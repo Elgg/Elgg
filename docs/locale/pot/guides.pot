@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-03 18:56+0200\n"
+"POT-Creation-Date: 2016-03-06 22:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4333,7 +4333,7 @@ msgstr ""
 
 #: ../../guides/plugins.rst:149
 #: ../../guides/views.rst:511
-#: ../../guides/web-services.rst:332
+#: ../../guides/web-services.rst:345
 msgid "Related"
 msgstr ""
 
@@ -7704,159 +7704,163 @@ msgstr ""
 msgid "Since we are providing this function to allow developers to test their API clients, we will require neither API authentication nor user authentication. This call registers the function with the web services API framework:"
 msgstr ""
 
-#: ../../guides/web-services.rst:70
-msgid "If you add this code to a plugin and then go to http://yoursite.com/services/api/rest/xml/?method=system.api.list, you should now see your test.echo method listed as an API call. Further, to test the exposed method from a web browser, you could hit the url: http://yoursite.com/services/api/rest/xml/?method=test.echo&string=testing and you should see xml data like this:"
+#: ../../guides/web-services.rst:75
+msgid "If you add this code to a plugin and then go to http://yoursite.com/services/api/rest/json/?method=system.api.list, you should now see your test.echo method listed as an API call. Further, to test the exposed method from a web browser, you could hit the url: http://yoursite.com/services/api/rest/json/?method=test.echo&string=testing and you should see JSON data like this:"
 msgstr ""
 
-#: ../../guides/web-services.rst:84
+#: ../../guides/web-services.rst:86
 msgid "Plugins can filter the output of individual API methods by registering a handler for ``'rest:output',$method`` plugin hook."
 msgstr ""
 
-#: ../../guides/web-services.rst:88
+#: ../../guides/web-services.rst:90
 msgid "Response formats"
 msgstr ""
 
-#: ../../guides/web-services.rst:90
-msgid "The web services API framework provides three different response formats by default: xml, json, and serialized php. You can request the different formats for substituting “json” or “php” for “xml” in the above URLs. You can also add additional response formats by defining new viewtypes."
+#: ../../guides/web-services.rst:92
+msgid "JSON is the default format, however XML and serialized PHP can be fetched by enabling the ``data_views`` plugin and substituting ``xml`` or ``php`` in place of ``json`` in the above URLs."
 msgstr ""
 
-#: ../../guides/web-services.rst:96
-msgid "Parameters"
+#: ../../guides/web-services.rst:95
+msgid "You can also add additional response formats by defining new viewtypes."
 msgstr ""
 
 #: ../../guides/web-services.rst:98
-msgid "Parameters expected by each method should be listed as an associative array, where the key represents the parameter name, and the value contains an array with ``type``, ``default`` and ``required`` fields."
+msgid "Parameters"
 msgstr ""
 
 #: ../../guides/web-services.rst:100
-msgid "Values submitted with the API request for each parameter should match the declared type. API will throw on exception if validation fails."
+msgid "Parameters expected by each method should be listed as an associative array, where the key represents the parameter name, and the value contains an array with ``type``, ``default`` and ``required`` fields."
 msgstr ""
 
 #: ../../guides/web-services.rst:102
-msgid "Recognized parameter types are:"
+msgid "Values submitted with the API request for each parameter should match the declared type. API will throw on exception if validation fails."
 msgstr ""
 
 #: ../../guides/web-services.rst:104
-msgid "``integer`` (or ``int``)"
-msgstr ""
-
-#: ../../guides/web-services.rst:105
-msgid "``boolean`` (or ``bool``)"
+msgid "Recognized parameter types are:"
 msgstr ""
 
 #: ../../guides/web-services.rst:106
-msgid "``string``"
+msgid "``integer`` (or ``int``)"
 msgstr ""
 
 #: ../../guides/web-services.rst:107
-msgid "``float``"
+msgid "``boolean`` (or ``bool``)"
 msgstr ""
 
 #: ../../guides/web-services.rst:108
-msgid "``array``"
+msgid "``string``"
+msgstr ""
+
+#: ../../guides/web-services.rst:109
+msgid "``float``"
 msgstr ""
 
 #: ../../guides/web-services.rst:110
-msgid "Unrecognized types will throw an API exception."
+msgid "``array``"
 msgstr ""
 
 #: ../../guides/web-services.rst:112
+msgid "Unrecognized types will throw an API exception."
+msgstr ""
+
+#: ../../guides/web-services.rst:114
 msgid "You can use additional fields to describe your parameter, e.g. ``description``."
 msgstr ""
 
-#: ../../guides/web-services.rst:138
+#: ../../guides/web-services.rst:141
 msgid "API authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:140
+#: ../../guides/web-services.rst:143
 msgid "You may want to control access to some of the functions that you expose. Perhaps you are exposing functions in order to integrate Elgg with another open source platform on the same server. In that case, you only want to allow that other application access to these methods. Another possibility is that you want to limit what external developers have access to your API. Or maybe you want to limit how many calls a developer can make against your API in a single day."
 msgstr ""
 
-#: ../../guides/web-services.rst:148
+#: ../../guides/web-services.rst:151
 msgid "In all of these cases, you can use Elgg's API authentication functions to control access. Elgg provides two built-in methods to perform API authentication: key based and HMAC signature based. You can also add your own authentication methods. The key based approach is very similar to what Google, Flickr, or Twitter. Developers can request a key (a random string) and pass that key with all calls that require API authentication. The keys are stored in the database and if an API call is made without a key or a bad key, the call is denied and an error message is returned."
 msgstr ""
 
-#: ../../guides/web-services.rst:159
+#: ../../guides/web-services.rst:162
 msgid "Key-based authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:161
+#: ../../guides/web-services.rst:164
 msgid "As an example, let's write a function that returns the number of users that have viewed the site in the last x minutes."
 msgstr ""
 
-#: ../../guides/web-services.rst:172
+#: ../../guides/web-services.rst:175
 msgid "Now, let's expose it and make the number of minutes an optional parameter:"
 msgstr ""
 
-#: ../../guides/web-services.rst:187
+#: ../../guides/web-services.rst:195
 msgid "This function is now available and if you check ``system.api.list``, you will see that it requires API authentication. If you hit the method with a web browser, it will return an error message about failing the API authentication. To test this method, you need an API key. Fortunately, there is a plugin called apiadmin that creates keys for you. It is available in the Elgg plugin repository. It will return a public and private key and you will use the public key for this kind of API authentication. Grab a key and then do a GET request with your browser on this API method passing in the key string as the parameter ``api_key``. It might look something like this: http://yoursite.com/services/api/rest/xml/?method=users.active&api_key=1140321cb56c71710c38feefdf72bc462938f59f."
 msgstr ""
 
-#: ../../guides/web-services.rst:200
+#: ../../guides/web-services.rst:208
 msgid "Signature-based authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:202
+#: ../../guides/web-services.rst:210
 msgid "The :doc:`web-services/hmac` is similar to what is used with OAuth or Amazon's S3 service. This involves both the public and private key. If you want to be very sure that the API calls are coming from the developer you think they are coming from and you want to make sure the data is not being tampered with during transmission, you would use this authentication method. Be aware that it is much more involved and could turn off developers when there are other sites out there with key-based authentication."
 msgstr ""
 
-#: ../../guides/web-services.rst:212
+#: ../../guides/web-services.rst:220
 msgid "OAuth"
 msgstr ""
 
-#: ../../guides/web-services.rst:214
+#: ../../guides/web-services.rst:222
 msgid "With the addition of the OAuth plugin, Elgg also fully supports the OAuth 1.0a authorization standard. Clients can then use standard OAuth libraries to make any API calls to the site."
 msgstr ""
 
-#: ../../guides/web-services.rst:219
+#: ../../guides/web-services.rst:227
 msgid "User authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:221
+#: ../../guides/web-services.rst:229
 msgid "So far you have been allowing developers to pull data out of your Elgg site. Now we'll move on to pushing data into Elgg. In this case, it is going to be done by a user. Maybe you have created a desktop application that allows your Users to post to the wire without going to the site. You need to expose a method for posting to the wire and you need to make sure that a user cannot post using someone else's account. Elgg provides a token-based approach for user authentication. It allows a user to submit their username and password in exchange for a token using the method ``auth.gettoken``. This token can then be used for some amount of time to authenticate all calls to the API before it expires by passing it as the parameter ``auth_token``. If you do not want to have your users trusting their passwords to 3rd-party applications, you can also extend the current capability to use an approach like OAuth."
 msgstr ""
 
-#: ../../guides/web-services.rst:235
+#: ../../guides/web-services.rst:243
 msgid "Let's write our wire posting function:"
 msgstr ""
 
-#: ../../guides/web-services.rst:249
+#: ../../guides/web-services.rst:257
 msgid "Exposing this function is the same as the previous except we require user authentication and we're going to make this use POST rather than GET HTTP requests."
 msgstr ""
 
-#: ../../guides/web-services.rst:264
+#: ../../guides/web-services.rst:277
 msgid "Please note that you will not be able to test this using a web browser as you did with the other methods. You need to write some client code to do this. There is some example client code in ``/engine/lib/api.php``. Take a look at `send\\_api\\_post\\_call()`_. You can also do a search for clients that have been written for the APIs of Flickr or Twitter or any other similar API. You will find a wide variety written in almost any language you can think of."
 msgstr ""
 
-#: ../../guides/web-services.rst:273
+#: ../../guides/web-services.rst:286
 msgid "Building out your API"
 msgstr ""
 
-#: ../../guides/web-services.rst:275
+#: ../../guides/web-services.rst:288
 msgid "As soon as you feel comfortable with Elgg's web services API framework, you will want to step back and design your API. What sort of data are you trying to expose? Who or what will be API users? How do you want them to get access to authentication keys? How are you going to document your API? Be sure to take a look at the APIs created by popular Web 2.0 sites for inspiration. If you are looking for 3rd party developers to build applications using your API, you will probably want to provide one or more language-specific clients."
 msgstr ""
 
-#: ../../guides/web-services.rst:287
+#: ../../guides/web-services.rst:300
 msgid "Determining the authentication available"
 msgstr ""
 
-#: ../../guides/web-services.rst:289
+#: ../../guides/web-services.rst:302
 msgid "Elgg's web services API uses a type of `pluggable authentication module (PAM)`_ architecture to manage how users and developers are authenticated. This provides you the flexibility to add and remove authentication modules. Do you want to not use the default user authentication PAM but would prefer using OAuth? You can do this."
 msgstr ""
 
-#: ../../guides/web-services.rst:295
+#: ../../guides/web-services.rst:308
 msgid "The first step is registering a callback function for the *rest, init* plugin hook:"
 msgstr ""
 
-#: ../../guides/web-services.rst:302
+#: ../../guides/web-services.rst:315
 msgid "Then in the callback function, you register the PAMs that you want to use:"
 msgstr ""
 
-#: ../../guides/web-services.rst:318
+#: ../../guides/web-services.rst:331
 msgid "When testing, you may find it useful to register the ``pam_auth_session`` PAM so that you can easily test your methods from the browser. Be careful not to use this PAM on a production site because it could open up your users to a `CSRF attack`_."
 msgstr ""
 
-#: ../../guides/web-services.rst:323
+#: ../../guides/web-services.rst:336
 msgid "Right now, the only other PAMs publicly available besides those provided by the Elgg core are the OAuth PAMs. See `Justin Richer's OAuth plugin`_ for more detail."
 msgstr ""
 

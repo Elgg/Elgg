@@ -99,7 +99,7 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Fall&oacute; el cambio de contrase&ntilde;a. revisa la antigua y nueva contrase&ntilde;a.',
 	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
-	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
+	'UserFetchFailureException' => 'No se pueden revisar los permisos para el user_guid [%s] porque el usuario no existe.',
 
 	'deprecatedfunction' => 'Precauci&oacute;n: Este c&oacute;digo utiliza la funci&oacute;n obsoleta \'%s\' que no es compatible con esta versi&oacute;n de Elgg',
 
@@ -628,8 +628,8 @@ return array(
 	'admin:plugins:warning:invalid' => '%s no es un plugin Elgg v&aacute;lido. Visite <a href="http://docs.elgg.org/Invalid_Plugin">la Documentaci&oacute;n Elgg</a> para consejos de soluci&oacute;n de problemas',
 	'admin:plugins:warning:invalid:check_docs' => 'Mira <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">la documentación de Elgg</a> donde encontrarás consejos de resolución de problemas.',
 	'admin:plugins:cannot_activate' => 'no se puede activar',
-	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
-	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
+	'admin:plugins:already:active' => 'Los plugins seleccionados ya están activos.',
+	'admin:plugins:already:inactive' => 'Los plugins seleccionados ya no están activos',
 
 	'admin:plugins:set_priority:yes' => "Reordenar %s",
 	'admin:plugins:set_priority:no' => "No se puede reordenar %s",

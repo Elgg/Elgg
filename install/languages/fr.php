@@ -2,7 +2,7 @@
 return array(
 	'install:title' => 'Installation d\'Elgg',
 	'install:welcome' => 'Bienvenue',
-	'install:requirements' => 'Vérification des pré-requis techniques',
+	'install:requirements' => 'Vérification des pré-requis',
 	'install:database' => 'Installation de la base de données',
 	'install:settings' => 'Configuration du site',
 	'install:admin' => 'Création d\'un compte administrateur',
@@ -22,7 +22,7 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 
 	'install:require:php' => 'PHP',
 	'install:require:rewrite' => 'Serveur web',
-	'install:require:settings' => 'Fichier paramètres',
+	'install:require:settings' => 'Fichier de configuration',
 	'install:require:database' => 'Base de données',
 
 	'install:check:root' => 'Votre serveur web n\'a pas la permission de créer le fichier ".htaccess" dans le répertoire racine d\'Elgg. Vous avez deux choix : 
@@ -31,8 +31,8 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 
 		2. Copier le fichier ".htaccess_dist" en le renommant ".htaccess"',
 
-	'install:check:php:version' => 'Elgg a besoin de la version %s ou supérieure de PHP . Ce serveur utilise la version %s.',
-	'install:check:php:extension' => 'Elgg a besoin de la version %s de l\'extension PHP.',
+	'install:check:php:version' => 'Elgg a besoin de la version %s ou supérieure de PHP. Ce serveur utilise la version %s.',
+	'install:check:php:extension' => 'Elgg a besoin de l\'extension PHP %s.',
 	'install:check:php:extension:recommend' => 'Il est recommandé que l\'extension PHP %s soit installée.',
 	'install:check:php:open_basedir' => 'La directive "open_basedir" de PHP peut empêcher Elgg d\'enregistrer des fichiers dans son répertoire de données.',
 	'install:check:php:safe_mode' => 'Exécuter PHP en mode sans échec n\'est pas conseillé et peut causer des problèmes avec Elgg.',
@@ -40,15 +40,15 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:check:php:register_globals' => 'L\'option "Register globals" doit être mise à "off".',
 	'install:check:php:session.auto_start' => "Pour fonctionner l'option session.auto_start doit être mise à \"off\". Vous devez soit modifier la configuration de votre serveur ou ajouter cette directive au fichier \".htaccess\" d'Elgg.",
 
-	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
+	'install:check:installdir' => 'Votre serveur web n\'a pas la permission de créer le fichier settings.php dans le répertoire d\'installation. Vous avez deux possibilités : 
 
-		1. Change the permissions on the elgg-config directory of your Elgg installation
+1. Modifier les permissions du dossier elgg-config de votre installation d\'Elgg
 
-		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+2. Copier le fichier %s/settings.example.php dans elgg-config/settings.php et suivre les instructions à l\'intérieur du fichier pour définir les paramètres de la base de données.',
 	'install:check:readsettings' => 'Un fichier de paramètres existe dans le répertoire "engine" (moteur), mais le serveur web ne peut pas le lire. Vous pouvez supprimer le fichier ou modifier les autorisations de lecture sur lui.',
 
 	'install:check:php:success' => "Votre serveur PHP remplit tous les pré-requis techniques d'Elgg.",
-	'install:check:rewrite:success' => 'Le test des règles de réécriture a été passé avec succès.',
+	'install:check:rewrite:success' => 'Le test des règles de réécriture a réussi.',
 	'install:check:database' => 'Les pré-requis techniques de la base de données sont vérifiés au moment où Elgg utilise la base de données.',
 
 	'install:database:instructions' => "Si vous n'avez pas déjà créé une base de données pour Elgg, le faire maintenant. Ensuite, remplissez les valeurs ci-dessous pour initialiser la base de données d'Elgg.",
@@ -59,14 +59,14 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:database:label:dbname' => 'Nom de la base de données',
 	'install:database:label:dbhost' => 'Nom du serveur de la base de données',
 	'install:database:label:dbprefix' => 'Préfixe des tables de la base de données',
-	'install:database:label:timezone' => "Timezone",
+	'install:database:label:timezone' => "Fuseau horaire",
 
 	'install:database:help:dbuser' => 'Un utilisateur qui a tous les privilèges sur la base de données MySQL que vous avez créée pour Elgg',
 	'install:database:help:dbpassword' => 'Mot de passe du compte de l\'utilisateur de la base de données ci-dessus',
 	'install:database:help:dbname' => 'Nom de la base de données d\'Elgg',
 	'install:database:help:dbhost' => 'Nom du serveur MySQL (habituellement localhost)',
 	'install:database:help:dbprefix' => "Le préfixe donné à toutes les tables d'Elgg (habituellement elgg_)",
-	'install:database:help:timezone' => "The default timezone in which the site will operate",
+	'install:database:help:timezone' => "Le fuseau horaire par défaut du site",
 
 	'install:settings:instructions' => 'Nous avons besoin d\'informations à propos du site afin de configurer correctement Elgg. Si vous n\'avez pas encore <a href="http://docs.elgg.org/wiki/Installation_fr" target="_blank">créé un répertoire de données</a> pour Elgg, vous devez le faire maintenant.',
 
@@ -126,8 +126,8 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:error:nodatabase' => 'Impossible d\'utiliser la base de données %s. Il se peut qu\'elle n\'existe pas.',
 	'install:error:cannotloadtables' => 'Impossible de charger les tables de la base de données',
 	'install:error:tables_exist' => 'Il y a déjà des tables dans la base de données d\'Elgg. Vous devez soit supprimer ces tables ou redémarrer l\'installeur et nous allons alors tenter de les utiliser. Pour redémarrer l\'installeur, enlevez "?step=database" dans la barre d\'adresse de votre navigateur et appuyez sur Entrée.',
-	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
+	'install:error:readsettingsphp' => 'Impossible de lire le fichier /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Impossible d\'écrire dans le fichier /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s est nécessaire',
 	'install:error:relative_path' => 'Nous ne pensons pas que "%s" soit un chemin absolu pour votre répertoire de données',
 	'install:error:datadirectoryexists' => 'Votre répertoire de données %s n\'existe pas.',
