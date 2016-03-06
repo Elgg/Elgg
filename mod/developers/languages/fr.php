@@ -23,11 +23,16 @@ return array(
 	'developers:help:screen_log' => "Ceci affiche les sorties de elgg_log() et de elgg_dump() et un compte des requêtes sur la BD",
 	'developers:label:show_strings' => "Montrer les chaînes de traduction brutes",
 	'developers:help:show_strings' => "Affiche les chaînes de traduction utilisées par elgg_echo().",
+	'developers:label:show_modules' => "Montrer les modules AMD chargés dans la console",
+	'developers:help:show_modules' => "Affiche les modules chargés et les valeurs dans votre console JavaScript.",
 	'developers:label:wrap_views' => "Vues contractées",
 	'developers:help:wrap_views' => "Cela regroupe presque toutes les vues avec les commentaires en HTML. C'est utile pour trouver la vue permettant de créer un code HTML particulier. 
 ⇥⇥⇥⇥⇥⇥⇥⇥⇥Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wrap_views() pour plus de détails. ",
 	'developers:label:log_events' => "Journaux des évènements et interceptions des plugins (hooks).",
 	'developers:help:log_events' => "Ecrit les événements et les interceptions plugins (hooks) dans le journal. Attention: il y en a beaucoup par page.",
+	'developers:label:show_gear' => "Utiliser %s hors de la zone d'administration",
+	'developers:help:show_gear' => "Une icône en bas à droite de l'affichage qui offre aux administrateurs un accès aux paramètres et liens pour développeurs.",
+	'developers:label:submit' => "Enregistrer et vider les caches",
 
 	'developers:debug:off' => 'Arrêt',
 	'developers:debug:error' => 'Erreur',
@@ -78,5 +83,7 @@ return array(
 	'developers:unit_tests:run' => 'Exécuter',
 
 	// status messages
-	'developers:settings:success' => 'Paramètres sauvegardés',
+	'developers:settings:success' => 'Paramètres enregistrés et caches vidés',
+
+	'developers:amd' => 'AMD',
 );

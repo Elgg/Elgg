@@ -58,7 +58,7 @@ return array(
 	'groups:cantcreate' => 'Vous ne pouvez créer un groupe. Seul les administrateurs peuvent.',
 	'groups:cantedit' => 'Vous ne pouvez pas modifier ce groupe',
 	'groups:saved' => 'Groupe enregistré',
-	'groups:save_error' => 'Group could not be saved',
+	'groups:save_error' => 'Le groupe n\'a pas pu être enregistré',
 	'groups:featured' => 'Les groupes à la une',
 	'groups:makeunfeatured' => 'Enlever de la une',
 	'groups:makefeatured' => 'Mettre à la une',
