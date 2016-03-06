@@ -280,9 +280,13 @@ class CacheHandler {
 	 * @return void
 	 */
 	protected function handle304($etag) {
-		// If is the same ETag, content didn't change.
-		if (isset($this->server_vars['HTTP_IF_NONE_MATCH'])
-			&& trim($this->server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
+		if (!isset($this->server_vars['HTTP_IF_NONE_MATCH'])) {
+			return;
+		}
+
+		// strip -gzip for #9427
+		$if_none_match = str_replace('-gzip', '', trim($this->server_vars['HTTP_IF_NONE_MATCH']));
+		if ($if_none_match === $etag) {
 			header("HTTP/1.1 304 Not Modified");
 			exit;
 		}
