@@ -1,3 +1,24 @@
+<a name="2.0.3"></a>
+### 2.0.3  (2016-03-06)
+
+#### Contributors
+
+* Ismayil Khayredinov (3)
+* Steve Clay (3)
+* Juho Jaakkola (1)
+* Niraj Kaushal (1)
+
+#### Bug Fixes
+
+* **comments:** unifies behavior after adding new comment/discussion reply ([8ff2b295](https://github.com/Elgg/Elgg/commit/8ff2b2950c7da783e7cb89f5a6eb9bb9cad54e59), closes [#8130](https://github.com/Elgg/Elgg/issues/8130))
+* **discussions:** put new discussion page behind gatekeeper ([a583f65b](https://github.com/Elgg/Elgg/commit/a583f65b6e5051d8d79f49aa16d455b24aebeedc), closes [#9383](https://github.com/Elgg/Elgg/issues/9383))
+* **events:** the pagesetup event timing is more like 1.x ([38b12288](https://github.com/Elgg/Elgg/commit/38b122888df42599be0c1ab47333c356822fbb2f))
+* **groups:**
+  * clarify notification status strings ([20059a89](https://github.com/Elgg/Elgg/commit/20059a89f110b27085bfe42ce742270f7110e46e))
+  * page owner is now correctly resolved prior to pagesetup ([9a8ba277](https://github.com/Elgg/Elgg/commit/9a8ba27765c831f29db89ed98678a03572eaaf9a))
+* **web_services:** web services again can output xml/php ([9bf27a4b](https://github.com/Elgg/Elgg/commit/9bf27a4b56be335b42d923ac62155cfe7437ddfb), closes [#8053](https://github.com/Elgg/Elgg/issues/8053))
+
+
 <a name="2.0.2"></a>
 ### 2.0.2  (2016-02-03)
 
