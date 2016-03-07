@@ -71,27 +71,6 @@ abstract class ElggExtender extends \ElggData {
 	}
 
 	/**
-	 * Set an attribute
-	 *
-	 * @param string $name       Name
-	 * @param mixed  $value      Value
-	 * @param string $value_type Value type
-	 *
-	 * @return boolean
-	 * @deprecated 1.9
-	 */
-	protected function set($name, $value, $value_type = '') {
-		elgg_deprecated_notice("Use -> instead of set()", 1.9);
-		if ($name == 'value') {
-			$this->setValue($value, $value_type);
-		} else {
-			$this->__set($name, $value);
-		}
-
-		return true;
-	}
-
-	/**
 	 * Gets an attribute
 	 *
 	 * @param string $name Name
@@ -118,18 +97,6 @@ abstract class ElggExtender extends \ElggData {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Returns an attribute
-	 *
-	 * @param string $name Name
-	 * @return mixed
-	 * @deprecated 1.9
-	 */
-	protected function get($name) {
-		elgg_deprecated_notice("Use -> instead of get()", 1.9);
-		return $this->__get($name);
 	}
 
 	/**
@@ -184,46 +151,6 @@ abstract class ElggExtender extends \ElggData {
 		$object->read_access = $this->access_id;
 		$params = array($this->getSubtype() => $this);
 		return _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
-	}
-
-	/*
-	 * EXPORTABLE INTERFACE
-	 */
-
-	/**
-	 * Return an array of fields which can be exported.
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function getExportableValues() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated by toObject()', 1.9);
-		return array(
-			'id',
-			'entity_guid',
-			'name',
-			'value',
-			'value_type',
-			'owner_guid',
-			'type',
-		);
-	}
-
-	/**
-	 * Export this object
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function export() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-		$uuid = get_uuid_from_object($this);
-
-		$meta = new ODDMetaData($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'],
-			$this->attributes['value'], $this->attributes['type'], guid_to_uuid($this->owner_guid));
-		$meta->setAttribute('published', date("r", $this->time_created));
-
-		return $meta;
 	}
 
 	/*

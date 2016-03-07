@@ -50,36 +50,30 @@ class ElggPlugin extends \ElggObject {
 			// database object
 			parent::__construct($path);
 			$this->path = _elgg_services()->config->getPluginsPath() . $this->getID();
-		} else if (is_numeric($path)) {
+			_elgg_cache_plugin_by_id($this);
+			return;
+		}
+
+		if (is_numeric($path)) {
 			// guid
 			// @todo plugins with directory names of '12345'
-			elgg_deprecated_notice("Use elgg_get_plugin_from_id() to load a plugin.", 1.9);
-			parent::__construct($path);
-			$this->path = _elgg_services()->config->getPluginsPath() . $this->getID();
-		} else {
-			$this->initializeAttributes();
-			
-			$mod_dir = _elgg_services()->config->getPluginsPath();
+			throw new \InvalidArgumentException('$path cannot be a GUID');
+		}
 
-			// not a full path, so assume a directory name and use the default path
-			if (strpos($path, $mod_dir) !== 0) {
-				elgg_deprecated_notice("You should pass a full path to ElggPlugin.", 1.9);
-				$path = $mod_dir . $path;
-			}
+		$this->initializeAttributes();
 
-			// path checking is done in the package
-			$path = sanitise_filepath($path);
-			$this->path = $path;
-			$path_parts = explode('/', rtrim($path, '/'));
-			$plugin_id = array_pop($path_parts);
-			$this->title = $plugin_id;
+		// path checking is done in the package
+		$path = sanitise_filepath($path);
+		$this->path = $path;
+		$path_parts = explode('/', rtrim($path, '/'));
+		$plugin_id = array_pop($path_parts);
+		$this->title = $plugin_id;
 
-			// check if we're loading an existing plugin
-			$existing_plugin = elgg_get_plugin_from_id($plugin_id);
-			
-			if ($existing_plugin) {
-				$this->load($existing_plugin->guid);
-			}
+		// check if we're loading an existing plugin
+		$existing_plugin = elgg_get_plugin_from_id($plugin_id);
+
+		if ($existing_plugin) {
+			$this->load($existing_plugin->guid);
 		}
 
 		_elgg_cache_plugin_by_id($this);
@@ -885,18 +879,6 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
-	 * Get a value from private settings.
-	 *
-	 * @param string $name Name
-	 * @return mixed
-	 * @deprecated 1.9
-	 */
-	public function get($name) {
-		elgg_deprecated_notice("Use -> instead of get()", 1.9);
-		return $this->__get($name);
-	}
-
-	/**
 	 * Set a value as private setting or attribute.
 	 *
 	 * Attributes include title and description.
@@ -917,22 +899,6 @@ class ElggPlugin extends \ElggObject {
 			// to make sure we trigger the correct hooks
 			$this->setSetting($name, $value);
 		}
-	}
-
-	/**
-	 * Save a value as private setting or attribute.
-	 *
-	 * Attributes include title and description.
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 * @return bool
-	 */
-	public function set($name, $value) {
-		elgg_deprecated_notice("Use -> instead of set()", 1.9);
-		$this->__set($name, $value);
-
-		return true;
 	}
 
 	/**

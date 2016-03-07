@@ -102,17 +102,6 @@ class ElggRiverItem {
 	 * Get the time this activity was posted
 	 * 
 	 * @return int
-	 * @deprecated 1.9 Use getTimePosted()
-	 */
-	public function getPostedTime() {
-		elgg_deprecated_notice("\ElggRiverItem::getPostedTime() deprecated in favor of getTimePosted()", 1.9);
-		return (int)$this->posted;
-	}
-
-	/**
-	 * Get the time this activity was posted
-	 * 
-	 * @return int
 	 */
 	public function getTimePosted() {
 		return (int)$this->posted;

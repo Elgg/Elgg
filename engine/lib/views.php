@@ -1416,11 +1416,6 @@ function elgg_view_icon($name, $vars = array()) {
 		$vars = array();
 	}
 
-	if ($vars === true) {
-		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
-		$vars = array('class' => 'float');
-	}
-
 	if (is_string($vars)) {
 		$vars = array('class' => $vars);
 	}

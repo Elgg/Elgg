@@ -68,32 +68,14 @@ class ElggSite extends \ElggEntity {
 	 * @throws IOException If cannot load remaining data from db
 	 * @throws InvalidParameterException If not passed a db result
 	 */
-	public function __construct($row = null) {
+	public function __construct(\stdClass $row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($row)) {
-			// Is $row is a DB entity table row
-			if ($row instanceof \stdClass) {
-				// Load the rest
-				if (!$this->load($row)) {
-					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
-					throw new \IOException($msg);
-				}
-			} else if (strpos($row, "http") !== false) {
-				// url so retrieve by url
-				elgg_deprecated_notice("Passing URL to constructor is deprecated. Use get_site_by_url()", 1.9);
-				$row = get_site_by_url($row);
-				foreach ($row->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
-				}
-			} else if (is_numeric($row)) {
-				// $row is a GUID so load
-				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
-				if (!$this->load($row)) {
-					throw new \IOException("Failed to load new " . get_class() . " from GUID:" . $row);
-				}
-			} else {
-				throw new \InvalidParameterException("Unrecognized value passed to constuctor.");
+		if ($row) {
+			// Load the rest
+			if (!$this->load($row)) {
+				$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
+				throw new \IOException($msg);
 			}
 		}
 	}
@@ -238,58 +220,6 @@ class ElggSite extends \ElggEntity {
 	}
 
 	/**
-	 * Gets an array of \ElggUser entities who are members of the site.
-	 *
-	 * @param array $options An associative array for key => value parameters
-	 *                       accepted by elgg_get_entities(). Common parameters
-	 *                       include 'limit', and 'offset'.
-	 *
-	 * @return array of \ElggUsers
-	 * @deprecated 1.9 Use \ElggSite::getEntities()
-	 */
-	public function getMembers($options = array()) {
-		elgg_deprecated_notice('\ElggSite::getMembers() is deprecated. Use \ElggSite::getEntities()', 1.9);
-
-		$defaults = array(
-			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
-			'relationship' => 'member_of_site',
-			'relationship_guid' => $this->getGUID(),
-			'inverse_relationship' => true,
-			'type' => 'user',
-		);
-
-		$options = array_merge($defaults, $options);
-
-		return elgg_get_entities_from_relationship($options);
-	}
-
-	/**
-	 * List the members of this site
-	 *
-	 * @param array $options An associative array for key => value parameters
-	 *                       accepted by elgg_list_entities(). Common parameters
-	 *                       include 'full_view', 'limit', and 'offset'.
-	 *
-	 * @return string
-	 * @since 1.8.0
-	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
-	 */
-	public function listMembers($options = array()) {
-		elgg_deprecated_notice('\ElggSite::listMembers() is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
-		$defaults = array(
-			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
-			'relationship' => 'member_of_site',
-			'relationship_guid' => $this->getGUID(),
-			'inverse_relationship' => true,
-			'type' => 'user',
-		);
-
-		$options = array_merge($defaults, $options);
-
-		return elgg_list_entities_from_relationship($options);
-	}
-
-	/**
 	 * Adds an entity to the site.
 	 *
 	 * This adds a 'member_of_site' relationship between between the entity and
@@ -343,76 +273,6 @@ class ElggSite extends \ElggEntity {
 	}
 
 	/**
-	 * Adds a user to the site.
-	 *
-	 * @param int $user_guid GUID
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggSite::addEntity()
-	 */
-	public function addUser($user_guid) {
-		elgg_deprecated_notice('\ElggSite::addUser() is deprecated. Use \ElggEntity::addEntity()', 1.9);
-		return add_site_user($this->getGUID(), $user_guid);
-	}
-
-	/**
-	 * Removes a user from the site.
-	 *
-	 * @param int $user_guid GUID
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggSite::removeEntity()
-	 */
-	public function removeUser($user_guid) {
-		elgg_deprecated_notice('\ElggSite::removeUser() is deprecated. Use \ElggEntity::removeEntity()', 1.9);
-		return remove_site_user($this->getGUID(), $user_guid);
-	}
-
-	/**
-	 * Returns an array of \ElggObject entities that belong to the site.
-	 *
-	 * @warning This only returns objects that have been explicitly added to the
-	 * site through addObject()
-	 *
-	 * @param string $subtype Entity subtype
-	 * @param int    $limit   Limit
-	 * @param int    $offset  Offset
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use \ElggSite:getEntities()
-	 */
-	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice('\ElggSite::getObjects() is deprecated. Use \ElggSite::getEntities()', 1.9);
-		return get_site_objects($this->getGUID(), $subtype, $limit, $offset);
-	}
-
-	/**
-	 * Adds an object to the site.
-	 *
-	 * @param int $object_guid GUID
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggSite::addEntity()
-	 */
-	public function addObject($object_guid) {
-		elgg_deprecated_notice('\ElggSite::addObject() is deprecated. Use \ElggEntity::addEntity()', 1.9);
-		return add_site_object($this->getGUID(), $object_guid);
-	}
-
-	/**
-	 * Remvoes an object from the site.
-	 *
-	 * @param int $object_guid GUID
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggSite::removeEntity()
-	 */
-	public function removeObject($object_guid) {
-		elgg_deprecated_notice('\ElggSite::removeObject() is deprecated. Use \ElggEntity::removeEntity()', 1.9);
-		return remove_site_object($this->getGUID(), $object_guid);
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	protected function prepareObject($object) {
@@ -421,24 +281,6 @@ class ElggSite extends \ElggEntity {
 		$object->description = $this->description;
 		unset($object->read_access);
 		return $object;
-	}
-
-	/*
-	 * EXPORTABLE INTERFACE
-	 */
-
-	/**
-	 * Return an array of fields which can be exported.
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function getExportableValues() {
-		return array_merge(parent::getExportableValues(), array(
-			'name',
-			'description',
-			'url',
-		));
 	}
 
 	/**

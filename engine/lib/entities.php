@@ -553,12 +553,6 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 
 	$options = array_merge($defaults, $options);
 
-	// backward compatibility
-	if (isset($options['view_type_toggle'])) {
-		elgg_deprecated_notice("Option 'view_type_toggle' deprecated by 'list_type_toggle' in elgg_list* functions", 1.9);
-		$options['list_type_toggle'] = $options['view_type_toggle'];
-	}
-
 	$options['count'] = true;
 	$count = call_user_func($getter, $options);
 
@@ -814,12 +808,6 @@ function elgg_list_registered_entities(array $options = array()) {
 	);
 
 	$options = array_merge($defaults, $options);
-
-	// backward compatibility
-	if (isset($options['view_type_toggle'])) {
-		elgg_deprecated_notice("Option 'view_type_toggle' deprecated by 'list_type_toggle' in elgg_list* functions", 1.9);
-		$options['list_type_toggle'] = $options['view_type_toggle'];
-	}
 
 	$types = get_registered_entity_types();
 

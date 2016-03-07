@@ -34,23 +34,12 @@ class ElggMetadata extends \ElggExtender {
 	 *
 	 * @param \stdClass $row Database row as \stdClass object
 	 */
-	public function __construct($row = null) {
+	public function __construct(\stdClass $row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($row)) {
-			// Create from db row
-			if ($row instanceof \stdClass) {
-				$metadata = $row;
-				
-				$objarray = (array) $metadata;
-				foreach ($objarray as $key => $value) {
-					$this->attributes[$key] = $value;
-				}
-			} else {
-				// get an \ElggMetadata object and copy its attributes
-				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use elgg_get_metadata_from_id()', 1.9);
-				$metadata = elgg_get_metadata_from_id($row);
-				$this->attributes = $metadata->attributes;
+		if ($row) {
+			foreach ((array)$row as $key => $value) {
+				$this->attributes[$key] = $value;
 			}
 		}
 	}

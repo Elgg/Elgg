@@ -42,8 +42,7 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
  * @property       string $location       A location of the entity
  */
 abstract class ElggEntity extends \ElggData implements
-	Locatable, // Geocoding interface
-	Importable // Allow import of data (deprecated 1.9)
+	Locatable // Geocoding interface
 {
 
 	/**
@@ -250,22 +249,6 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Sets the value of an attribute or metadata
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 *
-	 * @return bool
-	 * @deprecated 1.9
-	 */
-	public function set($name, $value) {
-		elgg_deprecated_notice("Use -> instead of set()", 1.9);
-		$this->__set($name, $value);
-
-		return true;
-	}
-
-	/**
 	 * Get the original values of attribute(s) that have been modified since the entity was persisted.
 	 *
 	 * @return array
@@ -289,25 +272,12 @@ abstract class ElggEntity extends \ElggData implements
 	public function __get($name) {
 		if (array_key_exists($name, $this->attributes)) {
 			if ($name === 'subtype' && $this->attributes['guid']) {
-				// note: only show deprecation notice if user reads ->subtype after save/load
-				elgg_deprecated_notice("Use getSubtype()", 1.9);
+				_elgg_services()->logger->warn('Reading ->subtype on a persisted entity is unreliable.');
 			}
 			return $this->attributes[$name];
 		}
 
 		return $this->getMetadata($name);
-	}
-
-	/**
-	 * Return the value of an attribute or metadata
-	 *
-	 * @param string $name Name
-	 * @return mixed Returns the value of a given value, or null.
-	 * @deprecated 1.9
-	 */
-	public function get($name) {
-		elgg_deprecated_notice("Use -> instead of get()", 1.9);
-		return $this->__get($name);
 	}
 
 	/**
@@ -849,43 +819,18 @@ abstract class ElggEntity extends \ElggData implements
 	 * To retrieve annotations on an unsaved entity, pass array('name' => [annotation name])
 	 * as the options array.
 	 *
-	 * @param array  $options Array of options for elgg_get_annotations() except guid. This
-	 *               may be passed a string annotation name, but this usage is deprecated.
-	 * @param int    $limit   Limit (deprecated)
-	 * @param int    $offset  Offset (deprecated)
-	 * @param string $order   Order by time: asc or desc (deprecated)
+	 * @param array $options Array of options for elgg_get_annotations() except guid.
 	 *
 	 * @return array
 	 * @see elgg_get_annotations()
 	 */
-	public function getAnnotations($options = array(), $limit = 50, $offset = 0, $order = "asc") {
-		if (!is_array($options)) {
-			elgg_deprecated_notice("\ElggEntity::getAnnotations() takes an array of options.", 1.9);
-		}
-
-		if ((int) ($this->guid) > 0) {
-			if (!is_array($options)) {
-				$options = array(
-					'guid' => $this->guid,
-					'annotation_name' => $options,
-					'limit' => $limit,
-					'offset' => $offset,
-				);
-
-				if ($order != 'asc') {
-					$options['reverse_order_by'] = true;
-				}
-			} else {
-				$options['guid'] = $this->guid;
-			}
+	public function getAnnotations(array $options = []) {
+		if ($this->guid) {
+			$options['guid'] = $this->guid;
 
 			return elgg_get_annotations($options);
 		} else {
-			if (!is_array($options)) {
-				$name = $options;
-			} else {
-				$name = elgg_extract('annotation_name', $options, '');
-			}
+			$name = elgg_extract('annotation_name', $options, '');
 
 			if (isset($this->temp_annotations[$name])) {
 				return array($this->temp_annotations[$name]);
@@ -979,27 +924,13 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param array $options Options array. See elgg_get_entities_from_relationship()
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity.
-	 * @param bool  $inverse Is this an inverse relationship? (deprecated)
-	 * @param int   $limit   Number of elements to return (deprecated)
-	 * @param int   $offset  Indexing offset (deprecated)
 	 *
 	 * @return array|false An array of entities or false on failure
 	 * @see elgg_get_entities_from_relationship()
 	 */
-	public function getEntitiesFromRelationship($options = array(), $inverse = false, $limit = 50, $offset = 0) {
-		if (is_array($options)) {
-			$options['relationship_guid'] = $this->getGUID();
-			return elgg_get_entities_from_relationship($options);
-		} else {
-			elgg_deprecated_notice("\ElggEntity::getEntitiesFromRelationship takes an options array", 1.9);
-			return elgg_get_entities_from_relationship(array(
-				'relationship' => $options,
-				'relationship_guid' => $this->getGUID(),
-				'inverse_relationship' => $inverse,
-				'limit' => $limit,
-				'offset' => $offset
-			));
-		}
+	public function getEntitiesFromRelationship(array $options = []) {
+		$options['relationship_guid'] = $this->guid;
+		return elgg_get_entities_from_relationship($options);
 	}
 
 	/**
@@ -1352,22 +1283,6 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		return elgg_normalize_url($url);
-	}
-
-	/**
-	 * Overrides the URL returned by getURL()
-	 *
-	 * @warning This override exists only for the life of the object.
-	 *
-	 * @param string $url The new item URL
-	 *
-	 * @return string The URL
-	 * @deprecated 1.9.0 See \ElggEntity::getURL() for details on the plugin hook
-	 */
-	public function setURL($url) {
-		elgg_deprecated_notice('\ElggEntity::setURL() has been replaced by the "entity:url" plugin hook', 1.9);
-		$this->url_override = $url;
-		return $url;
 	}
 
 	/**
@@ -2157,150 +2072,6 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function getLongitude() {
 		return (float)$this->{"geo:long"};
-	}
-
-	/*
-	 * EXPORTABLE INTERFACE
-	 */
-
-	/**
-	 * Returns an array of fields which can be exported.
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function getExportableValues() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated by toObject()', 1.9);
-		return array(
-			'guid',
-			'type',
-			'subtype',
-			'time_created',
-			'time_updated',
-			'container_guid',
-			'owner_guid',
-			'site_guid'
-		);
-	}
-
-	/**
-	 * Export this class into an array of ODD Elements containing all necessary fields.
-	 * Override if you wish to return more information than can be found in
-	 * $this->attributes (shouldn't happen)
-	 *
-	 * @return array
-	 * @deprecated 1.9
-	 */
-	public function export() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-		$tmp = array();
-
-		// Generate uuid
-		$uuid = guid_to_uuid($this->getGUID());
-
-		// Create entity
-		$odd = new ODDEntity(
-			$uuid,
-			$this->attributes['type'],
-			get_subtype_from_id($this->attributes['subtype'])
-		);
-
-		$tmp[] = $odd;
-
-		$exportable_values = $this->getExportableValues();
-
-		// Now add its attributes
-		foreach ($this->attributes as $k => $v) {
-			$meta = null;
-
-			if (in_array($k, $exportable_values)) {
-				switch ($k) {
-					case 'guid':			// Dont use guid in OpenDD
-					case 'type':			// Type and subtype already taken care of
-					case 'subtype':
-						break;
-
-					case 'time_created':	// Created = published
-						$odd->setAttribute('published', date("r", $v));
-						break;
-
-					case 'site_guid':	// Container
-						$k = 'site_uuid';
-						$v = guid_to_uuid($v);
-						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-						break;
-
-					case 'container_guid':	// Container
-						$k = 'container_uuid';
-						$v = guid_to_uuid($v);
-						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-						break;
-
-					case 'owner_guid':			// Convert owner guid to uuid, this will be stored in metadata
-						$k = 'owner_uuid';
-						$v = guid_to_uuid($v);
-						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-						break;
-
-					default:
-						$meta = new ODDMetaData($uuid . "attr/$k/", $uuid, $k, $v);
-				}
-
-				// set the time of any metadata created
-				if ($meta) {
-					$meta->setAttribute('published', date("r", $this->time_created));
-					$tmp[] = $meta;
-				}
-			}
-		}
-
-		// Now we do something a bit special.
-		/*
-		 * This provides a rendered view of the entity to foreign sites.
-		 */
-
-		elgg_set_viewtype('default');
-		$view = elgg_view_entity($this, array('full_view' => true));
-		elgg_set_viewtype();
-
-		$tmp[] = new ODDMetaData($uuid . "volatile/renderedentity/", $uuid,
-			'renderedentity', $view, 'volatile');
-
-		return $tmp;
-	}
-
-	/*
-	 * IMPORTABLE INTERFACE
-	 */
-
-	/**
-	 * Import data from an parsed ODD xml data array.
-	 *
-	 * @param ODD $data XML data
-	 *
-	 * @return true
-	 *
-	 * @throws InvalidParameterException
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function import(ODD $data) {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-		if (!($data instanceof ODDEntity)) {
-			throw new \InvalidParameterException("import() passed an unexpected ODD class");
-		}
-
-		// Set type and subtype
-		$this->attributes['type'] = $data->getAttribute('class');
-		$this->attributes['subtype'] = $data->getAttribute('subclass');
-
-		// Set owner
-		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid(); // Import as belonging to importer.
-
-		// Set time
-		$this->attributes['time_created'] = strtotime($data->getAttribute('published'));
-		$this->attributes['time_updated'] = time();
-
-		return true;
 	}
 
 	/*
