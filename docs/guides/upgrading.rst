@@ -19,6 +19,7 @@ Deprecated APIs
  * ``get_default_filestore``
  * ``set_default_filestore``
  * ``elgg_get_config('siteemail')``: Use ``elgg_get_site_entity()->email``
+ * URLs starting with ``/css/`` and ``/js/``: ``Use elgg_get_simplecache_url()``
 
 Added ``elgg/widgets`` module
 -----------------------------
