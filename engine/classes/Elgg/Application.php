@@ -312,17 +312,20 @@ class Application {
 	}
 
 	/**
-	 * Get the Database instance for performing queries without booting Elgg
+	 * Get a Database wrapper for performing queries without booting Elgg
 	 *
 	 * If settings.php has not been loaded, it will be loaded to configure the DB connection.
 	 *
-	 * Note: Before boot, the Database instance will not yet be bound to a Logger.
+	 * @note Do not type hint on \Elgg\Database, as this will fail in 3.0. If you must type hint,
+	 *       expect an \Elgg\Application\Database.
 	 *
-	 * @return Database
+	 * @note Before boot, the Database instance will not yet be bound to a Logger.
+	 *
+	 * @return \Elgg\Application\Database
 	 */
 	public function getDb() {
 		$this->loadSettings();
-		return $this->services->db;
+		return $this->services->publicDb;
 	}
 
 	/**

@@ -21,6 +21,13 @@ Deprecated APIs
  * ``elgg_get_config('siteemail')``: Use ``elgg_get_site_entity()->email``
  * URLs starting with ``/css/`` and ``/js/``: ``Use elgg_get_simplecache_url()``
 
+``Application::getDb()`` changes
+--------------------------------
+
+If you're using this low-level API, do not expect it to return an ``Elgg\Database`` instance in 3.0. It now
+returns an ``Elgg\Application\Database`` with many deprecated. These methods were never meant to be made
+public API, but we will do our best to support them in 2.x.
+
 Added ``elgg/widgets`` module
 -----------------------------
 

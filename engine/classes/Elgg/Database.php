@@ -99,10 +99,11 @@ class Database {
 	/**
 	 * Set the logger object
 	 *
-	 * @param \Elgg\Logger $logger The logger
+	 * @param Logger $logger The logger
 	 * @return void
+	 * @access private
 	 */
-	public function setLogger(\Elgg\Logger $logger) {
+	public function setLogger(Logger $logger) {
 		$this->logger = $logger;
 	}
 
@@ -133,6 +134,7 @@ class Database {
 	 *
 	 * @return void
 	 * @throws \DatabaseException
+	 * @access private
 	 */
 	public function setupConnections() {
 		if ($this->config->isDatabaseSplit()) {
@@ -152,6 +154,7 @@ class Database {
 	 *
 	 * @return void
 	 * @throws \DatabaseException
+	 * @access private
 	 */
 	public function connect($type = "readwrite") {
 		$conf = $this->config->getConnectionConfig($type);
@@ -448,6 +451,7 @@ class Database {
 	 *
 	 * @return void
 	 * @throws \DatabaseException
+	 * @access private
 	 */
 	public function runSqlScript($scriptlocation) {
 		$script = file_get_contents($scriptlocation);
@@ -498,6 +502,7 @@ class Database {
 	 * @param string $handler A callback function to pass the results array to
 	 *
 	 * @return boolean Whether registering was successful.
+	 * @access private
 	 */
 	public function registerDelayedQuery($query, $type, $handler = "") {
 		if ($type != 'read' && $type != 'write') {
@@ -549,6 +554,7 @@ class Database {
 	 * This does not take precedence over the \Elgg\Database\Config setting.
 	 * 
 	 * @return void
+	 * @access private
 	 */
 	public function enableQueryCache() {
 		if ($this->config->isQueryCacheEnabled() && $this->queryCache === null) {
@@ -564,6 +570,7 @@ class Database {
 	 * in single queries.
 	 * 
 	 * @return void
+	 * @access private
 	 */
 	public function disableQueryCache() {
 		$this->queryCache = null;
@@ -588,6 +595,7 @@ class Database {
 	 *
 	 * @return void
 	 * @throws \InstallationException
+	 * @access private
 	 */
 	public function assertInstalled() {
 
@@ -609,6 +617,7 @@ class Database {
 	 * Get the number of queries made to the database
 	 *
 	 * @return int
+	 * @access private
 	 */
 	public function getQueryCount() {
 		return $this->queryCount;
@@ -663,6 +672,7 @@ class Database {
 	 * @param string $type Connection type (Config constants, e.g. Config::READ_WRITE)
 	 *
 	 * @return string Empty if version cannot be determined
+	 * @access private
 	 */
 	public function getServerVersion($type) {
 		$driver = $this->getConnection($type)->getWrappedConnection();
