@@ -191,48 +191,38 @@ elgg.ui.initHoverMenu = function(parent) {
 
 	// avatar contextual menu
 	$(document).on('click', ".elgg-avatar > .elgg-icon-hover-menu", function(e) {
-		var $placeholder = $(this).parent().find(".elgg-menu-hover.elgg-ajax-loader");
+
+		var $icon = $(this);
+
+		var $placeholder = $icon.parent().find(".elgg-menu-hover.elgg-ajax-loader");
 
 		if ($placeholder.length) {
 			loadMenu($placeholder.attr("rel"));
 		}
 
 		// check if we've attached the menu to this element already
-		var $hovermenu = $(this).data('hovermenu') || null;
+		var $hovermenu = $icon.data('hovermenu') || null;
 
 		if (!$hovermenu) {
-			$hovermenu = $(this).parent().find(".elgg-menu-hover");
-			$(this).data('hovermenu', $hovermenu);
+			$hovermenu = $icon.parent().find(".elgg-menu-hover");
+			$icon.data('hovermenu', $hovermenu);
 		}
 
-		// close hovermenu if arrow is clicked & menu already open
-		if ($hovermenu.css('display') == "block") {
-			$hovermenu.fadeOut();
-		} else {
-			$avatar = $(this).closest(".elgg-avatar");
-
-			// @todo Use jQuery-ui position library instead -- much simpler
-			var offset = $avatar.offset();
-			var top = $avatar.height() + offset.top + 'px';
-			var left = $avatar.width() - 15 + offset.left + 'px';
-
-			$hovermenu.appendTo('body')
-					.css('position', 'absolute')
-					.css("top", top)
-					.css("left", left)
-					.fadeIn('normal');
-		}
-
-		// hide any other open hover menus
-		$(".elgg-menu-hover:visible").not($hovermenu).fadeOut();
+		require(['elgg/popup'], function(popup) {
+			if ($hovermenu.is(':visible')) {
+				// close hovermenu if arrow is clicked & menu already open
+				popup.close($hovermenu);
+			} else {
+				popup.open($icon, $hovermenu, {
+					'my': 'left top',
+					'at': 'right-15px bottom',
+					'of': $icon.closest(".elgg-avatar"),
+					'collision': 'none none'
+				});
+			}
+		});
 	});
 
-	// hide avatar menu when user clicks elsewhere
-	$(document).click(function(event) {
-		if ($(event.target).parents(".elgg-avatar").length === 0) {
-			$(".elgg-menu-hover").fadeOut();
-		}
-	});
 };
 
 /**
