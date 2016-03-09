@@ -11,15 +11,6 @@
 use Elgg\Database\QueryBuilder;
 
 /**
- * Get an Elgg query builder instance (based on Doctrine DBAL)
- *
- * @return QueryBuilder
- */
-function elgg_get_query_builder() {
-	return _elgg_services()->db->getQueryBuilder();
-}
-
-/**
  * Queue a query for running during shutdown that writes to the database
  *
  * @param string|QueryBuilder $query   The query to execute

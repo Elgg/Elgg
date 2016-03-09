@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\Database;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -21,19 +22,43 @@ use Doctrine\DBAL\Connection;
 class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder {
 
 	/**
+	 * @var Database
+	 */
+	private $db;
+
+	/**
 	 * @var string
 	 */
-	private $prefix;
+	private $append = '';
 
 	/**
 	 * Constructor
 	 *
-	 * @param Connection $connection Connection
-	 * @param string     $prefix     Table prefix
+	 * @param Connection $connection Active connection
+	 * @param Database   $db         Database
 	 */
-	public function __construct(Connection $connection, $prefix) {
-		$this->prefix = $prefix;
+	public function __construct(Connection $connection, Database $db) {
+		$this->db = $db;
 		parent::__construct($connection);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getSQL() {
+		return parent::getSQL() . $this->append;
+	}
+
+	/**
+	 * Append raw SQL to the output query
+	 *
+	 * @param string $sql SQL to append. E.g. "ON DUPLICATE ..."
+	 *
+	 * @return self
+	 */
+	public function appendSql($sql) {
+		$this->append = $sql;
+		return $this;
 	}
 
 	/**
@@ -45,7 +70,7 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder {
 	private function prefixTable($table) {
 		// note we pass through empty values because some methods pass null through this
 		if ($table && $table[0] === '{') {
-			return $this->prefix . trim($table, '{}');
+			return $this->db->getTablePrefix() . trim($table, '{}');
 		}
 		return $table;
 	}
@@ -71,15 +96,32 @@ class QueryBuilder extends \Doctrine\DBAL\Query\QueryBuilder {
 	}
 
 	/**
-	 * Not implemented.
+	 * Execute the query. This is a shortcut for the get_data(), get_data_row(), insert_data(),
+	 * update_data(), and delete_data() functions.
 	 *
-	 * @throws \BadMethodCallException
-	 * @return void
-	 * @internal
+	 * @param callable $callback   If a SELECT query, the function applied to each row
+	 * @param bool     $single_row If a SELECT query, return only the first row?
+	 *
+	 * @return array|int|\stdClass
 	 */
-	public function execute() {
-		throw new \BadMethodCallException(__METHOD__ . ' is not implemented. Pass this object to one of '
-			. 'Elgg\'s functions that accepts queries, like get_data(), insert_data(), etc.');
+	public function execute($callback = null, $single_row = false) {
+		switch ($this->getType()) {
+			case self::SELECT:
+				if ($single_row) {
+					return $this->db->getDataRow($this, $callback);
+				} else {
+					return $this->db->getData($this, $callback);
+				}
+
+			case self::UPDATE:
+				return $this->db->updateData($this, true);
+
+			case self::INSERT:
+				return $this->db->insertData($this);
+
+			case self::DELETE:
+				return $this->db->deleteData($this);
+		}
 	}
 
 	/**

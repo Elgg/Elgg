@@ -131,12 +131,16 @@ class Database {
 	 *
 	 * This can be passed to most of the public methods that perform queries.
 	 *
+	 * @param string $connection_type "readwrite", "write", or "read"
+	 *
 	 * @return QueryBuilder
+	 * @internal
+	 * @access private
 	 */
-	public function getQueryBuilder() {
+	public function getQueryBuilder($connection_type) {
 		// note we supply the readwrite connection, but when we execute in executeQueryBuilder()
 		// we will use the actual connection needed.
-		return new QueryBuilder($this->getConnection('readwrite'), $this->tablePrefix);
+		return new QueryBuilder($this->getConnection($connection_type), $this);
 	}
 
 	/**
@@ -252,6 +256,10 @@ class Database {
 		$this->invalidateQueryCache();
 
 		if ($query instanceof QueryBuilder) {
+			if ($query->getType() !== QueryBuilder::INSERT && $this->logger) {
+				$this->logger->warn("Non-insert query passed to insert_data()");
+			}
+
 			$this->executeQueryBuilder($query);
 			return $query->getConnection()->lastInsertId();
 		}
@@ -281,6 +289,10 @@ class Database {
 		$this->invalidateQueryCache();
 
 		if ($query instanceof QueryBuilder) {
+			if ($query->getType() !== QueryBuilder::UPDATE && $this->logger) {
+				$this->logger->warn("Non-update query passed to update_data()");
+			}
+
 			$stmt = $this->executeQueryBuilder($query);
 		} else {
 			$stmt = $this->executeQuery($query, $this->getConnection('write'));
@@ -312,6 +324,10 @@ class Database {
 		$this->invalidateQueryCache();
 
 		if ($query instanceof QueryBuilder) {
+			if ($query->getType() !== QueryBuilder::DELETE && $this->logger) {
+				$this->logger->warn("Non-delete query passed to delete_data()");
+			}
+
 			$stmt = $this->executeQueryBuilder($query);
 		} else {
 			$stmt = $this->executeQuery("$query", $this->getConnection('write'));
@@ -376,6 +392,12 @@ class Database {
 	 * @throws \DatabaseException
 	 */
 	protected function getResults($query, $callback = null, $single = false) {
+
+		if ($query instanceof QueryBuilder
+				&& $query->getType() !== QueryBuilder::SELECT
+				&& $this->logger) {
+			$this->logger->warn("Non-select query passed to get_data() or get_data_row()");
+		}
 
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
@@ -452,22 +474,22 @@ class Database {
 
 		$this->queryCount++;
 
+		if ($this->timer) {
+			$timer_key = preg_replace('~\\s+~', ' ', trim($query));
+			$this->timer->begin(['SQL', $timer_key]);
+		}
+
 		try {
-			if ($this->timer) {
-				$timer_key = preg_replace('~\\s+~', ' ', trim($query));
-				$this->timer->begin(['SQL', $timer_key]);
-			}
-
 			$value = $connection->query($query);
-
-			if ($this->timer) {
-				$this->timer->end(['SQL', $timer_key]);
-			}
-
-			return $value;
 		} catch (\Exception $e) {
 			throw new \DatabaseException($e->getMessage() . "\n\n QUERY: $query");
 		}
+
+		if ($this->timer) {
+			$this->timer->end(['SQL', $timer_key]);
+		}
+
+		return $value;
 	}
 
 	/**
@@ -481,31 +503,27 @@ class Database {
 	protected function executeQueryBuilder(QueryBuilder $qb) {
 		$this->queryCount++;
 
+		if ($this->timer) {
+			$timer_key = preg_replace('~\\s+~', ' ', $this->fingerprintQuery($qb));
+			$this->timer->begin(['SQL', $timer_key]);
+		}
+
+		$conn = $qb->getConnection();
+		$sql = $qb->getSQL();
+		$params = $qb->getParameters();
+		$types = $qb->getParameterTypes();
+
 		try {
-			if ($this->timer) {
-				$timer_key = preg_replace('~\\s+~', ' ', $this->fingerprintQuery($qb));
-				$this->timer->begin(['SQL', $timer_key]);
-			}
-
-			$sql = $qb->getSQL();
-			$params = $qb->getParameters();
-			$types = $qb->getParameterTypes();
-
-			// switch connection here, now that we know the type
-			if ($qb->getType() == QueryBuilder::SELECT) {
-				$value = $this->getConnection('read')->executeQuery($sql, $params, $types);
-			} else {
-				$value = $this->getConnection('write')->executeUpdate($sql, $params, $types);
-			}
-
-			if ($this->timer) {
-				$this->timer->end(['SQL', $timer_key]);
-			}
-
-			return $value;
+			$value = $conn->executeQuery($sql, $params, $types);
 		} catch (\Exception $e) {
 			throw new \DatabaseException($e->getMessage() . "\n\n QUERY: " . $this->fingerprintQuery($qb));
 		}
+
+		if ($this->timer) {
+			$this->timer->end(['SQL', $timer_key]);
+		}
+
+		return $value;
 	}
 
 	/**
