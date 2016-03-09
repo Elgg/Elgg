@@ -22,6 +22,7 @@ class Database {
 	const DELAYED_QUERY = 'q';
 	const DELAYED_TYPE = 't';
 	const DELAYED_HANDLER = 'h';
+	const DELAYED_PARAMS = 'p';
 
 	/**
 	 * @var string $tablePrefix Prefix for database tables
@@ -193,15 +194,16 @@ class Database {
 	 * argument to $callback.  If no callback function is defined, the
 	 * entire result set is returned as an array.
 	 *
-	 * @param mixed  $query    The query being passed.
-	 * @param string $callback Optionally, the name of a function to call back to on each row
+	 * @param string   $query    The query being passed.
+	 * @param callable $callback Optionally, the name of a function to call back to on each row
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
 	 * @throws \DatabaseException
 	 */
-	public function getData($query, $callback = '') {
-		return $this->getResults($query, $callback, false);
+	public function getData($query, $callback = null, array $params = []) {
+		return $this->getResults($query, $callback, false, $params);
 	}
 
 	/**
@@ -211,14 +213,15 @@ class Database {
 	 * matched.  If a callback function $callback is specified, the row will be passed
 	 * as the only argument to $callback.
 	 *
-	 * @param mixed  $query    The query to execute.
-	 * @param string $callback A callback function
+	 * @param string   $query    The query to execute.
+	 * @param callable $callback A callback function to apply to the row
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
 	 * @throws \DatabaseException
 	 */
-	public function getDataRow($query, $callback = '') {
-		return $this->getResults($query, $callback, true);
+	public function getDataRow($query, $callback = null, array $params = []) {
+		return $this->getResults($query, $callback, true, $params);
 	}
 
 	/**
@@ -226,13 +229,14 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @param mixed $query The query to execute.
+	 * @param string $query  The query to execute.
+	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
 	 * @throws \DatabaseException
 	 */
-	public function insertData($query) {
+	public function insertData($query, array $params = []) {
 
 		if ($this->logger) {
 			$this->logger->info("DB query $query");
@@ -242,7 +246,7 @@ class Database {
 
 		$this->invalidateQueryCache();
 
-		$this->executeQuery($query, $connection);
+		$this->executeQuery($query, $connection, $params);
 		return (int)$connection->lastInsertId();
 	}
 
@@ -251,13 +255,16 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @param string $query      The query to run.
-	 * @param bool   $getNumRows Return the number of rows affected (default: false)
+	 * @note WARNING! update_data() has the 2nd and 3rd arguments reversed.
+	 *
+	 * @param string $query        The query to run.
+	 * @param bool   $get_num_rows Return the number of rows affected (default: false).
+	 * @param array  $params       Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return bool|int
 	 * @throws \DatabaseException
 	 */
-	public function updateData($query, $getNumRows = false) {
+	public function updateData($query, $get_num_rows = false, array $params = []) {
 
 		if ($this->logger) {
 			$this->logger->info("DB query $query");
@@ -265,8 +272,8 @@ class Database {
 
 		$this->invalidateQueryCache();
 
-		$stmt = $this->executeQuery($query, $this->getConnection('write'));
-		if ($getNumRows) {
+		$stmt = $this->executeQuery($query, $this->getConnection('write'), $params);
+		if ($get_num_rows) {
 			return $stmt->rowCount();
 		} else {
 			return true;
@@ -278,12 +285,13 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in query cache.
 	 *
-	 * @param string $query The SQL query to run
+	 * @param string $query  The SQL query to run
+	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return int The number of affected rows
 	 * @throws \DatabaseException
 	 */
-	public function deleteData($query) {
+	public function deleteData($query, array $params = []) {
 
 		if ($this->logger) {
 			$this->logger->info("DB query $query");
@@ -293,7 +301,7 @@ class Database {
 
 		$this->invalidateQueryCache();
 
-		$stmt = $this->executeQuery("$query", $connection);
+		$stmt = $this->executeQuery("$query", $connection, $params);
 		return (int)$stmt->rowCount();
 	}
 
@@ -334,17 +342,22 @@ class Database {
 	 * @param string $query    The select query to execute
 	 * @param string $callback An optional callback function to run on each row
 	 * @param bool   $single   Return only a single result?
+	 * @param array  $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
 	 * @throws \DatabaseException
 	 */
-	protected function getResults($query, $callback = null, $single = false) {
+	protected function getResults($query, $callback = null, $single = false, array $params = []) {
 
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
 		$query_id = (int)$single . $query . '|';
+		if ($params) {
+			$query_id .= serialize($params) . '|';
+		}
+
 		if ($callback) {
 			if (!is_callable($callback)) {
 				$inspector = new \Elgg\Debug\Inspector();
@@ -359,6 +372,7 @@ class Database {
 		if ($this->queryCache) {
 			if (isset($this->queryCache[$hash])) {
 				if ($this->logger) {
+					// TODO add params in $query here
 					$this->logger->info("DB query $query results returned from cache (hash: $hash)");
 				}
 				return $this->queryCache[$hash];
@@ -367,7 +381,7 @@ class Database {
 
 		$return = array();
 
-		$stmt = $this->executeQuery($query, $this->getConnection('read'));
+		$stmt = $this->executeQuery($query, $this->getConnection('read'), $params);
 		while ($row = $stmt->fetch()) {
 			if ($callback) {
 				$row = call_user_func($callback, $row);
@@ -385,6 +399,7 @@ class Database {
 		if ($this->queryCache) {
 			$this->queryCache[$hash] = $return;
 			if ($this->logger) {
+				// TODO add params in $query here
 				$this->logger->info("DB query $query results cached (hash: $hash)");
 			}
 		}
@@ -400,32 +415,39 @@ class Database {
 	 *
 	 * @param string     $query      The query
 	 * @param Connection $connection The DB connection
+	 * @param array      $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return Statement The result of the query
 	 * @throws \DatabaseException
 	 */
-	protected function executeQuery($query, Connection $connection) {
+	protected function executeQuery($query, Connection $connection, array $params = []) {
 		if ($query == null) {
 			throw new \DatabaseException("Query cannot be null");
 		}
 
 		$this->queryCount++;
 
-		try {
-			if (!$this->timer) {
-				return $connection->query($query);
-			}
-
-			$timer_key = preg_replace('~\\s+~', ' ', trim($query));
-
+		if ($this->timer) {
+			$timer_key = preg_replace('~\\s+~', ' ', trim($query . '|' . serialize($params)));
 			$this->timer->begin(['SQL', $timer_key]);
-			$value = $connection->query($query);
-			$this->timer->end(['SQL', $timer_key]);
+		}
 
-			return $value;
+		try {
+			if ($params) {
+				$value = $connection->executeQuery($query, $params);
+			} else {
+				// faster
+				$value = $connection->query($query);
+			}
 		} catch (\Exception $e) {
 			throw new \DatabaseException($e->getMessage() . "\n\n QUERY: $query");
 		}
+
+		if ($this->timer) {
+			$this->timer->end(['SQL', $timer_key]);
+		}
+
+		return $value;
 	}
 
 	/**
@@ -494,17 +516,18 @@ class Database {
 	/**
 	 * Queue a query for execution upon shutdown.
 	 *
-	 * You can specify a handler function if you care about the result. This function will always
+	 * You can specify a callback if you care about the result. This function will always
 	 * be passed a \Doctrine\DBAL\Driver\Statement.
 	 *
-	 * @param string $query   The query to execute
-	 * @param string $type    The query type ('read' or 'write')
-	 * @param string $handler A callback function to pass the results array to
+	 * @param string   $query    The query to execute
+	 * @param string   $type     The query type ('read' or 'write')
+	 * @param callable $callback A callback function to pass the results array to
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return boolean Whether registering was successful.
 	 * @access private
 	 */
-	public function registerDelayedQuery($query, $type, $handler = "") {
+	public function registerDelayedQuery($query, $type, $callback = null, array $params = []) {
 		if ($type != 'read' && $type != 'write') {
 			return false;
 		}
@@ -512,7 +535,8 @@ class Database {
 		$this->delayedQueries[] = [
 			self::DELAYED_QUERY => $query,
 			self::DELAYED_TYPE => $type,
-			self::DELAYED_HANDLER => $handler,
+			self::DELAYED_HANDLER => $callback,
+			self::DELAYED_PARAMS => $params,
 		];
 
 		return true;
@@ -532,9 +556,11 @@ class Database {
 			$query = $set[self::DELAYED_QUERY];
 			$type = $set[self::DELAYED_TYPE];
 			$handler = $set[self::DELAYED_HANDLER];
+			$params = $set[self::DELAYED_PARAMS];
 
 			try {
-				$stmt = $this->executeQuery($query, $this->getConnection($type));
+
+				$stmt = $this->executeQuery($query, $this->getConnection($type), $params);
 
 				if (is_callable($handler)) {
 					call_user_func($handler, $stmt);
@@ -638,6 +664,7 @@ class Database {
 	 * @param int  $value  Value to sanitize
 	 * @param bool $signed Whether negative values are allowed (default: true)
 	 * @return int
+	 * @deprecated Use query parameters where possible
 	 */
 	public function sanitizeInt($value, $signed = true) {
 		$value = (int) $value;
@@ -657,6 +684,7 @@ class Database {
 	 * @param string $value Value to escape
 	 * @return string
 	 * @throws \DatabaseException
+	 * @deprecated Use query parameters where possible
 	 */
 	public function sanitizeString($value) {
 		$quoted = $this->getConnection('read')->quote($value);

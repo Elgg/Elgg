@@ -234,15 +234,17 @@ class SubtypeTable {
 				'class' => $class,
 			);
 	
-			$type = $this->db->sanitizeString($type);
-			$subtype = $this->db->sanitizeString($subtype);
-			$class = $this->db->sanitizeString($class);
-	
-			$id = $this->db->insertData("
+			$sql = "
 				INSERT INTO {$this->db->getTablePrefix()}entity_subtypes
-					(type, subtype, class) VALUES
-					('$type', '$subtype', '$class')
-			");
+					(type,  subtype,  class) VALUES
+					(:type, :subtype, :class)
+			";
+			$params = [
+				':type' => $type,
+				':subtype' => $subtype,
+				':class' => $class,
+			];
+			$id = $this->db->insertData($sql, $params);
 			
 			// add entry to cache
 			$cache_obj->id = $id;
@@ -267,13 +269,15 @@ class SubtypeTable {
 	 * @see update_subtype()
 	 */
 	function remove($type, $subtype) {
-		$type = $this->db->sanitizeString($type);
-		$subtype = $this->db->sanitizeString($subtype);
-	
-		$success = $this->db->deleteData("
+		$sql = "
 			DELETE FROM {$this->db->getTablePrefix()}entity_subtypes
-			WHERE type = '$type' AND subtype = '$subtype'
-		");
+			WHERE type = :type AND subtype = :subtype
+		";
+		$params = [
+			':type' => $type,
+			':subtype' => $subtype,
+		];
+		$success = $this->db->deleteData($sql, $params);
 		
 		if ($success) {
 			// invalidate the cache
@@ -302,20 +306,21 @@ class SubtypeTable {
 			$this->populateCache();
 		}
 	
-		$unescaped_class = $class;
-	
-		$type = $this->db->sanitizeString($type);
-		$subtype = $this->db->sanitizeString($subtype);
-		$class = $this->db->sanitizeString($class);
-		
-		$success = $this->db->updateData("
+		$sql = "
 			UPDATE {$this->db->getTablePrefix()}entity_subtypes
-			SET type = '$type', subtype = '$subtype', class = '$class'
-			WHERE id = $id
-		");
+			SET type = :type, subtype = :subtype, class = :class
+			WHERE id = :id
+		";
+		$params = [
+			':type' => $type,
+			':subtype' => $subtype,
+			':class' => $class,
+			':id' => $id,
+		];
+		$success = $this->db->updateData($sql, false, $params);
 	
 		if ($success && isset($this->cache[$id])) {
-			$this->cache[$id]->class = $unescaped_class;
+			$this->cache[$id]->class = $class;
 		}
 	
 		return $success;
