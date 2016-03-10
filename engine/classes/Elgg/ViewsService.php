@@ -166,8 +166,10 @@ class ViewsService {
 	 * @param string $viewtype Viewtype
 	 *
 	 * @return string Empty string if not found
+	 * @access private
+	 * @internal Plugins should not use this.
 	 */
-	private function findViewFile($view, $viewtype) {
+	public function findViewFile($view, $viewtype) {
 		if (!isset($this->locations[$viewtype][$view])) {
 			return "";
 		}
@@ -241,6 +243,24 @@ class ViewsService {
 	}
 
 	/**
+	 * Get the views, including extensions, used to render this view
+	 *
+	 * Keys returned are view priorities.
+	 *
+	 * @param string $view View name
+	 * @return string[]
+	 * @access private
+	 * @internal Plugins should not use this
+	 */
+	public function getViewList($view) {
+		if (isset($this->views->extensions[$view])) {
+			return $this->views->extensions[$view];
+		} else {
+			return [500 => $view];
+		}
+	}
+
+	/**
 	 * @access private
 	 */
 	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {
@@ -281,12 +301,7 @@ class ViewsService {
 			_elgg_services()->events->trigger('pagesetup', 'system');
 		}
 
-		// Set up any extensions to the requested view
-		if (isset($this->views->extensions[$view])) {
-			$viewlist = $this->views->extensions[$view];
-		} else {
-			$viewlist = array(500 => $view);
-		}
+		$viewlist = $this->getViewList($view);
 
 		$content = '';
 		foreach ($viewlist as $view) {
