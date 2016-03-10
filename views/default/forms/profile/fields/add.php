@@ -6,8 +6,8 @@
 $label_text = elgg_echo('profile:label');
 $type_text = elgg_echo('profile:type');
 
-$label_control = elgg_view('input/text', array('name' => 'label'));
-$type_control = elgg_view('input/select', array('name' => 'type', 'options_values' => array(
+// Default set of option_values for the type dropdown
+$option_values = array(
 	'text' => elgg_echo('profile:field:text'),
 	'longtext' => elgg_echo('profile:field:longtext'),
 	'tags' => elgg_echo('profile:field:tags'),
@@ -15,7 +15,13 @@ $type_control = elgg_view('input/select', array('name' => 'type', 'options_value
 	'email' => elgg_echo('profile:field:email'),
 	'location' => elgg_echo('profile:field:location'),
 	'date' => elgg_echo('profile:field:date'),
-)));
+);
+
+// Trigger plugin hook, so plugins are able to add custom fields
+$option_values = elgg_trigger_plugin_hook('profile:custom_fields', 'list', null, $option_values);
+
+$label_control = elgg_view('input/text', array('name' => 'label'));
+$type_control = elgg_view('input/select', array('name' => 'type', 'options_values' => $option_values));
 
 $submit_control = elgg_view('input/submit', array('name' => elgg_echo('add'), 'value' => elgg_echo('add')));
 

@@ -71,6 +71,8 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		)));
 		forward(REFERER);
 	}
+
+	$value = elgg_trigger_plugin_hook('profile:custom_fields:edit', $valuetype, null, $value);
 	
 	$input[$shortname] = $value;
 }
