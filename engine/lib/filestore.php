@@ -503,31 +503,9 @@ function _elgg_filestore_init() {
 function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
 
 	$original_filename = elgg_extract('original_filename', $params);
+	$ext = pathinfo($original_filename, PATHINFO_EXTENSION);
 
-	$info = pathinfo($original_filename);
-
-	// hack for Microsoft zipped formats
-	$office_formats = array('docx', 'xlsx', 'pptx');
-	if ($mime_type == "application/zip" && in_array($info['extension'], $office_formats)) {
-		switch ($info['extension']) {
-			case 'docx':
-				$mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-				break;
-			case 'xlsx':
-				$mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-				break;
-			case 'pptx':
-				$mime_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
-				break;
-		}
-	}
-
-	// check for bad ppt detection
-	if ($mime_type == "application/vnd.ms-office" && $info['extension'] == "ppt") {
-		$mime_type = "application/vnd.ms-powerpoint";
-	}
-
-	return $mime_type;
+	return (new \Elgg\Filesystem\MimeTypeDetector())->fixDetectionErrors($mime_type, $ext);
 }
 
 /**
