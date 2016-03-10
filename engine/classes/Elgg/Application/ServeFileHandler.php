@@ -5,6 +5,7 @@ namespace Elgg\Application;
 use DateTime;
 use Elgg\Application;
 use Elgg\Config;
+use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,7 +100,10 @@ class ServeFileHandler {
 		$public = $use_cookie ? false : true;
 		$content_disposition = $disposition == 'i' ? 'inline' : 'attachment';
 
-		$response = new BinaryFileResponse($filenameonfilestore, 200, array(), $public, $content_disposition);
+		$headers = [
+			'Content-Type' => (new MimeTypeDetector())->getType($filenameonfilestore),
+		];
+		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
 		$response->prepare($request);
 
 		if (empty($expires)) {
