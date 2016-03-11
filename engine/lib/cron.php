@@ -53,10 +53,7 @@ function _elgg_cron_run() {
 	$params = array();
 	$params['time'] = $now;
 
-	// Data to return to
-	$old_stdout = "";
-	$std_out = "";
-	ob_start();
+	$all_std_out = "";
 
 	$periods = array(
 		'minute' => 60,
@@ -75,15 +72,25 @@ function _elgg_cron_run() {
 		$key = "cron_latest:$period:ts";
 		$ts = elgg_get_site_entity()->getPrivateSetting($key);
 		$deadline = $ts + $interval;
+
 		if ($now > $deadline) {
-			$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, $old_stdout);
-			$std_out .= ob_clean();
-			$std_out .= $old_stdout;
+			$msg_key = "cron_latest:$period:msg";
+			$msg = elgg_echo('admin:cron:started', [$period, date('r', time())]);
+			elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
+
+			ob_start();
+			
+			$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, '');
+			$std_out = ob_get_clean();
+
+			$period_std_out = $std_out .  $old_stdout;
+			$all_std_out .= $period_std_out;
+
+			elgg_get_site_entity()->setPrivateSetting($msg_key, $period_std_out);
 		}
 	}
 
-	$std_out .= ob_get_clean();
-	echo $std_out;
+	echo $all_std_out;
 }
 
 /**
@@ -119,10 +126,17 @@ function _elgg_cron_page_handler($page) {
 		$old_stdout = "";
 		ob_start();
 
+		$msg_key = "cron_latest:$period:msg";
+		$msg = elgg_echo('admin:cron:started', [$period, date('r', time())]);
+		elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
+		
 		$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, $old_stdout);
 		$std_out = ob_get_clean();
 
-		echo $std_out . $old_stdout;
+		$msg = $std_out . $old_stdout;
+		echo $msg;
+
+		elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
 	}
 	return true;
 }
@@ -144,6 +158,7 @@ function _elgg_cron_monitor($hook, $period, $output, $params) {
 	if (in_array($period, $periods)) {
 		$key = "cron_latest:$period:ts";
 		elgg_get_site_entity()->setPrivateSetting($key, $time);
+		echo elgg_echo('admin:cron:complete', [$period, date('r', $time)]);
 	}
 }
 
