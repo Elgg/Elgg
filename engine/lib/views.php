@@ -1599,6 +1599,53 @@ function _elgg_views_send_header_x_frame_options() {
 	header('X-Frame-Options: SAMEORIGIN');
 }
 
+/**
+ * Is there a chance a plugin is altering this view?
+ *
+ * @note Must be called after the [init, system] event, ideally as late as possible.
+ *
+ * @note Always returns true if the view's location is set in /engine/views.php. Elgg does not keep
+ *       track of the defaults for those locations.
+ *
+ * @param string $view               View name. E.g. "elgg/init.js"
+ * @param string $path_from_viewtype File path relative to the viewtype directory. E.g. "elgg/init.js.php"
+ * @param string $viewtype           View type
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_view_may_be_altered($view, $path_from_viewtype, $viewtype = '') {
+	if (!$viewtype) {
+		$viewtype = elgg_get_viewtype();
+	}
+
+	$views = _elgg_services()->views;
+
+	if (count($views->getViewList($view)) > 1) {
+		// view was extended
+		return true;
+	}
+
+	$hooks = _elgg_services()->hooks;
+
+	if ($hooks->hasHandler('view', $view) || $hooks->hasHandler('view_vars', $view)) {
+		// altered via hook
+		return true;
+	}
+
+	// check location
+	$root = dirname(dirname(__DIR__));
+	$expected_path = "$root/views/$viewtype/" . ltrim($path_from_viewtype, '/\\');
+
+	$view_path = $views->findViewFile($view, $viewtype);
+
+	if (DIRECTORY_SEPARATOR === '\\') {
+		$expected_path = strtr($expected_path, "/", "\\");
+		$view_path = strtr($view_path, "/", "\\");
+	}
+
+	return ($expected_path !== $view_path);
+}
 
 /**
  * Initialize viewtypes on system boot event
