@@ -244,17 +244,29 @@ function elgg_front_page_handler() {
  * @return void
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
-	static $once = 0;
-	$once++;
-	if ($once === 2) {
-		echo "Infinite loop attempting to show error page.";
+	// This draws an error page, and sometimes there's another 40* forward() call made during that
+	// process (usually due to the pagesetup event). We want to allow the 2nd call to pass through,
+	// but draw the appropriate page for the first call.
+
+	static $vars;
+	if ($vars === null) {
+		// keep first vars for error page
+		$vars = [
+			'type' => $type,
+			'params' => $params,
+		];
+	}
+
+	static $calls = 0;
+	$calls++;
+	if ($calls < 3) {
+		echo elgg_view_resource('error', $vars);
 		exit;
 	}
 
-	echo elgg_view_resource('error', [
-		'type' => $type,
-		'params' => $params,
-	]);
+	// uh oh, may be infinite loop
+	register_error(elgg_echo('error:404:content'));
+	header('Location: ' . elgg_get_site_url());
 	exit;
 }
 
