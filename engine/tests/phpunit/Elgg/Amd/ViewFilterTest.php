@@ -4,6 +4,14 @@ namespace Elgg\Amd;
 
 class ViewFilterTest extends \PHPUnit_Framework_TestCase {
 
+	public function testHandlesShortViewNames() {
+		$viewFilter = new \Elgg\Amd\ViewFilter();
+
+		$originalContent = "define({})";
+
+		$this->assertEquals('define("foo", {})', $viewFilter->filter('foo.js', $originalContent));
+	}
+
 	public function testInsertsNamesForAnonymousModules() {
 		$viewFilter = new \Elgg\Amd\ViewFilter();
 
@@ -30,11 +38,11 @@ class ViewFilterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($originalContent, $filteredContent);
 	}
 
-	public function testIgnoresNonJsViews() {
+	public function testExtensionlessViewsMustBeInJs() {
 		$viewFilter = new \Elgg\Amd\ViewFilter();
 
-		$originalContent = "// Comment\ndefine('any/mod', {})";
-		$filteredContent = $viewFilter->filter('nonjs/foobar/my/mod.js', $originalContent);
+		$originalContent = "// Comment\ndefine({})";
+		$filteredContent = $viewFilter->filter('nonjs/foobar/my/mod', $originalContent);
 		$this->assertEquals($originalContent, $filteredContent);
 	}
 

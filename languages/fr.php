@@ -99,7 +99,7 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Echec vérification mot de passe courant.',
 	'LoginException:Unknown' => 'Nous ne pouvons pas vous connecter à cause d\'une erreur inconnue.',
 
-	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
+	'UserFetchFailureException' => 'Impossible de vérifier les permissions pour l\'utilisateur user_guid [%s] car l\'utilisateur n\'existe pas.',
 
 	'deprecatedfunction' => 'Attention : Ce code source utilise une fonction périmée \'%s\'. Il n\'est pas compatible avec cette version de Elgg.',
 
@@ -635,8 +635,8 @@ return array(
 	'admin:plugins:warning:invalid' => '%s n\'est pas un plugin valide d\'Elgg. Vérifiez <a href="http://docs.elgg.org/Invalid_Plugin">la documentation d\'Elgg</a> les conseils de dépannage.',
 	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/fr/stable/appendix/faqs.html">la documentation d\'Elgg</a> - ou la version <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">anglophone</a>, souvent plus complète - pour des astuces de débogage.',
 	'admin:plugins:cannot_activate' => 'Activation impossible',
-	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
-	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
+	'admin:plugins:already:active' => 'Plugin(s) déjà activé(s).',
+	'admin:plugins:already:inactive' => 'Plugin(s) déjà désactivé(s).',
 
 	'admin:plugins:set_priority:yes' => "%s réordonné",
 	'admin:plugins:set_priority:no' => "Impossible de réordonner %s.",
@@ -1280,13 +1280,13 @@ Ne répondez pas à cet e-mail.",
 	'entity:default:strapline' => 'Créé le %s par %s',
 	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. C\'est peut-être dû à un plugin qui a été supprimé.',
 
-	'entity:delete:item' => 'Item',
-	'entity:delete:item_not_found' => 'Item not found.',
-	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
-	'entity:delete:success' => '%s has been deleted.',
-	'entity:delete:fail' => '%s could not be deleted.',
+	'entity:delete:item' => 'Objet',
+	'entity:delete:item_not_found' => 'Objet non trouvé.',
+	'entity:delete:permission_denied' => 'Vous n\'avez pas les permissions nécessaires pour supprimer cet objet.',
+	'entity:delete:success' => '%s a été effacé.',
+	'entity:delete:fail' => '%s ne peut pas être effacé.',
 
-	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
+	'entity:can_delete:invaliduser' => 'Impossible de vérifier canDelete() pour l\'utilisateur user_guid [%s] car l\'utilisateur n\'existe pas.',
 
 /**
  * Action gatekeeper
@@ -1474,6 +1474,6 @@ Ne répondez pas à cet e-mail.",
 	"zh" => "Chinois",
 	"zu" => "Zoulou",
 
-	"field:required" => 'Required',
+	"field:required" => 'Requis.',
 
 );
