@@ -8,5 +8,5 @@ return array(
 	'members:title:popular' => 'Membres les plus populaires',
 	'members:title:online' => 'Membres en ligne',
 	'members:title:alpha' => 'Tous les membres',
-	'members:list:popular:none' => 'Aucun membre n\'a d\'amis.',
+	'members:list:popular:none' => 'Aucun membre n\'a de contact.',
 );

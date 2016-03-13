@@ -41,7 +41,7 @@ return array(
 	'actionunauthorized' => 'あなたの権限では、このアクションを実行することはできません。',
 
 	'ajax:error' => 'AJAXコールを実行中に予期せぬエラーが起こりました。おそらく、サーバへの接続が切断されたからかもしれません。',
-	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
+	'ajax:not_is_xhr' => 'AJAX views には直接アクセスはできません',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) は、設定に間違いのあるプラグインですので、起動不可となっています。 原因に当たっては、Elgg wiki (http://learn.elgg.org/) を参考にしてください。 ",
 	'PluginException:CannotStart' => '%s (guid: %s) は起動できず停止状態のままです。理由: %s',
@@ -99,7 +99,7 @@ return array(
 	'LoginException:ChangePasswordFailure' => '現在ご使用になられているパスワードのチェックに失敗しました。',
 	'LoginException:Unknown' => '不明なエラーがおこりましたので、ログインできませんでした。',
 
-	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
+	'UserFetchFailureException' => 'user_guid[%s] のユーザが存在しないため、パーミッションのチェックができません。',
 
 	'deprecatedfunction' => '警告: このコードは廃止された時代遅れの関数「 %s 」を使用しており、このバージョンのElggとは互換性がありません。',
 
@@ -114,12 +114,12 @@ return array(
 
 	'error:default:title' => 'アレッ？',
 	'error:default:content' => 'アレッ？何かがおかしいです。',
-	'error:400:title' => 'Bad request',
-	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
-	'error:403:title' => 'Forbidden',
-	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
+	'error:400:title' => 'リクエストが変です',
+	'error:400:content' => '申し訳ありません。そのリクエストは正しくないか不完全です。',
+	'error:403:title' => '禁止',
+	'error:403:content' => '申し訳ありません。要求されたページへのアクセスが許可されていません。',
 	'error:404:title' => 'ページが見つかりませんでした',
-	'error:404:content' => '申し訳あrません。ご要望のページを見つけることができませんでした',
+	'error:404:content' => '申し訳ありません。ご要望のページを見つけることができませんでした',
 
 	'upload:error:ini_size' => 'アップロードしようとされているファイルは、サイズが大きすぎるようです。',
 	'upload:error:form_size' => 'アップロードしようとされているファイルは、サイズが大きすぎるようです。',
@@ -605,16 +605,16 @@ return array(
 	'admin:plugins:opt:linktext' => "ツールの設定...",
 	'admin:plugins:opt:description' => "インストールされたツールを構築するための各種設定をします",
 	'admin:plugins:label:id' => "ID",
-	'admin:plugins:label:name' => "Name",
+	'admin:plugins:label:name' => "名前",
 	'admin:plugins:label:author' => "開発者",
 	'admin:plugins:label:copyright' => "コピーライト",
 	'admin:plugins:label:categories' => 'カテゴリ',
 	'admin:plugins:label:licence' => "ライセンス",
 	'admin:plugins:label:website' => "URL",
 	'admin:plugins:label:info' => "Info",
-	'admin:plugins:label:files' => "Files",
-	'admin:plugins:label:resources' => "Resources",
-	'admin:plugins:label:screenshots' => "Screenshots",
+	'admin:plugins:label:files' => "ファイル",
+	'admin:plugins:label:resources' => "リソース",
+	'admin:plugins:label:screenshots' => "スクリーンショット",
 	'admin:plugins:label:repository' => "Code",
 	'admin:plugins:label:bugtracker' => "問題を報告する",
 	'admin:plugins:label:donate' => "寄付する",
@@ -633,8 +633,8 @@ return array(
 	'admin:plugins:warning:invalid' => 'このプラグインは正しくありません: %s',
 	'admin:plugins:warning:invalid:check_docs' => '問題解決のヒントは、 <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> にあるかもしれません。',
 	'admin:plugins:cannot_activate' => '起動できません',
-	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
-	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
+	'admin:plugins:already:active' => '選択されたプラグインは、すでに起動しています。',
+	'admin:plugins:already:inactive' => '選択されたプラグインはすでに停止しています。',
 
 	'admin:plugins:set_priority:yes' => "%s を並べ直しました。",
 	'admin:plugins:set_priority:no' => "%s を並べ直せませんでした。",
@@ -722,7 +722,7 @@ return array(
 	'admin:robots.txt:instructions' => "このサイトの robots.txt ファイルを編集します。",
 	'admin:robots.txt:plugins' => "プラグインは編集結果を robots.txt ファイルに追加しています。",
 	'admin:robots.txt:subdir' => "Elggがサブディレクトリにインストールされているため、The robots.txt tool は機能しないでしょう。",
-	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
+	'admin:robots.txt:physical' => "robots.txt ファイルが存在しますので、 robots.txt tool は機能しないでしょう。",
 
 	'admin:maintenance_mode:default_message' => '申し訳ありません。このサイトは現在メンテナンス中で接続出来ません。',
 	'admin:maintenance_mode:instructions' => 'サイトのアップグレードやサイトに大きな変更をするときに、メンテナンス・モードをご利用ください。
@@ -1025,18 +1025,18 @@ return array(
 	'date:month:11' => '11月 %s',
 	'date:month:12' => '12月 %s',
 	
-	'date:month:short:01' => 'Jan %s',
-	'date:month:short:02' => 'Feb %s',
-	'date:month:short:03' => 'Mar %s',
-	'date:month:short:04' => 'Apr %s',
-	'date:month:short:05' => 'May %s',
-	'date:month:short:06' => 'Jun %s',
-	'date:month:short:07' => 'Jul %s',
-	'date:month:short:08' => 'Aug %s',
-	'date:month:short:09' => 'Sep %s',
-	'date:month:short:10' => 'Oct %s',
-	'date:month:short:11' => 'Nov %s',
-	'date:month:short:12' => 'Dec %s',
+	'date:month:short:01' => '1月%s日',
+	'date:month:short:02' => '2月%s日',
+	'date:month:short:03' => '3月%s日',
+	'date:month:short:04' => '4月%s日',
+	'date:month:short:05' => '5月%s日',
+	'date:month:short:06' => '6月%s日',
+	'date:month:short:07' => '7月%s日',
+	'date:month:short:08' => '8月%s日',
+	'date:month:short:09' => '9月%s日',
+	'date:month:short:10' => '10月%s日',
+	'date:month:short:11' => '11月%s日',
+	'date:month:short:12' => '12月%s日',
 
 	'date:weekday:0' => 'Sunday',
 	'date:weekday:1' => 'Monday',
@@ -1046,13 +1046,13 @@ return array(
 	'date:weekday:5' => 'Friday',
 	'date:weekday:6' => 'Saturday',
 
-	'date:weekday:short:0' => 'Sun',
-	'date:weekday:short:1' => 'Mon',
-	'date:weekday:short:2' => 'Tue',
-	'date:weekday:short:3' => 'Wed',
-	'date:weekday:short:4' => 'Thu',
-	'date:weekday:short:5' => 'Fri',
-	'date:weekday:short:6' => 'Sat',
+	'date:weekday:short:0' => '日',
+	'date:weekday:short:1' => '月',
+	'date:weekday:short:2' => '火',
+	'date:weekday:short:3' => '水',
+	'date:weekday:short:4' => '木',
+	'date:weekday:short:5' => '金',
+	'date:weekday:short:6' => '土',
 
 	'interval:minute' => '毎分',
 	'interval:fiveminute' => '5分毎',
@@ -1276,17 +1276,17 @@ return array(
  */
 
 	'byline' => 'By %s',
-	'byline:ingroup' => 'in the group %s',
+	'byline:ingroup' => '%sグループ内',
 	'entity:default:strapline' => '作成 %s by %s',
 	'entity:default:missingsupport:popup' => 'この情報を正確に表示できません。利用していたプラグインがうまく動作していないか、アンインストールされた可能性があります。',
 
-	'entity:delete:item' => 'Item',
-	'entity:delete:item_not_found' => 'Item not found.',
-	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
-	'entity:delete:success' => '%s has been deleted.',
-	'entity:delete:fail' => '%s could not be deleted.',
+	'entity:delete:item' => '項目',
+	'entity:delete:item_not_found' => '項目が見つかりませんでした。',
+	'entity:delete:permission_denied' => 'あなたには、この項目を削除する権限がありません。',
+	'entity:delete:success' => '%s は削除されました。',
+	'entity:delete:fail' => '%s は削除できませんでした。',
 
-	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
+	'entity:can_delete:invaliduser' => 'ユーザが存在しませんので、user_guid[%s] に対して canDelete() をチェックできません。 ',
 
 /**
  * Action gatekeeper
@@ -1474,6 +1474,6 @@ return array(
 	"zh" => "Chinese",
 	"zu" => "Zulu",
 
-	"field:required" => 'Required',
+	"field:required" => '必須です',
 
 );
