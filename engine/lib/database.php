@@ -8,11 +8,13 @@
  * @subpackage Database
  */
 
+use Elgg\Database\QueryBuilder;
+
 /**
  * Queue a query for running during shutdown that writes to the database
  *
- * @param string $query   The query to execute
- * @param string $handler The optional handler for processing the result
+ * @param string|QueryBuilder $query   The query to execute
+ * @param string              $handler The optional handler for processing the result
  *
  * @return boolean
  */
@@ -23,8 +25,8 @@ function execute_delayed_write_query($query, $handler = "") {
 /**
  * Queue a query for running during shutdown that reads from the database
  *
- * @param string $query   The query to execute
- * @param string $handler The optional handler for processing the result
+ * @param string|QueryBuilder $query   The query to execute
+ * @param string              $handler The optional handler for processing the result
  *
  * @return boolean
  */
@@ -41,8 +43,8 @@ function execute_delayed_read_query($query, $handler = "") {
  * argument to $callback.  If no callback function is defined, the
  * entire result set is returned as an array.
  *
- * @param mixed  $query    The query being passed.
- * @param string $callback Optionally, the name of a function to call back to on each row
+ * @param string|QueryBuilder $query    The query being passed.
+ * @param callable            $callback Optionally, the name of a function to call back to on each row
  *
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
@@ -58,8 +60,8 @@ function get_data($query, $callback = "") {
  * matched.  If a callback function $callback is specified, the row will be passed
  * as the only argument to $callback.
  *
- * @param mixed  $query    The query to execute.
- * @param string $callback A callback function
+ * @param string|QueryBuilder $query    The query to execute.
+ * @param callable            $callback A callback function
  *
  * @return mixed A single database result object or the result of the callback function.
  */
@@ -72,7 +74,7 @@ function get_data_row($query, $callback = "") {
  *
  * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
- * @param mixed $query The query to execute.
+ * @param string|QueryBuilder $query The query to execute.
  *
  * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
  *                   defined, 0 if not, and false on failure.
@@ -86,7 +88,7 @@ function insert_data($query) {
  *
  * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
- * @param string $query The query to run.
+ * @param string|QueryBuilder $query The query to run.
  *
  * @return bool
  */
@@ -99,7 +101,7 @@ function update_data($query) {
  *
  * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
- * @param string $query The SQL query to run
+ * @param string|QueryBuilder $query The SQL query to run
  *
  * @return int|false The number of affected rows or false on failure
  */
@@ -132,24 +134,26 @@ function run_sql_script($scriptlocation) {
 }
 
 /**
- * Alias of elgg()->getDb()->sanitizeString()
+ * Sanitizes a string for use in a query
  *
  * @see Elgg\Database::sanitizeString
  *
  * @param string $string The string to sanitize
  * @return string
+ * @deprecated Use elgg_get_query_builder() where possible
  */
 function sanitize_string($string) {
 	return _elgg_services()->db->sanitizeString($string);
 }
 
 /**
- * Alias of elgg()->getDb()->sanitizeString()
+ * Alias of sanitize_string
  *
  * @see Elgg\Database::sanitizeString
  *
  * @param string $string The string to sanitize
  * @return string
+ * @deprecated Use elgg_get_query_builder() where possible
  */
 function sanitise_string($string) {
 	return _elgg_services()->db->sanitizeString($string);
@@ -158,21 +162,26 @@ function sanitise_string($string) {
 /**
  * Sanitizes an integer for database use.
  *
+ * @see Elgg\Database::sanitizeInt
+ *
  * @param int  $int    Value to be sanitized
  * @param bool $signed Whether negative values should be allowed (true)
  * @return int
+ * @deprecated Use elgg_get_query_builder() where possible
  */
 function sanitize_int($int, $signed = true) {
 	return _elgg_services()->db->sanitizeInt($int, $signed);
 }
 
 /**
- * Sanitizes an integer for database use.
- * Wrapper function for alternate English spelling (@see sanitize_int)
+ * Alias of sanitize_int
+ *
+ * @see sanitize_int
  *
  * @param int  $int    Value to be sanitized
  * @param bool $signed Whether negative values should be allowed (true)
  * @return int
+ * @deprecated Use elgg_get_query_builder() where possible
  */
 function sanitise_int($int, $signed = true) {
 	return sanitize_int($int, $signed);

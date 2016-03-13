@@ -51,6 +51,18 @@ class ElggRelationshipTest extends ElggCoreUnitTest {
 		if ($this->entity3) {
 			$this->entity3->delete();
 		}
+
+		// delete left over test objects in case there was an exception. subtypes won't match due to
+		// the remove_subtype() below.
+		$test_objs = elgg_get_entities_from_relationship([
+			'type' => 'object',
+			'relationship' => 'test_relationship',
+			'limit' => false,
+		]);
+		foreach ($test_objs as $obj) {
+			$obj->delete();
+		}
+
 		remove_subtype('object', 'elgg_relationship_test');
 
 		_elgg_services()->events->restore();
@@ -77,6 +89,53 @@ class ElggRelationshipTest extends ElggCoreUnitTest {
 		$this->assertTrue(remove_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
 		
 		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+	}
+
+	public function testCanFetchRelationships() {
+		add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
+		add_entity_relationship($this->entity2->guid, 'test_relationship', $this->entity3->guid);
+
+		$rels = elgg_get_relationships([
+			'relationship' => 'test_relationship',
+		]);
+		$this->assertEqual(2, count($rels));
+		$this->assertEqual($this->entity2->guid, $rels[0]->guid_one);
+		$this->assertEqual($this->entity3->guid, $rels[0]->guid_two);
+		$this->assertEqual($this->entity1->guid, $rels[1]->guid_one);
+		$this->assertEqual($this->entity2->guid, $rels[1]->guid_two);
+
+		$rels = elgg_get_relationships([
+			'relationship' => 'test_relationship',
+			'offset' => 1,
+		]);
+		$this->assertEqual(1, count($rels));
+		$this->assertEqual($this->entity1->guid, $rels[0]->guid_one);
+		$this->assertEqual($this->entity2->guid, $rels[0]->guid_two);
+
+		$rels = elgg_get_relationships([
+			'relationship' => 'test_relationship',
+			'order_by' => 'r.id',
+			'limit' => 1,
+		]);
+		$this->assertEqual(1, count($rels));
+		$this->assertEqual($this->entity1->guid, $rels[0]->guid_one);
+		$this->assertEqual($this->entity2->guid, $rels[0]->guid_two);
+
+		$count = elgg_get_relationships([
+			'relationship' => 'test_relationship',
+			'count' => true,
+		]);
+		$this->assertSame(2, $count);
+
+		$rels = elgg_get_relationships([
+			'guid_one' => [$this->entity1->guid],
+			'callback' => '',
+		]);
+		$this->assertEqual(1, count($rels));
+		$this->assertIsA($rels[0], \stdClass::class);
+		$this->assertEqual($this->entity1->guid, $rels[0]->guid_one);
+		$this->assertEqual('test_relationship', $rels[0]->relationship);
+		$this->assertEqual($this->entity2->guid, $rels[0]->guid_two);
 	}
 	
 	public function testPreventAddRelationship() {

@@ -3,6 +3,7 @@ namespace Elgg\Database;
 
 use Elgg\Database;
 use Elgg\EventsService;
+use Elgg\OrderBy;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -39,7 +40,7 @@ class RelationshipsTable {
 	 * Constructor
 	 *
 	 * @param Database      $db       Elgg Database
-	 * @param EntityTable   $entities Entity table 
+	 * @param EntityTable   $entities Entity table
 	 * @param MetadataTable $metadata Metadata table
 	 * @param EventsService $events   Events service
 	 */
@@ -77,7 +78,10 @@ class RelationshipsTable {
 	public function getRow($id) {
 		$id = (int)$id;
 
-		return $this->db->getDataRow("SELECT * FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = $id");
+		$qb = elgg()->queries->select('*');
+		$qb->from('{entity_relationships}')
+			->where('id = ' . (int)$id);
+		return $qb->execute(null, true);
 	}
 
 	/**
@@ -97,7 +101,9 @@ class RelationshipsTable {
 			return false;
 		}
 
-		return $this->db->deleteData("DELETE FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = $id");
+		return elgg()->queries->delete('{entity_relationships}')
+			->where('id = ' . (int)$id)
+			->execute();
 	}
 
 	/**
@@ -125,17 +131,18 @@ class RelationshipsTable {
 			return false;
 		}
 
-		$guid_one = (int)$guid_one;
-		$relationship = $this->db->sanitizeString($relationship);
-		$guid_two = (int)$guid_two;
 		$time = time();
 
-		$id = $this->db->insertData("
-			INSERT INTO {$this->db->getTablePrefix()}entity_relationships
-			       (guid_one, relationship, guid_two, time_created)
-			VALUES ($guid_one, '$relationship', $guid_two, $time)
-				ON DUPLICATE KEY UPDATE time_created = $time
-		");
+		$qb = elgg()->queries->insert('{entity_relationships}');
+		$qb->values([
+			'guid_one' => (int)$guid_one,
+			'relationship' => $qb->createNamedParameter($relationship),
+			'guid_two' => (int)$guid_two,
+			'time_created' => (int)$time,
+		]);
+		$qb->appendSql('ON DUPLICATE KEY UPDATE time_created = ' . (int)$time);
+
+		$id = $qb->execute();
 		if (!$id) {
 			return false;
 		}
@@ -163,18 +170,14 @@ class RelationshipsTable {
 	 * @return \ElggRelationship|false Depending on success
 	 */
 	public function check($guid_one, $relationship, $guid_two) {
-		$guid_one = (int)$guid_one;
-		$relationship = $this->db->sanitizeString($relationship);
-		$guid_two = (int)$guid_two;
+		$qb = elgg()->queries->select('*');
+		$qb->from('{entity_relationships}')
+			->where('guid_one = ' . (int)$guid_one)
+			->andWhere('guid_two = ' . (int)$guid_two)
+			->andWhere('relationship = ' . $qb->createNamedParameter($relationship))
+			->setMaxResults(1);
 
-		$query = "
-			SELECT * FROM {$this->db->getTablePrefix()}entity_relationships
-			WHERE guid_one = $guid_one
-			  AND relationship = '$relationship'
-			  AND guid_two = $guid_two
-			LIMIT 1
-		";
-		$row = $this->rowToElggRelationship($this->db->getDataRow($query));
+		$row = $this->rowToElggRelationship($qb->execute(null, true));
 		if ($row) {
 			return $row;
 		}
@@ -249,6 +252,51 @@ class RelationshipsTable {
 	}
 
 	/**
+	 * Get all relationships matching the given options
+	 *
+	 * @param array $options See elgg_get_relationships()
+	 * @return \ElggRelationship[]|int
+	 */
+	public function getRelationships($options) {
+		$defaults = array(
+			'offset' => 0,
+			'limit' => 10,
+			'count' => false,
+			'order_by' => 'r.id DESC',
+			'callback' => [$this, 'rowToElggRelationship'],
+		);
+
+		$options = array_merge($defaults, $options);
+
+		$qb = elgg()->queries->select($options['count'] ? 'COUNT(*) AS cnt' : 'r.*');
+		$qb->from('{entity_relationships}', 'r');
+
+		foreach (['relationship', 'guid_one', 'guid_two'] as $column) {
+			if (empty($options[$column])) {
+				continue;
+			}
+
+			$type = ($column === 'relationship') ? \PDO::PARAM_STR : \PDO::PARAM_INT;
+			$qb->where("$column IN " . $qb->createSet($options[$column], $type));
+		}
+
+		if ($options['count']) {
+			return (int)$qb->execute(null, true)->cnt;
+		}
+
+		if ($options['offset']) {
+			$qb->setFirstResult($options['offset']);
+		}
+		if ($options['limit']) {
+			$qb->setMaxResults($options['limit']);
+		}
+
+		OrderBy::addToQueryBuilder($qb, $options);
+
+		return $qb->execute($options['callback']);
+	}
+
+	/**
 	 * Get all the relationships for a given GUID.
 	 *
 	 * @param int  $guid                 GUID of the subject or target entity (see $inverse)
@@ -258,13 +306,13 @@ class RelationshipsTable {
 	 * @return \ElggRelationship[]
 	 */
 	public function getAll($guid, $inverse_relationship = false) {
-		$guid = (int)$guid;
+		$column = $inverse_relationship ? 'guid_two' : 'guid_one';
 
-		$where = ($inverse_relationship ? "guid_two='$guid'" : "guid_one='$guid'");
+		$qb = elgg()->queries->select('*');
+		$qb->from('{entity_relationships}')
+			->where("$column = " . (int)$guid);
 
-		$query = "SELECT * from {$this->db->getTablePrefix()}entity_relationships WHERE {$where}";
-
-		return $this->db->getData($query, array($this, 'rowToElggRelationship'));
+		return $qb->execute([$this, 'rowToElggRelationship']);
 	}
 
 	/**
