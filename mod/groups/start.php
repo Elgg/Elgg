@@ -112,6 +112,10 @@ function groups_init() {
 
 	// prepare profile buttons to be registered in the title menu
 	elgg_register_plugin_hook_handler('profile_buttons', 'group', 'groups_prepare_profile_buttons');
+
+	// Help core resolve page owner guids from group routes
+	// Registered with an earlier priority to be called before default_page_owner_handler()
+	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
 }
 
 /**
@@ -464,18 +468,13 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 
 		// Add remove link if we can edit the group, and if we're not trying to remove the group owner
 		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
-			$remove = elgg_view('output/url', array(
+			$return[] = ElggMenuItem::factory([
+				'name' => 'removeuser',
 				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
 				'text' => elgg_echo('groups:removeuser'),
 				'confirm' => true,
-			));
-
-			$options = array(
-				'name' => 'removeuser',
-				'text' => $remove,
 				'priority' => 999,
-			);
-			$return[] = ElggMenuItem::factory($options);
+			]);
 		}
 	}
 
@@ -875,4 +874,68 @@ function groups_prepare_profile_buttons($hook, $type, $items, $params) {
 	}
 
 	return $items;
+}
+
+/**
+ * Helper handler to correctly resolve page owners on group routes
+ *
+ * @see default_page_owner_handler()
+ *
+ * @param string $hook   "page_owner"
+ * @param string $type   "system"
+ * @param int    $return Page owner guid
+ * @param array  $params Hook params
+ * @return int|void
+ */
+function groups_default_page_owner_handler($hook, $type, $return, $params) {
+
+	if ($return) {
+		return;
+	}
+
+	$segments = _elgg_services()->request->getUrlSegments();
+	$identifier = array_shift($segments);
+
+	if ($identifier !== 'groups') {
+		return;
+	}
+
+	$page = array_shift($segments);
+
+	switch ($page) {
+
+		case 'add' :
+			$guid = array_shift($segments);
+			if (!$guid) {
+				$guid = elgg_get_logged_in_user_guid();
+			}
+			return $guid;
+
+		case 'edit':
+		case 'profile' :
+		case 'activity' :
+		case 'invite' :
+		case 'requests' :
+		case 'members' :
+		case 'profile' :
+			$guid = array_shift($segments);
+			if (!$guid) {
+				return;
+			}
+			return $guid;
+
+		case 'member' :
+		case 'owner' :
+		case 'invitations':
+			$username = array_shift($segments);
+			if ($username) {
+				$user = get_user_by_username($username);
+			} else {
+				$user = elgg_get_logged_in_user_entity();
+			}
+			if (!$user) {
+				return;
+			}
+			return $user->guid;
+	}
 }

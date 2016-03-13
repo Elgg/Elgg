@@ -1,3 +1,24 @@
+<a name="2.0.3"></a>
+### 2.0.3  (2016-03-06)
+
+#### Contributors
+
+* Ismayil Khayredinov (3)
+* Steve Clay (3)
+* Juho Jaakkola (1)
+* Niraj Kaushal (1)
+
+#### Bug Fixes
+
+* **comments:** unifies behavior after adding new comment/discussion reply ([8ff2b295](https://github.com/Elgg/Elgg/commit/8ff2b2950c7da783e7cb89f5a6eb9bb9cad54e59), closes [#8130](https://github.com/Elgg/Elgg/issues/8130))
+* **discussions:** put new discussion page behind gatekeeper ([a583f65b](https://github.com/Elgg/Elgg/commit/a583f65b6e5051d8d79f49aa16d455b24aebeedc), closes [#9383](https://github.com/Elgg/Elgg/issues/9383))
+* **events:** the pagesetup event timing is more like 1.x ([38b12288](https://github.com/Elgg/Elgg/commit/38b122888df42599be0c1ab47333c356822fbb2f))
+* **groups:**
+  * clarify notification status strings ([20059a89](https://github.com/Elgg/Elgg/commit/20059a89f110b27085bfe42ce742270f7110e46e))
+  * page owner is now correctly resolved prior to pagesetup ([9a8ba277](https://github.com/Elgg/Elgg/commit/9a8ba27765c831f29db89ed98678a03572eaaf9a))
+* **web_services:** web services again can output xml/php ([9bf27a4b](https://github.com/Elgg/Elgg/commit/9bf27a4b56be335b42d923ac62155cfe7437ddfb), closes [#8053](https://github.com/Elgg/Elgg/issues/8053))
+
+
 <a name="2.0.2"></a>
 ### 2.0.2  (2016-02-03)
 
@@ -661,6 +682,30 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+<a name="1.12.9"></a>
+### 1.12.9  (2016-03-06)
+
+#### Contributors
+
+* Steve Clay (7)
+* Ismayil Khayredinov (2)
+* Jerôme Bakker (1)
+* Juho Jaakkola (1)
+
+#### Bug Fixes
+
+* **cache:** internal Stash pool wrapper works again ([ddc254e4](https://github.com/Elgg/Elgg/commit/ddc254e40f9a30a6473f042b7fb686767447a2f0), closes [#9374](https://github.com/Elgg/Elgg/issues/9374))
+* **css:** buttons no longer get cropped in admin context ([298ae0a8](https://github.com/Elgg/Elgg/commit/298ae0a8f90ca2bc3688a3d5cf3d6205a75f14d2))
+* **groups:** correctly format the remove user from group menu item ([8fdf21f5](https://github.com/Elgg/Elgg/commit/8fdf21f5303e709593b59a75eb9e24d263ac83d5))
+* **http:**
+  * cache handler sends 304 responses more reliably ([873be892](https://github.com/Elgg/Elgg/commit/873be8921d4b8ddc2fd6caf4f5bfa8ca05a93379), closes [#9427](https://github.com/Elgg/Elgg/issues/9427))
+  * more resources sent with explicit UTF-8 charset ([036a82bd](https://github.com/Elgg/Elgg/commit/036a82bd78da47bb6963a87e5f68b1eef88d85eb), closes [#9345](https://github.com/Elgg/Elgg/issues/9345))
+  * make sure all pages/JS/CSS sent with explicit UTF-8 charset ([3dab7d10](https://github.com/Elgg/Elgg/commit/3dab7d100641f5ad3e91353106e7bfd8693d63e0), closes [#9345](https://github.com/Elgg/Elgg/issues/9345))
+* **js:** AMD view filter handles short view names without `/` ([c9ca8329](https://github.com/Elgg/Elgg/commit/c9ca83295eb9e95f57ad74983386109ee4d6ab59))
+* **search:** eliminate 6 notices in search_users_hook ([87b7011b](https://github.com/Elgg/Elgg/commit/87b7011bd843125cb9db16306478c7ccab0c6f1a))
+* **settings:** do not emit errors if form fields are not present ([9f5111c9](https://github.com/Elgg/Elgg/commit/9f5111c97f79611734a9b32317ae0e729928a941))
+* **web_services:** reject requests for unavailable formats ([04aeaf7d](https://github.com/Elgg/Elgg/commit/04aeaf7d35ec25a08f011a74bb9d1947b6ac260a), closes [#9410](https://github.com/Elgg/Elgg/issues/9410))
 
 
 <a name="1.12.8"></a>
