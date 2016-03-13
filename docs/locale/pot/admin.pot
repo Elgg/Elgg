@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-06 22:18+0200\n"
+"POT-Creation-Date: 2016-03-13 18:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1285,154 +1285,166 @@ msgid "The system cache can be disabled via the administration menu, and it is r
 msgstr ""
 
 #: ../../admin/performance.rst:119
-msgid "Database query cache"
+msgid "Boot cache (experimental)"
 msgstr ""
 
 #: ../../admin/performance.rst:121
+msgid "Elgg has the ability to cache numerous resources created and fetched during the boot process. To enable this cache you must set a TTL in your ``settings.php`` file: ``$CONFIG->boot_cache_ttl = 10;``"
+msgstr ""
+
+#: ../../admin/performance.rst:125
+msgid "A small TTL is recommended because it brings all the benefits of caching under load while reducing the harm if Elgg's cache invalidation strategy should miss something."
+msgstr ""
+
+#: ../../admin/performance.rst:129
+msgid "Database query cache"
+msgstr ""
+
+#: ../../admin/performance.rst:131
 msgid "For the lifetime of a given page's execution, a cache of all ``SELECT`` queries is kept. This means that for a given page load a given select query will only ever go out to the database once, even if it is executed multiple times. Any write to the database will flush this cache, so it is advised that on complicated pages you postpone database writes until the end of the page or use the ``execute_delayed_*`` functionality. This cache will be automatically cleared at the end of a page load."
 msgstr ""
 
-#: ../../admin/performance.rst:128
+#: ../../admin/performance.rst:138
 msgid "You may experience memory problems if you use the Elgg framework as a library in a PHP CLI script. This can be disabled by setting ``$CONFIG->db_disable_query_cache = true;``"
 msgstr ""
 
-#: ../../admin/performance.rst:133
+#: ../../admin/performance.rst:143
 msgid "Etags and Expires headers"
 msgstr ""
 
-#: ../../admin/performance.rst:135
+#: ../../admin/performance.rst:145
 msgid "These technologies tell your users' browsers to cache static assets (CSS, JS, images) locally. Having these enabled greatly reduces server load and improves user-perceived performance."
 msgstr ""
 
-#: ../../admin/performance.rst:138
+#: ../../admin/performance.rst:148
 msgid "Use the `Firefox yslow plugin`__ or Chrome DevTools Audits to confirm which technologies are currently running on your site."
 msgstr ""
 
-#: ../../admin/performance.rst:144
+#: ../../admin/performance.rst:154
 msgid "If the static assets aren't being cached:"
 msgstr ""
 
-#: ../../admin/performance.rst:142
+#: ../../admin/performance.rst:152
 msgid "Verify that you have these extensions installed and enabled on your host"
 msgstr ""
 
-#: ../../admin/performance.rst:143
+#: ../../admin/performance.rst:153
 msgid "Update your .htaccess file, if you are upgrading from a previous version of Elgg"
 msgstr ""
 
-#: ../../admin/performance.rst:144
+#: ../../admin/performance.rst:154
 msgid "Enable Simplecache_, which turns select views into browser-cacheable assets"
 msgstr ""
 
-#: ../../admin/performance.rst:149
+#: ../../admin/performance.rst:159
 msgid "Memcache"
 msgstr ""
 
-#: ../../admin/performance.rst:151
+#: ../../admin/performance.rst:161
 msgid "Memcache is a generic caching technology developed by Brad Fitzpatrick for LiveJournal."
 msgstr ""
 
-#: ../../admin/performance.rst:153
+#: ../../admin/performance.rst:163
 msgid "SUPPORT FOR MEMCACHE IS EXPERIMENTAL AND MAY BE CHANGED."
 msgstr ""
 
-#: ../../admin/performance.rst:155
+#: ../../admin/performance.rst:165
 msgid "Installation requirements:"
 msgstr ""
 
-#: ../../admin/performance.rst:157
+#: ../../admin/performance.rst:167
 msgid "php5-memcache"
 msgstr ""
 
-#: ../../admin/performance.rst:158
+#: ../../admin/performance.rst:168
 msgid "memcached"
 msgstr ""
 
-#: ../../admin/performance.rst:160
+#: ../../admin/performance.rst:170
 msgid "Configuration:"
 msgstr ""
 
-#: ../../admin/performance.rst:162
+#: ../../admin/performance.rst:172
 msgid "Uncomment and populate the following sections in `settings.php`"
 msgstr ""
 
-#: ../../admin/performance.rst:173
+#: ../../admin/performance.rst:183
 msgid "Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want to add a namespace prefix. In order to do this, uncomment the following line"
 msgstr ""
 
-#: ../../admin/performance.rst:181
+#: ../../admin/performance.rst:191
 msgid "Squid"
 msgstr ""
 
-#: ../../admin/performance.rst:183
+#: ../../admin/performance.rst:193
 msgid "We have had good results by using `Squid`_ to cache images for us."
 msgstr ""
 
-#: ../../admin/performance.rst:189
+#: ../../admin/performance.rst:199
 msgid "Bytecode caching"
 msgstr ""
 
-#: ../../admin/performance.rst:191
+#: ../../admin/performance.rst:201
 msgid "There are numerous PHP code caches available on the market. These speed up your site by caching the compiled byte code from your script meaning that your server doesn't have to compile the PHP code each time it is executed."
 msgstr ""
 
-#: ../../admin/performance.rst:197
+#: ../../admin/performance.rst:207
 msgid "Hosting"
 msgstr ""
 
-#: ../../admin/performance.rst:199
+#: ../../admin/performance.rst:209
 msgid "Don't expect to run a site catering for millions of users on a cheap shared host. You will need to have your own host hardware and access over the configuration, as well as lots of bandwidth and memory available."
 msgstr ""
 
-#: ../../admin/performance.rst:204
+#: ../../admin/performance.rst:214
 msgid "Memory, CPU and bandwidth"
 msgstr ""
 
-#: ../../admin/performance.rst:206
+#: ../../admin/performance.rst:216
 msgid "Due to the nature of caching, all caching solutions will require memory. It is a fairly cheap return to throw memory and CPU at the problem."
 msgstr ""
 
-#: ../../admin/performance.rst:209
+#: ../../admin/performance.rst:219
 msgid "On advanced hardware it is likely that bandwidth is going to be your bottleneck before the server itself. Ensure that your host can support the load you are suggesting."
 msgstr ""
 
-#: ../../admin/performance.rst:213
+#: ../../admin/performance.rst:223
 msgid "Configuration"
 msgstr ""
 
-#: ../../admin/performance.rst:215
+#: ../../admin/performance.rst:225
 msgid "Lastly, take a look at your configuration as there are a few gotchas that can catch people."
 msgstr ""
 
-#: ../../admin/performance.rst:217
+#: ../../admin/performance.rst:227
 msgid "For example, out of the box, Apache can handle quite a high load. However, most distros of Linux come with mysql configured for small sites. This can result in Apache processes getting stalled waiting to talk to one very overloaded MySQL process."
 msgstr ""
 
-#: ../../admin/performance.rst:222
+#: ../../admin/performance.rst:232
 msgid "Check for poorly-behaved plugins"
 msgstr ""
 
-#: ../../admin/performance.rst:224
+#: ../../admin/performance.rst:234
 msgid "Plugins can be programmed in a very naive way and this can cause your whole site to feel slow."
 msgstr ""
 
-#: ../../admin/performance.rst:226
+#: ../../admin/performance.rst:236
 msgid "Try disabling some plugins to see if that noticeably improves performance. Once you've found a likely offender, go to the original plugin author and report your findings."
 msgstr ""
 
-#: ../../admin/performance.rst:230
+#: ../../admin/performance.rst:240
 msgid "Use client-rendered HTML"
 msgstr ""
 
-#: ../../admin/performance.rst:232
+#: ../../admin/performance.rst:242
 msgid "We've found that at a certain point, much of the time spent on the server is simply building the HTML of the page with Elgg's views system."
 msgstr ""
 
-#: ../../admin/performance.rst:235
+#: ../../admin/performance.rst:245
 msgid "It's very difficult to cache the output of templates since they can generally take arbitrary inputs. Instead of trying to cache the HTML output of certain pages or views, the suggestion is to switch to an HTML-based templating system so that the user's browser can cache the templates themselves. Then have the user's computer do the work of generating the output by applying JSON data to those templates."
 msgstr ""
 
-#: ../../admin/performance.rst:240
+#: ../../admin/performance.rst:250
 msgid "This can be very effective, but has the downside of being significant extra development cost. The Elgg team is looking to integrate this strategy into Elgg directly, since it is so effective especially on pages with repeated or hidden content."
 msgstr ""
 

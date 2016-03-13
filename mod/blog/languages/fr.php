@@ -5,11 +5,11 @@ return array(
 	'blog:revisions' => 'Révisions',
 	'blog:archives' => 'Archives',
 	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Blogs',
+	'item:object:blog' => 'Article de blog',
 
-	'blog:title:user_blogs' => 'Blogs de %s',
-	'blog:title:all_blogs' => 'Tous les blogs du site',
-	'blog:title:friends' => 'Blogs des contacts',
+	'blog:title:user_blogs' => 'Articles de blog de %s',
+	'blog:title:all_blogs' => 'Tous les articles de blog du site',
+	'blog:title:friends' => 'Articles de blog des contacts',
 
 	'blog:group' => 'Blog du groupe',
 	'blog:enableblog' => 'Activer le blog du groupe',
@@ -29,11 +29,11 @@ return array(
 	'blog:message:saved' => 'Article de blog enregistré.',
 	'blog:error:cannot_save' => 'Impossible d\'enregistrer l\'article de blog.',
 	'blog:error:cannot_auto_save' => 'Impossible de sauvegarder automatiquement l\'article de blog. ',
-	'blog:error:cannot_write_to_container' => 'Droits d\'accès insuffisants pour enregistrer l\'article pour ce groupe.',
+	'blog:error:cannot_write_to_container' => 'Droits d\'accès insuffisants pour enregistrer l\'article dans ce groupe.',
 	'blog:messages:warning:draft' => 'Il y a un brouillon non enregistré de cet article !',
 	'blog:edit_revision_notice' => '(Ancienne version)',
-	'blog:message:deleted_post' => 'Article supprimé.',
-	'blog:error:cannot_delete_post' => 'Impossible de supprimer l\'article.',
+	'blog:message:deleted_post' => 'Article de blog supprimé.',
+	'blog:error:cannot_delete_post' => 'Impossible de supprimer l\'article de blog.',
 	'blog:none' => 'Aucun article de blog',
 	'blog:error:missing:title' => 'Vous devez donner un titre à votre article !',
 	'blog:error:missing:description' => 'Le corps de votre article est vide !',
@@ -43,10 +43,10 @@ return array(
 
 	// river
 	'river:create:object:blog' => '%s a publié un article de blog %s',
-	'river:comment:object:blog' => '%s a commenté sur le blog %s',
+	'river:comment:object:blog' => '%s a commenté l\'article de blog %s',
 
 	// notifications
-	'blog:notify:summary' => 'Nouvel article de blog nommé %s',
+	'blog:notify:summary' => 'Nouvel article de blog intitulé %s',
 	'blog:notify:subject' => 'Nouvel article de blog: %s',
 	'blog:notify:body' =>
 '

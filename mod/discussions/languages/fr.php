@@ -16,8 +16,8 @@ return array(
 
 	'discussion:topic:notfound' => 'Le sujet de discussion est introuvable',
 	'discussion:error:notsaved' => 'Impossible d\'enregistrer ce sujet',
-	'discussion:error:missing' => 'Les deux champs \'titre\' et \'message\' sont obligatoires',
-	'discussion:error:permissions' => 'Vous n\'avez pas les autorisations pour effectuer cette action',
+	'discussion:error:missing' => 'Les deux champs "titre" et "message" sont obligatoires',
+	'discussion:error:permissions' => 'Vous n\'avez pas les droits pour effectuer cette action',
 	'discussion:error:notdeleted' => 'Impossible de supprimer le sujet de discussion',
 
 	'discussion:reply:edit' => 'Modifier la réponse',
@@ -31,8 +31,8 @@ return array(
 	/**
 	 * Action messages
 	 */
-	'discussion:reply:missing' => 'Vous ne pouvez fournir une réponse vide.',
-	'discussion:reply:topic_not_found' => 'Le sujet de discussion est introuvable',
+	'discussion:reply:missing' => 'Vous ne pouvez pas publier une réponse vide.',
+	'discussion:reply:topic_not_found' => 'Le sujet de discussion n\'a pas été trouvé',
 	'discussion:reply:error:cannot_edit' => 'Vous n\'avez pas la permission de modifier cette réponse.',
 
 	/**
