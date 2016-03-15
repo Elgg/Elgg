@@ -19,10 +19,6 @@ function profile_init() {
 	// Register a URL handler for users
 	elgg_register_plugin_hook_handler('entity:url', 'user', 'profile_set_url');
 
-	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'profile_set_icon_url');
-	elgg_unregister_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
-
-
 	elgg_register_simplecache_view('icon/user/default/tiny');
 	elgg_register_simplecache_view('icon/user/default/topbar');
 	elgg_register_simplecache_view('icon/user/default/small');
@@ -105,36 +101,10 @@ function profile_set_url($hook, $type, $url, $params) {
  * @param string $url
  * @param array  $params
  * @return string
+ * @deprecated 2.2
  */
 function profile_set_icon_url($hook, $type, $url, $params) {
-
-	// if someone already set this, quit
-	if ($url) {
-		return;
-	}
-
-	$user = $params['entity'];
-	$size = $params['size'];
-
-	$user_guid = $user->getGUID();
-	$icon_time = $user->icontime;
-
-	if (!$icon_time) {
-		return elgg_get_simplecache_url("icons/user/default{$size}.gif");
-	}
-
-	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $user_guid;
-	$filehandler->setFilename("profile/{$user_guid}{$size}.jpg");
-
-	try {
-		if ($filehandler->exists()) {
-			return "mod/profile/icondirect.php?lastcache=$icon_time&guid=$user_guid&size=$size";
-		}
-	} catch (InvalidParameterException $e) {
-		elgg_log("Unable to get profile icon for user with GUID $user_guid", 'ERROR');
-		return elgg_get_simplecache_url("icons/default/$size.png");
-	}
+	elgg_deprecated_notice("Profile plugin no longer customizes avatar url using 'entity:icon:url' hook", '2.2');
 }
 
 /**

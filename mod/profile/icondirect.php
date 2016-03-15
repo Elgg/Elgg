@@ -4,32 +4,8 @@
  * 
  * 
  * @package ElggProfile
+ * @deprecated 2.2
  */
-
-// won't be able to serve anything if no guid
-if (!isset($_GET['guid'])) {
-	header("HTTP/1.1 404 Not Found");
-	exit;
-}
-
-$last_cache = empty($_GET['lastcache']) ? 0 : (int)$_GET['lastcache']; // icontime
-$guid = (int)$_GET['guid'];
-
-// If is the same ETag, content didn't changed.
-$etag = $last_cache . $guid;
-if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == "\"$etag\"") {
-	header("HTTP/1.1 304 Not Modified");
-	exit;
-}
-
-$size = "medium";
-if (!empty($_GET['size'])) {
-	$size = strtolower($_GET['size']);
-	if (!in_array($size, array('large', 'medium', 'small', 'tiny', 'master', 'topbar'))) {
-		$size = "medium";
-	}
-}
-
 
 $autoload_root = dirname(dirname(__DIR__));
 if (!is_file("$autoload_root/vendor/autoload.php")) {
@@ -37,25 +13,26 @@ if (!is_file("$autoload_root/vendor/autoload.php")) {
 }
 require_once "$autoload_root/vendor/autoload.php";
 
-$data_root = \Elgg\Application::getDataPath();
-$locator = new \Elgg\EntityDirLocator($guid);
-$user_path = $data_root . $locator->getPath();
+\Elgg\Application::start();
 
-$filename = $user_path . "profile/{$guid}{$size}.jpg";
-$filesize = @filesize($filename);
+elgg_deprecated_notice("icondirect.php is no longer used and will be removed, do not include and require it. Use elgg_get_inline_url() instead.", '2.2');
 
-if ($filesize) {
-	header("Content-type: image/jpeg");
-	header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-	header("Pragma: public");
-	header("Cache-Control: public");
-	header("Content-Length: $filesize");
-	header("ETag: \"$etag\"");
-	readfile($filename);
-	exit;
+$guid = get_input('guid');
+$size = get_input('size') ? : 'medium';
+
+elgg_entity_gatekeeper($guid, 'user');
+
+$user = get_entity($guid);
+
+if ($user) {
+	$filehandler = new ElggFile();
+	$filehandler->owner_guid = $user->guid;
+	$filehandler->setFilename("profile/{$user->guid}{$size}.jpg");
+	$avatar_url = elgg_get_inline_url($filehandler);
 }
 
-// something went wrong so load engine and try to forward to default icon
-\Elgg\Application::start();
-elgg_log("Profile icon direct failed.", "WARNING");
-forward(elgg_get_simplecache_url("icons/user/default{$size}.gif"));
+if (!$avatar_url) {
+	$avatar_url = elgg_get_simplecache_url("icons/user/default{$size}.gif");
+}
+
+forward($avatar_url);
