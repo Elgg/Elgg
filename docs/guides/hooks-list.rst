@@ -291,6 +291,10 @@ Permission hooks
 **get_sql, access**
     Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
+**gatekeeper, <entity_type>:<entity_subtype>**
+    Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.
+
+
 Routing
 =======
 
