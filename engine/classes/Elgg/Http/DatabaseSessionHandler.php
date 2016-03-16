@@ -5,7 +5,7 @@ namespace Elgg\Http;
  * Database session handler
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */
@@ -53,9 +53,10 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		$time = time();
 		$sess_data_sanitised = sanitize_string($session_data);
 
-		$query = "REPLACE INTO {$this->db->getTablePrefix()}users_sessions
+		$query = "INSERT INTO {$this->db->getTablePrefix()}users_sessions
 			(session, ts, data) VALUES
-			('$id', '$time', '$sess_data_sanitised')";
+			('$id', '$time', '$sess_data_sanitised')
+			ON DUPLICATE KEY UPDATE ts = '$time', data = '$sess_data_sanitised'";
 
 		if ($this->db->insertData($query) !== false) {
 			return true;
