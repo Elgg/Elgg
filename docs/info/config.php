@@ -88,12 +88,16 @@ $CONFIG->dataroot;
 /**
  * Is simplecache enabled?
  *
+ * @see elgg_is_simplecache_enabled() Use this instead of reading the value.
+ *
  * @global string $CONFIG->simplecache_enabled
  */
 $CONFIG->simplecache_enabled;
 
 /**
  * Is the system cache enabled
+ *
+ * @see elgg_is_system_cache_enabled() Use this instead of reading the value.
  *
  * @global string $CONFIG->system_cache_enabled
  */
@@ -253,16 +257,16 @@ $CONFIG->lastcache;
 /**
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
- * 
+ *
  * This should be an absolute file path to a php script that will be called
  * any time an uncaught exception is thrown.
- * 
+ *
  * The script will have access to the following variables as part of the scope
  * global $CONFIG
  * $exception - the unhandled exception
- * 
+ *
  * @warning - the database may not be available
- * 
+ *
  * @global string $CONFIG->exception_include
  */
 $CONFIG->exception_include = '';

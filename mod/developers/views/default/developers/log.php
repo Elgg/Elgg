@@ -20,7 +20,7 @@ if ($items) {
 $elapsed = microtime(true) - $GLOBALS['START_MICROTIME'];
 $query_count = _elgg_services()->db->getQueryCount();
 $boot_cache_rebuilt = !elgg_get_config('_boot_cache_hit');
-$system_cache = (bool)elgg_get_config('system_cache_enabled');
+$system_cache = elgg_is_system_cache_enabled();
 
 $yes = elgg_echo('option:yes');
 $no = elgg_echo('option:no');
