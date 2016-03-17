@@ -7,11 +7,7 @@
 $num_featured_items = 6;
 
 // get site menu items
-$menu = elgg_get_config('menus');
-$menu = $menu['site'];
-$builder = new ElggMenuBuilder($menu);
-$menu = $builder->getMenu('name');
-$menu_items = $menu['default'];
+$menu_items = elgg_get_menu('site')->getMenuItems('name', 'default');
 
 $featured_menu_names = elgg_get_config('site_featured_menu_names');
 
