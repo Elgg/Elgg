@@ -240,6 +240,11 @@ class Config implements Services\Config {
 
 		// No settings means a fresh install
 		if (!is_file($path)) {
+			if ($this->getVolatile('installer_running')) {
+				$this->settings_loaded = true;
+				return;
+			}
+
 			header("Location: install.php");
 			exit;
 		}
