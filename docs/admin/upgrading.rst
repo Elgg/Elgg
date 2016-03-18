@@ -37,6 +37,18 @@ Basic instructions
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
    If this is not the case, take care to maintain your modifications. 
 
+Deprecations in 2.x
+===================
+
+2.2
+---
+
+Group avatars are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and note that:
+
+ * ``groupicon`` page handler (``groups_icon_handler()``) has been deprecated
+ * ``/mod/groups/icon.php`` file has been deprecated
+
+
 From 1.x to 2.0
 ===============
 
