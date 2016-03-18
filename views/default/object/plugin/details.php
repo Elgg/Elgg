@@ -95,7 +95,7 @@ $categories = (array)$plugin->getManifest()->getCategories();
 array_walk($categories, function(&$value) {
 	$value = htmlspecialchars(ElggPluginManifest::getFriendlyCategory($value));
 });
-$categories = implode(', ', $categories);
+
 $info[elgg_echo('admin:plugins:label:categories')] = implode(', ', $categories);
 
 // assemble table
