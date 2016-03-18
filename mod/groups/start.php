@@ -299,19 +299,29 @@ function groups_page_handler($page) {
  *
  * @param array $page
  * @return bool
+ * @deprecated 2.2
  */
 function groups_icon_handler($page) {
 
-	// The username should be the file we're getting
-	if (isset($page[0])) {
-		set_input('group_guid', $page[0]);
+	elgg_deprecated_notice('/groupicon page handler has been deprecated. Use elgg_get_inline_url() instead.', '2.2');
+
+	$guid = array_shift($page);
+	elgg_entity_gatekeeper($guid, 'group');
+
+	$size = array_shift($page) ? : 'medium';
+
+	$group = get_entity($guid);
+	
+	$icon = new ElggFile();
+	$icon->owner_guid = $group->owner_guid;
+	$icon->setFilename("groups/{$group->guid}{$size}.jpg");
+
+	$url = elgg_get_inline_url($icon, true);
+	if (!$url) {
+		$url = elgg_get_simplecache_url("groups/default{$size}.gif");
 	}
-	if (isset($page[1])) {
-		set_input('size', $page[1]);
-	}
-	// Include the standard profile index
-	include __DIR__ . "/icon.php";
-	return true;
+	
+	forward($url);
 }
 
 /**
@@ -354,7 +364,13 @@ function groups_set_icon_url($hook, $type, $url, $params) {
 	}
 	if ($icontime) {
 		// return thumbnail
-		return "groupicon/$group->guid/$size/$icontime.jpg";
+		$icon = new ElggFile();
+		$icon->owner_guid = $group->owner_guid;
+		$icon->setFilename("groups/{$group->guid}{$size}.jpg");
+		$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
+		if ($url) {
+			return $url;
+		}
 	}
 
 	return elgg_get_simplecache_url("groups/default{$size}.gif");
