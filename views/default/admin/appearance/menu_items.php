@@ -6,5 +6,4 @@
  * @subpackage Core
  */
 
-
-echo elgg_view_form('admin/menu/save', array('class' => 'elgg-form-settings'));
+echo elgg_view_form('admin/menu/save', ['class' => 'elgg-form-settings']);

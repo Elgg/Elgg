@@ -1,10 +1,9 @@
 <?php
-// Get entity statistics
+
 $entity_stats = get_entity_statistics();
-$even_odd = "";
-?>		
-<table class="elgg-table-alt">
-<?php
+$even_odd = '';
+
+$table_data = '';
 foreach ($entity_stats as $k => $entry) {
 	arsort($entry);
 	foreach ($entry as $a => $b) {
@@ -28,13 +27,11 @@ foreach ($entity_stats as $k => $entry) {
 			}
 		}
 		
-		echo <<< END
-			<tr class="{$even_odd}">
-				<td>{$a}:</td>
-				<td>{$b}</td>
-			</tr>
-END;
-		}
+		$rowdata = elgg_format_element('td', [], "{$a}:");
+		$rowdata .= elgg_format_element('td', [], $b);
+		
+		$table_data .= elgg_format_element('tr', ['class' => $even_odd], $rowdata);
 	}
-?>
-</table>
+}
+
+echo elgg_format_element('table', ['class' => 'elgg-table-alt'], $table_data);

@@ -1,15 +1,13 @@
 <?php
 /**
  * Profile fields.
- * 
+ *
  * @todo Needs some review
  */
 
-// List form elements
-$n = 0;
-$loaded_defaults = array();
-$items = array();
+$items = [];
 $fieldlist = elgg_get_config('profile_custom_fields');
+
 if ($fieldlist || $fieldlist === '0') {
 	$fieldlistarray = explode(',', $fieldlist);
 	foreach ($fieldlistarray as $listitem) {
@@ -25,29 +23,27 @@ if ($fieldlist || $fieldlist === '0') {
 		}
 	}
 }
-?>
-<ul id="elgg-profile-fields" class="mvm">
-<?php
 
+$list_items = '';
 foreach ($items as $item) {
-	echo elgg_view("profile/", array('value' => $item->translation));
-
-	//$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
-	$url = elgg_view('output/url', array(
+	$url = elgg_view('output/url', [
 		'href' => "action/profile/fields/delete?id={$item->shortname}",
 		'text' => elgg_view_icon('delete-alt'),
 		'is_action' => true,
 		'is_trusted' => true,
-	));
+	]);
 	$type = elgg_echo($item->type);
-	$drag_arrow = elgg_view_icon("drag-arrow", "elgg-state-draggable");
-	echo <<<HTML
-<li id="$item->shortname" class="clearfix">
-	$drag_arrow
-	<b><span id="elgg-profile-field-{$item->shortname}" class="elgg-state-editable">{$item->translation}</span></b> [$type] $url
-</li>
-HTML;
+	
+	$title = elgg_format_element('span', [
+		'id' => "elgg-profile-field-{$item->shortname}",
+		'class' => 'elgg-state-editable',
+	], $item->translation);
+	
+	$field = elgg_view_icon('drag-arrow', 'elgg-state-draggable');
+	$field .= elgg_format_element('b', [], $title);
+	$field .= " [$type] $url";
+	
+	$list_items .= elgg_format_element('li', ['id' => $item->shortname, 'class' => 'clearfix'], $field);
 }
 
-?>
-</ul>
+echo elgg_format_element('ul', ['id' => 'elgg-profile-fields', 'class' => 'mvm'], $list_items);
