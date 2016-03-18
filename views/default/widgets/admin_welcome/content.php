@@ -3,17 +3,12 @@
  * Welcome widget for admins
  */
 
-// section => string replacements.
-$sections = array(
-	'intro' => array(),
-	'admin_overview' => array(),
-	'outro' => array()
-);
+$sections = ['intro', 'admin_overview',	'outro'];
 
 // don't use longtext because it filters output.
 // that's annoying.
-echo '<div class="elgg-output">';
-foreach ($sections as $section => $strings) {
-	echo '<p>' . elgg_echo("admin:widget:admin_welcome:$section", $strings) . '</p>';
+$output = '';
+foreach ($sections as $section) {
+	$output .= elgg_format_element('p', [], elgg_echo("admin:widget:admin_welcome:$section", []));
 }
-echo '</div>';
+echo elgg_format_element('div', ['class' => 'elgg-output'], $output);

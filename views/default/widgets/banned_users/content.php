@@ -11,12 +11,12 @@ if (!$num_display) {
 
 $db_prefix = elgg_get_config('dbprefix');
 
-echo elgg_list_entities(array(
+echo elgg_list_entities([
 	'type' => 'user',
 	'subtype'=> null,
 	'wheres' => array("ue.banned = 'yes'"),
 	'joins' => array("JOIN {$db_prefix}users_entity ue on ue.guid = e.guid"),
 	'full_view' => false,
 	'pagination' => false,
-	'limit' => $num_display
-));
+	'limit' => $num_display,
+]);

@@ -26,7 +26,7 @@ foreach ($installed_plugins as $id => $plugin) {
 		if ($plugin->isActive()) {
 			// force disable and warn
 			elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-					elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
+					elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getId()]));
 			$plugin->deactivate();
 		}
 		continue;
@@ -60,8 +60,8 @@ $common_categories = [
 
 $categories = array_merge($common_categories, $categories);
 
-$category_form = elgg_view("admin/plugins/filter", [
-	'category' => "all",
+$category_form = elgg_view('admin/plugins/filter', [
+	'category' => 'all',
 	'category_options' => $categories
 ]);
 
@@ -82,12 +82,12 @@ $buttons = elgg_format_element('div', ['class' => 'float-alt'], $activate_all . 
 
 echo elgg_format_element('div', ['class' => 'mbm'], $buttons . $category_form);
 
-$options = array(
+$options = [
 	'limit' => 0,
 	'full_view' => true,
 	'list_type_toggle' => false,
 	'pagination' => false,
-	'display_reordering' => true
-);
+	'display_reordering' => true,
+];
 
 echo elgg_format_element('div', ['id' => 'elgg-plugin-list'] , elgg_view_entity_list($installed_plugins, $options));
