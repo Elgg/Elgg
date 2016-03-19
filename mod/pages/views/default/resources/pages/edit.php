@@ -40,6 +40,7 @@ $body = elgg_view_layout('content', array(
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
+	'entity' => $page,
 ));
 
 echo elgg_view_page($title, $body);

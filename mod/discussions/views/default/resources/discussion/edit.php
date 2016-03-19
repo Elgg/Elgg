@@ -24,6 +24,7 @@ $params = array(
 	'title' => $title,
 	'sidebar' => elgg_view('discussion/sidebar/edit'),
 	'filter' => '',
+	'entity' => $topic,
 );
 $body = elgg_view_layout('content', $params);
 

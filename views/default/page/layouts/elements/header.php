@@ -18,6 +18,7 @@ $title = elgg_extract('title', $vars, '');
 $buttons = elgg_view_menu('title', array(
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
+	'entity' => elgg_extract('entity', $vars),
 ));
 
 if ($title || $buttons) {

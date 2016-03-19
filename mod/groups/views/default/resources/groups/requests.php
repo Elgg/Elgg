@@ -32,6 +32,7 @@ $params = array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
+	'entity' => $group,
 );
 $body = elgg_view_layout('content', $params);
 

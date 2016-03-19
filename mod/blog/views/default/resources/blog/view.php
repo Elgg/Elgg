@@ -36,6 +36,7 @@ if ($blog->comments_on != 'Off' && $blog->status == 'published') {
 
 $params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
 
+$params['entity'] = $blog;
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($params['title'], $body);
