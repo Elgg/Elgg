@@ -197,3 +197,34 @@ with a high degree of control and flexibility when styling the site.
 	<ul class="elgg-menu elgg-menu-foo elgg-menu-foo-default">
 		<li class="elgg-menu-item elgg-menu-item-bar"></li>
 	</ul>
+
+
+JavaScript
+==========
+
+It is common that menu items rely on JavaScript. You can bind client-side events
+to menu items by placing your JavaScript into AMD module and defining the
+requirement during the registration.
+
+.. code-block:: php
+
+	elgg_register_menu_item('my_menu', array(
+		'name' => 'hide_on_click',
+		'href' => '#',
+		'text' => elgg_echo('hide:on:click'),
+		'item_class' => '.hide-on-click',
+		'deps' => ['navigation/menu/item/hide_on_click'],
+	));
+
+
+.. code-block:: js
+
+    // in navigation/menu/item/hide_on_click.js
+    define(function(require) {
+        var $ = require('jquery');
+
+        $(document).on('click', '.hide-on-click', function(e) {
+            e.preventDefault();
+            $(this).hide();
+        });
+    });

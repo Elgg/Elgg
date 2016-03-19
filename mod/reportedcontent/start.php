@@ -14,7 +14,7 @@ function reportedcontent_init() {
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('reportedcontent', 'reportedcontent_page_handler');
-	
+
 	// Extend CSS
 	elgg_extend_view('elgg.css', 'reportedcontent/css');
 	elgg_extend_view('admin.css', 'reportedcontent/admin_css');
