@@ -581,7 +581,7 @@ class ElggMenuItem {
 	 * 
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
-	 * @param array $children Array of \ElggMenuItems
+	 * @param ElggMenuItem[] $children Array of items
 	 * @return void
 	 * @access private
 	 */
@@ -594,7 +594,7 @@ class ElggMenuItem {
 	 * 
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
-	 * @return array
+	 * @return ElggMenuItem[]
 	 * @access private
 	 */
 	public function getChildren() {
