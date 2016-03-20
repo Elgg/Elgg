@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Мој статус',
 	'groups:my_status:group_owner' => 'Власник сте ове групе',
 	'groups:my_status:group_member' => 'Ви сте члан групе',
-	'groups:subscribed' => 'Обавештења групе су укључена',
-	'groups:unsubscribed' => 'Обавештења групе су искључена',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Чланови %s',
 	'groups:members:more' => "Види све чланове",

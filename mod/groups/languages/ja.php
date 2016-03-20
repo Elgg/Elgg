@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Myステータス',
 	'groups:my_status:group_owner' => 'このグループのオーナーです',
 	'groups:my_status:group_member' => 'このグループのメンバーです',
-	'groups:subscribed' => 'グループから通知 on',
-	'groups:unsubscribed' => 'グループからの通知 off',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => '%s のメンバ',
 	'groups:members:more' => "メンバ一覧",
