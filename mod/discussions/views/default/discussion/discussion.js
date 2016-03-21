@@ -30,6 +30,11 @@ elgg.discussion.Reply.prototype = {
 
 	showForm: function () {
 		this.getForm().slideDown('medium').data('hidden', 0);
+		var $form = this.getForm();
+		$form.slideDown('medium').data('hidden', 0);
+		$('body').animate({
+			scrollTop: $form.offset().top
+		}, 500);
 	},
 
 	loadForm: function () {
