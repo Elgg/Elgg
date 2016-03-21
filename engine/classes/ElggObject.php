@@ -72,14 +72,14 @@ class ElggObject extends \ElggEntity {
 			if ($row instanceof \stdClass) {
 				// Load the rest
 				if (!$this->load($row)) {
-					$msg = "Failed to load new " . get_class() . " for GUID: " . $row->guid;
+					$msg = "Failed to load new " . get_class($this) . " for GUID: " . $row->guid;
 					throw new \IOException($msg);
 				}
 			} else if (is_numeric($row)) {
 				// $row is a GUID so load
 				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
 				if (!$this->load($row)) {
-					throw new \IOException("Failed to load new " . get_class() . " from GUID:" . $row);
+					throw new \IOException("Failed to load new " . get_class($this) . " from GUID:" . $row);
 				}
 			} else {
 				throw new \InvalidParameterException("Unrecognized value passed to constuctor.");
