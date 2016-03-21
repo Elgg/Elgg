@@ -34,9 +34,12 @@ elgg.discussion.Reply.prototype = {
 
 	loadForm: function () {
 		var that = this;
-
+		var spinner = require('elgg/spinner');
+		
 		// Get the form using ajax ajax/view/core/ajax/edit_comment
 		elgg.ajax('ajax/view/ajax/discussion/reply/edit?guid=' + this.guid, {
+			beforeSend: spinner.start,
+			complete: spinner.stop,
 			success: function(html) {
 				// Add the form to DOM
 				that.$item.find('.elgg-body').first().append(html);
