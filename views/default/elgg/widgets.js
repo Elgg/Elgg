@@ -9,5 +9,7 @@ define(function (require) {
 		elgg.ui.widgets.init();
 	};
 
+	elgg.register_hook_handler('init', 'system', w.init);
+
 	return w;
 });
