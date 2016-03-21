@@ -1269,15 +1269,10 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 		'body' => elgg_view("forms/$action", $body_vars)
 	);
 
-	$form_class = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
-
 	// append elgg-form class to any class options set
-	if (isset($form_vars['class'])) {
-		$form_vars['class'] = $form_vars['class'] . " $form_class";
-	} else {
-		$form_vars['class'] = $form_class;
-	}
-
+	$form_vars['class'] = (array) elgg_extract('class', $form_vars, []);
+	$form_vars['class'][] = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
+	
 	$form_vars = array_merge($defaults, $form_vars);
 	$form_vars['action_name'] = $action;
 
