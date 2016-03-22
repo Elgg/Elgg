@@ -12,6 +12,11 @@ function discussion_init() {
 
 	elgg_register_library('elgg:discussion', __DIR__ . '/lib/discussion.php');
 
+	elgg_register_menu_item('site', [
+		'name' => 'discussion',
+		'text' => elgg_echo('discussion'),
+		'href' => 'discussion/all',
+	]);
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'discussion_set_topic_url');
