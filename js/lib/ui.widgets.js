@@ -213,11 +213,3 @@ elgg.ui.widgets.setMinHeight = function(selector) {
 		}
 	});
 };
-
-require(['jquery'], function ($) {
-	$(function () {
-		require(['elgg/widgets'], function (widgets) {
-			widgets.init();
-		});
-	});
-});
