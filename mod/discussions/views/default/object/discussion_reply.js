@@ -1,19 +1,17 @@
 define(function (require) {
 	var elgg = require('elgg');
 	var $ = require('jquery');
-	
-	elgg.provide('elgg.discussion');
 
 	/**
 	 * @param {Number} guid
 	 * @constructor
 	 */
-	elgg.discussion.Reply = function (guid) {
+	var Reply = function (guid) {
 		this.guid = guid;
 		this.$item = $('#elgg-object-' + guid);
 	};
 
-	elgg.discussion.Reply.prototype = {
+	Reply.prototype = {
 		/**
 		 * Get a jQuery-wrapped reference to the form
 		 *
@@ -98,7 +96,7 @@ define(function (require) {
 	 *
 	 * @return void
 	 */
-	elgg.discussion.init = function () {
+	function init() {
 		$(document).on('click', '.elgg-item-object-discussion_reply .elgg-menu-item-edit > a', function () {
 			// store object as data in the edit link
 			var dc = $(this).data('Reply'),
@@ -113,5 +111,10 @@ define(function (require) {
 		});
 	};
 
-	elgg.register_hook_handler('init', 'system', elgg.discussion.init);
+	elgg.register_hook_handler('init', 'system', init);
+
+	return {
+		Reply: Reply,
+		init: init
+	};
 });
