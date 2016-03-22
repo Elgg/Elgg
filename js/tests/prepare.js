@@ -2,6 +2,10 @@
 
 var elgg = elgg || {};
 
+elgg.config = elgg.config || {};
+
+elgg.config.wwwroot = 'http://www.elgg.org/';
+
 define('elgg', function() {
 	return elgg;
 });
@@ -32,7 +36,6 @@ define('elgg/init', function (require) {
 	var elgg = require('elgg');
 	var plugin = require('boot/example');
 
-	console.log(plugin);
 	plugin._init();
 
 	elgg.trigger_hook('init', 'system');
