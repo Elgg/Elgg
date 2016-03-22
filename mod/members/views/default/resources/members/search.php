@@ -10,8 +10,8 @@ if (empty($query)) {
 	forward("members");
 }
 
-$limit = get_input("limit");
-$offset = get_input("offset");
+$limit = get_input('limit', elgg_get_config('default_limit'));
+$offset = (int) get_input('offset', 0);
 
 $display_query = _elgg_get_display_query($query);
 $title = elgg_echo('members:title:search', array($display_query));
