@@ -1,4 +1,5 @@
 <?php
+use Elgg\WidgetDefinition;
 /**
  * Elgg widgets library.
  * Contains code for handling widgets.
@@ -72,7 +73,7 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  */
 function elgg_register_widget_type($handler, $name = null, $description = null, $context = array('all'), $multiple = false) {
 	if (is_array($handler)) {
-		$definition = \ElggWidgetDefinition::factory($handler);
+		$definition = \Elgg\WidgetDefinition::factory($handler);
 	} else {
 		if (is_string($context)) {
 			elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
@@ -81,8 +82,8 @@ function elgg_register_widget_type($handler, $name = null, $description = null, 
 			$context = array('all');
 		}
 		
-		$definition = \ElggWidgetDefinition::factory([
-			'handler' => $handler,
+		$definition = \Elgg\WidgetDefinition::factory([
+			'id' => $handler,
 			'name' => $name,
 			'description' => $description,
 			'context' => $context,
@@ -108,28 +109,45 @@ function elgg_unregister_widget_type($handler) {
 /**
  * Has a widget type with the specified handler been registered
  *
- * @param string $handler The widget handler identifying string
+ * @param string      $handler   The widget handler identifying string
+ * @param string      $context   Optional context to check
+ * @param \ElggEntity $container Optional limit widget definitions to a container
  *
  * @return bool Whether or not that widget type exists
  * @since 1.8.0
  */
-function elgg_is_widget_type($handler) {
-	return _elgg_services()->widgets->validateType($handler);
+function elgg_is_widget_type($handler, $context = null, \ElggEntity $container = null) {
+	return _elgg_services()->widgets->validateType($handler, $context, $container);
 }
 
 /**
  * Get the widget types for a context
  *
- * The widget types are \stdClass objects.
+ * If passing $context as an associative array you the following can be used:
+ * array (
+ *     'context' => string (defaults to ''),
+ *     'exact'   => bool (defaults to false),
+ *     'container' => \ElggEntity (defaults to null)
+ * )
+ * The contents of the array will be passed to the handlers:widgets hook.
  *
- * @param string $context The widget context or empty string for current context
- * @param bool   $exact   Only return widgets registered for this context (false)
+ * @param array|string $context An associative array of options or the widget context
+ * @param bool         $exact   Only return widgets registered for this context (false)
  *
- * @return array
+ * @return \Elgg\WidgetDefinition[]
  * @since 1.8.0
  */
 function elgg_get_widget_types($context = "", $exact = false) {
-	return _elgg_services()->widgets->getTypes($context, $exact);
+	if (is_array($context)) {
+		$params = $context;
+	} else {
+		$params = [
+			'context' => $context,
+			'exact' => $exact,
+			'container' => null,
+		];
+	}
+	return _elgg_services()->widgets->getTypes($params);
 }
 
 /**
