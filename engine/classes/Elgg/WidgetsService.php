@@ -135,25 +135,24 @@ class WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function registerType($handler, $name, $description, array $context = array('all'), $multiple = false) {
-		if (!$handler || !$name) {
+	public function registerType(\ElggWidgetDefinition $definition) {
+		if (!$definition) {
 			return false;
 		}
-
+		
+		$handler = $definition->handler;
+		if (!$handler) {
+			return false;
+		}
+		
 		if (!isset($this->widgets)) {
 			$this->widgets = new \stdClass;
 		}
 		if (!isset($this->widgets->handlers)) {
-			$this->widgets->handlers = array();
+			$this->widgets->handlers = [];
 		}
 
-		$handlerobj = new \stdClass;
-		$handlerobj->name = $name;
-		$handlerobj->description = $description;
-		$handlerobj->context = $context;
-		$handlerobj->multiple = $multiple;
-
-		$this->widgets->handlers[$handler] = $handlerobj;
+		$this->widgets->handlers[$handler] = $definition;
 
 		return true;
 	}

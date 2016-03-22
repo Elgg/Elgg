@@ -59,26 +59,38 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  *
  * This should be called by plugins in their init function.
  *
- * @param string $handler     The identifier for the widget handler
- * @param string $name        The name of the widget type
- * @param string $description A description for the widget type
- * @param array  $context     An array of contexts where this
- *                            widget is allowed (default: array('all'))
- * @param bool   $multiple    Whether or not multiple instances of this widget
- *                            are allowed in a single layout (default: false)
+ * @param string|array $handler     An array of options or the identifier for the widget handler
+ * @param string       $name        The name of the widget type
+ * @param string       $description A description for the widget type
+ * @param array        $context     An array of contexts where this
+ *                                  widget is allowed (default: array('all'))
+ * @param bool         $multiple    Whether or not multiple instances of this widget
+ *                                  are allowed in a single layout (default: false)
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_widget_type($handler, $name, $description, $context = array('all'), $multiple = false) {
-	if (is_string($context)) {
-		elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
-		$context = explode(",", $context);
-	} elseif (empty($context)) {
-		$context = array('all');
+function elgg_register_widget_type($handler, $name = null, $description = null, $context = array('all'), $multiple = false) {
+	if (is_array($handler)) {
+		$definition = \ElggWidgetDefinition::factory($handler);
+	} else {
+		if (is_string($context)) {
+			elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
+			$context = explode(",", $context);
+		} elseif (empty($context)) {
+			$context = array('all');
+		}
+		
+		$definition = \ElggWidgetDefinition::factory([
+			'handler' => $handler,
+			'name' => $name,
+			'description' => $description,
+			'context' => $context,
+			'multiple' => $multiple,
+		]);
 	}
 
-	return _elgg_services()->widgets->registerType($handler, $name, $description, $context, $multiple);
+	return _elgg_services()->widgets->registerType($definition);
 }
 
 /**
