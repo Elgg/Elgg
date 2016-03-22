@@ -1,7 +1,8 @@
 define(function (require) {
 
-	var elgg = require('elgg');
 	var $ = require('jquery');
+	var Ajax = require('elgg/Ajax');
+	var ajax = new Ajax;
 
 	/**
 	 * @param {Number} guid
@@ -37,28 +38,28 @@ define(function (require) {
 		},
 		loadForm: function () {
 			var that = this;
-
-			// Get the form using ajax ajax/view/core/ajax/edit_comment
-			elgg.ajax('ajax/view/ajax/discussion/reply/edit?guid=' + this.guid, {
-				success: function (html) {
-					// Add the form to DOM
-					that.$item.find('.elgg-body').first().append(html);
-
-					that.showForm();
-
-					var $form = that.getForm();
-
-					$form.find('.elgg-button-cancel').on('click', function () {
-						that.hideForm();
-						return false;
-					});
-
-					// save
-					$form.on('submit', function () {
-						that.submitForm();
-						return false;
-					});
+			ajax.view('ajax/discussion/reply/edit', {
+				data: {
+					guid: that.guid,
 				}
+			}).done(function (html) {
+				// Add the form to DOM
+				that.$item.find('.elgg-body').first().append(html);
+
+				that.showForm();
+
+				var $form = that.getForm();
+
+				$form.find('.elgg-button-cancel').on('click', function () {
+					that.hideForm();
+					return false;
+				});
+
+				// save
+				$form.on('submit', function () {
+					that.submitForm();
+					return false;
+				});
 			});
 		},
 		submitForm: function () {
@@ -66,19 +67,15 @@ define(function (require) {
 					$form = this.getForm(),
 					value = $form.find('textarea[name=description]').val();
 
-			elgg.action('discussion/reply/save', {
-				data: $form.serialize(),
-				success: function (json) {
-					if (json.status === 0) {
+			// @todo: pass data object with options once #9534 is fixed
+			ajax.action('discussion/reply/save?' + $form.serialize())
+					.done(function () {
 						// Update list item content
 						that.$item.find('[data-role="discussion-reply-text"]').html(value);
-					}
-					that.hideForm(function () {
-						that.getForm().remove();
+						that.hideForm(function () {
+							that.getForm().remove();
+						});
 					});
-				}
-			});
-
 			return false;
 		},
 		toggleEdit: function () {
