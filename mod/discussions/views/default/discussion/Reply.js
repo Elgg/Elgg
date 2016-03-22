@@ -29,7 +29,11 @@ define(function (require) {
 			this.getForm().slideUp('fast', complete).data('hidden', 1);
 		},
 		showForm: function () {
-			this.getForm().slideDown('medium').data('hidden', 0);
+			var $form = this.getForm();
+			$form.slideDown('medium').data('hidden', 0);
+			$('body').animate({
+				scrollTop: $form.offset().top
+			}, 500);
 		},
 		loadForm: function () {
 			var that = this;
