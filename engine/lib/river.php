@@ -832,6 +832,12 @@ function _elgg_river_init() {
 	elgg_register_action('river/delete', '', 'admin');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
+
+	// For BC, we want required AMD modules to be loaded even if plugins
+	// overwrite these views
+	elgg_extend_view('core/river/filter', 'core/river/filter_deps');
+	elgg_extend_view('forms/comment/save', 'forms/comment/save_deps');
+	
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
