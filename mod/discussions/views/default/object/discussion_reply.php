@@ -10,6 +10,8 @@ if (!$reply) {
 	return true;
 }
 
+elgg_require_js('object/discussion_reply');
+
 $poster = $reply->getOwnerEntity();
 
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
