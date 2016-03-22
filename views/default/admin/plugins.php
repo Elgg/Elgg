@@ -24,10 +24,16 @@ $categories = array();
 foreach ($installed_plugins as $id => $plugin) {
 	if (!$plugin->isValid()) {
 		if ($plugin->isActive()) {
-			// force disable and warn
-			elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-					elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
-			$plugin->deactivate();
+			$disable_plugins = elgg_get_config('auto_disable_plugins');
+			if ($disable_plugins === null) {
+				$disable_plugins = true;
+			}
+			if ($disable_plugins) {
+				// force disable and warn
+				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
+						elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
+				$plugin->deactivate();
+			}
 		}
 		continue;
 	}

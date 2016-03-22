@@ -201,6 +201,19 @@ $CONFIG->broken_mta = false;
 $CONFIG->db_disable_query_cache = false;
 
 /**
+ * Automatically disable plugins that are unable to boot
+ *
+ * Elgg will disable unbootable plugins. If you set this to false plugins
+ * will no longer be disabled if they are not bootable. This could cause requests
+ * to your site to fail as required views, classes or cached data could be missing.
+ *
+ * Setting this to false could be useful during deployment of new code.
+ *
+ * @global bool $CONFIG->auto_disable_plugins
+ */
+$CONFIG->auto_disable_plugins = true;
+
+/**
  * Minimum password length
  *
  * This value is used when validating a user's password during registration.
