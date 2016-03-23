@@ -35,14 +35,17 @@ elgg.security.setToken = function(json) {
  * @private
  */
 elgg.security.refreshToken = function() {
-	elgg.getJSON('refresh_token', function(data) {
-		if (data && data.__elgg_ts && data.__elgg_token) {
-			elgg.security.setToken(data);
-			if (elgg.is_logged_in() && data.logged_in === false) {
-				elgg.session.user = null;
-				elgg.register_error(elgg.echo('session_expired'));
+	elgg.getJSON('refresh_token', {
+		success: function(data) {
+			if (data && data.__elgg_ts && data.__elgg_token) {
+				elgg.security.setToken(data);
+				if (elgg.is_logged_in() && data.logged_in === false) {
+					elgg.session.user = null;
+					elgg.register_error(elgg.echo('session_expired'));
+				}
 			}
-		}
+		},
+		error: function() {},
 	});
 };
 
