@@ -93,16 +93,7 @@ if (is_array($users) && count($users) > 0) {
 	$html .= '</ul>';
 }
 
-echo <<<___END
-<div class="elgg-module elgg-module-inline uservalidation-module">
-	<div class="elgg-head">
-		$bulk_actions
-	</div>
-	<div class="elgg-body">
-		$html
-	</div>
-</div>
-___END;
+echo elgg_view_module('inline', $bulk_actions, $html, ['class' => 'uservalidation-module']);
 
 if ($count > 5) {
 	echo $bulk_actions;
