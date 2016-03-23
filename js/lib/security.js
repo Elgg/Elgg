@@ -24,8 +24,8 @@ elgg.security.setToken = function(json) {
 	// also update all links that contain tokens and time stamps
 	$('[href*="__elgg_ts"][href*="__elgg_token"]').each(function() {
 		this.href = this.href
-			.replace(/__elgg_ts=\d*/, '__elgg_ts=' + json.__elgg_ts)
-			.replace(/__elgg_token=[0-9a-f]*/, '__elgg_token=' + json.__elgg_token);
+			.replace(/__elgg_ts=\d*/i, '__elgg_ts=' + json.__elgg_ts)
+			.replace(/__elgg_token=[0-9a-z_-]*/i, '__elgg_token=' + json.__elgg_token);
 	});
 };
 
