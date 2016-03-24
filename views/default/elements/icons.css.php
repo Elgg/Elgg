@@ -45,6 +45,7 @@ h6 > .elgg-icon {
 .elgg-avatar > .elgg-icon-hover-menu:before {
 	position: absolute;
 	right: 2px;
+	bottom: 0px;
 }
 
 .elgg-ajax-loader {
