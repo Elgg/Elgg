@@ -71,6 +71,8 @@ function blog_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:blog', 'Elgg\Values::getTrue');
+
+	elgg_require_for_view('forms/blog/save', 'elgg/blog/save_draft');
 }
 
 /**
