@@ -36,8 +36,6 @@ function reportedcontent_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'reportedcontent_user_hover_menu');
 
-	// Add admin menu item
-	// @todo Might want to move this to a 'feedback' section. something other than utils
 	elgg_register_admin_menu_item('administer', 'reportedcontent', 'administer_utilities');
 
 	elgg_register_widget_type(
@@ -78,22 +76,30 @@ function reportedcontent_page_handler($page) {
  * Add report user link to hover menu
  */
 function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['entity'];
-	/* @var ElggUser $user */
-
-	$profile_url = urlencode($user->getURL());
-	$name = urlencode($user->name);
-	$url = "reportedcontent/add?address=$profile_url&title=$name";
-
-	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
-		$item = new ElggMenuItem(
-				'reportuser',
-				elgg_echo('reportedcontent:user'),
-				$url);
-		$item->setSection('action');
-		$item->addLinkClass('elgg-lightbox');
-		$return[] = $item;
+	if (!elgg_is_logged_in()) {
+		return;
 	}
+	
+	$user = elgg_extract('entity', $params);
+	/* @var ElggUser $user */
+	
+	if (elgg_get_logged_in_user_guid() == $user->guid) {
+		return;
+	}
+	
+	$href = elgg_http_add_url_query_elements('reportedcontent/add', [
+		'address' => $user->getURL(),
+		'title' => $user->name,
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'reportuser',
+		'text' => elgg_echo('reportedcontent:user'),
+		'href' => $href,
+		'section' => 'action',
+		'link_class' => 'elgg-lightbox',
+		'deps' => 'elgg/reportedcontent',
+	]);
 
 	return $return;
 }
