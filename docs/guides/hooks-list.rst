@@ -83,13 +83,16 @@ System hooks
 	In ``elgg_view_layout()``, filters the return value of the layout view.
 
 **parameters, menu:<menu_name>**
-	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before it is generated.
+	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before rendering.
 
 **register, menu:<menu_name>**
-	Triggered by ``elgg_view_menu()``. Used to add dynamic menu items.
+	Filters the initial list of menu items pulled from configuration, before the menu has been split into
+	sections. Triggered by ``elgg_view_menu()`` and ``elgg()->menus->getMenu()``.
 
 **prepare, menu:<menu_name>**
-	Trigger by ``elgg_view_menu()``. Used to sort, add, remove, and modify menu items.
+	Filters the array of menu sections before they're displayed. Each section is a string key mapping to
+	an area of menu items. This is a good hook to sort, add, remove, and modify menu items. Triggered by
+	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
 **creating, river**
 	Triggered before a river item is created. Return false to prevent river item from being created.

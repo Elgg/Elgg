@@ -46,6 +46,9 @@
  * @subpackage Views
  */
 
+use Elgg\Menu\Menu;
+use Elgg\Menu\UnpreparedMenu;
+
 /**
  * The viewtype override.
  *
@@ -683,8 +686,9 @@ function elgg_view_layout($layout_name, $vars = array()) {
  *
  * elgg_view_menu() uses views in navigation/menu
  *
- * @param string $menu_name The name of the menu
- * @param array  $vars      An associative array of display options for the menu.
+ * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
+ * @param array                      $vars An associative array of display options for the menu.
+ *
  *                          Options include:
  *                              sort_by => string or php callback
  *                                  string options: 'name', 'priority', 'title' (default),
@@ -698,36 +702,24 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_menu($menu_name, array $vars = array()) {
-	global $CONFIG;
+function elgg_view_menu($menu, array $vars = array()) {
+	if (is_string($menu)) {
+		$menu = _elgg_services()->menus->getMenu($menu, $vars);
 
-	$vars['name'] = $menu_name;
-
-	$vars = elgg_trigger_plugin_hook('parameters', "menu:$menu_name", $vars, $vars);
-
-	$sort_by = elgg_extract('sort_by', $vars, 'text');
-
-	if (isset($CONFIG->menus[$menu_name])) {
-		$menu = $CONFIG->menus[$menu_name];
-	} else {
-		$menu = array();
+	} elseif ($menu instanceof UnpreparedMenu) {
+		$menu = _elgg_services()->menus->prepareMenu($menu);
 	}
 
-	// Give plugins a chance to add menu items just before creation.
-	// This supports dynamic menus (example: user_hover).
-	$menu = elgg_trigger_plugin_hook('register', "menu:$menu_name", $vars, $menu);
+	if (!$menu instanceof Menu) {
+		throw new \InvalidArgumentException('$menu must be a menu name, a Menu, or UnpreparedMenu');
+	}
 
-	$builder = new \ElggMenuBuilder($menu);
-	$vars['menu'] = $builder->getMenu($sort_by);
-	$vars['selected_item'] = $builder->getSelected();
+	$name = $menu->getName();
 
-	// Let plugins modify the menu
-	$vars['menu'] = elgg_trigger_plugin_hook('prepare', "menu:$menu_name", $vars, $vars['menu']);
-
-	if (elgg_view_exists("navigation/menu/$menu_name")) {
-		return elgg_view("navigation/menu/$menu_name", $vars);
+	if (elgg_view_exists("navigation/menu/$name")) {
+		return elgg_view("navigation/menu/$name", $menu->getParams());
 	} else {
-		return elgg_view("navigation/menu/default", $vars);
+		return elgg_view("navigation/menu/default", $menu->getParams());
 	}
 }
 

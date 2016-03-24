@@ -14,6 +14,8 @@ use Elgg\Filesystem\Directory;
  * The full path is necessary to work around this: https://bugs.php.net/bug.php?id=55726
  *
  * @since 2.0.0
+ *
+ * @property-read \Elgg\Menu\Service $menus
  */
 class Application {
 
@@ -41,6 +43,7 @@ class Application {
 	 */
 	private static $public_services = [
 		//'config' => true,
+		'menus' => true,
 	];
 
 	/**

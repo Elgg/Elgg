@@ -79,7 +79,7 @@ Examples
 	/**
 	 * Change the URL of the "Albums" menu item in the owner_block menu
 	 */
-	function my_owner_block_menu_handler($hook, $type, $menu, $params) {
+	function my_owner_block_menu_handler($hook, $type, $items, $params) {
 		$owner = $params['entity'];
 
 		// Owner can be either user or a group, so we
@@ -93,7 +93,7 @@ Examples
 				break;
 		}
 
-		foreach ($menu as $key => $item) {
+		foreach ($items as $key => $item) {
 			if ($item->getName() == 'albums') {
 				// Set the new URL
 				$item->setURL($url);
@@ -101,7 +101,7 @@ Examples
 			}
 		}
 
-		return $menu;
+		return $items;
 	}
 
 **Example 2:** Modify the ``entity`` menu for the ``ElggBlog`` objects
@@ -121,7 +121,7 @@ Examples
 	/**
 	 * Customize the entity menu for ElggBlog objects
 	 */
-	function my_entity_menu_handler($hook, $type, $menu, $params) {
+	function my_entity_menu_handler($hook, $type, $items, $params) {
 		// The entity can be found from the $params parameter
 		$entity = $params['entity'];
 
@@ -131,11 +131,11 @@ Examples
 			return $menu;
 		}
 
-		foreach ($menu as $key => $item) {
+		foreach ($items as $key => $item) {
 			switch ($item->getName()) {
 				case 'likes':
 					// Remove the "likes" menu item
-					unset($menu[$key]);
+					unset($items[$key]);
 					break;
 				case 'edit':
 					// Change the "Edit" text into a custom icon
@@ -144,7 +144,7 @@ Examples
 			}
 		}
 
-		return $menu;
+		return $items;
 	}
 
 Creating a new menu
@@ -163,12 +163,14 @@ in alphapetical order:
 
 .. code-block:: php
 
+	// in a resource view
 	echo elgg_view_menu('my_menu', array('sort_by' => 'title'));
 
 You can now add new items to the menu like this:
 
 .. code-block:: php
 
+	// in plugin init
 	elgg_register_menu_item('my_menu', array(
 		'name' => 'my_page',
 		'href' => 'path/to/my_page',

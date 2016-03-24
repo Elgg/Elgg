@@ -39,6 +39,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
  * @property-read Mailer                                   $mailer
+ * @property-read \Elgg\Menu\Service                       $menus
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
@@ -191,6 +192,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
+
+		$this->setFactory('menus', function(ServiceProvider $c) {
+			return new \Elgg\Menu\Service($c->hooks, $c->config);
+		});
 
 		$this->setFactory('metadataCache', function (ServiceProvider $c) {
 			return new \Elgg\Cache\MetadataCache($c->session);
