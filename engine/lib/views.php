@@ -1692,8 +1692,6 @@ function elgg_views_boot() {
 	elgg_load_css('elgg');
 
 	elgg_register_simplecache_view('elgg/init.js');
-	elgg_require_js('elgg/init');
-	elgg_require_js('elgg/ready');
 
 	// optional stuff
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));

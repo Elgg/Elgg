@@ -109,7 +109,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
 
 		$this->setFactory('ajax', function(ServiceProvider $c) {
-			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input);
+			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input, $c->amdConfig);
 		});
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {

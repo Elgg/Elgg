@@ -32,6 +32,7 @@ More notes:
 * The default HTTP method is ``POST`` for actions, otherwise ``GET``. You can set it via ``options.method``.
 * For client caching, set ``options.method`` to ``"GET"`` and ``options.data.elgg_response_ttl`` to the max-age you want in seconds.
 * To save system messages for the next page load, set ``options.data.elgg_fetch_messages = 0``. You may want to do this if you intent to redirect the user based on the response.
+* To stop client-side API from requiring AMD modules required server-side with `elgg_require_js()`, set ``options.data.elgg_fetch_deps = 0``.
 
 Performing actions
 ------------------
@@ -283,6 +284,18 @@ To capture the metadata send back to the client, we use the client-side ``ajax_r
 .. note:: Only ``data.value`` is returned to the ``success`` function or available via the `Deferred` interface.
 
 .. note:: Elgg uses these same hooks to deliver system messages over ``elgg/Ajax`` responses.
+
+
+Requiring AMD modules
+---------------------
+
+Each response from an Ajax service will contain a list of AMD modules required server side with `elgg_require_js()`.
+When response data is unwrapped, these modules will be loaded asynchronously - plugins should not expect these
+modules to be loaded in their `$.done()` and `$.then()` handlers and must use `require()` for any modules they depend on.
+Additionally AMD modules should not expect the DOM to have been altered by an Ajax request when they are loaded -
+DOM events should be delegated and manipulations on DOM elements should be delayed until all Ajax requests have been
+resolved.
+
 
 Legacy elgg.ajax APIs
 =====================
