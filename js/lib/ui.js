@@ -290,7 +290,7 @@ elgg.ui.initHoverMenu = function(parent) {
 };
 
 /**
- * Calls a confirm() and prevents default if denied.
+ * Calls a confirm() and returns false if denied.
  *
  * @param {Object} e
  * @return void
@@ -298,7 +298,7 @@ elgg.ui.initHoverMenu = function(parent) {
 elgg.ui.requiresConfirmation = function(e) {
 	var confirmText = $(this).data('confirm') || elgg.echo('question:areyousure');
 	if (!confirm(confirmText)) {
-		e.preventDefault();
+		return false;
 	}
 };
 
