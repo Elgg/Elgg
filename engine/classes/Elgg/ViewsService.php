@@ -85,6 +85,7 @@ class ViewsService {
 
 		$this->views = (object)[
 			'extensions' => [],
+			'deps' => [],
 		];
 		$this->viewtype = (object)[
 			/**
@@ -309,6 +310,7 @@ class ViewsService {
 
 			$rendering = $this->renderViewFile($view, $vars, $viewtype, $issue_missing_notice);
 			if ($rendering !== false) {
+				$content .= $this->loadDeps($view);
 				$content .= $rendering;
 				continue;
 			}
@@ -318,9 +320,11 @@ class ViewsService {
 
 				$rendering = $this->renderViewFile($view, $vars, 'default', $issue_missing_notice);
 				if ($rendering !== false) {
+					$content .= $this->loadDeps($view);
 					$content .= $rendering;
 				}
 			}
+
 		}
 
 		// Plugin hook
@@ -485,6 +489,88 @@ class ViewsService {
 	}
 
 	/**
+	 * Registers an AMD module as a view dependency
+	 * 
+	 * @param string $view   View name
+	 * @param string $module AMD module name
+	 * @return void
+	 * @access private
+	 */
+	public function addDep($view, $module) {
+		$view = $this->canonicalizeViewName($view);
+
+		if ($this->isCacheableView($view)) {
+			$this->logger->warn("Cacheable view '$view' can not depend on an AMD module");
+			return;
+		}
+
+		if (!isset($this->views->deps[$view])) {
+			$this->views->deps[$view] = [];
+		}
+
+		$this->views->deps[$view][] = (string) $module;
+	}
+
+	/**
+	 * Unregister an AMD module from view dependencies
+	 *
+	 * @param string $view   View name
+	 * @param string $module AMD module name
+	 * @return bool
+	 * @access private
+	 */
+	public function removeDep($view, $module) {
+		$view = $this->canonicalizeViewName($view);
+
+		if (!isset($this->views->deps[$view])) {
+			return false;
+		}
+
+		$key = array_search($module, $this->views->deps[$view]);
+		if ($key === false) {
+			return false;
+		}
+
+		unset($this->views->deps[$view][$key]);
+
+		return true;
+	}
+
+	/**
+	 * Loads view depdencies
+	 *
+	 * @param string $view View name
+	 * @return string
+	 * @access private
+	 */
+	public function loadDeps($view) {
+		$contents = '';
+		if (empty($this->views->deps[$view])) {
+			return $contents;
+		}
+
+		foreach ($this->views->deps[$view] as $module) {
+			$contents .= $this->loadDep($module);
+		}
+
+		return $contents;
+	}
+
+	/**
+	 * 
+	 * Loads an individual dependency view
+	 *
+	 * @internal We return strings here that are appended to view rendering. We may sometimes need to print something inline, e.g. using <script> tag
+	 * 
+	 * @param string $module AMD module name
+	 * @return string
+	 */
+	public function loadDep($module) {
+		_elgg_services()->amdConfig->addDependency($module);
+		return '';
+	}
+
+	/**
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
@@ -632,6 +718,7 @@ class ViewsService {
 			'locations' => $this->locations,
 			'overrides' => $overrides,
 			'extensions' => $this->views->extensions,
+			'dependencies' => $this->views->deps,
 		];
 	}
 
