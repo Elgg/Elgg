@@ -14,7 +14,7 @@ Overview
 
 All the ajax methods perform the following:
 
-#. Client-side, the ``data`` option (if given) is filtered by the hook ``ajax_request_data``.
+#. Client-side, the ``data`` option (if given as an object) is filtered by the hook ``ajax_request_data``.
 #. The request is made to the server, either rendering a view or a form, calling an action, or loading a path.
 #. Echoed JSON is turned into a response object (``Elgg\Services\AjaxResponse``).
 #. The response object is filtered by the hook ``ajax_response``.
@@ -30,9 +30,11 @@ More notes:
 * Elgg gives you a default error handler that shows a generic message if output fails.
 * PHP exceptions or denied resource return HTTP error codes, resulting in use of the client-side error handler.
 * The default HTTP method is ``POST`` for actions, otherwise ``GET``. You can set it via ``options.method``.
+* If a non-empty ``options.data`` is given, the default method is always ``POST``.
 * For client caching, set ``options.method`` to ``"GET"`` and ``options.data.elgg_response_ttl`` to the max-age you want in seconds.
 * To save system messages for the next page load, set ``options.data.elgg_fetch_messages = 0``. You may want to do this if you intent to redirect the user based on the response.
-* To stop client-side API from requiring AMD modules required server-side with `elgg_require_js()`, set ``options.data.elgg_fetch_deps = 0``.
+* To stop client-side API from requiring AMD modules required server-side with ``elgg_require_js()``, set ``options.data.elgg_fetch_deps = 0``.
+* All methods accept a query string in the first argument. This is passed on to the fetch URL, but does not appear in the hook types.
 
 Performing actions
 ------------------
@@ -80,7 +82,11 @@ Notes for actions:
    * client-side ``"ajax_response_data", "action:do_math"`` to filter the response data (before the calling code receives it)
 * CSRF tokens are added to the request data.
 * The default method is ``POST``.
-* Using ``forward()`` in and action simply sends the response. The URL given in not returned to the client.
+* An absolute action URL can be given in place of the action name.
+* Using ``forward()`` in an action simply sends the response. The URL given in not returned to the client.
+
+.. note:: When setting ``data``, use ``ajax.objectify($form)`` instead of ``$form.serialize()``. Doing so allows the
+          ``ajax_request_data`` plugin hook to fire and other plugins to alter/piggyback on the request.
 
 Fetching data
 -------------
@@ -118,6 +124,7 @@ Notes for paths:
 
 * The 3 hooks (see Actions above) will have type ``path:<url_path>``. In this case, "path:myplugin_time".
 * If the page handler echoes a regular web page, ``output`` will be a string containing the HTML.
+* An absolute URL can be given in place of the path name.
 
 Fetching views
 --------------
@@ -236,6 +243,8 @@ Let's say when the view ``foo`` is fetched, we want to also send the server some
     });
 
 This data can be read server-side via ``get_input('bar');``.
+
+.. note:: If data was given as a string (e.g. ``$form.serialize()``), the request hooks are not triggered.
 
 Piggybacking on an Ajax response
 --------------------------------

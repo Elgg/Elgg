@@ -247,7 +247,7 @@ class Service {
 	 * @internal
 	 */
 	public function appendDeps($hook, $type, AjaxResponse $response, $params) {
-		$response->getData()->_deps = (array) $this->amd_config->getDependencies();
+		$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
 		return $response;
 	}
 
