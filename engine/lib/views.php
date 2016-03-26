@@ -1698,6 +1698,8 @@ function elgg_views_boot() {
 
 	elgg_register_js('elgg.friendspicker', elgg_get_simplecache_url('elgg/ui.friends_picker.js'));
 	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
+
+	// @deprecated 2.2
 	elgg_register_js('elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
 
 	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
