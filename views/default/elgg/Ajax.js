@@ -38,9 +38,9 @@ define(function (require) {
 		 */
 		function fetch(options, hook_type) {
 			var orig_options,
-				params,
-				unwrapped = false,
-				result;
+					params,
+					unwrapped = false,
+					result;
 
 			function unwrap_data(data) {
 				// between the deferred and a success function, make sure this runs only once.
@@ -133,7 +133,7 @@ define(function (require) {
 
 			options = options || {};
 			options.url = path;
-
+			
 			return fetch(options, 'path:' + path.replace(/\/$/, ''));
 		};
 
@@ -214,6 +214,11 @@ define(function (require) {
 		m && m.error && elgg.register_error(m.error);
 		m && m.success && elgg.system_message(m.success);
 		delete data._elgg_msgs;
+
+		var deps = data._deps;
+		deps.length && require(deps);
+		delete data._deps;
+
 		return data;
 	});
 

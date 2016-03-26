@@ -1,11 +1,13 @@
 <?php
 namespace Elgg\Ajax;
 
+use Elgg\Amd\Config;
 use Elgg\Http\Input;
 use Elgg\PluginHooksService;
-use Elgg\SystemMessagesService;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Elgg\Services\AjaxResponse;
+use Elgg\SystemMessagesService;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Models the Ajax API service
@@ -32,6 +34,11 @@ class Service {
 	private $input;
 
 	/**
+	 * @var Config
+	 */
+	private $amd_config;
+
+	/**
 	 * @var bool
 	 */
 	private $response_sent = false;
@@ -39,18 +46,25 @@ class Service {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService    $hooks Hooks service
-	 * @param SystemMessagesService $msgs  System messages service
-	 * @param Input                 $input Input service
+	 * @param PluginHooksService    $hooks     Hooks service
+	 * @param SystemMessagesService $msgs      System messages service
+	 * @param Input                 $input     Input service
+	 * @param Config                $amdConfig AMD config
 	 */
-	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Input $input) {
+	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Input $input, Config $amdConfig) {
 		$this->hooks = $hooks;
 		$this->msgs = $msgs;
 		$this->input = $input;
+		$this->amd_config = $amdConfig;
 
 		if ($this->input->get('elgg_fetch_messages', true)) {
 			$message_filter = [$this, 'appendMessages'];
 			$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $message_filter, 999);
+		}
+
+		if ($this->input->get('elgg_fetch_deps', true)) {
+			$deps_filter = [$this, 'appendDeps'];
+			$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $deps_filter, 999);
 		}
 	}
 
@@ -159,7 +173,7 @@ class Service {
 			$hook = AjaxResponse::RESPONSE_HOOK;
 			$api_response = $this->hooks->trigger($hook, $hook_type, null, $api_response);
 			if (!$api_response instanceof AjaxResponse) {
-				throw new \RuntimeException("The value returned by hook [$hook, $hook_type] was not an ApiResponse");
+				throw new RuntimeException("The value returned by hook [$hook, $hook_type] was not an ApiResponse");
 			}
 		}
 
@@ -173,7 +187,7 @@ class Service {
 	 * @param bool         $allow_removing_headers Alter PHP's global headers to allow caching
 	 *
 	 * @return JsonResponse
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	private function buildHttpResponse(AjaxResponse $api_response, $allow_removing_headers = true) {
 		if ($api_response->isCancelled()) {
@@ -219,4 +233,22 @@ class Service {
 		$response->getData()->_elgg_msgs = (object)$this->msgs->dumpRegister();
 		return $response;
 	}
+
+	/**
+	 * Send required AMD modules list back with the response
+	 *
+	 * @param string       $hook     "ajax_response"
+	 * @param string       $type     "all"
+	 * @param AjaxResponse $response Ajax response
+	 * @param array        $params   Hook params
+	 *
+	 * @return AjaxResponse
+	 * @access private
+	 * @internal
+	 */
+	public function appendDeps($hook, $type, AjaxResponse $response, $params) {
+		$response->getData()->_deps = (array) $this->amd_config->getDependencies();
+		return $response;
+	}
+
 }
