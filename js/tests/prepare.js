@@ -32,7 +32,6 @@ define('elgg/init', function (require) {
 	var elgg = require('elgg');
 	var plugin = require('boot/example');
 
-	console.log(plugin);
 	plugin._init();
 
 	elgg.trigger_hook('init', 'system');

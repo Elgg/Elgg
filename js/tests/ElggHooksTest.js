@@ -52,11 +52,123 @@ define(function(require) {
 
 				expect(elgg.trigger_hook("fee.fum", "pow")).toBe(2);
 			});
+
+			it("calls handlers in priority order despite use of 'all'", function() {
+				var todo = [
+					'foo,bar',
+					'foo,all',
+					'all,bar',
+					'foo,bar',
+					'all,all',
+					'foo,bar'
+				];
+				var done = [];
+
+				$.each(todo, function (i, hook_type) {
+					var hook = hook_type.split(',')[0];
+					var type = hook_type.split(',')[1];
+
+					elgg.register_hook_handler(hook, type, function () {
+						done.push(hook_type);
+					}, i);
+				});
+
+				elgg.trigger_hook('foo', 'bar');
+
+				expect(done).toEqual(todo);
+			});
+		});
+
+		describe("elgg.trigger_hook()", function() {
+			it("only calls sync handlers", function () {
+				elgg.register_hook_handler('foo', 'bar', function (h, t, p, v) {
+					return v + 1;
+				});
+				elgg.register_async_hook_handler('foo', 'bar', function (h, t, p, v, deferred) {
+					deferred.resolve(v + 10);
+				});
+
+				expect(elgg.trigger_hook('foo', 'bar', null, 0)).toBe(1);
+			});
+		});
+
+		describe("elgg.trigger_sync_hook()", function() {
+			it("calls all handlers", function (done) {
+				elgg.register_async_hook_handler('foo', 'bar', function (h, t, p, v, deferred) {
+					setTimeout(function () {
+						deferred.resolve(v + 5);
+					}, 1);
+				});
+				elgg.register_hook_handler('foo', 'bar', function (h, t, p, v) {
+					return v + 1;
+				});
+				elgg.register_async_hook_handler('foo', 'bar', function (h, t, p, v, deferred) {
+					setTimeout(function () {
+						deferred.resolve(v + 10);
+					}, 1);
+				});
+
+				elgg.trigger_async_hook('foo', 'bar', null, 0).done(function (val) {
+					expect(val).toBe(16);
+					done();
+				});
+			});
+
+			it("passes error to promise", function (done) {
+				elgg.register_async_hook_handler('foo', 'bar', function (h, t, p, v, deferred) {
+					setTimeout(function () {
+						deferred.reject('fail');
+					}, 1);
+				});
+
+				elgg.trigger_async_hook('foo', 'bar', null, 0).fail(function (err) {
+					expect(err).toBe('fail');
+					done();
+				});
+			});
+
+			it("auto-rejects after time exceeded", function (done) {
+				var tmp = elgg.config.async_handler_timeout;
+
+				elgg.config.async_handler_timeout = 100;
+
+				elgg.register_async_hook_handler('foo', 'bar', function (h, t, p, v, deferred) {
+					setTimeout(function () {
+						deferred.resolve(1);
+					}, 200); // too slow
+				});
+
+				elgg.trigger_async_hook('foo', 'bar', null, 0).fail(function (err) {
+					expect(err.message).toContain('within time limit');
+
+					elgg.config.async_handler_timeout = tmp;
+					done();
+				});
+			});
 		});
 		
 		describe("elgg.register_hook_handler()", function() {
 			it("only accepts functions as handlers", function() {
 				expect(function() { elgg.register_hook_handler('str', 'str', 'oops'); }).toThrow();
+			});
+		});
+
+		describe("elgg.unregister_hook_handler()", function() {
+			it("can remove handlers", function() {
+				elgg.register_hook_handler('foo', 'bar', function (h, t, p, v) {
+					return v + 1;
+				});
+				elgg.register_hook_handler('foo', 'bar', elgg.abstractMethod);
+				elgg.register_hook_handler('foo', 'bar', function (h, t, p, v) {
+					return v + 2;
+				});
+				elgg.register_hook_handler('foo', 'bar', elgg.abstractMethod);
+
+				expect(elgg.unregister_hook_handler('foo', 'bar', elgg.abstractMethod)).toBe(true);
+
+				expect(elgg.unregister_hook_handler('foo', 'bar', elgg.abstractMethod)).toBe(false);
+
+				expect(elgg.trigger_hook('foo', 'bar', null, 5)).toBe(8);
 			});
 		});
 	});

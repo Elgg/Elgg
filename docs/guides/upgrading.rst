@@ -124,6 +124,18 @@ Miscellaneous API changes
  * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_log`` no longer accepts the level ``"DEBUG"``
 
+JavaScript hook calling order may change
+----------------------------------------
+
+When registering for hooks, the ``all`` keyword for wildcard matching no longer has any effect
+on the order that handlers are called. To ensure your handler is called last, you must give it the
+highest priority of all matching handlers, or to ensure your handler is called first, you must give
+it the lowest priority of all matching handlers.
+
+If handlers were registered with the same priority, these are called in the order they were registered.
+
+To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
+priority. Some of these handlers will most likely be called in a different order.
 
 From 2.0 to 2.1
 ===============
