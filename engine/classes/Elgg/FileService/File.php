@@ -43,6 +43,14 @@ class File {
 	}
 
 	/**
+	 * Returns file object
+	 * @return \ElggFile|null
+	 */
+	public function getFile() {
+		return $this->file;
+	}
+
+	/**
 	 * Sets URL expiration
 	 *
 	 * @param int $expires String suitable for strtotime()

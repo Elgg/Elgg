@@ -318,6 +318,34 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
+	 * Sets access and modification time of file and clears stats cache for the file
+	 * 
+	 * @param int $time  Modification time (defaults to time())
+	 * @param int $atime Access time (defaults to $time)
+	 * @return bool
+	 */
+	public function setModifiedTime($time = null, $atime = null) {
+		if (!isset($time)) {
+			$time = time();
+		}
+		if (!isset($atime)) {
+			$atime = $time;
+		}
+		if ($result = touch($this->getFilenameOnFilestore(), $time, $atime)) {
+			clearstatcache(true, $this->getFilenameOnFilestore());
+		}
+		return $result;
+	}
+
+	/**
+	 * Returns file modification time
+	 * @return int
+	 */
+	public function getModifiedTime() {
+		return filemtime($this->getFilenameOnFilestore());
+	}
+
+	/**
 	 * Return the size of the file in bytes.
 	 *
 	 * @return int
