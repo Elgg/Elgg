@@ -26,13 +26,14 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 
 		$this->handler = _elgg_services()->serveFileHandler;
 
-		$file_mock = $this->getMockBuilder('\ElggFile')->disableOriginalConstructor()->getMock();
-		$file_mock->method('getFileNameOnFilestore')->willReturn("{$dataroot}file_service/foobar.txt");
-		$file_mock->method('exists')->willReturn(true);
-		$this->file = $file_mock;
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename("foobar.txt");
+
+		$this->file = $file;
 	}
 
-	function createRequest($file) {
+	function createRequest(\Elgg\FileService\File $file) {
 		$site_url = elgg_get_site_url();
 		$url = $file->getURL();
 		$path = substr($url, strlen($site_url));
@@ -72,7 +73,7 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @group FileService
 	 */
-	public function testSends403OnFileModificationTimeMismatch () {
+	public function testSends403OnFileModificationTimeMismatch() {
 
 		$file = new \Elgg\FileService\File();
 		$file->setFile($this->file);
@@ -82,9 +83,13 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(200, $response->getStatusCode());
 
-		touch($this->file->getFilenameOnFilestore());
-		clearstatcache(true, $this->file->getFilenameOnFilestore());
-		
+		// Consecutive request will be send by the browswer with an etag header
+		// We need to make sure we check modified time before issuing a Not Modified header
+		// See issue #9571
+		$request->headers->set('if_none_match', '"' . $this->file->getModifiedTime() . '-gzip"');
+
+		$this->file->setModifiedTime();
+
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(403, $response->getStatusCode());
 	}
@@ -120,10 +125,10 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 		$file->setFile($this->file);
 		$file->setDisposition('inline');
 		$file->bindSession(false);
-		
+
 		$request = $this->createRequest($file);
 		$response = $this->handler->getResponse($request);
-		
+
 		$this->assertEquals('text/plain', $response->headers->get('Content-Type'));
 
 		$filesize = filesize($this->file->getFilenameOnFilestore());
@@ -131,7 +136,7 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertContains('inline', $response->headers->get('Content-Disposition'));
 
-		$this->assertEquals('"' . filemtime($this->file->getFilenameOnFilestore()) . '"', $response->headers->get('Etag'));
+		$this->assertEquals('"' . $this->file->getModifiedTime() . '"', $response->headers->get('Etag'));
 	}
 
 	/**
@@ -153,7 +158,7 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertContains('attachment', $response->headers->get('Content-Disposition'));
 
-		$this->assertEquals('"' . filemtime($this->file->getFilenameOnFilestore()) . '"', $response->headers->get('Etag'));
+		$this->assertEquals('"' . $this->file->getModifiedTime() . '"', $response->headers->get('Etag'));
 	}
 
 	/**
