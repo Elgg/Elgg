@@ -76,7 +76,7 @@ class File {
 	}
 
 	/**
-	 * Returns publically accessible URL
+	 * Returns publicly accessible URL
 	 * @return string|false
 	 */
 	public function getURL() {

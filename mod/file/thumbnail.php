@@ -13,6 +13,8 @@ require_once "$autoload_root/vendor/autoload.php";
 
 \Elgg\Application::start();
 
+elgg_deprecated_notice('mod/file/thumbnail.php is no longer in use and will be removed. Do not include or require it. Use elgg_get_inline_url() instead.', '2.2');
+
 // Get file GUID
 $file_guid = (int) get_input('file_guid', 0);
 
@@ -20,14 +22,12 @@ $file_guid = (int) get_input('file_guid', 0);
 $size = get_input('size', 'small');
 
 $file = get_entity($file_guid);
-if (!elgg_instanceof($file, 'object', 'file')) {
-	exit;
-}
 
-$simpletype = $file->simpletype;
-if ($simpletype == "image") {
+$thumb_url = false;
 
-	// Get file thumbnail
+// thumbnails get first priority
+if ($file && $file->thumbnail) {
+
 	switch ($size) {
 		case "small":
 			$thumbfile = $file->thumbnail;
@@ -41,22 +41,17 @@ if ($simpletype == "image") {
 			break;
 	}
 
-	// Grab the file
-	if ($thumbfile && !empty($thumbfile)) {
+	if (!empty($thumbfile)) {
 		$readfile = new ElggFile();
 		$readfile->owner_guid = $file->owner_guid;
 		$readfile->setFilename($thumbfile);
-		$mime = $file->getMimeType();
-		$contents = $readfile->grabFile();
-
-		// caching images for 10 days
-		header("Content-type: $mime");
-		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
-		header("Pragma: public", true);
-		header("Cache-Control: public", true);
-		header("Content-Length: " . strlen($contents));
-
-		echo $contents;
-		exit;
+		$thumb_url = elgg_get_inline_url($readfile, true);
 	}
 }
+
+if ($thumb_url) {
+	forward($thumb_url);
+}
+
+header('HTTP/1.1 404 Not found');
+exit;

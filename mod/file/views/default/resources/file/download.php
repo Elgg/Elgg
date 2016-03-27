@@ -3,7 +3,10 @@
  * Elgg file download.
  *
  * @package ElggFile
+ * @deprecated since version 3.0
  */
+
+elgg_deprecated_notice('/file/download resource view has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '2.2');
 
 // Get the guid
 $file_guid = elgg_extract("guid", $vars);
@@ -15,23 +18,4 @@ if (!elgg_instanceof($file, 'object', 'file')) {
 	forward();
 }
 
-$mime = $file->getMimeType();
-if (!$mime) {
-	$mime = "application/octet-stream";
-}
-
-$filename = $file->originalfilename;
-
-// fix for IE https issue
-header("Pragma: public");
-
-header("Content-type: $mime");
-header("Content-Disposition: attachment; filename=\"$filename\"");
-header("Content-Length: {$file->getSize()}");
-
-while (ob_get_level()) {
-    ob_end_clean();
-}
-flush();
-readfile($file->getFilenameOnFilestore());
-exit;
+forward(elgg_get_download_url($file));
