@@ -71,5 +71,8 @@ call_user_func(function () use ($CONFIG) {
 	// persistentLogin service needs this set to instantiate without calling DB
 	_elgg_services()->config->getCookieConfig();
 
+	global $GLOBALS;
+	$GLOBALS['DEFAULT_FILE_STORE'] = new \ElggDiskFilestore($CONFIG->dataroot);
+
 	_elgg_testing_application($app);
 });
