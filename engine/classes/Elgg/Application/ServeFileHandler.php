@@ -62,10 +62,12 @@ class ServeFileHandler {
 			return $response->setStatusCode(403)->setContent('URL has expired');
 		}
 
-		$etag = '"' . $last_updated . '"';
-		$response->setPublic()->setEtag($etag);
-		if ($response->isNotModified($request)) {
-			return $response;
+		if ($last_updated) {
+			$etag = '"' . $last_updated . '"';
+			$response->setPublic()->setEtag($etag);
+			if ($response->isNotModified($request)) {
+				return $response;
+			}
 		}
 
 		$hmac_data = array(
@@ -92,9 +94,11 @@ class ServeFileHandler {
 			return $response->setStatusCode(404)->setContent('File not found');
 		}
 
-		$actual_last_updated = filemtime($filenameonfilestore);
-		if ($actual_last_updated != $last_updated) {
-			return $response->setStatusCode(403)->setContent('URL has expired');
+		if ($last_updated) {
+			$actual_last_updated = filemtime($filenameonfilestore);
+			if ($actual_last_updated != $last_updated) {
+				return $response->setStatusCode(403)->setContent('URL has expired');
+			}
 		}
 
 		$public = $use_cookie ? false : true;
@@ -106,11 +110,10 @@ class ServeFileHandler {
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
 		$response->prepare($request);
 
-		if (empty($expires)) {
-			$expires = strtotime('+1 year');
+		if ($expires) {
+			$expires_dt = (new DateTime())->setTimestamp($expires);
+			$response->setExpires($expires_dt);
 		}
-		$expires_dt = (new DateTime())->setTimestamp($expires);
-		$response->setExpires($expires_dt);
 
 		$response->setEtag($etag);
 		return $response;
@@ -127,4 +130,5 @@ class ServeFileHandler {
 		$session_name = $config['session']['name'];
 		return $request->cookies->get($session_name, '');
 	}
+
 }

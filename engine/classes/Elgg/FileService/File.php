@@ -108,7 +108,7 @@ class File {
 
 		$data = array(
 			'expires' => isset($this->expires) ? $this->expires : 0,
-			'last_updated' => filemtime($this->file->getFilenameOnFilestore()),
+			'last_updated' => $this->expires ? filemtime($this->file->getFilenameOnFilestore()) : 0,
 			'disposition' => $this->disposition == self::INLINE ? 'i' : 'a',
 			'path' => $relative_path,
 		);
