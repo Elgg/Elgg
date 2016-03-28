@@ -62,14 +62,6 @@ class ServeFileHandler {
 			return $response->setStatusCode(403)->setContent('URL has expired');
 		}
 
-		if ($last_updated) {
-			$etag = '"' . $last_updated . '"';
-			$response->setPublic()->setEtag($etag);
-			if ($response->isNotModified($request)) {
-				return $response;
-			}
-		}
-
 		$hmac_data = array(
 			'expires' => (int) $expires,
 			'last_updated' => (int) $last_updated,
@@ -94,11 +86,17 @@ class ServeFileHandler {
 			return $response->setStatusCode(404)->setContent('File not found');
 		}
 
+		$actual_last_updated = filemtime($filenameonfilestore);
+		$etag = '"' . $actual_last_updated . '"';
 		if ($last_updated) {
-			$actual_last_updated = filemtime($filenameonfilestore);
 			if ($actual_last_updated != $last_updated) {
 				return $response->setStatusCode(403)->setContent('URL has expired');
 			}
+		}
+
+		$response->setPublic()->setEtag($etag);
+		if ($response->isNotModified($request)) {
+			return $response;
 		}
 
 		$public = $use_cookie ? false : true;
