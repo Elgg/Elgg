@@ -62,12 +62,6 @@ class ServeFileHandler {
 			return $response->setStatusCode(403)->setContent('URL has expired');
 		}
 
-		$etag = '"' . $last_updated . '"';
-		$response->setPublic()->setEtag($etag);
-		if ($response->isNotModified($request)) {
-			return $response;
-		}
-
 		$hmac_data = array(
 			'expires' => (int) $expires,
 			'last_updated' => (int) $last_updated,
@@ -95,6 +89,18 @@ class ServeFileHandler {
 		$actual_last_updated = filemtime($filenameonfilestore);
 		if ($actual_last_updated != $last_updated) {
 			return $response->setStatusCode(403)->setContent('URL has expired');
+		}
+
+		$if_none_match = $request->headers->get('if_none_match');
+		if (!empty($if_none_match)) {
+			// strip mod_deflate suffixes
+			$request->headers->set('if_none_match', str_replace('-gzip', '', $if_none_match));
+		}
+
+		$etag = '"' . $last_updated . '"';
+		$response->setPublic()->setEtag($etag);
+		if ($response->isNotModified($request)) {
+			return $response;
 		}
 
 		$public = $use_cookie ? false : true;
@@ -127,4 +133,5 @@ class ServeFileHandler {
 		$session_name = $config['session']['name'];
 		return $request->cookies->get($session_name, '');
 	}
+
 }
