@@ -40,7 +40,7 @@ function add_translation($country_code, $language_array) {
 }
 
 /**
- * Detect the current language being used by the current site or logged in user.
+ * Get the current system/user language or "en".
  *
  * @return string The language code for the site/user or "en" if not set
  */
@@ -49,12 +49,12 @@ function get_current_language() {
 }
 
 /**
- * Gets the current language in use by the system or user.
+ * Detect the current system/user language or false.
  *
  * @return string The language code (eg "en") or false if not set
  */
 function get_language() {
-	return _elgg_services()->translator->getLanguage();
+	return _elgg_services()->translator->detectLanguage();
 }
 
 /**
