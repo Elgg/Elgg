@@ -5,6 +5,9 @@ Make your UI translatable into many different languages.
 
 If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
 
+The default language is ``en`` for English. Currently Elgg will always fall back to an English translation,
+even if the site's language is not English; this is a known bug.
+
 Overview
 ========
 
@@ -12,29 +15,26 @@ Translations are stored in PHP files in the ``/languages`` directory of your plu
 
 .. code-block:: php
 
-   <?php
+	<?php // mod/example/languages/en.php
 
-   // mod/example/languages/en.php
-   return array(
-     ‘example:text’ => ‘Some example text’,
-   );
+	return [
+		'example:text' => 'Some example text',
+	];
 
-The default language is “en” for English.
-
-To change the wording of any phrase, provide a new mapping in your plugin’s ``{language}.php`` file for the associated key:
+To override an existing translation, include it in your plugin's language file, and make sure your plugin is
+ordered later on the Admin > Plugins page:
 
 .. code:: php
 
-   <?php
+	<?php // mod/better_example/languages/en.php
 
-   return array(
-     ‘example:text’ => ‘This is an example’,
-   );
+	return [
+		'example:text' => 'Some better text!',
+	];
 
 .. note::
 
-   Unless you are overriding core’s or another plugin’s language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys.
-
+   Unless you are overriding core’s or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys.
 
 Server-side API
 ===============
@@ -47,25 +47,38 @@ Example:
 
 .. code:: php
 
-   echo elgg_echo(‘example:text’);
+	echo elgg_echo('example:text');
 
 It also supports variable replacement using sprintf syntax:
 
 .. code:: php
 
-   // ‘welcome’ => ‘Welcome to %s, %s!’
-   echo elgg_echo(‘welcome’, array(
-     elgg_get_config(‘sitename’),
-     elgg_get_logged_in_user_entity()->name,
-   ));
+	// 'welcome' => 'Welcome to %s, %s!'
+	echo elgg_echo('welcome', [
+		elgg_get_config('sitename'),
+		elgg_get_logged_in_user_entity()->name,
+	]);
 
 To force which language should be used for translation, set the third parameter:
 
 .. code:: php
 
-   echo elgg_echo(‘welcome’, array(), ‘es’);
+    echo elgg_echo('welcome', [], $user->language);
 
+To first test whether ``elgg_echo()`` can find a translation:
 
+.. code:: php
+
+	$key = 'key:that:might:not:exist';
+	if (!elgg_language_key_exists($key)) {
+		$key = 'fallback:key';
+	}
+
+	echo elgg_echo($key);
+
+.. note:: Some APIs allow creating translations for new keys. Translators should always include an English
+          translation as a fallback. This makes ``elgg_language_key_exists($key)`` a reliable way to predict
+          whether ``elgg_echo($key)`` will succeed.
 
 Javascript API
 ==============
