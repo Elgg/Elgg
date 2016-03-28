@@ -24,7 +24,6 @@ class ElggGroup extends \ElggEntity {
 
 		$this->attributes['type'] = "group";
 		$this->attributes += self::getExternalAttributes();
-		$this->tables_split = 2;
 	}
 
 	/**
@@ -271,7 +270,6 @@ class ElggGroup extends \ElggEntity {
 		}
 
 		$this->attributes = $attrs;
-		$this->tables_loaded = 2;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
 		_elgg_cache_entity($this);
 

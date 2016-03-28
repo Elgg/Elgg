@@ -8,6 +8,7 @@ use Elgg\Http\Request;
 use ElggFile;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Elgg\Filesystem\MimeTypeDetector;
 
 /**
  * File download handler for files with custom filestore
@@ -68,7 +69,10 @@ class DownloadFileHandler {
 			return $response;
 		}
 
-		$response = new BinaryFileResponse($filenameonfilestore, 200, array(), false, 'attachment');
+		$headers = [
+			'Content-Type' => (new MimeTypeDetector())->getType($filenameonfilestore),
+		];
+		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'attachment');
 		$response->prepare($request);
 
 		$expires = strtotime('+1 year');

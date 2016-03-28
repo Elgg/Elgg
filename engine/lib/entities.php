@@ -128,9 +128,7 @@ function _elgg_retrieve_cached_entity($guid) {
 	global $ENTITY_CACHE;
 
 	if (isset($ENTITY_CACHE[$guid])) {
-		if ($ENTITY_CACHE[$guid]->isFullyLoaded()) {
-			return $ENTITY_CACHE[$guid];
-		}
+		return $ENTITY_CACHE[$guid];
 	}
 
 	return false;
@@ -537,8 +535,7 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
 function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
 	$viewer = 'elgg_view_entity_list') {
 
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$offset_key = isset($options['offset_key']) ? $options['offset_key'] : 'offset';
 
@@ -794,8 +791,7 @@ function is_registered_entity_type($type, $subtype = null) {
  * @since 1.7.0
  */
 function elgg_list_registered_entities(array $options = array()) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'full_view' => false,

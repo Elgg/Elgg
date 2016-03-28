@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Oma jäsenyytesi',
 	'groups:my_status:group_owner' => 'Olet ryhmän omistaja',
 	'groups:my_status:group_member' => 'Olet ryhmän jäsen',
-	'groups:subscribed' => 'Olet tilannut ryhmän ilmoitukset',
-	'groups:unsubscribed' => 'Et ole tilannut ryhmän ilmoituksia',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Jäsenet ryhmässä: %s',
 	'groups:members:more' => "Näytä kaikki jäsenet",

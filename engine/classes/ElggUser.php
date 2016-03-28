@@ -31,7 +31,6 @@ class ElggUser extends \ElggEntity
 
 		$this->attributes['type'] = "user";
 		$this->attributes += self::getExternalAttributes();
-		$this->tables_split = 2;
 	}
 
 	/**
@@ -98,7 +97,6 @@ class ElggUser extends \ElggEntity
 		}
 
 		$this->attributes = $attrs;
-		$this->tables_loaded = 2;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
 		_elgg_cache_entity($this);
 

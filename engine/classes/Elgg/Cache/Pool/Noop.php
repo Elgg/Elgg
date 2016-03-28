@@ -16,7 +16,10 @@ use Elgg\Cache\Pool;
  */
 final class Noop implements Pool {
 	/** @inheritDoc */
-	public function get($key, callable $callback) {
+	public function get($key, callable $callback = null, $default = null) {
+		if (!$callback) {
+			return $default;
+		}
 		return call_user_func($callback);
 	}
 	

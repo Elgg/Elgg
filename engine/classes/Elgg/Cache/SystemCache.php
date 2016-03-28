@@ -17,7 +17,7 @@ class SystemCache {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -71,8 +71,7 @@ class SystemCache {
 	 */
 	function save($type, $data) {
 		
-	
-		if ($this->CONFIG->system_cache_enabled) {
+		if ($this->isEnabled()) {
 			return $this->getFileCache()->save($type, $data);
 		}
 	
@@ -87,8 +86,7 @@ class SystemCache {
 	 */
 	function load($type) {
 		
-	
-		if ($this->CONFIG->system_cache_enabled) {
+		if ($this->isEnabled()) {
 			$cached_data = $this->getFileCache()->load($type);
 	
 			if ($cached_data) {
@@ -97,6 +95,15 @@ class SystemCache {
 		}
 	
 		return null;
+	}
+	
+	/**
+	 * Is system cache enabled
+	 *
+	 * @return bool
+	 */
+	function isEnabled() {
+		return (bool) $this->CONFIG->system_cache_enabled;
 	}
 	
 	/**
@@ -133,7 +140,7 @@ class SystemCache {
 	
 	/**
 	 * Loads the system cache during engine boot
-	 * 
+	 *
 	 * @see elgg_reset_system_cache()
 	 * @access private
 	 */
@@ -166,11 +173,11 @@ class SystemCache {
 	/**
 	 * Initializes the simplecache lastcache variable and creates system cache files
 	 * when appropriate.
-	 * 
+	 *
 	 * @access private
 	 */
 	function init() {
-		if (!$this->CONFIG->system_cache_enabled) {
+		if (!$this->isEnabled()) {
 			return;
 		}
 

@@ -182,7 +182,7 @@ class Translator {
 	 * @access private
 	 */
 	function loadTranslations($language = null) {
-		if ($this->CONFIG->system_cache_enabled) {
+		if (elgg_is_system_cache_enabled()) {
 			$loaded = true;
 
 			if ($language) {

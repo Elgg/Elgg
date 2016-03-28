@@ -57,18 +57,21 @@ Feature PRs:
 Choosing a branch to submit to
 ------------------------------
 
-The following table assumes the latest stable release is 1.9.
+The following table assumes the latest stable release is 2.1.
 
-============== ====================================
-Type of change Branch to submit against
-============== ====================================
-Security fix   1.8 (Email security@elgg.org first!)
-Bug fix        1.9
-Deprecation    1.x
-Minor feature  1.x
-Major feature  master
-Breaking       master
-============== ====================================
+============================== ============================================
+Type of change                 Branch to submit against
+============================== ============================================
+Security fix                   Don't! Email security@elgg.org for guidance.
+Bug fix                        1.12 (or 2.1 if the 1.12 fix is too complex)
+Performance                    2.x
+Deprecation                    2.x
+Minor feature                  2.x
+Major feature                  master
+Has any breaking change        master
+============================== ============================================
+
+If you're not sure which branch to submit against, just ask!
 
 The difference between minor and major feature is subjective and up to the core team.
 
@@ -94,7 +97,7 @@ follow these steps:
 
 2. In parenthesis, add the ``component``, a short string which describes the subsystem being changed.
 
-   Some examples: "views", "i18n", "seo", "a11y", "cache", "db", "session", "router", "<plugin_name>".
+   Some examples: ``views``, ``i18n``, ``seo``, ``a11y``, ``cache``, ``db``, ``session``, ``router``, ``<plugin_name>``.
 
 3. Add a colon, a space, and a brief ``summary`` of the changes, which will appear in the changelog.
 
@@ -167,14 +170,16 @@ To edit just the last commit:
 1. Amend the commit: ``git commit --amend`` (git opens the message in a text editor).
 2. Change the message and save/exit the editor.
 3. Force push your branch: ``git push -f your_remote your_branch`` (your PR with be updated).
+4. Rename the PR title to match
 
 Otherwise you may need to perform an interactive rebase:
 
 1. Rebase the last N commits: ``git rebase -i HEAD~N`` where N is a number.
-   (Git will open the git-rebase-todo file for editing)
+   (Git will open the ``git-rebase-todo`` file for editing)
 2. For the commits that need to change, change ``pick`` to ``r`` (for reword) and save/exit the editor.
 3. Change the commit message(s), save/exit the editor (git will present a file for each commit that needs rewording).
 4. ``git push -f your_remote your_branch`` to force push the branch (updating your PR).
+5. Rename the PR title to match
 
 .. _contribute/code#testing:
 
@@ -274,7 +279,22 @@ You can also run tests continuously during development so they run on each save:
 
    karma start js/tests/karma.conf.js
 
+Debugging JS tests
+^^^^^^^^^^^^^^^^^^
 
+You can run the test suite inside Chrome dev tools:
+
+.. code::
+
+   npm run chrome
+
+This will output a URL like ``http://localhost:9876/``.
+
+#. Open the URL in Chrome, and click "Debug".
+#. Open Chrome dev tools and the Console tab.
+#. Reload the page.
+
+If you alter a test you'll have to quit Karma with ``Ctrl-c`` and restart it.
 
 Coding best practices
 =====================
@@ -325,22 +345,22 @@ Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``.
 Interface names
 ^^^^^^^^^^^^^^^
 
-Use the pattern `Elgg\{Namespace}\{Name}`.
+Use the pattern ``Elgg\{Namespace}\{Name}``.
 
-Do not include an `I` prefix or an `Interface` suffix.
+Do not include an ``I`` prefix or an ``Interface`` suffix.
 
 We do not include any prefix or suffix so that we're encouraged to:
 
  * name implementation classes more descriptively (the "default" name is taken).
  * type-hint on interfaces, because that is the shortest, easiest thing to do.
 
-Name implementations like `Elgg\{Namespace}\{Interface}\{Implementation}`.
+Name implementations like ``Elgg\{Namespace}\{Interface}\{Implementation}``.
 
 Functions
 ^^^^^^^^^
 
 Where possible, have functions/methods return a single type.
-Use empty values such as array(), "", or 0 to indicate no results.
+Use empty values such as ``array()``, ``""``, or ``0`` to indicate no results.
 
 Be careful where valid return values (like ``"0"``) could be interpreted as empty.
 
@@ -556,7 +576,7 @@ Good:
 Property declarations
 ^^^^^^^^^^^^^^^^^^^^^
 
-These should be spaced like so: `property: value;`
+These should be spaced like so: ``property: value;``
 
 Bad:
 

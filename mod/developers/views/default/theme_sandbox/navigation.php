@@ -22,3 +22,5 @@ echo elgg_view_module('theme-sandbox-demo', "Entity Menu (.elgg-menu-entity and 
 echo elgg_view_module('theme-sandbox-demo', "Owner Block Menu (.elgg-menu-owner-block)", elgg_view('theme_sandbox/navigation/owner_block'));
 
 echo elgg_view_module('theme-sandbox-demo', "Footer Menu (.elgg-menu-footer)", elgg_view('theme_sandbox/navigation/footer'));
+
+echo elgg_view_module('theme-sandbox-demo', "Menu Item with AMD require", elgg_view('theme_sandbox/navigation/require'));

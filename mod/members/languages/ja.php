@@ -7,5 +7,6 @@ return array(
 	'members:title:newest' => '新しい順',
 	'members:title:popular' => '人気順',
 	'members:title:online' => 'オンライン中',
+	'members:title:alpha' => '全メンバ',
 	'members:list:popular:none' => '友達がいるメンバが居ません',
 );

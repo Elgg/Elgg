@@ -2,9 +2,7 @@
 
 $guid = elgg_extract('guid', $vars);
 
-// turn this into a core function
-global $autofeed;
-$autofeed = true;
+elgg_register_rss_link();
 
 elgg_entity_gatekeeper($guid, 'group');
 

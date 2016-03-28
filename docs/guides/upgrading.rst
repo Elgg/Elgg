@@ -124,6 +124,18 @@ Miscellaneous API changes
  * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_log`` no longer accepts the level ``"DEBUG"``
 
+From 2.1 to 2.2
+===============
+
+Deprecated APIs
+---------------
+
+ * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
+
+Deprecated Views
+----------------
+
+ * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
 
 From 2.0 to 2.1
 ===============
@@ -134,6 +146,21 @@ Deprecated APIs
  * ``ElggFile::setFilestore``
  * ``get_default_filestore``
  * ``set_default_filestore``
+ * ``elgg_get_config('siteemail')``: Use ``elgg_get_site_entity()->email``
+ * URLs starting with ``/css/`` and ``/js/``: ``Use elgg_get_simplecache_url()``
+ * ``elgg.ui.widgets`` JavaScript object is deprecated by ``elgg/widgets`` AMD module
+
+``Application::getDb()`` changes
+--------------------------------
+
+If you're using this low-level API, do not expect it to return an ``Elgg\Database`` instance in 3.0. It now
+returns an ``Elgg\Application\Database`` with many deprecated. These methods were never meant to be made
+public API, but we will do our best to support them in 2.x.
+
+Added ``elgg/widgets`` module
+-----------------------------
+
+If your plugin code calls ``elgg.ui.widgets.init()``, instead use the :doc:`elgg/widgets module <javascript>`.
 
 From 1.x to 2.0
 ===============

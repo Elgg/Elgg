@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Meu status',
 	'groups:my_status:group_owner' => 'Você é o dono desta comunidade',
 	'groups:my_status:group_member' => 'Você está nesta comunidade',
-	'groups:subscribed' => 'Notificação de comunidade ativa',
-	'groups:unsubscribed' => 'Notificação de comunidade inativa',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Pessoas de %s',
 	'groups:members:more' => "Ver mais pessoas",

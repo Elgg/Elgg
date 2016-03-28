@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Мой статус',
 	'groups:my_status:group_owner' => 'Вы владеете этой группой',
 	'groups:my_status:group_member' => 'Вы в этой группе',
-	'groups:subscribed' => 'Уведомления группы включены',
-	'groups:unsubscribed' => 'Уведомления группы выключены',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Участники %s',
 	'groups:members:more' => "Показать всех участников группы",

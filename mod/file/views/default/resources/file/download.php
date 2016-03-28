@@ -6,7 +6,7 @@
  * @deprecated since version 3.0
  */
 
-elgg_deprecated_notice('/file/download resource view has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '3.0');
+elgg_deprecated_notice('/file/download resource view has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '2.2');
 
 // Get the guid
 $file_guid = elgg_extract("guid", $vars);

@@ -2,28 +2,6 @@
 
 class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 	
-	private $dbClass, $configClass;
-
-	/**
-	 * Inspect instances in DI container to get correct classnames for
-	 * Database API.
-	 */
-	public function setUp() {
-		$db = _elgg_testing_application()->getDb();
-		$this->dbClass = get_class($db);
-		
-		// Config class
-		$reflectionClass = new ReflectionClass($db);
-		$reflectionProperty = $reflectionClass->getProperty('config');
-		if (method_exists($reflectionProperty, 'setAccessible')) {
-			$reflectionProperty->setAccessible(true);
-			$config = $reflectionProperty->getValue($db);
-			$this->configClass = get_class($config);
-		} else {
-			$this->configClass = 'Elgg_Database_Config';
-		}
-	}
-	
 	/**
 	 * @dataProvider scriptsWithOneStatement
 	 */
@@ -107,15 +85,15 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * @return PHPUnit_Framework_MockObject_MockObject
+	 * @return \Elgg\Database|PHPUnit_Framework_MockObject_MockObject
 	 */
 	private function getDbMock()
 	{
 		return $this->getMock(
-			$this->dbClass,
+			\Elgg\Database::class,
 			array('updateData'),
 			array(
-				 new $this->configClass((object) array('dbprefix' => 'test_')),
+				 new \Elgg\Database\Config((object) array('dbprefix' => 'test_')),
 				_elgg_services()->logger
 			)
 		);

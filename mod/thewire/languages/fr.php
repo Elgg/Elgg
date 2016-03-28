@@ -4,50 +4,50 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'thewire' => "Microblog",
-	'thewire:everyone' => "Tous les messages du microblog",
-	'thewire:user' => "Le microblog de %s",
-	'thewire:friends' => "Messages des contacts sur le microblog",
-	'thewire:replying' => "Répondre à %s, qui a écrit",
-	'thewire:thread' => "Flux",
-	'thewire:charleft' => "caractères restant",
-	'thewire:tags' => "Messages du microblog commentés par '% s' avec",
-	'thewire:noposts' => "Pas encore de messages sur le microblog",
-	'item:object:thewire' => "Messages du microblog",
-	'thewire:by' => 'Message sur le microblog par %s',
+	'thewire' => "Le Fil",
+	'thewire:everyone' => "Tous les messages du Fil",
+	'thewire:user' => "Le Fil de %s",
+	'thewire:friends' => "Messages des contacts sur le Fil",
+	'thewire:replying' => "Répondre à %s (@%s), qui a écrit",
+	'thewire:thread' => "Conversation",
+	'thewire:charleft' => "caractères",
+	'thewire:tags' => "Messages du Fil avec le tag \"%s\"",
+	'thewire:noposts' => "Il n'y a pas encore de message sur le Fil",
+	'item:object:thewire' => "Messages du Fil",
+	'thewire:by' => 'Message du Fil de %s',
 	'thewire:previous:help' => "Voir le message précédent",
 	'thewire:hide:help' => "Masquer le message précédent",
 
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s a envoyé un message à %s",
-	'thewire:wire' => 'microblog',
+	'river:create:object:thewire' => "%s a publié sur %s",
+	'thewire:wire' => 'le Fil',
 
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Affichez vos derniers messages du microblog',
-	'thewire:num' => 'Nombre de publications à afficher',
-	'thewire:moreposts' => 'Plus de messages du microblog',
+	'thewire:widget:desc' => 'Affiche vos derniers messages sur le Fil',
+	'thewire:num' => 'Nombre de messages à afficher',
+	'thewire:moreposts' => 'Plus de messages du Fil',
 
 	/**
 	 * Status messages
 	 */
-	'thewire:posted' => "Votre message a bien été posté sur le microblog.",
-	'thewire:deleted' => "Votre message a bien été supprimé du microblog.",
-	'thewire:blank' => "Désolé, vous devez d'abord écrire un message avant de l'envoyer.",
+	'thewire:posted' => "Votre message a bien été publié sur le Fil.",
+	'thewire:deleted' => "Votre message a bien été supprimé du Fil.",
+	'thewire:blank' => "Désolé, vous devez d'abord écrire un message avant de pouvoir le publier.",
 	'thewire:notfound' => "Désolé, le message spécifié n'a pu être trouvé.",
-	'thewire:notsaved' => "Désolé. Nous n'avons pas pu enregistrer ce message de microblog.",
-	'thewire:notdeleted' => "Désolé, ce message n'a pu être effacé du microblog.",
+	'thewire:notsaved' => "Désolé. Impossible d'enregistrer ce message du Fil.",
+	'thewire:notdeleted' => "Désolé, ce message du Fil n'a pas pu être supprimé.",
 
 	/**
 	 * Notifications
 	 */
-	'thewire:notify:summary' => 'Nouveau message de microblog: %s',
-	'thewire:notify:subject' => "Nouveau message de microblog de %s",
-	'thewire:notify:reply' => '%s a répondu à %s sur le microblog :',
-	'thewire:notify:post' => '%s posté sur le microblog:',
+	'thewire:notify:summary' => 'Nouveau message sur le Fil : %s',
+	'thewire:notify:subject' => "Nouveau message sur le Fil de %s",
+	'thewire:notify:reply' => '%s a répondu à %s sur le Fil :',
+	'thewire:notify:post' => '%s a publié sur le Fil :',
 	'thewire:notify:footer' => "Voir et répondre:\n%s",
 
 	/**

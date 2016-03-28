@@ -132,6 +132,15 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->dataroot = "";
 //$CONFIG->simplecache_enabled = true;
 
+/**
+ * Enable the boot cache
+ *
+ * Elgg can store most non-user-specific boot up data in a cache. If you want to
+ * enable this, uncomment the next line to set it to 10. Although Elgg has a built-
+ * in invalidation strategy for this cache, you should consider a small TTL to
+ * minimize the damage if the cache should grow stale.
+ */
+//$CONFIG->boot_cache_ttl = 10;
 
 /**
  * Cookie configuration

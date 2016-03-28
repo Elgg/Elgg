@@ -1,6 +1,6 @@
 <?php
 return array(
-	'legacy_urls:message' => 'Cette page a été déplacée vers %s. Veuillez svp mettre à jour votre signet et nous signaler le lien qui vous a conduit ici.',
+	'legacy_urls:message' => 'Cette page a été déplacée vers %s. Veuillez SVP mettre à jour votre signet et nous signaler le lien qui vous a conduit ici.',
 
 	'legacy_urls:instructions' => 'Sélectionnez une méthode pour la gestion des URL pré-existantes',
 	'legacy_urls:immediate' => 'Transférer immédiatement vers la nouvelle URL',

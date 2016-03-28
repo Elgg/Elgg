@@ -91,6 +91,8 @@ function file_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:file', 'Elgg\Values::getTrue');
+
+	elgg_register_event_handler('update:after', 'object', 'file_reset_icon_urls');
 }
 
 /**
@@ -152,9 +154,23 @@ function file_page_handler($page) {
 			echo elgg_view_resource('file/world');
 			break;
 		case 'download':
-			echo elgg_view_resource('file/download', [
-				'guid' => $page[1],
-			]);
+			elgg_deprecated_notice('/file/download page handler has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '2.2');
+			if (_elgg_view_may_be_altered('resources/file/download', 'resources/file/download.php')) {
+				// For BC with 2.0 if a plugin is suspected of using this view we need to use it.
+				echo elgg_view_resource('file/download', [
+					'guid' => $page[1],
+				]);
+			} else {
+				$file = get_entity($page[1]);
+				if (!$file instanceof ElggFile) {
+					return false;
+				}
+				$download_url = elgg_get_download_url($file);
+				if (!$download_url) {
+					return false;
+				}
+				forward($download_url);
+			}
 			break;
 		default:
 			return false;
@@ -460,6 +476,41 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 			$delfile->owner_guid = $file->owner_guid;
 			$delfile->setFilename($thumbnail);
 			$delfile->delete();
+		}
+	}
+}
+
+/**
+ * Reset file thumb URLs if file access_id has changed
+ * 
+ * @param string     $event "update:after"
+ * @param string     $type  "object"
+ * @param ElggObject $file  File entity
+ * @return void
+ */
+function file_reset_icon_urls($event, $type, ElggObject $file) {
+
+	if (!$file instanceof ElggFile) {
+		return;
+	}
+
+	$original_attributes = $file->getOriginalAttributes();
+	if (!array_key_exists('access_id', $original_attributes)) {
+		return;
+	}
+
+	// we touch the file to invalidate any previously generated download URLs
+	touch($file->getFilenameOnFilestore());
+
+	// we touch the thumbs because we want new URLs from \Elgg\FileService\File::getURL
+	$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
+	foreach ($thumbnails as $thumbnail) {
+		$thumbfile = new ElggFile();
+		$thumbfile->owner_guid = $file->owner_guid;
+		$thumbfile->setFilename($thumbnail);
+		if ($thumbfile->exists()) {
+			$thumb_filename = $thumbfile->getFilenameOnFilestore();
+			touch($thumb_filename);
 		}
 	}
 }

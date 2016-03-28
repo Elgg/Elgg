@@ -14,6 +14,8 @@ use Elgg\Filesystem\Directory;
  * The full path is necessary to work around this: https://bugs.php.net/bug.php?id=55726
  *
  * @since 2.0.0
+ *
+ * @property-read \Elgg\Menu\Service $menus
  */
 class Application {
 
@@ -41,6 +43,7 @@ class Application {
 	 */
 	private static $public_services = [
 		//'config' => true,
+		'menus' => true,
 	];
 
 	/**
@@ -231,6 +234,10 @@ class Application {
 
 		$config = $this->services->config;
 
+		if ($config->getVolatile('Elgg\Application_phpunit')) {
+			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
+		}
+
 		if ($config->getVolatile('boot_complete')) {
 			return;
 		}
@@ -292,6 +299,8 @@ class Application {
 			elgg_set_viewtype('default');
 		}
 
+		$this->allowPathRewrite();
+
 		// @todo deprecate as plugins can use 'init', 'system' event
 		$events->trigger('plugins_boot', 'system');
 
@@ -305,17 +314,20 @@ class Application {
 	}
 
 	/**
-	 * Get the Database instance for performing queries without booting Elgg
+	 * Get a Database wrapper for performing queries without booting Elgg
 	 *
 	 * If settings.php has not been loaded, it will be loaded to configure the DB connection.
 	 *
-	 * Note: Before boot, the Database instance will not yet be bound to a Logger.
+	 * @note Do not type hint on \Elgg\Database, as this will fail in 3.0. If you must type hint,
+	 *       expect an \Elgg\Application\Database.
 	 *
-	 * @return Database
+	 * @note Before boot, the Database instance will not yet be bound to a Logger.
+	 *
+	 * @return \Elgg\Application\Database
 	 */
 	public function getDb() {
 		$this->loadSettings();
-		return $this->services->db;
+		return $this->services->publicDb;
 	}
 
 	/**
@@ -391,7 +403,7 @@ class Application {
 		}
 
 		if (0 === strpos($path, '/serve-file/')) {
-			(new Application\ServeFileHandler($this))->getResponse($this->services->request)->send();
+			$this->services->serveFileHandler->getResponse($this->services->request)->send();
 			return true;
 		}
 
@@ -571,5 +583,21 @@ class Application {
 		$_GET[self::GET_PATH_KEY] = '/' . trim($_GET[self::GET_PATH_KEY], '/');
 
 		return $_GET[self::GET_PATH_KEY];
+	}
+
+	/**
+	 * Allow plugins to rewrite the path.
+	 *
+	 * @return void
+	 */
+	private function allowPathRewrite() {
+		$request = $this->services->request;
+		$new = $this->services->router->allowRewrite($request);
+		if ($new === $request) {
+			return;
+		}
+
+		$this->services->setValue('request', $new);
+		_elgg_set_initial_context($new);
 	}
 }

@@ -1,133 +1,315 @@
 define(function(require) {
 	
 	var elgg = require('elgg');
+	var Ajax = require('elgg/Ajax');
+	var ajax = new Ajax();
 	
-	describe("elgg.ajax", function() {
-		var wwwroot, ajax;
-		
+	describe("elgg/ajax", function() {
+		var ajax_tmp,
+			captured_options,
+			captured_hook,
+			response_object,
+			root = elgg.get_site_url();
+
 		beforeEach(function() {
-			wwwroot = elgg.config.wwwroot;
-			ajax = $.ajax;
-			
-			elgg.config.wwwroot = 'http://www.elgg.org/';
+			ajax_tmp = $.ajax;
+			response_object = {value: null};
+			captured_hook = null;
 			
 			$.ajax = function(options) {
-				return options;
+				captured_options = options;
+				var def = $.Deferred();
+				setTimeout(function () {
+					if ($.isFunction(options.success)) {
+						options.success(response_object);
+					}
+					def.resolve(response_object);
+				}, 1);
+				return def;
 			};
+
+			elgg.config.hooks = {};
+			Ajax._init_hooks();
+
+			// note, "all" type > always higher priority than specific types
+			elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'all', function (h, t, p, v) {
+				captured_hook = {
+					t: t,
+					p: p,
+					v: v
+				};
+			});
 		});
 		
 		afterEach(function() {
-			$.ajax = ajax;
-			elgg.config.wwwroot = wwwroot;		
+			$.ajax = ajax_tmp;
 		});
-		
-		it("requests elgg.config.wwwroot by default", function() {
-			expect(elgg.ajax().url).toBe(elgg.config.wwwroot);
+
+		it("passes unwrapped value to both success and deferred", function(done) {
+			response_object = {
+				value: 1
+			};
+
+			var def1 = $.Deferred(),
+				def2 = $.Deferred();
+
+			ajax.path('foo', {
+				success: function (val) {
+					expect(val).toBe(1);
+					def1.resolve();
+				}
+			}).done(function (val) {
+				expect(val).toBe(1);
+				def2.resolve();
+			});
+
+			$.when(def1, def2).then(done);
 		});
-		
-		it("can issue a GET using elgg.get()", function() {
-			expect(elgg.get().type).toBe('get');	
-		});
-		
-		it("can issue a POST using elgg.post()", function() {
-			expect(elgg.post().type).toBe('post');	
-		});
-	
-		it("can request JSON with elgg.getJSON()", function() {
-			expect(elgg.getJSON().dataType).toBe('json');
-		});
-	
-		describe("handleOptions", function() {
-		
-			it("accepts handleOptions()", function() {
-				expect(elgg.ajax.handleOptions()).not.toBe(undefined);
+
+		it("allows filtering response wrapper by hook, called only once", function(done) {
+			response_object = {
+				value: 1,
+				foo: 2
+			};
+
+			var hook_calls = 0;
+
+			elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'path:foo', function (h, t, p, v) {
+				hook_calls++;
+				expect(v).toEqual({value: 1, foo: 2});
+				expect(p.options.url).toBe('foo');
+				v.value = 3;
+				return v;
 			});
-			
-			it("accepts handleOptions(url)", function() {
-				var url = 'http://google.com',
-					result = elgg.ajax.handleOptions(url);
-				
-				expect(result.url).toBe(url);
+
+			var def1 = $.Deferred(),
+				def2 = $.Deferred();
+
+			ajax.path('foo', {
+				success: function (val) {
+					expect(val).toBe(3);
+					def1.resolve();
+				}
+			}).done(function (val) {
+				expect(val).toBe(3);
+				def2.resolve();
 			});
-			
-			it("interprets a POJO as data", function() {
-				var options = {},
-					result = elgg.ajax.handleOptions(options);
-				
-				expect(result.data).toBe(options);	
-			});
-			
-			it("interprets a POJO with a data field as full options", function() {
-				var options = {data:{arg:1}},
-					result = elgg.ajax.handleOptions(options);
-				
-				expect(result).toBe(options);
-			});
-			
-			it("interprets a POJO with a function as full options", function() {
-				function func() {}
-				var options = {success: func};
-				var result = elgg.ajax.handleOptions(options);
-				
-				expect(result).toBe(options);		
-			});
-			
-			it("accepts handleOptions(url, data)", function() {
-				var url = 'url',
-					data = {arg:1},
-					result = elgg.ajax.handleOptions(url, data);
-				
-				expect(result.url).toBe(url);
-				expect(result.data).toBe(data);
-			});
-			
-			it("accepts handleOptions(url, successCallback)", function() {
-				var url = 'http://google.com',
-				result = elgg.ajax.handleOptions(url, elgg.nullFunction);
-				
-				expect(result.url).toBe(url);
-				expect(result.success).toBe(elgg.nullFunction);
-			});
-			
-			it("accepts handleOptions(url, options)", function() {
-				var url = 'url',
-				    options = {data:{arg:1}},
-				    result = elgg.ajax.handleOptions(url, options);
-				
-				expect(result.url).toBe(url);
-				expect(result.data).toBe(options.data);
+
+			$.when(def1, def2).then(function () {
+				expect(hook_calls).toBe(1);
+				done();
 			});
 		});
 
-		describe("elgg.action()", function() {
-			it("issues a POST request", function() {
-				var result = elgg.action('action');
-				expect(result.type).toBe('post');
+		$.each(['path', 'action', 'form', 'view'], function (i, method) {
+			it("method " + method + "() sends special header", function() {
+				ajax[method]('foo');
+				expect(captured_options.headers).toEqual({ 'X-Elgg-Ajax-API' : '2' });
 			});
-			
-			it("expects a JSON response", function() {
-				var result = elgg.action('action');
-				expect(result.dataType).toBe('json');			
+
+			it("method " + method + "() uses dataType json", function() {
+				ajax[method]('foo');
+				expect(captured_options.dataType).toEqual('json');
 			});
-	
-			it("accepts action names", function() {
-				var result = elgg.action('action');
-				expect(result.url).toBe(elgg.config.wwwroot + 'action/action');
+		});
+
+		it("action() defaults to POST", function() {
+			ajax.action('foo');
+			expect(captured_options.method).toEqual('POST');
+		});
+
+		$.each(['path', 'form', 'view'], function (i, method) {
+
+			it(method + "() defaults to GET", function() {
+				ajax[method]('foo');
+				expect(captured_options.method).toEqual('GET');
 			});
-			
-			it("accepts action URLs", function() {
-				var result = elgg.action(elgg.config.wwwroot + 'action/action');
-				expect(result.url).toBe(elgg.config.wwwroot + 'action/action');
+
+			it(method + "(): non-empty object data changes default to POST", function() {
+				ajax[method]('foo', {
+					data: {bar: 'bar'}
+				});
+				expect(captured_options.method).toEqual('POST');
 			});
-			
-			it("includes CSRF tokens automatically in the request", function() {
-				var result = elgg.action('action');
-				expect(result.data.__elgg_ts).toBe(elgg.security.token.__elgg_ts);
+
+			it(method + "(): non-empty string data changes default to POST", function() {
+				ajax[method]('foo', {
+					data: '?bar=bar'
+				});
+				expect(captured_options.method).toEqual('POST');
 			});
-	
-			it("throws an exception if you don't specify an action", function() {
-				expect(function() { elgg.action(); }).toThrow();
-				expect(function() { elgg.action({}); }).toThrow();
+
+			it(method + "(): empty string data leaves default as GET", function() {
+				ajax[method]('foo', {
+					data: ''
+				});
+				expect(captured_options.method).toEqual('GET');
+			});
+
+			it(method + "(): empty object data leaves default as GET", function() {
+				ajax[method]('foo', {
+					data: {}
+				});
+				expect(captured_options.method).toEqual('GET');
+			});
+		});
+
+		it("allows altering value via hook", function() {
+			elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'path:foo/bar', function (h, t, p, v) {
+				v.arg3 = 3;
+				return v;
+			}, 900);
+
+			ajax.path('/foo/bar/?arg1=1#target', {
+				data: {arg2: 2}
+			});
+
+			expect(captured_options.data).toEqual({
+				arg2: 2,
+				arg3: 3
+			});
+
+			expect(captured_hook.v).toEqual({arg2: 2, arg3: 3});
+			expect(captured_hook.p.options.data).toEqual({arg2: 2, arg3: 3});
+		});
+
+		it("normalizes argument paths/URLs", function() {
+			ajax.path('/foo/bar/?arg1=1#target');
+			expect(captured_hook.t).toEqual('path:foo/bar');
+			expect(captured_options.url).toEqual(root + 'foo/bar/?arg1=1');
+
+			ajax.path(root + 'foo/bar/?arg1=1#target');
+			expect(captured_hook.t).toEqual('path:foo/bar');
+			expect(captured_options.url).toEqual(root + 'foo/bar/?arg1=1');
+
+			ajax.action('/foo/bar/?arg1=1#target');
+			expect(captured_hook.t).toEqual('action:foo/bar');
+			expect(captured_options.url).toEqual(root + 'action/foo/bar/?arg1=1');
+
+			ajax.action(root + 'action/foo/bar/?arg1=1#target');
+			expect(captured_hook.t).toEqual('action:foo/bar');
+			expect(captured_options.url).toEqual(root + 'action/foo/bar/?arg1=1');
+
+			ajax.view('foo/bar?arg1=1');
+			expect(captured_hook.t).toEqual('view:foo/bar');
+			expect(captured_options.url).toEqual(root + 'ajax/view/foo/bar?arg1=1');
+
+			ajax.form('/foo/bar/?arg1=1#target');
+			expect(captured_hook.t).toEqual('form:foo/bar');
+			expect(captured_options.url).toEqual(root + 'ajax/form/foo/bar/?arg1=1');
+		});
+
+		it("refuses to accept external URLs", function() {
+			expect(function () {
+				ajax.action('http://other.com/action/foo');
+			}).toThrowError();
+
+			expect(function () {
+				ajax.path('http://other.com/foo');
+			}).toThrowError();
+		});
+
+		it("form() and view() refuse to accept any URL", function() {
+			expect(function () {
+				ajax.view(root + 'ajax/view/foo');
+			}).toThrowError();
+
+			expect(function () {
+				ajax.form(root + 'action/foo');
+			}).toThrowError();
+		});
+		
+		it("adds CSRF tokens to action data", function() {
+			var ts = elgg.security.token.__elgg_ts;
+
+			ajax.action('foo');
+			expect(captured_options.data.__elgg_ts).toBe(ts);
+
+			ajax.action('foo', {
+				data: "?arg1=1"
+			});
+			expect(captured_options.data).toContain('__elgg_ts=' + ts);
+		});
+
+		it("does not add tokens if already in action URL", function() {
+			var ts = elgg.security.token.__elgg_ts;
+
+			var url = elgg.security.addToken(root + 'action/foo');
+
+			ajax.action(url);
+			expect(captured_options.data.__elgg_ts).toBe(undefined);
+		});
+
+		it("path() accepts empty argument for fetching home page", function() {
+			ajax.path("");
+		});
+
+		$.each(['action', 'form', 'view'], function (i, method) {
+			it(method + "() does not accept empty argument", function () {
+				expect(function () {
+					ajax[method]('');
+				}).toThrowError();
+			});
+		});
+
+		it("handles server-sent messages and dependencies", function(done) {
+			var tmp_system_message = elgg.system_message;
+			var tmp_register_error = elgg.register_error;
+			var tmp_require = Ajax._require;
+			var captured = {};
+
+			elgg.system_message = function (arg) {
+				captured.msg = arg;
+			};
+			elgg.register_error = function (arg) {
+				captured.error = arg;
+			};
+			Ajax._require = function (arg) {
+				captured.deps = arg;
+			};
+
+			response_object = {
+				value: 1,
+				_elgg_msgs: {
+					error: ['fail'],
+					success: ['yay']
+				},
+				_elgg_deps: ['foo']
+			};
+
+			ajax.path('foo').done(function () {
+				expect(captured).toEqual({
+					msg: ['yay'],
+					error: ['fail'],
+					deps: ['foo']
+				});
+
+				elgg.system_message = tmp_system_message;
+				elgg.register_error = tmp_register_error;
+				Ajax._require = tmp_require;
+
+				done();
+			});
+		});
+
+		describe("ajax.objectify", function() {
+
+			/**
+			 * this is from the $.serialize() test suite
+			 * @link https://github.com/jquery/jquery/blob/master/test/index.html#L73
+			 */
+			var $form = $("<form id=\"form\" action=\"formaction\"><label for=\"action\" id=\"label-for\">Action:<\/label><input type=\"text\" name=\"action\" value=\"Test\" id=\"text1\" maxlength=\"30\"\/><input type=\"text\" name=\"text2\" value=\"Test\" id=\"text2\" disabled=\"disabled\"\/><input type=\"radio\" name=\"radio1\" id=\"radio1\" value=\"on\"\/><input type=\"radio\" name=\"radio2\" id=\"radio2\" checked=\"checked\"\/><input type=\"checkbox\" name=\"check\" id=\"check1\" checked=\"checked\"\/><input type=\"checkbox\" id=\"check2\" value=\"on\"\/><input type=\"hidden\" name=\"hidden\" id=\"hidden1\"\/><input type=\"text\" style=\"display:none;\" name=\"foo[bar]\" id=\"hidden2\"\/><input type=\"text\" id=\"name\" name=\"name\" value=\"name\" \/><input type=\"search\" id=\"search\" name=\"search\" value=\"search\" \/><button id=\"button\" name=\"button\" type=\"button\">Button<\/button><textarea id=\"area1\" maxlength=\"30\">foobar<\/textarea><select name=\"select1\" id=\"select1\"><option id=\"option1a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option1b\" value=\"1\">1<\/option><option id=\"option1c\" value=\"2\">2<\/option><option id=\"option1d\" value=\"3\">3<\/option><\/select><select name=\"select2\" id=\"select2\"><option id=\"option2a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option2b\" value=\"1\">1<\/option><option id=\"option2c\" value=\"2\">2<\/option><option id=\"option2d\" selected=\"selected\" value=\"3\">3<\/option><\/select><select name=\"select3\" id=\"select3\" multiple=\"multiple\"><option id=\"option3a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option3b\" selected=\"selected\" value=\"1\">1<\/option><option id=\"option3c\" selected=\"selected\" value=\"2\">2<\/option><option id=\"option3d\" value=\"3\">3<\/option><option id=\"option3e\">no value<\/option><\/select><select name=\"select4\" id=\"select4\" multiple=\"multiple\"><optgroup disabled=\"disabled\"><option id=\"option4a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option4b\" disabled=\"disabled\" selected=\"selected\" value=\"1\">1<\/option><option id=\"option4c\" selected=\"selected\" value=\"2\">2<\/option><\/optgroup><option selected=\"selected\" disabled=\"disabled\" id=\"option4d\" value=\"3\">3<\/option><option id=\"option4e\">no value<\/option><\/select><select name=\"select5\" id=\"select5\"><option id=\"option5a\" value=\"3\">1<\/option><option id=\"option5b\" value=\"2\">2<\/option><option id=\"option5c\" value=\"1\" data-attr=\"\">3<\/option><\/select><object id=\"object1\" codebase=\"stupid\"><param name=\"p1\" value=\"x1\" \/><param name=\"p2\" value=\"x2\" \/><\/object><span id=\"\u53F0\u5317Ta\u0301ibe\u030Ci\"><\/span><span id=\"\u53F0\u5317\" lang=\"\u4E2D\u6587\"><\/span><span id=\"utf8class1\" class=\"\u53F0\u5317Ta\u0301ibe\u030Ci \u53F0\u5317\"><\/span><span id=\"utf8class2\" class=\"\u53F0\u5317\"><\/span><span id=\"foo:bar\" class=\"foo:bar\"><\/span><span id=\"test.foo[5]bar\" class=\"test.foo[5]bar\"><\/span><foo_bar id=\"foobar\">test element<\/foo_bar><\/form>");
+
+			it("returns an object equivalent to $.serialize()", function() {
+				var obj = ajax.objectify($form);
+				var jquery_serialized = $form.serialize();
+				var obj_serialized = $.param(obj);
+
+				expect($.isPlainObject(obj)).toBeTruthy();
+
+				// $.serialize() does not automatically append "[]" to the name of input with multiple
+				// values. It's OK that $.param(obj) does because PHP requires the brackets anyway.
+				expect(obj_serialized).toBe(jquery_serialized.replace(/select3=/g, 'select3%5B%5D='));
 			});
 		});
 	});
