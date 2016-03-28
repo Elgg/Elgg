@@ -41,5 +41,3 @@ $attr = [
 
 $input = elgg_format_element('label', $attr, elgg_format_element('span', [], elgg_echo('filter')) . " $select");
 echo elgg_format_element('div', ['class' => 'clearfix'], $input);
-
-elgg_load_js('elgg.ui.river');

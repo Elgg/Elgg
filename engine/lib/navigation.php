@@ -81,6 +81,7 @@
  *                          parent_name => STR  Identifier of the parent menu item
  *                          link_class  => STR  A class or classes for the <a> tag
  *                          item_class  => STR  A class or classes for the <li> tag
+ *                          deps     => STR  One or more AMD modules to require
  *
  *                          Additional options that the view output/url takes can be
  *							passed in the array. Custom options can be added by using
@@ -613,6 +614,10 @@ function _elgg_nav_init() {
 	)));
 
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');
+
+	// Using a view extension to ensure that themes that have replaced the item view
+	// still load the required AMD modules
+	elgg_extend_view('navigation/menu/elements/item', 'navigation/menu/elements/item_deps');
 }
 
 /**

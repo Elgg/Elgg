@@ -1,4 +1,7 @@
 <?php
+
+use \Elgg\Database\SiteSecret;
+
 /**
  * \ElggCrypto
  *
@@ -18,6 +21,20 @@ class ElggCrypto {
 	 * Character set for hexadecimal
 	 */
 	const CHARS_HEX = '0123456789abcdef';
+
+	/**
+	 * @var SiteSecret
+	 */
+	private $siteSecret;
+
+	/**
+	 * Constructor
+	 *
+	 * @param SiteSecret $siteSecret Secret service
+	 */
+	public function __construct(SiteSecret $siteSecret) {
+		$this->siteSecret = $siteSecret;
+	}
 
 	/**
 	 * Generate a string of highly randomized bytes (over the full 8-bit range).
@@ -168,7 +185,7 @@ class ElggCrypto {
 	 */
 	public function getHmac($data, $algo = 'sha256', $key = '') {
 		if (!$key) {
-			$key = _elgg_services()->siteSecret->get(true);
+			$key = $this->siteSecret->get(true);
 		}
 		return new Elgg\Security\Hmac($key, [$this, 'areEqual'], $data, $algo);
 	}

@@ -66,7 +66,6 @@ $vars = array(
 $body = elgg_view('custom_index/content', $vars);
 
 // no RSS feed with a "widget" front page
-global $autofeed;
-$autofeed = FALSE;
+elgg_unregister_rss_link();
 
 echo elgg_view_page('', $body);

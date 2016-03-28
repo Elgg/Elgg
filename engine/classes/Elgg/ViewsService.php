@@ -65,6 +65,11 @@ class ViewsService {
 	 * @var SystemCache|null This is set if the views are configured via cache
 	 */
 	private $cache;
+
+	/**
+	 * @var bool
+	 */
+	private $allow_delay_pagesetup = true;
 	
 	/**
 	 * Constructor
@@ -166,8 +171,10 @@ class ViewsService {
 	 * @param string $viewtype Viewtype
 	 *
 	 * @return string Empty string if not found
+	 * @access private
+	 * @internal Plugins should not use this.
 	 */
-	private function findViewFile($view, $viewtype) {
+	public function findViewFile($view, $viewtype) {
 		if (!isset($this->locations[$viewtype][$view])) {
 			return "";
 		}
@@ -241,6 +248,24 @@ class ViewsService {
 	}
 
 	/**
+	 * Get the views, including extensions, used to render this view
+	 *
+	 * Keys returned are view priorities.
+	 *
+	 * @param string $view View name
+	 * @return string[]
+	 * @access private
+	 * @internal Plugins should not use this
+	 */
+	public function getViewList($view) {
+		if (isset($this->views->extensions[$view])) {
+			return $this->views->extensions[$view];
+		} else {
+			return [500 => $view];
+		}
+	}
+
+	/**
 	 * @access private
 	 */
 	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {
@@ -275,18 +300,9 @@ class ViewsService {
 
 		$view_orig = $view;
 
-		// Trigger the pagesetup event
-		if (!isset($GLOBALS['_ELGG']->pagesetupdone) && !empty($this->CONFIG->boot_complete)) {
-			$GLOBALS['_ELGG']->pagesetupdone = true;
-			_elgg_services()->events->trigger('pagesetup', 'system');
-		}
+		$this->handlePageSetup($view);
 
-		// Set up any extensions to the requested view
-		if (isset($this->views->extensions[$view])) {
-			$viewlist = $this->views->extensions[$view];
-		} else {
-			$viewlist = array(500 => $view);
-		}
+		$viewlist = $this->getViewList($view);
 
 		$content = '';
 		foreach ($viewlist as $view) {
@@ -326,6 +342,35 @@ class ViewsService {
 			$this->file_exists_cache[$path] = file_exists($path);
 		}
 		return $this->file_exists_cache[$path];
+	}
+
+	/**
+	 * Trigger the system "pagesetup" event just before the 1st view rendering, or the 2nd if the 1st
+	 * view starts with "resources/".
+	 *
+	 * We delay the pagesetup event if the first view is a resource view in order to allow plugins to
+	 * move all page-specific logic like context setting into a resource view with more confidence
+	 * that that state will be available in their pagesetup event handlers. See the commit message for
+	 * more BG info.
+	 *
+	 * @param string $view View about to be rendered
+	 * @return void
+	 */
+	private function handlePageSetup($view) {
+		if (isset($GLOBALS['_ELGG']->pagesetupdone) || empty($this->CONFIG->boot_complete)) {
+			return;
+		}
+
+		// only first rendering gets an opportunity to delay
+		$allow_delay = $this->allow_delay_pagesetup;
+		$this->allow_delay_pagesetup = false;
+
+		if ($allow_delay && (0 === strpos($view, 'resources/'))) {
+			return;
+		}
+
+		$GLOBALS['_ELGG']->pagesetupdone = true;
+		_elgg_services()->events->trigger('pagesetup', 'system');
 	}
 
 	/**

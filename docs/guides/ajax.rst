@@ -14,7 +14,7 @@ Overview
 
 All the ajax methods perform the following:
 
-#. Client-side, the ``data`` option (if given) is filtered by the hook ``ajax_request_data``.
+#. Client-side, the ``data`` option (if given as an object) is filtered by the hook ``ajax_request_data``.
 #. The request is made to the server, either rendering a view or a form, calling an action, or loading a path.
 #. Echoed JSON is turned into a response object (``Elgg\Services\AjaxResponse``).
 #. The response object is filtered by the hook ``ajax_response``.
@@ -30,7 +30,11 @@ More notes:
 * Elgg gives you a default error handler that shows a generic message if output fails.
 * PHP exceptions or denied resource return HTTP error codes, resulting in use of the client-side error handler.
 * The default HTTP method is ``POST`` for actions, otherwise ``GET``. You can set it via ``options.method``.
-* For client caching, set ``options.method`` to ``"GET"`` and ``options.data.response_ttl`` to the max-age you want in seconds.
+* If a non-empty ``options.data`` is given, the default method is always ``POST``.
+* For client caching, set ``options.method`` to ``"GET"`` and ``options.data.elgg_response_ttl`` to the max-age you want in seconds.
+* To save system messages for the next page load, set ``options.data.elgg_fetch_messages = 0``. You may want to do this if you intent to redirect the user based on the response.
+* To stop client-side API from requiring AMD modules required server-side with ``elgg_require_js()``, set ``options.data.elgg_fetch_deps = 0``.
+* All methods accept a query string in the first argument. This is passed on to the fetch URL, but does not appear in the hook types.
 
 Performing actions
 ------------------
@@ -78,7 +82,11 @@ Notes for actions:
    * client-side ``"ajax_response_data", "action:do_math"`` to filter the response data (before the calling code receives it)
 * CSRF tokens are added to the request data.
 * The default method is ``POST``.
-* Using ``forward()`` in and action simply sends the response. The URL given in not returned to the client.
+* An absolute action URL can be given in place of the action name.
+* Using ``forward()`` in an action simply sends the response. The URL given in not returned to the client.
+
+.. note:: When setting ``data``, use ``ajax.objectify($form)`` instead of ``$form.serialize()``. Doing so allows the
+          ``ajax_request_data`` plugin hook to fire and other plugins to alter/piggyback on the request.
 
 Fetching data
 -------------
@@ -116,6 +124,7 @@ Notes for paths:
 
 * The 3 hooks (see Actions above) will have type ``path:<url_path>``. In this case, "path:myplugin_time".
 * If the page handler echoes a regular web page, ``output`` will be a string containing the HTML.
+* An absolute URL can be given in place of the path name.
 
 Fetching views
 --------------
@@ -212,6 +221,89 @@ Notes for forms:
 
 	In ajax views and forms, note that ``$vars`` can be populated by client input. The data is filtered like
 	``get_input()``, but may not be the type you're expecting or may have unexpected keys.
+
+
+Piggybacking on an Ajax request
+-------------------------------
+
+The client-side ``ajax_request_data`` hook can be used to append or filter data being sent by an ``elgg/Ajax`` request.
+
+Let's say when the view ``foo`` is fetched, we want to also send the server some data:
+
+.. code-block:: js
+
+    // in your boot module
+    var Ajax = require('elgg/Ajax');
+    var elgg = require('elgg');
+
+    elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'view:foo', function (name, type, params, data) {
+        // send some data back
+        data.bar = 1;
+        return data;
+    });
+
+This data can be read server-side via ``get_input('bar');``.
+
+.. note:: If data was given as a string (e.g. ``$form.serialize()``), the request hooks are not triggered.
+
+Piggybacking on an Ajax response
+--------------------------------
+
+The server-side ``ajax_response`` hook can be used to append or filter response data (or metadata).
+
+Let's say when the view ``foo`` is fetched, we want to also send the client some additional data:
+
+.. code-block:: php
+
+    use Elgg\Services\AjaxResponse;
+
+    function myplugin_append_ajax($hook, $type, AjaxResponse $response, $params) {
+
+        // alter the value being returned
+        $response->getData()->value .= " hello";
+
+        // send some metadata back. Only client-side "ajax_response" hooks can see this!
+        $response->getData()->myplugin_alert = 'Listen to me!';
+
+        return $response;
+    }
+
+	// in myplugin_init()
+	elgg_register_plugin_hook_handler(AjaxResponse::RESPONSE_HOOK, 'view:foo', 'myplugin_append_ajax');
+
+To capture the metadata send back to the client, we use the client-side ``ajax_response`` hook:
+
+.. code-block:: js
+
+    // in your boot module
+    var Ajax = require('elgg/Ajax');
+    var elgg = require('elgg');
+
+    elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'view:foo', function (name, type, params, data) {
+
+        // the return value is data.value
+
+        // the rest is metadata
+
+        alert(data.myplugin_alert);
+
+        return data;
+    });
+
+.. note:: Only ``data.value`` is returned to the ``success`` function or available via the `Deferred` interface.
+
+.. note:: Elgg uses these same hooks to deliver system messages over ``elgg/Ajax`` responses.
+
+
+Requiring AMD modules
+---------------------
+
+Each response from an Ajax service will contain a list of AMD modules required server side with `elgg_require_js()`.
+When response data is unwrapped, these modules will be loaded asynchronously - plugins should not expect these
+modules to be loaded in their `$.done()` and `$.then()` handlers and must use `require()` for any modules they depend on.
+Additionally AMD modules should not expect the DOM to have been altered by an Ajax request when they are loaded -
+DOM events should be delegated and manipulations on DOM elements should be delayed until all Ajax requests have been
+resolved.
 
 
 Legacy elgg.ajax APIs

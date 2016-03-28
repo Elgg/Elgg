@@ -18,18 +18,13 @@ $icon = elgg_view_entity_icon($user, 'large', array(
 ));
 
 // grab the actions and admin menu items from user hover
-$menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
-$builder = new ElggMenuBuilder($menu);
-$menu = $builder->getMenu();
-$menu = elgg_trigger_plugin_hook('prepare', "menu:user_hover", array(
-	'menu' => $menu,
+$menu = elgg()->menus->getMenu('user_hover', [
 	'entity' => $user,
 	'username' => $user->username,
-	'name' => 'user_hover',
-), $menu);
+]);
 
-$actions = elgg_extract('action', $menu, array());
-$admin = elgg_extract('admin', $menu, array());
+$actions = $menu->getSection('action', []);
+$admin = $menu->getSection('admin', []);
 
 $profile_actions = '';
 if (elgg_is_logged_in() && $actions) {

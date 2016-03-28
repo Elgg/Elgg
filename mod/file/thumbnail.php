@@ -15,6 +15,8 @@ require_once "$autoload_root/vendor/autoload.php";
 
 \Elgg\Application::start();
 
+elgg_deprecated_notice('mod/file/thumbnail.php is no longer in use and will be removed. Do not include or require it. Use elgg_get_inline_url() instead.', '2.2');
+
 // Get file GUID
 $file_guid = (int) get_input('file_guid', 0);
 

@@ -18,6 +18,13 @@ JS;
 // For backwards compatibility...
 echo elgg_view('sprintf.js');
 
+// We use a named AMD module and inline it here instead of using an async call.
+// This allows us to bootstrap elgg.ui.widgets library at runtime, without having
+// to wait for the module to load. This is necessary to ensure BC for plugins that
+// rely on elgg.ui.widgets methods to be available at system init.
+// @todo: remove in 3.x and use async calls
+echo elgg_view('elgg/widgets.js');
+
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
 	// these must come first
@@ -98,3 +105,5 @@ if (!window._require_queue) {
 }
 
 elgg.trigger_hook('boot', 'system');
+
+require(['elgg/init', 'elgg/ready']);

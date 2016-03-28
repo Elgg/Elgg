@@ -1,15 +1,7 @@
 <?php
 namespace Elgg\Database;
 
-/**
- * Cache subtypes and related class names.
- *
- * @global array|null $SUBTYPE_CACHE array once populated from DB, initially null
- * @access private
- */
-global $SUBTYPE_CACHE;
-$SUBTYPE_CACHE = null;
-
+use Elgg\Database;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -21,19 +13,34 @@ $SUBTYPE_CACHE = null;
  * @since      1.10.0
  */
 class SubtypeTable {
+
 	/**
-	 * Global Elgg configuration
-	 * 
-	 * @var \stdClass
+	 * @var array|null
 	 */
-	private $CONFIG;
+	private $cache = null;
+
+	/**
+	 * @var Database
+	 */
+	private $db;
 
 	/**
 	 * Constructor
+	 *
+	 * @param Database $db Elgg database
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(Database $db) {
+		$this->db = $db;
+	}
+
+	/**
+	 * Set the cached values from the boot data
+	 *
+	 * @param array $values Values from boot data
+	 * @return void
+	 */
+	public function setCachedValues(array $values) {
+		$this->cache = $values;
 	}
 
 	/**
@@ -57,13 +64,11 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function getId($type, $subtype) {
-		global $SUBTYPE_CACHE;
-	
 		if (!$subtype) {
 			return false;
 		}
 	
-		if ($SUBTYPE_CACHE === null) {
+		if ($this->cache === null) {
 			$this->populateCache();
 		}
 	
@@ -85,18 +90,16 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function getSubtype($subtype_id) {
-		global $SUBTYPE_CACHE;
-	
 		if (!$subtype_id) {
 			return '';
 		}
 	
-		if ($SUBTYPE_CACHE === null) {
+		if ($this->cache === null) {
 			$this->populateCache();
 		}
 	
-		if (isset($SUBTYPE_CACHE[$subtype_id])) {
-			return $SUBTYPE_CACHE[$subtype_id]->subtype;
+		if (isset($this->cache[$subtype_id])) {
+			return $this->cache[$subtype_id]->subtype;
 		}
 	
 		return false;
@@ -112,13 +115,11 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function retrieveFromCache($type, $subtype) {
-		global $SUBTYPE_CACHE;
-	
-		if ($SUBTYPE_CACHE === null) {
+		if ($this->cache === null) {
 			$this->populateCache();
 		}
 	
-		foreach ($SUBTYPE_CACHE as $obj) {
+		foreach ($this->cache as $obj) {
 			if ($obj->type === $type && $obj->subtype === $subtype) {
 				return $obj;
 			}
@@ -132,13 +133,14 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function populateCache() {
-		global $SUBTYPE_CACHE;
-		
-		$results = _elgg_services()->db->getData("SELECT * FROM {$this->CONFIG->dbprefix}entity_subtypes");
-		
-		$SUBTYPE_CACHE = array();
+		$results = $this->db->getData("
+			SELECT *
+			FROM {$this->db->getTablePrefix()}entity_subtypes
+		");
+
+		$this->cache = array();
 		foreach ($results as $row) {
-			$SUBTYPE_CACHE[$row->id] = $row;
+			$this->cache[$row->id] = $row;
 		}
 	}
 	
@@ -158,9 +160,7 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function getClass($type, $subtype) {
-		global $SUBTYPE_CACHE;
-	
-		if ($SUBTYPE_CACHE === null) {
+		if ($this->cache === null) {
 			$this->populateCache();
 		}
 		
@@ -184,18 +184,16 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function getClassFromId($subtype_id) {
-		global $SUBTYPE_CACHE;
-	
 		if (!$subtype_id) {
 			return null;
 		}
 	
-		if ($SUBTYPE_CACHE === null) {
+		if ($this->cache === null) {
 			$this->populateCache();
 		}
 		
-		if (isset($SUBTYPE_CACHE[$subtype_id])) {
-			return $SUBTYPE_CACHE[$subtype_id]->class;
+		if (isset($this->cache[$subtype_id])) {
+			return $this->cache[$subtype_id]->class;
 		}
 	
 		return null;
@@ -222,8 +220,6 @@ class SubtypeTable {
 	 * @see get_entity()
 	 */
 	function add($type, $subtype, $class = "") {
-		global $SUBTYPE_CACHE;
-	
 		if (!$subtype) {
 			return 0;
 		}
@@ -238,16 +234,19 @@ class SubtypeTable {
 				'class' => $class,
 			);
 	
-			$type = sanitise_string($type);
-			$subtype = sanitise_string($subtype);
-			$class = sanitise_string($class);
+			$type = $this->db->sanitizeString($type);
+			$subtype = $this->db->sanitizeString($subtype);
+			$class = $this->db->sanitizeString($class);
 	
-			$id = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}entity_subtypes"
-				. " (type, subtype, class) VALUES ('$type', '$subtype', '$class')");
+			$id = $this->db->insertData("
+				INSERT INTO {$this->db->getTablePrefix()}entity_subtypes
+					(type, subtype, class) VALUES
+					('$type', '$subtype', '$class')
+			");
 			
 			// add entry to cache
 			$cache_obj->id = $id;
-			$SUBTYPE_CACHE[$id] = $cache_obj;
+			$this->cache[$id] = $cache_obj;
 		}
 	
 		return $id;
@@ -268,17 +267,17 @@ class SubtypeTable {
 	 * @see update_subtype()
 	 */
 	function remove($type, $subtype) {
-		global $SUBTYPE_CACHE;
+		$type = $this->db->sanitizeString($type);
+		$subtype = $this->db->sanitizeString($subtype);
 	
-		$type = sanitise_string($type);
-		$subtype = sanitise_string($subtype);
-	
-		$success = _elgg_services()->db->deleteData("DELETE FROM {$this->CONFIG->dbprefix}entity_subtypes"
-			. " WHERE type = '$type' AND subtype = '$subtype'");
+		$success = $this->db->deleteData("
+			DELETE FROM {$this->db->getTablePrefix()}entity_subtypes
+			WHERE type = '$type' AND subtype = '$subtype'
+		");
 		
 		if ($success) {
 			// invalidate the cache
-			$SUBTYPE_CACHE = null;
+			$this->cache = null;
 		}
 		
 		return (bool) $success;
@@ -294,30 +293,29 @@ class SubtypeTable {
 	 * @return bool
 	 */
 	function update($type, $subtype, $class = '') {
-		global $SUBTYPE_CACHE;
-	
 		$id = $this->getId($type, $subtype);
 		if (!$id) {
 			return false;
 		}
 	
-		if ($SUBTYPE_CACHE === null) {
+		if ($this->cache === null) {
 			$this->populateCache();
 		}
 	
 		$unescaped_class = $class;
 	
-		$type = sanitise_string($type);
-		$subtype = sanitise_string($subtype);
-		$class = sanitise_string($class);
+		$type = $this->db->sanitizeString($type);
+		$subtype = $this->db->sanitizeString($subtype);
+		$class = $this->db->sanitizeString($class);
 		
-		$success = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}entity_subtypes
+		$success = $this->db->updateData("
+			UPDATE {$this->db->getTablePrefix()}entity_subtypes
 			SET type = '$type', subtype = '$subtype', class = '$class'
 			WHERE id = $id
 		");
 	
-		if ($success && isset($SUBTYPE_CACHE[$id])) {
-			$SUBTYPE_CACHE[$id]->class = $unescaped_class;
+		if ($success && isset($this->cache[$id])) {
+			$this->cache[$id]->class = $unescaped_class;
 		}
 	
 		return $success;

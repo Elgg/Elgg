@@ -14,15 +14,13 @@ function reportedcontent_init() {
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('reportedcontent', 'reportedcontent_page_handler');
-	
+
 	// Extend CSS
 	elgg_extend_view('elgg.css', 'reportedcontent/css');
 	elgg_extend_view('admin.css', 'reportedcontent/admin_css');
 
 
 	if (elgg_is_logged_in()) {
-		elgg_require_js('elgg/reportedcontent');
-
 		// Extend footer with report content link
 		elgg_register_menu_item('extras', array(
 			'name' => 'report_this',
@@ -32,6 +30,7 @@ function reportedcontent_init() {
 			'priority' => 500,
 			'section' => 'default',
 			'link_class' => 'elgg-lightbox',
+			'deps' => 'elgg/reportedcontent',
 		));
 	}
 

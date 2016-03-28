@@ -78,20 +78,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Holds the original (persisted) attribute values that have been changed but not yet saved.
 	 */
 	protected $orig_attributes = array();
-
-	/**
-	 * Tells how many tables are going to need to be searched in order to fully populate this object
-	 *
-	 * @var int
-	 */
-	protected $tables_split;
-	
-	/**
-	 * Tells how many tables describing object have been loaded thus far
-	 *
-	 * @var int
-	 */
-	protected $tables_loaded;
 	
 	/**
 	 * Initialize the attributes array.
@@ -115,24 +101,6 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = "yes";
-
-		// There now follows a bit of a hack
-		/* Problem: To speed things up, some objects are split over several tables,
-		 * this means that it requires n number of database reads to fully populate
-		 * an entity. This causes problems for caching and create events
-		 * since it is not possible to tell whether a subclassed entity is complete.
-		 *
-		 * Solution: We have two counters, one 'tables_split' which tells whatever is
-		 * interested how many tables are going to need to be searched in order to fully
-		 * populate this object, and 'tables_loaded' which is how many have been
-		 * loaded thus far.
-		 *
-		 * If the two are the same then this object is complete.
-		 *
-		 * Use: isFullyLoaded() to check
-		 */
-		$this->tables_split = 1;
-		$this->tables_loaded = 0;
 	}
 
 	/**
@@ -200,8 +168,8 @@ abstract class ElggEntity extends \ElggData implements
 			// quick return if value is not changing
 			return;
 		}
-		if (array_key_exists($name, $this->attributes)) {
 
+		if (array_key_exists($name, $this->attributes)) {
 			// if an attribute is 1 (integer) and it's set to "1" (string), don't consider that a change.
 			if (is_int($this->attributes[$name])
 					&& is_string($value)
@@ -243,9 +211,15 @@ abstract class ElggEntity extends \ElggData implements
 					$this->attributes[$name] = $value;
 					break;
 			}
-		} else {
-			$this->setMetadata($name, $value);
+			return;
 		}
+
+		if ($name === 'tables_split' || $name === 'tables_loaded') {
+			elgg_deprecated_notice("Do not read/write ->tables_split or ->tables_loaded.", "2.1");
+			return;
+		}
+
+		$this->setMetadata($name, $value);
 	}
 
 	/**
@@ -275,6 +249,11 @@ abstract class ElggEntity extends \ElggData implements
 				_elgg_services()->logger->warn('Reading ->subtype on a persisted entity is unreliable.');
 			}
 			return $this->attributes[$name];
+		}
+
+		if ($name === 'tables_split' || $name === 'tables_loaded') {
+			elgg_deprecated_notice("Do not read/write ->tables_split or ->tables_loaded.", "2.1");
+			return 2;
 		}
 
 		return $this->getMetadata($name);
@@ -1379,12 +1358,12 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Tests to see whether the object has been fully loaded.
+	 * Tests to see whether the object has been persisted.
 	 *
 	 * @return bool
 	 */
 	public function isFullyLoaded() {
-		return ! ($this->tables_loaded < $this->tables_split);
+		return (bool)$this->guid;
 	}
 
 	/**
@@ -1559,6 +1538,8 @@ abstract class ElggEntity extends \ElggData implements
 	protected function update() {
 		global $CONFIG;
 
+		_elgg_services()->boot->invalidateCache($this->guid);
+
 		// See #5600. This ensures canEdit() checks the BD persisted entity so it sees the
 		// persisted owner_guid, container_guid, etc.
 		_elgg_disable_caching_for_entity($this->guid);
@@ -1652,11 +1633,6 @@ abstract class ElggEntity extends \ElggData implements
 			$objarray = (array) $row;
 			foreach ($objarray as $key => $value) {
 				$this->attributes[$key] = $value;
-			}
-
-			// Increment the portion counter
-			if (!$this->isFullyLoaded()) {
-				$this->tables_loaded++;
 			}
 
 			// guid needs to be an int  https://github.com/elgg/elgg/issues/4111

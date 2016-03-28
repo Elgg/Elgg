@@ -130,17 +130,9 @@ class ElggFile extends \ElggObject {
 
 		$mime = $default;
 
-		// for PHP5 folks.
-		if (function_exists('finfo_file') && defined('FILEINFO_MIME_TYPE')) {
-			$resource = finfo_open(FILEINFO_MIME_TYPE);
-			if ($resource) {
-				$mime = finfo_file($resource, $file);
-			}
-		}
-
-		// for everyone else.
-		if (!$mime && function_exists('mime_content_type')) {
-			$mime = mime_content_type($file);
+		$detected = (new \Elgg\Filesystem\MimeTypeDetector())->tryStrategies($file);
+		if ($detected) {
+			$mime = $detected;
 		}
 
 		$original_filename = isset($this) && $this instanceof $class ? $this->originalfilename : basename($file);
