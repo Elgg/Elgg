@@ -955,6 +955,9 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *      'item_class'       CSS class applied to the list items
  *      'item_view'        Alternative view to render list items
  *      'pagination'       Display pagination?
+ *      'base_url'         Base URL of list (optional)
+ *      'url_fragment'     URL fragment to add to links if not present in base_url (optional)
+ *      'position'         Position of the pagination: before, after, or both
  *      'list_type'        List type: 'list' (default), 'gallery'
  *      'list_type_toggle' Display the list type toggle?
  *      'no_results'       Message to display if no results (string|Closure)
@@ -1273,7 +1276,7 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 
 /**
  * Renders a form field
- * 
+ *
  * @param string $input_type Input type, used to generate an input view ("input/$input_type")
  * @param array  $vars       Fields and input vars.
  *                           Field vars contain both field and input params. 'label', 'help',

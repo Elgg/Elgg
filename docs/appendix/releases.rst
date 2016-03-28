@@ -11,9 +11,9 @@ Follow the blog to `stay up to date on the latest releases`__.
 
 __ https://community.elgg.org/blog/all
 
-Patch/Bugfix Releases (1.9.x)
+Patch/Bugfix Releases (2.1.x)
 -----------------------------
-Every few weeks.
+Every two weeks.
 
 Bugfix releases are made regularly to make sure Elgg stays stable, secure, and bug-free.
 The higher the third digit, the more tested and stable the release is.
@@ -22,9 +22,9 @@ Since bugfix release focus on fixing bugs and not making major changes,
 themes and plugins should work from bugfix release to bugfix release.
 
 
-Minor/Feature Releases (1.x.0)
+Minor/Feature Releases (2.x.0)
 ------------------------------
-Every few months.
+Every three months.
 
 Whenever we introduce new features, we'll bump the middle version number.
 These releases aren't as mature as bugfix release, but are considered stable and useable.
@@ -37,7 +37,7 @@ However, plugins might need to be updated to make use of the new features.
 
 Major/Breaking Releases (x.0.0)
 -------------------------------
-Every few years.
+Every year.
 
 Inevitably, improving Elgg requires breaking changes and a new major release is made.
 These releases are opportunities for the core team to make strategic, breaking changes to the underlying platform.

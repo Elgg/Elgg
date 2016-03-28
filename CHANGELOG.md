@@ -1,3 +1,26 @@
+<a name="2.1.1"></a>
+### 2.1.1  (2016-03-20)
+
+#### Contributors
+
+* Steve Clay (4)
+* Jeroen Dalsem (2)
+* iionly (1)
+
+#### Documentation
+
+* **contributing:** clarifies release periods and branches for PRs ([b82d1592](https://github.com/Elgg/Elgg/commit/b82d1592d0b584c4e90a6d863eaa7c9803623b5d))
+* **groups:** removed discussion reference in groups manifest ([249334ef](https://github.com/Elgg/Elgg/commit/249334ef57f6bc6c1197219040cf583d0938294c))
+* **release:** improves docs for release process ([96681b5b](https://github.com/Elgg/Elgg/commit/96681b5ba419ad268df8a1cdcd9860ed95b68bcc))
+* **views:** added page/components/list docs to elgg_view_entity_list ([76fea973](https://github.com/Elgg/Elgg/commit/76fea973adc7d2a14033eacea898129539dc7e5a))
+
+
+#### Bug Fixes
+
+* **core:** do not implode already imploded categories array in plugin object details view ([666333cf](https://github.com/Elgg/Elgg/commit/666333cfbf8c28c571679dbc146720400d0ed995))
+* **installer:** no longer redirects in loop during installation ([78d31799](https://github.com/Elgg/Elgg/commit/78d31799843c27fd89f659b38fe5a2954f78296b), closes [#9486](https://github.com/Elgg/Elgg/issues/9486))
+
+
 <a name="2.1.0"></a>
 ## 2.1.0  (2016-03-13)
 

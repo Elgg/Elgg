@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Mon statut',
 	'groups:my_status:group_owner' => 'Vous êtes responsable de ce groupe',
 	'groups:my_status:group_member' => 'Vous êtes dans ce groupe',
-	'groups:subscribed' => 'Notifications du groupe activées',
-	'groups:unsubscribed' => 'Notifications du groupe désactivées',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Les membres de %s',
 	'groups:members:more' => "Voir tous les membres",

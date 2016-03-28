@@ -33,6 +33,7 @@ Deprecated APIs
  * ``set_default_filestore``
  * ``elgg_get_config('siteemail')``: Use ``elgg_get_site_entity()->email``
  * URLs starting with ``/css/`` and ``/js/``: ``Use elgg_get_simplecache_url()``
+ * ``elgg.ui.widgets`` JavaScript object is deprecated by ``elgg/widgets`` AMD module
 
 ``Application::getDb()`` changes
 --------------------------------

@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Rol',
 	'groups:my_status:group_owner' => 'Administrador',
 	'groups:my_status:group_member' => 'Membr',
-	'groups:subscribed' => 'Notificacións do grupo activadas',
-	'groups:unsubscribed' => 'Notificacións do grupo desactivadas',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Membros de %s',
 	'groups:members:more' => "Ver todos os membros",
