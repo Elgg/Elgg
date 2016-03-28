@@ -238,10 +238,14 @@ function get_missing_language_keys($language) {
 }
 
 /**
- * Check if a give language key exists
+ * Check if a given language key exists.
+ *
+ * @note Translators should, whenever creating a "dynamically" named language key, always create an
+ *       English (fallback) translation as well.
  *
  * @param string $key      The translation key
- * @param string $language The language
+ * @param string $language The language. Provided an English translation exists for all created keys, then
+ *                         devs can generally use the default "en", regardless of the site/user language.
  *
  * @return bool
  * @since 1.11
