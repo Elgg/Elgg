@@ -24,35 +24,66 @@ Requirements
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
 
+0. Merge commits up from lower branches
+=======================================
+
+Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other
+branches.
+
+For each branch
+---------------
+
+Check out the branch, make sure it's up to date, and make a new work branch with the merge. E.g. here we're
+merging 1.12 commits into 2.0:
+
+.. code:: sh
+
+    git checkout 2.0
+    git pull
+    git checkout -b merge112
+    git merge 1.12
+
+.. note:: If already up-to-date (no commits to merge), we can stop here for this branch.
+
+If there are conflicts, resolve them, ``git add .``, and ``git merge``.
+
+Make a PR for the branch and wait for automated tests and approval by other dev(s).
+
+.. code:: sh
+
+    git push -u my_fork merge112
+
+Once merged, we would repeat the process to merge 2.0 commits into 2.1.
+
 1. First new stable minor/major release
 =======================================
 
-Make sure to update the :doc:`/appendix/support` document to include the new minor/major release date and fill in the blanks for the previous release. 
+Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release.
 
-2. Prepare and tag the release
-==============================
+2. Prepare the release
+======================
 
-Make sure your local git clone is up to date!
+Bring your local git clone up to date.
 
 Merge latest commits up from lowest supported branch.
-Visit https://github.com/Elgg/Elgg/compare/new...old and submit the PR
-if there is anything that needs to be merged up.
+
+Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR if there is anything that needs to be merged up.
 
 Install the prerequisites:
 
 .. code:: sh
 
-   npm install elgg-conventional-changelog
-   easy_install sphinx
-   easy_install sphinx-intl
-   easy_install transifex-client
+    npm install elgg-conventional-changelog
+    easy_install sphinx
+    easy_install sphinx-intl
+    easy_install transifex-client
 
 Run the ``release.php`` script. For example, to release 1.12.5:
 
 .. code:: sh
 
-   git checkout 1.12
-   php .scripts/release.php 1.12.5
+    git checkout 1.12
+    php .scripts/release.php 1.12.5
 
 This creates a ``release-1.12.5`` branch in your local repo.
 
@@ -64,57 +95,63 @@ Next, manually browse to the ``/admin/settings/basic`` page and verify it loads.
     git add .
     git commit --amend
 
-Next, submit a PR via Github:
+Next, submit a PR via GitHub for automated testing and approval by another developer:
 
 .. code:: sh
 
-   git push your-remote-fork release-1.12.5
+    git push your-remote-fork release-1.12.5
+
+3. Tag the release
+==================
 
 Once approved and merged, tag the release:
 
 .. code:: sh
 
-   git checkout release-${version}
-   git tag -a ${version}
-   git push origin ${release}
+    git checkout release-${version}
+    git tag -a ${version} -m'Elgg ${version}'
+    git push --tags origin release-${version}
 
-Update Milestones on Github
- * Mark release milestones as completed
- * Move unresolved tickets in released milestones to later milestones
+* Mark GitHub release milestones as completed
+* Move unresolved tickets in released milestones to later milestones
 
-3. Update the website
+4. Update the website
 =====================
 
- * ssh to elgg.org
- * Clone https://github.com/Elgg/elgg-scripts
+* ssh to elgg.org
+* Clone https://github.com/Elgg/elgg-scripts
 
-Build zip package for Elgg 1.n.n
---------------------------------
-
-Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage.
-
-Example::
-
-    ./build.sh 1.12.5 1.12.5 /var/www/www.elgg.org/download/
-
-MIT::
-
-    ./build.sh 1.12.5 1.12.5-mit /var/www/www.elgg.org/download/
-
-Build zip package for Elgg 2.n.n
---------------------------------
+Build zip package
+-----------------
 
 Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage.
 
-Example::
+.. code:: sh
 
+    # regular release
     ./elgg-starter-project.sh master 2.0.4 /var/www/www.elgg.org/download/
 
-MIT::
-
+    # MIT release
     ./elgg-starter-project.sh master 2.0.4-mit /var/www/www.elgg.org/download/
-    
-	
+
+
+* Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version.
+* If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg``
+  item in the composer requires list.
+
+Building 1.x zip packages
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage.
+
+.. code:: sh
+
+    # regular release
+    ./build.sh 1.12.5 1.12.5 /var/www/www.elgg.org/download/
+
+    # MIT release
+    ./build.sh 1.12.5 1.12.5-mit /var/www/www.elgg.org/download/
+
 Update elgg.org
 ---------------
 
@@ -122,36 +159,38 @@ Update elgg.org
 * Add the new versions to ``src/Elgg/Releases.php``
 * Update vendors
 
-  .. code:: sh
+.. code:: sh
 
     composer update
 
 * Commit and push the changes
 * Pull to live site
 
-  .. code:: sh
+.. code:: sh
 
-      cd /var/www/www.elgg.org && sudo su deploy && git pull
+    cd /var/www/www.elgg.org && sudo su deploy && git pull
       
 * Update dependencies
 
-  .. code:: sh
+.. code:: sh
 
-     composer install --no-dev --prefer-dist --optimize-autoloader
+    composer install --no-dev --prefer-dist --optimize-autoloader
 
 * Go to community admin panel
     * Flush APC cache
     * Run upgrade
 
-4. Make the announcement
+5. Make the announcement
 ========================
 
 This should be the very last thing you do.
 
-* Sign in at https://elgg.org/blog and compose a blog on with HTML version of CHANGELOG.md.
-* Add tags “release” and “elgg1.x” where x is whatever branch is being released.
-* Tweet from the elgg `Twitter account`_
-* Post from the `G+ page`_
+#. Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version
+#. Sign in at https://elgg.org/blog and compose a new blog with a summary
+#. Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors
+#. Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released
+#. Tweet from the elgg `Twitter account`_
+#. Post from the `G+ page`_
 
 .. _G+ page: https://plus.google.com/+ElggOrg
 .. _Twitter account: https://twitter.com/elgg
