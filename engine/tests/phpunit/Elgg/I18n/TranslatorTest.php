@@ -11,7 +11,7 @@ class TranslatorTest extends TestCase {
 		$input_lang = 'nl';
 		_elgg_services()->input->set('hl', $input_lang);
 		
-		$lang = $translator->getLanguage();
+		$lang = $translator->detectLanguage();
 		$this->assertEquals($lang, $input_lang);
 	}
 	

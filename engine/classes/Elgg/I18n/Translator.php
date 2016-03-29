@@ -37,7 +37,8 @@ class Translator {
 	 * @return string Either the translated string, the English string,
 	 * or the original language string.
 	 */
-	function translate($message_key, $args = array(), $language = "") {
+	public function translate($message_key, $args = [], $language = "") {
+		// TODO find a way to cache getLanguage() and get rid of this
 		static $CURRENT_LANGUAGE;
 
 		// old param order is deprecated
@@ -51,31 +52,22 @@ class Translator {
 			$args = array();
 		}
 
-		if (!isset($GLOBALS['_ELGG']->translations)) {
-			// this means we probably had an exception before translations were initialized
-			$this->registerTranslations($this->defaultPath);
-		}
-
 		if (!$CURRENT_LANGUAGE) {
-			$CURRENT_LANGUAGE = $this->getLanguage();
+			$CURRENT_LANGUAGE = $this->getCurrentLanguage();
 		}
 		if (!$language) {
 			$language = $CURRENT_LANGUAGE;
 		}
 
-		if (!isset($GLOBALS['_ELGG']->translations[$language])) {
-			// The language being requested is not the same as the language of the
-			// logged in user, so we will have to load it separately. (Most likely
-			// we're sending a notification and the recipient is using a different
-			// language than the logged in user.)
-			$this->loadTranslations($language);
-		}
+		$this->ensureTranslationsLoaded($language);
 
 		if (isset($GLOBALS['_ELGG']->translations[$language][$message_key])) {
 			$string = $GLOBALS['_ELGG']->translations[$language][$message_key];
+
 		} else if (isset($GLOBALS['_ELGG']->translations["en"][$message_key])) {
 			$string = $GLOBALS['_ELGG']->translations["en"][$message_key];
 			_elgg_services()->logger->notice(sprintf('Missing %s translation for "%s" language key', $language, $message_key));
+
 		} else {
 			$string = $message_key;
 			_elgg_services()->logger->notice(sprintf('Missing English translation for "%s" language key', $message_key));
@@ -103,7 +95,7 @@ class Translator {
 	 *
 	 * @return bool Depending on success
 	 */
-	function addTranslation($country_code, $language_array) {
+	public function addTranslation($country_code, $language_array) {
 
 		if (!isset($GLOBALS['_ELGG']->translations)) {
 			$GLOBALS['_ELGG']->translations = array();
@@ -125,12 +117,12 @@ class Translator {
 	}
 
 	/**
-	 * Detect the current language being used by the current site or logged in user.
+	 * Get the current system/user language or "en".
 	 *
 	 * @return string The language code for the site/user or "en" if not set
 	 */
-	function getCurrentLanguage() {
-		$language = $this->getLanguage();
+	public function getCurrentLanguage() {
+		$language = $this->detectLanguage();
 
 		if (!$language) {
 			$language = 'en';
@@ -140,11 +132,11 @@ class Translator {
 	}
 
 	/**
-	 * Gets the current language in use by the system or user.
+	 * Detect the current system/user language or false.
 	 *
 	 * @return string The language code (eg "en") or false if not set
 	 */
-	function getLanguage() {
+	public function detectLanguage() {
 		$url_lang = _elgg_services()->input->get('hl');
 		if ($url_lang) {
 			return $url_lang;
@@ -181,7 +173,7 @@ class Translator {
 	 * @param string $language Language code
 	 * @access private
 	 */
-	function loadTranslations($language = null) {
+	public function loadTranslations($language = null) {
 		if (elgg_is_system_cache_enabled()) {
 			$loaded = true;
 
@@ -273,7 +265,7 @@ class Translator {
 	 *
 	 * @return bool Success
 	 */
-	function registerPluginTranslations($path) {
+	public function registerPluginTranslations($path) {
 		$languages_path = rtrim($path, "\\/") . "/languages";
 
 		// don't need to have translations
@@ -294,7 +286,7 @@ class Translator {
 	 *
 	 * @return bool success
 	 */
-	function registerTranslations($path, $load_all = false, $language = null) {
+	public function registerTranslations($path, $load_all = false, $language = null) {
 		$path = sanitise_filepath($path);
 
 		// Make a note of this path just incase we need to register this language later
@@ -356,7 +348,7 @@ class Translator {
 	 *
 	 * @return void
 	 */
-	function reloadAllTranslations() {
+	public function reloadAllTranslations() {
 
 
 		static $LANG_RELOAD_ALL_RUN;
@@ -395,7 +387,7 @@ class Translator {
 	 *
 	 * @return array
 	 */
-	function getInstalledTranslations() {
+	public function getInstalledTranslations() {
 
 
 		// Ensure that all possible translations are loaded
@@ -425,7 +417,7 @@ class Translator {
 	 *
 	 * @return int
 	 */
-	function getLanguageCompleteness($language) {
+	public function getLanguageCompleteness($language) {
 
 
 		// Ensure that all possible translations are loaded
@@ -456,7 +448,7 @@ class Translator {
 	 *
 	 * @return mixed
 	 */
-	function getMissingLanguageKeys($language) {
+	public function getMissingLanguageKeys($language) {
 
 
 		// Ensure that all possible translations are loaded
@@ -479,7 +471,7 @@ class Translator {
 	}
 
 	/**
-	 * Check if a give language key exists
+	 * Check if a given language key exists
 	 *
 	 * @param string $key      The translation key
 	 * @param string $language The specific language to check
@@ -492,16 +484,34 @@ class Translator {
 			return false;
 		}
 
-		if (($language !== 'en') && !array_key_exists($language, $GLOBALS['_ELGG']->translations)) {
-			// Ensure that all possible translations are loaded
-			$this->reloadAllTranslations();
-		}
+		$this->ensureTranslationsLoaded($language);
 
 		if (!array_key_exists($language, $GLOBALS['_ELGG']->translations)) {
 			return false;
 		}
 
 		return array_key_exists($key, $GLOBALS['_ELGG']->translations[$language]);
+	}
+
+	/**
+	 * Make sure translations are loaded
+	 *
+	 * @param string $language Language
+	 * @return void
+	 */
+	private function ensureTranslationsLoaded($language) {
+		if (!isset($GLOBALS['_ELGG']->translations)) {
+			// this means we probably had an exception before translations were initialized
+			$this->registerTranslations($this->defaultPath);
+		}
+
+		if (!isset($GLOBALS['_ELGG']->translations[$language])) {
+			// The language being requested is not the same as the language of the
+			// logged in user, so we will have to load it separately. (Most likely
+			// we're sending a notification and the recipient is using a different
+			// language than the logged in user.)
+			$this->loadTranslations($language);
+		}
 	}
 
 	/**
