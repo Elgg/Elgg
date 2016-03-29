@@ -113,6 +113,27 @@ class ElggWidget extends \ElggObject {
 			$this->removePrivateSetting($name);
 		}
 	}
+	
+	/**
+	 * Test if property is set either as an attribute or private setting
+	 *
+	 * @tip Use isset($entity->property)
+	 *
+	 * @see \ElggEntity->__isset
+	 *
+	 * @param string $name The name of the attribute or private setting.
+	 *
+	 * @return bool
+	 * @since 2.2.0
+	 */
+	public function __isset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			return parent::__isset($name);
+		} else {
+			$private_setting = $this->getPrivateSetting($name);
+			return !is_null($private_setting);
+		}
+	}
 
 	/**
 	 * Set the widget context
