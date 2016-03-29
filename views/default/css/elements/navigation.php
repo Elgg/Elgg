@@ -22,7 +22,7 @@
 	text-align: center;
 }
 .elgg-pagination a, .elgg-pagination span {
-	border-radius: 4px;	
+	border-radius: 4px;
 	display: block;
 	padding: 2px 6px;
 	color: #4690d6;
@@ -311,7 +311,7 @@
 
 .elgg-menu-page a {
 	display: block;
-	border-radius: 5px;	
+	border-radius: 5px;
 	background-color: white;
 	margin: 0 0 3px;
 	padding: 2px 4px 2px 8px;
@@ -355,12 +355,15 @@
 
 	min-width: 165px;
 	max-width: 250px;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	
 	border: solid 1px;
 	border-color: #E5E5E5 #999 #999 #E5E5E5;
 	background-color: #FFF;
 	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+}
+.elgg-menu-hover.elgg-ajax-loader {
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 .elgg-menu-hover > li {
 	border-bottom: 1px solid #ddd;
@@ -461,7 +464,7 @@
 *************************************** */
 .elgg-menu-owner-block li a {
 	display: block;
-	border-radius: 5px;	
+	border-radius: 5px;
 	background-color: white;
 	margin: 3px 0 5px 0;
 	padding: 2px 4px 2px 8px;
