@@ -8,7 +8,7 @@ use Elgg\Cache\PluginSettingsCache;
 
 /**
  * Persistent, installation-wide key-value storage.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
@@ -206,9 +206,9 @@ class Plugins {
 	
 	/**
 	 * Cache a reference to this plugin by its ID
-	 * 
+	 *
 	 * @param \ElggPlugin $plugin
-	 * 
+	 *
 	 * @access private
 	 */
 	function cache(\ElggPlugin $plugin) {
@@ -376,11 +376,18 @@ class Plugins {
 				$plugin->start($start_flags);
 				$this->active_guids[$id] = $plugin->guid;
 			} catch (Exception $e) {
-				$plugin->deactivate();
-				$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-								array($id, $plugin->guid, $e->getMessage()));
-				elgg_add_admin_notice("cannot_start $id", $msg);
-				$return = false;
+				$disable_plugins = elgg_get_config('auto_disable_plugins');
+				if ($disable_plugins === null) {
+					$disable_plugins = true;
+				}
+				if ($disable_plugins) {
+					$plugin->deactivate();
+				
+					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
+									array($id, $plugin->guid, $e->getMessage()));
+					elgg_add_admin_notice("cannot_start $id", $msg);
+					$return = false;
+				}
 			}
 		}
 
@@ -634,7 +641,7 @@ class Plugins {
 	
 	/**
 	 * Deletes all cached data on plugins being provided.
-	 * 
+	 *
 	 * @return boolean
 	 * @access private
 	 */

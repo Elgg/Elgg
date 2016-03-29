@@ -104,6 +104,15 @@ $CONFIG->simplecache_enabled;
 $CONFIG->system_cache_enabled;
 
 /**
+ * Are unbootable plugins automatically disabled
+ *
+ * @see \Elgg\Database\Plugins->load
+ *
+ * @global string $CONFIG->auto_disable_plugins
+ */
+$CONFIG->auto_disable_plugins;
+
+/**
  * The site description from the current site object.
  *
  * @global string $CONFIG->sitedescription
