@@ -2,7 +2,6 @@
 
 use Elgg\Filesystem\Directory;
 
-
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
@@ -417,41 +416,6 @@ function sanitise_filepath($path, $append_slash = true) {
 }
 
 /**
- * Queues a message to be displayed.
- *
- * Messages will not be displayed immediately, but are stored in
- * for later display, usually upon next page load.
- *
- * The method of displaying these messages differs depending upon plugins and
- * viewtypes.  The core default viewtype retrieves messages in
- * {@link views/default/page/shells/default.php} and displays messages as
- * javascript popups.
- *
- * @note Internal: Messages are stored as strings in the Elgg session as ['msg'][$register] array.
- *
- * @warning This function is used to both add to and clear the message
- * stack.  If $messages is null, $register will be returned and cleared.
- * If $messages is null and $register is empty, all messages will be
- * returned and removed.
- *
- * @param mixed  $message  Optionally, a single message or array of messages to add, (default: null)
- * @param string $register Types of message: "error", "success" (default: success)
- * @param bool   $count    Count the number of messages (default: false)
- *
- * @return bool|array Either the array of messages, or a response regarding
- *                          whether the message addition was successful.
- */
-function system_messages($message = null, $register = "success", $count = false) {
-	if ($count) {
-		return _elgg_services()->systemMessages->count($register);
-	}
-	if ($message === null) {
-		return _elgg_services()->systemMessages->dumpRegister($register);
-	}
-	return _elgg_services()->systemMessages->addMessageToRegister($message, $register);
-}
-
-/**
  * Counts the number of messages, either globally or in a particular register
  *
  * @param string $register Optionally, the register
@@ -472,7 +436,8 @@ function count_messages($register = "") {
  * @return bool
  */
 function system_message($message) {
-	return _elgg_services()->systemMessages->addSuccessMessage($message);
+	_elgg_services()->systemMessages->addSuccessMessage($message);
+	return true;
 }
 
 /**
@@ -485,7 +450,29 @@ function system_message($message) {
  * @return bool
  */
 function register_error($error) {
-	return _elgg_services()->systemMessages->addErrorMessage($error);
+	_elgg_services()->systemMessages->addErrorMessage($error);
+	return true;
+}
+
+/**
+ * Get a copy of the current system messages.
+ *
+ * @return \Elgg\SystemMessages\RegisterSet
+ * @since 2.1
+ */
+function elgg_get_system_messages() {
+	return _elgg_services()->systemMessages->loadRegisters();
+}
+
+/**
+ * Set the system messages. This will overwrite the state of all messages and errors!
+ *
+ * @param \Elgg\SystemMessages\RegisterSet $set Set of messages
+ * @return void
+ * @since 2.1
+ */
+function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
+	_elgg_services()->systemMessages->saveRegisters($set);
 }
 
 /**
