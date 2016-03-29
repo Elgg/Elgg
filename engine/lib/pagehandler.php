@@ -179,12 +179,14 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
  * @param int    $guid    Entity GUID
  * @param string $type    Optional required entity type
  * @param string $subtype Optional required entity subtype
- * @return void
+ * @param bool   $forward If set to true (default), will forward the page;
+ *                        if set to false, will return true or false.
+ * @return bool Will return if $forward is set to false.
  * @since 1.9.0
  */
-function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward = true) {
 	$entity = get_entity($guid);
-	if (!$entity) {
+	if (!$entity && $forward) {
 		if (!elgg_entity_exists($guid)) {
 			// entity doesn't exist
 			forward('', '404');
@@ -195,15 +197,33 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 			// user is logged in but still does not have access to it
 			register_error(elgg_echo('limited_access'));
 			forward();
-		}		
+		}
+	} else if (!$entity) {
+		return false;
 	}
 
-	if ($type) {
-		if (!elgg_instanceof($entity, $type, $subtype)) {
-			// entity is of wrong type/subtype
+	if ($type && !elgg_instanceof($entity, $type, $subtype)) {
+		// entity is of wrong type/subtype
+		if ($forward) {
 			forward('', '404');
+		} else {
+			return false;
 		}
 	}
+
+	$hook_type = "{$entity->getType()}:{$entity->getSubtype()}";
+	$hook_params = [
+		'entity' => $entity,
+	];
+	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, true)) {
+		if ($forward) {
+			forward('', '403');
+		} else {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**
