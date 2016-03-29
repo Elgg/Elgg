@@ -174,6 +174,11 @@ class MimeTypeDetector {
 		if ($type === "application/vnd.ms-office" && $extension === "ppt") {
 			return "application/vnd.ms-powerpoint";
 		}
+		
+		// try extension detection as a fallback for octet-stream
+		if ($type === "application/octet-stream" && $this->use_extension && isset($this->extensions[$extension])) {
+			return $this->extensions[$extension];
+		}
 
 		return $type;
 	}
