@@ -10,15 +10,15 @@ class WidgetsServiceTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testRegisterTypeParametersControl() {
 		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
-
-		$this->assertFalse($service->registerType('', 'Widget name', 'Widget description'));
-		$this->assertFalse($service->registerType(0, 'Widget name', 'Widget description'));
-		$this->assertFalse($service->registerType(null, 'Widget name', 'Widget description'));
-		$this->assertFalse($service->registerType(false, 'Widget name', 'Widget description'));
-		$this->assertFalse($service->registerType('widget_type', '', 'Widget description'));
-		$this->assertFalse($service->registerType('widget_type', 0, 'Widget description'));
-		$this->assertFalse($service->registerType('widget_type', null, 'Widget description'));
-		$this->assertFalse($service->registerType('widget_type', false, 'Widget description'));
+		
+		$definition = \Elgg\WidgetDefinition::factory([
+			'id' => 'widget_test',
+			'name' => 'Widget name',
+		]);
+		$this->assertTrue($service->registerType($definition));
+		
+		$definition->id = null;
+		$this->assertFalse($service->registerType($definition));
 	}
 	
 	/**
@@ -30,12 +30,39 @@ class WidgetsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($service->validateType('widget_type'));
 		$this->assertFalse($service->validateType('not_registered_widget'));
 
-		$this->assertTrue($service->registerType('widget_type', 'Widget name1', 'Widget description1'));
-		$this->assertTrue($service->registerType('widget_type_con', 'Widget name2', 'Widget description2', array('dashboard', 'profile')));
-		$this->assertTrue($service->registerType('widget_type_mul', 'Widget name3', 'Widget description3', array('all'), true));
-		$this->assertTrue($service->registerType('widget_type_con_mul', 'Widget name4', 'Widget description4', array('dashboard', 'settings'), true));
+		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
+			'id' => 'widget_type',
+			'name' => 'Widget name1',
+			'description' => 'Widget description1',
+		])));
+		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
+			'id' => 'widget_type_con',
+			'name' => 'Widget name2',
+			'description' => 'Widget description2',
+			'context' => ['dashboard', 'profile'],
+		])));
+		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
+			'id' => 'widget_type_mul',
+			'name' => 'Widget name3',
+			'description' => 'Widget description3',
+			'context' => ['all'],
+			'multiple' => true,
+		])));
+		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
+			'id' => 'widget_type_con_mul',
+			'name' => 'Widget name4',
+			'description' => 'Widget description4',
+			'context' => ['dashboard', 'settings'],
+			'multiple' => true,
+		])));
 		//overwrite
-		$this->assertTrue($service->registerType('widget_type_con_mul', 'Widget name5', 'Widget description5', array('dashboard', 'settings'), true));
+		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
+			'id' => 'widget_type_con_mul',
+			'name' => 'Widget name5',
+			'description' => 'Widget description5',
+			'context' => ['dashboard', 'settings'],
+			'multiple' => true,
+		])));
 		
 		$this->assertTrue($service->validateType('widget_type'));
 		$this->assertTrue($service->validateType('widget_type_con'));
@@ -44,6 +71,70 @@ class WidgetsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($service->validateType('not_registered_widget'));
 
 		return $service;
+	}
+	/**
+	 * Tests register and unregister widgets with hook
+	 */
+	public function testCanRegisterAndUnregisterTypeWithHook() {
+		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
+
+		$this->assertFalse($service->validateType('hook_widget'));
+		
+		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		$this->assertArrayHasKey('hook_widget', $service->getTypes());
+		
+		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		$this->assertArrayNotHasKey('hook_widget', $service->getTypes());
+		
+		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		$this->assertArrayHasKey('hook_widget', $service->getTypes());
+				
+		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
+		$this->assertArrayNotHasKey('hook_widget', $service->getTypes());
+		
+		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
+		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
+	}
+	
+	/**
+	 * Register a widget
+	 *
+	 * @param string $hook
+	 * @param string $type
+	 * @param array  $value
+	 * @param array $params
+	 *
+	 * @return \Elgg\WidgetDefinition[]
+	 */
+	public function registerWidgetsHookHandler($hook, $type, $value, $params) {
+		$value[] = \Elgg\WidgetDefinition::factory([
+			'id' => 'hook_widget',
+			'name' => 'hook_widget name',
+			'description' => 'hook_widget description',
+		]);
+		
+		return $value;
+	}
+
+	/**
+	 * Unregister a widget
+	 *
+	 * @param string $hook
+	 * @param string $type
+	 * @param array  $value
+	 * @param array $params
+	 *
+	 * @return \Elgg\WidgetDefinition[]
+	 */
+	public function unregisterWidgetsHookHandler($hook, $type, $value, $params) {
+		foreach ($value as $key => $widget_definition) {
+			if ($widget_definition->id === 'hook_widget') {
+				unset($value[$key]);
+				break;
+			}
+		}
+		
+		return $value;
 	}
 
 	/**
@@ -64,11 +155,14 @@ class WidgetsServiceTest extends \PHPUnit_Framework_TestCase {
 			array(true, 'settings', array('widget_type_con_mul')),
 		);
 		
-		//is returned set of handlers the same as expected
+		//is returned set of ids the same as expected
 		foreach ($params as $case) {
 			list($exact, $context, $expected) = $case;
 			sort($expected);
-			$actual = array_keys($service->getTypes($context, $exact));
+			$actual = array_keys($service->getTypes([
+				'context' => $context,
+				'exact' => $exact,
+			]));
 			sort($actual);
 			$this->assertEquals($expected, $actual);
 		}
@@ -93,13 +187,16 @@ class WidgetsServiceTest extends \PHPUnit_Framework_TestCase {
 		
 		foreach (array(false, true) as $exact) {
 			foreach ($contexts as $context) {
-				$items = $service->getTypes($context, $exact);
-				foreach ($items as $handler => $item) {
-					$this->assertInstanceOf('\stdClass', $item);
-					$this->assertNotEmpty($handler);
-					$this->assertInternalType('string', $handler);
-					$this->assertArrayHasKey($handler, $resps);
-					$this->assertSame($resps[$handler], $item->multiple);
+				$items = $service->getTypes([
+					'context' => $context,
+					'exact' => $exact,
+				]);
+				foreach ($items as $id => $item) {
+					$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
+					$this->assertNotEmpty($id);
+					$this->assertInternalType('string', $id);
+					$this->assertArrayHasKey($id, $resps);
+					$this->assertSame($resps[$id], $item->multiple);
 				}
 			}
 		}
@@ -124,13 +221,16 @@ class WidgetsServiceTest extends \PHPUnit_Framework_TestCase {
 		
 		foreach (array(false, true) as $exact) {
 			foreach ($contexts as $context) {
-				$items = $service->getTypes($context, $exact);
-				foreach ($items as $handler => $item) {
-					$this->assertInstanceOf('\stdClass', $item);
-					$this->assertNotEmpty($handler);
-					$this->assertInternalType('string', $handler);
-					$this->assertArrayHasKey($handler, $resps);
-					list($name, $desc) = $resps[$handler];
+				$items = $service->getTypes([
+					'context' => $context,
+					'exact' => $exact,
+				]);
+				foreach ($items as $id => $item) {
+					$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
+					$this->assertNotEmpty($id);
+					$this->assertInternalType('string', $id);
+					$this->assertArrayHasKey($id, $resps);
+					list($name, $desc) = $resps[$id];
 					$this->assertSame($name, $item->name);
 					$this->assertSame($desc, $item->description);
 				}

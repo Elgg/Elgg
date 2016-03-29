@@ -88,7 +88,7 @@ class WidgetDefinition {
 			$definition->description = $description;
 		}
 		
-		$definition->context = (array) elgg_extract('context', $options, []);
+		$definition->context = (array) elgg_extract('context', $options, ['all']);
 		$definition->multiple = (bool) elgg_extract('multiple', $options, false);
 		
 		return $definition;

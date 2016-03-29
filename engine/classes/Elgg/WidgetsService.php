@@ -143,7 +143,7 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function registerType(WidgetDefinition $definition) {
-		if (!$definition) {
+		if (!($definition instanceof WidgetDefinition)) {
 			return false;
 		}
 		
