@@ -491,7 +491,13 @@ class UsersTable {
 	function setLastAction($user_guid) {
 		$user_guid = (int) $user_guid;
 		$time = time();
-	
+
+		$user = get_user($user_guid);
+		if ($user && $user->last_action == $time) {
+			// won't change
+			return;
+		}
+
 		$query = "
 			UPDATE {$this->CONFIG->dbprefix}users_entity
 			SET prev_last_action = last_action,
