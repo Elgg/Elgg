@@ -18,7 +18,12 @@ elgg.ui.init = function () {
 
 	$(document).on('click', '[rel=toggle]', elgg.ui.toggles);
 
-	$(document).on('click', '[rel=popup]', elgg.ui.popupOpen);
+	// Bind popup modules to their anchor elements
+	// Not checking if elements are present, as we want bindings to work with HTML added to DOM on AJAX calls
+	// @todo: Use elgg/booted module once #8319 is merged
+	require(['elgg/popup'], function(popup) {
+		popup.bind($('[rel="popup"],.elgg-popup'));
+	});
 
 	$(document).on('click', '.elgg-menu-page .elgg-menu-parent', elgg.ui.toggleMenu);
 
@@ -100,87 +105,30 @@ elgg.ui.toggles = function(event) {
  *
  * @param {Object} event
  * @return void
+ * @deprecated 2.1
  */
 elgg.ui.popupOpen = function(event) {
+	elgg.deprecated_notice('elgg.ui.popupOpen() has been deprecated and should not be called directly. Use elgg/popup AMD module instead', '2.1');
+
 	event.preventDefault();
 	event.stopPropagation();
 
-	var target = elgg.getSelectorFromUrlFragment($(this).toggleClass('elgg-state-active').attr('href'));
-	var $target = $(target);
-
-	// emit a hook to allow plugins to position and control popups
-	var params = {
-		targetSelector: target,
-		target: $target,
-		source: $(this)
-	};
-
-	var options = {
-		my: 'center top',
-		at: 'center bottom',
-		of: $(this),
-		collision: 'fit fit'
-	};
-
-	options = elgg.trigger_hook('getOptions', 'ui.popup', params, options);
-
-	// allow plugins to cancel event
-	if (!options) {
-		return;
-	}
-
-	// hide if already open
-	if ($target.is(':visible')) {
-		$target.fadeOut();
-		$(document).off('click', elgg.ui.popupClose);
-		return;
-	}
-
-	$target.appendTo('body')
-		.fadeIn()
-		.position(options);
-
-	$(document)
-		.off('click', 'body', elgg.ui.popupClose)
-		.on('click', 'body', elgg.ui.popupClose);
+	var $elem = $(this);
+	require(['elgg/popup'], function(popup) {
+		popup.open($elem);
+	});
 };
 
 /**
  * Catches clicks that aren't in a popup and closes all popups.
+ * @deprecated 2.1
  */
 elgg.ui.popupClose = function(event) {
-	$eventTarget = $(event.target);
-	var inTarget = false;
-	var $popups = $('[rel=popup]');
-
-	// if the click event target isn't in a popup target, fade all of them out.
-	$popups.each(function(i, e) {
-		var target = elgg.getSelectorFromUrlFragment($(e).attr('href')) + ':visible';
-		var $target = $(target);
-
-		if (!$target.is(':visible')) {
-			return;
-		}
-
-		// didn't click inside the target
-		if ($eventTarget.closest(target).length > 0) {
-			inTarget = true;
-			return false;
-		}
+	elgg.deprecated_notice('elgg.ui.popupClose() has been deprecated and should not be called directly. Use elgg/popup AMD module instead', '2.1');
+	
+	require(['elgg/popup'], function(popup) {
+		popup.close();
 	});
-
-	if (!inTarget) {
-		$popups.each(function(i, e) {
-			var $e = $(e);
-			var $target = $(elgg.getSelectorFromUrlFragment($e.attr('href')) + ':visible');
-			if ($target.length > 0) {
-				$target.fadeOut();
-				$e.removeClass('elgg-state-active');
-			}
-		});
-
-		$(document).off('click', elgg.ui.popupClose);
-	}
 };
 
 /**
@@ -245,48 +193,38 @@ elgg.ui.initHoverMenu = function(parent) {
 
 	// avatar contextual menu
 	$(document).on('click', ".elgg-avatar > .elgg-icon-hover-menu", function(e) {
-		var $placeholder = $(this).parent().find(".elgg-menu-hover.elgg-ajax-loader");
+
+		var $icon = $(this);
+
+		var $placeholder = $icon.parent().find(".elgg-menu-hover.elgg-ajax-loader");
 
 		if ($placeholder.length) {
 			loadMenu($placeholder.attr("rel"));
 		}
 
 		// check if we've attached the menu to this element already
-		var $hovermenu = $(this).data('hovermenu') || null;
+		var $hovermenu = $icon.data('hovermenu') || null;
 
 		if (!$hovermenu) {
-			$hovermenu = $(this).parent().find(".elgg-menu-hover");
-			$(this).data('hovermenu', $hovermenu);
+			$hovermenu = $icon.parent().find(".elgg-menu-hover");
+			$icon.data('hovermenu', $hovermenu);
 		}
 
-		// close hovermenu if arrow is clicked & menu already open
-		if ($hovermenu.css('display') == "block") {
-			$hovermenu.fadeOut();
-		} else {
-			$avatar = $(this).closest(".elgg-avatar");
-
-			// @todo Use jQuery-ui position library instead -- much simpler
-			var offset = $avatar.offset();
-			var top = $avatar.height() + offset.top + 'px';
-			var left = $avatar.width() - 15 + offset.left + 'px';
-
-			$hovermenu.appendTo('body')
-					.css('position', 'absolute')
-					.css("top", top)
-					.css("left", left)
-					.fadeIn('normal');
-		}
-
-		// hide any other open hover menus
-		$(".elgg-menu-hover:visible").not($hovermenu).fadeOut();
+		require(['elgg/popup'], function(popup) {
+			if ($hovermenu.is(':visible')) {
+				// close hovermenu if arrow is clicked & menu already open
+				popup.close($hovermenu);
+			} else {
+				popup.open($icon, $hovermenu, {
+					'my': 'left top',
+					'at': 'right-15px bottom',
+					'of': $icon.closest(".elgg-avatar"),
+					'collision': 'none none'
+				});
+			}
+		});
 	});
 
-	// hide avatar menu when user clicks elsewhere
-	$(document).click(function(event) {
-		if ($(event.target).parents(".elgg-avatar").length === 0) {
-			$(".elgg-menu-hover").fadeOut();
-		}
-	});
 };
 
 /**
