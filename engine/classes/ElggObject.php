@@ -153,8 +153,12 @@ class ElggObject extends \ElggEntity {
 		$title = sanitize_string($this->title);
 		$description = sanitize_string($this->description);
 
-		$query = "UPDATE {$CONFIG->dbprefix}objects_entity
-			set title='$title', description='$description' where guid=$guid";
+		$query = "
+			UPDATE {$CONFIG->dbprefix}objects_entity
+			SET title = '$title',
+				description = '$description'
+			WHERE guid = $guid
+		";
 
 		return $this->getDatabase()->updateData($query) !== false;
 	}
