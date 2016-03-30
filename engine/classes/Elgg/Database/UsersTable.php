@@ -537,6 +537,14 @@ class UsersTable {
 	 * @return void
 	 */
 	public function setLastAction($user_guid) {
+
+		$time = $this->getCurrentTime()->getTimestamp();
+		$user = get_entity($user_guid);
+		if ($user && $user->last_action == $time) {
+			// won't change
+			return;
+		}
+
 		$query = "
 			UPDATE {$this->table}
 			SET
@@ -545,7 +553,6 @@ class UsersTable {
 			WHERE guid = :guid
 		";
 
-		$time = $this->getCurrentTime()->getTimestamp();
 		$params = [
 			':last_action' => $time,
 			':guid' => (int) $user_guid,
@@ -576,7 +583,7 @@ class UsersTable {
 	 * @return void
 	 */
 	public function setLastLogin($user_guid) {
-	
+
 		$query = "
 			UPDATE {$this->table}
 			SET
