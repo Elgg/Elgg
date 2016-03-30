@@ -39,36 +39,36 @@ class Database extends ElggDb {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getData($query, $callback = '') {
-		return $this->db->getData($query, $callback);
+	public function getData($query, $callback = '', array $params = []) {
+		return $this->db->getData($query, $callback, $params);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getDataRow($query, $callback = '') {
-		return $this->db->getDataRow($query, $callback);
+	public function getDataRow($query, $callback = '', array $params = []) {
+		return $this->db->getDataRow($query, $callback, $params);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function insertData($query) {
-		return $this->db->insertData($query);
+	public function insertData($query, array $params = []) {
+		return $this->db->insertData($query, $params);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function updateData($query, $getNumRows = false) {
-		return $this->db->updateData($query, $getNumRows);
+	public function updateData($query, $getNumRows = false, array $params = []) {
+		return $this->db->updateData($query, $getNumRows, $params);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function deleteData($query) {
-		return $this->db->deleteData($query);
+	public function deleteData($query, array $params = []) {
+		return $this->db->deleteData($query, $params);
 	}
 
 	/**
@@ -157,9 +157,9 @@ class Database extends ElggDb {
 	 *
 	 * @deprecated 2.1 This method will not be available on this class in 3.0
 	 */
-	public function registerDelayedQuery($query, $type, $handler = "") {
+	public function registerDelayedQuery($query, $type, $handler = "", array $params = []) {
 		elgg_deprecated_notice(__METHOD__ . " was deprecated and will be removed in 3.0", '2.1');
-		return $this->db->registerDelayedQuery($query, $type, $handler);
+		return $this->db->registerDelayedQuery($query, $type, $handler, $params);
 	}
 
 	/**
