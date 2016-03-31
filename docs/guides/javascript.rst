@@ -434,6 +434,103 @@ The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixe
 
 .. note:: The ``elgg/Ajax`` module uses the spinner by default.
 
+Module ``elgg/popup``
+-----------------------
+
+The ``elgg/popup`` module can be used to display an overlay positioned relatively to its anchor (trigger).
+
+The ``elgg/popup`` module is loaded by default, and binding a popup module to an anchor is as simple as adding ``rel="popup"``
+attribute and defining target module with a ``href`` (or ``data-href``) attribute. Popup module positioning can be defined with
+``data-position`` attribute of the trigger element.
+
+.. $.position(): http://api.jqueryui.com/position/
+
+.. code:: php
+
+   echo elgg_format_element('div', [
+      'class' => 'elgg-module-popup hidden',
+      'id' => 'popup-module',
+   ], 'Popup module content');
+
+   // Simple anchor
+   echo elgg_view('output/url', [
+      'href' => '#popup-module',
+      'text' => 'Show popup',
+      'rel' => 'popup',
+   ]);
+
+   // Button with custom positioning of the popup
+   echo elgg_format_element('button', [
+      'rel' => 'popup',
+      'class' => 'elgg-button elgg-button-submit',
+      'text' => 'Show popup',
+      'data-href' => '#popup-module',
+      'data-position' => json_encode([
+         'my' => 'center bottom',
+         'at' => 'center top',
+      ]),
+   ]);
+
+
+The ``elgg/popup`` module allows you to build out more complex UI/UX elements. You can open and close
+popup modules programmatically:
+
+.. code:: js
+
+   define(function(require) {
+      var $ = require('jquery');
+      $(document).on('click', '.elgg-button-popup', function(e) {
+
+         e.preventDefault();
+
+         var $trigger = $(this);
+         var $target = $('#my-target');
+		 var $close = $target.find('.close');
+
+         require(['elgg/popup'], function(popup) {
+		   popup.open($trigger, $target, {
+			  'collision': 'fit none'
+		   });
+
+           $close.on('click', popup.close);
+		 });
+      });
+   });
+
+You can use ``getOptions, ui.popup`` plugin hook to manipulate the position of the popup before it has been opened.
+You can use jQuery ``open`` and ``close`` events to manipulate popup module after it has been opened or closed.
+
+.. code:: js
+
+   define(function(require) {
+
+      var elgg = require('elgg');
+      var $ = require('jquery');
+
+      $('#my-target').on('open', function() {
+         var $module = $(this);
+         var $trigger = $module.data('trigger');
+
+         elgg.ajax('ajax/view/my_module', {
+            beforeSend: function() {
+               $trigger.hide();
+               $module.html('').addClass('elgg-ajax-loader');
+            },
+            success: function(output) {
+               $module.removeClass('elgg-ajax-loader').html(output);
+            }
+         });
+      }).on('close', function() {
+         var $trigger = $(this).data('trigger');
+         $trigger.show();
+      });
+   });
+
+Open popup modules will always contain the following data that can be accessed via ``$.data()``:
+
+ * ``trigger`` - jQuery element used to trigger the popup module to open
+ * ``position`` - An object defining popup module position that was passed to ``$.position()``
+
 Module ``elgg/widgets``
 -----------------------
 

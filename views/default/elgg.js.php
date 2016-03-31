@@ -25,6 +25,10 @@ echo elgg_view('sprintf.js');
 // @todo: remove in 3.x and use async calls
 echo elgg_view('elgg/widgets.js');
 
+// We use a named AMD module and inine it here in order to save HTTP requests, 
+// as this module will be required on each page
+echo elgg_view('elgg/popup.js');
+
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
 	// these must come first
