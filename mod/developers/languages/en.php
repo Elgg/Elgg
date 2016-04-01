@@ -58,8 +58,11 @@ return array(
 	'developers:inspect:file_location' => 'File path from Elgg root',
 
 	// event logging
+	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
-	'developers:log_queries' => "%s DB queries (does not include the shutdown event)",
+	'developers:log_queries' => "DB queries: %s",
+	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
+	'developers:elapsed_time' => "Elapsed time (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',

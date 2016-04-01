@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Κατάσταση',
 	'groups:my_status:group_owner' => 'Αυτή η ομάδα σας ανήκει',
 	'groups:my_status:group_member' => 'Είστε μέλος αυτής της ομάδας',
-	'groups:subscribed' => 'Ειδοποιήσεις ομάδας: ενεργό',
-	'groups:unsubscribed' => 'Ειδοποιήσεις ομάδας: μη ενεργό',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Μέλη ομάδας %s',
 	'groups:members:more' => "Προβολή όλων των μελών",

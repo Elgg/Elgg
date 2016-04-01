@@ -32,7 +32,10 @@ class Response implements \Elgg\Services\AjaxResponse {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setData($data) {
+	public function setData(\stdClass $data) {
+		if (!property_exists($data, 'value')) {
+			throw new \InvalidArgumentException('$data must have a property "value"');
+		}
 		$this->data = $data;
 		return $this;
 	}

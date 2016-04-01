@@ -3,7 +3,7 @@ return array(
 	'admin:administer_utilities:diagnostics' => 'Diagnostics du système',
 	'diagnostics' => 'Diagnostics du système',
 	'diagnostics:report' => 'Rapport de Diagnostic',
-	'diagnostics:description' => 'Le rapport de diagnostic suivant est utile pour diagnostiquer tout problème avec Elgg, et devrait être inclus dans tout rapport d\'erreur que vous rapportez.',
+	'diagnostics:description' => 'Le rapport de diagnostic suivant est utile pour diagnostiquer tout problème avec Elgg, et devrait être joint à tout rapport d\'erreur que vous signalez.',
 	'diagnostics:header' => '========================================================================
 Rapport du diagnostic d\'Elgg
 Généré %s par %s
@@ -15,7 +15,7 @@ Elgg Révision %s, version %s
 
 ------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
-PHP info:
+Informations PHP :
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:plugins' => '

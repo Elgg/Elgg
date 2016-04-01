@@ -58,8 +58,11 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:inspect:file_location' => 'Dateipfad relativ zum Elgg-Root-Verzeichnis',
 
 	// event logging
+	'developers:request_stats' => "Abfragen-Statistik (Shutdown-Event nicht berücksichtigt)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
-	'developers:log_queries' => "%s Datenbankabfragen (Shutdown-Event nicht berücksichtigt)",
+	'developers:log_queries' => "Datenbankabfragen: %s",
+	'developers:boot_cache_rebuilt' => "Der Boot-Cache wurde für diese Abfrage neu erzeugt.",
+	'developers:elapsed_time' => "Benötigte Zeit (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Einführung',

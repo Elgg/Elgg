@@ -32,7 +32,7 @@ $user = elgg_get_logged_in_user_entity();
 if ($reply_guid) {
 	$reply = get_entity($reply_guid);
 
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
 		register_error(elgg_echo('discussion:reply:error:notfound'));
 		forward(REFERER);
 	}
@@ -75,4 +75,13 @@ if ($reply_guid) {
 	system_message(elgg_echo('discussion:post:success'));
 }
 
-forward(REFERER);
+// return to activity page if posted from there
+if (!empty($_SERVER['HTTP_REFERER'])) {
+	// don't redirect to URLs from client without verifying within site
+	$site_url = preg_quote(elgg_get_site_url(), '~');
+	if (preg_match("~^{$site_url}activity(/|\\z)~", $_SERVER['HTTP_REFERER'], $m)) {
+		forward("{$m[0]}#elgg-object-{$reply->guid}");
+	}
+}
+
+forward($reply->getURL());

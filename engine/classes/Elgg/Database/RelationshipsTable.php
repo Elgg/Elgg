@@ -125,17 +125,20 @@ class RelationshipsTable {
 			return false;
 		}
 
-		$guid_one = (int)$guid_one;
-		$relationship = $this->db->sanitizeString($relationship);
-		$guid_two = (int)$guid_two;
-		$time = time();
-
-		$id = $this->db->insertData("
+		$sql = "
 			INSERT INTO {$this->db->getTablePrefix()}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
-			VALUES ($guid_one, '$relationship', $guid_two, $time)
-				ON DUPLICATE KEY UPDATE time_created = $time
-		");
+			VALUES (:guid1, :relationship, :guid2, :time)
+				ON DUPLICATE KEY UPDATE time_created = :time
+		";
+		$params = [
+			':guid1' => (int)$guid_one,
+			':guid2' => (int)$guid_two,
+			':relationship' => $relationship,
+			':time' => time(),
+		];
+
+		$id = $this->db->insertData($sql, $params);
 		if (!$id) {
 			return false;
 		}
@@ -163,18 +166,19 @@ class RelationshipsTable {
 	 * @return \ElggRelationship|false Depending on success
 	 */
 	public function check($guid_one, $relationship, $guid_two) {
-		$guid_one = (int)$guid_one;
-		$relationship = $this->db->sanitizeString($relationship);
-		$guid_two = (int)$guid_two;
-
 		$query = "
 			SELECT * FROM {$this->db->getTablePrefix()}entity_relationships
-			WHERE guid_one = $guid_one
-			  AND relationship = '$relationship'
-			  AND guid_two = $guid_two
+			WHERE guid_one = :guid1
+			  AND relationship = :relationship
+			  AND guid_two = :guid2
 			LIMIT 1
 		";
-		$row = $this->rowToElggRelationship($this->db->getDataRow($query));
+		$params = [
+			':guid1' => (int)$guid_one,
+			':guid2' => (int)$guid_two,
+			':relationship' => $relationship,
+		];
+		$row = $this->rowToElggRelationship($this->db->getDataRow($query, null, $params));
 		if ($row) {
 			return $row;
 		}
@@ -215,23 +219,24 @@ class RelationshipsTable {
 	 */
 	public function removeAll($guid, $relationship = "", $inverse_relationship = false, $type = '') {
 		$guid = (int) $guid;
+		$params = [];
 
 		if (!empty($relationship)) {
-			$relationship = $this->db->sanitizeString($relationship);
-			$where = "AND er.relationship = '$relationship'";
+			$where = "AND er.relationship = :relationship";
+			$params[':relationship'] = $relationship;
 		} else {
 			$where = "";
 		}
 
 		if (!empty($type)) {
-			$type = $this->db->sanitizeString($type);
 			if (!$inverse_relationship) {
 				$join = "JOIN {$this->db->getTablePrefix()}entities e ON e.guid = er.guid_two";
 			} else {
 				$join = "JOIN {$this->db->getTablePrefix()}entities e ON e.guid = er.guid_one";
 				$where .= " AND ";
 			}
-			$where .= " AND e.type = '$type'";
+			$where .= " AND e.type = :type";
+			$params[':type'] = $type;
 		} else {
 			$join = "";
 		}
@@ -243,7 +248,7 @@ class RelationshipsTable {
 			$join
 			WHERE $guid_col = $guid
 			$where
-		");
+		", $params);
 
 		return true;
 	}
@@ -258,13 +263,13 @@ class RelationshipsTable {
 	 * @return \ElggRelationship[]
 	 */
 	public function getAll($guid, $inverse_relationship = false) {
-		$guid = (int)$guid;
+		$params[':guid'] = (int)$guid;
 
-		$where = ($inverse_relationship ? "guid_two='$guid'" : "guid_one='$guid'");
+		$where = ($inverse_relationship ? "guid_two = :guid" : "guid_one = :guid");
 
 		$query = "SELECT * from {$this->db->getTablePrefix()}entity_relationships WHERE {$where}";
 
-		return $this->db->getData($query, array($this, 'rowToElggRelationship'));
+		return $this->db->getData($query, [$this, 'rowToElggRelationship'], $params);
 	}
 
 	/**

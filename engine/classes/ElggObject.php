@@ -32,7 +32,6 @@ class ElggObject extends \ElggEntity {
 
 		$this->attributes['type'] = "object";
 		$this->attributes += self::getExternalAttributes();
-		$this->tables_split = 2;
 	}
 
 	/**
@@ -71,7 +70,7 @@ class ElggObject extends \ElggEntity {
 		if ($row) {
 			// Load the rest
 			if (!$this->load($row)) {
-				$msg = "Failed to load new " . get_class() . " for GUID: " . $row->guid;
+				$msg = "Failed to load new " . get_class($this) . " for GUID: " . $row->guid;
 				throw new \IOException($msg);
 			}
 		}
@@ -96,7 +95,6 @@ class ElggObject extends \ElggEntity {
 		}
 
 		$this->attributes = $attrs;
-		$this->tables_loaded = 2;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
 		_elgg_cache_entity($this);
 
@@ -144,8 +142,12 @@ class ElggObject extends \ElggEntity {
 		$title = sanitize_string($this->title);
 		$description = sanitize_string($this->description);
 
-		$query = "UPDATE {$CONFIG->dbprefix}objects_entity
-			set title='$title', description='$description' where guid=$guid";
+		$query = "
+			UPDATE {$CONFIG->dbprefix}objects_entity
+			SET title = '$title',
+				description = '$description'
+			WHERE guid = $guid
+		";
 
 		return $this->getDatabase()->updateData($query) !== false;
 	}

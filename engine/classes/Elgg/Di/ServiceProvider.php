@@ -21,6 +21,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
@@ -39,6 +40,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
  * @property-read Mailer                                   $mailer
+ * @property-read \Elgg\Menu\Service                       $menus
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
@@ -47,11 +49,14 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
+ * @property-read \Elgg\Cache\PluginSettingsCache          $pluginSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
+ * @property-read \Elgg\Application\Database               $publicDb
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
+ * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
@@ -106,7 +111,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
 
 		$this->setFactory('ajax', function(ServiceProvider $c) {
-			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input);
+			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input, $c->amdConfig);
 		});
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {
@@ -119,13 +124,23 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('autoP', \ElggAutoP::class);
 
+		$this->setFactory('boot', function(ServiceProvider $c) {
+			$boot = new \Elgg\BootService();
+			if ($c->config->getVolatile('enable_profiling')) {
+				$boot->setTimer($c->timer);
+			}
+			return $boot;
+		});
+
 		$this->setValue('config', $config);
 
 		$this->setClassName('configTable', \Elgg\Database\ConfigTable::class);
 
 		$this->setClassName('context', \Elgg\Context::class);
 
-		$this->setClassName('crypto', \ElggCrypto::class);
+		$this->setFactory('crypto', function(ServiceProvider $c) {
+			return new \ElggCrypto($c->siteSecret);
+		});
 
 		$this->setFactory('datalist', function(ServiceProvider $c) {
 			// TODO(ewinslow): Add back memcached support
@@ -136,6 +151,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('db', function(ServiceProvider $c) {
+			// gonna need dbprefix from settings
+			$c->config->loadSettingsFile();
 			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
 
 			// we inject the logger in _elgg_engine_boot()
@@ -181,6 +198,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
+		$this->setFactory('menus', function(ServiceProvider $c) {
+			return new \Elgg\Menu\Service($c->hooks, $c->config);
+		});
+
 		$this->setFactory('metadataCache', function (ServiceProvider $c) {
 			return new \Elgg\Cache\MetadataCache($c->session);
 		});
@@ -213,7 +234,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
-			$global_cookies_config = $c->config->get('cookies');
+			$global_cookies_config = $c->config->getCookieConfig();
 			$cookie_config = $global_cookies_config['remember_me'];
 			$cookie_name = $cookie_config['name'];
 			$cookie_token = $c->request->cookies->get($cookie_name, '');
@@ -221,24 +242,25 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->db, $c->session, $c->crypto, $cookie_config, $cookie_token);
 		});
 
-		$this->setFactory('passwords', function (ServiceProvider $c) {
-			if (!function_exists('password_hash')) {
-				$root = $c->config->getRootPath();
-				require "{$root}vendor/ircmaxell/password-compat/lib/password.php";
-			}
-			return new \Elgg\PasswordService();
-		});
+		$this->setClassName('passwords', \Elgg\PasswordService::class);
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
-			$plugins = new \Elgg\Database\Plugins(new Pool\InMemory());
+			$pool = new Pool\InMemory();
+			$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
 			if ($c->config->getVolatile('enable_profiling')) {
 				$plugins->setTimer($c->timer);
 			}
 			return $plugins;
 		});
 
+		$this->setClassName('pluginSettingsCache', \Elgg\Cache\PluginSettingsCache::class);
+
 		$this->setFactory('privateSettings', function(ServiceProvider $c) {
-			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable);
+			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->pluginSettingsCache);
+		});
+
+		$this->setFactory('publicDb', function(ServiceProvider $c) {
+			return new \Elgg\Application\Database($c->db);
 		});
 
 		$this->setFactory('queryCounter', function(ServiceProvider $c) {
@@ -260,8 +282,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $router;
 		});
 
+		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
+			return new \Elgg\Application\ServeFileHandler($c->crypto, $c->config);
+		});
+
 		$this->setFactory('session', function(ServiceProvider $c) {
-			$params = $c->config->get('cookies')['session'];
+			$params = $c->config->getCookieConfig()['session'];
 			$options = [
 				// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
 				// constructor, so we must capture and inject it directly.
@@ -285,11 +311,15 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
 		});
 
-		$this->setClassName('siteSecret', \Elgg\Database\SiteSecret::class);
+		$this->setFactory('siteSecret', function(ServiceProvider $c) {
+			return new \Elgg\Database\SiteSecret($c->datalist);
+		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
 
-		$this->setClassName('subtypeTable', \Elgg\Database\SubtypeTable::class);
+		$this->setFactory('subtypeTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\SubtypeTable($c->db);
+		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
 			$cache = new \Elgg\Cache\SystemCache();

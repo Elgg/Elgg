@@ -9,7 +9,6 @@
 $entity_guid = (int) get_input('entity_guid', 0, false);
 $comment_guid = (int) get_input('comment_guid', 0, false);
 $comment_text = get_input('generic_comment');
-$is_edit_page = (bool) get_input('is_edit_page', false, false);
 
 if (empty($comment_text)) {
 	register_error(elgg_echo("generic_comment:blank"));
@@ -100,8 +99,13 @@ if ($comment_guid) {
 	system_message(elgg_echo('generic_comment:posted'));
 }
 
-if ($is_edit_page) {
-	forward($comment->getURL());
+// return to activity page if posted from there
+if (!empty($_SERVER['HTTP_REFERER'])) {
+	// don't redirect to URLs from client without verifying within site
+	$site_url = preg_quote(elgg_get_site_url(), '~');
+	if (preg_match("~^{$site_url}activity(/|\\z)~", $_SERVER['HTTP_REFERER'], $m)) {
+		forward("{$m[0]}#elgg-object-{$comment->guid}");
+	}
 }
 
-forward(REFERER);
+forward($comment->getURL());

@@ -1,14 +1,14 @@
 <?php
 return array(
-	'embed:embed' => 'Importé',
-	'embed:media' => 'Fichier importé',
-	'embed:instructions' => 'Cliquez sur le fichier de votre choix pour l\'importer dans votre contenu.',
-	'embed:upload' => 'Envoyer des médias',
-	'embed:upload_type' => 'Envoyer type : ',
+	'embed:embed' => 'Intégrer un contenu',
+	'embed:media' => 'Intégrer un média',
+	'embed:instructions' => 'Cliquez sur l\'élément de votre choix pour l\'intégrer dans le contenu.',
+	'embed:upload' => 'Envoyer un fichier média',
+	'embed:upload_type' => 'Type d\'envoi : ',
 
 	// messages
-	'embed:no_upload_content' => 'Aucun fichier téléchargé !',
-	'embed:no_section_content' => 'Pas d\'éléments trouvés.',
+	'embed:no_upload_content' => 'Aucun contenu chargé !',
+	'embed:no_section_content' => 'Aucun élément trouvé.',
 
-	'embed:no_sections' => 'Aucun plugin gérant l\'intégration de fichier média n\'a été trouvé. Demander à l\'administrateur du site d\'activer un plugin gérant l\'intégration de fichier média.',
+	'embed:no_sections' => 'Aucun plugin gérant l\'intégration de fichier média n\'a été trouvé. Demandez à l\'administrateur du site d\'activer un plugin qui gère l\'intégration de fichier média.',
 );

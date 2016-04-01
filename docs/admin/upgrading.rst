@@ -37,6 +37,36 @@ Basic instructions
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
    If this is not the case, take care to maintain your modifications. 
 
+Deprecations in 2.x
+===================
+
+2.2
+---
+
+User avatars are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and note that:
+
+ * ``/avatar/view`` page handler and resource view have been deprecated
+ * ``/mod/profile/icondirect.php`` file has been deprecated
+ * ``profile_set_icon_url()`` is no longer registered as a callback for ``"entity:icon:url","user"`` plugin hook
+
+Group avatars are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and note that:
+
+ * ``groupicon`` page handler (``groups_icon_handler()``) has been deprecated
+ * ``/mod/groups/icon.php`` file has been deprecated
+
+
+File entity thumbs and downloads are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and ``elgg_get_download_url()`` and note that:
+
+ * ``file/download`` page handler and resource view have been deprecated
+ * ``mod/file/thumbnail.php`` file has been deprecated
+ * Several views have been updated to use new download URLs, including:
+
+   - ``mod/file/views/default/file/specialcontent/audio/default.php``
+   - ``mod/file/views/default/file/specialcontent/image/default.php``
+   - ``mod/file/views/default/resources/file/view.php``
+   - ``mod/file/views/rss/file/enclosure.php``
+
+
 From 1.x to 2.0
 ===============
 

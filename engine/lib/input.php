@@ -394,48 +394,6 @@ function input_livesearch_page_handler($page) {
 }
 
 /**
- * Strip slashes from array keys
- *
- * @param array $array Array of values
- *
- * @return array Sanitized array
- * @access private
- */
-function _elgg_stripslashes_arraykeys($array) {
-	if (is_array($array)) {
-		$array2 = array();
-		foreach ($array as $key => $data) {
-			if ($key != stripslashes($key)) {
-				$array2[stripslashes($key)] = $data;
-			} else {
-				$array2[$key] = $data;
-			}
-		}
-		return $array2;
-	} else {
-		return $array;
-	}
-}
-
-/**
- * Strip slashes
- *
- * @param mixed $value The value to remove slashes from
- *
- * @return mixed
- * @access private
- */
-function _elgg_stripslashes_deep($value) {
-	if (is_array($value)) {
-		$value = _elgg_stripslashes_arraykeys($value);
-		$value = array_map('_elgg_stripslashes_deep', $value);
-	} else {
-		$value = stripslashes($value);
-	}
-	return $value;
-}
-
-/**
  * Initialize the input library
  *
  * @return void
@@ -444,32 +402,6 @@ function _elgg_stripslashes_deep($value) {
 function _elgg_input_init() {
 	// register an endpoint for live search / autocomplete.
 	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
-
-	// backward compatible for plugins directly accessing globals
-	if (get_magic_quotes_gpc()) {
-		$_POST = array_map('_elgg_stripslashes_deep', $_POST);
-		$_GET = array_map('_elgg_stripslashes_deep', $_GET);
-		$_COOKIE = array_map('_elgg_stripslashes_deep', $_COOKIE);
-		$_REQUEST = array_map('_elgg_stripslashes_deep', $_REQUEST);
-		if (!empty($_SERVER['REQUEST_URI'])) {
-			$_SERVER['REQUEST_URI'] = stripslashes($_SERVER['REQUEST_URI']);
-		}
-		if (!empty($_SERVER['QUERY_STRING'])) {
-			$_SERVER['QUERY_STRING'] = stripslashes($_SERVER['QUERY_STRING']);
-		}
-		if (!empty($_SERVER['HTTP_REFERER'])) {
-			$_SERVER['HTTP_REFERER'] = stripslashes($_SERVER['HTTP_REFERER']);
-		}
-		if (!empty($_SERVER['PATH_INFO'])) {
-			$_SERVER['PATH_INFO'] = stripslashes($_SERVER['PATH_INFO']);
-		}
-		if (!empty($_SERVER['PHP_SELF'])) {
-			$_SERVER['PHP_SELF'] = stripslashes($_SERVER['PHP_SELF']);
-		}
-		if (!empty($_SERVER['PATH_TRANSLATED'])) {
-			$_SERVER['PATH_TRANSLATED'] = stripslashes($_SERVER['PATH_TRANSLATED']);
-		}
-	}
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

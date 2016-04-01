@@ -112,6 +112,10 @@ function groups_init() {
 
 	// prepare profile buttons to be registered in the title menu
 	elgg_register_plugin_hook_handler('profile_buttons', 'group', 'groups_prepare_profile_buttons');
+
+	// Help core resolve page owner guids from group routes
+	// Registered with an earlier priority to be called before default_page_owner_handler()
+	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
 }
 
 /**
@@ -295,19 +299,29 @@ function groups_page_handler($page) {
  *
  * @param array $page
  * @return bool
+ * @deprecated 2.2
  */
 function groups_icon_handler($page) {
 
-	// The username should be the file we're getting
-	if (isset($page[0])) {
-		set_input('group_guid', $page[0]);
+	elgg_deprecated_notice('/groupicon page handler has been deprecated. Use elgg_get_inline_url() instead.', '2.2');
+
+	$guid = array_shift($page);
+	elgg_entity_gatekeeper($guid, 'group');
+
+	$size = array_shift($page) ? : 'medium';
+
+	$group = get_entity($guid);
+	
+	$icon = new ElggFile();
+	$icon->owner_guid = $group->owner_guid;
+	$icon->setFilename("groups/{$group->guid}{$size}.jpg");
+
+	$url = elgg_get_inline_url($icon, true);
+	if (!$url) {
+		$url = elgg_get_simplecache_url("groups/default{$size}.gif");
 	}
-	if (isset($page[1])) {
-		set_input('size', $page[1]);
-	}
-	// Include the standard profile index
-	include __DIR__ . "/icon.php";
-	return true;
+	
+	forward($url);
 }
 
 /**
@@ -350,7 +364,13 @@ function groups_set_icon_url($hook, $type, $url, $params) {
 	}
 	if ($icontime) {
 		// return thumbnail
-		return "groupicon/$group->guid/$size/$icontime.jpg";
+		$icon = new ElggFile();
+		$icon->owner_guid = $group->owner_guid;
+		$icon->setFilename("groups/{$group->guid}{$size}.jpg");
+		$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
+		if ($url) {
+			return $url;
+		}
 	}
 
 	return elgg_get_simplecache_url("groups/default{$size}.gif");
@@ -464,18 +484,13 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 
 		// Add remove link if we can edit the group, and if we're not trying to remove the group owner
 		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
-			$remove = elgg_view('output/url', array(
+			$return[] = ElggMenuItem::factory([
+				'name' => 'removeuser',
 				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
 				'text' => elgg_echo('groups:removeuser'),
 				'confirm' => true,
-			));
-
-			$options = array(
-				'name' => 'removeuser',
-				'text' => $remove,
 				'priority' => 999,
-			);
-			$return[] = ElggMenuItem::factory($options);
+			]);
 		}
 	}
 
@@ -875,4 +890,68 @@ function groups_prepare_profile_buttons($hook, $type, $items, $params) {
 	}
 
 	return $items;
+}
+
+/**
+ * Helper handler to correctly resolve page owners on group routes
+ *
+ * @see default_page_owner_handler()
+ *
+ * @param string $hook   "page_owner"
+ * @param string $type   "system"
+ * @param int    $return Page owner guid
+ * @param array  $params Hook params
+ * @return int|void
+ */
+function groups_default_page_owner_handler($hook, $type, $return, $params) {
+
+	if ($return) {
+		return;
+	}
+
+	$segments = _elgg_services()->request->getUrlSegments();
+	$identifier = array_shift($segments);
+
+	if ($identifier !== 'groups') {
+		return;
+	}
+
+	$page = array_shift($segments);
+
+	switch ($page) {
+
+		case 'add' :
+			$guid = array_shift($segments);
+			if (!$guid) {
+				$guid = elgg_get_logged_in_user_guid();
+			}
+			return $guid;
+
+		case 'edit':
+		case 'profile' :
+		case 'activity' :
+		case 'invite' :
+		case 'requests' :
+		case 'members' :
+		case 'profile' :
+			$guid = array_shift($segments);
+			if (!$guid) {
+				return;
+			}
+			return $guid;
+
+		case 'member' :
+		case 'owner' :
+		case 'invitations':
+			$username = array_shift($segments);
+			if ($username) {
+				$user = get_user_by_username($username);
+			} else {
+				$user = elgg_get_logged_in_user_entity();
+			}
+			if (!$user) {
+				return;
+			}
+			return $user->guid;
+	}
 }

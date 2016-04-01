@@ -4,17 +4,11 @@ namespace Elgg\Database;
 use Elgg\Cache\Pool;
 use Elgg\Profilable;
 use Exception;
-
-/**
- * @var array cache used by elgg_get_plugins_provides function
- * @todo move it with all other functions to \Elgg\PluginsService
- */
-global $ELGG_PLUGINS_PROVIDES_CACHE;
-
+use Elgg\Cache\PluginSettingsCache;
 
 /**
  * Persistent, installation-wide key-value storage.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
@@ -25,27 +19,57 @@ class Plugins {
 	use Profilable;
 
 	/**
-	 * @var string[] Active plugin IDs with IDs as the array keys. Missing keys imply inactive plugins.
+	 * @var \ElggPlugin[]
 	 */
-	protected $active_ids = array();
+	private $boot_plugins = [];
 
 	/**
-	 * @var bool Has $active_ids been populated?
+	 * @var array|null
 	 */
-	protected $active_ids_known = false;
+	private $provides_cache;
+
+	/**
+	 * @var string[] Active plugins, with plugin ID => GUID. Missing keys imply inactive plugins.
+	 */
+	private $active_guids = array();
+
+	/**
+	 * @var bool Has $active_guids been populated?
+	 */
+	private $active_guids_known = false;
 
 	/**
 	 * @var Pool
 	 */
-	protected $plugins_by_id;
+	private $plugins_by_id;
+
+	/**
+	 * @var PluginSettingsCache
+	 */
+	private $settings_cache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Pool $pool Cache for referencing plugins by ID
+	 * @param Pool                $pool  Cache for referencing plugins by ID
+	 * @param PluginSettingsCache $cache Plugin settings cache
 	 */
-	public function __construct(Pool $pool) {
+	public function __construct(Pool $pool, PluginSettingsCache $cache) {
 		$this->plugins_by_id = $pool;
+		$this->settings_cache = $cache;
+	}
+
+	/**
+	 * Set the list of active plugins according to the boot data cache
+	 *
+	 * @param \ElggPlugin[] $plugins Set of active plugins
+	 * @return void
+	 */
+	public function setBootPlugins(array $plugins) {
+		$this->boot_plugins = $plugins;
+		foreach ($plugins as $plugin) {
+			$this->plugins_by_id->put($plugin->getID(), $plugin);
+		}
 	}
 
 	/**
@@ -182,9 +206,9 @@ class Plugins {
 	
 	/**
 	 * Cache a reference to this plugin by its ID
-	 * 
+	 *
 	 * @param \ElggPlugin $plugin
-	 * 
+	 *
 	 * @access private
 	 */
 	function cache(\ElggPlugin $plugin) {
@@ -274,9 +298,9 @@ class Plugins {
 	function isActive($plugin_id, $site_guid = null) {
 		$current_site_guid = elgg_get_site_entity()->guid;
 
-		if ($this->active_ids_known
+		if ($this->active_guids_known
 				&& ($site_guid === null || $site_guid == $current_site_guid)) {
-			return isset($this->active_ids[$plugin_id]);
+			return isset($this->active_guids[$plugin_id]);
 		}
 
 		if ($site_guid) {
@@ -339,32 +363,39 @@ class Plugins {
 			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_LANGUAGES;
 		}
 	
+		$plugins = $this->boot_plugins;
+		if (!$plugins) {
+			$this->active_guids_known = true;
+			return true;
+		}
+
 		$return = true;
-		$plugins = $this->find('active');
-		if ($plugins) {
-			foreach ($plugins as $plugin) {
-				$id = $plugin->getID();
-				try {
-					$plugin->start($start_flags);
-					$this->active_ids[$id] = true;
-				} catch (Exception $e) {
+		foreach ($plugins as $plugin) {
+			$id = $plugin->getID();
+			try {
+				$plugin->start($start_flags);
+				$this->active_guids[$id] = $plugin->guid;
+			} catch (Exception $e) {
+				$disable_plugins = elgg_get_config('auto_disable_plugins');
+				if ($disable_plugins === null) {
+					$disable_plugins = true;
+				}
+				if ($disable_plugins) {
 					$plugin->deactivate();
+				
 					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
 									array($id, $plugin->guid, $e->getMessage()));
 					elgg_add_admin_notice("cannot_start $id", $msg);
 					$return = false;
-	
-					continue;
 				}
 			}
 		}
 
-		$this->active_ids_known = true;
+		$this->active_guids_known = true;
 
 		if ($this->timer) {
 			$this->timer->end([__METHOD__]);
 		}
-
 		return $return;
 	}
 	
@@ -376,7 +407,7 @@ class Plugins {
 	 * @return \ElggPlugin[]
 	 */
 	function find($status = 'active', $site_guid = null) {
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = elgg_get_config('dbprefix');
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 	
 		if (!$site_guid) {
@@ -444,6 +475,7 @@ class Plugins {
 	 * @note This doesn't use the \ElggPlugin->setPriority() method because
 	 *       all plugins are being changed and we don't want it to automatically
 	 *       reorder plugins.
+	 * @todo Can this be done in a single sql command?
 	 *
 	 * @param array $order An array of plugin ids in the order to set them
 	 * @return bool
@@ -452,7 +484,7 @@ class Plugins {
 	function setPriorities(array $order) {
 		$name = $this->namespacePrivateSetting('internal', 'priority');
 	
-		$plugins = elgg_get_plugins('any');
+		$plugins = $this->find('any');
 		if (!$plugins) {
 			return false;
 		}
@@ -502,7 +534,6 @@ class Plugins {
 	/**
 	 * Reindexes all plugin priorities starting at 1.
 	 *
-	 * @todo Can this be done in a single sql command?
 	 * @return bool
 	 * @access private
 	 */
@@ -566,8 +597,7 @@ class Plugins {
 	 * @access private
 	 */
 	function getProvides($type = null, $name = null) {
-		global $ELGG_PLUGINS_PROVIDES_CACHE;
-		if (!isset($ELGG_PLUGINS_PROVIDES_CACHE)) {
+		if ($this->provides_cache === null) {
 			$active_plugins = $this->find('active');
 		
 			$provides = array();
@@ -588,35 +618,34 @@ class Plugins {
 				}
 			}
 			
-			$ELGG_PLUGINS_PROVIDES_CACHE = $provides;
+			$this->provides_cache = $provides;
 		}
 		
 		if ($type && $name) {
-			if (isset($ELGG_PLUGINS_PROVIDES_CACHE[$type][$name])) {
-				return $ELGG_PLUGINS_PROVIDES_CACHE[$type][$name];
+			if (isset($this->provides_cache[$type][$name])) {
+				return $this->provides_cache[$type][$name];
 			} else {
 				return false;
 			}
 		} elseif ($type) {
-			if (isset($ELGG_PLUGINS_PROVIDES_CACHE[$type])) {
-				return $ELGG_PLUGINS_PROVIDES_CACHE[$type];
+			if (isset($this->provides_cache[$type])) {
+				return $this->provides_cache[$type];
 			} else {
 				return false;
 			}
 		}
 	
-		return $ELGG_PLUGINS_PROVIDES_CACHE;
+		return $this->provides_cache;
 	}
 	
 	/**
 	 * Deletes all cached data on plugins being provided.
-	 * 
+	 *
 	 * @return boolean
 	 * @access private
 	 */
 	function invalidateProvidesCache() {
-		global $ELGG_PLUGINS_PROVIDES_CACHE;
-		$ELGG_PLUGINS_PROVIDES_CACHE = null;
+		$this->provides_cache = null;
 		return true;
 	}
 
@@ -627,8 +656,8 @@ class Plugins {
 	 * @access private
 	 */
 	public function invalidateIsActiveCache() {
-		$this->active_ids = array();
-		$this->active_ids_known = false;
+		$this->active_guids = array();
+		$this->active_guids_known = false;
 	}
 	
 	/**
@@ -805,7 +834,7 @@ class Plugins {
 	 * @see \ElggPlugin::getAllUserSettings()
 	 */
 	function getAllUserSettings($user_guid = 0, $plugin_id, $return_obj = false) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
@@ -837,11 +866,11 @@ class Plugins {
 	 * @see \ElggPlugin::setUserSetting()
 	 */
 	function setUserSetting($name, $value, $user_guid = 0, $plugin_id) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->setUserSetting($name, $value, (int)$user_guid);
 	}
 	
@@ -856,11 +885,11 @@ class Plugins {
 	 * @see \ElggPlugin::unsetUserSetting()
 	 */
 	function unsetUserSetting($name, $user_guid = 0, $plugin_id) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->unsetUserSetting($name, (int)$user_guid);
 	}
 	
@@ -876,11 +905,11 @@ class Plugins {
 	 * @see \ElggPlugin::getUserSetting()
 	 */
 	function getUserSetting($name, $user_guid = 0, $plugin_id, $default = null) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->getUserSetting($name, (int)$user_guid, $default);
 	}
 	
@@ -895,11 +924,11 @@ class Plugins {
 	 * @see \ElggPlugin::setSetting()
 	 */
 	function setSetting($name, $value, $plugin_id) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->setSetting($name, $value);
 	}
 	
@@ -914,11 +943,11 @@ class Plugins {
 	 * @see \ElggPlugin::getSetting()
 	 */
 	function getSetting($name, $plugin_id, $default = null) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->getSetting($name, $default);
 	}
 	
@@ -932,11 +961,11 @@ class Plugins {
 	 * @see \ElggPlugin::unsetSetting()
 	 */
 	function unsetSetting($name, $plugin_id) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->unsetSetting($name);
 	}
 	
@@ -949,7 +978,7 @@ class Plugins {
 	 * @see \ElggPlugin::unsetAllSettings()
 	 */
 	function unsetAllSettings($plugin_id) {
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}

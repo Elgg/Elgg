@@ -1,7 +1,11 @@
 <?php
+
 /**
  * View an avatar
+ * @deprecated 2.2
  */
+
+elgg_deprecated_notice("/avatar/view resource view has been deprecated and will be removed. Use elgg_get_inline_url() instead.", '2.2');
 
 // page owner library sets this based on URL
 $user = elgg_get_page_owner_entity();
@@ -12,39 +16,17 @@ if (!in_array($size, array('master', 'large', 'medium', 'small', 'tiny', 'topbar
 	$size = 'medium';
 }
 
-// If user doesn't exist, return default icon
-if (!$user) {
-	forward(elgg_get_simplecache_url("icons/default/$size.png"));
+$avatar_url = false;
+
+if ($user) {
+	$filehandler = new ElggFile();
+	$filehandler->owner_guid = $user->guid;
+	$filehandler->setFilename("profile/{$user->guid}{$size}.jpg");
+	$avatar_url = elgg_get_inline_url($filehandler);
 }
 
-$user_guid = $user->getGUID();
-
-// Try and get the icon
-$filehandler = new ElggFile();
-$filehandler->owner_guid = $user_guid;
-$filehandler->setFilename("profile/{$user_guid}{$size}.jpg");
-
-$success = false;
-
-try {
-	if ($filehandler->open("read")) {
-		$contents = $filehandler->read($filehandler->getSize());
-		if ($contents) {
-			$success = true;
-		}
-	}
-} catch (InvalidParameterException $e) {
-	elgg_log("Unable to get avatar for user with GUID $user_guid", 'ERROR');
+if (!$avatar_url) {
+	$avatar_url = elgg_get_simplecache_url("icons/user/default{$size}.gif");
 }
 
-if (!$success) {
-	forward(elgg_get_simplecache_url("icons/user/default{$size}.gif"));
-}
-
-header("Content-type: image/jpeg", true);
-header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-header("Pragma: public", true);
-header("Cache-Control: public", true);
-header("Content-Length: " . strlen($contents));
-
-echo $contents;
+forward($avatar_url);

@@ -179,12 +179,14 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
  * @param int    $guid    Entity GUID
  * @param string $type    Optional required entity type
  * @param string $subtype Optional required entity subtype
- * @return void
+ * @param bool   $forward If set to true (default), will forward the page;
+ *                        if set to false, will return true or false.
+ * @return bool Will return if $forward is set to false.
  * @since 1.9.0
  */
-function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward = true) {
 	$entity = get_entity($guid);
-	if (!$entity) {
+	if (!$entity && $forward) {
 		if (!elgg_entity_exists($guid)) {
 			// entity doesn't exist
 			forward('', '404');
@@ -195,15 +197,33 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 			// user is logged in but still does not have access to it
 			register_error(elgg_echo('limited_access'));
 			forward();
-		}		
+		}
+	} else if (!$entity) {
+		return false;
 	}
 
-	if ($type) {
-		if (!elgg_instanceof($entity, $type, $subtype)) {
-			// entity is of wrong type/subtype
+	if ($type && !elgg_instanceof($entity, $type, $subtype)) {
+		// entity is of wrong type/subtype
+		if ($forward) {
 			forward('', '404');
+		} else {
+			return false;
 		}
 	}
+
+	$hook_type = "{$entity->getType()}:{$entity->getSubtype()}";
+	$hook_params = [
+		'entity' => $entity,
+	];
+	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, true)) {
+		if ($forward) {
+			forward('', '403');
+		} else {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**
@@ -244,17 +264,29 @@ function elgg_front_page_handler() {
  * @return void
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
-	static $once = 0;
-	$once++;
-	if ($once === 2) {
-		echo "Infinite loop attempting to show error page.";
+	// This draws an error page, and sometimes there's another 40* forward() call made during that
+	// process (usually due to the pagesetup event). We want to allow the 2nd call to pass through,
+	// but draw the appropriate page for the first call.
+
+	static $vars;
+	if ($vars === null) {
+		// keep first vars for error page
+		$vars = [
+			'type' => $type,
+			'params' => $params,
+		];
+	}
+
+	static $calls = 0;
+	$calls++;
+	if ($calls < 3) {
+		echo elgg_view_resource('error', $vars);
 		exit;
 	}
 
-	echo elgg_view_resource('error', [
-		'type' => $type,
-		'params' => $params,
-	]);
+	// uh oh, may be infinite loop
+	register_error(elgg_echo('error:404:content'));
+	header('Location: ' . elgg_get_site_url());
 	exit;
 }
 

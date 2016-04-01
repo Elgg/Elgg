@@ -42,7 +42,7 @@ $minify_css_input = elgg_view("input/checkbox", array(
 $system_cache_input = elgg_view("input/checkbox", array(
 	'label' => elgg_echo('installation:systemcache:label'),
 	'name' => 'system_cache_enabled',
-	'checked' => (bool)elgg_get_config('system_cache_enabled'),
+	'checked' => elgg_is_system_cache_enabled(),
 ))
 
 ?>
