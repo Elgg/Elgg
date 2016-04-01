@@ -41,6 +41,8 @@ elgg.ui.init = function () {
 	$(elementId).addClass('elgg-state-highlight');
 
 	elgg.ui.initDatePicker();
+
+	elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
 };
 
 /**
@@ -391,4 +393,3 @@ elgg.ui.initAccessInputs = function () {
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);
-elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
