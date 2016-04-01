@@ -564,15 +564,17 @@ function _elgg_filestore_test($hook, $type, $value) {
 /**
  * Returns file's download URL
  *
- * @param \ElggFile $file       File object or entity
- * @param bool      $use_cookie Limit URL validity to current session only
- * @param string    $expires    URL expiration, as a string suitable for strtotime()
+ * @param \ElggFile    $file       File object or entity
+ * @param bool         $use_cookie Limit URL validity to current session only
+ * @param string|false $expires    URL expiration, as a string suitable for strtotime() or false for non-expiring URLs
  * @return string
  */
 function elgg_get_download_url(\ElggFile $file, $use_cookie = true, $expires = '+2 hours') {
 	$file_svc = new Elgg\FileService\File();
 	$file_svc->setFile($file);
-	$file_svc->setExpires($expires);
+	if ($expires) {
+		$file_svc->setExpires($expires);
+	}
 	$file_svc->setDisposition('attachment');
 	$file_svc->bindSession($use_cookie);
 	return $file_svc->getURL();

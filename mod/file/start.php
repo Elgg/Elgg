@@ -394,7 +394,11 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			$readfile = new ElggFile();
 			$readfile->owner_guid = $file->owner_guid;
 			$readfile->setFilename($thumbfile);
-			$thumb_url = elgg_get_inline_url($readfile, true);
+			if (elgg_in_context('embed')) {
+				$thumb_url = elgg_get_inline_url($readfile, false, false);
+			} else {
+				$thumb_url = elgg_get_inline_url($readfile, true);
+			}
 			if ($thumb_url) {
 				return $thumb_url;
 			}

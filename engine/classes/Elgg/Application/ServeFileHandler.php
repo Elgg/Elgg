@@ -87,8 +87,16 @@ class ServeFileHandler {
 		}
 
 		$actual_last_updated = filemtime($filenameonfilestore);
-		if ($actual_last_updated != $last_updated) {
-			return $response->setStatusCode(403)->setContent('URL has expired');
+		$etag = '"' . $actual_last_updated . '"';
+		if ($last_updated) {
+			if ($actual_last_updated != $last_updated) {
+				return $response->setStatusCode(403)->setContent('URL has expired');
+			}
+		}
+
+		$response->setPublic()->setEtag($etag);
+		if ($response->isNotModified($request)) {
+			return $response;
 		}
 
 		$if_none_match = $request->headers->get('if_none_match');
@@ -112,11 +120,10 @@ class ServeFileHandler {
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
 		$response->prepare($request);
 
-		if (empty($expires)) {
-			$expires = strtotime('+1 year');
+		if ($expires) {
+			$expires_dt = (new DateTime())->setTimestamp($expires);
+			$response->setExpires($expires_dt);
 		}
-		$expires_dt = (new DateTime())->setTimestamp($expires);
-		$response->setExpires($expires_dt);
 
 		$response->setEtag($etag);
 		return $response;
