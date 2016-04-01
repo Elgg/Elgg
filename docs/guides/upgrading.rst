@@ -16,11 +16,17 @@ Deprecated APIs
 ---------------
 
  * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
+ * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
 
 Deprecated Views
 ----------------
 
  * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
+
+Added ``elgg/popup`` module
+-----------------------------
+
+New :doc:`elgg/popup module <javascript>` can be used to build out more complex trigger-popup interactions, including binding custom anchor types and opening/closing popups programmatically.
 
 From 2.0 to 2.1
 ===============
