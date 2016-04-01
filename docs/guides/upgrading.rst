@@ -25,6 +25,7 @@ Deprecated Views
 ----------------
 
  * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
+ * ``groups/js`` is deprecated: Use ``groups/navigation`` AMD module as a menu item dependency for "feature" and "unfeature" menu items instead.
  * ``lightbox/settings.js`` is deprecated: Use ``getOptions, ui.lightbox`` JS plugin hook or ``data-colorbox-opts`` attribute.
 
 Added ``elgg/popup`` module

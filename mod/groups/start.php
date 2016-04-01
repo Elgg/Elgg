@@ -82,7 +82,10 @@ function groups_init() {
 
 	//extend some views
 	elgg_extend_view('elgg.css', 'groups/css');
-	elgg_extend_view('elgg.js', 'groups/js');
+	if (_elgg_view_may_be_altered('groups/js', __DIR__ . '/views/default/groups/js.php')) {
+		elgg_deprecated_notice('groups/js view has been deprecated. Use AMD modules instead', '2.2');
+		elgg_extend_view('elgg.js', 'groups/js');
+	}
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
@@ -448,6 +451,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=feature"),
 			'priority' => 300,
 			'item_class' => $isFeatured ? 'hidden' : '',
+			'deps' => 'groups/navigation',
 		));
 
 		$return[] = ElggMenuItem::factory(array(
@@ -456,6 +460,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=unfeature"),
 			'priority' => 300,
 			'item_class' => $isFeatured ? '' : 'hidden',
+			'deps' => 'groups/navigation',
 		));
 	}
 
