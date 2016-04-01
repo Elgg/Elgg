@@ -82,6 +82,12 @@ If you plugin implements a custom entity subtype with icon URL handlers, you can
    }
 
 
+Added handlers for file embeds
+------------------------------
+
+ * ``elgg_get_embed_url()`` - can be used to return an embed URL for a file's thumbnail
+ * ``/embed-file/`` - page handler has been added to serve file thumbnails
+
 From 2.0 to 2.1
 ===============
 
