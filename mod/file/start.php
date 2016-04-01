@@ -376,25 +376,14 @@ function file_set_icon_url($hook, $type, $url, $params) {
 	$file = $params['entity'];
 	$size = $params['size'];
 	if (elgg_instanceof($file, 'object', 'file')) {
-		// thumbnails get first priority
-		if ($file->thumbnail) {
-			switch ($size) {
-				case "small":
-					$thumbfile = $file->thumbnail;
-					break;
-				case "medium":
-					$thumbfile = $file->smallthumb;
-					break;
-				case "large":
-				default:
-					$thumbfile = $file->largethumb;
-					break;
-			}
 
-			$readfile = new ElggFile();
-			$readfile->owner_guid = $file->owner_guid;
-			$readfile->setFilename($thumbfile);
-			$thumb_url = elgg_get_inline_url($readfile, true);
+		// thumbnails get first priority
+		$thumbnail = elgg_get_thumbnail($file, $size);
+		if ($thumbnail instanceof ElggFile && $thumbnail->exists()) {
+			if (elgg_in_context('embed')) {
+				return elgg_get_embed_url($file, $size);
+			}
+			$thumb_url = elgg_get_inline_url($thumbnail, true);
 			if ($thumb_url) {
 				return $thumb_url;
 			}
