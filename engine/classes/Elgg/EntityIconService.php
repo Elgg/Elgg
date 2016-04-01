@@ -2,13 +2,17 @@
 
 namespace Elgg;
 
+use DateTime;
+use Elgg\Database\EntityTable;
 use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Http\Request;
 use ElggEntity;
 use ElggFile;
 use ElggIcon;
 use InvalidParameterException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -41,18 +45,25 @@ class EntityIconService {
 	private $logger;
 
 	/**
+	 * @var EntityTable
+	 */
+	private $entities;
+
+	/**
 	 * Constructor
 	 *
-	 * @param Config             $config  Config
-	 * @param PluginHooksService $hooks   Hook registration service
-	 * @param Request            $request Http request
-	 * @param Logger             $logger  Logger
+	 * @param Config             $config   Config
+	 * @param PluginHooksService $hooks    Hook registration service
+	 * @param Request            $request  Http request
+	 * @param Logger             $logger   Logger
+	 * @param EntityTable        $entities Entity table
 	 */
-	public function __construct(Config $config, PluginHooksService $hooks, Request $request, Logger $logger) {
+	public function __construct(Config $config, PluginHooksService $hooks, Request $request, Logger $logger, EntityTable $entities) {
 		$this->config = $config;
 		$this->hooks = $hooks;
 		$this->request = $request;
 		$this->logger = $logger;
+		$this->entities = $entities;
 	}
 
 	/**
@@ -228,7 +239,7 @@ class EntityIconService {
 			'x2' => $x2,
 			'y2' => $y2,
 				], false);
-		
+
 		if ($created === true) {
 			return $success();
 		}
@@ -236,7 +247,7 @@ class EntityIconService {
 		$sizes = $this->getSizes($entity_type, $entity_subtype, $type);
 
 		foreach ($sizes as $size => $opts) {
-			
+
 			$width = (int) elgg_extract('w', $opts);
 			$height = (int) elgg_extract('h', $opts);
 			$square = (bool) elgg_extract('square', $opts);
@@ -316,13 +327,13 @@ class EntityIconService {
 		if ($delete === false) {
 			return;
 		}
-		
+
 		$sizes = array_keys($this->getSizes($entity->getType(), $entity->getSubtype(), $type));
 		foreach ($sizes as $size) {
 			$icon = $this->getIcon($entity, $size, $type);
 			$icon->delete();
 		}
-		
+
 		if ($type == 'icon') {
 			unset($entity->icontime);
 			unset($entity->x1);
@@ -424,6 +435,68 @@ class EntityIconService {
 		}
 
 		return $sizes;
+	}
+
+	/**
+	 * Handle request to /serve-icon handler
+	 *
+	 * @param bool $allow_removing_headers Alter PHP's global headers to allow caching
+	 * @return BinaryFileResponse
+	 */
+	public function handleServeIconRequest($allow_removing_headers = true) {
+
+		$response = new Response();
+		$response->prepare($this->request);
+
+		if ($allow_removing_headers) {
+			// clear cache-boosting headers set by PHP session
+			header_remove('Cache-Control');
+			header_remove('Pragma');
+			header_remove('Expires');
+		}
+
+		$path = implode('/', $this->request->getUrlSegments());
+		if (!preg_match('~serve-icon/(\d+)/(.*+)$~', $path, $m)) {
+			return $response->setStatusCode(400)->setContent('Malformatted request URL');
+		}
+
+		list(, $guid, $size) = $m;
+
+		$entity = $this->entities->get($guid);
+		if (!$entity instanceof \ElggEntity) {
+			return $response->setStatusCode(404)->setContent('Item does not exist');
+		}
+
+		$thumbnail = $entity->getIcon($size);
+		if (!$thumbnail->exists()) {
+			return $response->setStatusCode(404)->setContent('Icon doest not exist');
+		}
+
+		$if_none_match = $this->request->headers->get('if_none_match');
+		if (!empty($if_none_match)) {
+			// strip mod_deflate suffixes
+			$this->request->headers->set('if_none_match', str_replace('-gzip', '', $if_none_match));
+		}
+
+		$filenameonfilestore = $thumbnail->getFilenameOnFilestore();
+		$last_updated = filemtime($filenameonfilestore);
+		$etag = '"' . $last_updated . '"';
+		$response->setPublic()->setEtag($etag);
+		if ($response->isNotModified($this->request)) {
+			return $response;
+		}
+
+		$headers = [
+			'Content-Type' => (new MimeTypeDetector())->getType($filenameonfilestore),
+		];
+		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
+		$response->prepare($this->request);
+
+		$expires_dt = (new DateTime())->setTimestamp(strtotime('+1 day'));
+		$response->setExpires($expires_dt);
+
+		$response->setEtag($etag);
+		return $response;
 	}
 
 }
