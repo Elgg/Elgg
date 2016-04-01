@@ -36,6 +36,12 @@ Added API for working with file entity thumbnails
  * ``elgg_create_thumbnails()`` - generates thumbnails for file entities
  * ``elgg_clear_thumbnails()`` - clears file entity thumbnails
 
+Added handlers for file embeds
+------------------------------
+
+ * ``elgg_get_embed_url()`` - can be used to return an embed URL for a file's thumbnail
+ * ``/embed-file/`` - page handler has been added to serve file thumbnails
+
 From 2.0 to 2.1
 ===============
 

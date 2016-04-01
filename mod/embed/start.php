@@ -25,6 +25,8 @@ function embed_init() {
 	
 	$embed_js = elgg_get_simplecache_url('embed/embed.js');
 	elgg_register_js('elgg.embed', $embed_js, 'footer');
+
+	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'embed_set_thumbnail_url', 1000);
 }
 
 /**
@@ -190,4 +192,35 @@ function embed_get_list_options($options = array()) {
 	$options = array_merge($defaults, $options);
 
 	return $options;
+}
+
+/**
+ * Substitutes thumbnail's inline URL with a permanent URL
+ * Registered with a very late priority of 1000 to ensure we replace all previous values
+ * 
+ * @param string $hook   "entity:icon:url"
+ * @param string $type   "object"
+ * @param string $return URL
+ * @param array  $params Hook params
+ * @return string
+ */
+function embed_set_thumbnail_url($hook, $type, $return, $params) {
+
+	if (!elgg_in_context('embed')) {
+		return;
+	}
+	
+	$entity = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params);
+
+	if (!$entity instanceof ElggFile) {
+		return;
+	}
+
+	$thumbnail = elgg_get_thumbnail($entity, $size);
+	if (!$thumbnail->exists()) {
+		return;
+	}
+
+	return elgg_get_embed_url($entity, $size);
 }

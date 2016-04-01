@@ -78,7 +78,7 @@ $square = false, $upscale = false) {
 	if (!$files->has($input_name)) {
 		return false;
 	}
-	
+
 	$file = $files->get($input_name);
 	if (empty($file)) {
 		// a file input was provided but no file uploaded
@@ -459,12 +459,14 @@ function _elgg_filestore_init() {
 
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
-	
+
 	// Parse category of file from MIME type
 	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
 
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
+
+	elgg_register_page_handler('embed-file', '_elgg_filestore_embed_file_handler');
 }
 
 /**
@@ -577,6 +579,90 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = fa
 }
 
 /**
+ * Returns a file's URL suitable for embedding in a text editor
+ * We can not use elgg_get_inline_url() for these purposes due to a URL structure bound to user session and file modification time
+ * This function returns a generic (permanent) URL that will then be resolved to an inline URL whenever requested.
+ * The behaviour of the embed-file handler is similar to deprecated mod/file/thumbnail.php
+ *
+ * @param \ElggFile $file File entity (must have guid)
+ * @param string    $size Size
+ * @return string
+ * @since 2.2
+ */
+function elgg_get_embed_url(\ElggFile $file, $size) {
+	return elgg_normalize_url("embed-file/$file->guid/$size");
+}
+
+/**
+ * Page handler for /embed-file/ identifier
+ * The bevaious of this handler is similar to deprecated mod/file/thumbnail.php
+ * 
+ * @param array $segments URL segments
+ * @return void
+ * @access private
+ * @since 2.2
+ */
+function _elgg_filestore_embed_file_handler($segments) {
+
+	// clear cache-boosting headers set by PHP session
+	header_remove('Cache-Control');
+	header_remove('Pragma');
+	header_remove('Expires');
+
+	$request = _elgg_services()->request;
+	$response = new Symfony\Component\HttpFoundation\Response();
+	$response->prepare($request);
+
+	$guid = array_shift($segments);
+	$size = array_shift($segments);
+
+	$file = get_entity($guid);
+	if (!$file instanceof ElggFile) {
+		if (elgg_entity_exists($guid)) {
+			$response->setStatusCode(403)->setContent('You are not allowed to access this file')->send();
+		} else {
+			$response->setStatusCode(404)->setContent('File does not exist')->send();
+		}
+		exit;
+	}
+
+	$thumbnail = elgg_get_thumbnail($file, $size);
+	if (!$thumbnail->exists()) {
+		$response->setStatusCode(404)->setContent('Thumbnail doest not exist')->send();
+		exit;
+	}
+
+	$if_none_match = $request->headers->get('if_none_match');
+	if (!empty($if_none_match)) {
+		// strip mod_deflate suffixes
+		$request->headers->set('if_none_match', str_replace('-gzip', '', $if_none_match));
+	}
+
+	$filenameonfilestore = $thumbnail->getFilenameOnFilestore();
+	$last_updated = filemtime($filenameonfilestore);
+	$etag = '"' . $last_updated . '"';
+	$response->setPublic()->setEtag($etag);
+	if ($response->isNotModified($request)) {
+		$response->send();
+		exit();
+	}
+
+	$headers = [
+		'Content-Type' => (new Elgg\Filesystem\MimeTypeDetector())->getType($filenameonfilestore),
+	];
+	$response = new Symfony\Component\HttpFoundation\BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
+	$response->prepare($request);
+
+	$expires_dt = (new DateTime())->setTimestamp(strtotime('+1 day'));
+	$response->setExpires($expires_dt);
+
+	$response->setEtag($etag);
+	
+	$response->send();
+	exit;
+}
+
+/**
  * Returns thumbnail sizes configuration for a file entity
  *
  * @param \ElggFile $file File entity
@@ -643,7 +729,7 @@ function elgg_create_thumbnails(\ElggFile $file) {
 	$thumb_filename = pathinfo($source_filename, PATHINFO_FILENAME) . '.jpg';
 
 	$sizes = elgg_get_thumbnail_sizes($file);
-	
+
 	foreach ($sizes as $size => $opts) {
 		$metadata_name = $opts['metadata_name'];
 		$filename_prefix = $opts['filename_prefix'];
@@ -665,12 +751,12 @@ function elgg_create_thumbnails(\ElggFile $file) {
 			return false;
 		}
 	}
-	
+
 	$file->icontime = time();
 	return true;
 }
 
-	/**
+/**
  * Clear file entity's thumbnails
  *
  * @param \ElggFile $file File entity

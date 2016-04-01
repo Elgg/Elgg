@@ -99,6 +99,16 @@ You can also invalidated all previously generated URLs by updating file's modifi
 by using ``touch()``.
 
 
+Embedding Files
+---------------
+Please note that due to their nature inline and download URLs are not suitable for embedding.
+Embed URLs must be permanent, whereas inline and download URLs are volatile (bound to user session
+and file modification time).
+
+To embed a thumbnail of an image file, use ``elgg_get_embed_url()``. For other purposes, please design
+your own page handlers and rewrite thumbnail/entity URLs accordingly.
+
+
 File entity icons
 -----------------
 
