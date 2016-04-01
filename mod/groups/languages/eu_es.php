@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Nire egoera',
 	'groups:my_status:group_owner' => 'Talde honen jabea zara',
 	'groups:my_status:group_member' => 'Talde honetan zaude',
-	'groups:subscribed' => 'Talde jakinarazpenak piztuta',
-	'groups:unsubscribed' => 'Talde jakinarazpenak itzalita',
+	'groups:subscribed' => 'Group notifications are on',
+	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => '%s-eko kideak',
 	'groups:members:more' => "Kide guztiak ikusi",

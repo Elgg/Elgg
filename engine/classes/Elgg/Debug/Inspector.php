@@ -342,13 +342,14 @@ class Inspector {
 
 		foreach ($all_handlers as $hook => $types) {
 			foreach ($types as $type => $priorities) {
-				foreach ($priorities as $priority => $handlers) {
+				ksort($priorities);
 
-					array_walk($handlers, function (&$callable) use ($root, $priority) {
+				foreach ($priorities as $priority => $handlers) {
+					foreach ($handlers as $callable) {
 						$description = $this->describeCallable($callable, $root);
 						$callable = "$priority: $description";
-					});
-					$tree[$hook . ',' . $type] = $handlers;
+						$tree["$hook, $type"][] = $callable;
+					}
 				}
 			}
 		}

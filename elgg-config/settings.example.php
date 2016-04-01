@@ -132,6 +132,15 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->dataroot = "";
 //$CONFIG->simplecache_enabled = true;
 
+/**
+ * Enable the boot cache
+ *
+ * Elgg can store most non-user-specific boot up data in a cache. If you want to
+ * enable this, uncomment the next line to set it to 10. Although Elgg has a built-
+ * in invalidation strategy for this cache, you should consider a small TTL to
+ * minimize the damage if the cache should grow stale.
+ */
+//$CONFIG->boot_cache_ttl = 10;
 
 /**
  * Cookie configuration
@@ -190,6 +199,19 @@ $CONFIG->broken_mta = false;
  * @global bool $CONFIG->db_disable_query_cache
  */
 $CONFIG->db_disable_query_cache = false;
+
+/**
+ * Automatically disable plugins that are unable to boot
+ *
+ * Elgg will disable unbootable plugins. If you set this to false plugins
+ * will no longer be disabled if they are not bootable. This could cause requests
+ * to your site to fail as required views, classes or cached data could be missing.
+ *
+ * Setting this to false could be useful during deployment of new code.
+ *
+ * @global bool $CONFIG->auto_disable_plugins
+ */
+$CONFIG->auto_disable_plugins = true;
 
 /**
  * Minimum password length

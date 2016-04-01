@@ -3,6 +3,10 @@
 elgg_gatekeeper();
 
 $guid = elgg_extract('guid', $vars);
+
+elgg_entity_gatekeeper($guid);
+elgg_group_gatekeeper(true, $guid);
+
 $container = get_entity($guid);
 
 // Make sure user has permissions to add a topic to container

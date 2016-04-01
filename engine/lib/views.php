@@ -46,6 +46,9 @@
  * @subpackage Views
  */
 
+use Elgg\Menu\Menu;
+use Elgg\Menu\UnpreparedMenu;
+
 /**
  * The viewtype override.
  *
@@ -583,8 +586,7 @@ function _elgg_views_prepare_head($title) {
 	);
 
 	// RSS feed link
-	global $autofeed;
-	if (isset($autofeed) && $autofeed == true) {
+	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
 		if (substr_count($url,'?')) {
 			$url .= "&view=rss";
@@ -684,8 +686,9 @@ function elgg_view_layout($layout_name, $vars = array()) {
  *
  * elgg_view_menu() uses views in navigation/menu
  *
- * @param string $menu_name The name of the menu
- * @param array  $vars      An associative array of display options for the menu.
+ * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
+ * @param array                      $vars An associative array of display options for the menu.
+ *
  *                          Options include:
  *                              sort_by => string or php callback
  *                                  string options: 'name', 'priority', 'title' (default),
@@ -699,36 +702,24 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_menu($menu_name, array $vars = array()) {
-	global $CONFIG;
+function elgg_view_menu($menu, array $vars = array()) {
+	if (is_string($menu)) {
+		$menu = _elgg_services()->menus->getMenu($menu, $vars);
 
-	$vars['name'] = $menu_name;
-
-	$vars = elgg_trigger_plugin_hook('parameters', "menu:$menu_name", $vars, $vars);
-
-	$sort_by = elgg_extract('sort_by', $vars, 'text');
-
-	if (isset($CONFIG->menus[$menu_name])) {
-		$menu = $CONFIG->menus[$menu_name];
-	} else {
-		$menu = array();
+	} elseif ($menu instanceof UnpreparedMenu) {
+		$menu = _elgg_services()->menus->prepareMenu($menu);
 	}
 
-	// Give plugins a chance to add menu items just before creation.
-	// This supports dynamic menus (example: user_hover).
-	$menu = elgg_trigger_plugin_hook('register', "menu:$menu_name", $vars, $menu);
+	if (!$menu instanceof Menu) {
+		throw new \InvalidArgumentException('$menu must be a menu name, a Menu, or UnpreparedMenu');
+	}
 
-	$builder = new \ElggMenuBuilder($menu);
-	$vars['menu'] = $builder->getMenu($sort_by);
-	$vars['selected_item'] = $builder->getSelected();
+	$name = $menu->getName();
 
-	// Let plugins modify the menu
-	$vars['menu'] = elgg_trigger_plugin_hook('prepare', "menu:$menu_name", $vars, $vars['menu']);
-
-	if (elgg_view_exists("navigation/menu/$menu_name")) {
-		return elgg_view("navigation/menu/$menu_name", $vars);
+	if (elgg_view_exists("navigation/menu/$name")) {
+		return elgg_view("navigation/menu/$name", $menu->getParams());
 	} else {
-		return elgg_view("navigation/menu/default", $vars);
+		return elgg_view("navigation/menu/default", $menu->getParams());
 	}
 }
 
@@ -805,8 +796,7 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = array(), $bypass = 
 		return false;
 	}
 
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'full_view' => true,
@@ -914,8 +904,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = ar
  * @return string/false Rendered annotation
  */
 function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array(), $bypass = false, $debug = false) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'full_view' => true,
@@ -966,6 +955,9 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *      'item_class'       CSS class applied to the list items
  *      'item_view'        Alternative view to render list items
  *      'pagination'       Display pagination?
+ *      'base_url'         Base URL of list (optional)
+ *      'url_fragment'     URL fragment to add to links if not present in base_url (optional)
+ *      'position'         Position of the pagination: before, after, or both
  *      'list_type'        List type: 'list' (default), 'gallery'
  *      'list_type_toggle' Display the list type toggle?
  *      'no_results'       Message to display if no results (string|Closure)
@@ -1272,15 +1264,10 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 		'body' => elgg_view("forms/$action", $body_vars)
 	);
 
-	$form_class = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
-
 	// append elgg-form class to any class options set
-	if (isset($form_vars['class'])) {
-		$form_vars['class'] = $form_vars['class'] . " $form_class";
-	} else {
-		$form_vars['class'] = $form_class;
-	}
-
+	$form_vars['class'] = (array) elgg_extract('class', $form_vars, []);
+	$form_vars['class'][] = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
+	
 	$form_vars = array_merge($defaults, $form_vars);
 	$form_vars['action_name'] = $action;
 
@@ -1289,7 +1276,7 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 
 /**
  * Renders a form field
- * 
+ *
  * @param string $input_type Input type, used to generate an input view ("input/$input_type")
  * @param array  $vars       Fields and input vars.
  *                           Field vars contain both field and input params. 'label', 'help',
@@ -1438,6 +1425,38 @@ function elgg_view_icon($name, $vars = array()) {
 }
 
 /**
+ * Include the RSS icon link and link element in the head
+ *
+ * @return void
+ */
+function elgg_register_rss_link() {
+	_elgg_services()->config->set('_elgg_autofeed', true);
+}
+
+/**
+ * Remove the RSS icon link and link element from the head
+ *
+ * @return void
+ */
+function elgg_unregister_rss_link() {
+	_elgg_services()->config->set('_elgg_autofeed', false);
+}
+
+/**
+ * Should the RSS view of this URL be linked to?
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_has_rss_link() {
+	if (isset($GLOBALS['autofeed']) && is_bool($GLOBALS['autofeed'])) {
+		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
+		return $GLOBALS['autofeed'];
+	}
+	return (bool)_elgg_services()->config->getVolatile('_elgg_autofeed');
+}
+
+/**
  * Displays a user's access collections, using the core/friends/collections view
  *
  * @param int $owner_guid The GUID of the owning user
@@ -1532,14 +1551,13 @@ function _elgg_views_amd($hook, $type, $content, $params) {
 }
 
 /**
- * Add the rss link to the extras when if needed
+ * Add the RSS link to the extras when if needed
  *
  * @return void
  * @access private
  */
 function elgg_views_add_rss_link() {
-	global $autofeed;
-	if (isset($autofeed) && $autofeed == true) {
+	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
 		if (substr_count($url, '?')) {
 			$url .= "&view=rss";
@@ -1566,6 +1584,53 @@ function _elgg_views_send_header_x_frame_options() {
 	header('X-Frame-Options: SAMEORIGIN');
 }
 
+/**
+ * Is there a chance a plugin is altering this view?
+ *
+ * @note Must be called after the [init, system] event, ideally as late as possible.
+ *
+ * @note Always returns true if the view's location is set in /engine/views.php. Elgg does not keep
+ *       track of the defaults for those locations.
+ *
+ * @param string $view               View name. E.g. "elgg/init.js"
+ * @param string $path_from_viewtype File path relative to the viewtype directory. E.g. "elgg/init.js.php"
+ * @param string $viewtype           View type
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_view_may_be_altered($view, $path_from_viewtype, $viewtype = '') {
+	if (!$viewtype) {
+		$viewtype = elgg_get_viewtype();
+	}
+
+	$views = _elgg_services()->views;
+
+	if (count($views->getViewList($view)) > 1) {
+		// view was extended
+		return true;
+	}
+
+	$hooks = _elgg_services()->hooks;
+
+	if ($hooks->hasHandler('view', $view) || $hooks->hasHandler('view_vars', $view)) {
+		// altered via hook
+		return true;
+	}
+
+	// check location
+	$root = dirname(dirname(__DIR__));
+	$expected_path = "$root/views/$viewtype/" . ltrim($path_from_viewtype, '/\\');
+
+	$view_path = $views->findViewFile($view, $viewtype);
+
+	if (DIRECTORY_SEPARATOR === '\\') {
+		$expected_path = strtr($expected_path, "/", "\\");
+		$view_path = strtr($view_path, "/", "\\");
+	}
+
+	return ($expected_path !== $view_path);
+}
 
 /**
  * Initialize viewtypes on system boot event
@@ -1617,8 +1682,6 @@ function elgg_views_boot() {
 	elgg_load_css('elgg');
 
 	elgg_register_simplecache_view('elgg/init.js');
-	elgg_require_js('elgg/init');
-	elgg_require_js('elgg/ready');
 
 	// optional stuff
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
@@ -1633,6 +1696,8 @@ function elgg_views_boot() {
 
 	elgg_register_js('elgg.friendspicker', elgg_get_simplecache_url('elgg/ui.friends_picker.js'));
 	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
+
+	// @deprecated 2.2
 	elgg_register_js('elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
 
 	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));

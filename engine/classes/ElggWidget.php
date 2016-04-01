@@ -28,7 +28,7 @@ class ElggWidget extends \ElggObject {
 
 	/**
 	 * Get a value from attributes or private settings
-	 * 
+	 *
 	 * @param string $name The name of the value
 	 * @return mixed
 	 */
@@ -51,7 +51,7 @@ class ElggWidget extends \ElggObject {
 
 	/**
 	 * Set an attribute or private setting value
-	 * 
+	 *
 	 * @param string $name  The name of the value to set
 	 * @param mixed  $value The value to set
 	 * @return void
@@ -66,6 +66,45 @@ class ElggWidget extends \ElggObject {
 			$this->attributes[$name] = $value;
 		} else {
 			$this->setPrivateSetting($name, $value);
+		}
+	}
+
+	/**
+	 * Unset a property from private settings or attribute.
+	 *
+	 * @see \ElggEntity->__unset
+	 *
+	 * @param string $name The name of the attribute or metadata.
+	 *
+	 * @return void
+	 * @since 2.2.0
+	 */
+	public function __unset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			parent::__unset($name);
+		} else {
+			$this->removePrivateSetting($name);
+		}
+	}
+	
+	/**
+	 * Test if property is set either as an attribute or private setting
+	 *
+	 * @tip Use isset($entity->property)
+	 *
+	 * @see \ElggEntity->__isset
+	 *
+	 * @param string $name The name of the attribute or private setting.
+	 *
+	 * @return bool
+	 * @since 2.2.0
+	 */
+	public function __isset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			return parent::__isset($name);
+		} else {
+			$private_setting = $this->getPrivateSetting($name);
+			return !is_null($private_setting);
 		}
 	}
 

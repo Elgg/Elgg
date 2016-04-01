@@ -27,7 +27,6 @@ elgg_push_breadcrumb($title);
 $params = array(
 	'entity' => $target,
 	'comment' => $comment,
-	'is_edit_page' => true,
 );
 $content = elgg_view_form('comment/save', null, $params);
 

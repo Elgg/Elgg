@@ -24,11 +24,7 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('session', $session);
 		_elgg_services()->session->start();
 
-		$site_secret_mock = $this->getMockBuilder('\Elgg\Database\SiteSecret')->getMock();
-		$site_secret_mock->method('init')->willReturn('strongSiteSecret1234567890');
-		_elgg_services()->setValue('siteSecret', $site_secret_mock);
-
-		$this->handler = new ServeFileHandler($app);
+		$this->handler = _elgg_services()->serveFileHandler;
 
 		$file_mock = $this->getMockBuilder('\ElggFile')->disableOriginalConstructor()->getMock();
 		$file_mock->method('getFileNameOnFilestore')->willReturn("{$dataroot}file_service/foobar.txt");
@@ -41,7 +37,12 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 		$url = $file->getURL();
 		$path = substr($url, strlen($site_url));
 		$path_key = \Elgg\Application::GET_PATH_KEY;
-		return \Elgg\Http\Request::create("?$path_key=$path");
+		$request = \Elgg\Http\Request::create("?$path_key=$path");
+
+		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
+		$session_id = _elgg_services()->session->getId();
+		$request->cookies->set($cookie_name, $session_id);
+		return $request;
 	}
 
 	/**
@@ -103,7 +104,9 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(200, $response->getStatusCode());
 
 		_elgg_services()->session->invalidate();
-		_elgg_services()->session->start();
+		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
+		$session_id = _elgg_services()->session->getId();
+		$request->cookies->set($cookie_name, $session_id);
 
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(403, $response->getStatusCode());

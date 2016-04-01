@@ -29,6 +29,7 @@ function _elgg_testing_application(\Elgg\Application $app = null) {
  */
 global $CONFIG;
 $CONFIG = (object)[
+	'Config_file' => false,
 	'dbprefix' => 'elgg_',
 	'boot_complete' => false,
 	'wwwroot' => 'http://localhost/',
@@ -37,6 +38,7 @@ $CONFIG = (object)[
 	'site_guid' => 1,
 	'AutoloaderManager_skip_storage' => true,
 	'simplecache_enabled' => false,
+	'Elgg\Application_phpunit' => true,
 ];
 
 global $_ELGG;
@@ -58,13 +60,16 @@ call_user_func(function () use ($CONFIG) {
 	_elgg_testing_config($config);
 	
 	$sp = new \Elgg\Di\ServiceProvider($config);
+
 	$sp->setValue('mailer', new InMemoryTransport());
+
+	$sp->siteSecret->setTestingSecret('z1234567890123456789012345678901');
 
 	$app = new \Elgg\Application($sp);
 	$app->loadCore();
 
 	// persistentLogin service needs this set to instantiate without calling DB
-	_elgg_configure_cookies($CONFIG);
+	_elgg_services()->config->getCookieConfig();
 
 	_elgg_testing_application($app);
 });

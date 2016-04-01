@@ -28,15 +28,15 @@ interface AjaxResponse {
 	/**
 	 * Set the response data
 	 *
-	 * @param mixed $data Response data. Must be able to be encoded in JSON.
+	 * @param \stdClass $data Response data. Must be able to be encoded in JSON.
 	 * @return self
 	 */
-	public function setData($data);
+	public function setData(\stdClass $data);
 
 	/**
-	 * Get the response data
+	 * Get the response data, which will be a stdClass object with property "value"
 	 *
-	 * @return mixed
+	 * @return \stdClass
 	 */
 	public function getData();
 

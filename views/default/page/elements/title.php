@@ -6,13 +6,15 @@
  * @uses $vars['class'] Optional class for heading
  */
 
-if (!isset($vars['title'])) {
+$title = elgg_extract('title', $vars);
+if (!is_string($title) || $title === '') {
 	return;
 }
 
-$class= '';
-if (isset($vars['class'])) {
-	$class = " class=\"{$vars['class']}\"";
+$attributes = [];
+$class = elgg_extract('class', $vars);
+if (!empty($class)) {
+	$attributes['class'] = $class;
 }
 
-echo "<h2{$class}>{$vars['title']}</h2>";
+echo elgg_format_element('h2', $attributes, $title);

@@ -454,7 +454,9 @@
 .elgg-menu-longtext {
 	float: right;
 }
-
+.elgg-field-label + .elgg-menu-longtext {
+	margin-top: -20px;
+}
 /* ***************************************
 	RIVER
 *************************************** */

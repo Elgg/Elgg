@@ -78,20 +78,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Holds the original (persisted) attribute values that have been changed but not yet saved.
 	 */
 	protected $orig_attributes = array();
-
-	/**
-	 * Tells how many tables are going to need to be searched in order to fully populate this object
-	 *
-	 * @var int
-	 */
-	protected $tables_split;
-	
-	/**
-	 * Tells how many tables describing object have been loaded thus far
-	 *
-	 * @var int
-	 */
-	protected $tables_loaded;
 	
 	/**
 	 * Initialize the attributes array.
@@ -115,24 +101,6 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = "yes";
-
-		// There now follows a bit of a hack
-		/* Problem: To speed things up, some objects are split over several tables,
-		 * this means that it requires n number of database reads to fully populate
-		 * an entity. This causes problems for caching and create events
-		 * since it is not possible to tell whether a subclassed entity is complete.
-		 *
-		 * Solution: We have two counters, one 'tables_split' which tells whatever is
-		 * interested how many tables are going to need to be searched in order to fully
-		 * populate this object, and 'tables_loaded' which is how many have been
-		 * loaded thus far.
-		 *
-		 * If the two are the same then this object is complete.
-		 *
-		 * Use: isFullyLoaded() to check
-		 */
-		$this->tables_split = 1;
-		$this->tables_loaded = 0;
 	}
 
 	/**
@@ -200,8 +168,8 @@ abstract class ElggEntity extends \ElggData implements
 			// quick return if value is not changing
 			return;
 		}
-		if (array_key_exists($name, $this->attributes)) {
 
+		if (array_key_exists($name, $this->attributes)) {
 			// if an attribute is 1 (integer) and it's set to "1" (string), don't consider that a change.
 			if (is_int($this->attributes[$name])
 					&& is_string($value)
@@ -243,9 +211,15 @@ abstract class ElggEntity extends \ElggData implements
 					$this->attributes[$name] = $value;
 					break;
 			}
-		} else {
-			$this->setMetadata($name, $value);
+			return;
 		}
+
+		if ($name === 'tables_split' || $name === 'tables_loaded') {
+			elgg_deprecated_notice("Do not read/write ->tables_split or ->tables_loaded.", "2.1");
+			return;
+		}
+
+		$this->setMetadata($name, $value);
 	}
 
 	/**
@@ -275,6 +249,11 @@ abstract class ElggEntity extends \ElggData implements
 				_elgg_services()->logger->warn('Reading ->subtype on a persisted entity is unreliable.');
 			}
 			return $this->attributes[$name];
+		}
+
+		if ($name === 'tables_split' || $name === 'tables_loaded') {
+			elgg_deprecated_notice("Do not read/write ->tables_split or ->tables_loaded.", "2.1");
+			return 2;
 		}
 
 		return $this->getMetadata($name);
@@ -967,30 +946,40 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		$return = false;
-
 		// Test user if possible - should default to false unless a plugin hook says otherwise
-		if ($user) {
-			if ($this->owner_guid == $user->guid) {
-				$return = true;
-			}
-			
-			if ($this->container_guid == $user->guid) {
-				$return = true;
-			}
-			
-			if ($this->guid == $user->guid) {
-				$return = true;
+		$default = call_user_func(function () use ($user) {
+			if (!$user) {
+				return false;
 			}
 
-			$container = $this->getContainerEntity();
-			if ($container && $container->canEdit($user->guid)) {
-				$return = true;
+			// favor the persisted attributes if not saved
+			$attrs = array_merge(
+				[
+					'owner_guid' => $this->owner_guid,
+					'container_guid' => $this->container_guid,
+				],
+				$this->getOriginalAttributes()
+			);
+
+			if ($attrs['owner_guid'] == $user->guid) {
+				return true;
 			}
-		}
+
+			if ($attrs['container_guid'] == $user->guid) {
+				return true;
+			}
+
+			if ($this->guid == $user->guid) {
+				return true;
+			}
+
+			$container = get_entity($attrs['container_guid']);
+
+			return ($container && $container->canEdit($user->guid));
+		});
 
 		$params = array('entity' => $this, 'user' => $user);
-		return _elgg_services()->hooks->trigger('permissions_check', $this->type, $params, $return);
+		return _elgg_services()->hooks->trigger('permissions_check', $this->type, $params, $default);
 	}
 
 	/**
@@ -1379,12 +1368,12 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Tests to see whether the object has been fully loaded.
+	 * Tests to see whether the object has been persisted.
 	 *
 	 * @return bool
 	 */
 	public function isFullyLoaded() {
-		return ! ($this->tables_loaded < $this->tables_split);
+		return (bool)$this->guid;
 	}
 
 	/**
@@ -1559,27 +1548,20 @@ abstract class ElggEntity extends \ElggData implements
 	protected function update() {
 		global $CONFIG;
 
-		// See #5600. This ensures canEdit() checks the BD persisted entity so it sees the
-		// persisted owner_guid, container_guid, etc.
-		_elgg_disable_caching_for_entity($this->guid);
-		$persisted_entity = get_entity($this->guid);
-		if (!$persisted_entity) {
-			// Why worry about this case? If access control was off when the user fetched this object but
+		_elgg_services()->boot->invalidateCache($this->guid);
+
+		if (!has_access_to_entity($this)) {
+			// Why worry about this case? If access control was off when the user fetched $this, but
 			// was turned back on again. Better to just bail than to turn access control off again.
 			return false;
 		}
 
-		$allow_edit = $persisted_entity->canEdit();
-		unset($persisted_entity);
-
-		if ($allow_edit) {
-			// give old update event a chance to stop the update
-			$allow_edit = _elgg_services()->events->trigger('update', $this->type, $this);
+		if (!$this->canEdit()) {
+			return false;
 		}
 
-		_elgg_enable_caching_for_entity($this->guid);
-
-		if (!$allow_edit) {
+		// give old update event a chance to stop the update
+		if (!_elgg_services()->events->trigger('update', $this->type, $this)) {
 			return false;
 		}
 
@@ -1594,11 +1576,17 @@ abstract class ElggEntity extends \ElggData implements
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
 		}
-		
-		$ret = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
-			set owner_guid='$owner_guid', access_id='$access_id',
-			container_guid='$container_guid', time_created='$time_created',
-			time_updated='$time' WHERE guid=$guid");
+
+		$query = "
+			UPDATE {$CONFIG->dbprefix}entities
+			SET owner_guid = '$owner_guid',
+				access_id = '$access_id',
+				container_guid = '$container_guid',
+				time_created = '$time_created',
+				time_updated = '$time'
+			WHERE guid = $guid
+		";
+		$ret = $this->getDatabase()->updateData($query);
 		
 		elgg_trigger_after_event('update', $this->type, $this);
 
@@ -1652,11 +1640,6 @@ abstract class ElggEntity extends \ElggData implements
 			$objarray = (array) $row;
 			foreach ($objarray as $key => $value) {
 				$this->attributes[$key] = $value;
-			}
-
-			// Increment the portion counter
-			if (!$this->isFullyLoaded()) {
-				$this->tables_loaded++;
 			}
 
 			// guid needs to be an int  https://github.com/elgg/elgg/issues/4111

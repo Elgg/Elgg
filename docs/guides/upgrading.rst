@@ -137,6 +137,25 @@ If handlers were registered with the same priority, these are called in the orde
 To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
 priority. Some of these handlers will most likely be called in a different order.
 
+From 2.1 to 2.2
+===============
+
+Deprecated APIs
+---------------
+
+ * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
+ * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
+
+Deprecated Views
+----------------
+
+ * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
+
+Added ``elgg/popup`` module
+-----------------------------
+
+New :doc:`elgg/popup module <javascript>` can be used to build out more complex trigger-popup interactions, including binding custom anchor types and opening/closing popups programmatically.
+
 From 2.0 to 2.1
 ===============
 
@@ -146,6 +165,21 @@ Deprecated APIs
  * ``ElggFile::setFilestore``
  * ``get_default_filestore``
  * ``set_default_filestore``
+ * ``elgg_get_config('siteemail')``: Use ``elgg_get_site_entity()->email``
+ * URLs starting with ``/css/`` and ``/js/``: ``Use elgg_get_simplecache_url()``
+ * ``elgg.ui.widgets`` JavaScript object is deprecated by ``elgg/widgets`` AMD module
+
+``Application::getDb()`` changes
+--------------------------------
+
+If you're using this low-level API, do not expect it to return an ``Elgg\Database`` instance in 3.0. It now
+returns an ``Elgg\Application\Database`` with many deprecated. These methods were never meant to be made
+public API, but we will do our best to support them in 2.x.
+
+Added ``elgg/widgets`` module
+-----------------------------
+
+If your plugin code calls ``elgg.ui.widgets.init()``, instead use the :doc:`elgg/widgets module <javascript>`.
 
 From 1.x to 2.0
 ===============

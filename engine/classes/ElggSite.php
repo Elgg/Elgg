@@ -38,7 +38,6 @@ class ElggSite extends \ElggEntity {
 
 		$this->attributes['type'] = "site";
 		$this->attributes += self::getExternalAttributes();
-		$this->tables_split = 2;
 	}
 
 	/**
@@ -99,7 +98,6 @@ class ElggSite extends \ElggEntity {
 		}
 
 		$this->attributes = $attrs;
-		$this->tables_loaded = 2;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
 		_elgg_cache_entity($this);
 

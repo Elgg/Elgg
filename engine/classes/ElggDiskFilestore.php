@@ -22,7 +22,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -68,7 +68,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 		$path = substr($fullname, 0, $ls);
 
-		if (($mode != 'write') && (!file_exists($fullname))) {
+		if (($mode === 'read') && (!file_exists($fullname))) {
 			return false;
 		}
 

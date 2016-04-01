@@ -18,7 +18,6 @@ System hooks
 	* headers
 	* params
 
-
 **page_owner, system**
 	Filter the page_owner for the current page. No options are passed.
 
@@ -84,13 +83,16 @@ System hooks
 	In ``elgg_view_layout()``, filters the return value of the layout view.
 
 **parameters, menu:<menu_name>**
-	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before it is generated.
+	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before rendering.
 
 **register, menu:<menu_name>**
-	Triggered by ``elgg_view_menu()``. Used to add dynamic menu items.
+	Filters the initial list of menu items pulled from configuration, before the menu has been split into
+	sections. Triggered by ``elgg_view_menu()`` and ``elgg()->menus->getMenu()``.
 
 **prepare, menu:<menu_name>**
-	Trigger by ``elgg_view_menu()``. Used to sort, add, remove, and modify menu items.
+	Filters the array of menu sections before they're displayed. Each section is a string key mapping to
+	an area of menu items. This is a good hook to sort, add, remove, and modify menu items. Triggered by
+	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
 **creating, river**
 	Triggered before a river item is created. Return false to prevent river item from being created.
@@ -292,12 +294,19 @@ Permission hooks
 **get_sql, access**
     Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
+**gatekeeper, <entity_type>:<entity_subtype>**
+    Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.
+
+
 Routing
 =======
 
 **route, <identifier>**
-    Allows altering the parameters used to route requests. ``identifier`` is the first URL segment,
-    registered with ``elgg_register_page_handler()``.
+    Allows applying logic or returning a response before the page handler is called. See :doc:`routing`
+    for details.
+
+**route:rewrite, <identifier>**
+	Allows altering the site-relative URL path. See :doc:`routing` for details.
 
 **ajax_response, path:<path>**
     Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will

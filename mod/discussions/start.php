@@ -12,6 +12,11 @@ function discussion_init() {
 
 	elgg_register_library('elgg:discussion', __DIR__ . '/lib/discussion.php');
 
+	elgg_register_menu_item('site', [
+		'name' => 'discussion',
+		'text' => elgg_echo('discussion'),
+		'href' => 'discussion/all',
+	]);
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'discussion_set_topic_url');
@@ -164,7 +169,7 @@ function discussion_redirect_to_reply($reply_guid, $fallback_guid) {
 		forward($fallback->getURL());
 	}
 
-	if (!$reply instanceof ElggDiscussionReply) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
 		$fail();
 	}
 
@@ -219,13 +224,10 @@ function discussion_set_topic_url($hook, $type, $url, $params) {
 		return "discussion/view/{$entity->guid}/{$title}";
 	}
 
-	if (!$entity instanceof ElggDiscussionReply) {
-		return;
+	if ($entity->getSubtype() === 'discussion_reply') {
+		$topic = $entity->getContainerEntity();
+		return "discussion/reply/view/{$entity->guid}/{$topic->guid}";
 	}
-
-	$topic = $entity->getContainerEntity();
-
-	return "discussion/reply/view/{$entity->guid}/{$topic->guid}";
 }
 
 /**
@@ -299,7 +301,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 			$return[] = ElggMenuItem::factory($options);
 		}
 	} else {
-		if (elgg_instanceof($object, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
+		if (elgg_instanceof($object, 'object', 'discussion_reply')) {
 			// Discussion replies cannot be commented
 			foreach ($return as $key => $item) {
 				if ($item->getName() === 'comment') {
@@ -381,7 +383,7 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 	$reply = $params['event']->getObject();
 
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
 		return $subscriptions;
 	}
 
@@ -415,7 +417,7 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
 	$reply = $params['entity'];
 	$user = $params['user'];
 
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
 		return $return;
 	}
 

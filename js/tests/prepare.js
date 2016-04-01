@@ -2,6 +2,10 @@
 
 var elgg = elgg || {};
 
+elgg.config = elgg.config || {};
+
+elgg.config.wwwroot = 'http://www.elgg.org/';
+
 define('elgg', function() {
 	return elgg;
 });

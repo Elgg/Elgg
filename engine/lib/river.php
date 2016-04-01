@@ -503,8 +503,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
  * @since 1.8.0
  */
 function elgg_list_river(array $options = array()) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'offset'     => (int) max(get_input('offset', 0), 0),
@@ -833,6 +832,12 @@ function _elgg_river_init() {
 	elgg_register_action('river/delete', '', 'admin');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
+
+	// For BC, we want required AMD modules to be loaded even if plugins
+	// overwrite these views
+	elgg_extend_view('core/river/filter', 'core/river/filter_deps');
+	elgg_extend_view('forms/comment/save', 'forms/comment/save_deps');
+	
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
