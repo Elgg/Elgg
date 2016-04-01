@@ -109,60 +109,10 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 
 	$guid = $file->save();
 
-	// if image, we need to create thumbnails (this should be moved into a function)
-	if ($guid && $file->simpletype == "image") {
-		$file->icontime = time();
-		
-		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60, 60, true);
-		if ($thumbnail) {
-			$thumb = new ElggFile();
-			$thumb->setMimeType($_FILES['upload']['type']);
-
-			$thumb->setFilename($prefix."thumb".$filestorename);
-			$thumb->open("write");
-			$thumb->write($thumbnail);
-			$thumb->close();
-
-			$file->thumbnail = $prefix."thumb".$filestorename;
-			unset($thumbnail);
-		}
-
-		$thumbsmall = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 153, 153, true);
-		if ($thumbsmall) {
-			$thumb->setFilename($prefix."smallthumb".$filestorename);
-			$thumb->open("write");
-			$thumb->write($thumbsmall);
-			$thumb->close();
-			$file->smallthumb = $prefix."smallthumb".$filestorename;
-			unset($thumbsmall);
-		}
-
-		$thumblarge = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 600, 600, false);
-		if ($thumblarge) {
-			$thumb->setFilename($prefix."largethumb".$filestorename);
-			$thumb->open("write");
-			$thumb->write($thumblarge);
-			$thumb->close();
-			$file->largethumb = $prefix."largethumb".$filestorename;
-			unset($thumblarge);
-		}
-	} elseif ($file->icontime) {
-		// if it is not an image, we do not need thumbnails
-		unset($file->icontime);
-		
-		$thumb = new ElggFile();
-		
-		$thumb->setFilename($prefix . "thumb" . $filestorename);
-		$thumb->delete();
-		unset($file->thumbnail);
-		
-		$thumb->setFilename($prefix . "smallthumb" . $filestorename);
-		$thumb->delete();
-		unset($file->smallthumb);
-		
-		$thumb->setFilename($prefix . "largethumb" . $filestorename);
-		$thumb->delete();
-		unset($file->largethumb);
+	if ($guid && $file->simpletype == 'image') {
+		elgg_create_thumbnails($file);
+	} else if ($file->icontime) {
+		elgg_clear_thumbnails($file);
 	}
 } else {
 	// not saving a file but still need to save the entity to push attributes to database

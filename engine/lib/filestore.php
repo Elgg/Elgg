@@ -465,19 +465,30 @@ function elgg_get_file_simple_type($mime_type) {
 }
 
 /**
- * Initialize the file library.
- * Listens to system init and configures the default filestore
+ * Listens to system init and configures the default filestore 
  *
  * @return void
  * @access private
  */
-function _elgg_filestore_init() {
+function _elgg_filestore_boot() {
+
 	global $CONFIG;
 
 	// Now register a default filestore
 	if (isset($CONFIG->dataroot)) {
 		$GLOBALS['DEFAULT_FILE_STORE'] = new \ElggDiskFilestore($CONFIG->dataroot);
 	}
+
+	elgg_register_plugin_hook_handler('route:rewrite', 'embed-file', '_elgg_filestore_rewrite_embed_file_route');
+}
+
+/**
+ * Initialize the file library.
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_filestore_init() {
 
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
@@ -598,7 +609,174 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = fa
 	return $file_svc->getURL();
 }
 
+/**
+ * Returns a file's URL suitable for embedding in a text editor
+ * We can not use elgg_get_inline_url() for these purposes due to a URL structure bound to user session and file modification time
+ * This function returns a generic (permanent) URL that will then be resolved to an inline URL whenever requested.
+ * 
+ * @param \ElggFile $file File entity (must have a guid)
+ * @param string    $size Thumnail size
+ * @return string
+ * @since 2.2
+ */
+function elgg_get_embed_url(\ElggFile $file, $size) {
+	return "embed-file/$file->guid/$size";
+}
+
+/**
+ * Create thumbnails for an image file
+ *
+ * @param \ElggFile $file File entity
+ * @return bool
+ */
+function elgg_create_thumbnails(\ElggFile $file) {
+
+	$prefix = 'file/';
+	$filestorename = elgg_substr($file->getFilename(), elgg_strlen($prefix));
+	
+	$sizes = [
+		'small' => [
+			'w' => 60,
+			'square' => true,
+			'metadata_name' => 'thumbnail',
+			'filename_prefix' => 'thumb',
+		],
+		'medium' => [
+			'w' => 153,
+			'square' => true,
+			'metadata_name' => 'smallthumb',
+			'filename_prefix' => 'smallthumb',
+		],
+		'large' => [
+			'w' => 600,
+			'square' => false,
+			'metadata_name' => 'largethumb',
+			'filename_prefix' => 'largethumb',
+		],
+	];
+
+	foreach ($sizes as $size => $opts) {
+		$metadata_name = $opts['metadata_name'];
+		$filename_prefix = $opts['filename_prefix'];
+		$width = $opts['w'];
+		$square = $opts['square'];
+		if (!isset($file->$metadata_name)) {
+			$file->$metadata_name = $prefix . $filename_prefix . $filestorename;
+		}
+		$thumb = elgg_get_thumbnail($file, $size);
+		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $width, $width, $square);
+		if ($thumbnail) {
+			$thumb->open("write");
+			$thumb->write($thumbnail);
+			$thumb->close();
+			unset($thumbnail);
+		} else {
+			elgg_clear_thumbnails($file);
+			return false;
+		}
+	}
+	
+	$file->icontime = time();
+	return true;
+
+}
+
+	/**
+ * Clear file entity's thumbnails
+ *
+ * @param \ElggFile $file File entity
+ * @return void
+ */
+function elgg_clear_thumbnails(\ElggFile $file) {
+
+	foreach (['small', 'medium', 'large'] as $size) {
+		$thumb = elgg_get_thumbnail($file, $size);
+		$thumb->delete();
+	}
+
+	unset($file->icontime);
+	unset($file->thumbnail);
+	unset($file->smallthumb);
+	unset($file->largethumb);
+}
+
+/**
+ * Returns a file that represents file entity's thumbnail on filestore
+ * 
+ * @param \ElggFile $file File entity (must have a guid)
+ * @param string    $size Thumnail size
+ * @return \ElggFile
+ * @since 2.2
+ */
+function elgg_get_thumbnail(\ElggFile $file, $size = 'medium') {
+
+	switch ($size) {
+		case "small":
+			$thumbfile = $file->thumbnail;
+			break;
+		case "medium":
+			$thumbfile = $file->smallthumb;
+			break;
+		case "large":
+		default:
+			$thumbfile = $file->largethumb;
+			break;
+	}
+
+	$thumbnail = new \ElggFile();
+	$thumbnail->owner_guid = $file->owner_guid;
+	$thumbnail->setFilename($thumbfile);
+
+	return $thumbnail;
+}
+
+/**
+ * Rewrites embed-file URL to an inline URL of the file thumbnail
+ * 
+ * @param string  $hook   "route:rewrite"
+ * @param sttring $type   "embed-file"
+ * @param array   $return Identifier and segments
+ * @param array   $params Hook params
+ * @return array
+ * @access private
+ * @since 2.2
+ */
+function _elgg_filestore_rewrite_embed_file_route($hook, $type, $return, $params) {
+
+	$segments = elgg_extract('segments', $return);
+	$guid = array_shift($segments);
+	$size = array_shift($segments) ? : 'medium';
+
+	$file = get_entity($guid);
+	if (!$file instanceof ElggFile) {
+		return;
+	}
+
+	$thumb = elgg_get_thumbnail($file, $size);
+	if (!$thumb instanceof \ElggFile) {
+		return;
+	}
+
+	$thumb_url = elgg_get_inline_url($thumb, true);
+	if (!$thumb_url) {
+		return;
+	}
+
+	forward($thumb_url);
+	
+//	$site_url = elgg_get_site_url();
+//	$thumb_url = elgg_substr($thumb_url, elgg_strlen($site_url));
+//
+//	$new_segments = explode('/', $thumb_url);
+//	$new_identifier = array_shift($new_segments);
+//
+//	return [
+//		'identifier' => $new_identifier,
+//		'segments' => $new_segments,
+//	];
+}
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('boot', 'system', '_elgg_filestore_boot');
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
 };
