@@ -352,6 +352,11 @@ Files
     ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
     ``ege*`` filters and menus.
 
+**create_thumbnails, file**
+    Triggered by ``elgg_create_thumbnails()`` and can be used by plugins to generate thumbnails for non-image
+    file types (e.g. by extracting a video frame using ``ffmpeg`` or processing an additional form input).
+    The handler must return ``true`` if custom thubmnails were generated.
+
 .. _guides/hooks-list#other:
 
 Other

@@ -375,29 +375,13 @@ function file_set_url($hook, $type, $url, $params) {
 function file_set_icon_url($hook, $type, $url, $params) {
 	$file = $params['entity'];
 	$size = $params['size'];
+
 	if (elgg_instanceof($file, 'object', 'file')) {
 		// thumbnails get first priority
-		if ($file->thumbnail) {
-			switch ($size) {
-				case "small":
-					$thumbfile = $file->thumbnail;
-					break;
-				case "medium":
-					$thumbfile = $file->smallthumb;
-					break;
-				case "large":
-				default:
-					$thumbfile = $file->largethumb;
-					break;
-			}
-
-			$readfile = new ElggFile();
-			$readfile->owner_guid = $file->owner_guid;
-			$readfile->setFilename($thumbfile);
-			$thumb_url = elgg_get_inline_url($readfile, true);
-			if ($thumb_url) {
-				return $thumb_url;
-			}
+		$thumbnail = elgg_get_thumbnail($file, $size);
+		$thumb_url = elgg_get_inline_url($thumbnail, true);
+		if ($thumb_url) {
+			return $thumb_url;
 		}
 
 		$mapping = array(
@@ -469,19 +453,13 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 		return;
 	}
 
-	$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
-	foreach ($thumbnails as $thumbnail) {
-		if ($thumbnail) {
-			$delfile = new ElggFile();
-			$delfile->owner_guid = $file->owner_guid;
-			$delfile->setFilename($thumbnail);
-			$delfile->delete();
-		}
-	}
+	elgg_clear_thumbnails($file);
 }
 
 /**
  * Reset file thumb URLs if file access_id has changed
+ *
+ * @todo Update to use ElggFile::setModifiedTime() once #9581 is merge
  * 
  * @param string     $event "update:after"
  * @param string     $type  "object"
@@ -502,15 +480,11 @@ function file_reset_icon_urls($event, $type, ElggObject $file) {
 	// we touch the file to invalidate any previously generated download URLs
 	touch($file->getFilenameOnFilestore());
 
-	// we touch the thumbs because we want new URLs from \Elgg\FileService\File::getURL
-	$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
-	foreach ($thumbnails as $thumbnail) {
-		$thumbfile = new ElggFile();
-		$thumbfile->owner_guid = $file->owner_guid;
-		$thumbfile->setFilename($thumbnail);
-		if ($thumbfile->exists()) {
-			$thumb_filename = $thumbfile->getFilenameOnFilestore();
-			touch($thumb_filename);
+	$sizes = elgg_get_thumbnail_sizes($file);
+	foreach ($sizes as $size => $opts) {
+		$thumb = elgg_get_thumbnail($file, $size);
+		if ($thumb->exists()) {
+			touch($thumb->getFilenameOnFilestore());
 		}
 	}
 }

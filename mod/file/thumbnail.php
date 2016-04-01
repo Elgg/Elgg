@@ -15,43 +15,18 @@ require_once "$autoload_root/vendor/autoload.php";
 
 elgg_deprecated_notice('mod/file/thumbnail.php is no longer in use and will be removed. Do not include or require it. Use elgg_get_inline_url() instead.', '2.2');
 
-// Get file GUID
-$file_guid = (int) get_input('file_guid', 0);
+$file_guid = get_input('file_guid');
+elgg_entity_gatekeeper($file_guid);
 
 // Get file thumbnail size
 $size = get_input('size', 'small');
-
 $file = get_entity($file_guid);
 
-$thumb_url = false;
-
-// thumbnails get first priority
-if ($file && $file->thumbnail) {
-
-	switch ($size) {
-		case "small":
-			$thumbfile = $file->thumbnail;
-			break;
-		case "medium":
-			$thumbfile = $file->smallthumb;
-			break;
-		case "large":
-		default:
-			$thumbfile = $file->largethumb;
-			break;
-	}
-
-	if (!empty($thumbfile)) {
-		$readfile = new ElggFile();
-		$readfile->owner_guid = $file->owner_guid;
-		$readfile->setFilename($thumbfile);
-		$thumb_url = elgg_get_inline_url($readfile, true);
-	}
-}
+$thumbnail = elgg_get_thumbnail($file, $size);
+$thumb_url = elgg_get_inline_url($thumbnail, true);
 
 if ($thumb_url) {
 	forward($thumb_url);
 }
 
-header('HTTP/1.1 404 Not found');
-exit;
+forward('', '404');

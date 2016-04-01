@@ -18,6 +18,10 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.File
+ *
+ * @property string $thumbnail  Path to small thumbnail relative to file owner's filestore directory
+ * @property string $smallthumb Path to medium thumbnail relative to file owner\'s filestore directory
+ * @property string $largethumb Path to large/master thumbnail relative to file owner\'s filestore diretory
  */
 class ElggFile extends \ElggObject {
 

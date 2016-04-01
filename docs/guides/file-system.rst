@@ -97,3 +97,22 @@ that access settings are respected and users do not share download URLs with som
 
 You can also invalidated all previously generated URLs by updating file's modified time, e.g.
 by using ``touch()``.
+
+
+File entity icons
+-----------------
+
+File entity icons use custom icon sizes and do not abide by site-wide `icon_sizes` configuration array.
+You can access custom sizes using ``elgg_get_thumbnail_sizes()``, note that in addition to standard
+``w``, ``h``, ``square`` parameters, this array contains ``metadata_name`` and ``filename_prefix`` parameters.
+``metadata_name`` value is added to the file entity to store relative path to the thumbnail of a given size
+from file entity owner's filestore directory. ``filename_prefix`` is used to prefix thumbnail's filename to
+distinguish it from other thumbnails (for legacy reasons they are stored in the same directory as the file entity's
+source file).
+
+Additional APIs to consider when working with file thumbnails:
+
+ * ``elgg_create_thumbnails()`` is used to generate thumbnails for an image file
+ * ``elgg_clear_thumbnails()`` is used to clear file thumbnails
+ * ``elgg_get_thumbnail()`` returns an ``ElggFile`` object that represents a thumbnail on filestore
+   (this maybe just a placeholder, use ``ElggFile::exists()`` to verify that an actual thumbnail has been created)

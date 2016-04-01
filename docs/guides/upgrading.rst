@@ -28,6 +28,14 @@ Added ``elgg/popup`` module
 
 New :doc:`elgg/popup module <javascript>` can be used to build out more complex trigger-popup interactions, including binding custom anchor types and opening/closing popups programmatically.
 
+Added API for working with file entity thumbnails
+-------------------------------------------------
+
+ * ``elgg_get_thumbnail_sizes()`` - returns configuration array for file thumbnails
+ * ``elgg_get_thumbnail()`` - returns file entity thumbnail as an ``ElggFile`` object
+ * ``elgg_create_thumbnails()`` - generates thumbnails for file entities
+ * ``elgg_clear_thumbnails()`` - clears file entity thumbnails
+
 From 2.0 to 2.1
 ===============
 
