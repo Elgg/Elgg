@@ -192,7 +192,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('iconService', function(ServiceProvider $c) {
-			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger);
+			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable);
 		});
 
 		$this->setClassName('input', \Elgg\Http\Input::class);
