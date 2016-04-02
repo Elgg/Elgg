@@ -17,6 +17,7 @@ Deprecated APIs
 
  * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
  * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
+ * ``elgg.discussion.init()`` and ``elgg.discussion.Reply`` constructor: Use ``elgg/discussion`` and ``elgg/DiscussionReply`` AMD modules accordingly
 
 Deprecated Views
 ----------------
