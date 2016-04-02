@@ -116,6 +116,8 @@ function groups_init() {
 	// Help core resolve page owner guids from group routes
 	// Registered with an earlier priority to be called before default_page_owner_handler()
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
+
+	elgg_require_for_view('groups/edit', 'elgg/groups/edit');
 }
 
 /**

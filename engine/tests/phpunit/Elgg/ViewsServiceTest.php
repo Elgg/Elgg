@@ -175,5 +175,18 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 			['view.jpg', 'css/view.jpg'],
 		];
 	}
+
+	public function testRequiredModuleIsLoadedOnViewRendering() {
+		$this->views->addDep('foo', 'static');
+		$this->views->renderView('foo');
+		$this->assertTrue(in_array('static', _elgg_services()->amdConfig->getDependencies()));
+	}
+
+	public function testCanUnrequireModuleForView() {
+		$this->views->addDep('foo', 'interpreted');
+		$this->views->removeDep('foo', 'interpreted');
+		$this->views->renderView('foo');
+		$this->assertFalse(in_array('interpreted', _elgg_services()->amdConfig->getDependencies()));
+	}
 }
 

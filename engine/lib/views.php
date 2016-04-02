@@ -399,6 +399,30 @@ function elgg_unextend_view($view, $view_extension) {
 }
 
 /**
+ * Registers an AMD module as a view dependency
+ * 
+ * @param string $view   View name
+ * @param string $module AMD module name
+ * @return void
+ * @since 2.2
+ */
+function elgg_require_for_view($view, $module) {
+	return _elgg_services()->views->addDep($view, $module);
+}
+
+/**
+ * Unregister an AMD module from view dependencies
+ *
+ * @param string $view   View name
+ * @param string $module AMD module name
+ * @return bool
+ * @since 2.2
+ */
+function elgg_unrequire_for_view($view, $module) {
+	return _elgg_services()->views->removeDep($view, $module);
+}
+
+/**
  * Assembles and outputs a full page.
  *
  * A "page" in Elgg is determined by the current view type and

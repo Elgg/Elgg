@@ -140,8 +140,6 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
  */
 function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 
-	elgg_require_js('elgg/blog/save_draft');
-
 	$return = array(
 		'filter' => '',
 	);
@@ -179,8 +177,6 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
 			elgg_push_breadcrumb(elgg_echo('edit'));
 			
-			elgg_require_js('elgg/blog/save_draft');
-
 			$content = elgg_view_form('blog/save', $vars, $body_vars);
 			$sidebar = elgg_view('blog/sidebar/revisions', $vars);
 		} else {
