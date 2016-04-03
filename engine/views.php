@@ -42,5 +42,8 @@ return [
 		"jquery.jeditable.js" => dirname(__DIR__) . "/bower_components/jquery-jeditable/jquery.jeditable.js",
 		"jquery.ui.autocomplete.html.js" => dirname(__DIR__) . "/bower_components/jquery-ui-extensions/src/autocomplete/jquery.ui.autocomplete.html.js",
 		"sprintf.js" => dirname(__DIR__) . "/bower_components/sprintf/src/sprintf.js",
+
+		'colorbox.css' => dirname(__DIR__) . "/views/default/lightbox/elgg-colorbox-theme/colorbox.css",
+		'colorbox-images/' => dirname(__DIR__) . "/views/default/lightbox/elgg-colorbox-theme/colorbox-images",
 	],
 ];
