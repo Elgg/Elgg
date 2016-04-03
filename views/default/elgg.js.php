@@ -25,7 +25,7 @@ echo elgg_view('sprintf.js');
 // @todo: remove in 3.x and use async calls
 echo elgg_view('elgg/widgets.js');
 
-// We use a named AMD module and inine it here in order to save HTTP requests, 
+// We use a named AMD module and inine it here in order to save HTTP requests,
 // as this module will be required on each page
 echo elgg_view('elgg/popup.js');
 
@@ -111,3 +111,15 @@ if (!window._require_queue) {
 elgg.trigger_hook('boot', 'system');
 
 require(['elgg/init', 'elgg/ready']);
+
+<?php
+if (_elgg_view_may_be_altered('lightbox/settings.js', 'lightbox/settings.js.php')) {
+	elgg_deprecated_notice('lightbox/settings.js view has been deprecated. Use "getOptions", "ui.lightbox" JS plugin hook or data-colorbox-opts attribute instead', '2.2');
+	?>
+	require(['elgg'], function(elgg) {
+		elgg.provide('elgg.ui.lightbox');
+		<?= elgg_view('lightbox/settings.js') ?>
+	});
+	<?php
+}
+?>
