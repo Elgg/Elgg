@@ -424,7 +424,7 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			'video' => 'video',
 		);
 
-		$mime = $file->mimetype;
+		$mime = $file->getMimeType();
 		if ($mime) {
 			$base_type = substr($mime, 0, strpos($mime, '/'));
 		} else {

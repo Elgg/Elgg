@@ -18,6 +18,9 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.File
+ *
+ * @property string $mimetype   MIME type of the file
+ * @property string $simpletype Category of the file
  */
 class ElggFile extends \ElggObject {
 
@@ -111,22 +114,20 @@ class ElggFile extends \ElggObject {
 
 	/**
 	 * Get the mime type of the file.
-	 *
+	 * Returns mimetype metadata value if set, otherwise attempts to detect it.
 	 * @return string
 	 */
 	public function getMimeType() {
 		if ($this->mimetype) {
 			return $this->mimetype;
 		}
-
-		// @todo Guess mimetype if not here
+		return $this->detectMimeType();
 	}
 
 	/**
 	 * Set the mime type of the file.
 	 *
 	 * @param string $mimetype The mimetype
-	 *
 	 * @return bool
 	 */
 	public function setMimeType($mimetype) {
@@ -169,6 +170,21 @@ class ElggFile extends \ElggObject {
 			'default' => $default,
 		);
 		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);
+	}
+
+	/**
+	 * Get the simple type of the file.
+	 * Returns simpletype metadata value if set, otherwise parses it from mimetype
+	 * @see elgg_get_file_simple_type
+	 *
+	 * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
+	 */
+	public function getSimpleType() {
+		if (isset($this->simpletype)) {
+			return $this->simpletype;
+		}
+		$mime_type = $this->getMimeType();
+		return elgg_get_file_simple_type($mime_type);
 	}
 
 	/**
@@ -465,7 +481,7 @@ class ElggFile extends \ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function save() {
+	public function save() {	
 		if (!parent::save()) {
 			return false;
 		}
