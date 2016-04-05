@@ -76,7 +76,9 @@ class BootService {
 			$CONFIG->boot_cache_ttl = 0;
 		}
 
-		$CONFIG->dataroot = rtrim($datalists['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
+		if (!$GLOBALS['_ELGG']->dataroot_in_settings) {
+			$CONFIG->dataroot = rtrim($datalists['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
+		}
 		$CONFIG->site_guid = (int)$datalists['default_site'];
 		$CONFIG->site_id = (int)$datalists['default_site'];
 		if (!isset($CONFIG->boot_cache_ttl)) {
