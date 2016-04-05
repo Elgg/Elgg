@@ -16,7 +16,8 @@ elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
 function groups_init() {
 
 	elgg_register_library('elgg:groups', __DIR__ . '/lib/groups.php');
-
+	elgg_load_library('elgg:groups');
+	
 	// register group entities for search
 	elgg_register_entity_type('group', '');
 
@@ -241,8 +242,6 @@ function groups_setup_sidebar_menus() {
  * @return bool
  */
 function groups_page_handler($page) {
-
-	elgg_load_library('elgg:groups');
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';

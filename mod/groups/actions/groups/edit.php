@@ -93,8 +93,9 @@ if (!$group->name) {
 	forward(REFERER);
 }
 
-// Set group tool options
-$tool_options = elgg_get_config('group_tool_options');
+// Set group tool options (only pass along saved entities)
+$tool_entity = !$is_new_group ? $group : null;
+$tool_options = groups_get_group_tool_options($tool_entity);
 if ($tool_options) {
 	foreach ($tool_options as $group_option) {
 		$option_toggle_name = $group_option->name . "_enable";
