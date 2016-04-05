@@ -22,45 +22,15 @@
  * -------------------------------------
  * In a plugin, override this view and override the registration for the
  * lightbox JavaScript and CSS (@see elgg_views_boot()).
+ *
+ * @deprecated 2.2
  */
 ?>
 //<script>
 
-	require(['elgg', 'jquery'], function (elgg, $) {
+	require(['elgg'], function (elgg) {
 
-		function init() {
-			require(['elgg/lightbox'], function (lightbox) {
-
-				lightbox.bind(".elgg-lightbox");
-				lightbox.bind(".elgg-lightbox-photo", {photo: true});
-				lightbox.bind(".elgg-lightbox-inline", {inline: true});
-				lightbox.bind(".elgg-lightbox-iframe", {iframe: true});
-
-				function registerDeprecationError() {
-					elgg.register_error("fancybox lightbox has been replaced by colorbox", 9999999999999);
-				}
-
-				if (typeof $.fancybox === 'undefined') {
-					$.fancybox = {
-						// error message for firefox users
-						__noSuchMethod__: registerDeprecationError,
-						close: function () {
-							registerDeprecationError();
-							$.colorbox.close();
-						}
-					};
-					// support $().fancybox({type:'image'})
-					$.fn.fancybox = function (arg) {
-						registerDeprecationError();
-						if (arg.type === 'image') {
-							arg.photo = true;
-						}
-						this.colorbox(arg);
-						return this;
-					};
-				}
-			});
-		};
+		elgg.deprecated_notice('lightbox.js library has been deprecated. Avoid using elgg_load_js("lightbox.js"), use elgg/lightbox AMD module instead');
 
 		elgg.provide('elgg.ui.lightbox');
 
@@ -69,23 +39,23 @@
 		}
 
 		/**
+		 * Lightbox initialization
+		 * @deprecated 2.2
+		 */
+		elgg.ui.lightbox.init = function () {
+			elgg.deprecated_notice('elgg.ui.lightbox.init() has been deprecated and should not be called directly. Lightbox is initialized automatically in elgg AMD module', '2.2');
+		};
+
+		/**
 		 * Lightbox settings
 		 * @deprecated 2.2
 		 */
 		elgg.ui.lightbox.getSettings = function () {
 			elgg.deprecated_notice('elgg.ui.lightbox.getSettings() has been deprecated and should not be called directly. Use elgg/lightbox AMD module intsead', '2.2');
 			var lightbox = require('elgg/lightbox');
-			return lightbox.getOptions();
+			return lightbox.getOptions.apply(this, arguments);
 		};
 
-		/**
-		 * Lightbox initialization
-		 * @deprecated 2.2
-		 */
-		elgg.ui.lightbox.init = function () {
-			elgg.deprecated_notice('elgg.ui.lightbox.init() has been deprecated and should not be called directly. Use elgg/lightbox AMD module intsead', '2.2');
-			init();
-		};
 		/**
 		 * Bind colorbox lightbox click to HTML
 		 * @deprecated 2.2
@@ -93,7 +63,7 @@
 		elgg.ui.lightbox.bind = function () {
 			elgg.deprecated_notice('elgg.ui.lightbox.bind() has been deprecated. Use elgg/lightbox AMD module intsead', '2.2');
 			require(['elgg/lightbox'], function (lightbox) {
-				lightbox.bind.apply(this, arguments);
+				return lightbox.bind.apply(this, arguments);
 			});
 		};
 		/**
@@ -103,9 +73,7 @@
 		elgg.ui.lightbox.close = function () {
 			elgg.deprecated_notice('elgg.ui.lightbox.close() has been deprecated. Use elgg/lightbox AMD module intsead', '2.2');
 			require(['elgg/lightbox'], function (lightbox) {
-				lightbox.close.apply(this, arguments);
+				return lightbox.close.apply(this, arguments);
 			});
 		};
-
-		require(['elgg/init'], init);
 	});

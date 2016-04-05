@@ -17,7 +17,8 @@ Deprecated APIs
 
  * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
  * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
- * All methods in ``elgg.ui.lightbox`` JS library: Use ``elgg/lightbox`` AMD module instead.
+ * ``lightbox.js`` library: Do not use ``elgg_load_js('lightbox.js');`` unless your code references deprecated ``elgg.ui.lightbox`` namespace. Use ``elgg/lightbox`` AMD module instead.
+ * ``lightbox.css`` library: Lightbox CSS now extends ``elgg.css``. Calls to ``elgg_require_css('lightbox.css')`` have no effect.
 
 Deprecated Views
 ----------------
@@ -33,7 +34,7 @@ New :doc:`elgg/popup module <javascript>` can be used to build out more complex 
 Added ``elgg/lightbox`` module
 ------------------------------
 
-New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically. Note that you should continue using ``elgg_load_js('lightbox')`` and ``elgg_load_css('lightbox')`` to bind clicks to ``.elgg-lightbox`` and to load the CSS.
+New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
 
 From 2.0 to 2.1
 ===============

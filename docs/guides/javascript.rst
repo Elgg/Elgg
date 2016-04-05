@@ -554,8 +554,6 @@ Use the following classes to bind your anchor elements to a lightbox:
  * ``elgg-lightbox-inline`` - displays an inline HTML element in a lightbox
  * ``elgg-lightbox-iframe`` - loads a resource in an ``iframe``
 
-.. note:: For performance reasons lightbox bindings are not performed automatically. You need to use ``elgg_load_js('lightbox')`` and ``elgg_load_css('lightbox')`` to load required assets.
-
 You may apply colorbox options to an individual ``elgg-lightbox`` element by setting the attribute ``data-colorbox-opts`` to a JSON settings object.
 
 .. code:: php
@@ -569,7 +567,7 @@ You may apply colorbox options to an individual ``elgg-lightbox`` element by set
       ])
    ]);
 
-Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened.
+Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened. Note that the hook handler should depend on ``elgg/init`` AMD module.
 
 ``elgg/lightbox`` AMD module should be used to open and close the lightbox programmatically:
 
@@ -591,8 +589,6 @@ Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.
          }
       });
    });
-
-.. note:: At this time, you should not rely on lightbox CSS to be loaded when you require the lightbox module. Use ``elgg_load_css('lightbox')``.
 
 To support gallery sets (via ``rel`` attribute), you need to bind colorbox directly to a specific selector (note that this will ignore ``data-colorbox-opts`` on all elements in a set):
 

@@ -1,16 +1,11 @@
 /**
  * Lightbox module
- *
- * @note You will need to load the lightbox CSS manually using elgg_load_css('lightbox');
+ * We use a named module and inline it in elgg.js. This allows us to deprecate the old
+ * elgg.ui.lightbox library.
  * 
  * @module elgg/lightbox
  */
-define(function (require) {
-
-	var elgg = require('elgg');
-	require('elgg/init');
-	var $ = require('jquery');
-	require('jquery.colorbox');
+define('elgg/lightbox', ['elgg', 'jquery', 'elgg/init'], function (elgg, $) {
 
 	var lightbox = {
 		/**
@@ -35,7 +30,6 @@ define(function (require) {
 				// don't move colorbox on small viewports https://github.com/Elgg/Elgg/issues/5312
 				reposition: $(window).height() > 600
 			};
-
 			elgg.provide('elgg.ui.lightbox');
 			if ($.isPlainObject(elgg.ui.lightbox.deprecated_settings)) {
 				$.extend(settings, elgg.ui.lightbox.deprecated_settings, opts);
@@ -44,7 +38,6 @@ define(function (require) {
 			}
 
 			return elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
-
 		},
 		/**
 		 * Bind colorbox lightbox click to HTML
@@ -59,9 +52,13 @@ define(function (require) {
 				opts = {};
 			}
 
+			console.log(use_element_data);
+
 			// Allow direct binding to allow grouping by rel attribute
 			if (use_element_data === false) {
-				$(selector).colorbox(lightbox.getOptions(opts));
+				require(['jquery.colorbox'], function () {
+					$(selector).colorbox(lightbox.getOptions(opts));
+				});
 				return;
 			}
 
@@ -72,7 +69,6 @@ define(function (require) {
 								href = $this.prop('href') || $this.prop('src'),
 								// Note: data-colorbox was reserved https://github.com/jackmoore/colorbox/issues/435
 								dataOpts = $this.data('colorboxOpts');
-
 						if (!$.isPlainObject(dataOpts)) {
 							dataOpts = {};
 						}
@@ -83,7 +79,6 @@ define(function (require) {
 
 						// merge data- options into opts
 						$.extend(opts, dataOpts);
-
 						if (opts.inline && opts.href) {
 							opts.href = elgg.getSelectorFromUrlFragment(opts.href);
 						}
@@ -93,21 +88,24 @@ define(function (require) {
 		},
 		/**
 		 * Open the colorbox
-		 * 
+		 *
 		 * @param {object} opts Colorbox options
 		 * @return void
 		 */
 		open: function (opts) {
-			$.colorbox(lightbox.getOptions(opts));
+			require(['jquery.colorbox'], function () {
+				$.colorbox(lightbox.getOptions(opts));
+			});
 		},
 		/**
 		 * Close the colorbox
 		 * @return void
 		 */
 		close: function () {
-			$.colorbox.close();
+			require(['jquery.colorbox'], function () {
+				$.colorbox.close();
+			});
 		}
 	};
-
 	return lightbox;
 });

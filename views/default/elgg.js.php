@@ -2,8 +2,6 @@
 /**
  * Core Elgg JavaScript file
  */
-
-use Elgg\Filesystem\Directory;
  
 global $CONFIG;
 
@@ -25,9 +23,11 @@ echo elgg_view('sprintf.js');
 // @todo: remove in 3.x and use async calls
 echo elgg_view('elgg/widgets.js');
 
-// We use a named AMD module and inine it here in order to save HTTP requests,
-// as this module will be required on each page
+// We use named AMD modules and inine them here in order to save HTTP requests,
+// as these modules will be required on each page
 echo elgg_view('elgg/popup.js');
+echo elgg_view('elgg/lightbox.js');
+echo elgg_view('elgg/ui/lightbox.js');
 
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
@@ -123,3 +123,6 @@ if (_elgg_view_may_be_altered('lightbox/settings.js', 'lightbox/settings.js.php'
 	<?php
 }
 ?>
+
+// UI initialization and binding scripts
+require(['elgg/ui/lightbox']);
