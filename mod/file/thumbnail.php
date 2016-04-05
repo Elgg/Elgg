@@ -18,6 +18,7 @@ $file = get_entity($file_guid);
 if (!elgg_instanceof($file, 'object', 'file')) {
 	exit;
 }
+/* @var ElggFile $file */
 
 $simpletype = $file->simpletype;
 if ($simpletype == "image") {
@@ -41,7 +42,10 @@ if ($simpletype == "image") {
 		$readfile = new ElggFile();
 		$readfile->owner_guid = $file->owner_guid;
 		$readfile->setFilename($thumbfile);
-		$mime = $file->getMimeType();
+		$mime = $readfile->detectMimeType();
+		if ($mime === 'application/octet-stream') {
+			$mime = 'image/jpeg';
+		}
 		$contents = $readfile->grabFile();
 
 		// caching images for 10 days

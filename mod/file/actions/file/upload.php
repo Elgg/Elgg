@@ -81,18 +81,14 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	$prefix = "file/";
 
 	// if previous file, delete it
-	if ($new_file == false) {
+	if (!$new_file) {
 		$filename = $file->getFilenameOnFilestore();
 		if (file_exists($filename)) {
 			unlink($filename);
 		}
-
-		// use same filename on the disk - ensures thumbnails are overwritten
-		$filestorename = $file->getFilename();
-		$filestorename = elgg_substr($filestorename, elgg_strlen($prefix));
-	} else {
-		$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
 	}
+
+	$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
 
 	$file->setFilename($prefix . $filestorename);
 	$file->originalfilename = $_FILES['upload']['name'];
@@ -108,61 +104,76 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 
 	$guid = $file->save();
 
-	// if image, we need to create thumbnails (this should be moved into a function)
+	$thumb = new ElggFile();
+	$thumb->owner_guid = $file->owner_guid;
+
+	$sizes = [
+		'small' => [
+			'w' => 60,
+			'h' => 60,
+			'square' => true,
+			'metadata_name' => 'thumbnail',
+			'filename_prefix' => 'thumb',
+		],
+		'medium' => [
+			'w' => 153,
+			'h' => 153,
+			'square' => true,
+			'metadata_name' => 'smallthumb',
+			'filename_prefix' => 'smallthumb',
+		],
+		'large' => [
+			'w' => 600,
+			'h' => 600,
+			'square' => false,
+			'metadata_name' => 'largethumb',
+			'filename_prefix' => 'largethumb',
+		],
+	];
+
+	$remove_thumbs = function () use ($file, $sizes, $thumb) {
+		if (!$file->guid) {
+			return;
+		}
+
+		unset($file->icontime);
+
+		foreach ($sizes as $size => $data) {
+			$filename = $file->{$data['metadata_name']};
+			if ($filename !== null) {
+				$thumb->setFilename($filename);
+				$thumb->delete();
+				unset($file->{$data['metadata_name']});
+			}
+		}
+	};
+
+	$remove_thumbs();
+
+	$jpg_filename = pathinfo($filestorename, PATHINFO_FILENAME) . '.jpg';
+
 	if ($guid && $file->simpletype == "image") {
 		$file->icontime = time();
-		
-		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60, 60, true);
-		if ($thumbnail) {
-			$thumb = new ElggFile();
-			$thumb->setMimeType($_FILES['upload']['type']);
 
-			$thumb->setFilename($prefix."thumb".$filestorename);
+		foreach ($sizes as $size => $data) {
+			$image_bytes = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $data['w'], $data['h'], $data['square']);
+			if (!$image_bytes) {
+				// bail and remove any thumbs
+				$remove_thumbs();
+				break;
+			}
+
+			$filename = "{$prefix}{$data['filename_prefix']}{$jpg_filename}";
+			$thumb->setFilename($filename);
 			$thumb->open("write");
-			$thumb->write($thumbnail);
+			$thumb->write($image_bytes);
 			$thumb->close();
+			unset($image_bytes);
 
-			$file->thumbnail = $prefix."thumb".$filestorename;
-			unset($thumbnail);
+			$file->{$data['metadata_name']} = $filename;
 		}
-
-		$thumbsmall = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 153, 153, true);
-		if ($thumbsmall) {
-			$thumb->setFilename($prefix."smallthumb".$filestorename);
-			$thumb->open("write");
-			$thumb->write($thumbsmall);
-			$thumb->close();
-			$file->smallthumb = $prefix."smallthumb".$filestorename;
-			unset($thumbsmall);
-		}
-
-		$thumblarge = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 600, 600, false);
-		if ($thumblarge) {
-			$thumb->setFilename($prefix."largethumb".$filestorename);
-			$thumb->open("write");
-			$thumb->write($thumblarge);
-			$thumb->close();
-			$file->largethumb = $prefix."largethumb".$filestorename;
-			unset($thumblarge);
-		}
-	} elseif ($file->icontime) {
-		// if it is not an image, we do not need thumbnails
-		unset($file->icontime);
-		
-		$thumb = new ElggFile();
-		
-		$thumb->setFilename($prefix . "thumb" . $filestorename);
-		$thumb->delete();
-		unset($file->thumbnail);
-		
-		$thumb->setFilename($prefix . "smallthumb" . $filestorename);
-		$thumb->delete();
-		unset($file->smallthumb);
-		
-		$thumb->setFilename($prefix . "largethumb" . $filestorename);
-		$thumb->delete();
-		unset($file->largethumb);
 	}
+
 } else {
 	// not saving a file but still need to save the entity to push attributes to database
 	$file->save();
