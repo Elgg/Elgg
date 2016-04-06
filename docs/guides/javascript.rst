@@ -542,6 +542,66 @@ Plugins that load a widget layout via Ajax should initialize via this module:
        widgets.init();
    });
 
+Module ``elgg/lightbox``
+------------------------
+
+Elgg is distributed with the Colorbox jQuery library. Please go to http://www.jacklmoore.com/colorbox for more information on the options of this lightbox.
+
+Use the following classes to bind your anchor elements to a lightbox:
+
+ * ``elgg-lightbox`` - loads an HTML resource
+ * ``elgg-lightbox-photo`` - loads an image resource (should be used to avoid displaying raw image bytes instead of an ``img`` tag)
+ * ``elgg-lightbox-inline`` - displays an inline HTML element in a lightbox
+ * ``elgg-lightbox-iframe`` - loads a resource in an ``iframe``
+
+You may apply colorbox options to an individual ``elgg-lightbox`` element by setting the attribute ``data-colorbox-opts`` to a JSON settings object.
+
+.. code:: php
+
+   echo elgg_view('output/url', [
+      'text' => 'Open lightbox',
+      'href' => 'ajax/view/my_view',
+      'class' => 'elgg-lightbox',
+      'data-colorbox-opts' => json_encode([
+         'width' => '300px',
+      ])
+   ]);
+
+Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened. Note that the hook handler should depend on ``elgg/init`` AMD module.
+
+``elgg/lightbox`` AMD module should be used to open and close the lightbox programmatically:
+
+.. code:: js
+
+   define(function(require) {
+      var lightbox = require('elgg/lightbox');
+      var spinner = require('elgg/spinner');
+
+      lightbox.open({
+         html: '<p>Hello world!</p>',
+         onClosed: function() {
+            lightbox.open({
+               onLoad: spinner.start,
+               onComplete: spinner.stop,
+               photo: true,
+               href: 'https://elgg.org/cache/1457904417/default/community_theme/graphics/logo.png',
+            });
+         }
+      });
+   });
+
+To support gallery sets (via ``rel`` attribute), you need to bind colorbox directly to a specific selector (note that this will ignore ``data-colorbox-opts`` on all elements in a set):
+
+.. code:: js
+
+   require(['elgg/lightbox'], function(lightbox) {
+      var options = {
+         photo: true,
+         width: 500
+      };
+      lightbox.bind('a[rel="my-gallery"]', options, false); // 3rd attribute ensures binding is done without proxies
+   });
+
 Traditional scripts
 ===================
 
@@ -638,6 +698,9 @@ Available hooks
 
 **getOptions, ui.popup**
     This hook is fired for pop up displays (``"rel"="popup"``) and allows for customized placement options.
+
+**getOptions, ui.lightbox**
+    This hook can be used to filter options passed to ``$.colorbox()``
 
 **config, ckeditor**
     This filters the CKEditor config object. Register for this hook in a plugin boot module. The defaults can be seen in the module ``elgg/ckeditor/config``.

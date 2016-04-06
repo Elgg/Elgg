@@ -91,7 +91,9 @@ elgg.embed.insert = function(event) {
 		textArea.val(result);
 	}
 
-	elgg.ui.lightbox.close();
+	require(['elgg/lightbox'], function(lightbox) {
+		lightbox.close();
+	});
 
 	event.preventDefault();
 };
