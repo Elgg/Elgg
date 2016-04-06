@@ -51,12 +51,11 @@ function groups_prepare_form_vars($group = null) {
 	}
 
 	// handle tool options
-	$tools = elgg_get_config('group_tool_options');
-	if ($tools) {
-		foreach ($tools as $group_option) {
-			$option_name = $group_option->name . "_enable";
-			$values[$option_name] = $group_option->default_on ? 'yes' : 'no';
-		}
+	$entity = ($group instanceof \ElggGroup) ? $group : null;
+	$tools = groups_get_group_tool_options($entity);
+	foreach ($tools as $group_option) {
+		$option_name = $group_option->name . "_enable";
+		$values[$option_name] = $group_option->default_on ? 'yes' : 'no';
 	}
 
 	// get current group settings
@@ -92,4 +91,23 @@ function groups_prepare_form_vars($group = null) {
 	elgg_clear_sticky_form('groups');
 
 	return $values;
+}
+
+/**
+ * Function to return available group tool options
+ *
+ * @param \ElggGroup $group optional group
+ *
+ * @return array
+ */
+function groups_get_group_tool_options(\ElggGroup $group = null) {
+	
+	$tool_options = elgg_get_config('group_tool_options');
+	
+	$hook_params = [
+		'group_tool_options' => $tool_options,
+		'entity' => $group,
+	];
+		
+	return (array) elgg_trigger_plugin_hook('tool_options', 'group', $hook_params, $tool_options);
 }

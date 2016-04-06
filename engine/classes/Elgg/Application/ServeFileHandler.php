@@ -97,7 +97,7 @@ class ServeFileHandler {
 			$request->headers->set('if_none_match', str_replace('-gzip', '', $if_none_match));
 		}
 
-		$etag = '"' . $last_updated . '"';
+		$etag = '"' . $actual_last_updated . '"';
 		$response->setPublic()->setEtag($etag);
 		if ($response->isNotModified($request)) {
 			return $response;
