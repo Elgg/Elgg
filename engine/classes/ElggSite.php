@@ -534,6 +534,7 @@ class ElggSite extends \ElggEntity {
 			'cache/[0-9]+/\w+/.*',
 			'cron/.*',
 			'services/.*',
+			'robots.txt',
 		);
 
 		// include a hook for plugin authors to include public pages
