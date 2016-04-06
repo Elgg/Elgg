@@ -26,7 +26,10 @@ return [
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.
 		 */
-		"/" => dirname(__DIR__) . "/_graphics",
+		"/" => [
+			dirname(__DIR__) . "/_graphics",
+			dirname(__DIR__) . "/views/default/lightbox/elgg-colorbox-theme",
+		],
 
 		"elgg/ui.avatar_cropper.js" => dirname(__DIR__) . "/js/lib/ui.avatar_cropper.js",
 		"elgg/ui.friends_picker.js" => dirname(__DIR__) . "/js/lib/ui.friends_picker.js",
@@ -42,8 +45,5 @@ return [
 		"jquery.jeditable.js" => dirname(__DIR__) . "/bower_components/jquery-jeditable/jquery.jeditable.js",
 		"jquery.ui.autocomplete.html.js" => dirname(__DIR__) . "/bower_components/jquery-ui-extensions/src/autocomplete/jquery.ui.autocomplete.html.js",
 		"sprintf.js" => dirname(__DIR__) . "/bower_components/sprintf/src/sprintf.js",
-
-		'colorbox.css' => dirname(__DIR__) . "/views/default/lightbox/elgg-colorbox-theme/colorbox.css",
-		'colorbox-images/' => dirname(__DIR__) . "/views/default/lightbox/elgg-colorbox-theme/colorbox-images",
 	],
 ];

@@ -570,26 +570,32 @@ class ViewsService {
 	 *
 	 * @param array $spec Specification
 	 *    viewtype => [
-	 *        view_name => path
+	 *        view_name => path or array of paths
 	 *    ]
 	 *
 	 * @access private
 	 */
 	public function mergeViewsSpec(array $spec) {
 		foreach ($spec as $viewtype => $list) {
-			foreach ($list as $view => $path) {
-				if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
-					// absolute path
-				} else {
-					// relative path
-					$path = Directory\Local::root()->getPath($path);
+			foreach ($list as $view => $paths) {
+				if (!is_array($paths)) {
+					$paths = [$paths];
 				}
 
-				if (substr($view, -1) === '/') {
-					// prefix
-					$this->autoregisterViews($view, $path, $viewtype);
-				} else {
-					$this->setViewLocation($view, $viewtype, $path);
+				foreach ($paths as $path) {
+					if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
+						// absolute path
+					} else {
+						// relative path
+						$path = Directory\Local::root()->getPath($path);
+					}
+
+					if (substr($view, -1) === '/') {
+						// prefix
+						$this->autoregisterViews($view, $path, $viewtype);
+					} else {
+						$this->setViewLocation($view, $viewtype, $path);
+					}
 				}
 			}
 		}
