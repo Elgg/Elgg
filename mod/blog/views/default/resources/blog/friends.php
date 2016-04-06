@@ -17,7 +17,7 @@ $crumbs_title = $user->name;
 elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
-elgg_register_title_button();
+elgg_register_title_button('blog', 'add', 'object', 'blog');
 
 $options = [
 	'type' => 'object',

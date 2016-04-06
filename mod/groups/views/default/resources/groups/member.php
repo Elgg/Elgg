@@ -19,7 +19,7 @@ if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
 elgg_push_breadcrumb($title);
 
 if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
-	elgg_register_title_button();
+	elgg_register_title_button('groups', 'add', 'group');
 }
 
 $dbprefix = elgg_get_config('dbprefix');

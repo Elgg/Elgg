@@ -6,10 +6,22 @@
  * @subpackage Social.Collections
  */
 
-$title = elgg_echo('friends:collections');
-elgg_register_title_button('collections', 'add');
+$owner = elgg_get_logged_in_user_entity();
+if (!$owner) {
+	forward('', '404');
+}
 
-$content = elgg_view_access_collections(elgg_get_logged_in_user_guid());
+$title = elgg_echo('friends:collections');
+if ($owner->canEdit()) {
+	elgg_register_menu_item('title', [
+		'name' => 'add',
+		'href' => "collections/add/$owner->guid",
+		'text' => elgg_echo('collections:add'),
+		'link_class' => 'elgg-button elgg-button-action',
+	]);
+}
+
+$content = elgg_view_access_collections($owner->guid);
 
 $body = elgg_view_layout('content', array(
 	'filter' => false,
