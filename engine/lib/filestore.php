@@ -78,7 +78,7 @@ $square = false, $upscale = false) {
 	if (!$files->has($input_name)) {
 		return false;
 	}
-	
+
 	$file = $files->get($input_name);
 	if (empty($file)) {
 		// a file input was provided but no file uploaded
@@ -327,37 +327,15 @@ function get_image_resize_parameters($width, $height, $options) {
  * Delete an \ElggFile file
  *
  * @param int $guid \ElggFile GUID
- *
  * @return bool
  */
 function file_delete($guid) {
 	$file = get_entity($guid);
-	if (!$file || !$file->canEdit()) {
+	if (!$file || !$file->canDelete()) {
 		return false;
 	}
 
-	$thumbnail = $file->thumbnail;
-	$smallthumb = $file->smallthumb;
-	$largethumb = $file->largethumb;
-	if ($thumbnail) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($thumbnail);
-		$delfile->delete();
-	}
-	if ($smallthumb) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($smallthumb);
-		$delfile->delete();
-	}
-	if ($largethumb) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($largethumb);
-		$delfile->delete();
-	}
-
+	elgg_clear_thumbnails($file);
 	return $file->delete();
 }
 
@@ -466,7 +444,7 @@ function elgg_get_file_simple_type($mime_type) {
 
 /**
  * Initialize the file library.
- * Listens to system init and configures the default filestore
+ * Listens to system init and configures the default filestore 
  *
  * @return void
  * @access private
@@ -481,12 +459,14 @@ function _elgg_filestore_init() {
 
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
-	
+
 	// Parse category of file from MIME type
 	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
 
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
+
+	elgg_register_page_handler('embed-file', '_elgg_filestore_embed_file_handler');
 }
 
 /**
@@ -602,6 +582,228 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = ''
 	return $file_svc->getURL();
 }
 
+/**
+ * Returns a file's URL suitable for embedding in a text editor
+ * We can not use elgg_get_inline_url() for these purposes due to a URL structure bound to user session and file modification time
+ * This function returns a generic (permanent) URL that will then be resolved to an inline URL whenever requested.
+ * The behaviour of the embed-file handler is similar to deprecated mod/file/thumbnail.php
+ *
+ * @param \ElggFile $file File entity (must have guid)
+ * @param string    $size Size
+ * @return string
+ * @since 2.2
+ */
+function elgg_get_embed_url(\ElggFile $file, $size) {
+	return elgg_normalize_url("embed-file/$file->guid/$size");
+}
+
+/**
+ * Page handler for /embed-file/ identifier
+ * The bevaious of this handler is similar to deprecated mod/file/thumbnail.php
+ * 
+ * @param array $segments URL segments
+ * @return void
+ * @access private
+ * @since 2.2
+ */
+function _elgg_filestore_embed_file_handler($segments) {
+
+	// clear cache-boosting headers set by PHP session
+	header_remove('Cache-Control');
+	header_remove('Pragma');
+	header_remove('Expires');
+
+	$request = _elgg_services()->request;
+	$response = new Symfony\Component\HttpFoundation\Response();
+	$response->prepare($request);
+
+	$guid = array_shift($segments);
+	$size = array_shift($segments);
+
+	$file = get_entity($guid);
+	if (!$file instanceof ElggFile) {
+		if (elgg_entity_exists($guid)) {
+			$response->setStatusCode(403)->setContent('You are not allowed to access this file')->send();
+		} else {
+			$response->setStatusCode(404)->setContent('File does not exist')->send();
+		}
+		exit;
+	}
+
+	$thumbnail = elgg_get_thumbnail($file, $size);
+	if (!$thumbnail->exists()) {
+		$response->setStatusCode(404)->setContent('Thumbnail doest not exist')->send();
+		exit;
+	}
+
+	$if_none_match = $request->headers->get('if_none_match');
+	if (!empty($if_none_match)) {
+		// strip mod_deflate suffixes
+		$request->headers->set('if_none_match', str_replace('-gzip', '', $if_none_match));
+	}
+
+	$filenameonfilestore = $thumbnail->getFilenameOnFilestore();
+	$last_updated = filemtime($filenameonfilestore);
+	$etag = '"' . $last_updated . '"';
+	$response->setPublic()->setEtag($etag);
+	if ($response->isNotModified($request)) {
+		$response->send();
+		exit();
+	}
+
+	$headers = [
+		'Content-Type' => (new Elgg\Filesystem\MimeTypeDetector())->getType($filenameonfilestore),
+	];
+	$response = new Symfony\Component\HttpFoundation\BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
+	$response->prepare($request);
+
+	$expires_dt = (new DateTime())->setTimestamp(strtotime('+1 day'));
+	$response->setExpires($expires_dt);
+
+	$response->setEtag($etag);
+	
+	$response->send();
+	exit;
+}
+
+/**
+ * Returns thumbnail sizes configuration for a file entity
+ *
+ * @param \ElggFile $file File entity
+ * @return array
+ */
+function elgg_get_thumbnail_sizes(\ElggFile $file) {
+
+	$sizes = [
+		'small' => [
+			'w' => 60,
+			'h' => 60,
+			'square' => true,
+			'metadata_name' => 'thumbnail',
+			'filename_prefix' => 'thumb',
+		],
+		'medium' => [
+			'w' => 153,
+			'h' => 153,
+			'square' => true,
+			'metadata_name' => 'smallthumb',
+			'filename_prefix' => 'smallthumb',
+		],
+		'large' => [
+			'w' => 600,
+			'h' => 600,
+			'square' => false,
+			'metadata_name' => 'largethumb',
+			'filename_prefix' => 'largethumb',
+		],
+	];
+
+	// @todo: add a hook to filter these values
+	return $sizes;
+}
+
+/**
+ * Attempt to create thumbnails for a file
+ * For non image files (or on a failed attempt to resize source image), all previously generated thumbnails will be cleared
+ *
+ * @param \ElggFile $file File entity
+ * @return bool
+ */
+function elgg_create_thumbnails(\ElggFile $file) {
+
+	if (!$file->guid || !$file->simpletype) {
+		elgg_log('File entity passed to elgg_create_thumbnails() should have a guid and simpletype', 'ERROR');
+		return false;
+	}
+
+	elgg_clear_thumbnails($file);
+	
+	$created = elgg_trigger_plugin_hook('create_thumbnails', 'file', ['entity' => $file], false);
+	if ($created) {
+		$file->icontime = time();
+		return true;
+	}
+
+	if ($file->simpletype !== 'image') {
+		return false;
+	}
+	
+	$prefix = 'file/';
+	$source_filename = elgg_substr($file->getFilename(), elgg_strlen($prefix));
+	$thumb_filename = pathinfo($source_filename, PATHINFO_FILENAME) . '.jpg';
+
+	$sizes = elgg_get_thumbnail_sizes($file);
+
+	foreach ($sizes as $size => $opts) {
+		$metadata_name = $opts['metadata_name'];
+		$filename_prefix = $opts['filename_prefix'];
+		$width = $opts['w'];
+		$height = $opts['h'];
+		$square = $opts['square'];
+		if (!isset($file->$metadata_name)) {
+			$file->$metadata_name = $prefix . $filename_prefix . $thumb_filename;
+		}
+		$thumb = elgg_get_thumbnail($file, $size);
+		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $width, $height, $square);
+		if ($thumbnail) {
+			$thumb->open("write");
+			$thumb->write($thumbnail);
+			$thumb->close();
+			unset($thumbnail);
+		} else {
+			elgg_clear_thumbnails($file);
+			return false;
+		}
+	}
+
+	$file->icontime = time();
+	return true;
+}
+
+/**
+ * Clear file entity's thumbnails
+ *
+ * @param \ElggFile $file File entity
+ * @return void
+ */
+function elgg_clear_thumbnails(\ElggFile $file) {
+
+	$sizes = elgg_get_thumbnail_sizes($file);
+	foreach ($sizes as $size => $opts) {
+		$thumb = elgg_get_thumbnail($file, $size);
+		$thumb->delete();
+		$metadata_name = $opts['metadata_name'];
+		unset($file->$metadata_name);
+	}
+
+	unset($file->icontime);
+}
+
+/**
+ * Returns a file that represents file entity's thumbnail on filestore
+ * Note that the thumbnail file may or may not exist, use ``ElggFile::exists()``
+ * on this function's return to ensure that the file has an actual thumbnail on filestore
+ * 
+ * @param \ElggFile $file File entity (must have a guid)
+ * @param string    $size Thumnail size
+ * @return \ElggFile
+ * @since 2.2
+ */
+function elgg_get_thumbnail(\ElggFile $file, $size = 'medium') {
+
+	$sizes = elgg_get_thumbnail_sizes($file);
+	if (!array_key_exists($size, $sizes)) {
+		$size = 'large';
+	}
+
+	$metadata_name = $sizes[$size]['metadata_name'];
+
+	$thumbnail = new \ElggFile();
+	$thumbnail->owner_guid = $file->owner_guid;
+	$thumbnail->setFilename($file->$metadata_name);
+
+	return $thumbnail;
+}
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
