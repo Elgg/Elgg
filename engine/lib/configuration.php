@@ -86,6 +86,9 @@ function elgg_get_config($name, $site_guid = 0) {
 	if ($name === 'siteemail') {
 		$msg = 'The config value "siteemail" is deprecated. Use elgg_get_site_entity()->email';
 		elgg_deprecated_notice($msg, '2.1');
+	} else if ($name == 'icon_sizes') {
+		$msg = 'The config value for "icon_sizes" should not be accessed directly. Use elgg_get_icon_sizes() instead';
+		elgg_deprecated_notice($msg, '2.2');
 	}
 
 	return _elgg_services()->config->get($name, $site_guid);

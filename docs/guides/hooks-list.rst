@@ -413,6 +413,23 @@ Other
 		return "http://www.gravatar.com/avatar/$hash?s=$size";
 	}
 
+**entity:icon:sizes, <entity_type>**
+    Triggered by ``elgg_get_icon_sizes()``. Should return entity specific configuration of icon/avatar sizes.
+
+**create_icons, <entity_type>**
+    Triggered by ``elgg_create_thumbnails()`` and can be used by plugins to generate icons using alternative methods.
+    The handler must return ``true`` if custom icons were generated.
+    Following parameters are available through the ``$params`` array:
+
+    entity
+        Entity for which icons are to be created
+
+	file
+        An instanceof ``ElggFile`` that represents the file to be used as the source for the thumbnails
+
+    x1, y1, x2, y2
+        Cropping coordinates
+
 **entity:url, <entity_type>**
 	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
 	``getUrl()`` method of ElggEntity. This hook should be used when it's not possible to subclass

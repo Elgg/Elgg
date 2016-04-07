@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Elgg file thumbnail
  *
  * @package ElggFile
  */
-
 $autoload_root = dirname(dirname(__DIR__));
 if (!is_file("$autoload_root/vendor/autoload.php")) {
 	$autoload_root = dirname(dirname(dirname($autoload_root)));
@@ -17,41 +17,17 @@ elgg_deprecated_notice('mod/file/thumbnail.php is no longer in use and will be r
 
 // Get file GUID
 $file_guid = (int) get_input('file_guid', 0);
+elgg_entity_gatekeeper($file_guid, 'object', 'file');
 
 // Get file thumbnail size
 $size = get_input('size', 'small');
 
 $file = get_entity($file_guid);
 
-$thumb_url = false;
-
-// thumbnails get first priority
-if ($file && $file->thumbnail) {
-
-	switch ($size) {
-		case "small":
-			$thumbfile = $file->thumbnail;
-			break;
-		case "medium":
-			$thumbfile = $file->smallthumb;
-			break;
-		case "large":
-		default:
-			$thumbfile = $file->largethumb;
-			break;
-	}
-
-	if (!empty($thumbfile)) {
-		$readfile = new ElggFile();
-		$readfile->owner_guid = $file->owner_guid;
-		$readfile->setFilename($thumbfile);
-		$thumb_url = elgg_get_inline_url($readfile, true);
-	}
-}
-
+$icon = elgg_get_entity_icon($file, $size);
+$thumb_url = elgg_get_inline_url($icon, true);
 if ($thumb_url) {
 	forward($thumb_url);
 }
 
-header('HTTP/1.1 404 Not found');
-exit;
+forward('', '404');

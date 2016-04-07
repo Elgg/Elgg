@@ -19,6 +19,8 @@ Deprecated APIs
  * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
  * ``lightbox.js`` library: Do not use ``elgg_load_js('lightbox.js');`` unless your code references deprecated ``elgg.ui.lightbox`` namespace. Use ``elgg/lightbox`` AMD module instead.
  * ``lightbox.css`` library: Lightbox CSS now extends ``elgg.css``. Calls to ``elgg_require_css('lightbox.css')`` have no effect.
+ * Accessing ``icon_sizes`` config value directly: Use ``elgg_get_icon_sizes()``
+ * Accessing entity icons by their filestore name: Use ``elgg_get_entity_icon()`` and ``elgg_create_entity_icons()``
 
 Deprecated Views
 ----------------
@@ -35,6 +37,50 @@ Added ``elgg/lightbox`` module
 ------------------------------
 
 New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
+
+New API for working with entity thumbnails
+------------------------------------------
+
+All entity icons now have a predictable location on filestore. Icons are located to in ``/icons/$size.jpg`` relative to the entity's directory on filestore.
+
+New functions for working with thumbnails:
+
+ * ``elgg_get_icon_sizes()`` - returns icons configuration array for a specific entity. Can be filtered with ``entity:icon:sizes, <entity_type>`` hook
+ * ``elgg_get_entity_icon()`` - returns an instanceof ``ElggFile`` that represents an icon of a given size. Note that the actual file may or may not exist.
+ * ``elgg_create_entity_icons()`` - generates icons for an entity
+ * ``elgg_clear_entity_icons()`` - clears entity icons
+
+Elgg will now automatically resolve entity icon URLs for icons generated using ``elgg_create_entity_icons()``.
+
+If you plugin implements a custom entity subtype with icon URL handlers, you can transition as follows:
+
+ * In your save action, use ``elgg_create_entity_icons()`` to generate icons
+ * In your handler for ``entity:icon:url, <entity_type>`` hook first check if an icon exists with ``elgg_get_entity_icon()``, then proceed to your custom logic
+
+.. code:: php
+
+   // in subtypes
+   elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'my_icon_handler');
+
+   function my_icon_handler($hook, $type, $url, $params) {
+
+      $entity = elgg_extract('entity', $params);
+      $size = elgg_extract('size', $params, 'medium');
+
+      if (!elgg_instanceof($entity, 'object', 'my_subtype') {
+         return;
+      }
+
+      $icon = elgg_get_entity_icon($entity, $size);
+      if ($icon->exists()) {
+        // we have an icon generated the new way
+        // @note: for objects and groups this is done automatically, so you can check if $url is set and return early
+        return elgg_get_inline_url($icon, true);
+      }
+
+      // proceed to determining the URL for icons generated the old way
+   }
+
 
 From 2.0 to 2.1
 ===============

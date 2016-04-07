@@ -452,8 +452,9 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 		return;
 	}
 
+	$icon = elgg_get_entity_icon($user, $size);
 	$default_url = elgg_get_simplecache_url("icons/user/default{$size}.gif");
-	if (!isset($user->icontime)) {
+	if (!$icon->exists()) {
 		return $default_url;
 	}
 
@@ -463,11 +464,8 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 		return "avatar/view/$user->username/$size/$user->icontime";
 	}
 
-	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $user->guid;
-	$filehandler->setFilename("profile/{$user->guid}{$size}.jpg");
 	$use_cookie = elgg_get_config('walled_garden'); // don't serve avatars with public URLs in a walled garden mode
-	$avatar_url = elgg_get_inline_url($filehandler, $use_cookie);
+	$avatar_url = elgg_get_inline_url($icon, $use_cookie);
 
 	return $avatar_url ? : $default_url;
 }

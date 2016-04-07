@@ -173,9 +173,8 @@ This method accepts a ``$params`` argument that can be either a string specifyin
 or an array of parameters, that specify the size and provide additional context for the hook to determine the icon
 to serve.
 
-Use ``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
-``'large'``, ``'medium'``, ``'small'``, ``'tiny'``, and ``'topbar'``. The method triggers the
-``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
+You can create entity icons by calling ``elgg_create_entity_icons()``. Elgg will generate the icons and set
+correct inline URLs. If you need to modify the icon URL further, use ``entity:icon:url, <entity_type>`` :ref:`hook <guides/hooks-list#other>`.
 
 Use ``elgg_view_entity_icon($entity, $size, $vars)`` to render an icon. This will scan the following
 locations for a view and include the first match.
@@ -196,6 +195,14 @@ $subtype
 By convention entities that have an uploaded avatar or icon will have the ``icontime`` property
 assigned. This means that you can use ``$entity->icontime`` to check if an icon exists for the given
 entity.
+
+Note that file plugin defines custom icon sizes. If you would like it to adhere to the site wide configuration,
+unregister the hook:
+
+.. code:: php
+
+    elgg_unregister_plugin_hook_handler('entity:icon:sizes', 'object', 'file_set_custom_icon_sizes');
+
 
 Adding, reading and deleting annotations
 ----------------------------------------

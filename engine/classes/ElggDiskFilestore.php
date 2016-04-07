@@ -261,6 +261,8 @@ class ElggDiskFilestore extends \ElggFilestore {
 	/**
 	 * Returns the size of all data stored under a directory in the disk store.
 	 *
+	 * @todo Add an option to get a cumulated size of entity directories for entities owned by $container
+	 * 
 	 * @param string $prefix         The prefix to check under.
 	 * @param string $container_guid The guid of the entity whose data you want to check.
 	 *
