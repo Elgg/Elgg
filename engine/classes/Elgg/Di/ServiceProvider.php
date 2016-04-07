@@ -71,6 +71,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\SystemMessagesService              $systemMessages
+ * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
@@ -400,6 +401,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('systemMessages', function(ServiceProvider $c) {
 			return new \Elgg\SystemMessagesService($c->session);
 		});
+
+		$this->setClassName('table_columns', \Elgg\Views\TableColumn\ColumnFactory::class);
 
 		$this->setClassName('timer', \Elgg\Timer::class);
 

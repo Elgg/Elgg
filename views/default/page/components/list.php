@@ -63,8 +63,8 @@ foreach ($items as $item) {
 	$li_attrs = ['class' => $item_classes];
 
 	if ($item instanceof \ElggEntity) {
-		$guid = $item->getGUID();
-		$type = $item->getType();
+		$guid = $item->guid;
+		$type = $item->type;
 		$subtype = $item->getSubtype();
 
 		$li_attrs['id'] = "elgg-$type-$guid";
