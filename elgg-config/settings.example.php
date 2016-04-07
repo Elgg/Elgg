@@ -133,6 +133,15 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->simplecache_enabled = true;
 
 /**
+ * Public cache
+ *
+ * If enabled, simplecache views will be placed in /root/cache rather than
+ * /dataroot/views_simplecache. This will allow cacheable views to be served
+ * directly from the server without booting the engine
+ */
+//$CONFIG->public_cache = false;
+
+/**
  * Enable the boot cache
  *
  * Elgg can store most non-user-specific boot up data in a cache. If you want to

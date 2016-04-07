@@ -164,7 +164,12 @@ class SimpleCache {
 	 * @return string
 	 */
 	private function getPath() {
-		return realpath($this->config->getDataPath() . "/views_simplecache");
+		if ($this->config->get('public_cache')) {
+			$cache_path = \Elgg\Filesystem\Directory\Local::root()->getPath() . "cache";
+		} else {
+			$cache_path = $this->config->get('dataroot') . "views_simplecache";
+		}
+		return $cache_path;
 	}
 
 	/**
