@@ -120,7 +120,8 @@ class CacheHandler {
 		$this->handle304($etag);
 
 		// trust the client but check for an existing cache file
-		$filename = $config->getVolatile('dataroot') . "views_simplecache/$ts/$viewtype/$view";
+		$cache_path = rtrim($this->getPath(), '/');
+		$filename = "{$cache_path}/{$ts}/{$viewtype}/{$view}";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
@@ -137,7 +138,7 @@ class CacheHandler {
 
 		$lastcache = (int)$config->get('lastcache');
 
-		$filename = $config->getVolatile('dataroot') . "views_simplecache/$lastcache/$viewtype/$view";
+		$filename = "$cache_path/$lastcache/$viewtype/$view";
 
 		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag);
@@ -400,6 +401,19 @@ class CacheHandler {
 		header('HTTP/1.1 403 Forbidden');
 		echo $msg;
 		exit;
+	}
+
+	/**
+	 * Returns the path of the cache directory
+	 * @return string
+	 */
+	protected function getPath() {
+		if ($this->config->getVolatile('public_cache')) {
+			$cache_path = \Elgg\Filesystem\Directory\Local::root()->getPath() . "cache/";
+		} else {
+			$cache_path = $this->config->getVolatile('dataroot') . "views_simplecache/";
+		}
+		return $cache_path;
 	}
 }
 

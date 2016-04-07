@@ -183,6 +183,9 @@ function elgg_disable_simplecache() {
  * @access private
  */
 function _elgg_rmdir($dir, $empty = false) {
+	if (!is_dir($dir)) {
+		mkdir($dir, 0700, true);
+	}
 	$files = array_diff(scandir($dir), array('.', '..'));
 	
 	foreach ($files as $file) {

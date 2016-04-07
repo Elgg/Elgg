@@ -90,7 +90,7 @@ If you don't have shell access to your server and have to ftp the data, you may 
 
 .. note::
    
-   You also need to delete the views cache on the test server after the copy process. This is a directory called ``views_simplecache`` in your data directory and the directory called ``system_cache`` .
+   You also need to delete the views cache on the test server after the copy process. This is a directory called ``views_simplecache`` in your data directory (or ``cache`` directory in your public root if ``public_cache`` is enabled) and the directory called ``system_cache`` .
 
 Edit settings.php
 =================
