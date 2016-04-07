@@ -67,7 +67,7 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->views->mergeViewsSpec([
 			'default' => [
 				'hello.js' => __DIR__ . '/../test_files/views/default/js/static.js',
-				'hello/world.js' => 'engine/tests/phpunit/test_files/views/default/js/interpreted.js.php',
+				'hello/world.js' => ['engine/tests/phpunit/test_files/views/default/js/interpreted.js.php'],
 			],
 		]);
 

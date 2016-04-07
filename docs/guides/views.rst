@@ -206,6 +206,20 @@ With the above, files found within the ``icons`` folder will be interpreted as v
 
     This is a fully recursive scan. All files found will be brought into the views system.
 
+Multiple paths can share the same prefix, just give an array of paths:
+
+.. code-block:: php
+
+    <?php // mod/file/views.php
+    return [
+        'default' => [
+            'file/icon/' => [
+                __DIR__ . '/graphics/icons',
+                __DIR__ . '/more_icons', // processed 2nd (may override)
+            ],
+        ],
+    ];
+
 Viewtypes
 =========
 
