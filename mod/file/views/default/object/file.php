@@ -45,7 +45,7 @@ if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
 }
 
 if ($full && !elgg_in_context('gallery')) {
-	$mime = $file->mimetype;
+	$mime = $file->getMimeType();
 	$base_type = substr($mime, 0, strpos($mime,'/'));
 
 	$extra = '';
