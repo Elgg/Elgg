@@ -6,6 +6,7 @@ define(function (require) {
 	var elgg = require('elgg');
 	var spinner = require('elgg/spinner');
 	var gear_html = require('text!elgg/dev/gear.html');
+	require('elgg/lightbox');
 
 	$(gear_html)
 		.appendTo('body')

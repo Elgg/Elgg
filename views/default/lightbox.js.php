@@ -2,23 +2,16 @@
 /**
  * Elgg lightbox
  *
- * Usage
- * ---------------
- * Call elgg_load_js('lightbox') and elgg_load_css('lightbox'). 
- * Then apply the class elgg-lightbox to links.
- *
- * 
- * Advanced Usage
- * -----------------
  * Elgg is distributed with the Colorbox jQuery library. Please go to
  * http://www.jacklmoore.com/colorbox for more information on the options of this lightbox.
  * 
- * You can change global options by overriding the js/lightbox/settings view.
+ * Use .elgg-lightbox or .elgg-lightbox-photo class on your anchor element to
+ * bind it to a lightbox.
  *
  * You may apply colorbox options to an individual .elgg-lightbox element
- * by setting the attribute data-colorbox-opts to a JSON settings object. You
- * can also set options in the elgg.ui.lightbox.bind() method, but data
- * attributes will take precedence.
+ * by setting the attribute data-colorbox-opts to a JSON settings object.
+ * You can use "getOptions", "ui.lightbox" plugin hook to filter options before
+ * they are passed to $.colorbox().
  * 
  * To support a hidden div as the source, add "inline: true" as a 
  * data-colorbox-opts option. For example, using the output/url view, add:
@@ -29,30 +22,104 @@
  * -------------------------------------
  * In a plugin, override this view and override the registration for the
  * lightbox JavaScript and CSS (@see elgg_views_boot()).
+ *
+ * @deprecated 2.2
  */
-
 ?>
 //<script>
 
-elgg.provide('elgg.ui.lightbox');
+// We don't depend on elgg/lightbox because it blocks until after elgg/init.
+// We want this API available immediately.
+require(['elgg', 'jquery', 'jquery.colorbox'], function (elgg, $) {
 
-<?php echo elgg_view('lightbox/settings.js'); ?>
+	elgg.deprecated_notice('lightbox.js library has been deprecated. Avoid using elgg_load_js("lightbox.js"), ' +
+		'use elgg/lightbox AMD module instead');
 
-/**
- * Lightbox initialization
- */
-elgg.ui.lightbox.init = function() {
-	function registerDeprecationError() {
-		elgg.register_error("fancybox lightbox has been replaced by colorbox", 9999999999999);
+	elgg.provide('elgg.ui.lightbox');
+
+	if (typeof elgg.ui.lightbox.getSettings === 'function') {
+		elgg.ui.lightbox.deprecated_settings = elgg.ui.lightbox.getSettings();
 	}
 
-	elgg.ui.lightbox.bind(".elgg-lightbox");
-	elgg.ui.lightbox.bind(".elgg-lightbox-photo", {photo: true});
+	/**
+	 * Lightbox initialization
+	 * @deprecated 2.2
+	 */
+	elgg.ui.lightbox.init = function () {
+		elgg.deprecated_notice('elgg.ui.lightbox.init() has been deprecated and should not be called directly. ' +
+			'Lightbox is initialized automatically in elgg AMD module', '2.2');
+	};
+
+	/**
+	 * Lightbox settings
+	 * @deprecated 2.2
+	 */
+	elgg.ui.lightbox.getSettings = function (opts) {
+		elgg.deprecated_notice('elgg.ui.lightbox.getSettings() has been deprecated and should not be called ' +
+			'directly. Use elgg/lightbox AMD module instead', '2.2');
+
+		if (!$.isPlainObject(opts)) {
+			opts = {};
+		}
+
+		// Note: keep these in sync with /views/default/elgg/lightbox.js
+		var settings = {
+			current: elgg.echo('js:lightbox:current', ['{current}', '{total}']),
+			previous: elgg.echo('previous'),
+			next: elgg.echo('next'),
+			close: elgg.echo('close'),
+			xhrError: elgg.echo('error:default'),
+			imgError: elgg.echo('error:default'),
+			opacity: 0.5,
+			maxWidth: '100%',
+			// don't move colorbox on small viewports https://github.com/Elgg/Elgg/issues/5312
+			reposition: $(window).height() > 600
+		};
+
+		elgg.provide('elgg.ui.lightbox');
+
+		if ($.isPlainObject(elgg.ui.lightbox.deprecated_settings)) {
+			$.extend(settings, elgg.ui.lightbox.deprecated_settings, opts);
+		} else {
+			$.extend(settings, opts);
+		}
+
+		return elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
+	};
+
+	/**
+	 * Bind colorbox lightbox click to HTML
+	 * @deprecated 2.2
+	 */
+	elgg.ui.lightbox.bind = function () {
+		elgg.deprecated_notice('elgg.ui.lightbox.bind() has been deprecated. Use elgg/lightbox AMD module ' +
+			'instead', '2.2');
+
+		require(['elgg/lightbox'], function (lightbox) {
+			return lightbox.bind.apply(this, arguments);
+		});
+	};
+	/**
+	 * Close the colorbox
+	 * @deprecated 2.2
+	 */
+	elgg.ui.lightbox.close = function () {
+		elgg.deprecated_notice('elgg.ui.lightbox.close() has been deprecated. Use elgg/lightbox AMD module ' +
+			'instead', '2.2');
+
+		require(['elgg/lightbox'], function (lightbox) {
+			return lightbox.close.apply(this, arguments);
+		});
+	};
+
+	function registerDeprecationError() {
+		elgg.register_error("fancybox lightbox has been replaced by colorbox.", 9999999999999);
+	}
 
 	if (typeof $.fancybox === 'undefined') {
 		$.fancybox = {
 			// error message for firefox users
-			__noSuchMethod__ : registerDeprecationError,
+			__noSuchMethod__: registerDeprecationError,
 			close: function () {
 				registerDeprecationError();
 				$.colorbox.close();
@@ -68,50 +135,4 @@ elgg.ui.lightbox.init = function() {
 			return this;
 		};
 	}
-};
-
-/**
- * Bind colorbox lightbox click to HTML
- *
- * @param {Object} selector CSS selector matching colorbox openers
- * @param {Object} opts     Colorbox options. These are overridden by data-colorbox-opts options
- */
-elgg.ui.lightbox.bind = function (selector, opts) {
-	if (!$.isPlainObject(opts)) {
-		opts = {};
-	}
-
-	// merge opts into defaults
-	opts = $.extend({}, elgg.ui.lightbox.getSettings(), opts);
-
-	$(document).on('click', selector, function (e) {
-		var $this = $(this),
-			href = $this.prop('href') || $this.prop('src'),
-			dataOpts = $this.data('colorboxOpts');
-		// Note: data-colorbox was reserved https://github.com/jackmoore/colorbox/issues/435
-
-		if (!$.isPlainObject(dataOpts)) {
-			dataOpts = {};
-		}
-
-		if (!dataOpts.href && href) {
-			dataOpts.href = href;
-		}
-
-		// merge data- options into opts
-		$.colorbox($.extend({}, opts, dataOpts));
-		e.preventDefault();
-	});
-};
-
-/**
- * Close the colorbox
- *
- */
-elgg.ui.lightbox.close = function() {
-	$.colorbox.close();
-};
-
-elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
-
-<?= elgg_view('jquery.colorbox.js'); ?>
+});

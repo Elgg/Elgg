@@ -68,8 +68,6 @@ function developers_process_settings() {
 
 	if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
 		elgg_require_js('elgg/dev/gear');
-		elgg_load_js('lightbox');
-		elgg_load_css('lightbox');
 		elgg_register_ajax_view('developers/gear_popup');
 		elgg_register_simplecache_view('elgg/dev/gear.html');
 

@@ -49,8 +49,6 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		$url = 'embed?container_guid=' . $page_owner->getGUID();
 	}
 
-	elgg_load_js('lightbox');
-	elgg_load_css('lightbox');
 	elgg_require_js('jquery.form');
 	elgg_load_js('elgg.embed');
 
