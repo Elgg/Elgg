@@ -1903,6 +1903,14 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
+		if ($this instanceof ElggUser && $this->banned === 'no') {
+			// temporarily ban to prevent using the site during disable
+			_elgg_services()->usersTable->markBanned($this->guid, true);
+			$unban_after = true;
+		} else {
+			$unban_after = false;
+		}
+
 		_elgg_invalidate_cache_for_entity($this->guid);
 		
 		if ($reason) {
@@ -1916,15 +1924,21 @@ abstract class ElggEntity extends \ElggData implements
 			$hidden = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
-			
-			$sub_entities = $this->getDatabase()->getData("SELECT * FROM {$CONFIG->dbprefix}entities
+
+			$query = "
+				SELECT *
+				FROM {$CONFIG->dbprefix}entities
 				WHERE (
-				container_guid = $guid
-				OR owner_guid = $guid
-				OR site_guid = $guid
-				) AND enabled='yes'", 'entity_row_to_elggstar');
+					container_guid = $guid
+					OR owner_guid = $guid
+					OR site_guid = $guid
+				) 
+				AND enabled = 'yes'
+			";
+			$sub_entities = $this->getDatabase()->getData($query, 'entity_row_to_elggstar');
 
 			if ($sub_entities) {
+				/* @var ElggEntity[] $sub_entities */
 				foreach ($sub_entities as $e) {
 					add_entity_relationship($e->guid, 'disabled_with', $this->guid);
 					$e->disable($reason);
@@ -1938,9 +1952,15 @@ abstract class ElggEntity extends \ElggData implements
 		$this->disableMetadata();
 		$this->disableAnnotations();
 
-		$res = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
+		$res = $this->getDatabase()->updateData("
+			UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'no'
-			WHERE guid = $guid");
+			WHERE guid = $guid
+		");
+
+		if ($unban_after) {
+			_elgg_services()->usersTable->markBanned($this->guid, false);
+		}
 
 		if ($res) {
 			$this->attributes['enabled'] = 'no';
@@ -2058,7 +2078,12 @@ abstract class ElggEntity extends \ElggData implements
 		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
 			return false;
 		}
-		
+
+		if ($this instanceof ElggUser) {
+			// ban to prevent using the site during delete
+			_elgg_services()->usersTable->markBanned($this->guid, true);
+		}
+
 		_elgg_invalidate_cache_for_entity($guid);
 		
 		// If memcache is available then delete this entry from the cache
@@ -2120,29 +2145,19 @@ abstract class ElggEntity extends \ElggData implements
 		elgg_delete_river(array('target_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		$res = $this->getDatabase()->deleteData("DELETE FROM {$CONFIG->dbprefix}entities WHERE guid = $guid");
-		if ($res) {
-			$sub_table = "";
+		$res = $this->getDatabase()->deleteData("
+			DELETE FROM {$CONFIG->dbprefix}entities
+			WHERE guid = $guid
+		");
 
-			// Where appropriate delete the sub table
-			switch ($this->type) {
-				case 'object' :
-					$sub_table = $CONFIG->dbprefix . 'objects_entity';
-					break;
-				case 'user' :
-					$sub_table = $CONFIG->dbprefix . 'users_entity';
-					break;
-				case 'group' :
-					$sub_table = $CONFIG->dbprefix . 'groups_entity';
-					break;
-				case 'site' :
-					$sub_table = $CONFIG->dbprefix . 'sites_entity';
-					break;
-			}
+		if ($res && in_array($this->type, ['object', 'user', 'group', 'site'])) {
+			// delete from secondary table
+			$sub_table = "{$CONFIG->dbprefix}{$this->type}s_entity";
 
-			if ($sub_table) {
-				$this->getDatabase()->deleteData("DELETE FROM $sub_table WHERE guid = $guid");
-			}
+			$this->getDatabase()->deleteData("
+				DELETE FROM $sub_table
+				WHERE guid = $guid
+			");
 		}
 		
 		_elgg_clear_entity_files($this);
