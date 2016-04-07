@@ -567,15 +567,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return mixed The value or null if not found.
 	 */
 	public function getVolatileData($name) {
-		if (!is_array($this->volatile)) {
-			$this->volatile = array();
-		}
-
-		if (array_key_exists($name, $this->volatile)) {
-			return $this->volatile[$name];
-		} else {
-			return null;
-		}
+		return array_key_exists($name, $this->volatile) ? $this->volatile[$name] : null;
 	}
 
 	/**
@@ -587,11 +579,30 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return void
 	 */
 	public function setVolatileData($name, $value) {
-		if (!is_array($this->volatile)) {
-			$this->volatile = array();
-		}
-
 		$this->volatile[$name] = $value;
+	}
+
+	/**
+	 * Cache the entity in a persisted cache
+	 *
+	 * @param ElggSharedMemoryCache $cache       Memcache or null cache
+	 * @param int                   $last_action Last action time
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public function storeInPersistedCache(\ElggSharedMemoryCache $cache, $last_action = 0) {
+		$tmp = $this->volatile;
+
+		// don't store volatile data
+		$this->volatile = [];
+		if ($last_action) {
+			$this->attributes['last_action'] = (int)$last_action;
+		}
+		$cache->save($this->guid, $this);
+
+		$this->volatile = $tmp;
 	}
 
 	/**
@@ -1484,6 +1495,7 @@ abstract class ElggEntity extends \ElggData implements
 					elgg_set_ignore_access($ia);
 				}
 			}
+			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 		}
 		
 		return false;
@@ -1681,19 +1693,14 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		// If memcache is available then delete this entry from the cache
-		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new \ElggMemcache('new_entity_cache');
-		}
-		if ($newentity_cache) {
-			$newentity_cache->delete($guid);
-		}
+		_elgg_invalidate_memcache_for_entity($guid);
 
 		if ($ret !== false) {
 			$this->attributes['time_updated'] = $time;
 		}
 
 		_elgg_cache_entity($this);
+		$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 
 		$this->orig_attributes = [];
 
@@ -1964,15 +1971,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 		
 		_elgg_invalidate_cache_for_entity($guid);
-		
-		// If memcache is available then delete this entry from the cache
-		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new \ElggMemcache('new_entity_cache');
-		}
-		if ($newentity_cache) {
-			$newentity_cache->delete($guid);
-		}
+		_elgg_invalidate_memcache_for_entity($guid);
 
 		// Delete contained owned and otherwise releated objects (depth first)
 		if ($recursive) {

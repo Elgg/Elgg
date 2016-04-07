@@ -74,6 +74,12 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 	}
 
 	protected function createTestUser($username = 'fileTest') {
+		// in case a test failure left the user
+		$user = get_user_by_username($username);
+		if ($user) {
+			return $user;
+		}
+
 		$user = new \ElggUser();
 		$user->username = $username;
 		$guid = $user->save();
