@@ -17,7 +17,7 @@ elgg_set_page_owner_guid($guid);
 
 elgg_push_breadcrumb(elgg_echo('item:object:discussion'));
 
-elgg_register_title_button();
+elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
 $title = elgg_echo('item:object:discussion');
 

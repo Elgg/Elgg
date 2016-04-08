@@ -15,7 +15,7 @@ if (!elgg_instanceof($group, 'group')) {
 elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb(elgg_echo('item:object:discussion'));
 
-elgg_register_title_button();
+elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
 $title = elgg_echo('item:object:discussion');
 

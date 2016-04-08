@@ -16,7 +16,7 @@ if (!$owner) {
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 elgg_push_breadcrumb($owner->name);
 
-elgg_register_title_button();
+elgg_register_title_button('file', 'add', 'object', 'file');
 
 $params = array();
 

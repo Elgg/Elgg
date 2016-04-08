@@ -10,7 +10,7 @@ $title = elgg_echo('pages:all');
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('pages'));
 
-elgg_register_title_button();
+elgg_register_title_button('pages', 'add', 'object', 'page_top');
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
