@@ -5,6 +5,9 @@
  * @package ElggReportContent
  */
 
+elgg_load_js('lightbox');
+elgg_load_css('lightbox');
+
 $report = $vars['entity'];
 /* @var ElggObject $report */
 $reporter = $report->getOwnerEntity();
