@@ -10,7 +10,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 
 		_elgg_filestore_init();
-		
+
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
 		_elgg_services()->session->start();
@@ -76,7 +76,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 
 	function providerSimpleTypeMap() {
 		return array(
-			array('x-world/x-svr' , 'general'),
+			array('x-world/x-svr', 'general'),
 			array('application/msword', 'document'),
 			array('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'document'),
 			array('application/vnd.oasis.opendocument.text', 'document'),
@@ -92,4 +92,198 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 			array('video/quicktime', 'video'),
 		);
 	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testFileExists() {
+		$this->assertTrue($this->file->exists());
+
+		$this->file->setFilename('foo/bar.txt');
+		$this->assertFalse($this->file->exists());
+	}
+
+	/**
+	 * @group FileService
+	 * @expectedException \IOException
+	 */
+	public function testExceptionThrownForMissingFilenameOnOpen() {
+		$file = new ElggFile();
+		$file->open('read');
+	}
+
+	/**
+	 * @group FileService
+	 * @expectedException \InvalidParameterException
+	 */
+	public function testExceptionThrownForUnknownModeOnOpen() {
+		$file = new ElggFile();
+		$file->setFilename('foo.txt');
+		$file->open('foo');
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanReadFile() {
+		$this->assertNotEmpty($this->file->open('read'));
+		$contents = $this->file->grabFile();
+		$this->assertTrue($this->file->close());
+
+		$dataroot = _elgg_services()->config->get('dataroot');
+		$expected = file_get_contents("{$dataroot}1/1/foobar.txt");
+
+		$this->assertEquals($expected, $contents);
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanCreateEmptyFile() {
+		$file = new ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('write-test.md');
+
+		$this->assertFalse($file->exists());
+
+		$this->assertNotEmpty($file->open('write'));
+		$this->assertTrue($file->close());
+
+		$this->assertTrue($file->exists());
+
+		$this->assertEquals('', file_get_contents($file->getFilenameOnFilestore()));
+
+		$this->assertTrue($file->delete());
+
+		$this->assertFalse($file->exists());
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanWriteToFile() {
+
+		$contents = 'Hello world!';
+		$contents2 = 'Sunny day outside!';
+
+		$file = new ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('write-test.md');
+
+		$this->assertFalse($file->exists());
+
+		$this->assertNotEmpty($file->open('write'));
+		$this->assertEquals(strlen($contents), $file->write($contents));
+		$this->assertTrue($file->close());
+
+		$this->assertTrue($file->exists());
+
+		$this->assertEquals($contents, file_get_contents($file->getFilenameOnFilestore()));
+
+		$this->assertNotEmpty($file->open('append'));
+		$this->assertEquals(strlen($contents2), $file->write($contents2));
+		$this->assertTrue($file->close());
+
+		$this->assertEquals($contents . $contents2, file_get_contents($file->getFilenameOnFilestore()));
+
+		$this->assertEquals(strlen($contents . $contents2), $file->getSize());
+
+		$this->assertTrue($file->delete());
+
+		$this->assertFalse($file->exists());
+	}
+
+	/**
+	 * @group FileService
+	 * @todo There is a bug somewhere in ElggFile::seek(). It returns an integer instead of bool
+	 */
+	public function testCanTellPosition() {
+
+		$this->markTestSkipped();
+
+		$size = $this->file->getSize();
+		$this->assertNotEmpty($size);
+		$this->assertNotEmpty($this->file->open('read'));
+
+		$this->assertTrue($this->file->seek(2));
+		$this->assertEquals(2, $this->file->tell());
+		$this->assertFalse($this->file->eof());
+
+		$this->assertTrue($this->file->seek($size));
+		$this->assertTrue($this->file->eof());
+		
+		$this->assertTrue($this->file->close());
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanResolveFilenameOnFilestore() {
+
+		$filename = "foo/bar.txt";
+
+		$dataroot = _elgg_services()->config->get('dataroot');
+		$dir = new \Elgg\EntityDirLocator(123);
+
+		$file = new ElggFile();
+		$file->owner_guid = 123;
+		$file->setFilename($filename);
+
+		$this->assertEquals($filename, $file->getFilename());
+
+		$filestorename = "$dataroot$dir$filename";
+		$this->assertEquals($filestorename, $file->getFilenameOnFilestore());
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanCreateAndReadSymlinks() {
+
+		$symlink_name = "symlink.txt";
+
+		$dataroot = _elgg_services()->config->get('dataroot');
+		$dir = new \Elgg\EntityDirLocator(1);
+
+		// Remove symlink in case it exists
+		if (file_exists("$dataroot$dir$symlink_name")) {
+			unlink("$dataroot$dir$symlink_name");
+		}
+
+		$symlink = new ElggFile();
+		$symlink->owner_guid = 1;
+		$symlink->setFilename($symlink_name);
+
+		$to = $this->file->getFilenameOnFilestore();
+		$from = $symlink->getFilenameOnFilestore();
+
+		$this->assertTrue(symlink($to, $from));
+
+		$this->assertEquals("$dataroot$dir$symlink_name", $from);
+
+		$this->assertTrue($symlink->exists());
+
+		$this->file->open('read');
+		$file_contents = $this->file->grabFile();
+		$this->file->close();
+
+		$symlink->open('read');
+		$symlink_contents = $symlink->grabFile();
+		$symlink->close();
+
+		$this->assertEquals($file_contents, $symlink_contents);
+
+		$this->assertTrue(unlink("$dataroot$dir$symlink_name"));
+		$this->assertFalse($symlink->exists());
+	}
+
+	/**
+	 * @group FileService
+	 * @todo ElggFile::delete() does not follow symlinks. Once fixed, we need to test
+	 * that when symlink is deleted, we also delete the target file
+	 */
+	public function testCanDeleteSymlinkTarget() {
+		$this->markTestIncomplete();
+	}
+
 }
