@@ -44,7 +44,7 @@ abstract class ElggFilestore {
 	 * @param mixed $f        The file handle.
 	 * @param int   $position The position.
 	 *
-	 * @return void
+	 * @return int 0 for success, or -1
 	 */
 	abstract public function seek($f, $position);
 

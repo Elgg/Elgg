@@ -167,7 +167,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @param resource $f        File resource
 	 * @param int      $position Position in bytes
 	 *
-	 * @return bool
+	 * @return int 0 for success, or -1
 	 */
 	public function seek($f, $position) {
 		return fseek($f, $position);

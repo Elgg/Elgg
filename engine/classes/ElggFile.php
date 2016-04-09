@@ -319,7 +319,6 @@ class ElggFile extends \ElggObject {
 	public function seek($position) {
 		$fs = $this->getFilestore();
 
-		// @todo add seek() to \ElggFilestore
 		return $fs->seek($this->handle, $position);
 	}
 
