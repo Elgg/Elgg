@@ -209,21 +209,21 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @group FileService
-	 * @todo There is a bug somewhere in ElggFile::seek(). It returns an integer instead of bool
 	 */
 	public function testCanTellPosition() {
-
-		$this->markTestSkipped();
 
 		$size = $this->file->getSize();
 		$this->assertNotEmpty($size);
 		$this->assertNotEmpty($this->file->open('read'));
 
-		$this->assertTrue($this->file->seek(2));
+		$this->assertEquals(0, $this->file->seek(2));
 		$this->assertEquals(2, $this->file->tell());
 		$this->assertFalse($this->file->eof());
 
-		$this->assertTrue($this->file->seek($size));
+		$this->assertEquals(0, $this->file->seek($size));
+		$this->assertFalse($this->file->eof());
+
+		$this->file->read(1);
 		$this->assertTrue($this->file->eof());
 		
 		$this->assertTrue($this->file->close());
@@ -347,7 +347,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($from->delete(true));
 		$this->assertFalse($from->exists());
 		$this->assertFalse(is_link($from_filename));
-		$this->assertfalse($to->exists());
+		$this->assertFalse($to->exists());
 	}
 
 	/**
@@ -376,5 +376,4 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse(is_link($from_filename));
 		$this->assertFalse($to->exists());
 	}
-
 }
