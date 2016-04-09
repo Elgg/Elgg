@@ -250,11 +250,18 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 			unlink("$dataroot$dir$symlink_name");
 		}
 
+		$target = new ElggFile();
+		$target->owner_guid = 1;
+		$target->setFilename('symlink-target.txt');
+		$target->open('write');
+		$target->write('Testing!');
+		$target->close();
+		
 		$symlink = new ElggFile();
 		$symlink->owner_guid = 1;
 		$symlink->setFilename($symlink_name);
 
-		$to = $this->file->getFilenameOnFilestore();
+		$to = $target->getFilenameOnFilestore();
 		$from = $symlink->getFilenameOnFilestore();
 
 		$this->assertTrue(symlink($to, $from));
@@ -263,9 +270,9 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($symlink->exists());
 
-		$this->file->open('read');
-		$file_contents = $this->file->grabFile();
-		$this->file->close();
+		$target->open('read');
+		$file_contents = $target->grabFile();
+		$target->close();
 
 		$symlink->open('read');
 		$symlink_contents = $symlink->grabFile();
@@ -279,11 +286,81 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @group FileService
-	 * @todo ElggFile::delete() does not follow symlinks. Once fixed, we need to test
-	 * that when symlink is deleted, we also delete the target file
 	 */
-	public function testCanDeleteSymlinkTarget() {
-		$this->markTestIncomplete();
+	public function testCanDeleteSymlinkAndKeepTarget() {
+
+		$to = new ElggFile();
+		$to->owner_guid = 1;
+		$to->setFilename('symlink-target.txt');
+		$to->open('write');
+		$to->close();
+
+		$from = new ElggFile();
+		$from->owner_guid = 1;
+		$from->setFilename('symlink.txt');
+
+		$to_filename = $to->getFilenameOnFilestore();
+		$from_filename = $from->getFilenameOnFilestore();
+
+		// Delete the symlink but keep the target
+		$this->assertTrue(symlink($to_filename, $from_filename));
+		$this->assertTrue($from->delete(false));
+		$this->assertFalse($from->exists());
+		$this->assertFalse(is_link($from_filename));
+		$this->assertTrue($to->exists());
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanDeleteSymlinkAndTarget() {
+
+		$to = new ElggFile();
+		$to->owner_guid = 1;
+		$to->setFilename('symlink-target.txt');
+		$to->open('write');
+		$to->close();
+
+		$from = new ElggFile();
+		$from->owner_guid = 1;
+		$from->setFilename('symlink.txt');
+
+		$to_filename = $to->getFilenameOnFilestore();
+		$from_filename = $from->getFilenameOnFilestore();
+
+		// Delete the symlink and the target
+		$this->assertTrue(symlink($to_filename, $from_filename));
+		$this->assertTrue($from->delete(true));
+		$this->assertFalse($from->exists());
+		$this->assertFalse(is_link($from_filename));
+		$this->assertfalse($to->exists());
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanDeleteSymlinkWithMissingTarget() {
+
+		$to = new ElggFile();
+		$to->owner_guid = 1;
+		$to->setFilename('symlink-target.txt');
+		$to->open('write');
+		$to->close();
+
+		$from = new ElggFile();
+		$from->owner_guid = 1;
+		$from->setFilename('symlink.txt');
+
+		$to_filename = $to->getFilenameOnFilestore();
+		$from_filename = $from->getFilenameOnFilestore();
+
+		// Test there are no errors when target doesn't exist anymore
+		$this->assertTrue(symlink($to_filename, $from_filename));
+		$this->assertTrue($to->delete());
+		$this->assertTrue($from->delete(true));
+		$this->assertFalse($from->exists());
+		$this->assertFalse(is_link($from_filename));
+		$this->assertFalse($to->exists());
 	}
 
 }

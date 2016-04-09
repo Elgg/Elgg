@@ -144,13 +144,17 @@ class ElggDiskFilestore extends \ElggFilestore {
 	/**
 	 * Delete an \ElggFile file.
 	 *
-	 * @param \ElggFile $file File to delete
-	 *
+	 * @param \ElggFile $file            File to delete
+	 * @param bool      $follow_symlinks If true, will also delete the target file if the current file is a symlink
 	 * @return bool
 	 */
-	public function delete(\ElggFile $file) {
+	public function delete(\ElggFile $file, $follow_symlinks = true) {
 		$filename = $this->getFilenameOnFilestore($file);
-		if (file_exists($filename)) {
+		if (file_exists($filename) || is_link($filename)) {
+			if ($follow_symlinks && is_link($filename) && file_exists($filename)) {
+				$target = readlink($filename);
+				file_exists($target) && unlink($target);
+			}
 			return unlink($filename);
 		} else {
 			return true;
