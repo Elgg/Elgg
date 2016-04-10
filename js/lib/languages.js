@@ -34,30 +34,32 @@ elgg.get_language = function() {
 /**
  * Translates a string
  *
- * @param {String} key      The string to translate
- * @param {Array}  argv     vsprintf support
- * @param {String} language The language to display it in
+ * @param {String} key      Message key
+ * @param {Array}  argv     vsprintf() arguments
+ * @param {String} language Desired language
  *
- * @return {String} The translation
+ * @return {String} The translation or the given key if no translation available
  */
 elgg.echo = function(key, argv, language) {
-	//elgg.echo('str', 'en')
+
+	// handle elgg.echo('str', 'en')
 	if (elgg.isString(argv)) {
 		language = argv;
 		argv = [];
+	} else {
+		argv = argv || [];
 	}
 
-	//elgg.echo('str', [...], 'en')
+	language = language || elgg.get_language();
+
 	var translations = elgg.config.translations,
-		dlang = elgg.get_language(),
-		map;
+		list = [language, elgg.get_language()],
+		lang;
 
-	language = language || dlang;
-	argv = argv || [];
-
-	map = translations[language] || translations[dlang];
-	if (map && map[key]) {
-		return vsprintf(map[key], argv);
+	while (lang = list.shift()) {
+		if (translations[lang] && elgg.isString(translations[lang][key])) {
+			return vsprintf(translations[lang][key], argv);
+		}
 	}
 
 	return key;
