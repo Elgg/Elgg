@@ -61,22 +61,35 @@ class Translator {
 
 		$this->ensureTranslationsLoaded($language);
 
-		if (isset($GLOBALS['_ELGG']->translations[$language][$message_key])) {
-			$string = $GLOBALS['_ELGG']->translations[$language][$message_key];
+		$notice = '';
+		$string = $message_key;
 
-		} else if (isset($GLOBALS['_ELGG']->translations["en"][$message_key])) {
-			$string = $GLOBALS['_ELGG']->translations["en"][$message_key];
-			_elgg_services()->logger->notice(sprintf('Missing %s translation for "%s" language key', $language, $message_key));
+		// avoid dupes without overhead of array_unique
+		$langs[$language] = true;
+		$langs['en'] = true;
 
-		} else {
-			$string = $message_key;
-			_elgg_services()->logger->notice(sprintf('Missing English translation for "%s" language key', $message_key));
+		foreach (array_keys($langs) as $try_lang) {
+			if (isset($GLOBALS['_ELGG']->translations[$try_lang][$message_key])) {
+				$string = $GLOBALS['_ELGG']->translations[$try_lang][$message_key];
+
+				// only pass through if we have arguments to allow backward compatibility
+				// with manual sprintf() calls.
+				if ($args) {
+					$string = vsprintf($string, $args);
+				}
+
+				break;
+			} else {
+				$notice = sprintf(
+					'Missing %s translation for "%s" language key',
+					($try_lang === 'en') ? 'English' : $try_lang,
+					$message_key
+				);
+			}
 		}
 
-		// only pass through if we have arguments to allow backward compatibility
-		// with manual sprintf() calls.
-		if ($args) {
-			$string = vsprintf($string, $args);
+		if ($notice) {
+			_elgg_services()->logger->notice($notice);
 		}
 
 		return $string;
