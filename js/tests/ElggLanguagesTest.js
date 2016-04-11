@@ -21,13 +21,36 @@ define(function(require) {
 				expect(elgg.echo('hello')).toBe('Hello!');
 				expect(elgg.echo('hello', 'es')).toBe('Hola!');			
 			});
-			
+
 			it("falls back to the default language", function() {
 				elgg.add_translation('en', {
 					'hello': 'Hello!'
 				});
-				
+
 				expect(elgg.echo('hello', 'es')).toBe('Hello!');
+			});
+
+			it("returns the key on failure", function() {
+				expect(elgg.echo('hello')).toBe('hello');
+			});
+
+			it("falls back even if an unrelated key exists in the requested language", function () {
+				elgg.add_translation('en', {
+					'hello': 'Hello!'
+				});
+				elgg.add_translation('es', {
+					'goodbye': 'Adios!'
+				});
+
+				expect(elgg.echo('hello', 'es')).toBe('Hello!');
+			});
+
+			it("recognizes empty string as a valid translation", function () {
+				elgg.add_translation('en', {
+					'void': ''
+				});
+
+				expect(elgg.echo('void')).toBe('');
 			});
 		});
 	});
