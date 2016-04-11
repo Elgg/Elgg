@@ -376,30 +376,13 @@ function file_set_url($hook, $type, $url, $params) {
  */
 function file_set_icon_url($hook, $type, $url, $params) {
 	$file = $params['entity'];
-	$size = $params['size'];
+	$size = elgg_extract('size', $params, 'large');
 	if (elgg_instanceof($file, 'object', 'file')) {
 		// thumbnails get first priority
-		if ($file->thumbnail) {
-			switch ($size) {
-				case "small":
-					$thumbfile = $file->thumbnail;
-					break;
-				case "medium":
-					$thumbfile = $file->smallthumb;
-					break;
-				case "large":
-				default:
-					$thumbfile = $file->largethumb;
-					break;
-			}
-
-			$readfile = new ElggFile();
-			$readfile->owner_guid = $file->owner_guid;
-			$readfile->setFilename($thumbfile);
-			$thumb_url = elgg_get_inline_url($readfile, true);
-			if ($thumb_url) {
-				return $thumb_url;
-			}
+		$thumbnail = $file->getIcon($size);
+		$thumb_url = elgg_get_inline_url($thumbnail, true);
+		if ($thumb_url) {
+			return $thumb_url;
 		}
 
 		$mapping = array(
@@ -471,15 +454,7 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 		return;
 	}
 
-	$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
-	foreach ($thumbnails as $thumbnail) {
-		if ($thumbnail) {
-			$delfile = new ElggFile();
-			$delfile->owner_guid = $file->owner_guid;
-			$delfile->setFilename($thumbnail);
-			$delfile->delete();
-		}
-	}
+	$file->deleteIcon();
 }
 
 /**

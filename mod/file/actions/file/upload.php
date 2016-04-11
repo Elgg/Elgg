@@ -105,76 +105,16 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 
 	$guid = $file->save();
 
-	$thumb = new ElggFile();
-	$thumb->owner_guid = $file->owner_guid;
-
-	$sizes = [
-		'small' => [
-			'w' => 60,
-			'h' => 60,
-			'square' => true,
-			'metadata_name' => 'thumbnail',
-			'filename_prefix' => 'thumb',
-		],
-		'medium' => [
-			'w' => 153,
-			'h' => 153,
-			'square' => true,
-			'metadata_name' => 'smallthumb',
-			'filename_prefix' => 'smallthumb',
-		],
-		'large' => [
-			'w' => 600,
-			'h' => 600,
-			'square' => false,
-			'metadata_name' => 'largethumb',
-			'filename_prefix' => 'largethumb',
-		],
-	];
-
-	$remove_thumbs = function () use ($file, $sizes, $thumb) {
-		if (!$file->guid) {
-			return;
-		}
-
-		unset($file->icontime);
-
-		foreach ($sizes as $size => $data) {
-			$filename = $file->{$data['metadata_name']};
-			if ($filename !== null) {
-				$thumb->setFilename($filename);
-				$thumb->delete();
-				unset($file->{$data['metadata_name']});
-			}
-		}
-	};
-
-	$remove_thumbs();
-
-	$jpg_filename = pathinfo($filestorename, PATHINFO_FILENAME) . '.jpg';
-
-	if ($guid && $file->simpletype == "image") {
-		$file->icontime = time();
-
-		foreach ($sizes as $size => $data) {
-			$image_bytes = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $data['w'], $data['h'], $data['square']);
-			if (!$image_bytes) {
-				// bail and remove any thumbs
-				$remove_thumbs();
-				break;
-			}
-
-			$filename = "{$prefix}{$data['filename_prefix']}{$jpg_filename}";
-			$thumb->setFilename($filename);
-			$thumb->open("write");
-			$thumb->write($image_bytes);
-			$thumb->close();
-			unset($image_bytes);
-
-			$file->{$data['metadata_name']} = $filename;
-		}
+	if ($guid && $file->saveIconFromElggFile($file)) {
+		$file->thumbnail = $file->getIcon('small')->getFilename();
+		$file->smallthumb = $file->getIcon('medium')->getFilename();
+		$file->largethumb = $file->getIcon('large')->getFilename();
+	} else {
+		$file->deleteIcon();
+		unset($file->thumbnail);
+		unset($file->smallthumb);
+		unset($file->largethumb);
 	}
-
 } else {
 	// not saving a file but still need to save the entity to push attributes to database
 	$file->save();
