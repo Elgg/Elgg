@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg filestore.
  * This file contains functions for saving and retrieving data from files.
@@ -72,13 +73,12 @@ function get_uploaded_file($input_name) {
  *
  * @return false|mixed The contents of the resized image, or false on failure
  */
-function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight,
-$square = false, $upscale = false) {
+function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight, $square = false, $upscale = false) {
 	$files = _elgg_services()->request->files;
 	if (!$files->has($input_name)) {
 		return false;
 	}
-	
+
 	$file = $files->get($input_name);
 	if (empty($file)) {
 		// a file input was provided but no file uploaded
@@ -88,8 +88,7 @@ $square = false, $upscale = false) {
 		return false;
 	}
 
-	return get_resized_image_from_existing_file($file->getPathname(), $maxwidth,
-		$maxheight, $square, 0, 0, 0, 0, $upscale);
+	return get_resized_image_from_existing_file($file->getPathname(), $maxwidth, $maxheight, $square, 0, 0, 0, 0, $upscale);
 }
 
 /**
@@ -112,8 +111,7 @@ $square = false, $upscale = false) {
  *
  * @return false|mixed The contents of the resized image, or false on failure
  */
-function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false,
-$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
+function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
 
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
@@ -168,20 +166,10 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
 
 	// color transparencies white (default is black)
 	imagefilledrectangle(
-		$new_image, 0, 0, $params['newwidth'], $params['newheight'],
-		imagecolorallocate($new_image, 255, 255, 255)
+			$new_image, 0, 0, $params['newwidth'], $params['newheight'], imagecolorallocate($new_image, 255, 255, 255)
 	);
 
-	$rtn_code = imagecopyresampled(	$new_image,
-									$original_image,
-									0,
-									0,
-									$params['xoffset'],
-									$params['yoffset'],
-									$params['newwidth'],
-									$params['newheight'],
-									$params['selectionwidth'],
-									$params['selectionheight']);
+	$rtn_code = imagecopyresampled($new_image, $original_image, 0, 0, $params['xoffset'], $params['yoffset'], $params['newwidth'], $params['newheight'], $params['selectionwidth'], $params['selectionheight']);
 	if (!$rtn_code) {
 		return false;
 	}
@@ -212,10 +200,8 @@ function get_image_resize_parameters($width, $height, $options) {
 	$defaults = array(
 		'maxwidth' => 100,
 		'maxheight' => 100,
-
 		'square' => false,
 		'upscale' => false,
-
 		'x1' => 0,
 		'y1' => 0,
 		'x2' => 0,
@@ -253,7 +239,6 @@ function get_image_resize_parameters($width, $height, $options) {
 	// determine cropping offsets
 	if ($square) {
 		// asking for a square image back
-
 		// detect case where someone is passing crop parameters that are not for a square
 		if ($crop == true && $selection_width != $selection_height) {
 			return false;
@@ -282,10 +267,10 @@ function get_image_resize_parameters($width, $height, $options) {
 		$new_height = $maxheight;
 
 		// maintain aspect ratio of original image/crop
-		if (($selection_height / (float)$new_height) > ($selection_width / (float)$new_width)) {
-			$new_width = floor($new_height * $selection_width / (float)$selection_height);
+		if (($selection_height / (float) $new_height) > ($selection_width / (float) $new_width)) {
+			$new_width = floor($new_height * $selection_width / (float) $selection_height);
 		} else {
-			$new_height = floor($new_width * $selection_height / (float)$selection_width);
+			$new_height = floor($new_width * $selection_height / (float) $selection_width);
 		}
 
 		// by default, use entire image
@@ -336,27 +321,7 @@ function file_delete($guid) {
 		return false;
 	}
 
-	$thumbnail = $file->thumbnail;
-	$smallthumb = $file->smallthumb;
-	$largethumb = $file->largethumb;
-	if ($thumbnail) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($thumbnail);
-		$delfile->delete();
-	}
-	if ($smallthumb) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($smallthumb);
-		$delfile->delete();
-	}
-	if ($largethumb) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($largethumb);
-		$delfile->delete();
-	}
+	elgg_clear_entity_icons($file);
 
 	return $file->delete();
 }
@@ -420,7 +385,6 @@ function _elgg_clear_entity_files($entity) {
 	}
 }
 
-
 /// Variable holding the default datastore
 $DEFAULT_FILE_STORE = null;
 
@@ -481,12 +445,52 @@ function _elgg_filestore_init() {
 
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
-	
+
 	// Parse category of file from MIME type
 	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
 
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
+
+	// Touch entity icons if entity access id has changed
+	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
+	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_touch_icons');
+
+	// We can now automatically resolve entity icon URLs
+	// Not applying this to users as they have some custom logic in their handlers
+	elgg_register_plugin_hook_handler('entity:icon:url', 'object', '_elgg_filestore_set_entity_icon_url');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'group', '_elgg_filestore_set_entity_icon_url');
+
+	elgg_register_page_handler('embed-icon', '_elgg_filestore_embed_icon_handler');
+}
+
+/**
+ * Reset icon URLs if access_id has changed
+ *
+ * @param string     $event  "update:after"
+ * @param string     $type   "object"|"group"
+ * @param ElggObject $entity Entity
+ * @return void
+ */
+function _elgg_filestore_touch_icons($event, $type, $entity) {
+
+	$original_attributes = $entity->getOriginalAttributes();
+	if (!array_key_exists('access_id', $original_attributes)) {
+		return;
+	}
+
+	if ($entity instanceof \ElggFile) {
+		// we touch the file to invalidate any previously generated download URLs
+		$entity->setModifiedTime();
+	}
+
+	$sizes = array_keys(elgg_get_icon_sizes($entity));
+	foreach ($sizes as $size) {
+		$icon = elgg_get_entity_icon($entity, $size);
+		if ($icon->exists()) {
+			$icon->setModifiedTime();
+		}
+	}
 }
 
 /**
@@ -560,7 +564,6 @@ function _elgg_filestore_test($hook, $type, $value) {
 	return $value;
 }
 
-
 /**
  * Returns file's download URL
  *
@@ -602,6 +605,356 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = ''
 	return $file_svc->getURL();
 }
 
+/**
+ 
+ * Returns a file's URL suitable for embedding in a text editor
+ * We can not use elgg_get_inline_url() for these purposes due to a URL structure bound to user session and file modification time
+ * This function returns a generic (permanent) URL that will then be resolved to an inline URL whenever requested.
+ * The behaviour of the embed-icon handler is similar to deprecated mod/file/thumbnail.php
+ *
+ * @param \ElggEntity $entity Entity
+ * @param string      $size   Size
+ * @return string
+ * @since 2.2
+ */
+function elgg_get_embed_url(\ElggEntity $entity, $size) {
+	return elgg_normalize_url("embed-icon/$entity->guid/$size");
+}
+
+/**
+ * Page handler for /embed-icon/ identifier
+ * 
+ * @param array $segments URL segments
+ * @return void
+ * @access private
+ * @since 2.2
+ */
+function _elgg_filestore_embed_icon_handler($segments) {
+
+	// clear cache-boosting headers set by PHP session
+	header_remove('Cache-Control');
+	header_remove('Pragma');
+	header_remove('Expires');
+
+	$request = _elgg_services()->request;
+	$response = new Symfony\Component\HttpFoundation\Response();
+	$response->prepare($request);
+
+	$guid = array_shift($segments);
+	$size = array_shift($segments);
+
+	$file = get_entity($guid);
+	if (!$file instanceof ElggFile) {
+		if (elgg_entity_exists($guid)) {
+			$response->setStatusCode(403)->setContent('You are not allowed to access this file')->send();
+		} else {
+			$response->setStatusCode(404)->setContent('File does not exist')->send();
+		}
+		exit;
+	}
+
+	$thumbnail = elgg_get_entity_icon($file, $size);
+	if (!$thumbnail->exists()) {
+		$response->setStatusCode(404)->setContent('Thumbnail doest not exist')->send();
+		exit;
+	}
+
+	$if_none_match = $request->headers->get('if_none_match');
+	if (!empty($if_none_match)) {
+		// strip mod_deflate suffixes
+		$request->headers->set('if_none_match', str_replace('-gzip', '', $if_none_match));
+	}
+
+	$filenameonfilestore = $thumbnail->getFilenameOnFilestore();
+	$last_updated = filemtime($filenameonfilestore);
+	$etag = '"' . $last_updated . '"';
+	$response->setPublic()->setEtag($etag);
+	if ($response->isNotModified($request)) {
+		$response->send();
+		exit();
+	}
+
+	$headers = [
+		'Content-Type' => (new Elgg\Filesystem\MimeTypeDetector())->getType($filenameonfilestore),
+	];
+	$response = new Symfony\Component\HttpFoundation\BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
+	$response->prepare($request);
+
+	$expires_dt = (new DateTime())->setTimestamp(strtotime('+1 day'));
+	$response->setExpires($expires_dt);
+
+	$response->setEtag($etag);
+	
+	$response->send();
+	exit;
+}
+
+/**
+ * Returns a configuration array of icon sizes
+ *
+ * @param \ElggEntity $entity Entity
+ * @return array
+ */
+function elgg_get_icon_sizes(\ElggEntity $entity = null) {
+	$icon_sizes = _elgg_services()->config->get('icon_sizes');
+
+	if (!$entity) {
+		return $icon_sizes;
+	}
+
+	return elgg_trigger_plugin_hook('entity:icon:sizes', $entity->getType(), ['entity' => $entity], $icon_sizes);
+}
+
+/**
+ * Create entity icons from a source file
+ *
+ * @param \ElggEntity      $entity        Entity to own the icons
+ * @param \ElggFile|string $file          Source image as an \ElggFile object, or path to source file, or form input name
+ * @param int              $x1            Cropping coordinate
+ * @param int              $y1            Cropping coordinate
+ * @param int              $x2            Cropping coordinate
+ * @param int              $y2            Cropping coordinate
+ * @param bool             $keep_original If true, will create a coopy of $file with an alias _uploaded under /icons/_uploaded.jpg
+ * @return bool
+ */
+function elgg_create_entity_icons(\ElggEntity $entity, $file = null, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $keep_original = true) {
+
+	if (!$entity->guid) {
+		elgg_log(__FUNCTION__ . ' only works with saved entities that have a guid', '2.2');
+	}
+	
+	$filename = false;
+	$default_mimetype = null;
+	if ($file instanceof \ElggFile) {
+		$filename = $file->getFilenameOnFilestore();
+		$default_mimetype = $file->mimetype;
+	} else if (is_string($file)) {
+		if (file_exists($file)) {
+			$filename = $file;
+		} else {
+			$files = _elgg_services()->request->files;
+			if ($files->has($file)) {
+				$file = $files->get($file);
+				if ($file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile && $file->isValid()) {
+					$filename = $file->getPathname();
+					$default_mimetype = $file->getClientMimeType();
+				}
+			}
+		}
+	} else if ($entity instanceof \ElggFile) {
+		$filename = $entity->getFilenameOnFilestore();
+		$keep_original = false;
+	}
+
+	if (!$filename || !is_readable($filename)) {
+		elgg_log('Source file passed to ' . __FUNCTION__ . ' is not readable', 'ERROR');
+		return false;
+	}
+
+	$mimetype = (new \Elgg\Filesystem\MimeTypeDetector())->getType($filename, $default_mimetype);
+	$simpletype = elgg_get_file_simple_type($mimetype);
+
+	if ($simpletype !== 'image') {
+		elgg_load("Source file $filename passed to " . __FUNCTION__ . " is not a valid image", 'ERROR');
+		return false;
+	}
+
+	// Create temporary file to avoid accidentally deleting source files that are also icons
+	$tmp_filename = "tmp/" . time() . pathinfo($filename, PATHINFO_BASENAME);
+	$tmp = new \ElggFile();
+	$tmp->setFilename($tmp_filename);
+	$tmp->open('write');
+	$tmp->close();
+	copy($filename, $tmp->getFilenameOnFilestore());
+
+	elgg_clear_entity_icons($entity);
+
+	$params = [
+		'entity' => $entity,
+		'file' => $tmp,
+		'x1' => $x1,
+		'y1' => $y1,
+		'x2' => $x2,
+		'y2' => $y2,
+	];
+
+	$created = elgg_trigger_plugin_hook('create_icons', $entity->getType(), $params, false);
+	if ($created) {
+		$tmp->delete();
+
+		$entity->icontime = time();
+		if ($x1 || $y1 || $x2 || $y2) {
+			$entity->x1 = $x1;
+			$entity->y1 = $y1;
+			$entity->x2 = $x2;
+			$entity->y2 = $y2;
+		}
+
+		return true;
+	}
+
+	if ($keep_original) {
+		// Store source file
+		// @todo: this logic is flawed; we need to convert source images to jpeg
+		$_uploaded = elgg_get_entity_icon($entity, '_uploaded');
+		$_uploaded->open('write');
+		$_uploaded->close();
+		copy($tmp->getFilenameOnFilestore(), $_uploaded->getFilenameOnFilestore());
+	}
+
+	$sizes = elgg_get_icon_sizes($entity);
+
+	// @todo: validate cropping coordinates
+
+	foreach ($sizes as $size => $opts) {
+		$width = $opts['w'];
+		$height = $opts['h'];
+		$square = $opts['square'];
+		$upscale = $opts['upscale'];
+
+		$icon = elgg_get_entity_icon($entity, $size);
+		if ($square) {
+			$image_bytes = get_resized_image_from_existing_file($tmp->getFilenameOnFilestore(), $width, $height, $square, $x1, $y1, $x2, $y2, $upscale);
+		} else {
+			$image_bytes = get_resized_image_from_existing_file($tmp->getFilenameOnFilestore(), $width, $height, $square, 0, 0, 0, 0, $upscale);
+		}
+		if ($image_bytes) {
+			$icon->open("write");
+			$icon->write($image_bytes);
+			$icon->close();
+			unset($image_bytes);
+		} else {
+			elgg_clear_entity_icons($entity);
+			$tmp->delete();
+			return false;
+		}
+	}
+
+	$tmp->delete();
+
+	$entity->icontime = time();
+	if ($x1 || $y1 || $x2 || $y2) {
+		$entity->x1 = $x1;
+		$entity->y1 = $y1;
+		$entity->x2 = $x2;
+		$entity->y2 = $y2;
+	}
+
+	return true;
+}
+
+/**
+ * Clear entity's icons
+ *
+ * @param \ElggEntity $entity Entity
+ * @return void
+ */
+function elgg_clear_entity_icons(\ElggEntity $entity) {
+
+	$sizes = array_keys(elgg_get_icon_sizes($entity));
+	$sizes[] = '_uploaded';
+
+	foreach ($sizes as $size) {
+		$thumb = elgg_get_entity_icon($entity, $size);
+		$thumb->delete();
+	}
+
+	unset($entity->icontime);
+	unset($entity->x1);
+	unset($entity->y1);
+	unset($entity->x2);
+	unset($entity->y2);
+}
+
+/**
+ * Returns a file object that represents entity's icon on filestore
+ * Note that the thumbnail file may or may not exist, use ``ElggFile::exists()``
+ * on this function's return to ensure that the icon file actually exists
+ *
+ * @param \ElggEntity $entity Entity (must have a guid)
+ * @param string      $size   Icon size name or '_uploaded' to retrieve originally uploaded image
+ * @return \ElggEntity
+ * @since 2.2
+ */
+function elgg_get_entity_icon(\ElggEntity $entity, $size = 'medium') {
+
+	$sizes = elgg_get_icon_sizes($entity);
+	if (!array_key_exists($size, $sizes) && $size !== '_uploaded') {
+		$size = 'medium';
+	}
+
+	$icon = new \ElggFile();
+	$icon->owner_guid = $entity->guid;
+	$icon->setFilename("icons/{$size}.jpg");
+
+	$legacy_icon = new \ElggFile();
+
+	// Check if we have a legacy icon
+	if ($entity instanceof \ElggFile) {
+		$metadata_names = [
+			'small' => 'thumbnail',
+			'medium' => 'smallthumb',
+			'large' => 'largethumb',
+		];
+		if (isset($metadata_names[$size])) {
+			$metadata_name = $metadata_names[$size];
+			if ($entity->$metadata_name) {
+				$legacy_icon->owner_guid = $entity->owner_guid;
+				$legacy_icon->setFilename($entity->$metadata_name);
+			}
+		}
+	} else if ($entity instanceof \ElggUser) {
+		// @note: prior to 2.2, source image for user avatars was discarded after resizing
+		$legacy_icon->owner_guid = $entity->guid;
+		$legacy_icon->setFilename("profile/{$entity->guid}{$size}.jpg");
+	} else if ($entity instanceof \ElggGroup) {
+		$legacy_icon->owner_guid = $entity->owner_guid;
+		$legacy_icon->setFilename("groups/{$entity->guid}{$size}.jpg");
+	}
+
+	if ($legacy_icon->exists()) {
+		$icon->open('write');
+		$icon->close();
+		$legacy_filestorename = $legacy_icon->getFilenameOnFilestore();
+		$filestorename = $icon->getFilenameOnFilestore();
+		if (rename($legacy_filestorename, $filestorename)) {
+			symlink($filestorename, $legacy_filestorename);
+			elgg_log("Legacy entity icon (guid: $entity->guid) has been moved from $legacy_filestorename to $filestorename. A new symlink has been created.", 'NOTICE');
+		}
+	}
+
+	return $icon;
+}
+
+/**
+ * Set object icon URL (if created with elgg_create_entity_icons())
+ *
+ * @param string $hook   "entity:icon:url"
+ * @param string $type   "object"|"group"
+ * @param string $return URL
+ * @param array  $params Hook params
+ * @param string
+ * @access private
+ * @since 2.2
+ */
+function _elgg_filestore_set_entity_icon_url($hook, $type, $return, $params) {
+
+	if (isset($return)) {
+		return;
+	}
+
+	$entity = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params, 'medium');
+
+	$icon = elgg_get_entity_icon($entity, $size);
+
+	if ($icon->exists()) {
+		$thumb_url = elgg_get_inline_url($icon, true);
+		if ($thumb_url) {
+			return $thumb_url;
+		}
+	}
+}
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);

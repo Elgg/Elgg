@@ -92,7 +92,13 @@ class ElggFile extends \ElggObject {
 	 * @return string
 	 */
 	public function getFilenameOnFilestore() {
-		return $this->getFilestore()->getFilenameOnFilestore($this);
+		$filestorename = $this->getFilestore()->getFilenameOnFilestore($this);
+		if (preg_match("/groups|profile\/\d+\w*\.jpg$/i", $this->getFilename()) || preg_match("/file\/(thumb|smallthumb|largethumb).*\.jpg$/i", $this->getFilename())) {
+			elgg_deprecated_notice("Filestore location and ownership of entity icons is in transition.
+				Do not attempt to access entity icons on filestore by filename ({$filestorename}).
+				Use elgg_create_entity_icons() and elgg_get_entity_icon().", '2.2');
+		}
+		return $filestorename;
 	}
 
 	/**

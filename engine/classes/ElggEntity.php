@@ -274,6 +274,12 @@ abstract class ElggEntity extends \ElggData implements
 			return 2;
 		}
 
+		if (in_array($name, array('thumbnail', 'smallthumb', 'largethumb'))) {
+			elgg_deprecated_notice("Filestore location and ownership of entity icons is in transition.
+				Do not attempt to access entity icons on filestore by '$name' metadata value.
+				Use elgg_get_entity_icon().", '2.2');
+		}
+
 		return $this->getMetadata($name);
 	}
 

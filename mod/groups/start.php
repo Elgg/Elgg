@@ -30,7 +30,6 @@ function groups_init() {
 
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
-	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_set_icon_url');
 
 	// Register an icon handler for groups
 	elgg_register_page_handler('groupicon', 'groups_icon_handler');
@@ -96,6 +95,7 @@ function groups_init() {
 
 	// Register a handler for create groups
 	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
+	elgg_register_event_handler('update', 'group', 'groups_update_event_listener');
 
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
@@ -346,33 +346,10 @@ function groups_set_url($hook, $type, $url, $params) {
  * @param string $url
  * @param array  $params
  * @return string Relative URL
+ * @return 2.2
  */
 function groups_set_icon_url($hook, $type, $url, $params) {
-	/* @var ElggGroup $group */
-	$group = $params['entity'];
-	$size = $params['size'];
-
-	$icontime = $group->icontime;
-	// handle missing metadata (pre 1.7 installations)
-	if (null === $icontime) {
-		$file = new ElggFile();
-		$file->owner_guid = $group->owner_guid;
-		$file->setFilename("groups/" . $group->guid . "large.jpg");
-		$icontime = $file->exists() ? time() : 0;
-		create_metadata($group->guid, 'icontime', $icontime, 'integer', $group->owner_guid, ACCESS_PUBLIC);
-	}
-	if ($icontime) {
-		// return thumbnail
-		$icon = new ElggFile();
-		$icon->owner_guid = $group->owner_guid;
-		$icon->setFilename("groups/{$group->guid}{$size}.jpg");
-		$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
-		if ($url) {
-			return $url;
-		}
-	}
-
-	return elgg_get_simplecache_url("groups/default{$size}.gif");
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and no longer in use', '2.2');
 }
 
 /**
@@ -510,6 +487,41 @@ function groups_create_event_listener($event, $object_type, $object) {
 	}
 
 	return true;
+}
+
+/**
+ * Update event handler
+ *
+ * @todo Write an upgrade script that will iterate through all groups and ->save()
+ * 
+ * @param string     $event "update"
+ * @param string     $type  "group"
+ * @param \ElggGroup $group Group entity
+ * @return void
+ */
+function groups_update_event_listener($event, $type, $group) {
+
+	// Regenerate group icons using new API
+	$owner_guid = $group->owner_guid;
+	$original_attrs = $group->getOriginalAttributes();
+	if (isset($original_attrs['owner_guid'])) {
+		$owner_guid = $original_attrs['owner_guid'];
+	}
+
+	$source = new ElggFile();
+	$source->owner_guid = $owner_guid;
+	$source->setFilename("groups/{$group->guid}.jpg");
+
+	if (!$source->exists()) {
+		// nothing to migrate
+		return;
+	}
+	
+	if (elgg_create_entity_icons($group, $source)) {
+		$source->delete();
+	} else {
+		elgg_log("Unable to regenerate icons from old source for group $group->guid", 'ERROR');
+	}
 }
 
 /**

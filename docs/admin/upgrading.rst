@@ -53,6 +53,7 @@ Group avatars are now served via ``serve-file`` handler. Plugins should start us
 
  * ``groupicon`` page handler (``groups_icon_handler()``) has been deprecated
  * ``/mod/groups/icon.php`` file has been deprecated
+ * ``groups_set_icon_url()`` no longer in use as callback for ``entity:icon:url, group`` hook
 
 
 File entity thumbs and downloads are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and ``elgg_get_download_url()`` and note that:
@@ -66,6 +67,9 @@ File entity thumbs and downloads are now served via ``serve-file`` handler. Plug
    - ``mod/file/views/default/resources/file/view.php``
    - ``mod/file/views/rss/file/enclosure.php``
 
+All entity icons now have a predictable location on filestore. Icons are located to in ``/icons/$size.jpg`` relative to the entity's directory on filestore.
+Whenever legacy icons are accessed, they are migrated to their new location. Though, we establish symlinks, you should no longer rely on metadata values or
+specific filestore names to fetch icons. Use ``elgg_get_entity_icon()``.
 
 From 1.x to 2.0
 ===============

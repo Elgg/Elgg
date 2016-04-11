@@ -64,25 +64,25 @@ function file_init() {
 
 	// embed support
 	$item = ElggMenuItem::factory(array(
-		'name' => 'file',
-		'text' => elgg_echo('file'),
-		'priority' => 10,
-		'data' => array(
-			'options' => array(
-				'type' => 'object',
-				'subtype' => 'file',
-			),
-		),
+				'name' => 'file',
+				'text' => elgg_echo('file'),
+				'priority' => 10,
+				'data' => array(
+					'options' => array(
+						'type' => 'object',
+						'subtype' => 'file',
+					),
+				),
 	));
 	elgg_register_menu_item('embed', $item);
 
 	$item = ElggMenuItem::factory(array(
-		'name' => 'file_upload',
-		'text' => elgg_echo('file:upload'),
-		'priority' => 100,
-		'data' => array(
-			'view' => 'embed/file_upload/content',
-		),
+				'name' => 'file_upload',
+				'text' => elgg_echo('file:upload'),
+				'priority' => 100,
+				'data' => array(
+					'view' => 'embed/file_upload/content',
+				),
 	));
 
 	elgg_register_menu_item('embed', $item);
@@ -92,7 +92,8 @@ function file_init() {
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:file', 'Elgg\Values::getTrue');
 
-	elgg_register_event_handler('update:after', 'object', 'file_reset_icon_urls');
+	// Set custom thumbnail sizes
+	elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', 'file_set_custom_icon_sizes');
 }
 
 /**
@@ -233,7 +234,7 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 		$title,
 		$descr,
 		$entity->getURL()
-	), $language);
+			), $language);
 	$notification->summary = elgg_echo('file:notify:summary', array($entity->title), $language);
 
 	return $notification;
@@ -301,18 +302,18 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 		elgg_register_menu_item('page', array(
 			'name' => 'file:all',
 			'text' => elgg_echo('all'),
-			'href' =>  file_type_cloud_get_url($all, $friends),
+			'href' => file_type_cloud_get_url($all, $friends),
 		));
-		
+
 		foreach ($types as $type) {
 			elgg_register_menu_item('page', array(
 				'name' => "file:$type->tag",
 				'text' => elgg_echo("file:type:$type->tag"),
-				'href' =>  file_type_cloud_get_url($type, $friends),
+				'href' => file_type_cloud_get_url($type, $friends),
 			));
 		}
 	}
-	
+
 	// returning the view is needed for BC
 	$params = array(
 		'friends' => $friends,
@@ -373,83 +374,67 @@ function file_set_url($hook, $type, $url, $params) {
  * @return string Relative URL
  */
 function file_set_icon_url($hook, $type, $url, $params) {
+
+	if (isset($url)) {
+		return;
+	}
+
 	$file = $params['entity'];
 	$size = $params['size'];
-	if (elgg_instanceof($file, 'object', 'file')) {
-		// thumbnails get first priority
-		if ($file->thumbnail) {
-			switch ($size) {
-				case "small":
-					$thumbfile = $file->thumbnail;
-					break;
-				case "medium":
-					$thumbfile = $file->smallthumb;
-					break;
-				case "large":
-				default:
-					$thumbfile = $file->largethumb;
-					break;
-			}
-
-			$readfile = new ElggFile();
-			$readfile->owner_guid = $file->owner_guid;
-			$readfile->setFilename($thumbfile);
-			$thumb_url = elgg_get_inline_url($readfile, true);
-			if ($thumb_url) {
-				return $thumb_url;
-			}
-		}
-
-		$mapping = array(
-			'application/excel' => 'excel',
-			'application/msword' => 'word',
-			'application/ogg' => 'music',
-			'application/pdf' => 'pdf',
-			'application/powerpoint' => 'ppt',
-			'application/vnd.ms-excel' => 'excel',
-			'application/vnd.ms-powerpoint' => 'ppt',
-			'application/vnd.oasis.opendocument.text' => 'openoffice',
-			'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'word',
-			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'excel',
-			'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'ppt',
-			'application/x-gzip' => 'archive',
-			'application/x-rar-compressed' => 'archive',
-			'application/x-stuffit' => 'archive',
-			'application/zip' => 'archive',
-			'text/directory' => 'vcard',
-			'text/v-card' => 'vcard',
-			'application' => 'application',
-			'audio' => 'music',
-			'text' => 'text',
-			'video' => 'video',
-		);
-
-		$mime = $file->getMimeType();
-		if ($mime) {
-			$base_type = substr($mime, 0, strpos($mime, '/'));
-		} else {
-			$mime = 'none';
-			$base_type = 'none';
-		}
-
-		if (isset($mapping[$mime])) {
-			$type = $mapping[$mime];
-		} elseif (isset($mapping[$base_type])) {
-			$type = $mapping[$base_type];
-		} else {
-			$type = 'general';
-		}
-
-		if ($size == 'large') {
-			$ext = '_lrg';
-		} else {
-			$ext = '';
-		}
-
-		$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
-		$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
-		return $url;
+	
+	if (!elgg_instanceof($file, 'object', 'file')) {
+		return;
 	}
+
+	$mapping = array(
+		'application/excel' => 'excel',
+		'application/msword' => 'word',
+		'application/ogg' => 'music',
+		'application/pdf' => 'pdf',
+		'application/powerpoint' => 'ppt',
+		'application/vnd.ms-excel' => 'excel',
+		'application/vnd.ms-powerpoint' => 'ppt',
+		'application/vnd.oasis.opendocument.text' => 'openoffice',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'word',
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'excel',
+		'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'ppt',
+		'application/x-gzip' => 'archive',
+		'application/x-rar-compressed' => 'archive',
+		'application/x-stuffit' => 'archive',
+		'application/zip' => 'archive',
+		'text/directory' => 'vcard',
+		'text/v-card' => 'vcard',
+		'application' => 'application',
+		'audio' => 'music',
+		'text' => 'text',
+		'video' => 'video',
+	);
+
+	$mime = $file->getMimeType();
+	if ($mime) {
+		$base_type = substr($mime, 0, strpos($mime, '/'));
+	} else {
+		$mime = 'none';
+		$base_type = 'none';
+	}
+
+	if (isset($mapping[$mime])) {
+		$type = $mapping[$mime];
+	} elseif (isset($mapping[$base_type])) {
+		$type = $mapping[$base_type];
+	} else {
+		$type = 'general';
+	}
+
+	if ($size == 'large') {
+		$ext = '_lrg';
+	} else {
+		$ext = '';
+	}
+
+	$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
+	$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
+	return $url;
 }
 
 /**
@@ -469,48 +454,41 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 		return;
 	}
 
-	$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
-	foreach ($thumbnails as $thumbnail) {
-		if ($thumbnail) {
-			$delfile = new ElggFile();
-			$delfile->owner_guid = $file->owner_guid;
-			$delfile->setFilename($thumbnail);
-			$delfile->delete();
-		}
-	}
+	elgg_clear_entity_icons($file);
 }
 
 /**
- * Reset file thumb URLs if file access_id has changed
- * 
- * @param string     $event "update:after"
- * @param string     $type  "object"
- * @param ElggObject $file  File entity
- * @return void
+ * Set custom icon/thumbnail sizes for files
+ *
+ * @param string $hook   "entity:icon:sizes"
+ * @param string $type   "object"
+ * @param array  $return Config array
+ * @param array  $params Hook params
+ * @return array
  */
-function file_reset_icon_urls($event, $type, ElggObject $file) {
+function file_set_custom_icon_sizes($hook, $type, $return, $params) {
 
-	if (!$file instanceof ElggFile) {
+	$entity = elgg_extract('entity', $params);
+
+	if (!elgg_instanceof($entity, 'object', 'file')) {
 		return;
 	}
 
-	$original_attributes = $file->getOriginalAttributes();
-	if (!array_key_exists('access_id', $original_attributes)) {
-		return;
-	}
-
-	// we touch the file to invalidate any previously generated download URLs
-	touch($file->getFilenameOnFilestore());
-
-	// we touch the thumbs because we want new URLs from \Elgg\FileService\File::getURL
-	$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
-	foreach ($thumbnails as $thumbnail) {
-		$thumbfile = new ElggFile();
-		$thumbfile->owner_guid = $file->owner_guid;
-		$thumbfile->setFilename($thumbnail);
-		if ($thumbfile->exists()) {
-			$thumb_filename = $thumbfile->getFilenameOnFilestore();
-			touch($thumb_filename);
-		}
-	}
+	return [
+		'small' => [
+			'w' => 60,
+			'h' => 60,
+			'square' => true,
+		],
+		'medium' => [
+			'w' => 153,
+			'h' => 153,
+			'square' => true,
+		],
+		'large' => [
+			'w' => 600,
+			'h' => 600,
+			'upscale' => false,
+		],
+	];
 }
