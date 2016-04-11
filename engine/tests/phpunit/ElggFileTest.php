@@ -20,6 +20,20 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$file->setFilename("foobar.txt");
 
 		$this->file = $file;
+
+		$dataroot = elgg_get_config('dataroot');
+		if (is_dir($dataroot . '1/2/')) {
+			// we use this for writing new files
+			_elgg_rmdir($dataroot . '1/2/');
+		}
+	}
+
+	public function tearDown() {
+		$dataroot = elgg_get_config('dataroot');
+		if (is_dir($dataroot . '1/2/')) {
+			// we use this for writing new files
+			_elgg_rmdir($dataroot . '1/2/');
+		}
 	}
 
 	/**
@@ -141,7 +155,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCanCreateEmptyFile() {
 		$file = new ElggFile();
-		$file->owner_guid = 1;
+		$file->owner_guid = 2;
 		$file->setFilename('write-test.md');
 
 		$this->assertFalse($file->exists());
@@ -167,7 +181,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$contents2 = 'Sunny day outside!';
 
 		$file = new ElggFile();
-		$file->owner_guid = 1;
+		$file->owner_guid = 2;
 		$file->setFilename('write-test.md');
 
 		$this->assertFalse($file->exists());
@@ -243,7 +257,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$symlink_name = "symlink.txt";
 
 		$dataroot = _elgg_services()->config->get('dataroot');
-		$dir = new \Elgg\EntityDirLocator(1);
+		$dir = new \Elgg\EntityDirLocator(2);
 
 		// Remove symlink in case it exists
 		if (file_exists("$dataroot$dir$symlink_name")) {
@@ -251,14 +265,14 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		}
 
 		$target = new ElggFile();
-		$target->owner_guid = 1;
+		$target->owner_guid = 2;
 		$target->setFilename('symlink-target.txt');
 		$target->open('write');
 		$target->write('Testing!');
 		$target->close();
 		
 		$symlink = new ElggFile();
-		$symlink->owner_guid = 1;
+		$symlink->owner_guid = 2;
 		$symlink->setFilename($symlink_name);
 
 		$to = $target->getFilenameOnFilestore();
@@ -290,13 +304,13 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 	public function testCanDeleteSymlinkAndKeepTarget() {
 
 		$to = new ElggFile();
-		$to->owner_guid = 1;
+		$to->owner_guid = 2;
 		$to->setFilename('symlink-target.txt');
 		$to->open('write');
 		$to->close();
 
 		$from = new ElggFile();
-		$from->owner_guid = 1;
+		$from->owner_guid = 2;
 		$from->setFilename('symlink.txt');
 
 		$to_filename = $to->getFilenameOnFilestore();
@@ -316,13 +330,13 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 	public function testCanDeleteSymlinkAndTarget() {
 
 		$to = new ElggFile();
-		$to->owner_guid = 1;
+		$to->owner_guid = 2;
 		$to->setFilename('symlink-target.txt');
 		$to->open('write');
 		$to->close();
 
 		$from = new ElggFile();
-		$from->owner_guid = 1;
+		$from->owner_guid = 2;
 		$from->setFilename('symlink.txt');
 
 		$to_filename = $to->getFilenameOnFilestore();
@@ -342,13 +356,13 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 	public function testCanDeleteSymlinkWithMissingTarget() {
 
 		$to = new ElggFile();
-		$to->owner_guid = 1;
+		$to->owner_guid = 2;
 		$to->setFilename('symlink-target.txt');
 		$to->open('write');
 		$to->close();
 
 		$from = new ElggFile();
-		$from->owner_guid = 1;
+		$from->owner_guid = 2;
 		$from->setFilename('symlink.txt');
 
 		$to_filename = $to->getFilenameOnFilestore();
