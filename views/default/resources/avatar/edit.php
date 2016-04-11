@@ -20,7 +20,7 @@ if (!elgg_instanceof($entity, 'user') || !$entity->canEdit()) {
 $content = elgg_view('core/avatar/upload', array('entity' => $entity));
 
 // only offer the crop view if an avatar has been uploaded
-if (isset($entity->icontime)) {
+if ($entity->hasIcon('master')) {
 	$content .= elgg_view('core/avatar/crop', array('entity' => $entity));
 }
 
