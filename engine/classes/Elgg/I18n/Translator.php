@@ -12,7 +12,7 @@ class Translator {
 	
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -114,7 +114,7 @@ class Translator {
 		$country_code = strtolower($country_code);
 		$country_code = trim($country_code);
 		if (is_array($language_array) && $country_code != "") {
-			if (sizeof($language_array) > 0) { 
+			if (sizeof($language_array) > 0) {
 				if (!isset($GLOBALS['_ELGG']->translations[$country_code])) {
 					$GLOBALS['_ELGG']->translations[$country_code] = $language_array;
 				} else {
@@ -190,7 +190,7 @@ class Translator {
 	
 			if ($loaded) {
 				$GLOBALS['_ELGG']->i18n_loaded_from_cache = true;
-				// this is here to force 
+				// this is here to force
 				$GLOBALS['_ELGG']->language_paths[$this->defaultPath] = true;
 				return;
 			}
@@ -202,9 +202,9 @@ class Translator {
 	
 	/**
 	 * Registers translations in a directory assuming the standard plugin layout.
-	 * 
+	 *
 	 * @param string $path Without the trailing slash.
-	 * 
+	 *
 	 * @return bool Success
 	 */
 	function registerPluginTranslations($path) {
@@ -334,12 +334,21 @@ class Translator {
 		$admin_logged_in = _elgg_services()->session->isAdminLoggedIn();
 	
 		foreach ($GLOBALS['_ELGG']->translations as $k => $v) {
-			$installed[$k] = $this->translate($k, array(), $k);
-			if ($admin_logged_in && ($k != 'en')) {
-				$completeness = $this->getLanguageCompleteness($k);
-				if ($completeness < 100) {
-					$installed[$k] .= " (" . $completeness . "% " . $this->translate('complete') . ")";
-				}
+			if ($this->languageKeyExists($k, $k)) {
+				$lang = $this->translate($k, [], $k);
+			} else {
+				$lang = $this->translate($k);
+			}
+			
+			$installed[$k] = $lang;
+			
+			if (!$admin_logged_in || ($k === 'en')) {
+				continue;
+			}
+			
+			$completeness = $this->getLanguageCompleteness($k);
+			if ($completeness < 100) {
+				$installed[$k] .= " (" . $completeness . "% " . $this->translate('complete') . ")";
 			}
 		}
 	
