@@ -253,6 +253,9 @@ class Inspector {
 					// this does not work because you cannot set a guid on an entity
 					$params['entity'] = $widget;
 					break;
+				case 'longtext':
+					$params['id'] = rand();
+					break;
 				default:
 					break;
 			}
