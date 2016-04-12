@@ -42,9 +42,9 @@ class ViewsService {
 	private $views;
 
 	/**
-	 * @var \stdClass A list of valid view types as discovered.
+	 * @var string[]
 	 */
-	private $viewtype;
+	private $fallback_viewtypes = [];
 
 	/**
 	 * @var \stdClass Global Elgg configuration
@@ -85,13 +85,11 @@ class ViewsService {
 
 		$this->views = (object)[
 			'extensions' => [],
-		];
-		$this->viewtype = (object)[
+
 			/**
 			 * A list of views to cache in the simple cache.
 			 */
 			'simplecache' => [],
-			'fallback' => [],
 		];
 	}
 	
@@ -212,14 +210,14 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerViewtypeFallback($viewtype) {
-		$this->viewtype->fallback[] = $viewtype;
+		$this->fallback_viewtypes[] = $viewtype;
 	}
 
 	/**
 	 * @access private
 	 */
 	public function doesViewtypeFallback($viewtype) {
-		return in_array($viewtype, $this->viewtype->fallback);
+		return in_array($viewtype, $this->fallback_viewtypes);
 	}
 
 	/**
@@ -617,6 +615,7 @@ class ViewsService {
 			'locations' => $this->locations,
 			'overrides' => $overrides,
 			'extensions' => $this->views->extensions,
+			'simplecache' => array_keys($this->views->simplecache),
 		];
 	}
 
