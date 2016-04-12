@@ -165,7 +165,7 @@ class ElggWidget extends \ElggObject {
 	public function getTitle() {
 		$title = $this->title;
 		if (!$title) {
-			$title = _elgg_services()->widgets->getNameByType($this->handler);
+			$title = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $this->getContainerEntity());
 		}
 		return $title;
 	}
@@ -199,7 +199,10 @@ class ElggWidget extends \ElggObject {
 		usort($widgets, create_function('$a,$b','return (int)$a->order > (int)$b->order;'));
 
 		// remove widgets from inactive plugins
-		$widget_types = elgg_get_widget_types($this->context);
+		$widget_types = elgg_get_widget_types([
+			'context' => $this->context,
+			'container' => $this->getContainerEntity(),
+		]);
 		$inactive_widgets = array();
 		foreach ($widgets as $index => $widget) {
 			if (!array_key_exists($widget->handler, $widget_types)) {
