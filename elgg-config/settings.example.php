@@ -143,6 +143,16 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->boot_cache_ttl = 10;
 
 /**
+ * Set cache directory
+ *
+ * By default, Elgg uses the data directory to store cache files, but this may
+ * be undesirable for sites with the data directory on a distributed file system
+ * (e.g. multiple servers with load balancing). You can specify a separate location
+ * for the cache files here.
+ */
+//$CONFIG->cacheroot = "";
+
+/**
  * Cookie configuration
  *
  * Elgg uses 2 cookies: a PHP session cookie and an extended login cookie

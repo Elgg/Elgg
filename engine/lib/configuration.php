@@ -49,6 +49,17 @@ function elgg_get_data_path() {
 }
 
 /**
+ * Get the cache directory path for this installation.
+ *
+ * If not set in settings.php, the data path will be returned.
+ *
+ * @return string
+ */
+function elgg_get_cache_path() {
+	return _elgg_services()->config->getCachePath();
+}
+
+/**
  * Get the root directory path for this installation
  * 
  * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg

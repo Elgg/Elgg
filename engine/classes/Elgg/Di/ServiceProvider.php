@@ -35,6 +35,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
+ * @property-read \ElggFileCache                           $fileCache
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
@@ -91,7 +92,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
 			if (!$c->config->get('AutoloaderManager_skip_storage')) {
-				$manager->setStorage($c->systemCache->getFileCache());
+				$manager->setStorage($c->fileCache);
 				$manager->loadCache();
 			}
 			return $manager;
@@ -178,6 +179,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('externalFiles', function(ServiceProvider $c) {
 			return new \Elgg\Assets\ExternalFiles($c->config->getStorageObject());
+		});
+
+		$this->setFactory('fileCache', function(ServiceProvider $c) {
+			return new \ElggFileCache($c->config->getCachePath() . 'system_cache/');
 		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
@@ -317,7 +322,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
-			$cache = new \Elgg\Cache\SystemCache();
+			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config, $c->datalist);
 			if ($c->config->getVolatile('enable_profiling')) {
 				$cache->setTimer($c->timer);
 			}

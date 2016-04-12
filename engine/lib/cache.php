@@ -18,7 +18,7 @@
  * @return \ElggFileCache
  */
 function elgg_get_system_cache() {
-	return _elgg_services()->systemCache->getFileCache();
+	return _elgg_services()->fileCache;
 }
 
 /**
@@ -183,6 +183,11 @@ function elgg_disable_simplecache() {
  * @access private
  */
 function _elgg_rmdir($dir, $empty = false) {
+	if (!$dir) {
+		// realpath can return false
+		_elgg_services()->logger->warn(__FUNCTION__ . ' called with empty $dir');
+		return true;
+	}
 	$files = array_diff(scandir($dir), array('.', '..'));
 	
 	foreach ($files as $file) {
