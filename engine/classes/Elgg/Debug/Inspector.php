@@ -48,8 +48,6 @@ class Inspector {
 	 * @return array [view] => map of priority to ViewComponent[]
 	 */
 	public function getViews($viewtype = 'default') {
-		global $CONFIG;
-
 		$view_data = $this->getViewsData();
 
 		// maps view name to array of ViewComponent[] with priority as keys
@@ -167,11 +165,21 @@ class Inspector {
 	 * @return array [views]
 	 */
 	public function getSimpleCache() {
-		global $CONFIG;
+		$view_data = $this->getViewsData();
 
-		$tree = array();
-		foreach ($CONFIG->views->simplecache as $view => $foo) {
+		$tree = [];
+
+		foreach ($view_data['simplecache'] as $view) {
 			$tree[$view] = "";
+		}
+
+		// add all static views
+		foreach ($view_data['locations'] as $viewtype) {
+			foreach ($viewtype as $view => $location) {
+				if (pathinfo($location, PATHINFO_EXTENSION) !== 'php') {
+					$tree[$view] = "";
+				}
+			}
 		}
 
 		ksort($tree);
