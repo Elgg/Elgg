@@ -52,10 +52,9 @@ class TranslatorTest extends TestCase {
 	}
 
 	public function testIssuesNoticeOnMissingKey() {
+		// key is missing from all checked translations
 		_elgg_services()->logger->disable();
-
 		$this->assertEquals("{$this->key}b", $this->translator->translate("{$this->key}b"));
-
 		$logged = _elgg_services()->logger->enable();
 
 		$this->assertEquals([
@@ -64,9 +63,23 @@ class TranslatorTest extends TestCase {
 				'level' => Logger::NOTICE,
 			]
 		], $logged);
+
+		// has fallback key
+		$this->translator->addTranslation('en', ["{$this->key}b" => 'Dummy']);
+
+		_elgg_services()->logger->disable();
+		$this->assertEquals('Dummy', $this->translator->translate("{$this->key}b", [], 'es'));
+		$logged = _elgg_services()->logger->enable();
+
+		$this->assertEquals([
+			[
+				'message' => "Missing es translation for \"{$this->key}b\" language key",
+				'level' => Logger::NOTICE,
+			]
+		], $logged);
 	}
-	
-	public function testDoesNotPerformSprintfFormattingIfArgsNotProvided() {
-		$this->markTestIncomplete();
+
+	public function testDoesNotProcessArgsOnKey() {
+		$this->assertEquals('nonexistent:%s', $this->translator->translate('nonexistent:%s', [1]));
 	}
 }
