@@ -167,11 +167,22 @@ class Inspector {
 	 * @return array [views]
 	 */
 	public function getSimpleCache() {
-		global $CONFIG;
-
-		$tree = array();
-		foreach ($CONFIG->views->simplecache as $view => $foo) {
-			$tree[$view] = "";
+		
+		$simplecache = elgg_extract('simplecache', $this->getViewsData(), []);
+		$locations = elgg_extract('locations', $this->getViewsData(), []);
+		
+		$tree = [];
+		foreach ($simplecache as $view => $foo) {
+			$tree[$view] = '';
+		}
+		
+		// add all static views
+		foreach ($locations as $viewtype) {
+			foreach ($viewtype as $view => $location) {
+				if (pathinfo($location, PATHINFO_EXTENSION) !== 'php') {
+					$tree[$view] = '';
+				}
+			}
 		}
 
 		ksort($tree);
