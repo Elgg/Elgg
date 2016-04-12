@@ -238,7 +238,7 @@ class Logger {
 
 		// don't display in simplecache requests
 		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
-		if (preg_match('~^(cache|action)/~', $path)) {
+		if (preg_match('~^(cache|action|serve-file)/~', $path)) {
 			$display = false;
 		}
 
