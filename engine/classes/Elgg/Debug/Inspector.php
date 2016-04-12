@@ -189,7 +189,7 @@ class Inspector {
 
 		$tree = array();
 		foreach ($API_METHODS as $method => $info) {
-			$params = implode(', ', array_keys($info['parameters']));
+			$params = implode(', ', array_keys(elgg_extract('parameters', $info, [])));
 			if (!$params) {
 				$params = 'none';
 			}
