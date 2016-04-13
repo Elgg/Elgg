@@ -22,10 +22,16 @@ function embed_init() {
 
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
-	
+
+	// @deprecated 2.2
 	$embed_js = elgg_get_simplecache_url('embed/embed.js');
 	elgg_register_js('elgg.embed', $embed_js, 'footer');
 
+	if (elgg_view_exists('embed/custom_insert_js')) {
+		elgg_deprecated_notice("The view embed/custom_insert_js has been replaced by the 'embed, editor' JS hook.", '1.9');
+		elgg_extend_view('elgg.js', 'embed/embed_custom_insert.js.php');
+	}
+	
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'embed_set_thumbnail_url', 1000);
 }
 
@@ -49,52 +55,30 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		return;
 	}
 
+	$id = elgg_extract('id', $vars);
+	if ($id === null) {
+		return;
+	}
+
 	$url = 'embed';
 
 	$page_owner = elgg_get_page_owner_entity();
 	if (elgg_instanceof($page_owner, 'group') && $page_owner->isMember()) {
-		$url = 'embed?container_guid=' . $page_owner->getGUID();
-	}
-
-	elgg_require_js('jquery.form');
-	elgg_load_js('elgg.embed');
-
-	$text = elgg_echo('embed:media');
-
-	// if loaded through ajax (like on /activity), pull in JS libs manually
-	// hack for #6422 because we haven't converted everything to amd yet
-	if (elgg_in_context('ajax')) {
-		$externals = $GLOBALS['_ELGG']->externals_map;
-		$embed = elgg_extract('elgg.embed', $externals['js']);
-		$lightbox_js = elgg_extract('lightbox', $externals['js']);
-		$lightbox_css = elgg_extract('lightbox', $externals['css']);
-		
-		$text .= <<<___JS
-<script>
-	require(['jquery.form']);
-	if (typeof $.fancybox === 'undefined') {
-		$.getScript('$lightbox_js->url');
-		$('head').append('<link rel="stylesheet" href="$lightbox_css->url"></link>');
-	}
-	if (typeof elgg.embed === 'undefined') {
-		$.getScript('$embed->url');
-	}
-</script>
-___JS;
+		$url = elgg_http_add_url_query_elements($url, [
+			'container_guid' => $page_owner->guid,
+		]);
 	}
 
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
-		'href' => 'javascript:void()',
-		'data-colorbox-opts' => json_encode([
-			'href' => elgg_normalize_url($url),
-		]),
-		'text' => $text,
+		'href' => elgg_normalize_url($url),
+		'text' => elgg_echo('embed:media'),
 		'rel' => "embed-lightbox-{$id}",
-		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$id}",
+		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$id} elgg-lightbox",
+		'deps' => ['elgg/embed'],
 		'priority' => 10,
 	));
-	
+
 	return $items;
 }
 
@@ -131,6 +115,8 @@ function embed_select_tab($hook, $type, $items, $vars) {
  */
 function embed_page_handler($page) {
 
+	elgg_ajax_gatekeeper();
+
 	$container_guid = (int)get_input('container_guid');
 	if ($container_guid) {
 		$container = get_entity($container_guid);
@@ -144,9 +130,7 @@ function embed_page_handler($page) {
 	set_input('page', $page[1]);
 
 	echo elgg_view('embed/layout');
-
-	// exit because this is in a modal display.
-	exit;
+	return true;
 }
 
 /**
