@@ -18,10 +18,7 @@ elgg_entity_gatekeeper($guid, 'group');
 
 $group = get_entity($guid);
 
-$icon = new ElggFile();
-$icon->owner_guid = $group->owner_guid;
-$icon->setFilename("groups/{$group->guid}{$size}.jpg");
-
+$icon = $group->getIcon($size);
 $url = elgg_get_inline_url($icon, true);
 if (!$url) {
 	$url = elgg_get_simplecache_url("groups/default{$size}.gif");

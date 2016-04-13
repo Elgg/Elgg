@@ -225,7 +225,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 
 		$this->file->read(1);
 		$this->assertTrue($this->file->eof());
-		
+
 		$this->assertTrue($this->file->close());
 	}
 
@@ -270,7 +270,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$target->open('write');
 		$target->write('Testing!');
 		$target->close();
-		
+
 		$symlink = new ElggFile();
 		$symlink->owner_guid = 2;
 		$symlink->setFilename($symlink_name);
