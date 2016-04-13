@@ -97,9 +97,9 @@ class ViewsService {
 	
 	/**
 	 * Takes a view name and returns the canonical name for that view.
-	 * 
+	 *
 	 * @param string $alias The possibly non-canonical view name.
-	 * 
+	 *
 	 * @return string The canonical view name.
 	 */
 	public function canonicalizeViewName(/*string*/ $alias) /*: string*/ {
@@ -191,7 +191,7 @@ class ViewsService {
 	 * @param string $view     Name of the view
 	 * @param string $location Full path to the view file
 	 * @param string $viewtype The viewtype to register this under
-	 * 
+	 *
 	 * @access private
 	 */
 	public function setViewDir($view, $location, $viewtype = '') {
@@ -375,7 +375,7 @@ class ViewsService {
 
 	/**
 	 * Includes view PHP or static file
-	 * 
+	 *
 	 * @param string $view                 The view name
 	 * @param array  $vars                 Variables passed to view
 	 * @param string $viewtype             The viewtype
@@ -632,6 +632,7 @@ class ViewsService {
 			'locations' => $this->locations,
 			'overrides' => $overrides,
 			'extensions' => $this->views->extensions,
+			'simplecache' => $this->views->simplecache,
 		];
 	}
 

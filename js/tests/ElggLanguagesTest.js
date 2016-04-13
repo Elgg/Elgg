@@ -29,6 +29,14 @@ define(function(require) {
 				
 				expect(elgg.echo('hello', 'es')).toBe('Hello!');
 			});
+
+			it("recognizes empty string as a valid translation", function () {
+				elgg.add_translation('en', {
+					'void': ''
+				});
+
+				expect(elgg.echo('void')).toBe('');
+			});
 		});
 	});
 });

@@ -43,8 +43,6 @@ class UsersTable {
 	 * @access private
 	 */
 	function getRow($guid) {
-		
-	
 		$guid = (int)$guid;
 		return _elgg_services()->db->getDataRow("SELECT * from {$this->CONFIG->dbprefix}users_entity where guid=$guid");
 	}
@@ -57,7 +55,6 @@ class UsersTable {
 	 * @return bool Depending on success
 	 */
 	function disableEntities($owner_guid) {
-		
 		$owner_guid = (int) $owner_guid;
 		if ($entity = get_entity($owner_guid)) {
 			if (_elgg_services()->events->trigger('disable', $entity->type, $entity)) {
@@ -76,7 +73,7 @@ class UsersTable {
 	}
 	
 	/**
-	 * Ban a user
+	 * Ban a user (calls events, stores the reason)
 	 *
 	 * @param int    $user_guid The user guid
 	 * @param string $reason    A reason
@@ -84,13 +81,11 @@ class UsersTable {
 	 * @return bool
 	 */
 	function ban($user_guid, $reason = "") {
-		
-	
 		$user_guid = (int)$user_guid;
 	
 		$user = get_entity($user_guid);
 	
-		if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
+		if (($user instanceof \ElggUser) && $user->canEdit()) {
 			if (_elgg_services()->events->trigger('ban', 'user', $user)) {
 				// Add reason
 				if ($reason) {
@@ -107,9 +102,7 @@ class UsersTable {
 					$newentity_cache->delete($user_guid);
 				}
 	
-				// Set ban flag
-				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid";
-				return _elgg_services()->db->updateData($query);
+				return $this->markBanned($user_guid, true);
 			}
 	
 			return false;
@@ -117,17 +110,36 @@ class UsersTable {
 	
 		return false;
 	}
+
+	/**
+	 * Mark a user entity banned or unbanned.
+	 *
+	 * @note Use ban() or unban()
+	 *
+	 * @param int  $guid   User GUID
+	 * @param bool $banned Mark the user banned?
+	 *
+	 * @return int Num rows affected
+	 */
+	public function markBanned($guid, $banned) {
+		$banned = $banned ? 'yes' : 'no';
+		$query = "
+			UPDATE {$this->CONFIG->dbprefix}users_entity
+			SET banned = '$banned'
+			WHERE guid = $guid
+		";
+
+		return _elgg_services()->db->updateData($query);
+	}
 	
 	/**
-	 * Unban a user.
+	 * Unban a user (calls events, removes the reason)
 	 *
 	 * @param int $user_guid Unban a user.
 	 *
 	 * @return bool
 	 */
 	function unban($user_guid) {
-		
-	
 		$user_guid = (int)$user_guid;
 	
 		$user = get_entity($user_guid);
@@ -146,9 +158,7 @@ class UsersTable {
 					$newentity_cache->delete($user_guid);
 				}
 	
-	
-				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid";
-				return _elgg_services()->db->updateData($query);
+				return $this->markBanned($user_guid, false);
 			}
 	
 			return false;
@@ -165,8 +175,6 @@ class UsersTable {
 	 * @return bool
 	 */
 	function makeAdmin($user_guid) {
-		
-	
 		$user = get_entity((int)$user_guid);
 	
 		if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
