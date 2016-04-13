@@ -227,6 +227,20 @@ function elgg_flush_caches() {
 }
 
 /**
+ * Checks if /cache has been symlinked to views simplecache directory,
+ * and if HTTP requests to /cache are are successful
+ * @return bool
+ * @access private
+ */
+function _elgg_is_cache_symlinked() {
+	if (!is_dir(elgg_get_root_path() . 'cache/')) {
+		return false;
+	}
+	$headers = get_headers(elgg_get_simplecache_url('elgg.js'));
+	return substr($headers[0], 9, 3) == 200;
+}
+
+/**
  * Initializes the simplecache lastcache variable and creates system cache files
  * when appropriate.
  *
