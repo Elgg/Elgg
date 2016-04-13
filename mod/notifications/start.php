@@ -29,6 +29,9 @@ function notifications_plugin_init() {
 	$actions_base = __DIR__ . '/actions';
 	elgg_register_action("notificationsettings/save", "$actions_base/save.php");
 	elgg_register_action("notificationsettings/groupsave", "$actions_base/groupsave.php");
+
+	// register unit tests
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'notifications_register_tests');
 }
 
 /**
@@ -210,4 +213,17 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 			}
 		}
 	}
+}
+
+/**
+ * Register unit tests
+ * 
+ * @param string   $hook  "unit_test"
+ * @param string   $type  "system"
+ * @param string[] $tests Tests
+ * @return string[]
+ */
+function notifications_register_tests($hook, $type, $tests) {
+	$tests[] = __DIR__ . '/tests/ElggNotificationsPluginUnitTest.php';
+	return $tests;
 }
