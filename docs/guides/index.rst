@@ -13,6 +13,7 @@ Customize Elgg's behavior with plugins.
    ajax
    authentication
    context
+   cron
    database
    actions
    helpers
