@@ -426,6 +426,12 @@ class Application {
 			return true;
 		}
 
+		if (0 === strpos($path, '/refresh-token')) {
+			$this->bootCore(true);
+			$this->services->actions->handleRefreshTokenRequest($this->services->request)->send();
+			return true;
+		}
+
 		if ($path === '/rewrite.php') {
 			require Directory\Local::root()->getPath("install.php");
 			return true;

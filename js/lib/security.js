@@ -35,7 +35,7 @@ elgg.security.setToken = function(json) {
  * @private
  */
 elgg.security.refreshToken = function() {
-	elgg.getJSON('refresh_token', {
+	elgg.getJSON('refresh-token', {
 		success: function(data) {
 			if (data && data.__elgg_ts && data.__elgg_token) {
 				elgg.security.setToken(data);

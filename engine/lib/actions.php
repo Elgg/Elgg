@@ -270,24 +270,11 @@ function ajax_action_hook() {
  * Send an updated CSRF token
  *
  * @access private
+ * @deprecated 2.2
  */
 function _elgg_csrf_token_refresh() {
-
-	if (!elgg_is_xhr()) {
-		return false;
-	}
-
-	$ts = time();
-	$token = generate_action_token($ts);
-	$data = array(
-		'__elgg_ts' => $ts,
-		'__elgg_token' => $token,
-		'logged_in' => elgg_is_logged_in(),
-	);
-
-	header("Content-Type: application/json;charset=utf-8");
-	echo json_encode($data);
-
+	elgg_deprecated_notice('/refresh_token page handler has been deprecated. Use /refresh-token', '2.2');
+	_elgg_services()->actions->handleRefreshTokenRequest(_elgg_services()->request)->send();
 	return true;
 }
 

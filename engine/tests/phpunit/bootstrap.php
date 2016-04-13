@@ -41,6 +41,10 @@ $CONFIG = (object)[
 	'simplecache_enabled' => false,
 	'system_cache_enabled' => false,
 	'Elgg\Application_phpunit' => true,
+	// \Elgg\Config::get() falls back to loading config values from database
+	// for undefined keys. This flag ensures we do not attempt reading data
+	// from database during tests
+	'site_config_loaded' => true,
 ];
 
 global $_ELGG;
