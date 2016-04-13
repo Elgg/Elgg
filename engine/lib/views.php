@@ -1745,6 +1745,49 @@ function elgg_views_boot() {
 	}
 }
 
+/**
+ * Handle triggering the pagesetup event at the right time
+ *
+ * Trigger the system "pagesetup" event just before the 1st view rendering, or the 2nd if the 1st
+ * view starts with "resources/".
+ *
+ * We delay the pagesetup event if the first view is a resource view in order to allow plugins to
+ * move all page-specific logic like context setting into a resource view with more confidence
+ * that that state will be available in their pagesetup event handlers. See the commit message for
+ * more BG info.
+ *
+ * @param string $hook   "view_vars"
+ * @param string $view   View name
+ * @param array  $value  View arguments
+ * @param array  $params Hook params
+ * @return void
+ */
+function _elgg_manage_pagesetup($hook, $view, $value, $params) {
+	global $CONFIG;
+
+	static $allow_delay_pagesetup = true;
+
+	if (isset($GLOBALS['_ELGG']->pagesetupdone) || empty($CONFIG->boot_complete)) {
+		return;
+	}
+
+	// only first rendering gets an opportunity to delay
+	$allow_delay = $allow_delay_pagesetup;
+	$allow_delay_pagesetup = false;
+
+	if ($allow_delay && (0 === strpos($view, 'resources/'))) {
+		return;
+	}
+
+	$GLOBALS['_ELGG']->pagesetupdone = true;
+
+	// don't call this anymore
+	_elgg_services()->hooks->unregisterHandler('view_vars', 'all', '_elgg_manage_pagesetup');
+
+	_elgg_services()->events->trigger('pagesetup', 'system');
+}
+
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('boot', 'system', 'elgg_views_boot');
+	$hooks->registerHandler('view_vars', 'all', '_elgg_manage_pagesetup', 1000);
 };
