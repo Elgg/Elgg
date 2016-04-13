@@ -27,22 +27,13 @@ elgg_push_breadcrumb($topic->title);
 
 $params = array(
 	'topic' => $topic,
-	'show_add_form' => false,
+	'show_add_form' => $topic->canWriteToContainer(0, 'object', 'discussion_reply'),
 );
 
 $content = elgg_view_entity($topic, array('full_view' => true));
+$content .= elgg_view('discussion/replies', $params);
 if ($topic->status == 'closed') {
-	$content .= elgg_view('discussion/replies', $params);
 	$content .= elgg_view('discussion/closed');
-} elseif (elgg_instanceof($container, 'group')) {
-	// Allow only group members to reply to a discussion within a group
-	if ($container->canWriteToContainer(0, 'object', 'discussion')) {
-		$params['show_add_form'] = true;
-	}
-	$content .= elgg_view('discussion/replies', $params);
-} else {
-	$params['show_add_form'] = true;
-	$content .= elgg_view('discussion/replies', $params);
 }
 
 $params = array(

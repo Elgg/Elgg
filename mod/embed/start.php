@@ -41,6 +41,11 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	if (elgg_get_context() == 'embed') {
 		return $items;
 	}
+	
+	$id = elgg_extract('id', $vars);
+	if ($id === null) {
+		return;
+	}
 
 	$url = 'embed';
 
@@ -85,8 +90,8 @@ ___JS;
 			'href' => elgg_normalize_url($url),
 		]),
 		'text' => $text,
-		'rel' => "embed-lightbox-{$vars['id']}",
-		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
+		'rel' => "embed-lightbox-{$id}",
+		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$id}",
 		'priority' => 10,
 	));
 	
@@ -136,7 +141,7 @@ function embed_page_handler($page) {
 		}
 	}
 
-	set_input('page', $page[1]); 
+	set_input('page', $page[1]);
 
 	echo elgg_view('embed/layout');
 
@@ -147,7 +152,7 @@ function embed_page_handler($page) {
 /**
  * A special listing function for selectable content
  *
- * This calls a custom list view for entities. 
+ * This calls a custom list view for entities.
  *
  * @param array $entities Array of ElggEntity objects
  * @param array $vars     Display parameters

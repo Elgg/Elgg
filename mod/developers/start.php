@@ -115,16 +115,16 @@ function developers_setup_menu() {
  * Adds debug info to all translatable strings.
  */
 function developers_decorate_all_translations() {
-	$language = get_language();
+	$language = get_current_language();
 	_developers_decorate_translations($language);
 	_developers_decorate_translations('en');
 }
 
 /**
  * Appends " ($key)" to all strings for the given language.
- * 
+ *
  * This function checks if the suffix has already been added so it is idempotent
- * 
+ *
  * @param string $language Language code like "en"
  */
 function _developers_decorate_translations($language) {
@@ -140,11 +140,11 @@ function _developers_decorate_translations($language) {
 
 /**
  * Clear all the strings so the raw descriptor strings are displayed
- * 
+ *
  * @deprecated Superceded by developers_decorate_all_translations
  */
 function developers_clear_strings() {
-	$language = get_language();
+	$language = get_current_language();
 	$GLOBALS['_ELGG']->translations[$language] = array();
 	$GLOBALS['_ELGG']->translations['en'] = array();
 }
