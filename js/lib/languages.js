@@ -56,7 +56,7 @@ elgg.echo = function(key, argv, language) {
 	argv = argv || [];
 
 	map = translations[language] || translations[dlang];
-	if (map && map[key]) {
+	if (map && elgg.isString(map[key])) {
 		return vsprintf(map[key], argv);
 	}
 

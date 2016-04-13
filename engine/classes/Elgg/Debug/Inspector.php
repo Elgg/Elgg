@@ -167,11 +167,22 @@ class Inspector {
 	 * @return array [views]
 	 */
 	public function getSimpleCache() {
-		global $CONFIG;
-
-		$tree = array();
-		foreach ($CONFIG->views->simplecache as $view => $foo) {
-			$tree[$view] = "";
+		
+		$simplecache = elgg_extract('simplecache', $this->getViewsData(), []);
+		$locations = elgg_extract('locations', $this->getViewsData(), []);
+		
+		$tree = [];
+		foreach ($simplecache as $view => $foo) {
+			$tree[$view] = '';
+		}
+		
+		// add all static views
+		foreach ($locations as $viewtype) {
+			foreach ($viewtype as $view => $location) {
+				if (pathinfo($location, PATHINFO_EXTENSION) !== 'php') {
+					$tree[$view] = '';
+				}
+			}
 		}
 
 		ksort($tree);
@@ -189,7 +200,7 @@ class Inspector {
 
 		$tree = array();
 		foreach ($API_METHODS as $method => $info) {
-			$params = implode(', ', array_keys($info['parameters']));
+			$params = implode(', ', array_keys(elgg_extract('parameters', $info, [])));
 			if (!$params) {
 				$params = 'none';
 			}
@@ -252,6 +263,9 @@ class Inspector {
 				case 'widget':
 					// this does not work because you cannot set a guid on an entity
 					$params['entity'] = $widget;
+					break;
+				case 'longtext':
+					$params['id'] = rand();
 					break;
 				default:
 					break;

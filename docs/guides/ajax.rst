@@ -62,7 +62,8 @@ To execute it, use ``ajax.action('<action_name>', options)``:
 
 .. code-block:: js
 
-	var ajax = new require('elgg/Ajax')();
+	var Ajax = require('elgg/Ajax');
+	var ajax = new Ajax();
 
 	ajax.action('do_math', {
 		data: {
@@ -113,7 +114,8 @@ To fetch its output, use ``ajax.path('<url_path>', options)``.
 
 .. code-block:: js
 
-	var ajax = new require('elgg/Ajax')();
+    var Ajax = require('elgg/Ajax');
+	var ajax = new Ajax();
 
 	ajax.path('myplugin_time').done(function (output) {
 		alert(output.rfc2822);
@@ -160,7 +162,8 @@ To fetch the view, use ``ajax.view('<view_name>', options)``:
 
 .. code-block:: js
 
-	var ajax = new require('elgg/Ajax')();
+	var Ajax = require('elgg/Ajax');
+	var ajax = new Ajax();
 
 	ajax.view('myplugin/get_link', {
 		data: {
@@ -197,7 +200,8 @@ To fetch this using ``ajax.form('<action_name>', options)``.
 
 .. code-block:: js
 
-	var ajax = new require('elgg/Ajax')();
+	var Ajax = require('elgg/Ajax');
+	var ajax = new Ajax();
 
 	ajax.form('myplugin/add').done(function (output) {
 		$('.myplugin-form-container').html(output);
@@ -235,6 +239,8 @@ Let's say when the view ``foo`` is fetched, we want to also send the server some
     // in your boot module
     var Ajax = require('elgg/Ajax');
     var elgg = require('elgg');
+
+	var ajax = new Ajax();
 
     elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'view:foo', function (name, type, params, data) {
         // send some data back
