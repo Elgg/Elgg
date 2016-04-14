@@ -27,11 +27,21 @@ class BootService {
 	const DEFAULT_BOOT_CACHE_TTL = 0;
 
 	/**
+	 * @var bool
+	 */
+	private $booted = false;
+
+	/**
 	 * Boots the engine
 	 *
 	 * @return void
 	 */
 	public function boot() {
+		if ($this->booted) {
+			return;
+		}
+		$this->booted = true;
+
 		// Register the error handlers
 		set_error_handler('_elgg_php_error_handler');
 		set_exception_handler('_elgg_php_exception_handler');
