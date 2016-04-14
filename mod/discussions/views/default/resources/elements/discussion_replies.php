@@ -1,9 +1,15 @@
 <?php
 /**
- * Displays discussion replies for a discussion river item
+ * Discussion topic replies in the river
+ *
+ * @uses ElggObject $vars['topic'] Object with subtype "discussion"
  */
 
 $topic = elgg_extract('topic', $vars);
+
+if (!elgg_instanceof($topic, 'object', 'discussion')) {
+	return;
+}
 
 $options = array(
 	'type' => 'object',
@@ -41,6 +47,8 @@ if ($count) {
 	}
 }
 
-$form_vars = array('id' => "discussion-reply-{$topic->guid}", 'class' => 'hidden');
-$body_vars = array('topic' => $topic, 'inline' => true);
-echo elgg_view_form('discussion/reply/save', $form_vars, $body_vars);
+if ($topic->canWriteToContainer(0, 'object', 'discussion_reply')) {
+	$form_vars = array('id' => "discussion-reply-{$topic->guid}", 'class' => 'hidden');
+	$body_vars = array('topic' => $topic, 'inline' => true);
+	echo elgg_view_form('discussion/reply/save', $form_vars, $body_vars);
+}
