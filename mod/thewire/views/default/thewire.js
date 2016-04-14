@@ -30,11 +30,11 @@ elgg.thewire.textCounter = function(textarea, status, limit) {
 
 	if (remaining_chars < 0) {
 		status.parent().addClass("thewire-characters-remaining-warning");
-		$("#thewire-submit-button").attr('disabled', 'disabled');
+		$("#thewire-submit-button").prop('disabled', true);
 		$("#thewire-submit-button").addClass('elgg-state-disabled');
 	} else {
 		status.parent().removeClass("thewire-characters-remaining-warning");
-		$("#thewire-submit-button").removeAttr('disabled', 'disabled');
+		$("#thewire-submit-button").prop('disabled', false);
 		$("#thewire-submit-button").removeClass('elgg-state-disabled');
 	}
 };
