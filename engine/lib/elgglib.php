@@ -2025,9 +2025,6 @@ define('REFERRER', -1);
 define('REFERER', -1);
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('boot', 'system', function () {
-		_elgg_services()->boot->boot();
-	}, 1);
 	$events->registerHandler('cache:flush', 'system', function () {
 		_elgg_services()->boot->invalidateCache();
 	});
