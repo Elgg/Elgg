@@ -2,7 +2,7 @@
 
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
-?> 
+?>
 <?php //@todo JS 1.8: no ?>
 <script>
 require(['jquery'], function($) {
@@ -19,7 +19,7 @@ require(['jquery'], function($) {
 		?>
 	});
 });
-<?php 
+<?php
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
 function adjust<?php echo $method; ?>(linkId) {
@@ -37,10 +37,10 @@ function adjust<?php echo $method; ?>_alt(linkId) {
 	
 	if (obj.className == "<?php echo $method; ?>toggleOff") {
 		obj.className = "<?php echo $method; ?>toggleOn";
-		$('#' + linkId).children("input[type='checkbox']").attr('checked', true);
+		$('#' + linkId).children("input[type='checkbox']").prop('checked', true);
 	} else {
 		obj.className = "<?php echo $method; ?>toggleOff";
-		$('#' + linkId).children("input[type='checkbox']").attr('checked', false);
+		$('#' + linkId).children("input[type='checkbox']").prop('checked', false);
 	}
 	return false;
 }
