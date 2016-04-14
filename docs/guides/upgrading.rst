@@ -26,6 +26,7 @@ Deprecated Views
 
  * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
  * ``lightbox/settings.js`` is deprecated: Use ``getOptions, ui.lightbox`` JS plugin hook or ``data-colorbox-opts`` attribute.
+ * ``elgg/ckeditor/insert.js`` is deprecated: You no longer need to include it, hook registration takes place in ``elgg/ckeditor`` module
 
 Added ``elgg/popup`` module
 ---------------------------
@@ -54,6 +55,11 @@ Removed APIs
 ------------
 
 Just a warning that the private entity cache functions (e.g. ``_elgg_retrieve_cached_entity``) have been removed. Some plugins may have been using them. Plugins should not use private APIs as they will more often be removed without notice.
+
+Improved ``elgg/ckeditor`` module
+-----------------------------------
+
+:doc:`elgg/ckeditor module <javascript>` can now be used to add WYSIWYG to a textarea programmatically with ``elgg/ckeditor#bind``.
 
 From 2.0 to 2.1
 ===============
