@@ -35,5 +35,6 @@ $layout = elgg_in_context('admin') ? 'admin' : 'error';
 $body = elgg_view_layout($layout, array(
 	'title' => $title,
 	'content' => $content,
+	'nav' => '', // prevents outputting breadcrumbs
 ));
 echo elgg_view_page($title, $body, $layout);
