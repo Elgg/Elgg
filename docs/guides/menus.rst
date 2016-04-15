@@ -199,7 +199,35 @@ with a high degree of control and flexibility when styling the site.
 	<ul class="elgg-menu elgg-menu-foo elgg-menu-foo-default">
 		<li class="elgg-menu-item elgg-menu-item-bar"></li>
 	</ul>
+	
+Toggling Menu Items
+===================
 
+There are situations where you wish to toggle menu items that are actions that are the opposite
+of each other and ajaxify them. E.g. like/unlike, friend/unfriend, ban/unban, etc. Elgg has built-in support
+for this kind of actions. When you register a menu item you can provide a name of the menu item (in the same menu)
+that should be toggled. An ajax call will be made using the href of the menu item.
+
+.. code-block:: php
+
+	elgg_register_menu_item('my_menu', [
+		'name' => 'like',
+		'toggle' => 'unlike',
+		'href' => 'action/like',
+		'text' => elgg_echo('like'),
+	]);
+
+	elgg_register_menu_item('my_menu', [
+		'name' => 'unlike',
+		'toggle' => 'like',
+		'href' => 'action/unlike',
+		'text' => elgg_echo('unlike'),
+	]);
+
+.. note::
+
+	The menu items are optimistically toggled. This means the menu items are toggled before the actions finish. If the actions fail,
+	the menu items will be toggled back.
 
 JavaScript
 ==========

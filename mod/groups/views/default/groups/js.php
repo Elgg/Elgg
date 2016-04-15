@@ -4,6 +4,4 @@
  *
  * @package ElggGroups
  */
-?>
 
-elgg.ui.registerTogglableMenuItems('feature', 'unfeature');

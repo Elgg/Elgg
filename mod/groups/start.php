@@ -82,7 +82,7 @@ function groups_init() {
 
 	//extend some views
 	elgg_extend_view('elgg.css', 'groups/css');
-	elgg_extend_view('elgg.js', 'groups/js');
+	elgg_extend_view('elgg.js', 'groups/js'); // @todo remove this extend and view in Elgg 3.0
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
@@ -444,6 +444,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'feature',
+			'toggle' => 'unfeature',
 			'text' => elgg_echo("groups:makefeatured"),
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=feature"),
 			'priority' => 300,
@@ -452,6 +453,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'unfeature',
+			'toggle' => 'feature',
 			'text' => elgg_echo("groups:makeunfeatured"),
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=unfeature"),
 			'priority' => 300,

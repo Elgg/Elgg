@@ -87,6 +87,7 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 			// Always emit both to make it super easy to toggle with ajax
 			$return[] = \ElggMenuItem::factory(array(
 				'name' => 'remove_friend',
+				'toggle' => 'add_friend',
 				'href' => elgg_add_action_tokens_to_url("action/friends/remove?friend={$user->guid}"),
 				'text' => elgg_echo('friend:remove'),
 				'section' => 'action',
@@ -95,6 +96,7 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 
 			$return[] = \ElggMenuItem::factory(array(
 				'name' => 'add_friend',
+				'toggle' => 'remove_friend',
 				'href' => elgg_add_action_tokens_to_url("action/friends/add?friend={$user->guid}"),
 				'text' => elgg_echo('friend:add'),
 				'section' => 'action',
