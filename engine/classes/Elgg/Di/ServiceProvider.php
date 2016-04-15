@@ -106,7 +106,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database\AccessCollections($c->config->get('site_guid'));
 		});
 
-		$this->setClassName('actions', \Elgg\ActionsService::class);
+		$this->setFactory('actions', function(ServiceProvider $c) {
+			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto);
+		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
 

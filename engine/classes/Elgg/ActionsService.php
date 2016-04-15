@@ -16,6 +16,21 @@ use Elgg\Services\AjaxResponse;
 class ActionsService {
 	
 	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
+	 * @var \ElggSession
+	 */
+	private $session;
+
+	/**
+	 * @var \ElggCrypto
+	 */
+	private $crypto;
+
+	/**
 	 * Registered actions storage
 	 *
 	 * Each element has keys:
@@ -36,7 +51,20 @@ class ActionsService {
 	 * @var string[]
 	 */
 	private static $access_levels = ['public', 'logged_in', 'admin'];
-	
+
+	/**
+	 * Constructor
+	 *
+	 * @param Config       $config  Config
+	 * @param \ElggSession $session Session
+	 * @param \ElggCrypto  $crypto  Crypto service
+	 */
+	public function __construct(Config $config, \ElggSession $session, \ElggCrypto $crypto) {
+		$this->config = $config;
+		$this->session = $session;
+		$this->crypto = $crypto;
+	}
+
 	/**
 	 * @see action
 	 * @access private
@@ -61,7 +89,7 @@ class ActionsService {
 			$this->gatekeeper($action);
 		}
 	
-		$forwarder = str_replace(_elgg_services()->config->getSiteUrl(), "", $forwarder);
+		$forwarder = str_replace($this->config->getSiteUrl(), "", $forwarder);
 		$forwarder = str_replace("http://", "", $forwarder);
 		$forwarder = str_replace("@", "", $forwarder);
 		if (substr($forwarder, 0, 1) == "/") {
@@ -89,7 +117,7 @@ class ActionsService {
 			$forward('actionundefined');
 		}
 
-		$user = _elgg_services()->session->getLoggedInUser();
+		$user = $this->session->getLoggedInUser();
 
 		// access checks
 		switch ($this->actions[$action]['access']) {
@@ -184,14 +212,14 @@ class ActionsService {
 			$ts = get_input('__elgg_ts');
 		}
 
-		$session_id = _elgg_services()->session->getId();
+		$session_id = $this->session->getId();
 	
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
 			$required_token = $this->generateActionToken($ts);
-	
+			
 			// Validate token
-			$token_matches = _elgg_services()->crypto->areEqual($token, $required_token);
+			$token_matches = $this->crypto->areEqual($token, $required_token);
 			if ($token_matches) {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
@@ -209,7 +237,7 @@ class ActionsService {
 				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
-						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
+						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array($this->config->getSiteUrl())));
 					} else {
 						register_error(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
 					}
@@ -217,7 +245,7 @@ class ActionsService {
 			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
-					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
+					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array($this->config->getSiteUrl())));
 				} else {
 					register_error(_elgg_services()->translator->translate('actiongatekeeper:tokeninvalid'));
 				}
@@ -263,7 +291,7 @@ class ActionsService {
 	 * @return int number of seconds that action token is valid
 	 */
 	public function getActionTokenTimeout() {
-		if (($timeout = _elgg_services()->config->get('action_token_timeout')) === null) {
+		if (($timeout = $this->config->get('action_token_timeout')) === null) {
 			// default to 2 hours
 			$timeout = 2;
 		}
@@ -306,15 +334,42 @@ class ActionsService {
 	 * @access private
 	 */
 	public function generateActionToken($timestamp) {
-		$session_id = _elgg_services()->session->getId();
+		$session_id = $this->session->getId();
 		if (!$session_id) {
 			return false;
 		}
 
-		$session_token = _elgg_services()->session->get('__elgg_session');
+		$session_token = $this->session->get('__elgg_session');
 
-		return _elgg_services()->crypto->getHmac([(int)$timestamp, $session_id, $session_token], 'md5')
+		return $this->crypto->getHmac([(int)$timestamp, $session_id, $session_token], 'md5')
 			->getToken();
+	}
+
+	/**
+	 * Handle request to /refresh-token
+	 *
+	 * @param \Elgg\Http\Request $request Http Request
+	 * @return \Symfony\Component\HttpFoundation\JsonResponse
+	 */
+	public function handleRefreshTokenRequest(\Elgg\Http\Request $request) {
+		$response = new \Symfony\Component\HttpFoundation\JsonResponse();
+		$response->prepare($request);
+		$response->setPrivate();
+
+		if (!$request->isXmlHttpRequest()) {
+			return $response->setStatusCode(400)->setContent('Bad request. Use XMLHttpRequest.');
+		}
+
+		$ts = time();
+		$token = $this->generateActionToken($ts);
+		$data = [
+			'__elgg_ts' => $ts,
+			'__elgg_token' => $token,
+			'logged_in' => $this->session->isLoggedIn(),
+		];
+
+		$response->setData($data);
+		return $response;
 	}
 	
 	/**
