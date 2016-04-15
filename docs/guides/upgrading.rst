@@ -25,6 +25,7 @@ Deprecated Views
 
  * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
  * ``lightbox/settings.js`` is deprecated: Use ``getOptions, ui.lightbox`` JS plugin hook or ``data-colorbox-opts`` attribute.
+ * ``lightbox/elgg-colorbox-theme/*`` are deprecated: Use the views ``colorbox.css`` and point to images mapped to the views ``colorbox-images/*``.
 
 Added ``elgg/popup`` module
 -----------------------------
@@ -34,7 +35,7 @@ New :doc:`elgg/popup module <javascript>` can be used to build out more complex 
 Added ``elgg/lightbox`` module
 ------------------------------
 
-New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
+New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically. Its theme is defined by the views ``colorbox.css`` and ``colorbox-images/*``.
 
 From 2.0 to 2.1
 ===============
