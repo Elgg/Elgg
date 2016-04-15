@@ -290,6 +290,24 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 		$user_guid = $user->guid;
 	}
 
+	// Unlike permissions, logic check can be used to prevent certain entity
+	// subtypes from being contained by other entity subtype,
+	// e.g. discussion_replies should only be contained by discussion.
+	// This hook can also be used to apply status logic, e.g. do not allow
+	// new replies for closed discussions.
+	$logic_check = elgg_trigger_plugin_hook(
+			'container_logic_check',
+			$type,
+			array(
+				'container' => $container,
+				'user' => $user,
+				'subtype' => $subtype
+			));
+
+	if ($logic_check === false) {
+		return false;
+	}
+
 	$return = false;
 	if ($container) {
 		// If the user can edit the container, they can also write to it
