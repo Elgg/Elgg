@@ -18,7 +18,6 @@ Deprecated APIs
  * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
  * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
  * ``lightbox.js`` library: Do not use ``elgg_load_js('lightbox.js');`` unless your code references deprecated ``elgg.ui.lightbox`` namespace. Use ``elgg/lightbox`` AMD module instead.
- * ``lightbox.css`` library: Lightbox CSS now extends ``elgg.css``. Calls to ``elgg_require_css('lightbox.css')`` have no effect.
 
 Deprecated Views
 ----------------

@@ -1688,7 +1688,8 @@ function elgg_views_boot() {
 
 	elgg_register_simplecache_view('elgg/init.js');
 
-	elgg_extend_view('elgg.css', 'colorbox.css');
+	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox/elgg-colorbox-theme/colorbox.css'));
+	elgg_load_css('lightbox');
 
 	// provide warning to use elgg/lightbox AMD
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
