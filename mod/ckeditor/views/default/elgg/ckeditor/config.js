@@ -9,7 +9,7 @@ define(function(require) {
 		allowedContent: true,
 		baseHref: elgg.get_site_url(),
 		removePlugins: 'liststyle,contextmenu,tabletools',
-		extraPlugins: 'blockimagepaste',
+		extraPlugins: 'blockimagepaste,autogrow',
 		defaultLanguage: 'en',
 		language: elgg.get_language(),
 		skin: 'moono',
