@@ -19,6 +19,7 @@ Deprecated APIs
  * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
  * ``lightbox.js`` library: Do not use ``elgg_load_js('lightbox.js');`` unless your code references deprecated ``elgg.ui.lightbox`` namespace. Use ``elgg/lightbox`` AMD module instead.
  * ``lightbox.css`` library: Lightbox CSS now extends ``elgg.css``. Calls to ``elgg_require_css('lightbox.css')`` have no effect.
+ * Accessing ``icons_sizes`` config value directly: Use ``elgg_get_icon_sizes()``
 
 Deprecated Views
 ----------------
@@ -35,6 +36,19 @@ Added ``elgg/lightbox`` module
 ------------------------------
 
 New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
+
+New API for handling entity icons
+---------------------------------
+
+ * ``ElggEntity`` now implements ``\Elgg\EntityIcon`` interface
+ * ``elgg_get_icon_sizes()`` - return entity type/subtype specific icon sizes
+ * ``ElggEntity::saveIconFromUploadedFile()`` - creates icons from an uploaded file
+ * ``ElggEntity::saveIconFromLocalFile()`` - creates icons from a local file
+ * ``ElggEntity::saveIconFromElggFile()`` - creates icons from an instance of ``ElggFile``
+ * ``ElggEntity::getIcon()`` - returns an instanceof ``ElggIcon`` that points to entity icon location on filestore (this may be just a placeholder, use ``ElggEntity::hasIcon()`` to validate if file has been written)
+ * ``ElggEntity::deleteIcon()`` - deletes entity icons
+ * ``ElggEntity::getIconLastChange()`` - return modified time of the icon file
+ * ``ElggEntity::hasIcon()`` - checks if an icon with given size has been created
 
 From 2.0 to 2.1
 ===============

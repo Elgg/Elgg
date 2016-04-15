@@ -753,6 +753,26 @@ function users_pagesetup() {
 }
 
 /**
+ * Set user icon file
+ * 
+ * @param string    $hook   "entity:icon:file"
+ * @param string    $type   "user"
+ * @param \ElggIcon $icon   Icon file
+ * @param array     $params Hook params
+ * @return \ElggIcon
+ */
+function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
+
+	$entity = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params, 'medium');
+
+	$icon->owner_guid = $entity->guid;
+	$icon->setFilename("profile/{$entity->guid}{$size}.jpg");
+	
+	return $icon;
+}
+
+/**
  * Users initialisation function, which establishes the page handler
  *
  * @return void
@@ -787,6 +807,8 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
+
+	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 }
 
 /**
