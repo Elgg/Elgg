@@ -221,6 +221,12 @@ Permission hooks
 	matching the logged in user, this hook is called *twice*, and in the first call ``$params['container']``
 	will be the *owner*, not the entity's real container.
 
+**container_logic_check, <entity_type>**
+	Triggered by ``can_write_to_container()`` before triggering ``permissions_check`` and ``container_permissions_check``
+	hooks. Unlike permissions hooks, logic check can be used to prevent certain entity types from being contained
+	by other entity types, e.g. discussion replies should only be contained by discussions. This hook can also be
+	used to apply status logic, e.g. do disallow new replies for closed discussions.
+
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
 
