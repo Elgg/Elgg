@@ -397,6 +397,11 @@ return array(
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
 	'registerdisabled' => "Registration has been disabled by the system administrator",
 	'register:fields' => 'All fields are required',
+	'forms:register:name:help' => 'This name is shown on your profile',
+	'forms:register:email:help' => 'This email address will be used to send you mails. Other users can not see this email address',
+	'forms:register:username:help' => 'Your username will be used for links to your profile',
+	'forms:register:password:help' => 'You will need a password to login to the site',
+	'forms:register:password2:help' => 'Enter the same password again for validation',
 
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
 	'registration:userexists' => 'That username already exists',
