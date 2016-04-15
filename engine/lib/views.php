@@ -1690,6 +1690,11 @@ function elgg_views_boot() {
 
 	elgg_extend_view('elgg.css', 'colorbox.css');
 
+	// TODO 3.0 move the images
+	elgg_register_simplecache_view('colorbox-images/border1.png');
+	elgg_register_simplecache_view('colorbox-images/border2.png');
+	elgg_register_simplecache_view('colorbox-images/loading.gif');
+
 	// provide warning to use elgg/lightbox AMD
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
 
@@ -1741,6 +1746,30 @@ function elgg_views_boot() {
 	}
 }
 
+/**
+ * Check for deprecated view usage
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_views_check_deprecations() {
+	// @deprecated 2.2 old colorbox CSS/image locations
+	$view = 'lightbox/elgg-colorbox-theme/colorbox.css';
+	if (_elgg_view_may_be_altered($view, "$view.php")) {
+		elgg_deprecated_notice('The view "lightbox/elgg-colorbox-theme/colorbox.css" is deprecated. '
+			. 'Use "colorbox.css" and make sure image paths point to the views "colorbox-images/*".', '2.2');
+	}
+
+	foreach (['border1.png', 'border2.png', 'loading.gif',] as $image) {
+		$view = "lightbox/elgg-colorbox-theme/colorbox-images/$image";
+		if (_elgg_view_may_be_altered($view, $view)) {
+			elgg_deprecated_notice("The view '$view' is deprecated. Instead override the view "
+				. "'colorbox-images/$image'.", '2.2');
+		}
+	}
+}
+
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('boot', 'system', 'elgg_views_boot');
+	$events->registerHandler('cache:flush', 'system', '_elgg_views_check_deprecations');
 };

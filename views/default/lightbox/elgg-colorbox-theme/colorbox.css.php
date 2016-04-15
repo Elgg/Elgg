@@ -1,6 +1,18 @@
+<?php
+/**
+ * @deprecated 2.2 use the colorbox.css view instead.
+ */
+
+// allow core to use this without deprecation notice
+if (!isset($vars['__core_usage'])) {
+    elgg_deprecated_notice('The view "lightbox/elgg-colorbox-theme/colorbox.css" is deprecated. '
+        . 'Use "colorbox.css" and make sure image paths point to the views "colorbox-images/*".', '2.2');
+}
+?>
 /*
     Colorbox Core Style:
     The following CSS is consistent between example themes and should not be altered.
+    <style>
 */
 #colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:1100; overflow:hidden;}
 #cboxWrapper {max-width:none;}
