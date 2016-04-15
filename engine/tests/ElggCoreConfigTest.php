@@ -169,5 +169,35 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 		$this->assertTrue(elgg_save_config($name, $value, 17));
 		$this->assertIdentical($value, elgg_get_config($name, 17));
 		$this->assertTrue(unset_config($name, 17));		
-	} 
+	}
+
+	public function testFeatureSetIsSane() {
+		$features = _elgg_get_known_features();
+		$this->assertTrue($features === array_unique($features));
+
+		foreach ($features as $feature) {
+			$matched = (bool)preg_match('~^(\\d+\\.\\d+)\\:(.+)\\z~', $feature, $m);
+			$this->assertTrue($matched, "Invalid feature string: $feature");
+			$this->assertTrue(strlen($feature) < 250, "Feature string must be under 250 chars");
+			$this->assertTrue(version_compare(elgg_get_version(), $m[1], '<'), "Feature should have been removed: $feature");
+		}
+	}
+
+	public function testUnknownFeaturesEnabled() {
+		$this->assertTrue(_elgg_feature_is_enabled('3.0:unknown', []));
+	}
+	
+	public function testKnownFeatureChecksConfig() {
+		$features = ['0.0:a', '0.0:b', '0.0:c'];
+
+		set_config("feat:{$features[0]}", true);
+		set_config("feat:{$features[1]}", false);
+
+		$this->assertTrue(_elgg_feature_is_enabled($features[0], $features));
+		$this->assertFalse(_elgg_feature_is_enabled($features[1], $features));
+		$this->assertFalse(_elgg_feature_is_enabled($features[2], $features));
+
+		unset_config("feat:{$features[0]}");
+		unset_config("feat:{$features[1]}");
+	}
 }
