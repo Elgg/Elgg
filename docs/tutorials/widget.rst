@@ -48,7 +48,11 @@ Edit ``/start.php``. In it add these lines:
     <?php
     
     function hello_init() {        
-        elgg_register_widget_type('helloworld', 'Hello, world!', 'The "Hello, world!" widget');
+        elgg_register_widget_type([
+            'id' => 'helloworld', 
+            'name' => 'Hello, world!', 
+            'description' => 'The "Hello, world!" widget',
+        ]);
     }
         
     elgg_register_event_handler('init', 'system', 'hello_init');       

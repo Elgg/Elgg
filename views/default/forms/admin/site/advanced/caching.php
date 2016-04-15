@@ -16,7 +16,7 @@ if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
 	$params['class'] = 'elgg-state-disabled';
 	$params['label_class'] = 'elgg-state-disabled';
 }
-$simple_cache_input .= elgg_view("input/checkbox", $params);
+$simple_cache_input = elgg_view("input/checkbox", $params);
 $simple_cache_warning = '';
 
 if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {

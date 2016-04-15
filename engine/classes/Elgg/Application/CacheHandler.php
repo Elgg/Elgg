@@ -120,7 +120,7 @@ class CacheHandler {
 		$this->handle304($etag);
 
 		// trust the client but check for an existing cache file
-		$filename = $config->getVolatile('dataroot') . "views_simplecache/$ts/$viewtype/$view";
+		$filename = $config->getVolatile('cacheroot') . "views_simplecache/$ts/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
@@ -137,7 +137,7 @@ class CacheHandler {
 
 		$lastcache = (int)$config->get('lastcache');
 
-		$filename = $config->getVolatile('dataroot') . "views_simplecache/$lastcache/$viewtype/$view";
+		$filename = $config->getVolatile('cacheroot') . "views_simplecache/$lastcache/$viewtype/$view";
 
 		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag);
@@ -213,7 +213,7 @@ class CacheHandler {
 		$config = $this->config;
 		$config->loadSettingsFile();
 
-		if ($config->getVolatile('dataroot') && $config->getVolatile('simplecache_enabled') !== null) {
+		if ($config->getVolatile('cacheroot') && $config->getVolatile('simplecache_enabled') !== null) {
 			// we can work with these...
 			return;
 		}
@@ -242,8 +242,12 @@ class CacheHandler {
 			$config->set($row->name, $row->value);
 		}
 
-		if (!$config->getVolatile('dataroot')) {
-			$this->send403('Cache error: unable to get the data root');
+		if (!$config->getVolatile('cacheroot')) {
+			$dataroot = $config->getVolatile('dataroot');
+			if (!$dataroot) {
+				$this->send403('Cache error: unable to get the cache root');
+			}
+			$config->set('cacheroot', $dataroot);
 		}
 	}
 

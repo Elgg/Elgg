@@ -8,7 +8,7 @@
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('bookmarks'));
 
-elgg_register_title_button();
+elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
 $content = elgg_list_entities(array(
 	'type' => 'object',

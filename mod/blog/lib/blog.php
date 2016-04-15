@@ -59,7 +59,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		elgg_push_breadcrumb(elgg_echo('blog:blogs'));
 	}
 
-	elgg_register_title_button();
+	elgg_register_title_button('blog', 'add', 'object', 'blog');
 
 	$return['content'] = elgg_list_entities($options);
 

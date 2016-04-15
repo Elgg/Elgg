@@ -33,9 +33,14 @@ if ($owner->guid != $page_owner->guid) {
 	elgg_set_page_owner_guid($owner->guid);
 }
 
-$widget_types = elgg_get_widget_types();
-
 $context = elgg_get_context();
+
+$widget_types = elgg_get_widget_types([
+	'context' => $context,
+	'exact' => $exact_match,
+	'container' => $owner,
+]);
+
 elgg_push_context('widgets');
 
 $widgets = elgg_get_widgets($owner->guid, $context);

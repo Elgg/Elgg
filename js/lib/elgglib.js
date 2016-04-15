@@ -403,7 +403,7 @@ elgg.register_error = function(errors, delay) {
 /**
  * Logs a notice about use of a deprecated function or capability
  * @param {String} msg         The deprecation message to display
- * @param {Number} dep_version The version the function was deprecated for
+ * @param {String} dep_version The version the function was deprecated for
  * @since 1.9
  */
 elgg.deprecated_notice = function(msg, dep_version) {

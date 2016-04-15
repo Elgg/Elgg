@@ -13,7 +13,7 @@ if (!$page_owner) {
 elgg_push_breadcrumb($page_owner->name, "bookmarks/owner/$page_owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
-elgg_register_title_button();
+elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
 $title = elgg_echo('bookmarks:friends');
 

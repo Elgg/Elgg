@@ -6,24 +6,32 @@
  * @uses $vars['show_add_form'] Display add form or not
  */
 
-$show_add_form = elgg_extract('show_add_form', $vars, true);
+$topic = elgg_extract('topic', $vars);
+if (!elgg_instanceof($topic, 'object', 'discussion')) {
+	elgg_log("discussion/replies view expects \$vars['topic'] to be a discussion object", 'ERROR');
+	return;
+}
 
-echo '<div id="group-replies" class="elgg-comments">';
+$show_add_form = elgg_extract('show_add_form', $vars);
+if (!isset($show_add_form)) {
+	$show_add_form = $topic->canWriteToContainer(0, 'object', 'discussion_reply');
+}
 
 $replies = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'discussion_reply',
-	'container_guid' => $vars['topic']->getGUID(),
+	'container_guid' => $topic->guid,
 	'reverse_order_by' => true,
 	'distinct' => false,
 	'url_fragment' => 'group-replies',
 ));
 
-echo $replies;
-
 if ($show_add_form) {
 	$form_vars = array('class' => 'mtm');
-	echo elgg_view_form('discussion/reply/save', $form_vars, $vars);
+	$replies .= elgg_view_form('discussion/reply/save', $form_vars, $vars);
 }
+?>
 
-echo '</div>';
+<div id="group-replies" class="elgg-comments">
+	<?= $replies ?>
+</div>

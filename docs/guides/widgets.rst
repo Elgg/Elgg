@@ -26,35 +26,53 @@ To create a widget, create two views:
    The effect is that you can only set and not clear flags.
    The "input/checkboxes" view will not work properly in a widget's edit panel.
 
-Initialise the widget
----------------------
+Register the widget
+-------------------
 
 Once you have created your edit and view pages, you need to initialize the plugin widget. This is done within the plugins ``init()`` function.
 
 .. code:: php
 
     // Add generic new file widget
-    add_widget_type('filerepo', elgg_echo("file:widget"), elgg_echo("file:widget:description"));
+    elgg_register_widget_type([
+        'id' => 'filerepo', 
+        'name' => elgg_echo('widgets:filerepo:name'), 
+        'description' => elgg_echo('widgets:filerepo:description'),
+    ]);
 
 .. note::
 
-   It is possible to add multiple widgets for a plugin. You just initialize as many widget directories as you need.
+    The only required attribute is the ``id``.
+
+Multiple widgets
+^^^^^^^^^^^^^^^^
+
+It is possible to add multiple widgets for a plugin. You just initialize as many widget directories as you need.
 
 .. code:: php
 
     // Add generic new file widget
-    add_widget_type('filerepo', elgg_echo("file:widget"), elgg_echo("file:widget:description"));
+    elgg_register_widget_type([
+        'id' => 'filerepo', 
+        'name' => elgg_echo('widgets:filerepo:name'), 
+        'description' => elgg_echo('widgets:filerepo:description'),
+    ]);
 
     // Add a second file widget
-    add_widget_type('filerepo2', elgg_echo("file:widget2"), elgg_echo("file:widget:description2"));
+   elgg_register_widget_type([
+        'id' => 'filerepo2', 
+        'name' => elgg_echo('widgets:filerepo2:name'), 
+        'description' => elgg_echo('widgets:filerepo2:description'),
+    ]);
 
     // Add a third file widget
-    add_widget_type('filerepo3', elgg_echo("file:widget3"), elgg_echo("file:widget:description3"));
+   elgg_register_widget_type([
+        'id' => 'filerepo3', 
+        'name' => elgg_echo('widgets:filerepo3:name'), 
+        'description' => elgg_echo('widgets:filerepo3:description'),
+    ]);
 
-Multiple widgets
-----------------
-
-Make sure you have the corrosponding directories within your plugin
+Make sure you have the corresponding directories within your plugin
 views structure:
 
 .. code::
@@ -65,16 +83,89 @@ views structure:
                 /widgets
                    /filerepo
                       /edit.php
-                      /contents.php
+                      /content.php
                    /filerepo2
                       /edit.php
-                      /contents.php
+                      /content.php
                    /filerepo3
                       /edit.php
-                      /contents.php
+                      /content.php
 
-Elgg 1.8: Default widgets
--------------------------
+Magic widget name and description
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When registering a widget you can omit providing a name and a description. If a translation in the following format is provided, they will be used. For the name: ``widgets:<widget_id>:name`` and for the description ``widgets:<widget_id>:description``. If you make sure these translation are available in a translation file, you have very little work registering the widget.
+
+.. code:: php
+
+    elgg_register_widget_type(['id' => 'filerepo']);
+
+How to restrict where widgets can be used
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The widget can specify the context that it can be used in (all, just profile, just dashboard, etc.). If you do not specify a context they will be available for all contexts.
+
+.. code:: php
+
+    elgg_register_widget_type([
+        'id' => 'filerepo',
+        'context' => ['profile', 'dashboard', 'other_context'],
+    ]);
+
+Allow multiple widgets on the same page
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+By default you can only add one widget of the same type on the page. If you want more of the same widget on the page, you can specify this when registering the widget:
+
+.. code:: php
+
+    elgg_register_widget_type([
+        'id' => 'filerepo',
+        'multiple' => true,
+    ]);
+
+
+Register widgets in a hook
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+If, for example, you wish to conditionally register widgets you can also use a hook to register widgets.
+
+.. code:: php
+
+    function my_plugin_init() {
+        elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_conditional_widgets_hook');
+    }
+
+    function my_plugin_conditional_widgets_hook($hook, $type, $return, $params) {
+        if (!elgg_is_active_plugin('file')) {
+            return;
+        }
+
+        $return[] = \Elgg\WidgetDefinition::factory([
+            'id' => 'filerepo',
+        ]);
+
+        return $return;
+    }
+
+Modify widget properties of existing widget registration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+If, for example, you wish to change the allowed contexts of an already registered widget you can do so by re-registering the widget with ``elgg_register_widget_type`` as it will override an already existing widget definition. If you want even more control you can also use the ``handlers, widgets`` hook to change the widget definition.
+
+.. code:: php
+
+    function my_plugin_init() {
+        elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_change_widget_definition_hook');
+    }
+
+    function my_plugin_change_widget_definition_hook($hook, $type, $return, $params) {
+        foreach ($return as $key => $widget) {
+            if ($widget->id === 'filerepo') {
+                $return[$key]->multiple = false;
+            }
+        }
+
+        return $return;
+    }
+
+Default widgets
+---------------
 
 If your plugin uses the widget canvas, you can register default widget support with Elgg core, which will handle everything else.
 
@@ -82,7 +173,7 @@ To announce default widget support in your plugin, register for the ``get_list, 
 
 .. code:: php
 
-    elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'my_plugin_default_widgets');
+    elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'my_plugin_default_widgets_hook');
 
 In the plugin hook handler, push an array into the return value defining your default widget support and when to create default widgets. Arrays require the following keys to be defined:
 
@@ -110,120 +201,3 @@ When an object triggers an event that matches the event, entity\_type, and entit
 
         return $return;
     }
-
-Simple Example
---------------
-
-Here is a simple Flickr widget that uses Flickr's JSON output.
-
-Widget edit page:
-
-.. code:: php
-
-        <p>
-        <?php echo elgg_echo("flickr:id"); ?>
-            <input type="text" name="params[title]" value="<?php echo htmlentities($vars['entity']->title); ?>" />  
-        </p>
-        
-        <p><?php echo elgg_echo("flickr:whatisid"); ?></p>
-
-Widget view page:
-
-.. code:: php
-
-    <?php
-
-        //some required params
-        $flickr_id = $vars['entity']->title;
-         
-        // if the flickr id is empty, then do not show any photos
-        if($flickr_id){
-         
-    ?>
-    <!-- this script uses the jquery cycle plugin -->
-    <script type="text/javascript" src="<?php echo $vars['url']; ?>mod/flickr/views/default/flickr/js/cycle.js"></script>
-
-    <!-- the Flickr JSON script -->
-    <script>
-        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=
-    <?php echo $flickr_id;?>&lang=en-us&format=json&jsoncallback=?", function(data){
-            $.each(data.items, function(i,item){
-                $("<img/>").attr("src", item.media.m).appendTo("#images")
-                .wrap("<a href='" + item.link + "'></a>");
-        });
-      
-        $('#images').cycle({
-            fx:     'fade',
-            speed:    'slow',
-            timeout:  0,
-            next:   '#next',
-            prev:   '#prev'
-        });
-      
-    });
-
-    </script>
-
-    <!-- some css for display -->
-    <style type="text/css">
-        #images { 
-            height: 180px;
-            width: 100%; 
-            padding:0; 
-            margin:0 0 10px 0; 
-            overflow: hidden;
-         }
-          #images img { 
-              border:none;
-          }
-    </style>
-
-    <!-- div where the images will display -->
-    <div id="title"></div>
-    <div id="images" align="center"></div>
-
-    <!-- next and prev nav -->
-    <div class="flickrNav" align="center">
-        <a id="prev" href="#">&laquo; Prev</a> <a id="next" href="#">Next &raquo;</a>
-    </div>
-
-    <?php
-
-        }else{
-            
-            //this should go through elgg_echo() - it was taken out for this demo
-            echo "You have not yet entered your Flickr ID which is required to display your photos.";
-            
-        }
-    ?>
-
-How to restrict where widgets can be used
------------------------------------------
-
-Any plugin that has a widget must register that widget with Elgg. The widget can specify the context that it can be used in (all, just profile, just dashboard, etc.). If you want to change where your users can use a widget, you can make a quick edit to the plugin's source.
-
-Find where the plugin registers the widget
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The function you are looking for is ``add_widget_type()``. It is typically used in an init function in ``start.php``. You should be able to go to ``/mod/<plugin name>/``, open ``start.php`` in a text editor, and find the string ``add_widget_type``.
-
-Changing the function's parameters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Let's use the friends plugin as an example. We want to restrict it so that it can only be used on a user's profile. Currently, the function call looks like this:
-
-.. warning::
-
-   Keep in mind :doc:`dont-modify-core`
-
-.. code:: php
-
-   add_widget_type('friends',elgg_echo("friends"),elgg_echo('friends:widget:description'));
-
-To restrict it to the profile, change it to this:
-
-.. code:: php
-
-   add_widget_type('friends',elgg_echo("friends"),elgg_echo('friends:widget:description'), "profile");
-   
-Notice that the context was not specified originally (there were only 3 parameters and we added a 4th). That means it defaulted to the "all" context. Besides "all" and "profile", the only other context available in default Elgg is "dashboard".

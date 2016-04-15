@@ -1683,9 +1683,10 @@ function elgg_views_boot() {
 
 	elgg_register_simplecache_view('elgg/init.js');
 
-	// optional stuff
+	elgg_extend_view('elgg.css', 'colorbox.css');
+
+	// provide warning to use elgg/lightbox AMD
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
-	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox/elgg-colorbox-theme/colorbox.css'));
 
 	// just provides warning to use elgg/autocomplete AMD
 	elgg_register_js('elgg.autocomplete', elgg_normalize_url('js/lib/ui.autocomplete.js'));

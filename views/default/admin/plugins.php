@@ -8,9 +8,6 @@
  * @subpackage Admin.Plugins
  */
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
-
 // @todo this should occur in the controller code
 _elgg_generate_plugin_entities();
 

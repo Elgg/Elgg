@@ -480,6 +480,10 @@ Other
 	Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``.
 	If handling saving the settings, the handler should return true to prevent the default code from running.
 
+**handlers, widgets**
+	Triggered when a list of available widgets is needed. Plugins can conditionally add or remove widgets from this list
+	or modify attributes of existing widgets like ``context`` or ``multiple``.
+
 **get_list, default_widgets**
 	Filters a list of default widgets to add for newly registered users. The list is an array
 	of arrays in the format:

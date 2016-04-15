@@ -26,7 +26,10 @@ return [
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.
 		 */
-		"/" => dirname(__DIR__) . "/_graphics",
+		"/" => [
+			dirname(__DIR__) . "/_graphics",
+			dirname(__DIR__) . "/views/default/lightbox/elgg-colorbox-theme",
+		],
 
 		"elgg/ui.avatar_cropper.js" => dirname(__DIR__) . "/js/lib/ui.avatar_cropper.js",
 		"elgg/ui.friends_picker.js" => dirname(__DIR__) . "/js/lib/ui.friends_picker.js",

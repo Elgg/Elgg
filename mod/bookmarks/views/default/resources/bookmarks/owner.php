@@ -13,7 +13,7 @@ if (!$page_owner) {
 
 elgg_push_breadcrumb($page_owner->name);
 
-elgg_register_title_button();
+elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
 $options = [
 	'type' => 'object',

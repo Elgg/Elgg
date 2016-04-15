@@ -102,14 +102,6 @@ class File {
 		}
 
 		if (!$relative_path) {
-			// File object has a custom filestore
-			if ($this->file->guid) {
-				$url_segments = array(
-					'download-file',
-					"g{$this->file->guid}"
-				);
-				return elgg_normalize_url(implode('/', $url_segments));
-			}
 			elgg_log("Unable to resolve relative path of the file on the filestore");
 			return false;
 		}
@@ -146,5 +138,4 @@ class File {
 
 		return elgg_normalize_url(implode('/', $url_segments));
 	}
-
 }
