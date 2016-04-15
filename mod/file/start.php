@@ -155,7 +155,8 @@ function file_page_handler($page) {
 			break;
 		case 'download':
 			elgg_deprecated_notice('/file/download page handler has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '2.2');
-			if (_elgg_view_may_be_altered('resources/file/download', 'resources/file/download.php')) {
+			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
+			if (_elgg_view_may_be_altered('resources/file/download', "$dir/resources/file/download.php")) {
 				// For BC with 2.0 if a plugin is suspected of using this view we need to use it.
 				echo elgg_view_resource('file/download', [
 					'guid' => $page[1],

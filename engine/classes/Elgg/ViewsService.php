@@ -254,10 +254,8 @@ class ViewsService {
 	 *
 	 * @param string $view View name
 	 * @return string[]
-	 * @access private
-	 * @internal Plugins should not use this
 	 */
-	public function getViewList($view) {
+	private function getViewList($view) {
 		if (isset($this->views->extensions[$view])) {
 			return $this->views->extensions[$view];
 		} else {
@@ -460,7 +458,32 @@ class ViewsService {
 
 		$this->views->extensions[$view][$priority] = (string) $view_extension;
 		ksort($this->views->extensions[$view]);
+	}
 
+	/**
+	 * Is the given view extended?
+	 *
+	 * @param string $view View name
+	 *
+	 * @return bool
+	 * @internal Plugins should not use this
+	 * @access private
+	 */
+	public function viewIsExtended($view) {
+		return count($this->getViewList($view)) > 1;
+	}
+
+	/**
+	 * Do hook handlers exist to modify the view?
+	 *
+	 * @param string $view View name
+	 *
+	 * @return bool
+	 * @internal Plugins should not use this
+	 * @access private
+	 */
+	public function viewHasHookHandlers($view) {
+		return $this->hooks->hasHandler('view', $view) || $this->hooks->hasHandler('view_vars', $view);
 	}
 
 	/**
