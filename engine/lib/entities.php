@@ -271,43 +271,19 @@ function update_subtype($type, $subtype, $class = '') {
  * @param string $subtype        The subtype of the entity we want to create (default: 'all')
  *
  * @return bool
+ * @deprecated 2.2
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
-	$container_guid = (int)$container_guid;
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggEntity::canWriteToContainer()', '2.2');
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
 	}
-
 	$container = get_entity($container_guid);
-
-	try {
-		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-	} catch (UserFetchFailureException $e) {
+	if (!$container) {
 		return false;
 	}
 
-	if ($user) {
-		$user_guid = $user->guid;
-	}
-
-	$return = false;
-	if ($container) {
-		// If the user can edit the container, they can also write to it
-		if ($container->canEdit($user_guid)) {
-			$return = true;
-		}
-	}
-
-	// See if anyone else has anything to say
-	return elgg_trigger_plugin_hook(
-			'container_permissions_check',
-			$type,
-			array(
-				'container' => $container,
-				'user' => $user,
-				'subtype' => $subtype
-			),
-			$return);
+	return $container->canWriteToContainer($user_guid, $type, $subtype);
 }
 
 /**

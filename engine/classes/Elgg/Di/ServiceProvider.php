@@ -68,6 +68,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
+ * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
@@ -351,6 +352,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->logger,
 				$c->mutex
 			);
+		});
+
+		$this->setFactory('userCapabilities', function(ServiceProvider $c) {
+			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
 		});
 
 		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
