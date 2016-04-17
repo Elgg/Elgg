@@ -226,6 +226,22 @@ Ajax
 Permission hooks
 ================
 
+**container_logic_check, <entity_type>**
+	Triggered by ``ElggEntity:canWriteToContainer()`` before triggering ``permissions_check`` and ``container_permissions_check``
+	hooks. Unlike permissions hooks, logic check can be used to prevent certain entity types from being contained
+	by other entity types, e.g. discussion replies should only be contained by discussions. This hook can also be
+	used to apply status logic, e.g. do disallow new replies for closed discussions.
+
+	The handler should return ``false`` to prevent an entity from containing another entity. The default value passed to the hook
+	is ``null``, so the handler can check if another hook has modified the value by checking if return value is set.
+	Should this hook return ``false``, ``container_permissions_check`` and ``permissions_check`` hooks will not be triggered.
+
+	The ``$params`` array will contain:
+
+	 * ``container`` - An entity that will be used as a container
+	 * ``user`` - User who will own the entity to be written to container
+	 * ``subtype`` - Subtype of the entity to be written to container (entity type is assumed from hook type)
+
 **container_permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']``
 	as a container for an entity of ``<entity_type>`` and subtype ``$params['subtype']``.
@@ -233,6 +249,12 @@ Permission hooks
 	In the rare case where an entity is created with neither the ``container_guid`` nor the ``owner_guid``
 	matching the logged in user, this hook is called *twice*, and in the first call ``$params['container']``
 	will be the *owner*, not the entity's real container.
+
+	The ``$params`` array will contain:
+
+	 * ``container`` - An entity that will be used as a container
+	 * ``user`` - User who will own the entity to be written to container
+	 * ``subtype`` - Subtype of the entity to be written to container (entity type is assumed from hook type)
 
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
