@@ -4,7 +4,7 @@ define(function (require) {
 		elgg = require('elgg');
 
 	$('.theme-sandbox-content-spinner a').on('click', function () {
-		spinner[ $(this).data('method') ]();
+		spinner[ $(this).data('method') ]($(this).data('spinnerText'));
 		return false;
 	});
 
