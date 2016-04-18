@@ -16,7 +16,9 @@ define(function (require) {
 			data: $form.serialize(),
 			success: function (data) {
 				if (data.status == 0) {
-					elgg.ui.lightbox.close();
+					require(['elgg/lightbox'], function(lightbox) {
+						lightbox.close();
+					});
 				}
 			}
 		});
@@ -24,7 +26,9 @@ define(function (require) {
 
 	$(document).on('click', '.elgg-form-reportedcontent-add .elgg-button-cancel', function (e) {
 		if ($(this).is('#colorbox *')) {
-			elgg.ui.lightbox.close();
+			require(['elgg/lightbox'], function(lightbox) {
+				lightbox.close();
+			});
 		} else {
 			if (history.length > 1) {
 				history.go(-1);

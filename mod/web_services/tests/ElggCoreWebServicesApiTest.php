@@ -85,6 +85,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		$method['call_method'] = 'GET'; 
 		$method['require_api_auth'] = false;
 		$method['require_user_auth'] = false;
+		$method['assoc'] = false;
 
 		$this->assertIdentical($method, $API_METHODS['test']);
 	}
@@ -274,6 +275,15 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		$s = serialise_parameters('test', $parameters);
 		$this->assertIdentical($s, ",array('0'=>'1','1'=>'2')");
 
+		// test missing optional param
+		$this->registerFunction(false, false, [
+			'param1' => ['type' => 'int', 'required' => false],
+			'param2' => ['type' => 'int'],
+		]);
+		$parameters = ['param2' => '2'];
+		$s = serialise_parameters('test', $parameters);
+		$this->assertIdentical($s, ",null,2");
+
 		// test unknown type
 		$this->registerFunction(false, false, array('param1' => array('type' => 'bad')));
 		$parameters = array('param1' => 'test');
@@ -297,8 +307,6 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	}
 
 	public function testApiAuthKeyBadKey() {
-		global $CONFIG;
-
 		set_input('api_key', 'BAD');
 		try {
 			api_auth_key();
@@ -308,8 +316,109 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 			$this->assertIdentical($e->getMessage(), elgg_echo('APIException:BadAPIKey'));
 		}
 	}
+
+	public function testSerialiseParametersCasting() {
+		$types = [
+			'int' => [
+				["0", 0],
+				["1", 1],
+				[" 1", 1],
+			],
+			'bool' => [
+				["0", false],
+				[" 1", true],
+
+				// BC with 2.0
+				[" false", false],
+				["true", false],
+			],
+			'float' => [
+				["1.65", 1.65],
+				[" 1.65 ", 1.65],
+			],
+			'array' => [
+				[["2 ", " bar"], [2, "bar"]],
+				[["' \""], ["' \\\""]],
+			],
+			'string' => [
+				[" foo ", "foo"],
+			],
+		];
+
+		foreach ($types as $type => $tests) {
+			foreach ($tests as $test) {
+				set_input('param', $test[0]);
+				$this->registerFunction(false, false, [
+					'param' => ['type' => $type],
+				]);
+
+				$serialized = serialise_parameters('test', [
+					// get_input() necessary because it does recursive trimming
+					'param' => get_input('param'),
+				]);
+
+				$serialized = trim($serialized, ", ");
+
+				// evaled
+				$value = eval("return $serialized;");
+				$this->assertEqual($value, $test[1]);
+			}
+		}
+	}
+
+	public function testExecuteMethod() {
+		$params = array(
+			'param1' => array('type' => 'int', 'required' => false),
+			'param2' => array('type' => 'bool', 'required' => true),
+		);
+		elgg_ws_expose_function('test', array($this, 'methodCallback'), $params);
+
+		set_input('param1', "2");
+		set_input('param2', "1");
+
+		$result = execute_method('test');
+		$this->assertIsA($result, 'SuccessResult');
+		$this->assertIdentical($result->export()->result, array(2, true));
+
+		set_input('param1', null);
+		set_input('param2', "1");
+
+		$result = execute_method('test');
+		$this->assertIsA($result, 'SuccessResult');
+		$this->assertIdentical($result->export()->result, array(null, true));
+	}
+
+	public function testExecuteMethodAssoc() {
+		$params = array(
+			'param1' => array('type' => 'int', 'required' => false),
+			'param2' => array('type' => 'bool', 'required' => true),
+		);
+		elgg_ws_expose_function('test', array($this, 'methodCallbackAssoc'), $params, '', 'GET', false, false, true);
+
+		set_input('param1', "2");
+		set_input('param2', "1");
+
+		$result = execute_method('test');
+		$this->assertIsA($result, 'SuccessResult');
+		$this->assertIdentical($result->export()->result, array('param1' => 2, 'param2' => true));
+
+		set_input('param1', null);
+		set_input('param2', "1");
+
+		$result = execute_method('test');
+		$this->assertIsA($result, 'SuccessResult');
+		$this->assertIdentical($result->export()->result, array('param1' => null, 'param2' => true));
+	}
+
+	public function methodCallback() {
+		return func_get_args();
+	}
+
+	public function methodCallbackAssoc($values) {
+		return $values;
+	}
 	
-	protected function registerFunction($api_auth = false, $user_auth = false, $params = null) {
+	protected function registerFunction($api_auth = false, $user_auth = false, $params = null, $assoc = false) {
 		$parameters = array('param1' => array('type' => 'int', 'required' => true),
 							'param2' => array('type' => 'bool', 'required' => false), );
 		
@@ -317,7 +426,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 			$params = $parameters;
 		}
 
-		elgg_ws_expose_function('test', 'elgg_echo', $params, '', 'POST', $api_auth, $user_auth);
+		$callback = ($assoc) ? [$this, 'methodCallbackAssoc'] : [$this, 'methodCallback'];
+		elgg_ws_expose_function('test', $callback, $params, '', 'POST', $api_auth, $user_auth);
 	}
-
 }

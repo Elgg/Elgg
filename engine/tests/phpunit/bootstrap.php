@@ -35,9 +35,11 @@ $CONFIG = (object)[
 	'wwwroot' => 'http://localhost/',
 	'path' => __DIR__ . '/../../../',
 	'dataroot' => __DIR__ . '/test_files/dataroot/',
+	'cacheroot' => __DIR__ . '/test_files/cacheroot/',
 	'site_guid' => 1,
 	'AutoloaderManager_skip_storage' => true,
 	'simplecache_enabled' => false,
+	'system_cache_enabled' => false,
 	'Elgg\Application_phpunit' => true,
 ];
 

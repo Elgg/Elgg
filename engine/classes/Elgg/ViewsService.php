@@ -97,9 +97,9 @@ class ViewsService {
 	
 	/**
 	 * Takes a view name and returns the canonical name for that view.
-	 * 
+	 *
 	 * @param string $alias The possibly non-canonical view name.
-	 * 
+	 *
 	 * @return string The canonical view name.
 	 */
 	public function canonicalizeViewName(/*string*/ $alias) /*: string*/ {
@@ -191,7 +191,7 @@ class ViewsService {
 	 * @param string $view     Name of the view
 	 * @param string $location Full path to the view file
 	 * @param string $viewtype The viewtype to register this under
-	 * 
+	 *
 	 * @access private
 	 */
 	public function setViewDir($view, $location, $viewtype = '') {
@@ -375,7 +375,7 @@ class ViewsService {
 
 	/**
 	 * Includes view PHP or static file
-	 * 
+	 *
 	 * @param string $view                 The view name
 	 * @param array  $vars                 Variables passed to view
 	 * @param string $viewtype             The viewtype
@@ -570,26 +570,32 @@ class ViewsService {
 	 *
 	 * @param array $spec Specification
 	 *    viewtype => [
-	 *        view_name => path
+	 *        view_name => path or array of paths
 	 *    ]
 	 *
 	 * @access private
 	 */
 	public function mergeViewsSpec(array $spec) {
 		foreach ($spec as $viewtype => $list) {
-			foreach ($list as $view => $path) {
-				if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
-					// absolute path
-				} else {
-					// relative path
-					$path = Directory\Local::root()->getPath($path);
+			foreach ($list as $view => $paths) {
+				if (!is_array($paths)) {
+					$paths = [$paths];
 				}
 
-				if (substr($view, -1) === '/') {
-					// prefix
-					$this->autoregisterViews($view, $path, $viewtype);
-				} else {
-					$this->setViewLocation($view, $viewtype, $path);
+				foreach ($paths as $path) {
+					if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
+						// absolute path
+					} else {
+						// relative path
+						$path = Directory\Local::root()->getPath($path);
+					}
+
+					if (substr($view, -1) === '/') {
+						// prefix
+						$this->autoregisterViews($view, $path, $viewtype);
+					} else {
+						$this->setViewLocation($view, $viewtype, $path);
+					}
 				}
 			}
 		}
@@ -632,6 +638,7 @@ class ViewsService {
 			'locations' => $this->locations,
 			'overrides' => $overrides,
 			'extensions' => $this->views->extensions,
+			'simplecache' => $this->views->simplecache,
 		];
 	}
 

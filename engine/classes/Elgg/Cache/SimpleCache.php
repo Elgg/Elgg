@@ -161,7 +161,8 @@ class SimpleCache {
 	 * @return string
 	 */
 	private function getPath() {
-		return realpath($this->config->getDataPath() . "/views_simplecache");
+		$realpath = realpath($this->config->getCachePath());
+		return rtrim($realpath, DIRECTORY_SEPARATOR) . "/views_simplecache";
 	}
 
 	/**

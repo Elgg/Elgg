@@ -242,6 +242,11 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
  */
 function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $params) {
 
+	if (!is_array($returnvalue) || !is_array($returnvalue['params'])) {
+		// another hook handler returned a non-array, let's not override it
+		return;
+	}
+	
 	$notificationParams = elgg_extract('params', $returnvalue, array());
 	/** @var \Elgg\Notifications\Notification */
 	$notification = elgg_extract('notification', $notificationParams);

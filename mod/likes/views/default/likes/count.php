@@ -8,9 +8,6 @@
 $num_of_likes = \Elgg\Likes\DataService::instance()->getNumLikes($vars['entity']);
 $guid = $vars['entity']->guid;
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
-
 // display the number of likes
 if ($num_of_likes == 1) {
 	$likes_string = elgg_echo('likes:userlikedthis', array($num_of_likes));

@@ -1,10 +1,8 @@
 <?php
 /**
- * Elgg lightbox settings view
- *
- * Override this view to change the default colorbox settings. 
- * See the js/lightbox view for more ways to change lightbox behavior.
+ * @deprecated 2.2
  */
+elgg_deprecated_notice('lightbox/settings.js view has been deprecated. Use "getOptions","ui.lightbox" plugin hook or data-colorbox-opts attribute instead', '2.2');
 ?>
 //<script>
 
