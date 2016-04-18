@@ -29,6 +29,33 @@ define(function(require) {
 			}, 25);
 		});
 
+		it("start/stop can be called without 'this' set", function() {
+			spinner.start.call(undefined);
+			spinner.stop.call(undefined);
+		});
+
+		it("start(text) shows escaped text below the spinner", function(done) {
+			expect($(visible_selector).length).toBe(0);
+			spinner.start('a>b&c');
+
+			setTimeout(function() {
+				expect($(visible_selector).length).toBe(1);
+				expect($('.elgg-spinner-text').html()).toBe('a&gt;b&amp;c');
+				done();
+			}, 25);
+		});
+
+		it("start() removes any set text", function(done) {
+			spinner.start('a>b&c');
+
+			setTimeout(spinner.start, 25);
+
+			setTimeout(function() {
+				expect($('.elgg-spinner-text').html()).toBe('');
+				done();
+			}, 35);
+		});
+
 		it("stop() removes the body class", function(done) {
 			spinner.start();
 
