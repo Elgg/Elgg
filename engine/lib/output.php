@@ -70,28 +70,11 @@ function elgg_autop($string) {
  * @since 1.7.2
  */
 function elgg_get_excerpt($text, $num_chars = 250) {
-	$text = trim(elgg_strip_tags($text));
-	$string_length = elgg_strlen($text);
-
-	if ($string_length <= $num_chars) {
-		return $text;
-	}
-
-	// handle cases
-	$excerpt = elgg_substr($text, 0, $num_chars);
-	$space = elgg_strrpos($excerpt, ' ', 0);
-
-	// don't crop if can't find a space.
-	if ($space === false) {
-		$space = $num_chars;
-	}
-	$excerpt = trim(elgg_substr($excerpt, 0, $space));
-
-	if ($string_length != elgg_strlen($excerpt)) {
-		$excerpt .= '...';
-	}
-
-	return $excerpt;
+	$vars = [
+		'text' => $text,
+		'num_chars' => $num_chars,
+	];
+	return elgg_view('output/excerpt', $vars);
 }
 
 /**
@@ -122,7 +105,7 @@ function elgg_format_bytes($size, $precision = 2) {
 	}
 
 	$base = log($size) / log(1024);
-	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');   
+	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');
 
 	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
 }
@@ -517,7 +500,7 @@ function _elgg_html_decode($string) {
 
 /**
  * Prepares query string for output to prevent CSRF attacks.
- * 
+ *
  * @param string $string
  * @return string
  *
