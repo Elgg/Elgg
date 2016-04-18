@@ -21,8 +21,9 @@ System events
 	Triggered after the ``init, system`` event. All plugins are fully loaded and the engine is ready
 	to serve pages.
 
-**pagesetup, system**
+**pagesetup, system** (deprecated in 2.3)
     Called just before the first content is produced. Is triggered by ``elgg_view()``.
+    Use the menu or page shell hooks instead.
 
 **shutdown, system**
     Triggered after the page has been sent to the user. Expensive operations could be done here

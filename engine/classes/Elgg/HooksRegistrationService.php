@@ -62,10 +62,6 @@ abstract class HooksRegistrationService {
 			return false;
 		}
 		
-		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
-			$type = _elgg_services()->views->canonicalizeViewName($type);
-		}
-
 		$this->registrations[$name][$type][] = [
 			self::REG_KEY_PRIORITY => $priority,
 			self::REG_KEY_INDEX => $this->next_index,
@@ -177,7 +173,7 @@ abstract class HooksRegistrationService {
 	 *
 	 * @param string $name The name of the hook
 	 * @param string $type The type of the hook
-	 * @return array
+	 * @return callable[]
 	 * @see \Elgg\HooksRegistrationService::getAllHandlers()
 	 *
 	 * @access private
