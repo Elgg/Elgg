@@ -8,8 +8,8 @@ define(function(require) {
 		removeButtons: 'Subscript,Superscript', // To have Underline back
 		allowedContent: true,
 		baseHref: elgg.get_site_url(),
-		removePlugins: 'liststyle,contextmenu,tabletools,resize',
-		extraPlugins: 'blockimagepaste',
+		removePlugins: 'liststyle,contextmenu,tabletools',
+		extraPlugins: 'blockimagepaste,autogrow',
 		defaultLanguage: 'en',
 		language: elgg.get_language(),
 		skin: 'moono',
