@@ -1260,7 +1260,7 @@ class EntityTable {
 		$show_hidden = access_show_hidden_entities(true);
 
 		$user = $this->get($guid, 'user');
-
+		
 		_elgg_services()->session->setIgnoreAccess($ia);
 		access_show_hidden_entities($show_hidden);
 
