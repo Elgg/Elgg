@@ -23,15 +23,10 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
  * Request user validation email.
  * Send email out to the address and request a confirmation.
  *
- * @param int  $user_guid       The user's GUID
- * @param bool $admin_requested Was it requested by admin
+ * @param int  $user_guid The user's GUID
  * @return mixed
  */
-function uservalidationbyemail_request_validation($user_guid, $admin_requested = 'deprecated') {
-
-	if ($admin_requested != 'deprecated') {
-		elgg_deprecated_notice('Second param $admin_requested no more used in uservalidationbyemail_request_validation function', 1.9);
-	}
+function uservalidationbyemail_request_validation($user_guid) {
 
 	$site = elgg_get_site_entity();
 

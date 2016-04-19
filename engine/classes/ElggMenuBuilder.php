@@ -312,23 +312,4 @@ class ElggMenuBuilder {
 		}
 		return $aw - $bw;
 	}
-
-	/**
-	 * Compare two menu items by their priority
-	 *
-	 * @param \ElggMenuItem $a Menu item
-	 * @param \ElggMenuItem $b Menu item
-	 * @return bool
-	 * @deprecated 1.9 Use compareByPriority()
-	 */
-	public static function compareByWeight($a, $b) {
-		elgg_deprecated_notice("\ElggMenuBuilder::compareByWeight() deprecated by \ElggMenuBuilder::compareByPriority", 1.9);
-		$aw = $a->getPriority();
-		$bw = $b->getPriority();
-
-		if ($aw == $bw) {
-			return $a->getData('original_order') - $b->getData('original_order');
-		}
-		return $aw - $bw;
-	}
 }

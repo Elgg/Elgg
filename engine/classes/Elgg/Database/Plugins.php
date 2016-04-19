@@ -564,8 +564,7 @@ class Plugins {
 	
 			case 'user_setting':
 				if (!$id) {
-					elgg_deprecated_notice("You must pass the plugin id to _elgg_namespace_plugin_private_setting() for user settings", 1.9);
-					$id = elgg_get_calling_plugin_id();
+					throw new \InvalidArgumentException("You must pass the plugin id for user settings");
 				}
 				$name = ELGG_PLUGIN_USER_SETTING_PREFIX . "$id:$name";
 				break;
@@ -834,15 +833,9 @@ class Plugins {
 	 * @return array
 	 * @see \ElggPlugin::getAllUserSettings()
 	 */
-	function getAllUserSettings($user_guid = 0, $plugin_id = null, $return_obj = false) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_get_all_plugin_user_settings() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
-		if (!$plugin instanceof \ElggPlugin) {
+	function getAllUserSettings($user_guid = 0, $plugin_id, $return_obj = false) {
+		$plugin = $this->get($plugin_id);
+		if (!$plugin) {
 			return false;
 		}
 	
@@ -872,18 +865,12 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::setUserSetting()
 	 */
-	function setUserSetting($name, $value, $user_guid = 0, $plugin_id = null) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_set_plugin_user_setting() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
+	function setUserSetting($name, $value, $user_guid = 0, $plugin_id) {
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->setUserSetting($name, $value, (int)$user_guid);
 	}
 	
@@ -897,18 +884,12 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetUserSetting()
 	 */
-	function unsetUserSetting($name, $user_guid = 0, $plugin_id = null) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_unset_plugin_user_setting() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
+	function unsetUserSetting($name, $user_guid = 0, $plugin_id) {
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->unsetUserSetting($name, (int)$user_guid);
 	}
 	
@@ -923,18 +904,12 @@ class Plugins {
 	 * @return mixed
 	 * @see \ElggPlugin::getUserSetting()
 	 */
-	function getUserSetting($name, $user_guid = 0, $plugin_id = null, $default = null) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_get_plugin_user_setting() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
+	function getUserSetting($name, $user_guid = 0, $plugin_id, $default = null) {
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->getUserSetting($name, (int)$user_guid, $default);
 	}
 	
@@ -948,18 +923,12 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::setSetting()
 	 */
-	function setSetting($name, $value, $plugin_id = null) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_set_plugin_setting() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
+	function setSetting($name, $value, $plugin_id) {
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->setSetting($name, $value);
 	}
 	
@@ -973,18 +942,12 @@ class Plugins {
 	 * @return mixed
 	 * @see \ElggPlugin::getSetting()
 	 */
-	function getSetting($name, $plugin_id = null, $default = null) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_get_plugin_setting() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
+	function getSetting($name, $plugin_id, $default = null) {
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->getSetting($name, $default);
 	}
 	
@@ -997,18 +960,12 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetSetting()
 	 */
-	function unsetSetting($name, $plugin_id = null) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_unset_plugin_setting() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
+	function unsetSetting($name, $plugin_id) {
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-	
+
 		return $plugin->unsetSetting($name);
 	}
 	
@@ -1020,14 +977,8 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetAllSettings()
 	 */
-	function unsetAllSettings($plugin_id = null) {
-		if ($plugin_id) {
-			$plugin = $this->get($plugin_id);
-		} else {
-			elgg_deprecated_notice('elgg_unset_all_plugin_settings() requires plugin_id to be set', 1.9);
-			$plugin = elgg_get_calling_plugin_entity();
-		}
-	
+	function unsetAllSettings($plugin_id) {
+		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
@@ -1063,11 +1014,6 @@ class Plugins {
 	 * @return mixed int If count, int. If not count, array. false on errors.
 	 */
 	function getEntitiesFromUserSettings(array $options = array()) {
-		if (!isset($options['plugin_id'])) {
-			elgg_deprecated_notice("'plugin_id' is now required for elgg_get_entities_from_plugin_user_settings()", 1.9);
-			$options['plugin_id'] = elgg_get_calling_plugin_id();
-		}
-	
 		$singulars = array('plugin_user_setting_name', 'plugin_user_setting_value',
 			'plugin_user_setting_name_value_pair');
 	
