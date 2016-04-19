@@ -18,6 +18,16 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	const OPTION_DEPRECATION_VERSION = 'deprecation_version';
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function registerHandler($name, $type, $callback, $priority = 500) {
+		if (in_array($type, ['member', 'friend', 'member_of_site', 'attached']) && in_array($name, ['create', 'update', 'delete'])) {
+			$this->logger->error("'$name, $type' event is no longer triggered. Update your event registration to use '$name, relationship'");
+		}
+		return parent::registerHandler($name, $type, $callback, $priority);
+	}
+
+	/**
 	 * Triggers an Elgg event.
 	 * 
 	 * @see elgg_trigger_event
