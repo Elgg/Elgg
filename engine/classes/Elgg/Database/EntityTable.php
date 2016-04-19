@@ -156,7 +156,7 @@ class EntityTable {
 		}
 		
 		// Check local cache first
-		$new_entity = _elgg_retrieve_cached_entity($guid);
+		$new_entity = _elgg_services()->entityCache->get($guid);
 		if ($new_entity) {
 			if ($type) {
 				return elgg_instanceof($new_entity, $type) ? $new_entity : false;
@@ -484,7 +484,7 @@ class EntityTable {
 		foreach ($results as $item) {
 			// A custom callback could result in items that aren't \ElggEntity's, so check for them
 			if ($item instanceof \ElggEntity) {
-				_elgg_cache_entity($item);
+				_elgg_services()->entityCache->set($item);
 				// plugins usually have only settings
 				if (!$item instanceof \ElggPlugin) {
 					$guids[] = $item->guid;
@@ -618,7 +618,7 @@ class EntityTable {
 			if (empty($row->guid) || empty($row->type)) {
 				throw new \LogicException('Entity row missing guid or type');
 			}
-			$entity = _elgg_retrieve_cached_entity($row->guid);
+			$entity = _elgg_services()->entityCache->get($row->guid);
 			if ($entity) {
 				$entity->refresh($row);
 				$rows[$i] = $entity;
@@ -1260,7 +1260,7 @@ class EntityTable {
 		$show_hidden = access_show_hidden_entities(true);
 
 		$user = $this->get($guid, 'user');
-
+		
 		_elgg_services()->session->setIgnoreAccess($ia);
 		access_show_hidden_entities($show_hidden);
 

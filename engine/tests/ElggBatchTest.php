@@ -75,7 +75,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			$entity->access_id = ACCESS_PUBLIC;
 			$entity->save();
 			$guids[] = $entity->guid;
-			_elgg_invalidate_cache_for_entity($entity->guid);
+			_elgg_services()->entityCache->remove($entity->guid);
 		}
 
 		// break entities such that the first fetch has one incomplete
@@ -126,7 +126,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			$entity->access_id = ACCESS_PUBLIC;
 			$entity->save();
 			$guids[] = $entity->guid;
-			_elgg_invalidate_cache_for_entity($entity->guid);
+			_elgg_services()->entityCache->remove($entity->guid);
 		}
 
 		// break entities such that the first fetch has one incomplete

@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\Database\EntityTable\UserFetchFailureException;
-
 /**
  * The parent class for all Elgg Entities.
  *
@@ -42,7 +40,8 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
  * @property       string $location       A location of the entity
  */
 abstract class ElggEntity extends \ElggData implements
-	Locatable // Geocoding interface
+	Locatable, // Geocoding interface
+	\Elgg\EntityIcon // Icon interface
 {
 
 	/**
@@ -940,46 +939,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit($user_guid = 0) {
-		try {
-			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		} catch (UserFetchFailureException $e) {
-			return false;
-		}
-
-		// Test user if possible - should default to false unless a plugin hook says otherwise
-		$default = call_user_func(function () use ($user) {
-			if (!$user) {
-				return false;
-			}
-
-			// favor the persisted attributes if not saved
-			$attrs = array_merge(
-				[
-					'owner_guid' => $this->owner_guid,
-					'container_guid' => $this->container_guid,
-				],
-				$this->getOriginalAttributes()
-			);
-
-			if ($attrs['owner_guid'] == $user->guid) {
-				return true;
-			}
-
-			if ($attrs['container_guid'] == $user->guid) {
-				return true;
-			}
-
-			if ($this->guid == $user->guid) {
-				return true;
-			}
-
-			$container = get_entity($attrs['container_guid']);
-
-			return ($container && $container->canEdit($user->guid));
-		});
-
-		$params = array('entity' => $this, 'user' => $user);
-		return _elgg_services()->hooks->trigger('permissions_check', $this->type, $params, $default);
+		return _elgg_services()->userCapabilities->canEdit($this, $user_guid);
 	}
 
 	/**
@@ -994,16 +954,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canDelete($user_guid = 0) {
-		try {
-			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		} catch (UserFetchFailureException $e) {
-			return false;
-		}
-
-		$return = $this->canEdit($user_guid);
-
-		$params = array('entity' => $this, 'user' => $user);
-		return _elgg_services()->hooks->trigger('permissions_check:delete', $this->type, $params, $return);
+		return _elgg_services()->userCapabilities->canDelete($this, $user_guid);
 	}
 
 	/**
@@ -1022,35 +973,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canEditMetadata($metadata = null, $user_guid = 0) {
-		if (!$this->guid) {
-			// @todo cannot edit metadata on unsaved entity?
-			return false;
-		}
-
-		try {
-			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		} catch (UserFetchFailureException $e) {
-			return false;
-		}
-
-		if ($user) {
-			$user_guid = $user->guid;
-		}
-
-		$return = null;
-
-		// if metadata is not owned or owned by the user, then can edit
-		if ($metadata && ($metadata->owner_guid == 0 || $metadata->owner_guid == $user_guid)) {
-			$return = true;
-		}
-
-		if (is_null($return)) {
-			$return = $this->canEdit($user_guid);
-		}
-
-		// metadata and user may be null
-		$params = array('entity' => $this, 'user' => $user, 'metadata' => $metadata);
-		return _elgg_services()->hooks->trigger('permissions_check:metadata', $this->type, $params, $return);
+		return _elgg_services()->userCapabilities->canEditMetadata($this, $user_guid, $metadata);
 	}
 
 	/**
@@ -1064,7 +987,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
-		return can_write_to_container($user_guid, $this->guid, $type, $subtype);
+		return _elgg_services()->userCapabilities->canWriteToContainer($this, $user_guid, $type, $subtype);
 	}
 
 	/**
@@ -1078,16 +1001,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function canComment($user_guid = 0) {
-		try {
-			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		} catch (UserFetchFailureException $e) {
-			return false;
-		}
-
-		// By default, we don't take a position of whether commenting is allowed
-		// because it is handled by the subclasses of \ElggEntity
-		$params = array('entity' => $this, 'user' => $user);
-		return _elgg_services()->hooks->trigger('permissions_check:comment', $this->type, $params, null);
+		return _elgg_services()->userCapabilities->canComment($this, $user_guid);
 	}
 
 	/**
@@ -1105,27 +1019,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function canAnnotate($user_guid = 0, $annotation_name = '') {
-		try {
-			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
-		} catch (UserFetchFailureException $e) {
-			return false;
-		}
-
-		$return = (bool)$user;
-
-		$hooks = _elgg_services()->hooks;
-
-		$params = array(
-			'entity' => $this,
-			'user' => $user,
-			'annotation_name' => $annotation_name,
-		);
-		if ($annotation_name !== '') {
-			$return = $hooks->trigger("permissions_check:annotate:$annotation_name", $this->type, $params, $return);
-		}
-		$return = $hooks->trigger('permissions_check:annotate', $this->type, $params, $return);
-
-		return $return;
+		return _elgg_services()->userCapabilities->canAnnotate($this, $user_guid, $annotation_name);
 	}
 
 	/**
@@ -1275,6 +1169,87 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
+	 * Saves icons using an uploaded file as the source.
+	 *
+	 * @param string $input_name Form input name
+	 * @param string $type       The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param array  $coords     An array of cropping coordinates x1, y1, x2, y2
+	 * @return bool
+	 */
+	public function saveIconFromUploadedFile($input_name, $type = 'icon', array $coords = array()) {
+		return _elgg_services()->iconService->saveIconFromUploadedFile($this, $input_name, $type, $coords);
+	}
+
+	/**
+	 * Saves icons using a local file as the source.
+	 *
+	 * @param string $filename The full path to the local file
+	 * @param string $type     The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param array  $coords   An array of cropping coordinates x1, y1, x2, y2
+	 * @return bool
+	 */
+	public function saveIconFromLocalFile($filename, $type = 'icon', array $coords = array()) {
+		return _elgg_services()->iconService->saveIconFromLocalFile($this, $file, $type, $coords);
+	}
+
+	/**
+	 * Saves icons using a file located in the data store as the source.
+	 *
+	 * @param string $file   An ElggFile instance
+	 * @param string $type   The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param array  $coords An array of cropping coordinates x1, y1, x2, y2
+	 * @return bool
+	 */
+	public function saveIconFromElggFile(\ElggFile $file, $type = 'icon', array $coords = array()) {
+		return _elgg_services()->iconService->saveIconFromElggFile($this, $file, $type, $coords);
+	}
+	
+	/**
+	 * Returns entity icon as an ElggIcon object
+	 * The icon file may or may not exist on filestore
+	 * 
+	 * @param string $size Size of the icon
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @return \ElggIcon
+	 */
+	public function getIcon($size, $type = 'icon') {
+		return _elgg_services()->iconService->getIcon($this, $size, $type);
+	}
+
+	/**
+	 * Removes all icon files and metadata for the passed type of icon.
+	 * 
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @return bool
+	 */
+	public function deleteIcon($type = 'icon') {
+		return _elgg_services()->iconService->deleteIcon($this, $type);
+	}
+	
+	/**
+	 * Returns the timestamp of when the icon was changed.
+	 * 
+	 * @param string $size The size of the icon
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * 
+	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
+	 */
+	public function getIconLastChange($size, $type = 'icon') {
+		return _elgg_services()->iconService->getIconLastChange($this, $size, $type);
+	}
+	
+	/**
+	 * Returns if the entity has an icon of the passed type.
+	 *
+	 * @param string $size The size of the icon
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @return bool
+	 */
+	public function hasIcon($size, $type = 'icon') {
+		return _elgg_services()->iconService->hasIcon($this, $size, $type);
+	}
+
+	/**
 	 * Get the URL for this entity's icon
 	 *
 	 * Plugins can register for the 'entity:icon:url', <type> plugin hook
@@ -1286,25 +1261,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @since 1.8.0
 	 */
 	public function getIconURL($params = array()) {
-		if (is_array($params)) {
-			$size = elgg_extract('size', $params, 'medium');
-		} else {
-			$size = is_string($params) ? $params : 'medium';
-			$params = array();
-		}
-		$size = elgg_strtolower($size);
-
-		$params['entity'] = $this;
-		$params['size'] = $size;
-
-		$type = $this->getType();
-
-		$url = _elgg_services()->hooks->trigger('entity:icon:url', $type, $params, null);
-		if ($url == null) {
-			$url = elgg_get_simplecache_url("icons/default/$size.png");
-		}
-
-		return elgg_normalize_url($url);
+		return _elgg_services()->iconService->getIconURL($this, $params);
 	}
 
 	/**
@@ -1533,7 +1490,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->temp_private_settings = array();
 		}
 
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 		
 		return $result;
 	}
@@ -1608,7 +1565,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->attributes['time_updated'] = $time;
 		}
 
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 
 		$this->orig_attributes = [];
 
@@ -1650,7 +1607,7 @@ abstract class ElggEntity extends \ElggData implements
 
 			// Cache object handle
 			if ($this->attributes['guid']) {
-				_elgg_cache_entity($this);
+				_elgg_services()->entityCache->set($this);
 			}
 
 			return true;
@@ -1730,8 +1687,8 @@ abstract class ElggEntity extends \ElggData implements
 			$unban_after = false;
 		}
 
-		_elgg_invalidate_cache_for_entity($this->guid);
-		
+		_elgg_services()->entityCache->remove($this->guid);
+
 		if ($reason) {
 			$this->disable_reason = $reason;
 		}
@@ -1903,8 +1860,8 @@ abstract class ElggEntity extends \ElggData implements
 			_elgg_services()->usersTable->markBanned($this->guid, true);
 		}
 
-		_elgg_invalidate_cache_for_entity($guid);
-		
+		_elgg_services()->entityCache->remove($guid);
+
 		// If memcache is available then delete this entry from the cache
 		static $newentity_cache;
 		if ((!$newentity_cache) && (is_memcache_available())) {

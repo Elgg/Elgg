@@ -271,7 +271,7 @@ class ElggGroup extends \ElggEntity {
 
 		$this->attributes = $attrs;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 
 		return true;
 	}
@@ -320,7 +320,7 @@ class ElggGroup extends \ElggEntity {
 			// TODO(evan): Throw an exception here?
 			return false;
 		}
-		
+
 		return $guid;
 	}
 

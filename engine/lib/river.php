@@ -445,13 +445,13 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	// prefetch objects, subjects and targets
 	$guids = array();
 	foreach ($river_items as $item) {
-		if ($item->subject_guid && !_elgg_retrieve_cached_entity($item->subject_guid)) {
+		if ($item->subject_guid && !_elgg_services()->entityCache->get($item->subject_guid)) {
 			$guids[$item->subject_guid] = true;
 		}
-		if ($item->object_guid && !_elgg_retrieve_cached_entity($item->object_guid)) {
+		if ($item->object_guid && !_elgg_services()->entityCache->get($item->object_guid)) {
 			$guids[$item->object_guid] = true;
 		}
-		if ($item->target_guid && !_elgg_retrieve_cached_entity($item->target_guid)) {
+		if ($item->target_guid && !_elgg_services()->entityCache->get($item->target_guid)) {
 			$guids[$item->target_guid] = true;
 		}
 	}
@@ -470,7 +470,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	$guids = array();
 	foreach ($river_items as $item) {
 		$object = $item->getObjectEntity();
-		if ($object->container_guid && !_elgg_retrieve_cached_entity($object->container_guid)) {
+		if ($object->container_guid && !_elgg_services()->entityCache->get($object->container_guid)) {
 			$guids[$object->container_guid] = true;
 		}
 	}

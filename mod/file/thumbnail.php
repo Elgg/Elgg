@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg file thumbnail
  *
@@ -25,35 +26,12 @@ $size = get_input('size', 'small');
 
 $file = get_entity($file_guid);
 
-$thumb_url = false;
-
-// thumbnails get first priority
-if ($file && $file->thumbnail) {
-
-	switch ($size) {
-		case "small":
-			$thumbfile = $file->thumbnail;
-			break;
-		case "medium":
-			$thumbfile = $file->smallthumb;
-			break;
-		case "large":
-		default:
-			$thumbfile = $file->largethumb;
-			break;
-	}
-
-	if (!empty($thumbfile)) {
-		$readfile = new ElggFile();
-		$readfile->owner_guid = $file->owner_guid;
-		$readfile->setFilename($thumbfile);
-		$thumb_url = elgg_get_inline_url($readfile, true);
+if ($file) {
+	$thumb = $file->getIcon($size);
+	$thumb_url = elgg_get_inline_url($thumb, true);
+	if ($thumb_url) {
+		forward($thumb_url);
 	}
 }
 
-if ($thumb_url) {
-	forward($thumb_url);
-}
-
-header('HTTP/1.1 404 Not found');
-exit;
+forward('', '404');

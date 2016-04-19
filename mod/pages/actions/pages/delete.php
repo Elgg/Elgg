@@ -43,7 +43,7 @@ if (pages_is_page($page)) {
 						'metadata_name' => 'parent_guid',
 					));
 
-					_elgg_invalidate_cache_for_entity($child_guid);
+					_elgg_services()->entityCache->remove($child_guid);
 					if ($newentity_cache) {
 						$newentity_cache->delete($child_guid);
 					}

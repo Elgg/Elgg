@@ -31,6 +31,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
+ * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
@@ -38,6 +39,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggFileCache                           $fileCache
  * @property-read \ElggDiskFilestore                       $filestore
  * @property-read \Elgg\PluginHooksService                 $hooks
+ * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
  * @property-read Mailer                                   $mailer
@@ -68,6 +70,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
+ * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
@@ -170,6 +173,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\DeprecationService($c->logger);
 		});
 
+		$this->setFactory('entityCache', function(ServiceProvider $c) {
+			return new \Elgg\Cache\EntityCache($c->session, $c->metadataCache);
+		});
+
 		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
 
 		$this->setClassName('entityTable', \Elgg\Database\EntityTable::class);
@@ -192,6 +199,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('hooks');
+		});
+
+		$this->setFactory('iconService', function(ServiceProvider $c) {
+			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger);
 		});
 
 		$this->setClassName('input', \Elgg\Http\Input::class);
@@ -351,6 +362,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->logger,
 				$c->mutex
 			);
+		});
+
+		$this->setFactory('userCapabilities', function(ServiceProvider $c) {
+			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
 		});
 
 		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
