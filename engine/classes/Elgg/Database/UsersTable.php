@@ -191,7 +191,7 @@ class UsersTable {
 				}
 	
 				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
-				_elgg_invalidate_cache_for_entity($user_guid);
+				_elgg_services()->entityCache->remove($user_guid);
 				return $r;
 			}
 	
@@ -227,7 +227,7 @@ class UsersTable {
 				}
 	
 				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
-				_elgg_invalidate_cache_for_entity($user_guid);
+				_elgg_services()->entityCache->remove($user_guid);
 				return $r;
 			}
 	
@@ -257,8 +257,8 @@ class UsersTable {
 	
 		// Caching
 		if ((isset($USERNAME_TO_GUID_MAP_CACHE[$username]))
-				&& (_elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
-			return _elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
+				&& (_elgg_services()->entityCache->get($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
+			return _elgg_services()->entityCache->get($USERNAME_TO_GUID_MAP_CACHE[$username]);
 		}
 	
 		$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}users_entity u

@@ -66,7 +66,7 @@ class ElggCoreAttributeLoaderTest extends \ElggCoreUnitTest {
 			$this->assertEqual($entity->getVolatileData('select:added_col3'), 42);
 
 			// make sure we have cached the entity
-			$this->assertNotEqual(false, _elgg_retrieve_cached_entity($entity->guid));
+			$this->assertNotEqual(false, _elgg_services()->entityCache->get($entity->guid));
 		}
 
 		// run these again but with different value to make sure cache does not interfere
