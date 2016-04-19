@@ -23,6 +23,9 @@ function reportedcontent_init() {
 	if (elgg_is_logged_in()) {
 		elgg_require_js('elgg/reportedcontent');
 
+		elgg_load_js('lightbox');
+		elgg_load_css('lightbox');
+
 		// Extend footer with report content link
 		elgg_register_menu_item('extras', array(
 			'name' => 'report_this',
