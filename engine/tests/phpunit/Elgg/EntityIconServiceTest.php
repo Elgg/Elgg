@@ -25,9 +25,24 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	private $logger;
 
 	/**
-	 * @var \ElggEntity
+	 * @var \Elgg\Database\EntityTable
+	 */
+	private $entities;
+
+	/**
+	 * @var \Elgg\Tests\EntityMocks
+	 */
+	private $mocks;
+
+	/**
+	 * @var \ElggObject
 	 */
 	private $entity;
+
+	/**
+	 * @var \ElggUser
+	 */
+	private $user;
 
 	/**
 	 * @var string
@@ -43,31 +58,34 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		_elgg_filestore_init(); // we will need simpletype hook to work
 
+		$this->mocks = new \Elgg\Tests\EntityMocks($this);
+
 		$this->config = _elgg_testing_config();
 		$this->hooks = new \Elgg\PluginHooksService();
 		$path_key = \Elgg\Application::GET_PATH_KEY;
 		$this->request = \Elgg\Http\Request::create("?$path_key=action/upload");
 		$this->logger = new \Elgg\Logger($this->hooks, $this->config, new \Elgg\Context());
 
-		$dbMock = $this->getMockBuilder('\Elgg\Database')
+		$this->entities = $this->getMockBuilder('\Elgg\Database\EntityTable')
+				->setMethods(['get', 'exists'])
 				->disableOriginalConstructor()
 				->getMock();
 
-		$this->entity = $this->getMockBuilder('\ElggEntity')
-				->disableOriginalConstructor()
-				->getMock();
-		$this->entity->expects($this->any())
-				->method('getType')
-				->will($this->returnValue('object'));
-		$this->entity->expects($this->any())
-				->method('getSubtype')
-				->will($this->returnValue('foo'));
-		$this->entity->expects($this->any())
-				->method('__get')
-				->will($this->returnValueMap([
-							['guid', 123],
-							['owner_guid', 2],
-		]));
+		$this->entities->expects($this->any())
+				->method('get')
+				->will($this->returnCallback([$this->mocks, 'get']));
+
+		$this->entities->expects($this->any())
+				->method('exists')
+				->will($this->returnCallback([$this->mocks, 'exists']));
+
+		_elgg_services()->setValue('entityTable', $this->entities);
+
+		$this->user = $this->mocks->getUser();
+		$this->entity = $this->mocks->getObject([
+			'owner_guid' => $this->user->guid,
+			'subtype' => 'foo',
+		]);
 
 		$dir = (new \Elgg\EntityDirLocator($this->entity->guid))->getPath();
 		$this->entity_dir_path = $this->config->get('dataroot') . $dir;
@@ -103,7 +121,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function createService() {
-		return new \Elgg\EntityIconService($this->config, $this->hooks, $this->request, $this->logger);
+		return new \Elgg\EntityIconService($this->config, $this->hooks, $this->request, $this->logger, $this->entities);
 	}
 
 	public static function getCoverSizes() {
@@ -377,7 +395,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		// Make a copy of the file so we can move it
 		$tmp = new \ElggFile();
-		$tmp->owner_guid = 2;
+		$tmp->owner_guid = $this->user->guid;
 		$tmp->setFilename('tmp.gif');
 		$tmp->open('write');
 		$tmp->write(file_get_contents($this->config->get('dataroot') . '1/1/400x300.gif'));
@@ -756,7 +774,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 		if (!$ch) {
 			$ch = $eh;
 		}
-		
+
 		// resizing
 		$service->saveIconFromElggFile($this->entity, $file, 'icon');
 
@@ -813,13 +831,79 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 			[75, 125, 'small', 40, 40, true],
 			[75, 125, 'tiny', 25, 25, true],
 			[75, 125, 'topbar', 16, 16, true],
-
 			// there is a problem in get_resized_image_from_existing_file()
 			// we expect the large icon to fill the container when in cropping mode
 			// however since the icon is set to not upscale, we end up with a 20x20 image
 			// See #9663
 			//[75, 125, 'large', 75, 125, true, 200, 200],
 		];
+	}
+
+	/**
+	 * @group IconService
+	 */
+	public function testServeIconSends400ForMalformattedRequest() {
+
+		$path_key = \Elgg\Application::GET_PATH_KEY;
+		$this->request = \Elgg\Http\Request::create("?$path_key=serve-icon/x/large");
+
+		$service = $this->createService();
+
+		$response = $service->handleServeIconRequest(false);
+
+		$this->assertEquals(400, $response->getStatusCode());
+	}
+
+	/**
+	 * @group IconService
+	 */
+	public function testServeIconSends404ForNonExistentGuid() {
+
+		$path_key = \Elgg\Application::GET_PATH_KEY;
+		$this->request = \Elgg\Http\Request::create("?$path_key=serve-icon/55/small");
+
+		$service = $this->createService();
+
+		$response = $service->handleServeIconRequest(false);
+
+		$this->assertEquals(404, $response->getStatusCode());
+	}
+
+	/**
+	 * @group IconService
+	 */
+	public function testCanHandleServeIconRequest() {
+
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('600x300.jpg');
+
+		$path_key = \Elgg\Application::GET_PATH_KEY;
+		$this->request = \Elgg\Http\Request::create("?$path_key=serve-icon/{$this->entity->guid}/small");
+
+		$service = $this->createService();
+
+		$service->saveIconFromElggFile($this->entity, $file);
+
+		$response = $service->handleServeIconRequest(false);
+
+		$icon = $service->getIcon($this->entity, 'small');
+
+		$this->assertInstanceOf(\Symfony\Component\HttpFoundation\BinaryFileResponse::class, $response);
+		$this->assertEquals(200, $response->getStatusCode());
+
+		$this->assertEquals('image/jpeg', $response->headers->get('Content-Type'));
+
+		$filesize = filesize($icon->getFilenameOnFilestore());
+		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
+
+		$this->assertContains('inline', $response->headers->get('Content-Disposition'));
+
+		$this->assertEquals('"' . $icon->getModifiedTime() . '"', $response->headers->get('Etag'));
+
+		// should be under 1 min, just enough for the test to run
+		$expires = $response->getExpires();
+		$this->assertTrue(time() - $expires->modify('-1 day')->getTimestamp() < 60);
 	}
 
 }
