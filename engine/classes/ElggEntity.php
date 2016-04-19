@@ -1274,7 +1274,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function saveIconFromLocalFile($filename, $type = 'icon', array $coords = array()) {
-		return _elgg_services()->iconService->saveIconFromLocalFile($this, $file, $type, $coords);
+		return _elgg_services()->iconService->saveIconFromLocalFile($this, $filename, $type, $coords);
 	}
 
 	/**
