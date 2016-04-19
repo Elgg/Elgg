@@ -5,9 +5,10 @@ if (empty($data)) {
 	return;
 }
 
-$views = $data['views'];
-$global_hooks = $data['global_hooks'];
-$filtered_views = $data['filtered_views'];
+$views = elgg_extract('views', $data);
+$global_hooks = elgg_extract('global_hooks', $data);
+$filtered_views = elgg_extract('filtered_views', $data);
+$input_filtered_views = (array)elgg_extract('input_filtered_views', $data);
 
 $root = elgg_get_root_path();
 $strip = function ($file) use ($root) {
@@ -62,15 +63,24 @@ foreach ($views as $view => $components) {
 
 	$rowspan = count($components);
 
+	$extra_rows = '';
+
+	if (in_array($view, $input_filtered_views)) {
+		$rowspan += 1;
+		$id = "z" . md5("view_vars, $view");
+		$link = "<a href='?inspect_type=Plugin%20Hooks#$id'>view_vars, $view</a>";
+		$col2 = elgg_echo('developers:inspect:views:input_filtered', array($link));
+
+		$extra_rows .= "<tr><td>&nbsp;</td><td>$col2</td></tr>";
+	}
+
 	if (in_array($view, $filtered_views)) {
 		$rowspan += 1;
-		$id = "z" . md5("view,$view");
-		$link = "<a href='?inspect_type=Plugin%20Hooks#$id'>view,$view</a>";
+		$id = "z" . md5("view, $view");
+		$link = "<a href='?inspect_type=Plugin%20Hooks#$id'>view, $view</a>";
 		$col2 = elgg_echo('developers:inspect:views:filtered', array($link));
 
-		$extra_row = "<tr><td>&nbsp;</td><td>$col2</td></tr>";
-	} else {
-		$extra_row = "";
+		$extra_rows .= "<tr><td>&nbsp;</td><td>$col2</td></tr>";
 	}
 
 	foreach ($components as $priority => $component) {
@@ -100,7 +110,7 @@ foreach ($views as $view => $components) {
 		echo "</tr>";
 	}
 
-	echo $extra_row;
+	echo $extra_rows;
 }
 
 echo "</table>";
