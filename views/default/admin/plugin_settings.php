@@ -21,8 +21,6 @@ if (elgg_view_exists("settings/$plugin_id/edit") || elgg_view_exists("plugins/$p
 
 	$params = array('id' => "$plugin_id-settings", 'class' => 'elgg-form-settings');
 	$body = elgg_view_form("plugins/settings/save", $params, $vars);
-	if (empty($body)) {
-		$body = elgg_format_element('p', ['class' => 'elgg-no-results'], elgg_echo('plugins:settings:empty'));
-	}
+
 	echo elgg_view_module('info', $title, $body);
 }

@@ -18,16 +18,10 @@ if ($type != 'user') {
 }
 
 if (elgg_view_exists("plugins/$plugin_id/{$type}settings")) {
-	$body = elgg_view("plugins/$plugin_id/{$type}settings", $vars);
+	echo elgg_view("plugins/$plugin_id/{$type}settings", $vars);
 } else {
-	$body = elgg_view_deprecated("{$type}settings/$plugin_id/edit", $vars, "Use the view plugins/$plugin_id/{$type}settings", 1.8);
+	echo elgg_view_deprecated("{$type}settings/$plugin_id/edit", $vars, "Use the view plugins/$plugin_id/{$type}settings", 1.8);
 }
-
-if (empty($body)) {
-	return;
-}
-
-echo $body;
 
 echo '<div class="elgg-foot">';
 echo elgg_view('input/hidden', array('name' => 'plugin_id', 'value' => $plugin_id));

@@ -36,9 +36,6 @@ if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
 }
 
 $content = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
-if (empty($content)) {
-	$content = elgg_format_element('p', ['class' => 'elgg-no-results'], elgg_echo('plugins:settings:empty'));
-}
 
 $params = array(
 	'content' => $content,
