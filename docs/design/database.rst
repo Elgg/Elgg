@@ -14,7 +14,7 @@ In Elgg, everything runs on a unified data model based on atomic
 units of data called entities.
 
 Plugins are discouraged from interacting directly with the database,
-which creates a more stable system and a better user experience becase
+which creates a more stable system and a better user experience because
 content created by different plugins can be mixed together in
 consistent ways. With this approach, plugins are faster to develop,
 and are at the same time much more powerful.
