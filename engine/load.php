@@ -8,7 +8,7 @@
 
 $lib_dir = __DIR__ . "/lib";
 
-require_once "$lib_dir/autoloader.php";
+$autoloader_setup = (require_once "$lib_dir/autoloader.php");
 
 $autoload_path = dirname(__DIR__) . '/vendor/autoload.php';
 $autoload_available = include_once($autoload_path);
@@ -79,7 +79,7 @@ $lib_files = array(
 );
 
 // isolate global scope
-call_user_func(function () use ($lib_dir, $lib_files) {
+call_user_func(function () use ($lib_dir, $lib_files, $autoloader_setup) {
 
 	$setups = array();
 
@@ -96,6 +96,7 @@ call_user_func(function () use ($lib_dir, $lib_files) {
 	$hooks = _elgg_services()->hooks;
 
 	// run setups
+	$autoloader_setup($events, $hooks);
 	foreach ($setups as $func) {
 		$func($events, $hooks);
 	}
