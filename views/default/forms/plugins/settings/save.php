@@ -17,9 +17,16 @@ if ($type != 'user') {
 	$type = '';
 }
 
-if (elgg_view_exists("plugins/$plugin_id/{$type}settings")) {
-	echo elgg_view("plugins/$plugin_id/{$type}settings", $vars);
+if (!elgg_view_exists("plugins/$plugin_id/{$type}settings")) {
+	return;
 }
+
+$body = elgg_view("plugins/$plugin_id/{$type}settings", $vars);
+if (empty($body)) {
+	return;
+}
+
+echo $body;
 
 echo '<div class="elgg-foot">';
 echo elgg_view('input/hidden', array('name' => 'plugin_id', 'value' => $plugin_id));

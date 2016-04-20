@@ -41,6 +41,9 @@ elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
 elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
 
 $content = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
+if (empty($content)) {
+	$content = elgg_format_element('p', ['class' => 'elgg-no-results'], elgg_echo('plugins:settings:empty'));
+}
 
 $params = array(
 	'content' => $content,

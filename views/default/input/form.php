@@ -31,6 +31,10 @@ $vars['method'] = strtolower($vars['method']);
 $body = $vars['body'];
 unset($vars['body']);
 
+if (empty($body)) {
+	return;
+}
+
 // Generate a security header
 if (!$vars['disable_security']) {
 	$body = elgg_view('input/securitytoken') . $body;
