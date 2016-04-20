@@ -760,6 +760,10 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 	if ($item->getConfirmText()) {
 		$vars['confirm'] = $item->getConfirmText();
 	}
+	
+	if (!empty($item->getToggleItem())) {
+		$vars['data-toggleable-item'] = $item->getToggleItem();
+	}
 
 	return elgg_view('output/url', $vars);
 }

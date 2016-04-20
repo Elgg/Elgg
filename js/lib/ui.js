@@ -42,7 +42,7 @@ elgg.ui.init = function () {
 
 	elgg.ui.initDatePicker();
 
-	elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
+	$(document).on('click.toggle', '.elgg-menu a[data-toggleable-item]', elgg.ui.toggleMenuItem);
 };
 
 /**
@@ -283,6 +283,40 @@ elgg.ui.initDatePicker = function () {
 };
 
 /**
+ * This function toggles a menu item that has a related toggleable menu item
+ */
+elgg.ui.toggleMenuItem = function() {
+	var $link = $(this);
+	var $menuitem = $link.closest('li');
+	var $menu = $menuitem.closest('.elgg-menu');
+	var other_menuitem_name = $link.data().toggleableItem.replace('_', '-');
+	var $other_menuitem = $menu.find('.elgg-menu-item-' + other_menuitem_name).eq(0);
+	
+	if ($other_menuitem == 'undefined') {
+		return;
+	}
+	
+	// Be optimistic about success
+	elgg.ui.toggleMenuItemsByObject($other_menuitem, $menuitem);
+
+	// Send the ajax request
+	elgg.action($(this).attr('href'), {
+		success: function(json) {
+			if (json.system_messages.error.length) {
+				// Something went wrong, so undo the optimistic changes
+				elgg.ui.toggleMenuItemsByObject($menuitem, $other_menuitem);
+			}
+		},
+		error: function() {
+			// Something went wrong, so undo the optimistic changes
+			elgg.ui.toggleMenuItemsByObject($menuitem, $other_menuitem);
+		}
+	});
+
+	// Don't want to actually click the link
+	return false;
+};
+/**
  * This function registers two menu items that are actions that are the opposite
  * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
  *
@@ -290,63 +324,38 @@ elgg.ui.initDatePicker = function () {
  * name is remove_friend, you should call this function with "remove-friend" instead.
  */
 elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
-
-	// Handles clicking the first button.
-	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a')
-			.on('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a', function() {
-		var $menu = $(this).closest('.elgg-menu');
-
-		// Be optimistic about success
-		elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-
-		// Send the ajax request
-		elgg.action($(this).attr('href'), {
-			success: function(json) {
-				if (json.system_messages.error.length) {
-					// Something went wrong, so undo the optimistic changes
-					elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-				}
-			},
-			error: function() {
-				// Something went wrong, so undo the optimistic changes
-				elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-			}
-		});
-
-		// Don't want to actually click the link
-		return false;
-	});
-
-	// Handles clicking the second button
-	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a')
-			.on('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a', function() {
-		var $menu = $(this).closest('.elgg-menu');
-
-		// Be optimistic about success
-		elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-
-		// Send the ajax request
-		elgg.action($(this).attr('href'), {
-			success: function(json) {
-				if (json.system_messages.error.length) {
-					// Something went wrong, so undo the optimistic changes
-					elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-				}
-			},
-			error: function() {
-				// Something went wrong, so undo the optimistic changes
-				elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-			}
-		});
-
-		// Don't want to actually click the link
-		return false;
-	});
+	elgg.deprecated_notice(
+		'Registering togglable menuitems(' + menuItemNameA + ' => ' + menuItemNameB + ') ' +
+		'is deprecated by setting data-toggle attributes on menu items', 
+	'2.2');
+	
+	// add a toggle relation between the menu items
+	$(document).on(
+		'mousedown', // need to be before click event
+		'.elgg-menu-item-' + menuItemNameA + ' a, .elgg-menu-item-' + menuItemNameB + ' a', 
+		function() {
+			$('.elgg-menu-item-' + menuItemNameA + ' a').attr('data-toggleable-item', menuItemNameB);
+			$('.elgg-menu-item-' + menuItemNameB + ' a').attr('data-toggleable-item', menuItemNameA);
+		}
+	);
 };
 
+/**
+ * Toggles menu items by name
+ */
 elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
     $menu.find('.elgg-menu-item-' + nameOfItemToShow).removeClass('hidden').find('a').focus();
     $menu.find('.elgg-menu-item-' + nameOfItemToHide).addClass('hidden');
+};
+
+/**
+ * Toggles menu items by object
+ * 
+ * @private
+ */
+elgg.ui.toggleMenuItemsByObject = function($itemToShow, $itemToHide) {
+    $itemToShow.removeClass('hidden').find('a').focus();
+    $itemToHide.addClass('hidden');
 };
 
 /**
