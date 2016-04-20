@@ -301,7 +301,7 @@ class Application {
 
 		$this->allowPathRewrite();
 
-		// @todo deprecate as plugins can use 'init', 'system' event
+		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');
 
 		// Complete the boot process for both engine and plugins

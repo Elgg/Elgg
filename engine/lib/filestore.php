@@ -449,6 +449,10 @@ function _elgg_filestore_init() {
 
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
+
+	// Touch entity icons if entity access id has changed
+	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
+	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_touch_icons');
 }
 
 /**
@@ -562,6 +566,33 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = ''
 	$file_svc->setDisposition('inline');
 	$file_svc->bindSession($use_cookie);
 	return $file_svc->getURL();
+}
+
+/**
+ * Reset icon URLs if access_id has changed
+ *
+ * @param string     $event  "update:after"
+ * @param string     $type   "object"|"group"
+ * @param ElggObject $entity Entity
+ * @return void
+ * @access private
+ */
+function _elgg_filestore_touch_icons($event, $type, $entity) {
+	$original_attributes = $entity->getOriginalAttributes();
+	if (!array_key_exists('access_id', $original_attributes)) {
+		return;
+	}
+	if ($entity instanceof \ElggFile) {
+		// we touch the file to invalidate any previously generated download URLs
+		$entity->setModifiedTime();
+	}
+	$sizes = array_keys(elgg_get_icon_sizes($entity->getType(), $entity->getSubtype()));
+	foreach ($sizes as $size) {
+		$icon = $entity->getIcon($size);
+		if ($icon->exists()) {
+			$icon->setModifiedTime();
+		}
+	}
 }
 
 

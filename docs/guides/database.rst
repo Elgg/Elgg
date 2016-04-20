@@ -168,17 +168,49 @@ EntityType/default.
 Entity Icons
 ~~~~~~~~~~~~
 
-Every entity can be assigned an icon which is retrieved using the ``ElggEntity::getIconURL($params)`` method.
-This method accepts a ``$params`` argument that can be either a string specifying on of the configured icon sizes,
-or an array of parameters, that specify the size and provide additional context for the hook to determine the icon
-to serve.
+Entity icons can be saved from uploaded files, existing local files, or existing ElggFile 
+objects. These methods save all sizes of icons defined in the system.
 
-Use ``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
-``'large'``, ``'medium'``, ``'small'``, ``'tiny'``, and ``'topbar'``. The method triggers the
-``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
+.. code:: php
+
+	$object = new ElggObject();
+	$object->title = 'Example entity';
+	$object->description = 'An example object with an icon.';
+	
+	// from an uploaded file
+	$object->setIconFromUploadedFile('file_upload_input');
+
+	// from a local file
+	$object->setIconFromLocalFile('/var/data/generic_icon.png');
+
+	// from a saved ElggFile object
+	$file = get_entity(123);
+	if ($file instanceof ElggFile) {
+		$object->setIconFromElggFile($file);
+	}
+	
+	$object->save();
+
+The following sizes exist by default: 
+ * ``master`` - 550px at longer edge (not upscaled)
+ * ``large`` - 200px at longer edge (not upscaled)
+ * ``medium`` - 100px square
+ * ``small`` - 40px square
+ * ``tiny`` - 25px square
+ * ``topbar`` - 16px square
+
+Use ``elgg_get_icon_sizes()`` to get all possible icon sizes for a specific entity type and subtype.
+The function triggers the ``entity:icon:sizes`` :ref:`hook <guides/hooks-list#other>`.
+
+To check if an icon is set, use ``$object->hasIcon($size)``.
+
+You can retrieve the URL of the generated icon with``ElggEntity::getIconURL($params)`` method.
+This method accepts a ``$params`` argument as an array that specifies the size, type, and provide 
+additional context for the hook to determine the icon to serve. 
+The method triggers the ``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
 
 Use ``elgg_view_entity_icon($entity, $size, $vars)`` to render an icon. This will scan the following
-locations for a view and include the first match.
+locations for a view and include the first match to .
 
 #. views/$viewtype/icon/$type/$subtype.php
 #. views/$viewtype/icon/$type/default.php
@@ -193,9 +225,23 @@ $type
 $subtype
 	Entity subtype, e.g. ``'blog'`` or ``'page'``.
 
-By convention entities that have an uploaded avatar or icon will have the ``icontime`` property
-assigned. This means that you can use ``$entity->icontime`` to check if an icon exists for the given
-entity.
+Icon methods support passing an icon type if an entity has more than one icon. For example, a user
+might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as the icon type:
+
+.. code:: php
+
+	$object->setIconFromUploadedFile('uploaded_photo', 'cover_photo');
+
+	$object->getIconUrl([
+		'size' => 'medium',
+		'type' => 'cover_photo'
+	]);
+
+Note that custom icon types (e.g. cover photos) do not have preset sizes and coordinates.
+Use ``entity:<icon_type>:url`` :ref:`hook <guides/hooks-list#other>` to configure them.
+
+By default icons will be stored in ``/icons/<icon_type>/<size>.jpg`` relative to entity's directory on filestore.
+To provide an alternative location, use the ``entity:<icon_type>:file`` :ref:`hook <guides/hooks-list#other>`.
 
 Adding, reading and deleting annotations
 ----------------------------------------

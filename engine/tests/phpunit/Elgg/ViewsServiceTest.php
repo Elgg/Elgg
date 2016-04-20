@@ -5,12 +5,12 @@ namespace Elgg;
 class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var \Elgg\PluginHooksService
+	 * @var PluginHooksService
 	 */
 	protected $hooks;
 
 	/**
-	 * @var \Elgg\ViewsService
+	 * @var ViewsService
 	 */
 	protected $views;
 
@@ -19,10 +19,10 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$this->viewsDir = dirname(dirname(__FILE__)) . "/test_files/views";
 		
-		$this->hooks = new \Elgg\PluginHooksService();
-		$this->logger = $this->getMock('\Elgg\Logger', array(), array(), '', false);
+		$this->hooks = new PluginHooksService();
+		$logger = $this->getMock('\Elgg\Logger', array(), array(), '', false);
 		
-		$this->views = new \Elgg\ViewsService($this->hooks, $this->logger);
+		$this->views = new ViewsService($this->hooks, $logger);
 		$this->views->autoregisterViews('', "$this->viewsDir/default", 'default');
 
 		// supports deprecation wrapper for $vars['user'] 
