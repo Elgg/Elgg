@@ -12,5 +12,6 @@ if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
 $vars['class'] = $class;
+$vars['nav'] = ''; // prevents outputting breadcrumbs
 
 echo elgg_view('page/layouts/one_column', $vars);

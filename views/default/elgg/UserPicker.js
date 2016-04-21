@@ -38,7 +38,7 @@ define(function(require) {
 				elgg.get(self.handler, {
 					data: {
 						term: this.term,
-						"match_on[]": ($('[name=match_on]', self.$wrapper).attr('checked') ? 'friends' : 'users'),
+						"match_on[]": ($('[name=match_on]', self.$wrapper).prop('checked') ? 'friends' : 'users'),
 						name: self.name
 					},
 					dataType: 'json',

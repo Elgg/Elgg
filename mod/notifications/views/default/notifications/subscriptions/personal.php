@@ -70,7 +70,7 @@ $table_attributes = [
 	'width' => '100%',
 ];
 
-$body = elgg_view_module('info', elgg_echo('notifications:subscriptions:personal:title'));
+$body = elgg_view_module('info', elgg_echo('notifications:subscriptions:personal:title'), '');
 $body .= elgg_format_element('table', $table_attributes, $table_data);
 
 echo elgg_format_element('div', ['class' => 'notification_personal'], $body);
