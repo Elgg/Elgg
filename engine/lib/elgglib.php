@@ -851,6 +851,7 @@ function _elgg_php_exception_handler($exception) {
 	} catch (Exception $e) {
 		$timestamp = time();
 		$message = $e->getMessage();
+		http_response_code(500);
 		echo "Fatal error in exception handler. Check log for Exception #$timestamp";
 		error_log("Exception #$timestamp : fatal error in exception handler : $message");
 	}
