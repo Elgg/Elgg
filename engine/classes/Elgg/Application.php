@@ -511,9 +511,9 @@ class Application {
 			$forward_url = '/' . $forward_url;
 		}
 
-		if (get_input('upgrade') == 'upgrade') {
+		$upgrader = _elgg_services()->upgrades;
 
-			$upgrader = _elgg_services()->upgrades;
+		if (get_input('upgrade') == 'upgrade') {
 			$result = $upgrader->run();
 			if ($result['failure'] == true) {
 				register_error($result['reason']);
@@ -527,32 +527,23 @@ class Application {
 				// due to ip restrictions for example
 				if (!$rewriteTester->runLocalhostAccessTest()) {
 					// note: translation may not be available until after upgrade
-					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
-					if ($msg === "installation:htaccess:localhost:connectionfailed") {
-						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
-								. "that curl is working and there are no IP restrictions preventing "
-								. "localhost connections.";
-					}
-					echo $msg;
-					exit;
-				}
-
-				// note: translation may not be available until after upgrade
-				$msg = elgg_echo("installation:htaccess:needs_upgrade");
-				if ($msg === "installation:htaccess:needs_upgrade") {
+					$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
+						. "that curl is working and there are no IP restrictions preventing "
+						. "localhost connections.";
+				} else {
 					$msg = "You must update your .htaccess file so that the path is injected "
 						. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
 				}
-				echo $msg;
-				exit;
+				$upgrader->logError($msg);
 			}
-
-			$vars = array(
-				'forward' => $forward_url
-			);
 
 			// reset cache to have latest translations available during upgrade
 			elgg_reset_system_cache();
+
+			$vars = array(
+				'forward' => $forward_url,
+				'errors' => $upgrader->getErrors(),
+			);
 
 			echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
 			exit;

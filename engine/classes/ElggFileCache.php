@@ -1,12 +1,10 @@
 <?php
+
 /**
- * \ElggFileCache
  * Store cached data in a file store.
- *
- * @package    Elgg.Core
- * @subpackage Caches
  */
 class ElggFileCache extends \ElggCache {
+
 	/**
 	 * Set the Elgg cache.
 	 *
@@ -165,7 +163,12 @@ class ElggFileCache extends \ElggCache {
 
 		foreach ($files as $f) {
 			if (!in_array($f, $exclude)) {
-				unlink($dir . $f);
+				$removed = unlink($dir . $f);
+				if (!$removed && defined('UPGRADING')) {
+					_elgg_services()->upgrades->logError("Failed to remove a cache directory", [
+						'path' => $dir . $f,
+					]);
+				}
 			}
 		}
 	}

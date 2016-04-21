@@ -175,7 +175,12 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function invalidate() {
-		_elgg_rmdir($this->getPath(), true);
+		$removed = _elgg_rmdir($this->getPath(), true);
+		if (!$removed && defined('UPGRADING')) {
+			_elgg_services()->upgrades->logError("Failed to remove a cache directory", [
+				'path' => $this->getPath(),
+			]);
+		}
 
 		$time = time();
 		$this->datalist->set("simplecache_lastupdate", $time);

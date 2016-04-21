@@ -1,6 +1,10 @@
 <?php
 namespace Elgg;
 
+use Elgg\i18n\Translator;
+use Elgg\Database\Datalist;
+use Elgg\Database\Mutex;
+
 /**
  * Upgrade service for Elgg
  *
@@ -9,52 +13,57 @@ namespace Elgg;
 class UpgradeService {
 
 	/**
-	 * @var \Elgg\i18n\Translator
+	 * @var Translator
 	 */
 	private $translator;
 
 	/**
-	 * @var \Elgg\EventsService
+	 * @var EventsService
 	 */
 	private $events;
 
 	/**
-	 * @var \Elgg\PluginHooksService
+	 * @var PluginHooksService
 	 */
 	private $hooks;
 
 	/**
-	 * @var \Elgg\Database\Datalist
+	 * @var Datalist
 	 */
 	private $datalist;
 
 	/**
-	 * @var \Elgg\Logger
+	 * @var Logger
 	 */
 	private $logger;
 
 	/**
-	 * @var \Elgg\Database\Mutex
+	 * @var Mutex
 	 */
 	private $mutex;
 
 	/**
+	 * @var array
+	 */
+	private $errors;
+
+	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\i18n\Translator    $translator Translation service
-	 * @param \Elgg\EventsService      $events     Events service
-	 * @param \Elgg\PluginHooksService $hooks      Plugin hook service
-	 * @param \Elgg\Database\Datalist  $datalist   Datalist table
-	 * @param \Elgg\Logger             $logger     Logger
-	 * @param \Elgg\Database\Mutex     $mutex      Database mutex service
+	 * @param Translator         $translator Translation service
+	 * @param EventsService      $events     Events service
+	 * @param PluginHooksService $hooks      Plugin hook service
+	 * @param Datalist           $datalist   Datalist table
+	 * @param Logger             $logger     Logger
+	 * @param Mutex              $mutex      Database mutex service
 	 */
 	public function __construct(
-			\Elgg\i18n\Translator $translator,
-			\Elgg\EventsService $events,
-			\Elgg\PluginHooksService $hooks,
-			\Elgg\Database\Datalist $datalist,
-			\Elgg\Logger $logger,
-			\Elgg\Database\Mutex $mutex) {
+			Translator $translator,
+			EventsService $events,
+			PluginHooksService $hooks,
+			Datalist $datalist,
+			Logger $logger,
+			Mutex $mutex) {
 		$this->translator = $translator;
 		$this->events = $events;
 		$this->hooks = $hooks;
@@ -97,6 +106,29 @@ class UpgradeService {
 		$this->mutex->unlock('upgrade');
 
 		return $result;
+	}
+
+	/**
+	 * Log an error that should pause the upgrade process
+	 *
+	 * @param string $public_msg Message appropriate for anonymous users
+	 * @param array  $admin_data Data for administrators
+	 * @return void
+	 */
+	public function logError($public_msg, array $admin_data = []) {
+		$this->errors[] = [
+			'public_msg' => $public_msg,
+			'admin_data' => $admin_data,
+		];
+	}
+
+	/**
+	 * Get the logged errors
+	 *
+	 * @return array
+	 */
+	public function getErrors() {
+		return $this->errors;
 	}
 
 	/**
