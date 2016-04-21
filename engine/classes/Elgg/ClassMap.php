@@ -44,8 +44,10 @@ class ClassMap {
 		if ('\\' === $class[0]) {
 			$class = substr($class, 1);
 		}
-		$this->map[$class] = $path;
-		$this->altered = true;
+		if (!isset($this->map[$class]) || $this->map[$class] !== $path) {
+			$this->map[$class] = $path;
+			$this->altered = true;
+		}
 		return $this;
 	}
 
