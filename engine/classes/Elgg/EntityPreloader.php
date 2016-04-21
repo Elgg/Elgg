@@ -2,14 +2,42 @@
 
 namespace Elgg;
 
+use Elgg\Cache\EntityCache;
+use Elgg\Database\EntityTable;
+
 /**
  * Preload entities based on properties of fetched objects
  *
  * @access private
- *
- * @package Elgg.Core
  */
 class EntityPreloader {
+
+	/**
+	 * @var callable DO NOT USE. For unit test mocking
+	 * @access private
+	 */
+	public $_callable_cache_checker;
+
+	/**
+	 * @var callable DO NOT USE. For unit test mocking
+	 * @access private
+	 */
+	public $_callable_entity_loader;
+
+	/**
+	 * Constructor
+	 *
+	 * @param EntityCache $entity_cache Entity cache
+	 * @param EntityTable $entity_table Entity service
+	 */
+	public function __construct(EntityCache $entity_cache, EntityTable $entity_table) {
+		$this->_callable_cache_checker = function ($guid) use ($entity_cache) {
+			return $entity_cache->get($guid);
+		};
+		$this->_callable_entity_loader = function ($options) use ($entity_table) {
+			return $entity_table->getEntities($options);
+		};
+	}
 
 	/**
 	 * Preload entities based on the given objects
@@ -60,16 +88,4 @@ class EntityPreloader {
 		}
 		return array_unique($preload_guids);
 	}
-
-	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
-	 */
-	public $_callable_cache_checker = '_elgg_retrieve_cached_entity';
-
-	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
-	 */
-	public $_callable_entity_loader = 'elgg_get_entities';
 }

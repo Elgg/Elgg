@@ -176,7 +176,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Cache\EntityCache($c->session, $c->metadataCache);
 		});
 
-		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
+		$this->setFactory('entityPreloader', function(ServiceProvider $c) {
+			return new \Elgg\EntityPreloader($c->entityCache, $c->entityTable);
+		});
 
 		$this->setClassName('entityTable', \Elgg\Database\EntityTable::class);
 
