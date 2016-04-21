@@ -50,6 +50,8 @@ New API for handling entity icons
  * ``ElggEntity::deleteIcon()`` - deletes entity icons
  * ``ElggEntity::getIconLastChange()`` - return modified time of the icon file
  * ``ElggEntity::hasIcon()`` - checks if an icon with given size has been created
+ * ``elgg_get_embed_url()`` - can be used to return an embed URL for an entity's icon (served via `/serve-icon` handler)
+
 
 Removed APIs
 ------------
