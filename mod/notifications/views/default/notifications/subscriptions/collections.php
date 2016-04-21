@@ -10,9 +10,9 @@ $user = $vars['user'];
 <script>
 	function setCollection(members, method, id) {
 		for ( var i in members ) {
-			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").attr('checked');
-			if ($("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked') != checked) {
-				$("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked', checked);
+			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").prop('checked');
+			if ($("#"+method+members[i]).children("INPUT[type='checkbox']").prop('checked') != checked) {
+				$("#"+method+members[i]).children("INPUT[type='checkbox']").prop('checked', checked);
 				functioncall = 'adjust' + method + '_alt("'+method+members[i]+'");';
 				eval(functioncall);
 			}
@@ -32,7 +32,7 @@ $user = $vars['user'];
 	<tr>
 		<td>&nbsp;</td>
 <?php
-	$i = 0; 
+	$i = 0;
 	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		if ($i > 0) {
