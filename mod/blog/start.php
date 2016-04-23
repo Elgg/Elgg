@@ -148,10 +148,9 @@ function blog_page_handler($page) {
 			echo elgg_view_resource('blog/group', $resource_vars);
 			break;
 		case 'all':
-			echo elgg_view_resource('blog/all', $resource_vars);
-			break;
+			return elgg_view_resource('blog/all', $resource_vars);
 		default:
-			return false;
+			return forward('', '404');
 	}
 
 	return true;

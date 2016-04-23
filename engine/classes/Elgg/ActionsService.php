@@ -40,11 +40,12 @@ class ActionsService {
 	/**
 	 * @see action
 	 * @access private
+	 * @return bool|void
 	 */
 	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
 		$this->currentAction = $action;
-	
+
 		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 		// Allow users to disable plugins without a token in order to
 		// remove plugins that are incompatible.
@@ -55,12 +56,12 @@ class ActionsService {
 			'logout',
 			'file/download',
 		);
-	
+
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
 			$this->gatekeeper($action);
 		}
-	
+
 		$forwarder = str_replace(_elgg_services()->config->getSiteUrl(), "", $forwarder);
 		$forwarder = str_replace("http://", "", $forwarder);
 		$forwarder = str_replace("@", "", $forwarder);
@@ -71,22 +72,25 @@ class ActionsService {
 		/**
 		 * Complete the execution with a forward
 		 *
-		 * @param string $error_key Error message key
-		 *
+		 * @param string $error_key      Error message key
+		 * @param string $forward_url    Optional URL to forward to
+		 * @param string $forward_reason Forward reason
 		 * @throws \SecurityException
 		 */
-		$forward = function ($error_key = '') use ($action, $forwarder) {
+		$forward = function ($error_key = '', $forward_url = null, $forward_reason = null) use ($action, $forwarder) {
 			if ($error_key) {
 				$msg = _elgg_services()->translator->translate($error_key, [$action]);
 				_elgg_services()->systemMessages->addErrorMessage($msg);
 			}
-
+			if (isset($forward_url)) {
+				$forwarder = $forward_url;
+			}
 			$forwarder = empty($forwarder) ? REFERER : $forwarder;
-			forward($forwarder);
+			return forward($forwarder, $forward_reason);
 		};
 
 		if (!isset($this->actions[$action])) {
-			$forward('actionundefined');
+			return $forward('actionundefined');
 		}
 
 		$user = _elgg_services()->session->getLoggedInUser();
@@ -97,19 +101,19 @@ class ActionsService {
 				break;
 			case 'logged_in':
 				if (!$user) {
-					$forward('actionloggedout');
+					return $forward('actionloggedout');
 				}
 				break;
 			default:
 				// admin or misspelling
 				if (!$user->isAdmin()) {
-					$forward('actionunauthorized');
+					return $forward('actionunauthorized');
 				}
 		}
 
 		// To quietly cancel the file, return a falsey value in the "action" hook.
 		if (!_elgg_services()->hooks->trigger('action', $action, null, true)) {
-			$forward();
+			return $forward();
 		}
 
 		$file = $this->actions[$action]['file'];
@@ -117,11 +121,24 @@ class ActionsService {
 		if (!is_file($file) || !is_readable($file)) {
 			$forward('actionnotfound');
 		}
+		$result = self::includeFile($file);
+		$result = _elgg_services()->hooks->trigger('action:after', $action, null, $result);
 
-		self::includeFile($file);
-		$forward();
+		if (is_array($result)) {			
+			$content = elgg_extract('content', $result);
+			$status_code = elgg_extract('status_code', $result, 200);
+			$forward_url = elgg_extract('forward_url', $result, REFERRER);
+
+			if (elgg_is_xhr() && $content) {
+				echo json_encode($content);
+			}
+
+			return $forward('', $forward_url, $status_code);
+		}
+
+		return $forward();
 	}
-
+	
 	/**
 	 * Include an action file with isolated scope
 	 *
@@ -129,7 +146,7 @@ class ActionsService {
 	 * @return void
 	 */
 	protected static function includeFile($file) {
-		include $file;
+		return include $file;
 	}
 	
 	/**
@@ -346,6 +363,7 @@ class ActionsService {
 			'403' => 'Forbidden',
 			'404' => 'Not Found',
 			'407' => 'Proxy Authentication Required',
+			'422' => 'Unprocessable Entity',
 			'500' => 'Internal Server Error',
 			'503' => 'Service Unavailable',
 		);

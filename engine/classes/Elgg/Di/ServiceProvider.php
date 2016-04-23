@@ -56,6 +56,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Application\Database               $publicDb
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
+ * @property-read \Elgg\Http\Response                      $response
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
@@ -285,6 +286,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
+		$this->setFactory('response', function(ServiceProvider $c) {
+			return new \Elgg\Http\Response($c->request, $c->hooks);
+		});
 
 		$this->setFactory('router', function(ServiceProvider $c) {
 			// TODO(evan): Init routes from plugins or cache
