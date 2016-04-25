@@ -148,7 +148,11 @@ END;
 					$top_row .= elgg_format_element('td', ['class' => 'spacercolumn'], '&nbsp;');
 				}
 
-				$top_row .= elgg_format_element('td', ['class' => "{$method}togglefield"], elgg_echo("notification:method:{$method}"));
+				$top_row .= elgg_format_element([
+					'#tag_name' => 'td',
+					'class' => "{$method}togglefield",
+					'#text' => elgg_echo("notification:method:{$method}"),
+				]);
 				$i++;
 			}
 			$top_row .= elgg_format_element('td', [], '&nbsp;');
@@ -204,10 +208,14 @@ END;
 						'href' => $friend->getURL(),
 						'text' => elgg_view_entity_icon($friend, 'tiny', ['use_hover' => false]),
 					]);
-					$name_field .= elgg_format_element('p', ['class' => 'namefieldlink'], elgg_view('output/url', [
-						'href' => $friend->getURL(),
-						'text' => $friend->name,
-					]));
+					$name_field .= elgg_format_element([
+						'#tag_name' => 'p',
+						'class' => 'namefieldlink',
+						'#text' => elgg_view('output/url', [
+							'href' => $friend->getURL(),
+							'text' => $friend->name,
+						]),
+					]);
 					
 					$friend_row = elgg_format_element('td', ['class' => 'namefield'], $name_field);
 					$friend_row .= $fields;
@@ -239,8 +247,16 @@ END;
 		$letter = elgg_substr($chararray,$letpos,1);
 	}
 		
-	$friendspicker_container = elgg_format_element('div', ['class' => 'friends-picker-container'], $friendspicker_container);
-	$friendspicker_wrapper = elgg_format_element('div', ['id' => "friends-picker{$friendspicker}"], $friendspicker_container);
+	$friendspicker_container = elgg_format_element([
+		'#tag_name' => 'div',
+		'class' => 'friends-picker-container',
+		'#text' => $friendspicker_container,
+	]);
+	$friendspicker_wrapper = elgg_format_element([
+		'#tag_name' => 'div',
+		'id' => "friends-picker{$friendspicker}",
+		'#text' => $friendspicker_container,
+	]);
 		
 	$placeholder_data .= elgg_format_element('div', ['class' => 'friends-picker-wrapper'], $friendspicker_wrapper);
 } else {
