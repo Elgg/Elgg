@@ -204,7 +204,13 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 			$attrs = isset($vars['attrs']) ? $vars['attrs'] : array();
 			$message = isset($vars['_msg']) ? $vars['_msg'] : null;
 			unset($vars['tag_name'], $vars['text'], $vars['_msg']);
+
 			$this->assertEqual(elgg_format_element($tag_name, $attrs, $text, $opts), $expected, $message);
+
+			$attrs['#tag_name'] = $tag_name;
+			$attrs['#text'] = $text;
+			$attrs['#options'] = $opts;
+			$this->assertEqual(elgg_format_element($attrs), $expected, $message);
 		}
 
 		try {
