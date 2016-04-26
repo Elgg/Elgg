@@ -280,8 +280,12 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 		return;
 	}
 
+	if (empty($returnvalue['params']['notification'])) {
+		return;
+	}
+	
 	/** @var Elgg\Notifications\Notification */
-	$notification = elgg_extract('notification', $returnvalue['params']);
+	$notification = $returnvalue['params']['notification'];
 
 	if ($notification instanceof Elgg\Notifications\Notification) {
 		$object = elgg_extract('object', $notification->params);
