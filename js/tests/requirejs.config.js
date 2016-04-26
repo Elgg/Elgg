@@ -9,7 +9,9 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/views/default/',
     paths: {
-        'sprintf': '/base/vendor/bower-asset/sprintf/src/sprintf',
+        'vendor': '../../vendor',
+        'node_modules': '../../node_modules',
+        'jquery-mockjax': '../../node_modules/jquery-mockjax/dist/jquery.mockjax',
     },
 
     // ask Require.js to load these files (all our tests)
