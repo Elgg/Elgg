@@ -101,13 +101,27 @@ define(function(require) {
 		$.each(['path', 'action', 'form', 'view'], function (i, method) {
 			it("method " + method + "() sends special header", function() {
 				ajax[method]('foo');
-				expect(ajax._ajax_options.headers).toEqual({ 'X-Elgg-Ajax-API' : '2' });
+				expect(ajax._ajax_options.headers).toEqual({ 'X-Elgg-Ajax-API' : 2 });
 			});
 
 			it("method " + method + "() uses dataType json", function() {
 				ajax[method]('foo');
 				expect(ajax._ajax_options.dataType).toEqual('json');
 			});
+		});
+
+		it("sends special header based on version", function () {
+			var ajax = new Ajax({
+				version: 3
+			});
+			ajax.action('foo');
+			expect(ajax._ajax_options.headers).toEqual({ 'X-Elgg-Ajax-API' : 3 });
+
+			ajax = new Ajax({
+				version: "3"
+			});
+			ajax.action('foo');
+			expect(ajax._ajax_options.headers).toEqual({ 'X-Elgg-Ajax-API' : 3 });
 		});
 
 		it("action() defaults to POST", function() {

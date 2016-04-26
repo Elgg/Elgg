@@ -1,0 +1,109 @@
+define(function(require) {
+	var Ajax = require('elgg/Ajax');
+	var elgg = require('elgg');
+
+	var ajax = new Ajax({
+		version: 3
+	});
+	var log = console.log.bind(console);
+
+	// log data passed through all hooks
+	//elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'all', function (name, type, params, value) {
+	//	log(arguments);
+	//});
+	//elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'all', function (name, type, params, value) {
+	//	log(arguments);
+	//});
+
+	// alter request data for the action
+	elgg.register_hook_handler(
+		Ajax.REQUEST_DATA_HOOK,
+		'action:developers/ajax3_demo',
+		function (name, type, params, value) {
+			// alter the data object sent to server
+			value.client_request_altered = 1;
+			return value;
+		}
+	);
+
+	var got_metadata_from_server = false,
+		num_hook_calls = 0;
+
+	// alter request data response for the action
+	elgg.register_hook_handler(
+		Ajax.RESPONSE_DATA_HOOK,
+		'action:developers/ajax3_demo',
+		function (name, type, params, data) {
+			// check the data wrapper for our expected metadata
+			if (data.server_response_altered) {
+				got_metadata_from_server = true;
+			}
+
+			// alter the return value
+			data.value.altered_value = true;
+
+			num_hook_calls++;
+
+			return data;
+		}
+	);
+
+	// we make 4 successive ajax calls, here chained together by Promises
+
+	ajax.path('developers_ajax_demo')
+		.then(function (html) {
+			if (html.indexOf('path demo') != -1) {
+				log("path() successful!");
+
+				return ajax.view('developers/ajax_demo.html');
+			}
+		})
+		.then(function (html) {
+			if (html.indexOf('view demo') != -1) {
+				log("view() successful!");
+
+				return ajax.form('developers/ajax_demo');
+			}
+		})
+		.then(function (html) {
+			if (html.indexOf('form demo') != -1) {
+				log("form() successful!");
+
+				return ajax.action('developers/ajax3_demo', {
+					data: {arg1: 2, arg2: 3},
+					success: function (value) {
+						// we should not get two sets of system messages
+					}
+				});
+			}
+		})
+		.then(function (obj, textStatus, jqXHR) {
+			if (obj.sum === 5
+					&& got_metadata_from_server
+					&& jqXHR.AjaxData.server_response_altered == 2
+					&& obj.altered_value
+					&& num_hook_calls == 1) {
+				log("action() successful!");
+
+				return ajax.action('developers/ajax3_demo', {
+					data: {arg1: 2}
+				});
+			}
+		})
+		.then(function () {}, function (jqXHR, textStatus, errorThrown) {
+			if (textStatus == 'error'
+					&& errorThrown == 'Bad Request') {
+				log("action() fail with specific HTTP status");
+
+				return ajax.action('developers/ajax3_demo');
+			}
+		})
+		.then(function () {}, function (jqXHR, textStatus, errorThrown) {
+			if (textStatus == 'error'
+					&& errorThrown == 'Internal Server Error') {
+				log("action() fail due to register_error() and no specific HTTP code set");
+
+				alert('Success!');
+			}
+		});
+});

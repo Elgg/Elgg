@@ -44,6 +44,13 @@ class Service {
 	private $response_sent = false;
 
 	/**
+	 * Only used in Ajax3 responses for now
+	 *
+	 * @var int|null
+	 */
+	private $http_status = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService    $hooks     Hooks service
@@ -56,26 +63,15 @@ class Service {
 		$this->msgs = $msgs;
 		$this->input = $input;
 		$this->amd_config = $amdConfig;
-
-		if ($this->input->get('elgg_fetch_messages', true)) {
-			$message_filter = [$this, 'appendMessages'];
-			$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $message_filter, 999);
-		}
-
-		if ($this->input->get('elgg_fetch_deps', true)) {
-			$deps_filter = [$this, 'appendDeps'];
-			$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $deps_filter, 999);
-		}
 	}
 
 	/**
-	 * Did the request come from the elgg/Ajax module?
+	 * Get the elgg/Ajax version header value
 	 *
-	 * @return bool
+	 * @return int
 	 */
-	public function isAjax2Request() {
-		$version = _elgg_services()->request->headers->get('X-Elgg-Ajax-API');
-		return ($version === '2');
+	public function getAjaxRequestVersion() {
+		return (int)_elgg_services()->request->headers->get('X-Elgg-Ajax-API');
 	}
 
 	/**
@@ -88,7 +84,26 @@ class Service {
 	 * @return bool
 	 */
 	public function isReady() {
-		return !$this->response_sent && $this->isAjax2Request();
+		return !$this->response_sent && ($this->getAjaxRequestVersion() >= 2);
+	}
+
+	/**
+	 * Set the HTTP status code (only used for Ajax3 responses for now)
+	 *
+	 * @param int $http_status Status code
+	 * @return void
+	 */
+	public function setStatusCode($http_status) {
+		$this->http_status = (int)$http_status;
+	}
+
+	/**
+	 * Get the HTTP status code
+	 *
+	 * @return int|null
+	 */
+	public function getStatusCode() {
+		return $this->http_status;
 	}
 
 	/**
@@ -114,6 +129,17 @@ class Service {
 	 * @return void
 	 */
 	public function respondFromOutput($output, $hook_type = '', $try_decode = true) {
+		if ($this->getAjaxRequestVersion() == 3) {
+			// hold up! check for use of register_error()
+			if (!$this->http_status && $this->msgs->count('error')) {
+				$this->http_status = 500;
+			}
+			if ($this->http_status >= 400 && $this->http_status <= 599) {
+				$this->respondWithError('', $this->http_status);
+				return;
+			}
+		}
+
 		if ($try_decode) {
 			$output = $this->decodeJson($output);
 		}
@@ -145,14 +171,26 @@ class Service {
 	}
 
 	/**
-	 * Send a JSON HTTP 400 response
+	 * Send a JSON HTTP error response
 	 *
 	 * @param string $msg    The error message (not displayed to the user)
 	 * @param int    $status The HTTP status code
 	 * @return void
 	 */
 	public function respondWithError($msg, $status = 400) {
-		$response = new JsonResponse(['error' => $msg], $status);
+		if ($this->getAjaxRequestVersion() == 3) {
+			// Ajax version 3 gets data with error response
+			$api_response = new Response();
+			$api_response->setData((object)[
+				'value' => null,
+			]);
+			$this->prepareClientData($api_response);
+			$response = $this->buildHttpResponse($api_response);
+		} else {
+			$response = new JsonResponse(['error' => $msg]);
+		}
+
+		$response->setStatusCode($status);
 
 		$this->response_sent = true;
 		$response->send();
@@ -177,7 +215,26 @@ class Service {
 			}
 		}
 
+		$this->prepareClientData($api_response);
+
 		return $api_response;
+	}
+
+	/**
+	 * Add required AMD modules and system messages to the response metadata
+	 *
+	 * @param AjaxResponse $api_response Ajax response
+	 * @return void
+	 */
+	private function prepareClientData(AjaxResponse $api_response) {
+		$data = $api_response->getData();
+
+		if ($this->input->get('elgg_fetch_messages', true)) {
+			$data->_elgg_msgs = (object)$this->msgs->dumpRegister();
+		}
+		if ($this->input->get('elgg_fetch_deps', true)) {
+			$data->_elgg_deps = (array) $this->amd_config->getDependencies();
+		}
 	}
 
 	/**
@@ -216,39 +273,4 @@ class Service {
 
 		return $response;
 	}
-
-	/**
-	 * Send system messages back with the response
-	 *
-	 * @param string       $hook     "ajax_response"
-	 * @param string       $type     "all"
-	 * @param AjaxResponse $response Ajax response
-	 * @param array        $params   Hook params
-	 *
-	 * @return AjaxResponse
-	 * @access private
-	 * @internal
-	 */
-	public function appendMessages($hook, $type, AjaxResponse $response, $params) {
-		$response->getData()->_elgg_msgs = (object)$this->msgs->dumpRegister();
-		return $response;
-	}
-
-	/**
-	 * Send required AMD modules list back with the response
-	 *
-	 * @param string       $hook     "ajax_response"
-	 * @param string       $type     "all"
-	 * @param AjaxResponse $response Ajax response
-	 * @param array        $params   Hook params
-	 *
-	 * @return AjaxResponse
-	 * @access private
-	 * @internal
-	 */
-	public function appendDeps($hook, $type, AjaxResponse $response, $params) {
-		$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
-		return $response;
-	}
-
 }

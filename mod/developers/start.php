@@ -24,6 +24,7 @@ function developers_init() {
 	$action_base = __DIR__ . '/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
 	elgg_register_action('developers/ajax_demo', "$action_base/ajax_demo.php", 'admin');
+	elgg_register_action('developers/ajax3_demo', "$action_base/ajax3_demo.php", 'admin');
 
 	elgg_register_ajax_view('forms/developers/ajax_demo');
 }

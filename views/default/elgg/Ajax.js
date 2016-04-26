@@ -13,15 +13,30 @@ define(function (require) {
 	/**
 	 * Module constructor
 	 *
-	 * @param {Boolean} use_spinner Use the elgg/spinner module during requests (default true)
+	 * @param {Object} options Options for the Ajax instance. Keys include:
+	 *
+	 *    use_spinner: {Boolean} (default true) Use the elgg/spinner module during requests
+	 *
+	 *    version: {Number} (default 2) When to 3, server-side uses of register_error() result in HTTP errors.
+	 *                      Server-sent messages are still displayed, but success/done callbacks are not called.
 	 *
 	 * @constructor
 	 */
-	function Ajax(use_spinner) {
-
-		use_spinner = elgg.isNullOrUndefined(use_spinner) ? true : !!use_spinner;
-
+	function Ajax(options) {
 		var that = this;
+
+		if (options === undefined) {
+			options = {};
+		} else if (!$.isPlainObject(options)) {
+			options = {
+				use_spinner: !!options
+			}
+		}
+
+		this._options = $.extend({
+			use_spinner: true,
+			version: 2
+		}, options);
 
 		/**
 		 * Fetch a value from an Ajax endpoint.
@@ -125,7 +140,7 @@ define(function (require) {
 				}
 			}
 
-			if (use_spinner) {
+			if (that._options.use_spinner) {
 				options.beforeSend = function () {
 					orig_options.beforeSend && orig_options.beforeSend.apply(null, arguments);
 					spinner.start();
@@ -183,7 +198,7 @@ define(function (require) {
 
 			options.url = elgg.normalize_url(options.url);
 			options.headers = {
-				'X-Elgg-Ajax-API': '2'
+				'X-Elgg-Ajax-API': parseInt(that._options.version, 10)
 			};
 
 			/**

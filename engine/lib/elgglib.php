@@ -455,6 +455,17 @@ function register_error($error) {
 }
 
 /**
+ * Set the HTTP response code for elgg/Ajax version 3 responses.
+ *
+ * @param int $code HTTP response code
+ * @return void
+ * @since 2.2
+ */
+function elgg_set_response_code($code) {
+	_elgg_services()->ajax->setStatusCode($code);
+}
+
+/**
  * Get a copy of the current system messages.
  *
  * @return \Elgg\SystemMessages\RegisterSet
@@ -2023,6 +2034,21 @@ define('REFERRER', -1);
  * @var int -1
  */
 define('REFERER', -1);
+
+/**
+ * HTTP status codes for common errors
+ *
+ * @see elgg_set_response_code
+ * @see register_error
+ */
+define('ELGG_HTTP_BAD_REQUEST', 400);
+define('ELGG_HTTP_FORBIDDEN', 403);
+define('ELGG_HTTP_NOT_FOUND', 404);
+define('ELGG_HTTP_CONFLICT', 409);
+define('ELGG_HTTP_GONE', 410);
+define('ELGG_HTTP_INTERNAL_SERVER_ERROR', 500);
+define('ELGG_HTTP_SERVICE_UNAVAILABLE', 503);
+
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('boot', 'system', function () {
