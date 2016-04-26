@@ -21,23 +21,20 @@ define(function (require) {
 
 		use_spinner = elgg.isNullOrUndefined(use_spinner) ? true : !!use_spinner;
 
+		var that = this;
+
 		/**
 		 * Fetch a value from an Ajax endpoint.
 		 *
-		 * Note that this function does not support the array form of "success".
-		 *
-		 * To request the response be cached, set options.method to "GET" and options.data.elgg_response_ttl
-		 * to a number of seconds.
-		 *
-		 * To bypass downloading system messages with the response, set options.data.elgg_fetch_messages = 0.
-		 *
 		 * @param {Object} options   See {@link jQuery#ajax}. The default method is "GET" (or "POST" for actions).
 		 *
-		 *     url   : {String} Path of the Ajax API endpoint (required)
-		 *     error : {Function} Error handler. Default is elgg.ajax.handleAjaxError. To cancel this altogether,
-		 *                        pass in function(){}.
-		 *     data  : {Object} Data to send to the server (optional). If set to a string (e.g. $.serialize)
-		 *                      then the request hook will not be called.
+		 *     data: {Object} Data to send to the server (optional). If set to a string (e.g. $.serialize)
+		 *                    then the request hook will not be called.
+		 *
+		 *           elgg_response_ttl:  {Number} Sets response max-age. To be effective, you must also
+		 *                                        set option.method to "GET".
+		 *
+		 *           elgg_fetch_message: {Number} Set to 0 to bypass downloading server messages
 		 *
 		 * @param {String} hook_type Type of the plugin hooks. If missing, the hooks will not trigger.
 		 *
@@ -46,23 +43,45 @@ define(function (require) {
 		function fetch(options, hook_type) {
 			var orig_options,
 				params,
-				unwrapped = false,
-				result;
+				jqXHR,
+				metadata_extracted = false,
+				error_displayed = false;
 
-			function unwrap_data(data) {
-				// between the deferred and a success function, make sure this runs only once.
-				if (!unwrapped) {
-					var params = {
-						options: orig_options
-					};
-					if (hook_type) {
-						data = elgg.trigger_hook(Ajax.RESPONSE_DATA_HOOK, hook_type, params, data);
+			/**
+			 * Show messages and require dependencies
+			 *
+			 * @param {Object} data
+			 */
+			function extract_metadata(data) {
+				if (!metadata_extracted) {
+					var m = data._elgg_msgs;
+					if (m && m.error) {
+						elgg.register_error(m.error);
+						error_displayed = true;
+						data.status = -1;
+					} else {
+						data.status = 0;
 					}
-					result = data.value;
-					unwrapped = true;
+					m && m.success && elgg.system_message(m.success);
+					delete data._elgg_msgs;
+
+					var deps = data._elgg_deps;
+					deps && deps.length && Ajax._require(deps);
+					delete data._elgg_deps;
+
+					metadata_extracted = true;
 				}
-				return result;
 			}
+
+			/**
+			 * For unit testing
+			 * @type {{options: Object, hook_type: String}}
+			 * @private
+			 */
+			that._fetch_args = {
+				options: options,
+				hook_type: hook_type
+			};
 
 			hook_type = hook_type || '';
 
@@ -106,38 +125,77 @@ define(function (require) {
 				}
 			}
 
-			if ($.isArray(options.success)) {
-				throw new Error('The array form of options.success is not supported');
-			}
-
-			if (elgg.isFunction(options.success)) {
-				options.success = function (data) {
-					data = unwrap_data(data);
-					orig_options.success(data);
-				};
-			}
-
 			if (use_spinner) {
 				options.beforeSend = function () {
-					orig_options.beforeSend && orig_options.beforeSend();
+					orig_options.beforeSend && orig_options.beforeSend.apply(null, arguments);
 					spinner.start();
 				};
 				options.complete = function () {
 					spinner.stop();
-					orig_options.complete && orig_options.complete();
+					orig_options.complete && orig_options.complete.apply(null, arguments);
 				};
 			}
 
 			if (!options.error) {
-				options.error = elgg.ajax.handleAjaxError;
+				options.error = function (jqXHR, textStatus, errorThrown) {
+					if (!jqXHR.getAllResponseHeaders()) {
+						// user aborts (like refresh or navigate) do not have headers
+						return;
+					}
+
+					try {
+						var data = $.parseJSON(jqXHR.responseText);
+						if ($.isPlainObject(data)) {
+							extract_metadata(data);
+						}
+					} catch (e) {
+						if (window.console) {
+							console.warn(e.message);
+						}
+					}
+
+					if (!error_displayed) {
+						elgg.register_error(elgg.echo('ajax:error'));
+					}
+				};
 			}
+
+			options.dataFilter = function (data, type) {
+				if (type !== 'json') {
+					return data;
+				}
+
+				data = $.parseJSON(data);
+
+				extract_metadata(data);
+
+				var params = {
+					options: orig_options
+				};
+				if (hook_type) {
+					data = elgg.trigger_hook(Ajax.RESPONSE_DATA_HOOK, hook_type, params, data);
+				}
+
+				jqXHR.AjaxData = data;
+
+				return JSON.stringify(data.value);
+			};
 
 			options.url = elgg.normalize_url(options.url);
 			options.headers = {
 				'X-Elgg-Ajax-API': '2'
 			};
 
-			return $.ajax(options).then(unwrap_data);
+			/**
+			 * For unit testing
+			 * @type {Object}
+			 * @private
+			 */
+			that._ajax_options = options;
+
+			jqXHR = $.ajax(options);
+
+			return jqXHR;
 		}
 
 		/**
@@ -317,27 +375,6 @@ define(function (require) {
 	 * data.value will be returned to the caller.
 	 */
 	Ajax.RESPONSE_DATA_HOOK = 'ajax_response_data';
-
-	/**
-	 * Sets up response hook for all responses
-	 * @private For testing
-	 */
-	Ajax._init_hooks = function () {
-		elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'all', function (name, type, params, data) {
-			var m = data._elgg_msgs;
-			m && m.error && elgg.register_error(m.error);
-			m && m.success && elgg.system_message(m.success);
-			delete data._elgg_msgs;
-
-			var deps = data._elgg_deps;
-			deps && deps.length && Ajax._require(deps);
-			delete data._elgg_deps;
-
-			return data;
-		});
-	};
-
-	Ajax._init_hooks();
 
 	/**
 	 * @private For testing
