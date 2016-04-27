@@ -453,9 +453,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['sysmessages'] = $messages;
 
 	// head has keys 'title', 'metas', 'links'
-	$head_params = _elgg_views_prepare_head($title);
-
-	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
+	$vars['head'] = _elgg_views_prepare_head($title);
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 
@@ -556,34 +554,19 @@ function _elgg_views_prepare_head($title) {
 	);
 	$params['links']['icon-vector'] = array(
 		'rel' => 'icon',
-		'sizes' => '16x16 32x32 48x48 64x64 128x128',
+		'sizes' => '16x16 32x32 48x48 64x64 128x128 144x144 192x192 any',
 		'type' => 'image/svg+xml',
 		'href' => elgg_get_simplecache_url('favicon.svg'),
 	);
-	$params['links']['icon-16'] = array(
-		'rel' => 'icon',
-		'sizes' => '16x16',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-16.png'),
-	);
-	$params['links']['icon-32'] = array(
-		'rel' => 'icon',
-		'sizes' => '32x32',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-32.png'),
-	);
-	$params['links']['icon-64'] = array(
-		'rel' => 'icon',
-		'sizes' => '64x64',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-64.png'),
-	);
-	$params['links']['icon-128'] = array(
-		'rel' => 'icon',
-		'sizes' => '128x128',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-128.png'),
-	);
+	
+	foreach (['16', '32', '64', '128', '144', '192'] as $size) {
+		$params['links']["icon-$size"] = array(
+			'rel' => 'icon',
+			'sizes' => "{$size}x{$size}",
+			'type' => 'image/png',
+			'href' => elgg_get_simplecache_url("favicon-$size.png"),
+		);
+	}
 
 	// RSS feed link
 	if (_elgg_has_rss_link()) {
@@ -601,7 +584,7 @@ function _elgg_views_prepare_head($title) {
 		);
 	}
 	
-	return $params;
+	return elgg_trigger_plugin_hook('head', 'page', $vars, $params);
 }
 
 /**
