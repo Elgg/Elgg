@@ -31,8 +31,8 @@ $extensions = elgg_view('extensions/channel');
 
 
 // allow caching as required by stupid MS products for https feeds.
-header('Pragma: public');
-header("Content-Type: text/xml;charset=utf-8");
+elgg_set_http_header('Pragma: public');
+elgg_set_http_header("Content-Type: text/xml;charset=utf-8");
 
 echo "<?xml version='1.0'?>";
 echo <<<END

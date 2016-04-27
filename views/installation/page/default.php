@@ -12,12 +12,12 @@ $title = elgg_echo('install:title');
 $title .= " : {$vars['title']}";
 
 // we won't trust server configuration but specify utf-8
-header('Content-type: text/html; charset=utf-8');
+elgg_set_http_header('Content-type: text/html; charset=utf-8');
 
 // turn off browser caching
-header('Pragma: public', TRUE);
-header("Cache-Control: no-cache, must-revalidate", TRUE);
-header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
+elgg_set_http_header('Pragma: public', TRUE);
+elgg_set_http_header("Cache-Control: no-cache, must-revalidate", TRUE);
+elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 
 $isElggAtRoot = Elgg\Application::elggDir()->getPath() === Directory\Local::root()->getPath();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';

@@ -279,5 +279,17 @@ class Logger {
 	public function enable() {
 		return array_pop($this->disabled_stack);
 	}
+
+	/**
+	 * Reset the hooks service for this instance (testing)
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public function setHooks(PluginHooksService $hooks) {
+		$this->hooks = $hooks;
+		$this->hooks->setLogger($this);
+	}
 }
 
