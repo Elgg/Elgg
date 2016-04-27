@@ -184,6 +184,12 @@ Action hooks
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 
+**response, action:<action>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+    Note that the ``<action>`` value is parsed from the request URL, therefore you may not be able to filter
+    the responses of `action()` calls if they are nested within the another action script file.
+
 .. _guides/hooks-list#ajax:
 
 Ajax
@@ -207,6 +213,7 @@ Ajax
 	This filters the JSON output wrapper returned to the legacy ajax API (``elgg.ajax``, ``elgg.action``, etc.).
 	Plugins can alter the output, forward URL, system messages, and errors. For the ``elgg/Ajax`` AMD module,
 	use the ``ajax_response`` hook documented above.
+
 
 .. _guides/hooks-list#permission-hooks:
 
@@ -304,13 +311,24 @@ Routing
 **route, <identifier>**
     Allows applying logic or returning a response before the page handler is called. See :doc:`routing`
     for details.
+    Note that plugins using this hook to rewrite paths, will not be able to filter the response object by
+    its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for
+    the original path.
 
 **route:rewrite, <identifier>**
 	Allows altering the site-relative URL path. See :doc:`routing` for details.
 
+**response, path:<path>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    This hook type will only be used if the path did not start with "action/" or "ajax/".
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+    Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` hook should
+    use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` hook.
+
 **ajax_response, path:<path>**
     Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will
     only be used if the path did not start with "action/" or "ajax/".
+
 
 .. _guides/hooks-list#views:
 
@@ -337,6 +355,16 @@ Views
 
 **ajax_response, form:<action>**
     Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
+
+**response, view:<view_name>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    Applies to request to ``/ajax/view/<view_name>``.
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+
+**response, form:<form_name>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    Applies to request to ``/ajax/form/<form_name>``.
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
 
 Files
 =====

@@ -27,7 +27,7 @@ $httpCodes = array(
 );
 
 if (isset($httpCodes[$type])) {
-	header("HTTP/1.1 $type {$httpCodes[$type]}");
+	elgg_set_http_header("HTTP/1.1 $type {$httpCodes[$type]}");
 }
 
 $layout = elgg_in_context('admin') ? 'admin' : 'error';

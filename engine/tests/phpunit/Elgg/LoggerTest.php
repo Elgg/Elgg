@@ -25,6 +25,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase {
 		$logger = _elgg_services()->logger;
 		$logger->disable();
 		$hooks = _elgg_services()->hooks;
+		$logger->setHooks($hooks);
 		$hooks->backup();
 
 		$num_processed = 0;

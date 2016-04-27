@@ -1,6 +1,9 @@
 <?php
 namespace Elgg;
-use Elgg\Services\AjaxResponse;
+
+use Elgg\Http\ResponseBuilder;
+use ElggCrypto;
+use ElggSession;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -15,6 +18,21 @@ use Elgg\Services\AjaxResponse;
  */
 class ActionsService {
 	
+	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
+	 * @var ElggSession
+	 */
+	private $session;
+
+	/**
+	 * @var ElggCrypto
+	 */
+	private $crypto;
+
 	/**
 	 * Registered actions storage
 	 *
@@ -36,15 +54,35 @@ class ActionsService {
 	 * @var string[]
 	 */
 	private static $access_levels = ['public', 'logged_in', 'admin'];
-	
+
 	/**
+	 * Constructor
+	 *
+	 * @param Config      $config  Config
+	 * @param ElggSession $session Session
+	 * @param ElggCrypto  $crypto  Crypto service
+	 */
+	public function __construct(Config $config, ElggSession $session, ElggCrypto $crypto) {
+		$this->config = $config;
+		$this->session = $session;
+		$this->crypto = $crypto;
+	}
+
+	/**
+	 * Executes an action
+	 * If called from action() redirect will be issued by the response factory
+	 * If called as /action page handler response will be handled by \Elgg\Router
+	 * 
+	 * @param string $action    Action name
+	 * @param string $forwarder URL to forward to after completion
+	 * @return ResponseBuilder|null
 	 * @see action
 	 * @access private
 	 */
 	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
 		$this->currentAction = $action;
-	
+		
 		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 		// Allow users to disable plugins without a token in order to
 		// remove plugins that are incompatible.
@@ -58,38 +96,51 @@ class ActionsService {
 	
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
-			$this->gatekeeper($action);
+			$pass = $this->gatekeeper($action);
+			if (!$pass) {
+				return;
+			}
 		}
 	
-		$forwarder = str_replace(_elgg_services()->config->getSiteUrl(), "", $forwarder);
+		$forwarder = str_replace($this->config->getSiteUrl(), "", $forwarder);
 		$forwarder = str_replace("http://", "", $forwarder);
 		$forwarder = str_replace("@", "", $forwarder);
 		if (substr($forwarder, 0, 1) == "/") {
 			$forwarder = substr($forwarder, 1);
 		}
 
+		$ob_started = false;
+
 		/**
-		 * Complete the execution with a forward
+		 * Prepare action response
 		 *
-		 * @param string $error_key Error message key
-		 *
-		 * @throws \SecurityException
+		 * @param string $error_key   Error message key
+		 * @param int    $status_code HTTP status code
+		 * @return ResponseBuilder
 		 */
-		$forward = function ($error_key = '') use ($action, $forwarder) {
+		$forward = function ($error_key = '', $status_code = ELGG_HTTP_OK) use ($action, $forwarder, &$ob_started) {
 			if ($error_key) {
+				if ($ob_started) {
+					ob_end_clean();
+				}
 				$msg = _elgg_services()->translator->translate($error_key, [$action]);
 				_elgg_services()->systemMessages->addErrorMessage($msg);
+				$response = new \Elgg\Http\ErrorResponse($msg, $status_code);
+			} else {
+				$content = ob_get_clean();
+				$response = new \Elgg\Http\OkResponse($content, $status_code);
 			}
-
+			
 			$forwarder = empty($forwarder) ? REFERER : $forwarder;
-			forward($forwarder);
+			$response->setForwardURL($forwarder);
+			return $response;
 		};
 
 		if (!isset($this->actions[$action])) {
-			$forward('actionundefined');
+			return $forward('actionundefined', ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
-		$user = _elgg_services()->session->getLoggedInUser();
+		$user = $this->session->getLoggedInUser();
 
 		// access checks
 		switch ($this->actions[$action]['access']) {
@@ -97,39 +148,47 @@ class ActionsService {
 				break;
 			case 'logged_in':
 				if (!$user) {
-					$forward('actionloggedout');
+					return $forward('actionloggedout', ELGG_HTTP_FORBIDDEN);
 				}
 				break;
 			default:
 				// admin or misspelling
-				if (!$user->isAdmin()) {
-					$forward('actionunauthorized');
+				if (!$user || !$user->isAdmin()) {
+					return $forward('actionunauthorized', ELGG_HTTP_FORBIDDEN);
 				}
 		}
 
+		ob_start();
+		$ob_started = true;
+		
 		// To quietly cancel the file, return a falsey value in the "action" hook.
 		if (!_elgg_services()->hooks->trigger('action', $action, null, true)) {
-			$forward();
+			return $forward('', ELGG_HTTP_OK);
 		}
 
 		$file = $this->actions[$action]['file'];
 
 		if (!is_file($file) || !is_readable($file)) {
-			$forward('actionnotfound');
+			return $forward('actionnotfound', ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
-		self::includeFile($file);
-		$forward();
+		$result = self::includeFile($file);
+		if ($result instanceof ResponseBuilder) {
+			ob_end_clean();
+			return $result;
+		}
+
+		return $forward('', ELGG_HTTP_OK);
 	}
 
 	/**
 	 * Include an action file with isolated scope
 	 *
 	 * @param string $file File to be interpreted by PHP
-	 * @return void
+	 * @return mixed
 	 */
 	protected static function includeFile($file) {
-		include $file;
+		return include $file;
 	}
 	
 	/**
@@ -184,14 +243,14 @@ class ActionsService {
 			$ts = get_input('__elgg_ts');
 		}
 
-		$session_id = _elgg_services()->session->getId();
-	
+		$session_id = $this->session->getId();
+
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
 			$required_token = $this->generateActionToken($ts);
-	
+			
 			// Validate token
-			$token_matches = _elgg_services()->crypto->areEqual($token, $required_token);
+			$token_matches = $this->crypto->areEqual($token, $required_token);
 			if ($token_matches) {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
@@ -209,7 +268,7 @@ class ActionsService {
 				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
-						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
+						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array($this->config->getSiteUrl())));
 					} else {
 						register_error(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
 					}
@@ -217,7 +276,7 @@ class ActionsService {
 			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
-					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
+					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array($this->config->getSiteUrl())));
 				} else {
 					register_error(_elgg_services()->translator->translate('actiongatekeeper:tokeninvalid'));
 				}
@@ -257,13 +316,13 @@ class ActionsService {
 	}
 
 	/**
-	 * @see \Elgg\ActionsService::validateActionToken
+	 * @see ActionsService::validateActionToken
 	 * @access private
 	 * @since 1.9.0
 	 * @return int number of seconds that action token is valid
 	 */
 	public function getActionTokenTimeout() {
-		if (($timeout = _elgg_services()->config->get('action_token_timeout')) === null) {
+		if (($timeout = $this->config->get('action_token_timeout')) === null) {
 			// default to 2 hours
 			$timeout = 2;
 		}
@@ -272,6 +331,7 @@ class ActionsService {
 	}
 
 	/**
+	 * @return bool
 	 * @see action_gatekeeper
 	 * @access private
 	 */
@@ -287,18 +347,17 @@ class ActionsService {
 				// The tokens are present and the time looks valid: this is probably a mismatch due to the 
 				// login form being on a different domain.
 				register_error(_elgg_services()->translator->translate('actiongatekeeper:crosssitelogin'));
-
-				forward('login', 'csrf');
+				_elgg_services()->responseFactory->redirect('login', 'csrf');
+				return false;
 			}
-
-			// let the validator send an appropriate msg
-			$this->validateActionToken();
-
-		} else if ($this->validateActionToken()) {
+		}
+		
+		if ($this->validateActionToken()) {
 			return true;
 		}
-
-		forward(REFERER, 'csrf');
+			
+		_elgg_services()->responseFactory->redirect(REFERER, 'csrf');
+		return false;
 	}
 	
 	/**
@@ -306,15 +365,30 @@ class ActionsService {
 	 * @access private
 	 */
 	public function generateActionToken($timestamp) {
-		$session_id = _elgg_services()->session->getId();
+		$session_id = $this->session->getId();
 		if (!$session_id) {
 			return false;
 		}
 
-		$session_token = _elgg_services()->session->get('__elgg_session');
+		$session_token = $this->session->get('__elgg_session');
 
-		return _elgg_services()->crypto->getHmac([(int)$timestamp, $session_id, $session_token], 'md5')
+		return $this->crypto->getHmac([(int)$timestamp, $session_id, $session_token], 'md5')
 			->getToken();
+	}
+
+	/**
+	 * Returns action token data for /refresh_token requests
+	 * @return array
+	 */
+	public function getActionTokenResponseData() {
+		$ts = time();
+		$token = $this->generateActionToken($ts);
+		$data = [
+			'__elgg_ts' => $ts,
+			'__elgg_token' => $token,
+			'logged_in' => $this->session->isLoggedIn(),
+		];
+		return $data;
 	}
 	
 	/**
@@ -328,8 +402,9 @@ class ActionsService {
 	/**
 	 * @see ajax_forward_hook
 	 * @access private
+	 * @deprecated 2.2
 	 */
-	public function ajaxForwardHook($hook, $reason, $return, $params) {
+	public function ajaxForwardHook($hook, $reason, $forward_url, $params) {
 		if (!elgg_is_xhr()) {
 			return;
 		}
@@ -337,79 +412,31 @@ class ActionsService {
 		// grab any data echo'd in the action
 		$output = ob_get_clean();
 
-		if ($reason == 'walled_garden') {
+		if ($reason == 'walled_garden' || $reason == 'csrf') {
 			$reason = '403';
 		}
-		$http_codes = array(
-			'400' => 'Bad Request',
-			'401' => 'Unauthorized',
-			'403' => 'Forbidden',
-			'404' => 'Not Found',
-			'407' => 'Proxy Authentication Required',
-			'500' => 'Internal Server Error',
-			'503' => 'Service Unavailable',
-		);
 
-		$ajax_api = _elgg_services()->ajax;
-		if ($ajax_api->isReady()) {
-			if (isset($http_codes[$reason])) {
-				$ajax_api->respondWithError($http_codes[$reason], $reason);
-			} else {
-				$ajax_api->respondFromOutput($output, "action:{$this->currentAction}");
-			}
-			exit;
+		$status_code = (int) $reason;
+		if ($status_code < 100 || ($status_code > 299 && $status_code < 400) || $status_code > 599) {
+			// We only want to preserve OK and error codes
+			// Redirect responses should be converted to OK responses as this is an XHR request
+			$status_code = ELGG_HTTP_OK;
 		}
 
-		// legacy XHR behavior
-		if (isset($http_codes[$reason])) {
-			header("HTTP/1.1 $reason {$http_codes[$reason]}", true);
-		}
+		$response = elgg_ok_response($output, '', $forward_url, $status_code);
 
-		// always pass the full structure to avoid boilerplate JS code.
-		$params = array_merge($params, array(
-			'output' => '',
-			'status' => 0,
-			'system_messages' => array(
-				'error' => array(),
-				'success' => array()
-			)
-		));
+		$headers = $response->getHeaders();
+		$headers['Content-Type'] = 'application/json; charset=UTF-8';
+		$response->setHeaders($headers);
 
-		$params['output'] = $ajax_api->decodeJson($output);
-
-		//Grab any system messages so we can inject them via ajax too
-		$system_messages = _elgg_services()->systemMessages->dumpRegister();
-
-		if (isset($system_messages['success'])) {
-			$params['system_messages']['success'] = $system_messages['success'];
-		}
-
-		if (isset($system_messages['error'])) {
-			$params['system_messages']['error'] = $system_messages['error'];
-			$params['status'] = -1;
-		}
-
-		$context = array('action' => $this->currentAction);
-		$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
-
-		// Check the requester can accept JSON responses, if not fall back to
-		// returning JSON in a plain-text response.  Some libraries request
-		// JSON in an invisible iframe which they then read from the iframe,
-		// however some browsers will not accept the JSON MIME type.
-		$http_accept = _elgg_services()->request->server->get('HTTP_ACCEPT');
-		if (stripos($http_accept, 'application/json') === false) {
-			header("Content-type: text/plain;charset=utf-8");
-		} else {
-			header("Content-type: application/json;charset=utf-8");
-		}
-
-		echo json_encode($params);
+		_elgg_services()->responseFactory->respond($response);
 		exit;
 	}
 	
 	/**
 	 * @see ajax_action_hook
 	 * @access private
+	 * @deprecated 2.2
 	 */
 	public function ajaxActionHook() {
 		if (elgg_is_xhr()) {
