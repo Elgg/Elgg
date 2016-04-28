@@ -45,7 +45,6 @@ class ActionsService {
 		$action = rtrim($action, '/');
 		$this->currentAction = $action;
 	
-		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 		// Allow users to disable plugins without a token in order to
 		// remove plugins that are incompatible.
 		// Login and logout are for convenience.
@@ -55,6 +54,8 @@ class ActionsService {
 			'logout',
 			'file/download',
 		);
+		
+		$exceptions = elgg_trigger_plugin_hook('actions:gatekeeper', 'exceptions', null, $exceptions);
 	
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
