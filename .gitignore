@@ -6,6 +6,7 @@
 /composer.lock
 /composer.phar
 /cache
+/js/webdriverio/config
 
 # Don't check in third party code
 /node_modules

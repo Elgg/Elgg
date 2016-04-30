@@ -24,12 +24,14 @@
     "grunt-exec": "~0.4.6",
     "grunt-open": "~0.2.3",
     "karma": "^0.12.32",
-    "karma-jasmine": "~0.2.0",
     "karma-chrome-launcher": "^0.2.3",
+    "karma-jasmine": "~0.2.0",
     "karma-phantomjs-launcher": "~0.1",
     "karma-requirejs": "~0.2",
     "load-grunt-config": "~0.16.0",
     "phantomjs": "~1.9.7-14",
-    "requirejs": "~2.2.0"
+    "requirejs": "~2.2.0",
+    "wdio-jasmine-framework": "^0.1.9",
+    "webdriverio": "^4.0.5"
   }
 }
