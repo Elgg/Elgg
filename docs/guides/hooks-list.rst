@@ -117,6 +117,13 @@ System hooks
 
 **add, river**
 
+**elgg_call:method, <method>**
+	This filters the ``$method`` argument in ``elgg_call``. A handler may return a callable, a class name,
+	or ``false`` to cancel the call.
+
+**elgg_call:value, <method>**
+	This filters the method return value in ``elgg_call()`` if a call is made.
+
 User hooks
 ==========
 
