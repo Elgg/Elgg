@@ -369,7 +369,7 @@ class Annotations {
 			$options['annotation_created_time_lower']);
 	
 		if ($time_wheres) {
-			$options['wheres'] = array_merge($options['wheres'], $time_wheres);
+			$options['wheres'][] = $time_wheres;
 		}
 	
 		return elgg_get_entities_from_metadata($options);
