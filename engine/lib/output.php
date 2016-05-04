@@ -567,33 +567,6 @@ function _elgg_get_display_query($string) {
 	return htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
 }
 
-/**
- * Unit tests for Output
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- */
-function _elgg_output_unit_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCoreOutputAutoPTest.php";
-	return $value;
-}
-
-/**
- * Initialize the output subsystem.
- *
- * @return void
- * @access private
- */
-function _elgg_output_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_output_unit_test');
-}
-
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_output_init');
+
 };
