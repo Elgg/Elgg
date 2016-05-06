@@ -260,4 +260,22 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 		
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}
+
+	public function testGetSettingRespectsDefaults() {
+		$plugin = elgg_get_plugin_from_id('profile');
+		if (!$plugin) {
+			return;
+		}
+
+		$cache = _elgg_services()->pluginSettingsCache;
+		$cache->setCachedValues([
+			$plugin->guid => [
+				__METHOD__ => 'foo',
+			],
+		]);
+
+		$this->assertEqual('foo', $plugin->getSetting(__METHOD__, 'bar'));
+		$cache->clearAll();
+		$this->assertEqual('bar', $plugin->getSetting(__METHOD__, 'bar'));
+	}
 }
