@@ -169,7 +169,7 @@ Installation requirements:
 
 Configuration:
 
-Uncomment and populate the following sections in `settings.php`
+Uncomment and populate the following sections in ``settings.php``
 
 .. code:: php
 
@@ -202,6 +202,13 @@ There are numerous PHP code caches available on the market.
 These speed up your site by caching the compiled byte code from your
 script meaning that your server doesn't have to compile the PHP code
 each time it is executed.
+
+Direct file serving
+-------------------
+
+If your server can be configured to support the X-Sendfile or X-Accel headers,
+you can configure it to be used in ``settings.php``. This allows your web server to
+directly stream files to the client instead of using PHP's ``readfile()``.
 
 Hosting
 =======
