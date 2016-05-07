@@ -246,8 +246,7 @@ function elgg_ajax_gatekeeper() {
  * @return bool
  */
 function elgg_front_page_handler() {
-	echo elgg_view_resource('index');
-	return true;
+	return elgg_ok_response(elgg_view_resource('index'));
 }
 
 /**
@@ -262,12 +261,15 @@ function elgg_front_page_handler() {
  * @param bool   $result The current value of the hook
  * @param array  $params Parameters related to the hook
  * @return void
+ * @deprecated 2.2
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Error pages are drawn by resource views without "forward" hook.', '2.2');
+	
 	// This draws an error page, and sometimes there's another 40* forward() call made during that
 	// process (usually due to the pagesetup event). We want to allow the 2nd call to pass through,
 	// but draw the appropriate page for the first call.
-
+	
 	static $vars;
 	if ($vars === null) {
 		// keep first vars for error page
@@ -291,6 +293,67 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 }
 
 /**
+ * Prepares a successful response to be returned by a page or an action handler
+ *
+ * @param mixed  $content     Response content
+ *                            In page handlers, response content should contain an HTML string
+ *                            In action handlers, response content can contain either a JSON string or an array of data
+ * @param string $message     System message visible to the client
+ *                            Can be used by handlers to display a system message
+ * @param string $forward_url Forward URL
+ *                            Can be used by handlers to redirect the client on non-ajax requests
+ * @param int    $status_code HTTP status code
+ *                            Status code of the HTTP response (defaults to 200)
+ * @return \Elgg\Http\OkResponse
+ */
+function elgg_ok_response($content = '', $message = '', $forward_url = null, $status_code = ELGG_HTTP_OK) {
+	if ($message) {
+		system_message($message);
+	}
+	return new \Elgg\Http\OkResponse($content, $status_code, $forward_url);
+	
+}
+
+/**
+ * Prepare an error response to be returned by a page or an action handler
+ *
+ * @param string $error       Error message
+ *                            Can be used by handlers to display an error message
+ *                            For certain requests this error message will also be used as the response body
+ * @param string $forward_url URL to redirect the client to
+ *                            Can be used by handlers to redirect the client on non-ajax requests
+ * @param int    $status_code HTTP status code
+ *                            Status code of the HTTP response
+ *                            For BC reasons and due to the logic in the client-side AJAX API,
+ *                            this defaults to 200. Note that the Router and AJAX API will
+ *                            treat these responses as error in spite of the HTTP code assigned
+ * @return \Elgg\Http\ErrorResponse
+ */
+function elgg_error_response($error = '', $forward_url = REFERRER, $status_code = ELGG_HTTP_OK) {
+	if ($error) {
+		register_error($error);
+	}
+	return new \Elgg\Http\ErrorResponse($error, $status_code, $forward_url);
+}
+
+/**
+ * Prepare a silent redirect response to be returned by a page or an action handler
+ *
+ * @param string $forward_url Redirection URL
+ *                            Relative or absolute URL to redirect the client to
+ * @param int    $status_code HTTP status code
+ *                            Status code of the HTTP response
+ *                            Note that the Router and AJAX API will treat these responses
+ *                            as redirection in spite of the HTTP code assigned
+ *                            Note that non-redirection HTTP codes will throw an exception
+ * @return \Elgg\Http\RedirectResponse
+ * @throws \InvalidArgumentException
+ */
+function elgg_redirect_response($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
+	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
+}
+
+/**
  * Initializes the page handler/routing system
  *
  * @return void
@@ -298,10 +361,6 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
  */
 function _elgg_page_handler_init() {
 	elgg_register_page_handler('', 'elgg_front_page_handler');
-	// Registered at 600 so that plugins can register at the default 500 and get to run first
-	elgg_register_plugin_hook_handler('forward', '400', 'elgg_error_page_handler', 600);
-	elgg_register_plugin_hook_handler('forward', '403', 'elgg_error_page_handler', 600);
-	elgg_register_plugin_hook_handler('forward', '404', 'elgg_error_page_handler', 600);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

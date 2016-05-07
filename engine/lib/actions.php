@@ -13,11 +13,11 @@
  * 
  * @param array $segments URL segments that make up action name
  *
- * @return void
+ * @return \Elgg\Http\ResponseBuilder|null
  * @access private
  */
 function _elgg_action_handler(array $segments) {
-	_elgg_services()->actions->execute(implode('/', $segments));
+	return _elgg_services()->actions->execute(implode('/', $segments));
 }
 
 /**
@@ -37,15 +37,24 @@ function _elgg_action_handler(array $segments) {
  * @warning All actions require CSRF tokens.
  *
  * @param string $action    The requested action
- * @param string $forwarder Optionally, the location to forward to
- *
+ *                          Name of the registered action
+ * @param string $forwarder The location to forward to
+ *                          Forwarding to this location will only take place if
+ *                          action script file is not calling forward()
+ *                          Defaults to index URL
+ *                          Use REFERRER to forward to the referring page
  * @see elgg_register_action()
  *
  * @return void
  * @access private
  */
 function action($action, $forwarder = "") {
-	_elgg_services()->actions->execute($action, $forwarder);
+	$response = _elgg_services()->actions->execute($action, $forwarder);
+	if ($response instanceof Elgg\Http\ResponseBuilder) {
+		// in case forward() wasn't called in the action
+		_elgg_services()->responseFactory->respond($response);
+	}
+	_elgg_services()->responseFactory->redirect(REFERRER, 'csrf');
 }
 
 /**
@@ -249,11 +258,13 @@ function elgg_is_xhr() {
  * @param string $hook
  * @param string $type
  * @param string $reason
- * @param array $params
+ * @param array  $params
  * @return void
  * @access private
+ * @deprecated 2.2
  */
 function ajax_forward_hook($hook, $type, $reason, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.2');
 	_elgg_services()->actions->ajaxForwardHook($hook, $type, $reason, $params);
 }
 
@@ -261,34 +272,24 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
  * Buffer all output echo'd directly in the action for inclusion in the returned JSON.
  * @return void
  * @access private
+ * @deprecated 2.2
  */
 function ajax_action_hook() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.2');
 	_elgg_services()->actions->ajaxActionHook();
 }
 
 /**
  * Send an updated CSRF token
  *
+ * @return \Elgg\Http\ResponseBuilder
  * @access private
  */
 function _elgg_csrf_token_refresh() {
-
-	if (!elgg_is_xhr()) {
-		return false;
-	}
-
-	$ts = time();
-	$token = generate_action_token($ts);
-	$data = array(
-		'__elgg_ts' => $ts,
-		'__elgg_token' => $token,
-		'logged_in' => elgg_is_logged_in(),
-	);
-
-	header("Content-Type: application/json;charset=utf-8");
-	echo json_encode($data);
-
-	return true;
+	elgg_ajax_gatekeeper();
+	$data = _elgg_services()->actions->getActionTokenResponseData();
+	elgg_set_http_header('Content-Type: application/json; charset=UTF-8');
+	return elgg_ok_response($data);
 }
 
 /**
@@ -300,9 +301,6 @@ function actions_init() {
 	elgg_register_page_handler('refresh_token', '_elgg_csrf_token_refresh');
 
 	elgg_register_simplecache_view('languages/en.js');
-
-	elgg_register_plugin_hook_handler('action', 'all', 'ajax_action_hook', 600);
-	elgg_register_plugin_hook_handler('forward', 'all', 'ajax_forward_hook', 600);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

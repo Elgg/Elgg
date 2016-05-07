@@ -12,7 +12,7 @@
  */
 
 // we won't trust server configuration but specify utf-8
-header('Content-type: text/html; charset=utf-8');
+elgg_set_http_header('Content-type: text/html; charset=utf-8');
 
 ?>
 <!DOCTYPE html>

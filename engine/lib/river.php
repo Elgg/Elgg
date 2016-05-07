@@ -720,20 +720,20 @@ function update_river_access_by_object($object_guid, $access_id) {
 /**
  * Page handler for activity
  *
- * @param array $page
- * @return bool
+ * @param array $segments URL segments
+ * @return \Elgg\Http\ResponseBuilder
  * @access private
  */
-function _elgg_river_page_handler($page) {
+function _elgg_river_page_handler($segments) {
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 	// make a URL segment available in page handler script
-	$page_type = elgg_extract(0, $page, 'all');
+	$page_type = elgg_extract(0, $segments, 'all');
 	$page_type = preg_replace('[\W]', '', $page_type);
 
 	if ($page_type == 'owner') {
 		elgg_gatekeeper();
-		$page_username = elgg_extract(1, $page, '');
+		$page_username = elgg_extract(1, $segments, '');
 		if ($page_username == elgg_get_logged_in_user_entity()->username) {
 			$page_type = 'mine';
 		} else {
@@ -743,8 +743,7 @@ function _elgg_river_page_handler($page) {
 
 	$vars['page_type'] = $page_type;
 
-	echo elgg_view_resource("river", $vars);
-	return true;
+	return elgg_ok_response(elgg_view_resource("river", $vars));
 }
 
 /**
