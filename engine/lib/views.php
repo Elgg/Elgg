@@ -371,8 +371,7 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
  * Priority can be specified and affects the order in which extensions
  * are appended or prepended.
  *
- * @note Internal: View extensions are stored in
- * $CONFIG->views->extensions[$view][$priority] = $view_extension
+ * @see elgg_prepend_css_urls() If the extension is CSS, you may need to use this to fix relative URLs.
  *
  * @param string $view           The view to extend.
  * @param string $view_extension This view is added to $view
@@ -396,6 +395,21 @@ function elgg_extend_view($view, $view_extension, $priority = 501) {
  */
 function elgg_unextend_view($view, $view_extension) {
 	return _elgg_services()->views->unextendView($view, $view_extension);
+}
+
+/**
+ * In CSS content, prepend a path to relative URLs.
+ *
+ * This is useful to process a CSS view being used as an extension.
+ *
+ * @param string $css  CSS
+ * @param string $path Path to prepend. E.g. "foo/bar/" or "../"
+ *
+ * @return string
+ * @since 2.2
+ */
+function elgg_prepend_css_urls($css, $path) {
+	return Minify_CSS_UriRewriter::prepend($css, $path);
 }
 
 /**
@@ -1636,7 +1650,7 @@ function _elgg_view_may_be_altered($view, $path) {
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);
-
+	
 	return realpath($view_path) !== realpath($expected_path);
 }
 

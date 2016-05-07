@@ -153,6 +153,25 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->cacheroot = "";
 
 /**
+ * Enable SendFile file serving
+ *
+ * After enabling X-Sendfile/X-Accel on your server, you can enable its support in Elgg. Set the
+ * X-Sendfile-Type value to "X-Sendfile" (Apache) or "X-Accel-Redirect" (Nginx).
+ *
+ * @global string $CONFIG->{'X-Sendfile-Type'}
+ */
+//$CONFIG->{'X-Sendfile-Type'} = '';
+
+/**
+ * Configure X-Accel on nginx (see SendFile above)
+ *
+ * For Nginx, you'll likely also need to set this to a mapping like: "/path/to/dataroot/=/download/".
+ *
+ * @global string $CONFIG->{'X-Accel-Mapping'}
+ */
+//$CONFIG->{'X-Accel-Mapping'} = '';
+
+/**
  * Cookie configuration
  *
  * Elgg uses 2 cookies: a PHP session cookie and an extended login cookie

@@ -602,6 +602,18 @@ To support gallery sets (via ``rel`` attribute), you need to bind colorbox direc
       lightbox.bind('a[rel="my-gallery"]', options, false); // 3rd attribute ensures binding is done without proxies
    });
 
+Module ``elgg/ckeditor``
+------------------------
+
+This module can be used to add WYSIWYG editor to a textarea (requires ``ckeditor`` plugin to be enabled).
+Note that WYSIWYG will be automatically attached to all instances of ``.elgg-input-longtext``.
+
+.. code:: js
+
+   require(['elgg/ckeditor'], function (editor) {
+       editor.bind('.my-text-area');
+   });
+
 Traditional scripts
 ===================
 
@@ -704,6 +716,9 @@ Available hooks
 
 **config, ckeditor**
     This filters the CKEditor config object. Register for this hook in a plugin boot module. The defaults can be seen in the module ``elgg/ckeditor/config``.
+
+**prepare, ckeditor**
+    This hook can be used to decorate ``CKEDITOR`` global. You can use this hook to register new CKEditor plugins and add event bindings.
 
 **ajax_request_data, \***
     This filters request data sent by the ``elgg/Ajax`` module. See :doc:`ajax` for details.

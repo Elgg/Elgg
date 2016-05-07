@@ -110,6 +110,17 @@ class ServeFileHandler {
 			'Content-Type' => (new MimeTypeDetector())->getType($filenameonfilestore),
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
+		
+		$sendfile_type = $this->config->getVolatile('X-Sendfile-Type');
+		if ($sendfile_type) {
+			$request->headers->set('X-Sendfile-Type', $sendfile_type);
+
+			$mapping = (string)$this->config->getVolatile('X-Accel-Mapping');
+			$request->headers->set('X-Accel-Mapping', $mapping);
+
+			$response->trustXSendfileTypeHeader();
+		}
+		
 		$response->prepare($request);
 
 		if (empty($expires)) {
