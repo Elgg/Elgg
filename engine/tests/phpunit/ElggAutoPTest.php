@@ -1,8 +1,6 @@
 <?php
-/**
- * Test case for \ElggAutoP functionality.
- */
-class ElggCoreOutputAutoPTest extends \ElggCoreUnitTest {
+
+class ElggAutoPTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var \ElggAutoP
@@ -14,7 +12,7 @@ class ElggCoreOutputAutoPTest extends \ElggCoreUnitTest {
 	}
 	
 	public function testDomRoundtrip() {
-		$d = dir(dirname(__FILE__) . '/test_files/output/autop');
+		$d = dir(__DIR__ . '/test_files/autop');
 		$in = file_get_contents($d->path . "/domdoc_in.html");
 		$exp = file_get_contents($d->path . "/domdoc_exp.html");
 		$exp = $this->flattenString($exp);
@@ -28,23 +26,22 @@ class ElggCoreOutputAutoPTest extends \ElggCoreUnitTest {
 		list($out) = explode('</body>', $out, 2);
 		$out = $this->flattenString($out);
 
-		$this->assertEqual($exp, $out, "DOMDocument's parsing/serialization roundtrip");
+		$this->assertEquals($exp, $out, "DOMDocument's parsing/serialization roundtrip");
 	}
 
-	public function testProcess() {
-		$data = $this->provider();
-		foreach ($data as $row) {
-			list($test, $in, $exp) = $row;
-			$exp = $this->flattenString($exp);
-			$out = $this->_autop->process($in);
-			$out = $this->flattenString($out);
-			
-			$this->assertEqual($exp, $out, "Equality case {$test}");
-		}
+	/**
+	 * @dataProvider provider
+	 */
+	public function testProcess($test, $in, $exp) {
+		$exp = $this->flattenString($exp);
+		$out = $this->_autop->process($in);
+		$out = $this->flattenString($out);
+
+		$this->assertEquals($exp, $out, "Equality case {$test}");
 	}
 
 	public function provider() {
-		$d = dir(dirname(__FILE__) . '/test_files/output/autop');
+		$d = dir(__DIR__ . '/test_files/autop');
 		$tests = array();
 		while (false !== ($entry = $d->read())) {
 			if (preg_match('/^([a-z\\-]+)\.in\.html$/i', $entry, $m)) {
