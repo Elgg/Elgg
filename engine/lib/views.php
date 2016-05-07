@@ -1636,7 +1636,7 @@ function _elgg_view_may_be_altered($view, $path) {
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);
-
+	
 	return realpath($view_path) !== realpath($expected_path);
 }
 

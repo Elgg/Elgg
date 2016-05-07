@@ -2,18 +2,10 @@
  * Insert embed media from embed plugin
  *
  * This JavaScript view is extending the view embed/embed.js
+ *
+ * @deprecated 2.2
  */
-
-elgg.register_hook_handler('embed', 'editor', function(hook, type, params, value) {
-	var textArea = $('#' + params.textAreaId);
-	var content = params.content;
-	if ($.fn.ckeditorGet) {
-		try {
-			var editor = textArea.ckeditorGet();
-			editor.insertHtml(content);
-			return false;
-		} catch (e) {
-			// do nothing.
-		}
-	}
+require(['elgg', 'elgg/ckeditor'], function(elgg, elggCKEditor) {
+	elgg.deprecated_notice('elgg/ckeditor/insert.js view has been deprecated. You should not need to use it. The handlers are now registered by elgg/ckeditor module', '2.2');
+	elggCKEditor.registerHandlers();
 });
