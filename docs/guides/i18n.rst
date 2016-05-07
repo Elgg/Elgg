@@ -83,9 +83,9 @@ To first test whether ``elgg_echo()`` can find a translation:
 Javascript API
 ==============
 
-``elgg.echo(key, args, language)``
+``elgg.echo(key, args)``
 
-This function is the exact counterpart to ``elgg_echo`` in PHP.
+This function is like ``elgg_echo`` in PHP.
 
 Client-side translations are loaded asynchronously. Ensure translations are available by requiring the "elgg" AMD module:
 
