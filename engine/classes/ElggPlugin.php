@@ -270,8 +270,9 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function getSetting($name, $default = null) {
 		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
+
 		if ($values !== null) {
-			return isset($values[$name]) ? $values[$name] : null;
+			return isset($values[$name]) ? $values[$name] : $default;
 		}
 
 		$val = $this->$name;

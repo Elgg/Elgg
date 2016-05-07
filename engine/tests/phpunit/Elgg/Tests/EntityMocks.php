@@ -33,7 +33,8 @@ class EntityMocks {
 
 	/**
 	 * Constructor
-	 * @throws LogicException
+	 *
+	 * @param PHPUnit_Framework_TestCase $test Test case
 	 */
 	public function __construct(PHPUnit_Framework_TestCase $test) {
 		$this->test = $test;
@@ -62,6 +63,16 @@ class EntityMocks {
 	}
 
 	/**
+	 * Return callback for mocking \Elgg\Database\EntityTable
+	 *
+	 * @param int    $guid GUID of the mock entity
+	 * @return boolean
+	 */
+	public function exists($guid) {
+		return $guid && array_key_exists($guid, $this->mocks);
+	}
+
+	/**
 	 * Setup a mock entity
 	 *
 	 * @param int    $guid       GUID of the mock entity
@@ -85,7 +96,7 @@ class EntityMocks {
 		}
 
 		$entity = $this->test->getMockBuilder($class)
-				->setMethods(['getGUID', 'getType', 'getSubtype', '__get'])
+				->setMethods(['getGUID', 'getType', 'getSubtype', '__get', '__set', '__unset'])
 				->disableOriginalConstructor()
 				->getMock();
 

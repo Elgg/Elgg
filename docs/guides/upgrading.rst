@@ -154,7 +154,9 @@ Deprecated Views
 ----------------
 
  * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
+ * ``groups/js`` is deprecated: Use ``groups/navigation`` AMD module as a menu item dependency for "feature" and "unfeature" menu items instead.
  * ``lightbox/settings.js`` is deprecated: Use ``getOptions, ui.lightbox`` JS plugin hook or ``data-colorbox-opts`` attribute.
+ * ``elgg/ckeditor/insert.js`` is deprecated: You no longer need to include it, hook registration takes place in ``elgg/ckeditor`` module
 
 Added ``elgg/popup`` module
 ---------------------------
@@ -178,11 +180,18 @@ New API for handling entity icons
  * ``ElggEntity::deleteIcon()`` - deletes entity icons
  * ``ElggEntity::getIconLastChange()`` - return modified time of the icon file
  * ``ElggEntity::hasIcon()`` - checks if an icon with given size has been created
+ * ``elgg_get_embed_url()`` - can be used to return an embed URL for an entity's icon (served via `/serve-icon` handler)
+
 
 Removed APIs
 ------------
 
 Just a warning that the private entity cache functions (e.g. ``_elgg_retrieve_cached_entity``) have been removed. Some plugins may have been using them. Plugins should not use private APIs as they will more often be removed without notice.
+
+Improved ``elgg/ckeditor`` module
+-----------------------------------
+
+:doc:`elgg/ckeditor module <javascript>` can now be used to add WYSIWYG to a textarea programmatically with ``elgg/ckeditor#bind``.
 
 From 2.0 to 2.1
 ===============

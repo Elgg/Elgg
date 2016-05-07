@@ -23,11 +23,6 @@ echo elgg_view('sprintf.js');
 // @todo: remove in 3.x and use async calls
 echo elgg_view('elgg/widgets.js');
 
-// We use named AMD modules and inline them here in order to save HTTP requests,
-// as these modules will be required on each page
-echo elgg_view('elgg/popup.js');
-echo elgg_view('elgg/lightbox.js');
-
 // In 3.0 this will be required by elgg/lightbox, but in 2.x we have to worry about
 // legacy code that expects $.colorbox to be ready synchronously. To avoid inlining
 // in both lightbox.js and elgg/lightbox, we do so here and define it as a module.
@@ -35,6 +30,10 @@ echo elgg_view('jquery.colorbox.js');
 ?>
 define('jquery.colorbox');
 <?php
+// We use named AMD modules and inline them here in order to save HTTP requests,
+// as these modules will be required on each page
+echo elgg_view('elgg/popup.js');
+echo elgg_view('elgg/lightbox.js');
 
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
@@ -131,3 +130,6 @@ if (_elgg_view_may_be_altered('lightbox/settings.js', 'lightbox/settings.js.php'
 	<?php
 }
 ?>
+
+// We need to ensure bindings take place
+require(['elgg/lightbox']);
