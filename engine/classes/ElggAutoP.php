@@ -226,6 +226,10 @@ class ElggAutoP {
 				$isElement = ($node->nodeType === XML_ELEMENT_NODE);
 				if ($isElement) {
 					$isBlock = in_array($node->nodeName, $this->_blocks);
+					if (!$isBlock) {
+						// if we start with an inline element we don't need to do this
+						$ltrimFirstTextNode = false;
+					}
 				} else {
 					$isBlock = false;
 				}
@@ -241,7 +245,9 @@ class ElggAutoP {
 
 					if ($isText) {
 						$nodeText = $node->nodeValue;
+
 						if ($ltrimFirstTextNode) {
+							// we're at the beginning of a sequence of text/inline elements
 							$nodeText = ltrim($nodeText);
 							$ltrimFirstTextNode = false;
 						}
@@ -250,6 +256,7 @@ class ElggAutoP {
 							$nodeText = substr($nodeText, strlen($m[0]));
 						}
 						if ($isLastInline) {
+							// we're at the end of a sequence of text/inline elements
 							$nodeText = rtrim($nodeText);
 						}
 						$nodeText = str_replace("\n", $this->_unique . 'NL', $nodeText);
