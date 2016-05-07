@@ -34,11 +34,16 @@ elgg.get_language = function() {
 /**
  * Translates a string
  *
- * @param {String} key      The string to translate
- * @param {Array}  argv     vsprintf support
- * @param {String} language The language to display it in
+ * @note The current system only loads a single language module per page, and it comes pre-merged with English
+ *       translations. Hence, elgg.echo() can only return translations in the language returned by
+ *       elgg.get_language(). Requests for other languages will fail unless a 3rd party plugin has manually
+ *       used elgg.add_translation() to merge the language module ahead of time.
  *
- * @return {String} The translation
+ * @param {String} key      Message key
+ * @param {Array}  argv     vsprintf() arguments
+ * @param {String} language Requested language. Not recommended (see above).
+ *
+ * @return {String} The translation or the given key if no translation available
  */
 elgg.echo = function(key, argv, language) {
 	//elgg.echo('str', 'en')
