@@ -24,6 +24,24 @@ if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
 	$simple_cache_warning .= "<span class=\"elgg-text-help\">$warning</span>";
 }
 
+$cache_symlinked = _elgg_is_cache_symlinked();
+$params = array(
+	'label' => elgg_echo('installation:cache_symlink:label'),
+	'name' => 'cache_symlink_enabled',
+	'checked' => $cache_symlinked,
+	'class' => $simple_cache_disabled_class,
+	'label_class' => $simple_cache_disabled_class,
+);
+$symlink_warning = '';
+if ($cache_symlinked) {
+	$params['class'] = 'elgg-state-disabled';
+	$params['label_class'] = 'elgg-state-disabled';
+}
+$symlink_input .= elgg_view("input/checkbox", $params);
+if ($cache_symlinked) {
+	$symlink_warning .= elgg_format_element('span', ['class' => 'elgg-text-help'], elgg_echo('installation:cache_symlink:warning'));
+}
+
 // minify
 $minify_js_input = elgg_view("input/checkbox", array(
 	'label' => elgg_echo('installation:minify_js:label'),
@@ -53,9 +71,12 @@ $system_cache_input = elgg_view("input/checkbox", array(
 		<?php echo $simple_cache_input; ?>
 		<p class="elgg-text-help"><?php echo elgg_echo('installation:simplecache:description'); ?></p>
 		<?php echo $simple_cache_warning; ?>
-		
 	</div>
-	
+	<div>
+		<?php echo $symlink_input; ?>
+		<p class="elgg-text-help"><?php echo elgg_echo('installation:cache_symlink:description'); ?></p>
+		<?php echo $symlink_warning; ?>
+	</div>
 	<div>
 		<p><?php echo elgg_echo('installation:minify:description'); ?></p>
 		<?php echo $minify_js_input; ?><br />
