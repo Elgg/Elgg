@@ -450,6 +450,9 @@ function _elgg_filestore_init() {
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
 
+	// Handler for serving embedded icons
+	elgg_register_page_handler('serve-icon', '_elgg_filestore_serve_icon_handler');
+
 	// Touch entity icons if entity access id has changed
 	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
 	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_touch_icons');
@@ -569,8 +572,38 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = ''
 }
 
 /**
- * Reset icon URLs if access_id has changed
+ * Returns a URL suitable for embedding entity's icon in a text editor.
+ * We can not use elgg_get_inline_url() for these purposes due to a URL structure
+ * bound to user session and file modification time.
+ * This function returns a generic (permanent) URL that will then be resolved to
+ * an inline URL whenever requested.
  *
+ * @param \ElggEntity $entity Entity
+ * @param string      $size   Size
+ * @return string
+ * @since 2.2
+ */
+function elgg_get_embed_url(\ElggEntity $entity, $size) {
+	return elgg_normalize_url("serve-icon/$entity->guid/$size");
+}
+
+/**
+ * Handler for /serve-icon resources
+ * /serve-icon/<entity_guid>/<size>
+ *
+ * @return void
+ * @access private
+ * @since 2.2
+ */
+function _elgg_filestore_serve_icon_handler() {
+	$response = _elgg_services()->iconService->handleServeIconRequest();
+	$response->send();
+	exit;
+}
+
+/**
+ * Reset icon URLs if access_id has changed
+ * 
  * @param string     $event  "update:after"
  * @param string     $type   "object"|"group"
  * @param ElggObject $entity Entity

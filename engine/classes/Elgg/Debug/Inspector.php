@@ -98,25 +98,28 @@ class Inspector {
 		// view handlers
 		$handlers = _elgg_services()->hooks->getAllHandlers();
 
+		$input_filtered_views = array();
+		if (!empty($handlers['view_vars'])) {
+			$input_filtered_views = array_keys($handlers['view_vars']);
+		}
+
 		$filtered_views = array();
 		if (!empty($handlers['view'])) {
 			$filtered_views = array_keys($handlers['view']);
 		}
 
 		$global_hooks = array();
+		if (!empty($handlers['view_vars']['all'])) {
+			$global_hooks[] = 'view_vars, all';
+		}
 		if (!empty($handlers['view']['all'])) {
-			$global_hooks[] = 'view,all';
-		}
-		if (!empty($handlers['display']['view'])) {
-			$global_hooks[] = 'display,view';
-		}
-		if (!empty($handlers['display']['all'])) {
-			$global_hooks[] = 'display,all';
+			$global_hooks[] = 'view, all';
 		}
 
 		return array(
 			'views' => $views,
 			'global_hooks' => $global_hooks,
+			'input_filtered_views' => $input_filtered_views,
 			'filtered_views' => $filtered_views,
 		);
 	}

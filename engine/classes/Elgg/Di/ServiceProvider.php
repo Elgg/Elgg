@@ -177,7 +177,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Cache\EntityCache($c->session, $c->metadataCache);
 		});
 
-		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
+		$this->setFactory('entityPreloader', function(ServiceProvider $c) {
+			return new \Elgg\EntityPreloader($c->entityCache, $c->entityTable);
+		});
 
 		$this->setClassName('entityTable', \Elgg\Database\EntityTable::class);
 
@@ -202,7 +204,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('iconService', function(ServiceProvider $c) {
-			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger);
+			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable);
 		});
 
 		$this->setClassName('input', \Elgg\Http\Input::class);

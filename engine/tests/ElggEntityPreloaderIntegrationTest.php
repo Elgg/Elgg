@@ -12,7 +12,9 @@ class ElggEntityPreloaderIntegrationTest extends ElggCoreUnitTest {
 	public function setUp() {
 		$this->realPreloader = _elgg_services()->entityPreloader;
 
-		$this->mockPreloader = new MockEntityPreloader20140623();
+		$this->mockPreloader = new MockEntityPreloader20140623(
+			_elgg_services()->entityCache, _elgg_services()->entityTable);
+		
 		_elgg_services()->setValue('entityPreloader', $this->mockPreloader);
 	}
 

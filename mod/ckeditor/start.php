@@ -24,10 +24,8 @@ function ckeditor_init() {
 
 	// need to set basepath early
 	elgg_extend_view('elgg.js', 'elgg/ckeditor/set-basepath.js');
-
+	
 	elgg_extend_view('input/longtext', 'ckeditor/init');
-
-	elgg_extend_view('embed/embed.js', 'elgg/ckeditor/insert.js');
 
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');
 }
