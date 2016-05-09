@@ -324,20 +324,23 @@ function elgg_list_views($viewtype = 'default') {
  * The input of views can be intercepted by registering for the
  * view_vars, $view_name plugin hook.
  *
+ * If the input contains the key "__view_output", the view will output this value as a string.
+ * No extensions are used, and the "view" hook is not triggered).
+ *
  * The output of views can be intercepted by registering for the
  * view, $view_name plugin hook.
  *
  * @param string  $view     The name and location of the view to use
  * @param array   $vars     Variables to pass to the view.
- * @param boolean $bypass   This argument is ignored and will be removed eventually
- * @param boolean $ignored  This argument is ignored and will be removed eventually
+ * @param boolean $ignore1  This argument is ignored and will be removed eventually
+ * @param boolean $ignore2  This argument is ignored and will be removed eventually
  * @param string  $viewtype If set, forces the viewtype for the elgg_view call to be
  *                          this value (default: standard detection)
  *
  * @return string The parsed view
  */
-function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
-	return _elgg_services()->views->renderView($view, $vars, $bypass, $viewtype);
+function elgg_view($view, $vars = array(), $ignore1 = false, $ignore2 = false, $viewtype = '') {
+	return _elgg_services()->views->renderView($view, $vars, $ignore1, $viewtype);
 }
 
 /**
