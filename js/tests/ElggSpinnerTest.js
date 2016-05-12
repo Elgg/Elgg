@@ -45,10 +45,33 @@ define(function(require) {
 			}, 25);
 		});
 
+		it("start([object]) sets empty text", function(done) {
+			spinner.start({});
+
+			setTimeout(function() {
+				expect($(visible_selector).length).toBe(1);
+				expect($('.elgg-spinner-text').html()).toBe('');
+				done();
+			}, 25);
+		});
+
 		it("start() removes any set text", function(done) {
 			spinner.start('a>b&c');
 
 			setTimeout(spinner.start, 25);
+
+			setTimeout(function() {
+				expect($('.elgg-spinner-text').html()).toBe('');
+				done();
+			}, 35);
+		});
+
+		it("start([object]) removes any set text", function(done) {
+			spinner.start('a>b&c');
+
+			setTimeout(function () {
+				spinner.start({});
+			}, 25);
 
 			setTimeout(function() {
 				expect($('.elgg-spinner-text').html()).toBe('');
