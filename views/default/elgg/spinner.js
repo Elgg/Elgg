@@ -22,8 +22,12 @@ define(function (require) {
 					$('body').addClass('elgg-spinner-active');
 				}
 			}, SHOW_DELAY);
-			
-			spinner.setText(text);
+
+			if (typeof text === 'string') {
+				spinner.setText(text);
+			} else {
+				spinner.setText('');
+			}
 		},
 
 		/**
