@@ -410,7 +410,7 @@ Other
 		$size = '150x150';
 
 		// Use configured size if possible
-		$config = elgg_get_config('icon_sizes');
+		$config = elgg_get_icon_sizes('user');
 		$key = $params['size'];
 		if (isset($config[$key])) {
 			$size = $config[$key]['w'] . 'x' . $config[$key]['h'];
