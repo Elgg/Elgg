@@ -27,6 +27,27 @@ function embed_init() {
 	elgg_register_js('elgg.embed', $embed_js, 'footer');
 
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'embed_set_thumbnail_url', 1000);
+
+	elgg_register_plugin_hook_handler('elgg.data', 'site', 'embed_set_js_data');
+}
+
+/**
+ * Set data to be used by ajax-loaded embeds
+ *
+ * @param string $hook   "elgg.data"
+ * @param string $type   "site"
+ * @param array  $data   elgg.data client-side data
+ * @param array  $params Hook params
+ * @return array
+ * @private
+ */
+function embed_set_js_data($hook, $type, $data, $params) {
+	$externals = $GLOBALS['_ELGG']->externals_map;
+	$data['embed'] = [
+		'embed_js' => $externals['js']['elgg.embed']->url,
+		'lightbox_css' => $externals['css']['lightbox']->url,
+	];
+	return $data;
 }
 
 /**
@@ -64,23 +85,27 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	// if loaded through ajax (like on /activity), pull in JS libs manually
 	// hack for #6422 because we haven't converted everything to amd yet
 	if (elgg_in_context('ajax')) {
-		$externals = $GLOBALS['_ELGG']->externals_map;
-		$embed = elgg_extract('elgg.embed', $externals['js']);
-		$lightbox_js = elgg_extract('lightbox', $externals['js']);
-		$lightbox_css = elgg_extract('lightbox', $externals['css']);
-		
-		$text .= <<<___JS
+		ob_start();
+?>
 <script>
-	require(['jquery.form']);
-	if (typeof $.fancybox === 'undefined') {
-		$.getScript('$lightbox_js->url');
-		$('head').append('<link rel="stylesheet" href="$lightbox_css->url"></link>');
-	}
-	if (typeof elgg.embed === 'undefined') {
-		$.getScript('$embed->url');
-	}
+!function () {
+	// decent test for whether the CSS is likely to be loaded
+	var css_loaded = !!(window.$ && $.colorbox);
+
+	require(['elgg', 'jquery.form', 'elgg/lightbox'], function (elgg) {
+		if (!css_loaded) {
+			$('<link rel="stylesheet">')
+				.prop('href',  elgg.data.embed.lightbox_css)
+				.appendTo('head');
+		}
+		if (typeof elgg.embed === 'undefined') {
+			$.getScript(elgg.data.embed.embed_js);
+		}
+	});
+}();
 </script>
-___JS;
+<?php
+		$text .= ob_get_clean();
 	}
 
 	$items[] = ElggMenuItem::factory(array(
