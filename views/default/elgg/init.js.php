@@ -39,5 +39,7 @@ define(function (require) {
 		}
 	}
 
+	Plugin.attachBehaviors(document.body);
+
 	elgg.trigger_hook('init', 'system');
 });

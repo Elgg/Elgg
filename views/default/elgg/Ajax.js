@@ -1,6 +1,7 @@
 define(function (require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
+	var Plugin = require('elgg/Plugin');
 	var spinner = require('elgg/spinner');
 
 	var site_url = elgg.get_site_url(),
@@ -325,6 +326,26 @@ define(function (require) {
 		};
 
 		/**
+		 * Call a method and set the returned HTML as the contents of the given element
+		 *
+		 * @param {String|HTMLElement} element Element in which to set HTML
+		 * @param {String}             method  "view", "form", or "path"
+		 * @param {String}             arg     First argument for the selected method
+		 * @param {Object}             options Options for the selected method
+		 * @returns {*|Promise.<T>}
+		 */
+		this.load = function (element, method, arg, options) {
+			if (!/^(view|form|path)$/.test(method)) {
+				throw new Error("Invalid method");
+			}
+			return that[method](arg, options).then(function (html) {
+				// populate element
+				$(element).html(html);
+				Ajax.attachBehaviors(element);
+			});
+		};
+
+		/**
 		 * Convert a form/element to a data object. Use this instead of $.serialize to allow other plugins
 		 * to alter the request by plugin hook.
 		 *
@@ -375,6 +396,16 @@ define(function (require) {
 	 * data.value will be returned to the caller.
 	 */
 	Ajax.RESPONSE_DATA_HOOK = 'ajax_response_data';
+
+	/**
+	 * Attach all available behaviors to elements within the context(s)
+	 *
+	 * When DOM elements are added to the page, this should be called on them, or a surrounding
+	 * container element.
+	 *
+	 * @param {HTMLElement|jQuery|String} context DOM element, jQuery collection, or CSS selector
+	 */
+	Ajax.attachBehaviors = Plugin.attachBehaviors;
 
 	/**
 	 * @private For testing

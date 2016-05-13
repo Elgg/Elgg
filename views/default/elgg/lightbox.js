@@ -9,6 +9,7 @@ define('elgg/lightbox', function (require) {
 
 	var elgg = require('elgg');
 	var $ = require('jquery');
+	var Plugin = require('elgg/Plugin');
 	require('elgg/init');
 	require('jquery.colorbox');
 
@@ -47,7 +48,17 @@ define('elgg/lightbox', function (require) {
 				$.extend(settings, opts);
 			}
 
-			return elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
+			settings = elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
+
+			var old_complete = settings.onComplete || elgg.nullFunction;
+			settings.onComplete = function () {
+				require(['elgg/Plugin'], function (Plugin) {
+					Plugin.attachBehaviors($.colorbox.element());
+					old_complete();
+				});
+			};
+
+			return settings;
 		},
 
 		/**
