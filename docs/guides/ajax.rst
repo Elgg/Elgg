@@ -16,11 +16,12 @@ All the ajax methods perform the following:
 
 #. Client-side, the ``data`` option (if given as an object) is filtered by the hook ``ajax_request_data``.
 #. The request is made to the server, either rendering a view or a form, calling an action, or loading a path.
-#. Echoed JSON is turned into a response object (``Elgg\Services\AjaxResponse``).
+#. The method returns a ``jqXHR`` object, which can be used as a Promise.
+#. Server-echoed content is turned into a response object (``Elgg\Services\AjaxResponse``) containing a string (or a JSON-parsed value).
 #. The response object is filtered by the hook ``ajax_response``.
 #. The response object is used to create the HTTP response.
 #. Client-side, the response data is filtered by the hook ``ajax_response_data``.
-#. The method returns a ``jqXHR`` object, which can be used as a Promise.
+#. The ``jqXHR`` promise is resolved and any ``success`` callbacks are called.
 
 More notes:
 
@@ -70,7 +71,10 @@ To execute it, use ``ajax.action('<action_name>', options)``:
 			arg1: 1,
 			arg2: 2
 		},
-	}).done(function (output) {
+	}).done(function (output, statusText, jqXHR) {
+	    if (jqXHR.AjaxData.status == -1) {
+	        return;
+	    }
 		alert(output.sum);
 		alert(output.product);
 	});
@@ -117,7 +121,10 @@ To fetch its output, use ``ajax.path('<url_path>', options)``.
     var Ajax = require('elgg/Ajax');
 	var ajax = new Ajax();
 
-	ajax.path('myplugin_time').done(function (output) {
+	ajax.path('myplugin_time').done(function (output, statusText, jqXHR) {
+	    if (jqXHR.AjaxData.status == -1) {
+	        return;
+	    }
 		alert(output.rfc2822);
 		alert(output.day);
 	});
@@ -169,7 +176,10 @@ To fetch the view, use ``ajax.view('<view_name>', options)``:
 		data: {
 			guid: 123 // querystring
 		},
-	}).done(function (output) {
+	}).done(function (output, statusText, jqXHR) {
+	    if (jqXHR.AjaxData.status == -1) {
+	        return;
+	    }
 		$('.myplugin-link').html(output);
 	});
 
@@ -203,7 +213,10 @@ To fetch this using ``ajax.form('<action_name>', options)``.
 	var Ajax = require('elgg/Ajax');
 	var ajax = new Ajax();
 
-	ajax.form('myplugin/add').done(function (output) {
+	ajax.form('myplugin/add').done(function (output, statusText, jqXHR) {
+	    if (jqXHR.AjaxData.status == -1) {
+	        return;
+	    }
 		$('.myplugin-form-container').html(output);
 	});
 
@@ -300,6 +313,27 @@ To capture the metadata send back to the client, we use the client-side ``ajax_r
 
 .. note:: Elgg uses these same hooks to deliver system messages over ``elgg/Ajax`` responses.
 
+Handling errors
+---------------
+
+Responses basically fall into three categories:
+
+1. HTTP success (200) with status ``0``. No ``register_error()`` calls were made on the server.
+2. HTTP success (200) with status ``-1``. ``register_error()`` was called.
+3. HTTP error (4xx/5xx). E.g. calling an action with stale tokens, or a server exception. In this case the ``done`` and ``success`` callbacks are not called.
+
+You may need only worry about the 2nd case. We can do this by looking at ``jqXHR.AjaxData.status``:
+
+.. code-block:: js
+
+	ajax.action('entity/delete?guid=123').done(function (value, statusText, jqXHR) {
+        if (jqXHR.AjaxData.status == -1) {
+            // a server error was already displayed
+            return;
+        }
+
+		// remove element from the page
+	});
 
 Requiring AMD modules
 ---------------------
