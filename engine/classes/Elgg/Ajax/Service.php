@@ -111,7 +111,7 @@ class Service {
 	 * @param mixed  $output     Output from a page/action handler
 	 * @param string $hook_type  The hook type. If given, the response will be filtered by hook
 	 * @param bool   $try_decode Try to convert a JSON string back to an abject
-	 * @return void
+	 * @return JsonResponse
 	 */
 	public function respondFromOutput($output, $hook_type = '', $try_decode = true) {
 		if ($try_decode) {
@@ -126,7 +126,7 @@ class Service {
 		$response = $this->buildHttpResponse($api_response);
 
 		$this->response_sent = true;
-		$response->send();
+		return _elgg_services()->responseFactory->send($response);
 	}
 
 	/**
@@ -134,14 +134,14 @@ class Service {
 	 *
 	 * @param AjaxResponse $api_response API response
 	 * @param string       $hook_type    The hook type. If given, the response will be filtered by hook
-	 * @return void
+	 * @return JsonResponse
 	 */
 	public function respondFromApiResponse(AjaxResponse $api_response, $hook_type = '') {
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
 		$response = $this->buildHttpResponse($api_response);
 
 		$this->response_sent = true;
-		$response->send();
+		return _elgg_services()->responseFactory->send($response);
 	}
 
 	/**
@@ -149,13 +149,13 @@ class Service {
 	 *
 	 * @param string $msg    The error message (not displayed to the user)
 	 * @param int    $status The HTTP status code
-	 * @return void
+	 * @return JsonResponse
 	 */
-	public function respondWithError($msg, $status = 400) {
+	public function respondWithError($msg = '', $status = 400) {
 		$response = new JsonResponse(['error' => $msg], $status);
 
 		$this->response_sent = true;
-		$response->send();
+		return _elgg_services()->responseFactory->send($response);
 	}
 
 	/**
@@ -189,7 +189,7 @@ class Service {
 	 * @return JsonResponse
 	 * @throws RuntimeException
 	 */
-	private function buildHttpResponse(AjaxResponse $api_response, $allow_removing_headers = true) {
+	private function buildHttpResponse(AjaxResponse $api_response, $allow_removing_headers = null) {
 		if ($api_response->isCancelled()) {
 			return new JsonResponse(['error' => "The response was cancelled"], 400);
 		}
@@ -199,6 +199,10 @@ class Service {
 		$ttl = $api_response->getTtl();
 		if ($ttl > 0) {
 			// Required to remove headers set by PHP session
+			if (!isset($allow_removing_headers)) {
+				$allow_removing_headers = !elgg_get_config('Elgg\Application_phpunit');
+			}
+			
 			if ($allow_removing_headers) {
 				header_remove('Expires');
 				header_remove('Pragma');
@@ -213,7 +217,7 @@ class Service {
 			// if we don't set Expires, Apache will add a far-off max-age and Expires for us.
 			$response->headers->set('Expires', gmdate('D, d M Y H:i:s \G\M\T', time() + $ttl));
 		}
-
+		
 		return $response;
 	}
 
@@ -229,7 +233,10 @@ class Service {
 	 * @access private
 	 * @internal
 	 */
-	public function appendMessages($hook, $type, AjaxResponse $response, $params) {
+	public function appendMessages($hook, $type, $response, $params) {
+		if (!$response instanceof AjaxResponse) {
+			return;
+		}
 		$response->getData()->_elgg_msgs = (object)$this->msgs->dumpRegister();
 		return $response;
 	}
@@ -246,7 +253,10 @@ class Service {
 	 * @access private
 	 * @internal
 	 */
-	public function appendDeps($hook, $type, AjaxResponse $response, $params) {
+	public function appendDeps($hook, $type, $response, $params) {
+		if (!$response instanceof AjaxResponse) {
+			return;
+		}
 		$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
 		return $response;
 	}

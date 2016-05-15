@@ -57,42 +57,39 @@ Use the ``get_input`` function to get access to request parameters:
 
 You can then use the :doc:`database` api to load entities and perform actions on them accordingly.
 
-To redirect the page once you've completed your actions, use the ``forward`` function:
+To indicate a successful action, use ``elgg_ok_response()``. This function accepts data that you want to make available
+to the client for XHR calls (this data will be ignored for non-XHR calls)
 
 .. code:: php
 
-   forward('url/to/forward/to');
+   $user = get_entity($guid);
+   // do something
 
-For example, to forward to the user's profile:
+   $action_data = [
+      'entity' => $user,
+      'stats' => [
+          'friends' => $user->getFriends(['count' => true]);
+      ],
+   ];
+
+   return elgg_ok_response($action_data, 'Action was successful', 'url/to/forward/to');
+
+
+To indicate an error, use ``elgg_error_response()``
 
 .. code:: php
 
    $user = elgg_get_logged_in_user_entity();
-   forward($user->getURL());
+   if (!$user) {
+      // show an error and forward the user to the referring page
+      // send 404 error code on AJAX calls
+      return elgg_error_response('User not found', REFERRER, ELGG_HTTP_NOT_FOUND);
+   }
 
-URLs can be relative to the Elgg root:
-
-.. code:: php
-
-   $user = elgg_get_logged_in_user_entity();
-   forward("/example/$user->username");
-
-Redirect to the referring page by using the ``REFERRER`` constant:
-
-.. code:: php
-
-   forward(REFERRER);
-   forward(REFERER); // equivalent
-
-Give feedback to the user about the status of the action by using
-``system_message`` for positive feedback or ``register_error`` for warnings and errors:
-
-.. code:: php
-
-   if ($success) {
-     system_message(elgg_echo(‘actions:example:success’));
-   } else {
-     register_error(elgg_echo(‘actions:example:error’));
+   if (!$user->canEdit()) {
+      // show an error and forward to user's profile
+      // send 403 error code on AJAX calls
+      return elgg_error_response('You are not allowed to perform this action', $user->getURL(), ELGG_HTTP_FORBIDDEN);
    }
 
 
