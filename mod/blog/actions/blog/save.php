@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Save blog entity
  *
@@ -31,7 +32,10 @@ if ($guid) {
 		$blog = $entity;
 	} else {
 		register_error(elgg_echo('blog:error:post_not_found'));
-		forward(get_input('forward', REFERER));
+		return [
+			'forward_url' => get_input('forward', REFERER),
+			'status_code' => 403,
+		];
 	}
 
 	// save some data for revisions once we save the new edit
@@ -171,15 +175,28 @@ if (!$error) {
 		}
 
 		if ($blog->status == 'published' || $save == false) {
-			forward($blog->getURL());
+			return [
+				'forward_url' => $blog->getURL(),
+				'content' => [
+					'guid' => $blog->guid,
+				],
+			];
 		} else {
-			forward("blog/edit/$blog->guid");
+			return [
+				'forward_url' => "blog/edit/$blog->guid",
+			];
 		}
 	} else {
 		register_error(elgg_echo('blog:error:cannot_save'));
-		forward($error_forward_url);
+		return [
+			'forward_url' => $error_forward_url,
+			'status_code' => 422,
+		];
 	}
 } else {
 	register_error($error);
-	forward($error_forward_url);
+	return [
+		'forward_url' => $error_forward_url,
+		'status_code' => 422,
+	];
 }

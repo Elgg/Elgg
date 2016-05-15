@@ -95,17 +95,24 @@ class Router {
 			$handled = call_user_func($function, $segments, $identifier);
 		}
 
-		$output = ob_get_clean();
-
-		$ajax_api = _elgg_services()->ajax;
-		if ($ajax_api->isReady()) {
-			$path = implode('/', $request->getUrlSegments());
-			$ajax_api->respondFromOutput($output, "path:$path");
-			return true;
+		if ($handled === true) {
+			$output = ob_get_clean();
+		} else if (is_string($handled)) {
+			$output = $handled;
 		}
 
-		echo $output;
-		return $handled || headers_sent();
+		if ($output) {
+			$ajax_api = _elgg_services()->ajax;
+			if ($ajax_api->isReady()) {
+				$path = implode('/', $request->getUrlSegments());
+				$ajax_api->respondFromOutput($output, "path:$path");
+				return true;
+			}
+
+			return _elgg_services()->response->prepareResponse($output)->send();
+		}
+
+		return headers_sent();
 	}
 
 	/**
