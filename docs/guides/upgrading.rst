@@ -18,6 +18,7 @@ Deprecated APIs
  * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
  * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
  * ``lightbox.js`` library: Do not use ``elgg_load_js('lightbox.js');`` unless your code references deprecated ``elgg.ui.lightbox`` namespace. Use ``elgg/lightbox`` AMD module instead.
+ * ``elgg.embed`` library and ``elgg.embed`` object: Do not use ``elgg_load_js('elgg.embed')``. Use ``elgg/embed`` AMD module instead
  * Accessing ``icons_sizes`` config value directly: Use ``elgg_get_icon_sizes()``
  * ``can_write_to_container()``: Use ``ElggEntity::canWriteToContainer()``
 
@@ -28,6 +29,7 @@ Deprecated Views
  * ``groups/js`` is deprecated: Use ``groups/navigation`` AMD module as a menu item dependency for "feature" and "unfeature" menu items instead.
  * ``lightbox/settings.js`` is deprecated: Use ``getOptions, ui.lightbox`` JS plugin hook or ``data-colorbox-opts`` attribute.
  * ``elgg/ckeditor/insert.js`` is deprecated: You no longer need to include it, hook registration takes place in ``elgg/ckeditor`` module
+ * ``embed/embed.js`` is deprecated: Use ``elgg/embed`` AMD module.
 
 Added ``elgg/popup`` module
 ---------------------------
@@ -38,6 +40,11 @@ Added ``elgg/lightbox`` module
 ------------------------------
 
 New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
+
+Added ``elgg/embed`` module
+------------------------------
+
+Even though rarely necessary, ``elgg/embed`` AMD module can be used to access the embed methods programmatically. The module bootstraps itself when necessary and is unlikely to require further decoration.
 
 New API for handling entity icons
 ---------------------------------
