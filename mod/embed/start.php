@@ -71,7 +71,10 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
-		'href' => elgg_normalize_url($url),
+		'href' => 'javascript:',
+		'data-colorbox-opts' => json_encode([
+			'href' => elgg_normalize_url($url),
+		]),
 		'text' => elgg_echo('embed:media'),
 		'rel' => "embed-lightbox-{$id}",
 		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$id} elgg-lightbox",
