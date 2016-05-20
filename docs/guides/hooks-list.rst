@@ -337,6 +337,38 @@ Views
 
 **head, page**
     In ``elgg_view_page()``, filters ``$vars['head']``
+    Return value contains an array with ``title``, ``metas`` and ``links`` keys,
+    where ``metas`` is an array of elements to be formatted as ``<meta>`` head tags,
+    and ``links`` is an array of elements to be formatted as ``<link>`` head tags.
+    Each meta and link element contains a set of key/value pairs that are formatted
+    into html tag attributes, e.g.
+
+.. code:: php
+
+    return [
+       'title' => 'Current page title',
+       'metas' => [
+          'viewport' => [
+             'name' => 'viewport',
+             'content' => 'width=device-width',
+	      ]
+       ],
+       'links' => [
+          'rss' => [
+             'rel' => 'alternative',
+             'type' => 'application/rss+xml',
+             'title' => 'RSS',
+             'href' => elgg_format_url($url),
+          ],
+          'icon-16' => [
+             'rel' => 'icon',
+             'sizes' => '16x16',
+             'type' => 'image/png',
+		     'href' => elgg_get_simplecache_url('favicon-16.png'),
+          ],
+       ],
+    ];
+
 
 **ajax_response, view:<view>**
     Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.

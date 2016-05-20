@@ -561,47 +561,7 @@ function _elgg_views_prepare_head($title) {
 		'name' => 'apple-mobile-web-app-capable',
 		'content' => 'yes',
 	);
-	$params['links']['apple-touch-icon'] = array(
-		'rel' => 'apple-touch-icon',
-		'href' => elgg_get_simplecache_url('favicon-128.png'),
-	);
-
-	// favicons
-	$params['links']['icon-ico'] = array(
-		'rel' => 'icon',
-		'href' => elgg_get_simplecache_url('favicon.ico'),
-	);
-	$params['links']['icon-vector'] = array(
-		'rel' => 'icon',
-		'sizes' => '16x16 32x32 48x48 64x64 128x128',
-		'type' => 'image/svg+xml',
-		'href' => elgg_get_simplecache_url('favicon.svg'),
-	);
-	$params['links']['icon-16'] = array(
-		'rel' => 'icon',
-		'sizes' => '16x16',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-16.png'),
-	);
-	$params['links']['icon-32'] = array(
-		'rel' => 'icon',
-		'sizes' => '32x32',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-32.png'),
-	);
-	$params['links']['icon-64'] = array(
-		'rel' => 'icon',
-		'sizes' => '64x64',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-64.png'),
-	);
-	$params['links']['icon-128'] = array(
-		'rel' => 'icon',
-		'sizes' => '128x128',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-128.png'),
-	);
-
+	
 	// RSS feed link
 	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
@@ -619,6 +579,69 @@ function _elgg_views_prepare_head($title) {
 	}
 	
 	return $params;
+}
+
+
+/**
+ * Add favicon link tags to HTML head
+ *
+ * @param string $hook        "head"
+ * @param string $type        "page"
+ * @param array  $head_params Head params
+ *                            <code>
+ *                               [
+ *                                  'title' => '',
+ *                                  'metas' => [],
+ *                                  'links' => [],
+ *                               ]
+ *                            </code>
+ * @param array  $params      Hook params
+ * @return array
+ */
+function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) {
+
+	$head_params['links']['apple-touch-icon'] = array(
+		'rel' => 'apple-touch-icon',
+		'href' => elgg_get_simplecache_url('favicon-128.png'),
+	);
+
+	// favicons
+	$head_params['links']['icon-ico'] = array(
+		'rel' => 'icon',
+		'href' => elgg_get_simplecache_url('favicon.ico'),
+	);
+	$head_params['links']['icon-vector'] = array(
+		'rel' => 'icon',
+		'sizes' => '16x16 32x32 48x48 64x64 128x128',
+		'type' => 'image/svg+xml',
+		'href' => elgg_get_simplecache_url('favicon.svg'),
+	);
+	$head_params['links']['icon-16'] = array(
+		'rel' => 'icon',
+		'sizes' => '16x16',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-16.png'),
+	);
+	$head_params['links']['icon-32'] = array(
+		'rel' => 'icon',
+		'sizes' => '32x32',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-32.png'),
+	);
+	$head_params['links']['icon-64'] = array(
+		'rel' => 'icon',
+		'sizes' => '64x64',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-64.png'),
+	);
+	$head_params['links']['icon-128'] = array(
+		'rel' => 'icon',
+		'sizes' => '128x128',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-128.png'),
+	);
+
+	return $head_params;
 }
 
 /**
@@ -1739,6 +1762,10 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
 
+	// registered with high priority for BC
+	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
+	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
+	
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
 	$view_path = $GLOBALS['_ELGG']->view_path;
 	$viewtype_dirs = scandir($view_path);
