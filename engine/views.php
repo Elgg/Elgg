@@ -9,15 +9,15 @@ return [
 		 *
 		 * All assets managed by composer (not checked in to version control) should use this syntax.
 		 */
-		"jquery.js" => "vendor/bower-asset/jquery/dist/jquery.min.js",
-		"jquery.min.map" => "vendor/bower-asset/jquery/dist/jquery.min.map",
-		"jquery-migrate.js" => "vendor/bower-asset/jquery-migrate/jquery-migrate.min.js",
-		"jquery-ui.js" => "vendor/bower-asset/jquery-ui/jquery-ui.min.js",
+		"jquery.js" => "vendor/npm-asset/jquery/dist/jquery.min.js",
+		"jquery.min.map" => "vendor/npm-asset/jquery/dist/jquery.min.map",
+		"jquery-migrate.js" => "vendor/npm-asset/jquery-migrate/jquery-migrate.min.js",
+		"jquery-ui.js" => "vendor/npm-asset/jquery-ui/jquery-ui.min.js",
 
-		"jquery.form.js" => "vendor/bower-asset/jquery-form/jquery.form.js",
-		"jquery.colorbox.js" => "vendor/bower-asset/jquery-colorbox/jquery.colorbox-min.js",
-		"require.js" => "vendor/bower-asset/requirejs/require.js",
-		"text.js" => "vendor/bower-asset/text/text.js",
+		"jquery.form.js" => "vendor/npm-asset/jquery-form/jquery.form.js",
+		"jquery.colorbox.js" => "vendor/npm-asset/jquery-colorbox/jquery.colorbox-min.js",
+		"require.js" => "vendor/npm-asset/requirejs/require.js",
+		"text.js" => "vendor/npm-asset/requirejs-text/text.js",
 		
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
 		"font-awesome/css/font-awesome.css" => "vendor/fortawesome/font-awesome/css/font-awesome.min.css",
@@ -35,7 +35,7 @@ return [
 		"elgg/ui.river.js" => dirname(__DIR__) . "/js/lib/ui.river.js",
 
 		// For datepicker. More info in the jquery-ui.js view
-		"jquery-ui/i18n/" => "vendor/bower-asset/jquery-ui/ui/minified/i18n",
+		"jquery-ui/i18n/" => "vendor/npm-asset/jquery-ui/ui/minified/i18n",
 
 		"jquery.imgareaselect.css" => dirname(__DIR__) . "/bower_components/jquery-imgareaselect/distfiles/css/imgareaselect-deprecated.css",
 		"jquery.imgareaselect.js" => dirname(__DIR__) . "/bower_components/jquery-imgareaselect/jquery.imgareaselect.dev.js",
