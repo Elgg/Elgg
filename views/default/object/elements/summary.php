@@ -49,7 +49,9 @@ if ($metadata) {
 if ($title_link) {
 	echo "<h3>$title_link</h3>";
 }
-echo "<div class=\"elgg-subtext\">$subtitle</div>";
+if ($subtitle) {
+	echo "<div class=\"elgg-subtext\">$subtitle</div>";
+}
 echo $tags;
 
 echo elgg_view('object/summary/extend', $vars);
