@@ -49,6 +49,7 @@ a.elgg-button {
 	background: #0054a7 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
 }
 
+.elgg-button-submit:disabled,
 .elgg-button-submit.elgg-state-disabled {
 	background: #999;
 	border-color: #999;
