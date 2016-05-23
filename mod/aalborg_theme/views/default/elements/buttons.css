@@ -78,6 +78,7 @@
 .elgg-button-special:focus {
 	background: #5ED9CD;
 }
+.elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
 	background: #DEDEDE;
 	cursor: default;

@@ -136,6 +136,7 @@ a.elgg-button {
 	border-radius:4px 4px 0 0;
 }
 
+.elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
 	background: #999;
 	border-color: #999;
