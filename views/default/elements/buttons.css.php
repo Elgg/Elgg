@@ -49,12 +49,6 @@ a.elgg-button {
 	background: #0054a7 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
 }
 
-.elgg-button-submit.elgg-state-disabled {
-	background: #999;
-	border-color: #999;
-	cursor: default;
-}
-
 /* Cancel: This button should convey a negative but easily reversible action (e.g., turning off a plugin) */
 .elgg-button-cancel {
 	color: #333;
@@ -140,4 +134,13 @@ a.elgg-button {
 	color: #333;
 	border:1px solid #ccc;
 	border-radius:4px 4px 0 0;
+}
+
+.elgg-button.elgg-state-disabled {
+	background: #999;
+	border-color: #999;
+	color: #666;
+	text-shadow: 0 0;
+	text-decoration: none;
+	cursor: default;
 }
