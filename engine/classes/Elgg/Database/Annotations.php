@@ -365,11 +365,11 @@ class Annotations {
 			}
 		}
 		
-		$time_wheres = _elgg_get_entity_time_where_sql('a', $options['annotation_created_time_upper'],
+		$time_wheres = _elgg_get_entity_time_where_sql('n_table', $options['annotation_created_time_upper'],
 			$options['annotation_created_time_lower']);
-	
+
 		if ($time_wheres) {
-			$options['wheres'] = array_merge($options['wheres'], $time_wheres);
+			$options['wheres'][] = $time_wheres;
 		}
 	
 		return elgg_get_entities_from_metadata($options);
