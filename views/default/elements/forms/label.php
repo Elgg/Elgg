@@ -18,10 +18,12 @@ if (!$label) {
 if ($required) {
 	$indicator = elgg_extract('required_indicator', $vars);
 	if (!isset($indicator)) {
-		$indicator = elgg_format_element('span', [
+		$indicator = elgg_format_element([
+			'#tag_name' => 'span',
 			'title' => elgg_echo('field:required'),
 			'class' => 'elgg-required-indicator',
-				], "&ast;");
+			'#text' => "&ast;",
+		]);
 	}
 	if ($indicator) {
 		$label .= $indicator;

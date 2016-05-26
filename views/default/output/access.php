@@ -44,11 +44,12 @@ if (!isset($access_id)) {
 
 $access_id_string = get_readable_access_level($access_id);
 
-$attributes = array(
+echo elgg_format_element([
+	'#tag_name' => 'span',
 	'title' => elgg_echo('access:help'),
 	'class' => $access_class,
-);
-
-echo elgg_format_element('span', $attributes, $access_id_string, array(
-	'encode_text' => true,
-));
+	'#text' => $access_id_string,
+	'#options' => [
+		'encode_text' => true,
+	],
+]);
