@@ -29,10 +29,10 @@
         "bower-asset/jquery-colorbox": "^1.5.14",
         "FortAwesome/Font-Awesome": "^4.3",
         "michelf/php-markdown": "^1.5.0",
-        "league/flysystem-memory": "^1.0"
+        "league/flysystem-memory": "^1.0",
+        "fxp/composer-asset-plugin": "^1.1.4"
     },
     "scripts": {
-        "pre-install-cmd": "php .scripts/check_global_requirements.php",
         "lint": [
             "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
             "composer validate"
@@ -40,7 +40,6 @@
         "test": "phpunit",
         "travis:install": [
             "composer self-update",
-            "composer global require \"fxp/composer-asset-plugin:~1.1.1\"",
             "composer install --prefer-source"
         ],
         "travis:install-with-mysql": [

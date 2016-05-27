@@ -793,10 +793,5 @@ For example, to include jQuery, you could run the following Composer commands:
 
 .. code-block:: shell
 
-    composer global require fxp/composer-asset-plugin:~1.1.1
     composer require bower-asset/jquery:~2.0
 
-.. note::
-
-    ``fxp/composer-asset-plugin`` must be installed globally!
-    See https://github.com/francoispluchino/composer-asset-plugin for more info.
