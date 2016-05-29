@@ -23,11 +23,16 @@ return array(
 	'developers:help:screen_log' => "Se muestra la salida de elgg_log() y elgg_dump() y el contador de consultas a la Base de Datos",
 	'developers:label:show_strings' => "Mostrar strings de traducciones extrañas",
 	'developers:help:show_strings' => "Esto muestra las traducciones utilizadas por elgg_echo().",
+	'developers:label:show_modules' => "Mostrar los módulos AMD cargados en la consola",
+	'developers:help:show_modules' => "Streams loaded modules and values to your JavaScript console.",
 	'developers:label:wrap_views' => "Wrap de vistas",
 	'developers:help:wrap_views' => "Esto envuelve casi todas las vistas con comentarios HTML. Muy útil para encontrar la vista creando HTML particular
          Esto puede dañar vistas no HTML en viewtype por defecto. Ver developers_wrap_views() para más detalles",
 	'developers:label:log_events' => "Eventos de Logs y Hooks de plugins",
 	'developers:help:log_events' => "Escribir eventos y hooks de plugins en el log. Precaución: hay varios de estos por página.",
+	'developers:label:show_gear' => "Use %s fuera de la zona de administración",
+	'developers:help:show_gear' => "Un icono en la parte inferior derecha de la ventana que permite el acceso de los administradores a la configuración y enlaces de desarrollo.",
+	'developers:label:submit' => "Salvar y liberar cachés",
 
 	'developers:debug:off' => 'Apagado',
 	'developers:debug:error' => 'Error',
@@ -78,5 +83,7 @@ return array(
 	'developers:unit_tests:run' => 'Ejecuta',
 
 	// status messages
-	'developers:settings:success' => 'Configuraciones almacenadas',
+	'developers:settings:success' => 'Configuración salvada y cachés liberadas',
+
+	'developers:amd' => 'AMD',
 );

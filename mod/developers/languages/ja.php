@@ -23,10 +23,15 @@ return array(
 	'developers:help:screen_log' => "elgg_log()とelgg_dump()の出力と、DBクエリの数を表示します。",
 	'developers:label:show_strings' => "翻訳を表示する代わりに翻訳キーを表示します",
 	'developers:help:show_strings' => "elgg_echo()で使われる翻訳キー(\$message_key)を表示します。",
+	'developers:label:show_modules' => "コンソールにロードされた AMD モジュールを表示する",
+	'developers:help:show_modules' => "ロードされたモジュールや値をあなたの JavaScript コンソールに配信します。",
 	'developers:label:wrap_views' => "Wrap views",
 	'developers:help:wrap_views' => "ほとんど全てのviewにHTMLコメントをつけます（HTMLコメントブロックでviewを挟みます）。ある特定のHTMLを作成するview（訳注：の名前）を見つけ出すのに便利です。（訳注：ウェブブラウザFirefoxのプラグインFirebugなどを使用します。）ただし、この機能はデフォルトveiwtypeの non-HTML views を崩してしまうことがあります。詳細は、 developers_wrap_views() を参照してください。",
 	'developers:label:log_events' => "イベントとプラグインhooksを記録する",
 	'developers:help:log_events' => "イベントとプラグインhooksをログに記録します。【警告】１ページでも、たくさん吐き出しますので注意してください。",
+	'developers:label:show_gear' => "adminエリアの外側で %s を使用する",
+	'developers:help:show_gear' => "ビューポートの右下のアイコン。それを通してadminsが開発用設定とリンクにアクセスできるようになります。",
+	'developers:label:submit' => "キャッシュの保存と消去",
 
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Error',
@@ -77,5 +82,7 @@ return array(
 	'developers:unit_tests:run' => '実行',
 
 	// status messages
-	'developers:settings:success' => '設定を保存しました',
+	'developers:settings:success' => '設定は保存され、キャッシュは空にされました',
+
+	'developers:amd' => 'AMD',
 );

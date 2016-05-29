@@ -6,20 +6,20 @@ return array(
 	 */
 	'file' => "Fichiers",
 	'file:user' => "Fichiers de %s",
-	'file:friends' => "Fichiers des amis de %s",
+	'file:friends' => "Fichiers des contacts",
 	'file:all' => "Tous les fichiers du site",
-	'file:edit' => "Editer le fichier",
+	'file:edit' => "Modifier le fichier",
 	'file:more' => "Plus de fichiers",
-	'file:list' => "Vue liste",
+	'file:list' => "vue liste",
 	'file:group' => "Fichiers du groupe",
-	'file:gallery' => "Vue galerie",
-	'file:gallery_list' => "Vue 'liste' ou 'galerie'",
+	'file:gallery' => "vue galerie",
+	'file:gallery_list' => "Vue \"liste\" ou \"galerie\"",
 	'file:num_files' => "Nombre de fichiers à afficher",
-	'file:user:gallery'=>'Voir la gallerie %s',
+	'file:user:gallery'=>'Voir la galerie %s',
 	'file:upload' => "Envoyer un fichier",
-	'file:replace' => 'Remplacer le contenu du fichier (laisser en blanc pour ne rien changer)',
+	'file:replace' => 'Remplacer le contenu du fichier (ne rien sélectionner pour ne pas changer)',
 	'file:list:title' => "de %s %s %s",
-	'file:title:friends' => "Amis",
+	'file:title:friends' => "des contacts",
 
 	'file:add' => 'Envoyer un fichier',
 
@@ -36,26 +36,26 @@ return array(
 	'file:type:document' => "Documents",
 	'file:type:audio' => "Audio",
 	'file:type:image' => "Images",
-	'file:type:general' => "Général",
+	'file:type:general' => "Autres types de fichiers",
 
-	'file:user:type:video' => "Les fichiers vidéos de %s",
-	'file:user:type:document' => "Les documents de %s",
-	'file:user:type:audio' => "Les fichiers audio de %s",
-	'file:user:type:image' => "Les images de %s",
-	'file:user:type:general' => "Les fichiers généraux de %s",
+	'file:user:type:video' => "Vidéos de %s",
+	'file:user:type:document' => "Documents de %s",
+	'file:user:type:audio' => "Enregistrements audio de %s",
+	'file:user:type:image' => "Images de %s",
+	'file:user:type:general' => "Autres types de fichiers de %s",
 
-	'file:friends:type:video' => "Les vidéos de vos contacts",
-	'file:friends:type:document' => "Les documents de vos contacts",
-	'file:friends:type:audio' => "Les enregistrements audio de vos contacts",
-	'file:friends:type:image' => "Les images de vos contacts",
-	'file:friends:type:general' => "Les fichiers généraux de vos contacts",
+	'file:friends:type:video' => "Vidéos des contacts",
+	'file:friends:type:document' => "Documents des contacts",
+	'file:friends:type:audio' => "Enregistrements audio des contacts",
+	'file:friends:type:image' => "Images des contacts",
+	'file:friends:type:general' => "Autres types de fichiers des contacts",
 
-	'file:widget' => "Widget fichiers",
-	'file:widget:description' => "Liste de vos derniers fichiers",
+	'file:widget' => "Widget Fichiers",
+	'file:widget:description' => "Affiche une liste de vos derniers fichiers",
 
 	'groups:enablefiles' => 'Activer les fichiers de groupes',
 
-	'file:delete:confirm' => "Etes-vous sûr(e) de vouloir supprimer ce fichier ?",
+	'file:delete:confirm' => "Confirmez-vous vouloir supprimer ce fichier ?",
 
 	'file:upload_limit' => 'La taille de fichier maximale autorisée est de %s',
 
@@ -63,19 +63,19 @@ return array(
 
 	'file:display:number' => "Nombre de fichiers à afficher",
 
-	'river:create:object:file' => '%s a téléchargé le fichier %s',
+	'river:create:object:file' => '%s a chargé le fichier %s',
 	'river:comment:object:file' => '%s a commenté le fichier %s',
 
 	'item:object:file' => 'Fichiers',
 
-	'file:notify:summary' => 'Nouveau fichier nommé %s',
-	'file:notify:subject' => 'Nouveau fichier: %s',
+	'file:notify:summary' => 'Nouveau fichier intitulé %s',
+	'file:notify:subject' => 'Nouveau fichier : %s',
 	'file:notify:body' =>
-'%s à publié un nouveau fichier: %s
+'%s à publié un nouveau fichier : %s
 
 %s
 
-Accéder à ce fichier et le commenter:
+Accéder à ce fichier et le commenter :
 %s
 ',
 
@@ -91,9 +91,10 @@ Accéder à ce fichier et le commenter:
 	 */
 
 	'file:none' => "Aucun fichier pour le moment.",
-	'file:uploadfailed' => "Désolé, votre fichier n'a pu être enregistré.",
+	'file:uploadfailed' => "Désolé, votre fichier n'a pas pu être enregistré.",
 	'file:downloadfailed' => "Désolé, ce fichier n'est pas disponible en ce moment.",
-	'file:deletefailed' => "Votre fichier n'a pas pu être effacé en ce moment.",
+	'file:deletefailed' => "Votre fichier n'a pas pu être supprimé.",
 	'file:noaccess' => "Vous n'avez pas la permission de modifier ce fichier",
-	'file:nofile' => "Vous devez choisir un fichier",
+	'file:cannotload' => "Une erreur s'est produite lors de l'envoi du fichier",
+	'file:nofile' => "Vous devez sélectionner un fichier",
 );

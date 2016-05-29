@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2015
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-31 19:09-0500\n"
-"PO-Revision-Date: 2015-08-24 06:41+0000\n"
+"POT-Creation-Date: 2016-03-06 18:02+0200\n"
+"PO-Revision-Date: 2016-03-10 16:29+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/elgg/elgg-core/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -20,22 +21,22 @@ msgstr ""
 
 #: ../../index.rst:2
 msgid "Elgg |version| Documentation"
-msgstr "Elgg |version| Documentation"
+msgstr "Documentation de Elgg |version|"
 
 #: ../../index.rst:4
 msgid ""
 "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a "
 "rapid development framework with built-in social features. It is a great fit"
 " for building any app where users log in and share information."
-msgstr "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) est un environnement de développement intégrant des fonctionnalités sociales. Ce framework est idéal pour construire des applications dans lesquelles les utilisateurs s'identifient et partagent des informations."
+msgstr "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) est un environnement de développement rapide intégrant nativement des fonctionnalités sociales. Ce framework est idéal pour construire des applications dans lesquelles les utilisateurs s'identifient et partagent des informations."
 
 #: ../../index.rst:7
 msgid "It has been used to build `all kinds of social apps`__:"
-msgstr "Elgg a été utilisé pour construire `tous types d'applications sociales`__:"
+msgstr "Elgg a été utilisé pour construire \"tous types d'applications sociales\" :"
 
 #: ../../index.rst:11
 msgid "open networks (similar to Facebook)"
-msgstr "réseau sociaux ouverts (similaires à Facebook)"
+msgstr "réseaux ouverts (similaires à Facebook)"
 
 #: ../../index.rst:12
 msgid "topical (like the Elgg Community)"
@@ -59,8 +60,8 @@ msgstr "blog d'entreprise"
 
 #: ../../index.rst:18
 msgid "There is also a `demo site`_ running a standard installation of Elgg."
-msgstr "Is existe également un `site de démonstration` qui permet de tester une installation Elgg standard"
+msgstr "Il existe également un `site de démonstration`_ qui permet de tester une installation de Elgg standard"
 
 #: ../../index.rst:20
 msgid "This is the canonical documentation for the Elgg_ project."
-msgstr "Ceci constitue la documentation officielle du projet Elgg_."
+msgstr "Ceci est la documentation officielle du projet Elgg_."

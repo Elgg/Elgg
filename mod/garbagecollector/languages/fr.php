@@ -6,12 +6,12 @@ return array(
 	'garbagecollector:monthly' => 'Une fois par mois',
 	'garbagecollector:yearly' => 'Une fois par an',
 
-	'garbagecollector' => "Ramasse-miettes",
-	'garbagecollector:done' => "Terminé",
-	'garbagecollector:optimize' => "Optimisation en cours %s ",
+	'garbagecollector' => "Ramasse-miettes\n",
+	'garbagecollector:done' => "Terminé\n",
+	'garbagecollector:optimize' => "Optimisation en cours de %s ",
 
-	'garbagecollector:error' => "Erreur",
-	'garbagecollector:ok' => "Ok",
+	'garbagecollector:error' => "ERREUR",
+	'garbagecollector:ok' => "OK",
 
-	'garbagecollector:gc:metastrings' => 'Nettoyage des chaînes meta (metastrings) non liées: ',
+	'garbagecollector:gc:metastrings' => 'Nettoyage des chaînes meta (metastrings) non liées : ',
 );
