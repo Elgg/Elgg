@@ -792,6 +792,54 @@ change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
+<a name="1.12.10"></a>
+### 1.12.10  (2016-05-29)
+
+#### Contributors
+
+* Steve Clay (13)
+* Jeroen Dalsem (6)
+* Ismayil Khayredinov (4)
+* Jerôme Bakker (1)
+* bruno-infotrad (1)
+* iionly (1)
+* jdalsem (1)
+
+#### Documentation
+
+* **cron:** added an example how to register a cron hook handler ([4b54a099](https://github.com/Elgg/Elgg/commit/4b54a099e7ddc5cacdf214d5ea383eddc03b255f))
+* **i18n:**
+  * clarifies limitations of elgg.echo ([83b2c106](https://github.com/Elgg/Elgg/commit/83b2c106d5ac671ee28e28625659392de4d34b0b))
+  * recommends an English translation for all new language keys ([facc222b](https://github.com/Elgg/Elgg/commit/facc222b417b710449963d078d294d231c6c2217), closes [#9375](https://github.com/Elgg/Elgg/issues/9375))
+
+
+#### Bug Fixes
+
+* **annotations:** fixes time-based annotations searches ([6d5e1b78](https://github.com/Elgg/Elgg/commit/6d5e1b781866dc4b79300f57424873049314a6ff), closes [#9785](https://github.com/Elgg/Elgg/issues/9785))
+* **autoload:** fixes bugs in class map saving ([18ea55fa](https://github.com/Elgg/Elgg/commit/18ea55fa990fab9724cbbd12365d754df19cbde2))
+* **comments:** email subject hook now validates array structure ([5df7f40b](https://github.com/Elgg/Elgg/commit/5df7f40b8cba8f5a61afcfbb4b3d2086d49b54ee), closes [#9772](https://github.com/Elgg/Elgg/issues/9772))
+* **core:** remove duplicate tags upon input ([096cf4b8](https://github.com/Elgg/Elgg/commit/096cf4b8b0cb7be801490d9c2cb983b5580c771b))
+* **css:** only apply vertical padding on ajax loader of user hover menu ([d9c8326e](https://github.com/Elgg/Elgg/commit/d9c8326eebe01a7197a3505f311b419a900ee097))
+* **file:**
+  * re-added cannotload language string for file plugin ([6ba7e7b8](https://github.com/Elgg/Elgg/commit/6ba7e7b8c4cebc3b13862094124b1246686bd917))
+  * better uploaded file handling and thumbnail serving ([72140cfc](https://github.com/Elgg/Elgg/commit/72140cfc3cdd6f6677eda84399cf6ca117ea44e2), closes [#9612](https://github.com/Elgg/Elgg/issues/9612), [#9267](https://github.com/Elgg/Elgg/issues/9267), [#6677](https://github.com/Elgg/Elgg/issues/6677))
+* **forms:**
+  * empty plugin settings forms no longer wrapped in a form tag ([5f7dbcd0](https://github.com/Elgg/Elgg/commit/5f7dbcd0d8006f41c230e34fc96ed13e0cd5ad71), closes [#9704](https://github.com/Elgg/Elgg/issues/9704))
+  * empty form body no longer wrapped in a form tag ([dc68d04e](https://github.com/Elgg/Elgg/commit/dc68d04ec92a482b561dfd00c0158838bf83dd43))
+* **html:** autop no longer ltrims next to a leading inline element ([6785ee88](https://github.com/Elgg/Elgg/commit/6785ee88278859c87a5569428656d6870f69fa3d), closes [#9790](https://github.com/Elgg/Elgg/issues/9790))
+* **http:** all unhanded exceptions send 500 status code ([2f45c2ca](https://github.com/Elgg/Elgg/commit/2f45c2ca96120352f0c0e3b8556e103924a3cc82), closes [#9758](https://github.com/Elgg/Elgg/issues/9758))
+* **js:**
+  * elgg.echo recognizes empty translation strings (does not return key) ([1d32b2c2](https://github.com/Elgg/Elgg/commit/1d32b2c2b35cf965af1d703d74fb5adeb2599336))
+  * action token refresh now correctly replaces tokens in urls ([7b4e0db2](https://github.com/Elgg/Elgg/commit/7b4e0db2f8a1357e854a5a94c990e6b32683e12f))
+  * do not trigger generic ajax error message for token refresh ([e052481f](https://github.com/Elgg/Elgg/commit/e052481fa31102e78c6a7be9fd5730d730579984))
+  * prevent generic ajax error when user aborts the ajax call ([1b5a765f](https://github.com/Elgg/Elgg/commit/1b5a765fae08ada5dd4128ad69ccfb82d0afc2c3))
+* **notifications:** smtp thread headers only set if still possible ([f3bb4ac4](https://github.com/Elgg/Elgg/commit/f3bb4ac43b6c14b6367fa17960cd95d2bb6dcb98))
+* **site:** adds robots.txt to public pages ([824197b1](https://github.com/Elgg/Elgg/commit/824197b183e98f6910b6bf43a14e5407af8cc09d))
+* **users:** mitigate race conditions when deleting/disabling users ([da45affe](https://github.com/Elgg/Elgg/commit/da45affef3fa16106305ab424a51fc69518ca66b))
+* **views:**
+  * no breadcrumbs in error layout ([b25324a3](https://github.com/Elgg/Elgg/commit/b25324a3214147217cbdbc233a0163d3e55828ed))
+  * do not output empty string titles in page/elements/title ([41eecbe3](https://github.com/Elgg/Elgg/commit/41eecbe37d2c54d290b8f96cf8187db2a151d3b5))
+
 <a name="1.12.9"></a>
 ### 1.12.9  (2016-03-06)
 
