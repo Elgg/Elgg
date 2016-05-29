@@ -1136,7 +1136,6 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 
 	'admin:pending_upgrades' => 'Ta strona ma oczekujące aktualizacje, które wymagają Twojej interwencji.',
 	'admin:view_upgrades' => 'Przeglądaj oczekujące aktualizacje.',
- 	'admin:upgrades' => 'Aktualizacje',
 	'item:object:elgg_upgrade' => 'Aktualizacje strony',
 	'admin:upgrades:none' => 'Twoja instalacja Elgg jest aktualna!',
 
