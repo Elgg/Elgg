@@ -1022,13 +1022,13 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'date:month:11' => '%s november',
 	'date:month:12' => '%s december',
 
-	'date:weekday:0' => 'Zondag',
-	'date:weekday:1' => 'Maandag',
-	'date:weekday:2' => 'Dinsdag',
-	'date:weekday:3' => 'Woensdag',
-	'date:weekday:4' => 'Donderdag',
-	'date:weekday:5' => 'Vrijdag',
-	'date:weekday:6' => 'Zaterdag',
+	'date:weekday:0' => 'zondag',
+	'date:weekday:1' => 'maandag',
+	'date:weekday:2' => 'dinsdag',
+	'date:weekday:3' => 'woensdag',
+	'date:weekday:4' => 'donderdag',
+	'date:weekday:5' => 'vrijdag',
+	'date:weekday:6' => 'zaterdag',
 	
 	'interval:minute' => 'Elke minuut',
 	'interval:fiveminute' => 'Elke vijf minuten',
@@ -1119,7 +1119,6 @@ Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.
 
 	'admin:pending_upgrades' => 'Er zijn belangrijke upgrades waar je beter nu meteen aandacht aan kunt schenken!',
 	'admin:view_upgrades' => 'Bekijk de upgrades.',
- 	'admin:upgrades' => 'Upgrades',
 	'item:object:elgg_upgrade' => 'Site-upgrades',
 	'admin:upgrades:none' => 'De installatie is up-to-date!',
 

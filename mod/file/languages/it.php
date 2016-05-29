@@ -94,5 +94,6 @@ Visualizza e commenta il nuovo file:
 	'file:downloadfailed' => "File non disponibile al momento.",
 	'file:deletefailed' => "Impossibile eliminare il file ora.",
 	'file:noaccess' => "Permessi insufficienti per modificare questo file",
+	'file:cannotload' => "Si è verificato un errore durante il caricamento del file",
 	'file:nofile' => "Occorre selezionare un file",
 );

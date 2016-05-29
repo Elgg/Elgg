@@ -95,5 +95,6 @@ Vexa e deixe un comentario no ficheiro:
 	'file:downloadfailed' => "O ficheiro non está dispoñíbel nestes momentos",
 	'file:deletefailed' => "Non foi posíbel eliminar o ficheiro.",
 	'file:noaccess' => "Non ten permisos para cambiar o ficheiro.",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Debe seleccionar un ficheiro.",
 );

@@ -6,7 +6,7 @@ return array(
 
 	'messages' => "Beskeder",
 	'messages:unreadcount' => "%s unread",
-	'messages:back' => "Tilbage til beskeder",
+	'messages:back' => "back to messages",
 	'messages:user' => "%s's indbakke",
 	'messages:posttitle' => "%s's beskeder: %s",
 	'messages:inbox' => "Indbakke",

@@ -41,7 +41,7 @@ return array(
 	'actionunauthorized' => 'あなたの権限では、このアクションを実行することはできません。',
 	
 	'ajax:error' => 'AJAXコールを実行中に予期せぬエラーが起こりました。おそらく、サーバへの接続が切断されたからかもしれません。',
-	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
+	'ajax:not_is_xhr' => 'AJAX views には直接アクセスはできません。',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) は、設定に間違いのあるプラグインですので、起動不可となっています。 原因に当たっては、Elgg wiki (http://learn.elgg.org/) を参考にしてください。 ",
 	'PluginException:CannotStart' => '%s (guid: %s) は起動できず停止状態のままです。理由: %s',
@@ -113,10 +113,10 @@ return array(
 
 	'error:default:title' => 'アレッ？',
 	'error:default:content' => 'アレッ？何かがおかしいです。',
-	'error:400:title' => 'Bad request',
-	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
-	'error:403:title' => 'Forbidden',
-	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
+	'error:400:title' => 'リクエストが変です',
+	'error:400:content' => '申し訳ありません。そのリクエストは正しくないか不完全です。',
+	'error:403:title' => '禁止',
+	'error:403:content' => '申し訳ありません。要求されたページへのアクセスが許可されていません。',
 	'error:404:title' => 'ページが見つかりませんでした',
 	'error:404:content' => '申し訳あrません。ご要望のページを見つけることができませんでした',
 
@@ -714,7 +714,7 @@ return array(
 	'admin:robots.txt:instructions' => "このサイトの robots.txt ファイルを編集します。",
 	'admin:robots.txt:plugins' => "プラグインは編集結果を robots.txt ファイルに追加しています。",
 	'admin:robots.txt:subdir' => "Elggがサブディレクトリにインストールされているため、The robots.txt tool は機能しないでしょう。",
-	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
+	'admin:robots.txt:physical' => "robots.txt ファイルが存在しますので、 robots.txt tool は機能しないでしょう。",
 
 	'admin:maintenance_mode:default_message' => '申し訳ありません。このサイトは現在メンテナンス中で接続出来ません。',
 	'admin:maintenance_mode:instructions' => 'サイトのアップグレードやサイトに大きな変更をするときに、メンテナンス・モードをご利用ください。
@@ -1116,7 +1116,6 @@ return array(
 
 	'admin:pending_upgrades' => 'サイトはアップグレードの途中で中断されています。これ以降は直接あなたの操作が必要です。',
 	'admin:view_upgrades' => '中断されているアップグレードを見る。',
- 	'admin:upgrades' => 'アップグレード',
 	'item:object:elgg_upgrade' => 'サイトのアップグレード',
 	'admin:upgrades:none' => 'このインストールは最新の状態です！',
 

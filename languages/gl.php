@@ -1116,7 +1116,6 @@ Atopará instrucións detalladas na <a href="http://learn.elgg.org/en/stable/adm
 
 	'admin:pending_upgrades' => 'O sitio ten anovacións pendentes que requiren da súa atención inmediata.',
 	'admin:view_upgrades' => 'Ver as anovacións pendentes.',
- 	'admin:upgrades' => 'Anovacións',
 	'item:object:elgg_upgrade' => 'Anovacións do sitio.',
 	'admin:upgrades:none' => 'A instalación está actualizada.',
 

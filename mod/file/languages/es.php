@@ -95,5 +95,6 @@ Ver y comentar en el archivo:
 	'file:downloadfailed' => "El archivo no est&aacute; disponible momentáneamente.",
 	'file:deletefailed' => "El archivo no pudo ser borrado ahora.",
 	'file:noaccess' => "No tienes permisos para modficar este archivo",
+	'file:cannotload' => "Ha habido un error subiendo el archivo",
 	'file:nofile' => "Debes seleccionar un archivo",
 );

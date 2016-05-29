@@ -5,7 +5,7 @@ return array(
 	'blog:revisions' => 'Révisions',
 	'blog:archives' => 'Archives',
 	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Blogs',
+	'item:object:blog' => 'Article de blog',
 
 	'blog:title:user_blogs' => 'Articles de blog de %s',
 	'blog:title:all_blogs' => 'Tous les articles de blog du site',
@@ -43,7 +43,7 @@ return array(
 
 	// river
 	'river:create:object:blog' => '%s a publié un article de blog %s',
-	'river:comment:object:blog' => '%s a fait un commentaire sur le blog %s',
+	'river:comment:object:blog' => '%s a commenté l\'article de blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nouvel article de blog intitulé %s',
@@ -59,7 +59,7 @@ Voir et commenter cet article de blog :
 ',
 
 	// widget
-	'blog:widget:description' => 'Afficher vos derniers articles de blog',
+	'blog:widget:description' => 'Ce widget affiche vos derniers articles de blog',
 	'blog:moreblogs' => 'Plus d\'articles de blog',
 	'blog:numbertodisplay' => 'Nombre d\'articles de blog à afficher',
 	'blog:noblogs' => 'Aucun article de blog'

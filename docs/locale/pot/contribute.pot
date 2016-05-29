@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-06 18:02+0200\n"
+"POT-Creation-Date: 2016-05-29 16:38-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -372,400 +372,428 @@ msgstr ""
 msgid "You can also run tests continuously during development so they run on each save:"
 msgstr ""
 
-#: ../../contribute/code.rst:242
-msgid "Coding best practices"
+#: ../../contribute/code.rst:240
+msgid "Debugging JS tests"
 msgstr ""
 
-#: ../../contribute/code.rst:244
-msgid "Make your code easier to read, easier to maintain, and easier to debug. Consistent use of these guidelines means less guess work for developers, which means happier, more productive developers."
+#: ../../contribute/code.rst:242
+msgid "You can run the test suite inside Chrome dev tools:"
+msgstr ""
+
+#: ../../contribute/code.rst:248
+msgid "This will output a URL like ``http://localhost:9876/``."
 msgstr ""
 
 #: ../../contribute/code.rst:250
-msgid "General coding"
+msgid "Open the URL in Chrome, and click \"Debug\"."
 msgstr ""
 
-#: ../../contribute/code.rst:253
-msgid "Don't Repeat Yourself"
+#: ../../contribute/code.rst:251
+msgid "Open Chrome dev tools and the Console tab."
 msgstr ""
 
-#: ../../contribute/code.rst:255
-msgid "If you are copy-pasting code a significant amount of code, consider whether there's an opportunity to reduce duplication by introducing a function, an additional argument, a view, or a new component class."
+#: ../../contribute/code.rst:252
+msgid "Reload the page."
 msgstr ""
 
-#: ../../contribute/code.rst:258
-msgid "E.g. If you find views that are identical except for a single value, refactor into a single view that takes an option."
+#: ../../contribute/code.rst:254
+msgid "If you alter a test you'll have to quit Karma with ``Ctrl-c`` and restart it."
 msgstr ""
 
-#: ../../contribute/code.rst:261
-msgid "**Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest way possible and refactor to reduce duplication in the next minor release branch."
+#: ../../contribute/code.rst:257
+msgid "Coding best practices"
+msgstr ""
+
+#: ../../contribute/code.rst:259
+msgid "Make your code easier to read, easier to maintain, and easier to debug. Consistent use of these guidelines means less guess work for developers, which means happier, more productive developers."
 msgstr ""
 
 #: ../../contribute/code.rst:265
-msgid "Embrace SOLID and GRASP"
+msgid "General coding"
 msgstr ""
 
-#: ../../contribute/code.rst:267
-msgid "Use these `principles for OO design`__ to solve problems using loosely coupled components, and try to make all components and integration code testable."
+#: ../../contribute/code.rst:268
+msgid "Don't Repeat Yourself"
+msgstr ""
+
+#: ../../contribute/code.rst:270
+msgid "If you are copy-pasting code a significant amount of code, consider whether there's an opportunity to reduce duplication by introducing a function, an additional argument, a view, or a new component class."
 msgstr ""
 
 #: ../../contribute/code.rst:273
-msgid "Whitespace is free"
+msgid "E.g. If you find views that are identical except for a single value, refactor into a single view that takes an option."
 msgstr ""
 
-#: ../../contribute/code.rst:275
-msgid "Don't be afraid to use it to separate blocks of code. Use a single space to separate function params and string concatenation."
+#: ../../contribute/code.rst:276
+msgid "**Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest way possible and refactor to reduce duplication in the next minor release branch."
 msgstr ""
 
-#: ../../contribute/code.rst:279
-msgid "Variable names"
+#: ../../contribute/code.rst:280
+msgid "Embrace SOLID and GRASP"
 msgstr ""
 
-#: ../../contribute/code.rst:281
-msgid "Use self-documenting variable names.  ``$group_guids`` is better than ``$array``."
-msgstr ""
-
-#: ../../contribute/code.rst:283
-msgid "Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``."
-msgstr ""
-
-#: ../../contribute/code.rst:286
-msgid "Interface names"
+#: ../../contribute/code.rst:282
+msgid "Use these `principles for OO design`__ to solve problems using loosely coupled components, and try to make all components and integration code testable."
 msgstr ""
 
 #: ../../contribute/code.rst:288
-msgid "Use the pattern `Elgg\\{Namespace}\\{Name}`."
+msgid "Whitespace is free"
 msgstr ""
 
 #: ../../contribute/code.rst:290
-msgid "Do not include an `I` prefix or an `Interface` suffix."
-msgstr ""
-
-#: ../../contribute/code.rst:292
-msgid "We do not include any prefix or suffix so that we're encouraged to:"
+msgid "Don't be afraid to use it to separate blocks of code. Use a single space to separate function params and string concatenation."
 msgstr ""
 
 #: ../../contribute/code.rst:294
-msgid "name implementation classes more descriptively (the \"default\" name is taken)."
+msgid "Variable names"
 msgstr ""
 
-#: ../../contribute/code.rst:295
-msgid "type-hint on interfaces, because that is the shortest, easiest thing to do."
+#: ../../contribute/code.rst:296
+msgid "Use self-documenting variable names.  ``$group_guids`` is better than ``$array``."
 msgstr ""
 
 #: ../../contribute/code.rst:298
-msgid "Functions"
+msgid "Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``."
 msgstr ""
 
-#: ../../contribute/code.rst:300
-msgid "Where possible, have functions/methods return a single type. Use empty values such as array(), \"\", or 0 to indicate no results."
+#: ../../contribute/code.rst:301
+msgid "Interface names"
 msgstr ""
 
 #: ../../contribute/code.rst:303
-msgid "Be careful where valid return values (like ``\"0\"``) could be interpreted as empty."
+msgid "Use the pattern `Elgg\\{Namespace}\\{Name}`."
 msgstr ""
 
 #: ../../contribute/code.rst:305
-msgid "Functions not throwing an exception on error should return ``false`` upon failure."
+msgid "Do not include an `I` prefix or an `Interface` suffix."
 msgstr ""
 
 #: ../../contribute/code.rst:307
-msgid "Functions returning only boolean should be prefaced with ``is_`` or ``has_`` (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
+msgid "We do not include any prefix or suffix so that we're encouraged to:"
 msgstr ""
 
-#: ../../contribute/code.rst:311
-msgid "Ternary syntax"
+#: ../../contribute/code.rst:309
+msgid "name implementation classes more descriptively (the \"default\" name is taken)."
+msgstr ""
+
+#: ../../contribute/code.rst:310
+msgid "type-hint on interfaces, because that is the shortest, easiest thing to do."
 msgstr ""
 
 #: ../../contribute/code.rst:313
-msgid "Acceptable only for single-line, non-embedded statements."
+msgid "Functions"
 msgstr ""
 
-#: ../../contribute/code.rst:316
-msgid "Minimize complexity"
+#: ../../contribute/code.rst:315
+msgid "Where possible, have functions/methods return a single type. Use empty values such as array(), \"\", or 0 to indicate no results."
 msgstr ""
 
 #: ../../contribute/code.rst:318
-msgid "Minimize nested blocks and distinct execution paths through code. Use `Return Early`__ to reduce nesting levels and cognitive load when reading code."
+msgid "Be careful where valid return values (like ``\"0\"``) could be interpreted as empty."
 msgstr ""
 
-#: ../../contribute/code.rst:324
-msgid "Use comments effectively"
+#: ../../contribute/code.rst:320
+msgid "Functions not throwing an exception on error should return ``false`` upon failure."
+msgstr ""
+
+#: ../../contribute/code.rst:322
+msgid "Functions returning only boolean should be prefaced with ``is_`` or ``has_`` (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
 msgstr ""
 
 #: ../../contribute/code.rst:326
-msgid "Good comments describe the \"why.\"  Good code describes the \"how.\" E.g.:"
+msgid "Ternary syntax"
 msgstr ""
 
 #: ../../contribute/code.rst:328
-#: ../../contribute/code.rst:483
-#: ../../contribute/code.rst:503
-#: ../../contribute/code.rst:518
-#: ../../contribute/code.rst:536
-#: ../../contribute/code.rst:558
-#: ../../contribute/code.rst:582
-msgid "Bad:"
+msgid "Acceptable only for single-line, non-embedded statements."
+msgstr ""
+
+#: ../../contribute/code.rst:331
+msgid "Minimize complexity"
+msgstr ""
+
+#: ../../contribute/code.rst:333
+msgid "Minimize nested blocks and distinct execution paths through code. Use `Return Early`__ to reduce nesting levels and cognitive load when reading code."
 msgstr ""
 
 #: ../../contribute/code.rst:339
-#: ../../contribute/code.rst:468
-#: ../../contribute/code.rst:493
-#: ../../contribute/code.rst:509
+msgid "Use comments effectively"
+msgstr ""
+
+#: ../../contribute/code.rst:341
+msgid "Good comments describe the \"why.\"  Good code describes the \"how.\" E.g.:"
+msgstr ""
+
+#: ../../contribute/code.rst:343
+#: ../../contribute/code.rst:498
+#: ../../contribute/code.rst:518
+#: ../../contribute/code.rst:533
+#: ../../contribute/code.rst:551
+#: ../../contribute/code.rst:573
+#: ../../contribute/code.rst:597
+msgid "Bad:"
+msgstr ""
+
+#: ../../contribute/code.rst:354
+#: ../../contribute/code.rst:483
+#: ../../contribute/code.rst:508
 #: ../../contribute/code.rst:524
-#: ../../contribute/code.rst:544
-#: ../../contribute/code.rst:567
-#: ../../contribute/code.rst:590
+#: ../../contribute/code.rst:539
+#: ../../contribute/code.rst:559
+#: ../../contribute/code.rst:582
+#: ../../contribute/code.rst:605
 msgid "Good:"
 msgstr ""
 
-#: ../../contribute/code.rst:350
+#: ../../contribute/code.rst:365
 msgid "Always include a comment if it's not obvious that something must be done in a certain way. Other developers looking at the code should be discouraged from refactoring in a way that would break the code."
 msgstr ""
 
-#: ../../contribute/code.rst:362
+#: ../../contribute/code.rst:377
 msgid "Commit effectively"
 msgstr ""
 
-#: ../../contribute/code.rst:364
+#: ../../contribute/code.rst:379
 msgid "Err on the side of `atomic commits`__ which are highly focused on changing one aspect of the system."
 msgstr ""
 
-#: ../../contribute/code.rst:365
+#: ../../contribute/code.rst:380
 msgid "Avoid mixing in unrelated changes or extensive whitespace changes. Commits with many changes are scary and make pull requests difficult to review."
 msgstr ""
 
-#: ../../contribute/code.rst:367
+#: ../../contribute/code.rst:382
 msgid "Use visual git tools to craft `highly precise and readable diffs`__."
 msgstr ""
 
-#: ../../contribute/code.rst:373
+#: ../../contribute/code.rst:388
 msgid "Include tests"
 msgstr ""
 
-#: ../../contribute/code.rst:375
+#: ../../contribute/code.rst:390
 msgid "When at all possible include unit tests for code you add or alter. We use:"
 msgstr ""
 
-#: ../../contribute/code.rst:377
+#: ../../contribute/code.rst:392
 msgid "PHPUnit for PHP unit tests."
 msgstr ""
 
-#: ../../contribute/code.rst:379
+#: ../../contribute/code.rst:394
 msgid "SimpleTest for legacy PHP tests that require use of the database. Our long-term goal is to move all tests to PHPUnit."
 msgstr ""
 
-#: ../../contribute/code.rst:382
+#: ../../contribute/code.rst:397
 msgid "Karma for JavaScript unit tests"
 msgstr ""
 
-#: ../../contribute/code.rst:385
+#: ../../contribute/code.rst:400
 msgid "Naming tests"
 msgstr ""
 
-#: ../../contribute/code.rst:387
+#: ../../contribute/code.rst:402
 msgid "Break tests up by the behaviors you want to test and use names that describe the behavior. E.g.:"
 msgstr ""
 
-#: ../../contribute/code.rst:390
+#: ../../contribute/code.rst:405
 msgid "Not so good: One big method `testAdd()`."
 msgstr ""
 
-#: ../../contribute/code.rst:392
+#: ../../contribute/code.rst:407
 msgid "Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`"
 msgstr ""
 
-#: ../../contribute/code.rst:395
+#: ../../contribute/code.rst:410
 msgid "Keep bugfixes simple"
 msgstr ""
 
-#: ../../contribute/code.rst:397
+#: ../../contribute/code.rst:412
 msgid "Avoid the temptation to refactor code for a bugfix release. Doing so tends to introduce regressions, breaking functionality in what should be a stable release."
 msgstr ""
 
-#: ../../contribute/code.rst:401
+#: ../../contribute/code.rst:416
 msgid "PHP guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:403
+#: ../../contribute/code.rst:418
 msgid "These are the required coding standards for Elgg core and all bundled plugins. Plugin developers are strongly encouraged to adopt these standards."
 msgstr ""
 
-#: ../../contribute/code.rst:406
+#: ../../contribute/code.rst:421
 msgid "Developers should first read the `PSR-2 Coding Standard Guide`__."
 msgstr ""
 
-#: ../../contribute/code.rst:410
+#: ../../contribute/code.rst:425
 msgid "Elgg's standards extend PSR-2, but differ in the following ways:"
 msgstr ""
 
-#: ../../contribute/code.rst:412
+#: ../../contribute/code.rst:427
 msgid "Indent using one tab character, not spaces."
 msgstr ""
 
-#: ../../contribute/code.rst:413
+#: ../../contribute/code.rst:428
 msgid "Opening braces for classes, methods, and functions must go on the same line."
 msgstr ""
 
-#: ../../contribute/code.rst:414
+#: ../../contribute/code.rst:429
 msgid "If a line reaches over 100 characters, consider refactoring (e.g. introduce variables)."
 msgstr ""
 
-#: ../../contribute/code.rst:415
+#: ../../contribute/code.rst:430
 msgid "Compliance with `PSR-1`__ is encouraged, but not strictly required."
 msgstr ""
 
-#: ../../contribute/code.rst:420
+#: ../../contribute/code.rst:435
 msgid "Documentation"
 msgstr ""
 
-#: ../../contribute/code.rst:422
+#: ../../contribute/code.rst:437
 msgid "Include PHPDoc comments on functions and classes (all methods; declared properties when appropriate), including types and descriptions of all parameters."
 msgstr ""
 
-#: ../../contribute/code.rst:426
+#: ../../contribute/code.rst:441
 msgid "In lists of ``@param`` declarations, the beginnings of variable names and descriptions must line up."
 msgstr ""
 
-#: ../../contribute/code.rst:429
+#: ../../contribute/code.rst:444
 msgid "Annotate classes, methods, properties, and functions with ``@access private`` unless they are intended for public use, are already of limited visibility, or are within a class already marked as private."
 msgstr ""
 
-#: ../../contribute/code.rst:433
+#: ../../contribute/code.rst:448
 msgid "Use ``//`` or ``/* */`` when commenting."
 msgstr ""
 
-#: ../../contribute/code.rst:435
+#: ../../contribute/code.rst:450
 msgid "Use only ``//`` comments inside function/method bodies."
 msgstr ""
 
-#: ../../contribute/code.rst:438
+#: ../../contribute/code.rst:453
 msgid "Naming"
 msgstr ""
 
-#: ../../contribute/code.rst:440
+#: ../../contribute/code.rst:455
 msgid "Use underscores to separate words in the names of functions, variables, and properties. Method names are camelCase."
 msgstr ""
 
-#: ../../contribute/code.rst:443
+#: ../../contribute/code.rst:458
 msgid "Names of functions for public use must begin with ``elgg_``."
 msgstr ""
 
-#: ../../contribute/code.rst:445
+#: ../../contribute/code.rst:460
 msgid "All other function names must begin with ``_elgg_``."
 msgstr ""
 
-#: ../../contribute/code.rst:447
+#: ../../contribute/code.rst:462
 msgid "Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``)."
 msgstr ""
 
-#: ../../contribute/code.rst:450
+#: ../../contribute/code.rst:465
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../../contribute/code.rst:452
+#: ../../contribute/code.rst:467
 msgid "For PHP requirements, see ``composer.json``."
 msgstr ""
 
-#: ../../contribute/code.rst:454
+#: ../../contribute/code.rst:469
 msgid "Do not use PHP shortcut tags ``<?`` or ``<%``. It is OK to use ``<?=`` since it is always enabled as of PHP 5.4."
 msgstr ""
 
-#: ../../contribute/code.rst:457
+#: ../../contribute/code.rst:472
 msgid "When creating strings with variables:"
 msgstr ""
 
-#: ../../contribute/code.rst:459
+#: ../../contribute/code.rst:474
 msgid "use double-quoted strings"
 msgstr ""
 
-#: ../../contribute/code.rst:460
+#: ../../contribute/code.rst:475
 msgid "wrap variables with braces only when necessary."
 msgstr ""
 
-#: ../../contribute/code.rst:462
+#: ../../contribute/code.rst:477
 msgid "Bad (hard to read, misuse of quotes and {}s):"
 msgstr ""
 
-#: ../../contribute/code.rst:474
+#: ../../contribute/code.rst:489
 msgid "Remove trailing whitespace at the end of lines. An easy way to do this before you commit is to run ``php .scripts/fix_style.php`` from the installation root."
 msgstr ""
 
-#: ../../contribute/code.rst:478
+#: ../../contribute/code.rst:493
 msgid "CSS guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:481
+#: ../../contribute/code.rst:496
 msgid "Use shorthand where possible"
 msgstr ""
 
-#: ../../contribute/code.rst:501
+#: ../../contribute/code.rst:516
 msgid "Use hyphens, not underscores"
 msgstr ""
 
-#: ../../contribute/code.rst:516
+#: ../../contribute/code.rst:531
 msgid "One property per line"
 msgstr ""
 
-#: ../../contribute/code.rst:532
+#: ../../contribute/code.rst:547
 msgid "Property declarations"
 msgstr ""
 
-#: ../../contribute/code.rst:534
+#: ../../contribute/code.rst:549
 msgid "These should be spaced like so: `property: value;`"
 msgstr ""
 
-#: ../../contribute/code.rst:551
+#: ../../contribute/code.rst:566
 msgid "Vendor prefixes"
 msgstr ""
 
-#: ../../contribute/code.rst:553
+#: ../../contribute/code.rst:568
 msgid "Group vendor-prefixes for the same property together"
 msgstr ""
 
-#: ../../contribute/code.rst:554
+#: ../../contribute/code.rst:569
 msgid "Longest vendor-prefixed version first"
 msgstr ""
 
-#: ../../contribute/code.rst:555
+#: ../../contribute/code.rst:570
 msgid "Always include non-vendor-prefixed version"
 msgstr ""
 
-#: ../../contribute/code.rst:556
+#: ../../contribute/code.rst:571
 msgid "Put an extra newline between vendor-prefixed groups and other properties"
 msgstr ""
 
-#: ../../contribute/code.rst:580
+#: ../../contribute/code.rst:595
 msgid "Group subproperties"
 msgstr ""
 
-#: ../../contribute/code.rst:599
+#: ../../contribute/code.rst:614
 msgid "Javascript guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:601
+#: ../../contribute/code.rst:616
 msgid "Same formatting standards as PHP apply."
 msgstr ""
 
-#: ../../contribute/code.rst:603
+#: ../../contribute/code.rst:618
 msgid "All functions should be in the ``elgg`` namespace."
 msgstr ""
 
-#: ../../contribute/code.rst:605
+#: ../../contribute/code.rst:620
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 
-#: ../../contribute/code.rst:616
+#: ../../contribute/code.rst:631
 msgid "Deprecating APIs"
 msgstr ""
 
-#: ../../contribute/code.rst:618
+#: ../../contribute/code.rst:633
 msgid "Occasionally functions and classes must be deprecated in favor of newer replacements. Since 3rd party plugin authors rely on a consistent API, backward compatibility must be maintained, but will not be maintained indefinitely as plugin authors are expected to properly update their plugins. In order to maintain backward compatibility, deprecated APIs will follow these guidelines:"
 msgstr ""
 
-#: ../../contribute/code.rst:625
+#: ../../contribute/code.rst:640
 msgid "Minor version (1.x) that deprecates an API must include a wrapper function/class (or otherwise appropriate means) to maintain backward compatibility, including any bugs in the original function/class. This compatibility layer uses ``elgg_deprecated_notice('...', '1.11')`` to log that the function is deprecated."
 msgstr ""
 
-#: ../../contribute/code.rst:631
+#: ../../contribute/code.rst:646
 msgid "The next major revision (2.0) removes the compatibility layer. Any use of the deprecated API should be corrected before this."
 msgstr ""
 
