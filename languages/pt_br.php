@@ -1144,7 +1144,6 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 
 	'admin:pending_upgrades' => 'O site possui atualizacoes pendentes que dependem da sua atencao imediata.',
 	'admin:view_upgrades' => 'Visualizar atualizacoes pendentes.',
- 	'admin:upgrades' => 'Atualizacoes',
 	'item:object:elgg_upgrade' => 'Atualizacoes do Site',
 	'admin:upgrades:none' => 'Sua instalacao em dia com as atualizacoes!',
 
