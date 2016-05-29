@@ -1125,7 +1125,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 
 	'admin:pending_upgrades' => 'Es gibt ausstehende Aktualisierungen auf Deiner Community-Seite. Du solltest diese baldmöglichst durchführen.',
 	'admin:view_upgrades' => 'Ausstehende Aktualisierungen anzeigen.',
- 	'admin:upgrades' => 'Aktualisierungen',
 	'item:object:elgg_upgrade' => 'Community-Seite-Aktualisierungen',
 	'admin:upgrades:none' => 'Deine Installation ist aktuell!',
 

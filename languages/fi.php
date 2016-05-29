@@ -1119,7 +1119,6 @@ Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/ad
 
 	'admin:pending_upgrades' => 'Sivustolla on odottavia päivityksiä, jotka vaativat välitöntä huomiotasi.',
 	'admin:view_upgrades' => 'Siirry päivityksiin tästä.',
- 	'admin:upgrades' => 'Päivitykset',
 	'item:object:elgg_upgrade' => 'Sivuston päivitykset',
 	'admin:upgrades:none' => 'Sivustosi on ajan tasalla!',
 

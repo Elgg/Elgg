@@ -10,7 +10,7 @@ return array(
 	'twitter_api:settings:instructions' => 'Je moet een Consumer Key en Consumer Secret aanvragen bij <a href="https://dev.twitter.com/apps/new" target="_blank">Twitter</a>. Vul het formulier in voor een nieuwe applicatie. Selecteer "Browser" voor het applicatietype en "Read & Write" voor de rechten. De callback-URL is %stwitter_api/authorize',
 
 	'twitter_api:usersettings:description' => "Koppel je %s account met Twitter.",
-	'twitter_api:usersettings:request' => "Je moet eerst %2$s <a href=\"%1$s\">autoriseren</a> om toegang te krijgen tot je Twitter account.",
+	'twitter_api:usersettings:request' => "Je moet eerst %2\$s <a href=\"%1\$s\">autoriseren</a> om toegang te krijgen tot je Twitter account.",
 	'twitter_api:usersettings:cannot_revoke' => "Je kunt je account niet ontkoppelen van Twitter omdat je geen e-mailadres of wachtwoord hebt opgegeven. <a href=\"%s\">Vul dit nu in!</a>",
 	'twitter_api:authorize:error' => 'Fout tijdens het autoriseren van Twitter.',
 	'twitter_api:authorize:success' => 'Twittertoegang is geautoriseerd.',

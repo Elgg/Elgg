@@ -1116,7 +1116,6 @@ return array(
 
 	'admin:pending_upgrades' => 'サイトはアップグレードの途中で中断されています。これ以降は直接あなたの操作が必要です。',
 	'admin:view_upgrades' => '中断されているアップグレードを見る。',
- 	'admin:upgrades' => 'アップグレード',
 	'item:object:elgg_upgrade' => 'サイトのアップグレード',
 	'admin:upgrades:none' => 'このインストールは最新の状態です！',
 

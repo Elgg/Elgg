@@ -1123,7 +1123,6 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'admin:pending_upgrades' => 'The site has pending upgrades that require your immediate attention.',
 	'admin:view_upgrades' => 'View pending upgrades.',
- 	'admin:upgrades' => 'Upgrades',
 	'item:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Your installation is up to date!',
 

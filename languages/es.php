@@ -1111,7 +1111,6 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 
 	'admin:pending_upgrades' => 'Este sitio tiene actualizaciones pendientes que requieren tu atención inmediata',
 	'admin:view_upgrades' => 'Ver actualizaciones pendientes',
- 	'admin:upgrades' => 'Actualizaciones',
 	'item:object:elgg_upgrade' => 'Actualizaciones del sitio',
 	'admin:upgrades:none' => 'Tu instalación esta al día!',
 

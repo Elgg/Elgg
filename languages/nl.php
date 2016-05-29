@@ -1119,7 +1119,6 @@ Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.
 
 	'admin:pending_upgrades' => 'Er zijn belangrijke upgrades waar je beter nu meteen aandacht aan kunt schenken!',
 	'admin:view_upgrades' => 'Bekijk de upgrades.',
- 	'admin:upgrades' => 'Upgrades',
 	'item:object:elgg_upgrade' => 'Site-upgrades',
 	'admin:upgrades:none' => 'De installatie is up-to-date!',
 

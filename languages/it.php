@@ -1120,7 +1120,6 @@ Una volta entrato/a ti invitiamo caldamente a cambiare la tua password.
 
 	'admin:pending_upgrades' => 'Il sito ha degli aggiornamenti in sospeso che richiedono la vostra immediata attenzione.',
 	'admin:view_upgrades' => 'Visualizza aggiornamenti in sospeso.',
- 	'admin:upgrades' => 'Aggiornamenti',
 	'item:object:elgg_upgrade' => 'Aggiornamenti del sito',
 	'admin:upgrades:none' => 'Questa installazione è aggiornata!',
 
