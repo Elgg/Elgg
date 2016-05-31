@@ -17,6 +17,7 @@ $elgg = array(
 	),
 	'session' => array(
 		'user' => null,
+		'token' => _elgg_services()->session->get('__elgg_session'),
 	),
 );
 
