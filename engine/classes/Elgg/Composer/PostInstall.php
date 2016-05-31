@@ -67,14 +67,19 @@ class PostInstall {
 	/**
 	 * Copies a file from the given location in Elgg to the given location in root.
 	 *
-	 * @param string $elggPath Path relative to elgg dir.
-	 * @param string $rootPath Path relative to app root dir.
+	 * @param string $elggPath  Path relative to elgg dir.
+	 * @param string $rootPath  Path relative to app root dir.
+	 * @param bool   $overwrite Overwrite file if it exists in root path, defaults to false.
 	 *
 	 * @return boolean Whether the copy succeeded.
 	 */
-	private static function copyFromElggToRoot($elggPath, $rootPath) {
+	private static function copyFromElggToRoot($elggPath, $rootPath, $overwrite = false) {
 		$from = Elgg\Application::elggDir()->getPath($elggPath);
 		$to = Directory\Local::root()->getPath($rootPath);
+
+		if (!$overwrite && file_exists($to)) {
+			return false;
+		}
 
 		return copy($from, $to);
 	}
