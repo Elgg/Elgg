@@ -442,6 +442,7 @@ return array(
 	'user:username:notfound' => 'Username %s not found.',
 
 	'user:password:lost' => 'Lost password',
+	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
 	'user:password:changereq:success' => 'Successfully requested a new password, email sent',
 	'user:password:changereq:fail' => 'Could not request a new password.',
 

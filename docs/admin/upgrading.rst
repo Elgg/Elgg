@@ -45,6 +45,14 @@ From 2.2 to 2.3
  * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_services()->config`` instead.
  * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
 
+From 2.3 to 3.0
+===============
+
+Data removal
+------------
+
+Be aware the 3.0 upgrade process will remove any remaining "legacy" password hashes. This will affect users who have never logged in under an Elgg 1.10 or later system. These users will be politely asked to reset their password.
+
 Deprecations in 2.x
 ===================
 

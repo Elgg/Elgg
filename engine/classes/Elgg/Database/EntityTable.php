@@ -765,7 +765,7 @@ class EntityTable {
 		// will fetch any missing attributes.
 		$types_to_optimize = array(
 			'object' => 'title',
-			'user' => 'password',
+			'user' => 'password_hash',
 			'group' => 'name',
 			'site' => 'url',
 		);
