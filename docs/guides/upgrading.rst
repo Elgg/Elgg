@@ -71,6 +71,7 @@ Inheritance changes
  * ``ElggEntity`` no longer implements ``Importable``
  * ``ElggGroup`` no longer implements ``Friendable``
  * ``ElggRelationship`` no longer implements ``Importable``
+ * ``Elgg\Application\Database`` no longer extends ``Elgg\Database``.
 
 Removed hooks/events
 --------------------
@@ -124,6 +125,7 @@ Miscellaneous API changes
  * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_log`` no longer accepts the level ``"DEBUG"``
  * ``elgg_gatekeeper`` and ``elgg_admin_gatekeeper`` no longer report ``login`` or ``admin`` as forward reason, but ``403``
+ * ``Application::getDb()`` no longer returns an instance of ``Elgg\Database``, but rather a ``Elgg\Application\Database``
 
 JavaScript hook calling order may change
 ----------------------------------------
