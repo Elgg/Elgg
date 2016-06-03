@@ -762,23 +762,6 @@ class ElggPlugin extends \ElggObject {
 	}
 
 
-	// start helpers
-
-	/**
-	 * Get the config object in a deprecation wrapper
-	 *
-	 * @return \Elgg\DeprecationWrapper
-	 */
-	protected static function getConfigWrapper() {
-		static $wrapper;
-		if (null === $wrapper) {
-			global $CONFIG;
-			$warning = 'Do not rely on local $CONFIG being available in start.php';
-			$wrapper = new \Elgg\DeprecationWrapper($CONFIG, $warning, "1.10");
-		}
-		return $wrapper;
-	}
-
 	/**
 	 * Includes one of the plugins files
 	 *
@@ -788,12 +771,6 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed The return value of the included file (or 1 if there is none)
 	 */
 	protected function includeFile($filename) {
-		// This needs to be here to be backwards compatible for 1.0-1.7.
-		// They expect the global config object to be available in start.php.
-		if ($filename == 'start.php') {
-			$CONFIG = self::getConfigWrapper();
-		}
-
 		$filepath = "$this->path/$filename";
 
 		if (!$this->canReadFile($filename)) {
