@@ -57,6 +57,7 @@ Removed global vars
 -------------------
 
  * ``$DEFAULT_FILE_STORE``
+ * ``$SESSION``: Use the API provided by ``elgg_get_session()``
 
 Removed classes/interfaces
 --------------------------
