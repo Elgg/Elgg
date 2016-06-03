@@ -120,14 +120,6 @@ $CONFIG->auto_disable_plugins;
 $CONFIG->sitedescription;
 
 /**
- * The site email from the current site object.
- *
- * @global string $CONFIG->siteemail
- * @deprecated 2.1 Use elgg_get_site_entity()->email
- */
-$CONFIG->siteemail;
-
-/**
  * The default "limit" used in site queries.
  *
  * @global int $CONFIG->default_limit
