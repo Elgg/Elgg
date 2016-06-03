@@ -12,9 +12,15 @@ if (elgg_is_logged_in()) {
 
 $title = elgg_echo("user:password:lost");
 
-$content = elgg_view_form('user/requestnewpassword', array(
-	'class' => 'elgg-form-account',
-));
+$hash_missing_username = elgg_get_session()->get('forgotpassword:hash_missing');
+if ($hash_missing_username) {
+	elgg_get_session()->remove('forgotpassword:hash_missing');
+	register_error(elgg_echo('user:password:hash_missing'));
+}
+
+$form_vars = ['class' => 'elgg-form-account'];
+$body_vars = ['username' => $hash_missing_username];
+$content = elgg_view_form('user/requestnewpassword', $form_vars, $body_vars);
 
 if (elgg_get_config('walled_garden')) {
 	elgg_load_css('elgg.walled_garden');
