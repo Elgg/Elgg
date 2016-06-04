@@ -177,23 +177,6 @@ class ElggObject extends \ElggEntity {
 		return $object;
 	}
 
-	/*
-	 * EXPORTABLE INTERFACE
-	 */
-
-	/**
-	 * Return an array of fields which can be exported.
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function getExportableValues() {
-		return array_merge(parent::getExportableValues(), array(
-			'title',
-			'description',
-		));
-	}
-
 	/**
 	 * Can a user comment on this object?
 	 *
