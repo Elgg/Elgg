@@ -127,6 +127,7 @@ Miscellaneous API changes
  * ``elgg_log`` no longer accepts the level ``"DEBUG"``
  * ``elgg_gatekeeper`` and ``elgg_admin_gatekeeper`` no longer report ``login`` or ``admin`` as forward reason, but ``403``
  * ``Application::getDb()`` no longer returns an instance of ``Elgg\Database``, but rather a ``Elgg\Application\Database``
+ * ``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files.
 
 JavaScript hook calling order may change
 ----------------------------------------
