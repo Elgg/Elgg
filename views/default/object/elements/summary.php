@@ -53,7 +53,7 @@ if (isset($icon)) {
 	$params['class'] = $class;
 
 	$params['data-guid'] = $entity->guid;
-	
+
 	echo elgg_view_image_block($icon, $summary, $params);
 } else {
 	echo $summary;

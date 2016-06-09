@@ -9,7 +9,7 @@
  * @deprecated 2.3
  */
 
-if (!defined('PHPUNIT_ELGG_TESTING_APPLICATION')) {
+if (!defined('PHPUNIT_ELGG_TESTING_APPLICATION') || function_exists('_elgg_testing_application')) {
 	// this value is set by phpunit.xml
 	return;
 }

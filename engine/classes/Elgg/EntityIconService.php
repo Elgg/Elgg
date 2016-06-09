@@ -425,6 +425,7 @@ class EntityIconService {
 	 * @param string $entity_subtype Entity subtype
 	 * @param string $type           The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return array
+	 * @throws InvalidParameterException
 	 */
 	public function getSizes($entity_type = null, $entity_subtype = null, $type = 'icon') {
 		$sizes = [];
