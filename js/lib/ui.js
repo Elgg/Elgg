@@ -8,9 +8,11 @@ elgg.ui.init = function () {
 	// add user hover menus
 	elgg.ui.initHoverMenu();
 
-	//if the user clicks a system message, make it disappear
-	$('.elgg-system-messages li').live('click', function() {
-		$(this).stop().fadeOut('fast');
+	// if the user clicks a system message (not a link inside one), make it disappear
+	$('.elgg-system-messages li').live('click', function(e) {
+		if (!$(e.target).is('a')) {
+			$(this).stop().fadeOut('fast');
+		}
 	});
 
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
