@@ -134,6 +134,10 @@
 .elgg-state-notice {
 	background-color: #4690D6;
 }
+.elgg-message a {
+	color: inherit;
+	text-decoration: underline;
+}
 
 /* ***************************************
 	River
