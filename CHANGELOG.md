@@ -1,3 +1,16 @@
+<a name="1.11.6"></a>
+### 1.11.6  (2016-06-12)
+
+#### Contributors
+
+* Steve Clay (3)
+
+#### Breaking Changes
+
+* The JS function `elgg.security.setToken` is now formally marked private and
+its parameters are not backwards compatible. ([9d8ddecb](https://github.com/Elgg/Elgg/commit/9d8ddecb90b9e160ad85610592c5808e7e8f0c3f))
+
+
 <a name="1.11.5"></a>
 ### 1.11.5  (2015-12-13)
 
