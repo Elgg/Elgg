@@ -570,6 +570,7 @@ class ElggSite extends \ElggEntity {
 			'cron/.*',
 			'services/.*',
 			'robots.txt',
+			'favicon.ico',
 		);
 
 		// include a hook for plugin authors to include public pages
