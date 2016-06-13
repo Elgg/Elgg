@@ -142,6 +142,7 @@ return array(
 	'password' => "Password",
 	'passwordagain' => "Password (again for verification)",
 	'admin_option' => "Make this user an admin?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access

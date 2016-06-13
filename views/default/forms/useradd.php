@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg add user form.
  *
@@ -6,6 +7,7 @@
  * @subpackage Core
  * 
  */
+elgg_require_js('forms/useradd');
 
 if (elgg_is_sticky_form('useradd')) {
 	$values = elgg_get_sticky_values('useradd');
@@ -19,6 +21,7 @@ $name = elgg_extract('name', $values);
 $username = elgg_extract('username', $values);
 $email = elgg_extract('email', $values);
 $admin = elgg_extract('admin', $values);
+$autogen_password = elgg_extract('autogen_password', $values);
 
 echo elgg_view_input('text', [
 	'name' => 'name',
@@ -40,6 +43,14 @@ echo elgg_view_input('email', [
 	'label' => elgg_echo('email'),
 	'required' => true,
 ]);
+
+echo elgg_view_input('checkbox', array(
+	'name' => 'autogen_password',
+	'value' => 1,
+	'default' => false,
+	'label' => elgg_echo('autogen_password_option'),
+	'checked' => (bool) $autogen_password,
+));
 
 echo elgg_view_input('password', [
 	'name' => 'password',
