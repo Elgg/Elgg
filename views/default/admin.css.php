@@ -592,6 +592,11 @@ select {
 	max-width: 800px;
 }
 
+.elgg-input-checkbox + label,
+.elgg-input-checkbox + .elgg-field-label {
+	display: inline-block;
+}
+
 /* **************************************
      DATE PICKER
 *************************************** */
