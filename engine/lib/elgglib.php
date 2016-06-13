@@ -1293,6 +1293,43 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 }
 
 /**
+ * Signs provided URL with a SHA256 HMAC key
+ *
+ * @note Signed URLs do not offer CSRF protection and should not be used instead of action tokens.
+ * 
+ * @param string $url     URL to sign
+ * @param string $expires Expiration time
+ *                        A string suitable for strtotime()
+ *                        Falsey values indicate non-expiring URL
+ * @return string
+ */
+function elgg_http_get_signed_url($url, $expires = false) {
+	return _elgg_services()->urlSigner->sign($url, $expires);
+}
+
+/**
+ * Validates if the HMAC signature of the URL is valid
+ *
+ * @param string $url URL to validate
+ * @return bool
+ */
+function elgg_http_validate_signed_url($url) {
+	return _elgg_services()->urlSigner->isValid($url);
+}
+
+/**
+ * Validates if the HMAC signature of the current request is valid
+ * Issues 403 response if signature is inalid
+ * @return void
+ */
+function elgg_signed_request_gatekeeper() {
+	if (!elgg_http_validate_signed_url(current_page_url())) {
+		register_error(elgg_echo('invalid_request_signature'));
+		forward('', '403');
+	}
+}
+
+/**
  * Checks for $array[$key] and returns its value if it exists, else
  * returns $default.
  *
