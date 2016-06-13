@@ -9,8 +9,10 @@ elgg.ui.init = function () {
 	elgg.ui.initHoverMenu();
 
 	//if the user clicks a system message, make it disappear
-	$(document).on('click', '.elgg-system-messages li', function() {
-		$(this).stop().fadeOut('fast');
+	$(document).on('click', '.elgg-system-messages li', function(e) {
+		if (!$(e.target).is('a')) {
+			$(this).stop().fadeOut('fast');
+		}
 	});
 
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
