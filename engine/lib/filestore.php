@@ -465,19 +465,27 @@ function elgg_get_file_simple_type($mime_type) {
 }
 
 /**
- * Initialize the file library.
- * Listens to system init and configures the default filestore
+ * Bootstraps the default filestore at "boot, system" event
  *
  * @return void
  * @access private
  */
-function _elgg_filestore_init() {
+function _elgg_filestore_boot() {
 	global $CONFIG;
 
 	// Now register a default filestore
 	if (isset($CONFIG->dataroot)) {
 		$GLOBALS['DEFAULT_FILE_STORE'] = new \ElggDiskFilestore($CONFIG->dataroot);
 	}
+}
+
+/**
+ * Register file-related handlers on "init, system" event
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_filestore_init() {
 
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
@@ -734,5 +742,6 @@ function _elgg_filestore_move_icons($event, $type, $entity) {
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('boot', 'system', '_elgg_filestore_boot', 100);
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
 };
