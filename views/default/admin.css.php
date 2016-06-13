@@ -584,7 +584,8 @@ select {
 }
 
 .elgg-form-useradd input[type=text],
-.elgg-form-useradd input[type=password] {
+.elgg-form-useradd input[type=password],
+.elgg-form-useradd input[type=email] {
 	width: 300px;
 }
 
