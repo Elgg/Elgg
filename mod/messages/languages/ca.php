@@ -15,7 +15,6 @@ return array(
 	'messages:title' => "Assumpte",
 	'messages:to:help' => "Escriu el nom d'usuari del destinatari aquí.",
 	'messages:replying' => "Missatge amb resposta a",
-	'messages:inbox' => "Safata d'entrada",
 	'messages:sendmessage' => "Envia un missatge",
 	'messages:add' => "Redactar",
 	'messages:sentmessages' => "Missatges enviats",

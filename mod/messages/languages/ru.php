@@ -15,7 +15,6 @@ return array(
 	'messages:title' => "Тема",
 	'messages:to:help' => "Ники получателей",
 	'messages:replying' => "Ответить на сообщение",
-	'messages:inbox' => "Входящие",
 	'messages:sendmessage' => "Отправить сообщение",
 	'messages:add' => "Написать",
 	'messages:sentmessages' => "Отравленые сообщения",

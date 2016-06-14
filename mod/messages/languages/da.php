@@ -15,7 +15,6 @@ return array(
 	'messages:title' => "Emne",
 	'messages:to:help' => "Write recipient's username here.",
 	'messages:replying' => "Besked som svar til",
-	'messages:inbox' => "Indbakke",
 	'messages:sendmessage' => "Send en besked",
 	'messages:add' => "Opret en besked",
 	'messages:sentmessages' => "Sendte beskeder",

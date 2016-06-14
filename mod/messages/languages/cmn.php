@@ -15,7 +15,6 @@ return array(
 	'messages:title' => "主旨",
 	'messages:to:help' => "在這裡寫入收件者名稱。",
 	'messages:replying' => "回覆訊息給",
-	'messages:inbox' => "收件匣",
 	'messages:sendmessage' => "發送訊息",
 	'messages:add' => "撰寫訊息",
 	'messages:sentmessages' => "已發送訊息",

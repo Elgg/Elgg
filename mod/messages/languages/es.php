@@ -15,7 +15,6 @@ return array(
 	'messages:title' => "Asunto",
 	'messages:to:help' => "Write recipient's username here.",
 	'messages:replying' => "Mensaje respondiendo a",
-	'messages:inbox' => "Bandeja de entrada",
 	'messages:sendmessage' => "Enviar un mensaje",
 	'messages:add' => "Escribir un mensaje",
 	'messages:sentmessages' => "Mensajes enviados",

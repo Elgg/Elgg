@@ -15,7 +15,6 @@ return array(
 	'messages:title' => "Gaia",
 	'messages:to:help' => "Hartzailearen erabiltzaile izena idatzi hemen.",
 	'messages:replying' => "Mezua honi erantzuten",
-	'messages:inbox' => "Sarrera ontzia",
 	'messages:sendmessage' => "Mezu bat bidali",
 	'messages:add' => "Mezu bat idatzi",
 	'messages:sentmessages' => "Bidalitako mezuak",

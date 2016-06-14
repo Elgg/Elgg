@@ -28,11 +28,11 @@ return array(
 	'pages:notify:summary' => 'Ny side kaldt %s',
 	'pages:notify:subject' => "En ny side: %s",
 	'pages:notify:body' =>
-'%s har tilføjet en ny side: %s
+'%s added a new page: %s
 
 %s
 
-Se og kommenter på den nye side:
+View and comment on the page:
 %s
 ',
 	'item:object:page_top' => 'Top-niveau sider',
