@@ -1,3 +1,35 @@
+<a name="2.1.2"></a>
+### 2.1.2  (2016-06-13)
+
+#### Contributors
+
+* Steve Clay (5)
+* Ismayil Khayredinov (4)
+* Brett Profitt (1)
+* Jerôme Bakker (1)
+* iionly (1)
+
+#### Documentation
+
+* **ajax:** fixes constructor usage of elgg/Ajax ([07c7ce49](https://github.com/Elgg/Elgg/commit/07c7ce49538ae8b61b3c48cd1e5a8287dc777e5b), closes [#9533](https://github.com/Elgg/Elgg/issues/9533))
+
+
+#### Bug Fixes
+
+* **core:**
+  * elgg_get_plugin_setting() respects defaults for values that haven't been cached or created. ([1e141d46](https://github.com/Elgg/Elgg/commit/1e141d468c75a64bd9068908380e034765772ea6), closes [#9781](https://github.com/Elgg/Elgg/issues/9781))
+  * Elgg again uses the dataroot given in settings.php ([64c23f70](https://github.com/Elgg/Elgg/commit/64c23f703b9515c30089470da2899f105de99333), closes [#9602](https://github.com/Elgg/Elgg/issues/9602))
+* **errors:** nested forward 404 calls are less likely to abruptly fail ([068711fa](https://github.com/Elgg/Elgg/commit/068711fad3680f5d9d431759ed895b6a48d78076), closes [#9476](https://github.com/Elgg/Elgg/issues/9476))
+* **files:** file service now sends 304 and 403 headers more reliably ([c9af1790](https://github.com/Elgg/Elgg/commit/c9af179092be61e50acc17603a8fbf3dd9e22272), closes [#9571](https://github.com/Elgg/Elgg/issues/9571))
+* **js:** deprecate elgg.ui.widgets more reliably ([c25c5211](https://github.com/Elgg/Elgg/commit/c25c5211c307fc0b4c869f3e098c5002494d77cf), closes [#9523](https://github.com/Elgg/Elgg/issues/9523))
+* **logger:** logger no longer pollutes serve-file response ([8209a38b](https://github.com/Elgg/Elgg/commit/8209a38b01b89bea65b696db3662962a8f332ebd), closes [#9657](https://github.com/Elgg/Elgg/issues/9657))
+* **profile:** able to store more information in tag fields ([0467e3ff](https://github.com/Elgg/Elgg/commit/0467e3ffcc35e0cf88a476dfbbc15a669dbdad80))
+* **reportedcontent:**
+  * report form opens in lightbox ([6db794ac](https://github.com/Elgg/Elgg/commit/6db794ac689322ba07f884e30766c755a6026968))
+  * clicking on reported content links again opens lightbox ([55fa9d5c](https://github.com/Elgg/Elgg/commit/55fa9d5ce2b4a589187e6186e842718e212175c1))
+* **site:** allow access to serve-file handler in walled garden mode ([1a8d33a1](https://github.com/Elgg/Elgg/commit/1a8d33a16ee1dca272a5cd0861f657b799f841d7))
+
+
 <a name="2.1.1"></a>
 ### 2.1.1  (2016-03-20)
 
