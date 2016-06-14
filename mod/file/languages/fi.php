@@ -95,5 +95,6 @@ Voit nähdä tiedoston täällä:
 	'file:downloadfailed' => "Tiedoston lataaminen epäonnistui.",
 	'file:deletefailed' => "Tiedoston poistaminen epäonnistui.",
 	'file:noaccess' => "Sinulla ei ole oikeuksia tämän tiedoston muuttamiseen",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Sinun pitää valita tiedosto",
 );

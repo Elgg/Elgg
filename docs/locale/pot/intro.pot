@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-20 19:29-0400\n"
+"POT-Creation-Date: 2016-06-13 22:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -349,395 +349,395 @@ msgstr ""
 msgid "With Composer (recommended if comfortable with CLI):"
 msgstr ""
 
-#: ../../intro/install.rst:81
+#: ../../intro/install.rst:82
 msgid "From pre-packaged zip (recommended if not comfortable with CLI):"
 msgstr ""
 
-#: ../../intro/install.rst:83
+#: ../../intro/install.rst:84
 msgid "Download the `latest version of Elgg`_"
 msgstr ""
 
-#: ../../intro/install.rst:84
+#: ../../intro/install.rst:85
 msgid "Upload the ZIP file with an FTP client to your server"
 msgstr ""
 
-#: ../../intro/install.rst:85
+#: ../../intro/install.rst:86
 msgid "Unzip the files in your domain's document root."
 msgstr ""
 
-#: ../../intro/install.rst:91
+#: ../../intro/install.rst:92
 msgid "Create a data folder"
 msgstr ""
 
-#: ../../intro/install.rst:93
+#: ../../intro/install.rst:94
 msgid "Elgg needs a special folder to store uploaded files including profile icons and photos. You will need to create this directory."
 msgstr ""
 
-#: ../../intro/install.rst:98
+#: ../../intro/install.rst:99
 msgid "For security reasons, this folder MUST be stored outside of your document root. If you created it under /www/ or /public_html/, you're doing it wrong."
 msgstr ""
 
-#: ../../intro/install.rst:102
+#: ../../intro/install.rst:103
 msgid "Once this folder has been created, you'll need to make sure the web server Elgg is running on has permission to write to and create directories in it. This shouldn't be a problem on Windows-based servers, but if your server runs Linux, Mac OS X or a UNIX variant, you'll need to `set the permissions on the directory`_."
 msgstr ""
 
-#: ../../intro/install.rst:110
+#: ../../intro/install.rst:111
 msgid "If you are using a graphical FTP client to upload files, you can usually set permissions by right clicking on the folder and selecting 'properties' or 'Get Info'."
 msgstr ""
 
-#: ../../intro/install.rst:116
+#: ../../intro/install.rst:117
 msgid "Directories must be executable to be read and written to. The suggested permissions depend upon the exact server and user configuration. If the data directory is owned by the web server user, the recommended permissions are 770."
 msgstr ""
 
-#: ../../intro/install.rst:121
+#: ../../intro/install.rst:122
 msgid "Setting your data directory to 777 will work, but it is insecure and is not recommended. If you are unsure how to correctly set permissions, contact your host for more information."
 msgstr ""
 
-#: ../../intro/install.rst:126
+#: ../../intro/install.rst:127
 msgid "Create a MySQL database"
 msgstr ""
 
-#: ../../intro/install.rst:128
+#: ../../intro/install.rst:129
 msgid "Using your database administration tool of choice (if you're unsure about this, ask your system administrator), create a new MySQL database for Elgg. You can create a MySQL database with any of the following tools:"
 msgstr ""
 
-#: ../../intro/install.rst:133
+#: ../../intro/install.rst:134
 msgid "Make sure you add a user to the database with all privileges and record the database name, username and password. You will need this information when installing Elgg."
 msgstr ""
 
-#: ../../intro/install.rst:138
+#: ../../intro/install.rst:139
 msgid "Visit your Elgg site"
 msgstr ""
 
-#: ../../intro/install.rst:140
+#: ../../intro/install.rst:141
 msgid "Once you've performed these steps, visit your Elgg site in your web browser. Elgg will take you through the rest of the installation process from there. The first account that you create at the end of the installation process will be an administrator account."
 msgstr ""
 
-#: ../../intro/install.rst:147
+#: ../../intro/install.rst:148
 msgid "A note on settings.php and .htaccess"
 msgstr ""
 
-#: ../../intro/install.rst:149
+#: ../../intro/install.rst:150
 msgid "The Elgg installer will try to create two files for you:"
 msgstr ""
 
-#: ../../intro/install.rst:151
+#: ../../intro/install.rst:152
 msgid "``elgg-config/settings.php``, which contains local environment configuration for your installation"
 msgstr ""
 
-#: ../../intro/install.rst:152
+#: ../../intro/install.rst:153
 msgid "``.htaccess``, which allows Elgg to generate dynamic URLs"
 msgstr ""
 
-#: ../../intro/install.rst:154
+#: ../../intro/install.rst:155
 msgid "If these files can't be automatically generated, for example because the web server doesn't have write permissions in the directories, Elgg will tell you how to create them. You could also temporarily change the permissions on the root directory and the engine directory. Set the permissions on those two directories so that the web server can write those two files, complete the install process, and them change the permissions back to their original settings. If, for some reason, this won't work, you will need to:"
 msgstr ""
 
-#: ../../intro/install.rst:163
+#: ../../intro/install.rst:164
 msgid "In ``elgg-config/``, copy ``settings.example.php`` to ``settings.php``, open it up in a text editor and fill in your database details"
 msgstr ""
 
-#: ../../intro/install.rst:165
+#: ../../intro/install.rst:166
 msgid "On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``"
 msgstr ""
 
-#: ../../intro/install.rst:166
+#: ../../intro/install.rst:167
 msgid "On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents"
 msgstr ""
 
-#: ../../intro/install.rst:169
+#: ../../intro/install.rst:170
 msgid "Other Configurations"
 msgstr ""
 
-#: ../../intro/install.rst:171
+#: ../../intro/install.rst:172
 msgid ":doc:`Cloud9 <./install/cloud9>`"
 msgstr ""
 
-#: ../../intro/install.rst:172
+#: ../../intro/install.rst:173
 msgid ":doc:`EasyPHP <./install/easyphp>`"
 msgstr ""
 
-#: ../../intro/install.rst:173
+#: ../../intro/install.rst:174
 msgid ":doc:`IIS <./install/iis>`"
 msgstr ""
 
-#: ../../intro/install.rst:174
+#: ../../intro/install.rst:175
 msgid ":doc:`MAMP <./install/mamp>`"
 msgstr ""
 
-#: ../../intro/install.rst:175
+#: ../../intro/install.rst:176
 msgid ":doc:`MariaDB <./install/mariadb>`"
 msgstr ""
 
-#: ../../intro/install.rst:176
+#: ../../intro/install.rst:177
 msgid ":doc:`Nginx <./install/nginx>`"
 msgstr ""
 
-#: ../../intro/install.rst:177
+#: ../../intro/install.rst:178
 msgid ":doc:`Ubuntu <./install/ubuntu>`"
 msgstr ""
 
-#: ../../intro/install.rst:178
+#: ../../intro/install.rst:179
 msgid ":doc:`Virtual hosts <./install/virtual>`"
 msgstr ""
 
-#: ../../intro/install.rst:179
+#: ../../intro/install.rst:180
 msgid ":doc:`XAMPP <./install/xampp>`"
 msgstr ""
 
-#: ../../intro/install.rst:182
+#: ../../intro/install.rst:183
 msgid "Troubleshooting"
 msgstr ""
 
-#: ../../intro/install.rst:185
+#: ../../intro/install.rst:186
 msgid "Help! I'm having trouble installing Elgg"
 msgstr ""
 
-#: ../../intro/install.rst:187
+#: ../../intro/install.rst:188
 msgid "First:"
 msgstr ""
 
-#: ../../intro/install.rst:189
+#: ../../intro/install.rst:190
 msgid "Recheck that your server meets the technical requirements for Elgg."
 msgstr ""
 
-#: ../../intro/install.rst:190
+#: ../../intro/install.rst:191
 msgid "Follow the environment-specific instructions if need be"
 msgstr ""
 
-#: ../../intro/install.rst:191
+#: ../../intro/install.rst:192
 msgid "Have you verified that ``mod_rewrite`` is being loaded?"
 msgstr ""
 
-#: ../../intro/install.rst:192
+#: ../../intro/install.rst:193
 msgid "Is the mysql apache being loaded?"
 msgstr ""
 
-#: ../../intro/install.rst:194
+#: ../../intro/install.rst:195
 msgid "Keep notes on steps that you take to fix the install. Sometimes changing some setting or file to try to fix a problem may cause some other problem later on. If you need to start over, just delete all the files, drop your database, and begin again."
 msgstr ""
 
-#: ../../intro/install.rst:200
+#: ../../intro/install.rst:201
 msgid "I can't save my settings on installation (I get a 404 error when saving settings)"
 msgstr ""
 
-#: ../../intro/install.rst:202
+#: ../../intro/install.rst:203
 msgid "Elgg relies on the ``mod_rewrite`` Apache extension in order to simulate certain URLs. For example, whenever you perform an action in Elgg, or when you visit a user's profile, the URL is translated by the server into something Elgg understands internally. This is done using rules defined in an ``.htaccess`` file, which is Apache's standard way of defining extra configuration for a site."
 msgstr ""
 
-#: ../../intro/install.rst:209
+#: ../../intro/install.rst:210
 msgid "This error suggests that the ``mod_rewrite`` rules aren't being picked up correctly. This may be for several reasons. If you're not comfortable implementing the solutions provided below, we strongly recommend that you contact your system administrator or technical support and forward this page to them."
 msgstr ""
 
-#: ../../intro/install.rst:215
+#: ../../intro/install.rst:216
 msgid "The ``.htaccess``, if not generated automatically (that happens when you have problem with ``mod_rewrite``), you can create it by renaming ``install/config/htaccess.dist`` file you find with elgg package to ``.htaccess``. Also if you find a ``.htaccess`` file inside the installation path, but you are still getting 404 error, make sure the contents of ``.htaccess`` are same as that of ``install/config/htaccess.dist``."
 msgstr ""
 
-#: ../../intro/install.rst:222
+#: ../../intro/install.rst:223
 msgid "**``mod_rewrite`` isn't installed.**"
 msgstr ""
 
-#: ../../intro/install.rst:224
+#: ../../intro/install.rst:225
 msgid "Check your ``httpd.conf`` to make sure that this module is being loaded by Apache. You may have to restart Apache to get it to pick up any changes in configuration. You can also use `PHP info`_ to check to see if the module is being loaded."
 msgstr ""
 
-#: ../../intro/install.rst:229
+#: ../../intro/install.rst:230
 msgid "**The rules in ``.htaccess`` aren't being obeyed.**"
 msgstr ""
 
-#: ../../intro/install.rst:233
+#: ../../intro/install.rst:234
 msgid "In your virtual host configuration settings (which may be contained within ``httpd.conf``), change the AllowOverride setting so that it reads:"
 msgstr ""
 
-#: ../../intro/install.rst:237
+#: ../../intro/install.rst:238
 msgid "``AllowOverride all``"
 msgstr ""
 
-#: ../../intro/install.rst:239
+#: ../../intro/install.rst:240
 msgid "This will tell Apache to pick up the ``mod_rewrite`` rules from ``.htaccess``."
 msgstr ""
 
-#: ../../intro/install.rst:242
+#: ../../intro/install.rst:243
 msgid "**Elgg is not installed in the root of your web directory (ex: http://example.org/elgg/ instead of http://example.org/)**"
 msgstr ""
 
-#: ../../intro/install.rst:246
+#: ../../intro/install.rst:247
 msgid "The install script redirects me to \"action\" when it should be \"actions\""
 msgstr ""
 
-#: ../../intro/install.rst:248
+#: ../../intro/install.rst:249
 msgid "This is a problem with your ``mod_rewrite`` setup. DO NOT, REPEAT, DO NOT change any directory names!"
 msgstr ""
 
-#: ../../intro/install.rst:252
+#: ../../intro/install.rst:253
 msgid "I installed in a subdirectory and my install action isn't working!"
 msgstr ""
 
-#: ../../intro/install.rst:254
+#: ../../intro/install.rst:255
 msgid "If you installed Elgg so that it is reached with an address like http://example.org/mysite/ rather than http://example.org/, there is a small chance that the rewrite rules in .htaccess will not be processed correctly. This is usually due to using an alias with Apache. You may need to give mod\\_rewrite a pointer to where your Elgg installation is."
 msgstr ""
 
-#: ../../intro/install.rst:260
+#: ../../intro/install.rst:261
 msgid "Open up .htaccess in a text editor"
 msgstr ""
 
-#: ../../intro/install.rst:262
+#: ../../intro/install.rst:263
 msgid "Where prompted, add a line like ``RewriteBase /path/to/your/elgg/installation/`` (Don't forget the trailing slash)"
 msgstr ""
 
-#: ../../intro/install.rst:265
+#: ../../intro/install.rst:266
 msgid "Save the file and refresh your browser."
 msgstr ""
 
-#: ../../intro/install.rst:267
+#: ../../intro/install.rst:268
 msgid "Please note that the path you are using is the **web** path, minus the host."
 msgstr ""
 
-#: ../../intro/install.rst:270
+#: ../../intro/install.rst:271
 msgid "For example, if you reach your elgg install at http://example.org/elgg/, you would set the base like this:"
 msgstr ""
 
-#: ../../intro/install.rst:273
+#: ../../intro/install.rst:274
 msgid "``RewriteBase /elgg/``"
 msgstr ""
 
-#: ../../intro/install.rst:275
+#: ../../intro/install.rst:276
 msgid "Please note that installing in a subdirectory does not require using RewriteBase. There are only some rare circumstances when it is needed due to the set up of the server."
 msgstr ""
 
-#: ../../intro/install.rst:280
+#: ../../intro/install.rst:281
 msgid "I did everything! mod\\_rewrite is working fine, but still the 404 error"
 msgstr ""
 
-#: ../../intro/install.rst:282
+#: ../../intro/install.rst:283
 msgid "Maybe there is a problem with the file .htaccess. Sometimes the elgg install routine is unable to create one and unable to tell you that. If you are on this point and tried everything that is written above:"
 msgstr ""
 
-#: ../../intro/install.rst:286
+#: ../../intro/install.rst:287
 msgid "check if it is really the elgg-created .htaccess (not only a dummy provided from the server provider)"
 msgstr ""
 
-#: ../../intro/install.rst:289
+#: ../../intro/install.rst:290
 msgid "if it is not the elgg provided htaccess file, use the htaccess\\_dist (rename it to .htaccess)"
 msgstr ""
 
-#: ../../intro/install.rst:293
+#: ../../intro/install.rst:294
 msgid "I get an error message that the rewrite test failed after the requirements check page"
 msgstr ""
 
-#: ../../intro/install.rst:295
+#: ../../intro/install.rst:296
 msgid "I get the following messages after the requirements check step (step 2) of the install:"
 msgstr ""
 
-#: ../../intro/install.rst:297
+#: ../../intro/install.rst:298
 msgid "We think your server is running the Apache web server."
 msgstr ""
 
-#: ../../intro/install.rst:299
+#: ../../intro/install.rst:300
 msgid "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules."
 msgstr ""
 
-#: ../../intro/install.rst:302
+#: ../../intro/install.rst:303
 msgid "A less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory."
 msgstr ""
 
-#: ../../intro/install.rst:305
+#: ../../intro/install.rst:306
 msgid "After this error, everinteraction with the web interface results in a error 500 (Internal Server Error)"
 msgstr ""
 
-#: ../../intro/install.rst:307
+#: ../../intro/install.rst:308
 msgid "This is likely caused by not loading the \"filter module by un-commenting the"
 msgstr ""
 
-#: ../../intro/install.rst:309
+#: ../../intro/install.rst:310
 msgid "#LoadModule filter_module modules/mod_filter.so"
 msgstr ""
 
-#: ../../intro/install.rst:311
+#: ../../intro/install.rst:312
 msgid "line in the \"httpd.conf\" file."
 msgstr ""
 
-#: ../../intro/install.rst:313
+#: ../../intro/install.rst:314
 msgid "the Apache \"error.log\" file will contain an entry similar to:"
 msgstr ""
 
-#: ../../intro/install.rst:315
+#: ../../intro/install.rst:316
 msgid "... .htaccess: Invalid command 'AddOutputFilterByType', perhaps misspelled or defined by a module not included in the server configuration"
 msgstr ""
 
-#: ../../intro/install.rst:319
+#: ../../intro/install.rst:320
 msgid "There is a white page after I submit my database settings"
 msgstr ""
 
-#: ../../intro/install.rst:321
+#: ../../intro/install.rst:322
 msgid "Check that the Apache mysql module is installed and is being loaded."
 msgstr ""
 
-#: ../../intro/install.rst:324
+#: ../../intro/install.rst:325
 msgid "I'm getting a 404 error with a really long url"
 msgstr ""
 
-#: ../../intro/install.rst:326
+#: ../../intro/install.rst:327
 msgid "If you see a 404 error during the install or on the creation of the first user with a url like: ``http://example.com/homepages/26/d147515119/htdocs/elgg/action/register`` that means your site url is incorrect in your sites\\_entity table in your database. This was set by you on the second page of the install. Elgg tries to guess the correct value but has difficulty with shared hosting sites. Use phpMyAdmin to edit this value to the correct base url."
 msgstr ""
 
-#: ../../intro/install.rst:336
+#: ../../intro/install.rst:337
 msgid "I am having trouble setting my data path"
 msgstr ""
 
-#: ../../intro/install.rst:338
+#: ../../intro/install.rst:339
 msgid "This is highly server specific so it is difficult to give specific advice. If you have created a directory for uploading data, make sure your http server can access it. The easiest (but least secure) way to do this is give it permissions 777. It is better to give the web server ownership of the directory and limit the permissions."
 msgstr ""
 
-#: ../../intro/install.rst:344
+#: ../../intro/install.rst:345
 msgid "The top cause of this issue is PHP configured to prevent access to most directories using `open\\_basedir`_. You may want to check with your hosting provider on this."
 msgstr ""
 
-#: ../../intro/install.rst:348
+#: ../../intro/install.rst:349
 msgid "Make sure the path is correct and ends with a /. You can check the path in your database in the datalists table."
 msgstr ""
 
-#: ../../intro/install.rst:351
+#: ../../intro/install.rst:352
 msgid "If you only have ftp access to your server and created a directory but do not know the path of it, you might be able to figure it out from the www file path set in your datalists database table. Asking for help from your hosting help team is recommended at this stage."
 msgstr ""
 
-#: ../../intro/install.rst:360
+#: ../../intro/install.rst:361
 msgid "I can't validate my admin account because I don't have an email server!"
 msgstr ""
 
-#: ../../intro/install.rst:362
+#: ../../intro/install.rst:363
 msgid "While it's true that normal accounts (aside from those created from the admin panel) require their email address to be authenticated before they can log in, the admin account does not."
 msgstr ""
 
-#: ../../intro/install.rst:366
+#: ../../intro/install.rst:367
 msgid "Once you have registered your first account you will be able to log in using the credentials you have provided!"
 msgstr ""
 
-#: ../../intro/install.rst:370
+#: ../../intro/install.rst:371
 msgid "I have tried all of these suggestions and I still cannot install Elgg"
 msgstr ""
 
-#: ../../intro/install.rst:372
+#: ../../intro/install.rst:373
 msgid "It is possible that during the process of debugging your install you have broken something else. Try doing a clean install:"
 msgstr ""
 
-#: ../../intro/install.rst:375
+#: ../../intro/install.rst:376
 msgid "drop your elgg database"
 msgstr ""
 
-#: ../../intro/install.rst:376
+#: ../../intro/install.rst:377
 msgid "delete your data directory"
 msgstr ""
 
-#: ../../intro/install.rst:377
+#: ../../intro/install.rst:378
 msgid "delete the Elgg source files"
 msgstr ""
 
-#: ../../intro/install.rst:378
+#: ../../intro/install.rst:379
 msgid "start over"
 msgstr ""
 
-#: ../../intro/install.rst:380
+#: ../../intro/install.rst:381
 msgid "If that fails, seek the help of the `Elgg community`_. Be sure to mention what version of Elgg you are installing, details of your server platform, and any error messages that you may have received including ones in the error log of your server."
 msgstr ""
 

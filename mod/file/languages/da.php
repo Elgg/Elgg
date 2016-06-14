@@ -95,5 +95,6 @@ See og kommenter på filen:
 	'file:downloadfailed' => "Beklager, denne fil er ikke til rådighed lige nu.",
 	'file:deletefailed' => "Din fil kunne ikke slettes.",
 	'file:noaccess' => "Du har ikke tilladelse ti at ændre denne fil",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Du skal vælge en fil",
 );

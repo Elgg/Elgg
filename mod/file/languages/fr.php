@@ -95,5 +95,6 @@ Accéder à ce fichier et le commenter:
 	'file:downloadfailed' => "Désolé, ce fichier n'est pas disponible en ce moment.",
 	'file:deletefailed' => "Votre fichier n'a pas pu être supprimé.",
 	'file:noaccess' => "Vous n'avez pas la permission de modifier ce fichier",
+	'file:cannotload' => "Une erreur s'est produite lors de l'envoi du fichier",
 	'file:nofile' => "Vous devez sélectionner un fichier",
 );

@@ -477,6 +477,9 @@ return array(
 	'admin:cron:period' => 'Cron の間隔',
 	'admin:cron:friendly' => '最後に完了した時間',
 	'admin:cron:date' => '日付と時間',
+	'admin:cron:msg' => 'Message',
+	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
+	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => '見た目',
 	'admin:administer_utilities' => 'ユーティリティ',
@@ -1103,6 +1106,11 @@ return array(
 	'installation:simplecache:description' => "このsimple cacheは、CSSやJavaScriptなどの静的コンテントをキャッシュすることによって、サイトのパフォーマンスを改善させます。",
 	'installation:simplecache:label' => "Simple cache を使う(推奨)",
 
+	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
+	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
+	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
+	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+
 	'installation:minify:description' => "Simple cache は JavaScripte と CSS ファイルを圧縮することでパフォーマンスも改善することができます。（simple cacheを「有効」にする必要があります。）",
 	'installation:minify_js:label' => "JavaScript を圧縮（推奨）",
 	'installation:minify_css:label' => "CSS を圧縮（推奨）",
@@ -1142,6 +1150,7 @@ return array(
 
 	'admin:pending_upgrades' => 'サイトはアップグレードの途中で中断されています。これ以降は直接あなたの操作が必要です。',
 	'admin:view_upgrades' => '中断されているアップグレードを見る。',
+ 	'admin:upgrades' => 'アップグレード',
 	'item:object:elgg_upgrade' => 'サイトのアップグレード',
 	'admin:upgrades:none' => 'このインストールは最新の状態です！',
 
@@ -1357,6 +1366,7 @@ return array(
 	"es" => "Spanish",
 	"et" => "Estonian",
 	"eu" => "Basque",
+	"eu_es" => "Basque (Spain)",
 	"fa" => "Persian",
 	"fi" => "Finnish",
 	"fj" => "Fiji",
@@ -1421,11 +1431,12 @@ return array(
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
-	"pt_br" => 'ブラジルポルトガル語',
+	"pt_br" => "Portuguese (Brazil)",
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
 	"ro" => "Romanian",
+	"ro_ro" => "Romanian (Romania)",
 	"ru" => "Russian",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1440,6 +1451,7 @@ return array(
 	"so" => "Somali",
 	"sq" => "Albanian",
 	"sr" => "Serbian",
+	"sr_latin" => "Serbian (Latin)",
 	"ss" => "Siswati",
 	"st" => "Sesotho",
 	"su" => "Sundanese",
@@ -1471,6 +1483,7 @@ return array(
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinese",
+	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 
 	"field:required" => '必須です',

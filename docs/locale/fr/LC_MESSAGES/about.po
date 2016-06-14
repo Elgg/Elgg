@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the Elgg package.
 # 
 # Translators:
-# Emmanuel Simond, 2014
+# Emmanuel Simond <emmanuel.simond@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-13 18:54+0200\n"
+"POT-Creation-Date: 2016-03-20 19:29-0400\n"
 "PO-Revision-Date: 2016-03-10 16:25+0000\n"
 "Last-Translator: Juho Jaakkola <juho.jaakkola@mediamaisteri.com>\n"
 "Language-Team: French (http://www.transifex.com/elgg/elgg-core-2/language/fr/)\n"
