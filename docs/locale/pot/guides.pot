@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-06 22:18+0200\n"
+"POT-Creation-Date: 2016-06-13 22:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -349,7 +349,7 @@ msgid "``elgg_get_sticky_values($name)`` Returns all sticky values saved for $na
 msgstr ""
 
 #: ../../guides/actions.rst:232
-#: ../../guides/i18n.rst:9
+#: ../../guides/i18n.rst:12
 #: ../../guides/plugins/dependencies.rst:11
 msgid "Overview"
 msgstr ""
@@ -788,6 +788,26 @@ msgstr ""
 
 #: ../../guides/context.rst:11
 msgid "Sometimes a view will return different HTML depending on the context. A plugin can take advantage of that by setting the context before calling ``elgg_view()`` on the view and then setting the context back. This is frequently done with the search context."
+msgstr ""
+
+#: ../../guides/cron.rst:2
+msgid "Cron"
+msgstr ""
+
+#: ../../guides/cron.rst:4
+msgid "If you setup cron correctly as described in :doc:`/admin/cron` special hooks will be triggered so you can register for these hooks from your own code."
+msgstr ""
+
+#: ../../guides/cron.rst:7
+msgid "The example below registers a function for the daily cron."
+msgstr ""
+
+#: ../../guides/cron.rst:16
+msgid "If timing is important in your cron hook be advised that the functions are executed in order of registration. This could mean that your function may start (a lot) later then you may have expected. However the parameters provided in the hook contain the original starting time of the cron, so you can always use that information."
+msgstr ""
+
+#: ../../guides/cron.rst:30
+msgid ":doc:`/design/events` has more information about hooks"
 msgstr ""
 
 #: ../../guides/database.rst:2
@@ -3238,20 +3258,20 @@ msgstr ""
 msgid "If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`."
 msgstr ""
 
-#: ../../guides/i18n.rst:11
+#: ../../guides/i18n.rst:8
+msgid "The default language is ``en`` for English. Currently Elgg will always fall back to an English translation, even if the site's language is not English; this is a known bug."
+msgstr ""
+
+#: ../../guides/i18n.rst:14
 msgid "Translations are stored in PHP files in the ``/languages`` directory of your plugin. Each file corresponds to a language. The format is ``/languages/{language-code}.php`` where ``{language-code}`` is the ISO 639-1 short code for the language. For example:"
 msgstr ""
 
-#: ../../guides/i18n.rst:22
-msgid "The default language is “en” for English."
-msgstr ""
-
 #: ../../guides/i18n.rst:24
-msgid "To change the wording of any phrase, provide a new mapping in your plugin’s ``{language}.php`` file for the associated key:"
+msgid "To override an existing translation, include it in your plugin's language file, and make sure your plugin is ordered later on the Admin > Plugins page:"
 msgstr ""
 
-#: ../../guides/i18n.rst:36
-msgid "Unless you are overriding core’s or another plugin’s language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys."
+#: ../../guides/i18n.rst:37
+msgid "Unless you are overriding core’s or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys."
 msgstr ""
 
 #: ../../guides/i18n.rst:40
@@ -3282,23 +3302,31 @@ msgstr ""
 msgid "To force which language should be used for translation, set the third parameter:"
 msgstr ""
 
-#: ../../guides/i18n.rst:71
+#: ../../guides/i18n.rst:68
+msgid "To first test whether ``elgg_echo()`` can find a translation:"
+msgstr ""
+
+#: ../../guides/i18n.rst:79
+msgid "Some APIs allow creating translations for new keys. Translators should always include an English translation as a fallback. This makes ``elgg_language_key_exists($key)`` a reliable way to predict whether ``elgg_echo($key)`` will succeed."
+msgstr ""
+
+#: ../../guides/i18n.rst:84
 msgid "Javascript API"
 msgstr ""
 
-#: ../../guides/i18n.rst:73
-msgid "``elgg.echo(key, args, language)``"
+#: ../../guides/i18n.rst:86
+msgid "``elgg.echo(key, args)``"
 msgstr ""
 
-#: ../../guides/i18n.rst:75
-msgid "This function is the exact counterpart to ``elgg_echo`` in PHP."
+#: ../../guides/i18n.rst:88
+msgid "This function is like ``elgg_echo`` in PHP."
 msgstr ""
 
-#: ../../guides/i18n.rst:77
+#: ../../guides/i18n.rst:90
 msgid "Client-side translations are loaded asynchronously. Ensure translations are available by requiring the \"elgg\" AMD module:"
 msgstr ""
 
-#: ../../guides/i18n.rst:87
+#: ../../guides/i18n.rst:100
 msgid "Translations are also available after the ``init, system`` JavaScript event."
 msgstr ""
 

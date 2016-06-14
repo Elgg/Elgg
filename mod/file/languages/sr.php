@@ -95,5 +95,6 @@ return array(
 	'file:downloadfailed' => "Извинте,  овај фајл није доступан тренутно.",
 	'file:deletefailed' => "Нисмо могли да обришемо ваш фајл.",
 	'file:noaccess' => "Немте дозволе да мењате овај фајл",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Морате да означите фајл",
 );

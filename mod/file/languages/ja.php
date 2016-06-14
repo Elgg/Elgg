@@ -95,5 +95,6 @@ return array(
 	'file:downloadfailed' => "申し訳ありません。今、このファイルは利用できません。",
 	'file:deletefailed' => "今、このファイルは削除できません。",
 	'file:noaccess' => "あなたには、このファイルを変更する権限がありません。",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "ファイルを選択して下さい。",
 );
