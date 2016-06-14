@@ -81,12 +81,18 @@ class CommitMessage {
 	 */
 	private static $validTypes = array(
 		'feature',
+		'feat',
 		'fix',
+		'fixes',
+		'fixed',
+		'doc',
 		'docs',
 		'chore',
 		'perf',
+		'performance',
 		'security',
 		'deprecate',
+		'deprecates'
 	);
 
 	/**

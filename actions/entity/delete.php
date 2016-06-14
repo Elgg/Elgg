@@ -11,7 +11,7 @@ if (!$entity instanceof ElggEntity) {
 	forward(REFERRER);
 }
 
-if (!$entity->canDelete()) {
+if (!$entity->canDelete() || $entity instanceof ElggPlugin || $entity instanceof ElggSite) {
 	register_error(elgg_echo('entity:delete:permission_denied'));
 	forward(REFERRER);
 }
