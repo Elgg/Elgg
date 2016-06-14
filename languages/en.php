@@ -20,7 +20,8 @@ return array(
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
 	'logouterror' => "We couldn't log you out. Please try again.",
-	'session_expired' => "Your session has expired. Please reload the page to log in.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "You must be logged in to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",

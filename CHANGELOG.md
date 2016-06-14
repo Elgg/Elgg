@@ -107,6 +107,41 @@
 * **filestore:** deprecates giving files custom filestores ([0050b1db](https://github.com/Elgg/Elgg/commit/0050b1dbf21961ab24f4046c2f2aa62fa7177080), closes [#9352](https://github.com/Elgg/Elgg/issues/9352))
 
 
+<a name="2.0.4"></a>
+### 2.0.4  (2016-06-13)
+
+#### Contributors
+
+* Jeroen Dalsem (13)
+* Ismayil Khayredinov (4)
+* Steve Clay (2)
+* iionly (2)
+* jdalsem (1)
+
+#### Bug Fixes
+
+* **ckeditor:** do not draw a menu item if id is missing ([edf382b0](https://github.com/Elgg/Elgg/commit/edf382b0d8dda49bc0938524b494a0e9253bd73a))
+* **core:**
+  * prevent undefined variable notices advanced caching form ([f3459110](https://github.com/Elgg/Elgg/commit/f345911053179a199b569fc022dc4039b9ee6f5b))
+  * view inspector now can use simplecache views again ([6c39e573](https://github.com/Elgg/Elgg/commit/6c39e57367231dbccf818b83ac8da655e7e55e15))
+  * prevent inspector producing notices inspecting webservices ([3862ffcd](https://github.com/Elgg/Elgg/commit/3862ffcde22c3837d04aca901d3ba12c9f7a57e6))
+  * menu inspector provides id in longtext menu ([61c0a549](https://github.com/Elgg/Elgg/commit/61c0a549818f5efa7eea88ae22c0628487c7ff04))
+* **css:** correctly positioned the user hover menu icon ([e5566c1a](https://github.com/Elgg/Elgg/commit/e5566c1add0c3276dcc6ff8fe0046c413e571e54))
+* **developers:**
+  * replaced get_language with get_current_language ([b6bcc579](https://github.com/Elgg/Elgg/commit/b6bcc5796ebe6da491371619014386dc11dc3003))
+  * restores missing event/hook handlers in inspector ([70ca4264](https://github.com/Elgg/Elgg/commit/70ca4264195c3d05f12f241d0f051896468fe3c9), closes [#9527](https://github.com/Elgg/Elgg/issues/9527))
+* **discussion:** correctly check permissions before showing reply form ([8e64d44d](https://github.com/Elgg/Elgg/commit/8e64d44df5f647ac4cee4b3e60ba7c4e0739e540))
+* **embed:** do not draw a menu item if id is missing ([69ca6b51](https://github.com/Elgg/Elgg/commit/69ca6b5111fc29adf0fafb337fb4c944138c5ce2))
+* **i18n:** prevent php notices about language translations missing ([1f9916e7](https://github.com/Elgg/Elgg/commit/1f9916e71ddc35d1261b8572f80da2fb2c75a487))
+* **js:** replace deprecated jquery .attr usage with .prop ([a95ecc6c](https://github.com/Elgg/Elgg/commit/a95ecc6c854ebf236eea56666f0116ead91154ba))
+* **members:** search page now has pagination ([d42611c2](https://github.com/Elgg/Elgg/commit/d42611c28f5209f5185c6dff2046d7c208db9a94))
+* **notifications:**
+  * use the correct way to check if checkbox is checked ([4c7b8b65](https://github.com/Elgg/Elgg/commit/4c7b8b653407b4f253ec53d31c830f4296429976))
+  * users are again unsubscribed when friendship and membership are deleted ([8990ab53](https://github.com/Elgg/Elgg/commit/8990ab535f0bf6763bc412e94bebd5ec699dcece))
+* **pages:** use elgg_extract to prevent php notice fetching parent_name ([c8710c9b](https://github.com/Elgg/Elgg/commit/c8710c9bea9963d5f1425ce670608aeed97b3ba9))
+* **views:** passing 'default' to input/checkboxes now works ([efa6395f](https://github.com/Elgg/Elgg/commit/efa6395f575973c0f588028c81acdc5446421970))
+
+
 <a name="2.0.3"></a>
 ### 2.0.3  (2016-03-06)
 
@@ -792,6 +827,24 @@ change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
+
+<a name="1.12.11"></a>
+### 1.12.11  (2016-06-13)
+
+#### Contributors
+
+* Ismayil Khayredinov (2)
+* Steve Clay (2)
+* Matt Beckett (1)
+* ura soul (1)
+
+#### Bug Fixes
+
+* **river:** custom joins can now reference default joined tables. ([a6590a9a](https://github.com/Elgg/Elgg/commit/a6590a9a68f534b8ae6bde274bf642bec301f4a3), closes [#8580](https://github.com/Elgg/Elgg/issues/8580))
+* **ui:** improves usability of anchors within system messages ([30e3ad6c](https://github.com/Elgg/Elgg/commit/30e3ad6cf32fc467be0d83cbb44481f4c6a92ffa))
+* **walled_garden:** favicon.ico page handler is now treated as public ([53f11c43](https://github.com/Elgg/Elgg/commit/53f11c436ec4101fccb2d2a39bd4cdceaeeff779))
+
+
 <a name="1.12.10"></a>
 ### 1.12.10  (2016-05-29)
 
@@ -1075,6 +1128,19 @@ Elgg 2.0. ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654
 * **views:**
   * elgg_get_view_location is going away in 2.0 ([b4347fb4](https://github.com/Elgg/Elgg/commit/b4347fb4209dd1a09d5ad0d1ef2d546169aeb5b9))
   * Support for custom template handlers will end soon ([0dc67698](https://github.com/Elgg/Elgg/commit/0dc67698f6def5fa6cea32dd1171d1166e9c4e29))
+
+
+<a name="1.11.6"></a>
+### 1.11.6  (2016-06-12)
+
+#### Contributors
+
+* Steve Clay (3)
+
+#### Breaking Changes
+
+* The JS function `elgg.security.setToken` is now formally marked private and
+its parameters are not backwards compatible. ([9d8ddecb](https://github.com/Elgg/Elgg/commit/9d8ddecb90b9e160ad85610592c5808e7e8f0c3f))
 
 
 <a name="1.11.5"></a>
