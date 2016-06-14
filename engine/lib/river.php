@@ -341,7 +341,7 @@ function elgg_get_river(array $options = array()) {
 	if ($options['posted_time_upper'] && is_int($options['posted_time_upper'])) {
 		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
 	}
-	
+
 	if (!access_get_show_hidden_status()) {
 		$wheres[] = "rv.enabled = 'yes'";
 	}
@@ -349,7 +349,11 @@ function elgg_get_river(array $options = array()) {
 	$joins = $options['joins'];
 
 	$dbprefix = elgg_get_config('dbprefix');
+
+	// joins
+	$joins = array();
 	$joins[] = "JOIN {$dbprefix}entities oe ON rv.object_guid = oe.guid";
+
 	// LEFT JOIN is used because all river items do not necessarily have target
 	$joins[] = "LEFT JOIN {$dbprefix}entities te ON rv.target_guid = te.guid";
 
@@ -364,6 +368,9 @@ function elgg_get_river(array $options = array()) {
 			$joins = array_merge($joins, $clauses['joins']);
 		}
 	}
+
+	// add optional joins
+	$joins = array_merge($joins, $options['joins']);
 
 	// see if any functions failed
 	// remove empty strings on successful functions
@@ -380,12 +387,12 @@ function elgg_get_river(array $options = array()) {
 
 	if (!$options['count']) {
 		$distinct = $options['distinct'] ? "DISTINCT" : "";
-		
+
 		$query = "SELECT $distinct rv.* FROM {$CONFIG->dbprefix}river rv ";
 	} else {
 		// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than IDs
 		$count_expr = $options['distinct'] ? "DISTINCT rv.id" : "*";
-		
+
 		$query = "SELECT COUNT($count_expr) as total FROM {$CONFIG->dbprefix}river rv ";
 	}
 
@@ -760,7 +767,7 @@ function _elgg_river_test($hook, $type, $value) {
 
 /**
  * Disable river entries that reference a disabled entity as subject/object/target
- * 
+ *
  * @param string $event The event 'disable'
  * @param string $type Type of entity being disabled 'all'
  * @param mixed $entity The entity being disabled
@@ -768,18 +775,18 @@ function _elgg_river_test($hook, $type, $value) {
  * @access private
  */
 function _elgg_river_disable($event, $type, $entity) {
-	
+
 	if (!elgg_instanceof($entity)) {
 		return true;
 	}
-	
+
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = <<<QUERY
 	UPDATE {$dbprefix}river AS rv
 	SET rv.enabled = 'no'
 	WHERE (rv.subject_guid = {$entity->guid} OR rv.object_guid = {$entity->guid} OR rv.target_guid = {$entity->guid});
 QUERY;
-	
+
 	update_data($query);
 	return true;
 }
@@ -787,7 +794,7 @@ QUERY;
 
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
- * 
+ *
  * @param string $event The event 'enable'
  * @param string $type Type of entity being enabled 'all'
  * @param mixed $entity The entity being enabled
@@ -795,11 +802,11 @@ QUERY;
  * @access private
  */
 function _elgg_river_enable($event, $type, $entity) {
-	
+
 	if (!elgg_instanceof($entity)) {
 		return true;
 	}
-	
+
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = <<<QUERY
 	UPDATE {$dbprefix}river AS rv
@@ -808,9 +815,9 @@ function _elgg_river_enable($event, $type, $entity) {
 	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
 	SET rv.enabled = 'yes'
 	WHERE (
-			(se.enabled = 'yes' OR se.guid IS NULL) AND 
+			(se.enabled = 'yes' OR se.guid IS NULL) AND
 			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
-			(te.enabled = 'yes' OR te.guid IS NULL)		
+			(te.enabled = 'yes' OR te.guid IS NULL)
 		)
 		AND (se.guid = {$entity->guid} OR oe.guid = {$entity->guid} OR te.guid = {$entity->guid});
 QUERY;

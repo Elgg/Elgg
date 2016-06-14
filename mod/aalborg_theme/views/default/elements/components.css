@@ -127,6 +127,10 @@
 .elgg-state-notice {
 	background-color: #5097CF;
 }
+.elgg-message a {
+	color: inherit;
+	text-decoration: underline;
+}
 .elgg-box-error {
 	margin-top: 10px;
 	padding: 20px;

@@ -13,8 +13,10 @@ define(function(require) {
 		// system messages do not fade in admin area, instead slide up when clicked
 		$('.elgg-system-messages li').stop(true);
 		$(document).off('click', '.elgg-system-messages li');
-		$(document).on('click', '.elgg-system-messages li', function() {
-			$(this).stop().slideUp('medium');
+		$(document).on('click', '.elgg-system-messages li', function(e) {
+			if (!$(e.target).is('a')) {
+				$(this).stop().slideUp('medium');
+			}
 		});
 
 		// draggable plugin reordering
