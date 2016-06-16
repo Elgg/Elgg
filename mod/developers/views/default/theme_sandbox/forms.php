@@ -30,6 +30,16 @@ $ipsum = elgg_view('developers/ipsum');
 			'label' => 'Radio input (.elgg-input-radios):',
 		));
 
+		echo elgg_view_input('checkbox', array(
+			'name' => 'f4s',
+			'id' => 'f4s',
+			'value' => 1,
+			'default' => false,
+			'required' => true,
+			'label' => 'a (.elgg-input-checkbox)',
+			'help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox',
+		));
+
 		echo elgg_view_input('checkboxes', array(
 			'name' => 'f4',
 			'id' => 'f4',

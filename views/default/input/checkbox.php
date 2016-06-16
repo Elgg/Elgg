@@ -18,6 +18,7 @@
  * @uses $vars['label']       Optional label string
  * @uses $vars['class']       Additional CSS class
  * @uses $vars['label_class'] Optional class for the label
+ * @uses $vars['label_tag']   HTML tag that wraps concatinated label and input. Defaults to 'label'.
  */
 
 $vars['class'] = (array) elgg_extract('class', $vars, []);
@@ -39,14 +40,16 @@ if (isset($vars['name']) && $default !== false) {
 }
 
 $label = elgg_extract('label', $vars, false);
-$label_class = elgg_extract('label_class', $vars);
+$label_class = (array) elgg_extract('label_class', $vars, []);
+$label_class[] = 'elgg-input-single-checkbox';
 unset($vars['label']);
 unset($vars['label_class']);
 
 $input = elgg_format_element('input', $vars);
 
 if (!empty($label)) {
-	echo elgg_format_element('label', ['class' => $label_class], "$input $label");
+	$html_tag = elgg_extract('label_tag', $vars, 'label', false);
+	echo elgg_format_element($html_tag, ['class' => $label_class], "$input $label");
 } else {
 	echo $input;
 }

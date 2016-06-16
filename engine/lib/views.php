@@ -1348,7 +1348,13 @@ function elgg_view_input($input_type, array $vars = array()) {
 	$vars['input_type'] = $input_type;
 
 	$label = elgg_view('elements/forms/label', $vars);
-	unset($vars['label']);
+	if ($input_type == 'checkbox') {
+		$vars['label'] = $label;
+		$vars['label_tag'] = 'div';
+		$label = false;
+	} else {
+		unset($vars['label']);
+	}
 
 	$help = elgg_view('elements/forms/help', $vars);
 	unset($vars['help']);

@@ -588,12 +588,18 @@ select {
 }
 
 .elgg-form-useradd input[type=text],
-.elgg-form-useradd input[type=password] {
+.elgg-form-useradd input[type=password],
+.elgg-form-useradd input[type=email] {
 	width: 300px;
 }
 
 .elgg-form-settings {
 	max-width: 800px;
+}
+
+.elgg-input-checkbox + label,
+.elgg-input-checkbox + .elgg-field-label {
+	display: inline-block;
 }
 
 /* **************************************

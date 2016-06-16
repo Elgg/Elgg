@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg add user form.
  *
@@ -6,6 +7,7 @@
  * @subpackage Core
  * 
  */
+elgg_require_js('forms/useradd');
 
 if (elgg_is_sticky_form('useradd')) {
 	$values = elgg_get_sticky_values('useradd');
@@ -19,66 +21,60 @@ $name = elgg_extract('name', $values);
 $username = elgg_extract('username', $values);
 $email = elgg_extract('email', $values);
 $admin = elgg_extract('admin', $values);
-if (is_array($admin)) {
-	$admin = array_shift($admin);
-}
+$autogen_password = elgg_extract('autogen_password', $values);
 
-?>
-<div>
-	<label><?php echo elgg_echo('name');?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
-		'name' => 'name',
-		'value' => $name,
-	));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('username'); ?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
-		'name' => 'username',
-		'value' => $username,
-	));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('email'); ?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
-		'name' => 'email',
-		'value' => $email,
-	));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('password'); ?></label><br />
-	<?php
-	echo elgg_view('input/password', array(
-		'name' => 'password',
-		'value' => $password,
-	));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('passwordagain'); ?></label><br />
-	<?php
-	echo elgg_view('input/password', array(
-		'name' => 'password2',
-		'value' => $password2,
-	));
-	?>
-</div>
-<div>
-<?php 
-	echo elgg_view('input/checkboxes', array(
-		'name' => "admin",
-		'options' => array(elgg_echo('admin_option') => 1),
-		'value' => $admin,
-	));
-?>
-</div>
+echo elgg_view_input('text', [
+	'name' => 'name',
+	'value' => $name,
+	'label' => elgg_echo('name'),
+	'required' => true,
+]);
 
-<div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('register'))); ?>
-</div>
+echo elgg_view_input('text', [
+	'name' => 'username',
+	'value' => $username,
+	'label' => elgg_echo('username'),
+	'required' => true,
+]);
+
+echo elgg_view_input('email', [
+	'name' => 'email',
+	'value' => $email,
+	'label' => elgg_echo('email'),
+	'required' => true,
+]);
+
+echo elgg_view_input('checkbox', array(
+	'name' => 'autogen_password',
+	'value' => 1,
+	'default' => false,
+	'label' => elgg_echo('autogen_password_option'),
+	'checked' => (bool) $autogen_password,
+));
+
+echo elgg_view_input('password', [
+	'name' => 'password',
+	'value' => $password,
+	'label' => elgg_echo('password'),
+	'required' => true,
+]);
+
+echo elgg_view_input('password', [
+	'name' => 'password2',
+	'value' => $password2,
+	'label' => elgg_echo('passwordagain'),
+	'required' => true,
+]);
+
+echo elgg_view_input('checkbox', array(
+	'name' => 'admin',
+	'value' => 1,
+	'default' => false,
+	'label' => elgg_echo('admin_option'),
+	'checked' => $admin,
+));
+
+echo elgg_view_input('submit', [
+	'value' => elgg_echo('register'),
+	'field_class' => 'elgg-foot',
+]);
