@@ -9,10 +9,9 @@ function developers_ajax_demo_alter($hook, $type, Elgg\Services\AjaxResponse $v,
 		$v->getData()->server_response_altered = 2;
 	}
 
-	register_error('Error from ajax demo response hook');
+	register_error('Hello from ajax_response hook');
 }
 elgg_register_plugin_hook_handler('ajax_response', 'action:developers/ajax_demo', 'developers_ajax_demo_alter');
-
 
 // typical ajax action:
 
@@ -21,7 +20,7 @@ elgg_ajax_gatekeeper();
 $arg1 = (int)get_input('arg1');
 $arg2 = (int)get_input('arg2');
 
-system_message('Success message from ajax demo');
+system_message('Hello from action');
 
 echo json_encode([
 	'sum' => $arg1 + $arg2,

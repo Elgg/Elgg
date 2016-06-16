@@ -24,6 +24,8 @@ module.exports = function(config) {
 
 			{pattern:'js/tests/*Test.js',included: false},
 			{pattern:'views/default/**/*.js',included:false},
+			{pattern:'vendor/bower-asset/**/*.js',included:false},
+			{pattern:'node_modules/**/*.js',included:false},
 
 			'js/tests/requirejs.config.js'
 		],

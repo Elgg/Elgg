@@ -349,6 +349,39 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
+	 * Transfer a file to a new owner and sets a new filename,
+	 * copies file contents to a new location.
+	 *
+	 * This is an alternative to using rename() which fails to move files to 
+	 * a non-existent directory under new owner's filestore directory
+	 * 
+	 * @param int    $owner_guid New owner's guid
+	 * @param string $filename   New filename (uses old filename if not set)
+	 * @return bool
+	 */
+	public function transfer($owner_guid, $filename = null) {
+		if (!$owner_guid) {
+			return false;
+		}
+
+		if (!$this->exists()) {
+			return false;
+		}
+		
+		if (!$filename) {
+			$filename = $this->getFilename();
+		}
+		$filestorename = $this->getFilenameOnFilestore();
+		
+		$this->owner_guid = $owner_guid;
+		$this->setFilename($filename);
+		$this->open('write');
+		$this->close();
+
+		return rename($filestorename, $this->getFilenameOnFilestore());
+	}
+
+	/**
 	 * Get property names to serialize.
 	 *
 	 * @return string[]

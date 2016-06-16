@@ -68,19 +68,15 @@ foreach ($files as $file) {
 	echo "\n";
 }
 
-/**
- * Set some values that are cacheable
- */
 ?>
 //<script>
+<?php foreach (_elgg_get_js_site_data() as $expression => $value): ?>
+<?= $expression ?> = <?= json_encode($value) ?>;
+<?php endforeach; ?>
 
-elgg.version = '<?php echo elgg_get_version(); ?>';
-elgg.release = '<?php echo elgg_get_version(true); ?>';
-elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
-
-// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
-elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
-elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
+// page data overrides site data
+$.extend(elgg.data, elgg._data);
+delete elgg._data;
 
 // jQuery and UI must be loaded sync in 2.x but modules should depend on these AMD modules
 define('jquery', function () {

@@ -65,7 +65,11 @@ $name_input = elgg_view('input/text', ['name' => 'custom_menu_titles[]']);
 
 $url_input = elgg_view('input/text', ['name' => 'custom_menu_urls[]']);
 
-$add_menu_items .= elgg_format_element('li', ['class' => 'custom_menuitem'], "$name_str: $name_input $url_str: $url_input");
+$add_menu_items .= elgg_format_element([
+	'#tag_name' => 'li',
+	'class' => 'custom_menuitem',
+	'#text' => "$name_str: $name_input $url_str: $url_input",
+]);
 
 $add_menu = elgg_view('output/longtext', ['value' => elgg_echo('admin:add_menu_item:description')]);
 $add_menu .= elgg_format_element('ul', ['class' => 'elgg-list elgg-list-simple'], $add_menu_items);

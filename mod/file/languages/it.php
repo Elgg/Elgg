@@ -94,5 +94,6 @@ Visualizza e commenta il nuovo file:
 	'file:downloadfailed' => "Spiacenti; questo file non è disponibile al momento.",
 	'file:deletefailed' => "Il tuo file non può essere rimosso in questo momento.",
 	'file:noaccess' => "Non hai il permesso di modificare questo file",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Devi selezionare un file",
 );

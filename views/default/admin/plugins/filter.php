@@ -26,6 +26,10 @@ foreach ($categories as $key => $category) {
 	$list_items .= elgg_format_element('li', array(), $link);
 }
 
-$body = elgg_format_element('ul', ['class' => 'elgg-admin-plugins-categories elgg-admin-sidebar-menu elgg-menu-hz'], $list_items);
+$body = elgg_format_element([
+	'#tag_name' => 'ul',
+	'class' => 'elgg-admin-plugins-categories elgg-admin-sidebar-menu elgg-menu-hz',
+	'#text' => $list_items,
+]);
 
 echo elgg_view_module('', elgg_echo('filter'), $body);

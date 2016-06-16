@@ -317,14 +317,15 @@ class ElggSession implements \ArrayAccess {
 	/**
 	 * Adds a token to the session
 	 * 
-	 * This is used in creation of CSRF token
+	 * This is used in creation of CSRF token, and is passed to the client to allow validating tokens
+	 * later, even if the PHP session was destroyed.
 	 * 
 	 * @return void
 	 */
 	protected function generateSessionToken() {
 		// Generate a simple token that we store server side
 		if (!$this->has('__elgg_session')) {
-			$this->set('__elgg_session', md5(microtime() . rand()));
+			$this->set('__elgg_session', _elgg_services()->crypto->getRandomString(22));
 		}
 	}
 
