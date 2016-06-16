@@ -95,5 +95,6 @@ return array(
 	'file:downloadfailed' => "抱歉，文献现在无法访问。",
 	'file:deletefailed' => "你的文件现在无法删除。",
 	'file:noaccess' => "你没有权限修改这个文件",
+	'file:cannotload' => "上传文件存在错误",
 	'file:nofile' => "你必须选择一个文件",
 );

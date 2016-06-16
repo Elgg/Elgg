@@ -1872,9 +1872,9 @@ function _elgg_get_js_page_data() {
 
 	$elgg = array(
 		'config' => array(
-			'lastcache' => (int)elgg_get_config('lastcache'),
+			'lastcache' => (int) elgg_get_config('lastcache'),
 			'viewtype' => elgg_get_viewtype(),
-			'simplecache_enabled' => (int)elgg_is_simplecache_enabled(),
+			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
 		),
 		'security' => array(
 			'token' => array(
@@ -1884,8 +1884,9 @@ function _elgg_get_js_page_data() {
 		),
 		'session' => array(
 			'user' => null,
+			'token' => _elgg_services()->session->get('__elgg_session'),
 		),
-		'_data' => (object)$data,
+		'_data' => (object) $data,
 	);
 
 	if (elgg_get_config('elgg_load_sync_code')) {

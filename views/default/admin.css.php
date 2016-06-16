@@ -254,6 +254,10 @@ a.elgg-maintenance-mode-warning {
 	background-color: #EAF8E8;
 	border: 1px solid #AADEA2;
 }
+.elgg-message a {
+	color: inherit;
+	text-decoration: underline;
+}
 
 .elgg-admin-notices p {
 	color: #3B8BC9;
