@@ -20,7 +20,8 @@ return array(
 	'logout' => "ログアウト",
 	'logoutok' => "ログアウトしました。",
 	'logouterror' => "ログアウトできませんでした。もう一度お試しください。",
-	'session_expired' => "あなたのセッションは期限切れです。ログインするためにはページを再読み込みしてください。",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "要求されたページはログインしないとご覧になることはできません。",
 	'adminrequired' => "要求されたページは管理者でないとご覧になることはできません。",
@@ -142,6 +143,7 @@ return array(
 	'password' => "パスワード",
 	'passwordagain' => "パスワード（確認）",
 	'admin_option' => "このユーザに管理者権限を与える",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -1150,7 +1152,6 @@ return array(
 
 	'admin:pending_upgrades' => 'サイトはアップグレードの途中で中断されています。これ以降は直接あなたの操作が必要です。',
 	'admin:view_upgrades' => '中断されているアップグレードを見る。',
- 	'admin:upgrades' => 'アップグレード',
 	'item:object:elgg_upgrade' => 'サイトのアップグレード',
 	'admin:upgrades:none' => 'このインストールは最新の状態です！',
 
