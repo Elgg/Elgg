@@ -95,5 +95,6 @@ Zobacz i skomentuj nowy plik:
 	'file:downloadfailed' => "Przykro nam, ten plik nie jest dostępny w tej chwili.",
 	'file:deletefailed' => "Plik nie może być usunięty w tej chwili.",
 	'file:noaccess' => "Nie masz uprawnień do modyfikacji tego pliku",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Musisz wskazać plik",
 );

@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Mein Status',
 	'groups:my_status:group_owner' => 'Die Gruppe wurde von Dir gegründet.',
 	'groups:my_status:group_member' => 'Du bist Mitglied dieser Gruppe.',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
+	'groups:subscribed' => 'Benachrichtigungen für diese Gruppe sind aktiviert.',
+	'groups:unsubscribed' => 'Benachrichtigungen für diese Gruppe sind deaktiviert.',
 
 	'groups:members:title' => 'Mitglieder von %s',
 	'groups:members:more' => "Alle Mitglieder auflisten",

@@ -243,7 +243,7 @@ function twitter_api_update_user_avatar($user, $file_location) {
 	// @todo Should probably check that it's an image file.
 	$file_location = str_replace('_normal.jpg', '.jpg', $file_location);
 
-	$icon_sizes = elgg_get_config('icon_sizes');
+	$icon_sizes = elgg_get_icon_sizes('user');
 
 	$filehandler = new ElggFile();
 	$filehandler->owner_guid = $user->getGUID();

@@ -24,6 +24,12 @@ if (is_array($admin)) {
 	$admin = $admin[0];
 }
 
+$autogen_password = get_input('autogen_password');
+if ($autogen_password) {
+	$password = generate_random_cleartext_password();
+	$password2 = $password;
+}
+
 // no blank fields
 if ($username == '' || $password == '' || $password2 == '' || $email == '' || $name == '') {
 	register_error(elgg_echo('register:fields'));

@@ -1,35 +1,24 @@
 define(function(require) {
 	
 	var elgg = require('elgg');
+	var $ = require('jquery');
+	require('jquery-mockjax');
 	var Ajax = require('elgg/Ajax');
 	var ajax = new Ajax();
-	
+
+	$.mockjaxSettings.responseTime = 10;
+
 	describe("elgg/ajax", function() {
-		var ajax_tmp,
-			captured_options,
-			captured_hook,
-			response_object,
+		var captured_hook,
 			root = elgg.get_site_url();
 
 		beforeEach(function() {
-			ajax_tmp = $.ajax;
-			response_object = {value: null};
 			captured_hook = null;
-			
-			$.ajax = function(options) {
-				captured_options = options;
-				var def = $.Deferred();
-				setTimeout(function () {
-					if ($.isFunction(options.success)) {
-						options.success(response_object);
-					}
-					def.resolve(response_object);
-				}, 1);
-				return def;
-			};
+
+			$.mockjaxSettings.logging = false;
+			$.mockjax.clear();
 
 			elgg.config.hooks = {};
-			Ajax._init_hooks();
 
 			// note, "all" type > always higher priority than specific types
 			elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'all', function (h, t, p, v) {
@@ -40,15 +29,15 @@ define(function(require) {
 				};
 			});
 		});
-		
-		afterEach(function() {
-			$.ajax = ajax_tmp;
-		});
 
 		it("passes unwrapped value to both success and deferred", function(done) {
-			response_object = {
-				value: 1
-			};
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				responseText: {
+					value: 1
+				}
+			});
 
 			var def1 = $.Deferred(),
 				def2 = $.Deferred();
@@ -67,16 +56,24 @@ define(function(require) {
 		});
 
 		it("allows filtering response wrapper by hook, called only once", function(done) {
-			response_object = {
-				value: 1,
-				foo: 2
-			};
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				responseText: {
+					value: 1,
+					foo: 2
+				}
+			});
 
 			var hook_calls = 0;
 
 			elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'path:foo', function (h, t, p, v) {
 				hook_calls++;
-				expect(v).toEqual({value: 1, foo: 2});
+				expect(v).toEqual({
+					value: 1,
+					foo: 2,
+					status: 0
+				});
 				expect(p.options.url).toBe('foo');
 				v.value = 3;
 				return v;
@@ -104,99 +101,109 @@ define(function(require) {
 		$.each(['path', 'action', 'form', 'view'], function (i, method) {
 			it("method " + method + "() sends special header", function() {
 				ajax[method]('foo');
-				expect(captured_options.headers).toEqual({ 'X-Elgg-Ajax-API' : '2' });
+				expect(ajax._ajax_options.headers).toEqual({ 'X-Elgg-Ajax-API' : '2' });
 			});
 
 			it("method " + method + "() uses dataType json", function() {
 				ajax[method]('foo');
-				expect(captured_options.dataType).toEqual('json');
+				expect(ajax._ajax_options.dataType).toEqual('json');
 			});
 		});
 
 		it("action() defaults to POST", function() {
 			ajax.action('foo');
-			expect(captured_options.method).toEqual('POST');
+			expect(ajax._ajax_options.method).toEqual('POST');
 		});
 
 		$.each(['path', 'form', 'view'], function (i, method) {
 
 			it(method + "() defaults to GET", function() {
 				ajax[method]('foo');
-				expect(captured_options.method).toEqual('GET');
+				expect(ajax._ajax_options.method).toEqual('GET');
 			});
 
 			it(method + "(): non-empty object data changes default to POST", function() {
 				ajax[method]('foo', {
 					data: {bar: 'bar'}
 				});
-				expect(captured_options.method).toEqual('POST');
+				expect(ajax._ajax_options.method).toEqual('POST');
 			});
 
 			it(method + "(): non-empty string data changes default to POST", function() {
 				ajax[method]('foo', {
 					data: '?bar=bar'
 				});
-				expect(captured_options.method).toEqual('POST');
+				expect(ajax._ajax_options.method).toEqual('POST');
 			});
 
 			it(method + "(): empty string data leaves default as GET", function() {
 				ajax[method]('foo', {
 					data: ''
 				});
-				expect(captured_options.method).toEqual('GET');
+				expect(ajax._ajax_options.method).toEqual('GET');
 			});
 
 			it(method + "(): empty object data leaves default as GET", function() {
 				ajax[method]('foo', {
 					data: {}
 				});
-				expect(captured_options.method).toEqual('GET');
+				expect(ajax._ajax_options.method).toEqual('GET');
 			});
 		});
 
-		it("allows altering value via hook", function() {
+		it("allows altering value via hook", function(done) {
 			elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'path:foo/bar', function (h, t, p, v) {
 				v.arg3 = 3;
 				return v;
 			}, 900);
 
-			ajax.path('/foo/bar/?arg1=1#target', {
-				data: {arg2: 2}
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo/bar/?arg1=1"),
+				responseText: {
+					value: 1,
+					foo: 2
+				}
 			});
 
-			expect(captured_options.data).toEqual({
+			ajax.path('/foo/bar/?arg1=1#target', {
+				data: {arg2: 2}
+			}).done(function () {
+				expect(captured_hook.v).toEqual({arg2: 2, arg3: 3});
+				expect(captured_hook.p.options.data).toEqual({arg2: 2, arg3: 3});
+				done();
+			});
+
+			expect(ajax._ajax_options.data).toEqual({
 				arg2: 2,
 				arg3: 3
 			});
-
-			expect(captured_hook.v).toEqual({arg2: 2, arg3: 3});
-			expect(captured_hook.p.options.data).toEqual({arg2: 2, arg3: 3});
 		});
 
 		it("normalizes argument paths/URLs", function() {
 			ajax.path('/foo/bar/?arg1=1#target');
-			expect(captured_hook.t).toEqual('path:foo/bar');
-			expect(captured_options.url).toEqual(root + 'foo/bar/?arg1=1');
+			expect(ajax._fetch_args.hook_type).toEqual('path:foo/bar');
+			expect(ajax._fetch_args.options.url).toEqual(root + 'foo/bar/?arg1=1');
 
 			ajax.path(root + 'foo/bar/?arg1=1#target');
-			expect(captured_hook.t).toEqual('path:foo/bar');
-			expect(captured_options.url).toEqual(root + 'foo/bar/?arg1=1');
+			expect(ajax._fetch_args.hook_type).toEqual('path:foo/bar');
+			expect(ajax._fetch_args.options.url).toEqual(root + 'foo/bar/?arg1=1');
 
 			ajax.action('/foo/bar/?arg1=1#target');
-			expect(captured_hook.t).toEqual('action:foo/bar');
-			expect(captured_options.url).toEqual(root + 'action/foo/bar/?arg1=1');
+			expect(ajax._fetch_args.hook_type).toEqual('action:foo/bar');
+			expect(ajax._fetch_args.options.url).toEqual(root + 'action/foo/bar/?arg1=1');
 
 			ajax.action(root + 'action/foo/bar/?arg1=1#target');
-			expect(captured_hook.t).toEqual('action:foo/bar');
-			expect(captured_options.url).toEqual(root + 'action/foo/bar/?arg1=1');
+			expect(ajax._fetch_args.hook_type).toEqual('action:foo/bar');
+			expect(ajax._fetch_args.options.url).toEqual(root + 'action/foo/bar/?arg1=1');
 
 			ajax.view('foo/bar?arg1=1');
-			expect(captured_hook.t).toEqual('view:foo/bar');
-			expect(captured_options.url).toEqual(root + 'ajax/view/foo/bar?arg1=1');
+			expect(ajax._fetch_args.hook_type).toEqual('view:foo/bar');
+			expect(ajax._fetch_args.options.url).toEqual(root + 'ajax/view/foo/bar?arg1=1');
 
 			ajax.form('/foo/bar/?arg1=1#target');
-			expect(captured_hook.t).toEqual('form:foo/bar');
-			expect(captured_options.url).toEqual(root + 'ajax/form/foo/bar/?arg1=1');
+			expect(ajax._fetch_args.hook_type).toEqual('form:foo/bar');
+			expect(ajax._fetch_args.options.url).toEqual(root + 'ajax/form/foo/bar/?arg1=1');
 		});
 
 		it("refuses to accept external URLs", function() {
@@ -223,12 +230,12 @@ define(function(require) {
 			var ts = elgg.security.token.__elgg_ts;
 
 			ajax.action('foo');
-			expect(captured_options.data.__elgg_ts).toBe(ts);
+			expect(ajax._ajax_options.data.__elgg_ts).toBe(ts);
 
 			ajax.action('foo', {
 				data: "?arg1=1"
 			});
-			expect(captured_options.data).toContain('__elgg_ts=' + ts);
+			expect(ajax._ajax_options.data).toContain('__elgg_ts=' + ts);
 		});
 
 		it("does not add tokens if already in action URL", function() {
@@ -237,7 +244,7 @@ define(function(require) {
 			var url = elgg.security.addToken(root + 'action/foo');
 
 			ajax.action(url);
-			expect(captured_options.data.__elgg_ts).toBe(undefined);
+			expect(ajax._ajax_options.data.__elgg_ts).toBe(undefined);
 		});
 
 		it("path() accepts empty argument for fetching home page", function() {
@@ -268,14 +275,18 @@ define(function(require) {
 				captured.deps = arg;
 			};
 
-			response_object = {
-				value: 1,
-				_elgg_msgs: {
-					error: ['fail'],
-					success: ['yay']
-				},
-				_elgg_deps: ['foo']
-			};
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				responseText: {
+					value: 1,
+					_elgg_msgs: {
+						error: ['fail'],
+						success: ['yay']
+					},
+					_elgg_deps: ['foo']
+				}
+			});
 
 			ajax.path('foo').done(function () {
 				expect(captured).toEqual({
@@ -289,6 +300,127 @@ define(function(require) {
 				Ajax._require = tmp_require;
 
 				done();
+			});
+		});
+
+		it("error handler still handles server-sent messages and dependencies", function (done) {
+			var tmp_system_message = elgg.system_message;
+			var tmp_register_error = elgg.register_error;
+			var tmp_require = Ajax._require;
+			var captured = {};
+
+			elgg.system_message = function (arg) {
+				captured.msg = arg;
+			};
+			elgg.register_error = function (arg) {
+				captured.error = arg;
+			};
+			Ajax._require = function (arg) {
+				captured.deps = arg;
+			};
+
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				status: 500,
+				responseText: {
+					value: null,
+					_elgg_msgs: {
+						error: ['fail'],
+						success: ['yay']
+					},
+					_elgg_deps: ['foo']
+				}
+			});
+
+			ajax.path('foo').fail(function () {
+				expect(captured).toEqual({
+					msg: ['yay'],
+					error: ['fail'],
+					deps: ['foo']
+				});
+
+				elgg.system_message = tmp_system_message;
+				elgg.register_error = tmp_register_error;
+				Ajax._require = tmp_require;
+
+				done();
+			});
+		});
+
+		it("outputs the generic error if no server-sent message", function (done) {
+			var tmp_register_error = elgg.register_error;
+			var captured = {};
+
+			elgg.register_error = function (arg) {
+				captured.error = arg;
+			};
+
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				status: 500,
+				responseText: {
+					error: 'not seen by user'
+				}
+			});
+
+			ajax.path('foo').fail(function () {
+				expect(captured).toEqual({
+					error: elgg.echo('ajax:error')
+				});
+
+				elgg.register_error = tmp_register_error;
+
+				done();
+			});
+		});
+
+		it("copies data to jqXHR.AjaxData", function (done) {
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				responseText: {
+					value: 1,
+					other: 2
+				}
+			});
+
+			ajax.path('foo').done(function (value, textStatus, jqXHR) {
+				expect(jqXHR.AjaxData).toEqual({
+					value: 1,
+					other: 2,
+					status: 0
+				});
+				done();
+			});
+		});
+
+		it("sets jqXHR.AjaxData.status to 0 or -1 depending on presence of server error", function (done) {
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("good"),
+				responseText: {
+					value: 1
+				}
+			});
+			$.mockjax({
+				url: elgg.normalize_url("bad"),
+				responseText: {
+					value: 1,
+					_elgg_msgs: {
+						error: ['fail']
+					}
+				}
+			});
+
+			ajax.path('good').done(function (value, textStatus, jqXHR) {
+				expect(jqXHR.AjaxData.status).toBe(0);
+
+				ajax.path('bad').done(function (value, textStatus, jqXHR) {
+					expect(jqXHR.AjaxData.status).toBe(-1);
+					done();
+				});
 			});
 		});
 

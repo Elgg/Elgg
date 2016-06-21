@@ -41,7 +41,11 @@ if ($groups) {
 			$top_row .= '<td class="spacercolumn">&nbsp;</td>';
 		}
 		
-		$top_row .= elgg_format_element('td', ['class' => "{$method}togglefield"], elgg_echo("notification:method:{$method}"));
+		$top_row .= elgg_format_element([
+			'#tag_name' => 'td',
+			'class' => "{$method}togglefield",
+			'#text' => elgg_echo("notification:method:{$method}"),
+		]);
 		$i++;
 	}
 	$top_row .= '<td>&nbsp;</td>';

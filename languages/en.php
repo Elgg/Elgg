@@ -20,7 +20,8 @@ return array(
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
 	'logouterror' => "We couldn't log you out. Please try again.",
-	'session_expired' => "Your session has expired. Please reload the page to log in.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "You must be logged in to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",
@@ -142,6 +143,7 @@ return array(
 	'password' => "Password",
 	'passwordagain' => "Password (again for verification)",
 	'admin_option' => "Make this user an admin?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -1157,7 +1159,6 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'admin:pending_upgrades' => 'The site has pending upgrades that require your immediate attention.',
 	'admin:view_upgrades' => 'View pending upgrades.',
- 	'admin:upgrades' => 'Upgrades',
 	'item:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Your installation is up to date!',
 

@@ -95,5 +95,6 @@ return array(
 	'file:downloadfailed' => "죄송합니다. 지금은 파일을 사용할 수 없습니다.",
 	'file:deletefailed' => "지금 파일을 삭제할 수 없었습니다.",
 	'file:noaccess' => "이 파일을 변경할 권한이 없습니다.",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "파일을 선택해야합니다.",
 );

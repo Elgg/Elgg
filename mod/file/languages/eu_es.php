@@ -95,5 +95,6 @@ Ikusi eta iruzkindu orri honetan:
 	'file:downloadfailed' => "Barkatu, fitxategia ez dago eskuragarri oraintxe bertan.",
 	'file:deletefailed' => "Zure fitxategia ezin da ezabatu oraintxe bertan.",
 	'file:noaccess' => "Ez duzu baimenik fitxategi hau aldatzeko",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Fitxategi bat aukeratu behar duzu",
 );

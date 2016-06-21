@@ -16,9 +16,15 @@ define(function (require) {
 			data: $form.serialize(),
 			success: function (data) {
 				if (data.status == 0) {
-					require(['elgg/lightbox'], function(lightbox) {
-						lightbox.close();
-					});
+					if ($form.is('#colorbox *')) {
+						require(['elgg/lightbox'], function(lightbox) {
+							lightbox.close();
+						});
+					} else {
+						// redirect to address if not reported from a lightbox
+						// can not use history as it may not exist
+						location.href = $form.find('input[name="address"]').val();
+					}
 				}
 			}
 		});
