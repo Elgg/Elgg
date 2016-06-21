@@ -53,6 +53,10 @@ server {
 		return 403;
 	}
 
+	location /cache {
+		expires 1y;
+	}
+
 	location = /rewrite.php {
 		rewrite ^(.*)$ /install.php;
 	}
