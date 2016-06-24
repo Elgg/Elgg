@@ -114,6 +114,14 @@ define('elgg/lightbox', function (require) {
 		 */
 		close: function () {
 			$.colorbox.close();
+		},
+		
+		/**
+		 * Resizes the colorbox
+		 * @return void
+		 */
+		resize: function () {
+			$.colorbox.resize();
 		}
 	};
 
