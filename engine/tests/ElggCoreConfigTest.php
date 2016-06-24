@@ -21,33 +21,32 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 		global $CONFIG;
 		$name = 'foo' . rand(0, 1000);
 		$value = 'test';
-		$this->assertTrue(set_config($name, $value, 22));
-		$this->assertTrue(!isset($CONFIG->$name));
-		$this->assertEqual($value, get_config($name, 22));
-		$this->assertTrue(unset_config($name, 22));
+		$this->assertTrue(set_config($name, $value));
+		$this->assertEqual($value, get_config($name));
+		$this->assertTrue(unset_config($name));
 	}
 
 	public function testSetConfigWithUsedName() {
 		$name = 'foo' . rand(0, 1000);
 		$value = 'test';
-		$this->assertTrue(set_config($name, 'not test', 22));
-		$this->assertTrue(set_config($name, $value, 22));
-		$this->assertEqual($value, get_config($name, 22));
-		$this->assertTrue(unset_config($name, 22));
+		$this->assertTrue(set_config($name, 'not test'));
+		$this->assertTrue(set_config($name, $value));
+		$this->assertEqual($value, get_config($name));
+		$this->assertTrue(unset_config($name));
 	}
 
 	public function testSetConfigWithObject() {
 		$name = 'foo' . rand(0, 1000);
 		$value = new \stdClass();
 		$value->test = true;
-		$this->assertTrue(set_config($name, $value, 22));
-		$this->assertIdentical($value, get_config($name, 22));
-		$this->assertTrue(unset_config($name, 22));
+		$this->assertTrue(set_config($name, $value));
+		$this->assertIdentical($value, get_config($name));
+		$this->assertTrue(unset_config($name));
 	}
 
 	public function testSetConfigWithNonexistentName() {
 		$name = 'foo' . rand(0, 1000);
-		$this->assertIdentical(null, get_config($name, 22));
+		$this->assertIdentical(null, get_config($name));
 	}
 
 	public function testSetConfigWithCurrentSite() {
@@ -67,23 +66,8 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 		unset($CONFIG->foo_unit_test);
 	}
 
-	public function testGetConfigAlreadyLoadedForNotCurrentSite() {
-		global $CONFIG;
-		$CONFIG->foo_unit_test = 35;
-		$this->assertIdentical(null, get_config('foo_unit_test', 34));
-		unset($CONFIG->foo_unit_test);
-	}
-
 	public function testUnsetConfigWithNonexistentName() {
 		$this->assertTrue(unset_config('does_not_exist'));
-	}
-
-	public function testUnsetConfigOnNotCurrentSite() {
-		global $CONFIG;
-		$CONFIG->foo_unit_test = 35;
-		$this->assertIdentical(true, unset_config('foo_unit_test', 99));
-		$this->assertIdentical(35, $CONFIG->foo_unit_test);
-		unset($CONFIG->foo_unit_test);
 	}
 
 	public function testUnsetConfigClearsGlobalForCurrentSite() {
@@ -152,22 +136,4 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 		$this->assertIdentical($value, $CONFIG->$name);
 		$this->assertTrue(unset_config($name));
 	}
-
-	public function testElggSaveConfigForNonCurrentSiteConfig() {
-		global $CONFIG;
-		$name = 'foo' . rand(0, 1000);
-		$value = 'test';
-		$this->assertTrue(elgg_save_config($name, $value, 17));
-		$this->assertIdentical($value, get_config($name, 17));
-		$this->assertTrue(!isset($CONFIG->$name));
-		$this->assertTrue(unset_config($name, 17));
-	}
-
-	public function testElggGetConfigNonCurrentSiteConfig() {
-		$name = 'foo' . rand(0, 1000);
-		$value = 'test';
-		$this->assertTrue(elgg_save_config($name, $value, 17));
-		$this->assertIdentical($value, elgg_get_config($name, 17));
-		$this->assertTrue(unset_config($name, 17));		
-	} 
 }

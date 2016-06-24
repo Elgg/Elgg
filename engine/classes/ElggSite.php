@@ -125,13 +125,6 @@ class ElggSite extends \ElggEntity {
 			return false;
 		}
 
-		// make sure the site guid is set to self if not already set
-		if (!$this->site_guid) {
-			$this->site_guid = $guid;
-			$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
-				SET site_guid = $guid WHERE guid = $guid");
-		}
-
 		return $guid;
 	}
 
@@ -221,7 +214,7 @@ class ElggSite extends \ElggEntity {
 	 * Adds an entity to the site.
 	 *
 	 * This adds a 'member_of_site' relationship between between the entity and
-	 * the site. It does not change the site_guid of the entity.
+	 * the site.
 	 *
 	 * @param \ElggEntity $entity User, group, or object entity
 	 *
@@ -263,9 +256,6 @@ class ElggSite extends \ElggEntity {
 		$options['relationship'] = 'member_of_site';
 		$options['relationship_guid'] = $this->guid;
 		$options['inverse_relationship'] = true;
-		if (!isset($options['site_guid']) || !isset($options['site_guids'])) {
-			$options['site_guids'] = ELGG_ENTITIES_ANY_VALUE;
-		}
 
 		return elgg_get_entities_from_relationship($options);
 	}

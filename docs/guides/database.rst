@@ -19,8 +19,6 @@ variables or properties. The built-in properties are:
 
 -  **``guid``** The entity's GUID; set automatically
 -  **``owner_guid``** The owning user's GUID
--  **``site_guid``** The owning site's GUID. This is set automatically
-   when an instance of ``ElggObject`` gets created)
 -  **``subtype``** A single-word arbitrary string that defines what kind
    of object it is, for example ``blog``
 -  **``access_id``** An integer representing the access level of the

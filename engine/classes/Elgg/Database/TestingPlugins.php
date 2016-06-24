@@ -11,11 +11,10 @@ class TestingPlugins extends Plugins {
 	/**
 	 * Returns no plugins
 	 *
-	 * @param string $status    The status of the plugins. active, inactive, or all.
-	 * @param mixed  $site_guid Optional site guid
+	 * @param string $status The status of the plugins. active, inactive, or all.
 	 * @return \ElggPlugin[]
 	 */
-	function find($status = 'active', $site_guid = null) {
+	function find($status = 'active') {
 		return [];
 	}
 }

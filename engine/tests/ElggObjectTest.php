@@ -42,7 +42,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$attributes['subtype'] = null;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
-		$attributes['site_guid'] = null;
 		$attributes['access_id'] = ACCESS_PRIVATE;
 		$attributes['time_created'] = null;
 		$attributes['time_updated'] = null;
@@ -142,7 +141,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 			'time_updated',
 			'container_guid',
 			'owner_guid',
-			'site_guid',
 			'url',
 			'read_access',
 			'title',

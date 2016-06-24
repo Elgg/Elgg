@@ -104,7 +104,6 @@ function _elgg_get_metastring_based_objects($options) {
 		'guids' => ELGG_ENTITIES_ANY_VALUE,
 		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
-		'site_guids' => get_config('site_guid'),
 
 		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
@@ -146,9 +145,6 @@ function _elgg_get_metastring_based_objects($options) {
 		'batch_size' => 25,
 	);
 
-	// @todo Ignore site_guid right now because of #2910
-	$options['site_guid'] = ELGG_ENTITIES_ANY_VALUE;
-
 	$options = array_merge($defaults, $options);
 
 	if ($options['batch'] && !$options['count']) {
@@ -174,7 +170,7 @@ function _elgg_get_metastring_based_objects($options) {
 
 	$singulars = array(
 		'type', 'subtype', 'type_subtype_pair',
-		'guid', 'owner_guid', 'container_guid', 'site_guid',
+		'guid', 'owner_guid', 'container_guid',
 		'metastring_name', 'metastring_value',
 		'metastring_owner_guid', 'metastring_id',
 		'select', 'where', 'join'
@@ -202,7 +198,6 @@ function _elgg_get_metastring_based_objects($options) {
 	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 
 	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);

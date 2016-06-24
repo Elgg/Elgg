@@ -59,11 +59,6 @@ class AccessCollections {
 	protected $translator;
 
 	/**
-	 * @var int
-	 */
-	protected $site_guid;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config                  $config     Config
@@ -83,7 +78,6 @@ class AccessCollections {
 			ElggSession $session,
 			Translator $translator) {
 		$this->config = $config;
-		$this->site_guid = $this->config->get('site_guid');
 		$this->db = $db;
 		$this->entities = $entities;
 		$this->access_cache = $cache;
@@ -100,14 +94,13 @@ class AccessCollections {
 	 * @see get_access_array()
 	 *
 	 * @param int  $user_guid User ID; defaults to currently logged in user
-	 * @param int  $site_guid Site ID; defaults to current site
 	 * @param bool $flush     If set to true, will refresh the access list from the
 	 *                        database rather than using this function's cache.
 	 *
 	 * @return string A list of access collections suitable for using in an SQL call
 	 * @access private
 	 */
-	function getAccessList($user_guid = 0, $site_guid = 0, $flush = false) {
+	function getAccessList($user_guid = 0, $flush = false) {
 		global $init_finished;
 		$cache = $this->access_cache;
 
@@ -119,19 +112,16 @@ class AccessCollections {
 			$user_guid = $this->session->getLoggedInUserGuid();
 		}
 
-		if (($site_guid == 0) && $this->site_guid) {
-			$site_guid = $this->site_guid;
-		}
 		$user_guid = (int) $user_guid;
-		$site_guid = (int) $site_guid;
-
-		$hash = $user_guid . $site_guid . 'get_access_list';
-
+	
+		$hash = $user_guid . 'get_access_list';
+		
 		if ($cache[$hash]) {
 			return $cache[$hash];
 		}
 
-		$access_array = $this->getAccessArray($user_guid, $site_guid, $flush);
+		$access_array = $this->getAccessArray($user_guid, $flush);
+
 		$access = "(" . implode(",", $access_array) . ")";
 
 		if ($init_finished) {
@@ -160,13 +150,12 @@ class AccessCollections {
 	 * @see get_write_access_array() for the access levels that a user can write to.
 	 *
 	 * @param int  $user_guid User ID; defaults to currently logged in user
-	 * @param int  $site_guid Site ID; defaults to current site
 	 * @param bool $flush     If set to true, will refresh the access ids from the
 	 *                        database rather than using this function's cache.
 	 *
 	 * @return array An array of access collections ids
 	 */
-	function getAccessArray($user_guid = 0, $site_guid = 0, $flush = false) {
+	function getAccessArray($user_guid = 0, $flush = false) {
 		global $init_finished;
 
 		$cache = $this->access_cache;
@@ -179,14 +168,9 @@ class AccessCollections {
 			$user_guid = $this->session->getLoggedInUserGuid();
 		}
 
-		if (($site_guid == 0) && $this->site_guid) {
-			$site_guid = $this->site_guid;
-		}
-
 		$user_guid = (int) $user_guid;
-		$site_guid = (int) $site_guid;
-
-		$hash = $user_guid . $site_guid . 'get_access_array';
+	
+		$hash = $user_guid . 'get_access_array';
 
 		if ($cache[$hash]) {
 			$access_array = $cache[$hash];
@@ -202,9 +186,9 @@ class AccessCollections {
 
 				// Get ACL memberships
 				$query = "SELECT am.access_collection_id"
-						. " FROM {$prefix}access_collection_membership am"
-						. " LEFT JOIN {$prefix}access_collections ag ON ag.id = am.access_collection_id"
-						. " WHERE am.user_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
+					. " FROM {$prefix}access_collection_membership am"
+					. " LEFT JOIN {$prefix}access_collections ag ON ag.id = am.access_collection_id"
+					. " WHERE am.user_guid = $user_guid";
 
 				$collections = $db->getData($query);
 				if ($collections) {
@@ -217,8 +201,8 @@ class AccessCollections {
 
 				// Get ACLs owned.
 				$query = "SELECT ag.id FROM {$prefix}access_collections ag ";
-				$query .= "WHERE ag.owner_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
-
+				$query .= "WHERE ag.owner_guid = $user_guid";
+	
 				$collections = $db->getData($query);
 				if ($collections) {
 					foreach ($collections as $collection) {
@@ -242,7 +226,6 @@ class AccessCollections {
 
 		$options = array(
 			'user_id' => $user_guid,
-			'site_id' => $site_guid
 		);
 
 		// see the warning in the docs for this function about infinite loop potential
@@ -253,7 +236,7 @@ class AccessCollections {
 	 * Returns the SQL where clause for enforcing read access to data.
 	 *
 	 * Note that if this code is executed in privileged mode it will return (1=1).
-	 * 
+	 *
 	 * Otherwise it returns a where clause to retrieve the data that a user has
 	 * permission to read.
 	 *
@@ -267,25 +250,25 @@ class AccessCollections {
 	 *
 	 * The results will be combined into an SQL where clause in the form:
 	 *  ((or1 OR or2 OR orN) AND (and1 AND and2 AND andN))
-	 * 
+	 *
 	 * @param array $options Array in format:
 	 *
 	 * 	table_alias => STR Optional table alias. This is based on the select and join clauses.
-	 *                     Default is 'e'. 
+	 *                     Default is 'e'.
 	 *
 	 *  user_guid => INT Optional GUID for the user that we are retrieving data for.
 	 *                   Defaults to the logged in user if null.
 	 *                   Passing 0 will build a query for a logged out user (even if there is a logged in user)
-	 * 
-	 *  use_enabled_clause => BOOL Optional. Should we append the enabled clause? The default 
+	 *
+	 *  use_enabled_clause => BOOL Optional. Should we append the enabled clause? The default
 	 *                             is set by access_show_hidden_entities().
-	 * 
+	 *
 	 *  access_column => STR Optional access column name. Default is 'access_id'.
-	 * 
+	 *
 	 *  owner_guid_column => STR Optional owner_guid column. Default is 'owner_guid'.
-	 * 
+	 *
 	 *  guid_column => STR Optional guid_column. Default is 'guid'.
-	 * 
+	 *
 	 * @return string
 	 * @access private
 	 */
@@ -444,13 +427,12 @@ class AccessCollections {
 	 * belongs to such as the access collection for a group.
 	 *
 	 * @param int   $user_guid    The user's GUID.
-	 * @param int   $site_guid    The current site.
 	 * @param bool  $flush        If this is set to true, this will ignore a cached access array
 	 * @param array $input_params Some parameters passed into an input/access view
 	 *
 	 * @return array List of access permissions
 	 */
-	function getWriteAccessArray($user_guid = 0, $site_guid = 0, $flush = false, array $input_params = array()) {
+	function getWriteAccessArray($user_guid = 0, $flush = false, array $input_params = array()) {
 		global $init_finished;
 		$cache = $this->access_cache;
 
@@ -462,15 +444,10 @@ class AccessCollections {
 			$user_guid = $this->session->getLoggedInUserGuid();
 		}
 
-		if (($site_guid == 0) && $this->site_guid) {
-			$site_guid = $this->site_guid;
-		}
-
 		$user_guid = (int) $user_guid;
-		$site_guid = (int) $site_guid;
 
-		$hash = $user_guid . $site_guid . 'get_write_access_array';
-
+		$hash = $user_guid . 'get_write_access_array';
+	
 		if ($cache[$hash]) {
 			$access_array = $cache[$hash];
 		} else {
@@ -481,7 +458,7 @@ class AccessCollections {
 				ACCESS_PUBLIC => $this->getReadableAccessLevel(ACCESS_PUBLIC)
 			);
 
-			$collections = $this->getEntityCollections($user_guid, $site_guid);
+			$collections = $this->getEntityCollections($user_guid);
 			if ($collections) {
 				foreach ($collections as $collection) {
 					$access_array[$collection->id] = $collection->name;
@@ -495,7 +472,6 @@ class AccessCollections {
 
 		$options = array(
 			'user_id' => $user_guid,
-			'site_id' => $site_guid,
 			'input_params' => $input_params,
 		);
 		return $this->hooks->trigger('access:collections:write', 'user', $options, $access_array);
@@ -528,7 +504,7 @@ class AccessCollections {
 			return false;
 		}
 
-		$write_access = $this->getWriteAccessArray($user->guid, 0, true);
+		$write_access = $this->getWriteAccessArray($user->guid, true);
 
 		// don't ignore access when checking users.
 		if ($user_guid) {
@@ -551,11 +527,10 @@ class AccessCollections {
 	 *
 	 * @param string $name       The name of the collection.
 	 * @param int    $owner_guid The GUID of the owner (default: currently logged in user).
-	 * @param int    $site_guid  The GUID of the site (default: current site).
 	 *
 	 * @return int|false The collection ID if successful and false on failure.
 	 */
-	function create($name, $owner_guid = 0, $site_guid = 0) {
+	function create($name, $owner_guid = 0) {
 		$name = trim($name);
 		if (empty($name)) {
 			return false;
@@ -563,9 +538,6 @@ class AccessCollections {
 
 		if ($owner_guid == 0) {
 			$owner_guid = $this->session->getLoggedInUserGuid();
-		}
-		if (($site_guid == 0) && $this->site_guid) {
-			$site_guid = $this->site_guid;
 		}
 
 		$db = $this->db;
@@ -575,8 +547,7 @@ class AccessCollections {
 
 		$q = "INSERT INTO {$prefix}access_collections
 			SET name = '{$name}',
-				owner_guid = {$owner_guid},
-				site_guid = {$site_guid}";
+				owner_guid = {$owner_guid}";
 		$id = $db->insertData($q);
 		if (!$id) {
 			return false;
@@ -776,24 +747,17 @@ class AccessCollections {
 	 * Returns an array of database row objects of the access collections owned by $owner_guid.
 	 *
 	 * @param int $owner_guid The entity guid
-	 * @param int $site_guid  The GUID of the site (default: current site).
 	 *
 	 * @return array|false
 	 */
-	function getEntityCollections($owner_guid, $site_guid = 0) {
+	function getEntityCollections($owner_guid) {
 		$owner_guid = (int) $owner_guid;
-		$site_guid = (int) $site_guid;
-
-		if (($site_guid == 0) && $this->site_guid) {
-			$site_guid = $this->site_guid;
-		}
 
 		$db = $this->db;
 		$prefix = $db->prefix;
 
 		$query = "SELECT * FROM {$prefix}access_collections
 				WHERE owner_guid = {$owner_guid}
-				AND site_guid = {$site_guid}
 				ORDER BY name ASC";
 
 		$collections = $db->getData($query);
@@ -838,27 +802,20 @@ class AccessCollections {
 
 	/**
 	 * Return an array of database row objects of the access collections $entity_guid is a member of.
-	 * 
+	 *
 	 * @param int $member_guid The entity guid
-	 * @param int $site_guid   The GUID of the site (default: current site).
-	 * 
+	 *
 	 * @return array|false
 	 */
-	function getCollectionsByMember($member_guid, $site_guid = 0) {
+	function getCollectionsByMember($member_guid) {
 		$member_guid = (int) $member_guid;
-		$site_guid = (int) $site_guid;
-
-		if (($site_guid == 0) && $this->site_guid) {
-			$site_guid = $this->site_guid;
-		}
 
 		$db = $this->db;
 		$prefix = $db->prefix;
-
+		
 		$query = "SELECT ac.* FROM {$prefix}access_collections ac
 				JOIN {$prefix}access_collection_membership m ON ac.id = m.access_collection_id
 				WHERE m.user_guid = {$member_guid}
-				AND ac.site_guid = {$site_guid}
 				ORDER BY name ASC";
 
 		$collections = $db->getData($query);
@@ -879,7 +836,7 @@ class AccessCollections {
 	 * or 'Limited' if the user access is restricted to read-only, e.g. a friends collection the user was added to
 	 *
 	 * @param int $entity_access_id The entity's access id
-	 * 
+	 *
 	 * @return string
 	 * @since 1.11
 	 */
@@ -908,7 +865,7 @@ class AccessCollections {
 
 		// Entity access id is probably a custom access collection
 		// Check if the user has write access to it and can see it's label
-		// Admins should always be able to see the readable version	
+		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
 		if ($collection) {

@@ -113,24 +113,22 @@ function _elgg_get_max_plugin_priority() {
  * Returns if a plugin is active for a current site.
  *
  * @param string $plugin_id The plugin ID
- * @param int    $site_guid The site guid
  * @since 1.8.0
  * @return bool
  */
-function elgg_is_active_plugin($plugin_id, $site_guid = null) {
-	return _elgg_services()->plugins->isActive($plugin_id, $site_guid);
+function elgg_is_active_plugin($plugin_id) {
+	return _elgg_services()->plugins->isActive($plugin_id);
 }
 
 /**
  * Returns an ordered list of plugins
  *
- * @param string $status    The status of the plugins. active, inactive, or all.
- * @param mixed  $site_guid Optional site guid
+ * @param string $status The status of the plugins. active, inactive, or all.
  * @return \ElggPlugin[]
  * @since 1.8.0
  */
-function elgg_get_plugins($status = 'active', $site_guid = null) {
-	return _elgg_services()->plugins->find($status, $site_guid);
+function elgg_get_plugins($status = 'active') {
+	return _elgg_services()->plugins->find($status);
 }
 
 /**

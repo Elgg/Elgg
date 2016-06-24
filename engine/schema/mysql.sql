@@ -14,10 +14,8 @@ CREATE TABLE `prefix_access_collections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
-  `site_guid` bigint(20) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `owner_guid` (`owner_guid`),
-  KEY `site_guid` (`site_guid`)
+  KEY `owner_guid` (`owner_guid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- store an annotation on an entity
@@ -42,7 +40,6 @@ CREATE TABLE `prefix_annotations` (
 -- api keys for old web services
 CREATE TABLE `prefix_api_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `site_guid` bigint(20) unsigned DEFAULT NULL,
   `api_key` varchar(40) DEFAULT NULL,
   `secret` varchar(40) NOT NULL,
   `active` int(1) DEFAULT '1',
@@ -54,8 +51,7 @@ CREATE TABLE `prefix_api_users` (
 CREATE TABLE `prefix_config` (
   `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
-  `site_guid` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`name`,`site_guid`)
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- application specific configuration
@@ -71,7 +67,6 @@ CREATE TABLE `prefix_entities` (
   `type` enum('object','user','group','site') NOT NULL,
   `subtype` int(11) DEFAULT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
-  `site_guid` bigint(20) unsigned NOT NULL,
   `container_guid` bigint(20) unsigned NOT NULL,
   `access_id` int(11) NOT NULL,
   `time_created` int(11) NOT NULL,
@@ -82,7 +77,6 @@ CREATE TABLE `prefix_entities` (
   KEY `type` (`type`),
   KEY `subtype` (`subtype`),
   KEY `owner_guid` (`owner_guid`),
-  KEY `site_guid` (`site_guid`),
   KEY `container_guid` (`container_guid`),
   KEY `access_id` (`access_id`),
   KEY `time_created` (`time_created`),
@@ -267,11 +261,10 @@ CREATE TABLE `prefix_system_log` (
 CREATE TABLE `prefix_users_apisessions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_guid` bigint(20) unsigned NOT NULL,
-  `site_guid` bigint(20) unsigned NOT NULL,
   `token` varchar(40) DEFAULT NULL,
   `expires` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_guid` (`user_guid`,`site_guid`),
+  KEY `user_guid` (`user_guid`),
   KEY `token` (`token`)
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 

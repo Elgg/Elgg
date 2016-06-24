@@ -88,14 +88,13 @@ class BootData {
 		$rows = $db->getData("
 			SELECT *
 			FROM {$db->prefix}config
-			WHERE site_guid = {$config->site_guid}
 		");
 		foreach ($rows as $row) {
 			$this->config_values[$row->name] = unserialize($row->value);
 		}
 
 		// get plugins
-		$this->active_plugins = $plugins->find('active', $config->site_guid);
+		$this->active_plugins = $plugins->find('active');
 
 		// get plugin settings
 		if (!$this->active_plugins) {

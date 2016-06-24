@@ -9,10 +9,9 @@ interface Config {
 	/**
 	 * Get the URL for the current (or specified) site
 	 *
-	 * @param int $site_guid The GUID of the site whose URL we want to grab
 	 * @return string
 	 */
-	public function getSiteUrl($site_guid = 0);
+	public function getSiteUrl();
 
 	/**
 	 * Get the plugin path for this installation
@@ -44,7 +43,7 @@ interface Config {
 	 * getVolatile() before system boot.
 	 *
 	 * @param string $name      Name of the configuration value
-	 * @param int    $site_guid null for installation setting, 0 for default site
+	 * @param int    $site_guid null for installation setting anything else for current site
 	 *
 	 * @return mixed Configuration value or null if it does not exist
 	 */
@@ -77,7 +76,7 @@ interface Config {
 	 *
 	 * @param string $name      Configuration name (cannot be greater than 255 characters)
 	 * @param mixed  $value     Configuration value. Should be string for installation setting
-	 * @param int    $site_guid null for installation setting, 0 for default site
+	 * @param int    $site_guid null for installation setting anything else for current site
 	 *
 	 * @return bool
 	 */

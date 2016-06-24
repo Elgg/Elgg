@@ -135,7 +135,7 @@ class EntityTable {
 	 * Returns a database row from the entities table.
 	 *
 	 * @see entity_row_to_elggstar()
-	 * 
+	 *
 	 * @tip Use get_entity() to return the fully loaded entity.
 	 *
 	 * @warning This will only return results if a) it exists, b) you have access to it.
@@ -182,17 +182,16 @@ class EntityTable {
 	public function insertRow(stdClass $row, array $attributes = []) {
 
 		$sql = "INSERT INTO {$this->db->prefix}entities
-			(type, subtype, owner_guid, site_guid, container_guid,
+			(type, subtype, owner_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
 			VALUES
-			(:type, :subtype_id, :owner_guid, :site_guid, :container_guid,
+			(:type, :subtype_id, :owner_guid, :container_guid,
 				:access_id, :time_created, :time_updated, :last_action)";
 
 		return $this->db->insertData($sql, [
 			':type' => $row->type,
 			':subtype_id' => $row->subtype_id,
 			':owner_guid' => $row->owner_guid,
-			':site_guid' => $row->site_guid,
 			':container_guid' => $row->container_guid,
 			':access_id' => $row->access_id,
 			':time_created' => $row->time_created,
@@ -203,7 +202,7 @@ class EntityTable {
 
 	/**
 	 * Update entity table row
-	 * 
+	 *
 	 * @param int      $guid Entity guid
 	 * @param stdClass $row  Updated data
 	 * @return int|false
@@ -239,7 +238,7 @@ class EntityTable {
 	 * @see get_entity_as_row()
 	 * @see add_subtype()
 	 * @see get_entity()
-	 * 
+	 *
 	 * @access private
 	 *
 	 * @param stdClass $row The row of the entry in the entities table.
@@ -446,8 +445,6 @@ class EntityTable {
 	 *
 	 * 	container_guids => null|ARR Array of container_guids
 	 *
-	 * 	site_guids => null (current_site)|ARR Array of site_guid
-	 *
 	 * 	order_by => null (time_created desc)|STR SQL order by clause
 	 *
 	 *  reverse_order_by => BOOL Reverse the default order by clause
@@ -505,7 +502,8 @@ class EntityTable {
 	 */
 	public function getEntities(array $options = array()) {
 
-
+		_elgg_check_unsupported_site_guid($options);
+		
 		$defaults = array(
 			'types'					=>	ELGG_ENTITIES_ANY_VALUE,
 			'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
@@ -514,7 +512,6 @@ class EntityTable {
 			'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
 			'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
 			'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
-			'site_guids'			=>	$this->config->get('site_guid'),
 
 			'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
 			'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
@@ -567,7 +564,7 @@ class EntityTable {
 			}
 		}
 
-		$singulars = array('type', 'subtype', 'guid', 'owner_guid', 'container_guid', 'site_guid');
+		$singulars = array('type', 'subtype', 'guid', 'owner_guid', 'container_guid');
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 		$options = $this->autoJoinTables($options);
@@ -585,7 +582,6 @@ class EntityTable {
 		$wheres[] = $this->getGuidBasedWhereSql('e.guid', $options['guids']);
 		$wheres[] = $this->getGuidBasedWhereSql('e.owner_guid', $options['owner_guids']);
 		$wheres[] = $this->getGuidBasedWhereSql('e.container_guid', $options['container_guids']);
-		$wheres[] = $this->getGuidBasedWhereSql('e.site_guid', $options['site_guids']);
 
 		$wheres[] = $this->getEntityTimeWhereSql('e', $options['created_time_upper'],
 			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
@@ -1323,17 +1319,12 @@ class EntityTable {
 	 * @param string $type           The type of entity
 	 * @param string $subtype        The subtype of entity
 	 * @param int    $container_guid The container GUID that the entities belong to
-	 * @param int    $site_guid      The site GUID
 	 * @param string $order_by       Order_by SQL order by clause
 	 *
 	 * @return array|false Either an array months as YYYYMM, or false on failure
 	 */
-	public function getDates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0, $order_by = 'time_created') {
+	public function getDates($type = '', $subtype = '', $container_guid = 0, $order_by = 'time_created') {
 
-		$site_guid = (int) $site_guid;
-		if ($site_guid == 0) {
-			$site_guid = $this->config->get('site_guid');
-		}
 		$where = array();
 
 		if ($type != "") {
@@ -1384,10 +1375,6 @@ class EntityTable {
 				$container_guid = (int) $container_guid;
 				$where[] = "container_guid = {$container_guid}";
 			}
-		}
-
-		if ($site_guid > 0) {
-			$where[] = "site_guid = {$site_guid}";
 		}
 
 		$where[] = _elgg_get_access_where_sql(array('table_alias' => ''));
