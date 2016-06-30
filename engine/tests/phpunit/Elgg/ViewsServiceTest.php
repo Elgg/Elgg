@@ -166,6 +166,23 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEmpty($this->views->listViews('fake_viewtype'));
 	}
+
+	public function testCanGetViewRenderingList() {
+		$list = $this->views->getViewList('foo');
+		$this->assertEquals([
+			500 => 'foo',
+		], $list);
+
+		$this->views->extendView('foo', 'bar');
+		$this->views->extendView('foo', 'bing', 499);
+
+		$list = $this->views->getViewList('foo');
+		$this->assertEquals([
+			499 => 'bing',
+			500 => 'foo',
+			501 => 'bar',
+		], $list);
+	}
 	
 	public function getExampleNormalizedViews() {
 		return [
