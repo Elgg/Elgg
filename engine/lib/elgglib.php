@@ -796,7 +796,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
  */
 function _elgg_php_exception_handler($exception) {
 	$timestamp = time();
-	error_log("Exception #$timestamp: $exception");
+	error_log("Exception at time $timestamp: $exception");
 
 	// Wipe any existing output buffer
 	ob_end_clean();
@@ -852,8 +852,8 @@ function _elgg_php_exception_handler($exception) {
 		$timestamp = time();
 		$message = $e->getMessage();
 		http_response_code(500);
-		echo "Fatal error in exception handler. Check log for Exception #$timestamp";
-		error_log("Exception #$timestamp : fatal error in exception handler : $message");
+		echo "Fatal error in exception handler. Check log for Exception at time $timestamp";
+		error_log("Exception at time $timestamp : fatal error in exception handler : $message");
 	}
 }
 
