@@ -20,7 +20,8 @@ return array(
 	'logout' => "Déconnexion",
 	'logoutok' => "Vous avez été déconnecté(e).",
 	'logouterror' => "Impossible de vous déconnecter. Veuillez réessayer.",
-	'session_expired' => "Suite à un temps d'inactivité prolongé, votre session de travail a expiré. Veuillez SVP recharger la page afin de vous identifier à nouveau.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Vous devez être connecté(e) pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
@@ -142,6 +143,7 @@ return array(
 	'password' => "Mot de passe",
 	'passwordagain' => "Mot de passe (confirmation)",
 	'admin_option' => "Définir comme administrateur ?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -1149,7 +1151,6 @@ Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="h
 
 	'admin:pending_upgrades' => 'Le site a des mises à niveau en attente qui nécessitent votre attention immédiate.',
 	'admin:view_upgrades' => 'Afficher les mises à niveau en attente.',
- 	'admin:upgrades' => 'Mises à niveau',
 	'item:object:elgg_upgrade' => 'Mises à niveau du site',
 	'admin:upgrades:none' => 'Votre installation est à jour !',
 

@@ -20,7 +20,8 @@ return array(
 	'logout' => "Saír",
 	'logoutok' => "Pechouse a súa sesión.",
 	'logouterror' => "Non foi posíbel pechar a súa sesión. Inténteo de novo.",
-	'session_expired' => "A sesión caducou. Actualize a páxina para acceder.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Identifíquese para poder ver a páxina.",
 	'adminrequired' => "Debe ser administrador para poder ver a páxina.",
@@ -142,6 +143,7 @@ return array(
 	'password' => "Contrasinal",
 	'passwordagain' => "Contrasinal (repítaa para asegurarse)",
 	'admin_option' => "Converter o usuario en administrador?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -1150,7 +1152,6 @@ Atopará instrucións detalladas na <a href="http://learn.elgg.org/en/stable/adm
 
 	'admin:pending_upgrades' => 'O sitio ten anovacións pendentes que requiren da súa atención inmediata.',
 	'admin:view_upgrades' => 'Ver as anovacións pendentes.',
- 	'admin:upgrades' => 'Anovacións',
 	'item:object:elgg_upgrade' => 'Anovacións do sitio.',
 	'admin:upgrades:none' => 'A instalación está actualizada.',
 
