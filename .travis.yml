@@ -81,7 +81,7 @@ before_install: composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 install: composer travis:install-with-mysql
 
 script:
- - phpunit
+ - ./vendor/bin/phpunit
  - php -f ./engine/tests/suite.php
  
 notifications:
