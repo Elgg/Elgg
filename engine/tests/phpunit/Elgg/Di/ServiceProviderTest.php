@@ -60,7 +60,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 	public static function servicesListProvider() {
 		$sp = _elgg_services();
 		$class = new \ReflectionClass(get_class($sp));
-		$phpdoc = new DocBlock($class);
+		$phpdoc = new DocBlock((string)$class);
 		$readonly_props = $phpdoc->getTagsByName('property-read');
 
 		/* @var \phpDocumentor\Reflection\DocBlock\Tag\PropertyReadTag[] $readonly_props */
