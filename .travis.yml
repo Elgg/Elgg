@@ -87,7 +87,7 @@ install:
  - php -f ./install/cli/travis_installer.php
 
 script:
- - phpunit
+ - ./vendor/bin/phpunit
  - php -f ./engine/tests/suite.php
  
 notifications:
