@@ -198,7 +198,10 @@ Put the content of your form in your plugin’s ``forms/example`` view:
 
    // /mod/example/views/default/forms/example.php
    echo elgg_view('input/text', array('name' => 'example'));
-   echo elgg_view('input/submit');
+
+   // defer form footer rendering
+   // this will allow other plugins to extend forms/example view
+   elgg_set_form_footer(elgg_view('input/submit'));
 
 Now when you call ``elgg_view_form('example')``, Elgg will produce:
 
@@ -210,7 +213,9 @@ Now when you call ``elgg_view_form('example')``, Elgg will produce:
        <input type="hidden" name="__elgg_token" value="...">
  
        <input type="text" class="elgg-input-text" name="example">
-       <input type="submit" class="elgg-button elgg-button-submit" value="Submit">
+       <div class="elgg-foot elgg-form-footer">
+           <input type="submit" class="elgg-button elgg-button-submit" value="Submit">
+       </div>
      </fieldset>
    </form>
 

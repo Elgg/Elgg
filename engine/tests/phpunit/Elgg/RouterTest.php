@@ -1433,7 +1433,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'value' => elgg_view_form('query_view', [], $vars),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-		]);
+				], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -1470,7 +1470,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 		$output = json_encode([
 			'error' => 'good bye',
-		]);
+				], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}

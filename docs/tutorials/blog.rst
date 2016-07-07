@@ -85,10 +85,11 @@ which we will create in a moment. Here is the content of
         'help' => elgg_echo('tags:help'),
     ]);
 
-    echo elgg_view_input('submit', array(
+    $submit = elgg_view_input('submit', array(
         'value' => elgg_echo('save'),
         'field_class' => 'elgg-foot',
     ));
+    elgg_set_form_footer($submit);
 
 
 Notice how the form is calling ``elgg_view_input()`` to render inputs. This helper function maintains
