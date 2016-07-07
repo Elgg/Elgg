@@ -156,15 +156,16 @@ $categories_input
 	$status_input
 </div>
 
-<div class="elgg-foot">
-	<div class="elgg-subtext mbm">
-	$save_status <span class="blog-save-status-time">$saved</span>
-	</div>
-
-	$guid_input
-	$container_guid_input
-
-	$action_buttons
-</div>
+$guid_input
+$container_guid_input
 
 ___HTML;
+
+$footer = <<<___HTML
+<div class="elgg-subtext mbm">
+	$save_status <span class="blog-save-status-time">$saved</span>
+</div>
+$action_buttons
+___HTML;
+
+elgg_set_form_footer($footer);
