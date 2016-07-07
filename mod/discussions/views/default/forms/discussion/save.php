@@ -62,11 +62,6 @@ $fields = [
 		'name' => 'topic_guid',
 		'value' => $guid,
 	],
-	[
-		'type' => 'submit',
-		'value' => elgg_echo('save'),
-		'field_class' => 'elgg-foot',
-	]
 ];
 
 foreach ($fields as $field) {

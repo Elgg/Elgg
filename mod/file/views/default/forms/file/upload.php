@@ -18,10 +18,8 @@ $guid = elgg_extract('guid', $vars, null);
 
 if ($guid) {
 	$file_label = elgg_echo("file:replace");
-	$submit_label = elgg_echo('save');
 } else {
 	$file_label = elgg_echo("file:file");
-	$submit_label = elgg_echo('upload');
 }
 
 // Get post_max_size and upload_max_filesize
@@ -82,11 +80,6 @@ $fields = [
 		'name' => 'file_guid',
 		'value' => $guid,
 	],
-	[
-		'type' => 'submit',
-		'value' => $submit_label,
-		'field_class' => 'elgg-foot',
-	]
 ];
 
 foreach ($fields as $field) {
