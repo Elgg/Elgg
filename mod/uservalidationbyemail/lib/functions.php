@@ -61,8 +61,14 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 			), $user->language
 		);
 
+		$params = [
+			'action' => 'uservalidationbyemail',
+			'object' => $user,
+			'link' => $link,
+		];
+		
 		// Send validation email
-		$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
+		$result = notify_user($user->guid, $site->guid, $subject, $body, $params, 'email');
 
 		return $result;
 	}
