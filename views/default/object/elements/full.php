@@ -11,6 +11,9 @@
  * @uses $vars['header_params'] Vars to pass to the header image block wrapper
  */
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	elgg_log("object/elements/full expects an ElggEntity in \$vars['entity']", 'ERROR');
+}
 
 $class = (array) elgg_extract('class', $vars, []);
 $class[] = 'elgg-listing-full';

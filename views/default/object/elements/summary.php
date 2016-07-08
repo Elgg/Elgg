@@ -12,6 +12,9 @@
  * @uses $vars['class']     Class selector
  */
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	elgg_log("object/elements/summary expects an ElggEntity in \$vars['entity']", 'ERROR');
+}
 
 $title = elgg_extract('title', $vars, '');
 if ($title === '' && $entity instanceof ElggEntity) {
