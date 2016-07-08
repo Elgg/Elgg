@@ -332,7 +332,10 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 			$recipient->language
 		);
 
-		notify_user($recipient_guid, $sender_guid, $subject, $body);
+		notify_user($recipient_guid, $sender_guid, $subject, $body, [
+			'object' => $message_to,
+			'action' => 'send',
+		]);
 	}
 
 	$messagesendflag = 0;
