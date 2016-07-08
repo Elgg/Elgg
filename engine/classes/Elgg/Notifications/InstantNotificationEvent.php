@@ -1,23 +1,23 @@
 <?php
+
 namespace Elgg\Notifications;
 
 use ElggData;
 use ElggEntity;
-use InvalidArgumentException;
-use stdClass;
 
 /**
- * Subscription notification event
- * 
- * @package    Elgg.Core
- * @subpackage Notifications
- * @deprecated 2.3
+ * Instant notification event
+ *
+ * @since 2.3
  */
-class Event implements NotificationEvent {
+class InstantNotificationEvent implements NotificationEvent {
 
 	use EventSerialization;
 	
+	const DEFAULT_ACTION_NAME = 'notify_user';
+
 	/* @var string The name of the action/event */
+
 	protected $action;
 
 	/* @var string Action's object */
@@ -27,26 +27,14 @@ class Event implements NotificationEvent {
 	protected $actor;
 
 	/**
-	 * Create a notification event
+	 * Constructor
 	 *
 	 * @param ElggData   $object The object of the event (ElggEntity)
 	 * @param string     $action The name of the action (default: create)
 	 * @param ElggEntity $actor  The entity that caused the event (default: logged in user)
-	 * 
-	 * @throws InvalidArgumentException
 	 */
-	public function __construct(ElggData $object, $action, ElggEntity $actor = null) {
-		if (get_class($this) == Event::class || get_class($this) == Elgg_Notifications_Event::class) {
-			_elgg_services()->deprecation->sendNotice(__CLASS__ . ' is deprecated. '
-					. 'Use ' . SubscriptionNotificationEvent::class . ' instead', '2.3');
-		}
-		if (!$object instanceof ElggData) {
-			throw new InvalidArgumentException(__METHOD__ . ' expects an object as an instance of ' . ElggData::class);
-		}
-		if (!$action) {
-			throw new InvalidArgumentException(__METHOD__ . ' expects a valid action name');
-		}
-		
+	public function __construct(ElggData $object = null, $action = null, ElggEntity $actor = null) {
+
 		$this->object = $object;
 
 		$this->actor = $actor;
@@ -54,7 +42,7 @@ class Event implements NotificationEvent {
 			$this->actor = _elgg_services()->session->getLoggedInUser();
 		}
 
-		$this->action = $action;
+		$this->action = $action ? : self::DEFAULT_ACTION_NAME;
 	}
 
 	/**
@@ -76,7 +64,7 @@ class Event implements NotificationEvent {
 	 * @note Note that the actor and the object of the notification event
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
-	 *
+	 * 
 	 * @return int
 	 */
 	public function getActorGUID() {
@@ -111,6 +99,10 @@ class Event implements NotificationEvent {
 	 * @return string
 	 */
 	public function getDescription() {
+		if (!$this->object) {
+			return $this->action;
+		}
+
 		return implode(':', [
 			$this->action,
 			$this->object->getType(),
@@ -137,14 +129,3 @@ class Event implements NotificationEvent {
 		return $obj;
 	}
 }
-
-/**
- * Notification event
- * 
- * @package    Elgg.Core
- * @subpackage Notifications
- * @since      1.9.0
- * @deprecated 2.3
- */
-class Elgg_Notifications_Event extends Event {}
-

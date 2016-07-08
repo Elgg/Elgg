@@ -20,7 +20,7 @@ $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecated
 $subscriptions = array();
 foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 	$personal[$method] = get_input($method.'personal');
-	set_user_notification_setting($user->guid, $method, ($personal[$method] == '1') ? true : false);
+	$user->setNotificationSetting($method, ($personal[$method] == '1'));
 
 	$collections[$method] = get_input($method.'collections');
 	$metaname = 'collections_notifications_preferences_' . $method;

@@ -2,6 +2,9 @@
 
 namespace Elgg\Notifications;
 
+/**
+ * @group NotificationsService
+ */
 class SubscriptionsServiceTest extends \Elgg\TestCase {
 
 	public function setUp() {

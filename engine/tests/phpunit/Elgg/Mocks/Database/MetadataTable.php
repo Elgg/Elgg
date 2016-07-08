@@ -45,6 +45,8 @@ class MetadataTable extends DbMetadataTabe {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 
+		$access_id = (int) $access_id;
+
 		$this->iterator++;
 		$id = $this->iterator;
 

@@ -21,6 +21,8 @@ Deprecated APIs
  * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
  * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
+ * ``get_user_notification_settings()`` is deprecated: Use ``ElggUser::getNotificationSettings()``
+ * ``set_user_notification_setting()`` is deprecated: Use ``ElggUser::setNotificationSetting()``
  * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
  * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
  * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
@@ -69,6 +71,14 @@ New API for extracting class names from arrays
 
 Similar to ``elgg_extract()``, ``elgg_extract_class()`` extracts the "class" key (if present), merges into existing class names, and always returns an array.
 
+Notifications
+-------------
+
+ * A high level ``'prepare','notification'`` hook is now triggered for instant and subscription notifications and can be used to alter notification objects irrespective of their type.
+ * ``'format','notification:<method>'`` hook is now triggered for instant and subscription notifications and can be used to format the notification (e.g. strip HTML tags, wrap the notification body in a template etc).
+ * Instant notifications are now handled by the notifications service, hence almost all hooks applicable to subscription notifications also apply to instant notifications.
+ * ``elgg_get_notification_methods()`` can be used to obtain registered notification methods
+ * Added ``ElggUser::getNotificationSettings()`` and ``ElggUser::setNotificationSetting()``
 
 From 2.1 to 2.2
 ===============
