@@ -77,6 +77,7 @@ if ($full) {
 	$summary = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view('object/elements/full', array(
+		'entity' => $blog,
 		'summary' => $summary,
 		'icon' => $owner_icon,
 		'body' => $body,
