@@ -2,12 +2,12 @@
 
 namespace Elgg\Tests;
 
+use Elgg\Database\EntityTable;
+use Elgg\TestCase;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
 use ElggUser;
-use LogicException;
-
 
 /**
  * Create test doubles for Elgg entities
@@ -15,9 +15,9 @@ use LogicException;
  * @since 2.2
  */
 class EntityMocks {
-	
+
 	/**
-	 * @var \Elgg\TestCase
+	 * @var TestCase
 	 */
 	private $test;
 
@@ -34,9 +34,9 @@ class EntityMocks {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\TestCase $test Test case
+	 * @param TestCase $test Test case
 	 */
-	public function __construct(\Elgg\TestCase $test) {
+	public function __construct(TestCase $test) {
 		$this->test = $test;
 		$this->iterator = 100; // some random offset
 	}
@@ -96,7 +96,16 @@ class EntityMocks {
 		}
 
 		$entity = $this->test->getMockBuilder($class)
-				->setMethods(['getGUID', 'getType', 'getSubtype', '__get', '__set', '__unset'])
+				->setMethods([
+					'getGUID',
+					'getType',
+					'getSubtype',
+					'__get',
+					'__set',
+					'__unset',
+					'getOwnerEntity',
+					'getContainerEntity',
+				])
 				->disableOriginalConstructor()
 				->getMock();
 
@@ -104,7 +113,6 @@ class EntityMocks {
 				->method('getGUID')
 				->will($this->test->returnValue($guid));
 		$attributes['guid'] = $guid;
-
 
 		$entity->expects($this->test->any())
 				->method('getType')
@@ -117,6 +125,39 @@ class EntityMocks {
 				->will($this->test->returnValue($subtype));
 		$attributes['subtype'] = $subtype;
 
+		if (!isset($attributes['owner_guid'])) {
+			switch ($type) {
+				case 'user' :
+					$attributes['owner_guid'] = 0;
+					break;
+				case 'group' :
+				case 'object' :
+					$owner = $this->getUser();
+					$attributes['owner_guid'] = $owner->guid;
+					break;
+			}
+		}
+
+		if (!isset($attributes['container_guid'])) {
+			switch ($type) {
+				case 'user' :
+					$attributes['container_guid'] = 0;
+					break;
+				case 'group' :
+				case 'object' :
+					$attributes['container_guid'] = $attributes['owner_guid'];
+					break;
+			}
+		}
+
+		$entity->expects($this->test->any())
+				->method('getOwnerEntity')
+				->will($this->test->returnValue($this->get($attributes['owner_guid'])));
+
+		$entity->expects($this->test->any())
+				->method('getContainerEntity')
+				->will($this->test->returnValue($this->get($attributes['container_guid'])));
+		
 		$map = [];
 		foreach ($attributes as $key => $value) {
 			$map[] = [$key, $value];
@@ -172,4 +213,26 @@ class EntityMocks {
 		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_group';
 		return $this->setup($this->iterator, 'group', $subtype, $attributes);
 	}
+
+	/**
+	 * Setup entity table mock
+	 * @return EntityTable
+	 */
+	public function getEntityTableMock() {
+		$mock = $this->test->getMockBuilder(\Elgg\Database\EntityTable::class)
+				->setMethods(['get', 'exists'])
+				->disableOriginalConstructor()
+				->getMock();
+
+		$mock->expects($this->test->any())
+				->method('get')
+				->will($this->test->returnCallback([$this, 'get']));
+
+		$mock->expects($this->test->any())
+				->method('exists')
+				->will($this->test->returnCallback([$this, 'exists']));
+
+		return $mock;
+	}
+
 }

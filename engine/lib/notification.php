@@ -262,7 +262,7 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
 	/** @var \Elgg\Notifications\Event $event */
 	$event = elgg_extract('event', $notification->params);
 
-	if (($object instanceof \ElggEntity) && ($event instanceof \Elgg\Notifications\Event)) {
+	if (($object instanceof \ElggEntity) && ($event instanceof \Elgg\Notifications\NotificationEvent)) {
 		if ($event->getAction() === 'create') {
 			// create event happens once per entity and we need to guarantee message id uniqueness
 			// and at the same time have thread message id that we don't need to store
@@ -441,81 +441,10 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  * @throws NotificationException
  */
 function notify_user($to, $from, $subject, $message, array $params = array(), $methods_override = "") {
-
-	if (!is_array($to)) {
-		$to = array((int)$to);
-	}
-	$from = (int)$from;
-	$from = get_entity($from) ? $from : elgg_get_site_entity()->guid;
-	$sender = get_entity($from);
-	$summary = elgg_extract('summary', $params, '');
-
-	// Get notification methods
-	if (($methods_override) && (!is_array($methods_override))) {
-		$methods_override = array($methods_override);
-	}
-
-	$result = array();
-
-	$available_methods = _elgg_services()->notifications->getMethods();
-	if (!$available_methods) {
-		// There are no notifications methods to use
-		return $result;
-	}
-
-	// temporary backward compatibility for 1.8 and earlier notifications
-	$event = null;
-	if (isset($params['object']) && isset($params['action'])) {
-		$event = new \Elgg\Notifications\Event($params['object'], $params['action'], $sender);
-	}
-	$params['event'] = $event;
-
-	foreach ($to as $guid) {
-		// Results for a user are...
-		$result[$guid] = array();
-
-		if ($guid) { // Is the guid > 0?
-			// Are we overriding delivery?
-			$methods = $methods_override;
-			if (!$methods) {
-				$tmp = (array)get_user_notification_settings($guid);
-				$methods = array();
-				foreach ($tmp as $k => $v) {
-					// Add method if method is turned on for user!
-					if ($v) {
-						$methods[] = $k;
-					}
-				}
-			}
-
-			if ($methods) {
-				// Deliver
-				foreach ($methods as $method) {
-					if (!in_array($method, $available_methods)) {
-						// This method was available the last time the user saved their
-						// notification settings. It's however currently disabled.
-						continue;
-					}
-
-					if (_elgg_services()->hooks->hasHandler('send', "notification:$method")) {
-						// 1.9 style notification handler
-						$recipient = get_entity($guid);
-						if (!$recipient) {
-							continue;
-						}
-						$language = $recipient->language;
-						$notification = new \Elgg\Notifications\Notification($sender, $recipient, $language, $subject, $message, $summary, $params);
-						$params['notification'] = $notification;
-						$result[$guid][$method] = _elgg_services()->hooks->trigger('send', "notification:$method", $params, false);
-					} else {
-						$result[$guid][$method] = _elgg_notify_user($guid, $from, $subject, $message, $params, array($method));
-					}
-				}
-			}
-		}
-	}
-
-	return $result;
+	$params['message'] = $message;
+	$params['subject'] = $subject;
+	$params['methods_override'] = $methods_override;
+	return _elgg_services()->notifications->sendInstantNotifications($to, $from, $params);
 }
 
 /**

@@ -2,176 +2,264 @@
 
 namespace Elgg\Notifications;
 
-class NotificationsServiceTest extends \Elgg\TestCase {
+use Elgg\Config;
+use Elgg\Context;
+use Elgg\Database\EntityTable;
+use Elgg\I18n\Translator;
+use Elgg\Logger;
+use Elgg\PluginHooksService;
+use Elgg\Queue\MemoryQueue;
+use Elgg\TestCase;
+use Elgg\Tests\EntityMocks;
+use ElggObject;
+use ElggSession;
 
-	protected $session;
+/**
+ * @group NotificationsService
+ */
+class NotificationsServiceTest extends TestCase {
+
+	/**
+	 * @var PluginHooksService
+	 */
+	private $hooks;
+
+	/**
+	 * @var MemoryQueue
+	 */
+	private $queue;
+
+	/**
+	 * @var SubscriptionsService
+	 */
+	private $subscriptions;
+
+	/**
+	 * @var Translator
+	 */
+	private $translator;
+
+	/**
+	 * @var ElggSession
+	 */
+	private $session;
+
+	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
+	 * @var Context
+	 */
+	private $context;
+
+	/**
+	 * @var Logger
+	 */
+	private $logger;
+
+	/**
+	 * @var NotificationsService
+	 */
+	private $notifications;
+
+	/**
+	 * @var EntityMocks
+	 */
+	private $mocks;
+
+	/**
+	 * @var EntityTable
+	 */
+	private $entities;
 
 	public function setUp() {
-		$this->hooks = new \Elgg\PluginHooksService();
-		$this->queue = new \Elgg\Queue\MemoryQueue();
-		$dbMock = $this->getMockBuilder('\Elgg\Database')
+		$this->hooks = new PluginHooksService();
+		$this->queue = new MemoryQueue();
+		$dbMock = $this->getMockBuilder(\Elgg\Database::class)
 				->disableOriginalConstructor()
 				->getMock();
-		$this->sub = new \Elgg\Notifications\SubscriptionsService($dbMock);
-		$this->translator = new \Elgg\I18n\Translator();
-		$this->session = \ElggSession::getMock();
+		$this->subscriptions = new SubscriptionsService($dbMock);
+		$this->translator = new Translator();
+		$this->session = ElggSession::getMock();
+		$this->config = $this->config();
+		$this->context = new Context();
+		$this->logger = new Logger($this->hooks, $this->config, $this->context);
+		$this->logger->disable();
 
-		// User mock that supports calling $user->isBanned()
-		$user_123 = $this->getMockBuilder('\ElggEntity')
-				->disableOriginalConstructor()
-				->getMock();
-		$user_123->expects($this->any())
-				->method('isBanned')
-				->will($this->returnValue(false));
+		$this->mocks = new EntityMocks($this);
+		$this->entities = $this->mocks->getEntityTableMock();
+	}
 
-		// Database mock that returns the user_123
-		$this->entities = $this->getMockBuilder('\Elgg\Database\EntityTable')
-				->disableOriginalConstructor()
-				->getMock();
-		$this->entities->expects($this->any())
-				->method('get')
-				->with($this->equalTo('123'))
-				->will($this->returnValue($user_123));
+	public function tearDown() {
+		$this->logger->enable();
+	}
 
-		// Event class has dependency on elgg_get_logged_in_user_guid()
+	public function setupServices() {
+		_elgg_services()->setValue('hooks', $this->hooks);
+		_elgg_services()->setValue('translator', $this->translator);
 		_elgg_services()->setValue('session', $this->session);
+		_elgg_services()->setValue('config', $this->config);
+		_elgg_services()->setValue('context', $this->context);
+		_elgg_services()->setValue('logger', $this->logger);
+		_elgg_services()->setValue('entityTable', $this->entities);
+
+		$this->notifications = new NotificationsService(
+				$this->subscriptions, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities, $this->logger);
+
+		_elgg_services()->setValue('notifications', $this->notifications);
 	}
 
 	public function testRegisterEvent() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
+		$this->setupServices();
 
-		$service->registerEvent('foo', 'bar');
+		$this->notifications->registerEvent('foo', 'bar');
 		$events = array(
 			'foo' => array(
 				'bar' => array('create')
 			)
 		);
-		$this->assertEquals($events, $service->getEvents());
+		$this->assertEquals($events, $this->notifications->getEvents());
 
-		$service->registerEvent('foo', 'bar', array('test'));
+		$this->notifications->registerEvent('foo', 'bar', array('test'));
 		$events['foo']['bar'] = array('create', 'test');
-		$this->assertEquals($events, $service->getEvents());
+		$this->assertEquals($events, $this->notifications->getEvents());
 
-		$service->registerEvent('foo', 'bar');
-		$this->assertEquals($events, $service->getEvents());
+		$this->notifications->registerEvent('foo', 'bar');
+		$this->assertEquals($events, $this->notifications->getEvents());
 	}
 
 	public function testUnregisterEvent() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
+		$this->setupServices();
 
-		$service->registerEvent('foo', 'bar');
-		$this->assertTrue($service->unregisterEvent('foo', 'bar'));
+		$this->notifications->registerEvent('foo', 'bar');
+		$this->assertTrue($this->notifications->unregisterEvent('foo', 'bar'));
 
 		$events = array(
 			'foo' => array()
 		);
-		$this->assertEquals($events, $service->getEvents());
-		$this->assertFalse($service->unregisterEvent('foo', 'bar'));
+		$this->assertEquals($events, $this->notifications->getEvents());
+		$this->assertFalse($this->notifications->unregisterEvent('foo', 'bar'));
 	}
 
 	public function testRegisterMethod() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
+		$this->setupServices();
 
-		$service->registerMethod('foo');
+		$this->notifications->registerMethod('foo');
 		$methods = array('foo' => 'foo');
-		$this->assertEquals($methods, $service->getMethods());
+		$this->assertEquals($methods, $this->notifications->getMethods());
 	}
 
 	public function testUnregisterMethod() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
+		$this->setupServices();
 
-		$service->registerMethod('foo');
-		$this->assertTrue($service->unregisterMethod('foo'));
-		$this->assertEquals(array(), $service->getMethods());
-		$this->assertFalse($service->unregisterMethod('foo'));
+		$this->notifications->registerMethod('foo');
+		$this->assertTrue($this->notifications->unregisterMethod('foo'));
+		$this->assertEquals(array(), $this->notifications->getMethods());
+		$this->assertFalse($this->notifications->unregisterMethod('foo'));
 	}
 
 	public function testEnqueueEvent() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
+		$this->setupServices();
 
-		$service->registerEvent('object', 'bar');
-		$object = new \ElggObject();
-		$object->subtype = 'bar';
-		$service->enqueueEvent('create', 'object', $object);
-		$event = new \Elgg\Notifications\Event($object, 'create');
+		$object = $this->mocks->getObject();
+		$this->notifications->registerEvent('object', $object->getSubtype());
+
+		$this->notifications->enqueueEvent('create', 'object', $object);
+
+		$event = new SubscriptionNotificationEvent($object, 'create');
 		$this->assertEquals($event, $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
-		$service->enqueueEvent('null', 'object', $object);
+		$this->notifications->enqueueEvent('null', 'object', $object);
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$service->enqueueEvent('create', 'object', new \ElggObject());
+		$this->notifications->enqueueEvent('create', 'object', new ElggObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 
 	public function testEnqueueEventHook() {
-		$object = new \ElggObject();
-		$object->subtype = 'bar';
+
+		$object = $this->mocks->getObject();
+
 		$params = array('action' => 'create', 'object' => $object);
 
-		$mock = $this->getMock('\Elgg\PluginHooksService', array('trigger'));
+		$mock = $this->getMock(PluginHooksService::class, ['trigger']);
 		$mock->expects($this->once())
 				->method('trigger')
 				->with('enqueue', 'notification', $params, true);
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $mock, $this->session, $this->translator, $this->entities);
-		$service->registerEvent('object', 'bar');
-		$service->enqueueEvent('create', 'object', $object);
+		$this->hooks = $mock;
+
+		$this->setupServices();
+		$this->notifications->registerEvent('object', $object->getSubtype());
+		$this->notifications->enqueueEvent('create', 'object', $object);
 	}
 
 	public function testStoppingEnqueueEvent() {
-		$mock = $this->getMock('\Elgg\PluginHooksService', array('trigger'));
+
+		$mock = $this->getMock(PluginHooksService::class, ['trigger']);
 		$mock->expects($this->once())
 				->method('trigger')
 				->will($this->returnValue(false));
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $mock, $this->session, $this->translator, $this->entities);
 
-		$service->registerEvent('object', 'bar');
-		$object = new \ElggObject();
-		$object->subtype = 'bar';
-		$service->enqueueEvent('create', 'object', $object);
+		$this->hooks = $mock;
+
+		$this->setupServices();
+
+		$object = $this->mocks->getObject();
+		$this->notifications->registerEvent('object', $object->getSubtype());
+
+		$this->notifications->enqueueEvent('create', 'object', $object);
 		$this->assertNull($this->queue->dequeue());
 	}
 
 	public function testProcessQueueNoEvents() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
-		$this->assertEquals(0, $service->processQueue(time() + 10));
+		$this->setupServices();
+		$this->assertEquals(0, $this->notifications->processQueue(time() + 10));
 	}
 
 	public function testProcessQueueThreeEvents() {
-		$mock = $this->getMock(
-				'\Elgg\Notifications\SubscriptionsService', array('getSubscriptions'), array(), '', false);
+
+		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(3))
 				->method('getSubscriptions')
-				->will($this->returnValue(array()));
-		$service = new \Elgg\Notifications\NotificationsService($mock, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
+				->will($this->returnValue([]));
 
-		$service->registerEvent('object', 'bar');
-		$object = new \ElggObject();
-		$object->subtype = 'bar';
-		$service->enqueueEvent('create', 'object', $object);
-		$service->enqueueEvent('create', 'object', $object);
-		$service->enqueueEvent('create', 'object', $object);
+		$this->subscriptions = $mock;
 
-		$this->assertEquals(3, $service->processQueue(time() + 10));
+		$this->setupServices();
+
+		$object = $this->mocks->getObject();
+		$this->notifications->registerEvent('object', $object->getSubtype());
+		
+		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->enqueueEvent('create', 'object', $object);
+
+		$this->assertEquals(3, $this->notifications->processQueue(time() + 10));
 	}
 
 	public function testProcessQueueTimesout() {
-		$mock = $this->getMock(
-				'\Elgg\Notifications\SubscriptionsService', array('getSubscriptions'), array(), '', false);
+		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
-				->method('getSubscriptions');
-		$service = new \Elgg\Notifications\NotificationsService($mock, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
+				->method('getSubscriptions')
+				->will($this->returnValue([]));
 
-		$service->registerEvent('object', 'bar');
-		$object = new \ElggObject();
-		$object->subtype = 'bar';
-		$service->enqueueEvent('create', 'object', $object);
-		$service->enqueueEvent('create', 'object', $object);
-		$service->enqueueEvent('create', 'object', $object);
+		$this->subscriptions = $mock;
 
-		$this->assertEquals(0, $service->processQueue(time()));
+		$this->setupServices();
+
+		$object = $this->mocks->getObject();
+		$this->notifications->registerEvent('object', $object->getSubtype());
+
+		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->enqueueEvent('create', 'object', $object);
+
+		$this->assertEquals(0, $this->notifications->processQueue(time()));
 	}
 
 }

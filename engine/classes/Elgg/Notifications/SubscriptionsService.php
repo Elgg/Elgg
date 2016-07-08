@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Notifications;
 
+use Elgg\Database;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -23,16 +25,16 @@ class SubscriptionsService {
 	 */
 	public $methods;
 
-	/** @var \Elgg\Database */
+	/** @var Database */
 	protected $db;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database $db      Database object
-	 * @param array          $methods Notification delivery method names
+	 * @param Database $db      Database object
+	 * @param array    $methods Notification delivery method names
 	 */
-	public function __construct(\Elgg\Database $db, array $methods = array()) {
+	public function __construct(Database $db, array $methods = array()) {
 		$this->db = $db;
 		$this->methods = $methods;
 	}
@@ -46,10 +48,10 @@ class SubscriptionsService {
 	 *     <user guid> => array('email', 'sms', 'ajax'),
 	 * );
 	 *
-	 * @param \Elgg\Notifications\Event $event Notification event
+	 * @param NotificationEvent $event Notification event
 	 * @return array
 	 */
-	public function getSubscriptions(\Elgg\Notifications\Event $event) {
+	public function getSubscriptions(NotificationEvent $event) {
 
 		$subscriptions = array();
 
@@ -69,7 +71,7 @@ class SubscriptionsService {
 			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
 		}
 
-		$params = array('event' => $event);
+		$params = array('event' => $event, 'origin' => Notification::ORIGIN_SUBSCRIPTIONS);
 		return _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 	}
 

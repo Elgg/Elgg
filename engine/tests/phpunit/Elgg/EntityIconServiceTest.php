@@ -58,27 +58,14 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 
 		_elgg_filestore_init(); // we will need simpletype hook to work
 
-		$this->mocks = new \Elgg\Tests\EntityMocks($this);
-
 		$this->config = $this->config();
 		$this->hooks = new \Elgg\PluginHooksService();
 		$path_key = \Elgg\Application::GET_PATH_KEY;
 		$this->request = \Elgg\Http\Request::create("?$path_key=action/upload");
 		$this->logger = new \Elgg\Logger($this->hooks, $this->config, new \Elgg\Context());
 
-		$this->entities = $this->getMockBuilder('\Elgg\Database\EntityTable')
-				->setMethods(['get', 'exists'])
-				->disableOriginalConstructor()
-				->getMock();
-
-		$this->entities->expects($this->any())
-				->method('get')
-				->will($this->returnCallback([$this->mocks, 'get']));
-
-		$this->entities->expects($this->any())
-				->method('exists')
-				->will($this->returnCallback([$this->mocks, 'exists']));
-
+		$this->mocks = new \Elgg\Tests\EntityMocks($this);
+		$this->entities = $this->mocks->getEntityTableMock();
 		_elgg_services()->setValue('entityTable', $this->entities);
 
 		$this->user = $this->mocks->getUser();
