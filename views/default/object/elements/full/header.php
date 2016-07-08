@@ -13,7 +13,7 @@ $summary = elgg_extract('summary', $vars);
 
 $header_params = (array) elgg_extract('header_params', $vars, []);
 $class = (array) elgg_extract('class', $header_params, []);
-$class = 'elgg-listing-full-header';
+$class[] = 'elgg-listing-full-header';
 $header_params['class'] = implode(' ', $class);
 
 echo elgg_view_image_block($icon, $summary, $header_params);
