@@ -498,18 +498,25 @@ class ElggPluginPackage {
 	private function checkDepPriority(array $dep, array $plugins, $inverse = false) {
 		// grab the \ElggPlugin using this package.
 		$plugin_package = elgg_get_plugin_from_id($this->getID());
-		$plugin_priority = $plugin_package->getPriority();
-		$test_plugin = elgg_get_plugin_from_id($dep['plugin']);
-
-		// If this isn't a plugin or the plugin isn't installed or active
-		// priority doesn't matter. Use requires to check if a plugin is active.
-		if (!$plugin_package || !$test_plugin || !$test_plugin->isActive()) {
+		if (!$plugin_package) {
 			return array(
 				'status' => true,
 				'value' => 'uninstalled'
 			);
 		}
 
+		$test_plugin = elgg_get_plugin_from_id($dep['plugin']);
+
+		// If this isn't a plugin or the plugin isn't installed or active
+		// priority doesn't matter. Use requires to check if a plugin is active.
+		if (!$test_plugin || !$test_plugin->isActive()) {
+			return array(
+				'status' => true,
+				'value' => 'uninstalled'
+			);
+		}
+
+		$plugin_priority = $plugin_package->getPriority();
 		$test_plugin_priority = $test_plugin->getPriority();
 
 		switch ($dep['priority']) {
