@@ -84,6 +84,7 @@ if ($full) {
 
 	$params = array(
 		'entity' => $topic,
+		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,
@@ -91,18 +92,17 @@ if ($full) {
 	$params = $params + $vars;
 	$list_body = elgg_view('object/elements/summary', $params);
 
-	$info = elgg_view_image_block($poster_icon, $list_body);
-
 	$body = elgg_view('output/longtext', array(
 		'value' => $topic->description,
 		'class' => 'clearfix',
 	));
 
-	echo <<<HTML
-$info
-$body
-HTML;
-
+	echo elgg_view('object/elements/full', [
+		'entity' => $topic,
+		'icon' => $poster_icon,
+		'summary' => $list_body,
+		'body' => $body,
+	]);
 } else {
 	// brief view
 	$subtitle = "$by_line $replies_link <span class=\"float-alt\">$reply_text</span>";
