@@ -12,6 +12,9 @@ echo elgg_view_module('theme-sandbox-demo', 'List (.elgg-list)', $body);
 $body = elgg_view('theme_sandbox/components/summary_listing');
 echo elgg_view_module('theme-sandbox-demo', 'Summary Listing (object/elements/summary)', $body);
 
+$body = elgg_view('theme_sandbox/components/full_listing');
+echo elgg_view_module('theme-sandbox-demo', 'Full Listing (object/elements/full)', $body);
+
 $body = elgg_view('theme_sandbox/components/table', array('class' => 'elgg-table'));
 echo elgg_view_module('theme-sandbox-demo', 'Table (.elgg-table)', $body);
 
