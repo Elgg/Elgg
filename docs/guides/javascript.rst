@@ -77,8 +77,61 @@ the greeting:
         $('body').append(hello);
     });
 
+.. _guides/javascript#config:
+
 Passing settings to modules
 ---------------------------
+
+The ``elgg.data`` plugin hooks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``elgg`` module provides an object ``elgg.data`` which is populated from two server side hooks:
+
+- **elgg.data, site**: This filters an associative array of site-specific data passed to the client and cached.
+- **elgg.data, page**: This filters an associative array of uncached, page-specific data passed to the client.
+
+Let's pass some data to a module:
+
+.. code-block:: php
+
+    <?php
+
+    function myplugin_config_site($hook, $type, $value, $params) {
+        // this will be cached client-side
+        $value['myplugin']['api'] = elgg_get_site_url() . 'myplugin-api';
+        $value['myplugin']['key'] = 'none';
+        return $value;
+    }
+
+    function myplugin_config_page($hook, $type, $value, $params) {
+        $user = elgg_get_logged_in_user_entity();
+        if ($user) {
+            $value['myplugin']['key'] = $user->myplugin_api_key;
+            return $value;
+        }
+    }
+
+    elgg_register_plugin_hook_handler('elgg.data', 'site', 'myplugin_config_site');
+    elgg_register_plugin_hook_handler('elgg.data', 'page', 'myplugin_config_page');
+
+.. code-block:: javascript
+
+    define(function(require) {
+        var elgg = require("elgg");
+
+        var api = elgg.data.myplugin.api;
+        var key = elgg.data.myplugin.key; // "none" or a user's key
+
+        // ...
+    });
+
+.. note::
+
+    In ``elgg.data``, page data overrides site data. Also note ``json_encode()`` is used to copy
+    data client-side, so the data must be JSON-encodable.
+
+Making a config module
+^^^^^^^^^^^^^^^^^^^^^^
 
 You can use a PHP-based module to pass values from the server. To make the module ``myplugin/settings``,
 create the view file ``views/default/myplugin/settings.js.php`` (note the double extension
@@ -88,12 +141,11 @@ create the view file ``views/default/myplugin/settings.js.php`` (note the double
 
     <?php
 
-    $settings = elgg_get_plugin_from_id('myplugin')->getAllSettings();
+    // this will be cached client-side
     $settings = [
-        'foo' => elgg_extract('foo', $settings),
-        'bar' => elgg_extract('bar', $settings),
+        'api' => elgg_get_site_url() . 'myplugin-api',
+        'key' => null,
     ];
-
     ?>
     define(<?php echo json_encode($settings); ?>);
 
@@ -669,7 +721,7 @@ The following example registers the ``handleFoo`` function for the ``foo, bar`` 
         elgg.register_hook_handler('foo', 'bar', handleFoo);
 
         return new Plugin();
-   });
+    });
 
 The handler function
 --------------------
@@ -725,6 +777,9 @@ Available hooks
 
 **ajax_response_data, \***
     This filters the response data returned to users of the ``elgg/Ajax`` module. See :doc:`ajax` for details.
+
+**insert, editor**
+    This hook is triggered by the embed plugin and can be used to filter content before it is inserted into the textarea. This hook can also be used by WYSIWYG editors to insert content using their own API (in this case the handler should return ``false``). See ckeditor plugin for an example.
 
 Third-party assets
 ==================

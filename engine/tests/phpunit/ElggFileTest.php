@@ -225,7 +225,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 
 		$this->file->read(1);
 		$this->assertTrue($this->file->eof());
-		
+
 		$this->assertTrue($this->file->close());
 	}
 
@@ -270,7 +270,7 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$target->open('write');
 		$target->write('Testing!');
 		$target->close();
-		
+
 		$symlink = new ElggFile();
 		$symlink->owner_guid = 2;
 		$symlink->setFilename($symlink_name);
@@ -376,4 +376,43 @@ class ElggFileTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse(is_link($from_filename));
 		$this->assertFalse($to->exists());
 	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanTransferFile() {
+
+		$dataroot = elgg_get_config('dataroot');
+
+		$file = new \ElggFile();
+		$file->owner_guid = 3;
+		$file->setFilename("file-to-transfer.txt");
+		$file->setFilename("file-to-transfer.txt");
+
+		// Fail with non-existent file
+		$this->assertFalse($file->transfer(4));
+
+		$file->open('write');
+		$file->write('Transfer');
+		$file->close();
+
+		$this->assertTrue($file->transfer(4));
+		$this->assertEquals(4, $file->owner_guid);
+		$this->assertEquals("file-to-transfer.txt", $file->getFilename());
+		$this->assertEquals("{$dataroot}1/4/file-to-transfer.txt", $file->getFilenameOnFilestore());
+		$this->assertTrue($file->exists());
+		$this->assertFalse(file_exists("{$dataroot}1/3/file-to-transfer.txt"));
+
+		$this->assertTrue($file->transfer(3, 'tmp/transferred-file.txt'));
+		$this->assertEquals(3, $file->owner_guid);
+		$this->assertEquals("tmp/transferred-file.txt", $file->getFilename());
+		$this->assertEquals("{$dataroot}1/3/tmp/transferred-file.txt", $file->getFilenameOnFilestore());
+		$this->assertTrue($file->exists());
+		$this->assertFalse(file_exists("{$dataroot}1/4/file-to-transfer.txt"));
+
+		// cleanup
+		_elgg_rmdir("{$dataroot}1/3/");
+		_elgg_rmdir("{$dataroot}1/4/");
+	}
+
 }

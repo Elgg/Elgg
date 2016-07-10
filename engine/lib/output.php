@@ -167,13 +167,16 @@ function elgg_format_attributes(array $attrs = array()) {
 /**
  * Format an HTML element
  *
- * @param string $tag_name   The element tagName. e.g. "div". This will not be validated.
+ * @param string|array $tag_name   The element tagName. e.g. "div". This will not be validated.
+ *                                 All function arguments can be given as a single array: The array will be used
+ *                                 as $attributes, except for the keys "#tag_name", "#text", and "#options", which
+ *                                 will be extracted as the other arguments.
  *
- * @param array  $attributes The element attributes. This is passed to elgg_format_attributes().
+ * @param array        $attributes The element attributes. This is passed to elgg_format_attributes().
  *
- * @param string $text       The contents of the element. Assumed to be HTML unless encode_text is true.
+ * @param string       $text       The contents of the element. Assumed to be HTML unless encode_text is true.
  *
- * @param array  $options    Options array with keys:
+ * @param array        $options    Options array with keys:
  *
  *   encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
  *                    will not be double-escaped.
@@ -192,7 +195,28 @@ function elgg_format_attributes(array $attrs = array()) {
  * @since 1.9.0
  */
 function elgg_format_element($tag_name, array $attributes = array(), $text = '', array $options = array()) {
-	if (!is_string($tag_name)) {
+	if (is_array($tag_name)) {
+		$args = $tag_name;
+
+		if ($attributes !== [] || $text !== '' || $options !== []) {
+			throw new \InvalidArgumentException('If $tag_name is an array, the other arguments must not be set');
+		}
+
+		if (isset($args['#tag_name'])) {
+			$tag_name = $args['#tag_name'];
+		}
+		if (isset($args['#text'])) {
+			$text = $args['#text'];
+		}
+		if (isset($args['#options'])) {
+			$options = $args['#options'];
+		}
+
+		unset($args['#tag_name'], $args['#text'], $args['#options']);
+		$attributes = $args;
+	}
+
+	if (!is_string($tag_name) || $tag_name === '') {
 		throw new \InvalidArgumentException('$tag_name is required');
 	}
 

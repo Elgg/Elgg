@@ -16,6 +16,10 @@ use Elgg\Filesystem\Directory;
  */
 class ViewsService {
 
+	const VIEW_HOOK = 'view';
+	const VIEW_VARS_HOOK = 'view_vars';
+	const OUTPUT_KEY = '__view_output';
+
 	/**
 	 * @see fileExists
 	 * @var array
@@ -233,14 +237,15 @@ class ViewsService {
 	}
 
 	/**
-	 * Get the views, including extensions, used to render this view
+	 * Get the views, including extensions, used to render a view
 	 *
-	 * Keys returned are view priorities.
+	 * Keys returned are view priorities. View existence is not checked.
 	 *
 	 * @param string $view View name
 	 * @return string[]
+	 * @access private
 	 */
-	private function getViewList($view) {
+	public function getViewList($view) {
 		if (isset($this->extensions[$view])) {
 			return $this->extensions[$view];
 		} else {
@@ -251,7 +256,7 @@ class ViewsService {
 	/**
 	 * @access private
 	 */
-	public function renderView($view, array $vars = [], $bypass = false, $viewtype = '', $issue_missing_notice = true) {
+	public function renderView($view, array $vars = [], $ignored = false, $viewtype = '', $issue_missing_notice = true) {
 		$view = $this->canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
@@ -279,7 +284,12 @@ class ViewsService {
 			'vars' => $vars,
 			'viewtype' => $viewtype,
 		];
-		$vars = $this->hooks->trigger('view_vars', $view, $vars_hook_params, $vars);
+		$vars = $this->hooks->trigger(self::VIEW_VARS_HOOK, $view, $vars_hook_params, $vars);
+
+		// allow $vars to hijack output
+		if (isset($vars[self::OUTPUT_KEY])) {
+			return (string)$vars[self::OUTPUT_KEY];
+		}
 
 		$view_orig = $view;
 
@@ -305,8 +315,12 @@ class ViewsService {
 		}
 
 		// Plugin hook
-		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
-		$content = $this->hooks->trigger('view', $view_orig, $params, $content);
+		$params = [
+			'view' => $view_orig,
+			'vars' => $vars,
+			'viewtype' => $viewtype,
+		];
+		$content = $this->hooks->trigger(self::VIEW_HOOK, $view_orig, $params, $content);
 
 		return $content;
 	}

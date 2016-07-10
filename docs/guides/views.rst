@@ -405,6 +405,22 @@ Here we'll eliminate breadcrumbs that don't have at least one link.
 	    // returning nothing means "don't alter the returnvalue"
 	}
 
+Replacing view output completely
+--------------------------------
+
+You can pre-set the view output by setting ``$vars['__view_output']``. The value will be returned as a
+string. View extensions will not be used and the ``view`` hook will not be triggered.
+
+.. code-block:: php
+
+    elgg_register_plugin_hook_handler('view_vars', 'navigation/breadcrumbs', 'myplugin_no_page_breadcrumbs');
+
+    function myplugin_no_page_breadcrumbs($hook, $type, $vars, $params) {
+        if (elgg_in_context('pages')) {
+            return ['__view_output' => ""];
+        }
+    }
+
 Displaying entities
 ===================
 

@@ -21,10 +21,10 @@ return array(
 	'discussion:error:notdeleted' => 'Impossible de supprimer le sujet de discussion',
 
 	'discussion:reply:edit' => 'Modifier la réponse',
-	'discussion:reply:deleted' => 'La réponse de la discussion a été supprimée.',
+	'discussion:reply:deleted' => 'La réponse discussion a été supprimée.',
 	'discussion:reply:error:notfound' => 'La réponse à cette discussion n\'a pas été trouvée',
-	'discussion:reply:error:notfound_fallback' => "Désolé, le message spécifié n'a pu être trouvé. Vous avez été redirigé vers le sujet de discussion original.",
-	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de la discussion',
+	'discussion:reply:error:notfound_fallback' => "Désolé, la réponse spécifiée n'a pu être trouvée, mais vous avez été redirigé vers le sujet de discussion original.",
+	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse à la discussion',
 
 	'discussion:search:title' => 'Répondre au sujet : %s',
 
@@ -40,30 +40,30 @@ return array(
 	 */
 	'river:create:object:discussion' => '%s a ajouté un nouveau sujet de discussion %s',
 	'river:reply:object:discussion' => '%s a répondu sur le sujet de discussion %s',
-	'river:reply:view' => 'Afficher la réponse',
+	'river:reply:view' => 'afficher la réponse',
 
 	/**
 	 * Notifications
 	 */
-	'discussion:topic:notify:summary' => 'Nouveau sujet de discussion appelé %s',
+	'discussion:topic:notify:summary' => 'Nouveau sujet de discussion intitulé %s',
 	'discussion:topic:notify:subject' => 'Nouveau sujet de discussion : %s',
 	'discussion:topic:notify:body' =>
 '%s a ajouté un nouveau sujet de discussion à %s :
 
 %s
 
-Voir et répondre à la discussion :
+Voir la discussion et répondre :
 %s
 ',
 
-	'discussion:reply:notify:summary' => 'Nouvelle réponse au sujet : %s',
-	'discussion:reply:notify:subject' => 'Nouvelle réponse au sujet : %s',
+	'discussion:reply:notify:summary' => 'Nouvelle réponse dans la discussion : %s',
+	'discussion:reply:notify:subject' => 'Nouvelle réponse dans la discussion : %s',
 	'discussion:reply:notify:body' =>
-'%s a ajouté un nouveau sujet de discussion à %s :
+'%s a répondu au sujet de discussion "%s" :
 
 %s
 
-Voir et répondre à la discussion :
+Voir la discussion et répondre :
 %s
 ',
 
@@ -72,7 +72,7 @@ Voir et répondre à la discussion :
 
 	'groups:enableforum' => 'Activer les discussions de groupe',
 
-	'reply:this' => 'Répondre à ça',
+	'reply:this' => 'Répondre',
 
 	/**
 	 * ecml
@@ -88,11 +88,11 @@ Voir et répondre à la discussion :
 
 	'discussion:replies' => 'Réponses',
 	'discussion:addtopic' => 'Ajouter un sujet',
-	'discussion:post:success' => 'Votre réponse a été publié avec succès',
+	'discussion:post:success' => 'Votre réponse a bien été publiée',
 	'discussion:post:failure' => 'Il y a eu un problème lors de la publication de votre réponse',
 	'discussion:topic:edit' => 'Modifier le sujet',
 	'discussion:topic:description' => 'Message du sujet',
 
-	'discussion:reply:edited' => "Vous avez modifié ce billet avec succés.",
-	'discussion:reply:error' => "Il y a eu un problème lors de la modification du billet.",
+	'discussion:reply:edited' => "Vous avez bien modifié cette discussion.",
+	'discussion:reply:error' => "Il y a eu un problème lors de la modification de la discussion.",
 );

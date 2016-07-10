@@ -15,7 +15,8 @@ echo elgg_view_module('popup', 'Popup Test', $ipsum, array(
 ));
 
 
-$button = elgg_format_element('button', array(
+$button = elgg_format_element(array(
+	'#tag_name' => 'button',
 	'class' => 'elgg-button elgg-button-submit mll',
 	'rel' => 'popup',
 	'data-href' => "#elgg-popup-test2",
@@ -23,13 +24,15 @@ $button = elgg_format_element('button', array(
 		'my' => 'left top',
 		'at' => 'left bottom',
 	)),
-		), 'Load content in a popup');
+	'#text' => 'Load content in a popup',
+));
 
 echo $button;
 
-echo elgg_format_element('div', array(
+echo elgg_format_element(array(
+	'#tag_name' => 'div',
 	'id' => 'elgg-popup-test2',
 	'class' => 'hidden theme-sandbox-content-thin elgg-module-popup',
-		), '');
+));
 
 elgg_require_js('theme_sandbox/javascript/popup');

@@ -74,6 +74,10 @@ input[type="radio"] {
 	border: none;
 	width: auto;
 }
+.elgg-input-checkbox + label,
+.elgg-input-checkbox + .elgg-field-label {
+	display: inline-block;
+}
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radios.elgg-horizontal li {
 	display: inline;

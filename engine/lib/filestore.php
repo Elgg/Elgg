@@ -465,19 +465,27 @@ function elgg_get_file_simple_type($mime_type) {
 }
 
 /**
- * Initialize the file library.
- * Listens to system init and configures the default filestore
+ * Bootstraps the default filestore at "boot, system" event
  *
  * @return void
  * @access private
  */
-function _elgg_filestore_init() {
+function _elgg_filestore_boot() {
 	global $CONFIG;
 
 	// Now register a default filestore
 	if (isset($CONFIG->dataroot)) {
 		$GLOBALS['DEFAULT_FILE_STORE'] = new \ElggDiskFilestore($CONFIG->dataroot);
 	}
+}
+
+/**
+ * Register file-related handlers on "init, system" event
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_filestore_init() {
 
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
@@ -494,6 +502,10 @@ function _elgg_filestore_init() {
 	// Touch entity icons if entity access id has changed
 	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
 	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_touch_icons');
+	
+	// Move entity icons if entity owner has changed
+	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_move_icons');
+	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_move_icons');
 }
 
 /**
@@ -666,7 +678,70 @@ function _elgg_filestore_touch_icons($event, $type, $entity) {
 	}
 }
 
+/**
+ * Listen to entity ownership changes and update icon ownership by moving
+ * icons to their new owner's directory on filestore.
+ *
+ * This will only transfer icons that have a custom location on filestore
+ * and are owned by the entity's owner (instead of the entity itself).
+ * Even though core icon service does not store icons in the entity's owner
+ * directory, there are plugins that do (e.g. file plugin) - this handler
+ * helps such plugins avoid ownership mismatch.
+ *
+ * @param string     $event  "update:after"
+ * @param string     $type   "object"|"group"
+ * @param ElggObject $entity Entity
+ * @return void
+ * @access private
+ */
+function _elgg_filestore_move_icons($event, $type, $entity) {
+
+	$original_attributes = $entity->getOriginalAttributes();
+	if (empty($original_attributes['owner_guid'])) {
+		return;
+	}
+
+	$previous_owner_guid = $original_attributes['owner_guid'];
+	$new_owner_guid = $entity->owner_guid;
+
+	$sizes = elgg_get_icon_sizes($entity->getType(), $entity->getSubtype());
+
+	foreach ($sizes as $size => $opts) {
+		$new_icon = $entity->getIcon($size);
+		if ($new_icon->owner_guid == $entity->guid) {
+			// we do not need to update icons that are owned by the entity itself
+			continue;
+		}
+
+		if ($new_icon->owner_guid != $new_owner_guid) {
+			// a plugin implements some custom logic
+			continue;
+		}
+
+		$old_icon = new \ElggIcon();
+		$old_icon->owner_guid = $previous_owner_guid;
+		$old_icon->setFilename($new_icon->getFilename());
+		if (!$old_icon->exists()) {
+			// there is no icon to move
+			continue;
+		}
+		
+		if ($new_icon->exists()) {
+			// there is already a new icon
+			// just removing the old one
+			$old_icon->delete();
+			elgg_log("Entity $entity->guid has been transferred to a new owner but an icon was left behind under {$old_icon->getFilenameOnFilestore()}. "
+				. "Old icon has been deleted", 'NOTICE');
+			continue;
+		}
+
+		$old_icon->transfer($new_icon->owner_guid, $new_icon->getFilename());
+		elgg_log("Entity $entity->guid has been transferred to a new owner. "
+				. "Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.", 'NOTICE');
+	}
+}
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('boot', 'system', '_elgg_filestore_boot', 100);
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
 };

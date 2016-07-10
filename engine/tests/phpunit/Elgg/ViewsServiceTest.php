@@ -123,6 +123,18 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals("// Hello", $this->views->renderView('js/interpreted.js'));
 	}
+
+	public function testCanReplaceViews() {
+		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function ($h, $t, $v, $p) {
+			return ['__view_output' => 123];
+		});
+
+		$this->hooks->registerHandler('view', 'js/interpreted.js', function ($h, $t, $v, $p) {
+			$this->fail('view hook was called though __view_output was set.');
+		});
+
+		$this->assertSame("123", $this->views->renderView('js/interpreted.js'));
+	}
 	
 	public function testThrowsOnCircularAliases() {
 		$this->markTestIncomplete();
@@ -153,6 +165,23 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(in_array('static.js', $views));
 
 		$this->assertEmpty($this->views->listViews('fake_viewtype'));
+	}
+
+	public function testCanGetViewRenderingList() {
+		$list = $this->views->getViewList('foo');
+		$this->assertEquals([
+			500 => 'foo',
+		], $list);
+
+		$this->views->extendView('foo', 'bar');
+		$this->views->extendView('foo', 'bing', 499);
+
+		$list = $this->views->getViewList('foo');
+		$this->assertEquals([
+			499 => 'bing',
+			500 => 'foo',
+			501 => 'bar',
+		], $list);
 	}
 	
 	public function getExampleNormalizedViews() {

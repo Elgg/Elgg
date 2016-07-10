@@ -31,7 +31,11 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		$top_row .= '<td class="spacercolumn">&nbsp;</td>';
 	}
 
-	$top_row .= elgg_format_element('td', ['class' => "{$method}togglefield"], elgg_echo("notification:method:{$method}"));
+	$top_row .= elgg_format_element([
+		'#tag_name' => 'td',
+		'#text' => elgg_echo("notification:method:{$method}"),
+		'class' => "{$method}togglefield",
+	]);
 	$i++;
 }
 
@@ -168,7 +172,11 @@ $table_attributes = [
 	'width' => '100%',
 ];
 
-$body = elgg_format_element('p', ['class' => 'margin-none'], elgg_echo('notifications:subscriptions:friends:description'));
+$body = elgg_format_element([
+	'#tag_name' => 'p',
+	'class' => 'margin-none',
+	'#text' => elgg_echo('notifications:subscriptions:friends:description'),
+]);
 $body .= elgg_format_element('table', $table_attributes, $table_data);
 
 echo elgg_view_module('info', elgg_echo('notifications:subscriptions:friends:title'), $body);

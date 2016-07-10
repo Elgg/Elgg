@@ -31,6 +31,7 @@ function groups_init() {
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
 	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_set_icon_url');
+	elgg_register_plugin_hook_handler('entity:icon:file', 'group', 'groups_set_icon_file');
 
 	// Register an icon handler for groups
 	elgg_register_page_handler('groupicon', 'groups_icon_handler');
@@ -99,6 +100,8 @@ function groups_init() {
 
 	// Register a handler for create groups
 	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
+	elgg_register_event_handler('update:after', 'group', 'groups_update_event_listener');
+	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener', 999);
 
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
@@ -314,10 +317,7 @@ function groups_icon_handler($page) {
 
 	$group = get_entity($guid);
 	
-	$icon = new ElggFile();
-	$icon->owner_guid = $group->owner_guid;
-	$icon->setFilename("groups/{$group->guid}{$size}.jpg");
-
+	$icon = $group->getIcon($size);
 	$url = elgg_get_inline_url($icon, true);
 	if (!$url) {
 		$url = elgg_get_simplecache_url("groups/default{$size}.gif");
@@ -342,7 +342,7 @@ function groups_set_url($hook, $type, $url, $params) {
 }
 
 /**
- * Override the default entity icon for groups
+ * Override the default entity icon URL for groups
  *
  * @param string $hook
  * @param string $type
@@ -351,31 +351,46 @@ function groups_set_url($hook, $type, $url, $params) {
  * @return string Relative URL
  */
 function groups_set_icon_url($hook, $type, $url, $params) {
-	/* @var ElggGroup $group */
-	$group = $params['entity'];
-	$size = $params['size'];
 
-	$icontime = $group->icontime;
-	// handle missing metadata (pre 1.7 installations)
+	$entity = elgg_extract('entity', $params);
+	/* @var $group \ElggGroup */
+
+	$size = elgg_extract('size', $params, 'medium');
+
+	$icontime = $entity->icontime;
 	if (null === $icontime) {
-		$file = new ElggFile();
-		$file->owner_guid = $group->owner_guid;
-		$file->setFilename("groups/" . $group->guid . "large.jpg");
-		$icontime = $file->exists() ? time() : 0;
-		create_metadata($group->guid, 'icontime', $icontime, 'integer', $group->owner_guid, ACCESS_PUBLIC);
-	}
-	if ($icontime) {
-		// return thumbnail
-		$icon = new ElggFile();
-		$icon->owner_guid = $group->owner_guid;
-		$icon->setFilename("groups/{$group->guid}{$size}.jpg");
-		$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
-		if ($url) {
-			return $url;
-		}
-	}
+		// handle missing metadata (pre 1.7 installations)
+		$icon = $entity->getIcon('large');
+		$icontime = $icon->exists() ? time() : 0;
+		create_metadata($entity->guid, 'icontime', $icontime, 'integer', $entity->owner_guid, ACCESS_PUBLIC);
+}
 
-	return elgg_get_simplecache_url("groups/default{$size}.gif");
+	$icon = $entity->getIcon($size);
+	$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
+	if (!$url) {
+		$url = elgg_get_simplecache_url("groups/default{$size}.gif");
+	}
+	return $url;
+}
+
+/**
+ * Override the default entity icon file for groups
+ *
+ * @param string    $hook   "entity:icon:file"
+ * @param string    $type   "group"
+ * @param \ElggIcon $icon   Icon file
+ * @param array     $params Hook params
+ * @return \ElggIcon
+ */
+function groups_set_icon_file($hook, $type, $icon, $params) {
+
+	$entity = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params, 'medium');
+
+	$icon->owner_guid = $entity->owner_guid;
+	$icon->setFilename("groups/{$entity->guid}{$size}.jpg");
+
+	return $icon;
 }
 
 /**
@@ -515,6 +530,67 @@ function groups_create_event_listener($event, $object_type, $object) {
 	}
 
 	return true;
+}
+
+/**
+ * Listen to group ownership changes and update group icon ownership
+ * This will only move the source file, the actual icons are moved by
+ * _elgg_filestore_move_icons()
+ *
+ * This operation is performed in an event listener to ensure that icons
+ * are moved when ownership changes outside of the groups/edit action flow.
+ *
+ * @todo #4683 proposes that icons are owned by groups and not group owners
+ * @see _elgg_filestore_move_icons()
+ *
+ * @param string   $event "update:after"
+ * @param string   $type  "group"
+ * @param ElggGrup $group Group entity
+ * @return void
+ */
+function groups_update_event_listener($event, $type, $group) {
+
+	/* @var $group \ElggGroup */
+
+	$original_attributes = $group->getOriginalAttributes();
+	if (empty($original_attributes['owner_guid'])) {
+		return;
+	}
+
+	$previous_owner_guid = $original_attributes['owner_guid'];
+
+	// In addition to standard icons, groups plugin stores a copy of the original upload
+	$filehandler = new ElggFile();
+	$filehandler->owner_guid = $previous_owner_guid;
+	$filehandler->setFilename("groups/$group->guid.jpg");
+	$filehandler->transfer($group->owner_guid);
+}
+
+/**
+ * Remove groups icons on delete
+ *
+ * This operation is performed in an event listener to ensure that icons
+ * are removed when group is deleted outside of groups/delete action flow.
+ *
+ * Registered with a hight priority to make sure that other handlers to not prevent
+ * the deletion.
+ * 
+ * @param string   $event "delete"
+ * @param string   $type  "group"
+ * @param ElggGrup $group Group entity
+ * @return void
+ */
+function groups_delete_event_listener($event, $type, $group) {
+
+	/* @var $group \ElggGroup */
+
+	// In addition to standard icons, groups plugin stores a copy of the original upload
+	$filehandler = new ElggFile();
+	$filehandler->owner_guid = $group->owner_guid;
+	$filehandler->setFilename("groups/$group->guid.jpg");
+	$filehandler->delete();
+
+	$group->deleteIcon();
 }
 
 /**

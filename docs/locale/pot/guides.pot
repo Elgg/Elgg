@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-20 19:29-0400\n"
+"POT-Creation-Date: 2016-06-13 22:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -487,7 +487,7 @@ msgstr ""
 
 #: ../../guides/actions.rst:361
 #: ../../guides/ajax.rst:13
-#: ../../guides/i18n.rst:9
+#: ../../guides/i18n.rst:12
 #: ../../guides/plugins/dependencies.rst:11
 msgid "Overview"
 msgstr ""
@@ -695,337 +695,337 @@ msgstr ""
 msgid "To execute it, use ``ajax.action('<action_name>', options)``:"
 msgstr ""
 
-#: ../../guides/ajax.rst:74
+#: ../../guides/ajax.rst:75
 msgid "Notes for actions:"
 msgstr ""
 
-#: ../../guides/ajax.rst:78
+#: ../../guides/ajax.rst:79
 msgid "All hooks have type ``action:<action_name>``. So in this case, three hooks will be triggered:"
 msgstr ""
 
-#: ../../guides/ajax.rst:77
+#: ../../guides/ajax.rst:78
 msgid "client-side ``\"ajax_request_data\", \"action:do_math\"`` to filter the request data (before it's sent)"
 msgstr ""
 
-#: ../../guides/ajax.rst:78
+#: ../../guides/ajax.rst:79
 msgid "server-side ``\"ajax_response\", \"action:do_math\"`` to filter the response (after the action runs)"
 msgstr ""
 
-#: ../../guides/ajax.rst:79
+#: ../../guides/ajax.rst:80
 msgid "client-side ``\"ajax_response_data\", \"action:do_math\"`` to filter the response data (before the calling code receives it)"
 msgstr ""
 
-#: ../../guides/ajax.rst:80
+#: ../../guides/ajax.rst:81
 msgid "CSRF tokens are added to the request data."
 msgstr ""
 
-#: ../../guides/ajax.rst:81
+#: ../../guides/ajax.rst:82
 msgid "The default method is ``POST``."
 msgstr ""
 
-#: ../../guides/ajax.rst:82
+#: ../../guides/ajax.rst:83
 msgid "Using ``forward()`` in and action simply sends the response. The URL given in not returned to the client."
 msgstr ""
 
-#: ../../guides/ajax.rst:85
+#: ../../guides/ajax.rst:86
 msgid "Fetching data"
 msgstr ""
 
-#: ../../guides/ajax.rst:87
+#: ../../guides/ajax.rst:88
 msgid "Consider this PHP script that runs at ``http://example.org/myplugin_time``."
 msgstr ""
 
-#: ../../guides/ajax.rst:105
+#: ../../guides/ajax.rst:106
 msgid "To fetch its output, use ``ajax.path('<url_path>', options)``."
 msgstr ""
 
-#: ../../guides/ajax.rst:116
+#: ../../guides/ajax.rst:118
 msgid "Notes for paths:"
 msgstr ""
 
-#: ../../guides/ajax.rst:118
+#: ../../guides/ajax.rst:120
 msgid "The 3 hooks (see Actions above) will have type ``path:<url_path>``. In this case, \"path:myplugin_time\"."
 msgstr ""
 
-#: ../../guides/ajax.rst:119
+#: ../../guides/ajax.rst:121
 msgid "If the page handler echoes a regular web page, ``output`` will be a string containing the HTML."
 msgstr ""
 
-#: ../../guides/ajax.rst:122
+#: ../../guides/ajax.rst:124
 msgid "Fetching views"
 msgstr ""
 
-#: ../../guides/ajax.rst:124
+#: ../../guides/ajax.rst:126
 msgid "Consider this view:"
 msgstr ""
 
-#: ../../guides/ajax.rst:143
+#: ../../guides/ajax.rst:145
 msgid "Since it's a PHP file, we must register it for Ajax first:"
 msgstr ""
 
-#: ../../guides/ajax.rst:151
+#: ../../guides/ajax.rst:153
 msgid "To fetch the view, use ``ajax.view('<view_name>', options)``:"
 msgstr ""
 
-#: ../../guides/ajax.rst:165
+#: ../../guides/ajax.rst:168
 msgid "Notes for views:"
 msgstr ""
 
-#: ../../guides/ajax.rst:167
+#: ../../guides/ajax.rst:170
 msgid "The 3 hooks (see Actions above) will have type ``view:<view_name>``. In this case, \"view:myplugin/get_link\"."
 msgstr ""
 
-#: ../../guides/ajax.rst:168
-#: ../../guides/ajax.rst:201
+#: ../../guides/ajax.rst:171
+#: ../../guides/ajax.rst:205
 msgid "``output`` will be a string with the rendered view."
 msgstr ""
 
-#: ../../guides/ajax.rst:169
+#: ../../guides/ajax.rst:172
 msgid "The request data are injected into ``$vars`` in the view."
 msgstr ""
 
-#: ../../guides/ajax.rst:170
-#: ../../guides/ajax.rst:203
+#: ../../guides/ajax.rst:173
+#: ../../guides/ajax.rst:207
 msgid "If the request data contains ``guid``, the system sets ``$vars['entity']`` to the corresponding entity or ``false`` if it can't be loaded."
 msgstr ""
 
-#: ../../guides/ajax.rst:174
-#: ../../guides/ajax.rst:214
+#: ../../guides/ajax.rst:177
+#: ../../guides/ajax.rst:218
 msgid "In ajax views and forms, note that ``$vars`` can be populated by client input. The data is filtered like ``get_input()``, but may not be the type you're expecting or may have unexpected keys."
 msgstr ""
 
-#: ../../guides/ajax.rst:179
+#: ../../guides/ajax.rst:182
 msgid "Fetching forms"
 msgstr ""
 
-#: ../../guides/ajax.rst:181
+#: ../../guides/ajax.rst:184
 msgid "Consider we have a form view. We register it for Ajax:"
 msgstr ""
 
-#: ../../guides/ajax.rst:188
+#: ../../guides/ajax.rst:191
 msgid "To fetch this using ``ajax.form('<action_name>', options)``."
 msgstr ""
 
-#: ../../guides/ajax.rst:198
+#: ../../guides/ajax.rst:202
 msgid "Notes for forms:"
 msgstr ""
 
-#: ../../guides/ajax.rst:200
+#: ../../guides/ajax.rst:204
 msgid "The 3 hooks (see Actions above) will have type ``form:<action_name>``. In this case, \"form:myplugin/add\"."
 msgstr ""
 
-#: ../../guides/ajax.rst:202
+#: ../../guides/ajax.rst:206
 msgid "The request data are injected into ``$vars`` in your form view."
 msgstr ""
 
-#: ../../guides/ajax.rst:207
-#: ../../guides/ajax.rst:451
+#: ../../guides/ajax.rst:211
+#: ../../guides/ajax.rst:457
 msgid "Only the request data are passed to the requested form view (i.e. as a third parameter accepted by ``elgg_view_form()``). If you need to pass attributes or parameters of the form element rendered by the ``input/form`` view (i.e. normally passed as a second parameter to ``elgg_view_form()``), use the server-side hook ``view_vars, input/form``."
 msgstr ""
 
-#: ../../guides/ajax.rst:219
+#: ../../guides/ajax.rst:223
 msgid "Piggybacking on an Ajax request"
 msgstr ""
 
-#: ../../guides/ajax.rst:221
+#: ../../guides/ajax.rst:225
 msgid "The client-side ``ajax_request_data`` hook can be used to append or filter data being sent by an ``elgg/Ajax`` request."
 msgstr ""
 
-#: ../../guides/ajax.rst:223
+#: ../../guides/ajax.rst:227
 msgid "Let's say when the view ``foo`` is fetched, we want to also send the server some data:"
 msgstr ""
 
-#: ../../guides/ajax.rst:237
+#: ../../guides/ajax.rst:243
 msgid "This data can be read server-side via ``get_input('bar');``."
 msgstr ""
 
-#: ../../guides/ajax.rst:240
+#: ../../guides/ajax.rst:246
 msgid "Piggybacking on an Ajax response"
 msgstr ""
 
-#: ../../guides/ajax.rst:242
+#: ../../guides/ajax.rst:248
 msgid "The server-side ``ajax_response`` hook can be used to append or filter response data (or metadata)."
 msgstr ""
 
-#: ../../guides/ajax.rst:244
+#: ../../guides/ajax.rst:250
 msgid "Let's say when the view ``foo`` is fetched, we want to also send the client some additional data:"
 msgstr ""
 
-#: ../../guides/ajax.rst:264
+#: ../../guides/ajax.rst:270
 msgid "To capture the metadata send back to the client, we use the client-side ``ajax_response`` hook:"
 msgstr ""
 
-#: ../../guides/ajax.rst:283
+#: ../../guides/ajax.rst:289
 msgid "Only ``data.value`` is returned to the ``success`` function or available via the `Deferred` interface."
 msgstr ""
 
-#: ../../guides/ajax.rst:285
+#: ../../guides/ajax.rst:291
 msgid "Elgg uses these same hooks to deliver system messages over ``elgg/Ajax`` responses."
 msgstr ""
 
-#: ../../guides/ajax.rst:288
+#: ../../guides/ajax.rst:294
 msgid "Legacy elgg.ajax APIs"
 msgstr ""
 
-#: ../../guides/ajax.rst:290
+#: ../../guides/ajax.rst:296
 msgid "Elgg 1.8 introduced ``elgg.action``, ``elgg.get``, ``elgg.getJSON``, and other methods which behave less consistently both client-side and server-side."
 msgstr ""
 
-#: ../../guides/ajax.rst:293
+#: ../../guides/ajax.rst:299
 msgid "Legacy elgg.action"
 msgstr ""
 
-#: ../../guides/ajax.rst:295
+#: ../../guides/ajax.rst:301
 msgid "Differences:"
 msgstr ""
 
-#: ../../guides/ajax.rst:297
+#: ../../guides/ajax.rst:303
 msgid "you must manually pull the ``output`` from the returned wrapper"
 msgstr ""
 
-#: ../../guides/ajax.rst:298
+#: ../../guides/ajax.rst:304
 msgid "the ``success`` handler will fire even if the action is prevented"
 msgstr ""
 
-#: ../../guides/ajax.rst:299
+#: ../../guides/ajax.rst:305
 msgid "the ``success`` handler will receive a wrapper object. You must look for ``wrapper.output``"
 msgstr ""
 
-#: ../../guides/ajax.rst:300
+#: ../../guides/ajax.rst:306
 msgid "no ajax hooks"
 msgstr ""
 
-#: ../../guides/ajax.rst:323
+#: ../../guides/ajax.rst:329
 msgid "elgg.action notes"
 msgstr ""
 
-#: ../../guides/ajax.rst:325
+#: ../../guides/ajax.rst:331
 msgid "It's best to echo a non-empty string, as this is easy to validate in the ``success`` function. If the action was not allowed to run for some reason, ``wrapper.output`` will be an empty string."
 msgstr ""
 
-#: ../../guides/ajax.rst:327
+#: ../../guides/ajax.rst:333
 msgid "You may want to use the :doc:`elgg/spinner</guides/javascript>` module."
 msgstr ""
 
-#: ../../guides/ajax.rst:328
+#: ../../guides/ajax.rst:334
 msgid "Elgg does not use ``wrapper.status`` for anything, but a call to ``register_error()`` causes it to be set to ``-1``."
 msgstr ""
 
-#: ../../guides/ajax.rst:330
+#: ../../guides/ajax.rst:336
 msgid "If the action echoes a non-JSON string, ``wrapper.output`` will contain that string."
 msgstr ""
 
-#: ../../guides/ajax.rst:331
+#: ../../guides/ajax.rst:337
 msgid "``elgg.action`` is based on ``jQuery.ajax`` and returns a ``jqXHR`` object (like a Promise), if you should want to use it."
 msgstr ""
 
-#: ../../guides/ajax.rst:332
+#: ../../guides/ajax.rst:338
 msgid "After the PHP action completes, other plugins can alter the wrapper via the plugin hook ``'output', 'ajax'``, which filters the wrapper as an array (not a JSON string)."
 msgstr ""
 
-#: ../../guides/ajax.rst:334
+#: ../../guides/ajax.rst:340
 msgid "A ``forward()`` call forces the action to be processed and output immediately, with the ``wrapper.forward_url`` value set to the normalized location given."
 msgstr ""
 
-#: ../../guides/ajax.rst:336
+#: ../../guides/ajax.rst:342
 msgid "To make sure Ajax actions can only be executed via XHR, use ``elgg_ajax_gatekeeper()``."
 msgstr ""
 
-#: ../../guides/ajax.rst:339
+#: ../../guides/ajax.rst:345
 msgid "elgg.action JSON response wrapper"
 msgstr ""
 
-#: ../../guides/ajax.rst:353
+#: ../../guides/ajax.rst:359
 msgid "It's probably best to rely only on the ``output`` key, and validate it in case the PHP action could not run for some reason, e.g. the user was logged out or a CSRF attack did not provide tokens."
 msgstr ""
 
-#: ../../guides/ajax.rst:358
+#: ../../guides/ajax.rst:364
 msgid "If ``forward()`` is used in response to a legacy ajax request (e.g. ``elgg.ajax``), Elgg will *always* respond with this wrapper, **even if not in an action**."
 msgstr ""
 
-#: ../../guides/ajax.rst:362
+#: ../../guides/ajax.rst:368
 msgid "Legacy view fetching"
 msgstr ""
 
-#: ../../guides/ajax.rst:364
+#: ../../guides/ajax.rst:370
 msgid "A plugin can use a view script to handle XHR ``GET`` requests. Here's a simple example of a view that returns a link to an object given by its GUID:"
 msgstr ""
 
-#: ../../guides/ajax.rst:400
+#: ../../guides/ajax.rst:406
 msgid "The Ajax view system works significantly differently than the action system."
 msgstr ""
 
-#: ../../guides/ajax.rst:402
+#: ../../guides/ajax.rst:408
 msgid "There are no access controls based on session status."
 msgstr ""
 
-#: ../../guides/ajax.rst:403
+#: ../../guides/ajax.rst:409
 msgid "Non-XHR requests are automatically rejected."
 msgstr ""
 
-#: ../../guides/ajax.rst:404
+#: ../../guides/ajax.rst:410
 msgid "GET vars are injected into ``$vars`` in the view."
 msgstr ""
 
-#: ../../guides/ajax.rst:405
+#: ../../guides/ajax.rst:411
 msgid "If the request contains ``$_GET['guid']``, the system sets ``$vars['entity']`` to the corresponding entity or ``false`` if it can't be loaded."
 msgstr ""
 
-#: ../../guides/ajax.rst:407
+#: ../../guides/ajax.rst:413
 msgid "There's no \"wrapper\" object placed around the view output."
 msgstr ""
 
-#: ../../guides/ajax.rst:408
+#: ../../guides/ajax.rst:414
 msgid "System messages/errors shouldn't be used, as they don't display until the user loads another page."
 msgstr ""
 
-#: ../../guides/ajax.rst:409
+#: ../../guides/ajax.rst:415
 msgid "Depending on the view's suffix (.js, .html, .css, etc.), a corresponding Content-Type header is added."
 msgstr ""
 
-#: ../../guides/ajax.rst:413
-#: ../../guides/ajax.rst:458
+#: ../../guides/ajax.rst:419
+#: ../../guides/ajax.rst:464
 msgid "In ajax views and forms, note that ``$vars`` can be populated by client input. The data is filtered like"
 msgstr ""
 
-#: ../../guides/ajax.rst:414
-#: ../../guides/ajax.rst:459
+#: ../../guides/ajax.rst:420
+#: ../../guides/ajax.rst:465
 msgid "``get_input()``, but may not be the type you're expecting or may have unexpected keys."
 msgstr ""
 
-#: ../../guides/ajax.rst:417
+#: ../../guides/ajax.rst:423
 msgid "Returning JSON from a view"
 msgstr ""
 
-#: ../../guides/ajax.rst:419
+#: ../../guides/ajax.rst:425
 msgid "If the view outputs encoded JSON, you must use ``elgg.getJSON`` to fetch it (or use some other method to set jQuery's ajax option ``dataType`` to ``json``). Your ``success`` function will be passed the decoded Object."
 msgstr ""
 
-#: ../../guides/ajax.rst:422
+#: ../../guides/ajax.rst:428
 msgid "Here's an example of fetching a view that returns a JSON-encoded array of times:"
 msgstr ""
 
-#: ../../guides/ajax.rst:433
+#: ../../guides/ajax.rst:439
 msgid "Legacy form fetching"
 msgstr ""
 
-#: ../../guides/ajax.rst:435
+#: ../../guides/ajax.rst:441
 msgid "If you register a form view (name starting with ``forms/``), you can fetch it pre-rendered with ``elgg_view_form()``. Simply use ``ajax/form/<action>`` (instead of ``ajax/view/<view_name>``):"
 msgstr ""
 
-#: ../../guides/ajax.rst:463
+#: ../../guides/ajax.rst:469
 msgid "Legacy helper functions"
 msgstr ""
 
-#: ../../guides/ajax.rst:465
+#: ../../guides/ajax.rst:471
 msgid "These functions extend jQuery's native Ajax features."
 msgstr ""
 
-#: ../../guides/ajax.rst:467
+#: ../../guides/ajax.rst:473
 msgid "``elgg.get()`` is a wrapper for jQuery's ``$.ajax()``, but forces ``GET`` and does URL normalization."
 msgstr ""
 
-#: ../../guides/ajax.rst:478
+#: ../../guides/ajax.rst:484
 msgid "``elgg.post()`` is a wrapper for jQuery's ``$.ajax()``, but forces ``POST`` and does URL normalization."
 msgstr ""
 
@@ -1179,6 +1179,26 @@ msgstr ""
 
 #: ../../guides/context.rst:11
 msgid "Sometimes a view will return different HTML depending on the context. A plugin can take advantage of that by setting the context before calling ``elgg_view()`` on the view and then setting the context back. This is frequently done with the search context."
+msgstr ""
+
+#: ../../guides/cron.rst:2
+msgid "Cron"
+msgstr ""
+
+#: ../../guides/cron.rst:4
+msgid "If you setup cron correctly as described in :doc:`/admin/cron` special hooks will be triggered so you can register for these hooks from your own code."
+msgstr ""
+
+#: ../../guides/cron.rst:7
+msgid "The example below registers a function for the daily cron."
+msgstr ""
+
+#: ../../guides/cron.rst:16
+msgid "If timing is important in your cron hook be advised that the functions are executed in order of registration. This could mean that your function may start (a lot) later then you may have expected. However the parameters provided in the hook contain the original starting time of the cron, so you can always use that information."
+msgstr ""
+
+#: ../../guides/cron.rst:30
+msgid ":doc:`/design/events` has more information about hooks"
 msgstr ""
 
 #: ../../guides/database.rst:2
@@ -2241,7 +2261,7 @@ msgid ":doc:`dont-modify-core`"
 msgstr ""
 
 #: ../../guides/guidelines.rst:21
-#: ../../guides/upgrading.rst:1076
+#: ../../guides/upgrading.rst:1077
 msgid "Use standardized routing with page handlers"
 msgstr ""
 
@@ -2340,7 +2360,7 @@ msgid "The group URL should use views like ``resources/groups/*.php`` to render 
 msgstr ""
 
 #: ../../guides/guidelines.rst:46
-#: ../../guides/upgrading.rst:1094
+#: ../../guides/upgrading.rst:1095
 msgid "Page handlers should not contain HTML."
 msgstr ""
 
@@ -2349,7 +2369,7 @@ msgid "If upgrading a 1.7 plugin, update the URLs throughout the plugin. (Don’
 msgstr ""
 
 #: ../../guides/guidelines.rst:50
-#: ../../guides/upgrading.rst:1099
+#: ../../guides/upgrading.rst:1100
 msgid "Use standardized page handlers and scripts"
 msgstr ""
 
@@ -2370,7 +2390,7 @@ msgid "Page handler scripts should not contain HTML"
 msgstr ""
 
 #: ../../guides/guidelines.rst:57
-#: ../../guides/upgrading.rst:1108
+#: ../../guides/upgrading.rst:1109
 msgid "Call ``elgg_push_breadcrumb()`` in the page handler scripts."
 msgstr ""
 
@@ -2403,12 +2423,12 @@ msgid "Update action structure - Example: Bookmarks plugin."
 msgstr ""
 
 #: ../../guides/guidelines.rst:69
-#: ../../guides/upgrading.rst:1123
+#: ../../guides/upgrading.rst:1124
 msgid "Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)"
 msgstr ""
 
 #: ../../guides/guidelines.rst:78
-#: ../../guides/upgrading.rst:1124
+#: ../../guides/upgrading.rst:1125
 msgid "Use the following action URLs:"
 msgstr ""
 
@@ -2507,7 +2527,7 @@ msgid "Integrate sticky forms (see the file plugin’s upload action and form pr
 msgstr ""
 
 #: ../../guides/guidelines.rst:116
-#: ../../guides/upgrading.rst:1164
+#: ../../guides/upgrading.rst:1165
 msgid "Clean up CSS/HTML"
 msgstr ""
 
@@ -3821,20 +3841,20 @@ msgstr ""
 msgid "If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`."
 msgstr ""
 
-#: ../../guides/i18n.rst:11
+#: ../../guides/i18n.rst:8
+msgid "The default language is ``en`` for English. Currently Elgg will always fall back to an English translation, even if the site's language is not English; this is a known bug."
+msgstr ""
+
+#: ../../guides/i18n.rst:14
 msgid "Translations are stored in PHP files in the ``/languages`` directory of your plugin. Each file corresponds to a language. The format is ``/languages/{language-code}.php`` where ``{language-code}`` is the ISO 639-1 short code for the language. For example:"
 msgstr ""
 
-#: ../../guides/i18n.rst:22
-msgid "The default language is “en” for English."
-msgstr ""
-
 #: ../../guides/i18n.rst:24
-msgid "To change the wording of any phrase, provide a new mapping in your plugin’s ``{language}.php`` file for the associated key:"
+msgid "To override an existing translation, include it in your plugin's language file, and make sure your plugin is ordered later on the Admin > Plugins page:"
 msgstr ""
 
-#: ../../guides/i18n.rst:36
-msgid "Unless you are overriding core’s or another plugin’s language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys."
+#: ../../guides/i18n.rst:37
+msgid "Unless you are overriding core’s or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys."
 msgstr ""
 
 #: ../../guides/i18n.rst:40
@@ -3865,23 +3885,31 @@ msgstr ""
 msgid "To force which language should be used for translation, set the third parameter:"
 msgstr ""
 
-#: ../../guides/i18n.rst:71
+#: ../../guides/i18n.rst:68
+msgid "To first test whether ``elgg_echo()`` can find a translation:"
+msgstr ""
+
+#: ../../guides/i18n.rst:79
+msgid "Some APIs allow creating translations for new keys. Translators should always include an English translation as a fallback. This makes ``elgg_language_key_exists($key)`` a reliable way to predict whether ``elgg_echo($key)`` will succeed."
+msgstr ""
+
+#: ../../guides/i18n.rst:84
 msgid "Javascript API"
 msgstr ""
 
-#: ../../guides/i18n.rst:73
-msgid "``elgg.echo(key, args, language)``"
+#: ../../guides/i18n.rst:86
+msgid "``elgg.echo(key, args)``"
 msgstr ""
 
-#: ../../guides/i18n.rst:75
-msgid "This function is the exact counterpart to ``elgg_echo`` in PHP."
+#: ../../guides/i18n.rst:88
+msgid "This function is like ``elgg_echo`` in PHP."
 msgstr ""
 
-#: ../../guides/i18n.rst:77
+#: ../../guides/i18n.rst:90
 msgid "Client-side translations are loaded asynchronously. Ensure translations are available by requiring the \"elgg\" AMD module:"
 msgstr ""
 
-#: ../../guides/i18n.rst:87
+#: ../../guides/i18n.rst:100
 msgid "Translations are also available after the ``init, system`` JavaScript event."
 msgstr ""
 
@@ -4552,7 +4580,7 @@ msgid "**Example:** The following would be the output of the ``foo`` menu with s
 msgstr ""
 
 #: ../../guides/notifications.rst:2
-#: ../../guides/upgrading.rst:788
+#: ../../guides/upgrading.rst:789
 msgid "Notifications"
 msgstr ""
 
@@ -6102,1598 +6130,1602 @@ msgstr ""
 msgid "URLs starting with ``/css/`` and ``/js/``: ``Use elgg_get_simplecache_url()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:25
+#: ../../guides/upgrading.rst:23
+msgid "``elgg.ui.widgets`` JavaScript object is deprecated by ``elgg/widgets`` AMD module"
+msgstr ""
+
+#: ../../guides/upgrading.rst:26
 msgid "Added ``elgg/widgets`` module"
 msgstr ""
 
-#: ../../guides/upgrading.rst:27
+#: ../../guides/upgrading.rst:28
 msgid "If your plugin code calls ``elgg.ui.widgets.init()``, instead use the :doc:`elgg/widgets module <javascript>`."
 msgstr ""
 
-#: ../../guides/upgrading.rst:30
+#: ../../guides/upgrading.rst:31
 msgid "From 1.x to 2.0"
 msgstr ""
 
-#: ../../guides/upgrading.rst:33
+#: ../../guides/upgrading.rst:34
 msgid "Elgg can be now installed as a composer dependency instead of at document root"
 msgstr ""
 
-#: ../../guides/upgrading.rst:35
+#: ../../guides/upgrading.rst:36
 msgid "That means an Elgg site can look something like this:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:52
+#: ../../guides/upgrading.rst:53
 msgid "``elgg_get_root_path`` and ``$CONFIG->path`` will return the path to the application root directory, which is not necessarily the same as Elgg core's root directory (which in this case is ``vendor/elgg/elgg/``)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:56
+#: ../../guides/upgrading.rst:57
 msgid "Do not attempt to access the core Elgg from your plugin directly, since you cannot rely on its location on the filesystem."
 msgstr ""
 
-#: ../../guides/upgrading.rst:59
+#: ../../guides/upgrading.rst:60
 msgid "In particular, don't try load ``engine/start.php``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:66
+#: ../../guides/upgrading.rst:67
 msgid "To boot Elgg manually, you can use the class ``Elgg\\Application``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:74
+#: ../../guides/upgrading.rst:75
 msgid "However, use this approach sparingly. Prefer :doc:`routing` instead whenever possible as that keeps your public URLs and your filesystem layout decoupled."
 msgstr ""
 
-#: ../../guides/upgrading.rst:77
+#: ../../guides/upgrading.rst:78
 msgid "Also, don't try to access the ``_graphics`` files directly."
 msgstr ""
 
-#: ../../guides/upgrading.rst:83
+#: ../../guides/upgrading.rst:84
 msgid "Use :doc:`views` instead:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:91
+#: ../../guides/upgrading.rst:92
 msgid "Cacheable views must have a file extension in their names"
 msgstr ""
 
-#: ../../guides/upgrading.rst:93
+#: ../../guides/upgrading.rst:94
 msgid "This requirement makes it possibile for us to serve assets directly from disk for performance, instead of serving them through PHP."
 msgstr ""
 
-#: ../../guides/upgrading.rst:96
+#: ../../guides/upgrading.rst:97
 msgid "It also makes it much easier to explore the available cached resources by navigating to dataroot/views_simplecache and browsing around."
 msgstr ""
 
-#: ../../guides/upgrading.rst:99
+#: ../../guides/upgrading.rst:100
 #: ../../guides/views.rst:87
 msgid "Bad: ``my/cool/template``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:100
+#: ../../guides/upgrading.rst:101
 #: ../../guides/views.rst:88
 msgid "Good: ``my/cool/template.html``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:102
+#: ../../guides/upgrading.rst:103
 msgid "We now cache assets by ``\"$viewtype/$view\"``, not ``md5(\"$viewtype|$view\")``, which can result in conflicts between cacheable views that don't have file extensions to disambiguate files from directories."
 msgstr ""
 
-#: ../../guides/upgrading.rst:108
+#: ../../guides/upgrading.rst:109
 msgid "Dropped ``jquery-migrate`` and upgraded ``jquery`` to ^2.1.4"
 msgstr ""
 
-#: ../../guides/upgrading.rst:110
+#: ../../guides/upgrading.rst:111
 msgid "jQuery 2.x is API-compatible with 1.x, but drops support for IE8-, which Elgg hasn't supported for some time anyways."
 msgstr ""
 
-#: ../../guides/upgrading.rst:113
+#: ../../guides/upgrading.rst:114
 msgid "See http://jquery.com/upgrade-guide/1.9/ for how to move off jquery-migrate."
 msgstr ""
 
-#: ../../guides/upgrading.rst:115
+#: ../../guides/upgrading.rst:116
 msgid "If you'd prefer to just add it back, you can use this code in your plugin's init:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:123
+#: ../../guides/upgrading.rst:124
 msgid "Also, define a ``jquery-migrate.js`` view containing the contents of the script."
 msgstr ""
 
-#: ../../guides/upgrading.rst:126
+#: ../../guides/upgrading.rst:127
 msgid "JS and CSS views have been moved out of the js/ and css/ directories"
 msgstr ""
 
-#: ../../guides/upgrading.rst:128
+#: ../../guides/upgrading.rst:129
 msgid "They also have been given .js and .css extensions respectively if they didn't already have them:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:132
+#: ../../guides/upgrading.rst:133
 msgid "Old view"
 msgstr ""
 
-#: ../../guides/upgrading.rst:132
+#: ../../guides/upgrading.rst:133
 msgid "New view"
 msgstr ""
 
-#: ../../guides/upgrading.rst:134
+#: ../../guides/upgrading.rst:135
 msgid "``js/view``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:134
+#: ../../guides/upgrading.rst:135
 msgid "``view.js``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:135
+#: ../../guides/upgrading.rst:136
 msgid "``js/other.js``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:135
+#: ../../guides/upgrading.rst:136
 msgid "``other.js``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:136
+#: ../../guides/upgrading.rst:137
 msgid "``css/view``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:136
+#: ../../guides/upgrading.rst:137
 msgid "``view.css``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:137
+#: ../../guides/upgrading.rst:138
 msgid "``css/other.css``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:137
+#: ../../guides/upgrading.rst:138
 msgid "``other.css``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:138
+#: ../../guides/upgrading.rst:139
 msgid "``js/img.png``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:138
+#: ../../guides/upgrading.rst:139
 msgid "``img.png``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:141
+#: ../../guides/upgrading.rst:142
 msgid "The main benefit this brings is being able to co-locate related assets. So a template (``view.php``) can have its CSS/JS dependencies right next to it (``view.css``, ``view.js``)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:145
+#: ../../guides/upgrading.rst:146
 msgid "Care has been taken to make this change as backwards-compatible as possible, so you should not need to update any view references right away. However, you are certainly encouraged to move your JS and CSS views to their new, canonical locations."
 msgstr ""
 
-#: ../../guides/upgrading.rst:150
+#: ../../guides/upgrading.rst:151
 msgid "Practically speaking, this carries a few gotchas:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:152
+#: ../../guides/upgrading.rst:153
 msgid "The ``view_vars, $view_name`` and ``view, $view_name`` hooks will operate on the *canonical* view name:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:161
+#: ../../guides/upgrading.rst:162
 msgid "Using the ``view, all`` hook and checking for individual views may not work as intended:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:177
+#: ../../guides/upgrading.rst:178
 msgid "Please let us know about any other BC issues this change causes. We'd like to fix as many as possible to make the transition smooth."
 msgstr ""
 
-#: ../../guides/upgrading.rst:181
+#: ../../guides/upgrading.rst:182
 msgid "``fxp/composer-asset-plugin`` is now required to install Elgg from source"
 msgstr ""
 
-#: ../../guides/upgrading.rst:183
+#: ../../guides/upgrading.rst:184
 msgid "We use ``fxp/composer-asset-plugin`` to manage our browser assets (js, css, html) with Composer, but it must be installed globally *before installing Elgg* in order for the ``bower-asset/*`` packages to be recognized. To install it, run:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:191
+#: ../../guides/upgrading.rst:192
 msgid "If you don't do this before running ``composer install`` or ``composer create-project``, you will get an error message:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:201
+#: ../../guides/upgrading.rst:202
 msgid "List of deprecated views and view arguments that have been removed"
 msgstr ""
 
-#: ../../guides/upgrading.rst:203
+#: ../../guides/upgrading.rst:204
 msgid "We dropped support for and/or removed the following views:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:205
+#: ../../guides/upgrading.rst:206
 msgid "canvas/layouts/*"
 msgstr ""
 
-#: ../../guides/upgrading.rst:206
+#: ../../guides/upgrading.rst:207
 msgid "categories"
 msgstr ""
 
-#: ../../guides/upgrading.rst:207
+#: ../../guides/upgrading.rst:208
 msgid "categories/view"
 msgstr ""
 
-#: ../../guides/upgrading.rst:208
+#: ../../guides/upgrading.rst:209
 msgid "core/settings/tools"
 msgstr ""
 
-#: ../../guides/upgrading.rst:209
+#: ../../guides/upgrading.rst:210
 msgid "embed/addcontentjs"
 msgstr ""
 
-#: ../../guides/upgrading.rst:210
+#: ../../guides/upgrading.rst:211
 msgid "footer/analytics (Use page/elements/foot instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:211
+#: ../../guides/upgrading.rst:212
 msgid "groups/left_column"
 msgstr ""
 
-#: ../../guides/upgrading.rst:212
+#: ../../guides/upgrading.rst:213
 msgid "groups/right_column"
 msgstr ""
 
-#: ../../guides/upgrading.rst:213
+#: ../../guides/upgrading.rst:214
 msgid "groups/search/finishblurb"
 msgstr ""
 
-#: ../../guides/upgrading.rst:214
+#: ../../guides/upgrading.rst:215
 msgid "groups/search/startblurb"
 msgstr ""
 
-#: ../../guides/upgrading.rst:215
+#: ../../guides/upgrading.rst:216
 msgid "input/calendar (Use input/date instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:216
+#: ../../guides/upgrading.rst:217
 msgid "input/datepicker (Use input/date instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:217
+#: ../../guides/upgrading.rst:218
 msgid "input/pulldown (Use input/select instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:218
+#: ../../guides/upgrading.rst:219
 msgid "invitefriends/formitems"
 msgstr ""
 
-#: ../../guides/upgrading.rst:219
+#: ../../guides/upgrading.rst:220
 msgid "js/admin (Use AMD and ``elgg_require_js`` instead of extending JS views)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:220
+#: ../../guides/upgrading.rst:221
 msgid "js/initialise_elgg (Use AMD and ``elgg_require_js`` instead of extending JS views)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:221
+#: ../../guides/upgrading.rst:222
 msgid "members/nav"
 msgstr ""
 
-#: ../../guides/upgrading.rst:222
+#: ../../guides/upgrading.rst:223
 msgid "metatags (Use the 'head', 'page' plugin hook instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:223
+#: ../../guides/upgrading.rst:224
 msgid "navigation/topbar_tools"
 msgstr ""
 
-#: ../../guides/upgrading.rst:224
+#: ../../guides/upgrading.rst:225
 msgid "navigation/viewtype"
 msgstr ""
 
-#: ../../guides/upgrading.rst:225
+#: ../../guides/upgrading.rst:226
 msgid "notifications/subscriptions/groupsform"
 msgstr ""
 
-#: ../../guides/upgrading.rst:226
+#: ../../guides/upgrading.rst:227
 msgid "object/groupforumtopic"
 msgstr ""
 
-#: ../../guides/upgrading.rst:227
+#: ../../guides/upgrading.rst:228
 msgid "output/calendar (Use output/date instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:228
+#: ../../guides/upgrading.rst:229
 msgid "output/confirmlink (Use output/url instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:229
+#: ../../guides/upgrading.rst:230
 msgid "page_elements/contentwrapper"
 msgstr ""
 
-#: ../../guides/upgrading.rst:230
+#: ../../guides/upgrading.rst:231
 msgid "page/elements/shortcut_icon (Use the 'head', 'page' plugin hook instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:231
+#: ../../guides/upgrading.rst:232
 msgid "page/elements/wrapper"
 msgstr ""
 
-#: ../../guides/upgrading.rst:232
+#: ../../guides/upgrading.rst:233
 msgid "profile/icon (Use ``elgg_get_entity_icon``)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:233
+#: ../../guides/upgrading.rst:234
 msgid "river/object/groupforumtopic/create"
 msgstr ""
 
-#: ../../guides/upgrading.rst:234
+#: ../../guides/upgrading.rst:235
 msgid "settings/{plugin}/edit (Use plugins/{plugin}/settings instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:235
+#: ../../guides/upgrading.rst:236
 msgid "user/search/finishblurb"
 msgstr ""
 
-#: ../../guides/upgrading.rst:236
+#: ../../guides/upgrading.rst:237
 msgid "user/search/startblurb"
 msgstr ""
 
-#: ../../guides/upgrading.rst:237
+#: ../../guides/upgrading.rst:238
 msgid "usersettings/{plugin}/edit (Use plugins/{plugin}/usersettings instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:238
+#: ../../guides/upgrading.rst:239
 msgid "widgets/{handler}/view (Use widgets/{handler}/content instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:240
+#: ../../guides/upgrading.rst:241
 msgid "We also dropped the following arguments to views:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:242
+#: ../../guides/upgrading.rst:243
 msgid "\"value\" in output/iframe (Use \"src\" instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:243
+#: ../../guides/upgrading.rst:244
 msgid "\"area2\" and \"area3\" in page/elements/sidebar (Use \"sidebar\" or view extension instead)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:244
+#: ../../guides/upgrading.rst:245
 msgid "\"js\" in icon views (e.g. icon/user/default)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:245
+#: ../../guides/upgrading.rst:246
 msgid "\"options\" to input/radio and input/checkboxes which aren't key-value pairs will no longer be acceptable."
 msgstr ""
 
-#: ../../guides/upgrading.rst:250
+#: ../../guides/upgrading.rst:251
 msgid "All scripts moved to bottom of page"
 msgstr ""
 
-#: ../../guides/upgrading.rst:252
+#: ../../guides/upgrading.rst:253
 msgid "You should test your plugin **with the JavaScript error console visible**. For performance reasons, Elgg no longer supports ``script`` elements in the ``head`` element or in HTML views. ``elgg_register_js`` will now load *all* scripts at the end of the ``body`` element."
 msgstr ""
 
-#: ../../guides/upgrading.rst:256
+#: ../../guides/upgrading.rst:257
 msgid "You must convert inline scripts to :doc:`AMD </guides/javascript>` or to external scripts loaded with ``elgg_load_js``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:259
+#: ../../guides/upgrading.rst:260
 msgid "Early in the page, Elgg provides a shim of the RequireJS ``require()`` function that simply queues code until the AMD ``elgg`` and ``jQuery`` modules are defined. This provides a straightforward way to convert many inline scripts to use ``require()``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:263
+#: ../../guides/upgrading.rst:264
 msgid "Inline code which will fail because the stack is not yet loaded:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:273
+#: ../../guides/upgrading.rst:274
 msgid "This should work in Elgg 2.0:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:286
+#: ../../guides/upgrading.rst:287
 msgid "Attribute formatter removes keys with underscores"
 msgstr ""
 
-#: ../../guides/upgrading.rst:288
+#: ../../guides/upgrading.rst:289
 msgid "``elgg_format_attributes()`` (and all APIs that use it) now filter out attributes whose name contains an underscore. If the attribute begins with ``data-``, however, it will not be removed."
 msgstr ""
 
-#: ../../guides/upgrading.rst:292
+#: ../../guides/upgrading.rst:293
 msgid "Breadcrumbs"
 msgstr ""
 
-#: ../../guides/upgrading.rst:294
+#: ../../guides/upgrading.rst:295
 msgid "Breadcrumb display now removes the last item if it does not contain a link. To restore the previous behavior, replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:311
+#: ../../guides/upgrading.rst:312
 msgid "Callbacks in Queries"
 msgstr ""
 
-#: ../../guides/upgrading.rst:313
+#: ../../guides/upgrading.rst:314
 msgid "Make sure to use only valid *callable* values for \"callback\" argument/options in the API."
 msgstr ""
 
-#: ../../guides/upgrading.rst:315
+#: ../../guides/upgrading.rst:316
 msgid "Querying functions will now will throw a ``RuntimeException`` if ``is_callable()`` returns ``false`` for the given callback value. This includes functions such as ``elgg_get_entities()``, ``get_data()``, and many more."
 msgstr ""
 
-#: ../../guides/upgrading.rst:319
+#: ../../guides/upgrading.rst:320
 msgid "Comments plugin hook"
 msgstr ""
 
-#: ../../guides/upgrading.rst:321
+#: ../../guides/upgrading.rst:322
 msgid "Plugins can now return an empty string from ``'comments',$entity_type`` hook in order to override the default comments component view. To force the default comments component, your plugin must return ``false``. If you were using empty strings to force the default comments view, you need to update your hook handlers to return ``false``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:324
+#: ../../guides/upgrading.rst:325
 msgid "Container permissions hook"
 msgstr ""
 
-#: ../../guides/upgrading.rst:326
+#: ../../guides/upgrading.rst:327
 msgid "The behavior of the ``container_permissions_check`` hook has changed when an entity is being created: Before 2.0, the hook would be called twice if the entity's container was not the owner. On the first call, the entity's owner would be passed in as ``$params['container']``, which could confuse handlers."
 msgstr ""
 
-#: ../../guides/upgrading.rst:328
+#: ../../guides/upgrading.rst:329
 msgid "In 2.0, when an entity is created in a container like a group, if the owner is the same as the logged in user (almost always the case), this first check is bypassed. So the ``container_permissions_check`` hook will almost always be called once with ``$params['container']`` being the correct container of the entity."
 msgstr ""
 
-#: ../../guides/upgrading.rst:331
+#: ../../guides/upgrading.rst:332
 msgid "Creating or deleting a relationship triggers only one event"
 msgstr ""
 
-#: ../../guides/upgrading.rst:333
+#: ../../guides/upgrading.rst:334
 msgid "The \"create\" and \"delete\" relationship events are now only fired once, with ``\"relationship\"`` as the object type."
 msgstr ""
 
-#: ../../guides/upgrading.rst:335
+#: ../../guides/upgrading.rst:336
 msgid "E.g. Listening for the ``\"create\", \"member\"`` or ``\"delete\", \"member\"`` event(s) will no longer capture group membership additions/removals. Use the ``\"create\", \"relationship\"`` or ``\"delete\", \"relationship\"`` events."
 msgstr ""
 
-#: ../../guides/upgrading.rst:338
+#: ../../guides/upgrading.rst:339
 msgid "Discussion feature has been pulled from groups into its own plugin"
 msgstr ""
 
-#: ../../guides/upgrading.rst:340
+#: ../../guides/upgrading.rst:341
 msgid "The ``object, groupforumtopic`` subtype has been replaced with the ``object, discussion`` subtype. If your plugin is using or altering the old discussion feature, you should upgrade it to use the new subtype."
 msgstr ""
 
-#: ../../guides/upgrading.rst:345
+#: ../../guides/upgrading.rst:346
 msgid "Nothing changes from the group owners' point of view. The discussion feature is still available as a group tool and all old discussions are intact."
 msgstr ""
 
-#: ../../guides/upgrading.rst:350
+#: ../../guides/upgrading.rst:351
 msgid "Dropped login-over-https feature"
 msgstr ""
 
-#: ../../guides/upgrading.rst:352
+#: ../../guides/upgrading.rst:353
 msgid "For the best security and performance, serve all pages over HTTPS by switching the scheme in your site's wwwroot to ``https`` at http://yoursite.tld/admin/settings/advanced"
 msgstr ""
 
-#: ../../guides/upgrading.rst:358
+#: ../../guides/upgrading.rst:359
 msgid "Elgg has migrated from ext/mysql to PDO MySQL"
 msgstr ""
 
-#: ../../guides/upgrading.rst:360
+#: ../../guides/upgrading.rst:361
 msgid "Elgg now uses a ``PDO_MYSQL`` connection and no longer uses any ext/mysql functions. If you use ``mysql_*`` functions, implicitly relying on an open connection, these will fail."
 msgstr ""
 
-#: ../../guides/upgrading.rst:363
+#: ../../guides/upgrading.rst:364
 msgid "If your code uses one of the following functions, read below."
 msgstr ""
 
-#: ../../guides/upgrading.rst:365
+#: ../../guides/upgrading.rst:366
 msgid "``execute_delayed_write_query()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:366
+#: ../../guides/upgrading.rst:367
 msgid "``execute_delayed_read_query()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:368
+#: ../../guides/upgrading.rst:369
 msgid "If you provide a callable ``$handler`` to be called with the results, your handler will now receive a ``\\Doctrine\\DBAL\\Driver\\Statement`` object. Formerly this was an ext/mysql ``result`` resource."
 msgstr ""
 
-#: ../../guides/upgrading.rst:373
+#: ../../guides/upgrading.rst:374
 msgid "Event/Hook calling order may change"
 msgstr ""
 
-#: ../../guides/upgrading.rst:375
+#: ../../guides/upgrading.rst:376
 msgid "When registering for events/hooks, the ``all`` keyword for wildcard matching no longer has any effect on the order that handlers are called. To ensure your handler is called last, you must give it the highest priority of all matching handlers, or to ensure your handler is called first, you must give it the lowest priority of all matching handlers."
 msgstr ""
 
-#: ../../guides/upgrading.rst:380
+#: ../../guides/upgrading.rst:381
 msgid "If handlers were registered with the same priority, these are called in the order they were registered."
 msgstr ""
 
-#: ../../guides/upgrading.rst:382
+#: ../../guides/upgrading.rst:383
 msgid "To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in priority. Some of these handlers will most likely be called in a different order."
 msgstr ""
 
-#: ../../guides/upgrading.rst:386
+#: ../../guides/upgrading.rst:387
 msgid "``export/`` URLs are no longer available"
 msgstr ""
 
-#: ../../guides/upgrading.rst:388
+#: ../../guides/upgrading.rst:389
 msgid "Elgg no longer provides this endpoint for exposing resource data."
 msgstr ""
 
-#: ../../guides/upgrading.rst:391
+#: ../../guides/upgrading.rst:392
 msgid "Icons migrated to Font Awesome"
 msgstr ""
 
-#: ../../guides/upgrading.rst:393
+#: ../../guides/upgrading.rst:394
 msgid "Elgg's sprites and most of the CSS classes beginning with ``elgg-icon-`` `have been removed <https://github.com/Elgg/Elgg/pull/8578/files#diff-b3912b37ca7bd6c53a2968ccb6c22a94L22>`_."
 msgstr ""
 
-#: ../../guides/upgrading.rst:396
+#: ../../guides/upgrading.rst:397
 msgid "Usage of ``elgg_view_icon()`` is backward compatible, but static HTML using the ``elgg-icon`` classes will have to be updated to the new markup."
 msgstr ""
 
-#: ../../guides/upgrading.rst:400
+#: ../../guides/upgrading.rst:401
 msgid "Increase of z-index value in elgg-menu-site class"
 msgstr ""
 
-#: ../../guides/upgrading.rst:402
+#: ../../guides/upgrading.rst:403
 msgid "The value of z-index in the elgg-menu-site class has been increased from 1 to 50 to allow for page elements in the content area to use the z-index property without the \"More\" site menu's dropdown being displayed behind these elements. If your plugin/theme overrides the elgg-menu-site class or views/default/elements/navigation.css please adjust the z-index value in your modified CSS file accordingly."
 msgstr ""
 
-#: ../../guides/upgrading.rst:408
+#: ../../guides/upgrading.rst:409
 msgid "input/autocomplete view"
 msgstr ""
 
-#: ../../guides/upgrading.rst:410
+#: ../../guides/upgrading.rst:411
 msgid "Plugins that override the ``input/autocomplete`` view will need to include the source URL in the ``data-source`` attribute of the input element, require the new ``elgg/autocomplete`` AMD module, and call its ``init`` method. The 1.x javascript library ``elgg.autocomplete`` is no longer used."
 msgstr ""
 
-#: ../../guides/upgrading.rst:413
+#: ../../guides/upgrading.rst:414
 msgid "Introduced third-party library for sending email"
 msgstr ""
 
-#: ../../guides/upgrading.rst:415
+#: ../../guides/upgrading.rst:416
 msgid "We are using the excellent ``Zend\\Mail`` library to send emails in Elgg 2.0. There are likely edge cases that the library handles differently than Elgg 1.x. Take care to test your email notifications carefully when upgrading to 2.0."
 msgstr ""
 
-#: ../../guides/upgrading.rst:420
+#: ../../guides/upgrading.rst:421
 msgid "Label elements"
 msgstr ""
 
-#: ../../guides/upgrading.rst:422
+#: ../../guides/upgrading.rst:423
 msgid "The following views received ``label`` elements around some of the input fields. If your plugin/theme overrides these views please check for the new content."
 msgstr ""
 
-#: ../../guides/upgrading.rst:424
+#: ../../guides/upgrading.rst:425
 msgid "views/default/core/river/filter.php"
 msgstr ""
 
-#: ../../guides/upgrading.rst:425
+#: ../../guides/upgrading.rst:426
 msgid "views/default/forms/admin/plugins/filter.php"
 msgstr ""
 
-#: ../../guides/upgrading.rst:426
+#: ../../guides/upgrading.rst:427
 msgid "views/default/forms/admin/plugins/sort.php"
 msgstr ""
 
-#: ../../guides/upgrading.rst:427
+#: ../../guides/upgrading.rst:428
 msgid "views/default/forms/login.php"
 msgstr ""
 
-#: ../../guides/upgrading.rst:430
+#: ../../guides/upgrading.rst:431
 msgid "Plugin Aalborg Theme"
 msgstr ""
 
-#: ../../guides/upgrading.rst:432
+#: ../../guides/upgrading.rst:433
 msgid "The view ``page/elements/navbar`` now uses a Font Awesome icon for the mobile menu selector instead of an image. The ``bars.png`` image and supporting CSS for the 1.12 rendering has been removed, so update your theme accordingly."
 msgstr ""
 
-#: ../../guides/upgrading.rst:435
+#: ../../guides/upgrading.rst:436
 msgid "Plugin Likes"
 msgstr ""
 
-#: ../../guides/upgrading.rst:437
+#: ../../guides/upgrading.rst:438
 msgid "Objects are no longer likable by default. To support liking, you can register a handler to permit the annotation, or more simply register for the hook ``[\"likes:is_likable\", \"<type>:<subtype>\"]`` and return true. E.g."
 msgstr ""
 
-#: ../../guides/upgrading.rst:444
+#: ../../guides/upgrading.rst:445
 msgid "Just as before, the ``permissions_check:annotate`` hook is still called and may be used to override default behavior."
 msgstr ""
 
-#: ../../guides/upgrading.rst:447
+#: ../../guides/upgrading.rst:448
 msgid "Plugin Messages"
 msgstr ""
 
-#: ../../guides/upgrading.rst:449
+#: ../../guides/upgrading.rst:450
 msgid "If you've removed or replaced the handler function ``messages_notifier`` to hide/alter the inbox icon, you'll instead need to do the same for the topbar menu handler ``messages_register_topbar``. ``messages_notifier`` is no longer used to add the menu link."
 msgstr ""
 
-#: ../../guides/upgrading.rst:452
+#: ../../guides/upgrading.rst:453
 msgid "Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist."
 msgstr ""
 
-#: ../../guides/upgrading.rst:455
+#: ../../guides/upgrading.rst:456
 msgid "Plugin Blog"
 msgstr ""
 
-#: ../../guides/upgrading.rst:457
+#: ../../guides/upgrading.rst:458
 msgid "The blog pages showing 'Mine' or 'Friends' listings of blogs have been changed to list all the blogs owned by the users (including those created in groups)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:460
+#: ../../guides/upgrading.rst:461
 msgid "Plugin Bookmarks"
 msgstr ""
 
-#: ../../guides/upgrading.rst:462
+#: ../../guides/upgrading.rst:463
 msgid "The bookmark pages showing 'Mine' or 'Friends' listings of bookmarks have been changed to list all the bookmarks owned by the users (including those created in groups)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:465
+#: ../../guides/upgrading.rst:466
 msgid "Plugin File"
 msgstr ""
 
-#: ../../guides/upgrading.rst:467
+#: ../../guides/upgrading.rst:468
 msgid "The file pages showing 'Mine' or 'Friends' listings of files have been changed to list all the files owned by the users (including those created in groups)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:470
+#: ../../guides/upgrading.rst:471
 msgid "Removed Classes"
 msgstr ""
 
-#: ../../guides/upgrading.rst:472
+#: ../../guides/upgrading.rst:473
 msgid "``ElggInspector``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:473
+#: ../../guides/upgrading.rst:474
 msgid "``Notable``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:474
+#: ../../guides/upgrading.rst:475
 msgid "``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:477
+#: ../../guides/upgrading.rst:478
 msgid "Removed keys available via ``elgg_get_config()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:479
+#: ../../guides/upgrading.rst:480
 msgid "``allowed_ajax_views``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:480
+#: ../../guides/upgrading.rst:481
 msgid "``dataroot_in_settings``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:481
+#: ../../guides/upgrading.rst:482
 msgid "``externals``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:482
+#: ../../guides/upgrading.rst:483
 msgid "``externals_map``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:483
+#: ../../guides/upgrading.rst:484
 msgid "``i18n_loaded_from_cache``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:484
+#: ../../guides/upgrading.rst:485
 msgid "``language_paths``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:485
+#: ../../guides/upgrading.rst:486
 msgid "``pagesetupdone``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:486
+#: ../../guides/upgrading.rst:487
 msgid "``registered_tag_metadata_names``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:487
+#: ../../guides/upgrading.rst:488
 msgid "``simplecache_enabled_in_settings``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:488
+#: ../../guides/upgrading.rst:489
 msgid "``translations``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:489
+#: ../../guides/upgrading.rst:490
 msgid "``viewpath``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:490
+#: ../../guides/upgrading.rst:491
 msgid "``views``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:491
+#: ../../guides/upgrading.rst:492
 msgid "``view_path``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:492
+#: ../../guides/upgrading.rst:493
 msgid "``viewtype``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:493
+#: ../../guides/upgrading.rst:494
 msgid "``wordblacklist``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:495
+#: ../../guides/upgrading.rst:496
 msgid "Also note that plugins should not be accessing the global ``$CONFIG`` variable except for in ``settings.php``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:498
+#: ../../guides/upgrading.rst:499
 msgid "Removed Functions"
 msgstr ""
 
-#: ../../guides/upgrading.rst:500
+#: ../../guides/upgrading.rst:501
 msgid "``blog_get_page_content_friends``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:501
+#: ../../guides/upgrading.rst:502
 msgid "``blog_get_page_content_read``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:502
+#: ../../guides/upgrading.rst:503
 msgid "``count_unread_messages()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:503
+#: ../../guides/upgrading.rst:504
 msgid "``delete_entities()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:504
+#: ../../guides/upgrading.rst:505
 msgid "``delete_object_entity()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:505
+#: ../../guides/upgrading.rst:506
 msgid "``delete_user_entity()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:506
+#: ../../guides/upgrading.rst:507
 msgid "``elgg_get_view_location()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:507
+#: ../../guides/upgrading.rst:508
 msgid "``elgg_validate_action_url()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:508
+#: ../../guides/upgrading.rst:509
 msgid "``execute_delayed_query()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:509
+#: ../../guides/upgrading.rst:510
 msgid "``extend_view()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:510
+#: ../../guides/upgrading.rst:511
 msgid "``get_db_error()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:511
+#: ../../guides/upgrading.rst:512
 msgid "``get_db_link()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:512
+#: ../../guides/upgrading.rst:513
 msgid "``get_entities()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:513
+#: ../../guides/upgrading.rst:514
 msgid "``get_entities_from_access_id()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:514
+#: ../../guides/upgrading.rst:515
 msgid "``get_entities_from_access_collection()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:515
+#: ../../guides/upgrading.rst:516
 msgid "``get_entities_from_annotations()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:516
+#: ../../guides/upgrading.rst:517
 msgid "``get_entities_from_metadata()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:517
+#: ../../guides/upgrading.rst:518
 msgid "``get_entities_from_metadata_multi()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:518
+#: ../../guides/upgrading.rst:519
 msgid "``get_entities_from_relationship()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:519
+#: ../../guides/upgrading.rst:520
 msgid "``get_filetype_cloud()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:520
+#: ../../guides/upgrading.rst:521
 msgid "``get_library_files()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:521
+#: ../../guides/upgrading.rst:522
 msgid "``get_views()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:522
+#: ../../guides/upgrading.rst:523
 msgid "``is_ip_in_array()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:523
+#: ../../guides/upgrading.rst:524
 msgid "``list_entities()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:524
+#: ../../guides/upgrading.rst:525
 msgid "``list_entities_from_annotations()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:525
+#: ../../guides/upgrading.rst:526
 msgid "``list_group_search()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:526
+#: ../../guides/upgrading.rst:527
 msgid "``list_registered_entities()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:527
+#: ../../guides/upgrading.rst:528
 msgid "``list_user_search()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:528
+#: ../../guides/upgrading.rst:529
 msgid "``load_plugins()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:529
+#: ../../guides/upgrading.rst:530
 msgid "``menu_item()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:530
+#: ../../guides/upgrading.rst:531
 msgid "``make_register_object()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:531
+#: ../../guides/upgrading.rst:532
 msgid "``mysql_*()``: Elgg :ref:`no longer uses ext/mysql<migrated-to-pdo>`"
 msgstr ""
 
-#: ../../guides/upgrading.rst:532
+#: ../../guides/upgrading.rst:533
 msgid "``remove_blacklist()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:533
+#: ../../guides/upgrading.rst:534
 msgid "``search_for_group()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:534
+#: ../../guides/upgrading.rst:535
 msgid "``search_for_object()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:535
+#: ../../guides/upgrading.rst:536
 msgid "``search_for_site()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:536
+#: ../../guides/upgrading.rst:537
 msgid "``search_for_user()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:537
+#: ../../guides/upgrading.rst:538
 msgid "``search_list_objects_by_name()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:538
+#: ../../guides/upgrading.rst:539
 msgid "``search_list_groups_by_name()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:539
+#: ../../guides/upgrading.rst:540
 msgid "``search_list_users_by_name()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:540
+#: ../../guides/upgrading.rst:541
 msgid "``set_template_handler()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:541
+#: ../../guides/upgrading.rst:542
 msgid "``test_ip()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:544
+#: ../../guides/upgrading.rst:545
 msgid "Removed methods"
 msgstr ""
 
-#: ../../guides/upgrading.rst:546
+#: ../../guides/upgrading.rst:547
 msgid "``ElggCache::set_variable()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:547
+#: ../../guides/upgrading.rst:548
 msgid "``ElggCache::get_variable()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:548
+#: ../../guides/upgrading.rst:549
 msgid "``ElggData::initialise_attributes()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:549
+#: ../../guides/upgrading.rst:550
 msgid "``ElggData::getObjectOwnerGUID()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:550
+#: ../../guides/upgrading.rst:551
 msgid "``ElggDiskFilestore::make_directory_root()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:551
+#: ../../guides/upgrading.rst:552
 msgid "``ElggDiskFilestore::make_file_matrix()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:552
+#: ../../guides/upgrading.rst:553
 msgid "``ElggDiskFilestore::user_file_matrix()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:553
+#: ../../guides/upgrading.rst:554
 msgid "``ElggDiskFilestore::mb_str_split()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:554
+#: ../../guides/upgrading.rst:555
 msgid "``ElggEntity::clearMetadata()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:555
+#: ../../guides/upgrading.rst:556
 msgid "``ElggEntity::clearRelationships()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:556
+#: ../../guides/upgrading.rst:557
 msgid "``ElggEntity::clearAnnotations()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:557
+#: ../../guides/upgrading.rst:558
 msgid "``ElggEntity::getOwner()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:558
+#: ../../guides/upgrading.rst:559
 msgid "``ElggEntity::setContainer()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:559
+#: ../../guides/upgrading.rst:560
 msgid "``ElggEntity::getContainer()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:560
+#: ../../guides/upgrading.rst:561
 msgid "``ElggEntity::getIcon()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:561
+#: ../../guides/upgrading.rst:562
 msgid "``ElggEntity::setIcon()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:562
+#: ../../guides/upgrading.rst:563
 msgid "``ElggExtender::getOwner()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:563
+#: ../../guides/upgrading.rst:564
 msgid "``ElggFileCache::create_file()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:564
+#: ../../guides/upgrading.rst:565
 msgid "``ElggObject::addToSite()``: parent function in ElggEntity still available"
 msgstr ""
 
-#: ../../guides/upgrading.rst:565
+#: ../../guides/upgrading.rst:566
 msgid "``ElggObject::getSites()``: parent function in ElggEntity still available"
 msgstr ""
 
-#: ../../guides/upgrading.rst:566
+#: ../../guides/upgrading.rst:567
 msgid "``ElggSite::getCollections()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:567
+#: ../../guides/upgrading.rst:568
 msgid "``ElggUser::addToSite()``: parent function in ElggEntity still available"
 msgstr ""
 
-#: ../../guides/upgrading.rst:568
+#: ../../guides/upgrading.rst:569
 msgid "``ElggUser::getCollections()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:569
+#: ../../guides/upgrading.rst:570
 msgid "``ElggUser::getOwner()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:570
+#: ../../guides/upgrading.rst:571
 msgid "``ElggUser::getSites()``: parent function in ElggEntity still available"
 msgstr ""
 
-#: ../../guides/upgrading.rst:571
+#: ../../guides/upgrading.rst:572
 msgid "``ElggUser::listFriends()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:572
+#: ../../guides/upgrading.rst:573
 msgid "``ElggUser::listGroups()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:573
+#: ../../guides/upgrading.rst:574
 msgid "``ElggUser::removeFromSite()``: parent function in ElggEntity still available"
 msgstr ""
 
-#: ../../guides/upgrading.rst:575
+#: ../../guides/upgrading.rst:576
 msgid "The following arguments have also been dropped:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:577
+#: ../../guides/upgrading.rst:578
 msgid "``ElggSite::getMembers()`` - 2: ``$offset``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:579
+#: ../../guides/upgrading.rst:580
 msgid "``elgg_view_entity_list()`` - 3: ``$offset`` - 4: ``$limit`` - 5: ``$full_view`` - 6: ``$list_type_toggle`` - 7: ``$pagination``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:587
+#: ../../guides/upgrading.rst:588
 msgid "Removed Plugin Hooks"
 msgstr ""
 
-#: ../../guides/upgrading.rst:589
+#: ../../guides/upgrading.rst:590
 msgid "``[display, view]``: See the :ref:`new plugin hook<guides/views#altering-view-output>`."
 msgstr ""
 
-#: ../../guides/upgrading.rst:592
+#: ../../guides/upgrading.rst:593
 msgid "Removed Actions"
 msgstr ""
 
-#: ../../guides/upgrading.rst:594
+#: ../../guides/upgrading.rst:595
 msgid "``widgets/upgrade``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:597
+#: ../../guides/upgrading.rst:598
 msgid "Removed Views"
 msgstr ""
 
-#: ../../guides/upgrading.rst:599
+#: ../../guides/upgrading.rst:600
 msgid "``forms/admin/plugins/change_state``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:602
+#: ../../guides/upgrading.rst:603
 msgid "Removed View Variables"
 msgstr ""
 
-#: ../../guides/upgrading.rst:604
+#: ../../guides/upgrading.rst:605
 msgid "During rendering, the view system no longer injects these into the scope:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:606
+#: ../../guides/upgrading.rst:607
 msgid "``$vars['url']``: replace with ``elgg_get_site_url()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:607
+#: ../../guides/upgrading.rst:608
 msgid "``$vars['user']``: replace with ``elgg_get_logged_in_user_entity()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:608
+#: ../../guides/upgrading.rst:609
 msgid "``$vars['config']``: use ``elgg_get_config()`` and ``elgg_set_config()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:609
+#: ../../guides/upgrading.rst:610
 msgid "``$CONFIG``: use ``elgg_get_config()`` and ``elgg_set_config()``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:611
+#: ../../guides/upgrading.rst:612
 msgid "Also several workarounds for very old views are no longer performed. Make these changes:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:613
+#: ../../guides/upgrading.rst:614
 msgid "Set ``$vars['full_view']`` instead of ``$vars['full']``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:614
+#: ../../guides/upgrading.rst:615
 msgid "Set ``$vars['name']`` instead of ``$vars['internalname']``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:615
+#: ../../guides/upgrading.rst:616
 msgid "Set ``$vars['id']`` instead of ``$vars['internalid']``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:618
+#: ../../guides/upgrading.rst:619
 msgid "Removed libraries"
 msgstr ""
 
-#: ../../guides/upgrading.rst:620
+#: ../../guides/upgrading.rst:621
 msgid "``elgg:markdown``: Elgg no longer provides a markdown implementation. You must provide your own."
 msgstr ""
 
-#: ../../guides/upgrading.rst:623
+#: ../../guides/upgrading.rst:624
 msgid "Specifying View via Properties"
 msgstr ""
 
-#: ../../guides/upgrading.rst:625
+#: ../../guides/upgrading.rst:626
 msgid "The metadata ``$entity->view`` no longer specifies the view used to render in ``elgg_view_entity()``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:627
+#: ../../guides/upgrading.rst:628
 msgid "Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:630
+#: ../../guides/upgrading.rst:631
 msgid "Viewtype is static after the initial ``elgg_get_viewtype()`` call"
 msgstr ""
 
-#: ../../guides/upgrading.rst:632
+#: ../../guides/upgrading.rst:633
 msgid "``elgg_set_viewtype()`` must be used to set the viewtype at runtime. Although Elgg still checks the ``view`` input and ``$CONFIG->view`` initially, this is only done once per request."
 msgstr ""
 
-#: ../../guides/upgrading.rst:637
+#: ../../guides/upgrading.rst:638
 msgid "Deprecations"
 msgstr ""
 
-#: ../../guides/upgrading.rst:639
+#: ../../guides/upgrading.rst:640
 msgid "It's deprecated to read or write to metadata keys starting with ``filestore::`` on ``ElggFile`` objects. In Elgg 3.0 this metadata will be deleted if it points to the current data root path, so few file objects will have it. Plugins should only use ``ElggFile::setFilestore`` if files need to be stored in a custom location."
 msgstr ""
 
-#: ../../guides/upgrading.rst:641
+#: ../../guides/upgrading.rst:642
 msgid "This is not the only deprecation in Elgg 2.0. Plugin developers should watch their site error logs."
 msgstr ""
 
-#: ../../guides/upgrading.rst:644
+#: ../../guides/upgrading.rst:645
 msgid "From 1.10 to 1.11"
 msgstr ""
 
-#: ../../guides/upgrading.rst:647
+#: ../../guides/upgrading.rst:648
 msgid "Comment highlighting"
 msgstr ""
 
-#: ../../guides/upgrading.rst:649
+#: ../../guides/upgrading.rst:650
 msgid "If your theme is using the file ``views/default/css/elements/components.php``, you must add the following style definitions in it to enable highlighting for comments and discussion replies:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:667
+#: ../../guides/upgrading.rst:668
 msgid "From 1.9 to 1.10"
 msgstr ""
 
-#: ../../guides/upgrading.rst:670
+#: ../../guides/upgrading.rst:671
 msgid "File uploads"
 msgstr ""
 
-#: ../../guides/upgrading.rst:672
+#: ../../guides/upgrading.rst:673
 msgid "If your plugin is using a snippet copied from the ``file/upload`` action to fix detected mime types for Microsoft zipped formats, it can now be safely removed."
 msgstr ""
 
-#: ../../guides/upgrading.rst:674
+#: ../../guides/upgrading.rst:675
 msgid "If your upload action performs other manipulations on detected mime and simple types, it is recommended to make use of available plugin hooks:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:676
+#: ../../guides/upgrading.rst:677
 msgid "``'mime_type','file'`` for filtering detected mime types"
 msgstr ""
 
-#: ../../guides/upgrading.rst:677
+#: ../../guides/upgrading.rst:678
 msgid "``'simple_type','file'`` for filtering parsed simple types"
 msgstr ""
 
-#: ../../guides/upgrading.rst:680
+#: ../../guides/upgrading.rst:681
 msgid "From 1.8 to 1.9"
 msgstr ""
 
-#: ../../guides/upgrading.rst:682
+#: ../../guides/upgrading.rst:683
 msgid "In the examples we are upgrading an imaginary \"Photos\" plugin."
 msgstr ""
 
-#: ../../guides/upgrading.rst:684
+#: ../../guides/upgrading.rst:685
 msgid "Only the key changes are included. For example some of the deprecated functions are not mentioned here separately."
 msgstr ""
 
-#: ../../guides/upgrading.rst:686
+#: ../../guides/upgrading.rst:687
 msgid "Each section will include information whether the change is backwards compatible with Elgg 1.8."
 msgstr ""
 
-#: ../../guides/upgrading.rst:689
+#: ../../guides/upgrading.rst:690
 msgid "The manifest file"
 msgstr ""
 
-#: ../../guides/upgrading.rst:691
+#: ../../guides/upgrading.rst:692
 msgid "No changes are needed if your plugin is compatible with 1.8."
 msgstr ""
 
-#: ../../guides/upgrading.rst:693
+#: ../../guides/upgrading.rst:694
 msgid "It's however recommended to add the ``<id>`` tag. It's value should be the name of the directory where the plugin is located inside the ``mod/`` directory."
 msgstr ""
 
-#: ../../guides/upgrading.rst:695
+#: ../../guides/upgrading.rst:696
 msgid "If you make changes that break BC, you must update the plugin version and the required Elgg release."
 msgstr ""
 
-#: ../../guides/upgrading.rst:697
+#: ../../guides/upgrading.rst:698
 msgid "Example of (shortened) old version:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:713
+#: ../../guides/upgrading.rst:714
 msgid "Example of (shortened) new version:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:731
+#: ../../guides/upgrading.rst:732
 msgid "$CONFIG and $vars['config']"
 msgstr ""
 
-#: ../../guides/upgrading.rst:733
+#: ../../guides/upgrading.rst:734
 msgid "Both the global ``$CONFIG`` variable and the ``$vars['config']`` parameter have been deprecated. They should be replaced with the ``elgg_get_config()`` function."
 msgstr ""
 
-#: ../../guides/upgrading.rst:735
+#: ../../guides/upgrading.rst:736
 msgid "Example of old code:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:746
+#: ../../guides/upgrading.rst:747
 msgid "Example of new code:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:754
-#: ../../guides/upgrading.rst:943
+#: ../../guides/upgrading.rst:755
+#: ../../guides/upgrading.rst:944
 msgid "Compatible with 1.8"
 msgstr ""
 
-#: ../../guides/upgrading.rst:758
+#: ../../guides/upgrading.rst:759
 msgid "See how the community_plugins plugin was updated: https://github.com/Elgg/community_plugins/commit/f233999bbd1478a200ee783679c2e2897c9a0483"
 msgstr ""
 
-#: ../../guides/upgrading.rst:761
+#: ../../guides/upgrading.rst:762
 msgid "Language files"
 msgstr ""
 
-#: ../../guides/upgrading.rst:763
+#: ../../guides/upgrading.rst:764
 msgid "In Elgg 1.8 the language files needed to use the ``add_translation()`` function. In 1.9 it is enough to just return the array that was previously passed to the function as a parameter. Elgg core will use the file name (e.g. en.php) to tell which language the file contains."
 msgstr ""
 
-#: ../../guides/upgrading.rst:766
+#: ../../guides/upgrading.rst:767
 msgid "Example of the old way in ``languages/en.php``:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:775
+#: ../../guides/upgrading.rst:776
 msgid "Example of new way:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:785
-#: ../../guides/upgrading.rst:875
-#: ../../guides/upgrading.rst:971
-#: ../../guides/upgrading.rst:1033
+#: ../../guides/upgrading.rst:786
+#: ../../guides/upgrading.rst:876
+#: ../../guides/upgrading.rst:972
+#: ../../guides/upgrading.rst:1034
 msgid "Not compatible with 1.8"
 msgstr ""
 
-#: ../../guides/upgrading.rst:790
+#: ../../guides/upgrading.rst:791
 msgid "One of the biggest changes in Elgg 1.9 is the notifications system. The new system allows more flexible and scalable way of sending notifications."
 msgstr ""
 
-#: ../../guides/upgrading.rst:792
-#: ../../guides/upgrading.rst:893
-#: ../../guides/upgrading.rst:978
+#: ../../guides/upgrading.rst:793
+#: ../../guides/upgrading.rst:894
+#: ../../guides/upgrading.rst:979
 msgid "Example of the old way:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:831
-#: ../../guides/upgrading.rst:913
-#: ../../guides/upgrading.rst:999
+#: ../../guides/upgrading.rst:832
+#: ../../guides/upgrading.rst:914
+#: ../../guides/upgrading.rst:1000
 msgid "Example of the new way:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:879
+#: ../../guides/upgrading.rst:880
 msgid "See how the community_plugins plugin was updated to use the new system: https://github.com/Elgg/community_plugins/commit/bfa356cfe8fb99ebbca4109a1b8a1383b70ff123"
 msgstr ""
 
-#: ../../guides/upgrading.rst:881
+#: ../../guides/upgrading.rst:882
 msgid "Notifications can also be sent with the ``notify_user()`` function."
 msgstr ""
 
-#: ../../guides/upgrading.rst:883
+#: ../../guides/upgrading.rst:884
 msgid "It has however been updated to support three new optional parameters passed inside an array as the fifth parameter."
 msgstr ""
 
-#: ../../guides/upgrading.rst:885
+#: ../../guides/upgrading.rst:886
 msgid "The parameters give notification plugins more control over the notifications, so they should be included whenever possible. For example the bundled site_notifications plugin won't work properly if the parameters are missing."
 msgstr ""
 
-#: ../../guides/upgrading.rst:887
+#: ../../guides/upgrading.rst:888
 msgid "Parameters:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:889
+#: ../../guides/upgrading.rst:890
 msgid "**object** The object that we are notifying about (e.g. ElggEntity or ElggAnnotation). This is needed so that notification plugins can provide a link to the object."
 msgstr ""
 
-#: ../../guides/upgrading.rst:890
+#: ../../guides/upgrading.rst:891
 msgid "**action** String that describes the action that triggered the notification (e.g. \"create\", \"update\", etc)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:891
+#: ../../guides/upgrading.rst:892
 msgid "**summary** String that contains a summary of the notification. (It should be more informative than the notification subject but less informative than the notification body.)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:946
+#: ../../guides/upgrading.rst:947
 msgid "Adding items to the Activity listing"
 msgstr ""
 
-#: ../../guides/upgrading.rst:961
+#: ../../guides/upgrading.rst:962
 msgid "You can also add the optional ``target_guid`` parameter which tells the target of the create action."
 msgstr ""
 
-#: ../../guides/upgrading.rst:963
+#: ../../guides/upgrading.rst:964
 msgid "If the photo would had been added for example into a photo album, we could add it by passing in also:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:974
+#: ../../guides/upgrading.rst:975
 msgid "Entity URL handlers"
 msgstr ""
 
-#: ../../guides/upgrading.rst:976
+#: ../../guides/upgrading.rst:977
 msgid "The ``elgg_register_entity_url_handler()`` function has been deprecated. In 1.9 you should use the ``'entity:url', 'object'`` plugin hook instead."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1036
+#: ../../guides/upgrading.rst:1037
 #: ../../guides/web-services.rst:2
 msgid "Web services"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1038
+#: ../../guides/upgrading.rst:1039
 msgid "In Elgg 1.8 the web services API was included in core and methods were exposed using ``expose_function()``. To enable the same functionality for Elgg 1.9, enable the \"Web services 1.9\" plugin and replace all calls to ``expose_function()`` with  ``elgg_ws_expose_function()``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1044
+#: ../../guides/upgrading.rst:1045
 msgid "From 1.7 to 1.8"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1045
+#: ../../guides/upgrading.rst:1046
 msgid "Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades. There were a small number of API changes and following our standard practice, the methods we deprecated have been updated to work with the new API. The biggest changes are in the standardization of plugins and in the views system."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1053
+#: ../../guides/upgrading.rst:1054
 msgid "Updating core"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1054
+#: ../../guides/upgrading.rst:1055
 msgid "Delete the following core directories (same level as _graphics and engine):"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1056
+#: ../../guides/upgrading.rst:1057
 msgid "_css"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1057
+#: ../../guides/upgrading.rst:1058
 msgid "account"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1058
+#: ../../guides/upgrading.rst:1059
 msgid "admin"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1059
+#: ../../guides/upgrading.rst:1060
 msgid "dashboard"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1060
+#: ../../guides/upgrading.rst:1061
 msgid "entities"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1061
+#: ../../guides/upgrading.rst:1062
 msgid "friends"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1062
+#: ../../guides/upgrading.rst:1063
 msgid "search"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1063
+#: ../../guides/upgrading.rst:1064
 msgid "settings"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1064
+#: ../../guides/upgrading.rst:1065
 msgid "simplecache"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1065
+#: ../../guides/upgrading.rst:1066
 msgid "views"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1069
+#: ../../guides/upgrading.rst:1070
 msgid "If you do not delete these directories before an upgrade, you will have problems!"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1073
+#: ../../guides/upgrading.rst:1074
 msgid "Updating plugins"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1077
+#: ../../guides/upgrading.rst:1078
 msgid "All: /page_handler/all"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1078
+#: ../../guides/upgrading.rst:1079
 msgid "User’s content: /page_handler/owner/:username"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1079
+#: ../../guides/upgrading.rst:1080
 msgid "User’s friends' content: /page_handler/friends/:username"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1080
+#: ../../guides/upgrading.rst:1081
 msgid "Single entity: /page_handler/view/:guid/:title"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1081
+#: ../../guides/upgrading.rst:1082
 msgid "Added: /page_handler/add/:container_guid"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1082
+#: ../../guides/upgrading.rst:1083
 msgid "Editing: /page_handler/edit/:guid"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1083
+#: ../../guides/upgrading.rst:1084
 msgid "Group list: /page_handler/group/:guid/all"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1087
+#: ../../guides/upgrading.rst:1088
 msgid "Include page handler scripts from the page handler"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1088
+#: ../../guides/upgrading.rst:1089
 msgid "Almost every page handler should have a page handler script. (Example: ``bookmarks/all => mod/bookmarks/pages/bookmarks/all.php``)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1091
+#: ../../guides/upgrading.rst:1092
 msgid "Call ``set_input()`` for entity guids in the page handler and use ``get_input()`` in the page handler scripts."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1092
+#: ../../guides/upgrading.rst:1093
 msgid "Call ``gatekeeper()`` and ``admin_gatekeeper()`` in the page handler function if required."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1093
+#: ../../guides/upgrading.rst:1094
 msgid "The group URL should use the ``pages/:handler/owner.php`` script."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1095
+#: ../../guides/upgrading.rst:1096
 msgid "Update the URLs throughout the plugin. (Don't forget to remove ``/pg/``!)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1100
+#: ../../guides/upgrading.rst:1101
 msgid "Store page handler scripts in ``mod/:plugin/pages/:page_handler/:page_name.php``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1101
+#: ../../guides/upgrading.rst:1102
 msgid "Use the content page layout in page handler scripts:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1107
+#: ../../guides/upgrading.rst:1108
 msgid "Page handler scripts should not contain HTML."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1109
+#: ../../guides/upgrading.rst:1110
 msgid "No need to set page owner if the URLs are in the standardized format."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1110
+#: ../../guides/upgrading.rst:1111
 msgid "For group content, check the container_guid by using elgg_get_page_owner_entity()."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1114
+#: ../../guides/upgrading.rst:1115
 msgid "The ``object/:subtype`` view"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1115
+#: ../../guides/upgrading.rst:1116
 msgid "Make sure there are views for ``$vars['full_view'] == true`` and ``$vars['full_view'] == false``. ``$vars['full_view']`` replaced ``$vars['full]``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1116
+#: ../../guides/upgrading.rst:1117
 msgid "Check for the object in ``$vars['entity']``. Use ``elgg_instance_of()`` to make sure it's the type of entity you want."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1117
+#: ../../guides/upgrading.rst:1118
 msgid "Return ``true`` to short circuit the view if the entity is missing or wrong."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1118
+#: ../../guides/upgrading.rst:1119
 msgid "Use ``elgg_view(‘object/elements/summary’, array(‘entity’ => $entity));`` and ``elgg_view_menu(‘entity’, array(‘entity’ => $entity));`` to help format. You should use very little markup in these views."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1122
+#: ../../guides/upgrading.rst:1123
 msgid "Update action structure"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1126
+#: ../../guides/upgrading.rst:1127
 msgid "Add: ``action/:plugin/save``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1127
+#: ../../guides/upgrading.rst:1128
 msgid "Edit: ``action/:plugin/save``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1128
+#: ../../guides/upgrading.rst:1129
 msgid "Delete: ``action/:plugin/delete``"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1130
+#: ../../guides/upgrading.rst:1131
 msgid "Make the delete action accept ``action/:handler/delete?guid=:guid`` so the metadata entity menu has the correct URL by default."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1134
+#: ../../guides/upgrading.rst:1135
 msgid "Update deprecated functions"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1135
+#: ../../guides/upgrading.rst:1136
 msgid "Functions deprecated in 1.7 will produce visible errors in 1.8."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1136
+#: ../../guides/upgrading.rst:1137
 msgid "You can also update functions deprecated in 1.8."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1138
+#: ../../guides/upgrading.rst:1139
 msgid "Many registration functions simply added an ``elgg_`` prefix for consistency, and should be easy to update."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1139
+#: ../../guides/upgrading.rst:1140
 msgid "See ``/engine/lib/deprecated-1.8.php`` for the full list."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1140
+#: ../../guides/upgrading.rst:1141
 msgid "You can set the debug level to “warning” to get visual reminders of deprecated functions."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1144
+#: ../../guides/upgrading.rst:1145
 msgid "Update the widget views"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1145
+#: ../../guides/upgrading.rst:1146
 msgid "See the blog or file widgets for examples."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1149
+#: ../../guides/upgrading.rst:1150
 msgid "Update the group profile module"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1150
+#: ../../guides/upgrading.rst:1151
 msgid "Use the blog or file plugins for examples. This will help with making your plugin themeable by the new CSS framework."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1154
+#: ../../guides/upgrading.rst:1155
 msgid "Update forms"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1155
+#: ../../guides/upgrading.rst:1156
 msgid "Move form bodies to the ``forms/:action`` view to use Evan's new ``elgg_view_form``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1156
+#: ../../guides/upgrading.rst:1157
 msgid "Use input views in form bodies rather than html. This helps with theming and future-proofing."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1157
+#: ../../guides/upgrading.rst:1158
 msgid "Add a function that prepares the form (see ``mod/file/lib/file.php`` for an example)"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1158
+#: ../../guides/upgrading.rst:1159
 msgid "Make your forms sticky (see the file plugin's upload action and form prepare function)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1160
+#: ../../guides/upgrading.rst:1161
 msgid "The forms API is discussed in more detail in :doc:`/guides/actions`."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1165
+#: ../../guides/upgrading.rst:1166
 msgid "We have added many CSS patterns to the base CSS file (modules, image block, spacing primitives). We encourage you to use these patterns and classes wherever possible. Doing so should:"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1167
+#: ../../guides/upgrading.rst:1168
 msgid "Reduce maintenance costs, since you can delete most custom CSS."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1168
+#: ../../guides/upgrading.rst:1169
 msgid "Make your plugin more compatible with community themes."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1170
+#: ../../guides/upgrading.rst:1171
 msgid "Look for patterns that can be moved into core if you need significant CSS."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1172
+#: ../../guides/upgrading.rst:1173
 msgid "We use hyphens rather than underscores in classes/ids and encourage you do the same for consistency."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1174
+#: ../../guides/upgrading.rst:1175
 msgid "If you do need your own CSS, you should use your own namespace, rather than ``elgg-``."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1178
+#: ../../guides/upgrading.rst:1179
 msgid "Update manifest.xml"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1179
+#: ../../guides/upgrading.rst:1180
 msgid "Use http://el.gg/manifest17to18 to automate this."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1180
+#: ../../guides/upgrading.rst:1181
 msgid "Don't use the \"bundled\" category with your plugins. That is only for plugins distributed with Elgg."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1184
+#: ../../guides/upgrading.rst:1185
 msgid "Update settings and user settings views"
 msgstr ""
 
-#: ../../guides/upgrading.rst:1185
+#: ../../guides/upgrading.rst:1186
 msgid "The view for settings is now ``plugins/:plugin/settings`` (previously ``settings/:plugin/edit``)."
 msgstr ""
 
-#: ../../guides/upgrading.rst:1186
+#: ../../guides/upgrading.rst:1187
 msgid "The view for user settings is now ``plugins/:plugin/usersettings`` (previously ``usersettings/:plugin/edit``)."
 msgstr ""
 

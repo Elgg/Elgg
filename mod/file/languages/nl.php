@@ -102,5 +102,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 	'file:downloadfailed' => "Sorry, dit bestand is op dit moment niet beschikbaar.",
 	'file:deletefailed' => "Je bestand kon op dit moment niet worden verwijderd.",
 	'file:noaccess' => "Je hebt onvoldoende rechten om dit bestand aan te passen",
+	'file:cannotload' => "Er was een fout tijdens het uploaden van het bestand",
 	'file:nofile' => "Selecteer een bestand",
 );

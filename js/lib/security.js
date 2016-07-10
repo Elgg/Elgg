@@ -3,52 +3,100 @@
  */
 elgg.provide('elgg.security.token');
 
-elgg.security.tokenRefreshFailed = false;
-
 elgg.security.tokenRefreshTimer = null;
 
 /**
- * Sets the currently active security token and updates all forms and links on the current page.
+ * Updates in-page CSRF tokens that were validated on the server. Only validated __elgg_token values
+ * are replaced.
  *
- * @param {Object} json The json representation of a token containing __elgg_ts and __elgg_token
+ * @param {Object} token_object Value to replace elgg.security.token
+ * @param {Object} valid_tokens Map of valid tokens (as keys) in the current page
  * @return {Void}
+ *
+ * @private
  */
-elgg.security.setToken = function(json) {	
-	//update the convenience object
-	elgg.security.token = json;
+elgg.security.setToken = function(token_object, valid_tokens) {
+	// update the convenience object
+	elgg.security.token = token_object;
 
-	//also update all forms
-	$('[name=__elgg_ts]').val(json.__elgg_ts);
-	$('[name=__elgg_token]').val(json.__elgg_token);
+	// also update all forms
+	$('[name=__elgg_ts]').val(token_object.__elgg_ts);
+	$('[name=__elgg_token]').each(function () {
+		if (valid_tokens[$(this).val()]) {
+			$(this).val(token_object.__elgg_token);
+		}
+	});
 
 	// also update all links that contain tokens and time stamps
 	$('[href*="__elgg_ts"][href*="__elgg_token"]').each(function() {
-		this.href = this.href
-			.replace(/__elgg_ts=\d*/i, '__elgg_ts=' + json.__elgg_ts)
-			.replace(/__elgg_token=[0-9a-z_-]*/i, '__elgg_token=' + json.__elgg_token);
+		var token = this.href.match(/__elgg_token=([0-9a-z_-]+)/i)[1];
+		if (valid_tokens[token]) {
+			this.href = this.href
+				.replace(/__elgg_ts=\d+/i, '__elgg_ts=' + token_object.__elgg_ts)
+				.replace(/__elgg_token=[0-9a-z_-]+/i, '__elgg_token=' + token_object.__elgg_token);
+		}
 	});
 };
 
 /**
  * Security tokens time out so we refresh those every so often.
+ *
+ * We don't want to update invalid tokens, so we collect all tokens in the page and send them to
+ * the server to be validated. Those that were valid are replaced in setToken().
  * 
  * @private
  */
 elgg.security.refreshToken = function() {
-	elgg.getJSON('refresh_token', {
+	// round up token pairs present
+	var pairs = {};
+
+	pairs[elgg.security.token.__elgg_ts + ',' + elgg.security.token.__elgg_token] = 1;
+
+	$('form').each(function () {
+		// we need consider only the last ts/token inputs, as those will be submitted
+		var ts = $('[name=__elgg_ts]:last', this).val();
+		var token = $('[name=__elgg_token]:last', this).val();
+		// some forms won't have tokens
+		if (token) {
+			pairs[ts + ',' + token] = 1;
+		}
+	});
+
+	$('[href*="__elgg_ts"][href*="__elgg_token"]').each(function() {
+		var ts = this.href.match(/__elgg_ts=(\d+)/i)[1];
+		var token = this.href.match(/__elgg_token=([0-9a-z_-]+)/i)[1];
+		pairs[ts + ',' + token] = 1;
+	});
+
+	pairs = $.map(pairs, function(val, key) {
+		return key;
+	});
+
+	elgg.ajax('refresh_token', {
+		data: {
+			pairs: pairs,
+			session_token: elgg.session.token
+		},
+		dataType: 'json',
+		method: 'POST',
 		success: function(data) {
-			if (data && data.__elgg_ts && data.__elgg_token) {
-				elgg.security.setToken(data);
-				if (elgg.is_logged_in() && data.logged_in === false) {
+			if (data) {
+				elgg.session.token = data.session_token;
+				elgg.security.setToken(data.token, data.valid_tokens);
+
+				if (elgg.get_logged_in_user_guid() != data.user_guid) {
 					elgg.session.user = null;
-					elgg.register_error(elgg.echo('session_expired'));
+					if (data.user_guid) {
+						elgg.register_error(elgg.echo('session_changed_user'));
+					} else {
+						elgg.register_error(elgg.echo('session_expired'));
+					}
 				}
 			}
 		},
-		error: function() {},
+		error: function() {}
 	});
 };
-
 
 /**
  * Add elgg action tokens to an object, URL, or query string (with a ?).
@@ -102,6 +150,9 @@ elgg.security.addToken = function(data) {
 	throw new TypeError("elgg.security.addToken not implemented for " + (typeof data) + "s");
 };
 
+/**
+ * @private
+ */
 elgg.security.init = function() {
 	// elgg.security.interval is set in the `elgg.js` view.
 	elgg.security.tokenRefreshTimer = setInterval(elgg.security.refreshToken, elgg.security.interval);
