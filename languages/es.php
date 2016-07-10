@@ -20,7 +20,8 @@ return array(
 	'logout' => "Cerrar sesi&oacute;n",
 	'logoutok' => "Se ha cerrado la sesi&oacute;n",
 	'logouterror' => "No se pudo cerrar la sesi&oacute;n, por favor intente nuevamente",
-	'session_expired' => "Su sesión ha expirado. Por favor refresca la página para ingresar nuevamente.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Debe estar autenticado para poder visualizar esta p&aacute;gina",
 	'adminrequired' => "Debe ser un administrador para poder visualizar esta p&aacute;gina",
@@ -142,6 +143,7 @@ return array(
 	'password' => "Contrase&ntilde;a",
 	'passwordagain' => "Contrase&ntilde;a (nuevamente, para verificaci&oacute;n)",
 	'admin_option' => "Hacer administrador a este usuario?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -477,6 +479,9 @@ return array(
 	'admin:cron:period' => 'Periodo Cron',
 	'admin:cron:friendly' => 'Ultimo completado',
 	'admin:cron:date' => 'Fecha y hora',
+	'admin:cron:msg' => 'Mensaje',
+	'admin:cron:started' => 'Los trabajos de cron para "%s" han empezado a las %s',
+	'admin:cron:complete' => 'Los trabajos de cron para "%s" se han completado a las %s',
 
 	'admin:appearance' => 'Apariencia',
 	'admin:administer_utilities' => 'Utilities',
@@ -1098,6 +1103,11 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'installation:simplecache:description' => "La cache simple aumenta el rentimiento almacenando contenido est&aacute;tico, como hojas CSS y archivos JavaScript. Normalmente se desea esto activado",
 	'installation:simplecache:label' => "Utilizar cache simple (recomendado)",
 
+	'installation:cache_symlink:description' => "El enlace simbólico al directorio de caché simple permite que el servidor sirva vistas estáticas sin pasar por el motor, lo que mejora considerablemente el rendimiento y reduce la carga del servidor",
+	'installation:cache_symlink:label' => "Usar un enlace simbólico para el directorio de caché simple (recomendado)",
+	'installation:cache_symlink:warning' => "Se ha creado el enlace simbólico. Si, por alguna razón, quieres quitar el enlace, borra el enlace simbólico al directorio de tu servidor",
+	'installation:cache_symlink:error' => "No se puede generar el enlace simbólico por la configuración de tu servidor. Por favor consulta el manual para crear manualmente el enlace simbólico",
+
 	'installation:minify:description' => "El simple cache puede también mejorar el rendimiento por que comprime los archivos JavaScript y CSS. (Requiere que simple cache este habilitado.)",
 	'installation:minify_js:label' => "Comprimir JavaScript (recomendado)",
 	'installation:minify_css:label' => "Comprimir CSS (recomendado)",
@@ -1137,7 +1147,6 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 
 	'admin:pending_upgrades' => 'Este sitio tiene actualizaciones pendientes que requieren tu atención inmediata',
 	'admin:view_upgrades' => 'Ver actualizaciones pendientes',
- 	'admin:upgrades' => 'Actualizaciones',
 	'item:object:elgg_upgrade' => 'Actualizaciones del sitio',
 	'admin:upgrades:none' => 'Tu instalación esta al día!',
 
@@ -1276,13 +1285,13 @@ Por favor no responda a este correo",
 	'entity:default:strapline' => 'Creado %s por %s',
 	'entity:default:missingsupport:popup' => 'Esta entidad no puede mostrarse correctamente. Esto puede deberse a que el soporte provisto por un plugin ya no se encuentra instalado',
 
-	'entity:delete:item' => 'Item',
-	'entity:delete:item_not_found' => 'Item not found.',
-	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
-	'entity:delete:success' => '%s has been deleted.',
-	'entity:delete:fail' => '%s could not be deleted.',
+	'entity:delete:item' => 'Elemento',
+	'entity:delete:item_not_found' => 'No se ha encontrado el elemento',
+	'entity:delete:permission_denied' => 'No tiene permisos para borrar este elemento',
+	'entity:delete:success' => '%s se ha borrado.',
+	'entity:delete:fail' => '%s no se ha podido borrar.',
 
-	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
+	'entity:can_delete:invaliduser' => 'No se puede comprobar canDelete() para el user_guid [%s] porque el usuario no existe.',
 
 /**
  * Action gatekeeper
@@ -1354,6 +1363,7 @@ Por favor no responda a este correo",
 	"es" => "Espa&ntilde;ol",
 	"et" => "Estonian",
 	"eu" => "Basque",
+	"eu_es" => "Euskera (España)",
 	"fa" => "Persian",
 	"fi" => "Finnish",
 	"fj" => "Fiji",
@@ -1418,11 +1428,12 @@ Por favor no responda a este correo",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
-	"pt_br" => 'Portugués Brasileño',
+	"pt_br" => "Portugués (Brasil)",
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
 	"ro" => "Romanian",
+	"ro_ro" => "Rumano (Rumanía)",
 	"ru" => "Russian",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1437,6 +1448,7 @@ Por favor no responda a este correo",
 	"so" => "Somali",
 	"sq" => "Albanian",
 	"sr" => "Serbian",
+	"sr_latin" => "Servio (Latino)",
 	"ss" => "Siswati",
 	"st" => "Sesotho",
 	"su" => "Sundanese",
@@ -1468,8 +1480,9 @@ Por favor no responda a este correo",
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinese",
+	"zh_hans" => "Chino Simplificado",
 	"zu" => "Zulu",
 
-	"field:required" => 'Required',
+	"field:required" => 'Requerido',
 
 );

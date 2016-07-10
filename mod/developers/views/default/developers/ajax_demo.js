@@ -24,8 +24,9 @@ define(function(require) {
 		}
 	);
 
-	var got_metadata_from_server = false,
-		num_hook_calls = 0;
+	var got_metadata_from_server = false;
+
+	log("Expecting 6 passes...");
 
 	// alter request data response for the action
 	elgg.register_hook_handler(
@@ -40,8 +41,6 @@ define(function(require) {
 			// alter the return value
 			data.value.altered_value = true;
 
-			num_hook_calls++;
-
 			return data;
 		}
 	);
@@ -51,21 +50,21 @@ define(function(require) {
 	ajax.path('developers_ajax_demo')
 		.then(function (html_page) {
 			if (html_page.indexOf('path demo') != -1) {
-				log("path() successful!");
+				log("PASS path()");
 
 				return ajax.view('developers/ajax_demo.html');
 			}
 		})
 		.then(function (div) {
 			if (div.indexOf('view demo') != -1) {
-				log("view() successful!");
+				log("PASS view()");
 
 				return ajax.form('developers/ajax_demo');
 			}
 		})
 		.then(function (form) {
 			if (form.indexOf('form demo') != -1) {
-				log("form() successful!");
+				log("PASS form()");
 
 				return ajax.action('developers/ajax_demo', {
 					data: {arg1: 2, arg2: 3},
@@ -76,12 +75,16 @@ define(function(require) {
 			}
 		})
 		.then(function (obj) {
-			if (obj.sum === 5
-					&& got_metadata_from_server
-					&& obj.altered_value
-					&& num_hook_calls == 1) {
-				log("action() successful!");
-				alert('Success!');
+			if (obj.sum === 5) {
+				log("PASS action()");
 			}
+			if (got_metadata_from_server) {
+				log("PASS got metadata from server response hook");
+			}
+			if (obj.altered_value) {
+				log("PASS client response hook altered value");
+			}
+
+			alert('Success!');
 		});
 });

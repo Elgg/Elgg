@@ -254,6 +254,10 @@ a.elgg-maintenance-mode-warning {
 	background-color: #EAF8E8;
 	border: 1px solid #AADEA2;
 }
+.elgg-message a {
+	color: inherit;
+	text-decoration: underline;
+}
 
 .elgg-admin-notices p {
 	color: #3B8BC9;
@@ -584,12 +588,18 @@ select {
 }
 
 .elgg-form-useradd input[type=text],
-.elgg-form-useradd input[type=password] {
+.elgg-form-useradd input[type=password],
+.elgg-form-useradd input[type=email] {
 	width: 300px;
 }
 
 .elgg-form-settings {
 	max-width: 800px;
+}
+
+.elgg-input-checkbox + label,
+.elgg-input-checkbox + .elgg-field-label {
+	display: inline-block;
 }
 
 /* **************************************

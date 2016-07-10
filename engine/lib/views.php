@@ -324,20 +324,23 @@ function elgg_list_views($viewtype = 'default') {
  * The input of views can be intercepted by registering for the
  * view_vars, $view_name plugin hook.
  *
+ * If the input contains the key "__view_output", the view will output this value as a string.
+ * No extensions are used, and the "view" hook is not triggered).
+ *
  * The output of views can be intercepted by registering for the
  * view, $view_name plugin hook.
  *
  * @param string  $view     The name and location of the view to use
  * @param array   $vars     Variables to pass to the view.
- * @param boolean $bypass   This argument is ignored and will be removed eventually
- * @param boolean $ignored  This argument is ignored and will be removed eventually
+ * @param boolean $ignore1  This argument is ignored and will be removed eventually
+ * @param boolean $ignore2  This argument is ignored and will be removed eventually
  * @param string  $viewtype If set, forces the viewtype for the elgg_view call to be
  *                          this value (default: standard detection)
  *
  * @return string The parsed view
  */
-function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
-	return _elgg_services()->views->renderView($view, $vars, $bypass, $viewtype);
+function elgg_view($view, $vars = array(), $ignore1 = false, $ignore2 = false, $viewtype = '') {
+	return _elgg_services()->views->renderView($view, $vars, $ignore1, $viewtype);
 }
 
 /**
@@ -395,6 +398,22 @@ function elgg_extend_view($view, $view_extension, $priority = 501) {
  */
 function elgg_unextend_view($view, $view_extension) {
 	return _elgg_services()->views->unextendView($view, $view_extension);
+}
+
+/**
+ * Get the views (and priorities) that extend a view.
+ *
+ * @note extensions may change anytime, especially during the [init, system] event
+ *
+ * @param string $view View name
+ *
+ * @return string[] Keys returned are view priorities.
+ * @since 2.3
+ */
+function elgg_get_view_extensions($view) {
+	$list = _elgg_services()->views->getViewList($view);
+	unset($list[500]);
+	return $list;
 }
 
 /**
@@ -558,47 +577,7 @@ function _elgg_views_prepare_head($title) {
 		'name' => 'apple-mobile-web-app-capable',
 		'content' => 'yes',
 	);
-	$params['links']['apple-touch-icon'] = array(
-		'rel' => 'apple-touch-icon',
-		'href' => elgg_get_simplecache_url('favicon-128.png'),
-	);
-
-	// favicons
-	$params['links']['icon-ico'] = array(
-		'rel' => 'icon',
-		'href' => elgg_get_simplecache_url('favicon.ico'),
-	);
-	$params['links']['icon-vector'] = array(
-		'rel' => 'icon',
-		'sizes' => '16x16 32x32 48x48 64x64 128x128',
-		'type' => 'image/svg+xml',
-		'href' => elgg_get_simplecache_url('favicon.svg'),
-	);
-	$params['links']['icon-16'] = array(
-		'rel' => 'icon',
-		'sizes' => '16x16',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-16.png'),
-	);
-	$params['links']['icon-32'] = array(
-		'rel' => 'icon',
-		'sizes' => '32x32',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-32.png'),
-	);
-	$params['links']['icon-64'] = array(
-		'rel' => 'icon',
-		'sizes' => '64x64',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-64.png'),
-	);
-	$params['links']['icon-128'] = array(
-		'rel' => 'icon',
-		'sizes' => '128x128',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-128.png'),
-	);
-
+	
 	// RSS feed link
 	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
@@ -616,6 +595,69 @@ function _elgg_views_prepare_head($title) {
 	}
 	
 	return $params;
+}
+
+
+/**
+ * Add favicon link tags to HTML head
+ *
+ * @param string $hook        "head"
+ * @param string $type        "page"
+ * @param array  $head_params Head params
+ *                            <code>
+ *                               [
+ *                                  'title' => '',
+ *                                  'metas' => [],
+ *                                  'links' => [],
+ *                               ]
+ *                            </code>
+ * @param array  $params      Hook params
+ * @return array
+ */
+function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) {
+
+	$head_params['links']['apple-touch-icon'] = array(
+		'rel' => 'apple-touch-icon',
+		'href' => elgg_get_simplecache_url('favicon-128.png'),
+	);
+
+	// favicons
+	$head_params['links']['icon-ico'] = array(
+		'rel' => 'icon',
+		'href' => elgg_get_simplecache_url('favicon.ico'),
+	);
+	$head_params['links']['icon-vector'] = array(
+		'rel' => 'icon',
+		'sizes' => '16x16 32x32 48x48 64x64 128x128',
+		'type' => 'image/svg+xml',
+		'href' => elgg_get_simplecache_url('favicon.svg'),
+	);
+	$head_params['links']['icon-16'] = array(
+		'rel' => 'icon',
+		'sizes' => '16x16',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-16.png'),
+	);
+	$head_params['links']['icon-32'] = array(
+		'rel' => 'icon',
+		'sizes' => '32x32',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-32.png'),
+	);
+	$head_params['links']['icon-64'] = array(
+		'rel' => 'icon',
+		'sizes' => '64x64',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-64.png'),
+	);
+	$head_params['links']['icon-128'] = array(
+		'rel' => 'icon',
+		'sizes' => '128x128',
+		'type' => 'image/png',
+		'href' => elgg_get_simplecache_url('favicon-128.png'),
+	);
+
+	return $head_params;
 }
 
 /**
@@ -1322,7 +1364,13 @@ function elgg_view_input($input_type, array $vars = array()) {
 	$vars['input_type'] = $input_type;
 
 	$label = elgg_view('elements/forms/label', $vars);
-	unset($vars['label']);
+	if ($input_type == 'checkbox') {
+		$vars['label'] = $label;
+		$vars['label_tag'] = 'div';
+		$label = false;
+	} else {
+		unset($vars['label']);
+	}
 
 	$help = elgg_view('elements/forms/help', $vars);
 	unset($vars['help']);
@@ -1736,6 +1784,10 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
 
+	// registered with high priority for BC
+	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
+	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
+	
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
 	$view_path = $GLOBALS['_ELGG']->view_path;
 	$viewtype_dirs = scandir($view_path);
@@ -1799,6 +1851,83 @@ function _elgg_manage_pagesetup($hook, $view, $value, $params) {
 	_elgg_services()->hooks->unregisterHandler('view_vars', 'all', '_elgg_manage_pagesetup');
 
 	_elgg_services()->events->trigger('pagesetup', 'system');
+}
+
+/**
+ * Get the site data to be merged into "elgg" in elgg.js.
+ *
+ * Unlike _elgg_get_js_page_data(), the keys returned are literal expressions.
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_get_js_site_data() {
+	$language = elgg_get_config('language');
+	if (!$language) {
+		$language = 'en';
+	}
+
+	return [
+		'elgg.data' => (object)elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
+		'elgg.version' => elgg_get_version(),
+		'elgg.release' => elgg_get_version(true),
+		'elgg.config.wwwroot' => elgg_get_site_url(),
+
+		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
+		'elgg.security.interval' => (int)_elgg_services()->actions->getActionTokenTimeout() * 333,
+		'elgg.config.language' => $language,
+	];
+}
+
+/**
+ * Get the initial contents of "elgg" client side. Will be extended by elgg.js.
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_get_js_page_data() {
+	$data = elgg_trigger_plugin_hook('elgg.data', 'page', null, []);
+	if (!is_array($data)) {
+		elgg_log('"elgg.data" plugin hook handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
+		$data = [];
+	}
+
+	$elgg = array(
+		'config' => array(
+			'lastcache' => (int) elgg_get_config('lastcache'),
+			'viewtype' => elgg_get_viewtype(),
+			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
+		),
+		'security' => array(
+			'token' => array(
+				'__elgg_ts' => $ts = time(),
+				'__elgg_token' => generate_action_token($ts),
+			),
+		),
+		'session' => array(
+			'user' => null,
+			'token' => _elgg_services()->session->get('__elgg_session'),
+		),
+		'_data' => (object) $data,
+	);
+
+	if (elgg_get_config('elgg_load_sync_code')) {
+		$elgg['config']['load_sync_code'] = true;
+	}
+
+	$page_owner = elgg_get_page_owner_entity();
+	if ($page_owner instanceof ElggEntity) {
+		$elgg['page_owner'] = $page_owner->toObject();
+	}
+
+	$user = elgg_get_logged_in_user_entity();
+	if ($user instanceof ElggUser) {
+		$user_object = $user->toObject();
+		$user_object->admin = $user->isAdmin();
+		$elgg['session']['user'] = $user_object;
+	}
+
+	return $elgg;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

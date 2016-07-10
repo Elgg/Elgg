@@ -23,6 +23,60 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 		return $annotations;
 	}
 
+	public function testCanGetEntitiesByAnnotationCreationTime() {
+		$prefix = elgg_get_config('dbprefix');
+		$users = elgg_get_entities(array('type' => 'user', 'limit' => 1));
+
+		// create some test annotations
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$annotation_name = 'test_annotation_name_' . rand();
+
+		// our targets
+		$valid1 = new \ElggObject();
+		$valid1->subtype = $subtype;
+		$valid1->save();
+		$id1 = $valid1->annotate($annotation_name, 1, ACCESS_PUBLIC, $users[0]->guid);
+
+		// this one earlier
+		$yesterday = time() - 86400;
+		update_data("
+			UPDATE {$prefix}annotations
+			SET time_created = $yesterday
+			WHERE id = $id1
+		");
+
+		$valid2 = new \ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->save();
+		$valid2->annotate($annotation_name, 1, ACCESS_PUBLIC, $users[0]->guid);
+
+		$options = array(
+			'annotation_owner_guid' => $users[0]->guid,
+			'annotation_created_time_lower' => (time() - 3600),
+			'annotation_name' => $annotation_name,
+		);
+
+		$entities = elgg_get_entities_from_annotations($options);
+
+		$this->assertEqual(1, count($entities));
+		$this->assertEqual($valid2->guid, $entities[0]->guid);
+
+		$options = array(
+			'annotation_owner_guid' => $users[0]->guid,
+			'annotation_created_time_upper' => (time() - 3600),
+			'annotation_name' => $annotation_name,
+		);
+
+		$entities = elgg_get_entities_from_annotations($options);
+
+		$this->assertEqual(1, count($entities));
+		$this->assertEqual($valid1->guid, $entities[0]->guid);
+
+		$valid1->delete();
+		$valid2->delete();
+	}
+
 	public function testElggApiGettersEntitiesFromAnnotation() {
 
 		// grab a few different users to annotation

@@ -95,5 +95,6 @@ Schau Dir die Datei an und schreibe einen Kommentar:
 	'file:downloadfailed' => "Entschuldigung, diese Datei ist derzeit nicht verfügbar.",
 	'file:deletefailed' => "Deine Datei konnte zu diesem Zeitpunkt nicht gelöscht werden.",
 	'file:noaccess' => "Du hast keine Berechtigung, um diesen Datei-Eintrag zu ändern.",
+	'file:cannotload' => "Beim Hochladen dieser Datei ist ein Fehler aufgetreten.",
 	'file:nofile' => "Du mußt eine Datei auswählen.",
 );

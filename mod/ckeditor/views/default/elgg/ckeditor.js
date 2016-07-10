@@ -125,6 +125,10 @@ define(function (require) {
 		 */
 		config: config
 	};
+
 	elggCKEditor.bind('.elgg-input-longtext');
+
+	$(document).on('click', '.ckeditor-toggle-editor', elggCKEditor.toggleEditor);
+
 	return elggCKEditor;
 });

@@ -94,5 +94,6 @@ Visualizado e comentado no arquivo:
 	'file:downloadfailed' => "Desculpe, este arquivo não está disponível no momento.",
 	'file:deletefailed' => "Seu arquivo não pode ser apagado.",
 	'file:noaccess' => "Você não possui permissão para editar este arquivo",
+	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Você deve selecionar um arquivo",
 );

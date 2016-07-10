@@ -259,27 +259,27 @@ class AccessCollections {
 		$prefix = _elgg_services()->db->getTablePrefix();
 	
 		if ($options['ignore_access']) {
-			$clauses['ors'][] = '1 = 1';
+			$clauses['ors']['ignore_access'] = '1 = 1';
 		} else if ($options['user_guid']) {
 			// include content of user's friends
-			$clauses['ors'][] = "$table_alias{$options['access_column']} = " . ACCESS_FRIENDS . "
+			$clauses['ors']['friends_access'] = "$table_alias{$options['access_column']} = " . ACCESS_FRIENDS . "
 				AND $table_alias{$options['owner_guid_column']} IN (
 					SELECT guid_one FROM {$prefix}entity_relationships
 					WHERE relationship = 'friend' AND guid_two = {$options['user_guid']}
 				)";
 	
 			// include user's content
-			$clauses['ors'][] = "$table_alias{$options['owner_guid_column']} = {$options['user_guid']}";
+			$clauses['ors']['owner_access'] = "$table_alias{$options['owner_guid_column']} = {$options['user_guid']}";
 		}
 	
 		// include standard accesses (public, logged in, access collections)
 		if (!$options['ignore_access']) {
 			$access_list = $this->getAccessList($options['user_guid']);
-			$clauses['ors'][] = "$table_alias{$options['access_column']} IN {$access_list}";
+			$clauses['ors']['acl_access'] = "$table_alias{$options['access_column']} IN {$access_list}";
 		}
 	
 		if ($options['use_enabled_clause']) {
-			$clauses['ands'][] = "{$table_alias}enabled = 'yes'";
+			$clauses['ands']['use_enabled'] = "{$table_alias}enabled = 'yes'";
 		}
 	
 		$clauses = _elgg_services()->hooks->trigger('get_sql', 'access', $options, $clauses);
