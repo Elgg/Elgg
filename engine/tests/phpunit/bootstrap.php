@@ -64,6 +64,26 @@ function _elgg_testing_config(\Elgg\Config $config = null) {
 	return $inst;
 }
 
+/**
+ * Reset the components and factories of the ServiceProvider.
+ * If you have to use _elgg_services()->setValue() in your tests, call this in tearDown()
+ */
+function _elgg_testing_restore_sp($initial_state = null) {
+	static $state;
+	if ($initial_state) {
+		$state = $initial_state;
+	}
+	// rebuild service provider with original state
+	$sp = new \Elgg\Di\ServiceProvider($state['values']['config']);
+	foreach ($state['values'] as $key => $val) {
+		$sp->setValue($key, $val);
+	}
+	$refl_prop = new ReflectionProperty(\Elgg\Di\DiContainer::class, 'factories_');
+	$refl_prop->setAccessible(true);
+	$refl_prop->setValue($sp, $state['factories']);
+	_elgg_services($sp);
+}
+
 // PHPUnit will serialize globals between tests, so let's not introduce any globals here.
 call_user_func(function () use ($CONFIG) {
 	$config = new \Elgg\Config($CONFIG);
@@ -79,10 +99,18 @@ call_user_func(function () use ($CONFIG) {
 	$app->loadCore();
 
 	// persistentLogin service needs this set to instantiate without calling DB
-	_elgg_services()->config->getCookieConfig();
+	$sp->config->getCookieConfig();
 
 	global $GLOBALS;
 	$GLOBALS['DEFAULT_FILE_STORE'] = new \ElggDiskFilestore($CONFIG->dataroot);
 
 	_elgg_testing_application($app);
+
+	// backup service provider state
+	$refl_prop = new ReflectionProperty(\Elgg\Di\DiContainer::class, 'factories_');
+	$refl_prop->setAccessible(true);
+	_elgg_testing_restore_sp([
+		'values' => get_object_vars($sp),
+		'factories' => $refl_prop->getValue($sp),
+	]);
 });
