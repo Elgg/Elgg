@@ -1,7 +1,10 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\Http\Request;
+use Elgg\Http\ResponseBuilder;
+use RuntimeException;
 
 /**
  * Delegates requests to controllers based on the registered configuration.
@@ -16,6 +19,7 @@ use Elgg\Http\Request;
  * @access private
  */
 class Router {
+
 	use Profilable;
 
 	private $handlers = array();
@@ -24,9 +28,9 @@ class Router {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\PluginHooksService $hooks For customized routing.
+	 * @param PluginHooksService $hooks For customized routing.
 	 */
-	public function __construct(\Elgg\PluginHooksService $hooks) {
+	public function __construct(PluginHooksService $hooks) {
 		$this->hooks = $hooks;
 	}
 
@@ -36,11 +40,11 @@ class Router {
 	 * This function triggers a plugin hook `'route', $identifier` so that plugins can
 	 * modify the routing or handle a request.
 	 *
-	 * @param \Elgg\Http\Request $request The request to handle.
+	 * @param Request $request The request to handle.
 	 * @return boolean Whether the request was routed successfully.
 	 * @access private
 	 */
-	public function route(\Elgg\Http\Request $request) {
+	public function route(Request $request) {
 		$segments = $request->getUrlSegments();
 		if ($segments) {
 			$identifier = array_shift($segments);
@@ -70,42 +74,49 @@ class Router {
 			$this->timer->begin(['build page']);
 		}
 
-		$result = $this->hooks->trigger('route', $identifier, $old, $old);
-		if ($result === false) {
-			return true;
-		}
-
-		if ($result !== $old) {
-			_elgg_services()->logger->warn('Use the route:rewrite hook to modify routes.');
-		}
-
-		if ($identifier != $result['identifier']) {
-			$identifier = $result['identifier'];
-		} else if ($identifier != $result['handler']) {
-			$identifier = $result['handler'];
-		}
-
-		$segments = $result['segments'];
-
-		$handled = false;
 		ob_start();
 
-		if (isset($this->handlers[$identifier]) && is_callable($this->handlers[$identifier])) {
-			$function = $this->handlers[$identifier];
-			$handled = call_user_func($function, $segments, $identifier);
+		$result = $this->hooks->trigger('route', $identifier, $old, $old);
+		if ($result === false) {
+			$output = ob_get_clean();
+			$response = elgg_ok_response($output);
+		} else {
+			if ($result !== $old) {
+				_elgg_services()->logger->warn('Use the route:rewrite hook to modify routes.');
+			}
+
+			if ($identifier != $result['identifier']) {
+				$identifier = $result['identifier'];
+			} else if ($identifier != $result['handler']) {
+				$identifier = $result['handler'];
+			}
+
+			$segments = $result['segments'];
+
+			$response = false;
+
+			if (isset($this->handlers[$identifier]) && is_callable($this->handlers[$identifier])) {
+				$function = $this->handlers[$identifier];
+				$response = call_user_func($function, $segments, $identifier);
+			}
+			
+			$output = ob_get_clean();
+
+			if ($response === false) {
+				return headers_sent();
+			}
+
+			if (!$response instanceof ResponseBuilder) {
+				$response = elgg_ok_response($output);
+			}
 		}
 
-		$output = ob_get_clean();
-
-		$ajax_api = _elgg_services()->ajax;
-		if ($ajax_api->isReady()) {
-			$path = implode('/', $request->getUrlSegments());
-			$ajax_api->respondFromOutput($output, "path:$path");
+		if (_elgg_services()->responseFactory->getSentResponse()) {
 			return true;
 		}
-
-		echo $output;
-		return $handled || headers_sent();
+		
+		_elgg_services()->responseFactory->respond($response);
+		return headers_sent();
 	}
 
 	/**
@@ -171,12 +182,9 @@ class Router {
 			return $request;
 		}
 
-		if (!isset($new['identifier'])
-			|| !isset($new['segments'])
-			|| !is_string($new['identifier'])
-			|| !is_array($new['segments'])
+		if (!isset($new['identifier']) || !isset($new['segments']) || !is_string($new['identifier']) || !is_array($new['segments'])
 		) {
-			throw new \RuntimeException('rewrite_path handler returned invalid route data.');
+			throw new RuntimeException('rewrite_path handler returned invalid route data.');
 		}
 
 		// rewrite request
@@ -184,5 +192,5 @@ class Router {
 		array_unshift($segments, $new['identifier']);
 		return $request->setUrlSegments($segments);
 	}
-}
 
+}

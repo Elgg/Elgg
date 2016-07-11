@@ -41,14 +41,23 @@ the request to a resource view.
         if ($subpage === 'view') {
 
             // use a view for the page logic to allow other plugins to easily change it
-            echo elgg_view_resource('blog/view', [
+            $resource = elgg_view_resource('blog/view', [
                 'guid' => (int)elgg_extract(1, $segments);
             ]);
 
-            // in page handlers, return true says, "we've handled this request"
-            return true;
+            return elgg_ok_response($resource);
         }
 
+        // redirect to a different location
+        if ($subpage === '') {
+            return elgg_redirect_response('blog/all');
+        }
+
+        // send an error page
+        if ($subpage === 'owner' && !elgg_entity_exists($segments[1])) {
+            return elgg_error_response('User not found', 'blog/all', ELGG_HTTP_NOT_FOUND);
+        }
+        
         // ... handle other subpages
    }
 

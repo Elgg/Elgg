@@ -32,6 +32,9 @@ Deprecated APIs
  * ``elgg.embed`` library and ``elgg.embed`` object: Do not use ``elgg_load_js('elgg.embed')``. Use ``elgg/embed`` AMD module instead
  * Accessing ``icons_sizes`` config value directly: Use ``elgg_get_icon_sizes()``
  * ``can_write_to_container()``: Use ``ElggEntity::canWriteToContainer()``
+ * ``ajax_forward_hook()``: No longer used as handler for `'forward','all'` hook. Ajax response is now wrapped by the ``ResponseFactory``
+ * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
+ * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
 
 Deprecated Views
 ----------------
@@ -71,6 +74,15 @@ New API for handling entity icons
  * ``ElggEntity::hasIcon()`` - checks if an icon with given size has been created
  * ``elgg_get_embed_url()`` - can be used to return an embed URL for an entity's icon (served via `/serve-icon` handler)
 
+New API for page and action handling
+------------------------------------
+
+Page handlers and action script files should now return an instance of ``\Elgg\Http\ResponseBuilder``.
+Plugins should use the following convenience functions to build responses:
+
+ * ``elgg_ok_response()`` sends a 2xx response with HTML (page handler) or JSON data (actions)
+ * ``elgg_error_response()`` sends a 4xx or 5xx response without content/data
+ * ``elgg_redirect_response()`` silently redirects the request
 
 Removed APIs
 ------------
