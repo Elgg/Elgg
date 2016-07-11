@@ -1,4 +1,5 @@
 <?php
+
 /**
  * River item class.
  *
@@ -139,6 +140,47 @@ class ElggRiverItem {
 	 */
 	public function getSubtype() {
 		return 'item';
+	}
+
+	/**
+	 * Can a user delete this river item?
+	 *
+	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" plugin hook.
+	 *
+	 * @note This is not called by elgg_delete_river().
+	 *
+	 * @param int $user_guid The user GUID, optionally (default: logged in user)
+	 *
+	 * @return bool Whether this river item should be considered deletable by the given user.
+	 * @since 2.3
+	 */
+	public function canDelete($user_guid = 0) {
+		return _elgg_services()->userCapabilities->canDeleteRiverItem($this, $user_guid);
+	}
+
+	/**
+	 * Delete the river item
+	 *
+	 * @return bool False if the user lacks permission or the before event is cancelled
+	 * @since 2.3
+	 */
+	public function delete() {
+		if (!$this->canDelete()) {
+			return false;
+		}
+
+		$events = _elgg_services()->events;
+		if (!$events->triggerBefore('delete', 'river', $this)) {
+			return false;
+		}
+
+		$db = _elgg_services()->db;
+		$prefix = $db->getTablePrefix();
+		_elgg_services()->db->deleteData("DELETE FROM {$prefix}river WHERE id = ?", [$this->id]);
+
+		$events->triggerAfter('delete', 'river', $this);
+
+		return true;
 	}
 
 	/**

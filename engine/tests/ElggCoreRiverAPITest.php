@@ -7,9 +7,8 @@
  */
 class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
-	public function testElggCreateRiverItemWorks() {
-		$entity = elgg_get_entities(array('limit' => 1));
-		$entity = $entity[0];
+	public function testCanCreateRiverItem() {
+		$entity = $this->getSomeEntity();
 		$params = array(
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
@@ -19,13 +18,186 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 		$id = elgg_create_river_item($params);
 		$this->assertTrue(is_int($id));
-
 		$this->assertTrue(elgg_delete_river(array('id' => $id)));
+
+		$params['return_item'] = true;
+		$item = elgg_create_river_item($params);
+
+		$this->assertIsA($item, ElggRiveritem::class);
+		$this->assertTrue(elgg_delete_river(array('id' => $item->id)));
+	}
+
+	public function testRiverCreationEmitsHookAndEvent() {
+		$entity = $this->getSomeEntity();
+		$params = array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->guid,
+			'object_guid' => $entity->guid,
+			'posted' => time(),
+			'return_item' => true,
+		);
+
+		$captured = [];
+		$hook_handler = function ($hook, $type, $value, $params) use (&$captured) {
+			$captured['hook_value'] = $value;
+		};
+		$event_handler = function ($event, $type, $object) use (&$captured) {
+			$captured['event_object'] = $object;
+		};
+
+		elgg_register_plugin_hook_handler('creating', 'river', $hook_handler);
+		elgg_register_event_handler('created', 'river', $event_handler);
+		$item = elgg_create_river_item($params);
+		elgg_unregister_plugin_hook_handler('creating', 'river', $hook_handler);
+		elgg_unregister_event_handler('created', 'river', $event_handler);
+
+		$expected_values = array(
+			'type' => $entity->getType(),
+			'subtype' => $entity->getSubtype(),
+			'action_type' => $params['action_type'],
+			'access_id' => $entity->access_id,
+			'view' => $params['view'],
+			'subject_guid' => $params['subject_guid'],
+			'object_guid' => $params['object_guid'],
+			'target_guid' => 0,
+			'annotation_id' => 0,
+			'posted' => $params['posted'],
+		);
+		foreach ($expected_values as $key => $value) {
+			$this->assertEqual($captured['hook_value'][$key], $value);
+		}
+		$this->assertSame($item, $captured['event_object']);
+
+		$this->assertTrue($item->delete());
+	}
+
+	public function testCanCancelRiverItemViaHook() {
+		$entity = $this->getSomeEntity();
+		$params = array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->guid,
+			'object_guid' => $entity->guid,
+		);
+
+		elgg_register_plugin_hook_handler('creating', 'river', [Elgg\Values::class, 'getFalse']);
+		$id = elgg_create_river_item($params);
+		elgg_unregister_plugin_hook_handler('creating', 'river', [Elgg\Values::class, 'getFalse']);
+
+		$this->assertTrue($id === true); // prevented
+	}
+
+	public function testCanCancelRiverDeleteByEvent() {
+		$entity = $this->getSomeEntity();
+		$params = array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->guid,
+			'object_guid' => $entity->guid,
+			'return_item' => true,
+		);
+		$item = elgg_create_river_item($params);
+
+		elgg_register_event_handler('delete:before', 'river', [Elgg\Values::class, 'getFalse']);
+		$this->assertFalse($item->delete());
+		elgg_unregister_event_handler('delete:before', 'river', [Elgg\Values::class, 'getFalse']);
+
+		$items = elgg_get_river(['id' => $item->id]);
+		$this->assertEqual(count($items), 1);
+
+		$this->assertTrue($item->delete());
+	}
+
+	public function testRiverDeleteFiresAfterEvent() {
+		// [delete:after, river]
+
+		$entity = $this->getSomeEntity();
+		$params = array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->guid,
+			'object_guid' => $entity->guid,
+			'return_item' => true,
+		);
+		$item = elgg_create_river_item($params);
+
+		$captured = null;
+		$event_handler = function ($event, $type, $object) use (&$captured) {
+			$captured = $object;
+		};
+
+		elgg_register_event_handler('delete:after', 'river', $event_handler);
+		$item->delete();
+		elgg_unregister_event_handler('delete:after', 'river', $event_handler);
+
+		$this->assertSame($item, $captured);
+	}
+
+	public function testRiverDeleteUsesPermissionHook() {
+		$entity = $this->getSomeEntity();
+		$params = array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->guid,
+			'object_guid' => $entity->guid,
+			'return_item' => true,
+		);
+		$item = elgg_create_river_item($params);
+
+		//permissions_check:delete, river
+		$this->assertTrue($item->canDelete());
+
+		$captured = null;
+		$handler = function () use (&$captured) {
+			$captured = func_get_args();
+			return false;
+		};
+
+		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+
+		$this->assertFalse($item->canDelete());
+		$this->assertTrue($captured[2]);
+		$this->assertSame($captured[3]['item'], $item);
+		$this->assertSame($captured[3]['user'], elgg_get_logged_in_user_entity());
+
+		$this->assertFalse($item->delete());
+
+		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+
+		$this->assertTrue($item->delete());
+	}
+
+	public function testDeprecatedDeleteRiverFunctionBypassesEventsPerms() {
+		$entity = $this->getSomeEntity();
+		$params = array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->guid,
+			'object_guid' => $entity->guid,
+		);
+		$id = elgg_create_river_item($params);
+
+		$fired = false;
+		$handler = function () use (&$fired) {
+			$fired = true;
+		};
+
+		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+		elgg_register_event_handler('delete:before', 'river', $handler);
+		elgg_register_event_handler('delete:after', 'river', $handler);
+
+		elgg_delete_river(['id' => $id]);
+
+		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', $handler);
+		elgg_unregister_event_handler('delete:before', 'river', $handler);
+		elgg_unregister_event_handler('delete:after', 'river', $handler);
+
+		$this->assertFalse($fired);
 	}
 
 	public function testElggCreateRiverItemMissingRequiredParam() {
-		$entity = elgg_get_entities(array('limit' => 1));
-		$entity = $entity[0];
+		$entity = $this->getSomeEntity();
 		$params = array(
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
@@ -51,8 +223,7 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggCreateRiverItemViewNotExist() {
-		$entity = elgg_get_entities(array('limit' => 1));
-		$entity = $entity[0];
+		$entity = $this->getSomeEntity();
 		$params = array(
 			'view' => 'river/relationship/foo/create',
 			'action_type' => 'create',
@@ -64,8 +235,7 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggCreateRiverItemBadEntity() {
-		$entity = elgg_get_entities(array('limit' => 1));
-		$entity = $entity[0];
+		$entity = $this->getSomeEntity();
 		$params = array(
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
@@ -137,5 +307,13 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		
 		$user->delete();
 		$entity->delete();
+	}
+
+	/**
+	 * @return ElggEntity
+	 */
+	protected function getSomeEntity() {
+		$entity = elgg_get_entities(array('limit' => 1));
+		return $entity[0];
 	}
 }

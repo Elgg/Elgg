@@ -95,7 +95,8 @@ System hooks
 	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
 **creating, river**
-	Triggered before a river item is created. Return false to prevent river item from being created.
+	The options for ``elgg_create_river_item`` are filtered through this hook. You may alter values
+	or return ``false`` to cancel the item creation.
 
 **simplecache:generate, <view>**
 	Triggered when generating the cached content of a view.
@@ -261,6 +262,12 @@ Permission hooks
 
 **permissions_check:delete, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can delete the entity ``$params['entity']``. Defaults to ``$entity->canEdit()``.
+
+**permissions_check:delete, river**
+	Return boolean for if the user ``$params['user']`` can delete the river item ``$params['item']``. Defaults to
+	``true`` for admins and ``false`` for other users.
+
+	.. note:: This check is not performed when using the deprecated ``elgg_delete_river()``.
 
 **permissions_check, widget_layout**
 	Return boolean for if ``$params['user']`` can edit the widgets in the context passed as
