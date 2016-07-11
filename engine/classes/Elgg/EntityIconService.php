@@ -435,6 +435,17 @@ class EntityIconService {
 			$sizes = $this->hooks->trigger("entity:$type:sizes", $entity_type, $params, $sizes);
 		}
 
+		if (!is_array($sizes)) {
+			throw new InvalidParameterException("The icon size configuration for image type '$type' " .
+				"must be an associative array of image size names and their properties");
+		}
+
+		if (empty($sizes)) {
+			$this->logger->error("Failed to find size configuration for image of type '$type' for entity type " .
+				"'$entity_type'. Use the 'entity:$type:sizes, $entity_type' hook to define the icon sizes");
+
+		}
+
 		return $sizes;
 	}
 

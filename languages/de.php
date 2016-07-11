@@ -20,7 +20,8 @@ return array(
 	'logout' => "Abmelden",
 	'logoutok' => "Du bist nun abgemeldet.",
 	'logouterror' => "Wir konnten Dich nicht abmelden. Bitte versuche es noch einmal.",
-	'session_expired' => "Deine Session ist abgelaufen. Bitte lade die Seite erneut, um Dich anzumelden.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Du mußt angemeldet sein, um diese Seite aufrufen zu können.",
 	'adminrequired' => "Du mußt ein Administrator sein, um diese Seite aufrufen zu können.",
@@ -142,6 +143,7 @@ return array(
 	'password' => "Passwort",
 	'passwordagain' => "Passwort (wiederholen für Verifikation)",
 	'admin_option' => "Diesen Benutzer zum Admin machen?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -1109,10 +1111,10 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'installation:simplecache:description' => "Simple-Cache verbessert die Systemleistung durch Caching von statischen Seiteninhalten inklusive einiger CSS- und JavaScript-Dateien.",
 	'installation:simplecache:label' => "Simple-Cache aktivieren (empfohlen)",
 
-	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
-	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
-	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
-	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+	'installation:cache_symlink:description' => "Der symbolische Link zum Simple Cache-Verzeichnis ermöglicht es dem Server, statische Views ohne Zuhilfenahme der Elgg-Engine anzuzeigen. Dies verbessert die Performance und reduziert die Serverlast.",
+	'installation:cache_symlink:label' => "Symbolischen Link zum Simple Cache-Verzeichnis verwenden (empfohlen)",
+	'installation:cache_symlink:warning' => "Der symbolische Link wurde erstellt. Wenn Du zu einem späteren Zeitpunkt keinen Link zum Simple Cache-Verzeichnis mehr verwenden möchtest, lösche bitte den symbolischen Link zum Simple Cache-Verzeichnis aus dem Hauptverzeichnis Deiner Elgg-Installation.",
+	'installation:cache_symlink:error' => "Die automatische Erstellung des symbolischen Links ist fehlgeschlagen. Bitte schau in der Elgg-Dokumentation nach, wie Du den Link manuell erstellen kannst.",
 
 	'installation:minify:description' => "Der Simple-Cache kann die Performance auch zusätzlich noch durch Komprimierung der CSS- und JavaScript-Dateien verbessern. (Voraussetzung ist, das der Simple-Cache aktiviert ist.)",
 	'installation:minify_js:label' => "JavaScript-Dateien komprimieren (empfohlen)",
@@ -1159,7 +1161,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 
 	'admin:pending_upgrades' => 'Es gibt ausstehende Aktualisierungen auf Deiner Community-Seite. Du solltest diese baldmöglichst durchführen.',
 	'admin:view_upgrades' => 'Ausstehende Aktualisierungen anzeigen.',
- 	'admin:upgrades' => 'Aktualisierungen',
 	'item:object:elgg_upgrade' => 'Community-Seite-Aktualisierungen',
 	'admin:upgrades:none' => 'Deine Installation ist aktuell!',
 
