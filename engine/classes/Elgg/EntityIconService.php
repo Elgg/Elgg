@@ -247,6 +247,15 @@ class EntityIconService {
 
 		$sizes = $this->getSizes($entity_type, $entity_subtype, $type);
 
+		// The 'original' icon size is handled differently. It is always
+		// saved regardless if it's included the image size configuration.
+		// Additionally it is never cropped. This is to make sure we always
+		// have access to a high quality version of the image.
+		$original = $this->getIcon($entity, 'original', $type);
+		copy($file->getFilenameOnFilestore(), $original->getFilenameOnFilestore());
+		// Prevent the resizing loop below from overwriting it
+		unset($sizes['original']);
+
 		foreach ($sizes as $size => $opts) {
 
 			$width = (int) elgg_extract('w', $opts);
@@ -282,7 +291,7 @@ class EntityIconService {
 	 * The icon file may or may not exist on filestore
 	 *
 	 * @note Returned ElggIcon object may be a placeholder. Use ElggIcon::exists() to validate if file has been written to filestore
-	 * 
+	 *
 	 * @param ElggEntity $entity Entity that owns the icon
 	 * @param string     $size   Size of the icon
 	 * @param string     $type   The name of the icon. e.g., 'icon', 'cover_photo'
@@ -419,7 +428,7 @@ class EntityIconService {
 	 * @return array
 	 */
 	public function getSizes($entity_type = null, $entity_subtype = null, $type = 'icon') {
-		$sizes = [];
+		$sizes = ['original' => array()];
 		if (!$type) {
 			$type = 'icon';
 		}
