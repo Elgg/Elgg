@@ -26,7 +26,7 @@ define(function(require) {
 			setTimeout(function() {
 				expect($(visible_selector).length).toBe(1);
 				done();
-			}, 25);
+			}, 40);
 		});
 
 		it("start/stop can be called without 'this' set", function() {
@@ -87,7 +87,7 @@ define(function(require) {
 				spinner.stop();
 				expect($(visible_selector).length).toBe(0);
 				done();
-			}, 25);
+			}, 40);
 		});
 	});
 });
