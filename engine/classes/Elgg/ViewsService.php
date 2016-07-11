@@ -237,14 +237,15 @@ class ViewsService {
 	}
 
 	/**
-	 * Get the views, including extensions, used to render this view
+	 * Get the views, including extensions, used to render a view
 	 *
-	 * Keys returned are view priorities.
+	 * Keys returned are view priorities. View existence is not checked.
 	 *
 	 * @param string $view View name
 	 * @return string[]
+	 * @access private
 	 */
-	private function getViewList($view) {
+	public function getViewList($view) {
 		if (isset($this->extensions[$view])) {
 			return $this->extensions[$view];
 		} else {

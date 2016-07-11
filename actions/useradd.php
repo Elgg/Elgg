@@ -70,7 +70,11 @@ try {
 			$password,
 		), $new_user->language);
 
-		notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body);
+		notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body, [
+			'action' => 'useradd',
+			'object' => $new_user,
+			'password' => $password,
+		]);
 
 		system_message(elgg_echo("adduser:ok", array(elgg_get_site_entity()->name)));
 	} else {

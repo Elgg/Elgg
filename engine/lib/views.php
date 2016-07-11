@@ -401,6 +401,22 @@ function elgg_unextend_view($view, $view_extension) {
 }
 
 /**
+ * Get the views (and priorities) that extend a view.
+ *
+ * @note extensions may change anytime, especially during the [init, system] event
+ *
+ * @param string $view View name
+ *
+ * @return string[] Keys returned are view priorities.
+ * @since 2.3
+ */
+function elgg_get_view_extensions($view) {
+	$list = _elgg_services()->views->getViewList($view);
+	unset($list[500]);
+	return $list;
+}
+
+/**
  * In CSS content, prepend a path to relative URLs.
  *
  * This is useful to process a CSS view being used as an extension.

@@ -143,6 +143,18 @@ If handlers were registered with the same priority, these are called in the orde
 To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
 priority. Some of these handlers will most likely be called in a different order.
 
+
+From 2.2 to 2.3
+===============
+
+Deprecated APIs
+---------------
+
+
+Deprecated Views
+----------------
+
+
 From 2.1 to 2.2
 ===============
 

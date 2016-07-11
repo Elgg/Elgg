@@ -20,7 +20,8 @@ return array(
 	'logout' => "Kirjaudu ulos",
 	'logoutok' => "Olet kirjautunut ulos.",
 	'logouterror' => "Uloskirjautuminen epäonnistui. Yritä uudelleen.",
-	'session_expired' => "Sessiosi on vanhentunut. Päivitä sivu kirjautuaksesi sisään.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Tämän sivun näkyminen edellyttää, että olet kirjautuneena sisään.",
 	'adminrequired' => "Tämän sivun näkyminen edellyttää ylläpitäjän oikeuksia.",
@@ -142,6 +143,7 @@ return array(
 	'password' => "Salasana",
 	'passwordagain' => "Salasana (uudelleen)",
 	'admin_option' => "Tee tästä käyttäjästä ylläpitäjä?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -1153,7 +1155,6 @@ Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/ad
 
 	'admin:pending_upgrades' => 'Sivustolla on odottavia päivityksiä, jotka vaativat välitöntä huomiotasi.',
 	'admin:view_upgrades' => 'Siirry päivityksiin tästä.',
- 	'admin:upgrades' => 'Päivitykset',
 	'item:object:elgg_upgrade' => 'Sivuston päivitykset',
 	'admin:upgrades:none' => 'Sivustosi on ajan tasalla!',
 

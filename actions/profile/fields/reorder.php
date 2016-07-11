@@ -6,7 +6,4 @@
 
 $ordering = get_input('fieldorder');
 
-$result = elgg_save_config('profile_custom_fields', $ordering);
-
-// called by ajax so we exit
-exit;
+elgg_save_config('profile_custom_fields', $ordering);
