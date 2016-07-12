@@ -167,7 +167,9 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($this->config->get('icon_sizes'), $service->getSizes());
 
 		// If type is not 'icon', should return an empty array
+		$this->logger->disable();
 		$this->assertEmpty($service->getSizes(null, null, 'foo'));
+		$this->logger->enable();
 	}
 
 	/**
@@ -175,7 +177,9 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCanSetSizesForCustomIconType() {
 		$service = $this->createService();
+		$this->logger->disable();
 		$this->assertEmpty($service->getSizes('object', 'foo', 'cover'));
+		$this->logger->enable();
 
 		$this->hooks->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
 		$service = $this->createService();
