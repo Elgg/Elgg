@@ -31,10 +31,14 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	private $request;
 
 	/**
-	 *
-	 * @var type @var \Elgg\PluginHooksService
+	 * @var PluginHooksService
 	 */
 	private $hooks;
+
+	/**
+	 * @var Translator
+	 */
+	private $translator;
 
 	public function setUp() {
 
@@ -75,6 +79,12 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		// register page handlers
 		elgg_register_page_handler('action', '_elgg_action_handler');
+	}
+
+	function route() {
+		ob_start();
+		_elgg_services()->router->route($this->request);
+		return ob_get_clean();
 	}
 
 	/**
@@ -143,7 +153,16 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRegisterActionWithUnknownAccessLevel() {
 
 		// Access level will fall back to admin
+		_elgg_services()->logger->disable();
 		$this->assertTrue($this->actions->register('test/output', "$this->actionsDir/output.php", 'pblc'));
+		$logged = _elgg_services()->logger->enable();
+
+		$this->assertEquals([
+			[
+				'message' => 'Unrecognized value \'pblc\' for $access in Elgg\\ActionsService::register',
+				'level' => Logger::ERROR,
+			]
+		], $logged);
 
 		$actions = $this->actions->getAllActions();
 		$this->assertArrayHasKey('test/output', $actions);
@@ -237,7 +256,10 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function testActionGatekeeper() {
 
+		ob_start();
 		$result = $this->actions->gatekeeper('test');
+		ob_end_clean();
+
 		$this->assertFalse($result);
 		$this->assertInstanceOf(RedirectResponse::class, _elgg_services()->responseFactory->getSentResponse());
 
@@ -261,7 +283,9 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		set_input('output', 'output3');
 
+		ob_start();
 		$result = $this->actions->execute('output3');
+		ob_end_clean();
 
 		$this->assertInstanceOf(OkResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_OK, $result->getStatusCode());
@@ -302,7 +326,9 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		set_input('output', 'output3');
 
+		ob_start();
 		$result = $this->actions->execute('output3');
+		ob_end_clean();
 
 		$this->assertEquals(null, $result);
 
@@ -420,7 +446,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('system_message', 'success');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(RedirectResponse::class, $response);
@@ -442,7 +468,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('system_message', 'success');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -478,7 +504,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('system_message', 'success');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -519,7 +545,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('system_message', 'success');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -562,7 +588,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('system_message', 'success');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -578,19 +604,22 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @group AjaxService
-	 * @expectedException \RuntimeException
 	 */
 	public function testThrowsExceptionForInvalidAjax2ResponseFilter() {
 
-		$this->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function($hook, $type, $api_response) {
-			return false;
-		});
+		$this->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', [Values::class, 'getFalse']);
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
 		$this->request = _elgg_testing_request('action/output3', 'POST', [], 2, true);
 		$this->createService();
 
-		_elgg_services()->router->route($this->request);
+		try {
+			$this->route();
+			$this->fail('route did not throw RuntimeException');
+		} catch (\RuntimeException $e) {
+			ob_end_clean();
+			return;
+		}
 	}
 
 	/**
@@ -604,7 +633,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('error_message', 'error');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(RedirectResponse::class, $response);
@@ -623,7 +652,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('error_message', 'error');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -656,7 +685,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('output', 'output3');
 		set_input('error_message', 'error');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -685,7 +714,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_url', 'index');
 		set_input('forward_reason', ELGG_HTTP_OK);
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(RedirectResponse::class, $response);
@@ -705,7 +734,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_url', 'index');
 		set_input('forward_reason', ELGG_HTTP_BAD_REQUEST);
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(RedirectResponse::class, $response);
@@ -724,7 +753,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_url', 'index');
 		set_input('forward_reason', ELGG_HTTP_FOUND);
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(RedirectResponse::class, $response);
@@ -743,7 +772,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_OK);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -775,7 +804,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_BAD_REQUEST);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -806,7 +835,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_FOUND);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -841,7 +870,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_OK);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -873,7 +902,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_OK);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -901,7 +930,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_BAD_REQUEST);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -927,7 +956,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_FOUND);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -953,7 +982,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		set_input('output', 'foo');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(RedirectResponse::class, $response);
@@ -967,7 +996,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		set_input('output', 'foo');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -1000,7 +1029,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		set_input('output', 'foo');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -1041,7 +1070,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		set_input('forward_reason', ELGG_HTTP_OK);
 		set_input('forward_url', 'index');
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -1075,7 +1104,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		]);
 		set_input('session_token', $session_token);
 
-		_elgg_services()->router->route($this->request);
+		$this->route();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
