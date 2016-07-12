@@ -10,7 +10,7 @@ if (!$message) {
 
 elgg_load_css('maintenance');
 
-header("HTTP/1.1 503 Service Unavailable");
+elgg_set_http_header("HTTP/1.1 503 Service Unavailable");
 
 $body = elgg_view_layout('maintenance', array(
 	'message' => $message,

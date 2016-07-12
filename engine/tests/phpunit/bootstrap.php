@@ -28,7 +28,7 @@ function _elgg_testing_application(\Elgg\Application $app = null) {
  * testable without global state.
  */
 global $CONFIG;
-$CONFIG = (object)[
+$CONFIG = (object) [
 	'Config_file' => false,
 	'dbprefix' => 'elgg_',
 	'boot_complete' => false,
@@ -41,6 +41,10 @@ $CONFIG = (object)[
 	'simplecache_enabled' => false,
 	'system_cache_enabled' => false,
 	'Elgg\Application_phpunit' => true,
+	// \Elgg\Config::get() falls back to loading config values from database
+	// for undefined keys. This flag ensures we do not attempt reading data
+	// from database during tests
+	'site_config_loaded' => true,
 	'icon_sizes' => array(
 		'topbar' => array('w' => 16, 'h' => 16, 'square' => true, 'upscale' => true),
 		'tiny' => array('w' => 25, 'h' => 25, 'square' => true, 'upscale' => true),
@@ -52,8 +56,9 @@ $CONFIG = (object)[
 ];
 
 global $_ELGG;
-$_ELGG = (object)[
+$_ELGG = (object) [
 	'view_path' => __DIR__ . '/../../../views/',
+	'allowed_ajax_views' => [],
 ];
 
 function _elgg_testing_config(\Elgg\Config $config = null) {
@@ -64,11 +69,50 @@ function _elgg_testing_config(\Elgg\Config $config = null) {
 	return $inst;
 }
 
+/**
+ * Create an HTTP request
+ *
+ * @param string $uri             URI of the request
+ * @param string $method          HTTP method
+ * @param array  $parameters      Query/Post parameters
+ * @param int    $ajax            AJAX api version (0 for non-ajax)
+ * @param bool   $add_csrf_tokens Add CSRF tokens
+ * @return \Elgg\Http\Request
+ */
+function _elgg_testing_request($uri = '', $method = 'GET', $parameters = [], $ajax = 0, $add_csrf_tokens = false) {
+	$site_url = elgg_get_site_url();
+	$path = substr(elgg_normalize_url($uri), strlen($site_url));
+	$path_key = \Elgg\Application::GET_PATH_KEY;
+
+	if ($add_csrf_tokens) {
+		$ts = time();
+		$parameters['__elgg_ts'] = $ts;
+		$parameters['__elgg_token'] = _elgg_services()->actions->generateActionToken($ts);
+	}
+
+	$request = \Elgg\Http\Request::create("?$path_key=" . urlencode($path), $method, $parameters);
+
+	$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
+	$session_id = _elgg_services()->session->getId();
+	$request->cookies->set($cookie_name, $session_id);
+
+	$request->headers->set('Referer', elgg_normalize_url('phpunit'));
+
+	if ($ajax) {
+		$request->headers->set('X-Requested-With', 'XMLHttpRequest');
+		if ($ajax >= 2) {
+			$request->headers->set('X-Elgg-Ajax-API', (string) $ajax);
+		}
+	}
+
+	return $request;
+}
+
 // PHPUnit will serialize globals between tests, so let's not introduce any globals here.
 call_user_func(function () use ($CONFIG) {
 	$config = new \Elgg\Config($CONFIG);
 	_elgg_testing_config($config);
-	
+
 	$sp = new \Elgg\Di\ServiceProvider($config);
 
 	$sp->setValue('mailer', new InMemoryTransport());
