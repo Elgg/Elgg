@@ -654,6 +654,18 @@ To support gallery sets (via ``rel`` attribute), you need to bind colorbox direc
       lightbox.bind('a[rel="my-gallery"]', options, false); // 3rd attribute ensures binding is done without proxies
    });
 
+You can also resize the lightbox programmatically if needed:
+
+.. code:: js
+
+   define(function(require) {
+      var lightbox = require('elgg/lightbox');
+     
+      lightbox.resize({
+         width: '300px'
+      });
+   });
+
 Module ``elgg/ckeditor``
 ------------------------
 
