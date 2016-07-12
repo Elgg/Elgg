@@ -145,15 +145,10 @@ class BootService {
 		_elgg_services()->translator->loadTranslations();
 
 		// we always need site->email and user->icontime, so load them together
-		$preload_md_guids = [$CONFIG->site_guid];
 		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		if ($user_guid) {
-			$preload_md_guids[] = $user_guid;
+			_elgg_services()->metadataCache->populateFromEntities([$user_guid]);
 		}
-		_elgg_services()->metadataCache->populateFromEntities($preload_md_guids);
-
-		// TODO get rid of in 3.0, then we can drop the metadata preload for anon visitors
-		$CONFIG->siteemail = $CONFIG->site->email;
 
 		// gives hint to get() how to approach missing values
 		$CONFIG->site_config_loaded = true;

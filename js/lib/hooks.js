@@ -6,50 +6,60 @@ elgg.provide('elgg.config.hooks');
 elgg.provide('elgg.config.instant_hooks');
 elgg.provide('elgg.config.triggered_hooks');
 
+!function() {
+	// counter for tracking registration order
+	var index = 0;
+
+	/**
+	 * Registers a hook handler with the event system.
+	 *
+	 * For best results, depend on the elgg/ready module, so plugins will have been booted.
+	 *
+	 * The special keyword "all" can be used for either the name or the type or both
+	 * and means to call that handler for all of those hooks.
+	 *
+	 * Note that handlers registering for instant hooks will be executed immediately if the instant
+	 * hook has been previously triggered.
+	 *
+	 * @param {String}   name     The hook name.
+	 * @param {String}   type     The hook type.
+	 * @param {Function} handler  Handler to call: function(hook, type, params, value)
+	 * @param {Number}   priority Priority to call the event handler
+	 * @return {Boolean}
+	 */
+	elgg.register_hook_handler = function(name, type, handler, priority) {
+		elgg.assertTypeOf('string', name);
+		elgg.assertTypeOf('string', type);
+		elgg.assertTypeOf('function', handler);
+
+		if (!name || !type) {
+			return false;
+		}
+
+		var hooks = elgg.config.hooks;
+
+		elgg.provide([name, type], hooks);
+
+		if (!hooks[name][type].length) {
+			hooks[name][type] = [];
+		}
+
+		// call if instant and already triggered.
+		if (elgg.is_instant_hook(name, type) && elgg.is_triggered_hook(name, type)) {
+			handler(name, type, null, null);
+		}
+
+		hooks[name][type].push({
+			priority: priority,
+			index: index++,
+			handler: handler
+		});
+		return true;
+	}
+}();
+
 /**
- * Registers a hook handler with the event system.
- *
- * For best results, depend on the elgg/ready module, so plugins will have been booted.
- *
- * The special keyword "all" can be used for either the name or the type or both
- * and means to call that handler for all of those hooks.
- *
- * Note that handlers registering for instant hooks will be executed immediately if the instant
- * hook has been previously triggered.
- *
- * @param {String}   name     Name of the plugin hook to register for
- * @param {String}   type     Type of the event to register for
- * @param {Function} handler  Handle to call
- * @param {Number}   priority Priority to call the event handler
- * @return {Boolean}
- */
-elgg.register_hook_handler = function(name, type, handler, priority) {
-	elgg.assertTypeOf('string', name);
-	elgg.assertTypeOf('string', type);
-	elgg.assertTypeOf('function', handler);
-
-	if (!name || !type) {
-		return false;
-	}
-
-	var hooks = elgg.config.hooks;
-
-	elgg.provide([name, type], hooks);
-
-	if (!(hooks[name][type] instanceof elgg.ElggPriorityList)) {
-		hooks[name][type] = new elgg.ElggPriorityList();
-	}
-
-	// call if instant and already triggered.
-	if (elgg.is_instant_hook(name, type) && elgg.is_triggered_hook(name, type)) {
-		handler(name, type, null, null);
-	}
-
-	return hooks[name][type].insert(handler, priority);
-};
-
-/**
- * Emits a hook.
+ * Emits a synchronous hook, calling only synchronous handlers
  *
  * Loops through all registered hooks and calls the handler functions in order.
  * Every handler function will always be called, regardless of the return value.
@@ -59,18 +69,14 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
  *
  * @note Instant hooks do not support params or values.
  *
- * Hooks are called in this order:
- *	specifically registered (event_name and event_type match)
- *	all names, specific type
- *	specific name, all types
- *	all names, all types
+ * Hooks are called in priority order.
  *
- * @param {String} name   Name of the hook to emit
- * @param {String} type   Type of the hook to emit
+ * @param {String} name   The hook name.
+ * @param {String} type   The hook type.
  * @param {Object} params Optional parameters to pass to the handlers
- * @param {Object} value  Initial value of the return. Can be mangled by handlers
+ * @param {Object} value  Initial value of the return. Can be modified by handlers
  *
- * @return {Boolean}
+ * @return {*}
  */
 elgg.trigger_hook = function(name, type, params, value) {
 	elgg.assertTypeOf('string', name);
@@ -83,44 +89,55 @@ elgg.trigger_hook = function(name, type, params, value) {
 	value = !elgg.isNullOrUndefined(value) ? value : null;
 
 	var hooks = elgg.config.hooks,
-		tempReturnValue = null,
-		returnValue = value,
-		callHookHandler = function(handler) {
-			tempReturnValue = handler(name, type, params, returnValue);
-			if (!elgg.isNullOrUndefined(tempReturnValue)) {
-				returnValue = tempReturnValue;
-			}
-		};
+		registrations = [],
+		push = Array.prototype.push;
 
 	elgg.provide([name, type], hooks);
 	elgg.provide(['all', type], hooks);
 	elgg.provide([name, 'all'], hooks);
 	elgg.provide(['all', 'all'], hooks);
 
-	var hooksList = [];
-	
-	if (name != 'all' && type != 'all') {
-		hooksList.push(hooks[name][type]);
-	}
-
-	if (type != 'all') {
-		hooksList.push(hooks['all'][type]);
-	}
-
-	if (name != 'all') {
-		hooksList.push(hooks[name]['all']);
-	}
-
-	hooksList.push(hooks['all']['all']);
-
-	hooksList.every(function(handlers) {
-		if (handlers instanceof elgg.ElggPriorityList) {
-			handlers.forEach(callHookHandler);
+	if (hooks[name][type].length) {
+		if (name !== 'all' && type !== 'all') {
+			push.apply(registrations, hooks[name][type]);
 		}
-		return true;
+	}
+	if (hooks['all'][type].length) {
+		if (type !== 'all') {
+			push.apply(registrations, hooks['all'][type]);
+		}
+	}
+	if (hooks[name]['all'].length) {
+		if (name !== 'all') {
+			push.apply(registrations, hooks[name]['all']);
+		}
+	}
+	if (hooks['all']['all'].length) {
+		push.apply(registrations, hooks['all']['all']);
+	}
+
+	registrations.sort(function (a, b) {
+		// priority first
+		if (a.priority < b.priority) {
+			return -1;
+		}
+		if (a.priority > b.priority) {
+			return 1;
+		}
+
+		// then insertion order
+		return (a.index < b.index) ? -1 : 1;
 	});
 
-	return returnValue;
+	// only synchronous handlers
+	$.each(registrations, function (i, registration) {
+		var handler_return = registration.handler(name, type, params, value);
+		if (!elgg.isNullOrUndefined(handler_return)) {
+			value = handler_return;
+		}
+	});
+
+	return value;
 };
 
 /**

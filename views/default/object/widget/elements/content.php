@@ -12,8 +12,4 @@ if (!elgg_instanceof($widget, 'object', 'widget')) {
 
 $handler = $widget->handler;
 
-if (elgg_view_exists("widgets/$handler/content")) {
-	echo elgg_view("widgets/$handler/content", $vars);
-} else {
-	echo elgg_view_deprecated("widgets/$handler/view", $vars, "Widgets use content as the display view", '1.8');
-}
+echo elgg_view("widgets/$handler/content", $vars);

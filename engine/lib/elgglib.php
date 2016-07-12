@@ -1014,12 +1014,11 @@ function elgg_log($message, $level = 'NOTICE') {
 		'INFO' => 200,
 		'NOTICE' => 250,
 		'WARNING' => 300,
-		'DEBUG' => 300,
 		'ERROR' => 400,
 	);
 
-	if ($level == 'DEBUG') {
-		elgg_deprecated_notice("The 'DEBUG' level for logging has been deprecated.", 1.9);
+	if (!isset($levels[$level])) {
+		throw new \InvalidArgumentException("Invalid \$level value");
 	}
 
 	$level = $levels[$level];

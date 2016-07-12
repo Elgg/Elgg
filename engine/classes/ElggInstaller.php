@@ -818,7 +818,6 @@ class ElggInstaller {
 				'users.php',
 				'upgrade.php',
 				'widgets.php',
-				'deprecated-1.9.php',
 			);
 
 			foreach ($lib_files as $file) {

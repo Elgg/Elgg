@@ -9,6 +9,141 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
    :local:
    :depth: 2
 
+From 2.x to 3.0
+===============
+
+Removed classes
+---------------
+
+ * ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
+
+Removed views
+-------------
+
+ * ``resources/file/download``
+ * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
+
+Removed functions/methods
+-------------------------
+
+All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.9.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
+
+ * ``get_default_filestore``
+ * ``set_default_filestore``
+ * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
+ * ``ElggFile::size``: Use ``getSize``
+ * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
+ * ``ElggData::get``: Usually can be replaced by property read
+ * ``ElggData::getClassName``: Use ``get_class()``
+ * ``ElggData::set``: Usually can be replaced by property write
+ * ``ElggEntity::setURL``: See ``getURL`` for details on the plugin hook
+ * ``ElggMenuBuilder::compareByWeight``: Use ``compareByPriority``
+ * ``ElggMenuItem::getWeight``: Use ``getPriority``
+ * ``ElggMenuItem::getContent``: Use ``elgg_view_menu_item()``
+ * ``ElggMenuItem::setWeight``: Use ``setPriority``
+ * ``ElggRiverItem::getPostedTime``: Use ``getTimePosted``
+ * ``ElggSite::addObject``: Use ``addEntity``
+ * ``ElggSite::addUser``: Use ``addEntity``
+ * ``ElggSite::getExportableValues``: Use ``toObject``
+ * ``ElggSite::getMembers``: Use ``getEntities``
+ * ``ElggSite::getObjects``: Use ``getEntities``
+ * ``ElggSite::listMembers``: Use ``elgg_list_entities_from_relationship()``
+ * ``ElggSite::removeObject``: Use ``removeEntity``
+ * ``ElggSite::removeUser``: Use ``removeEntity``
+ * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
+ * ``Logger::getClassName``: Use ``get_class()``
+
+Removed global vars
+-------------------
+
+ * ``$DEFAULT_FILE_STORE``
+ * ``$SESSION``: Use the API provided by ``elgg_get_session()``
+
+Removed classes/interfaces
+--------------------------
+
+ * ``Exportable`` and its methods ``export`` and ``getExportableValues``: Use ``toObject``
+ * ``Importable`` and its method ``import``.
+
+Inheritance changes
+-------------------
+
+ * ``ElggData`` (and hence most Elgg domain objects) no longer implements ``Exportable``
+ * ``ElggEntity`` no longer implements ``Importable``
+ * ``ElggGroup`` no longer implements ``Friendable``
+ * ``ElggRelationship`` no longer implements ``Importable``
+ * ``Elgg\Application\Database`` no longer extends ``Elgg\Database``.
+
+Removed hooks/events
+--------------------
+
+ * Hook **index, system**: Override the ``resources/index`` view
+ * Hook **object:notifications, <type>**: Use the hook **send:before, notifications**
+ * Event **delete, annotations**: Use **delete, annotation**
+
+APIs that now accept only an ``$options`` array
+-----------------------------------------------
+
+ * ``ElggEntity::getAnnotations``
+ * ``ElggEntity::getEntitiesFromRelationship``
+ * ``ElggGroup::getMembers``
+ * ``ElggUser::getGroups``
+ * ``ElggUser::getFriends`` (as part of ``Friendable``)
+ * ``ElggUser::getFriendsOf`` (as part of ``Friendable``)
+ * ``ElggUser::getFriendsObjects`` (as part of ``Friendable``)
+ * ``ElggUser::getObjects`` (as part of ``Friendable``)
+ * ``find_active_users``
+
+Plugin functions that now require an explicit ``$plugin_id``
+------------------------------------------------------------
+
+ * ``elgg_get_all_plugin_user_settings``
+ * ``elgg_set_plugin_user_setting``
+ * ``elgg_unset_plugin_user_setting``
+ * ``elgg_get_plugin_user_setting``
+ * ``elgg_set_plugin_setting``
+ * ``elgg_get_plugin_setting``
+ * ``elgg_unset_plugin_setting``
+ * ``elgg_unset_all_plugin_settings``
+
+Class constructors that now accept only a ``stdClass`` object or ``null``
+-------------------------------------------------------------------------
+
+ * ``ElggAnnotation``: No longer accepts an annotation ID
+ * ``ElggGroup``: No longer accepts a GUID
+ * ``ElggMetadata``: No longer accepts a metadata ID
+ * ``ElggObject``: No longer accepts a GUID
+ * ``ElggRelationship``: No longer accepts a relationship ID or ``null``
+ * ``ElggSite``: No longer accepts a GUID or URL
+ * ``ElggUser``: No longer accepts a GUID or username
+
+Miscellaneous API changes
+-------------------------
+
+ * ``ElggGroup::removeObjectFromGroup`` requires passing in an ``ElggObject`` (no longer accepts a GUID)
+ * ``elgg_view_icon`` no longer supports ``true`` as the 2nd argument
+ * ``elgg_list_entities`` no longer supports the option ``view_type_toggle``
+ * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
+ * ``elgg_log`` no longer accepts the level ``"DEBUG"``
+ * ``elgg_gatekeeper`` and ``elgg_admin_gatekeeper`` no longer report ``login`` or ``admin`` as forward reason, but ``403``
+ * ``Application::getDb()`` no longer returns an instance of ``Elgg\Database``, but rather a ``Elgg\Application\Database``
+ * ``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files.
+ * ``elgg_get_config('siteemail')`` is no longer available. Use ``elgg_get_site_entity()->email``.
+
+JavaScript hook calling order may change
+----------------------------------------
+
+When registering for hooks, the ``all`` keyword for wildcard matching no longer has any effect
+on the order that handlers are called. To ensure your handler is called last, you must give it the
+highest priority of all matching handlers, or to ensure your handler is called first, you must give
+it the lowest priority of all matching handlers.
+
+If handlers were registered with the same priority, these are called in the order they were registered.
+
+To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
+priority. Some of these handlers will most likely be called in a different order.
+
+
 From 2.2 to 2.3
 ===============
 

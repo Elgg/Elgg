@@ -9,8 +9,7 @@
 abstract class ElggData implements
 	Loggable,    // Can events related to this object class be logged
 	Iterator,    // Override foreach behaviour
-	\ArrayAccess, // Override for array access
-	Exportable   // (deprecated 1.9)
+	\ArrayAccess // Override for array access
 {
 
 	/**
@@ -61,27 +60,6 @@ abstract class ElggData implements
 	}
 
 	/**
-	 * Fetch the specified attribute
-	 *
-	 * @param string $name The attribute to fetch
-	 *
-	 * @return mixed The attribute, if it exists.  Otherwise, null.
-	 * @deprecated 1.9
-	 */
-	abstract protected function get($name);
-
-	/**
-	 * Set the specified attribute
-	 *
-	 * @param string $name  The attribute to set
-	 * @param mixed  $value The value to set it to
-	 *
-	 * @return bool The success of your set function?
-	 * @deprecated 1.9
-	 */
-	abstract protected function set($name, $value);
-
-	/**
 	 * Get a URL for this object
 	 *
 	 * @return string
@@ -117,21 +95,6 @@ abstract class ElggData implements
 	 * @return \stdClass
 	 */
 	abstract public function toObject();
-
-	/*
-	 *  SYSTEM LOG INTERFACE
-	 */
-
-	/**
-	 * Return the class name of the object.
-	 *
-	 * @return string
-	 * @deprecated 1.9 Use get_class()
-	 */
-	public function getClassName() {
-		elgg_deprecated_notice("getClassName() is deprecated. Use get_class().", 1.9);
-		return get_class($this);
-	}
 
 	/*
 	 * ITERATOR INTERFACE
