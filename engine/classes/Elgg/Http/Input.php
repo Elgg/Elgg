@@ -76,7 +76,7 @@ class Input {
 		$result = $default;
 	
 		elgg_push_context('input');
-	
+
 		if (isset($this->CONFIG->input[$variable])) {
 			// a plugin has already set this variable
 			$result = $this->CONFIG->input[$variable];
@@ -98,7 +98,7 @@ class Input {
 				}
 			}
 		}
-	
+
 		elgg_pop_context();
 	
 		return $result;
