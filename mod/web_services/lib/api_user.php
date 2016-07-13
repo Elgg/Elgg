@@ -21,8 +21,9 @@ function create_api_user($site_guid) {
 
 	$site_guid = (int)$site_guid;
 
-	$public = sha1(rand() . $site_guid . microtime());
-	$secret = sha1(rand() . $site_guid . microtime() . $public);
+	$crypto = new ElggCrypto();
+	$public = $crypto->getRandomString(40, ElggCrypto::CHARS_HEX);
+	$secret = $crypto->getRandomString(40, ElggCrypto::CHARS_HEX);
 
 	$insert = insert_data("INSERT into {$CONFIG->dbprefix}api_users
 		(site_guid, api_key, secret) values
