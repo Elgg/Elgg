@@ -71,10 +71,15 @@ class Request extends SymfonyRequest {
 	 *
 	 * @see \Elgg\Http\Request::getPathInfo()
 	 *
-	 * @return array
+	 * @param bool $raw If true, the segments will not be HTML escaped
+	 *
+	 * @return string[]
 	 */
-	public function getUrlSegments() {
+	public function getUrlSegments($raw = false) {
 		$path = trim($this->query->get('__elgg_uri'), '/');
+		if (!$raw) {
+			$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+		}
 		if (!$path) {
 			return array();
 		}

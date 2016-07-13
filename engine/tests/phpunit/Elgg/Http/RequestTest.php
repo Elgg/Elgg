@@ -12,6 +12,20 @@ class RequestTest extends TestCase {
 		$this->assertEquals(['foo', 'bar'], $req->getUrlSegments());
 	}
 
+	public function testUrlSegmentsAutoHtmlEscaped() {
+		$req = new Request([
+			'__elgg_uri' => '/fo<script>alert("/ba&r/',
+		]);
+		$this->assertEquals(['fo&lt;script&gt;alert(&quot;', 'ba&amp;r'], $req->getUrlSegments());
+	}
+
+	public function testCanAccessRawUrlSegments() {
+		$req = new Request([
+			'__elgg_uri' => '/fo<script>alert("/ba&r/',
+		]);
+		$this->assertEquals(['fo<script>alert("', 'ba&r'], $req->getUrlSegments(true));
+	}
+
 	public function testClientIpChecksXRealIp() {
 		$req = new Request();
 		$req->server->set('HTTP_X_REAL_IP', '127.0.0.1');
