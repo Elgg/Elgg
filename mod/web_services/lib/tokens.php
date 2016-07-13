@@ -16,9 +16,10 @@ function create_user_token($username, $expire = 60) {
 
 	$site_guid = $CONFIG->site_id;
 	$user = get_user_by_username($username);
-	$time = time();
-	$time += 60 * $expire;
-	$token = md5(rand() . microtime() . $username . $time . $site_guid);
+	$time = time() + 60 * $expire;
+
+	$crypto = new ElggCrypto();
+	$token = $crypto->getRandomString(32, ElggCrypto::CHARS_HEX);
 
 	if (!$user) {
 		return false;
