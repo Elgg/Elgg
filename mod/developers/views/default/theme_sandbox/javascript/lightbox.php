@@ -1,7 +1,7 @@
 <?php
 
 echo elgg_view('output/url', array(
-	'text' => 'Open lighbox',
+	'text' => 'Open lightbox',
 	'href' => "ajax/view/developers/ajax",
 	'class' => 'elgg-lightbox'
 ));
@@ -21,6 +21,9 @@ echo elgg_view('output/url', array(
 	'href' => '#lightbox-inline',
 	'class' => 'elgg-lightbox-inline mll',
 ));
+
+elgg_require_js('theme_sandbox/javascript/lightbox');
+
 ?>
 <div class="hidden">
 	<div id="lightbox-inline">
@@ -40,8 +43,6 @@ $files = elgg_get_entities_from_metadata(array(
 if (!$files) {
 	return;
 }
-
-elgg_require_js('theme_sandbox/javascript/lightbox');
 
 echo elgg_view('output/url', array(
 	'text' => 'Open photo lightbox',

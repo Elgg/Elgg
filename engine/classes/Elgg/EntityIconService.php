@@ -254,7 +254,7 @@ class EntityIconService {
 			$square = (bool) elgg_extract('square', $opts);
 			$upscale = (bool) elgg_extract('upscale', $opts);
 
-			if ($cropping_mode && $square === false && $size !== 'large') {
+			if ($type === 'icon' && $cropping_mode && $square === false && $size !== 'large') {
 				// In cropping mode, we want to preserve non-square images the way they are.
 				// For BC, we need to crop the large icon into a square if cropping coordinates are provided.
 				// There is a problem with cropping large icons however. See #9663 and EntityIconServiceTest::testIconDimensionsAfterResize

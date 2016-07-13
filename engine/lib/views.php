@@ -1344,8 +1344,6 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  */
 function elgg_view_input($input_type, array $vars = array()) {
 
-	static $id_num;
-
 	if (!elgg_view_exists("input/$input_type")) {
 		return '';
 	}
@@ -1356,8 +1354,7 @@ function elgg_view_input($input_type, array $vars = array()) {
 
 	$id = elgg_extract('id', $vars);
 	if (!$id) {
-		$id_num++;
-		$id = "elgg-field-$id_num";
+		$id = "elgg-field-" . base_convert(mt_rand(), 10, 36);
 		$vars['id'] = $id;
 	}
 
