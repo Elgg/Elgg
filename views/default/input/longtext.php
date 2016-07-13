@@ -18,7 +18,7 @@ $defaults = array(
 	'value' => '',
 	'rows' => '10',
 	'cols' => '50',
-	'id' => 'elgg-input-' . rand(), //@todo make this more robust
+	'id' => "elgg-input-" . base_convert(mt_rand(), 10, 36),
 );
 
 $vars = array_merge($defaults, $vars);
