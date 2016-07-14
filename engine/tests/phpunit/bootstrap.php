@@ -2,7 +2,11 @@
 
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+// If Elgg root matches the install root
+@include_once __DIR__ . '/../../../vendor/autoload.php';
+
+// If Elgg was installed as a composer dependency and resides in /vendor/elgg/elgg/
+@include_once __DIR__ . '/../../../../../../vendor/autoload.php';
 
 date_default_timezone_set('America/Los_Angeles');
 
