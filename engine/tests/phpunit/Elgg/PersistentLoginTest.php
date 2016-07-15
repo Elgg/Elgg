@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg;
 
-
-class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
+class PersistentLoginTest extends \Elgg\TestCase {
 
 	/**
 	 * @var \ElggSession
@@ -67,27 +67,27 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 		// mock DB
 		$this->dbMock = $this->getMockBuilder('\Elgg\Database')
-			->disableOriginalConstructor()
-			->getMock();
+				->disableOriginalConstructor()
+				->getMock();
 		// use addslashes as ->sanitizeString (my local CLI doesn't have MySQL)
 		$this->dbMock->expects($this->any())
-			->method('sanitizeString')
-			->will($this->returnCallback(array($this, 'mock_sanitizeString')));
+				->method('sanitizeString')
+				->will($this->returnCallback(array($this, 'mock_sanitizeString')));
 
 		$this->cryptoMock = $this->getMockBuilder('\ElggCrypto')
-			->setConstructorArgs([_elgg_services()->siteSecret])
-			->getMock();
+				->setConstructorArgs([_elgg_services()->siteSecret])
+				->getMock();
 		$this->cryptoMock->expects($this->any())
-			->method('getRandomString')
-			->will($this->returnValue(str_repeat('a', 31)));
+				->method('getRandomString')
+				->will($this->returnValue(str_repeat('a', 31)));
 
 		$this->svc = $this->getSvcWithCookie("");
 	}
 
 	function testLoginSavesHashAndPutsTokenInCookieAndSession() {
 		$this->dbMock->expects($this->once())
-			->method('insertData')
-			->will($this->returnCallback(array($this, 'mock_insertData')));
+				->method('insertData')
+				->will($this->returnCallback(array($this, 'mock_insertData')));
 
 		$this->svc->makeLoginPersistent($this->user123);
 
@@ -99,8 +99,8 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$this->svc = $this->getSvcWithCookie($this->mockToken);
 
 		$this->dbMock->expects($this->once())
-			->method('deleteData')
-			->will($this->returnCallback(array($this, 'mock_deleteData')));
+				->method('deleteData')
+				->will($this->returnCallback(array($this, 'mock_deleteData')));
 
 		$this->svc->removePersistentLogin();
 
@@ -111,7 +111,7 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testRemoveWithoutCookieCantDeleteHash() {
 		$this->dbMock->expects($this->never())
-			->method('deleteData');
+				->method('deleteData');
 
 		$this->svc->removePersistentLogin();
 
@@ -122,8 +122,8 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testGettingUserFromKnownHashReturnsUser() {
 		$this->dbMock->expects($this->once())
-			->method('getDataRow')
-			->will($this->returnCallback(array($this, 'mock_getDataRow')));
+				->method('getDataRow')
+				->will($this->returnCallback(array($this, 'mock_getDataRow')));
 
 		$user = $this->svc->getUserFromHash($this->mockHash);
 
@@ -132,8 +132,8 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testGettingUserFromMissingHashReturnsNull() {
 		$this->dbMock->expects($this->once())
-			->method('getDataRow')
-			->will($this->returnValue(array()));
+				->method('getDataRow')
+				->will($this->returnValue(array()));
 
 		$user = $this->svc->getUserFromHash($this->mockHash);
 
@@ -142,8 +142,8 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testGettingMissingUserFromKnownHashReturnsNull() {
 		$this->dbMock->expects($this->once())
-			->method('getDataRow')
-			->will($this->returnValue((object)array('guid' => 234)));
+				->method('getDataRow')
+				->will($this->returnValue((object) array('guid' => 234)));
 
 		$user = $this->svc->getUserFromHash($this->mockHash);
 
@@ -155,15 +155,15 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$modifier = $this->user123;
 
 		$this->dbMock->expects($this->exactly(2))
-			->method('deleteData');
+				->method('deleteData');
 		// Here we can't make an expectation on mock_deleteAll because one
 		// of the calls deletes all, and another deletes only a single hash.
 		// We'd have to fix mock_deleteAll to handle it.
 		// @todo replace this with a real DB test
 
 		$this->dbMock->expects($this->once())
-			->method('insertData')
-			->will($this->returnCallback(array($this, 'mock_insertData')));
+				->method('insertData')
+				->will($this->returnCallback(array($this, 'mock_insertData')));
 
 		$this->svc = $this->getSvcWithCookie('notempty');
 		$this->svc->handlePasswordChange($subject, $modifier);
@@ -177,10 +177,10 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$modifier = $this->user123;
 
 		$this->dbMock->expects($this->once())
-			->method('deleteData')
-			->will($this->returnCallback(array($this, 'mock_deleteAll')));
+				->method('deleteData')
+				->will($this->returnCallback(array($this, 'mock_deleteAll')));
 		$this->dbMock->expects($this->never())
-			->method('insertData');
+				->method('insertData');
 
 		$this->svc->handlePasswordChange($subject, $modifier);
 
@@ -193,10 +193,10 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$modifier = $this->getMockElggUser(234);
 
 		$this->dbMock->expects($this->atLeastOnce())
-			->method('deleteData')
-			->will($this->returnCallback(array($this, 'mock_deleteAll')));
+				->method('deleteData')
+				->will($this->returnCallback(array($this, 'mock_deleteAll')));
 		$this->dbMock->expects($this->never())
-			->method('insertData');
+				->method('insertData');
 
 		$this->svc->handlePasswordChange($subject, $modifier);
 
@@ -206,8 +206,8 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testGettingUserFromValidClientReturnsUser() {
 		$this->dbMock->expects($this->once())
-			->method('getDataRow')
-			->will($this->returnValue((object)array('guid' => 123)));
+				->method('getDataRow')
+				->will($this->returnValue((object) array('guid' => 123)));
 
 		$this->svc = $this->getSvcWithCookie($this->mockToken);
 
@@ -218,8 +218,8 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testGetPersistedUser_invalidModernToken() {
 		$this->dbMock->expects($this->once())
-			->method('getDataRow')
-			->will($this->returnValue(array()));
+				->method('getDataRow')
+				->will($this->returnValue(array()));
 
 		$this->svc = $this->getSvcWithCookie('z' . str_repeat('b', 31));
 
@@ -233,8 +233,8 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testBootSessionWithInvalidLegacyTokenCausesDelayAndFailure() {
 		$this->dbMock->expects($this->once())
-			->method('getDataRow')
-			->will($this->returnValue(array()));
+				->method('getDataRow')
+				->will($this->returnValue(array()));
 
 		$this->svc = $this->getSvcWithCookie(str_repeat('b', 32));
 
@@ -250,7 +250,7 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$this->svc = $this->getSvcWithCookie('');
 
 		$this->dbMock->expects($this->never())
-			->method('deleteData');
+				->method('deleteData');
 
 		$this->svc->replaceLegacyToken($this->user123);
 
@@ -260,7 +260,7 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	function testModernTokenCookiesAreNotReplaced() {
 		$this->dbMock->expects($this->never())
-			->method('deleteData');
+				->method('deleteData');
 
 		$this->svc->replaceLegacyToken($this->user123);
 
@@ -272,9 +272,9 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$this->svc = $this->getSvcWithCookie(str_repeat('a', 32));
 
 		$this->dbMock->expects($this->atLeastOnce())
-			->method('deleteData');
+				->method('deleteData');
 		$this->dbMock->expects($this->once())
-			->method('insertData');
+				->method('insertData');
 
 		$this->svc->replaceLegacyToken($this->user123);
 
@@ -285,17 +285,17 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 	// mock \ElggUser which will return the GUID on ->guid reads
 	function getMockElggUser($guid) {
 		$user = $this->getMockBuilder('\ElggUser')
-			->disableOriginalConstructor()
-			->getMock();
+				->disableOriginalConstructor()
+				->getMock();
 		$user->expects($this->any())
-			->method('__get')
-			->with('guid')
-			->will($this->returnValue((int)$guid));
+				->method('__get')
+				->with('guid')
+				->will($this->returnValue((int) $guid));
 		return $user;
 	}
 
 	function mock_get_user($guid) {
-		if ((int)$guid === 123) {
+		if ((int) $guid === 123) {
 			return $this->user123;
 		}
 		return null;
@@ -330,8 +330,7 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		);
 		$time = $this->thirtyDaysAgo + (30 * 86400);
 		$svc = new \Elgg\PersistentLoginService(
-			$this->dbMock, $this->session, $this->cryptoMock,
-			$cookie_config, $cookie_token, $time);
+				$this->dbMock, $this->session, $this->cryptoMock, $cookie_config, $cookie_token, $time);
 
 		$svc->_callable_get_user = array($this, 'mock_get_user');
 		$svc->_callable_generateToken = array($this, 'mock_generateToken');
@@ -354,11 +353,12 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$pattern = "~SELECT guid FROM users_remember_me_cookies\\s+WHERE code = '{$this->mockHash}'~";
 		$this->assertSame(1, preg_match($pattern, $sql));
 
-		return (object)array('guid' => 123);
+		return (object) array('guid' => 123);
 	}
 
 	function mock_deleteAll($sql) {
 		$pattern = "~DELETE FROM users_remember_me_cookies\\s+WHERE guid = '123'+~";
 		$this->assertSame(1, preg_match($pattern, $sql));
 	}
+
 }

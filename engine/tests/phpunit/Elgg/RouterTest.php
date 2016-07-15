@@ -9,7 +9,6 @@ use Elgg\Http\Request;
 use Elgg\Http\ResponseFactory;
 use Elgg\I18n\Translator;
 use ElggSession;
-use PHPUnit_Framework_TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group HttpService
  * @group RouterService
  */
-class RouterTest extends PHPUnit_Framework_TestCase {
+class RouterTest extends \Elgg\TestCase {
 
 	/**
 	 * @var PluginHooksService
@@ -63,13 +62,13 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('session', $session);
 		_elgg_services()->session->start();
 
-		$config = _elgg_testing_config();
+		$config = $this->config();
 		_elgg_services()->setValue('config', $config);
 
 		$input = new Input();
 		_elgg_services()->setValue('input', $input);
 
-		$this->request = _elgg_testing_request('', 'GET');
+		$this->request = $this->prepareHttpRequest('', 'GET');
 		_elgg_services()->setValue('request', $this->request);
 
 		$this->translator = new Translator();
@@ -122,7 +121,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		$path = "hello/1/\xE2\x82\xAC"; // euro sign
 
 		ob_start();
-		$handled = $this->router->route(_elgg_testing_request($path));
+		$handled = $this->router->route($this->prepareHttpRequest($path));
 		ob_end_clean();
 		$this->assertTrue($handled);
 
@@ -147,7 +146,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		$this->router->unregisterPageHandler('hello');
 
 		ob_start();
-		$this->router->route(_elgg_testing_request('hello'));
+		$this->router->route($this->prepareHttpRequest('hello'));
 		$output = ob_get_clean();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
@@ -173,7 +172,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_handler'));
 
 		ob_start();
-		$this->router->route(_elgg_testing_request('bar/baz'));
+		$this->router->route($this->prepareHttpRequest('bar/baz'));
 		ob_end_clean();
 
 		$this->assertEquals(1, $this->fooHandlerCalls);
@@ -194,7 +193,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_identifier'));
 
 		ob_start();
-		$this->router->route(_elgg_testing_request('bar/baz'));
+		$this->router->route($this->prepareHttpRequest('bar/baz'));
 		ob_end_clean();
 
 		$this->assertEquals(1, $this->fooHandlerCalls);
@@ -208,7 +207,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		$this->hooks->registerHandler('route', 'foo', array($this, 'bar_route_override'));
 
 		ob_start();
-		$this->router->route(_elgg_testing_request('foo'));
+		$this->router->route($this->prepareHttpRequest('foo'));
 		$result = ob_get_clean();
 
 		$this->assertEquals("Page handler override from hook", $result);
@@ -259,7 +258,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			];
 		});
 
-		$this->request = _elgg_testing_request('foo/bar/baz');
+		$this->request = $this->prepareHttpRequest('foo/bar/baz');
 
 		$this->createService();
 
@@ -283,7 +282,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			return false;
 		});
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET');
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
 		$this->route();
@@ -304,7 +303,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			return false;
 		});
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET');
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
 		$this->assertTrue($this->route());
@@ -325,7 +324,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			return elgg_error_response('', REFERRER, ELGG_HTTP_BAD_REQUEST);
 		});
 
-		$this->request = _elgg_testing_request('foo/bar', 'GET');
+		$this->request = $this->prepareHttpRequest('foo/bar', 'GET');
 		$this->createService();
 
 		elgg_register_page_handler('foo', function() {
@@ -343,7 +342,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToNonAjaxRequestFromOkResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET');
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -362,7 +361,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToNonAjaxRequestFromErrorResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET');
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -384,7 +383,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToNonAjaxRequestFromRedirectResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET');
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -403,7 +402,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToNonAjaxRequestInNonDefaultViewtype() {
 
-		$this->request = _elgg_testing_request('phpunit', 'GET', ['view' => 'json']);
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json']);
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -423,7 +422,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToNonAjaxRequestForPageThatForwards() {
 
-		$this->request = _elgg_testing_request('phpunit', 'GET');
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -439,7 +438,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanRespondToNonAjaxRequestForPageThatForwardsToErrorPage() {
-		$this->request = _elgg_testing_request('phpunit', 'GET');
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -470,7 +469,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_INTERNAL_SERVER_ERROR);
 		});
 
-		$this->request = _elgg_testing_request('phpunit', 'GET');
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -502,7 +501,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			return false;
 		});
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
 		$this->assertTrue($this->route());
@@ -528,7 +527,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			return false;
 		});
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
 		$this->assertTrue($this->route());
@@ -559,7 +558,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjaxRequestFromOkResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -583,7 +582,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjaxRequestFromErrorResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -607,7 +606,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjaxRequestFromRedirectResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -644,7 +643,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjaxRequestInNonDefaultViewtype() {
 
-		$this->request = _elgg_testing_request('phpunit', 'GET', ['view' => 'json'], 1);
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json'], 1);
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -667,7 +666,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjaxRequestForPageThatForwards() {
 
-		$this->request = _elgg_testing_request('phpunit', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 1);
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -702,7 +701,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanRespondToAjaxRequestForPageThatForwardsToErrorPage() {
-		$this->request = _elgg_testing_request('phpunit', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 1);
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -746,7 +745,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			return false;
 		});
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
 		$this->assertTrue($this->route());
@@ -776,7 +775,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			return false;
 		});
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
 		$this->assertTrue($this->route());
@@ -801,7 +800,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjax2RequestFromOkResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -829,7 +828,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjax2RequestFromErrorResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -855,7 +854,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjax2RequestFromRedirectResponseBuilder() {
 
-		$this->request = _elgg_testing_request('foo/bar/baz', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
 		elgg_register_page_handler('foo', function($segments, $identifier) {
@@ -886,7 +885,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjax2RequestInNonDefaultViewtype() {
 
-		$this->request = _elgg_testing_request('phpunit', 'GET', ['view' => 'json'], 2);
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json'], 2);
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -915,7 +914,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjax2RequestForPageThatForwards() {
 
-		$this->request = _elgg_testing_request('phpunit', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 2);
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -944,7 +943,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanRespondToAjax2RequestForPageThatForwardsToErrorPage() {
-		$this->request = _elgg_testing_request('phpunit', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 2);
 		$this->createService();
 
 		elgg_register_page_handler('phpunit', function() {
@@ -975,7 +974,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanRespondToUnregisteredRoute() {
 
-		$this->request = _elgg_testing_request('unknown', 'GET');
+		$this->request = $this->prepareHttpRequest('unknown', 'GET');
 		$this->createService();
 
 		// Normally we would assert that this is false, but since PHPUnit is sending it's own headers
@@ -995,7 +994,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 		 */
 		$this->markTestSkipped();
 
-		$this->request = _elgg_testing_request('ajax/view/unallowed', 'GET');
+		$this->request = $this->prepareHttpRequest('ajax/view/unallowed', 'GET');
 		$this->createService();
 
 		$this->assertTrue($this->route());
@@ -1007,7 +1006,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondWithErrorToAjaxViewRequestForUnallowedView() {
 
-		$this->request = _elgg_testing_request('ajax/view/unallowed', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('ajax/view/unallowed', 'GET', [], 1);
 		$this->createService();
 
 		$this->route();
@@ -1022,7 +1021,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(_elgg_services()->views->isCacheableView('cacheable.xml'));
 
-		$this->request = _elgg_testing_request('ajax/view/cacheable.xml', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('ajax/view/cacheable.xml', 'GET', [], 1);
 		$this->createService();
 
 		$this->route();
@@ -1036,7 +1035,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjaxViewRequestForCSS() {
 
-		$this->request = _elgg_testing_request('ajax/view/css/styles.css', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('ajax/view/css/styles.css', 'GET', [], 1);
 		$this->createService();
 
 		$this->route();
@@ -1051,7 +1050,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRespondToAjaxViewRequestForJS() {
 
-		$this->request = _elgg_testing_request('ajax/view/js/javascript.js', 'GET', [], 1);
+		$this->request = $this->prepareHttpRequest('ajax/view/js/javascript.js', 'GET', [], 1);
 		$this->createService();
 
 		$this->route();
@@ -1070,10 +1069,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('query_view');
-
-		$this->request = _elgg_testing_request('ajax/view/query_view', 'GET', $vars, 1);
+		$this->request = $this->prepareHttpRequest('ajax/view/query_view', 'GET', $vars, 1);
 		$this->createService();
+
+		elgg_register_ajax_view('query_view');
 
 		$this->route();
 
@@ -1100,10 +1099,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('query_view');
-
-		$this->request = _elgg_testing_request('ajax/view/query_view', 'GET', $vars, 1);
+		$this->request = $this->prepareHttpRequest('ajax/view/query_view', 'GET', $vars, 1);
 		$this->createService();
+
+		elgg_register_ajax_view('query_view');
 
 		$this->route();
 
@@ -1124,10 +1123,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'error' => 'error',
 		];
 
-		elgg_register_ajax_view('forwards');
-
-		$this->request = _elgg_testing_request('ajax/view/forwards', 'GET', $vars, 1);
+		$this->request = $this->prepareHttpRequest('ajax/view/forwards', 'GET', $vars, 1);
 		$this->createService();
+
+		elgg_register_ajax_view('forwards');
 
 		$this->route();
 
@@ -1159,7 +1158,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanRespondWithErrorToAjax2ViewRequestForUnallowedView() {
 
-		$this->request = _elgg_testing_request('ajax/view/unallowed', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('ajax/view/unallowed', 'GET', [], 2);
 		$this->createService();
 
 		$this->route();
@@ -1183,7 +1182,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue(_elgg_services()->views->isCacheableView('cacheable.xml'));
 
-		$this->request = _elgg_testing_request('ajax/view/cacheable.xml', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('ajax/view/cacheable.xml', 'GET', [], 2);
 		$this->createService();
 
 		$this->route();
@@ -1208,7 +1207,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanRespondToAjax2ViewRequestForCSS() {
 
-		$this->request = _elgg_testing_request('ajax/view/css/styles.css', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('ajax/view/css/styles.css', 'GET', [], 2);
 		$this->createService();
 
 		$this->route();
@@ -1233,7 +1232,7 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanRespondToAjax2ViewRequestForJS() {
 
-		$this->request = _elgg_testing_request('ajax/view/js/javascript.js', 'GET', [], 2);
+		$this->request = $this->prepareHttpRequest('ajax/view/js/javascript.js', 'GET', [], 2);
 		$this->createService();
 
 		$this->route();
@@ -1261,10 +1260,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('query_view');
-
-		$this->request = _elgg_testing_request('ajax/view/query_view', 'GET', $vars, 2);
+		$this->request = $this->prepareHttpRequest('ajax/view/query_view', 'GET', $vars, 2);
 		$this->createService();
+
+		elgg_register_ajax_view('query_view');
 
 		$this->route();
 
@@ -1300,10 +1299,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('query_view');
-
-		$this->request = _elgg_testing_request('ajax/view/query_view', 'GET', $vars, 2);
+		$this->request = $this->prepareHttpRequest('ajax/view/query_view', 'GET', $vars, 2);
 		$this->createService();
+
+		elgg_register_ajax_view('query_view');
 
 		$this->route();
 
@@ -1331,10 +1330,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'error' => 'error',
 		];
 
-		elgg_register_ajax_view('forwards');
-
-		$this->request = _elgg_testing_request('ajax/view/forwards', 'GET', $vars, 2);
+		$this->request = $this->prepareHttpRequest('ajax/view/forwards', 'GET', $vars, 2);
 		$this->createService();
+
+		elgg_register_ajax_view('forwards');
 
 		$this->route();
 
@@ -1363,10 +1362,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('forms/query_view');
-
-		$this->request = _elgg_testing_request('ajax/form/query_view', 'GET', $vars, 1);
+		$this->request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 1);
 		$this->createService();
+
+		elgg_register_ajax_view('forms/query_view');
 
 		$this->route();
 
@@ -1393,10 +1392,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('form/query_view');
-
-		$this->request = _elgg_testing_request('ajax/form/query_view', 'GET', $vars, 1);
+		$this->request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 1);
 		$this->createService();
+
+		elgg_register_ajax_view('form/query_view');
 
 		$this->route();
 
@@ -1417,10 +1416,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('forms/query_view');
-
-		$this->request = _elgg_testing_request('ajax/form/query_view', 'GET', $vars, 2);
+		$this->request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 2);
 		$this->createService();
+
+		elgg_register_ajax_view('forms/query_view');
 
 		$this->route();
 
@@ -1456,10 +1455,10 @@ class RouterTest extends PHPUnit_Framework_TestCase {
 			'query_value' => 'hello',
 		];
 
-		elgg_register_ajax_view('form/query_view');
-
-		$this->request = _elgg_testing_request('ajax/form/query_view', 'GET', $vars, 2);
+		$this->request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 2);
 		$this->createService();
+
+		elgg_register_ajax_view('form/query_view');
 
 		$this->route();
 

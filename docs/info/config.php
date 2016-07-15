@@ -333,14 +333,6 @@ $_ELGG->translations;
 $_ELGG->registered_tag_metadata_names;
 
 /**
- * The full path for core views.
- *
- * @global string $_ELGG->view_path
- * @access private
- */
-$_ELGG->view_path;
-
-/**
  * A list of valid view types as discovered.
  *
  * @global array $_ELGG->view_types

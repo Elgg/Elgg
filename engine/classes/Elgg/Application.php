@@ -235,7 +235,7 @@ class Application {
 
 		$config = $this->services->config;
 
-		if ($config->getVolatile('Elgg\Application_phpunit')) {
+		if (defined('PHPUNIT_ELGG_TESTING_APPLICATION')) {
 			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
 		}
 

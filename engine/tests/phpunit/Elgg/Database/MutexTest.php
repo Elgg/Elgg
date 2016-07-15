@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg\Database;
 
-class MutexTest extends \PHPUnit_Framework_TestCase {
+class MutexTest extends \Elgg\TestCase {
 
 	public function testMutexLocksIfNotAlreadyLocked() {
 		$this->markTestIncomplete();
@@ -14,4 +15,5 @@ class MutexTest extends \PHPUnit_Framework_TestCase {
 	public function testUnlockingFailsIfWrongNamespace() {
 		$this->markTestIncomplete();
 	}
+
 }

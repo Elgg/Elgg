@@ -1,9 +1,8 @@
 <?php
+
 namespace Elgg\Http;
 
-use PHPUnit_Framework_TestCase as TestCase;
-
-class RequestTest extends TestCase {
+class RequestTest extends \Elgg\TestCase {
 
 	public function testCanDetectElggPath() {
 		$req = new Request([

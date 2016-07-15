@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg\Database;
 
-
-class ConfigTest extends \PHPUnit_Framework_TestCase {
+class ConfigTest extends \Elgg\TestCase {
 
 	public function testGetTablePrefix() {
 		$CONFIG = new \stdClass();
@@ -136,5 +136,5 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$connConf = $conf->getConnectionConfig(\Elgg\Database\Config::READ);
 		$this->assertEquals($ans[$connConf['host']], $connConf);
 	}
-}
 
+}

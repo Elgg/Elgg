@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
+class EntityIconServiceTest extends \Elgg\TestCase {
 
 	/**
 	 * @var \Elgg\Config
@@ -60,7 +60,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->mocks = new \Elgg\Tests\EntityMocks($this);
 
-		$this->config = _elgg_testing_config();
+		$this->config = $this->config();
 		$this->hooks = new \Elgg\PluginHooksService();
 		$path_key = \Elgg\Application::GET_PATH_KEY;
 		$this->request = \Elgg\Http\Request::create("?$path_key=action/upload");
@@ -884,11 +884,11 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 			[75, 125, 'small', 40, 40, true],
 			[75, 125, 'tiny', 25, 25, true],
 			[75, 125, 'topbar', 16, 16, true],
-			// there is a problem in get_resized_image_from_existing_file()
-			// we expect the large icon to fill the container when in cropping mode
-			// however since the icon is set to not upscale, we end up with a 20x20 image
-			// See #9663
-			//[75, 125, 'large', 75, 125, true, 200, 200],
+				// there is a problem in get_resized_image_from_existing_file()
+				// we expect the large icon to fill the container when in cropping mode
+				// however since the icon is set to not upscale, we end up with a 20x20 image
+				// See #9663
+				//[75, 125, 'large', 75, 125, true, 200, 200],
 		];
 	}
 

@@ -10,7 +10,6 @@ use Elgg\PluginHooksService;
 use Elgg\SystemMessagesService;
 use ElggSession;
 use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 use SecurityException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,7 +20,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  * @group HttpService
  * @group HttpResponses
  */
-class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
+class ResponseFactoryTest extends \Elgg\TestCase {
 
 	/**
 	 *
@@ -73,8 +72,8 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 
 		$this->session = ElggSession::getMock();
 		$this->session->start();
-		
-		$this->config = _elgg_testing_config();
+
+		$this->config = $this->config();
 		$this->hooks = new PluginHooksService();
 		$this->input = new Input();
 		$this->request = $this->createRequest('', 'GET');
@@ -117,7 +116,7 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		if ($xhr) {
 			$request->headers->set('X-Requested-With', 'XMLHttpRequest');
 		}
-		
+
 		return $request;
 	}
 
@@ -141,7 +140,7 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanPrepareResponse() {
-		
+
 		$service = $this->createService();
 
 		elgg_set_http_header('X-Elgg-Testing: 1');
@@ -228,14 +227,14 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$response = $service->prepareResponse('foo');
 		$sent_response = $service->send($response);
 		$this->assertInstanceOf(Response::class, $sent_response);
-		$this->assertEquals($sent_response,$service->send($response));
+		$this->assertEquals($sent_response, $service->send($response));
 
 		$output = ob_get_clean();
 		$this->assertEquals('foo', $output);
 	}
 
 	public function testCanNotSendModifiedResponse() {
-		
+
 		$service = $this->createService();
 
 		$response = $service->prepareResponse('foo');
@@ -260,7 +259,6 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$response2 = $service->prepareResponse('bar');
 		$this->assertEquals($response, $service->send($response2));
 	}
-
 
 	public function testCanSendAjaxResponseFromOutput() {
 		$service = $this->createService();
@@ -287,7 +285,6 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($json_response, $service->send($service->prepareResponse('bar')));
 	}
 
-
 	public function testCanSendAjaxResponseFromApiResponse() {
 		$service = $this->createService();
 
@@ -298,7 +295,7 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 
 		$api_response = new \Elgg\Ajax\Response();
 		$api_response->setData((object) [
-			'value' => $data,
+					'value' => $data,
 		]);
 
 		$response = $service->send($this->ajax->respondFromApiResponse($api_response));
@@ -314,7 +311,7 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$service = $this->createService();
 		$api_response = new \Elgg\Ajax\Response();
 		$api_response->setData((object) [
-			'value' => 'foo',
+					'value' => 'foo',
 		]);
 		ob_start();
 		$json_response = $this->ajax->respondFromApiResponse($api_response);
@@ -397,4 +394,5 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 			['foo/bar/ajax', 'path:foo/bar/ajax'],
 		];
 	}
+
 }

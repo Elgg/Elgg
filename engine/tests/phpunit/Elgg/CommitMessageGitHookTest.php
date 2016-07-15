@@ -1,10 +1,12 @@
 <?php
+
 namespace Elgg;
 
 /**
  * Tests the commit message validation shell script used by the git hook and travis
  */
-class CommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
+class CommitMessageGitHookTest extends \Elgg\TestCase {
+
 	protected $scriptsDir;
 	protected $filesDir;
 	protected $validateScript;
@@ -20,7 +22,7 @@ class CommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 
 		parent::setUp();
 	}
-	
+
 	/**
 	 * Test failures for missing input
 	 */
@@ -30,13 +32,13 @@ class CommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
 	}
-	
+
 	public function testRejectsEmptyFileInput() {
 		$cmd = "$this->validateScript /dev/null";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
 	}
-	
+
 	public function testRejectsEmptyPipeInput() {
 		$cmd = "echo '' | $this->validateScript";
 		$result = $this->runCmd($cmd, $output);
@@ -54,7 +56,7 @@ class CommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 		$result = $this->runCmd($cmd, $output);
 		$this->assertTrue($result, $output);
 	}
-	
+
 	public function testAcceptsValidPipeInput() {
 		$msg = escapeshellarg(file_get_contents("{$this->filesDir}valid.txt"));
 		$cmd = "echo $msg | $this->validateScript";
@@ -80,12 +82,12 @@ class CommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function runCmd($cmd, &$output, array $env = array()) {
 		$descriptorspec = array(
-			0 => array("pipe", "r"),// stdin
-			1 => array("pipe", "w"),// stdout
-			2 => array("pipe", "w"),// stderr
+			0 => array("pipe", "r"), // stdin
+			1 => array("pipe", "w"), // stdout
+			2 => array("pipe", "w"), // stderr
 		);
 		$defaultEnv = array(
-			'PATH' => getenv('PATH'),// we need to copy PATH variable to run php without specifying absolute path
+			'PATH' => getenv('PATH'), // we need to copy PATH variable to run php without specifying absolute path
 		);
 		$env = array_merge($defaultEnv, $env);
 
@@ -99,4 +101,5 @@ class CommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 
 		return $exit > 0 ? false : true;
 	}
+
 }

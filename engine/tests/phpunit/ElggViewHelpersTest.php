@@ -1,6 +1,6 @@
 <?php
 
-class ElggViewHelpersTest extends \PHPUnit_Framework_TestCase {
+class ElggViewHelpersTest extends \Elgg\TestCase {
 
 	public function test_elgg_prepend_css_path() {
 		// basic tests
@@ -22,4 +22,5 @@ class ElggViewHelpersTest extends \PHPUnit_Framework_TestCase {
 
 		// more complete: https://github.com/mrclay/minify/blob/master/tests/MinifyCSSUriRewriterTest.php
 	}
+
 }

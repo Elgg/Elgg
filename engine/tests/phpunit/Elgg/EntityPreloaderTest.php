@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg;
 
-class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
+class EntityPreloaderTest extends \Elgg\TestCase {
 
 	/**
 	 * @var \PHPUnit_Framework_MockObject_MockObject
@@ -27,7 +28,7 @@ class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
 			'foo',
 			array('0', array()),
 			array(
-				(object)array('foo' => 123),
+				(object) array('foo' => 123),
 				array('bar' => 234),
 			),
 		);
@@ -42,35 +43,41 @@ class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->_callable_entity_loader = array($this->mock, 'load');
 		$this->mock->expects($this->once())->method('load')->with(array('guids' => array(234, 345)));
 		$this->obj->preload(array(
-			(object)array('foo' => 23,),
-			(object)array('bar' => 234,),
-			(object)array('bar' => 345,),
-		), array('foo', 'bar'));
+			(object) array('foo' => 23,),
+			(object) array('bar' => 234,),
+			(object) array('bar' => 345,),
+				), array('foo', 'bar'));
 	}
 
 	public function testOnlyLoadsIfMoreThanOne() {
 		$this->obj->_callable_entity_loader = array($this->mock, 'load');
 		$this->mock->expects($this->never())->method('load');
 		$this->obj->preload(array(
-			(object)array('foo' => 23,),
-			(object)array('bar' => 234,),
-		), array('foo', 'bar'));
+			(object) array('foo' => 23,),
+			(object) array('bar' => 234,),
+				), array('foo', 'bar'));
 	}
 
 	public function testQuietlyIgnoresMissingProperty() {
 		$this->obj->_callable_entity_loader = array($this->mock, 'load');
 		$this->mock->expects($this->once())->method('load')->with(array('guids' => array(234, 345)));
 		$this->obj->preload(array(
-			(object)array('foo' => 234),
-			(object)array(),
-			(object)array('bar' => 345)
-		), array('foo', 'bar'));
+			(object) array('foo' => 234),
+			(object) array(),
+			(object) array('bar' => 345)
+				), array('foo', 'bar'));
 	}
+
 }
 
 class PreloaderMock_20140623 {
+
 	function isCached($guid) {
 		return $guid < 100;
 	}
-	function load($opts) {}
+
+	function load($opts) {
+		
+	}
+
 }

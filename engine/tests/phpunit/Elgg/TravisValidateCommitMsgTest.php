@@ -1,17 +1,19 @@
 <?php
+
 namespace Elgg;
 
 /**
  * Tests the travis shell script
  */
 class TravisValidateCommitMsgTest extends CommitMessageGitHookTest {
+
 	protected $travisScript;
 
 	public function setUp() {
 		parent::setUp();
 
 		$this->travisScript = $this->scriptsDir . 'travis/check_commit_msgs.sh';
-		
+
 		$this->markTestSkipped('Testing against particular SHAs is too flaky.');
 	}
 
@@ -144,4 +146,5 @@ class TravisValidateCommitMsgTest extends CommitMessageGitHookTest {
 		$result = $this->runCmd($cmd, $output);
 		$this->assertTrue($result, $output);
 	}
+
 }

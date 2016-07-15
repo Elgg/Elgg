@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg\Application;
 
-class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
+class CacheHandlerTest extends \Elgg\TestCase {
 
 	/**
 	 * @var CacheHandler
@@ -9,7 +10,9 @@ class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
 	protected $handler;
 
 	public function setUp() {
-		$this->handler = new CacheHandler(_elgg_testing_application(), _elgg_testing_config(), []);
+		$app = elgg();
+		$config = _elgg_services()->config;
+		$this->handler = new CacheHandler($app, $config, []);
 	}
 
 	protected function _testParseFail($input) {
@@ -21,7 +24,7 @@ class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
 			'ts' => '1234',
 			'viewtype' => 'default',
 			'view' => 'hel/8lo-wo_rl.d.js',
-		), $this->handler->parsePath('/cache/1234/default/hel/8lo-wo_rl.d.js'));
+				), $this->handler->parsePath('/cache/1234/default/hel/8lo-wo_rl.d.js'));
 	}
 
 	public function testCantParseDoubleDot() {
@@ -47,21 +50,21 @@ class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
 	public function testCanHandleConditionalRequests() {
 		$this->markTestIncomplete();
 	}
-	
+
 	public function testGetViewFileTypeHandlesJs() {
 		$this->markTestIncomplete("getViewFileType() is private/protected");
-		
+
 		$type = $this->handler->getViewFileType('js/some/view.js');
-		
+
 		$this->assertEquals('js', $type);
 	}
-	
+
 	public function testGetContentTypeHandlesJs() {
 		$this->markTestIncomplete("getContentType() is private/protected");
-		
+
 		$mediaType = $this->handler->getContentType('view.js');
-		
+
 		$this->assertEquals('application/javascript', $mediaType);
 	}
-}
 
+}
