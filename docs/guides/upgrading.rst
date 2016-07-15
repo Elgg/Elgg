@@ -280,7 +280,8 @@ for the ``bower-asset/*`` packages to be recognized. To install it, run:
     composer global require fxp/composer-asset-plugin
 
 If you don't do this before running ``composer install`` or ``composer create-project``,
-you will get an error message:
+Elgg will attempt to run the command automatically. Should the installation fail,
+you will see an message:
 
 .. code:: shell
 
