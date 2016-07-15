@@ -44,7 +44,7 @@ if ($image) {
 }
 
 if ($alt_image) {
-	$alt_image = elgg_format_element([
+	$alt_image = elgg_format_element('div', [
 		'class' => 'elgg-image-alt',
 	], $alt_image);
 }

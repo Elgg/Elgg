@@ -6,6 +6,9 @@
 $body = elgg_view('theme_sandbox/components/image_block');
 echo elgg_view_module('theme-sandbox-demo', 'Image Block (.elgg-image-block)', $body);
 
+$body = elgg_view('theme_sandbox/components/image_block_alt');
+echo elgg_view_module('theme-sandbox-demo', 'Image Block (.elgg-image-block) with .elgg-image-alt', $body);
+
 $body = elgg_view('theme_sandbox/components/list');
 echo elgg_view_module('theme-sandbox-demo', 'List (.elgg-list)', $body);
 
