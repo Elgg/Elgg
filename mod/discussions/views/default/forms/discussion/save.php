@@ -62,11 +62,6 @@ $fields = [
 		'name' => 'topic_guid',
 		'value' => $guid,
 	],
-	[
-		'type' => 'submit',
-		'value' => elgg_echo('save'),
-		'field_class' => 'elgg-foot',
-	]
 ];
 
 foreach ($fields as $field) {
@@ -74,3 +69,8 @@ foreach ($fields as $field) {
 	unset($field['type']);
 	echo elgg_view_input($type, $field);
 }
+
+$footer = elgg_view_input('submit', [
+	'value' => elgg_echo('save'),
+]);
+elgg_set_form_footer($footer);

@@ -31,6 +31,14 @@ Plugins should use the following convenience functions to build responses:
  * ``elgg_error_response()`` sends a 4xx or 5xx response without content/data
  * ``elgg_redirect_response()`` silently redirects the request
 
+Extendable form views
+---------------------
+
+Form footer rendering can now be deferred until the form view and its extensions have finished rendering. This allows plugins to collaborate on form views without breaking the markup logic.
+
+ * ``elgg_set_form_footer()`` - sets form footer for deferred rendering
+ * ``elgg_get_form_footer()`` - returns currently set form footer
+
 From 2.1 to 2.2
 ===============
 

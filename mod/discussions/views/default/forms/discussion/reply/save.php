@@ -72,11 +72,14 @@ echo <<<FORM
 		<label>$reply_label</label>
 		$description_input
 	</div>
-	<div class="foot">
-		$reply_guid_input
-		$topic_guid_input
-		$submit_input $cancel_button
-	</div>
+	$reply_guid_input
+	$topic_guid_input
 FORM;
+
+	$footer = elgg_format_element('div', [
+		'class' => 'foot',
+			], $submit_input . ' ' . $cancel_button);
+
+	elgg_set_form_footer($footer);
 }
 
