@@ -410,7 +410,38 @@ Other
 	``entity_subtype`` will be passed with the ``$params`` array to the callback.
 
 **entity:<icon_type>:sizes, <entity_type>**
-	Allows filtering sizes for custom icon types, see ``entity:icon:sizes, <entity_type>``
+	Allows filtering sizes for custom icon types, see ``entity:icon:sizes, <entity_type>``.
+
+	The hook must return an associative array where keys are the names of the icon sizes
+	(e.g. "large"), and the values are arrays with the following keys:
+
+	 * ``w`` - Width of the image in pixels
+	 * ``h`` - Height of the image in pixels
+	 * ``square`` - Should the aspect ratio be a square (true/false)
+	 * ``upscale`` - Should the image be upscaled in case it is smaller than the given
+           width and height (true/false)
+
+	If the configuration array for an image size is empty, the image will be
+	saved as an exact copy of the source without resizing or cropping.
+
+	Example:
+
+.. code:: php
+
+	return [
+		'small' => [
+			'w' => 60,
+			'h' => 60,
+			'square' => true,
+			'upscale' => true,
+		],
+		'large' => [
+			'w' => 600,
+			'h' => 600,
+			'upscale' => false,
+		],
+		'original' => [],
+	];
 
 **entity:icon:url, <entity_type>**
 	Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should
