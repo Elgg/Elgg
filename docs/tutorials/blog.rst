@@ -1,10 +1,14 @@
 Building a Blog Plugin
 ######################
 
-Build a simple blogging site using Elgg.
-
-This duplicates features in the bundled ``blog`` plugin,
-so be sure to disable that while working on your own version.
+This tutorial will teach you how to create a simple blog plugin.
+The basic functions of the blog will be creating posts,
+saving them and viewing them.
+The plugin duplicates features that are found in the
+bundled ``blog`` plugin.
+You can disable the bundled ``blog`` plugin if you wish,
+but it is not necessary since the features do not conflict
+each other.
 
 .. contents:: Contents
    :local:
@@ -14,25 +18,108 @@ Prerequisites:
 
  - :doc:`Install Elgg</intro/install>`
 
+Create the plugin's directory and manifest file
+===============================================
+
+First, choose a simple and descriptive name for your plugin.
+In this tutorial, the name will be ``my_blog``.
+Then, create a directory for your plugin in the ``/mod/`` directory
+found in your Elgg installation directory. Other plugins are also located
+in ``/mod/``. In this case, the name of the directory should
+be ``/mod/my_blog/``. This directory is the root of your plugin and all the
+files that you create for the new plugin will go somewhere under it.
+
+Next, in the root of the plugin, create the plugin's manifest file,
+``manifest.xml``:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+        <name>My Blog</name>
+        <id>my_blog</id>
+        <author>Your Name Here</author>
+        <version>0.1</version>
+        <description>Adds blogging capabilities.</description>
+        <requires>
+            <type>elgg_release</type>
+            <version>2.0</version>
+        </requires>
+    </plugin_manifest>
+
+See :doc:`Plugins</guides/plugins>` for more information
+about the manifest file.
+
+Create the form for creating a new blog post
+================================================
+
+Create a file at ``/mod/my_blog/views/default/forms/my_blog/save.php``
+that contains the form body.
+The form should have input fields for the title, body and tags
+of the my_blog post. It does not need form tag markup.
+
+.. code-block:: php
+
+    <?php
+
+    // creates a field where you can write the blog post's title
+    echo elgg_view_input('text', [
+        'name' => 'title',
+        'label' => 'Title of your post',
+        'required' => true,
+    ]);
+
+    // creates a field where you can write the blog post's content
+    echo elgg_view_input('longtext', [
+        'name' => 'body',
+        'label' => 'Content of your post',
+        'required' => true,
+    ]);
+
+    // creates a field where you can write the blog post's tags
+    echo elgg_view_input('tags', [
+        'name' => 'tags',
+        'label' => 'Tags of your post',
+    ]);
+
+    // creates a save button
+    echo elgg_view_input('submit', array(
+        'value' => 'Save your post',
+        'field_class' => 'elgg-foot',
+    ));
+
+The input fields are rendered by calling ``elgg_view_input``.
+This helper function maintains consistency in field markup,
+and is used as a shortcut for rendering field elements like label,
+help text, input and so on. See :doc:`/guides/actions` for more information.
+The name field is used to identify the data in the saving phase.
+
+You can see a complete list of input views in the
+``/views/default/input/`` directory.
+
+It is recommended that you make your plugin translatable by using
+``elgg_echo(textkey)`` whenever there is a string of text that will
+be shown to the user. Read more at :doc:`Internationalization</guides/i18n>`.
+
 Create a page for composing the blogs
 =====================================
 
-Create the file ``/views/default/resources/my_blog/add.php``.
+Create the file ``/mod/my_blog/views/default/resources/my_blog/add.php``.
+This page will view the form you created in the above section.
 
-.. code:: php
+.. code-block:: php
 
     <?php
     // make sure only logged in users can see this page 
     gatekeeper();
                     
     // set the title
-    // be sure to use ``elgg_echo()`` for internationalization if you need it
     $title = "Create a new my_blog post";
 
-    // start building the main column of the page
+    // start building the main column of the page 
     $content = elgg_view_title($title);
 
-    // add the form to this section
+    // add the form to the main column
     $content .= elgg_view_form("my_blog/save");
 
     // optionally, add the content for the sidebar
@@ -47,63 +134,20 @@ Create the file ``/views/default/resources/my_blog/add.php``.
     // draw the page, including the HTML wrapper and basic page layout
     echo elgg_view_page($title, $body);
 
-Create the form for creating a new my\_blog post
-================================================
+The function ``elgg_view_form("my_blog/save")`` views the form that
+you created in the previous section. It also automatically wraps
+the form with a ``<form>`` tag and the necessary attributes as well
+as anti-csrf tokens.
 
-Create a file at ``/views/default/forms/my_blog/save.php``
-that contains the form body. This corresponds to view that is called above:
-``elgg_view_form("my_blog/save")``.
+The form's action will be ``"<?= elgg_get_site_url() ?>action/my_blog/save"``.
 
-The form should have input fields for the title, body and tags.
-Because you used ``elgg_view_form()``, you do not need to include form tag markup.
-The view will be automatically wrapped with:
+Create the action file for saving the blog post
+===============================================
 
- * a ``<form>`` tag and the necessary attributes
- * anti-csrf tokens
+The action file will save the my_blog post to the database.
+Create the file ``/mod/my_blog/actions/my_blog/save.php``:
 
-The form's action will be ``"<?= elgg_get_site_url() ?>action/my_blog/save"``,
-which we will create in a moment. Here is the content of
-``/views/default/forms/my_blog/save.php``:
-
-.. code:: php
-
-    echo elgg_view_input('text', [
-        'name' => 'title',
-        'label' => elgg_echo('title'),
-        'required' => true,
-    ]);
-
-    echo elgg_view_input('longtext', [
-        'name' => 'body',
-        'label' => elgg_echo('body'),
-        'required' => true,
-    ]);
-
-    echo elgg_view_input('tags', [
-        'name' => 'tags',
-        'label' => elgg_echo('tags'),
-        'help' => elgg_echo('tags:help'),
-    ]);
-
-    echo elgg_view_input('submit', array(
-        'value' => elgg_echo('save'),
-        'field_class' => 'elgg-foot',
-    ));
-
-
-Notice how the form is calling ``elgg_view_input()`` to render inputs. This helper function maintains
-consistency in field markup, and is used as a shortcut for rendering field elements, such as label,
-help text, and input. See :doc:`/guides/actions`.
-
-You can see a complete list of input views in the ``/vendor/elgg/elgg/views/default/input/`` directory.
-
-The action file
-===============
-
-Create the file ``/actions/my_blog/save.php``.
-This will save the blog post to the database.
-
-.. code:: php
+.. code-block:: php
 
     <?php
     // get the form inputs
@@ -111,20 +155,20 @@ This will save the blog post to the database.
     $body = get_input('body');
     $tags = string_to_tag_array(get_input('tags'));
 
-    // create a new my_blog object
+    // create a new my_blog object and put the content in it
     $blog = new ElggObject();
-    $blog->subtype = "my_blog";
     $blog->title = $title;
     $blog->description = $body;
+    $blog->tags = $tags;
 
-    // for now make all my_blog posts public
+    // the object can and should have a subtype
+    $blog->subtype = 'my_blog';
+    
+    // for now, make all my_blog posts public
     $blog->access_id = ACCESS_PUBLIC;
 
     // owner is logged in user
     $blog->owner_guid = elgg_get_logged_in_user_guid();
-
-    // save tags as metadata
-    $blog->tags = $tags;
 
     // save to database and get id of the new my_blog
     $blog_guid = $blog->save();
@@ -132,148 +176,237 @@ This will save the blog post to the database.
     // if the my_blog was saved, we want to display the new post
     // otherwise, we want to register an error and forward back to the form
     if ($blog_guid) {
-       system_message("Your blog post was saved");
+       system_message("Your blog post was saved.");
        forward($blog->getURL());
     } else {
-       register_error("The blog post could not be saved");
+       register_error("The blog post could not be saved.");
        forward(REFERER); // REFERER is a global variable that defines the previous page
     }
 
-A few fields are built into Elgg objects. Title and description are two of these.
-It makes sense to use description to contain the my\_blog text.
-Every entity can have a subtype and in this we are using ``"my_blog"``.
-The tags are stored as metadata.
+As you can see in the above code, Elgg objects have several fields built
+into them. The title of the my_blog post is stored
+in the ``title`` field while the body is stored in the
+``description`` field. There is also a field for tags which are stored as
+metadata.
 
-Every object in Elgg has a built-in URL automatically,
-although you can override this if you wish.
-The ``getURL()`` method is called to get that unique URL.
-
-The object view
-===============
-
-Elgg will automatically call the ``object/my_blog`` view to view the
-my\_blog post so we need to create the object view.
-
-Objects in Elgg are a subclass of something called an “entity”.
+Objects in Elgg are a subclass of something called an "entity".
 Users, sites, and groups are also subclasses of entity.
-All entities can (and should) have a subtype,
-which allows granular control for listing and displaying.
-Here, we have used the subtype "``my_blog``\ " to identify a my\_blog post,
+An entity's subtype allows granular control for listing and displaying,
+which is why every entity should have a subtype.
+In this tutorial, the subtype "``my_blog``\ " identifies a my\_blog post,
 but any alphanumeric string can be a valid subtype.
 When picking subtypes, be sure to pick ones that make sense for your plugin.
 
-Create the file ``/views/default/object/my_blog.php``.
+The ``getURL`` method fetches the URL of the new post. It is recommended
+that you override this method. The overriding will be done in the
+``start.php`` file.
 
-Each my\_blog post will be passed to this PHP file as
-``$vars['entity']``. (``$vars`` is an array used in the views system to
-pass variables to a view.) The content of ``object/my_blog.php`` can
-just be something like:
-
-.. code:: php
-
-    <?php
-    
-    echo elgg_view_title($vars['entity']->title);
-    echo elgg_view('output/longtext', array('value' => $vars['entity']->description));
-    echo elgg_view('output/tags', array('tags' => $vars['entity']->tags)); 
-
-The last line takes the tags on the my\_blog post and automatically
-displays them as a series of clickable links. Search is handled
-automatically.
-
-(If you're wondering about the '``default``\ ' in ``/views/default/``,
-you can create alternative views. RSS, OpenDD, FOAF, mobile and others
-are all valid view types.)
-
-start.php
+Create start.php
 ================
 
-For this example, we just need to register the action file we created earlier:
-Also see a related guide about :doc:`/guides/actions`.
+The ``/mod/my_blog/start.php`` file needs to
+register the save action you created earlier,
+register a page handler and
+override the URL generation.
 
-.. code:: php
+.. code-block:: php
 
     <?php
-    
-    elgg_register_action("my_blog/save", __DIR__ . "/actions/my_blog/save.php");
 
-The action will now be available as ``/action/my_blog/save``.
+    // register an initializer
+    elgg_register_event_handler('init', 'system', 'my_blog_init');
+
+    function my_blog_init() {
+        // register the save action
+	elgg_register_action("my_blog/save", __DIR__ . "/actions/my_blog/save.php");
+
+        // register the page handler
+        elgg_register_page_handler('my_blog', 'my_blog_page_handler');
+
+        // register a hook handler to override urls
+        elgg_register_plugin_hook_handler('entity:url', 'object', 'my_blog_set_url');
+    }
+
+Registering the save action will make it available as ``/action/my_blog/save``.
 By default, all actions are available only to logged in users.
 If you want to make an action available to only admins or open it up to unauthenticated users,
-you can pass 'admin' or 'public' as the third parameter of ``elgg_register_action()``, respectively.
+you can pass 'admin' or 'public' as the third parameter of ``elgg_register_action``.
 
-Registering a page handler
-==========================
+The URL overriding function will extract the ID of the given entity and use it to make
+a simple URL for the page that is supposed to view the entity. In this case
+the entity should of course be a my_blog post. Add this function to your
+``start.php`` file:
 
-In order to be able to serve the page that generates the form, you'll
-need to register a page handler. Add the following to your start.php:
+.. code-block:: php
 
-.. code:: php
+    function my_blog_set_url($hook, $type, $url, $params) {
+        $entity = $params['entity'];
+        if (elgg_instanceof($entity, 'object', 'my_blog')) {
+            return "my_blog/view/{$entity->guid}";
+        }
+    }
 
-    elgg_register_page_handler('my_blog', 'my_blog_page_handler');
+The page handler makes it possible to serve the page that generates the form
+and the page that views the post. The next section will show how to create
+the page that views the post. Add this function to your ``start.php`` file:
+
+.. code-block:: php
 
     function my_blog_page_handler($segments) {
         if ($segments[0] == 'add') {
             echo elgg_view_resource('my_blog/add');
             return true;
         }
+
+        else if ($segments[0] == 'view') {
+            $resource_vars['guid'] = elgg_extract(1, $segments);
+            echo elgg_view_resource('my_blog/view', $resource_vars);
+            return true;
+        }
+	
         return false;
     }
+
+The ``$segments`` variable contains the different parts of the URL as separated by /.
 
 Page handling functions need to return ``true`` or ``false``. ``true``
 means the page exists and has been handled by the page handler.
 ``false`` means that the page does not exist and the user will be
 forwarded to the site's 404 page (requested page does not exist or not found).
-In this particular example, the URL must contain
-``/my_blog/add`` for the user to view a page with a form, otherwise the
-user will see a 404 page.
+In this particular example, the URL must contain either ``/my_blog/add`` or
+``/my_blog/view/id`` where id is a valid ID of an entity with the ``my_blog`` subtype.
+More information about page handling is at
+:doc:`Page handler</guides/pagehandler>`.
+
+.. _tutorials/blog#view:
+
+Create a page for viewing a blog post
+=====================================
+
+To be able to view a my_blog post on its own page, you need to make a view page.
+Create the file ``/mod/my_blog/views/default/resources/my_blog/view.php``:
+
+.. code-block:: php
+
+    <?php
+
+    // get the entity
+    $guid = elgg_extract('guid', $vars);
+    $my_blog = get_entity($guid);
+
+    // get the content of the post
+    $content = elgg_view_entity($my_blog, array('full_view' => true));
+
+    $params = array(
+        'title' => $my_blog->title,
+        'content' => $content,
+        'filter' => '',
+    );
+
+    $body = elgg_view_layout('content', $params);
+
+    echo elgg_view_page($my_blog->title, $body);
+
+This page has much in common with the ``add.php`` page. The biggest differences
+are that some information is extracted from the my_blog entity, and instead of
+viewing a form, the function ``elgg_view_entity`` is called. This function
+gives the information of the entity to something called the object view.
+
+Create the object view
+======================
+
+When ``elgg_view_entity`` is called or when my_blogs are viewed in a list
+for example, the object view will generate the appropriate content.
+Create the file ``/mod/my_blog/views/default/object/my_blog.php``:
+
+.. code-block:: php
+
+    <?php
+    
+    echo elgg_view('output/longtext', array('value' => $vars['entity']->description));
+    echo elgg_view('output/tags', array('tags' => $vars['entity']->tags)); 
+
+As you can see in the previous section, each my\_blog post is passed to the object
+view as ``$vars['entity']``. (``$vars`` is an array used in the views system to
+pass variables to a view.)
+
+The last line takes the tags on the my\_blog post and automatically
+displays them as a series of clickable links. Search is handled
+automatically.
+
+(If you're wondering about the "``default``" in ``/views/default/``,
+you can create alternative views. RSS, OpenDD, FOAF, mobile and others
+are all valid view types.)
 
 Trying it out
 =============
 
-The page to create a new my\_blog post should be accessible at ``https://elgg.example.com/my_blog/add``.
+Go to your Elgg site's administration page, list the plugins and activate
+the ``my_blog`` plugin.
 
-Displaying list of my\_blogs
-============================
+The page to create a new my\_blog post should now be accessible at
+``https://elgg.example.com/my_blog/add``, and after successfully saving the post,
+you should see it viewed on its own page.
+
+Displaying a list of blog posts
+===============================
 
 Let's also create a page that lists my\_blog entries that have been created.
 
-Create ``/views/default/resources/my_blog/all.php``.
+Create ``/mod/my_blog/views/default/resources/my_blog/all.php``:
 
-To grab the latest my\_blog posts, we'll use ``elgg_list_entities``.
-Note that this function returns only the posts that the user can see,
-so access restrictions are handled transparently:
+.. code-block:: php
 
-.. code:: php
+    <?php
+    $titlebar = "All Site My_Blogs";
+    $pagetitle = "List of all my_blogs";
 
     $body = elgg_list_entities(array(
         'type' => 'object',
         'subtype' => 'my_blog',
     ));
 
-The function \`elgg\_list\_entities\` (and its cousins) also
-transparently handle pagination, and even create an RSS feeds for your
-my\_blogs if you have defined these views.
+    $body = elgg_view_title($pagetitle) . elgg_view_layout('one_column', array('content' => $body));
 
-Finally, we'll draw the page:
+    echo elgg_view_page($titlebar, $body);
 
-.. code:: php
+The ``elgg_list_entities`` function grabs the latest my_blog posts and
+passes them to the object view file.
+Note that this function returns only the posts that the user can see,
+so access restrictions are handled transparently.
+The function (and its cousins) also
+transparently handles pagination and even creates an RSS feed for your
+my\_blogs if you have defined that view.
 
-    $body = elgg_view_layout('one_column', array('content' => $body));
+The list function can also limit the my_blog posts to those of a specified user.
+For example, the function ``elgg_get_logged_in_user_guid`` grabs the Global Unique
+IDentifier (GUID) of the logged in user, and by giving that to
+``elgg_list_entities``, the list only displays the posts of the current user:
 
-    echo elgg_view_page("All Site Blogs", $body);
+.. code-block:: php
 
-We will then need to modify our my\_blog page handler to grab the new
-page when the URL is set to ``/my_blog/all``. So, your new
-``my_blog_page_handler()`` function in start.php should look like:
+    echo elgg_list_entities(array(
+        'type' => 'object',
+        'subtype' => 'my_blog',
+        'owner_guid' => elgg_get_logged_in_user_guid()
+    ));
 
-.. code:: php
+Next, you will need to modify your my\_blog page handler to grab the new
+page when the URL is set to ``/my_blog/all``. Change the
+``my_blog_page_handler`` function in ``start.php`` to look like this:
+
+.. code-block:: php
 
     function my_blog_page_handler($segments) {
         switch ($segments[0]) {
             case 'add':
                echo elgg_view_resource('my_blog/add');
                break;
+
+            case 'view':
+                $resource_vars['guid'] = elgg_extract(1, $segments);
+                echo elgg_view_resource('my_blog/view', $resource_vars);
+                break;
 
             case 'all':
             default:
@@ -284,27 +417,45 @@ page when the URL is set to ``/my_blog/all``. So, your new
         return true;
     }
 
-Now, if the URL contains just ``/my_blog`` or ``/my_blog/all``,
-the user will see an "All Site Blogs" page.
+Now, if the URL contains ``/my_blog/all``, the user will see an
+"All Site My_Blogs" page. Because of the default case, the list of all my_blogs
+will also be shown if the URL is something invalid,
+like ``/my_blog`` or ``/my_blog/xyz``.
 
-A user's blog page
-==================
+You might also want to update the object view to handle different kinds of viewing,
+because otherwise the list of all my_blogs will also show the full content of all my_blogs.
+Change ``/mod/my_blog/views/default/object/my_blog.php`` to look like this:
 
-If we grab the Global Unique IDentifier (GUID) of the logged in user, we
-can limit the my\_blog posts to those posted by specifying the
-owner\_guid argument in the list function above.
+.. code-block:: php
 
-.. code:: php
+    <?php
+    $full = elgg_extract('full_view', $vars, FALSE);
 
-    echo elgg_list_entities(array(
-        'type' => 'object',
-        'subtype' => 'my_blog',
-        'owner_guid' => elgg_get_logged_in_user_guid()
-    ));
+    // full view
+    if ($full) {
+        echo elgg_view('output/longtext', array('value' => $vars['entity']->description));
+        echo elgg_view('output/tags', array('tags' => $vars['entity']->tags));
 
+    // list view or short view
+    } else {
+        // make a link out of the post's title
+        echo elgg_view_title(
+            elgg_view('output/url', array(
+                'href' => $vars['entity']->getURL(),
+                'text' => $vars['entity']->title,
+                'is_trusted' => true
+        )));
+        echo elgg_view('output/tags', array('tags' => $vars['entity']->tags));
+    }
+
+Now, if ``full_view`` is ``true`` (as it was pre-emptively set to be in
+:ref:`this section <tutorials/blog#view>`), the object view will show
+the post's content and tags (the title is shown by ``view.php``).
+Otherwise the object view will render just the title and
+tags of the post.
 
 The end
 =======
 
 There's much more that could be done,
-but hopefully this gives you a good idea of how to get started with your own.
+but hopefully this gives you a good idea of how to get started.

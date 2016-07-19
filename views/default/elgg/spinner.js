@@ -20,6 +20,7 @@ define(function (require) {
 			setTimeout(function () {
 				if (active) {
 					$('body').addClass('elgg-spinner-active');
+					$(spinner).triggerHandler('_testing_show');
 				}
 			}, SHOW_DELAY);
 
