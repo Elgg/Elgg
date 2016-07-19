@@ -81,6 +81,12 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$this->amd_config = new Config($this->hooks);
 		$this->system_messages = new SystemMessagesService($this->session);
 		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
+
+		_elgg_services()->logger->disable();
+	}
+
+	public function tearDown() {
+		_elgg_services()->logger->enable();
 	}
 
 	public function createService() {
@@ -223,7 +229,6 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$sent_response = $service->send($response);
 		$this->assertInstanceOf(Response::class, $sent_response);
 		$this->assertEquals($sent_response,$service->send($response));
-		$this->assertEquals($sent_response,$service->send($response));
 
 		$output = ob_get_clean();
 		$this->assertEquals('foo', $output);
@@ -234,7 +239,10 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$service = $this->createService();
 
 		$response = $service->prepareResponse('foo');
+		ob_start();
 		$sent_response = $service->send($response);
+		ob_get_clean();
+
 		$this->assertInstanceOf(Response::class, $sent_response);
 		$response->headers->set('X-Elgg-Modified', '1');
 		$this->assertEquals($sent_response, $service->send($response));
@@ -244,7 +252,10 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$service = $this->createService();
 
 		$response = $service->prepareResponse('foo');
-		$this->assertInstanceOf(Response::class, $service->send($response));
+		ob_start();
+		$sent_response = $service->send($response);
+		ob_get_clean();
+		$this->assertInstanceOf(Response::class, $sent_response);
 
 		$response2 = $service->prepareResponse('bar');
 		$this->assertEquals($response, $service->send($response2));
@@ -270,7 +281,9 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanNotSendANewResponseAfterAjaxResponseFromOutputIsSent() {
 		$service = $this->createService();
+		ob_start();
 		$json_response = $this->ajax->respondFromOutput('foo');
+		ob_get_clean();
 		$this->assertEquals($json_response, $service->send($service->prepareResponse('bar')));
 	}
 
@@ -281,15 +294,15 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		ob_start();
 
 		$data = ['foo' => 'bar'];
-		$content = json_encode($data);
 		$wrapped_content = json_encode(['value' => $data]);
 
 		$api_response = new \Elgg\Ajax\Response();
 		$api_response->setData((object) [
 			'value' => $data,
 		]);
-		
+
 		$response = $service->send($this->ajax->respondFromApiResponse($api_response));
+
 		$this->assertInstanceOf(JsonResponse::class, $response);
 		$this->assertEquals($wrapped_content, $response->getContent());
 
@@ -303,7 +316,10 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$api_response->setData((object) [
 			'value' => 'foo',
 		]);
+		ob_start();
 		$json_response = $this->ajax->respondFromApiResponse($api_response);
+		ob_get_clean();
+
 		$this->assertEquals($json_response, $service->send($service->prepareResponse('bar')));
 	}
 
@@ -316,6 +332,7 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 		$wrapped_content = json_encode(['error' => $error]);
 
 		$response = $service->send($this->ajax->respondWithError($error));
+
 		$this->assertInstanceOf(JsonResponse::class, $response);
 		$this->assertEquals($wrapped_content, $response->getContent());
 
@@ -325,7 +342,9 @@ class ResponseFactoryTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanNotSendANewResponseAfterAjaxErrorResponseIsSent() {
 		$service = $this->createService();
+		ob_start();
 		$json_response = $this->ajax->respondWithError('error');
+		ob_get_clean();
 		$this->assertEquals($json_response, $service->send($service->prepareResponse('bar')));
 	}
 

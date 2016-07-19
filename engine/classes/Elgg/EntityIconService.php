@@ -254,7 +254,7 @@ class EntityIconService {
 			$square = (bool) elgg_extract('square', $opts);
 			$upscale = (bool) elgg_extract('upscale', $opts);
 
-			if ($cropping_mode && $square === false && $size !== 'large') {
+			if ($type === 'icon' && $cropping_mode && $square === false && $size !== 'large') {
 				// In cropping mode, we want to preserve non-square images the way they are.
 				// For BC, we need to crop the large icon into a square if cropping coordinates are provided.
 				// There is a problem with cropping large icons however. See #9663 and EntityIconServiceTest::testIconDimensionsAfterResize
@@ -262,6 +262,14 @@ class EntityIconService {
 			}
 
 			$icon = $this->getIcon($entity, $size, $type);
+
+			// Save the image without resizing or cropping if the
+			// image size value is an empty array
+			if (is_array($opts) && empty($opts)) {
+				copy($file->getFilenameOnFilestore(), $icon->getFilenameOnFilestore());
+				continue;
+			}
+
 			$image_bytes = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $width, $height, $square, $x1, $y1, $x2, $y2, $upscale);
 			if ($image_bytes) {
 				$icon->open("write");
@@ -282,7 +290,7 @@ class EntityIconService {
 	 * The icon file may or may not exist on filestore
 	 *
 	 * @note Returned ElggIcon object may be a placeholder. Use ElggIcon::exists() to validate if file has been written to filestore
-	 * 
+	 *
 	 * @param ElggEntity $entity Entity that owns the icon
 	 * @param string     $size   Size of the icon
 	 * @param string     $type   The name of the icon. e.g., 'icon', 'cover_photo'

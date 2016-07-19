@@ -130,7 +130,9 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 				'w' => 1280,
 				'h' => 720,
 				'square' => false,
-			]
+			],
+			// Empty config means that image should not be altered
+			'original' => [],
 		];
 	}
 
@@ -167,7 +169,9 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($this->config->get('icon_sizes'), $service->getSizes());
 
 		// If type is not 'icon', should return an empty array
+		$this->logger->disable();
 		$this->assertEmpty($service->getSizes(null, null, 'foo'));
+		$this->logger->enable();
 	}
 
 	/**
@@ -175,7 +179,9 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCanSetSizesForCustomIconType() {
 		$service = $this->createService();
+		$this->logger->disable();
 		$this->assertEmpty($service->getSizes('object', 'foo', 'cover'));
+		$this->logger->enable();
 
 		$this->hooks->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
 		$service = $this->createService();
@@ -534,6 +540,53 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		// medium should have been cropped
 		$this->assertNotEquals($medium_bytes, file_get_contents($service->getIcon($this->entity, 'medium')->getFilenameOnFilestore()));
+	}
+
+	/**
+	 * @group IconService
+	 */
+	function testEmptySizeConfigSavesUnmodifiedVersion() {
+		$this->hooks->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
+
+		$service = $this->createService();
+
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('600x300.jpg');
+		$file->mimetype = 'image/jpeg';
+
+		$service->saveIconFromElggFile($this->entity, $file, 'cover');
+
+		// original file should stay where it is
+		$this->assertTrue($file->exists());
+
+		$this->assertTrue($service->hasIcon($this->entity, 'medium', 'cover'));
+		$this->assertTrue($service->hasIcon($this->entity, 'original', 'cover'));
+
+		$medium = $service->getIcon($this->entity, 'original', 'cover');
+		$medium_bytes = file_get_contents($medium->getFilenameOnFilestore());
+
+		$source_bytes = file_get_contents($file->getFilenameOnFilestore());
+
+		// crop with coordinates
+		$service->saveIconFromElggFile($this->entity, $file, 'cover', [
+			'x1' => 10,
+			'y1' => 10,
+			'x2' => 110,
+			'y2' => 110,
+		]);
+
+		// source file should stay where it is
+		$this->assertTrue($file->exists());
+
+		$this->assertTrue($service->hasIcon($this->entity, 'medium', 'cover'));
+		$this->assertTrue($service->hasIcon($this->entity, 'original', 'cover'));
+
+		// original should remain the same
+		$this->assertEquals($source_bytes, file_get_contents($service->getIcon($this->entity, 'original', 'cover')->getFilenameOnFilestore()));
+
+		// medium should have been cropped
+		$this->assertNotEquals($medium_bytes, file_get_contents($service->getIcon($this->entity, 'medium', 'cover')->getFilenameOnFilestore()));
 	}
 
 	/**
@@ -913,7 +966,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('max-age=86400, private', $response->headers->get('cache-control'));
 
 		// now try conditional request
-		
+
 		$this->request->headers->set('if-none-match', '"' . $icon->getModifiedTime() . '"');
 		$response = $service->handleServeIconRequest(false);
 
