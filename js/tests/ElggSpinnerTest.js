@@ -9,8 +9,9 @@ define(function (require) {
 	}
 
 	describe("elgg/spinner", function () {
-		beforeEach(function () {
+		beforeEach(function (done) {
 			spinner.stop();
+			setTimeout(done, 200);
 		});
 
 		it("indicator is in the DOM", function () {
