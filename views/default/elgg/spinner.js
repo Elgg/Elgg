@@ -6,12 +6,13 @@ define(function (require) {
 
 	$('body').append('<div class="elgg-spinner"><div class="elgg-ajax-loader"></div></div>');
 
-	return {
+	var module = {
 		start: function () {
 			active = true;
 			setTimeout(function () {
 				if (active) {
 					$('body').addClass('elgg-spinner-active');
+					$(module).triggerHandler('_testing_show');
 				}
 			}, SHOW_DELAY);
 		},
@@ -21,4 +22,6 @@ define(function (require) {
 			$('body').removeClass('elgg-spinner-active');
 		}
 	};
+
+	return module;
 });

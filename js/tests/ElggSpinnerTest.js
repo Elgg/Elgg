@@ -20,24 +20,24 @@ define(function(require) {
 		});
 
 		it("start() adds the body class after 20ms", function(done) {
-			expect($(visible_selector).length).toBe(0);
-			spinner.start();
-
-			setTimeout(function() {
+			$(spinner).one('_testing_show', function () {
 				expect($(visible_selector).length).toBe(1);
 				done();
-			}, 100);
+			});
+
+			expect($(visible_selector).length).toBe(0);
+			spinner.start();
 		});
 
 		it("stop() removes the body class", function(done) {
-			spinner.start();
-
-			setTimeout(function() {
+			$(spinner).one('_testing_show', function () {
 				expect($(visible_selector).length).toBe(1);
 				spinner.stop();
 				expect($(visible_selector).length).toBe(0);
 				done();
-			}, 100);
+			});
+
+			spinner.start();
 		});
 	});
 });
