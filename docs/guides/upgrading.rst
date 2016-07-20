@@ -14,6 +14,8 @@ From 2.2 to 2.3
 
 Deprecated APIs
 ---------------
+
+ * Registering for ``to:object`` hook by the extender name: Use ``to:object, annotation`` and ``to:object, metadata`` hooks instead.
  * ``ajax_forward_hook()``: No longer used as handler for `'forward','all'` hook. Ajax response is now wrapped by the ``ResponseFactory``
  * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
