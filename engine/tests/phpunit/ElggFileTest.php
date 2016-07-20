@@ -1,6 +1,6 @@
 <?php
 
-class ElggFileTest extends \PHPUnit_Framework_TestCase {
+class ElggFileTest extends \Elgg\TestCase {
 
 	/**
 	 * @var \ElggFile

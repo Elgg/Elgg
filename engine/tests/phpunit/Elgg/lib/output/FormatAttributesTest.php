@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg\lib\output;
 
-class FormatAttributesTest extends \PHPUnit_Framework_TestCase {
+class FormatAttributesTest extends \Elgg\TestCase {
 
 	public function testGeneralUsage() {
 		$attrs = [
@@ -10,7 +11,7 @@ class FormatAttributesTest extends \PHPUnit_Framework_TestCase {
 			'c' => true,
 			'd' => null, // ignored
 			'e' => ['&', '&amp;', '<', '&lt;'],
-			'f' => (object)['foo' => 'bar'], // ignored
+			'f' => (object) ['foo' => 'bar'], // ignored
 		];
 		$expected = 'a="Hello &amp; &amp; &lt; &lt;" c="c" e="&amp; &amp; &lt; &lt;"';
 
@@ -36,4 +37,5 @@ class FormatAttributesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($expected, elgg_format_attributes($attrs));
 	}
+
 }

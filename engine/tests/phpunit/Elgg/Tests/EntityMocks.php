@@ -7,7 +7,7 @@ use ElggGroup;
 use ElggObject;
 use ElggUser;
 use LogicException;
-use PHPUnit_Framework_TestCase;
+
 
 /**
  * Create test doubles for Elgg entities
@@ -17,7 +17,7 @@ use PHPUnit_Framework_TestCase;
 class EntityMocks {
 	
 	/**
-	 * @var PHPUnit_Framework_TestCase
+	 * @var \Elgg\TestCase
 	 */
 	private $test;
 
@@ -34,9 +34,9 @@ class EntityMocks {
 	/**
 	 * Constructor
 	 *
-	 * @param PHPUnit_Framework_TestCase $test Test case
+	 * @param \Elgg\TestCase $test Test case
 	 */
-	public function __construct(PHPUnit_Framework_TestCase $test) {
+	public function __construct(\Elgg\TestCase $test) {
 		$this->test = $test;
 		$this->iterator = 100; // some random offset
 	}

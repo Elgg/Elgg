@@ -137,7 +137,7 @@ class BootService {
 			_elgg_services()->logger->setDisplay(true);
 		}
 
-		$GLOBALS['_ELGG']->view_path = \Elgg\Application::elggDir()->getPath("/views/");
+		_elgg_services()->views->view_path = \Elgg\Application::elggDir()->getPath("/views/");
 
 		// finish boot sequence
 		_elgg_session_boot();

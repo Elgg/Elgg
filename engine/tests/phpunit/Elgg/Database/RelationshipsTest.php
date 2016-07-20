@@ -1,30 +1,30 @@
 <?php
+
 namespace Elgg\Database;
 
-class RelationshipsTest extends \PHPUnit_Framework_TestCase {
+class RelationshipsTest extends \Elgg\TestCase {
 
 	private $guids;
-	
+
 	/**
 	 * Create the entities used for each test
 	 */
 	protected function setUp() {
 		$this->markTestSkipped("Skipped test as Elgg can not yet run PHP Unit tests that interact with the database");
-		
+
 		$this->guids = array();
-		
+
 		$obj1 = new \ElggObject();
 		$obj1->save();
-		
+
 		$this->guids[] = $obj1->guid;
-		
+
 		$obj2 = new \ElggObject();
 		$obj2->save();
-		
+
 		$this->guids[] = $obj2->guid;
-		
 	}
-	
+
 	/**
 	 * Remove the entities that are created for each test
 	 */
@@ -34,42 +34,42 @@ class RelationshipsTest extends \PHPUnit_Framework_TestCase {
 			$e->delete();
 		}
 	}
-	
+
 	/**
 	 * Check that you can get entities by filtering them on relationship time created lower
 	 */
 	public function testGetEntitiesFromRelationshipFilterByTimeCreatedLower() {
-		
+
 		// get a timestamp before creating the relationship
 		$ts_lower = time() - 1;
-		
+
 		add_entity_relationship($this->guids[0], 'testGetEntitiesFromRelationship', $this->guids[1]);
-		
+
 		// get a timestamp after creating the relationship
 		$ts_upper = time() + 1;
-		
+
 		// check that if ts_lower is before the relationship you get the just created entity
 		$options = array(
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $this->guids[0],
 			'relationship_created_time_lower' => $ts_lower
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertIdentical(count($es), 1);
-		
+
 		foreach ($es as $e) {
 			$this->assertEqual($this->guids[1], $e->guid);
-		}	
-		
+		}
+
 		// check that if ts_lower is after the relationship you get no entities
 		$options = array(
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $this->guids[0],
 			'relationship_created_time_lower' => $ts_upper
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertIdentical(count($es), 0);
@@ -82,34 +82,34 @@ class RelationshipsTest extends \PHPUnit_Framework_TestCase {
 
 		// get a timestamp before creating the relationship
 		$ts_lower = time() - 1;
-		
+
 		add_entity_relationship($this->guids[0], 'testGetEntitiesFromRelationship', $this->guids[1]);
-		
+
 		// get a timestamp after creating the relationship
 		$ts_upper = time() + 1;
-		
+
 		// check that if ts_upper is after the relationship you get the just created entity
 		$options = array(
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $this->guids[0],
 			'relationship_created_time_upper' => $ts_upper
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertIdentical(count($es), 1);
-		
+
 		foreach ($es as $e) {
 			$this->assertEqual($this->guids[1], $e->guid);
 		}
-		
+
 		// check that if ts_upper is before the relationship you get no entities
 		$options = array(
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $this->guids[0],
 			'relationship_created_time_upper' => $ts_lower
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertIdentical(count($es), 0);
@@ -122,12 +122,12 @@ class RelationshipsTest extends \PHPUnit_Framework_TestCase {
 
 		// get a timestamp before creating the relationship
 		$ts_lower = time() - 1;
-		
+
 		add_entity_relationship($this->guids[0], 'testGetEntitiesFromRelationship', $this->guids[1]);
-		
+
 		// get a timestamp after creating the relationship
 		$ts_upper = time() + 1;
-		
+
 		// check that if relationship time created is between lower and upper you get the just created entity
 		$options = array(
 			'relationship' => 'testGetEntitiesFromRelationship',
@@ -135,15 +135,15 @@ class RelationshipsTest extends \PHPUnit_Framework_TestCase {
 			'relationship_created_time_lower' => $ts_lower,
 			'relationship_created_time_upper' => $ts_upper
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertIdentical(count($es), 1);
-		
+
 		foreach ($es as $e) {
 			$this->assertEqual($this->guids[1], $e->guid);
 		}
-		
+
 		// check that if  ts_lower > ts_upper you get no entities
 		$options = array(
 			'relationship' => 'testGetEntitiesFromRelationship',
@@ -151,7 +151,7 @@ class RelationshipsTest extends \PHPUnit_Framework_TestCase {
 			'relationship_created_time_lower' => $ts_upper,
 			'relationship_created_time_upper' => $ts_lower
 		);
-		
+
 		$es = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($es));
 		$this->assertIdentical(count($es), 0);

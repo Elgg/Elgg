@@ -1,4 +1,4 @@
-<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php">
+<phpunit bootstrap="./vendor/autoload.php">
 	<testsuites>
 		<testsuite name="All Tests">
 			<directory>./engine/tests/phpunit/</directory>
@@ -16,4 +16,7 @@
 			<directory suffix=".php">/docs</directory>
 		</blacklist>
 	</filter>
+	<php>
+		<const name="PHPUNIT_ELGG_TESTING_APPLICATION" value="true"/>
+	</php>
 </phpunit>

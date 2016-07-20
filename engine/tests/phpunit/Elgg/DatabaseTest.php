@@ -1,15 +1,15 @@
 <?php
 
-class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
-	
+class Elgg_DatabaseTest extends \Elgg\TestCase {
+
 	/**
 	 * @dataProvider scriptsWithOneStatement
 	 */
 	public function test_runSqlScript_withOneStatement($script) {
 		$db = $this->getDbMock();
 		$db->expects($this->exactly(1))
-			->method('updateData')
-			->with($this->matchesRegularExpression("/^INSERT INTO test_sometable \(`key`\)\sVALUES \('Value(?: -- not a comment)?'\)$/"));
+				->method('updateData')
+				->with($this->matchesRegularExpression("/^INSERT INTO test_sometable \(`key`\)\sVALUES \('Value(?: -- not a comment)?'\)$/"));
 		$db->runSqlScript($this->getFixture($script));
 	}
 
@@ -20,7 +20,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 			array('one_statement_with_comments.sql'),
 		);
 	}
-	
+
 	/**
 	 * @dataProvider scriptsWithMultipleStatements
 	 * @todo Use @see withConsecutive() to test consecutive method calls after upgrading to PHPUnit 4.
@@ -38,7 +38,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 		$this->expectExecutedStatement($db2, 2, $this->matches("INSERT INTO test_sometable (`key`) VALUES ('Value 3')"));
 		$db2->runSqlScript($this->getFixture($script));
 	}
-	
+
 	public function scriptsWithMultipleStatements() {
 		return array(
 			array('multiple_statements.sql'),
@@ -78,38 +78,39 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 
 	private function getFixture($filename) {
 		return dirname(__FILE__) .
-			DIRECTORY_SEPARATOR . '..' .
-			DIRECTORY_SEPARATOR . 'test_files' .
-			DIRECTORY_SEPARATOR . 'sql' .
-			DIRECTORY_SEPARATOR . $filename;
+				DIRECTORY_SEPARATOR . '..' .
+				DIRECTORY_SEPARATOR . 'test_files' .
+				DIRECTORY_SEPARATOR . 'sql' .
+				DIRECTORY_SEPARATOR . $filename;
 	}
-	
+
 	/**
 	 * @return \Elgg\Database|PHPUnit_Framework_MockObject_MockObject
 	 */
-	private function getDbMock()
-	{
+	private function getDbMock() {
 		return $this->getMock(
-			\Elgg\Database::class,
-			array('updateData'),
-			array(
-				 new \Elgg\Database\Config((object) array('dbprefix' => 'test_')),
-				_elgg_services()->logger
-			)
+						\Elgg\Database::class, array('updateData'), array(
+					new \Elgg\Database\Config((object) array('dbprefix' => 'test_')),
+					_elgg_services()->logger
+						)
 		);
 	}
-		
+
 	/**
 	 * @param PHPUnit_Framework_MockObject_MockObject $db
 	 * @param int $index
 	 * @param PHPUnit_Framework_MockObject_Matcher $matcher
 	 */
-	private function expectExecutedStatement($db, $index, $matcher)
-	{
+	private function expectExecutedStatement($db, $index, $matcher) {
 		$db->expects($this->at($index))->method('updateData')->with($matcher);
 	}
+
 }
 
 class Elgg_DatabaseTestObj {
-    public function __invoke() {}
+
+	public function __invoke() {
+		
+	}
+
 }

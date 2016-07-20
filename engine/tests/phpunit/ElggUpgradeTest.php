@@ -1,6 +1,7 @@
 <?php
 
-class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
+class ElggUpgradeTest extends \Elgg\TestCase {
+
 	/**
 	 * @var ElggUpgrade
 	 */
@@ -16,7 +17,7 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 
 		$this->obj->_callable_egefps = array($this, 'mock_egefps');
 	}
-	
+
 	public function mock_egefps($options) {
 		return array();
 	}
@@ -100,17 +101,16 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 	public function testCanFindUpgradesByPath() {
 		$this->obj->_callable_egefps = array($this, 'mock_egefps_for_path');
 		$upgrade = $this->obj->getUpgradeFromPath('test');
-		$this->assertTrue((bool)$upgrade);
+		$this->assertTrue((bool) $upgrade);
 	}
 
 	public function testCanFindUpgradesByFullUrl() {
 		$this->obj->_callable_egefps = array($this, 'mock_egefps_for_full_url');
 		$this->obj->upgrade_url = elgg_normalize_url('test');
 		$upgrade = $this->obj->getUpgradeFromPath('test');
-		$this->assertTrue((bool)$upgrade);
+		$this->assertTrue((bool) $upgrade);
 		$this->assertSame('test', $upgrade->upgrade_url);
 	}
 
 	// can't test save without db mocking
-
 }

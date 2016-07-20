@@ -51,6 +51,8 @@ class ElggInstaller {
 
 	protected $autoLogin = TRUE;
 
+	private $view_path = '';
+
 	/**
 	 * Global Elgg configuration
 	 * 
@@ -80,6 +82,8 @@ class ElggInstaller {
 
 		$this->bootstrapEngine();
 
+		_elgg_services()->views->view_path = $this->view_path;
+		
 		_elgg_services()->setValue('session', \ElggSession::getMock());
 
 		elgg_set_viewtype('installation');
@@ -855,7 +859,7 @@ class ElggInstaller {
 		$this->CONFIG->wwwroot = $this->getBaseUrl();
 		$this->CONFIG->url = $this->CONFIG->wwwroot;
 		$this->CONFIG->path = \Elgg\Application::elggDir()->getPath() . "/";
-		$GLOBALS['_ELGG']->view_path = $this->CONFIG->path . 'views/';
+		$this->view_path = $this->CONFIG->path . 'views/';
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
 		$this->CONFIG->context = array();
 		$this->CONFIG->entity_types = array('group', 'object', 'site', 'user');

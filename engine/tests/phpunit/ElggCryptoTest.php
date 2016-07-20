@@ -1,6 +1,6 @@
 <?php
 
-class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
+class ElggCryptoTest extends \Elgg\TestCase {
 
 	/**
 	 * @var PHPUnit_Framework_MockObject_MockObject
@@ -13,13 +13,13 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function setUp() {
 		$this->stub = $this->getMockBuilder('\ElggCrypto')
-			->setMethods(array('getRandomBytes'))
-			->setConstructorArgs([_elgg_services()->siteSecret])
-			->getMock();
+				->setMethods(array('getRandomBytes'))
+				->setConstructorArgs([_elgg_services()->siteSecret])
+				->getMock();
 
 		$this->stub->expects($this->any())
-			->method('getRandomBytes')
-			->will($this->returnCallback(array($this, 'mock_getRandomBytes')));
+				->method('getRandomBytes')
+				->will($this->returnCallback(array($this, 'mock_getRandomBytes')));
 	}
 
 	protected function getCrypto() {
@@ -121,4 +121,5 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertNotEquals($t1, $t2);
 	}
+
 }

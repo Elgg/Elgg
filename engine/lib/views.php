@@ -241,11 +241,8 @@ function elgg_unregister_ajax_view($view) {
  * @since 1.9.0
  */
 function elgg_register_external_view($view, $cacheable = false) {
-	if (!isset($GLOBALS['_ELGG']->allowed_ajax_views)) {
-		$GLOBALS['_ELGG']->allowed_ajax_views = array();
-	}
-
-	$GLOBALS['_ELGG']->allowed_ajax_views[$view] = true;
+	
+	_elgg_services()->ajax->registerView($view);
 
 	if ($cacheable) {
 		_elgg_services()->views->registerCacheableView($view);
@@ -260,9 +257,7 @@ function elgg_register_external_view($view, $cacheable = false) {
  * @since 1.9.0
  */
 function elgg_unregister_external_view($view) {
-	if (isset($GLOBALS['_ELGG']->allowed_ajax_views[$view])) {
-		unset($GLOBALS['_ELGG']->allowed_ajax_views[$view]);
-	}
+	_elgg_services()->ajax->unregisterView($view);
 }
 
 /**
@@ -270,8 +265,6 @@ function elgg_unregister_external_view($view) {
  *
  * Views are expected to be in plugin_name/views/.  This function can
  * be used to change that location.
- *
- * @note Internal: Core view locations are stored in $CONFIG->view_path.
  *
  * @tip This is useful to optionally register views in a plugin.
  *
@@ -1786,7 +1779,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
 	
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
-	$view_path = $GLOBALS['_ELGG']->view_path;
+	$view_path = _elgg_services()->views->view_path;
 	$viewtype_dirs = scandir($view_path);
 	foreach ($viewtype_dirs as $viewtype) {
 		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {

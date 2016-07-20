@@ -1554,11 +1554,11 @@ function _elgg_ajax_page_handler($segments) {
 			$view = 'forms/' . implode('/', array_slice($segments, 1));
 		}
 
-		$allowed_views = $GLOBALS['_ELGG']->allowed_ajax_views;
 		$ajax_api = _elgg_services()->ajax;
-
+		$allowed_views = $ajax_api->getViews();
+		
 		// cacheable views are always allowed
-		if (!array_key_exists($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
+		if (!in_array($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
 			return elgg_error_response("Ajax view '$view' was not registered", REFERRER, ELGG_HTTP_FORBIDDEN);
 		}
 
