@@ -18,6 +18,7 @@ available via ``get_input()``)
 The site URL (home page) is a special case that produces an empty string identifier and
 an empty segments array.
 
+.. warning:: URL identifier/segments should be considered potentially dangerous user input. Elgg uses ``htmlspecialchars`` to escapes HTML entities in them.
 
 Page Handler
 ============
