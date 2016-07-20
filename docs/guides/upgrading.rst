@@ -9,6 +9,7 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
    :local:
    :depth: 2
 
+
 From 2.2 to 2.3
 ===============
 
@@ -19,6 +20,7 @@ Deprecated APIs
  * ``ajax_forward_hook()``: No longer used as handler for `'forward','all'` hook. Ajax response is now wrapped by the ``ResponseFactory``
  * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
+ * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
 
 Deprecated Views
 ----------------
@@ -32,6 +34,13 @@ Plugins should use the following convenience functions to build responses:
  * ``elgg_ok_response()`` sends a 2xx response with HTML (page handler) or JSON data (actions)
  * ``elgg_error_response()`` sends a 4xx or 5xx response without content/data
  * ``elgg_redirect_response()`` silently redirects the request
+
+New API for working with file uploads
+-------------------------------------
+
+ * ``elgg_get_uploaded_files()`` - returns an array of uploaded file objects
+ * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
+ * ``\Elgg\UploadedFile`` class represents an uploaded file as an object
 
 From 2.1 to 2.2
 ===============

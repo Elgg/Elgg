@@ -201,6 +201,15 @@ River events
 **created, river**
 	Called after a river item is created.
 
+
+File events
+===========
+
+**upload:after, file**
+    Called after an uploaded file has been written to filestore. Receives an
+    instance of ``ElggFile`` the uploaded file was written to. The ``ElggFile``
+    may or may not be an entity with a GUID.
+
 Notes
 =====
 

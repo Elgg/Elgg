@@ -11,7 +11,7 @@ use ElggFile;
 use ElggIcon;
 use InvalidParameterException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -83,7 +83,7 @@ class EntityIconService {
 		}
 
 		$input = $files->get($input_name);
-		if (!$input instanceof UploadedFile || !$input->isValid()) {
+		if (!$input instanceof SymfonyUploadedFile || !$input->isValid()) {
 			return false;
 		}
 
