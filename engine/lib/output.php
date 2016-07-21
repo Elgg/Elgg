@@ -128,22 +128,34 @@ function elgg_format_bytes($size, $precision = 2) {
 }
 
 /**
- * Converts an associative array into a string of well-formed attributes
+ * Converts an associative array into a string of well-formed HTML/XML attributes
+ * Returns a concatenated string of HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
  *
- * @note usually for HTML, but could be useful for XML too...
+ * @see elgg_format_element
  *
- * @note Key names containing "_" will be ignored unless they start with "data-"
+ * @param array $attrs Attributes
+ *                     An array of attribute => value pairs
+ *                     Attribute value can be a scalar value, an array of scalar values, or true
+ *                     <code>
+ *                     $attrs = array(
+ *                         'class' => ['elgg-input', 'elgg-input-text'], // will be imploded with spaces
+ *                         'style' => ['margin-left:10px;', 'color: #666;'], // will be imploded with spaces
+ *                         'alt' => 'Alt text', // will be left as is
+ *                         'disabled' => true, // will be converted to disabled="disabled"
+ *                         'data-options' => json_encode(['foo' => 'bar']), // will be output as an escaped JSON string
+ *                         'batch' => <\ElggBatch>, // will be ignored
+ *                         'items' => [<\ElggObject>], // will be ignored
+ *                     );
+ *                     </code>
  *
- * @param array $attrs An associative array of attr => val pairs
- *
- * @return string HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
+ * @return string
  */
 function elgg_format_attributes(array $attrs = array()) {
-	if (!is_array($attrs) || !count($attrs)) {
+	if (!is_array($attrs) || empty($attrs)) {
 		return '';
 	}
 
-	$attributes = array();
+	$attributes = [];
 
 	foreach ($attrs as $attr => $val) {
 		if (0 !== strpos($attr, 'data-') && false !== strpos($attr, '_')) {
@@ -153,29 +165,35 @@ function elgg_format_attributes(array $attrs = array()) {
 
 		$attr = strtolower($attr);
 
+		if (!isset($val) || $val === false) {
+			continue;
+		}
+
 		if ($val === true) {
 			$val = $attr; //e.g. checked => true ==> checked="checked"
 		}
 
-		/**
-		 * Ignore non-array values and allow attribute values to be an array
-		 *  <code>
-		 *  $attrs = array(
-		 *		'entity' => <\ElggObject>, // will be ignored
-		 * 		'class' => array('elgg-input', 'elgg-input-text'), // will be imploded with spaces
-		 * 		'style' => array('margin-left:10px;', 'color: #666;'), // will be imploded with spaces
-		 *		'alt' => 'Alt text', // will be left as is
-		 *  );
-		 *  </code>
-		 */
-		if ($val !== NULL && $val !== false && (is_array($val) || !is_object($val))) {
-			if (is_array($val)) {
-				$val = implode(' ', $val);
-			}
-
-			$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
-			$attributes[] = "$attr=\"$val\"";
+		if (is_scalar($val)) {
+			$val = [$val];
 		}
+
+		if (!is_array($val)) {
+			continue;
+		}
+
+		// Check if array contains non-scalar values and bail if so
+		$filtered_val = array_filter($val, function($e) {
+			return is_scalar($e);
+		});
+
+		if (count($val) != count($filtered_val)) {
+			continue;
+		}
+
+		$val = implode(' ', $val);
+
+		$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
+		$attributes[] = "$attr=\"$val\"";
 	}
 
 	return implode(' ', $attributes);
