@@ -70,6 +70,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
+ * @property-read \Elgg\UploadService                      $uploads
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
@@ -356,6 +357,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('timer', \Elgg\Timer::class);
 
 		$this->setClassName('translator', \Elgg\I18n\Translator::class);
+
+		$this->setFactory('uploads', function(ServiceProvider $c) {
+			return new \Elgg\UploadService($c->request);
+		});
 
 		$this->setFactory('upgrades', function(ServiceProvider $c) {
 			return new \Elgg\UpgradeService(

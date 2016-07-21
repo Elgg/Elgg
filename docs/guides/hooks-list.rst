@@ -418,6 +418,18 @@ Files
     ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
     ``ege*`` filters and menus.
 
+**upload, file**
+    Allows plugins to implement custom logic for moving an uploaded file into an instance of ``ElggFile``.
+    The handler must return ``true`` to indicate that the uploaded file was moved.
+    The handler must return ``false`` to indicate that the uploaded file could not be moved.
+    Other returns will indicate that ``ElggFile::acceptUploadedFile`` should proceed with the
+    default upload logic.
+
+    ``$params`` array includes:
+
+     * ``file`` - instance of ``ElggFile`` to write to
+     * ``upload`` - instance of Symfony's ``UploadedFile``
+
 .. _guides/hooks-list#other:
 
 Other
