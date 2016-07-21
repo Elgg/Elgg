@@ -41,6 +41,16 @@ New API for working with file uploads
  * ``elgg_get_uploaded_files()`` - returns an array of Symfony uploaded file objects
  * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
 
+New API for signing URLs
+------------------------
+
+URLs can now be signed with a SHA-256 HMAC key and validated at any time before URL expiry. This feature can be used to tokenize action URLs in email notifications, as well as other uses outside of the Elgg installation.
+
+ * `elgg_http_get_signed_url()` - signs the URL with HMAC key
+ * `elgg_http_validate_signed_url()` - validates the signed URL
+ * `elgg_signed_request_gatekeeper()` - gatekeeper that validates the signature of the current request
+
+
 From 2.1 to 2.2
 ===============
 
