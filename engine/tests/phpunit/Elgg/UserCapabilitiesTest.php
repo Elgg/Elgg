@@ -608,4 +608,37 @@ class UserCapabilitiesTest extends \Elgg\TestCase {
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 	}
 
+	/**
+	 * @group UserCapabilities
+	 */
+	public function testCanOverrideContainerLogicWithAHook() {
+
+		$owner = $this->mocks->getUser();
+		$entity = $this->mocks->getObject([
+			'owner_guid' => $owner->guid,
+		]);
+
+		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+
+		$this->hooks->registerHandler('container_logic_check', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
+			$this->assertInstanceOf(\ElggEntity::class, $params['container']);
+			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertEquals($entity, $params['container']);
+			$this->assertEquals($owner, $params['user']);
+			$this->assertEquals('object', $type);
+			$this->assertEquals('bar', $params['subtype']);
+			$this->assertNull($return);
+			return false;
+		});
+		
+		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+
+		// make sure container permission hooks are not triggered
+		$this->hooks->registerHandler('container_permissions_check', 'object', function() {
+			return true;
+		});
+
+		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+	}
+
 }
