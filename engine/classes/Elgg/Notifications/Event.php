@@ -18,18 +18,11 @@ class Event implements NotificationEvent {
 	/* @var string The name of the action/event */
 	protected $action;
 
-	/* @var string The type of the action's object */
-	protected $object_type;
+	/* @var string Action's object */
+	protected $object;
 
-	/* @var string the subtype of the action's object */
-	protected $object_subtype;
-
-	/* @var int The identifier of the object (GUID for entity) */
-	protected $object_id;
-
-	/* @var int The GUID of the user who triggered the event */
-	protected $actor_guid;
-
+	/* @var ElggEntity User who triggered the event */
+	protected $actor;
 
 	/**
 	 * Create a notification event
@@ -52,20 +45,11 @@ class Event implements NotificationEvent {
 			throw new InvalidArgumentException(__METHOD__ . ' expects a valid action name');
 		}
 		
-		if (elgg_instanceof($object)) {
-			$this->object_type = $object->getType();
-			$this->object_subtype = $object->getSubtype();
-			$this->object_id = $object->guid;
-		} else {
-			$this->object_type = $object->getType();
-			$this->object_subtype = $object->getSubtype();
-			$this->object_id = $object->id;
-		}
-	
-		if ($actor == null) {
-			$this->actor_guid = _elgg_services()->session->getLoggedInUserGuid();
-		} else {
-			$this->actor_guid = $actor->guid;
+		$this->object = $object;
+
+		$this->actor = $actor;
+		if (!isset($actor)) {
+			$this->actor = _elgg_services()->session->getLoggedInUser();
 		}
 
 		$this->action = $action;
@@ -77,7 +61,7 @@ class Event implements NotificationEvent {
 	 * @return ElggEntity|false
 	 */
 	public function getActor() {
-		return _elgg_services()->entityTable->get($this->actor_guid);
+		return $this->actor;
 	}
 
 	/**
@@ -86,7 +70,7 @@ class Event implements NotificationEvent {
 	 * @return int
 	 */
 	public function getActorGUID() {
-		return $this->actor_guid;
+		return $this->actor ? $this->actor->guid : 0;
 	}
 
 	/**
@@ -95,21 +79,7 @@ class Event implements NotificationEvent {
 	 * @return ElggData
 	 */
 	public function getObject() {
-		switch ($this->object_type) {
-			case 'object':
-			case 'user':
-			case 'site':
-			case 'group':
-				return _elgg_services()->entityTable->get($this->object_id);
-				
-			case 'relationship':
-				return get_relationship($this->object_id);
-				
-			case 'annotation':
-				return elgg_get_annotation_from_id($this->object_id);
-				
-		}
-		return null;
+		return $this->object;
 	}
 
 	/**
@@ -127,7 +97,11 @@ class Event implements NotificationEvent {
 	 * @return string
 	 */
 	public function getDescription() {
-		return "{$this->action}:{$this->object_type}:{$this->object_subtype}";
+		return implode(':', [
+			$this->action,
+			$this->object->getType(),
+			$this->object->getSubtype(),
+		]);
 	}
 
 	/**

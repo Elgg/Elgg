@@ -17,98 +17,92 @@ class InstantNotificationEvent implements NotificationEvent {
 	/* @var string The name of the action/event */
 	protected $action;
 
-	/* @var string The type of the action's object */
-	protected $object_type;
+	/* @var string Action's object */
+	protected $object;
 
-	/* @var string the subtype of the action's object */
-	protected $object_subtype;
-
-	/* @var int The identifier of the object (GUID for entity) */
-	protected $object_id;
-
-	/* @var int The GUID of the user who triggered the event */
-	protected $actor_guid;
+	/* @var ElggEntity User who triggered the event */
+	protected $actor;
 
 	/**
-	 * {@inheritdoc}
+	 * Create a notification event
+	 *
+	 * @param ElggData   $object The object of the event (ElggEntity)
+	 * @param string     $action The name of the action (default: create)
+	 * @param ElggEntity $actor  The entity that caused the event (default: logged in user)
+	 *
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct(ElggData $object = null, $action = null, ElggEntity $actor = null) {
-		if (elgg_instanceof($object)) {
-			$this->object_type = $object->getType();
-			$this->object_subtype = $object->getSubtype();
-			$this->object_id = $object->getGUID();
-		} else if ($object) {
-			$this->object_type = $object->getType();
-			$this->object_subtype = $object->getSubtype();
-			$this->object_id = $object->id;
-		}
 
-		if ($actor == null) {
-			$this->actor_guid = _elgg_services()->session->getLoggedInUserGuid();
-		} else {
-			$this->actor_guid = $actor->getGUID();
+		$this->object = $object;
+
+		$this->actor = $actor;
+		if (!isset($actor)) {
+			$this->actor = _elgg_services()->session->getLoggedInUser();
 		}
 
 		$this->action = $action ? : self::DEFAULT_ACTION_NAME;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the actor of the event
+	 *
+	 * @return ElggEntity|false
 	 */
 	public function getActor() {
-		return get_entity($this->actor_guid);
+		return $this->actor;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the GUID of the actor
+	 *
+	 * @return int
 	 */
 	public function getActorGUID() {
-		return $this->actor_guid;
+		return $this->actor ? $this->actor->guid : 0;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the object of the event
+	 *
+	 * @return ElggData|null
 	 */
 	public function getObject() {
-		switch ($this->object_type) {
-			case 'object':
-			case 'user':
-			case 'site':
-			case 'group':
-				return get_entity($this->object_id);
-			case 'relationship':
-				return get_relationship($this->object_id);
-			case 'annotation':
-				return elgg_get_annotation_from_id($this->object_id);
-		}
-		return null;
+		return $this->object;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the name of the action
+	 *
+	 * @return string
 	 */
 	public function getAction() {
 		return $this->action;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get a description of the event
+	 *
+	 * @return string
 	 */
 	public function getDescription() {
-		$parts = [
+		if (!$this->object) {
+			return $this->action;
+		}
+		
+		return implode(':', [
 			$this->action,
-			$this->object_type,
-			$this->object_subtype,
-		];
-		return implode(':', array_filter($parts));
+			$this->object->getType(),
+			$this->object->getSubtype(),
+		]);
 	}
 
 	/**
 	 * Export
-	 * @return \stdClass
+	 * @return stdClass
 	 */
 	public function toObject() {
-		$obj = new \stdClass();
+		$obj = new stdClass();
 		$vars = get_object_vars($this);
 		foreach ($vars as $key => $value) {
 			if (is_object($value) && is_callable([$value, 'toObject'])) {

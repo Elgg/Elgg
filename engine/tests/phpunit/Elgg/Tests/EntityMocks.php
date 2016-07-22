@@ -83,29 +83,54 @@ class EntityMocks {
 	 */
 	protected function setup($guid, $type, $subtype, array $attributes = []) {
 
+		$methods = [
+			'getGUID',
+			'getType',
+			'getSubtype',
+			'__get',
+			'__set',
+			'__unset',
+			'getOwnerEntity',
+			'getContainerEntity',
+		];
+
 		switch ($type) {
 			case 'object' :
 				$class = ElggObject::class;
+				$external_attributes = [
+					'title' => null,
+					'description' => null,
+				];
 				break;
 			case 'user' :
 				$class = ElggUser::class;
+				$external_attributes = [
+					'name' => "John Doe $guid",
+					'username' => "john_doe_$guid",
+					'password' => null,
+					'salt' => null,
+					'password_hash' => null,
+					'email' => "john_doe_$guid@example.com",
+					'language' => 'en',
+					'banned' => "no",
+					'admin' => 'no',
+					'prev_last_action' => null,
+					'last_login' => null,
+					'prev_last_login' => null,
+				];
+				$methods[] = 'isAdmin';
 				break;
 			case 'group' :
 				$class = ElggGroup::class;
+				$external_attributes = [
+					'name' => null,
+					'description' => null,
+				];
 				break;
 		}
 
 		$entity = $this->test->getMockBuilder($class)
-				->setMethods([
-					'getGUID',
-					'getType',
-					'getSubtype',
-					'__get',
-					'__set',
-					'__unset',
-					'getOwnerEntity',
-					'getContainerEntity',
-				])
+				->setMethods($methods)
 				->disableOriginalConstructor()
 				->getMock();
 
@@ -157,6 +182,8 @@ class EntityMocks {
 		$entity->expects($this->test->any())
 				->method('getContainerEntity')
 				->will($this->test->returnValue($this->get($attributes['container_guid'])));
+
+		$attributes = array_merge($external_attributes, $attributes);
 		
 		$map = [];
 		foreach ($attributes as $key => $value) {
@@ -166,6 +193,12 @@ class EntityMocks {
 		$entity->expects($this->test->any())
 				->method('__get')
 				->will($this->test->returnValueMap($map));
+
+		if (in_array('isAdmin', $methods)) {
+			$entity->expects($this->test->any())
+				->method('isAdmin')
+				->will($this->test->returnValue($attributes['admin'] == 'yes'));
+		}
 
 		$this->mocks[$guid] = $entity;
 

@@ -442,6 +442,7 @@ Note that not all hooks apply to instant notifications.
 
 	 * ``event`` - ``\Elgg\Notifications\NotificationEvent`` instance that describes the notification event
 	 * ``subscriptions`` - a list of subscriptions. See ``'get', 'subscriptions'`` hook for details
+	 * ``deliveries`` - a matrix of delivery statuses by user for each delivery method
 
 
 Routing

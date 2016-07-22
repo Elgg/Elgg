@@ -168,6 +168,7 @@ class NotificationsService {
 	 * @access private
 	 */
 	public function enqueueEvent($action, $type, $object) {
+		
 		if ($object instanceof ElggData) {
 			$object_type = $object->getType();
 			$object_subtype = $object->getSubtype();
@@ -194,13 +195,16 @@ class NotificationsService {
 	/**
 	 * Pull notification events from queue until stop time is reached
 	 *
-	 * @param int $stopTime The Unix time to stop sending notifications
-	 * @return int The number of notification events handled
+	 * @param int  $stopTime The Unix time to stop sending notifications
+	 * @param bool $matrix   If true, will return delivery matrix instead of a notifications event count
+	 * @return int|array The number of notification events handled, or a delivery matrix
 	 * @access private
 	 */
-	public function processQueue($stopTime) {
+	public function processQueue($stopTime, $matrix = false) {
 
 		$this->subscriptions->methods = $this->methods;
+
+		$delivery_matrix = [];
 
 		$count = 0;
 
@@ -211,6 +215,8 @@ class NotificationsService {
 		while (time() < $stopTime) {
 			// dequeue notification event
 			$event = $this->queue->dequeue();
+			/* @var $event NotificationEvent */
+			
 			if (!$event) {
 				break;
 			}
@@ -223,19 +229,26 @@ class NotificationsService {
 			$subscriptions = $this->subscriptions->getSubscriptions($event);
 
 			// return false to stop the default notification sender
-			$params = array('event' => $event, 'subscriptions' => $subscriptions);
+			$params = [
+				'event' => $event,
+				'subscriptions' => $subscriptions
+			];
+			
+			$deliveries = [];
 			if ($this->hooks->trigger('send:before', 'notifications', $params, true)) {
-				$this->sendNotifications($event, $subscriptions);
+				$deliveries = $this->sendNotifications($event, $subscriptions);
 			}
+			$params['deliveries'] = $deliveries;
 			$this->hooks->trigger('send:after', 'notifications', $params);
 			$count++;
+			$delivery_matrix[$event->getDescription()] = $deliveries;
 		}
 
 		// release mutex
 
 		$this->session->setIgnoreAccess($ia);
 
-		return $count;
+		return $matrix ? $delivery_matrix : $count;
 	}
 
 	/**
@@ -424,7 +437,7 @@ class NotificationsService {
 			if ($recipient->getGUID() == $event->getActorGUID()) {
 				return false;
 			}
-
+			
 			if (!$actor || !$object) {
 				return false;
 			}
@@ -523,9 +536,14 @@ class NotificationsService {
 		// Check custom notification subject for the action/type/subtype combination
 		$subject_key = "notification:{$event->getDescription()}:subject";
 		if ($this->translator->languageKeyExists($subject_key, $language)) {
+			if ($object instanceof \ElggEntity) {
+				$display_name = $object->getDisplayName();
+			} else {
+				$display_name = '';
+			}
 			return $this->translator->translate($subject_key, array(
 						$actor->name,
-						$object->getDisplayName(),
+						$display_name,
 							), $language);
 		}
 
@@ -578,13 +596,23 @@ class NotificationsService {
 		// Check custom notification body for the action/type/subtype combination
 		$body_key = "notification:{$event->getDescription()}:body";
 		if ($this->translator->languageKeyExists($body_key, $language)) {
-			$container = $object->getContainerEntity();
+			if ($object instanceof \ElggEntity) {
+				$display_name = $object->getDisplayName();
+				$container_name = '';
+				$container = $object->getContainerEntity();
+				if ($container) {
+					$container_name = $container->getDisplayName();
+				}
+			} else {
+				$display_name = '';
+				$container_name = '';
+			}
 
 			return $this->translator->translate($body_key, array(
 						$recipient->name,
 						$actor->name,
-						$object->getDisplayName(),
-						$container->getDisplayName(),
+						$display_name,
+						$container_name,
 						$object->description,
 						$object->getURL(),
 							), $language);
