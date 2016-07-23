@@ -14,6 +14,8 @@ use stdClass;
  * @deprecated 2.3
  */
 class Event implements NotificationEvent {
+
+	use EventSerialization;
 	
 	/* @var string The name of the action/event */
 	protected $action;

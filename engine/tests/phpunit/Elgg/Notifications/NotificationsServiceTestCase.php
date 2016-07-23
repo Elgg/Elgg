@@ -6,9 +6,12 @@ use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
 use Elgg\Database\AccessCollections;
+use Elgg\Database\Annotations;
 use Elgg\Database\EntityTable;
 use Elgg\Database\MetadataTable;
 use Elgg\Database\RelationshipsTable;
+use Elgg\Debug\Inspector;
+use Elgg\EventsService;
 use Elgg\I18n\Translator;
 use Elgg\Logger;
 use Elgg\PluginHooksService;
@@ -18,6 +21,7 @@ use Elgg\Tests\EntityMocks;
 use ElggEntity;
 use ElggObject;
 use ElggSession;
+use Exception;
 
 abstract class NotificationsServiceTestCase extends TestCase {
 
@@ -33,7 +37,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 
 	/**
 	 *
-	 * @var \Elgg\Debug\Inspector
+	 * @var Inspector
 	 */
 	protected $inspector;
 
@@ -93,7 +97,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 	protected $metadata;
 
 	/**
-	 * @var \Elgg\Database\Annotations
+	 * @var Annotations
 	 */
 	protected $annotations;
 
@@ -115,7 +119,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 	public function setUp() {
 
 		if (!isset($this->test_object_class)) {
-			throw new \Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
+			throw new Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
 		}
 
 		$this->mocks = new EntityMocks($this);
@@ -124,14 +128,14 @@ abstract class NotificationsServiceTestCase extends TestCase {
 		$this->annotations = $this->mocks->getAnnotationsTableMock();
 		$this->relationships = $this->mocks->getRelationshipsTableMock();
 
-		$this->inspector = new \Elgg\Debug\Inspector();
-		$this->events = new \Elgg\EventsService($this->inspector);
+		$this->inspector = new Inspector();
+		$this->events = new EventsService($this->inspector);
 		$this->events->backup();
 
 		$this->hooks = new PluginHooksService();
 		$this->hooks->backup();
 
-		$this->queue = new MemoryQueue();
+		$this->queue = new DatabaseQueueMock();
 		$dbMock = $this->getMockBuilder(Database::class)
 				->disableOriginalConstructor()
 				->getMock();
@@ -213,7 +217,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 				return $object;
 			}
 		}
-		throw new \Exception("Test object not found for $this->test_object_class class");
+		throw new Exception("Test object not found for $this->test_object_class class");
 	}
 
 	public function prepareTestObjects() {
@@ -666,4 +670,47 @@ abstract class NotificationsServiceTestCase extends TestCase {
 		$this->assertEquals(1, $this->notifications->processQueue(time() + 10));
 	}
 
+	public function testValidatesObjectExistenceForDequeuedSubscriptionNotificationEvent() {
+
+		$object = $this->getTestObject();
+
+		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock->expects($this->exactly(0))
+				->method('getSubscriptions')
+				->will($this->returnValue([]));
+
+		$this->subscriptions = $mock;
+
+		$this->setupServices();
+
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+
+		$object->delete();
+
+		$this->assertEquals(0, $this->notifications->processQueue(time() + 10));
+	}
+
+	public function testValidatesActorExistenceForDequeuedSubscriptionNotificationEvent() {
+
+		$object = $this->getTestObject();
+
+		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock->expects($this->exactly(0))
+				->method('getSubscriptions')
+				->will($this->returnValue([]));
+
+		$this->subscriptions = $mock;
+
+		$this->setupServices();
+
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+
+		$this->session->getLoggedInUser()->delete();
+
+		$this->assertEquals(0, $this->notifications->processQueue(time() + 10));
+	}
 }

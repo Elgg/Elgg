@@ -299,6 +299,7 @@ class EntityMocks {
 			'setMetadata',
 			'deleteMetadata',
 			'annotate',
+			'delete',
 		];
 
 		switch ($type) {
@@ -429,7 +430,11 @@ class EntityMocks {
 				->will($this->test->returnCallback(function($name, $value) use ($entity) {
 							$this->iterator++;
 							$id = $this->iterator;
-							$metadata = new ElggMetadata((object) [
+
+							$metadata = $this->test->getMockBuilder(ElggMetadata::class)
+									->setMethods(['delete'])
+									->setConstructorArgs([
+										(object) [
 										'type' => 'metadata',
 										'id' => $id,
 										'entity_guid' => $entity->guid,
@@ -438,7 +443,16 @@ class EntityMocks {
 										'value' => $value,
 										'time_created' => time(),
 										'access_id' => $entity->guid,
-							]);
+							]
+									])
+									->getMock();
+
+							$metadata->expects($this->test->any())
+									->method('delete')
+									->will($this->test->returnCallback(function() use ($id) {
+										return $this->deleteMetadata($id);
+									}));
+
 							$this->metadata_mocks[$id] = $metadata;
 							return $metadata;
 						}));
@@ -469,7 +483,10 @@ class EntityMocks {
 				->will($this->test->returnCallback(function($name, $value, $value_type, $owner_guid, $access_id) use ($entity, &$map) {
 							$this->iterator++;
 							$id = $this->iterator;
-							$annotation = new ElggAnnotation((object) [
+							$annotation = $this->test->getMockBuilder(ElggAnnotation::class)
+									->setMethods(['delete'])
+									->setConstructorArgs([
+										(object) [
 										'type' => 'annotation',
 										'id' => $id,
 										'entity_guid' => $entity->guid,
@@ -479,9 +496,25 @@ class EntityMocks {
 										'value_type' => $value_type,
 										'time_created' => time(),
 										'access_id' => $access_id,
-							]);
+							]
+									])
+									->getMock();
+
+							$annotation->expects($this->test->any())
+									->method('delete')
+									->will($this->test->returnCallback(function() use ($id) {
+										return $this->deleteAnnotation($id);
+									}));
+
 							$this->annotation_mocks[$id] = $annotation;
 							return $id;
+						}));
+
+		$entity->expects($this->test->any())
+				->method('delete')
+				->will($this->test->returnCallback(function($recursive = true) use ($entity) {
+							unset($this->mocks[$entity->guid]);
+							return true;
 						}));
 
 		if (in_array('isAdmin', $methods)) {

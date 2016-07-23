@@ -5,6 +5,7 @@ namespace Elgg\Notifications;
 use ElggData;
 use ElggEntity;
 use InvalidArgumentException;
+use Serializable;
 
 /**
  * Notification event interface
@@ -12,7 +13,7 @@ use InvalidArgumentException;
  * @package    Elgg.Core
  * @subpackage Notifications
  */
-interface NotificationEvent {
+interface NotificationEvent extends Serializable {
 
 	/**
 	 * Create a notification event

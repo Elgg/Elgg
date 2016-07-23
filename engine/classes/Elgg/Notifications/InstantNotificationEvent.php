@@ -12,9 +12,12 @@ use ElggEntity;
  */
 class InstantNotificationEvent implements NotificationEvent {
 
+	use EventSerialization;
+	
 	const DEFAULT_ACTION_NAME = 'notify_user';
 
 	/* @var string The name of the action/event */
+
 	protected $action;
 
 	/* @var string Action's object */
@@ -89,7 +92,7 @@ class InstantNotificationEvent implements NotificationEvent {
 		if (!$this->object) {
 			return $this->action;
 		}
-		
+
 		return implode(':', [
 			$this->action,
 			$this->object->getType(),

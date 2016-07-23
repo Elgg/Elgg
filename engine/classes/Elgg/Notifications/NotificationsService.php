@@ -216,9 +216,15 @@ class NotificationsService {
 			// dequeue notification event
 			$event = $this->queue->dequeue();
 			/* @var $event NotificationEvent */
-			
+
 			if (!$event) {
+				// queue is empty
 				break;
+			}
+
+			if (!$event instanceof NotificationEvent || !$event->getObject() || !$event->getActor()) {
+				// event object or actor have been deleted since the event was enqueued
+				continue;
 			}
 		
 			// test for usage of the deprecated override hook
@@ -241,6 +247,7 @@ class NotificationsService {
 			$params['deliveries'] = $deliveries;
 			$this->hooks->trigger('send:after', 'notifications', $params);
 			$count++;
+
 			$delivery_matrix[$event->getDescription()] = $deliveries;
 		}
 
