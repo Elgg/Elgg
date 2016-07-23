@@ -227,7 +227,7 @@ class NotificationsService {
 			}
 
 			$subscriptions = $this->subscriptions->getSubscriptions($event);
-
+			
 			// return false to stop the default notification sender
 			$params = [
 				'event' => $event,
@@ -432,7 +432,7 @@ class NotificationsService {
 			if (!$recipient || $recipient->isBanned()) {
 				return false;
 			}
-
+		
 			// don't notify the creator of the content
 			if ($recipient->getGUID() == $event->getActorGUID()) {
 				return false;

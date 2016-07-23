@@ -19,104 +19,132 @@ use ElggEntity;
 use ElggObject;
 use ElggSession;
 
-/**
- * @group NotificationsService
- */
-class NotificationsServiceTest extends TestCase {
+abstract class NotificationsServiceTestCase extends TestCase {
 
 	/**
 	 * @var PluginHooksService
 	 */
-	private $hooks;
+	protected $hooks;
+
+	/**
+	 * @var EventsService
+	 */
+	protected $events;
+
+	/**
+	 *
+	 * @var \Elgg\Debug\Inspector
+	 */
+	protected $inspector;
 
 	/**
 	 * @var MemoryQueue
 	 */
-	private $queue;
+	protected $queue;
 
 	/**
 	 * @var SubscriptionsService
 	 */
-	private $subscriptions;
+	protected $subscriptions;
 
 	/**
 	 * @var Translator
 	 */
-	private $translator;
+	protected $translator;
 
 	/**
 	 * @var ElggSession
 	 */
-	private $session;
+	protected $session;
 
 	/**
 	 * @var Config
 	 */
-	private $config;
+	protected $config;
 
 	/**
 	 * @var Context
 	 */
-	private $context;
+	protected $context;
 
 	/**
 	 * @var Logger
 	 */
-	private $logger;
+	protected $logger;
 
 	/**
 	 * @var NotificationsService
 	 */
-	private $notifications;
+	protected $notifications;
 
 	/**
 	 * @var EntityMocks
 	 */
-	private $mocks;
+	protected $mocks;
 
 	/**
 	 * @var EntityTable
 	 */
-	private $entities;
+	protected $entities;
 
 	/**
 	 * @var MetadataTable
 	 */
-	private $metadata;
+	protected $metadata;
 
 	/**
-	 * @var \Elgg\Database\AnnotationTable
+	 * @var \Elgg\Database\Annotations
 	 */
-	private $annotations;
+	protected $annotations;
 
 	/**
 	 * @var RelationshipsTable
 	 */
-	private $relationships;
+	protected $relationships;
 
 	/**
 	 * @var AccessCollections
 	 */
-	private $accessCollections;
+	protected $accessCollections;
+
+	/**
+	 * @var string
+	 */
+	protected $test_object_class;
 
 	public function setUp() {
+
+		if (!isset($this->test_object_class)) {
+			throw new \Exception(get_class($this) . ' must set \$object_test_class before calling ' . __METHOD__);
+		}
+
 		$this->mocks = new EntityMocks($this);
 		$this->entities = $this->mocks->getEntityTableMock();
 		$this->metadata = $this->mocks->getMetadataTableMock();
 		$this->annotations = $this->mocks->getAnnotationsTableMock();
 		$this->relationships = $this->mocks->getRelationshipsTableMock();
 
+		$this->inspector = new \Elgg\Debug\Inspector();
+		$this->events = new \Elgg\EventsService($this->inspector);
+		$this->events->backup();
+
 		$this->hooks = new PluginHooksService();
+		$this->hooks->backup();
+
 		$this->queue = new MemoryQueue();
 		$dbMock = $this->getMockBuilder(Database::class)
 				->disableOriginalConstructor()
 				->getMock();
+
 		$this->subscriptions = new SubscriptionsService($dbMock);
 		$this->translator = new Translator();
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
 
 		$this->session = ElggSession::getMock();
 		$this->session->start();
+		$this->session->setLoggedInUser($this->mocks->getUser([
+			'language' => 'en',
+		]));
 
 		$this->config = $this->config();
 		$this->context = new Context();
@@ -148,15 +176,19 @@ class NotificationsServiceTest extends TestCase {
 							}
 							return false;
 						}));
+
 	}
 
 	public function tearDown() {
 		$this->logger->enable();
 		$this->session->invalidate();
+		$this->events->restore();
+		$this->hooks->restore();
 	}
 
 	public function setupServices() {
 		_elgg_services()->setValue('hooks', $this->hooks);
+		_elgg_services()->setValue('events', $this->events);
 		_elgg_services()->setValue('translator', $this->translator);
 		_elgg_services()->setValue('session', $this->session);
 		_elgg_services()->setValue('config', $this->config);
@@ -174,73 +206,122 @@ class NotificationsServiceTest extends TestCase {
 		_elgg_services()->setValue('notifications', $this->notifications);
 	}
 
+	public function getTestObject() {
+		$objects = $this->prepareTestObjects();
+		foreach ($objects as $object) {
+			if ($object instanceof $this->test_object_class) {
+				return $object;
+			}
+		}
+		throw new \Exception("Test object not found for $this->test_object_class class");
+	}
+
+	public function prepareTestObjects() {
+
+		$this->setupServices();
+
+		$object = $this->mocks->getObject([
+			'access_id' => ACCESS_LOGGED_IN,
+			'subtype' => 'test_subtype',
+		]);
+
+		$group = $this->mocks->getGroup([
+			'access_id' => ACCESS_LOGGED_IN,
+		]);
+
+		$user = $this->mocks->getUser();
+
+		$metadata_id = create_metadata($object->guid, 'test_metadata_name', 'test_metadata_value');
+		$metadata = elgg_get_metadata_from_id($metadata_id);
+
+		$annotation_id = $object->annotate('test_annotation_name', 'test_annotation_value');
+		$annotation = elgg_get_annotation_from_id($annotation_id);
+
+		add_entity_relationship($object->guid, 'test_relationship', $user->guid);
+		$relationship = check_entity_relationship($object->guid, 'test_relationship', $user->guid);
+
+		return [
+			$object,
+			$group,
+			$user,
+			$metadata,
+			$annotation,
+			$relationship,
+		];
+	}
+
 	public function testRegisterEvent() {
 		$this->setupServices();
 
-		$this->notifications->registerEvent('foo', 'bar');
+		$object = $this->getTestObject();
+
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 		$events = array(
-			'foo' => array(
-				'bar' => array('create')
+			$object->getType() => array(
+				$object->getSubtype() => array('create')
 			)
 		);
 		$this->assertEquals($events, $this->notifications->getEvents());
 
-		$this->notifications->registerEvent('foo', 'bar', array('test'));
-		$events['foo']['bar'] = array('create', 'test');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), array('test_event'));
+		$events[$object->getType()][$object->getSubtype()] = array('create', 'test_event');
 		$this->assertEquals($events, $this->notifications->getEvents());
 
-		$this->notifications->registerEvent('foo', 'bar');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 		$this->assertEquals($events, $this->notifications->getEvents());
 	}
 
 	public function testUnregisterEvent() {
 		$this->setupServices();
 
-		$this->notifications->registerEvent('foo', 'bar');
-		$this->assertTrue($this->notifications->unregisterEvent('foo', 'bar'));
+		$object = $this->getTestObject();
+
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+		$this->assertTrue($this->notifications->unregisterEvent($object->getType(), $object->getSubtype()));
 
 		$events = array(
-			'foo' => array()
+			$object->getType() => array()
 		);
 		$this->assertEquals($events, $this->notifications->getEvents());
-		$this->assertFalse($this->notifications->unregisterEvent('foo', 'bar'));
+		$this->assertFalse($this->notifications->unregisterEvent($object->getType(), $object->getSubtype()));
 	}
 
 	public function testRegisterMethod() {
 		$this->setupServices();
 
-		$this->notifications->registerMethod('foo');
-		$methods = array('foo' => 'foo');
+		$this->notifications->registerMethod('test_method');
+		$methods = array('test_method' => 'test_method');
 		$this->assertEquals($methods, $this->notifications->getMethods());
 	}
 
 	public function testUnregisterMethod() {
 		$this->setupServices();
 
-		$this->notifications->registerMethod('foo');
-		$this->assertTrue($this->notifications->unregisterMethod('foo'));
+		$this->notifications->registerMethod('test_method');
+		$this->assertTrue($this->notifications->unregisterMethod('test_method'));
 		$this->assertEquals(array(), $this->notifications->getMethods());
-		$this->assertFalse($this->notifications->unregisterMethod('foo'));
+		$this->assertFalse($this->notifications->unregisterMethod('test_method'));
 	}
 
 	public function testEnqueueEvent() {
 		$this->setupServices();
 
-		$object = $this->mocks->getObject();
-		$this->notifications->registerEvent('object', $object->getSubtype());
+		$object = $this->getTestObject();
 
-		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+
+		$this->notifications->enqueueEvent('create', $object->getType(), $object);
 
 		$event = new SubscriptionNotificationEvent($object, 'create');
 		$this->assertEquals($event, $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
-		$this->notifications->enqueueEvent('null', 'object', $object);
+		$this->notifications->enqueueEvent('null', $object->getType(), $object);
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$this->notifications->enqueueEvent('create', 'object', new ElggObject());
+		$this->notifications->enqueueEvent('create', $object->getType(), new ElggObject());
 		$this->assertNull($this->queue->dequeue());
 	}
 
@@ -255,10 +336,11 @@ class NotificationsServiceTest extends TestCase {
 
 		$this->setupServices();
 
-		$object = $this->mocks->getObject();
-		$this->notifications->registerEvent('object', $object->getSubtype());
+		$object = $this->getTestObject();
 
-		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+
+		$this->notifications->enqueueEvent('create', $object->getType(), $object);
 		$this->assertNull($this->queue->dequeue());
 	}
 
@@ -278,17 +360,18 @@ class NotificationsServiceTest extends TestCase {
 
 		$this->setupServices();
 
-		$object = $this->mocks->getObject();
-		$this->notifications->registerEvent('object', $object->getSubtype());
+		$object = $this->getTestObject();
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['event1', 'event2', 'event3']);
 
-		$this->notifications->enqueueEvent('create', 'object', $object);
-		$this->notifications->enqueueEvent('create', 'object', $object);
-		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->enqueueEvent('event1', $object->getType(), $object);
+		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
+		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
 
 		$this->assertEquals(3, $this->notifications->processQueue(time() + 10));
 	}
 
 	public function testProcessQueueTimesout() {
+
 		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 				->method('getSubscriptions')
@@ -298,65 +381,19 @@ class NotificationsServiceTest extends TestCase {
 
 		$this->setupServices();
 
-		$object = $this->mocks->getObject();
-		$this->notifications->registerEvent('object', $object->getSubtype());
+		$object = $this->getTestObject();
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['event1', 'event2', 'event3']);
 
-		$this->notifications->enqueueEvent('create', 'object', $object);
-		$this->notifications->enqueueEvent('create', 'object', $object);
-		$this->notifications->enqueueEvent('create', 'object', $object);
+		$this->notifications->enqueueEvent('event1', $object->getType(), $object);
+		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
+		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
 
 		$this->assertEquals(0, $this->notifications->processQueue(time()));
 	}
 
-	/**
-	 * Can't use dataProvider because dataProvider methods are static,
-	 * and we need a concrete instance of the test to boostrap mocks
-	 */
-	public function testNotificationFlow() {
+	public function testCanUseEnqueueHookToPreventSubscriptionNotificationEventFromQueueing() {
 
-		$this->setupServices();
-		
-		$object = $this->mocks->getObject([
-			'access_id' => ACCESS_LOGGED_IN,
-			'subtype' => 'test_subtype',
-		]);
-
-		$group = $this->mocks->getGroup([
-			'access_id' => ACCESS_LOGGED_IN,
-		]);
-
-		$user = $this->mocks->getUser([
-			'access_id' => ACCESS_PUBLIC,
-		]);
-
-		$metadata_id = create_metadata($object->guid, 'test_metadata_name', 'test_metadata_value');
-		$metadata = elgg_get_metadata_from_id($metadata_id);
-
-		$annotation_id = $object->annotate('test_annotation_name', 'test_annotation_value');
-		$annotation = elgg_get_annotation_from_id($annotation_id);
-
-		add_entity_relationship($object->guid, 'test_relationship', $user->guid);
-		$relationship = check_entity_relationship($object->guid, 'test_relationship', $user->guid);
-		
-		$test_objects = [
-			$object,
-			$group,
-			$user,
-			$metadata,
-			$annotation,
-			$relationship,
-		];
-
-		foreach ($test_objects as $test_object) {
-			$this->canUseEnqueueHookToPreventQueuing($test_object);
-			$this->canUseHooksBeforeAndAfterQueueProcessing($test_object);
-			$this->canProcessQueue($test_object);
-			$this->canAlterTranslations($test_object);
-			$this->canPrepareNotification($test_object);
-		}
-	}
-
-	public function canUseEnqueueHookToPreventQueuing($object) {
+		$object = $this->getTestObject();
 
 		$call_count = 0;
 
@@ -368,45 +405,43 @@ class NotificationsServiceTest extends TestCase {
 		$mock->expects($this->exactly(0))
 				->method('getSubscriptions')
 				->will($this->returnValue([
-							$recipient->guid => ['foo', 'bar'],
+							$recipient->guid => ['test_method', 'bad_method'],
 		]));
 
 		$this->subscriptions = $mock;
 
-		$this->hooks->backup();
-
 		$this->hooks->registerHandler('enqueue', 'notification', function($hook, $type, $return, $params) use (&$call_count, $object) {
 			$call_count++;
-			$this->assertSame($object, $params['object'], 'Failed with ' . get_class($object));
-			$this->assertEquals('create', $params['action'], 'Failed with ' . get_class($object));
+			$this->assertSame($object, $params['object']);
+			$this->assertEquals('test_event', $params['action']);
 			return false;
 		});
 
 		$this->setupServices();
 
-		$this->notifications->registerMethod('foo');
+		$this->notifications->registerMethod('test_method');
 
 
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
-		$this->assertEquals(0, $this->queue->size(), 'Failed with ' . get_class($object));
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
-		$this->assertEquals(1, $call_count, 'Failed with ' . get_class($object));
-		$this->assertEquals(0, $this->queue->size(), 'Failed with ' . get_class($object));
+		$this->assertEquals(0, $this->queue->size());
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->assertEquals(1, $call_count);
+		$this->assertEquals(0, $this->queue->size());
 
-		$this->assertEquals(0, $this->notifications->processQueue(time() + 10), 'Failed with ' . get_class($object));
-
-		$this->hooks->restore();
+		$this->assertEquals(0, $this->notifications->processQueue(time() + 10));
 	}
 
-	public function canUseHooksBeforeAndAfterQueueProcessing($object) {
+	public function testCanUseHooksBeforeAndAfterSubscriptionNotificationsQueue() {
+
+		$object = $this->getTestObject();
 
 		$before_call_count = 0;
 		$after_call_count = 0;
 
 		$recipient = $this->mocks->getUser();
 		$subscribers = [
-			$recipient->guid => ['foo', 'bar'],
+			$recipient->guid => ['test_method', 'bad_method'],
 		];
 		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
@@ -415,47 +450,40 @@ class NotificationsServiceTest extends TestCase {
 
 		$this->subscriptions = $mock;
 
-		$this->hooks->backup();
-
-		$event = new SubscriptionNotificationEvent($object, 'create');
+		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
 		$this->hooks->registerHandler('send:before', 'notifications', function($hook, $type, $return, $params) use (&$before_call_count, $event, $subscribers, $object) {
 			$before_call_count++;
-			$this->assertEquals($event, $params['event'], 'Failed with ' . get_class($object));
-			$this->assertEquals($subscribers, $params['subscriptions'], 'Failed with ' . get_class($object));
+			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($subscribers, $params['subscriptions']);
 			return false;
 		});
 
 		$this->hooks->registerHandler('send:after', 'notifications', function($hook, $type, $return, $params) use (&$after_call_count, $event, $subscribers, $object) {
 			$after_call_count++;
-			$this->assertEquals($event, $params['event'], 'Failed with ' . get_class($object));
-			$this->assertEquals($subscribers, $params['subscriptions'], 'Failed with ' . get_class($object));
+			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($subscribers, $params['subscriptions']);
 			$this->assertEmpty($params['deliveries']);
 		});
 
 		$this->setupServices();
 
-		$this->notifications->registerMethod('foo');
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
-		$this->assertEquals(0, $this->queue->size(), 'Failed with ' . get_class($object));
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
-		$this->assertEquals(1, $this->queue->size(), 'Failed with ' . get_class($object));
+		$this->assertEquals(0, $this->queue->size());
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->assertEquals(1, $this->queue->size());
 
-		$this->assertEquals(1, $this->notifications->processQueue(time() + 10), 'Failed with ' . get_class($object));
+		$this->assertEquals(1, $this->notifications->processQueue(time() + 10));
 
-		$this->assertEquals(1, $before_call_count, 'Failed with ' . get_class($object));
-		$this->assertEquals(1, $after_call_count, 'Failed with ' . get_class($object));
-
-		$this->hooks->restore();
+		$this->assertEquals(1, $before_call_count);
+		$this->assertEquals(1, $after_call_count);
 	}
 
-	public function canProcessQueue($object) {
+	public function testCanProcessSubscriptionNotificationsQueue() {
 
-		$logged_in = $this->mocks->getUser([
-			'language' => 'en',
-		]);
-		$this->session->setLoggedInUser($logged_in);
+		$object = $this->getTestObject();
 
 		$call_count = 0;
 
@@ -465,70 +493,61 @@ class NotificationsServiceTest extends TestCase {
 		$mock->expects($this->exactly(1))
 				->method('getSubscriptions')
 				->will($this->returnValue([
-							$recipient->guid => ['foo', 'bar'],
+							$recipient->guid => ['test_method', 'bad_method'],
 		]));
 
 		$this->subscriptions = $mock;
 
-		$event = new SubscriptionNotificationEvent($object, 'create');
+		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
 		$this->translator->addTranslation('en', [
 			'notification:body' => 'Link: %s',
 			'notification:subject' => 'From: %s',
 		]);
 
-		$this->hooks->backup();
-
-		$this->hooks->registerHandler('send', 'notification:foo', function($hook, $type, $return, $params) use (&$call_count, $event, $object, $recipient) {
+		$this->hooks->registerHandler('send', 'notification:test_method', function($hook, $type, $return, $params) use (&$call_count, $event, $recipient) {
 			$call_count++;
 			$this->assertInstanceOf(Notification::class, $params['notification']);
 			$this->assertEquals($this->translator->translate('notification:subject', [$event->getActor()->name], $recipient->language), $params['notification']->subject);
 			$this->assertEquals($this->translator->translate('notification:body', [$event->getObject()->getURL()], $recipient->language), $params['notification']->body);
-			$this->assertEquals($event, $params['event'], 'Failed with ' . get_class($object));
+			$this->assertEquals($event, $params['event']);
 			return true;
 		});
 
 		$this->setupServices();
 
-		$this->notifications->registerMethod('foo');
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
-		$this->assertEquals(0, $this->queue->size(), 'Failed with ' . get_class($object));
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
+		$this->assertEquals(0, $this->queue->size());
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
 		$event = $this->queue->dequeue();
 		$this->assertInstanceOf(SubscriptionNotificationEvent::class, $event);
-		$this->assertSame($logged_in, $event->getActor());
+		$this->assertSame(elgg_get_logged_in_user_entity(), $event->getActor());
 		$this->assertSame($object, $event->getObject());
-		$this->assertEquals("create:{$object->getType()}:{$object->getSubtype()}", $event->getDescription());
+		$this->assertEquals("test_event:{$object->getType()}:{$object->getSubtype()}", $event->getDescription());
 
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
-		$this->assertEquals(1, $this->queue->size(), 'Failed with ' . get_class($object));
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
+		$this->assertEquals(1, $this->queue->size());
 
 		$deliveries = [
-			"create:{$object->getType()}:{$object->getSubtype()}" => [
+			"test_event:{$object->getType()}:{$object->getSubtype()}" => [
 				$recipient->guid => [
-					'foo' => true,
-					'bar' => false,
+					'test_method' => true,
+					'bad_method' => false,
 				]
 			]
 		];
 
 		$result = $this->notifications->processQueue(time() + 10, true);
-		$this->assertEquals(1, $call_count, 'Failed with ' . get_class($object));
-		$this->assertEquals($deliveries, $result, 'Failed with ' . get_class($object));
-
-		$this->hooks->restore();
-
-		$this->session->removeLoggedInUser();
+		$this->assertEquals(1, $call_count);
+		$this->assertEquals($deliveries, $result);
 	}
 
-	public function canAlterTranslations($object) {
+	public function testCanAlterSubscriptionNotificationTranslations() {
 
-		$logged_in = $this->mocks->getUser([
-			'language' => 'en',
-		]);
-		$this->session->setLoggedInUser($logged_in);
+		$object = $this->getTestObject();
 
 		$call_count = 0;
 
@@ -540,21 +559,19 @@ class NotificationsServiceTest extends TestCase {
 		$mock->expects($this->exactly(1))
 				->method('getSubscriptions')
 				->will($this->returnValue([
-							$recipient->guid => ['foo', 'bar'],
+							$recipient->guid => ['test_method', 'bad_method'],
 		]));
 
 		$this->subscriptions = $mock;
 
-		$event = new SubscriptionNotificationEvent($object, 'create');
+		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
 		$this->translator->addTranslation('en', [
 			"notification:{$event->getDescription()}:body" => '%s %s %s %s %s %s',
 			"notification:{$event->getDescription()}:subject" => '%s %s',
 		]);
 
-		$this->hooks->backup();
-
-		$this->hooks->registerHandler('send', 'notification:foo', function($hook, $type, $return, $params) use (&$call_count, $event, $object, $recipient) {
+		$this->hooks->registerHandler('send', 'notification:test_method', function($hook, $type, $return, $params) use (&$call_count, $event, $object, $recipient) {
 			$call_count++;
 
 			$object = $event->getObject();
@@ -582,31 +599,24 @@ class NotificationsServiceTest extends TestCase {
 						$object->description,
 						$object->getURL(),
 							], $recipient->language), $params['notification']->body);
-			$this->assertEquals($event, $params['event'], 'Failed with ' . get_class($object));
+			$this->assertEquals($event, $params['event']);
 			return true;
 		});
 
 		$this->setupServices();
 
-		$this->notifications->registerMethod('foo');
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
 		$this->notifications->processQueue(time() + 10);
 
-		$this->assertEquals(1, $call_count, 'Failed with ' . get_class($object));
-
-		$this->hooks->restore();
-
-		$this->session->removeLoggedInUser();
+		$this->assertEquals(1, $call_count);
 	}
 
-	public function canPrepareNotification($object) {
+	public function testCanPrepareSubscriptionNotification() {
 
-		$logged_in = $this->mocks->getUser([
-			'language' => 'en',
-		]);
-		$this->session->setLoggedInUser($logged_in);
+		$object = $this->getTestObject();
 
 		$recipient = $this->mocks->getUser([
 			'language' => 'en',
@@ -616,15 +626,13 @@ class NotificationsServiceTest extends TestCase {
 		$mock->expects($this->exactly(1))
 				->method('getSubscriptions')
 				->will($this->returnValue([
-							$recipient->guid => ['foo', 'bar'],
+							$recipient->guid => ['test_method', 'bad_method'],
 								]
 		));
 
 		$this->subscriptions = $mock;
 
-		$event = new SubscriptionNotificationEvent($object, 'create');
-
-		$this->hooks->backup();
+		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
 		$this->hooks->registerHandler('prepare', 'notification', function($hook, $type, $notification) {
 			$notification->prepare_hook = true;
@@ -636,12 +644,12 @@ class NotificationsServiceTest extends TestCase {
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('format', 'notification:foo', function($hook, $type, $notification) {
+		$this->hooks->registerHandler('format', 'notification:test_method', function($hook, $type, $notification) {
 			$notification->format_hook = true;
 			return $notification;
 		});
 
-		$this->hooks->registerHandler('send', 'notification:foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('send', 'notification:test_method', function($hook, $type, $return, $params) {
 			$notification = $params['notification'];
 			$this->assertTrue($notification->prepare_hook);
 			$this->assertTrue($notification->granular_prepare_hook);
@@ -651,15 +659,11 @@ class NotificationsServiceTest extends TestCase {
 
 		$this->setupServices();
 
-		$this->notifications->registerMethod('foo');
-		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
-		$this->notifications->enqueueEvent('create', $object->getType(), $object);
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
+		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
 		$this->assertEquals(1, $this->notifications->processQueue(time() + 10));
-
-		$this->hooks->restore();
-
-		$this->session->removeLoggedInUser();
 	}
 
 }

@@ -351,7 +351,6 @@ class EntityMocks {
 				->will($this->test->returnValue($type));
 		$attributes['type'] = $type;
 
-
 		$entity->expects($this->test->any())
 				->method('getSubtype')
 				->will($this->test->returnValue($subtype));
@@ -378,6 +377,17 @@ class EntityMocks {
 				case 'group' :
 				case 'object' :
 					$attributes['container_guid'] = $attributes['owner_guid'];
+					break;
+			}
+		}
+
+		if (!isset($attributes['access_id'])) {
+			switch ($type) {
+				case 'user' :
+					$attributes['access_id'] = ACCESS_PUBLIC;
+					break;
+				default :
+					$attributes['access_id'] = ACCESS_PRIVATE;
 					break;
 			}
 		}

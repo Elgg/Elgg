@@ -1,0 +1,15 @@
+<?php
+
+namespace Elgg\Notifications;
+
+/**
+ * @group NotificationsService
+ */
+class NotificationsServiceElggObjectTest extends NotificationsServiceTestCase {
+	
+	public function setUp() {
+		$this->test_object_class = \ElggObject::class;
+		parent::setUp();
+	}
+
+}
