@@ -162,17 +162,23 @@ abstract class NotificationsServiceTestCase extends TestCase {
 
 		$this->accessCollections->expects($this->any())
 				->method('hasAccessToEntity')
-				->will($this->returnCallback(function($entity, $user) {
+				->will($this->returnCallback(function($entity, $user = null) {
+					if ($entity->access_id == ACCESS_PUBLIC) {
+								return true;
+							}
+							if ($entity->access_id == ACCESS_LOGGED_IN && elgg_is_logged_in()) {
+								return true;
+							}
+							if (!$user) {
+								$user = elgg_get_logged_in_user_entity();
+							}
+							if (!$user) {
+								return false;
+							}
 							if ($user->isAdmin()) {
 								return true;
 							}
 							if ($entity->owner_guid == $user->guid) {
-								return true;
-							}
-							if ($entity->access_id == ACCESS_PUBLIC) {
-								return true;
-							}
-							if ($entity->access_id == ACCESS_LOGGED_IN && elgg_is_logged_in()) {
 								return true;
 							}
 							if ($entity->access_id == ACCESS_PRIVATE && $entity->owner_guid == $user->guid) {
@@ -712,5 +718,249 @@ abstract class NotificationsServiceTestCase extends TestCase {
 		$this->session->getLoggedInUser()->delete();
 
 		$this->assertEquals(0, $this->notifications->processQueue(time() + 10));
+	}
+
+	/**
+	 * @group InstantNotificationsService
+	 */
+	public function testCanNotifyUser() {
+
+		$object = $this->getTestObject();
+
+		$from = $this->mocks->getUser();
+		$to1 = $this->mocks->getUser();
+
+		$to2 = $this->mocks->getUser();
+		$to2->setNotificationSetting('test_method', true);
+		
+		$to3 = $this->mocks->getUser();
+		
+		$subject = 'Test message';
+		$body = 'Lorem ipsum';
+
+		$event = new InstantNotificationEvent($object, 'notify_user', $from);
+
+		$this->hooks->registerHandler('get', 'subscriptions', function($hook, $type, $return) use ($to3) {
+			$return[$to3->guid] = [
+				'test_method'
+			];
+			return $return;
+		});
+
+		$this->hooks->registerHandler('prepare', 'notification', function($hook, $type, $notification) {
+			$notification->prepare_hook = true;
+			return $notification;
+		});
+
+		$this->hooks->registerHandler('prepare', "notification:{$event->getDescription()}", function($hook, $type, $notification) {
+			$notification->granular_prepare_hook = true;
+			return $notification;
+		});
+
+		$this->hooks->registerHandler('format', 'notification:test_method', function($hook, $type, $notification) {
+			$notification->format_hook = true;
+			return $notification;
+		});
+		
+		$sent = 0;
+		$this->hooks->registerHandler('send', 'notification:test_method', function($hook, $type, $return, $params) use (&$sent, $subject, $body, $event){
+			$sent++;
+			$notification = $params['notification'];
+			
+			$this->assertInstanceOf(Notification::class, $notification);
+			$this->assertEquals($notification->subject, $subject);
+			$this->assertEquals($notification->body, $body);
+			$this->assertEquals($notification->summary, $subject);
+			$this->assertEquals($event, $params['event']);
+
+			$this->assertTrue($notification->prepare_hook);
+			$this->assertTrue($notification->granular_prepare_hook);
+			$this->assertTrue($notification->format_hook);
+			return true;
+		});
+
+		$this->setupServices();
+
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerMethod('test_method2');
+
+		$expected = [
+			$to2->guid => [
+				'test_method' => true,
+			],
+			$to3->guid => [
+				'test_method' => true,
+			]
+		];
+		
+		$this->assertEquals($expected, notify_user([$to1->guid, $to2->guid, 0], $from->guid, $subject, $body, [
+			'object' => $object,
+			'summary' => $subject,
+		]));
+
+		$this->assertEquals(2, $sent);
+	}
+
+	/**
+	 * @group InstantNotificationsService
+	 */
+	public function testCanNotifyUserWithoutAnObject() {
+
+		$from = $this->mocks->getUser();
+		$to1 = $this->mocks->getUser();
+
+		$to2 = $this->mocks->getUser();
+		$to2->setNotificationSetting('test_method', true);
+
+		$to3 = $this->mocks->getUser();
+
+		$subject = 'Test message';
+		$body = 'Lorem ipsum';
+
+		$event = new InstantNotificationEvent(null, null, $from);
+
+		$this->hooks->registerHandler('get', 'subscriptions', function($hook, $type, $return) use ($to3) {
+			$return[$to3->guid] = ['test_method'];
+			return $return;
+		});
+
+		$this->hooks->registerHandler('prepare', 'notification', function($hook, $type, $notification) {
+			$notification->prepare_hook = true;
+			return $notification;
+		});
+
+		$this->hooks->registerHandler('prepare', "notification:{$event->getDescription()}", function($hook, $type, $notification) {
+			$notification->granular_prepare_hook = true;
+			return $notification;
+		});
+
+		$this->hooks->registerHandler('format', 'notification:test_method', function($hook, $type, $notification) {
+			$notification->format_hook = true;
+			return $notification;
+		});
+
+		$sent = 0;
+		$this->hooks->registerHandler('send', 'notification:test_method', function($hook, $type, $return, $params) use (&$sent, $subject, $body, $event){
+			$sent++;
+			$notification = $params['notification'];
+
+			$this->assertInstanceOf(Notification::class, $notification);
+			$this->assertEquals($notification->subject, $subject);
+			$this->assertEquals($notification->body, $body);
+			$this->assertEquals($event, $params['event']);
+
+			$this->assertTrue($notification->prepare_hook);
+			$this->assertTrue($notification->granular_prepare_hook);
+			$this->assertTrue($notification->format_hook);
+			return true;
+		});
+
+		$this->setupServices();
+
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerMethod('test_method2');
+
+		$expected = [
+			$to2->guid => [
+				'test_method' => true,
+			],
+			$to3->guid => [
+				'test_method' => true,
+			]
+		];
+		
+		$this->assertEquals($expected, notify_user([$to1->guid, $to2->guid, 0], $from->guid, $subject, $body));
+
+		$this->assertEquals(2, $sent);
+	}
+
+	/**
+	 * @group InstantNotificationsService
+	 */
+	public function testCanUseHooksBeforeAndAfterInstantNotificationsQueue() {
+
+		$object = $this->getTestObject();
+
+		$from = $this->mocks->getUser();
+		$to1 = $this->mocks->getUser();
+
+		$to2 = $this->mocks->getUser();
+		$to2->setNotificationSetting('test_method', true);
+
+		$subject = 'Test message';
+		$body = 'Lorem ipsum';
+
+		$subscribers = [
+			$to1->guid => [],
+			$to2->guid => ['test_method'],
+		];
+
+		$event = new InstantNotificationEvent($object, 'test_event', $from);
+
+		$before_call_count = 0;
+		$after_call_count = 0;
+
+		$this->hooks->registerHandler('send:before', 'notifications', function($hook, $type, $return, $params) use (&$before_call_count, $event, $subscribers) {
+			$before_call_count++;
+			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($subscribers, $params['subscriptions']);
+			return false;
+		});
+
+		$this->hooks->registerHandler('send:after', 'notifications', function($hook, $type, $return, $params) use (&$after_call_count, $event, $subscribers) {
+			$after_call_count++;
+			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($subscribers, $params['subscriptions']);
+			$this->assertEmpty($params['deliveries']);
+		});
+
+		$this->setupServices();
+
+		$this->notifications->registerMethod('test_method');
+		
+		$this->assertEquals([], notify_user([$to1->guid, $to2->guid, 0], $from->guid, $subject, $body, [
+			'object' => $object,
+			'summary' => $subject,
+			'action' => 'test_event',
+		]));
+
+		$this->assertEquals(1, $before_call_count);
+		$this->assertEquals(1, $after_call_count);
+	}
+
+	/**
+	 * @group InstantNotificationsService
+	 */
+	public function testCanNotifyUserViaCustomMethods() {
+
+		$object = $this->getTestObject();
+
+		$from = $this->mocks->getUser();
+		$to1 = $this->mocks->getUser();
+		$to1->setNotificationSetting('test_method', true);
+
+		$to2 = $this->mocks->getUser();
+		$to2->setNotificationSetting('test_method', true);
+		
+		$subject = 'Test message';
+		$body = 'Lorem ipsum';
+		$this->hooks->registerHandler('send', 'notification:test_method', [\Elgg\Values::class, 'getFalse']);
+		$this->hooks->registerHandler('send', 'notification:test_method2', [\Elgg\Values::class, 'getTrue']);
+
+		$this->setupServices();
+
+		$this->notifications->registerMethod('test_method');
+		$this->notifications->registerMethod('test_method2');
+
+		$expected = [
+			$to1->guid => [
+				'test_method2' => true,
+			],
+			$to2->guid => [
+				'test_method2' => true,
+			]
+		];
+
+		$this->assertEquals($expected, notify_user([$to1->guid, $to2->guid, 0], $from->guid, $subject, $body, [], 'test_method2'));
 	}
 }

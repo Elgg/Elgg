@@ -11,7 +11,7 @@ use ElggData;
 use ElggEntity;
 use ElggSession;
 use ElggUser;
-use NotificationException;
+use InvalidArgumentException;
 use RuntimeException;
 
 /**
@@ -312,19 +312,19 @@ class NotificationsService {
 	 * ]
 	 * </code>
 	 *
-	 * @param mixed  $to               Either a guid or an array of guid's to notify.
-	 * @param int    $from             GUID of the sender, which may be a user, site or object.
-	 * @param array  $params           Notification parameters
+	 * @param ElggUser[]  $recipients     Either a guid or an array of guid's to notify.
+	 * @param ElggEntity  $from   GUID of the sender, which may be a user, site or object.
+	 * @param array       $params Notification parameters
 	 * 
 	 * @uses $params['subject']          string
 	 *                                   Default message subject
-	 * @uses $params['message']          string
+	 * @uses $params['body']             string
 	 *                                   Default message body
 	 * @uses $params['object']           null|\ElggEntity|\ElggAnnotation
 	 *                                   The object that is triggering the notification.
 	 * @uses $params['action']           null|string
 	 *                                   Word that describes the action that is triggering the notification
-	 *                                  (e.g. "create" or "update").
+	 *                                  (e.g. "create" or "update"). Defaults to "notify_user"
 	 * @uses $params['summary']          null|string
 	 *                                   Summary that notification plugins can use alongside the notification title and body.
 	 * @uses $params['methods_override'] string|array
@@ -333,32 +333,26 @@ class NotificationsService {
 	 *                                   user's chosen delivery methods.
 	 *
 	 * @return array
-	 * @throws NotificationException
 	 * @access private
 	 */
-	public function sendInstantNotifications($to, $from, array $params = []) {
+	public function sendInstantNotifications(\ElggEntity $sender, array $recipients = [], array $params = []) {
 
-		$result = [];
+		if (!$sender instanceof \ElggEntity) {
+			throw new InvalidArgumentException("Notification sender must be a valid entity");
+		}
+		
+		$deliveries = [];
 
 		if (!$this->methods) {
-			return $result;
+			return $deliveries;
 		}
-
-		if (!is_array($to)) {
-			$to = [(int) $to];
-		}
-
-		$sender = get_entity($from);
-		if (!$sender) {
-			$sender = elgg_get_site_entity();
-			$from = $sender->guid;
-		}
-
-		$subject = elgg_extract('subject', $params);
-		$message = elgg_extract('message', $params);
+		
+		$recipients = array_filter($recipients, function($e) {
+			return ($e instanceof \ElggUser);
+		});
+		
 		$object = elgg_extract('object', $params);
 		$action = elgg_extract('action', $params);
-		$summary = elgg_extract('summary', $params, '');
 
 		$methods_override = elgg_extract('methods_override', $params);
 		unset($params['methods_override']);
@@ -373,17 +367,13 @@ class NotificationsService {
 
 		$subscriptions = [];
 
-		foreach ($to as $guid) {
-			$recipient = get_entity($guid);
-			if (!$recipient) {
-				continue;
-			}
+		foreach ($recipients as $recipient) {
 
 			// Are we overriding delivery?
 			$methods = $methods_override;
 			if (empty($methods)) {
 				$methods = [];
-				$user_settings = (array) get_user_notification_settings($guid);
+				$user_settings = $recipient->getNotificationSettings();
 				foreach ($user_settings as $method => $enabled) {
 					if ($enabled) {
 						$methods[] = $method;
@@ -391,7 +381,7 @@ class NotificationsService {
 				}
 			}
 
-			$subscriptions[$guid] = $methods;
+			$subscriptions[$recipient->guid] = $methods;
 		}
 
 		$hook_params = [
@@ -405,11 +395,12 @@ class NotificationsService {
 
 		// return false to stop the default notification sender
 		if ($this->hooks->trigger('send:before', 'notifications', $params, true)) {
-			$result = $this->sendNotifications($event, $subscriptions, $params);
+			$deliveries = $this->sendNotifications($event, $subscriptions, $params);
 		}
+		$params['deliveries'] = $deliveries;
 		$this->hooks->trigger('send:after', 'notifications', $params);
 
-		return $result;
+		return $deliveries;
 	}
 
 	/**
@@ -431,7 +422,7 @@ class NotificationsService {
 			$recipient = $this->entities->get($guid);
 			/* @var \ElggEntity $recipient */
 			$subject = elgg_extract('subject', $params, '');
-			$body = elgg_extract('message', $params, '');
+			$body = elgg_extract('body', $params, '');
 			$summary = elgg_extract('summary', $params, '');
 		} else {
 			$recipient = $this->entities->get($guid, 'user');
@@ -753,7 +744,7 @@ class NotificationsService {
 	 * @param NotificationEvent $event Event
 	 * @return boolean
 	 */
-	protected function existsDeprecatedNotificationOverride(NotificationEvent $event) {	
+	protected function existsDeprecatedNotificationOverride(NotificationEvent $event) {
 		$entity = $event->getObject();
 		if (!elgg_instanceof($entity)) {
 			return false;

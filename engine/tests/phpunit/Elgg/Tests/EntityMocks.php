@@ -420,8 +420,8 @@ class EntityMocks {
 						}));
 
 		$entity->expects($this->test->any())
-				->method('__set')
-				->will($this->test->returnCallback(function($name, $value) use ($entity, &$map) {
+				->method('__unset')
+				->will($this->test->returnCallback(function($name) use ($entity) {
 							$entity->deleteMetadata($name);
 						}));
 
