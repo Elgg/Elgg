@@ -4,13 +4,18 @@ namespace Elgg\Notifications;
 
 use Elgg\Config;
 use Elgg\Context;
+use Elgg\Database;
+use Elgg\Database\AccessCollections;
 use Elgg\Database\EntityTable;
+use Elgg\Database\MetadataTable;
+use Elgg\Database\RelationshipsTable;
 use Elgg\I18n\Translator;
 use Elgg\Logger;
 use Elgg\PluginHooksService;
 use Elgg\Queue\MemoryQueue;
 use Elgg\TestCase;
 use Elgg\Tests\EntityMocks;
+use ElggEntity;
 use ElggObject;
 use ElggSession;
 
@@ -75,17 +80,35 @@ class NotificationsServiceTest extends TestCase {
 	private $entities;
 
 	/**
-	 * @var \Elgg\Database\AccessCollections
+	 * @var MetadataTable
+	 */
+	private $metadata;
+
+	/**
+	 * @var \Elgg\Database\AnnotationTable
+	 */
+	private $annotations;
+
+	/**
+	 * @var RelationshipsTable
+	 */
+	private $relationships;
+
+	/**
+	 * @var AccessCollections
 	 */
 	private $accessCollections;
 
 	public function setUp() {
 		$this->mocks = new EntityMocks($this);
 		$this->entities = $this->mocks->getEntityTableMock();
+		$this->metadata = $this->mocks->getMetadataTableMock();
+		$this->annotations = $this->mocks->getAnnotationsTableMock();
+		$this->relationships = $this->mocks->getRelationshipsTableMock();
 
 		$this->hooks = new PluginHooksService();
 		$this->queue = new MemoryQueue();
-		$dbMock = $this->getMockBuilder(\Elgg\Database::class)
+		$dbMock = $this->getMockBuilder(Database::class)
 				->disableOriginalConstructor()
 				->getMock();
 		$this->subscriptions = new SubscriptionsService($dbMock);
@@ -100,7 +123,7 @@ class NotificationsServiceTest extends TestCase {
 		$this->logger = new Logger($this->hooks, $this->config, $this->context);
 		$this->logger->disable();
 
-		$this->accessCollections = $this->getMockBuilder(\Elgg\Database\AccessCollections::class)
+		$this->accessCollections = $this->getMockBuilder(AccessCollections::class)
 				->disableOriginalConstructor()
 				->setMethods(['hasAccessToEntity'])
 				->getMock();
@@ -140,6 +163,9 @@ class NotificationsServiceTest extends TestCase {
 		_elgg_services()->setValue('context', $this->context);
 		_elgg_services()->setValue('logger', $this->logger);
 		_elgg_services()->setValue('entityTable', $this->entities);
+		_elgg_services()->setValue('metadataTable', $this->metadata);
+		_elgg_services()->setValue('annotations', $this->annotations);
+		_elgg_services()->setValue('relationshipsTable', $this->relationships);
 		_elgg_services()->setValue('accessCollections', $this->accessCollections);
 
 		$this->notifications = new NotificationsService(
@@ -288,47 +314,45 @@ class NotificationsServiceTest extends TestCase {
 	 */
 	public function testNotificationFlow() {
 
-		$objects = [
-			$this->mocks->getObject([
-				'access_id' => ACCESS_LOGGED_IN,
-			]),
-			$this->mocks->getGroup([
-				'access_id' => ACCESS_LOGGED_IN,
-			]),
-			$this->mocks->getUser([
-				'access_id' => ACCESS_LOGGED_IN,
-			]),
-			new \ElggMetadata((object) [
-						'id' => 1,
-						'entity_guid' => $this->mocks->getObject()->guid,
-						'owner_guid' => $this->mocks->getUser()->guid,
-						'name' => 'foo',
-						'value' => 'bar',
-						'time_created' => time(),
-					]),
-			new \ElggAnnotation((object) [
-						'id' => 2,
-						'entity_guid' => $this->mocks->getObject()->guid,
-						'owner_guid' => $this->mocks->getUser()->guid,
-						'name' => 'foo',
-						'value' => 'bar',
-						'time_created' => time(),
-					]),
-			new \ElggRelationship((object) [
-						'id' => 3,
-						'guid_one' => $this->mocks->getUser()->guid,
-						'guid_two' => $this->mocks->getUser()->guid,
-						'relationship' => 'friend',
-						'time_created' => time(),
-					]),
+		$this->setupServices();
+		
+		$object = $this->mocks->getObject([
+			'access_id' => ACCESS_LOGGED_IN,
+			'subtype' => 'test_subtype',
+		]);
+
+		$group = $this->mocks->getGroup([
+			'access_id' => ACCESS_LOGGED_IN,
+		]);
+
+		$user = $this->mocks->getUser([
+			'access_id' => ACCESS_PUBLIC,
+		]);
+
+		$metadata_id = create_metadata($object->guid, 'test_metadata_name', 'test_metadata_value');
+		$metadata = elgg_get_metadata_from_id($metadata_id);
+
+		$annotation_id = $object->annotate('test_annotation_name', 'test_annotation_value');
+		$annotation = elgg_get_annotation_from_id($annotation_id);
+
+		add_entity_relationship($object->guid, 'test_relationship', $user->guid);
+		$relationship = check_entity_relationship($object->guid, 'test_relationship', $user->guid);
+		
+		$test_objects = [
+			$object,
+			$group,
+			$user,
+			$metadata,
+			$annotation,
+			$relationship,
 		];
 
-		foreach ($objects as $object) {
-			$this->canUseEnqueueHookToPreventQueuing($object);
-			$this->canUseHooksBeforeAndAfterQueueProcessing($object);
-			$this->canProcessQueue($object);
-			$this->canAlterTranslations($object);
-			$this->canPrepareNotification($object);
+		foreach ($test_objects as $test_object) {
+			$this->canUseEnqueueHookToPreventQueuing($test_object);
+			$this->canUseHooksBeforeAndAfterQueueProcessing($test_object);
+			$this->canProcessQueue($test_object);
+			$this->canAlterTranslations($test_object);
+			$this->canPrepareNotification($test_object);
 		}
 	}
 
@@ -490,9 +514,9 @@ class NotificationsServiceTest extends TestCase {
 			]
 		];
 
-		$this->assertEquals($deliveries, $this->notifications->processQueue(time() + 10, true), 'Failed with ' . get_class($object));
-
+		$result = $this->notifications->processQueue(time() + 10, true);
 		$this->assertEquals(1, $call_count, 'Failed with ' . get_class($object));
+		$this->assertEquals($deliveries, $result, 'Failed with ' . get_class($object));
 
 		$this->hooks->restore();
 
@@ -522,7 +546,7 @@ class NotificationsServiceTest extends TestCase {
 		$this->subscriptions = $mock;
 
 		$event = new SubscriptionNotificationEvent($object, 'create');
-		
+
 		$this->translator->addTranslation('en', [
 			"notification:{$event->getDescription()}:body" => '%s %s %s %s %s %s',
 			"notification:{$event->getDescription()}:subject" => '%s %s',
@@ -534,7 +558,7 @@ class NotificationsServiceTest extends TestCase {
 			$call_count++;
 
 			$object = $event->getObject();
-			if ($object instanceof \ElggEntity) {
+			if ($object instanceof ElggEntity) {
 				$display_name = $object->getDisplayName();
 				$container_name = '';
 				$container = $object->getContainerEntity();
@@ -557,7 +581,7 @@ class NotificationsServiceTest extends TestCase {
 						$container_name,
 						$object->description,
 						$object->getURL(),
-					], $recipient->language), $params['notification']->body);
+							], $recipient->language), $params['notification']->body);
 			$this->assertEquals($event, $params['event'], 'Failed with ' . get_class($object));
 			return true;
 		});
@@ -593,8 +617,8 @@ class NotificationsServiceTest extends TestCase {
 				->method('getSubscriptions')
 				->will($this->returnValue([
 							$recipient->guid => ['foo', 'bar'],
-		]
-						));
+								]
+		));
 
 		$this->subscriptions = $mock;
 
@@ -637,4 +661,5 @@ class NotificationsServiceTest extends TestCase {
 
 		$this->session->removeLoggedInUser();
 	}
+
 }

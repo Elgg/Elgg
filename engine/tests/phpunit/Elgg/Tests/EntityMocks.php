@@ -2,12 +2,19 @@
 
 namespace Elgg\Tests;
 
+use Elgg\Database\Annotations;
 use Elgg\Database\EntityTable;
+use Elgg\Database\MetadataTable;
+use Elgg\Database\RelationshipsTable;
 use Elgg\TestCase;
+use ElggAnnotation;
 use ElggEntity;
 use ElggGroup;
+use ElggMetadata;
 use ElggObject;
+use ElggRelationship;
 use ElggUser;
+use InvalidArgumentException;
 
 /**
  * Create test doubles for Elgg entities
@@ -24,7 +31,22 @@ class EntityMocks {
 	/**
 	 * @var ElggEntity[]
 	 */
-	private $mocks;
+	private $mocks = [];
+
+	/**
+	 * @var ElggMetadata[]
+	 */
+	private $metadata_mocks = [];
+
+	/**
+	 * @var ElggAnnotation[]
+	 */
+	private $annotation_mocks = [];
+
+	/**
+	 * @var ElggRelationship[]
+	 */
+	private $relationship_mocks = [];
 
 	/**
 	 * @var int
@@ -46,7 +68,7 @@ class EntityMocks {
 	 * 
 	 * @param int    $guid GUID of the mock entity
 	 * @param string $type Type the mock entity
-	 * @return boolean
+	 * @return \ElggEntity|boolean
 	 */
 	public function get($guid, $type = '') {
 		if (empty($this->mocks[$guid])) {
@@ -58,6 +80,187 @@ class EntityMocks {
 		}
 		if ($type && $entity && $entity->getType() == $type) {
 			return $entity;
+		}
+		return false;
+	}
+
+	/**
+	 * Return callback for mocking \Elgg\Database\MetadataTable
+	 *
+	 * @param int $id Metadata id
+	 * @return ElggMetadata|false
+	 */
+	public function getMetadata($id) {
+		if (empty($this->metadata_mocks[$id])) {
+			return false;
+		}
+		return $this->metadata_mocks[$id];
+	}
+
+	/**
+	 * Return callback for mocking \Elgg\Database\MetadataTable
+	 *
+	 * @param int    $entity_guid
+	 * @param string $name
+	 * @param mixed  $value
+	 * @param string $value_type     'text', 'integer', or '' for automatic detection
+	 * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
+	 * @param int    $access_id      Default is ACCESS_PRIVATE
+	 * @param bool   $allow_multiple Allow multiple values for one key. Default is false
+	 * @return boolean
+	 */
+	public function createMetadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+		$entity = $this->get((int) $entity_guid);
+		if (!$entity) {
+			return false;
+		}
+		$metadata = $entity->setMetadata($name, $value);
+		return $metadata->id;
+	}
+
+	/**
+	 * Return callback for mocking \Elgg\Database\MetadataTable
+	 *
+	 * @param int $id Metadata id
+	 * @return boolean
+	 */
+	public function deleteMetadata($id) {
+		unset($this->metadata_mocks[$id]);
+		return true;
+	}
+
+	/**
+	 * Return callback for mocking \Elgg\Database\AnnotationTable
+	 *
+	 * @param int $id Annotation id
+	 * @return ElggAnnotation|false
+	 */
+	public function getAnnotation($id) {
+		if (empty($this->annotation_mocks[$id])) {
+			return false;
+		}
+		return $this->annotation_mocks[$id];
+	}
+
+	/**
+	 * Create a new annotation.
+	 *
+	 * @param int    $entity_guid GUID of entity to be annotated
+	 * @param string $name        Name of annotation
+	 * @param string $value       Value of annotation
+	 * @param string $value_type  Type of value (default is auto detection)
+	 * @param int    $owner_guid  Owner of annotation (default is logged in user)
+	 * @param int    $access_id   Access level of annotation
+	 *
+	 * @return int|bool id on success or false on failure
+	 */
+	function createAnnotation($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
+		$entity = $this->get((int) $entity_guid);
+		if (!$entity) {
+			return false;
+		}
+		return $entity->annotate($name, $value, $value_type, $owner_guid, $access_id);
+	}
+
+	/**
+	 * Return callback for mocking \Elgg\Database\AnnotationTable
+	 *
+	 * @param int $id Annotation id
+	 * @return boolean
+	 */
+	public function deleteAnnotation($id) {
+		unset($this->annotation_mocks[$id]);
+		return true;
+	}
+
+	/**
+	 * Get a relationship by its ID
+	 *
+	 * @param int $id The relationship ID
+	 *
+	 * @return ElggRelationship|false False if not found
+	 */
+	public function getRelationship($id) {
+		if (empty($this->relationship_mocks[$id])) {
+			return false;
+		}
+		return $this->relationship_mocks[$id];
+	}
+
+	/**
+	 * Delete a relationship by its ID
+	 *
+	 * @param int  $id         Relationship ID
+	 * @param bool $call_event Call the delete event before deleting
+	 *
+	 * @return bool
+	 */
+	public function deleteRelationship($id, $call_event = true) {
+		unset($this->relationship_mocks[$id]);
+		return true;
+	}
+
+	/**
+	 * Create a relationship between two entities. E.g. friendship, group membership, site membership.
+	 *
+	 * This function lets you make the statement "$guid_one is a $relationship of $guid_two". In the statement,
+	 * $guid_one is the subject of the relationship, $guid_two is the target, and $relationship is the type.
+	 *
+	 * @param int    $guid_one     GUID of the subject entity of the relationship
+	 * @param string $relationship Type of the relationship
+	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 *
+	 * @return bool
+	 * @throws InvalidArgumentException
+	 */
+	public function addRelationship($guid_one, $relationship, $guid_two) {
+		$rel = $this->checkRelationship($guid_one, $relationship, $guid_two);
+		if ($rel) {
+			return false;
+		}
+		
+		$this->iterator++;
+		$id = $this->iterator;
+
+		if (!$this->get($guid_one) || !$this->get($guid_two) || !$relationship) {
+			return false;
+		}
+
+		$rel = new ElggRelationship((object) [
+			'id' => $id,
+			'guid_one' => $guid_one,
+			'guid_two' => $guid_two,
+			'relationship' => $relationship,
+			'time_created' => time(),
+		]);
+
+		$this->relationship_mocks[$id] = $rel;
+		return true;
+	}
+
+	/**
+	 * Check if a relationship exists between two entities. If so, the relationship object is returned.
+	 *
+	 * This function lets you ask "Is $guid_one a $relationship of $guid_two?"
+	 *
+	 * @param int    $guid_one     GUID of the subject entity of the relationship
+	 * @param string $relationship Type of the relationship
+	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 *
+	 * @return ElggRelationship|false Depending on success
+	 */
+	public function checkRelationship($guid_one, $relationship, $guid_two) {
+		foreach ($this->relationship_mocks as $rel) {
+			if ($rel->guid_one != $guid_one) {
+				continue;
+			}
+			if ($rel->guid_two != $guid_two) {
+				continue;
+			}
+			if ($rel->relationship != $relationship) {
+				continue;
+			}
+			return $rel;
 		}
 		return false;
 	}
@@ -92,6 +295,10 @@ class EntityMocks {
 			'__unset',
 			'getOwnerEntity',
 			'getContainerEntity',
+			'getMetadata',
+			'setMetadata',
+			'deleteMetadata',
+			'annotate',
 		];
 
 		switch ($type) {
@@ -183,21 +390,94 @@ class EntityMocks {
 				->method('getContainerEntity')
 				->will($this->test->returnValue($this->get($attributes['container_guid'])));
 
-		$attributes = array_merge($external_attributes, $attributes);
-		
-		$map = [];
-		foreach ($attributes as $key => $value) {
-			$map[] = [$key, $value];
-		}
+		$map = array_merge($external_attributes, $attributes);
 
 		$entity->expects($this->test->any())
 				->method('__get')
-				->will($this->test->returnValueMap($map));
+				->will($this->test->returnCallback(function($name) use ($entity, &$map) {
+							if (isset($map[$name])) {
+								return $map[$name];
+							}
+							return $entity->getMetadata($name);
+						}));
+
+		$entity->expects($this->test->any())
+				->method('__set')
+				->will($this->test->returnCallback(function($name, $value) use ($entity, &$map) {
+							$map[$name] = $value;
+							$entity->setMetadata($name, $value);
+						}));
+
+		$entity->expects($this->test->any())
+				->method('__set')
+				->will($this->test->returnCallback(function($name, $value) use ($entity, &$map) {
+							$entity->deleteMetadata($name);
+						}));
+
+		$entity->expects($this->test->any())
+				->method('setMetadata')
+				->will($this->test->returnCallback(function($name, $value) use ($entity) {
+							$this->iterator++;
+							$id = $this->iterator;
+							$metadata = new ElggMetadata((object) [
+										'type' => 'metadata',
+										'id' => $id,
+										'entity_guid' => $entity->guid,
+										'owner_guid' => $entity->owner_guid,
+										'name' => $name,
+										'value' => $value,
+										'time_created' => time(),
+										'access_id' => $entity->guid,
+							]);
+							$this->metadata_mocks[$id] = $metadata;
+							return $metadata;
+						}));
+
+		$entity->expects($this->test->any())
+				->method('getMetadata')
+				->will($this->test->returnCallback(function($name) use ($entity) {
+							foreach ($this->metadata_mocks as $md) {
+								if ($md->entity_guid == $entity->guid && $md->name == $name) {
+									return $md->value;
+								}
+							}
+						}));
+
+		$entity->expects($this->test->any())
+				->method('deleteMetadata')
+				->will($this->test->returnCallback(function($name) use ($entity, &$map) {
+							foreach ($this->metadata_mocks as $id => $md) {
+								if ($md->entity_guid == $entity->guid && $md->name == $name) {
+									unset($this->metadata_mocks[$id]);
+								}
+								unset($map[$name]);
+							}
+						}));
+
+		$entity->expects($this->test->any())
+				->method('annotate')
+				->will($this->test->returnCallback(function($name, $value, $value_type, $owner_guid, $access_id) use ($entity, &$map) {
+							$this->iterator++;
+							$id = $this->iterator;
+							$annotation = new ElggAnnotation((object) [
+										'type' => 'annotation',
+										'id' => $id,
+										'entity_guid' => $entity->guid,
+										'owner_guid' => $owner_guid ? : $entity->owner_guid,
+										'name' => $name,
+										'value' => $value,
+										'value_type' => $value_type,
+										'time_created' => time(),
+										'access_id' => $access_id,
+							]);
+							$this->annotation_mocks[$id] = $annotation;
+							return $id;
+						}));
 
 		if (in_array('isAdmin', $methods)) {
 			$entity->expects($this->test->any())
-				->method('isAdmin')
-				->will($this->test->returnValue($attributes['admin'] == 'yes'));
+					->method('isAdmin')
+					->will($this->test->returnValue(isset($map['admin']) && $map['admin'] == 'yes'));
 		}
 
 		$this->mocks[$guid] = $entity;
@@ -252,7 +532,7 @@ class EntityMocks {
 	 * @return EntityTable
 	 */
 	public function getEntityTableMock() {
-		$mock = $this->test->getMockBuilder(\Elgg\Database\EntityTable::class)
+		$mock = $this->test->getMockBuilder(EntityTable::class)
 				->setMethods(['get', 'exists'])
 				->disableOriginalConstructor()
 				->getMock();
@@ -264,6 +544,89 @@ class EntityMocks {
 		$mock->expects($this->test->any())
 				->method('exists')
 				->will($this->test->returnCallback([$this, 'exists']));
+
+		return $mock;
+	}
+
+	/**
+	 * Setup metadata table mock
+	 * @return MetadataTable
+	 */
+	public function getMetadataTableMock() {
+		$mock = $this->test->getMockBuilder(MetadataTable::class)
+				->setMethods(['get', 'create', 'delete'])
+				->disableOriginalConstructor()
+				->getMock();
+
+		$mock->expects($this->test->any())
+				->method('get')
+				->will($this->test->returnCallback([$this, 'getMetadata']));
+
+		$mock->expects($this->test->any())
+				->method('create')
+				->will($this->test->returnCallback([$this, 'createMetadata']));
+
+		$mock->expects($this->test->any())
+				->method('delete')
+				->will($this->test->returnCallback([$this, 'deleteMetadata']));
+
+		return $mock;
+	}
+
+	/**
+	 * Setup annotation table mock
+	 * @return Annotations
+	 */
+	public function getAnnotationsTableMock() {
+		$mock = $this->test->getMockBuilder(\Elgg\Database\AnnotationTable::class)
+				->setMethods(['get', 'create', 'delete'])
+				->disableOriginalConstructor()
+				->getMock();
+
+		$mock->expects($this->test->any())
+				->method('get')
+				->will($this->test->returnCallback([$this, 'getAnnotation']));
+
+		$mock->expects($this->test->any())
+				->method('create')
+				->will($this->test->returnCallback([$this, 'createAnnotation']));
+
+		$mock->expects($this->test->any())
+				->method('delete')
+				->will($this->test->returnCallback([$this, 'deleteAnnotation']));
+
+		return $mock;
+	}
+
+	/**
+	 * Setup relationship table mock
+	 * @return RelationshipsTable
+	 */
+	public function getRelationshipsTableMock() {
+		$mock = $this->test->getMockBuilder(\Elgg\Database\AnnotationTable::class)
+				->setMethods(['get', 'add', 'remove', 'delete', 'check'])
+				->disableOriginalConstructor()
+				->getMock();
+
+		$mock->expects($this->test->any())
+				->method('get')
+				->will($this->test->returnCallback([$this, 'getRelationship']));
+
+		$mock->expects($this->test->any())
+				->method('add')
+				->will($this->test->returnCallback([$this, 'addRelationship']));
+
+		$mock->expects($this->test->any())
+				->method('delete')
+				->will($this->test->returnCallback([$this, 'deleteRelationship']));
+
+		$mock->expects($this->test->any())
+				->method('remove')
+				->will($this->test->returnCallback([$this, 'deleteRelationship']));
+
+		$mock->expects($this->test->any())
+				->method('check')
+				->will($this->test->returnCallback([$this, 'checkRelationship']));
 
 		return $mock;
 	}
