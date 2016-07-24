@@ -504,25 +504,28 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
  * @see get_registered_entity_types()
  */
 function elgg_register_entity_type($type, $subtype = null) {
-	global $CONFIG;
+
+	$entity_types = (array) elgg_get_config('entity_types');
+	$registered_entities = (array) elgg_get_config('registered_entities');
 
 	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
+	if (!in_array($type, $entity_types)) {
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities)) {
-		$CONFIG->registered_entities = array();
+	if (!isset($registered_entities)) {
+		$registered_entities = [];
 	}
 
-	if (!isset($CONFIG->registered_entities[$type])) {
-		$CONFIG->registered_entities[$type] = array();
+	if (!isset($registered_entities[$type])) {
+		$registered_entities[$type] = [];
 	}
 
 	if ($subtype) {
-		$CONFIG->registered_entities[$type][] = $subtype;
+		$registered_entities[$type][] = $subtype;
 	}
 
+	elgg_set_config('registered_entities', $registered_entities);
 	return true;
 }
 
@@ -539,32 +542,35 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function elgg_unregister_entity_type($type, $subtype = null) {
-	global $CONFIG;
 
+	$entity_types = (array) elgg_get_config('entity_types');
+	$registered_entities = (array) elgg_get_config('registered_entities');
+	
 	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
+	if (!in_array($type, $entity_types)) {
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities)) {
+	if (!isset($registered_entities)) {
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities[$type])) {
+	if (!isset($registered_entities[$type])) {
 		return false;
 	}
 
 	if ($subtype) {
-		if (in_array($subtype, $CONFIG->registered_entities[$type])) {
-			$key = array_search($subtype, $CONFIG->registered_entities[$type]);
-			unset($CONFIG->registered_entities[$type][$key]);
+		if (in_array($subtype, $registered_entities[$type])) {
+			$key = array_search($subtype, $registered_entities[$type]);
+			unset($registered_entities[$type][$key]);
 		} else {
 			return false;
 		}
 	} else {
-		unset($CONFIG->registered_entities[$type]);
+		unset($registered_entities[$type]);
 	}
 
+	elgg_set_config('registered_entities', $registered_entities);
 	return true;
 }
 
@@ -577,23 +583,24 @@ function elgg_unregister_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function get_registered_entity_types($type = null) {
-	global $CONFIG;
 
-	if (!isset($CONFIG->registered_entities)) {
+	$registered_entities = (array) elgg_get_config('registered_entities');
+
+	if (!isset($registered_entities)) {
 		return false;
 	}
 	if ($type) {
 		$type = strtolower($type);
 	}
-	if (!empty($type) && empty($CONFIG->registered_entities[$type])) {
+	if (!empty($type) && empty($registered_entities[$type])) {
 		return false;
 	}
 
 	if (empty($type)) {
-		return $CONFIG->registered_entities;
+		return $registered_entities;
 	}
 
-	return $CONFIG->registered_entities[$type];
+	return $registered_entities[$type];
 }
 
 /**
@@ -605,9 +612,9 @@ function get_registered_entity_types($type = null) {
  * @return bool Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype = null) {
-	global $CONFIG;
 
-	if (!isset($CONFIG->registered_entities)) {
+	$registered_entities = (array) elgg_get_config('registered_entities');
+	if (!isset($registered_entities)) {
 		return false;
 	}
 
@@ -615,11 +622,11 @@ function is_registered_entity_type($type, $subtype = null) {
 
 	// @todo registering a subtype implicitly registers the type.
 	// see #2684
-	if (!isset($CONFIG->registered_entities[$type])) {
+	if (!isset($registered_entities[$type])) {
 		return false;
 	}
 
-	if ($subtype && !in_array($subtype, $CONFIG->registered_entities[$type])) {
+	if ($subtype && !in_array($subtype, $registered_entities[$type])) {
 		return false;
 	}
 	return true;

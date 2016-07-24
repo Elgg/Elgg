@@ -69,6 +69,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 			'path' => __DIR__ . '/../../../../',
 			'dataroot' => __DIR__ . '/../test_files/dataroot/',
 			'cacheroot' => __DIR__ . '/../test_files/cacheroot/',
+			'pluginspath' => __DIR__ . '/../../../../mod/',
 			'site_guid' => 1,
 			'AutoloaderManager_skip_storage' => true,
 			'simplecache_enabled' => false,
@@ -86,6 +87,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				'large' => array('w' => 200, 'h' => 200, 'square' => false, 'upscale' => false),
 				'master' => array('w' => 550, 'h' => 550, 'square' => false, 'upscale' => false),
 			),
+			'entity_types' => ['object', 'group', 'user', 'site'],
 		];
 	}
 
@@ -140,6 +142,38 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		}
 
 		return $request;
+	}
+
+	/**
+	 * Boot core and trigger boot/init events
+	 * @return void
+	 */
+	public function bootCore() {
+
+		$config = $this->config();
+
+		if ($config->getVolatile('boot_complete')) {
+			return;
+		}
+
+		$config->set('boot_complete', false);
+
+		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
+		$config->set('default_limit', 10);
+
+		$events = _elgg_services()->events;
+
+		$events->trigger('boot', 'system');
+
+		elgg_set_viewtype('default');
+
+		$events->trigger('plugins_boot', 'system');
+
+		$events->trigger('init', 'system');
+
+		$config->set('boot_complete', true);
+
+		$events->trigger('ready', 'system');
 	}
 
 }
