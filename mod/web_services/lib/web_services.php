@@ -64,18 +64,8 @@ function execute_method($method) {
 	}
 
 	// function must be callable
-	$function = null;
-	if (isset($API_METHODS[$method]["function"])) {
-		$function = $API_METHODS[$method]["function"];
-		// allow array version of static callback
-		if (is_array($function)
-				&& isset($function[0], $function[1])
-				&& is_string($function[0])
-				&& is_string($function[1])) {
-			$function = "{$function[0]}::{$function[1]}";
-		}
-	}
-	if (!is_string($function) || !is_callable($function)) {
+	$function = elgg_extract('function', $API_METHODS[$method]);
+	if (!$function || !is_callable($function)) {
 		$msg = elgg_echo('APIException:FunctionDoesNotExist', array($method));
 		throw new APIException($msg);
 	}
@@ -97,8 +87,14 @@ function execute_method($method) {
 	// Execute function: Construct function and calling parameters
 	$serialised_parameters = trim($serialised_parameters, ", ");
 
-	// @todo remove the need for eval()
-	$result = eval("return $function($serialised_parameters);");
+	$arguments = eval("return [$serialised_parameters];");
+
+	if ($API_METHODS[$method]['assoc']) {
+		$argument = array_combine(_elgg_ws_get_parameter_names($method), $arguments);
+		$result = call_user_func($function, $argument);
+	} else {
+		$result = call_user_func_array($function, $arguments);
+	}
 
 	$result = elgg_trigger_plugin_hook('rest:output', $method, $parameters, $result);
 	
@@ -220,6 +216,23 @@ function verify_parameters($method, $parameters) {
 }
 
 /**
+ * Get the names of a method's parameters
+ *
+ * @param string $method
+ * @return string[]
+ * @access private
+ */
+function _elgg_ws_get_parameter_names($method) {
+	global $API_METHODS;
+
+	if (!isset($API_METHODS[$method]["parameters"])) {
+		return [];
+	}
+
+	return array_keys($API_METHODS[$method]["parameters"]);
+}
+
+/**
  * Serialize an array of parameters for an API method call
  *
  * @param string $method     API method name
@@ -243,6 +256,7 @@ function serialise_parameters($method, $parameters) {
 
 		// avoid warning on parameters that are not required and not present
 		if (!isset($parameters[$key])) {
+			$serialised_parameters .= ',null';
 			continue;
 		}
 

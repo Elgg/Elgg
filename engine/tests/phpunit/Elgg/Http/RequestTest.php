@@ -1,15 +1,28 @@
 <?php
+
 namespace Elgg\Http;
 
-use PHPUnit_Framework_TestCase as TestCase;
-
-class RequestTest extends TestCase {
+class RequestTest extends \Elgg\TestCase {
 
 	public function testCanDetectElggPath() {
 		$req = new Request([
 			'__elgg_uri' => '/foo/bar/',
 		]);
 		$this->assertEquals(['foo', 'bar'], $req->getUrlSegments());
+	}
+
+	public function testUrlSegmentsAutoHtmlEscaped() {
+		$req = new Request([
+			'__elgg_uri' => '/fo<script>alert("/ba&r/',
+		]);
+		$this->assertEquals(['fo&lt;script&gt;alert(&quot;', 'ba&amp;r'], $req->getUrlSegments());
+	}
+
+	public function testCanAccessRawUrlSegments() {
+		$req = new Request([
+			'__elgg_uri' => '/fo<script>alert("/ba&r/',
+		]);
+		$this->assertEquals(['fo<script>alert("', 'ba&r'], $req->getUrlSegments(true));
 	}
 
 	public function testClientIpChecksXRealIp() {

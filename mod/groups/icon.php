@@ -1,57 +1,27 @@
 <?php
+
 /**
  * Icon display
  *
  * @package ElggGroups
+ * @deprecated 2.2
  */
+elgg_deprecated_notice('icon.php has been depreated and should not be included. Use elgg_get_inline_url() instead.', '2.2');
 
-if (!isset($page)) {
-	die('This file cannot be called directly.');
+$guid = get_input('group_guid');
+$size = get_input('size');
+if (!isset($size) || $size === '') {
+   $size = 'medium';
 }
 
-$group_guid = get_input('group_guid');
+elgg_entity_gatekeeper($guid, 'group');
 
-/* @var ElggGroup $group */
-$group = get_entity($group_guid);
-if (!($group instanceof ElggGroup)) {
-	header("HTTP/1.1 404 Not Found");
-	exit;
+$group = get_entity($guid);
+
+$icon = $group->getIcon($size);
+$url = elgg_get_inline_url($icon, true);
+if (!$url) {
+	$url = elgg_get_simplecache_url("groups/default{$size}.gif");
 }
 
-// If is the same ETag, content didn't changed.
-$etag = $group->icontime . $group_guid;
-if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == "\"$etag\"") {
-	header("HTTP/1.1 304 Not Modified");
-	exit;
-}
-
-$size = strtolower(get_input('size'));
-if (!in_array($size, array('large', 'medium', 'small', 'tiny', 'master', 'topbar')))
-	$size = "medium";
-
-$success = false;
-
-$filehandler = new ElggFile();
-$filehandler->owner_guid = $group->owner_guid;
-$filehandler->setFilename("groups/" . $group->guid . $size . ".jpg");
-
-$success = false;
-if ($filehandler->open("read")) {
-	if ($contents = $filehandler->read($filehandler->getSize())) {
-		$success = true;
-	}
-}
-
-if (!$success) {
-	$contents = elgg_view("groups/default{$size}.gif");
-	header("Content-type: image/gif");
-} else {
-	header("Content-type: image/jpeg");
-}
-
-header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
-header("Pragma: public");
-header("Cache-Control: public");
-header("Content-Length: " . strlen($contents));
-header("ETag: \"$etag\"");
-echo $contents;
+forward($url);

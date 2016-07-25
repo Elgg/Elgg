@@ -37,6 +37,44 @@ Basic instructions
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
    If this is not the case, take care to maintain your modifications. 
 
+From 2.2 to 2.3
+===============
+
+ * PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\Elgg\TestCase``.
+ * Some core files now sniff if	``PHPUNIT_ELGG_TESTING_APPLICATION`` constant is set to determine whether Elgg is being bootstrapped for PHPUnit tests. ``phpunit.xml`` configuration needs to updated to include this constant definition.
+ * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_services()->config`` instead.
+ * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
+
+Deprecations in 2.x
+===================
+
+2.2
+---
+
+User avatars are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and note that:
+
+ * ``/avatar/view`` page handler and resource view have been deprecated
+ * ``/mod/profile/icondirect.php`` file has been deprecated
+ * ``profile_set_icon_url()`` is no longer registered as a callback for ``"entity:icon:url","user"`` plugin hook
+
+Group avatars are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and note that:
+
+ * ``groupicon`` page handler (``groups_icon_handler()``) has been deprecated
+ * ``/mod/groups/icon.php`` file has been deprecated
+
+
+File entity thumbs and downloads are now served via ``serve-file`` handler. Plugins should start using ``elgg_get_inline_url()`` and ``elgg_get_download_url()`` and note that:
+
+ * ``file/download`` page handler and resource view have been deprecated
+ * ``mod/file/thumbnail.php`` file has been deprecated
+ * Several views have been updated to use new download URLs, including:
+
+   - ``mod/file/views/default/file/specialcontent/audio/default.php``
+   - ``mod/file/views/default/file/specialcontent/image/default.php``
+   - ``mod/file/views/default/resources/file/view.php``
+   - ``mod/file/views/rss/file/enclosure.php``
+
+
 From 1.x to 2.0
 ===============
 

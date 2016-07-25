@@ -16,11 +16,15 @@ use Elgg\Filesystem\Directory;
  */
 class ViewsService {
 
+	const VIEW_HOOK = 'view';
+	const VIEW_VARS_HOOK = 'view_vars';
+	const OUTPUT_KEY = '__view_output';
+
 	/**
-	 * @see \Elgg\ViewsService::fileExists
+	 * @see fileExists
 	 * @var array
 	 */
-	protected $file_exists_cache = array();
+	protected $file_exists_cache = [];
 
 	/**
 	 * @var array
@@ -30,26 +34,30 @@ class ViewsService {
 	private $locations = [];
 
 	/**
-	 * @var array
+	 * @var array Tracks location changes for views
 	 *
 	 * [viewtype][view][] => '/path/to/views/style.css'
 	 */
 	private $overrides = [];
 
 	/**
-	 * @var \stdClass
+	 * @var array Simplecache views (view names are keys)
+	 *
+	 * [view] = true
 	 */
-	private $views;
+	private $simplecache_views = [];
 
 	/**
-	 * @var \stdClass A list of valid view types as discovered.
+	 * @var array
+	 *
+	 * [view][priority] = extension_view
 	 */
-	private $viewtype;
+	private $extensions = [];
 
 	/**
-	 * @var \stdClass Global Elgg configuration
+	 * @var string[] A list of fallback viewtypes
 	 */
-	private $CONFIG;
+	private $fallbacks = [];
 
 	/**
 	 * @var PluginHooksService
@@ -65,34 +73,21 @@ class ViewsService {
 	 * @var SystemCache|null This is set if the views are configured via cache
 	 */
 	private $cache;
-
-	/**
-	 * @var bool
-	 */
-	private $allow_delay_pagesetup = true;
 	
+	/**
+	 * @var string Absolute path of the views directory
+	 */
+	public $view_path;
+
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\PluginHooksService $hooks  The hooks service
-	 * @param \Elgg\Logger             $logger Logger
+	 * @param PluginHooksService $hooks  The hooks service
+	 * @param Logger             $logger Logger
 	 */
-	public function __construct(\Elgg\PluginHooksService $hooks, \Elgg\Logger $logger) {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(PluginHooksService $hooks, Logger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
-
-		$this->views = (object)[
-			'extensions' => [],
-		];
-		$this->viewtype = (object)[
-			/**
-			 * A list of views to cache in the simple cache.
-			 */
-			'simplecache' => [],
-			'fallback' => [],
-		];
 	}
 	
 	/**
@@ -102,12 +97,11 @@ class ViewsService {
 	 *
 	 * @return string The canonical view name.
 	 */
-	public function canonicalizeViewName(/*string*/ $alias) /*: string*/ {
+	public function canonicalizeViewName($alias) {
 		if (!is_string($alias)) {
 			return false;
 		}
-		
-		
+
 		$canonical = $alias;
 		
 		$extension = pathinfo($canonical, PATHINFO_EXTENSION);
@@ -171,8 +165,10 @@ class ViewsService {
 	 * @param string $viewtype Viewtype
 	 *
 	 * @return string Empty string if not found
+	 * @access private
+	 * @internal Plugins should not use this.
 	 */
-	private function findViewFile($view, $viewtype) {
+	public function findViewFile($view, $viewtype) {
 		if (!isset($this->locations[$viewtype][$view])) {
 			return "";
 		}
@@ -212,14 +208,14 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerViewtypeFallback($viewtype) {
-		$this->viewtype->fallback[] = $viewtype;
+		$this->fallbacks[] = $viewtype;
 	}
 
 	/**
 	 * @access private
 	 */
 	public function doesViewtypeFallback($viewtype) {
-		return in_array($viewtype, $this->viewtype->fallback);
+		return in_array($viewtype, $this->fallbacks);
 	}
 
 	/**
@@ -246,9 +242,26 @@ class ViewsService {
 	}
 
 	/**
+	 * Get the views, including extensions, used to render a view
+	 *
+	 * Keys returned are view priorities. View existence is not checked.
+	 *
+	 * @param string $view View name
+	 * @return string[]
 	 * @access private
 	 */
-	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {
+	public function getViewList($view) {
+		if (isset($this->extensions[$view])) {
+			return $this->extensions[$view];
+		} else {
+			return [500 => $view];
+		}
+	}
+
+	/**
+	 * @access private
+	 */
+	public function renderView($view, array $vars = [], $ignored = false, $viewtype = '', $issue_missing_notice = true) {
 		$view = $this->canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
@@ -276,18 +289,16 @@ class ViewsService {
 			'vars' => $vars,
 			'viewtype' => $viewtype,
 		];
-		$vars = $this->hooks->trigger('view_vars', $view, $vars_hook_params, $vars);
+		$vars = $this->hooks->trigger(self::VIEW_VARS_HOOK, $view, $vars_hook_params, $vars);
+
+		// allow $vars to hijack output
+		if (isset($vars[self::OUTPUT_KEY])) {
+			return (string)$vars[self::OUTPUT_KEY];
+		}
 
 		$view_orig = $view;
 
-		$this->handlePageSetup($view);
-
-		// Set up any extensions to the requested view
-		if (isset($this->views->extensions[$view])) {
-			$viewlist = $this->views->extensions[$view];
-		} else {
-			$viewlist = array(500 => $view);
-		}
+		$viewlist = $this->getViewList($view);
 
 		$content = '';
 		foreach ($viewlist as $view) {
@@ -309,8 +320,12 @@ class ViewsService {
 		}
 
 		// Plugin hook
-		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
-		$content = $this->hooks->trigger('view', $view_orig, $params, $content);
+		$params = [
+			'view' => $view_orig,
+			'vars' => $vars,
+			'viewtype' => $viewtype,
+		];
+		$content = $this->hooks->trigger(self::VIEW_HOOK, $view_orig, $params, $content);
 
 		return $content;
 	}
@@ -327,35 +342,6 @@ class ViewsService {
 			$this->file_exists_cache[$path] = file_exists($path);
 		}
 		return $this->file_exists_cache[$path];
-	}
-
-	/**
-	 * Trigger the system "pagesetup" event just before the 1st view rendering, or the 2nd if the 1st
-	 * view starts with "resources/".
-	 *
-	 * We delay the pagesetup event if the first view is a resource view in order to allow plugins to
-	 * move all page-specific logic like context setting into a resource view with more confidence
-	 * that that state will be available in their pagesetup event handlers. See the commit message for
-	 * more BG info.
-	 *
-	 * @param string $view View about to be rendered
-	 * @return void
-	 */
-	private function handlePageSetup($view) {
-		if (isset($GLOBALS['_ELGG']->pagesetupdone) || empty($this->CONFIG->boot_complete)) {
-			return;
-		}
-
-		// only first rendering gets an opportunity to delay
-		$allow_delay = $this->allow_delay_pagesetup;
-		$this->allow_delay_pagesetup = false;
-
-		if ($allow_delay && (0 === strpos($view, 'resources/'))) {
-			return;
-		}
-
-		$GLOBALS['_ELGG']->pagesetupdone = true;
-		_elgg_services()->events->trigger('pagesetup', 'system');
 	}
 
 	/**
@@ -409,8 +395,8 @@ class ViewsService {
 
 		// If we got here then check whether this exists as an extension
 		// We optionally recursively check whether the extended view exists also for the viewtype
-		if ($recurse && isset($this->views->extensions[$view])) {
-			foreach ($this->views->extensions[$view] as $view_extension) {
+		if ($recurse && isset($this->extensions[$view])) {
+			foreach ($this->extensions[$view] as $view_extension) {
 				// do not recursively check to stay away from infinite loops
 				if ($this->viewExists($view_extension, $viewtype, false)) {
 					return true;
@@ -434,18 +420,43 @@ class ViewsService {
 		$view = $this->canonicalizeViewName($view);
 		$view_extension = $this->canonicalizeViewName($view_extension);
 
-		if (!isset($this->views->extensions[$view])) {
-			$this->views->extensions[$view][500] = (string) $view;
+		if (!isset($this->extensions[$view])) {
+			$this->extensions[$view][500] = (string) $view;
 		}
 
 		// raise priority until it doesn't match one already registered
-		while (isset($this->views->extensions[$view][$priority])) {
+		while (isset($this->extensions[$view][$priority])) {
 			$priority++;
 		}
 
-		$this->views->extensions[$view][$priority] = (string) $view_extension;
-		ksort($this->views->extensions[$view]);
+		$this->extensions[$view][$priority] = (string) $view_extension;
+		ksort($this->extensions[$view]);
+	}
 
+	/**
+	 * Is the given view extended?
+	 *
+	 * @param string $view View name
+	 *
+	 * @return bool
+	 * @internal Plugins should not use this
+	 * @access private
+	 */
+	public function viewIsExtended($view) {
+		return count($this->getViewList($view)) > 1;
+	}
+
+	/**
+	 * Do hook handlers exist to modify the view?
+	 *
+	 * @param string $view View name
+	 *
+	 * @return bool
+	 * @internal Plugins should not use this
+	 * @access private
+	 */
+	public function viewHasHookHandlers($view) {
+		return $this->hooks->hasHandler('view', $view) || $this->hooks->hasHandler('view_vars', $view);
 	}
 
 	/**
@@ -455,16 +466,16 @@ class ViewsService {
 		$view = $this->canonicalizeViewName($view);
 		$view_extension = $this->canonicalizeViewName($view_extension);
 
-		if (!isset($this->views->extensions[$view])) {
+		if (!isset($this->extensions[$view])) {
 			return false;
 		}
 
-		$priority = array_search($view_extension, $this->views->extensions[$view]);
+		$priority = array_search($view_extension, $this->extensions[$view]);
 		if ($priority === false) {
 			return false;
 		}
 
-		unset($this->views->extensions[$view][$priority]);
+		unset($this->extensions[$view][$priority]);
 
 		return true;
 	}
@@ -475,7 +486,7 @@ class ViewsService {
 	public function registerCacheableView($view) {
 		$view = $this->canonicalizeViewName($view);
 
-		$this->views->simplecache[$view] = true;
+		$this->simplecache_views[$view] = true;
 	}
 
 	/**
@@ -483,7 +494,7 @@ class ViewsService {
 	 */
 	public function isCacheableView($view) {
 		$view = $this->canonicalizeViewName($view);
-		if (isset($this->views->simplecache[$view])) {
+		if (isset($this->simplecache_views[$view])) {
 			return true;
 		}
 
@@ -500,7 +511,7 @@ class ViewsService {
 			$file = $this->findViewFile($view, $viewtype);
 
 			if ($file && pathinfo($file, PATHINFO_EXTENSION) !== 'php') {
-				$this->views->simplecache[$view] = true;
+				$this->simplecache_views[$view] = true;
 				return true;
 			}
 		}
@@ -555,26 +566,32 @@ class ViewsService {
 	 *
 	 * @param array $spec Specification
 	 *    viewtype => [
-	 *        view_name => path
+	 *        view_name => path or array of paths
 	 *    ]
 	 *
 	 * @access private
 	 */
 	public function mergeViewsSpec(array $spec) {
 		foreach ($spec as $viewtype => $list) {
-			foreach ($list as $view => $path) {
-				if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
-					// absolute path
-				} else {
-					// relative path
-					$path = Directory\Local::root()->getPath($path);
+			foreach ($list as $view => $paths) {
+				if (!is_array($paths)) {
+					$paths = [$paths];
 				}
 
-				if (substr($view, -1) === '/') {
-					// prefix
-					$this->autoregisterViews($view, $path, $viewtype);
-				} else {
-					$this->setViewLocation($view, $viewtype, $path);
+				foreach ($paths as $path) {
+					if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
+						// absolute path
+					} else {
+						// relative path
+						$path = Directory\Local::root()->getPath($path);
+					}
+
+					if (substr($view, -1) === '/') {
+						// prefix
+						$this->autoregisterViews($view, $path, $viewtype);
+					} else {
+						$this->setViewLocation($view, $viewtype, $path);
+					}
 				}
 			}
 		}
@@ -616,8 +633,8 @@ class ViewsService {
 		return [
 			'locations' => $this->locations,
 			'overrides' => $overrides,
-			'extensions' => $this->views->extensions,
-			'simplecache' => $this->views->simplecache,
+			'extensions' => $this->extensions,
+			'simplecache' => $this->simplecache_views,
 		];
 	}
 

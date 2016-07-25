@@ -12,8 +12,10 @@
  * @param int    $user_guid     The guid of the user
  * @param string $email_address Email address
  * @return string
+ * @deprecated 2.3
  */
 function uservalidationbyemail_generate_code($user_guid, $email_address) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Validation now relies on signed URL API', '2.3');
 	// Note: binding to site URL for multisite.
 	$site_url = elgg_get_site_url();
 	return elgg_build_hmac([(int)$user_guid, $email_address, $site_url])->getToken();
@@ -40,9 +42,9 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 
 	if (($user) && ($user instanceof ElggUser)) {
 		// Work out validate link
-		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
-		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code";
-
+		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid";
+		$link = elgg_http_get_signed_url($link);
+		
 		// Get email to show in the next page
 		elgg_get_session()->set('emailsent', $user->email);
 
@@ -61,8 +63,14 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 			), $user->language
 		);
 
+		$params = [
+			'action' => 'uservalidationbyemail',
+			'object' => $user,
+			'link' => $link,
+		];
+		
 		// Send validation email
-		$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
+		$result = notify_user($user->guid, $site->guid, $subject, $body, $params, 'email');
 
 		return $result;
 	}
@@ -76,16 +84,11 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
  * @param int    $user_guid
  * @param string $code
  * @return bool
+ * @deprecated 2.3
  */
-function uservalidationbyemail_validate_email($user_guid, $code) {
-	$user = get_entity($user_guid);
-	$site_url = elgg_get_site_url();
-
-	$matches = elgg_build_hmac([(int)$user_guid, $user->email, $site_url])->matchesToken($code);
-	if (!$matches) {
-		return false;
-	}
-
+function uservalidationbyemail_validate_email($user_guid, $code = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Validation now relies on signed URL API', '2.3');
+	elgg_signed_request_gatekeeper();
 	return elgg_set_user_validation_status($user_guid, true, 'email');
 }
 

@@ -12,17 +12,37 @@ use Elgg\Debug\Inspector;
  * @since      1.9.0
  */
 class EventsService extends \Elgg\HooksRegistrationService {
+	use Profilable;
 
 	const OPTION_STOPPABLE = 'stoppable';
 	const OPTION_DEPRECATION_MESSAGE = 'deprecation_message';
 	const OPTION_DEPRECATION_VERSION = 'deprecation_version';
 
 	/**
+	 * @var Inspector
+	 */
+	private $inspector;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Inspector $inspector Inspector
+	 */
+	public function __construct(Inspector $inspector = null) {
+		if (!$inspector) {
+			$inspector = new Inspector();
+		}
+		$this->inspector = $inspector;
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function registerHandler($name, $type, $callback, $priority = 500) {
-		if (in_array($type, ['member', 'friend', 'member_of_site', 'attached']) && in_array($name, ['create', 'update', 'delete'])) {
-			$this->logger->error("'$name, $type' event is no longer triggered. Update your event registration to use '$name, relationship'");
+		if (in_array($type, ['member', 'friend', 'member_of_site', 'attached'])
+				&& in_array($name, ['create', 'update', 'delete'])) {
+			$this->logger->error("'$name, $type' event is no longer triggered. Update your event registration "
+				. "to use '$name, relationship'");
 		}
 		return parent::registerHandler($name, $type, $callback, $priority);
 	}
@@ -56,14 +76,22 @@ class EventsService extends \Elgg\HooksRegistrationService {
 		foreach ($events as $callback) {
 			if (!is_callable($callback)) {
 				if ($this->logger) {
-					$inspector = new Inspector();
 					$this->logger->warn("handler for event [$event, $type] is not callable: "
-										. $inspector->describeCallable($callback));
+										. $this->inspector->describeCallable($callback));
 				}
 				continue;
 			}
 
-			$return = call_user_func_array($callback, $args);
+			if ($this->timer && $type === 'system' && $event !== 'shutdown') {
+				$callback_as_string = $this->inspector->describeCallable($callback) . "()";
+
+				$this->timer->begin(["[$event,$type]", $callback_as_string]);
+				$return = call_user_func_array($callback, $args);
+				$this->timer->end(["[$event,$type]", $callback_as_string]);
+			} else {
+				$return = call_user_func_array($callback, $args);
+			}
+
 			if (!empty($options[self::OPTION_STOPPABLE]) && ($return === false)) {
 				return false;
 			}

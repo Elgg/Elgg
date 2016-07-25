@@ -34,7 +34,7 @@ $content .= elgg_view_comments($file);
 elgg_register_menu_item('title', array(
 	'name' => 'download',
 	'text' => elgg_echo('download'),
-	'href' => "file/download/$file->guid",
+	'href' => elgg_get_download_url($file),
 	'link_class' => 'elgg-button elgg-button-action',
 ));
 

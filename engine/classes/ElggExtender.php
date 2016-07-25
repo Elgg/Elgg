@@ -182,8 +182,16 @@ abstract class ElggExtender extends \ElggData {
 		$object->value = $this->value;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
-		$params = array($this->getSubtype() => $this);
-		return _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
+		$params = array(
+			$this->getSubtype() => $this, // deprecated use
+			$this->getType() => $this,
+		);
+		if (_elgg_services()->hooks->hasHandler('to:object', $this->getSubtype())) {
+			_elgg_services()->deprecation->sendNotice("Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
+			. "Use the generic 'to:object','{$this->getType()}' hook instead.", '2.3');
+			$object = _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
+		}
+		return _elgg_services()->hooks->trigger('to:object', $this->getType(), $params, $object);
 	}
 
 	/*

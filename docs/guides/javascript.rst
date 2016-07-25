@@ -5,32 +5,11 @@ JavaScript
    :local:
    :depth: 2
 
-Third-party assets
-==================
-
-We recommend managing third-party scripts and styles with Composer.
-Elgg core uses ``fxp/composer-asset-plugin`` for this purpose.
-This plugin allows you to pull dependencies from the Bower or NPM package repositories,
-but using the Composer command-line tool.
-
-For example, to include jQuery, you could run the following Composer commands:
-
-.. code-block:: shell
-
-    composer global require fxp/composer-asset-plugin:~1.1.1
-    composer require bower-asset/jquery:~2.0
-
-.. note::
-
-    ``fxp/composer-asset-plugin`` must be installed globally!
-    See https://github.com/francoispluchino/composer-asset-plugin for more info.
-
 AMD
 ===
 
-As of Elgg 1.9, we encourage all developers to adopt the `AMD (Asynchronous Module
+Developers should use the `AMD (Asynchronous Module
 Definition) <http://requirejs.org/docs/whyamd.html>`_ standard for writing JavaScript code in Elgg.
-The 1.8 version is still functional and is :ref:`described below<1.8-js>`.
 
 Here we'll describe making and executing AMD modules. The RequireJS documentation for
 `defining modules <http://requirejs.org/docs/api.html#define>`_ may also be of use.
@@ -98,8 +77,61 @@ the greeting:
         $('body').append(hello);
     });
 
-Passing plugin/Elgg settings to modules
----------------------------------------
+.. _guides/javascript#config:
+
+Passing settings to modules
+---------------------------
+
+The ``elgg.data`` plugin hooks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``elgg`` module provides an object ``elgg.data`` which is populated from two server side hooks:
+
+- **elgg.data, site**: This filters an associative array of site-specific data passed to the client and cached.
+- **elgg.data, page**: This filters an associative array of uncached, page-specific data passed to the client.
+
+Let's pass some data to a module:
+
+.. code-block:: php
+
+    <?php
+
+    function myplugin_config_site($hook, $type, $value, $params) {
+        // this will be cached client-side
+        $value['myplugin']['api'] = elgg_get_site_url() . 'myplugin-api';
+        $value['myplugin']['key'] = 'none';
+        return $value;
+    }
+
+    function myplugin_config_page($hook, $type, $value, $params) {
+        $user = elgg_get_logged_in_user_entity();
+        if ($user) {
+            $value['myplugin']['key'] = $user->myplugin_api_key;
+            return $value;
+        }
+    }
+
+    elgg_register_plugin_hook_handler('elgg.data', 'site', 'myplugin_config_site');
+    elgg_register_plugin_hook_handler('elgg.data', 'page', 'myplugin_config_page');
+
+.. code-block:: javascript
+
+    define(function(require) {
+        var elgg = require("elgg");
+
+        var api = elgg.data.myplugin.api;
+        var key = elgg.data.myplugin.key; // "none" or a user's key
+
+        // ...
+    });
+
+.. note::
+
+    In ``elgg.data``, page data overrides site data. Also note ``json_encode()`` is used to copy
+    data client-side, so the data must be JSON-encodable.
+
+Making a config module
+^^^^^^^^^^^^^^^^^^^^^^
 
 You can use a PHP-based module to pass values from the server. To make the module ``myplugin/settings``,
 create the view file ``views/default/myplugin/settings.js.php`` (note the double extension
@@ -109,12 +141,11 @@ create the view file ``views/default/myplugin/settings.js.php`` (note the double
 
     <?php
 
-    $settings = elgg_get_plugin_from_id('myplugin')->getAllSettings();
+    // this will be cached client-side
     $settings = [
-        'foo' => elgg_extract('foo', $settings),
-        'bar' => elgg_extract('bar', $settings),
+        'api' => elgg_get_site_url() . 'myplugin-api',
+        'key' => null,
     ];
-
     ?>
     define(<?php echo json_encode($settings); ?>);
 
@@ -146,7 +177,7 @@ The best way to accomplish this is by configuring the path to the file using the
     return [
       'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
     ];
-    
+
 If you've copied the script directly into your plugin instead of managing it with Composer,
 you can use something like this instead:
 
@@ -193,50 +224,50 @@ Some things to note
 #. The configuration is also cached in simplecache, and should not rely on user-specific values
    like ``get_language()``.
 
+.. _guides/javascript#boot:
 
-Migrating JS from Elgg 1.8 to AMD / 1.9
-=======================================
+Booting your plugin
+===================
 
-**Current 1.8 JavaScript modules will continue to work with Elgg**.
+To add functionality to each page, or make sure your hook handlers are registered early enough, you may create a boot module for your plugin, with the name ``boot/<plugin_id>``.
 
-We do not anticipate any backwards compatibility issues with this new direction and will fix any
-issues that do come up. The old system will still be functional in Elgg 1.9, but developers are
-encouraged to begin looking to AMD as the future of JS in Elgg.
+.. code-block:: javascript
 
-.. _1.8-js:
+    // in views/default/boot/example.js
 
-Traditional JavaScript (1.8)
-============================
+    define(function(require) {
+        var elgg = require("elgg");
+        var Plugin = require("elgg/Plugin");
 
+        // plugin logic
+        function my_init() { ... }
 
-Register third-party libraries with ``elgg_register_js``:
+        return new Plugin({
+            // executed in order of plugin priority
+            init: function () {
+                elgg.register_hook_handler("init", "system", my_init, 400);
+            }
+        });
+    });
 
-.. code:: php
+When your plugin is active, this module will automatically be loaded on each page. Other modules can depend on ``elgg/init`` to make sure all boot modules are loaded.
 
-   elgg_register_js('jquery', $cdnjs_url);
+Each boot module **must** return an instance of ``elgg/Plugin``. The constructor must receive an object with a function in the ``init`` key. The ``init`` function will be called in the order of the plugin in Elgg's admin area.
 
-This will override any URLs previously registered under this name.
+.. note:: Though not strictly necessary, you may want to use the ``init, system`` event to control when your initialization code runs with respect to other modules.
 
-Load a library on the current page with ``elgg_load_js``:
+.. warning:: A boot module **cannot** depend on the modules ``elgg/init`` or ``elgg/ready``.
 
-.. code:: php
+Modules provided with Elgg
+==========================
 
-   elgg_load_js('jquery');
+Modules ``jquery`` and ``jquery-ui``
+------------------------------------
 
-This will include and execute the linked code.
+You must depend on these modules to use ``$`` or ``$.ui`` methods. In the future Elgg may stop loading these by default.
 
-.. warning::
-
-   Using inline scripts is NOT SUPPORTED because:
-    * They are not testable (maintainability)
-    * They are not cacheable (performance)
-    * They prevent use of Content-Security-Policy (security) 
-    * They prevent scripts from being loaded with ``defer`` or ``async`` (performance)
-
-   Inline scripts in core or bundled plugins are considered legacy bugs.
-
-Core functions available in JS
-==============================
+Module ``elgg``
+---------------
 
 ``elgg.echo()``
 
@@ -265,8 +296,6 @@ Display an error message to the user.
    elgg.register_error(elgg.echo('error'));
 
 
-``elgg.forward()``
-
 ``elgg.normalize_url()``
 
 Normalize a URL relative to the elgg root:
@@ -276,7 +305,7 @@ Normalize a URL relative to the elgg root:
     // "http://localhost/elgg/blog"
     elgg.normalize_url('/blog');
 
-
+``elgg.forward()``
 
 Redirect to a new page.
 
@@ -299,8 +328,7 @@ Parse a URL into its component parts:
    //   path: "/file.php",
    //   query: "arg=val"
    // }
-   elgg.parse_url(
-     'http://community.elgg.org/file.php?arg=val#fragment');
+   elgg.parse_url('http://community.elgg.org/file.php?arg=val#fragment');
 
 
 ``elgg.get_page_owner_guid()``
@@ -310,29 +338,36 @@ Get the GUID of the current page's owner.
 
 ``elgg.register_hook_handler()``
 
-Register a hook handler with the event system.
+Register a hook handler with the event system. For best results, do this in a plugin boot module.
 
-.. code:: js
+.. code-block:: js
 
-    // old initialization style
-    elgg.register_hook_handler('init', 'system', my_plugin.init);
-
-    // new: AMD module
+    // boot module: /views/default/boot/example.js
     define(function (require) {
         var elgg = require('elgg');
+        var Plugin = require('elgg/Plugin');
 
-        // [init, system] has fired
+        elgg.register_hook_handler('foo', 'bar', function () { ... });
+
+        return new Plugin();
     });
 
 
 ``elgg.trigger_hook()``
 
-Emit a hook event in the event system.
+Emit a hook event in the event system. For best results depend on the elgg/init module.
 
-.. code:: js
+.. code-block:: js
 
-    // allow other plugins to alter value
+    // old
     value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
+
+    define(function (require) {
+        require('elgg/init');
+        var elgg = require('elgg');
+
+        value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
+    });
 
 
 ``elgg.security.refreshToken()``
@@ -406,6 +441,30 @@ There are a number of configuration values set in the elgg object:
     // The Elgg release (X.Y.Z).
     elgg.config.release;
 
+Module ``elgg/Ajax``
+--------------------
+
+See the :doc:`ajax` page for details.
+
+Module ``elgg/init``
+--------------------
+
+``elgg/init`` loads and initializes all boot modules in priority order and triggers the [init, system] hook.
+
+Require this module to make sure all plugins are ready.
+
+Module ``elgg/Plugin``
+----------------------
+
+Used to create a :ref:`boot module <guides/javascript#boot>`.
+
+Module ``elgg/ready``
+---------------------
+
+``elgg/ready`` loads and initializes all plugin boot modules in priority order.
+
+Require this module to make sure all plugins are ready.
+
 Module ``elgg/spinner``
 -----------------------
 
@@ -425,29 +484,261 @@ The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixe
       });
    });
 
+.. note:: The ``elgg/Ajax`` module uses the spinner by default.
+
+Module ``elgg/popup``
+-----------------------
+
+The ``elgg/popup`` module can be used to display an overlay positioned relatively to its anchor (trigger).
+
+The ``elgg/popup`` module is loaded by default, and binding a popup module to an anchor is as simple as adding ``rel="popup"``
+attribute and defining target module with a ``href`` (or ``data-href``) attribute. Popup module positioning can be defined with
+``data-position`` attribute of the trigger element.
+
+.. $.position(): http://api.jqueryui.com/position/
+
+.. code:: php
+
+   echo elgg_format_element('div', [
+      'class' => 'elgg-module-popup hidden',
+      'id' => 'popup-module',
+   ], 'Popup module content');
+
+   // Simple anchor
+   echo elgg_view('output/url', [
+      'href' => '#popup-module',
+      'text' => 'Show popup',
+      'rel' => 'popup',
+   ]);
+
+   // Button with custom positioning of the popup
+   echo elgg_format_element('button', [
+      'rel' => 'popup',
+      'class' => 'elgg-button elgg-button-submit',
+      'text' => 'Show popup',
+      'data-href' => '#popup-module',
+      'data-position' => json_encode([
+         'my' => 'center bottom',
+         'at' => 'center top',
+      ]),
+   ]);
+
+
+The ``elgg/popup`` module allows you to build out more complex UI/UX elements. You can open and close
+popup modules programmatically:
+
+.. code:: js
+
+   define(function(require) {
+      var $ = require('jquery');
+      $(document).on('click', '.elgg-button-popup', function(e) {
+
+         e.preventDefault();
+
+         var $trigger = $(this);
+         var $target = $('#my-target');
+		 var $close = $target.find('.close');
+
+         require(['elgg/popup'], function(popup) {
+		   popup.open($trigger, $target, {
+			  'collision': 'fit none'
+		   });
+
+           $close.on('click', popup.close);
+		 });
+      });
+   });
+
+You can use ``getOptions, ui.popup`` plugin hook to manipulate the position of the popup before it has been opened.
+You can use jQuery ``open`` and ``close`` events to manipulate popup module after it has been opened or closed.
+
+.. code:: js
+
+   define(function(require) {
+
+      var elgg = require('elgg');
+      var $ = require('jquery');
+
+      $('#my-target').on('open', function() {
+         var $module = $(this);
+         var $trigger = $module.data('trigger');
+
+         elgg.ajax('ajax/view/my_module', {
+            beforeSend: function() {
+               $trigger.hide();
+               $module.html('').addClass('elgg-ajax-loader');
+            },
+            success: function(output) {
+               $module.removeClass('elgg-ajax-loader').html(output);
+            }
+         });
+      }).on('close', function() {
+         var $trigger = $(this).data('trigger');
+         $trigger.show();
+      });
+   });
+
+Open popup modules will always contain the following data that can be accessed via ``$.data()``:
+
+ * ``trigger`` - jQuery element used to trigger the popup module to open
+ * ``position`` - An object defining popup module position that was passed to ``$.position()``
+
+Module ``elgg/widgets``
+-----------------------
+
+Plugins that load a widget layout via Ajax should initialize via this module:
+
+.. code:: js
+
+   require(['elgg/widgets'], function (widgets) {
+       widgets.init();
+   });
+
+Module ``elgg/lightbox``
+------------------------
+
+Elgg is distributed with the Colorbox jQuery library. Please go to http://www.jacklmoore.com/colorbox for more information on the options of this lightbox.
+
+Use the following classes to bind your anchor elements to a lightbox:
+
+ * ``elgg-lightbox`` - loads an HTML resource
+ * ``elgg-lightbox-photo`` - loads an image resource (should be used to avoid displaying raw image bytes instead of an ``img`` tag)
+ * ``elgg-lightbox-inline`` - displays an inline HTML element in a lightbox
+ * ``elgg-lightbox-iframe`` - loads a resource in an ``iframe``
+
+You may apply colorbox options to an individual ``elgg-lightbox`` element by setting the attribute ``data-colorbox-opts`` to a JSON settings object.
+
+.. code:: php
+
+   echo elgg_view('output/url', [
+      'text' => 'Open lightbox',
+      'href' => 'ajax/view/my_view',
+      'class' => 'elgg-lightbox',
+      'data-colorbox-opts' => json_encode([
+         'width' => '300px',
+      ])
+   ]);
+
+Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened. Note that the hook handler should depend on ``elgg/init`` AMD module.
+
+``elgg/lightbox`` AMD module should be used to open and close the lightbox programmatically:
+
+.. code:: js
+
+   define(function(require) {
+      var lightbox = require('elgg/lightbox');
+      var spinner = require('elgg/spinner');
+
+      lightbox.open({
+         html: '<p>Hello world!</p>',
+         onClosed: function() {
+            lightbox.open({
+               onLoad: spinner.start,
+               onComplete: spinner.stop,
+               photo: true,
+               href: 'https://elgg.org/cache/1457904417/default/community_theme/graphics/logo.png',
+            });
+         }
+      });
+   });
+
+To support gallery sets (via ``rel`` attribute), you need to bind colorbox directly to a specific selector (note that this will ignore ``data-colorbox-opts`` on all elements in a set):
+
+.. code:: js
+
+   require(['elgg/lightbox'], function(lightbox) {
+      var options = {
+         photo: true,
+         width: 500
+      };
+      lightbox.bind('a[rel="my-gallery"]', options, false); // 3rd attribute ensures binding is done without proxies
+   });
+
+You can also resize the lightbox programmatically if needed:
+
+.. code:: js
+
+   define(function(require) {
+      var lightbox = require('elgg/lightbox');
+     
+      lightbox.resize({
+         width: '300px'
+      });
+   });
+
+Module ``elgg/ckeditor``
+------------------------
+
+This module can be used to add WYSIWYG editor to a textarea (requires ``ckeditor`` plugin to be enabled).
+Note that WYSIWYG will be automatically attached to all instances of ``.elgg-input-longtext``.
+
+.. code:: js
+
+   require(['elgg/ckeditor'], function (editor) {
+       editor.bind('.my-text-area');
+   });
+
+Traditional scripts
+===================
+
+Although we highly recommend using AMD modules, you can register scripts with ``elgg_register_js``:
+
+.. code:: php
+
+   elgg_register_js('jquery', $cdnjs_url);
+
+This will override any URLs previously registered under this name.
+
+Load a library on the current page with ``elgg_load_js``:
+
+.. code:: php
+
+   elgg_load_js('jquery');
+
+This will load the library in the page footer. You must use the ``require()`` function to depend on
+modules like ``elgg`` and ``jquery``.
+
+.. warning::
+
+   Using inline scripts is NOT SUPPORTED because:
+    * They are not testable (maintainability)
+    * They are not cacheable (performance)
+    * They prevent use of Content-Security-Policy (security)
+    * They prevent scripts from being loaded with ``defer`` or ``async`` (performance)
+
+   Inline scripts in core or bundled plugins are considered legacy bugs.
+
 Hooks
------
+=====
 
-The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks are triggered and plugins can register callbacks to react or alter information. There is no concept of Elgg events in the JS engine; everything in the JS engine is implemented as a hook.
+The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks are triggered and plugins can register functions to react or alter information. There is no concept of Elgg events in the JS engine; everything in the JS engine is implemented as a hook.
 
-Registering a callback to a hook
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Registering hook handlers
+-------------------------
 
-Callbacks are registered using ``elgg.register_hook_handler()``. Multiple callbacks can be registered for the same hook.
+Handler functions are registered using ``elgg.register_hook_handler()``. Multiple handlers can be registered for the same hook.
 
-The following example registers the ``elgg.ui.initDatePicker`` callback for the *init*, *system* event. Note that a difference in the JS engine is that instead of passing a string you pass the function itself to ``elgg.register_hook_handler()`` as the callback.
+The following example registers the ``handleFoo`` function for the ``foo, bar`` hook.
 
-.. code:: javascript
+.. code-block:: javascript
 
-   elgg.provide('elgg.ui.initDatePicker');
-   elgg.ui.initDatePicker = function() { ... }
-   
-   elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
+    define(function (require) {
+        var elgg = require('elgg');
+        var Plugin = require('elgg/Plugin');
 
-The callback
-^^^^^^^^^^^^
+        function handleFoo(hook, type, params, value) {
+            // do something
+        }
 
-The callback accepts 4 arguments:
+        elgg.register_hook_handler('foo', 'bar', handleFoo);
+
+        return new Plugin();
+    });
+
+The handler function
+--------------------
+
+The handler will receive 4 arguments:
 
 - **hook** - The hook name
 - **type** - The hook type
@@ -457,22 +748,67 @@ The callback accepts 4 arguments:
 The ``value`` will be passed through each hook. Depending on the hook, callbacks can simply react or alter data.
 
 Triggering custom hooks
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 Plugins can trigger their own hooks:
 
 .. code:: javascript
 
-   elgg.hook.trigger_hook('name', 'type', {params}, "value");
+    define(function(require) {
+        require('elgg/init');
+        var elgg = require('elgg');
+
+        elgg.trigger_hook('name', 'type', {params}, "value");
+    });
+
+.. note:: Be aware of timing. If you don't depend on elgg/init, other plugins may not have had a chance to register their handlers.
 
 Available hooks
-^^^^^^^^^^^^^^^
+---------------
 
-init, system
-   This hook is fired when the JS system is ready. Plugins should register their init functions for this hook.
+**init, system**
+    Plugins should register their init functions for this hook. It is fired after Elgg's JS is loaded and all plugin boot modules have been initialized. Depend on the ``elgg/init`` module to be sure this has completed.
 
-ready, system
-   This hook is fired when the system has fully booted.
+**ready, system**
+    This hook is fired when the system has fully booted (after init). Depend on the ``elgg/ready`` module to be sure this has completed.
 
-getOptions, ui.popup
-   This hook is fired for pop up displays ("rel"="popup") and allows for customized placement options.
+**getOptions, ui.popup**
+    This hook is fired for pop up displays (``"rel"="popup"``) and allows for customized placement options.
+
+**getOptions, ui.lightbox**
+    This hook can be used to filter options passed to ``$.colorbox()``
+
+**config, ckeditor**
+    This filters the CKEditor config object. Register for this hook in a plugin boot module. The defaults can be seen in the module ``elgg/ckeditor/config``.
+
+**prepare, ckeditor**
+    This hook can be used to decorate ``CKEDITOR`` global. You can use this hook to register new CKEditor plugins and add event bindings.
+
+**ajax_request_data, \***
+    This filters request data sent by the ``elgg/Ajax`` module. See :doc:`ajax` for details.
+
+**ajax_response_data, \***
+    This filters the response data returned to users of the ``elgg/Ajax`` module. See :doc:`ajax` for details.
+
+**insert, editor**
+    This hook is triggered by the embed plugin and can be used to filter content before it is inserted into the textarea. This hook can also be used by WYSIWYG editors to insert content using their own API (in this case the handler should return ``false``). See ckeditor plugin for an example.
+
+Third-party assets
+==================
+
+We recommend managing third-party scripts and styles with Composer.
+Elgg core uses ``fxp/composer-asset-plugin`` for this purpose.
+This plugin allows you to pull dependencies from the Bower or NPM package repositories,
+but using the Composer command-line tool.
+
+For example, to include jQuery, you could run the following Composer commands:
+
+.. code-block:: shell
+
+    composer global require fxp/composer-asset-plugin:~1.1.1
+    composer require bower-asset/jquery:~2.0
+
+.. note::
+
+    ``fxp/composer-asset-plugin`` must be installed globally!
+    See https://github.com/francoispluchino/composer-asset-plugin for more info.

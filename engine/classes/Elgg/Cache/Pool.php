@@ -18,14 +18,15 @@ namespace Elgg\Cache;
  */
 interface Pool {
 	/**
-	 * Fetches a value from the cache, calculating on miss via $callback.
+	 * Fetches a value from the cache, with the option of calculating on miss
 	 * 
-	 * @param string|int $key      A plain string ID for the cache entry
-	 * @param callable   $callback Logic for calculating the cache entry on miss
+	 * @param string|int    $key      A plain string ID for the cache entry
+	 * @param callable|null $callback Logic for calculating the cache entry on miss
+	 * @param mixed         $default  Default value returned if the value is missing and no callback is provided
 	 * 
-	 * @return mixed The cache value
+	 * @return mixed The cache value or the $default if no value and no callable
 	 */
-	public function get($key, callable $callback);
+	public function get($key, callable $callback = null, $default = null);
 	
 	/**
 	 * Forcefully invalidates the value associated with the given key.

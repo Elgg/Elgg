@@ -91,6 +91,9 @@ function file_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:file', 'Elgg\Values::getTrue');
+
+	elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', 'file_set_custom_icon_sizes');
+	elgg_register_plugin_hook_handler('entity:icon:file', 'object', 'file_set_icon_file');
 }
 
 /**
@@ -152,9 +155,24 @@ function file_page_handler($page) {
 			echo elgg_view_resource('file/world');
 			break;
 		case 'download':
-			echo elgg_view_resource('file/download', [
-				'guid' => $page[1],
-			]);
+			elgg_deprecated_notice('/file/download page handler has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '2.2');
+			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
+			if (_elgg_view_may_be_altered('resources/file/download', "$dir/resources/file/download.php")) {
+				// For BC with 2.0 if a plugin is suspected of using this view we need to use it.
+				echo elgg_view_resource('file/download', [
+					'guid' => $page[1],
+				]);
+			} else {
+				$file = get_entity($page[1]);
+				if (!$file instanceof ElggFile) {
+					return false;
+				}
+				$download_url = elgg_get_download_url($file);
+				if (!$download_url) {
+					return false;
+				}
+				forward($download_url);
+			}
 			break;
 		default:
 			return false;
@@ -358,13 +376,13 @@ function file_set_url($hook, $type, $url, $params) {
  */
 function file_set_icon_url($hook, $type, $url, $params) {
 	$file = $params['entity'];
-	$size = $params['size'];
+	$size = elgg_extract('size', $params, 'large');
 	if (elgg_instanceof($file, 'object', 'file')) {
-
 		// thumbnails get first priority
-		if ($file->thumbnail) {
-			$ts = (int)$file->icontime;
-			return "mod/file/thumbnail.php?file_guid=$file->guid&size=$size&icontime=$ts";
+		$thumbnail = $file->getIcon($size);
+		$thumb_url = elgg_get_inline_url($thumbnail, true);
+		if ($thumb_url) {
+			return $thumb_url;
 		}
 
 		$mapping = array(
@@ -383,17 +401,15 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			'application/x-rar-compressed' => 'archive',
 			'application/x-stuffit' => 'archive',
 			'application/zip' => 'archive',
-
 			'text/directory' => 'vcard',
 			'text/v-card' => 'vcard',
-
 			'application' => 'application',
 			'audio' => 'music',
 			'text' => 'text',
 			'video' => 'video',
 		);
 
-		$mime = $file->mimetype;
+		$mime = $file->getMimeType();
 		if ($mime) {
 			$base_type = substr($mime, 0, strpos($mime, '/'));
 		} else {
@@ -438,13 +454,107 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 		return;
 	}
 
-	$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
-	foreach ($thumbnails as $thumbnail) {
-		if ($thumbnail) {
-			$delfile = new ElggFile();
-			$delfile->owner_guid = $file->owner_guid;
-			$delfile->setFilename($thumbnail);
-			$delfile->delete();
-		}
+	$file->deleteIcon();
+}
+
+/**
+ * Reset file thumb URLs if file access_id has changed
+ * 
+ * @param string     $event "update:after"
+ * @param string     $type  "object"
+ * @param ElggObject $file  File entity
+ * @return void
+ * @deprecated 2.2
+ * @see _elgg_filestore_touch_icons()
+ */
+function file_reset_icon_urls($event, $type, ElggObject $file) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is no longer in use and will be removed.', '2.2');
+}
+
+/**
+ * Set custom icon sizes for file objects
+ *
+ * @param string $hook   "entity:icon:url"
+ * @param string $type   "object"
+ * @param array  $return Sizes
+ * @param array  $params Hook params
+ * @return array
+ */
+function file_set_custom_icon_sizes($hook, $type, $return, $params) {
+
+	$entity_subtype = elgg_extract('entity_subtype', $params);
+	if ($entity_subtype !== 'file') {
+		return;
 	}
+
+	return [
+		'small' => [
+			'w' => 60,
+			'h' => 60,
+			'square' => true,
+			'upscale' => true,
+		],
+		'medium' => [
+			'w' => 153,
+			'h' => 153,
+			'square' => true,
+			'upscale' => true,
+		],
+		'large' => [
+			'w' => 600,
+			'h' => 600,
+			'upscale' => false,
+		],
+	];
+}
+
+/**
+ * Set custom file thumbnail location
+ *
+ * @param string     $hook   "entity:icon:file"
+ * @param string     $type   "object"
+ * @param \ElggIcon  $icon   Icon file
+ * @param array      $params Hook params
+ * @return \ElggIcon
+ */
+function file_set_icon_file($hook, $type, $icon, $params) {
+
+	$entity = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params, 'large');
+
+	if (!elgg_instanceof($entity, 'object', 'file')) {
+		return;
+	}
+	
+	switch ($size) {
+		case 'small' :
+			$filename_prefix = 'thumb';
+			$metadata_name = 'thumbnail';
+			break;
+
+		case 'medium' :
+			$filename_prefix = 'smallthumb';
+			$metadata_name = 'smallthumb';
+			break;
+
+		case 'large' :
+			$filename_prefix = 'largethumb';
+			$metadata_name = 'largethumb';
+			break;
+
+		default :
+			$filename_prefix = "{$size}thumb";
+			$metadata_name = $filename_prefix;
+			break;
+	}
+
+	$icon->owner_guid = $entity->owner_guid;
+	if (isset($entity->$metadata_name)) {
+		$icon->setFilename($entity->$metadata_name);
+	} else {
+		$filename = pathinfo($entity->getFilenameOnFilestore(), PATHINFO_FILENAME);
+		$filename = "file/{$filename_prefix}{$filename}.jpg";
+		$icon->setFilename($filename);
+	}
+	return $icon;
 }

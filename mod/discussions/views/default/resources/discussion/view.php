@@ -2,9 +2,7 @@
 
 $guid = elgg_extract('guid', $vars);
 
-// We now have RSS on topics
-global $autofeed;
-$autofeed = true;
+elgg_register_rss_link();
 
 elgg_entity_gatekeeper($guid, 'object', 'discussion');
 

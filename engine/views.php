@@ -30,6 +30,8 @@ return [
 
 		"elgg/ui.avatar_cropper.js" => dirname(__DIR__) . "/js/lib/ui.avatar_cropper.js",
 		"elgg/ui.friends_picker.js" => dirname(__DIR__) . "/js/lib/ui.friends_picker.js",
+
+		// @deprecated 2.2
 		"elgg/ui.river.js" => dirname(__DIR__) . "/js/lib/ui.river.js",
 
 		// For datepicker. More info in the jquery-ui.js view

@@ -7,7 +7,7 @@ elgg.thewire.init = function() {
 	var callback = function() {
 		var maxLength = $(this).data('max-length');
 		if (maxLength) {
-			elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), maxLength);
+			elgg.thewire.textCounter(this, $(this).closest('form').find("#thewire-characters-remaining span"), maxLength);
 		}
 	};
 
@@ -27,15 +27,16 @@ elgg.thewire.textCounter = function(textarea, status, limit) {
 
 	var remaining_chars = limit - $(textarea).val().length;
 	status.html(remaining_chars);
+	var $submit = $(textarea).closest('form').find('#thewire-submit-button');
 
 	if (remaining_chars < 0) {
 		status.parent().addClass("thewire-characters-remaining-warning");
-		$("#thewire-submit-button").prop('disabled', true);
-		$("#thewire-submit-button").addClass('elgg-state-disabled');
+		$submit.prop('disabled', true);
+		$submit.addClass('elgg-state-disabled');
 	} else {
 		status.parent().removeClass("thewire-characters-remaining-warning");
-		$("#thewire-submit-button").prop('disabled', false);
-		$("#thewire-submit-button").removeClass('elgg-state-disabled');
+		$submit.prop('disabled', false);
+		$submit.removeClass('elgg-state-disabled');
 	}
 };
 

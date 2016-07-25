@@ -28,7 +28,7 @@ class ElggWidget extends \ElggObject {
 
 	/**
 	 * Get a value from attributes or private settings
-	 * 
+	 *
 	 * @param string $name The name of the value
 	 * @return mixed
 	 */
@@ -63,7 +63,7 @@ class ElggWidget extends \ElggObject {
 
 	/**
 	 * Set an attribute or private setting value
-	 * 
+	 *
 	 * @param string $name  The name of the value to set
 	 * @param mixed  $value The value to set
 	 * @return void
@@ -94,6 +94,45 @@ class ElggWidget extends \ElggObject {
 		$this->__set($name, $value);
 
 		return true;
+	}
+	
+	/**
+	 * Unset a property from private settings or attribute.
+	 *
+	 * @see \ElggEntity->__unset
+	 *
+	 * @param string $name The name of the attribute or metadata.
+	 *
+	 * @return void
+	 * @since 2.2.0
+	 */
+	public function __unset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			parent::__unset($name);
+		} else {
+			$this->removePrivateSetting($name);
+		}
+	}
+	
+	/**
+	 * Test if property is set either as an attribute or private setting
+	 *
+	 * @tip Use isset($entity->property)
+	 *
+	 * @see \ElggEntity->__isset
+	 *
+	 * @param string $name The name of the attribute or private setting.
+	 *
+	 * @return bool
+	 * @since 2.2.0
+	 */
+	public function __isset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			return parent::__isset($name);
+		} else {
+			$private_setting = $this->getPrivateSetting($name);
+			return !is_null($private_setting);
+		}
 	}
 
 	/**
@@ -126,7 +165,7 @@ class ElggWidget extends \ElggObject {
 	public function getTitle() {
 		$title = $this->title;
 		if (!$title) {
-			$title = _elgg_services()->widgets->getNameByType($this->handler);
+			$title = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $this->getContainerEntity());
 		}
 		return $title;
 	}
@@ -160,7 +199,10 @@ class ElggWidget extends \ElggObject {
 		usort($widgets, create_function('$a,$b','return (int)$a->order > (int)$b->order;'));
 
 		// remove widgets from inactive plugins
-		$widget_types = elgg_get_widget_types($this->context);
+		$widget_types = elgg_get_widget_types([
+			'context' => $this->context,
+			'container' => $this->getContainerEntity(),
+		]);
 		$inactive_widgets = array();
 		foreach ($widgets as $index => $widget) {
 			if (!array_key_exists($widget->handler, $widget_types)) {

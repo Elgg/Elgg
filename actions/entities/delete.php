@@ -6,17 +6,6 @@
  * @subpackage Core
  */
 
-$guid = get_input('guid');
-$entity = get_entity($guid);
+elgg_deprecated_notice('entities/delete action file has been deprecated. Use entity/delete action instead', '2.1');
 
-if ($entity && $entity->canEdit()) {
-	if ($entity->delete() && (!$entity instanceof ElggPlugin) && (!$entity instanceof ElggSite)) {
-		system_message(elgg_echo('entity:delete:success', array($guid)));
-	} else {
-		register_error(elgg_echo('entity:delete:fail', array($guid)));
-	}
-} else {
-	register_error(elgg_echo('entity:delete:fail', array($guid)));
-}
-
-forward(REFERER);
+return require dirname(dirname(__FILE__)) . '/entity/delete.php';

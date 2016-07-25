@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg;
 
-class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
+class HooksRegistrationServiceTest extends \Elgg\TestCase {
 
 	/**
 	 * @var HooksRegistrationService
@@ -13,9 +14,11 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->mock = $this->getMockForAbstractClass('\Elgg\HooksRegistrationService');
 	}
-	
+
 	public function testCanRegisterHandlers() {
-		$f = function () {};
+		$f = function () {
+
+		};
 
 		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'callback1'));
 		$this->assertTrue($this->mock->registerHandler('foo', 'bar', $f));
@@ -37,7 +40,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		// check possibly invalid callbacks
 		$this->assertFalse($this->mock->registerHandler('foo', 'bar', 1234));
 	}
-	
+
 	public function testCanUnregisterHandlers() {
 		$o = new HooksRegistrationServiceTest_invokable();
 
@@ -49,19 +52,18 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->mock->registerHandler('foo', 'bar', [$o, '__invoke'], 300);
 
 		$this->assertTrue($this->mock->unregisterHandler(
-			'foo', 'bar', 'callback2'));
+						'foo', 'bar', 'callback2'));
 		$this->assertTrue($this->mock->unregisterHandler(
-			'foo', 'bar', HooksRegistrationServiceTest_invokable::KLASS . '::__invoke'));
+						'foo', 'bar', HooksRegistrationServiceTest_invokable::KLASS . '::__invoke'));
 		$this->assertTrue($this->mock->unregisterHandler(
-			'foo', 'bar', [HooksRegistrationServiceTest_invokable::KLASS, '__invoke']));
+						'foo', 'bar', [HooksRegistrationServiceTest_invokable::KLASS, '__invoke']));
 		$this->assertTrue($this->mock->unregisterHandler(
-			'foo', 'bar', [$o, '__invoke']));
+						'foo', 'bar', [$o, '__invoke']));
 
 		$expected = [
 			'foo' => [
 				'bar' => [
 					500 => ['callback1'],
-
 					// only one removed
 					150 => ['callback2'],
 				]
@@ -72,7 +74,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		// check unregistering things that aren't registered
 		$this->assertFalse($this->mock->unregisterHandler('foo', 'bar', 'not_valid'));
 	}
-	
+
 	public function testCanClearMultipleHandlersAtOnce() {
 		$o = new HooksRegistrationServiceTest_invokable();
 
@@ -80,7 +82,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->mock->registerHandler('foo', 'baz', 'callback1', 10);
 		$this->mock->registerHandler('foo', 'bar', 'callback2', 100);
 		$this->mock->registerHandler('foo', 'bar', 'callback2', 150);
-		
+
 		$expected = [
 			'foo' => [
 				'baz' => [
@@ -90,7 +92,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		];
 		// clearHandlers should remove everything registrered for 'foo', 'bar', but not 'foo', 'baz'
 		$this->mock->clearHandlers('foo', 'bar');
-		
+
 		$this->assertSame($expected, $this->mock->getAllHandlers());
 	}
 
@@ -123,9 +125,43 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($expected_foo_bar, $this->mock->getOrderedHandlers('foo', 'bar'));
 		$this->assertSame($expected_foo_baz, $this->mock->getOrderedHandlers('foo', 'baz'));
 	}
+
+	public function testCanBackupAndRestoreRegistrations() {
+		$this->mock->registerHandler('foo', 'bar', 'callback2');
+		$this->mock->registerHandler('all', 'all', 'callback4', 100);
+		$handlers = $this->mock->getAllHandlers();
+
+		$this->mock->backup();
+		$this->assertEmpty($this->mock->getAllHandlers());
+
+		$this->mock->restore();
+		$this->assertEquals($handlers, $this->mock->getAllHandlers());
+	}
+
+	public function testBackupIsAStack() {
+		$this->mock->registerHandler('foo', 'bar', 'callback2');
+		$handlers1 = $this->mock->getAllHandlers();
+		$this->mock->backup();
+
+		$this->mock->registerHandler('all', 'all', 'callback4', 100);
+		$handlers2 = $this->mock->getAllHandlers();
+		$this->mock->backup();
+
+		$this->mock->restore();
+		$this->assertEquals($handlers2, $this->mock->getAllHandlers());
+
+		$this->mock->restore();
+		$this->assertEquals($handlers1, $this->mock->getAllHandlers());
+	}
+
 }
 
 class HooksRegistrationServiceTest_invokable {
+
 	const KLASS = __CLASS__;
-	function __invoke() {}
+
+	function __invoke() {
+		
+	}
+
 }

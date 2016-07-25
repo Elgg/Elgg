@@ -3,9 +3,10 @@
 /**
  * Depends on elgg_normalize_url() in output.php
  */
-class ElggMenuItemTest extends \PHPUnit_Framework_TestCase {
+class ElggMenuItemTest extends \Elgg\TestCase {
 
 	protected function setUp() {
+
 	}
 
 	public function testFactoryNoNameOrText() {
@@ -14,7 +15,7 @@ class ElggMenuItemTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testFactoryNoHref() {
-		$item = \ElggMenuItem::factory(array('name' => 'test','text' => 'test'));
+		$item = \ElggMenuItem::factory(array('name' => 'test', 'text' => 'test'));
 		$this->assertEquals('', $item->getHref());
 	}
 
@@ -139,13 +140,13 @@ class ElggMenuItemTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($item->inContext('file'));
 	}
 
-/*
- * This requires elgg_in_context()
-	public function testInContextAgainstRequestContext() {
-		$item = new \ElggMenuItem('name', 'text', 'url');
-		$item->setContext(array('blog', 'bookmarks'));
-	}
-*/
+	/*
+	 * This requires elgg_in_context()
+	  public function testInContextAgainstRequestContext() {
+	  $item = new \ElggMenuItem('name', 'text', 'url');
+	  $item->setContext(array('blog', 'bookmarks'));
+	  }
+	 */
 
 	public function testSetLinkClassWithString() {
 		$item = new \ElggMenuItem('name', 'text', 'url');
@@ -197,11 +198,34 @@ class ElggMenuItemTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testArgumentTypeValidationOnItemRegistration() {
+		_elgg_services()->logger->disable();
+
 		$this->assertTrue(elgg_register_menu_item('foo', new \ElggMenuItem('foo', 'bar', 'url')));
 		$this->assertTrue(elgg_register_menu_item('foo', array('name' => 'foo', 'text' => 'bar')));
 		$this->assertFalse(elgg_register_menu_item('foo', array()));
 		$this->assertFalse(elgg_register_menu_item('foo', array('text' => 'bar')));
 		$this->assertFalse(elgg_register_menu_item('foo', 'bar'));
 		$this->assertFalse(elgg_register_menu_item('foo', new stdClass()));
+
+		$logged = _elgg_services()->logger->enable();
+		$this->assertEquals([
+			[
+				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',
+				'level' => 300,
+			],
+			[
+				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',
+				'level' => 300,
+			],
+			[
+				'message' => 'Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options',
+				'level' => 400,
+			],
+			[
+				'message' => 'Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options',
+				'level' => 400,
+			],
+				], $logged);
 	}
+
 }

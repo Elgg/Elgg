@@ -3,6 +3,7 @@ namespace Elgg\Database;
 
 use Elgg\Database;
 use Elgg\Database\EntityTable;
+use Elgg\Cache\PluginSettingsCache;
 
 /**
  * Private settings for entities
@@ -23,18 +24,23 @@ class PrivateSettingsTable {
 	/** @var EntityTable */
 	private $entities;
 
-	/** @var Name of the database table */
+	/** @var string Name of the database table */
 	private $table;
+
+	/** @var PluginSettingsCache cache for settings */
+	private $cache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Database    $db       The database
-	 * @param EntityTable $entities Entities table
+	 * @param Database            $db       The database
+	 * @param EntityTable         $entities Entities table
+	 * @param PluginSettingsCache $cache    Settings cache
 	 */
-	public function __construct(Database $db, EntityTable $entities) {
+	public function __construct(Database $db, EntityTable $entities, PluginSettingsCache $cache) {
 		$this->db = $db;
 		$this->entities = $entities;
+		$this->cache = $cache;
 		$this->table = $this->db->getTablePrefix() . 'private_settings';
 	}
 
@@ -298,6 +304,11 @@ class PrivateSettingsTable {
 	 * @return mixed The setting value, or null if does not exist
 	 */
 	public function get($entity_guid, $name) {
+		$values = $this->cache->getAll($entity_guid);
+		if (isset($values[$name])) {
+			return $values[$name];
+		}
+
 		$entity_guid = (int) $entity_guid;
 		$name = $this->db->sanitizeString($name);
 
@@ -357,6 +368,9 @@ class PrivateSettingsTable {
 	 * @return bool
 	 */
 	public function set($entity_guid, $name, $value) {
+		$this->cache->clear($entity_guid);
+		_elgg_services()->boot->invalidateCache();
+
 		$entity_guid = (int) $entity_guid;
 		$name = $this->db->sanitizeString($name);
 		$value = $this->db->sanitizeString($value);
@@ -377,6 +391,9 @@ class PrivateSettingsTable {
 	 * @return bool
 	 */
 	function remove($entity_guid, $name) {
+		$this->cache->clear($entity_guid);
+		_elgg_services()->boot->invalidateCache();
+
 		$entity_guid = (int) $entity_guid;
 
 		$entity = $this->entities->get($entity_guid);
@@ -399,6 +416,9 @@ class PrivateSettingsTable {
 	 * @return bool
 	 */
 	function removeAllForEntity($entity_guid) {
+		$this->cache->clear($entity_guid);
+		_elgg_services()->boot->invalidateCache();
+
 		$entity_guid = (int) $entity_guid;
 
 		$entity = $this->entities->get($entity_guid);

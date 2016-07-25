@@ -29,6 +29,11 @@ abstract class HooksRegistrationService {
 	private $registrations = [];
 
 	/**
+	 * @var array
+	 */
+	private $backups = [];
+
+	/**
 	 * @var \Elgg\Logger
 	 */
 	protected $logger;
@@ -245,5 +250,37 @@ abstract class HooksRegistrationService {
 		}
 
 		return new MethodMatcher($spec[0], $spec[1]);
+	}
+
+	/**
+	 * Temporarily remove all event/hook registrations (before tests)
+	 *
+	 * Call backup() before your tests and restore() after.
+	 *
+	 * @note This behaves like a stack. You must call restore() for each backup() call.
+	 *
+	 * @return void
+	 * @see restore
+	 * @access private
+	 * @internal
+	 */
+	public function backup() {
+		$this->backups[] = $this->registrations;
+		$this->registrations = [];
+	}
+
+	/**
+	 * Restore backed up event/hook registrations (after tests)
+	 *
+	 * @return void
+	 * @see backup
+	 * @access private
+	 * @internal
+	 */
+	public function restore() {
+		$backup = array_pop($this->backups);
+		if (is_array($backup)) {
+			$this->registrations = $backup;
+		}
 	}
 }

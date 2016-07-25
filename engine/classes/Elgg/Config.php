@@ -22,6 +22,11 @@ class Config implements Services\Config {
 	private $settings_loaded = false;
 
 	/**
+	 * @var bool
+	 */
+	private $cookies_configured = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @internal Access this object via Elgg\Application::$config
@@ -81,6 +86,42 @@ class Config implements Services\Config {
 	}
 
 	/**
+	 * Set up and return the cookie configuration array resolved from settings.php
+	 *
+	 * @return array
+	 */
+	public function getCookieConfig() {
+		$c = $this->config;
+
+		if ($this->cookies_configured) {
+			return $c->cookies;
+		}
+
+		$this->loadSettingsFile();
+
+		// set cookie values for session and remember me
+		if (!isset($c->cookies)) {
+			$c->cookies = array();
+		}
+		if (!isset($c->cookies['session'])) {
+			$c->cookies['session'] = array();
+		}
+		$session_defaults = session_get_cookie_params();
+		$session_defaults['name'] = 'Elgg';
+		$c->cookies['session'] = array_merge($session_defaults, $c->cookies['session']);
+		if (!isset($c->cookies['remember_me'])) {
+			$c->cookies['remember_me'] = array();
+		}
+		$session_defaults['name'] = 'elggperm';
+		$session_defaults['expire'] = strtotime("+30 days");
+		$c->cookies['remember_me'] = array_merge($session_defaults, $c->cookies['remember_me']);
+
+		$this->cookies_configured = true;
+
+		return $c->cookies;
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function getDataPath() {
@@ -89,6 +130,19 @@ class Config implements Services\Config {
 		}
 
 		return $this->config->dataroot;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getCachePath() {
+		$this->loadSettingsFile();
+
+		if (!isset($this->config->cacheroot)) {
+			$this->config->cacheroot = $this->getDataPath();
+		}
+
+		return $this->config->cacheroot;
 	}
 
 	/**
@@ -199,6 +253,11 @@ class Config implements Services\Config {
 
 		// No settings means a fresh install
 		if (!is_file($path)) {
+			if ($this->getVolatile('installer_running')) {
+				$this->settings_loaded = true;
+				return;
+			}
+
 			header("Location: install.php");
 			exit;
 		}
@@ -224,6 +283,10 @@ class Config implements Services\Config {
 		}
 
 		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
+
+		if (!empty($CONFIG->cacheroot)) {
+			$CONFIG->cacheroot = rtrim($CONFIG->cacheroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		if (!$global_is_bound) {
 			// must manually copy settings into our storage

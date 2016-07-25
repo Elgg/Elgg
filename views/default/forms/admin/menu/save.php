@@ -3,100 +3,77 @@
  * Form body for setting up site menu
  */
 
-// @todo Could probably make this number configurable
-$num_featured_items = 6;
+$num_featured_items = elgg_extract('num_featured_items', $vars, 6);
 
 // get site menu items
-$menu = elgg_get_config('menus');
-$menu = $menu['site'];
-$builder = new ElggMenuBuilder($menu);
-$menu = $builder->getMenu('name');
-$menu_items = $menu['default'];
+$menu = elgg()->menus->getUnpreparedMenu('site', [
+	'sort_by' => 'name',
+]);
+
+$menu_items = $menu->getItems();
 
 $featured_menu_names = elgg_get_config('site_featured_menu_names');
 
-$dropdown_values = array();
+$dropdown_values = [];
 foreach ($menu_items as $item) {
 	$dropdown_values[$item->getName()] = $item->getText();
 }
 $dropdown_values[' '] = elgg_echo('none');
 
-?>
-<div class="elgg-module elgg-module-inline">
-	<div class="elgg-head">
-		<h3><?php echo elgg_echo('admin:menu_items:configure'); ?></h3>
-	</div>
-	<div class="elgg-body">
-<?php
-echo elgg_view('output/longtext', array(
-	'value' => elgg_echo("admin:menu_items:description")
-));
+$configure = elgg_view('output/longtext', ['value' => elgg_echo('admin:menu_items:description')]);
 
-for ($i=0; $i<$num_featured_items; $i++) {
+for ($i=0; $i < $num_featured_items; $i++) {
 	if ($featured_menu_names && array_key_exists($i, $featured_menu_names)) {
 		$current_value = $featured_menu_names[$i];
 	} else {
 		$current_value = ' ';
 	}
 
-	echo elgg_view('input/select', array(
+	$configure .= elgg_view('input/select', [
 		'options_values' => $dropdown_values,
 		'name' => 'featured_menu_names[]',
-		'value' => $current_value
-	));
+		'value' => $current_value,
+	]);
 }
-?>
-	</div>
-</div>
 
-<div class="elgg-module elgg-module-inline">
-	<div class="elgg-head">
-		<h3><?php echo elgg_echo('admin:add_menu_item'); ?></h3>
-	</div>
-	<div class="elgg-body">
-<?php
-echo elgg_view('output/longtext', array(
-	'value' => elgg_echo("admin:add_menu_item:description")
-));
+echo elgg_view_module('inline', elgg_echo('admin:menu_items:configure'), $configure);
 
 $custom_items = elgg_get_config('site_custom_menu_items');
 
 $name_str = elgg_echo('name');
 $url_str = elgg_echo('admin:plugins:label:website');
 
-echo '<ul class="elgg-list elgg-list-simple">';
-
+$add_menu_items = '';
 if (is_array($custom_items)) {
 	foreach ($custom_items as $title => $url) {
-		$name_input = elgg_view('input/text', array(
+		$name_input = elgg_view('input/text', [
 			'name' => 'custom_menu_titles[]',
-			'value' => $title
-		));
+			'value' => $title,
+		]);
 
-		$url_input = elgg_view('input/text', array(
+		$url_input = elgg_view('input/text', [
 			'name' => 'custom_menu_urls[]',
-			'value' => $url
-		));
+			'value' => $url,
+		]);
 
-		echo "<li>$name_str: $name_input $url_str: $url_input $delete</li>";
+		$add_menu_items .= elgg_format_element('li', [], "$name_str: $name_input $url_str: $url_input $delete");
 	}
 }
 
 $new = elgg_echo('new');
-$name_input = elgg_view('input/text', array(
-	'name' => 'custom_menu_titles[]',
-));
+$name_input = elgg_view('input/text', ['name' => 'custom_menu_titles[]']);
 
-$url_input = elgg_view('input/text', array(
-	'name' => 'custom_menu_urls[]',
-));
+$url_input = elgg_view('input/text', ['name' => 'custom_menu_urls[]']);
 
-echo "<li class='custom_menuitem'>$name_str: $name_input $url_str: $url_input</li>
-</ul>";
+$add_menu_items .= elgg_format_element([
+	'#tag_name' => 'li',
+	'class' => 'custom_menuitem',
+	'#text' => "$name_str: $name_input $url_str: $url_input",
+]);
 
-?>
-	</div>
-</div>
-<?php
+$add_menu = elgg_view('output/longtext', ['value' => elgg_echo('admin:add_menu_item:description')]);
+$add_menu .= elgg_format_element('ul', ['class' => 'elgg-list elgg-list-simple'], $add_menu_items);
 
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+echo elgg_view_module('inline', elgg_echo('admin:add_menu_item'), $add_menu);
+
+echo elgg_view('input/submit', ['value' => elgg_echo('save')]);

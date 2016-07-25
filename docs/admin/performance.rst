@@ -115,6 +115,16 @@ The system cache can be disabled via the administration menu, and it is
 recommended that you do this on your development platform if you are
 writing Elgg plugins.
 
+Boot cache (experimental)
+-------------------------
+
+Elgg has the ability to cache numerous resources created and fetched during
+the boot process. To enable this cache you must set a TTL in your ``settings.php``
+file: ``$CONFIG->boot_cache_ttl = 10;``
+
+A small TTL is recommended because it brings all the benefits of caching under load
+while reducing the harm if Elgg's cache invalidation strategy should miss something.
+
 Database query cache
 --------------------
 
@@ -159,7 +169,7 @@ Installation requirements:
 
 Configuration:
 
-Uncomment and populate the following sections in `settings.php`
+Uncomment and populate the following sections in ``settings.php``
 
 .. code:: php
 
@@ -192,6 +202,13 @@ There are numerous PHP code caches available on the market.
 These speed up your site by caching the compiled byte code from your
 script meaning that your server doesn't have to compile the PHP code
 each time it is executed.
+
+Direct file serving
+-------------------
+
+If your server can be configured to support the X-Sendfile or X-Accel headers,
+you can configure it to be used in ``settings.php``. This allows your web server to
+directly stream files to the client instead of using PHP's ``readfile()``.
 
 Hosting
 =======

@@ -1,70 +1,58 @@
 <?php
 
-use Zend\Mail\Transport\InMemory as InMemoryTransport;
+/**
+ * Instead of relying on this bootstrap, which leads to unreliable global state,
+ * test cases should extend \Elgg\TestCase, which resets service providers
+ * during test initialization making sure altered state does not
+ * flow over to the next test case.
+ * 
+ * @deprecated 2.3
+ */
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+if (!defined('PHPUNIT_ELGG_TESTING_APPLICATION') || function_exists('_elgg_testing_application')) {
+	// this value is set by phpunit.xml
+	return;
+}
 
-date_default_timezone_set('America/Los_Angeles');
-
-error_reporting(E_ALL | E_STRICT);
+\Elgg\TestCase::bootstrap();
 
 /**
  * Get/set an Application for testing purposes
  *
  * @param \Elgg\Application $app Elgg Application
  * @return \Elgg\Application
+ * @deprecated 2.3 Use elgg() instead
  */
 function _elgg_testing_application(\Elgg\Application $app = null) {
-	static $inst;
 	if ($app) {
-		$inst = $app;
+		\Elgg\Application::$_instance = $app;
 	}
-	return $inst;
+	return elgg();
 }
 
 /**
- * This is here as a temporary solution only. Instead of adding more global
- * state to this file as we migrate tests, try to refactor the code to be
- * testable without global state.
+ * Set/get testing config
+ *
+ * @staticvar \Elgg\Config $inst
+ * @param \Elgg\Config $config Config
+ * @return \Elgg\Config
+ * @depreated 2.3 Use _elgg_services() to access config
  */
-global $CONFIG;
-$CONFIG = (object)[
-	'dbprefix' => 'elgg_',
-	'boot_complete' => false,
-	'wwwroot' => 'http://localhost/',
-	'path' => __DIR__ . '/../../../',
-	'dataroot' => __DIR__ . '/test_files/dataroot/',
-	'site_guid' => 1,
-	'AutoloaderManager_skip_storage' => true,
-	'simplecache_enabled' => false,
-];
-
-global $_ELGG;
-$_ELGG = (object)[
-	'view_path' => __DIR__ . '/../../../views/',
-];
-
 function _elgg_testing_config(\Elgg\Config $config = null) {
-	static $inst;
-	if ($config) {
-		$inst = $config;
-	}
-	return $inst;
+	return \Elgg\TestCase::config($config);
 }
 
-// PHPUnit will serialize globals between tests, so let's not introduce any globals here.
-call_user_func(function () use ($CONFIG) {
-	$config = new \Elgg\Config($CONFIG);
-	_elgg_testing_config($config);
-	
-	$sp = new \Elgg\Di\ServiceProvider($config);
-	$sp->setValue('mailer', new InMemoryTransport());
-
-	$app = new \Elgg\Application($sp);
-	$app->loadCore();
-
-	// persistentLogin service needs this set to instantiate without calling DB
-	_elgg_configure_cookies($CONFIG);
-
-	_elgg_testing_application($app);
-});
+/**
+ * Create an HTTP request
+ *
+ * @param string $uri             URI of the request
+ * @param string $method          HTTP method
+ * @param array  $parameters      Query/Post parameters
+ * @param int    $ajax            AJAX api version (0 for non-ajax)
+ * @param bool   $add_csrf_tokens Add CSRF tokens
+ * @return \Elgg\Http\Request
+ * @deprecated 2.3
+ */
+function _elgg_testing_request($uri = '', $method = 'GET', $parameters = [], $ajax = 0, $add_csrf_tokens = false) {
+	return \Elgg\TestCase::prepareHttpRequest($uri, $method, $parameters, $ajax, $add_csrf_tokens);
+}

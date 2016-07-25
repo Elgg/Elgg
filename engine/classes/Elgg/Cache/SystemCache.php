@@ -1,6 +1,11 @@
 <?php
 namespace Elgg\Cache;
 
+use Elgg\Profilable;
+use Elgg\Config;
+use ElggFileCache;
+use Elgg\Database\Datalist;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -11,51 +16,43 @@ namespace Elgg\Cache;
  * @since      1.10.0
  */
 class SystemCache {
+	use Profilable;
+
 	/**
-	 * Global Elgg configuration
-	 * 
-	 * @var \stdClass
+	 * @var Config
 	 */
-	private $CONFIG;
+	private $config;
+
+	/**
+	 * @var ElggFileCache
+	 */
+	private $cache;
+
+	/**
+	 * @var Datalist
+	 */
+	private $datalist;
 
 	/**
 	 * Constructor
+	 *
+	 * @param ElggFileCache $cache    Elgg disk cache
+	 * @param Config        $config   Elgg config
+	 * @param Datalist      $datalist Elgg datalist
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(ElggFileCache $cache, Config $config, Datalist $datalist) {
+		$this->cache = $cache;
+		$this->config = $config;
+		$this->datalist = $datalist;
 	}
 
-	/**
-	 * Returns an \ElggCache object suitable for caching system information
-	 *
-	 * @todo Can this be done in a cleaner way?
-	 * @todo Swap to memcache etc?
-	 *
-	 * @return \ElggFileCache
-	 */
-	function getFileCache() {
-		
-	
-		/**
-		 * A default filestore cache using the dataroot.
-		 */
-		static $FILE_PATH_CACHE;
-	
-		if (!$FILE_PATH_CACHE) {
-			$FILE_PATH_CACHE = new \ElggFileCache($this->CONFIG->dataroot . 'system_cache/');
-		}
-	
-		return $FILE_PATH_CACHE;
-	}
-	
 	/**
 	 * Reset the system cache by deleting the caches
 	 *
 	 * @return void
 	 */
 	function reset() {
-		$this->getFileCache()->clear();
+		$this->cache->clear();
 	}
 	
 	/**
@@ -66,10 +63,8 @@ class SystemCache {
 	 * @return bool
 	 */
 	function save($type, $data) {
-		
-	
-		if ($this->CONFIG->system_cache_enabled) {
-			return $this->getFileCache()->save($type, $data);
+		if ($this->isEnabled()) {
+			return $this->cache->save($type, $data);
 		}
 	
 		return false;
@@ -82,17 +77,23 @@ class SystemCache {
 	 * @return string
 	 */
 	function load($type) {
-		
-	
-		if ($this->CONFIG->system_cache_enabled) {
-			$cached_data = $this->getFileCache()->load($type);
-	
+		if ($this->isEnabled()) {
+			$cached_data = $this->cache->load($type);
 			if ($cached_data) {
 				return $cached_data;
 			}
 		}
 	
 		return null;
+	}
+	
+	/**
+	 * Is system cache enabled
+	 *
+	 * @return bool
+	 */
+	function isEnabled() {
+		return (bool)$this->config->getVolatile('system_cache_enabled');
 	}
 	
 	/**
@@ -104,10 +105,8 @@ class SystemCache {
 	 * @return void
 	 */
 	function enable() {
-		
-	
-		_elgg_services()->datalist->set('system_cache_enabled', 1);
-		$this->CONFIG->system_cache_enabled = 1;
+		$this->datalist->set('system_cache_enabled', 1);
+		$this->config->set('system_cache_enabled', 1);
 		$this->reset();
 	}
 	
@@ -120,21 +119,23 @@ class SystemCache {
 	 * @return void
 	 */
 	function disable() {
-		
-	
-		_elgg_services()->datalist->set('system_cache_enabled', 0);
-		$this->CONFIG->system_cache_enabled = 0;
+		$this->datalist->set('system_cache_enabled', 0);
+		$this->config->set('system_cache_enabled', 0);
 		$this->reset();
 	}
 	
 	/**
 	 * Loads the system cache during engine boot
-	 * 
+	 *
 	 * @see elgg_reset_system_cache()
 	 * @access private
 	 */
 	function loadAll() {
-		$this->CONFIG->system_cache_loaded = false;
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		$this->config->set('system_cache_loaded', false);
 
 		if (!_elgg_services()->views->configureFromCache($this)) {
 			return;
@@ -147,23 +148,27 @@ class SystemCache {
 		$GLOBALS['_ELGG']->view_types = unserialize($data);
 
 		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
-	
-		$this->CONFIG->system_cache_loaded = true;
+
+		$this->config->set('system_cache_loaded', true);
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
 	}
 	
 	/**
 	 * Initializes the simplecache lastcache variable and creates system cache files
 	 * when appropriate.
-	 * 
+	 *
 	 * @access private
 	 */
 	function init() {
-		if (!$this->CONFIG->system_cache_enabled) {
+		if (!$this->isEnabled()) {
 			return;
 		}
 
 		// cache system data if enabled and not loaded
-		if (!$this->CONFIG->system_cache_loaded) {
+		if (!$this->config->getVolatile('system_cache_loaded')) {
 			$this->save('view_types', serialize($GLOBALS['_ELGG']->view_types));
 
 			_elgg_services()->views->cacheConfiguration($this);

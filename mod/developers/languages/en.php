@@ -49,7 +49,8 @@ return array(
 	'developers:inspect:priority' => 'Priority',
 	'developers:inspect:simplecache' => 'Simple Cache',
 	'developers:inspect:views' => 'Views',
-	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view output is filtered through these Plugin Hooks:",
+	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view input/output is filtered through these Plugin Hooks:",
+	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(filtered by plugin hook: %s)",
 	'developers:inspect:widgets' => 'Widgets',
 	'developers:inspect:webservices' => 'Webservices',
@@ -58,8 +59,11 @@ return array(
 	'developers:inspect:file_location' => 'File path from Elgg root',
 
 	// event logging
+	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
-	'developers:log_queries' => "%s DB queries (does not include the shutdown event)",
+	'developers:log_queries' => "DB queries: %s",
+	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
+	'developers:elapsed_time' => "Elapsed time (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',

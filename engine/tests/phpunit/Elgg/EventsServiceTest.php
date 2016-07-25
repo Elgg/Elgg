@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg;
 
-
-class EventsServiceTest extends \PHPUnit_Framework_TestCase {
+class EventsServiceTest extends \Elgg\TestCase {
 
 	public $counter = 0;
 
@@ -47,7 +47,7 @@ class EventsServiceTest extends \PHPUnit_Framework_TestCase {
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
 		$this->assertTrue($events->trigger('foo', 'bar', null, array(
-			\Elgg\EventsService::OPTION_STOPPABLE => false
+					\Elgg\EventsService::OPTION_STOPPABLE => false
 		)));
 		$this->assertEquals($this->counter, 1);
 	}
@@ -69,5 +69,5 @@ class EventsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->counter++;
 		return true;
 	}
-}
 
+}

@@ -2,8 +2,6 @@
 /**
  * Core Elgg JavaScript file
  */
-
-use Elgg\Filesystem\Directory;
  
 global $CONFIG;
 
@@ -17,6 +15,25 @@ JS;
 
 // For backwards compatibility...
 echo elgg_view('sprintf.js');
+
+// We use a named AMD module and inline it here instead of using an async call.
+// This allows us to bootstrap elgg.ui.widgets library at runtime, without having
+// to wait for the module to load. This is necessary to ensure BC for plugins that
+// rely on elgg.ui.widgets methods to be available at system init.
+// @todo: remove in 3.x and use async calls
+echo elgg_view('elgg/widgets.js');
+
+// In 3.0 this will be required by elgg/lightbox, but in 2.x we have to worry about
+// legacy code that expects $.colorbox to be ready synchronously. To avoid inlining
+// in both lightbox.js and elgg/lightbox, we do so here and define it as a module.
+echo elgg_view('jquery.colorbox.js');
+?>
+define('jquery.colorbox');
+<?php
+// We use named AMD modules and inline them here in order to save HTTP requests,
+// as these modules will be required on each page
+echo elgg_view('elgg/popup.js');
+echo elgg_view('elgg/lightbox.js');
 
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
@@ -51,19 +68,15 @@ foreach ($files as $file) {
 	echo "\n";
 }
 
-/**
- * Set some values that are cacheable
- */
 ?>
 //<script>
+<?php foreach (_elgg_get_js_site_data() as $expression => $value): ?>
+<?= $expression ?> = <?= json_encode($value) ?>;
+<?php endforeach; ?>
 
-elgg.version = '<?php echo elgg_get_version(); ?>';
-elgg.release = '<?php echo elgg_get_version(true); ?>';
-elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
-
-// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
-elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
-elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
+// page data overrides site data
+$.extend(elgg.data, elgg._data);
+delete elgg._data;
 
 // jQuery and UI must be loaded sync in 2.x but modules should depend on these AMD modules
 define('jquery', function () {
@@ -78,11 +91,6 @@ define('jquery-ui/datepicker', jQuery.datepicker);
 
 define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
-
-	$(function() {
-		elgg.trigger_hook('init', 'system');
-		elgg.trigger_hook('ready', 'system');
-	});
 
 	return elgg;
 });
@@ -103,3 +111,21 @@ if (!window._require_queue) {
 }
 
 elgg.trigger_hook('boot', 'system');
+
+require(['elgg/init', 'elgg/ready']);
+
+<?php
+if (_elgg_view_may_be_altered('lightbox/settings.js', 'lightbox/settings.js.php')) {
+	elgg_deprecated_notice('lightbox/settings.js view has been deprecated. Use "getOptions", "ui.lightbox" ' .
+		'JS plugin hook or data-colorbox-opts attribute instead', '2.2');
+	?>
+	require(['elgg'], function(elgg) {
+		elgg.provide('elgg.ui.lightbox');
+		<?= elgg_view('lightbox/settings.js') ?>
+	});
+	<?php
+}
+?>
+
+// We need to ensure bindings take place
+require(['elgg/lightbox']);

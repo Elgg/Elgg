@@ -13,7 +13,7 @@ if (!$owner) {
 elgg_push_breadcrumb($owner->name, "pages/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
-elgg_register_title_button();
+elgg_register_title_button('pages', 'add', 'object', 'page_top');
 
 $title = elgg_echo('pages:friends');
 

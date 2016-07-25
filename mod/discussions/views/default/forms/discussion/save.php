@@ -1,9 +1,9 @@
 <?php
+
 /**
  * Discussion topic add/edit form body
  *
  */
-
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
 $status = elgg_extract('status', $vars, '');
@@ -12,58 +12,65 @@ $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
 $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
 
-?>
-<div>
-	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('discussion:topic:description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
-</div>
-<div>
-    <label><?php echo elgg_echo("discussion:topic:status"); ?></label><br />
-	<?php
-		echo elgg_view('input/select', array(
-			'name' => 'status',
-			'value' => $status,
-			'options_values' => array(
-				'open' => elgg_echo('status:open'),
-				'closed' => elgg_echo('status:closed'),
-			),
-		));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array(
+$fields = [
+	[
+		'type' => 'text',
+		'name' => 'title',
+		'value' => $title,
+		'label' => elgg_echo('title'),
+		'required' => true,
+	],
+	[
+		'type' => 'longtext',
+		'name' => 'description',
+		'value' => $desc,
+		'label' => elgg_echo('discussion:topic:description'),
+		'required' => true,
+	],
+	[
+		'type' => 'tags',
+		'name' => 'tags',
+		'value' => $tags,
+		'label' => elgg_echo('tags'),
+	],
+	[
+		'type' => 'select',
+		'name' => 'status',
+		'value' => $status,
+		'options_values' => array(
+			'open' => elgg_echo('status:open'),
+			'closed' => elgg_echo('status:closed'),
+		),
+		'label' => elgg_echo('discussion:topic:status'),
+	],
+	[
+		'type' => 'access',
 		'name' => 'access_id',
 		'value' => $access_id,
 		'entity' => get_entity($guid),
 		'entity_type' => 'object',
 		'entity_subtype' => 'discussion',
-	)); ?>
-</div>
-<div class="elgg-foot">
-<?php
-
-echo elgg_view('input/hidden', array(
-	'name' => 'container_guid',
-	'value' => $container_guid,
-));
-
-if ($guid) {
-	echo elgg_view('input/hidden', array(
+		'label' => elgg_echo('access'),
+	],
+	[
+		'type' => 'hidden',
+		'name' => 'container_guid',
+		'value' => $container_guid,
+	],
+	[
+		'type' => 'hidden',
 		'name' => 'topic_guid',
 		'value' => $guid,
-	));
+	],
+	[
+		'type' => 'submit',
+		'value' => elgg_echo('save'),
+		'field_class' => 'elgg-foot',
+	]
+];
+
+foreach ($fields as $field) {
+	$type = elgg_extract('type', $field, 'text');
+	unset($field['type']);
+	echo elgg_view_input($type, $field);
 }
-
-echo elgg_view('input/submit', array('value' => elgg_echo("save")));
-
-?>
-</div>

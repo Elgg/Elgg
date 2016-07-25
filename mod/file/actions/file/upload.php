@@ -20,9 +20,10 @@ if ($container_guid == 0) {
 elgg_make_sticky_form('file');
 
 // check if upload attempted and failed
-if (!empty($_FILES['upload']['name']) && $_FILES['upload']['error'] != 0) {
-	$error = elgg_get_friendly_upload_error($_FILES['upload']['error']);
-
+$uploaded_files = elgg_get_uploaded_files('upload');
+$uploaded_file = array_shift($uploaded_files);
+if ($uploaded_file && !$uploaded_file->isValid()) {
+	$error = elgg_get_friendly_upload_error($uploaded_file->getError());
 	register_error($error);
 	forward(REFERER);
 }
@@ -34,21 +35,8 @@ if ($guid > 0) {
 }
 
 if ($new_file) {
-	// must have a file if a new file upload
-	if (empty($_FILES['upload']['name'])) {
-		$error = elgg_echo('file:nofile');
-		register_error($error);
-		forward(REFERER);
-	}
-
 	$file = new ElggFile();
 	$file->subtype = "file";
-
-	// if no title on new upload, grab filename
-	if (empty($title)) {
-		$title = htmlspecialchars($_FILES['upload']['name'], ENT_QUOTES, 'UTF-8');
-	}
-
 } else {
 	// load original file object
 	$file = get_entity($guid);
@@ -63,120 +51,33 @@ if ($new_file) {
 		register_error(elgg_echo('file:noaccess'));
 		forward(REFERER);
 	}
-
-	if (!$title) {
-		// user blanked title, but we need one
-		$title = $file->title;
-	}
 }
 
-$file->title = $title;
+if ($title) {
+	$file->title = $title;
+}
 $file->description = $desc;
 $file->access_id = $access_id;
 $file->container_guid = $container_guid;
 $file->tags = string_to_tag_array($tags);
 
-// we have a file upload, so process it
-if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
+if ($uploaded_file && $uploaded_file->isValid()) {
 
-	$prefix = "file/";
-
-	// if previous file, delete it
-	if (!$new_file) {
-		$filename = $file->getFilenameOnFilestore();
-		if (file_exists($filename)) {
-			unlink($filename);
-		}
+	if ($file->acceptUploadedFile($uploaded_file)) {
+		$guid = $file->save();
 	}
-
-	$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
-
-	$file->setFilename($prefix . $filestorename);
-	$file->originalfilename = $_FILES['upload']['name'];
-	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
-
-	$file->setMimeType($mime_type);
-	$file->simpletype = elgg_get_file_simple_type($mime_type);
-
-	// Open the file to guarantee the directory exists
-	$file->open("write");
-	$file->close();
-	move_uploaded_file($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
-
-	$guid = $file->save();
-
-	$thumb = new ElggFile();
-	$thumb->owner_guid = $file->owner_guid;
-
-	$sizes = [
-		'small' => [
-			'w' => 60,
-			'h' => 60,
-			'square' => true,
-			'metadata_name' => 'thumbnail',
-			'filename_prefix' => 'thumb',
-		],
-		'medium' => [
-			'w' => 153,
-			'h' => 153,
-			'square' => true,
-			'metadata_name' => 'smallthumb',
-			'filename_prefix' => 'smallthumb',
-		],
-		'large' => [
-			'w' => 600,
-			'h' => 600,
-			'square' => false,
-			'metadata_name' => 'largethumb',
-			'filename_prefix' => 'largethumb',
-		],
-	];
-
-	$remove_thumbs = function () use ($file, $sizes, $thumb) {
-		if (!$file->guid) {
-			return;
-		}
-
-		unset($file->icontime);
-
-		foreach ($sizes as $size => $data) {
-			$filename = $file->{$data['metadata_name']};
-			if ($filename !== null) {
-				$thumb->setFilename($filename);
-				$thumb->delete();
-				unset($file->{$data['metadata_name']});
-			}
-		}
-	};
-
-	$remove_thumbs();
-
-	$jpg_filename = pathinfo($filestorename, PATHINFO_FILENAME) . '.jpg';
-
-	if ($guid && $file->simpletype == "image") {
-		$file->icontime = time();
-
-		foreach ($sizes as $size => $data) {
-			$image_bytes = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $data['w'], $data['h'], $data['square']);
-			if (!$image_bytes) {
-				// bail and remove any thumbs
-				$remove_thumbs();
-				break;
-			}
-
-			$filename = "{$prefix}{$data['filename_prefix']}{$jpg_filename}";
-			$thumb->setFilename($filename);
-			$thumb->open("write");
-			$thumb->write($image_bytes);
-			$thumb->close();
-			unset($image_bytes);
-
-			$file->{$data['metadata_name']} = $filename;
-		}
+	
+	if ($guid && $file->saveIconFromElggFile($file)) {
+		$file->thumbnail = $file->getIcon('small')->getFilename();
+		$file->smallthumb = $file->getIcon('medium')->getFilename();
+		$file->largethumb = $file->getIcon('large')->getFilename();
+	} else {
+		$file->deleteIcon();
+		unset($file->thumbnail);
+		unset($file->smallthumb);
+		unset($file->largethumb);
 	}
-
-} else {
-	// not saving a file but still need to save the entity to push attributes to database
+} else if ($file->exists()) {
 	$file->save();
 }
 

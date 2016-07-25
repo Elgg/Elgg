@@ -14,9 +14,8 @@
  * @uses $vars['value']     The current value, if any (as a unix timestamp)
  * @uses $vars['class']     Additional CSS class
  * @uses $vars['timestamp'] Store as a Unix timestamp in seconds. Default = false
- *                          Note: you cannot use an id with the timestamp option.
+ * @uses $vars['datepicker_options'] An array of options to pass to the jQuery UI datepicker
  */
-
 $vars['class'] = (array) elgg_extract('class', $vars, []);
 $vars['class'][] = 'elgg-input-date';
 
@@ -36,10 +35,15 @@ $timestamp = $vars['timestamp'];
 unset($vars['timestamp']);
 
 if ($timestamp) {
-	echo elgg_view('input/hidden', ['name' => $vars['name'], 'value' => $vars['value']]);
-
+	if (!isset($vars['id'])) {
+		$vars['id'] = $vars['name'];
+	}
+	echo elgg_view('input/hidden', [
+		'name' => $vars['name'],
+		'value' => $vars['value'],
+		'rel' => $vars['id'],
+	]);
 	$vars['class'][] = 'elgg-input-timestamp';
-	$vars['id'] = $vars['name'];
 	unset($vars['name']);
 }
 
@@ -48,8 +52,20 @@ if (is_numeric($vars['value'])) {
 	$vars['value'] = gmdate('Y-m-d', $vars['value']);
 }
 
+$datepicker_options = elgg_extract('datepicker_options', $vars);
+$vars['data-datepicker-opts'] = $datepicker_options ? json_encode($datepicker_options) : '';
+unset($vars['datepicker_options']);
+
 echo elgg_format_element('input', $vars);
 
-if (elgg_is_xhr()) {
-	echo elgg_format_element('script', [], 'elgg.ui.initDatePicker();');
+if (isset($vars['id'])) {
+	$selector = "#{$vars['id']}";
+} else {
+	$selector = ".elgg-input-date[name='{$vars['name']}']";
 }
+?>
+<script>
+	require(['input/date'], function (datepicker) {
+		datepicker.init(<?= json_encode($selector) ?>);
+	});
+</script>

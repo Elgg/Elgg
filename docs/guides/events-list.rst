@@ -130,9 +130,13 @@ Entity events
 
 **update, <entity type>**
     Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
+    The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
+    the entity was last saved.
 
 **update:after, <entity type>**
     Triggered after an update for the user, group, object, and site entities.
+    The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
+    the entity was last saved.
 
 **delete, <entity type>**
     Triggered before entity deletion. Return false to prevent deletion.
@@ -196,6 +200,15 @@ River events
 
 **created, river**
 	Called after a river item is created.
+
+
+File events
+===========
+
+**upload:after, file**
+    Called after an uploaded file has been written to filestore. Receives an
+    instance of ``ElggFile`` the uploaded file was written to. The ``ElggFile``
+    may or may not be an entity with a GUID.
 
 Notes
 =====

@@ -18,7 +18,6 @@ System hooks
 	* headers
 	* params
 
-
 **page_owner, system**
 	Filter the page_owner for the current page. No options are passed.
 
@@ -83,18 +82,17 @@ System hooks
 **output:after, layout**
 	In ``elgg_view_layout()``, filters the return value of the layout view.
 
-**output, ajax**
-	Triggered in the ajax forward hook that is called for ajax requests. Allows plugins to alter the
-	output returned, including the forward URL, system messages, and errors.
-
 **parameters, menu:<menu_name>**
-	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before it is generated.
+	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before rendering.
 
 **register, menu:<menu_name>**
-	Triggered by ``elgg_view_menu()``. Used to add dynamic menu items.
+	Filters the initial list of menu items pulled from configuration, before the menu has been split into
+	sections. Triggered by ``elgg_view_menu()`` and ``elgg()->menus->getMenu()``.
 
 **prepare, menu:<menu_name>**
-	Trigger by ``elgg_view_menu()``. Used to sort, add, remove, and modify menu items.
+	Filters the array of menu sections before they're displayed. Each section is a string key mapping to
+	an area of menu items. This is a good hook to sort, add, remove, and modify menu items. Triggered by
+	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
 **creating, river**
 	Triggered before a river item is created. Return false to prevent river item from being created.
@@ -118,6 +116,12 @@ System hooks
     returning them, allowing a plugin to alter breadcrumb strategy site-wide.
 
 **add, river**
+
+**elgg.data, site**
+   Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
+
+**elgg.data, page**
+   Filters uncached, page-specific configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
 
 User hooks
 ==========
@@ -186,10 +190,57 @@ Action hooks
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 
+**response, action:<action>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+    Note that the ``<action>`` value is parsed from the request URL, therefore you may not be able to filter
+    the responses of `action()` calls if they are nested within the another action script file.
+
+.. _guides/hooks-list#ajax:
+
+Ajax
+====
+
+**ajax_response, \***
+	When the ``elgg/Ajax`` AMD module is used, this hook gives access to the response object
+	(``\Elgg\Services\AjaxResponse``) so it can be altered/extended. The hook type depends on
+	the method call:
+
+	================  ====================
+	elgg/Ajax method  plugin hook type
+	================  ====================
+	action()          action:<action_name>
+	path()            path:<url_path>
+	view()            view:<view_name>
+	form()            form:<action_name>
+	================  ====================
+
+**output, ajax**
+	This filters the JSON output wrapper returned to the legacy ajax API (``elgg.ajax``, ``elgg.action``, etc.).
+	Plugins can alter the output, forward URL, system messages, and errors. For the ``elgg/Ajax`` AMD module,
+	use the ``ajax_response`` hook documented above.
+
+
 .. _guides/hooks-list#permission-hooks:
 
 Permission hooks
 ================
+
+**container_logic_check, <entity_type>**
+	Triggered by ``ElggEntity:canWriteToContainer()`` before triggering ``permissions_check`` and ``container_permissions_check``
+	hooks. Unlike permissions hooks, logic check can be used to prevent certain entity types from being contained
+	by other entity types, e.g. discussion replies should only be contained by discussions. This hook can also be
+	used to apply status logic, e.g. do disallow new replies for closed discussions.
+
+	The handler should return ``false`` to prevent an entity from containing another entity. The default value passed to the hook
+	is ``null``, so the handler can check if another hook has modified the value by checking if return value is set.
+	Should this hook return ``false``, ``container_permissions_check`` and ``permissions_check`` hooks will not be triggered.
+
+	The ``$params`` array will contain:
+
+	 * ``container`` - An entity that will be used as a container
+	 * ``user`` - User who will own the entity to be written to container
+	 * ``subtype`` - Subtype of the entity to be written to container (entity type is assumed from hook type)
 
 **container_permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']``
@@ -198,6 +249,12 @@ Permission hooks
 	In the rare case where an entity is created with neither the ``container_guid`` nor the ``owner_guid``
 	matching the logged in user, this hook is called *twice*, and in the first call ``$params['container']``
 	will be the *owner*, not the entity's real container.
+
+	The ``$params`` array will contain:
+
+	 * ``container`` - An entity that will be used as a container
+	 * ``user`` - User who will own the entity to be written to container
+	 * ``subtype`` - Subtype of the entity to be written to container (entity type is assumed from hook type)
 
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
@@ -272,6 +329,35 @@ Permission hooks
 **get_sql, access**
     Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
+**gatekeeper, <entity_type>:<entity_subtype>**
+    Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.
+
+
+Routing
+=======
+
+**route, <identifier>**
+    Allows applying logic or returning a response before the page handler is called. See :doc:`routing`
+    for details.
+    Note that plugins using this hook to rewrite paths, will not be able to filter the response object by
+    its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for
+    the original path.
+
+**route:rewrite, <identifier>**
+	Allows altering the site-relative URL path. See :doc:`routing` for details.
+
+**response, path:<path>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    This hook type will only be used if the path did not start with "action/" or "ajax/".
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+    Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` hook should
+    use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` hook.
+
+**ajax_response, path:<path>**
+    Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will
+    only be used if the path did not start with "action/" or "ajax/".
+
+
 .. _guides/hooks-list#views:
 
 Views
@@ -291,6 +377,54 @@ Views
 
 **head, page**
     In ``elgg_view_page()``, filters ``$vars['head']``
+    Return value contains an array with ``title``, ``metas`` and ``links`` keys,
+    where ``metas`` is an array of elements to be formatted as ``<meta>`` head tags,
+    and ``links`` is an array of elements to be formatted as ``<link>`` head tags.
+    Each meta and link element contains a set of key/value pairs that are formatted
+    into html tag attributes, e.g.
+
+.. code:: php
+
+    return [
+       'title' => 'Current page title',
+       'metas' => [
+          'viewport' => [
+             'name' => 'viewport',
+             'content' => 'width=device-width',
+	      ]
+       ],
+       'links' => [
+          'rss' => [
+             'rel' => 'alternative',
+             'type' => 'application/rss+xml',
+             'title' => 'RSS',
+             'href' => elgg_format_url($url),
+          ],
+          'icon-16' => [
+             'rel' => 'icon',
+             'sizes' => '16x16',
+             'type' => 'image/png',
+		     'href' => elgg_get_simplecache_url('favicon-16.png'),
+          ],
+       ],
+    ];
+
+
+**ajax_response, view:<view>**
+    Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.
+
+**ajax_response, form:<action>**
+    Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
+
+**response, view:<view_name>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    Applies to request to ``/ajax/view/<view_name>``.
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+
+**response, form:<form_name>**
+    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+    Applies to request to ``/ajax/form/<form_name>``.
+    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
 
 Files
 =====
@@ -306,6 +440,18 @@ Files
     ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
     ``ege*`` filters and menus.
 
+**upload, file**
+    Allows plugins to implement custom logic for moving an uploaded file into an instance of ``ElggFile``.
+    The handler must return ``true`` to indicate that the uploaded file was moved.
+    The handler must return ``false`` to indicate that the uploaded file could not be moved.
+    Other returns will indicate that ``ElggFile::acceptUploadedFile`` should proceed with the
+    default upload logic.
+
+    ``$params`` array includes:
+
+     * ``file`` - instance of ``ElggFile`` to write to
+     * ``upload`` - instance of Symfony's ``UploadedFile``
+
 .. _guides/hooks-list#other:
 
 Other
@@ -320,6 +466,44 @@ Other
 	the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
 	"container_guid" (int) are provided. An empty entity value generally means the form is to
 	create a new object.
+
+**entity:icon:sizes, <entity_type>**
+	Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes.
+	``entity_subtype`` will be passed with the ``$params`` array to the callback.
+
+**entity:<icon_type>:sizes, <entity_type>**
+	Allows filtering sizes for custom icon types, see ``entity:icon:sizes, <entity_type>``.
+
+	The hook must return an associative array where keys are the names of the icon sizes
+	(e.g. "large"), and the values are arrays with the following keys:
+
+	 * ``w`` - Width of the image in pixels
+	 * ``h`` - Height of the image in pixels
+	 * ``square`` - Should the aspect ratio be a square (true/false)
+	 * ``upscale`` - Should the image be upscaled in case it is smaller than the given
+           width and height (true/false)
+
+	If the configuration array for an image size is empty, the image will be
+	saved as an exact copy of the source without resizing or cropping.
+
+	Example:
+
+.. code:: php
+
+	return [
+		'small' => [
+			'w' => 60,
+			'h' => 60,
+			'square' => true,
+			'upscale' => true,
+		],
+		'large' => [
+			'w' => 600,
+			'h' => 600,
+			'upscale' => false,
+		],
+		'original' => [],
+	];
 
 **entity:icon:url, <entity_type>**
 	Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should
@@ -357,7 +541,7 @@ Other
 		$size = '150x150';
 
 		// Use configured size if possible
-		$config = elgg_get_config('icon_sizes');
+		$config = elgg_get_icon_sizes('user');
 		$key = $params['size'];
 		if (isset($config[$key])) {
 			$size = $config[$key]['w'] . 'x' . $config[$key]['h'];
@@ -366,6 +550,54 @@ Other
 		// Produce URL used to retrieve icon
 		return "http://www.gravatar.com/avatar/$hash?s=$size";
 	}
+
+**entity:<icon_type>:url, <entity_type>**
+	Allows filtering URLs for custom icon types, see ``entity:icon:url, <entity_type>``
+
+**entity:icon:file, <entity_type>**
+	Triggered by ``ElggEntity::getIcon()`` and allows plugins to provide an alternative ``ElggIcon`` object
+	that points to a custom location of the icon on filestore. The handler must return an instance of ``ElggIcon``
+	or an exception will be thrown.
+
+**entity:<icon_type>:file, <entity_type>**
+	Allows filtering icon file object for custom icon types, see ``entity:icon:file, <entity_type>``
+
+**entity:<icon_type>:prepare, <entity_type>**
+	Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to prepare an image from uploaded/linked file.
+	This hook can be used to e.g. rotate the image before it is resized/cropped, or it can be used to extract an image frame
+	if the uploaded file is a video. The handler must return an instance of ``ElggFile`` with a `simpletype`
+	that resolves to `image`. The ``$return`` value passed to the hook is an instance of ``ElggFile`` that points
+	to a temporary copy of the uploaded/linked file.
+
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
+	 * ``file`` - original input file before it has been modified by other hooks
+
+**entity:<icon_type>:save, <entity_type>**
+	Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to apply custom image manipulation logic to
+	resizing/cropping icons. The handler must return ``true`` to prevent the core APIs from resizing/cropping icons.
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
+	 * ``file`` - ``ElggFile`` object that points to the image file to be used as source for icons
+	 * ``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates
+
+**entity:<icon_type>:saved, <entity_type>**
+	Triggered by ``ElggEntity::saveIcon*()`` methods once icons have been created. This hook can be used by plugins
+	to create river items, update cropping coordinates for custom icon types etc. The handler can access the
+	created icons using ``ElggEntity::getIcon()``.
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
+	 * ``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates
+
+**entity:<icon_type>:delete, <entity_type>**
+	Triggered by ``ElggEntity::deleteIcon()`` method and can be used for clean up operations. This hook is triggered
+	before the icons are deleted. The handler can return ``false`` to prevent icons from being deleted.
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
 
 **entity:url, <entity_type>**
 	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
@@ -434,6 +666,10 @@ Other
 	Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``.
 	If handling saving the settings, the handler should return true to prevent the default code from running.
 
+**handlers, widgets**
+	Triggered when a list of available widgets is needed. Plugins can conditionally add or remove widgets from this list
+	or modify attributes of existing widgets like ``context`` or ``multiple``.
+
 **get_list, default_widgets**
 	Filters a list of default widgets to add for newly registered users. The list is an array
 	of arrays in the format:
@@ -477,6 +713,15 @@ Embed
 **embed_get_sections, all**
 
 **embed_get_upload_sections, all**
+
+Groups
+------
+
+**profile_buttons, group**
+	Filters buttons (``ElggMenuItem`` instances) to be registered in the title menu of the group profile page
+
+**tool_options, group**
+	Use this hook to influence the available group tool options
 
 HTMLawed
 --------

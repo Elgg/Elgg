@@ -22,6 +22,35 @@ namespace Elgg\Database;
 class SiteSecret {
 
 	/**
+	 * @var Datalist
+	 */
+	private $datalist;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Datalist $datalist Datalist table
+	 */
+	public function __construct(Datalist $datalist) {
+		$this->datalist = $datalist;
+	}
+
+	/**
+	 * @var string
+	 */
+	private $test_secret = '';
+
+	/**
+	 * Set a secret to be used in testing
+	 *
+	 * @param string $secret Testing site secret. 32 alphanums starting with "z"
+	 * @return void
+	 */
+	public function setTestingSecret($secret) {
+		$this->test_secret = $secret;
+	}
+
+	/**
 	 * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
 	 *
 	 * Used during installation and saves as a datalist.
@@ -34,7 +63,7 @@ class SiteSecret {
 	function init() {
 		$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
 
-		if (_elgg_services()->datalist->set('__site_secret__', $secret)) {
+		if ($this->datalist->set('__site_secret__', $secret)) {
 			return $secret;
 		}
 
@@ -52,9 +81,13 @@ class SiteSecret {
 	 * @access private
 	 */
 	function get($raw = false) {
-		$secret = _elgg_services()->datalist->get('__site_secret__');
+		if ($this->test_secret) {
+			$secret = $this->test_secret;
+		} else {
+			$secret = $this->datalist->get('__site_secret__');
+		}
 		if (!$secret) {
-			$secret = init_site_secret();
+			$secret = $this->init();
 		}
 
 		if ($raw) {
@@ -86,7 +119,7 @@ class SiteSecret {
 	 * @access private
 	 */
 	function getStrength() {
-		$secret = get_site_secret();
+		$secret = $this->get();
 		if ($secret[0] !== 'z') {
 			$rand_max = getrandmax();
 			if ($rand_max < pow(2, 16)) {
@@ -98,5 +131,4 @@ class SiteSecret {
 		}
 		return 'strong';
 	}
-
 }

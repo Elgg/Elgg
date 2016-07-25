@@ -57,42 +57,39 @@ Use the ``get_input`` function to get access to request parameters:
 
 You can then use the :doc:`database` api to load entities and perform actions on them accordingly.
 
-To redirect the page once you've completed your actions, use the ``forward`` function:
+To indicate a successful action, use ``elgg_ok_response()``. This function accepts data that you want to make available
+to the client for XHR calls (this data will be ignored for non-XHR calls)
 
 .. code:: php
 
-   forward('url/to/forward/to');
+   $user = get_entity($guid);
+   // do something
 
-For example, to forward to the user's profile:
+   $action_data = [
+      'entity' => $user,
+      'stats' => [
+          'friends' => $user->getFriends(['count' => true]);
+      ],
+   ];
+
+   return elgg_ok_response($action_data, 'Action was successful', 'url/to/forward/to');
+
+
+To indicate an error, use ``elgg_error_response()``
 
 .. code:: php
 
    $user = elgg_get_logged_in_user_entity();
-   forward($user->getURL());
+   if (!$user) {
+      // show an error and forward the user to the referring page
+      // send 404 error code on AJAX calls
+      return elgg_error_response('User not found', REFERRER, ELGG_HTTP_NOT_FOUND);
+   }
 
-URLs can be relative to the Elgg root:
-
-.. code:: php
-
-   $user = elgg_get_logged_in_user_entity();
-   forward("/example/$user->username");
-
-Redirect to the referring page by using the ``REFERRER`` constant:
-
-.. code:: php
-
-   forward(REFERRER);
-   forward(REFERER); // equivalent
-
-Give feedback to the user about the status of the action by using
-``system_message`` for positive feedback or ``register_error`` for warnings and errors:
-
-.. code:: php
-
-   if ($success) {
-     system_message(elgg_echo(‘actions:example:success’));
-   } else {
-     register_error(elgg_echo(‘actions:example:error’));
+   if (!$user->canEdit()) {
+      // show an error and forward to user's profile
+      // send 403 error code on AJAX calls
+      return elgg_error_response('You are not allowed to perform this action', $user->getURL(), ELGG_HTTP_FORBIDDEN);
    }
 
 
@@ -136,6 +133,41 @@ This is done as follows:
 
 This lets a plugin extend an existing action without the need to replace the whole action. In the case of the captcha plugin it allows the plugin to provide captcha support in a very loosely coupled way.
 
+
+Actions available in core
+=========================
+
+``entity/delete``
+-------------------
+
+If your plugin does not implement any custom logic when deleting an entity, you can use bundled delete action
+
+.. code-block:: php
+
+   $guid = 123;
+   // You can provide optional forward path as a URL query parameter
+   $forward_url = 'path/to/forward/to';
+   echo elgg_view('output/url', array(
+      'text' => elgg_echo('delete'),
+      'href' => "action/entity/delete?guid=$guid&forward_url=$forward_url",
+      'confirm' => true,
+   ));
+
+
+You can customize the success message keys for your entity type and subtype, using ``"entity:delete:$type:$subtype:success"`` and ``"entity:delete:$type:success"`` keys.
+
+.. code-block:: php
+
+   // to add a custom message when a blog post or file is deleted
+   // add the translations keys in your language files
+   return array(
+      'entity:delete:object:blog:success' => 'Blog post has been deleted,
+      'entity:delete:object:file:success' => 'File titled %s has been deleted',
+   );
+
+
+Forms
+=====
 
 To output a form, use the elgg_view_form function like so:
 
@@ -181,6 +213,100 @@ Now when you call ``elgg_view_form('example')``, Elgg will produce:
        <input type="submit" class="elgg-button elgg-button-submit" value="Submit">
      </fieldset>
    </form>
+
+
+Inputs
+------
+
+To render a form input, use one of the bundled input views, which cover all standard
+HTML input elements. See individual view files for a list of accepted parameters.
+
+.. code:: php
+
+   echo elgg_view('input/select', array(
+      'required' => true,
+      'name' => 'status',
+      'options_values' => array(
+         'draft' => elgg_echo('status:draft'),
+         'published' => elgg_echo('status:published'),
+      ),
+      // most input views will render additional parameters passed to the view
+      // as tag attributes
+      'data-rel' => 'blog',
+   ));
+
+The above example will render a dropdown select input:
+
+.. code:: html
+
+   <select required="required" name="status" data-rel="blog" class="elgg-input-dropdown">
+      <option value="draft">Draft</option>
+      <option value="published">Published</option>
+   </select>
+
+To ensure consistency in field markup, use ``elgg_view_input()``, which accepts
+all the parameters of the input being rendered, as well as ``label`` and ``help``
+parameters (both of which are optional and accept HTML or text).
+
+.. code:: php
+
+   echo elgg_view_input('select', array(
+      'required' => true,
+      'name' => 'status',
+      'options_values' => array(
+         'draft' => elgg_echo('status:draft'),
+         'published' => elgg_echo('status:published'),
+      ),
+      'data-rel' => 'blog',
+      'label' => elgg_echo('blog:status:label'),
+      'help' => elgg_view_icon('help') . elgg_echo('blog:status:help'),
+   ));
+
+The above will generate the following markup:
+
+.. code:: html
+
+   <div class="elgg-field elgg-field-required">
+      <label for="elgg-field-1" class="elgg-field-label">Blog status<span title="Required" class="elgg-required-indicator">*</span></label>
+      <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-dropdown">
+         <option value="draft">Draft</option>
+         <option value="published">Published</option>
+      </select>
+      <div class="elgg-field-help elgg-text-help">
+         <span class="elgg-icon-help elgg-icon"></span>This indicates whether or not the blog is visible in the feed
+      </div>
+   </div>
+
+
+Input types
+-----------
+
+A list of bundled input types/views:
+
+* ``input/text`` - renders a text input ``<input type="text">``
+* ``input/plaintext`` - renders a textarea ``<textarea></textarea>``
+* ``input/longtext`` - renders a WYSIWYG text input
+* ``input/url`` - renders a url input ``<input type="url">``
+* ``input/email`` - renders an email input ``<input type="email">``
+* ``input/checkbox`` - renders a single checkbox ``<input type="checkbox">``
+* ``input/checkboxes`` - renders a set of checkboxes with the same name
+* ``input/radio`` - renders one or more radio buttons ``<input type="radio">``
+* ``input/submit`` - renders a submit button ``<input type="submit">``
+* ``input/button`` - renders a button ``<button></button>``
+* ``input/file`` - renders a file input ``<input type="file">``
+* ``input/select`` - renders a select input ``<select></select>``
+* ``input/hidden`` - renders a hidden input ``<input type="hidden">``
+* ``input/password`` - renders a password input ``<input type="password">``
+* ``input/date`` - renders a jQuery datepicker
+
+* ``input/access`` - renders an Elgg access level select
+* ``input/tags`` - renders an Elgg tags input
+* ``input/autocomplete`` - renders an Elgg entity autocomplete
+* ``input/captcha`` - placeholder view for plugins to extend
+* ``input/friendspicker`` - renders an Elgg friend picker
+* ``input/userpicker`` - renders an Elgg user autocomplete
+* ``input/location`` renders an Elgg location input
+
 
 Files and images
 ================
@@ -446,3 +572,26 @@ Note: If you use a non-string as HMAC data, you must use types consistently. Con
 
     // types identical to original
     elgg_build_hmac([123, 456])->matchesToken($mac); // true
+
+
+Signed URLs
+===========
+
+Signed URLs offer a limited level of security for situations where action tokens are not suitable, for example when sending a confirmation link via email. URL signatures verify that the URL has been generated by your Elgg installation (using site secret) and that the URL query elements were not tampered with.
+
+URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ for more details.
+
+.. code:: php
+
+    $url = elgg_http_add_url_query_element(elgg_normalize_url('confirm'), [
+       'user_guid' => $user_guid,
+    ]);
+
+    $url = elgg_http_get_signed_url($url);
+ 
+    notify_user($user_guid, $site->guid, 'Confirm', "Please confirm by clicking this link: $url");
+
+
+.. warning::
+
+   Signed URLs do not offer CSRF protection and should not be used instead of action tokens.

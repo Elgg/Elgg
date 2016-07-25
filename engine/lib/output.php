@@ -70,28 +70,11 @@ function elgg_autop($string) {
  * @since 1.7.2
  */
 function elgg_get_excerpt($text, $num_chars = 250) {
-	$text = trim(elgg_strip_tags($text));
-	$string_length = elgg_strlen($text);
-
-	if ($string_length <= $num_chars) {
-		return $text;
-	}
-
-	// handle cases
-	$excerpt = elgg_substr($text, 0, $num_chars);
-	$space = elgg_strrpos($excerpt, ' ', 0);
-
-	// don't crop if can't find a space.
-	if ($space === false) {
-		$space = $num_chars;
-	}
-	$excerpt = trim(elgg_substr($excerpt, 0, $space));
-
-	if ($string_length != elgg_strlen($excerpt)) {
-		$excerpt .= '...';
-	}
-
-	return $excerpt;
+	$vars = [
+		'text' => $text,
+		'num_chars' => $num_chars,
+	];
+	return elgg_view('output/excerpt', $vars);
 }
 
 /**
@@ -122,7 +105,7 @@ function elgg_format_bytes($size, $precision = 2) {
 	}
 
 	$base = log($size) / log(1024);
-	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');   
+	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');
 
 	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
 }
@@ -184,13 +167,16 @@ function elgg_format_attributes(array $attrs = array()) {
 /**
  * Format an HTML element
  *
- * @param string $tag_name   The element tagName. e.g. "div". This will not be validated.
+ * @param string|array $tag_name   The element tagName. e.g. "div". This will not be validated.
+ *                                 All function arguments can be given as a single array: The array will be used
+ *                                 as $attributes, except for the keys "#tag_name", "#text", and "#options", which
+ *                                 will be extracted as the other arguments.
  *
- * @param array  $attributes The element attributes. This is passed to elgg_format_attributes().
+ * @param array        $attributes The element attributes. This is passed to elgg_format_attributes().
  *
- * @param string $text       The contents of the element. Assumed to be HTML unless encode_text is true.
+ * @param string       $text       The contents of the element. Assumed to be HTML unless encode_text is true.
  *
- * @param array  $options    Options array with keys:
+ * @param array        $options    Options array with keys:
  *
  *   encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
  *                    will not be double-escaped.
@@ -209,7 +195,28 @@ function elgg_format_attributes(array $attrs = array()) {
  * @since 1.9.0
  */
 function elgg_format_element($tag_name, array $attributes = array(), $text = '', array $options = array()) {
-	if (!is_string($tag_name)) {
+	if (is_array($tag_name)) {
+		$args = $tag_name;
+
+		if ($attributes !== [] || $text !== '' || $options !== []) {
+			throw new \InvalidArgumentException('If $tag_name is an array, the other arguments must not be set');
+		}
+
+		if (isset($args['#tag_name'])) {
+			$tag_name = $args['#tag_name'];
+		}
+		if (isset($args['#text'])) {
+			$text = $args['#text'];
+		}
+		if (isset($args['#options'])) {
+			$options = $args['#options'];
+		}
+
+		unset($args['#tag_name'], $args['#text'], $args['#options']);
+		$attributes = $args;
+	}
+
+	if (!is_string($tag_name) || $tag_name === '') {
 		throw new \InvalidArgumentException('$tag_name is required');
 	}
 
@@ -517,7 +524,7 @@ function _elgg_html_decode($string) {
 
 /**
  * Prepares query string for output to prevent CSRF attacks.
- * 
+ *
  * @param string $string
  * @return string
  *

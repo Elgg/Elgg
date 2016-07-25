@@ -132,6 +132,44 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->dataroot = "";
 //$CONFIG->simplecache_enabled = true;
 
+/**
+ * Enable the boot cache
+ *
+ * Elgg can store most non-user-specific boot up data in a cache. If you want to
+ * enable this, uncomment the next line to set it to 10. Although Elgg has a built-
+ * in invalidation strategy for this cache, you should consider a small TTL to
+ * minimize the damage if the cache should grow stale.
+ */
+//$CONFIG->boot_cache_ttl = 10;
+
+/**
+ * Set cache directory
+ *
+ * By default, Elgg uses the data directory to store cache files, but this may
+ * be undesirable for sites with the data directory on a distributed file system
+ * (e.g. multiple servers with load balancing). You can specify a separate location
+ * for the cache files here.
+ */
+//$CONFIG->cacheroot = "";
+
+/**
+ * Enable SendFile file serving
+ *
+ * After enabling X-Sendfile/X-Accel on your server, you can enable its support in Elgg. Set the
+ * X-Sendfile-Type value to "X-Sendfile" (Apache) or "X-Accel-Redirect" (Nginx).
+ *
+ * @global string $CONFIG->{'X-Sendfile-Type'}
+ */
+//$CONFIG->{'X-Sendfile-Type'} = '';
+
+/**
+ * Configure X-Accel on nginx (see SendFile above)
+ *
+ * For Nginx, you'll likely also need to set this to a mapping like: "/path/to/dataroot/=/download/".
+ *
+ * @global string $CONFIG->{'X-Accel-Mapping'}
+ */
+//$CONFIG->{'X-Accel-Mapping'} = '';
 
 /**
  * Cookie configuration
@@ -192,6 +230,19 @@ $CONFIG->broken_mta = false;
 $CONFIG->db_disable_query_cache = false;
 
 /**
+ * Automatically disable plugins that are unable to boot
+ *
+ * Elgg will disable unbootable plugins. If you set this to false plugins
+ * will no longer be disabled if they are not bootable. This could cause requests
+ * to your site to fail as required views, classes or cached data could be missing.
+ *
+ * Setting this to false could be useful during deployment of new code.
+ *
+ * @global bool $CONFIG->auto_disable_plugins
+ */
+$CONFIG->auto_disable_plugins = true;
+
+/**
  * Minimum password length
  *
  * This value is used when validating a user's password during registration.
@@ -216,3 +267,20 @@ $CONFIG->min_password_length = 6;
  * @global string $CONFIG->exception_include
  */
 $CONFIG->exception_include = '';
+
+/**
+ * To enable profiling, uncomment the following lines, and replace __some_secret__ with a
+ * secret key. When enabled, profiling data will show in the JS console.
+ */
+//if (isset($_REQUEST['__some_secret__'])) {
+//
+//	// send profiling data to the JS console?
+//	$CONFIG->enable_profiling = true;
+//
+//	// profile all queries? A page with a ton of queries could eat up memory.
+//	$CONFIG->profiling_sql = false;
+//
+//	// in the list, don't include times that don't contribute at least this much to the
+//	// total time captured. .1% by default
+//	$CONFIG->profiling_minimum_percentage = .1;
+//}

@@ -21,9 +21,8 @@ if ($topic_guid) {
 		forward(REFERER);
 	}
 
-	$container = $topic->getContainerEntity();
-	if (elgg_instanceof($container, 'group') && !$container->canWriteToContainer()) {
-		register_error(elgg_echo('groups:notmember'));
+	if (!$topic->canWriteToContainer(0, 'object', 'discussion_reply')) {
+		register_error(elgg_echo('discussion:reply:error:permissions'));
 		forward(REFERER);
 	}
 }
@@ -32,7 +31,7 @@ $user = elgg_get_logged_in_user_entity();
 if ($reply_guid) {
 	$reply = get_entity($reply_guid);
 
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
 		register_error(elgg_echo('discussion:reply:error:notfound'));
 		forward(REFERER);
 	}

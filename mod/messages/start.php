@@ -332,7 +332,11 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 			$recipient->language
 		);
 
-		notify_user($recipient_guid, $sender_guid, $subject, $body);
+		$params = [
+			'object' => $message_to,
+			'action' => 'send',
+		];
+		notify_user($recipient_guid, $sender_guid, $subject, $body, $params);
 	}
 
 	$messagesendflag = 0;
@@ -374,12 +378,7 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
 
 	// denormalize the md to speed things up.
 	// seriously, 10 joins if you don't.
-	$strings = array('toId', $user_guid, 'readYet', 0);
-	$map = array();
-	foreach ($strings as $string) {
-		$id = elgg_get_metastring_id($string);
-		$map[$string] = $id;
-	}
+	$map = elgg_get_metastring_map(['toId', $user_guid, 'readYet', 0]);
 
 	if ($limit === null) {
 		$limit = elgg_get_config('default_limit');
@@ -407,7 +406,7 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
 		'distinct' => false,
 	);
 
-	return elgg_get_entities_from_metadata($options);
+	return elgg_get_entities($options);
 }
 
 /**

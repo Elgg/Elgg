@@ -8,17 +8,17 @@
  */
 
 /* @var ElggUser $user */
-$user = $vars['user'];
+$user = elgg_extract('user', $vars);
 
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-	$subsbig[$method] = elgg_get_entities_from_relationship(array(
+	$subsbig[$method] = elgg_get_entities_from_relationship([
 		'relationship' => 'notify' . $method,
 		'relationship_guid' => $user->guid,
 		'type' => 'group',
 		'limit' => false,
-	));
-	$tmparray = array();
+	]);
+	$tmparray = [];
 	if ($subsbig[$method]) {
 		foreach($subsbig[$method] as $tmpent) {
 			$tmparray[] = $tmpent->guid;
@@ -27,85 +27,82 @@ foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = $tmparray;
 }
 
-?>
+$body = elgg_view('notifications/subscriptions/jsfuncs', $vars);
+$body .= elgg_format_element('div', [], elgg_echo('notifications:subscriptions:groups:description'));
 
-<div class="elgg-module elgg-module-info">
-	<div class="elgg-body">
-	<?php
-		echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
-	?>
-		<div>
-		<?php
-			echo elgg_echo('notifications:subscriptions:groups:description');
-		?>
-		</div>
-<?php
+$groups = elgg_extract('groups', $vars);
+if ($groups) {
 
-if (isset($vars['groups']) && !empty($vars['groups'])) {
+	$top_row = elgg_format_element('td', [], '&nbsp;');
 
-?>
-		<table id="notificationstable" cellspacing="0" cellpadding="4" width="100%">
-			<tr>
-				<td>&nbsp;</td>
-<?php
-
-	$i = 0; 
+	$i = 0;
 	foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		if ($i > 0) {
-			echo "<td class='spacercolumn'>&nbsp;</td>";
+			$top_row .= '<td class="spacercolumn">&nbsp;</td>';
 		}
-?>
-				<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
-<?php
+		
+		$top_row .= elgg_format_element([
+			'#tag_name' => 'td',
+			'class' => "{$method}togglefield",
+			'#text' => elgg_echo("notification:method:{$method}"),
+		]);
 		$i++;
 	}
-?>
-				<td>&nbsp;</td>
-			</tr>
-<?php
-	foreach($vars['groups'] as $group) {
+	$top_row .= '<td>&nbsp;</td>';
+	
+	$table_data = elgg_format_element('tr', [], $top_row);
+
+	foreach($groups as $group) {
 		
 		$fields = '';
 		$i = 0;
 		
 		foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-			if (in_array($group->guid,$subsbig[$method])) {
-				$checked[$method] = 'checked="checked"';
-			} else {
-				$checked[$method] = '';
-			}
+			
 			if ($i > 0) {
-				$fields .= "<td class=\"spacercolumn\">&nbsp;</td>";
+				$fields .= '<td class="spacercolumn">&nbsp;</td>';
 			}
-			$fields .= <<< END
-				<td class="{$method}togglefield">
-				<a border="0" id="{$method}{$group->guid}" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}{$group->guid}');">
-				<input type="checkbox" name="{$method}subscriptions[]" id="{$method}checkbox" onclick="adjust{$method}('{$method}{$group->guid}');" value="{$group->guid}" {$checked[$method]} /></a></td>
-END;
+			
+			$toggle_input = elgg_view('input/checkbox', [
+				'name' => "{$method}subscriptions[]",
+				'id' => "{$method}checkbox",
+				'value' => $group->guid,
+				'checked' => in_array($group->guid, $subsbig[$method]),
+				'onclick' => "adjust{$method}('{$method}{$group->guid}');",
+			]);
+			$toggle_link = elgg_view('output/url', [
+				'href' => false,
+				'text' => $toggle_input,
+				'id' => "{$method}{$group->guid}",
+				'class' => "{$method}toggleOff",
+				'border' => '0',
+				'onclick' => "adjust{$method}_alt('{$method}{$group->guid}');",
+			]);
+			
+			$fields .= elgg_format_element('td', ['class' => "{$method}togglefield"], $toggle_link);
 			$i++;
 		}
+		
+		$group_row = "<td class='namefield'><div>{$group->name}</div></td>";
+		$group_row .= $fields;
+		$group_row .= '<td>&nbsp;</td>';
 	
-?>
-			<tr>
-				<td class="namefield">
-					<div>
-					<?php echo $group->name; ?>
-					</div>
-				</td>
-				<?php echo $fields; ?>
-				<td>&nbsp;</td>
-			</tr>
-<?php
+		$table_data .= "<tr>{$group_row}</tr>";
 	}
-?>
-		</table>
-<?php
+
+	$table_attributes = [
+		'id' => 'notificationstable',
+		'cellspacing' => '0',
+		'cellpadding' => '4',
+		'width' => '100%',
+	];
+
+	$body .= elgg_format_element('table', $table_attributes, $table_data);
 }
-	echo '<div class="elgg-foot mtm">';
-	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $user->guid));
-	echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-	echo '</div>';
-	
-?>
-	</div>
-</div>
+
+$footer = elgg_view('input/hidden', ['name' => 'guid', 'value' => $user->guid]);
+$footer .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
+
+$body .= "<div class='elgg-foot mtm'>$footer</div>";
+
+echo elgg_view_module('info', '', $body);

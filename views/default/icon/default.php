@@ -13,8 +13,9 @@
  */
 
 $entity = $vars['entity'];
+/* @var ElggEntity $entity */
 
-$icon_sizes = elgg_get_config('icon_sizes');
+$icon_sizes = elgg_get_icon_sizes($entity->type, $entity->getSubtype());
 // Get size
 $size = elgg_extract('size', $vars, 'medium');
 if (!array_key_exists($size, $icon_sizes)) {

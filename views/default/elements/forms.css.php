@@ -76,6 +76,10 @@ input[type="radio"] {
 	border-radius:0;
 	width:auto;
 }
+.elgg-input-checkbox + label,
+.elgg-input-checkbox + .elgg-field-label {
+	display: inline-block;
+}
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radios.elgg-horizontal li {
 	display: inline;
@@ -302,6 +306,7 @@ input[type="radio"] {
 }
 .ui-datepicker-inline {
 	box-shadow: none;
+	max-width: 225px;
 }
 
 .ui-datepicker-header {

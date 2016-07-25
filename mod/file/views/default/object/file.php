@@ -45,7 +45,7 @@ if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
 }
 
 if ($full && !elgg_in_context('gallery')) {
-	$mime = $file->mimetype;
+	$mime = $file->getMimeType();
 	$base_type = substr($mime, 0, strpos($mime,'/'));
 
 	$extra = '';
@@ -93,9 +93,9 @@ if ($full && !elgg_in_context('gallery')) {
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'content' => $excerpt,
+		'icon' => $file_icon,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
+	echo elgg_view('object/elements/summary', $params);
 
-	echo elgg_view_image_block($file_icon, $list_body);
 }

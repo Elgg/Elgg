@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
 use IncompleteEntityException;
 
 /**
@@ -155,7 +156,7 @@ class EntityTable {
 		}
 		
 		// Check local cache first
-		$new_entity = _elgg_retrieve_cached_entity($guid);
+		$new_entity = _elgg_services()->entityCache->get($guid);
 		if ($new_entity) {
 			if ($type) {
 				return elgg_instanceof($new_entity, $type) ? $new_entity : false;
@@ -369,15 +370,15 @@ class EntityTable {
 	
 		$wheres = $options['wheres'];
 	
-		$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+		$wheres[] = $this->getEntityTypeSubtypeWhereSql('e', $options['types'],
 			$options['subtypes'], $options['type_subtype_pairs']);
 	
-		$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.guid', $options['guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.owner_guid', $options['owner_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.container_guid', $options['container_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.site_guid', $options['site_guids']);
 	
-		$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
+		$wheres[] = $this->getEntityTimeWhereSql('e', $options['created_time_upper'],
 			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 	
 		// see if any functions failed
@@ -468,7 +469,7 @@ class EntityTable {
 		}
 
 		if ($options['callback'] === 'entity_row_to_elggstar') {
-			$results = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
+			$results = $this->fetchFromSql($query, $options['__ElggBatch']);
 		} else {
 			$results = _elgg_services()->db->getData($query, $options['callback']);
 		}
@@ -483,7 +484,7 @@ class EntityTable {
 		foreach ($results as $item) {
 			// A custom callback could result in items that aren't \ElggEntity's, so check for them
 			if ($item instanceof \ElggEntity) {
-				_elgg_cache_entity($item);
+				_elgg_services()->entityCache->set($item);
 				// plugins usually have only settings
 				if (!$item instanceof \ElggPlugin) {
 					$guids[] = $item->guid;
@@ -617,7 +618,7 @@ class EntityTable {
 			if (empty($row->guid) || empty($row->type)) {
 				throw new \LogicException('Entity row missing guid or type');
 			}
-			$entity = _elgg_retrieve_cached_entity($row->guid);
+			$entity = _elgg_services()->entityCache->get($row->guid);
 			if ($entity) {
 				$entity->refresh($row);
 				$rows[$i] = $entity;
@@ -1238,5 +1239,40 @@ class EntityTable {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Get a user by GUID even if the entity is hidden or disabled
+	 *
+	 * @param int $guid User GUID. Default is logged in user
+	 *
+	 * @return \ElggUser|false
+	 * @throws UserFetchFailureException
+	 * @access private
+	 */
+	public function getUserForPermissionsCheck($guid = 0) {
+		if (!$guid) {
+			return _elgg_services()->session->getLoggedInUser();
+		}
+
+		// need to ignore access and show hidden entities for potential hidden/disabled users
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
+		$show_hidden = access_show_hidden_entities(true);
+
+		$user = $this->get($guid, 'user');
+		
+		_elgg_services()->session->setIgnoreAccess($ia);
+		access_show_hidden_entities($show_hidden);
+
+		if (!$user) {
+			// requested to check access for a specific user_guid, but there is no user entity, so the caller
+			// should cancel the check and return false
+			$message = _elgg_services()->translator->translate('UserFetchFailureException', array($guid));
+			_elgg_services()->logger->warn($message);
+
+			throw new UserFetchFailureException();
+		}
+
+		return $user;
 	}
 }

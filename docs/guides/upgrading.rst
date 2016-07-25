@@ -9,6 +9,134 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
    :local:
    :depth: 2
 
+
+From 2.2 to 2.3
+===============
+
+Deprecated APIs
+---------------
+
+ * Registering for ``to:object`` hook by the extender name: Use ``to:object, annotation`` and ``to:object, metadata`` hooks instead.
+ * ``ajax_forward_hook()``: No longer used as handler for `'forward','all'` hook. Ajax response is now wrapped by the ``ResponseFactory``
+ * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
+ * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
+ * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
+
+Deprecated Views
+----------------
+
+New API for page and action handling
+------------------------------------
+
+Page handlers and action script files should now return an instance of ``\Elgg\Http\ResponseBuilder``.
+Plugins should use the following convenience functions to build responses:
+
+ * ``elgg_ok_response()`` sends a 2xx response with HTML (page handler) or JSON data (actions)
+ * ``elgg_error_response()`` sends a 4xx or 5xx response without content/data
+ * ``elgg_redirect_response()`` silently redirects the request
+
+New API for working with file uploads
+-------------------------------------
+
+ * ``elgg_get_uploaded_files()`` - returns an array of Symfony uploaded file objects
+ * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
+
+New API for signing URLs
+------------------------
+
+URLs can now be signed with a SHA-256 HMAC key and validated at any time before URL expiry. This feature can be used to tokenize action URLs in email notifications, as well as other uses outside of the Elgg installation.
+
+ * `elgg_http_get_signed_url()` - signs the URL with HMAC key
+ * `elgg_http_validate_signed_url()` - validates the signed URL
+ * `elgg_signed_request_gatekeeper()` - gatekeeper that validates the signature of the current request
+
+
+From 2.1 to 2.2
+===============
+
+Deprecated APIs
+---------------
+
+ * ``elgg.ui.river`` JavaScript library: Remove calls to ``elgg_load_js('elgg.ui.river')`` from plugin code. Update ``core/river/filter`` and ``forms/comment/save``, if overwritten, to require component AMD modules
+ * ``elgg.ui.popupOpen()`` and ``elgg.ui.popupClose()`` methods in ``elgg.ui`` JS library: Use ``elgg/popup`` module instead.
+ * ``lightbox.js`` library: Do not use ``elgg_load_js('lightbox.js');`` unless your code references deprecated ``elgg.ui.lightbox`` namespace. Use ``elgg/lightbox`` AMD module instead.
+ * ``elgg.embed`` library and ``elgg.embed`` object: Do not use ``elgg_load_js('elgg.embed')``. Use ``elgg/embed`` AMD module instead
+ * Accessing ``icons_sizes`` config value directly: Use ``elgg_get_icon_sizes()``
+ * ``can_write_to_container()``: Use ``ElggEntity::canWriteToContainer()``
+
+Deprecated Views
+----------------
+
+ * ``elgg/ui.river.js`` is deprecated: Do not rely on simplecache URLs to work.
+ * ``groups/js`` is deprecated: Use ``groups/navigation`` AMD module as a menu item dependency for "feature" and "unfeature" menu items instead.
+ * ``lightbox/settings.js`` is deprecated: Use ``getOptions, ui.lightbox`` JS plugin hook or ``data-colorbox-opts`` attribute.
+ * ``elgg/ckeditor/insert.js`` is deprecated: You no longer need to include it, hook registration takes place in ``elgg/ckeditor`` module
+ * ``embed/embed.js`` is deprecated: Use ``elgg/embed`` AMD module.
+
+Added ``elgg/popup`` module
+---------------------------
+
+New :doc:`elgg/popup module <javascript>` can be used to build out more complex trigger-popup interactions, including binding custom anchor types and opening/closing popups programmatically.
+
+Added ``elgg/lightbox`` module
+------------------------------
+
+New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
+
+Added ``elgg/embed`` module
+------------------------------
+
+Even though rarely necessary, ``elgg/embed`` AMD module can be used to access the embed methods programmatically. The module bootstraps itself when necessary and is unlikely to require further decoration.
+
+New API for handling entity icons
+---------------------------------
+
+ * ``ElggEntity`` now implements ``\Elgg\EntityIcon`` interface
+ * ``elgg_get_icon_sizes()`` - return entity type/subtype specific icon sizes
+ * ``ElggEntity::saveIconFromUploadedFile()`` - creates icons from an uploaded file
+ * ``ElggEntity::saveIconFromLocalFile()`` - creates icons from a local file
+ * ``ElggEntity::saveIconFromElggFile()`` - creates icons from an instance of ``ElggFile``
+ * ``ElggEntity::getIcon()`` - returns an instanceof ``ElggIcon`` that points to entity icon location on filestore (this may be just a placeholder, use ``ElggEntity::hasIcon()`` to validate if file has been written)
+ * ``ElggEntity::deleteIcon()`` - deletes entity icons
+ * ``ElggEntity::getIconLastChange()`` - return modified time of the icon file
+ * ``ElggEntity::hasIcon()`` - checks if an icon with given size has been created
+ * ``elgg_get_embed_url()`` - can be used to return an embed URL for an entity's icon (served via `/serve-icon` handler)
+
+Removed APIs
+------------
+
+Just a warning that the private entity cache functions (e.g. ``_elgg_retrieve_cached_entity``) have been removed. Some plugins may have been using them. Plugins should not use private APIs as they will more often be removed without notice.
+
+Improved ``elgg/ckeditor`` module
+-----------------------------------
+
+:doc:`elgg/ckeditor module <javascript>` can now be used to add WYSIWYG to a textarea programmatically with ``elgg/ckeditor#bind``.
+
+From 2.0 to 2.1
+===============
+
+Deprecated APIs
+---------------
+
+ * ``ElggFile::setFilestore``
+ * ``get_default_filestore``
+ * ``set_default_filestore``
+ * ``elgg_get_config('siteemail')``: Use ``elgg_get_site_entity()->email``
+ * URLs starting with ``/css/`` and ``/js/``: ``Use elgg_get_simplecache_url()``
+ * ``elgg.ui.widgets`` JavaScript object is deprecated by ``elgg/widgets`` AMD module
+
+``Application::getDb()`` changes
+--------------------------------
+
+If you're using this low-level API, do not expect it to return an ``Elgg\Database`` instance in 3.0. It now
+returns an ``Elgg\Application\Database`` with many deprecated. These methods were never meant to be made
+public API, but we will do our best to support them in 2.x.
+
+Added ``elgg/widgets`` module
+-----------------------------
+
+If your plugin code calls ``elgg.ui.widgets.init()``, instead use the :doc:`elgg/widgets module <javascript>`.
+
 From 1.x to 2.0
 ===============
 

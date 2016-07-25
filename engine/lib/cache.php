@@ -18,7 +18,7 @@
  * @return \ElggFileCache
  */
 function elgg_get_system_cache() {
-	return _elgg_services()->systemCache->getFileCache();
+	return _elgg_services()->fileCache;
 }
 
 /**
@@ -49,6 +49,16 @@ function elgg_save_system_cache($type, $data) {
  */
 function elgg_load_system_cache($type) {
 	return _elgg_services()->systemCache->load($type);
+}
+
+/**
+ * Is system cache enabled
+ *
+ * @return bool
+ * @since 2.2.0
+ */
+function elgg_is_system_cache_enabled() {
+	return _elgg_services()->systemCache->isEnabled();
 }
 
 /**
@@ -101,23 +111,23 @@ function elgg_register_simplecache_view($view_name) {
 
 /**
  * Get the URL for the cached view.
- * 
+ *
  * Recommended usage is to just pass the entire view name as the first and only arg:
  *
  * ```
  * $blog_js = elgg_get_simplecache_url('elgg/blog/save_draft.js');
  * $favicon = elgg_get_simplecache_url('favicon.ico');
  * ```
- * 
+ *
  * For backwards compatibility with older versions of Elgg, this function supports
  * "js" or "css" as the first arg, with the rest of the view name as the second arg:
  *
  * ```
  * $blog_js = elgg_get_simplecache_url('js', 'elgg/blog/save_draft.js');
  * ```
- * 
+ *
  * This automatically registers the view with Elgg's simplecache.
- * 
+ *
  * @param string $view    The full view name
  * @param string $subview If the first arg is "css" or "js", the rest of the view name
  * @return string
@@ -163,7 +173,7 @@ function elgg_disable_simplecache() {
 
 /**
  * Recursively deletes a directory, including all hidden files.
- * 
+ *
  * TODO(ewinslow): Move to filesystem package
  *
  * @param string $dir   The directory
@@ -173,6 +183,11 @@ function elgg_disable_simplecache() {
  * @access private
  */
 function _elgg_rmdir($dir, $empty = false) {
+	if (!$dir) {
+		// realpath can return false
+		_elgg_services()->logger->warn(__FUNCTION__ . ' called with empty $dir');
+		return true;
+	}
 	$files = array_diff(scandir($dir), array('.', '..'));
 	
 	foreach ($files as $file) {
@@ -203,7 +218,7 @@ function elgg_invalidate_simplecache() {
 
 /**
  * Flush all the registered caches
- * 
+ *
  * @return void
  * @since 1.11
  */
@@ -212,9 +227,23 @@ function elgg_flush_caches() {
 }
 
 /**
+ * Checks if /cache has been symlinked to views simplecache directory,
+ * and if HTTP requests to /cache are are successful
+ * @return bool
+ * @access private
+ */
+function _elgg_is_cache_symlinked() {
+	if (!is_dir(elgg_get_root_path() . 'cache/')) {
+		return false;
+	}
+	$headers = get_headers(elgg_get_simplecache_url('elgg.js'));
+	return substr($headers[0], 9, 3) == 200;
+}
+
+/**
  * Initializes the simplecache lastcache variable and creates system cache files
  * when appropriate.
- * 
+ *
  * @access private
  */
 function _elgg_cache_init() {

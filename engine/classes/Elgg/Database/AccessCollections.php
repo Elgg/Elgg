@@ -2,6 +2,8 @@
 
 namespace Elgg\Database;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -65,7 +67,7 @@ class AccessCollections {
 			return $cache[$hash];
 		}
 		
-		$access_array = get_access_array($user_guid, $site_guid, $flush);
+		$access_array = $this->getAccessArray($user_guid, $site_guid, $flush);
 		$access = "(" . implode(",", $access_array) . ")";
 	
 		if ($init_finished) {
@@ -233,9 +235,9 @@ class AccessCollections {
 			'owner_guid_column' => 'owner_guid',
 			'guid_column' => 'guid',
 		);
-	
+
 		$options = array_merge($defaults, $options);
-	
+
 		// just in case someone passes a . at the end
 		$options['table_alias'] = rtrim($options['table_alias'], '.');
 	
@@ -257,27 +259,27 @@ class AccessCollections {
 		$prefix = _elgg_services()->db->getTablePrefix();
 	
 		if ($options['ignore_access']) {
-			$clauses['ors'][] = '1 = 1';
+			$clauses['ors']['ignore_access'] = '1 = 1';
 		} else if ($options['user_guid']) {
 			// include content of user's friends
-			$clauses['ors'][] = "$table_alias{$options['access_column']} = " . ACCESS_FRIENDS . "
+			$clauses['ors']['friends_access'] = "$table_alias{$options['access_column']} = " . ACCESS_FRIENDS . "
 				AND $table_alias{$options['owner_guid_column']} IN (
 					SELECT guid_one FROM {$prefix}entity_relationships
 					WHERE relationship = 'friend' AND guid_two = {$options['user_guid']}
 				)";
 	
 			// include user's content
-			$clauses['ors'][] = "$table_alias{$options['owner_guid_column']} = {$options['user_guid']}";
+			$clauses['ors']['owner_access'] = "$table_alias{$options['owner_guid_column']} = {$options['user_guid']}";
 		}
 	
 		// include standard accesses (public, logged in, access collections)
 		if (!$options['ignore_access']) {
-			$access_list = get_access_list($options['user_guid']);
-			$clauses['ors'][] = "$table_alias{$options['access_column']} IN {$access_list}";
+			$access_list = $this->getAccessList($options['user_guid']);
+			$clauses['ors']['acl_access'] = "$table_alias{$options['access_column']} IN {$access_list}";
 		}
 	
 		if ($options['use_enabled_clause']) {
-			$clauses['ands'][] = "{$table_alias}enabled = 'yes'";
+			$clauses['ands']['use_enabled'] = "{$table_alias}enabled = 'yes'";
 		}
 	
 		$clauses = _elgg_services()->hooks->trigger('get_sql', 'access', $options, $clauses);
@@ -323,9 +325,9 @@ class AccessCollections {
 		$ia = elgg_set_ignore_access(false);
 	
 		if (!isset($user)) {
-			$access_bit = _elgg_get_access_where_sql();
+			$access_bit = $this->getWhereSql();
 		} else {
-			$access_bit = _elgg_get_access_where_sql(array('user_guid' => $user->getGUID()));
+			$access_bit = $this->getWhereSql(array('user_guid' => $user->guid));
 		}
 	
 		elgg_set_ignore_access($ia);
@@ -436,20 +438,20 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function canEdit($collection_id, $user_guid = null) {
-		if ($user_guid) {
-			$user = _elgg_services()->entityTable->get((int) $user_guid);
-		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
-		}
-	
-		$collection = get_access_collection($collection_id);
-	
-		if (!($user instanceof \ElggUser) || !$collection) {
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
 			return false;
 		}
 	
-		$write_access = get_write_access_array($user->getGUID(), 0, true);
+		$collection = $this->get($collection_id);
 	
+		if (!$user || !$collection) {
+			return false;
+		}
+	
+		$write_access = $this->getWriteAccessArray($user->guid, 0, true);
+
 		// don't ignore access when checking users.
 		if ($user_guid) {
 			return array_key_exists($collection_id, $write_access);

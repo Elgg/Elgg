@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -15,9 +17,9 @@ namespace Elgg;
 class WidgetsService {
 
 	/**
-	 * @var \stdClass
+	 * @var WidgetDefinition[]
 	 */
-	private $widgets;
+	private $widgets = [];
 
 	/**
 	 * @see \Elgg\WidgetsService::getWidgets()
@@ -73,12 +75,15 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function createWidget($owner_guid, $handler, $context, $access_id = null) {
-		if (empty($owner_guid) || empty($handler) || !$this->validateType($handler)) {
+		if (empty($owner_guid) || empty($handler)) {
 			return false;
 		}
 
 		$owner = get_entity($owner_guid);
 		if (!$owner) {
+			return false;
+		}
+		if (!$this->validateType($handler, $context, $owner)) {
 			return false;
 		}
 
@@ -108,17 +113,16 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function canEditLayout($context, $user_guid = 0) {
-		$user = get_entity((int)$user_guid);
-		if (!$user) {
-			$user = _elgg_services()->session->getLoggedInUser();
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
 		}
 
-		$return = false;
-		if (_elgg_services()->session->isAdminLoggedIn()) {
-			$return = true;
-		}
-		if (elgg_get_page_owner_guid() == $user->guid) {
-			$return = true;
+		if ($user) {
+			$return = ($user->isAdmin() || (elgg_get_page_owner_guid() == $user->guid));
+		} else {
+			$return = false;
 		}
 
 		$params = array(
@@ -130,71 +134,68 @@ class WidgetsService {
 	}
 
 	/**
+	 * @param WidgetDefinition Definition of the widget
+	 *
+	 * @return bool
+	 *
 	 * @see elgg_register_widget_type
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function registerType($handler, $name, $description, array $context = array('all'), $multiple = false) {
-		if (!$handler || !$name) {
+	public function registerType(WidgetDefinition $definition) {
+		if (!($definition instanceof WidgetDefinition)) {
 			return false;
 		}
-
-		if (!isset($this->widgets)) {
-			$this->widgets = new \stdClass;
+		
+		$id = $definition->id;
+		if (!$id) {
+			return false;
 		}
-		if (!isset($this->widgets->handlers)) {
-			$this->widgets->handlers = array();
-		}
-
-		$handlerobj = new \stdClass;
-		$handlerobj->name = $name;
-		$handlerobj->description = $description;
-		$handlerobj->context = $context;
-		$handlerobj->multiple = $multiple;
-
-		$this->widgets->handlers[$handler] = $handlerobj;
+		
+		$this->widgets[$id] = $definition;
 
 		return true;
 	}
 
 	/**
-	 * @param string $handler
+	 * @param string $id
 	 * @return bool
 	 * @see elgg_unregister_widget_type
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function unregisterType($handler) {
-		if (!isset($this->widgets)) {
-			return false;
-		}
-
-		if (!isset($this->widgets->handlers)) {
-			return false;
-		}
-
-		if (isset($this->widgets->handlers[$handler])) {
-			unset($this->widgets->handlers[$handler]);
+	public function unregisterType($id) {
+		if (isset($this->widgets[$id])) {
+			unset($this->widgets[$id]);
 			return true;
 		}
 		return false;
 	}
 
 	/**
+	 * Checks if a widget type exists for a given id
+	 *
+	 * @param string $id             Widget identifier
+	 * @param string $context        Optional context to check
+	 * @param \ElggEntity $container Optional limit widget definitions to a container
+	 *
 	 * @see elgg_is_widget_type
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function validateType($handler) {
-		if (!empty($this->widgets) &&
-				!empty($this->widgets->handlers) &&
-				is_array($this->widgets->handlers) &&
-				array_key_exists($handler, $this->widgets->handlers)) {
-
-			return true;
+	public function validateType($id, $context = null, \ElggEntity $container = null) {
+		$types = $this->getTypes([
+			'context' => $context,
+			'container' => $container,
+		]);
+		$found = array_key_exists($id, $types);
+		
+		if (!$found && ($context === null)) {
+			// Pre Elgg 2.2 this function returned true if a widget was registered regardless of context
+			$found = array_key_exists($id, $this->widgets);
 		}
-
-		return false;
+		
+		return $found;
 	}
 
 	/**
@@ -202,58 +203,72 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function getAllTypes() {
-		if (empty($this->widgets) ||
-			empty($this->widgets->handlers) ||
-			!is_array($this->widgets->handlers)) {
-			// no widgets
-			return array();
-		}
-
-		$widgets = array();
-		foreach ($this->widgets->handlers as $key => $handler) {
-			$widgets[$key] = $handler;
-		}
-
-		return $widgets;
+		return $this->widgets;
 	}
-
+	
 	/**
+	 * Returns widget name based on id
+	 *
+	 * @param string $id             Widget identifier
+	 * @param string $context        Context to check
+	 * @param \ElggEntity $container Optional limit widget definitions to a container
+	 *
+	 * @return string|boolean
+	 *
 	 * @access private
-	 * @since 1.9.0
+	 * @since 2.2.0
 	 */
-	public function getNameByType($handler) {
-		if (isset($this->widgets->handlers[$handler])) {
-			return $this->widgets->handlers[$handler]->name;
+	public function getNameById($id, $context = '', \ElggEntity $container = null) {
+		$types = $this->getTypes([
+			'context' => $context,
+			'container' => $container,
+		]);
+		if (isset($types[$id])) {
+			return $types[$id]->name;
 		}
 		return false;
 	}
 
 	/**
-	 * @see elgg_get_widget_types
+	 * @param $params Associative array of params used to determine what to return
+	 *
+	 * array (
+	 *     'context' => string (defaults to elgg_get_context()),
+	 *     'exact'   => bool (defaults to false),
+	 *     'container' => \ElggEntity (defaults to null)
+	 * )
+	 *
+	 * @return \Elgg\WidgetDefinition[]
+	 *
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function getTypes($context = "", $exact = false) {
-		if (empty($this->widgets) ||
-				empty($this->widgets->handlers) ||
-				!is_array($this->widgets->handlers)) {
-			// no widgets
-			return array();
-		}
-
+	public function getTypes(array $params = []) {
+		$exact = (bool) elgg_extract('exact', $params, false);
+		$context = elgg_extract('context', $params, '');
 		if (!$context) {
 			$context = elgg_get_context();
+			$params['context'] = $context;
 		}
-
-		$widgets = array();
-		foreach ($this->widgets->handlers as $key => $handler) {
+		
+		$available_widgets = _elgg_services()->hooks->trigger('handlers', 'widgets', $params, $this->widgets);
+		if (!is_array($available_widgets)) {
+			return [];
+		}
+		
+		$widgets = [];
+		foreach ($available_widgets as $widget_definition) {
+			if (!($widget_definition instanceof WidgetDefinition)) {
+				continue;
+			}
+			
 			if ($exact) {
-				if (in_array($context, $handler->context)) {
-					$widgets[$key] = $handler;
+				if (in_array($context, $widget_definition->context)) {
+					$widgets[$widget_definition->id] = $widget_definition;
 				}
 			} else {
-				if (in_array('all', $handler->context) || in_array($context, $handler->context)) {
-					$widgets[$key] = $handler;
+				if (in_array('all', $widget_definition->context) || in_array($context, $widget_definition->context)) {
+					$widgets[$widget_definition->id] = $widget_definition;
 				}
 			}
 		}

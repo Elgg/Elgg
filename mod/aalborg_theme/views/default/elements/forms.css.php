@@ -6,7 +6,7 @@
 /* ***************************************
 	Form Elements
 *************************************** */
-fieldset > div {
+fieldset > div, .elgg-field {
 	margin-bottom: 15px;
 }
 fieldset > div:last-child {
@@ -16,13 +16,23 @@ fieldset > div:last-child {
 	border-top: 1px solid #DCDCDC;
 	padding: 10px 0;
 }
-label {
+label, .elgg-field-label {
 	font-weight: bold;
 	color: #333;
 	font-size: 110%;
 }
-label.elgg-state-disabled {
+.elgg-field-label {
+	display: block;
+}
+label.elgg-state-disabled, .elgg-field-label.elgg-state-disabled {
 	opacity: 0.6;
+}
+.elgg-required-indicator {
+	font-size: 110%;
+	font-weight: bold;
+	color: #C24000;
+	display: inline;
+	padding: 0 5px;
 }
 input, textarea {
 	border: 1px solid #DCDCDC;
@@ -63,6 +73,10 @@ input[type="radio"] {
 	padding: 0;
 	border: none;
 	width: auto;
+}
+.elgg-input-checkbox + label,
+.elgg-input-checkbox + .elgg-field-label {
+	display: inline-block;
 }
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radios.elgg-horizontal li {
@@ -294,6 +308,7 @@ select {
 }
 .ui-datepicker-inline {
 	box-shadow: none;
+	max-width: 225px;
 }
 
 .ui-datepicker-header {

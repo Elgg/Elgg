@@ -15,6 +15,7 @@ Customize Elgg's behavior with plugins.
    context
    cron
    database
+   file-system
    actions
    helpers
    i18n

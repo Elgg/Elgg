@@ -91,6 +91,7 @@ class Config {
 	 *                           deps:     array  Dependencies
 	 *                           exports:  string Name of the shimmed module to export
 	 * @return void
+	 * @throws \InvalidParameterException
 	 */
 	public function addShim($name, array $config) {
 		$deps = elgg_extract('deps', $config, array());

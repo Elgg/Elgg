@@ -1,4 +1,4 @@
-
+//<script>
 // force the first column to at least be as large as the profile box in cols 2 and 3
 // we also want to run before the widget init happens so priority is < 500
 elgg.register_hook_handler('init', 'system', function() {

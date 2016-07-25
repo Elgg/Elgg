@@ -1,15 +1,16 @@
 <?php
+
 namespace Elgg\Filesystem;
 
-abstract class DirectoryTest extends \PHPUnit_Framework_TestCase {
+abstract class DirectoryTest extends \Elgg\TestCase {
 
-    /**
-     * Returns an array of one-element arrays. Those elements should
-     * be fresh (empty) directory instances that use the relevant implementation.
-     * 
-     * @return array
-     */
-    abstract public function emptyDirectoryProvider();
+	/**
+	 * Returns an array of one-element arrays. Those elements should
+	 * be fresh (empty) directory instances that use the relevant implementation.
+	 * 
+	 * @return array
+	 */
+	abstract public function emptyDirectoryProvider();
 
 	/**
 	 * @dataProvider emptyDirectoryProvider
@@ -26,7 +27,7 @@ abstract class DirectoryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(3, count($directory->getDirectories()));
 		$this->assertEquals(1, count($directory->getDirectories('', false)));
 	}
-	
+
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
@@ -45,7 +46,7 @@ abstract class DirectoryTest extends \PHPUnit_Framework_TestCase {
 			$this->assertEquals(2, count($directory->getDirectories($path, false)));
 		}
 	}
-	
+
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
@@ -65,23 +66,31 @@ abstract class DirectoryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, count($directory->chroot('/foo/bar')->getFiles()));
 		$this->assertEquals(1, count($directory->chroot('foo/bar')->getFiles()));
 	}
-	
+
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
 	public function testCanGetAnyFileInThisDirectoryEvenIfTheFileDoesNotExistYet(Directory $directory) {
 		$this->assertFalse($directory->getFile('foo.php')->exists());
 	}
-	
+
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
 	public function testPathsCannotContainDots(Directory $directory) {
 		$funcs = [
-			function () use ($directory) { $directory->chroot('.'); },
-			function () use ($directory) { $directory->chroot('..'); },
-			function () use ($directory) { $directory->getFile('.'); },
-			function () use ($directory) { $directory->getFile('..'); },
+			function () use ($directory) {
+				$directory->chroot('.');
+			},
+			function () use ($directory) {
+				$directory->chroot('..');
+			},
+			function () use ($directory) {
+				$directory->getFile('.');
+			},
+			function () use ($directory) {
+				$directory->getFile('..');
+			},
 		];
 
 		foreach ($funcs as $i => $f) {
@@ -121,4 +130,5 @@ abstract class DirectoryTest extends \PHPUnit_Framework_TestCase {
 			$this->assertEquals('bang', $dir->getFile('bang.php')->getContents());
 		}
 	}
+
 }

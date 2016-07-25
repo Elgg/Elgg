@@ -27,7 +27,7 @@ return array(
 	'adminrequired' => "You must be an administrator to view the requested page.",
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
 	'limited_access' => "You do not have permission to view the requested page.",
-
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -40,7 +40,7 @@ return array(
 	'actionnotfound' => "The action file for %s was not found.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
-	
+
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
@@ -61,7 +61,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
@@ -85,7 +84,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
@@ -100,6 +99,8 @@ return array(
 	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
 	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
+
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -142,6 +143,7 @@ return array(
 	'password' => "Password",
 	'passwordagain' => "Password (again for verification)",
 	'admin_option' => "Make this user an admin?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -477,6 +479,9 @@ return array(
 	'admin:cron:period' => 'Cron period',
 	'admin:cron:friendly' => 'Last completed',
 	'admin:cron:date' => 'Date and time',
+	'admin:cron:msg' => 'Message',
+	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
+	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => 'Appearance',
 	'admin:administer_utilities' => 'Utilities',
@@ -739,7 +744,7 @@ These changes will only affect new users on the site.',
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Your statistics",
@@ -766,7 +771,7 @@ These changes will only affect new users on the site.',
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
 	'river:owner' => 'Activity of %s',
@@ -793,7 +798,7 @@ These changes will only affect new users on the site.',
 	'icon:size:medium' => "Medium",
 	'icon:size:large' => "Large",
 	'icon:size:master' => "Extra Large",
-		
+
 /**
  * Generic action words
  */
@@ -878,11 +883,11 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Active',
 	'total' => 'Total',
-	
+
 	'ok' => 'OK',
 	'any' => 'Any',
 	'error' => 'Error',
-	
+
 	'other' => 'Other',
 	'options' => 'Options',
 	'advanced' => 'Advanced',
@@ -895,7 +900,7 @@ These changes will only affect new users on the site.',
 	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 
 	'link:text' => 'view link',
-	
+
 /**
  * Generic questions
  */
@@ -923,7 +928,7 @@ These changes will only affect new users on the site.',
 	'sort:popular' => 'Popular',
 	'sort:alpha' => 'Alphabetical',
 	'sort:priority' => 'Priority',
-		
+
 /**
  * Generic data words
  */
@@ -948,7 +953,7 @@ These changes will only affect new users on the site.',
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
 	'comment:this' => 'Comment on this',
@@ -991,7 +996,7 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Import of data was successful",
 	'importfail' => "OpenDD import of data failed.",
 
@@ -1007,7 +1012,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'friendlytime:days' => "%s days ago",
 	'friendlytime:days:singular' => "yesterday",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "in %s minutes",
 	'friendlytime:future:minutes:singular' => "in a minute",
 	'friendlytime:future:hours' => "in %s hours",
@@ -1048,7 +1053,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:weekday:4' => 'Thursday',
 	'date:weekday:5' => 'Friday',
 	'date:weekday:6' => 'Saturday',
-	
+
 	'date:weekday:short:0' => 'Sun',
 	'date:weekday:short:1' => 'Mon',
 	'date:weekday:short:2' => 'Tue',
@@ -1056,7 +1061,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:weekday:short:4' => 'Thu',
 	'date:weekday:short:5' => 'Fri',
 	'date:weekday:short:6' => 'Sat',
-	
+
 	'interval:minute' => 'Every minute',
 	'interval:fiveminute' => 'Every five minutes',
 	'interval:fifteenmin' => 'Every fifteen minutes',
@@ -1106,13 +1111,18 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files.",
 	'installation:simplecache:label' => "Use simple cache (recommended)",
 
+	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
+	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
+	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
+	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+
 	'installation:minify:description' => "The simple cache can also improve performance by compressing JavaScript and CSS files. (Requires that simple cache is enabled.)",
 	'installation:minify_js:label' => "Compress JavaScript (recommended)",
 	'installation:minify_css:label' => "Compress CSS (recommended)",
 
 	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file so that the path is injected into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg cannot connect to itself to test rewrite rules properly. Check that curl is working and there are no IP restrictions preventing localhost connections.",
-	
+
 	'installation:systemcache:description' => "The system cache decreases the loading time of Elgg by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 
@@ -1183,12 +1193,12 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Emails
  */
-		
+
 	'email:from' => 'From',
 	'email:to' => 'To',
 	'email:subject' => 'Subject',
 	'email:body' => 'Body',
-	
+
 	'email:settings' => "Email settings",
 	'email:address:label' => "Email address",
 
@@ -1280,16 +1290,19 @@ Please do not reply to this email.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'By %s',
 	'byline:ingroup' => 'in the group %s',
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
 
-	'entity:delete:success' => 'Entity %s has been deleted',
-	'entity:delete:fail' => 'Entity %s could not be deleted',
-	
-	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
+
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1480,4 +1493,7 @@ Please do not reply to this email.",
 	"zh" => "Chinese",
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
+
+	"field:required" => 'Required',
+
 );

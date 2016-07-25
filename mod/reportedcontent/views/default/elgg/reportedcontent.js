@@ -16,7 +16,15 @@ define(function (require) {
 			data: $form.serialize(),
 			success: function (data) {
 				if (data.status == 0) {
-					elgg.ui.lightbox.close();
+					if ($form.is('#colorbox *')) {
+						require(['elgg/lightbox'], function(lightbox) {
+							lightbox.close();
+						});
+					} else {
+						// redirect to address if not reported from a lightbox
+						// can not use history as it may not exist
+						location.href = $form.find('input[name="address"]').val();
+					}
 				}
 			}
 		});
@@ -24,7 +32,9 @@ define(function (require) {
 
 	$(document).on('click', '.elgg-form-reportedcontent-add .elgg-button-cancel', function (e) {
 		if ($(this).is('#colorbox *')) {
-			elgg.ui.lightbox.close();
+			require(['elgg/lightbox'], function(lightbox) {
+				lightbox.close();
+			});
 		} else {
 			if (history.length > 1) {
 				history.go(-1);

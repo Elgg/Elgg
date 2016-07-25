@@ -81,9 +81,7 @@ elgg.ajax.handleOptions = function(url, options) {
 
 	if (!elgg.isFunction(options.error)) {
 		// add a generic error handler
-		options.error = function(xhr, status, error) { 
-			elgg.ajax.handleAjaxError(xhr, status, error);
-		};
+		options.error = elgg.ajax.handleAjaxError;
 	}
 	
 	if (url) {

@@ -44,7 +44,7 @@ abstract class ElggFilestore {
 	 * @param mixed $f        The file handle.
 	 * @param int   $position The position.
 	 *
-	 * @return void
+	 * @return int 0 for success, or -1
 	 */
 	abstract public function seek($f, $position);
 
@@ -78,11 +78,11 @@ abstract class ElggFilestore {
 	/**
 	 * Delete the file associated with a given file handle.
 	 *
-	 * @param \ElggFile $file The file
-	 *
+	 * @param \ElggFile $file            The file
+	 * @param bool      $follow_symlinks If true, will also delete the target file if the current file is a symlink
 	 * @return bool
 	 */
-	abstract public function delete(\ElggFile $file);
+	abstract public function delete(\ElggFile $file, $follow_symlinks = true);
 
 	/**
 	 * Return the size in bytes for a given file.

@@ -4,70 +4,81 @@
  */
 
 /* @var ElggUser $user */
-$user = $vars['user'];
+$user = elgg_extract('user', $vars);
 
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
-?>
-<div class="notification_personal">
-<div class="elgg-module elgg-module-info">
-	<div class="elgg-head">
-		<h3>
-			<?php echo elgg_echo('notifications:subscriptions:personal:title'); ?>
-		</h3>
-	</div>
-</div>
-<table id="notificationstable" cellspacing="0" cellpadding="4" width="100%">
-	<tr>
-		<td>&nbsp;</td>
-<?php
-$i = 0; 
+$top_row = elgg_format_element('td', [], '&nbsp;');
+$i = 0;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	if ($i > 0) {
-		echo "<td class='spacercolumn'>&nbsp;</td>";
+		$top_row .= elgg_format_element('td', ['class' => 'spacercolumn'], '&nbsp;');
 	}
-?>
-		<td class="<?php echo $method; ?>togglefield"><?php echo elgg_echo('notification:method:'.$method); ?></td>
-<?php
+
+	$top_row .= elgg_format_element([
+		'#tag_name' => 'td',
+		'class' => "{$method}togglefield",
+		'#text' => elgg_echo("notification:method:{$method}"),
+	]);
 	$i++;
 }
-?>
-		<td>&nbsp;</td>
-	</tr>
-	<tr>
-		<td class="namefield">
-			<p>
-				<?php echo elgg_echo('notifications:subscriptions:personal:description') ?>
-			</p>
-		</td>
+$top_row .= elgg_format_element('td', [], '&nbsp;');
 
-<?php
+$table_data = elgg_format_element('tr', [], $top_row);
 
 $fields = '';
 $i = 0;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
+	$checked = false;
 	if ($notification_settings = get_user_notification_settings($user->guid)) {
 		if (isset($notification_settings->$method) && $notification_settings->$method) {
-			$personalchecked[$method] = 'checked="checked"';
-		} else {
-			$personalchecked[$method] = '';
+			$checked = true;
 		}
 	}
+	
 	if ($i > 0) {
-		$fields .= "<td class='spacercolumn'>&nbsp;</td>";
+		$fields .= elgg_format_element('td', ['class' => 'spacercolumn'], '&nbsp;');
 	}
-	$fields .= <<< END
-		<td class="{$method}togglefield">
-		<a  border="0" id="{$method}personal" class="{$method}toggleOff" onclick="adjust{$method}_alt('{$method}personal');">
-		<input type="checkbox" name="{$method}personal" id="{$method}checkbox" onclick="adjust{$method}('{$method}personal');" value="1" {$personalchecked[$method]} /></a></td>
-END;
+		
+	$toggle_input = elgg_view('input/checkbox', [
+		'name' => "{$method}personal",
+		'id' => "{$method}checkbox",
+		'value' => '1',
+		'checked' => $checked,
+		'onclick' => "adjust{$method}('{$method}personal');",
+		'default' => false,
+	]);
+	$toggle_link = elgg_view('output/url', [
+		'href' => false,
+		'text' => $toggle_input,
+		'id' => "{$method}personal",
+		'class' => "{$method}toggleOff",
+		'border' => '0',
+		'onclick' => "adjust{$method}_alt('{$method}personal');",
+	]);
+		
+	$fields .= elgg_format_element('td', ['class' => "{$method}togglefield"], $toggle_link);
 	$i++;
 }
-echo $fields;
 
-?>
+$personal_row = elgg_format_element([
+	'#tag_name' => 'td',
+	'class' => 'namefield',
+	'#text' => "<p>" . elgg_echo('notifications:subscriptions:personal:description') . "</p>",
+]);
+$personal_row .= $fields;
+$personal_row .= elgg_format_element('td', [], '&nbsp;');
 
-		<td>&nbsp;</td>
-	</tr>
-</table>
-</div>
+$table_data .= elgg_format_element('tr', [], $personal_row);
+
+$table_attributes = [
+	'id' => 'notificationstable',
+	'cellspacing' => '0',
+	'cellpadding' => '4',
+	'width' => '100%',
+];
+
+$body = elgg_view_module('info', elgg_echo('notifications:subscriptions:personal:title'), '');
+$body .= elgg_format_element('table', $table_attributes, $table_data);
+
+echo elgg_format_element('div', ['class' => 'notification_personal'], $body);

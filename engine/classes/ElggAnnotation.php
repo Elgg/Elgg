@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * Elgg Annotations
  *
@@ -120,34 +123,8 @@ class ElggAnnotation extends \ElggExtender {
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit($user_guid = 0) {
-
-		if ($user_guid) {
-			$user = get_user($user_guid);
-			if (!$user) {
-				return false;
-			}
-		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
-		}
-
-		$result = false;
-		if ($user) {
-			// If the owner of annotation is the specified user, they can edit.
-			if ($this->getOwnerGUID() == $user_guid) {
-				$result = true;
-			}
-
-			// If the user can edit the entity this is attached to, they can edit.
-			$entity = $this->getEntity();
-			if ($result == false && $entity->canEdit($user->getGUID())) {
-				$result = true;
-			}
-		}
-
-		// Trigger plugin hook - note that $user may be null
-		$params = array('entity' => $entity, 'user' => $user, 'annotation' => $this);
-		return _elgg_services()->hooks->trigger('permissions_check', 'annotation', $params, $result);
+		$entity = $this->getEntity();
+		return _elgg_services()->userCapabilities->canEditAnnotation($entity, $user_guid, $this);
 	}
 
 	// SYSTEM LOG INTERFACE

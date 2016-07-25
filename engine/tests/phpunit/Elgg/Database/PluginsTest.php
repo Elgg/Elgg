@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg\Database;
 
-
-class PluginsTest extends \PHPUnit_Framework_TestCase {
+class PluginsTest extends \Elgg\TestCase {
 
 	public function testAfterPluginLoadActiveCheckIsFree() {
 		$this->markTestIncomplete();
@@ -15,4 +15,5 @@ class PluginsTest extends \PHPUnit_Framework_TestCase {
 	public function testPluginDeactivateAltersIsActive() {
 		$this->markTestIncomplete();
 	}
+
 }

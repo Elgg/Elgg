@@ -2,80 +2,27 @@
 namespace Elgg\Http;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\FileBag;
-use Symfony\Component\HttpFoundation\ServerBag;
-use Symfony\Component\HttpFoundation\HeaderBag;
 use Elgg\Application;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Elgg HTTP request.
  *
- * Represents an HTTP request.
- *
- * Some methods were pulled from Symfony. They are
- * Copyright (c) 2004-2013 Fabien Potencier
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is furnished
- * to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * 
- * @package    Elgg.Core
- * @subpackage Http
- * @since      1.9.0
  * @access private
  */
 class Request extends SymfonyRequest {
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public function initialize(array $query = array(), array $request = array(), array $attributes = array(),
-			array $cookies = array(), array $files = array(), array $server = array(), $content = null) {
-		$this->request = new ParameterBag($this->stripSlashesIfMagicQuotes($request));
-		$this->query = new ParameterBag($this->stripSlashesIfMagicQuotes($query));
-		$this->attributes = new ParameterBag($attributes);
-		$this->cookies = new ParameterBag($this->stripSlashesIfMagicQuotes($cookies));
-		$this->files = new FileBag($files);
-		$this->server = new ServerBag($server);
-		$this->headers = new HeaderBag($this->server->getHeaders());
-
-		$this->content = $content;
-		$this->languages = null;
-		$this->charsets = null;
-		$this->encodings = null;
-		$this->acceptableContentTypes = null;
-		$this->pathInfo = null;
-		$this->requestUri = null;
-		$this->baseUrl = null;
-		$this->basePath = null;
-		$this->method = null;
-		$this->format = null;
-	}
-
-	/**
-	 * Get URL segments from the path info
+	 * Get the Elgg URL segments
 	 *
-	 * @see \Elgg\Http\Request::getPathInfo()
+	 * @param bool $raw If true, the segments will not be HTML escaped
 	 *
-	 * @return array
+	 * @return string[]
 	 */
-	public function getUrlSegments() {
+	public function getUrlSegments($raw = false) {
 		$path = trim($this->query->get(Application::GET_PATH_KEY), '/');
+		if (!$raw) {
+			$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+		}
 		if (!$path) {
 			return array();
 		}
@@ -84,7 +31,20 @@ class Request extends SymfonyRequest {
 	}
 
 	/**
-	 * Get first URL segment from the path info
+	 * Get a cloned request with new Elgg URL segments
+	 *
+	 * @param string[] $segments URL segments
+	 *
+	 * @return Request
+	 */
+	public function setUrlSegments(array $segments) {
+		$query = $this->query->all();
+		$query[Application::GET_PATH_KEY] = '/' . implode('/', $segments);
+		return $this->duplicate($query);
+	}
+
+	/**
+	 * Get first Elgg URL segment
 	 *
 	 * @see \Elgg\Http\Request::getUrlSegments()
 	 *

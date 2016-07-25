@@ -363,7 +363,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 		elgg_unregister_event_handler('update', 'object', array('\ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
 
-		_elgg_invalidate_cache_for_entity($guid);
+		_elgg_services()->entityCache->remove($guid);
 		$object = get_entity($guid);
 		$this->assertEqual($object->access_id, ACCESS_PRIVATE);
 

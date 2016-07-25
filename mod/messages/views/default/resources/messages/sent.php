@@ -27,7 +27,7 @@ if (!$page_owner || !$page_owner->canEdit()) {
 
 elgg_push_breadcrumb(elgg_echo('messages:sent'));
 
-elgg_register_title_button();
+elgg_register_title_button('messages', 'add', 'object', 'messages');
 
 $title = elgg_echo('messages:sentmessages', array($page_owner->name));
 

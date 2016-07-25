@@ -9,7 +9,9 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/views/default/',
     paths: {
-        'sprintf': '/base/vendor/bower-asset/sprintf/src/sprintf',
+        'vendor': '../../vendor',
+        'node_modules': '../../node_modules',
+        'jquery-mockjax': '../../node_modules/jquery-mockjax/dist/jquery.mockjax',
     },
 
     // ask Require.js to load these files (all our tests)
@@ -18,7 +20,3 @@ requirejs.config({
     // start test run, once Require.js is done
     callback: window.__karma__.start
 });
-
-// This module is typically built in PHP. We can't do that with the test runner.
-define('elgg', function() { return elgg; });
-

@@ -1,5 +1,9 @@
 <?php
 
+use Elgg\Filesystem\MimeTypeDetector;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * This class represents a physical file.
  *
@@ -18,12 +22,23 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.File
+ *
+ * @property string $mimetype         MIME type of the file
+ * @property string $simpletype       Category of the file
+ * @property string $originalfilename Filename of the original upload
+ * @property int    $upload_time      Timestamp of the upload action, used as a filename prefix
+ * @property string $filestore_prefix Prefix (directory) on user's filestore where the file is saved
  */
-class ElggFile extends \ElggObject {
-	/** Filestore */
+class ElggFile extends ElggObject {
+
+	/**
+	 * @var ElggFilestore|null Cache for getFilestore(). Do not use. Use getFilestore().
+	 */
 	private $filestore;
 
-	/** File handle used to identify this file in a filestore. Created by open. */
+	/**
+	 * @var resource|null File handle used to identify this file in a filestore. Created by open.
+	 */
 	private $handle;
 
 	/**
@@ -35,18 +50,6 @@ class ElggFile extends \ElggObject {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = "file";
-	}
-
-	/**
-	 * Loads an \ElggFile entity.
-	 *
-	 * @param \stdClass $row Database result or null for new \ElggFile
-	 */
-	public function __construct($row = null) {
-		parent::__construct($row);
-
-		// Set default filestore
-		$this->filestore = $this->getFilestore();
 	}
 
 	/**
@@ -96,7 +99,7 @@ class ElggFile extends \ElggObject {
 	 * @return string
 	 */
 	public function getFilenameOnFilestore() {
-		return $this->filestore->getFilenameOnFilestore($this);
+		return $this->getFilestore()->getFilenameOnFilestore($this);
 	}
 
 	/**
@@ -118,22 +121,20 @@ class ElggFile extends \ElggObject {
 
 	/**
 	 * Get the mime type of the file.
-	 *
+	 * Returns mimetype metadata value if set, otherwise attempts to detect it.
 	 * @return string
 	 */
 	public function getMimeType() {
 		if ($this->mimetype) {
 			return $this->mimetype;
 		}
-
-		// @todo Guess mimetype if not here
+		return $this->detectMimeType();
 	}
 
 	/**
 	 * Set the mime type of the file.
 	 *
 	 * @param string $mimetype The mimetype
-	 *
 	 * @return bool
 	 */
 	public function setMimeType($mimetype) {
@@ -164,17 +165,9 @@ class ElggFile extends \ElggObject {
 
 		$mime = $default;
 
-		// for PHP5 folks.
-		if (function_exists('finfo_file') && defined('FILEINFO_MIME_TYPE')) {
-			$resource = finfo_open(FILEINFO_MIME_TYPE);
-			if ($resource) {
-				$mime = finfo_file($resource, $file);
-			}
-		}
-
-		// for everyone else.
-		if (!$mime && function_exists('mime_content_type')) {
-			$mime = mime_content_type($file);
+		$detected = (new MimeTypeDetector())->tryStrategies($file);
+		if ($detected) {
+			$mime = $detected;
 		}
 
 		$original_filename = isset($this) && $this instanceof $class ? $this->originalfilename : basename($file);
@@ -184,6 +177,21 @@ class ElggFile extends \ElggObject {
 			'default' => $default,
 		);
 		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);
+	}
+
+	/**
+	 * Get the simple type of the file.
+	 * Returns simpletype metadata value if set, otherwise parses it from mimetype
+	 * @see elgg_get_file_simple_type
+	 *
+	 * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
+	 */
+	public function getSimpleType() {
+		if (isset($this->simpletype)) {
+			return $this->simpletype;
+		}
+		$mime_type = $this->getMimeType();
+		return elgg_get_file_simple_type($mime_type);
 	}
 
 	/**
@@ -204,24 +212,24 @@ class ElggFile extends \ElggObject {
 	 *
 	 * @return resource File handler
 	 *
-	 * @throws IOException|InvalidParameterException
+	 * @throws IOException
+	 * @throws InvalidParameterException
 	 */
 	public function open($mode) {
 		if (!$this->getFilename()) {
-			throw new \IOException("You must specify a name before opening a file.");
+			throw new IOException("You must specify a name before opening a file.");
 		}
 
 		// See if file has already been saved
 		// seek on datastore, parameters and name?
-
 		// Sanity check
 		if (
-			($mode != "read") &&
-			($mode != "write") &&
-			($mode != "append")
+				($mode != "read") &&
+				($mode != "write") &&
+				($mode != "append")
 		) {
 			$msg = "Unrecognized file mode '" . $mode . "'";
-			throw new \InvalidParameterException($msg);
+			throw new InvalidParameterException($msg);
 		}
 
 		// Get the filestore
@@ -229,7 +237,6 @@ class ElggFile extends \ElggObject {
 
 		// Ensure that we save the file details to object store
 		//$this->save();
-
 		// Open the file handle
 		$this->handle = $fs->open($this, $mode);
 
@@ -293,17 +300,18 @@ class ElggFile extends \ElggObject {
 	/**
 	 * Delete this file.
 	 *
+	 * @param bool $follow_symlinks If true, will also delete the target file if the current file is a symlink
 	 * @return bool
 	 */
-	public function delete() {
+	public function delete($follow_symlinks = true) {
 		$fs = $this->getFilestore();
-		
-		$result = $fs->delete($this);
-		
+
+		$result = $fs->delete($this, $follow_symlinks);
+
 		if ($this->getGUID() && $result) {
 			$result = parent::delete();
 		}
-		
+
 		return $result;
 	}
 
@@ -317,7 +325,6 @@ class ElggFile extends \ElggObject {
 	public function seek($position) {
 		$fs = $this->getFilestore();
 
-		// @todo add seek() to \ElggFilestore
 		return $fs->seek($this->handle, $position);
 	}
 
@@ -333,13 +340,36 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
+	 * Updates modification time of the file and clears stats cache for the file
+	 * @return bool
+	 */
+	public function setModifiedTime() {
+		$filestorename = $this->getFilenameOnFilestore();
+		$modified = touch($filestorename);
+		if ($modified) {
+			clearstatcache(true, $filestorename);
+		} else {
+			elgg_log("Unable to update modified time for $filestorename", 'ERROR');
+		}
+		return $modified;
+	}
+
+	/**
+	 * Returns file modification time
+	 * @return int
+	 */
+	public function getModifiedTime() {
+		return filemtime($this->getFilenameOnFilestore());
+	}
+
+	/**
 	 * Return the size of the file in bytes.
 	 *
 	 * @return int
 	 * @since 1.9
 	 */
 	public function getSize() {
-		return $this->filestore->getFileSize($this);
+		return $this->getFilestore()->getFileSize($this);
 	}
 
 	/**
@@ -378,11 +408,13 @@ class ElggFile extends \ElggObject {
 	/**
 	 * Set a filestore.
 	 *
-	 * @param \ElggFilestore $filestore The file store.
+	 * @param ElggFilestore $filestore The file store.
 	 *
 	 * @return void
+	 * @deprecated Will be removed in 3.0
 	 */
-	public function setFilestore(\ElggFilestore $filestore) {
+	public function setFilestore(ElggFilestore $filestore) {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '2.1');
 		$this->filestore = $filestore;
 	}
 
@@ -391,56 +423,56 @@ class ElggFile extends \ElggObject {
 	 * This filestore is either a pre-registered filestore,
 	 * a filestore as recorded in metadata or the system default.
 	 *
-	 * @return \ElggFilestore
+	 * @return ElggFilestore
 	 *
 	 * @throws ClassNotFoundException
 	 */
 	protected function getFilestore() {
-		// Short circuit if already set.
 		if ($this->filestore) {
+			// already set
 			return $this->filestore;
 		}
 
-		// ask for entity specific filestore
-		// saved as filestore::className in metadata.
+		// such a common case we just assume for now
+		$this->filestore = $GLOBALS['DEFAULT_FILE_STORE'];
+
+		if (!$this->guid) {
+			return $this->filestore;
+		}
+
+		// Note we use parent::getMetadata() below to avoid showing the warnings added in #9193
+
+		$class = parent::getMetadata('filestore::filestore');
+		if (!$class) {
+			return $this->filestore;
+		}
+
+		// common case
+		if ($class === ElggDiskFilestore::class && parent::getMetadata('filestore::dir_root') === _elgg_services()->config->getDataPath()) {
+			return $this->filestore;
+		}
+
+		if (!class_exists($class)) {
+			$this->filestore = null;
+			throw new ClassNotFoundException("Unable to load filestore class $class for file {$this->guid}");
+		}
+
 		// need to get all filestore::* metadata because the rest are "parameters" that
 		// get passed to filestore::setParameters()
-		if ($this->guid) {
-			$options = array(
-				'guid' => $this->guid,
-				'where' => array("n.string LIKE 'filestore::%'"),
-			);
-
-			$mds = elgg_get_metadata($options);
-
-			$parameters = array();
-			foreach ($mds as $md) {
-				list( , $name) = explode("::", $md->name);
-				if ($name == 'filestore') {
-					$filestore = $md->value;
-				}
+		$mds = elgg_get_metadata([
+			'guid' => $this->guid,
+			'where' => array("n.string LIKE 'filestore::%'"),
+		]);
+		$parameters = [];
+		foreach ($mds as $md) {
+			list(, $name) = explode("::", $md->name);
+			if ($name !== 'filestore') {
 				$parameters[$name] = $md->value;
 			}
 		}
 
-		// need to check if filestore is set because this entity is loaded in save()
-		// before the filestore metadata is saved.
-		if (isset($filestore)) {
-			if (!class_exists($filestore)) {
-				$msg = "Unable to load filestore class " . $filestore . " for file " . $this->guid;
-				throw new \ClassNotFoundException($msg);
-			}
-
-			$this->filestore = new $filestore();
-			$this->filestore->setParameters($parameters);
-			// @todo explain why $parameters will always be set here (PhpStorm complains)
-		}
-
-		// this means the entity hasn't been saved so fallback to default
-		if (!$this->filestore) {
-			$this->filestore = get_default_filestore();
-		}
-
+		$this->filestore = new $class();
+		$this->filestore->setParameters($parameters);
 		return $this->filestore;
 	}
 
@@ -450,7 +482,7 @@ class ElggFile extends \ElggObject {
 	 * Write the file's data to the filestore and save
 	 * the corresponding entity.
 	 *
-	 * @see \ElggObject::save()
+	 * @see ElggObject::save()
 	 *
 	 * @return bool
 	 */
@@ -459,16 +491,121 @@ class ElggFile extends \ElggObject {
 			return false;
 		}
 
+		$filestore = $this->getFilestore();
+
+		// Note we use parent::getMetadata() below to avoid showing the warnings added in #9193
 		// Save datastore metadata
-		$params = $this->filestore->getParameters();
+		$params = $filestore->getParameters();
 		foreach ($params as $k => $v) {
 			parent::setMetadata("filestore::$k", $v);
 		}
 
 		// Now make a note of the filestore class
-		parent::setMetadata("filestore::filestore", get_class($this->filestore));
+		parent::setMetadata("filestore::filestore", get_class($filestore));
 
 		return true;
+	}
+
+	/**
+	 * Transfer a file to a new owner and sets a new filename,
+	 * copies file contents to a new location.
+	 *
+	 * This is an alternative to using rename() which fails to move files to 
+	 * a non-existent directory under new owner's filestore directory
+	 * 
+	 * @param int    $owner_guid New owner's guid
+	 * @param string $filename   New filename (uses old filename if not set)
+	 * @return bool
+	 */
+	public function transfer($owner_guid, $filename = null) {
+		if (!$owner_guid) {
+			return false;
+		}
+
+		if (!$this->exists()) {
+			return false;
+		}
+
+		if (!$filename) {
+			$filename = $this->getFilename();
+		}
+		$filestorename = $this->getFilenameOnFilestore();
+
+		$this->owner_guid = $owner_guid;
+		$this->setFilename($filename);
+		$this->open('write');
+		$this->close();
+
+		return rename($filestorename, $this->getFilenameOnFilestore());
+	}
+
+	/**
+	 * Writes contents of the uploaded file to an instance of ElggFile
+	 *
+	 * @note Note that this function moves the file and populates properties,
+	 * but does not call ElggFile::save().
+	 *
+	 * @note This method will automatically assign a filename on filestore based
+	 * on the upload time and filename. By default, the file will be written
+	 * to /file directory on owner's filestore. You can change this directory,
+	 * by setting 'filestore_prefix' property of the ElggFile instance before
+	 * calling this method.
+	 *
+	 * @param UploadedFile $upload Uploaded file object
+	 * @return bool 
+	 */
+	public function acceptUploadedFile(UploadedFile $upload) {
+		if (!$upload->isValid()) {
+			return false;
+		}
+
+		$old_filestorename = '';
+		if ($this->exists()) {
+			$old_filestorename = $this->getFilenameOnFilestore();
+		}
+
+		$originalfilename = $upload->getClientOriginalName();
+		$this->originalfilename = $originalfilename;
+		if (empty($this->title)) {
+			$this->title = htmlspecialchars($this->originalfilename, ENT_QUOTES, 'UTF-8');
+		}
+
+		$this->upload_time = time();
+		$prefix = $this->filestore_prefix ? : 'file';
+		$prefix = trim($prefix, '/');
+		$filename = elgg_strtolower("$prefix/{$this->upload_time}{$this->originalfilename}");
+		$this->setFilename($filename);
+		$this->filestore_prefix = $prefix;
+
+		$hook_params = [
+			'file' => $this,
+			'upload' => $upload,
+		];
+
+		$uploaded = _elgg_services()->hooks->trigger('upload', 'file', $hook_params);
+		if ($uploaded !== true && $uploaded !== false) {
+			$filestorename = $this->getFilenameOnFilestore();
+			try {
+				$uploaded = $upload->move(pathinfo($filestorename, PATHINFO_DIRNAME), pathinfo($filestorename, PATHINFO_BASENAME));
+			} catch (FileException $ex) {
+				_elgg_services()->logger->error($ex->getMessage());
+				$uploaded = false;
+			}
+		}
+
+		if ($uploaded) {
+			if ($old_filestorename && $old_filestorename != $this->getFilenameOnFilestore()) {
+				// remove old file
+				unlink($old_filestorename);
+			}
+			$mime_type = $this->detectMimeType(null, $upload->getClientMimeType());
+			$this->setMimeType($mime_type);
+			$this->simpletype = elgg_get_file_simple_type($mime_type);
+			_elgg_services()->events->triggerAfter('upload', 'file', $this);
+			return true;
+		}
+		
+		return false;
 	}
 
 	/**
@@ -481,19 +618,9 @@ class ElggFile extends \ElggObject {
 			// Don't persist filestore, which contains CONFIG
 			// https://github.com/Elgg/Elgg/issues/9081#issuecomment-152859856
 			'filestore',
-
 			// a resource
 			'handle',
 		));
 	}
 
-	/**
-	 * Reestablish filestore property
-	 *
-	 * @return void
-	 * @throws ClassNotFoundException
-	 */
-	public function __wakeup() {
-		$this->getFilestore();
-	}
 }

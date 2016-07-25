@@ -452,13 +452,13 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	// prefetch objects, subjects and targets
 	$guids = array();
 	foreach ($river_items as $item) {
-		if ($item->subject_guid && !_elgg_retrieve_cached_entity($item->subject_guid)) {
+		if ($item->subject_guid && !_elgg_services()->entityCache->get($item->subject_guid)) {
 			$guids[$item->subject_guid] = true;
 		}
-		if ($item->object_guid && !_elgg_retrieve_cached_entity($item->object_guid)) {
+		if ($item->object_guid && !_elgg_services()->entityCache->get($item->object_guid)) {
 			$guids[$item->object_guid] = true;
 		}
-		if ($item->target_guid && !_elgg_retrieve_cached_entity($item->target_guid)) {
+		if ($item->target_guid && !_elgg_services()->entityCache->get($item->target_guid)) {
 			$guids[$item->target_guid] = true;
 		}
 	}
@@ -477,7 +477,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	$guids = array();
 	foreach ($river_items as $item) {
 		$object = $item->getObjectEntity();
-		if ($object->container_guid && !_elgg_retrieve_cached_entity($object->container_guid)) {
+		if ($object->container_guid && !_elgg_services()->entityCache->get($object->container_guid)) {
 			$guids[$object->container_guid] = true;
 		}
 	}
@@ -510,8 +510,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
  * @since 1.8.0
  */
 function elgg_list_river(array $options = array()) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'offset'     => (int) max(get_input('offset', 0), 0),
@@ -728,20 +727,20 @@ function update_river_access_by_object($object_guid, $access_id) {
 /**
  * Page handler for activity
  *
- * @param array $page
- * @return bool
+ * @param array $segments URL segments
+ * @return \Elgg\Http\ResponseBuilder
  * @access private
  */
-function _elgg_river_page_handler($page) {
+function _elgg_river_page_handler($segments) {
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 	// make a URL segment available in page handler script
-	$page_type = elgg_extract(0, $page, 'all');
+	$page_type = elgg_extract(0, $segments, 'all');
 	$page_type = preg_replace('[\W]', '', $page_type);
 
 	if ($page_type == 'owner') {
 		elgg_gatekeeper();
-		$page_username = elgg_extract(1, $page, '');
+		$page_username = elgg_extract(1, $segments, '');
 		if ($page_username == elgg_get_logged_in_user_entity()->username) {
 			$page_type = 'mine';
 		} else {
@@ -751,8 +750,7 @@ function _elgg_river_page_handler($page) {
 
 	$vars['page_type'] = $page_type;
 
-	echo elgg_view_resource("river", $vars);
-	return true;
+	return elgg_ok_response(elgg_view_resource("river", $vars));
 }
 
 /**
@@ -840,6 +838,12 @@ function _elgg_river_init() {
 	elgg_register_action('river/delete', '', 'admin');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
+
+	// For BC, we want required AMD modules to be loaded even if plugins
+	// overwrite these views
+	elgg_extend_view('core/river/filter', 'core/river/filter_deps');
+	elgg_extend_view('forms/comment/save', 'forms/comment/save_deps');
+	
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

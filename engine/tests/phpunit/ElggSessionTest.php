@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Many methods for \ElggSession pass through to the storage class so we
  * don't test them here.
  */
-
-class ElggSessionTest extends \PHPUnit_Framework_TestCase {
+class ElggSessionTest extends \Elgg\TestCase {
 
 	public function testStart() {
 		$session = \ElggSession::getMock();
@@ -33,4 +33,5 @@ class ElggSessionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNotEquals($id, $session->getId());
 		$this->assertTrue($session->has('__elgg_session'));
 	}
+
 }

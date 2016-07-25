@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-13 22:10-0400\n"
+"POT-Creation-Date: 2016-06-13 22:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1239,11 +1239,11 @@ msgid "Follow the blog to `stay up to date on the latest releases`__."
 msgstr ""
 
 #: ../../appendix/releases.rst:15
-msgid "Patch/Bugfix Releases (1.9.x)"
+msgid "Patch/Bugfix Releases (2.1.x)"
 msgstr ""
 
 #: ../../appendix/releases.rst:16
-msgid "Every few weeks."
+msgid "Every two weeks."
 msgstr ""
 
 #: ../../appendix/releases.rst:18
@@ -1255,11 +1255,11 @@ msgid "Since bugfix release focus on fixing bugs and not making major changes, t
 msgstr ""
 
 #: ../../appendix/releases.rst:26
-msgid "Minor/Feature Releases (1.x.0)"
+msgid "Minor/Feature Releases (2.x.0)"
 msgstr ""
 
 #: ../../appendix/releases.rst:27
-msgid "Every few months."
+msgid "Every three months."
 msgstr ""
 
 #: ../../appendix/releases.rst:29
@@ -1279,7 +1279,7 @@ msgid "Major/Breaking Releases (x.0.0)"
 msgstr ""
 
 #: ../../appendix/releases.rst:40
-msgid "Every few years."
+msgid "Every year."
 msgstr ""
 
 #: ../../appendix/releases.rst:42

@@ -7,48 +7,19 @@
  * Registers the buttons for title area of the group profile page
  *
  * @param ElggGroup $group
+ * @return void
  */
 function groups_register_profile_buttons($group) {
 
-	$actions = array();
+	$params = [
+		'entity' => $group,
+	];
 
-	// group owners
-	if ($group->canEdit()) {
-		// edit and invite
-		$url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
-		$actions[$url] = 'groups:edit';
-		$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
-		$actions[$url] = 'groups:invite';
-	}
-
-	// group members
-	if ($group->isMember(elgg_get_logged_in_user_entity())) {
-		if ($group->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
-			// leave
-			$url = elgg_get_site_url() . "action/groups/leave?group_guid={$group->getGUID()}";
-			$url = elgg_add_action_tokens_to_url($url);
-			$actions[$url] = 'groups:leave';
-		}
-	} elseif (elgg_is_logged_in()) {
-		// join - admins can always join.
-		$url = elgg_get_site_url() . "action/groups/join?group_guid={$group->getGUID()}";
-		$url = elgg_add_action_tokens_to_url($url);
-		if ($group->isPublicMembership() || $group->canEdit()) {
-			$actions[$url] = 'groups:join';
-		} else {
-			// request membership
-			$actions[$url] = 'groups:joinrequest';
-		}
-	}
-
-	if ($actions) {
-		foreach ($actions as $url => $text) {
-			elgg_register_menu_item('title', array(
-				'name' => $text,
-				'href' => $url,
-				'text' => elgg_echo($text),
-				'link_class' => 'elgg-button elgg-button-action',
-			));
+	$items = elgg_trigger_plugin_hook('profile_buttons', 'group', $params, []);
+	
+	if (!empty($items)) {
+		foreach ($items as $item) {
+			elgg_register_menu_item('title', $item);
 		}
 	}
 }
@@ -80,12 +51,11 @@ function groups_prepare_form_vars($group = null) {
 	}
 
 	// handle tool options
-	$tools = elgg_get_config('group_tool_options');
-	if ($tools) {
-		foreach ($tools as $group_option) {
-			$option_name = $group_option->name . "_enable";
-			$values[$option_name] = $group_option->default_on ? 'yes' : 'no';
-		}
+	$entity = ($group instanceof \ElggGroup) ? $group : null;
+	$tools = groups_get_group_tool_options($entity);
+	foreach ($tools as $group_option) {
+		$option_name = $group_option->name . "_enable";
+		$values[$option_name] = $group_option->default_on ? 'yes' : 'no';
 	}
 
 	// get current group settings
@@ -121,4 +91,23 @@ function groups_prepare_form_vars($group = null) {
 	elgg_clear_sticky_form('groups');
 
 	return $values;
+}
+
+/**
+ * Function to return available group tool options
+ *
+ * @param \ElggGroup $group optional group
+ *
+ * @return array
+ */
+function groups_get_group_tool_options(\ElggGroup $group = null) {
+	
+	$tool_options = elgg_get_config('group_tool_options');
+	
+	$hook_params = [
+		'group_tool_options' => $tool_options,
+		'entity' => $group,
+	];
+		
+	return (array) elgg_trigger_plugin_hook('tool_options', 'group', $hook_params, $tool_options);
 }

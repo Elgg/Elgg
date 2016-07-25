@@ -1,3 +1,283 @@
+<a name="2.2.0-rc.1"></a>
+### 2.2.0-rc.1  (2016-06-16)
+
+#### Contributors
+
+* Ismayil Khayredinov (43)
+* Steve Clay (37)
+* Jeroen Dalsem (22)
+* jdalsem (6)
+* Wouter van Os (2)
+* Brett Profitt (1)
+* Jerôme Bakker (1)
+* V. Lehkonen (1)
+* lehkonev (1)
+
+#### Features
+
+* **ajax:**
+  * better elgg/Ajax handling of form data and URLs ([8795b9f4](https://github.com/Elgg/Elgg/commit/8795b9f43893842f3ecc6ab4e323c8a5bd5be00a), closes [#9534](https://github.com/Elgg/Elgg/issues/9534), [#9564](https://github.com/Elgg/Elgg/issues/9564))
+  * Ajax service now loads required AMD modules ([292dc391](https://github.com/Elgg/Elgg/commit/292dc391355b9fc6c5116f54b2d8ce20770469af))
+* **avatar:** user avatars are now served by serve-file handler ([a55d746a](https://github.com/Elgg/Elgg/commit/a55d746acd2b81c0bb36e32b147ebc97b6ef5cd6))
+* **cache:**
+  * allow admin to attempt an automatic symlink to cache ([b06a1cb3](https://github.com/Elgg/Elgg/commit/b06a1cb3e799d3863126bc279d202e25ed96aea9), closes [#8639](https://github.com/Elgg/Elgg/issues/8639), [#8638](https://github.com/Elgg/Elgg/issues/8638))
+  * allows specifying cache directory in settings.php ([4b2ed514](https://github.com/Elgg/Elgg/commit/4b2ed514e20c7da8c6a1e40a3886c6671c9b62ef))
+* **ckeditor:**
+  * improved elgg/ckeditor AMD module ([a0ff70ec](https://github.com/Elgg/Elgg/commit/a0ff70ec3af2c784054e1e2f328c4504458b8978))
+  * added editor autogrow plugin ([771abac8](https://github.com/Elgg/Elgg/commit/771abac8a2130a83629fa3be8ba16161c36fc4fa))
+  * allowed resizing of editor window ([f43a6565](https://github.com/Elgg/Elgg/commit/f43a65658f44d7ee9b209b97e8da888846223ff9))
+* **core:**
+  * added a CONFIG flag to control auto-disabling plugins ([17363a50](https://github.com/Elgg/Elgg/commit/17363a50baf32ed0699673356e89e439eff961f0))
+  * added a new function to check if system_cache is enabled ([f3bbff32](https://github.com/Elgg/Elgg/commit/f3bbff32ef8c0620ebb9ccd93b82504e8a1f6634))
+* **cron:** improved cron logging ([5305b60d](https://github.com/Elgg/Elgg/commit/5305b60dadceb9056b684d7359ffd389b4d50f8b), closes [#9474](https://github.com/Elgg/Elgg/issues/9474))
+* **db:**
+  * access sql parts are named in the clauses array ([50ffcf24](https://github.com/Elgg/Elgg/commit/50ffcf249cf6da2bd0b07a35b06e15c986c1e80d))
+  * allows using parameterized queries in core DB functions ([a9e51682](https://github.com/Elgg/Elgg/commit/a9e516826f8ee8bb763e12b3451aee96436ae985))
+* **developers:** add view_vars hook to views inspector ([41e9e1ef](https://github.com/Elgg/Elgg/commit/41e9e1ef9462dedae00b49079ec5b3b4619cfb75))
+* **discussions:**
+  * added a site menu item for discussion/all ([79809b78](https://github.com/Elgg/Elgg/commit/79809b785b5ee5defa2184c7debd24d580e0e234))
+  * allow plugins to use custom discussion reply object class ([ac55f8f4](https://github.com/Elgg/Elgg/commit/ac55f8f48cbc17c45db7ebab52e2c95c7594022c))
+* **embed:**
+  * adds elgg/embed AMD module ([1f1dad12](https://github.com/Elgg/Elgg/commit/1f1dad12c0ce30ef426893802f46dd1c5f5114e1))
+  * adds serve-icon page handler ([e4d09f82](https://github.com/Elgg/Elgg/commit/e4d09f82e5d3a1029864c35a90668dbe5ff596a8), closes [#9582](https://github.com/Elgg/Elgg/issues/9582))
+* **entities:** adds user capabilities service ([81f05058](https://github.com/Elgg/Elgg/commit/81f05058223df1657bbd87474d8a68906573ea6c))
+* **file:**
+  * adds ElggFile::transfer() for reliable renaming of files ([bf50c5d0](https://github.com/Elgg/Elgg/commit/bf50c5d0d1ff5151e87c38438f312e25409bec1e))
+  * more consistency in mime and simple type values ([3e09fa15](https://github.com/Elgg/Elgg/commit/3e09fa15865360335ef4d3fde002d7684a582c28), closes [#9614](https://github.com/Elgg/Elgg/issues/9614))
+* **files:** update file plugin to new file serving API ([a9d409ee](https://github.com/Elgg/Elgg/commit/a9d409eeb7fdd9c651bde31575cc37d05db86985))
+* **filestore:**
+  * bootstrap default filestore early in the boot sequence ([c85fa0ee](https://github.com/Elgg/Elgg/commit/c85fa0ee65c04b51f65e4cd9202f8c6382afced6), closes [#9873](https://github.com/Elgg/Elgg/issues/9873))
+  * adds API to reliably set file modification time ([476b6d29](https://github.com/Elgg/Elgg/commit/476b6d293c8671d1856443b6804f861dbc539406))
+* **forms:**
+  * Add new user now has an option to autogenerate the password ([ee4758d3](https://github.com/Elgg/Elgg/commit/ee4758d3c053e5b22827f368ebf1546dc41208a6))
+  * input/checkbox is now usable with elgg_view_input() ([82bbf49b](https://github.com/Elgg/Elgg/commit/82bbf49bd9da83fbc160f5c83c241db772d1ae8d), closes [#9808](https://github.com/Elgg/Elgg/issues/9808))
+* **gatekeeper:** entity gatekeeper result can now be filtered ([75af2fd5](https://github.com/Elgg/Elgg/commit/75af2fd54d5e5e2be629b205babc486085e685df))
+* **groups:**
+  * group icons are now handled by the new icon service ([e809f5fd](https://github.com/Elgg/Elgg/commit/e809f5fde978dcb790dc7e81d3341e54fc4b5533))
+  * introduced a hook to influence group tool options ([b6617e5e](https://github.com/Elgg/Elgg/commit/b6617e5ea33609ae32dfd9f9af404b42e85609dd))
+  * allow the group river to be filtered by content type ([0d8f9364](https://github.com/Elgg/Elgg/commit/0d8f93641ec69b13b81902dee6645cf4fbf8fce1))
+  * group avatars now use serve-file handler ([ac57e990](https://github.com/Elgg/Elgg/commit/ac57e99002a1c1490b7dd2f348845cbf7653ed8b))
+* **html:**
+  * allows cleaner elgg_format_element usage ([425f57d7](https://github.com/Elgg/Elgg/commit/425f57d7d2f49c06631ca0300ba77d1f101fe211), closes [#9766](https://github.com/Elgg/Elgg/issues/9766))
+  * moves favicon registration to a hook ([a4a35362](https://github.com/Elgg/Elgg/commit/a4a35362eefbfa8449648b9834f29b9da0a7703c))
+* **http:** allow use of X-Sendfile/X-Accel web server feature ([a88db207](https://github.com/Elgg/Elgg/commit/a88db207aa39351eb26855fe9125cdaf287a1e03), closes [#4898](https://github.com/Elgg/Elgg/issues/4898))
+* **icons:**
+  * udpate file plugin to use new icon service ([2c9f5c0a](https://github.com/Elgg/Elgg/commit/2c9f5c0a47bf81b6291384145b5fe01ff7e17b72))
+  * user avatars are now handled by the icon service ([36c8b465](https://github.com/Elgg/Elgg/commit/36c8b465e0f8c39a1f83f74fb9cf3562d1467c17))
+  * adds a service for handling entity icons ([72b8a2c7](https://github.com/Elgg/Elgg/commit/72b8a2c78d997277f24e57db834f96f6fd779e92))
+* **js:**
+  * Adds hooks to pass site and page-level data client-side ([cec6b42b](https://github.com/Elgg/Elgg/commit/cec6b42b2ec6b86bc3530f6233b7d8dfb8c05328), closes [#8997](https://github.com/Elgg/Elgg/issues/8997))
+  * elgg/Ajax users get more access to underlying resources ([39a3fbce](https://github.com/Elgg/Elgg/commit/39a3fbced333dc093e45a655d8d417b359ce92c4), closes [#9767](https://github.com/Elgg/Elgg/issues/9767))
+  * elgg/spinner now supports optional text to be displayed ([da5c5b06](https://github.com/Elgg/Elgg/commit/da5c5b06cb665ddec7ab10802dd5c499f61474a6))
+  * adds elgg/lightbox AMD module, loaded on all pages ([9135ad26](https://github.com/Elgg/Elgg/commit/9135ad26633b76eab3e8a642b14a34487c539a7e), closes [#7895](https://github.com/Elgg/Elgg/issues/7895), [#8309](https://github.com/Elgg/Elgg/issues/8309), [#6991](https://github.com/Elgg/Elgg/issues/6991))
+  * user hover menu now uses elgg/popup module ([d0dffca6](https://github.com/Elgg/Elgg/commit/d0dffca6f44009012b5ce3371e4a5a125a5f5344))
+  * adds elgg/popup AMD module ([fd75da60](https://github.com/Elgg/Elgg/commit/fd75da601ce6aaac4853ba4406f6141e1d17917c))
+  * requiresConfirmation now returns false if not confirmed ([cac5c0fd](https://github.com/Elgg/Elgg/commit/cac5c0fd1fa6b8dd5861cbcf7e76efeb6a855714))
+* **menus:**
+  * elgg_register_title_button() can now check entity type and subtype ([a0c118ad](https://github.com/Elgg/Elgg/commit/a0c118ad46f3038a027c1d56313b9369c5ec6ae8))
+  * required AMD modules can now be defined at item registration ([46c3ead8](https://github.com/Elgg/Elgg/commit/46c3ead835d728b7afec70fc6c0aa01d152e4ea1))
+  * adds menu service for more orderly menu construction ([38ecfc6b](https://github.com/Elgg/Elgg/commit/38ecfc6ba9b3aa431e9b553651e26c3dd10bbc18), closes [#9508](https://github.com/Elgg/Elgg/issues/9508))
+* **reportedcontent:** only load javascript when needed ([29c39cd7](https://github.com/Elgg/Elgg/commit/29c39cd79b13abc6787e805f83747e035f981b56))
+* **river:** convert river JS to AMD modules ([790a1a00](https://github.com/Elgg/Elgg/commit/790a1a008eda55424d857c779ef475c85e59512c))
+* **thewire:** allow multiple add forms to exist on the same page ([9f72e287](https://github.com/Elgg/Elgg/commit/9f72e2874912d50c917b466a8a4ac2f512f69aa2))
+* **ui:** Allows modifying system messages/errors ([eee183c5](https://github.com/Elgg/Elgg/commit/eee183c549320eff63406cfa825679b7260b2653))
+* **views:**
+  * view_vars handlers can preset view output ([68fde7b6](https://github.com/Elgg/Elgg/commit/68fde7b6f0002afe01080adda1f7f8699a9cf903))
+  * elgg_get_excerpt output now comes from a view ([4d6ec3f2](https://github.com/Elgg/Elgg/commit/4d6ec3f272ebed3ebf6abe2e0439e596e69fc6e1))
+  * allows changing relative URLs in CSS files ([70d3aab7](https://github.com/Elgg/Elgg/commit/70d3aab719ade13804428b7b90bd848a28891f91))
+  * allow multiple paths in views.php files ([7672d754](https://github.com/Elgg/Elgg/commit/7672d7542f322322b5a4868a8af4e61e8a9a702b))
+* **web_services:** allows API function to be given an associative array ([cd80863a](https://github.com/Elgg/Elgg/commit/cd80863a5e91e4184080bdf451c26ee10058febd), closes [#9411](https://github.com/Elgg/Elgg/issues/9411))
+* **widgets:**
+  * widget types can now be extended with a hook ([3c76194c](https://github.com/Elgg/Elgg/commit/3c76194c02274c09a3097168280950e7d6699456))
+  * widget title and description can be autodetected ([3c61e2f0](https://github.com/Elgg/Elgg/commit/3c61e2f0b2b21cac8ab538e5ede76f647f4217ed))
+  * added a helper class and factory for defining widgets ([bc56fafd](https://github.com/Elgg/Elgg/commit/bc56fafd81c362964ac0764ec4641023d06560aa))
+  * widget layout owner can now be set explicitly ([b3bd2a84](https://github.com/Elgg/Elgg/commit/b3bd2a84e44c0e1f4aff96eb5bcdc5b7b1186417), closes [#7023](https://github.com/Elgg/Elgg/issues/7023))
+  * added isset on \ElggWidget objects to check settings ([7b095208](https://github.com/Elgg/Elgg/commit/7b0952088d94f2132917f2b3cdd9f328726595be))
+  * added unset on \ElggWidget objects to remove settings ([f99e4f5d](https://github.com/Elgg/Elgg/commit/f99e4f5debea861aede1e3009b11f07f917b0b06))
+
+
+#### Performance
+
+* **db:** improved session write db query for InnoDB ([3b55226d](https://github.com/Elgg/Elgg/commit/3b55226d43d0feaea75488d19c8b8e8a6fd1d941))
+* **reportedcontent:** only load JS if menu item is rendered ([ececa98d](https://github.com/Elgg/Elgg/commit/ececa98d3520483d0d4f956f0461e8d30d2db3f2))
+
+
+#### Documentation
+
+* **core:** fixes docs for ElggFilestore::seek return value ([fe310c31](https://github.com/Elgg/Elgg/commit/fe310c313aba11e0439be9aaf46a5030c0b4c031))
+* **faqs:** fixed typo in IDE section ([a1ed1305](https://github.com/Elgg/Elgg/commit/a1ed130584e65535f47e037bfd9ff7bbf833963b))
+* **tutorials:** updated Hello world ([dc5a4ade](https://github.com/Elgg/Elgg/commit/dc5a4ade129f2ef2c7c8defae23e5498946078bf), closes [#9875](https://github.com/Elgg/Elgg/issues/9875))
+* **widgets:** updated the widget registration documentation ([3410e1ec](https://github.com/Elgg/Elgg/commit/3410e1ec4f20d0a8dfbf49595b2bf865b76ba5d1))
+
+
+#### Bug Fixes
+
+* **avatars:** avatars are no longer served with public URLs in a walled garden mode ([4c8a7ced](https://github.com/Elgg/Elgg/commit/4c8a7ced7ec56637dd836f2854df9f276893b876))
+* **core:**
+  * get class from subclass instead of base ([8b3e17fa](https://github.com/Elgg/Elgg/commit/8b3e17facef15a0349401695408c7b0faf3ed594))
+  * allows ElggFile to append files not yet existing ([ac0ba3f2](https://github.com/Elgg/Elgg/commit/ac0ba3f214a24c10255aa3836e11d31a310e3089))
+* **file:** ElggFile::delete() now removes target files if filename is a symlink ([facc13fe](https://github.com/Elgg/Elgg/commit/facc13fe13f8719204c85b7f7334acfa5e8f06da))
+* **files:** use actual file modification time as an etag value ([17c5dcaf](https://github.com/Elgg/Elgg/commit/17c5dcaf2d505b20913b1689d22906394896e682))
+* **js:** ui bindings now wait for system init event to fire ([5794e027](https://github.com/Elgg/Elgg/commit/5794e0275629e14830e6c464460056c4bc6f5bd3))
+* **mime:** fall back to detection based on extension for octet-stream ([0b1f4539](https://github.com/Elgg/Elgg/commit/0b1f45396aa0f147a7ae6b957d61fbd2854f5d30))
+* **reportedcontent:** forward to address if not submitted in lightbox ([ee63b1d8](https://github.com/Elgg/Elgg/commit/ee63b1d8ea94cdd26f43591cc01fd00747efb9d9))
+* **views:** elgg_view_form now accepts class to be an array in form_vars ([4133b516](https://github.com/Elgg/Elgg/commit/4133b51657971a22af6a29f32adfdd69fd533dc5))
+
+
+#### Deprecations
+
+* **db:** deprecates many methods on the `Application::getDb` object ([2ba9a876](https://github.com/Elgg/Elgg/commit/2ba9a8761875fc1061d74ec699ff79ce4c4df95a))
+* **entities:**
+  * adds entityCache service and deprecates old global ([9fa45b62](https://github.com/Elgg/Elgg/commit/9fa45b62a03c3b4ec282042ca5cdbebe5ee0f451))
+  * deprecate can_write_to_container ([ee473b37](https://github.com/Elgg/Elgg/commit/ee473b371949b475e2cdafbbe53cb93965a22735))
+* **file:** new file service deprecates file download and thumbnail handlers ([90925fab](https://github.com/Elgg/Elgg/commit/90925fab4f6e67750e5f21eeb52ecf67711c2a95))
+* **groups:**
+  * groups/js view deprecated by groups/navigation AMD module ([975014bb](https://github.com/Elgg/Elgg/commit/975014bb1e799be93c04ef493edba8d3649e64ef))
+  * new file service deprecated avatar/view resource ([5c535271](https://github.com/Elgg/Elgg/commit/5c535271a8d89b6d012541657c2c3cd091585873))
+  * new file service deprecated groupicon page handler ([0721023b](https://github.com/Elgg/Elgg/commit/0721023be4e83de81492254262d5628a0dce5193))
+
+
+<a name="2.1.2"></a>
+### 2.1.2  (2016-06-13)
+
+#### Contributors
+
+* Steve Clay (5)
+* Ismayil Khayredinov (4)
+* Brett Profitt (1)
+* Jerôme Bakker (1)
+* iionly (1)
+
+#### Documentation
+
+* **ajax:** fixes constructor usage of elgg/Ajax ([07c7ce49](https://github.com/Elgg/Elgg/commit/07c7ce49538ae8b61b3c48cd1e5a8287dc777e5b), closes [#9533](https://github.com/Elgg/Elgg/issues/9533))
+
+
+#### Bug Fixes
+
+* **core:**
+  * elgg_get_plugin_setting() respects defaults for values that haven't been cached or created. ([1e141d46](https://github.com/Elgg/Elgg/commit/1e141d468c75a64bd9068908380e034765772ea6), closes [#9781](https://github.com/Elgg/Elgg/issues/9781))
+  * Elgg again uses the dataroot given in settings.php ([64c23f70](https://github.com/Elgg/Elgg/commit/64c23f703b9515c30089470da2899f105de99333), closes [#9602](https://github.com/Elgg/Elgg/issues/9602))
+* **errors:** nested forward 404 calls are less likely to abruptly fail ([068711fa](https://github.com/Elgg/Elgg/commit/068711fad3680f5d9d431759ed895b6a48d78076), closes [#9476](https://github.com/Elgg/Elgg/issues/9476))
+* **files:** file service now sends 304 and 403 headers more reliably ([c9af1790](https://github.com/Elgg/Elgg/commit/c9af179092be61e50acc17603a8fbf3dd9e22272), closes [#9571](https://github.com/Elgg/Elgg/issues/9571))
+* **js:** deprecate elgg.ui.widgets more reliably ([c25c5211](https://github.com/Elgg/Elgg/commit/c25c5211c307fc0b4c869f3e098c5002494d77cf), closes [#9523](https://github.com/Elgg/Elgg/issues/9523))
+* **logger:** logger no longer pollutes serve-file response ([8209a38b](https://github.com/Elgg/Elgg/commit/8209a38b01b89bea65b696db3662962a8f332ebd), closes [#9657](https://github.com/Elgg/Elgg/issues/9657))
+* **profile:** able to store more information in tag fields ([0467e3ff](https://github.com/Elgg/Elgg/commit/0467e3ffcc35e0cf88a476dfbbc15a669dbdad80))
+* **reportedcontent:**
+  * report form opens in lightbox ([6db794ac](https://github.com/Elgg/Elgg/commit/6db794ac689322ba07f884e30766c755a6026968))
+  * clicking on reported content links again opens lightbox ([55fa9d5c](https://github.com/Elgg/Elgg/commit/55fa9d5ce2b4a589187e6186e842718e212175c1))
+* **site:** allow access to serve-file handler in walled garden mode ([1a8d33a1](https://github.com/Elgg/Elgg/commit/1a8d33a16ee1dca272a5cd0861f657b799f841d7))
+
+
+<a name="2.1.1"></a>
+### 2.1.1  (2016-03-20)
+
+#### Contributors
+
+* Steve Clay (4)
+* Jeroen Dalsem (2)
+* iionly (1)
+
+#### Documentation
+
+* **contributing:** clarifies release periods and branches for PRs ([b82d1592](https://github.com/Elgg/Elgg/commit/b82d1592d0b584c4e90a6d863eaa7c9803623b5d))
+* **groups:** removed discussion reference in groups manifest ([249334ef](https://github.com/Elgg/Elgg/commit/249334ef57f6bc6c1197219040cf583d0938294c))
+* **release:** improves docs for release process ([96681b5b](https://github.com/Elgg/Elgg/commit/96681b5ba419ad268df8a1cdcd9860ed95b68bcc))
+* **views:** added page/components/list docs to elgg_view_entity_list ([76fea973](https://github.com/Elgg/Elgg/commit/76fea973adc7d2a14033eacea898129539dc7e5a))
+
+
+#### Bug Fixes
+
+* **core:** do not implode already imploded categories array in plugin object details view ([666333cf](https://github.com/Elgg/Elgg/commit/666333cfbf8c28c571679dbc146720400d0ed995))
+* **installer:** no longer redirects in loop during installation ([78d31799](https://github.com/Elgg/Elgg/commit/78d31799843c27fd89f659b38fe5a2954f78296b), closes [#9486](https://github.com/Elgg/Elgg/issues/9486))
+
+
+<a name="2.1.0"></a>
+## 2.1.0  (2016-03-13)
+
+#### Contributors
+
+* Steve Clay (40)
+* Ismayil Khayredinov (25)
+* Juho Jaakkola (10)
+* Jeroen Dalsem (2)
+* Hereward Mills (1)
+* Wade Benson (1)
+* Wouter van Os (1)
+
+#### Features
+
+* **actions:** adds a generic delete action ([4c35fe26](https://github.com/Elgg/Elgg/commit/4c35fe26b26e8f76919b4ac08e9b0246c047497e))
+* **ajax:**
+  * improves the elgg/Ajax API and adds docs ([4211155e](https://github.com/Elgg/Elgg/commit/4211155eb223fdd3bc67534377757453ba2de398), closes [#9404](https://github.com/Elgg/Elgg/issues/9404))
+  * Adds a new elgg/Ajax AMD module with unified API ([2a132ae8](https://github.com/Elgg/Elgg/commit/2a132ae87749f1aec8f9f78d7106cee982e7cce9), closes [#8323](https://github.com/Elgg/Elgg/issues/8323))
+* **cron:** allows for a more systematic way of calling cron using one url ([3c947fc1](https://github.com/Elgg/Elgg/commit/3c947fc1621a9f6b0dbe0fb3176b05354e415cd4))
+* **discussions:** makes "last reply" text into a link ([9c1d543a](https://github.com/Elgg/Elgg/commit/9c1d543ae865f5958e9705971dd7a2fe1735c9ba))
+* **engine:**
+  * use elgg_log prior to error_log in custom error handler ([6b483b08](https://github.com/Elgg/Elgg/commit/6b483b081f12f989c9053e80435b2c2df10e2fa5))
+  * also log to php error_log when log is shown on screen ([9f630e58](https://github.com/Elgg/Elgg/commit/9f630e58b948ea981ae4bf8893818a343518db2d))
+* **entities:** give access to original values of modified attributes ([56ddabbc](https://github.com/Elgg/Elgg/commit/56ddabbcbd450f6726ae23840f3c7a22bf86fafe), closes [#9187](https://github.com/Elgg/Elgg/issues/9187))
+* **files:** adds a service for serving files from filestore ([1d6b23c7](https://github.com/Elgg/Elgg/commit/1d6b23c704495603f862d4189fd135992cc71f32))
+* **forms:**
+  * moves datepicker init to AMD and improves dev usability ([15c2686b](https://github.com/Elgg/Elgg/commit/15c2686b846a82d4a634bcba4e3b7adf99d057b1))
+  * elgg_view_input() can now be used to render hidden inputs ([8d996cd1](https://github.com/Elgg/Elgg/commit/8d996cd115e47211e1f631b77f3f269f8fc2674a))
+  * allow custom required indicators for field labels ([f29fbb6f](https://github.com/Elgg/Elgg/commit/f29fbb6fb759ac4eb4c353eb3ad335c6655be607))
+  * adds elgg_view_input() to the views api ([70b35bd7](https://github.com/Elgg/Elgg/commit/70b35bd731810f15330ae51cff5bffb940ba5601), closes [#6356](https://github.com/Elgg/Elgg/issues/6356))
+* **groups:** profile buttons can now be filtered with a hook ([52e82943](https://github.com/Elgg/Elgg/commit/52e82943f64a2dd0883866f0e5ec97230990f319))
+* **js:**
+  * elgg.ui.toggle now triggers jQuery event ([941b49ad](https://github.com/Elgg/Elgg/commit/941b49adabbe846f83c1fd259baded8d9a19d2aa))
+  * adds plugin boot modules and modules based on system events ([924355a7](https://github.com/Elgg/Elgg/commit/924355a7e52c359f430ff1be04ec968286c64480), closes [#7131](https://github.com/Elgg/Elgg/issues/7131), [#7926](https://github.com/Elgg/Elgg/issues/7926))
+  * Allow canceling a previous elgg_require_js() call ([375be5ff](https://github.com/Elgg/Elgg/commit/375be5ffddfb9dc598d3d15bf1d6069f2eb88c8c), closes [#9074](https://github.com/Elgg/Elgg/issues/9074))
+* **menus:** delete menu item now checks if delete action exists ([84cbb151](https://github.com/Elgg/Elgg/commit/84cbb1518e021cc7d17aee4bc83c30b2d10edfe0))
+* **metastrings:** add function to get map of strings to metastring IDs ([8d28a8dd](https://github.com/Elgg/Elgg/commit/8d28a8dd4eacfc427d925166885fa68081f42b4b))
+* **notifications:** it's now easier to alter translations for notifications ([4677d482](https://github.com/Elgg/Elgg/commit/4677d482864095ae59b98b191a9a95d659af5ba1))
+* **profiler:** allow capture/display of crude profiling data ([6ce01fad](https://github.com/Elgg/Elgg/commit/6ce01fadd8993eb1f834344cc9c2d5aac74f5534), closes [#9293](https://github.com/Elgg/Elgg/issues/9293))
+* **routing:** allow more reliable URL path rewriting ([853fc0ef](https://github.com/Elgg/Elgg/commit/853fc0ef65356b72ad19d62331ac6e539ca02b4f), closes [#9388](https://github.com/Elgg/Elgg/issues/9388))
+* **rss:** adds functions for adding/removing the RSS link ([ae765e19](https://github.com/Elgg/Elgg/commit/ae765e1907b2967991706bb992ceee6b136bccc1))
+* **search:** search hooks now preserve custom joins and wheres ([65041619](https://github.com/Elgg/Elgg/commit/650416192092b3dbbaa63e441a435fce1abd3d93))
+* **views:** add attributes to input select options ([63b04d6a](https://github.com/Elgg/Elgg/commit/63b04d6ab7af21c43df97efc04012c7575889cd5))
+
+
+#### Performance
+
+* **boot:** we order plugins in PHP because MySQL order by CAST is slow ([c4b10c1c](https://github.com/Elgg/Elgg/commit/c4b10c1c51e9205b0e448ce5c4e0b1b494517013), closes [#8183](https://github.com/Elgg/Elgg/issues/8183))
+* **files:** ElggFile no longer queries metadata for filestore data ([d9243002](https://github.com/Elgg/Elgg/commit/d92430027393fb6d6657af72867f65e31e713ac0), closes [#9138](https://github.com/Elgg/Elgg/issues/9138))
+* **http:** serve-file URLs can respond without booting core ([4f587df0](https://github.com/Elgg/Elgg/commit/4f587df02062c7d8f6b239041789030299af2bd6))
+
+
+#### Documentation
+
+* **js:** modernizes the JS docs to emphasize AMD usage ([d66cae64](https://github.com/Elgg/Elgg/commit/d66cae64c597bc87b8a10c18d0ae21394cbe6398))
+
+
+#### Bug Fixes
+
+* **actions:** referrer path is now parsed correctly ([6b1bfe26](https://github.com/Elgg/Elgg/commit/6b1bfe2631b1c367252e6feb967b63211527b098))
+* **ajax:** iframe-based submissions can again be recognized as XHR requests ([c25962a0](https://github.com/Elgg/Elgg/commit/c25962a02d29ad00f304918c29f44f05e76186b6), closes [#8735](https://github.com/Elgg/Elgg/issues/8735))
+* **files:** files with custom filestore can now be served via file service ([1a2b0ca7](https://github.com/Elgg/Elgg/commit/1a2b0ca7170e7bbe949208de8d8321278cb4843d))
+* **forms:**
+  * remove extra spacing between longtext field label and menu ([23edb5ad](https://github.com/Elgg/Elgg/commit/23edb5adbf57acc8d4eab14c9d1e2d3604f78f7c))
+  * elgg_view_input() now passes input type to the field view ([63013725](https://github.com/Elgg/Elgg/commit/63013725c7f3ac00fb5f0e0699c2ede4422236d6))
+* **i18n:** admin-created accounts now get site language instead of admin's language ([561bad37](https://github.com/Elgg/Elgg/commit/561bad37580406b3298f816e12956283d826c602), closes [#9454](https://github.com/Elgg/Elgg/issues/9454))
+* **js:**
+  * don't show ajax error message when aborting request ([5aea301f](https://github.com/Elgg/Elgg/commit/5aea301f901be1a2c5984264f8ecf19a2138c45c), closes [#9372](https://github.com/Elgg/Elgg/issues/9372))
+  * client-side hooks can now handle periods in hook names ([9f70099f](https://github.com/Elgg/Elgg/commit/9f70099f5ecec3deacd666195cb7751eef77ce17), closes [#9160](https://github.com/Elgg/Elgg/issues/9160))
+* **menus:** delete menu item is only registered if canDelete is fullfilled ([e13ba511](https://github.com/Elgg/Elgg/commit/e13ba51182fed1deed1774840601733e299d5195))
+* **permissions:** All permissions functions handle user fetches consistently ([b875fd33](https://github.com/Elgg/Elgg/commit/b875fd33a5d018fd72b4f062225c1fee18cdceda), closes [#8941](https://github.com/Elgg/Elgg/issues/8941), [#8038](https://github.com/Elgg/Elgg/issues/8038), [#8945](https://github.com/Elgg/Elgg/issues/8945))
+* **river:** opening comment form auto-focuses input ([5b68badc](https://github.com/Elgg/Elgg/commit/5b68badcaae36724d3b00406711bef7b30744615))
+* **search:**
+  * search hooks no longer reset subtypes ([5d6987ce](https://github.com/Elgg/Elgg/commit/5d6987ceee63c0975811196a66f2d7f4a52e661a))
+  * hooks no longer reset order_by clauses ([b15b9e94](https://github.com/Elgg/Elgg/commit/b15b9e946c66c3afe2721d2160ea1db742e0a6a8))
+
+
+#### Deprecations
+
+* **assets:** Deprecates URLs like /js/ and /css/ in favor of simplecache ([91daac90](https://github.com/Elgg/Elgg/commit/91daac904475cd0bc78e464eb6a97ac61d325a0c))
+* **config:** deprecates config value "siteemail" ([cdd4bb5f](https://github.com/Elgg/Elgg/commit/cdd4bb5f6dd12252aeb36e9ec025acc2f68e5072))
+* **entity:** removes the tables_split and tables_loaded properties ([4d469183](https://github.com/Elgg/Elgg/commit/4d469183f1ca21d2a494b1ac2b65cd95a47581bc))
+* **filestore:** deprecates giving files custom filestores ([0050b1db](https://github.com/Elgg/Elgg/commit/0050b1dbf21961ab24f4046c2f2aa62fa7177080), closes [#9352](https://github.com/Elgg/Elgg/issues/9352))
+
+
 <a name="2.0.4"></a>
 ### 2.0.4  (2016-06-13)
 

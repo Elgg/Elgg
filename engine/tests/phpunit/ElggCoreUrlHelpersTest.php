@@ -4,7 +4,7 @@
  * @see \ElggCoreHelpersTest
  * @todo migrate similar simpletest tests to this class
  */
-class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
+class ElggCoreUrlHelpersTest extends \Elgg\TestCase {
 
 	/**
 	 * Test if elgg_http_add_url_query_elements() preserves original url when no params are passed
@@ -24,12 +24,10 @@ class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
 			array('https://example.com/path', array(), 'https://example.com/path'),
 			array('http://example-time.com', array(), 'http://example-time.com?'),
 			array('http://example-time.com/path', array(), 'http://example-time.com/path'),
-
 			array('ftp://example.com/', array(), 'ftp://example.com/'),
 			array('ftp://example.com/file', array(), 'ftp://example.com/file'),
 			array('app://endpoint', array(), 'app://endpoint?'),
 			array('app://endpoint/path', array(), 'app://endpoint/path'),
-
 			array('https://example.com?foo=123&bar=abc', array(), 'https://example.com?foo=123&bar=abc'),
 			array('https://example.com/path?foo=123&bar=abc', array(), 'https://example.com/path?foo=123&bar=abc'),
 		);
@@ -57,12 +55,10 @@ class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
 			array('https://example.com/path', array('foo' => 'bar'), 'https://example.com/path?foo=bar'),
 			array('http://example-time.com', array('foo' => 'bar'), 'http://example-time.com?foo=bar'),
 			array('http://example-time.com/path', array('foo' => 'bar'), 'http://example-time.com/path?foo=bar'),
-
 			array('ftp://example.com/', array('foo' => 'bar'), 'ftp://example.com/?foo=bar'),
 			array('ftp://example.com/file', array('foo' => 'bar'), 'ftp://example.com/file?foo=bar'),
 			array('app://endpoint', array('foo' => 'bar'), 'app://endpoint?foo=bar'),
 			array('app://endpoint/path', array('foo' => 'bar'), 'app://endpoint/path?foo=bar'),
-
 			array('https://example.com?foo=123&bar=abc', array('foo2' => 'bar2'), 'https://example.com?foo=123&bar=abc&foo2=bar2'),
 			array('https://example.com/path?foo=123&bar=abc', array('foo' => 'bar'), 'https://example.com/path?foo=bar&bar=abc'),
 			array('https://example.com?foo=123&bar=abc', array('foo2' => 'bar2', '123' => 456), 'https://example.com?foo=123&bar=abc&foo2=bar2&123=456'),
@@ -86,7 +82,6 @@ class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
 			array('?foo=bar', array('foo' => null), '?'),
 			array('/?foo=bar', array('foo' => null), '/'),
 			array('/path?foo=bar', array('foo' => null), '/path'),
-
 			array('example.com', array('foo' => null), 'example.com'),
 			array('example.com?foo=bar', array('foo' => null), 'example.com'),
 			array('example.com/path?foo=bar', array('foo' => null), 'example.com/path'),
@@ -98,12 +93,10 @@ class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
 			array('https://example.com/path?foo=bar', array('foo' => null), 'https://example.com/path'),
 			array('http://example-time.com?foo=bar', array('foo' => null), 'http://example-time.com?'),
 			array('http://example-time.com/path?foo=bar', array('foo' => null), 'http://example-time.com/path'),
-
 			array('ftp://example.com/?foo=bar', array('foo' => null), 'ftp://example.com/'),
 			array('ftp://example.com/file?foo=bar', array('foo' => null), 'ftp://example.com/file'),
 			array('app://endpoint?foo=bar', array('foo' => null), 'app://endpoint?'),
 			array('app://endpoint/path?foo=bar', array('foo' => null), 'app://endpoint/path'),
-
 			//add and delete at the same time
 			array('https://example.com?foo=123&bar=abc', array('foo' => null, 'foo2' => 'bar2'), 'https://example.com?bar=abc&foo2=bar2'),
 			array('https://example.com/path?bar=abc&foo=123', array('foo' => null, 'foo2' => 'bar'), 'https://example.com/path?bar=abc&foo2=bar'),
@@ -119,4 +112,5 @@ class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
 			}
 		}
 	}
+
 }

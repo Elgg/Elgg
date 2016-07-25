@@ -34,7 +34,7 @@ ordered later on the Admin > Plugins page:
 
 .. note::
 
-   Unless you are overriding core’s or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys.
+    Unless you are overriding core's or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys.
 
 Server-side API
 ===============

@@ -29,8 +29,8 @@ return array(
 	'groups:my_status' => 'Mijn status',
 	'groups:my_status:group_owner' => 'Jij bent eigenaar/beheerder van deze groep',
 	'groups:my_status:group_member' => 'Je bent lid van deze groep',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
+	'groups:subscribed' => 'Groepsnotificaties staan aan',
+	'groups:unsubscribed' => 'Groepsnotificaties staan uit',
 
 	'groups:members:title' => 'Leden van %s',
 	'groups:members:more' => "Bekijk alle leden",

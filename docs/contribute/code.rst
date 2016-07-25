@@ -57,18 +57,21 @@ Feature PRs:
 Choosing a branch to submit to
 ------------------------------
 
-The following table assumes the latest stable release is 1.9.
+The following table assumes the latest stable release is 2.1.
 
-============== ====================================
-Type of change Branch to submit against
-============== ====================================
-Security fix   1.8 (Email security@elgg.org first!)
-Bug fix        1.9
-Deprecation    1.x
-Minor feature  1.x
-Major feature  master
-Breaking       master
-============== ====================================
+============================== ============================================
+Type of change                 Branch to submit against
+============================== ============================================
+Security fix                   Don't! Email security@elgg.org for guidance.
+Bug fix                        1.12 (or 2.1 if the 1.12 fix is too complex)
+Performance                    2.x
+Deprecation                    2.x
+Minor feature                  2.x
+Major feature                  master
+Has any breaking change        master
+============================== ============================================
+
+If you're not sure which branch to submit against, just ask!
 
 The difference between minor and major feature is subjective and up to the core team.
 
@@ -94,7 +97,7 @@ follow these steps:
 
 2. In parenthesis, add the ``component``, a short string which describes the subsystem being changed.
 
-   Some examples: "views", "i18n", "seo", "a11y", "cache", "db", "session", "router", "<plugin_name>".
+   Some examples: ``views``, ``i18n``, ``seo``, ``a11y``, ``cache``, ``db``, ``session``, ``router``, ``<plugin_name>``.
 
 3. Add a colon, a space, and a brief ``summary`` of the changes, which will appear in the changelog.
 
@@ -167,25 +170,65 @@ To edit just the last commit:
 1. Amend the commit: ``git commit --amend`` (git opens the message in a text editor).
 2. Change the message and save/exit the editor.
 3. Force push your branch: ``git push -f your_remote your_branch`` (your PR with be updated).
+4. Rename the PR title to match
 
 Otherwise you may need to perform an interactive rebase:
 
 1. Rebase the last N commits: ``git rebase -i HEAD~N`` where N is a number.
-   (Git will open the git-rebase-todo file for editing)
+   (Git will open the ``git-rebase-todo`` file for editing)
 2. For the commits that need to change, change ``pick`` to ``r`` (for reword) and save/exit the editor.
 3. Change the commit message(s), save/exit the editor (git will present a file for each commit that needs rewording).
 4. ``git push -f your_remote your_branch`` to force push the branch (updating your PR).
+5. Rename the PR title to match
+
+.. _contribute/code#testing:
 
 Testing
 =======
 
-Elgg has automated tests for both PHP and JavaScript functionality.
-All new contributions are required to come with appropriate tests.
+Elgg has automated tests for both PHP and JavaScript functionality. All new contributions are required to come with appropriate tests.
 
-PHPUnit Tests
--------------
+General guidelines
+------------------
 
-TODO
+Break tests up by the behaviors you want to test and use names that describe the behavior. E.g.:
+
+* Not so good: One big method ``testAdd()``.
+
+* Better: Methods ``testAddingZeroChangesNothing`` and ``testAddingNegativeNumberSubtracts``
+
+Strive for :ref:`componentized designs <contribute/code#solid>` that allow testing in isolation, without large dependency graphs or DB access. Injecting dependencies is key here.
+
+PHP Tests
+---------
+
+PHPUnit
+^^^^^^^
+
+Located in ``engine/tests/phpunit``, this is our preferred test suite. It uses no DB access, and has only superficial access to the entities API.
+
+* We encourage you to create components that are testable in this suite if possible.
+* Consider separating storage from your component so at least business logic can be tested here.
+* Depend on the ``Elgg\Filesystem\*`` classes rather than using PHP filesystem functions.
+
+SimpleTest
+^^^^^^^^^^
+
+The rest of the files in ``engine/tests`` form our integration suite, for anything that needs access to the DB or entity APIs.
+
+* Our long-term goals are to minimize these and convert them to PHPUnit
+
+Testing interactions between services
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ideally your tests would construct your own isolated object graphs for direct manipulation, but this isn't always possible.
+
+If your test relies on Elgg's Service Provider (``_elgg_services()`` returns a ``Elgg\Di\ServiceProvider``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well.
+
+Due to these local references, replacing services on the SP within a test often will not have the desired effect. Instead, you may need to use functionality baked into the services themselves:
+
+* The ``events`` and ``hooks`` services have methods ``backup()`` and ``restore()``.
+* The ``logger`` service has methods ``disable()`` and ``enable()``.
 
 Jasmine Tests
 -------------
@@ -276,6 +319,8 @@ that takes an option.
 **Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest
 way possible and refactor to reduce duplication in the next minor release branch.
 
+.. _contribute/code#solid:
+
 Embrace SOLID and GRASP
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -300,22 +345,22 @@ Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``.
 Interface names
 ^^^^^^^^^^^^^^^
 
-Use the pattern `Elgg\{Namespace}\{Name}`.
+Use the pattern ``Elgg\{Namespace}\{Name}``.
 
-Do not include an `I` prefix or an `Interface` suffix.
+Do not include an ``I`` prefix or an ``Interface`` suffix.
 
 We do not include any prefix or suffix so that we're encouraged to:
 
  * name implementation classes more descriptively (the "default" name is taken).
  * type-hint on interfaces, because that is the shortest, easiest thing to do.
 
-Name implementations like `Elgg\{Namespace}\{Interface}\{Implementation}`.
+Name implementations like ``Elgg\{Namespace}\{Interface}\{Implementation}``.
 
 Functions
 ^^^^^^^^^
 
 Where possible, have functions/methods return a single type.
-Use empty values such as array(), "", or 0 to indicate no results.
+Use empty values such as ``array()``, ``""``, or ``0`` to indicate no results.
 
 Be careful where valid return values (like ``"0"``) could be interpreted as empty.
 
@@ -389,24 +434,7 @@ __ http://www.mrclay.org/2014/02/14/gitx-for-cleaner-commits/
 Include tests
 ~~~~~~~~~~~~~
 
-When at all possible include unit tests for code you add or alter. We use:
-
-* PHPUnit for PHP unit tests.
-
-* SimpleTest for legacy PHP tests that require use of the database. Our long-term goal
-  is to move all tests to PHPUnit.
-
-* Karma for JavaScript unit tests
-
-Naming tests
-~~~~~~~~~~~~
-
-Break tests up by the behaviors you want to test and use names that describe the
-behavior. E.g.:
-
-* Not so good: One big method `testAdd()`.
-
-* Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`
+When at all possible :ref:`include unit tests <contribute/code#testing>` for code you add or alter.
 
 Keep bugfixes simple
 ~~~~~~~~~~~~~~~~~~~~
@@ -548,7 +576,7 @@ Good:
 Property declarations
 ^^^^^^^^^^^^^^^^^^^^^
 
-These should be spaced like so: `property: value;`
+These should be spaced like so: ``property: value;``
 
 Bad:
 

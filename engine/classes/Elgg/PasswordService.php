@@ -89,7 +89,8 @@ final class PasswordService {
 
 		// generate link
 		$link = _elgg_services()->config->getSiteUrl() . "changepassword?u=$user_guid&c=$code";
-
+		$link = _elgg_services()->urlSigner->sign($link, '+1 day');
+		
 		// generate email
 		$ip_address = _elgg_services()->request->getClientIp();
 		$message = _elgg_services()->translator->translate(
@@ -97,7 +98,14 @@ final class PasswordService {
 		$subject = _elgg_services()->translator->translate(
 			'email:changereq:subject', array(), $user->language);
 
-		return notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, array(), 'email');
+		$params = [
+			'action' => 'requestnewpassword',
+			'object' => $user,
+			'ip_address' => $ip_address,
+			'link' => $link,
+		];
+		
+		return notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, $params, 'email');
 	}
 
 	/**
@@ -179,7 +187,13 @@ final class PasswordService {
 			"email:$ns:body", array($user->username, $password), $user->language);
 		$subject = _elgg_services()->translator->translate("email:$ns:subject", array(), $user->language);
 
-		notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, array(), 'email');
+		$params = [
+			'action' => $ns,
+			'object' => $user,
+			'password' => $password,
+		];
+
+		notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, $params, 'email');
 
 		return true;
 	}

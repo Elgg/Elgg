@@ -1,6 +1,6 @@
 <?php
 
-class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
+class ElggBreadcrumbsTest extends \Elgg\TestCase {
 
 //	public function setUp() {
 //		// TODO run each test in better isolation
@@ -19,10 +19,13 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(
 			array('title' => 'title 1', 'link' => null),
 			array('title' => 'title 2', 'link' => 'path2')
-		), elgg_get_breadcrumbs());
+				), elgg_get_breadcrumbs());
 	}
 
 	public function testCrumbsCanBePopped() {
+		// disable the default behavior that auto-removes the final non-link in get
+		_elgg_services()->hooks->backup();
+
 		elgg_push_breadcrumb('title 1');
 
 		elgg_push_breadcrumb('title 2', 'path2');
@@ -31,11 +34,13 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array(
 			array('title' => 'title 1', 'link' => null),
-		), elgg_get_breadcrumbs());
+				), elgg_get_breadcrumbs());
 
 		$this->assertEquals(array('title' => 'title 1', 'link' => null), elgg_pop_breadcrumb());
 
 		$this->assertEquals(array(), elgg_get_breadcrumbs());
+
+		_elgg_services()->hooks->restore();
 	}
 
 	public function testCanAlterCrumbsViaHook() {
@@ -48,7 +53,7 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 				'title' => str_repeat('abcd ', 100),
 				'link' => null,
 			),
-		), elgg_get_breadcrumbs());
+				), elgg_get_breadcrumbs());
 	}
 
 	public function testCrumbsAreExcerpted() {
@@ -61,7 +66,7 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 				'title' => elgg_get_excerpt(str_repeat('abcd ', 100), 100),
 				'link' => null,
 			),
-		), elgg_get_breadcrumbs());
+				), elgg_get_breadcrumbs());
 	}
 
 	public function testCrumbTitlesAreEscaped() {
@@ -108,4 +113,5 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 		$html = elgg_view('navigation/breadcrumbs');
 		$this->assertFalse(strpos($html, 'Bar'));
 	}
+
 }

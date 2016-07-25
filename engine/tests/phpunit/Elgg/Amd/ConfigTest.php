@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg\Amd;
 
-
-class ConfigTest extends \PHPUnit_Framework_TestCase {
+class ConfigTest extends \Elgg\TestCase {
 
 	public function testCanConfigureBaseUrl() {
 		$hooks = new \Elgg\PluginHooksService();
@@ -20,15 +20,15 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$amdConfig->addPath('jquery', '/some/path.js');
 
 		$this->assertTrue($amdConfig->hasModule('jquery'));
-		
+
 		$configArray = $amdConfig->getConfig();
-		
+
 		$this->assertEquals(array('/some/path'), $configArray['paths']['jquery']);
 
 		$amdConfig->removePath('jquery', '/some/path.js');
 		$this->assertFalse($amdConfig->hasModule('jquery'));
 	}
-	
+
 	public function testCanConfigureModuleShims() {
 		$hooks = new \Elgg\PluginHooksService();
 		$amdConfig = new \Elgg\Amd\Config($hooks);
@@ -52,14 +52,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($amdConfig->hasShim('jquery'));
 		$this->assertFalse($amdConfig->hasModule('jquery'));
 	}
-	
+
 	public function testCanRequireUnregisteredAmdModules() {
 		$hooks = new \Elgg\PluginHooksService();
 		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->addDependency('jquery');
-		
+
 		$configArray = $amdConfig->getConfig();
-		
+
 		$this->assertEquals(array('jquery'), $configArray['deps']);
 
 		$this->assertTrue($amdConfig->hasDependency('jquery'));
@@ -71,8 +71,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-     * @expectedException \InvalidParameterException
-     */
+	 * @expectedException \InvalidParameterException
+	 */
 	public function testThrowsOnBadShim() {
 		$hooks = new \Elgg\PluginHooksService();
 		$amdConfig = new \Elgg\Amd\Config($hooks);
@@ -108,7 +108,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(
 			'exports' => 'jquery.fn.ajaxform',
 			'deps' => array('jquery')
-		), $configArray['shim']['jquery.form']);
+				), $configArray['shim']['jquery.form']);
 
 		$this->assertArrayHasKey('jquery.form', $configArray['paths']);
 		$this->assertEquals(array('http://foobar.com'), $configArray['paths']['jquery.form']);
@@ -120,19 +120,19 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($amdConfig->hasModule('jquery.form'));
 		$this->assertFalse($amdConfig->hasShim('jquery.form'));
 	}
-	
+
 	public function testGetConfigTriggersTheConfigAmdPluginHook() {
 		$hooks = new \Elgg\PluginHooksService();
 		$amdConfig = new \Elgg\Amd\Config($hooks);
-		
+
 		$test_input = ['test' => 'test_' . time()];
-	
+
 		$hooks->registerHandler('config', 'amd', function() use ($test_input) {
 			return $test_input;
 		});
-	
+
 		$config = $amdConfig->getConfig();
 		$this->assertEquals($test_input, $config);
 	}
-}
 
+}
