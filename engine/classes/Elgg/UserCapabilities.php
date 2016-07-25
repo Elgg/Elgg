@@ -284,10 +284,10 @@ class UserCapabilities {
 	 *
 	 * @param ElggEntity $entity    Object entity
 	 * @param int        $user_guid User guid (default is logged in user)
-	 *
+	 * @param bool       $default   Default permission
 	 * @return bool
 	 */
-	public function canComment(ElggEntity $entity, $user_guid = 0) {
+	public function canComment(ElggEntity $entity, $user_guid = 0, $default = null) {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -300,7 +300,7 @@ class UserCapabilities {
 			'entity' => $entity,
 			'user' => $user
 		];
-		return $this->hooks->trigger('permissions_check:comment', $entity->getType(), $params, null);
+		return $this->hooks->trigger('permissions_check:comment', $entity->getType(), $params, $default);
 	}
 
 	/**

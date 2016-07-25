@@ -25,12 +25,16 @@ class ElggComment extends \ElggObject {
 	 *
 	 * @see \ElggEntity::canComment()
 	 *
-	 * @param int $user_guid User guid (default is logged in user)
-	 * @return bool False
+	 * @param int  $user_guid User guid (default is logged in user)
+	 * @param bool $default   Default permission
+	 * @return bool
 	 * @since 1.9.0
 	 */
-	public function canComment($user_guid = 0) {
-		return false;
+	public function canComment($user_guid = 0, $default = null) {
+		if (!isset($default)) {
+			$default = false;
+		}
+		return parent::canComment($user_guid, $default);
 	}
 
 	/**

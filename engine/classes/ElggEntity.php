@@ -1065,12 +1065,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * @tip Can be overridden by registering for the permissions_check:comment,
 	 * <entity type> plugin hook.
 	 *
-	 * @param int $user_guid User guid (default is logged in user)
-	 *
+	 * @param int  $user_guid User guid (default is logged in user)
+	 * @param bool $default   Default permission
 	 * @return bool
 	 */
-	public function canComment($user_guid = 0) {
-		return _elgg_services()->userCapabilities->canComment($this, $user_guid);
+	public function canComment($user_guid = 0, $default = null) {
+		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);
 	}
 
 	/**

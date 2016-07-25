@@ -417,6 +417,15 @@ class UserCapabilitiesTest extends \Elgg\TestCase {
 		$this->assertTrue($object->canComment($viewer->guid));
 		$this->assertFalse($group->canComment($viewer->guid));
 		$this->assertNull($entity->canComment($viewer->guid));
+
+		// can pass default value
+		$this->assertTrue($object->canComment($viewer->guid, true));
+		$this->assertFalse($object->canComment($viewer->guid, false));
+
+		// can't comment on comment
+		$comment = new \ElggComment();
+		$comment->owner_guid = $owner->guid;
+		$this->assertFalse($comment->canComment($owner->guid));
 	}
 
 	/**
