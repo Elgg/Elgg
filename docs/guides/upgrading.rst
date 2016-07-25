@@ -21,6 +21,7 @@ Deprecated APIs
  * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
  * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
+ * ``elgg_list_registered_entities()`` is deprecated: Use ``elgg_list_entities()`` with ``type_subtype_pairs`` options from ``get_registered_entity_types()``
 
 Deprecated Views
 ----------------
