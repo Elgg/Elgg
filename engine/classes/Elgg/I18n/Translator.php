@@ -18,6 +18,15 @@ class Translator {
 	private $CONFIG;
 
 	/**
+	 * Regexp for finding keyword arguments in language strings.
+	 * Accepts forms like {label}, { label}, and {label } where label can include
+	 * a-z, A-Z, 0-9, _, -, :, /, and .
+	 *
+	 * @var string
+	 */
+	CONST KW_ARG_REGEXP = "|\{(\W?)([\w\-:/\.]+)(\W?)\}|";
+
+	/**
 	 * Initializes new translator
 	 */
 	public function __construct() {
@@ -68,14 +77,21 @@ class Translator {
 		$langs[$language] = true;
 		$langs['en'] = true;
 
+		// separate into sprintf_args and kwargs
+		list($printf_args, $kwargs) = self::getStringReplacementsArgs($args);
+
 		foreach (array_keys($langs) as $try_lang) {
 			if (isset($GLOBALS['_ELGG']->translations[$try_lang][$message_key])) {
 				$string = $GLOBALS['_ELGG']->translations[$try_lang][$message_key];
 
 				// only pass through if we have arguments to allow backward compatibility
 				// with manual sprintf() calls.
-				if ($args) {
+				if ($printf_args) {
 					$string = vsprintf($string, $args);
+				}
+
+				if ($kwargs) {
+					$string = self::replaceKWArgs($kwargs, $string);
 				}
 
 				break;
@@ -93,6 +109,53 @@ class Translator {
 		}
 
 		return $string;
+	}
+
+	/**
+	 * Replaces keyword arguments in strings
+	 *
+	 * @param array $kwargs
+	 * @param array $string
+	 *
+	 * @return mixed
+	 */
+	protected static function replaceKWArgs($kwargs, $string) {
+		$cb = function ($matches) use ($kwargs) {
+			$key = $matches[2];
+
+			if (isset($kwargs[$key])) {
+				$value = $kwargs[$key];
+				return "{$matches[1]}{$value}{$matches[3]}";
+			}
+
+			// strip the {}s and trim any spaces
+			return '';
+		};
+
+		return preg_replace_callback(self::KW_ARG_REGEXP, $cb, $string);
+	}
+
+	/**
+	 * Separates keyword args from sprintf / numeric args.
+	 * Maintains numeric args order.
+	 *
+	 * @param $args
+	 *
+	 * @return array
+	 */
+	protected static function getStringReplacementsArgs($args) {
+		$printf_args = [];
+		$kwargs = [];
+
+		foreach ($args as $k => $v) {
+			if (!is_numeric($k)) {
+				$kwargs[$k] = $v;
+			} else {
+				$printf_args[] = $v;
+			}
+		}
+
+		return [$printf_args, $kwargs];
 	}
 
 	/**

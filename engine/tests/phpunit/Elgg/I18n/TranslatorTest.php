@@ -82,4 +82,48 @@ class TranslatorTest extends TestCase {
 	public function testDoesNotProcessArgsOnKey() {
 		$this->assertEquals('nonexistent:%s', $this->translator->translate('nonexistent:%s', [1]));
 	}
+
+	public function testCanUseKWArgs() {
+		$this->translator->addTranslation('en', [
+			$this->key => 'Dummy {kwarg}'
+		]);
+
+		$kwargs = [
+			'kwarg' => 'test kwarg'
+		];
+
+		$this->assertEquals('Dummy test kwarg', $this->translator->translate($this->key, $kwargs));
+		$this->assertEquals('Dummy {kwarg}', $this->translator->translate($this->key));
+	}
+
+	public function testKWArgDoesntEatPrintfArgs() {
+		$this->translator->addTranslation('en', [
+			$this->key => 'Dummy %s {kwarg} %s'
+		]);
+
+		$kwargs = [
+			'kwarg' => 'test kwarg'
+		];
+
+		$this->assertEquals('Dummy %s test kwarg %s', $this->translator->translate($this->key, $kwargs));
+		$this->assertEquals('Dummy %s {kwarg} %s', $this->translator->translate($this->key));
+		$this->assertEquals('Dummy 1 {kwarg} 2', $this->translator->translate($this->key, [1, 2]));
+	}
+
+
+	public function testKWArgTrimsSpaces() {
+		$this->translator->addTranslation('en', [
+			'trailing_space' => 'Dummy {kwarg }string',
+			'leading_space' => 'Dummy{ kwarg}',
+			'both_spaces' => 'Dummy{ kwarg }string',
+		]);
+
+		$kwargs = [
+			'kwarg' => 'test kwarg'
+		];
+
+		$this->assertEquals('Dummy test kwarg string', $this->translator->translate('trailing_space', $kwargs));
+		$this->assertEquals('Dummy test kwarg', $this->translator->translate('leading_space', $kwargs));
+		$this->assertEquals('Dummy test kwarg string', $this->translator->translate('both_spaces', $kwargs));
+	}
 }
