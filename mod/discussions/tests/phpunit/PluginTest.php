@@ -49,7 +49,7 @@ class PluginTest extends TestCase {
 		_elgg_services()->events->backup();
 
 		// Temp fix
-		$entity_types = ['object', 'group', 'user', 'site']
+		$entity_types = ['object', 'group', 'user', 'site'];
 		_elgg_services()->config->set('entity_types', $entity_types);
 		global $CONFIG;
 		$CONFIG->entity_types = $entity_types;
