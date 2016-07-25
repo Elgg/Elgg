@@ -1,12 +1,10 @@
 <?php
 /**
- * Class for discussion reply
- *
- * We extend ElggComment to get the future thread support.
+ * Discussion topic class
  */
-class ElggDiscussionReply extends ElggComment {
+class ElggDiscussion extends ElggObject {
 
-	const SUBTYPE = 'discussion_reply';
+	const SUBTYPE = 'discussion';
 
 	/**
 	 * {@inheritdoc}
