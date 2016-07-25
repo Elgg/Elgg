@@ -3,8 +3,6 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
-use Elgg\Database\EntityTable\UserFetchFailureException;
-
 /**
  * Return the id for a given subtype.
  *
@@ -490,8 +488,7 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
 }
 
 /**
- * Registers an entity type and subtype as a public-facing entity that should
- * be shown in search and by {@link elgg_list_registered_entities()}.
+ * Registers an entity type and subtype as a public-facing entity that can be included in search results.
  *
  * @warning Entities that aren't registered here will not show up in search.
  *
@@ -504,25 +501,25 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_
  * @see get_registered_entity_types()
  */
 function elgg_register_entity_type($type, $subtype = null) {
-	global $CONFIG;
 
+	$config = _elgg_services()->config;
+	
 	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
+	if (!in_array($type, (array) $config->get('entity_types'))) {
+		_elgg_services()->logger->error("$type is not a valid entity type");
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities)) {
-		$CONFIG->registered_entities = array();
-	}
-
-	if (!isset($CONFIG->registered_entities[$type])) {
-		$CONFIG->registered_entities[$type] = array();
+	$registered_entities = (array) $config->get('registered_entities');
+	if (!array_key_exists($type, $registered_entities)) {
+		$registered_entities[$type] = [];
 	}
 
 	if ($subtype) {
-		$CONFIG->registered_entities[$type][] = $subtype;
+		$registered_entities[$type][] = $subtype;
 	}
 
+	$config->set('registered_entities', $registered_entities);
 	return true;
 }
 
@@ -539,32 +536,32 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function elgg_unregister_entity_type($type, $subtype = null) {
-	global $CONFIG;
+
+	$config = _elgg_services()->config;
 
 	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
+	if (!in_array($type, (array) $config->get('entity_types'))) {
+		_elgg_services()->logger->error("$type is not a valid entity type");
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->registered_entities[$type])) {
+	$registered_entities = (array) $config->get('registered_entities');
+	if (!isset($registered_entities[$type])) {
 		return false;
 	}
 
 	if ($subtype) {
-		if (in_array($subtype, $CONFIG->registered_entities[$type])) {
-			$key = array_search($subtype, $CONFIG->registered_entities[$type]);
-			unset($CONFIG->registered_entities[$type][$key]);
+		if (in_array($subtype, $registered_entities[$type])) {
+			$key = array_search($subtype, $registered_entities[$type]);
+			unset($registered_entities[$type][$key]);
 		} else {
 			return false;
 		}
 	} else {
-		unset($CONFIG->registered_entities[$type]);
+		unset($registered_entities[$type]);
 	}
 
+	$config->set('registered_entities', $registered_entities);
 	return true;
 }
 
@@ -577,23 +574,23 @@ function elgg_unregister_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function get_registered_entity_types($type = null) {
-	global $CONFIG;
 
-	if (!isset($CONFIG->registered_entities)) {
-		return false;
-	}
+	$config = _elgg_services()->config;
+	$registered_entities = (array) $config->get('registered_entities');
+
 	if ($type) {
 		$type = strtolower($type);
 	}
-	if (!empty($type) && empty($CONFIG->registered_entities[$type])) {
+
+	if (!empty($type) && empty($registered_entities[$type])) {
 		return false;
 	}
 
 	if (empty($type)) {
-		return $CONFIG->registered_entities;
+		return $registered_entities;
 	}
 
-	return $CONFIG->registered_entities[$type];
+	return $registered_entities[$type];
 }
 
 /**
@@ -605,23 +602,22 @@ function get_registered_entity_types($type = null) {
  * @return bool Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype = null) {
-	global $CONFIG;
 
-	if (!isset($CONFIG->registered_entities)) {
-		return false;
-	}
+	$config = _elgg_services()->config;
+	$registered_entities = (array) $config->get('registered_entities');
 
 	$type = strtolower($type);
 
 	// @todo registering a subtype implicitly registers the type.
 	// see #2684
-	if (!isset($CONFIG->registered_entities[$type])) {
+	if (!isset($registered_entities[$type])) {
 		return false;
 	}
 
-	if ($subtype && !in_array($subtype, $CONFIG->registered_entities[$type])) {
+	if ($subtype && !in_array($subtype, $registered_entities[$type])) {
 		return false;
 	}
+	
 	return true;
 }
 
@@ -629,6 +625,7 @@ function is_registered_entity_type($type, $subtype = null) {
  * Returns a viewable list of entities based on the registered types.
  *
  * @see elgg_view_entity_list
+ * @see get_registered_entity_types
  *
  * @param array $options Any elgg_get_entity() options plus:
  *
@@ -642,8 +639,13 @@ function is_registered_entity_type($type, $subtype = null) {
  *
  * @return string A viewable list of entities
  * @since 1.7.0
+ * @deprecated 2.3 Use elgg_list_entities() with 'type_subtype_pairs' options from {@link get_registered_entity_types}
  */
 function elgg_list_registered_entities(array $options = array()) {
+
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. '
+			. 'Use elgg_list_entities() with "type_subtype_pairs" options from get_registered_entity_types()', '2.3');
+
 	elgg_register_rss_link();
 
 	$defaults = array(
@@ -759,16 +761,16 @@ function update_entity_last_action($guid, $posted = null) {
  * @access private
  */
 function _elgg_entities_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAttributeLoaderTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
+	$path = rtrim(elgg_get_engine_path(), '/');
+	$value[] = $path . '/tests/ElggEntityTest.php';
+	$value[] = $path . '/tests/ElggCoreAttributeLoaderTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromMetadataTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromAttributesTest.php';
+	$value[] = $path . '/tests/ElggEntityPreloaderIntegrationTest.php';
 	return $value;
 }
 

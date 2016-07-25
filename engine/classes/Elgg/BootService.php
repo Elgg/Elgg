@@ -53,6 +53,7 @@ class BootService {
 		$CONFIG->pluginspath = "{$local_path}mod/";
 		$CONFIG->entity_types = ['group', 'object', 'site', 'user'];
 		$CONFIG->language = 'en';
+		$CONFIG->registered_entities = [];
 
 		// set cookie values for session and remember me
 		_elgg_services()->config->getCookieConfig();

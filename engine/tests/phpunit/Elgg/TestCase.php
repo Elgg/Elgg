@@ -86,6 +86,8 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				'large' => array('w' => 200, 'h' => 200, 'square' => false, 'upscale' => false),
 				'master' => array('w' => 550, 'h' => 550, 'square' => false, 'upscale' => false),
 			),
+			'entity_types' => ['object', 'group', 'user', 'site'],
+			'registered_entities' => [],
 		];
 	}
 
