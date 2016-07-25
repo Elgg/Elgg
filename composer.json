@@ -38,6 +38,13 @@
             "composer validate"
         ],
         "test": "phpunit",
+		"test:core": [
+			"phpunit --testsuite 'Elgg'",
+			"php -f ./engine/tests/suite.php"
+		],
+		"test:plugins": [
+			"phpunit --testsuite 'Discussions'"
+		],
         "travis:install": [
             "composer self-update",
             "composer global require \"fxp/composer-asset-plugin:~1.1.1\"",
@@ -56,7 +63,10 @@
     },
     "autoload": {
         "psr-0": {
-            "": "engine/classes/"
+            "": [
+				"engine/classes/",
+				"mod/discussions/classes/"
+			]
         }
     },
     "autoload-dev": {

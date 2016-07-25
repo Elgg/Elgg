@@ -67,6 +67,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 			'boot_complete' => false,
 			'wwwroot' => 'http://localhost/',
 			'path' => __DIR__ . '/../../../../',
+			'pluginspath' => __DIR__ . '/../../../../mod/',
 			'dataroot' => __DIR__ . '/../test_files/dataroot/',
 			'cacheroot' => __DIR__ . '/../test_files/cacheroot/',
 			'site_guid' => 1,
