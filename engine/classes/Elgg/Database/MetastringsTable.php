@@ -21,7 +21,10 @@ use Elgg\Database;
 class MetastringsTable {
 
 	/** @var Pool */
-	private $cache;
+	private $id_cache;
+
+	/** @var Pool */
+	private $string_cache;
 
 	/** @var Database */
 	private $db;
@@ -29,11 +32,13 @@ class MetastringsTable {
 	/**
 	 * Constructor
 	 * 
-	 * @param Pool     $cache A cache for this table.
-	 * @param Database $db    The database.
+	 * @param Pool     $id_cache     Cache of metastring IDs (by strings)
+	 * @param Pool     $string_cache Cache of strings (by metastring IDs)
+	 * @param Database $db           The database.
 	 */
-	public function __construct(Pool $cache, Database $db) {
-		$this->cache = $cache;
+	public function __construct(Pool $id_cache, Pool $string_cache, Database $db) {
+		$this->id_cache = $id_cache;
+		$this->string_cache = $string_cache;
 		$this->db = $db;
 	}
 
@@ -53,7 +58,7 @@ class MetastringsTable {
 	 *
 	 * @see elgg_get_metastring_id
 	 */
-	function getId($string, $case_sensitive = true) {
+	public function getId($string, $case_sensitive = true) {
 		if ($case_sensitive) {
 			return $this->getIdCaseSensitive($string);
 		} else {
@@ -70,7 +75,7 @@ class MetastringsTable {
 	 *
 	 * @see elgg_get_metastring_map
 	 */
-	function getMap(array $string_keys) {
+	public function getIds(array $string_keys) {
 		if (!$string_keys) {
 			return [];
 		}
@@ -81,15 +86,21 @@ class MetastringsTable {
 
 		$missing = array_fill_keys($string_keys, true);
 
-		$set_element = array_map(function ($string) {
-			return "BINARY '" . $this->db->sanitizeString($string) . "'";
-		}, $string_keys);
+		foreach ($string_keys as $string_key) {
+			$set_element[] = "BINARY ?";
+			$params[] = (string)$string_key;
+		}
+
 		$set = implode(',', $set_element);
 
-		$query = "SELECT * FROM {$this->getTableName()} WHERE string IN ($set)";
+		$query = "
+			SELECT *
+			FROM {$this->getTableName()}
+			WHERE string IN ($set)
+		";
 		$ret = [];
 
-		foreach ($this->db->getData($query) as $row) {
+		foreach ($this->db->getData($query, null, $params) as $row) {
 			$ret[$row->string] = (int)$row->id;
 			unset($missing[$row->string]);
 		}
@@ -98,6 +109,69 @@ class MetastringsTable {
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Fetch strings for given IDs.
+	 *
+	 * @param int[] $ids Metastring IDs
+	 *
+	 * @return string[] map of [id] => [string]. Missing strings will not be present
+	 */
+	public function getStrings(array $ids) {
+		$ret = [];
+		$ids = array_map('intval', $ids);
+
+		// try cache
+		foreach ($ids as $i => $id) {
+			$string = $this->string_cache->get($id);
+			if ($string !== null) {
+				$ret[$id] = $string;
+				unset($ids[$i]);
+			}
+		}
+
+		if (!$ids) {
+			return $ret;
+		}
+
+		$query = "
+			SELECT *
+			FROM {$this->getTableName()}
+			WHERE id IN (" . implode(',', $ids) . ")
+		";
+
+		foreach ($this->db->getData($query) as $row) {
+			$ret[$row->id] = $row->string;
+
+			// cache short strings (that may be identifiers/common values). Caching everything makes it
+			// too easy to eat memory.
+			if (strlen($row->string) < 25) {
+				$this->string_cache->put($row->id, $row->string);
+			}
+		}
+
+		return $ret;
+	}
+
+	/**
+	 * Populate the "name" and "value" properties of metadata rows based on "name_id" and "value_id"
+	 *
+	 * @param \stdClass[] $rows Rows from the Metadata table
+	 *
+	 * @return void
+	 */
+	public function populateMetadataRows($rows) {
+		$ids = [];
+		foreach ($rows as $row) {
+			$ids[$row->name_id] = true;
+			$ids[$row->value_id] = true;
+		}
+		$strings = $this->getStrings(array_keys($ids));
+		foreach ($rows as $row) {
+			$row->name = isset($strings[$row->name_id]) ? $strings[$row->name_id] : null;
+			$row->value = isset($strings[$row->value_id]) ? $strings[$row->value_id] : null;
+		}
 	}
 	
 	/**
@@ -110,10 +184,9 @@ class MetastringsTable {
 	 */
 	private function getIdCaseSensitive($string) {
 		$string = (string)$string;
-		return $this->cache->get($string, function() use ($string) {
-			$escaped_string = $this->db->sanitizeString($string);
-			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY '$escaped_string' LIMIT 1";
-			$results = $this->db->getData($query);
+		return $this->id_cache->get($string, function() use ($string) {
+			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY ? LIMIT 1";
+			$results = $this->db->getData($query, null, [$string]);
 			if (isset($results[0])) {
 				return $results[0]->id;
 			} else {
@@ -133,9 +206,8 @@ class MetastringsTable {
 	private function getIdCaseInsensitive($string) {
 		$string = (string)$string;
 		// caching doesn't work for case insensitive requests
-		$escaped_string = $this->db->sanitizeString($string);
-		$query = "SELECT id FROM {$this->getTableName()} WHERE string = '$escaped_string'";
-		$results = $this->db->getData($query);
+		$query = "SELECT id FROM {$this->getTableName()} WHERE string = ?";
+		$results = $this->db->getData($query, null, [$string]);
 		$ids = array();
 		foreach ($results as $result) {
 			$ids[] = $result->id;
@@ -154,10 +226,11 @@ class MetastringsTable {
 	 * @param string $string The value to be normalized
 	 * @return int The identifier for this string
 	 */
-	function add($string) {
-		$escaped_string = $this->db->sanitizeString(trim($string));
-	
-		return $this->db->insertData("INSERT INTO {$this->getTableName()} (string) VALUES ('$escaped_string')");
+	public function add($string) {
+		return $this->db->insertData(
+			"INSERT INTO {$this->getTableName()} (string) VALUES (?)",
+			[trim($string)]
+		);
 	}
 	
 	/**

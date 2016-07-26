@@ -140,17 +140,11 @@ class MetadataCache {
 		// could be useful at some point in future
 		//$guids = $this->filterMetadataHeavyEntities($guids);
 
-		$db_prefix = _elgg_services()->db->getTablePrefix();
 		$options = array(
 			'guids' => $guids,
 			'limit' => 0,
 			'callback' => false,
 			'distinct' => false,
-			'joins' => array(
-				"JOIN {$db_prefix}metastrings v ON n_table.value_id = v.id",
-				"JOIN {$db_prefix}metastrings n ON n_table.name_id = n.id",
-			),
-			'selects' => array('n.string AS name', 'v.string AS value'),
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC, n_table.id ASC',
 
 			// @todo don't know why this is necessary
@@ -160,6 +154,9 @@ class MetadataCache {
 			))),
 		);
 		$data = _elgg_services()->metadataTable->getAll($options);
+
+		// query metastrings separately (SQL JOIN is slow)
+		_elgg_services()->metastringsTable->populateMetadataRows($data);
 
 		// make sure we show all entities as loaded
 		foreach ($guids as $guid) {

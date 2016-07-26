@@ -232,8 +232,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('metastringsTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use memcache-based Pool if available...
-			$pool = new Pool\InMemory();
-			return new \Elgg\Database\MetastringsTable($pool, $c->db);
+			$pool1 = new Pool\InMemory();
+			$pool2 = new Pool\InMemory();
+			return new \Elgg\Database\MetastringsTable($pool1, $pool2, $c->db);
 		});
 
 		$this->setFactory('mutex', function(ServiceProvider $c) {

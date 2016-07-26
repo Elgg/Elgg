@@ -38,7 +38,7 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
  * @since 2.1
  */
 function elgg_get_metastring_map(array $strings) {
-	return _elgg_services()->metastringsTable->getMap($strings);
+	return _elgg_services()->metastringsTable->getIds($strings);
 }
 
 /**
