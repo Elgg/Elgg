@@ -61,4 +61,15 @@ class PluginHooksService extends \Elgg\HooksRegistrationService {
 		
 		return $returnvalue;
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function registerHandler($name, $type, $callback, $priority = 500) {
+		if (($name == 'view' || $name == 'view_vars') && $type !== 'all') {
+			$type = _elgg_services()->views->canonicalizeViewName($type);
+		}
+
+		return parent::registerHandler($name, $type, $callback, $priority);
+	}
 }
