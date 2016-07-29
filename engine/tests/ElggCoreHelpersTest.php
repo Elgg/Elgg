@@ -42,44 +42,6 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	}
 
 	/**
-	 * Test elgg_normalize_url()
-	 */
-	public function testElggNormalizeURL() {
-		$conversions = array(
-			'http://example.com' => 'http://example.com',
-			'https://example.com' => 'https://example.com',
-			'http://example-time.com' => 'http://example-time.com',
-
-			'//example.com' => '//example.com',
-			'ftp://example.com/file' => 'ftp://example.com/file',
-			'mailto:brett@elgg.org' => 'mailto:brett@elgg.org',
-			'javascript:alert("test")' => 'javascript:alert("test")',
-			'app://endpoint' => 'app://endpoint',
-
-			'example.com' => 'http://example.com',
-			'example.com/subpage' => 'http://example.com/subpage',
-
-			'page/handler' =>                	elgg_get_site_url() . 'page/handler',
-			'page/handler?p=v&p2=v2' =>      	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
-			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
-			'mod/plugin/file.php?p=v&p2=v2' =>  elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
-			'rootfile.php' =>                   elgg_get_site_url() . 'rootfile.php',
-			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
-
-			'/page/handler' =>               	elgg_get_site_url() . 'page/handler',
-			'/page/handler?p=v&p2=v2' =>     	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
-			'/mod/plugin/file.php' =>           elgg_get_site_url() . 'mod/plugin/file.php',
-			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
-			'/rootfile.php' =>                  elgg_get_site_url() . 'rootfile.php',
-			'/rootfile.php?p=v&p2=v2' =>        elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
-		);
-
-		foreach ($conversions as $input => $output) {
-			$this->assertIdentical($output, elgg_normalize_url($input));
-		}
-	}
-
-	/**
 	 * Test elgg_register_js()
 	 */
 	public function testElggRegisterJS() {

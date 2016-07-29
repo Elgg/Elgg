@@ -75,6 +75,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\UploadService                      $uploads
+ * @property-read \Elgg\UrlsService                        $urls
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
@@ -418,6 +419,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->logger,
 				$c->mutex
 			);
+		});
+
+		$this->setFactory('urls', function(ServiceProvider $c) {
+			return new \Elgg\UrlsService($c->request, $c->config->getSiteUrl());
 		});
 
 		$this->setFactory('userCapabilities', function(ServiceProvider $c) {

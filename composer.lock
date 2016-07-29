@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b275198b1b535974a2ddde1931885200",
-    "content-hash": "d620498815fc574203ddd8676451ae87",
+    "hash": "e30dfb4bc0c51a4c6a3a9ee027fb65dc",
+    "content-hash": "3d1f575856812e262d105c1f51d22485",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -1117,6 +1117,54 @@
                 "markdown"
             ],
             "time": "2015-12-24 01:37:31"
+        },
+        {
+            "name": "mrclay/elgg-url-sniffer",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrclay/elgg-url-sniffer.git",
+                "reference": "0d139a73045ba1c001da134dbc9cf01ded1fc409"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrclay/elgg-url-sniffer/zipball/0d139a73045ba1c001da134dbc9cf01ded1fc409",
+                "reference": "0d139a73045ba1c001da134dbc9cf01ded1fc409",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "SiteUrl.php",
+                    "SitePath.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Clay",
+                    "email": "steve@mrclay.org",
+                    "homepage": "http://www.mrclay.org/"
+                }
+            ],
+            "description": "Analyze a URL to see if it's within an Elgg site, is an action/page, likely represents a GUID, etc.",
+            "keywords": [
+                "analyze",
+                "elgg",
+                "routing",
+                "sniff",
+                "url"
+            ],
+            "time": "2016-08-29 15:26:55"
         },
         {
             "name": "mrclay/minify",

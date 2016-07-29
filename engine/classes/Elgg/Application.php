@@ -16,6 +16,7 @@ use Elgg\Filesystem\Directory;
  * @since 2.0.0
  *
  * @property-read \Elgg\Menu\Service $menus
+ * @property-read \Elgg\UrlsService  $urls
  */
 class Application {
 
@@ -44,6 +45,7 @@ class Application {
 	private static $public_services = [
 		//'config' => true,
 		'menus' => true,
+		'urls' => true,
 	];
 
 	/**
@@ -594,6 +596,7 @@ class Application {
 		}
 
 		$this->services->setValue('request', $new);
+		$this->services->urls->setRequest($new);
 		_elgg_set_initial_context($new);
 	}
 }

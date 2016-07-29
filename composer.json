@@ -14,6 +14,7 @@
         "ext-xml": "*",
         "doctrine/dbal": "~2.5",
         "symfony/http-foundation": "~2.6",
+        "mrclay/elgg-url-sniffer": "~3.1",
         "mrclay/minify": "~2.0",
         "tedivm/stash": "0.14.*",
         "roave/security-advisories": "dev-master",

@@ -13,3 +13,8 @@ Menus
 
 ``elgg()->menus`` provides low-level methods for constructing menus. In general, menus should be
 passed to ``elgg_view_menu`` for rendering instead of manual rendering.
+
+URLs
+----
+
+``elgg()->urls`` provides methods for common operations with URLs.

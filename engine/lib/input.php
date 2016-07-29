@@ -63,19 +63,7 @@ function filter_tags($var) {
  * @return string The current page URL.
  */
 function current_page_url() {
-	$url = parse_url(elgg_get_site_url());
-
-	$page = $url['scheme'] . "://" . $url['host'];
-
-	if (isset($url['port']) && $url['port']) {
-		$page .= ":" . $url['port'];
-	}
-
-	$page = trim($page, "/");
-
-	$page .= _elgg_services()->request->getRequestUri();
-
-	return $page;
+	return _elgg_services()->urls->getCurrentUrl();
 }
 
 /**
