@@ -335,8 +335,10 @@ return array(
 	'river:none' => 'No activity',
 	'river:update' => 'Update for %s',
 	'river:delete' => 'Remove this activity item',
-	'river:delete:success' => 'River item has been deleted',
-	'river:delete:fail' => 'River item could not be deleted',
+	'river:delete:success' => 'Activity item has been deleted',
+	'river:delete:fail' => 'Activity item could not be deleted',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Invalid user',
 	'activity:owner' => 'View activity',
 
