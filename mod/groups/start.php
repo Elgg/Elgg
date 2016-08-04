@@ -53,6 +53,7 @@ function groups_init() {
 
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
+	elgg_register_widget_type('a_logged_in_user_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'), "index");
 
 	elgg_register_widget_type(
 			'group_activity',
