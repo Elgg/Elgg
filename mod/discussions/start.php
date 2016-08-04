@@ -288,9 +288,8 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 	$object = $item->getObjectEntity();
 
 	if (elgg_instanceof($object, 'object', 'discussion')) {
-		$container = $object->getContainerEntity();
-
-		if ($container && ($container->canWriteToContainer() || elgg_is_admin_logged_in())) {
+		/* @var $object ElggObject */
+		if ($object->canWriteToContainer(0, 'object', 'discussion_reply')) {
 				$options = array(
 				'name' => 'reply',
 				'href' => "#discussion-reply-{$object->guid}",
@@ -301,8 +300,9 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 			);
 			$return[] = ElggMenuItem::factory($options);
 		}
-	} else {
-		if (elgg_instanceof($object, 'object', 'discussion_reply')) {
+	} else if (elgg_instanceof($object, 'object', 'discussion_reply')) {
+		/* @var $object ElggDiscussionReply */
+		if (!$object->canComment()) {
 			// Discussion replies cannot be commented
 			foreach ($return as $key => $item) {
 				if ($item->getName() === 'comment') {
@@ -486,7 +486,7 @@ function discussion_reply_container_permissions_override($hook, $type, $return, 
 	/** @var $discussion ElggEntity */
 	$discussion = $params['container'];
 	$user = $params['user'];
-
+	
 	$container = $discussion->getContainerEntity();
 
 	if (elgg_instanceof($container, 'group')) {
