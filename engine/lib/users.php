@@ -724,6 +724,7 @@ function users_pagesetup() {
 			)),
 			'priority' => 100,
 			'link_class' => 'elgg-topbar-avatar',
+			'item_class' => 'elgg-avatar elgg-avatar-topbar',
 		));
 
 		elgg_register_menu_item('topbar', array(
