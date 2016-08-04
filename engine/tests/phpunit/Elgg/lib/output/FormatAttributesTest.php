@@ -2,6 +2,9 @@
 
 namespace Elgg\lib\output;
 
+/**
+ * @group Output
+ */
 class FormatAttributesTest extends \Elgg\TestCase {
 
 	public function testGeneralUsage() {
@@ -12,8 +15,21 @@ class FormatAttributesTest extends \Elgg\TestCase {
 			'd' => null, // ignored
 			'e' => ['&', '&amp;', '<', '&lt;'],
 			'f' => (object) ['foo' => 'bar'], // ignored
+			'g' => [
+				'bar',
+				true,
+				1.5,
+				2
+			],
+			'h' => [
+				'foo',
+				[],
+			],
+			'i' => [
+				new \ElggObject(),
+			],
 		];
-		$expected = 'a="Hello &amp; &amp; &lt; &lt;" c="c" e="&amp; &amp; &lt; &lt;"';
+		$expected = 'a="Hello &amp; &amp; &lt; &lt;" c="c" e="&amp; &amp; &lt; &lt;" g="bar 1 1.5 2"';
 
 		$this->assertEquals($expected, elgg_format_attributes($attrs));
 	}
