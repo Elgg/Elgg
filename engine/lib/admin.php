@@ -411,7 +411,43 @@ function _elgg_admin_pagesetup() {
 		elgg_register_css('elgg.admin', $url);
 		elgg_load_css('elgg.admin');
 		elgg_unregister_css('elgg');
+		
+		$admin = elgg_get_logged_in_user_entity();
 
+		// setup header menu
+		elgg_register_menu_item('admin_header', array(
+			'name' => 'admin_logout',
+			'href' => 'action/logout',
+			'text' => elgg_echo('logout'),
+			'is_trusted' => true,
+			'priority' => 1000,
+		));
+		
+		elgg_register_menu_item('admin_header', array(
+			'name' => 'view_site',
+			'href' => elgg_get_site_url(),
+			'text' => elgg_echo('admin:view_site'),
+			'is_trusted' => true,
+			'priority' => 900,
+		));
+
+		elgg_register_menu_item('admin_header', array(
+			'name' => 'admin_profile',
+			'href' => false,
+			'text' => elgg_echo('admin:loggedin', array($admin->name)),
+			'priority' => 800,
+		));		
+
+		if (elgg_get_config('elgg_maintenance_mode', null)) {
+			elgg_register_menu_item('admin_header', array(
+				'name' => 'maintenance',
+				'href' => 'admin/administer_utilities/maintenance',
+				'text' => elgg_echo('admin:administer_utilities:maintenance'),
+				'link_class' => 'elgg-maintenance-mode-warning',
+				'priority' => 700,
+			));
+		}
+				
 		// setup footer menu
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'faq',
