@@ -63,6 +63,10 @@ class PersistentLoginService {
 	public function makeLoginPersistent(\ElggUser $user) {
 		$token = $this->generateToken();
 		$hash = $this->hashToken($token);
+		if ($this->hashExists($hash)) {
+			// this seems to have been happening on community.elgg.org, but we don't understand how.
+			return;
+		}
 
 		$this->storeHash($user, $hash);
 		$this->setCookie($token);
@@ -182,10 +186,6 @@ class PersistentLoginService {
 	 * @return void
 	 */
 	protected function storeHash(\ElggUser $user, $hash) {
-		// This prevents inserting the same hash twice, which seems to be happening in some rare cases
-		// and for unknown reasons. See https://github.com/Elgg/Elgg/issues/8104
-		$this->removeHash($hash);
-
 		$time = time();
 		$hash = $this->db->sanitizeString($hash);
 
@@ -197,6 +197,24 @@ class PersistentLoginService {
 			$this->db->insertData($query);
 		} catch (\DatabaseException $e) {
 			$this->handleDbException($e);
+		}
+	}
+
+	/**
+	 * Is this hash already stored?
+	 *
+	 * @param string $hash The hashed token
+	 *
+	 * @return bool
+	 */
+	protected function hashExists($hash) {
+		$hash = $this->db->sanitizeString($hash);
+		$query = "SELECT 1 FROM {$this->table} WHERE code = '$hash'";
+
+		try {
+			return (bool)$this->db->getDataRow($query);
+		} catch (\DatabaseException $e) {
+			return $this->handleDbException($e);
 		}
 	}
 
