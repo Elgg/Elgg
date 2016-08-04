@@ -48,6 +48,17 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 }
 
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
+
+	if ($vars['value'] && !array_key_exists($vars['value'], $vars['options_values']) && $container && $container->canEdit()) {
+		// editing entity where access_id is a custom collection
+		// so adding it tp the options to allow editing without changing access
+		$collection_id = $vars['value'];
+		$collection = get_access_collection($collection_id);
+		if ($collection) {
+			$vars['options_values'][$collection_id] = $collection->name;
+		}
+	}
+	
 	if ($show_override_notice) {
 		$vars['data-group-acl'] = $container->group_acl;
 	}
