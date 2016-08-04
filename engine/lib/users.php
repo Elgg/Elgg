@@ -564,8 +564,9 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 		$return = array(\ElggMenuItem::factory($options));
 	} else {
 		$return = array();
-		if (isset($entity->location)) {
-			$location = htmlspecialchars($entity->location, ENT_QUOTES, 'UTF-8', false);
+		if (isset($entity->location) && !empty($entity->location)) {
+			$location = (is_array($entity->location)) ? $entity->location[0] : $entity->location;
+			$location = htmlspecialchars($location, ENT_QUOTES, 'UTF-8', false);
 			$options = array(
 				'name' => 'location',
 				'text' => "<span>$location</span>",
