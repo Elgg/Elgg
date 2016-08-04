@@ -26,46 +26,7 @@
 .elgg-module .elgg-widget-content > .elgg-list { /* margin for profile and dashboard widgets */
     margin-top: 0;
 }
-/* ***************************************
-	TOPBAR MENU DROPDOWN
-*****************************************/
-.elgg-topbar-dropdown {
-	padding-bottom: 8px; /* forces button to reach bottom of topbar */
-}
-.elgg-menu-topbar > li > .elgg-topbar-dropdown:hover {
-	color: #EEE;
-	cursor: default;
-}
-.elgg-menu-topbar-alt ul {
-	position: absolute;
-	display: none;
-	background-color: #FFF;
-	border: 1px solid #DEDEDE;
-	text-align: left;
-	top: 33px;
-	margin-left: -100px;
-	width: 180px;
 
-	border-radius: 0 0 3px 3px;
-	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
-}
-.elgg-menu-topbar-alt li ul > li > a {
-	text-decoration: none;
-	padding: 10px 20px;
-	background-color: #FFF;
-	color: #444;
-}
-.elgg-menu-topbar-alt li ul > li > a:hover {
-	background-color: #F0F0F0;
-	color: #444;
-}
-.elgg-menu-topbar-alt > li:hover > ul {
-	display: block;
-}
-.elgg-menu-item-account > a:after {
-	content: "\bb";
-	margin-left: 6px;
-}
 /* ***************************************
 	ICONS
 *****************************************/
