@@ -17,6 +17,8 @@ if (!preg_match($regexp, $version, $matches)) {
 	exit(1);
 }
 
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
 function run_commands($commands) {
 	foreach ($commands as $command) {
 		echo "$command\n";
@@ -45,10 +47,19 @@ run_commands(array(
 	"git checkout -B $branch",
 ));
 
-
 // Update translations
 run_commands(array(
 	"tx pull -a --minimum-perc=100",
+));
+
+// Clean translations
+$cleaner = new Elgg\I18n\ReleaseCleaner();
+$cleaner->cleanInstallation(dirname(__DIR__));
+foreach ($cleaner->log as $msg) {
+	echo "ReleaseCleaner: $msg\n";
+}
+
+run_commands(array(
 	"sphinx-build -b gettext docs docs/locale/pot",
 	"sphinx-intl build --locale-dir=docs/locale/",
 	"git add .",
@@ -56,7 +67,6 @@ run_commands(array(
 ));
 
 // Update version in composer.json
-require_once __DIR__ . '/../engine/classes/Elgg/Json/EmptyKeyEncoding.php';
 $encoding = new \Elgg\Json\EmptyKeyEncoding();
 
 $composer_path = "$elgg_path/composer.json";
