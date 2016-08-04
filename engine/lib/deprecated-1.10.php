@@ -53,3 +53,14 @@ function generate_user_password(\ElggUser $user, $password) {
 	elgg_deprecated_notice(__FUNCTION__ . " is deprecated and will not be replaced.", "1.10");
 	return _elgg_services()->passwords->generateLegacyHash($user, $password);
 }
+
+
+/**
+ * Convert Markdown to HTML.
+ *
+ * @deprecated 1.10
+ */
+function Markdown($text) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \Michelf\MarkdownExtra::defaultTransform()', "1.10");
+	return \Michelf\MarkdownExtra::defaultTransform($text);
+}
