@@ -222,6 +222,9 @@ function elgg_get_plugin_from_id($plugin_id) {
 	$plugins = elgg_get_entities($options);
 
 	if ($plugins) {
+		// let's cache the result for faster access the next time
+		_elgg_cache_plugin_by_id($plugins[0]);
+		
 		return $plugins[0];
 	}
 
@@ -346,6 +349,12 @@ function _elgg_load_plugins() {
 		foreach ($plugins as $plugin) {
 			try {
 				$plugin->start($start_flags);
+				
+				if (is_memcache_available()) {
+					// with Memcache enabled plugins aren't cached during contruction
+					// so let's cache here
+					_elgg_cache_plugin_by_id($plugin);
+				}
 			} catch (Exception $e) {
 				$plugin->deactivate();
 				$msg = elgg_echo('PluginException:CannotStart',
