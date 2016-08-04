@@ -14,7 +14,22 @@ $options = array(
 	'pagination' => false,
 	'distinct' => false,
 );
-$content = elgg_list_entities($options);
+
+// show all posts for admin or users looking at their own widget
+// show only published posts for other users.
+$show_only_published = true;
+
+if ($vars["entity"]->canEdit()) {
+	$show_only_published = false;
+}
+
+if ($show_only_published) {
+	$options['metadata_name_value_pairs'] = array(
+		array('name' => 'status', 'value' => 'published')
+	);
+}
+
+$content = elgg_list_entities_from_metadata($options);
 
 echo $content;
 
