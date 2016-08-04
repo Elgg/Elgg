@@ -14,6 +14,10 @@
 .elgg-page-default {
 	min-width: 800px;
 }
+.elgg-page-default .elgg-page-topbar > .elgg-inner {
+	max-width: 990px;
+	margin: 0 auto;
+}
 .elgg-page-default .elgg-page-header > .elgg-inner {
 	max-width: 990px;
 	margin: 0 auto;
