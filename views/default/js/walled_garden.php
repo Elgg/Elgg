@@ -11,6 +11,8 @@ $cancel_button = elgg_view('input/button', array(
 ));
 $cancel_button = json_encode($cancel_button);
 
+$loader = json_encode(elgg_view("graphics/ajax_loader", array("hidden" => false)));
+
 if (0) { ?><script><?php }
 ?>
 
@@ -23,6 +25,9 @@ elgg.walled_garden.init = function () {
 
 	$('input.elgg-button-cancel').live('click', function(event) {
 		var $wgs = $('.elgg-walledgarden-single');
+
+		$('#elgg-walledgarden-login .elgg-ajax-loader').remove();
+		
 		if ($wgs.is(':visible')) {
 			$('.elgg-walledgarden-double').fadeToggle();
 			$wgs.fadeToggle();
@@ -42,7 +47,9 @@ elgg.walled_garden.load = function(view) {
 	return function(event) {
 		var id = '#elgg-walledgarden-' + view;
 		id = id.replace('_', '-');
-		// @todo display some visual element that indicates that loading of content is running
+
+		$('.elgg-module-walledgarden-login').after(<?php echo $loader; ?>);
+		
 		elgg.get('walled_garden/' + view, {
 			'success' : function(data) {
 				var $wg = $('.elgg-body-walledgarden');
