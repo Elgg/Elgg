@@ -50,18 +50,18 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 			'item_class' => $hasLiked ? '' : 'hidden',
 			'priority' => 1000,
 		));
-	}
-
-	// likes count
-	$count = elgg_view('likes/count', array('entity' => $entity));
-	if ($count) {
-		$options = array(
-			'name' => 'likes_count',
-			'text' => $count,
-			'href' => false,
-			'priority' => 1001,
-		);
-		$return[] = ElggMenuItem::factory($options);
+		
+		// likes count
+		$count = elgg_view('likes/count', array('entity' => $entity));
+		if ($count) {
+			$options = array(
+				'name' => 'likes_count',
+				'text' => $count,
+				'href' => false,
+				'priority' => 1001,
+			);
+			$return[] = ElggMenuItem::factory($options);
+		}
 	}
 
 	return $return;
