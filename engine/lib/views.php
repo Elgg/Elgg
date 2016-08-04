@@ -1153,7 +1153,7 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = array())
 	$vars['class'] = elgg_extract('class', $vars, "{$entity->getSubtype()}-comments");
 
 	$output = elgg_trigger_plugin_hook('comments', $entity->getType(), $vars, false);
-	if ($output) {
+	if ($output !== false) {
 		return $output;
 	} else {
 		return elgg_view('page/elements/comments', $vars);
