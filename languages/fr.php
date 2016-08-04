@@ -375,7 +375,7 @@ return array(
  */
 
 	'account' => "Compte",
-	'settings' => "Paramètres développeurs",
+	'settings' => "Paramètres",
 	'tools' => "Outils",
 	'settings:edit' => 'Editer les paramètres',
 
