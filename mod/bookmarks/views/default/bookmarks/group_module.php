@@ -7,7 +7,7 @@
 
 $group = elgg_get_page_owner_entity();
 
-if ($group->bookmarks_enable == "no") {
+if ($group->bookmarks_enable != "yes") {
 	return true;
 }
 
