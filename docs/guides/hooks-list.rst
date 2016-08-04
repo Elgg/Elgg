@@ -110,6 +110,11 @@ System hooks
 		<user_guid2> => array('email', 'sms', 'ajax')
 	);
 
+**prepare, breadcrumbs**
+    In elgg_get_breadcrumbs(), this filters the registered breadcrumbs before
+    returning them, allowing a plugin to alter breadcrumb strategy site-wide.
+
+**add, river**
 
 User hooks
 ==========
