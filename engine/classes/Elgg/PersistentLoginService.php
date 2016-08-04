@@ -63,6 +63,10 @@ class PersistentLoginService {
 	public function makeLoginPersistent(\ElggUser $user) {
 		$token = $this->generateToken();
 		$hash = $this->hashToken($token);
+		if ($this->hashExists($hash)) {
+			// this seems to have been happening on community.elgg.org, but we don't understand how.
+			return;
+		}
 
 		$this->storeHash($user, $hash);
 		$this->setCookie($token);
@@ -116,6 +120,36 @@ class PersistentLoginService {
 		$cookie_hash = $this->hashToken($this->cookie_token);
 		$user = $this->getUserFromHash($cookie_hash);
 		if ($user) {
+
+
+
+			// Temporary, for data collection: https://github.com/Elgg/Elgg/issues/8736
+			// If GUID cookie doesn't match, send debug data to some admins
+			$cookies = _elgg_services()->request->cookies;
+			$cookie_guid = $cookies->get('ElggGuid');
+			if ($cookie_guid && (int)$cookie_guid !== $user->guid) {
+				$cookie_user = get_user($cookie_guid);
+				$info = [
+					'Elgg_cookie' => $cookies->get('Elgg'),
+					'elggperm_cookie' => $cookies->get('elggperm'),
+					'ElggGuid_cookie' => $cookie_guid,
+					'ElggGuid_cookie_username' => $cookie_user ? $cookie_user->username : '',
+					'hashed_token' => $cookie_hash,
+					'token_holder_guid' => $user->guid,
+					'token_holder_username' => $user->username,
+					'referrer' => _elgg_services()->request->headers->get('Referer'),
+					'url' => current_page_url(),
+					'time' => time(),
+				];
+				foreach (['steve@elgg.org'] as $email) {
+					elgg_send_email('no-reply@elgg.org', $email, 'cross-user auth event', var_export($info, true));
+				}
+				$this->setCookie('');
+				return null;
+			}
+
+
+
 			$this->setSession($this->cookie_token);
 			// note: if the token is legacy, we don't both replacing it here because
 			// it will be replaced during the next request boot
@@ -182,10 +216,6 @@ class PersistentLoginService {
 	 * @return void
 	 */
 	protected function storeHash(\ElggUser $user, $hash) {
-		// This prevents inserting the same hash twice, which seems to be happening in some rare cases
-		// and for unknown reasons. See https://github.com/Elgg/Elgg/issues/8104
-		$this->removeHash($hash);
-
 		$time = time();
 		$hash = $this->db->sanitizeString($hash);
 
@@ -197,6 +227,24 @@ class PersistentLoginService {
 			$this->db->insertData($query);
 		} catch (\DatabaseException $e) {
 			$this->handleDbException($e);
+		}
+	}
+
+	/**
+	 * Is this hash already stored?
+	 *
+	 * @param string $hash The hashed token
+	 *
+	 * @return bool
+	 */
+	protected function hashExists($hash) {
+		$hash = $this->db->sanitizeString($hash);
+		$query = "SELECT 1 FROM {$this->table} WHERE code = '$hash'";
+
+		try {
+			return (bool)$this->db->getDataRow($query);
+		} catch (\DatabaseException $e) {
+			return $this->handleDbException($e);
 		}
 	}
 

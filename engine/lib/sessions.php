@@ -389,6 +389,21 @@ function logout() {
 
 	_elgg_services()->persistentLogin->removePersistentLogin();
 
+
+
+	// Temporary, for data collection: https://github.com/Elgg/Elgg/issues/8736
+	// Remove GUID cookie
+	$cookie_config = _elgg_services()->config->get('cookies')['remember_me'];
+	$cookie = new \ElggCookie('ElggGuid');
+	foreach (array('expire', 'path', 'domain', 'secure', 'httponly') as $key) {
+		$cookie->$key = $cookie_config[$key];
+	}
+	$cookie->value = '';
+	$cookie->expire = time() - 86400;
+	elgg_set_cookie($cookie);
+
+
+
 	// pass along any messages into new session
 	$old_msg = $session->get('msg');
 	$session->invalidate();
@@ -424,6 +439,25 @@ function _elgg_session_boot() {
 		}
 
 		$session->setLoggedInUser($user);
+
+
+
+		// Temporary, for data collection: https://github.com/Elgg/Elgg/issues/8736
+		// If has an elggperm cookie, make sure they also have a GUID cookie
+		$cookies = _elgg_services()->request->cookies;
+		$cookie_perm_token = $cookies->get('elggperm');
+		$cookie_guid = $cookies->get('ElggGuid');
+		if ($cookie_perm_token && !$cookie_guid) {
+			$cookie_config = _elgg_services()->config->get('cookies')['remember_me'];
+			$cookie = new \ElggCookie('ElggGuid');
+			foreach (array('expire', 'path', 'domain', 'secure', 'httponly') as $key) {
+				$cookie->$key = $cookie_config[$key];
+			}
+			$cookie->value = $user->guid;
+			elgg_set_cookie($cookie);
+		}
+
+
 
 		_elgg_services()->persistentLogin->replaceLegacyToken($user);
 	} else {
