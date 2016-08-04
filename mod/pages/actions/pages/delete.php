@@ -11,9 +11,8 @@ $guid = get_input('guid');
 $page = get_entity($guid);
 if (pages_is_page($page)) {
 	// only allow owners and admin to delete
-	if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $page->getOwnerGuid()) {
-		$container = get_entity($page->container_guid);
-
+	$container = get_entity($page->container_guid);
+	if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $page->getOwnerGuid()||(elgg_instanceof($container, 'group')&& $container->canEdit())) {
 		// Bring all child elements forward
 		$parent = $page->parent_guid;
 		$children = elgg_get_entities_from_metadata(array(
