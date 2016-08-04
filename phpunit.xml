@@ -3,6 +3,7 @@
 		<testsuite name="All Tests">
 			<directory>./engine/tests/phpunit/</directory>
 			<directory>./engine/classes/</directory>
+			<directory>./mod/discussions/tests/phpunit/</directory>
 		</testsuite>
 	</testsuites>
 

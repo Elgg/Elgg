@@ -6,12 +6,14 @@
  */
 class ElggDiscussionReply extends ElggComment {
 
+	const SUBTYPE = 'discussion_reply';
+
 	/**
 	 * Set subtype
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "discussion_reply";
+		$this->attributes['subtype'] = self::SUBTYPE;
 	}
 }

@@ -1,0 +1,37 @@
+<?php
+
+namespace Elgg\lib\entities;
+
+/**
+ * @group Entities
+ */
+class EntityTypeRegistrationTest extends \Elgg\TestCase {
+
+	/**
+	 * @dataProvider typeSubtypePairsProvider
+	 */
+	public function testCanRegisterEntityType($type, $subtype) {
+
+		$this->assertFalse(is_registered_entity_type($type, $subtype));
+
+		$this->assertTrue(elgg_register_entity_type($type, $subtype));
+
+		$this->assertTrue(is_registered_entity_type($type, $subtype));
+
+		$this->assertTrue(in_array($subtype, get_registered_entity_types($type)));
+
+		$this->assertTrue(elgg_unregister_entity_type($type, $subtype));
+
+		$this->assertFalse(is_registered_entity_type($type, $subtype));
+
+	}
+
+	public function typeSubtypePairsProvider() {
+		return [
+			'object' => ['object', 'test_object_subtype'],
+			'group' => ['group', 'test_group_subtype'],
+			'user' => ['user', 'test_user_subtype'],
+		];
+	}
+
+}
