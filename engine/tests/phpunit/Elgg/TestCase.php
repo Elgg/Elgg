@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Di\ServiceProvider;
 use Elgg\Http\Request;
+use Elgg\Cache\Pool\InMemory;
 use stdClass;
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
@@ -37,6 +38,11 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 		$config = new Config((object) self::getTestingConfigArray());
 		$sp = new ServiceProvider($config);
+
+		$sp->setFactory('plugins', function(ServiceProvider $c) {
+			$pool = new InMemory();
+			return new \Elgg\Database\TestingPlugins($pool, $c->pluginSettingsCache);
+		});
 
 		$sp->setValue('mailer', new InMemoryTransport());
 
