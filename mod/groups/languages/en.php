@@ -81,27 +81,21 @@ return array(
 	'groups:acl' => "Group: %s",
 
 	'discussion:topic:notify:summary' => 'New discussion topic called %s',
-	'discussion:topic:notify:subject' => 'New discussion topic: %s',
-	'discussion:topic:notify:body' =>
-'%s added a new discussion topic to the group %s:
+	'discussion:topic:notify:subject' => '%s',
+	'discussion:topic:notify:body' => '%4$s
 
-Title: %s
-
-%s
-
-View and reply to the discussion topic:
-%s
+This is a new discussion in the group %2$s.
+View and reply to the discussion:
+%5$s
 ',
 
 	'discussion:reply:notify:summary' => 'New reply in topic: %s',
-	'discussion:reply:notify:subject' => 'New reply in topic: %s',
-	'discussion:reply:notify:body' =>
-'%s replied to the discussion topic %s in the group %s:
+	'discussion:reply:notify:subject' => '%s',
+	'discussion:reply:notify:body' => '%4$s
 
-%s
-
+This is a reply to a discussion in the group %3$s.
 View and reply to the discussion:
-%s
+%5$s
 ',
 
 	'groups:activity' => "Group activity",
