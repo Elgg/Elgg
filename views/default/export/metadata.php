@@ -7,7 +7,7 @@
  * @subpackage Core
  * @deprecated 1.9
  */
-
+admin_gatekeeper(); // Only Admins have access to view metadata information
 $m = $vars['metadata'];
 $e = get_entity($m->entity_guid);
 ?>
