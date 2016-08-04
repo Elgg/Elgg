@@ -98,14 +98,7 @@ class UsersTable {
 				}
 	
 				// invalidate memcache for this user
-				static $newentity_cache;
-				if ((!$newentity_cache) && (is_memcache_available())) {
-					$newentity_cache = new \ElggMemcache('new_entity_cache');
-				}
-	
-				if ($newentity_cache) {
-					$newentity_cache->delete($user_guid);
-				}
+				_elgg_get_memcache('new_entity_cache')->delete($user_guid);
 	
 				// Set ban flag
 				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid";
@@ -137,15 +130,7 @@ class UsersTable {
 				create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
 	
 				// invalidate memcache for this user
-				static $newentity_cache;
-				if ((!$newentity_cache) && (is_memcache_available())) {
-					$newentity_cache = new \ElggMemcache('new_entity_cache');
-				}
-	
-				if ($newentity_cache) {
-					$newentity_cache->delete($user_guid);
-				}
-	
+				_elgg_get_memcache('new_entity_cache')->delete($user_guid);
 	
 				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid";
 				return _elgg_services()->db->updateData($query);
@@ -172,18 +157,11 @@ class UsersTable {
 		if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
 			if (_elgg_services()->events->trigger('make_admin', 'user', $user)) {
 	
-				// invalidate memcache for this user
-				static $newentity_cache;
-				if ((!$newentity_cache) && (is_memcache_available())) {
-					$newentity_cache = new \ElggMemcache('new_entity_cache');
-				}
-	
-				if ($newentity_cache) {
-					$newentity_cache->delete($user_guid);
-				}
-	
 				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
+
 				_elgg_invalidate_cache_for_entity($user_guid);
+				_elgg_invalidate_memcache_for_entity($user_guid);
+
 				return $r;
 			}
 	
@@ -209,17 +187,11 @@ class UsersTable {
 			if (_elgg_services()->events->trigger('remove_admin', 'user', $user)) {
 	
 				// invalidate memcache for this user
-				static $newentity_cache;
-				if ((!$newentity_cache) && (is_memcache_available())) {
-					$newentity_cache = new \ElggMemcache('new_entity_cache');
-				}
-	
-				if ($newentity_cache) {
-					$newentity_cache->delete($user_guid);
-				}
-	
 				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
+
 				_elgg_invalidate_cache_for_entity($user_guid);
+				_elgg_invalidate_memcache_for_entity($user_guid);
+
 				return $r;
 			}
 	

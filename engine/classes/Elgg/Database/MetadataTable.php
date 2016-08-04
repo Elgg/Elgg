@@ -204,15 +204,8 @@ class MetadataTable {
 		}
 	
 		// If memcached then we invalidate the cache for this entry
-		static $metabyname_memcache;
-		if ((!$metabyname_memcache) && (is_memcache_available())) {
-			$metabyname_memcache = new \ElggMemcache('metabyname_memcache');
-		}
-	
-		if ($metabyname_memcache) {
-			// @todo fix memcache (name_id is not a property of \ElggMetadata)
-			$metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
-		}
+		// @todo fix memcache (name_id is not a property of \ElggMetadata)
+		_elgg_get_memcache('metabyname_memcache')->delete("{$md->entity_guid}:{$md->name_id}");
 	
 		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
 	
