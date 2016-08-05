@@ -1509,22 +1509,6 @@ function _elgg_shutdown_hook() {
 }
 
 /**
- * Serve javascript pages.
- *
- * Searches for views under js/ and outputs them with special
- * headers for caching control.
- *
- * @param array $page The page array
- *
- * @return bool
- * @elgg_pagehandler js
- * @access private
- */
-function _elgg_js_page_handler($page) {
-	return _elgg_cacheable_view_page_handler($page, 'js');
-}
-
-/**
  * Serve individual views for Ajax.
  *
  * /ajax/view/<view_name>?<key/value params>
@@ -1606,26 +1590,6 @@ function _elgg_ajax_page_handler($segments) {
 }
 
 /**
- * Serve CSS
- *
- * Serves CSS from the css views directory with headers for caching control
- *
- * @param array $page The page array
- *
- * @return bool
- * @elgg_pagehandler css
- * @access private
- */
-function _elgg_css_page_handler($page) {
-	if (!isset($page[0])) {
-		// default css
-		$page[0] = 'elgg';
-	}
-	
-	return _elgg_cacheable_view_page_handler($page, 'css');
-}
-
-/**
  * Handle requests for /favicon.ico
  *
  * @param string[] $segments The URL segments
@@ -1645,70 +1609,6 @@ function _elgg_favicon_page_handler($segments) {
 	//echo elgg_view('favicon.ico');
 
 	return true;
-}
-
-/**
- * Serves a JS or CSS view with headers for caching.
- *
- * /<css||js>/name/of/view.<last_cache>.<css||js>
- *
- * @param array  $page The page array
- * @param string $type The type: js or css
- *
- * @return bool
- * @access private
- * @deprecated 2.1 Use elgg_get_simplecache_url()
- */
-function _elgg_cacheable_view_page_handler($page, $type) {
-
-	switch ($type) {
-		case 'js':
-			$content_type = 'text/javascript';
-			break;
-
-		case 'css':
-			$content_type = 'text/css';
-			break;
-
-		default:
-			return false;
-			break;
-	}
-
-	if ($page) {
-		// the view file names can have multiple dots
-		// eg: views/default/js/calendars/jquery.fullcalendar.min.php
-		// translates to the url /js/<ts>/calendars/jquery.fullcalendar.min.js
-		// and the view js/calendars/jquery.fullcalendar.min
-		// we ignore the last two dots for the ts and the ext.
-		// Additionally, the timestamp is optional.
-		$page = implode('/', $page);
-		$regex = '|(.+?)\.\w+$|';
-		if (!preg_match($regex, $page, $matches)) {
-			return false;
-		}
-		$view = "$type/{$matches[1]}";
-		if (!elgg_view_exists($view)) {
-			return false;
-		}
-
-		$msg = 'URLs starting with /js/ and /css/ are deprecated. Use elgg_get_simplecache_url().';
-		elgg_deprecated_notice($msg, '2.1');
-
-		$return = elgg_view($view);
-
-		header("Content-type: $content_type;charset=utf-8");
-
-		// @todo should js be cached when simple cache turned off
-		//header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
-		//header("Pragma: public");
-		//header("Cache-Control: public");
-		//header("Content-Length: " . strlen($return));
-
-		echo $return;
-		return true;
-	}
-	return false;
 }
 
 /**
@@ -1923,8 +1823,6 @@ function _elgg_init() {
 	elgg_register_action('comment/save');
 	elgg_register_action('comment/delete');
 
-	elgg_register_page_handler('js', '_elgg_js_page_handler');
-	elgg_register_page_handler('css', '_elgg_css_page_handler');
 	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
 	elgg_register_page_handler('favicon.ico', '_elgg_favicon_page_handler');
 

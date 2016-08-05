@@ -129,6 +129,7 @@ Miscellaneous API changes
  * ``Application::getDb()`` no longer returns an instance of ``Elgg\Database``, but rather a ``Elgg\Application\Database``
  * ``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files.
  * ``elgg_get_config('siteemail')`` is no longer available. Use ``elgg_get_site_entity()->email``.
+ * The URL endpoints ``js/`` and ``css/`` are no longer supported. Use ``elgg_get_simplecache_url()``.
 
 JavaScript hook calling order may change
 ----------------------------------------
