@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the Elgg package.
 # 
 # Translators:
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core 2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-03 18:56+0200\n"
-"PO-Revision-Date: 2016-03-27 17:11+0000\n"
-"Last-Translator: Evan Winslow <evan@elgg.org>\n"
+"PO-Revision-Date: 2016-07-15 09:43+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/elgg/elgg-core-2/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +61,7 @@ msgstr "Les Plugins modifient le comportement ou l'apparence d'Elgg en surcharge
 
 #: ../../intro/development.rst:24
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: ../../intro/development.rst:26
 msgid ""
@@ -82,7 +83,7 @@ msgstr "Les Événements et les Hooks des plugins sont utilisés dans les plugin
 
 #: ../../intro/development.rst:36
 msgid "Views"
-msgstr ""
+msgstr "Vues"
 
 #: ../../intro/development.rst:38
 msgid ""
@@ -93,7 +94,7 @@ msgstr "Les vues sont la première couche de présentation pour Elgg. Les vues p
 
 #: ../../intro/development.rst:43
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: ../../intro/development.rst:45
 msgid ""
@@ -118,7 +119,7 @@ msgstr "L'interface d'Elgg supporte de multiples langues, et utilise `Transifex`
 
 #: ../../intro/development.rst:56
 msgid "Caching"
-msgstr ""
+msgstr "Mise en cache"
 
 #: ../../intro/development.rst:58
 msgid ""
@@ -269,7 +270,7 @@ msgstr "MySQL 5+"
 
 #: ../../intro/install.rst:14
 msgid "PHP 5.5+ with the following extensions:"
-msgstr ""
+msgstr "PHP 5.5+ avec les extensions suivantes :"
 
 #: ../../intro/install.rst:16
 msgid "GD (for graphics processing)"
@@ -388,7 +389,7 @@ msgstr "Il se peut qu'Elgg fonctionne avec des navigateurs non supportés, cepen
 
 #: ../../intro/install.rst:67
 msgid "Overview"
-msgstr ""
+msgstr "Vue d'ensemble"
 
 #: ../../intro/install.rst:70
 msgid "Upload Elgg"
@@ -396,11 +397,11 @@ msgstr "Chargez Elgg"
 
 #: ../../intro/install.rst:72
 msgid "With Composer (recommended if comfortable with CLI):"
-msgstr ""
+msgstr "Avec Composer (recommandé si vous êtes à l'aise avec la ligne de commande) : "
 
 #: ../../intro/install.rst:81
 msgid "From pre-packaged zip (recommended if not comfortable with CLI):"
-msgstr ""
+msgstr "A partir du fichier ZIP (recommandé si vous n'êtes pas à l'aise avec la ligne de commande) :"
 
 #: ../../intro/install.rst:83
 msgid "Download the `latest version of Elgg`_"
@@ -412,7 +413,7 @@ msgstr "Chargez le fichier ZPI avec un client FTP sur votre serveur"
 
 #: ../../intro/install.rst:85
 msgid "Unzip the files in your domain's document root."
-msgstr ""
+msgstr "Dézippez les fichiers dans la racine web de votre domaine."
 
 #: ../../intro/install.rst:91
 msgid "Create a data folder"
@@ -503,11 +504,11 @@ msgstr "L'installeur d'Elgg va essayer de créer deux fichiers pour vous :"
 msgid ""
 "``elgg-config/settings.php``, which contains local environment configuration"
 " for your installation"
-msgstr ""
+msgstr "``elgg-config/settings.php``, qui contient la configuration de votre environnement local pour votre installation"
 
 #: ../../intro/install.rst:152
 msgid "``.htaccess``, which allows Elgg to generate dynamic URLs"
-msgstr ""
+msgstr "``.htaccess``, qui permet à Elgg de générer des URLs dynamiques"
 
 #: ../../intro/install.rst:154
 msgid ""
@@ -524,7 +525,7 @@ msgstr "Si ces fichiers ne peuvent pas être générés automatiquement, par exe
 msgid ""
 "In ``elgg-config/``, copy ``settings.example.php`` to ``settings.php``, open"
 " it up in a text editor and fill in your database details"
-msgstr ""
+msgstr "Depuis ``elgg-config/``, copiez ``settings.example.php`` vers ``settings.php``, puis ouvrez-le dans un éditeur de texte et complétez les informations de la base de données"
 
 #: ../../intro/install.rst:165
 msgid ""
@@ -987,7 +988,7 @@ msgstr "Exécutez les commandes suivantes dans le terminal de cloud9 :"
 
 #: ../../intro/install/cloud9.rst:33
 msgid "Configure ``settings.php`` to be like so:"
-msgstr ""
+msgstr "Configurez ``settings.php`` de sorte qu'il ressemble à ceci :"
 
 #: ../../intro/install/cloud9.rst:47
 msgid "3. Complete the install process from Elgg's UI"
