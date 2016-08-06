@@ -137,6 +137,20 @@
   * new file service deprecated groupicon page handler ([0721023b](https://github.com/Elgg/Elgg/commit/0721023be4e83de81492254262d5628a0dce5193))
 
 
+<a name="2.1.3"></a>
+### 2.1.3  (2016-08-05)
+
+#### Contributors
+
+* Ismayil Khayredinov (2)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **output:** attribute formatter now skips arrays with non-scalar values ([fbe1cd34](https://github.com/Elgg/Elgg/commit/fbe1cd3451a8ea2020118c980c1d394304e9766f), closes [#10010](https://github.com/Elgg/Elgg/issues/10010))
+* **views:** issue unique IDs in elgg_view_input() ([f20f0603](https://github.com/Elgg/Elgg/commit/f20f0603de19211d4a2ae5597fc182cd83aa3a93), closes [#9955](https://github.com/Elgg/Elgg/issues/9955))
+
+
 <a name="2.1.2"></a>
 ### 2.1.2  (2016-06-13)
 
@@ -997,6 +1011,22 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+
+<a name="1.12.12"></a>
+### 1.12.12  (2016-08-05)
+
+#### Contributors
+
+* Steve Clay (11)
+* Ismayil Khayredinov (2)
+
+#### Bug Fixes
+
+* **blog:** pass entity to the object/elements/full ([134c5b83](https://github.com/Elgg/Elgg/commit/134c5b837c476f36ff52ecbe4e1e5b213833df31))
+* **groups:** unfeaturing a group no longer leaves useless metadata ([2f3cf28a](https://github.com/Elgg/Elgg/commit/2f3cf28ac0d879fa13a874e99227faad6ef5bb4c))
+* **logging:** make clearer exception numbers are timestamps ([9c70596e](https://github.com/Elgg/Elgg/commit/9c70596e591198a72a713218ecdaf780f33539c2), closes [#9924](https://github.com/Elgg/Elgg/issues/9924))
+* **plugins:** now checks plugin instances before parsing priorities ([26d21f88](https://github.com/Elgg/Elgg/commit/26d21f886c809517890e8264ee4a6181293cad50))
 
 
 <a name="1.12.11"></a>
