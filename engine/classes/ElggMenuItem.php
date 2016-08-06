@@ -460,9 +460,9 @@ class ElggMenuItem {
 
 		$class = implode(' ', $this->data['itemClass']);
 		if ($class) {
-			return "elgg-menu-item-$name $class";
+			return "elgg-menu-item elgg-menu-item-$name $class";
 		} else {
-			return "elgg-menu-item-$name";
+			return "elgg-menu-item elgg-menu-item-$name";
 		}
 	}
 
