@@ -26,6 +26,7 @@ You can regenerate the Simplecache at any time by:
 - In the admin panel click on 'Flush the caches'
 - Enabling or disabling a plugin
 - Reordering your plugins
+- Removing your ``datadir/system_cache`` 
 
 Using the Simplecache in your plugins
 -------------------------------------
