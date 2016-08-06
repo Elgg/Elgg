@@ -27,7 +27,7 @@ return array(
 	'adminrequired' => "要求されたページは管理者でないとご覧になることはできません。",
 	'membershiprequired' => "要求されたページはこのグループのメンバでないとご覧になることはできません。",
 	'limited_access' => "あなたには要求されたページを閲覧する十分な権限はありません。",
-
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -337,6 +337,8 @@ return array(
 	'river:delete' => 'このアクティビティ項目を削除しました',
 	'river:delete:success' => 'River 項目を削除しました',
 	'river:delete:fail' => 'River 項目は削除できませんでした',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => '正しいユーザではありません',
 	'activity:owner' => 'アクティビティ一覧',
 

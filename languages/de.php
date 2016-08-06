@@ -20,14 +20,14 @@ return array(
 	'logout' => "Abmelden",
 	'logoutok' => "Du bist nun abgemeldet.",
 	'logouterror' => "Wir konnten Dich nicht abmelden. Bitte versuche es noch einmal.",
-	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
-	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
+	'session_expired' => "Deine Session ist abgelaufen. Zum Anmelden bitte die Seite <a href='javascript:location.reload(true)'>neu laden</a>.",
+	'session_changed_user' => "Du wurdest als ein anderer Benutzer eingeloggt. Du solltest die Seite <a href='javascript:location.reload(true)'>neu laden</a>.",
 
 	'loggedinrequired' => "Du mußt angemeldet sein, um diese Seite aufrufen zu können.",
 	'adminrequired' => "Du mußt ein Administrator sein, um diese Seite aufrufen zu können.",
 	'membershiprequired' => "Du mußt Mitglied dieser Gruppe sein, um diese Seite aufrufen zu können.",
 	'limited_access' => "Du hast nicht die erforderliche Berechtigung, um auf die angeforderte Seite zuzugreifen.",
-
+	'invalid_request_signature' => "Die URL der Seite, auf die Du zugreifen möchtest, ist entweder ungültig oder Deine Session ist abgelaufen.",
 
 /**
  * Errors
@@ -143,7 +143,7 @@ return array(
 	'password' => "Passwort",
 	'passwordagain' => "Passwort (wiederholen für Verifikation)",
 	'admin_option' => "Diesen Benutzer zum Admin machen?",
-	'autogen_password_option' => "Automatically generate a secure password?",
+	'autogen_password_option' => "Automatisch ein sicheres Password erzeugen?",
 
 /**
  * Access
@@ -335,8 +335,10 @@ return array(
 	'river:none' => 'Keine Aktivität',
 	'river:update' => 'Aktualisierung für %s',
 	'river:delete' => 'Entferne diesen Aktivitäts-Eintrag',
-	'river:delete:success' => 'Der Eintrag wurde gelöscht.',
-	'river:delete:fail' => 'Der Eintrag konnte nicht gelöscht werden.',
+	'river:delete:success' => 'Der Aktivitäts-Eintrag wurde gelöscht.',
+	'river:delete:fail' => 'Das Löschen des Aktivitäts-Eintrags ist fehlgeschlagen.',
+	'river:delete:lack_permission' => 'Du hast keine ausreichende Berechtigung, um diesen Aktivitäts-Eintrag zu löschen.',
+	'river:can_delete:invaliduser' => 'Ein Aufruf der canDelete()-Funktion für den Benutzer mit der Benutzer-GUID [%s] ist nicht möglich, da dieser Benutzer nicht existiert.',
 	'river:subject:invalid_subject' => 'Ungültiger Benutzer',
 	'activity:owner' => 'Aktivitäten anzeigen',
 

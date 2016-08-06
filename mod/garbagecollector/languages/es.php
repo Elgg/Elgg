@@ -1,6 +1,6 @@
 <?php
 return array(
-	'garbagecollector:period' => '&iquest;Cada cuanto tiempo deseas ejecutar el recolector de basura?',
+	'garbagecollector:period' => '¿Con qué frecuencia se debe ejecutar el recolector de basura Elgg? ',
 
 	'garbagecollector:weekly' => 'Semanalmente',
 	'garbagecollector:monthly' => 'Mensualmente',

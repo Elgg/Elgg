@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-13 22:44-0400\n"
+"POT-Creation-Date: 2016-08-05 21:19-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -889,7 +889,7 @@ msgstr ""
 
 #: ../../appendix/faqs/development.rst:5
 #: ../../appendix/faqs/development.rst:5
-msgid "What should I use to edit php code"
+msgid "What should I use to edit php code?"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:7
@@ -914,7 +914,7 @@ msgstr ""
 
 #: ../../appendix/faqs/development.rst:17
 #: ../../appendix/faqs/development.rst:17
-msgid "An IDE does just what it's name implies: it includes a set of tools that you would normally use separately. Most IDEs will include source code control which will allow you to directly commit and update your code from your cvs repository. It may have an FTP client built into it to make the transfer of files to a remote server easier. It will have syntax checking to catch errors before you try to execute the code on a server."
+msgid "An IDE does just what its name implies: it includes a set of tools that you would normally use separately. Most IDEs will include source code control which will allow you to directly commit and update your code from your cvs repository. It may have an FTP client built into it to make the transfer of files to a remote server easier. It will have syntax checking to catch errors before you try to execute the code on a server."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:19

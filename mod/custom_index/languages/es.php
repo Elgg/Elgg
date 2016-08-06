@@ -1,6 +1,6 @@
 <?php
 return array(	
-	'custom:bookmarks' => "&uacute;ltimos marcadores",
+	'custom:bookmarks' => "Los últimos marcadores",
 	'custom:groups' => "&uacute;ltimos grupos",
 	'custom:files' => "&uacute;ltimos archivos",
 	'custom:blogs' => "&uacute;ltimos blogs",
