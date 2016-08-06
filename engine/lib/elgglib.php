@@ -1869,6 +1869,9 @@ function _elgg_walled_garden_index() {
  */
 function _elgg_walled_garden_ajax_handler($page) {
 	$view = $page[0];
+	if (!elgg_view_exists("core/walled_garden/$view")) {
+		return false;
+	}
 	$params = array(
 		'content' => elgg_view("core/walled_garden/$view"),
 		'class' => 'elgg-walledgarden-single hidden',
