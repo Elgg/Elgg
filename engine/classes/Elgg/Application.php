@@ -229,9 +229,14 @@ class Application {
 	 *
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
+	 * @param bool $partial INTERNAL USE ONLY. Boot without triggering any events or loading any plugins. The
+	 *                      session is set up and most entities can be loaded, but that's about it. No start.php
+	 *                      files will be executed, and things like views and translations will likely be
+	 *                      unreliable depending on system cache settings.
+	 *
 	 * @return void
 	 */
-	public function bootCore() {
+	public function bootCore($partial = false) {
 
 		$config = $this->services->config;
 
@@ -250,12 +255,25 @@ class Application {
 		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
 		$config->set('default_limit', 10);
 
-		// in case not loaded already
+		// Load engine/lib files and run their anonymous setup functions
 		$this->loadCore();
+
+		if ($partial) {
+			$this->services->boot->boot();
+
+			// everything above here can safely be re-done if a full boot is needed
+			return;
+		}
 
 		$events = $this->services->events;
 
-		// Connect to database, load language files, load configuration, init session
+		// using event to capture profiling data
+		$events->registerHandler('boot', 'system', function () {
+			// Connect to database, load configuration, translations, init session.
+			$this->services->boot->boot();
+		}, 1);
+
+		// Boot, set up views and page owner
 		// Plugins can't use this event because they haven't been loaded yet.
 		$events->trigger('boot', 'system');
 
