@@ -330,6 +330,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			}
 		}
 
+		$prefix = _elgg_services()->db->getTablePrefix();
 		$options = array(
 			'type' => 'object',
 			'subtypes' => $subtypes,
@@ -337,6 +338,9 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			'annotation_name' => $name,
 			'annotation_values' => array_unique(call_user_func_array('array_merge', $values)),
 			'calculation' => 'sum',
+			'joins' => array(
+				"JOIN {$prefix}metastrings msv ON (n_table.value_id = msv.id)",
+			),
 			'wheres' => array(
 				"CAST(msv.string as SIGNED) > 0"
 			)

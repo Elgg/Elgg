@@ -132,7 +132,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 
 		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', array('test'), array(false));
 		$where = preg_replace( '/\s+/', ' ', $result['wheres'][0]);
-		$this->assertTrue(strpos($where, "msn.string IN ('test')) AND ( BINARY msv.string IN ('0')"));
+		$this->assertTrue(strpos($where, "WHERE BINARY string IN ('0')"));
 	}
 
 	// Make sure metadata with multiple values is correctly deleted when re-written
