@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-13 22:44-0400\n"
+"POT-Creation-Date: 2016-08-05 20:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5686,107 +5686,111 @@ msgstr ""
 msgid "The site URL (home page) is a special case that produces an empty string identifier and an empty segments array."
 msgstr ""
 
-#: ../../guides/routing.rst:23
+#: ../../guides/routing.rst:21
+msgid "URL identifier/segments should be considered potentially dangerous user input. Elgg uses ``htmlspecialchars`` to escapes HTML entities in them."
+msgstr ""
+
+#: ../../guides/routing.rst:24
 msgid "Page Handler"
 msgstr ""
 
-#: ../../guides/routing.rst:25
+#: ../../guides/routing.rst:26
 msgid "To handle all URLs that begin with a particular identifier, you can register a function to act as a :doc:`/guides/pagehandler`. When the handler is called, the segments array is passed in as the first argument."
 msgstr ""
 
-#: ../../guides/routing.rst:29
+#: ../../guides/routing.rst:30
 msgid "The following code registers a page handler for \"blog\" URLs and shows how one might route the request to a resource view."
 msgstr ""
 
-#: ../../guides/routing.rst:57
+#: ../../guides/routing.rst:58
 msgid "The ``route`` Plugin Hook"
 msgstr ""
 
-#: ../../guides/routing.rst:59
+#: ../../guides/routing.rst:60
 msgid "The ``route`` plugin hook is triggered before page handlers are called. The URL identifier is given as the type of the hook. This hook can be used to add some logic before the request is handled elsewhere, or take over page rendering completely."
 msgstr ""
 
-#: ../../guides/routing.rst:63
+#: ../../guides/routing.rst:64
 msgid "Generally devs should instead use a page handler unless they need to affect a single page or a wider variety of URLs."
 msgstr ""
 
-#: ../../guides/routing.rst:66
+#: ../../guides/routing.rst:67
 msgid "The following code results in ``/blog/all`` requests being completely handled by the plugin hook handler. For these requests the ``blog`` page handler is never called."
 msgstr ""
 
-#: ../../guides/routing.rst:89
+#: ../../guides/routing.rst:90
 msgid "As of 2.1, route modification should be done in the ``route:rewrite`` hook."
 msgstr ""
 
-#: ../../guides/routing.rst:92
+#: ../../guides/routing.rst:93
 msgid "The ``route:rewrite`` Plugin Hook"
 msgstr ""
 
-#: ../../guides/routing.rst:94
+#: ../../guides/routing.rst:95
 msgid "For URL rewriting, the ``route:rewrite`` hook (with similar arguments as ``route``) is triggered very early, and allows modifying the request URL path (relative to the Elgg site)."
 msgstr ""
 
-#: ../../guides/routing.rst:97
+#: ../../guides/routing.rst:98
 msgid "Here we rewrite requests for ``news/*`` to ``blog/*``:"
 msgstr ""
 
-#: ../../guides/routing.rst:110
+#: ../../guides/routing.rst:111
 msgid "The hook must be registered directly in your plugin ``start.php`` (the ``[init, system]`` event is too late)."
 msgstr ""
 
-#: ../../guides/routing.rst:114
+#: ../../guides/routing.rst:115
 msgid "Routing overview"
 msgstr ""
 
-#: ../../guides/routing.rst:116
+#: ../../guides/routing.rst:117
 msgid "For regular pages, Elgg's program flow is something like this:"
 msgstr ""
 
-#: ../../guides/routing.rst:118
+#: ../../guides/routing.rst:119
 msgid "A user requests ``http://example.com/news/owner/jane``."
 msgstr ""
 
-#: ../../guides/routing.rst:119
+#: ../../guides/routing.rst:120
 msgid "Plugins are initialized."
 msgstr ""
 
-#: ../../guides/routing.rst:120
+#: ../../guides/routing.rst:121
 msgid "Elgg parses the URL to identifier ``news`` and segments ``['owner', 'jane']``."
 msgstr ""
 
-#: ../../guides/routing.rst:121
+#: ../../guides/routing.rst:122
 msgid "Elgg triggers the plugin hook ``route:rewrite, news`` (see above)."
 msgstr ""
 
-#: ../../guides/routing.rst:122
+#: ../../guides/routing.rst:123
 msgid "Elgg triggers the plugin hook ``route, blog`` (was rewritten in the rewrite hook)."
 msgstr ""
 
-#: ../../guides/routing.rst:123
+#: ../../guides/routing.rst:124
 msgid "Elgg finds a registered page handler (see above) for ``blog``, and calls the function, passing in the segments."
 msgstr ""
 
-#: ../../guides/routing.rst:125
+#: ../../guides/routing.rst:126
 msgid "The page handler function determines it needs to render a single user's blog. It calls ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username."
 msgstr ""
 
-#: ../../guides/routing.rst:127
+#: ../../guides/routing.rst:128
 msgid "The ``resources/blog/owner`` view gets the username via ``$vars['username']``, and uses many other views and formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page."
 msgstr ""
 
-#: ../../guides/routing.rst:129
+#: ../../guides/routing.rst:130
 msgid "The page handler echos the view HTML and returns ``true`` to indicate it handled the request."
 msgstr ""
 
-#: ../../guides/routing.rst:130
+#: ../../guides/routing.rst:131
 msgid "PHP invokes Elgg's shutdown sequence."
 msgstr ""
 
-#: ../../guides/routing.rst:131
+#: ../../guides/routing.rst:132
 msgid "The user receives a fully rendered page."
 msgstr ""
 
-#: ../../guides/routing.rst:133
+#: ../../guides/routing.rst:134
 msgid "Elgg's coding standards suggest a particular URL layout, but there is no syntax enforced."
 msgstr ""
 

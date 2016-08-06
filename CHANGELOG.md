@@ -1,3 +1,17 @@
+<a name="2.1.3"></a>
+### 2.1.3  (2016-08-05)
+
+#### Contributors
+
+* Ismayil Khayredinov (2)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **output:** attribute formatter now skips arrays with non-scalar values ([fbe1cd34](https://github.com/Elgg/Elgg/commit/fbe1cd3451a8ea2020118c980c1d394304e9766f), closes [#10010](https://github.com/Elgg/Elgg/issues/10010))
+* **views:** issue unique IDs in elgg_view_input() ([f20f0603](https://github.com/Elgg/Elgg/commit/f20f0603de19211d4a2ae5597fc182cd83aa3a93), closes [#9955](https://github.com/Elgg/Elgg/issues/9955))
+
+
 <a name="2.1.2"></a>
 ### 2.1.2  (2016-06-13)
 
