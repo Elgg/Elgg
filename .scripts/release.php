@@ -34,10 +34,8 @@ $elgg_path = dirname(__DIR__);
 
 $branch = "release-$version";
 
-
 // Setup. Version checks are here so we fail early if any deps are missing
 run_commands([
-	"tx --version",
 	"git --version",
 	"npm --version",
 	"node --version",
@@ -45,25 +43,6 @@ run_commands([
 
 	"cd $elgg_path",
 	"git checkout -B $branch",
-]);
-
-// Update translations
-run_commands([
-	"tx pull -af --minimum-perc=95",
-]);
-
-// Clean translations
-$cleaner = new Elgg\I18n\ReleaseCleaner();
-$cleaner->cleanInstallation(dirname(__DIR__));
-foreach ($cleaner->log as $msg) {
-	echo "ReleaseCleaner: $msg\n";
-}
-
-run_commands([
-	"sphinx-build -b gettext docs docs/locale/pot",
-	"sphinx-intl build --locale-dir=docs/locale/",
-	"git add .",
-	"git commit -am \"chore(i18n): update translations\"",
 ]);
 
 // Update version in composer.json
@@ -77,6 +56,8 @@ file_put_contents($composer_path, $json);
 
 // Generate changelog
 run_commands(array(
+	"sphinx-build -b gettext docs docs/locale/pot",
+	"sphinx-intl build --locale-dir=docs/locale/",
 	"npm install && npm update",
 	"node .scripts/write-changelog.js",
 	"git add .",
