@@ -69,6 +69,6 @@
         "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "~1.5",
         "simpletest/simpletest": "~1.1",
-        "phpdocumentor/reflection-docblock": "~2.0"
+        "phpdocumentor/reflection-docblock": "2.0.4"
     }
 }
