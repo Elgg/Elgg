@@ -137,7 +137,7 @@ class SimpleCache {
 	 */
 	function enable() {
 		$this->datalist->set('simplecache_enabled', 1);
-		$this->config->set('simplecache_enabled', 1);
+		$this->config->save('simplecache_enabled', 1);
 		$this->invalidate();
 	}
 
