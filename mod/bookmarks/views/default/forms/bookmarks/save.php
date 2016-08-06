@@ -49,7 +49,6 @@ if ($categories) {
 		'entity_subtype' => 'bookmarks',
 	)); ?>
 </div>
-<div class="elgg-foot">
 <?php
 
 echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
@@ -57,8 +56,3 @@ echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $con
 if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
 }
-
-echo elgg_view('input/submit', array('value' => elgg_echo("save")));
-
-?>
-</div>

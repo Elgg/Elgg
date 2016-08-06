@@ -1278,6 +1278,10 @@ function elgg_view_river_item($item, array $vars = array()) {
  * sets the action by default to "action/$action".  Automatically wraps the forms/$action
  * view with a <form> tag and inserts the anti-csrf security tokens.
  *
+ * If the view "forms/{$action}-footer" exists, it will be rendered, passing in the $body_vars
+ * as parameters. If content is rendered, it's wrapped in a div (see the input/form-footer view)
+ * and added to the form body.
+ *
  * @tip This automatically appends elgg-form-action-name to the form's class. It replaces any
  * slashes with dashes (blog/save becomes elgg-form-blog-save)
  *
@@ -1301,17 +1305,34 @@ function elgg_view_river_item($item, array $vars = array()) {
  * @param string $action    The name of the action. An action name does not include
  *                          the leading "action/". For example, "login" is an action name.
  * @param array  $form_vars $vars environment passed to the "input/form" view
- * @param array  $body_vars $vars environment passed to the "forms/$action" view
+ * @param array  $body_vars $vars environment passed to the "forms/$action" and "forms/{$action}-footer" views
  *
  * @return string The complete form
  */
 function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
-	global $CONFIG;
 
-	$defaults = array(
-		'action' => $CONFIG->wwwroot . "action/$action",
-		'body' => elgg_view("forms/$action", $body_vars)
-	);
+	// TODO cleanup watching implementation
+	$footer_rendered = false;
+	$watcher = function () use (&$footer_rendered) {
+		$footer_rendered = true;
+	};
+
+	elgg_register_plugin_hook_handler('view_vars', "forms/$action-footer", $watcher);
+	$body = elgg_view("forms/$action", $body_vars);
+	elgg_unregister_plugin_hook_handler('view_vars', "forms/$action-footer", $watcher);
+
+	$defaults = [
+		'action' => elgg_get_site_url() . "action/$action",
+		'body' => $body,
+	];
+
+	// add footer if not rendered during forms view
+	if (!$footer_rendered && elgg_view_exists("forms/$action-footer")) {
+		$defaults['body'] .=  elgg_view("input/form-footer", [
+			'action' => $action,
+			'body_vars' => $body_vars,
+		]);
+	}
 
 	// append elgg-form class to any class options set
 	$form_vars['class'] = (array) elgg_extract('class', $form_vars, []);
