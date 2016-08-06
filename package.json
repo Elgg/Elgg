@@ -31,6 +31,8 @@
     "karma-requirejs": "~0.2",
     "load-grunt-config": "~0.16.0",
     "phantomjs": "~1.9.7-14",
-    "requirejs": "~2.2.0"
+    "requirejs": "~2.2.0",
+    "wdio-jasmine-framework": "^0.1.9",
+    "webdriverio": "^4.0.5"
   }
 }
