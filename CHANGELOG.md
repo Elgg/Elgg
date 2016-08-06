@@ -1,3 +1,24 @@
+<a name="2.2.0"></a>
+## 2.2.0  (2016-08-05)
+
+#### Contributors
+
+* Juho Jaakkola (3)
+* Steve Clay (3)
+* jdalsem (2)
+
+#### Features
+
+* **iconservice:** it is possible to save unaltered version of an image ([7157a33f](https://github.com/Elgg/Elgg/commit/7157a33f647a937191c6961d960b4e76d325edd4), closes [#9970](https://github.com/Elgg/Elgg/issues/9970))
+
+
+#### Bug Fixes
+
+* **js:**
+  * add missing elgg/lightbox#resize method ([4f6a0174](https://github.com/Elgg/Elgg/commit/4f6a0174779abc11c6d92e54a107899aa30ef5a3))
+  * correctly report success in admin profile field reorder action ([b63396a7](https://github.com/Elgg/Elgg/commit/b63396a7f1ab572925e35b3fb5bb23e3f98e1e3e))
+
+
 <a name="2.2.0-rc.1"></a>
 ### 2.2.0-rc.1  (2016-06-16)
 
