@@ -560,6 +560,55 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
+	 * Disable all comments contained by this entity
+	 *
+	 * @return void
+	 * @since 2.3
+	 */
+	public function disableComments() {
+		$ia = elgg_set_ignore_access();
+
+		$batch = new ElggBatch('elgg_get_entities', [
+			'type' => 'object',
+			'subtype' => 'comment',
+			'container_guid' => $this->guid,
+			'wheres' => ['e.enabled = "yes"'],
+			'limit' => false,
+		]);
+		foreach ($batch as $comment) {
+			$comment->disable();
+		}
+
+		elgg_set_ignore_access($ia);
+	}
+
+	/**
+	 * Enable all comments contained by this entity
+	 *
+	 * @return void
+	 * @since 2.3
+	 */
+	public function enableComments() {
+		$old_access_status = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$ia = elgg_set_ignore_access();
+
+		$batch = new ElggBatch('elgg_get_entities', [
+			'type' => 'object',
+			'subtype' => 'comment',
+			'container_guid' => $this->guid,
+			'wheres' => ['e.enabled = "no"'],
+			'limit' => false,
+		]);
+		foreach ($batch as $comment) {
+			$comment->enable();
+		}
+
+		access_show_hidden_entities($old_access_status);
+		elgg_set_ignore_access($ia);
+	}
+
+	/**
 	 * Get a piece of volatile (non-persisted) data on this entity.
 	 *
 	 * @param string $name The name of the volatile data

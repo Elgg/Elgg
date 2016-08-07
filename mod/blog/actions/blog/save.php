@@ -37,10 +37,12 @@ if ($guid) {
 	// save some data for revisions once we save the new edit
 	$revision_text = $blog->description;
 	$new_post = $blog->new_post;
+	$old_comments_on = $blog->comments_on;
 } else {
 	$blog = new ElggBlog();
 	$blog->subtype = 'blog';
 	$new_post = TRUE;
+	$old_comments_on = 'On';
 }
 
 // set the previous status for the hooks to update the time_created and river entries
@@ -140,6 +142,14 @@ if (!$error) {
 		// if this was an edit, create a revision annotation
 		if (!$new_post && $revision_text) {
 			$blog->annotate('blog_revision', $revision_text);
+		}
+
+		if ($old_comments_on !== $blog->comments_on) {
+			if ($blog->comments_on === 'Off') {
+				$blog->disableComments();
+			} else {
+				$blog->enableComments();
+			}
 		}
 
 		system_message(elgg_echo('blog:message:saved'));

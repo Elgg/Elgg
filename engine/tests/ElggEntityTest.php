@@ -412,4 +412,33 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->replaceSession($old_user);
 		$user->delete();
 	}
+
+	public function testCanDisableAndEnableContainedComments() {
+		$c1 = new ElggComment();
+		$c1->container_guid = $this->entity->guid;
+		$c1->save();
+
+		$c2 = new ElggComment();
+		$c2->container_guid = $this->entity->guid;
+		$c2->save();
+
+		$this->entity->disableComments();
+
+		$prefix = _elgg_services()->db->prefix;
+
+		$get_row = function ($guid) use ($prefix) {
+			return get_data_row("SELECT * FROM {$prefix}entities WHERE guid = ?", null, [$guid]);
+		};
+
+		$this->assertSame($get_row($c1->guid)->enabled, 'no');
+		$this->assertSame($get_row($c2->guid)->enabled, 'no');
+
+		$this->entity->enableComments();
+
+		$this->assertSame($get_row($c1->guid)->enabled, 'yes');
+		$this->assertSame($get_row($c2->guid)->enabled, 'yes');
+
+		$c1->delete();
+		$c2->delete();
+	}
 }
