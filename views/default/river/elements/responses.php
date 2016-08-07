@@ -53,6 +53,10 @@ if ($comment_count) {
 	}
 }
 
+if (!$object->canComment()) {
+	return;
+}
+
 // inline comment form
 $form_vars = array('id' => "comments-add-{$object->getGUID()}", 'class' => 'hidden');
 $body_vars = array('entity' => $object, 'inline' => true);
