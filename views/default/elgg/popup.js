@@ -8,7 +8,6 @@
 define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 
 	var popup = {
-		ready: false,
 		/**
 		 * Initializes a popup module and binds an event to hide visible popup
 		 * modules on a click event outside of their DOM stack.
@@ -18,10 +17,6 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 		 * @return void
 		 */
 		init: function () {
-			if (popup.ready) {
-				// We only need to bind the events once
-				return;
-			}
 			$(document).on('click', function (e) {
 				var $eventTargets = $(e.target).parents().andSelf();
 				if ($eventTargets.is('.elgg-state-popped')) {
@@ -29,7 +24,8 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 				}
 				popup.close();
 			});
-			popup.ready = true;
+			// Bind events only once
+			popup.init = elgg.nullFunction;
 		},
 		/**
 		 * Shortcut to bind a click event on a set of $triggers.
@@ -113,13 +109,22 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 			}
 
 			popup.init();
+
+			// If the user is clicking on the trigger while the popup is open
+			// we should just close the popup
+			if ($target.is('.elgg-state-popped')) {
+				popup.close($target);
+				return;
+			}
+			
 			popup.close(); // close any open popup modules
 
 			$target.data('trigger', $trigger); // used to remove elgg-state-active class when popup is closed
 			$target.data('position', position); // used to reposition the popup module on window manipulations
 
 			// @todo: in 3.0, do not append to 'body' and use fixed positioning with z-indexes instead
-			// @todo: use css transitions instead of $.fadeOut() to avoid collisions due to slow 
+			// @todo: use css transitions instead of $.fadeOut() to avoid collisions
+			// (with fading the DOM element is considered visible until animation is complete)
 			$target.appendTo('body')
 					.fadeIn()
 					.addClass('elgg-state-active elgg-state-popped')
