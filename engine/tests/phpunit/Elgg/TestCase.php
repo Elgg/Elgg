@@ -7,6 +7,10 @@ use Elgg\Http\Request;
 use stdClass;
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	/**

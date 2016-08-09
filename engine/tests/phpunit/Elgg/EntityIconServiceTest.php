@@ -346,6 +346,8 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'tiny'));
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 
+		_elgg_services()->logger->disable();
+
 		// This will fail for square icons because cropping coordinates are not square
 		$service->saveIconFromElggFile($this->entity, $file, 'icon', [
 			'x1' => 0,
@@ -354,6 +356,8 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 			'y2' => 20,
 		]);
 
+		_elgg_services()->logger->enable();
+		
 		$this->assertFalse($service->hasIcon($this->entity, 'master'));
 		$this->assertFalse($service->hasIcon($this->entity, 'large'));
 		$this->assertFalse($service->hasIcon($this->entity, 'medium'));
