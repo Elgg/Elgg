@@ -5,7 +5,6 @@ filter:
         - '*/tests/*'
         - '*/vendor/*'
 tools:
-    external_code_coverage: true
     js_hint:
         filter:
             excluded_paths: ['vendors/*','*/vendors/*','*/tests/*','*/vendor/*']
@@ -17,8 +16,6 @@ tools:
         excluded_dirs:
             - vendors
             - vendor
-    external_code_coverage:
-        timeout: '1200'
     php_hhvm: true
     php_sim: true
 
