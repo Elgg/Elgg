@@ -9,6 +9,10 @@ php:
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
+# Only clone the repository for the latest commit
+# We do not need the entire commit history to test latest PR
+git:
+  depth: 1
 
 branches:
   except:
