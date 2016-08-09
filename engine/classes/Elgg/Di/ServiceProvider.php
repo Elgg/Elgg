@@ -292,7 +292,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
-			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax);
+			if (PHP_SAPI === 'cli') {
+				$transport = new \Elgg\Http\OutputBufferTransport();
+			} else {
+				$transport = new \Elgg\Http\HttpProtocolTransport();
+			}
+			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport);
 		});
 
 		$this->setFactory('router', function(ServiceProvider $c) {

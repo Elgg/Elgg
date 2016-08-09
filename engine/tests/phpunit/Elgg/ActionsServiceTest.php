@@ -50,8 +50,8 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		$config = $this->config();
 		_elgg_services()->setValue('config', $config);
 
-		$input = new Input();
-		_elgg_services()->setValue('input', $input);
+		$this->input = new Input();
+		_elgg_services()->setValue('input', $this->input);
 
 		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto);
 		_elgg_services()->setValue('actions', $this->actions);
@@ -64,8 +64,14 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 		$this->hooks = new PluginHooksService();
 		$this->system_messages = new SystemMessagesService(elgg_get_session());
+
+		_elgg_services()->logger->disable();
 	}
 
+	public function tearDown() {
+		_elgg_services()->logger->enable();
+	}
+	
 	function createService() {
 
 		_elgg_services()->setValue('systemMessages', $this->system_messages); // we don't want system messages propagating across tests
@@ -73,8 +79,14 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		_elgg_services()->setValue('hooks', $this->hooks);
 		_elgg_services()->setValue('request', $this->request);
 		_elgg_services()->setValue('translator', $this->translator);
-		_elgg_services()->setValue('ajax', new Service(_elgg_services()->hooks, _elgg_services()->systemMessages, _elgg_services()->input, _elgg_services()->amdConfig));
-		_elgg_services()->setValue('responseFactory', new ResponseFactory(_elgg_services()->request, _elgg_services()->hooks, _elgg_services()->ajax));
+		
+		$this->amd_config = _elgg_services()->amdConfig;
+		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
+		_elgg_services()->setValue('ajax', $this->ajax);
+
+		$transport = new \Elgg\Http\OutputBufferTransport();
+		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport);
+		_elgg_services()->setValue('responseFactory', $this->response_factory);
 
 		// register page handlers
 		elgg_register_page_handler('action', '_elgg_action_handler');

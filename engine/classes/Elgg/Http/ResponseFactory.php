@@ -35,6 +35,11 @@ class ResponseFactory {
 	private $hooks;
 
 	/**
+	 * @var ResponseTransport
+	 */
+	private $transport;
+
+	/**
 	 * @var Response|bool
 	 */
 	private $response_sent = false;
@@ -47,14 +52,16 @@ class ResponseFactory {
 	/**
 	 * Constructor
 	 * 
-	 * @param Request            $request HTTP request
-	 * @param PluginHooksService $hooks   Plugin hooks service
-	 * @param AjaxService        $ajax    AJAX service
+	 * @param Request            $request   HTTP request
+	 * @param PluginHooksService $hooks     Plugin hooks service
+	 * @param AjaxService        $ajax      AJAX service
+	 * @param ResponseTransport  $transport Response transport
 	 */
-	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax) {
+	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, ResponseTransport $transport) {
 		$this->request = $request;
 		$this->hooks = $hooks;
 		$this->ajax = $ajax;
+		$this->transport = $transport;
 		$this->headers = new ResponseHeaderBag();
 	}
 
@@ -148,7 +155,7 @@ class ResponseFactory {
 				return false;
 			}
 
-			if (!$response->send()) {
+			if (!$this->transport->send($response)) {
 				return false;
 			}
 
