@@ -144,7 +144,15 @@ class ResponseFactory {
 						. (string) $this->response_sent);
 			}
 		} else {
-			$response->send();
+			if (!elgg_trigger_before_event('send', 'http_response', $response)) {
+				return false;
+			}
+
+			if (!$response->send()) {
+				return false;
+			}
+
+			elgg_trigger_after_event('send', 'http_response', $response);
 			$this->response_sent = $response;
 		}
 

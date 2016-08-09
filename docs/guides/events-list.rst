@@ -65,6 +65,12 @@ System events
 **cache:flush, system**
     Reset internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to reset others such as APC, OPCache, or WinCache.
 
+**send:before, http_response**
+    Triggered before an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` that is to be sent to the requester. Handlers can terminate the event and prevent the response from being sent by returning `false`.
+
+**send:after, http_response**
+    Triggered after an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` that was sent to the requester.
+
 User events
 ===========
 
