@@ -30,6 +30,8 @@ matrix:
     # Lint checks for PHP code and composer.json
     - php: 5.6
       env: VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
       install:
        - phpenv rehash
        - composer travis:install
@@ -40,6 +42,8 @@ matrix:
     # Build and test javascript
     - php: 5.6
       env: VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
       install:
        - npm install
        - composer travis:install
@@ -65,6 +69,8 @@ matrix:
     # End to end tests
     - php: 5.6
       env: E2E=true
+      before_install:
+        - phpenv config-rm xdebug.ini
       install:
        - composer travis:install-with-mysql
        - php -S localhost:8888 index.php &
@@ -77,8 +83,10 @@ matrix:
 services: 
  - mysql
 
-before_install: composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-
+before_install:
+ - phpenv config-rm xdebug.ini
+ - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+  
 install: composer travis:install-with-mysql
 
 script:
