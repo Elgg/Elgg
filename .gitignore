@@ -3,7 +3,6 @@
 /elgg-config/settings.php
 /.htaccess
 /mod/*
-/composer.lock
 /composer.phar
 /cache
 
