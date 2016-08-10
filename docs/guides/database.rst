@@ -290,14 +290,15 @@ Elgg aware of the new mapping. Following is an example class extension:
 
     function committee_init() {
         
-        register_entity_type('group', 'committee');
-        
         // Tell Elgg that group subtype "committee" should be loaded using the Committee class
         // If you ever change the name of the class, use update_subtype() to change it
-        add_subtype('group', 'committee', 'Committee');
+        elgg_register_entity_type('group', 'committee', Committee::class, [
+            'search' => true,
+            'tools' => ['tool1', 'tool2'], // Can be accessed via Committee::getVolatileData("config:tools")
+        ]);
     }
 
-    register_elgg_event_handler('init', 'system', 'committee_init');
+    elgg_register_event_handler('init', 'system', 'committee_init');
     
 Now if you invoke ``get_entity()`` with the GUID of a committee object,
 you'll get back an object of type Committee.
