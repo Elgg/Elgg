@@ -1,6 +1,6 @@
 <?php
 return array(
-	'admin:administer_utilities:diagnostics' => 'Diagn&oacute;sticos de sistema',
+	'admin:administer_utilities:diagnostics' => 'Diagnostico del sistema',
 	'diagnostics' => 'Diagn&oacute;sticos',
 	'diagnostics:report' => 'Reporte de Diagn&oacute;sticos',
 	'diagnostics:description' => 'Los siguientes reportes de diagn&oacute;stico pueden ser &uacute;tiles para encontrar problemas en Elgg. Los desarrolladores de Elgg requieren que incluya estos resultados en los reportes de error.',

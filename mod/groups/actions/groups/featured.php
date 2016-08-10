@@ -20,7 +20,7 @@ if ($action == "feature") {
 	$group->featured_group = "yes";
 	system_message(elgg_echo('groups:featuredon', array($group->name)));
 } else {
-	$group->featured_group = "no";
+	$group->deleteMetadata('featured_group');
 	system_message(elgg_echo('groups:unfeatured', array($group->name)));
 }
 

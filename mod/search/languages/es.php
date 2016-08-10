@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'search:enter_term' => 'Ingresa un t&eacute;rmino para buscar:',
+	'search:enter_term' => 'Introduzca un término de búsqueda:',
 	'search:no_results' => 'Sin resultados.',
 	'search:matched' => 'Coincide: ',
 	'search:results' => 'Resultados para %s',

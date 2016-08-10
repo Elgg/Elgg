@@ -27,7 +27,7 @@ return array(
 	'adminrequired' => "Devi essere amministratore per vedere la pagina richiesta.",
 	'membershiprequired' => "Devi essere un membro di questo gruppo per vedere la pagina richiesta.",
 	'limited_access' => "Non hai i permessi per vedere la pagina richiesta.",
-
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -337,6 +337,8 @@ return array(
 	'river:delete' => 'Rimuovi questo elemento',
 	'river:delete:success' => 'Elemento del river cancellato',
 	'river:delete:fail' => 'Non è stato possibile eliminare l\'elemento del river',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Utente non valido',
 	'activity:owner' => 'Visualizza attività',
 
