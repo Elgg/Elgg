@@ -1921,6 +1921,9 @@ function _elgg_walled_garden_init() {
 	global $CONFIG;
 
 	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
+
+	// Deprecated, but registered for BC
+	// @todo: remove in 3.x
 	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.js'));
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
@@ -1929,6 +1932,10 @@ function _elgg_walled_garden_init() {
 	if (isset($CONFIG->site) && $CONFIG->site instanceof \ElggSite) {
 		$CONFIG->site->checkWalledGarden();
 	}
+
+	// For BC, we are extending the views to make sure that sites that customized walled garden get the updates
+	// @todo: in 3.0, move this into the layout view
+	elgg_extend_view('page/layouts/walled_garden', 'page/layouts/walled_garden/cancel_button');
 }
 
 /**

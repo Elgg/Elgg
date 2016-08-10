@@ -22,9 +22,12 @@ Deprecated APIs
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
  * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
  * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
+ * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
 
 Deprecated Views
 ----------------
+
+ * ``wallled_garden.js`` is deprecated: Use ``elgg/walled_garden`` module instead.
 
 New API for page and action handling
 ------------------------------------
