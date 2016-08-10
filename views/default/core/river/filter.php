@@ -8,7 +8,9 @@
 // create selection array
 $options = array();
 $options['type=all'] = elgg_echo('river:select', array(elgg_echo('all')));
-$registered_entities = elgg_get_config('registered_entities');
+
+// @todo: merge with entity types registered for 'river' context
+$registered_entities = get_registered_entity_types();
 
 if (!empty($registered_entities)) {
 	foreach ($registered_entities as $type => $subtypes) {

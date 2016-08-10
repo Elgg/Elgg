@@ -19,6 +19,13 @@ elgg_register_event_handler('init', 'system', 'blog_init');
  */
 function blog_init() {
 
+	$class = get_subtype_class('object', 'blog');
+	if (!$class) {
+		// For BC, check if other plugins have modified the class
+		$class = \ElggBlog::class;
+	}
+	elgg_register_entity_type('object', 'blog', $class);
+	
 	elgg_register_library('elgg:blog', __DIR__ . '/lib/blog.php');
 
 	// add a site navigation item
@@ -46,9 +53,6 @@ function blog_init() {
 	// pingbacks
 	//elgg_register_event_handler('create', 'object', 'blog_incoming_ping');
 	//elgg_register_plugin_hook_handler('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
-
-	// Register for search.
-	elgg_register_entity_type('object', 'blog');
 
 	// Add group option
 	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);

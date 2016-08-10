@@ -100,6 +100,10 @@ function elgg_get_config($name, $site_guid = 0) {
 	} else if ($name == 'icon_sizes') {
 		$msg = 'The config value "icon_sizes" is deprecated. Use elgg_get_icon_sizes()';
 		elgg_deprecated_notice($msg, '2.2');
+	} else if ($name == 'registered_entities') {
+		$msg = 'The config value "registered_entities" is deprecated. Use get_registered_entity_types()';
+		elgg_deprecated_notice($msg, '2.2');
+		return get_registered_entity_types();
 	}
 
 	return _elgg_services()->config->get($name, $site_guid);

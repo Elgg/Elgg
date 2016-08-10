@@ -8,14 +8,13 @@ use ElggObject;
 use ElggUser;
 use LogicException;
 
-
 /**
  * Create test doubles for Elgg entities
  * @access private
  * @since 2.2
  */
 class EntityMocks {
-	
+
 	/**
 	 * @var \Elgg\TestCase
 	 */
@@ -30,6 +29,12 @@ class EntityMocks {
 	 * @var int
 	 */
 	private $iterator;
+
+	/**
+	 *
+	 * @var type @var array
+	 */
+	private $subtypes = [];
 
 	/**
 	 * Constructor
@@ -172,4 +177,126 @@ class EntityMocks {
 		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_group';
 		return $this->setup($this->iterator, 'group', $subtype, $attributes);
 	}
+
+	/**
+	 * Get SubtypeTable mock
+	 * @return \Elgg\Database\SubtypeTable
+	 */
+	public function getSubtypeTableMock() {
+
+		$mock = $this->test->getMockBuilder(\Elgg\Database\SubtypeTable::class)
+				->setMethods([
+					'getId',
+					'add',
+					'getSubtype',
+					'getClass',
+					'getClassFromId',
+					'update',
+					'remove',
+				])
+				->disableOriginalConstructor()
+				->getMock();
+
+		$mock->expects($this->test->any())
+				->method('getId')
+				->will($this->test->returnCallback([$this, 'getSubtypeId']));
+
+		$mock->expects($this->test->any())
+				->method('add')
+				->will($this->test->returnCallback([$this, 'addSubtype']));
+
+		$mock->expects($this->test->any())
+				->method('getSubtype')
+				->will($this->test->returnCallback([$this, 'getSubtypeFromId']));
+
+		$mock->expects($this->test->any())
+				->method('getClass')
+				->will($this->test->returnCallback([$this, 'getSubtypeClass']));
+
+		$mock->expects($this->test->any())
+				->method('getClassFromId')
+				->will($this->test->returnCallback([$this, 'getSubtypeClassFromId']));
+
+		$mock->expects($this->test->any())
+				->method('remove')
+				->will($this->test->returnCallback([$this, 'removeSubtype']));
+
+		$mock->expects($this->test->any())
+				->method('update')
+				->will($this->test->returnCallback([$this, 'updateSubtype']));
+
+		return $mock;
+	}
+
+	public function getSubtypeId($type, $subtype) {
+		foreach ($this->subtypes as $id => $row) {
+			if ($row['type'] == $type && $row['subtype'] == $subtype) {
+				return $id;
+			}
+			return false;
+		}
+	}
+
+	public function addSubtype($type, $subtype, $class = '') {
+		if ($id = $this->getSubtypeId($type, $subtype)) {
+			return $id;
+		}
+		$last = max(array_keys($this->subtypes));
+		$last++;
+
+		$this->subtypes[$last] = [
+			'type' => $type,
+			'subtype' => $subtype,
+			'class' => $class,
+		];
+
+		return $last;
+	}
+
+	public function getSubtypeFromId($id) {
+		if (!isset($this->subtypes[$id])) {
+			return false;
+		}
+		return $this->subtypes[$id]['subtype'];
+	}
+
+	public function getSubtypeClass($type, $subtype) {
+		$id = $this->getSubtypeId($type, $subtype);
+		if (empty($this->subtypes[$id]['class'])) {
+			return false;
+		}
+		return $this->subtypes[$id]['class'];
+	}
+
+	public function getSubtypeClassFromId($id) {
+		if (empty($this->subtypes[$id]['class'])) {
+			return false;
+		}
+		return $this->subtypes[$id]['class'];
+	}
+
+	public function removeSubtype($type, $subtype) {
+		$id = $this->getSubtypeId($type, $subtype);
+		if (!isset($this->subtypes[$id])) {
+			return false;
+		}
+		unset($this->subtypes[$id]);
+		return true;
+	}
+
+	public function updateSubtype($type, $subtype, $class = '') {
+		$id = $this->getSubtypeId($type, $subtype);
+		if (!$id) {
+			return false;
+		}
+
+		$this->subtypes[$id] = [
+			'type' => $type,
+			'subtype' => $subtype,
+			'class' => $class,
+		];
+
+		return true;
+	}
+
 }

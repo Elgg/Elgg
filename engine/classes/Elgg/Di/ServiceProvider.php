@@ -34,6 +34,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
+ * @property-read \Elgg\EntityTypeRegister                 $entityTypes
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \ElggFileCache                           $fileCache
@@ -186,6 +187,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('entityTable', \Elgg\Database\EntityTable::class);
+
+		$this->setFactory('entityTypes', function(ServiceProvider $c) {
+			return new \Elgg\EntityTypeRegister($c->config, $c->subtypeTable);
+		});
 
 		$this->setFactory('events', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('events');
