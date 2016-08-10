@@ -15,7 +15,7 @@ use Elgg\Database;
 class SubtypeTable {
 
 	/**
-	 * @var array|null
+	 * @var \stdClass[]|null
 	 */
 	private $cache = null;
 
@@ -245,7 +245,8 @@ class SubtypeTable {
 				':class' => $class,
 			];
 			$id = $this->db->insertData($sql, $params);
-			
+			_elgg_services()->boot->invalidateCache();
+
 			// add entry to cache
 			$cache_obj->id = $id;
 			$this->cache[$id] = $cache_obj;
@@ -278,6 +279,7 @@ class SubtypeTable {
 			':subtype' => $subtype,
 		];
 		$success = $this->db->deleteData($sql, $params);
+		_elgg_services()->boot->invalidateCache();
 		
 		if ($success) {
 			// invalidate the cache
@@ -318,6 +320,7 @@ class SubtypeTable {
 			':id' => $id,
 		];
 		$success = $this->db->updateData($sql, false, $params);
+		_elgg_services()->boot->invalidateCache();
 	
 		if ($success && isset($this->cache[$id])) {
 			$this->cache[$id]->class = $class;
