@@ -29,7 +29,7 @@ function discussion_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'discussion_reply_menu_setup');
 
 	// allow non-owners to add replies to discussion
-	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'discussion_reply_container_logic_override');
+	elgg_register_plugin_hook_handler('container_logic_check', 'object', 'discussion_reply_container_logic_override');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'discussion_reply_container_permissions_override');
 
 	elgg_register_event_handler('update:after', 'object', 'discussion_update_reply_access_ids');
