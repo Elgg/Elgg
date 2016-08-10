@@ -632,7 +632,7 @@ function _elgg_save_notification_user_settings() {
 	$result = false;
 	foreach ($method as $k => $v) {
 		// check if setting has changed and skip if not
-		if ($current_settings->$k == ($v == 'yes')) {
+		if ($current_settings[$k] == ($v == 'yes')) {
 			continue;
 		}
 
