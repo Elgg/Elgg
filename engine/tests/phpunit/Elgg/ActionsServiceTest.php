@@ -356,7 +356,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_NOT_IMPLEMENTED, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionundefined'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionundefined', ['unregistered']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
@@ -370,7 +370,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionloggedout'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionloggedout', ['output3']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
@@ -397,7 +397,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_NOT_IMPLEMENTED, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionnotfound'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionnotfound', ['no_file']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
@@ -429,7 +429,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_NOT_IMPLEMENTED, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionnotfound'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionnotfound', ['no_file']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
