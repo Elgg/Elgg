@@ -84,51 +84,39 @@ class EntityTable {
 	
 		// Create a memcache cache if we can
 		static $newentity_cache;
+
 		if ((!$newentity_cache) && (is_memcache_available())) {
 			$newentity_cache = new \ElggMemcache('new_entity_cache');
 		}
+
 		if ($newentity_cache) {
 			$new_entity = $newentity_cache->load($row->guid);
 		}
-		if ($new_entity) {
+
+		$subtype = get_subtype_from_id($row->subtype);
+		$constructor = _elgg_services()->entityTypes->getConstructor($row->type, $subtype);
+
+		if (!$constructor) {
+			$msg = "Entity type $row->type is not supported.";
+			throw new \InstallationException($msg);
+		}
+
+		if (!class_exists($constructor)) {
+			_elgg_services()->logger->error("Class $constructor was not found, missing plugin?");
+			$constructor = _elgg_services()->entityTypes->getConstructor($row->type);
+		}
+
+		if (!is_subclass_of($constructor, \ElggEntity::class)) {
+			$msg = "$constructor must extend " . \ElggEntity::class;
+			throw new \ClassException($msg);
+		}
+
+		// Reload entity if constructor class has changed
+		if ($new_entity && get_class($new_entity) == $constructor) {
 			return $new_entity;
 		}
-	
-		// load class for entity if one is registered
-		$classname = get_subtype_class_from_id($row->subtype);
-		if ($classname != "") {
-			if (class_exists($classname)) {
-				$new_entity = new $classname($row);
-	
-				if (!($new_entity instanceof \ElggEntity)) {
-					$msg = $classname . " is not a " . '\ElggEntity' . ".";
-					throw new \ClassException($msg);
-				}
-			} else {
-				error_log("Class '" . $classname . "' was not found, missing plugin?");
-			}
-		}
-	
-		if (!$new_entity) {
-			//@todo Make this into a function
-			switch ($row->type) {
-				case 'object' :
-					$new_entity = new \ElggObject($row);
-					break;
-				case 'user' :
-					$new_entity = new \ElggUser($row);
-					break;
-				case 'group' :
-					$new_entity = new \ElggGroup($row);
-					break;
-				case 'site' :
-					$new_entity = new \ElggSite($row);
-					break;
-				default:
-					$msg = "Entity type " . $row->type . " is not supported.";
-					throw new \InstallationException($msg);
-			}
-		}
+
+		$new_entity = new $constructor($row);
 	
 		// Cache entity if we have a cache available
 		if (($newentity_cache) && ($new_entity)) {

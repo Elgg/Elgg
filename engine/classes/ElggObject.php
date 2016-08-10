@@ -85,6 +85,13 @@ class ElggObject extends \ElggEntity {
 				throw new \InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
+
+		$config = _elgg_services()->entityTypes->getContextConfig($this->type, $this->getSubtype());
+		if ($config) {
+			foreach ($config as $key => $val) {
+				$this->setVolatileData("config:$key", $val);
+			}
+		}
 	}
 
 	/**

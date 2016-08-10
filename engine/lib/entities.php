@@ -1,9 +1,8 @@
 <?php
+
 /**
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
-
-use Elgg\Database\EntityTable\UserFetchFailureException;
 
 /**
  * Return the id for a given subtype.
@@ -264,7 +263,7 @@ function elgg_enable_entity($guid, $recursive = true) {
  *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
  *                        );
  *
- *	guids => null|ARR Array of entity guids
+ * 	guids => null|ARR Array of entity guids
  *
  * 	owner_guids => null|ARR Array of owner guids
  *
@@ -301,9 +300,9 @@ function elgg_enable_entity($guid, $recursive = true) {
  * 	callback => string A callback function to pass each row through
  *
  * 	distinct => bool (true) If set to false, Elgg will drop the DISTINCT clause from
- *				the MySQL query, which will improve performance in some situations.
- *				Avoid setting this option without a full understanding of the underlying
- *				SQL query Elgg creates.
+ * 				the MySQL query, which will improve performance in some situations.
+ * 				Avoid setting this option without a full understanding of the underlying
+ * 				SQL query Elgg creates.
  *
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
@@ -346,10 +345,8 @@ function _elgg_get_guid_based_where_sql($column, $guids) {
  * @since 1.7.0
  * @access private
  */
-function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
-		$time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
-	return _elgg_services()->entityTable->getEntityTimeWhereSql($table,
-		$time_created_upper, $time_created_lower, $time_updated_upper, $time_updated_lower);
+function _elgg_get_entity_time_where_sql($table, $time_created_upper = null, $time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
+	return _elgg_services()->entityTable->getEntityTimeWhereSql($table, $time_created_upper, $time_created_lower, $time_updated_upper, $time_updated_lower);
 }
 
 /**
@@ -379,8 +376,7 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  * @see elgg_get_entities()
  * @see elgg_view_entity_list()
  */
-function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
-	$viewer = 'elgg_view_entity_list') {
+function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities', $viewer = 'elgg_view_entity_list') {
 
 	elgg_register_rss_link();
 
@@ -483,152 +479,114 @@ function _elgg_get_entity_attribute_where_sql(array $options = array()) {
  *
  * @return array|false Either an array months as YYYYMM, or false on failure
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0,
-		$order_by = 'time_created') {
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0, $order_by = 'time_created') {
 	return _elgg_services()->entityTable->getDates(
-		$type, $subtype, $container_guid, $site_guid, $order_by);
+					$type, $subtype, $container_guid, $site_guid, $order_by);
 }
 
 /**
- * Registers an entity type and subtype as a public-facing entity that should
- * be shown in search and by {@link elgg_list_registered_entities()}.
+ * Registers an entity type and subtype
  *
- * @warning Entities that aren't registered here will not show up in search.
- *
- * @tip Add a language string item:type:subtype to make sure the items are display properly.
- *
- * @param string $type    The type of entity (object, site, user, group)
- * @param string $subtype The subtype to register (may be blank)
- *
- * @return bool Depending on success
- * @see get_registered_entity_types()
+ * @param string $type        Entity type
+ *                            "object"|"group"|"user"|"site"
+ * @param string $subtype     Entity subtype
+ * @param string $constructor Object constructor class name
+ *                            Class name associated with the entity of this type and subtype
+ *                            Will automatically update subtype, if set value does not match
+ *                            the one in the database
+ *                            @see update_subtype()
+ *                            @see add_subtype()
+ * @param array  $contexts    Context configuration
+ *                            Specifies in which contexts entities of this type and subtype
+ *                            should be considered public-facing, as well as additional options
+ *                            for the given context
+ *                            <code>
+ *                               array(
+ *                                  'search' => true,
+ *                                  'likes' => [
+ *                                     'is_likable' => true,
+ *                                  ],
+ *                                  'edit' => [
+ *                                      'fields' => []
+ *                                  ],
+ *                               )
+ *                            </code>
+ * @return bool
  */
-function elgg_register_entity_type($type, $subtype = null) {
-	global $CONFIG;
-
-	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
-		return false;
+function elgg_register_entity_type($type, $subtype = null, $constructor = null, array $contexts = null) {
+	if (!isset($contexts)) {
+		$contexts = [
+			'search' => true,
+		];
 	}
-
-	if (!isset($CONFIG->registered_entities)) {
-		$CONFIG->registered_entities = array();
-	}
-
-	if (!isset($CONFIG->registered_entities[$type])) {
-		$CONFIG->registered_entities[$type] = array();
-	}
-
-	if ($subtype) {
-		$CONFIG->registered_entities[$type][] = $subtype;
-	}
-
-	return true;
+	return _elgg_services()->entityTypes->add($type, $subtype, $constructor, $contexts);
 }
 
 /**
- * Unregisters an entity type and subtype as a public-facing type.
+ * Unregisters an entity type and subtype
  *
  * @warning With a blank subtype, it unregisters that entity type including
- * all subtypes. This must be called after all subtypes have been registered.
+ * all subtypes. If that's the intention, this function must be called after
+ * all subtypes have been registered.
  *
- * @param string $type    The type of entity (object, site, user, group)
- * @param string $subtype The subtype to register (may be blank)
- *
- * @return bool Depending on success
- * @see elgg_register_entity_type()
+ * @param string $type    Entity type
+ *                        "object"|"group"|"user"|"site"
+ * @param string $subtype Entity subtype
+ *                        Leave empty, to unregister both type and all subtypes
+ * @param string $context Context(s)
+ *                        If set, will only unregister entity type from specific context(s)
+ *                        <code>['search', 'likes']</code>
+ * @return bool
  */
-function elgg_unregister_entity_type($type, $subtype = null) {
-	global $CONFIG;
-
-	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->registered_entities)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->registered_entities[$type])) {
-		return false;
-	}
-
-	if ($subtype) {
-		if (in_array($subtype, $CONFIG->registered_entities[$type])) {
-			$key = array_search($subtype, $CONFIG->registered_entities[$type]);
-			unset($CONFIG->registered_entities[$type][$key]);
-		} else {
-			return false;
-		}
-	} else {
-		unset($CONFIG->registered_entities[$type]);
-	}
-
-	return true;
+function elgg_unregister_entity_type($type, $subtype = null, $context = 'search') {
+	return _elgg_services()->entityTypes->remove($type, $subtype, $context);
 }
 
 /**
  * Returns registered entity types and subtypes
  *
- * @param string $type The type of entity (object, site, user, group) or blank for all
- *
- * @return array|false Depending on whether entities have been registered
- * @see elgg_register_entity_type()
+ * @param string $type    Entity type
+ *                        "object"|"group"|"user"|"site"
+ *                        Leave empty for all
+ * @param string $context Context(s)
+ *                        If set, will return subtypes that are registered for ALL contexts
+ *                        <code>['search', 'likes']</code>
+ * @return array|false
  */
-function get_registered_entity_types($type = null) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->registered_entities)) {
+function get_registered_entity_types($type = null, $context = 'search') {
+	$subtypes = _elgg_services()->entityTypes->getSubtypes($type, $context);
+	if (empty($subtypes)) {
 		return false;
 	}
+
+	// Modify the results for BC
 	if ($type) {
-		$type = strtolower($type);
-	}
-	if (!empty($type) && empty($CONFIG->registered_entities[$type])) {
-		return false;
+		return elgg_extract($type, $subtypes, false);
 	}
 
-	if (empty($type)) {
-		return $CONFIG->registered_entities;
-	}
-
-	return $CONFIG->registered_entities[$type];
+	return $subtypes;
 }
 
 /**
- * Returns if the entity type and subtype have been registered with {@link elgg_register_entity_type()}.
+ * Check if entity type is considered public in a given context(s)
  *
- * @param string $type    The type of entity (object, site, user, group)
- * @param string $subtype The subtype (may be blank)
- *
- * @return bool Depending on whether or not the type has been registered
+ * @param string $type    Entity type
+ *                        "object"|"group"|"user"|"site"
+ * @param string $subtype Entity subtype
+ * @param mixed  $context Context(s)
+ *                        If multiple contexts are provided, will check if entity type is
+ *                        is registered for ALL contexts
+ * @return bool
  */
-function is_registered_entity_type($type, $subtype = null) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->registered_entities)) {
-		return false;
-	}
-
-	$type = strtolower($type);
-
-	// @todo registering a subtype implicitly registers the type.
-	// see #2684
-	if (!isset($CONFIG->registered_entities[$type])) {
-		return false;
-	}
-
-	if ($subtype && !in_array($subtype, $CONFIG->registered_entities[$type])) {
-		return false;
-	}
-	return true;
+function is_registered_entity_type($type, $subtype = null, $context = 'search') {
+	return _elgg_services()->entityTypes->inContext($context, $type, $subtype);
 }
 
 /**
  * Returns a viewable list of entities based on the registered types.
  *
  * @see elgg_view_entity_list
+ * @see get_registered_entity_types
  *
  * @param array $options Any elgg_get_entity() options plus:
  *
@@ -644,6 +602,7 @@ function is_registered_entity_type($type, $subtype = null) {
  * @since 1.7.0
  */
 function elgg_list_registered_entities(array $options = array()) {
+
 	elgg_register_rss_link();
 
 	$defaults = array(
@@ -759,16 +718,16 @@ function update_entity_last_action($guid, $posted = null) {
  * @access private
  */
 function _elgg_entities_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAttributeLoaderTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
+	$path = rtrim(elgg_get_engine_path(), '/');
+	$value[] = $path . '/tests/ElggEntityTest.php';
+	$value[] = $path . '/tests/ElggCoreAttributeLoaderTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromMetadataTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
+	$value[] = $path . '/tests/ElggCoreGetEntitiesFromAttributesTest.php';
+	$value[] = $path . '/tests/ElggEntityPreloaderIntegrationTest.php';
 	return $value;
 }
 
