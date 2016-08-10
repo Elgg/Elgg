@@ -10,7 +10,6 @@ use Elgg\PluginHooksService;
 use Elgg\SystemMessagesService;
 use ElggSession;
 use InvalidArgumentException;
-use SecurityException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -98,7 +97,8 @@ class ResponseFactoryTest extends \Elgg\TestCase {
 		_elgg_services()->setValue('system_messages', $this->system_messages);
 		_elgg_services()->setValue('ajax', $this->ajax);
 
-		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax);
+		$transport = new \Elgg\Http\OutputBufferTransport();
+		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport);
 		_elgg_services()->setValue('responseFactory', $this->response_factory);
 		return $this->response_factory;
 	}
