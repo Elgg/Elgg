@@ -10,7 +10,6 @@ use Elgg\Http\Request;
 use Elgg\Http\ResponseFactory;
 use Elgg\I18n\Translator;
 use ElggSession;
-use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group HttpService
  * @group ActionsService
  */
-class ActionsServiceTest extends PHPUnit_Framework_TestCase {
+class ActionsServiceTest extends \Elgg\TestCase {
 
 	/**
 	 * @var ActionsService
@@ -48,16 +47,16 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('session', $session);
 		_elgg_services()->session->start();
 
-		$config = _elgg_testing_config();
+		$config = $this->config();
 		_elgg_services()->setValue('config', $config);
 
-		$input = new Input();
-		_elgg_services()->setValue('input', $input);
+		$this->input = new Input();
+		_elgg_services()->setValue('input', $this->input);
 
 		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto);
 		_elgg_services()->setValue('actions', $this->actions);
 
-		$this->request = _elgg_testing_request();
+		$this->request = $this->prepareHttpRequest();
 		_elgg_services()->setValue('request', $this->request);
 
 		$this->translator = new Translator();
@@ -65,8 +64,14 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		$this->hooks = new PluginHooksService();
 		$this->system_messages = new SystemMessagesService(elgg_get_session());
+
+		_elgg_services()->logger->disable();
 	}
 
+	public function tearDown() {
+		_elgg_services()->logger->enable();
+	}
+	
 	function createService() {
 
 		_elgg_services()->setValue('systemMessages', $this->system_messages); // we don't want system messages propagating across tests
@@ -74,8 +79,14 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('hooks', $this->hooks);
 		_elgg_services()->setValue('request', $this->request);
 		_elgg_services()->setValue('translator', $this->translator);
-		_elgg_services()->setValue('ajax', new Service(_elgg_services()->hooks, _elgg_services()->systemMessages, _elgg_services()->input, _elgg_services()->amdConfig));
-		_elgg_services()->setValue('responseFactory', new ResponseFactory(_elgg_services()->request, _elgg_services()->hooks, _elgg_services()->ajax));
+		
+		$this->amd_config = _elgg_services()->amdConfig;
+		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
+		_elgg_services()->setValue('ajax', $this->ajax);
+
+		$transport = new \Elgg\Http\OutputBufferTransport();
+		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport);
+		_elgg_services()->setValue('responseFactory', $this->response_factory);
 
 		// register page handlers
 		elgg_register_page_handler('action', '_elgg_action_handler');
@@ -147,7 +158,6 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->actions->register('test/output', "$this->actionsDir/output.php", 'public'));
 		$this->assertTrue($this->actions->register('test/output_logged_in', "$this->actionsDir/output.php", 'logged_in'));
 		$this->assertTrue($this->actions->register('test/output_admin', "$this->actionsDir/output.php", 'admin'));
-
 	}
 
 	public function testCanRegisterActionWithUnknownAccessLevel() {
@@ -162,7 +172,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 				'message' => 'Unrecognized value \'pblc\' for $access in Elgg\\ActionsService::register',
 				'level' => Logger::ERROR,
 			]
-		], $logged);
+				], $logged);
 
 		$actions = $this->actions->getAllActions();
 		$this->assertArrayHasKey('test/output', $actions);
@@ -208,7 +218,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function testActionReturnValuesAreIgnoredIfNotResponseBuilder() {
 
-		$this->request = _elgg_testing_request('action/output6', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output6', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('output6', "$this->actionsDir/output6.php", 'public'));
 
 		$this->createService();
@@ -216,14 +226,13 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		ob_start();
 		$result = $this->actions->execute('output6');
 		$output = ob_get_clean();
-		
+
 		$this->assertInstanceOf(OkResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_OK, $result->getStatusCode());
 		$this->assertEquals('', $result->getContent());
 		$this->assertEquals(REFERRER, $result->getForwardURL());
 
 		$this->assertEmpty($output);
-
 	}
 
 	public function testCanGenerateValidTokens() {
@@ -276,7 +285,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanExecute() {
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
 
 		$this->createService();
@@ -295,10 +304,11 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * The logic is a bit odd. See #9792
+	 * 
 	 * @dataProvider executeForwardUrlDataProvider
 	 */
 	public function testCanResolveForwardUrl($url, $expected) {
-		$this->request = _elgg_testing_request('action/fail', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/fail', 'POST', [], false, true);
 		$this->createService();
 		$result = $this->actions->execute('fail', $url);
 		$this->assertInstanceOf(ErrorResponse::class, $result);
@@ -313,9 +323,9 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 			['@me/home/', 'me/home/'],
 		];
 	}
-	
+
 	public function testCanNotExecuteWithInvalidTokens() {
-		$this->request = _elgg_testing_request('action/output3', 'POST', [
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [
 			'__elgg_ts' => time(),
 			'__elgg_token' => 'abcdefghi123456',
 				], false, false);
@@ -339,20 +349,20 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanNotExecuteUnregisteredAction() {
 
-		$this->request = _elgg_testing_request('action/unregistered', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/unregistered', 'POST', [], false, true);
 		$this->createService();
 
 		$result = $this->actions->execute('unregistered', 'referrer');
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_NOT_IMPLEMENTED, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionundefined'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionundefined', ['unregistered']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
 	public function testCanNotExecuteLoggedInActionIfLoggedOut() {
 
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php"));
 		$this->createService();
 
@@ -360,13 +370,13 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_FORBIDDEN, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionloggedout'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionloggedout', ['output3']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
 	public function testCanNotExecuteAdminActionIfNotAdmin() {
 
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'admin'));
 		$this->createService();
 
@@ -379,7 +389,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanNotExecuteIfActionFileIsMissing() {
-		$this->request = _elgg_testing_request('action/no_file', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/no_file', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('no_file', "$this->actionsDir/no_file.php", 'public'));
 		$this->createService();
 
@@ -387,7 +397,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_NOT_IMPLEMENTED, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionnotfound'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionnotfound', ['no_file']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
@@ -398,7 +408,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 			return false;
 		});
 
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
 		$this->createService();
 
@@ -411,7 +421,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanNotExecuteActionWithoutActionFile() {
-		$this->request = _elgg_testing_request('action/no_file', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/no_file', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('no_file', "$this->actionsDir/no_file.php", 'public'));
 		$this->createService();
 
@@ -419,7 +429,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
 		$this->assertEquals(ELGG_HTTP_NOT_IMPLEMENTED, $result->getStatusCode());
-		$this->assertEquals(elgg_echo('actionnotfound'), $result->getContent());
+		$this->assertEquals(elgg_echo('actionnotfound', ['no_file']), $result->getContent());
 		$this->assertEquals('referrer', $result->getForwardURL());
 	}
 
@@ -440,7 +450,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanRespondToNonAjaxRequest() {
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], false, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -462,7 +472,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjaxRequest() {
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], 1, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], 1, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -498,7 +508,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjax2Request() {
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -530,7 +540,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	 * @group AjaxService
 	 */
 	public function testCanFilterAjax2Response() {
-		
+
 		$this->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function($hook, $type, $api_response) {
 			/* @var $api_response Services\AjaxResponse */
 			$api_response->setTtl(1000);
@@ -539,7 +549,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		});
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -557,7 +567,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(strtotime($date) + 1000, strtotime($expires));
 		$this->assertContains('max-age=1000', $response->headers->get('Cache-Control'));
 		$this->assertContains('private', $response->headers->get('Cache-Control'));
-		
+
 		$output = json_encode([
 			'value' => 'output3_modified',
 			'_elgg_msgs' => [
@@ -582,7 +592,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		});
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -610,7 +620,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', [Values::class, 'getFalse']);
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], 2, true);
 		$this->createService();
 
 		try {
@@ -627,7 +637,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanRespondWithErrorToNonAjaxRequest() {
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], false, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -646,7 +656,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondWithErrorToAjaxRequest() {
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], 1, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], 1, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -679,7 +689,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondWithErrorToAjax2Request() {
 
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-		$this->request = _elgg_testing_request('action/output3', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', 'output3');
@@ -706,7 +716,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToNonAjaxRequestFromOkResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], false, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -726,7 +736,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToNonAjaxRequestFromErrorResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], false, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -746,7 +756,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToNonAjaxRequestFromRedirectResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], false, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -764,7 +774,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjaxRequestFromOkResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 1, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 1, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -796,7 +806,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjaxRequestFromErrorResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 1, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 1, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -828,7 +838,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjaxRequestFromRedirectResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 1, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 1, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -862,7 +872,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjax2RequestFromOkResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -894,7 +904,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjax2RequestFromErrorResponseBuilderWithOkStatusCode() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -922,7 +932,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjax2RequestFromErrorResponseBuilderWithErrorStatusCode() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -950,7 +960,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRespondToAjax2RequestFromRedirectResponseBuilder() {
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('forward_reason', ELGG_HTTP_FOUND);
@@ -977,7 +987,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRedirectOnNonAjaxRequest() {
 		$this->assertTrue($this->actions->register('output5', "$this->actionsDir/output5.php", 'public'));
-		$this->request = _elgg_testing_request('action/output5', 'POST', [], false, true);
+		$this->request = $this->prepareHttpRequest('action/output5', 'POST', [], false, true);
 		$this->createService();
 
 		set_input('output', 'foo');
@@ -991,7 +1001,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanRedirectOnAjaxRequest() {
 		$this->assertTrue($this->actions->register('output5', "$this->actionsDir/output5.php", 'public'));
-		$this->request = _elgg_testing_request('action/output5', 'POST', [], 1, true);
+		$this->request = $this->prepareHttpRequest('action/output5', 'POST', [], 1, true);
 		$this->createService();
 
 		set_input('output', 'foo');
@@ -1024,7 +1034,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanRedirectOnAjax2Request() {
 		$this->assertTrue($this->actions->register('output5', "$this->actionsDir/output5.php", 'public'));
-		$this->request = _elgg_testing_request('action/output5', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output5', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', 'foo');
@@ -1062,7 +1072,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		});
 
 		$this->assertTrue($this->actions->register('output4', "$this->actionsDir/output4.php", 'public'));
-		$this->request = _elgg_testing_request('action/output4', 'POST', [], 2, true);
+		$this->request = $this->prepareHttpRequest('action/output4', 'POST', [], 2, true);
 		$this->createService();
 
 		set_input('output', ['foo', 'bar']);
@@ -1094,7 +1104,7 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$token = $this->actions->generateActionToken($ts);
 		$session_token = elgg_get_session()->get('__elgg_session');
 
-		$this->request = _elgg_testing_request('refresh_token', 'POST', [], 1);
+		$this->request = $this->prepareHttpRequest('refresh_token', 'POST', [], 1);
 		$this->createService();
 
 		set_input('pairs', [
@@ -1126,4 +1136,5 @@ class ActionsServiceTest extends PHPUnit_Framework_TestCase {
 		]);
 		$this->assertEquals($expected, $response->getContent());
 	}
+
 }

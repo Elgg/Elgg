@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg;
 
-class TimerTest extends \PHPUnit_Framework_TestCase {
+class TimerTest extends \Elgg\TestCase {
 
 	/**
 	 * @var Timer
@@ -51,4 +52,5 @@ class TimerTest extends \PHPUnit_Framework_TestCase {
 		$this->timer->end(['1', 'a']);
 		$this->assertTrue($this->timer->hasEnded(['1', 'a']));
 	}
+
 }

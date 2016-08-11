@@ -4,7 +4,7 @@
  * This requires elgg_get_logged_in_user_guid() in session.php, the access 
  * constants defined in entities.php, and elgg_normalize_url() in output.php
  */
-class ElggEntityTest extends \PHPUnit_Framework_TestCase {
+class ElggEntityTest extends \Elgg\TestCase {
 
 	/** @var \ElggEntity */
 	protected $obj;
@@ -44,15 +44,15 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 	public function testSettingIntegerAttributes() {
 		foreach (array('access_id', 'owner_guid', 'container_guid') as $name) {
 			$this->obj->$name = '77';
-			$this->assertSame(77, $this->obj->$name);			
+			$this->assertSame(77, $this->obj->$name);
 		}
 	}
 
 	public function testSettingUnsettableAttributes() {
 		foreach (array('guid', 'time_updated', 'last_action') as $name) {
 			$this->obj->$name = 'foo';
-			$this->assertNotEquals('foo', $this->obj->$name);			
-		}		
+			$this->assertNotEquals('foo', $this->obj->$name);
+		}
 	}
 
 	public function testSettingMetadataNoDatabase() {
@@ -73,17 +73,17 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->access_id = 2;
 		$this->obj->time_created = 123456789;
 
-		$this->assertEquals($this->obj->getGUID(), $this->obj->guid );
-		$this->assertEquals($this->obj->getType(), $this->obj->type );
+		$this->assertEquals($this->obj->getGUID(), $this->obj->guid);
+		$this->assertEquals($this->obj->getType(), $this->obj->type);
 
 		// Note: before save() subtype returns string, int after
 		// see https://github.com/Elgg/Elgg/issues/5920#issuecomment-25246298
-		$this->assertEquals($this->obj->getSubtype(), $this->obj->subtype );
+		$this->assertEquals($this->obj->getSubtype(), $this->obj->subtype);
 
-		$this->assertEquals($this->obj->getOwnerGUID(), $this->obj->owner_guid );
-		$this->assertEquals($this->obj->getAccessID(), $this->obj->access_id );
-		$this->assertEquals($this->obj->getTimeCreated(), $this->obj->time_created );
-		$this->assertEquals($this->obj->getTimeUpdated(), $this->obj->time_updated );
+		$this->assertEquals($this->obj->getOwnerGUID(), $this->obj->owner_guid);
+		$this->assertEquals($this->obj->getAccessID(), $this->obj->access_id);
+		$this->assertEquals($this->obj->getTimeCreated(), $this->obj->time_created);
+		$this->assertEquals($this->obj->getTimeUpdated(), $this->obj->time_updated);
 	}
 
 	public function testUnsetAttribute() {
@@ -96,15 +96,11 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 	 * @expectedException InvalidParameterException
 	 */
 	public function testSaveWithoutType() {
-		$db = $this->getMock('\Elgg\Database',
-			array('getData', 'getTablePrefix', 'sanitizeString'),
-			array(),
-			'',
-			false
+		$db = $this->getMock('\Elgg\Database', array('getData', 'getTablePrefix', 'sanitizeString'), array(), '', false
 		);
 		$db->expects($this->any())
-			->method('sanitizeString')
-			->will($this->returnArgument(0));
+				->method('sanitizeString')
+				->will($this->returnArgument(0));
 		_elgg_services()->setValue('db', $db);
 
 		// requires type to be set
@@ -153,4 +149,5 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($this->obj->getLatitude(), $lat);
 		$this->assertEquals($this->obj->getLongitude(), $long);
 	}
+
 }

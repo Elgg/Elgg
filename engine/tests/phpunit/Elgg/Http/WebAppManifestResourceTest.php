@@ -1,9 +1,8 @@
 <?php
+
 namespace Elgg\Http;
 
-use PHPUnit_Framework_TestCase as TestCase;
-
-class WebAppManifestResourceTest extends TestCase {
+class WebAppManifestResourceTest extends \Elgg\TestCase {
 
 	public function testPagesExposeARelManifestLink() {
 		$this->markTestIncomplete();

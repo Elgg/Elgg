@@ -101,8 +101,83 @@ by using ``touch()``.
 
 Embedding Files
 ---------------
+
 Please note that due to their nature inline and download URLs are not suitable for embedding.
 Embed URLs must be permanent, whereas inline and download URLs are volatile (bound to user session
 and file modification time).
 
 To embed an entity icon, use ``elgg_get_embed_url()``.
+
+
+Handling File Uploads
+---------------------
+
+In order to implement an action that saves a single file uploaded by a user, you can use the following approach:
+
+.. code-block:: php
+
+	// in your form
+	echo elgg_view('input/file', [
+		'name' => 'upload',
+		'label' => 'Select an image to upload',
+		'help' => 'Only jpeg, gif and png images are supported',
+	]);
+
+
+.. code-block:: php
+
+	// in your action
+	$uploaded_files = elgg_get_uploaded_files('upload');
+	if (!$uploaded_files) {
+		register_error("No file was uploaded");
+		forward(REFERER);
+	}
+
+	$uploaded_file = array_shift($uploaded_files);
+	if (!$uploaded_file->isValid()) {
+		$error = elgg_get_friendly_upload_error($uploaded_file->getError());
+		register_error($error);
+		forward(REFERER);
+	}
+
+	$supported_mimes = [
+		'image/jpeg',
+		'image/png',
+		'image/gif',
+	];
+
+	$mime_type = ElggFile::detectMimeType($uploaded_file->getPathname(), $uploaded_file->getClientMimeType());
+	if (!in_array($mime_type, $supported_mimes)) {
+		register_error("$mime_type is not supported");
+		forward(REFERER);
+	}
+
+	$file = new ElggFile();
+	$file->owner_guid = elgg_get_logged_in_user_guid();
+	if ($file->acceptUploadedFile($uploaded_file)) {
+		$file->save();
+	}
+
+
+If your file input supports multiple files, you can iterate through them in your action:
+
+.. code-block:: php
+
+	// in your form
+	echo elgg_view('input/file', [
+		'name' => 'upload[]',
+		'multiple' => true,
+		'label' => 'Select images to upload',
+	]);
+
+
+.. code-block:: php
+
+	// in your action
+	foreach (elgg_get_uploaded_files('upload') as $upload) {
+		$file = new ElggFile();
+		$file->owner_guid = elgg_get_logged_in_user_guid();
+		if ($file->acceptUploadedFile($upload)) {
+			$file->save();
+		}
+	}

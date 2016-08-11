@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "2.2.0-rc.1",
+    "version": "2.2.0",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0",
     "minimum-stability": "dev",
@@ -40,8 +40,8 @@
         "test": "phpunit",
         "travis:install": [
             "composer self-update",
-            "composer global require \"fxp/composer-asset-plugin:~1.1.1\"",
-            "composer install --prefer-source"
+            "composer global require \"fxp/composer-asset-plugin:~1.1.4\" --prefer-dist",
+            "composer install --prefer-dist"
         ],
         "travis:install-with-mysql": [
             "composer travis:install",

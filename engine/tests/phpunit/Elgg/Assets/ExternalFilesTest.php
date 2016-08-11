@@ -1,23 +1,23 @@
 <?php
+
 namespace Elgg\Assets;
 
-
-class ExternalFilesTest extends \PHPUnit_Framework_TestCase {
+class ExternalFilesTest extends \Elgg\TestCase {
 
 	public function testPreservesInputConfigData() {
 		$config = new \stdClass();
 		$list = new \ElggPriorityList();
-		$obj1 = (object)array(
-			'name' => 'bar1',
-			'url' => '#',
-			'loaded' => false,
-			'location' => 'custom_location'
+		$obj1 = (object) array(
+					'name' => 'bar1',
+					'url' => '#',
+					'loaded' => false,
+					'location' => 'custom_location'
 		);
-		$obj2 = (object)array(
-			'name' => 'bar2',
-			'url' => 'http://elgg.org/',
-			'loaded' => true,
-			'location' => 'custom_location'
+		$obj2 = (object) array(
+					'name' => 'bar2',
+					'url' => 'http://elgg.org/',
+					'loaded' => true,
+					'location' => 'custom_location'
 		);
 
 		$list->add($obj1, 600);
@@ -36,14 +36,14 @@ class ExternalFilesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array(
 			300 => 'http://elgg.org/'
-		), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar1');
 
 		$this->assertEquals(array(
 			300 => 'http://elgg.org/',
 			600 => '#'
-		), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
 	}
 
 	public function testRegisterItemsAndLoad() {
@@ -61,14 +61,14 @@ class ExternalFilesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array(
 			300 => 'http://elgg.org/'
-		), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar1');
 
 		$this->assertEquals(array(
 			300 => 'http://elgg.org/',
 			600 => '#'
-		), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
 
 		$externalFiles->load('foo', 'bar3');
 
@@ -76,14 +76,14 @@ class ExternalFilesTest extends \PHPUnit_Framework_TestCase {
 			300 => 'http://elgg.org/',
 			500 => 'http://community.elgg.org/',
 			600 => '#'
-		), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
 
 		$this->assertTrue($externalFiles->unregister('foo', 'bar1'));
 
 		$this->assertEquals(array(
 			300 => 'http://elgg.org/',
 			500 => 'http://community.elgg.org/'
-		), $externalFiles->getLoadedFiles('foo', 'custom_location'));
+				), $externalFiles->getLoadedFiles('foo', 'custom_location'));
 
 		$this->assertFalse($externalFiles->unregister('foo', 'bar1'));
 
@@ -91,9 +91,9 @@ class ExternalFilesTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array(
 			0 => ''
-		), $externalFiles->getLoadedFiles('foo', ''));
+				), $externalFiles->getLoadedFiles('foo', ''));
 
 		$this->assertEquals(array(), $externalFiles->getLoadedFiles('nonexistent', 'custom_location'));
 	}
-}
 
+}

@@ -1,33 +1,42 @@
 <?php
+
 namespace Elgg\Cache\Pool;
 
-use Stash;
-
-class StashWrapperTest extends \PHPUnit_Framework_TestCase implements TestCase {
+class StashWrapperTest extends \Elgg\TestCase implements \Elgg\Cache\Pool\TestCase {
 
 	public function testGetDoesNotRegenerateValueFromCallbackOnHit() {
 		$pool = StashWrapper::createEphemeral();
 
-		$pool->get('foo', function() { return 1; });
-		$result = $pool->get('foo', function() { return 2; });
+		$pool->get('foo', function() {
+			return 1;
+		});
+		$result = $pool->get('foo', function() {
+			return 2;
+		});
 		$this->assertEquals(1, $result);
 	}
-	
+
 	public function testGetRegeneratesValueFromCallbackOnMiss() {
 		$pool = StashWrapper::createEphemeral();
-		
-		$result = $pool->get('foo', function() { return 1; });
+
+		$result = $pool->get('foo', function() {
+			return 1;
+		});
 		$this->assertEquals(1, $result);
 	}
-	
+
 	public function testInvalidateForcesTheSpecifiedValueToBeRegenerated() {
 		$pool = StashWrapper::createEphemeral();
 
-		$result = $pool->get('foo', function() { return 1; });
+		$result = $pool->get('foo', function() {
+			return 1;
+		});
 		$this->assertEquals(1, $result);
 		$pool->invalidate('foo');
 
-		$result = $pool->get('foo', function() { return 2; });
+		$result = $pool->get('foo', function() {
+			return 2;
+		});
 		$this->assertEquals(2, $result);
 	}
 
@@ -36,7 +45,9 @@ class StashWrapperTest extends \PHPUnit_Framework_TestCase implements TestCase {
 
 		foreach (array('123', 123) as $key) {
 			$pool->put($key, 'foo');
-			$pool->get($key, function () { return 'foo'; });
+			$pool->get($key, function () {
+				return 'foo';
+			});
 			$pool->invalidate($key);
 		}
 	}
@@ -56,7 +67,9 @@ class StashWrapperTest extends \PHPUnit_Framework_TestCase implements TestCase {
 	public function testGetComplainsAboutInvalidKeys($key) {
 		$pool = StashWrapper::createEphemeral();
 		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
-		$pool->get($key, function () { return 'foo'; });
+		$pool->get($key, function () {
+			return 'foo';
+		});
 	}
 
 	/**
@@ -94,4 +107,5 @@ class StashWrapperTest extends \PHPUnit_Framework_TestCase implements TestCase {
 		$pool = StashWrapper::createEphemeral();
 		$this->markTestIncomplete();
 	}
+
 }

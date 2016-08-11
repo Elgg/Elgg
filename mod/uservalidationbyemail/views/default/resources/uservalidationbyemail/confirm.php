@@ -1,6 +1,7 @@
 <?php
 
-$code = sanitise_string(get_input('c', FALSE));
+elgg_signed_request_gatekeeper();
+
 $user_guid = get_input('u', FALSE);
 
 // new users are not enabled by default.
@@ -9,14 +10,14 @@ access_show_hidden_entities(true);
 
 $user = get_entity($user_guid);
 
-if (!$code || !$user || !uservalidationbyemail_validate_email($user_guid, $code)) {
+if (!$user || !elgg_set_user_validation_status($user_guid, true, 'email')) {
 	register_error(elgg_echo('email:confirm:fail'));
 	forward();
 }
 
-elgg_push_context('uservalidationbyemail_validate_user');
 system_message(elgg_echo('email:confirm:success'));
-$user = get_entity($user_guid);
+
+elgg_push_context('uservalidationbyemail_validate_user');
 $user->enable();
 elgg_pop_context();
 

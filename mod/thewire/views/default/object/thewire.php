@@ -51,11 +51,11 @@ $params = array(
 	'subtitle' => $subtitle,
 	'content' => thewire_filter($post->description),
 	'tags' => false,
+	'icon' => $owner_icon,
+	'class' => 'thewire-post',
 );
 $params = $params + $vars;
-$list_body = elgg_view('object/elements/summary', $params);
-
-echo elgg_view_image_block($owner_icon, $list_body, array('class' => 'thewire-post'));
+echo elgg_view('object/elements/summary', $params);
 
 if ($post->reply) {
 	echo "<div class=\"thewire-parent hidden\" id=\"thewire-previous-{$post->guid}\">";

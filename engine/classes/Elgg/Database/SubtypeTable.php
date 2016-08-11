@@ -15,7 +15,7 @@ use Elgg\Database;
 class SubtypeTable {
 
 	/**
-	 * @var array|null
+	 * @var \stdClass[]|null
 	 */
 	private $cache = null;
 
@@ -67,18 +67,10 @@ class SubtypeTable {
 		if (!$subtype) {
 			return false;
 		}
-	
-		if ($this->cache === null) {
-			$this->populateCache();
-		}
-	
-		// use the cache before hitting database
-		$result = $this->retrieveFromCache($type, $subtype);
-		if ($result !== null) {
-			return $result->id;
-		}
-	
-		return false;
+
+		$obj = $this->retrieveFromCache($type, $subtype);
+
+		return $obj ? $obj->id : false;
 	}
 	
 	/**
@@ -93,16 +85,10 @@ class SubtypeTable {
 		if (!$subtype_id) {
 			return '';
 		}
-	
-		if ($this->cache === null) {
-			$this->populateCache();
-		}
-	
-		if (isset($this->cache[$subtype_id])) {
-			return $this->cache[$subtype_id]->subtype;
-		}
-	
-		return false;
+
+		$cache = $this->getPopulatedCache();
+
+		return isset($cache[$subtype_id]) ? $cache[$subtype_id]->subtype : false;
 	}
 	
 	/**
@@ -115,35 +101,15 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function retrieveFromCache($type, $subtype) {
-		if ($this->cache === null) {
-			$this->populateCache();
-		}
-	
-		foreach ($this->cache as $obj) {
+		foreach ($this->getPopulatedCache() as $obj) {
 			if ($obj->type === $type && $obj->subtype === $subtype) {
 				return $obj;
 			}
 		}
+
 		return null;
 	}
-	
-	/**
-	 * Fetch all suptypes from DB to local cache.
-	 *
-	 * @access private
-	 */
-	function populateCache() {
-		$results = $this->db->getData("
-			SELECT *
-			FROM {$this->db->getTablePrefix()}entity_subtypes
-		");
 
-		$this->cache = array();
-		foreach ($results as $row) {
-			$this->cache[$row->id] = $row;
-		}
-	}
-	
 	/**
 	 * Return the class name for a registered type and subtype.
 	 *
@@ -160,19 +126,11 @@ class SubtypeTable {
 	 * @access private
 	 */
 	function getClass($type, $subtype) {
-		if ($this->cache === null) {
-			$this->populateCache();
-		}
-		
-		// use the cache before going to the database
 		$obj = $this->retrieveFromCache($type, $subtype);
-		if ($obj) {
-			return $obj->class;
-		}
-	
-		return null;
+
+		return $obj ? $obj->class : null;
 	}
-	
+
 	/**
 	 * Returns the class name for a subtype id.
 	 *
@@ -187,16 +145,10 @@ class SubtypeTable {
 		if (!$subtype_id) {
 			return null;
 		}
-	
-		if ($this->cache === null) {
-			$this->populateCache();
-		}
-		
-		if (isset($this->cache[$subtype_id])) {
-			return $this->cache[$subtype_id]->class;
-		}
-	
-		return null;
+
+		$cache = $this->getPopulatedCache();
+
+		return isset($cache[$subtype_id]) ? $cache[$subtype_id]->class : null;
 	}
 	
 	/**
@@ -227,13 +179,6 @@ class SubtypeTable {
 		$id = $this->getId($type, $subtype);
 	
 		if (!$id) {
-			// In cache we store non-SQL-escaped strings because that's what's returned by query
-			$cache_obj = (object) array(
-				'type' => $type,
-				'subtype' => $subtype,
-				'class' => $class,
-			);
-	
 			$sql = "
 				INSERT INTO {$this->db->getTablePrefix()}entity_subtypes
 					(type,  subtype,  class) VALUES
@@ -245,10 +190,8 @@ class SubtypeTable {
 				':class' => $class,
 			];
 			$id = $this->db->insertData($sql, $params);
-			
-			// add entry to cache
-			$cache_obj->id = $id;
-			$this->cache[$id] = $cache_obj;
+
+			$this->invalidateCache();
 		}
 	
 		return $id;
@@ -277,14 +220,13 @@ class SubtypeTable {
 			':type' => $type,
 			':subtype' => $subtype,
 		];
-		$success = $this->db->deleteData($sql, $params);
-		
-		if ($success) {
-			// invalidate the cache
-			$this->cache = null;
+		if (!$this->db->deleteData($sql, $params)) {
+			return false;
 		}
+
+		$this->invalidateCache();
 		
-		return (bool) $success;
+		return true;
 	}
 	
 	/**
@@ -302,10 +244,6 @@ class SubtypeTable {
 			return false;
 		}
 	
-		if ($this->cache === null) {
-			$this->populateCache();
-		}
-	
 		$sql = "
 			UPDATE {$this->db->getTablePrefix()}entity_subtypes
 			SET type = :type, subtype = :subtype, class = :class
@@ -317,12 +255,46 @@ class SubtypeTable {
 			':class' => $class,
 			':id' => $id,
 		];
-		$success = $this->db->updateData($sql, false, $params);
-	
-		if ($success && isset($this->cache[$id])) {
-			$this->cache[$id]->class = $class;
+		if (!$this->db->updateData($sql, false, $params)) {
+			return false;
 		}
-	
-		return $success;
+
+		$this->invalidateCache();
+
+		return true;
+	}
+
+	/**
+	 * Empty the cache. Also invalidates the boot cache and memcache
+	 *
+	 * @return void
+	 */
+	private function invalidateCache() {
+		$this->cache = null;
+		_elgg_services()->boot->invalidateCache();
+		if (is_memcache_available()) {
+			(new \ElggMemcache('new_entity_cache'))->clear();
+		}
+	}
+
+	/**
+	 * Get a populated cache object
+	 *
+	 * @return array
+	 */
+	private function getPopulatedCache() {
+		if ($this->cache === null) {
+			$rows = $this->db->getData("
+				SELECT *
+				FROM {$this->db->getTablePrefix()}entity_subtypes
+			");
+
+			$this->cache = [];
+			foreach ($rows as $row) {
+				$this->cache[$row->id] = $row;
+			}
+		}
+
+		return $this->cache;
 	}
 }

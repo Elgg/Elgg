@@ -9,21 +9,9 @@
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
-$is_sticky_register = elgg_is_sticky_form('register');
-$wg_body_class = 'elgg-body-walledgarden';
-$inline_js = '';
-if ($is_sticky_register) {
-	$wg_body_class .= ' hidden';
-	ob_start(); ?>
-<script>
-require(['elgg'], function (elgg) {
-	elgg.register_hook_handler('init', 'system', function() {
-		$('.registration_link').trigger('click');
-	});
-});
-</script>
-	<?php
-	$inline_js = ob_get_clean();
+if (elgg_is_sticky_form('register')) {
+	// An error occurred while submitting the registration form in a lightbox
+	forward('register');
 }
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
@@ -35,7 +23,7 @@ ob_start(); ?>
 	<div class="elgg-page-messages">
 		<?php echo $messages ?>
 	</div>
-	<div class="<?php echo $wg_body_class; ?>">
+	<div class="elgg-body-walledgarden">
 		<?php echo $content ?>
 	</div>
 </div>
@@ -43,8 +31,6 @@ ob_start(); ?>
 $body = ob_get_clean();
 
 $body .= elgg_view('page/elements/foot');
-
-$body .= $inline_js;
 
 $head = elgg_view('page/elements/head', $vars['head']);
 

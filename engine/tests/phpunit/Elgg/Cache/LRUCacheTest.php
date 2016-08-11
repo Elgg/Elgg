@@ -1,9 +1,9 @@
 <?php
+
 namespace Elgg\Cache;
 
-use PHPUnit_Framework_TestCase as TestCase;
+class LRUCacheTest extends \Elgg\TestCase {
 
-class LRUCacheTest extends TestCase {
 	public function testOldestItemsGetDroppedWhenUnused() {
 		$pool = new LRUCache(4);
 
@@ -69,5 +69,5 @@ class LRUCacheTest extends TestCase {
 		$this->setExpectedException('\InvalidArgumentException');
 		$pool = new LRUCache("abc");
 	}
-}
 
+}

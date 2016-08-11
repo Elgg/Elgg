@@ -76,11 +76,9 @@ class EntityTable {
 			return $row;
 		}
 	
-		if ((!isset($row->guid)) || (!isset($row->subtype))) {
+		if (!isset($row->guid) || !isset($row->subtype)) {
 			return $row;
 		}
-	
-		$new_entity = false;
 	
 		// Create a memcache cache if we can
 		static $newentity_cache;
@@ -88,54 +86,45 @@ class EntityTable {
 			$newentity_cache = new \ElggMemcache('new_entity_cache');
 		}
 		if ($newentity_cache) {
-			$new_entity = $newentity_cache->load($row->guid);
+			$cached = $newentity_cache->load($row->guid);
+			if ($cached) {
+				return $cached;
+			}
 		}
-		if ($new_entity) {
-			return $new_entity;
+
+		$class_name = _elgg_services()->subtypeTable->getClassFromId($row->subtype);
+		if ($class_name && !class_exists($class_name)) {
+			_elgg_services()->logger->error("Class '$class_name' was not found, missing plugin?");
+			$class_name = '';
 		}
-	
-		// load class for entity if one is registered
-		$classname = get_subtype_class_from_id($row->subtype);
-		if ($classname != "") {
-			if (class_exists($classname)) {
-				$new_entity = new $classname($row);
-	
-				if (!($new_entity instanceof \ElggEntity)) {
-					$msg = $classname . " is not a " . '\ElggEntity' . ".";
-					throw new \ClassException($msg);
-				}
+
+		if (!$class_name) {
+			$map = [
+				'object' => \ElggObject::class,
+				'user' => \ElggUser::class,
+				'group' => \ElggGroup::class,
+				'site' => \ElggSite::class,
+			];
+
+			if (isset($map[$row->type])) {
+				$class_name = $map[$row->type];
 			} else {
-				error_log("Class '" . $classname . "' was not found, missing plugin?");
+				throw new \InstallationException("Entity type {$row->type} is not supported.");
 			}
 		}
-	
-		if (!$new_entity) {
-			//@todo Make this into a function
-			switch ($row->type) {
-				case 'object' :
-					$new_entity = new \ElggObject($row);
-					break;
-				case 'user' :
-					$new_entity = new \ElggUser($row);
-					break;
-				case 'group' :
-					$new_entity = new \ElggGroup($row);
-					break;
-				case 'site' :
-					$new_entity = new \ElggSite($row);
-					break;
-				default:
-					$msg = "Entity type " . $row->type . " is not supported.";
-					throw new \InstallationException($msg);
-			}
+
+		$entity = new $class_name($row);
+
+		if (!$entity instanceof \ElggEntity) {
+			throw new \ClassException("$class_name must extend " . \ElggEntity::class);
 		}
-	
+
 		// Cache entity if we have a cache available
-		if (($newentity_cache) && ($new_entity)) {
-			$newentity_cache->save($new_entity->guid, $new_entity);
+		if ($newentity_cache) {
+			$newentity_cache->save($entity->guid, $entity);
 		}
 	
-		return $new_entity;
+		return $entity;
 	}
 	
 	/**
@@ -658,7 +647,7 @@ class EntityTable {
 				continue;
 			} else {
 				try {
-					$rows[$i] = entity_row_to_elggstar($row);
+					$rows[$i] = $this->rowToElggStar($row);
 				} catch (IncompleteEntityException $e) {
 					// don't let incomplete entities throw fatal errors
 					unset($rows[$i]);

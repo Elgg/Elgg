@@ -1,38 +1,26 @@
 <?php
+
 namespace Elgg\Notifications;
 
-
-class SubscriptionsServiceTest extends \PHPUnit_Framework_TestCase {
+class SubscriptionsServiceTest extends \Elgg\TestCase {
 
 	public function setUp() {
 		$this->containerGuid = 42;
 
 		// mock \ElggObject that has a container guid
 		$object = $this->getMock(
-				'\ElggObject',
-				array('getContainerGUID'),
-				array(),
-				'',
-				false);
+				'\ElggObject', array('getContainerGUID'), array(), '', false);
 		$object->expects($this->any())
 				->method('getContainerGUID')
 				->will($this->returnValue($this->containerGuid));
 
 		// mock event that holds the mock object
 		$this->event = $this->getMock(
-				'\Elgg\Notifications\Event',
-				array('getObject'),
-				array(),
-				'',
-				false);
+				'\Elgg\Notifications\Event', array('getObject'), array(), '', false);
 		$this->event->expects($this->any())
 				->method('getObject')
 				->will($this->returnValue($object));
-		$this->db = $this->getMock('\Elgg\Database',
-				array('getData', 'getTablePrefix', 'sanitizeString'),
-				array(),
-				'',
-				false
+		$this->db = $this->getMock('\Elgg\Database', array('getData', 'getTablePrefix', 'sanitizeString'), array(), '', false
 		);
 		$this->db->expects($this->any())
 				->method('getTablePrefix')
@@ -52,11 +40,7 @@ class SubscriptionsServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testGetSubscriptionsWithBadObject() {
 		$this->event = $this->getMock(
-				'\Elgg\Notifications\Event',
-				array('getObject'),
-				array(),
-				'',
-				false);
+				'\Elgg\Notifications\Event', array('getObject'), array(), '', false);
 		$this->event->expects($this->any())
 				->method('getObject')
 				->will($this->returnValue(null));
@@ -134,5 +118,5 @@ class SubscriptionsServiceTest extends \PHPUnit_Framework_TestCase {
 		}
 		return $obj;
 	}
-}
 
+}

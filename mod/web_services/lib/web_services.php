@@ -87,6 +87,10 @@ function execute_method($method) {
 	// Execute function: Construct function and calling parameters
 	$serialised_parameters = trim($serialised_parameters, ", ");
 
+	// Sadly we probably can't get rid of this eval() in 2.x. Doing so would involve
+	// replacing serialise_parameters(), which does a bunch of weird stuff we need to
+	// stay BC with 2.x. There are tests for a lot of these quirks in ElggCoreWebServicesApiTest
+	// particularly in testSerialiseParametersCasting().
 	$arguments = eval("return [$serialised_parameters];");
 
 	if ($API_METHODS[$method]['assoc']) {
@@ -233,15 +237,23 @@ function _elgg_ws_get_parameter_names($method) {
 }
 
 /**
- * Serialize an array of parameters for an API method call
+ * Serialize an array of parameters for an API method call, applying transformations
+ * to values depending on the declared parameter type, and returning a string of PHP
+ * code representing the contents of a PHP array literal.
+ *
+ * A leading comma needs to be removed from the output.
+ *
+ * @see \ElggCoreWebServicesApiTest::testSerialiseParametersCasting
  *
  * @param string $method     API method name
  * @param array  $parameters Array of parameters
  *
- * @return string or exception
+ * @return string or exception E.g. ",'foo',2.1"
  * @throws APIException
  * @since 1.7.0
  * @access private
+ *
+ * @todo in 3.0 this should return an array of parameter values instead of a string of code.
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -280,6 +292,9 @@ function serialise_parameters($method, $parameters) {
 
 				break;
 			case 'string':
+				// This is using addcslashes() to escape characters to be inside a
+				// single-quoted string literal in PHP code.
+				// TODO in 3.0, convert to simple trim(), but this won't be completely BC.
 				$serialised_parameters .= ",'" . addcslashes(trim($parameters[$key]), "'") . "'";
 				break;
 			case 'float':
@@ -295,6 +310,9 @@ function serialise_parameters($method, $parameters) {
 				$array = "array(";
 
 				foreach ($parameters[$key] as $k => $v) {
+					// This is using sanitise_string() to escape characters to be inside a
+					// single-quoted string literal in PHP code. Not sure what we have to do
+					// to keep this safe in 3.0...
 					$k = sanitise_string($k);
 					$v = sanitise_string($v);
 

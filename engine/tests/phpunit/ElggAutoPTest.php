@@ -1,6 +1,6 @@
 <?php
 
-class ElggAutoPTest extends \PHPUnit_Framework_TestCase {
+class ElggAutoPTest extends \Elgg\TestCase {
 
 	/**
 	 * @var \ElggAutoP
@@ -10,7 +10,7 @@ class ElggAutoPTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$this->_autop = new \ElggAutoP();
 	}
-	
+
 	public function testDomRoundtrip() {
 		$d = dir(__DIR__ . '/test_files/autop');
 		$in = file_get_contents($d->path . "/domdoc_in.html");
@@ -22,7 +22,7 @@ class ElggAutoPTest extends \PHPUnit_Framework_TestCase {
 		$doc->loadHTML("<html><meta http-equiv='content-type' content='text/html; charset=utf-8'><body>"
 				. $in . '</body></html>');
 		$serialized = $doc->saveHTML();
-		list(,$out) = explode('<body>', $serialized, 2);
+		list(, $out) = explode('<body>', $serialized, 2);
 		list($out) = explode('</body>', $out, 2);
 		$out = $this->flattenString($out);
 
@@ -48,7 +48,7 @@ class ElggAutoPTest extends \PHPUnit_Framework_TestCase {
 				$tests[] = $m[1];
 			}
 		}
-
+		
 		$data = array();
 		foreach ($tests as $test) {
 			$data[] = array(
@@ -68,4 +68,5 @@ class ElggAutoPTest extends \PHPUnit_Framework_TestCase {
 		$r = preg_replace('/[\n\r]+/', '', $string);
 		return $r;
 	}
+
 }

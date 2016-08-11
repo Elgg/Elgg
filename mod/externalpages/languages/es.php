@@ -4,7 +4,7 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'expages' => "P&aacute;ginas externas",
+	'expages' => "Páginas del sitio",
 	'admin:appearance:expages' => "P&aacute;ginas externas",
 	'expages:edit:viewpage' => "Ver página en el sitio",
 	'expages:about' => "Acerca de",

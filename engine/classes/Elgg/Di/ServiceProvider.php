@@ -62,6 +62,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
+ * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
@@ -71,6 +72,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
+ * @property-read \Elgg\UploadService                      $uploads
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
@@ -295,7 +297,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
-			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax);
+			if (PHP_SAPI === 'cli') {
+				$transport = new \Elgg\Http\OutputBufferTransport();
+			} else {
+				$transport = new \Elgg\Http\HttpProtocolTransport();
+			}
+			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport);
 		});
 
 		$this->setFactory('router', function(ServiceProvider $c) {
@@ -332,6 +339,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \ElggSession($session);
 		});
 
+		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
+
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
 			return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
 		});
@@ -361,6 +370,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('timer', \Elgg\Timer::class);
 
 		$this->setClassName('translator', \Elgg\I18n\Translator::class);
+
+		$this->setFactory('uploads', function(ServiceProvider $c) {
+			return new \Elgg\UploadService($c->request);
+		});
 
 		$this->setFactory('upgrades', function(ServiceProvider $c) {
 			return new \Elgg\UpgradeService(

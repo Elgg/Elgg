@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg\Amd;
 
-
-class ViewFilterTest extends \PHPUnit_Framework_TestCase {
+class ViewFilterTest extends \Elgg\TestCase {
 
 	public function testHandlesShortViewNames() {
 		$viewFilter = new \Elgg\Amd\ViewFilter();
@@ -53,5 +53,5 @@ class ViewFilterTest extends \PHPUnit_Framework_TestCase {
 		$filteredContent = $viewFilter->filter('js/foobar/my/mod.jst', $originalContent);
 		$this->assertEquals($originalContent, $filteredContent);
 	}
-}
 
+}

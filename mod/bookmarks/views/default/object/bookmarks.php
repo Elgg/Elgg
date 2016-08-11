@@ -111,9 +111,9 @@ HTML;
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'content' => $content,
+		'icon' => $owner_icon,
 	);
 	$params = $params + $vars;
-	$body = elgg_view('object/elements/summary', $params);
+	echo elgg_view('object/elements/summary', $params);
 	
-	echo elgg_view_image_block($owner_icon, $body);
 }

@@ -6,6 +6,7 @@ use Elgg\Database\EntityTable;
 use Elgg\Database\EntityTable\UserFetchFailureException;
 use ElggAnnotation;
 use ElggEntity;
+use ElggRiverItem;
 use ElggMetadata;
 use ElggSession;
 use InvalidArgumentException;
@@ -130,6 +131,36 @@ class UserCapabilities {
 	}
 
 	/**
+	 * Can a user delete this river item?
+	 *
+	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" plugin hook.
+	 *
+	 * @note This is not called by elgg_delete_river().
+	 *
+	 * @param ElggRiverItem $item      River item
+	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
+	 *
+	 * @return bool Whether this river item should be considered deletable by the given user.
+	 * @since 2.3
+	 * @see elgg_set_ignore_access()
+	 */
+	public function canDeleteRiverItem(ElggRiverItem $item, $user_guid = 0) {
+		try {
+			$user = $this->entities->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
+		}
+
+		$return = ($user && $user->isAdmin());
+
+		$params = [
+			'item' => $item,
+			'user' => $user,
+		];
+		return $this->hooks->trigger('permissions_check:delete', 'river', $params, $return);
+	}
+
+	/**
 	 * Can a user edit metadata on this entity?
 	 *
 	 * If no specific metadata is passed, it returns whether the user can
@@ -243,6 +274,25 @@ class UserCapabilities {
 			$user_guid = $user->guid;
 		}
 
+		$params = [
+			'container' => $entity,
+			'user' => $user,
+			'subtype' => $subtype
+		];
+
+		// Unlike permissions, logic check can be used to prevent certain entity
+		// types from being contained by other entity types,
+		// e.g. discussion reply objects can only be contained by discussion objects.
+		// This hook can also be used to apply status logic, e.g. to disallow
+		// new replies in closed discussions.
+		// We do not take a stand hence the return is null. This can be used by
+		// handlers to check if another hook has modified the value.
+		$logic_check = $this->hooks->trigger('container_logic_check', $type, $params);
+
+		if ($logic_check === false) {
+			return false;
+		}
+		
 		$return = false;
 		if ($entity) {
 			// If the user can edit the container, they can also write to it
@@ -251,12 +301,9 @@ class UserCapabilities {
 			}
 		}
 
-		// See if anyone else has anything to say
-		$params = [
-			'container' => $entity,
-			'user' => $user,
-			'subtype' => $subtype
-		];
+		// Container permissions can prevent users from writing to an entity.
+		// For instance, these permissions can prevent non-group members from writing
+		// content to the group.
 		return $this->hooks->trigger('container_permissions_check', $type, $params, $return);
 	}
 

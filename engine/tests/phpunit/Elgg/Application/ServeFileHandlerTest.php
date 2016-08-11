@@ -2,9 +2,7 @@
 
 namespace Elgg\Application;
 
-use PHPUnit_Framework_TestCase;
-
-class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
+class ServeFileHandlerTest extends \Elgg\TestCase {
 
 	/**
 	 * @var ServeFileHandler
@@ -17,8 +15,6 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 	protected $file;
 
 	public function setUp() {
-		$app = _elgg_testing_application();
-		$dataroot = _elgg_testing_config()->getDataPath();
 
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
@@ -90,7 +86,7 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 
 		sleep(1); // sometimes tests are too fast
 		$this->file->setModifiedTime();
-		
+
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(403, $response->getStatusCode());
 	}
@@ -199,4 +195,5 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(304, $response->getStatusCode());
 	}
+
 }
