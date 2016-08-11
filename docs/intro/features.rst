@@ -1,8 +1,6 @@
 Features
 ########
 
-Demo: http://demo.elgg.org/
-
 Showcases: https://community.elgg.org/showcase
 
 For developers
@@ -29,7 +27,7 @@ For admins
  * Responsive, mobile-friendly design
  * RSS support
  * Activity stream
- * Plugins for common content types like blogs, bookmarks, files, microblogging, private messages, documents, message boards, discussion 
+ * Plugins for common content types like blogs, bookmarks, files, microblogging, private messages, documents, message boards, discussion
  * User authentication and administration
 
 If you need more functionality than what Elgg offers out-of-the-box there are a couple of options:
@@ -37,4 +35,3 @@ If you need more functionality than what Elgg offers out-of-the-box there are a 
  * Add more by :doc:`installing plugins </admin/plugins>` - for example, blogs, forums, social bookmarks
  * Develop your own features via plugins
  * Hire someone to do the above for you
-
