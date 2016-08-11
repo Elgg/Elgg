@@ -6,7 +6,7 @@ It is a great fit for building any app where users log in and share information.
 
 It has been used to build `all kinds of social apps`__:
 
-__ http://community.elgg.org/showcase
+__ https://elgg.org/showcase
 
  * open networks (similar to Facebook)
  * topical (like the Elgg Community)
