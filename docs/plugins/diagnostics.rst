@@ -6,7 +6,7 @@ For the technically savvy user, system diagnostics enables you to quickly evalua
 To use:
 
 - Log in as Administrator
-- Go to Administration -> Administer -> Utilities ->System diagnostics
+- Go to Administration -> Administer -> Utilities ->System Diagnostics
 - Click 'Download'
 
 System diagnostics dump file contents:
