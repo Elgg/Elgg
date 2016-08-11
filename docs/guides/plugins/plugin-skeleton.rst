@@ -147,4 +147,4 @@ Javascript and CSS will live in the views system. See :doc:`/guides/javascript`.
 activate.php and deactivate.php
 -------------------------------
 
-The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run respectively upon plugin activation or deactivation. Use these files to perform one-time events such as registering a persistent admin notice, registering subtypes, or performing garbage collection when deactivated.
+The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run respectively upon plugin activation or deactivation. Use these files to perform one-time events such as registering a persistent admin notice or performing garbage collection when deactivated.

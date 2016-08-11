@@ -9,6 +9,8 @@
 elgg_register_event_handler('init', 'system', 'site_notifications_init');
 
 function site_notifications_init() {
+	add_subtype('object', 'site_notification', SiteNotification::class);
+
 	// register as a notification type
 	elgg_register_notification_method('site');
 	elgg_register_plugin_hook_handler('send', 'notification:site', 'site_notifications_send');

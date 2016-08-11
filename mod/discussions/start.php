@@ -10,6 +10,8 @@ elgg_register_event_handler('init', 'system', 'discussion_init');
  */
 function discussion_init() {
 
+	add_subtype('object', 'discussion_reply', ElggDiscussionReply::class);
+
 	elgg_register_library('elgg:discussion', __DIR__ . '/lib/discussion.php');
 
 	elgg_register_menu_item('site', [

@@ -19,13 +19,13 @@ elgg_register_event_handler('init', 'system', 'blog_init');
  */
 function blog_init() {
 
+	add_subtype('object', 'blog', ElggBlog::class);
+
 	elgg_register_library('elgg:blog', __DIR__ . '/lib/blog.php');
 
 	// add a site navigation item
 	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'blog/all');
 	elgg_register_menu_item('site', $item);
-
-	elgg_register_event_handler('upgrade', 'upgrade', 'blog_run_upgrades');
 
 	// add to the main css
 	elgg_extend_view('elgg.css', 'blog/css');
@@ -263,21 +263,4 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
 	return $return_value;
-}
-
-/**
- * Upgrade from 1.7 to 1.8.
- */
-function blog_run_upgrades($event, $type, $details) {
-	$blog_upgrade_version = elgg_get_plugin_setting('upgrade_version', 'blogs');
-
-	if (!$blog_upgrade_version) {
-		 // When upgrading, check if the ElggBlog class has been registered as this
-		 // was added in Elgg 1.8
-		if (!update_subtype('object', 'blog', 'ElggBlog')) {
-			add_subtype('object', 'blog', 'ElggBlog');
-		}
-
-		elgg_set_plugin_setting('upgrade_version', 1, 'blogs');
-	}
 }
