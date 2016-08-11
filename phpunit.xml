@@ -1,8 +1,13 @@
 <phpunit bootstrap="./vendor/autoload.php">
 	<testsuites>
-		<testsuite name="All Tests">
+		<testsuite name="Elgg">
 			<directory>./engine/tests/phpunit/</directory>
 			<directory>./engine/classes/</directory>
+		</testsuite>
+		<testsuite name="Discussions">
+			<directory>./mod/discussions/tests/phpunit/</directory>
+			<directory>./mod/discussions/classes/</directory>
+			<directory>./mod/discussions/lib/</directory>
 		</testsuite>
 	</testsuites>
 
