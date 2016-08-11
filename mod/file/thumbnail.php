@@ -5,6 +5,9 @@
  *
  * @package ElggFile
  */
+
+elgg_deprecated_notice('thumbnail.php is no longer in use and will be removed. Do not include or require it. Use elgg_get_inline_url() instead.', '3.0');
+
 $autoload_root = dirname(dirname(__DIR__));
 if (!is_file("$autoload_root/vendor/autoload.php")) {
 	$autoload_root = dirname(dirname(dirname($autoload_root)));

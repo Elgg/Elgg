@@ -322,30 +322,4 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 		return false;
 	}
-
-
-	
-	/**
-	 * Deprecated methods
-	 */
-
-	/**
-	 * Construct a file path matrix for an entity.
-	 *
-	 * @param int $guid The guid of the entity to store the data under.
-	 *
-	 * @return string The path where the entity's data will be stored relative to the data dir.
-	 * @deprecated 1.9 Use \Elgg\EntityDirLocator()
-	 */
-	protected function makeFileMatrix($guid) {
-		elgg_deprecated_notice('\ElggDiskFilestore::makeFileMatrix() is deprecated by \Elgg\EntityDirLocator', 1.9);
-		$entity = get_entity($guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return false;
-		}
-
-		$dir = new \Elgg\EntityDirLocator($guid);
-		return $dir->getPath();
-	}
 }

@@ -50,55 +50,47 @@ interface Friendable {
 	public function isFriendOf($user_guid);
 
 	/**
-	 * Returns this entity's friends
+	 * Gets this entity's friends
 	 *
-	 * @param string $subtype The subtype of entity to return
-	 * @param int    $limit   The number of entities to return
-	 * @param int    $offset  Indexing offset
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity, relationship name to 'friend' and type to 'user'.
+	 *
+	 * @return array|false Array of \ElggUser, or false, depending on success
+	 */
+	public function getFriends(array $options = []);
+
+	/**
+	 * Gets users who have made this entity a friend
+	 *
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity, relationship name to 'friend', type to 'user'
+	 *                       and inverse_relationship to true.
+	 *
+	 * @return array|false Array of \ElggUser, or false, depending on success
+	 */
+	public function getFriendsOf(array $options = []);
+
+	/**
+	 * Get an array of \ElggObject owned by this entity.
+	 *
+	 * @param array $options Options array. See elgg_get_entities() for a list of options.
+	 *                       'type' is set to object and owner_guid to this entity.
 	 *
 	 * @return array|false
 	 */
-	public function getFriends($subtype = "", $limit = 10, $offset = 0);
+	public function getObjects(array $options = []);
 
 	/**
-	 * Returns entities that have made this entity a friend
+	 * Get an array of \ElggObjects owned by this entity's friends.
 	 *
-	 * @param string $subtype The subtype of entity to return
-	 * @param int    $limit   The number of entities to return
-	 * @param int    $offset  Indexing offset
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity, type to 'object', relationship name to 'friend'
+	 *                       and relationship_join_on to 'container_guid'.
 	 *
 	 * @return array|false
 	 */
-	public function getFriendsOf($subtype = "", $limit = 10, $offset = 0);
-
-	/**
-	 * Returns objects in this entity's container
-	 *
-	 * @param string $subtype The subtype of entity to return
-	 * @param int    $limit   The number of entities to return
-	 * @param int    $offset  Indexing offset
-	 *
-	 * @return array|false
-	 */
-	public function getObjects($subtype = "", $limit = 10, $offset = 0);
-
-	/**
-	 * Returns objects in the containers of this entity's friends
-	 *
-	 * @param string $subtype The subtype of entity to return
-	 * @param int    $limit   The number of entities to return
-	 * @param int    $offset  Indexing offset
-	 *
-	 * @return array|false
-	 */
-	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0);
-
-	/**
-	 * Returns the number of object entities in this entity's container
-	 *
-	 * @param string $subtype The subtype of entity to count
-	 *
-	 * @return int
-	 */
-	public function countObjects($subtype = "");
+	public function getFriendsObjects(array $options = []);
 }

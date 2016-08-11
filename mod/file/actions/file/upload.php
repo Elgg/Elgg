@@ -79,6 +79,20 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 	}
 } else if ($file->exists()) {
 	$file->save();
+
+	if (isset($reset_icon_urls)) {
+		// we touch the thumbs because we want new URLs from \Elgg\FileService\File::getURL
+		$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
+		foreach ($thumbnails as $thumbnail) {
+			$thumbfile = new ElggFile();
+			$thumbfile->owner_guid = $file->owner_guid;
+			$thumbfile->setFilename($thumbnail);
+			if ($thumbfile->exists()) {
+				$thumb_filename = $thumbfile->getFilenameOnFilestore();
+				touch($thumb_filename);
+			}
+		}
+	}
 }
 
 // file saved so clear sticky form

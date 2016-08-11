@@ -201,11 +201,6 @@ class NotificationsService {
 				break;
 			}
 
-			// test for usage of the deprecated override hook
-			if ($this->existsDeprecatedNotificationOverride($event)) {
-				continue;
-			}
-
 			$subscriptions = $this->subscriptions->getSubscriptions($event);
 
 			// return false to stop the default notification sender
@@ -530,30 +525,5 @@ class NotificationsService {
 		}
 
 		return $this->deprSubjects[$type][$subtype];
-	}
-
-	/**
-	 * Is someone using the deprecated override
-	 *
-	 * @param \Elgg\Notifications\Event $event Event
-	 * @return boolean
-	 */
-	protected function existsDeprecatedNotificationOverride(\Elgg\Notifications\Event $event) {
-		$entity = $event->getObject();
-		if (!elgg_instanceof($entity)) {
-			return false;
-		}
-		$params = array(
-			'event' => $event->getAction(),
-			'object_type' => $entity->getType(),
-			'object' => $entity,
-		);
-		$hookresult = $this->hooks->trigger('object:notifications', $entity->getType(), $params, false);
-		if ($hookresult === true) {
-			elgg_deprecated_notice("Using the plugin hook 'object:notifications' has been deprecated by the hook 'send:before', 'notifications'", 1.9);
-			return true;
-		} else {
-			return false;
-		}
 	}
 }

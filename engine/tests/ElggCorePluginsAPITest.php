@@ -249,14 +249,14 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 	// \ElggPlugin
 	public function testElggPluginIsValid() {
 		
-		$test_plugin = new \ElggPlugin('profile');
+		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
 		
 		$this->assertIdentical(true, $test_plugin->isValid());
 	}
 	
 	public function testElggPluginGetID() {
 		
-		$test_plugin = new \ElggPlugin('profile');
+		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
 		
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}

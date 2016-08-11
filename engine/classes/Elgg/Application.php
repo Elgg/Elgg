@@ -170,7 +170,6 @@ class Application {
 			'widgets.php',
 
 			// backward compatibility
-			'deprecated-1.9.php',
 			'deprecated-1.10.php',
 			'deprecated-1.11.php',
 			'deprecated-1.12.php',
@@ -318,9 +317,6 @@ class Application {
 	 * Get a Database wrapper for performing queries without booting Elgg
 	 *
 	 * If settings.php has not been loaded, it will be loaded to configure the DB connection.
-	 *
-	 * @note Do not type hint on \Elgg\Database, as this will fail in 3.0. If you must type hint,
-	 *       expect an \Elgg\Application\Database.
 	 *
 	 * @note Before boot, the Database instance will not yet be bound to a Logger.
 	 *
