@@ -66,8 +66,7 @@ $params = array(
 	'metadata' => $metadata,
 	'subtitle' => $subtitle,
 	'content' => $content,
+	'icon' => $poster_icon,
 );
 $params = $params + $vars;
-$list_body = elgg_view('object/elements/summary', $params);
-
-echo elgg_view_image_block($poster_icon, $list_body);
+echo elgg_view('object/elements/summary', $params);

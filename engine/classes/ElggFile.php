@@ -1,5 +1,9 @@
 <?php
 
+use Elgg\Filesystem\MimeTypeDetector;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * This class represents a physical file.
  *
@@ -18,10 +22,13 @@
  * @package    Elgg.Core
  * @subpackage DataModel.File
  *
- * @property string $mimetype   MIME type of the file
- * @property string $simpletype Category of the file
+ * @property string $mimetype         MIME type of the file
+ * @property string $simpletype       Category of the file
+ * @property string $originalfilename Filename of the original upload
+ * @property int    $upload_time      Timestamp of the upload action, used as a filename prefix
+ * @property string $filestore_prefix Prefix (directory) on user's filestore where the file is saved
  */
-class ElggFile extends \ElggObject {
+class ElggFile extends ElggObject {
 
 	/**
 	 * @var resource|null File handle used to identify this file in a filestore. Created by open.
@@ -131,7 +138,7 @@ class ElggFile extends \ElggObject {
 
 		$mime = $default;
 
-		$detected = (new \Elgg\Filesystem\MimeTypeDetector())->tryStrategies($file);
+		$detected = (new MimeTypeDetector())->tryStrategies($file);
 		if ($detected) {
 			$mime = $detected;
 		}
@@ -178,24 +185,24 @@ class ElggFile extends \ElggObject {
 	 *
 	 * @return resource File handler
 	 *
-	 * @throws IOException|InvalidParameterException
+	 * @throws IOException
+	 * @throws InvalidParameterException
 	 */
 	public function open($mode) {
 		if (!$this->getFilename()) {
-			throw new \IOException("You must specify a name before opening a file.");
+			throw new IOException("You must specify a name before opening a file.");
 		}
 
 		// See if file has already been saved
 		// seek on datastore, parameters and name?
-
 		// Sanity check
 		if (
-			($mode != "read") &&
-			($mode != "write") &&
-			($mode != "append")
+				($mode != "read") &&
+				($mode != "write") &&
+				($mode != "append")
 		) {
 			$msg = "Unrecognized file mode '" . $mode . "'";
-			throw new \InvalidParameterException($msg);
+			throw new InvalidParameterException($msg);
 		}
 
 		// Open the file handle
@@ -263,7 +270,7 @@ class ElggFile extends \ElggObject {
 		if ($this->getGUID() && $result) {
 			$result = parent::delete();
 		}
-		
+
 		return $result;
 	}
 
@@ -367,12 +374,12 @@ class ElggFile extends \ElggObject {
 		if (!$this->exists()) {
 			return false;
 		}
-		
+
 		if (!$filename) {
 			$filename = $this->getFilename();
 		}
 		$filestorename = $this->getFilenameOnFilestore();
-		
+
 		$this->owner_guid = $owner_guid;
 		$this->setFilename($filename);
 		$this->open('write');
@@ -382,14 +389,87 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
+	 * Writes contents of the uploaded file to an instance of ElggFile
+	 *
+	 * @note Note that this function moves the file and populates properties,
+	 * but does not call ElggFile::save().
+	 *
+	 * @note This method will automatically assign a filename on filestore based
+	 * on the upload time and filename. By default, the file will be written
+	 * to /file directory on owner's filestore. You can change this directory,
+	 * by setting 'filestore_prefix' property of the ElggFile instance before
+	 * calling this method.
+	 *
+	 * @param UploadedFile $upload Uploaded file object
+	 * @return bool 
+	 */
+	public function acceptUploadedFile(UploadedFile $upload) {
+		if (!$upload->isValid()) {
+			return false;
+		}
+
+		$old_filestorename = '';
+		if ($this->exists()) {
+			$old_filestorename = $this->getFilenameOnFilestore();
+		}
+
+		$originalfilename = $upload->getClientOriginalName();
+		$this->originalfilename = $originalfilename;
+		if (empty($this->title)) {
+			$this->title = htmlspecialchars($this->originalfilename, ENT_QUOTES, 'UTF-8');
+		}
+
+		$this->upload_time = time();
+		$prefix = $this->filestore_prefix ? : 'file';
+		$prefix = trim($prefix, '/');
+		$filename = elgg_strtolower("$prefix/{$this->upload_time}{$this->originalfilename}");
+		$this->setFilename($filename);
+		$this->filestore_prefix = $prefix;
+
+		$hook_params = [
+			'file' => $this,
+			'upload' => $upload,
+		];
+
+		$uploaded = _elgg_services()->hooks->trigger('upload', 'file', $hook_params);
+		if ($uploaded !== true && $uploaded !== false) {
+			$filestorename = $this->getFilenameOnFilestore();
+			try {
+				$uploaded = $upload->move(pathinfo($filestorename, PATHINFO_DIRNAME), pathinfo($filestorename, PATHINFO_BASENAME));
+			} catch (FileException $ex) {
+				_elgg_services()->logger->error($ex->getMessage());
+				$uploaded = false;
+			}
+		}
+
+		if ($uploaded) {
+			if ($old_filestorename && $old_filestorename != $this->getFilenameOnFilestore()) {
+				// remove old file
+				unlink($old_filestorename);
+			}
+			$mime_type = $this->detectMimeType(null, $upload->getClientMimeType());
+			$this->setMimeType($mime_type);
+			$this->simpletype = elgg_get_file_simple_type($mime_type);
+			_elgg_services()->events->triggerAfter('upload', 'file', $this);
+			return true;
+		}
+		
+		return false;
+	}
+
+	/**
 	 * Get property names to serialize.
 	 *
 	 * @return string[]
 	 */
 	public function __sleep() {
 		return array_diff(array_keys(get_object_vars($this)), array(
+			// Don't persist filestore, which contains CONFIG
+			// https://github.com/Elgg/Elgg/issues/9081#issuecomment-152859856
+			'filestore',
 			// a resource
 			'handle',
 		));
 	}
+
 }

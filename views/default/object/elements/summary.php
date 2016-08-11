@@ -1,13 +1,9 @@
 <?php
+
 /**
  * Object summary
- *
- * Sample output
- * <ul class="elgg-menu elgg-menu-entity"><li>Public</li><li>Like this</li></ul>
- * <h3><a href="">Title</a></h3>
- * <p class="elgg-subtext">Posted 3 hours ago by George</p>
- * <p class="elgg-tags"><a href="">one</a>, <a href="">two</a></p>
- * <div class="elgg-content">Excerpt text</div>
+ * Passing an 'icon' with the variables will wrap the listing in an image block. In that case,
+ * variables not listed in @uses (e.g. image_alt) will be passed to the image block.
  *
  * @uses $vars['entity']    ElggEntity
  * @uses $vars['title']     Title link (optional) false = no title, '' = default
@@ -15,45 +11,50 @@
  * @uses $vars['subtitle']  HTML for the subtitle (optional)
  * @uses $vars['tags']      HTML for the tags (default is tags on entity, pass false for no tags)
  * @uses $vars['content']   HTML for the entity content (optional)
+ * @uses $vars['icon']      Object icon. If set, the listing will be wrapped with an image block
+ * @uses $vars['class']     Class selector for the image block
  */
-
-$entity = $vars['entity'];
-
-$title_link = elgg_extract('title', $vars, '');
-if ($title_link === '') {
-	if (isset($entity->title)) {
-		$text = $entity->title;
-	} else {
-		$text = $entity->name;
-	}
-	$params = array(
-		'text' => elgg_get_excerpt($text, 100),
-		'href' => $entity->getURL(),
-		'is_trusted' => true,
-	);
-	$title_link = elgg_view('output/url', $params);
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	elgg_log("object/elements/summary expects an ElggEntity in \$vars['entity']", 'ERROR');
 }
 
-$metadata = elgg_extract('metadata', $vars, '');
-$subtitle = elgg_extract('subtitle', $vars, '');
-$content = elgg_extract('content', $vars, '');
+$title = elgg_extract('title', $vars, '');
+if ($title === '' && $entity instanceof ElggEntity) {
+	$vars['title'] = elgg_view('output/url', [
+		'text' => elgg_get_excerpt($entity->getDisplayName(), 100),
+		'href' => $entity->getURL(),
+	]);
+}
 
 $tags = elgg_extract('tags', $vars, '');
 if ($tags === '') {
-	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
+	$tags = elgg_view('output/tags', [
+		'entity' => $entity,
+	]);
 }
 
-if ($metadata) {
-	echo $metadata;
-}
-if ($title_link) {
-	echo "<h3>$title_link</h3>";
-}
-echo "<div class=\"elgg-subtext\">$subtitle</div>";
-echo $tags;
+$metadata = elgg_view('object/elements/summary/metadata', $vars);
+$title = elgg_view('object/elements/summary/title', $vars);
+$subtitle = elgg_view('object/elements/summary/subtitle', $vars);
+$extensions = elgg_view('object/summary/extend', $vars);
+$content = elgg_view('object/elements/summary/content', $vars);
 
-echo elgg_view('object/summary/extend', $vars);
+$summary = $metadata . $title . $subtitle . $tags . $extensions . $content;
 
-if ($content) {
-	echo "<div class=\"elgg-content\">$content</div>";
+$icon = elgg_extract('icon', $vars);
+if (isset($icon)) {
+	$params = $vars;
+	foreach (['title', 'metadata', 'subtitle', 'tags', 'content', 'icon', 'class'] as $key) {
+		unset($params[$key]);
+	}
+	$class = (array) elgg_extract('class', $vars, []);
+	$class[] = 'elgg-listing-summary';
+	$params['class'] = $class;
+
+	$params['data-guid'] = $entity->guid;
+
+	echo elgg_view_image_block($icon, $summary, $params);
+} else {
+	echo $summary;
 }

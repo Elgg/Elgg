@@ -1,6 +1,7 @@
 <?php
 
-class ElggPriorityListTest extends \PHPUnit_Framework_TestCase {
+class ElggPriorityListTest extends \Elgg\TestCase {
+
 	public function testAdd() {
 		$pl = new \ElggPriorityList();
 		$elements = array(
@@ -90,7 +91,7 @@ class ElggPriorityListTest extends \PHPUnit_Framework_TestCase {
 		$pl = new \ElggPriorityList();
 
 		$elements = array();
-		for ($i=0; $i<3; $i++) {
+		for ($i = 0; $i < 3; $i++) {
 			$element = new \stdClass();
 			$element->name = "Test Element $i";
 			$element->someAttribute = rand(0, 9999);
@@ -194,7 +195,7 @@ class ElggPriorityListTest extends \PHPUnit_Framework_TestCase {
 
 	public function testPriorityCollision() {
 		$pl = new \ElggPriorityList();
-		
+
 		$elements = array(
 			5 => 'Test element 5',
 			6 => 'Test element 6',
@@ -218,7 +219,7 @@ class ElggPriorityListTest extends \PHPUnit_Framework_TestCase {
 			0 => 'Test element 0',
 			5 => 'Test element 5',
 		);
-		
+
 		$pl = new \ElggPriorityList($elements);
 
 		foreach ($pl as $priority => $element) {
@@ -270,5 +271,5 @@ class ElggPriorityListTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertSame($elements_sorted_string, $test_elements);
 	}
-   
+
 }

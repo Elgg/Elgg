@@ -15,38 +15,41 @@
  * @uses $vars['body']        HTML content of the body block
  * @uses $vars['image']       HTML content of the image block
  * @uses $vars['image_alt']   HTML content of the alternate image block
- * @uses $vars['class']       Optional additional class for media element
+ * @uses $vars['class']       Optional additional class (or an array of classes) for media element
  * @uses $vars['id']          Optional id for the media element
  */
 
 $body = elgg_extract('body', $vars, '');
+unset($vars['body']);
+
 $image = elgg_extract('image', $vars, '');
+unset($vars['image']);
+
 $alt_image = elgg_extract('image_alt', $vars, '');
+unset($vars['image_alt']);
 
-$class = 'elgg-image-block';
-$additional_class = elgg_extract('class', $vars, '');
-if ($additional_class) {
-	$class = "$class $additional_class";
-}
+$class = (array) elgg_extract('class', $vars, []);
+$class[] = 'elgg-image-block';
+$class[] = 'clearfix';
+unset($vars['class']);
 
-$id = '';
-if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
-}
-
-
-$body = "<div class=\"elgg-body\">$body</div>";
+$body = elgg_format_element('div', [
+	'class' => 'elgg-body',
+], $body);
 
 if ($image) {
-	$image = "<div class=\"elgg-image\">$image</div>";
+	$image = elgg_format_element('div', [
+		'class' => 'elgg-image',
+	], $image);
 }
 
 if ($alt_image) {
-	$alt_image = "<div class=\"elgg-image-alt\">$alt_image</div>";
+	$alt_image = elgg_format_element('div', [
+		'class' => 'elgg-image-alt',
+	], $alt_image);
 }
 
-echo <<<HTML
-<div class="$class clearfix" $id>
-	$image$alt_image$body
-</div>
-HTML;
+$params = $vars;
+$params['class'] = $class;
+
+echo elgg_format_element('div', $params, $image . $alt_image . $body);

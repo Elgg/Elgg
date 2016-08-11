@@ -1,6 +1,6 @@
 <?php
 
-class Elgg_Access_AclTest extends PHPUnit_Framework_TestCase {
+class Elgg_Access_AclTest extends \Elgg\TestCase {
 
 	/**
 	 * Ignoring access permissions globally shouldn't affect the results
@@ -52,7 +52,7 @@ class Elgg_Access_AclTest extends PHPUnit_Framework_TestCase {
 		 */
 		$this->markTestIncomplete();
 	}
-	
+
 	/**
 	 * Getting the readable name of a default access_id should return the expected value.
 	 */
@@ -77,6 +77,5 @@ class Elgg_Access_AclTest extends PHPUnit_Framework_TestCase {
 		 */
 		$this->markTestIncomplete();
 	}
-	
-	
+
 }

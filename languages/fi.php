@@ -27,7 +27,7 @@ return array(
 	'adminrequired' => "Tämän sivun näkyminen edellyttää ylläpitäjän oikeuksia.",
 	'membershiprequired' => "Sinun pitää olla ryhmän jäsen nähdäksesi tämän sivun.",
 	'limited_access' => "Sinulla ei ole oikeuksia tämän sivun tarkasteluun.",
-
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -337,6 +337,8 @@ return array(
 	'river:delete' => 'Poista tämä kohde listasta',
 	'river:delete:success' => 'Kohde poistettu',
 	'river:delete:fail' => 'Kohteen poistaminen epäonnistui',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Virheellinen käyttäjä',
 	'activity:owner' => 'Näytä toiminta',
 

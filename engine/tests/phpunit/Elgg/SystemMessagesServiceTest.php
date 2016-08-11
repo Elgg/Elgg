@@ -1,9 +1,10 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\SystemMessages\RegisterSet;
 
-class SystemMessagesServiceTest extends \PHPUnit_Framework_TestCase {
+class SystemMessagesServiceTest extends \Elgg\TestCase {
 
 	/**
 	 * @var SystemMessagesService
@@ -30,7 +31,7 @@ class SystemMessagesServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals([
 			'success' => ['s1', 's2', 's3'],
 			'error' => ['e1', 'e2', 'e3'],
-		], $this->svc->dumpRegister());
+				], $this->svc->dumpRegister());
 
 		$this->assertEmpty($this->svc->dumpRegister());
 	}
@@ -47,15 +48,15 @@ class SystemMessagesServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals([
 			'success' => ['s2', 's3'],
-		], $this->svc->dumpRegister('success'));
+				], $this->svc->dumpRegister('success'));
 
 		$this->assertEquals([
 			'success' => [],
-		], $this->svc->dumpRegister('success'));
+				], $this->svc->dumpRegister('success'));
 
 		$this->assertEquals([
 			'error' => ['e1', 'e2', 'e3'],
-		], $this->svc->dumpRegister('error'));
+				], $this->svc->dumpRegister('error'));
 
 		$this->assertEmpty($this->svc->dumpRegister());
 	}
@@ -86,15 +87,15 @@ class SystemMessagesServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals([
 			'success' => ['s2'],
-		], $this->svc->dumpRegister('success'));
+				], $this->svc->dumpRegister('success'));
 
 		$this->assertEquals([
 			'error' => ['e1'],
-		], $this->svc->dumpRegister('error'));
+				], $this->svc->dumpRegister('error'));
 
 		$this->assertEquals([
 			'notice' => ['n1', 'n2'],
-		], $this->svc->dumpRegister());
+				], $this->svc->dumpRegister());
 	}
 
 	function testSystemMessagesFunction() {
@@ -115,9 +116,10 @@ class SystemMessagesServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals([
 			'notice' => ['n1'],
 			'success' => ['s1', 's2']
-		], system_messages(null, ''));
+				], system_messages(null, ''));
 
 		// clean up
 		_elgg_services()->setValue('systemMessages', $old_svc);
 	}
+
 }

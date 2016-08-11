@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Ajax;
 
 use Elgg\Amd\Config;
@@ -42,6 +43,11 @@ class Service {
 	 * @var bool
 	 */
 	private $response_sent = false;
+
+	/**
+	 * @var array
+	 */
+	private $allowed_views = [];
 
 	/**
 	 * Constructor
@@ -120,7 +126,7 @@ class Service {
 
 		$api_response = new Response();
 		$api_response->setData((object)[
-			'value' => $output,
+					'value' => $output,
 		]);
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
 		$response = $this->buildHttpResponse($api_response);
@@ -200,9 +206,9 @@ class Service {
 		if ($ttl > 0) {
 			// Required to remove headers set by PHP session
 			if (!isset($allow_removing_headers)) {
-				$allow_removing_headers = !elgg_get_config('Elgg\Application_phpunit');
+				$allow_removing_headers = !defined('PHPUNIT_ELGG_TESTING_APPLICATION');
 			}
-			
+
 			if ($allow_removing_headers) {
 				header_remove('Expires');
 				header_remove('Pragma');
@@ -217,7 +223,7 @@ class Service {
 			// if we don't set Expires, Apache will add a far-off max-age and Expires for us.
 			$response->headers->set('Expires', gmdate('D, d M Y H:i:s \G\M\T', time() + $ttl));
 		}
-		
+
 		return $response;
 	}
 
@@ -261,4 +267,32 @@ class Service {
 		return $response;
 	}
 
+	/**
+	 * Register a view to be available for ajax calls
+	 *
+	 * @param string $view The view name
+	 * @return void
+	 */
+	public function registerView($view) {
+		$this->allowed_views[$view] = true;
+	}
+
+	/**
+	 * Unregister a view for ajax calls
+	 *
+	 * @param string $view The view name
+	 * @return void
+	 */
+	public function unregisterView($view) {
+		unset($this->allowed_views[$view]);
+	}
+
+	/**
+	 * Returns an array of views allowed for ajax calls
+	 * @return string[]
+	 */
+	public function getViews() {
+		return array_keys($this->allowed_views);
+	}
+	
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-13 22:44-0400\n"
+"POT-Creation-Date: 2016-08-05 21:19-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,6 @@ msgid "Prerequisites:"
 msgstr ""
 
 #: ../../tutorials/blog.rst:15
-#: ../../tutorials/hello_world.rst:10
 msgid ":doc:`Install Elgg</intro/install>`"
 msgstr ""
 
@@ -139,7 +138,7 @@ msgid "The action will now be available as ``/action/my_blog/save``. By default,
 msgstr ""
 
 #: ../../tutorials/blog.rst:206
-#: ../../tutorials/hello_world.rst:29
+#: ../../tutorials/hello_world.rst:58
 msgid "Registering a page handler"
 msgstr ""
 
@@ -212,71 +211,115 @@ msgid "Hello world"
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:4
-msgid "This tutorial shows you how to add a new page and print the text \"Hello world\" on it."
+msgid "This tutorial shows you how to create a new plugin that consists of a new page with the text \"Hello world\" on it."
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:6
-msgid "In this tutorial we will pretend your site's URL is ``https://elgg.example.com``."
+msgid "Before anything else, you need to :doc:`install Elgg</intro/install>`."
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:8
-msgid "First, you need to:"
+msgid "In this tutorial we will pretend your site's URL is ``https://elgg.example.com``."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:11
-msgid "Create a file called ``start.php`` at the root of your app."
+#: ../../tutorials/hello_world.rst:10
+msgid "First, create a directory that will contain the plugin's files. It should be located under the ``mod/`` directory which is located in your Elgg installation directory. So in this case, create ``mod/hello/``."
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:13
-msgid "Copy this code into ``start.php``:"
+msgid "Manifest file"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:25
-msgid "This piece of code tells Elgg that it should call the function ``hello_world_init()`` once the Elgg core system is initiated."
+#: ../../tutorials/hello_world.rst:15
+msgid "Elgg requires that your plugin has a manifest file that contains information about the plugin. Therefore, in the directory you just created, create a file called ``manifest.xml`` and copy this code into it:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:31
-msgid "The next step is to register a page handler which has the purpose of handling request that users make to the URL ``https://elgg.example.com/hello``."
+#: ../../tutorials/hello_world.rst:32
+msgid "This is the minimum amount of information in a manifest file:"
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:34
-msgid "Update the ``start.php`` to look like this:"
+msgid "``<name>`` is the display name of the plugin"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:50
-msgid "The call to ``elgg_register_page_handler()`` tells Elgg that it should call the function ``hello_world_page_handler()`` when user goes navigates to ``https://elgg.example.com/hello/*``."
+#: ../../tutorials/hello_world.rst:35
+msgid "``<id>`` must be the same as the directory you just created"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:36
+msgid "``<requires>`` must include which version of Elgg your plugin requires"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:37
+msgid "``<author>``, ``<version>`` and ``<description>`` should have some appropriate values but can be filled freely"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:40
+msgid "Initializer"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:42
+msgid "Next, create ``start.php`` in the ``mod/hello/`` directory and copy this code into it:"
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:54
-msgid "The ``hello_world_page_handler()`` passes off rendering the actual page to the ``resources/hello`` view."
+msgid "The above code tells Elgg that it should call the function ``hello_world_init()`` once the Elgg core system is initiated."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:57
-msgid "Create ``views/default/resources/hello.php`` with this content:"
+#: ../../tutorials/hello_world.rst:60
+msgid "The next step is to register a page handler which has the purpose of handling request that users make to the URL ``https://elgg.example.com/hello``."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:74
-msgid "We give an array of parameters to the ``elgg_view_layout()`` function, including:"
+#: ../../tutorials/hello_world.rst:63
+msgid "Update ``start.php`` to look like this:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:76
-msgid "The title of the page"
-msgstr ""
-
-#: ../../tutorials/hello_world.rst:77
-msgid "The contents of the page"
-msgstr ""
-
-#: ../../tutorials/hello_world.rst:78
-msgid "Filter which is left empty because there's currently nothing to filter"
-msgstr ""
-
-#: ../../tutorials/hello_world.rst:80
-msgid "This creates the basic layout for the page. The layout is then run through ``elgg_view_page()`` which assembles and outputs the full page."
+#: ../../tutorials/hello_world.rst:79
+msgid "The call to ``elgg_register_page_handler()`` tells Elgg that it should call the function ``hello_world_page_handler()`` when a user navigates to ``https://elgg.example.com/hello/*``."
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:83
-msgid "You can now go to the address https://elgg.example.com/hello/ and you should see your new page!"
+msgid "The ``hello_world_page_handler()`` passes off rendering the actual page to a view file called ``hello.php``."
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:86
+msgid "View file"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:88
+msgid "Create ``mod/hello/views/default/resources/hello.php`` with this content:"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:105
+msgid "The code creates an array of parameters to be given to the ``elgg_view_layout()`` function, including:"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:107
+msgid "The title of the page"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:108
+msgid "The contents of the page"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:109
+msgid "Filter which is left empty because there's currently nothing to filter"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:111
+msgid "This creates the basic layout for the page. The layout is then run through ``elgg_view_page()`` which assembles and outputs the full page."
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:115
+msgid "Last step"
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:117
+msgid "Finally, activate the plugin through your Elgg administrator page: ``https://elgg.example.com/admin/plugins`` (the new plugin appears at the bottom)."
+msgstr ""
+
+#: ../../tutorials/hello_world.rst:119
+msgid "You can now go to the address ``https://elgg.example.com/hello/`` and you should see your new page!"
 msgstr ""
 
 #: ../../tutorials/index.rst:2
@@ -355,39 +398,39 @@ msgstr ""
 msgid "Elgg needs to be told explicitly that the plugin contains a widget so that it will scan the widget views directory. This is done by calling the elgg\\_register\\_widget\\_type() function. Edit ``/start.php``. In it add these lines:"
 msgstr ""
 
-#: ../../tutorials/widget.rst:56
+#: ../../tutorials/widget.rst:60
 msgid "Now go to your profile page using a web browser and add the “hello, world” widget. It should display “Hello, world!”."
 msgstr ""
 
-#: ../../tutorials/widget.rst:61
+#: ../../tutorials/widget.rst:65
 msgid "For real widgets, it is always a good idea to support :doc:`/guides/i18n`."
 msgstr ""
 
-#: ../../tutorials/widget.rst:64
+#: ../../tutorials/widget.rst:68
 msgid "Allow user customization"
 msgstr ""
 
-#: ../../tutorials/widget.rst:66
+#: ../../tutorials/widget.rst:70
 msgid "Click on the edit link on the toolbar of the widget that you've created. You will notice that the only control it gives you by default is over access (over who can see the widget)."
 msgstr ""
 
-#: ../../tutorials/widget.rst:70
+#: ../../tutorials/widget.rst:74
 msgid "Suppose you want to allow the user to control what greeting is displayed in the widget. Just as Elgg automatically loads ``content.php`` when viewing a widget, it loads ``edit.php`` when a user attempts to edit a widget. Put the following code into ``/views/default/widgets/helloworld/edit.php``:"
 msgstr ""
 
-#: ../../tutorials/widget.rst:92
+#: ../../tutorials/widget.rst:96
 msgid "Notice the relationship between the values passed to the 'name' and the 'value' fields of input/text. The name of the input text box is ``params[message]`` because Elgg will automatically handle widget variables put in the array ``params``. The actual php variable name will be ``message``. If we wanted to use the field ``greeting`` instead of ``message`` we would pass the values ``params[greeting]`` and ``$widget->greeting`` respectively."
 msgstr ""
 
-#: ../../tutorials/widget.rst:100
+#: ../../tutorials/widget.rst:104
 msgid "The reason we set the 'value' option of the array is so that the edit view remembers what the user typed in the previous time he changed the value of his message text."
 msgstr ""
 
-#: ../../tutorials/widget.rst:104
+#: ../../tutorials/widget.rst:108
 msgid "Now to display the user's message we need to modify content.php to use this *message* variable. Edit ``/views/default/widgets/helloworld/content.php`` and change it to:"
 msgstr ""
 
-#: ../../tutorials/widget.rst:116
+#: ../../tutorials/widget.rst:120
 msgid "You should now be able to enter a message in the text box and see it appear in the widget."
 msgstr ""
 

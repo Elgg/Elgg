@@ -9,6 +9,10 @@ php:
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
+# Only clone the repository for the latest commit
+# We do not need the entire commit history to test latest PR
+git:
+  depth: 1
 
 branches:
   except:
@@ -26,6 +30,8 @@ matrix:
     # Lint checks for PHP code and composer.json
     - php: 5.6
       env: VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
       install:
        - phpenv rehash
        - composer travis:install
@@ -36,6 +42,8 @@ matrix:
     # Build and test javascript
     - php: 5.6
       env: VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
       install:
        - npm install
        - composer travis:install
@@ -61,23 +69,24 @@ matrix:
     # End to end tests
     - php: 5.6
       env: E2E=true
+      before_install:
+        - phpenv config-rm xdebug.ini
       install:
        - composer travis:install-with-mysql
        - php -S localhost:8888 index.php &
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-       - phpunit --coverage-clover=coverage.clover
-      after_script:
-       # Report unit test coverage metrics to scrutinizer
-       - wget https://scrutinizer-ci.com/ocular.phar
-       - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+       - ./vendor/bin/phpunit
+       - php -f ./engine/tests/suite.php
 
 services: 
  - mysql
 
-before_install: composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-
+before_install:
+ - phpenv config-rm xdebug.ini
+ - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+  
 install: composer travis:install-with-mysql
 
 script:
@@ -95,3 +104,9 @@ notifications:
 env:
   global:
      secure: "fdpCjdC0Qp/ZJqtrCHE4I/tHXWF1sORftm6khd6geqK7d4qWzIh6HzNN2BlF+2m4nyuyxo2wzPm/oGoqogVpBgrzpQ7SZl7h2/wzgs2C/k39sFGyDisLesTM5DhBDJWcomyqtcnQmKn340Z9KOxiHAt4FOj2FZVN5+tIO5j3Cks="
+
+## Cache dependencies
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.npm

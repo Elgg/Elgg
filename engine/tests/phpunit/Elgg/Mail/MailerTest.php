@@ -1,9 +1,10 @@
 <?php
+
 namespace Elgg\Mail;
 
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
-class MailerTest extends \PHPUnit_Framework_TestCase {
+class MailerTest extends \Elgg\TestCase {
 
 	public $hookArgs = [];
 
@@ -30,9 +31,9 @@ class MailerTest extends \PHPUnit_Framework_TestCase {
 		$subject_expected = "You & me < she.";
 
 		elgg_send_email("Frōm <from@elgg.org>", "Tō <to@elgg.org>", $subject, $body);
-		
+
 		$message = $this->mailer->getLastMessage();
-		
+
 		$this->assertEquals('Tō', $message->getTo()->get('to@elgg.org')->getName());
 		$this->assertEquals('Frōm', $message->getFrom()->get('from@elgg.org')->getName());
 		$this->assertEquals($subject_expected, $message->getSubject());
@@ -86,4 +87,5 @@ class MailerTest extends \PHPUnit_Framework_TestCase {
 	function handleEmailHookTrue() {
 		return true;
 	}
+
 }

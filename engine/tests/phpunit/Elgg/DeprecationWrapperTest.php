@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg;
 
-class DeprecationWrapperTest extends \PHPUnit_Framework_TestCase {
+class DeprecationWrapperTest extends \Elgg\TestCase {
 
 	public $last_stack_line = '';
 
@@ -93,17 +94,27 @@ class DeprecationWrapperTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('value', $obj->{'0'});
 		$this->assertEquals("$file:$line", $this->last_stack_line);
 	}
+
 }
 
 class DeprecationWrapperTestObj1 {
+
 	public $foo = 'foo';
-	public function foo() { return 'foo'; }
-	public function __toString() { return 'foo'; }
+
+	public function foo() {
+		return 'foo';
+	}
+
+	public function __toString() {
+		return 'foo';
+	}
+
 }
 
-
 class DeprecationWrapperTestObj2 extends \ArrayObject {
+
 	public $data = array();
+
 	public function offsetSet($offset, $value) {
 		if (is_null($offset)) {
 			$this->data[] = $value;
@@ -111,14 +122,17 @@ class DeprecationWrapperTestObj2 extends \ArrayObject {
 			$this->data[$offset] = $value;
 		}
 	}
+
 	public function offsetExists($offset) {
 		return array_key_exists($offset, $this->data);
 	}
+
 	public function offsetUnset($offset) {
 		unset($this->data[$offset]);
 	}
+
 	public function offsetGet($offset) {
 		return isset($this->data[$offset]) ? $this->data[$offset] : null;
 	}
-}
 
+}

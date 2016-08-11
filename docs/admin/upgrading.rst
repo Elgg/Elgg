@@ -37,6 +37,14 @@ Basic instructions
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
    If this is not the case, take care to maintain your modifications. 
 
+From 2.2 to 2.3
+===============
+
+ * PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\Elgg\TestCase``.
+ * Some core files now sniff if	``PHPUNIT_ELGG_TESTING_APPLICATION`` constant is set to determine whether Elgg is being bootstrapped for PHPUnit tests. ``phpunit.xml`` configuration needs to updated to include this constant definition.
+ * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_services()->config`` instead.
+ * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
+
 Deprecations in 2.x
 ===================
 

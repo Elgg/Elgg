@@ -24,8 +24,15 @@ Requirements
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
 
-0. Merge commits up from lower branches
-=======================================
+Update composer dependencies
+============================
+Since Elgg 2.3, ``composer.lock`` is committed to the repository. Therefore,
+if any of the composer dependencies require an update, run ``composer update``
+on the corresponding branch and make a pull request with an updated ``composer.lock`` file.
+This will run the test suite and ensure that new dependencies do not break the build.
+
+Merge commits up from lower branches
+====================================
 
 Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other
 branches.
@@ -55,12 +62,12 @@ Make a PR for the branch and wait for automated tests and approval by other dev(
 
 Once merged, we would repeat the process to merge 2.0 commits into 2.1.
 
-1. First new stable minor/major release
-=======================================
+First new stable minor/major release
+====================================
 
 Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release.
 
-2. Prepare the release
+Prepare the release
 ======================
 
 Bring your local git clone up to date.
@@ -101,8 +108,8 @@ Next, submit a PR via GitHub for automated testing and approval by another devel
 
     git push your-remote-fork release-1.12.5
 
-3. Tag the release
-==================
+Tag the release
+===============
 
 Once approved and merged, tag the release:
 
@@ -115,8 +122,8 @@ Once approved and merged, tag the release:
 * Mark GitHub release milestones as completed
 * Move unresolved tickets in released milestones to later milestones
 
-4. Update the website
-=====================
+Update the website
+==================
 
 * ssh to elgg.org
 * Clone https://github.com/Elgg/elgg-scripts
@@ -180,8 +187,8 @@ Update elgg.org
     * Flush APC cache
     * Run upgrade
 
-5. Make the announcement
-========================
+Make the announcement
+=====================
 
 This should be the very last thing you do.
 

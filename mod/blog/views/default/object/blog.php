@@ -86,9 +86,9 @@ if ($full) {
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'content' => $excerpt,
+		'icon' => $owner_icon,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
+	echo elgg_view('object/elements/summary', $params);
 
-	echo elgg_view_image_block($owner_icon, $list_body);
 }

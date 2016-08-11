@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg\Json;
 
-class EmptyKeyEncodingTest extends \PHPUnit_Framework_TestCase {
+class EmptyKeyEncodingTest extends \Elgg\TestCase {
 
 	function testRoundTrip() {
 		$json = <<<EOL
@@ -43,4 +44,5 @@ EOL;
 
 		$this->assertEquals('{"":"foo"}', $json);
 	}
+
 }

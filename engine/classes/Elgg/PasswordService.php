@@ -89,7 +89,8 @@ final class PasswordService {
 
 		// generate link
 		$link = _elgg_services()->config->getSiteUrl() . "changepassword?u=$user_guid&c=$code";
-
+		$link = _elgg_services()->urlSigner->sign($link, '+1 day');
+		
 		// generate email
 		$ip_address = _elgg_services()->request->getClientIp();
 		$message = _elgg_services()->translator->translate(

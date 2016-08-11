@@ -1,37 +1,32 @@
 <?php
-/**
- * Object full rendering
- *
- * Sample output:
- * <div class="elgg-content">
- *     <div class="elgg-image-block">
- *     </div>
- *     <div class="elgg-output">
- *     </div>
- * </div>
- *
- * @uses $vars['entity']   ElggEntity
- * @uses $vars['icon']     HTML for the content icon
- * @uses $vars['summary']  HTML for the content summary
- * @uses $vars['body']     HTML for the content body
- * @uses $vars['class']    Optional additional class for the content wrapper
- */
 
-$icon = elgg_extract('icon', $vars);
-$summary = elgg_extract('summary', $vars);
-$body = elgg_extract('body', $vars);
-$class = elgg_extract('class', $vars);
-if ($class) {
-	$class = "elgg-content clearfix $class";
-} else {
-	$class = "elgg-content clearfix";
+/**
+ * Object full view
+ *
+ * @uses $vars['entity']        ElggEntity
+ * @uses $vars['icon']          HTML for the content icon
+ * @uses $vars['summary']       HTML for the content summary
+ * @uses $vars['body']          HTML for the content body
+ * @uses $vars['class']         Optional additional class for the content wrapper
+ * @uses $vars['header_params'] Vars to pass to the header image block wrapper
+ */
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	elgg_log("object/elements/full expects an ElggEntity in \$vars['entity']", 'ERROR');
 }
 
-$header = elgg_view_image_block($icon, $summary);
+$class = (array) elgg_extract('class', $vars, []);
+$class[] = 'elgg-listing-full';
+$class[] = 'elgg-content';
+$class[] = 'clearfix';
+unset($vars['class']);
 
-echo <<<HTML
-<div class="$class">
-$header
-$body
-</div>
-HTML;
+$header = elgg_view('object/elements/full/header', $vars);
+$body = elgg_view('object/elements/full/body', $vars);
+
+echo elgg_format_element('div', [
+	'class' => $class,
+	'data-guid' => $entity->guid,
+		], $header . $body);
+
+

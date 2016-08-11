@@ -95,7 +95,8 @@ System hooks
 	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
 **creating, river**
-	Triggered before a river item is created. Return false to prevent river item from being created.
+	The options for ``elgg_create_river_item`` are filtered through this hook. You may alter values
+	or return ``false`` to cancel the item creation.
 
 **simplecache:generate, <view>**
 	Triggered when generating the cached content of a view.
@@ -226,6 +227,22 @@ Ajax
 Permission hooks
 ================
 
+**container_logic_check, <entity_type>**
+	Triggered by ``ElggEntity:canWriteToContainer()`` before triggering ``permissions_check`` and ``container_permissions_check``
+	hooks. Unlike permissions hooks, logic check can be used to prevent certain entity types from being contained
+	by other entity types, e.g. discussion replies should only be contained by discussions. This hook can also be
+	used to apply status logic, e.g. do disallow new replies for closed discussions.
+
+	The handler should return ``false`` to prevent an entity from containing another entity. The default value passed to the hook
+	is ``null``, so the handler can check if another hook has modified the value by checking if return value is set.
+	Should this hook return ``false``, ``container_permissions_check`` and ``permissions_check`` hooks will not be triggered.
+
+	The ``$params`` array will contain:
+
+	 * ``container`` - An entity that will be used as a container
+	 * ``user`` - User who will own the entity to be written to container
+	 * ``subtype`` - Subtype of the entity to be written to container (entity type is assumed from hook type)
+
 **container_permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']``
 	as a container for an entity of ``<entity_type>`` and subtype ``$params['subtype']``.
@@ -234,11 +251,23 @@ Permission hooks
 	matching the logged in user, this hook is called *twice*, and in the first call ``$params['container']``
 	will be the *owner*, not the entity's real container.
 
+	The ``$params`` array will contain:
+
+	 * ``container`` - An entity that will be used as a container
+	 * ``user`` - User who will own the entity to be written to container
+	 * ``subtype`` - Subtype of the entity to be written to container (entity type is assumed from hook type)
+
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
 
 **permissions_check:delete, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can delete the entity ``$params['entity']``. Defaults to ``$entity->canEdit()``.
+
+**permissions_check:delete, river**
+	Return boolean for if the user ``$params['user']`` can delete the river item ``$params['item']``. Defaults to
+	``true`` for admins and ``false`` for other users.
+
+	.. note:: This check is not performed when using the deprecated ``elgg_delete_river()``.
 
 **permissions_check, widget_layout**
 	Return boolean for if ``$params['user']`` can edit the widgets in the context passed as
@@ -417,6 +446,18 @@ Files
     ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
     ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
     ``ege*`` filters and menus.
+
+**upload, file**
+    Allows plugins to implement custom logic for moving an uploaded file into an instance of ``ElggFile``.
+    The handler must return ``true`` to indicate that the uploaded file was moved.
+    The handler must return ``false`` to indicate that the uploaded file could not be moved.
+    Other returns will indicate that ``ElggFile::acceptUploadedFile`` should proceed with the
+    default upload logic.
+
+    ``$params`` array includes:
+
+     * ``file`` - instance of ``ElggFile`` to write to
+     * ``upload`` - instance of Symfony's ``UploadedFile``
 
 .. _guides/hooks-list#other:
 

@@ -1,27 +1,27 @@
 <?php
+
 namespace Elgg;
 
+class PluginHooksServiceTest extends \Elgg\TestCase {
 
-class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
-	
 	public function testTriggerCallsRegisteredHandlers() {
 		$hooks = new \Elgg\PluginHooksService();
-		
+
 		$this->setExpectedException('InvalidArgumentException');
-		
+
 		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'throwInvalidArg'));
 
 		$hooks->trigger('foo', 'bar');
 	}
-	
+
 	public function testCanPassParamsAndChangeReturnValue() {
 		$hooks = new \Elgg\PluginHooksService();
 		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'changeReturn'));
-		
+
 		$returnval = $hooks->trigger('foo', 'bar', array(
 			'testCase' => $this,
-		), 1);
-		
+				), 1);
+
 		$this->assertEquals(2, $returnval);
 	}
 
@@ -58,5 +58,5 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 	public static function throwInvalidArg() {
 		throw new \InvalidArgumentException();
 	}
-}
 
+}
