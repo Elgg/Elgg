@@ -15,12 +15,9 @@ __ http://community.elgg.org/showcase
  * educational
  * company blog
 
-There is also a `demo site`_ running a standard installation of Elgg.
-
 This is the canonical documentation for the Elgg_ project.
 
 .. _Elgg: http://elgg.org
-.. _demo site: http://demo.elgg.org
 
 .. toctree::
    :maxdepth: 2
