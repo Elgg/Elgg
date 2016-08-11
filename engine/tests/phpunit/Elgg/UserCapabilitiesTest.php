@@ -27,17 +27,9 @@ class UserCapabilitiesTest extends \Elgg\TestCase {
 	public function setUp() {
 
 		$this->mocks = new EntityMocks($this);
-
+		$this->entities = $this->mocks->getEntityTableMock();
+		
 		$this->hooks = new PluginHooksService();
-
-		$this->entities = $this->getMockBuilder('\Elgg\Database\EntityTable')
-				->setMethods(['get'])
-				->disableOriginalConstructor()
-				->getMock();
-
-		$this->entities->expects($this->any())
-				->method('get')
-				->will($this->returnCallback([$this->mocks, 'get']));
 
 		$this->session = ElggSession::getMock();
 

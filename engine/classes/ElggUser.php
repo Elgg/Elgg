@@ -672,4 +672,40 @@ class ElggUser extends \ElggEntity
 		$this->attributes['password'] = "";
 		$this->attributes['password_hash'] = _elgg_services()->passwords->generateHash($password);
 	}
+
+	/**
+	 * Enable or disable a notification delivery method
+	 *
+	 * @param string $method  Method name
+	 * @param bool   $enabled Enabled or disabled
+	 * @return bool
+	 */
+	public function setNotificationSetting($method, $enabled = true) {
+		$this->{"notification:method:$method"} = (bool) $enabled;
+		return (bool) $this->save();
+	}
+
+	/**
+	 * Returns users's notification settings
+	 * <code>
+	 *    [
+	 *       'email' => true, // enabled
+	 *       'ajax' => false, // disabled
+	 *    ]
+	 * </code>
+	 * 
+	 * @return array
+	 */
+	public function getNotificationSettings() {
+
+		$settings = [];
+
+		$methods = _elgg_services()->notifications->getMethods();
+		foreach ($methods as $method) {
+			$settings[$method] = (bool) $this->{"notification:method:$method"};
+		}
+
+		return $settings;
+	
+	}
 }
