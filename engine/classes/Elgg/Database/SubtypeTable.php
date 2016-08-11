@@ -56,21 +56,30 @@ class SubtypeTable {
 	 * @internal Subtypes are stored in the entity_subtypes table.  There is a foreign
 	 * key in the entities table.
 	 *
-	 * @param string $type    Type
-	 * @param string $subtype Subtype
+	 * @param string $type        Type
+	 * @param string $subtype     Subtype
+	 * @param bool   $auto_create Create subtype entry if missing
 	 *
-	 * @return int Subtype ID
+	 * @return int Subtype ID or false
 	 * @see get_subtype_from_id()
 	 * @access private
 	 */
-	function getId($type, $subtype) {
+	public function getId($type, $subtype, $auto_create = false) {
 		if (!$subtype) {
 			return false;
 		}
 
 		$obj = $this->retrieveFromCache($type, $subtype);
 
-		return $obj ? $obj->id : false;
+		if ($obj) {
+			return (int)$obj->id;
+		}
+
+		if ($auto_create) {
+			return $this->register($type, $subtype);
+		}
+
+		return false;
 	}
 	
 	/**
@@ -81,7 +90,7 @@ class SubtypeTable {
 	 * @see get_subtype_id()
 	 * @access private
 	 */
-	function getSubtype($subtype_id) {
+	public function getSubtype($subtype_id) {
 		if (!$subtype_id) {
 			return '';
 		}
@@ -100,7 +109,7 @@ class SubtypeTable {
 	 *
 	 * @access private
 	 */
-	function retrieveFromCache($type, $subtype) {
+	public function retrieveFromCache($type, $subtype) {
 		foreach ($this->getPopulatedCache() as $obj) {
 			if ($obj->type === $type && $obj->subtype === $subtype) {
 				return $obj;
@@ -125,10 +134,10 @@ class SubtypeTable {
 	 * @see get_subtype_class_from_id()
 	 * @access private
 	 */
-	function getClass($type, $subtype) {
+	public function getClass($type, $subtype) {
 		$obj = $this->retrieveFromCache($type, $subtype);
 
-		return $obj ? $obj->class : null;
+		return ($obj && !empty($obj->class)) ? $obj->class : null;
 	}
 
 	/**
@@ -141,14 +150,18 @@ class SubtypeTable {
 	 * @see get_subtype_from_id()
 	 * @access private
 	 */
-	function getClassFromId($subtype_id) {
+	public function getClassFromId($subtype_id) {
 		if (!$subtype_id) {
 			return null;
 		}
 
 		$cache = $this->getPopulatedCache();
 
-		return isset($cache[$subtype_id]) ? $cache[$subtype_id]->class : null;
+		if (isset($cache[$subtype_id]) && !empty($cache[$subtype_id]->class)) {
+			return $cache[$subtype_id]->class;
+		}
+
+		return null;
 	}
 	
 	/**
@@ -159,9 +172,6 @@ class SubtypeTable {
 	 * it will be loaded as that class automatically when retrieved from the database with
 	 * {@link get_entity()}.
 	 *
-	 * @warning This function cannot be used to change the class for a type-subtype pair.
-	 * Use update_subtype() for that.
-	 *
 	 * @param string $type    The type you're subtyping (site, user, object, or group)
 	 * @param string $subtype The subtype
 	 * @param string $class   Optional class name for the object
@@ -171,29 +181,39 @@ class SubtypeTable {
 	 * @see remove_subtype()
 	 * @see get_entity()
 	 */
-	function add($type, $subtype, $class = "") {
+	public function register($type, $subtype, $class = "") {
 		if (!$subtype) {
 			return 0;
 		}
-	
-		$id = $this->getId($type, $subtype);
-	
-		if (!$id) {
+
+		$obj = $this->retrieveFromCache($type, $subtype);
+		if ($obj) {
+			if ($obj->class === $class) {
+				// matches cache
+				return $obj->id;
+			}
+
+			// must update
 			$sql = "
-				INSERT INTO {$this->db->getTablePrefix()}entity_subtypes
-					(type,  subtype,  class) VALUES
-					(:type, :subtype, :class)
+				UPDATE {$this->db->getTablePrefix()}entity_subtypes
+				SET class = ?
+				WHERE id = ?
 			";
-			$params = [
-				':type' => $type,
-				':subtype' => $subtype,
-				':class' => $class,
-			];
-			$id = $this->db->insertData($sql, $params);
+			$this->db->updateData($sql, false, [$class, $obj->id]);
 
 			$this->invalidateCache();
+
+			return $obj->id;
 		}
-	
+
+		// add new
+		$sql = "
+			INSERT INTO {$this->db->getTablePrefix()}entity_subtypes
+				(type,  subtype,  class) VALUES (?, ?, ?)
+		";
+		$id = $this->db->insertData($sql, [$type, $subtype, $class]);
+
+		$this->invalidateCache();
 		return $id;
 	}
 	
@@ -211,16 +231,12 @@ class SubtypeTable {
 	 * @see add_subtype()
 	 * @see update_subtype()
 	 */
-	function remove($type, $subtype) {
+	public function unregister($type, $subtype) {
 		$sql = "
 			DELETE FROM {$this->db->getTablePrefix()}entity_subtypes
-			WHERE type = :type AND subtype = :subtype
+			WHERE type = ? AND subtype = ?
 		";
-		$params = [
-			':type' => $type,
-			':subtype' => $subtype,
-		];
-		if (!$this->db->deleteData($sql, $params)) {
+		if (!$this->db->deleteData($sql, [$type, $subtype])) {
 			return false;
 		}
 
@@ -229,41 +245,6 @@ class SubtypeTable {
 		return true;
 	}
 	
-	/**
-	 * Update a registered \ElggEntity type, subtype, and class name
-	 *
-	 * @param string $type    Type
-	 * @param string $subtype Subtype
-	 * @param string $class   Class name to use when loading this entity
-	 *
-	 * @return bool
-	 */
-	function update($type, $subtype, $class = '') {
-		$id = $this->getId($type, $subtype);
-		if (!$id) {
-			return false;
-		}
-	
-		$sql = "
-			UPDATE {$this->db->getTablePrefix()}entity_subtypes
-			SET type = :type, subtype = :subtype, class = :class
-			WHERE id = :id
-		";
-		$params = [
-			':type' => $type,
-			':subtype' => $subtype,
-			':class' => $class,
-			':id' => $id,
-		];
-		if (!$this->db->updateData($sql, false, $params)) {
-			return false;
-		}
-
-		$this->invalidateCache();
-
-		return true;
-	}
-
 	/**
 	 * Empty the cache. Also invalidates the boot cache and memcache
 	 *

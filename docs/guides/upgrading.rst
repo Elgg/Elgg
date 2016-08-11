@@ -54,6 +54,12 @@ URLs can now be signed with a SHA-256 HMAC key and validated at any time before 
  * `elgg_http_validate_signed_url()` - validates the signed URL
  * `elgg_signed_request_gatekeeper()` - gatekeeper that validates the signature of the current request
 
+New ``add_subtype()`` and ``update_subtype()`` behavior
+-------------------------------------------------------
+
+Both functions are now identical; they *always* register the subtype and *always* update (or remove) the class name association. Plugins that register a class name, **must always** include the class name.
+
+Plugins no longer need to use ``update_subtype()`` in an ``activate.php`` script.
 
 From 2.1 to 2.2
 ===============
@@ -112,7 +118,7 @@ Removed APIs
 Just a warning that the private entity cache functions (e.g. ``_elgg_retrieve_cached_entity``) have been removed. Some plugins may have been using them. Plugins should not use private APIs as they will more often be removed without notice.
 
 Improved ``elgg/ckeditor`` module
------------------------------------
+---------------------------------
 
 :doc:`elgg/ckeditor module <javascript>` can now be used to add WYSIWYG to a textarea programmatically with ``elgg/ckeditor#bind``.
 

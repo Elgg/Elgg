@@ -15,7 +15,7 @@ activate.php, deactivate.php
 
 The activate.php and deactivate.php files contain procedural code that will run
 upon plugin activation and deactivation. Use these files to perform one-time
-events such as registering a persistent admin notice, registering subtypes, or performing
+events such as registering a persistent admin notice or performing
 garbage collection when deactivated.
 
 manifest.xml

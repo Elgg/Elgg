@@ -1523,11 +1523,11 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function setSubtypeClasses() {
-		add_subtype("object", "plugin", "ElggPlugin");
-		add_subtype("object", "file", "ElggFile");
-		add_subtype("object", "widget", "ElggWidget");
-		add_subtype("object", "comment", "ElggComment");
-		add_subtype("object", "elgg_upgrade", 'ElggUpgrade');
+		add_subtype("object", "plugin", ElggPlugin::class);
+		add_subtype("object", "file", ElggFile::class);
+		add_subtype("object", "widget", ElggWidget::class);
+		add_subtype("object", "comment", ElggComment::class);
+		add_subtype("object", "elgg_upgrade", ElggUpgrade::class);
 	}
 
 	/**

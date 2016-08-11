@@ -73,15 +73,12 @@ function get_subtype_class_from_id($subtype_id) {
 }
 
 /**
- * Register \ElggEntities with a certain type and subtype to be loaded as a specific class.
+ * Register Elgg entities with a certain type and subtype to be loaded as a specific class.
  *
  * By default entities are loaded as one of the 4 parent objects: site, user, object, or group.
  * If you subclass any of these you can register the classname with add_subtype() so
  * it will be loaded as that class automatically when retrieved from the database with
  * {@link get_entity()}.
- *
- * @warning This function cannot be used to change the class for a type-subtype pair.
- * Use update_subtype() for that.
  *
  * @param string $type    The type you're subtyping (site, user, object, or group)
  * @param string $subtype The subtype
@@ -93,7 +90,7 @@ function get_subtype_class_from_id($subtype_id) {
  * @see get_entity()
  */
 function add_subtype($type, $subtype, $class = "") {
-	return _elgg_services()->subtypeTable->add($type, $subtype, $class);
+	return _elgg_services()->subtypeTable->register($type, $subtype, $class);
 }
 
 /**
@@ -111,20 +108,22 @@ function add_subtype($type, $subtype, $class = "") {
  * @see update_subtype()
  */
 function remove_subtype($type, $subtype) {
-	return _elgg_services()->subtypeTable->remove($type, $subtype);
+	return _elgg_services()->subtypeTable->unregister($type, $subtype);
 }
 
 /**
- * Update a registered \ElggEntity type, subtype, and class name
+ * Alias of add_subtype(), but returns true for BC.
  *
  * @param string $type    Type
  * @param string $subtype Subtype
  * @param string $class   Class name to use when loading this entity
  *
- * @return bool
+ * @return true
+ * @see add_subtype()
  */
 function update_subtype($type, $subtype, $class = '') {
-	return _elgg_services()->subtypeTable->update($type, $subtype, $class);
+	_elgg_services()->subtypeTable->register($type, $subtype, $class);
+	return true;
 }
 
 /**
