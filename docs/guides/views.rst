@@ -143,22 +143,25 @@ Views and third-party assets
 ============================
 
 The best way to serve third-party assets is through views. However, instead of manually copy/pasting
-the assets into the right location in ``/views/*``, you can use a ``views.php`` file in your plugin's
-directory to map the assets into the views system.
+the assets into the right location in ``/views/*``, you can map the assets into the views system via
+the ``"views"`` key in your plugin's ``elgg-plugin.php`` config file.
 
-A views file must return a 2 dimensional array. The first level maps a viewtype to a list of view
+The views value must be a 2 dimensional array. The first level maps a viewtype to a list of view
 mappings. The secondary lists map view names to file paths, either absolute or relative to the Elgg root directory.
 
 If you check your assets into source control, point to them like this:
 
 .. code-block:: php
 
-    <?php // mod/example/views.php
+    <?php // mod/example/elgg-plugin.php
     return [
-        // viewtype
-        'default' => [
-            // view => /path/from/filesystem/root
-            'js/jquery-ui.js' => __DIR__ . '/bower_components/jquery-ui/jquery-ui.min.js',
+        // view mappings
+        'views' => [
+            // viewtype
+            'default' => [
+                // view => /path/from/filesystem/root
+                'js/jquery-ui.js' => __DIR__ . '/bower_components/jquery-ui/jquery-ui.min.js',
+            ],
         ],
     ];
 
@@ -167,16 +170,17 @@ paths by leaving off the leading slash:
 
 .. code-block:: php
 
-    <?php // mod/example/views.php
+    <?php // mod/example/elgg-plugin.php
     return [
-        // viewtype
-        'default' => [
-            // view => path/from/install/root
-            'js/jquery-ui.js' => 'vendor/bower-asset/jquery-ui/jquery-ui.min.js',
+        'views' => [
+            'default' => [
+                // view => path/from/install/root
+                'js/jquery-ui.js' => 'vendor/bower-asset/jquery-ui/jquery-ui.min.js',
+            ],
         ],
     ];
     
-Elgg core uses this feature extensively. See ``/engine/views.php``.
+Elgg core uses this feature extensively, though the value is returned directly from ``/engine/views.php``.
 
 .. note::
 
@@ -187,15 +191,17 @@ Elgg core uses this feature extensively. See ``/engine/views.php``.
 Specifying additional views directories
 ---------------------------------------
 
-In your ``views.php`` file you can also specify directories to be scanned for views. Just provide
+In ``elgg-plugin.php`` you can also specify directories to be scanned for views. Just provide
 a view name prefix ending with ``/`` and a directory path (like above).
 
 .. code-block:: php
 
-    <?php // mod/file/views.php
+    <?php // mod/file/elgg-plugin.php
     return [
-        'default' => [
-            'file/icon/' => __DIR__ . '/graphics/icons',
+        'views' => [
+            'default' => [
+                'file/icon/' => __DIR__ . '/graphics/icons',
+            ],
         ],
     ];
 
@@ -210,12 +216,14 @@ Multiple paths can share the same prefix, just give an array of paths:
 
 .. code-block:: php
 
-    <?php // mod/file/views.php
+    <?php // mod/file/elgg-plugin.php
     return [
-        'default' => [
-            'file/icon/' => [
-                __DIR__ . '/graphics/icons',
-                __DIR__ . '/more_icons', // processed 2nd (may override)
+        'views' => [
+            'default' => [
+                'file/icon/' => [
+                    __DIR__ . '/graphics/icons',
+                    __DIR__ . '/more_icons', // processed 2nd (may override)
+                ],
             ],
         ],
     ];

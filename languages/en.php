@@ -59,7 +59,9 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadble.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 	'PluginException:NoPluginName' => "The plugin name could not be found",
@@ -67,6 +69,8 @@ return array(
 	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
+	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggests',

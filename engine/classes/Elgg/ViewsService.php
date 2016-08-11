@@ -365,7 +365,10 @@ class ViewsService {
 
 		if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
 			ob_start();
+
+			// don't isolate, scripts use the local $vars
 			include $file;
+
 			return ob_get_clean();
 		}
 

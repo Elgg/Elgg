@@ -18,6 +18,8 @@
  */
 class ElggPluginPackage {
 
+	const STATIC_CONFIG_FILENAME = 'elgg-plugin.php';
+
 	/**
 	 * The required files in the package
 	 *
@@ -195,7 +197,32 @@ class ElggPluginPackage {
 			return false;
 		}
 
+		if (!$this->hasReadableConfigFile()) {
+			return false;
+		}
+
 		return true;
+	}
+
+	/**
+	 * Check that, if the plugin has a static config file, it is readable. We wait to read the contents
+	 * because we don't want to risk crashing the whole plugins page.
+	 *
+	 * @return bool
+	 */
+	private function hasReadableConfigFile() {
+		$file = "{$this->path}/" . self::STATIC_CONFIG_FILENAME;
+		if (!is_file($file)) {
+			return true;
+		}
+
+		if (is_readable($file)) {
+			return true;
+		}
+
+		$this->errorMsg =
+			_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:UnreadableConfig');
+		return false;
 	}
 
 	/**

@@ -880,7 +880,10 @@ function _elgg_php_exception_handler($exception) {
 		// value should be a system path to a file to include
 		if (!empty($CONFIG->exception_include) && is_file($CONFIG->exception_include)) {
 			ob_start();
+
+			// don't isolate, these scripts may use the local $exception var.
 			include $CONFIG->exception_include;
+
 			$exception_output = ob_get_clean();
 			
 			// if content is returned from the custom handler we will output

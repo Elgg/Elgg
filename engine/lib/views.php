@@ -48,6 +48,7 @@
 
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
+use Elgg\Includer;
 
 /**
  * The viewtype override.
@@ -1710,7 +1711,7 @@ function elgg_views_boot() {
 		// Core view definitions in /engine/views.php
 		$file = dirname(__DIR__) . '/views.php';
 		if (is_file($file)) {
-			$spec = (include $file);
+			$spec = Includer::includeFile($file);
 			if (is_array($spec)) {
 				_elgg_services()->views->mergeViewsSpec($spec);
 			}

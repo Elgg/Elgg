@@ -10,6 +10,30 @@ start.php
 The start.php file bootstraps plugin by registering event listeners and plugin
 hooks.
 
+elgg-plugin.php
+===============
+
+This optional file is read by Elgg to configure various services, and must return an array if present.
+It should not be included by plugins and is not guaranteed to run at any particular time. Besides magic
+constants like ``__DIR__``, its return value should not change.
+
+Syntax
+------
+
+Here's a trivial example configuring view locations via the ``views`` key:
+
+.. code:: php
+
+	<?php
+
+	return [
+		'views' => [
+			'default' => [
+				'file/icon/' => __DIR__ . '/graphics/icons',
+			],
+		],
+	];
+
 activate.php, deactivate.php
 ============================
 
@@ -79,7 +103,7 @@ In addition to the require elements above, the follow elements are available to 
 
 .. seealso::
 
-   :doc:`plugins/dependencies`
+	:doc:`plugins/dependencies`
 
 Simple Example
 --------------
@@ -149,7 +173,7 @@ Related
 =======
 
 .. toctree::
-   :maxdepth: 1
-   
-   plugins/plugin-skeleton
-   plugins/dependencies
+	:maxdepth: 1
+
+	plugins/plugin-skeleton
+	plugins/dependencies

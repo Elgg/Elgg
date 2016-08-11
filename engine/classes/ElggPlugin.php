@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Includer;
+
 /**
  * Stores site-side plugin settings as private data.
  *
@@ -11,6 +14,13 @@
 class ElggPlugin extends \ElggObject {
 	private $package;
 	private $manifest;
+
+	/**
+	 * Data from static config file. null if not yet read.
+	 *
+	 * @var array|null
+	 */
+	private $static_config;
 
 	private $path;
 	private $errorMsg = '';
@@ -143,6 +153,35 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function getPath() {
 		return sanitise_filepath($this->path);
+	}
+
+	/**
+	 * Get a value from the plugins's static config file.
+	 *
+	 * @note If the system cache is on, Elgg APIs should not call this on every request.
+	 *
+	 * @param string $key     Config key
+	 * @param mixed  $default Value returned if missing
+	 *
+	 * @return mixed
+	 * @throws PluginException
+	 * @access private
+	 * @internal For Elgg internal use only
+	 */
+	public function getStaticConfig($key, $default = null) {
+		if ($this->static_config === null) {
+			$this->static_config = [];
+
+			if ($this->canReadFile(ElggPluginPackage::STATIC_CONFIG_FILENAME)) {
+				$this->static_config = $this->includeFile(ElggPluginPackage::STATIC_CONFIG_FILENAME);
+			}
+		}
+
+		if (array_key_exists($key, $this->static_config)) {
+			return $this->static_config[$key];
+		} else {
+			return $default;
+		}
 	}
 
 	/**
@@ -664,39 +703,44 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		// set in the db, now perform tasks and emit events
-		if ($this->setStatus(true, $site_guid)) {
-			// emit an event. returning false will make this not be activated.
-			// we need to do this after it's been fully activated
-			// or the deactivate will be confused.
-			$params = array(
-				'plugin_id' => $this->getID(),
-				'plugin_entity' => $this,
-			);
-
-			$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
-
-			// if there are any on_enable functions, start the plugin now and run them
-			// Note: this will not run re-run the init hooks!
-			if ($return) {
-				if ($this->canReadFile('activate.php')) {
-					$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
-							ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
-
-					$this->start($flags);
-
-					$return = $this->includeFile('activate.php');
-				}
-			}
-
-			if ($return === false) {
-				$this->deactivate($site_guid);
-			}
-
-			return $return;
+		// Check this before setting status because the file could potentially throw
+		if (!$this->isStaticConfigValid()) {
+			return false;
 		}
 
-		return false;
+		if (!$this->setStatus(true, $site_guid)) {
+			return false;
+		}
+
+		// perform tasks and emit events
+		// emit an event. returning false will make this not be activated.
+		// we need to do this after it's been fully activated
+		// or the deactivate will be confused.
+		$params = array(
+			'plugin_id' => $this->getID(),
+			'plugin_entity' => $this,
+		);
+
+		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
+
+		// if there are any on_enable functions, start the plugin now and run them
+		// Note: this will not run re-run the init hooks!
+		if ($return) {
+			if ($this->canReadFile('activate.php')) {
+				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
+						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
+
+				$this->start($flags);
+
+				$return = $this->includeFile('activate.php');
+			}
+		}
+
+		if ($return === false) {
+			$this->deactivate($site_guid);
+		}
+
+		return $return;
 	}
 
 	/**
@@ -808,7 +852,15 @@ class ElggPlugin extends \ElggObject {
 			throw new \PluginException($msg);
 		}
 
-		return include $filepath;
+		try {
+			$ret = include $filepath;
+		} catch (Exception $e) {
+			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
+				array($filename, $this->getID(), $this->guid, $this->path));
+			throw new \PluginException($msg, 0, $e);
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -818,7 +870,36 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	protected function canReadFile($filename) {
-		return is_readable($this->path . '/' . $filename);
+		$path = "{$this->path}/$filename";
+		return is_file($path) && is_readable($path);
+	}
+
+	/**
+	 * If a static config file is present, is it a serializable array?
+	 *
+	 * @return bool
+	 * @throws PluginException
+	 */
+	private function isStaticConfigValid() {
+		if (!$this->canReadFile(ElggPluginPackage::STATIC_CONFIG_FILENAME)) {
+			return true;
+		}
+
+		ob_start();
+		$value = $this->includeFile(ElggPluginPackage::STATIC_CONFIG_FILENAME);
+		if (ob_get_clean() !== '') {
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:activate:ConfigSentOutput');
+			return false;
+		}
+
+		// make sure can serialize
+		$value = @unserialize(serialize($value));
+		if (!is_array($value)) {
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:activate:BadConfigFormat');
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -833,16 +914,22 @@ class ElggPlugin extends \ElggObject {
 		// Declared views first
 		$file = "{$this->path}/views.php";
 		if (is_file($file)) {
-			$spec = (include $file);
+			$spec = Includer::includeFile($file);
 			if (is_array($spec)) {
 				$views->mergeViewsSpec($spec);
 			}
 		}
 
+		$spec = $this->getStaticConfig('views');
+		if ($spec) {
+			$views->mergeViewsSpec($spec);
+		}
+
 		// Allow /views directory files to override
 		if (!$views->registerPluginViews($this->path, $failed_dir)) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
-				array($this->getID(), $this->guid, $failed_dir));
+			$key = 'ElggPlugin:Exception:CannotRegisterViews';
+			$args = [$this->getID(), $this->guid, $failed_dir];
+			$msg = _elgg_services()->translator->translate($key, $args);
 			throw new \PluginException($msg);
 		}
 	}
