@@ -1,7 +1,7 @@
 Features
 ########
 
-Showcases: https://community.elgg.org/showcase
+Showcases: https://elgg.org/showcase
 
 For developers
 ==============
