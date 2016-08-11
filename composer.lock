@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9488f28391c40372edcd8610ca2db024",
-    "content-hash": "8be31c8919b20f44edbb6aa291c1c77c",
+    "hash": "b275198b1b535974a2ddde1931885200",
+    "content-hash": "d620498815fc574203ddd8676451ae87",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -935,16 +935,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.26",
+            "version": "1.0.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "fb3b30dca320b36931ea878fea17ebe136fba1b0"
+                "reference": "50e2045ed70a7e75a5e30bc3662904f3b67af8a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/fb3b30dca320b36931ea878fea17ebe136fba1b0",
-                "reference": "fb3b30dca320b36931ea878fea17ebe136fba1b0",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/50e2045ed70a7e75a5e30bc3662904f3b67af8a9",
+                "reference": "50e2045ed70a7e75a5e30bc3662904f3b67af8a9",
                 "shasum": ""
             },
             "require": {
@@ -1014,7 +1014,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-08-03 09:49:11"
+            "time": "2016-08-10 08:55:11"
         },
         {
             "name": "league/flysystem-memory",
