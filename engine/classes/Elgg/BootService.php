@@ -141,7 +141,9 @@ class BootService {
 
 		// finish boot sequence
 		_elgg_session_boot();
-		_elgg_services()->systemCache->loadAll();
+		if ($CONFIG->system_cache_enabled) {
+			_elgg_services()->systemCache->loadAll();
+		}
 		_elgg_services()->translator->loadTranslations();
 
 		// we always need site->email and user->icontime, so load them together
