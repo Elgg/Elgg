@@ -32,7 +32,10 @@
         "league/flysystem-memory": "^1.0"
     },
     "scripts": {
-        "pre-install-cmd": "php .scripts/check_global_requirements.php",
+        "pre-install-cmd": [
+            "composer global require \"fxp/composer-asset-plugin:~1.1.4\"",
+            "php .scripts/check_global_requirements.php"
+        ],
         "lint": [
             "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
             "composer validate"
