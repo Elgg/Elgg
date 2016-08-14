@@ -122,6 +122,14 @@ From 2.0 to 2.1
 Deprecated APIs
 ---------------
 
+ * `discussion/discussion.js` deprecated by `object/discussion_reply` AMD module. `elgg.discussion` JS is no longer registered thus `elgg_load_js()` will have no effect.
+
+From 2.0 to 2.1
+===============
+
+Deprecated APIs
+---------------
+
  * ``ElggFile::setFilestore``
  * ``get_default_filestore``
  * ``set_default_filestore``
