@@ -436,14 +436,17 @@ function elgg_prepend_css_urls($css, $path) {
  *
  * @param string $title      Title
  * @param string $body       Body
- * @param string $page_shell Optional page shell to use. See page/shells view directory
- * @param array  $vars       Optional vars array to pass to the page
- *                           shell. Automatically adds title, body, head, and sysmessages
+ * @param string $page_shell Page shell
+ *                           Optional shell to be used to render the page (defaults to 'default')
+ *                           Shell name determines the location of the page shell view ("page/<page_shell>")
+ * @param array  $vars       View vars
+ *                           Optional array of variables to pass to the page shell view
+ *                           By default $vars array will contain: title, body, head, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
  */
-function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
+function elgg_view_page($title, $body, $page_shell = null, $vars = array()) {
 	$timer = _elgg_services()->timer;
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);
@@ -454,8 +457,15 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($params['segments']);
-	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
 
+	if (empty($page_shell)) {
+		$page_shell = 'default';
+	}
+	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
+	if (!elgg_view_exists("page/$page_shell")) {
+		$viewtype = elgg_get_viewtype();
+		_elgg_services()->logger->warn("Shell view 'page/$page_shell' does not exist in $viewtype viewtype");
+	}
 
 	$system_messages = _elgg_services()->systemMessages;
 
