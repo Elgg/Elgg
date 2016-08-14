@@ -95,6 +95,15 @@ function elgg_register_notification_method($name) {
 }
 
 /**
+ * Returns registered delivery methods for notifications
+ * @return array
+ * @since 2.1
+ */
+function elgg_get_notification_methods() {
+	return array_keys(_elgg_services()->notifications->getMethods());
+}
+
+/**
  * Unregister a delivery method for notifications
  *
  * @param string $name The notification method name
@@ -136,6 +145,22 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
 	$db = _elgg_services()->db;
 	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
 	return $subs->removeSubscription($user_guid, $method, $target_guid);
+}
+
+/**
+ * Returns an array of delivery methods used to notify the user about a target entity,
+ * or false if user is not subscribed
+ * 
+ * @param int $user_guid   GUID of the subscriber
+ * @param int $target_guid GUID of the subscription target
+ * @retun array|false
+ */
+function elgg_get_subscription_record($user_guid, $target_guid) {
+	$methods = _elgg_services()->notifications->getMethods();
+	$db = _elgg_services()->db;
+	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
+	$subscriptions = $subs->getSubscriptionsForContainer($target_guid, array($user_guid));
+	return elgg_extract($user_guid, $subscriptions, false);
 }
 
 /**

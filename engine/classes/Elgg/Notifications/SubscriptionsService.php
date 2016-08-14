@@ -82,10 +82,11 @@ class SubscriptionsService {
 	 *     <user guid> => array('email', 'sms', 'ajax'),
 	 * );
 	 *
-	 * @param int $container_guid GUID of the entity acting as a container
+	 * @param int   $container_guid GUID of the entity acting as a container
+	 * @param array $user_guids     An array of subscriber GUIDs to include in the return
 	 * @return array User GUIDs (keys) and their subscription types (values).
 	 */
-	public function getSubscriptionsForContainer($container_guid) {
+	public function getSubscriptionsForContainer($container_guid, $user_guids = null) {
 
 		$subscriptions = array();
 
@@ -94,7 +95,7 @@ class SubscriptionsService {
 		}
 
 		$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
-		$records = $this->getSubscriptionRecords($container_guid);
+		$records = $this->getSubscriptionRecords($container_guid, $user_guids);
 		foreach ($records as $record) {
 			$deliveryMethods = explode(',', $record->methods);
 			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
@@ -140,10 +141,11 @@ class SubscriptionsService {
 	 * Records are an object with two vars: guid and methods with the latter
 	 * being a comma-separated list of subscription relationship names.
 	 *
-	 * @param int $container_guid The GUID of the subscription target
+	 * @param int   $container_guid The GUID of the subscription target
+	 * @param array $user_guids     The GUIDs of subscribers to return (defaults to all)
 	 * @return array
 	 */
-	protected function getSubscriptionRecords($container_guid) {
+	protected function getSubscriptionRecords($container_guid, $user_guids = null) {
 
 		$container_guid = $this->db->sanitizeInt($container_guid);
 
@@ -155,10 +157,16 @@ class SubscriptionsService {
 		array_walk($rels, array($this->db, 'sanitizeString'));
 		$methods_string = "'" . implode("','", $rels) . "'";
 
+		$subscribers_str = '';
+		if (!empty($user_guids) && is_array($user_guids)) {
+			array_walk($user_guids, array($this->db, 'sanitizeInt'));
+			$subscribers_str = ' AND guid_one IN (' . implode(',', $user_guids) . ') ';
+		}
+		
 		$db_prefix = $this->db->getTablePrefix();
 		$query = "SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
 			FROM {$db_prefix}entity_relationships
-			WHERE guid_two = $container_guid AND
+			WHERE guid_two = $container_guid $subscribers_str AND
 					relationship IN ($methods_string) GROUP BY guid_one";
 		return $this->db->getData($query);
 	}
