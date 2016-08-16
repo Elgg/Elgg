@@ -116,7 +116,6 @@ class ElggObject extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function create() {
-		global $CONFIG;
 
 		$guid = parent::create();
 		if (!$guid) {
@@ -124,13 +123,21 @@ class ElggObject extends \ElggEntity {
 			// Is returning false the correct thing to do
 			return false;
 		}
-		$title = sanitize_string($this->title);
-		$description = sanitize_string($this->description);
-		
-		$query = "INSERT into {$CONFIG->dbprefix}objects_entity
-			(guid, title, description) values ($guid, '$title', '$description')";
 
-		$result = $this->getDatabase()->insertData($query);
+		$dbprefix = elgg_get_config('dbprefix');
+		$query = "INSERT INTO {$dbprefix}objects_entity
+			(guid, title, description)
+			VALUES
+			(:guid, :title, :description)";
+
+		$params = [
+			':guid' => (int) $guid,
+			':title' => (string) $this->title,
+			':description' => (string) $this->description,
+		];
+
+		$result = $this->getDatabase()->insertData($query, $params);
+
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
@@ -143,24 +150,27 @@ class ElggObject extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function update() {
-		global $CONFIG;
 
 		if (!parent::update()) {
 			return false;
 		}
-		
-		$guid = (int)$this->guid;
-		$title = sanitize_string($this->title);
-		$description = sanitize_string($this->description);
+
+		$dbprefix = elgg_get_config('dbprefix');
 
 		$query = "
-			UPDATE {$CONFIG->dbprefix}objects_entity
-			SET title = '$title',
-				description = '$description'
-			WHERE guid = $guid
+			UPDATE {$dbprefix}objects_entity
+			SET title = :title,
+				description = :description
+			WHERE guid = :guid
 		";
 
-		return $this->getDatabase()->updateData($query) !== false;
+		$params = [
+			':guid' => $this->guid,
+			':title' => (string) $this->title,
+			':description' => (string) $this->description,
+		];
+
+		return $this->getDatabase()->updateData($query, false, $params) !== false;
 	}
 
 	/**

@@ -11,19 +11,33 @@ namespace Elgg\Database;
  * @since      1.10.0
  */
 class Annotations {
+
 	/**
-	 * Global Elgg configuration
-	 * 
-	 * @var \stdClass
+	 * @var \Elgg\Database
 	 */
-	private $CONFIG;
+	private $db;
+
+	/**
+	 * @var \ElggSession
+	 */
+	private $session;
+
+	/**
+	 * @var \Elgg\EventsService
+	 */
+	private $events;
 
 	/**
 	 * Constructor
+	 *
+	 * @param \Elgg\Database      $db      Database
+	 * @param \ElggSession        $session Session
+	 * @param \Elgg\EventsService $events  Events
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(\Elgg\Database $db, \ElggSession $session, \Elgg\EventsService $events) {
+		$this->db = $db;
+		$this->session = $session;
+		$this->events = $events;
 	}
 
 	/**
@@ -75,7 +89,7 @@ class Annotations {
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
 		$access_id = (int)$access_id;
@@ -95,14 +109,14 @@ class Annotations {
 		// not have access to the entity
 		$entity = get_entity($entity_guid);
 	
-		if (_elgg_services()->events->trigger('annotate', $entity->type, $entity)) {
-			$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}annotations
+		if ($this->events->trigger('annotate', $entity->type, $entity)) {
+			$result = $this->db->insertData("INSERT INTO {$this->db->getTablePrefix()}annotations
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
 	
 			if ($result !== false) {
 				$obj = elgg_get_annotation_from_id($result);
-				if (_elgg_services()->events->trigger('create', 'annotation', $obj)) {
+				if ($this->events->trigger('create', 'annotation', $obj)) {
 					return $result;
 				} else {
 					// plugin returned false to reject annotation
@@ -145,7 +159,7 @@ class Annotations {
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
 		$access_id = (int)$access_id;
@@ -160,7 +174,7 @@ class Annotations {
 			return false;
 		}
 	
-		$result = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}annotations
+		$result = $this->db->updateData("UPDATE {$this->db->getTablePrefix()}annotations
 			SET name_id = $name_id, value_id = $value_id, value_type = '$value_type',
 			access_id = $access_id, owner_guid = $owner_guid
 			WHERE id = $annotation_id");
@@ -168,7 +182,7 @@ class Annotations {
 		if ($result !== false) {
 			// @todo add plugin hook that sends old and new annotation information before db access
 			$obj = $this->get($annotation_id);
-			_elgg_services()->events->trigger('update', 'annotation', $obj);
+			$this->events->trigger('update', 'annotation', $obj);
 		}
 	
 		return $result;
@@ -413,7 +427,7 @@ class Annotations {
 			return elgg_get_entities_from_annotations($options);
 		}
 		
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = $this->db->getTablePrefix();
 		$defaults = array(
 			'calculation' => 'sum',
 			'order_by' => 'annotation_calculation desc'
@@ -454,7 +468,7 @@ class Annotations {
 	function exists($entity_guid, $annotation_type, $owner_guid = null) {
 		
 	
-		if (!$owner_guid && !($owner_guid = _elgg_services()->session->getLoggedInUserGuid())) {
+		if (!$owner_guid && !($owner_guid = $this->session->getLoggedInUserGuid())) {
 			return false;
 		}
 	
@@ -462,12 +476,12 @@ class Annotations {
 		$owner_guid = sanitize_int($owner_guid);
 		$annotation_type = sanitize_string($annotation_type);
 	
-		$sql = "SELECT a.id FROM {$this->CONFIG->dbprefix}annotations a" .
-				" JOIN {$this->CONFIG->dbprefix}metastrings m ON a.name_id = m.id" .
+		$sql = "SELECT a.id FROM {$this->db->getTablePrefix()}annotations a" .
+				" JOIN {$this->db->getTablePrefix()}metastrings m ON a.name_id = m.id" .
 				" WHERE a.owner_guid = $owner_guid AND a.entity_guid = $entity_guid" .
 				" AND m.string = '$annotation_type'";
 	
-		if (_elgg_services()->db->getDataRow($sql)) {
+		if ($this->db->getDataRow($sql)) {
 			return true;
 		}
 	

@@ -3,6 +3,8 @@
 /**
  * This requires elgg_get_logged_in_user_guid() in session.php, the access 
  * constants defined in entities.php, and elgg_normalize_url() in output.php
+ *
+ * @group ElggEntity
  */
 class ElggEntityTest extends \Elgg\TestCase {
 

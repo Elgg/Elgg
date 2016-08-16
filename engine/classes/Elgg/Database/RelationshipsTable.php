@@ -15,25 +15,27 @@ use Elgg\EventsService;
  */
 class RelationshipsTable {
 
+	use \Elgg\TimeUsing;
+	
 	/**
 	 * @var Database
 	 */
-	private $db;
+	protected $db;
 
 	/**
 	 * @var EntityTable
 	 */
-	private $entities;
+	protected $entities;
 
 	/**
 	 * @var MetadataTable
 	 */
-	private $metadata;
+	protected $metadata;
 
 	/**
 	 * @var EventsService
 	 */
-	private $events;
+	protected $events;
 
 	/**
 	 * Constructor
@@ -75,9 +77,11 @@ class RelationshipsTable {
 	 * @access private
 	 */
 	public function getRow($id) {
-		$id = (int)$id;
-
-		return $this->db->getDataRow("SELECT * FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = $id");
+		$sql = "SELECT * FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = :id";
+		$params = [
+			':id' => (int) $id,
+		];
+		return $this->db->getDataRow($sql, null, $params);
 	}
 
 	/**
@@ -97,7 +101,11 @@ class RelationshipsTable {
 			return false;
 		}
 
-		return $this->db->deleteData("DELETE FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = $id");
+		$sql = "DELETE FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = :id";
+		$params = [
+			':id' => $id,
+		];
+		return $this->db->deleteData($sql, $params);
 	}
 
 	/**
@@ -135,7 +143,7 @@ class RelationshipsTable {
 			':guid1' => (int)$guid_one,
 			':guid2' => (int)$guid_two,
 			':relationship' => $relationship,
-			':time' => time(),
+			':time' => $this->getCurrentTime()->getTimestamp(),
 		];
 
 		$id = $this->db->insertData($sql, $params);

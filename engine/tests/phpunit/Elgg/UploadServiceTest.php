@@ -27,8 +27,7 @@ class UploadServiceTest extends \Elgg\TestCase {
 
 	public function setUp() {
 
-		$this->mocks = new \Elgg\Tests\EntityMocks($this);
-		$this->user = $this->mocks->getUser();
+		$this->user = $this->mocks()->getUser();
 		$this->owner_guid = $this->user->guid;
 
 		$dir = (new EntityDirLocator($this->owner_guid))->getPath();

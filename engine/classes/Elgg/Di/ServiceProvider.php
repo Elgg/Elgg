@@ -109,7 +109,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('accessCollections', function(ServiceProvider $c) {
-			return new \Elgg\Database\AccessCollections($c->config->get('site_guid'));
+			return new \Elgg\Database\AccessCollections(
+					$c->config, $c->db, $c->entityTable, $c->accessCache, $c->hooks, $c->session, $c->translator);
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
@@ -128,7 +129,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $obj;
 		});
 
-		$this->setClassName('annotations', \Elgg\Database\Annotations::class);
+		$this->setFactory('annotations', function(ServiceProvider $c) {
+			return new \Elgg\Database\Annotations($c->db, $c->session, $c->events);
+		});
 
 		$this->setClassName('autoP', \ElggAutoP::class);
 
@@ -185,7 +188,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\EntityPreloader($c->entityCache, $c->entityTable);
 		});
 
-		$this->setClassName('entityTable', \Elgg\Database\EntityTable::class);
+		$this->setFactory('entityTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\EntityTable($c->config, $c->db);
+		});
 
 		$this->setFactory('events', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('events');
