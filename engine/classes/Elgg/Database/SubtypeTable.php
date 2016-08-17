@@ -212,15 +212,10 @@ class SubtypeTable {
 	 * @see update_subtype()
 	 */
 	function remove($type, $subtype) {
-		$sql = "
-			DELETE FROM {$this->db->getTablePrefix()}entity_subtypes
-			WHERE type = :type AND subtype = :subtype
-		";
-		$params = [
-			':type' => $type,
-			':subtype' => $subtype,
-		];
-		if (!$this->db->deleteData($sql, $params)) {
+		if (!$this->db->deleteRows('entity_subtypes', [
+			'type' => $type,
+			'subtype' => $subtype,
+		])) {
 			return false;
 		}
 

@@ -111,9 +111,13 @@ class MetastringsTable {
 	private function getIdCaseSensitive($string) {
 		$string = (string)$string;
 		return $this->cache->get($string, function() use ($string) {
-			$escaped_string = $this->db->sanitizeString($string);
-			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY '$escaped_string' LIMIT 1";
-			$results = $this->db->getData($query);
+			$query = "
+				SELECT id
+				FROM {$this->getTableName()}
+				WHERE string = BINARY ?
+				LIMIT 1
+			";
+			$results = $this->db->getData($query, null, [$string]);
 			if (isset($results[0])) {
 				return $results[0]->id;
 			} else {
@@ -133,9 +137,14 @@ class MetastringsTable {
 	private function getIdCaseInsensitive($string) {
 		$string = (string)$string;
 		// caching doesn't work for case insensitive requests
-		$escaped_string = $this->db->sanitizeString($string);
-		$query = "SELECT id FROM {$this->getTableName()} WHERE string = '$escaped_string'";
-		$results = $this->db->getData($query);
+
+		$query = "
+			SELECT id
+			FROM {$this->db->prefix('metastrings')}
+			WHERE string = ?
+		";
+		$results = $this->db->getData($query, null, [$string]);
+
 		$ids = array();
 		foreach ($results as $result) {
 			$ids[] = $result->id;
@@ -155,9 +164,9 @@ class MetastringsTable {
 	 * @return int The identifier for this string
 	 */
 	function add($string) {
-		$escaped_string = $this->db->sanitizeString(trim($string));
-	
-		return $this->db->insertData("INSERT INTO {$this->getTableName()} (string) VALUES ('$escaped_string')");
+		return $this->db->insertRow('metastrings', [
+			'string' => trim($string),
+		]);
 	}
 	
 	/**

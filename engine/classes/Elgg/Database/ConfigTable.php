@@ -50,12 +50,14 @@ class ConfigTable {
 			unset($this->CONFIG->$name);
 		}
 	
-		$escaped_name = sanitize_string($name);
-		$query = "DELETE FROM {$this->CONFIG->dbprefix}config WHERE name = '$escaped_name' AND site_guid = $site_guid";
-
 		_elgg_services()->boot->invalidateCache($site_guid);
-	
-		return _elgg_services()->db->deleteData($query) !== false;
+
+		$res = _elgg_services()->db->deleteRows('config', [
+			'name' => $name,
+			'site_guid' => $site_guid,
+		]);
+
+		return $res !== false;
 	}
 	
 	/**
@@ -96,12 +98,19 @@ class ConfigTable {
 		if ($site_guid == $this->CONFIG->site_guid) {
 			$this->CONFIG->$name = $value;
 		}
-	
-		$escaped_name = sanitize_string($name);
-		$escaped_value = sanitize_string(serialize($value));
-		$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}config
-			SET name = '$escaped_name', value = '$escaped_value', site_guid = $site_guid
-			ON DUPLICATE KEY UPDATE value = '$escaped_value'");
+
+		$db = _elgg_services()->db;
+		$sql = "
+			INSERT INTO {$db->prefix('config')}
+			SET name = :name, value = :value, site_guid = :site_guid
+			ON DUPLICATE KEY UPDATE value = :value
+		";
+		$params = [
+			':name' => $name,
+			':value' => serialize($value),
+			':site_guid' => $site_guid,
+		];
+		$result = $db->insertData($sql, $params);
 
 		_elgg_services()->boot->invalidateCache($site_guid);
 	
@@ -156,10 +165,14 @@ class ConfigTable {
 			return $this->CONFIG->$name;
 		}
 	
-		$escaped_name = sanitize_string($name);
-		$result = _elgg_services()->db->getDataRow("SELECT value FROM {$this->CONFIG->dbprefix}config
-			WHERE name = '$escaped_name' AND site_guid = $site_guid");
-	
+		$db = _elgg_services()->db;
+		$sql = "
+			SELECT value
+			FROM {$db->prefix('config')}
+			WHERE name = ? AND site_guid = ?
+		";
+		$result = $db->getDataRow($sql, null, [$name, $site_guid]);
+
 		if ($result) {
 			$result = unserialize($result->value);
 	

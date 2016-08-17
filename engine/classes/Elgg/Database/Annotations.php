@@ -96,9 +96,15 @@ class Annotations {
 		$entity = get_entity($entity_guid);
 	
 		if (_elgg_services()->events->trigger('annotate', $entity->type, $entity)) {
-			$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}annotations
-				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
-				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
+			$result = _elgg_services()->db->insertRow('annotations', [
+				'entity_guid' => $entity_guid,
+				'name_id' => $name_id,
+				'value_id' => $value_id,
+				'value_type' => $value_type,
+				'owner_guid' => $owner_guid,
+				'time_created' => $time,
+				'access_id' => $access_id,
+			]);
 	
 			if ($result !== false) {
 				$obj = elgg_get_annotation_from_id($result);
@@ -452,22 +458,27 @@ class Annotations {
 	 * @return bool
 	 */
 	function exists($entity_guid, $annotation_type, $owner_guid = null) {
-		
-	
+
 		if (!$owner_guid && !($owner_guid = _elgg_services()->session->getLoggedInUserGuid())) {
 			return false;
 		}
 	
-		$entity_guid = sanitize_int($entity_guid);
-		$owner_guid = sanitize_int($owner_guid);
-		$annotation_type = sanitize_string($annotation_type);
+		$db = _elgg_services()->db;
+		$sql = "
+			SELECT a.id
+			FROM {$db->prefix('annotations')} a
+			JOIN {$db->prefix('metastrings')} m ON a.name_id = m.id
+			WHERE a.owner_guid = :owner_guid
+			AND a.entity_guid = :entity_guid
+			AND m.string = :annotation_type
+		";
+		$params = [
+			':owner_guid' => (int)$owner_guid,
+			':entity_guid' => (int)$entity_guid,
+			':annotation_type' => $annotation_type,
+		];
 	
-		$sql = "SELECT a.id FROM {$this->CONFIG->dbprefix}annotations a" .
-				" JOIN {$this->CONFIG->dbprefix}metastrings m ON a.name_id = m.id" .
-				" WHERE a.owner_guid = $owner_guid AND a.entity_guid = $entity_guid" .
-				" AND m.string = '$annotation_type'";
-	
-		if (_elgg_services()->db->getDataRow($sql)) {
+		if (_elgg_services()->db->getDataRow($sql, null, $params)) {
 			return true;
 		}
 	

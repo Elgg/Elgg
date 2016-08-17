@@ -284,16 +284,17 @@ class UsersTable {
 	 */
 	function getByEmail($email) {
 		
-	
-		$email = sanitise_string($email);
-	
 		$access = _elgg_get_access_where_sql();
-	
-		$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}entities e
+		$query = "
+			SELECT e.*
+			FROM {$this->CONFIG->dbprefix}entities e
 			JOIN {$this->CONFIG->dbprefix}users_entity u ON e.guid = u.guid
-			WHERE email = '$email' AND $access";
+			WHERE email = :email AND $access
+		";
+		$params = [':email' => (string)$email];
+		$callback = 'entity_row_to_elggstar';
 	
-		return _elgg_services()->db->getData($query, 'entity_row_to_elggstar');
+		return _elgg_services()->db->getData($query, $callback, $params);
 	}
 	
 	/**
