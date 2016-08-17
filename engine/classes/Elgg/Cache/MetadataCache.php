@@ -140,7 +140,7 @@ class MetadataCache {
 		// could be useful at some point in future
 		//$guids = $this->filterMetadataHeavyEntities($guids);
 
-		$db_prefix = _elgg_services()->db->getTablePrefix();
+		$db_prefix = _elgg_services()->db->prefix;
 		$options = array(
 			'guids' => $guids,
 			'limit' => 0,

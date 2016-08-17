@@ -39,7 +39,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * {@inheritdoc}
 	 */
 	public function enqueue($item) {
-		$prefix = $this->db->getTablePrefix();
+		$prefix = $this->db->prefix;
 		$name = $this->db->sanitizeString($this->name);
 		$blob = $this->db->sanitizeString(serialize($item));
 		$time = time();
@@ -53,7 +53,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * {@inheritdoc}
 	 */
 	public function dequeue() {
-		$prefix = $this->db->getTablePrefix();
+		$prefix = $this->db->prefix;
 		$name = $this->db->sanitizeString($this->name);
 		$worker_id = $this->db->sanitizeString($this->workerId);
 
@@ -82,7 +82,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * {@inheritdoc}
 	 */
 	public function clear() {
-		$prefix = $this->db->getTablePrefix();
+		$prefix = $this->db->prefix;
 		$name = $this->db->sanitizeString($this->name);
 
 		$this->db->deleteData("DELETE FROM {$prefix}queue WHERE name = '$name'");
@@ -92,7 +92,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 * {@inheritdoc}
 	 */
 	public function size() {
-		$prefix = $this->db->getTablePrefix();
+		$prefix = $this->db->prefix;
 		$name = $this->db->sanitizeString($this->name);
 
 		$result = $this->db->getDataRow("SELECT COUNT(id) AS total FROM {$prefix}queue WHERE name = '$name'");

@@ -74,7 +74,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 		// Insert a new relationship
 		$sql = "
-			INSERT INTO {$this->db->getTablePrefix()}entity_relationships
+			INSERT INTO {$this->db->prefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES (:guid1, :relationship, :guid2, :time)
 				ON DUPLICATE KEY UPDATE time_created = :time
@@ -106,7 +106,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	public function addQuerySpecs(\stdClass $row) {
 
 		// Get relationship by its ID
-		$sql = "SELECT * FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = :id";
+		$sql = "SELECT * FROM {$this->db->prefix}entity_relationships WHERE id = :id";
 		$params = [
 			':id' => (int) $row->id,
 		];
@@ -119,7 +119,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 		]);
 
 		// Delete relationship by its ID
-		$sql = "DELETE FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = :id";
+		$sql = "DELETE FROM {$this->db->prefix}entity_relationships WHERE id = :id";
 		$params = [
 			':id' => $row->id,
 		];
@@ -132,7 +132,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 		// Check relationship between two GUIDs
 		$sql = "
-			SELECT * FROM {$this->db->getTablePrefix()}entity_relationships
+			SELECT * FROM {$this->db->prefix}entity_relationships
 			WHERE guid_one = :guid1
 			  AND relationship = :relationship
 			  AND guid_two = :guid2

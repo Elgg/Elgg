@@ -173,7 +173,7 @@ class MetastringsTable {
 	 * @return string
 	 */
 	public function getTableName() {
-		return $this->db->getTablePrefix() . "metastrings";
+		return $this->db->prefix . "metastrings";
 	}
 
 }

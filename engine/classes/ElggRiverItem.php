@@ -175,7 +175,7 @@ class ElggRiverItem {
 		}
 
 		$db = _elgg_services()->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 		_elgg_services()->db->deleteData("DELETE FROM {$prefix}river WHERE id = ?", [$this->id]);
 
 		$events->triggerAfter('delete', 'river', $this);

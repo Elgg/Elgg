@@ -7,14 +7,12 @@ use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 
 /**
- * An object representing a single Elgg database.
- *
- * WARNING: THIS API IS IN FLUX. PLUGIN AUTHORS SHOULD NOT USE. See lib/database.php instead.
+ * The Elgg database
  *
  * @access private
+ * @internal Use the public API functions in engine/lib/database.php
  *
- * @package    Elgg.Core
- * @subpackage Database
+ * @property-read string $prefix Elgg table prefix (read only)
  */
 class Database {
 	use Profilable;
@@ -25,9 +23,9 @@ class Database {
 	const DELAYED_PARAMS = 'p';
 
 	/**
-	 * @var string $tablePrefix Prefix for database tables
+	 * @var string $table_prefix Prefix for database tables
 	 */
-	private $tablePrefix;
+	private $table_prefix;
 
 	/**
 	 * @var Connection[]
@@ -35,9 +33,9 @@ class Database {
 	private $connections = [];
 
 	/**
-	 * @var int $queryCount The number of queries made
+	 * @var int $query_count The number of queries made
 	 */
-	private $queryCount = 0;
+	private $query_count = 0;
 
 	/**
 	 * Query cache for select queries.
@@ -48,23 +46,23 @@ class Database {
 	 * </code>
 	 * @see \Elgg\Database::getResults() for details on the hash.
 	 *
-	 * @var \Elgg\Cache\LRUCache $queryCache The cache
+	 * @var \Elgg\Cache\LRUCache $query_cache The cache
 	 */
-	private $queryCache = null;
+	private $query_cache = null;
 
 	/**
-	 * @var int $queryCacheSize The number of queries to cache
+	 * @var int $query_cache_size The number of queries to cache
 	 */
-	private $queryCacheSize = 50;
+	private $query_cache_size = 50;
 
 	/**
 	 * Queries are saved as an array with the DELAYED_* constants as keys.
 	 *
 	 * @see registerDelayedQuery
 	 *
-	 * @var array $delayedQueries Queries to be run during shutdown
+	 * @var array $delayed_queries Queries to be run during shutdown
 	 */
-	private $delayedQueries = array();
+	private $delayed_queries = array();
 
 	/**
 	 * @var bool $installed Is the database installed?
@@ -92,7 +90,7 @@ class Database {
 		$this->logger = $logger;
 		$this->config = $config;
 
-		$this->tablePrefix = $config->getTablePrefix();
+		$this->table_prefix = $config->getTablePrefix();
 
 		$this->enableQueryCache();
 	}
@@ -369,13 +367,13 @@ class Database {
 		$hash = md5($query_id);
 
 		// Is cached?
-		if ($this->queryCache) {
-			if (isset($this->queryCache[$hash])) {
+		if ($this->query_cache) {
+			if (isset($this->query_cache[$hash])) {
 				if ($this->logger) {
 					// TODO add params in $query here
 					$this->logger->info("DB query $query results returned from cache (hash: $hash)");
 				}
-				return $this->queryCache[$hash];
+				return $this->query_cache[$hash];
 			}
 		}
 
@@ -396,8 +394,8 @@ class Database {
 		}
 
 		// Cache result
-		if ($this->queryCache) {
-			$this->queryCache[$hash] = $return;
+		if ($this->query_cache) {
+			$this->query_cache[$hash] = $return;
 			if ($this->logger) {
 				// TODO add params in $query here
 				$this->logger->info("DB query $query results cached (hash: $hash)");
@@ -425,7 +423,7 @@ class Database {
 			throw new \DatabaseException("Query cannot be null");
 		}
 
-		$this->queryCount++;
+		$this->query_count++;
 
 		if ($this->timer) {
 			$timer_key = preg_replace('~\\s+~', ' ', trim($query . '|' . serialize($params)));
@@ -491,7 +489,7 @@ class Database {
 
 			foreach ($sql_statements as $statement) {
 				$statement = trim($statement);
-				$statement = str_replace("prefix_", $this->tablePrefix, $statement);
+				$statement = str_replace("prefix_", $this->table_prefix, $statement);
 				if (!empty($statement)) {
 					try {
 						$this->updateData($statement);
@@ -534,7 +532,7 @@ class Database {
 			return false;
 		}
 
-		$this->delayedQueries[] = [
+		$this->delayed_queries[] = [
 			self::DELAYED_QUERY => $query,
 			self::DELAYED_TYPE => $type,
 			self::DELAYED_HANDLER => $callback,
@@ -554,7 +552,7 @@ class Database {
 	 */
 	public function executeDelayedQueries() {
 
-		foreach ($this->delayedQueries as $set) {
+		foreach ($this->delayed_queries as $set) {
 			$query = $set[self::DELAYED_QUERY];
 			$type = $set[self::DELAYED_TYPE];
 			$handler = $set[self::DELAYED_HANDLER];
@@ -585,9 +583,9 @@ class Database {
 	 * @access private
 	 */
 	public function enableQueryCache() {
-		if ($this->config->isQueryCacheEnabled() && $this->queryCache === null) {
+		if ($this->config->isQueryCacheEnabled() && $this->query_cache === null) {
 			// @todo if we keep this cache, expose the size as a config parameter
-			$this->queryCache = new \Elgg\Cache\LRUCache($this->queryCacheSize);
+			$this->query_cache = new \Elgg\Cache\LRUCache($this->query_cache_size);
 		}
 	}
 
@@ -601,7 +599,7 @@ class Database {
 	 * @access private
 	 */
 	public function disableQueryCache() {
-		$this->queryCache = null;
+		$this->query_cache = null;
 	}
 
 	/**
@@ -610,8 +608,8 @@ class Database {
 	 * @return void
 	 */
 	protected function invalidateQueryCache() {
-		if ($this->queryCache) {
-			$this->queryCache->clear();
+		if ($this->query_cache) {
+			$this->query_cache->clear();
 			if ($this->logger) {
 				$this->logger->info("Query cache invalidated");
 			}
@@ -632,7 +630,7 @@ class Database {
 		}
 
 		try {
-			$sql = "SELECT value FROM {$this->tablePrefix}datalists WHERE name = 'installed'";
+			$sql = "SELECT value FROM {$this->table_prefix}datalists WHERE name = 'installed'";
 			$this->getConnection('read')->query($sql);
 		} catch (\DatabaseException $e) {
 			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
@@ -648,16 +646,22 @@ class Database {
 	 * @access private
 	 */
 	public function getQueryCount() {
-		return $this->queryCount;
+		return $this->query_count;
 	}
 
 	/**
-	 * Get the prefix for Elgg's tables
+	 * Get the value of the "prefix" property
+	 *
+	 * @see Database::$prefix
 	 *
 	 * @return string
+	 * @deprecated 2.3 Read the "prefix" property
 	 */
 	public function getTablePrefix() {
-		return $this->tablePrefix;
+		if (function_exists('elgg_deprecated_notice')) {
+			elgg_deprecated_notice(__METHOD__ . ' is deprecated. Read the "prefix" property', '2.3');
+		}
+		return $this->table_prefix;
 	}
 
 	/**
@@ -711,5 +715,30 @@ class Database {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Handle magic property reads
+	 *
+	 * @param string $name Property name
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if ($name === 'prefix') {
+			return $this->table_prefix;
+		}
+
+		throw new \RuntimeException("Cannot read property '$name'");
+	}
+
+	/**
+	 * Handle magic property writes
+	 *
+	 * @param string $name  Property name
+	 * @param mixed  $value Value
+	 * @return void
+	 */
+	public function __set($name, $value) {
+		throw new \RuntimeException("Cannot write property '$name'");
 	}
 }

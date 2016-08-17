@@ -61,7 +61,7 @@ class BootData {
 		// do not store site key in cache. The others we've already fetched.
 		$rows = $db->getData("
 			SELECT *
-			FROM {$db->getTablePrefix()}datalists
+			FROM {$db->prefix}datalists
 			WHERE `name` NOT IN ('__site_secret__', 'default_site', 'dataroot')
 		");
 		$this->datalist_cache = new InMemory();
@@ -72,7 +72,7 @@ class BootData {
 		// get subtypes
 		$rows = $db->getData("
 			SELECT *
-			FROM {$db->getTablePrefix()}entity_subtypes
+			FROM {$db->prefix}entity_subtypes
 		");
 		foreach ($rows as $row) {
 			$this->subtype_data[$row->id] = $row;
@@ -87,7 +87,7 @@ class BootData {
 		// get config
 		$rows = $db->getData("
 			SELECT *
-			FROM {$db->getTablePrefix()}config
+			FROM {$db->prefix}config
 			WHERE site_guid = {$config->site_guid}
 		");
 		foreach ($rows as $row) {
@@ -112,7 +112,7 @@ class BootData {
 		$set = implode(',', $guids);
 		$sql = "
 			SELECT entity_guid
-			FROM {$db->getTablePrefix()}private_settings
+			FROM {$db->prefix}private_settings
 			WHERE entity_guid IN ($set)
 			  AND name NOT LIKE 'plugin:user_setting:%'
 			  AND name NOT LIKE 'elgg:internal:%'
@@ -129,7 +129,7 @@ class BootData {
 		$set = implode(',', $guids);
 		$rows = $db->getData("
 			SELECT entity_guid, `name`, `value`
-			FROM {$db->getTablePrefix()}private_settings
+			FROM {$db->prefix}private_settings
 			WHERE entity_guid IN ($set)
 			  AND name NOT LIKE 'plugin:user_setting:%'
 			  AND name NOT LIKE 'elgg:internal:%'

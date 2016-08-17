@@ -180,7 +180,7 @@ class SubtypeTable {
 	
 		if (!$id) {
 			$sql = "
-				INSERT INTO {$this->db->getTablePrefix()}entity_subtypes
+				INSERT INTO {$this->db->prefix}entity_subtypes
 					(type,  subtype,  class) VALUES
 					(:type, :subtype, :class)
 			";
@@ -213,7 +213,7 @@ class SubtypeTable {
 	 */
 	public function remove($type, $subtype) {
 		$sql = "
-			DELETE FROM {$this->db->getTablePrefix()}entity_subtypes
+			DELETE FROM {$this->db->prefix}entity_subtypes
 			WHERE type = :type AND subtype = :subtype
 		";
 		$params = [
@@ -245,7 +245,7 @@ class SubtypeTable {
 		}
 	
 		$sql = "
-			UPDATE {$this->db->getTablePrefix()}entity_subtypes
+			UPDATE {$this->db->prefix}entity_subtypes
 			SET type = :type, subtype = :subtype, class = :class
 			WHERE id = :id
 		";
@@ -286,7 +286,7 @@ class SubtypeTable {
 		if ($this->cache === null) {
 			$rows = $this->db->getData("
 				SELECT *
-				FROM {$this->db->getTablePrefix()}entity_subtypes
+				FROM {$this->db->prefix}entity_subtypes
 			");
 
 			$this->cache = [];

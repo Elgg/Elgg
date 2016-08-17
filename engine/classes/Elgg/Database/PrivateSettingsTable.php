@@ -41,7 +41,7 @@ class PrivateSettingsTable {
 		$this->db = $db;
 		$this->entities = $entities;
 		$this->cache = $cache;
-		$this->table = $this->db->getTablePrefix() . 'private_settings';
+		$this->table = $this->db->prefix . 'private_settings';
 	}
 
 	/**
