@@ -34,6 +34,7 @@ return array(
 	'discussion:reply:missing' => 'You cannot post an empty reply',
 	'discussion:reply:topic_not_found' => 'The discussion topic was not found',
 	'discussion:reply:error:cannot_edit' => 'You do not have the permission to edit this reply',
+	'discussion:reply:error:permissions' => 'You are not allowed to reply to this topic',
 
 	/**
 	 * River

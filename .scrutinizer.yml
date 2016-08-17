@@ -1,3 +1,15 @@
+build:
+    dependencies:
+        before:
+            - 'composer global require "fxp/composer-asset-plugin:~1.1.1"'
+    tests:
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=coverage'
+                coverage:
+                    file: 'coverage'
+                    format: 'clover'
+
 filter:
     excluded_paths:
         - 'vendors/*'
@@ -5,23 +17,50 @@ filter:
         - '*/tests/*'
         - '*/vendor/*'
 tools:
-    external_code_coverage: true
     js_hint:
         filter:
-            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*','*/vendor/*']
+            excluded_paths: ['vendors/*','*/vendors/*','*/vendor/*','*/tests/*']
     php_mess_detector:
         filter:
-            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*','*/vendor/*']
-    sensiolabs_security_checker: true
+            excluded_paths: ['vendors/*','*/vendors/*','*/vendor/*','*/tests/*']
+    php_analyzer:
+        filter:
+            excluded_paths: ['vendors/*','*/vendors/*','*/vendor/*','*/tests/*']
+        config:
+            parameter_reference_check: { enabled: true }
+            checkstyle: { enabled: false, no_trailing_whitespace: true, naming: { enabled: true, local_variable: '^[a-z][a-zA-Z0-9]*$', abstract_class_name: ^Abstract|Factory$, utility_class_name: 'Utils?$', constant_name: '^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*$', property_name: '^[a-z][a-zA-Z0-9]*$', method_name: '^(?:[a-z]|__)[a-zA-Z0-9]*$', parameter_name: '^[a-z][a-zA-Z0-9]*$', interface_name: '^[A-Z][a-zA-Z0-9]*Interface$', type_name: '^[A-Z][a-zA-Z0-9]*$', exception_name: '^[A-Z][a-zA-Z0-9]*Exception$', isser_method_name: '^(?:is|has|should|may|supports)' } }
+            unreachable_code: { enabled: false }
+            check_access_control: { enabled: false }
+            typo_checks: { enabled: false }
+            check_variables: { enabled: false }
+            suspicious_code: { enabled: false, overriding_parameter: false, overriding_closure_use: false, parameter_closure_use_conflict: false, parameter_multiple_times: false, non_existent_class_in_instanceof_check: false, non_existent_class_in_catch_clause: false, assignment_of_null_return: false, non_commented_switch_fallthrough: false, non_commented_empty_catch_block: false, overriding_private_members: false, use_statement_alias_conflict: false, precedence_in_condition_assignment: false }
+            dead_assignments: { enabled: false }
+            verify_php_doc_comments: { enabled: false, parameters: false, return: false, suggest_more_specific_types: false, ask_for_return_if_not_inferrable: false, ask_for_param_type_annotation: false }
+            loops_must_use_braces: { enabled: true }
+            check_usage_context: { enabled: true, method_call_on_non_object: { enabled: true, ignore_null_pointer: true }, foreach: { value_as_reference: true, traversable: true }, missing_argument: true, argument_type_checks: lenient }
+            simplify_boolean_return: { enabled: false }
+            phpunit_checks: { enabled: false }
+            reflection_checks: { enabled: false }
+            precedence_checks: { enabled: true, assignment_in_condition: true, comparison_of_bit_result: true }
+            basic_semantic_checks: { enabled: false }
+            doc_comment_fixes: { enabled: false }
+            reflection_fixes: { enabled: false }
+            use_statement_fixes: { enabled: true, remove_unused: true, preserve_multiple: false, order_alphabetically: false }
+    sensiolabs_security_checker:
+        filter:
+            excluded_paths: ['vendors/*','*/vendors/*','*/vendor/*','*/tests/*']
+    php_cpd:
+        filter:
+            excluded_paths: ['vendors/*','*/vendors/*','*/vendor/*','*/tests/*']
     php_pdepend:
+        filter:
+            excluded_paths: ['vendors/*','*/vendors/*','*/vendor/*','*/tests/*']
         excluded_dirs:
             - vendors
             - vendor
-    external_code_coverage:
-        timeout: '1200'
-    php_hhvm: true
-    php_sim: true
+    external_code_coverage: false
 
-    # PHP Similarity Analyzer and Copy/paste Detector cannot be used at
-    # the same time right now. Make sure to either remove, or disable one.
-    php_cpd: false
+checks:
+    php:
+        code_rating: true
+        duplication: true

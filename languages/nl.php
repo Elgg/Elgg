@@ -27,7 +27,7 @@ return array(
 	'adminrequired' => "Je moet een beheerder zijn om die pagina te kunnen bekijken.",
 	'membershiprequired' => "Je moet lid zijn van deze groep om deze pagina te kunnen bekijken.",
 	'limited_access' => "Je hebt niet de juiste rechten om deze pagina te zien.",
-
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -343,6 +343,8 @@ Je kunt op elk moment terugkeren naar het standaardprofiel, maar dan gaat alle i
 	'river:delete' => 'Verwijder deze activiteit',
 	'river:delete:success' => 'Het river-item is verwijderd',
 	'river:delete:fail' => 'Het river-item kon niet worden verwijderd',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Ongeldige gebruiker',
 	'activity:owner' => 'Bekijk activiteit',
 

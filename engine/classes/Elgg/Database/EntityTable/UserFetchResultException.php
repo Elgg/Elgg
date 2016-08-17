@@ -1,8 +1,7 @@
 <?php
 
-namespace Elgg\Database\EntityTable;
-
 /**
- * Exception indicating a user could not be looked up for a permissions check
+ * File name should correspond to class name for PSR-0 autoloading
+ * @deprecated 2.3
  */
-class UserFetchFailureException extends \RuntimeException {}
+require_once __DIR__ . '/UserFetchFailureException.php';

@@ -2,12 +2,10 @@
 
 namespace Elgg;
 
-class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
-
-	/**
-	 * @var \Elgg\Config
-	 */
-	private $config;
+/**
+ * @group EntityIconService
+ */
+class EntityIconServiceTest extends \Elgg\TestCase {
 
 	/**
 	 * @var \Elgg\PluginHooksService
@@ -28,11 +26,6 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	 * @var \Elgg\Database\EntityTable
 	 */
 	private $entities;
-
-	/**
-	 * @var \Elgg\Tests\EntityMocks
-	 */
-	private $mocks;
 
 	/**
 	 * @var \ElggObject
@@ -58,43 +51,28 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		_elgg_filestore_init(); // we will need simpletype hook to work
 
-		$this->mocks = new \Elgg\Tests\EntityMocks($this);
-
-		$this->config = _elgg_testing_config();
 		$this->hooks = new \Elgg\PluginHooksService();
 		$path_key = \Elgg\Application::GET_PATH_KEY;
 		$this->request = \Elgg\Http\Request::create("?$path_key=action/upload");
-		$this->logger = new \Elgg\Logger($this->hooks, $this->config, new \Elgg\Context());
+		$this->logger = new \Elgg\Logger($this->hooks, $this->config(), new \Elgg\Context());
 
-		$this->entities = $this->getMockBuilder('\Elgg\Database\EntityTable')
-				->setMethods(['get', 'exists'])
-				->disableOriginalConstructor()
-				->getMock();
+		$this->setupMockServices();
+		$this->entities = _elgg_services()->entityTable;
 
-		$this->entities->expects($this->any())
-				->method('get')
-				->will($this->returnCallback([$this->mocks, 'get']));
-
-		$this->entities->expects($this->any())
-				->method('exists')
-				->will($this->returnCallback([$this->mocks, 'exists']));
-
-		_elgg_services()->setValue('entityTable', $this->entities);
-
-		$this->user = $this->mocks->getUser();
-		$this->entity = $this->mocks->getObject([
+		$this->user = $this->mocks()->getUser();
+		$this->entity = $this->mocks()->getObject([
 			'owner_guid' => $this->user->guid,
 			'subtype' => 'foo',
 		]);
 
 		$dir = (new \Elgg\EntityDirLocator($this->entity->guid))->getPath();
-		$this->entity_dir_path = $this->config->get('dataroot') . $dir;
+		$this->entity_dir_path = $this->config()->get('dataroot') . $dir;
 		if (is_dir($this->entity_dir_path)) {
 			_elgg_rmdir($this->entity_dir_path);
 		}
 
 		$dir = (new \Elgg\EntityDirLocator($this->entity->owner_guid))->getPath();
-		$this->owner_dir_path = $this->config->get('dataroot') . $dir;
+		$this->owner_dir_path = $this->config()->get('dataroot') . $dir;
 		if (is_dir($this->owner_dir_path)) {
 			_elgg_rmdir($this->owner_dir_path);
 		}
@@ -105,12 +83,12 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function tearDown() {
-		$this->assertTrue(file_exists($this->config->get('dataroot') . '1/1/75x125.jpg'));
-		$this->assertTrue(file_exists($this->config->get('dataroot') . '1/1/300x300.jpg'));
-		$this->assertTrue(file_exists($this->config->get('dataroot') . '1/1/600x300.jpg'));
-		$this->assertTrue(file_exists($this->config->get('dataroot') . '1/1/300x600.jpg'));
-		$this->assertTrue(file_exists($this->config->get('dataroot') . '1/1/400x300.gif'));
-		$this->assertTrue(file_exists($this->config->get('dataroot') . '1/1/400x300.png'));
+		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/75x125.jpg'));
+		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/300x300.jpg'));
+		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/600x300.jpg'));
+		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/300x600.jpg'));
+		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/400x300.gif'));
+		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/400x300.png'));
 		if (is_dir($this->entity_dir_path)) {
 			_elgg_rmdir($this->entity_dir_path);
 		}
@@ -121,7 +99,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function createService() {
-		return new \Elgg\EntityIconService($this->config, $this->hooks, $this->request, $this->logger, $this->entities);
+		return new \Elgg\EntityIconService($this->config(), $this->hooks, $this->request, $this->logger, $this->entities);
 	}
 
 	public static function getCoverSizes() {
@@ -166,7 +144,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 		$service = $this->createService();
 
 		// Should return config values, as we do not have any registered hook
-		$this->assertEquals($this->config->get('icon_sizes'), $service->getSizes());
+		$this->assertEquals($this->config()->get('icon_sizes'), $service->getSizes());
 
 		// If type is not 'icon', should return an empty array
 		$this->logger->disable();
@@ -346,6 +324,8 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'tiny'));
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 
+		$this->logger->disable();
+
 		// This will fail for square icons because cropping coordinates are not square
 		$service->saveIconFromElggFile($this->entity, $file, 'icon', [
 			'x1' => 0,
@@ -353,6 +333,8 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 			'x2' => 10,
 			'y2' => 20,
 		]);
+
+		$this->logger->enable();
 
 		$this->assertFalse($service->hasIcon($this->entity, 'master'));
 		$this->assertFalse($service->hasIcon($this->entity, 'large'));
@@ -368,7 +350,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testThrowsExceptionIfLocalFileIsNotReadable() {
 		$service = $this->createService();
-		$local_file = $this->config->get('dataroot') . '_______empty';
+		$local_file = $this->config()->get('dataroot') . '_______empty';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 	}
 
@@ -379,7 +361,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'master'));
@@ -404,7 +386,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 		$tmp->owner_guid = $this->user->guid;
 		$tmp->setFilename('tmp.gif');
 		$tmp->open('write');
-		$tmp->write(file_get_contents($this->config->get('dataroot') . '1/1/400x300.gif'));
+		$tmp->write(file_get_contents($this->config()->get('dataroot') . '1/1/400x300.gif'));
 		$tmp->close();
 
 		$uploaded_file = $tmp->getFilenameOnFilestore();
@@ -438,7 +420,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
@@ -458,7 +440,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
@@ -478,7 +460,7 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
@@ -884,11 +866,11 @@ class EntityIconServiceTest extends \PHPUnit_Framework_TestCase {
 			[75, 125, 'small', 40, 40, true],
 			[75, 125, 'tiny', 25, 25, true],
 			[75, 125, 'topbar', 16, 16, true],
-			// there is a problem in get_resized_image_from_existing_file()
-			// we expect the large icon to fill the container when in cropping mode
-			// however since the icon is set to not upscale, we end up with a 20x20 image
-			// See #9663
-			//[75, 125, 'large', 75, 125, true, 200, 200],
+				// there is a problem in get_resized_image_from_existing_file()
+				// we expect the large icon to fill the container when in cropping mode
+				// however since the icon is set to not upscale, we end up with a 20x20 image
+				// See #9663
+				//[75, 125, 'large', 75, 125, true, 200, 200],
 		];
 	}
 

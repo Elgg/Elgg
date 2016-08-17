@@ -20,28 +20,28 @@ use Elgg\Cache\MetadataCache as Cache;
  */
 class MetadataTable {
 	/** @var array */
-	private $independents = array();
+	protected $independents = array();
 	
 	/** @var Cache */
-	private $cache;
+	protected $cache;
 	
 	/** @var Database */
-	private $db;
+	protected $db;
 	
 	/** @var EntityTable */
-	private $entityTable;
+	protected $entityTable;
 	
 	/** @var MetastringsTable */
-	private $metastringsTable;
+	protected $metastringsTable;
 	
 	/** @var Events */
-	private $events;
+	protected $events;
 	
 	/** @var Session */
-	private $session;
+	protected $session;
 	
 	/** @var string */
-	private $table;
+	protected $table;
 
 	/**
 	 * Constructor
@@ -128,12 +128,17 @@ class MetadataTable {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
-		$access_id = (int)$access_id;
+		$access_id = (int) $access_id;
 	
-		$query = "SELECT * from {$this->table}"
-			. " WHERE entity_guid = $entity_guid and name_id=" . $this->metastringsTable->getId($name) . " limit 1";
-	
-		$existing = $this->db->getDataRow($query);
+		$query = "SELECT * FROM {$this->table}
+			WHERE entity_guid = :entity_guid and name_id = :name_id LIMIT 1";
+
+		$params = [
+			':entity_guid' => $entity_guid,
+			':name_id' => $this->metastringsTable->getId($name)
+		];
+
+		$existing = $this->db->getDataRow($query, null, $params);
 		if ($existing && !$allow_multiple) {
 			$id = (int)$existing->id;
 			$result = $this->update($id, $name, $value, $value_type, $owner_guid, $access_id);
@@ -159,12 +164,22 @@ class MetadataTable {
 			}
 	
 			// If ok then add it
-			$query = "INSERT into {$this->table}"
-				. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
-				. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
-	
-			$id = $this->db->insertData($query);
-	
+			$query = "INSERT INTO {$this->table}
+				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)
+				VALUES (:entity_guid, :name_id, :value_id, :value_type, :owner_guid, :time_created, :access_id)";
+
+			$params = [
+				':entity_guid' => $entity_guid,
+				':name_id' => $name_id,
+				':value_id' => $value_id,
+				':value_type' => $value_type,
+				':owner_guid' => $owner_guid,
+				':time_created' => $time,
+				':access_id' => $access_id,
+			];
+			
+			$id = $this->db->insertData($query, $params);
+			
 			if ($id !== false) {
 				$obj = $this->get($id);
 				if ($this->events->trigger('create', 'metadata', $obj)) {
@@ -239,11 +254,25 @@ class MetadataTable {
 		}
 	
 		// If ok then add it
-		$query = "UPDATE {$this->table}"
-			. " set name_id='$name_id', value_id='$value_id', value_type='$value_type', access_id=$access_id,"
-			. " owner_guid=$owner_guid where id=$id";
-	
-		$result = $this->db->updateData($query);
+		$query = "UPDATE {$this->table}
+			SET name_id = :name_id,
+			    value_id = :value_id,
+				value_type = :value_type,
+				access_id = :access_id,
+			    owner_guid = :owner_guid
+			WHERE id = :id";
+
+		$params = [
+			':name_id' => $name_id,
+			':value_id' => $value_id,
+			':value_type' => $value_type,
+			':access_id' => $access_id,
+			':owner_guid' => $owner_guid,
+			':id' => $id,
+		];
+		
+		$result = $this->db->updateData($query, false, $params);
+		
 		if ($result !== false) {
 	
 			$this->cache->clear($md->entity_guid);

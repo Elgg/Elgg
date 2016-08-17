@@ -1,6 +1,6 @@
 <?php
 
-class ElggCoreViewtypeTest extends \PHPUnit_Framework_TestCase {
+class ElggCoreViewtypeTest extends \Elgg\TestCase {
 
 	protected function setUp() {
 		global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
@@ -61,4 +61,5 @@ class ElggCoreViewtypeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse(_elgg_is_valid_viewtype(123));
 		$this->assertFalse(_elgg_is_valid_viewtype(''));
 	}
+
 }

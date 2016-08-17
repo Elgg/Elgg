@@ -12,6 +12,8 @@ abstract class ElggData implements
 	\ArrayAccess // Override for array access
 {
 
+	use \Elgg\TimeUsing;
+	
 	/**
 	 * The main attributes of an entity.
 	 * Holds attributes to save to database

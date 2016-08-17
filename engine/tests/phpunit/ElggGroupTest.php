@@ -1,6 +1,6 @@
 <?php
 
-class ElggGroupTest extends \PHPUnit_Framework_TestCase {
+class ElggGroupTest extends \Elgg\TestCase {
 
 	protected function setUp() {
 		// required by \ElggEntity when setting the owner/container

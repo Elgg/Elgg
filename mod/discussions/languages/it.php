@@ -34,6 +34,7 @@ return array(
 	'discussion:reply:missing' => 'Non si può inviare una risposta vuota',
 	'discussion:reply:topic_not_found' => 'Argomento non trovato',
 	'discussion:reply:error:cannot_edit' => 'Permessi insufficienti per modificare questa risposta',
+	'discussion:reply:error:permissions' => 'You are not allowed to reply to this topic',
 
 	/**
 	 * River

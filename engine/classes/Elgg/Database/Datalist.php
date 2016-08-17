@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 use Elgg\Cache\Pool;
@@ -18,17 +19,19 @@ use Elgg\Logger;
  */
 class Datalist {
 	
+	const MAX_NAME_LENGTH = 255;
+	
 	/** @var Pool */
-	private $cache;
+	protected $cache;
 
 	/** @var Database */
-	private $db;
+	protected $db;
 
 	/** @var Logger */
-	private $logger;
+	protected $logger;
 
 	/** @var string */
-	private $table;
+	protected $table;
 
 	/**
 	 * Constructor
@@ -54,10 +57,10 @@ class Datalist {
 	 * @access private
 	 * @see \Elgg\BootService::boot
 	 */
-	function setCache(Pool $pool) {
+	public function setCache(Pool $pool) {
 		$this->cache = $pool;
 	}
-	
+
 	/**
 	 * Get the value of a datalist element.
 	 * 
@@ -71,19 +74,23 @@ class Datalist {
 	 * @return string|null|false String if value exists, null if doesn't, false on error
 	 * @access private
 	 */
-	function get($name) {
+	public function get($name) {
 		$name = trim($name);
 		if (!$this->validateName($name)) {
 			return false;
 		}
 
 		return $this->cache->get($name, function() use ($name) {
-			$escaped_name = $this->db->sanitizeString($name);
-			$result = $this->db->getDataRow("SELECT * FROM {$this->table} WHERE name = '$escaped_name'");
+
+			$sql = "SELECT * FROM {$this->table} WHERE name = :name";
+			$params = [
+				':name' => $name,
+			];
+			$result = $this->db->getDataRow($sql, null, $params);
 			return $result ? $result->value : null;
 		});
 	}
-	
+
 	/**
 	 * Set the value for a datalist element.
 	 * 
@@ -100,20 +107,27 @@ class Datalist {
 	 * @return bool
 	 * @access private
 	 */
-	function set($name, $value) {
+	public function set($name, $value) {
 		$name = trim($name);
 		if (!$this->validateName($name)) {
 			return false;
 		}
-	
-		$escaped_name = $this->db->sanitizeString($name);
-		$escaped_value = $this->db->sanitizeString($value);
-		$success = $this->db->insertData("INSERT INTO {$this->table}"
-			. " SET name = '$escaped_name', value = '$escaped_value'"
-			. " ON DUPLICATE KEY UPDATE value = '$escaped_value'");
 
+		$sql = "
+			INSERT INTO {$this->table}
+			SET name = :name, value = :value
+			ON DUPLICATE KEY UPDATE value = :value
+		";
+
+		$params = [
+			':name' => $name,
+			':value' => $value,
+		];
+
+		$success = $this->db->insertData($sql, $params);
+		
 		$this->cache->put($name, $value);
-	
+
 		return $success !== false;
 	}
 
@@ -144,7 +158,7 @@ class Datalist {
 	 * @return bool
 	 * @todo deprecate
 	 */
-	function runFunctionOnce($functionname, $timelastupdatedcheck = 0) {
+	public function runFunctionOnce($functionname, $timelastupdatedcheck = 0) {
 		$lastupdated = $this->get($functionname);
 		if ($lastupdated) {
 			$lastupdated = (int) $lastupdated;
@@ -171,17 +185,21 @@ class Datalist {
 	 * @return bool
 	 */
 	protected function validateName($name) {
+
+		$max = self::MAX_NAME_LENGTH;
+
 		// Can't use elgg_strlen() because not available until core loaded.
 		if (is_callable('mb_strlen')) {
-			$is_valid = (mb_strlen($name) <= 255);
+			$is_valid = (mb_strlen($name) <= $max);
 		} else {
-			$is_valid = (strlen($name) <= 255);
+			$is_valid = (strlen($name) <= $max);
 		}
 
 		if (!$is_valid) {
-			$this->logger->error("The name length for configuration variables cannot be greater than 255");
+			$this->logger->error("The name length for configuration variables cannot be greater than $max");
 		}
 
 		return $is_valid;
 	}
+
 }

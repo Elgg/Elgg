@@ -329,7 +329,7 @@ function _elgg_get_metastring_based_objects($options) {
 			$offset = sanitise_int($options['offset'], false);
 			$query .= " LIMIT $offset, $limit";
 		}
-
+		
 		$dt = get_data($query, $options['callback']);
 
 		if ($options['preload_owners'] && is_array($dt) && count($dt) > 1) {
@@ -554,7 +554,10 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 		if ($object->enabled == $enabled) {
 			$return = false;
 		} elseif ($object->canEdit() && (elgg_trigger_event($event, $type, $object))) {
-			$return = update_data("UPDATE $table SET enabled = '$enabled' where id = $id");
+			$return = update_data("UPDATE $table SET enabled = :enabled where id = :id", [
+				':enabled' => $enabled,
+				':id' => $id,
+			]);
 		}
 	}
 
@@ -660,7 +663,9 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 
 		if ($obj->canEdit()) {
 			if (elgg_trigger_event('delete', $type, $obj)) {
-				return (bool)delete_data("DELETE FROM $table WHERE id = $id");
+				return (bool)delete_data("DELETE FROM $table WHERE id = :id", [
+					':id' => $id,
+				]);
 			}
 		}
 	}

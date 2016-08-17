@@ -29,6 +29,7 @@ function discussion_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'discussion_reply_menu_setup');
 
 	// allow non-owners to add replies to discussion
+	elgg_register_plugin_hook_handler('container_logic_check', 'object', 'discussion_reply_container_logic_override');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'discussion_reply_container_permissions_override');
 
 	elgg_register_event_handler('update:after', 'object', 'discussion_update_reply_access_ids');
@@ -287,9 +288,8 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 	$object = $item->getObjectEntity();
 
 	if (elgg_instanceof($object, 'object', 'discussion')) {
-		$container = $object->getContainerEntity();
-
-		if ($container && ($container->canWriteToContainer() || elgg_is_admin_logged_in())) {
+		/* @var $object ElggObject */
+		if ($object->canWriteToContainer(0, 'object', 'discussion_reply')) {
 				$options = array(
 				'name' => 'reply',
 				'href' => "#discussion-reply-{$object->guid}",
@@ -300,8 +300,9 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 			);
 			$return[] = ElggMenuItem::factory($options);
 		}
-	} else {
-		if (elgg_instanceof($object, 'object', 'discussion_reply')) {
+	} else if (elgg_instanceof($object, 'object', 'discussion_reply')) {
+		/* @var $object ElggDiscussionReply */
+		if (!$object->canComment()) {
 			// Discussion replies cannot be commented
 			foreach ($return as $key => $item) {
 				if ($item->getName() === 'comment') {
@@ -439,6 +440,36 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
 }
 
 /**
+ * Make sure that discussion replies are only contained by discussions
+ * Make sure discussion replies can not be written to a discussion after it has been closed
+ *
+ * @param string $hook   'container_logic_check'
+ * @param string $type   'object'
+ * @param array  $return Allowed or not
+ * @param array  $params Hook params
+ * @return bool
+ */
+function discussion_reply_container_logic_override($hook, $type, $return, $params) {
+
+	$container = elgg_extract('container', $params);
+	$subtype = elgg_extract('subtype', $params);
+
+	if ($type !== 'object' || $subtype !== 'discussion_reply') {
+		return;
+	}
+
+	if (!elgg_instanceof($container, 'object', 'discussion')) {
+		// only discussions can contain discussion replies
+		return false;
+	}
+
+	if ($container->status == 'closed') {
+		// do not allow new replies in closed discussions
+		return false;
+	}
+}
+
+/**
  * Make sure that only group members can post to a group discussion
  *
  * @param string $hook   'container_permissions_check'
@@ -455,7 +486,7 @@ function discussion_reply_container_permissions_override($hook, $type, $return, 
 	/** @var $discussion ElggEntity */
 	$discussion = $params['container'];
 	$user = $params['user'];
-
+	
 	$container = $discussion->getContainerEntity();
 
 	if (elgg_instanceof($container, 'group')) {

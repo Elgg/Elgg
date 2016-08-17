@@ -34,6 +34,7 @@ return array(
 	'discussion:reply:missing' => '返答が空なので投稿できません',
 	'discussion:reply:topic_not_found' => '議題は見つかりませんでした',
 	'discussion:reply:error:cannot_edit' => 'あなたには、この返答を編集する権限がありません',
+	'discussion:reply:error:permissions' => 'You are not allowed to reply to this topic',
 
 	/**
 	 * River

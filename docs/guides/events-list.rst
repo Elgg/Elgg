@@ -21,8 +21,9 @@ System events
 	Triggered after the ``init, system`` event. All plugins are fully loaded and the engine is ready
 	to serve pages.
 
-**pagesetup, system**
+**pagesetup, system** (deprecated in 2.3)
     Called just before the first content is produced. Is triggered by ``elgg_view()``.
+    Use the menu or page shell hooks instead.
 
 **shutdown, system**
     Triggered after the page has been sent to the user. Expensive operations could be done here
@@ -63,6 +64,12 @@ System events
 
 **cache:flush, system**
     Reset internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to reset others such as APC, OPCache, or WinCache.
+
+**send:before, http_response**
+    Triggered before an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` that is to be sent to the requester. Handlers can terminate the event and prevent the response from being sent by returning `false`.
+
+**send:after, http_response**
+    Triggered after an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` that was sent to the requester.
 
 User events
 ===========
@@ -200,6 +207,22 @@ River events
 
 **created, river**
 	Called after a river item is created.
+
+	.. note:: Use the plugin hook ``creating, river`` to cancel creation (or alter options).
+
+**delete:before, river**
+	Triggered before a river item is deleted. Returning false cancels the deletion.
+
+**delete:after, river**
+	Triggered after a river item was deleted.
+
+File events
+===========
+
+**upload:after, file**
+    Called after an uploaded file has been written to filestore. Receives an
+    instance of ``ElggFile`` the uploaded file was written to. The ``ElggFile``
+    may or may not be an entity with a GUID.
 
 Notes
 =====

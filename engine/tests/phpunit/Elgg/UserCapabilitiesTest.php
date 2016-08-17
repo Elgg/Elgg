@@ -3,12 +3,15 @@
 namespace Elgg;
 
 use Elgg\Database\EntityTable;
-use Elgg\Database\EntityTable\UserFetchFailureException;
-use Elgg\Tests\EntityMocks;
+use ElggAnnotation;
+use ElggEntity;
+use ElggMetadata;
+use ElggObject;
 use ElggSession;
-use PHPUnit_Framework_TestCase;
+use ElggUser;
+use InvalidArgumentException;
 
-class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
+class UserCapabilitiesTest extends TestCase {
 
 	/**
 	 * @var PluginHooksService
@@ -27,24 +30,16 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 
-		$this->mocks = new EntityMocks($this);
-		
 		$this->hooks = new PluginHooksService();
-
-		$this->entities = $this->getMockBuilder('\Elgg\Database\EntityTable')
-				->setMethods(['get'])
-				->disableOriginalConstructor()
-				->getMock();
-
-		$this->entities->expects($this->any())
-				->method('get')
-				->will($this->returnCallback([$this->mocks, 'get']));
-
 		$this->session = ElggSession::getMock();
 
 		_elgg_services()->setValue('hooks', $this->hooks);
-		_elgg_services()->setValue('entityTable', $this->entities);
 		_elgg_services()->setValue('session', $this->session);
+
+		$this->setupMockServices();
+
+		$this->entities = _elgg_services()->entityTable;
+		
 		_elgg_services()->setValue('userCapabilities', new UserCapabilities($this->hooks, $this->entities, $this->session));
 	}
 
@@ -52,9 +47,9 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testOwnerCanEditEntity() {
-		$owner = $this->mocks->getUser();
-		$viewer = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$viewer = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 		$this->assertTrue($entity->canEdit($owner->guid));
@@ -65,10 +60,10 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testContainerCanEditEntity() {
-		$owner = $this->mocks->getUser();
-		$container = $this->mocks->getUser();
-		$viewer = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$container = $this->mocks()->getUser();
+		$viewer = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 			'container_guid' => $container->guid,
 		]);
@@ -81,8 +76,8 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanUserEditSelf() {
-		$user = $this->mocks->getUser();
-		$viewer = $this->mocks->getUser();
+		$user = $this->mocks()->getUser();
+		$viewer = $this->mocks()->getUser();
 		$this->assertTrue($user->canEdit($user->guid));
 		$this->assertFalse($user->canEdit($viewer->guid));
 	}
@@ -92,16 +87,16 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanOverrideEditPermissionsWithAHook() {
 
-		$user = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$user = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $user->guid,
 		]);
-		
+
 		$this->assertTrue($entity->canEdit($user->guid));
 
 		$this->hooks->registerHandler('permissions_check', 'object', function($hook, $type, $return, $params) use ($entity, $user) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($user, $params['user']);
 			$this->assertTrue($return);
@@ -114,10 +109,10 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanDeleteWhenCanEdit() {
-		$owner = $this->mocks->getUser();
-		$container = $this->mocks->getUser();
-		$viewer = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$container = $this->mocks()->getUser();
+		$viewer = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 			'container_guid' => $container->guid,
 		]);
@@ -136,15 +131,15 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanOverrideDeletePermissionsWithAHook() {
 
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 		$this->assertTrue($entity->canDelete($owner->guid));
 
 		$this->hooks->registerHandler('permissions_check:delete', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertTrue($return);
@@ -158,14 +153,14 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanWriteToContainerWhenCanEdit() {
-		$owner = $this->mocks->getUser();
-		$container = $this->mocks->getUser();
-		$viewer = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$container = $this->mocks()->getUser();
+		$viewer = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 			'container_guid' => $container->guid,
 		]);
-		
+
 		$this->assertTrue($entity->canWriteToContainer($owner->guid));
 		$this->assertTrue($entity->canWriteToContainer($container->guid));
 		$this->assertEquals($entity->canEdit($owner->guid), $entity->canDelete($owner->guid));
@@ -180,8 +175,8 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanOverrideContainerPermissionsWithAHook() {
 
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 			'subtype' => 'bar',
 		]);
@@ -189,8 +184,8 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
 		$this->hooks->registerHandler('container_permissions_check', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['container']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['container']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['container']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals('bar', $params['subtype']);
@@ -199,18 +194,17 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 		});
 
 		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
-		
+
 		// Should still be able to write to container without particular entity type specified
 		$this->assertTrue($entity->canWriteToContainer($owner->guid));
-		
 	}
 
 	/**
 	 * @group UserCapabilities
 	 */
 	public function testCanNotEditMetadataOfUnsavedEntity() {
-		$user = $this->mocks->getUser();
-		$entity = new \ElggObject();
+		$user = $this->mocks()->getUser();
+		$entity = new ElggObject();
 		$this->assertFalse($entity->canEditMetadata(null, $user->guid));
 	}
 
@@ -218,11 +212,11 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testOwnerCanEditUnownedMetadata() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-		$metadata = new \ElggMetadata((object) [
+		$metadata = new ElggMetadata((object) [
 					'owner_guid' => 0,
 					'entity_guid' => $entity->guid,
 		]);
@@ -233,17 +227,17 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testOwnerCanEditMetadataOwnedBySelf() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-		$metadata = new \ElggMetadata((object) [
+		$metadata = new ElggMetadata((object) [
 					'owner_guid' => $owner->guid,
 					'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
 
-		$viewer = $this->mocks->getUser();
+		$viewer = $this->mocks()->getUser();
 		$this->assertFalse($entity->canEditMetadata($metadata, $viewer->guid));
 	}
 
@@ -251,8 +245,8 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanEditMetadataWhenCanEdit() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 		$this->assertTrue($entity->canEdit($owner->guid));
@@ -264,20 +258,20 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanOverrideMetadataPermissionsWithAHook() {
 
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-		$metadata = new \ElggMetadata((object) [
+		$metadata = new ElggMetadata((object) [
 					'owner_guid' => $owner->guid,
 					'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
 
 		$this->hooks->registerHandler('permissions_check:metadata', 'object', function($hook, $type, $return, $params) use ($entity, $owner, $metadata) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
-			$this->assertInstanceOf(\ElggMetadata::class, $params['metadata']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggMetadata::class, $params['metadata']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals($metadata, $params['metadata']);
@@ -293,11 +287,11 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testOwnerCanEditUnownedAnnotationOnOwnedEntity() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-		$annotation = new \ElggAnnotation((object) [
+		$annotation = new ElggAnnotation((object) [
 					'owner_guid' => 0,
 					'entity_guid' => $entity->guid,
 		]);
@@ -308,17 +302,17 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testOwnerCanEditAnnotationOwnedBySelfOnOwnedEntity() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-		$annotation = new \ElggAnnotation((object) [
+		$annotation = new ElggAnnotation((object) [
 					'owner_guid' => $owner->guid,
 					'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($annotation->canEdit($owner->guid));
 
-		$viewer = $this->mocks->getUser();
+		$viewer = $this->mocks()->getUser();
 		$this->assertFalse($annotation->canEdit($viewer->guid));
 	}
 
@@ -326,17 +320,17 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testOwnerCanEditAnnotationOwnedBySelfOnUnownedEntity() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject();
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject();
 
-		$annotation = new \ElggAnnotation((object) [
+		$annotation = new ElggAnnotation((object) [
 					'owner_guid' => $owner->guid,
 					'entity_guid' => $entity->guid,
 		]);
-		
+
 		$this->assertTrue($annotation->canEdit($owner->guid));
 
-		$viewer = $this->mocks->getUser();
+		$viewer = $this->mocks()->getUser();
 		$this->assertFalse($annotation->canEdit($viewer->guid));
 	}
 
@@ -344,11 +338,11 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanEditAnnotationWhenCanEdit() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-		$annotation = new \ElggAnnotation((object) [
+		$annotation = new ElggAnnotation((object) [
 					'owner_guid' => $owner->guid,
 					'entity_guid' => $entity->guid,
 		]);
@@ -361,20 +355,20 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCanOverrideAnnotationPermissionsWithAHook() {
 
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-		$annotation = new \ElggAnnotation((object) [
+		$annotation = new ElggAnnotation((object) [
 					'owner_guid' => $owner->guid,
 					'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($annotation->canEdit($owner->guid));
 
 		$this->hooks->registerHandler('permissions_check', 'annotation', function($hook, $type, $return, $params) use ($entity, $owner, $annotation) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
-			$this->assertInstanceOf(\ElggAnnotation::class, $params['annotation']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggAnnotation::class, $params['annotation']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals($annotation, $params['annotation']);
@@ -384,23 +378,23 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse($annotation->canEdit($owner->guid));
 	}
-	
+
 	/**
 	 * @group UserCapabilities
 	 */
 	public function testDefaultCanCommentPermissions() {
 
-		$viewer = $this->mocks->getUser();
+		$viewer = $this->mocks()->getUser();
 
-		$owner = $this->mocks->getUser();
-		$group = $this->mocks->getGroup([
+		$owner = $this->mocks()->getUser();
+		$group = $this->mocks()->getGroup([
 			'owner_guid', $owner->guid,
 		]);
-		$object = $this->mocks->getObject([
+		$object = $this->mocks()->getObject([
 			'owner_guid', $owner->guid,
 		]);
 
-		$entity = $this->getMockBuilder(\ElggEntity::class)
+		$entity = $this->getMockBuilder(ElggEntity::class)
 				->setMethods(['__get', 'getDisplayName', 'setDisplayName']) // keep origin canComment method
 				->disableOriginalConstructor()
 				->getMock();
@@ -425,17 +419,17 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanOverrideCommentingPermissionsWithAHook() {
-		
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 
 		$this->assertTrue($entity->canComment($owner->guid));
 
 		$this->hooks->registerHandler('permissions_check:comment', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals('object', $type);
@@ -448,24 +442,24 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @group UserCapabilities
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToAnnotationInstance() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 
-		$entity->canAnnotate($owner->guid, new \ElggAnnotation());
+		$entity->canAnnotate($owner->guid, new ElggAnnotation());
 	}
 
 	/**
 	 * @group UserCapabilities
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToArray() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 
@@ -474,11 +468,11 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @group UserCapabilities
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToInteger() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 
@@ -487,26 +481,27 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @group UserCapabilities
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToClosure() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 
-		$entity->canAnnotate($owner->guid, function() {return 'annotation_name';});
+		$entity->canAnnotate($owner->guid, function() {
+			return 'annotation_name';
+		});
 	}
-
 
 	/**
 	 * @group UserCapabilities
 	 */
 	public function testCanAnnotateByDefault() {
-		
-		$viewer = $this->mocks->getUser();
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+
+		$viewer = $this->mocks()->getUser();
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 
@@ -516,7 +511,6 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($entity->canAnnotate($owner->guid, ''));
 		$this->assertTrue($entity->canAnnotate($owner->guid, false)); //BC
 		$this->assertTrue($entity->canAnnotate($owner->guid, null)); //BC
-
 		// All other users can annotate
 		$this->assertTrue($entity->canAnnotate($viewer->guid));
 		$this->assertTrue($viewer->canAnnotate($viewer->guid, 'baz'));
@@ -529,15 +523,15 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanOverrideAnnotationPermissionsWithAHookByAnnotationName() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 
 		$this->hooks->registerHandler('permissions_check:annotate:baz', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals('baz', $params['annotation_name']);
@@ -553,15 +547,15 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 	 * @group UserCapabilities
 	 */
 	public function testCanOverrideAnnotationPermissionsWithAGenericHook() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 
 		$this->hooks->registerHandler('permissions_check:annotate', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals('baz', $params['annotation_name']);
@@ -573,20 +567,19 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
 	}
 
-
 	/**
 	 * @group UserCapabilities
 	 */
 	public function testCanAnnotateHookSequence() {
-		$owner = $this->mocks->getUser();
-		$entity = $this->mocks->getObject([
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 
 		$this->hooks->registerHandler('permissions_check:annotate:baz', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals('baz', $params['annotation_name']);
@@ -598,8 +591,8 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
 
 		$this->hooks->registerHandler('permissions_check:annotate', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(\ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(\ElggUser::class, $params['user']);
+			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
 			$this->assertEquals($entity, $params['entity']);
 			$this->assertEquals($owner, $params['user']);
 			$this->assertEquals('baz', $params['annotation_name']);
@@ -610,4 +603,38 @@ class UserCapabilitiesTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 	}
+
+	/**
+	 * @group UserCapabilities
+	 */
+	public function testCanOverrideContainerLogicWithAHook() {
+
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
+			'owner_guid' => $owner->guid,
+		]);
+
+		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+
+		$this->hooks->registerHandler('container_logic_check', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $params['container']);
+			$this->assertInstanceOf(ElggUser::class, $params['user']);
+			$this->assertEquals($entity, $params['container']);
+			$this->assertEquals($owner, $params['user']);
+			$this->assertEquals('object', $type);
+			$this->assertEquals('bar', $params['subtype']);
+			$this->assertNull($return);
+			return false;
+		});
+		
+		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+
+		// make sure container permission hooks are not triggered
+		$this->hooks->registerHandler('container_permissions_check', 'object', function() {
+			return true;
+		});
+
+		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+	}
+
 }
