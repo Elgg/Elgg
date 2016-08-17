@@ -490,16 +490,11 @@ class AccessCollections {
 			$site_guid = $this->site_guid;
 		}
 
-		$db = _elgg_services()->db;
-		$prefix = $db->getTablePrefix();
-
-		$name = $db->sanitizeString($name);
-	
-		$q = "INSERT INTO {$prefix}access_collections
-			SET name = '{$name}',
-				owner_guid = {$owner_guid},
-				site_guid = {$site_guid}";
-		$id = $db->insertData($q);
+		$id = _elgg_services()->db->insertRow('access_collections', [
+			'name' => $name,
+			'owner_guid' => $owner_guid,
+			'site_guid' => $site_guid,
+		]);
 		if (!$id) {
 			return false;
 		}
@@ -571,17 +566,12 @@ class AccessCollections {
 			return false;
 		}
 
-		$db = _elgg_services()->db;
-		$prefix = $db->getTablePrefix();
-	
 		// Deleting membership doesn't affect result of deleting ACL.
-		$q = "DELETE FROM {$prefix}access_collection_membership
-			WHERE access_collection_id = {$collection_id}";
-		$db->deleteData($q);
+		_elgg_services()->db->deleteRows('access_collection_membership', [
+			'access_collection_id' => $collection_id,
+		]);
 	
-		$q = "DELETE FROM {$prefix}access_collections
-			WHERE id = {$collection_id}";
-		$result = $db->deleteData($q);
+		$result = _elgg_services()->db->deleteRows('access_collections', ['id' => $collection_id]);
 	
 		return (bool)$result;
 	}
@@ -684,14 +674,10 @@ class AccessCollections {
 			return false;
 		}
 
-		$db = _elgg_services()->db;
-		$prefix = $db->getTablePrefix();
-	
-		$q = "DELETE FROM {$prefix}access_collection_membership
-			WHERE access_collection_id = {$collection_id}
-				AND user_guid = {$user_guid}";
-	
-		return (bool)$db->deleteData($q);
+		return (bool)_elgg_services()->db->deleteRows('access_collection_membership', [
+			'access_collection_id' => $collection_id,
+			'user_guid' => $user_guid,
+		]);
 	}
 	
 	/**

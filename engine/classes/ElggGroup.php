@@ -529,28 +529,24 @@ class ElggGroup extends \ElggEntity
 	 * {@inheritdoc}
 	 */
 	protected function update() {
-		global $CONFIG;
-		
 		if (!parent::update()) {
 			return false;
 		}
 		
-		$guid = (int)$this->guid;
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
-		
-		$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-			. " name='$name', description='$description' where guid=$guid";
+		$res = $this->getDatabase()->updateRows('groups_entity', [
+			'name' => (string)$this->name,
+			'description' => (string)$this->description,
+		], [
+			'guid' => (int)$this->guid,
+		]);
 
-		return $this->getDatabase()->updateData($query) !== false;
+		return $res !== false;
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
 	protected function create() {
-		global $CONFIG;
-		
 		$guid = parent::create();
 		if (!$guid) {
 			// @todo this probably means permission to create entity was denied
@@ -558,13 +554,11 @@ class ElggGroup extends \ElggEntity
 			return false;
 		}
 		
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
-
-		$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-			. " (guid, name, description) values ($guid, '$name', '$description')";
-
-		$result = $this->getDatabase()->insertData($query);
+		$result = $this->getDatabase()->insertRow('groups_entity', [
+			'guid' => $guid,
+			'name' => (string)$this->name,
+			'description' => (string)$this->description,
+		]);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;

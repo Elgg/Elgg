@@ -97,7 +97,7 @@ class RelationshipsTable {
 			return false;
 		}
 
-		return $this->db->deleteData("DELETE FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = $id");
+		return $this->db->deleteRows('entity_relationships', ['id' => $id]);
 	}
 
 	/**

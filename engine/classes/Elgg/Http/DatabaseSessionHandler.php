@@ -34,10 +34,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function read($session_id) {
-		
-		$id = sanitize_string($session_id);
-		$query = "SELECT * FROM {$this->db->getTablePrefix()}users_sessions WHERE session='$id'";
-		$result = $this->db->getDataRow($query);
+		$result = $this->db->fetchRow('users_sessions', ['session' => (string)$session_id]);
 		if ($result) {
 			return (string) $result->data;
 		} else {
@@ -49,20 +46,19 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function write($session_id, $session_data) {
-		$id = sanitize_string($session_id);
-		$time = time();
-		$sess_data_sanitised = sanitize_string($session_data);
-
-		$query = "INSERT INTO {$this->db->getTablePrefix()}users_sessions
+		$query = "
+			INSERT INTO {$this->db->getTablePrefix()}users_sessions
 			(session, ts, data) VALUES
-			('$id', '$time', '$sess_data_sanitised')
-			ON DUPLICATE KEY UPDATE ts = '$time', data = '$sess_data_sanitised'";
+		  	(:session, :ts, :data)
+			ON DUPLICATE KEY UPDATE ts = :ts, data = :data
+		";
+		$params = [
+			':session' => (string)$session_id,
+			':ts' => time(),
+			':data' => (string)$session_data,
+		];
 
-		if ($this->db->insertData($query) !== false) {
-			return true;
-		} else {
-			return false;
-		}
+		return $this->db->insertData($query, $params) !== false;
 	}
 
 	/**
@@ -76,10 +72,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function destroy($session_id) {
-		
-		$id = sanitize_string($session_id);
-		$query = "DELETE FROM {$this->db->getTablePrefix()}users_sessions WHERE session='$id'";
-		return (bool) $this->db->deleteData($query);
+		return (bool) $this->db->deleteRows('users_sessions', ['session' => $session_id]);
 	}
 
 	/**

@@ -115,10 +115,10 @@ class MetadataTable {
 
 		$entity_guid = (int)$entity_guid;
 		// name and value are encoded in add_metastring()
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, trim($value_type));
 		$time = time();
 		$owner_guid = (int)$owner_guid;
-		$allow_multiple = (boolean)$allow_multiple;
+		$allow_multiple = (bool)$allow_multiple;
 	
 		if (!isset($value)) {
 			return false;
@@ -130,8 +130,13 @@ class MetadataTable {
 	
 		$access_id = (int)$access_id;
 	
-		$query = "SELECT * from {$this->table}"
-			. " WHERE entity_guid = $entity_guid and name_id=" . $this->metastringsTable->getId($name) . " limit 1";
+		$query = "
+			SELECT *
+			FROM {$this->table}
+			WHERE entity_guid = $entity_guid
+			  AND name_id = {$this->metastringsTable->getId($name)}
+			LIMIT 1
+		";
 	
 		$existing = $this->db->getDataRow($query);
 		if ($existing && !$allow_multiple) {
@@ -159,11 +164,15 @@ class MetadataTable {
 			}
 	
 			// If ok then add it
-			$query = "INSERT into {$this->table}"
-				. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
-				. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
-	
-			$id = $this->db->insertData($query);
+			$id = $this->db->insertRow('metadata', [
+				'entity_guid' => $entity_guid,
+				'name_id' => $name_id,
+				'value_id' => $value_id,
+				'value_type' => $value_type,
+				'owner_guid' => $owner_guid,
+				'time_created' => $time,
+				'access_id' => $access_id,
+			]);
 	
 			if ($id !== false) {
 				$obj = $this->get($id);
@@ -214,7 +223,7 @@ class MetadataTable {
 			$metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
 		}
 	
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, trim($value_type));
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {

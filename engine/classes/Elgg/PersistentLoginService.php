@@ -158,10 +158,9 @@ class PersistentLoginService {
 			return null;
 		}
 
-		$hash = $this->db->sanitizeString($hash);
-		$query = "SELECT guid FROM {$this->table} WHERE code = '$hash'";
+		$query = "SELECT guid FROM {$this->table} WHERE code = ?";
 		try {
-			$user_row = $this->db->getDataRow($query);
+			$user_row = $this->db->getDataRow($query, null, [$hash]);
 		} catch (\DatabaseException $e) {
 			return $this->handleDbException($e);
 		}
@@ -186,15 +185,12 @@ class PersistentLoginService {
 		// and for unknown reasons. See https://github.com/Elgg/Elgg/issues/8104
 		$this->removeHash($hash);
 
-		$time = time();
-		$hash = $this->db->sanitizeString($hash);
-
-		$query = "
-			INSERT INTO {$this->table} (code, guid, timestamp)
-		    VALUES ('$hash', {$user->guid}, $time)
-		";
 		try {
-			$this->db->insertData($query);
+			$this->db->insertRow('users_remember_me_cookies', [
+				'code' => $hash,
+				'guid' => $user->guid,
+				'timestamp' => time(),
+			]);
 		} catch (\DatabaseException $e) {
 			$this->handleDbException($e);
 		}
@@ -207,11 +203,8 @@ class PersistentLoginService {
 	 * @return void
 	 */
 	protected function removeHash($hash) {
-		$hash = $this->db->sanitizeString($hash);
-
-		$query = "DELETE FROM {$this->table} WHERE code = '$hash'";
 		try {
-			$this->db->deleteData($query);
+			$this->db->deleteRows('users_remember_me_cookies', ['code' => $hash]);
 		} catch (\DatabaseException $e) {
 			$this->handleDbException($e);
 		}

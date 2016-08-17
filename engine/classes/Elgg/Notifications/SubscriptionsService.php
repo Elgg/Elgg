@@ -152,15 +152,23 @@ class SubscriptionsService {
 		if (!$rels) {
 			return array();
 		}
-		array_walk($rels, array($this->db, 'sanitizeString'));
-		$methods_string = "'" . implode("','", $rels) . "'";
 
-		$db_prefix = $this->db->getTablePrefix();
-		$query = "SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
-			FROM {$db_prefix}entity_relationships
-			WHERE guid_two = $container_guid AND
-					relationship IN ($methods_string) GROUP BY guid_one";
-		return $this->db->getData($query);
+		$params = [];
+		$placeholders = [];
+		foreach ($rels as $rel) {
+			$placeholders[] = '?';
+			$params[] = $rel;
+		}
+		$set = implode(',', $placeholders);
+
+		$query = "
+			SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
+			FROM {$this->db->prefix('entity_relationships')}
+			WHERE guid_two = $container_guid
+			  AND relationship IN ($set)
+		  	GROUP BY guid_one
+		";
+		return $this->db->getData($query, null, $params);
 	}
 
 	/**

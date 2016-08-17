@@ -126,18 +126,14 @@ class ElggSite extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function create() {
-		global $CONFIG;
-
 		$guid = parent::create();
 
-		$name = sanitize_string($this->attributes['name']);
-		$description = sanitize_string($this->attributes['description']);
-		$url = sanitize_string($this->attributes['url']);
-
-		$query = "INSERT into {$CONFIG->dbprefix}sites_entity
-			(guid, name, description, url) values ($guid, '$name', '$description', '$url')";
-
-		$result = $this->getDatabase()->insertData($query);
+		$result = $this->getDatabase()->insertRow('sites_entity', [
+			'guid' => $guid,
+			'name' => (string)$this->attributes['name'],
+			'description' => (string)$this->attributes['description'],
+			'url' => (string)$this->attributes['url'],
+		]);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
@@ -146,8 +142,11 @@ class ElggSite extends \ElggEntity {
 		// make sure the site guid is set to self if not already set
 		if (!$this->site_guid) {
 			$this->site_guid = $guid;
-			$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
-				SET site_guid = $guid WHERE guid = $guid");
+			$this->getDatabase()->updateRows('entities', [
+				'site_guid' => $guid,
+			], [
+				'guid' => $guid,
+			]);
 		}
 
 		return $guid;
@@ -157,21 +156,19 @@ class ElggSite extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function update() {
-		global $CONFIG;
-
 		if (!parent::update()) {
 			return false;
 		}
 
-		$guid = (int)$this->guid;
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
-		$url = sanitize_string($this->url);
+		$res = $this->getDatabase()->updateRows('sites_entity', [
+			'name' => (string)$this->name,
+			'description' => (string)$this->description,
+			'url' => (string)$this->url,
+		], [
+			'guid' => (int)$this->guid,
+		]);
 
-		$query = "UPDATE {$CONFIG->dbprefix}sites_entity
-			SET name='$name', description='$description', url='$url' WHERE guid=$guid";
-
-		return $this->getDatabase()->updateData($query) !== false;
+		return $res !== false;
 	}
 
 	/**

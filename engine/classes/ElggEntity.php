@@ -1463,7 +1463,7 @@ abstract class ElggEntity extends \ElggData implements
 		global $CONFIG;
 
 		// Using attribute array directly; get function does something special!
-		$type = $this->getDatabase()->sanitizeString($this->attributes['type']);
+		$type = (string)$this->attributes['type'];
 		if ($type == "") {
 			throw new \InvalidParameterException("Entity type must be set.");
 		}
@@ -1528,12 +1528,17 @@ abstract class ElggEntity extends \ElggData implements
 			}
 		}
 
-		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
-			(type, subtype, owner_guid, site_guid, container_guid,
-				access_id, time_created, time_updated, last_action)
-			values
-			('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
-				$access_id, $time_created, $now, $now)");
+		$result = $this->getDatabase()->insertRow('entities', [
+			'type' => $type,
+			'subtype' => $subtype_id,
+			'owner_guid' => $owner_guid,
+			'site_guid' => $site_guid,
+			'container_guid' => $container_guid,
+			'access_id' => $access_id,
+			'time_created' => $time_created,
+			'time_updated' => $now,
+			'last_action' => $now,
+		]);
 
 		if (!$result) {
 			throw new \IOException("Unable to save new object's base entity information!");
@@ -2006,19 +2011,15 @@ abstract class ElggEntity extends \ElggData implements
 		elgg_delete_river(array('target_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		$res = $this->getDatabase()->deleteData("
-			DELETE FROM {$CONFIG->dbprefix}entities
-			WHERE guid = $guid
-		");
+		$res = $this->getDatabase()->deleteRows('entities', [
+			'guid' => $guid,
+		]);
 
 		if ($res && in_array($this->type, ['object', 'user', 'group', 'site'])) {
 			// delete from secondary table
-			$sub_table = "{$CONFIG->dbprefix}{$this->type}s_entity";
-
-			$this->getDatabase()->deleteData("
-				DELETE FROM $sub_table
-				WHERE guid = $guid
-			");
+			$res = $this->getDatabase()->deleteRows("{$this->type}s_entity", [
+				'guid' => $guid,
+			]);
 		}
 		
 		_elgg_clear_entity_files($this);

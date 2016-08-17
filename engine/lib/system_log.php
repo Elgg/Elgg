@@ -212,9 +212,8 @@ function system_log($object, $event) {
 		$object_class = get_class($object);
 		$object_type = $object->getType();
 		$object_subtype = $object->getSubtype();
-		$event = sanitise_string($event);
 		$time = time();
-		$ip_address = sanitize_string(_elgg_services()->request->getClientIp());
+		$ip_address = _elgg_services()->request->getClientIp();
 		if (!$ip_address) {
 			$ip_address = '0.0.0.0';
 		}
@@ -239,14 +238,31 @@ function system_log($object, $event) {
 
 		// Create log if we haven't already created it
 		if (!isset($log_cache[$time][$object_id][$event])) {
-			$query = "INSERT into {$CONFIG->dbprefix}system_log
-				(object_id, object_class, object_type, object_subtype, event,
-				performed_by_guid, owner_guid, access_id, enabled, time_created, ip_address)
-			VALUES
-				('$object_id','$object_class','$object_type', '$object_subtype', '$event',
-				$performed_by, $owner_guid, $access_id, '$enabled', '$time', '$ip_address')";
-			
-			execute_delayed_write_query($query);
+			$values = [
+				'object_id' => (string)$object_id,
+				'object_class' => (string)$object_class,
+				'object_type' => (string)$object_type,
+				'object_subtype' => (string)$object_subtype,
+				'event' => (string)$event,
+				'performed_by_guid' => $performed_by,
+				'owner_guid' => $owner_guid,
+				'access_id' => $access_id,
+				'enabled' => (string)$enabled,
+				'time_created' => $time,
+				'ip_address' => (string)$ip_address,
+			];
+			$columns = implode(',', array_keys($values));
+			$placeholders = array_map(function () {
+				return '?';
+			}, $values);
+			$placeholders = implode(',', $placeholders);
+			$params = array_values($values);
+
+			$table = _elgg_services()->db->prefix('system_log');
+			$query = "
+				INSERT INTO $table ($columns) VALUES ($placeholders)
+			";
+			execute_delayed_write_query($query, null, $params);
 
 			$log_cache[$time][$object_id][$event] = true;
 			$cache_size += 1;

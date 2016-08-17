@@ -310,17 +310,19 @@ class PrivateSettingsTable {
 		}
 
 		$entity_guid = (int) $entity_guid;
-		$name = $this->db->sanitizeString($name);
 
 		$entity = $this->entities->get($entity_guid);
-
 		if (!$entity instanceof \ElggEntity) {
 			return null;
 		}
 
-		$query = "SELECT value FROM {$this->table}
-			where name = '{$name}' and entity_guid = {$entity_guid}";
-		$setting = $this->db->getDataRow($query);
+		$query = "
+			SELECT value
+			FROM {$this->table}
+			WHERE name = ?
+			  AND entity_guid = $entity_guid
+		";
+		$setting = $this->db->getDataRow($query, null, [$name]);
 
 		if ($setting) {
 			return $setting->value;
@@ -372,13 +374,18 @@ class PrivateSettingsTable {
 		_elgg_services()->boot->invalidateCache();
 
 		$entity_guid = (int) $entity_guid;
-		$name = $this->db->sanitizeString($name);
-		$value = $this->db->sanitizeString($value);
 
-		$result = $this->db->insertData("INSERT into {$this->table}
-			(entity_guid, name, value) VALUES
-			($entity_guid, '$name', '$value')
-			ON DUPLICATE KEY UPDATE value='$value'");
+		$sql = "
+			INSERT INTO {$this->table}
+				(entity_guid, name, value) VALUES
+				($entity_guid, :name, :value)
+			ON DUPLICATE KEY UPDATE value = :value
+		";
+		$params = [
+			':name' => $name,
+			':value' => (string)$value,
+		];
+		$result = $this->db->insertData($sql, $params);
 
 		return $result !== false;
 	}
@@ -402,11 +409,10 @@ class PrivateSettingsTable {
 			return false;
 		}
 
-		$name = $this->db->sanitizeString($name);
-
-		return $this->db->deleteData("DELETE FROM {$this->table}
-			WHERE name = '{$name}'
-			AND entity_guid = {$entity_guid}");
+		return $this->db->deleteRows('private_settings', [
+			'name' => $name,
+			'entity_guid' => $entity_guid,
+		]);
 	}
 
 	/**

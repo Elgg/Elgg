@@ -78,8 +78,12 @@ class Datalist {
 		}
 
 		return $this->cache->get($name, function() use ($name) {
-			$escaped_name = $this->db->sanitizeString($name);
-			$result = $this->db->getDataRow("SELECT * FROM {$this->table} WHERE name = '$escaped_name'");
+			$result = $this->db->getDataRow("
+				SELECT *
+				FROM {$this->table}
+				WHERE name = ?
+			", null, [$name]);
+
 			return $result ? $result->value : null;
 		});
 	}
@@ -106,11 +110,14 @@ class Datalist {
 			return false;
 		}
 	
-		$escaped_name = $this->db->sanitizeString($name);
-		$escaped_value = $this->db->sanitizeString($value);
-		$success = $this->db->insertData("INSERT INTO {$this->table}"
-			. " SET name = '$escaped_name', value = '$escaped_value'"
-			. " ON DUPLICATE KEY UPDATE value = '$escaped_value'");
+		$success = $this->db->insertData("
+			INSERT INTO {$this->table}
+			SET name = :name, value = :value
+			ON DUPLICATE KEY UPDATE value = :value
+		", [
+			':name' => $name,
+			':value' => $value,
+		]);
 
 		$this->cache->put($name, $value);
 	
