@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg;
 
-class MethodMatcherTest extends \PHPUnit_Framework_TestCase {
+class MethodMatcherTest extends \Elgg\TestCase {
 
 	public function testMatchesStrings() {
 		$matcher = new MethodMatcher('stdClass', 'bar');
@@ -27,6 +28,9 @@ class MethodMatcherTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($matcher->matches([new \stdClass(), 'BAR']));
 		$this->assertFalse($matcher->matches([new MethodMatcherTestObject, 'bar']));
 	}
+
 }
 
-class MethodMatcherTestObject {}
+class MethodMatcherTestObject {
+
+}

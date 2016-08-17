@@ -43,7 +43,7 @@ abstract class ElggEntity extends \ElggData implements
 	Locatable, // Geocoding interface
 	\Elgg\EntityIcon // Icon interface
 {
-
+	
 	/**
 	 * If set, overrides the value of getURL()
 	 */
@@ -1375,24 +1375,24 @@ abstract class ElggEntity extends \ElggData implements
 	 * @throws IOException If the new row fails to write to the DB.
 	 */
 	protected function create() {
-		global $CONFIG;
 
-		// Using attribute array directly; get function does something special!
+		$allowed_types = elgg_get_config('entity_types');
 		$type = $this->getDatabase()->sanitizeString($this->attributes['type']);
-		if ($type == "") {
-			throw new \InvalidParameterException("Entity type must be set.");
+		if (!in_array($type, $allowed_types)) {
+			throw new \InvalidParameterException('Entity type must be one of the allowed types: '
+					. implode(', ', $allowed_types));
 		}
 		
 		$subtype = $this->attributes['subtype'];
 		$subtype_id = add_subtype($type, $subtype);
 		$owner_guid = (int)$this->attributes['owner_guid'];
 		$access_id = (int)$this->attributes['access_id'];
-		$now = (string)time();
+		$now = $this->getCurrentTime()->getTimestamp();
 		$time_created = isset($this->attributes['time_created']) ? (int)$this->attributes['time_created'] : $now;
 
 		$site_guid = $this->attributes['site_guid'];
 		if ($site_guid == 0) {
-			$site_guid = $CONFIG->site_guid;
+			$site_guid = elgg_get_config('site_guid');
 		}
 		$site_guid = (int)$site_guid;
 		
@@ -1443,12 +1443,17 @@ abstract class ElggEntity extends \ElggData implements
 			}
 		}
 
-		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
-			(type, subtype, owner_guid, site_guid, container_guid,
-				access_id, time_created, time_updated, last_action)
-			values
-			('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
-				$access_id, $time_created, $now, $now)");
+		$result = _elgg_services()->entityTable->insertRow((object) [
+			'type' => $type,
+			'subtype_id' => $subtype_id,
+			'owner_guid' => $owner_guid,
+			'container_guid' => $container_guid,
+			'site_guid' => $site_guid,
+			'access_id' => $access_id,
+			'time_created' => $time_created,
+			'time_updated' => $now,
+			'last_action' => $now,
+		]);
 
 		if (!$result) {
 			throw new \IOException("Unable to save new object's base entity information!");
@@ -1503,8 +1508,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @throws InvalidParameterException
 	 */
 	protected function update() {
-		global $CONFIG;
-
+		
 		_elgg_services()->boot->invalidateCache($this->guid);
 
 		if (!has_access_to_entity($this)) {
@@ -1528,23 +1532,21 @@ abstract class ElggEntity extends \ElggData implements
 		$access_id = (int)$this->access_id;
 		$container_guid = (int)$this->container_guid;
 		$time_created = (int)$this->time_created;
-		$time = time();
+		$time = $this->getCurrentTime()->getTimestamp();
 
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
 		}
 
-		$query = "
-			UPDATE {$CONFIG->dbprefix}entities
-			SET owner_guid = '$owner_guid',
-				access_id = '$access_id',
-				container_guid = '$container_guid',
-				time_created = '$time_created',
-				time_updated = '$time'
-			WHERE guid = $guid
-		";
-		$ret = $this->getDatabase()->updateData($query);
-		
+		$ret = _elgg_services()->entityTable->updateRow($guid, (object) [
+			'owner_guid' => $owner_guid,
+			'container_guid' => $container_guid,
+			'access_id' => $access_id,
+			'time_created' => $time_created,
+			'time_updated' => $time,
+			'guid' => $guid,
+		]);
+
 		elgg_trigger_after_event('update', $this->type, $this);
 
 		// TODO(evan): Move this to \ElggObject?

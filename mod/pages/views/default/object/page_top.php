@@ -119,9 +119,9 @@ if ($full) {
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'content' => $excerpt,
+		'icon' => $page_icon,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
+	echo elgg_view('object/elements/summary', $params);
 
-	echo elgg_view_image_block($page_icon, $list_body);
 }

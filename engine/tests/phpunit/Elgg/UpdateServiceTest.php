@@ -1,7 +1,8 @@
 <?php
+
 namespace Elgg;
 
-class UpgradeServiceTest extends \PHPUnit_Framework_TestCase {
+class UpgradeServiceTest extends \Elgg\TestCase {
 
 	/**
 	 * @var \Elgg\UpgradeService
@@ -31,9 +32,9 @@ class UpgradeServiceTest extends \PHPUnit_Framework_TestCase {
 			$this->assertTrue(is_array($result));
 			$this->assertArrayHasKey("failure", $result);
 			$this->assertFalse($result["failure"]);
-
 		} catch (Exception $e) {
 			$this->fail($e->getMessage());
 		}
 	}
+
 }

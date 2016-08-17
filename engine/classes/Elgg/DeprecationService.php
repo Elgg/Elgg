@@ -52,7 +52,13 @@ class DeprecationService {
 		$i = count($backtrace);
 
 		foreach ($backtrace as $trace) {
-			$stack[] = "[#$i] {$trace['file']}:{$trace['line']}";
+			if (empty($trace['file'])) {
+				// file/line not set for Closures
+				$stack[] = "[#$i] unknown";
+			} else {
+				$stack[] = "[#$i] {$trace['file']}:{$trace['line']}";
+			}
+
 			$i--;
 
 			if ($backtrace_level > 0) {

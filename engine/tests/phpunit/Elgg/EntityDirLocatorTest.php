@@ -1,8 +1,9 @@
 <?php
+
 namespace Elgg;
 
+class EntityDirLocatorTest extends \Elgg\TestCase {
 
-class EntityDirLocatorTest extends \PHPUnit_Framework_TestCase {
 	public $guids = array(
 		1,
 		4999,

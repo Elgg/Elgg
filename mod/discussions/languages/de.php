@@ -34,6 +34,7 @@ return array(
 	'discussion:reply:missing' => 'Du mußt das Textfeld ausfüllen, bevor Du eine Antwort hinzufügen kannst.',
 	'discussion:reply:topic_not_found' => 'Die Diskussion wurde leider nicht gefunden.',
 	'discussion:reply:error:cannot_edit' => 'Du kast keine Berechtigung zum Bearbeiten dieser Antwort.',
+	'discussion:reply:error:permissions' => 'You are not allowed to reply to this topic',
 
 	/**
 	 * River

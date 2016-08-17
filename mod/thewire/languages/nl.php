@@ -21,7 +21,7 @@ return array(
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s stuurde een bericht aan %s",
+	'river:create:object:thewire' => "%s plaatste een bericht op %s",
 	'thewire:wire' => 'The Wire',
 
 	/**

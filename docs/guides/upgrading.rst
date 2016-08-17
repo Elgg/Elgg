@@ -149,12 +149,19 @@ From 2.2 to 2.3
 
 Deprecated APIs
 ---------------
+
+ * Registering for ``to:object`` hook by the extender name: Use ``to:object, annotation`` and ``to:object, metadata`` hooks instead.
  * ``ajax_forward_hook()``: No longer used as handler for `'forward','all'` hook. Ajax response is now wrapped by the ``ResponseFactory``
  * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
+ * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
+ * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
+ * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
 
 Deprecated Views
 ----------------
+
+ * ``wallled_garden.js`` is deprecated: Use ``elgg/walled_garden`` module instead.
 
 New API for page and action handling
 ------------------------------------
@@ -165,6 +172,22 @@ Plugins should use the following convenience functions to build responses:
  * ``elgg_ok_response()`` sends a 2xx response with HTML (page handler) or JSON data (actions)
  * ``elgg_error_response()`` sends a 4xx or 5xx response without content/data
  * ``elgg_redirect_response()`` silently redirects the request
+
+New API for working with file uploads
+-------------------------------------
+
+ * ``elgg_get_uploaded_files()`` - returns an array of Symfony uploaded file objects
+ * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
+
+New API for signing URLs
+------------------------
+
+URLs can now be signed with a SHA-256 HMAC key and validated at any time before URL expiry. This feature can be used to tokenize action URLs in email notifications, as well as other uses outside of the Elgg installation.
+
+ * `elgg_http_get_signed_url()` - signs the URL with HMAC key
+ * `elgg_http_validate_signed_url()` - validates the signed URL
+ * `elgg_signed_request_gatekeeper()` - gatekeeper that validates the signature of the current request
+
 
 From 2.1 to 2.2
 ===============

@@ -1,6 +1,6 @@
 <?php
 
-class ElggExtenderTest extends \PHPUnit_Framework_TestCase {
+class ElggExtenderTest extends \Elgg\TestCase {
 
 	public function testSettingAndGettingAttribute() {
 		$obj = $this->getMockForAbstractClass('\ElggExtender');
@@ -27,6 +27,7 @@ class ElggExtenderTest extends \PHPUnit_Framework_TestCase {
 		$obj = $this->getMockForAbstractClass('\ElggExtender');
 		$obj->setValue('36', 'integer');
 		$this->assertSame(36, $obj->value);
-		$this->assertEquals('integer', $obj->value_type);		
+		$this->assertEquals('integer', $obj->value_type);
 	}
+
 }

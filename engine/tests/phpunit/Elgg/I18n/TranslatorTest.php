@@ -1,10 +1,10 @@
 <?php
+
 namespace Elgg\I18n;
 
 use Elgg\Logger;
-use PHPUnit_Framework_TestCase as TestCase;
 
-class TranslatorTest extends TestCase {
+class TranslatorTest extends \Elgg\TestCase {
 
 	public $key = '__elgg_php_unit:test_key';
 
@@ -62,7 +62,7 @@ class TranslatorTest extends TestCase {
 				'message' => "Missing English translation for \"{$this->key}b\" language key",
 				'level' => Logger::NOTICE,
 			]
-		], $logged);
+				], $logged);
 
 		// has fallback key
 		$this->translator->addTranslation('en', ["{$this->key}b" => 'Dummy']);
@@ -76,10 +76,11 @@ class TranslatorTest extends TestCase {
 				'message' => "Missing es translation for \"{$this->key}b\" language key",
 				'level' => Logger::NOTICE,
 			]
-		], $logged);
+				], $logged);
 	}
 
 	public function testDoesNotProcessArgsOnKey() {
 		$this->assertEquals('nonexistent:%s', $this->translator->translate('nonexistent:%s', [1]));
 	}
+
 }

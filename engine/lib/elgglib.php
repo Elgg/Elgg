@@ -1304,6 +1304,43 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 }
 
 /**
+ * Signs provided URL with a SHA256 HMAC key
+ *
+ * @note Signed URLs do not offer CSRF protection and should not be used instead of action tokens.
+ * 
+ * @param string $url     URL to sign
+ * @param string $expires Expiration time
+ *                        A string suitable for strtotime()
+ *                        Falsey values indicate non-expiring URL
+ * @return string
+ */
+function elgg_http_get_signed_url($url, $expires = false) {
+	return _elgg_services()->urlSigner->sign($url, $expires);
+}
+
+/**
+ * Validates if the HMAC signature of the URL is valid
+ *
+ * @param string $url URL to validate
+ * @return bool
+ */
+function elgg_http_validate_signed_url($url) {
+	return _elgg_services()->urlSigner->isValid($url);
+}
+
+/**
+ * Validates if the HMAC signature of the current request is valid
+ * Issues 403 response if signature is inalid
+ * @return void
+ */
+function elgg_signed_request_gatekeeper() {
+	if (!elgg_http_validate_signed_url(current_page_url())) {
+		register_error(elgg_echo('invalid_request_signature'));
+		forward('', '403');
+	}
+}
+
+/**
  * Checks for $array[$key] and returns its value if it exists, else
  * returns $default.
  *
@@ -1553,11 +1590,11 @@ function _elgg_ajax_page_handler($segments) {
 			$view = 'forms/' . implode('/', array_slice($segments, 1));
 		}
 
-		$allowed_views = $GLOBALS['_ELGG']->allowed_ajax_views;
 		$ajax_api = _elgg_services()->ajax;
-
+		$allowed_views = $ajax_api->getViews();
+		
 		// cacheable views are always allowed
-		if (!array_key_exists($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
+		if (!in_array($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
 			return elgg_error_response("Ajax view '$view' was not registered", REFERRER, ELGG_HTTP_FORBIDDEN);
 		}
 
@@ -1857,6 +1894,9 @@ function _elgg_walled_garden_index() {
  */
 function _elgg_walled_garden_ajax_handler($page) {
 	$view = $page[0];
+	if (!elgg_view_exists("core/walled_garden/$view")) {
+		return false;
+	}
 	$params = array(
 		'content' => elgg_view("core/walled_garden/$view"),
 		'class' => 'elgg-walledgarden-single hidden',
@@ -1883,6 +1923,9 @@ function _elgg_walled_garden_init() {
 	global $CONFIG;
 
 	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
+
+	// Deprecated, but registered for BC
+	// @todo: remove in 3.x
 	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.js'));
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
@@ -1891,6 +1934,10 @@ function _elgg_walled_garden_init() {
 	if (isset($CONFIG->site) && $CONFIG->site instanceof \ElggSite) {
 		$CONFIG->site->checkWalledGarden();
 	}
+
+	// For BC, we are extending the views to make sure that sites that customized walled garden get the updates
+	// @todo: in 3.0, move this into the layout view
+	elgg_extend_view('page/layouts/walled_garden', 'page/layouts/walled_garden/cancel_button');
 }
 
 /**

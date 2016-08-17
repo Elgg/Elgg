@@ -16,10 +16,13 @@
  * @access private
  */
 function get_object_entity_as_row($guid) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}objects_entity where guid=$guid");
+	$dbprefix = elgg_get_config('dbprefix');
+	$sql = "SELECT * FROM {$dbprefix}objects_entity
+		WHERE guid = :guid";
+	$params = [
+		':guid' => (int) $guid,
+	];
+	return _elgg_services()->db->getDataRow($sql, null, $params);
 }
 
 /**

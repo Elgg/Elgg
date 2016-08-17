@@ -6,14 +6,22 @@
  * @subpackage Core
  */
 
-$id = get_input('id', false);
+$id = (int)get_input('id');
 
-if ($id !== false && elgg_is_admin_logged_in()) {
-	if (elgg_delete_river(array('id' => $id))) {
-		system_message(elgg_echo('river:delete:success'));
-	} else {
-		register_error(elgg_echo('river:delete:fail'));
-	}
+$items = elgg_get_river(['id' => $id]);
+if (!$items) {
+	register_error(elgg_echo('river:delete:fail'));
+	forward(REFERER);
+}
+
+$item = $items[0];
+if (!$item->canDelete()) {
+	register_error(elgg_echo('river:delete:lack_permission'));
+	forward(REFERER);
+}
+
+if ($item->delete()) {
+	system_message(elgg_echo('river:delete:success'));
 } else {
 	register_error(elgg_echo('river:delete:fail'));
 }

@@ -4,13 +4,12 @@ namespace Elgg\Http;
 
 use ElggObject;
 use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 use stdClass;
 
 /**
  * @group HttpService
  */
-class OkResponseTest extends PHPUnit_Framework_TestCase {
+class OkResponseTest extends \Elgg\TestCase {
 
 	public $class;
 

@@ -1,10 +1,11 @@
 <?php
+
 namespace Elgg\Di;
 
 use phpDocumentor\Reflection\DocBlock;
 use Zend\Mail\Transport\InMemory;
 
-class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
+class ServiceProviderTest extends \Elgg\TestCase {
 
 	public function setUp() {
 		$sp = _elgg_services();
@@ -22,7 +23,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 		];
 
 		$skipped_names = [
-			//'service' => 'reason can't be loaded in phpunit',
+				//'service' => 'reason can't be loaded in phpunit',
 		];
 
 		if (isset($skipped_names[$name])) {
@@ -78,4 +79,5 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
 		return $sets;
 	}
+
 }

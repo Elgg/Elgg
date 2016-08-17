@@ -1,12 +1,11 @@
 <?php
+
 namespace Elgg;
 
-class ApplicationTest extends \PHPUnit_Framework_TestCase {
+class ApplicationTest extends \Elgg\TestCase {
 
 	function testElggReturnsApp() {
-		$app = _elgg_testing_application();
-
-		$this->assertSame($app, elgg());
+		$this->assertInstanceOf(Application::class, elgg());
 	}
 
 	function testStartsTimer() {
@@ -21,10 +20,10 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app = new Application($services);
 
 		$names = [
-			//'config',
+				//'config',
 		];
 
-		foreach	($names as $name) {
+		foreach ($names as $name) {
 			$this->assertSame($services->{$name}, $app->{$name});
 		}
 	}
@@ -60,5 +59,5 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	function testRunBootsAndRoutes() {
 		$this->markTestIncomplete();
 	}
-}
 
+}

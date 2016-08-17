@@ -44,6 +44,27 @@ class EventsService extends \Elgg\HooksRegistrationService {
 			$this->logger->error("'$name, $type' event is no longer triggered. Update your event registration "
 				. "to use '$name, relationship'");
 		}
+
+		if ($name === 'pagesetup' && $type === 'system') {
+			static $ignore = [
+				'users_pagesetup' => true,
+				'profile_pagesetup' => true,
+				'_elgg_friends_page_setup' => true,
+				'_elgg_setup_collections_menu' => true,
+				'_elgg_user_settings_menu_setup' => true,
+				'developers_setup_menu' => true,
+				'groups_setup_sidebar_menus' => true,
+				'notifications_plugin_pagesetup' => true,
+				'_elgg_admin_pagesetup' => true,
+				'aalborg_theme_pagesetup' => true,
+				'login_as_add_topbar_link' => true,
+			];
+			if (!is_string($callback) || !isset($ignore[$callback])) {
+				$msg = "Event [pagesetup, system] is deprecated. Use menu or page shell hooks.";
+				elgg_deprecated_notice($msg, '2.3', 2);
+			}
+		}
+
 		return parent::registerHandler($name, $type, $callback, $priority);
 	}
 

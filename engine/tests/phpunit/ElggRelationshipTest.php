@@ -1,6 +1,6 @@
 <?php
 
-class ElggRelationshipTest extends \PHPUnit_Framework_TestCase {
+class ElggRelationshipTest extends \Elgg\TestCase {
 
 	public function testSettingAndGettingAttribute() {
 		$obj = $this->getRelationshipMock();
@@ -18,4 +18,5 @@ class ElggRelationshipTest extends \PHPUnit_Framework_TestCase {
 		// and deprecation is not test-friendly yet.
 		return $this->getMockForAbstractClass('\ElggRelationship', array(), '', false);
 	}
+
 }

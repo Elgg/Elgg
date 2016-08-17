@@ -34,6 +34,7 @@ return array(
 	'discussion:reply:missing' => 'Je kunt geen lege reactie plaatsen',
 	'discussion:reply:topic_not_found' => 'Het discussieonderwerp kan niet gevonden worden',
 	'discussion:reply:error:cannot_edit' => 'U beschikt niet over de juiste rechten om deze reactie te bewerken',
+	'discussion:reply:error:permissions' => 'You are not allowed to reply to this topic',
 
 	/**
 	 * River
