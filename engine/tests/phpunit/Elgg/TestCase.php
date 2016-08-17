@@ -80,8 +80,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		// sure it happens before each test.
 		$app->loadCore();
 		_elgg_services($sp);
-
-		_elgg_filestore_boot();
 	}
 
 	/**
