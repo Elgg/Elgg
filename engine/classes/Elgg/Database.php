@@ -251,6 +251,116 @@ class Database {
 	}
 
 	/**
+	 * Insert a row
+	 *
+	 * @param string $table Table name without prefix
+	 * @param array  $data  Column-value pair(s) to insert
+	 *
+	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
+	 *                   defined, 0 if not, and false on failure.
+	 */
+	public function insertRow($table, array $data) {
+		$builder = $this->getConnection('write')->createQueryBuilder()
+			->insert($this->prefix($table));
+
+		foreach ($data as $column => $value) {
+			$builder->setValue($column, $builder->createPositionalParameter($value));
+		}
+
+		// first builder param key is 1, we need 0
+		$params = array_values($builder->getParameters());
+
+		return $this->insertData($builder->getSQL(), $params);
+	}
+
+	/**
+	 * Update row(s)
+	 *
+	 * @param string $table      Table name without prefix
+	 * @param array  $data       Column-value pair(s) to set
+	 * @param array  $identifier Column-value pair(s) identifying the row(s) to update
+	 *
+	 * @return int Affected rows
+	 * @throws \DatabaseException
+	 */
+	public function updateRows($table, array $data, array $identifier) {
+		$builder = $this->getConnection('write')->createQueryBuilder()
+			->update($this->prefix($table));
+
+		if (!$identifier) {
+			throw new \DatabaseException('identifier must not be empty');
+		}
+
+		foreach ($data as $column => $value) {
+			$builder->set($column, $builder->createPositionalParameter($value));
+		}
+		foreach ($identifier as $column => $value) {
+			$builder->andWhere("$column = " . $builder->createPositionalParameter($value));
+		}
+
+		// first builder param key is 1, we need 0
+		$params = array_values($builder->getParameters());
+
+		return $this->updateData($builder->getSQL(), true, $params);
+	}
+
+	/**
+	 * Delete row(s)
+	 *
+	 * @param string $table      Table name without prefix
+	 * @param array  $identifier Column-value pair(s) identifying the row(s) to delete
+	 *
+	 * @return int Affected rows
+	 * @throws \DatabaseException
+	 */
+	public function deleteRows($table, array $identifier) {
+		$builder = $this->getConnection('write')->createQueryBuilder()
+			->delete($this->prefix($table));
+
+		if (!$identifier) {
+			throw new \DatabaseException('identifier must not be empty');
+		}
+
+		foreach ($identifier as $column => $value) {
+			$builder->andWhere("$column = " . $builder->createPositionalParameter($value));
+		}
+
+		// first builder param key is 1, we need 0
+		$params = array_values($builder->getParameters());
+
+		return $this->deleteData($builder->getSQL(), $params);
+	}
+
+	/**
+	 * Fetch a complete row
+	 *
+	 * @param string   $table      Table name without prefix
+	 * @param array    $identifier Column-value pair(s) identifying the row
+	 * @param callable $callable   Callable to apply to the row
+	 *
+	 * @return \stdClass|mixed
+	 * @throws \DatabaseException
+	 */
+	public function fetchRow($table, array $identifier, callable $callable = null) {
+		$builder = $this->getConnection('read')->createQueryBuilder()
+			->select('*')
+			->from($this->prefix($table));
+
+		if (!$identifier) {
+			throw new \DatabaseException('identifier must not be empty');
+		}
+
+		foreach ($identifier as $column => $value) {
+			$builder->andWhere("$column = " . $builder->createPositionalParameter($value));
+		}
+
+		// first builder param key is 1, we need 0
+		$params = array_values($builder->getParameters());
+
+		return $this->getDataRow($builder->getSQL(), $callable, $params);
+	}
+
+	/**
 	 * Update the database.
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
@@ -656,6 +766,17 @@ class Database {
 	 */
 	public function getTablePrefix() {
 		return $this->tablePrefix;
+	}
+
+	/**
+	 * Get a prefixed table name
+	 *
+	 * @param string $table Table name without prefix
+	 *
+	 * @return string
+	 */
+	public function prefix($table) {
+		return "{$this->tablePrefix}$table";
 	}
 
 	/**
