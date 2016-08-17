@@ -63,7 +63,7 @@ class SubtypeTable {
 	 * @see get_subtype_from_id()
 	 * @access private
 	 */
-	function getId($type, $subtype) {
+	public function getId($type, $subtype) {
 		if (!$subtype) {
 			return false;
 		}
@@ -81,7 +81,7 @@ class SubtypeTable {
 	 * @see get_subtype_id()
 	 * @access private
 	 */
-	function getSubtype($subtype_id) {
+	public function getSubtype($subtype_id) {
 		if (!$subtype_id) {
 			return '';
 		}
@@ -100,7 +100,7 @@ class SubtypeTable {
 	 *
 	 * @access private
 	 */
-	function retrieveFromCache($type, $subtype) {
+	public function retrieveFromCache($type, $subtype) {
 		foreach ($this->getPopulatedCache() as $obj) {
 			if ($obj->type === $type && $obj->subtype === $subtype) {
 				return $obj;
@@ -125,7 +125,7 @@ class SubtypeTable {
 	 * @see get_subtype_class_from_id()
 	 * @access private
 	 */
-	function getClass($type, $subtype) {
+	public function getClass($type, $subtype) {
 		$obj = $this->retrieveFromCache($type, $subtype);
 
 		return $obj ? $obj->class : null;
@@ -141,7 +141,7 @@ class SubtypeTable {
 	 * @see get_subtype_from_id()
 	 * @access private
 	 */
-	function getClassFromId($subtype_id) {
+	public function getClassFromId($subtype_id) {
 		if (!$subtype_id) {
 			return null;
 		}
@@ -171,7 +171,7 @@ class SubtypeTable {
 	 * @see remove_subtype()
 	 * @see get_entity()
 	 */
-	function add($type, $subtype, $class = "") {
+	public function add($type, $subtype, $class = "") {
 		if (!$subtype) {
 			return 0;
 		}
@@ -211,7 +211,7 @@ class SubtypeTable {
 	 * @see add_subtype()
 	 * @see update_subtype()
 	 */
-	function remove($type, $subtype) {
+	public function remove($type, $subtype) {
 		$sql = "
 			DELETE FROM {$this->db->getTablePrefix()}entity_subtypes
 			WHERE type = :type AND subtype = :subtype
@@ -238,7 +238,7 @@ class SubtypeTable {
 	 *
 	 * @return bool
 	 */
-	function update($type, $subtype, $class = '') {
+	public function update($type, $subtype, $class = '') {
 		$id = $this->getId($type, $subtype);
 		if (!$id) {
 			return false;

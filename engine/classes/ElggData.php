@@ -13,6 +13,8 @@ abstract class ElggData implements
 	Exportable   // (deprecated 1.9)
 {
 
+	use \Elgg\TimeUsing;
+	
 	/**
 	 * The main attributes of an entity.
 	 * Holds attributes to save to database

@@ -610,17 +610,20 @@ function _elgg_river_get_view_where_sql($views) {
  * @return bool Depending on success
  */
 function update_river_access_by_object($object_guid, $access_id) {
-	// Sanitise
-	$object_guid = (int) $object_guid;
-	$access_id = (int) $access_id;
+	
+	$dbprefix = elgg_get_config('dbprefix');
+	$query = "
+		UPDATE {$dbprefix}river
+		SET access_id = :access_id
+		WHERE object_guid = :object_guid
+	";
 
-	// Load config
-	global $CONFIG;
+	$params = [
+		':access_id' => (int) $access_id,
+		':object_guid' => (int) $object_guid,
+	];
 
-	$query = "UPDATE {$CONFIG->dbprefix}river
-		SET access_id = {$access_id}
-		WHERE object_guid = {$object_guid}";
-	return update_data($query);
+	return update_data($query, $params);
 }
 
 /**

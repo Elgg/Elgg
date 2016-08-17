@@ -114,6 +114,7 @@ class ElggMetadata extends \ElggExtender {
 	public function disable() {
 		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
 		if ($success) {
+			$this->enabled = 'no';
 			_elgg_services()->metadataCache->clear($this->entity_guid);
 		}
 		return $success;
@@ -128,6 +129,7 @@ class ElggMetadata extends \ElggExtender {
 	public function enable() {
 		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
 		if ($success) {
+			$this->enabled = 'yes';
 			_elgg_services()->metadataCache->clear($this->entity_guid);
 		}
 		return $success;
