@@ -79,6 +79,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$sp->config->getCookieConfig();
 
 		$app = new Application($sp);
+		Application::setTestingApplication(true);
 		Application::$_instance = $app;
 
 		// loadCore bails on repeated calls, so we need to manually inject this to make
@@ -96,7 +97,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 * @return array
 	 */
 	public static function getTestingConfigArray() {
-		return [
+		global $CONFIG;
+
+		if (!isset($CONFIG)) {
+			$CONFIG = new \stdClass;
+		}
+		
+		$conf = [
 			'Config_file' => false,
 			'dbprefix' => 'elgg_t_i_',
 			'boot_complete' => false,
@@ -128,6 +135,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 				'site',
 			],
 		];
+
+		foreach ($conf as $key => $val) {
+			if (!isset($CONFIG->$key)) {
+				$CONFIG->$key = $val;
+			}
+		}
+
+		return (array) $CONFIG;
 	}
 
 	/**
