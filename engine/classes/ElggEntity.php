@@ -1596,7 +1596,7 @@ abstract class ElggEntity extends \ElggData implements
 		
 		_elgg_services()->boot->invalidateCache($this->guid);
 
-		if (!has_access_to_entity($this)) {
+		if (!elgg_get_ignore_access() && !has_access_to_entity($this)) {
 			// Why worry about this case? If access control was off when the user fetched $this, but
 			// was turned back on again. Better to just bail than to turn access control off again.
 			return false;
