@@ -1765,40 +1765,39 @@ abstract class ElggEntity extends \ElggData implements
 			$unban_after = false;
 		}
 
-		_elgg_services()->entityCache->remove($this->guid);
-
 		if ($reason) {
 			$this->disable_reason = $reason;
 		}
 
-		global $CONFIG;
-		$guid = (int)$this->guid;
+		$dbprefix = elgg_get_config('dbprefix');
+		
+		$guid = (int) $this->guid;
 		
 		if ($recursive) {
+			// Only disable enabled subentities
 			$hidden = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
+			access_show_hidden_entities(false);
+
 			$ia = elgg_set_ignore_access(true);
 
-			$query = "
-				SELECT *
-				FROM {$CONFIG->dbprefix}entities
-				WHERE (
-					container_guid = $guid
-					OR owner_guid = $guid
-					OR site_guid = $guid
-				) 
-				AND enabled = 'yes'
-			";
-			$sub_entities = $this->getDatabase()->getData($query, 'entity_row_to_elggstar');
-
-			if ($sub_entities) {
-				/* @var ElggEntity[] $sub_entities */
-				foreach ($sub_entities as $e) {
-					add_entity_relationship($e->guid, 'disabled_with', $this->guid);
-					$e->disable($reason);
-				}
-			}
+			$subentities = new \ElggBatch('elgg_get_entities', [
+				'wheres' => [
+					"e.container_guid = $guid OR e.owner_guid = $guid OR e.site_guid = $guid",
+					"e.guid != $guid"
+				],
+				'limit' => 0,
+			]);
+			$subentities->setIncrementOffset(false);
 			
+			foreach ($subentities as $subentity) {
+				/* @var $subentity \ElggEntity */
+				if (!$subentity->isEnabled()) {
+					continue;
+				}
+				add_entity_relationship($subentity->guid, 'disabled_with', $guid);
+				$subentity->disable($reason);
+			}
+
 			access_show_hidden_entities($hidden);
 			elgg_set_ignore_access($ia);
 		}
@@ -1806,22 +1805,28 @@ abstract class ElggEntity extends \ElggData implements
 		$this->disableMetadata();
 		$this->disableAnnotations();
 
-		$res = $this->getDatabase()->updateData("
-			UPDATE {$CONFIG->dbprefix}entities
+		_elgg_services()->entityCache->remove($guid);
+		
+		$sql = "
+			UPDATE {$dbprefix}entities
 			SET enabled = 'no'
-			WHERE guid = $guid
-		");
+			WHERE guid = :guid
+		";
+		$params = [
+			':guid' => $guid,
+		];
+		$disabled = $this->getDatabase()->updateData($sql, false, $params);
 
 		if ($unban_after) {
 			_elgg_services()->usersTable->markBanned($this->guid, false);
 		}
 
-		if ($res) {
+		if ($disabled) {
 			$this->attributes['enabled'] = 'no';
 			_elgg_services()->events->trigger('disable:after', $this->type, $this);
 		}
 
-		return $res;
+		return (bool) $disabled;
 	}
 
 	/**
@@ -1913,7 +1918,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function delete($recursive = true) {
-		global $CONFIG;
 
 		$guid = $this->guid;
 		if (!$guid) {
@@ -1990,24 +1994,30 @@ abstract class ElggEntity extends \ElggData implements
 
 		_elgg_services()->entityCache->remove($guid);
 
-		$res = $this->getDatabase()->deleteData("
-			DELETE FROM {$CONFIG->dbprefix}entities
-			WHERE guid = $guid
-		");
+		$dbprefix = elgg_get_config('dbprefix');
 
-		if ($res && in_array($this->type, ['object', 'user', 'group', 'site'])) {
-			// delete from secondary table
-			$sub_table = "{$CONFIG->dbprefix}{$this->type}s_entity";
+		$sql = "
+			DELETE FROM {$dbprefix}entities
+			WHERE guid = :guid
+		";
+		$params = [
+			':guid' => $guid,
+		];
 
-			$this->getDatabase()->deleteData("
-				DELETE FROM $sub_table
-				WHERE guid = $guid
-			");
+		$deleted = $this->getDatabase()->deleteData($sql, $params);
+
+		if ($deleted && in_array($this->type, ['object', 'user', 'group', 'site'])) {
+			// delete from type-specific subtable
+			$sql = "
+				DELETE FROM {$dbprefix}{$this->type}s_entity
+				WHERE guid = :guid
+			";
+			$this->getDatabase()->deleteData($sql, $params);
 		}
 		
 		_elgg_clear_entity_files($this);
 
-		return (bool)$res;
+		return (bool)$deleted;
 	}
 
 	/**

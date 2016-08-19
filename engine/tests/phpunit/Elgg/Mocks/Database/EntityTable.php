@@ -234,6 +234,68 @@ class EntityTable extends DbEntityTable {
 			'row_count' => 1,
 		]);
 
+		$sql = "
+			DELETE FROM {$dbprefix}entities
+			WHERE guid = :guid
+		";
+		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+			'sql' => $sql,
+			'params' => [
+				':guid' => $row->guid,
+			],
+			'results' => function() use ($row) {
+				unset($this->mocks[$row->guid]);
+			},
+			'row_count' => 1,
+			'times' => 1,
+		]);
+
+		// Entity might not have any relationships, therefore adding the spec here
+		// and not in the relationships table mock
+		// @todo: figure out a way to remove this from relationships table
+		foreach (['guid_one', 'guid_two'] as $column) {
+			$sql = "DELETE er FROM {$dbprefix}entity_relationships AS er
+				WHERE $column = $row->guid";
+			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+				'sql' => $sql,
+				'row_count' => 0,
+				'times' => 1,
+			]);
+		}
+
+		// Private settings cleanup
+		$sql = "DELETE FROM {$dbprefix}private_settings
+				WHERE entity_guid = $row->guid";
+		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+			'sql' => $sql,
+			'row_count' => 0,
+			'times' => 1,
+		]);
+
+		// River table clean up
+		foreach (['subject_guid', 'object_guid', 'target_guid'] as $column) {
+			$sql = "DELETE rv.* FROM elgg_river rv  WHERE (rv.$column IN ($row->guid)) AND 1=1";
+			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+				'sql' => $sql,
+				'row_count' => 0,
+				'times' => 1,
+			]);
+		}
+
+		// Disable
+		$sql = "
+			UPDATE {$dbprefix}entities
+			SET enabled = 'no'
+			WHERE guid = :guid
+		";
+		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+			'sql' => $sql,
+			'params' => [
+				':guid' => $row->guid,
+			],
+			'row_count' => 1,
+			'times' => 1,
+		]);
 
 		switch ($row->type) {
 			case 'object' :
@@ -272,6 +334,20 @@ class EntityTable extends DbEntityTable {
 					],
 					'row_count' => 1,
 				]);
+
+				$sql = "
+					DELETE FROM {$dbprefix}objects_entity
+					WHERE guid = :guid
+				";
+				$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+					'sql' => $sql,
+					'params' => [
+						':guid' => $row->guid,
+					],
+					'row_count' => 1,
+					'times' => 1,
+				]);
+
 				break;
 		}
 	}
