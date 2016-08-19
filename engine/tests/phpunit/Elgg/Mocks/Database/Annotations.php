@@ -18,10 +18,6 @@ class Annotations extends DbAnnotations {
 	public $mocks = [];
 
 	/**
-	 *
-	 * @var TestCase	private $test;
-
-	  /**
 	 * @var int
 	 */
 	private $iterator = 100;

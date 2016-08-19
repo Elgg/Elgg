@@ -20,7 +20,7 @@ class MetadataTable extends DbMetadataTabe {
 	 * @var array
 	 */
 	public $specs = [];
-
+	
 	/**
 	 * @var int
 	 */

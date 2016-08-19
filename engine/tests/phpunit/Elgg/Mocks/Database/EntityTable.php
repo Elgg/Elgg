@@ -24,12 +24,6 @@ class EntityTable extends DbEntityTable {
 	public $rows = [];
 
 	/**
-	 *
-	 * @var TestCase
-	 */
-	private $test;
-
-	/**
 	 * @var int
 	 */
 	private $iterator = 100;
@@ -38,14 +32,6 @@ class EntityTable extends DbEntityTable {
 	 * @var array
 	 */
 	private $query_specs = [];
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct(Config $config, Database $db) {
-		parent::__construct($config, $db);
-		$this->test = TestCase::getInstance();
-	}
 
 	/**
 	 * {@inheritdoc}

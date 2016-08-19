@@ -26,42 +26,42 @@ class AccessCollections {
 	/**
 	 * @var Conf
 	 */
-	private $config;
+	protected $config;
 
 	/**
 	 * @var Database
 	 */
-	private $db;
+	protected $db;
 
 	/**
 	 * @vars \ElggStateVariableCache
 	 */
-	private $access_cache;
+	protected $access_cache;
 
 	/**
 	 * @var PluginHooksService
 	 */
-	private $hooks;
+	protected $hooks;
 
 	/**
 	 * @var ElggSession
 	 */
-	private $session;
+	protected $session;
 
 	/**
 	 * @var EntityTable
 	 */
-	private $entities;
+	protected $entities;
 
 	/**
 	 * @var Translator
 	 */
-	private $translator;
+	protected $translator;
 
 	/**
 	 * @var int
 	 */
-	private $site_guid;
+	protected $site_guid;
 
 	/**
 	 * Constructor

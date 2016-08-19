@@ -180,23 +180,6 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * User specific override of the entity delete method.
-	 *
-	 * @return bool
-	 */
-	public function delete() {
-		global $USERNAME_TO_GUID_MAP_CACHE;
-
-		// clear cache
-		if (isset($USERNAME_TO_GUID_MAP_CACHE[$this->username])) {
-			unset($USERNAME_TO_GUID_MAP_CACHE[$this->username]);
-		}
-
-		// Delete entity
-		return parent::delete();
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function getDisplayName() {
@@ -311,6 +294,11 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function makeAdmin() {
+		
+		if ($this->isAdmin()) {
+			return true;
+		}
+
 		// If already saved, use the standard function.
 		if ($this->guid && !make_user_admin($this->guid)) {
 			return false;
@@ -328,6 +316,11 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function removeAdmin() {
+
+		if (!$this->isAdmin()) {
+			return true;
+		}
+
 		// If already saved, use the standard function.
 		if ($this->guid && !remove_user_admin($this->guid)) {
 			return false;

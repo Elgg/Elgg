@@ -43,15 +43,8 @@ function is_memcache_available() {
  *
  * @return void
  * @access private
+ * @deprecated 2.3
  */
 function _elgg_invalidate_memcache_for_entity($entity_guid) {
-	static $newentity_cache;
-	
-	if ((!$newentity_cache) && (is_memcache_available())) {
-		$newentity_cache = new \ElggMemcache('new_entity_cache');
-	}
-	
-	if ($newentity_cache) {
-		$newentity_cache->delete($entity_guid);
-	}
+	return _elgg_invalidate_cache_for_entity($entity_guid);
 }

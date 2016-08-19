@@ -189,7 +189,17 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('entityTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\EntityTable($c->config, $c->db);
+			return new \Elgg\Database\EntityTable(
+				$c->config,
+				$c->db,
+				$c->entityCache,
+				$c->metadataCache,
+				$c->subtypeTable,
+				$c->events,
+				$c->session,
+				$c->translator,
+				$c->logger
+			);
 		});
 
 		$this->setFactory('events', function(ServiceProvider $c) {
@@ -390,7 +400,15 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
 		});
 
-		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
+		$this->setFactory('usersTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\UsersTable(
+				$c->config,
+				$c->db,
+				$c->entityTable,
+				$c->entityCache,
+				$c->events
+			);
+		});
 
 		$this->setFactory('views', function(ServiceProvider $c) {
 			return new \Elgg\ViewsService($c->hooks, $c->logger);
