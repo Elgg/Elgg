@@ -9,6 +9,8 @@ use Elgg\Database as ElggDb;
  * This is returned by elgg()->getDb() or Application::start()->getDb().
  *
  * @see \Elgg\Application::getDb for more details.
+ *
+ * @property-read string $prefix Elgg table prefix (read only)
  */
 class Database {
 
@@ -66,9 +68,13 @@ class Database {
 
 	/**
 	 * {@inheritdoc}
+	 * @deprecated 2.3 Read the "prefix" property
 	 */
 	public function getTablePrefix() {
-		return $this->db->getTablePrefix();
+		if (function_exists('elgg_deprecated_notice')) {
+			elgg_deprecated_notice(__METHOD__ . ' is deprecated. Read the "prefix" property', '2.3');
+		}
+		return $this->db->prefix;
 	}
 
 	/**
@@ -83,5 +89,30 @@ class Database {
 	 */
 	public function sanitizeString($value) {
 		return $this->db->sanitizeString($value);
+	}
+
+	/**
+	 * Handle magic property reads
+	 *
+	 * @param string $name Property name
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if ($name === 'prefix') {
+			return $this->db->prefix;
+		}
+
+		throw new \RuntimeException("Cannot read property '$name'");
+	}
+
+	/**
+	 * Handle magic property writes
+	 *
+	 * @param string $name  Property name
+	 * @param mixed  $value Value
+	 * @return void
+	 */
+	public function __set($name, $value) {
+		throw new \RuntimeException("Cannot write property '$name'");
 	}
 }

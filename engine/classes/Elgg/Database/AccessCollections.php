@@ -196,7 +196,7 @@ class AccessCollections {
 			// The following can only return sensible data for a known user.
 			if ($user_guid) {
 				$db = $this->db;
-				$prefix = $db->getTablePrefix();
+				$prefix = $db->prefix;
 
 				$access_array[] = ACCESS_LOGGED_IN;
 
@@ -320,7 +320,7 @@ class AccessCollections {
 			'ands' => array()
 		);
 
-		$prefix = $this->db->getTablePrefix();
+		$prefix = $this->db->prefix;
 
 		if ($options['ignore_access']) {
 			$clauses['ors']['ignore_access'] = '1 = 1';
@@ -397,7 +397,7 @@ class AccessCollections {
 		elgg_set_ignore_access($ia);
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		$query = "SELECT guid from {$prefix}entities e WHERE e.guid = {$entity->guid}";
 		// Add access controls
@@ -555,7 +555,7 @@ class AccessCollections {
 		}
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		$name = $db->sanitizeString($name);
 
@@ -636,7 +636,7 @@ class AccessCollections {
 		}
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		// Deleting membership doesn't affect result of deleting ACL.
 		$q = "DELETE FROM {$prefix}access_collection_membership
@@ -667,7 +667,7 @@ class AccessCollections {
 		$collection_id = (int) $collection_id;
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		$query = "SELECT * FROM {$prefix}access_collections WHERE id = {$collection_id}";
 		$get_collection = $db->getDataRow($query);
@@ -707,7 +707,7 @@ class AccessCollections {
 		}
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		// if someone tries to insert the same data twice, we do a no-op on duplicate key
 		$q = "INSERT INTO {$prefix}access_collection_membership
@@ -749,7 +749,7 @@ class AccessCollections {
 		}
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		$q = "DELETE FROM {$prefix}access_collection_membership
 			WHERE access_collection_id = {$collection_id}
@@ -775,7 +775,7 @@ class AccessCollections {
 		}
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		$query = "SELECT * FROM {$prefix}access_collections
 				WHERE owner_guid = {$owner_guid}
@@ -799,7 +799,7 @@ class AccessCollections {
 		$collection_id = (int) $collection_id;
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		if (!$guids_only) {
 			$query = "SELECT e.* FROM {$prefix}access_collection_membership m"
@@ -839,7 +839,7 @@ class AccessCollections {
 		}
 
 		$db = $this->db;
-		$prefix = $db->getTablePrefix();
+		$prefix = $db->prefix;
 
 		$query = "SELECT ac.* FROM {$prefix}access_collections ac
 				JOIN {$prefix}access_collection_membership m ON ac.id = m.access_collection_id

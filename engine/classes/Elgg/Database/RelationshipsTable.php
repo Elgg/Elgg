@@ -77,7 +77,7 @@ class RelationshipsTable {
 	 * @access private
 	 */
 	public function getRow($id) {
-		$sql = "SELECT * FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = :id";
+		$sql = "SELECT * FROM {$this->db->prefix}entity_relationships WHERE id = :id";
 		$params = [
 			':id' => (int) $id,
 		];
@@ -101,7 +101,7 @@ class RelationshipsTable {
 			return false;
 		}
 
-		$sql = "DELETE FROM {$this->db->getTablePrefix()}entity_relationships WHERE id = :id";
+		$sql = "DELETE FROM {$this->db->prefix}entity_relationships WHERE id = :id";
 		$params = [
 			':id' => $id,
 		];
@@ -134,7 +134,7 @@ class RelationshipsTable {
 		}
 
 		$sql = "
-			INSERT INTO {$this->db->getTablePrefix()}entity_relationships
+			INSERT INTO {$this->db->prefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES (:guid1, :relationship, :guid2, :time)
 				ON DUPLICATE KEY UPDATE time_created = :time
@@ -175,7 +175,7 @@ class RelationshipsTable {
 	 */
 	public function check($guid_one, $relationship, $guid_two) {
 		$query = "
-			SELECT * FROM {$this->db->getTablePrefix()}entity_relationships
+			SELECT * FROM {$this->db->prefix}entity_relationships
 			WHERE guid_one = :guid1
 			  AND relationship = :relationship
 			  AND guid_two = :guid2
@@ -238,9 +238,9 @@ class RelationshipsTable {
 
 		if (!empty($type)) {
 			if (!$inverse_relationship) {
-				$join = "JOIN {$this->db->getTablePrefix()}entities e ON e.guid = er.guid_two";
+				$join = "JOIN {$this->db->prefix}entities e ON e.guid = er.guid_two";
 			} else {
-				$join = "JOIN {$this->db->getTablePrefix()}entities e ON e.guid = er.guid_one";
+				$join = "JOIN {$this->db->prefix}entities e ON e.guid = er.guid_one";
 				$where .= " AND ";
 			}
 			$where .= " AND e.type = :type";
@@ -252,7 +252,7 @@ class RelationshipsTable {
 		$guid_col = $inverse_relationship ? "guid_two" : "guid_one";
 
 		$this->db->deleteData("
-			DELETE er FROM {$this->db->getTablePrefix()}entity_relationships AS er
+			DELETE er FROM {$this->db->prefix}entity_relationships AS er
 			$join
 			WHERE $guid_col = $guid
 			$where
@@ -275,7 +275,7 @@ class RelationshipsTable {
 
 		$where = ($inverse_relationship ? "guid_two = :guid" : "guid_one = :guid");
 
-		$query = "SELECT * from {$this->db->getTablePrefix()}entity_relationships WHERE {$where}";
+		$query = "SELECT * from {$this->db->prefix}entity_relationships WHERE {$where}";
 
 		return $this->db->getData($query, [$this, 'rowToElggRelationship'], $params);
 	}
@@ -409,9 +409,9 @@ class RelationshipsTable {
 		$group_by = '';
 
 		if ($inverse_relationship) {
-			$joins[] = "JOIN {$this->db->getTablePrefix()}entity_relationships r on r.guid_one = $column";
+			$joins[] = "JOIN {$this->db->prefix}entity_relationships r on r.guid_one = $column";
 		} else {
-			$joins[] = "JOIN {$this->db->getTablePrefix()}entity_relationships r on r.guid_two = $column";
+			$joins[] = "JOIN {$this->db->prefix}entity_relationships r on r.guid_two = $column";
 		}
 
 		if ($relationship) {

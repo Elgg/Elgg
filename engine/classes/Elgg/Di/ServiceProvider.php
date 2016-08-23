@@ -157,7 +157,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('datalist', function(ServiceProvider $c) {
 			// TODO(ewinslow): Add back memcached support
 			$db = $c->db;
-			$dbprefix = $db->getTablePrefix();
+			$dbprefix = $db->prefix;
 			$pool = new Pool\InMemory();
 			return new \Elgg\Database\Datalist($pool, $db, $c->logger, "{$dbprefix}datalists");
 		});

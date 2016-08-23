@@ -110,7 +110,7 @@ class Annotations {
 		$entity = get_entity($entity_guid);
 	
 		if ($this->events->trigger('annotate', $entity->type, $entity)) {
-			$result = $this->db->insertData("INSERT INTO {$this->db->getTablePrefix()}annotations
+			$result = $this->db->insertData("INSERT INTO {$this->db->prefix}annotations
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
 	
@@ -174,7 +174,7 @@ class Annotations {
 			return false;
 		}
 	
-		$result = $this->db->updateData("UPDATE {$this->db->getTablePrefix()}annotations
+		$result = $this->db->updateData("UPDATE {$this->db->prefix}annotations
 			SET name_id = $name_id, value_id = $value_id, value_type = '$value_type',
 			access_id = $access_id, owner_guid = $owner_guid
 			WHERE id = $annotation_id");
@@ -427,7 +427,7 @@ class Annotations {
 			return elgg_get_entities_from_annotations($options);
 		}
 		
-		$db_prefix = $this->db->getTablePrefix();
+		$db_prefix = $this->db->prefix;
 		$defaults = array(
 			'calculation' => 'sum',
 			'order_by' => 'annotation_calculation desc'
@@ -476,8 +476,8 @@ class Annotations {
 		$owner_guid = sanitize_int($owner_guid);
 		$annotation_type = sanitize_string($annotation_type);
 	
-		$sql = "SELECT a.id FROM {$this->db->getTablePrefix()}annotations a" .
-				" JOIN {$this->db->getTablePrefix()}metastrings m ON a.name_id = m.id" .
+		$sql = "SELECT a.id FROM {$this->db->prefix}annotations a" .
+				" JOIN {$this->db->prefix}metastrings m ON a.name_id = m.id" .
 				" WHERE a.owner_guid = $owner_guid AND a.entity_guid = $entity_guid" .
 				" AND m.string = '$annotation_type'";
 	
