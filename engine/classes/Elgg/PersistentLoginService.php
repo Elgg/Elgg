@@ -48,7 +48,7 @@ class PersistentLoginService {
 		$this->cookie_config = $cookie_config;
 		$this->cookie_token = $cookie_token;
 
-		$prefix = $this->db->getTablePrefix();
+		$prefix = $this->db->prefix;
 		$this->table = "{$prefix}users_remember_me_cookies";
 		$this->time = is_numeric($time) ? (int)$time : time();
 	}

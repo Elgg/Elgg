@@ -45,7 +45,7 @@ class Mutex {
 
 		if (!$this->isLocked($namespace)) {
 			// Lock it
-			$this->db->insertData("CREATE TABLE {$this->db->getTablePrefix()}{$namespace}_lock (id INT)");
+			$this->db->insertData("CREATE TABLE {$this->db->prefix}{$namespace}_lock (id INT)");
 			$this->logger->info("Locked mutex for $namespace");
 			return true;
 		}
@@ -63,7 +63,7 @@ class Mutex {
 	public function unlock($namespace) {
 		$this->assertNamespace($namespace);
 
-		$this->db->deleteData("DROP TABLE {$this->db->getTablePrefix()}{$namespace}_lock");
+		$this->db->deleteData("DROP TABLE {$this->db->prefix}{$namespace}_lock");
 		$this->logger->notice("Mutex unlocked for $namespace.");
 	}
 
@@ -76,7 +76,7 @@ class Mutex {
 	public function isLocked($namespace) {
 		$this->assertNamespace($namespace);
 
-		return (bool) count($this->db->getData("SHOW TABLES LIKE '{$this->db->getTablePrefix()}{$namespace}_lock'"));
+		return (bool) count($this->db->getData("SHOW TABLES LIKE '{$this->db->prefix}{$namespace}_lock'"));
 	}
 
 	/**

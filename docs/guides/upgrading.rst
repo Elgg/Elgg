@@ -157,6 +157,7 @@ Deprecated APIs
  * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
  * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
  * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
+ * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
 
 Deprecated Views
 ----------------

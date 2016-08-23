@@ -155,7 +155,7 @@ class SubscriptionsService {
 		array_walk($rels, array($this->db, 'sanitizeString'));
 		$methods_string = "'" . implode("','", $rels) . "'";
 
-		$db_prefix = $this->db->getTablePrefix();
+		$db_prefix = $this->db->prefix;
 		$query = "SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
 			FROM {$db_prefix}entity_relationships
 			WHERE guid_two = $container_guid AND

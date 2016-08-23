@@ -66,7 +66,7 @@ class MetadataTable {
 		$this->events = $events;
 		$this->metastringsTable = $metastringsTable;
 		$this->session = $session;
-		$this->table = $this->db->getTablePrefix() . "metadata";
+		$this->table = $this->db->prefix . "metadata";
 	}
 
 	/**
@@ -570,7 +570,7 @@ class MetadataTable {
 		);
 	
 		// will always want to join these tables if pulling metastrings.
-		$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table on
+		$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table on
 			{$e_table}.guid = n_table.entity_guid";
 	
 		$wheres = array();
@@ -716,7 +716,7 @@ class MetadataTable {
 				$name = $this->db->sanitizeString($pair['name']);
 	
 				// @todo The multiple joins are only needed when the operator is AND
-				$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table{$i}
+				$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table{$i}
 					on {$e_table}.guid = n_table{$i}.entity_guid";
 				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
 					on n_table{$i}.name_id = msn{$i}.id";
@@ -763,7 +763,7 @@ class MetadataTable {
 					} else {
 						$direction = 'ASC';
 					}
-					$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table{$i}
+					$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table{$i}
 						on {$e_table}.guid = n_table{$i}.entity_guid";
 					$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
 						on n_table{$i}.name_id = msn{$i}.id";

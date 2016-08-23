@@ -20,10 +20,10 @@ class SubscriptionsServiceTest extends \Elgg\TestCase {
 		$this->event->expects($this->any())
 				->method('getObject')
 				->will($this->returnValue($object));
-		$this->db = $this->getMock('\Elgg\Database', array('getData', 'getTablePrefix', 'sanitizeString'), array(), '', false
+		$this->db = $this->getMock('\Elgg\Database', array('getData', 'prefix', 'sanitizeString'), array(), '', false
 		);
 		$this->db->expects($this->any())
-				->method('getTablePrefix')
+				->method('prefix')
 				->will($this->returnValue('elgg_'));
 		$this->db->expects($this->any())
 				->method('sanitizeString')
@@ -52,7 +52,7 @@ class SubscriptionsServiceTest extends \Elgg\TestCase {
 	public function testQueryGenerationForRetrievingSubscriptionRelationships() {
 		$methods = array('apples', 'bananas');
 		$query = "SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
-			FROM elgg_entity_relationships
+			FROM {$this->db->prefix}entity_relationships
 			WHERE guid_two = $this->containerGuid AND
 					relationship IN ('notifyapples','notifybananas') GROUP BY guid_one";
 		$this->db->expects($this->once())
