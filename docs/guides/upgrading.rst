@@ -52,6 +52,7 @@ All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https:/
  * ``ElggSite::removeUser``: Use ``removeEntity``
  * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
  * ``Logger::getClassName``: Use ``get_class()``
+ * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
 
 Removed global vars
 -------------------

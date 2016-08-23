@@ -68,17 +68,6 @@ class Database {
 
 	/**
 	 * {@inheritdoc}
-	 * @deprecated 2.3 Read the "prefix" property
-	 */
-	public function getTablePrefix() {
-		if (function_exists('elgg_deprecated_notice')) {
-			elgg_deprecated_notice(__METHOD__ . ' is deprecated. Read the "prefix" property', '2.3');
-		}
-		return $this->db->prefix;
-	}
-
-	/**
-	 * {@inheritdoc}
 	 */
 	public function sanitizeInt($value, $signed = true) {
 		return $this->db->sanitizeInt($value, $signed);
@@ -98,11 +87,7 @@ class Database {
 	 * @return mixed
 	 */
 	public function __get($name) {
-		if ($name === 'prefix') {
-			return $this->db->prefix;
-		}
-
-		throw new \RuntimeException("Cannot read property '$name'");
+		return $this->db->{$name};
 	}
 
 	/**
@@ -113,6 +98,6 @@ class Database {
 	 * @return void
 	 */
 	public function __set($name, $value) {
-		throw new \RuntimeException("Cannot write property '$name'");
+		$this->db->{$name} = $value;
 	}
 }
