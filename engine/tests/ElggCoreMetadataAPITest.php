@@ -161,8 +161,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 
 		// need to fake different logins.
 		// good times without mocking.
-		$original_user = elgg_get_logged_in_user_entity();
-		$_SESSION['user'] = $u1;
+		$original_user = $this->replaceSession($u1);
 		
 		elgg_set_ignore_access(false);
 
@@ -182,7 +181,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		}
 
 		// add md w/ same name as a different user
-		$_SESSION['user'] = $u2;
+		$this->replaceSession($u2);
 		$md_values2 = array(
 			'four',
 			'five',
@@ -202,7 +201,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 			$this->assertEqual('test', $md->name);
 		}
 
-		$_SESSION['user'] = $original_user;
+		$this->replaceSession($original_user);
 
 		$obj->delete();
 		$u1->delete();
