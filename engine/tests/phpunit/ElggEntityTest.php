@@ -98,7 +98,7 @@ class ElggEntityTest extends \Elgg\TestCase {
 	 * @expectedException InvalidParameterException
 	 */
 	public function testSaveWithoutType() {
-		$db = $this->getMock('\Elgg\Database', array('getData', 'getTablePrefix', 'sanitizeString'), array(), '', false
+		$db = $this->getMock('\Elgg\Database', array('getData', 'sanitizeString'), array(), '', false
 		);
 		$db->expects($this->any())
 				->method('sanitizeString')

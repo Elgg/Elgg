@@ -61,7 +61,7 @@ class EntityTable {
 			'table_alias' => '',
 		]);
 
-		$sql = "SELECT * FROM {$this->db->getTablePrefix()}entities
+		$sql = "SELECT * FROM {$this->db->prefix}entities
 			WHERE guid = :guid AND $access";
 
 		$params = [
@@ -79,7 +79,7 @@ class EntityTable {
 	 */
 	public function insertRow(\stdClass $row) {
 
-		$sql = "INSERT INTO {$this->db->getTablePrefix()}entities
+		$sql = "INSERT INTO {$this->db->prefix}entities
 			(type, subtype, owner_guid, site_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
 			VALUES
@@ -108,7 +108,7 @@ class EntityTable {
 	 */
 	public function updateRow($guid, \stdClass $row) {
 		$sql = "
-			UPDATE {$this->db->getTablePrefix()}entities
+			UPDATE {$this->db->prefix}entities
 			SET owner_guid = :owner_guid,
 			    access_id = :access_id,
 				container_guid = :container_guid,
@@ -252,7 +252,7 @@ class EntityTable {
 	 */
 	public function exists($guid) {
 
-		$query = "SELECT 1 FROM {$this->db->getTablePrefix()}entities 
+		$query = "SELECT 1 FROM {$this->db->prefix}entities
 			WHERE guid = :guid";
 		
 		$result = $this->db->getDataRow($query, false, [
@@ -482,11 +482,11 @@ class EntityTable {
 
 		if (!$options['count']) {
 			$distinct = $options['distinct'] ? "DISTINCT" : "";
-			$query = "SELECT $distinct e.*{$selects} FROM {$this->db->getTablePrefix()}entities e ";
+			$query = "SELECT $distinct e.*{$selects} FROM {$this->db->prefix}entities e ";
 		} else {
 			// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than GUIDs
 			$count_expr = $options['distinct'] ? "DISTINCT e.guid" : "*";
-			$query = "SELECT COUNT($count_expr) as total FROM {$this->db->getTablePrefix()}entities e ";
+			$query = "SELECT COUNT($count_expr) as total FROM {$this->db->prefix}entities e ";
 		}
 
 		// add joins
@@ -626,7 +626,7 @@ class EntityTable {
 		}
 
 		// join the secondary table
-		$options['joins'][] = "JOIN {$this->db->getTablePrefix()}{$type}s_entity st ON (e.guid = st.guid)";
+		$options['joins'][] = "JOIN {$this->db->prefix}{$type}s_entity st ON (e.guid = st.guid)";
 
 		return $options;
 	}
@@ -1085,7 +1085,7 @@ class EntityTable {
 		}
 
 
-		$type_table = "{$this->db->getTablePrefix()}{$type}s_entity";
+		$type_table = "{$this->db->prefix}{$type}s_entity";
 
 		$return = array(
 			'joins' => array(),
@@ -1244,7 +1244,7 @@ class EntityTable {
 		$where[] = _elgg_get_access_where_sql(array('table_alias' => ''));
 
 		$sql = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth
-			FROM {$this->db->getTablePrefix()}entities where ";
+			FROM {$this->db->prefix}entities where ";
 
 		foreach ($where as $w) {
 			$sql .= " $w and ";
@@ -1284,7 +1284,7 @@ class EntityTable {
 
 		if ($guid) {
 			//now add to the river updated table
-			$query = "UPDATE {$this->db->getTablePrefix()}entities SET last_action = {$posted} WHERE guid = {$guid}";
+			$query = "UPDATE {$this->db->prefix}entities SET last_action = {$posted} WHERE guid = {$guid}";
 			$result = $this->db->updateData($query);
 			if ($result) {
 				return true;

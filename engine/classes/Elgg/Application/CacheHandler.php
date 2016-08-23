@@ -223,7 +223,7 @@ class CacheHandler {
 		try {
 			$rows = $db->getData("
 				SELECT `name`, `value`
-				FROM {$db->getTablePrefix()}datalists
+				FROM {$db->prefix}datalists
 				WHERE `name` IN ('dataroot', 'simplecache_enabled')
 			");
 			if (!$rows) {

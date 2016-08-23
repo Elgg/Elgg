@@ -221,7 +221,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$obj->test_md = [1, 2, 3];
 
 		$time = time();
-		$prefix = _elgg_services()->db->getTablePrefix();
+		$prefix = _elgg_services()->db->prefix;
 
 		// reverse the times
 		$mds = elgg_get_metadata([

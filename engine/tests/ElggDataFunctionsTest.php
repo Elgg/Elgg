@@ -10,7 +10,7 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 	private $user;
 
 	public function setUp() {
-		$this->prefix = _elgg_services()->db->getTablePrefix();
+		$this->prefix = _elgg_services()->db->prefix;
 
 		$users = elgg_get_entities([
 			'type' => 'user',

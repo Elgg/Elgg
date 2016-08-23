@@ -193,7 +193,7 @@ class EntityTable extends DbEntityTable {
 			}
 		}
 
-		$dbprefix = $this->db->getTablePrefix();
+		$dbprefix = $this->db->prefix;
 
 		$access = _elgg_get_access_where_sql([
 			'table_alias' => '',

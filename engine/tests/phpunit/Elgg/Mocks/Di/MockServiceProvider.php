@@ -68,7 +68,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('datalist', function(MockServiceProvider $m) use ($sp) {
 			$db = $m->db;
-			$dbprefix = $db->getTablePrefix();
+			$dbprefix = $db->prefix;
 			$pool = new \Elgg\Cache\Pool\InMemory();
 			return new \Elgg\Mocks\Database\Datalist($pool, $db, $sp->logger, "{$dbprefix}datalists");
 		});

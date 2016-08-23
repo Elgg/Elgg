@@ -60,7 +60,7 @@ class BootService {
 		// we need this stuff before cache
 		$rows = $db->getData("
 			SELECT *
-			FROM {$db->getTablePrefix()}datalists
+			FROM {$db->prefix}datalists
 			WHERE `name` IN ('__site_secret__', 'default_site', 'dataroot')
 		");
 		$datalists = [];
