@@ -40,17 +40,11 @@ $controls = elgg_view('object/widget/elements/controls', array(
 $content = elgg_view('object/widget/elements/content', $vars);
 
 $widget_id = "elgg-widget-$widget->guid";
-$widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$handler");
-if ($can_edit) {
-	$widget_class = "elgg-state-draggable $widget_instance";
-} else {
-	$widget_class = "elgg-state-fixed $widget_instance";
-}
 
-$additional_class = elgg_extract('class', $vars, '');
-if ($additional_class) {
-	$widget_class = "$widget_class $additional_class";
-}
+$widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$handler");
+
+$widget_class = elgg_extract_class($vars, $widget_instance);
+$widget_class[] = $can_edit ? "elgg-state-draggable" : "elgg-state-fixed";
 
 $widget_header = <<<HEADER
 	<div class="elgg-widget-handle clearfix"><h3 class="elgg-widget-title">$title</h3>

@@ -43,7 +43,7 @@ if (empty($vars['options'])) {
 	return;
 }
 
-$list_class = (array) elgg_extract('class', $vars, []);
+$list_class = elgg_extract_class($vars);
 unset($vars['class']);
 
 $list_class[] = 'elgg-input-checkboxes';

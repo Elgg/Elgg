@@ -9,8 +9,7 @@
  * @uses $vars['entity']   Optional. Entity whose tags are being displayed (metadata ->tags)
  */
 
-$vars['class'] = (array) elgg_extract('class', $vars, []);
-$vars['class'][] = 'elgg-input-tags';
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-tags');
 
 $defaults = array(
 	'value' => '',

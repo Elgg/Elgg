@@ -20,10 +20,9 @@ $show_inner = elgg_extract('show_inner', $vars, false);
 
 $attrs = [
 	'id' => elgg_extract('id', $vars),
-	'class' => (array) elgg_extract('class', $vars, []),
+	'class' => elgg_extract_class($vars, 'elgg-module'),
 ];
 
-$attrs['class'][] = 'elgg-module';
 if ($type) {
 	$attrs['class'][] = "elgg-module-$type";
 }

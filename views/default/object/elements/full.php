@@ -15,10 +15,7 @@ if (!$entity instanceof ElggEntity) {
 	elgg_log("object/elements/full expects an ElggEntity in \$vars['entity']", 'ERROR');
 }
 
-$class = (array) elgg_extract('class', $vars, []);
-$class[] = 'elgg-listing-full';
-$class[] = 'elgg-content';
-$class[] = 'clearfix';
+$class = elgg_extract_class($vars, ['elgg-listing-full', 'elgg-content', 'clearfix']);
 unset($vars['class']);
 
 $header = elgg_view('object/elements/full/header', $vars);

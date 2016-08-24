@@ -58,9 +58,7 @@ $translated_icons = array(
 $convert = (bool) elgg_extract('convert', $vars, true);
 unset($vars['convert']);
 
-$class = (array) elgg_extract("class", $vars);
-$class[] = "elgg-icon";
-$class[] = "fa";
+$class = elgg_extract_class($vars, ["elgg-icon", "fa"]);
 
 foreach ($class as $index => $c) {
 	if (preg_match_all('/^elgg-icon-(.+)-hover$/i', $c)) {
