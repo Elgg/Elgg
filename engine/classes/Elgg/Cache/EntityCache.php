@@ -78,9 +78,8 @@ class EntityCache {
 	 * @return \ElggUser|false
 	 */
 	public function getByUsername($username) {
-		$cache = array_flip($this->username_cache);
-		if (isset($cache[$username])) {
-			return $this->get($cache[$username]);
+		if (isset($this->username_cache[$username])) {
+			return $this->get($this->username_cache[$username]);
 		}
 		return false;
 	}
@@ -116,7 +115,7 @@ class EntityCache {
 		$GLOBALS['ENTITY_CACHE'] = $this->entities;
 
 		if ($entity instanceof \ElggUser) {
-			$this->username_cache[$entity->guid] = $entity->username;
+			$this->username_cache[$entity->username] = $entity->guid;
 		}
 	}
 
@@ -138,7 +137,10 @@ class EntityCache {
 		unset($this->entities[$guid]);
 		$GLOBALS['ENTITY_CACHE'] = $this->entities;
 
-		unset($this->username_cache[$guid]);
+		$username = array_search($guid, $this->username_cache);
+		if ($username !== false) {
+			unset($this->username_cache[$username]);
+		}
 
 		// Purge separate metadata cache. Original idea was to do in entity destructor, but that would
 		// have caused a bunch of unnecessary purges at every shutdown. Doing it this way we have no way

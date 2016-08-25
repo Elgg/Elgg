@@ -27,13 +27,14 @@
  *
  * @property       string $type           object, user, group, or site (read-only after save)
  * @property-write string $subtype        Further clarifies the nature of the entity (this should not be read)
- * @property       int    $guid           The unique identifier for this entity (read only)
+ * @property-read  int    $guid           The unique identifier for this entity (read only)
  * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property       int    $container_guid The GUID of the entity containing this entity
  * @property       int    $site_guid      The GUID of the website this entity is associated with
  * @property       int    $access_id      Specifies the visibility level of this entity
  * @property       int    $time_created   A UNIX timestamp of when the entity was created
- * @property       int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
  * @property       string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
@@ -1439,23 +1440,24 @@ abstract class ElggEntity extends \ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			return $this->update();
+			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid) {
-				if (_elgg_services()->events->trigger('create', $this->type, $this)) {
-					return $guid;
-				} else {
-					// plugins that return false to event don't need to override the access system
-					$ia = elgg_set_ignore_access(true);
-					$this->delete();
-					elgg_set_ignore_access($ia);
-				}
+			if ($guid && !_elgg_services()->events->trigger('create', $this->type, $this)) {
+				// plugins that return false to event don't need to override the access system
+				$ia = elgg_set_ignore_access(true);
+				$this->delete();
+				elgg_set_ignore_access($ia);
+				return false;
 			}
+		}
+
+		if ($guid) {
+			_elgg_services()->entityCache->set($this);
 			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 		}
-		
-		return false;
+
+		return $guid;
 	}
 	
 	/**
@@ -1591,8 +1593,6 @@ abstract class ElggEntity extends \ElggData implements
 			
 			$this->temp_private_settings = array();
 		}
-
-		_elgg_services()->entityCache->set($this);
 		
 		return $result;
 	}
@@ -1651,15 +1651,9 @@ abstract class ElggEntity extends \ElggData implements
 			update_river_access_by_object($guid, $access_id);
 		}
 
-		// If memcache is available then delete this entry from the cache
-		_elgg_invalidate_memcache_for_entity($guid);
-
 		if ($ret !== false) {
 			$this->attributes['time_updated'] = $time;
 		}
-
-		_elgg_services()->entityCache->set($this);
-		$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 
 		$this->orig_attributes = [];
 
@@ -1952,9 +1946,6 @@ abstract class ElggEntity extends \ElggData implements
 		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
 			return false;
 		}
-		
-		_elgg_invalidate_cache_for_entity($guid);
-		_elgg_invalidate_memcache_for_entity($guid);
 
 		if ($this instanceof ElggUser) {
 			// ban to prevent using the site during delete
@@ -2011,10 +2002,11 @@ abstract class ElggEntity extends \ElggData implements
 		elgg_delete_river(array('target_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		_elgg_services()->entityCache->remove($guid);
+		_elgg_invalidate_cache_for_entity($guid);
+		_elgg_invalidate_memcache_for_entity($guid);
 
 		$dbprefix = elgg_get_config('dbprefix');
-
+		
 		$sql = "
 			DELETE FROM {$dbprefix}entities
 			WHERE guid = :guid
@@ -2388,5 +2380,25 @@ abstract class ElggEntity extends \ElggData implements
 		}
 		
 		return $result;
+	}
+
+	/**
+	 * Update the last_action column in the entities table.
+	 *
+	 * @warning This is different to time_updated.  Time_updated is automatically set,
+	 * while last_action is only set when explicitly called.
+	 *
+	 * @param int $posted Timestamp of last action
+	 * @return int|false
+	 * @access private
+	 */
+	public function updateLastAction($posted = null) {
+		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);
+		if ($posted) {
+			$this->attributes['last_action'] = $posted;
+			_elgg_services()->entityCache->set($this);
+			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+		}
+		return $posted;
 	}
 }

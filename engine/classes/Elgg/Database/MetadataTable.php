@@ -21,7 +21,7 @@ use Elgg\Cache\MetadataCache as Cache;
 class MetadataTable {
 
 	use \Elgg\TimeUsing;
-	
+
 	/** @var array */
 	protected $independents = array();
 	

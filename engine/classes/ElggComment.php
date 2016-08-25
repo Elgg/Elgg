@@ -42,7 +42,10 @@ class ElggComment extends \ElggObject {
 	public function save($update_last_action = true) {
 		$result = parent::save();
 		if ($result && $update_last_action) {
-			update_entity_last_action($this->container_guid, $this->time_updated);
+			$container = $this->getContainerEntity();
+			if ($container) {
+				$container->updateLastAction($this->time_updated);
+			}
 		}
 		return $result;
 	}

@@ -24,7 +24,6 @@ function is_memcache_available() {
  *
  * @return void
  * @access private
- * @deprecated 2.3
  */
 function _elgg_invalidate_memcache_for_entity($entity_guid) {
 	_elgg_get_memcache('new_entity_cache')->delete($entity_guid);

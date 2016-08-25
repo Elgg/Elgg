@@ -8,9 +8,7 @@ use Elgg\TestCase;
 class ElggMetadataTest extends TestCase {
 
 	public function setUp() {
-		$this->setupTestingServices();
 		$this->setupMockServices();
-		_elgg_services()->db->clearQuerySpecs();
 		_elgg_services()->metadataTable->setCurrentTime();
 	}
 
@@ -100,7 +98,7 @@ class ElggMetadataTest extends TestCase {
 		$metadata->value = 'bar';
 		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
 
-		$id = _elgg_services()->metadataTable->iterate();
+		$id = _elgg_services()->metadataTable->iterator + 1;
 
 		// Insert
 		$dbprefix = elgg_get_config('dbprefix');

@@ -42,15 +42,11 @@ if (pages_is_page($page)) {
 						'metadata_name' => 'parent_guid',
 					));
 
-<<<<<<< HEAD
-					_elgg_services()->entityCache->remove($child_guid);
 					if ($newentity_cache) {
 						$newentity_cache->delete($child_guid);
 					}
-=======
 					_elgg_invalidate_cache_for_entity($child_guid);
 					_elgg_invalidate_memcache_for_entity($child_guid);
->>>>>>> 0906c27... chore(cache): reworks ElggMemcache and its core usage
 				}
 			}
 		}

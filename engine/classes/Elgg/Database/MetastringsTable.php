@@ -121,23 +121,21 @@ class MetastringsTable {
 				return $result;
 			}
 
-			$escaped_string = $this->db->sanitizeString($string);
-			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY '$escaped_string' LIMIT 1";
-			$results = $this->db->getData($query);
-			$result = isset($results[0]) ? $results[0]->id : $this->add($string);
-
-			$memcache->save(md5($string), $result);
-			return $result;
 			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY :string";
 			$params = [
 				':string' => $string,
 			];
+
 			$result = $this->db->getDataRow($query, null, $params);
 			if ($result) {
-				return $result->id;
+				$id = $result->id;
 			} else {
-				return $this->add($string);
+				$id = $this->add($string);
 			}
+
+			$memcache->save(md5($string), $id);
+
+			return $id;
 		});
 	}
 

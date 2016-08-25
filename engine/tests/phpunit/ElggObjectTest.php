@@ -7,7 +7,6 @@
 class ElggObjectTest extends \Elgg\TestCase {
 
 	protected function setUp() {
-		$this->setupTestingServices();
 		$this->setupMockServices();
 
 		_elgg_services()->hooks->backup();
@@ -53,7 +52,7 @@ class ElggObjectTest extends \Elgg\TestCase {
 
 		$user = $this->mocks()->getUser();
 		_elgg_services()->session->setLoggedInUser($user);
-
+		
 		$object = new \ElggObject();
 		$object->subtype = $subtype;
 		$object->title = 'Foo';
@@ -234,10 +233,16 @@ class ElggObjectTest extends \Elgg\TestCase {
 		_elgg_groups_init();
 
 		$user = $this->mocks()->getUser();
+		$user2 = $this->mocks()->getUser();
+
 		_elgg_services()->session->setLoggedInUser($user);
 
-		$group = $this->mocks()->getGroup();
+		$group = $this->mocks()->getGroup([
+			'owner_guid' => $user2->guid,
+		]);
+
 		$object = $this->mocks()->getObject([
+			'owner_guid' => $user2->guid,
 			'container_guid' => $group->guid,
 		]);
 

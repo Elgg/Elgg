@@ -7,15 +7,18 @@
  * @package    Elgg.Core
  * @subpackage DataModel.User
  *
- * @property      string $name          The display name that the user will be known by in the network
- * @property      string $username      The short, reference name for the user in the network
- * @property      string $email         The email address to which Elgg will send email notifications
- * @property      string $language      The language preference of the user (ISO 639-1 formatted)
- * @property      string $banned        'yes' if the user is banned from the network, 'no' otherwise
- * @property      string $admin         'yes' if the user is an administrator of the network, 'no' otherwise
- * @property-read string $password      The legacy (salted MD5) password hash of the user
- * @property-read string $salt          The salt used to create the legacy password hash
- * @property-read string $password_hash The hashed password of the user
+ * @property      string $name             The display name that the user will be known by in the network
+ * @property      string $username         The short, reference name for the user in the network
+ * @property      string $email            The email address to which Elgg will send email notifications
+ * @property      string $language         The language preference of the user (ISO 639-1 formatted)
+ * @property      string $banned           'yes' if the user is banned from the network, 'no' otherwise
+ * @property      string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property-read string $password         The legacy (salted MD5) password hash of the user
+ * @property-read string $salt             The salt used to create the legacy password hash
+ * @property-read string $password_hash    The hashed password of the user
+ * @property-read int    $prev_last_action A UNIX timestamp of the previous last action
+ * @property-read int    $last_login       A UNIX timestamp of the last login
+ * @property-read int    $prev_last_login  A UNIX timestamp of the previous login
  */
 class ElggUser extends \ElggEntity
 	implements Friendable {
@@ -226,7 +229,6 @@ class ElggUser extends \ElggEntity
 			// setting this not supported
 			case 'password_hash':
 				_elgg_services()->logger->error("password_hash is now an attribute of ElggUser and cannot be set.");
-				return;
 				break;
 
 			default:

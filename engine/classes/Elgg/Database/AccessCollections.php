@@ -274,7 +274,8 @@ class AccessCollections {
 	 *                     Default is 'e'. 
 	 *
 	 *  user_guid => INT Optional GUID for the user that we are retrieving data for.
-	 *                   Defaults to the logged in user.
+	 *                   Defaults to the logged in user if null.
+	 *                   Passing 0 will build a query for a logged out user (even if there is a logged in user)
 	 * 
 	 *  use_enabled_clause => BOOL Optional. Should we append the enabled clause? The default 
 	 *                             is set by access_show_hidden_entities().
@@ -288,7 +289,7 @@ class AccessCollections {
 	 * @return string
 	 * @access private
 	 */
-	function getWhereSql(array $options = array()) {
+	public function getWhereSql(array $options = array()) {
 		global $ENTITY_SHOW_HIDDEN_OVERRIDE;
 
 		$defaults = array(
@@ -299,6 +300,13 @@ class AccessCollections {
 			'owner_guid_column' => 'owner_guid',
 			'guid_column' => 'guid',
 		);
+
+		foreach ($options as $key => $value) {
+			if (is_null($value)) {
+				// remove null values so we don't loose defaults in array_merge
+				unset($options[$key]);
+			}
+		}
 
 		$options = array_merge($defaults, $options);
 
@@ -313,7 +321,9 @@ class AccessCollections {
 		// only add dot if we have an alias or table name
 		$table_alias = $options['table_alias'] ? $options['table_alias'] . '.' : '';
 
-		$options['ignore_access'] = elgg_check_access_overrides($options['user_guid']);
+		if (!isset($options['ignore_access'])) {
+			$options['ignore_access'] = elgg_check_access_overrides($options['user_guid']);
+		}
 
 		$clauses = array(
 			'ors' => array(),
@@ -382,31 +392,18 @@ class AccessCollections {
 	 *
 	 * @return bool
 	 */
-	function hasAccessToEntity($entity, $user = null) {
-
+	public function hasAccessToEntity($entity, $user = null) {
 
 		// See #7159. Must not allow ignore access to affect query
 		$ia = elgg_set_ignore_access(false);
 
-		if (!isset($user)) {
-			$access_bit = $this->getWhereSql();
-		} else {
-			$access_bit = $this->getWhereSql(array('user_guid' => $user->guid));
-		}
+		$user_guid = isset($user) ? (int) $user->guid : null;
+
+		$row = $this->entities->getRow($entity->guid, $user_guid);
 
 		elgg_set_ignore_access($ia);
 
-		$db = $this->db;
-		$prefix = $db->prefix;
-
-		$query = "SELECT guid from {$prefix}entities e WHERE e.guid = {$entity->guid}";
-		// Add access controls
-		$query .= " AND " . $access_bit;
-		if ($db->getData($query)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !empty($row);
 	}
 
 	/**

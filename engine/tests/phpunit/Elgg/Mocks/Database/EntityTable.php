@@ -166,6 +166,20 @@ class EntityTable extends DbEntityTable {
 	}
 
 	/**
+	 * Clear query specs
+	 * 
+	 * @param int $guid GUID
+	 * @return void
+	 */
+	public function clearQuerySpecs($guid) {
+		if (!empty($this->query_specs[$guid])) {
+			foreach ($this->query_specs[$guid] as $spec) {
+				$this->db->removeQuerySpec($spec);
+			}
+		}
+	}
+
+	/**
 	 * Add query specs
 	 *
 	 * @param \stdClass $row Entity table row
@@ -173,43 +187,103 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addQuerySpecs(\stdClass $row) {
 
-		if (!empty($this->query_specs[$row->guid])) {
-			foreach ($this->query_specs[$row->guid] as $spec) {
-				$this->db->removeQuerySpec($spec);
-			}
+		$this->clearQuerySpecs($row->guid);
+
+		$dbprefix = elgg_get_config('dbprefix');
+
+		// Get entity by it's guid
+		// Access query might differ based on the logged in user/access hidden status
+		// We are going to populate queries for all possible combinations,
+		// and then validate the access before giving back the entity
+		$access_user_guids = array_unique([0, $row->guid, $row->owner_guid, $row->container_guid]);
+		$access_combinations = [];
+
+		foreach ($access_user_guids as $access_user_guid) {
+			$access_combinations[] = [
+				'user_guid' => $access_user_guid,
+				'ignore_access' => false,
+				'use_enabled_clause' => true,
+			];
+			$access_combinations[] = [
+				'user_guid' => $access_user_guid,
+				'ignore_access' => true,
+				'use_enabled_clause' => true,
+			];
+			$access_combinations[] = [
+				'user_guid' => $access_user_guid,
+				'ignore_access' => false,
+				'use_enabled_clause' => false,
+			];
+			$access_combinations[] = [
+				'user_guid' => $access_user_guid,
+				'ignore_access' => true,
+				'use_enabled_clause' => false,
+			];
 		}
 
-		$dbprefix = $this->db->prefix;
-
-		$access = _elgg_get_access_where_sql([
-			'table_alias' => '',
-		]);
-
-		$sql = "SELECT * FROM {$dbprefix}entities
+		$access_queries = [];
+		foreach ($access_combinations as $access_combination) {
+			$access_combination['table_alias'] = '';
+			$access_queries[] = _elgg_get_access_where_sql($access_combination);
+		}
+		$access_queries = array_unique($access_queries);
+		
+		foreach ($access_queries as $access) {
+			$sql = "SELECT * FROM {$dbprefix}entities
 			WHERE guid = :guid AND $access";
 
-		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':guid' => (int) $row->guid,
-			],
-			'results' => function() use ($row) {
-				return [$row];
-			},
-		]);
+			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+				'sql' => $sql,
+				'params' => [
+					':guid' => (int) $row->guid,
+				],
+				'results' => function() use ($row, $access_combination) {
+					if (!isset($this->rows[$row->guid])) {
+						return [];
+					}
+					$row = $this->rows[$row->guid];
 
-		$sql = "SELECT 1 FROM {$dbprefix}entities
-			WHERE guid = :guid";
+					if ($access_combination['use_enabled_clause'] && !$row->enabled != 'yes') {
+						return [];
+					}
+					if (elgg_get_ignore_access()) {
+						return [$row];
+					}
 
-		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':guid' => (int) $row->guid,
-			],
-			'results' => function() {
-				return [1];
-			},
-		]);
+					// Check entity access
+					if ($row->access_id == ACCESS_PUBLIC) {
+						return [$row];
+					}
+					if ($row->access_id == ACCESS_LOGGED_IN && elgg_is_logged_in()) {
+						return [$row];
+					}
+
+					$user = elgg_get_logged_in_user_entity();
+					if (!$user) {
+						return [];
+					}
+					if ($user->isAdmin()) {
+						return [$row];
+					}
+					if ($row->owner_guid == $user->guid) {
+						return [$row];
+					}
+					if ($row->access_id == ACCESS_PRIVATE && $row->owner_guid == $user->guid) {
+						return [$row];
+					}
+					// friends
+					if ($row->access_id == ACCESS_FRIENDS && check_entity_relationship($row->owner_guid, 'friend', $user->guid)) {
+						return [$row];
+					}
+					// access collections
+					$access_list = _elgg_services()->accessCollections->getAccessList($user->guid);
+					if (in_array($row->access_id, $access_list)) {
+						return [$row];
+					}
+					return false;
+				}
+			]);
+		}
 
 		$sql = "
 			UPDATE {$dbprefix}entities
@@ -231,22 +305,34 @@ class EntityTable extends DbEntityTable {
 				':time_updated' => $row->time_updated,
 				':guid' => $row->guid,
 			],
-			'row_count' => 1,
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->guid])) {
+					$this->rows[$row->guid] = $row;
+					return [$row->guid];
+				}
+				return [];
+			},
 		]);
 
 		$sql = "
 			DELETE FROM {$dbprefix}entities
 			WHERE guid = :guid
 		";
+
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
 				':guid' => $row->guid,
 			],
 			'results' => function() use ($row) {
-				unset($this->mocks[$row->guid]);
+				if (isset($this->rows[$row->guid])) {
+					// query spec will be cleared once removed from objects table below
+					unset($this->rows[$row->guid]);
+					unset($this->mocks[$row->guid]);
+					return [$row->guid];
+				}
+				return [];
 			},
-			'row_count' => 1,
 			'times' => 1,
 		]);
 
@@ -266,6 +352,7 @@ class EntityTable extends DbEntityTable {
 		// Private settings cleanup
 		$sql = "DELETE FROM {$dbprefix}private_settings
 				WHERE entity_guid = $row->guid";
+
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'row_count' => 0,
@@ -274,7 +361,7 @@ class EntityTable extends DbEntityTable {
 
 		// River table clean up
 		foreach (['subject_guid', 'object_guid', 'target_guid'] as $column) {
-			$sql = "DELETE rv.* FROM elgg_river rv  WHERE (rv.$column IN ($row->guid)) AND 1=1";
+			$sql = "DELETE rv.* FROM {$dbprefix}river rv  WHERE (rv.$column IN ($row->guid)) AND 1=1";
 			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 				'sql' => $sql,
 				'row_count' => 0,
@@ -293,8 +380,65 @@ class EntityTable extends DbEntityTable {
 			'params' => [
 				':guid' => $row->guid,
 			],
-			'row_count' => 1,
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->guid])) {
+					$row->enabled = 'no';
+					$this->rows[$row->guid] = $row;
+					$this->addQuerySpecs($row);
+					return [$row->guid];
+				}
+				return [];
+			},
 			'times' => 1,
+		]);
+
+		// Enable
+		$sql = "
+			UPDATE {$dbprefix}entities
+			SET enabled = 'yes'
+			WHERE guid = :guid
+		";
+		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+			'sql' => $sql,
+			'params' => [
+				':guid' => $row->guid,
+			],
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->guid])) {
+					$row->enabled = 'yes';
+					$this->rows[$row->guid] = $row;
+					$this->addQuerySpecs($row);
+					return [$row->guid];
+				}
+				return [];
+			},
+			'times' => 1,
+		]);
+
+		// Update last action
+		$time = $this->getCurrentTime()->getTimestamp();
+
+		$sql = "
+			UPDATE {$dbprefix}entities
+			SET last_action = :last_action
+			WHERE guid = :guid
+		";
+
+		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
+			'sql' => $sql,
+			'params' => [
+				':last_action' => $time,
+				':guid' => $row->guid,
+			],
+			'results' => function() use ($row, $time) {
+				if (isset($this->rows[$row->guid])) {
+					$row->last_action = $time;
+					$this->rows[$row->guid] = $row;
+					$this->addQuerySpecs($row);
+					return [$row->guid];
+				}
+				return [];
+			},
 		]);
 
 		switch ($row->type) {
@@ -332,7 +476,13 @@ class EntityTable extends DbEntityTable {
 						':title' => $row->title,
 						':description' => $row->description,
 					],
-					'row_count' => 1,
+					'results' => function() use ($row) {
+						if (isset($this->rows[$row->guid])) {
+							$this->rows[$row->guid] = $row;
+							return [$row->guid];
+						}
+						return [];
+					},
 				]);
 
 				$sql = "
@@ -344,7 +494,15 @@ class EntityTable extends DbEntityTable {
 					'params' => [
 						':guid' => $row->guid,
 					],
-					'row_count' => 1,
+					'results' => function() use ($row) {
+						if (isset($this->rows[$row->guid])) {
+							unset($this->rows[$row->guid]);
+							unset($this->mocks[$row->guid]);
+							$this->clearQuerySpecs($row->guid);
+							return [$row->guid];
+						}
+						return [];
+					},
 					'times' => 1,
 				]);
 

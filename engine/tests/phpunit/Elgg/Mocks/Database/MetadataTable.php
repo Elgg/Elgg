@@ -24,7 +24,7 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * @var int
 	 */
-	private $iterator = 100;
+	public $iterator = 100;
 
 	/**
 	 * {@inheritdoc}
@@ -47,6 +47,8 @@ class MetadataTable extends DbMetadataTabe {
 		$this->iterator++;
 		$id = $this->iterator;
 
+		$time = $this->getCurrentTime()->getTimestamp();
+		
 		$row = (object) [
 			'type' => 'metadata',
 			'id' => $id,

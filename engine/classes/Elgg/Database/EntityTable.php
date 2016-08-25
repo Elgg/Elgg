@@ -121,7 +121,7 @@ class EntityTable {
 	) {
 		$this->config = $config;
 		$this->db = $db;
-		$this->table = $this->db->getTablePrefix() . 'entities';
+		$this->table = $this->db->prefix . 'entities';
 		$this->entity_cache = $entity_cache;
 		$this->metadata_cache = $metadata_cache;
 		$this->subtype_table = $subtype_table;
@@ -141,11 +141,14 @@ class EntityTable {
 	 * @warning This will only return results if a) it exists, b) you have access to it.
 	 * see {@link _elgg_get_access_where_sql()}.
 	 *
-	 * @param int $guid The GUID of the object to extract
+	 * @param int $guid      The GUID of the object to extract
+	 * @param int $user_guid GUID of the user accessing the row
+	 *                       Defaults to logged in user if null
+	 *                       Builds an access query for a logged out user if 0
 	 * @return stdClass|false
 	 * @access private
 	 */
-	public function getRow($guid) {
+	public function getRow($guid, $user_guid = null) {
 
 		if (!$guid) {
 			return false;
@@ -153,6 +156,7 @@ class EntityTable {
 
 		$access = _elgg_get_access_where_sql([
 			'table_alias' => '',
+			'user_guid' => $user_guid,
 		]);
 
 		$sql = "SELECT * FROM {$this->db->prefix}entities
@@ -284,7 +288,7 @@ class EntityTable {
 	 * @param string $type The type of the entity. If given, even an existing entity with the given GUID
 	 *                     will not be returned unless its type matches.
 	 *
-	 * @return ElggEntity The correct Elgg or custom object based upon entity type and subtype
+	 * @return ElggEntity|stdClass|false The correct Elgg or custom object based upon entity type and subtype
 	 * @throws ClassException
 	 * @throws InstallationException
 	 */
@@ -301,20 +305,22 @@ class EntityTable {
 		$memcache = _elgg_get_memcache('new_entity_cache');
 		
 		$entity = $this->entity_cache->get($guid);
+
 		if (!$entity) {
-			// Check caches
 			$entity = $memcache->load($guid);
-			if ($entity instanceof ElggEntity) {
-				// until ACLs in memcache, DB query is required to determine access
-				if (!$this->getRow($guid)) {
-					$entity = false;
-				}
+			// Validate accessibility
+			if ($entity && !elgg_get_ignore_access() && !has_access_to_entity($entity)) {
+				$entity = false;
 			}
 		}
 
-		// Verify type of cached entity		
+		if (!$entity instanceof ElggEntity) {
+			$entity = false;
+		}
+
 		if ($entity) {
 			if ($type) {
+				// Verify type of the cached entity
 				return elgg_instanceof($entity, $type) ? $entity : false;
 			}
 			$this->entity_cache->set($entity);
@@ -354,12 +360,14 @@ class EntityTable {
 	 */
 	public function exists($guid) {
 
-		$query = "SELECT 1 FROM {$this->db->prefix}entities
-			WHERE guid = :guid";
-		
-		$result = $this->db->getDataRow($query, false, [
-			':guid' => (int) $guid,
-		]);
+		// need to ignore access and show hidden entities to check existence
+		$ia = $this->session->setIgnoreAccess(true);
+		$show_hidden = access_show_hidden_entities(true);
+
+		$result = $this->getRow($guid);
+
+		$this->session->setIgnoreAccess($ia);
+		access_show_hidden_entities($show_hidden);
 
 		return !empty($result);
 	}
@@ -1369,21 +1377,17 @@ class EntityTable {
 	 * @warning This is different to time_updated.  Time_updated is automatically set,
 	 * while last_action is only set when explicitly called.
 	 *
-	 * @param int $guid   Entity annotation|relationship action carried out on
-	 * @param int $posted Timestamp of last action
-	 * @return bool
+	 * @param ElggEntity $entity Entity annotation|relationship action carried out on
+	 * @param int        $posted Timestamp of last action
+	 * @return int|false
 	 * @access private
 	 */
-	public function updateLastAction($guid, $posted = null) {
-
-		if (!$guid) {
-			return false;
-		}
+	public function updateLastAction(ElggEntity $entity, $posted = null) {
 
 		if (!$posted) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
-
+		
 		$query = "
 			UPDATE {$this->db->prefix}entities
 			SET last_action = :last_action
@@ -1392,15 +1396,15 @@ class EntityTable {
 
 		$params = [
 			':last_action' => (int) $posted,
-			':guid' => (int) $guid,
+			':guid' => (int) $entity->guid,
 		];
-
-		_elgg_invalidate_cache_for_entity($entity->guid);
-		_elgg_invalidate_memcache_for_entity($entity->guid);
 		
 		$result = $this->db->updateData($query, true, $params);
 		if ($result) {
-			return true;
+			$entity->last_action = $posted;
+			_elgg_services()->entityCache->set($entity);
+			$entity->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+			return (int) $posted;
 		}
 
 		return false;
@@ -1423,7 +1427,7 @@ class EntityTable {
 		// need to ignore access and show hidden entities for potential hidden/disabled users
 		$ia = $this->session->setIgnoreAccess(true);
 		$show_hidden = access_show_hidden_entities(true);
-
+	
 		$user = $this->get($guid, 'user');
 
 		$this->session->setIgnoreAccess($ia);

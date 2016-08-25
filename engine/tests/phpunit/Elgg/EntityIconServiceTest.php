@@ -56,7 +56,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 		$this->request = \Elgg\Http\Request::create("?$path_key=action/upload");
 		$this->logger = new \Elgg\Logger($this->hooks, $this->config(), new \Elgg\Context());
 
-		$this->setupMockServices();
+		$this->setupMockServices(false);
 		$this->entities = _elgg_services()->entityTable;
 
 		$this->user = $this->mocks()->getUser();
