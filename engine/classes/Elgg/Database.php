@@ -173,6 +173,10 @@ class Database {
 			$this->connections[$type] = DriverManager::getConnection($params);
 			$this->connections[$type]->setFetchMode(\PDO::FETCH_OBJ);
 
+			// https://github.com/Elgg/Elgg/issues/8121
+			$sub_query = "SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')";
+			$this->connections[$type]->exec("SET SESSION sql_mode=($sub_query);");
+
 		} catch (\PDOException $e) {
 			// @todo just allow PDO exceptions
 			// http://dev.mysql.com/doc/refman/5.1/en/error-messages-server.html
