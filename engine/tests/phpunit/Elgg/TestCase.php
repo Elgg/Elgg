@@ -165,15 +165,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	public static function setupMockServices($reset = true) {
 
 		if ($reset) {
-			// We reset the service provider here
-			// Tests within the same test case need to run with clean entity/metadata caches
-			// Additionally, we tend to login/logout users during tests, so we need a clean session
-			// injected into the mock services
+			// Individual tests can reset service providers to get a clean global state
 			self::bootstrap();
-
-			$session = \ElggSession::getMock();
-			_elgg_services()->setValue('session', $session);
 		}
+
+		$session = \ElggSession::getMock();
+		_elgg_services()->setValue('session', $session);
 
 		_elgg_services()->setValue('db', self::mocks()->db);
 		_elgg_services()->setValue('entityTable', self::mocks()->entityTable);

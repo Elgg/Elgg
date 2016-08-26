@@ -2,13 +2,8 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Database;
 use Elgg\Database\Annotations as DbAnnotations;
-use Elgg\EventsService;
-use Elgg\TestCase;
-use ElggAnnotation;
 use ElggMetadata;
-use ElggSession;
 
 class Annotations extends DbAnnotations {
 
