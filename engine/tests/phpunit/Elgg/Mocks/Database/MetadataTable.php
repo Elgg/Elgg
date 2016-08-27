@@ -2,15 +2,9 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Cache\MetadataCache;
-use Elgg\Database;
-use Elgg\Database\EntityTable as DbEntityTable;
 use Elgg\Database\MetadataTable as DbMetadataTabe;
-use Elgg\Database\MetastringsTable;
-use Elgg\EventsService;
 use ElggMetadata;
-use ElggSession;
-use Elgg\TestCase;
+use stdClass;
 
 /**
  * @group ElggMetadata
@@ -18,35 +12,20 @@ use Elgg\TestCase;
 class MetadataTable extends DbMetadataTabe {
 
 	/**
-	 * @var ElggMetadata
+	 * @var stdClass[]
 	 */
-	public $mocks = [];
+	public $rows = [];
 
 	/**
-	 * DB query specs
+	 * DB query query_specs
 	 * @var array
 	 */
-	public $specs = [];
-
-	/**
-	 *
-	 * @var TestCase
-	 */
-	private $test;
+	public $query_specs = [];
 
 	/**
 	 * @var int
 	 */
-	private $iterator = 100;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct(MetadataCache $cache, Database $db, DbEntityTable $entityTable, EventsService $events,
-	MetastringsTable $metastringsTable, ElggSession $session) {
-		parent::__construct($cache, $db, $entityTable, $events, $metastringsTable, $session);
-		$this->test = TestCase::getInstance();
-	}
+	public $iterator = 100;
 
 	/**
 	 * {@inheritdoc}
@@ -57,25 +36,35 @@ class MetadataTable extends DbMetadataTabe {
 			return false;
 		}
 
+		if (!isset($value)) {
+			return false;
+		}
+
+		$owner_guid = (int) $owner_guid;
+		if ($owner_guid == 0) {
+			$owner_guid = $this->session->getLoggedInUserGuid();
+		}
+
 		$this->iterator++;
 		$id = $this->iterator;
+
+		$time = $this->getCurrentTime()->getTimestamp();
 
 		$row = (object) [
 			'type' => 'metadata',
 			'id' => $id,
 			'entity_guid' => $entity->guid,
-			'owner_guid' => $entity->owner_guid,
+			'owner_guid' => $owner_guid,
 			'name' => $name,
 			'value' => $value,
-			'time_created' => time(),
+			'time_created' => $this->getCurrentTime()->getTimestamp(),
 			'access_id' => (int) $access_id,
 			'value_type' => detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type))),
 		];
 
-		$metadata = new \ElggMetadata($row);
-		$this->mocks[$id] = $metadata;
+		$this->rows[$id] = $row;
 
-		$this->addQuerySpecs($metadata);
+		$this->addQuerySpecs($row);
 
 		return parent::create($entity_guid, $name, $value, $value_type, $owner_guid, $access_id, $allow_multiple);
 	}
@@ -84,44 +73,21 @@ class MetadataTable extends DbMetadataTabe {
 	 * {@inheritdoc}
 	 */
 	public function update($id, $name, $value, $value_type, $owner_guid, $access_id) {
-		$metadata = $this->get($id);
-		if (!$metadata) {
+		if (!isset($this->rows[$id])) {
 			return false;
 		}
+		$row = $this->rows[$id];
+		$row->name = $name;
+		$row->value = $value;
+		$row->value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$row->owner_guid = $owner_guid;
+		$row->access_id = $access_id;
 
-		$metadata->name = $name;
-		$metadata->value = $value;
-		$metadata->value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
-		$metadata->owner_guid = $owner_guid;
-		$metadata->access_id = $access_id;
+		$this->rows[$id] = $row;
 
-		$this->mocks[$id] = $metadata;
-
-		foreach ((array) $this->specs[$id] as $spec) {
-			$this->db->removeQuerySpec($spec);
-		}
-		$this->addQuerySpecs($metadata);
+		$this->addQuerySpecs($row);
 
 		return parent::update($id, $name, $value, $value_type, $owner_guid, $access_id);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function delete($id) {
-		$metadata = $this->get($id);
-		if (!$metadata) {
-			return false;
-		}
-
-		if ($result = parent::delete($id)) {
-			foreach ((array) $this->specs[$id] as $spec) {
-				$this->db->removeQuerySpec($spec);
-			}
-			unset($this->mocks[$id]);
-		}
-
-		return $result;
 	}
 
 	/**
@@ -130,9 +96,9 @@ class MetadataTable extends DbMetadataTabe {
 	public function getAll(array $options = array()) {
 		$guids = elgg_extract('guids', $options);
 		$rows = [];
-		foreach ($this->mocks as $id => $md) {
-			if (empty($guids) || in_array($md->entity_guid, $guids)) {
-				$rows[] = $md;
+		foreach ($this->rows as $id => $row) {
+			if (empty($guids) || in_array($row->entity_guid, $guids)) {
+				$rows[] = new ElggMetadata($row);
 			}
 		}
 		return $rows;
@@ -144,22 +110,40 @@ class MetadataTable extends DbMetadataTabe {
 	public function deleteAll(array $options = array()) {
 		$guids = elgg_extract('guids', $options);
 		$deleted = false;
-		foreach ($this->mocks as $id => $md) {
-			if (empty($guids) || in_array($md->entity_guid, $guids)) {
-				unset($this->mocks[$id]);
+		foreach ($this->rows as $id => $row) {
+			if (empty($guids) || in_array($row->entity_guid, $guids)) {
+				$this->clearQuerySpecs($this->rows[$id]);
 				$deleted = true;
+				unset($this->rows[$id]);
 			}
 		}
 		return $deleted;
 	}
 
 	/**
-	 * Add query specs for a metadata object
+	 * Clear query specs
 	 * 
-	 * @param ElggMetadata $metadata Metadata
+	 * @param stdClass $row Data row
 	 * @return void
 	 */
-	public function addQuerySpecs(\ElggMetadata $metadata) {
+	public function clearQuerySpecs(stdClass $row) {
+		if (!isset($this->query_specs[$row->id])) {
+			return;
+		}
+		foreach ($this->query_specs[$row->id] as $spec) {
+			$this->db->removeQuerySpec($spec);
+		}
+	}
+
+	/**
+	 * Add query query_specs for a metadata object
+	 * 
+	 * @param stdClass $row Data row
+	 * @return void
+	 */
+	public function addQuerySpecs(stdClass $row) {
+
+		$this->clearQuerySpecs($row);
 
 		// Return this metadata object when _elgg_get_metastring_based_objects() is called
 		$e_access_sql = _elgg_get_access_where_sql(array('table_alias' => 'e'));
@@ -174,13 +158,16 @@ class MetadataTable extends DbMetadataTabe {
 				JOIN {$dbprefix}entities e ON n_table.entity_guid = e.guid
 				JOIN {$dbprefix}metastrings n on n_table.name_id = n.id
 				JOIN {$dbprefix}metastrings v on n_table.value_id = v.id
-				WHERE  (n_table.id IN ({$metadata->id}) AND $md_access_sql) AND $e_access_sql
+				WHERE  (n_table.id IN ({$row->id}) AND $md_access_sql) AND $e_access_sql
 				ORDER BY n_table.time_created ASC, n_table.id ASC, n_table.id";
 
-		$this->specs[$metadata->id][] = $this->db->addQuerySpec([
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
-			'results' => function() use ($metadata) {
-				return [$metadata];
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					return [$this->rows[$row->id]];
+				}
+				return [];
 			},
 		]);
 
@@ -188,18 +175,18 @@ class MetadataTable extends DbMetadataTabe {
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)
 				VALUES (:entity_guid, :name_id, :value_id, :value_type, :owner_guid, :time_created, :access_id)";
 
-		$this->specs[$metadata->id][] = $this->db->addQuerySpec([
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':entity_guid' => $metadata->entity_guid,
-				':name_id' => elgg_get_metastring_id($metadata->name),
-				':value_id' => elgg_get_metastring_id($metadata->value),
-				':value_type' => $metadata->value_type,
-				':owner_guid' => $metadata->owner_guid,
-				':time_created' => $metadata->time_created,
-				':access_id' => $metadata->access_id,
+				':entity_guid' => $row->entity_guid,
+				':name_id' => elgg_get_metastring_id($row->name),
+				':value_id' => elgg_get_metastring_id($row->value),
+				':value_type' => $row->value_type,
+				':owner_guid' => $row->owner_guid,
+				':time_created' => $row->time_created,
+				':access_id' => $row->access_id,
 			],
-			'insert_id' => $metadata->id,
+			'insert_id' => $row->id,
 		]);
 
 		$sql = "UPDATE {$dbprefix}metadata
@@ -210,38 +197,73 @@ class MetadataTable extends DbMetadataTabe {
 			    owner_guid = :owner_guid
 			WHERE id = :id";
 
-		$this->specs[$metadata->id][] = $this->db->addQuerySpec([
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':name_id' => elgg_get_metastring_id($metadata->name),
-				':value_id' => elgg_get_metastring_id($metadata->value),
-				':value_type' => $metadata->value_type,
-				':owner_guid' => $metadata->owner_guid,
-				':access_id' => $metadata->access_id,
-				':id' => $metadata->id,
+				':name_id' => elgg_get_metastring_id($row->name),
+				':value_id' => elgg_get_metastring_id($row->value),
+				':value_type' => $row->value_type,
+				':owner_guid' => $row->owner_guid,
+				':access_id' => $row->access_id,
+				':id' => $row->id,
 			],
-			'row_count' => 1,
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					return [$row->id];
+				}
+				return [];
+			},
 		]);
 
 		// Enable/disable metadata
 		$sql = "UPDATE {$dbprefix}metadata SET enabled = :enabled where id = :id";
 
-		$this->specs[$metadata->id][] = $this->db->addQuerySpec([
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':id' => $metadata->id,
+				':id' => $row->id,
 				':enabled' => 'yes',
 			],
-			'row_count' => 1,
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					$this->rows[$row->id]->enabled = 'yes';
+					return [$row->id];
+				}
+				return [];
+			}
 		]);
 
-		$this->specs[$metadata->id][] = $this->db->addQuerySpec([
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':id' => $metadata->id,
+				':id' => $row->id,
 				':enabled' => 'no',
 			],
-			'row_count' => 1,
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					$this->rows[$row->id]->enabled = 'no';
+					return [$row->id];
+				}
+				return [];
+			}
+		]);
+
+		// Delete
+		$sql = "DELETE FROM {$dbprefix}metadata WHERE id = :id";
+
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+			'sql' => $sql,
+			'params' => [
+				':id' => $row->id,
+			],
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					unset($this->rows[$row->id]);
+					$this->clearQuerySpecs($row);
+					return [$row->id];
+				}
+				return [];
+			}
 		]);
 	}
 

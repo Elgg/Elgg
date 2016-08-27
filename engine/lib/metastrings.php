@@ -647,20 +647,6 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	$obj = _elgg_get_metastring_based_object_from_id($id, $type);
 
 	if ($obj) {
-		// Tidy up if memcache is enabled.
-		// @todo only metadata is supported
-		if ($type == 'metadata') {
-			static $metabyname_memcache;
-			if ((!$metabyname_memcache) && (is_memcache_available())) {
-				$metabyname_memcache = new \ElggMemcache('metabyname_memcache');
-			}
-
-			if ($metabyname_memcache) {
-				// @todo why name_id? is that even populated?
-				$metabyname_memcache->delete("{$obj->entity_guid}:{$obj->name_id}");
-			}
-		}
-
 		if ($obj->canEdit()) {
 			if (elgg_trigger_event('delete', $type, $obj)) {
 				return (bool)delete_data("DELETE FROM $table WHERE id = :id", [

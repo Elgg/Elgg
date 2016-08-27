@@ -17,13 +17,6 @@ class SubtypeTable extends \Elgg\Database\SubtypeTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(\Elgg\Database $db) {
-		parent::__construct($db);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function getId($type, $subtype) {
 		foreach ($this->subtypes as $id => $row) {
 			if ($row['type'] == $type && $row['subtype'] == $subtype) {

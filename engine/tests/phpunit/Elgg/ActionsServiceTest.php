@@ -239,7 +239,12 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 		$timeout = $this->actions->getActionTokenTimeout();
 		for ($i = 1; $i <= 100; $i++) {
-			$timestamp = rand(time(), time() + $timeout);
+			$dt = new \DateTime();
+			$this->actions->setCurrentTime($dt);
+
+			$ts = $dt->getTimestamp();
+
+			$timestamp = rand($ts, $ts + $timeout);
 			$token = $this->actions->generateActionToken($timestamp);
 			$this->assertTrue($this->actions->validateActionToken(false, $token, $timestamp), "Test failed at pass $i");
 			$this->assertFalse($this->actions->validateActionToken(false, $token, $timestamp + 1), "Test failed at pass $i");
@@ -248,15 +253,19 @@ class ActionsServiceTest extends \Elgg\TestCase {
 	}
 
 	public function testCanNotValidateExpiredToken() {
+		$dt = new \DateTime();
+		$this->actions->setCurrentTime($dt);
 		$timeout = $this->actions->getActionTokenTimeout();
-		$timestamp = time() - $timeout - 10;
+		$timestamp = $dt->getTimestamp() - $timeout - 10;
 		$token = $this->actions->generateActionToken($timestamp);
 		$this->assertFalse($this->actions->validateActionToken(false, $token, $timestamp));
 	}
 
 	public function testCanNotValidateTokenAfterSessionExpiry() {
+		$dt = new \DateTime();
+		$this->actions->setCurrentTime($dt);
 		$timeout = $this->actions->getActionTokenTimeout();
-		$timestamp = time();
+		$timestamp = $dt->getTimestamp();
 		$token = $this->actions->generateActionToken($timestamp);
 		_elgg_services()->session->invalidate();
 		_elgg_services()->session->start();
@@ -265,6 +274,9 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 	public function testActionGatekeeper() {
 
+		$dt = new \DateTime();
+		$this->actions->setCurrentTime($dt);
+
 		ob_start();
 		$result = $this->actions->gatekeeper('test');
 		ob_end_clean();
@@ -272,7 +284,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		$this->assertFalse($result);
 		$this->assertInstanceOf(RedirectResponse::class, _elgg_services()->responseFactory->getSentResponse());
 
-		$ts = time();
+		$ts = $dt->getTimestamp();
 		set_input('__elgg_ts', $ts);
 		set_input('__elgg_token', $this->actions->generateActionToken($ts));
 
@@ -325,8 +337,11 @@ class ActionsServiceTest extends \Elgg\TestCase {
 	}
 
 	public function testCanNotExecuteWithInvalidTokens() {
+		$dt = new \DateTime();
+		$this->actions->setCurrentTime($dt);
+
 		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [
-			'__elgg_ts' => time(),
+			'__elgg_ts' => $dt->getTimestamp(),
 			'__elgg_token' => 'abcdefghi123456',
 				], false, false);
 
@@ -1100,7 +1115,10 @@ class ActionsServiceTest extends \Elgg\TestCase {
 	public function testCanRefreshTokens() {
 		elgg_register_page_handler('refresh_token', [$this->actions, 'handleTokenRefreshRequest']);
 
-		$ts = time();
+		$dt = new \DateTime();
+		$this->actions->setCurrentTime($dt);
+
+		$ts = $dt->getTimestamp();
 		$token = $this->actions->generateActionToken($ts);
 		$session_token = elgg_get_session()->get('__elgg_session');
 

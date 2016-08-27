@@ -34,7 +34,17 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('entityTable', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\EntityTable($sp->config, $m->db);
+			return new \Elgg\Mocks\Database\EntityTable(
+				$sp->config,
+				$m->db,
+				$sp->entityCache,
+				$sp->metadataCache,
+				$m->subtypeTable,
+				$sp->events,
+				$sp->session,
+				$sp->translator,
+				$sp->logger
+			);
 		});
 
 		$this->setFactory('metadataTable', function(MockServiceProvider $m) use ($sp) {
@@ -59,11 +69,27 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('accessCollections', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\AccessCollections($sp->config, $m->db, $m->entityTable, $sp->accessCache, $sp->hooks, $sp->session, $sp->translator);
+			return new \Elgg\Mocks\Database\AccessCollections(
+				$sp->config,
+				$m->db,
+				$m->entityTable,
+				$sp->accessCache,
+				$sp->hooks,
+				$sp->session,
+				$sp->translator
+			);
 		});
 
 		$this->setFactory('accessCollections', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\AccessCollections($sp->config, $m->db, $m->entityTable, $sp->accessCache, $sp->hooks, $sp->session, $sp->translator);
+			return new \Elgg\Mocks\Database\AccessCollections(
+				$sp->config,
+				$m->db,
+				$m->entityTable,
+				$sp->accessCache,
+				$sp->hooks,
+				$sp->session,
+				$sp->translator
+			);
 		});
 
 		$this->setFactory('datalist', function(MockServiceProvider $m) use ($sp) {

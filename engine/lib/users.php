@@ -396,22 +396,28 @@ function elgg_user_account_page_handler($page_elements, $handler) {
  * Sets the last action time of the given user to right now.
  *
  * @param int $user_guid The user GUID
- *
  * @return void
  */
 function set_last_action($user_guid) {
-	_elgg_services()->usersTable->setLastAction($user_guid);
+	$user = get_user($user_guid);
+	if (!$user) {
+		return;
+	}
+	_elgg_services()->usersTable->setLastAction($user);
 }
 
 /**
  * Sets the last logon time of the given user to right now.
  *
  * @param int $user_guid The user GUID
- *
  * @return void
  */
 function set_last_login($user_guid) {
-	_elgg_services()->usersTable->setLastLogin($user_guid);
+	$user = get_user($user_guid);
+	if (!$user) {
+		return;
+	}
+	_elgg_services()->usersTable->setLastLogin($user);
 }
 
 /**

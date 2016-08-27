@@ -2,13 +2,8 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Database;
 use Elgg\Database\Annotations as DbAnnotations;
-use Elgg\EventsService;
-use Elgg\TestCase;
-use ElggAnnotation;
 use ElggMetadata;
-use ElggSession;
 
 class Annotations extends DbAnnotations {
 
@@ -18,21 +13,9 @@ class Annotations extends DbAnnotations {
 	public $mocks = [];
 
 	/**
-	 *
-	 * @var TestCase	private $test;
-
-	  /**
 	 * @var int
 	 */
 	private $iterator = 100;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct(Database $db, ElggSession $session, EventsService $events) {
-		parent::__construct($db, $session, $events);
-		$this->test = TestCase::getInstance();
-	}
 
 	/**
 	 * {@inheritdoc}
@@ -64,6 +47,11 @@ class Annotations extends DbAnnotations {
 			return false;
 		}
 
+		$owner_guid = (int) $owner_guid;
+		if ($owner_guid == 0) {
+			$owner_guid = $this->session->getLoggedInUserGuid();
+		}
+
 		$this->iterator++;
 		$id = $this->iterator;
 
@@ -71,12 +59,12 @@ class Annotations extends DbAnnotations {
 			'type' => 'annotation',
 			'id' => $id,
 			'entity_guid' => $entity->guid,
-			'owner_guid' => $owner_guid ? : $entity->owner_guid,
+			'owner_guid' => $owner_guid,
 			'name' => $name,
 			'value' => $value,
 			'value_type' => $value_type,
-			'time_created' => time(),
-			'access_id' => $access_id,
+			'time_created' => $this->getCurrentTime()->getTimestamp(),
+			'access_id' => (int) $access_id,
 		];
 
 		$annotation = new \ElggAnnotation($row);

@@ -729,11 +729,21 @@ function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) 
  * @param int $guid   Entity annotation|relationship action carried out on
  * @param int $posted Timestamp of last action
  *
- * @return bool
+ * @return int|false Timestamp or false on failure
  * @access private
+ * @deprecated 2.3
  */
 function update_entity_last_action($guid, $posted = null) {
-	return _elgg_services()->entityTable->updateLastAction($guid, $posted);
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Refrain from updating last action timestamp manually', '2.3');
+
+	$result = false;
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($guid);
+	if ($entity) {
+		$result = $entity->updateLastAction($posted);
+	}
+	elgg_set_ignore_access($ia);
+	return $result;
 }
 
 /**
