@@ -2,21 +2,26 @@
 
 namespace Elgg;
 
+use DateTime;
+use Elgg\Cache\Pool\InMemory;
+use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Http\Request;
-use Elgg\Cache\Pool\InMemory;
+use Elgg\Mocks\Di\MockServiceProvider;
+use ElggSession;
+use PHPUnit_Framework_TestCase;
 use stdClass;
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase {
-
+abstract class TestCase extends PHPUnit_Framework_TestCase {
+	
 	/**
-	 * @var \Elgg\TestCase
+	 * @var TestCase
 	 */
 	static $_instance;
 
 	/**
-	 * @var \Elgg\Mocks\Di\MockServiceProvider
+	 * @var MockServiceProvider
 	 */
 	static $_mocks;
 
@@ -36,7 +41,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Returns current test instance
-	 * @return \Elgg\TestCase
+	 * @return TestCase
 	 */
 	public static function getInstance() {
 		if (!isset(self::$_instance)) {
@@ -63,7 +68,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 		$sp->setFactory('plugins', function(ServiceProvider $c) {
 			$pool = new InMemory();
-			return new \Elgg\Database\TestingPlugins($pool, $c->pluginSettingsCache);
+			return new TestingPlugins($pool, $c->pluginSettingsCache);
 		});
 
 		$sp->setValue('mailer', new InMemoryTransport());
@@ -144,7 +149,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 */
 	public static function mocks() {
 		if (!isset(self::$_mocks)) {
-			self::$_mocks = new \Elgg\Mocks\Di\MockServiceProvider();
+			self::$_mocks = new MockServiceProvider();
 		}
 		return self::$_mocks;
 	}
@@ -163,6 +168,12 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('accessCollections', self::mocks()->accessCollections);
 		_elgg_services()->setValue('subtypeTable', self::mocks()->subtypeTable);
 		_elgg_services()->setValue('datalist', self::mocks()->datalist);
+
+		$dt = new DateTime();
+		_elgg_services()->entityTable->setCurrentTime($dt);
+		_elgg_services()->metadataTable->setCurrentTime($dt);
+		_elgg_services()->annotations->setCurrentTime($dt);
+		_elgg_services()->usersTable->setCurrentTime($dt);
 	}
 
 	/**
@@ -171,7 +182,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 */
 	public static function setupTestingServices() {
 
-		$session = \ElggSession::getMock();
+		$session = ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
 		
 	}

@@ -12,6 +12,8 @@ namespace Elgg\Database;
  */
 class Annotations {
 
+	use \Elgg\TimeUsing;
+	
 	/**
 	 * @var \Elgg\Database
 	 */
@@ -93,7 +95,7 @@ class Annotations {
 		}
 	
 		$access_id = (int)$access_id;
-		$time = time();
+		$time = $this->getCurrentTime()->getTimestamp();
 	
 		$value_id = elgg_get_metastring_id($value);
 		if (!$value_id) {
