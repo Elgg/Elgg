@@ -67,7 +67,7 @@ class MetadataTable extends DbMetadataTabe {
 			'owner_guid' => $entity->owner_guid,
 			'name' => $name,
 			'value' => $value,
-			'time_created' => time(),
+			'time_created' => $this->getCurrentTime()->getTimestamp(),
 			'access_id' => (int) $access_id,
 			'value_type' => detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type))),
 		];
