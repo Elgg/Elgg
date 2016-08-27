@@ -105,9 +105,9 @@ class EntityTable extends DbEntityTable {
 			'container_guid' => 0,
 			'site_guid' => 1,
 			'access_id' => ACCESS_PUBLIC,
-			'time_created' => time(),
-			'time_updated' => time(),
-			'last_action' => time(),
+			'time_created' => $this->getCurrentTime()->getTimestamp(),
+			'time_updated' => $this->getCurrentTime()->getTimestamp(),
+			'last_action' => $this->getCurrentTime()->getTimestamp(),
 			'enabled' => 'yes',
 		);
 

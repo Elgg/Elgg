@@ -2,15 +2,8 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Cache\MetadataCache;
-use Elgg\Database;
-use Elgg\Database\EntityTable as DbEntityTable;
 use Elgg\Database\MetadataTable as DbMetadataTabe;
-use Elgg\Database\MetastringsTable;
-use Elgg\EventsService;
 use ElggMetadata;
-use ElggSession;
-use Elgg\TestCase;
 
 /**
  * @group ElggMetadata
@@ -29,24 +22,9 @@ class MetadataTable extends DbMetadataTabe {
 	public $specs = [];
 
 	/**
-	 *
-	 * @var TestCase
-	 */
-	private $test;
-
-	/**
 	 * @var int
 	 */
 	private $iterator = 100;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct(MetadataCache $cache, Database $db, DbEntityTable $entityTable, EventsService $events,
-	MetastringsTable $metastringsTable, ElggSession $session) {
-		parent::__construct($cache, $db, $entityTable, $events, $metastringsTable, $session);
-		$this->test = TestCase::getInstance();
-	}
 
 	/**
 	 * {@inheritdoc}
@@ -57,6 +35,15 @@ class MetadataTable extends DbMetadataTabe {
 			return false;
 		}
 
+		if (!isset($value)) {
+			return false;
+		}
+
+		$owner_guid = (int) $owner_guid;
+		if ($owner_guid == 0) {
+			$owner_guid = $this->session->getLoggedInUserGuid();
+		}
+
 		$this->iterator++;
 		$id = $this->iterator;
 
@@ -64,7 +51,7 @@ class MetadataTable extends DbMetadataTabe {
 			'type' => 'metadata',
 			'id' => $id,
 			'entity_guid' => $entity->guid,
-			'owner_guid' => $entity->owner_guid,
+			'owner_guid' => $owner_guid,
 			'name' => $name,
 			'value' => $value,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),

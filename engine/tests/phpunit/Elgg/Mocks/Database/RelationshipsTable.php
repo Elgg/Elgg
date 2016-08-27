@@ -2,13 +2,10 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Database;
-use Elgg\Database\EntityTable as DbEntityTable;
-use Elgg\Database\MetadataTable as DbMetadataTable;
 use Elgg\Database\RelationshipsTable as DbRelationshipsTable;
-use Elgg\EventsService;
 use ElggMetadata;
 use ElggRelationship;
+use stdClass;
 
 class RelationshipsTable extends DbRelationshipsTable {
 
@@ -27,13 +24,6 @@ class RelationshipsTable extends DbRelationshipsTable {
 	 * @var type@var array
 	 */
 	private $query_specs;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct(Database $db, DbEntityTable $entities, DbMetadataTable $metadata, EventsService $events) {
-		parent::__construct($db, $entities, $metadata, $events);
-	}
 
 	/**
 	 * {@inheritdoc}
@@ -103,7 +93,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 		return $result;
 	}
 
-	public function addQuerySpecs(\stdClass $row) {
+	public function addQuerySpecs(stdClass $row) {
 
 		// Get relationship by its ID
 		$sql = "SELECT * FROM {$this->db->prefix}entity_relationships WHERE id = :id";

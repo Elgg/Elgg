@@ -29,14 +29,6 @@ class Annotations extends DbAnnotations {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(Database $db, ElggSession $session, EventsService $events) {
-		parent::__construct($db, $session, $events);
-		$this->test = TestCase::getInstance();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get($id) {
 		if (empty($this->mocks[$id])) {
 			return false;
@@ -64,6 +56,11 @@ class Annotations extends DbAnnotations {
 			return false;
 		}
 
+		$owner_guid = (int) $owner_guid;
+		if ($owner_guid == 0) {
+			$owner_guid = $this->session->getLoggedInUserGuid();
+		}
+
 		$this->iterator++;
 		$id = $this->iterator;
 
@@ -71,12 +68,12 @@ class Annotations extends DbAnnotations {
 			'type' => 'annotation',
 			'id' => $id,
 			'entity_guid' => $entity->guid,
-			'owner_guid' => $owner_guid ? : $entity->owner_guid,
+			'owner_guid' => $owner_guid,
 			'name' => $name,
 			'value' => $value,
 			'value_type' => $value_type,
-			'time_created' => time(),
-			'access_id' => $access_id,
+			'time_created' => $this->getCurrentTime()->getTimestamp(),
+			'access_id' => (int) $access_id,
 		];
 
 		$annotation = new \ElggAnnotation($row);
