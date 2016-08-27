@@ -19,6 +19,9 @@ use Elgg\Cache\MetadataCache as Cache;
  * @since      1.10.0
  */
 class MetadataTable {
+
+	use \Elgg\TimeUsing;
+	
 	/** @var array */
 	protected $independents = array();
 	
@@ -116,7 +119,7 @@ class MetadataTable {
 		$entity_guid = (int)$entity_guid;
 		// name and value are encoded in add_metastring()
 		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
-		$time = time();
+		$time = $this->getCurrentTime()->getTimestamp();
 		$owner_guid = (int)$owner_guid;
 		$allow_multiple = (boolean)$allow_multiple;
 	
