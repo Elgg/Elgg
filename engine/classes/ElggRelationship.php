@@ -11,38 +11,18 @@
  * @property int    $guid_two     The GUID of the target of the relationship
  * @property int    $time_created A UNIX timestamp of when the relationship was created (read-only, set on first save)
  */
-class ElggRelationship extends \ElggData implements
-	Importable // deprecated
-{
+class ElggRelationship extends \ElggData {
 	// database column limit
 	const RELATIONSHIP_LIMIT = 50;
 
 	/**
 	 * Create a relationship object
 	 *
-	 * @param \stdClass $row Database row or null for new relationship
+	 * @param \stdClass $row Database row
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($row = null) {
+	public function __construct(\stdClass $row) {
 		$this->initializeAttributes();
-
-		if ($row === null) {
-			elgg_deprecated_notice('Passing null to constructor is deprecated. Use add_entity_relationship()', 1.9);
-			return;
-		}
-
-		if (!($row instanceof \stdClass)) {
-			if (!is_numeric($row)) {
-				throw new \InvalidArgumentException("Constructor accepts only a \stdClass or null.");
-			}
-
-			$id = (int)$row;
-			elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
-			$row = _elgg_services()->relationshipsTable->getRow($id);
-			if (!$row) {
-				throw new \InvalidArgumentException("Relationship not found with ID $id");
-			}
-		}
 
 		foreach ((array)$row as $key => $value) {
 			$this->attributes[$key] = $value;
@@ -77,20 +57,6 @@ class ElggRelationship extends \ElggData implements
 	}
 
 	/**
-	 * Class member set overloading
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 * @return mixed
-	 * @deprecated 1.9
-	 */
-	public function set($name, $value) {
-		elgg_deprecated_notice("Use -> instead of set()", 1.9);
-		$this->__set($name, $value);
-		return true;
-	}
-
-	/**
 	 * Get an attribute of the relationship
 	 *
 	 * @param string $name Name
@@ -102,18 +68,6 @@ class ElggRelationship extends \ElggData implements
 		}
 
 		return null;
-	}
-	
-	/**
-	 * Class member get overloading
-	 *
-	 * @param string $name Name
-	 * @return mixed
-	 * @deprecated 1.9
-	 */
-	public function get($name) {
-		elgg_deprecated_notice("Use -> instead of get()", 1.9);
-		return $this->__get($name);
 	}
 
 	/**
@@ -196,92 +150,6 @@ class ElggRelationship extends \ElggData implements
 		$object->time_created = date('c', $this->getTimeCreated());
 		$params = array('relationship' => $this);
 		return _elgg_services()->hooks->trigger('to:object', 'relationship', $params, $object);
-	}
-
-	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
-
-	/**
-	 * Return an array of fields which can be exported.
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function getExportableValues() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated by toObject()', 1.9);
-		return array(
-			'id',
-			'guid_one',
-			'relationship',
-			'guid_two'
-		);
-	}
-
-	/**
-	 * Export this relationship
-	 *
-	 * @return array
-	 * @deprecated 1.9 Use toObject()
-	 */
-	public function export() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-		$uuid = get_uuid_from_object($this);
-		$relationship = new ODDRelationship(
-			guid_to_uuid($this->guid_one),
-			$this->relationship,
-			guid_to_uuid($this->guid_two)
-		);
-
-		$relationship->setAttribute('uuid', $uuid);
-
-		return $relationship;
-	}
-
-	// IMPORTABLE INTERFACE ////////////////////////////////////////////////////////////
-
-	/**
-	 * Import a relationship
-	 *
-	 * @param ODD $data ODD data
-
-	 * @return bool
-	 * @throws ImportException|InvalidParameterException
-	 * @deprecated 1.9
-	 */
-	public function import(ODD $data) {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-		if (!($data instanceof ODDRelationship)) {
-			throw new \InvalidParameterException("import() passed an unexpected ODD class");
-		}
-
-		$uuid_one = $data->getAttribute('uuid1');
-		$uuid_two = $data->getAttribute('uuid2');
-
-		// See if this entity has already been imported, if so then we need to link to it
-		$entity1 = get_entity_from_uuid($uuid_one);
-		$entity2 = get_entity_from_uuid($uuid_two);
-		if (($entity1) && ($entity2)) {
-			// Set the item ID
-			$this->attributes['guid_one'] = $entity1->getGUID();
-			$this->attributes['guid_two'] = $entity2->getGUID();
-
-			// Map verb to relationship
-			//$verb = $data->getAttribute('verb');
-			//$relationship = get_relationship_from_verb($verb);
-			$relationship = $data->getAttribute('type');
-
-			if ($relationship) {
-				$this->attributes['relationship'] = $relationship;
-				// save
-				$result = $this->save();
-				if (!$result) {
-					throw new \ImportException("There was a problem saving " . get_class());
-				}
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////

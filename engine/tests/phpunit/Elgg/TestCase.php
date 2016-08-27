@@ -86,8 +86,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$app->loadCore();
 		_elgg_services($sp);
 
-		_elgg_filestore_boot();
-
 		self::$_mocks = null; // reset mocking service
 	}
 

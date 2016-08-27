@@ -327,35 +327,13 @@ class UsersTable {
 	 *   offset  (int)  => Offset (default 0)
 	 *   count   (bool) => Return a count instead of users? (default false)
 	 *
-	 *   Formerly this was the seconds parameter.
-	 *
-	 * @param int   $limit   Limit (deprecated usage, use $options)
-	 * @param int   $offset  Offset (deprecated usage, use $options)
-	 * @param bool  $count   Count (deprecated usage, use $options)
-	 *
-	 * @return ElggUser[]|int
+	 * @return \ElggUser[]|int
 	 */
-	public function findActive($options = array(), $limit = 10, $offset = 0, $count = false) {
-
-		$seconds = 600; //default value
-
-		if (!is_array($options)) {
-			elgg_deprecated_notice("find_active_users() now accepts an \$options array", 1.9);
-			if (!$options) {
-				$options = $seconds; //assign default value
-			}
-			$options = array('seconds' => $options);
-		}
-
-		if ($limit === null) {
-			$limit = $this->config->get('default_limit');
-		}
-
+	public function findActive(array $options = []) {
+	
 		$options = array_merge(array(
-			'seconds' => $seconds,
-			'limit' => $limit,
-			'offset' => $offset,
-			'count' => $count,
+			'seconds' => 600,
+			'limit' => $this->config->get('default_limit'),
 		), $options);
 
 		// cast options we're sending to hook

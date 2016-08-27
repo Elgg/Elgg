@@ -52,6 +52,31 @@ define(function(require) {
 
 				expect(elgg.trigger_hook("fee.fum", "pow")).toBe(2);
 			});
+
+			it("calls handlers in priority order despite use of 'all'", function() {
+				var todo = [
+					'foo,bar',
+					'foo,all',
+					'all,bar',
+					'foo,bar',
+					'all,all',
+					'foo,bar'
+				];
+				var done = [];
+
+				$.each(todo, function (i, hook_type) {
+					var hook = hook_type.split(',')[0];
+					var type = hook_type.split(',')[1];
+
+					elgg.register_hook_handler(hook, type, function () {
+						done.push(hook_type);
+					}, i);
+				});
+
+				elgg.trigger_hook('foo', 'bar');
+
+				expect(done).toEqual(todo);
+			});
 		});
 		
 		describe("elgg.register_hook_handler()", function() {

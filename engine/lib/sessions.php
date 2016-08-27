@@ -9,12 +9,6 @@
  */
 
 /**
- * Elgg magic session
- * @deprecated 1.9
- */
-global $SESSION;
-
-/**
  * Gets Elgg's session object
  *
  * @return \ElggSession
@@ -430,10 +424,6 @@ function _elgg_session_boot() {
 	if ($session->has('guid')) {
 		set_last_action($session->get('guid'));
 	}
-
-	// initialize the deprecated global session wrapper
-	global $SESSION;
-	$SESSION = new \Elgg\DeprecationWrapper($session, "\$SESSION is deprecated", 1.9);
 
 	// logout a user with open session who has been banned
 	$user = $session->getLoggedInUser();

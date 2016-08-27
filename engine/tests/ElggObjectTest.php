@@ -81,15 +81,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$this->entity->delete();
 	}
 
-	public function testElggConstructorWithGarbage() {
-		try {
-			$error = new \ElggObjectTest('garbage');
-			$this->assertTrue(false);
-		} catch (Exception $e) {
-			$this->assertIsA($e, 'InvalidParameterException');
-		}
-	}
-
 	public function testElggObjectClone() {
 		$this->entity->title = 'testing';
 		$this->entity->description = '\ElggObject';

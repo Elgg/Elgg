@@ -131,16 +131,10 @@ function get_user_by_email($email) {
  *   offset  (int)  => Offset (default 0)
  *   count   (bool) => Return a count instead of users? (default false)
  *
- *   Formerly this was the seconds parameter.
- *
- * @param int   $limit   Limit (deprecated usage, use $options)
- * @param int   $offset  Offset (deprecated usage, use $options)
- * @param bool  $count   Count (deprecated usage, use $options)
- *
  * @return \ElggUser[]|int
  */
-function find_active_users($options = array(), $limit = 10, $offset = 0, $count = false) {
-	return _elgg_services()->usersTable->findActive($options, $limit, $offset, $count);
+function find_active_users(array $options = []) {
+	return _elgg_services()->usersTable->findActive($options);
 }
 
 /**

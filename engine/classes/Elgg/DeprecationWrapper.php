@@ -7,8 +7,8 @@ namespace Elgg;
  * Note that the wrapper will not share the type of the wrapped object and will
  * fail type hints, instanceof, etc.
  *
- * This was introduced for deprecating passing particular variabled to views
- * automatically in elgg_view(). It also used to wrap the deprecated global $SESSION.
+ * This was introduced for deprecating passing particular variables to views
+ * automatically in elgg_view().
  * It can be removed once that use is no longer required.
  *
  * Wraps:

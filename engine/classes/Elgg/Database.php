@@ -650,21 +650,6 @@ class Database {
 	}
 
 	/**
-	 * Get the value of the "prefix" property
-	 *
-	 * @see Database::$prefix
-	 *
-	 * @return string
-	 * @deprecated 2.3 Read the "prefix" property
-	 */
-	public function getTablePrefix() {
-		if (function_exists('elgg_deprecated_notice')) {
-			elgg_deprecated_notice(__METHOD__ . ' is deprecated. Read the "prefix" property', '2.3');
-		}
-		return $this->table_prefix;
-	}
-
-	/**
 	 * Sanitizes an integer value for use in a query
 	 *
 	 * @param int  $value  Value to sanitize

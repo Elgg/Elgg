@@ -86,15 +86,6 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$object->delete();
 	}
 
-	public function testElggUserConstructorWithGarbage() {
-		try {
-			$error = new \ElggUserTest(array('invalid'));
-			$this->assertTrue(false);
-		} catch (Exception $e) {
-			$this->assertIsA($e, 'InvalidParameterException');
-		}
-	}
-
 	public function testElggUserConstructorByDbRow() {
 		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new \ElggUser($row);
