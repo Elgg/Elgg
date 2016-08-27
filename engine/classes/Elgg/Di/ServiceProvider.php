@@ -44,10 +44,12 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read Mailer                                   $mailer
  * @property-read \Elgg\Menu\Service                       $menus
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
+ * @property-read \Stash\Pool|null                         $memcacheStashPool
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Database\Mutex                     $mutex
  * @property-read \Elgg\Notifications\NotificationsService $notifications
+ * @property-read \Elgg\Cache\NullCache                    $nullCache
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
@@ -189,7 +191,17 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('entityTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\EntityTable($c->config, $c->db);
+			return new \Elgg\Database\EntityTable(
+				$c->config,
+				$c->db,
+				$c->entityCache,
+				$c->metadataCache,
+				$c->subtypeTable,
+				$c->events,
+				$c->session,
+				$c->translator,
+				$c->logger
+			);
 		});
 
 		$this->setFactory('events', function(ServiceProvider $c) {
@@ -229,6 +241,21 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Cache\MetadataCache($c->session);
 		});
 
+		$this->setFactory('memcacheStashPool', function(ServiceProvider $c) {
+			if (!$c->config->getVolatile('memcache')) {
+				return null;
+			}
+
+			$servers = $c->config->getVolatile('memcache_servers');
+			if (!$servers) {
+				return null;
+			}
+			$driver = new \Stash\Driver\Memcache([
+				'servers' => $servers,
+			]);
+			return new \Stash\Pool($driver);
+		});
+
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
 			return new \Elgg\Database\MetadataTable(
@@ -255,6 +282,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
 			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable);
 		});
+
+		$this->setClassName('nullCache', \Elgg\Cache\NullCache::class);
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
 			$global_cookies_config = $c->config->getCookieConfig();
@@ -390,7 +419,15 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
 		});
 
-		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
+		$this->setFactory('usersTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\UsersTable(
+				$c->config,
+				$c->db,
+				$c->entityTable,
+				$c->entityCache,
+				$c->events
+			);
+		});
 
 		$this->setFactory('views', function(ServiceProvider $c) {
 			return new \Elgg\ViewsService($c->hooks, $c->logger);

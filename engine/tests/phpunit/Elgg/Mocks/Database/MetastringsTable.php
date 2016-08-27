@@ -74,7 +74,7 @@ class MetastringsTable extends \Elgg\Database\MetastringsTable {
 			},
 		]);
 
-		return $id;
+		return parent::add($string);
 	}
 
 }

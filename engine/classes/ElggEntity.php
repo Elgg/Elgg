@@ -27,13 +27,14 @@
  *
  * @property       string $type           object, user, group, or site (read-only after save)
  * @property-write string $subtype        Further clarifies the nature of the entity (this should not be read)
- * @property       int    $guid           The unique identifier for this entity (read only)
+ * @property-read  int    $guid           The unique identifier for this entity (read only)
  * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property       int    $container_guid The GUID of the entity containing this entity
  * @property       int    $site_guid      The GUID of the website this entity is associated with
  * @property       int    $access_id      Specifies the visibility level of this entity
  * @property       int    $time_created   A UNIX timestamp of when the entity was created
- * @property       int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
  * @property       string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
@@ -566,15 +567,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return mixed The value or null if not found.
 	 */
 	public function getVolatileData($name) {
-		if (!is_array($this->volatile)) {
-			$this->volatile = array();
-		}
-
-		if (array_key_exists($name, $this->volatile)) {
-			return $this->volatile[$name];
-		} else {
-			return null;
-		}
+		return array_key_exists($name, $this->volatile) ? $this->volatile[$name] : null;
 	}
 
 	/**
@@ -586,11 +579,30 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return void
 	 */
 	public function setVolatileData($name, $value) {
-		if (!is_array($this->volatile)) {
-			$this->volatile = array();
-		}
-
 		$this->volatile[$name] = $value;
+	}
+
+	/**
+	 * Cache the entity in a persisted cache
+	 *
+	 * @param ElggSharedMemoryCache $cache       Memcache or null cache
+	 * @param int                   $last_action Last action time
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public function storeInPersistedCache(\ElggSharedMemoryCache $cache, $last_action = 0) {
+		$tmp = $this->volatile;
+
+		// don't store volatile data
+		$this->volatile = [];
+		if ($last_action) {
+			$this->attributes['last_action'] = (int)$last_action;
+		}
+		$cache->save($this->guid, $this);
+
+		$this->volatile = $tmp;
 	}
 
 	/**
@@ -1428,22 +1440,24 @@ abstract class ElggEntity extends \ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			return $this->update();
+			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid) {
-				if (_elgg_services()->events->trigger('create', $this->type, $this)) {
-					return $guid;
-				} else {
-					// plugins that return false to event don't need to override the access system
-					$ia = elgg_set_ignore_access(true);
-					$this->delete();
-					elgg_set_ignore_access($ia);
-				}
+			if ($guid && !_elgg_services()->events->trigger('create', $this->type, $this)) {
+				// plugins that return false to event don't need to override the access system
+				$ia = elgg_set_ignore_access(true);
+				$this->delete();
+				elgg_set_ignore_access($ia);
+				return false;
 			}
 		}
-		
-		return false;
+
+		if ($guid) {
+			_elgg_services()->entityCache->set($this);
+			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+		}
+
+		return $guid;
 	}
 	
 	/**
@@ -1579,8 +1593,6 @@ abstract class ElggEntity extends \ElggData implements
 			
 			$this->temp_private_settings = array();
 		}
-
-		_elgg_services()->entityCache->set($this);
 		
 		return $result;
 	}
@@ -1639,20 +1651,9 @@ abstract class ElggEntity extends \ElggData implements
 			update_river_access_by_object($guid, $access_id);
 		}
 
-		// If memcache is available then delete this entry from the cache
-		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new \ElggMemcache('new_entity_cache');
-		}
-		if ($newentity_cache) {
-			$newentity_cache->delete($guid);
-		}
-
 		if ($ret !== false) {
 			$this->attributes['time_updated'] = $time;
 		}
-
-		_elgg_services()->entityCache->set($this);
 
 		$this->orig_attributes = [];
 
@@ -1774,40 +1775,39 @@ abstract class ElggEntity extends \ElggData implements
 			$unban_after = false;
 		}
 
-		_elgg_services()->entityCache->remove($this->guid);
-
 		if ($reason) {
 			$this->disable_reason = $reason;
 		}
 
-		global $CONFIG;
-		$guid = (int)$this->guid;
+		$dbprefix = elgg_get_config('dbprefix');
+		
+		$guid = (int) $this->guid;
 		
 		if ($recursive) {
+			// Only disable enabled subentities
 			$hidden = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
+			access_show_hidden_entities(false);
+
 			$ia = elgg_set_ignore_access(true);
 
-			$query = "
-				SELECT *
-				FROM {$CONFIG->dbprefix}entities
-				WHERE (
-					container_guid = $guid
-					OR owner_guid = $guid
-					OR site_guid = $guid
-				) 
-				AND enabled = 'yes'
-			";
-			$sub_entities = $this->getDatabase()->getData($query, 'entity_row_to_elggstar');
-
-			if ($sub_entities) {
-				/* @var ElggEntity[] $sub_entities */
-				foreach ($sub_entities as $e) {
-					add_entity_relationship($e->guid, 'disabled_with', $this->guid);
-					$e->disable($reason);
-				}
-			}
+			$subentities = new \ElggBatch('elgg_get_entities', [
+				'wheres' => [
+					"e.container_guid = $guid OR e.owner_guid = $guid OR e.site_guid = $guid",
+					"e.guid != $guid"
+				],
+				'limit' => 0,
+			]);
+			$subentities->setIncrementOffset(false);
 			
+			foreach ($subentities as $subentity) {
+				/* @var $subentity \ElggEntity */
+				if (!$subentity->isEnabled()) {
+					continue;
+				}
+				add_entity_relationship($subentity->guid, 'disabled_with', $guid);
+				$subentity->disable($reason);
+			}
+
 			access_show_hidden_entities($hidden);
 			elgg_set_ignore_access($ia);
 		}
@@ -1815,22 +1815,28 @@ abstract class ElggEntity extends \ElggData implements
 		$this->disableMetadata();
 		$this->disableAnnotations();
 
-		$res = $this->getDatabase()->updateData("
-			UPDATE {$CONFIG->dbprefix}entities
+		_elgg_services()->entityCache->remove($guid);
+		
+		$sql = "
+			UPDATE {$dbprefix}entities
 			SET enabled = 'no'
-			WHERE guid = $guid
-		");
+			WHERE guid = :guid
+		";
+		$params = [
+			':guid' => $guid,
+		];
+		$disabled = $this->getDatabase()->updateData($sql, false, $params);
 
 		if ($unban_after) {
 			_elgg_services()->usersTable->markBanned($this->guid, false);
 		}
 
-		if ($res) {
+		if ($disabled) {
 			$this->attributes['enabled'] = 'no';
 			_elgg_services()->events->trigger('disable:after', $this->type, $this);
 		}
 
-		return $res;
+		return (bool) $disabled;
 	}
 
 	/**
@@ -1922,7 +1928,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function delete($recursive = true) {
-		global $CONFIG;
 
 		$guid = $this->guid;
 		if (!$guid) {
@@ -1945,17 +1950,6 @@ abstract class ElggEntity extends \ElggData implements
 		if ($this instanceof ElggUser) {
 			// ban to prevent using the site during delete
 			_elgg_services()->usersTable->markBanned($this->guid, true);
-		}
-
-		_elgg_services()->entityCache->remove($guid);
-
-		// If memcache is available then delete this entry from the cache
-		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new \ElggMemcache('new_entity_cache');
-		}
-		if ($newentity_cache) {
-			$newentity_cache->delete($guid);
 		}
 
 		// Delete contained owned and otherwise releated objects (depth first)
@@ -2008,24 +2002,33 @@ abstract class ElggEntity extends \ElggData implements
 		elgg_delete_river(array('target_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		$res = $this->getDatabase()->deleteData("
-			DELETE FROM {$CONFIG->dbprefix}entities
-			WHERE guid = $guid
-		");
+		_elgg_invalidate_cache_for_entity($guid);
+		_elgg_invalidate_memcache_for_entity($guid);
 
-		if ($res && in_array($this->type, ['object', 'user', 'group', 'site'])) {
-			// delete from secondary table
-			$sub_table = "{$CONFIG->dbprefix}{$this->type}s_entity";
+		$dbprefix = elgg_get_config('dbprefix');
+		
+		$sql = "
+			DELETE FROM {$dbprefix}entities
+			WHERE guid = :guid
+		";
+		$params = [
+			':guid' => $guid,
+		];
 
-			$this->getDatabase()->deleteData("
-				DELETE FROM $sub_table
-				WHERE guid = $guid
-			");
+		$deleted = $this->getDatabase()->deleteData($sql, $params);
+
+		if ($deleted && in_array($this->type, ['object', 'user', 'group', 'site'])) {
+			// delete from type-specific subtable
+			$sql = "
+				DELETE FROM {$dbprefix}{$this->type}s_entity
+				WHERE guid = :guid
+			";
+			$this->getDatabase()->deleteData($sql, $params);
 		}
 		
 		_elgg_clear_entity_files($this);
 
-		return (bool)$res;
+		return (bool)$deleted;
 	}
 
 	/**
@@ -2377,5 +2380,25 @@ abstract class ElggEntity extends \ElggData implements
 		}
 		
 		return $result;
+	}
+
+	/**
+	 * Update the last_action column in the entities table.
+	 *
+	 * @warning This is different to time_updated.  Time_updated is automatically set,
+	 * while last_action is only set when explicitly called.
+	 *
+	 * @param int $posted Timestamp of last action
+	 * @return int|false
+	 * @access private
+	 */
+	public function updateLastAction($posted = null) {
+		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);
+		if ($posted) {
+			$this->attributes['last_action'] = $posted;
+			_elgg_services()->entityCache->set($this);
+			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+		}
+		return $posted;
 	}
 }

@@ -35,6 +35,11 @@ class EntityCache {
 	private $metadata_cache;
 
 	/**
+	 * @var array
+	 */
+	private $username_cache = [];
+	
+	/**
 	 * Constructor
 	 *
 	 * @param ElggSession   $session        Session
@@ -57,10 +62,25 @@ class EntityCache {
 	public function get($guid) {
 		$this->checkGlobal();
 
+		$guid = (int) $guid;
+
 		if (isset($this->entities[$guid]) && $this->entities[$guid]->isFullyLoaded()) {
 			return $this->entities[$guid];
 		}
 
+		return false;
+	}
+
+	/**
+	 * Returns cached user entity by username
+	 * 
+	 * @param string $username Username
+	 * @return \ElggUser|false
+	 */
+	public function getByUsername($username) {
+		if (isset($this->username_cache[$username])) {
+			return $this->get($this->username_cache[$username]);
+		}
 		return false;
 	}
 
@@ -93,6 +113,10 @@ class EntityCache {
 
 		$this->entities[$guid] = $entity;
 		$GLOBALS['ENTITY_CACHE'] = $this->entities;
+
+		if ($entity instanceof \ElggUser) {
+			$this->username_cache[$entity->username] = $entity->guid;
+		}
 	}
 
 	/**
@@ -105,13 +129,18 @@ class EntityCache {
 		$this->checkGlobal();
 
 		$guid = (int)$guid;
-
+		
 		if (!isset($this->entities[$guid])) {
 			return;
 		}
 
 		unset($this->entities[$guid]);
 		$GLOBALS['ENTITY_CACHE'] = $this->entities;
+
+		$username = array_search($guid, $this->username_cache);
+		if ($username !== false) {
+			unset($this->username_cache[$username]);
+		}
 
 		// Purge separate metadata cache. Original idea was to do in entity destructor, but that would
 		// have caused a bunch of unnecessary purges at every shutdown. Doing it this way we have no way
@@ -128,6 +157,7 @@ class EntityCache {
 	public function clear() {
 		$this->checkGlobal();
 		$this->entities = [];
+		$this->username_cache = [];
 		$GLOBALS['ENTITY_CACHE'] = $this->entities;
 	}
 

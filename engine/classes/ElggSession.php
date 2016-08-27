@@ -202,8 +202,12 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function setLoggedInUser(\ElggUser $user) {
-		$this->set('guid', $user->guid);
-		$this->logged_in_user = $user;
+		$current_user = $this->getLoggedInUser();
+		if ($current_user != $user) {
+			$this->set('guid', $user->guid);
+			$this->logged_in_user = $user;
+			_elgg_services()->entityCache->clear();
+		}
 	}
 
 	/**
@@ -256,6 +260,7 @@ class ElggSession implements \ArrayAccess {
 	public function removeLoggedInUser() {
 		$this->logged_in_user = null;
 		$this->remove('guid');
+		_elgg_services()->entityCache->clear();
 	}
 
 	/**

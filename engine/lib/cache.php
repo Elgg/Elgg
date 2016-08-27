@@ -241,6 +241,18 @@ function _elgg_is_cache_symlinked() {
 }
 
 /**
+ * Invalidate entity cache
+ *
+ * @param int $entity_guid The GUID of the entity to invalidate
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_invalidate_cache_for_entity($entity_guid) {
+	_elgg_services()->entityCache->remove($entity_guid);
+}
+
+/**
  * Initializes the simplecache lastcache variable and creates system cache files
  * when appropriate.
  *

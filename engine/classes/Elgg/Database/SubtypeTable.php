@@ -17,12 +17,12 @@ class SubtypeTable {
 	/**
 	 * @var \stdClass[]|null
 	 */
-	private $cache = null;
+	protected $cache = null;
 
 	/**
 	 * @var Database
 	 */
-	private $db;
+	protected $db;
 
 	/**
 	 * Constructor
@@ -269,12 +269,10 @@ class SubtypeTable {
 	 *
 	 * @return void
 	 */
-	private function invalidateCache() {
+	protected function invalidateCache() {
 		$this->cache = null;
 		_elgg_services()->boot->invalidateCache();
-		if (is_memcache_available()) {
-			(new \ElggMemcache('new_entity_cache'))->clear();
-		}
+		_elgg_services()->entityCache->clear();
 	}
 
 	/**
@@ -282,7 +280,7 @@ class SubtypeTable {
 	 *
 	 * @return array
 	 */
-	private function getPopulatedCache() {
+	protected function getPopulatedCache() {
 		if ($this->cache === null) {
 			$rows = $this->db->getData("
 				SELECT *

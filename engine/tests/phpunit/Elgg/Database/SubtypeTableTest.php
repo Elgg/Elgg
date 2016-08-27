@@ -37,8 +37,9 @@ class SubtypeTableTest extends \Elgg\TestCase {
 	}
 
 	public function setupFetchAllQuery() {
+		$dbprefix = elgg_get_config('dbprefix');
 		$this->db->addQuerySpec([
-			'sql' => "SELECT * FROM elgg_entity_subtypes",
+			'sql' => "SELECT * FROM {$dbprefix}entity_subtypes",
 			'results' => [$this, 'fetchAllResults'],
 		]);
 	}
@@ -79,13 +80,15 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 	public function testCanAddSubtype() {
 
+		$dbprefix = elgg_get_config('dbprefix');
+
 		$type = 'object';
 		$subtype = 'bar';
 		$class = '\BarObject';
 
 		$this->db->addQuerySpec([
 			'sql' => "
-				INSERT INTO elgg_entity_subtypes
+				INSERT INTO {$dbprefix}entity_subtypes
 				(type,  subtype,  class) VALUES
 				(:type, :subtype, :class)
 			",
@@ -104,6 +107,8 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 	public function testCanUpdateSubtype() {
 
+		$dbprefix = elgg_get_config('dbprefix');
+
 		$this->setupFetchAllQuery();
 
 		$type = 'object';
@@ -112,7 +117,7 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 		$this->db->addQuerySpec([
 			'sql' => "
-				UPDATE elgg_entity_subtypes
+				UPDATE {$dbprefix}entity_subtypes
 				SET type = :type, subtype = :subtype, class = :class
 				WHERE id = :id
 			",
@@ -133,6 +138,8 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 	public function testCanRemoveSubtype() {
 
+		$dbprefix = elgg_get_config('dbprefix');
+
 		$this->setupFetchAllQuery();
 
 		$type = 'object';
@@ -140,7 +147,7 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 		$this->db->addQuerySpec([
 			'sql' => "
-				DELETE FROM elgg_entity_subtypes
+				DELETE FROM {$dbprefix}entity_subtypes
 				WHERE type = :type AND subtype = :subtype
 			",
 			'params' => [
@@ -154,7 +161,7 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 		$this->db->addQuerySpec([
 			'sql' => "
-				DELETE FROM elgg_entity_subtypes
+				DELETE FROM {$dbprefix}entity_subtypes
 				WHERE type = :type AND subtype = :subtype
 			",
 			'params' => [

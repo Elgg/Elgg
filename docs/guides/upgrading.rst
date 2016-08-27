@@ -24,6 +24,7 @@ Deprecated APIs
  * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
  * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
  * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
+ * Private ``update_entity_last_action()`` is deprecated: Refrain from manually updating last action timestamp.
 
 Deprecated Views
 ----------------

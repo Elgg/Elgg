@@ -87,6 +87,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services($sp);
 
 		_elgg_filestore_boot();
+
+		self::$_mocks = null; // reset mocking service
 	}
 
 	/**
@@ -96,7 +98,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	public static function getTestingConfigArray() {
 		return [
 			'Config_file' => false,
-			'dbprefix' => 'elgg_',
+			'dbprefix' => 'elgg_t_i_',
 			'boot_complete' => false,
 			'wwwroot' => 'http://localhost/',
 			'path' => __DIR__ . '/../../../../',
@@ -156,9 +158,20 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Substitute database dependent services with their doubles
+	 *
+	 * @param bool $reset Reset service provider
 	 * @return void
 	 */
-	public static function setupMockServices() {
+	public static function setupMockServices($reset = true) {
+
+		if ($reset) {
+			// Individual tests can reset service providers to get a clean global state
+			self::bootstrap();
+		}
+
+		$session = \ElggSession::getMock();
+		_elgg_services()->setValue('session', $session);
+
 		_elgg_services()->setValue('db', self::mocks()->db);
 		_elgg_services()->setValue('entityTable', self::mocks()->entityTable);
 		_elgg_services()->setValue('metadataTable', self::mocks()->metadataTable);
@@ -174,17 +187,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services()->metadataTable->setCurrentTime($dt);
 		_elgg_services()->annotations->setCurrentTime($dt);
 		_elgg_services()->usersTable->setCurrentTime($dt);
-	}
-
-	/**
-	 * Setup commonly used services
-	 * @retun void
-	 */
-	public static function setupTestingServices() {
-
-		$session = ElggSession::getMock();
-		_elgg_services()->setValue('session', $session);
-		
 	}
 
 	/**
