@@ -2,30 +2,9 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Config;
-use Elgg\Database;
 use Elgg\Database\AccessCollections as DbAccessCollections;
-use Elgg\Database\EntityTable as DbEntityTable;
-use Elgg\I18n\Translator;
-use Elgg\PluginHooksService;
-use ElggSession;
-use ElggStaticVariableCache;
 
 class AccessCollections extends DbAccessCollections {
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct(
-			Config $config,
-			Database $db,
-			DbEntityTable $entities,
-			ElggStaticVariableCache $cache,
-			PluginHooksService $hooks,
-			ElggSession $session,
-			Translator $translator) {
-		parent::__construct($config, $db, $entities, $cache, $hooks, $session, $translator);
-	}
 
 	/**
 	 * {@inheritdoc}
