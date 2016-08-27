@@ -305,6 +305,7 @@ class EntityTable {
 		$memcache = _elgg_get_memcache('new_entity_cache');
 		
 		$entity = $this->entity_cache->get($guid);
+		$from_entity_cache = (bool)$entity;
 
 		if (!$entity) {
 			$entity = $memcache->load($guid);
@@ -319,11 +320,13 @@ class EntityTable {
 		}
 
 		if ($entity) {
-			if ($type) {
-				// Verify type of the cached entity
-				return elgg_instanceof($entity, $type) ? $entity : false;
+			if ($type && !elgg_instanceof($entity, $type)) {
+				return false;
 			}
-			$this->entity_cache->set($entity);
+
+			if (!$from_entity_cache) {
+				$this->entity_cache->set($entity);
+			}
 			return $entity;
 		}
 
@@ -337,11 +340,9 @@ class EntityTable {
 		}
 
 		$entity = $this->rowToElggStar($row);
-		/* @var \ElggEntity[] $entities */
 
 		if ($entity instanceof ElggEntity) {
 			$entity->storeInPersistedCache($memcache);
-			$this->entity_cache->set($entity);
 		}
 
 		return $entity;
