@@ -2255,7 +2255,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		// Set time
 		$this->attributes['time_created'] = strtotime($data->getAttribute('published'));
-		$this->attributes['time_updated'] = time();
+		$this->attributes['time_updated'] = $this->getCurrentTime()->getTimestamp();
 
 		return true;
 	}

@@ -19,6 +19,9 @@ $USERNAME_TO_GUID_MAP_CACHE = array();
  * @since      1.10.0
  */
 class UsersTable {
+
+	use \Elgg\TimeUsing;
+	
 	/**
 	 * Global Elgg configuration
 	 * 
@@ -358,7 +361,7 @@ class UsersTable {
 		}
 	
 		$dbprefix = _elgg_services()->config->get('dbprefix');
-		$time = time() - $options['seconds'];
+		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
 		return elgg_get_entities(array(
 			'type' => 'user',
 			'limit' => $options['limit'],
@@ -453,7 +456,7 @@ class UsersTable {
 	 * @see validateInviteCode
 	 */
 	function generateInviteCode($username) {
-		$time = time();
+		$time = $this->getCurrentTime()->getTimestamp();
 		return "$time." . _elgg_services()->crypto->getHmac([(int)$time, $username])->getToken();
 	}
 
@@ -527,7 +530,7 @@ class UsersTable {
 	function setLastAction($user_guid) {
 		$user_guid = (int) $user_guid;
 		
-		$time = time();
+		$time = $this->getCurrentTime()->getTimestamp();
 	
 		$query = "UPDATE {$this->CONFIG->dbprefix}users_entity
 			set prev_last_action = last_action,
@@ -546,7 +549,7 @@ class UsersTable {
 	function setLastLogin($user_guid) {
 		$user_guid = (int) $user_guid;
 		
-		$time = time();
+		$time = $this->getCurrentTime()->getTimestamp();
 	
 		$query = "UPDATE {$this->CONFIG->dbprefix}users_entity
 			set prev_last_login = last_login, last_login = {$time} where guid = {$user_guid}";

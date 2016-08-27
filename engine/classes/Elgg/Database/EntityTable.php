@@ -16,6 +16,8 @@ use IncompleteEntityException;
  */
 class EntityTable {
 
+	use \Elgg\TimeUsing;
+	
 	/**
 	 * @var \Elgg\Config
 	 */
@@ -1279,7 +1281,7 @@ class EntityTable {
 		$posted = (int) $posted;
 
 		if (!$posted) {
-			$posted = time();
+			$posted = $this->getCurrentTime()->getTimestamp();
 		}
 
 		if ($guid) {
