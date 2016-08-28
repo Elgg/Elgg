@@ -21,10 +21,6 @@ echo elgg_view("groups/edit/access", $vars);
 echo elgg_view("groups/edit/tools", $vars);
 
 // display the save button and some additional form data
-?>
-<div class="elgg-foot">
-<?php
-
 if ($entity) {
 	echo elgg_view("input/hidden", array(
 		"name" => "group_guid",
@@ -32,11 +28,13 @@ if ($entity) {
 	));
 }
 
-echo elgg_view("input/submit", array("value" => elgg_echo("save")));
+$footer = elgg_view_input('submit', [
+	'value' => elgg_echo('save'),
+]);
 
 if ($entity) {
 	$delete_url = "action/groups/delete?guid=" . $entity->getGUID();
-	echo elgg_view("output/url", array(
+	$footer .= elgg_view("output/url", array(
 		"text" => elgg_echo("groups:delete"),
 		"href" => $delete_url,
 		"confirm" => elgg_echo("groups:deletewarning"),
@@ -44,6 +42,6 @@ if ($entity) {
 	));
 }
 
+elgg_set_form_footer($footer);
+
 elgg_pop_context();
-?>
-</div>
