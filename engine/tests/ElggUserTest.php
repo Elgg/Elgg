@@ -122,7 +122,9 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$guid = $this->user->save();
 
 		$user = get_user_by_username($name);
-		$user->delete();
+
+		$this->assertTrue($user->delete());
+
 		$user = get_user_by_username($name);
 		$this->assertFalse($user);
 	}
@@ -166,6 +168,8 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		// need to save user to have a guid
 		$guid = $this->user->save();
 
+		$this->assertTrue($this->user->makeAdmin());
+		
 		$this->assertTrue($this->user->removeAdmin());
 
 		$row = _elgg_services()->db->getDataRow("

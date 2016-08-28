@@ -130,7 +130,7 @@ function elgg_create_river_item(array $options = array()) {
 
 	// update the entities which had the action carried out on it
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
-	update_entity_last_action($values['object_guid'], $values['posted']);
+	$object->updateLastAction($values['posted']);
 
 	$ia = elgg_set_ignore_access(true);
 	$river_items = elgg_get_river(array('id' => $id));

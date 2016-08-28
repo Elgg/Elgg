@@ -17,6 +17,8 @@ use ElggSession;
  * @since      1.9.0
  */
 class ActionsService {
+
+	use \Elgg\TimeUsing;
 	
 	/**
 	 * @var Config
@@ -306,7 +308,7 @@ class ActionsService {
 	 */
 	protected function validateTokenTimestamp($ts) {
 		$timeout = $this->getActionTokenTimeout();
-		$now = time();
+		$now = $this->getCurrentTime()->getTimestamp();
 		return ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout));
 	}
 
@@ -479,7 +481,7 @@ class ActionsService {
 			}
 		}
 
-		$ts = time();
+		$ts = $this->getCurrentTime()->getTimestamp();
 		$token = $this->generateActionToken($ts);
 		$data = array(
 			'token' => array(
