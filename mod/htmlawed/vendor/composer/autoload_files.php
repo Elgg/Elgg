@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    $vendorDir . '/htmlawed/htmlawed/htmLawed.php',
+    'ef836782e1b8d747e78815386b148139' => $vendorDir . '/htmlawed/htmlawed/htmLawed.php',
 );

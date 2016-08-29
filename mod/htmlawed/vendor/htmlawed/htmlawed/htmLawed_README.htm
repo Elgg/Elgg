@@ -110,8 +110,8 @@ span.totop a, span.totop a:visited {color: #6699cc;}
 
 <div id="body">
 <br />
-<div class="comment">htmLawed_README.txt, 19 January 2015<br />
-htmLawed 1.1.19, 19 January 2015<br />
+<div class="comment">htmLawed_README.txt, 5 March 2016<br />
+htmLawed 1.1.22, 5 March 2016<br />
 Copyright Santosh Patnaik<br />
 Dual licensed with LGPL 3 and GPL 2+<br />
 A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed">http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed</a>&#160;</div>
@@ -195,7 +195,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 &#160; * &#160;option to <strong>remove or neutralize bad content</strong>&#160;^~`<br />
 &#160; * &#160;attempts to <strong>rectify common errors of plain-text misplacement</strong>&#160;(e.g., directly inside <span class="term">blockquote</span>) ^~`<br />
 <br />
-&#160; * &#160;fast, <strong>non-OOP</strong>&#160;code of ~45 kb incurring peak basal memory usage of ~0.5 MB<br />
+&#160; * &#160;fast, <strong>non-OOP</strong>&#160;code of ~50 kb incurring peak basal memory usage of ~0.5 MB<br />
 &#160; * &#160;<strong>compatible</strong>&#160;with pre-existing code using <span class="term">Kses</span>&#160;(the filter used by <span class="term">WordPress</span>)<br />
 <br />
 &#160; * &#160;optional <strong>anti-spam</strong>&#160;measures such as addition of <span class="term">rel="nofollow"</span>&#160;and link-disabling &#160;~`<br />
@@ -554,35 +554,37 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; Rules regarding <strong>attribute values</strong>&#160;are optionally specified inside round brackets after attribute names in slash ('/')-separated <em>parameter = value</em>&#160;pairs. E.g., <span class="term">title(maxlen=30/minlen=5)</span>. None or one or more of the following parameters may be specified:<br />
 <br />
-&#160; * &#160;<span class="term">oneof</span>&#160;- one or more choices separated by <span class="term">|</span>&#160;that the value should match; if only one choice is provided, then the value must match that choice<br />
+&#160; * &#160;<span class="term">oneof</span>&#160;- one or more choices separated by <span class="term">|</span>&#160;that the value should match; if only one choice is provided, then the value must match that choice; matching is case-sensitive<br />
 <br />
-&#160; * &#160;<span class="term">noneof</span>&#160;- one or more choices separated by <span class="term">|</span>&#160;that the value should not match<br />
+&#160; * &#160;<span class="term">noneof</span>&#160;- one or more choices separated by <span class="term">|</span>&#160;that the value should not match; matching is case-sensitive<br />
 <br />
 &#160; * &#160;<span class="term">maxlen</span>&#160;and <span class="term">minlen</span>&#160;- upper and lower limits for the number of characters in the attribute value; specified in numbers<br />
 <br />
 &#160; * &#160;<span class="term">maxval</span>&#160;and <span class="term">minval</span>&#160;- upper and lower limits for the numerical value specified in the attribute value; specified in numbers<br />
 <br />
-&#160; * &#160;<span class="term">match</span>&#160;and <span class="term">nomatch</span>&#160;- pattern that the attribute value should or should not match; specified as PHP/PCRE-compatible regular expressions with delimiters and possibly modifiers<br />
+&#160; * &#160;<span class="term">match</span>&#160;and <span class="term">nomatch</span>&#160;- pattern that the attribute value should or should not match; specified as PHP/PCRE-compatible regular expressions with delimiters and possibly modifiers (e.g., to specify case-sensitivity for matching)<br />
 <br />
 &#160; * &#160;<span class="term">default</span>&#160;- a value to force on the attribute if the value provided by the writer does not fit any of the specified parameters<br />
 <br />
 &#160; If <span class="term">default</span>&#160;is not set and the attribute value does not satisfy any of the specified parameters, then the attribute is removed. The <span class="term">default</span>&#160;value can also be used to force all attribute declarations to take the same value (by getting the values declared illegal by setting, e.g., <span class="term">maxlen</span>&#160;to <span class="term">-1</span>).<br />
 <br />
-&#160; Examples with <em>input</em>&#160;<span class="term">&lt;input title="WIDTH" value="10em" /&gt;&lt;input title="length" value="5" /&gt;</span>&#160;are shown below.<br />
+&#160; Examples with <em>input</em>&#160;<span class="term">&lt;input title="WIDTH" value="10em" /&gt;&lt;input title="length" value="5" class="ic1 ic2" /&gt;</span>&#160;are shown below.<br />
 <br />
 &#160; <em>Rule</em>: <span class="term">input=title(maxlen=60/minlen=6), value</span><br />
-&#160; <em>Output</em>: <span class="term">&lt;input value="10em" /&gt;&lt;input title="length" value="5" /&gt;</span><br />
+&#160; <em>Output</em>: <span class="term">&lt;input value="10em" /&gt;&lt;input title="length" value="5" class="ic1 ic2" /&gt;</span><br />
 <br />
 &#160; <em>Rule</em>: <span class="term">input=title(), value(maxval=8/default=6)</span><br />
-&#160; <em>Output</em>: <span class="term">&lt;input title="WIDTH" value="6" /&gt;&lt;input title="length" value="5" /&gt;</span><br />
+&#160; <em>Output</em>: <span class="term">&lt;input title="WIDTH" value="6" /&gt;&lt;input title="length" value="5" class="ic1 ic2" /&gt;</span><br />
 <br />
 &#160; <em>Rule</em>: <span class="term">input=title(nomatch=%w.d%i), value(match=%em%/default=6em)</span><br />
-&#160; <em>Output</em>: <span class="term">&lt;input value="10em" /&gt;&lt;input title="length" value="6em" /&gt;</span><br />
+&#160; <em>Output</em>: <span class="term">&lt;input value="10em" /&gt;&lt;input title="length" value="6em" class="ic1 ic2" /&gt;</span><br />
 <br />
-&#160; <em>Rule</em>: <span class="term">input=title(oneof=height|depth/default=depth), value(noneof=5|6)</span><br />
-&#160; <em>Output</em>: <span class="term">&lt;input title="depth" value="10em" /&gt;&lt;input title="depth" /&gt;</span><br />
+&#160; <em>Rule</em>: <span class="term">input=class(noneof=ic2|ic3/oneof=ic1|ic4), title(oneof=height|depth/default=depth), value(noneof=5|6)</span><br />
+&#160; <em>Output</em>: <span class="term">&lt;input title="depth" value="10em" /&gt;&lt;input title="depth" class="ic1" /&gt;</span><br />
 <br />
 &#160; <strong>Special characters</strong>: The characters <span class="term">;</span>, <span class="term">,</span>, <span class="term">/</span>, <span class="term">(</span>, <span class="term">)</span>, <span class="term">|</span>, <span class="term">~</span>&#160;and space have special meanings in the rules. Words in the rules that use such characters, or the characters themselves, should be <em>escaped</em>&#160;by enclosing in pairs of double-quotes (<span class="term">"</span>). A back-tick (<span class="term">&#96;</span>) can be used to escape a literal <span class="term">"</span>. An example rule illustrating this is <span class="term">input=value(maxlen=30/match="/^\w/"/default="your &#96;"ID&#96;"")</span>.<br />
+<br />
+&#160; <strong>Attributes that accept multiple values</strong>: If an attribute is <span class="term">accesskey</span>, <span class="term">class</span>, or <span class="term">rel</span>, which can have multiple, space-separated values, htmLawed will parse the attribute value for such multiple values and will test each of them individually.<br />
 <br />
 &#160; <strong>Note</strong>: To deny an attribute for all elements for which it is legal, <span class="term">$config["deny_attribute"]</span>&#160;(see <a href="#s3.4">section 3.4</a>) can be used instead of <span class="term">$spec</span>. Also, attributes can be allowed element-specifically through <span class="term">$spec</span>&#160;while being denied globally through <span class="term">$config["deny_attribute"]</span>. The <span class="term">hook_tag</span>&#160;parameter (<a href="#s3.4.9">section 3.4.9</a>) can also be possibly used to implement a functionality like that achieved using <span class="term">$spec</span>&#160;functionality.<br />
 <br />
@@ -1250,7 +1252,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s3.4" id="s3.4"></a><span class="item-no">3.4</span>&#160; Attributes
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; htmLawed will only permit attributes described in the HTML specs (including deprecated ones). It also permits some attributes for use with the <span class="term">embed</span>&#160;element (the non-standard <span class="term">embed</span>&#160;element is supported in htmLawed because of its widespread use), and the the <span class="term">xml&#58;space</span>&#160;attribute (valid only in XHTML 1.1). A list of such 111 attributes and the elements they are allowed in is in <a href="#s5.2">section 5.2</a>. Using the <span class="term">$spec</span>&#160;argument, htmLawed can be forced to permit custom, non-standard attributes as well as custom rules for standard attributes (<a href="#s2.3">section 2.3</a>).<br />
+&#160; htmLawed will only permit attributes described in the HTML specs (including deprecated ones). It also permits some attributes for use with the <span class="term">embed</span>&#160;element (the non-standard <span class="term">embed</span>&#160;element is supported in htmLawed because of its widespread use), and the <span class="term">allowfullscreen</span>&#160;(in <span class="term">iframe</span>, because of its widespread use), <span class="term">bordercolor</span>&#160;(in <span class="term">table</span>, <span class="term">td</span>&#160;and <span class="term">tr</span>, because of its widespread use), and <span class="term">xml&#58;space</span>&#160;(valid only in XHTML 1.1) attributes. A list of such 112 attributes and the elements they are allowed in is in <a href="#s5.2">section 5.2</a>. Using the <span class="term">$spec</span>&#160;argument, htmLawed can be forced to permit custom, non-standard attributes as well as custom rules for standard attributes (<a href="#s2.3">section 2.3</a>).<br />
 <br />
 &#160; When <span class="term">$config["deny_attribute"]</span>&#160;is not set, or set to <span class="term">0</span>, or empty (<span class="term">""</span>), all the 111 attributes are permitted. Otherwise, <span class="term">$config["deny_attribute"]</span>&#160;can be set as a list of comma-separated names of the denied attributes. <span class="term">on&#42;</span>&#160;can be used to refer to the group of potentially dangerous, script-accepting attributes: <span class="term">onblur</span>, <span class="term">onchange</span>, <span class="term">onclick</span>, <span class="term">ondblclick</span>, <span class="term">onfocus</span>, <span class="term">onkeydown</span>, <span class="term">onkeypress</span>, <span class="term">onkeyup</span>, <span class="term">onmousedown</span>, <span class="term">onmousemove</span>, <span class="term">onmouseout</span>, <span class="term">onmouseover</span>, <span class="term">onmouseup</span>, <span class="term">onreset</span>, <span class="term">onselect</span>&#160;and <span class="term">onsubmit</span>.<br />
 <br />
@@ -1773,6 +1775,13 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; <em>Version number - Release date. Notes</em><br />
 <br />
+<br />
+&#160; 1.1.22 - 5 March 2016. Improved testing of attribute value rules specified in <span class="term">$spec</span>.<br />
+<br />
+&#160; 1.1.21 - 27 February 2016. Improvement and security fix in transforming <span class="term">font</span>&#160;element.<br />
+<br />
+&#160; 1.1.20 - 9 June 2015. Fix for a potential security vulnerability arising from unescaped double-quote character in single-quoted attribute value of some deprecated elements when tag transformation is enabled; recognition for non-(HTML4) standard <span class="term">allowfullscreen</span>&#160;attribute of <span class="term">iframe.</span><br />
+<br />
 &#160; 1.1.19 - 19 January 2015. Fix for a bug in cleaning of soft-hyphens in URL values, etc.<br />
 <br />
 &#160; 1.1.18 - 2 August 2014. Fix for a potential security vulnerability arising from specially encoded text with serial opening tags<br />
@@ -1908,7 +1917,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <a name="s4.10" id="s4.10"></a><span class="item-no">4.10</span>&#160; Acknowledgements
 </h3><span class="totop"><a href="#peak">(to top)</a></span><br style="clear: both;" />
 <br />
-&#160; Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Dac Chartrand, Ulf Harnhammer, Gareth Heyes, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Psych0tr1a, Lincoln Russell, Tomas Sykorka, Harro Verton, Edward Yang, and many anonymous users.<br />
+&#160; Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Dac Chartrand, Ulf Harnhammer, Gareth Heyes, Hakre, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Psych0tr1a, Lincoln Russell, Tomas Sykorka, Harro Verton, Edward Yang, and many anonymous users.<br />
 <br />
 &#160; Thank you!<br />
 
@@ -1932,8 +1941,9 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 <br />
 &#160; Valid attribute-element combinations as per <a href="http://www.w3c.org">W3C</a>&#160;specs.<br />
 <br />
-&#160; * &#160;includes deprecated attributes (marked <span class="term">^</span>), attributes for the non-standard <span class="term">embed</span>&#160;element (marked <span class="term">&#42;</span>), and the proprietary <span class="term">bordercolor</span>&#160;(marked <span class="term">~</span>)<br />
+&#160; * &#160;includes deprecated attributes (marked <span class="term">^</span>), attributes for the non-standard <span class="term">embed</span>&#160;element (marked <span class="term">&#42;</span>), and the non-standard <span class="term">allowfullscreen</span>&#160;and <span class="term">bordercolor</span>&#160;(marked <span class="term">~</span>)<br />
 &#160; * &#160;only non-frameset, HTML body elements<br />
+&#160; * <span class="term">accesskey</span>, <span class="term">class</span>&#160;and <span class="term">rel</span>&#160;can have multiple, space-separated values<br />
 &#160; * &#160;<span class="term">name</span>&#160;for <span class="term">a</span>&#160;and <span class="term">map</span>, and <span class="term">lang</span>&#160;are invalid in XHTML 1.1<br />
 &#160; * &#160;<span class="term">target</span>&#160;is valid for <span class="term">a</span>&#160;in XHTML 1.1 and higher<br />
 &#160; * &#160;<span class="term">xml&#58;space</span>&#160;is only for XHTML 1.1<br />
@@ -1944,6 +1954,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 &#160; accesskey - a, area, button, input, label, legend, textarea<br />
 &#160; action - form<br />
 &#160; align - caption^, embed, applet, iframe, img^, input^, object^, legend^, table^, hr^, div^, h1^, h2^, h3^, h4^, h5^, h6^, p^, col, colgroup, tbody, td, tfoot, th, thead, tr<br />
+&#160; allowfullscreen - iframe~<br />
 &#160; alt - applet, area, img, input<br />
 &#160; archive - applet, object<br />
 &#160; axis - td, th<br />
@@ -2177,7 +2188,7 @@ A PHP Labware internal utility &#45; <a href="http://www.bioinformatics.org/phpl
 </div>
 </div>
 <br />
-<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 19 Jan, 2015 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
+<hr /><br /><br /><span class="subtle"><small>HTM version of <em><a href="htmLawed_README.txt">htmLawed_README.txt</a></em> generated on 06 Mar, 2016 using <a href="http://www.bioinformatics.org/phplabware/internal_utilities">rTxt2htm</a> from PHP Labware</small></span>
 </div><!-- ended div body -->
 </div><!-- ended div top -->
 </body>
