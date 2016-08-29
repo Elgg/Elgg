@@ -1,6 +1,6 @@
 /*
-htmLawed_TESTCASE.txt, 27 August 2013
-htmLawed 1.1.16, 29 August 2013
+htmLawed_TESTCASE.txt, 27 February 2016
+htmLawed 1.1.22, 5 March 2016
 Copyright Santosh Patnaik
 Dual licensed with LGPL 3 and GPL 2+
 A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed
@@ -372,7 +372,7 @@ na Alemanha.
 <h6>Tag transformation</h6>
 <strong>Font element intended as 'inline' element:</strong> <p><font color='red'>hi</font></p><br />
 <strong>Font element intended as 'block' element:</strong> <div><font color='red'><div>hi</div></font></div><br />
-<strong>Font element intended as 'block' element:</strong> <center><font color='red'><div>hi</div><div>QQQ</div></font></center><br />
+<strong>Font element intended as 'block' element:</strong> <center><font color='red' face="serif, 'Times'"><div>hi</div><div>QQQ</div></font></center><br />
 
 <h6>Tidy</h6>
 <strong>White-space handling:</strong> abc<em> def </em> ghi   abc <em>def</em> ghi
@@ -384,15 +384,19 @@ na Alemanha.
 <strong>CSS URLs:</strong> <div style="background-image: url('a.gif');"></div>, <div style="background-image: URL(&quot;a.gif&quot;);"></div>, <div style="background-image: url('http://a.com/a.gif');"></div>, <div style="background-image: url('./../a.gif');"></div>, <div style="background-image: &#117;r&#x6C;('js&#58;xss'&#x29;"></div><br />
 <strong>Double URLs:</strong> <a style="behaviour: url(foo) url(http://example.com/xss.htc)">b</a><br />
 <strong>Anti-spam:</strong> (try regex for 'http://a.com', etc.) <a href="mailto:x@y.com"></a>, <a href="http://a.com/b@d.f"></a>, <a href="a.com/d.f" rel="nofollow"></a>, <a href="a.com/d.f" rel="1, 2"></a>, <a href="a.com/d.f"></a>, <a href="b.com/d.f"></a>, <a href="c.com/d.f">, <a href="denied:http://c.com/d.f"></a><br />
+<strong>Soft-hyphen:</strong> <a href="http://q=ídis­c">ídis­c</a>
 
 <h6>XSS</h6>
 
+<img alt="<img onmouseover=confirm(1)//"<"">
 '';!--"<xss>=&{()}<br />
 <img src="javascript%3Aalert('xss');" /><br />
 <img src="javascript:alert('xss');" /><br />
 <img src="java script:alert('xss');" /><br />
 <img
 src=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41; /><br />
+<font color='#FF6699"onmouseover="alert(1)//'>test</font>
+<font color='<img//onerror="alert`www.ptsecurity.com`"src=Psych0tr1a'>
 <div style="javascript:alert('xss');"></div><br />
 <div style="background-image:url(javascript:alert('xss'));"></div><br />
 <div style="background-image:url(&quot;javascript:alert('xss')&quot; );"></div><br />
