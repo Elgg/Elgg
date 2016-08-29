@@ -33,7 +33,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	public function setUp() {
 		// Replace current hook service with new instance for each test
 		$this->original_hooks = _elgg_services()->hooks;
-		_elgg_services()->hooks = new \Elgg\PluginHooksService();
+		_elgg_services()->setValue('hooks', new \Elgg\PluginHooksService());
 	}
 
 	/**
@@ -41,7 +41,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	 */
 	public function tearDown() {
 		// Restore original hook service
-		_elgg_services()->hooks = $this->original_hooks;
+		_elgg_services()->setValue('hooks', $this->original_hooks);
 	}
 
 	/**
@@ -173,6 +173,49 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$sql = _elgg_get_access_where_sql();
 		$ans = "((1 = 1) AND (e.enabled = 'yes' AND 57 > 32))";
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
+
+	public function testHasAccessToEntity() {
+		$session = elgg_get_session();
+		$test_user = $session->getLoggedInUser();
+
+		$object = new ElggObject();
+		$object->access_id = ACCESS_PRIVATE;
+		$object->save();
+
+		$session->removeLoggedInUser();
+		$this->assertFalse(has_access_to_entity($object));
+		$this->assertFalse(has_access_to_entity($object, $this->user));
+		$session->setLoggedInUser($test_user);
+
+		$object->access_id = ACCESS_PUBLIC;
+		$object->save();
+
+		$session->removeLoggedInUser();
+		$this->assertTrue(has_access_to_entity($object));
+		$this->assertTrue(has_access_to_entity($object, $this->user));
+		$session->setLoggedInUser($test_user);
+
+		$object->access_id = ACCESS_LOGGED_IN;
+		$object->save();
+
+		$session->removeLoggedInUser();
+		$this->assertFalse(has_access_to_entity($object));
+		$this->assertTrue(has_access_to_entity($object, $this->user));
+		$session->setLoggedInUser($test_user);
+
+		$test_user->addFriend($this->user->guid);
+
+		$object->access_id = ACCESS_FRIENDS;
+		$object->save();
+
+		$session->removeLoggedInUser();
+		$this->assertFalse(has_access_to_entity($object));
+		$this->assertTrue(has_access_to_entity($object, $this->user));
+		$session->setLoggedInUser($test_user);
+
+		$test_user->removeFriend($this->user->guid);
+		$object->delete();
 	}
 
 	public function addAndCallback($hook, $type, $clauses, $params) {
