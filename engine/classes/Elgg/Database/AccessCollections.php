@@ -317,12 +317,22 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function hasAccessToEntity($entity, $user = null) {
-		
-	
+		if (!$entity instanceof \ElggEntity) {
+			return false;
+		}
+
+//		if ($entity->access_id == ACCESS_PUBLIC) {
+//			return true;
+//		}
+
 		// See #7159. Must not allow ignore access to affect query
 		$ia = elgg_set_ignore_access(false);
 	
 		if (!isset($user)) {
+//			if (elgg_is_logged_in() && $entity->access_id == ACCESS_LOGGED_IN) {
+//				return true;
+//			}
+
 			$access_bit = _elgg_get_access_where_sql();
 		} else {
 			$access_bit = _elgg_get_access_where_sql(array('user_guid' => $user->getGUID()));
