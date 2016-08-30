@@ -26,6 +26,8 @@ function logrotate_init() {
 		// Register cron hook for deletion of selected archived logs
 		elgg_register_plugin_hook_handler('cron', $delete, 'logrotate_delete_cron');
 	}
+
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_logrotate_test');
 }
 
 /**
@@ -36,7 +38,6 @@ function logrotate_archive_cron($hook, $entity_type, $returnvalue, $params) {
 
 	$day = 86400;
 
-	$offset = 0;
 	$period = elgg_get_plugin_setting('period', 'logrotate');
 	switch ($period) {
 		case 'weekly':
@@ -51,7 +52,10 @@ function logrotate_archive_cron($hook, $entity_type, $returnvalue, $params) {
 			$offset = $day * 28;
 	}
 
-	if (!archive_log($offset)) {
+	$archived = _logrotate_handle_crashed_table(function () use ($offset) {
+		return archive_log($offset);
+	});
+	if (!$archived) {
 		$resulttext = elgg_echo("logrotate:lognotrotated");
 	}
 
@@ -66,7 +70,6 @@ function logrotate_delete_cron($hook, $entity_type, $returnvalue, $params) {
 
 	$day = 86400;
 
-	$offset = 0;
 	$period = elgg_get_plugin_setting('delete', 'logrotate');
 	switch ($period) {
 		case 'weekly':
@@ -81,7 +84,10 @@ function logrotate_delete_cron($hook, $entity_type, $returnvalue, $params) {
 			$offset = $day * 28;
 	}
 
-	if (!log_browser_delete_log($offset)) {
+	$deleted = _logrotate_handle_crashed_table(function () use ($offset) {
+		return log_browser_delete_log($offset);
+	});
+	if (!$deleted) {
 		$resulttext = elgg_echo("logrotate:lognotdeleted");
 	}
 
@@ -119,4 +125,68 @@ function log_browser_delete_log($time_of_delete) {
 	}
 
 	return $deleted_tables;
+}
+
+/**
+ * Call a function, catching DB table crashes
+ *
+ * @param callable $func    Function to call
+ * @param mixed    $default Value to return on crashed table
+ *
+ * @return mixed
+ * @throws \DatabaseException
+ * @access private
+ */
+function _logrotate_handle_crashed_table(callable $func, $default = null) {
+	try {
+		return call_user_func($func);
+
+	} catch (\DatabaseException $e) {
+		if (!preg_match('~Table (.+?) is marked as crashed~', $e->getMessage(), $m)) {
+			throw $e;
+		}
+
+		elgg_log($e->getMessage(), 'ERROR');
+		$added = elgg_add_admin_notice("crash_table_" . md5($m[1]), elgg_echo('logrotate:table_crashed', [$m[1]]));
+		if (!$added) {
+			// already added notice
+			return $default;
+		}
+
+		// notify oldest admin user ¯\_(ツ)_/¯
+		$admins = elgg_get_admins([
+			'order_by' => 'e.time_created ASC',
+			'limit' => 1,
+		]);
+		if (!$admins) {
+			return $default;
+		}
+
+		$admin = $admins[0];
+		/* @var ElggUser $admin */
+
+		$site = elgg_get_site_entity();
+
+		notify_user(
+			$admin->guid,
+			$site->guid,
+			elgg_echo('logrotate:table_crashed:subject', [$site->name], $admin->language),
+			elgg_echo('logrotate:table_crashed', [$m[1]], $admin->language),
+			[],
+			'email'
+		);
+
+		return $default;
+	}
+}
+
+/**
+ * Runs unit tests
+ *
+ * @return array
+ * @access private
+ */
+function _logrotate_test($hook, $type, $value, $params) {
+	$value[] = __DIR__ . '/tests/LogRotateTest.php';
+	return $value;
 }
