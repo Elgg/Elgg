@@ -125,20 +125,22 @@ class BootData {
 		$guids = array_values($guids);
 		$guids = array_diff($guids, $unsuitable_guids);
 
-		// get the settings
-		$set = implode(',', $guids);
-		$rows = $db->getData("
-			SELECT entity_guid, `name`, `value`
-			FROM {$db->getTablePrefix()}private_settings
-			WHERE entity_guid IN ($set)
-			  AND name NOT LIKE 'plugin:user_setting:%'
-			  AND name NOT LIKE 'elgg:internal:%'
-			ORDER BY entity_guid
-		");
-		// make sure we show all entities as loaded
-		$this->plugin_settings = array_fill_keys($guids, []);
-		foreach ($rows as $i => $row) {
-			$this->plugin_settings[$row->entity_guid][$row->name] = $row->value;
+		if ($guids) {
+			// get the settings
+			$set = implode(',', $guids);
+			$rows = $db->getData("
+				SELECT entity_guid, `name`, `value`
+				FROM {$db->getTablePrefix()}private_settings
+				WHERE entity_guid IN ($set)
+				  AND name NOT LIKE 'plugin:user_setting:%'
+				  AND name NOT LIKE 'elgg:internal:%'
+				ORDER BY entity_guid
+			");
+			// make sure we show all entities as loaded
+			$this->plugin_settings = array_fill_keys($guids, []);
+			foreach ($rows as $i => $row) {
+				$this->plugin_settings[$row->entity_guid][$row->name] = $row->value;
+			}
 		}
 	}
 
