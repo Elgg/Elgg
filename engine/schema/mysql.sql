@@ -107,7 +107,7 @@ CREATE TABLE `prefix_entity_subtypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` enum('object','user','group','site') NOT NULL,
   `subtype` varchar(50) NOT NULL,
-  `class` varchar(50) NOT NULL DEFAULT '',
+  `class` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`,`subtype`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
