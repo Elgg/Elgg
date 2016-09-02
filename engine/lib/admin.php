@@ -225,6 +225,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
 	elgg_register_action('admin/site/set_robots', '', 'admin');
 	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
+	elgg_register_action('admin/site/early_access', '', 'admin');
 
 	elgg_register_action('admin/upgrades/upgrade_comments', '', 'admin');
 	elgg_register_action('admin/upgrades/upgrade_datadirs', '', 'admin');
@@ -298,6 +299,9 @@ function _elgg_admin_init() {
 	elgg_register_admin_menu_item('configure', 'settings', null, 100);
 	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
 	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
+	if (_elgg_get_known_features()) {
+		elgg_register_admin_menu_item('configure', 'early_access', 'settings', 30);
+	}
 	// plugin settings are added in _elgg_admin_add_plugin_settings_menu() via the admin page handler
 	// for performance reasons.
 

@@ -270,6 +270,44 @@ function get_config($name, $site_guid = 0) {
 }
 
 /**
+ * Is this feature enabled?
+ *
+ * @param string   $feature Feature name. E.g. "3.0:the_name"
+ * @param string[] $_known  Known feature list (for testing)
+ *
+ * @return bool
+ * @access private
+ * @since 2.2
+ */
+function _elgg_feature_is_enabled($feature, array $_known = null) {
+	if ($_known === null) {
+		$_known = _elgg_get_known_features();
+	}
+
+	if (!in_array($feature, $_known)) {
+		// unknown features assumed on
+		return true;
+	}
+
+	return (bool)elgg_get_config("feat:$feature");
+}
+
+/**
+ * Get a list of known features
+ *
+ * @return string[] E.g. ["3.0:cool_river", "3.0:new_login"]
+ * @access private
+ * @since 2.2
+ */
+function _elgg_get_known_features() {
+	return [
+		// should be of form "x.x:shortname" where x.x is the major/minor version in which
+		// the option must be removed and will become automatically enabled.
+		// For each string, add a translation for "feature:label:<feature>" and "feature:help:<feature>".
+	];
+}
+
+/**
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {

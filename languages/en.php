@@ -508,6 +508,8 @@ return array(
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
 	'admin:settings:advanced' => 'Advanced Settings',
+	'admin:settings:early_access' => 'Preview Features',
+	'admin:settings:early_access:description' => 'The following features are optional now, but will be permanently enabled in the next major version.',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:settings:in_settings_file' => 'This setting is configured in settings.php',
