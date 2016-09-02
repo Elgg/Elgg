@@ -282,6 +282,34 @@ class EntityTable {
 	}
 
 	/**
+	 * Get an entity from the in-memory or memcache caches
+	 *
+	 * @param int $guid GUID
+	 *
+	 * @return \ElggEntity
+	 */
+	protected function getFromCache($guid) {
+		$entity = $this->entity_cache->get($guid);
+		if ($entity) {
+			return $entity;
+		}
+
+		$memcache = _elgg_get_memcache('new_entity_cache');
+		$entity = $memcache->load($guid);
+		if (!$entity instanceof ElggEntity) {
+			return false;
+		}
+
+		// Validate accessibility if from memcache
+		if (!elgg_get_ignore_access() && !has_access_to_entity($entity)) {
+			return false;
+		}
+
+		$this->entity_cache->set($entity);
+		return $entity;
+	}
+
+	/**
 	 * Loads and returns an entity object from a guid.
 	 *
 	 * @param int    $guid The GUID of the entity
@@ -302,31 +330,8 @@ class EntityTable {
 
 		$guid = (int) $guid;
 
-		$memcache = _elgg_get_memcache('new_entity_cache');
-		
-		$entity = $this->entity_cache->get($guid);
-		$from_entity_cache = (bool)$entity;
-
-		if (!$entity) {
-			$entity = $memcache->load($guid);
-			// Validate accessibility
-			if ($entity && !elgg_get_ignore_access() && !has_access_to_entity($entity)) {
-				$entity = false;
-			}
-		}
-
-		if (!$entity instanceof ElggEntity) {
-			$entity = false;
-		}
-
-		if ($entity) {
-			if ($type && !elgg_instanceof($entity, $type)) {
-				return false;
-			}
-
-			if (!$from_entity_cache) {
-				$this->entity_cache->set($entity);
-			}
+		$entity = $this->getFromCache($guid);
+		if ($entity && (!$type || elgg_instanceof($entity, $type))) {
 			return $entity;
 		}
 
@@ -342,7 +347,7 @@ class EntityTable {
 		$entity = $this->rowToElggStar($row);
 
 		if ($entity instanceof ElggEntity) {
-			$entity->storeInPersistedCache($memcache);
+			$entity->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 		}
 
 		return $entity;
