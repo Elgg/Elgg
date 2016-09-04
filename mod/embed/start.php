@@ -23,15 +23,6 @@ function embed_init() {
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
 
-	// @deprecated 2.2
-	$embed_js = elgg_get_simplecache_url('embed/embed.js');
-	elgg_register_js('elgg.embed', $embed_js, 'footer');
-
-	if (elgg_view_exists('embed/custom_insert_js')) {
-		elgg_deprecated_notice("The view embed/custom_insert_js has been replaced by the 'embed, editor' JS hook.", '1.9');
-		elgg_extend_view('elgg.js', 'embed/embed_custom_insert.js.php');
-	}
-	
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'embed_set_thumbnail_url', 1000);
 }
 
