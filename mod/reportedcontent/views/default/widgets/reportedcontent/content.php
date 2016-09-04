@@ -19,3 +19,6 @@ if (!$list) {
 }
 
 echo $list;
+
+// elgg_require_js() fails when widget is newly added
+?><script>require(['elgg/reportedcontent']);</script>
