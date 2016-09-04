@@ -1,6 +1,8 @@
 
 elgg.provide('elgg.discussion');
 
+elgg.deprecated_notice('discussion/discussion.js is deprecated. Use the "elgg/discussion" AMD module', '2.3');
+
 /**
  * @param {Number} guid
  * @constructor
