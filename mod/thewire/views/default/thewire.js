@@ -3,6 +3,8 @@
  */
 elgg.provide('elgg.thewire');
 
+elgg.deprecated_notice('thewire.js is deprecated. Use the "elgg/thewire" AMD module', '2.3');
+
 elgg.thewire.init = function() {
 	var callback = function() {
 		var maxLength = $(this).data('max-length');

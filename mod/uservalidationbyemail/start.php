@@ -45,7 +45,10 @@ function uservalidationbyemail_init() {
 	elgg_register_admin_menu_item('administer', 'unvalidated', 'users');
 
 	elgg_extend_view('admin.css', 'uservalidationbyemail/css');
-	elgg_extend_view('elgg.js', 'uservalidationbyemail/js');
+
+	// inline module
+	elgg_extend_view('elgg.js', 'elgg/uservalidationbyemail.js');
+	elgg_require_js('elgg/uservalidationbyemail');
 
 	$action_path = dirname(__FILE__) . '/actions';
 
