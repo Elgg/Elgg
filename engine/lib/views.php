@@ -1306,21 +1306,28 @@ function elgg_view_river_item($item, array $vars = array()) {
  * @return string The complete form
  */
 function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
-	global $CONFIG;
+	return _elgg_services()->forms->render($action, $form_vars, $body_vars);
+}
 
-	$defaults = array(
-		'action' => $CONFIG->wwwroot . "action/$action",
-		'body' => elgg_view("forms/$action", $body_vars)
-	);
+/**
+ * Sets form footer and defers its rendering until the form view and extensions have been rendered.
+ * Deferring footer rendering allows plugins to extend the form view while maintaining
+ * logical DOM structure.
+ * Footer will be rendered using 'elements/forms/footer' view after form body has finished rendering
+ *
+ * @param string $footer Footer
+ * @return bool
+ */
+function elgg_set_form_footer($footer = '') {
+	return _elgg_services()->forms->setFooter($footer);
+}
 
-	// append elgg-form class to any class options set
-	$form_vars['class'] = (array) elgg_extract('class', $form_vars, []);
-	$form_vars['class'][] = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
-	
-	$form_vars = array_merge($defaults, $form_vars);
-	$form_vars['action_name'] = $action;
-
-	return elgg_view('input/form', $form_vars);
+/**
+ * Returns currently set footer, or false if not in the form rendering stack
+ * @return string|false
+ */
+function elgg_get_form_footer() {
+	return _elgg_services()->forms->getFooter();
 }
 
 /**

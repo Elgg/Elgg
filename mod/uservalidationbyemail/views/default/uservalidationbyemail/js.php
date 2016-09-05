@@ -2,6 +2,8 @@
 
 elgg.provide('elgg.uservalidationbyemail');
 
+elgg.deprecated_notice('uservalidationbyemail.js is deprecated. Use the "elgg/uservalidationbyemail" AMD module', 2.3);
+
 elgg.uservalidationbyemail.init = function() {
 	$('#uservalidationbyemail-checkall').click(function() {
 		$('#uservalidationbyemail-form .elgg-body').find('input[type=checkbox]').prop('checked', this.checked);

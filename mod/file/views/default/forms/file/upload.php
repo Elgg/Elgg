@@ -82,11 +82,6 @@ $fields = [
 		'name' => 'file_guid',
 		'value' => $guid,
 	],
-	[
-		'type' => 'submit',
-		'value' => $submit_label,
-		'field_class' => 'elgg-foot',
-	]
 ];
 
 foreach ($fields as $field) {
@@ -97,3 +92,8 @@ foreach ($fields as $field) {
 	}
 	echo elgg_view_input($type, $field);
 }
+
+$footer = elgg_view_input('submit', [
+	'value' => elgg_echo('save'),
+]);
+elgg_set_form_footer($footer);

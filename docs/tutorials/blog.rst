@@ -51,55 +51,49 @@ See :doc:`Plugins</guides/plugins>` for more information
 about the manifest file.
 
 Create the form for creating a new blog post
-================================================
+============================================
 
 Create a file at ``/mod/my_blog/views/default/forms/my_blog/save.php``
-that contains the form body.
-The form should have input fields for the title, body and tags
-of the my_blog post. It does not need form tag markup.
+that contains the form body. The form should have input fields for the title,
+body and tags of the my_blog post. It does not need form tag markup.
 
 .. code-block:: php
 
-    <?php
-
-    // creates a field where you can write the blog post's title
     echo elgg_view_input('text', [
         'name' => 'title',
-        'label' => 'Title of your post',
+        'label' => elgg_echo('title'),
         'required' => true,
     ]);
 
-    // creates a field where you can write the blog post's content
     echo elgg_view_input('longtext', [
         'name' => 'body',
-        'label' => 'Content of your post',
+        'label' => elgg_echo('body'),
         'required' => true,
     ]);
 
-    // creates a field where you can write the blog post's tags
     echo elgg_view_input('tags', [
         'name' => 'tags',
-        'label' => 'Tags of your post',
+        'label' => elgg_echo('tags'),
+        'help' => elgg_echo('tags:help'),
     ]);
 
-    // creates a save button
-    echo elgg_view_input('submit', array(
-        'value' => 'Save your post',
+    $submit = elgg_view_input('submit', array(
+        'value' => elgg_echo('save'),
         'field_class' => 'elgg-foot',
     ));
+    elgg_set_form_footer($submit);
 
-The input fields are rendered by calling ``elgg_view_input``.
-This helper function maintains consistency in field markup,
-and is used as a shortcut for rendering field elements like label,
-help text, input and so on. See :doc:`/guides/actions` for more information.
-The name field is used to identify the data in the saving phase.
+
+Notice how the form is calling ``elgg_view_input()`` to render inputs. This helper
+function maintains consistency in field markup, and is used as a shortcut for
+rendering field elements, such as label, help text, and input. See :doc:`/guides/actions`.
 
 You can see a complete list of input views in the
-``/views/default/input/`` directory.
+``/vendor/elgg/elgg/views/default/input/`` directory.
 
-It is recommended that you make your plugin translatable by using
-``elgg_echo(textkey)`` whenever there is a string of text that will
-be shown to the user. Read more at :doc:`Internationalization</guides/i18n>`.
+It is recommended that you make your plugin translatable by using ``elgg_echo()``
+whenever there is a string of text that will be shown to the user. Read more at
+:doc:`Internationalization</guides/i18n>`.
 
 Create a page for composing the blogs
 =====================================

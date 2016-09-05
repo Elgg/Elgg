@@ -5,7 +5,7 @@
  * @uses $vars['entity']
  */
 
-elgg_load_js('elgg.thewire');
+elgg_require_js('elgg/thewire');
 
 $full = elgg_extract('full_view', $vars, FALSE);
 $post = elgg_extract('entity', $vars, FALSE);

@@ -38,6 +38,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \ElggFileCache                           $fileCache
  * @property-read \ElggDiskFilestore                       $filestore
+ * @property-read \Elgg\FormsService                       $forms
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
@@ -219,6 +220,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('filestore', function(ServiceProvider $c) {
 			return new \ElggDiskFilestore($c->config->getDataPath());
+		});
+
+		$this->setFactory('forms', function(ServiceProvider $c) {
+			return new \Elgg\FormsService($c->views, $c->logger);
 		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {

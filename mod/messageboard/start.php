@@ -11,8 +11,9 @@
  * MessageBoard initialisation
  */
 function messageboard_init() {
-	// js
-	elgg_extend_view('elgg.js', 'messageboard/js');
+	// inline module
+	elgg_extend_view('elgg.js', 'elgg/messageboard.js');
+	elgg_require_js('elgg/messageboard');
 
 	// css
 	elgg_extend_view('elgg.css', 'messageboard/css');

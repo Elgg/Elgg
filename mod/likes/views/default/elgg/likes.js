@@ -1,34 +1,36 @@
-<?php
 /**
- * Likes JavaScript extension for elgg.js
- */
-?>
-//<script>
-
-elgg.deprecated_notice('likes.js is deprecated. Use the "elgg/likes" AMD module', 2.3);
-
-/**
- * Repositions the likes popup
+ * Likes module
  *
- * @param {String} hook    'getOptions'
- * @param {String} type    'ui.popup'
- * @param {Object} params  An array of info about the target and source.
- * @param {Object} options Options to pass to
- *
- * @return {Object}
+ * @note The name is required for inlining, do not remove it
  */
-elgg.ui.likesPopupHandler = function(hook, type, params, options) {
-	if (params.target.hasClass('elgg-likes')) {
-		options.my = 'right bottom';
-		options.at = 'left top';
-		return options;
-	}
-	return null;
-};
+define('elgg/likes', function (require) {
+	var $ = require('jquery');
+	var elgg = require('elgg');
 
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
+	elgg.provide('elgg.ui');
 
-!function() {
+	/**
+	 * Repositions the likes popup
+	 *
+	 * @param {String} hook    'getOptions'
+	 * @param {String} type    'ui.popup'
+	 * @param {Object} params  An array of info about the target and source.
+	 * @param {Object} options Options to pass to
+	 *
+	 * @return {Object}
+	 * @deprecated 2.3 Do not call this directly
+	 */
+	elgg.ui.likesPopupHandler = function(hook, type, params, options) {
+		if (params.target.hasClass('elgg-likes')) {
+			options.my = 'right bottom';
+			options.at = 'left top';
+			return options;
+		}
+		return null;
+	};
+
+	elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
+
 	function setupHandlers(nameA, nameB) {
 		$(document).on('click', '.elgg-menu-item-' + nameA + ' a', function() {
 			var $menu = $(this).closest('.elgg-menu');
@@ -62,4 +64,4 @@ elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
 
 	setupHandlers('likes', 'unlike');
 	setupHandlers('unlike', 'likes');
-}();
+});
