@@ -5,7 +5,7 @@
  * @uses $vars['post']
  */
 
-elgg_load_js('elgg.thewire');
+elgg_require_js('elgg/thewire');
 
 $post = elgg_extract('post', $vars);
 $char_limit = (int)elgg_get_plugin_setting('limit', 'thewire');

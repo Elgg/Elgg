@@ -10,7 +10,7 @@ $topic = get_entity($guid);
 
 $container = $topic->getContainerEntity();
 
-elgg_load_js('elgg.discussion');
+elgg_require_js('elgg/discussion');
 
 elgg_set_page_owner_guid($container->getGUID());
 

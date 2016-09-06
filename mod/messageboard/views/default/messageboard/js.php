@@ -1,6 +1,8 @@
 //<script>
 elgg.provide('elgg.messageboard');
 
+elgg.deprecated_notice('messageboard.js is deprecated. Use the "elgg/messageboard" AMD module', 2.3);
+
 elgg.messageboard.init = function() {
 	var form = $('form[name=elgg-messageboard]');
 	form.on('click', 'input[type=submit]', elgg.messageboard.submit);
@@ -30,7 +32,7 @@ elgg.messageboard.submit = function(e) {
 				form.parent().append(json.output);
 			} else {
 				ul.prepend($(json.output).find('li:first'));
-			};
+			}
 			form.find('textarea').val('');
 		}
 	});
