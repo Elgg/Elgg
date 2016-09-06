@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 	'bookmarks:inbox' => "Bookmarks inbox",
-	'bookmarks:with' => "Share with",
-	'bookmarks:new' => "A new bookmark",
 	'bookmarks:address' => "Address of the bookmark",
 	'bookmarks:none' => 'No bookmarks',
 
@@ -37,10 +35,6 @@ View and comment on the bookmark:
 
 	'bookmarks:numbertodisplay' => 'Number of bookmarks to display',
 
-	'bookmarks:shared' => "Bookmarked",
-	'bookmarks:visit' => "Visit resource",
-	'bookmarks:recent' => "Recent bookmarks",
-
 	'river:create:object:bookmarks' => '%s bookmarked %s',
 	'river:comment:object:bookmarks' => '%s commented on a bookmark %s',
 	'bookmarks:river:annotate' => 'a comment on this bookmark',
@@ -58,7 +52,7 @@ View and comment on the bookmark:
 	'bookmarks:widget:description' => "Display your latest bookmarks.",
 
 	'bookmarks:bookmarklet:description' =>
-			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks, and optionally share it with your friends. To set it up, drag the button below to your browser's links bar:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"If you are using Internet Explorer, you will need to right click on the bookmarklet icon, select 'add to favorites', and then the Links bar.",
