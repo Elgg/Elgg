@@ -12,7 +12,6 @@ $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
 $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
-$shares = elgg_extract('shares', $vars, array());
 
 ?>
 <div>
