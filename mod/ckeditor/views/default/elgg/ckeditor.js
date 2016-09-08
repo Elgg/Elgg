@@ -5,6 +5,8 @@
  *	      editor.bind('textarea');
  *	  });
  * </code>
+ *
+ * Modify the config by creating a boot module and handling the [config, ckeditor] hook.
  * 
  * @module elgg/ckeditor
  */
@@ -21,6 +23,7 @@ define(function (require) {
 		 * A flag that indicates whether handlers were registered
 		 */
 		ready: false,
+
 		bind: function (selector) {
 			elggCKEditor.registerHandlers();
 			CKEDITOR = elgg.trigger_hook('prepare', 'ckeditor', null, CKEDITOR);
@@ -33,6 +36,7 @@ define(function (require) {
 					.attr('data-cke-init', true)
 					.ckeditor(elggCKEditor.init, elggCKEditor.config);
 		},
+
 		/**
 		 * Register event and hook handlers
 		 * @return void
@@ -61,6 +65,7 @@ define(function (require) {
 			});
 			elggCKEditor.ready = true;
 		},
+
 		/**
 		 * Toggles the CKEditor
 		 *
@@ -78,6 +83,7 @@ define(function (require) {
 				$(this).html(elgg.echo('ckeditor:visual'));
 			}
 		},
+
 		/**
 		 * Initializes the ckeditor module
 		 *
@@ -88,6 +94,7 @@ define(function (require) {
 			// show the toggle-editor link which is hidden by default, so it will only show up if the editor is correctly loaded
 			$('.ckeditor-toggle-editor[href="#' + textarea.id + '"]').show();
 		},
+
 		/**
 		 * CKEditor has decided using width and height as attributes on images isn't
 		 * kosher and puts that in the style. This adds those back as attributes.
@@ -117,6 +124,7 @@ define(function (require) {
 				}
 			});
 		},
+
 		/**
 		 * CKEditor configuration
 		 *

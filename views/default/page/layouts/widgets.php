@@ -94,6 +94,13 @@ echo elgg_view('graphics/ajax_loader', array('id' => 'elgg-widget-loader'));
 
 echo '</div>';
 
+?>
+<script>
+require(['elgg/widgets'], function (widgets) {
+	widgets.init();
+});
+</script>
+<?php
 
 // Restore original page owner
 if ($owner->guid != $page_owner->guid) {

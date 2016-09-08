@@ -1,11 +1,29 @@
 /**
  * Lightbox module
- * We use a named module and inline it in elgg.js. This allows us to deprecate the old
- * elgg.ui.lightbox library.
- * 
+ *
+ * Elgg is distributed with the Colorbox jQuery library. Please go to
+ * http://www.jacklmoore.com/colorbox for more information on the options of this lightbox.
+ *
+ * Use .elgg-lightbox or .elgg-lightbox-photo class on your anchor element to
+ * bind it to a lightbox.
+ *
+ * You may apply colorbox options to an individual .elgg-lightbox element
+ * by setting the attribute data-colorbox-opts to a JSON settings object.
+ * You can use "getOptions", "ui.lightbox" plugin hook to filter options before
+ * they are passed to $.colorbox().
+ *
+ * To support a hidden div as the source, add "inline: true" as a
+ * data-colorbox-opts option. For example, using the output/url view, add:
+ *    'data-colorbox-opts' => '{"inline": true}',
+ *
+ * Overriding with a different lightbox
+ * -------------------------------------
+ * In a plugin, override this view and override the registration for the
+ * lightbox JavaScript and CSS (@see elgg_views_boot()).
+ *
  * @module elgg/lightbox
  */
-define('elgg/lightbox', function (require) {
+define(function (require) {
 
 	var elgg = require('elgg');
 	var $ = require('jquery');
@@ -25,7 +43,6 @@ define('elgg/lightbox', function (require) {
 				opts = {};
 			}
 
-			// Note: keep these in sync with /views/default/lightbox.js.php
 			var settings = {
 				current: elgg.echo('js:lightbox:current', ['{current}', '{total}']),
 				previous: elgg.echo('previous'),
@@ -41,11 +58,7 @@ define('elgg/lightbox', function (require) {
 			
 			elgg.provide('elgg.ui.lightbox');
 			
-			if ($.isPlainObject(elgg.ui.lightbox.deprecated_settings)) {
-				$.extend(settings, elgg.ui.lightbox.deprecated_settings, opts);
-			} else {
-				$.extend(settings, opts);
-			}
+			$.extend(settings, opts);
 
 			return elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
 		},

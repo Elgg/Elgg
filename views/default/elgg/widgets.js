@@ -1,13 +1,7 @@
 /**
- * To implement a BC solution and deprecated elgg.ui.widgets, we use a named
- * AMD module that is inlined in elgg.js. This allows us to proxy elgg.ui.widgets
- * calls via elgg/widgets module to issue deprecation notices.
- *
- * @todo: in 3.x make this an anonymous module
- * @todo: in 3.x define elgg/ready as a dependency
  * @module elgg/widgets
  */
-define('elgg/widgets', ['elgg', 'jquery'], function (elgg, $) {
+define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 
 	var widgets = {};
 
