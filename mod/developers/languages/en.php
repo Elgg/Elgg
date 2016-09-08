@@ -42,6 +42,7 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
+	'developers:inspect:elggapi' => 'Elgg API',
 	'developers:inspect:actions' => 'Actions',
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menus',
@@ -90,4 +91,40 @@ return array(
 	'developers:settings:success' => 'Settings saved and caches flushed',
 
 	'developers:amd' => 'AMD',
+
+	'developers:api:events:name' => 'Events/Hooks',
+	'developers:api:events:heading' => 'Handling and Creating Events and Plugin Hooks',
+	'developers:api:events:intro' => '',
+
+	'developers:api:views:name' => 'Views',
+	'developers:api:views:heading' => 'Rendering HTML and Other Strings',
+	'developers:api:views:intro' => '',
+
+	'developers:api:routing-pages:name' => 'Pages',
+	'developers:api:routing-pages:heading' => 'Routing and Creating Pages',
+	'developers:api:routing-pages:intro' => '',
+
+	'developers:api:forms-actions:name' => 'Forms/Actions',
+	'developers:api:forms-actions:heading' => 'Creating Forms and Actions',
+	'developers:api:forms-actions:intro' => '',
+
+	'developers:api:session:name' => 'Session',
+	'developers:api:session:heading' => 'Managing User State',
+	'developers:api:session:intro' => '',
+
+	'developers:api:data:name' => 'Data',
+	'developers:api:data:heading' => 'Storing and Fetching Data',
+	'developers:api:data:intro' => '',
+
+	'developers:api:urls:name' => 'URLs',
+	'developers:api:urls:heading' => 'Creating URLs',
+	'developers:api:urls:intro' => '',
+
+	'developers:api:notifications:name' => 'Notifications',
+	'developers:api:notifications:heading' => 'Notifying Users',
+	'developers:api:notifications:intro' => '',
+
+	'developers:api:misc:name' => 'Misc',
+	'developers:api:misc:heading' => 'Miscellaneous',
+	'developers:api:misc:intro' => '',
 );

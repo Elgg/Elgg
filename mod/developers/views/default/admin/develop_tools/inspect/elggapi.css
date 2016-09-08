@@ -1,0 +1,48 @@
+/**
+ * WARNING! This view is internal and may change at any time.
+ * Plugins should not use/modify/override this view.
+ */
+
+.elgg-api-section {
+	padding: 1em 0;
+	border-bottom: 1px solid #999;
+}
+.elgg-api-func {
+	padding-top: .5em;
+}
+.elgg-api-func > h4 {
+	margin: 0 0 .5em 2em;
+	text-indent: -2em;
+	font-size: 1em;
+	cursor: pointer;
+}
+.elgg-api-func > h4:hover {
+	text-decoration: underline;
+}
+.elgg-api-func.selected > h4 {
+	color: #900;
+}
+.elgg-api-func-summary {
+	margin: .5em 0 .5em 2em;
+	font-style: italic;
+}
+.elgg-api-func-args {
+	font-weight: 300;
+	opacity: .5;
+}
+.elgg-api-func > section {
+	margin: .5em 0 .5em 2em;
+	display: none;
+}
+.elgg-api-func.selected > section {
+	display: block;
+}
+.elgg-api-func > section > pre {
+	white-space: pre-wrap;
+	font-size: .8em;
+}
+.elgg-api-tag {
+	color: #000;
+	font-weight: 900;
+	font-size: 1.1em;
+}

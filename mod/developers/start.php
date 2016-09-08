@@ -270,6 +270,7 @@ function developers_ajax_demo_controller() {
  */
 function developers_get_inspect_options() {
 	$options = array(
+		'Elgg API' => elgg_echo('developers:inspect:elggapi'),
 		'Actions' => elgg_echo('developers:inspect:actions'),
 		'Events' => elgg_echo('developers:inspect:events'),
 		'Menus' => elgg_echo('developers:inspect:menus'),

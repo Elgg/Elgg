@@ -1,0 +1,143 @@
+[
+    {
+        "id": "events",
+        "type": "api-list",
+        "url": "DOCS/design/events.html",
+        "items": [
+            "function:elgg_register_event_handler",
+            "function:elgg_register_plugin_hook_handler",
+            "function:elgg_trigger_event",
+            "function:elgg_trigger_plugin_hook"
+        ]
+    },
+    {
+        "id": "views",
+        "type": "api-list",
+        "url": "DOCS/guides/views.html",
+        "items": [
+            "function:elgg_view",
+            "function:elgg_extend_view",
+            "function:elgg_echo"
+        ]
+    },
+    {
+        "id": "routing-pages",
+        "type": "api-list",
+        "url": "DOCS/guides/pagehandler.html",
+        "items": [
+            "function:elgg_register_menu_item",
+            "function:elgg_register_page_handler",
+            "function:elgg_view_resource",
+            "function:elgg_set_page_owner_guid",
+            "function:elgg_get_page_owner_guid",
+            "function:elgg_get_page_owner_entity",
+            "function:elgg_require_js",
+            "function:elgg_register_css",
+            "function:elgg_load_css",
+            "function:elgg_push_breadcrumb",
+            "function:elgg_register_title_button",
+            "function:elgg_list_entities",
+            "function:elgg_list_entities_from_annotations",
+            "function:elgg_list_entities_from_metadata",
+            "function:elgg_list_entities_from_relationship",
+            "function:elgg_view_layout",
+            "function:elgg_view_page"
+        ]
+    },
+    {
+        "id": "forms-actions",
+        "type": "api-list",
+        "url": "DOCS/guides/actions.html",
+        "items": [
+            "function:elgg_register_action",
+            "function:elgg_view_form",
+            "function:elgg_view_input",
+            "function:elgg_set_form_footer",
+            "function:elgg_make_sticky_form",
+            "function:elgg_clear_sticky_form",
+            "function:get_input",
+            "function:register_error",
+            "function:system_message",
+            "function:forward"
+        ]
+    },
+    {
+        "id": "session",
+        "type": "api-list",
+        "items": [
+            "function:elgg_get_session",
+            "function:elgg_get_logged_in_user_entity",
+            "function:elgg_get_logged_in_user_guid",
+            "function:elgg_is_admin_logged_in",
+            "function:elgg_is_logged_in",
+            "function:elgg_gatekeeper",
+            "function:elgg_group_gatekeeper",
+            "function:elgg_entity_gatekeeper",
+            "function:elgg_admin_gatekeeper"
+        ]
+    },
+    {
+        "id": "data",
+        "type": "api-list",
+        "items": [
+            "function:elgg_get_config",
+            "function:elgg_set_config",
+            "function:elgg_get_entities",
+            "function:get_entity",
+            "function:elgg_instanceof",
+            "function:add_entity_relationship",
+            "function:check_entity_relationship",
+            "function:remove_entity_relationship",
+            "function:get_user_by_username",
+            "function:elgg_get_plugin_setting",
+            "function:elgg_set_plugin_setting",
+            "function:elgg_create_river_item"
+        ]
+    },
+    {
+        "id": "urls",
+        "type": "api-list",
+        "items": [
+            "function:elgg_normalize_url",
+            "function:elgg_get_simplecache_url",
+            "function:elgg_add_action_tokens_to_url",
+            "function:elgg_http_add_url_query_elements",
+            "function:elgg_get_download_url",
+            "function:elgg_get_friendly_title",
+            "function:elgg_get_inline_url",
+            "function:current_page_url"
+        ]
+    },
+    {
+        "id": "notifications",
+        "type": "api-list",
+        "url": "DOCS/guides/notifications.html",
+        "items": [
+            "function:elgg_register_notification_event",
+            "function:notify_user"
+        ]
+    },
+    {
+        "id": "misc",
+        "type": "api-list",
+        "items": [
+            "function:elgg_in_context",
+            "function:elgg_pop_context",
+            "function:elgg_push_context",
+            "function:elgg_get_site_entity",
+            "function:elgg_extract",
+            "function:elgg_is_active_plugin",
+            "function:elgg_register_entity_type",
+            "function:elgg_view_entity_icon",
+            "function:elgg_view_friendly_time",
+            "function:elgg_view_icon",
+            "function:elgg_view_image_block",
+            "function:elgg_view_menu",
+            "function:elgg_format_element",
+            "function:elgg_get_excerpt",
+            "function:add_group_tool_option",
+            "function:elgg_register_widget_type",
+            "function:elgg_register_ajax_view"
+        ]
+    }
+]

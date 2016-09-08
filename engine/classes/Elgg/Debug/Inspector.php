@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Debug;
 
+use Elgg\Debug\Inspector\ApiReader;
 use Elgg\Debug\Inspector\ViewComponent;
 
 /**
@@ -12,6 +13,16 @@ use Elgg\Debug\Inspector\ViewComponent;
  * @since   1.11
  */
 class Inspector {
+
+	/**
+	 * Get Elgg API information
+	 *
+	 * @return array
+	 */
+	public function getElggAPI() {
+		// cache this computation
+		return (new ApiReader())->getData();
+	}
 
 	/**
 	 * Get Elgg event information
