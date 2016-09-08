@@ -21,8 +21,7 @@
  * @uses $vars['label_tag']   HTML tag that wraps concatinated label and input. Defaults to 'label'.
  */
 
-$vars['class'] = (array) elgg_extract('class', $vars, []);
-$vars['class'][] = 'elgg-input-checkbox';
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-checkbox');
 
 $defaults = array(
 	'default' => 0,

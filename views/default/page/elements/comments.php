@@ -21,9 +21,8 @@ if (!$limit) {
 
 $attr = [
 	'id' => elgg_extract('id', $vars, 'comments'),
-	'class' => (array) elgg_extract('class', $vars, []),
+	'class' => elgg_extract_class($vars, 'elgg-comments'),
 ];
-$attr['class'][] = 'elgg-comments';
 
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);

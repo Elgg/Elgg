@@ -64,6 +64,12 @@ Form footer rendering can now be deferred until the form view and its extensions
  * ``elgg_set_form_footer()`` - sets form footer for deferred rendering
  * ``elgg_get_form_footer()`` - returns currently set form footer
 
+New API for extracting class names from arrays
+----------------------------------------------
+
+Similar to ``elgg_extract()``, ``elgg_extract_class()`` extracts the "class" key (if present), merges into existing class names, and always returns an array.
+
+
 From 2.1 to 2.2
 ===============
 
@@ -97,7 +103,7 @@ Added ``elgg/lightbox`` module
 New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
 
 Added ``elgg/embed`` module
-------------------------------
+---------------------------
 
 Even though rarely necessary, ``elgg/embed`` AMD module can be used to access the embed methods programmatically. The module bootstraps itself when necessary and is unlikely to require further decoration.
 

@@ -26,8 +26,7 @@ if (isset($vars['options_values'])) {
 $entity_allows_comments = elgg_extract('entity_allows_comments', $vars, true);
 unset($vars['entity_allows_comments']);
 
-$vars['class'] = (array) elgg_extract('class', $vars, []);
-$vars['class'][] = 'elgg-input-access';
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-access');
 
 // this will be passed to plugin hooks ['access:collections:write', 'user'] and ['default', 'access']
 $params = array();

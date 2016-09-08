@@ -11,10 +11,6 @@ if (!is_string($title) || $title === '') {
 	return;
 }
 
-$attributes = [];
-$class = elgg_extract('class', $vars);
-if (!empty($class)) {
-	$attributes['class'] = $class;
-}
+$attributes['class'] = elgg_extract_class($vars);
 
 echo elgg_format_element('h2', $attributes, $title);

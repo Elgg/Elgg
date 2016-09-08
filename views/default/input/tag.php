@@ -8,8 +8,7 @@
  * @uses $vars['class'] Additional CSS class
  */
 
-$vars['class'] = (array) elgg_extract('class', $vars, []);
-$vars['class'][] = 'elgg-input-tag';
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-tag');
 
 $defaults = array(
 	'value' => '',
