@@ -1131,9 +1131,12 @@ function elgg_view_title($title, array $vars = array()) {
  * @since 1.7.2
  */
 function elgg_view_friendly_time($time) {
-	return elgg_view('output/friendlytime', array('time' => $time));
-}
+	$view = 'output/friendlytime';
+	$vars = ['time' => $time];
+	$viewtype = elgg_view_exists($view) ? '' : 'default';
 
+	return _elgg_view_under_viewtype($view, $vars, $viewtype);
+}
 
 /**
  * Returns rendered comments and a comment form for an entity.
@@ -1909,6 +1912,32 @@ function _elgg_get_js_page_data() {
 	}
 
 	return $elgg;
+}
+
+/**
+ * Render a view while the global viewtype is temporarily changed. This makes sure that
+ * nested views use the same viewtype.
+ *
+ * @param string  $view     View name
+ * @param array   $vars     View vars
+ * @param string  $viewtype Temporary viewtype ('' to leave current)
+ *
+ * @return mixed
+ * @access private
+ */
+function _elgg_view_under_viewtype($view, $vars, $viewtype) {
+	if ($viewtype) {
+		$old = elgg_get_viewtype();
+		elgg_set_viewtype($viewtype);
+	}
+
+	$ret = elgg_view($view, $vars);
+
+	if ($viewtype) {
+		elgg_set_viewtype($old);
+	}
+
+	return $ret;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
