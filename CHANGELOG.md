@@ -1,3 +1,23 @@
+<a name="1.12.13"></a>
+### 1.12.13  (2016-09-08)
+
+#### Contributors
+
+* Steve Clay (3)
+* iionly (3)
+
+#### Documentation
+
+* **license:** clarifies dual licensing in LICENSE.txt ([1db4994f](https://github.com/Elgg/Elgg/commit/1db4994f8bab11898153c4c9e6e2898c0549714f))
+
+
+#### Bug Fixes
+
+* **js:** output deprecation messages to admins in browser console only ([a8052f9c](https://github.com/Elgg/Elgg/commit/a8052f9cd5e2cbc120a6d5b7b3664049d569011e))
+* **members:** Don't rely on newest members tab set as default tab in pagehandler for members page ([a78aa354](https://github.com/Elgg/Elgg/commit/a78aa354ffa79f9f8fb90ad8aa3cccdf4554b034))
+* **pages:** operations keep track of more than 10 child pages ([bc5f414b](https://github.com/Elgg/Elgg/commit/bc5f414bf597fe440ca096333fafea330746a323))
+
+
 <a name="1.12.12"></a>
 ### 1.12.12  (2016-08-05)
 
