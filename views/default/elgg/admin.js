@@ -108,7 +108,7 @@ define(function(require) {
 		var $form = $('<form method="post" />');
 		$form.prop('action', elgg.security.addToken(this.href));
 		$form.append('<input type="hidden" name="guids" value="' + guids.join(',') + '" />');
-		$form.trigger('submit');
+		$form.appendTo("body").submit();
 	}
 
 	/**
