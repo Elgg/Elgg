@@ -164,7 +164,7 @@ if (!$error) {
 				$blog->save();
 			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
-			elgg_delete_river(array(
+			_elgg_delete_river(array(
 				'object_guid' => $blog->guid,
 				'action_type' => 'create',
 			));
