@@ -503,6 +503,7 @@ input {
 
 /* default elgg core input field classes */
 .elgg-input-text,
+.elgg-input-number,
 .elgg-input-tags,
 .elgg-input-url,
 .elgg-input-plaintext,
@@ -588,6 +589,7 @@ select {
 }
 
 .elgg-form-useradd input[type=text],
+.elgg-form-useradd input[type=number],
 .elgg-form-useradd input[type=password],
 .elgg-form-useradd input[type=email] {
 	width: 300px;
@@ -1887,6 +1889,7 @@ html {
 }
 @media (max-width: 480px) {
 	.elgg-form-useradd input[type=text],
+	.elgg-form-useradd input[type=number],
 	.elgg-form-useradd input[type=password] {
 		width: 100%;
 	}

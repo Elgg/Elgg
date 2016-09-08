@@ -163,6 +163,16 @@ $ipsum = elgg_view('developers/ipsum');
 			'value' => $ipsum,
 			'label' => 'Long textarea input (.elgg-input-longtext):',
 		));
+
+		echo elgg_view_input('number', array(
+			'name' => 'f15',
+			'id' => 'f15',
+			'value' => 1,
+			'min' => 1,
+			'step' => 1,
+			'label' => 'Number input (.elgg-input-number) with custom options:',
+			'help' => 'Enter an integer number larger than zero',
+		));
 		?>
 	</fieldset>
 </form>

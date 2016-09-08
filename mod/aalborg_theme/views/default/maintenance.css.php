@@ -157,6 +157,7 @@ input, textarea {
 input[type=email]:focus,
 input[type=password]:focus,
 input[type=text]:focus,
+input[type=number]:focus,
 input[type=url]:focus,
 textarea:focus {
 	border: solid 1px #C2C2C2;
