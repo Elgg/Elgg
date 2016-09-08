@@ -571,12 +571,6 @@ select {
 	background-color: #000;
 	text-decoration: none;
 }
-.elgg-button-submit.elgg-state-disabled,
-.elgg-button-action.elgg-state-disabled {
-	color: #999;
-	cursor: default;
-}
-
 .elgg-button-cancel {
 	color: #333;
 	background-color: #ccc;
@@ -586,6 +580,13 @@ select {
 	color: #222;
 	background-color: #999;
 	text-decoration: none;
+}
+.elgg-button:disabled,
+.elgg-button.elgg-state-disabled {
+	background: #DEDEDE;
+	color: white;
+	cursor: default;
+	border-color: transparent;
 }
 
 .elgg-form-useradd input[type=text],
