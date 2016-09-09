@@ -1,18 +1,21 @@
 [
     {
         "name": "composer/installers",
-        "version": "v1.0.21",
-        "version_normalized": "1.0.21.0",
+        "version": "v1.1.0",
+        "version_normalized": "1.1.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45"
+            "reference": "a3595c5272a6f247228abb20076ed27321e4aae9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
-            "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
+            "url": "https://api.github.com/repos/composer/installers/zipball/a3595c5272a6f247228abb20076ed27321e4aae9",
+            "reference": "a3595c5272a6f247228abb20076ed27321e4aae9",
             "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
         },
         "replace": {
             "roundcube/plugin-installer": "*",
@@ -22,18 +25,18 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2015-02-18 17:17:01",
-        "type": "composer-installer",
+        "time": "2016-07-05 06:18:20",
+        "type": "composer-plugin",
         "extra": {
-            "class": "Composer\\Installers\\Installer",
+            "class": "Composer\\Installers\\Plugin",
             "branch-alias": {
                 "dev-master": "1.0-dev"
             }
         },
         "installation-source": "dist",
         "autoload": {
-            "psr-0": {
-                "Composer\\Installers\\": "src/"
+            "psr-4": {
+                "Composer\\Installers\\": "src/Composer/Installers"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -48,13 +51,16 @@
             }
         ],
         "description": "A multi-framework Composer library installer",
-        "homepage": "http://composer.github.com/installers/",
+        "homepage": "https://composer.github.io/installers/",
         "keywords": [
             "Craft",
             "Dolibarr",
             "Hurad",
+            "ImageCMS",
             "MODX Evo",
+            "Mautic",
             "OXID",
+            "RadPHP",
             "SMF",
             "Thelia",
             "WolfCMS",
@@ -70,6 +76,7 @@
             "dokuwiki",
             "drupal",
             "elgg",
+            "expressionengine",
             "fuelphp",
             "grav",
             "installer",
@@ -98,23 +105,23 @@
     },
     {
         "name": "htmlawed/htmlawed",
-        "version": "1.1.19",
-        "version_normalized": "1.1.19.0",
+        "version": "1.1.22",
+        "version_normalized": "1.1.22.0",
         "source": {
             "type": "git",
             "url": "https://github.com/kesar/HTMLawed.git",
-            "reference": "620c38edd57e680260ebd8dd0e98167d97e9a7bf"
+            "reference": "b270453ba016ee4c6dae585f047d1e4f3cc456a1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/kesar/HTMLawed/zipball/620c38edd57e680260ebd8dd0e98167d97e9a7bf",
-            "reference": "620c38edd57e680260ebd8dd0e98167d97e9a7bf",
+            "url": "https://api.github.com/repos/kesar/HTMLawed/zipball/b270453ba016ee4c6dae585f047d1e4f3cc456a1",
+            "reference": "b270453ba016ee4c6dae585f047d1e4f3cc456a1",
             "shasum": ""
         },
         "require": {
             "php": ">4.4.0"
         },
-        "time": "2015-04-05 17:23:05",
+        "time": "2016-08-27 18:53:27",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -134,7 +141,7 @@
                 "role": "Developer"
             }
         ],
-        "description": "htmLawed - Process text with HTML markup to make it more compliant with HTML  standards and administrative policies",
+        "description": "htmLawed - Process text with HTML markup to make it more compliant with HTML standards and administrative policies",
         "homepage": "http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/",
         "keywords": [
             "HTMLtidy",

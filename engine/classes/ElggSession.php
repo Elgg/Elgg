@@ -213,7 +213,7 @@ class ElggSession implements \ArrayAccess {
 	/**
 	 * Gets the logged in user
 	 * 
-	 * @return \ElggUser
+	 * @return \ElggUser|null
 	 * @since 1.9
 	 */
 	public function getLoggedInUser() {

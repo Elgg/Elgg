@@ -70,11 +70,14 @@ function elgg_autop($string) {
  * @since 1.7.2
  */
 function elgg_get_excerpt($text, $num_chars = 250) {
+	$view = 'output/excerpt';
 	$vars = [
 		'text' => $text,
 		'num_chars' => $num_chars,
 	];
-	return elgg_view('output/excerpt', $vars);
+	$viewtype = elgg_view_exists($view) ? '' : 'default';
+
+	return _elgg_view_under_viewtype($view, $vars, $viewtype);
 }
 
 /**

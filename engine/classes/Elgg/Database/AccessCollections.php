@@ -392,7 +392,11 @@ class AccessCollections {
 	 *
 	 * @return bool
 	 */
+
 	public function hasAccessToEntity($entity, $user = null) {
+		if (!$entity instanceof \ElggEntity) {
+			return false;
+		}
 
 		// See #7159. Must not allow ignore access to affect query
 		$ia = elgg_set_ignore_access(false);
