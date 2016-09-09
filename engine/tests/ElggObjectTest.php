@@ -201,14 +201,13 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$guid2 = $e2->getGUID();
 
 		// fake being logged out
-		$user = $_SESSION['user'];
-		unset($_SESSION['user']);
+		$old_user = $this->replaceSession();
 		$ia = elgg_set_ignore_access(true);
 
 		$this->assertTrue($e1->disable(null, true));
 
 		// "log in" original user
-		$_SESSION['user'] = $user;
+		$this->replaceSession($old_user);
 		elgg_set_ignore_access($ia);
 
 		$this->assertFalse(get_entity($guid1));
