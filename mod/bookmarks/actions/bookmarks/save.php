@@ -11,7 +11,6 @@ $address = get_input('address');
 $access_id = get_input('access_id');
 $tags = get_input('tags');
 $guid = get_input('guid');
-$share = get_input('share');
 $container_guid = get_input('container_guid', elgg_get_logged_in_user_guid());
 
 elgg_make_sticky_form('bookmarks');
@@ -69,13 +68,6 @@ if ($bookmark->save()) {
 
 	elgg_clear_sticky_form('bookmarks');
 
-	// @todo
-	if (is_array($shares) && sizeof($shares) > 0) {
-		foreach($shares as $share) {
-			$share = (int) $share;
-			add_entity_relationship($bookmark->getGUID(), 'share', $share);
-		}
-	}
 	system_message(elgg_echo('bookmarks:save:success'));
 
 	//add to river only if new

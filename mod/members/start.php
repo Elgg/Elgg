@@ -130,7 +130,7 @@ function members_nav_popular($hook, $type, $returnvalue, $params) {
 function members_nav_newest($hook, $type, $returnvalue, $params) {
 	$returnvalue['newest'] = array(
 		'title' => elgg_echo('sort:newest'),
-		'url' => "members",
+		'url' => "members/newest",
 	);
 	return $returnvalue;
 }
