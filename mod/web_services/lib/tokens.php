@@ -18,8 +18,7 @@ function create_user_token($username, $expire = 60) {
 	$user = get_user_by_username($username);
 	$time = time() + 60 * $expire;
 
-	$crypto = new ElggCrypto();
-	$token = $crypto->getRandomString(32, ElggCrypto::CHARS_HEX);
+	$token = _elgg_services()->crypto->getRandomString(32, ElggCrypto::CHARS_HEX);
 
 	if (!$user) {
 		return false;

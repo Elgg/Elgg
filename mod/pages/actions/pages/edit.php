@@ -81,40 +81,39 @@ if ($parent_guid && $parent_guid != $page_guid) {
 		// If is below, bring all child elements forward
 		if ($page_guid == $tree_page->guid) {
 			$previous_parent = $page->parent_guid;
-			$children = elgg_get_entities_from_metadata(array(
+
+			$children = new ElggBatch('elgg_get_entities_from_metadata', [
 				'metadata_name' => 'parent_guid',
-				'metadata_value' => $page->getGUID()
-			));
-			if ($children) {
-				foreach ($children as $child) {
-					$child->parent_guid = $previous_parent;
-				}
+				'metadata_value' => $page->guid,
+				'limit' => 0,
+			]);
+			foreach ($children as $child) {
+				$child->parent_guid = $previous_parent;
 			}
 		}
 	}
 	$page->parent_guid = $parent_guid;
 }
 
-if ($page->save()) {
-
-	elgg_clear_sticky_form('page');
-
-	// Now save description as an annotation
-	$page->annotate('page', $page->description, $page->access_id);
-
-	system_message(elgg_echo('pages:saved'));
-
-	if ($new_page) {
-		elgg_create_river_item(array(
-			'view' => 'river/object/page/create',
-			'action_type' => 'create',
-			'subject_guid' => elgg_get_logged_in_user_guid(),
-			'object_guid' => $page->guid,
-		));
-	}
-
-	forward($page->getURL());
-} else {
+if (!$page->save()) {
 	register_error(elgg_echo('pages:notsaved'));
 	forward(REFERER);
 }
+
+elgg_clear_sticky_form('page');
+
+// Now save description as an annotation
+$page->annotate('page', $page->description, $page->access_id);
+
+system_message(elgg_echo('pages:saved'));
+
+if ($new_page) {
+	elgg_create_river_item(array(
+		'view' => 'river/object/page/create',
+		'action_type' => 'create',
+		'subject_guid' => elgg_get_logged_in_user_guid(),
+		'object_guid' => $page->guid,
+	));
+}
+
+forward($page->getURL());

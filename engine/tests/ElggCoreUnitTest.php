@@ -48,6 +48,23 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 		return $this->assert(new IdenticalEntityExpectation($first), $second, $message);
 	}
 
+	/**
+	 * Replace the current user session
+	 *
+	 * @param ElggUser $user New user to login as (null to log out)
+	 * @return ElggUser|null Removed session user (or null)
+	 */
+	public function replaceSession(ElggUser $user = null) {
+		$session = elgg_get_session();
+		$old = $session->getLoggedInUser();
+		if ($user) {
+			$session->setLoggedInUser($user);
+		} else {
+			$session->removeLoggedInUser();
+		}
+		return $old;
+	}
+
 }
 
 /**
