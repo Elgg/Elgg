@@ -92,6 +92,7 @@ class InstallerTest extends TestCase
             array('bitrix-module', true),
             array('bitrix-component', true),
             array('bitrix-theme', true),
+            array('bonefish-package', true),
             array('cakephp', false),
             array('cakephp-', false),
             array('cakephp-app', false),
@@ -109,10 +110,15 @@ class InstallerTest extends TestCase
             array('craft-plugin', true),
             array('croogo-plugin', true),
             array('croogo-theme', true),
+            array('decibel-app', true),
             array('dokuwiki-plugin', true),
             array('dokuwiki-template', true),
             array('drupal-module', true),
             array('dolibarr-module', true),
+            array('ee3-theme', true),
+            array('ee3-addon', true),
+            array('ee2-theme', true),
+            array('ee2-addon', true),
             array('elgg-plugin', true),
             array('fuel-module', true),
             array('fuel-package', true),
@@ -120,6 +126,9 @@ class InstallerTest extends TestCase
             array('fuelphp-component', true),
             array('hurad-plugin', true),
             array('hurad-theme', true),
+            array('imagecms-template', true),
+            array('imagecms-module', true),
+            array('imagecms-library', true),
             array('joomla-library', true),
             array('kirby-plugin', true),
             array('kohana-module', true),
@@ -146,6 +155,7 @@ class InstallerTest extends TestCase
             array('prestashop-module', true),
             array('prestashop-theme', true),
             array('puppet-module', true),
+            array('radphp-bundle', true),
             array('redaxo-addon', true),
             array('redaxo-bestyle-plugin', true),
             array('roundcube-plugin', true),
@@ -173,6 +183,11 @@ class InstallerTest extends TestCase
             array('zend-library', true),
             array('zikula-module', true),
             array('zikula-theme', true),
+            array('kodicms-plugin', true),
+            array('kodicms-media', true),
+            array('phifty-bundle', true),
+            array('phifty-library', true),
+            array('phifty-framework', true),
         );
     }
 
@@ -202,9 +217,13 @@ class InstallerTest extends TestCase
             array('annotatecms-module', 'addons/modules/my_module/', 'vysinsky/my_module'),
             array('annotatecms-component', 'addons/components/my_component/', 'vysinsky/my_component'),
             array('annotatecms-service', 'addons/services/my_service/', 'vysinsky/my_service'),
-            array('bitrix-module', 'local/modules/my_module/', 'author/my_module'),
-            array('bitrix-component', 'local/components/my_component/', 'author/my_component'),
-            array('bitrix-theme', 'local/templates/my_theme/', 'author/my_theme'),
+            array('bitrix-module', 'bitrix/modules/my_module/', 'author/my_module'),
+            array('bitrix-component', 'bitrix/components/my_component/', 'author/my_component'),
+            array('bitrix-theme', 'bitrix/templates/my_theme/', 'author/my_theme'),
+            array('bitrix-d7-module', 'bitrix/modules/author.my_module/', 'author/my_module'),
+            array('bitrix-d7-component', 'bitrix/components/author/my_component/', 'author/my_component'),
+            array('bitrix-d7-template', 'bitrix/templates/author_my_template/', 'author/my_template'),
+            array('bonefish-package', 'Packages/bonefish/package/', 'bonefish/package'),
             array('cakephp-plugin', 'Plugin/Ftp/', 'shama/ftp'),
             array('chef-cookbook', 'Chef/mre/my_cookbook/', 'mre/my_cookbook'),
             array('chef-role', 'Chef/roles/my_role/', 'mre/my_role'),
@@ -217,6 +236,7 @@ class InstallerTest extends TestCase
             array('craft-plugin', 'craft/plugins/my_plugin/', 'mdcpepper/my_plugin'),
             array('croogo-plugin', 'Plugin/Sitemaps/', 'fahad19/sitemaps'),
             array('croogo-theme', 'View/Themed/Readable/', 'rchavik/readable'),
+            array('decibel-app', 'app/someapp/', 'author/someapp'),
             array('dokuwiki-plugin', 'lib/plugins/someplugin/', 'author/someplugin'),
             array('dokuwiki-template', 'lib/tpl/sometemplate/', 'author/sometemplate'),
             array('dolibarr-module', 'htdocs/custom/my_module/', 'shama/my_module'),
@@ -225,12 +245,19 @@ class InstallerTest extends TestCase
             array('drupal-profile', 'profiles/my_module/', 'shama/my_module'),
             array('drupal-drush', 'drush/my_module/', 'shama/my_module'),
             array('elgg-plugin', 'mod/sample_plugin/', 'test/sample_plugin'),
+            array('ee3-addon', 'system/user/addons/ee_theme/', 'author/ee_theme'),
+            array('ee3-theme', 'themes/user/ee_package/', 'author/ee_package'),
+            array('ee2-addon', 'system/expressionengine/third-party/ee_theme/', 'author/ee_theme'),
+            array('ee2-theme', 'themes/third-party/ee_package/', 'author/ee_package'),
             array('fuel-module', 'fuel/app/modules/module/', 'fuel/module'),
             array('fuel-package', 'fuel/packages/orm/', 'fuel/orm'),
             array('fuel-theme', 'fuel/app/themes/theme/', 'fuel/theme'),
             array('fuelphp-component', 'components/demo/', 'fuelphp/demo'),
             array('hurad-plugin', 'plugins/Akismet/', 'atkrad/akismet'),
             array('hurad-theme', 'plugins/Hurad2013/', 'atkrad/Hurad2013'),
+            array('imagecms-template', 'templates/my_template/', 'shama/my_template'),
+            array('imagecms-module', 'application/modules/my_module/', 'shama/my_module'),
+            array('imagecms-library', 'application/libraries/my_library/', 'shama/my_library'),
             array('joomla-plugin', 'plugins/my_plugin/', 'shama/my_plugin'),
             array('kirby-plugin', 'site/plugins/my_plugin/', 'shama/my_plugin'),
             array('kohana-module', 'modules/my_package/', 'shama/my_package'),
@@ -264,6 +291,7 @@ class InstallerTest extends TestCase
             array('pimcore-plugin', 'plugins/MyPlugin/', 'ubikz/my_plugin'),
             array('ppi-module', 'modules/foo/', 'test/foo'),
             array('puppet-module', 'modules/puppet-name/', 'puppet/puppet-name'),
+            array('radphp-bundle', 'src/Migration/', 'atkrad/migration'),
             array('redaxo-addon', 'redaxo/include/addons/my_plugin/', 'shama/my_plugin'),
             array('redaxo-bestyle-plugin', 'redaxo/include/addons/be_style/plugins/my_plugin/', 'shama/my_plugin'),
             array('roundcube-plugin', 'plugins/base/', 'test/base'),
@@ -297,6 +325,11 @@ class InstallerTest extends TestCase
             array('zend-extra', 'extras/library/zend_test/', 'shama/zend_test'),
             array('zikula-module', 'modules/my-test_module/', 'my/test_module'),
             array('zikula-theme', 'themes/my-test_theme/', 'my/test_theme'),
+            array('kodicms-media', 'cms/media/vendor/my_media/', 'shama/my_media'),
+            array('kodicms-plugin', 'cms/plugins/my_plugin/', 'shama/my_plugin'),
+            array('phifty-bundle', 'bundles/core/', 'shama/core'),
+            array('phifty-library', 'libraries/my-lib/', 'shama/my-lib'),
+            array('phifty-framework', 'frameworks/my-framework/', 'shama/my-framework'),
         );
     }
 
@@ -372,6 +405,27 @@ class InstallerTest extends TestCase
         ));
         $result = $installer->getInstallPath($package);
         $this->assertEquals('my/custom/path/my_plugin/', $result);
+    }
+
+    /**
+     * testVendorPath
+     */
+    public function testVendorPath()
+    {
+        $installer = new Installer($this->io, $this->composer);
+        $package = new Package('penyaskito/my_module', '1.0.0', '1.0.0');
+        $package->setType('drupal-module');
+        $consumerPackage = new RootPackage('drupal/drupal', '1.0.0', '1.0.0');
+        $this->composer->setPackage($consumerPackage);
+        $consumerPackage->setExtra(array(
+          'installer-paths' => array(
+            'modules/custom/{$name}/' => array(
+              'vendor:penyaskito'
+            ),
+          ),
+        ));
+        $result = $installer->getInstallPath($package);
+        $this->assertEquals('modules/custom/my_module/', $result);
     }
 
     /**
