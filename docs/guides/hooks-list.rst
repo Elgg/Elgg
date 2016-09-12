@@ -91,10 +91,6 @@ System hooks
 **simplecache:generate, <view>**
 	Triggered when generating the cached content of a view.
 
-**prepare, breadcrumbs**
-    In elgg_get_breadcrumbs(), this filters the registered breadcrumbs before
-    returning them, allowing a plugin to alter breadcrumb strategy site-wide.
-
 **add, river**
 
 **elgg.data, site**
@@ -543,6 +539,15 @@ Views
     plugins to override or provide an implementation. Handlers receive the method arguments via
     ``$params['arguments']`` and should return an instance of ``Elgg\Views\TableColumn`` if they
     wish to specify the column directly.
+
+Navigation
+==========
+
+**prepare, breadcrumbs**
+    In ``elgg_get_breadcrumbs()``, this filters the registered breadcrumbs before returning them, allowing a plugin to alter breadcrumb strategy site-wide.
+
+**filter_tabs, <context>**
+    Triggered by ``elgg_get_filter_tabs()`` and can be used to alter filter tabs of the content layout.
 
 Files
 =====

@@ -123,6 +123,9 @@ function groups_init() {
 	// Help core resolve page owner guids from group routes
 	// Registered with an earlier priority to be called before default_page_owner_handler()
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
+
+	// Filter content layout tabs
+	elgg_register_plugin_hook_handler('filter_tabs', 'groups/all', 'groups_prepare_filter_tabs', 400);
 }
 
 /**
@@ -257,8 +260,33 @@ function groups_page_handler($page) {
 
 	$vars = [];
 	switch ($page[0]) {
+		case 'all' :
+			$plugin_root = __DIR__;
+			$viewtype = elgg_get_viewtype();
+
+			$resource_view_path = "$plugin_root/views/$viewtype/resources/groups/all.php";
+			$sort_menu_view_path = "$plugin_root/views/$viewtype/groups/group_sort_menu.php";
+
+			if (_elgg_view_may_be_altered('resources/groups/all', $resource_view_path) &&
+			_elgg_view_may_be_altered('groups/group_sort_menu', $sort_menu_view_path)) {
+
+				elgg_deprecated_notice("'groups/group_sort_menu' view has been deprecated. "
+				. "Update 'resources/groups/all' view to use elgg_get_filter_tabs() as the filter value instead "
+				. "and remove the altered 'groups/group_sort_menu' view.", '2.3');
+
+				// We need to make sure that tabs added via the hook appear in the filter menu
+				$selected_tab = get_input('filter', 'newest');
+				$filter_vars = ['__ignore_defaults' => true]; // used to ensure BC in the hook
+				$tabs = elgg_get_filter_tabs('groups/all', $selected_tab, [], $filter_vars);
+				foreach ($tabs as $name => $tab) {
+					elgg_register_menu_item('filter', $tab);
+				}
+			}
+
+			echo elgg_view_resource("groups/all");
+			break;
+
 		case 'add':
-		case 'all':
 		case 'owner':
 		case 'search':
 			echo elgg_view_resource("groups/{$page[0]}");
@@ -1034,4 +1062,48 @@ function groups_default_page_owner_handler($hook, $type, $return, $params) {
 			}
 			return $user->guid;
 	}
+}
+
+/**
+ * Returns an array of tabs to be registered as filter menu items on the groups/all route
+ *
+ * @param string $hook   "filter_tabs"
+ * @param string $type   "groups/all"
+ * @param array  $return Tabs
+ * @param array  $params Hook params
+ * @return array
+ */
+function groups_prepare_filter_tabs($hook, $type, $return, $params) {
+
+	if (elgg_extract('__ignore_defaults', $params)) {
+		// @todo: remove in 3.0
+		// this is here to avoid reregistering tabs that may have been
+		// removed in a overwrriten groups/group_sort_menu
+		return;
+	}
+
+	$tabs = array(
+		'newest' => array(
+			'text' => elgg_echo('sort:newest'),
+			'href' => 'groups/all?filter=newest',
+			'priority' => 200,
+		),
+		'alpha' => array(
+			'text' => elgg_echo('sort:alpha'),
+			'href' => 'groups/all?filter=alpha',
+			'priority' => 250,
+		),
+		'popular' => array(
+			'text' => elgg_echo('sort:popular'),
+			'href' => 'groups/all?filter=popular',
+			'priority' => 300,
+		),
+		'featured' => array(
+			'text' => elgg_echo('groups:featured'),
+			'href' => 'groups/all?filter=featured',
+			'priority' => 400,
+		),
+	);
+
+	return $return + $tabs;
 }

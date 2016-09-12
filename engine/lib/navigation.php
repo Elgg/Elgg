@@ -641,6 +641,75 @@ function _elgg_nav_public_pages($hook_name, $entity_type, $return_value, $params
 	return $return_value;
 }
 
+/**
+ * Returns an array of tabs to be registered as 'filter' menu items
+ * of the 'content' layout
+ * <code>
+ * [
+ *    'tab_name' => [
+ *       'text' => 'Tab text',
+ *       'href' => '/path/to/page',
+ *       'priority' => 200,
+ *    ],
+ * ]
+ * </code>
+ *
+ * @param string     $context      Context or resource ID
+ * @param string     $selected     Name of the selected tab
+ * @param array|true $default_tabs Default tabs
+ *                                 If set to true, a standard set of
+ *                                 tabs (All, Mine, Friends) will be used
+ * @param array      $params       Additional params
+ * @return array
+ */
+function elgg_get_filter_tabs($context, $selected = null, $default_tabs = [], array $params = []) {
+
+	if (!$context) {
+		return [];
+	}
+
+	if ($default_tabs === true && ($user = elgg_get_logged_in_user_entity())) {
+		$username = $user->username;
+		$default_tabs = array(
+			'all' => array(
+				'text' => elgg_echo('all'),
+				'href' => elgg_extract('all_link', $params, "$context/all"),
+				'priority' => 200,
+			),
+			'mine' => array(
+				'text' => elgg_echo('mine'),
+				'href' => elgg_extract('mine_link', $params, "$context/owner/$username"),
+				'priority' => 300,
+			),
+			'friend' => array(
+				'text' => elgg_echo('friends'),
+				'href' => elgg_extract('friends_link', $params, "$context/friends/$username"),
+				'priority' => 400,
+			),
+		);
+	} else if (!is_array($default_tabs)) {
+		$default_tabs = [];
+	}
+
+	$tabs = (array) elgg_trigger_plugin_hook('filter_tabs', $context, $params, $default_tabs);
+
+	foreach ($tabs as $name => $tab) {
+		if (!isset($tab['name'])) {
+			$tab['name'] = $name;
+		}
+		if ($selected) {
+			$tab['selected'] = $name == $selected;
+		}
+		$tabs[$name] = $tab;
+	}
+
+	uasort($tabs, function ($a, $b) {
+		return elgg_extract('priority', $a, 500) - elgg_extract('priority', $b, 500);
+	});
+
+	return $tabs;
+}
+
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_nav_init');
 };

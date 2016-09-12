@@ -32,6 +32,7 @@ Deprecated Views
 ----------------
 
  * ``wallled_garden.js`` is deprecated: Use ``elgg/walled_garden`` module instead.
+ * ``groups/group_sort_menu`` is deprecated: Use ``'filter_tabs','groups/all'`` hook to alter tabs.
 
 New API for page and action handling
 ------------------------------------
@@ -90,6 +91,13 @@ Each column is an ``Elgg\Views\TableColumn`` object, usually created via methods
 
 Plugins can provide or alter these factory methods (see ``Elgg\Views\TableColumn\ColumnFactory``).
 See the view ``admin/users/newest`` for a usage example.
+
+Layout filters
+--------------
+
+ * ``content`` layout view now accepts an array of filter tabs through the ``filter`` parameter - these tabs will be automatically registered as ``filter`` menu items.
+ * ``elgg_get_filter_tabs()`` can be used generically to obtain filter tabs for a given resource. This function triggers ``'filter_tabs'`` hook that can be used to alter tabs for a given context.
+ * ``resources/groups/all`` has been updated to use the updated ``filter`` parameter - plugins overriding the view with a custom filter, should update their use of the ``filter`` parameter to benefit from the new ``'filter_tabs'`` hook.
 
 From 2.1 to 2.2
 ===============

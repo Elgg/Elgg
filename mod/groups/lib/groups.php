@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Groups function library
  */
@@ -16,7 +17,7 @@ function groups_register_profile_buttons($group) {
 	];
 
 	$items = elgg_trigger_plugin_hook('profile_buttons', 'group', $params, []);
-	
+
 	if (!empty($items)) {
 		foreach ($items as $item) {
 			elgg_register_menu_item('title', $item);
@@ -101,13 +102,14 @@ function groups_prepare_form_vars($group = null) {
  * @return array
  */
 function groups_get_group_tool_options(\ElggGroup $group = null) {
-	
+
 	$tool_options = elgg_get_config('group_tool_options');
-	
+
 	$hook_params = [
 		'group_tool_options' => $tool_options,
 		'entity' => $group,
 	];
-		
+
 	return (array) elgg_trigger_plugin_hook('tool_options', 'group', $hook_params, $tool_options);
 }
+
