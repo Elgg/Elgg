@@ -31,7 +31,7 @@ Deprecated Views
 
  * ``resources/file/world``: Use the ``resources/file/all`` view instead.
  * ``resources/pages/world``: Use the ``resources/pages/all`` view instead.
- * ``wallled_garden.js``: Use the ``elgg/walled_garden`` module instead.
+ * ``walled_garden.js``: Use the ``elgg/walled_garden`` module instead.
 
 New API for page and action handling
 ------------------------------------
