@@ -215,6 +215,23 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$this->user->delete();
 	}
 
+	public function testElggUserNotificationSettings() {
+
+		elgg_register_notification_method('method1');
+		elgg_register_notification_method('method2');
+
+		$this->user->setNotificationSetting('method1', true);
+		$this->user->setNotificationSetting('method2', false);
+		$this->user->setNotificationSetting('method3', true);
+
+		$settings = $this->user->getNotificationSettings();
+		$this->assertTrue($settings['method1']);
+		$this->assertFalse($settings['method2']);
+		$this->assertTrue(!isset($settings['method3']));
+
+		$this->user->delete();
+	}
+
 	protected function fetchUser($guid) {
 		global $CONFIG;
 

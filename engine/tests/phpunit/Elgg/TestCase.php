@@ -169,9 +169,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			self::bootstrap();
 		}
 
-		$session = \ElggSession::getMock();
-		_elgg_services()->setValue('session', $session);
-
+		_elgg_services()->setValue('session', self::mocks()->session);
 		_elgg_services()->setValue('db', self::mocks()->db);
 		_elgg_services()->setValue('entityTable', self::mocks()->entityTable);
 		_elgg_services()->setValue('metadataTable', self::mocks()->metadataTable);
@@ -185,6 +183,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$dt = new DateTime();
 		_elgg_services()->entityTable->setCurrentTime($dt);
 		_elgg_services()->metadataTable->setCurrentTime($dt);
+		_elgg_services()->relationshipsTable->setCurrentTime($dt);
 		_elgg_services()->annotations->setCurrentTime($dt);
 		_elgg_services()->usersTable->setCurrentTime($dt);
 	}

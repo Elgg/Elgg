@@ -3,16 +3,23 @@
 namespace Elgg\Mocks\Database;
 
 use Elgg\Database\RelationshipsTable as DbRelationshipsTable;
-use ElggMetadata;
-use ElggRelationship;
 use stdClass;
 
+/**
+ * This mock table is designed to simplify testing of DB-dependent services.
+ * It populates the mock database with query specifications for predictable results
+ * when relationship are requested or deleted.
+ *
+ * Note that this mock is not designed for testing the relationships table itself.
+ * When testing the relationships table, you should define query specs individually for the
+ * method being tested.
+ */
 class RelationshipsTable extends DbRelationshipsTable {
 
 	/**
-	 * @var ElggMetadata
+	 * @var stdClass[]
 	 */
-	public $mocks = [];
+	public $rows = [];
 
 	/**
 	 * @var int
@@ -28,116 +35,137 @@ class RelationshipsTable extends DbRelationshipsTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete($id, $call_event = true) {
-		if ($result = parent::delete($id, $call_event)) {
-			unset($this->mocks[$id]);
-			if (!empty($this->query_specs[$id])) {
-				foreach ($this->query_specs[$id] as $spec) {
-					$this->db->removeQuerySpec($spec);
-				}
-			}
-		}
-		return $result;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function add($guid_one, $relationship, $guid_two) {
 		$rel = $this->check($guid_one, $relationship, $guid_two);
 		if ($rel) {
 			return false;
 		}
 
-		$this->setCurrentTime();
-
 		$this->iterator++;
 		$id = $this->iterator;
 
 		$row = (object) [
 			'id' => $id,
-			'guid_one' => $guid_one,
-			'guid_two' => $guid_two,
+			'guid_one' => (int) $guid_one,
+			'guid_two' => (int) $guid_two,
 			'relationship' => $relationship,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
 		];
 
+		$this->rows[$id] = $row;
+
+		$this->addQuerySpecs($row);
+
+		return parent::add($row->guid_one, $row->relationship, $row->guid_two);
+	}
+
+	/**
+	 * Clear query specs
+	 *
+	 * @param int $id Relationship ID
+	 * @return void
+	 */
+	public function clearQuerySpecs($id) {
+		if (!empty($this->query_specs[$id])) {
+			foreach ($this->query_specs[$id] as $spec) {
+				$this->db->removeQuerySpec($spec);
+			}
+		}
+	}
+
+	/**
+	 * Add query specs for a relationship data row
+	 *
+	 * @param stdClass $row Data row
+	 * @return void
+	 */
+	public function addQuerySpecs(stdClass $row) {
+
+		$this->clearQuerySpecs($row->id);
+
+		$dbprefix = elgg_get_config('dbprefix');
+
 		// Insert a new relationship
 		$sql = "
-			INSERT INTO {$this->db->prefix}entity_relationships
+			INSERT INTO {$dbprefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES (:guid1, :relationship, :guid2, :time)
 				ON DUPLICATE KEY UPDATE time_created = :time
 		";
-		$params = [
-			':guid1' => (int) $row->guid_one,
-			':guid2' => (int) $row->guid_two,
-			':relationship' => $row->relationship,
-			':time' => $row->time_created
-		];
+
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
-			'params' => $params,
+			'params' => [
+				':guid1' => $row->guid_one,
+				':guid2' => $row->guid_two,
+				':relationship' => $row->relationship,
+				':time' => $row->time_created
+			],
 			'insert_id' => $row->id,
 		]);
 
-		if ($result = parent::add($guid_one, $relationship, $guid_two)) {
-			$this->addQuerySpecs($row);
-
-			$rel = new ElggRelationship($row);
-			$this->mocks[$id] = $rel;
-		} else {
-			$this->iterator--;
-		}
-
-		return $result;
-	}
-
-	public function addQuerySpecs(stdClass $row) {
-
 		// Get relationship by its ID
-		$sql = "SELECT * FROM {$this->db->prefix}entity_relationships WHERE id = :id";
-		$params = [
-			':id' => (int) $row->id,
-		];
+		$sql = "
+			SELECT * FROM {$dbprefix}entity_relationships
+			WHERE id = :id
+		";
+
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
-			'params' => $params,
+			'params' => [
+				':id' => (int) $row->id,
+			],
 			'results' => function() use ($row) {
-				return [$row];
+				if (isset($this->rows[$row->id])) {
+					return [$this->rows[$row->id]];
+				}
+				return [];
 			},
 		]);
 
 		// Delete relationship by its ID
-		$sql = "DELETE FROM {$this->db->prefix}entity_relationships WHERE id = :id";
-		$params = [
-			':id' => $row->id,
-		];
+		$sql = "
+			DELETE FROM {$dbprefix}entity_relationships
+			WHERE id = :id
+		";
+
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
-			'params' => $params,
-			'row_count' => 1,
+			'params' => [
+				':id' => (int) $row->id,
+			],
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					$this->clearQuerySpecs($row->id);
+					unset($this->rows[$row->id]);
+					return [$row->id];
+				}
+				return [];
+			},
 			'times' => 1,
 		]);
 
 		// Check relationship between two GUIDs
 		$sql = "
-			SELECT * FROM {$this->db->prefix}entity_relationships
+			SELECT * FROM {$dbprefix}entity_relationships
 			WHERE guid_one = :guid1
 			  AND relationship = :relationship
 			  AND guid_two = :guid2
 			LIMIT 1
 		";
-		$params = [
-			':guid1' => (int) $row->guid_one,
-			':guid2' => (int) $row->guid_two,
-			':relationship' => $row->relationship,
-		];
+
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
-			'params' => $params,
+			'params' => [
+				':guid1' => (int) $row->guid_one,
+				':guid2' => (int) $row->guid_two,
+				':relationship' => $row->relationship,
+			],
 			'results' => function() use ($row) {
-				return [$row];
+				if (isset($this->rows[$row->id])) {
+					return [$this->rows[$row->id]];
+				}
+				return [];
 			},
 		]);
 	}

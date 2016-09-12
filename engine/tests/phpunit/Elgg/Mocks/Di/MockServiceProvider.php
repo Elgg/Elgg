@@ -28,6 +28,8 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 
 		$sp = _elgg_services();
 
+		$this->setValue('session', \ElggSession::getMock());
+		
 		$this->setFactory('db', function(MockServiceProvider $m) use ($sp) {
 			$config = $this->getTestingDatabaseConfig();
 			return new \Elgg\Mocks\Database($config, $sp->logger);
@@ -48,11 +50,11 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('metadataTable', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->events, $m->metastringsTable, $sp->session);
+			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->events, $m->metastringsTable, $m->session);
 		});
 
 		$this->setFactory('annotations', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\Annotations($m->db, $sp->session, $sp->events);
+			return new \Elgg\Mocks\Database\Annotations($m->db, $m->session, $sp->events);
 		});
 
 		$this->setFactory('metastringsTable', function(MockServiceProvider $m) {
@@ -66,18 +68,6 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('subtypeTable', function(MockServiceProvider $m) {
 			return new \Elgg\Mocks\Database\SubtypeTable($m->db);
-		});
-
-		$this->setFactory('accessCollections', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\AccessCollections(
-				$sp->config,
-				$m->db,
-				$m->entityTable,
-				$sp->accessCache,
-				$sp->hooks,
-				$sp->session,
-				$sp->translator
-			);
 		});
 
 		$this->setFactory('accessCollections', function(MockServiceProvider $m) use ($sp) {
