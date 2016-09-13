@@ -33,3 +33,6 @@ echo elgg_view('output/url', array(
 	'text' => elgg_echo('messageboard:viewall'),
 	'is_trusted' => true,
 ));
+
+?>
+<script>require(['elgg/messageboard']);</script>

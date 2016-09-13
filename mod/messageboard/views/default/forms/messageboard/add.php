@@ -18,3 +18,6 @@ echo elgg_view('input/hidden', array(
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('post')
 ));
+
+?>
+<script>require(['elgg/messageboard']);</script>

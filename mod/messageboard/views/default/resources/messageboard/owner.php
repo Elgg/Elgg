@@ -5,6 +5,8 @@
  * @package MessageBoard
  */
 
+elgg_require_js('elgg/messageboard');
+
 $page_owner_guid = elgg_extract('page_owner_guid', $vars);
 elgg_set_page_owner_guid($page_owner_guid);
 $page_owner = elgg_get_page_owner_entity();
