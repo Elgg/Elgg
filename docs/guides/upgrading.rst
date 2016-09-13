@@ -81,12 +81,14 @@ Removed JavaScript APIs
  * ``elgg.widgets``: Use the ``elgg/widgets`` module. The "widgets" layouts do this module automatically
  * ``lightbox.js``: Use the ``elgg/lightbox`` module as needed
  * ``lightbox/settings.js``: Use the ``getOptions, ui.lightbox`` JS hook or the ``data-colorbox-opts`` attribute
- * ``elgg.ui.popupClose()``: Use the ``elgg/popup`` module
+ * ``elgg.ui.popupClose``: Use the ``elgg/popup`` module
  * ``elgg.ui.river``
- * ``elgg.ui.initDatePicker()``: Use the ``input/date`` module
+ * ``elgg.ui.initDatePicker``: Use the ``input/date`` module
+ * ``elgg.ui.likesPopupHandler``
  * ``elgg.embed``: Use the ``elgg/embed`` module
  * ``embed/custom_insert_js``: Use the ``embed, editor`` JS hook
  * ``elgg/ckeditor/insert.js``
+ * ``likes.js``: The ``elgg/likes`` module is loaded automatically
 
 Removed hooks/events
 --------------------
