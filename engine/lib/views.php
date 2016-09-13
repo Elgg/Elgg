@@ -739,6 +739,8 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * @param array                      $vars An associative array of display options for the menu.
  *
  *                          Options include:
+ *                              items => an array of unprepared menu items
+ *                                       as ElggMenuItem or menu item factory options
  *                              sort_by => string or php callback
  *                                  string options: 'name', 'priority', 'title' (default),
  *                                  'register' (registration order) or a
