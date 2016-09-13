@@ -19,17 +19,9 @@ elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
 $title = elgg_echo('item:object:discussion');
 
-$options = array(
-	'type' => 'object',
-	'subtype' => 'discussion',
-	'limit' => max(20, elgg_get_config('default_limit')),
-	'order_by' => 'e.last_action desc',
-	'container_guid' => $guid,
-	'full_view' => false,
-	'no_results' => elgg_echo('discussion:none'),
-	'preload_owners' => true,
-);
-$content = elgg_list_entities($options);
+$content = elgg_view('discussion/listing/group', [
+	'entity' => $group,
+]);
 
 $params = array(
 	'content' => $content,
