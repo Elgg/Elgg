@@ -376,7 +376,8 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  * @param array    $options Any options from $getter options plus:
  *                   item_view => STR Optional. Alternative view used to render list items
  *                   full_view => BOOL Display full view of entities (default: false)
- *                   list_type => STR 'list' or 'gallery'
+ *                   list_type => STR 'list', 'gallery', or 'table'
+ *                   columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
  *                   no_results => STR|Closure Message to display when there are no entities

@@ -503,6 +503,9 @@ you can improve performance a bit by preloading all owner entities:
 
 See also :doc:`this background information on Elgg's database </design/database>`.
 
+Rendering a list with an alternate view
+---------------------------------------
+
 Since 1.11, you can define an alternative view to render list items using ``'item_view'`` parameter.
 
 In some cases, default entity views may be unsuitable for your needs.
@@ -536,6 +539,37 @@ In the second example, we want to display a list of groups the user was invited 
 Since invitations are not entities, they do not have their own views and can not be listed using ``elgg_list_*``.
 We are providing an alternative item view, that will use the group entity to display
 an invitation that contains a group name and buttons to access or reject the invitation.
+
+Rendering a list as a table
+---------------------------
+
+Since 2.3 you can render lists as tables. Set ``$options['list_type'] = 'table'`` and provide an array of
+TableColumn objects as ``$options['columns']``. The service ``elgg()->table_columns`` provides several
+methods to create column objects based around existing views (like ``page/components/column/*``), properties,
+or methods.
+
+In this example, we list the latest ``my_plugin`` objects in a table of 3 columns: entity icon, the display
+name, and a friendly format of the time.
+
+.. code-block:: php
+
+    echo elgg_list_entities([
+        'type' => 'object',
+        'subtype' => 'my_plugin',
+
+        'list_type' => 'table',
+        'columns' => [
+            elgg()->table_columns->icon(),
+            elgg()->table_columns->getDisplayName(),
+            elgg()->table_columns->time_created(null, [
+                'format' => 'friendly',
+            ]),
+        ],
+    ]);
+
+See the ``Elgg\Views\TableColumn\ColumnFactory`` class for more details on how columns are specified and
+rendered. You can add or override methods of ``elgg()->table_columns`` in a variety of ways, based on views,
+properties/methods on the items, or given functions.
 
 Related
 =======

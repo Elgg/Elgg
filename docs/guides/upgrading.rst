@@ -80,6 +80,17 @@ Notifications
  * ``elgg_get_notification_methods()`` can be used to obtain registered notification methods
  * Added ``ElggUser::getNotificationSettings()`` and ``ElggUser::setNotificationSetting()``
 
+Entity list functions can output tables
+---------------------------------------
+
+In functions like ``elgg_list_entities($options)``, table output is possible by setting
+``$options['list_type'] = 'table'`` and providing an array of table columns as ``$options['columns']``.
+Each column is an ``Elgg\Views\TableColumn`` object, usually created via methods on the service
+``elgg()->table_columns``.
+
+Plugins can provide or alter these factory methods (see ``Elgg\Views\TableColumn\ColumnFactory``).
+See the view ``admin/users/newest`` for a usage example.
+
 From 2.1 to 2.2
 ===============
 
@@ -137,7 +148,7 @@ Removed APIs
 Just a warning that the private entity cache functions (e.g. ``_elgg_retrieve_cached_entity``) have been removed. Some plugins may have been using them. Plugins should not use private APIs as they will more often be removed without notice.
 
 Improved ``elgg/ckeditor`` module
------------------------------------
+---------------------------------
 
 :doc:`elgg/ckeditor module <javascript>` can now be used to add WYSIWYG to a textarea programmatically with ``elgg/ckeditor#bind``.
 

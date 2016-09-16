@@ -538,6 +538,12 @@ Views
     Applies to request to ``/ajax/form/<form_name>``.
     This hook can be used to modify response content, status code, forward URL, or set additional response headers.
 
+**table_columns:call, <name>**
+    When the method ``elgg()->table_columns->$name()`` is called, this hook is called to allow
+    plugins to override or provide an implementation. Handlers receive the method arguments via
+    ``$params['arguments']`` and should return an instance of ``Elgg\Views\TableColumn`` if they
+    wish to specify the column directly.
+
 Files
 =====
 
