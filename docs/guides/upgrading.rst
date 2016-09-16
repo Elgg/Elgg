@@ -27,6 +27,8 @@ Deprecated APIs
  * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
  * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
  * Private ``update_entity_last_action()`` is deprecated: Refrain from manually updating last action timestamp.
+ * ``'members:config', 'tabs'`` hook is deprecated: Use ``'filter_tabs', 'members'`` hook instead.
+ * ``'members:list', <list_type>`` hook is deprecated: Use ``members/listing/<list_type>`` view instead.
 
 Deprecated Views
 ----------------

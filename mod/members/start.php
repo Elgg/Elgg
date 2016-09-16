@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Members plugin initialization
  *
- * To adding a list page, handle the hook (members:list, <page_name>) and return the HTML for the list.
- *
- * To alter the navigation tabs, use the hook (members:config, tabs) which receives the array used to build them.
+ * To add a new page:
+ * - Add a new tab using 'filter_tabs','members' hook
+ * - Add a view corresponding to the tab name in members/listing/<tab_name>
  */
-
 elgg_register_event_handler('init', 'system', 'members_init');
 
 /**
@@ -15,15 +15,132 @@ elgg_register_event_handler('init', 'system', 'members_init');
 function members_init() {
 	elgg_register_page_handler('members', 'members_page_handler');
 
-	$item = new ElggMenuItem('members', elgg_echo('members'), 'members');
-	elgg_register_menu_item('site', $item);
+	elgg_register_menu_item('site', [
+		'name' => 'members',
+		'text' => elgg_echo('members'),
+		'href' => 'members',
+	]);
 
-	$list_types = array('newest', 'alpha', 'popular', 'online');
+	elgg_register_plugin_hook_handler('members:list', 'all', '_members_render_list');
+	elgg_register_plugin_hook_handler('members:config', 'tabs', '_members_prepare_tabs');
 
-	foreach ($list_types as $type) {
-		elgg_register_plugin_hook_handler('members:list', $type, "members_list_$type");
-		elgg_register_plugin_hook_handler('members:config', 'tabs', "members_nav_$type");
+	elgg_register_plugin_hook_handler('filter_tabs', 'members', 'members_prepare_filter_tabs', 400);
+}
+
+/**
+ * Render a list of members
+ *
+ * @todo: in 3.0 remove this handler and move the logic in the resource view
+ * 
+ * @param string $hook   "members:list"
+ * @param string $type   "all"
+ * @param mixed  $return List
+ * @param array  $params Hook params
+ * @return mixed
+ * @access private
+ */
+function _members_render_list($hook, $type, $return, $params) {
+	if (isset($return)) {
+		elgg_deprecated_notice("'members:list','$type' hook has been deprecated. Use 'members/listing/$type' view instead", '2.3');
 	}
+
+	if (elgg_view_exists("members/listing/$type")) {
+		return elgg_view("members/listing/$type", $params);
+	}
+}
+
+/**
+ * Prepare default tabs
+ *
+ * @todo: remove in 3.0
+ *
+ * @param string $hook   "members:config"
+ * @param string $type   "tabs"
+ * @param array  $return Tabs
+ * @param array  $params Hook params
+ * @return array
+ */
+function _members_prepare_tabs($hook, $type, $return, $params) {
+
+	if (elgg_extract('__ignore_defaults', (array) $params)) {
+		return;
+	}
+
+	elgg_deprecated_notice("'members:config','tabs' hook has been deprecated. Use 'filter_tabs','members' instead", '2.3');
+
+	$defaults = [
+		'newest' => [
+			'title' => elgg_echo('sort:newest'),
+			'url' => "members/newest",
+		],
+		'alpha' => [
+			'title' => elgg_echo('sort:alpha'),
+			'url' => "members/alpha",
+		],
+		'popular' => [
+			'title' => elgg_echo('sort:popular'),
+			'url' => "members/popular",
+		],
+		'online' => [
+			'title' => elgg_echo('members:label:online'),
+			'url' => "members/online",
+		],
+	];
+
+	return $defaults + $return;
+}
+
+/**
+ * Prepare filter tabs
+ *
+ * @todo in 3.0, remove 'members:config' hook call
+ * 
+ * @param string $hook   "filter_tabs"
+ * @param string $type   "members"
+ * @param array  $return Tabs
+ * @param array  $params Hook params
+ * @return array
+ */
+function members_prepare_filter_tabs($hook, $type, $return, $params) {
+
+	$defaults = [
+		'newest' => [
+			'text' => elgg_echo('sort:newest'),
+			'href' => "members/newest",
+		],
+		'alpha' => [
+			'text' => elgg_echo('sort:alpha'),
+			'href' => "members/alpha",
+		],
+		'popular' => [
+			'text' => elgg_echo('sort:popular'),
+			'href' => "members/popular",
+		],
+		'online' => [
+			'text' => elgg_echo('members:label:online'),
+			'href' => "members/online",
+		],
+	];
+
+	$params['__ignore_defaults'] = true; // needed to keep hook BC
+	$tabs = (array) elgg_trigger_plugin_hook('members:config', 'tabs', $params, $defaults);
+
+	if (!empty($tabs)) {
+		foreach ($tabs as $name => $tab) {
+			if (!isset($tab['name'])) {
+				$tab['name'] = $name;
+			}
+			if (!isset($tab['text'])) {
+				$tab['text'] = $tab['title'];
+			}
+			if (!isset($tab['href'])) {
+				$tab['href'] = $tab['url'];
+			}
+			$tabs[$name] = $tab;
+		}
+	}
+
+	return $tabs + $return;
 }
 
 /**
@@ -36,14 +153,11 @@ function members_init() {
  * @return string
  */
 function members_list_popular($hook, $type, $returnvalue, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . " has been deprecated and will be removed", '2.3');
 	if ($returnvalue !== null) {
 		return;
 	}
-
-	$options = $params['options'];
-	$options['relationship'] = 'friend';
-	$options['inverse_relationship'] = false;
-	return elgg_list_entities_from_relationship_count($options);
+	return elgg_view("members/listing/$type", $params);
 }
 
 /**
@@ -56,10 +170,11 @@ function members_list_popular($hook, $type, $returnvalue, $params) {
  * @return string
  */
 function members_list_newest($hook, $type, $returnvalue, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . " has been deprecated and will be removed", '2.3');
 	if ($returnvalue !== null) {
 		return;
 	}
-	return elgg_list_entities($params['options']);
+	return elgg_view("members/listing/$type", $params);
 }
 
 /**
@@ -72,10 +187,11 @@ function members_list_newest($hook, $type, $returnvalue, $params) {
  * @return string
  */
 function members_list_online($hook, $type, $returnvalue, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . " has been deprecated and will be removed", '2.3');
 	if ($returnvalue !== null) {
 		return;
 	}
-	return get_online_users();
+	return elgg_view("members/listing/$type", $params);
 }
 
 /**
@@ -91,14 +207,12 @@ function members_list_alpha($hook, $type, $returnvalue, $params) {
 	if ($returnvalue !== null) {
 		return;
 	}
-	
-	$dbprefix = elgg_get_config('dbprefix');
-	$options = elgg_extract('options', $params);
-	
-	$options['joins'][] = "JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid";
-	$options['order_by'] = 'ue.name ASC';
-	
-	return elgg_list_entities($options);
+
+	elgg_deprecated_notice(__FUNCTION__ . " has been deprecated and will be removed", '2.3');
+	if ($returnvalue !== null) {
+		return;
+	}
+	return elgg_view("members/listing/$type", $params);
 }
 
 /**
@@ -111,6 +225,7 @@ function members_list_alpha($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function members_nav_popular($hook, $type, $returnvalue, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated and will be removed', '2.3');
 	$returnvalue['popular'] = array(
 		'title' => elgg_echo('sort:popular'),
 		'url' => "members/popular",
@@ -126,8 +241,10 @@ function members_nav_popular($hook, $type, $returnvalue, $params) {
  * @param array  $returnvalue array that build navigation tabs
  * @param array  $params      unused
  * @return array
+ * @deprecated 2.3
  */
 function members_nav_newest($hook, $type, $returnvalue, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated and will be removed', '2.3');
 	$returnvalue['newest'] = array(
 		'title' => elgg_echo('sort:newest'),
 		'url' => "members/newest",
@@ -145,6 +262,7 @@ function members_nav_newest($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function members_nav_online($hook, $type, $returnvalue, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated and will be removed', '2.3');
 	$returnvalue['online'] = array(
 		'title' => elgg_echo('members:label:online'),
 		'url' => "members/online",
@@ -162,13 +280,13 @@ function members_nav_online($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function members_nav_alpha($hook, $type, $returnvalue, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated and will be removed', '2.3');
 	$returnvalue['alpha'] = array(
 		'title' => elgg_echo('sort:alpha'),
 		'url' => "members/alpha",
 	);
 	return $returnvalue;
 }
-
 
 /**
  * Members page handler

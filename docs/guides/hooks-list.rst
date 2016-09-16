@@ -864,16 +864,6 @@ Likes
 
     .. note:: The callback ``'Elgg\Values::getTrue'`` is a useful handler for this hook.
 
-Members
--------
-
-**members:list, <page_segment>**
-    To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list.
-
-**members:config, tabs**
-    This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
-    for the members pages.
-
 Twitter API
 -----------
 
