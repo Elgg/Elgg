@@ -164,6 +164,22 @@ $ipsum = elgg_view('developers/ipsum');
 			'label' => 'Long textarea input (.elgg-input-longtext):',
 		));
 
+		echo elgg_view_input('longtext', array(
+			'name' => 'f14a',
+			'id' => 'f14a',
+			'value' => $ipsum,
+			'editor' => false,
+			'label' => 'Long textarea input (.elgg-input-longtext) with a disabled editor:',
+		));
+
+		echo elgg_view_input('longtext', array(
+			'name' => 'f14b',
+			'id' => 'f14b',
+			'value' => $ipsum,
+			'visual' => false,
+			'label' => 'Long textarea input (.elgg-input-longtext) without a visual editor activated by default:',
+		));
+
 		echo elgg_view_input('number', array(
 			'name' => 'f15',
 			'id' => 'f15',
