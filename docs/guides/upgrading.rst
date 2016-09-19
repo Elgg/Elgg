@@ -106,6 +106,12 @@ Each column is an ``Elgg\Views\TableColumn`` object, usually created via methods
 Plugins can provide or alter these factory methods (see ``Elgg\Views\TableColumn\ColumnFactory``).
 See the view ``admin/users/newest`` for a usage example.
 
+Inline tabs components
+----------------------
+
+Inline tabs component can now be rendered with ``page/components/tabs`` view. The components allows to switch between pre-poluated and ajax-loaded.
+See ``page/components/tabs`` in core views and ``theme_sandbox/components/tabs`` in developers plugin for usage instructions and examples.
+
 API to alter registration and login URL
 ---------------------------------------
 
