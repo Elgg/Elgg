@@ -103,6 +103,14 @@ System hooks
 **elgg.data, page**
    Filters uncached, page-specific configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
 
+**prepare, list**
+   Triggered by ``elgg_list_entities()`` before getter and viewer functions are called. Can be used to alter the options, the getter and the viewer functions.
+   The hook receives and should return an array containing:
+
+    * ``options`` - an array of options passed to the getter and viewer funtions
+    * ``getter`` - getter function
+    * ``viewer`` - viewer function
+
 User hooks
 ==========
 
