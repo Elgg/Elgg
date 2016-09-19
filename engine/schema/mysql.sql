@@ -50,6 +50,25 @@ CREATE TABLE `prefix_api_users` (
   UNIQUE KEY `api_key` (`api_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- push API channels
+CREATE TABLE `prefix_channels` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `retire_if_unused` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- push API messages
+CREATE TABLE `prefix_channel_messages` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `channel_id` bigint(20) unsigned NOT NULL,
+  `data` TEXT NOT NULL,
+  `time_created` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `channel_id` (`channel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- site specific configuration
 CREATE TABLE `prefix_config` (
   `name` varchar(255) NOT NULL,

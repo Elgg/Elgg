@@ -38,6 +38,21 @@ if (!$annotation_id) {
 	forward(REFERER);
 }
 
+// TODO REMOVE ME
+// This sends a message to the likes channel for this entity
+	$owner = $entity->getOwnerEntity();
+	/* @var ElggUser $owner */
+
+	elgg()->channels->sendMessage("{$entity->guid}-likes", [
+		'id' => $annotation_id,
+		'owner' => [
+			'guid' => $owner->guid,
+			'username' => $owner->username,
+			'name' => $owner->name,
+			'icon' => $owner->getIconURL(['size' => 'tiny']),
+		],
+	]);
+
 // notify if poster wasn't owner
 if ($entity->owner_guid != $user->guid) {
 	$owner = $entity->getOwnerEntity();

@@ -12,6 +12,13 @@
  * in this view
  */
 
+$entity = $vars['entity'];
+/* @var ElggEntity $entity */
+
+// TODO REMOVE ME
+// This sends the client data it needs to request later messages
+	elgg()->channels->setupClient("{$entity->guid}-likes");
+
 $show_add_form = elgg_extract('show_add_form', $vars, true);
 $full_view = elgg_extract('full_view', $vars, true);
 $limit = elgg_extract('limit', $vars, get_input('limit', 0));
@@ -30,7 +37,7 @@ unset($vars['internalid']);
 $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'comment',
-	'container_guid' => $vars['entity']->guid,
+	'container_guid' => $entity->guid,
 	'reverse_order_by' => true,
 	'full_view' => true,
 	'limit' => $limit,

@@ -15,6 +15,7 @@ use Elgg\Filesystem\Directory;
  *
  * @since 2.0.0
  *
+ * @property-read \Elgg\Channels\Api $channels
  * @property-read \Elgg\Menu\Service $menus
  * @property-read \Elgg\Views\TableColumn\ColumnFactory $table_columns
  */
@@ -44,6 +45,7 @@ class Application {
 	 */
 	private static $public_services = [
 		//'config' => true,
+		'channels' => true,
 		'menus' => true,
 		'table_columns' => true,
 	];

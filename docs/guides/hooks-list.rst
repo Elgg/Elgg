@@ -585,6 +585,14 @@ Other
 	"container_guid" (int) are provided. An empty entity value generally means the form is to
 	create a new object.
 
+**elgg_channels:send, <channel_name>**
+	Filters the data array sent the to clients by ``elgg()->channels->sendMessage()``. Handlers
+	should return ``false`` if you send the message to the client by another method.
+
+**elgg_channels:setupClient, <channel_name>**
+	Triggered by ``elgg()->channels->setupClient()``. Return ``false`` if you setup the client
+	connection by another method.
+
 **entity:icon:sizes, <entity_type>**
 	Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes.
 	``entity_subtype`` will be passed with the ``$params`` array to the callback.

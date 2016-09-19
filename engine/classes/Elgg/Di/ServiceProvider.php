@@ -22,6 +22,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\BootService                        $boot
+ * @property-read \Elgg\Channels\Api                       $channels
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
@@ -145,6 +146,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$boot->setTimer($c->timer);
 			}
 			return $boot;
+		});
+
+		$this->setFactory('channels', function(ServiceProvider $c) {
+			$hmac_key = \Elgg\Channels\Api::initHmacKey($c->datalist, $c->crypto);
+			return new \Elgg\Channels\Api($hmac_key, $c->session->getId(), $c->hooks, $c->db);
 		});
 
 		$this->setValue('config', $config);

@@ -793,6 +793,9 @@ Available hooks
 **insert, editor**
     This hook is triggered by the embed plugin and can be used to filter content before it is inserted into the textarea. This hook can also be used by WYSIWYG editors to insert content using their own API (in this case the handler should return ``false``). See ckeditor plugin for an example.
 
+**channels:message, <channel_name>**
+    This hook receives Message objects from the PHP API ``elgg()->channels->sendMessage()``. The type is the channel name.
+
 Third-party assets
 ==================
 
