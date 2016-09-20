@@ -221,7 +221,7 @@ elgg.ui.initHoverMenu = function(parent) {
 					'my': 'left top',
 					'at': 'right-15px bottom',
 					'of': $icon.closest(".elgg-avatar"),
-					'collision': 'none none'
+					'collision': 'fit fit'
 				});
 			}
 		});
