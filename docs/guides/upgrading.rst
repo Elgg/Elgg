@@ -96,6 +96,14 @@ Each column is an ``Elgg\Views\TableColumn`` object, usually created via methods
 Plugins can provide or alter these factory methods (see ``Elgg\Views\TableColumn\ColumnFactory``).
 See the view ``admin/users/newest`` for a usage example.
 
+API to alter registration and login URL
+---------------------------------------
+
+ * ``elgg_get_registration_url()`` should be used to obtain site's registration URL
+ * ``elgg_get_login_url()`` should be used to obtain site's login URL
+ * ``registration_url, site`` hook can be used to alter the default registration URL
+ * ``login_url, site`` hook can be used to alter the default login URL
+
 From 2.1 to 2.2
 ===============
 
