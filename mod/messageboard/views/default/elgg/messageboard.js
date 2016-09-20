@@ -1,9 +1,7 @@
 /**
  * Messageboard module
- *
- * @note The name is required for inlining, do not remove it
  */
-define('elgg/messageboard', function (require) {
+define(function (require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 
@@ -61,9 +59,4 @@ define('elgg/messageboard', function (require) {
 	};
 
 	elgg.register_hook_handler('init', 'system', MB.init);
-
-	/**
-	 * @deprecated 2.3 Do not call methods on elgg.messageboard
-	 */
-	elgg.messageboard = MB;
 });

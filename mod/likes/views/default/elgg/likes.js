@@ -1,13 +1,9 @@
 /**
  * Likes module
- *
- * @note The name is required for inlining, do not remove it
  */
-define('elgg/likes', function (require) {
+define(function (require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
-
-	elgg.provide('elgg.ui');
 
 	/**
 	 * Repositions the likes popup
@@ -18,18 +14,17 @@ define('elgg/likes', function (require) {
 	 * @param {Object} options Options to pass to
 	 *
 	 * @return {Object}
-	 * @deprecated 2.3 Do not call this directly
 	 */
-	elgg.ui.likesPopupHandler = function(hook, type, params, options) {
+	function popupHandler(hook, type, params, options) {
 		if (params.target.hasClass('elgg-likes')) {
 			options.my = 'right bottom';
 			options.at = 'left top';
 			return options;
 		}
 		return null;
-	};
+	}
 
-	elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
+	elgg.register_hook_handler('getOptions', 'ui.popup', popupHandler);
 
 	function setupHandlers(nameA, nameB) {
 		$(document).on('click', '.elgg-menu-item-' + nameA + ' a', function() {
