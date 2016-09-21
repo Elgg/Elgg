@@ -5,44 +5,38 @@
  * @package Elgg
  * @subpackage Core
  */
+echo elgg_view_input('text', [
+	'name' => 'username',
+	'autofocus' => true,
+	'required' => true,
+	'label' => elgg_echo('loginusername'),
+]);
+
+echo elgg_view_input('password', [
+	'name' => 'password',
+	'required' => true,
+	'label' => elgg_echo('password'),
+]);
+
+echo elgg_view('login/extend', $vars);
+
+if (isset($vars['returntoreferer'])) {
+	echo elgg_view_input('hidden', [
+		'name' => 'returntoreferer',
+		'value' => 'true'
+	]);
+}
+
+ob_start();
 ?>
-
-<div>
-	<label><?php echo elgg_echo('loginusername'); ?>
-		<?php
-			echo elgg_view('input/text', array(
-				'name' => 'username',
-				'autofocus' => true,
-				'required' => true
-			));
-		?>
-	</label>
-</div>
-<div>
-	<label><?php echo elgg_echo('password'); ?>
-		<?php
-			echo elgg_view('input/password', array(
-				'name' => 'password',
-				'required' => true
-			));
-		?>
-	</label>
-</div>
-
-<?php echo elgg_view('login/extend', $vars); ?>
-
 <div class="elgg-foot">
 	<label class="mtm float-alt">
 		<input type="checkbox" name="persistent" value="true" />
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
-	
+
 	<?php
 	echo elgg_view('input/submit', array('value' => elgg_echo('login')));
-	
-	if (isset($vars['returntoreferer'])) {
-		echo elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
-	}
 
 	echo elgg_view_menu('login', array(
 		'sort_by' => 'priority',
@@ -50,3 +44,6 @@
 	));
 	?>
 </div>
+<?php
+$footer = ob_get_clean();
+elgg_set_form_footer($footer);
