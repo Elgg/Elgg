@@ -4,7 +4,7 @@
 
 -- record membership in an access collection
 CREATE TABLE `prefix_access_collection_membership` (
-  `user_guid` int(11) NOT NULL,
+  `user_guid` bigint(20) unsigned NOT NULL,
   `access_collection_id` int(11) NOT NULL,
   PRIMARY KEY (`user_guid`,`access_collection_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -54,7 +54,7 @@ CREATE TABLE `prefix_api_users` (
 CREATE TABLE `prefix_config` (
   `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
-  `site_guid` int(11) NOT NULL,
+  `site_guid` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`name`,`site_guid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -180,7 +180,7 @@ CREATE TABLE `prefix_objects_entity` (
 -- settings for an entity
 CREATE TABLE `prefix_private_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entity_guid` int(11) NOT NULL,
+  `entity_guid` bigint(20) unsigned NOT NULL,
   `name` varchar(128) NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`id`),
@@ -209,9 +209,9 @@ CREATE TABLE `prefix_river` (
   `action_type` varchar(32) NOT NULL,
   `access_id` int(11) NOT NULL,
   `view` text NOT NULL,
-  `subject_guid` int(11) NOT NULL,
-  `object_guid` int(11) NOT NULL,
-  `target_guid` int(11) NOT NULL,
+  `subject_guid` bigint(20) unsigned NOT NULL,
+  `object_guid` bigint(20) unsigned NOT NULL,
+  `target_guid` bigint(20) unsigned NOT NULL,
   `annotation_id` int(11) NOT NULL,
   `posted` int(11) NOT NULL,
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
@@ -245,8 +245,8 @@ CREATE TABLE `prefix_system_log` (
   `object_type` varchar(50) NOT NULL,
   `object_subtype` varchar(50) NOT NULL,
   `event` varchar(50) NOT NULL,
-  `performed_by_guid` int(11) NOT NULL,
-  `owner_guid` int(11) NOT NULL,
+  `performed_by_guid` bigint(20) unsigned NOT NULL,
+  `owner_guid` bigint(20) unsigned NOT NULL,
   `access_id` int(11) NOT NULL,
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   `time_created` int(11) NOT NULL,

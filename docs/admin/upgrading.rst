@@ -44,6 +44,7 @@ From 2.2 to 2.3
  * Some core files now sniff if	``PHPUNIT_ELGG_TESTING_APPLICATION`` constant is set to determine whether Elgg is being bootstrapped for PHPUnit tests. ``phpunit.xml`` configuration needs to updated to include this constant definition.
  * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_services()->config`` instead.
  * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
+ * The database GUID columns need to be aligned. In the admin section an upgrade is available to handle this. Please make sure you have a backup available
 
 Deprecations in 2.x
 ===================
