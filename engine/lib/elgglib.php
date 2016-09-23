@@ -566,6 +566,19 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
 }
 
 /**
+ * Clears all callback registrations for a event.
+ *
+ * @param string $event       The name of the event
+ * @param string $object_type The objecttype of the event
+ *
+ * @return void
+ * @since 2.3
+ */
+function elgg_clear_event_handlers($event, $object_type) {
+	_elgg_services()->events->clearHandlers($event, $object_type);
+}
+
+/**
  * Trigger an Elgg Event and attempt to run all handler callbacks registered to that
  * event, type.
  *
@@ -1308,7 +1321,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
  * Signs provided URL with a SHA256 HMAC key
  *
  * @note Signed URLs do not offer CSRF protection and should not be used instead of action tokens.
- * 
+ *
  * @param string $url     URL to sign
  * @param string $expires Expiration time
  *                        A string suitable for strtotime()
