@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 21:19-0400\n"
+"POT-Creation-Date: 2016-09-21 21:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1430,101 +1430,119 @@ msgstr ""
 msgid "Support policy"
 msgstr ""
 
-#: ../../appendix/support.rst:6
-msgid "As of Elgg 1.9, each minor release gets:"
+#: ../../appendix/support.rst:4
+msgid "As of Elgg 2.0, each minor release receives bug and security fixes only until the next minor release."
 msgstr ""
 
-#: ../../appendix/support.rst:5
-msgid "Normal bugfixes every 2 weeks for 3 months, at which point the next minor release candidate is made available."
+#: ../../appendix/support.rst:7
+msgid "Long Term Support Releases"
 msgstr ""
 
-#: ../../appendix/support.rst:6
-msgid "Security and critical (i.e. regression) bug fixes for 1 year from the date of the next stable minor release. These will be released on an as-needed basis."
+#: ../../appendix/support.rst:9
+msgid "Within each major version, the last minor release is designated for long term support (\"LTS\") and will receive bug fixes until the 2nd following major version release, and security fixes until the 3rd following major version release."
 msgstr ""
 
-#: ../../appendix/support.rst:10
+#: ../../appendix/support.rst:13
+msgid "E.g. 1.12 is the last minor release within 1.x. It will receive bug fixes until 3.0 is released and security fixes until 4.0 is released."
+msgstr ""
+
+#: ../../appendix/support.rst:16
+msgid "When bugs are found, a good faith effort will be made to patch the LTS release, but **not all fixes will be back-ported.** E.g. some fixes may depend on new APIs, break backwards compatibility, or require significant refactoring. If a fix risks stability of the LTS branch, it will not be included."
+msgstr ""
+
+#: ../../appendix/support.rst:23
 msgid ":doc:`releases`"
 msgstr ""
 
-#: ../../appendix/support.rst:12
-msgid "Below is a table outlining the specifics for each release:"
+#: ../../appendix/support.rst:25
+msgid "Below is a table outlining the specifics for each release (future dates are tentative):"
 msgstr ""
 
-#: ../../appendix/support.rst:15
+#: ../../appendix/support.rst:28
 msgid "Version"
 msgstr ""
 
-#: ../../appendix/support.rst:15
+#: ../../appendix/support.rst:28
 msgid "First stable release"
 msgstr ""
 
-#: ../../appendix/support.rst:15
+#: ../../appendix/support.rst:28
 msgid "Bug fixes through"
 msgstr ""
 
-#: ../../appendix/support.rst:15
+#: ../../appendix/support.rst:28
 msgid "Security fixes through"
 msgstr ""
 
-#: ../../appendix/support.rst:17
-msgid "1.8"
+#: ../../appendix/support.rst:30
+msgid "1.12 LTS"
 msgstr ""
 
-#: ../../appendix/support.rst:17
-msgid "September 2011"
-msgstr ""
-
-#: ../../appendix/support.rst:17
-msgid "August 2014"
-msgstr ""
-
-#: ../../appendix/support.rst:17
-msgid "September 2015"
-msgstr ""
-
-#: ../../appendix/support.rst:19
-msgid "1.9"
-msgstr ""
-
-#: ../../appendix/support.rst:19
-msgid "September 2014"
-msgstr ""
-
-#: ../../appendix/support.rst:19
-#: ../../appendix/support.rst:21
-msgid "January 2015"
-msgstr ""
-
-#: ../../appendix/support.rst:19
-msgid "January 2016"
-msgstr ""
-
-#: ../../appendix/support.rst:21
-msgid "1.10"
-msgstr ""
-
-#: ../../appendix/support.rst:21
-#: ../../appendix/support.rst:23
-msgid "April 2015"
-msgstr ""
-
-#: ../../appendix/support.rst:21
-msgid "April 2016"
-msgstr ""
-
-#: ../../appendix/support.rst:23
-msgid "1.11"
-msgstr ""
-
-#: ../../appendix/support.rst:23
+#: ../../appendix/support.rst:30
 msgid "July 2015"
 msgstr ""
 
-#: ../../appendix/support.rst:23
-msgid "July 2016"
+#: ../../appendix/support.rst:30
+msgid "**Until 3.0**"
 msgstr ""
 
-#: ../../appendix/support.rst:26
-msgid "We don't have a support policy for major releases (x.0.0) yet because we've never done one."
+#: ../../appendix/support.rst:30
+#: ../../appendix/support.rst:38
+msgid "**Until 4.0**"
+msgstr ""
+
+#: ../../appendix/support.rst:32
+msgid "2.0"
+msgstr ""
+
+#: ../../appendix/support.rst:32
+msgid "December 2015"
+msgstr ""
+
+#: ../../appendix/support.rst:32
+#: ../../appendix/support.rst:34
+msgid "March 2016"
+msgstr ""
+
+#: ../../appendix/support.rst:34
+msgid "2.1"
+msgstr ""
+
+#: ../../appendix/support.rst:34
+#: ../../appendix/support.rst:36
+msgid "June 2016"
+msgstr ""
+
+#: ../../appendix/support.rst:36
+msgid "2.2"
+msgstr ""
+
+#: ../../appendix/support.rst:36
+#: ../../appendix/support.rst:38
+msgid "September 2016"
+msgstr ""
+
+#: ../../appendix/support.rst:38
+msgid "2.3 LTS"
+msgstr ""
+
+#: ../../appendix/support.rst:38
+msgid "**Until 5.0**"
+msgstr ""
+
+#: ../../appendix/support.rst:40
+msgid "3.0"
+msgstr ""
+
+#: ../../appendix/support.rst:40
+msgid "December 2016"
+msgstr ""
+
+#: ../../appendix/support.rst:42
+msgid "4.0"
+msgstr ""
+
+#: ../../appendix/support.rst:42
+msgid "December 2017"
 msgstr ""
 

@@ -1,7 +1,7 @@
 <?php
 namespace Elgg\Composer;
 
-use Composer\Script\Event;
+use Composer\Script\PackageEvent;
 
 /**
  * A composer command handler to run after post-package-update event
