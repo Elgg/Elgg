@@ -32,6 +32,9 @@ System events
     might not be shown until after the process is completed. This means that any long-running
     processes will still delay the page load.
 
+.. note:: This event is prefered above using ``register_shutdown_function`` as you may not have access
+    to all the Elgg services (eg. database) in the shutdown function but you will in the event.
+
 **regenerate_site_secret:before, system**
     Return false to cancel regenerating the site secret. You should also provide a message
     to the user.
