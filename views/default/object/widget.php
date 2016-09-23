@@ -7,60 +7,20 @@
  * @uses $vars['class']       Optional additional CSS class
  */
 
-$widget = $vars['entity'];
-if (!elgg_instanceof($widget, 'object', 'widget')) {
-	return true;
+$widget = elgg_extract('entity', $vars);
+if (!($widget instanceof \ElggWidget)) {
+	return;
 }
-
-$show_access = elgg_extract('show_access', $vars, true);
-
-// @todo catch for disabled plugins
-$widget_types = elgg_get_widget_types([
-	'context' => 'all',
-	'container' => $widget->getContainerEntity(),
-]);
 
 $handler = $widget->handler;
-
-$title = $widget->getTitle();
-
-$edit_area = '';
-$can_edit = $widget->canEdit();
-if ($can_edit) {
-	$edit_area = elgg_view('object/widget/elements/settings', array(
-		'widget' => $widget,
-		'show_access' => $show_access,
-	));
-}
-$controls = elgg_view('object/widget/elements/controls', array(
-	'widget' => $widget,
-	'show_edit' => $edit_area != '',
-));
-
-$content = elgg_view('object/widget/elements/content', $vars);
-
-$widget_id = "elgg-widget-$widget->guid";
 
 $widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$handler");
 
 $widget_class = elgg_extract_class($vars, $widget_instance);
-$widget_class[] = $can_edit ? "elgg-state-draggable" : "elgg-state-fixed";
+$widget_class[] = $widget->canEdit() ? 'elgg-state-draggable' : 'elgg-state-fixed';
 
-$widget_header = <<<HEADER
-	<div class="elgg-widget-handle clearfix"><h3 class="elgg-widget-title">$title</h3>
-	$controls
-	</div>
-HEADER;
-
-$widget_body = <<<BODY
-	$edit_area
-	<div class="elgg-widget-content" id="elgg-widget-content-$widget->guid">
-		$content
-	</div>
-BODY;
-
-echo elgg_view_module('widget', '', $widget_body, array(
+echo elgg_view_module('widget', '', elgg_view('object/widget/body', $vars), [
 	'class' => $widget_class,
-	'id' => $widget_id,
-	'header' => $widget_header,
-));
+	'id' => "elgg-widget-$widget->guid",
+	'header' => elgg_view('object/widget/header', $vars),
+]);
