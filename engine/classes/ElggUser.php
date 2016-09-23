@@ -248,6 +248,23 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
+	 * Get user language or default to site language
+	 *
+	 * @param string $fallback Optional language
+	 *
+	 * @return string
+	 */
+	public function getLanguage($fallback = null) {
+		if (isset($this->language)) {
+			return $this->language;
+		}
+		if ($fallback != null) {
+			return $fallback;
+		}
+		return elgg_get_config('language');
+	}
+
+	/**
 	 * Ban this user.
 	 *
 	 * @param string $reason Optional reason
