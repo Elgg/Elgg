@@ -391,11 +391,21 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	$minute = 60;
 	$hour = $minute * 60;
 	$day = $hour * 24;
+	$month = $day * 30;
+	$year = $day * 365;
 
 	if ($diff < $minute) {
-		return elgg_echo("friendlytime:justnow");
+		return elgg_echo('friendlytime:justnow');
 	}
 	
+	if ($diff > $year) {
+		return trim(elgg_echo('date:month:' . date('m', $time), [''])) . ' ' . date('Y', $time);
+	}
+	
+	if ($diff > $month) {
+		return elgg_echo('date:month:' . date('m', $time), [date('d', $time)]);
+	}
+		
 	if ($diff < $hour) {
 		$granularity = ':minutes';
 		$diff = round($diff / $minute);
