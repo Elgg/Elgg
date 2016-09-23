@@ -1211,6 +1211,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:upgrades:discussion_replies' => 'Discussion reply upgrade',
 	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id %s to an entity.',
 
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	
 /**
  * Welcome
  */
