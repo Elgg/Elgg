@@ -4,11 +4,11 @@
  */
 
 // section => string replacements.
-$sections = array(
-	'intro' => array(),
-	'admin_overview' => array(),
-	'outro' => array()
-);
+$sections = [
+	'intro' => [],
+	'admin_overview' => [],
+	'outro' => [],
+];
 
 // don't use longtext because it filters output.
 // that's annoying.

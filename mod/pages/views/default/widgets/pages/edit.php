@@ -1,8 +1,6 @@
 <?php
 /**
- * Elgg pages widget edit
- *
- * @package ElggPages
+ * Pages widget edit
  */
 
 $widget = elgg_extract('entity', $vars);

@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg group widget edit view
- *
- * @package ElggGroups
  */
 
 $widget = elgg_extract('entity', $vars);

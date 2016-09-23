@@ -2,6 +2,7 @@
 /**
  * User blog widget edit view
  */
+
 $widget = elgg_extract('entity', $vars);
 // set default value
 if (!isset($widget->num_display)) {

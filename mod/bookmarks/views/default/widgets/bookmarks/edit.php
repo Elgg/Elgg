@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg bookmark widget edit view
- *
- * @package Bookmarks
  */
 
 $widget = elgg_extract('entity', $vars);

@@ -3,41 +3,34 @@
  * Edit settings for river widget
  */
 
+$widget = elgg_extract('entity', $vars);
+
 // dashboard widget has type parameter
 if (elgg_in_context('dashboard')) {
-	if (!isset($vars['entity']->content_type)) {
-		$vars['entity']->content_type = 'friends';
+	if (!isset($widget->content_type)) {
+		$widget->content_type = 'friends';
 	}
-	$params = array(
+
+	echo elgg_view_input('select', [
 		'name' => 'params[content_type]',
-		'value' => $vars['entity']->content_type,
-		'options_values' => array(
+		'label' => elgg_echo('river:widget:type'),
+		'value' => $widget->content_type,
+		'options_values' => [
 			'friends' => elgg_echo('river:widgets:friends'),
 			'all' => elgg_echo('river:widgets:all'),
-		),
-	);
-	$type_dropdown = elgg_view('input/select', $params);
-	?>
-	<div>
-		<?php echo elgg_echo('river:widget:type'); ?>:
-		<?php echo $type_dropdown; ?>
-	</div>
-	<?php
+		],
+	]);
 }
 
 echo elgg_view('object/widget/edit/num_display', [
-	'entity' => elgg_extract('entity', $vars),
+	'entity' => $widget,
 	'default' => 8,
 ]);
 
 // pass the context so we have the correct output upon save.
-if (elgg_in_context('dashboard')) {
-	$context = 'dashboard';
-} else {
-	$context = 'profile';
-}
+$context = elgg_in_context('dashboard') ? 'dashboard' : 'profile';
 
-echo elgg_view('input/hidden', array(
+echo elgg_view('input/hidden', [
 	'name' => 'context',
-	'value' => $context
-));
+	'value' => $context,
+]);
