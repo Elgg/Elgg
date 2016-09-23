@@ -42,6 +42,13 @@ class Translator {
 	
 		static $CURRENT_LANGUAGE;
 	
+		if (!is_string($message_key) || strlen($message_key) < 1) {
+			_elgg_services()->logger->warn(
+				'$message_key needs to be a string in ' . __METHOD__ . '(), ' . gettype($message_key) . ' provided'
+			);
+			return '';
+		}
+		
 		// old param order is deprecated
 		if (!is_array($args)) {
 			elgg_deprecated_notice(
