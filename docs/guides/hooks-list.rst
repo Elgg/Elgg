@@ -739,6 +739,9 @@ HTMLawed
 **config, htmlawed**
 	Filter the HTMLawed config array.
 
+**spec, htmlawed**
+	Filter the HTMLawed spec argument (string).
+
 Likes
 -----
 
