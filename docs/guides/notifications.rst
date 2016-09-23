@@ -87,8 +87,10 @@ This is the workflow of the notifications system:
      - By default this includes all the users who have enabled any notification method
        for the user at ``www.site.com/notifications/personal/<username>``
  #. Plugins are allowed to alter the subscriptions using the ``[get, subscriptions]`` hook
- #. Plugins are allowed to alter the notification parameters with the ``[send:before, notifications]`` hook
- #. Plugins are allowed to alter the notification message with the ``[prepare, notification:<action>:<type>:<subtype>]`` hook
+ #. Plugins are allowed to terminate notifications queue processing with the ``[send:before, notifications]`` hook
+ #. Plugins are allowed to alter the notification parameters with the ``[prepare, notification]`` hook
+ #. Plugins are allowed to alter the notification subject/message/summary with the ``[prepare, notification:<action>:<type>:<subtype>]`` hook
+ #. Plugins are allowed to format notification subject/message/summary for individual delivery methods with ``[format, notification:<method>]`` hook
  #. Notifications are sent to each subscriber using the methods they have chosen
      - Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` hook
  #. The ``[send:after, notifications]`` hook is triggered for the event after all notifications have been sent

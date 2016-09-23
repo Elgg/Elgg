@@ -9,10 +9,10 @@ php:
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
-# Only clone the repository for the latest commit
-# We do not need the entire commit history to test latest PR
-git:
-  depth: 1
+# Do not limit history to latest commits. Merge commits will need older commits.
+# Limiting depth caused issues with /.scripts/travis/check_commit_msgs.sh
+#git:
+#  depth: 1
 
 branches:
   except:
@@ -100,6 +100,10 @@ notifications:
     urls:
      - secure: "Ug81+4Fa2UFZetSCV79OWOgYi4uVgNQ6rVrVn2HElddOMDwuHxo9CYKoA3Q+joPKMtNFCN2qkMyoyUfIMM83uJi1LmaUx/c7lR1pXBFVgc4Xyt114NcY80I4OCWWKg0G1FDlSiaXil922JjeC3MekYoqjsIyUgabGihe6j7DWz0="
     on_start: true
+  slack: 
+     secure: elgg:qUNTV70bSXTkIdr7b4FjvFhm
+     on_failure: always
+     on_success: never
 
 env:
   global:

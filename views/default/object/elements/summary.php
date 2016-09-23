@@ -13,6 +13,7 @@
  * @uses $vars['content']   HTML for the entity content (optional)
  * @uses $vars['icon']      Object icon. If set, the listing will be wrapped with an image block
  * @uses $vars['class']     Class selector for the image block
+ * @uses $vars['image_block_vars'] Attributes for the image block wrapper
  */
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
@@ -44,14 +45,10 @@ $summary = $metadata . $title . $subtitle . $tags . $extensions . $content;
 
 $icon = elgg_extract('icon', $vars);
 if (isset($icon)) {
-	$params = $vars;
-	foreach (['title', 'metadata', 'subtitle', 'tags', 'content', 'icon', 'class'] as $key) {
-		unset($params[$key]);
-	}
-	$class = (array) elgg_extract('class', $vars, []);
-	$class[] = 'elgg-listing-summary';
+	$params = (array) elgg_extract('image_block_vars', $vars, []);
+	$class = elgg_extract_class($params);
+	$class = elgg_extract_class($vars, $class);
 	$params['class'] = $class;
-
 	$params['data-guid'] = $entity->guid;
 
 	echo elgg_view_image_block($icon, $summary, $params);

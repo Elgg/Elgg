@@ -131,6 +131,32 @@ return array(
 	'upload:error:extension' => 'Cannot save the uploaded file.',
 	'upload:error:unknown' => 'The file upload failed.',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Admin',
+	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:excerpt' => 'Description',
+	'table_columns:fromView:link' => 'Name/Title',
+	'table_columns:fromView:icon' => 'Icon',
+	'table_columns:fromView:item' => 'Item',
+	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:time_created' => 'Time Created',
+	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:user' => 'User',
+
+	'table_columns:fromProperty:description' => 'Description',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Name',
+	'table_columns:fromProperty:type' => 'Type',
+	'table_columns:fromProperty:username' => 'Username',
+
+	'table_columns:fromMethod:getSubtype' => 'Subtype',
+	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
+	'table_columns:fromMethod:getMimeType' => 'MIME Type',
+	'table_columns:fromMethod:getSimpleType' => 'Type',
 
 /**
  * User details
@@ -752,6 +778,10 @@ These changes will only affect new users on the site.',
 	'usersettings:statistics' => "Your statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
+	
+	'usersettings:statistics:login_history' => "Login History",
+	'usersettings:statistics:login_history:date' => "Date",
+	'usersettings:statistics:login_history:ip' => "IP Address",
 
 	'usersettings:user' => "%s's settings",
 	'usersettings:user:opt:description' => "This allows you to control user settings.",
@@ -1185,6 +1215,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:upgrades:discussion_replies' => 'Discussion reply upgrade',
 	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id %s to an entity.',
 
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	
 /**
  * Welcome
  */

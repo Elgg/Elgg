@@ -174,6 +174,8 @@ Deprecated APIs
  * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
  * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
+ * ``get_user_notification_settings()`` is deprecated: Use ``ElggUser::getNotificationSettings()``
+ * ``set_user_notification_setting()`` is deprecated: Use ``ElggUser::setNotificationSetting()``
  * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
  * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
  * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
@@ -200,6 +202,11 @@ New API for working with file uploads
  * ``elgg_get_uploaded_files()`` - returns an array of Symfony uploaded file objects
  * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
 
+New API for events
+------------------
+
+ * ``elgg_clear_event_handlers()`` - similar to ``elgg_clear_plugin_hook_handlers`` this functions removes all registered event handlers
+
 New API for signing URLs
 ------------------------
 
@@ -216,6 +223,39 @@ Form footer rendering can now be deferred until the form view and its extensions
 
  * ``elgg_set_form_footer()`` - sets form footer for deferred rendering
  * ``elgg_get_form_footer()`` - returns currently set form footer
+
+New API for extracting class names from arrays
+----------------------------------------------
+
+Similar to ``elgg_extract()``, ``elgg_extract_class()`` extracts the "class" key (if present), merges into existing class names, and always returns an array.
+
+Notifications
+-------------
+
+ * A high level ``'prepare','notification'`` hook is now triggered for instant and subscription notifications and can be used to alter notification objects irrespective of their type.
+ * ``'format','notification:<method>'`` hook is now triggered for instant and subscription notifications and can be used to format the notification (e.g. strip HTML tags, wrap the notification body in a template etc).
+ * Instant notifications are now handled by the notifications service, hence almost all hooks applicable to subscription notifications also apply to instant notifications.
+ * ``elgg_get_notification_methods()`` can be used to obtain registered notification methods
+ * Added ``ElggUser::getNotificationSettings()`` and ``ElggUser::setNotificationSetting()``
+
+Entity list functions can output tables
+---------------------------------------
+
+In functions like ``elgg_list_entities($options)``, table output is possible by setting
+``$options['list_type'] = 'table'`` and providing an array of table columns as ``$options['columns']``.
+Each column is an ``Elgg\Views\TableColumn`` object, usually created via methods on the service
+``elgg()->table_columns``.
+
+Plugins can provide or alter these factory methods (see ``Elgg\Views\TableColumn\ColumnFactory``).
+See the view ``admin/users/newest`` for a usage example.
+
+API to alter registration and login URL
+---------------------------------------
+
+ * ``elgg_get_registration_url()`` should be used to obtain site's registration URL
+ * ``elgg_get_login_url()`` should be used to obtain site's login URL
+ * ``registration_url, site`` hook can be used to alter the default registration URL
+ * ``login_url, site`` hook can be used to alter the default login URL
 
 From 2.1 to 2.2
 ===============
@@ -250,7 +290,7 @@ Added ``elgg/lightbox`` module
 New :doc:`elgg/lightbox module <javascript>` can be used to open and close the lightbox programmatically.
 
 Added ``elgg/embed`` module
-------------------------------
+---------------------------
 
 Even though rarely necessary, ``elgg/embed`` AMD module can be used to access the embed methods programmatically. The module bootstraps itself when necessary and is unlikely to require further decoration.
 
@@ -274,7 +314,7 @@ Removed APIs
 Just a warning that the private entity cache functions (e.g. ``_elgg_retrieve_cached_entity``) have been removed. Some plugins may have been using them. Plugins should not use private APIs as they will more often be removed without notice.
 
 Improved ``elgg/ckeditor`` module
------------------------------------
+---------------------------------
 
 :doc:`elgg/ckeditor module <javascript>` can now be used to add WYSIWYG to a textarea programmatically with ``elgg/ckeditor#bind``.
 

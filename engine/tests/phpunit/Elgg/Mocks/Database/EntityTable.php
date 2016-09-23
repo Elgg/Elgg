@@ -4,9 +4,6 @@ namespace Elgg\Mocks\Database;
 
 use Elgg\Database\EntityTable as DbEntityTable;
 use ElggEntity;
-use ElggGroup;
-use ElggObject;
-use ElggUser;
 use stdClass;
 
 /**
@@ -15,7 +12,7 @@ use stdClass;
  * when entities are requested, updated or deleted.
  *
  * Note that this mock is not designed for testing the entity table itself.
- * When testing the entity table, you should defined query specs individually for the
+ * When testing the entity table, you should define query specs individually for the
  * method being tested.
  */
 class EntityTable extends DbEntityTable {
@@ -215,6 +212,7 @@ class EntityTable extends DbEntityTable {
 			(int) $row->guid,
 			(int) $row->owner_guid,
 			(int) $row->container_guid,
+			(int) elgg_get_logged_in_user_guid(),
 		]);
 		
 		$access_combinations = [];

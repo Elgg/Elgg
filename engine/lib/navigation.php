@@ -574,7 +574,7 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 	if (elgg_get_config('allow_registration')) {
 		$return[] = \ElggMenuItem::factory(array(
 			'name' => 'register',
-			'href' => 'register',
+			'href' => elgg_get_registration_url(),
 			'text' => elgg_echo('register'),
 			'link_class' => 'registration_link',
 		));

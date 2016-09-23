@@ -26,7 +26,7 @@ if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
 	system_message(elgg_echo("avatar:upload:success"));
 
 	$view = 'river/user/default/profileiconupdate';
-	elgg_delete_river(array('subject_guid' => $owner->guid, 'view' => $view));
+	_elgg_delete_river(array('subject_guid' => $owner->guid, 'view' => $view));
 	elgg_create_river_item(array(
 		'view' => $view,
 		'action_type' => 'update',

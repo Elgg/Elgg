@@ -54,10 +54,11 @@ foreach ($emails as $email) {
 		continue;
 	}
 
-	$link = elgg_get_site_url() . 'register?' . http_build_query(array(
+	$link = elgg_get_registration_url(array(
 		'friend_guid' => $current_user->guid,
 		'invitecode' => generate_invite_code($current_user->username),
 	));
+	
 	$message = elgg_echo('invitefriends:email', array(
 		$site->name,
 		$current_user->name,

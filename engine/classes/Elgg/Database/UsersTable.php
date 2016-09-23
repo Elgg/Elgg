@@ -435,8 +435,8 @@ class UsersTable {
 		}
 
 		// Turn on email notifications by default
-		set_user_notification_setting($user->getGUID(), 'email', true);
-
+		$user->setNotificationSetting('email', true);
+	
 		return $user->getGUID();
 	}
 

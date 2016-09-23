@@ -16,8 +16,7 @@
  * @uses $vars['timestamp'] Store as a Unix timestamp in seconds. Default = false
  * @uses $vars['datepicker_options'] An array of options to pass to the jQuery UI datepicker
  */
-$vars['class'] = (array) elgg_extract('class', $vars, []);
-$vars['class'][] = 'elgg-input-date';
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-date');
 
 //@todo popup_calendar deprecated in 1.8.  Remove in 2.0
 $vars['class'][] = 'popup_calendar';

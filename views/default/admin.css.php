@@ -503,6 +503,7 @@ input {
 
 /* default elgg core input field classes */
 .elgg-input-text,
+.elgg-input-number,
 .elgg-input-tags,
 .elgg-input-url,
 .elgg-input-plaintext,
@@ -570,12 +571,6 @@ select {
 	background-color: #000;
 	text-decoration: none;
 }
-.elgg-button-submit.elgg-state-disabled,
-.elgg-button-action.elgg-state-disabled {
-	color: #999;
-	cursor: default;
-}
-
 .elgg-button-cancel {
 	color: #333;
 	background-color: #ccc;
@@ -586,8 +581,16 @@ select {
 	background-color: #999;
 	text-decoration: none;
 }
+.elgg-button:disabled,
+.elgg-button.elgg-state-disabled {
+	background: #DEDEDE;
+	color: white;
+	cursor: default;
+	border-color: transparent;
+}
 
 .elgg-form-useradd input[type=text],
+.elgg-form-useradd input[type=number],
 .elgg-form-useradd input[type=password],
 .elgg-form-useradd input[type=email] {
 	width: 300px;
@@ -1887,6 +1890,7 @@ html {
 }
 @media (max-width: 480px) {
 	.elgg-form-useradd input[type=text],
+	.elgg-form-useradd input[type=number],
 	.elgg-form-useradd input[type=password] {
 		width: 100%;
 	}

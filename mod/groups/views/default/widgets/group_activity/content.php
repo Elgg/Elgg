@@ -3,33 +3,35 @@
  * Group activity widget
  */
 
-$num = (int) $vars['entity']->num_display;
-$guid = (int) $vars['entity']->group_guid;
+$widget = elgg_extract('entity', $vars);
 
-$content = '';
+$num = (int) $widget->num_display;
+$guid = (int) $widget->group_guid;
 
-if ($guid) {
-	// backward compatibility when we couldn't set widget title (pre 1.9)
-	if (!$vars['entity']->title) {
-		$title = get_entity($guid)->name;
-		$content = "<h3>$title</h3>";
-	}
-
-	$db_prefix = elgg_get_config('dbprefix');
-	$activity = elgg_list_river(array(
-		'limit' => $num,
-		'pagination' => false,
-		'joins' => array("JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid"),
-		'wheres' => array("(e1.container_guid = $guid)"),
-	));
-	if (!$activity) {
-		$activity = '<p>' . elgg_echo('groups:widget:group_activity:content:noactivity') . '</p>';
-	}
-	
-	$content .= $activity;
-} else {
+if (empty($guid)) {
 	// no group selected yet
-	$content = '<p>' . elgg_echo('groups:widget:group_activity:content:noselect') . '</p>';
+	echo '<p>' . elgg_echo('groups:widget:group_activity:content:noselect') . '</p>';
+	return;
 }
 
-echo $content;
+
+// backward compatibility when we couldn't set widget title (pre 1.9)
+if (!$widget->title) {
+	$title = get_entity($guid)->name;
+	echo "<h3>$title</h3>";
+}
+
+$db_prefix = elgg_get_config('dbprefix');
+$activity = elgg_list_river([
+	'limit' => $num,
+	'pagination' => false,
+	'joins' => ["JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid"],
+	'wheres' => ["(e1.container_guid = $guid)"],
+]);
+
+if (empty($activity)) {
+	echo '<p>' . elgg_echo('groups:widget:group_activity:content:noactivity') . '</p>';
+	return;
+}
+
+echo $activity;

@@ -566,6 +566,19 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
 }
 
 /**
+ * Clears all callback registrations for a event.
+ *
+ * @param string $event       The name of the event
+ * @param string $object_type The objecttype of the event
+ *
+ * @return void
+ * @since 2.3
+ */
+function elgg_clear_event_handlers($event, $object_type) {
+	_elgg_services()->events->clearHandlers($event, $object_type);
+}
+
+/**
  * Trigger an Elgg Event and attempt to run all handler callbacks registered to that
  * event, type.
  *
@@ -1307,7 +1320,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
  * Signs provided URL with a SHA256 HMAC key
  *
  * @note Signed URLs do not offer CSRF protection and should not be used instead of action tokens.
- * 
+ *
  * @param string $url     URL to sign
  * @param string $expires Expiration time
  *                        A string suitable for strtotime()
@@ -1346,9 +1359,9 @@ function elgg_signed_request_gatekeeper() {
  *
  * Shorthand for $value = (isset($array['key'])) ? $array['key'] : 'default';
  *
- * @param string $key     The key to check.
- * @param array  $array   The array to check against.
- * @param mixed  $default Default value to return if nothing is found.
+ * @param string $key     Key to check in the source array
+ * @param array  $array   Source array
+ * @param mixed  $default Value to return if key is not found
  * @param bool   $strict  Return array key if it's set, even if empty. If false,
  *                        return $default if the array key is unset or empty.
  *
@@ -1365,6 +1378,25 @@ function elgg_extract($key, array $array, $default = null, $strict = true) {
 	} else {
 		return (isset($array[$key]) && !empty($array[$key])) ? $array[$key] : $default;
 	}
+}
+
+/**
+ * Extract class names from an array with key "class", optionally merging into a preexisting set.
+ *
+ * @param array           $array    Source array
+ * @param string|string[] $existing Existing name(s)
+ * @return string[]
+ *
+ * @since 2.3.0
+ */
+function elgg_extract_class(array $array, $existing = []) {
+	$existing = empty($existing) ? [] : (array) $existing;
+
+	$merge = (array) elgg_extract('class', $array, []);
+
+	array_splice($existing, count($existing), 0, $merge);
+
+	return array_values(array_unique($existing));
 }
 
 /**

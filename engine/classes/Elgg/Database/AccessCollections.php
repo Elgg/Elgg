@@ -393,12 +393,30 @@ class AccessCollections {
 	 * @return bool
 	 */
 	public function hasAccessToEntity($entity, $user = null) {
+		if (!$entity instanceof \ElggEntity) {
+			return false;
+		}
+
+		if ($entity->access_id == ACCESS_PUBLIC) {
+			// Public entities are always accessible
+			return true;
+		}
 
 		// See #7159. Must not allow ignore access to affect query
 		$ia = elgg_set_ignore_access(false);
 
-		$user_guid = isset($user) ? (int) $user->guid : null;
+		$user_guid = isset($user) ? (int) $user->guid : elgg_get_logged_in_user_guid();
 
+		if ($user_guid && $user_guid == $entity->owner_guid) {
+			// Owners have access to their own content
+			return true;
+		}
+
+		if ($user_guid && $entity->access_id == ACCESS_LOGGED_IN) {
+			// Existing users have access to entities with logged in access
+			return true;
+		}
+		
 		$row = $this->entities->getRow($entity->guid, $user_guid);
 
 		elgg_set_ignore_access($ia);

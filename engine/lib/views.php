@@ -733,12 +733,31 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * to modify the structure of the menu (sort it, remove items, set variables on
  * the menu items).
  *
+ * Preset (unprepared) menu items passed to the this function with the $vars
+ * argument, will be merged with the registered items (registered with
+ * elgg_register_menu_item()). The combined set of menu items will be passed
+ * to 'register', 'menu:<menu_name>' hook.
+ *
+ * Plugins that pass preset menu items to this function and do not wish to be
+ * affected by plugin hooks (e.g. if you are displaying multiple menus with
+ * the same name on the page) should instead choose a unqie menu name
+ * and define a menu_view argument to render menus consistently.
+ * For example, if you have multiple 'filter' menus on the page:
+ * <code>
+ *    elgg_view_menu("filter:$uid", [
+ *        'items' => $items,
+ *        'menu_view' => 'navigation/menu/filter',
+ *    ]);
+ * </code>
+ *
  * elgg_view_menu() uses views in navigation/menu
  *
  * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
  * @param array                      $vars An associative array of display options for the menu.
  *
  *                          Options include:
+ *                              items => an array of unprepared menu items
+ *                                       as ElggMenuItem or menu item factory options
  *                              sort_by => string or php callback
  *                                  string options: 'name', 'priority', 'title' (default),
  *                                  'register' (registration order) or a
@@ -746,12 +765,17 @@ function elgg_view_layout($layout_name, $vars = array()) {
  *                              handler: string the page handler to build action URLs
  *                              entity: \ElggEntity to use to build action URLs
  *                              class: string the class for the entire menu.
+ *                              menu_view: name of the view to be used to render the menu
  *                              show_section_headers: bool show headers before menu sections.
  *
  * @return string
  * @since 1.8.0
  */
 function elgg_view_menu($menu, array $vars = array()) {
+
+	$menu_view = elgg_extract('menu_view', $vars);
+	unset($vars['menu_view']);
+
 	if (is_string($menu)) {
 		$menu = _elgg_services()->menus->getMenu($menu, $vars);
 
@@ -764,11 +788,18 @@ function elgg_view_menu($menu, array $vars = array()) {
 	}
 
 	$name = $menu->getName();
+	$params = $menu->getParams();
 
-	if (elgg_view_exists("navigation/menu/$name")) {
-		return elgg_view("navigation/menu/$name", $menu->getParams());
-	} else {
-		return elgg_view("navigation/menu/default", $menu->getParams());
+	$views = [
+		$menu_view,
+		"navigation/menu/$name",
+		'navigation/menu/default',
+	];
+
+	foreach ($views as $view) {
+		if (elgg_view_exists($view)) {
+			return elgg_view($view, $params);
+		}
 	}
 }
 
@@ -1037,10 +1068,12 @@ function elgg_view_entity_list($entities, array $vars = array()) {
 		$vars["pagination"] = false;
 	}
 
-	if ($vars['list_type'] != 'list') {
-		return elgg_view('page/components/gallery', $vars);
-	} else {
+	if ($vars['list_type'] == 'table') {
+		return elgg_view('page/components/table', $vars);
+	} elseif ($vars['list_type'] == 'list') {
 		return elgg_view('page/components/list', $vars);
+	} else {
+		return elgg_view('page/components/gallery', $vars);
 	}
 }
 
@@ -1140,9 +1173,12 @@ function elgg_view_title($title, array $vars = array()) {
  * @since 1.7.2
  */
 function elgg_view_friendly_time($time) {
-	return elgg_view('output/friendlytime', array('time' => $time));
-}
+	$view = 'output/friendlytime';
+	$vars = ['time' => $time];
+	$viewtype = elgg_view_exists($view) ? '' : 'default';
 
+	return _elgg_view_under_viewtype($view, $vars, $viewtype);
+}
 
 /**
  * Returns rendered comments and a comment form for an entity.
@@ -1917,6 +1953,32 @@ function _elgg_get_js_page_data() {
 	}
 
 	return $elgg;
+}
+
+/**
+ * Render a view while the global viewtype is temporarily changed. This makes sure that
+ * nested views use the same viewtype.
+ *
+ * @param string  $view     View name
+ * @param array   $vars     View vars
+ * @param string  $viewtype Temporary viewtype ('' to leave current)
+ *
+ * @return mixed
+ * @access private
+ */
+function _elgg_view_under_viewtype($view, $vars, $viewtype) {
+	if ($viewtype) {
+		$old = elgg_get_viewtype();
+		elgg_set_viewtype($viewtype);
+	}
+
+	$ret = elgg_view($view, $vars);
+
+	if ($viewtype) {
+		elgg_set_viewtype($old);
+	}
+
+	return $ret;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

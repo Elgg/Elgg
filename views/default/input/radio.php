@@ -39,9 +39,7 @@ if (empty($options)) {
 $id = elgg_extract('id', $vars, '');
 unset($vars['id']);
 
-$list_class = (array) elgg_extract('class', $vars, []);
-$list_class[] = 'elgg-input-radios';
-$list_class[] = "elgg-{$vars['align']}";
+$list_class = elgg_extract_class($vars, ['elgg-input-radios', "elgg-{$vars['align']}"]);
 
 unset($vars['class']);
 unset($vars['align']);

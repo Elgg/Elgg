@@ -28,20 +28,18 @@ function parse_urls($text) {
 	// if PHP supported conditional negative lookbehinds we could use this:
 	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
 	$r = preg_replace_callback('/(?<![=\/"\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\']+)/i',
-	create_function(
-		'$matches',
-		'
-			$url = $matches[1];
-			$punc = "";
-			$last = substr($url, -1, 1);
-			if (in_array($last, array(".", "!", ",", "(", ")"))) {
-				$punc = $last;
-				$url = rtrim($url, ".!,()");
-			}
-			$urltext = str_replace("/", "/<wbr />", $url);
-			return "<a href=\"$url\" rel=\"nofollow\">$urltext</a>$punc";
-		'
-	), $text);
+	function($matches) {
+		$url = $matches[1];
+		$punc = '';
+		$last = substr($url, -1, 1);
+		if (in_array($last, array(".", "!", ",", "(", ")"))) {
+			$punc = $last;
+			$url = rtrim($url, ".!,()");
+		}
+		$urltext = str_replace("/", "/<wbr />", $url);
+		
+		return "<a href=\"$url\" rel=\"nofollow\">$urltext</a>$punc";
+	}, $text);
 
 	return $r;
 }
@@ -70,11 +68,14 @@ function elgg_autop($string) {
  * @since 1.7.2
  */
 function elgg_get_excerpt($text, $num_chars = 250) {
+	$view = 'output/excerpt';
 	$vars = [
 		'text' => $text,
 		'num_chars' => $num_chars,
 	];
-	return elgg_view('output/excerpt', $vars);
+	$viewtype = elgg_view_exists($view) ? '' : 'default';
+
+	return _elgg_view_under_viewtype($view, $vars, $viewtype);
 }
 
 /**

@@ -674,8 +674,22 @@ Note that WYSIWYG will be automatically attached to all instances of ``.elgg-inp
 
 .. code:: js
 
-   require(['elgg/ckeditor'], function (editor) {
-       editor.bind('.my-text-area');
+   require(['elgg/ckeditor'], function (elggCKEditor) {
+      elggCKEditor.bind('#my-text-area');
+
+      // Toggle CKEditor
+      elggCKEditor.toggle('#my-text-area');
+
+      // Focus on CKEditor input
+      elggCKEditor.focus('#my-text-area');
+      // or
+      $('#my-text-area').trigger('focus');
+
+      // Reset CKEditor input
+      elggCKEditor.reset('#my-text-area');
+      // or
+      $('#my-text-area').trigger('reset');
+
    });
 
 Traditional scripts

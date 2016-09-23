@@ -65,6 +65,19 @@ function system_messages($message = null, $register = "success", $count = false)
 }
 
 /**
+ * Alias of elgg_delete_river() that doesn't raise notices
+ *
+ * @param array $options Options for elgg_delete_river()
+ * @return bool
+ * @internal Will be removed with elgg_delete_river()
+ * @access private
+ */
+function _elgg_delete_river(array $options = []) {
+	$options['__bypass_notice'] = true;
+	return elgg_delete_river($options);
+}
+
+/**
  * Delete river items
  *
  * @warning Does not fire permission hooks or delete, river events.
@@ -93,7 +106,10 @@ function system_messages($message = null, $register = "success", $count = false)
 function elgg_delete_river(array $options = array()) {
 	global $CONFIG;
 
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_river() and call delete() on the returned item(s)', '2.3');
+	// allow core to use this in 2.x w/o warnings
+	if (empty($options['__bypass_notice'])) {
+		elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_river() and call delete() on the returned item(s)', '2.3');
+	}
 
 	$defaults = array(
 		'ids'                  => ELGG_ENTITIES_ANY_VALUE,

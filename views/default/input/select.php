@@ -23,8 +23,7 @@
  * @uses $vars['class']          Additional CSS class
  */
 
-$vars['class'] = (array) elgg_extract('class', $vars, []);
-$vars['class'][] = 'elgg-input-dropdown';
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-dropdown');
 
 $defaults = array(
 	'disabled' => false,
@@ -82,17 +81,23 @@ if ($options_values) {
 	if (is_array($options)) {
 		foreach ($options as $option) {
 
-			$option_attrs = ['selected' => in_array((string)$option, $value)];
-
 			if (is_array($option)) {
 				$text = elgg_extract('text', $option, '');
 				unset($option['text']);
+
 				if (!$text) {
 					elgg_log('No text defined for input/select option', 'ERROR');
 				}
 
+				$option_attrs = [
+					'selected' => in_array((string)$text, $value),
+				];
 				$option_attrs = array_merge($option_attrs, $option);
 			} else {
+				$option_attrs = [
+					'selected' => in_array((string)$option, $value),
+				];
+
 				$text = $option;
 			}
 

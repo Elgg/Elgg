@@ -3,14 +3,13 @@
  * Tag cloud widget
  */
 
-$num_items = $vars['entity']->num_items;
+$widget = elgg_extract('entity', $vars);
 
 elgg_push_context('tags');
-$options = array(
-	'owner_guid' => elgg_get_page_owner_guid(),
+echo elgg_view_tagcloud([
+	'owner_guid' => $widget->owner_guid,
 	'threshold' => 1,
-	'limit' => $num_items,
+	'limit' => $widget->num_items,
 	'tag_name' => 'tags',
-);
-echo elgg_view_tagcloud($options);
+]);
 elgg_pop_context();

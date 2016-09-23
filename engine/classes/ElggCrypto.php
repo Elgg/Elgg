@@ -25,15 +25,15 @@ class ElggCrypto {
 	/**
 	 * @var SiteSecret
 	 */
-	private $siteSecret;
+	private $site_secret;
 
 	/**
 	 * Constructor
 	 *
-	 * @param SiteSecret $siteSecret Secret service
+	 * @param SiteSecret $site_secret Secret service
 	 */
-	public function __construct(SiteSecret $siteSecret) {
-		$this->siteSecret = $siteSecret;
+	public function __construct(SiteSecret $site_secret = null) {
+		$this->site_secret = $site_secret;
 	}
 
 	/**
@@ -185,7 +185,7 @@ class ElggCrypto {
 	 */
 	public function getHmac($data, $algo = 'sha256', $key = '') {
 		if (!$key) {
-			$key = $this->siteSecret->get(true);
+			$key = $this->site_secret->get(true);
 		}
 		return new Elgg\Security\Hmac($key, [$this, 'areEqual'], $data, $algo);
 	}

@@ -1,34 +1,30 @@
 <?php
 /**
  * Elgg file widget view
- *
- * @package ElggFile
  */
 
+$widget = elgg_extract('entity', $vars);
 
-$num = $vars['entity']->num_display;
-
-$options = array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'file',
-	'container_guid' => $vars['entity']->owner_guid,
-	'limit' => $num,
-	'full_view' => FALSE,
-	'pagination' => FALSE,
+	'container_guid' => $widget->owner_guid,
+	'limit' => $widget->num_display,
+	'pagination' => false,
 	'distinct' => false,
-);
-$content = elgg_list_entities($options);
+]);
+
+
+if (empty($content)) {
+	echo elgg_echo('file:none');
+	return;
+}
 
 echo $content;
 
-if ($content) {
-	$url = "file/owner/" . elgg_get_page_owner_entity()->username;
-	$more_link = elgg_view('output/url', array(
-		'href' => $url,
-		'text' => elgg_echo('file:more'),
-		'is_trusted' => true,
-	));
-	echo "<span class=\"elgg-widget-more\">$more_link</span>";
-} else {
-	echo elgg_echo('file:none');
-}
+$more_link = elgg_view('output/url', [
+	'href' => 'file/owner/' . $widget->getOwnerEntity()->username,
+	'text' => elgg_echo('file:more'),
+	'is_trusted' => true,
+]);
+echo "<div class=\"elgg-widget-more\">$more_link</div>";
