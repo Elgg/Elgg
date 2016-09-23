@@ -374,24 +374,25 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  * @note Internal: If the initial COUNT query returns 0, the $getter will not be called again.
  *
  * @param array    $options Any options from $getter options plus:
- *                   item_view => STR Optional. Alternative view used to render list items
- *                   full_view => BOOL Display full view of entities (default: false)
- *                   list_type => STR 'list', 'gallery', or 'table'
- *                   columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
- *                   list_type_toggle => BOOL Display gallery / list switch
- *                   pagination => BOOL Display pagination links
- *                   no_results => STR|Closure Message to display when there are no entities
+ *                            item_view => STR Optional. Alternative view used to render list items
+ *                            full_view => BOOL Display full view of entities (default: false)
+ *                            list_type => STR 'list', 'gallery', or 'table'
+ *                            columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
+ *                            list_type_toggle => BOOL Display gallery / list switch
+ *                            pagination => BOOL Display pagination links
+ *                            no_results => STR|Closure Message to display when there are no entities
  *
- * @param callback $getter  The entity getter function to use to fetch the entities.
- * @param callback $viewer  The function to use to view the entity list.
+ * @param callable $getter  The entity getter function to use to fetch the entities.
+ *                          Defaults to elgg_get_entities()
+ * @param callable $viewer  The function to use to view the entity list.
+ *                          Defaults to elgg_view_entity_list()
  *
  * @return string
  * @since 1.7
  * @see elgg_get_entities()
  * @see elgg_view_entity_list()
  */
-function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
-	$viewer = 'elgg_view_entity_list') {
+function elgg_list_entities(array $options = array(), callable $getter = null, callable $viewer = null) {
 
 	elgg_register_rss_link();
 
@@ -414,6 +415,17 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		$options['list_type_toggle'] = $options['view_type_toggle'];
 	}
 
+	$list_params = [
+		'options' => $options,
+		'getter' => $getter ? : 'elgg_get_entities',
+		'viewer' => $viewer ? : 'elgg_view_entity_list',
+	];
+	$list_params = elgg_trigger_plugin_hook('prepare', 'list', $list_params, $list_params);
+
+	$options = elgg_extract('options', $list_params);
+	$getter = elgg_extract('getter', $list_params);
+	$viewer = elgg_extract('viewer', $list_params);
+	
 	$options['count'] = true;
 	$count = call_user_func($getter, $options);
 
