@@ -25,26 +25,11 @@ if (elgg_in_context('dashboard')) {
 	<?php
 }
 
-$num_display = sanitize_int($vars['entity']->num_display, false);
-// set default value for display number
-if (!$num_display) {
-	$num_display = 8;
-}
+echo elgg_view('object/widget/edit/num_display', [
+	'entity' => elgg_extract('entity', $vars),
+	'default' => 8,
+]);
 
-$params = array(
-	'name' => 'params[num_display]',
-	'value' => $num_display,
-	'options' => array(5, 8, 10, 12, 15, 20),
-);
-$num_dropdown = elgg_view('input/select', $params);
-
-?>
-<div>
-	<?php echo elgg_echo('widget:numbertodisplay'); ?>:
-	<?php echo $num_dropdown; ?>
-</div>
-
-<?php
 // pass the context so we have the correct output upon save.
 if (elgg_in_context('dashboard')) {
 	$context = 'dashboard';
