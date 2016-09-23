@@ -86,18 +86,4 @@ class Request extends SymfonyRequest {
 			|| $this->request->get('X-Requested-With') === 'XMLHttpRequest');
 		// GET/POST check is necessary for jQuery.form and other iframe-based "ajax". #8735
 	}
-
-	/**
-	 * Strip slashes if magic quotes is on
-	 *
-	 * @param mixed $data Data to strip slashes from
-	 * @return mixed
-	 */
-	protected function stripSlashesIfMagicQuotes($data) {
-		if (get_magic_quotes_gpc()) {
-			return _elgg_stripslashes_deep($data);
-		} else {
-			return $data;
-		}
-	}
 }

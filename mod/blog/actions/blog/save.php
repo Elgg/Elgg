@@ -91,7 +91,8 @@ foreach ($values as $name => $default) {
 		case 'container_guid':
 			// this can't be empty or saving the base entity fails
 			if (!empty($value)) {
-				if (can_write_to_container($user->getGUID(), $value)) {
+				$container = get_entity($value);
+				if ($container && $container->canWriteToContainer(0, 'object', 'blog')) {
 					$values[$name] = $value;
 				} else {
 					$error = elgg_echo("blog:error:cannot_write_to_container");
