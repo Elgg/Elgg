@@ -65,28 +65,6 @@ if ($comment_guid) {
 		forward(REFERER);
 	}
 
-	// Notify if poster wasn't owner
-	if ($entity->owner_guid != $user->guid) {
-		$owner = $entity->getOwnerEntity();
-
-		notify_user($owner->guid,
-			$user->guid,
-			elgg_echo('generic_comment:email:subject', array(), $owner->language),
-			elgg_echo('generic_comment:email:body', array(
-				$entity->title,
-				$user->name,
-				$comment_text,
-				$comment->getURL(),
-				$user->name,
-				$user->getURL()
-			), $owner->language),
-			array(
-				'object' => $comment,
-				'action' => 'create',
-			)
-		);
-	}
-
 	// Add to river
 	elgg_create_river_item(array(
 		'view' => 'river/object/comment/create',

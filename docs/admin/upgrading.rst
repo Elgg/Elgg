@@ -37,6 +37,15 @@ Basic instructions
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
    If this is not the case, take care to maintain your modifications. 
 
+From 2.3 to 3.0
+===============
+
+Removed / changed language keys
+-------------------------------
+
+ * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
+
+
 From 2.2 to 2.3
 ===============
 

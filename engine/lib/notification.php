@@ -80,7 +80,7 @@ function elgg_unregister_notification_event($object_type, $object_subtype) {
 
 /**
  * Register a delivery method for notifications
- * 
+ *
  * Register for the 'send', 'notification:[method name]' plugin hook to handle
  * sending a notification. A notification object is in the params array for the
  * hook with the key 'notification'. See \Elgg\Notifications\Notification.
@@ -206,7 +206,7 @@ function _elgg_notifications_cron() {
 
 /**
  * Send an email notification
- * 
+ *
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param bool   $result Has anyone sent a message yet?

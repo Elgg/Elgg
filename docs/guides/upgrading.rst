@@ -200,6 +200,7 @@ Miscellaneous API changes
  * ``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files.
  * ``elgg_get_config('siteemail')`` is no longer available. Use ``elgg_get_site_entity()->email``.
  * The URL endpoints ``js/`` and ``css/`` are no longer supported. Use ``elgg_get_simplecache_url()``.
+ * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
 
 JavaScript hook calling order may change
 ----------------------------------------
@@ -277,6 +278,12 @@ Notable changes in plugins:
 
  * search plugin no longer extends ``page/elements/header`` and instead extends ``page/elements/sidebar``
  * topbar menu items might now have a new parent item or be found in a different section
+
+Comment notifications
+---------------------
+
+ * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
+ * The action for creating a comment (``action/comment/save``) was changed. If your plugin overruled this action you should have a look at it in order to prevent double notifications 
 
 From 2.2 to 2.3
 ===============
