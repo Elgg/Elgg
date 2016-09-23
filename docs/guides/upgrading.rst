@@ -49,6 +49,11 @@ New API for working with file uploads
  * ``elgg_get_uploaded_files()`` - returns an array of Symfony uploaded file objects
  * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
 
+New API for events
+------------------
+
+ * ``elgg_clear_event_handlers()`` - similar to ``elgg_clear_plugin_hook_handlers`` this functions removes all registered event handlers
+
 New API for signing URLs
 ------------------------
 
