@@ -733,6 +733,23 @@ function elgg_view_layout($layout_name, $vars = array()) {
  * to modify the structure of the menu (sort it, remove items, set variables on
  * the menu items).
  *
+ * Preset (unprepared) menu items passed to the this function with the $vars
+ * argument, will be merged with the registered items (registered with
+ * elgg_register_menu_item()). The combined set of menu items will be passed
+ * to 'register', 'menu:<menu_name>' hook.
+ *
+ * Plugins that pass preset menu items to this function and do not wish to be
+ * affected by plugin hooks (e.g. if you are displaying multiple menus with
+ * the same name on the page) should instead choose a unqie menu name
+ * and define a menu_view argument to render menus consistently.
+ * For example, if you have multiple 'filter' menus on the page:
+ * <code>
+ *    elgg_view_menu("filter:$uid", [
+ *        'items' => $items,
+ *        'menu_view' => 'navigation/menu/filter',
+ *    ]);
+ * </code>
+ *
  * elgg_view_menu() uses views in navigation/menu
  *
  * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
@@ -748,12 +765,17 @@ function elgg_view_layout($layout_name, $vars = array()) {
  *                              handler: string the page handler to build action URLs
  *                              entity: \ElggEntity to use to build action URLs
  *                              class: string the class for the entire menu.
+ *                              menu_view: name of the view to be used to render the menu
  *                              show_section_headers: bool show headers before menu sections.
  *
  * @return string
  * @since 1.8.0
  */
 function elgg_view_menu($menu, array $vars = array()) {
+
+	$menu_view = elgg_extract('menu_view', $vars);
+	unset($vars['menu_view']);
+
 	if (is_string($menu)) {
 		$menu = _elgg_services()->menus->getMenu($menu, $vars);
 
@@ -766,11 +788,18 @@ function elgg_view_menu($menu, array $vars = array()) {
 	}
 
 	$name = $menu->getName();
+	$params = $menu->getParams();
 
-	if (elgg_view_exists("navigation/menu/$name")) {
-		return elgg_view("navigation/menu/$name", $menu->getParams());
-	} else {
-		return elgg_view("navigation/menu/default", $menu->getParams());
+	$views = [
+		$menu_view,
+		"navigation/menu/$name",
+		'navigation/menu/default',
+	];
+
+	foreach ($views as $view) {
+		if (elgg_view_exists($view)) {
+			return elgg_view($view, $params);
+		}
 	}
 }
 
