@@ -19,7 +19,7 @@ if ($user->isBanned()) {
 	echo "<div class='profile-banned-user'><h4 class='mbs'>$title</h4>$reason</div>";
 }
 
-echo elgg_view("profile/status", array("entity" => $user));
+echo elgg_view_deprecated('profile/status', ['entity' => $user], 'This view will be removed in Elgg 3.0', '2.3');
 
 $microformats = array(
 	'mobile' => 'tel p-tel',

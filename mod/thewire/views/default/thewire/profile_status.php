@@ -5,6 +5,8 @@
  * @uses $vars['entity'] User that owns this profile page
  */
 
+elgg_deprecated_notice('The thewire/profile_status view has been deprecated. This view will be removed in Elgg 3.0', '2.3', 0);
+
 $owner = $vars['entity']->guid;
 
 //grab the user's latest from the wire
