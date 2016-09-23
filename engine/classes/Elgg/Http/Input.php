@@ -3,7 +3,7 @@ namespace Elgg\Http;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Provides unified access to the $_GET and $_POST inputs.
  *
  * @package    Elgg.Core
@@ -14,7 +14,7 @@ namespace Elgg\Http;
 class Input {
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -44,7 +44,7 @@ class Input {
 		}
 	
 		if (is_array($value)) {
-			array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
+			array_walk_recursive($value, function(&$v, $k) { $v = trim($v);});
 			$this->CONFIG->input[trim($variable)] = $value;
 		} else {
 			$this->CONFIG->input[trim($variable)] = trim($value);
