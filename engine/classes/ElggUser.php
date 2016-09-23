@@ -183,6 +183,24 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
+	 * Get user language or default to site language
+	 *
+	 * @param string $fallback If this is provided, it will be returned if the user doesn't have a language set.
+	 *                         If null, the site language will be returned.
+	 *
+	 * @return string
+	 */
+	public function getLanguage($fallback = null) {
+		if (!empty($this->language)) {
+			return $this->language;
+		}
+		if ($fallback !== null) {
+			return $fallback;
+		}
+		return elgg_get_config('language');
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function getDisplayName() {
