@@ -8,36 +8,16 @@ $current_strength = elgg_echo('site_secret:current_strength');
 $strength_text = elgg_echo("site_secret:strength:$strength");
 $strength_msg = elgg_echo("site_secret:strength_msg:$strength");
 
+$body = '<p>' . elgg_echo('admin:site:secret:intro') . '</p>';
+$body .= elgg_view_module('main', "$current_strength: $strength_text", $strength_msg, [
+	'class' => ($strength != 'strong') ? 'elgg-message elgg-state-error' : 'elgg-message elgg-state-success',
+]);
 
-if ($strength != 'strong') {
-	$title = "$current_strength: $strength_text";
+$body .= elgg_view_input('checkbox', [
+	'label' => elgg_echo('admin:site:secret:regenerate'),
+	'value' => 1,
+	'name' => 'regenerate_site_secret',
+	'help' => elgg_echo('admin:site:secret:regenerate:help'),
+]);
 
-	$status_msg = elgg_view_module('main', $title, $strength_msg, array(
-		'class' => 'elgg-message elgg-state-error'
-	));
-} else {
-	$status_msg = "<p>$strength_msg</p>";
-}
-
-$regenerate_input = elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('admin:site:secret:regenerate') => 1),
-	'name' => 'regenerate_site_secret'
-));
-
-?>
-<fieldset class="elgg-fieldset" id="elgg-settings-advanced-security">
-	<legend><?php echo elgg_echo('admin:legend:security'); ?></legend>
-	
-	<div>
-		<p><?php echo elgg_echo('admin:site:secret:intro'); ?></p>
-		
-		<?php 
-		echo $status_msg;
-		echo $regenerate_input; 
-		?>
-		
-		<p class="elgg-text-help">
-			<?php echo elgg_echo('admin:site:secret:regenerate:help'); ?>
-		</p>
-	</div>
-</fieldset>
+echo elgg_view_module('inline', elgg_echo('admin:legend:security'), $body, ['id' => 'elgg-settings-advanced-security']);

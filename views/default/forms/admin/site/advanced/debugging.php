@@ -3,34 +3,18 @@
  * Advanced site settings, debugging section.
  */
 
-$debug_options = array(
-	'0' => elgg_echo('installation:debug:none'),
-	'ERROR' => elgg_echo('installation:debug:error'),
-	'WARNING' => elgg_echo('installation:debug:warning'),
-	'NOTICE' => elgg_echo('installation:debug:notice'),
-	'INFO' => elgg_echo('installation:debug:info'),
-);
-
-$debug_label = elgg_echo('installation:debug:label');
-$debug_input = elgg_view('input/select', array(
-	'options_values' => $debug_options,
+$body = elgg_view_input('select', [
+	'options_values' => [
+		'0' => elgg_echo('installation:debug:none'),
+		'ERROR' => elgg_echo('installation:debug:error'),
+		'WARNING' => elgg_echo('installation:debug:warning'),
+		'NOTICE' => elgg_echo('installation:debug:notice'),
+		'INFO' => elgg_echo('installation:debug:info'),
+	],
 	'name' => 'debug',
+	'label' => elgg_echo('installation:debug:label'),
+	'help' => elgg_echo('installation:debug'),
 	'value' => elgg_get_config('debug'),
-));
+]);
 
-?>
-<fieldset class="elgg-fieldset" id="elgg-settings-advanced-debugging">
-	<legend><?php echo elgg_echo('admin:legend:debug'); ?></legend>
-	
-	<div>
-		<p><?php echo elgg_echo('installation:debug'); ?></p>
-		
-		<label>
-			<?php 
-			echo $debug_label; 
-			echo $debug_input;
-			?>
-			
-		</label>
-	</div>
-</fieldset>
+echo elgg_view_module('inline', elgg_echo('admin:legend:debug'), $body, ['id' => 'elgg-settings-advanced-debugging']);
