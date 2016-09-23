@@ -16,7 +16,8 @@
 
 <?php /* Need .elgg-page to be able to override .elgg-menu-hz > li {display:inline-block} and such */ ?>
 .hidden,
-.elgg-page .hidden {
+.elgg-page .hidden,
+.elgg-menu > li.hidden {
 	display: none;
 }
 
