@@ -778,6 +778,10 @@ These changes will only affect new users on the site.',
 	'usersettings:statistics' => "Your statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
+	
+	'usersettings:statistics:login_history' => "Login History",
+	'usersettings:statistics:login_history:date' => "Date",
+	'usersettings:statistics:login_history:ip' => "IP Address",
 
 	'usersettings:user' => "%s's settings",
 	'usersettings:user:opt:description' => "This allows you to control user settings.",
