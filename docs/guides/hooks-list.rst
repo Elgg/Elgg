@@ -103,6 +103,16 @@ System hooks
 **elgg.data, page**
    Filters uncached, page-specific configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
 
+**registration_url, site**
+   Filters site's registration URL. Can be used by plugins to attach invitation codes, referrer codes etc. to the registration URL.
+   ``$params`` array contains an array of query elements added to the registration URL by the invoking script.
+   The hook must return an absolute URL to the registration page.
+
+**login_url, site**
+   Filters site's login URL.
+   ``$params`` array contains an array of query elements added to the login URL by the invoking script.
+   The hook must return an absolute URL of the login page.
+
 User hooks
 ==========
 
