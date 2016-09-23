@@ -2,36 +2,27 @@
 /**
  * Advanced site settings, system section.
  */
-?>
-<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system">
-	<legend><?php echo elgg_echo('admin:legend:system');?></legend>
-	<?php foreach (['wwwroot', 'path', 'dataroot'] as $field) {
-		$warning = false;
-		$label = elgg_echo('installation:' . $field);
 
-		$params = [
-			'name' => $field,
-			'value' => elgg_get_config($field)
-		];
-		if ($field == 'dataroot' && $GLOBALS['_ELGG']->dataroot_in_settings) {
-			$params['readonly'] = true;
-			$params['class'] = 'elgg-state-disabled';
-			$warning = elgg_echo('admin:settings:in_settings_file');
-		}
+$body = elgg_view_input('text', [
+	'name' => 'wwwroot',
+	'label' => elgg_echo('installation:wwwroot'),
+	'value' => elgg_get_config('wwwroot'),
+]);
 
-		$input = elgg_view("input/text", $params);
-		if ($warning) {
-			$input = "<span class=\"elgg-text-help\">$warning</span>";
-		}
-		
-		?>
-	<div>
-		<label>
-			<?php 
-				echo $label; 
-				echo $input;
-			?>
-		</label>
-	</div>
-	<?php } ?>
-</fieldset>
+$body .= elgg_view_input('text', [
+	'name' => 'path',
+	'label' => elgg_echo('installation:path'),
+	'value' => elgg_get_config('path'),
+]);
+
+$dataroot_in_settings = !empty($GLOBALS['_ELGG']->dataroot_in_settings);
+$body .= elgg_view_input('text', [
+	'name' => 'dataroot',
+	'label' => elgg_echo('installation:dataroot'),
+	'value' => elgg_get_config('dataroot'),
+	'readonly' => $dataroot_in_settings,
+	'class' => $dataroot_in_settings ? 'elgg-state-disabled' : '',
+	'help' => $dataroot_in_settings ? elgg_echo('admin:settings:in_settings_file') : '',
+]);
+
+echo elgg_view_module('inline', elgg_echo('admin:legend:system'), $body, ['id' => 'elgg-settings-advanced-system']);
