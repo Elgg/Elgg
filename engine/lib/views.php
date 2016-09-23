@@ -698,6 +698,18 @@ function elgg_view_layout($layout_name, $vars = array()) {
 	array_shift($params['segments']);
 	$layout_name = elgg_trigger_plugin_hook('layout', 'page', $params, $layout_name);
 
+	// @todo: remove in 3.0 and document a breaking change in page/layouts/elements/filter
+	if (_elgg_view_may_be_altered('page/layouts/elements/filter', 'page/layouts/elements/filter.php')) {
+		if (isset($vars['filter']) && is_array($vars['filter'])) {
+			// Replace an array of filter tabs with a rendered menu
+			$filter_vars = (array) elgg_extract('filter_vars', $vars, []);
+			unset($vars['filter_vars']);
+
+			$filter_vars['tabs'] = elgg_extract('filter', $vars);
+			$vars['filter'] = elgg_view('navigation/filter', $filter_vars);
+		}
+	}
+
 	$param_array = $vars;
 
 	$param_array['layout'] = $layout_name;

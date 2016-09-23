@@ -67,6 +67,9 @@ function discussion_init() {
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:discussion', 'Elgg\Values::getTrue');
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:discussion_reply', 'Elgg\Values::getTrue');
+
+	// add a tab to groups page
+	elgg_register_plugin_hook_handler('filter_tabs', 'groups/all', 'discussion_prepare_filter_tabs', 400);
 }
 
 /**
@@ -656,4 +659,31 @@ function discussion_prepare_form_vars($topic = NULL) {
 	elgg_clear_sticky_form('topic');
 
 	return $values;
+}
+
+/**
+ * Adds latest discussions tab to the groups/all page filter
+ * 
+ * @param string $hook   "filter_tabs"
+ * @param string $type   "groups/all"
+ * @param array  $tabs   Tabs
+ * @param array  $params Hook params
+ * @return array
+ */
+function discussion_prepare_filter_tabs($hook, $type, $tabs, $params) {
+
+	if (elgg_extract('__ignore_defaults', $params)) {
+		// @todo: remove in 3.0
+		// this is here to avoid reregistering tabs that may have been
+		// removed in a overwrriten groups/group_sort_menu
+		return;
+	}
+	
+	$tabs['discussion'] = array(
+		'text' => elgg_echo('discussion:latest'),
+		'href' => 'groups/all?filter=discussion',
+		'priority' => 500,
+	);
+
+	return $tabs;
 }

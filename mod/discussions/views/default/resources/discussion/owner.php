@@ -21,25 +21,9 @@ elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
 $title = elgg_echo('item:object:discussion');
 
-$options = array(
-	'type' => 'object',
-	'subtype' => 'discussion',
-	'limit' => max(20, elgg_get_config('default_limit')),
-	'order_by' => 'e.last_action desc',
-	'full_view' => false,
-	'no_results' => elgg_echo('discussion:none'),
-	'preload_owners' => true,
-);
-
-if ($target instanceof ElggUser) {
-	// Display all discussions started by the user regardless of
-	// the entity that is working as a container. See #4878.
-	$options['owner_guid'] = $guid;
-} else {
-	$options['container_guid'] = $guid;
-}
-
-$content = elgg_list_entities($options);
+$content = elgg_view('discussion/listing/owner', [
+	'entity' => $target,
+]);
 
 $params = array(
 	'content' => $content,

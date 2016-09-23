@@ -6,31 +6,31 @@
 // The URL segment after members/
 $page = elgg_extract('page', $vars);
 
-$tabs = elgg_trigger_plugin_hook('members:config', 'tabs', null, array());
-
-foreach ($tabs as $type => $values) {
-	$tabs[$type]['selected'] = ($page == $type);
+$tabs = elgg_get_filter_tabs('members', $page);
+if (!array_key_exists($page, $tabs)) {
+	$page = array_values($tabs)[0]['name'];
 }
-$filter = elgg_view('navigation/tabs', array('tabs' => $tabs));
 
 $params = array(
-	'options' => array('type' => 'user', 'full_view' => false),
+	'options' => [
+		'type' => 'user',
+		'full_view' => false,
+	],
 );
 
+// @todo: in 3.0, replace the hook with the listing view
 $content = elgg_trigger_plugin_hook('members:list', $page, $params, null);
 if ($content === null) {
 	forward('', '404');
 }
 
-$title = elgg_echo("members:title:{$page}");
+$title = elgg_echo("members:title:$page");
 
-$params = array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
 	'title' => $title,
-	'filter' => $filter,
-);
-
-$body = elgg_view_layout('content', $params);
+	'filter' => $tabs,
+]);
 
 echo elgg_view_page($title, $body);
