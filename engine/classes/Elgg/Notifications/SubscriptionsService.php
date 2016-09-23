@@ -61,12 +61,14 @@ class SubscriptionsService {
 		if (!$object) {
 			return $subscriptions;
 		}
-
-		$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
-		$records = $this->getSubscriptionRecords($object->getContainerGUID());
-		foreach ($records as $record) {
-			$deliveryMethods = explode(',', $record->methods);
-			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
+		
+		if ($object instanceof \ElggEntity) {
+			$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
+			$records = $this->getSubscriptionRecords($object->getContainerGUID());
+			foreach ($records as $record) {
+				$deliveryMethods = explode(',', $record->methods);
+				$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
+			}
 		}
 
 		$params = array('event' => $event);
