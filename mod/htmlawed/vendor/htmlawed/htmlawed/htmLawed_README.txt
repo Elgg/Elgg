@@ -1,6 +1,6 @@
 /*
-htmLawed_README.txt, 19 January 2015
-htmLawed 1.1.19, 19 January 2015
+htmLawed_README.txt, 5 March 2016
+htmLawed 1.1.22, 5 March 2016
 Copyright Santosh Patnaik
 Dual licensed with LGPL 3 and GPL 2+
 A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed
@@ -146,7 +146,7 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
   *  option to *remove or neutralize bad content* ^~`
   *  attempts to *rectify common errors of plain-text misplacement* (e.g., directly inside 'blockquote') ^~`
 
-  *  fast, *non-OOP* code of ~45 kb incurring peak basal memory usage of ~0.5 MB
+  *  fast, *non-OOP* code of ~50 kb incurring peak basal memory usage of ~0.5 MB
   *  *compatible* with pre-existing code using 'Kses' (the filter used by 'WordPress')
 
   *  optional *anti-spam* measures such as addition of 'rel="nofollow"' and link-disabling  ~`
@@ -469,35 +469,37 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 
   Rules regarding *attribute values* are optionally specified inside round brackets after attribute names in slash ('/')-separated `parameter = value` pairs. E.g., 'title(maxlen=30/minlen=5)'. None or one or more of the following parameters may be specified:
 
-  *  'oneof' - one or more choices separated by '|' that the value should match; if only one choice is provided, then the value must match that choice
+  *  'oneof' - one or more choices separated by '|' that the value should match; if only one choice is provided, then the value must match that choice; matching is case-sensitive
 
-  *  'noneof' - one or more choices separated by '|' that the value should not match
+  *  'noneof' - one or more choices separated by '|' that the value should not match; matching is case-sensitive
 
   *  'maxlen' and 'minlen' - upper and lower limits for the number of characters in the attribute value; specified in numbers
 
   *  'maxval' and 'minval' - upper and lower limits for the numerical value specified in the attribute value; specified in numbers
 
-  *  'match' and 'nomatch' - pattern that the attribute value should or should not match; specified as PHP/PCRE-compatible regular expressions with delimiters and possibly modifiers
+  *  'match' and 'nomatch' - pattern that the attribute value should or should not match; specified as PHP/PCRE-compatible regular expressions with delimiters and possibly modifiers (e.g., to specify case-sensitivity for matching)
 
   *  'default' - a value to force on the attribute if the value provided by the writer does not fit any of the specified parameters
 
   If 'default' is not set and the attribute value does not satisfy any of the specified parameters, then the attribute is removed. The 'default' value can also be used to force all attribute declarations to take the same value (by getting the values declared illegal by setting, e.g., 'maxlen' to '-1').
 
-  Examples with `input` '<input title="WIDTH" value="10em" /><input title="length" value="5" />' are shown below.
+  Examples with `input` '<input title="WIDTH" value="10em" /><input title="length" value="5" class="ic1 ic2" />' are shown below.
 
   `Rule`: 'input=title(maxlen=60/minlen=6), value'
-  `Output`: '<input value="10em" /><input title="length" value="5" />'
+  `Output`: '<input value="10em" /><input title="length" value="5" class="ic1 ic2" />'
 
   `Rule`: 'input=title(), value(maxval=8/default=6)'
-  `Output`: '<input title="WIDTH" value="6" /><input title="length" value="5" />'
+  `Output`: '<input title="WIDTH" value="6" /><input title="length" value="5" class="ic1 ic2" />'
 
   `Rule`: 'input=title(nomatch=%w.d%i), value(match=%em%/default=6em)'
-  `Output`: '<input value="10em" /><input title="length" value="6em" />'
+  `Output`: '<input value="10em" /><input title="length" value="6em" class="ic1 ic2" />'
 
-  `Rule`: 'input=title(oneof=height|depth/default=depth), value(noneof=5|6)'
-  `Output`: '<input title="depth" value="10em" /><input title="depth" />'
+  `Rule`: 'input=class(noneof=ic2|ic3/oneof=ic1|ic4), title(oneof=height|depth/default=depth), value(noneof=5|6)'
+  `Output`: '<input title="depth" value="10em" /><input title="depth" class="ic1" />'
 
   *Special characters*: The characters ';', ',', '/', '(', ')', '|', '~' and space have special meanings in the rules. Words in the rules that use such characters, or the characters themselves, should be `escaped` by enclosing in pairs of double-quotes ('"'). A back-tick ('`') can be used to escape a literal '"'. An example rule illustrating this is 'input=value(maxlen=30/match="/^\w/"/default="your `"ID`"")'.
+
+  *Attributes that accept multiple values*: If an attribute is 'accesskey', 'class', or 'rel', which can have multiple, space-separated values, htmLawed will parse the attribute value for such multiple values and will test each of them individually.
    
   *Note*: To deny an attribute for all elements for which it is legal, '$config["deny_attribute"]' (see section:- #3.4) can be used instead of '$spec'. Also, attributes can be allowed element-specifically through '$spec' while being denied globally through '$config["deny_attribute"]'. The 'hook_tag' parameter (section:- #3.4.9) can also be possibly used to implement a functionality like that achieved using '$spec' functionality.
   
@@ -991,7 +993,7 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 -- 3.4  Attributes ------------------------------------------------oo
 
 
-  htmLawed will only permit attributes described in the HTML specs (including deprecated ones). It also permits some attributes for use with the 'embed' element (the non-standard 'embed' element is supported in htmLawed because of its widespread use), and the the 'xml:space' attribute (valid only in XHTML 1.1). A list of such 111 attributes and the elements they are allowed in is in section:- #5.2. Using the '$spec' argument, htmLawed can be forced to permit custom, non-standard attributes as well as custom rules for standard attributes (section:- #2.3).
+  htmLawed will only permit attributes described in the HTML specs (including deprecated ones). It also permits some attributes for use with the 'embed' element (the non-standard 'embed' element is supported in htmLawed because of its widespread use), and the 'allowfullscreen' (in 'iframe', because of its widespread use), 'bordercolor' (in 'table', 'td' and 'tr', because of its widespread use), and 'xml:space' (valid only in XHTML 1.1) attributes. A list of such 112 attributes and the elements they are allowed in is in section:- #5.2. Using the '$spec' argument, htmLawed can be forced to permit custom, non-standard attributes as well as custom rules for standard attributes (section:- #2.3).
 
   When '$config["deny_attribute"]' is not set, or set to '0', or empty ('""'), all the 111 attributes are permitted. Otherwise, '$config["deny_attribute"]' can be set as a list of comma-separated names of the denied attributes. 'on*' can be used to refer to the group of potentially dangerous, script-accepting attributes: 'onblur', 'onchange', 'onclick', 'ondblclick', 'onfocus', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onreset', 'onselect' and 'onsubmit'.
 
@@ -1343,6 +1345,13 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
   (The release date for the downloadable package of files containing documentation, demo script, test-cases, etc., besides the 'htmLawed.php' file, may be updated without a change-log entry if the secondary files, but not htmLawed per se, are revised.)
 
   `Version number - Release date. Notes`
+
+
+  1.1.22 - 5 March 2016. Improved testing of attribute value rules specified in '$spec'.
+
+  1.1.21 - 27 February 2016. Improvement and security fix in transforming 'font' element.
+  
+  1.1.20 - 9 June 2015. Fix for a potential security vulnerability arising from unescaped double-quote character in single-quoted attribute value of some deprecated elements when tag transformation is enabled; recognition for non-(HTML4) standard 'allowfullscreen' attribute of 'iframe.'
   
   1.1.19 - 19 January 2015. Fix for a bug in cleaning of soft-hyphens in URL values, etc.
 
@@ -1472,7 +1481,7 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 -- 4.10  Acknowledgements ------------------------------------------o
 
 
-  Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Dac Chartrand, Ulf Harnhammer, Gareth Heyes, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Psych0tr1a, Lincoln Russell, Tomas Sykorka, Harro Verton, Edward Yang, and many anonymous users.
+  Nicholas Alipaz, Bryan Blakey, Pádraic Brady, Dac Chartrand, Ulf Harnhammer, Gareth Heyes, Hakre, Klaus Leithoff, Lukasz Pilorz, Shelley Powers, Psych0tr1a, Lincoln Russell, Tomas Sykorka, Harro Verton, Edward Yang, and many anonymous users.
 
   Thank you!
 
@@ -1493,8 +1502,9 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
 
   Valid attribute-element combinations as per W3C:- http://www.w3c.org specs.
 
-  *  includes deprecated attributes (marked '^'), attributes for the non-standard 'embed' element (marked '*'), and the proprietary 'bordercolor' (marked '~')
+  *  includes deprecated attributes (marked '^'), attributes for the non-standard 'embed' element (marked '*'), and the non-standard 'allowfullscreen' and 'bordercolor' (marked '~')
   *  only non-frameset, HTML body elements
+  * 'accesskey', 'class' and 'rel' can have multiple, space-separated values
   *  'name' for 'a' and 'map', and 'lang' are invalid in XHTML 1.1
   *  'target' is valid for 'a' in XHTML 1.1 and higher
   *  'xml:space' is only for XHTML 1.1
@@ -1505,6 +1515,7 @@ A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/intern
   accesskey - a, area, button, input, label, legend, textarea
   action - form
   align - caption^, embed, applet, iframe, img^, input^, object^, legend^, table^, hr^, div^, h1^, h2^, h3^, h4^, h5^, h6^, p^, col, colgroup, tbody, td, tfoot, th, thead, tr
+  allowfullscreen - iframe~
   alt - applet, area, img, input
   archive - applet, object
   axis - td, th

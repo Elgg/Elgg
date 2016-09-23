@@ -19,11 +19,6 @@ define(function (require) {
 	var config = require('elgg/ckeditor/config');
 
 	var elggCKEditor = {
-		/**
-		 * A flag that indicates whether handlers were registered
-		 */
-		ready: false,
-
 		bind: function (selector) {
 			elggCKEditor.registerHandlers();
 			CKEDITOR = elgg.trigger_hook('prepare', 'ckeditor', null, CKEDITOR);
@@ -31,10 +26,29 @@ define(function (require) {
 			if ($(selector).length === 0) {
 				return;
 			}
-			$(selector)
-					.not('[data-cke-init]')
+			$(selector).not('[data-cke-init]')
 					.attr('data-cke-init', true)
-					.ckeditor(elggCKEditor.init, elggCKEditor.config);
+					.each(function () {
+						var opts = $(this).data('editorOpts') || {};
+
+						if (opts.disabled) {
+							// Editor has been disabled
+							return;
+						}
+						delete opts.disabled;
+
+						var visual = opts.state !== 'html';
+						delete opts.state;
+
+						var config = $.extend({}, elggCKEditor.config, opts);
+						$(this).data('elggCKEeditorConfig', config);
+
+						if (!visual) {
+							elggCKEditor.init(this, visual);
+						} else {
+							$(this).ckeditor(elggCKEditor.init, config);
+						}
+					});
 		},
 
 		/**
@@ -42,9 +56,6 @@ define(function (require) {
 		 * @return void
 		 */
 		registerHandlers: function () {
-			if (elggCKEditor.ready) {
-				return;
-			}
 			elgg.register_hook_handler('prepare', 'ckeditor', function (hook, type, params, CKEDITOR) {
 				CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('elgg/ckeditor/blockimagepaste.js'), '');
 				CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
@@ -63,11 +74,12 @@ define(function (require) {
 					}
 				}
 			});
-			elggCKEditor.ready = true;
+			elggCKEditor.registerHandlers = elgg.nullFunction;
 		},
 
 		/**
 		 * Toggles the CKEditor
+		 * Callback function for toggler click event
 		 *
 		 * @param {Object} event
 		 * @return void
@@ -75,24 +87,93 @@ define(function (require) {
 		toggleEditor: function (event) {
 			event.preventDefault();
 			var target = $(this).attr('href');
-			if (!$(target).data('ckeditorInstance')) {
-				$(target).ckeditor(elggCKEditor.init, elggCKEditor.config);
-				$(this).html(elgg.echo('ckeditor:html'));
-			} else {
-				$(target).ckeditorGet().destroy();
-				$(this).html(elgg.echo('ckeditor:visual'));
+			elggCKEditor.toggle($(target)[0]);
+		},
+		/**
+		 * Toggles the CKEditor
+		 *
+		 * @param {Object} textarea DOM element
+		 * @returns {void}
+		 */
+		toggle: function (textarea) {
+			$(textarea).each(function() {
+				if (!$(this).data('ckeditorInstance')) {
+					$(this).ckeditor(elggCKEditor.init, $(this).data('elggCKEeditorConfig'));
+					$(this).data('toggler').html(elgg.echo('ckeditor:html'));
+				} else {
+					$(this).ckeditorGet().destroy();
+					$(this).data('toggler').html(elgg.echo('ckeditor:visual'));
+				}
+			});
+		},
+		/**
+		 * Resets the CKEditor
+		 * Callback function for the reset event
+		 *
+		 * @param {Object} event
+		 * @return void
+		 */
+		resetEditor: function (event) {
+			event.preventDefault();
+			elggCKEditor.reset(this);
+		},
+		/**
+		 * Resets the CKEditor
+		 *
+		 * @param {Object} textarea DOM element
+		 * @returns {void}
+		 */
+		reset: function (textarea) {
+			$(textarea).each(function() {
+				if ($(textarea).data('ckeditorInstance')) {
+					$(textarea).ckeditorGet().setData('');
+				}
+			});
+		},
+		/**
+		 * Focuses the CKEditor
+		 * Callback function for the focus event
+		 *
+		 * @param {Object} event
+		 * @return void
+		 */
+		focusEditor: function (event) {
+			event.preventDefault();
+			elggCKEditor.focus(this);
+		},
+		/**
+		 * Focuses the CKEditor
+		 *
+		 * @param {Object} textarea DOM element
+		 * @returns {void}
+		 */
+		focus: function (textarea) {
+			if ($(textarea).first().data('ckeditorInstance')) {
+				$(textarea).ckeditorGet().focus();
 			}
 		},
 
 		/**
 		 * Initializes the ckeditor module
 		 *
-		 * @param {Object} textarea DOM element passed by ckeditor on init
+		 * @param {Object}  textarea DOM element passed by ckeditor on init
+		 * @param {Boolean} visual
 		 * @return void
 		 */
-		init: function (textarea) {
+		init: function (textarea, visual) {
+			var $toggler = $(textarea).data('toggler');
+
+			if (!$toggler) {
+				$toggler = $('.ckeditor-toggle-editor[href="#' + textarea.id + '"]');
+				$(textarea).data('toggler', $toggler);
+			}
+
+			if (!visual) {
+				$toggler.html(elgg.echo('ckeditor:visual'));
+			}
+
 			// show the toggle-editor link which is hidden by default, so it will only show up if the editor is correctly loaded
-			$('.ckeditor-toggle-editor[href="#' + textarea.id + '"]').show();
+			$toggler.show();
 		},
 
 		/**
@@ -137,6 +218,10 @@ define(function (require) {
 	elggCKEditor.bind('.elgg-input-longtext');
 
 	$(document).on('click', '.ckeditor-toggle-editor', elggCKEditor.toggleEditor);
+
+	$(document).on('reset', '[data-cke-init]', elggCKEditor.resetEditor);
+
+	$(document).on('focus', '[data-cke-init]', elggCKEditor.focusEditor);
 
 	return elggCKEditor;
 });

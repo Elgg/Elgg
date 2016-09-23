@@ -3,28 +3,26 @@
  * User wire post widget display view
  */
 
-$num = $vars['entity']->num_display;
+$widget = elgg_extract('entity', $vars);
 
-$options = array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
-	'container_guid' => $vars['entity']->owner_guid,
-	'limit' => $num,
-	'full_view' => FALSE,
-	'pagination' => FALSE,
-);
-$content = elgg_list_entities($options);
+	'container_guid' => $widget->owner_guid,
+	'limit' => $widget->num_display,
+	'pagination' => false,
+]);
+
+if (empty($content)) {
+	echo elgg_echo('thewire:noposts');
+	return;
+}
 
 echo $content;
 
-if ($content) {
-	$owner_url = "thewire/owner/" . elgg_get_page_owner_entity()->username;
-	$more_link = elgg_view('output/url', array(
-		'href' => $owner_url,
-		'text' => elgg_echo('thewire:moreposts'),
-		'is_trusted' => true,
-	));
-	echo "<span class=\"elgg-widget-more\">$more_link</span>";
-} else {
-	echo elgg_echo('thewire:noposts');
-}
+$more_link = elgg_view('output/url', [
+	'href' => "thewire/owner/" . $widget->getOwnerEntity()->username,
+	'text' => elgg_echo('thewire:moreposts'),
+	'is_trusted' => true,
+]);
+echo "<div class=\"elgg-widget-more\">$more_link</div>";

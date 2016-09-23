@@ -379,4 +379,37 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$user->delete();
 
 	}
+
+	public function testUpdateAbilityDependsOnCanEdit() {
+		$this->entity->access_id = ACCESS_PRIVATE;
+
+		$this->assertTrue($this->entity->save());
+
+		// even owner can't bypass permissions
+		elgg_register_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getFalse'], 999);
+		$this->assertFalse($this->entity->save());
+		elgg_unregister_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getFalse']);
+
+		$user = new ElggUser();
+		$user->save();
+		$old_user = $this->replaceSession($user);
+
+		$this->assertFalse($this->entity->save());
+
+		elgg_register_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getTrue']);
+
+		// even though this user can't look up the entity via the DB, permission allows update.
+		$this->assertFalse(has_access_to_entity($this->entity, $user));
+		$this->assertTrue($this->entity->save());
+
+		elgg_unregister_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getTrue']);
+
+		// can save with access ignore
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($this->entity->save());
+		elgg_set_ignore_access($ia);
+
+		$this->replaceSession($old_user);
+		$user->delete();
+	}
 }

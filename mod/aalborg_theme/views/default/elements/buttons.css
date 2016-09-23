@@ -26,10 +26,6 @@
 .elgg-button-submit:focus {
 	background: #60B6F7;
 }
-.elgg-button-submit.elgg-state-disabled {
-	background: #DEDEDE;
-	cursor: default;
-}
 .elgg-button-cancel {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #FAA51A;
@@ -81,6 +77,12 @@
 .elgg-button-special:hover,
 .elgg-button-special:focus {
 	background: #5ED9CD;
+}
+.elgg-button:disabled,
+.elgg-button.elgg-state-disabled {
+	background: #DEDEDE;
+	cursor: default;
+	color: white;
 }
 /* Use .elgg-size-small or .elgg-size-large for additional sizes */
 .elgg-button.elgg-size-small {

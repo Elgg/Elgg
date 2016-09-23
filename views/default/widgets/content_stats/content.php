@@ -3,7 +3,9 @@
  * Content stats widget
  */
 
-$num_display = sanitize_int($vars['entity']->num_display, false);
+$widget = elgg_extract('entity', $vars);
+
+$num_display = sanitize_int($widget->num_display, false);
 // set default value for display number
 if (!$num_display) {
 	$num_display = 8;
@@ -23,10 +25,10 @@ foreach ($object_stats as $subtype => $num) {
 }
 echo '</table>';
 
-echo '<div class="mtm">';
-echo elgg_view('output/url', array(
+echo '<div class="mtm elgg-widget-more">';
+echo elgg_view('output/url', [
 	'href' => 'admin/statistics/overview',
 	'text' => elgg_echo('more'),
 	'is_trusted' => true,
-));
+]);
 echo '</div>';

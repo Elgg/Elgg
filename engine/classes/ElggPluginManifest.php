@@ -718,11 +718,11 @@ class ElggPluginManifest {
 	 */
 	static public function getFriendlyCategory($category) {
 		$cat_raw_string = "admin:plugins:category:$category";
-		$cat_display_string = _elgg_services()->translator->translate($cat_raw_string);
-		if ($cat_display_string == $cat_raw_string) {
-			$category = str_replace(array('-', '_'), ' ', $category);
-			$cat_display_string = ucwords($category);
+		if (_elgg_services()->translator->languageKeyExists($cat_raw_string)) {
+			return _elgg_services()->translator->translate($cat_raw_string);
 		}
-		return $cat_display_string;
+		
+		$category = str_replace(['-', '_'], ' ', $category);
+		return ucwords($category);
 	}
 }

@@ -197,6 +197,20 @@ function elgg_strtoupper() {
 }
 
 /**
+ * Wrapper for mb_convert_case($str, MB_CASE_TITLE)
+ *
+ * @param string $str String
+ * @return string
+ * @since 2.3
+ */
+function elgg_ucwords($str) {
+	if (is_callable('mb_convert_case')) {
+		return mb_convert_case($str, MB_CASE_TITLE, 'UTF-8');
+	}
+	return ucwords($str);
+}
+
+/**
  * Wrapper function for mb_substr_count(). Falls back to substr_count() if
  * mb_substr_count() isn't available.  Parameters are passed to the
  * wrapped function in the same order they are passed to this

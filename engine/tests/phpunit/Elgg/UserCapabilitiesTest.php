@@ -18,29 +18,15 @@ class UserCapabilitiesTest extends TestCase {
 	 */
 	private $hooks;
 
-	/**
-	 * @var EntityTable
-	 */
-	private $entities;
-
-	/**
-	 * @var ElggSession
-	 */
-	private $session;
-
 	public function setUp() {
-
-		$this->hooks = new PluginHooksService();
-		$this->session = ElggSession::getMock();
-
-		_elgg_services()->setValue('hooks', $this->hooks);
-		_elgg_services()->setValue('session', $this->session);
-
 		$this->setupMockServices();
 
-		$this->entities = _elgg_services()->entityTable;
-		
-		_elgg_services()->setValue('userCapabilities', new UserCapabilities($this->hooks, $this->entities, $this->session));
+		$this->hooks = _elgg_services()->hooks;
+		$this->hooks->backup();
+	}
+
+	public function tearDown() {
+		$this->hooks->restore();
 	}
 
 	/**
@@ -217,8 +203,8 @@ class UserCapabilitiesTest extends TestCase {
 			'owner_guid' => $owner->guid,
 		]);
 		$metadata = new ElggMetadata((object) [
-					'owner_guid' => 0,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => 0,
+			'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
 	}
@@ -232,8 +218,8 @@ class UserCapabilitiesTest extends TestCase {
 			'owner_guid' => $owner->guid,
 		]);
 		$metadata = new ElggMetadata((object) [
-					'owner_guid' => $owner->guid,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => $owner->guid,
+			'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
 
@@ -263,8 +249,8 @@ class UserCapabilitiesTest extends TestCase {
 			'owner_guid' => $owner->guid,
 		]);
 		$metadata = new ElggMetadata((object) [
-					'owner_guid' => $owner->guid,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => $owner->guid,
+			'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
 
@@ -292,8 +278,8 @@ class UserCapabilitiesTest extends TestCase {
 			'owner_guid' => $owner->guid,
 		]);
 		$annotation = new ElggAnnotation((object) [
-					'owner_guid' => 0,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => 0,
+			'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($annotation->canEdit($owner->guid));
 	}
@@ -307,8 +293,8 @@ class UserCapabilitiesTest extends TestCase {
 			'owner_guid' => $owner->guid,
 		]);
 		$annotation = new ElggAnnotation((object) [
-					'owner_guid' => $owner->guid,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => $owner->guid,
+			'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($annotation->canEdit($owner->guid));
 
@@ -324,8 +310,8 @@ class UserCapabilitiesTest extends TestCase {
 		$entity = $this->mocks()->getObject();
 
 		$annotation = new ElggAnnotation((object) [
-					'owner_guid' => $owner->guid,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => $owner->guid,
+			'entity_guid' => $entity->guid,
 		]);
 
 		$this->assertTrue($annotation->canEdit($owner->guid));
@@ -343,8 +329,8 @@ class UserCapabilitiesTest extends TestCase {
 			'owner_guid' => $owner->guid,
 		]);
 		$annotation = new ElggAnnotation((object) [
-					'owner_guid' => $owner->guid,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => $owner->guid,
+			'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($entity->canEdit($owner->guid));
 		$this->assertTrue($annotation->canEdit($owner->guid));
@@ -360,8 +346,8 @@ class UserCapabilitiesTest extends TestCase {
 			'owner_guid' => $owner->guid,
 		]);
 		$annotation = new ElggAnnotation((object) [
-					'owner_guid' => $owner->guid,
-					'entity_guid' => $entity->guid,
+			'owner_guid' => $owner->guid,
+			'entity_guid' => $entity->guid,
 		]);
 		$this->assertTrue($annotation->canEdit($owner->guid));
 
@@ -395,13 +381,13 @@ class UserCapabilitiesTest extends TestCase {
 		]);
 
 		$entity = $this->getMockBuilder(ElggEntity::class)
-				->setMethods(['__get', 'getDisplayName', 'setDisplayName']) // keep origin canComment method
-				->disableOriginalConstructor()
-				->getMock();
+		->setMethods(['__get', 'getDisplayName', 'setDisplayName']) // keep origin canComment method
+		->disableOriginalConstructor()
+		->getMock();
 		$entity->expects($this->any())
-				->method('__get')
-				->will($this->returnValueMap([
-							['owner_guid', $owner->guid]
+		->method('__get')
+		->will($this->returnValueMap([
+			['owner_guid', $owner->guid]
 		]));
 
 		$this->assertFalse($owner->canComment($owner->guid));
@@ -424,7 +410,7 @@ class UserCapabilitiesTest extends TestCase {
 		$entity = $this->mocks()->getObject([
 			'owner_guid' => $owner->guid,
 		]);
-
+		
 		$this->assertTrue($entity->canComment($owner->guid));
 
 		$this->hooks->registerHandler('permissions_check:comment', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
@@ -626,7 +612,7 @@ class UserCapabilitiesTest extends TestCase {
 			$this->assertNull($return);
 			return false;
 		});
-		
+
 		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
 		// make sure container permission hooks are not triggered

@@ -17,17 +17,17 @@ class Annotations {
 	/**
 	 * @var \Elgg\Database
 	 */
-	private $db;
+	protected $db;
 
 	/**
 	 * @var \ElggSession
 	 */
-	private $session;
+	protected $session;
 
 	/**
 	 * @var \Elgg\EventsService
 	 */
-	private $events;
+	protected $events;
 
 	/**
 	 * Constructor

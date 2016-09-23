@@ -3,47 +3,32 @@
  * Group activity widget settings
  */
 
+$widget = elgg_extract('entity', $vars);
+
 // once autocomplete is working use that
-$groups = elgg_get_logged_in_user_entity()->getGroups(array('limit' => 0));
-$mygroups = array();
-if (!$vars['entity']->group_guid) {
+$groups = $widget->getOwnerEntity()->getGroups(['limit' => false]);
+$mygroups = [];
+if (!$widget->group_guid) {
 	$mygroups[0] = '';
 }
 foreach ($groups as $group) {
 	$mygroups[$group->guid] = $group->name;
 }
-$params = array(
-	'name' => 'params[group_guid]',
-	'value' => $vars['entity']->group_guid,
-	'options_values' => $mygroups,
-);
-$group_dropdown = elgg_view('input/select', $params);
-?>
-<div>
-	<?php echo elgg_echo('groups:widget:group_activity:edit:select'); ?>:
-	<?php echo $group_dropdown; ?>
-</div>
-<?php
 
-// set default value for number to display
-if (!isset($vars['entity']->num_display)) {
-	$vars['entity']->num_display = 8;
+echo elgg_view_input('select', [
+	'name' => 'params[group_guid]',
+	'label' => elgg_echo('groups:widget:group_activity:edit:select'),
+	'value' => $widget->group_guid,
+	'options_values' => $mygroups,
+]);
+
+// set default value
+if (!isset($widget->num_display)) {
+	$widget->num_display = 8;
 }
 
-$params = array(
-	'name' => 'params[num_display]',
-	'value' => $vars['entity']->num_display,
-	'options' => array(5, 8, 10, 12, 15, 20),
-);
-$num_dropdown = elgg_view('input/select', $params);
+echo elgg_view('object/widget/edit/num_display', [
+	'entity' => $widget,
+]);
 
-?>
-<div>
-	<?php echo elgg_echo('widget:numbertodisplay'); ?>:
-	<?php echo $num_dropdown; ?>
-</div>
-
-<?php
-
-$title_input = elgg_view('input/hidden', array('name' => 'title'));
-echo $title_input;
+echo elgg_view('input/hidden', ['name' => 'title']);

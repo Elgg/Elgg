@@ -19,7 +19,6 @@ function bookmarks_init() {
 	$action_path = "$root/actions/bookmarks";
 	elgg_register_action('bookmarks/save', "$action_path/save.php");
 	elgg_register_action('bookmarks/delete', "$action_path/delete.php");
-	elgg_register_action('bookmarks/share', "$action_path/share.php");
 
 	// menus
 	elgg_register_menu_item('site', array(

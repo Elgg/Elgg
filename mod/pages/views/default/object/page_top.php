@@ -96,6 +96,7 @@ if ($full) {
 	$params = array(
 		'entity' => $page,
 		'metadata' => $metadata,
+		'title' => false,
 		'subtitle' => $subtitle,
 	);
 	$params = $params + $vars;
@@ -103,7 +104,6 @@ if ($full) {
 
 	echo elgg_view('object/elements/full', array(
 		'entity' => $page,
-		'title' => false,
 		'icon' => $page_icon,
 		'summary' => $summary,
 		'body' => $body,

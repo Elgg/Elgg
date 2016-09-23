@@ -89,7 +89,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	public function testElggUserConstructorByDbRow() {
 		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new \ElggUser($row);
-		$this->assertIdenticalEntities($user, $_SESSION['user']);
+		$this->assertIdenticalEntities($user, elgg_get_logged_in_user_entity());
 	}
 
 	public function testElggUserSave() {
@@ -202,6 +202,23 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		// this is testing the function, not the SQL.
 		// that's been tested above.
 		$this->assertFalse($this->user->isAdmin());
+
+		$this->user->delete();
+	}
+
+	public function testElggUserNotificationSettings() {
+
+		elgg_register_notification_method('method1');
+		elgg_register_notification_method('method2');
+
+		$this->user->setNotificationSetting('method1', true);
+		$this->user->setNotificationSetting('method2', false);
+		$this->user->setNotificationSetting('method3', true);
+
+		$settings = $this->user->getNotificationSettings();
+		$this->assertTrue($settings['method1']);
+		$this->assertFalse($settings['method2']);
+		$this->assertTrue(!isset($settings['method3']));
 
 		$this->user->delete();
 	}

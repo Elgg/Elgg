@@ -1,52 +1,57 @@
 <?php
 namespace Elgg\Notifications;
+
+use ElggData;
+use ElggEntity;
+use InvalidArgumentException;
+use stdClass;
+
 /**
- * Notification event
+ * Subscription notification event
  * 
  * @package    Elgg.Core
  * @subpackage Notifications
+ * @deprecated 2.3
  */
-class Event {
+class Event implements NotificationEvent {
+
+	use EventSerialization;
+	
 	/* @var string The name of the action/event */
 	protected $action;
 
-	/* @var string The type of the action's object */
-	protected $object_type;
+	/* @var string Action's object */
+	protected $object;
 
-	/* @var string the subtype of the action's object */
-	protected $object_subtype;
-
-	/* @var int The identifier of the object (GUID for entity) */
-	protected $object_id;
-
-	/* @var int The GUID of the user who triggered the event */
-	protected $actor_guid;
-
+	/* @var ElggEntity User who triggered the event */
+	protected $actor;
 
 	/**
 	 * Create a notification event
 	 *
-	 * @param \ElggData   $object The object of the event (\ElggEntity)
-	 * @param string      $action The name of the action (default: create)
-	 * @param \ElggEntity $actor  The entity that caused the event (default: logged in user)
+	 * @param ElggData   $object The object of the event (ElggEntity)
+	 * @param string     $action The name of the action (default: create)
+	 * @param ElggEntity $actor  The entity that caused the event (default: logged in user)
 	 * 
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
-	public function __construct(\ElggData $object, $action, \ElggEntity $actor = null) {
-		if (elgg_instanceof($object)) {
-			$this->object_type = $object->getType();
-			$this->object_subtype = $object->getSubtype();
-			$this->object_id = $object->getGUID();
-		} else {
-			$this->object_type = $object->getType();
-			$this->object_subtype = $object->getSubtype();
-			$this->object_id = $object->id;
+	public function __construct(ElggData $object, $action, ElggEntity $actor = null) {
+		if (get_class($this) == Event::class || get_class($this) == Elgg_Notifications_Event::class) {
+			_elgg_services()->deprecation->sendNotice(__CLASS__ . ' is deprecated. '
+					. 'Use ' . SubscriptionNotificationEvent::class . ' instead', '2.3');
 		}
+		if (!$object instanceof ElggData) {
+			throw new InvalidArgumentException(__METHOD__ . ' expects an object as an instance of ' . ElggData::class);
+		}
+		if (!$action) {
+			throw new InvalidArgumentException(__METHOD__ . ' expects a valid action name');
+		}
+		
+		$this->object = $object;
 
-		if ($actor == null) {
-			$this->actor_guid = _elgg_services()->session->getLoggedInUserGuid();
-		} else {
-			$this->actor_guid = $actor->getGUID();
+		$this->actor = $actor;
+		if (!isset($actor)) {
+			$this->actor = _elgg_services()->session->getLoggedInUser();
 		}
 
 		$this->action = $action;
@@ -55,42 +60,40 @@ class Event {
 	/**
 	 * Get the actor of the event
 	 *
-	 * @return \ElggEntity|false
+	 * @note Note that the actor and the object of the notification event
+	 * may have been deleted/disabled since the event was serialized and
+	 * stored in the database.
+	 *
+	 * @return ElggEntity|false|null
 	 */
 	public function getActor() {
-		return get_entity($this->actor_guid);
+		return $this->actor;
 	}
 
 	/**
 	 * Get the GUID of the actor
-	 * 
+	 *
+	 * @note Note that the actor and the object of the notification event
+	 * may have been deleted/disabled since the event was serialized and
+	 * stored in the database.
+	 *
 	 * @return int
 	 */
 	public function getActorGUID() {
-		return $this->actor_guid;
+		return $this->actor ? $this->actor->guid : 0;
 	}
 
 	/**
 	 * Get the object of the event
 	 *
-	 * @return \ElggData
+	 * @note Note that the actor and the object of the notification event
+	 * may have been deleted/disabled since the event was serialized and
+	 * stored in the database.
+	 * 
+	 * @return ElggData|false|null
 	 */
 	public function getObject() {
-		switch ($this->object_type) {
-			case 'object':
-			case 'user':
-			case 'site':
-			case 'group':
-				return get_entity($this->object_id);
-				break;
-			case 'relationship':
-				return get_relationship($this->object_id);
-				break;
-			case 'annotation':
-				return elgg_get_annotation_from_id($this->object_id);
-				break;
-		}
-		return null;
+		return $this->object;
 	}
 
 	/**
@@ -108,7 +111,30 @@ class Event {
 	 * @return string
 	 */
 	public function getDescription() {
-		return "{$this->action}:{$this->object_type}:{$this->object_subtype}";
+		return implode(':', [
+			$this->action,
+			$this->object->getType(),
+			$this->object->getSubtype(),
+		]);
+	}
+
+	/**
+	 * Export the notification event into a serializable object
+	 * This method is mainly used for logging purposes
+	 *
+	 * @return stdClass
+	 */
+	public function toObject() {
+		$obj = new stdClass();
+		$vars = get_object_vars($this);
+		foreach ($vars as $key => $value) {
+			if (is_object($value) && is_callable([$value, 'toObject'])) {
+				$obj->$key = $value->toObject();
+			} else {
+				$obj->$key = $value;
+			}
+		}
+		return $obj;
 	}
 }
 
@@ -118,6 +144,7 @@ class Event {
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.9.0
+ * @deprecated 2.3
  */
-class Elgg_Notifications_Event extends \Elgg\Notifications\Event {}
+class Elgg_Notifications_Event extends Event {}
 

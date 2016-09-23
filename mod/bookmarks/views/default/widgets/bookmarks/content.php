@@ -1,32 +1,25 @@
 <?php
 /**
  * Elgg bookmarks widget
- *
- * @package Bookmarks
  */
 
-$widget = $vars['entity'];
-/* @var ElggWidget $widget */
+$widget = elgg_extract('entity', $vars);
 
-$max = (int) $widget->num_display;
-
-$options = array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'bookmarks',
 	'container_guid' => $widget->owner_guid,
-	'limit' => $max,
-	'full_view' => FALSE,
-	'pagination' => FALSE,
+	'limit' => $widget->num_display,
+	'pagination' => false,
 	'distinct' => false,
-);
-$content = elgg_list_entities($options);
+]);
 
-echo $content;
-
-if (!$content) {
+if (empty($content)) {
     echo elgg_echo('bookmarks:none');
     return;
 }
+
+echo $content;
 
 $owner = $widget->getOwnerEntity();
 if ($owner instanceof ElggGroup) {
@@ -35,9 +28,9 @@ if ($owner instanceof ElggGroup) {
     $url = "bookmarks/owner/{$owner->username}";
 }
 
-$more_link = elgg_view('output/url', array(
+$more_link = elgg_view('output/url', [
     'href' => $url,
     'text' => elgg_echo('more'),
     'is_trusted' => true,
-));
-echo "<span class=\"elgg-widget-more\">$more_link</span>";
+]);
+echo "<div class=\"elgg-widget-more\">$more_link</div>";

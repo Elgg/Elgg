@@ -1,0 +1,4 @@
+
+.elgg-newest-users td + td {
+	white-space: nowrap;
+}

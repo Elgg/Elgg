@@ -393,6 +393,37 @@ function elgg_user_account_page_handler($page_elements, $handler) {
 }
 
 /**
+ * Returns site's registration URL
+ * Triggers a 'registration_url', 'site' plugin hook that can be used by
+ * plugins to alter the default registration URL and append query elements, such as
+ * an invitation code and inviting user's guid
+ *
+ * @param array  $query    An array of query elements
+ * @param string $fragment Fragment identifier
+ * @return string
+ */
+function elgg_get_registration_url(array $query = [], $fragment = '') {
+	$url = elgg_normalize_url('register');
+	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
+	return elgg_trigger_plugin_hook('registration_url', 'site', $query, $url);
+}
+
+/**
+ * Returns site's login URL
+ * Triggers a 'login_url', 'site' plugin hook that can be used by
+ * plugins to alter the default login URL
+ *
+ * @param array  $query    An array of query elements
+ * @param string $fragment Fragment identifier (e.g. #login-dropdown-box)
+ * @return string
+ */
+function elgg_get_login_url(array $query = [], $fragment = '') {
+	$url = elgg_normalize_url('login');
+	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
+	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
+}
+
+/**
  * Sets the last action time of the given user to right now.
  *
  * @param int $user_guid The user GUID

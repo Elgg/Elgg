@@ -18,13 +18,13 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 		$id = elgg_create_river_item($params);
 		$this->assertTrue(is_int($id));
-		$this->assertTrue(elgg_delete_river(array('id' => $id)));
+		$this->assertTrue(_elgg_delete_river(array('id' => $id)));
 
 		$params['return_item'] = true;
 		$item = elgg_create_river_item($params);
 
 		$this->assertIsA($item, ElggRiveritem::class);
-		$this->assertTrue(elgg_delete_river(array('id' => $item->id)));
+		$this->assertTrue(_elgg_delete_river(array('id' => $item->id)));
 	}
 
 	public function testRiverCreationEmitsHookAndEvent() {
@@ -187,7 +187,7 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		elgg_register_event_handler('delete:before', 'river', $handler);
 		elgg_register_event_handler('delete:after', 'river', $handler);
 
-		elgg_delete_river(['id' => $id]);
+		_elgg_delete_river(['id' => $id]);
 
 		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', $handler);
 		elgg_unregister_event_handler('delete:before', 'river', $handler);

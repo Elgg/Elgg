@@ -57,9 +57,13 @@ class Service {
 	 */
 	public function getUnpreparedMenu($name, array $params = []) {
 		$menus = $this->config->getVolatile('menus');
-		$items = [];
+
+		$items = $this->prepareMenuItems(elgg_extract('items', $params, []));
+		unset($params['items']);
+		
 		if ($menus && isset($menus[$name])) {
-			$items = elgg_extract($name, $menus, []);
+			$registered_items = elgg_extract($name, $menus, []);
+			$items = array_merge($items, $registered_items);
 		}
 
 		$params['name'] = $name;
@@ -131,4 +135,30 @@ class Service {
 
 		return new UnpreparedMenu($params, $all_items);
 	}
+
+	/**
+	 * Prepare menu items
+	 *
+	 * @param array $items An array of ElggMenuItem instances or menu item factory options
+	 * @return ElggMenuItem[]
+	 */
+	public function prepareMenuItems(array $items = []) {
+		$prepared_items = [];
+		
+		foreach ($items as $item) {
+			if (is_array($item)) {
+				$options = $item;
+				$item = \ElggMenuItem::factory($options);
+			}
+
+			if (!$item instanceof \ElggMenuItem) {
+				continue;
+			}
+			
+			$prepared_items[] = $item;
+		}
+
+		return $prepared_items;
+	}
+
 }

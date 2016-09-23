@@ -302,6 +302,7 @@ A list of bundled input types/views:
 * ``input/select`` - renders a select input ``<select></select>``
 * ``input/hidden`` - renders a hidden input ``<input type="hidden">``
 * ``input/password`` - renders a password input ``<input type="password">``
+* ``input/number`` - renders a number input ``<input type="number">``
 * ``input/date`` - renders a jQuery datepicker
 
 * ``input/access`` - renders an Elgg access level select

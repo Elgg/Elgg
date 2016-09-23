@@ -72,6 +72,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\SystemMessagesService              $systemMessages
+ * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
@@ -290,7 +291,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable);
+			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
 		});
 
 		$this->setClassName('nullCache', \Elgg\Cache\NullCache::class);
@@ -405,6 +406,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('systemMessages', function(ServiceProvider $c) {
 			return new \Elgg\SystemMessagesService($c->session);
 		});
+
+		$this->setClassName('table_columns', \Elgg\Views\TableColumn\ColumnFactory::class);
 
 		$this->setClassName('timer', \Elgg\Timer::class);
 

@@ -103,6 +103,7 @@ function get_online_users(array $options = array()) {
 function statistics_init() {
 	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/online');
 	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
+	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/login_history');
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

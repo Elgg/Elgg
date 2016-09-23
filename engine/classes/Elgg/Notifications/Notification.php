@@ -9,6 +9,10 @@ namespace Elgg\Notifications;
  * @since      1.10
  */
 class Notification {
+
+	const ORIGIN_SUBSCRIPTIONS = 'subscriptions_service';
+	const ORIGIN_INSTANT = 'instant_notifications';
+	
 	/** @var \ElggEntity The entity causing or creating the notification */
 	protected $from;
 
@@ -92,6 +96,30 @@ class Notification {
 	 */
 	public function getRecipientGUID() {
 		return $this->to->guid;
+	}
+
+	/**
+	 * Export notification
+	 * @return \stdClass
+	 */
+	public function toObject() {
+		$obj = new \stdClass();
+		$vars = get_object_vars($this);
+		$vars = array_merge($this->params, $vars);
+		unset($vars['params']);
+		unset($vars['sender']);
+		unset($vars['recipient']);
+		unset($vars['subscriptions']);
+		unset($vars['action']);
+		unset($vars['object']);
+		foreach ($vars as $key => $value) {
+			if (is_object($value) && is_callable([$value, 'toObject'])) {
+				$obj->$key = $value->toObject();
+			} else {
+				$obj->$key = $value;
+			}
+		}
+		return $obj;
 	}
 }
 
