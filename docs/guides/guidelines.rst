@@ -121,3 +121,4 @@ These points are good ideas, but are not yet in the official guidelines. Followi
 - Update functions deprecated in 1.8.
    - Many registration functions simply added an ``elgg_`` prefix for consistency
    - See ``/engine/lib/deprecated-1.8.php`` for the full list. You can also set the debug level to warning to get visual reminders of deprecated functions
+- Don't use ``register_shutdown_function`` as you may not have access to certain Elgg parts anymore (eg database). Instead use the ``shutdown`` ``system`` event

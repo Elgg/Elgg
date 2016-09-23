@@ -88,6 +88,10 @@ if ($name) {
 
 // go through custom fields
 if (sizeof($input) > 0) {
+	
+	// fetch default access level for the user for use in fallback cases
+	$user_default_access = get_default_access($owner);
+	
 	foreach ($input as $shortname => $value) {
 		$options = array(
 			'guid' => $owner->guid,
@@ -104,7 +108,7 @@ if (sizeof($input) > 0) {
 				$access_id = (int) $accesslevel[$shortname];
 			} else {
 				// this should never be executed since the access level should always be set
-				$access_id = ACCESS_DEFAULT;
+				$access_id = $user_default_access;
 			}
 			if (is_array($value)) {
 				$i = 0;

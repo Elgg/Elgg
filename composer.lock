@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b275198b1b535974a2ddde1931885200",
-    "content-hash": "d620498815fc574203ddd8676451ae87",
+    "hash": "060acc9e20dd6c0b6817196bfeb21aa8",
+    "content-hash": "9e70d1557007eef66cbe25b50224b11c",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -109,16 +109,16 @@
         },
         {
             "name": "bower-asset/jquery-ui",
-            "version": "1.12.0.1",
+            "version": "1.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jqueryui.git",
-                "reference": "2c9359a9d199da254dd278bef3d4ced047d6581c"
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jqueryui/zipball/2c9359a9d199da254dd278bef3d4ced047d6581c",
-                "reference": "2c9359a9d199da254dd278bef3d4ced047d6581c",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
                 "shasum": ""
             },
             "require": {
