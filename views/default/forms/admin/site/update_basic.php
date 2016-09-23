@@ -16,7 +16,19 @@ foreach (array('sitename','sitedescription', 'siteemail', 'default_limit') as $f
 	} else {
 		$value = elgg_get_config($field);
 	}
-	$form_body .= elgg_view("input/text",array('name' => $field, 'value' => $value));
+	if ($field === 'default_limit') {
+		$form_body .= elgg_view("input/number", array(
+			'name' => $field,
+			'value' => $value,
+			'min' => 1,
+			'step' => 1,
+		));
+	} else {
+		$form_body .= elgg_view("input/text", array(
+			'name' => $field,
+			'value' => $value,
+		));
+	}
 	$form_body .= "</div>";
 }
 
