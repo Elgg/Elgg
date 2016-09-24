@@ -14,7 +14,7 @@
 
 // backward compatability support for plugins that are not using the new approach
 // of routing through admin. See reportedcontent plugin for a simple example.
-if (elgg_get_context() == 'admin') {
+if (elgg_get_context() == 'admin' && elgg_is_admin_logged_in()) {
 	_elgg_admin_add_plugin_settings_menu();
 	elgg_unregister_css('elgg');
 	echo elgg_view('page/admin', $vars);
