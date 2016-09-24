@@ -362,8 +362,9 @@ abstract class ElggEntity extends \ElggData implements
 	 *                           Does not support associative arrays.
 	 * @param int    $owner_guid GUID of entity that owns the metadata.
 	 *                           Default is owner of entity.
-	 * @param int    $access_id  Who can read the metadata relative to the owner.
-	 *                           Default is the access level of the entity.
+	 * @param int    $access_id  Who can read the metadata relative to the owner (deprecated).
+	 *                           Default is the access level of the entity. Use ACCESS_PUBLIC for
+	 *                           compatibility with Elgg 3.0
 	 *
 	 * @return bool
 	 * @throws InvalidArgumentException
@@ -399,15 +400,21 @@ abstract class ElggEntity extends \ElggData implements
 				elgg_set_ignore_access($ia);
 			}
 
-			$owner_guid = (int)$owner_guid;
-			$access_id = ($access_id === null) ? $this->getAccessId() : (int)$access_id;
-			$owner_guid = $owner_guid ? $owner_guid : $this->getOwnerGUID();
+			$owner_guid = $owner_guid ? (int)$owner_guid : $this->owner_guid;
+
+			if ($access_id === null) {
+				$access_id = $this->access_id;
+			} elseif ($access_id != ACCESS_PUBLIC) {
+				$access_id = (int)$access_id;
+				elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+					. 'All metadata will be public in 3.0.', '2.3');
+			}
 
 			// add new md
 			$result = true;
 			foreach ($value as $value_tmp) {
 				// at this point $value is appended because it was cleared above if needed.
-				$md_id = create_metadata($this->getGUID(), $name, $value_tmp, $value_type,
+				$md_id = _elgg_services()->metadataTable->create($this->guid, $name, $value_tmp, $value_type,
 						$owner_guid, $access_id, true);
 				if (!$md_id) {
 					return false;
@@ -1353,7 +1360,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @throws IOException
 	 */
 	public function save() {
-		$guid = $this->getGUID();
+		$guid = $this->guid;
 		if ($guid > 0) {
 			$guid = $this->update();
 		} else {

@@ -1368,7 +1368,7 @@ function elgg_signed_request_gatekeeper() {
  * @return mixed
  * @since 1.8.0
  */
-function elgg_extract($key, array $array, $default = null, $strict = true) {
+function elgg_extract($key, $array, $default = null, $strict = true) {
 	if (!is_array($array)) {
 		return $default;
 	}

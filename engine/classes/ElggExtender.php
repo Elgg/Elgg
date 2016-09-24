@@ -51,6 +51,11 @@ abstract class ElggExtender extends \ElggData {
 	 * @return void
 	 */
 	public function __set($name, $value) {
+		if ($name === 'access_id' && $this instanceof ElggMetadata && $value != ACCESS_PUBLIC) {
+			elgg_deprecated_notice('Setting ->access_id to a value other than ACCESS_PUBLIC is deprecated. '
+				. 'All metadata will be public in 3.0.', '2.3');
+		}
+
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
 			$this->attributes['value_type'] = detect_extender_valuetype($value);

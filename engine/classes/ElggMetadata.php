@@ -10,6 +10,9 @@
  *
  * @package    Elgg.Core
  * @subpackage Metadata
+ *
+ * @property int $access_id Access level of the metadata (deprecated). Only set this to ACCESS_PUBLIC
+ *                          for compatibility with Elgg 3.0
  */
 class ElggMetadata extends \ElggExtender {
 
@@ -71,6 +74,7 @@ class ElggMetadata extends \ElggExtender {
 			return update_metadata($this->id, $this->name, $this->value,
 				$this->value_type, $this->owner_guid, $this->access_id);
 		} else {
+			// using create_metadata() for deprecation notices in 2.x
 			$this->id = create_metadata($this->entity_guid, $this->name, $this->value,
 				$this->value_type, $this->owner_guid, $this->access_id);
 
