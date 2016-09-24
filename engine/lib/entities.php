@@ -195,14 +195,23 @@ function entity_row_to_elggstar($row) {
 }
 
 /**
- * Loads and returns an entity object from a guid.
+ * Loads and returns an entity object from its GUID
  *
- * @param int $guid The GUID of the entity
- *
- * @return \ElggEntity The correct Elgg or custom object based upon entity type and subtype
+ * @param int  $guid          GUID of the entity
+ * @param bool $ignore_access Fetch with ignored access
+ * @return \ElggEntity
  */
-function get_entity($guid) {
-	return _elgg_services()->entityTable->get($guid);
+function get_entity($guid, $ignore_access = false) {
+	$ia = elgg_get_ignore_access();
+	if ($ignore_access) {
+		$ia = elgg_set_ignore_access(true);
+	}
+
+	$entity = _elgg_services()->entityTable->get($guid);
+
+	elgg_set_ignore_access($ia);
+
+	return $entity;
 }
 
 /**

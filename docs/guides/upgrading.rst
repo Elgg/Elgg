@@ -40,6 +40,11 @@ Deprecated Views
  * ``resources/pages/world``: Use the ``resources/pages/all`` view instead.
  * ``walled_garden.js``: Use the ``elgg/walled_garden`` module instead.
 
+Notable API changes
+-------------------
+
+ * `get_entity()` now accepts a second argument that allows to fetch an entity with ignored access (bypassing access control system)
+
 New API for page and action handling
 ------------------------------------
 

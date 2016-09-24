@@ -634,14 +634,14 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 		);
 
 		// grab ourself again to fill out attributes.
-		$e = get_entity($e->getGUID());
+		$e = get_entity($e->guid);
 
 		$entities = elgg_get_entities($options);
 
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
-			$this->assertIdentical($e->getGUID(), $entity->getGUID());
+			$this->assertIdentical($e->guid, $entity->guid);
 		}
 
 		$e->delete();
@@ -662,14 +662,14 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 		);
 
 		// grab ourself again to fill out attributes.
-		$e = get_entity($e->getGUID());
+		$e = get_entity($e->guid);
 
 		$entities = elgg_get_entities($options);
 
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
-			$this->assertIdentical($e->getGUID(), $entity->getGUID());
+			$this->assertIdentical($e->guid, $entity->guid);
 		}
 
 		$e->delete();
@@ -697,7 +697,7 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 		);
 
 		// grab ourself again to fill out attributes.
-		$e = get_entity($e->getGUID());
+		$e = get_entity($e->guid);
 
 		$entities = elgg_get_entities($options);
 
@@ -998,5 +998,37 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 		$options['distinct'] = false;
 		$users = elgg_get_entities($options);
 		$this->assertTrue(count($users) > 1);
+	}
+
+	public function testCanGetEntityWithIgnoredAccess() {
+
+		$user = _elgg_services()->session->getLoggedInUser();
+		$logged_in_user = $user;
+		
+		if (!$user) {
+			$user = new \ElggUser();
+			$user->save();
+			_elgg_services()->session->setLoggedInUser($user);
+		}
+
+		$object = new \ElggObject();
+		$object->access_id = ACCESS_PRIVATE;
+		$object->save();
+
+		$this->assertEqual($object->guid, get_entity($object->guid)->guid);
+		$this->assertEqual($object->guid, get_entity($object->guid, true)->guid);
+
+		_elgg_services()->session->removeLoggedInUser();
+
+		$this->assertFalse(get_entity($object->guid));
+		$this->assertEqual($object->guid, get_entity($object->guid, true)->guid);
+
+		if ($logged_in_user) {
+			_elgg_services()->session->setLoggedInUser($logged_in_user);
+		} else {
+			$user->delete();
+		}
+
+		$object->delete();
 	}
 }

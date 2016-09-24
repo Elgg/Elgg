@@ -134,6 +134,7 @@ return array(
 	'groups:joinrequestmade' => 'Requested to join group',
 	'groups:joined' => 'Successfully joined group!',
 	'groups:left' => 'Successfully left group',
+	'groups:requestexists' => 'You have already requested to join this group',
 	'groups:notowner' => 'Sorry, you are not the owner of this group.',
 	'groups:notmember' => 'Sorry, you are not a member of this group.',
 	'groups:alreadymember' => 'You are already a member of this group!',
