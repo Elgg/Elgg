@@ -367,19 +367,39 @@ function pages_write_permission_check($hook, $entity_type, $returnvalue, $params
  * @return bool
  */
 function pages_container_permission_check($hook, $entity_type, $returnvalue, $params) {
-	$container = elgg_get_page_owner_entity();
-	if ($container && $container->canWriteToContainer(0, 'object', 'page')) {
+	$container = elgg_extract('container', $params);
+	$user = elgg_extract('user', $params);
+	$subtype = elgg_extract('subtype', $params);
+
+	// check type/subtype
+	if ($entity_type !== 'object' || !in_array($subtype, ['page', 'page_top'])) {
+		return null;
+	}
+
+	// OK if you can write to the container
+	if ($container && $container->canWriteToContainer($user->guid)) {
 		return true;
 	}
+
+	// look up a page object given via input
 	if ($page_guid = get_input('page_guid', 0)) {
-		$entity = get_entity($page_guid);
+		$page = get_entity($page_guid);
 	} elseif ($parent_guid = get_input('parent_guid', 0)) {
-		$entity = get_entity($parent_guid);
+		$page = get_entity($parent_guid);
 	}
-	if (isset($entity) && pages_is_page($entity)) {
-		if ($entity->canWriteToContainer(0, 'object', 'page') || in_array($entity->write_access_id, get_access_list())) {
-			return true;
-		}
+	if (!pages_is_page($page)) {
+		return null;
+	}
+
+	// try the page's container
+	$page_container = $page->getContainerEntity();
+	if ($page_container && $page_container->canWriteToContainer($user->guid)) {
+		return true;
+	}
+
+	// I don't understand this but it's old - mrclay
+	if (in_array($page->write_access_id, get_access_list())) {
+		return true;
 	}
 }
 
