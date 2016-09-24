@@ -57,13 +57,21 @@ function elgg_delete_metadata_by_id($id) {
  * @param string $value          Value of the metadata
  * @param string $value_type     'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
- * @param int    $access_id      Default is ACCESS_PRIVATE
+ * @param int    $access_id      Access level of the metadata (deprecated). Default in 2.x is ACCESS_PRIVATE, but
+ *                               use ACCESS_PUBLIC for compatibility with Elgg 3.0
  * @param bool   $allow_multiple Allow multiple values for one key. Default is false
  *
  * @return int|false id of metadata or false if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
-		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+		$access_id = null, $allow_multiple = false) {
+
+	if ($access_id === null) {
+		$access_id = ACCESS_PRIVATE;
+	} elseif ($access_id != ACCESS_PUBLIC) {
+		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+			. 'All metadata will be public in 3.0.', '2.3');
+	}
 
 	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,
 		$value_type, $owner_guid, $access_id, $allow_multiple);
@@ -77,11 +85,17 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  * @param string $value      Metadata value
  * @param string $value_type Value type
  * @param int    $owner_guid Owner guid
- * @param int    $access_id  Access ID
+ * @param int    $access_id  Access level of the metadata (deprecated). Use ACCESS_PUBLIC for compatibility
+ *                           with Elgg 3.0
  *
  * @return bool
  */
 function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id) {
+	if ($access_id != ACCESS_PUBLIC) {
+		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+			. 'All metadata will be public in 3.0.', '2.3');
+	}
+
 	return _elgg_services()->metadataTable->update($id, $name, $value,
 		$value_type, $owner_guid, $access_id);
 }
@@ -97,17 +111,24 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
  * @param array  $name_and_values Associative array - a value can be a string, number, bool
  * @param string $value_type      'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid      GUID of entity that owns the metadata
- * @param int    $access_id       Default is ACCESS_PRIVATE
+ * @param int    $access_id       Access level of the metadata (deprecated). Default in 2.x is ACCESS_PRIVATE, but
+ *                                use ACCESS_PUBLIC for compatibility with Elgg 3.0
  * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
  *
  * @return bool
  */
 function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid,
-		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+		$access_id = null, $allow_multiple = false) {
+
+	if ($access_id === null) {
+		$access_id = ACCESS_PRIVATE;
+	} elseif ($access_id != ACCESS_PUBLIC) {
+		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+			. 'All metadata will be public in 3.0.', '2.3');
+	}
 
 	return _elgg_services()->metadataTable->createFromArray($entity_guid, $name_and_values,
 		$value_type, $owner_guid, $access_id, $allow_multiple);
-
 }
 
 /**
