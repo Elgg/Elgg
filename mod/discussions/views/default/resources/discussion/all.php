@@ -3,16 +3,7 @@
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('discussion'));
 
-$content = elgg_list_entities(array(
-	'type' => 'object',
-	'subtype' => 'discussion',
-	'order_by' => 'e.last_action desc',
-	'limit' => max(20, elgg_get_config('default_limit')),
-	'full_view' => false,
-	'no_results' => elgg_echo('discussion:none'),
-	'preload_owners' => true,
-	'preload_containers' => true,
-));
+$content = elgg_view('discussion/listing/all');
 
 $title = elgg_echo('discussion:latest');
 
