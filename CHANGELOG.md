@@ -1,3 +1,43 @@
+<a name="2.2.1"></a>
+### 2.2.1  (2016-09-21)
+
+#### Contributors
+
+* Steve Clay (16)
+* iionly (5)
+* Ismayil Khayredinov (2)
+* Wouter van Os (1)
+
+#### Documentation
+
+* **license:** clarifies dual licensing in LICENSE.txt ([1db4994f](https://github.com/Elgg/Elgg/commit/1db4994f8bab11898153c4c9e6e2898c0549714f))
+* **support:** updates support policy and tentative release schedule ([71aab2c6](https://github.com/Elgg/Elgg/commit/71aab2c65c36265af2309954018806b91b40ecd8))
+
+
+#### Bug Fixes
+
+* **access:** updates no longer mistakenly blocked in some scenarios ([01f4f1df](https://github.com/Elgg/Elgg/commit/01f4f1df12d95c9828c5e7581b5352c7953e8109))
+* **boot:**
+  * boot cache now respects system cache setting ([f90b1eb1](https://github.com/Elgg/Elgg/commit/f90b1eb162968077be9d125437a8aa2e77e129ae))
+  * make sure boot cache updated when subtype data changes ([c80f6e64](https://github.com/Elgg/Elgg/commit/c80f6e64701320fdc83904719ca4bb2305079a5c))
+* **core:** boot no longer throws DB exception in some edge cases ([c7c44763](https://github.com/Elgg/Elgg/commit/c7c44763a58b41440fd5d1f321a511468018220f), closes [#10119](https://github.com/Elgg/Elgg/issues/10119))
+* **discussions:** removes site "Discussions" menu item added in 2.2.0 ([34678299](https://github.com/Elgg/Elgg/commit/346782993fbb3e5f6e5c56a6b16038cc4f6de275), closes [#9731](https://github.com/Elgg/Elgg/issues/9731))
+* **js:**
+  * output deprecation messages to admins in browser console only ([a8052f9c](https://github.com/Elgg/Elgg/commit/a8052f9cd5e2cbc120a6d5b7b3664049d569011e))
+  * popup no longer reopens after a second click on the trigger ([6dc8012b](https://github.com/Elgg/Elgg/commit/6dc8012b9bb4ca2c374b67f9cc88582bbd832a10), closes [#10063](https://github.com/Elgg/Elgg/issues/10063))
+* **likes:** don't emit notice if a listing's `$vars['list_class']` isn't set ([f2882158](https://github.com/Elgg/Elgg/commit/f2882158eed56c42c938b69d7e7caa53485284a5))
+* **members:** Don't rely on newest members tab set as default tab in pagehandler for members page ([a78aa354](https://github.com/Elgg/Elgg/commit/a78aa354ffa79f9f8fb90ad8aa3cccdf4554b034))
+* **pages:** operations keep track of more than 10 child pages ([bc5f414b](https://github.com/Elgg/Elgg/commit/bc5f414bf597fe440ca096333fafea330746a323))
+* **plugins:** Make activate/deactivate all plugins to work also on Firefox ([915865b9](https://github.com/Elgg/Elgg/commit/915865b9009bdbf9b47307ee908883874957cf0b))
+* **reportedcontent:** Reported Content admin widget works again ([739259fc](https://github.com/Elgg/Elgg/commit/739259fcb52e7400d1156635345067d381f36b6d), closes [#10151](https://github.com/Elgg/Elgg/issues/10151))
+* **river:** ensure unique comment form id ([80e508ae](https://github.com/Elgg/Elgg/commit/80e508ae1dc85db9aebb2b32dab904f1ea2b2674))
+* **ui:** hover menus no longer open outside viewport ([edd3740a](https://github.com/Elgg/Elgg/commit/edd3740a7203b8c287ae76b44fae1ec3e535fca1), closes [#10214](https://github.com/Elgg/Elgg/issues/10214))
+* **views:**
+  * input/select view can select options more reliably ([af103c7e](https://github.com/Elgg/Elgg/commit/af103c7ec700c2d6ca39f29e9ff57f71ef08447c), closes [#10154](https://github.com/Elgg/Elgg/issues/10154))
+  * some functions that use views fallback to default viewtype ([5a58317e](https://github.com/Elgg/Elgg/commit/5a58317eeee52e2a2e49df1a2f987c163ec25f93), closes [#10114](https://github.com/Elgg/Elgg/issues/10114))
+* **web_services:** create_api_user() and create_user_token() work again ([1ee8fe96](https://github.com/Elgg/Elgg/commit/1ee8fe9613435a637e2460b20e6b591541ae4039))
+
+
 <a name="2.2.0"></a>
 ## 2.2.0  (2016-08-05)
 

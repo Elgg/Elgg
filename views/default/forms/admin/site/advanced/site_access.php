@@ -4,31 +4,19 @@
  */
 
 // new user registration
-$allow_reg_input = elgg_view('input/checkbox', array(
+$body = elgg_view_input('checkbox', [
 	'label' => elgg_echo('installation:registration:label'),
+	'help' => elgg_echo('installation:registration:description'),
 	'name' => 'allow_registration',
 	'checked' => (bool)elgg_get_config('allow_registration'),
-));
+]);
 
 // walled garden
-$walled_garen_input = elgg_view('input/checkbox', array(
+$body .= elgg_view_input('checkbox', [
 	'label' => elgg_echo('installation:walled_garden:label'),
+	'help' => elgg_echo('installation:walled_garden:description'),
 	'name' => 'walled_garden',
 	'checked' => (bool)elgg_get_config('walled_garden'),
-));
+]);
 
-?>
-
-<fieldset class="elgg-fieldset" id="elgg-settings-advanced-site-access">
-	<legend><?php echo elgg_echo('admin:legend:site_access'); ?></legend>
-	
-	<div>
-		<?php echo $allow_reg_input; ?>
-		<p class="elgg-text-help"><?php echo elgg_echo('installation:registration:description'); ?></p>
-	</div>
-	
-	<div>
-		<?php echo $walled_garen_input; ?>
-		<p class="elgg-text-help"><?php echo elgg_echo('installation:walled_garden:description'); ?></p>
-	</div>
-</fieldset>
+echo elgg_view_module('inline', elgg_echo('admin:legend:site_access'), $body, ['id' => 'elgg-settings-advanced-site-access']);

@@ -13,7 +13,7 @@ For only $50 per year for individuals or $150 per year for organizations,
 you can get listed as a supporter on `our supporters page`_.
 Elgg supporters are listed there unless they request not to be.
 
-.. _our supporters page: http://elgg.org/supporters.php
+.. _our supporters page: http://elgg.org/supporter.php
 
 Supporters are able to put this official logo on their site if they wish:
 

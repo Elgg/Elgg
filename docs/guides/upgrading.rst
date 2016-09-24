@@ -180,6 +180,7 @@ Deprecated APIs
  * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
  * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
  * Private ``update_entity_last_action()`` is deprecated: Refrain from manually updating last action timestamp.
+ * Setting non-public ``access_id`` on metadata is deprecated. See below.
 
 Deprecated Views
 ----------------
@@ -223,6 +224,13 @@ Form footer rendering can now be deferred until the form view and its extensions
 
  * ``elgg_set_form_footer()`` - sets form footer for deferred rendering
  * ``elgg_get_form_footer()`` - returns currently set form footer
+
+Metadata ``access_id``
+----------------------
+
+It's now deprecated to create metadata with an explicit ``access_id`` value other than ``ACCESS_PUBLIC``.
+
+In Elgg 3.0, metadata will not be access controlled, and will be available in all contexts. If your plugin relies on access control of metadata, it would be wise to migrate storage to annotations or entities instead.
 
 New API for extracting class names from arrays
 ----------------------------------------------
