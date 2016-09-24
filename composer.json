@@ -29,7 +29,8 @@
         "bower-asset/jquery-colorbox": "^1.5.14",
         "FortAwesome/Font-Awesome": "^4.3",
         "michelf/php-markdown": "^1.5.0",
-        "league/flysystem-memory": "^1.0"
+        "league/flysystem-memory": "^1.0",
+        "imagine/imagine": "^0.6.3"
     },
     "scripts": {
         "pre-install-cmd": "php .scripts/check_global_requirements.php",

@@ -249,10 +249,7 @@ class EntityIconService {
 
 		foreach ($sizes as $size => $opts) {
 
-			$width = (int) elgg_extract('w', $opts);
-			$height = (int) elgg_extract('h', $opts);
 			$square = (bool) elgg_extract('square', $opts);
-			$upscale = (bool) elgg_extract('upscale', $opts);
 
 			if ($type === 'icon' && $cropping_mode) {
 				// Do not crop out non-square icons if cropping coordinates are a square
@@ -264,6 +261,12 @@ class EntityIconService {
 
 			$icon = $this->getIcon($entity, $size, $type);
 
+			// We need to make sure that file path is readable by
+			// Imagine\Image\ImagineInterface::save(), as it fails to
+			// build the directory structure on owner's filestore otherwise
+			$icon->open('write');
+			$icon->close();
+			
 			// Save the image without resizing or cropping if the
 			// image size value is an empty array
 			if (is_array($opts) && empty($opts)) {
@@ -271,14 +274,14 @@ class EntityIconService {
 				continue;
 			}
 
-			$image_bytes = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), $width, $height, $square, $x1, $y1, $x2, $y2, $upscale);
-			if ($image_bytes) {
-				$icon->open("write");
-				$icon->write($image_bytes);
-				$icon->close();
-				unset($image_bytes);
-			} else {
-				$this->logger->error("Failed to create {$size} icon from {$file->getFilenameOnFilestore()} with coords [{$x1}, {$y1}],[{$x2}, {$y2}]");
+			$source = $file->getFilenameOnFilestore();
+			$destination = $icon->getFilenameOnFilestore();
+
+			$resize_params = array_merge($opts, $coords);
+			
+			if (!_elgg_services()->imageService->resize($source, $destination, $resize_params)) {
+				$this->logger->error("Failed to create {$size} icon from
+					{$file->getFilenameOnFilestore()} with coords [{$x1}, {$y1}],[{$x2}, {$y2}]");
 				return $fail();
 			}
 		}
