@@ -138,7 +138,7 @@ class UpgradeService {
 			if ($quiet) {
 				// hide include errors as well as any exceptions that might happen
 				try {
-					if (!@self::includeCode("$upgrade_path/$upgrade")) {
+					if (!@Includer::includeFile("$upgrade_path/$upgrade")) {
 						$success = false;
 						$this->logger->error("Could not include $upgrade_path/$upgrade");
 					}
@@ -147,7 +147,7 @@ class UpgradeService {
 					$this->logger->error($e->getMessage());
 				}
 			} else {
-				if (!self::includeCode("$upgrade_path/$upgrade")) {
+				if (!Includer::includeFile("$upgrade_path/$upgrade")) {
 					$success = false;
 					$this->logger->error("Could not include $upgrade_path/$upgrade");
 				}
@@ -168,16 +168,6 @@ class UpgradeService {
 		}
 
 		return true;
-	}
-
-	/**
-	 * PHP include a file with a very limited scope
-	 *
-	 * @param string $file File path to include
-	 * @return mixed
-	 */
-	protected static function includeCode($file) {
-		return include $file;
 	}
 
 	/**
