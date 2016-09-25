@@ -56,6 +56,7 @@ The following files for plugin ``example`` would go in ``/mod/example/``
                     edit.php
     activate.php
     deactivate.php
+    elgg-plugin.php
     CHANGES.txt
     COPYRIGHT.txt
     INSTALL.txt
@@ -140,7 +141,7 @@ Included third-party libraries of any kind *should* be included in the ``vendors
 Views
 -----
 
-In order to override core views, a plugin's views **must** be placed in a ``views/``. This directory has special meaning to Elgg as views defined here automatically override Elgg core's version of those views. For more info, see :doc:`/guides/views`.
+In order to override core views, a plugin's views can be placed in ``views/``, or an ``elgg-plugin.php`` config file can be used for more detailed file/path mapping. See :doc:`/guides/views`.
 
 Javascript and CSS will live in the views system. See :doc:`/guides/javascript`.
 

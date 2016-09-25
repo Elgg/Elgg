@@ -161,7 +161,6 @@ class ActionsService {
 		}
 
 		ob_start();
-		$ob_started = true;
 		
 		// To quietly cancel the file, return a falsey value in the "action" hook.
 		if (!_elgg_services()->hooks->trigger('action', $action, null, true)) {
@@ -174,23 +173,13 @@ class ActionsService {
 			return $forward('actionnotfound', ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
-		$result = self::includeFile($file);
+		$result = Includer::includeFile($file);
 		if ($result instanceof ResponseBuilder) {
 			ob_end_clean();
 			return $result;
 		}
 
 		return $forward('', ELGG_HTTP_OK);
-	}
-
-	/**
-	 * Include an action file with isolated scope
-	 *
-	 * @param string $file File to be interpreted by PHP
-	 * @return mixed
-	 */
-	protected static function includeFile($file) {
-		return include $file;
 	}
 	
 	/**
