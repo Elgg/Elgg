@@ -30,6 +30,13 @@ Removed views
  * ``page/layouts/one_sidebar`` in Aalborg theme
  * ``page/layouts/two_sidebar`` in Aalborg theme
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
+ * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
+ * ``notifications/subscriptions/personal``
+ * ``notifications/subscriptions/collections``
+ * ``notifications/subscriptions/form``
+ * ``notifications/subscriptions/jsfuncs``
+ * ``notifications/subscriptions/forminternals``
+ * ``notifications/css``
 
 Removed functions/methods
 -------------------------
@@ -108,6 +115,12 @@ Removed hooks/events
  * Event **delete, annotations**: Use **delete, annotation**
  * Hook **output:before, layout**: Use **view_vars, page/layout/<layout_name>**
  * Hook **output:after, layout**: Use **view, page/layout/<layout_name>**
+
+Removed forms/actions
+---------------------
+
+ * ``notificationsettings/save`` form and action
+ * ``notificationsettings/groupsave`` form and action
 
 APIs that now accept only an ``$options`` array
 -----------------------------------------------
@@ -212,6 +225,17 @@ Plugins and themes should:
  * Update hook registrations for ``output:before, layout`` to ``view_vars, page/layout/<layout_name>``
  * Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``
  * RSS extras menu is now registered with ``register, menu:extras`` hook
+
+Notifications plugin
+--------------------
+
+Notifications plugin has been rewritten dropping many views and actions. The purpose of this rewrite was
+to implement a more efficient, extendable and scalable interface for managing notifications preferences.
+We have implemented a much simpler markup and removed excessive styling and javascript that was
+required to make the old interface work.
+
+If your plugin is extending any of the views or relies on any actions in the notifications plugin,
+it has to be updated.
 
 From 2.2 to 2.3
 ===============
