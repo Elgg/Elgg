@@ -9,7 +9,7 @@ elgg_register_event_handler('init', 'system', 'notifications_plugin_init');
 
 function notifications_plugin_init() {
 
-	elgg_extend_view('elgg.css','notifications/css');
+	elgg_extend_view('elgg.css','notifications.css');
 
 	elgg_register_page_handler('notifications', 'notifications_page_handler');
 
@@ -26,9 +26,8 @@ function notifications_plugin_init() {
 	elgg_register_event_handler('create', 'relationship', 'notifications_update_friend_notify');
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
 
-	$actions_base = __DIR__ . '/actions';
-	elgg_register_action("notificationsettings/save", "$actions_base/save.php");
-	elgg_register_action("notificationsettings/groupsave", "$actions_base/groupsave.php");
+	elgg_register_action("notifications/settings", __DIR__ . '/actions/notifications/settings.php');
+	elgg_register_action("notifications/subscriptions", __DIR__ . '/actions/notifications/subscriptions.php');
 
 	// register unit tests
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'notifications_register_tests');
