@@ -11,4 +11,8 @@
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
-echo elgg_view('page/default', $vars);
+if (elgg_get_context() == 'admin' && elgg_is_admin_logged_in()) {
+	echo elgg_view('page/admin', $vars);
+} else {
+	echo elgg_view('page/default', $vars);
+}

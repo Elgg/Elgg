@@ -81,7 +81,7 @@ function developers_process_settings() {
 }
 
 function developers_setup_menu() {
-	if (elgg_in_context('admin')) {
+	if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
 		elgg_register_admin_menu_item('develop', 'inspect');
 		elgg_register_admin_menu_item('develop', 'sandbox', 'develop_tools');
 		elgg_register_admin_menu_item('develop', 'unit_tests', 'develop_tools');
