@@ -226,6 +226,10 @@ input[type="submit"]:focus {
 	border: 4px solid #0054a7;
 }
 
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
 select {
 	display: block;
 	padding: .5em;

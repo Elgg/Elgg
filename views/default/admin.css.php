@@ -521,6 +521,10 @@ input[type="radio"] {
 	margin: 0 3px 0 0;
 }
 
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
 select {
 	max-width: 100%;
 	padding: 4px;
