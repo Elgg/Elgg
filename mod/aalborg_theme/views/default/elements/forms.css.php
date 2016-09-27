@@ -67,7 +67,9 @@ textarea:focus {
 .elgg-input-access {
 	margin: 5px 0 0 0;
 }
-
+input[type="number"] {
+	-moz-appearance: textfield;
+}
 input[type="checkbox"],
 input[type="radio"] {
 	margin: 0 3px 0 0;
