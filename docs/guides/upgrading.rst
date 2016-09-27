@@ -91,6 +91,7 @@ Removed JavaScript APIs
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``
  * ``elgg.messageboard`` is no longer defined.
+ * ``jQuery.fn.friendsPicker`` is no longer defined
 
 Removed hooks/events
 --------------------

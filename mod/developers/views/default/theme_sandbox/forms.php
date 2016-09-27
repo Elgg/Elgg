@@ -189,6 +189,20 @@ $ipsum = elgg_view('developers/ipsum');
 			'label' => 'Number input (.elgg-input-number) with custom options:',
 			'help' => 'Enter an integer number larger than zero',
 		));
+
+		$users = elgg_get_entities_from_relationship_count([
+			'types' => 'user',
+			'relationship' => 'friend',
+			'limit' => 1,
+		]);
+		
+		echo elgg_view_input('friendspicker', array(
+			'name' => 'f16',
+			'id' => 'f16',
+			'user' => $users[0],
+			'label' => 'Friendspicker',
+			'help' => "Pick {$user->name}'s friends",
+		));
 		?>
 	</fieldset>
 </form>

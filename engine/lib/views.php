@@ -1562,20 +1562,7 @@ function _elgg_has_rss_link() {
  * @access private
  */
 function elgg_view_access_collections($owner_guid) {
-	if ($collections = get_user_access_collections($owner_guid)) {
-		$user = get_user($owner_guid);
-		if ($user) {
-			$entities = $user->getFriends(array('limit' => 0));
-		} else {
-			$entities = array();
-		}
-
-		foreach ($collections as $key => $collection) {
-			$collections[$key]->members = get_members_of_access_collection($collection->id, true);
-			$collections[$key]->entities = $entities;
-		}
-	}
-
+	$collections = get_user_access_collections($owner_guid);
 	return elgg_view('core/friends/collections', array('collections' => $collections));
 }
 
@@ -1792,7 +1779,6 @@ function elgg_views_boot() {
 		'deps' => ['jquery-ui'],
 	]);
 
-	elgg_register_js('elgg.friendspicker', elgg_get_simplecache_url('elgg/ui.friends_picker.js'));
 	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
 
 	// @deprecated 2.2
