@@ -41,9 +41,10 @@ if ($revision) {
 	}
 }
 
-$page_icon = elgg_view('pages/icon', array('annotation' => $annotation, 'size' => 'small'));
-
 $editor = get_entity($annotation->owner_guid);
+
+$page_icon = elgg_view_entity_icon($editor, 'tiny');
+
 $editor_link = elgg_view('output/url', array(
 	'href' => "pages/owner/$editor->username",
 	'text' => $editor->name,
@@ -55,7 +56,7 @@ $editor_text = elgg_echo('pages:strapline', array($date, $editor_link));
 $categories = elgg_view('output/categories', $vars);
 
 $comments_count = $page->countComments();
-//only display if there are commments
+// only display if there are comments
 if ($comments_count != 0 && !$revision) {
 	$text = elgg_echo("comments") . " ($comments_count)";
 	$comments_link = elgg_view('output/url', array(
@@ -98,6 +99,7 @@ if ($full) {
 		'metadata' => $metadata,
 		'title' => false,
 		'subtitle' => $subtitle,
+		'title' => false,
 	);
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
