@@ -123,6 +123,9 @@ function groups_init() {
 	// Help core resolve page owner guids from group routes
 	// Registered with an earlier priority to be called before default_page_owner_handler()
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
+
+	// Setup filter tabs on /groups/all page
+	elgg_register_plugin_hook_handler('register', 'menu:filter:groups/all', 'groups_setup_filter_tabs');
 }
 
 /**
@@ -1034,4 +1037,52 @@ function groups_default_page_owner_handler($hook, $type, $return, $params) {
 			}
 			return $user->guid;
 	}
+}
+
+/**
+ * Setup filter tabs on /groups/all page
+ * 
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:filter:groups/all"
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ * @return ElggMenuItem[]
+ */
+function groups_setup_filter_tabs($hook, $type, $return, $params) {
+
+	$filter_value = elgg_extract('filter_value', $params);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'newest',
+		'text' => elgg_echo('sort:newest'),
+		'href' => 'groups/all?filter=newest',
+		'priority' => 200,
+		'selected' => $filter_value == 'newest',
+	]);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'alpha',
+		'text' => elgg_echo('sort:alpha'),
+		'href' => 'groups/all?filter=alpha',
+		'priority' => 250,
+		'selected' => $filter_value == 'alpha',
+	]);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'popular',
+		'text' => elgg_echo('sort:popular'),
+		'href' => 'groups/all?filter=popular',
+		'priority' => 300,
+		'selected' => $filter_value == 'popular',
+	]);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'featured',
+		'text' => elgg_echo('groups:featured'),
+		'href' => 'groups/all?filter=featured',
+		'priority' => 400,
+		'selected' => $filter_value == 'featured',
+	]);
+	
+	return $return;
 }

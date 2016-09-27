@@ -29,6 +29,7 @@ Removed views
  * ``page/layouts/two_column_left_sidebar``
  * ``page/layouts/one_sidebar`` in Aalborg theme
  * ``page/layouts/two_sidebar`` in Aalborg theme
+ * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
 
 Removed functions/methods
 -------------------------
