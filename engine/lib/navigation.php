@@ -329,6 +329,63 @@ function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
 }
 
 /**
+ * Returns default filter tabs (All, Mine, Friends) for the user
+ * 
+ * @param string   $context  Context to be used to prefix tab URLs
+ * @param string   $selected Name of the selected tab
+ * @param ElggUser $user     User who owns the layout (defaults to logged in user)
+ * @param array    $vars     Additional vars
+ * @return ElggMenuItem[]
+ * @since 2.3
+ */
+function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user = null, array $vars = []) {
+
+	$items = [];
+
+	if (!isset($user)) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+	
+	if (!elgg_instanceof($user, 'user')) {
+		return $items;
+	}
+	
+	$username = $user->username;
+	if (!isset($selected)) {
+		$selected = 'all';
+	}
+
+	// generate a list of default tabs
+	$tabs = array(
+		'all' => array(
+			'text' => elgg_echo('all'),
+			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
+			'selected' => ($selected == 'all'),
+			'priority' => 200,
+		),
+		'mine' => array(
+			'text' => elgg_echo('mine'),
+			'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "$context/owner/$username",
+			'selected' => ($selected == 'mine'),
+			'priority' => 300,
+		),
+		'friend' => array(
+			'text' => elgg_echo('friends'),
+			'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$context/friends/$username",
+			'selected' => ($selected == 'friends'),
+			'priority' => 400,
+		),
+	);
+
+	foreach ($tabs as $name => $tab) {
+		$tab['name'] = $name;
+		$items[] = ElggMenuItem::factory($tab);
+	}
+
+	return $items;
+}
+
+/**
  * Set up the site menu
  *
  * Handles default, featured, and custom menu items
@@ -590,6 +647,28 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Add the RSS link to the extras menu
+ * @access private
+ */
+function _elgg_extras_menu_setup($hook, $type, $return, $params) {
+
+	if (!_elgg_has_rss_link()) {
+		return;
+	}
+
+	$url = current_page_url();
+	$return[] = ElggMenuItem::factory([
+		'name' => 'rss',
+		'text' => elgg_view_icon('rss'),
+		'href' => elgg_http_add_url_query_elements($url, [
+			'view' => 'rss',
+		]),
+		'title' => elgg_echo('feed:rss'),
+	]);
+
+	return $return;
+}
 
 /**
  * Navigation initialization
@@ -603,6 +682,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:extras', '_elgg_extras_menu_setup');
 
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 

@@ -22,6 +22,13 @@ Removed views
 
  * ``resources/file/download``
  * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
+ * ``page/layouts/content``: use ``page/layouts/default``
+ * ``page/layouts/one_column``: use ``page/layouts/default``
+ * ``page/layouts/one_sidebar``: use ``page/layouts/default``
+ * ``page/layouts/two_sidebar``: use ``page/layouts/default``
+ * ``page/layouts/two_column_left_sidebar``
+ * ``page/layouts/one_sidebar`` in Aalborg theme
+ * ``page/layouts/two_sidebar`` in Aalborg theme
 
 Removed functions/methods
 -------------------------
@@ -98,6 +105,8 @@ Removed hooks/events
  * Hook **index, system**: Override the ``resources/index`` view
  * Hook **object:notifications, <type>**: Use the hook **send:before, notifications**
  * Event **delete, annotations**: Use **delete, annotation**
+ * Hook **output:before, layout**: Use **view_vars, page/layout/<layout_name>**
+ * Hook **output:after, layout**: Use **view, page/layout/<layout_name>**
 
 APIs that now accept only an ``$options`` array
 -----------------------------------------------
@@ -167,6 +176,41 @@ HtmLawed is no longer a plugin
 
  * Do not call ``elgg_load_library('htmlawed')``.
  * In the hook params for ``'config', 'htmlawed'``, the ``hook_tag`` function name changed.
+
+New approach to page layouts
+----------------------------
+
+``one_column``, ``one_sidebar``, ``two_sidebar`` and ``content`` layouts have been removed - instead layout rendering has been centralized in the ``default``. Updated ``default`` layout provides full control over the layout elements via ``$vars``.
+For maximum backwards compatibility, calls to ``elgg_view_layout()`` with these layout names will still yield expected output, but the plugins should start using the ``default`` layout with an updated set of parameters.
+
+Page layouts have been decomposed into smaller elements, which should make it easier for themes to target specific layout elements without having to override layouts at large.
+
+As a result of these changes:
+
+ * all layouts are consistent in how they handle title and filter menus, breadcrumbs and layout subviews
+ * all layouts can now be easily extended to have multiple tabs. Plugins can pass ``filter_id`` parameter that will allow other plugins to hook into ``register, menu:filter:<filter_id>`` hook and add new tabs. If no ``filter_id`` is provided, default ``register, menu:filter`` hook can be used.
+ * layout views and subviews now receive ``identifier`` and ``segments`` of the page being rendered
+ * layout parameters are available to title and filter menu hooks, which allows resources to provide additional context information, for example, an ``$entity`` in case of a profile resource
+
+Plugins and themes should use the following upgrade path:
+
+ * Update calls to ``elgg_view_layout()`` to use ``default`` layout
+ * Update their use of ``filter`` parameter in layout views by either providing a default set of filter tabs, or setting a ``filter_id`` parameter and using hooks
+ * Remove ``page/layouts/one_column`` view
+ * Remove ``page/layouts/one_sidebar`` view
+ * Remove ``page/layouts/two_sidebar`` view
+ * Remove ``page/layouts/content`` view
+ * Update their use of ``page/layouts/default``
+ * Update their use of ``page/layouts/error``
+ * Update their use of ``page/layouts/elements/filter``
+ * Update their use of ``page/layouts/elements/header``
+ * Update their use of ``page/layouts/elements/footer``
+ * Update their use of ``page/elements/title``
+ * Update hook registrations for ``output:before, layout`` to ``view_vars, page/layout/<layout_name>``
+ * Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``
+ * RSS extras menu is now registered with ``register, menu:extras`` hook
+
+>>>>>>> 1851c53... feat(layouts): decompose and centralize layout views
 
 From 2.2 to 2.3
 ===============
