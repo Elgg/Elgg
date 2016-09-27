@@ -77,6 +77,11 @@ input[type="radio"] {
 	border-radius:0;
 	width:auto;
 }
+
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
 .elgg-input-checkbox + label,
 .elgg-input-checkbox + .elgg-field-label {
 	display: inline-block;
