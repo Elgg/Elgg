@@ -19,10 +19,12 @@ echo elgg_view_input('email', [
 	'class' => 'elgg-input-text',
 ]);
 
-echo elgg_view_input('text', [
+echo elgg_view_input('number', [
 	'name' => 'default_limit',
 	'label' => elgg_echo('installation:default_limit'),
 	'value' => elgg_get_config('default_limit'),
+	'min' => 1,
+	'step' => 1,
 ]);
 
 echo elgg_view_input('select', [
