@@ -15,16 +15,14 @@ if (!elgg_view_exists("groups/listing/$selected_tab")) {
 
 $content = elgg_view("groups/listing/$selected_tab", $vars);
 
-$filter = elgg_view('groups/group_sort_menu', array('selected' => $selected_tab));
-
 $sidebar = elgg_view('groups/sidebar/find');
 $sidebar .= elgg_view('groups/sidebar/featured');
 
-$params = array(
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'sidebar' => $sidebar,
-	'filter' => $filter,
-);
-$body = elgg_view_layout('content', $params);
+	'filter_id' => 'groups/all',
+	'filter_value' => $selected_tab,
+]);
 
 echo elgg_view_page(elgg_echo('groups:all'), $body);

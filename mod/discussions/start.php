@@ -67,6 +67,9 @@ function discussion_init() {
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:discussion', 'Elgg\Values::getTrue');
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:discussion_reply', 'Elgg\Values::getTrue');
+
+	// Add latest discussions tab to /groups/all page
+	elgg_register_plugin_hook_handler('register', 'menu:filter:groups/all', 'discussion_setup_groups_filter_tabs');
 }
 
 /**
@@ -656,4 +659,28 @@ function discussion_prepare_form_vars($topic = NULL) {
 	elgg_clear_sticky_form('topic');
 
 	return $values;
+}
+
+/**
+ * Add latest discussions tab to /groups/all page
+ *
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:filter:groups/all"
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ * @return ElggMenuItem[]
+ */
+function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
+
+	$filter_value = elgg_extract('filter_value', $params);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'discussion',
+		'text' => elgg_echo('discussion:latest'),
+		'href' => 'groups/all?filter=discussion',
+		'priority' => 500,
+		'selected' => $filter_value == 'discussion',
+	]);
+
+	return $return;
 }
