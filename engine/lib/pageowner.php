@@ -44,19 +44,18 @@ function elgg_get_page_owner_guid($guid = 0) {
 /**
  * Gets the owner entity for the current page.
  *
- * @note Access is disabled when getting the page owner entity.
- *
  * @return \ElggUser|\ElggGroup|false The current page owner or false if none.
  *
  * @since 1.8.0
  */
 function elgg_get_page_owner_entity() {
 	$guid = elgg_get_page_owner_guid();
-	if ($guid > 0) {
-		$ia = elgg_set_ignore_access(true);
-		$owner = get_entity($guid);
-		elgg_set_ignore_access($ia);
+	if (!$guid) {
+		return false;
+	}
 
+	$owner = get_entity($guid);
+	if ($owner instanceof ElggUser || $owner instanceof ElggGroup) {
 		return $owner;
 	}
 
