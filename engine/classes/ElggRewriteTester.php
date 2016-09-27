@@ -230,13 +230,13 @@ class ElggRewriteTester {
 				$msg .= elgg_view('install/js_rewrite_check', array('url' => $url));
 			
 				return array(
-					'severity' => 'failure',
+					'severity' => 'warning',
 					'message' => $msg,
 				);
 			}
 			$msg .= _elgg_services()->translator->translate("install:error:rewrite:htaccess:{$this->htaccessIssue}");
 			return array(
-				'severity' => 'failure',
+				'severity' => 'warning',
 				'message' => $msg,
 			);
 		}
@@ -246,13 +246,13 @@ class ElggRewriteTester {
 			$msg = "$serverString\n\n";
 			$msg .= _elgg_services()->translator->translate("install:error:rewrite:altserver");
 			return array(
-				'severity' => 'failure',
+				'severity' => 'warning',
 				'message' => $msg,
 			);
 		}
 
 		return array(
-			'severity' => 'failure',
+			'severity' => 'warning',
 			'message' => _elgg_services()->translator->translate('install:error:rewrite:unknown'),
 		);
 	}
