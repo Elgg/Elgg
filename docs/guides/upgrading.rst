@@ -81,6 +81,11 @@ Removed classes/interfaces
  * ``Exportable`` and its methods ``export`` and ``getExportableValues``: Use ``toObject``
  * ``Importable`` and its method ``import``.
 
+Form and field related changes
+------------------------------
+
+* ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
+
 Inheritance changes
 -------------------
 
