@@ -37,7 +37,12 @@ if ($cache_symlinked) {
 	
 	$symlink_warning .= elgg_format_element('span', ['class' => 'elgg-text-help'], elgg_echo('installation:cache_symlink:warning'));
 }
+
 $symlink_input = elgg_view('input/checkbox', $params);
+$symlink_source = elgg_get_root_path() . 'cache/';
+$symlink_target = elgg_get_cache_path() . 'views_simplecache/';
+$symlink_paths_help = elgg_echo('installation:cache_symlink:paths', [$symlink_source, $symlink_target]);
+$symlink_warning .= elgg_format_element('span', ['class' => 'elgg-text-help'], $symlink_paths_help);
 
 // minify
 $minify_description = elgg_echo('installation:minify:description');
