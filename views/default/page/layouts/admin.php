@@ -10,33 +10,21 @@
  * @uses $vars['title']   Optional title string
  */
 
-?>
+$class = elgg_extract_class($vars, [
+	'elgg-layout',
+	'elgg-layout-one-sidebar',
+	'elgg-layout-admin',
+	'clearfix',
+]);
+unset($vars['class']);
 
-<div class="elgg-layout elgg-layout-one-sidebar">
-	<div class="elgg-sidebar clearfix">
-		<?php
-			echo elgg_view('admin/sidebar', $vars);
-		?>
-	</div>
-	<div class="elgg-main elgg-body">
-		<div class="elgg-head">
-		<?php
-			echo elgg_view_menu('title', array(
-				'sort_by' => 'priority',
-				'class' => 'elgg-menu-hz',
-			));
+$vars['breadcrumbs'] = false;
 
-			if (isset($vars['title'])) {
-				echo '<div class="elgg-head clearfix">';
-				echo elgg_view_title($vars['title']);
-				echo '</div>';
-			}
-		?>
-		</div>
-		<?php
-			if (isset($vars['content'])) {
-				echo $vars['content'];
-			}
-		?>
-	</div>
-</div>
+$vars['sidebar'] = elgg_view('admin/sidebar', $vars);
+
+$sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
+$body = elgg_view('page/layouts/elements/body', $vars);
+
+echo elgg_format_element('div', [
+	'class' => $class,
+], $sidebar . $body);

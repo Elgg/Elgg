@@ -1,36 +1,74 @@
 <?php
+
 /**
  * Elgg default layout
  *
- * @package Elgg
- * @subpackage Core
+ * @uses $vars['class']        Additional CSS classes to apply to the layout
  *
- * @uses $vars['content'] Content string
- * @uses $vars['class']   Additional class to apply to layout
- * @uses $vars['nav']     Optional override of the page nav (default: breadcrumbs)
- * @uses $vars['title']   Optional title for main content area
- * @uses $vars['header']  Optional override for the header
- * @uses $vars['footer']  Optional footer
+ * @uses $vars['breadcrumbs']  Breadcrumbs
+ *                             Will no be rendered if the value is 'false'
+ *                             Will render 'navigation/breadcrumbs' view if
+ *                             not set or is an array of breadcrumbs
+ *                             Will override breadcrumbs view if set to a string
+ *
+ * @uses $vars['title']        Optional title for main content area
+ * @uses $vars['header']       Optional override for the header
+ *
+ * @uses $vars['content']      Page content
+
+ * @uses $vars['footer']       Optional footer
+ *
+ * @uses $vars['sidebar']      Sidebar HTML (default: empty string)
+ *                             Will not be rendered if the value is 'false'
+ * @uses $vars['sidebar_alt']  Second sidebar HTML (default: false)
+ *                             Will not be rendered if the value is 'false'
+ *
+ * @uses $vars['filter']       An optional array of filter tabs
+ *                             Array items should be suitable for usage with
+ *                             elgg_register_menu_item()
+ * @uses $vars['filter_id']    An optional ID of the filter
+ *                             If provided, plugins can adjust filter tabs menu
+ *                             via 'register, menu:filter:$filter_id' hook
+ * @uses $vars['filter_value'] Optional name of the selected filter tab
+ *                             If not provided, will be determined by the current page's URL
  */
+$class = elgg_extract_class($vars, [
+	'elgg-layout',
+	'clearfix'
+]);
+unset($vars['class']);
 
-$class = 'elgg-layout elgg-layout-default clearfix';
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
+// Prepare layout sidebar
+$vars['sidebar'] = elgg_extract('sidebar', $vars, '');
+if ($vars['sidebar'] !== false) {
+	// In a default layout, we want to make sure we render
+	// sidebar navigation items
+	$vars['sidebar'] = elgg_view('page/elements/sidebar', $vars);
+}
+$sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
+
+// Prepare second layout sidebar
+$sidebar_alt = '';
+if ($sidebar) {
+	$vars['sidebar_alt'] = elgg_extract('sidebar_alt', $vars, false);
+	if ($vars['sidebar_alt'] !== false) {
+		// In a default layout, we want to make sure we render
+		// sidebar navigation items
+		$vars['sidebar_alt'] = elgg_view('page/elements/sidebar_alt', $vars);
+	}
+	$sidebar_alt = elgg_view('page/layouts/elements/sidebar_alt', $vars);
 }
 
-echo "<div class=\"$class\">";
-
-echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
-
-echo elgg_view('page/layouts/elements/header', $vars);
-
-echo $vars['content'];
-
-// @deprecated 1.8
-if (isset($vars['area1'])) {
-	echo $vars['area1'];
+if ($sidebar && $sidebar_alt) {
+	$class[] = 'elgg-layout-two-sidebar';
+} else if ($sidebar) {
+	$class[] = 'elgg-layout-one-sidebar';
+} else {
+	$class[] = 'elgg-layout-one-column';
 }
 
-echo elgg_view('page/layouts/elements/footer', $vars);
+$body = elgg_view('page/layouts/elements/body', $vars);
 
-echo '</div>';
+echo elgg_format_element('div', [
+	'class' => $class,
+], $sidebar_alt . $body . $sidebar);

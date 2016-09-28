@@ -66,12 +66,6 @@ System hooks
 **output, page**
     In ``elgg_view_page()``, this filters the output return value.
 
-**output:before, layout**
-	In ``elgg_view_layout()``, filters ``$params`` before it's passed to the layout view.
-
-**output:after, layout**
-	In ``elgg_view_layout()``, filters the return value of the layout view.
-
 **parameters, menu:<menu_name>**
 	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before rendering.
 
@@ -84,6 +78,9 @@ System hooks
 	an area of menu items. This is a good hook to sort, add, remove, and modify menu items. Triggered by
 	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
+**register, menu:filter:<filter_id>**
+	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter.
+
 **creating, river**
 	The options for ``elgg_create_river_item`` are filtered through this hook. You may alter values
 	or return ``false`` to cancel the item creation.
@@ -92,8 +89,13 @@ System hooks
 	Triggered when generating the cached content of a view.
 
 **prepare, breadcrumbs**
-    In elgg_get_breadcrumbs(), this filters the registered breadcrumbs before
+    In ``elgg_get_breadcrumbs()``, this filters the registered breadcrumbs before
     returning them, allowing a plugin to alter breadcrumb strategy site-wide.
+    ``$params`` array includes:
+
+      * ``breadcrumbs`` - an array of bredcrumbs, each with ``title`` and ``link`` keys
+      * ``identifier`` - route identifier of the current page
+      * ``segments`` - route segments of the current page
 
 **add, river**
 
@@ -492,7 +494,12 @@ Views
     Filters the returned content of the view
 
 **layout, page**
-    In ``elgg_view_layout()``, filters the layout name
+    In ``elgg_view_layout()``, filters the layout name.
+    ``$params`` array includes:
+
+     * ``identifier`` - ID of the page being rendered
+     * ``segments`` - URL segments of the page being rendered
+     * other ``$vars`` received by ``elgg_view_layout()``
 
 **shell, page**
     In ``elgg_view_page()``, filters the page shell name
