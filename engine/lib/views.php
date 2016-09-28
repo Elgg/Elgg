@@ -715,6 +715,12 @@ function elgg_view_layout($layout_name, $vars = array()) {
 			break;
 	}
 
+	if (isset($vars['nav'])) {
+		// Temporary helper until all core views are updated
+		$vars['breadcrumbs'] = $vars['nav'];
+		unset($vars['nav']);
+	}
+
 	$vars['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$vars['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($vars['segments']);

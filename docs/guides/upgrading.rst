@@ -187,9 +187,10 @@ As a result of these changes:
  * layout views and subviews now receive ``identifier`` and ``segments`` of the page being rendered
  * layout parameters are available to title and filter menu hooks, which allows resources to provide additional context information, for example, an ``$entity`` in case of a profile resource
 
-Plugins and themes should use the following upgrade path:
+Plugins and themes should:
 
  * Update calls to ``elgg_view_layout()`` to use ``default`` layout
+ * Update replace `nav` parameter in layout views with `breadcrumbs` parameter
  * Update their use of ``filter`` parameter in layout views by either providing a default set of filter tabs, or setting a ``filter_id`` parameter and using hooks
  * Remove ``page/layouts/one_column`` view
  * Remove ``page/layouts/one_sidebar`` view
@@ -201,6 +202,7 @@ Plugins and themes should use the following upgrade path:
  * Update their use of ``page/layouts/elements/header``
  * Update their use of ``page/layouts/elements/footer``
  * Update their use of ``page/elements/title``
+ * Update their use of ``navigation/breadcrumbs`` to pass ``$vars['breadcrumbs']`` to ``elgg_get_breadcrumbs()``
  * Update hook registrations for ``output:before, layout`` to ``view_vars, page/layout/<layout_name>``
  * Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``
  * RSS extras menu is now registered with ``register, menu:extras`` hook

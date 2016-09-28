@@ -18,7 +18,7 @@ $class = elgg_extract_class($vars, [
 ]);
 unset($vars['class']);
 
-$vars['nav'] = ''; // do not show breadcrumbs
+$vars['breadcrumbs'] = false;
 
 $vars['sidebar'] = elgg_view('admin/sidebar', $vars);
 
