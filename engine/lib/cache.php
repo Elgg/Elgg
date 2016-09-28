@@ -227,17 +227,15 @@ function elgg_flush_caches() {
 }
 
 /**
- * Checks if /cache has been symlinked to views simplecache directory,
- * and if HTTP requests to /cache are are successful
+ * Checks if /cache directory has been symlinked to views simplecache directory
+ * 
  * @return bool
  * @access private
  */
 function _elgg_is_cache_symlinked() {
-	if (!is_dir(elgg_get_root_path() . 'cache/')) {
-		return false;
-	}
-	$headers = get_headers(elgg_get_simplecache_url('elgg.js'));
-	return substr($headers[0], 9, 3) == 200;
+	$link = elgg_get_root_path() . 'cache/';
+	$target = elgg_get_cache_path() . 'views_simplecache/';
+	return is_dir($link) && realpath($target) == realpath(readlink($link));
 }
 
 /**

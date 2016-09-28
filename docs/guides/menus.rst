@@ -89,7 +89,7 @@ Examples
 				$url = "album/owner/{$owner->guid}";
 				break;
 			case 'group':
-				$url = "album/group/{$owner->guid}:
+				$url = "album/group/{$owner->guid}";
 				break;
 		}
 
