@@ -13,7 +13,7 @@ namespace Elgg\Forms;
 class StickyForms {
 	
 	/**
-	 * Load all the GET and POST variables into the sticky form cache
+	 * Save form submission data (all GET and POST vars) into a session cache
 	 *
 	 * Call this from an action when you want all your submitted variables
 	 * available if the submission fails validation and is sent back to the form
@@ -23,7 +23,13 @@ class StickyForms {
 	 * @return void
 	 */
 	public function makeStickyForm($form_name) {
-	
+
+		$banned_keys = [];
+		// TODO make $banned_keys an argument
+		if (in_array($form_name, ['register', 'useradd', 'usersettings'])) {
+			$banned_keys = ['password', 'password2'];
+		}
+
 		elgg_clear_sticky_form($form_name);
 	
 		$session = _elgg_services()->session;
@@ -32,13 +38,16 @@ class StickyForms {
 	
 		// will go through XSS filtering in elgg_get_sticky_value()
 		$vars = array_merge($req->query->all(), $req->request->all());
+		foreach ($banned_keys as $key) {
+			unset($vars[$key]);
+		}
 		$data[$form_name] = $vars;
 	
 		$session->set('sticky_forms', $data);
 	}
 	
 	/**
-	 * Clear the sticky form cache
+	 * Remove form submission data from the session
 	 *
 	 * Call this if validation is successful in the action handler or
 	 * when they sticky values have been used to repopulate the form
@@ -56,7 +65,7 @@ class StickyForms {
 	}
 	
 	/**
-	 * Has this form been made sticky?
+	 * Does form submission data exist for this form?
 	 *
 	 * @param string $form_name Form namespace
 	 *
@@ -69,7 +78,7 @@ class StickyForms {
 	}
 	
 	/**
-	 * Get a specific sticky variable
+	 * Get a specific value from cached form submission data
 	 *
 	 * @param string  $form_name     The name of the form
 	 * @param string  $variable      The name of the variable
@@ -95,7 +104,7 @@ class StickyForms {
 	}
 	
 	/**
-	 * Get all the values in a sticky form in an array
+	 * Get all submission data cached for a form
 	 *
 	 * @param string $form_name     The name of the form
 	 * @param bool   $filter_result Filter for bad input if true
@@ -120,7 +129,7 @@ class StickyForms {
 	}
 	
 	/**
-	 * Clear a specific sticky variable
+	 * Remove one value of form submission data from the session
 	 *
 	 * @param string $form_name The name of the form
 	 * @param string $variable  The name of the variable to clear
