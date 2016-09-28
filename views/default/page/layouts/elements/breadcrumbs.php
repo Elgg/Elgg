@@ -2,15 +2,30 @@
 /**
  * Layout breadcrumbs
  *
- * @uses $vars['breadcrumbs'] An array of breadcrumbs
- * @uses $vars['nav']         Optional HTML overriding the breadcrumbs entirely
+ * @uses $vars['breadcrumbs']  Breadcrumbs
+ *                             Will no be rendered if the value is 'false'
+ *                             Will override breadcrumbs view if set to a string
+ *                             Will render 'navigation/breadcrumbs' view if
+ *                             not set or is an array of breadcrumbs
+ *                             <code>
+ *                             [
+ *                                [
+ *                                   'title' => 'Breadcrumb title',
+ *                                   'link' => '/path/to/page',
+ *                                ],
+ *                             ]
+ *                             </code>
  */
-if (isset($vars['nav'])) {
-	$breadcrumbs = $vars['nav'];
-} else {
-	$breadcrumbs = elgg_view('navigation/breadcrumbs', $vars);
+$breadcrumbs = elgg_extract('breadcrumbs', $vars);
+if ($breadcrumbs === false) {
+	return;
+}
+if (is_string($breadcrumbs)) {
+	echo $breadcrumbs;
+	return;
 }
 
+$breadcrumbs = elgg_view('navigation/breadcrumbs', $vars);
 if (!$breadcrumbs) {
 	return;
 }

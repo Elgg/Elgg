@@ -272,31 +272,50 @@ function elgg_pop_breadcrumb() {
 }
 
 /**
- * Returns all breadcrumbs as an array of array('title' => 'Title', 'link' => 'URL')
+ * Returns all breadcrumbs as an array
+ * <code>
+ * [
+ *    [
+ *       'title' => 'Breadcrumb title',
+ *       'link' => '/path/to/page',
+ *    ]
+ * ]
+ * </code>
  *
- * Since 1.11, breadcrumbs are filtered through the plugin hook [prepare, breadcrumbs] before
+ * Breadcrumbs are filtered through the plugin hook [prepare, breadcrumbs] before
  * being returned.
  *
- * @return array Breadcrumbs
+ * @param array $breadcrumbs An array of breadcrumbs
+ *                           If set, will override breadcrumbs in the stack
+ * @return array
  * @since 1.8.0
  * @see elgg_prepare_breadcrumbs
  */
-function elgg_get_breadcrumbs() {
+function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	global $CONFIG;
 
-	// if no crumbs set, still allow hook to populate it
-	if (isset($CONFIG->breadcrumbs) && is_array($CONFIG->breadcrumbs)) {
-		$breadcrumbs = $CONFIG->breadcrumbs;
-	} else {
-		$breadcrumbs = array();
+	if (!isset($breadcrumbs)) {
+		// if no crumbs set, still allow hook to populate it
+		$breadcrumbs = (array) $CONFIG->breadcrumbs;
 	}
 
+	if (!is_array($breadcrumbs)) {
+		_elgg_services()->logger->error(__FUNCTION__ . ' expects breadcrumbs as an array');
+		$breadcrumbs = [];
+	}
+	
 	$params = array(
 		'breadcrumbs' => $breadcrumbs,
 	);
+
+	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
+	$params['segments'] = _elgg_services()->request->getUrlSegments();
+	array_shift($params['segments']);
+
 	$breadcrumbs = elgg_trigger_plugin_hook('prepare', 'breadcrumbs', $params, $breadcrumbs);
 	if (!is_array($breadcrumbs)) {
-		return array();
+		_elgg_services()->logger->error('"prepare, breadcrumbs" hook must return an array of breadcrumbs');
+		return [];
 	}
 
 	return $breadcrumbs;

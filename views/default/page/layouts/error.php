@@ -14,7 +14,7 @@ $class = elgg_extract_class($vars, [
 ]);
 unset($vars['class']);
 
-$vars['nav'] = ''; // do not show breadcrumbs
+$vars['breadcrumbs'] = false;
 
 $body = elgg_view('page/layouts/elements/body', $vars);
 
