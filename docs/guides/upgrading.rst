@@ -22,6 +22,13 @@ Removed views
 
  * ``resources/file/download``
  * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
+ * ``subscriptions/form/additions``: extend ``forms/notificationsettings/save`` instead
+ * ``notifications/subscriptions/personal``
+ * ``notifications/subscriptions/collections``
+ * ``notifications/subscriptions/form``
+ * ``notifications/subscriptions/jsfuncs``
+ * ``notifications/subscriptions/forminternals``
+ * ``notifications/css``
 
 Removed functions/methods
 -------------------------
@@ -99,6 +106,12 @@ Removed hooks/events
  * Hook **object:notifications, <type>**: Use the hook **send:before, notifications**
  * Event **delete, annotations**: Use **delete, annotation**
 
+Removed forms/actions
+---------------------
+
+ * ``notificationsettings/save`` form and action
+ * ``notificationsettings/groupsave`` form and action
+
 APIs that now accept only an ``$options`` array
 -----------------------------------------------
 
@@ -162,6 +175,16 @@ If handlers were registered with the same priority, these are called in the orde
 To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
 priority. Some of these handlers will most likely be called in a different order.
 
+Notifications plugin
+--------------------
+
+Notifications plugin has been rewritten dropping many views and actions. The purpose of this rewrite was
+to implement a more efficient, extendable and scalable interface for managing notifications preferences.
+We have implemented a much simpler markup and removed excessive styling and javascript that was
+required to make the old interface work.
+
+If your plugin is extending any of the views or relies on any actions in the notifications plugin,
+it has to be updated.
 
 From 2.2 to 2.3
 ===============
