@@ -77,7 +77,8 @@ if (elgg_get_config('allow_registration')) {
 					$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 					forward($forward_url);
 				} catch (LoginException $e) {
-					// do nothing
+					register_error($e->getMessage());
+					forward(REFERER);
 				}
 			}
 
