@@ -3,6 +3,7 @@
 define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
+	var spinner = require('elgg/spinner');
 	require('jquery.ui.autocomplete.html');
 
 	/**
@@ -17,7 +18,7 @@ define(function(require) {
 		this.$input = $('.elgg-input-user-picker', wrapper);
 		this.$ul = $('.elgg-user-picker-list', wrapper);
 
-		var self = this,
+		var UserPicker = this,
 			data = this.$wrapper.data();
 
 		this.name = data.name || 'members';
@@ -27,19 +28,22 @@ define(function(require) {
 		this.isSealed = false;
 
 		this.$input.autocomplete({
-			source: function(request, response) {
+			source: function(request, response) {				
 				// note: "this" below will not be bound to the input, but rather
 				// to an object created by the autocomplete component
+				var Autocomplete = this;
 
-				if (self.isSealed) {
+				if (UserPicker.isSealed) {
 					return;
 				}
 
-				elgg.get(self.handler, {
+				elgg.get(UserPicker.handler, {
+					beforeSend: spinner.start,
+					complete: spinner.stop,
 					data: {
-						term: this.term,
-						"match_on[]": ($('[name=match_on]', self.$wrapper).prop('checked') ? 'friends' : 'users'),
-						name: self.name
+						term: Autocomplete.term,
+						"match_on[]": UserPicker.getSearchType(),
+						name: UserPicker.name
 					},
 					dataType: 'json',
 					success: function(data) {
@@ -47,10 +51,10 @@ define(function(require) {
 					}
 				});
 			},
-			minLength: self.minLength,
+			minLength: UserPicker.minLength,
 			html: "html",
 			select: function(event, ui) {
-				self.addUser(event, ui.item.guid, ui.item.html);
+				UserPicker.addUser(event, ui.item.guid, ui.item.html);
 			},
 			// turn off experimental live help - no i18n support and a little buggy
 			messages: {
@@ -60,7 +64,7 @@ define(function(require) {
 		});
 
 		this.$wrapper.on('click', '.elgg-user-picker-remove', function(event) {
-			self.removeUser(event);
+			UserPicker.removeUser(event);
 		});
 
 		this.enforceLimit();
@@ -132,6 +136,17 @@ define(function(require) {
 			this.$input.prop('disabled', false);
 			this.$wrapper.removeClass('elgg-state-disabled');
 			this.isSealed = false;
+		},
+
+		/**
+		 * Get search type
+		 */
+		getSearchType: function() {
+			if (this.$wrapper.has('[type="checkbox"][name=match_on]')) {
+				return $('[name=match_on]', UserPicker.$wrapper).prop('checked') ? 'friends' : 'users';
+			} else {
+				return 'friends';
+			}
 		}
 	};
 

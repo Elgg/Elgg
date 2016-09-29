@@ -382,6 +382,7 @@ class ElggPluginManifest {
 	 */
 	public function getCategories() {
 		$bundled_plugins = array(
+			'activity',
 			'blog',
 			'bookmarks',
 			'ckeditor',
@@ -393,6 +394,8 @@ class ElggPluginManifest {
 			'embed',
 			'externalpages',
 			'file',
+			'friends',
+			'friends_collections',
 			'garbagecollector',
 			'groups',
 			'htmlawed',

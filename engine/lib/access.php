@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions for Elgg's access system for entities, metadata, and annotations.
  *
@@ -351,7 +352,7 @@ function delete_access_collection($collection_id) {
  *
  * @param int $collection_id The collection ID
  *
- * @return object|false
+ * @return ElggAccessCollection|false
  */
 function get_access_collection($collection_id) {
 	return _elgg_services()->accessCollections->get($collection_id);
@@ -390,13 +391,13 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
 }
 
 /**
- * Returns an array of database row objects of the access collections owned by $owner_guid.
+ * Returns access collections owned by the entity
  *
- * @param int $owner_guid The entity guid
- *
- * @return array|false
  * @see add_access_collection()
  * @see get_members_of_access_collection()
+ *
+ * @param int $owner_guid GUID of the owner
+ * @return \ElggAccessCollection[]|false
  */
 function get_user_access_collections($owner_guid) {
 	return _elgg_services()->accessCollections->getEntityCollections($owner_guid);
@@ -405,14 +406,29 @@ function get_user_access_collections($owner_guid) {
 /**
  * Get all of members of an access collection
  *
- * @param int  $collection_id The collection's ID
- * @param bool $guids_only    If set to true, will only return the members' GUIDs (default: false)
+ * @param int   $collection_id The collection's ID
+ * @param bool  $guids_only    If set to true, will only return the members' GUIDs (default: false)
+ * @param array $options       ege* options
  *
  * @return ElggUser[]|int[]|false guids or entities if successful, false if not
  * @see add_user_to_access_collection()
  */
-function get_members_of_access_collection($collection_id, $guids_only = false) {
-	return _elgg_services()->accessCollections->getMembers($collection_id, $guids_only);
+function get_members_of_access_collection($collection_id, $guids_only = false, array $options = []) {
+	if (!isset($options['limit'])) {
+		$options['limit'] = 0;
+	}
+
+	if (!$guids_only) {
+		return _elgg_services()->accessCollections->getMembers($collection_id, $options);
+	}
+
+	$guids = [];
+	$options['callback'] = false;
+	$rows = _elgg_services()->accessCollections->getMembers($collection_id, $options);
+	foreach ($rows as $row) {
+		$guids[] = $row->guid;
+	}
+	return $guids;
 }
 
 /**
@@ -563,7 +579,6 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 	//if (!$user instanceof \ElggUser) {
 	//	return false;
 	//}
-
 	// check for admin
 	if ($user_guid && elgg_is_admin_user($user_guid)) {
 		return true;
