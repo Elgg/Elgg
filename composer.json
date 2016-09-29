@@ -22,7 +22,7 @@
         "zendframework/zend-mail": "~2.4",
         "league/flysystem": "~1.0",
         "bower-asset/jquery": "^2.1.4",
-        "bower-asset/jquery-ui": "1.11.*",
+        "bower-asset/jquery-ui": "~1.11.4",
         "bower-asset/text": "^2.0.4",
         "bower-asset/requirejs": "^2.1.18",
         "bower-asset/jquery-form": "^3.51",
