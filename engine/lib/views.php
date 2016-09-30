@@ -657,34 +657,30 @@ function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) 
 /**
  * Displays a layout with optional parameters.
  *
- * Layouts provide consistent organization of pages and other blocks of content.
- * There are a few default layouts in core:
- *  - admin                   A special layout for the admin area.
- *  - one_column              A single content column.
- *  - one_sidebar             A content column with sidebar.
- *  - two_sidebar             A content column with two sidebars.
- *  - widgets                 A widget canvas.
+ * Layouts are templates provide consistency by organizing blocks of content on the page.
  *
- * The layout views take the form page/layouts/$layout_name
- * See the individual layouts for what options are supported. The three most
- * common layouts have these parameters:
- * one_column
- *     content => string
- * one_sidebar
- *     content => string
- *     sidebar => string (optional)
- * content
- *     content => string
- *     sidebar => string (optional)
- *     buttons => string (override the default add button)
- *     title   => string (override the default title)
- *     filter_context => string (selected content filter)
- *     See the content layout view for more parameters
+ * Plugins should use one of the core layouts:
+ *  - default     Primary template with one, two or no sidebars
+ *  - admin       Admin page template
+ *  - error       Error page template
+ *  - widgets     Widgets canvas
  *
- * @param string $layout_name The name of the view in page/layouts/.
- * @param array  $vars        Associative array of parameters for the layout view
+ * Plugins can create and use custom layouts by placing a layout view
+ * in "page/layouts/<layout_name>" and calling elgg_view_layout(<layout_name>).
  *
- * @return string The layout
+ * For a full list of parameters supported by each of these layouts see
+ * corresponding layout views.
+ *
+ * @param string $layout_name Layout name
+ *                            Corresponds to a view in "page/layouts/<layout_name>".
+ * @param array  $vars        Layout parameters
+ *                            An associative array of parameters to pass to
+ *                            the layout hooks and views.
+ *                            Route 'identifier' and 'segments' of the page being
+ *                            rendered will be added to this array automatially,
+ *                            allowing plugins to alter layout views and subviews
+ *                            based on the current route.
+ * @return string
  */
 function elgg_view_layout($layout_name, $vars = array()) {
 	$timer = _elgg_services()->timer;
@@ -693,28 +689,94 @@ function elgg_view_layout($layout_name, $vars = array()) {
 	}
 	$timer->begin([__FUNCTION__]);
 
-	$params = array();
-	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
-	$params['segments'] = _elgg_services()->request->getUrlSegments();
-	array_shift($params['segments']);
-	$layout_name = elgg_trigger_plugin_hook('layout', 'page', $params, $layout_name);
+	// Help plugins transition without breaking them
+	switch ($layout_name) {
+		case 'content' :
+			$layout_name = 'default';
+			$vars = _elgg_normalize_content_layout_vars($vars);
+			break;
 
-	$param_array = $vars;
+		case 'one_sidebar' :
+			$layout_name = 'default';
+			$vars['sidebar'] = elgg_extract('sidebar', $vars, '', false);
+			$vars['sidebar_alt'] = false;
+			break;
 
-	$param_array['layout'] = $layout_name;
+		case 'one_column' :
+			$layout_name = 'default';
+			$vars['sidebar'] = false;
+			$vars['sidebar_alt'] = false;
+			break;
 
-	$params = elgg_trigger_plugin_hook('output:before', 'layout', null, $param_array);
-
-	if (elgg_view_exists("page/layouts/$layout_name")) {
-		$output = elgg_view("page/layouts/$layout_name", $params);
-	} else {
-		$output = elgg_view("page/layouts/default", $params);
+		case 'two_sidebar' :
+			$layout_name = 'default';
+			$vars['sidebar'] = elgg_extract('sidebar', $vars, '', false);
+			$vars['sidebar_alt'] = elgg_extract('sidebar_alt', $vars, '', false);
+			break;
 	}
 
-	$output = elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
+	if (isset($vars['nav'])) {
+		// Temporary helper until all core views are updated
+		$vars['breadcrumbs'] = $vars['nav'];
+		unset($vars['nav']);
+	}
+
+	$vars['identifier'] = _elgg_services()->request->getFirstUrlSegment();
+	$vars['segments'] = _elgg_services()->request->getUrlSegments();
+	array_shift($vars['segments']);
+
+	$layout_name = elgg_trigger_plugin_hook('layout', 'page', $vars, $layout_name);
+
+	$vars['layout'] = $layout_name;
+
+	$layout_views = [
+		"page/layouts/$layout_name",
+		"page/layouts/default",
+	];
+
+	$output = '';
+	foreach ($layout_views as $layout_view) {
+		if (elgg_view_exists($layout_view)) {
+			$output = elgg_view($layout_view, $vars);
+			break;
+		}
+	}
 
 	$timer->end([__FUNCTION__]);
 	return $output;
+}
+
+/**
+ * Normalizes deprecated content layout $vars for use in default layout
+ * Helper function to assist plugins transitioning to 3.0
+ * 
+ * @param array $vars Vars
+ * @return array
+ * @access private
+ */
+function _elgg_normalize_content_layout_vars(array $vars = []) {
+
+	$context = elgg_extract('context', $vars, elgg_get_context());
+
+	$vars['title'] = elgg_extract('title', $vars, '');
+	if (!$vars['title'] && $vars['title'] !== false) {
+		$vars['title'] = elgg_echo($context);
+	}
+
+	// 1.8 supported 'filter_override'
+	if (isset($vars['filter_override'])) {
+		$vars['filter'] = $vars['filter_override'];
+	}
+
+	// register the default content filters
+	if (!isset($vars['filter']) && $context) {
+		$selected = elgg_extract('filter_context', $vars);
+		$vars['filter'] = elgg_get_filter_tabs($context, $selected, null, $vars);
+		$vars['filter_id'] = $context;
+		$vars['filter_value'] = $selected;
+	}
+	
+	return $vars;
 }
 
 /**
@@ -1647,31 +1709,6 @@ function _elgg_views_amd($hook, $type, $content, $params) {
 }
 
 /**
- * Add the RSS link to the extras when if needed
- *
- * @return void
- * @access private
- */
-function elgg_views_add_rss_link() {
-	if (_elgg_has_rss_link()) {
-		$url = current_page_url();
-		if (substr_count($url, '?')) {
-			$url .= "&view=rss";
-		} else {
-			$url .= "?view=rss";
-		}
-
-		$url = elgg_format_url($url);
-		elgg_register_menu_item('extras', array(
-			'name' => 'rss',
-			'text' => elgg_view_icon('rss'),
-			'href' => $url,
-			'title' => elgg_echo('feed:rss'),
-		));
-	}
-}
-
-/**
  * Sends X-Frame-Options header on page requests
  *
  * @access private
@@ -1807,7 +1844,6 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
-	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
 
 	// registered with high priority for BC

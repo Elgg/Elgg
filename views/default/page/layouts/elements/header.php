@@ -1,29 +1,33 @@
 <?php
+
 /**
  * Header for layouts
- *
+ * 
  * @uses $vars['title']  Title
  * @uses $vars['header'] Optional override for the header
  */
+$header = elgg_extract('header', $vars);
+unset($vars['header']);
 
-if (isset($vars['header'])) {
-	echo '<div class="elgg-head clearfix">';
-	echo $vars['header'];
-	echo '</div>';
-	return;
+if (!isset($header)) {
+	$title = elgg_extract('title', $vars, '');
+	unset($vars['title']);
+
+	if ($title) {
+		$title = elgg_view_title($title, [
+			'class' => 'elgg-heading-main',
+		]);
+	}
+
+	$menu_params = $vars;
+	$menu_params['sort_by'] = 'priority';
+	$menu_params['class'] = 'elgg-menu-hz';
+	$buttons = elgg_view_menu('title', $menu_params);
+	
+	$header = $title . $buttons;
 }
 
-$title = elgg_extract('title', $vars, '');
-
-$buttons = elgg_view_menu('title', array(
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-));
-
-if ($title || $buttons) {
-	echo '<div class="elgg-head clearfix">';
-	// @todo .elgg-heading-main supports action buttons - maybe rename class name?
-	echo $buttons;
-	echo elgg_view_title($vars['title'], array('class' => 'elgg-heading-main'));
-	echo '</div>';
-}
+?>
+<div class="elgg-head elgg-layout-header clearfix">
+	<?= $header ?>
+</div>

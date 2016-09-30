@@ -21,7 +21,7 @@ function aalborg_theme_init() {
 
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
-		elgg_unregister_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
+		elgg_unregister_plugin_hook_handler('register', 'menu:extras', '_elgg_extras_menu_setup');
 	}
 
 }

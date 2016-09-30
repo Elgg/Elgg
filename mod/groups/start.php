@@ -15,6 +15,8 @@ elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
  */
 function groups_init() {
 
+	elgg_register_plugin_hook_handler('route', 'groups', 'groups_router');
+	
 	elgg_register_library('elgg:groups', __DIR__ . '/lib/groups.php');
 	elgg_load_library('elgg:groups');
 	
@@ -123,6 +125,32 @@ function groups_init() {
 	// Help core resolve page owner guids from group routes
 	// Registered with an earlier priority to be called before default_page_owner_handler()
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
+
+	// Setup filter tabs on /groups/all page
+	elgg_register_plugin_hook_handler('register', 'menu:filter:groups/all', 'groups_setup_filter_tabs');
+}
+
+function groups_router($hook, $type, $return, $params) {
+
+	if (!is_array($return)) {
+		return;
+	}
+
+	$identifier = elgg_extract('identifier', $return);
+	$segments = (array) elgg_extract('segments', $return, []);
+
+	if (!isset($segments[0])) {
+		$segments[0] = 'all';
+	}
+
+	switch ($segments[0]) {
+		case 'all' :
+			return new \Elgg\Groups\Routes\Index($identifier, $segments);
+		case 'profile':
+			// This mapping would be done in the router
+			$segments['guid'] = $segments[1];
+			return new \Elgg\Groups\Routes\Profile($identifier, $segments);
+	}
 }
 
 /**
@@ -353,7 +381,7 @@ function groups_set_url($hook, $type, $url, $params) {
 function groups_set_icon_url($hook, $type, $url, $params) {
 
 	$entity = elgg_extract('entity', $params);
-	/* @var $group \ElggGroup */
+	/* @var $group ElggGroup */
 
 	$size = elgg_extract('size', $params, 'medium');
 
@@ -378,9 +406,9 @@ function groups_set_icon_url($hook, $type, $url, $params) {
  *
  * @param string    $hook   "entity:icon:file"
  * @param string    $type   "group"
- * @param \ElggIcon $icon   Icon file
+ * @param ElggIcon $icon   Icon file
  * @param array     $params Hook params
- * @return \ElggIcon
+ * @return ElggIcon
  */
 function groups_set_icon_file($hook, $type, $icon, $params) {
 
@@ -550,7 +578,7 @@ function groups_create_event_listener($event, $object_type, $object) {
  */
 function groups_update_event_listener($event, $type, $group) {
 
-	/* @var $group \ElggGroup */
+	/* @var $group ElggGroup */
 
 	$original_attributes = $group->getOriginalAttributes();
 	if (empty($original_attributes['owner_guid'])) {
@@ -582,7 +610,7 @@ function groups_update_event_listener($event, $type, $group) {
  */
 function groups_delete_event_listener($event, $type, $group) {
 
-	/* @var $group \ElggGroup */
+	/* @var $group ElggGroup */
 
 	// In addition to standard icons, groups plugin stores a copy of the original upload
 	$filehandler = new ElggFile();
@@ -844,11 +872,11 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
 	$group = elgg_extract('entity', $params);
 	$user = elgg_extract('user', $params);
 
-	if (!$group instanceof \ElggGroup) {
+	if (!$group instanceof ElggGroup) {
 		return $menu;
 	}
 
-	if (!$user instanceof \ElggUser || !$user->canEdit()) {
+	if (!$user instanceof ElggUser || !$user->canEdit()) {
 		return $menu;
 	}
 
@@ -857,7 +885,7 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
 		'group_guid' => $group->guid,
 	));
 
-	$menu[] = \ElggMenuItem::factory(array(
+	$menu[] = ElggMenuItem::factory(array(
 		'name' => 'accept',
 		'href' => $accept_url,
 		'is_action' => true,
@@ -871,7 +899,7 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
 		'group_guid' => $group->guid,
 	));
 
-	$menu[] = \ElggMenuItem::factory(array(
+	$menu[] = ElggMenuItem::factory(array(
 		'name' => 'delete',
 		'href' => $delete_url,
 		'is_action' => true,
@@ -1034,4 +1062,52 @@ function groups_default_page_owner_handler($hook, $type, $return, $params) {
 			}
 			return $user->guid;
 	}
+}
+
+/**
+ * Setup filter tabs on /groups/all page
+ * 
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:filter:groups/all"
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ * @return ElggMenuItem[]
+ */
+function groups_setup_filter_tabs($hook, $type, $return, $params) {
+
+	$filter_value = elgg_extract('filter_value', $params);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'newest',
+		'text' => elgg_echo('sort:newest'),
+		'href' => 'groups/all?filter=newest',
+		'priority' => 200,
+		'selected' => $filter_value == 'newest',
+	]);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'alpha',
+		'text' => elgg_echo('sort:alpha'),
+		'href' => 'groups/all?filter=alpha',
+		'priority' => 250,
+		'selected' => $filter_value == 'alpha',
+	]);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'popular',
+		'text' => elgg_echo('sort:popular'),
+		'href' => 'groups/all?filter=popular',
+		'priority' => 300,
+		'selected' => $filter_value == 'popular',
+	]);
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'featured',
+		'text' => elgg_echo('groups:featured'),
+		'href' => 'groups/all?filter=featured',
+		'priority' => 400,
+		'selected' => $filter_value == 'featured',
+	]);
+	
+	return $return;
 }

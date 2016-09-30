@@ -5,20 +5,27 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['breadcrumbs'] (Optional) Array of arrays with keys 'title' and 'link'
- * @uses $vars['class']
+ * @uses $vars['breadcrumbs'] Breadcrumbs
+ *                            If not set, will use breadcrumbs from the stack
+ *                            pushed by elgg_push_breadcrumb()
+ *                            <code>
+ *                            [
+ *                               [
+ *                                  'title' => 'Breadcrumb title',
+ *                                  'link' => '/path/to/page',
+ *                               ],
+ *                            ]
+ *                            </code>
+ * @uses $vars['class']       Optional class to add to the wrapping <ul>
  *
  * @see elgg_push_breadcrumb
  * @see elgg_get_breadcrumbs
  */
 
-if (isset($vars['breadcrumbs'])) {
-	$breadcrumbs = $vars['breadcrumbs'];
-} else {
-	$breadcrumbs = elgg_get_breadcrumbs();
-}
+$breadcrumbs = elgg_extract('breadcrumbs', $vars);
+$breadcrumbs = elgg_get_breadcrumbs($breadcrumbs);
 
-if (!is_array($breadcrumbs) || !$breadcrumbs) {
+if (!is_array($breadcrumbs) || empty($breadcrumbs)) {
 	return;
 }
 
