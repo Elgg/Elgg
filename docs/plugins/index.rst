@@ -27,7 +27,6 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - embed
 - externalpages
 - garbagecollector
-- htmlawed
 - invitefriends
 - legacy_urls
 - likes

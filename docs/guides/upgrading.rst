@@ -162,6 +162,11 @@ If handlers were registered with the same priority, these are called in the orde
 To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
 priority. Some of these handlers will most likely be called in a different order.
 
+HtmLawed is no longer a plugin
+------------------------------
+
+ * Do not call ``elgg_load_library('htmlawed')``.
+ * In the hook params for ``'config', 'htmlawed'``, the ``hook_tag`` function name changed.
 
 From 2.2 to 2.3
 ===============
