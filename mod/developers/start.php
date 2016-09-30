@@ -24,6 +24,7 @@ function developers_init() {
 	$action_base = __DIR__ . '/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
 	elgg_register_action('developers/ajax_demo', "$action_base/ajax_demo.php", 'admin');
+	elgg_register_action('developers/entity_explorer_delete', "$action_base/entity_explorer_delete.php", 'admin');
 
 	elgg_register_ajax_view('forms/developers/ajax_demo');
 }
@@ -85,6 +86,7 @@ function developers_setup_menu() {
 		elgg_register_admin_menu_item('develop', 'inspect');
 		elgg_register_admin_menu_item('develop', 'sandbox', 'develop_tools');
 		elgg_register_admin_menu_item('develop', 'unit_tests', 'develop_tools');
+		elgg_register_admin_menu_item('develop', 'entity_explorer', 'develop_tools');
 
 		elgg_register_menu_item('page', array(
 			'name' => 'dev_settings',
