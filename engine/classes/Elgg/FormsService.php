@@ -72,8 +72,8 @@ class FormsService {
 	 *
 	 * @param string $action    The name of the action. An action name does not include
 	 *                          the leading "action/". For example, "login" is an action name.
-	 * @param array  $form_vars $vars environment passed to the "input/form" view
-	 * @param array  $body_vars $vars environment passed to the "forms/$action" view
+	 * @param array  $form_vars $vars passed to the "input/form" view
+	 * @param array  $body_vars $vars passed to the "forms/<action>" view
 	 *
 	 * @return string The complete form
 	 */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Discussion topic reply form body
  *
@@ -6,80 +7,46 @@
  * @uses $vars['entity'] A discussion reply object
  * @uses $vars['inline'] Display a shortened form?
  */
-
 $topic = elgg_extract('topic', $vars);
-
-$topic_guid_input = '';
-if (isset($vars['topic'])) {
-	$topic_guid_input = elgg_view('input/hidden', array(
-		'name' => 'topic_guid',
-		'value' => $vars['topic']->getGUID(),
-	));
-}
-
+$reply = elgg_extract('entity', $vars);
 $inline = elgg_extract('inline', $vars, false);
 
-$reply = elgg_extract('entity', $vars);
+echo elgg_view_input('hidden', array(
+	'name' => 'topic_guid',
+	'value' => $topic ? $topic->guid : '',
+));
 
-$value = '';
+echo elgg_view_input('hidden', array(
+	'name' => 'guid',
+	'value' => $reply ? $reply->guid : '',
+));
 
-$reply_guid_input = '';
-if ($reply && $reply->canEdit()) {
-	$value = $reply->description;
-	$reply_guid_input = elgg_view('input/hidden', array(
-		'name' => 'guid',
-		'value' => $reply->guid
-	));
+echo elgg_view_input('longtext', array(
+	'name' => 'description',
+	'value' => $reply ? $reply->description : '',
+	'visual' => !$inline,
+	'label' => $reply ? elgg_echo("discussion:reply:edit") : elgg_echo("reply:this"),
+));
 
-	$reply_label = elgg_echo("discussion:reply:edit");
-	$submit_text = elgg_echo('save');
-} else {
-	$reply_label = elgg_echo("reply:this");
-	$submit_text = elgg_echo('reply');
-}
-
-$cancel_button = '';
-if ($reply) {
-	$cancel_button = elgg_view('input/button', array(
-		'value' => elgg_echo('cancel'),
-		'class' => 'elgg-button-cancel mlm',
-		'href' => $entity ? $entity->getURL() : '#',
-	));
-}
-
-$submit_input = elgg_view('input/submit', array('value' => $submit_text));
+$buttons = [
+	[
+		'#type' => 'submit',
+		'value' => $reply ? elgg_echo('save') : elgg_echo('reply'),
+	]
+];
 
 if ($inline) {
-	$description_input = elgg_view('input/text', array(
-		'name' => 'description',
-		'value' => $value
-	));
-
-echo <<<FORM
-	$description_input
-	$topic_guid_input
-	$reply_guid_input
-	$submit_input
-FORM;
-} else {
-	$description_input = elgg_view('input/longtext', array(
-		'name' => 'description',
-		'value' => $value
-	));
-
-echo <<<FORM
-	<div>
-		<label>$reply_label</label>
-		$description_input
-	</div>
-	$reply_guid_input
-	$topic_guid_input
-FORM;
-
-	$footer = elgg_format_element('div', [
-		'class' => 'foot',
-			], $submit_input . ' ' . $cancel_button);
-
-	elgg_set_form_footer($footer);
+	$buttons[] = [
+		'#type' => 'button',
+		'type' => 'reset',
+		'text' => elgg_echo('cancel'),
+		'class' => 'elgg-button-cancel',
+	];
 }
 
+$footer = elgg_view_input('fieldset', [
+	'fields' => $buttons,
+	'align' => 'horizontal',
+]);
+
+elgg_set_form_footer($footer);

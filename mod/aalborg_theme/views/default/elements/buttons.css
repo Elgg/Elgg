@@ -18,6 +18,12 @@
 .elgg-button:focus {
 	text-decoration: none;
 }
+.elgg-button .elgg-icon {
+    color: inherit;
+    vertical-align: middle;
+    margin-right: 10px;
+    line-height: 9px;
+}
 .elgg-button-submit {	
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #4787B8;
