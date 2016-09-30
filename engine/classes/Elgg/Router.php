@@ -26,6 +26,11 @@ class Router {
 	private $hooks;
 
 	/**
+	 * @var \Elgg\Route
+	 */
+	private $route;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks For customized routing.
@@ -67,6 +72,16 @@ class Router {
 		ob_start();
 
 		$result = $this->hooks->trigger('route', $identifier, $old, $old);
+
+		if ($result instanceof \Elgg\Route) {
+			$this->route = $result;
+			$response = $result->validate();
+			if (!$response) {
+				$response = $this->getResponse($result);
+			}
+			return _elgg_services()->responseFactory->respond($response);
+		}
+
 		if ($result === false) {
 			$output = ob_get_clean();
 			$response = elgg_ok_response($output);
@@ -181,6 +196,39 @@ class Router {
 		$segments = $new['segments'];
 		array_unshift($segments, $new['identifier']);
 		return $request->setUrlSegments($segments);
+	}
+
+	/**
+	 * Returns current route object
+	 * @return \Elgg\Route
+	 */
+	public function getRoute() {
+		return $this->route;
+	}
+
+	/**
+	 * Prepares a response for a route
+	 *
+	 * @param \Elgg\Route $route Route
+	 * @return \Elgg\Http\OkResponse
+	 */
+	public function getResponse(\Elgg\Route $route) {
+		$params = [
+			'layout' => $route->getLayout(),
+			'title' => $route->getTitle(),
+			'content' => $route->getContent(),
+			'sidebar' => $route->getSidebar(),
+			'sidebar_alt' => $route->getSidebarAlt(),
+			'breadcrumbs' => $route->getBreadcrumbs(),
+			'filter' => $route->getFilter(),
+			'entity' => $route->getPageEntity(),
+			'page_owner' => $route->getPageOwner(),
+			'page_title' => $route->getPageTitle(),
+			'page_shell' => $route->getPageShell(),
+		];
+
+		$resource = elgg_view_resource('default', $params);
+		return elgg_ok_response($resource);
 	}
 
 }
