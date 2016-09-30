@@ -1450,7 +1450,7 @@ h6 > .elgg-icon {
 }
 .elgg-plugin > .elgg-image-block > .elgg-image {
 	margin-right: 10px;
-	min-width: 120px;
+	min-width: 9em;
 	text-align: center;
 }
 .elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
@@ -1471,24 +1471,22 @@ h6 > .elgg-icon {
 	color: #999;
 }
 
+.elgg-plugin.elgg-state-active,
 .elgg-state-active .elgg-plugin-list-reordering {
-	background: white;
+	background: #fff;
 }
-
+.elgg-plugin.elgg-state-inactive,
 .elgg-state-inactive .elgg-plugin-list-reordering {
-	background: #EEE;
-}
-
-.elgg-plugin.elgg-state-active {
-	background: white;
-}
-.elgg-plugin.elgg-state-inactive {
-	background: #EEE;
+	background: #eee;
 }
 
 .elgg-plugin.elgg-state-cannot-activate,
 .elgg-plugin.elgg-state-cannot-activate .elgg-plugin-list-reordering {
-	background: #FBEDB5;
+	background: #f7f0d4;
+}
+.elgg-state-cannot-activate .elgg-image a[disabled],
+.elgg-state-cannot-deactivate .elgg-image a[disabled] {
+	text-decoration: none;
 }
 
 .elgg-plugin-list-reordering {
@@ -1537,14 +1535,37 @@ h6 > .elgg-icon {
 	background: #fbe3e4;
 	color: #8a1f11;
 	border-color: #fbc2c4;
-	font-weight: bold;
+	padding: 3px 6px;
+    margin: 3px 0;
+    width: auto;
+    display: inline-block;
 }
 .elgg-plugin .elgg-state-warning {
-	background: #fbedb5;
+	background: #f4f4f4;
 	color: #000000;
 	border-color: #fbe58b;
-	font-weight: bold;
+	padding: 3px 6px;
+    margin: 3px 0;
+    width: auto;
+    display: inline-block;
 }
+.elgg-plugin .elgg-state-error a,
+.elgg-plugin .elgg-state-warning a,
+.elgg-plugin .elgg-text-help a {
+	text-decoration: underline;
+}
+
+.elgg-plugin-title {
+	font-weight: bold;
+	margin-right: 5px;
+}
+.elgg-state-active .elgg-plugin-title {
+	font-style: italic;
+}
+.elgg-state-inactive .elgg-plugin-title {
+	color: #666;
+}
+
 .elgg-plugin-more {
 	background-color: #eee;
 	border-radius: 8px;

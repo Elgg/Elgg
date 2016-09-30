@@ -11,15 +11,20 @@
  * @package Elgg.Core
  * @subpackage Plugins
  */
-
-
 /* @var ElggPlugin $plugin */
 $plugin = $vars['entity'];
 $reordering = elgg_extract('display_reordering', $vars, false);
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
 
-$can_activate = $plugin->canActivate();
+if ($plugin->isActive()) {
+	$can_activate = false;
+	$can_deactivate = $plugin->canDeactivate();
+} else {
+	$can_deactivate = false;
+	$can_activate = $plugin->canActivate();
+}
+
 $max_priority = _elgg_get_max_plugin_priority();
 $actions_base = '/action/admin/plugins/';
 $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
@@ -71,7 +76,7 @@ if ($reordering) {
 		$links .= "<li>" . elgg_view('output/url', array(
 			'href' => $down_url,
 			'text' => elgg_echo('down'),
-			'is_action'	=> true,
+			'is_action' => true,
 			'is_trusted' => true,
 		)) . "</li>";
 
@@ -82,9 +87,9 @@ if ($reordering) {
 		));
 
 		$links .= "<li>" . elgg_view('output/url', array(
-			'href' 		=> $bottom_url,
-			'text'		=> elgg_echo('bottom'),
-			'is_action'	=> true,
+			'href' => $bottom_url,
+			'text' => elgg_echo('bottom'),
+			'is_action' => true,
 			'is_trusted' => true,
 		)) . "</li>";
 	}
@@ -98,7 +103,6 @@ if ($reordering) {
 
 
 // activate / deactivate links
-
 // always let them deactivate
 $options = array(
 	'is_action' => true,
@@ -106,12 +110,16 @@ $options = array(
 );
 if ($active) {
 	$classes[] = 'elgg-state-active';
-	$action = 'deactivate';
 	$options['title'] = elgg_echo('admin:plugins:deactivate');
-	$options['class'] = 'elgg-button elgg-button-cancel';
 	$options['text'] = elgg_echo('admin:plugins:deactivate');
-	if (!$can_activate) {
-		$classes[] = 'elgg-state-cannot-activate';
+	if ($can_deactivate) {
+		$action = 'deactivate';
+		$options['class'] = 'elgg-button elgg-button-cancel';
+	} else {
+		$action = '';
+		$classes[] = 'elgg-state-cannot-deactivate';
+		$options['text'] = elgg_echo('admin:plugins:cannot_deactivate');
+		$options['disabled'] = 'disabled';
 	}
 } else if ($can_activate) {
 	$classes[] = 'elgg-state-inactive';
@@ -119,12 +127,10 @@ if ($active) {
 	$options['title'] = elgg_echo('admin:plugins:activate');
 	$options['class'] = 'elgg-button elgg-button-submit';
 	$options['text'] = elgg_echo('admin:plugins:activate');
-
 } else {
 	$classes[] = 'elgg-state-inactive elgg-state-cannot-activate';
 	$action = '';
 	$options['text'] = elgg_echo('admin:plugins:cannot_activate');
-
 	$options['disabled'] = 'disabled';
 }
 
@@ -135,6 +141,7 @@ if ($action) {
 
 	$options['href'] = $url;
 }
+
 $action_button = elgg_view('output/url', $options);
 
 $action_button = elgg_trigger_plugin_hook("action_button", "plugin", array("entity" => $plugin), $action_button);
@@ -178,7 +185,6 @@ $attrs = [
 	'id' => $css_id,
 	'data-guid' => $plugin->guid,
 ];
-
 ?>
 <div <?= elgg_format_attributes($attrs) ?>>
 	<div class="elgg-image-block">
@@ -190,20 +196,34 @@ $attrs = [
 		<div class="elgg-body">
 			<div class="elgg-head">
 				<?php
-					echo $links;
-					$url_options = array(
-						"href" => "ajax/view/object/plugin/details?guid=" . $plugin->getGUID(),
-						"text" => $plugin->getManifest()->getName(),
-						"class" => "elgg-lightbox",
-					);
-					echo elgg_view("output/url", $url_options);
-					
-					echo " ". $settings_link;
+				echo $links;
+				$url_options = array(
+					"href" => "ajax/view/object/plugin/details?guid=" . $plugin->getGUID(),
+					"text" => $plugin->getManifest()->getName(),
+					"class" => "elgg-lightbox elgg-plugin-title",
+				);
+				echo elgg_view("output/url", $url_options);
+
+				echo " " . $settings_link;
 				?>
 				<span class="elgg-plugin-list-description">
-					<?php echo $description;?>
+					<?php echo $description; ?>
 				</span>
 			</div>
+			<?php
+			$error = $plugin->getError();
+			if ($error) {
+				?>
+				<div class="elgg-body">
+					<?php
+					echo elgg_format_element('p', [
+						'class' => $plugin->isActive() ? 'elgg-text-help' : 'elgg-text-help elgg-state-error',
+					], $error);
+					?>
+				</div>
+				<?php
+			}
+			?>
 		</div>
 	</div>
 </div>

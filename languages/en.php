@@ -59,6 +59,7 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
@@ -672,6 +673,7 @@ three sections:
 	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> for troubleshooting tips.',
 	'admin:plugins:cannot_activate' => 'cannot activate',
+	'admin:plugins:cannot_deactivate' => 'cannot deactivate',
 	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
 	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
