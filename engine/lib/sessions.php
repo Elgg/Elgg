@@ -21,7 +21,7 @@ function elgg_get_session() {
 /**
  * Return the current logged in user, or null if no user is logged in.
  *
- * @return \ElggUser
+ * @return \ElggUser|null
  */
 function elgg_get_logged_in_user_entity() {
 	return _elgg_services()->session->getLoggedInUser();

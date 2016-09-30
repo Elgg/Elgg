@@ -5,6 +5,7 @@ return array(
  */
 
 	'item:site' => 'Sites',
+	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
  * Sessions

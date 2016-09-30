@@ -11,6 +11,7 @@
 /vendor
 
 # don't ignore bundled plugins
+!/mod/activity
 !/mod/blog/
 !/mod/bookmarks/
 !/mod/categories/
@@ -23,6 +24,7 @@
 !/mod/embed/
 !/mod/externalpages/
 !/mod/file/
+!/mod/friends/
 !/mod/garbagecollector/
 !/mod/groups/
 !/mod/invitefriends/

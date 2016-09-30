@@ -51,17 +51,11 @@ function groups_init() {
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
 
-	elgg_register_widget_type(
-			'group_activity',
-			elgg_echo('groups:widget:group_activity:title'),
-			elgg_echo('groups:widget:group_activity:description'),
-			array('dashboard'),
-			true
-	);
-
 	// add group activity tool option
-	add_group_tool_option('activity', elgg_echo('groups:enableactivity'), true);
-	elgg_extend_view('groups/tool_latest', 'groups/profile/activity_module');
+	if (elgg_get_plugin_setting('allow_activity', 'groups', 'yes') === 'yes') {
+		add_group_tool_option('activity', elgg_echo('groups:enableactivity'), true);
+		elgg_extend_view('groups/tool_latest', 'groups/profile/activity_module');
+	}
 
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'groups_activity_owner_block_menu');
@@ -378,7 +372,7 @@ function groups_set_icon_url($hook, $type, $url, $params) {
 		$icon = $entity->getIcon('large');
 		$icontime = $icon->exists() ? time() : 0;
 		create_metadata($entity->guid, 'icontime', $icontime, 'integer', $entity->owner_guid, ACCESS_PUBLIC);
-}
+	}
 
 	$icon = $entity->getIcon($size);
 	$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
@@ -558,9 +552,9 @@ function groups_create_event_listener($event, $object_type, $object) {
  * @todo #4683 proposes that icons are owned by groups and not group owners
  * @see _elgg_filestore_move_icons()
  *
- * @param string   $event "update:after"
- * @param string   $type  "group"
- * @param ElggGrup $group Group entity
+ * @param string    $event "update:after"
+ * @param string    $type  "group"
+ * @param ElggGroup $group Group entity
  * @return void
  */
 function groups_update_event_listener($event, $type, $group) {
@@ -590,9 +584,9 @@ function groups_update_event_listener($event, $type, $group) {
  * Registered with a hight priority to make sure that other handlers to not prevent
  * the deletion.
  *
- * @param string   $event "delete"
- * @param string   $type  "group"
- * @param ElggGrup $group Group entity
+ * @param string    $event "delete"
+ * @param string    $type  "group"
+ * @param ElggGroup $group Group entity
  * @return void
  */
 function groups_delete_event_listener($event, $type, $group) {
@@ -704,7 +698,7 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
 function groups_access_default_override($hook, $type, $access) {
 	$page_owner = elgg_get_page_owner_entity();
 
-	if (elgg_instanceof($page_owner, 'group')) {
+	if ($page_owner instanceof ElggGroup) {
 		if ($page_owner->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 			$access = $page_owner->group_acl;
 		}
@@ -805,12 +799,15 @@ function group_access_options($group) {
 
 function activity_profile_menu($hook, $entity_type, $return_value, $params) {
 
-	if ($params['owner'] instanceof ElggGroup) {
-		$return_value[] = array(
-			'text' => elgg_echo('groups:activity'),
-			'href' => "groups/activity/{$params['owner']->getGUID()}"
-		);
+	if (!$params['owner'] instanceof ElggGroup
+			|| elgg_get_plugin_setting('allow_activity', 'groups') === 'no') {
+		return;
 	}
+
+	$return_value[] = array(
+		'text' => elgg_echo('groups:activity'),
+		'href' => "groups/activity/{$params['owner']->guid}"
+	);
 	return $return_value;
 }
 

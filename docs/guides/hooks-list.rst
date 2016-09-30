@@ -81,6 +81,14 @@ System hooks
 **register, menu:filter:<filter_id>**
 	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter.
 
+**filter_tabs, <context>**
+	Filters the array of ``ElggMenuItem`` used to display the All/Mine/Friends tabs. The ``$params``
+	array includes:
+
+	 * ``selected``: the selected menu item name
+	 * ``user``: the logged in ``ElggUser`` or ``null``
+	 * ``vars``: The ``$vars`` argument passed to ``elgg_get_filter_tabs``
+
 **creating, river**
 	The options for ``elgg_create_river_item`` are filtered through this hook. You may alter values
 	or return ``false`` to cancel the item creation.

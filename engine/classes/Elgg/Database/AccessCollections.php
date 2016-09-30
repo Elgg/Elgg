@@ -477,7 +477,6 @@ class AccessCollections {
 			// @todo is there such a thing as public write access?
 			$access_array = array(
 				ACCESS_PRIVATE => $this->getReadableAccessLevel(ACCESS_PRIVATE),
-				ACCESS_FRIENDS => $this->getReadableAccessLevel(ACCESS_FRIENDS),
 				ACCESS_LOGGED_IN => $this->getReadableAccessLevel(ACCESS_LOGGED_IN),
 				ACCESS_PUBLIC => $this->getReadableAccessLevel(ACCESS_PUBLIC)
 			);

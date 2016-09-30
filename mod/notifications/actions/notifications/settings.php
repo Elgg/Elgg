@@ -24,21 +24,24 @@ foreach ($methods as $method) {
 
 $collections_by_method = [];
 
-$collection_settings = get_input('collections', []);
-if (!empty($collection_settings)) {
-	foreach ($collection_settings as $coollection_id => $preferred_methods) {
-		if (!is_array($preferred_methods)) {
-			$preferred_methods = [];
+$collection_settings = get_input('collections');
+if ($collection_settings !== null) {
+	if (!empty($collection_settings)) {
+		foreach ($collection_settings as $collection_id => $preferred_methods) {
+			if (!is_array($preferred_methods)) {
+				$preferred_methods = [];
+			}
+			foreach ($preferred_methods as $preferred_method) {
+				$collections_by_method[$preferred_method][] = $collection_id;
+			}
 		}
-		foreach ($preferred_methods as $preferred_method) {
-			$collections_by_method[$preferred_method][] = $coollection_id;
-		}
+	}
+
+	foreach ($methods as $method) {
+		$metaname = 'collections_notifications_preferences_' . $method;
+		$user->$metaname = array_unique($collections_by_method[$method]);
 	}
 }
 
-foreach ($methods as $method) {
-	$metaname = 'collections_notifications_preferences_' . $method;
-	$user->$metaname = array_unique($collections_by_method[$method]);
-}
 
 system_message(elgg_echo('notifications:subscriptions:success'));
