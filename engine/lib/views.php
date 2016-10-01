@@ -1371,60 +1371,105 @@ function elgg_get_form_footer() {
  * Renders a form field
  *
  * @param string $input_type Input type, used to generate an input view ("input/$input_type")
- * @param array  $vars       Fields and input vars.
- *                           Field vars contain both field and input params. 'label', 'help',
- *                           and 'field_class' params will not be passed on to the input view.
- *                           Others, including 'required' and 'id', will be available to the
- *                           input view. Both 'label' and 'help' params accept HTML, and
- *                           will be printed unescaped within their wrapper element.
+ *                           $vars['#type'] will override this value if present
+ * @param array  $params     Field parameter and input variables
+ *                           Field vars contain both field and input params.
+ *                           Field parameters are prefixed with a hash (#) to prevent name collision with input vars.
+ *                            - #type: input type
+ *                            - #label: field label
+ *                            - #help: field help text
+ *                            - #class: field class
+ *                           Both #label and #help params accept HTML,
+ *                           and will be printed unescaped within their wrapper element.
  * @return string
  */
-function elgg_view_input($input_type, array $vars = array()) {
+function elgg_view_input($input_type = '', array $params = array()) {
 
+	if (!isset($params['#type'])) {
+		$params['#type'] = $input_type;
+	}
+
+	$input_type = $params['#type'];
 	if (!elgg_view_exists("input/$input_type")) {
 		return '';
 	}
 
-	if ($input_type == 'hidden') {
-		return elgg_view("input/$input_type", $vars);
+	$hidden_types = ['hidden', 'securitytoken'];
+	if (in_array($input_type, $hidden_types)) {
+		return elgg_view("input/$input_type", $params);
 	}
 
-	$id = elgg_extract('id', $vars);
+	$id = elgg_extract('id', $params);
 	if (!$id) {
 		$id = "elgg-field-" . base_convert(mt_rand(), 10, 36);
-		$vars['id'] = $id;
+		$params['id'] = $id;
 	}
 
-	$vars['input_type'] = $input_type;
+	$params['input_type'] = $input_type;
+	
+	// $vars passed to input/$input_name
+	$input_vars = $params;
 
-	$label = elgg_view('elements/forms/label', $vars);
+	// $vars passed to label, help and field wrapper views
+	$element_vars = $params;
+
+	// We are adding hashed parameter names to avoid name collisions with input $vars.
+	// To stay BC, we need to remap old key names to new ones
+	$map = [
+		'#label' => 'label',
+		'#help' => 'help',
+		'#class' => 'field_class',
+	];
+
+	foreach ($map as $new_key => $old_key) {
+		if (isset($params[$new_key])) {
+			// We have a new key definition and we need to map it to keys expected by
+			// label/help views. We don't need to clear these values from $vars,
+			// as they will not be clashing with input view $vars
+			$element_vars[$old_key] = $params[$new_key];
+		} else {
+			// We assume that the value passed with the old key name is meant for
+			// the field wrapper and not the input view
+			unset($input_vars[$old_key]);
+		}
+	}
+
+	$element_vars['class'] = $element_vars['field_class'];
+	$element_vars['label'] = elgg_view('elements/forms/label', $element_vars);
+	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
+
 	if ($input_type == 'checkbox') {
-		$vars['label'] = $label;
-		$vars['label_tag'] = 'div';
-		$label = false;
-	} else {
-		unset($vars['label']);
+		// Single checkbox input view gets special treatment
+		// We don't want the field label to appear a checkbox without a label
+		$input_vars['label'] = $element_vars['label'];
+		$input_vars['label_tag'] = 'div';
+		unset($element_vars['label']);
 	}
+	
+	$element_vars['input'] = elgg_view("elements/forms/input", $input_vars);
 
-	$help = elgg_view('elements/forms/help', $vars);
-	unset($vars['help']);
+	return elgg_view('elements/forms/field', $element_vars);
+}
 
-	$required = elgg_extract('required', $vars);
-
-	$field_class = (array) elgg_extract('field_class', $vars, array());
-	unset($vars['field_class']);
-
-	$input = elgg_view("elements/forms/input", $vars);
-
-	return elgg_view('elements/forms/field', array(
-		'label' => $label,
-		'help' => $help,
-		'required' => $required,
-		'id' => $id,
-		'input' => $input,
-		'class' => $field_class,
-		'input_type' => $input_type,
-	));
+/**
+ * Renders a form field
+ * A shortcut method to rendering inputs from an array of options
+ *
+ * @see elgg_view_input()
+ *
+ * @param array  $params Field parameter and input variables
+ *                       Field vars contain both field and input params.
+ *                       Field parameters are prefixed with a hash (#) to prevent name collisions.
+ *                        - #type: input type
+ *                        - #label: field label
+ *                        - #help: field help text
+ *                        - #class: field class
+ *                       Both #label and #help params accept HTML,
+ *                       and will be printed unescaped within their wrapper element.
+ * @return string
+ */
+function elgg_view_field(array $params = []) {
+	return elgg_view_input('', $params);
 }
 
 /**
@@ -1843,6 +1888,13 @@ function elgg_views_boot() {
 		);
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}
+
+	// Patches and features that were included between major releases
+	// sometimes require additional styling, but adding them to core CSS files
+	// is not always feasible, because those can be replaced by themes.
+	// @todo Remove in 3.0
+	elgg_extend_view('elgg.css', 'elements/pathces.css');
+	elgg_extend_view('admin.css', 'elements/pathces.css');
 }
 
 /**

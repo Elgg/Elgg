@@ -526,18 +526,30 @@ select {
 	padding: 4px;
 }
 
-.elgg-fieldset {
+.elgg-fieldset-has-legend {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	padding: 5px;
 	padding-bottom: 10px;
 	margin-bottom: 15px;
 }
-.elgg-fieldset > legend {
+.elgg-fieldset-has-legend > legend {
 	color: #333333;
 	font-size: 110%;
 	font-weight: bold;
 	padding: 0 3px;
+}
+.elgg-fieldset-horizontal .elgg-field {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
+    margin: 0 0 0 10px;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
+    margin: 0 5px;
 }
 
 .elgg-button {
@@ -1682,6 +1694,17 @@ table.mceLayout {
 }
 .center {
 	text-align: center;
+}
+.elgg-justify-center {
+	text-align: center;
+}
+
+.elgg-justify-right {
+	text-align: right;
+}
+
+.elgg-justify-left {
+	text-align: left;
 }
 .float {
 	float: left;

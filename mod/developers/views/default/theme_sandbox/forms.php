@@ -189,6 +189,43 @@ $ipsum = elgg_view('developers/ipsum');
 			'label' => 'Number input (.elgg-input-number) with custom options:',
 			'help' => 'Enter an integer number larger than zero',
 		));
+
+		$dt = new \DateTime(null, new \DateTimeZone('UTC'));
+		$hour_options = array();
+		$hour_options_ts = range(0, 24*60*60, 900); // step of 15 minutes
+		foreach ($hour_options_ts as $ts) {
+			$hour_options[$ts] = $dt->setTimestamp($ts)->format('g:ia');
+		}
+
+		echo elgg_view_input('fieldset', array(
+			'name' => 'f16',
+			'legend' => 'Fieldset with a legend',
+			'fields' => [
+				[
+					'#type' => 'text',
+					'label' => 'Text field',
+					'required' => true,
+				],
+				[
+					'#type' => 'fieldset',
+					'label' => 'Date and time fieldset',
+					'align' => 'horizontal',
+					'fields' => [
+						[
+							'#type' => 'date',
+							'value' => time(),
+							'timestamp' => true,
+							'label' => 'Date',
+						],
+						[
+							'#type' => 'select',
+							'label' => 'Time',
+							'options' => $hour_options,
+						],
+					],
+				],
+			]
+		));
 		?>
 	</fieldset>
 </form>
