@@ -59,32 +59,36 @@ body and tags of the my_blog post. It does not need form tag markup.
 
 .. code-block:: php
 
-    echo elgg_view_input('text', [
+    echo elgg_view_field([
+        '#type' => 'text',
+        '#label' => elgg_echo('title'),
         'name' => 'title',
-        'label' => elgg_echo('title'),
         'required' => true,
     ]);
 
-    echo elgg_view_input('longtext', [
+    echo elgg_view_field([
+        '#type' => 'longtext',
+        '#label' => elgg_echo('body'),
         'name' => 'body',
-        'label' => elgg_echo('body'),
         'required' => true,
     ]);
 
-    echo elgg_view_input('tags', [
+    echo elgg_view_field([
+        '#type' => 'tags',
+        '#label' => elgg_echo('tags'),
+        '#help' => elgg_echo('tags:help'),
         'name' => 'tags',
-        'label' => elgg_echo('tags'),
-        'help' => elgg_echo('tags:help'),
     ]);
 
-    $submit = elgg_view_input('submit', array(
+    $submit = elgg_view_field(array(
+        '#type' => 'submit',
+        '#class' => 'elgg-foot',
         'value' => elgg_echo('save'),
-        'field_class' => 'elgg-foot',
     ));
     elgg_set_form_footer($submit);
 
 
-Notice how the form is calling ``elgg_view_input()`` to render inputs. This helper
+Notice how the form is calling ``elgg_view_field()`` to render inputs. This helper
 function maintains consistency in field markup, and is used as a shortcut for
 rendering field elements, such as label, help text, and input. See :doc:`/guides/actions`.
 

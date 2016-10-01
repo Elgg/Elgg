@@ -20,17 +20,18 @@ Deprecated APIs
  * ``ajax_forward_hook()``: No longer used as handler for `'forward','all'` hook. Ajax response is now wrapped by the ``ResponseFactory``
  * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
  * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
- * ``get_uploaded_file()`` is deprecated: Use new file uploads API instead
- * ``get_user_notification_settings()`` is deprecated: Use ``ElggUser::getNotificationSettings()``
- * ``set_user_notification_setting()`` is deprecated: Use ``ElggUser::setNotificationSetting()``
+ * ``get_uploaded_file()``: Use new file uploads API instead
+ * ``get_user_notification_settings()``: Use ``ElggUser::getNotificationSettings()``
+ * ``set_user_notification_setting()``: Use ``ElggUser::setNotificationSetting()``
  * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
  * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
- * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
- * Private ``update_entity_last_action()`` is deprecated: Refrain from manually updating last action timestamp.
+ * ``elgg()->getDb()->getTableprefix()``: Use ``elgg_get_config('dbprefix')``.
+ * Private ``update_entity_last_action()``: Refrain from manually updating last action timestamp.
  * Setting non-public ``access_id`` on metadata is deprecated. See below.
- * ``get_resized_image_from_existing_file()`` is deprecated: Use ``elgg_save_resized_image()``.
- * ``get_resized_image_from_uploaded_file()`` is deprecated: Use ``elgg_save_resized_image()`` in combination with upload API.
- * ``get_image_resize_parameters()`` is deprecated and will be removed.
+ * ``get_resized_image_from_existing_file()``: Use ``elgg_save_resized_image()``.
+ * ``get_resized_image_from_uploaded_file()``: Use ``elgg_save_resized_image()`` in combination with upload API.
+ * ``get_image_resize_parameters()`` will be removed.
+ * ``elgg_view_input()``: Use ``elgg_view_field()``. Apologies for the API churn.
 
 Deprecated Views
 ----------------
@@ -72,9 +73,9 @@ New API for signing URLs
 
 URLs can now be signed with a SHA-256 HMAC key and validated at any time before URL expiry. This feature can be used to tokenize action URLs in email notifications, as well as other uses outside of the Elgg installation.
 
- * `elgg_http_get_signed_url()` - signs the URL with HMAC key
- * `elgg_http_validate_signed_url()` - validates the signed URL
- * `elgg_signed_request_gatekeeper()` - gatekeeper that validates the signature of the current request
+ * ``elgg_http_get_signed_url()`` - signs the URL with HMAC key
+ * ``elgg_http_validate_signed_url()`` - validates the signed URL
+ * ``elgg_signed_request_gatekeeper()`` - gatekeeper that validates the signature of the current request
 
 Extendable form views
 ---------------------
@@ -123,6 +124,13 @@ API to alter registration and login URL
  * ``elgg_get_login_url()`` should be used to obtain site's login URL
  * ``registration_url, site`` hook can be used to alter the default registration URL
  * ``login_url, site`` hook can be used to alter the default login URL
+
+Support for fieldsets in forms
+------------------------------
+
+ * ``elgg_view_field()`` replaces ``elgg_view_input()``. It has a similar API, but accepts a single array.
+ * ``elgg_view_field()`` supports ``#type``, ``#label``, ``#help`` and ``#class``, allowing unprefixed versions to be sent to the input view ``$vars``.
+ * The new view ``input/fieldset`` can be used to render a set of fields, each rendered with ``elgg_view_field()``.
 
 From 2.1 to 2.2
 ===============

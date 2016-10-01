@@ -96,6 +96,24 @@ select {
 	margin: 0 auto;
 }
 
+.elgg-fieldset-has-legend {
+	border: 1px solid #dedede;
+	padding: 10px;
+}
+
+.elgg-fieldset-horizontal .elgg-field {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
+    margin: 0 0 0 10px;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
+    margin: 0 5px;
+}
+
 /* ***************************************
 	FRIENDS PICKER
 *************************************** */
