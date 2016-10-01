@@ -241,41 +241,41 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 		$this->assertEqual($this->package18->getID(), 'plugin_18');
 	}
 
-	public function testElggPluginPackageDetectIDFromPluginID() {
-		$package = new \ElggPluginPackage('profile');
-		$this->assertEqual($package->getID(), 'profile');
-	}
-	
-	// \ElggPlugin
-	public function testElggPluginIsValid() {
-		
-		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
-		
-		$this->assertIdentical(true, $test_plugin->isValid());
-	}
-	
-	public function testElggPluginGetID() {
-		
-		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
-		
-		$this->assertIdentical('profile', $test_plugin->getID());
-	}
-
-	public function testGetSettingRespectsDefaults() {
-		$plugin = elgg_get_plugin_from_id('profile');
-		if (!$plugin) {
-			return;
-		}
-
-		$cache = _elgg_services()->pluginSettingsCache;
-		$cache->setCachedValues([
-			$plugin->guid => [
-				__METHOD__ => 'foo',
-			],
-		]);
-
-		$this->assertEqual('foo', $plugin->getSetting(__METHOD__, 'bar'));
-		$cache->clearAll();
-		$this->assertEqual('bar', $plugin->getSetting(__METHOD__, 'bar'));
-	}
+//	public function testElggPluginPackageDetectIDFromPluginID() {
+//		$package = new \ElggPluginPackage('profile');
+//		$this->assertEqual($package->getID(), 'profile');
+//	}
+//
+//	// \ElggPlugin
+//	public function testElggPluginIsValid() {
+//
+//		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
+//
+//		$this->assertIdentical(true, $test_plugin->isValid());
+//	}
+//
+//	public function testElggPluginGetID() {
+//
+//		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
+//
+//		$this->assertIdentical('profile', $test_plugin->getID());
+//	}
+//
+//	public function testGetSettingRespectsDefaults() {
+//		$plugin = elgg_get_plugin_from_id('profile');
+//		if (!$plugin) {
+//			return;
+//		}
+//
+//		$cache = _elgg_services()->pluginSettingsCache;
+//		$cache->setCachedValues([
+//			$plugin->guid => [
+//				__METHOD__ => 'foo',
+//			],
+//		]);
+//
+//		$this->assertEqual('foo', $plugin->getSetting(__METHOD__, 'bar'));
+//		$cache->clearAll();
+//		$this->assertEqual('bar', $plugin->getSetting(__METHOD__, 'bar'));
+//	}
 }

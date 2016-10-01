@@ -12,6 +12,11 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+Removed plugins
+---------------
+
+See :doc:`the site upgrade docs</admin/upgrading>` for details.
+
 Removed classes
 ---------------
 

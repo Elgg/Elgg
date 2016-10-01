@@ -37,6 +37,20 @@ Basic instructions
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
    If this is not the case, take care to maintain your modifications. 
 
+From 2.3 to 3.0
+===============
+
+Removed plugins
+---------------
+
+A large number of plugins have been removed from the core framework. See (TODO) for the complete list. Many were no longer being maintained, and those that are will improve more quickly as separate projects.
+
+If you still need these plugins, you must install them from other sources and ensure the plugin supports Elgg 3.0 (like any other plugin). The Elgg GitHub account will be maintaining projects for many of them. As a last resort you may copy code from Elgg's 2.3 branch: https://github.com/Elgg/Elgg/tree/2.3/mod
+
+Note that some fo the removed plugins have changes documented in :doc:`the plugin upgrade docs</guides/upgrading>`. These will only apply to recent versions of the plugins, tagged 3.0.0 or later.
+
+The core team will gladly help you transition to external versions of these plugins.
+
 From 2.2 to 2.3
 ===============
 
