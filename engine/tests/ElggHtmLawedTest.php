@@ -1,6 +1,6 @@
 <?php
 
-class HtmLawedTest extends ElggCoreUnitTest {
+class ElggHtmLawedTest extends ElggCoreUnitTest {
 
 	protected $configHooks = array();
 	protected $styleHooks = array();
@@ -18,7 +18,7 @@ class HtmLawedTest extends ElggCoreUnitTest {
 		'margin', 'margin-top', 'margin-bottom', 'margin-left',
 		'margin-right',	'padding', 'float', 'text-decoration'
 	);
-	
+
 	/**
 	 * Called before each test object.
 	 */
@@ -85,9 +85,9 @@ class HtmLawedTest extends ElggCoreUnitTest {
 
 		// set context to input to avoid adding nofollow
 		elgg_push_context('input');
-		
+
 		foreach ($tests as $input => $expected) {
-			$result = htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(null, null, $input);
 			$this->assertEqual($expected, $result);
 		}
 
@@ -98,7 +98,7 @@ class HtmLawedTest extends ElggCoreUnitTest {
 		);
 
 		foreach ($weird_schemes as $input => $expected) {
-			$result = htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(null, null, $input);
 			$this->assertEqual($expected, $result);
 		}
 
@@ -117,7 +117,7 @@ class HtmLawedTest extends ElggCoreUnitTest {
 		}
 
 		foreach ($tests as $input => $expected) {
-			$result = htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(null, null, $input);
 			$this->assertEqual($expected, $result);
 		}
 	}
@@ -157,7 +157,7 @@ class HtmLawedTest extends ElggCoreUnitTest {
 		}
 
 		foreach ($tests as $input => $expected) {
-			$result = htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(null, null, $input);
 			$this->assertEqual($expected, $result);
 		}
 	}
@@ -186,7 +186,7 @@ class HtmLawedTest extends ElggCoreUnitTest {
 		}
 
 		foreach ($tests as $input => $expected) {
-			$result = htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(null, null, $input);
 			$this->assertEqual($expected, $result);
 		}
 	}

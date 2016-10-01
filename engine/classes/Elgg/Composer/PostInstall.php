@@ -37,7 +37,6 @@ class PostInstall {
 			'file',
 			'garbagecollector',
 			'groups',
-			'htmlawed',
 			'invitefriends',
 			'legacy_urls',
 			'likes',
