@@ -307,7 +307,7 @@ function _elgg_admin_init() {
 	elgg_register_admin_menu_item('configure', 'robots', 'configure_utilities');
 
 	// we want plugin settings menu items to be sorted alphabetical
-	if (elgg_in_context('admin')) {
+	if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
 		elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_admin_sort_page_menu');
 	}
 
@@ -363,7 +363,7 @@ function _elgg_admin_ready() {
  * @access private
  */
 function _elgg_admin_pagesetup() {
-	if (elgg_in_context('admin')) {
+	if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
 		$url = elgg_get_simplecache_url('admin.css');
 		elgg_register_css('elgg.admin', $url);
 		elgg_load_css('elgg.admin');

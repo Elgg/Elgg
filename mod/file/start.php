@@ -152,7 +152,13 @@ function file_page_handler($page) {
 			break;
 		case 'all':
 			file_register_toggle();
-			echo elgg_view_resource('file/world');
+			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
+			if (_elgg_view_may_be_altered('resources/file/world', "$dir/resources/file/world.php")) {
+				elgg_deprecated_notice('The view "resources/file/world" is deprecated. Use "resources/file/all".', 2.3);
+				echo elgg_view_resource('file/world', ['__shown_notice' => true]);
+			} else {
+				echo elgg_view_resource('file/all');
+			}
 			break;
 		case 'download':
 			elgg_deprecated_notice('/file/download page handler has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '2.2');

@@ -1,31 +1,10 @@
 <?php
 /**
- * List all pages
- *
- * @package ElggPages
+ * @deprecated 2.3 Use the view resources/pages/all
  */
 
-$title = elgg_echo('pages:all');
+if (!elgg_extract('__shown_notice', $vars)) {
+	elgg_deprecated_notice('The view "resources/pages/world" is deprecated. Use "resources/pages/all".', 2.3);
+}
 
-elgg_pop_breadcrumb();
-elgg_push_breadcrumb(elgg_echo('pages'));
-
-elgg_register_title_button('pages', 'add', 'object', 'page_top');
-
-$content = elgg_list_entities(array(
-	'type' => 'object',
-	'subtype' => 'page_top',
-	'full_view' => false,
-	'no_results' => elgg_echo('pages:none'),
-	'preload_owners' => true,
-	'preload_containers' => true,
-));
-
-$body = elgg_view_layout('content', array(
-	'filter_context' => 'all',
-	'content' => $content,
-	'title' => $title,
-	'sidebar' => elgg_view('pages/sidebar'),
-));
-
-echo elgg_view_page($title, $body);
+echo elgg_view('resources/pages/all', $vars);
