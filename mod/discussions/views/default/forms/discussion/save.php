@@ -14,27 +14,27 @@ $guid = elgg_extract('guid', $vars, null);
 
 $fields = [
 	[
-		'type' => 'text',
+		'input_type' => 'text',
 		'name' => 'title',
 		'value' => $title,
 		'label' => elgg_echo('title'),
 		'required' => true,
 	],
 	[
-		'type' => 'longtext',
+		'input_type' => 'longtext',
 		'name' => 'description',
 		'value' => $desc,
 		'label' => elgg_echo('discussion:topic:description'),
 		'required' => true,
 	],
 	[
-		'type' => 'tags',
+		'input_type' => 'tags',
 		'name' => 'tags',
 		'value' => $tags,
 		'label' => elgg_echo('tags'),
 	],
 	[
-		'type' => 'select',
+		'input_type' => 'select',
 		'name' => 'status',
 		'value' => $status,
 		'options_values' => array(
@@ -44,7 +44,7 @@ $fields = [
 		'label' => elgg_echo('discussion:topic:status'),
 	],
 	[
-		'type' => 'access',
+		'input_type' => 'access',
 		'name' => 'access_id',
 		'value' => $access_id,
 		'entity' => get_entity($guid),
@@ -53,21 +53,19 @@ $fields = [
 		'label' => elgg_echo('access'),
 	],
 	[
-		'type' => 'hidden',
+		'input_type' => 'hidden',
 		'name' => 'container_guid',
 		'value' => $container_guid,
 	],
 	[
-		'type' => 'hidden',
+		'input_type' => 'hidden',
 		'name' => 'topic_guid',
 		'value' => $guid,
 	],
 ];
 
 foreach ($fields as $field) {
-	$type = elgg_extract('type', $field, 'text');
-	unset($field['type']);
-	echo elgg_view_input($type, $field);
+	echo elgg_view_input($field);
 }
 
 $footer = elgg_view_input('submit', [

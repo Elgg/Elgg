@@ -1370,16 +1370,32 @@ function elgg_get_form_footer() {
 /**
  * Renders a form field
  *
- * @param string $input_type Input type, used to generate an input view ("input/$input_type")
- * @param array  $vars       Fields and input vars.
- *                           Field vars contain both field and input params. 'label', 'help',
- *                           and 'field_class' params will not be passed on to the input view.
- *                           Others, including 'required' and 'id', will be available to the
- *                           input view. Both 'label' and 'help' params accept HTML, and
- *                           will be printed unescaped within their wrapper element.
+ * @param array $vars        Field and input params. 'input_type' is required to indicate the underlying input view,
+ *                           e.g. "text" will use the view "input/text". 'input_type', 'label', 'help', and
+ *                           'field_class' params will not be passed on to the input view. Others, including
+ *                           'required' and 'id', will be available to the input view. Both 'label' and 'help'
+ *                           params accept HTML, and will be printed unescaped within their wrapper element.
+ * @param array $legacy_vars Ignored if $vars is given an array. Otherwise this is used as the field/input params
+ *                           and $vars is used as the input_type. This is for BC with 2.2.
+ *
  * @return string
  */
-function elgg_view_input($input_type, array $vars = array()) {
+function elgg_view_input($vars, array $legacy_vars = array()) {
+
+	if (!is_array($vars)) {
+		// 2.2 usage
+		$type = $vars;
+		$vars = $legacy_vars;
+		$vars['input_type'] = $type;
+	}
+
+	if (empty($vars['input_type'])) {
+		_elgg_services()->logger->error("'input_type' is a required key in " . __FUNCTION__);
+		return '';
+	}
+
+	$input_type = $vars['input_type'];
+	unset($vars['input_type']);
 
 	if (!elgg_view_exists("input/$input_type")) {
 		return '';
