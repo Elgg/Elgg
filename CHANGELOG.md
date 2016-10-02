@@ -1,3 +1,20 @@
+<a name="1.12.13"></a>
+### 1.12.13  (2016-10-02)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Steve Clay (2)
+* Sébastien Lemay (1)
+
+#### Bug Fixes
+
+* **core:** page owner entity only returns users/groups user can see ([0d333100](https://github.com/Elgg/Elgg/commit/0d33310031024aa8940f9d3bbe5cdd80f2a4da57))
+* **docs:** Fixed link to 'our supporters page' ([fe144644](https://github.com/Elgg/Elgg/commit/fe144644faa84f9849604abfd4c34efb2df0d165))
+* **notifications:** only prefetch subscribers for ElggEntities ([65be05c5](https://github.com/Elgg/Elgg/commit/65be05c567692694e052ae4711450b7c19f2d571))
+* **profile:** use correct default access for profile fields ([63a01b6f](https://github.com/Elgg/Elgg/commit/63a01b6f8c9314ddae5819e8194938c988871a60))
+
+
 <a name="1.12.12"></a>
 ### 1.12.12  (2016-08-05)
 
