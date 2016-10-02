@@ -33,9 +33,12 @@ $max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_m
 
 $upload_limit = elgg_echo('file:upload_limit', array(elgg_format_bytes($max_upload)));
 
+$categories_field = $vars;
+$categories_field['input_type'] = 'cetegories';
+
 $fields = [
 	[
-		'type' => 'file',
+		'input_type' => 'file',
 		'name' => 'upload',
 		'label' => $file_label,
 		'help' => $upload_limit,
@@ -43,28 +46,26 @@ $fields = [
 		'required' => (!$guid),
 	],
 	[
-		'type' => 'text',
+		'input_type' => 'text',
 		'name' => 'title',
 		'value' => $title,
 		'label' => elgg_echo('title'),
 	],
 	[
-		'type' => 'longtext',
+		'input_type' => 'longtext',
 		'name' => 'description',
 		'value' => $desc,
 		'label' => elgg_echo('description'),
 	],
 	[
-		'type' => 'tags',
+		'input_type' => 'tags',
 		'name' => 'tags',
 		'value' => $tags,
 		'label' => elgg_echo('tags'),
 	],
+	$categories_field,
 	[
-		'type' => 'categories',
-	],
-	[
-		'type' => 'access',
+		'input_type' => 'access',
 		'name' => 'access_id',
 		'value' => $access_id,
 		'entity' => get_entity($guid),
@@ -73,24 +74,19 @@ $fields = [
 		'label' => elgg_echo('access'),
 	],
 	[
-		'type' => 'hidden',
+		'input_type' => 'hidden',
 		'name' => 'container_guid',
 		'value' => $container_guid,
 	],
 	[
-		'type' => 'hidden',
+		'input_type' => 'hidden',
 		'name' => 'file_guid',
 		'value' => $guid,
 	],
 ];
 
 foreach ($fields as $field) {
-	$type = elgg_extract('type', $field, 'text');
-	unset($field['type']);
-	if ($type == 'categories') {
-		$field = $vars;
-	}
-	echo elgg_view_input($type, $field);
+	echo elgg_view_input($field);
 }
 
 $footer = elgg_view_input('submit', [
