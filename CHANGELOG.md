@@ -1,3 +1,29 @@
+<a name="2.2.2"></a>
+### 2.2.2  (2016-10-02)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Ismayil Khayredinov (2)
+* Juho Jaakkola (2)
+* Steve Clay (2)
+* Jeroen Dalsem (1)
+* iionly (1)
+
+#### Documentation
+
+* **events:** prefered use of the shutdown event vs shutdown function ([c62b307d](https://github.com/Elgg/Elgg/commit/c62b307d4898f4774592d52922560fd3380f8a8b))
+* **install:** warn composer users they have to "install" twice ([7c8fd239](https://github.com/Elgg/Elgg/commit/7c8fd23982c2b013810c7d1476d53526cfa4cc18))
+
+
+#### Bug Fixes
+
+* **css:** apply hidden class to menu items ([5281199b](https://github.com/Elgg/Elgg/commit/5281199b852f930b23466b4d211c21874a9bc567))
+* **i18n:** validate the translation key ([76d7ac69](https://github.com/Elgg/Elgg/commit/76d7ac69b5932f526dca1b02fb2882701369f118))
+* **mysql:** adds MySQL 5.7 compatibility ([3198d84a](https://github.com/Elgg/Elgg/commit/3198d84a5d000a48388bc39e0c08bdc2b1e63ee5), closes [#8121](https://github.com/Elgg/Elgg/issues/8121))
+* **views:** no results listing output should show if empty item views ([a3d4f8c8](https://github.com/Elgg/Elgg/commit/a3d4f8c81132cd34b8152d08b18d1bcd6cd2a2e3))
+
+
 <a name="2.2.1"></a>
 ### 2.2.1  (2016-09-21)
 
