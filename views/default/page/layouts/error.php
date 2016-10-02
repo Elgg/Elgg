@@ -7,11 +7,17 @@
  * @uses $vars['class']   Additional class for the layout
  */
 
-$class = 'elgg-layout-error';
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
-$vars['class'] = $class;
-$vars['nav'] = ''; // prevents outputting breadcrumbs
+$class = elgg_extract_class($vars, [
+	'elgg-layout',
+	'elgg-layout-one-column',
+	'clearfix',
+]);
+unset($vars['class']);
 
-echo elgg_view('page/layouts/one_column', $vars);
+$vars['breadcrumbs'] = false;
+
+$body = elgg_view('page/layouts/elements/body', $vars);
+
+echo elgg_format_element('div', [
+	'class' => $class,
+], $body);

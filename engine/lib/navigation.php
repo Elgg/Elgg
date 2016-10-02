@@ -272,31 +272,50 @@ function elgg_pop_breadcrumb() {
 }
 
 /**
- * Returns all breadcrumbs as an array of array('title' => 'Title', 'link' => 'URL')
+ * Returns all breadcrumbs as an array
+ * <code>
+ * [
+ *    [
+ *       'title' => 'Breadcrumb title',
+ *       'link' => '/path/to/page',
+ *    ]
+ * ]
+ * </code>
  *
- * Since 1.11, breadcrumbs are filtered through the plugin hook [prepare, breadcrumbs] before
+ * Breadcrumbs are filtered through the plugin hook [prepare, breadcrumbs] before
  * being returned.
  *
- * @return array Breadcrumbs
+ * @param array $breadcrumbs An array of breadcrumbs
+ *                           If set, will override breadcrumbs in the stack
+ * @return array
  * @since 1.8.0
  * @see elgg_prepare_breadcrumbs
  */
-function elgg_get_breadcrumbs() {
+function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	global $CONFIG;
 
-	// if no crumbs set, still allow hook to populate it
-	if (isset($CONFIG->breadcrumbs) && is_array($CONFIG->breadcrumbs)) {
-		$breadcrumbs = $CONFIG->breadcrumbs;
-	} else {
-		$breadcrumbs = array();
+	if (!isset($breadcrumbs)) {
+		// if no crumbs set, still allow hook to populate it
+		$breadcrumbs = (array) $CONFIG->breadcrumbs;
 	}
 
+	if (!is_array($breadcrumbs)) {
+		_elgg_services()->logger->error(__FUNCTION__ . ' expects breadcrumbs as an array');
+		$breadcrumbs = [];
+	}
+	
 	$params = array(
 		'breadcrumbs' => $breadcrumbs,
 	);
+
+	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
+	$params['segments'] = _elgg_services()->request->getUrlSegments();
+	array_shift($params['segments']);
+
 	$breadcrumbs = elgg_trigger_plugin_hook('prepare', 'breadcrumbs', $params, $breadcrumbs);
 	if (!is_array($breadcrumbs)) {
-		return array();
+		_elgg_services()->logger->error('"prepare, breadcrumbs" hook must return an array of breadcrumbs');
+		return [];
 	}
 
 	return $breadcrumbs;
@@ -326,6 +345,63 @@ function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
 		$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
 	}
 	return $breadcrumbs;
+}
+
+/**
+ * Returns default filter tabs (All, Mine, Friends) for the user
+ * 
+ * @param string   $context  Context to be used to prefix tab URLs
+ * @param string   $selected Name of the selected tab
+ * @param ElggUser $user     User who owns the layout (defaults to logged in user)
+ * @param array    $vars     Additional vars
+ * @return ElggMenuItem[]
+ * @since 2.3
+ */
+function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user = null, array $vars = []) {
+
+	$items = [];
+
+	if (!isset($user)) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+	
+	if (!elgg_instanceof($user, 'user')) {
+		return $items;
+	}
+	
+	$username = $user->username;
+	if (!isset($selected)) {
+		$selected = 'all';
+	}
+
+	// generate a list of default tabs
+	$tabs = array(
+		'all' => array(
+			'text' => elgg_echo('all'),
+			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
+			'selected' => ($selected == 'all'),
+			'priority' => 200,
+		),
+		'mine' => array(
+			'text' => elgg_echo('mine'),
+			'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "$context/owner/$username",
+			'selected' => ($selected == 'mine'),
+			'priority' => 300,
+		),
+		'friend' => array(
+			'text' => elgg_echo('friends'),
+			'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$context/friends/$username",
+			'selected' => ($selected == 'friends'),
+			'priority' => 400,
+		),
+	);
+
+	foreach ($tabs as $name => $tab) {
+		$tab['name'] = $name;
+		$items[] = ElggMenuItem::factory($tab);
+	}
+
+	return $items;
 }
 
 /**
@@ -590,6 +666,28 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Add the RSS link to the extras menu
+ * @access private
+ */
+function _elgg_extras_menu_setup($hook, $type, $return, $params) {
+
+	if (!_elgg_has_rss_link()) {
+		return;
+	}
+
+	$url = current_page_url();
+	$return[] = ElggMenuItem::factory([
+		'name' => 'rss',
+		'text' => elgg_view_icon('rss'),
+		'href' => elgg_http_add_url_query_elements($url, [
+			'view' => 'rss',
+		]),
+		'title' => elgg_echo('feed:rss'),
+	]);
+
+	return $return;
+}
 
 /**
  * Navigation initialization
@@ -603,6 +701,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:extras', '_elgg_extras_menu_setup');
 
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 
