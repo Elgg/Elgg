@@ -73,8 +73,8 @@ function current_page_url() {
 
 	$page = trim($page, "/");
 
-	$page .= _elgg_services()->request->getRequestUri();
-
+	$page .= implode('/', _elgg_services()->request->getUrlSegments());
+	
 	return $page;
 }
 
