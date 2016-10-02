@@ -213,8 +213,6 @@ Plugins and themes should:
  * Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``
  * RSS extras menu is now registered with ``register, menu:extras`` hook
 
->>>>>>> 1851c53... feat(layouts): decompose and centralize layout views
-
 From 2.2 to 2.3
 ===============
 

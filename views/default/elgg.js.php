@@ -43,7 +43,6 @@ $files = array(
 
 	//ui
 	$elggDir->getPath("js/lib/ui.js"),
-	$elggDir->getPath("js/lib/ui.widgets.js"),
 );
 
 
@@ -98,19 +97,3 @@ if (!window._require_queue) {
 elgg.trigger_hook('boot', 'system');
 
 require(['elgg/init', 'elgg/ready']);
-
-<?php
-if (_elgg_view_may_be_altered('lightbox/settings.js', 'lightbox/settings.js.php')) {
-	elgg_deprecated_notice('lightbox/settings.js view has been deprecated. Use "getOptions", "ui.lightbox" ' .
-		'JS plugin hook or data-colorbox-opts attribute instead', '2.2');
-	?>
-	require(['elgg'], function(elgg) {
-		elgg.provide('elgg.ui.lightbox');
-		<?= elgg_view('lightbox/settings.js') ?>
-	});
-	<?php
-}
-?>
-
-// We need to ensure bindings take place
-require(['elgg/lightbox']);
