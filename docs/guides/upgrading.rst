@@ -233,11 +233,16 @@ Deprecated APIs
  * ``elgg()->getDb()->getTableprefix()`` is deprecated: Use ``elgg_get_config('dbprefix')``.
  * Private ``update_entity_last_action()`` is deprecated: Refrain from manually updating last action timestamp.
  * Setting non-public ``access_id`` on metadata is deprecated. See below.
+ * ``get_resized_image_from_existing_file()`` is deprecated: Use ``elgg_save_resized_image()``.
+ * ``get_resized_image_from_uploaded_file()`` is deprecated: Use ``elgg_save_resized_image()`` in combination with upload API.
+ * ``get_image_resize_parameters()`` is deprecated and will be removed.
 
 Deprecated Views
 ----------------
 
- * ``wallled_garden.js`` is deprecated: Use ``elgg/walled_garden`` module instead.
+ * ``resources/file/world``: Use the ``resources/file/all`` view instead.
+ * ``resources/pages/world``: Use the ``resources/pages/all`` view instead.
+ * ``walled_garden.js``: Use the ``elgg/walled_garden`` module instead.
 
 New API for page and action handling
 ------------------------------------
@@ -254,6 +259,13 @@ New API for working with file uploads
 
  * ``elgg_get_uploaded_files()`` - returns an array of Symfony uploaded file objects
  * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
+
+New API for manipulating images
+-------------------------------
+
+New image manipulation service implements a more efficient approach to cropping and resizing images.
+
+ * ``elgg_save_resized_image()`` - crops and resizes an image to preferred dimensions
 
 New API for events
 ------------------

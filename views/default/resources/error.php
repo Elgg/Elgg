@@ -30,7 +30,7 @@ if (isset($httpCodes[$type])) {
 	elgg_set_http_header("HTTP/1.1 $type {$httpCodes[$type]}");
 }
 
-$layout = elgg_in_context('admin') ? 'admin' : 'error';
+$layout = elgg_in_context('admin') && elgg_is_admin_logged_in() ? 'admin' : 'error';
 
 $body = elgg_view_layout($layout, array(
 	'title' => $title,
