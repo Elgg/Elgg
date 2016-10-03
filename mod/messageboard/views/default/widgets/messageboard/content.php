@@ -28,7 +28,7 @@ $more_link = elgg_view('output/url', [
 	'href' => $url,
 	'text' => elgg_echo('messageboard:viewall'),
 	'is_trusted' => true,
-));
+]);
 
 echo "<div class=\"elgg-widget-more\">$more_link</div>";
 
