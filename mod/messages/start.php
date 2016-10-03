@@ -127,13 +127,6 @@ function messages_page_handler($page) {
 }
 
 /**
- * @deprecated Do not use this
- */
-function messages_notifier() {
-	elgg_deprecated_notice( __FUNCTION__ . ' is no longer used and will be removed', '2.0');
-}
-
-/**
  * Add inbox link to topbar
  *
  * @param string $hook   "register"

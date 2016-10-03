@@ -163,12 +163,7 @@ function pages_page_handler($page) {
 			break;
 		case 'all':
 			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
-			if (_elgg_view_may_be_altered('resources/pages/world', "$dir/resources/pages/world.php")) {
-				elgg_deprecated_notice('The view "resources/pages/world" is deprecated. Use "resources/pages/all".', 2.3);
-				echo elgg_view_resource('pages/world', ['__shown_notice' => true]);
-			} else {
-				echo elgg_view_resource('pages/all');
-			}
+			echo elgg_view_resource('pages/all');
 			break;
 		default:
 			return false;

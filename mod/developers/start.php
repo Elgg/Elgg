@@ -137,17 +137,6 @@ function _developers_decorate_translations($language) {
 }
 
 /**
- * Clear all the strings so the raw descriptor strings are displayed
- *
- * @deprecated Superceded by developers_decorate_all_translations
- */
-function developers_clear_strings() {
-	$language = get_current_language();
-	$GLOBALS['_ELGG']->translations[$language] = array();
-	$GLOBALS['_ELGG']->translations['en'] = array();
-}
-
-/**
  * Post-process a view to add wrapper comments to it
  *
  * 1. Only process views served with the 'default' viewtype.

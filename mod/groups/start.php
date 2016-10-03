@@ -33,9 +33,6 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_set_icon_url');
 	elgg_register_plugin_hook_handler('entity:icon:file', 'group', 'groups_set_icon_file');
 
-	// Register an icon handler for groups
-	elgg_register_page_handler('groupicon', 'groups_icon_handler');
-
 	// Register some actions
 	$action_base = __DIR__ . '/actions/groups';
 	elgg_register_action("groups/edit", "$action_base/edit.php");
@@ -300,33 +297,6 @@ function groups_page_handler($page) {
 			return false;
 	}
 	return true;
-}
-
-/**
- * Handle group icons.
- *
- * @param array $page
- * @return bool
- * @deprecated 2.2
- */
-function groups_icon_handler($page) {
-
-	elgg_deprecated_notice('/groupicon page handler has been deprecated. Use elgg_get_inline_url() instead.', '2.2');
-
-	$guid = array_shift($page);
-	elgg_entity_gatekeeper($guid, 'group');
-
-	$size = array_shift($page) ? : 'medium';
-
-	$group = get_entity($guid);
-	
-	$icon = $group->getIcon($size);
-	$url = elgg_get_inline_url($icon, true);
-	if (!$url) {
-		$url = elgg_get_simplecache_url("groups/default{$size}.gif");
-	}
-	
-	forward($url);
 }
 
 /**
