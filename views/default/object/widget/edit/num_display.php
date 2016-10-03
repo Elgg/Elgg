@@ -19,6 +19,8 @@ $vars['name'] = "params[{$name}]";
 if (!isset($vars['label'])) {
 	$vars['label'] = elgg_echo('widget:numbertodisplay');
 }
+$vars['#label'] = $vars['label'];
+unset($vars['label']);
 
 if (!isset($vars['options'])) {
 	$vars['options'] = [5, 8, 10, 12, 15, 20];
@@ -29,5 +31,6 @@ if (!$value) {
 	$value = elgg_extract('default', $vars, $vars['options'][0]);
 }
 $vars['value'] = $value;
+$vars['#type'] = 'select';
 
-echo elgg_view_input('select', $vars);
+echo elgg_view_field($vars);
