@@ -248,12 +248,9 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  * @see elgg_get_breadcrumbs
  */
 function elgg_push_breadcrumb($title, $link = null) {
-	global $CONFIG;
-	if (!isset($CONFIG->breadcrumbs)) {
-		$CONFIG->breadcrumbs = array();
-	}
-
-	$CONFIG->breadcrumbs[] = array('title' => $title, 'link' => $link);
+	$breadcrumbs = (array)elgg_get_config('breadcrumbs');
+	$breadcrumbs[] = array('title' => $title, 'link' => $link);
+	elgg_set_config('breadcrumbs', $breadcrumbs);
 }
 
 /**
@@ -263,12 +260,16 @@ function elgg_push_breadcrumb($title, $link = null) {
  * @since 1.8.0
  */
 function elgg_pop_breadcrumb() {
-	global $CONFIG;
+	$breadcrumbs = (array)elgg_get_config('breadcrumbs');
 
-	if (empty($CONFIG->breadcrumbs) || !is_array($CONFIG->breadcrumbs)) {
+	if (empty($breadcrumbs)) {
 		return array();
 	}
-	return array_pop($CONFIG->breadcrumbs);
+
+	$popped = array_pop($breadcrumbs);
+	elgg_set_config('breadcrumbs', $breadcrumbs);
+
+	return $popped;
 }
 
 /**

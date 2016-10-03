@@ -2,14 +2,9 @@
 
 class ElggBreadcrumbsTest extends \Elgg\TestCase {
 
-//	public function setUp() {
-//		// TODO run each test in better isolation
-//		static $have_run;
-//		if (!$have_run) {
-//			_elgg_nav_init();
-//			$have_run = true;
-//		}
-//	}
+	public function setUp() {
+		elgg_set_config('breadcrumbs', []);
+	}
 
 	public function testCrumbsCanBePushed() {
 		elgg_push_breadcrumb('title 1');
