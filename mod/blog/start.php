@@ -57,12 +57,6 @@ function blog_init() {
 	// add a blog widget
 	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'));
 
-	// register actions
-	$action_path = __DIR__ . '/actions/blog';
-	elgg_register_action('blog/save', "$action_path/save.php");
-	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
-	elgg_register_action('blog/delete', "$action_path/delete.php");
-
 	// entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'blog_entity_menu_setup');
 

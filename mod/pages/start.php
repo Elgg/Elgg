@@ -27,12 +27,6 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'pages_set_url');
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
 
-	// Register some actions
-	$action_base = __DIR__ . '/actions';
-	elgg_register_action("pages/edit", "$action_base/pages/edit.php");
-	elgg_register_action("pages/delete", "$action_base/pages/delete.php");
-	elgg_register_action("annotations/page/delete", "$action_base/annotations/page/delete.php");
-
 	// Extend the main css view
 	elgg_extend_view('elgg.css', 'pages/css');
 
@@ -173,7 +167,7 @@ function pages_page_handler($page) {
 
 /**
  * Override the page url
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param string $url
@@ -260,8 +254,8 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	// remove delete if not owner or admin
-	if (!elgg_is_admin_logged_in() 
-		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid() 
+	if (!elgg_is_admin_logged_in()
+		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()
 		&& ! pages_can_delete_page($entity)) {
 		foreach ($return as $index => $item) {
 			if ($item->getName() == 'delete') {
@@ -283,7 +277,7 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new page
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -300,7 +294,7 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('pages:notify:body', array(
 		$owner->name,
 		$title,
@@ -457,7 +451,7 @@ function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 /**
  * Called on view_vars, input/access hook
  * Prevent ACCESS_PUBLIC from ending up as a write access option
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array $return

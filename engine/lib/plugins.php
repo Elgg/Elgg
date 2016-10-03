@@ -28,6 +28,11 @@ define('ELGG_PLUGIN_REGISTER_LANGUAGES', 4);
 define('ELGG_PLUGIN_REGISTER_CLASSES', 8);
 
 /**
+ * Tells \ElggPlugin::start() to automatically register the plugin's actions.
+ */
+define('ELGG_PLUGIN_REGISTER_ACTIONS', 16);
+
+/**
  * Prefix for plugin setting names
  *
  * @todo Can't namespace these because many plugins directly call

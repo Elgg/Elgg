@@ -23,11 +23,7 @@ function likes_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
 	elgg_register_plugin_hook_handler('permissions_check', 'annotation', 'likes_permissions_check');
 	elgg_register_plugin_hook_handler('permissions_check:annotate', 'all', 'likes_permissions_check_annotate', 0);
-	
-	$actions_base = __DIR__ . '/actions/likes';
-	elgg_register_action('likes/add', "$actions_base/add.php");
-	elgg_register_action('likes/delete', "$actions_base/delete.php");
-	
+		
 	elgg_register_ajax_view('likes/popup');
 }
 

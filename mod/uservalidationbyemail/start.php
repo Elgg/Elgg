@@ -46,13 +46,6 @@ function uservalidationbyemail_init() {
 	// inline module
 	elgg_extend_view('elgg.js', 'elgg/uservalidationbyemail.js');
 	elgg_require_js('elgg/uservalidationbyemail');
-
-	$action_path = dirname(__FILE__) . '/actions';
-
-	elgg_register_action('uservalidationbyemail/validate', "$action_path/validate.php", 'admin');
-	elgg_register_action('uservalidationbyemail/resend_validation', "$action_path/resend_validation.php", 'admin');
-	elgg_register_action('uservalidationbyemail/delete', "$action_path/delete.php", 'admin');
-	elgg_register_action('uservalidationbyemail/bulk_action', "$action_path/bulk_action.php", 'admin');
 }
 
 /**

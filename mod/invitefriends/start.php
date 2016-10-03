@@ -10,8 +10,6 @@ elgg_register_event_handler('init', 'system', 'invitefriends_init');
 function invitefriends_init() {
 	elgg_register_page_handler('invite', 'invitefriends_page_handler');
 
-	elgg_register_action('invitefriends/invite', __DIR__ . '/actions/invite.php');
-
 	elgg_register_plugin_hook_handler('register', 'user', 'invitefriends_add_friends');
 
 	if (elgg_is_logged_in() && elgg_get_config('allow_registration')) {
@@ -27,7 +25,7 @@ function invitefriends_init() {
 
 /**
  * Page handler function
- * 
+ *
  * @param array $page Page URL segments
  * @return bool
  */

@@ -28,7 +28,7 @@ function messages_init() {
 			'text' => elgg_echo('messages:sentmessages'),
 			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));		
+		));
 	}
 
 	// Extend system CSS with our own styles, which are defined in the messages/css view
@@ -54,12 +54,6 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('permissions_check:metadata', 'object', 'messages_can_edit_metadata');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'messages_can_edit');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
-
-	// Register actions
-	$action_path = __DIR__ . '/actions/messages';
-	elgg_register_action("messages/send", "$action_path/send.php");
-	elgg_register_action("messages/delete", "$action_path/delete.php");
-	elgg_register_action("messages/process", "$action_path/process.php");
 
 	// Topbar menu. We assume this menu will render *after* a message is rendered. If a refactor/plugin
 	// causes it to render first, the unread count notification will not update until the next page.

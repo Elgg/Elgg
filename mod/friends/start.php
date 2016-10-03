@@ -4,13 +4,6 @@ function elgg_friends_plugin_init() {
 	elgg_register_plugin_hook_handler('access:collections:write', 'user', '_elgg_friends_write_access', 1);
 	elgg_register_plugin_hook_handler('filter_tabs', 'all', '_elgg_friends_filter_tabs', 1);
 
-	elgg_register_action('friends/add');
-	elgg_register_action('friends/remove');
-
-	elgg_register_action('friends/collections/add');
-	elgg_register_action('friends/collections/delete');
-	elgg_register_action('friends/collections/edit');
-
 	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
 
 	elgg_register_page_handler('friends', '_elgg_friends_page_handler');

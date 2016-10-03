@@ -15,11 +15,6 @@ function bookmarks_init() {
 	$root = dirname(__FILE__);
 	elgg_register_library('elgg:bookmarks', "$root/lib/bookmarks.php");
 
-	// actions
-	$action_path = "$root/actions/bookmarks";
-	elgg_register_action('bookmarks/save', "$action_path/save.php");
-	elgg_register_action('bookmarks/delete', "$action_path/delete.php");
-
 	// menus
 	elgg_register_menu_item('site', array(
 		'name' => 'bookmarks',
@@ -166,7 +161,7 @@ function bookmark_set_url($hook, $type, $url, $params) {
 
 /**
  * Add a menu item to an ownerblock
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array  $return
@@ -190,7 +185,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new bookmark
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -207,7 +202,7 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('bookmarks:notify:body', array(
 		$owner->name,
 		$title,

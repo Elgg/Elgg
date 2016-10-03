@@ -27,12 +27,6 @@ function discussion_init() {
 
 	elgg_register_event_handler('update:after', 'object', 'discussion_update_reply_access_ids');
 
-	$action_base = __DIR__ . '/actions/discussion';
-	elgg_register_action('discussion/save', "$action_base/save.php");
-	elgg_register_action('discussion/delete', "$action_base/delete.php");
-	elgg_register_action('discussion/reply/save', "$action_base/reply/save.php");
-	elgg_register_action('discussion/reply/delete', "$action_base/reply/delete.php");
-
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
