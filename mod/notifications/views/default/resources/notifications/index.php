@@ -26,29 +26,13 @@ $title = elgg_echo('notifications:subscriptions:changesettings');
 elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
 elgg_push_breadcrumb($title);
 
-// Get the form
-$people = array();
-if ($people_ents = elgg_get_entities_from_relationship(array(
-		'relationship' => 'notify',
-		'relationship_guid' => $user->guid,
-		'type' => 'user',
-		'limit' => false,
-	))) {
-	
-	foreach($people_ents as $ent) {
-		$people[] = $ent->guid;
-	}
-}
-
-$body = elgg_view('notifications/subscriptions/form', array(
-	'people' => $people,
+$content = elgg_view('notifications/personal', [
 	'user' => $user,
-));
+]);
 
-$params = array(
-	'content' => $body,
+$layout = elgg_view_layout('one_sidebar', [
+	'content' => $content,
 	'title' => $title,
-);
-$body = elgg_view_layout('one_sidebar', $params);
+]);
 
-echo elgg_view_page($title, $body);
+echo elgg_view_page($title, $layout);
