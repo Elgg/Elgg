@@ -29,9 +29,7 @@ function twitter_api_init() {
 
 	// register page handler
 	elgg_register_page_handler('twitter_api', 'twitter_api_pagehandler');
-	// backward compatibility
-	elgg_register_page_handler('twitterservice', 'twitter_api_pagehandler_deprecated');
-
+	
 	// register Walled Garden public pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'twitter_api_public_pages');
 
@@ -43,21 +41,6 @@ function twitter_api_init() {
 	$actions = dirname(__FILE__) . '/actions/twitter_api';
 	elgg_register_action('twitter_api/interstitial_settings', "$actions/interstitial_settings.php", 'logged_in');
 }
-
-/**
- * Handles old pg/twitterservice/ handler
- *
- * @param array $page
- * @return bool
- */
-function twitter_api_pagehandler_deprecated($page) {
-	$url = elgg_get_site_url() . 'pg/twitter_api/authorize';
-	$msg = elgg_echo('twitter_api:deprecated_callback_url', array($url));
-	register_error($msg);
-
-	return twitter_api_pagehandler($page);
-}
-
 
 /**
  * Serves pages for twitter.

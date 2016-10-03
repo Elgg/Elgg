@@ -94,20 +94,6 @@ function profile_set_url($hook, $type, $url, $params) {
 }
 
 /**
- * Use a URL for avatars that avoids loading Elgg engine for better performance
- *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string
- * @deprecated 2.2
- */
-function profile_set_icon_url($hook, $type, $url, $params) {
-	elgg_deprecated_notice("Profile plugin no longer customizes avatar url using 'entity:icon:url' hook", '2.2');
-}
-
-/**
  * Parse ECML on parts of the profile
  *
  * @param string $hook

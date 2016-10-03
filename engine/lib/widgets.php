@@ -75,13 +75,6 @@ function elgg_register_widget_type($handler, $name = null, $description = null, 
 	if (is_array($handler)) {
 		$definition = \Elgg\WidgetDefinition::factory($handler);
 	} else {
-		if (is_string($context)) {
-			elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
-			$context = explode(",", $context);
-		} elseif (empty($context)) {
-			$context = array('all');
-		}
-		
 		$definition = \Elgg\WidgetDefinition::factory([
 			'id' => $handler,
 			'name' => $name,
