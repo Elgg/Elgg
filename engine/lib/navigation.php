@@ -292,11 +292,9 @@ function elgg_pop_breadcrumb() {
  * @see elgg_prepare_breadcrumbs
  */
 function elgg_get_breadcrumbs(array $breadcrumbs = null) {
-	global $CONFIG;
-
 	if (!isset($breadcrumbs)) {
 		// if no crumbs set, still allow hook to populate it
-		$breadcrumbs = (array) $CONFIG->breadcrumbs;
+		$breadcrumbs = (array)elgg_get_config('breadcrumbs');
 	}
 
 	if (!is_array($breadcrumbs)) {
