@@ -124,6 +124,13 @@ API to alter registration and login URL
  * ``registration_url, site`` hook can be used to alter the default registration URL
  * ``login_url, site`` hook can be used to alter the default login URL
 
+Support for fieldsets in forms
+------------------------------
+
+ * ``elgg_view_input()`` now supports ``#type``, ``#label``, ``#help`` and ``#class`` parameters to prevent name collision with input view ``$vars``
+ * ``elgg_view_field()`` has been added as a shortcut to ``elgg_view_input()``
+ * New ``input/fieldset`` can be used to render a set of ``fields``
+
 From 2.1 to 2.2
 ===============
 
