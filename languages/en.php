@@ -558,6 +558,8 @@ return array(
 	'admin:dashboard' => 'Dashboard',
 	'admin:widget:online_users' => 'Online users',
 	'admin:widget:online_users:help' => 'Lists the users currently on the site',
+	'admin:widget:elgg_news' => 'Elgg News',
+	'admin:widget:elgg_news:help' => 'Shows latest news post on elgg.org',
 	'admin:widget:new_users' => 'New users',
 	'admin:widget:new_users:help' => 'Lists the newest users',
 	'admin:widget:banned_users' => 'Banned users',

@@ -322,7 +322,7 @@ function _elgg_admin_init() {
 	}
 
 	// widgets
-	$widgets = array('online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status');
+	$widgets = array('online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'elgg_news', 'control_panel', 'cron_status');
 	foreach ($widgets as $widget) {
 		elgg_register_widget_type(
 				$widget,
@@ -717,7 +717,7 @@ function _elgg_add_admin_widgets($event, $type, $user) {
 
 	// In the form column => array of handlers in order, top to bottom
 	$adminWidgets = array(
-		1 => array('control_panel', 'admin_welcome'),
+		1 => array('control_panel', 'admin_welcome', 'elgg_news'),
 		2 => array('online_users', 'new_users', 'content_stats'),
 	);
 
