@@ -1819,28 +1819,6 @@ function _elgg_walled_garden_index() {
 	return elgg_ok_response(elgg_view_resource('walled_garden'));
 }
 
-
-/**
- * Serve walled garden sections
- *
- * @param array $page Array of URL segments
- * @return string
- * @access private
- */
-function _elgg_walled_garden_ajax_handler($page) {
-	$view = $page[0];
-	if (!elgg_view_exists("core/walled_garden/$view")) {
-		return false;
-	}
-	$params = array(
-		'content' => elgg_view("core/walled_garden/$view"),
-		'class' => 'elgg-walledgarden-single hidden',
-		'id' => str_replace('_', '-', "elgg-walledgarden-$view"),
-	);
-	echo elgg_view_layout('walled_garden', $params);
-	return true;
-}
-
 /**
  * Checks the status of the Walled Garden and forwards to a login page
  * if required.
@@ -1855,24 +1833,43 @@ function _elgg_walled_garden_ajax_handler($page) {
  * @access private
  */
 function _elgg_walled_garden_init() {
-	global $CONFIG;
-
 	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
 
-	// Deprecated, but registered for BC
-	// @todo: remove in 3.x
-	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.js'));
-
-	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
-
+	elgg_register_plugin_hook_handler('register', 'menu:walled_garden', '_elgg_walled_garden_menu');
+	
 	// check for external page view
-	if (isset($CONFIG->site) && $CONFIG->site instanceof \ElggSite) {
-		$CONFIG->site->checkWalledGarden();
+	$site = elgg_get_site_entity();
+	if ($site) {
+		$site->checkWalledGarden();
 	}
+}
 
-	// For BC, we are extending the views to make sure that sites that customized walled garden get the updates
-	// @todo: in 3.0, move this into the layout view
-	elgg_extend_view('page/layouts/walled_garden', 'page/layouts/walled_garden/cancel_button');
+/**
+ * Adds home link to walled garden menu
+ *
+ * @param string $hook         'register'
+ * @param string $type         'menu:walled_garden'
+ * @param array  $return_value Current menu items
+ * @param array  $params       Optional menu parameters
+ *
+ * @return array
+ *
+ * @access private
+ */
+function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
+	
+	if (current_page_url() === elgg_get_site_url()) {
+		return;
+	}
+	
+	$return_value[] = \ElggMenuItem::factory([
+		'name' => 'home',
+		'href' => '/',
+		'text' => elgg_echo('walled_garden:home'),
+		'priority' => 10,
+	]);
+
+	return $return_value;
 }
 
 /**

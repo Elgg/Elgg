@@ -481,7 +481,7 @@ return array(
 
 	'user:persistent' => 'Remember me',
 
-	'walled_garden:welcome' => 'Welcome to',
+	'walled_garden:home' => 'Home',
 
 /**
  * Administration
