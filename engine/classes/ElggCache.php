@@ -155,6 +155,45 @@ abstract class ElggCache implements \ArrayAccess {
 		return false;
 	}
 
+	/**
+	 * Cache the output of an expensive function, if the system cache is enabled
+	 *
+	 * @param string   $key  Cache key
+	 * @param callable $func Function that requires no arguments. The result must be serializable.
+	 * @param int      $ttl  TTL for result (seconds). 0 for no expiration
+	 *
+	 * @return mixed
+	 */
+	public function cacheCall($key, callable $func, $ttl = 0) {
+		if (!elgg_is_system_cache_enabled()) {
+			return call_user_func($func);
+		}
+
+		$cached = $this->load($key);
+		if ($cached && preg_match('~^\d+,(?:string|serialized),~', $cached)) {
+			list($saved_at, $type, $txt) = explode(',', $cached, 3);
+			if (!$ttl || (time() < $saved_at + $ttl)) {
+				if ($type === 'string') {
+					return $txt;
+				}
+				return unserialize($txt);
+			}
+		}
+
+		$return = call_user_func($func);
+		if (is_string($return)) {
+			$txt = $return;
+			$type = 'string';
+		} else {
+			$txt = serialize($return);
+			$type = 'serialized';
+		}
+
+		$this->save($key, implode(',', [time(), $type, $txt]));
+
+		return $return;
+	}
+
 	// ARRAY ACCESS INTERFACE //////////////////////////////////////////////////////////
 
 	/**
