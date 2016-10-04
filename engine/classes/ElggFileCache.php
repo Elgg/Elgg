@@ -32,18 +32,10 @@ class ElggFileCache extends \ElggCache {
 	 * @param string $filename Filename to save as
 	 * @param string $rw       Write mode
 	 *
-	 * @return mixed
+	 * @return resource|false
 	 */
 	protected function createFile($filename, $rw = "rb") {
-		// Create a filename matrix
-		$matrix = "";
-		$depth = strlen($filename);
-		if ($depth > 5) {
-			$depth = 5;
-		}
-
-		// Create full path
-		$path = $this->getVariable("cache_path") . $matrix;
+		$path = $this->getVariable("cache_path");
 		if (!is_dir($path)) {
 			mkdir($path, 0700, true);
 		}
@@ -113,7 +105,7 @@ class ElggFileCache extends \ElggCache {
 	 * @param int    $offset Offset
 	 * @param int    $limit  Limit
 	 *
-	 * @return string
+	 * @return string|false
 	 */
 	public function load($key, $offset = 0, $limit = null) {
 		$f = $this->createFile($this->sanitizeFilename($key));

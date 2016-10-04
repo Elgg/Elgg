@@ -24,7 +24,7 @@ class SystemCache {
 	private $config;
 
 	/**
-	 * @var ElggFileCache
+	 * @var SystemFileCache
 	 */
 	private $cache;
 
@@ -36,14 +36,16 @@ class SystemCache {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggFileCache $cache    Elgg disk cache
-	 * @param Config        $config   Elgg config
-	 * @param Datalist      $datalist Elgg datalist
+	 * @param SystemFileCache $cache    Elgg disk cache
+	 * @param Config          $config   Elgg config
+	 * @param Datalist        $datalist Elgg datalist
 	 */
-	public function __construct(ElggFileCache $cache, Config $config, Datalist $datalist) {
+	public function __construct(SystemFileCache $cache, Config $config, Datalist $datalist) {
 		$this->cache = $cache;
 		$this->config = $config;
 		$this->datalist = $datalist;
+
+		$this->cache->setEnabled($this->isEnabled());
 	}
 
 	/**
@@ -63,28 +65,18 @@ class SystemCache {
 	 * @return bool
 	 */
 	function save($type, $data) {
-		if ($this->isEnabled()) {
-			return $this->cache->save($type, $data);
-		}
-	
-		return false;
+		return $this->cache->save($type, $data);
 	}
 	
 	/**
 	 * Retrieve the contents of a system cache.
 	 *
-	 * @param string $type The type of cache to load
-	 * @return string
+	 * @param string $key Cache key
+	 *
+	 * @return mixed False if missing
 	 */
-	function load($type) {
-		if ($this->isEnabled()) {
-			$cached_data = $this->cache->load($type);
-			if ($cached_data) {
-				return $cached_data;
-			}
-		}
-	
-		return null;
+	function load($key) {
+		return $this->cache->load($key);
 	}
 	
 	/**
@@ -105,6 +97,7 @@ class SystemCache {
 	 * @return void
 	 */
 	function enable() {
+		$this->cache->setEnabled(true);
 		$this->datalist->set('system_cache_enabled', 1);
 		$this->config->set('system_cache_enabled', 1);
 		$this->reset();
@@ -119,6 +112,7 @@ class SystemCache {
 	 * @return void
 	 */
 	function disable() {
+		$this->cache->setEnabled(false);
 		$this->datalist->set('system_cache_enabled', 0);
 		$this->config->set('system_cache_enabled', 0);
 		$this->reset();
@@ -142,10 +136,10 @@ class SystemCache {
 		}
 
 		$data = $this->load('view_types');
-		if (!is_string($data)) {
+		if (!$data) {
 			return;
 		}
-		$GLOBALS['_ELGG']->view_types = unserialize($data);
+		$GLOBALS['_ELGG']->view_types = $data;
 
 		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
 
@@ -169,7 +163,7 @@ class SystemCache {
 
 		// cache system data if enabled and not loaded
 		if (!$this->config->getVolatile('system_cache_loaded')) {
-			$this->save('view_types', serialize($GLOBALS['_ELGG']->view_types));
+			$this->save('view_types', $GLOBALS['_ELGG']->view_types);
 
 			_elgg_services()->views->cacheConfiguration($this);
 		}
@@ -179,7 +173,7 @@ class SystemCache {
 			_elgg_services()->translator->reloadAllTranslations();
 
 			foreach ($GLOBALS['_ELGG']->translations as $lang => $map) {
-				$this->save("$lang.lang", serialize($map));
+				$this->save("$lang.lang", $map);
 			}
 		}
 	}

@@ -629,7 +629,7 @@ class ViewsService {
 		if ($this->cache) {
 			$data = $this->cache->load('view_overrides');
 			if ($data) {
-				$overrides = unserialize($data);
+				$overrides = $data;
 			}
 		}
 
@@ -650,11 +650,9 @@ class ViewsService {
 	 */
 	public function configureFromCache(SystemCache $cache) {
 		$data = $cache->load('view_locations');
-		if (!is_string($data)) {
+		if (!$data) {
 			return false;
 		}
-		// format changed, check version
-		$data = unserialize($data);
 		if (empty($data['version']) || $data['version'] !== '2.0') {
 			return false;
 		}
@@ -672,13 +670,13 @@ class ViewsService {
 	 * @access private
 	 */
 	public function cacheConfiguration(SystemCache $cache) {
-		$cache->save('view_locations', serialize([
+		$cache->save('view_locations', [
 			'version' => '2.0',
 			'locations' => $this->locations,
-		]));
+		]);
 
 		// this is saved just for the inspector and is not loaded in loadAll()
-		$cache->save('view_overrides', serialize($this->overrides));
+		$cache->save('view_overrides', $this->overrides);
 	}
 
 	/**

@@ -1,5 +1,8 @@
 <?php
 namespace Elgg;
+
+use \Elgg\Cache\SystemFileCache;
+
 /**
  * Manages core autoloading and caching of class maps
  *
@@ -10,7 +13,7 @@ namespace Elgg;
  */
 class AutoloadManager {
 
-	const FILENAME = 'autoload_data.php';
+	const FILENAME = 'autoload_data';
 	const KEY_CLASSES = 'classes';
 	const KEY_SCANNED_DIRS = 'scannedDirs';
 
@@ -30,7 +33,7 @@ class AutoloadManager {
 	protected $altered = false;
 
 	/**
-	 * @var \ElggCache
+	 * @var SystemFileCache
 	 */
 	protected $storage = null;
 
@@ -118,7 +121,7 @@ class AutoloadManager {
 			if ($this->altered || $map->getAltered()) {
 				$spec[self::KEY_CLASSES] = $map->getMap();
 				$spec[self::KEY_SCANNED_DIRS] = $this->scannedDirs;
-				$this->storage->save(self::FILENAME, serialize($spec));
+				$this->storage->save(self::FILENAME, $spec);
 			}
 		}
 		return $this;
@@ -152,12 +155,9 @@ class AutoloadManager {
 	 */
 	protected function getSpec() {
 		if ($this->storage) {
-			$serialization = $this->storage->load(self::FILENAME);
-			if ($serialization) {
-				$spec = unserialize($serialization);
-				if (isset($spec[self::KEY_CLASSES])) {
-					return $spec;
-				}
+			$spec = $this->storage->load(self::FILENAME);
+			if ($spec && isset($spec[self::KEY_CLASSES])) {
+				return $spec;
 			}
 		}
 		return false;
@@ -187,10 +187,10 @@ class AutoloadManager {
 	/**
 	 * Set the cache storage object
 	 * 
-	 * @param \ElggCache $storage Cache object
+	 * @param SystemFileCache $storage Cache object
 	 * @return void
 	 */
-	public function setStorage(\ElggCache $storage) {
+	public function setStorage(SystemFileCache $storage) {
 		$this->storage = $storage;
 	}
 

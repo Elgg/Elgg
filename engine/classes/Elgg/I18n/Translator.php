@@ -205,8 +205,8 @@ class Translator {
 
 			foreach ($languages as $language) {
 				$data = elgg_load_system_cache("$language.lang");
-				if ($data) {
-					$this->addTranslation($language, unserialize($data));
+				if (is_array($data)) {
+					$this->addTranslation($language, $data);
 				} else {
 					$loaded = false;
 				}
@@ -387,8 +387,8 @@ class Translator {
 				if (preg_match('/(([a-z]{2,3})(_[a-z]{2})?)\.lang$/', $filename, $matches)) {
 					$language = $matches[1];
 					$data = elgg_load_system_cache("$language.lang");
-					if ($data) {
-						$this->addTranslation($language, unserialize($data));
+					if (is_array($data)) {
+						$this->addTranslation($language, $data);
 					}
 				}
 			}

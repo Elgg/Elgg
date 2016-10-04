@@ -15,7 +15,7 @@
  * @todo Can this be done in a cleaner way?
  * @todo Swap to memcache etc?
  *
- * @return \ElggFileCache
+ * @return \Elgg\Cache\SystemFileCache
  */
 function elgg_get_system_cache() {
 	return _elgg_services()->fileCache;
@@ -31,10 +31,10 @@ function elgg_reset_system_cache() {
 }
 
 /**
- * Saves a system cache.
+ * Saves data to system cache (if enabled)
  *
  * @param string $type The type or identifier of the cache
- * @param string $data The data to be saved
+ * @param mixed  $data The data to be saved
  * @return bool
  */
 function elgg_save_system_cache($type, $data) {
@@ -42,13 +42,13 @@ function elgg_save_system_cache($type, $data) {
 }
 
 /**
- * Retrieve the contents of a system cache.
+ * Loads data from system cache (if enabled)
  *
- * @param string $type The type of cache to load
- * @return string
+ * @param string $key Cache key
+ * @return mixed False if missing
  */
-function elgg_load_system_cache($type) {
-	return _elgg_services()->systemCache->load($type);
+function elgg_load_system_cache($key) {
+	return _elgg_services()->systemCache->load($key);
 }
 
 /**
