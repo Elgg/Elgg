@@ -137,16 +137,8 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		}
 	}
 
-	// ignore root and query
-	$uri = current_page_url();
-	$path = str_replace(elgg_get_site_url(), '', $uri);
-	$path = trim($path, "/");
-	if (strpos($path, "?")) {
-		$path = substr($path, 0, strpos($path, "?"));
-	}
-
 	// @todo feels hacky
-	$segments = explode('/', $path);
+	$segments = _elgg_services()->request->getUrlSegments();
 	if (isset($segments[1]) && isset($segments[2])) {
 		switch ($segments[1]) {
 			case 'owner':
