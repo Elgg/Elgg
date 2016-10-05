@@ -44,7 +44,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 /**
  * Gets the owner entity for the current page.
  *
- * @return \ElggUser|\ElggGroup|false The current page owner or false if none.
+ * @return \ElggEntity|false The current page owner or false if none.
  *
  * @since 1.8.0
  */
@@ -54,12 +54,7 @@ function elgg_get_page_owner_entity() {
 		return false;
 	}
 
-	$owner = get_entity($guid);
-	if ($owner instanceof ElggUser || $owner instanceof ElggGroup) {
-		return $owner;
-	}
-
-	return false;
+	return get_entity($guid);
 }
 
 /**
