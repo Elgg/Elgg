@@ -41,18 +41,3 @@ function elgg_get_access_object() {
 
 	return _elgg_services()->session;
 }
-
-/**
- * Create a legacy password hash (salted MD5).
- *
- * @param \ElggUser $user     The user this is being generated for.
- * @param string    $password Password in clear text
- *
- * @return string
- * @access private
- * @deprecated 1.10.0 The password hashing API is not public
- */
-function generate_user_password(\ElggUser $user, $password) {
-	elgg_deprecated_notice(__FUNCTION__ . " is deprecated and will not be replaced.", "1.10");
-	return _elgg_services()->passwords->generateLegacyHash($user, $password);
-}

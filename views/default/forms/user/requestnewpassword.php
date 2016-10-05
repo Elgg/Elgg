@@ -5,6 +5,16 @@
  * @package Elgg
  * @subpackage Core
  */
+
+$username = elgg_extract('username', $vars, '');
+
+$input_attrs = [
+	'name' => 'username',
+	'value' => $username,
+];
+if (!$username) {
+	$input_attrs['autofocus'] = true;
+}
 ?>
 
 <div class="mtm">
@@ -12,11 +22,7 @@
 </div>
 <div>
 	<label><?php echo elgg_echo('loginusername'); ?></label><br />
-	<?php echo elgg_view('input/text', array(
-		'name' => 'username',
-		'autofocus' => true,
-		));
-	?>
+	<?php echo elgg_view('input/text', $input_attrs); ?>
 </div>
 <?php echo elgg_view('input/captcha'); ?>
 <div class="elgg-foot">

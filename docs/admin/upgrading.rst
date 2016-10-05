@@ -46,6 +46,17 @@ From 2.2 to 2.3
  * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
  * The database GUID columns need to be aligned. In the admin section an upgrade is available to handle this. Please make sure you have a backup available
 
+From 2.3 to 3.0
+===============
+
+Data removal
+------------
+
+Be aware the 3.0 upgrade process will remove any remaining "legacy" password hashes. This will affect users who have never logged in under an Elgg 1.10 or later system. These users will be politely asked to reset their password.
+
+The process will also remove the old columns from the users database table, hence the table can no longer be used
+in older Elgg versions.
+
 Deprecations in 2.x
 ===================
 

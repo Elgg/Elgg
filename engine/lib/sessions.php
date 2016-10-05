@@ -160,25 +160,12 @@ function pam_auth_userpass(array $credentials = array()) {
 		throw new \LoginException(_elgg_services()->translator->translate('LoginException:UsernameFailure'));
 	}
 
-	if (check_rate_limit_exceeded($user->guid)) {
-		throw new \LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
-	}
-
 	$password_svc = _elgg_services()->passwords;
 	$password = $credentials['password'];
 	$hash = $user->password_hash;
 
-	if (!$hash) {
-		// try legacy hash
-		$legacy_hash = $password_svc->generateLegacyHash($user, $password);
-		if ($user->password !== $legacy_hash) {
-			log_login_failure($user->guid);
-			throw new \LoginException(_elgg_services()->translator->translate('LoginException:PasswordFailure'));
-		}
-
-		// migrate password
-		$password_svc->forcePasswordReset($user, $password);
-		return true;
+	if (check_rate_limit_exceeded($user->guid)) {
+		throw new \LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
 	}
 
 	if (!$password_svc->verify($password, $hash)) {

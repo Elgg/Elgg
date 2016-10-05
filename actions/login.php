@@ -36,13 +36,23 @@ if (strpos($username, '@') !== false && ($users = get_user_by_email($username)))
 	$username = $users[0]->username;
 }
 
+$user = get_user_by_username($username);
+
 $result = elgg_authenticate($username, $password);
 if ($result !== true) {
+	// was due to missing hash?
+	if ($user && !$user->password_hash) {
+		// if we did this in pam_auth_userpass(), visitors could sniff account usernames from
+		// email addresses. Instead, this lets us give the visitor only the information
+		// they provided.
+		elgg_get_session()->set('forgotpassword:hash_missing', get_input('username'));
+		forward('forgotpassword');
+	}
+
 	register_error($result);
 	forward(REFERER);
 }
 
-$user = get_user_by_username($username);
 if (!$user) {
 	register_error(elgg_echo('login:baduser'));
 	forward(REFERER);
