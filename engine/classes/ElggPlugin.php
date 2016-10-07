@@ -760,6 +760,9 @@ class ElggPlugin extends \ElggObject {
 
 		foreach ($active_plugins as $plugin) {
 			$manifest = $plugin->getManifest();
+			if (!$manifest) {
+				return true;
+			}
 			$requires = $manifest->getRequires();
 
 			foreach ($requires as $required) {
@@ -1080,7 +1083,7 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Returns this plugin's \ElggPluginManifest object
 	 *
-	 * @return \ElggPluginManifest
+	 * @return \ElggPluginManifest|null
 	 */
 	public function getManifest() {
 		if ($this->manifest instanceof \ElggPluginManifest) {
@@ -1088,7 +1091,11 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		try {
-			$this->manifest = $this->getPackage()->getManifest();
+			$package = $this->getPackage();
+			if (!$package) {
+				throw new \Exception('Package cannot be loaded');
+			}
+			$this->manifest = $package->getManifest();
 		} catch (Exception $e) {
 			_elgg_services()->logger->warn("Failed to load manifest for plugin $this->guid. " . $e->getMessage());
 			$this->errorMsg = $e->getmessage();
@@ -1100,7 +1107,7 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Returns this plugin's \ElggPluginPackage object
 	 *
-	 * @return \ElggPluginPackage
+	 * @return \ElggPluginPackage|null
 	 */
 	public function getPackage() {
 		if ($this->package instanceof \ElggPluginPackage) {
