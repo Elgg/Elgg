@@ -35,7 +35,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function add($guid_one, $relationship, $guid_two) {
+	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
 		$rel = $this->check($guid_one, $relationship, $guid_two);
 		if ($rel) {
 			return false;
@@ -56,7 +56,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 		$this->addQuerySpecs($row);
 
-		return parent::add($row->guid_one, $row->relationship, $row->guid_two);
+		return parent::add($row->guid_one, $row->relationship, $row->guid_two, $return_id);
 	}
 
 	/**
