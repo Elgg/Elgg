@@ -354,7 +354,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(RedirectResponse::class, $response);
-		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
+		$this->assertEquals(ELGG_HTTP_SEE_OTHER, $response->getStatusCode());
 	}
 
 	public function testCanNotExecuteUnregisteredAction() {
