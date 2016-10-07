@@ -1152,7 +1152,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
 	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
 	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
-	'installation:cache_symlink:paths' => 'Correctly configured symbolink link must link <i>%s</i> to <i>%s</i>',
+	'installation:cache_symlink:paths' => 'Correctly configured symbolic link must link <i>%s</i> to <i>%s</i>',
 	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
 
 	'installation:minify:description' => "The simple cache can also improve performance by compressing JavaScript and CSS files. (Requires that simple cache is enabled.)",

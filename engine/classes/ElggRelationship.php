@@ -47,6 +47,8 @@ class ElggRelationship extends \ElggData implements
 		foreach ((array)$row as $key => $value) {
 			$this->attributes[$key] = $value;
 		}
+
+		$this->attributes['id'] = (int)$this->attributes['id'];
 	}
 
 	/**
@@ -127,7 +129,12 @@ class ElggRelationship extends \ElggData implements
 			delete_relationship($this->id);
 		}
 
-		$this->id = add_entity_relationship($this->guid_one, $this->relationship, $this->guid_two);
+		$this->id = _elgg_services()->relationshipsTable->add(
+			$this->guid_one,
+			$this->relationship,
+			$this->guid_two,
+			true
+		);
 		if (!$this->id) {
 			throw new \IOException("Unable to save new " . get_class());
 		}

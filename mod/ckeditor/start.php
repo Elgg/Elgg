@@ -15,6 +15,7 @@ function ckeditor_init() {
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/typography.css', 100);
 
 	elgg_define_js('ckeditor', array(
+		'deps' => ['elgg/ckeditor/set-basepath'],
 		'exports' => 'CKEDITOR',
 	));
 	elgg_define_js('jquery.ckeditor', array(
