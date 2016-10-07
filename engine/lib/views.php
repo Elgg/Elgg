@@ -1279,6 +1279,9 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = array())
  * Fixed width media on the side (image, icon, flash, etc.).
  * Descriptive content filling the rest of the column.
  *
+ * @note Use the $vars "image_alt" key to set an image on the right. If you do, you may pass
+ *       in an empty string for $image to have only the right image.
+ *
  * This is a shortcut for {@elgg_view page/components/image_block}.
  *
  * @param string $image The icon and other information

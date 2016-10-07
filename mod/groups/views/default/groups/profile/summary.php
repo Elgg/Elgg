@@ -22,7 +22,7 @@ if (!$owner) {
 }
 
 ?>
-<div class="groups-profile clearfix elgg-image-block">
+<div class="groups-profile elgg-image-block">
 	<div class="elgg-image">
 		<div class="groups-profile-icon">
 			<?php

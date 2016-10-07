@@ -18,6 +18,7 @@
 
 /* Clearfix */
 .clearfix:after,
+.elgg-body:after,
 .elgg-grid:after,
 .elgg-layout:after,
 .elgg-inner:after,
@@ -35,8 +36,13 @@
 	visibility: hidden;	
 }
 
+/* Simple block that clears floats and breaks words to wrap */
+.elgg-body {
+	display: block;
+	word-wrap: break-word;
+}
+
 /* Fluid width container that does not wrap floats */
-.elgg-body,
 .elgg-col-last {
 	display: block;
 	width: auto;
@@ -46,11 +52,11 @@
 
 <?php
 /**
- * elgg-body fills the space available to it.
+ * elgg-col-last fills the space available to it. (elgg-body no longer does this)
  * It uses hidden text to expand itself. The combination of auto width, overflow
  * hidden, and the hidden text creates this effect.
  *
- * This allows us to float fixed width divs to either side of an .elgg-body div
+ * This allows us to float fixed width divs to either side of an .elgg-col-last div
  * without having to specify the body div's width.
  *
  * @todo check what happens with long <pre> tags or large images
@@ -59,7 +65,6 @@
 
 //@todo isn't this only needed if we use display:table-cell?
 ?>
-.elgg-body:after,
 .elgg-col-last:after {
 	display: block;
 	visibility: hidden;

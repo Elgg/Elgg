@@ -15,14 +15,35 @@
 *************************************** */
 .elgg-image-block {
 	padding: 3px 0;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+}
+.elgg-image-block:after {
+	display: none;
 }
 .elgg-image-block .elgg-image {
-	float: left;
 	margin-right: 5px;
 }
 .elgg-image-block .elgg-image-alt {
-	float: right;
 	margin-left: 5px;
+
+	-webkit-box-ordinal-group: 2;
+	-webkit-order: 1;
+	-ms-flex-order: 1;
+	order: 1;
+}
+.elgg-image-block > .elgg-body {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 }
 .elgg-avatar > a:focus > img,
 .elgg-image > a:focus > img {

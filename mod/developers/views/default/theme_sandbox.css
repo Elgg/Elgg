@@ -8,14 +8,29 @@
 	text-align: center;
 }
 
+.theme-sandbox-layout {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+}
+
 .theme-sandbox-main {
 	padding: 20px 20px;
 	min-height: 360px;
 	position: relative;
+
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 }
 
 .theme-sandbox-sidebar {
-	float: left;
 	padding: 20px 20px;
 	margin-right: 10px;
 	position: relative;

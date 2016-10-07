@@ -133,6 +133,14 @@ html {
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
     }
+	.elgg-layout-one-sidebar,
+	.elgg-layout-two-sidebar {
+		display: block;
+	}
+	.elgg-layout-one-sidebar > .elgg-sidebar,
+	.elgg-layout-two-sidebar > .elgg-sidebar {
+		margin-left: 0;
+	}
     .elgg-layout-one-sidebar .elgg-main,
 	.elgg-layout-two-sidebar .elgg-main {
         width: 100%;
@@ -297,17 +305,18 @@ html {
 	}
 }
 @media (max-width: 600px) {
+	.groups-profile {
+		display: block;
+	}
 	.groups-profile-fields {
-		float: left;
-		padding-left: 0;
+		padding-top: 20px;
+	}
+	.profile > .elgg-inner {
+		display: block;
 	}
 	#profile-owner-block {
 		border-right: none;
 		width: auto;
-	}
-	#profile-details {
-		display: block;
-		float: left;
 	}
 	#groups-tools > li {
 		width: 100%;
