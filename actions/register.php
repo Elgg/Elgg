@@ -63,8 +63,22 @@ if (elgg_get_config('allow_registration')) {
 				// plugin that has disabled the user
 				try {
 					login($new_user);
+					// set forward url
+					$session = elgg_get_session();
+					if ($session->has('last_forward_from')) {
+						$forward_url = $session->get('last_forward_from');
+						$forward_source = 'last_forward_from';
+					} else {
+						// forward to main index page
+						$forward_url = '';
+						$forward_source = null;
+					}
+					$params = array('user' => $new_user, 'source' => $forward_source);
+					$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
+					forward($forward_url);
 				} catch (LoginException $e) {
-					// do nothing
+					register_error($e->getMessage());
+					forward(REFERER);
 				}
 			}
 
