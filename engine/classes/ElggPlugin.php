@@ -673,6 +673,10 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function canActivate($site_guid = null) {
+		if ($this->isActive($site_guid)) {
+			return false;
+		}
+
 		if ($this->getPackage()) {
 			$result = $this->getPackage()->isValid() && $this->getPackage()->checkDependencies();
 			if (!$result) {
@@ -744,6 +748,52 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
+	 * Checks if this plugin can be deactivated on the current
+	 * Elgg installation. Validates that this plugin has no
+	 * active dependants.
+	 *
+	 * @param mixed $site_guid Optional site guid
+	 * @return bool
+	 */
+	public function canDeactivate($site_guid = null) {
+		if (!$this->isActive($site_guid)) {
+			return false;
+		}
+
+		$dependents = [];
+
+		$active_plugins = elgg_get_plugins();
+
+		foreach ($active_plugins as $plugin) {
+			$manifest = $plugin->getManifest();
+			$requires = $manifest->getRequires();
+
+			foreach ($requires as $required) {
+				if ($required['type'] == 'plugin' && $required['name'] == $this->getID()) {
+					// there are active dependents
+					$dependents[$manifest->getPluginID()] = $plugin;
+				}
+			}
+		}
+
+		if (!empty($dependents)) {
+			$list = array_map(function(\ElggPlugin $plugin) {
+				$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getManifest()->getID());
+				return elgg_view('output/url', [
+					'text' => $plugin->getManifest()->getName(),
+					'href' => "#$css_id",
+				]);
+			}, $dependents);
+			$name = $this->getManifest()->getName();
+			$list = implode(', ', $list);
+			$this->errorMsg = elgg_echo('ElggPlugin:Dependencies:ActiveDependent', [$name, $list]);
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Deactivates the plugin.
 	 *
 	 * @param mixed $site_guid Optional site GUID.
@@ -754,6 +804,10 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
+		if (!$this->canDeactivate($site_guid)) {
+			return false;
+		}
+		
 		// emit an event. returning false will cause this to not be deactivated.
 		$params = array(
 			'plugin_id' => $this->getID(),
