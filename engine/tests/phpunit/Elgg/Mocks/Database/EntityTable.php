@@ -109,8 +109,6 @@ class EntityTable extends DbEntityTable {
 				$external_attributes = [
 					'name' => "John Doe $guid",
 					'username' => "john_doe_$guid",
-					'password' => null,
-					'salt' => null,
 					'password_hash' => null,
 					'email' => "john_doe_$guid@example.com",
 					'language' => 'en',

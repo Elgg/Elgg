@@ -56,18 +56,6 @@ final class PasswordService {
 	}
 
 	/**
-	 * Hash a password for storage. Currently salted MD5.
-	 *
-	 * @param \ElggUser $user     The user this is being generated for.
-	 * @param string    $password Password in clear text
-	 *
-	 * @return string
-	 */
-	function generateLegacyHash(\ElggUser $user, $password) {
-		return md5($password . $user->salt);
-	}
-
-	/**
 	 * Generate and send a password request email to a given user's registered email address.
 	 *
 	 * @param int $user_guid User GUID

@@ -48,8 +48,6 @@ class ElggUser extends \ElggEntity
 		return [
 			'name' => null,
 			'username' => null,
-			'password' => null,
-			'salt' => null,
 			'password_hash' => null,
 			'email' => null,
 			'language' => null,
@@ -116,15 +114,13 @@ class ElggUser extends \ElggEntity
 		$guid = parent::create();
 		$name = sanitize_string($this->name);
 		$username = sanitize_string($this->username);
-		$password = sanitize_string($this->password);
-		$salt = sanitize_string($this->salt);
 		$password_hash = sanitize_string($this->password_hash);
 		$email = sanitize_string($this->email);
 		$language = sanitize_string($this->language);
 
 		$query = "INSERT into {$CONFIG->dbprefix}users_entity
-			(guid, name, username, password, salt, password_hash, email, language)
-			values ($guid, '$name', '$username', '$password', '$salt', '$password_hash', '$email', '$language')";
+			(guid, name, username, password_hash, email, language)
+			values ($guid, '$name', '$username', '$password_hash', '$email', '$language')";
 
 		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {
@@ -148,14 +144,12 @@ class ElggUser extends \ElggEntity
 		$guid = (int)$this->guid;
 		$name = sanitize_string($this->name);
 		$username = sanitize_string($this->username);
-		$password = sanitize_string($this->password);
-		$salt = sanitize_string($this->salt);
 		$password_hash = sanitize_string($this->password_hash);
 		$email = sanitize_string($this->email);
 		$language = sanitize_string($this->language);
 
 		$query = "UPDATE {$CONFIG->dbprefix}users_entity
-			SET name='$name', username='$username', password='$password', salt='$salt',
+			SET name='$name', username='$username',
 			password_hash='$password_hash', email='$email', language='$language'
 			WHERE guid = $guid";
 
@@ -198,17 +192,12 @@ class ElggUser extends \ElggEntity
 
 			case 'salt':
 			case 'password':
-				elgg_deprecated_notice("Setting salt/password directly is deprecated. Use ElggUser::setPassword().", "1.10");
-				$this->attributes[$name] = $value;
-
-				// this is emptied so that the user is not left with two usable hashes
-				$this->attributes['password_hash'] = '';
-
+				_elgg_services()->logger->error("User entities no longer contain salt/password");
 				break;
 
 			// setting this not supported
 			case 'password_hash':
-				_elgg_services()->logger->error("password_hash is now an attribute of ElggUser and cannot be set.");
+				_elgg_services()->logger->error("password_hash is a readonly attribute.");
 				break;
 
 			default:
@@ -493,18 +482,15 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * Set the necessary attributes to store a hash of the user's password. Also removes
-	 * the legacy hash/salt values.
+	 * Set the necessary attribute to store a hash of the user's password.
 	 *
-	 * @tip You must save() to persist the attributes
+	 * @tip You must save() to persist the attribute
 	 *
 	 * @param string $password The password to be hashed
 	 * @return void
 	 * @since 1.10.0
 	 */
 	public function setPassword($password) {
-		$this->attributes['salt'] = "";
-		$this->attributes['password'] = "";
 		$this->attributes['password_hash'] = _elgg_services()->passwords->generateHash($password);
 	}
 
