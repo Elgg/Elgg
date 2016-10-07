@@ -24,9 +24,10 @@ echo elgg_view('object/widget/edit/num_display', [
 	'options' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 30, 50, 100],
 ]);
 
-echo elgg_view_input('select', [
+echo elgg_view_field([
+	'#type' => 'select',
 	'name' => 'params[icon_size]',
-	'label' => elgg_echo('friends:icon_size'),
+	'#label' => elgg_echo('friends:icon_size'),
 	'value' => $widget->icon_size,
 	'options_values' => [
 		'small' => elgg_echo('friends:small'),

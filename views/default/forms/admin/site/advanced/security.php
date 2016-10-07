@@ -13,11 +13,12 @@ $body .= elgg_view_module('main', "$current_strength: $strength_text", $strength
 	'class' => ($strength != 'strong') ? 'elgg-message elgg-state-error' : 'elgg-message elgg-state-success',
 ]);
 
-$body .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('admin:site:secret:regenerate'),
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('admin:site:secret:regenerate'),
 	'value' => 1,
 	'name' => 'regenerate_site_secret',
-	'help' => elgg_echo('admin:site:secret:regenerate:help'),
+	'#help' => elgg_echo('admin:site:secret:regenerate:help'),
 ]);
 
 echo elgg_view_module('inline', elgg_echo('admin:legend:security'), $body, ['id' => 'elgg-settings-advanced-security']);

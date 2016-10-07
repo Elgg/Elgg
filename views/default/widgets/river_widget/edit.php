@@ -11,9 +11,10 @@ if (elgg_in_context('dashboard')) {
 		$widget->content_type = 'friends';
 	}
 
-	echo elgg_view_input('select', [
+	echo elgg_view_field([
+		'#type' => 'select',
 		'name' => 'params[content_type]',
-		'label' => elgg_echo('river:widget:type'),
+		'#label' => elgg_echo('river:widget:type'),
 		'value' => $widget->content_type,
 		'options_values' => [
 			'friends' => elgg_echo('river:widgets:friends'),

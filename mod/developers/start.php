@@ -26,6 +26,7 @@ function developers_init() {
 	elgg_register_action('developers/ajax_demo', "$action_base/ajax_demo.php", 'admin');
 
 	elgg_register_ajax_view('forms/developers/ajax_demo');
+	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax_demo');
 }
 
 function developers_process_settings() {

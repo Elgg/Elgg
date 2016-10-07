@@ -403,7 +403,14 @@ class ElggPluginPackage {
 					$conflict['name'] = $plugin->getManifest()->getName();
 
 					if (!$full_report && !$result['status']) {
-						$this->errorMsg = "Conflicts with plugin \"{$plugin->getManifest()->getName()}\".";
+						$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getManifest()->getID());
+						$link = elgg_view('output/url', [
+							'text' => $plugin->getManifest()->getName(),
+							'href' => "#$css_id",
+						]);
+
+						$key = 'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin';
+						$this->errorMsg = _elgg_services()->translator->translate($key, [$link]);
 						return $result['status'];
 					} else {
 						$report[] = array(

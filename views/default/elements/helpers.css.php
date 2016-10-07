@@ -25,8 +25,17 @@
 	margin: 0 auto;
 }
 
-.center {
+.center,
+.elgg-justify-center {
 	text-align: center;
+}
+
+.elgg-justify-right {
+	text-align: right;
+}
+
+.elgg-justify-left {
+	text-align: left;
 }
 
 .float {

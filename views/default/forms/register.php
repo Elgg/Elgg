@@ -25,59 +25,56 @@ $name = elgg_extract('name', $values, get_input('n'));
 
 $fields = [
 	[
+		'#type' => 'hidden',
 		'name' => 'friend_guid',
-		'type' => 'hidden',
 		'value' => elgg_extract('friend_guid', $vars),
 	],
 	[
+		'#type' => 'hidden',
 		'name' => 'invitecode',
-		'type' => 'hidden',
 		'value' => elgg_extract('invitecode', $vars),
 	],
 	[
+		'#type' => 'text',
+		'#label' => elgg_echo('name'),
+		'#class' => 'mtm',
 		'name' => 'name',
-		'type' => 'text',
 		'value' => $name,
 		'autofocus' => true,
 		'required' => true,
-		'label' => elgg_echo('name'),
-		'field_class' => 'mtm',
 	],
 	[
+		'#type' => 'email',
+		'#label' => elgg_echo('email'),
 		'name' => 'email',
-		'type' => 'email',
 		'value' => $email,
 		'required' => true,
-		'label' => elgg_echo('email'),
 	],
 	[
+		'#type' => 'text',
+		'#label' => elgg_echo('username'),
 		'name' => 'username',
-		'type' => 'text',
 		'value' => $username,
 		'required' => true,
-		'label' => elgg_echo('username'),
 	],
 	[
-	'name' => 'password',
-		'type' => 'password',
+		'#type' => 'password',
+		'#label' => elgg_echo('password'),
+		'name' => 'password',
 		'value' => $password,
 		'required' => true,
-		'label' => elgg_echo('password'),
-		],
+	],
 	[
+		'#type' => 'password',
+		'#label' => elgg_echo('passwordagain'),
 		'name' => 'password2',
-		'type' => 'password',
 		'value' => $password2,
 		'required' => true,
-		'label' => elgg_echo('passwordagain'),
 	],
 ];
 
 foreach ($fields as $field) {
-	$type = elgg_extract('type', $field, 'text');
-	unset($field[$type]);
-
-	echo elgg_view_input($type, $field);
+	echo elgg_view_field($field);
 }
 
 // view to extend to add more fields to the registration form
@@ -86,7 +83,8 @@ echo elgg_view('register/extend', $vars);
 // Add captcha hook
 echo elgg_view('input/captcha', $vars);
 
-$footer = elgg_view_input('submit', [
+$footer = elgg_view_field([
+	'#type' => 'submit',
 	'value' => elgg_echo('register'),
 ]);
 

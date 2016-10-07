@@ -77,6 +77,9 @@ input[type="radio"] {
 	border-radius:0;
 	width:auto;
 }
+input[type="number"] {
+	-moz-appearance: textfield;
+}
 .elgg-input-checkbox + label,
 .elgg-input-checkbox + .elgg-field-label {
 	display: inline-block;
@@ -90,6 +93,24 @@ input[type="radio"] {
 .elgg-form-login, .elgg-form-account {
 	max-width: 475px;
 	margin: 0 auto;
+}
+
+.elgg-fieldset-has-legend {
+	border: 1px solid #dedede;
+	padding: 10px;
+}
+
+.elgg-fieldset-horizontal .elgg-field {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
+    margin: 0 0 0 10px;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
+    margin: 0 5px;
 }
 
 /* ***************************************

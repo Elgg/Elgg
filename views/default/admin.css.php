@@ -521,23 +521,39 @@ input[type="radio"] {
 	margin: 0 3px 0 0;
 }
 
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
 select {
 	max-width: 100%;
 	padding: 4px;
 }
 
-.elgg-fieldset {
+.elgg-fieldset-has-legend {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	padding: 5px;
 	padding-bottom: 10px;
 	margin-bottom: 15px;
 }
-.elgg-fieldset > legend {
+.elgg-fieldset-has-legend > legend {
 	color: #333333;
 	font-size: 110%;
 	font-weight: bold;
 	padding: 0 3px;
+}
+.elgg-fieldset-horizontal .elgg-field {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
+    margin: 0 0 0 10px;
+}
+
+.elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
+    margin: 0 5px;
 }
 
 .elgg-button {
@@ -1438,7 +1454,7 @@ h6 > .elgg-icon {
 }
 .elgg-plugin > .elgg-image-block > .elgg-image {
 	margin-right: 10px;
-	min-width: 120px;
+	min-width: 9em;
 	text-align: center;
 }
 .elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
@@ -1459,24 +1475,22 @@ h6 > .elgg-icon {
 	color: #999;
 }
 
+.elgg-plugin.elgg-state-active,
 .elgg-state-active .elgg-plugin-list-reordering {
-	background: white;
+	background: #fff;
 }
-
+.elgg-plugin.elgg-state-inactive,
 .elgg-state-inactive .elgg-plugin-list-reordering {
-	background: #EEE;
-}
-
-.elgg-plugin.elgg-state-active {
-	background: white;
-}
-.elgg-plugin.elgg-state-inactive {
-	background: #EEE;
+	background: #eee;
 }
 
 .elgg-plugin.elgg-state-cannot-activate,
 .elgg-plugin.elgg-state-cannot-activate .elgg-plugin-list-reordering {
-	background: #FBEDB5;
+	background: #f7f0d4;
+}
+.elgg-state-cannot-activate .elgg-image a[disabled],
+.elgg-state-cannot-deactivate .elgg-image a[disabled] {
+	text-decoration: none;
 }
 
 .elgg-plugin-list-reordering {
@@ -1525,14 +1539,37 @@ h6 > .elgg-icon {
 	background: #fbe3e4;
 	color: #8a1f11;
 	border-color: #fbc2c4;
-	font-weight: bold;
+	padding: 3px 6px;
+    margin: 3px 0;
+    width: auto;
+    display: inline-block;
 }
 .elgg-plugin .elgg-state-warning {
-	background: #fbedb5;
+	background: #f4f4f4;
 	color: #000000;
 	border-color: #fbe58b;
-	font-weight: bold;
+	padding: 3px 6px;
+    margin: 3px 0;
+    width: auto;
+    display: inline-block;
 }
+.elgg-plugin .elgg-state-error a,
+.elgg-plugin .elgg-state-warning a,
+.elgg-plugin .elgg-text-help a {
+	text-decoration: underline;
+}
+
+.elgg-plugin-title {
+	font-weight: bold;
+	margin-right: 5px;
+}
+.elgg-state-active .elgg-plugin-title {
+	font-style: italic;
+}
+.elgg-state-inactive .elgg-plugin-title {
+	color: #666;
+}
+
 .elgg-plugin-more {
 	background-color: #eee;
 	border-radius: 8px;
@@ -1682,6 +1719,17 @@ table.mceLayout {
 }
 .center {
 	text-align: center;
+}
+.elgg-justify-center {
+	text-align: center;
+}
+
+.elgg-justify-right {
+	text-align: right;
+}
+
+.elgg-justify-left {
+	text-align: left;
 }
 .float {
 	float: left;

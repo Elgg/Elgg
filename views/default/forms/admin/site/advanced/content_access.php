@@ -3,7 +3,8 @@
  * Advanced site settings, content access section.
  */
 
-$body = elgg_view_input('access', [
+$body = elgg_view_field([
+	'#type' => 'access',
 	'options_values' => [
 		ACCESS_PRIVATE => elgg_echo('PRIVATE'),
 		ACCESS_FRIENDS => elgg_echo('access:friends:label'),
@@ -11,14 +12,15 @@ $body = elgg_view_input('access', [
 		ACCESS_PUBLIC => elgg_echo('PUBLIC'),
 	],
 	'name' => 'default_access',
-	'label' => elgg_echo('installation:sitepermissions'),
-	'help' => elgg_echo('admin:site:access:warning'),
+	'#label' => elgg_echo('installation:sitepermissions'),
+	'#help' => elgg_echo('admin:site:access:warning'),
 	'value' => elgg_get_config('default_access'),
 ]);
 
-$body .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('installation:allow_user_default_access:label'),
-	'help' => elgg_echo('installation:allow_user_default_access:description'),
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('installation:allow_user_default_access:label'),
+	'#help' => elgg_echo('installation:allow_user_default_access:description'),
 	'name' => 'allow_user_default_access',
 	'checked' => (bool)elgg_get_config('allow_user_default_access'),
 ]);
