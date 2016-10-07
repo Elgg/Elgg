@@ -242,6 +242,18 @@ required to make the old interface work.
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
 
+Aalborg theme is now in core
+----------------------------
+
+Aalborg theme is no longer bundled with Elgg, instead all styles have been either moved to core views or to an appropriate core plugin.
+
+This change may affect themes and plugins that were developed without aalborg stylesheets loaded or were relying on a certain priority of views with the aalborg_theme plugin enabled.
+
+Notable changes in plugins:
+
+ * search plugin no longer extends ``page/elements/header`` and instead extends ``page/elements/sidebar``
+ * topbar menu items have been modified and may have a new parent item, a different section, or a different priority
+
 From 2.2 to 2.3
 ===============
 

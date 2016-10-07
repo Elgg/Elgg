@@ -68,5 +68,6 @@ startup.sh
 !/.travis.yml
 !/.scrutinizer.yml
 !.gitignore
+!.gitattributes
 !.scripts
 !.tx
