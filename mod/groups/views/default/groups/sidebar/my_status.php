@@ -58,5 +58,7 @@ if (elgg_is_active_plugin('notifications') && $is_member) {
 	}
 }
 
-$body = elgg_view_menu('groups:my_status');
+$body = elgg_view_menu('groups:my_status', [
+	'class' => 'elgg-menu-page',
+]);
 echo elgg_view_module('aside', elgg_echo('groups:my_status'), $body);

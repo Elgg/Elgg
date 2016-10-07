@@ -1,30 +1,26 @@
-<?php
+/* <style> /**/
+	
 /**
  * CSS typography
- *
- * @package Elgg.Core
- * @subpackage UI
  */
-?>
-/* <style> /**/
 
 /* ***************************************
 	Typography
 *************************************** */
 body {
-	font-size: 80%;
+	color: #333;
+	font-size: 90%;
 	line-height: 1.4em;
-	font-family: "Lucida Grande", Arial, Tahoma, Verdana, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, "Lucida Grande", Arial, sans-serif;
 }
 
 a {
-	color: #4690D6;
+	color: #5097CF;
 }
 
 a:hover,
-a:focus,
-a.selected { <?php //@todo remove .selected ?>
-	color: #555555;
+a.selected { /* @todo remove .selected */
+	color: #555;
 	text-decoration: underline;
 }
 
@@ -41,7 +37,7 @@ pre, code {
 	font-size: 12px;
 
 	background:#EBF5FF;
-	color:#000000;
+	color: #000;
 	overflow:auto;
 
 	overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
@@ -67,42 +63,39 @@ code {
 
 blockquote {
 	line-height: 1.3em;
-	padding:3px 15px;
-	margin:0px 0 15px 0;
-	background:#EBF5FF;
-	border:none;
-	border-radius: 4px;
+	padding: 10px 15px;
+	margin: 0 0 15px 0;
+	background: #E2F2FE;
+	border: 1px solid #A1CBEA;
+	border-radius: 3px;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
-	color: #0054A7;
+	color: #444;
+
+	text-rendering: optimizelegibility;
 }
 
 h1 { font-size: 1.8em; }
-h2 { font-size: 1.5em; line-height: 1.1em; padding-bottom:5px}
+h2 { font-size: 1.5em; line-height: 1.1em; }
 h3 { font-size: 1.2em; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
 
-.elgg-heading-site,
-.elgg-heading-site:hover,
-.elgg-heading-site:focus {
+.elgg-heading-site, .elgg-heading-site:hover {
+	font-family: Georgia, Times, "Times New Roman", serif;
 	font-size: 2em;
-	line-height: 1.4em;
-	color: white;
-	font-style: italic;
-	font-family: Georgia, times, serif;
-	text-shadow: 1px 2px 4px #333;
+	line-height: 1.2em;
+	color: #FFF;
+	text-shadow: 1px 1px 3px #333;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 	text-decoration: none;
 }
-.elgg-heading-site:hover,
-.elgg-heading-site:focus {
-	text-shadow: 1px 2px 8px #000;
-}
-
 .elgg-heading-main {
+	display: inline-block;
+	padding-top: 15px;
 	margin-right: 10px;
 }
 .elgg-heading-basic {
@@ -112,9 +105,9 @@ h6 { font-size: 0.8em; }
 }
 
 .elgg-subtext {
-	color: #666666;
+	color: #666;
 	font-size: 85%;
-	line-height: 1.2em;
+	line-height: 1.4em;
 	font-style: italic;
 }
 
@@ -159,13 +152,29 @@ h6 { font-size: 0.8em; }
 	padding-left: .4em;
 }
 .elgg-output table {
-	border: 1px solid #ccc;
+	border: 1px solid #DCDCDC;
 }
 .elgg-output table td {
-	border: 1px solid #ccc;
+	border: 1px solid #DCDCDC;
 	padding: 3px 5px;
 }
 .elgg-output img {
 	max-width: 100%;
 	height: auto;
+}
+
+@media (max-width: 766px) {
+	.elgg-page-header > .elgg-inner h1 {
+		padding-top: 10px;
+	}
+	.elgg-heading-site, .elgg-heading-site:hover {
+		font-size: 1.6em;
+	}
+}
+
+@media (max-width: 600px) {
+	.elgg-subtext {
+		float: left;
+		margin-right: 15px;
+	}
 }

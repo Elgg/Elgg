@@ -3,4 +3,9 @@
  * Bad request error
  */
 
-echo elgg_echo('error:400:content');
+$message = elgg_echo('error:400:content');
+?>
+
+<div class="elgg-box-error">
+	<?php echo $message ?>
+</div>

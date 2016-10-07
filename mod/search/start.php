@@ -37,7 +37,7 @@ function search_init() {
 	elgg_extend_view('elgg.css', 'search/css');
 
 	// extend view for elgg topbar search box
-	elgg_extend_view('page/elements/header', 'search/header');
+	elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 
 	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
 }

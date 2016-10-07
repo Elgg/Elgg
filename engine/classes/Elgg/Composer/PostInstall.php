@@ -23,7 +23,6 @@ class PostInstall {
 		self::copyFromElggToRoot("upgrade.php", "upgrade.php");
 
 		$managed_plugins = [
-			'aalborg_theme',
 			'blog',
 			'bookmarks',
 			'ckeditor',

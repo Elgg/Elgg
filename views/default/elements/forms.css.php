@@ -1,81 +1,79 @@
-<?php
+/* <style> /**/
 /**
  * CSS form/input elements
- *
- * @package Elgg.Core
- * @subpackage UI
  */
-?>
-/* <style> /**/
 
 /* ***************************************
 	Form Elements
 *************************************** */
-fieldset > div {
+fieldset > div, .elgg-field {
 	margin-bottom: 15px;
 }
 fieldset > div:last-child {
 	margin-bottom: 0;
 }
 .elgg-form-alt > fieldset > .elgg-foot {
-	border-top: 1px solid #CCC;
+	border-top: 1px solid #DCDCDC;
 	padding: 10px 0;
 }
-
-label {
+label, .elgg-field-label {
 	font-weight: bold;
 	color: #333;
 	font-size: 110%;
 }
-label.elgg-state-disabled {
+.elgg-field-label {
+	display: block;
+}
+label.elgg-state-disabled, .elgg-field-label.elgg-state-disabled {
 	opacity: 0.6;
 }
-
+.elgg-required-indicator {
+	font-size: 110%;
+	font-weight: bold;
+	color: #C24000;
+	display: inline;
+	padding: 0 5px;
+}
 input, textarea {
-	border: 1px solid #ccc;
+	border: 1px solid #DCDCDC;
 	color: #666;
-	font: 120% Arial, Helvetica, sans-serif;
-	padding: 5px;
-	width: 100%;	
-	border-radius: 5px;
+	font: 100% Arial, Helvetica, sans-serif;
+	padding: 7px 6px;
+	width: 100%;
+	border-radius: 3px;
+
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-
 input[type=email]:focus,
 input[type=password]:focus,
 input[type=text]:focus,
 input[type=number]:focus,
 input[type=url]:focus,
 textarea:focus {
-	border: solid 1px #4690d6;
-	background: #e4ecf5;
-	color:#333;
+	border: solid 1px #C2C2C2;
+	background: #F0F0F0;
 	/* We remove outlines from specific input types so we can leave the browser
 	   defaults (like glows) for everything else */
 	outline: 0 none;
 }
-
 .elgg-longtext-control {
 	float: right;
 	margin-left: 14px;
 	font-size: 80%;
 	cursor: pointer;
 }
-
-
 .elgg-input-access {
-	margin:5px 0 0 0;
+	margin: 5px 0 0 0;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
-	margin:0 3px 0 0;
-	padding:0;
-	border:none;
-	border-radius:0;
-	width:auto;
+	margin: 0 3px 0 0;
+	padding: 0;
+	border: none;
+	width: auto;
 }
 input[type="number"] {
 	-moz-appearance: textfield;
@@ -89,7 +87,13 @@ input[type="number"] {
 	display: inline;
 	padding-right: 10px;
 }
-
+select {
+	max-width: 100%;
+	padding: 4px;
+}
+.elgg-form-account {
+	margin-bottom: 15px;
+}
 .elgg-form-login, .elgg-form-account {
 	max-width: 475px;
 	margin: 0 auto;
@@ -120,37 +124,37 @@ input[type="number"] {
 	margin-bottom: 15px;
 }
 .friends-picker-container h3 {
-	font-size:4em !important;
+	font-size: 4em !important;
 	text-align: left;
-	margin:10px 0 20px !important;
-	color:#999 !important;
+	margin: 10px 0 20px !important;
+	color: #999 !important;
 	background: none !important;
 	padding:0 !important;
 }
 .friends-picker .friends-picker-container .panel ul {
 	text-align: left;
 	margin: 0;
-	padding:0;
+	padding: 0;
 }
 .friends-picker-wrapper {
 	margin: 0;
-	padding:0;
+	padding: 0;
 	position: relative;
-	width: 730px;
+	width: 720px;
 }
 .friends-picker {
 	position: relative;
 	overflow: hidden;
 	margin: 0;
-	padding:0;
-	width: 730px;
+	padding: 0;
+	width: 720px;
 	height: auto;
-	background-color: #dedede;
-	border-radius: 8px;
+	background-color: #DEDEDE;
+	border-radius: 3px;
 }
 .friendspicker-savebuttons {
-	background: white;
-	border-radius: 8px;	
+	background: #FFF;
+	border-radius: 3px;
 	margin:0 10px 10px;
 }
 .friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
@@ -161,22 +165,22 @@ input[type="number"] {
 	list-style-type: none;
 }
 .friends-picker .friends-picker-container .panel {
-	float:left;
+	float: left;
 	height: 100%;
 	position: relative;
 	width: 730px;
 	margin: 0;
-	padding:0;
+	padding: 0;
 }
 .friends-picker .friends-picker-container .panel .wrapper {
 	margin: 0;
-	padding:4px 10px 10px 10px;
+	padding: 4px 10px 10px 10px;
 	min-height: 230px;
 }
 .friends-picker-navigation {
-	margin: 0 0 10px;
-	padding:0 0 10px;
-	border-bottom:1px solid #ccc;
+	margin: 10px 0;
+	padding: 0 0 10px;
+	border-bottom: 1px solid #DCDCDC;
 }
 .friends-picker-navigation ul {
 	list-style: none;
@@ -184,31 +188,31 @@ input[type="number"] {
 }
 .friends-picker-navigation ul li {
 	float: left;
-	margin:0;
-	background:white;
+	margin: 0;
+	background: #FFF;
 }
 .friends-picker-navigation a {
 	font-weight: bold;
 	text-align: center;
-	background: white;
+	background: #FFF;
 	color: #999;
 	text-decoration: none;
 	display: block;
 	padding: 0;
-	width:20px;
-	border-radius: 4px;
+	width: 20px;
+	border-radius: 3px;
 }
 .tabHasContent {
-	background: white;
-	color:#333 !important;
+	background: #FFF;
+	color: #333 !important;
 }
 .friends-picker-navigation li a:hover {
 	background: #333;
-	color:white !important;
+	color: #FFF !important;
 }
 .friends-picker-navigation li a.current {
-	background: #4690D6;
-	color:white !important;
+	background: #5097CF;
+	color: #FFF !important;
 }
 .friends-picker-navigation-l, .friends-picker-navigation-r {
 	position: absolute;
@@ -222,33 +226,31 @@ input[type="number"] {
 }
 .friends-picker-navigation-l {
 	right: 48px;
-	z-index:1;
+	z-index: 1;
 }
 .friends-picker-navigation-r {
 	right: 0;
-	z-index:1;
+	z-index: 1;
 }
 .friends-picker-navigation-l {
-	background: url(<?= elgg_get_simplecache_url("friendspicker.png"); ?>) no-repeat left top;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat left top;
 }
 .friends-picker-navigation-r {
-	background: url(<?= elgg_get_simplecache_url("friendspicker.png"); ?>) no-repeat -60px top;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat -60px top;
 }
 .friends-picker-navigation-l:hover {
-	background: url(<?= elgg_get_simplecache_url("friendspicker.png"); ?>) no-repeat left -44px;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat left -44px;
 }
 .friends-picker-navigation-r:hover {
-	background: url(<?= elgg_get_simplecache_url("friendspicker.png"); ?>) no-repeat -60px -44px;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat -60px -44px;
 }
 .friendspicker-savebuttons .elgg-button-submit,
 .friendspicker-savebuttons .elgg-button-cancel {
-	margin:5px 20px 5px 5px;
+	margin: 5px 20px 5px 5px;
 }
-.friendspicker-members-table {
-	background: #dedede;
-	border-radius: 8px;	
-	margin:10px 0 0;
-	padding:10px 10px 0;
+#friendspicker-members-table {
+	margin: 10px 0 0;
+	padding: 10px 10px 0;
 }
 
 /* ***************************************
@@ -264,24 +266,24 @@ input[type="number"] {
 	max-width: 600px;
 }
 .ui-autocomplete {
-	background-color: white;
-	border: 1px solid #ccc;
+	background-color: #FFF;
+	border: 1px solid #DCDCDC;
 	overflow: hidden;
-	border-radius: 5px;
+	border-radius: 3px;
 }
 .ui-autocomplete .ui-menu-item {
 	padding: 0px 4px;
-	border-radius: 5px;
+	border-radius: 3px;
 }
 .ui-autocomplete .ui-menu-item:hover {
-	background-color: #eee;
+	background-color: #EEE;
 }
 .ui-autocomplete a:hover {
 	text-decoration: none;
-	color: #4690D6;
+	color: #5097CF;
 }
 .ui-autocomplete a.ui-state-hover {
-	background-color: #eee;
+	background-color: #EEE;
 	display: block;
 }
 .ui-helper-hidden-accessible {
@@ -314,15 +316,15 @@ input[type="number"] {
 }
 
 /* ***************************************
-      DATE PICKER
+	DATE PICKER
 **************************************** */
 .ui-datepicker {
 	display: none;
 
 	margin-top: 3px;
-	background-color: white;
+	background-color: #FFF;
 	border: 1px solid #0054A7;
-	border-radius: 6px;
+	border-radius: 3px;
 	overflow: hidden;
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
@@ -333,24 +335,31 @@ input[type="number"] {
 
 .ui-datepicker-header {
 	position: relative;
-	background: #4690D6;
-	color: white;
+	background: #5097CF;
+	color: #FFF;
 	padding: 2px 0;
 	border-bottom: 1px solid #0054A7;
 }
 .ui-datepicker-header a {
-	color: white;
+	color: #FFF;
 }
 .ui-datepicker-prev, .ui-datepicker-next {
 	position: absolute;
-	top: 5px;
+	top: 3px;
 	cursor: pointer;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	padding: 1px 7px;
+}
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover {
+	text-decoration: none;
 }
 .ui-datepicker-prev {
-	left: 6px;
+	left: 3px;
 }
 .ui-datepicker-next {
-	right: 6px;
+	right: 3px;
 }
 .ui-datepicker-title {
 	line-height: 1.8em;
@@ -379,14 +388,14 @@ input[type="number"] {
 	text-decoration: none;
 }
 .ui-datepicker-calendar .ui-state-default {
-	border: 1px solid #ccc;
-	color: #4690D6;;
-	background: #fafafa;
+	border: 1px solid #DCDCDC;
+	color: #5097CF;;
+	background: #FAFAFA;
 }
 .ui-datepicker-calendar .ui-state-hover {
-	border: 1px solid #aaa;
+	border: 1px solid #AAA;
 	color: #0054A7;
-	background: #eee;
+	background: #EEE;
 }
 .ui-datepicker-calendar .ui-state-active,
 .ui-datepicker-calendar .ui-state-active.ui-state-hover {
@@ -394,4 +403,13 @@ input[type="number"] {
 	border: 1px solid #0054A7;
 	color: #0054A7;
 	background: #E4ECF5;
+}
+
+/* ***************************************
+	MISC
+*****************************************/
+.elgg-sidebar input[type=text],
+.elgg-sidebar input[type=number],
+.elgg-sidebar input[type=password] {
+	box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
 }

@@ -14,8 +14,8 @@ function dashboard_init() {
 	elgg_register_menu_item('topbar', array(
 		'name' => 'dashboard',
 		'href' => 'dashboard',
-		'text' => elgg_view_icon('home') . elgg_echo('dashboard'),
-		'priority' => 450,
+		'text' => elgg_echo('dashboard'),
+		'priority' => 100,
 		'section' => 'alt',
 	));
 

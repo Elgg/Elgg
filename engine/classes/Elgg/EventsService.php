@@ -56,7 +56,6 @@ class EventsService extends \Elgg\HooksRegistrationService {
 				'groups_setup_sidebar_menus' => true,
 				'notifications_plugin_pagesetup' => true,
 				'_elgg_admin_pagesetup' => true,
-				'aalborg_theme_pagesetup' => true,
 				'login_as_add_topbar_link' => true,
 			];
 			if (!is_string($callback) || !isset($ignore[$callback])) {

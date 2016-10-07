@@ -3,4 +3,10 @@
  * Page not found error
  */
 
-echo elgg_echo('error:404:content');
+$message = elgg_echo('error:404:content');
+
+?>
+
+<div class="elgg-box-error">
+	<?php echo $message ?>
+</div>

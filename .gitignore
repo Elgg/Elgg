@@ -11,7 +11,6 @@
 /vendor
 
 # don't ignore bundled plugins
-!/mod/aalborg_theme/
 !/mod/blog/
 !/mod/bookmarks/
 !/mod/categories/

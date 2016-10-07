@@ -60,3 +60,18 @@
 .elgg-col-5of6 {
 	width: 83.33%;
 }
+
+@media (max-width: 820px) {
+	/***** CUSTOM INDEX ******/
+	.elgg-col-1of2 {
+		float: none;
+		width: 100%;
+	}
+	/***** WIDGETS ******/
+	.elgg-col-1of3,
+	.elgg-col-2of3 {
+		float: none;
+		min-height: 0 !important;
+		width: 100%;
+	}
+}

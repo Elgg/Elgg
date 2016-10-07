@@ -671,6 +671,10 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
  */
 function _elgg_extras_menu_setup($hook, $type, $return, $params) {
 
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+	
 	if (!_elgg_has_rss_link()) {
 		return;
 	}
