@@ -236,20 +236,15 @@ class ActionsServiceTest extends \Elgg\TestCase {
 	}
 
 	public function testCanGenerateValidTokens() {
+		$dt = new \DateTime();
+		$time = $dt->getTimestamp();
+		$this->actions->setCurrentTime($dt);
 
-		$timeout = $this->actions->getActionTokenTimeout();
-		for ($i = 1; $i <= 100; $i++) {
-			$dt = new \DateTime();
-			$this->actions->setCurrentTime($dt);
+		$token = $this->actions->generateActionToken($time);
+		$this->assertTrue($this->actions->validateActionToken(false, $token, $time));
 
-			$ts = $dt->getTimestamp();
-
-			$timestamp = rand($ts, $ts + $timeout);
-			$token = $this->actions->generateActionToken($timestamp);
-			$this->assertTrue($this->actions->validateActionToken(false, $token, $timestamp), "Test failed at pass $i");
-			$this->assertFalse($this->actions->validateActionToken(false, $token, $timestamp + 1), "Test failed at pass $i");
-			$this->assertFalse($this->actions->validateActionToken(false, $token, $timestamp - 1), "Test failed at pass $i");
-		}
+		$this->assertFalse($this->actions->validateActionToken(false, $token, $time + 1));
+		$this->assertFalse($this->actions->validateActionToken(false, $token, $time - 1));
 	}
 
 	public function testCanNotValidateExpiredToken() {
