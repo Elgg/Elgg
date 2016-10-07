@@ -90,7 +90,7 @@ function is_email_address($address) {
 }
 
 /**
- * Load all the GET and POST variables into the sticky form cache
+ * Save form submission data (all GET and POST vars) into a session cache
  *
  * Call this from an action when you want all your submitted variables
  * available if the submission fails validation and is sent back to the form
@@ -105,7 +105,7 @@ function elgg_make_sticky_form($form_name) {
 }
 
 /**
- * Clear the sticky form cache
+ * Remove form submission data from the session
  *
  * Call this if validation is successful in the action handler or
  * when they sticky values have been used to repopulate the form
@@ -121,7 +121,7 @@ function elgg_clear_sticky_form($form_name) {
 }
 
 /**
- * Has this form been made sticky?
+ * Does form submission data exist for this form?
  *
  * @param string $form_name Form namespace
  *
@@ -133,7 +133,7 @@ function elgg_is_sticky_form($form_name) {
 }
 
 /**
- * Get a specific sticky variable
+ * Get a specific value from cached form submission data
  *
  * @param string  $form_name     The name of the form
  * @param string  $variable      The name of the variable
@@ -147,11 +147,10 @@ function elgg_is_sticky_form($form_name) {
  */
 function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {
 	return _elgg_services()->stickyForms->getStickyValue($form_name, $variable, $default, $filter_result);
-
 }
 
 /**
- * Get all the values in a sticky form in an array
+ * Get all submission data cached for a form
  *
  * @param string $form_name     The name of the form
  * @param bool   $filter_result Filter for bad input if true
@@ -164,7 +163,7 @@ function elgg_get_sticky_values($form_name, $filter_result = true) {
 }
 
 /**
- * Clear a specific sticky variable
+ * Remove one value of form submission data from the session
  *
  * @param string $form_name The name of the form
  * @param string $variable  The name of the variable to clear

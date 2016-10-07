@@ -249,13 +249,16 @@ The above example will render a dropdown select input:
       <option value="published">Published</option>
    </select>
 
-To ensure consistency in field markup, use ``elgg_view_input()``, which accepts
-all the parameters of the input being rendered, as well as ``label`` and ``help``
+To ensure consistency in field markup, use ``elgg_view_field()``, which accepts
+all the parameters of the input being rendered, as well as ``#label`` and ``#help``
 parameters (both of which are optional and accept HTML or text).
 
 .. code:: php
 
-   echo elgg_view_input('select', array(
+   echo elgg_view_field(array(
+      '#type' => 'select',
+      '#label' => elgg_echo('blog:status:label'),
+      '#help' => elgg_view_icon('help') . elgg_echo('blog:status:help'),
       'required' => true,
       'name' => 'status',
       'options_values' => array(
@@ -263,8 +266,6 @@ parameters (both of which are optional and accept HTML or text).
          'published' => elgg_echo('status:published'),
       ),
       'data-rel' => 'blog',
-      'label' => elgg_echo('blog:status:label'),
-      'help' => elgg_view_icon('help') . elgg_echo('blog:status:help'),
    ));
 
 The above will generate the following markup:

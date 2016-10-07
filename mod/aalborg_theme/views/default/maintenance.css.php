@@ -173,6 +173,9 @@ input[type="radio"] {
 	border: none;
 	width: auto;
 }
+input[type="number"] {
+	-moz-appearance: textfield;
+}
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radios.elgg-horizontal li {
 	display: inline;

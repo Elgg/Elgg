@@ -407,25 +407,25 @@ class ResponseFactory {
 		$forward_url = elgg_normalize_url($forward_url);
 
 		switch ($status_code) {
-			case 'walled_garden';
-			case 'csrf' :
+			case 'walled_garden':
 			case 'admin' :
 			case 'login' :
-				$status_code = ELGG_HTTP_FORBIDDEN;
+				$status_code = ELGG_HTTP_SEE_OTHER;
 				break;
 			case 'system' :
+			case 'csrf' :
 				$status_code = ELGG_HTTP_OK;
 				break;
 			default :
 				$status_code = (int) $status_code;
 				if (!$status_code || $status_code < 100 || $status_code > 599) {
-					$status_code = ELGG_HTTP_OK;
+					$status_code = ELGG_HTTP_SEE_OTHER;
 				}
 				break;
 		}
 
 		if ($this->isXhr()) {
-			if ($status_code < 100 || ($status_code > 299 && $status_code < 400) || $status_code > 599) {
+			if ($status_code < 100 || ($status_code >= 300 && $status_code <= 399) || $status_code > 599) {
 				// We only want to preserve OK and error codes
 				// Redirect responses should be converted to OK responses as this is an XHR request
 				$status_code = ELGG_HTTP_OK;
@@ -448,7 +448,7 @@ class ResponseFactory {
 		if ($this->isAction()) {
 			// actions should always redirect on non xhr-calls
 			if (!is_int($status_code) || $status_code < 300 || $status_code > 399) {
-				$status_code = ELGG_HTTP_FOUND;
+				$status_code = ELGG_HTTP_SEE_OTHER;
 			}
 		}
 

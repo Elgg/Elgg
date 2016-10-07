@@ -23,58 +23,66 @@ $email = elgg_extract('email', $values);
 $admin = elgg_extract('admin', $values);
 $autogen_password = elgg_extract('autogen_password', $values);
 
-echo elgg_view_input('text', [
+echo elgg_view_field([
+	'#type' => 'text',
 	'name' => 'name',
 	'value' => $name,
-	'label' => elgg_echo('name'),
+	'#label' => elgg_echo('name'),
 	'required' => true,
 ]);
 
-echo elgg_view_input('text', [
+echo elgg_view_field([
+	'#type' => 'text',
 	'name' => 'username',
 	'value' => $username,
-	'label' => elgg_echo('username'),
+	'#label' => elgg_echo('username'),
 	'required' => true,
 ]);
 
-echo elgg_view_input('email', [
+echo elgg_view_field([
+	'#type' => 'email',
 	'name' => 'email',
 	'value' => $email,
-	'label' => elgg_echo('email'),
+	'#label' => elgg_echo('email'),
 	'required' => true,
 ]);
 
-echo elgg_view_input('checkbox', array(
+echo elgg_view_field(array(
+	'#type' => 'checkbox',
 	'name' => 'autogen_password',
 	'value' => 1,
 	'default' => false,
-	'label' => elgg_echo('autogen_password_option'),
+	'#label' => elgg_echo('autogen_password_option'),
 	'checked' => (bool) $autogen_password,
 ));
 
-echo elgg_view_input('password', [
+echo elgg_view_field([
+	'#type' => 'password',
 	'name' => 'password',
 	'value' => $password,
-	'label' => elgg_echo('password'),
+	'#label' => elgg_echo('password'),
 	'required' => true,
 ]);
 
-echo elgg_view_input('password', [
+echo elgg_view_field([
+	'#type' => 'password',
 	'name' => 'password2',
 	'value' => $password2,
-	'label' => elgg_echo('passwordagain'),
+	'#label' => elgg_echo('passwordagain'),
 	'required' => true,
 ]);
 
-echo elgg_view_input('checkbox', array(
+echo elgg_view_field(array(
+	'#type' => 'checkbox',
 	'name' => 'admin',
 	'value' => 1,
 	'default' => false,
-	'label' => elgg_echo('admin_option'),
+	'#label' => elgg_echo('admin_option'),
 	'checked' => $admin,
 ));
 
-echo elgg_view_input('submit', [
+echo elgg_view_field([
+	'#type' => 'submit',
 	'value' => elgg_echo('register'),
-	'field_class' => 'elgg-foot',
+	'#class' => 'elgg-foot',
 ]);

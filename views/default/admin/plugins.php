@@ -4,9 +4,10 @@
  *
  * Shows a list of plugins that can be sorted and filtered.
  *
- * @package Elgg.Core
- * @subpackage Admin.Plugins
+ * @uses $vars['list_only']
  */
+
+$list_only = (bool)elgg_extract('list_only', $vars);
 
 // @todo this should occur in the controller code
 _elgg_generate_plugin_entities();
@@ -46,6 +47,28 @@ foreach ($installed_plugins as $id => $plugin) {
 	}
 }
 
+$list_options = [
+	'limit' => 0,
+	'full_view' => true,
+	'list_type_toggle' => false,
+	'pagination' => false,
+	'display_reordering' => true,
+];
+
+$add_context = !elgg_in_context('admin');
+if ($add_context) {
+	// needed for expected plugin view rendering
+	elgg_push_context('admin');
+}
+$plugins_list = elgg_view_entity_list($installed_plugins, $list_options);
+if ($add_context) {
+	elgg_pop_context();
+}
+
+if ($list_only) {
+	echo $plugins_list;
+	return;
+}
 
 asort($categories);
 
@@ -85,12 +108,8 @@ $buttons = elgg_format_element('div', ['class' => 'float-alt'], $activate_all . 
 
 echo elgg_format_element('div', ['class' => 'mbm'], $buttons . $category_form);
 
-$options = array(
-	'limit' => 0,
-	'full_view' => true,
-	'list_type_toggle' => false,
-	'pagination' => false,
-	'display_reordering' => true
+echo elgg_format_element(
+	'div',
+	['id' => 'elgg-plugin-list'],
+	$plugins_list
 );
-
-echo elgg_format_element('div', ['id' => 'elgg-plugin-list'] , elgg_view_entity_list($installed_plugins, $options));

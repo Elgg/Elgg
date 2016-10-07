@@ -28,7 +28,8 @@ if ($entity) {
 	));
 }
 
-$footer = elgg_view_input('submit', [
+$footer = elgg_view_field([
+	'#type' => 'submit',
 	'value' => elgg_echo('save'),
 ]);
 

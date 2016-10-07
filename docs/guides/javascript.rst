@@ -692,6 +692,30 @@ Note that WYSIWYG will be automatically attached to all instances of ``.elgg-inp
 
    });
 
+
+Inline tabs component
+---------------------
+
+Inline tabs component fires an ``open`` event whenever a tabs is open and, in case of ajax tabs, finished loading:
+
+.. code:: js
+
+    // Add custom animation to tab content
+	require(['jquery', 'elgg/ready'], function($) {
+		$(document).on('open', '.theme-sandbox-tab-callback', function() {
+			$(this).find('a').text('Clicked!');
+			$(this).data('target').hide().show('slide', {
+				duration: 2000,
+				direction: 'right',
+				complete: function() {
+					alert('Thank you for clicking. We hope you enjoyed the show!');
+					$(this).css('display', ''); // .show() adds display property
+				}
+			});
+		});
+	});
+
+
 Traditional scripts
 ===================
 

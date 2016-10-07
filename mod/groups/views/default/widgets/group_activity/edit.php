@@ -15,9 +15,10 @@ foreach ($groups as $group) {
 	$mygroups[$group->guid] = $group->name;
 }
 
-echo elgg_view_input('select', [
+echo elgg_view_field([
+	'#type' => 'select',
 	'name' => 'params[group_guid]',
-	'label' => elgg_echo('groups:widget:group_activity:edit:select'),
+	'#label' => elgg_echo('groups:widget:group_activity:edit:select'),
 	'value' => $widget->group_guid,
 	'options_values' => $mygroups,
 ]);

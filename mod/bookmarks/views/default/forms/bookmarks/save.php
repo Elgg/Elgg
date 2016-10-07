@@ -56,7 +56,8 @@ if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
 }
 
-$footer = elgg_view_input('submit', [
+$footer = elgg_view_field([
+	'#type' => 'submit',
 	'value' => elgg_echo('save'),
 ]);
 elgg_set_form_footer($footer);
