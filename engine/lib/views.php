@@ -1432,13 +1432,13 @@ function elgg_get_form_footer() {
 /**
  * Renders a form field
  *
- * @param string $input_type Input type, used to generate an input view ("input/$input_type")
- * @param array  $vars       Fields and input vars.
- *                           Field vars contain both field and input params. 'label', 'help',
- *                           and 'field_class' params will not be passed on to the input view.
- *                           Others, including 'required' and 'id', will be available to the
- *                           input view. Both 'label' and 'help' params accept HTML, and
- *                           will be printed unescaped within their wrapper element.
+ * @param mixed $input_type Input type, used to generate an input view ("input/$input_type")
+ * @param array $vars       Fields and input vars.
+ *                          Field vars contain both field and input params. 'label', 'help',
+ *                          and 'field_class' params will not be passed on to the input view.
+ *                          Others, including 'required' and 'id', will be available to the
+ *                          input view. Both 'label' and 'help' params accept HTML, and
+ *                          will be printed unescaped within their wrapper element.
  * @return string
  */
 function elgg_view_input($input_type, array $vars = array()) {
@@ -1447,7 +1447,8 @@ function elgg_view_input($input_type, array $vars = array()) {
 		return '';
 	}
 
-	if ($input_type == 'hidden') {
+	$hidden_types = ['hidden', 'securitytoken'];
+	if (in_array($input_type, $hidden_types)) {
 		return elgg_view("input/$input_type", $vars);
 	}
 
@@ -1487,6 +1488,25 @@ function elgg_view_input($input_type, array $vars = array()) {
 		'class' => $field_class,
 		'input_type' => $input_type,
 	));
+}
+
+/**
+ * Renders a form field
+ * A shortcut method to rendering inputs from an array of options
+ * In addition to all $vars accepted by elgg_view_input(), this function
+ * offers support for:
+ *  - #type: input type
+ *
+ * @see elgg_view_input()
+ *
+ * @param array $vars Field vars
+ * @return string
+ */
+function elgg_view_field(array $vars = []) {
+	$input_type = elgg_extract('#type', $vars);
+	unset($vars['#type']);
+
+	return elgg_view_input($input_type, $vars);
 }
 
 /**

@@ -32,6 +32,13 @@ a.elgg-button {
 	background: #eee;
 }
 
+.elgg-button .elgg-icon {
+    color: inherit;
+    vertical-align: middle;
+    margin-right: 10px;
+    line-height: 9px;
+}
+
 /* Submit: This button should convey, "you're about to take some definitive action" */
 .elgg-button-submit {
 	color: white;

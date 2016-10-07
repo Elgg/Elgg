@@ -7,6 +7,7 @@
  *
  * @uses $vars['src']   Src of an image
  * @uses $vars['class'] Additional CSS class
+ * @uses $vars['text']  Text to include between <button> tags
  */
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-button');
@@ -16,9 +17,13 @@ $defaults = ['type' => 'button'];
 $vars = array_merge($defaults, $vars);
 
 switch ($vars['type']) {
-	case 'button':
-	case 'reset':
 	case 'submit':
+		$vars['class'][] = 'elgg-button-submit';
+		break;
+	case 'reset':
+		$vars['class'][] = 'elgg-button-cancel';
+		break;
+	case 'button':
 	case 'image':
 		break;
 	default:
@@ -26,9 +31,7 @@ switch ($vars['type']) {
 		break;
 }
 
-// blank src if trying to access an offsite image. @todo why?
-if (isset($vars['src']) && strpos($vars['src'], elgg_get_site_url()) === false) {
-	$vars['src'] = "";
-}
+$text = elgg_extract('text', $vars, '');
+unset($vars['text']);
 
-echo elgg_format_element('input', $vars);
+echo elgg_format_element('button', $vars, $text);
