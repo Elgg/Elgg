@@ -29,3 +29,6 @@ echo elgg_view_module('theme-sandbox-demo', 'Tags (.elgg-tag)', $body);
 
 $body = elgg_view('theme_sandbox/components/messages');
 echo elgg_view_module('theme-sandbox-demo', 'Messages (.elgg-message)', $body);
+
+$body = elgg_view('theme_sandbox/components/tabs');
+echo elgg_view_module('theme-sandbox-demo', 'Inline/Ajax Tabs (.elgg-tabs-component)', $body);
