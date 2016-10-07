@@ -19,7 +19,7 @@ class ElggRelationshipTest extends ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		$this->original_events = _elgg_services()->events;
-		_elgg_services()->events = new Elgg\EventsService();
+		_elgg_services()->setValue('events', new Elgg\EventsService());
 
 		$this->entity1 = new ElggObject();
 		$this->entity1->subtype = 'elgg_relationship_test';
@@ -54,7 +54,7 @@ class ElggRelationshipTest extends ElggCoreUnitTest {
 		}
 		remove_subtype('object', 'elgg_relationship_test');
 
-		_elgg_services()->events = $this->original_events;
+		_elgg_services()->setValue('events', $this->original_events);
 	}
 	
 	/**
@@ -110,10 +110,13 @@ class ElggRelationshipTest extends ElggCoreUnitTest {
 		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
 		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
 		$this->assertIsA($r, 'ElggRelationship');
+		$old_id = $r->id;
 		
 		// note - string because that's how it's returned when getting a new object
 		$r->guid_two = (string) $this->entity3->guid;
-		$this->assertTrue($r->save());
+		$new_id = $r->save();
+		$this->assertIsA($new_id, 'int');
+		$this->assertNotEqual($new_id, $old_id);
 		
 		$test_r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
 		$this->assertIsA($test_r, 'ElggRelationship');
