@@ -114,7 +114,7 @@ if ($active) {
 	$options['text'] = elgg_echo('admin:plugins:deactivate');
 	if ($can_deactivate) {
 		$action = 'deactivate';
-		$options['class'] = 'elgg-button elgg-button-cancel';
+		$options['class'] = 'elgg-button elgg-button-cancel elgg-plugin-state-change';
 	} else {
 		$action = '';
 		$classes[] = 'elgg-state-cannot-deactivate';
@@ -125,7 +125,7 @@ if ($active) {
 	$classes[] = 'elgg-state-inactive';
 	$action = 'activate';
 	$options['title'] = elgg_echo('admin:plugins:activate');
-	$options['class'] = 'elgg-button elgg-button-submit';
+	$options['class'] = 'elgg-button elgg-button-submit elgg-plugin-state-change';
 	$options['text'] = elgg_echo('admin:plugins:activate');
 } else {
 	$classes[] = 'elgg-state-inactive elgg-state-cannot-activate';

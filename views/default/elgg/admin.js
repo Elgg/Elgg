@@ -8,6 +8,9 @@ define(function(require) {
 	var ui = require('jquery-ui');
 	var elgg = require('elgg');
 	var spinner = require('elgg/spinner');
+	var Ajax = require('elgg/Ajax');
+
+	var ajax = new Ajax();
 
 	function init () {
 		// system messages do not fade in admin area, instead slide up when clicked
@@ -66,8 +69,28 @@ define(function(require) {
 
 		$(document).on('click', '.elgg-plugins-toggle', toggleAllPlugins);
 
+		$(document).on('click', '.elgg-plugin-state-change', toggleSinglePlugin);
+
 		// plugin screenshots
 		$(document).on('mouseenter', '.elgg-plugin-details-screenshots .elgg-plugin-screenshot', showPluginScreenshot);
+	}
+
+	function toggleSinglePlugin(e) {
+		e.preventDefault();
+
+		ajax.action(this.href)
+			.done(function (output, statusText, jqXHR) {
+				if (jqXHR.AjaxData.status == -1) {
+					// don't know status :/
+					location.reload();
+					return;
+				}
+
+				$('#elgg-plugin-list').html(output.list);
+
+				// reapply category filtering
+				$(".elgg-admin-plugins-categories > li.elgg-state-selected > a").trigger('click');
+			});
 	}
 
 	/**
