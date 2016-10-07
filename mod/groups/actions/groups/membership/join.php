@@ -43,6 +43,9 @@ if ($user && ($group instanceof ElggGroup)) {
 		} else {
 			register_error(elgg_echo("groups:cantjoin"));
 		}
+	} else if (check_entity_relationship($user->guid, 'membership_request', $group->guid)) {
+		register_error(elgg_echo("groups:requestexists"));
+		forward(REFERER);
 	} else {
 		add_entity_relationship($user->guid, 'membership_request', $group->guid);
 
@@ -67,7 +70,7 @@ if ($user && ($group instanceof ElggGroup)) {
 			'action' => 'membership_request',
 			'object' => $group,
 		];
-		
+
 		// Notify group owner
 		if (notify_user($owner->guid, $user->getGUID(), $subject, $body, $params)) {
 			system_message(elgg_echo("groups:joinrequestmade"));
