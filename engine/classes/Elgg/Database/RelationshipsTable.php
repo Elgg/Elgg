@@ -109,11 +109,12 @@ class RelationshipsTable {
 	 * @param int    $guid_one     GUID of the subject entity of the relationship
 	 * @param string $relationship Type of the relationship
 	 * @param int    $guid_two     GUID of the target entity of the relationship
+	 * @param bool   $return_id    Return the ID instead of bool?
 	 *
-	 * @return bool
+	 * @return bool|int
 	 * @throws \InvalidArgumentException
 	 */
-	public function add($guid_one, $relationship, $guid_two) {
+	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
 		if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
 			$msg = "relationship name cannot be longer than " . \ElggRelationship::RELATIONSHIP_LIMIT;
 			throw new \InvalidArgumentException($msg);
@@ -124,7 +125,7 @@ class RelationshipsTable {
 		if ($this->check($guid_one, $relationship, $guid_two)) {
 			return false;
 		}
-
+		
 		$sql = "
 			INSERT INTO {$this->db->getTablePrefix()}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
@@ -151,7 +152,7 @@ class RelationshipsTable {
 			return false;
 		}
 
-		return true;
+		return $return_id ? $obj->id : true;
 	}
 
 	/**
