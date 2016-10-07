@@ -62,8 +62,8 @@ function site_notifications_set_topbar() {
 		elgg_register_menu_item('topbar', array(
 			'name' => 'site_notifications',
 			'href' => 'site_notifications/view/' . elgg_get_logged_in_user_entity()->username,
-			'text' => elgg_view_icon('info') . elgg_echo('site_notifications:topbar'),
-			'priority' => 150,
+			'text' => elgg_echo('site_notifications:topbar'),
+			'priority' => 100,
 			'section' => 'alt',
 		));	
 	}

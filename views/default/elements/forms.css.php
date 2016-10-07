@@ -80,6 +80,9 @@ input[type="radio"] {
 input[type="number"] {
 	-moz-appearance: textfield;
 }
+input[type="number"] {
+	-moz-appearance: textfield;
+}
 .elgg-input-checkbox + label,
 .elgg-input-checkbox + .elgg-field-label {
 	display: inline-block;

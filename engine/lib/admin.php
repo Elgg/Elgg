@@ -311,16 +311,6 @@ function _elgg_admin_init() {
 		elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_admin_sort_page_menu');
 	}
 
-	if (elgg_is_admin_logged_in()) {
-		elgg_register_menu_item('topbar', array(
-			'name' => 'administration',
-			'href' => 'admin',
-			'text' => elgg_view_icon('settings') . elgg_echo('admin'),
-			'priority' => 100,
-			'section' => 'alt',
-		));
-	}
-
 	// widgets
 	$widgets = array('online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status');
 	foreach ($widgets as $widget) {

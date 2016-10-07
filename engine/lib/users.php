@@ -764,20 +764,41 @@ function users_pagesetup() {
 
 	// topbar
 	if ($viewer) {
+
+		elgg_register_menu_item('topbar', array(
+			'name' => 'account',
+			'text' => elgg_echo('account'),
+			'href' => "#",
+			'priority' => 900,
+			'section' => 'alt',
+			'link_class' => 'elgg-topbar-dropdown',
+		));
+
 		elgg_register_menu_item('topbar', array(
 			'name' => 'usersettings',
 			'href' => "settings/user/{$viewer->username}",
-			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
-			'priority' => 500,
+			'text' => elgg_echo('settings'),
+			'priority' => 200,
 			'section' => 'alt',
 		));
+
+		if (elgg_is_admin_logged_in()) {
+			elgg_register_menu_item('topbar', array(
+				'name' => 'administration',
+				'parent_name' => 'account',
+				'href' => 'admin',
+				'text' => elgg_echo('admin'),
+				'priority' => 800,
+				'section' => 'alt',
+			));
+		}
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'logout',
 			'href' => "action/logout",
 			'text' => elgg_echo('logout'),
 			'is_action' => true,
-			'priority' => 1000,
+			'priority' => 900,
 			'section' => 'alt',
 		));
 	}
