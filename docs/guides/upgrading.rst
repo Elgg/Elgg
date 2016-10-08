@@ -87,6 +87,25 @@ Form and field related changes
 
 * ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
 
+
+Removed libraries
+-----------------
+
+ * ``elgg:discussion``
+
+Removed pagehandling
+--------------------
+
+ * ``file/download``
+ * ``groupicon``
+ * ``twitterservice``
+
+Removed actions
+---------------
+
+ * ``file/download``: Use ``elgg_get_inline_url`` or ``elgg_get_download_url``
+ * ``import/opendd``
+ 
 Inheritance changes
 -------------------
 
@@ -217,7 +236,7 @@ As a result of these changes:
 Plugins and themes should:
 
  * Update calls to ``elgg_view_layout()`` to use ``default`` layout
- * Update replace `nav` parameter in layout views with `breadcrumbs` parameter
+ * Update replace ``nav`` parameter in layout views with ``breadcrumbs`` parameter
  * Update their use of ``filter`` parameter in layout views by either providing a default set of filter tabs, or setting a ``filter_id`` parameter and using hooks
  * Remove ``page/layouts/one_column`` view
  * Remove ``page/layouts/one_sidebar`` view

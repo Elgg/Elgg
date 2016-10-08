@@ -705,14 +705,8 @@ function elgg_avatar_page_handler($page) {
 
 	if ($page[0] == 'edit') {
 		echo elgg_view_resource("avatar/edit");
-	} else {
-		elgg_deprecated_notice("/avatar/view page handler has been deprecated and will be removed. Use elgg_get_inline_url() instead.", '2.2');
-		echo elgg_view_resource("avatar/view", [
-			'size' => elgg_extract(2, $page),
-		]);
+		return true;
 	}
-
-	return true;
 }
 
 /**
