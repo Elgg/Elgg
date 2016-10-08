@@ -10,8 +10,6 @@ elgg_register_event_handler('init', 'system', 'discussion_init');
  */
 function discussion_init() {
 
-	elgg_register_library('elgg:discussion', __DIR__ . '/lib/discussion.php');
-
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'discussion_set_topic_url');

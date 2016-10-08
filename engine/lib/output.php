@@ -526,22 +526,6 @@ function elgg_html_decode($string) {
 }
 
 /**
- * Alias of elgg_html_decode
- *
- * This is kept in 2.0 because it was used in public views and might have been copied into plugins.
- *
- * @param string $string Encoded HTML
- *
- * @return string
- * @see elgg_html_decode
- * @deprecated
- */
-function _elgg_html_decode($string) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_html_decode()', '2.0');
-	return elgg_html_decode($string);
-}
-
-/**
  * Prepares query string for output to prevent CSRF attacks.
  *
  * @param string $string

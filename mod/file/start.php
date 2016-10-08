@@ -55,8 +55,6 @@ function file_init() {
 	$action_path = __DIR__ . '/actions/file';
 	elgg_register_action("file/upload", "$action_path/upload.php");
 	elgg_register_action("file/delete", "$action_path/delete.php");
-	// temporary - see #2010
-	elgg_register_action("file/download", "$action_path/download.php");
 
 	// cleanup thumbnails on delete. high priority because we want to try to make sure the
 	// deletion will actually occur before we go through with this.
@@ -153,32 +151,7 @@ function file_page_handler($page) {
 		case 'all':
 			file_register_toggle();
 			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
-			if (_elgg_view_may_be_altered('resources/file/world', "$dir/resources/file/world.php")) {
-				elgg_deprecated_notice('The view "resources/file/world" is deprecated. Use "resources/file/all".', 2.3);
-				echo elgg_view_resource('file/world', ['__shown_notice' => true]);
-			} else {
-				echo elgg_view_resource('file/all');
-			}
-			break;
-		case 'download':
-			elgg_deprecated_notice('/file/download page handler has been deprecated and will be removed. Use elgg_get_download_url() to build download URLs', '2.2');
-			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
-			if (_elgg_view_may_be_altered('resources/file/download', "$dir/resources/file/download.php")) {
-				// For BC with 2.0 if a plugin is suspected of using this view we need to use it.
-				echo elgg_view_resource('file/download', [
-					'guid' => $page[1],
-				]);
-			} else {
-				$file = get_entity($page[1]);
-				if (!$file instanceof ElggFile) {
-					return false;
-				}
-				$download_url = elgg_get_download_url($file);
-				if (!$download_url) {
-					return false;
-				}
-				forward($download_url);
-			}
+			echo elgg_view_resource('file/all');
 			break;
 		default:
 			return false;
@@ -461,20 +434,6 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 	}
 
 	$file->deleteIcon();
-}
-
-/**
- * Reset file thumb URLs if file access_id has changed
- * 
- * @param string     $event "update:after"
- * @param string     $type  "object"
- * @param ElggObject $file  File entity
- * @return void
- * @deprecated 2.2
- * @see _elgg_filestore_touch_icons()
- */
-function file_reset_icon_urls($event, $type, ElggObject $file) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is no longer in use and will be removed.', '2.2');
 }
 
 /**

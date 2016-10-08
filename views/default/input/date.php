@@ -18,9 +18,6 @@
  */
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-date');
 
-//@todo popup_calendar deprecated in 1.8.  Remove in 2.0
-$vars['class'][] = 'popup_calendar';
-
 $defaults = array(
 	'value' => '',
 	'disabled' => false,
