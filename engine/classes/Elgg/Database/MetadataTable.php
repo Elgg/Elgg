@@ -573,7 +573,7 @@ class MetadataTable {
 			if (!is_array($names)) {
 				$names = array($names);
 			}
-	
+
 			$sanitised_names = array();
 			foreach ($names as $name) {
 				// normalise to 0.
@@ -584,8 +584,10 @@ class MetadataTable {
 			}
 	
 			if ($names_str = implode(',', $sanitised_names)) {
-				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn on n_table.name_id = msn.id";
-				$names_where = "(msn.string IN ($names_str))";
+				$names_where = "(n_table.name_id IN (
+					SELECT id FROM {$this->db->getTablePrefix()}metastrings
+					WHERE string IN ($names_str)
+				))";
 			}
 		}
 	
@@ -606,8 +608,10 @@ class MetadataTable {
 			}
 	
 			if ($values_str = implode(',', $sanitised_values)) {
-				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv on n_table.value_id = msv.id";
-				$values_where = "({$binary}msv.string IN ($values_str))";
+				$values_where = "(n_table.value_id IN (
+					SELECT id FROM {$this->db->getTablePrefix()}metastrings
+					WHERE $binary string IN ($values_str)
+				))";
 			}
 		}
 	

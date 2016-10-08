@@ -414,8 +414,10 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		}
 
 		if ($names_str = implode(',', $sanitised_names)) {
-			$return['joins'][] = "JOIN {$db_prefix}metastrings msn on $table.name_id = msn.id";
-			$names_where = "(msn.string IN ($names_str))";
+			$names_where = "($table.name_id IN (
+				SELECT id FROM {$db_prefix}metastrings
+				WHERE string IN ($names_str)
+			))";
 		}
 	}
 
@@ -436,8 +438,10 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		}
 
 		if ($values_str = implode(',', $sanitised_values)) {
-			$return['joins'][] = "JOIN {$db_prefix}metastrings msv on $table.value_id = msv.id";
-			$values_where = "({$binary}msv.string IN ($values_str))";
+			$values_where = "($table.value_id IN (
+				SELECT id FROM {$db_prefix}metastrings
+				WHERE $binary string IN ($values_str)
+			))";
 		}
 	}
 
@@ -727,6 +731,16 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 			} else {
 				$options['order_by'] = "$order_by_metadata, e.time_created DESC";
 			}
+		}
+	}
+
+	// a user may expect the n_table to be present and reference it in a join, but this will
+	// fail if the n_table is joined *after*. So here we find the n_table join and place it first.
+	foreach ($options['joins'] as $k => $join) {
+		if (preg_match("~$n_table n_table\\b~", $join)) {
+			unset($options['joins'][$k]);
+			array_unshift($options['joins'], $join);
+			break;
 		}
 	}
 
