@@ -7,8 +7,8 @@
 
 elgg_require_js('elgg/thewire');
 
-$full = elgg_extract('full_view', $vars, FALSE);
-$post = elgg_extract('entity', $vars, FALSE);
+$full = elgg_extract('full_view', $vars, false);
+$post = elgg_extract('entity', $vars, false);
 
 if (!$post) {
 	return true;
@@ -20,18 +20,7 @@ if (!$thread_id) {
 	$post->wire_thread = $post->guid;
 }
 
-$owner = $post->getOwnerEntity();
-
-$owner_icon = elgg_view_entity_icon($owner, 'tiny');
-$owner_link = elgg_view('output/url', array(
-	'href' => "thewire/owner/$owner->username",
-	'text' => $owner->name,
-	'is_trusted' => true,
-));
-$author_text = elgg_echo('byline', array($owner_link));
-$date = elgg_view_friendly_time($post->time_created);
-
-$subtitle = "$author_text $date";
+$subtitle = elgg_view('page/elements/by_line', $vars);
 
 $metadata = '';
 if (!elgg_in_context('widgets')) {
@@ -51,13 +40,17 @@ $params = array(
 	'subtitle' => $subtitle,
 	'content' => thewire_filter($post->description),
 	'tags' => false,
-	'icon' => $owner_icon,
+	'icon' => elgg_view_entity_icon($post->getOwnerEntity(), 'tiny'),
 	'class' => 'thewire-post',
 );
 $params = $params + $vars;
 echo elgg_view('object/elements/summary', $params);
 
-if ($post->reply) {
-	echo "<div class=\"thewire-parent hidden\" id=\"thewire-previous-{$post->guid}\">";
-	echo "</div>";
+if (!$post->reply) {
+	return;
 }
+
+echo elgg_format_element('div', [
+	'class' => 'thewire-parent hidden',
+	'id' => "thewire-previous-{$post->guid}",
+]);

@@ -3,24 +3,12 @@
  * Forum reply entity view
 */
 
-$reply = elgg_extract('entity', $vars, FALSE);
+$reply = elgg_extract('entity', $vars, false);
 /* @var ElggDiscussionReply $reply */
 
 if (!$reply) {
 	return true;
 }
-
-$poster = $reply->getOwnerEntity();
-
-$poster_icon = elgg_view_entity_icon($poster, 'tiny');
-$poster_link = elgg_view('output/url', array(
-	'href' => $poster->getURL(),
-	'text' => $poster->name,
-	'is_trusted' => true,
-));
-$poster_text = elgg_echo('byline', array($poster->name));
-
-$date = elgg_view_friendly_time($reply->time_created);
 
 $metadata = '';
 if (!elgg_in_context('widgets')) {
@@ -39,34 +27,22 @@ if (elgg_in_context('activity')) {
 		'value' => elgg_get_excerpt($reply->description)
 	));
 	$content .= '</div>';
-
-	$date_link = elgg_view('output/url', [
-		'href' => $reply->getURL(),
-		'text' => $date,
-		'is_trusted' => true,
-	]);
 } else {
 	$content = elgg_view('output/longtext', array(
 		'value' => $reply->description,
 		'class' => 'elgg-inner',
 		'data-role' => 'discussion-reply-text',
 	));
-
-	$date_link = elgg_view('output/url', [
-		'href' => $reply->getURL(),
-		'text' => $date,
-		'is_trusted' => true,
-	]);
 }
 
-$subtitle = "$poster_text $date_link";
+$subtitle = elgg_view('page/elements/by_line', ['entity' => $reply]);
 
 $params = array(
 	'entity' => $reply,
 	'metadata' => $metadata,
 	'subtitle' => $subtitle,
 	'content' => $content,
-	'icon' => $poster_icon,
+	'icon' => elgg_view_entity_icon($reply->getOwnerEntity(), 'tiny'),
 );
 $params = $params + $vars;
 echo elgg_view('object/elements/summary', $params);
