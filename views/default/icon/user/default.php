@@ -78,7 +78,6 @@ if ($show_menu) {
 		'username' => $username,
 		'name' => $name,
 	];
-	echo elgg_view_icon('hover-menu');
 	echo elgg_view('navigation/menu/user_hover/placeholder', ['entity' => $user]);
 }
 
