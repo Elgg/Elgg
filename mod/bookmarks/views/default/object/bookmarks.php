@@ -19,7 +19,6 @@ $categories = elgg_view('output/categories', $vars);
 $link = elgg_view('output/url', array('href' => $bookmark->address));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
-$vars['owner_url'] = "bookmarks/owner/$owner->username";
 $by_line = elgg_view('page/elements/by_line', $vars);
 
 $comments_count = $bookmark->countComments();

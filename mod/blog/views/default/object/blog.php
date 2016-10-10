@@ -21,7 +21,6 @@ if (!$excerpt) {
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 
-$vars['owner_url'] = "blog/owner/$owner->username";
 $by_line = elgg_view('page/elements/by_line', $vars);
 
 // The "on" status changes for comments, so best to check for !Off

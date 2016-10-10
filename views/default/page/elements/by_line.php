@@ -20,10 +20,8 @@ $by_line = [];
 $owner = $entity->getOwnerEntity();
 if ($owner instanceof ElggEntity) {
 	if ($show_links) {
-		$owner_url = elgg_extract('owner_url', $vars, $owner->getURL());
-		
 		$owner_text = elgg_view('output/url', [
-			'href' => $owner_url,
+			'href' => $owner->getURL(),
 			'text' => $owner->name,
 			'is_trusted' => true,
 		]);
