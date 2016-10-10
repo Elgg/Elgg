@@ -1,13 +1,14 @@
-/* <style> /**/
-
 /* ***************************************
 	MISC
 *************************************** */
 #login-dropdown {
 	position: absolute;
-	top:10px;
-	right:0;
+	top: 0;
+	right: 0;
 	z-index: 100;
+}
+#login-dropdown a {
+	padding: 14px 18px;
 }
 
 /* ***************************************
@@ -15,10 +16,10 @@
 *************************************** */
 
 #current-user-avatar {
-	border-right:1px solid #ccc;
+	border-right: 1px solid #EBEBEB;
 }
 #avatar-croppingtool {
-	border-top: 1px solid #ccc;
+	border-top: 1px solid #DCDCDC;
 }
 #user-avatar-cropper {
 	float: left;
@@ -39,23 +40,23 @@
 	color: #666;
 }
 #friends_collections_accordian li h2 {
-	border-radius: 8px;	
-	background: none repeat scroll 0 0 #4690D6;
-	color: white;
+	border-radius: 3px;
+	background: none repeat scroll 0 0 #F0F0F0;
+	color: #444;
 	cursor: pointer;
 	font-size: 1.2em;
 	margin: 10px 0;
-	padding: 4px 2px 4px 6px;
+	padding: 10px;
 }
 #friends_collections_accordian li h2:hover {
-	background-color: #333;
+	background-color: #E5E5E5;
 }
 #friends_collections_accordian .friends_collections_controls {
 	float: right;
 	font-size: 70%;
 }
 #friends_collections_accordian .friends-picker-main-wrapper {
-	background: none repeat scroll 0 0 white;
+	background: none repeat scroll 0 0 #FFF;
 	display: none;
 	padding: 0;
 }

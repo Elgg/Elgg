@@ -2,7 +2,7 @@
 	Custom Index
 ********************************/
 .custom-index {
-	padding: 10px 0;
+	padding: 22px 0 10px;
 }
 .custom-index-col1 > .elgg-inner {
 	padding-right: 10px;
@@ -11,8 +11,14 @@
 	padding-left: 10px;
 }
 .elgg-module-highlight {
-	box-shadow: 1px 1px 5px #CCC;
+	border: 1px solid #DCDCDC;
 }
 .elgg-module-highlight:hover {
-	box-shadow: 1px 1px 6px #AAA;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 820px) {
+	.custom-index-col1 > .elgg-inner,
+	.custom-index-col2 > .elgg-inner {
+		padding: 0;
+	}
 }

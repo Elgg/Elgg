@@ -36,6 +36,11 @@ html, body {
 	height: 100%;
 	margin-bottom: 1px;
 }
+html {
+	font-size: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
 img {
 	border-width:0;
 	border-color:transparent;

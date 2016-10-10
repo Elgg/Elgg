@@ -48,6 +48,20 @@ h6 > .elgg-icon {
 	bottom: 0px;
 }
 
+.elgg-icon-hover-menu-hover,
+.elgg-icon-hover-menu,
+.elgg-icon-hover-menu:hover,
+:focus > .elgg-icon-hover-menu {
+	width: 100%;
+	height: 100%;
+}
+.elgg-icon-hover-menu-hover:before,
+.elgg-icon-hover-menu:before {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
 .elgg-ajax-loader {
 	background: white url(<?= elgg_get_simplecache_url("ajax_loader_bw.gif"); ?>) no-repeat center center;
 	min-height: 31px;

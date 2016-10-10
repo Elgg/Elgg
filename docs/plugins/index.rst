@@ -19,7 +19,6 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
 
 The following plugins are also bundled with Elgg, but are not (yet) documented
 
-- aalborg_theme
 - bookmarks
 - ckeditor
 - custom_index

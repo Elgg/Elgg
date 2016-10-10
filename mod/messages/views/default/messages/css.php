@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Messages CSS
- * 
+ *
  * @package ElggMessages
  */
 ?>
@@ -10,7 +10,7 @@
 	min-height: 200px;
 }
 .message.unread a {
-	color: #d40005;
+	color: #D40005;
 }
 .messages-buttonbank {
 	text-align: right;
@@ -41,13 +41,14 @@
 }
 /*** topbar icon ***/
 .messages-new {
-	color: white;
-	background-color: red;
+	color: #FFF;
+	background-color: #FF0000;
 	border-radius: 10px;
-	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);	
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
 	position: absolute;
 	text-align: center;
-	top: 0px;
+	line-height: 14px;
+	top: 4px;
 	left: 26px;
 	min-width: 16px;
 	height: 16px;

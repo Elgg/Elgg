@@ -1,147 +1,99 @@
-<?php
-/**
- * CSS buttons
- *
- * @package Elgg.Core
- * @subpackage UI
- */
-?>
 /* <style> /**/
-
+	
 /* **************************
 	BUTTONS
 ************************** */
-
-/* Base */
 .elgg-button {
-	font-size: 14px;
-	font-weight: bold;
-	border-radius: 5px;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	color: #FFF;
 	width: auto;
-	padding: 2px 4px;
+	padding: 6px 12px;
 	cursor: pointer;
-	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
-	background-color: #ccc;
-}
-a.elgg-button {
-	padding: 3px 6px;
-}
+	border-radius: 3px;
+	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
 
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .elgg-button:hover,
 .elgg-button:focus {
-	background: #eee;
-}
-
-/* Submit: This button should convey, "you're about to take some definitive action" */
-.elgg-button-submit {
-	color: white;
-	text-shadow: 1px 1px 0px black;
 	text-decoration: none;
-	border: 1px solid #4690d6;
-	background: #4690d6 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
 }
-
+.elgg-button-submit {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #4787B8;
+}
 .elgg-button-submit:hover,
 .elgg-button-submit:focus {
-	border-color: #0054a7;
-	text-decoration: none;
-	color: white;
-	background: #0054a7 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
+	background: #60B6F7;
 }
-
-/* Cancel: This button should convey a negative but easily reversible action (e.g., turning off a plugin) */
 .elgg-button-cancel {
-	color: #333;
-	background: #ddd url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
-	border: 1px solid #999;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #FAA51A;
 }
 .elgg-button-cancel:hover,
 .elgg-button-cancel:focus {
-	color: #444;
-	background-color: #999;
-	background-position: left 10px;
-	text-decoration: none;
+	background: #E38F07;
 }
-
-/* Action: This button should convey a normal, inconsequential action, such as clicking a link */
 .elgg-button-action {
-	background: #ccc url(<?= elgg_get_simplecache_url("button_background.gif"); ?>) repeat-x 0 0;
-	border:1px solid #999;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #F0F0F0;
 	color: #333;
-	padding: 2px 15px;
-	text-align: center;
-	font-weight: bold;
-	text-decoration: none;
-	text-shadow: 0 1px 0 white;
-	cursor: pointer;
-	border-radius: 5px;
-	box-shadow: none;
 }
-
 .elgg-button-action:hover,
 .elgg-button-action:focus {
-	background: #ccc url(<?= elgg_get_simplecache_url("button_background.gif"); ?>) repeat-x 0 -15px;
-	color: #111;
-	text-decoration: none;
-	border: 1px solid #999;
+	background: #DEDEDE;
+	color: #333;
 }
-
-/* Delete: This button should convey "be careful before you click me" */
 .elgg-button-delete {
-	color: #bbb;
-	text-decoration: none;
-	border: 1px solid #333;
-	background: #555 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
-	text-shadow: 1px 1px 0px black;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #FF3300;
 }
 .elgg-button-delete:hover,
 .elgg-button-delete:focus {
-	color: #999;
-	background-color: #333;
-	background-position: left 10px;
-	text-decoration: none;
+	background: #D63006;
 }
-
 .elgg-button-dropdown {
-	padding:3px 6px;
-	text-decoration:none;
-	display:block;
-	font-weight:bold;
-	position:relative;
-	margin-left:0;
-	color: white;
-	background-color: transparent;
-	border:1px solid #71B9F7;
-	border-radius:4px;
-	box-shadow: 0 0 0;
+	background: none;
+	text-decoration: none;
+	display: block;
+	position: relative;
+	margin-left: 0;
+	color: #FFF;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
 }
-
-.elgg-button-dropdown:after {
-	content: " \25BC ";
-	font-size:smaller;
-}
-
-.elgg-button-dropdown:hover {
-	background-color:#71B9F7;
-	text-decoration:none;
-}
-.elgg-button-dropdown:focus {
+.elgg-button-dropdown:hover,
+.elgg-button-dropdown:focus,
+.elgg-button-dropdown.elgg-state-active {
+	color: #FFF;
+	background: #60B8F7;
 	text-decoration: none;
 }
-.elgg-button-dropdown.elgg-state-active {
-	background: #ccc;
-	outline: none;
-	color: #333;
-	border:1px solid #ccc;
-	border-radius:4px 4px 0 0;
+.elgg-button-special {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #42C5B8;
 }
-
+.elgg-button-special:hover,
+.elgg-button-special:focus {
+	background: #5ED9CD;
+}
 .elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
-	background: #999;
-	border-color: #999;
-	color: #666;
-	text-shadow: 0 0;
-	text-decoration: none;
+	background: #DEDEDE;
 	cursor: default;
+	color: white;
+}
+/* Use .elgg-size-small or .elgg-size-large for additional sizes */
+.elgg-button.elgg-size-small {
+	font-size: 12px;
+	padding: 4px 8px;
+}
+.elgg-button.elgg-size-large {
+	font-size: 20px;
+	padding: 14px 20px;
+	margin: 15px 0;
+	border-radius: 5px;
 }

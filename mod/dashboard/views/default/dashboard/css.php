@@ -5,6 +5,12 @@
 ?>
 
 #dashboard-info {
-	border: 2px solid #dedede;
-	margin-bottom: 15px;
+	border: 1px solid #DCDCDC;
+	margin: 0 10px 15px;
+}
+
+@media (max-width: 820px) {
+	#dashboard-info {
+		margin: 0 0 15px;
+	}
 }

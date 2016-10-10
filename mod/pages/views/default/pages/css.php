@@ -6,14 +6,16 @@
  */
 ?>
 
+.pages-nav a {
+	color: #444;
+}
 .pages-nav.treeview ul {
 	background-color: transparent;
 }
-
 .pages-nav.treeview a.selected {
-	color: #555555;
+	color: #999;
+	background: none;
 }
-
 .pages-nav.treeview .hover {
-	color: #0054a7;
+	color: #999;
 }

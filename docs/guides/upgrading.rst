@@ -27,8 +27,6 @@ Removed views
  * ``page/layouts/one_sidebar``: use ``page/layouts/default``
  * ``page/layouts/two_sidebar``: use ``page/layouts/default``
  * ``page/layouts/two_column_left_sidebar``
- * ``page/layouts/one_sidebar`` in Aalborg theme
- * ``page/layouts/two_sidebar`` in Aalborg theme
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
  * ``notifications/subscriptions/personal``
@@ -37,6 +35,8 @@ Removed views
  * ``notifications/subscriptions/jsfuncs``
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
+ * ``aalborg_theme/homepage.png``
+ * ``aalborg_theme/css``
 
 Removed functions/methods
 -------------------------
@@ -263,6 +263,18 @@ required to make the old interface work.
 
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
+
+Aalborg theme is now in core
+----------------------------
+
+Aalborg theme is no longer bundled with Elgg, instead all styles have been either moved to core views or to an appropriate core plugin.
+
+This change may affect themes and plugins that were developed without Aalborg stylesheets loaded or were relying on a certain priority of views with Aalborg stylesheets loaded.
+
+Notable changes in plugins:
+
+ * search plugin no longer extends ``page/elements/header`` and instead extends ``page/elements/sidebar``
+ * topbar menu items might now have a new parent item or be found in a different section
 
 From 2.2 to 2.3
 ===============

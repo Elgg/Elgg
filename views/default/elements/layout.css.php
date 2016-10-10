@@ -1,29 +1,29 @@
-<?php
+//<style>
 /**
  * Page Layout
  *
  * Contains CSS for the page shell and page layout
  *
  * Default layout: 990px wide, centered. Used in default page shell
- *
- * @package Elgg.Core
- * @subpackage UI
  */
-?>
-/* <style> /**/
 
 /* ***************************************
 	PAGE LAYOUT
 *************************************** */
 /***** DEFAULT LAYOUT ******/
-<?php // the width is on the page rather than topbar to handle small viewports ?>
+/* the width is on the page rather than topbar to handle small viewports */
 .elgg-page-default {
 	min-width: 800px;
 }
 .elgg-page-default .elgg-page-header > .elgg-inner {
 	max-width: 990px;
 	margin: 0 auto;
-	height: 90px;
+	min-height: 65px;
+}
+.elgg-page-default .elgg-page-navbar > .elgg-inner {
+	max-width: 990px;
+	margin: 0 auto;
+	height: auto;
 }
 .elgg-page-default .elgg-page-body > .elgg-inner {
 	max-width: 990px;
@@ -38,18 +38,19 @@
 
 /***** TOPBAR ******/
 .elgg-page-topbar {
-	background: #333333 url(<?= elgg_get_simplecache_url("toptoolbar_background.gif"); ?>) repeat-x top left;
+	background: #424242;
+	border-top: 1px solid #424242;
 	border-bottom: 1px solid #000000;
-	padding: 0 10px;
+	padding: 0 20px;
 	position: relative;
-	height: 24px;
+	height: 32px;
 	z-index: 9000;
 }
 
 /***** PAGE MESSAGES ******/
 .elgg-system-messages {
 	position: fixed;
-	top: 24px;
+	top: 32px;
 	right: 20px;
 	max-width: 500px;
 	z-index: 2000;
@@ -63,54 +64,67 @@
 
 /***** PAGE HEADER ******/
 .elgg-page-header {
-	padding: 0 10px;
+	padding: 5px 20px 10px;
 	position: relative;
-	background: #4690D6 url(<?= elgg_get_simplecache_url("header_shadow.png"); ?>) repeat-x bottom left;
+	background: #60B8F7;
 }
 .elgg-page-header > .elgg-inner {
+	position: relative;
+}
+/***** PAGE NAVBAR ******/
+.elgg-page-navbar {
+	padding: 0 20px;
+	position: relative;
+	background: #4787B8;
+}
+.elgg-page-navbar > .elgg-inner {
 	position: relative;
 }
 
 /***** PAGE BODY LAYOUT ******/
 .elgg-page-body {
-	padding: 0 10px;
+	padding: 0 20px;
 }
 
 .elgg-layout {
 	min-height: 360px;
-}
-.elgg-layout-one-sidebar {
-	background: transparent url(<?= elgg_get_simplecache_url("sidebar_background.gif"); ?>) repeat-y right top;
-}
-.elgg-layout-two-sidebar {
-	background: transparent url(<?= elgg_get_simplecache_url("two_sidebar_background.gif"); ?>) repeat-y right top;
 }
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
 .elgg-sidebar {
 	position: relative;
-	padding: 20px 10px;
+	padding: 32px 0 20px 30px;
 	float: right;
-	width: 210px;
-	margin: 0 0 0 10px;
+	width: 21.212121%;
+	margin: 0;
+	border-left: 1px solid #EBEBEB;
 }
 .elgg-sidebar-alt {
 	position: relative;
-	padding: 20px 10px;
+	padding: 32px 30px 20px 0;
 	float: left;
-	width: 160px;
-	margin: 0 10px 0 0;
+	width: 16.161616%;
+	margin: 0 30px 0 0;
+	border-right: 1px solid #EBEBEB;
 }
 .elgg-main {
 	position: relative;
 	min-height: 360px;
-	padding: 10px;
+	padding: 12px 0 10px 0;
 }
 .elgg-main > .elgg-head {
-	padding-bottom: 3px;
-	border-bottom: 1px solid #CCCCCC;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #EBEBEB;
 	margin-bottom: 10px;
+}
+.elgg-layout-one-sidebar .elgg-main {
+	float: left;
+	width: 72.525252%;
+}
+.elgg-layout-two-sidebar .elgg-main {
+	float: left;
+	width: 50.101010%;
 }
 
 /***** PAGE FOOTER ******/
@@ -122,4 +136,50 @@
 
 .elgg-page-footer a:hover {
 	color: #666;
+}
+
+@media (max-width: 1030px) {
+	.elgg-page-footer {
+		padding: 0 20px;
+	}
+}
+
+@media (max-width: 820px) {
+	.elgg-page-default {
+		min-width: 0;
+	}
+	.elgg-page-body {
+		padding: 0;
+	}
+	.elgg-main {
+        padding: 12px 20px 10px;
+
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+    }
+    .elgg-layout-one-sidebar .elgg-main,
+	.elgg-layout-two-sidebar .elgg-main {
+        width: 100%;
+    }
+	.elgg-sidebar {
+		border-left: none;
+		border-top: 1px solid #DCDCDC;
+		border-bottom: 1px solid #DCDCDC;
+		background-color: #FAFAFA;
+		width: 100%;
+		float: left;
+		padding: 27px 20px 20px;
+		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05) inset;
+
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	.elgg-sidebar-alt {
+		display: none;
+	}
+	.elgg-page-default .elgg-page-footer > .elgg-inner {
+		border-top: none;
+	}
 }

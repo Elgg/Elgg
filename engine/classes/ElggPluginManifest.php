@@ -382,7 +382,6 @@ class ElggPluginManifest {
 	 */
 	public function getCategories() {
 		$bundled_plugins = array(
-			'aalborg_theme',
 			'blog',
 			'bookmarks',
 			'ckeditor',

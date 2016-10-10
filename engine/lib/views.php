@@ -561,7 +561,7 @@ function _elgg_views_prepare_head($title) {
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
 	$params['metas']['viewport'] = array(
 		'name' => 'viewport',
-		'content' => 'width=device-width',
+		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
 	);
 	$params['metas']['mobile-web-app-capable'] = array(
 		'name' => 'mobile-web-app-capable',
