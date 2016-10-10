@@ -1,35 +1,52 @@
 <?php
+/**
+ * Shows a line with information about who created a piece of content
+ *
+ * Generally used a entity summary.
+ *
+ * @uses $vars['entity']     The entity to show the by line for
+ * @uses $vars['show_links'] Owner and container text should show as links (default: true)
+ */
 
 $entity = elgg_extract('entity', $vars);
 if (!($entity instanceof ElggEntity)) {
 	return;
 }
 
+$show_links = elgg_extract('show_links', $vars, true);
+
 $by_line = [];
 
 $owner = $entity->getOwnerEntity();
 if ($owner instanceof ElggEntity) {
-	$owner_url = elgg_extract('owner_url', $vars, $owner->getURL());
+	if ($show_links) {
+		$owner_text = elgg_view('output/url', [
+			'href' => $owner->getURL(),
+			'text' => $owner->name,
+			'is_trusted' => true,
+		]);
+	} else {
+		$owner_text = $owner->name;
+	}
 	
-	$owner_link = elgg_view('output/url', [
-		'href' => $owner_url,
-		'text' => $owner->name,
-		'is_trusted' => true,
-	]);
-	
-	$by_line[] = elgg_echo('byline', array($owner_link));
+	$by_line[] = elgg_echo('byline', [$owner_text]);
 }
 
 $by_line[] = elgg_view_friendly_time($entity->time_created);
 
 $container_entity = $entity->getContainerEntity();
 if ($container_entity instanceof ElggGroup && ($container_entity->getGUID() !== elgg_get_page_owner_guid())) {
-	$group_link = elgg_view('output/url', [
-		'href' => $container_entity->getURL(),
-		'text' => $container_entity->name,
-		'is_trusted' => true,
-	]);
-	$by_line[] = elgg_echo("byline:ingroup", [$group_link]);
+	if ($show_links) {
+		$group_text = elgg_view('output/url', [
+			'href' => $container_entity->getURL(),
+			'text' => $container_entity->name,
+			'is_trusted' => true,
+		]);
+	} else {
+		$group_text = $container_entity->name;
+	}
+
+	$by_line[] = elgg_echo('byline:ingroup', [$group_text]);
 }
 
 if (!empty($by_line)) {

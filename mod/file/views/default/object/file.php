@@ -15,7 +15,6 @@ if (!$file) {
 $owner = $file->getOwnerEntity();
 $categories = elgg_view('output/categories', $vars);
 
-$vars['owner_url'] = "file/owner/$owner->username";
 $by_line = elgg_view('page/elements/by_line', $vars);
 
 $comments_count = $file->countComments();

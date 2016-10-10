@@ -5,7 +5,7 @@
  * @uses $vars['entity'] ElggEntity object
  */
 
-$entity = $vars['entity'];
+$entity = elgg_extract('entity', $vars);
 
 $title = $entity->title;
 if (!$title) {
@@ -17,14 +17,10 @@ $title = isset($entity->name) ? $entity->name : $entity->title;
 // don't let it be too long
 $title = elgg_get_excerpt($title);
 
-$owner = $entity->getOwnerEntity();
-if ($owner) {
-	$author_text = elgg_echo('byline', array($owner->name));
-	$date = elgg_view_friendly_time($entity->time_created);
-	$subtitle = "$author_text $date";
-} else {
-	$subtitle = '';
-}
+$subtitle = elgg_view('page/elements/by_line', [
+	'entity' => $entity,
+	'show_links' => false,
+]);
 
 $image = elgg_view_entity_icon($entity, 'small', array('link_class' => 'embed-insert'));
 
