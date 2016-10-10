@@ -5,7 +5,7 @@
  * @uses $vars['body']
  */
 
-echo elgg_view_layout('one_sidebar', array(
+echo elgg_view_layout('one_sidebar', [
 	'title' => $vars['title'],
-	'content' => $vars['body']
-));
+	'content' => $vars['body'],
+]);

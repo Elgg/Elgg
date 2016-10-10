@@ -36,6 +36,7 @@ Removed views
  * ``notifications/subscriptions/jsfuncs``
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
+ * ``search/startblurb``
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``

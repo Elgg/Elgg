@@ -13,7 +13,7 @@
  * @uses $vars['entity'] Entity returned in a search
  */
 
-$entity = $vars['entity'];
+$entity = elgg_extract('entity', $vars);
 
 $icon = $entity->getVolatileData('search_icon');
 if (!$icon) {
@@ -34,13 +34,13 @@ if (!$icon) {
 $title = $entity->getVolatileData('search_matched_title');
 $description = $entity->getVolatileData('search_matched_description');
 $extra_info = $entity->getVolatileData('search_matched_extra');
-$url = $entity->getVolatileData('search_url');
+$url = $entity->getVolatileData('search_url') ?: $entity->getURL();
 
-if (!$url) {
-	$url = $entity->getURL();
-}
+$title = elgg_view('output/url', [
+	'href' => $url,
+	'text' => $title,
+]);
 
-$title = "<a href=\"$url\">$title</a>";
 $time = $entity->getVolatileData('search_time');
 if (!$time) {
 	$tc = $entity->time_created;
