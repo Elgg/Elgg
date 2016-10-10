@@ -247,6 +247,37 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	}
 
 	/**
+	 * Test #10398 -- elgg_parse_emails()
+	 * https://github.com/Elgg/Elgg/pull/10398
+	 */
+	public function test_elgg_parse_emails() {
+
+		$cases = array(
+			'no.email.here' =>
+				'no.email.here',
+			'simple email mail@test.com test' =>
+				'simple email <a href="mailto:mail@test.com" rel="nofollow">mail@test.com</a> test',
+			'simple paragraph <p>mail@test.com</p>' =>
+				'simple paragraph <p><a href="mailto:mail@test.com" rel="nofollow">mail@test.com</a></p>',
+			'multiple matches mail@test.com test mail@test.com test' =>
+				'multiple matches <a href="mailto:mail@test.com" rel="nofollow">mail@test.com</a> test <a href="mailto:mail@test.com" rel="nofollow">mail@test.com</a> test',
+			'invalid email 1 @invalid.com test' =>
+				'invalid email 1 @invalid.com test',
+			'invalid email 2 mail@invalid. test' =>
+				'invalid email 2 mail@invalid. test',
+			'no double parsing <a href="mailto:mail@test.com" rel="nofollow">mail@test.com</a> test' =>
+				'no double parsing <a href="mailto:mail@test.com" rel="nofollow">mail@test.com</a> test',
+			'no double parsing 2 <a href="#">mail@test.com</a> test' =>
+				'no double parsing 2 <a href="#">mail@test.com</a> test',
+			'no double parsing 3 <a href="#">with a lot of text - mail@test.com - around it</a> test' =>
+				'no double parsing 3 <a href="#">with a lot of text - mail@test.com - around it</a> test',
+		);
+		foreach ($cases as $input => $output) {
+			$this->assertEqual($output, elgg_parse_emails($input));
+		}
+	}
+
+	/**
 	 * Ensure additional select columns do not end up in entity attributes.
 	 *
 	 * https://github.com/Elgg/Elgg/issues/5538

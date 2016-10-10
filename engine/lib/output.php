@@ -45,6 +45,28 @@ function parse_urls($text) {
 }
 
 /**
+ * Takes a string and turns any email addresses into formatted links
+ *
+ * @param string $text The input string
+ *
+ * @return string The output string with formatted links
+ *
+ * @since 3.0
+ */
+function elgg_parse_emails($text) {
+	$search  = '/<a(?:\s[^>]*)?>[\W\w]*?<\/a>|([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})(?:\s|$|<)/';
+
+	return preg_replace_callback($search, function($email) {
+		if (!isset($email[1])) {
+			return $email[0];
+		}
+		$after = substr($email[0], strlen($email[1]));
+		
+		return "<a href=\"mailto:{$email[1]}\" rel=\"nofollow\">$email[1]</a>" . $after;
+	}, $text);
+}
+
+/**
  * Create paragraphs from text with line spacing
  *
  * @param string $string The string
