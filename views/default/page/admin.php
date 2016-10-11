@@ -11,21 +11,10 @@
  */
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
-
-$notices_html = '';
-$notices = elgg_get_admin_notices();
-if ($notices) {
-	foreach ($notices as $notice) {
-		$notices_html .= elgg_view_entity($notice);
-	}
-
-	$notices_html = "<div class=\"elgg-admin-notices\">$notices_html</div>";
-}
-
 $header = elgg_view('admin/header', $vars);
 
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
-$messages .= $notices_html;
+$messages .= elgg_view('page/elements/admin_notices', $vars);
 
 $content = $vars["body"];
 
