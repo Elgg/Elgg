@@ -33,10 +33,17 @@ $anchor4 = elgg_view('output/url', [
 	]),
 ]);
 
+$anchor5 = elgg_view('output/url', [
+	'href' => '#anchor3',
+	'text' => 'Anchor with indicator',
+	'icon' => 'bank',
+	'indicator' => '500$',
+]);
+
 ?>
 <p>Lorem ipsum dolor sit amet (<?= $anchor1 ?>)
 adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec
-faucibus. Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam libero
+faucibus. Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam <?= $anchor5 ?> libero
 nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. Praesent
 mattis, massa quis luctus <?= $anchor2 ?>, turpis mi volutpat justo, eu
 volutpat enim diam eget metus. Maecenas ornare tortor. Donec sed tellus

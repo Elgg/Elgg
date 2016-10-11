@@ -26,8 +26,9 @@ function reportedcontent_init() {
 		elgg_register_menu_item('extras', array(
 			'name' => 'report_this',
 			'href' => 'reportedcontent/add',
+			'text' => elgg_echo('reportedcontent:this'),
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
-			'text' => elgg_view_icon('report-this'),
+			'icon' => 'report-this',
 			'priority' => 500,
 			'section' => 'default',
 			'link_class' => 'elgg-lightbox',

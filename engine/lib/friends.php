@@ -61,13 +61,14 @@ function _elgg_friends_page_setup() {
 
 	// topbar
 	if ($viewer) {
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item('topbar', [
 			'name' => 'friends',
 			'href' => "friends/{$viewer->username}",
-			'text' => elgg_view_icon('users'),
+			'text' => elgg_echo('friends'),
 			'title' => elgg_echo('friends'),
 			'priority' => 300,
-		));
+			'icon' => 'users',
+		]);
 	}
 }
 

@@ -69,6 +69,8 @@ All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https:/
  * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
  * ``Logger::getClassName``: Use ``get_class()``
  * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
+ * ``profile_pagesetup``
+ * ``groups_setup_sidebar_menus``
 
 Removed global vars
 -------------------
@@ -88,6 +90,7 @@ Form and field related changes
  * ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
  * ``input/submit``, ``input/reset`` and ``input/button`` are now rendered with a ``<button>`` instead of the ``<input>`` tag. These input view also accept ``text`` and ``icon`` parameters.
  * ``output/url`` now sets ``.elgg-anchor`` class on anchor elements and accepts ``icon`` parameter. If not ``text`` is set, the ``href`` parameter used as a label will be restricted to 100 characters.
+ * ``output/url`` now support ``indicator`` parameter, which can be used where a counter, a badge or similar is required as a postfix (mainly in menu items that have counters).
 
 Removed libraries
 -----------------
@@ -282,6 +285,8 @@ Notable changes in plugins:
 Menu changes
 ------------
 
+Support for ``icon`` and ``indicator`` parameters was added. Plugins should start using these parameters and prefer them to a single ``text`` parameter. CSS should be used to control visibility of the label, icon and indicator, instead of conditionals in preparing menu items.
+
 ``topbar`` menu:
 
  * ``account`` menu item with priority ``800`` added to ``alt`` section
@@ -290,7 +295,14 @@ Menu changes
  * ``administration`` menu item is now a child of ``account`` with priority ``800``
  * ``logout`` menu item is now a child of ``account`` with priority ``900``
  * ``dashboard`` menu item now has priority of ``100``
+ * In ``default`` section (``profile``, ``friends``, ``messages``), core menu items now use ``icon`` parameter and use CSS to hide the label. Plugins that register items to this section and expect a visible label need to update their CSS.
+ * ``profile`` menu item no longer registered at ``pagesetup``, uses ``icon`` parameter
+ * ``friends`` menu item now uses ``icon`` parameter
+ * ``messages`` menu item now uses ``icon`` and ``indicator`` parameters
 
+``extras`` menu:
+
+ * ``bookmark``, ``report_this`` and ``rss`` menu items now use ``icon`` parameter
 
 From 2.2 to 2.3
 ===============

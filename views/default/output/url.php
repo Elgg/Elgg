@@ -11,7 +11,8 @@
  * @uses mixed  $vars['confirm']     Confirmation dialog text | (bool) true
  *                                   Note that if 'confirm' is set to true or a dialog text,
  *                                   'is_action' parameter will default to true
- * @uses string $vars['icon']        Name of the Elgg icon, or icon HTML
+ * @uses string $vars['icon']        Name of the Elgg icon, or icon HTML, appended before the text label
+ * @uses string $vars['indicator']   Text of the indicator or a badge appended after the text label
  */
 
 if (!empty($vars['confirm']) && !isset($vars['is_action'])) {
@@ -96,4 +97,14 @@ if ($icon && !preg_match('/^</', $icon)) {
 	]);
 }
 
-echo elgg_format_element('a', $vars, $icon . $text);
+$indicator = elgg_extract('indicator', $vars);
+unset($vars['indicator']);
+
+if (!is_null($indicator)) {
+	$indicator = elgg_format_element('span', [
+		'class' => 'elgg-anchor-indicator',
+		'data-indicator' => $indicator,
+	]);
+}
+
+echo elgg_format_element('a', $vars, $icon . $text . $indicator);
