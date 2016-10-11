@@ -178,15 +178,15 @@ function blog_set_url($hook, $type, $url, $params) {
  * Add a menu item to an ownerblock
  */
 function blog_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "blog/owner/{$params['entity']->username}";
-		$item = new ElggMenuItem('blog', elgg_echo('blog'), $url);
-		$return[] = $item;
-	} else {
-		if ($params['entity']->blog_enable != "no") {
-			$url = "blog/group/{$params['entity']->guid}/all";
-			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
-			$return[] = $item;
+	$entity = elgg_extract('entity', $params);
+	if ($entity instanceof ElggUser) {
+		$url = "blog/owner/{$entity->username}";
+		$return[] = new ElggMenuItem('blog', elgg_echo('blog'), $url);
+
+	} elseif ($entity instanceof ElggGroup) {
+		if ($entity->blog_enable != "no") {
+			$url = "blog/group/{$entity->guid}/all";
+			$return[] = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
 		}
 	}
 
