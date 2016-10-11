@@ -58,9 +58,6 @@
 .elgg-system-messages li {
 	margin-top: 10px;
 }
-.elgg-system-messages li p {
-	margin: 0;
-}
 
 /***** PAGE HEADER ******/
 .elgg-page-header {

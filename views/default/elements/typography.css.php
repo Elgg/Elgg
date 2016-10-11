@@ -24,12 +24,8 @@ a.selected { /* @todo remove .selected */
 	text-decoration: underline;
 }
 
-p {
-	margin-bottom: 15px;
-}
-
-p:last-child {
-	margin-bottom: 0;
+.elgg-output p + p {
+	margin-top: 15px;
 }
 
 pre, code {
