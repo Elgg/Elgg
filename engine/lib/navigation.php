@@ -599,16 +599,6 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 	/* @var \ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
 
-	$collapse = array(
-		'name' => 'collapse',
-		'text' => ' ',
-		'href' => "#elgg-widget-content-$widget->guid",
-		'link_class' => 'elgg-widget-collapse-button',
-		'rel' => 'toggle',
-		'priority' => 1,
-	);
-	$return[] = \ElggMenuItem::factory($collapse);
-
 	if ($widget->canEdit()) {
 		$delete = array(
 			'name' => 'delete',
@@ -682,10 +672,11 @@ function _elgg_extras_menu_setup($hook, $type, $return, $params) {
 	$url = current_page_url();
 	$return[] = ElggMenuItem::factory([
 		'name' => 'rss',
-		'text' => elgg_view_icon('rss'),
 		'href' => elgg_http_add_url_query_elements($url, [
 			'view' => 'rss',
 		]),
+		'icon' => 'rss',
+		'text' => elgg_echo('feed:rss'),
 		'title' => elgg_echo('feed:rss'),
 	]);
 

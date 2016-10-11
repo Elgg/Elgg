@@ -78,6 +78,9 @@ function groups_init() {
 	// group members tabs
 	elgg_register_plugin_hook_handler('register', 'menu:groups_members', 'groups_members_menu_setup');
 
+	// setup sidebar menus
+	elgg_register_plugin_hook_handler('register', 'menu:page', 'groups_page_menu_setup');
+
 	//extend some views
 	elgg_extend_view('elgg.css', 'groups/css');
 	if (_elgg_view_may_be_altered('groups/js', __DIR__ . '/views/default/groups/js.php')) {
@@ -102,7 +105,6 @@ function groups_init() {
 
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
-	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
 
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
@@ -159,73 +161,87 @@ function groups_fields_setup() {
 }
 
 /**
- * Configure the groups sidebar menu. Triggered on page setup
+ * Setup sidebar (page) menu
  *
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:page"
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ * @return ElggMenuItem[]
  */
-function groups_setup_sidebar_menus() {
+function groups_page_menu_setup($hook, $type, $return, $params) {
 
 	// Get the page owner entity
 	$page_owner = elgg_get_page_owner_entity();
 
 	if (elgg_in_context('group_profile')) {
 		if (!elgg_instanceof($page_owner, 'group')) {
-			forward('', '404');
+			return;
 		}
 
 		if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
-			$url = elgg_get_site_url() . "groups/requests/{$page_owner->getGUID()}";
+			$url = elgg_normalize_url("groups/requests/{$page_owner->guid}");
 
 			$count = elgg_get_entities_from_relationship(array(
 				'type' => 'user',
 				'relationship' => 'membership_request',
-				'relationship_guid' => $page_owner->getGUID(),
+				'relationship_guid' => $page_owner->guid,
 				'inverse_relationship' => true,
 				'count' => true,
 			));
 
+			$text = elgg_echo('groups:membershiprequests');
+			$title = $text;
 			if ($count) {
-				$text = elgg_echo('groups:membershiprequests:pending', array($count));
-			} else {
-				$text = elgg_echo('groups:membershiprequests');
+				$title = elgg_echo('groups:membershiprequests:pending', array($count));
 			}
 
-			elgg_register_menu_item('page', array(
+			$return[] = ElggMenuItem::factory([
 				'name' => 'membership_requests',
 				'text' => $text,
+				'title' => $title,
 				'href' => $url,
-			));
+				'indicator' => $count,
+			]);
 		}
 	}
+	
 	if (elgg_get_context() == 'groups' && !elgg_instanceof($page_owner, 'group')) {
-		elgg_register_menu_item('page', array(
+		$return[] = ElggMenuItem::factory([
 			'name' => 'groups:all',
 			'text' => elgg_echo('groups:all'),
 			'href' => 'groups/all',
-		));
+		]);
 
 		$user = elgg_get_logged_in_user_entity();
 		if ($user) {
 			$url =  "groups/owner/$user->username";
-			$item = new ElggMenuItem('groups:owned', elgg_echo('groups:owned'), $url);
-			elgg_register_menu_item('page', $item);
+			$return[] = new ElggMenuItem('groups:owned', elgg_echo('groups:owned'), $url);
+			
 
 			$url = "groups/member/$user->username";
-			$item = new ElggMenuItem('groups:member', elgg_echo('groups:yours'), $url);
-			elgg_register_menu_item('page', $item);
+			$return[] = new ElggMenuItem('groups:member', elgg_echo('groups:yours'), $url);
 
-			$url = "groups/invitations/$user->username";
-			$invitation_count = groups_get_invited_groups($user->getGUID(), false, array('count' => true));
+			// Invitations
+			$text = elgg_echo('groups:invitations');
+			$title = $text;
 
+			$invitation_count = groups_get_invited_groups($user->guid, false, array('count' => true));
 			if ($invitation_count) {
-				$text = elgg_echo('groups:invitations:pending', array($invitation_count));
-			} else {
-				$text = elgg_echo('groups:invitations');
+				$title = elgg_echo('groups:invitations:pending', array($invitation_count));
 			}
 
-			$item = new ElggMenuItem('groups:user:invites', $text, $url);
-			elgg_register_menu_item('page', $item);
+			$return[] = ElggMenuItem::factory([
+				'name' => 'groups:user:invites',
+				'text' => $text,
+				'title' => $title,
+				'href' => "groups/invitations/$user->username",
+				'indicator' => $invitation_count,
+			]);
 		}
 	}
+
+	return $return;
 }
 
 /**

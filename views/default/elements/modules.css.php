@@ -142,7 +142,7 @@
 }
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
-	padding: 0 45px 0 30px;
+	padding: 0 45px 0 20px;
 	color: #666;
 }
 .elgg-module-widget.elgg-state-draggable .elgg-widget-handle {

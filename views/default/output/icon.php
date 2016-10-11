@@ -28,9 +28,9 @@ $translated_icons = array(
 	"lock-open" => "unlock",
 	"mail" => "envelope-o",
 	"mail-alt" => "envelope",
-	"print-alt" => "print elgg-icon-hover",
+	"print-alt" => "print",
 	"push-pin" => "thumb-tack",
-	"push-pin-alt" => "thumb-tack elgg-icon-hover",
+	"push-pin-alt" => "thumb-tack",
 	"redo" => "share",
 	"round-arrow-left" => "arrow-circle-left",
 	"round-arrow-right" => "arrow-circle-right",
@@ -38,17 +38,17 @@ $translated_icons = array(
 	"round-minus" => "minus-circle",
 	"round-plus" => "plus-circle",
 	"rss" => "rss-square",
-	"search-focus" => "search elgg-icon-hover",
+	"search-focus" => "search",
 	"settings" => "wrench",
 	"settings-alt" => "cog",
 	"share" => "share-alt-square",
 	"shop-cart" => "shopping-cart",
 	"speech-bubble" => "comment",
 	"speech-bubble-alt" => "comments",
-	"star-alt" => "star elgg-icon-hover",
+	"star-alt" => "star",
 	"star-empty" => "star-o",
-	"thumbs-down-alt" => "thumbs-down elgg-icon-hover",
-	"thumbs-up-alt" => "thumbs-up elgg-icon-hover",
+	"thumbs-down-alt" => "thumbs-down",
+	"thumbs-up-alt" => "thumbs-up",
 	"trash" => "trash-o",
 	"twitter" => "twitter-square",
 	"undo" => "reply",
@@ -61,12 +61,6 @@ unset($vars['convert']);
 $class = elgg_extract_class($vars, ["elgg-icon", "fa"]);
 
 foreach ($class as $index => $c) {
-	if (preg_match_all('/^elgg-icon-(.+)-hover$/i', $c)) {
-		// add hover class
-		$class[] = 'elgg-icon-hover';
-		$c = preg_replace('/(.+)-hover$/i', '$1', $c);
-	}
-	
 	if (preg_match_all('/^elgg-icon-(.+)/i', $c)) {
 		// convert
 		$base_icon = preg_replace('/^elgg-icon-(.+)/i', '$1', $c);

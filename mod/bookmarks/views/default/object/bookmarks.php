@@ -101,9 +101,10 @@ HTML;
 	$link = elgg_view('output/url', array(
 		'href' => $bookmark->address,
 		'text' => $display_text,
+		'icon' => 'push-pin-alt',
 	));
 
-	$content = elgg_view_icon('push-pin-alt') . "$link{$excerpt}";
+	$content = "$link{$excerpt}";
 
 	$params = array(
 		'entity' => $bookmark,

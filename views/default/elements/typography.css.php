@@ -24,6 +24,25 @@ a.selected { /* @todo remove .selected */
 	text-decoration: underline;
 }
 
+.elgg-anchor * {
+    display: inline;
+    vertical-align: middle;
+}
+
+.elgg-anchor * + .elgg-anchor-label {
+	margin-left: 5px;
+}
+
+.elgg-anchor-indicator:after {
+	content: attr(data-indicator);
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.elgg-anchor-indicator[data-indicator="0"] {
+	display: none;
+}
+
 p {
 	margin-bottom: 15px;
 }
