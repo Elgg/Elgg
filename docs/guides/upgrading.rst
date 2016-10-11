@@ -20,7 +20,8 @@ Removed classes
 Removed views
 -------------
 
- * ``resources/file/download``
+ * ``resources/file/download`` 
+ * ``output/checkboxes``: use ``output/tags`` if you want the same behaviour
  * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
  * ``page/layouts/content``: use ``page/layouts/default``
  * ``page/layouts/one_column``: use ``page/layouts/default``
