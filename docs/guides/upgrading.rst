@@ -122,6 +122,7 @@ Removed JavaScript APIs
  * ``lightbox.js``: Use the ``elgg/lightbox`` module as needed
  * ``lightbox/settings.js``: Use the ``getOptions, ui.lightbox`` JS hook or the ``data-colorbox-opts`` attribute
  * ``elgg.ui.popupClose``: Use the ``elgg/popup`` module
+ * ``elgg.ui.popupOpen``: Use the ``elgg/popup`` module
  * ``elgg.ui.initAccessInputs``
  * ``elgg.ui.river``
  * ``elgg.ui.initDatePicker``: Use the ``input/date`` module

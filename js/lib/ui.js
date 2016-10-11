@@ -86,37 +86,6 @@ elgg.ui.toggles = function(event) {
 };
 
 /**
- * Pops up an element based on clicking a separate element
- *
- * Set the rel="popup" on the popper and set the href to target the
- * item you want to toggle (<a rel="popup" href="#id-of-target">)
- *
- * This function emits the getOptions, ui.popup hook that plugins can register for to provide custom
- * positioning for elements.  The handler is passed the following params:
- *	targetSelector: The selector used to find the popup
- *	target:         The popup jQuery element as found by the selector
- *	source:         The jquery element whose click event initiated a popup.
- *
- * The return value of the function is used as the options object to .position().
- * Handles can also return false to abort the default behvior and override it with their own.
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.popupOpen = function(event) {
-
-	elgg.deprecated_notice('elgg.ui.popupOpen() has been deprecated and should not be called directly. Use elgg/popup AMD module instead', '2.2');
-
-	event.preventDefault();
-	event.stopPropagation();
-
-	var $elem = $(this);
-	require(['elgg/popup'], function(popup) {
-		popup.open($elem);
-	});
-};
-
-/**
  * Toggles a child menu when the parent is clicked
  *
  * @param {Object} event
