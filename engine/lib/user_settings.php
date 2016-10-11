@@ -11,7 +11,7 @@
  * Set a user's password
  * Returns null if no change is required
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -80,7 +80,7 @@ function _elgg_set_user_password() {
  * Set a user's display name
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -125,10 +125,78 @@ function _elgg_set_user_name() {
 }
 
 /**
+ * Set a user's username
+ * Returns null if no change is required or input is not present in the form
+ * Returns true or false indicating success or failure if change was needed
+ *
+ * @return bool|void
+ *
+ * @since 3.0
+ *
+ * @access private
+ */
+function _elgg_set_user_username() {
+	$username = get_input('username');
+	$user_guid = get_input('guid');
+
+	if (!isset($username)) {
+		return;
+	}
+	
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$user = get_user($user_guid);
+	if (empty($user)) {
+		return;
+	}
+		
+	if ($user->username === $username) {
+		return;
+	}
+
+	// check if username is valid and does not exist
+	try {
+		if (validate_username($username)) {
+			$found = false;
+			// make sure we can check every user (even unvalidated)
+			$hidden = access_show_hidden_entities(true);
+			if (get_user_by_username($username)) {
+				$found = true;
+			}
+			// restore access settings
+			access_show_hidden_entities($hidden);
+			
+			if ($found) {
+				register_error(elgg_echo('registration:userexists'));
+				return false;
+			}
+		}
+	} catch (Exception $e) {
+		register_error($e->getMessage());
+		return false;
+	}
+	
+	$user->username = $username;
+	if ($user->save()) {
+		// correctly forward after after a username change
+		elgg_register_plugin_hook_handler('forward', 'all', function() use ($username) {
+			return "settings/user/$username";
+		});
+		system_message(elgg_echo('user:username:success'));
+		return true;
+	}
+	
+	register_error(elgg_echo('user:username:fail'));
+	return false;
+}
+
+/**
  * Set a user's language
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -170,7 +238,7 @@ function _elgg_set_user_language() {
  * Set a user's email address
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -351,17 +419,17 @@ function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
 	$configure = elgg_extract("configure", $value);
 	if (empty($configure)) {
 		return $value;
-	}	
+	}
 	
 	foreach ($configure as $index => $menu_item) {
 		if (!($menu_item instanceof ElggMenuItem)) {
-			continue;	
+			continue;
 		}
 		
 		if ($menu_item->getName() == "1_plugins") {
 			if (!$menu_item->getChildren()) {
 				// no need for this menu item if it has no children
-				unset($value["configure"][$index]);	
+				unset($value["configure"][$index]);
 			}
 		}
 	}
@@ -426,11 +494,13 @@ function _elgg_user_settings_init() {
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_password');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_default_access');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_name');
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_username');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_email');
 	
 	elgg_register_action("usersettings/save");
 
 	// extend the account settings form
+	elgg_extend_view('forms/account/settings', 'core/settings/account/username', 100);
 	elgg_extend_view('forms/account/settings', 'core/settings/account/name', 100);
 	elgg_extend_view('forms/account/settings', 'core/settings/account/password', 100);
 	elgg_extend_view('forms/account/settings', 'core/settings/account/email', 100);

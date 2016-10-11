@@ -452,6 +452,8 @@ return array(
 	'user:name:label' => "Display name",
 	'user:name:success' => "Successfully changed display name on the system.",
 	'user:name:fail' => "Could not change display name on the system.",
+	'user:username:success' => "Successfully changed username on the system.",
+	'user:username:fail' => "Could not change username on the system.",
 
 	'user:set:password' => "Account password",
 	'user:current_password:label' => 'Current password',
@@ -471,6 +473,7 @@ return array(
 	'user:language:fail' => "Language settings could not be saved.",
 
 	'user:username:notfound' => 'Username %s not found.',
+	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
 
 	'user:password:lost' => 'Lost password',
 	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
