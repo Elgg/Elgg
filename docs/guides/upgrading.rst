@@ -132,6 +132,7 @@ Removed JavaScript APIs
  * ``elgg/ckeditor/insert.js``
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``
+ * ``elgg.autocomplete`` is no longer defined.
  * ``elgg.messageboard`` is no longer defined.
 
 Removed hooks/events
