@@ -264,8 +264,8 @@ required to make the old interface work.
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
 
-Aalborg theme is now in core
-----------------------------
+Theme and styling changes
+-------------------------
 
 Aalborg theme is no longer bundled with Elgg, instead all styles have been either moved to core views or to an appropriate core plugin.
 
@@ -274,7 +274,22 @@ This change may affect themes and plugins that were developed without Aalborg st
 Notable changes in plugins:
 
  * search plugin no longer extends ``page/elements/header`` and instead extends ``page/elements/sidebar``
- * topbar menu items might now have a new parent item or be found in a different section
+ * ``.elgg-icon`` no longer has a global ``font-size``, ``line-height`` or ``color``: these values will be inherited from parent items
+ * Support for ``.elgg-icon-hover`` has been dropped
+ * Admin theme now reuses icon classes from ``elements/icons.css``
+
+Menu changes
+------------
+
+``topbar`` menu:
+
+ * ``account`` menu item with priority ``800`` added to ``alt`` section
+ * ``site_notifications`` menu item is now a child of ``account`` with priority ``100``
+ * ``usersettings`` menu item is now a child of ``account`` with priority ``300``
+ * ``administration`` menu item is now a child of ``account`` with priority ``800``
+ * ``logout`` menu item is now a child of ``account`` with priority ``900``
+ * ``dashboard`` menu item now has priority of ``100``
+
 
 From 2.2 to 2.3
 ===============
