@@ -48,19 +48,6 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		$value = string_to_tag_array($value);
 	}
 
-	// limit to reasonable sizes
-	if ($valuetype != 'longtext') {
-		$check_values = (array) $value;
-		
-		// also check tags/checkboxes/etc
-		array_walk_recursive($check_values, function($v, $index, $short) {
-			if (elgg_strlen($v) > 250) {
-				register_error(elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$short}"))));
-				forward(REFERER);
-			}
-		}, $shortname);
-	}
-
 	if ($value && $valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
 	}
