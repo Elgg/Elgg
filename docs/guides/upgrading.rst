@@ -470,10 +470,14 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 
  * ``access`` menu item has been removed. Access information is now rendered in the entity byline.
  
- ``user_hover`` menu:
+``user_hover`` menu:
  
  * All items use the ``icon`` parameter.
  * The layout of the dropdown has been changed. If you have modified the look and feel of this dropdown, you might need to update your HTML/CSS.
+
+``widget`` menu:
+
+ * ``collapse`` menu item has been removed and CSS updated accordingly
 
 Entity icons
 ------------
