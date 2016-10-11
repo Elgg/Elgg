@@ -125,6 +125,7 @@ Removed JavaScript APIs
  * ``elgg.ui.river``
  * ``elgg.ui.initDatePicker``: Use the ``input/date`` module
  * ``elgg.ui.likesPopupHandler``
+ * ``elgg.ui.toggles``
  * ``elgg.embed``: Use the ``elgg/embed`` module
  * ``embed/custom_insert_js``: Use the ``embed, editor`` JS hook
  * ``elgg/ckeditor/insert.js``
@@ -275,6 +276,13 @@ Notable changes in plugins:
 
  * search plugin no longer extends ``page/elements/header`` and instead extends ``page/elements/sidebar``
  * topbar menu items might now have a new parent item or be found in a different section
+
+Element toggling
+----------------
+
+``elgg.ui.toggles`` has been removed and is now handled by ``elgg/toggle`` AMD module.
+
+``data-toggle-slide`` attribute of the ``[rel="toggle"]`` is no longer respected: instead use ``data-animation`` with a json encoded array of open and close animation classes.
 
 From 2.2 to 2.3
 ===============

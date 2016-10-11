@@ -19,6 +19,7 @@ echo elgg_view('sprintf.js');
 // We use named AMD modules and inline them here in order to save HTTP requests,
 // as these modules will be required on each page
 echo elgg_view('elgg/popup.js');
+echo elgg_view('elgg/toggle.js');
 
 $elggDir = \Elgg\Application::elggDir();
 $files = array(

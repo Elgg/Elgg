@@ -23,6 +23,9 @@ return [
 		"font-awesome/css/font-awesome.css" => "vendor/fortawesome/font-awesome/css/font-awesome.min.css",
 		"font-awesome/fonts/" => "vendor/fortawesome/font-awesome/fonts",
 
+		// Animate.css
+		"animate.css" => "vendor/bower-asset/animate-css/animate.min.css",
+
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.
 		 */
