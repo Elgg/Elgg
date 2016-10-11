@@ -572,21 +572,14 @@
 /* ***************************************
 	WIDGET MENU
 *************************************** */
-.elgg-menu-widget > li {
+.elgg-menu-widget {
 	position: absolute;
 	top: 8px;
+	right: 8px;
+}
+.elgg-menu-widget > li {
 	display: inline-block;
-	width: 18px;
-	height: 18px;
-}
-.elgg-menu-widget > .elgg-menu-item-collapse {
-	left: 10px;
-}
-.elgg-menu-widget > .elgg-menu-item-delete {
-	right: 10px;
-}
-.elgg-menu-widget > .elgg-menu-item-settings {
-	right: 32px;
+	margin-left: 5px;
 }
 
 @media (max-width: 820px) {

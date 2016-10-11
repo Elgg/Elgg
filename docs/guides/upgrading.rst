@@ -304,6 +304,11 @@ Support for ``icon`` and ``indicator`` parameters was added. Plugins should star
 
  * ``bookmark``, ``report_this`` and ``rss`` menu items now use ``icon`` parameter
 
+``widget`` menu:
+
+ * ``collapse`` menu item has been removed and CSS updated accordingly
+
+
 From 2.2 to 2.3
 ===============
 
