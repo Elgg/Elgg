@@ -46,11 +46,21 @@ if ($entity->owner_guid != $user->guid) {
 
 	$title_str = $entity->getDisplayName();
 	if (!$title_str) {
-		$title_str = elgg_get_excerpt($entity->description);
+		$title_str = elgg_get_excerpt($entity->description, 80);
 	}
 
 	$site = elgg_get_site_entity();
 
+	// summary for site_notifications
+	$summary = elgg_echo('likes:notifications:subject', array(
+			$user->name,
+			$title_str
+		),
+		$owner->language
+	);
+	
+	// prevent long subjects in mail
+	$title_str = elgg_get_excerpt($title_str, 80);
 	$subject = elgg_echo('likes:notifications:subject', array(
 			$user->name,
 			$title_str
@@ -77,6 +87,7 @@ if ($entity->owner_guid != $user->guid) {
 		array(
 			'action' => 'create',
 			'object' => $annotation,
+			'summary' => $summary,
 		)
 	);
 }
