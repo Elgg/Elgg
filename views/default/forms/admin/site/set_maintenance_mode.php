@@ -11,27 +11,32 @@ if (!$message) {
 	$message = elgg_echo('admin:maintenance_mode:default_message');
 }
 
-echo '<p>' . elgg_echo('admin:maintenance_mode:instructions') . '</p>';
+echo elgg_view('output/longtext', [
+	'value' => elgg_echo('admin:maintenance_mode:instructions'),
+]);
 
-echo '<div><label>' . elgg_echo('admin:maintenance_mode:mode_label') . ': ';
-echo elgg_view('input/select', array(
+echo elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('admin:maintenance_mode:mode_label'),
 	'name' => 'mode',
 	'options_values' => array(
 		'1' => elgg_echo('on'),
 		'0' => elgg_echo('off'),
 	),
 	'value' => $mode,
-));
-echo '</label></div>';
+]);
 
-echo '<div><label for="message">' . elgg_echo('admin:maintenance_mode:message_label') . ':</label><br>';
-echo elgg_view('input/longtext', array(
+echo elgg_view_field([
+	'#type' => 'longtext',
+	'#label' => elgg_echo('admin:maintenance_mode:message_label'),
 	'name' => 'message',
 	'id' => 'message',
 	'value' => $message,
-));
-echo '</div>';
+]);
 
-echo '<div class="elgg-foot">';
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-echo '</div>';
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+
+elgg_set_form_footer($footer);
