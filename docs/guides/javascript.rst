@@ -583,6 +583,8 @@ Open popup modules will always contain the following data that can be accessed v
  * ``trigger`` - jQuery element used to trigger the popup module to open
  * ``position`` - An object defining popup module position that was passed to ``$.position()``
 
+By default, ``target`` element will be appended to ``$('body')`` thus altering DOM hierarchy. If you need to preserve the DOM position of the popup module, you can add ``.elgg-popup-inline`` class to your trigger.
+
 Module ``elgg/widgets``
 -----------------------
 
