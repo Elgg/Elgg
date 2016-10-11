@@ -93,8 +93,10 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	$entity = $params['entity'];
-	/* @var ElggEntity $entity */
+	$entity = elgg_extract('entity', $params);
+	if (!($entity instanceof \ElggEntity)) {
+		return $return;
+	}
 
 	$type = $entity->type;
 	$subtype = $entity->getSubtype();
