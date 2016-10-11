@@ -96,4 +96,4 @@ if (!window._require_queue) {
 
 elgg.trigger_hook('boot', 'system');
 
-require(['elgg/init', 'elgg/ready']);
+require(['elgg/init', 'elgg/ready', 'elgg/lightbox']);
