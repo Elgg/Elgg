@@ -1432,7 +1432,9 @@ h6 > .elgg-icon {
 /* ***************************************
 	PLUGINS
 **************************************** */
-
+#plugins-filter {
+    margin: 5px 5px 20px;
+}
 .elgg-admin-plugins-categories li {
 	padding-right: 5px;
 }
