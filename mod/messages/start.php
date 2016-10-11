@@ -140,23 +140,26 @@ function messages_register_topbar($hook, $type, $items, $params) {
 		return;
 	}
 
-	$text = elgg_view_icon("mail");
-	$tooltip = elgg_echo("messages");
+	$user = elgg_get_logged_in_user_entity();
 
-	// get unread messages
-	$num_messages = (int)messages_count_unread();
-	if ($num_messages != 0) {
-		$text .= "<span class=\"messages-new\">$num_messages</span>";
-		$tooltip .= " (" . elgg_echo("messages:unreadcount", array($num_messages)) . ")";
+	$text = elgg_echo('messages');
+	$title = $text;
+
+	$num_messages = (int) messages_count_unread();
+	if ($num_messages) {
+		$title .= " (" . elgg_echo("messages:unreadcount", array($num_messages)) . ")";
 	}
 
 	$items[] = ElggMenuItem::factory([
 		'name' => 'messages',
-		'href' => 'messages/inbox/' . elgg_get_logged_in_user_entity()->username,
+		'href' => "messages/inbox/$user->username",
 		'text' => $text,
 		'priority' => 600,
-		'title' => $tooltip,
+		'title' => $title,
+		'icon' => 'mail',
+		'badge' => $num_messages ? $num_messages : null,
 	]);
+
 	return $items;
 }
 

@@ -9,13 +9,18 @@
  * @uses string $vars['text']        The string between the <a></a> tags.
  * @uses string $vars['href']        The unencoded url string
  * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
- * @uses bool   $vars['is_action']   Is this a link to an action (false)
+ * @uses bool   $vars['is_action']   Is this a link to an action (default: false, unless 'confirm' parameter is set)
  * @uses bool   $vars['is_trusted']  Is this link trusted (false)
  * @uses mixed  $vars['confirm']     Confirmation dialog text | (bool) true
- * 
- * Note: if confirm is set to true or has dialog text 'is_action' will default to true
- * 
+ *                                   Note that if 'confirm' is set to true or a dialog text,
+ *                                   'is_action' parameter will default to true
+ * @uses string $vars['icon']        Name of the Elgg icon, or icon HTML, appended before the text label
+ * @uses string $vars['badge']       HTML content of the badge appended after the text label
+ * @uses int    $vars['excerpt_length'] Length of the URL excerpt if text is not given.
  */
+
+$excerpt_length = elgg_extract('excerpt_length', $vars, 100);
+unset($vars['excerpt_length']);
 
 if (!empty($vars['confirm']) && !isset($vars['is_action'])) {
 	$vars['is_action'] = true;
@@ -44,7 +49,7 @@ if (isset($vars['text'])) {
 	}
 	unset($vars['text']);
 } else {
-	$text = htmlspecialchars($url, ENT_QUOTES, 'UTF-8', false);
+	$text = htmlspecialchars(elgg_get_excerpt($url, $excerpt_length), ENT_QUOTES, 'UTF-8', false);
 }
 
 unset($vars['encode_text']);
@@ -84,5 +89,30 @@ unset($vars['is_action']);
 unset($vars['is_trusted']);
 unset($vars['confirm']);
 
-$attributes = elgg_format_attributes($vars);
-echo "<a $attributes>$text</a>";
+$vars['class'] = elgg_extract_class($vars, 'elgg-anchor');
+
+$text = elgg_format_element('span', [
+	'class' => 'elgg-anchor-label',
+], $text);
+
+$icon = elgg_extract('icon', $vars, '');
+unset($vars['icon']);
+
+if ($icon && !preg_match('/^</', $icon)) {
+	$icon = elgg_view_icon($icon, [
+		'class' => 'elgg-anchor-icon',
+	]);
+}
+
+$badge = elgg_extract('badge', $vars);
+unset($vars['badge']);
+
+if (!is_null($badge)) {
+	$badge = elgg_format_element([
+		'#tag_name' => 'span',
+		'#text' => $badge,
+		'class' => 'elgg-badge',
+	]);
+}
+
+echo elgg_format_element('a', $vars, $icon . $text . $badge);

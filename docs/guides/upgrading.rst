@@ -78,6 +78,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
  * ``ElggSession::get_ignore_access``: Use ``getIgnoreAccess``
  * ``ElggSession::set_ignore_access``: Use ``setIgnoreAccess``
+ * ``profile_pagesetup``
+ * ``groups_setup_sidebar_menus``
 
 Removed global vars
 -------------------
@@ -94,8 +96,9 @@ Removed classes/interfaces
 Form and field related changes
 ------------------------------
 
-* ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
-
+ * ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
+ * ``output/url`` now sets ``.elgg-anchor`` class on anchor elements and accepts ``icon`` parameter. If no ``text`` is set, the ``href`` parameter used as a label will be restricted to 100 characters.
+ * ``output/url`` now supports a ``badge`` parameter, which can be used where a counter, a badge, or similar is required as a postfix (mainly in menu items that have counters).
 
 Removed libraries
 -----------------
@@ -295,6 +298,28 @@ Comment notifications
 
  * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
  * The action for creating a comment (``action/comment/save``) was changed. If your plugin overruled this action you should have a look at it in order to prevent double notifications 
+
+Menu changes
+------------
+
+Support for ``icon`` and ``badge`` parameters was added. Plugins should start using these parameters and prefer them to a single ``text`` parameter. CSS should be used to control visibility of the label, icon and badge, instead of conditionals in preparing menu items.
+
+``topbar`` menu:
+
+ * ``account`` menu item with priority ``800`` added to ``alt`` section
+ * ``site_notifications`` menu item is now a child of ``account`` with priority ``100``
+ * ``usersettings`` menu item is now a child of ``account`` with priority ``300``
+ * ``administration`` menu item is now a child of ``account`` with priority ``800``
+ * ``logout`` menu item is now a child of ``account`` with priority ``900``
+ * ``dashboard`` menu item now has priority of ``100``
+ * In ``default`` section (``profile``, ``friends``, ``messages``), core menu items now use ``icon`` parameter and use CSS to hide the label. Plugins that register items to this section and expect a visible label need to update their CSS.
+ * ``profile`` menu item now uses ``icon`` parameter
+ * ``friends`` menu item now uses ``icon`` parameter
+ * ``messages`` menu item now uses ``icon`` and ``badge`` parameters
+
+``extras`` menu:
+
+ * ``bookmark``, ``report_this`` and ``rss`` menu items now use ``icon`` parameter
 
 From 2.2 to 2.3
 ===============
