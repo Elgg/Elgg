@@ -24,6 +24,15 @@ a.selected { /* @todo remove .selected */
 	text-decoration: underline;
 }
 
+.elgg-anchor * {
+    display: inline;
+    vertical-align: middle;
+}
+
+.elgg-anchor * + .elgg-anchor-label {
+	margin-left: 5px;
+}
+
 p {
 	margin-bottom: 15px;
 }

@@ -9,4 +9,6 @@ echo elgg_view_module('theme-sandbox-demo', "Fonts", elgg_view('theme_sandbox/ty
 
 echo elgg_view_module('theme-sandbox-demo', "Paragraph", elgg_view('theme_sandbox/typography/paragraph'));
 
+echo elgg_view_module('theme-sandbox-demo', "Anchors", elgg_view('theme_sandbox/typography/anchor'));
+
 echo elgg_view_module('theme-sandbox-demo', "Misc", elgg_view('theme_sandbox/typography/misc'));
