@@ -85,7 +85,8 @@ Removed classes/interfaces
 Form and field related changes
 ------------------------------
 
-* ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
+ * ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
+ * ``input/submit``, ``input/reset`` and ``input/button`` are now rendered with a ``<button>`` instead of the ``<input>`` tag. These input view also accept ``text`` and ``icon`` parameters.
 
 
 Removed libraries

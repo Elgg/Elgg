@@ -1,15 +1,17 @@
 <?php
 /**
- * Create a submit input button
+ * Renders a <button type="submit">
  *
- * @package Elgg
- * @subpackage Core
- *
- * @uses $vars['class'] Additional CSS class
+ * See input/button view for a full list of options
+ * 
+ * @uses $vars['text'] Text of the button
  */
 
 $vars['type'] = 'submit';
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-button-submit');
+if (!isset($vars['text']) && isset($vars['value'])) {
+	// Keeping this to ease the transition to 3.0
+	$vars['text'] = $vars['value'];
+}
 
 echo elgg_view('input/button', $vars);
