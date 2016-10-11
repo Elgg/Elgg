@@ -3,9 +3,9 @@ namespace Elgg\Database;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Controls all admin notices in the system.
- * 
+ *
  * @access private
  *
  * @package    Elgg.Core
@@ -29,29 +29,29 @@ class AdminNotices {
 	 * @return bool
 	 */
 	function add($id, $message) {
-		if ($id && $message) {
-			if (elgg_admin_notice_exists($id)) {
-				return false;
-			}
-	
-			// need to handle when no one is logged in
-			$old_ia = elgg_set_ignore_access(true);
-	
-			$admin_notice = new \ElggObject();
-			$admin_notice->subtype = 'admin_notice';
-			// admins can see ACCESS_PRIVATE but no one else can.
-			$admin_notice->access_id = ACCESS_PRIVATE;
-			$admin_notice->admin_notice_id = $id;
-			$admin_notice->description = $message;
-	
-			$result = $admin_notice->save();
-	
-			elgg_set_ignore_access($old_ia);
-	
-			return (bool)$result;
+		if (!$id || !$message) {
+			return false;
 		}
-	
-		return false;
+		
+		if (elgg_admin_notice_exists($id)) {
+			return false;
+		}
+
+		// need to handle when no one is logged in
+		$old_ia = elgg_set_ignore_access(true);
+
+		$admin_notice = new \ElggObject();
+		$admin_notice->subtype = 'admin_notice';
+		// admins can see ACCESS_PRIVATE but no one else can.
+		$admin_notice->access_id = ACCESS_PRIVATE;
+		$admin_notice->admin_notice_id = $id;
+		$admin_notice->description = $message;
+
+		$result = $admin_notice->save();
+
+		elgg_set_ignore_access($old_ia);
+
+		return (bool)$result;
 	}
 	
 	/**
@@ -70,21 +70,24 @@ class AdminNotices {
 		if (!$id) {
 			return false;
 		}
+		
 		$result = true;
+		
 		$notices = elgg_get_entities_from_metadata(array(
+			'type' => 'object',
+			'subtype' => 'admin_notice',
 			'metadata_name' => 'admin_notice_id',
 			'metadata_value' => $id,
-			'distinct' => false,
+			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
 		));
-	
-		if ($notices) {
-			// in case a bad plugin adds many, let it remove them all at once.
-			foreach ($notices as $notice) {
-				$result = ($result && $notice->delete());
-			}
-			return $result;
+
+		// in case a bad plugin adds many, let it remove them all at once.
+		foreach ($notices as $notice) {
+			$result = ($result && $notice->delete());
 		}
-		return false;
+		return $result;
 	}
 	
 	/**
@@ -117,7 +120,7 @@ class AdminNotices {
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id),
-			'distinct' => false,
+			'count' => true,
 		));
 		elgg_set_ignore_access($old_ia);
 	
