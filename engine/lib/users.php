@@ -607,6 +607,12 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	}
 	/* @var \ElggUser $entity */
 
+	foreach ($return as $key => $item) {
+		if (in_array($item->getName(), ['access', 'edit', 'delete'])) {
+			unset($return[$key]);
+		}
+	}
+	
 	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
 		$options = array(
@@ -615,9 +621,8 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 			'href' => false,
 			'priority' => 0,
 		);
-		$return = array(\ElggMenuItem::factory($options));
+		$return[] = \ElggMenuItem::factory($options);
 	} else {
-		$return = array();
 		$location = $entity->location;
 		if (is_string($location) && $location !== '') {
 			$location = htmlspecialchars($location, ENT_QUOTES, 'UTF-8', false);

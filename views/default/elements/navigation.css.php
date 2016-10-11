@@ -578,6 +578,47 @@
 	right: 32px;
 }
 
+/* ***************************************
+	ELLIPSIS
+*************************************** */
+.elgg-menu-item-ellipsis .elgg-module-popup > ul {
+    float: none;
+    margin:  0;
+    font-size: 100%;
+}
+
+.elgg-menu-item-ellipsis .elgg-module-popup ul > li {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.elgg-menu-item-ellipsis .elgg-module-popup {
+    position: absolute;
+    right: 0;
+    width: 200px;
+    padding: 0;
+}
+
+.elgg-menu-item-ellipsis .elgg-module-popup ul > li > a {
+    display: inline-block;
+    width: 100%;
+    padding: 8px 12px;
+    box-sizing: border-box;
+}
+.elgg-menu-item-ellipsis .elgg-module-popup ul > li > a:hover {
+	text-decoration: none;
+	background-color: #f1f1f1;
+}
+
+.elgg-menu-item-ellipsis .elgg-module-popup > ul + ul {
+    border-top: 1px solid #DCDCDC;
+}
+
+.elgg-menu-item-ellipsis .elgg-module-popup ul.elgg-menu-entity-admin > li > a {
+    color: red;
+}
+
 @media (max-width: 820px) {
 	.elgg-menu-footer {
 		float: none;

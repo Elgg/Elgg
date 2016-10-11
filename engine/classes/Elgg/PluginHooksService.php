@@ -70,6 +70,10 @@ class PluginHooksService extends \Elgg\HooksRegistrationService {
 			$type = _elgg_services()->views->canonicalizeViewName($type);
 		}
 
+		if ($type == 'menu:user_hover') {
+			$type = 'menu:entity';
+		}
+		
 		return parent::registerHandler($name, $type, $callback, $priority);
 	}
 }
