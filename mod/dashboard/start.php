@@ -11,14 +11,16 @@ function dashboard_init() {
 	elgg_extend_view('elgg.css', 'dashboard/css');
 	elgg_extend_view('elgg.js', 'dashboard/js');
 
-	elgg_register_menu_item('topbar', array(
-		'name' => 'dashboard',
-		'href' => 'dashboard',
-		'text' => elgg_echo('dashboard'),
-		'priority' => 100,
-		'section' => 'alt',
-	));
-
+	if (elgg_is_logged_in()) {
+		elgg_register_menu_item('topbar', array(
+			'name' => 'dashboard',
+			'href' => 'dashboard',
+			'text' => elgg_echo('dashboard'),
+			'priority' => 100,
+			'section' => 'alt',
+		));
+	}
+	
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
 }
 
@@ -30,7 +32,6 @@ function dashboard_page_handler() {
 	echo elgg_view_resource('dashboard');
 	return true;
 }
-
 
 /**
  * Register user dashboard with default widgets
