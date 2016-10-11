@@ -8,11 +8,11 @@ $version = elgg_get_version();
 $release = elgg_get_version(true);
 ?>
 <table class="elgg-table-alt">
-	<tr class="odd">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
 		<td><?php echo elgg_echo('admin:statistics:label:version:release'); ?> - <?php echo $release; ?>, <?php echo elgg_echo('admin:statistics:label:version:version'); ?> - <?php echo $version; ?></td>
 	</tr>
-	<tr class="even">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:statistics:label:numusers'); ?> :</b></td>
 		<td><?php echo $users_stats; ?> <?php echo elgg_echo('active'); ?> / <?php echo $total_users; ?> <?php echo elgg_echo('total') ?></td>
 	</tr>

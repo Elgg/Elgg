@@ -28,8 +28,8 @@ $microformats = array(
 	'contactemail' => 'email u-email',
 );
 
-$even_odd = null;
 if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
+	echo '<div class="profile-fields">';
 	foreach ($profile_fields as $shortname => $valtype) {
 		if ($shortname == "description") {
 			// skip about me and put at bottom
@@ -51,10 +51,8 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 				$value = "http://$value";
 			}
 
-			// this controls the alternating class
-			$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 			?>
-			<div class="<?php echo $even_odd; ?>">
+			<div>
 				<b><?php echo elgg_echo("profile:{$shortname}"); ?>: </b>
 				<?php
 					$params = array(
@@ -73,6 +71,7 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 			<?php
 		}
 	}
+	echo "</div>";
 }
 
 if (isset($profile_fields['description']) && $user->description) {

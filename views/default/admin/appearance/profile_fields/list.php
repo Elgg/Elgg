@@ -1,7 +1,7 @@
 <?php
 /**
  * Profile fields.
- * 
+ *
  * @todo Needs some review
  */
 
@@ -32,7 +32,6 @@ if ($fieldlist || $fieldlist === '0') {
 foreach ($items as $item) {
 	echo elgg_view("profile/", array('value' => $item->translation));
 
-	//$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 	$url = elgg_view('output/url', array(
 		'href' => "action/profile/fields/delete?id={$item->shortname}",
 		'text' => elgg_view_icon('delete-alt'),

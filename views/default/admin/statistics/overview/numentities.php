@@ -1,16 +1,10 @@
 <?php
 // Get entity statistics
 $entity_stats = get_entity_statistics();
-$even_odd = "";
-?>		
-<table class="elgg-table-alt">
-<?php
+$rows = '';
 foreach ($entity_stats as $k => $entry) {
 	arsort($entry);
 	foreach ($entry as $a => $b) {
-
-		//This function controls the alternating class
-		$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 
 		if ($a == "__base__") {
 			$a = elgg_echo("item:{$k}");
@@ -28,13 +22,8 @@ foreach ($entity_stats as $k => $entry) {
 			}
 		}
 		
-		echo <<< END
-			<tr class="{$even_odd}">
-				<td>{$a}:</td>
-				<td>{$b}</td>
-			</tr>
-END;
-		}
+		$rows .= "<tr><td>{$a}:</td><td>{$b}</td></tr>";
 	}
-?>
-</table>
+}
+
+echo "<table class='elgg-table-alt'>$rows</table>";

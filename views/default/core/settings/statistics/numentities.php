@@ -11,13 +11,9 @@ $entity_stats = get_entity_statistics(elgg_get_page_owner_guid());
 
 if ($entity_stats) {
 	$rows = '';
-	$even_odd = null;
+	
 	foreach ($entity_stats as $k => $entry) {
 		foreach ($entry as $a => $b) {
-
-			// This function controls the alternating class
-			$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
-
 			if ($a == "__base__") {
 				$a = elgg_echo("item:{$k}");
 				if (empty($a)) {
@@ -30,7 +26,7 @@ if ($entity_stats) {
 				}
 			}
 			$rows .= <<< END
-				<tr class="{$even_odd}">
+				<tr>
 					<td class="column-one"><b>{$a}:</b></td>
 					<td>{$b}</td>
 				</tr>
