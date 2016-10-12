@@ -1461,8 +1461,10 @@ function elgg_view_field(array $params = []) {
 
 	// field views get more data
 	$element_vars['input_type'] = $input_type;
+	
+	unset($element_vars['class']);
 	if (isset($params['#class'])) {
-		$element_vars['field_class'] = $params['#class'];
+		$element_vars['class'] = $params['#class'];
 	}
 	if (isset($params['#help'])) {
 		$element_vars['help'] = $params['#help'];
