@@ -36,8 +36,6 @@ elgg.ui.init = function () {
 		elgg.deprecated_notice('Use of .elgg-autofocus is deprecated by html5 autofocus', 1.9);
 	}
 
-	elgg.ui.initAccessInputs();
-
 	// Allow element to be highlighted using CSS if its id is found from the URL
 	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
 	$(elementId).addClass('elgg-state-highlight');
@@ -85,37 +83,6 @@ elgg.ui.toggles = function(event) {
 	$this.trigger('elgg_ui_toggle', [{
 		$toggled_elements: $elements
 	}]);
-};
-
-/**
- * Pops up an element based on clicking a separate element
- *
- * Set the rel="popup" on the popper and set the href to target the
- * item you want to toggle (<a rel="popup" href="#id-of-target">)
- *
- * This function emits the getOptions, ui.popup hook that plugins can register for to provide custom
- * positioning for elements.  The handler is passed the following params:
- *	targetSelector: The selector used to find the popup
- *	target:         The popup jQuery element as found by the selector
- *	source:         The jquery element whose click event initiated a popup.
- *
- * The return value of the function is used as the options object to .position().
- * Handles can also return false to abort the default behvior and override it with their own.
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.popupOpen = function(event) {
-
-	elgg.deprecated_notice('elgg.ui.popupOpen() has been deprecated and should not be called directly. Use elgg/popup AMD module instead', '2.2');
-
-	event.preventDefault();
-	event.stopPropagation();
-
-	var $elem = $(this);
-	require(['elgg/popup'], function(popup) {
-		popup.open($elem);
-	});
 };
 
 /**
@@ -311,48 +278,6 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
     $menu.find('.elgg-menu-item-' + nameOfItemToShow).removeClass('hidden').find('a').focus();
     $menu.find('.elgg-menu-item-' + nameOfItemToHide).addClass('hidden');
-};
-
-/**
- * Initialize input/access for dynamic display of members only warning
- *
- * If a select.elgg-input-access is accompanied by a note (.elgg-input-access-membersonly),
- * then hide the note when the select value is PRIVATE or group members.
- *
- * @return void
- * @since 1.9.0
- */
-elgg.ui.initAccessInputs = function () {
-	$('.elgg-input-access').each(function () {
-		function updateMembersonlyNote() {
-			var val = $select.val();
-			if (val != acl && val !== 0) {
-				// .show() failed in Chrome. Maybe a float/jQuery bug
-				$note.css('visibility', 'visible');
-			} else {
-				$note.css('visibility', 'hidden');
-			}
-		}
-		var $select = $(this),
-			acl = $select.data('group-acl'),
-			$note = $('.elgg-input-access-membersonly', this.parentNode),
-			commentCount = $select.data('comment-count'),
-			originalValue = $select.data('original-value');
-		if ($note) {
-			updateMembersonlyNote();
-			$select.change(updateMembersonlyNote);
-		}
-
-		if (commentCount) {
-			$select.change(function(e) {
-				if ($(this).val() != originalValue) {
-					if (!confirm(elgg.echo('access:comments:change', [commentCount]))) {
-						$(this).val(originalValue);
-					}
-				}
-			});
-		}
-	});
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
