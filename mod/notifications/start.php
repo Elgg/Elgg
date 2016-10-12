@@ -12,8 +12,8 @@ function notifications_plugin_init() {
 	elgg_extend_view('elgg.css','notifications.css');
 
 	elgg_register_page_handler('notifications', 'notifications_page_handler');
-
-	elgg_register_event_handler('pagesetup', 'system', 'notifications_plugin_pagesetup');
+	
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_page_menu');
 
 	// Unset the default notification settings
 	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
@@ -73,35 +73,46 @@ function notifications_page_handler($page) {
 }
 
 /**
- * Notification settings sidebar menu
+ * Register menu items for the page menu
  *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
  */
-function notifications_plugin_pagesetup() {
-	if (elgg_in_context("settings") && elgg_get_logged_in_user_guid()) {
-
-		$user = elgg_get_page_owner_entity();
-		if (!$user) {
-			$user = elgg_get_logged_in_user_entity();
-		}
-
-		$params = array(
-			'name' => '2_a_user_notify',
-			'text' => elgg_echo('notifications:subscriptions:changesettings'),
-			'href' => "notifications/personal/{$user->username}",
-			'section' => "notifications",
-		);
-		elgg_register_menu_item('page', $params);
-		
-		if (elgg_is_active_plugin('groups')) {
-			$params = array(
-				'name' => '2_group_notify',
-				'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
-				'href' => "notifications/group/{$user->username}",
-				'section' => "notifications",
-			);
-			elgg_register_menu_item('page', $params);
-		}
+function _notifications_page_menu($hook, $type, $return, $params) {
+	
+	if (!elgg_in_context('settings') || !elgg_get_logged_in_user_guid()) {
+		return;
 	}
+
+	$user = elgg_get_page_owner_entity();
+	if (!$user) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => '2_a_user_notify',
+		'text' => elgg_echo('notifications:subscriptions:changesettings'),
+		'href' => "notifications/personal/{$user->username}",
+		'section' => 'notifications',
+	]);
+	
+	if (elgg_is_active_plugin('groups')) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => '2_group_notify',
+			'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
+			'href' => "notifications/group/{$user->username}",
+			'section' => 'notifications',
+		]);
+	}
+		
+	return $return;
 }
 
 /**
@@ -216,7 +227,7 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 
 /**
  * Register unit tests
- * 
+ *
  * @param string   $hook  "unit_test"
  * @param string   $type  "system"
  * @param string[] $tests Tests

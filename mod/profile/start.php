@@ -37,7 +37,7 @@ function profile_init() {
 	// allow admins to set default widgets for users on profiles
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'profile_default_widgets_hook');
 	
-	elgg_register_event_handler('pagesetup', 'system', 'profile_pagesetup', 50);
+	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_profile_topbar_menu');
 }
 
 /**
@@ -130,18 +130,26 @@ function profile_default_widgets_hook($hook, $type, $return) {
 }
 
 /**
- * Sets up user-related menu items
+ * Register menu items for the topbar menu
  *
- * @return void
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
  * @access private
+ *
+ * @since 3.0
  */
-function profile_pagesetup() {
+function _profile_topbar_menu($hook, $type, $return, $params) {
+	
 	$viewer = elgg_get_logged_in_user_entity();
 	if (!$viewer) {
 		 return;
 	}
-	
-	elgg_register_menu_item('topbar', array(
+
+	$return[] = \ElggMenuItem::factory([
 		'name' => 'profile',
 		'href' => $viewer->getURL(),
 		'text' => elgg_view('output/img', array(
@@ -153,5 +161,7 @@ function profile_pagesetup() {
 		'priority' => 100,
 		'link_class' => 'elgg-topbar-avatar',
 		'item_class' => 'elgg-avatar elgg-avatar-topbar',
-	));
+	]);
+	
+	return $return;
 }

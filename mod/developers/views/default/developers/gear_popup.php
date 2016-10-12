@@ -6,9 +6,6 @@ _elgg_admin_add_plugin_settings_menu();
 elgg_push_context('admin');
 elgg_push_context('developers_gear');
 
-// requires "admin" in context
-developers_setup_menu();
-
 // requires "admin" and "developers_gear" in context
 $menu = elgg_view_menu('page', [
 	'sort_by' => 'priority',

@@ -65,7 +65,7 @@ function elgg_gatekeeper() {
 
 /**
  * Alias of elgg_gatekeeper()
- * 
+ *
  * Used at the top of a page to mark it as logged in users only.
  *
  * @return void
@@ -242,7 +242,7 @@ function elgg_ajax_gatekeeper() {
 
 /**
  * Front page handler
- * 
+ *
  * @return bool
  */
 function elgg_front_page_handler() {
@@ -266,9 +266,8 @@ function elgg_front_page_handler() {
 function elgg_error_page_handler($hook, $type, $result, $params) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Error pages are drawn by resource views without "forward" hook.', '2.3');
 	
-	// This draws an error page, and sometimes there's another 40* forward() call made during that
-	// process (usually due to the pagesetup event). We want to allow the 2nd call to pass through,
-	// but draw the appropriate page for the first call.
+	// This draws an error page, and sometimes there's another 40* forward() call made during that process.
+	// We want to allow the 2nd call to pass through, but draw the appropriate page for the first call.
 	
 	static $vars;
 	if ($vars === null) {

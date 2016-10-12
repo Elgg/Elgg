@@ -11,7 +11,7 @@
  * Set a user's password
  * Returns null if no change is required
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -80,7 +80,7 @@ function _elgg_set_user_password() {
  * Set a user's display name
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -128,7 +128,7 @@ function _elgg_set_user_name() {
  * Set a user's language
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -170,7 +170,7 @@ function _elgg_set_user_language() {
  * Set a user's email address
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
- * 
+ *
  * @return bool|void
  * @since 1.8.0
  * @access private
@@ -265,67 +265,74 @@ function _elgg_set_user_default_access() {
 }
 
 /**
- * Set up the menu for user settings
+ * Register menu items for the user settings page menu
  *
- * @return void
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
  * @access private
+ *
+ * @since 3.0
  */
-function _elgg_user_settings_menu_setup() {
+function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
 	$user = elgg_get_page_owner_entity();
-
 	if (!$user) {
 		return;
 	}
 
-	if (!elgg_in_context("settings")) {
+	if (!elgg_in_context('settings')) {
 		return;
 	}
 	
-	$params = array(
+	$return[] = \ElggMenuItem::factory([
 		'name' => '1_account',
 		'text' => elgg_echo('usersettings:user:opt:linktext'),
 		'href' => "settings/user/{$user->username}",
 		'section' => 'configure',
-	);
-	elgg_register_menu_item('page', $params);
-	$params = array(
+	]);
+
+	$return[] = \ElggMenuItem::factory([
 		'name' => '1_plugins',
 		'text' => elgg_echo('usersettings:plugins:opt:linktext'),
 		'href' => '#',
 		'section' => 'configure',
-	);
-	elgg_register_menu_item('page', $params);
-	$params = array(
+	]);
+
+	$return[] = \ElggMenuItem::factory([
 		'name' => '1_statistics',
 		'text' => elgg_echo('usersettings:statistics:opt:linktext'),
 		'href' => "settings/statistics/{$user->username}",
 		'section' => 'configure',
-	);
-	elgg_register_menu_item('page', $params);
-	
+	]);
+
 	// register plugin user settings menu items
 	$active_plugins = elgg_get_plugins();
 	
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
-		if (elgg_view_exists("usersettings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/usersettings")) {
-			if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
-				$title = elgg_echo($plugin_id . ':usersettings:title');
-			} else {
-				$title = $plugin->getFriendlyName();
-			}
-			$params = array(
-				'name' => $plugin_id,
-				'text' => $title,
-				'href' => "settings/plugins/{$user->username}/$plugin_id",
-				'parent_name' => '1_plugins',
-				'section' => 'configure',
-			);
-			elgg_register_menu_item('page', $params);
+		if (!elgg_view_exists("usersettings/$plugin_id/edit") && !elgg_view_exists("plugins/$plugin_id/usersettings")) {
+			continue;
 		}
+
+		if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
+			$title = elgg_echo($plugin_id . ':usersettings:title');
+		} else {
+			$title = $plugin->getFriendlyName();
+		}
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => $plugin_id,
+			'text' => $title,
+			'href' => "settings/plugins/{$user->username}/$plugin_id",
+			'parent_name' => '1_plugins',
+			'section' => 'configure',
+		]);
 	}
 	
-	elgg_register_plugin_hook_handler("prepare", "menu:page", "_elgg_user_settings_menu_prepare");
+	return $return;
 }
 
 /**
@@ -351,17 +358,17 @@ function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
 	$configure = elgg_extract("configure", $value);
 	if (empty($configure)) {
 		return $value;
-	}	
+	}
 	
 	foreach ($configure as $index => $menu_item) {
 		if (!($menu_item instanceof ElggMenuItem)) {
-			continue;	
+			continue;
 		}
 		
 		if ($menu_item->getName() == "1_plugins") {
 			if (!$menu_item->getChildren()) {
 				// no need for this menu item if it has no children
-				unset($value["configure"][$index]);	
+				unset($value["configure"][$index]);
 			}
 		}
 	}
@@ -420,7 +427,8 @@ function _elgg_user_settings_page_handler($page) {
 function _elgg_user_settings_init() {
 	elgg_register_page_handler('settings', '_elgg_user_settings_page_handler');
 
-	elgg_register_event_handler('pagesetup', 'system', '_elgg_user_settings_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_settings_menu_register');
+	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_user_settings_menu_prepare');
 
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_language');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_password');

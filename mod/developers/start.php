@@ -9,8 +9,9 @@ developers_process_settings();
 elgg_register_event_handler('init', 'system', 'developers_init');
 
 function developers_init() {
-	elgg_register_event_handler('pagesetup', 'system', 'developers_setup_menu');
 
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_developers_page_menu');
+		
 	elgg_extend_view('admin.css', 'developers/css');
 	elgg_extend_view('elgg.css', 'developers/css');
 
@@ -81,33 +82,70 @@ function developers_process_settings() {
 	}
 }
 
-function developers_setup_menu() {
-	if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
-		elgg_register_admin_menu_item('develop', 'inspect');
-		elgg_register_admin_menu_item('develop', 'sandbox', 'develop_tools');
-		elgg_register_admin_menu_item('develop', 'unit_tests', 'develop_tools');
-
-		elgg_register_menu_item('page', array(
-			'name' => 'dev_settings',
-			'href' => 'admin/developers/settings',
-			'text' => elgg_echo('settings'),
-			'context' => 'admin',
-			'priority' => 10,
-			'section' => 'develop'
-		));
-		
-		$inspect_options = developers_get_inspect_options();
-		foreach ($inspect_options as $key => $value) {
-			elgg_register_menu_item('page', array(
-				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
-				'href' => "admin/develop_tools/inspect?inspect_type={$key}",
-				'text' => $value,
-				'context' => 'admin',
-				'section' => 'develop',
-				'parent_name' => 'inspect'
-			));
-		}
+/**
+ * Register menu items for the page menu
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _developers_page_menu($hook, $type, $return, $params) {
+	if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+		return;
 	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'dev_settings',
+		'href' => 'admin/developers/settings',
+		'text' => elgg_echo('settings'),
+		'priority' => 10,
+		'section' => 'develop',
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'inspect',
+		'text' => elgg_echo('admin:inspect'),
+		'section' => 'develop',
+	]);
+	
+	$inspect_options = developers_get_inspect_options();
+	foreach ($inspect_options as $key => $value) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
+			'href' => "admin/develop_tools/inspect?inspect_type={$key}",
+			'text' => $value,
+			'section' => 'develop',
+			'parent_name' => 'inspect',
+		]);
+	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'develop_tools',
+		'text' => elgg_echo('admin:develop_tools'),
+		'section' => 'develop',
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'develop_tools:sandbox',
+		'text' => elgg_echo('admin:develop_tools:sandbox'),
+		'parent_name' => 'develop_tools',
+		'section' => 'develop',
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'develop_tools:unit_tests',
+		'text' => elgg_echo('admin:develop_tools:unit_tests'),
+		'parent_name' => 'develop_tools',
+		'section' => 'develop',
+	]);
+	
+	return $return;
 }
 
 /**

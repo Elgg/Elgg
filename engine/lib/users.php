@@ -728,81 +728,111 @@ function elgg_profile_page_handler($page) {
 }
 
 /**
- * Sets up user-related menu items
+ * Register menu items for the page menu
  *
- * @return void
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ *
+ * @return array
+ *
  * @access private
+ *
+ * @since 3.0
  */
-function users_pagesetup() {
-
+function _elgg_user_page_menu($hook, $type, $return, $params) {
+	
 	$owner = elgg_get_page_owner_entity();
-	$viewer = elgg_get_logged_in_user_entity();
-
-	if ($owner) {
-		elgg_register_menu_item('page', array(
-			'name' => 'edit_avatar',
-			'href' => "avatar/edit/{$owner->username}",
-			'text' => elgg_echo('avatar:edit'),
-			'section' => '1_profile',
-			'contexts' => array('settings'),
-		));
-
-		elgg_register_menu_item('page', array(
-			'name' => 'edit_profile',
-			'href' => "profile/{$owner->username}/edit",
-			'text' => elgg_echo('profile:edit'),
-			'section' => '1_profile',
-			'contexts' => array('settings'),
-		));
+	if (!$owner) {
+		return;
 	}
 
-	// topbar
-	if ($viewer) {
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'edit_avatar',
+		'href' => "avatar/edit/{$owner->username}",
+		'text' => elgg_echo('avatar:edit'),
+		'section' => '1_profile',
+		'contexts' => array('settings'),
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'edit_profile',
+		'href' => "profile/{$owner->username}/edit",
+		'text' => elgg_echo('profile:edit'),
+		'section' => '1_profile',
+		'contexts' => array('settings'),
+	]);
+	
+	return $return;
+}
 
-		elgg_register_menu_item('topbar', array(
-			'name' => 'account',
-			'text' => elgg_echo('account'),
-			'href' => "#",
+/**
+ * Register menu items for the topbar menu
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ *
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _elgg_user_topbar_menu($hook, $type, $return, $params) {
+	
+	$viewer = elgg_get_logged_in_user_entity();
+	if (!$viewer) {
+		return;
+	}
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'account',
+		'text' => elgg_echo('account'),
+		'href' => '#',
+		'priority' => 800,
+		'section' => 'alt',
+		'link_class' => 'elgg-topbar-dropdown',
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'usersettings',
+		'parent_name' => 'account',
+		'href' => "settings/user/{$viewer->username}",
+		'text' => elgg_echo('settings'),
+		'priority' => 300,
+		'section' => 'alt',
+	]);
+	
+	if ($viewer->isAdmin()) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'administration',
+			'parent_name' => 'account',
+			'href' => 'admin',
+			'text' => elgg_echo('admin'),
 			'priority' => 800,
 			'section' => 'alt',
-			'link_class' => 'elgg-topbar-dropdown',
-		));
-		
-		elgg_register_menu_item('topbar', array(
-			'name' => 'usersettings',
-			'parent_name' => 'account',
-			'href' => "settings/user/{$viewer->username}",
-			'text' => elgg_echo('settings'),
-			'priority' => 300,
-			'section' => 'alt',
-		));
-
-		if ($viewer->isAdmin()) {
-			elgg_register_menu_item('topbar', array(
-				'name' => 'administration',
-				'parent_name' => 'account',
-				'href' => 'admin',
-				'text' => elgg_echo('admin'),
-				'priority' => 800,
-				'section' => 'alt',
-			));
-		}
-
-		elgg_register_menu_item('topbar', array(
-			'name' => 'logout',
-			'parent_name' => 'account',
-			'href' => "action/logout",
-			'text' => elgg_echo('logout'),
-			'is_action' => true,
-			'priority' => 900,
-			'section' => 'alt',
-		));
+		]);
 	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'logout',
+		'parent_name' => 'account',
+		'href' => 'action/logout',
+		'text' => elgg_echo('logout'),
+		'is_action' => true,
+		'priority' => 900,
+		'section' => 'alt',
+	]);
+	
+	return $return;
 }
 
 /**
  * Set user icon file
- * 
+ *
  * @param string    $hook   "entity:icon:file"
  * @param string    $type   "user"
  * @param \ElggIcon $icon   Icon file
@@ -836,7 +866,9 @@ function users_init() {
 	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
-
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
+	
 	elgg_register_action('register', '', 'public');
 	elgg_register_action('useradd', '', 'admin');
 	elgg_register_action('avatar/upload');
@@ -879,6 +911,5 @@ function users_test($hook, $type, $value, $params) {
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', 'users_init', 0);
 	$events->registerHandler('init', 'system', 'elgg_profile_fields_setup', 10000); // Ensure this runs after other plugins
-	$events->registerHandler('pagesetup', 'system', 'users_pagesetup', 0);
 	$hooks->registerHandler('unit_test', 'system', 'users_test');
 };

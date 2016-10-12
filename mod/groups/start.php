@@ -102,7 +102,6 @@ function groups_init() {
 
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
-	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
 
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
@@ -123,6 +122,9 @@ function groups_init() {
 
 	// Setup filter tabs on /groups/all page
 	elgg_register_plugin_hook_handler('register', 'menu:filter:groups/all', 'groups_setup_filter_tabs');
+
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu_group_profile');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu');
 }
 
 /**
@@ -159,73 +161,119 @@ function groups_fields_setup() {
 }
 
 /**
- * Configure the groups sidebar menu. Triggered on page setup
+ * Register menu items for the page menu
  *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
  */
-function groups_setup_sidebar_menus() {
-
+function _groups_page_menu_group_profile($hook, $type, $return, $params) {
+	
+	if (!elgg_in_context('group_profile') || !elgg_is_logged_in()) {
+		return;
+	}
+	
 	// Get the page owner entity
 	$page_owner = elgg_get_page_owner_entity();
-
-	if (elgg_in_context('group_profile')) {
-		if (!elgg_instanceof($page_owner, 'group')) {
-			forward('', '404');
-		}
-
-		if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
-			$url = elgg_get_site_url() . "groups/requests/{$page_owner->getGUID()}";
-
-			$count = elgg_get_entities_from_relationship(array(
-				'type' => 'user',
-				'relationship' => 'membership_request',
-				'relationship_guid' => $page_owner->getGUID(),
-				'inverse_relationship' => true,
-				'count' => true,
-			));
-
-			if ($count) {
-				$text = elgg_echo('groups:membershiprequests:pending', array($count));
-			} else {
-				$text = elgg_echo('groups:membershiprequests');
-			}
-
-			elgg_register_menu_item('page', array(
-				'name' => 'membership_requests',
-				'text' => $text,
-				'href' => $url,
-			));
-		}
+	if (!($page_owner instanceof ElggGroup)) {
+		return;
 	}
-	if (elgg_get_context() == 'groups' && !elgg_instanceof($page_owner, 'group')) {
-		elgg_register_menu_item('page', array(
-			'name' => 'groups:all',
-			'text' => elgg_echo('groups:all'),
-			'href' => 'groups/all',
-		));
-
-		$user = elgg_get_logged_in_user_entity();
-		if ($user) {
-			$url =  "groups/owner/$user->username";
-			$item = new ElggMenuItem('groups:owned', elgg_echo('groups:owned'), $url);
-			elgg_register_menu_item('page', $item);
-
-			$url = "groups/member/$user->username";
-			$item = new ElggMenuItem('groups:member', elgg_echo('groups:yours'), $url);
-			elgg_register_menu_item('page', $item);
-
-			$url = "groups/invitations/$user->username";
-			$invitation_count = groups_get_invited_groups($user->getGUID(), false, array('count' => true));
-
-			if ($invitation_count) {
-				$text = elgg_echo('groups:invitations:pending', array($invitation_count));
-			} else {
-				$text = elgg_echo('groups:invitations');
-			}
-
-			$item = new ElggMenuItem('groups:user:invites', $text, $url);
-			elgg_register_menu_item('page', $item);
-		}
+	
+	if (!$page_owner->canEdit() || $page_owner->isPublicMembership()) {
+		return;
 	}
+	
+	$count = elgg_get_entities_from_relationship(array(
+		'type' => 'user',
+		'relationship' => 'membership_request',
+		'relationship_guid' => $page_owner->getGUID(),
+		'inverse_relationship' => true,
+		'count' => true,
+	));
+
+	if ($count) {
+		$text = elgg_echo('groups:membershiprequests:pending', array($count));
+	} else {
+		$text = elgg_echo('groups:membershiprequests');
+	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'membership_requests',
+		'text' => $text,
+		'href' => "groups/requests/{$page_owner->getGUID()}",
+	]);
+	
+	return $return;
+}
+
+/**
+ * Register menu items for the page menu
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _groups_page_menu($hook, $type, $return, $params) {
+	
+	if (elgg_get_context() !== 'groups') {
+		return;
+	}
+	
+	// Get the page owner entity
+	$page_owner = elgg_get_page_owner_entity();
+	if ($page_owner instanceof ElggGroup) {
+		return;
+	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'groups:all',
+		'text' => elgg_echo('groups:all'),
+		'href' => 'groups/all',
+	]);
+
+	$user = elgg_get_logged_in_user_entity();
+	if (!$user) {
+		return $return;
+	}
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'groups:owned',
+		'text' => elgg_echo('groups:owned'),
+		'href' => "groups/owner/$user->username",
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'groups:member',
+		'text' => elgg_echo('groups:yours'),
+		'href' => "groups/member/$user->username",
+	]);
+
+	$invitation_count = groups_get_invited_groups($user->getGUID(), false, array('count' => true));
+
+	if ($invitation_count) {
+		$text = elgg_echo('groups:invitations:pending', array($invitation_count));
+	} else {
+		$text = elgg_echo('groups:invitations');
+	}
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'groups:user:invites',
+		'text' => $text,
+		'href' => "groups/invitations/$user->username",
+	]);
+	
+	return $return;
 }
 
 /**
@@ -279,12 +327,6 @@ function groups_page_handler($page) {
 			}
 			break;
 		case 'profile':
-			// Page owner and context need to be set before elgg_view() is
-			// called so they'll be available in the [pagesetup, system] event
-			// that is used for registering items for the sidebar menu.
-			// @see groups_setup_sidebar_menus()
-			elgg_push_context('group_profile');
-			elgg_set_page_owner_guid($page[1]);
 		case 'activity':
 		case 'edit':
 		case 'invite':
@@ -547,7 +589,7 @@ function groups_update_event_listener($event, $type, $group) {
  *
  * Registered with a hight priority to make sure that other handlers to not prevent
  * the deletion.
- * 
+ *
  * @param string   $event "delete"
  * @param string   $type  "group"
  * @param ElggGrup $group Group entity
@@ -1011,7 +1053,7 @@ function groups_default_page_owner_handler($hook, $type, $return, $params) {
 
 /**
  * Setup filter tabs on /groups/all page
- * 
+ *
  * @param string         $hook   "register"
  * @param string         $type   "menu:filter:groups/all"
  * @param ElggMenuItem[] $return Menu
