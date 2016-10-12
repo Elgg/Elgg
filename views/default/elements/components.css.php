@@ -20,6 +20,9 @@
 	float: right;
 	margin-left: 8px;
 }
+.elgg-image-block .elgg-body {
+	overflow: visible;
+}
 
 /* ***************************************
 	List

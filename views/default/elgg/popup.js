@@ -122,13 +122,13 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 			$target.data('trigger', $trigger); // used to remove elgg-state-active class when popup is closed
 			$target.data('position', position); // used to reposition the popup module on window manipulations
 
-			// @todo: in 3.0, do not append to 'body' and use fixed positioning with z-indexes instead
-			// @todo: use css transitions instead of $.fadeOut() to avoid collisions
-			// (with fading the DOM element is considered visible until animation is complete)
-			$target.appendTo('body')
-					.fadeIn()
-					.addClass('elgg-state-active elgg-state-popped')
-					.position(position);
+			if (!$trigger.is('.elgg-popup-inline')) {
+				$target.appendTo('body');
+			}
+			
+			$target.fadeIn()
+				   .addClass('elgg-state-active elgg-state-popped')
+				   .position(position);
 
 			$trigger.addClass('elgg-state-active');
 

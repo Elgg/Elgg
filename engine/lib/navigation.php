@@ -561,9 +561,11 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		$options = array(
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
+			'icon' => 'edit',
 			'title' => elgg_echo('edit:this'),
-			'href' => "$handler/edit/{$entity->getGUID()}",
+			'href' => "$handler/edit/{$entity->guid}",
 			'priority' => 200,
+			'section' => 'actions',
 		);
 		$return[] = \ElggMenuItem::factory($options);
 	}
@@ -577,11 +579,13 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		}
 		$options = array(
 			'name' => 'delete',
-			'text' => elgg_view_icon('delete'),
+			'icon' => 'delete',
+			'text' => elgg_echo('delete'),
 			'title' => elgg_echo('delete:this'),
-			'href' => "$action?guid={$entity->getGUID()}",
+			'href' => "$action?guid={$entity->guid}",
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
+			'section' => 'actions',
 		);
 		$return[] = \ElggMenuItem::factory($options);
 	}

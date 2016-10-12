@@ -79,7 +79,11 @@ function _elgg_friends_page_setup() {
 function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 	/* @var \ElggUser $user */
-
+	
+	if (!elgg_instanceof($user, 'user')) {
+		return;
+	}
+	
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() != $user->guid) {
 			$isFriend = $user->isFriend();
