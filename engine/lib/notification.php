@@ -107,7 +107,7 @@ function elgg_register_notification_method($name) {
  * @since 2.3
  */
 function elgg_get_notification_methods() {
-	return array_keys(_elgg_services()->notifications->getMethods());
+	return _elgg_services()->notifications->getMethods();
 }
 
 /**
