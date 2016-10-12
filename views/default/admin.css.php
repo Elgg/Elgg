@@ -599,10 +599,11 @@ select {
 }
 .elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
-	background: #DEDEDE;
-	color: white;
+	background: #dedede;
+	color: #888;
 	cursor: default;
-	border-color: transparent;
+	cursor: not-allowed;
+	border-color: #adadad;
 }
 
 .elgg-form-useradd input[type=text],
@@ -1432,7 +1433,9 @@ h6 > .elgg-icon {
 /* ***************************************
 	PLUGINS
 **************************************** */
-
+#plugins-filter {
+    margin: 5px 5px 20px;
+}
 .elgg-admin-plugins-categories li {
 	padding-right: 5px;
 }
@@ -1453,15 +1456,20 @@ h6 > .elgg-icon {
 	cursor: move;
 }
 .elgg-plugin > .elgg-image-block > .elgg-image {
-	margin-right: 10px;
+	margin-right: 0;
 	min-width: 9em;
 	text-align: center;
 }
 .elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
 	display: block;
 	margin: 0;
-	padding: 0;
+	padding: 3px 10px;
+	margin: 0;
 }
+.elgg-plugin > .elgg-image-block > .elgg-body {
+	padding: 3px 10px;
+}
+
 .elgg-plugin p {
 	margin: 0;
 }
@@ -1510,6 +1518,7 @@ h6 > .elgg-icon {
 .elgg-plugin-settings {
 	font-weight: normal;
 	font-size: 0.9em;
+	margin: 0 5px;
 }
 .elgg-plugin-contributors {
 	list-style-position: inside;
@@ -1561,11 +1570,8 @@ h6 > .elgg-icon {
 
 .elgg-plugin-title {
 	font-weight: bold;
-	margin-right: 5px;
 }
-.elgg-state-active .elgg-plugin-title {
-	font-style: italic;
-}
+
 .elgg-state-inactive .elgg-plugin-title {
 	color: #666;
 }

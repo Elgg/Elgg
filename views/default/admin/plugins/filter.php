@@ -32,4 +32,6 @@ $body = elgg_format_element([
 	'#text' => $list_items,
 ]);
 
-echo elgg_view_module('', elgg_echo('filter'), $body);
+echo elgg_view_module('', elgg_echo('filter'), $body, [
+	'id' => 'plugins-filter',
+]);
