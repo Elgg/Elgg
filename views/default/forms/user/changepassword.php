@@ -3,39 +3,39 @@
  * Reset user password form
  */
 
-$text = elgg_autop(elgg_echo('user:changepassword:change_password_confirm'));
+echo elgg_view('output/longtext', [
+	'value' => elgg_echo('user:changepassword:change_password_confirm'),
+]);
 
-$password1_label = elgg_echo('user:password:label');
-$password1 = elgg_view('input/password', array(
-	'name' => 'password1',
-));
+$fields = [
+	[
+		'#type' => 'hidden',
+		'name' => 'u',
+		'value' => elgg_extract('guid', $vars),
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'c',
+		'value' => elgg_extract('code', $vars),
+	],
+	[
+		'#type' => 'password',
+		'#label' => elgg_echo('user:password:label'),
+		'name' => 'password1',
+	],
+	[
+		'#type' => 'password',
+		'#label' => elgg_echo('user:password2'),
+		'name' => 'password2',
+	],
+];
 
-$password2_label = elgg_echo('user:password2:label');
-$password2 = elgg_view('input/password', array(
-	'name' => 'password2',
-));
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
+}
 
-$u = elgg_view('input/hidden', array(
-	'name' => 'u',
-	'value' => $vars['guid'],
-));
-
-$c = elgg_view('input/hidden', array(
-	'name' => 'c',
-	'value' => $vars['code'],
-));
-
-$submit = elgg_view('input/submit', array(
-	'value' => elgg_echo('changepassword')
-));
-
-echo <<<HTML
-$text
-<div><label>$password1_label</label>$password1</div>
-<div><label>$password2_label</label>$password2</div>
-<div class="elgg-foot">
-$u $c
-$submit
-</div>
-HTML;
-
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('changepassword'),
+]);
+elgg_set_form_footer($footer);

@@ -2,57 +2,59 @@
  * Walled garden CSS
  */
 
-.elgg-body-walledgarden {
-	margin: 100px auto 0;
+body {
+	background-image: url('walled_garden.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top left;
+    margin: 0;
+}
+
+.elgg-page-walled-garden {
 	position: relative;
-	width: 530px;
+	width: 500px;
+	min-height: 100%;
+	background: white;
+	margin: 0;
+	float: right;
 }
-.elgg-module-walledgarden {
+
+.elgg-page-walled-garden > div {
+	margin: 0;
+	padding: 20px 40px;
+	background: none;
+}
+
+.elgg-main {
+	padding: 0;
+}
+
+.elgg-heading-walled-garden a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.elgg-page-walled-garden .elgg-page-footer {
 	position: absolute;
-	top: 0;
+	bottom: 0;
 	left: 0;
+}
 
-    background-color: #FFF;
-    border: 1px solid #DEDEDE;
-    padding: 10px;
-
-	border-radius: 3px;
-	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
-}
-.elgg-module-walledgarden > .elgg-head {
-    padding: 20px 20px 0 20px;
-}
-.elgg-module-walledgarden > .elgg-body {
-    padding: 0 20px;
-}
-.elgg-module-walledgarden > .elgg-foot {
-    padding: 0 20px 20px 20px;
-}
-.elgg-menu-walled-garden {
-	margin: 10px 0;
-}
-.elgg-walledgarden-single > .elgg-body {
-	padding: 0 18px;
-}
-.elgg-body-walledgarden h3 {
-	font-size: 1.5em;
-	line-height: 1.1em;
-	padding-bottom: 5px;
-}
-.elgg-heading-walledgarden {
-	line-height: 1.1em;
-}
-.elgg-module-walledgarden .elgg-output img {
-	width: 100%;
-	height: auto;
+.elgg-form-login, .elgg-form-account {
+	max-width: none;
 }
 
 @media (max-width: 600px) {
-	.elgg-page-walledgarden {
-		padding: 20px;
+	.elgg-page-walled-garden {
+		width: 100%;
+		float: none;
 	}
-    .elgg-body-walledgarden {
-    	margin: 40px auto 0;
-        width: auto;
-    }
+	
+	.elgg-page-walled-garden > div {
+		padding: 10px 20px;
+	}
+	
+	.elgg-page-walled-garden .elgg-page-footer {
+		position: relative;
+	}
 }

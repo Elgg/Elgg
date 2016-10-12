@@ -15,7 +15,7 @@ elgg_signed_request_gatekeeper();
 $user_guid = get_input('u');
 $code = get_input('c');
 
-$user = get_entity($user_guid);
+$user = get_user($user_guid);
 
 // don't check code here to avoid automated attacks
 if (!$user instanceof ElggUser) {
@@ -31,15 +31,11 @@ $params = array(
 );
 $content = elgg_view_form('user/changepassword', array('class' => 'elgg-form-account'), $params);
 
-if (elgg_get_config('walled_garden')) {
-	elgg_load_css('elgg.walled_garden');
-	$body = elgg_view_layout('walled_garden', array('content' => $content));
-	echo elgg_view_page($title, $body, 'walled_garden');
-} else {
-	$body = elgg_view_layout('one_column', array(
-		'title' => $title,
-		'content' => $content,
-	));
-	echo elgg_view_page($title, $body);
-}
+$shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 
+$body = elgg_view_layout('default', [
+	'content' => $content,
+	'title' => $title,
+	'sidebar' => false,
+]);
+echo elgg_view_page($title, $body, $shell);

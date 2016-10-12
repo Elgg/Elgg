@@ -9,29 +9,45 @@
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
-if (elgg_is_sticky_form('register')) {
-	// An error occurred while submitting the registration form in a lightbox
-	forward('register');
-}
+elgg_load_css('elgg.walled_garden');
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
-$messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
-$content = $vars["body"];
+$messages = elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
+$content = elgg_extract('body', $vars);
 
-ob_start(); ?>
-<div class="elgg-page elgg-page-walledgarden">
+$header = elgg_view('page/elements/walled_garden/header', $vars);
+$footer = elgg_view('page/elements/walled_garden/footer', $vars);
+
+$body = <<<__BODY
+<div class="elgg-page elgg-page-walled-garden">
 	<div class="elgg-page-messages">
-		<?php echo $messages ?>
+		$messages
 	</div>
-	<div class="elgg-body-walledgarden">
-		<?php echo $content ?>
+	<div class="elgg-page-header">
+		<div class="elgg-inner">
+			$header
+		</div>
+	</div>
+	<div class="elgg-page-body">
+		<div class="elgg-inner">
+			$content
+		</div>
+	</div>
+	<div class="elgg-page-footer">
+		<div class="elgg-inner">
+			$footer
+		</div>
 	</div>
 </div>
-<?php
-$body = ob_get_clean();
+__BODY;
 
 $body .= elgg_view('page/elements/foot');
 
-$head = elgg_view('page/elements/head', $vars['head']);
+$head = elgg_view('page/elements/head', elgg_extract('head', $vars));
 
-echo elgg_view("page/elements/html", array("head" => $head, "body" => $body));
+$params = [
+	'head' => $head,
+	'body' => $body,
+];
+
+echo elgg_view('page/elements/html', $params);

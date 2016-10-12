@@ -26,6 +26,8 @@ Removed views
  * ``page/layouts/one_column``: use ``page/layouts/default``
  * ``page/layouts/one_sidebar``: use ``page/layouts/default``
  * ``page/layouts/two_sidebar``: use ``page/layouts/default``
+ * ``page/layouts/walled_garden``: use ``page/layouts/default``
+ * ``page/layouts/walled_garden/cancel_button``
  * ``page/layouts/two_column_left_sidebar``
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead

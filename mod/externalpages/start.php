@@ -67,19 +67,19 @@ function expages_page_handler($page, $handler) {
 	$type = strtolower($handler);
 
 	$title = elgg_echo("expages:$type");
-	$header = elgg_view_title($title);
-
-	$object = elgg_get_entities(array(
+	
+	$object = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => $type,
 		'limit' => 1,
-	));
-	if ($object) {
-		$content .= elgg_view('output/longtext', array('value' => $object[0]->description));
-	} else {
-		$content .= elgg_echo("expages:notset");
-	}
-	$content = elgg_view('expages/wrapper', array('content' => $content));
+	]);
+	
+	$description = $object ? $object[0]->description : elgg_echo('expages:notset');
+	$description = elgg_view('output/longtext', ['value' => $description]);
+	
+	$content = elgg_view('expages/wrapper', [
+		'content' => $description,
+	]);
 	
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_menu_item('title', array(
@@ -89,15 +89,18 @@ function expages_page_handler($page, $handler) {
 			'link_class' => 'elgg-button elgg-button-action',
 		));
 	}
-
-	if (elgg_is_logged_in() || !elgg_get_config('walled_garden')) {
-		$body = elgg_view_layout('one_column', array('title' => $title, 'content' => $content));
-		echo elgg_view_page($title, $body);
-	} else {
-		elgg_load_css('elgg.walled_garden');
-		$body = elgg_view_layout('walled_garden', array('content' => $header . $content));
-		echo elgg_view_page($title, $body, 'walled_garden');
+	
+	$shell = 'default';
+	if (elgg_get_config('walled_garden') && !elgg_is_logged_in()) {
+		$shell = 'walled_garden';
 	}
+	$body = elgg_view_layout('default', [
+		'content' => $content,
+		'title' => $title,
+		'sidebar' => false,
+	]);
+	echo elgg_view_page($title, $body, $shell);
+	
 	return true;
 }
 
@@ -108,7 +111,7 @@ function expages_page_handler($page, $handler) {
  * @param string $type   'menu:expages'
  * @param array  $return current menu items
  * @param array  $params parameters
- * 
+ *
  * @return array
  */
 function expages_menu_register_hook($hook, $type, $return, $params) {

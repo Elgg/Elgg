@@ -8,23 +8,20 @@
 
 $username = elgg_extract('username', $vars, '');
 
-$input_attrs = [
+echo elgg_view('output/longtext', ['value' => elgg_echo('user:password:text')]);
+
+echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('loginusername'),
 	'name' => 'username',
 	'value' => $username,
-];
-if (!$username) {
-	$input_attrs['autofocus'] = true;
-}
-?>
+	'autofocus' => empty($username),
+]);
 
-<div class="mtm">
-	<?php echo elgg_echo('user:password:text'); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('loginusername'); ?></label><br />
-	<?php echo elgg_view('input/text', $input_attrs); ?>
-</div>
-<?php echo elgg_view('input/captcha'); ?>
-<div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('request'))); ?>
-</div>
+echo elgg_view_field(['#type' => 'captcha']);
+
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('request'),
+]);
+elgg_set_form_footer($footer);
