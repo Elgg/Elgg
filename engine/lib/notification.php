@@ -195,6 +195,12 @@ function _elgg_notifications_cron() {
  * @access private
  */
 function _elgg_send_email_notification($hook, $type, $result, $params) {
+	
+	if ($result === true) {
+		// assume someone else already sent the message
+		return;
+	}
+	
 	/* @var \Elgg\Notifications\Notification $message */
 	$message = $params['notification'];
 
