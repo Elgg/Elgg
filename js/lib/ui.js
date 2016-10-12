@@ -18,7 +18,9 @@ elgg.ui.init = function () {
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li.elgg-state-success').fadeOut('slow');
 
-	$(document).on('click', '[rel=toggle]', elgg.ui.toggles);
+	require(['elgg/toggle'], function(toggle) {
+		toggle.bind($('[rel="toggle"]'));
+	});
 
 	require(['elgg/popup'], function(popup) {
 		popup.bind($('[rel="popup"]'));
@@ -43,48 +45,6 @@ elgg.ui.init = function () {
 	$(elementId).addClass('elgg-state-highlight');
 
 	elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
-};
-
-/**
- * Toggles an element based on clicking a separate element
- *
- * Use rel="toggle" on the toggler element
- * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
- * or use data-toggle-selector="your_jquery_selector" to have an advanced selection method
- *
- * By default elements perform a slideToggle.
- * If you want a normal toggle (hide/show) you can add data-toggle-slide="0" on the elements to prevent a slide.
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.toggles = function(event) {
-	event.preventDefault();
-	var $this = $(this),
-		selector = $this.data().toggleSelector;
-
-	if (!selector) {
-		// @todo we can switch to elgg.getSelectorFromUrlFragment() in 1.x if
-		// we also extend it to support href=".some-class"
-		selector = $this.attr('href');
-	}
-
-	var $elements = $(selector);
-
-	$this.toggleClass('elgg-state-active');
-
-	$elements.each(function(index, elem) {
-		var $elem = $(elem);
-		if ($elem.data().toggleSlide != false) {
-			$elem.slideToggle('medium');
-		} else {
-			$elem.toggle();
-		}
-	});
-
-	$this.trigger('elgg_ui_toggle', [{
-		$toggled_elements: $elements
-	}]);
 };
 
 /**

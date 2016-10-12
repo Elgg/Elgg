@@ -510,6 +510,10 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 					'title' => elgg_echo('comment:this'),
 					'rel' => 'toggle',
 					'priority' => 50,
+					'data-animation' => json_encode([
+						'open' => 'slideInDown',
+						'close' => 'slideOutUp',
+					]),
 				);
 				$return[] = \ElggMenuItem::factory($options);
 			}
