@@ -29,9 +29,6 @@ function uservalidationbyemail_init() {
 	// prevent users from logging in if they aren't validated
 	register_pam_handler('uservalidationbyemail_check_auth_attempt', "required");
 
-	// when requesting a new password
-	elgg_register_plugin_hook_handler('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
-
 	// prevent the engine from logging in users via login()
 	elgg_register_event_handler('login:before', 'user', 'uservalidationbyemail_check_manual_login');
 
