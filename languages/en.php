@@ -1301,22 +1301,29 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:on' => '%s on %s',
 	'generic_comments:latest:posted' => 'posted a',
 
-	'generic_comment:email:subject' => 'You have a new comment!',
-	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
-
+	'generic_comment:notification:owner:subject' => 'You have a new comment!',
+	'generic_comment:notification:owner:summary' => 'You have a new comment!',
+	'generic_comment:notification:owner:body' => "You have a new comment on your item \"%s\" from %s. It reads:
 
 %s
 
-
 To reply or view the original item, click here:
-
 %s
 
 To view %s's profile, click here:
+%s",
+	
+	'generic_comment:notification:user:subject' => 'A new comment on: %s',
+	'generic_comment:notification:user:summary' => 'A new comment on: %s',
+	'generic_comment:notification:user:body' => "A new comment was made on \"%s\" by %s. It reads:
 
 %s
 
-Please do not reply to this email.",
+To reply or view the original item, click here:
+%s
+
+To view %s's profile, click here:
+%s",
 
 /**
  * Entities

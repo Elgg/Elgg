@@ -28,6 +28,11 @@ function _elgg_comments_init() {
 	elgg_register_ajax_view('core/ajax/edit_comment');
 
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:comment', 'Elgg\Values::getTrue');
+	
+	elgg_register_notification_event('object', 'comment', ['create']);
+	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_comments_add_content_owner_to_subscriptions');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:comment', '_elgg_comments_prepare_content_owner_notification');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:comment', '_elgg_comments_prepare_notification');
 }
 
 /**
@@ -209,7 +214,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 
 /**
  * By default, only authors can edit their comments.
- * 
+ *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
  * @param boolean $return Can the given user edit the given entity?
@@ -273,12 +278,12 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 
 /**
  * Update comment access to match that of the container
- * 
+ *
  * @param string     $event  'update:after'
  * @param string     $type   'all'
  * @param ElggEntity $entity The updated entity
  * @return bool
- * 
+ *
  * @access private
  */
 function _elgg_comments_access_sync($event, $type, $entity) {
@@ -309,6 +314,145 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 	elgg_set_ignore_access($ia);
 	
 	return true;
+}
+
+/**
+ * Add the owner of the content being commented on to the subscribers
+ *
+ * @param string $hook        'get'
+ * @param string $type        'subscribers'
+ * @param array  $returnvalue current subscribers
+ * @param array  $params      supplied params
+ *
+ * @return void|array
+ *
+ * @access private
+ */
+function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $returnvalue, $params) {
+	
+	$event = elgg_extract('event', $params);
+	if (!($event instanceof \Elgg\Notifications\Event)) {
+		return;
+	}
+	
+	$object = $event->getObject();
+	if (!elgg_instanceof($object, 'object', 'comment')) {
+		// can't use instanceof ElggComment as discussion replies inherit
+		return;
+	}
+	
+	$content_owner = $object->getContainerEntity()->getOwnerEntity();
+	if (!($content_owner instanceof ElggUser)) {
+		return;
+	}
+	
+	$notification_settings = get_user_notification_settings($content_owner->getGUID());
+	if (empty($notification_settings)) {
+		return;
+	}
+	
+	$returnvalue[$content_owner->getGUID()] = [];
+	foreach ($notification_settings as $method => $enabled) {
+		if (empty($enabled)) {
+			continue;
+		}
+		
+		$returnvalue[$content_owner->getGUID()][] = $method;
+	}
+	
+	return $returnvalue;
+}
+
+/**
+ * Set the notification message for the owner of the content being commented on
+ *
+ * @param string                           $hook        'prepare'
+ * @param string                           $type        'notification:create:object:comment'
+ * @param \Elgg\Notifications\Notification $returnvalue current notification message
+ * @param array                            $params      supplied params
+ *
+ * @return void|\Elgg\Notifications\Notification
+ *
+ * @access private
+ */
+function _elgg_comments_prepare_content_owner_notification($hook, $type, $returnvalue, $params) {
+	
+	$comment = elgg_extract('object', $params);
+	if (!elgg_instanceof($comment, 'object', 'comment')) {
+		// can't use instanceof ElggComment as discussion replies inherit
+		return;
+	}
+	
+	/* @var $content \ElggEntity */
+	$content = $comment->getContainerEntity();
+	$recipient = elgg_extract('recipient', $params);
+	if ($content->owner_guid !== $recipient->guid) {
+		// not the content owner
+		return;
+	}
+	
+	$language = elgg_extract('language', $params);
+	/* @var $commenter \ElggUser */
+	$commenter = $comment->getOwnerEntity();
+	
+	$returnvalue->subject = elgg_echo('generic_comment:notification:owner:subject', [], $language);
+	$returnvalue->summary = elgg_echo('generic_comment:notification:owner:summary', [], $language);
+	$returnvalue->body = elgg_echo('generic_comment:notification:owner:body', [
+		$content->getDisplayName(),
+		$commenter->getDisplayName(),
+		$comment->description,
+		$comment->getURL(),
+		$commenter->getDisplayName(),
+		$commenter->getURL(),
+	], $language);
+	
+	return $returnvalue;
+}
+
+/**
+ * Set the notification message for interested users
+ *
+ * @param string                           $hook        'prepare'
+ * @param string                           $type        'notification:create:object:comment'
+ * @param \Elgg\Notifications\Notification $returnvalue current notification message
+ * @param array                            $params      supplied params
+ *
+ * @return void|\Elgg\Notifications\Notification
+ *
+ * @access private
+ */
+function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params) {
+	
+	$comment = elgg_extract('object', $params);
+	if (!elgg_instanceof($object, 'object', 'comment')) {
+		// can't use instanceof ElggComment as discussion replies inherit
+		return;
+	}
+	
+	/* @var $content \ElggEntity */
+	$content = $object->getContainerEntity();
+	$recipient = elgg_extract('recipient', $params);
+	if ($content->getOwnerGUID() === $recipient->getGUID()) {
+		// the content owner, this is handled in other hook
+		return;
+	}
+	
+	$language = elgg_extract('language', $params);
+	/* @var $commenter \ElggUser */
+	$commenter = $comment->getOwnerEntity();
+	
+	$returnvalue->subject = elgg_echo('generic_comment:notification:user:subject', [$content->getDisplayName()], $language);
+	$returnvalue->summary = elgg_echo('generic_comment:notification:user:summary', [$content->getDisplayName()], $language);
+	$returnvalue->body = elgg_echo('generic_comment:notification:user:body', [
+		$content->getDisplayName(),
+		$commenter->getDisplayName(),
+		$comment->description,
+		$comment->getURL(),
+		$commenter->getDisplayName(),
+		$commenter->getURL(),
+	], $language);
+	
+	return $returnvalue;
 }
 
 /**
