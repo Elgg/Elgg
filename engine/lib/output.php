@@ -142,6 +142,11 @@ function elgg_format_attributes(array $attrs = array()) {
 	$attributes = [];
 
 	foreach ($attrs as $attr => $val) {
+		if (!is_string($attr) || $attr[0] == '#') {
+			// this is a variable belonging to a parent view
+			continue;
+		}
+		
 		if (0 !== strpos($attr, 'data-') && false !== strpos($attr, '_')) {
 			// this is probably a view $vars variable not meant for output
 			continue;

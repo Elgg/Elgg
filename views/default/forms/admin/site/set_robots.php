@@ -5,22 +5,23 @@
 
 $site = elgg_get_site_entity();
 
-echo '<div>';
-echo elgg_echo('admin:robots.txt:instructions');
-echo elgg_view('input/plaintext', array(
+echo elgg_view_field([
+	'#type' => 'plaintext',
+	'#label' => elgg_echo('admin:robots.txt:instructions'),
 	'name' => 'text',
 	'value' => $site->getPrivateSetting('robots.txt'),
-));
-echo '</div>';
+]);
 
-echo '<div>';
-echo elgg_echo('admin:robots.txt:plugins');
-echo elgg_view('input/plaintext', array(
-	'value' => elgg_trigger_plugin_hook('robots.txt', 'site', array('site' => $site), ''),
+echo elgg_view_field([
+	'#type' => 'plaintext',
+	'#label' => elgg_echo('admin:robots.txt:plugins'),
+	'value' => elgg_trigger_plugin_hook('robots.txt', 'site', ['site' => $site], ''),
 	'readonly' => true,
-));
-echo '</div>';
+]);
 
-echo '<div>';
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-echo '</div>';
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+
+elgg_set_form_footer($footer);
