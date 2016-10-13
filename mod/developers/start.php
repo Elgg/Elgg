@@ -67,7 +67,7 @@ function developers_process_settings() {
 		elgg_register_plugin_hook_handler('all', 'all', 'developers_log_events', 1);
 	}
 
-	if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
+	if (!empty($settings['show_gear']) && elgg_is_admin_logged_in()) {
 		elgg_require_js('elgg/dev/gear');
 		elgg_register_ajax_view('developers/gear_popup');
 		elgg_register_simplecache_view('elgg/dev/gear.html');

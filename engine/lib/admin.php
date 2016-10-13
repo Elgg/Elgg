@@ -411,13 +411,13 @@ function _elgg_admin_pagesetup() {
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'community_forums',
 			'text' => elgg_echo('admin:footer:community_forums'),
-			'href' => 'http://community.elgg.org/groups/all/',
+			'href' => 'https://elgg.org/groups/all',
 		));
 
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'blog',
 			'text' => elgg_echo('admin:footer:blog'),
-			'href' => 'https://community.elgg.org/blog/all',
+			'href' => 'https://elgg.org/blog',
 		));
 	}
 }
