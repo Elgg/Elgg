@@ -27,48 +27,12 @@ function _elgg_friends_init() {
 
 	elgg_register_widget_type('friends', elgg_echo('friends'), elgg_echo('friends:widget:description'));
 
-	elgg_register_event_handler('pagesetup', 'system', '_elgg_friends_page_setup');
-	elgg_register_event_handler('pagesetup', 'system', '_elgg_setup_collections_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_friends_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_collections_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
+	
 	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
-}
-
-/**
- * Register some menu items for friends UI
- * @access private
- */
-function _elgg_friends_page_setup() {
-	$owner = elgg_get_page_owner_entity();
-	$viewer = elgg_get_logged_in_user_entity();
-
-	if ($owner) {
-		$params = array(
-			'name' => 'friends',
-			'text' => elgg_echo('friends'),
-			'href' => 'friends/' . $owner->username,
-			'contexts' => array('friends')
-		);
-		elgg_register_menu_item('page', $params);
-
-		$params = array(
-			'name' => 'friends:of',
-			'text' => elgg_echo('friends:of'),
-			'href' => 'friendsof/' . $owner->username,
-			'contexts' => array('friends')
-		);
-		elgg_register_menu_item('page', $params);
-	}
-
-	// topbar
-	if ($viewer) {
-		elgg_register_menu_item('topbar', array(
-			'name' => 'friends',
-			'href' => "friends/{$viewer->username}",
-			'text' => elgg_view_icon('users'),
-			'title' => elgg_echo('friends'),
-			'priority' => 300,
-		));
-	}
 }
 
 /**
@@ -174,23 +138,106 @@ function _elgg_collections_page_handler($page_elements) {
 }
 
 /**
- * Adds collection sidebar menu items
+ * Register menu items for the page menu
  *
- * @return void
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
  * @access private
+ *
+ * @since 3.0
  */
-function _elgg_setup_collections_menu() {
-	
-	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		$user = elgg_get_page_owner_entity();
-		
-		elgg_register_menu_item('page', array(
-			'name' => 'friends:view:collections',
-			'text' => elgg_echo('friends:collections'),
-			'href' => "collections/owner/$user->username",
-			'contexts' => array('friends')
-		));
+function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
+
+	$viewer = elgg_get_logged_in_user_entity();
+	if (!$viewer) {
+		return;
 	}
+		
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'friends',
+		'href' => "friends/{$viewer->username}",
+		'text' => elgg_view_icon('users'),
+		'title' => elgg_echo('friends'),
+		'priority' => 300,
+	]);
+	
+	return $return;
+}
+
+/**
+ * Register menu items for the page menu
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _elgg_friends_page_menu($hook, $type, $return, $params) {
+
+	$owner = elgg_get_page_owner_entity();
+	if (!$owner) {
+		return;
+	}
+		
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'friends',
+		'text' => elgg_echo('friends'),
+		'href' => 'friends/' . $owner->username,
+		'contexts' => array('friends'),
+	]);
+		
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'friends:of',
+		'text' => elgg_echo('friends:of'),
+		'href' => 'friendsof/' . $owner->username,
+		'contexts' => array('friends'),
+	]);
+	
+	return $return;
+}
+
+/**
+ * Register menu items for the page menu
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _elgg_collections_page_menu($hook, $type, $return, $params) {
+
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+	
+	if (elgg_get_logged_in_user_guid() !== elgg_get_page_owner_guid()) {
+		return;
+	}
+
+	$user = elgg_get_page_owner_entity();
+		
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'friends:view:collections',
+		'text' => elgg_echo('friends:collections'),
+		'href' => "collections/owner/$user->username",
+		'contexts' => array('friends'),
+	]);
+	
+	return $return;
 }
 
 /**

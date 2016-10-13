@@ -10,6 +10,8 @@
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
+elgg_load_css('elgg.admin');
+
 // render content before head so that JavaScript and CSS can be loaded. See #4032
 $header = elgg_view('admin/header', $vars);
 

@@ -45,9 +45,13 @@ Removed functions/methods
 
 All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.9.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
+ * ``_elgg_manage_pagesetup``
+ * ``developers_setup_menu``
  * ``get_default_filestore``
+ * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``
  * ``generate_user_password``: Use ``ElggUser::setPassword``
+ * ``notifications_plugin_pagesetup``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
  * ``ElggFile::size``: Use ``getSize``
  * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
@@ -140,9 +144,10 @@ Removed JavaScript APIs
 Removed hooks/events
 --------------------
 
+ * Event **delete, annotations**: Use **delete, annotation**
+ * Event **pagesetup, system**: Use the menu or page shell hooks instead.
  * Hook **index, system**: Override the ``resources/index`` view
  * Hook **object:notifications, <type>**: Use the hook **send:before, notifications**
- * Event **delete, annotations**: Use **delete, annotation**
  * Hook **output:before, layout**: Use **view_vars, page/layout/<layout_name>**
  * Hook **output:after, layout**: Use **view, page/layout/<layout_name>**
 

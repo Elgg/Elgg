@@ -149,10 +149,11 @@ There are 5 :doc:`Elgg events </design/events>` that are triggered on every page
 1. boot, system
 2. plugins_boot, system
 3. init, system
-4. pagesetup, system (deprecated)
+4. ready, system
 5. shutdown, system
 
-The *boot*, *system* event is triggered before the plugins get loaded. There does not appear to be any difference between the timing of the next two events: *plugins_boot*, *system* and *init*, *system* so plugins tend to use *init*, *system*. This event is triggered in ``Elgg\Application::bootCore``. The *pagesetup*, *system* event is thrown the first time ``elgg_view()`` is called. Some pages like the default ``index.php`` do not call ``elgg_view()`` so it is not triggered for them. The *shutdown*, *system* event is triggered after the page has been sent to the requester and is handled through the PHP function ``register_shutdown_function()``.
+
+The *boot*, *system* event is triggered before the plugins get loaded. There does not appear to be any difference between the timing of the next two events: *plugins_boot*, *system* and *init*, *system* so plugins tend to use *init*, *system*. This event is triggered in ``Elgg\Application::bootCore``. The *ready*, *system* event is triggered after all plugins are fully loaded and the engine is ready to serve pages. The *shutdown*, *system* event is triggered after the page has been sent to the requester and is handled through the PHP function ``register_shutdown_function()``.
 
 There are :doc:`other events </guides/events-list>` that are triggered by the Elgg core but they happen occasionally (such as when a user logs in).
 

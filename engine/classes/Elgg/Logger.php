@@ -211,7 +211,6 @@ class Logger {
 	 */
 	protected function process($data, $display, $level) {
 		
-
 		// plugin can return false to stop the default logging method
 		$params = array(
 			'level' => $level,
@@ -222,13 +221,6 @@ class Logger {
 
 		if (!$this->hooks->trigger('debug', 'log', $params, true)) {
 			return;
-		}
-
-		// Do not want to write to screen before page creation has started.
-		// This is not fool-proof but probably fixes 95% of the cases when logging
-		// results in data sent to the browser before the page is begun.
-		if (!isset($GLOBALS['_ELGG']->pagesetupdone)) {
-			$display = false;
 		}
 
 		// Do not want to write to JS or CSS pages

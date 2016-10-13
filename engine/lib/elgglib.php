@@ -883,9 +883,7 @@ function _elgg_php_exception_handler($exception) {
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 
-	// we don't want the 'pagesetup', 'system' event to fire
 	global $CONFIG;
-	$GLOBALS['_ELGG']->pagesetupdone = true;
 
 	try {
 		// allow custom scripts to trigger on exception

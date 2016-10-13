@@ -8,6 +8,8 @@ elgg_entity_gatekeeper($guid, 'group');
 
 $group = get_entity($guid);
 
+elgg_push_context('group_profile');
+
 elgg_push_breadcrumb($group->name);
 
 groups_register_profile_buttons($group);
