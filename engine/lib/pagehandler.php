@@ -214,6 +214,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 	$hook_type = "{$entity->getType()}:{$entity->getSubtype()}";
 	$hook_params = [
 		'entity' => $entity,
+		'forward' => $forward,
 	];
 	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, true)) {
 		if ($forward) {
