@@ -80,7 +80,7 @@ function elgg_unregister_notification_event($object_type, $object_subtype) {
 
 /**
  * Register a delivery method for notifications
- * 
+ *
  * Register for the 'send', 'notification:[method name]' plugin hook to handle
  * sending a notification. A notification object is in the params array for the
  * hook with the key 'notification'. See \Elgg\Notifications\Notification.
@@ -102,7 +102,7 @@ function elgg_register_notification_method($name) {
  *		'sms' => 'sms',
  *	]
  * </code>
- * 
+ *
  * @return array
  * @since 2.3
  */
@@ -206,7 +206,7 @@ function _elgg_notifications_cron() {
 
 /**
  * Send an email notification
- * 
+ *
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param bool   $result Has anyone sent a message yet?
@@ -315,8 +315,8 @@ function _elgg_notifications_init() {
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_notifications_smtp_thread_headers');
 
 	// add ability to set personal notification method
-	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
+	elgg_extend_view('core/settings/account', 'core/settings/account/notifications', 200);
+	elgg_register_action('usersettings/notifications');
 }
 
 /**
@@ -617,41 +617,6 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	}
 
 	return true;
-}
-
-/**
- * Save personal notification settings - input comes from request
- *
- * @return void
- * @access private
- */
-function _elgg_save_notification_user_settings() {
-
-	$user = elgg_get_logged_in_user_entity();
-	if (!$user) {
-		return;
-	}
-
-	$method = get_input('method');
-
-	$current_settings = $user->getNotificationSettings();
-
-	$result = false;
-	foreach ($method as $k => $v) {
-		// check if setting has changed and skip if not
-		if ($current_settings[$k] == ($v == 'yes')) {
-			continue;
-		}
-
-		$result = $user->setNotificationSetting($k, ($v == 'yes'));
-		if (!$result) {
-			register_error(elgg_echo('notifications:usersettings:save:fail'));
-		}
-	}
-
-	if ($result) {
-		system_message(elgg_echo('notifications:usersettings:save:ok'));
-	}
 }
 
 /**

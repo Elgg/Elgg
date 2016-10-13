@@ -383,6 +383,7 @@ return array(
  * Notifications
  */
 	'notifications:usersettings' => "Notification settings",
+	'notifications:usersettings:intro' => "Configure which notification methods you would like to use.",
 	'notification:method:email' => 'Email',
 
 	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",
@@ -450,13 +451,18 @@ return array(
 
 	'user:set:name' => "Account name settings",
 	'user:name:label' => "Display name",
+	'user:name:intro' => "Change your name shown on this site.",
 	'user:name:success' => "Successfully changed display name on the system.",
 	'user:name:fail' => "Could not change display name on the system.",
 	'user:username:success' => "Successfully changed username on the system.",
 	'user:username:fail' => "Could not change username on the system.",
-
+	'user:username:intro' => 'Here you can change the username for this account.',
+	'user:username:notfound' => 'Username %s not found.',
+	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
+	
 	'user:set:password' => "Account password",
 	'user:current_password:label' => 'Current password',
+	'user:password:intro' => "Update your password here.",
 	'user:password:label' => "New password",
 	'user:password2:label' => "New password again",
 	'user:password:success' => "Password changed",
@@ -469,12 +475,10 @@ return array(
 
 	'user:set:language' => "Language settings",
 	'user:language:label' => "Language",
+	'user:language:intro' => "Control the language of the interface.",
 	'user:language:success' => "Language settings have been updated.",
 	'user:language:fail' => "Language settings could not be saved.",
-
-	'user:username:notfound' => 'Username %s not found.',
-	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
-
+	
 	'user:password:lost' => 'Lost password',
 	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
 	'user:password:changereq:success' => 'Successfully requested a new password, email sent',
@@ -1231,6 +1235,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'email:body' => 'Body',
 
 	'email:settings' => "Email settings",
+	'email:settings:intro' => "Change your email address.",
 	'email:address:label' => "Email address",
 
 	'email:save:success' => "New email address saved. Verification is requested.",
@@ -1270,6 +1275,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
  */
 
 	'default_access:settings' => "Your default access level",
+	'default_access:settings:intro' => "Configure the default visibility for newly created content.",
 	'default_access:label' => "Default access",
 	'user:default_access:success' => "Your new default access level was saved.",
 	'user:default_access:failure' => "Your new default access level could not be saved.",
