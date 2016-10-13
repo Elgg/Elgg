@@ -1,25 +1,17 @@
 <?php
-/**
- * Elgg friends library.
- * Provides the UI for friends. Includes access collections since they are based
- * on friends relationships.
- *
- * @package Elgg.Core
- * @subpackage Friends
- */
 
-/**
- * Init friends library
- *
- * @access private
- */
-function _elgg_friends_init() {
+function elgg_friends_plugin_init() {
+	elgg_register_plugin_hook_handler('access:collections:write', 'user', '_elgg_friends_write_access', 1);
+	elgg_register_plugin_hook_handler('filter_tabs', 'all', '_elgg_friends_filter_tabs', 1);
+
 	elgg_register_action('friends/add');
 	elgg_register_action('friends/remove');
 
 	elgg_register_action('friends/collections/add');
 	elgg_register_action('friends/collections/delete');
 	elgg_register_action('friends/collections/edit');
+
+	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
 
 	elgg_register_page_handler('friends', '_elgg_friends_page_handler');
 	elgg_register_page_handler('friendsof', '_elgg_friends_page_handler');
@@ -31,9 +23,9 @@ function _elgg_friends_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_collections_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
-	
-	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
 }
+
+elgg_register_event_handler('init', 'system', 'elgg_friends_plugin_init');
 
 /**
  * Adds friending to user hover menu
@@ -117,14 +109,14 @@ function _elgg_collections_page_handler($page_elements) {
 		switch ($page_elements[0]) {
 			case 'add':
 				elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-				
+
 				echo elgg_view_resource("friends/collections/add");
 				return true;
 			case 'owner':
 				$user = get_user_by_username($page_elements[1]);
 				if ($user) {
 					elgg_set_page_owner_guid($user->getGUID());
-					
+
 					echo elgg_view_resource("friends/collections/view");
 					return true;
 				}
@@ -138,7 +130,7 @@ function _elgg_collections_page_handler($page_elements) {
 }
 
 /**
- * Register menu items for the page menu
+ * Register menu items for the topbar menu
  *
  * @param string $hook
  * @param string $type
@@ -169,7 +161,7 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Register menu items for the page menu
+ * Register menu items for the friends page menu
  *
  * @param string $hook
  * @param string $type
@@ -187,26 +179,26 @@ function _elgg_friends_page_menu($hook, $type, $return, $params) {
 	if (!$owner) {
 		return;
 	}
-		
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends',
 		'text' => elgg_echo('friends'),
 		'href' => 'friends/' . $owner->username,
 		'contexts' => array('friends'),
 	]);
-		
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends:of',
 		'text' => elgg_echo('friends:of'),
 		'href' => 'friendsof/' . $owner->username,
 		'contexts' => array('friends'),
 	]);
-	
+
 	return $return;
 }
 
 /**
- * Register menu items for the page menu
+ * Register menu items for the collections page menu
  *
  * @param string $hook
  * @param string $type
@@ -254,7 +246,7 @@ function _elgg_send_friend_notification($event, $type, $object) {
 	if ($object->relationship != 'friend') {
 		return true;
 	}
-	
+
 	$user_one = get_entity($object->guid_one);
 	/* @var \ElggUser $user_one */
 
@@ -278,10 +270,68 @@ function _elgg_send_friend_notification($event, $type, $object) {
 		'object' => $user_one,
 		'friend' => $user_two,
 	];
-	
+
 	return notify_user($user_two->guid, $object->guid_one, $subject, $body, $params);
 }
 
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_friends_init');
-};
+/**
+ * Add ACCESS_FRIENDS to the available access levels
+ *
+ * @param string $hook         "access:collections:write"
+ * @param string $type         "user"
+ * @param array  $access_array Access array
+ * @param array  $params       Hook params
+ *
+ * @return array
+ */
+function _elgg_friends_write_access($hook, $type, $access_array, $params) {
+
+	// rebuild array, putting friends 1st or 2nd
+	$ret = [];
+
+	// private exists, it goes first
+	if (isset($access_array[ACCESS_PRIVATE])) {
+		$ret[ACCESS_PRIVATE] = $access_array[ACCESS_PRIVATE];
+		unset($access_array[ACCESS_PRIVATE]);
+	}
+
+	// friends
+	$ret[ACCESS_FRIENDS] = get_readable_access_level(ACCESS_FRIENDS);
+
+	// rest
+	foreach ($access_array as $key => $value) {
+		$ret[$key] = $value;
+	}
+
+	return $ret;
+}
+
+/**
+ * Add "Friends" tab to common filter
+ *
+ * @param string $hook   "filter_tabs"
+ * @param string $type   Context
+ * @param array  $items  Menu items to render as tabs
+ * @param array  $params Hook params
+ *
+ * @return array
+ */
+function _elgg_friends_filter_tabs($hook, $type, $items, $params) {
+
+	$user = elgg_extract('user', $params);
+	if (!$user instanceof ElggUser) {
+		return;
+	}
+
+	$vars = elgg_extract('vars', $params);
+	$selected = elgg_extract('selected', $params);
+
+	$items[] = ElggMenuItem::factory([
+		'name' => 'friend',
+		'text' => elgg_echo('friends'),
+		'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$type/friends/{$user->username}",
+		'selected' => ($selected == 'friends'),
+		'priority' => 400,
+	]);
+	return $items;
+}

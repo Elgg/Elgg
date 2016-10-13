@@ -358,47 +358,38 @@ function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
  */
 function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user = null, array $vars = []) {
 
-	$items = [];
-
-	if (!isset($user)) {
-		$user = elgg_get_logged_in_user_entity();
-	}
-	
-	if (!elgg_instanceof($user, 'user')) {
-		return $items;
-	}
-	
-	$username = $user->username;
 	if (!isset($selected)) {
 		$selected = 'all';
 	}
 
-	// generate a list of default tabs
-	$tabs = array(
-		'all' => array(
+	if (!$user) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+
+	$items = [];
+	if ($user) {
+		$items[] = ElggMenuItem::factory([
+			'name' => 'all',
 			'text' => elgg_echo('all'),
 			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
 			'selected' => ($selected == 'all'),
 			'priority' => 200,
-		),
-		'mine' => array(
+		]);
+		$items[] = ElggMenuItem::factory([
+			'name' => 'mine',
 			'text' => elgg_echo('mine'),
-			'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "$context/owner/$username",
+			'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "$context/owner/{$user->username}",
 			'selected' => ($selected == 'mine'),
 			'priority' => 300,
-		),
-		'friend' => array(
-			'text' => elgg_echo('friends'),
-			'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$context/friends/$username",
-			'selected' => ($selected == 'friends'),
-			'priority' => 400,
-		),
-	);
-
-	foreach ($tabs as $name => $tab) {
-		$tab['name'] = $name;
-		$items[] = ElggMenuItem::factory($tab);
+		]);
 	}
+
+	$params = [
+		'selected' => $selected,
+		'user' => $user,
+		'vars' => $vars,
+	];
+	$items = _elgg_services()->hooks->trigger('filter_tabs', $context, $params, $items);
 
 	return $items;
 }

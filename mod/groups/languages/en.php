@@ -188,8 +188,9 @@ or click below to view the group's join requests:
 	'groups:widgets:entities:label:displaynum' => 'List the objects of a group.',
 	'groups:widgets:entities:label:pleaseedit' => 'Please configure this widget.',
 
-	'groups:allowhiddengroups' => 'Do you want to allow private (invisible) groups?',
+	'groups:allowhiddengroups' => 'Allow private (invisible) groups?',
 	'groups:whocancreate' => 'Who can create new groups?',
+	'groups:allow_activity' => 'Allow activity pages in groups?',
 
 	/**
 	 * Action messages

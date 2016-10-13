@@ -141,7 +141,6 @@ class Application {
 			'entities.php',
 			'extender.php',
 			'filestore.php',
-			'friends.php',
 			'group.php',
 			'input.php',
 			'languages.php',

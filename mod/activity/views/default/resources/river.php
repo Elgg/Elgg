@@ -42,11 +42,13 @@ switch ($page_type) {
 		$options['subject_guid'] = $subject->guid;
 		break;
 	case 'friends':
-		$title = elgg_echo('river:friends');
-		$page_filter = 'friends';
-		$options['relationship_guid'] = elgg_get_logged_in_user_guid();
-		$options['relationship'] = 'friend';
-		break;
+		if (elgg_is_active_plugin('friends')) {
+			$title = elgg_echo('river:friends');
+			$page_filter = 'friends';
+			$options['relationship_guid'] = elgg_get_logged_in_user_guid();
+			$options['relationship'] = 'friend';
+			break;
+		}
 	default:
 		$title = elgg_echo('river:all');
 		$page_filter = 'all';
