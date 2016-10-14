@@ -56,7 +56,7 @@ function filter_tags($var) {
 
 /**
  * Returns the current page's complete URL.
- * 
+ *
  * It uses the configured site URL for the hostname rather than depending on
  * what the server uses to populate $_SERVER.
  *
@@ -538,6 +538,27 @@ function _elgg_htmlawed_test($hook, $type, $value, $params) {
 }
 
 /**
+ * Disable the autocomplete feature on password fields
+ *
+ * @param string $hook         'view_vars'
+ * @param string $type         'input/password'
+ * @param array  $return_value the current view vars
+ * @param array  $params       supplied params
+ *
+ * @return void|array
+ */
+function _elgg_disable_password_autocomplete($hook, $type, $return_value, $params) {
+	
+	if (!get_config('security_disable_password_autocomplete')) {
+		return;
+	}
+	
+	$return_value['autocomplete'] = 'off';
+	
+	return $return_value;
+}
+
+/**
  * Initialize the input library
  *
  * @return void
@@ -550,6 +571,8 @@ function _elgg_input_init() {
 	elgg_register_plugin_hook_handler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_htmlawed_test');
+	
+	elgg_register_plugin_hook_handler('view_vars', 'input/password', '_elgg_disable_password_autocomplete');
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

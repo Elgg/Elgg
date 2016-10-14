@@ -296,4 +296,3 @@ class UpgradeService {
 		return false;
 	}
 }
-

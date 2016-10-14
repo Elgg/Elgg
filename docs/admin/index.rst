@@ -14,3 +14,4 @@ Best practices for effectively managing an Elgg-based site.
 	backup-restore
 	duplicate-installation
 	getting-help
+	security
