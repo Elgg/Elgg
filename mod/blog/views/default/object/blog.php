@@ -70,11 +70,20 @@ if ($full) {
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
 
+	$responses = '';
+	if (elgg_extract('show_responses', $vars, false)) {
+		// check to see if we should allow comments
+		if ($blog->comments_on != 'Off' && $blog->status == 'published') {
+			$responses = elgg_view_comments($blog);
+		}
+	}
+
 	echo elgg_view('object/elements/full', array(
 		'entity' => $blog,
 		'summary' => $summary,
 		'icon' => $owner_icon,
 		'body' => $body,
+		'responses' => $responses,
 	));
 
 } else {

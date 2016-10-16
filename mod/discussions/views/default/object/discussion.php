@@ -25,8 +25,6 @@ $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 
 $by_line = elgg_view('page/elements/by_line', $vars);
 
-$tags = elgg_view('output/tags', array('tags' => $topic->tags));
-
 $replies_link = '';
 $reply_text = '';
 
@@ -84,24 +82,38 @@ if ($full) {
 
 	$params = array(
 		'entity' => $topic,
+		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-		'tags' => $tags,
 	);
-	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
 
-	$info = elgg_view_image_block($poster_icon, $list_body);
+	$params = $params + $vars;
+	$summary = elgg_view('object/elements/summary', $params);
 
 	$body = elgg_view('output/longtext', array(
 		'value' => $topic->description,
 		'class' => 'clearfix',
 	));
 
-	echo <<<HTML
-$info
-$body
-HTML;
+	$responses = '';
+	if (elgg_extract('show_responses', $vars)) {
+		$params = array(
+			'topic' => $topic,
+			'show_add_form' => $topic->canWriteToContainer(0, 'object', 'discussion_reply'),
+		);
+		$responses = elgg_view('discussion/replies', $params);
+		if ($topic->status == 'closed') {
+			$responses .= elgg_view('discussion/closed');
+		}
+	}
+
+	echo elgg_view('object/elements/full', array(
+		'entity' => $topic,
+		'icon' => $poster_icon,
+		'summary' => $summary,
+		'body' => $body,
+		'responses' => $responses,
+	));
 
 } else {
 	// brief view
