@@ -357,7 +357,7 @@ function api_auth_key() {
 	}
 
 	// check that it is active
-	$api_user = get_api_user($CONFIG->site_id, $api_key);
+	$api_user = get_api_user($CONFIG->site_guid, $api_key);
 	if (!$api_user) {
 		// key is not active or does not exist
 		throw new APIException(elgg_echo('APIException:BadAPIKey'));
@@ -385,7 +385,7 @@ function api_auth_hmac() {
 	$api_header = get_and_validate_api_headers();
 
 	// Pull API user details
-	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
+	$api_user = get_api_user($CONFIG->site_guid, $api_header->api_key);
 
 	if (!$api_user) {
 		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),
@@ -629,8 +629,8 @@ function pam_auth_usertoken() {
 	if (!$token) {
 		return false;
 	}
-
-	$validated_userid = validate_user_token($token, $CONFIG->site_id);
+	
+	$validated_userid = validate_user_token($token, $CONFIG->site_guid);
 
 	if ($validated_userid) {
 		$u = get_entity($validated_userid);

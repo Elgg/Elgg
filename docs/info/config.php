@@ -65,13 +65,6 @@ $CONFIG->installed;
 $CONFIG->site_guid;
 
 /**
- * Copy of $CONFIG->site_guid
- *
- * @global int $CONFIG->site_id
- */
-$CONFIG->site_id;
-
-/**
  * The current site object.
  *
  * @global ElggSite $CONFIG->site
