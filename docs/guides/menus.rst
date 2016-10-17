@@ -252,9 +252,11 @@ requirement during the registration.
     // in navigation/menu/item/hide_on_click.js
     define(function(require) {
         var $ = require('jquery');
+		var elgg = require('elgg');
 
-        $(document).on('click', '.hide-on-click', function(e) {
-            e.preventDefault();
-            $(this).hide();
-        });
+		function likesToggle(hook, type, params, options) {
+			// do your thing
+		}
+		
+		elgg.register_hook_handler('toggle', 'menu_item', likesToggle);
     });

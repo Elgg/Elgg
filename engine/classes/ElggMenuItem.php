@@ -234,7 +234,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the display text of the menu item
-	 * 
+	 *
 	 * @param string $text The display text as HTML
 	 * @return void
 	 */
@@ -440,11 +440,11 @@ class ElggMenuItem {
 		$this->setDeps($current + (array) $modules);
 	}
 	
- 	/**
+	/**
 	 * Returns the menu item name that should be toggled when clicking on this menu item
 	 *
 	 * @return string
-	 * 
+	 *
 	 * @since 3.0
 	 */
 	public function getToggleItem() {
@@ -499,7 +499,7 @@ class ElggMenuItem {
 	// @codingStandardsIgnoreStart
 	/**
 	 * Add additional classes
-	 * 
+	 *
 	 * @param array $current    The current array of classes
 	 * @param mixed $additional Additional classes (either array of string)
 	 * @return void
@@ -572,7 +572,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the parent menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param \ElggMenuItem $parent The parent of this menu item
@@ -585,7 +585,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get the parent menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @return \ElggMenuItem or null
@@ -597,7 +597,7 @@ class ElggMenuItem {
 
 	/**
 	 * Add a child menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param \ElggMenuItem $item A child menu item
@@ -610,7 +610,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the menu item's children
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param ElggMenuItem[] $children Array of items
@@ -623,7 +623,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get the children menu items
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @return ElggMenuItem[]
@@ -635,7 +635,7 @@ class ElggMenuItem {
 
 	/**
 	 * Sort the children
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param string $sortFunction A function that is passed to usort()
@@ -651,7 +651,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get all the values for this menu item. Useful for rendering.
-	 * 
+	 *
 	 * @return array
 	 * @since 1.9.0
 	 */

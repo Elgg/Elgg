@@ -203,10 +203,5 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
 	return null;
 };
 
-elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
-    $menu.find('.elgg-menu-item-' + nameOfItemToShow).removeClass('hidden').find('a').focus();
-    $menu.find('.elgg-menu-item-' + nameOfItemToHide).addClass('hidden');
-};
-
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);

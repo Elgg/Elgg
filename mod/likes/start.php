@@ -108,6 +108,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 		// Always register both. That makes it super easy to toggle with javascript
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'likes',
+			'toggle' => 'unlike',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
 			'text' => elgg_view_icon('thumbs-up'),
 			'title' => elgg_echo('likes:likethis'),
@@ -117,6 +118,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 		));
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'unlike',
+			'toggle' => 'likes',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
 			'text' => elgg_view_icon('thumbs-up-alt'),
 			'title' => elgg_echo('likes:remove'),

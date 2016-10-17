@@ -25,6 +25,14 @@ define(['elgg', 'jquery'], function (elgg, $) {
 					// Something went wrong, so undo the optimistic changes
 					$both_items.toggleClass('hidden');
 					$item_clicked.focus();
+				} else {
+					// let others know we toggled the menu item
+					elgg.trigger_hook('toggle', 'menu_item', {
+						itemClicked: $item_clicked,
+						itemToggled: $other_item,
+						menu: $menu,
+						data: json 
+					});
 				}
 			},
 			error: function() {
