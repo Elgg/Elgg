@@ -49,7 +49,10 @@ class ElggMenuItem {
 		'linkClass' => array(),
 
 		// array AMD modules required by this menu item
-		'deps' => array()
+		'deps' => array(),
+			
+		// a related menu item name that is toggled when clicking the item
+		'toggle' => '',
 	);
 
 	/**
@@ -114,6 +117,7 @@ class ElggMenuItem {
 	 *    selected    => BOOL Is this menu item currently selected?
 	 *    confirm     => STR  If set, the link will be drawn with the output/confirmlink view instead of output/url.
 	 *    deps        => ARR  AMD modules required by this menu item
+	 *    toggle      => STR  menu item name of other item that is toggled when this item is clicked
 	 *    data        => ARR  Custom attributes stored in the menu item.
 	 *
 	 * @return ElggMenuItem or null on error
@@ -151,6 +155,14 @@ class ElggMenuItem {
 		if (isset($options['item_class'])) {
 			$item->setItemClass($options['item_class']);
 			unset($options['item_class']);
+		}
+		
+		if (isset($options['toggle'])) {
+			// add dependency with toggle AMD
+			if (!isset($options['deps'])) {
+				$options['deps'] = [];
+			}
+			$options['deps'][] = 'js/navigation/menu/elements/item_toggle';
 		}
 
 		if (isset($options['data']) && is_array($options['data'])) {
@@ -426,6 +438,17 @@ class ElggMenuItem {
 	public function addDeps($modules) {
 		$current = $this->getDeps();
 		$this->setDeps($current + (array) $modules);
+	}
+	
+ 	/**
+	 * Returns the menu item name that should be toggled when clicking on this menu item
+	 *
+	 * @return string
+	 * 
+	 * @since 3.0
+	 */
+	public function getToggleItem() {
+		return $this->data['toggle'];
 	}
 
 	/**

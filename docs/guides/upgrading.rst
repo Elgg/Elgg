@@ -139,6 +139,7 @@ Removed JavaScript APIs
  * ``elgg.ui.river``
  * ``elgg.ui.initDatePicker``: Use the ``input/date`` module
  * ``elgg.ui.likesPopupHandler``
+ * ``elgg.ui.registerTogglableMenuItems``: Use ``toggle`` attribute when registering toggleable menu items
  * ``elgg.embed``: Use the ``elgg/embed`` module
  * ``embed/custom_insert_js``: Use the ``embed, editor`` JS hook
  * ``elgg/ckeditor/insert.js``
