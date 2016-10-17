@@ -44,6 +44,7 @@ Removed functions/methods
 -------------------------
 
 All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.9.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
+All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.10.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
  * ``_elgg_manage_pagesetup``
  * ``developers_setup_menu``
@@ -75,6 +76,8 @@ All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https:/
  * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
  * ``Logger::getClassName``: Use ``get_class()``
  * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
+ * ``ElggSession::get_ignore_access``: Use ``getIgnoreAccess``
+ * ``ElggSession::set_ignore_access``: Use ``setIgnoreAccess``
 
 Removed global vars
 -------------------
