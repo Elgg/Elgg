@@ -373,10 +373,10 @@ class Application {
 	/**
 	 * Elgg's front controller. Handles basically all incoming URL requests.
 	 *
-	 * @return void
+	 * @return bool True if Elgg will handle the request, false if the server should (PHP-CLI server)
 	 */
 	public static function index() {
-		self::create()->run();
+		return self::create()->run();
 	}
 
 	/**
