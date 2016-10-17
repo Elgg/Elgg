@@ -225,6 +225,27 @@ $type
 $subtype
 	Entity subtype, e.g. ``'blog'`` or ``'page'``.
 
+You do not have to return a fallback icon from the hook handler. If no uploaded icon is found,
+the view system will scan the views (in this specific order):
+
+#. views/$viewtype/$icon_type/$entity_type/$entity_subtype.svg
+#. views/$viewtype/$icon_type/$entity_type/$entity_subtype/$size.gif
+#. views/$viewtype/$icon_type/$entity_type/$entity_subtype/$size.png
+#. views/$viewtype/$icon_type/$entity_type/$entity_subtype/$size.jpg
+
+Where
+
+$viewtype
+	Type of view, e.g. ``'default'`` or ``'json'``.
+$icon_type
+	Icon type, e.g. ``'icon'`` or ``'cover_image'``.
+$entity_type
+	Type of entity, e.g. ``'group'`` or ``'user'``.
+$entity_subtype
+	Entity subtype, e.g. ``'blog'`` or ``'page'`` (or ``'default'`` if entity has not subtype).
+$size
+    Icon size (note that we do not use the size with svg icons)
+
 Icon methods support passing an icon type if an entity has more than one icon. For example, a user
 might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as the icon type:
 

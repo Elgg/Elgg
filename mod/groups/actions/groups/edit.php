@@ -210,21 +210,7 @@ if ($is_new_group) {
 	));
 }
 
-$has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['icon']['type'], 'image/'));
-
-if ($has_uploaded_icon) {
-	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $group->owner_guid;
-	$filehandler->setFilename("groups/$group->guid.jpg");
-	$filehandler->open("write");
-	$filehandler->write(get_uploaded_file('icon'));
-	$filehandler->close();
-
-	if ($filehandler->exists()) {
-		// Non existent file throws exception
-		$group->saveIconFromElggFile($filehandler);
-	}
-}
+$group->saveIconFromUploadedFile('icon');
 
 system_message(elgg_echo("groups:saved"));
 

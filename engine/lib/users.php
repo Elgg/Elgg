@@ -466,16 +466,17 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
 }
 
 /**
- * Serves the user's avatar
+ * Set user avatar URL
+ * Replaces user avatar URL with a public URL when walled garden is disabled
  *
- * @param string $hook
- * @param string $entity_type
- * @param string $returnvalue
- * @param array  $params
+ * @param string $hook   "entity:icon:url"
+ * @param string $type   "user"
+ * @param string $return Icon URL
+ * @param array  $params Hook params
  * @return string
  * @access private
  */
-function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
+function user_avatar_hook($hook, $type, $return, $params) {
 	$user = elgg_extract('entity', $params);
 	$size = elgg_extract('size', $params, 'medium');
 
@@ -483,24 +484,16 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 		return;
 	}
 
-	$default_url = elgg_get_simplecache_url("icons/user/default{$size}.gif");
-	if (!isset($user->icontime)) {
-		return $default_url;
+	if (elgg_get_config('walled_garden')) {
+		return;
 	}
 
-	if (_elgg_view_may_be_altered('resources/avatar/view', 'resources/avatar/view.php')) {
-		// For BC with 2.0 if a plugin is suspected of using this view/page handler we need to use it.
-		// /avatar page handler will issue a deprecation notice.
-		return "avatar/view/$user->username/$size/$user->icontime";
+	if (!$user->hasIcon($size, 'icon')) {
+		return;
 	}
-
-	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $user->guid;
-	$filehandler->setFilename("profile/{$user->guid}{$size}.jpg");
-	$use_cookie = elgg_get_config('walled_garden'); // don't serve avatars with public URLs in a walled garden mode
-	$avatar_url = elgg_get_inline_url($filehandler, $use_cookie);
-
-	return $avatar_url ? : $default_url;
+	
+	$icon = $user->getIcon($size, 'icon');
+	return elgg_get_inline_url($icon, false);
 }
 
 /**

@@ -30,7 +30,6 @@ function groups_init() {
 
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
-	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_set_icon_url');
 	elgg_register_plugin_hook_handler('entity:icon:file', 'group', 'groups_set_icon_file');
 
 	// Register some actions
@@ -354,38 +353,6 @@ function groups_set_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
 	$title = elgg_get_friendly_title($entity->name);
 	return "groups/profile/{$entity->guid}/$title";
-}
-
-/**
- * Override the default entity icon URL for groups
- *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string Relative URL
- */
-function groups_set_icon_url($hook, $type, $url, $params) {
-
-	$entity = elgg_extract('entity', $params);
-	/* @var $group \ElggGroup */
-
-	$size = elgg_extract('size', $params, 'medium');
-
-	$icontime = $entity->icontime;
-	if (null === $icontime) {
-		// handle missing metadata (pre 1.7 installations)
-		$icon = $entity->getIcon('large');
-		$icontime = $icon->exists() ? time() : 0;
-		create_metadata($entity->guid, 'icontime', $icontime, 'integer', $entity->owner_guid, ACCESS_PUBLIC);
-	}
-
-	$icon = $entity->getIcon($size);
-	$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
-	if (!$url) {
-		$url = elgg_get_simplecache_url("groups/default{$size}.gif");
-	}
-	return $url;
 }
 
 /**
