@@ -4,6 +4,7 @@
  */
 
 elgg_register_event_handler('init', 'system', 'discussion_init');
+elgg_register_event_handler('upgrade', 'system', 'discussion_upgrade');
 
 /**
  * Initialize the discussion component
@@ -656,4 +657,16 @@ function discussion_prepare_form_vars($topic = NULL) {
 	elgg_clear_sticky_form('topic');
 
 	return $values;
+}
+
+/**
+ * Run upgrade scripts
+ * @return void
+ */
+function discussion_upgrade() {
+
+	$class = get_subtype_class('object', ElggDiscussion::SUBTYPE);
+	if (!$class || $class == ElggObject::class) {
+		update_subtype('object', ElggDiscussion::SUBTYPE, ElggDiscussion::class);
+	}
 }
