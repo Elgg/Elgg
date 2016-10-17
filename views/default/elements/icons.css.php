@@ -10,29 +10,8 @@
 /* <style> /**/
 
 /* ***************************************
-	ICONS
+	ICON HOVER MENU
 *************************************** */
-.elgg-icon {
-	color: #CCC;
-	font-size: 18px;
-	line-height: 1em;
-	margin: 0 2px;
-}
-
-:focus > .elgg-icon,
-.elgg-icon:hover,
-.elgg-icon-hover {
-	color: #4690D6;
-}
-
-h1 > .elgg-icon,
-h2 > .elgg-icon,
-h3 > .elgg-icon,
-h4 > .elgg-icon,
-h5 > .elgg-icon,
-h6 > .elgg-icon {
-	font-size: 1em;
-}
 
 .elgg-avatar > .elgg-icon-hover-menu {
 	display: none;
@@ -45,7 +24,7 @@ h6 > .elgg-icon {
 .elgg-avatar > .elgg-icon-hover-menu:before {
 	position: absolute;
 	right: 2px;
-	bottom: 0px;
+	bottom: 0;
 }
 
 .elgg-icon-hover-menu-hover,
@@ -62,10 +41,27 @@ h6 > .elgg-icon {
 	right: 0;
 }
 
+/* ***************************************
+	AJAX LOADER
+*************************************** */
 .elgg-ajax-loader {
-	background: white url(<?= elgg_get_simplecache_url("ajax_loader_bw.gif"); ?>) no-repeat center center;
+	background: white url(ajax_loader_bw.gif) no-repeat center center;
 	min-height: 31px;
 	min-width: 31px;
+}
+
+/* ***************************************
+	MENU ICONS
+*************************************** */
+.elgg-menu a:not(.elgg-button) .elgg-icon {
+	color: #CCC;
+	font-size: 18px;
+	line-height: 1em;
+	margin: 0 2px;
+}
+
+.elgg-menu a:not(.elgg-button):hover .elgg-icon {
+	color: #4690D6;
 }
 
 /* ***************************************
@@ -85,7 +81,7 @@ h6 > .elgg-icon {
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
 
-	background-clip:  border;
+	background-clip: border;
 	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
@@ -95,7 +91,7 @@ h6 > .elgg-icon {
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 5px;
 
-	background-clip:  border;
+	background-clip: border;
 	background-size: 40px;
 }
 .elgg-avatar-medium > a > img {
