@@ -673,7 +673,8 @@ function _elgg_extras_menu_setup($hook, $type, $return, $params) {
 	$url = current_page_url();
 	$return[] = ElggMenuItem::factory([
 		'name' => 'rss',
-		'text' => elgg_view_icon('rss'),
+		'text' => elgg_echo('feed:rss'),
+		'icon' => 'rss',
 		'href' => elgg_http_add_url_query_elements($url, [
 			'view' => 'rss',
 		]),

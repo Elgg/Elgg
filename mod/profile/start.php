@@ -143,7 +143,7 @@ function profile_default_widgets_hook($hook, $type, $return) {
  * @since 3.0
  */
 function _profile_topbar_menu($hook, $type, $return, $params) {
-	
+
 	$viewer = elgg_get_logged_in_user_entity();
 	if (!$viewer) {
 		 return;
@@ -152,15 +152,14 @@ function _profile_topbar_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'profile',
 		'href' => $viewer->getURL(),
-		'text' => elgg_view('output/img', array(
+		'text' => $viewer->name,
+		'title' => elgg_echo('profile'),
+		'icon' => elgg_view('output/img', array(
 			'src' => $viewer->getIconURL('topbar'),
 			'alt' => $viewer->name,
-			'title' => elgg_echo('profile'),
 			'class' => 'elgg-border-plain elgg-transition',
 		)),
 		'priority' => 100,
-		'link_class' => 'elgg-topbar-avatar',
-		'item_class' => 'elgg-avatar elgg-avatar-topbar',
 	]);
 	
 	return $return;

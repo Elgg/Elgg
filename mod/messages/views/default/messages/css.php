@@ -39,19 +39,3 @@
 	float: left;
 	width: 5%;
 }
-/*** topbar icon ***/
-.messages-new {
-	color: #FFF;
-	background-color: #FF0000;
-	border-radius: 10px;
-	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
-	position: absolute;
-	text-align: center;
-	line-height: 14px;
-	top: 4px;
-	left: 26px;
-	min-width: 16px;
-	height: 16px;
-	font-size: 10px;
-	font-weight: bold;
-}

@@ -152,7 +152,8 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends',
 		'href' => "friends/{$viewer->username}",
-		'text' => elgg_view_icon('users'),
+		'text' => elgg_echo('friends'),
+		'icon' => 'users',
 		'title' => elgg_echo('friends'),
 		'priority' => 300,
 	]);

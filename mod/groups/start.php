@@ -186,21 +186,23 @@ function _groups_page_menu_group_profile($hook, $type, $return, $params) {
 	$count = elgg_get_entities_from_relationship(array(
 		'type' => 'user',
 		'relationship' => 'membership_request',
-		'relationship_guid' => $page_owner->getGUID(),
+		'relationship_guid' => $page_owner->guid,
 		'inverse_relationship' => true,
 		'count' => true,
 	));
 
+	$text = elgg_echo('groups:membershiprequests');
+	$title = $text;
 	if ($count) {
-		$text = elgg_echo('groups:membershiprequests:pending', array($count));
-	} else {
-		$text = elgg_echo('groups:membershiprequests');
+		$title = elgg_echo('groups:membershiprequests:pending', array($count));
 	}
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'membership_requests',
 		'text' => $text,
-		'href' => "groups/requests/{$page_owner->getGUID()}",
+		'badge' => $count ? $count : null,
+		'title' => $title,
+		'href' => "groups/requests/{$page_owner->guid}",
 	]);
 	
 	return $return;
@@ -254,19 +256,23 @@ function _groups_page_menu($hook, $type, $return, $params) {
 		'href' => "groups/member/$user->username",
 	]);
 
-	$invitation_count = groups_get_invited_groups($user->getGUID(), false, array('count' => true));
+	$invitation_count = groups_get_invited_groups($user->guid, false, ['count' => true]);
 
+	// Invitations
+	$text = elgg_echo('groups:invitations');
+	$title = $text;
 	if ($invitation_count) {
-		$text = elgg_echo('groups:invitations:pending', array($invitation_count));
-	} else {
-		$text = elgg_echo('groups:invitations');
+		$title = elgg_echo('groups:invitations:pending', array($invitation_count));
 	}
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'groups:user:invites',
 		'text' => $text,
+		'badge' => $invitation_count ? $invitation_count : null,
+		'title' => $title,
 		'href' => "groups/invitations/$user->username",
 	]);
-	
+
 	return $return;
 }
 

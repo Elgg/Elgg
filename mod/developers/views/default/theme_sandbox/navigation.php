@@ -3,6 +3,8 @@
  * Navigation CSS
  */
 
+echo elgg_view_module('theme-sandbox-demo', "Anchors (.elgg-anchor)", elgg_view('theme_sandbox/navigation/anchors'));
+
 echo elgg_view_module('theme-sandbox-demo', "Tabs (.elgg-tabs)", elgg_view('theme_sandbox/navigation/tabs'));
 
 echo elgg_view_module('theme-sandbox-demo', "Pagination (.elgg-pagination)", elgg_view('theme_sandbox/navigation/pagination'));
