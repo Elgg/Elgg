@@ -80,9 +80,6 @@ function pages_init() {
 
 	elgg_register_plugin_hook_handler('access:collections:write', 'user', 'pages_write_access_options_hook');
 
-	// icon url override
-	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'pages_icon_url_override');
-
 	// entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'pages_entity_menu_setup');
 
@@ -201,27 +198,6 @@ function pages_set_revision_url($hook, $type, $url, $params) {
 	$annotation = $params['extender'];
 	if ($annotation->getSubtype() == 'page') {
 		return "pages/revision/$annotation->id";
-	}
-}
-
-/**
- * Override the default entity icon for pages
- *
- * @return string Relative URL
- */
-function pages_icon_url_override($hook, $type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	if (pages_is_page($entity)) {
-		switch ($params['size']) {
-			case 'topbar':
-			case 'tiny':
-			case 'small':
-				return elgg_get_simplecache_url('pages/pages.gif');
-				break;
-			default:
-				return elgg_get_simplecache_url('pages/pages_lrg.gif');
-				break;
-		}
 	}
 }
 

@@ -35,6 +35,8 @@ Removed views
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
+ * ``pages/pages.gif``
+ * ``pages/pages_lrg.gif``
 
 Removed functions/methods
 -------------------------
@@ -51,6 +53,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``row_to_elggrelationship``
  * ``system_messages``
  * ``notifications_plugin_pagesetup``
+ * ``pages_icon_url_override``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
  * ``ElggFile::size``: Use ``getSize``
  * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
