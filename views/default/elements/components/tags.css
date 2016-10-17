@@ -1,0 +1,18 @@
+/* ***************************************
+	Tags
+*************************************** */
+.elgg-tags {
+    font-size: 85%;
+    color: #AAA;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+.elgg-tags > .elgg-icon {
+    margin-right: 5px;
+}
+
+.elgg-tags > .elgg-tag:not(:last-child):after {
+	content: ",";
+	margin-right: 3px;
+}

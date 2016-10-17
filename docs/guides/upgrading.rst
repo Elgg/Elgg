@@ -99,6 +99,7 @@ Form and field related changes
  * ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
  * ``output/url`` now sets ``.elgg-anchor`` class on anchor elements and accepts ``icon`` parameter. If no ``text`` is set, the ``href`` parameter used as a label will be restricted to 100 characters.
  * ``output/url`` now supports a ``badge`` parameter, which can be used where a counter, a badge, or similar is required as a postfix (mainly in menu items that have counters).
+ * ``output/tags`` no longer uses ``<ul>`` tags with floats and instead it relies on inherently inline elements such as ``<span>`` and ``<a>``
 
 Removed libraries
 -----------------
