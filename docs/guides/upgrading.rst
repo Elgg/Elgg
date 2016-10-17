@@ -144,6 +144,7 @@ Removed JavaScript APIs
 Removed hooks/events
 --------------------
 
+ * Event **login, user**: Use **login:before** or **login:after**. Note the user is not logged in during the **login:before** event.
  * Event **delete, annotations**: Use **delete, annotation**
  * Event **pagesetup, system**: Use the menu or page shell hooks instead.
  * Hook **index, system**: Override the ``resources/index`` view
