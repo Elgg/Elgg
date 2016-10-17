@@ -52,6 +52,7 @@ class PostInstall {
 			'site_notifications',
 			'tagcloud',
 			'thewire',
+			'theme_sandbox',
 			'twitter_api',
 			'uservalidationbyemail',
 			'web_services',

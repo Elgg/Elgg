@@ -37,6 +37,7 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - search
 - site_notifications
 - tagcloud
+- theme_sandbox
 - twitter_api
 - uservalidationbyemail
 - web_services

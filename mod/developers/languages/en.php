@@ -2,7 +2,6 @@
 return array(
 	// menu
 	'admin:develop_tools' => 'Tools',
-	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspect',
 	'admin:inspect' => 'Inspect',
 	'admin:develop_tools:unit_tests' => 'Unit Tests',
@@ -64,23 +63,7 @@ return array(
 	'developers:log_queries' => "DB queries: %s",
 	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
 	'developers:elapsed_time' => "Elapsed time (s)",
-
-	// theme sandbox
-	'theme_sandbox:intro' => 'Introduction',
-	'theme_sandbox:breakout' => 'Break out of iframe',
-	'theme_sandbox:buttons' => 'Buttons',
-	'theme_sandbox:components' => 'Components',
-	'theme_sandbox:forms' => 'Forms',
-	'theme_sandbox:grid' => 'Grid',
-	'theme_sandbox:icons' => 'Icons',
-	'theme_sandbox:javascript' => 'JavaScript',
-	'theme_sandbox:layouts' => 'Layouts',
-	'theme_sandbox:modules' => 'Modules',
-	'theme_sandbox:navigation' => 'Navigation',
-	'theme_sandbox:typography' => 'Typography',
-
-	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> to display icons.',
-
+		
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg has unit and integration tests for detecting bugs in its core classes and functions.',
 	'developers:unit_tests:warning' => 'Warning: Do Not Run These Tests on a Production Site. They can corrupt your database.',

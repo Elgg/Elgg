@@ -181,6 +181,12 @@ source_file = mod/thewire/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
+[elgg-core-2.theme_sandbox]
+file_filter = mod/theme_sandbox/languages/<lang>.php
+source_file = mod/theme_sandbox/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
 [elgg-core-2.twitter_api]
 file_filter = mod/twitter_api/languages/<lang>.php
 source_file = mod/twitter_api/languages/en.php

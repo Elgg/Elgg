@@ -15,19 +15,13 @@ function developers_init() {
 	elgg_extend_view('admin.css', 'developers/css');
 	elgg_extend_view('elgg.css', 'developers/css');
 
-	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
 	elgg_register_page_handler('developers_ajax_demo', 'developers_ajax_demo_controller');
-
-	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
-	$sandbox_css = elgg_get_simplecache_url('theme_sandbox.css');
-	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
 	$action_base = __DIR__ . '/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
 	elgg_register_action('developers/ajax_demo', "$action_base/ajax_demo.php", 'admin');
 
 	elgg_register_ajax_view('forms/developers/ajax_demo');
-	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax_demo');
 }
 
 function developers_process_settings() {
@@ -130,15 +124,7 @@ function _developers_page_menu($hook, $type, $return, $params) {
 		'text' => elgg_echo('admin:develop_tools'),
 		'section' => 'develop',
 	]);
-	
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'develop_tools:sandbox',
-		'href' => 'admin/develop_tools/sandbox',
-		'text' => elgg_echo('admin:develop_tools:sandbox'),
-		'parent_name' => 'develop_tools',
-		'section' => 'develop',
-	]);
-	
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'develop_tools:unit_tests',
 		'href' => 'admin/develop_tools/unit_tests',
@@ -269,23 +255,6 @@ function developers_log_events($name, $type) {
 	elgg_dump($msg, false);
 
 	unset($stack);
-}
-
-/**
- * Serve the theme sandbox pages
- *
- * @param array $page
- * @return bool
- */
-function developers_theme_sandbox_controller($page) {
-	if (!isset($page[0])) {
-		forward('theme_sandbox/intro');
-	}
-
-	echo elgg_view_resource('theme_sandbox', [
-		'page' => $page[0],
-	]);
-	return true;
 }
 
 function developers_ajax_demo_controller() {
