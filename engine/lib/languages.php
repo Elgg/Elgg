@@ -18,7 +18,7 @@
  * @return string Either the translated string, the English string,
  * or the original language string.
  */
-function elgg_echo($message_key, $args = array(), $language = "") {
+function elgg_echo($message_key, array $args = array(), $language = "") {
 	return _elgg_services()->translator->translate($message_key, $args, $language);
 }
 

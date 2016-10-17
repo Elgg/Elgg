@@ -56,20 +56,6 @@ class ElggFileCache extends \ElggCache {
 		return fopen($path . $filename, $rw);
 	}
 
-	// @codingStandardsIgnoreStart
-	/**
-	 * Create a sanitised filename for the file.
-	 *
-	 * @param string $key The filename
-	 *
-	 * @return string
-	 * @deprecated 1.8 Use \ElggFileCache::sanitizeFilename()
-	 */
-	protected function sanitise_filename($key) {
-		return $this->sanitizeFilename($key);
-	}
-	// @codingStandardsIgnoreEnd
-
 	/**
 	 * Create a sanitised filename for the file.
 	 *

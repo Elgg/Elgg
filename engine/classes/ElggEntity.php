@@ -214,11 +214,6 @@ abstract class ElggEntity extends \ElggData implements
 			return;
 		}
 
-		if ($name === 'tables_split' || $name === 'tables_loaded') {
-			elgg_deprecated_notice("Do not read/write ->tables_split or ->tables_loaded.", "2.1");
-			return;
-		}
-
 		$this->setMetadata($name, $value);
 	}
 
@@ -249,11 +244,6 @@ abstract class ElggEntity extends \ElggData implements
 				_elgg_services()->logger->warn('Reading ->subtype on a persisted entity is unreliable.');
 			}
 			return $this->attributes[$name];
-		}
-
-		if ($name === 'tables_split' || $name === 'tables_loaded') {
-			elgg_deprecated_notice("Do not read/write ->tables_split or ->tables_loaded.", "2.1");
-			return 2;
 		}
 
 		return $this->getMetadata($name);

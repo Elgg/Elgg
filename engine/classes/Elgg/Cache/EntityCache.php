@@ -48,8 +48,6 @@ class EntityCache {
 	public function __construct(ElggSession $session, MetadataCache $metadata_cache) {
 		$this->session = $session;
 		$this->metadata_cache = $metadata_cache;
-
-		$GLOBALS['ENTITY_CACHE'] = $this->entities;
 	}
 
 	/**
@@ -60,8 +58,6 @@ class EntityCache {
 	 * @return \ElggEntity|false false if entity not cached, or not fully loaded
 	 */
 	public function get($guid) {
-		$this->checkGlobal();
-
 		$guid = (int) $guid;
 
 		if (isset($this->entities[$guid]) && $this->entities[$guid]->isFullyLoaded()) {
@@ -91,8 +87,6 @@ class EntityCache {
 	 * @return void
 	 */
 	public function set(ElggEntity $entity) {
-		$this->checkGlobal();
-
 		$guid = $entity->guid;
 
 		if (!$guid || isset($this->entities[$guid]) || isset($this->disabled_guids[$guid])) {
@@ -112,7 +106,6 @@ class EntityCache {
 		}
 
 		$this->entities[$guid] = $entity;
-		$GLOBALS['ENTITY_CACHE'] = $this->entities;
 
 		if ($entity instanceof \ElggUser) {
 			$this->username_cache[$entity->username] = $entity->guid;
@@ -126,8 +119,6 @@ class EntityCache {
 	 * @return void
 	 */
 	public function remove($guid) {
-		$this->checkGlobal();
-
 		$guid = (int)$guid;
 		
 		if (!isset($this->entities[$guid])) {
@@ -135,7 +126,6 @@ class EntityCache {
 		}
 
 		unset($this->entities[$guid]);
-		$GLOBALS['ENTITY_CACHE'] = $this->entities;
 
 		$username = array_search($guid, $this->username_cache);
 		if ($username !== false) {
@@ -155,10 +145,8 @@ class EntityCache {
 	 * @return void
 	 */
 	public function clear() {
-		$this->checkGlobal();
 		$this->entities = [];
 		$this->username_cache = [];
-		$GLOBALS['ENTITY_CACHE'] = $this->entities;
 	}
 
 	/**
@@ -182,18 +170,5 @@ class EntityCache {
 	 */
 	public function enableCachingForEntity($guid) {
 		unset($this->disabled_guids[$guid]);
-	}
-
-	/**
-	 * Make sure the global hasn't been altered outside this class
-	 *
-	 * @return void
-	 * @todo remove in 3.0
-	 */
-	private function checkGlobal() {
-		if (!isset($GLOBALS['ENTITY_CACHE']) || ($GLOBALS['ENTITY_CACHE'] !== $this->entities)) {
-			$GLOBALS['ENTITY_CACHE'] = $this->entities;
-			elgg_deprecated_notice('Do not access or write to the global $ENTITY_CACHE.', '2.2');
-		}
 	}
 }

@@ -252,8 +252,6 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	 * https://github.com/Elgg/Elgg/issues/5538
 	 */
 	public function test_extra_columns_dont_appear_in_attributes() {
-		global $ENTITY_CACHE;
-
 		// may not have groups in DB - let's create one
 		$group = new \ElggGroup();
 		$group->name = 'test_group';
@@ -261,7 +259,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		$this->assertTrue($group->save() !== false);
 
 		// entity cache interferes with our test
-		$ENTITY_CACHE = array();
+		_elgg_services()->entityCache->clear();
 
 		foreach (array('site', 'user', 'group', 'object') as $type) {
 			$entities = elgg_get_entities(array(

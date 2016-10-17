@@ -114,7 +114,7 @@ function elgg_get_config($name, $site_guid = 0) {
  * @since 1.8.0
  */
 function elgg_set_config($name, $value) {
-	return _elgg_services()->config->set($name, $value);
+	_elgg_services()->config->set($name, $value);
 }
 
 /**

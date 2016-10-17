@@ -97,29 +97,4 @@ class SystemMessagesServiceTest extends \Elgg\TestCase {
 			'notice' => ['n1', 'n2'],
 				], $this->svc->dumpRegister());
 	}
-
-	function testSystemMessagesFunction() {
-		$old_svc = _elgg_services()->systemMessages;
-		_elgg_services()->setValue('systemMessages', $this->svc);
-
-		// register new messages
-		$this->assertTrue(system_messages('n1', 'notice'));
-		$this->assertTrue(system_messages(['s1', 's2'], 'success'));
-
-		// missing register
-		$this->assertFalse(system_messages('--', ''));
-
-		// count
-		$this->assertEquals(3, system_messages(null, '', true));
-
-		// dump
-		$this->assertEquals([
-			'notice' => ['n1'],
-			'success' => ['s1', 's2']
-				], system_messages(null, ''));
-
-		// clean up
-		_elgg_services()->setValue('systemMessages', $old_svc);
-	}
-
 }
