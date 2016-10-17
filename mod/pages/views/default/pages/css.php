@@ -19,3 +19,9 @@
 .pages-nav.treeview .hover {
 	color: #999;
 }
+
+.pages-icon {
+	display: inline-block;
+	text-align: center;
+	color: #999;
+}
