@@ -314,14 +314,6 @@ function login(\ElggUser $user, $persistent = false) {
 	// use elgg_get_logged_in_user_entity().
 	$session->setLoggedInUser($user);
 
-	// deprecate event
-	$message = "The 'login' event was deprecated. Register for 'login:before' or 'login:after'";
-	$version = "1.9";
-	if (!elgg_trigger_deprecated_event('login', 'user', $user, $message, $version)) {
-		$session->removeLoggedInUser();
-		throw new \LoginException(elgg_echo('LoginException:Unknown'));
-	}
-
 	// if remember me checked, set cookie with token and store hash(token) for user
 	if ($persistent) {
 		_elgg_services()->persistentLogin->makeLoginPersistent($user);
