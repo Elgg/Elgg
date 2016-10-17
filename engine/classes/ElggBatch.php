@@ -457,37 +457,4 @@ class ElggBatch implements BatchResult {
 
 		return call_user_func($this->getter, $options);
 	}
-
-	/**
-	 * Read a property
-	 *
-	 * @param string $name
-	 * @return mixed
-	 * @access private
-	 */
-	public function __get($name) {
-		if ($name === 'options') {
-			elgg_deprecated_notice("The ElggBatch 'options' property is private and should not be used", "2.3");
-			return $this->options;
-		}
-
-		_elgg_services()->logger->warn("Read of non-existent property '$name'");
-		return null;
-	}
-
-	/**
-	 * Write a property
-	 *
-	 * @param string $name
-	 * @param mixed  $value
-	 * @return void
-	 * @access private
-	 */
-	public function __set($name, $value) {
-		if ($name === 'options') {
-			elgg_deprecated_notice("The ElggBatch 'options' property is private and should not be used", "2.3");
-		}
-
-		$this->{$name} = $value;
-	}
 }

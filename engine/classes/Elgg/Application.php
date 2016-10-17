@@ -205,7 +205,7 @@ class Application {
 	}
 
 	/**
-	 * Replacement for loading engine/start.php
+	 * Start and boot the core
 	 *
 	 * @return self
 	 */
@@ -281,7 +281,7 @@ class Application {
 				_elgg_services()->translator->registerPluginTranslations($root->getPath());
 			}
 
-			// This is root directory start.php, not elgg/engine/start.php
+			// This is root directory start.php
 			$root_start = $root->getPath("start.php");
 			if (is_file($root_start)) {
 				require $root_start;

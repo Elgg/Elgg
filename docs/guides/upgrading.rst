@@ -12,11 +12,6 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
-Removed classes
----------------
-
- * ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
-
 Removed views
 -------------
 
@@ -37,6 +32,7 @@ Removed views
  * ``notifications/subscriptions/jsfuncs``
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
+ * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
 
@@ -52,6 +48,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``
  * ``generate_user_password``: Use ``ElggUser::setPassword``
+ * ``row_to_elggrelationship``
+ * ``system_messages``
  * ``notifications_plugin_pagesetup``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
  * ``ElggFile::size``: Use ``getSize``
@@ -60,11 +58,13 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggData::getClassName``: Use ``get_class()``
  * ``ElggData::set``: Usually can be replaced by property write
  * ``ElggEntity::setURL``: See ``getURL`` for details on the plugin hook
+ * ``ElggFileCache::sanitise_filename``: Use ``sanitizeFilename``
  * ``ElggMenuBuilder::compareByWeight``: Use ``compareByPriority``
  * ``ElggMenuItem::getWeight``: Use ``getPriority``
  * ``ElggMenuItem::getContent``: Use ``elgg_view_menu_item()``
  * ``ElggMenuItem::setWeight``: Use ``setPriority``
  * ``ElggRiverItem::getPostedTime``: Use ``getTimePosted``
+ * ``ElggSession`` has removed all deprecated methods
  * ``ElggSite::addObject``: Use ``addEntity``
  * ``ElggSite::addUser``: Use ``addEntity``
  * ``ElggSite::getExportableValues``: Use ``toObject``
@@ -83,13 +83,20 @@ Removed global vars
 -------------------
 
  * ``$DEFAULT_FILE_STORE``
+ * ``$ENTITY_CACHE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``
 
 Removed classes/interfaces
 --------------------------
 
+ * ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
+ * ``Elgg_Notifications_Notification``
  * ``Exportable`` and its methods ``export`` and ``getExportableValues``: Use ``toObject``
+ * ``ExportException``
  * ``Importable`` and its method ``import``.
+ * ``ImportException``
+ * ``ODD`` and all classes beginning with ``ODD*``.
+ * ``XmlElement``
 
 Form and field related changes
 ------------------------------
@@ -122,11 +129,13 @@ Inheritance changes
  * ``ElggEntity`` no longer implements ``Importable``
  * ``ElggGroup`` no longer implements ``Friendable``
  * ``ElggRelationship`` no longer implements ``Importable``
- * ``Elgg\Application\Database`` no longer extends ``Elgg\Database``.
+ * ``ElggSession`` no longer implements ``ArrayAccess``
+ * ``Elgg\Application\Database`` no longer extends ``Elgg\Database``
 
 Removed JavaScript APIs
 -----------------------
 
+ * ``admin.js``
  * ``elgg.widgets``: Use the ``elgg/widgets`` module. The "widgets" layouts do this module automatically
  * ``lightbox.js``: Use the ``elgg/lightbox`` module as needed
  * ``lightbox/settings.js``: Use the ``getOptions, ui.lightbox`` JS hook or the ``data-colorbox-opts`` attribute
@@ -199,6 +208,8 @@ Class constructors that now accept only a ``stdClass`` object or ``null``
 Miscellaneous API changes
 -------------------------
 
+ * ``ElggBatch``: You may only access public properties
+ * ``ElggEntity``: The ``tables_split`` and ``tables_loaded`` properties were removed
  * ``ElggGroup::removeObjectFromGroup`` requires passing in an ``ElggObject`` (no longer accepts a GUID)
  * ``ElggUser::$salt`` no longer exists as an attribute, nor is it used for authentication
  * ``ElggUser::$password`` no longer exists as an attribute, nor is it used for authentication
@@ -212,6 +223,7 @@ Miscellaneous API changes
  * ``elgg_get_config('siteemail')`` is no longer available. Use ``elgg_get_site_entity()->email``.
  * The URL endpoints ``js/`` and ``css/`` are no longer supported. Use ``elgg_get_simplecache_url()``.
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
+ * The script ``engine/start.php`` is removed.
 
 JavaScript hook calling order may change
 ----------------------------------------

@@ -37,7 +37,7 @@ class Translator {
 	 * @return string Either the translated string, the English string,
 	 * or the original language string.
 	 */
-	public function translate($message_key, $args = [], $language = "") {
+	public function translate($message_key, array $args = [], $language = "") {
 		// TODO find a way to cache getLanguage() and get rid of this
 		static $CURRENT_LANGUAGE;
 		
@@ -48,17 +48,6 @@ class Translator {
 			return '';
 		}
 		
-		// old param order is deprecated
-		if (!is_array($args)) {
-			elgg_deprecated_notice(
-				'As of Elgg 1.8, the 2nd arg to elgg_echo() is an array of string replacements and the 3rd arg is the language.',
-				1.8
-			);
-
-			$language = $args;
-			$args = array();
-		}
-
 		if (!$CURRENT_LANGUAGE) {
 			$CURRENT_LANGUAGE = $this->getCurrentLanguage();
 		}

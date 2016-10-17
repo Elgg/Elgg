@@ -8,18 +8,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * Elgg Session Management
  *
  * Reserved keys: last_forward_from, msg, sticky_forms, user, guid, id, code, name, username
- * Deprecated keys: user, id, name, username
  *
- * \ArrayAccess was deprecated in Elgg 1.9. This means you should use
- * $session->get('foo') rather than $session['foo'].
- * Warning: You can not access multidimensional arrays through \ArrayAccess like
- * this $session['foo']['bar']
- *
- * @package    Elgg.Core
- * @subpackage Session
- * @see        elgg_get_session()
+ * @see elgg_get_session()
  */
-class ElggSession implements \ArrayAccess {
+class ElggSession {
 
 	/**
 	 * @var SessionInterface
@@ -172,18 +164,6 @@ class ElggSession implements \ArrayAccess {
 	}
 
 	/**
-	 * Alias to offsetUnset()
-	 *
-	 * @param string $key Name
-	 * @return void
-	 * @deprecated 1.9 Use remove()
-	 */
-	public function del($key) {
-		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
-		$this->remove($key);
-	}
-
-	/**
 	 * Has the attribute been defined
 	 *
 	 * @param string $name Name of the attribute
@@ -301,127 +281,6 @@ class ElggSession implements \ArrayAccess {
 		if (!$this->has('__elgg_session')) {
 			$this->set('__elgg_session', _elgg_services()->crypto->getRandomString(22));
 		}
-	}
-
-	/**
-	 * Test if property is set either as an attribute or metadata.
-	 *
-	 * @param string $key The name of the attribute or metadata.
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use has()
-	 */
-	public function __isset($key) {
-		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
-		// Note: We use offsetExists() for BC
-		return $this->offsetExists($key);
-	}
-
-	/**
-	 * Set a value, go straight to session.
-	 *
-	 * @param string $key   Name
-	 * @param mixed  $value Value
-	 *
-	 * @return void
-	 * @deprecated 1.9 Use set()
-	 */
-	public function offsetSet($key, $value) {
-		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
-		$this->set($key, $value);
-	}
-
-	/**
-	 * Get a variable from either the session, or if its not in the session
-	 * attempt to get it from an api call.
-	 *
-	 * @see \ArrayAccess::offsetGet()
-	 *
-	 * @param mixed $key Name
-	 *
-	 * @return mixed
-	 * @deprecated 1.9 Use get()
-	 */
-	public function offsetGet($key) {
-		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
-
-		if (in_array($key, array('user', 'id', 'name', 'username'))) {
-			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
-			if ($this->logged_in_user) {
-				switch ($key) {
-					case 'user':
-						return $this->logged_in_user;
-						break;
-					case 'id':
-						return $this->logged_in_user->guid;
-						break;
-					case 'name':
-					case 'username':
-						return $this->logged_in_user->$key;
-						break;
-				}
-			} else {
-				return null;
-			}
-		}
-
-		if ($this->has($key)) {
-			return $this->get($key);
-		}
-
-		$orig_value = null;
-		$value = _elgg_services()->hooks->trigger('session:get', $key, null, $orig_value);
-		if ($orig_value !== $value) {
-			elgg_deprecated_notice("Plugin hook session:get has been deprecated.", 1.9);
-		}
-
-		$this->set($key, $value);
-		return $value;
-	}
-
-	/**
-	 * Unset a value from the cache and the session.
-	 *
-	 * @see \ArrayAccess::offsetUnset()
-	 *
-	 * @param mixed $key Name
-	 *
-	 * @return void
-	 * @deprecated 1.9 Use remove()
-	 */
-	public function offsetUnset($key) {
-		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
-		$this->remove($key);
-	}
-
-	/**
-	 * Return whether the value is set in either the session or the cache.
-	 *
-	 * @see \ArrayAccess::offsetExists()
-	 *
-	 * @param int $offset Offset
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use has()
-	 */
-	public function offsetExists($offset) {
-		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
-
-		if (in_array($offset, array('user', 'id', 'name', 'username'))) {
-			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
-			return (bool)$this->logged_in_user;
-		}
-
-		if ($this->has($offset)) {
-			return true;
-		}
-
-		// Note: We use offsetGet() for BC
-		if ($this->offsetGet($offset)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

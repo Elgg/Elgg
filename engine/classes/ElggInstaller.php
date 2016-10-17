@@ -756,7 +756,7 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Load remaining engine libraries and complete bootstraping (see start.php)
+	 * Load remaining engine libraries and complete bootstrapping
 	 *
 	 * @param string $step Which step to boot strap for. Required because
 	 *                     boot strapping is different until the DB is populated.

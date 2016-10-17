@@ -441,8 +441,6 @@ function count_messages($register = "") {
 /**
  * Display a system message on next page load.
  *
- * @see system_messages()
- *
  * @param string|array $message Message or messages to add
  *
  * @return bool
@@ -454,8 +452,6 @@ function system_message($message) {
 
 /**
  * Display an error on next page load.
- *
- * @see system_messages()
  *
  * @param string|array $error Error or errors to add
  *
@@ -960,15 +956,6 @@ function _elgg_php_exception_handler($exception) {
  * @access private
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
-
-	// Elgg 2.0 no longer uses ext/mysql, so these warnings are just a nuisance for 1.x site
-	// owners and plugin devs.
-	if (0 === strpos($errmsg, "mysql_connect(): The mysql extension is deprecated")) {
-		// only suppress core's usage
-		if (preg_match('~/classes/Elgg/Database\.php$~', strtr($filename, '\\', '/'))) {
-			return true;
-		}
-	}
 
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 

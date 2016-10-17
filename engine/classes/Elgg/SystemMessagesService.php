@@ -88,8 +88,6 @@ class SystemMessagesService {
 	/**
 	 * Display a system message on next page load.
 	 *
-	 * @see system_messages()
-	 *
 	 * @param string|string[] $message Message or messages to add
 	 *
 	 * @return void
@@ -104,8 +102,6 @@ class SystemMessagesService {
 
 	/**
 	 * Display an error on next page load.
-	 *
-	 * @see system_messages()
 	 *
 	 * @param string|string[] $error Error or errors to add
 	 *
