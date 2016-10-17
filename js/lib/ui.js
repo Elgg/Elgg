@@ -31,11 +31,6 @@ elgg.ui.init = function () {
         elgg.deprecated_notice('Use of .elgg-requires-confirmation is deprecated by data-confirm', '1.10');
     }
 
-	$('.elgg-autofocus').focus();
-	if ($('.elgg-autofocus').length > 0) {
-		elgg.deprecated_notice('Use of .elgg-autofocus is deprecated by html5 autofocus', 1.9);
-	}
-
 	// Allow element to be highlighted using CSS if its id is found from the URL
 	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
 	$(elementId).addClass('elgg-state-highlight');
