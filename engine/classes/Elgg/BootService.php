@@ -80,7 +80,6 @@ class BootService {
 			$CONFIG->dataroot = rtrim($datalists['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
 		}
 		$CONFIG->site_guid = (int)$datalists['default_site'];
-		$CONFIG->site_id = (int)$datalists['default_site'];
 		if (!isset($CONFIG->boot_cache_ttl)) {
 			$CONFIG->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
 		}

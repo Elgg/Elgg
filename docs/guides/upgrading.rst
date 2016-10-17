@@ -86,6 +86,7 @@ Removed global vars
 
  * ``$DEFAULT_FILE_STORE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``
+ * ``$CONFIG->site_id``: Use ``elgg_get_config('site_guid')`` or ``elgg_get_site_entity()->guid``
 
 Removed classes/interfaces
 --------------------------

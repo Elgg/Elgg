@@ -836,7 +836,6 @@ class ElggInstaller {
 
 			if ($stepIndex > $settingsIndex) {
 				$this->CONFIG->site_guid = (int) _elgg_services()->datalist->get('default_site');
-				$this->CONFIG->site_id = $this->CONFIG->site_guid;
 				$this->CONFIG->site = get_entity($this->CONFIG->site_guid);
 				$this->CONFIG->dataroot = _elgg_services()->datalist->get('dataroot');
 				_elgg_services()->config->getCookieConfig();
@@ -1486,7 +1485,6 @@ class ElggInstaller {
 
 		// bootstrap site info
 		$this->CONFIG->site_guid = $guid;
-		$this->CONFIG->site_id = $guid;
 		$this->CONFIG->site = $site;
 
 		_elgg_services()->datalist->set('installed', time());
