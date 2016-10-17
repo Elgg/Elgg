@@ -1,34 +1,41 @@
 <?php
-/**
- * Create a input button
- *
- * @package Elgg
- * @subpackage Core
- *
- * @uses $vars['src']   Src of an image
- * @uses $vars['class'] Additional CSS class
- */
 
+/**
+ * Renders a <button>
+ *
+ * @uses $vars['type']  Button type (submit|reset|image)
+ * @uses $vars['class'] Additional CSS class
+ * @uses $vars['text']  Text to include between <button> tags
+ * @uses $vars['icon']  Optional icon name
+ */
 $vars['class'] = elgg_extract_class($vars, 'elgg-button');
 
-$defaults = ['type' => 'button'];
+$type = elgg_extract('type', $vars, 'button', false);
 
-$vars = array_merge($defaults, $vars);
+$text = elgg_extract('text', $vars);
+unset($vars['text']);
 
-switch ($vars['type']) {
-	case 'button':
-	case 'reset':
+$text = elgg_format_element('span', [
+	'class' => 'elgg-button-label',
+], $text);
+
+$icon = elgg_extract('icon', $vars, '');
+unset($vars['icon']);
+
+if ($icon && !preg_match('/^</', $icon)) {
+	$icon = elgg_view_icon($icon, [
+		'class' => 'elgg-button-icon',
+	]);
+}
+
+switch ($type) {
 	case 'submit':
-	case 'image':
+		$vars['class'][] = 'elgg-button-submit';
 		break;
-	default:
-		$vars['type'] = 'button';
+
+	case 'reset':
+		$vars['class'][] = 'elgg-button-cancel';
 		break;
 }
 
-// blank src if trying to access an offsite image. @todo why?
-if (isset($vars['src']) && strpos($vars['src'], elgg_get_site_url()) === false) {
-	$vars['src'] = "";
-}
-
-echo elgg_format_element('input', $vars);
+echo elgg_format_element('button', $vars, $icon . $text);
