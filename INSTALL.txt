@@ -1,1 +1,0 @@
-See http://learn.elgg.org/en/stable/intro/install.html
