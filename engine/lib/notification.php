@@ -199,6 +199,12 @@ function _elgg_notifications_cron() {
  * @access private
  */
 function _elgg_send_email_notification($hook, $type, $result, $params) {
+	
+	if ($result === true) {
+		// assume someone else already sent the message
+		return;
+	}
+	
 	/* @var \Elgg\Notifications\Notification $message */
 	$message = $params['notification'];
 
@@ -229,6 +235,36 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 	return elgg_send_email($from, $to, $message->subject, $message->body, $params);
 }
 
+/**
+ * Adds default Message-ID header to all e-mails
+ *
+ * @param string $hook        Equals to 'email'
+ * @param string $type        Equals to 'system'
+ * @param array  $returnvalue Array containing fields: 'to', 'from', 'subject', 'body', 'headers', 'params'
+ * @param array  $params      The same value as $returnvalue
+ * 
+ * @see https://tools.ietf.org/html/rfc5322#section-3.6.4
+ * 
+ * @return array
+ * 
+ * @access private
+ */
+function _elgg_notifications_smtp_default_message_id_header($hook, $type, $returnvalue, $params) {
+	
+	if (!is_array($returnvalue) || !is_array($returnvalue['params'])) {
+		// another hook handler returned a non-array, let's not override it
+		return;
+	}
+	
+	$hostname = parse_url(elgg_get_site_url(), PHP_URL_HOST);
+	$url_path = parse_url(elgg_get_site_url(), PHP_URL_PATH);
+	
+	$mt = microtime(true);
+	
+	$returnvalue['headers']['Message-ID'] = "<{$url_path}.default.{$mt}@{$hostname}>";
+	
+	return $returnvalue;
+}
 /**
  * Adds default thread SMTP headers to group messages correctly.
  * Note that it won't be sufficient for some email clients. Ie. Gmail is looking at message subject anyway.
@@ -296,6 +332,7 @@ function _elgg_notifications_init() {
 	// add email notifications
 	elgg_register_notification_method('email');
 	elgg_register_plugin_hook_handler('send', 'notification:email', '_elgg_send_email_notification');
+	elgg_register_plugin_hook_handler('email', 'system', '_elgg_notifications_smtp_default_message_id_header', 1);
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_notifications_smtp_thread_headers');
 
 	// add ability to set personal notification method
