@@ -506,6 +506,13 @@ class Application {
 		}
 
 		if (get_input('upgrade') == 'upgrade') {
+			// Find unprocessed batch uprade classes and save them as ElggUpgrade objects
+			$has_pending_upgrades = _elgg_services()->upgradeLocator->run();
+
+			if ($has_pending_upgrades) {
+				// Forward to the list of pending upgrades
+				$forward_url = '/admin/upgrades';
+			}
 
 			$upgrader = _elgg_services()->upgrades;
 			$result = $upgrader->run();

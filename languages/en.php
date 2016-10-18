@@ -540,6 +540,8 @@ return array(
 
 	'admin:administer_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
+	'admin:upgrades:run' => 'Run upgrades now',
+	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s)is not an instance of ElggUpgrade',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -789,7 +791,7 @@ These changes will only affect new users on the site.',
 	'usersettings:statistics' => "Your statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
-	
+
 	'usersettings:statistics:login_history' => "Login History",
 	'usersettings:statistics:login_history:date' => "Date",
 	'usersettings:statistics:login_history:ip' => "IP Address",
@@ -1075,7 +1077,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:month:10' => 'October %s',
 	'date:month:11' => 'November %s',
 	'date:month:12' => 'December %s',
-	
+
 	'date:month:short:01' => 'Jan %s',
 	'date:month:short:02' => 'Feb %s',
 	'date:month:short:03' => 'Mar %s',
@@ -1209,9 +1211,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
 	'upgrade:warning' => '<b>Warning:</b> On a large site this upgrade may take a significantly long time!',
 	'upgrade:success_count' => 'Upgraded:',
-	'upgrade:error_count' => 'Errors:',
-	'upgrade:river_update_failed' => 'Failed to update the river entry for item id %s',
-	'upgrade:timestamp_update_failed' => 'Failed to update the timestamps for item id %s',
+	'upgrade:error_count' => 'Errors: %s',
 	'upgrade:finished' => 'Upgrade finished',
 	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
 

@@ -36,5 +36,6 @@ Customize Elgg's behavior with plugins.
    walled-garden
    web-services
    upgrading
+   upgrading-data
    events-list
    hooks-list

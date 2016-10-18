@@ -231,6 +231,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
 
 	elgg_register_action('admin/site/regenerate_secret', '', 'admin');
+	elgg_register_action('admin/upgrade', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 
@@ -243,7 +244,7 @@ function _elgg_admin_init() {
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
 	elgg_register_simplecache_view('admin.css');
-	
+
 	elgg_load_css('lightbox');
 
 	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
