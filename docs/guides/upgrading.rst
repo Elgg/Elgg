@@ -35,6 +35,17 @@ Removed views
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
+ * ``ajax_loader.gif``
+ * ``button_background.gif``
+ * ``button_graduation.png``
+ * ``elgg_toolbar_logo.gif``
+ * ``header_shadow.png``
+ * ``powered_by_elgg_badge_drk_bckgnd.gif``
+ * ``powered_by_elgg_badge_light_bckgnd.gif``
+ * ``sidebar_background.gif``
+ * ``spacer.gif``
+ * ``toptoolbar_background.gif``
+ * ``two_sidebar_background.gif``
 
 Removed functions/methods
 -------------------------
