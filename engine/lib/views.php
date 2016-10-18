@@ -1521,22 +1521,6 @@ function elgg_view_field(array $params = []) {
 	// field input view needs this
 	$input_vars['input_type'] = $input_type;
 
-	// field views get more data
-	$element_vars['input_type'] = $input_type;
-	if (isset($params['#class'])) {
-		$element_vars['field_class'] = $params['#class'];
-	}
-	if (isset($params['#help'])) {
-		$element_vars['help'] = $params['#help'];
-	}
-	if (isset($params['#label'])) {
-		$element_vars['label'] = $params['#label'];
-	}
-
-	// wrap if present
-	$element_vars['label'] = elgg_view('elements/forms/label', $element_vars);
-	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
-
 	if ($input_type == 'checkbox') {
 		// Single checkbox input view gets special treatment
 		// We don't want the field label to appear a checkbox without a label
@@ -1544,6 +1528,24 @@ function elgg_view_field(array $params = []) {
 		$input_vars['label_tag'] = 'div';
 		unset($element_vars['label']);
 	}
+
+	// field views get more data
+	$element_vars['input_type'] = $input_type;
+	
+	unset($element_vars['class']);
+	if (isset($params['#class'])) {
+		$element_vars['class'] = $params['#class'];
+	}
+	if (isset($params['#help'])) {
+		$element_vars['help'] = $params['#help'];
+	}
+	if (isset($params['#label'])) {
+		$element_vars['label'] = $params['#label'];
+	}
+	
+	// wrap if present
+	$element_vars['label'] = elgg_view('elements/forms/label', $element_vars);
+	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
 
 	$element_vars['input'] = elgg_view("elements/forms/input", $input_vars);
 

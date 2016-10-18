@@ -732,6 +732,11 @@ three sections:
 	'admin:server:label:post_max_size' => 'POST maximum size',
 	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
 	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure memcache.
+	',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
@@ -1215,6 +1220,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:finished' => 'Upgrade finished',
 	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
 
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	
 /**
  * Welcome
  */

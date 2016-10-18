@@ -407,15 +407,14 @@ class ResponseFactory {
 		$forward_url = elgg_normalize_url($forward_url);
 
 		switch ($status_code) {
-			case 'walled_garden':
-			case 'admin' :
-			case 'login' :
-				$status_code = ELGG_HTTP_SEE_OTHER;
-				break;
-			case 'system' :
-			case 'csrf' :
+			case 'system':
+			case 'csrf':
 				$status_code = ELGG_HTTP_OK;
 				break;
+			case 'admin':
+			case 'login':
+			case 'member':
+			case 'walled_garden':
 			default :
 				$status_code = (int) $status_code;
 				if (!$status_code || $status_code < 100 || $status_code > 599) {
