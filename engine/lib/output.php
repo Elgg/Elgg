@@ -27,8 +27,12 @@ function parse_urls($text) {
 	// By default htmlawed rewrites tags to this format.
 	// if PHP supported conditional negative lookbehinds we could use this:
 	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	$r = preg_replace_callback('/(?<![=\/"\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\']+)/i',
+	$r = preg_replace_callback('/<a(?:\s[^>]*)?>[\W\w]*?<\/a>|((?:https?|ftp):\/\/[^\s\r\n\t<>"]+)/i',
 	function($matches) {
+		if (!isset($matches[1])) {
+			return $matches[0];
+		}
+		
 		$url = $matches[1];
 		$punc = '';
 		$last = substr($url, -1, 1);
