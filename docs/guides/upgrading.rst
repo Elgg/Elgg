@@ -35,6 +35,7 @@ Removed views
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
+ * ``resources/avatar/view``: Use entity icon API
  * ``ajax_loader.gif``
  * ``button_background.gif``
  * ``button_graduation.png``
@@ -91,6 +92,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggSession::set_ignore_access``: Use ``setIgnoreAccess``
  * ``profile_pagesetup``
  * ``groups_setup_sidebar_menus``
+ * ``groups_set_icon_url``
 
 Removed global vars
 -------------------
@@ -347,6 +349,15 @@ Support for ``icon`` and ``badge`` parameters was added. Plugins should start us
 ``extras`` menu:
 
  * ``bookmark``, ``report_this`` and ``rss`` menu items now use ``icon`` parameter
+
+Entity icons
+------------
+
+Default icon image files have been moved and re-mapped as follows:
+
+ * Default icons: ``views/default/icon/default/$size.png``
+ * User icons: ``views/default/icon/user/default/$size.gif``
+ * Group icons: ``views/default/icon/group/default/$size.gif`` in the groups plugin
 
 From 2.2 to 2.3
 ===============
