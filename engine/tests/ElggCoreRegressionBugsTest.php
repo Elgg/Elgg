@@ -224,6 +224,9 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'already anchor <a href="http://twitter.com/">twitter</a> test' =>
 				'already anchor <a href="http://twitter.com/">twitter</a> test',
 
+			'already anchor with link text <a href="http://twitter.com/">http://twitter.com</a> test' =>
+				'already anchor with link text <a href="http://twitter.com/">http://twitter.com</a> test',
+
 			'ssl https://example.org/ test' =>
 				'ssl <a href="https://example.org/" rel="nofollow">https:/<wbr />/<wbr />example.org/<wbr /></a> test',
 			'ftp ftp://example.org/ test' =>
