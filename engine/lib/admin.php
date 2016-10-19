@@ -245,8 +245,6 @@ function _elgg_admin_init() {
 
 	elgg_register_simplecache_view('admin.css');
 
-	elgg_load_css('lightbox');
-
 	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
 
 	// administer
