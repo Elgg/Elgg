@@ -118,7 +118,8 @@ if ($active) {
 	} else {
 		$action = '';
 		$classes[] = 'elgg-state-cannot-deactivate';
-		$options['text'] = elgg_echo('admin:plugins:cannot_deactivate');
+		$options['title'] = elgg_echo('admin:plugins:cannot_deactivate');
+		$options['class'] = 'elgg-button elgg-button-cancel elgg-state-disabled';
 		$options['disabled'] = 'disabled';
 	}
 } else if ($can_activate) {
@@ -130,7 +131,9 @@ if ($active) {
 } else {
 	$classes[] = 'elgg-state-inactive elgg-state-cannot-activate';
 	$action = '';
-	$options['text'] = elgg_echo('admin:plugins:cannot_activate');
+	$options['title'] = elgg_echo('admin:plugins:cannot_activate');
+	$options['class'] = 'elgg-button elgg-button-submit elgg-state-disabled';
+	$options['text'] = elgg_echo('admin:plugins:activate');
 	$options['disabled'] = 'disabled';
 }
 

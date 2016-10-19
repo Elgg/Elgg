@@ -91,23 +91,22 @@ $category_form = elgg_view("admin/plugins/filter", [
 	'category_options' => $categories
 ]);
 
-$activate_all = elgg_view('output/url', [
+elgg_register_menu_item('title', [
+	'name' => 'activate-all',
 	'href' => 'action/admin/plugins/activate_all',
 	'text' => elgg_echo('admin:plugins:activate_all'),
-	'class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
 	'data-desired-state' => 'active',
 ]);
-$deactivate_all = elgg_view('output/url', [
+elgg_register_menu_item('title', [
+	'name' => 'dactivate-all',
 	'href' => 'action/admin/plugins/deactivate_all',
 	'text' => elgg_echo('admin:plugins:deactivate_all'),
-	'class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
 	'data-desired-state' => 'inactive',
 ]);
 
-$buttons = elgg_format_element('div', ['class' => 'float-alt'], $activate_all . $deactivate_all);
-
-echo elgg_format_element('div', ['class' => 'mbm'], $buttons . $category_form);
-
+echo $category_form;
 echo elgg_format_element(
 	'div',
 	['id' => 'elgg-plugin-list'],

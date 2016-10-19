@@ -6,6 +6,7 @@ return array(
 	'admin:develop_tools:inspect' => 'Inspect',
 	'admin:inspect' => 'Inspect',
 	'admin:develop_tools:unit_tests' => 'Unit Tests',
+	'admin:develop_tools:entity_explorer' => 'Entity Explorer',
 	'admin:developers' => 'Developers',
 	'admin:developers:settings' => 'Settings',
 
@@ -39,6 +40,16 @@ return array(
 	'developers:debug:warning' => 'Warning',
 	'developers:debug:notice' => 'Notice',
 	'developers:debug:info' => 'Info',
+	
+	// entity explorer
+	'developers:entity_explorer:help' => 'View information about entities and perform some basic actions on them.',
+	'developers:entity_explorer:guid:label' => 'Enter the guid of the entity to inspect',
+	'developers:entity_explorer:info' => 'Entity Information',
+	'developers:entity_explorer:info:attributes' => 'Attributes',
+	'developers:entity_explorer:info:metadata' => 'Metadata',
+	'developers:entity_explorer:info:relationships' => 'Relationships',
+	'developers:entity_explorer:info:private_settings' => 'Private Settings',
+	'developers:entity_explorer:delete_entity' => 'Remove this entity',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
