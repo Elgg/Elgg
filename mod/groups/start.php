@@ -30,7 +30,6 @@ function groups_init() {
 
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
-	elgg_register_plugin_hook_handler('entity:icon:file', 'group', 'groups_set_icon_file');
 
 	// Register some actions
 	$action_base = __DIR__ . '/actions/groups';
@@ -353,26 +352,6 @@ function groups_set_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
 	$title = elgg_get_friendly_title($entity->name);
 	return "groups/profile/{$entity->guid}/$title";
-}
-
-/**
- * Override the default entity icon file for groups
- *
- * @param string    $hook   "entity:icon:file"
- * @param string    $type   "group"
- * @param \ElggIcon $icon   Icon file
- * @param array     $params Hook params
- * @return \ElggIcon
- */
-function groups_set_icon_file($hook, $type, $icon, $params) {
-
-	$entity = elgg_extract('entity', $params);
-	$size = elgg_extract('size', $params, 'medium');
-
-	$icon->owner_guid = $entity->owner_guid;
-	$icon->setFilename("groups/{$entity->guid}{$size}.jpg");
-
-	return $icon;
 }
 
 /**

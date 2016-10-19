@@ -16,9 +16,9 @@ interface Batch {
 	 *
 	 * @param Result $result Object that holds results of the batch
 	 * @param int    $offset Starting point of the batch
-	 * @return Result Instance of \Elgg\Upgrade\Result;
+	 * @return Result Instance of \Elgg\Upgrade\Result
 	 */
-	public function run(Result $result, int $offset);
+	public function run(Result $result, $offset);
 
 	/**
 	 * Gets the amount of items that need to be upgraded

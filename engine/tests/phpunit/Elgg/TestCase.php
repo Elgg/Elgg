@@ -8,7 +8,6 @@ use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Http\Request;
 use Elgg\Mocks\Di\MockServiceProvider;
-use ElggSession;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
@@ -27,7 +26,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Constructs a test case with the given name.
-	 * Boostraps testing environment
+	 * Bootstraps testing environment
 	 * 
 	 * @param string $name
 	 * @param array  $data
@@ -51,7 +50,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Boostraps test suite
+	 * Bootstraps test suite
 	 *
 	 * @global stdClass $CONFIG Global config
 	 * @global stdClass $_ELGG  Global vars
@@ -166,7 +165,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			// Individual tests can reset service providers to get a clean global state
 			self::bootstrap();
 		}
-
+		
 		_elgg_services()->setValue('session', self::mocks()->session);
 		_elgg_services()->setValue('db', self::mocks()->db);
 		_elgg_services()->setValue('entityTable', self::mocks()->entityTable);
@@ -175,6 +174,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('annotations', self::mocks()->annotations);
 		_elgg_services()->setValue('relationshipsTable', self::mocks()->relationshipsTable);
 		_elgg_services()->setValue('accessCollections', self::mocks()->accessCollections);
+		_elgg_services()->setValue('privateSettings', self::mocks()->privateSettings);
 		_elgg_services()->setValue('subtypeTable', self::mocks()->subtypeTable);
 		_elgg_services()->setValue('datalist', self::mocks()->datalist);
 

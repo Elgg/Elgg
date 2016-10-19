@@ -25,8 +25,8 @@ Example from ``mod/blog/elgg-plugin.php`` file:
 
 	return [
 		'upgrades' => [
-			'Blog\Upgrades\AccessLevelFix',
-			'Blog\Upgrades\DraftStatusUpgrade',
+			Blog\Upgrades\AccessLevelFix::class,
+			Blog\Upgrades\DraftStatusUpgrade::class,
 		]
 	];
 
@@ -50,13 +50,10 @@ The basic structure of the class is the following:
 	
 	namespace Blog\Upgrades;
 	
-	use Elgg\Upgrade\Batch;
-	use Elgg\Upgrade\Result;
-	
 	/**
 	 * Fixes invalid blog access values
 	 */
-	class AccessLevelFix implements BatchUpgrade {
+	class AccessLevelFix implements \Elgg\Upgrade\Batch {
 		const INCREMENT_OFFSET = true;
 		
 		const VERSION = 2016120300;
@@ -68,7 +65,7 @@ The basic structure of the class is the following:
 		 * @param int    $offset
 		 * @return Result result
 		 */
-		public function run(Result $result, $offset) {
+		public function run(\Elgg\Upgrade\Result $result, $offset) {
 		
 		}
 	}

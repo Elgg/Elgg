@@ -172,10 +172,14 @@ class EntityTable {
 	/**
 	 * Adds a new row to the entity table
 	 *
-	 * @param stdClass $row Entity base information
+	 * @param stdClass $row        Entity base information
+	 * @param array    $attributes All primary and secondary table attributes
+	 *                             Used by database mock services to allow mocking
+	 *                             entities that were instantiated using new keyword
+	 *                             and calling ElggEntity::save()
 	 * @return int|false
 	 */
-	public function insertRow(stdClass $row) {
+	public function insertRow(stdClass $row, array $attributes = []) {
 
 		$sql = "INSERT INTO {$this->db->prefix}entities
 			(type, subtype, owner_guid, site_guid, container_guid,

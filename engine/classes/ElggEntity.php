@@ -1464,7 +1464,7 @@ abstract class ElggEntity extends \ElggData implements
 			'time_created' => $time_created,
 			'time_updated' => $now,
 			'last_action' => $now,
-		]);
+		], $this->attributes);
 
 		if (!$result) {
 			throw new \IOException("Unable to save new object's base entity information!");

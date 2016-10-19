@@ -541,7 +541,8 @@ return array(
 	'admin:administer_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
 	'admin:upgrades:run' => 'Run upgrades now',
-	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s)is not an instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s) is not an instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
