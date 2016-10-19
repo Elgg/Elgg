@@ -1,0 +1,69 @@
+<?php 
+$icons = array(
+	'arrow-left',
+	'arrow-right',
+	'arrow-two-head',
+	'attention',
+	'calendar',
+	'cell-phone',
+	'checkmark',
+	'clip',
+	'cursor-drag-arrow',
+	'delete',
+	'delete-alt',
+	'download',
+	'eye',
+	'facebook',
+	'grid',
+	'home',
+	'hover-menu',
+	'info',
+	'link',
+	'list',
+	'lock-closed',
+	'lock-open',
+	'mail',
+	'mail-alt',
+	'photo',
+	'print',
+	'push-pin',
+	'redo',
+	'refresh',
+	'round-arrow-left',
+	'round-arrow-right',
+	'round-checkmark',
+	'round-minus',
+	'round-plus',
+	'rss',
+	'search',
+	'settings',
+	'settings-alt',
+	'share',
+	'share-hover',
+	'shop-cart',
+	'speech-bubble',
+	'speech-bubble-alt',
+	'star',
+	'star-empty',
+	'tag',
+	'thumbs-down',
+	'thumbs-up',
+	'trash',
+	'twitter',
+	'undo',
+	'user',
+	'users',
+	'video',
+);
+?>
+<p>
+	<?php echo elgg_echo('theme_sandbox:icons:blurb'); ?>
+</p>
+
+<ul class="elgg-gallery">
+<?php
+	foreach ($icons as $icon) {
+		echo "<li title=\"elgg-icon-$icon\" style=\"margin:10px\">" . elgg_view_icon($icon) . "</li>";
+	}
+?>
+</ul>
