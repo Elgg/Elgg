@@ -45,7 +45,7 @@
 	AJAX LOADER
 *************************************** */
 .elgg-ajax-loader {
-	background: white url(ajax_loader_bw.gif) no-repeat center center;
+	background: white url('graphics/ajax_loader_bw.gif') no-repeat center center;
 	min-height: 31px;
 	min-width: 31px;
 }

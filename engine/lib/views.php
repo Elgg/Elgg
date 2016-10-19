@@ -612,43 +612,43 @@ function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) 
 
 	$head_params['links']['apple-touch-icon'] = array(
 		'rel' => 'apple-touch-icon',
-		'href' => elgg_get_simplecache_url('favicon-128.png'),
+		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
 	);
 
 	// favicons
 	$head_params['links']['icon-ico'] = array(
 		'rel' => 'icon',
-		'href' => elgg_get_simplecache_url('favicon.ico'),
+		'href' => elgg_get_simplecache_url('graphics/favicon.ico'),
 	);
 	$head_params['links']['icon-vector'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16 32x32 48x48 64x64 128x128',
 		'type' => 'image/svg+xml',
-		'href' => elgg_get_simplecache_url('favicon.svg'),
+		'href' => elgg_get_simplecache_url('graphics/favicon.svg'),
 	);
 	$head_params['links']['icon-16'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16',
 		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-16.png'),
+		'href' => elgg_get_simplecache_url('graphics/favicon-16.png'),
 	);
 	$head_params['links']['icon-32'] = array(
 		'rel' => 'icon',
 		'sizes' => '32x32',
 		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-32.png'),
+		'href' => elgg_get_simplecache_url('graphics/favicon-32.png'),
 	);
 	$head_params['links']['icon-64'] = array(
 		'rel' => 'icon',
 		'sizes' => '64x64',
 		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-64.png'),
+		'href' => elgg_get_simplecache_url('graphics/favicon-64.png'),
 	);
 	$head_params['links']['icon-128'] = array(
 		'rel' => 'icon',
 		'sizes' => '128x128',
 		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('favicon-128.png'),
+		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
 	);
 
 	return $head_params;
