@@ -359,6 +359,8 @@ Default icon image files have been moved and re-mapped as follows:
  * User icons: ``views/default/icon/user/default/$size.gif``
  * Group icons: ``views/default/icon/group/default/$size.gif`` in the groups plugin
 
+Groups icon files have been moved from ``groups/<guid><size>.jpg`` relative to group owner's directory on filestore to a location prescribed by the entity icon service. Plugins should stop accessing files on the filestore directly and use the entity icon API. Upgrade script is available via admin interface.
+
 From 2.2 to 2.3
 ===============
 
