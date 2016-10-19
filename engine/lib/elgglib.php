@@ -1661,9 +1661,8 @@ function _elgg_favicon_page_handler($segments) {
 	header("Pragma: public", true);
 	header("Cache-Control: public", true);
 
-	// TODO in next 1.x send our default icon
-	//header('Content-Type: image/x-icon');
-	//echo elgg_view('favicon.ico');
+	header('Content-Type: image/x-icon');
+	echo elgg_view('graphics/favicon.ico');
 
 	return true;
 }
