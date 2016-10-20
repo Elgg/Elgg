@@ -22,6 +22,21 @@ function parse_urls($text) {
 }
 
 /**
+ * Takes a string and turns any email addresses into formatted links
+ *
+ * @param string $text The input string
+ *
+ * @return string The output string with formatted links
+ *
+ * @since 2.3
+ */
+function elgg_parse_emails($text) {
+	$linkify = new \Misd\Linkify\Linkify();
+		
+	return $linkify->processEmails($text, ['attr' => ['rel' => 'nofollow']]);
+}
+
+/**
  * Create paragraphs from text with line spacing
  *
  * @param string $string The string
