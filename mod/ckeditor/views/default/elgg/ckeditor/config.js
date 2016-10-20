@@ -13,7 +13,6 @@ define(function(require) {
 		defaultLanguage: 'en',
 		language: elgg.get_language(),
 		skin: 'moono',
-		uiColor: '#EEEEEE',
 		contentsCss: elgg.get_simplecache_url('elgg/wysiwyg.css'),
 		disableNativeSpellChecker: false,
 		disableNativeTableHandles: false,
