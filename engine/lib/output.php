@@ -16,32 +16,9 @@
  */
 function parse_urls($text) {
 
-	// URI specification: http://www.ietf.org/rfc/rfc3986.txt
-	// This varies from the specification in the following ways:
-	//  * Supports non-ascii characters
-	//  * Does not allow parentheses and single quotes
-	//  * Cuts off commas, exclamation points, and periods off as last character
-
-	// @todo this causes problems with <attr = "val">
-	// must be in <attr="val"> format (no space).
-	// By default htmlawed rewrites tags to this format.
-	// if PHP supported conditional negative lookbehinds we could use this:
-	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	$r = preg_replace_callback('/(?<![=\/"\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\']+)/i',
-	function($matches) {
-		$url = $matches[1];
-		$punc = '';
-		$last = substr($url, -1, 1);
-		if (in_array($last, array(".", "!", ",", "(", ")"))) {
-			$punc = $last;
-			$url = rtrim($url, ".!,()");
-		}
-		$urltext = str_replace("/", "/<wbr />", $url);
+	$linkify = new \Misd\Linkify\Linkify();
 		
-		return "<a href=\"$url\" rel=\"nofollow\">$urltext</a>$punc";
-	}, $text);
-
-	return $r;
+	return $linkify->processUrls($text, ['attr' => ['rel' => 'nofollow']]);
 }
 
 /**

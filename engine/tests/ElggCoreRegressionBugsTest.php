@@ -193,41 +193,41 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'no.link.here' =>
 				'no.link.here',
 			'simple link http://example.org test' =>
-				'simple link <a href="http://example.org" rel="nofollow">http:/<wbr />/<wbr />example.org</a> test',
+				'simple link <a href="http://example.org" rel="nofollow">http://example.org</a> test',
 			'non-ascii http://ñew.org/ test' =>
-				'non-ascii <a href="http://ñew.org/" rel="nofollow">http:/<wbr />/<wbr />ñew.org/<wbr /></a> test',
+				'non-ascii <a href="http://ñew.org/" rel="nofollow">http://ñew.org/</a> test',
 
 			// section 2.1
 			'percent encoded http://example.org/a%20b test' =>
-				'percent encoded <a href="http://example.org/a%20b" rel="nofollow">http:/<wbr />/<wbr />example.org/<wbr />a%20b</a> test',
+				'percent encoded <a href="http://example.org/a%20b" rel="nofollow">http://example.org/a%20b</a> test',
 			// section 2.2: skipping single quote and parenthese
 			'reserved characters http://example.org/:/?#[]@!$&*+,;= test' =>
-				'reserved characters <a href="http://example.org/:/?#[]@!$&*+,;=" rel="nofollow">http:/<wbr />/<wbr />example.org/<wbr />:/<wbr />?#[]@!$&*+,;=</a> test',
+				'reserved characters <a href="http://example.org/:/?#[]@!$&*+,;=" rel="nofollow">http://example.org/:/?#[]@!$&*+,;=</a> test',
 			// section 2.3
 			'unreserved characters http://example.org/a1-._~ test' =>
-				'unreserved characters <a href="http://example.org/a1-._~" rel="nofollow">http:/<wbr />/<wbr />example.org/<wbr />a1-._~</a> test',
+				'unreserved characters <a href="http://example.org/a1-._~" rel="nofollow">http://example.org/a1-._~</a> test',
 
 			'parameters http://example.org/?val[]=1&val[]=2 test' =>
-				'parameters <a href="http://example.org/?val[]=1&val[]=2" rel="nofollow">http:/<wbr />/<wbr />example.org/<wbr />?val[]=1&val[]=2</a> test',
+				'parameters <a href="http://example.org/?val[]=1&val[]=2" rel="nofollow">http://example.org/?val[]=1&val[]=2</a> test',
 			'port http://example.org:80/ test' =>
-				'port <a href="http://example.org:80/" rel="nofollow">http:/<wbr />/<wbr />example.org:80/<wbr /></a> test',
+				'port <a href="http://example.org:80/" rel="nofollow">http://example.org:80/</a> test',
 
 			'parentheses (http://www.google.com) test' =>
-				'parentheses (<a href="http://www.google.com" rel="nofollow">http:/<wbr />/<wbr />www.google.com</a>) test',
+				'parentheses (<a href="http://www.google.com" rel="nofollow">http://www.google.com</a>) test',
 			'comma http://elgg.org, test' =>
-				'comma <a href="http://elgg.org" rel="nofollow">http:/<wbr />/<wbr />elgg.org</a>, test',
+				'comma <a href="http://elgg.org" rel="nofollow">http://elgg.org</a>, test',
 			'period http://elgg.org. test' =>
-				'period <a href="http://elgg.org" rel="nofollow">http:/<wbr />/<wbr />elgg.org</a>. test',
+				'period <a href="http://elgg.org" rel="nofollow">http://elgg.org</a>. test',
 			'exclamation http://elgg.org! test' =>
-				'exclamation <a href="http://elgg.org" rel="nofollow">http:/<wbr />/<wbr />elgg.org</a>! test',
+				'exclamation <a href="http://elgg.org" rel="nofollow">http://elgg.org</a>! test',
 
 			'already anchor <a href="http://twitter.com/">twitter</a> test' =>
 				'already anchor <a href="http://twitter.com/">twitter</a> test',
 
 			'ssl https://example.org/ test' =>
-				'ssl <a href="https://example.org/" rel="nofollow">https:/<wbr />/<wbr />example.org/<wbr /></a> test',
+				'ssl <a href="https://example.org/" rel="nofollow">https://example.org/</a> test',
 			'ftp ftp://example.org/ test' =>
-				'ftp <a href="ftp://example.org/" rel="nofollow">ftp:/<wbr />/<wbr />example.org/<wbr /></a> test',
+				'ftp <a href="ftp://example.org/" rel="nofollow">ftp://example.org/</a> test',
 
 			'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>' =>
 				'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>',
@@ -239,7 +239,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 				'unquoted already anchor <a href=http://www.yahoo.com>yahoo</a>',
 
 			'parens in uri http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx' =>
-				'parens in uri <a href="http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx" rel="nofollow">http:/<wbr />/<wbr />thedailywtf.com/<wbr />Articles/<wbr />A-(Long-Overdue)-BuildMaster-Introduction.aspx</a>'
+				'parens in uri <a href="http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx" rel="nofollow">http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx</a>'
 		);
 		foreach ($cases as $input => $output) {
 			$this->assertEqual($output, parse_urls($input));
