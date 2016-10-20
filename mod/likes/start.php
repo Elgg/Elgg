@@ -178,6 +178,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		'item_class' => $hasLiked ? 'hidden' : '',
 		'priority' => 100,
 		'deps' => ['elgg/likes'],
+		'data-elgg-click' => 'likes',
 	));
 	$return[] = ElggMenuItem::factory(array(
 		'name' => 'unlike',
@@ -187,6 +188,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		'item_class' => $hasLiked ? '' : 'hidden',
 		'priority' => 100,
 		'deps' => ['elgg/likes'],
+		'data-elgg-click' => 'likes',
 	));
 
 	// likes count

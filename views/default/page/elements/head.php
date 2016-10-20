@@ -32,8 +32,32 @@ foreach ($stylesheets as $url) {
 <script>
 	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
 	require = function () {
-		// handled in the view "elgg.js"
+		// see module "elgg"
 		_require_queue.push(arguments);
 	};
 	_require_queue = [];
+
+	// see module "elgg/click"
+	elgg_click = {
+		listener: function (e) {
+			var el = e.target;
+			while (!el.hasAttribute('data-elgg-click')) {
+				el = el.parentNode;
+			}
+			var name = el.getAttribute('data-elgg-click');
+			if (name) {
+				if (elgg_click.stops.hasOwnProperty(name)) {
+					return;
+				}
+				elgg_click.clicks[name] = elgg_click.clicks[name] || [];
+				elgg_click.clicks[name].push({
+					target: el
+				});
+				return false;
+			}
+		},
+		clicks: {},
+		stops: {}
+	};
+	document.addEventListener('click', elgg_click.listener, true);
 </script>
