@@ -226,6 +226,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/set_robots', '', 'admin');
 	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
 
+	elgg_register_action('admin/upgrades/upgrade_database_guid_columns', '', 'admin');
 	elgg_register_action('admin/site/regenerate_secret', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
