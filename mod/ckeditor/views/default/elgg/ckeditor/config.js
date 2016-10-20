@@ -13,11 +13,12 @@ define(function(require) {
 		defaultLanguage: 'en',
 		language: elgg.get_language(),
 		skin: 'moono',
-		uiColor: '#EEEEEE',
 		contentsCss: elgg.get_simplecache_url('elgg/wysiwyg.css'),
 		disableNativeSpellChecker: false,
 		disableNativeTableHandles: false,
 		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target',
-		autoGrow_maxHeight: $(window).height() - 100
+		autoGrow_maxHeight: $(window).height() - 100,
+		customConfig: false, //no additional config.js
+		stylesSet: false, //no additional styles.js
 	});
 });

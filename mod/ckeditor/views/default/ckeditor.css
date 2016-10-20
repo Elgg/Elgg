@@ -4,10 +4,31 @@
 	clear: right;
 }
 
+.cke.cke_chrome {	
+	box-shadow: none;
+	border-color: #CCC;
+}
+
+.cke .cke_top,
+.cke .cke_bottom {	
+	background: transparent;
+	border-color: #CCC;
+}
+
+.cke .cke_toolgroup {
+	border-radius: 0px;
+	border-color: #CCC;
+	background: transparent;
+}
+
 .cke_bottom .cke_wordcount {
 	float: left;
 }
 
 .cke_bottom .cke_path {
 	float: right;
+}
+
+.cke_button {
+	background: none !important;
 }
