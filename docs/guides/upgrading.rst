@@ -47,6 +47,16 @@ Removed views
  * ``spacer.gif``
  * ``toptoolbar_background.gif``
  * ``two_sidebar_background.gif``
+ * ``ajax_loader_bw.gif``: use ``graphics/ajax_loader_bw.gif``
+ * ``elgg_logo.png``: use ``graphics/elgg_logo.png``
+ * ``favicon-128.png``: use ``graphics/favicon-128.png``
+ * ``favicon-16.png``: use ``graphics/favicon-16.png``
+ * ``favicon-32.png``: use ``graphics/favicon-32.png``
+ * ``favicon-64.png``: use ``graphics/favicon-64.png``
+ * ``favicon.ico``: use ``graphics/favicon.ico``
+ * ``favicon.svg``: use ``graphics/favicon.svg``
+ * ``friendspicker.png``: use ``graphics/friendspicker.png``
+ * ``walled_garden.jpg``: use ``graphics/walled_garden.jpg``
 
 Removed functions/methods
 -------------------------

@@ -541,7 +541,7 @@ Views
              'rel' => 'icon',
              'sizes' => '16x16',
              'type' => 'image/png',
-		     'href' => elgg_get_simplecache_url('favicon-16.png'),
+		     'href' => elgg_get_simplecache_url('graphics/favicon-16.png'),
           ],
        ],
     ];

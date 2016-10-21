@@ -63,7 +63,7 @@ class SimpleCache {
 	 *
 	 * ```
 	 * $blog_js = $simpleCache->getUrl('blog/save_draft.js');
-	 * $favicon = $simpleCache->getUrl('favicon.ico');
+	 * $favicon = $simpleCache->getUrl('graphics/favicon.ico');
 	 * ```
 	 *
 	 * For backwards compatibility with older versions of Elgg, you can also pass

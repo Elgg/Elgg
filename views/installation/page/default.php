@@ -29,7 +29,7 @@ $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 		<title><?php echo $title; ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="icon" href="<?php echo elgg_get_site_url() . $elggSubdir; ?>_graphics/favicon.ico" />
+		<link rel="icon" href="<?php echo elgg_get_site_url() . $elggSubdir; ?>views/default/graphics/favicon.ico" />
 		<link rel="stylesheet" href="<?php echo elgg_get_site_url() . $elggSubdir; ?>install/css/install.css" type="text/css" />
 		<script src="<?php echo elgg_get_site_url(); ?>vendor/bower-asset/jquery/dist/jquery.min.js"></script>
 		<script src="<?php echo elgg_get_site_url() . $elggSubdir; ?>install/js/install.js"></script>
@@ -37,7 +37,7 @@ $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 	<body>
 		<div class="elgg-page">
 			<header class="elgg-page-header" role="banner">
-				<img src="<?= elgg_get_site_url() . $elggSubdir; ?>_graphics/elgg_logo.png" alt="Elgg" />
+				<img src="<?= elgg_get_site_url() . $elggSubdir; ?>views/default/graphics/elgg_logo.png" alt="Elgg" />
 			</header>
 			<div class="elgg-page-body">
 				<div class="elgg-layout">
