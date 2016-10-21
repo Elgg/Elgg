@@ -5,9 +5,4 @@ return [
 		'notifications/settings' => [],
 		'notifications/subscriptions' => [],
 	],
-	'views' => [
-		'default' => [
-			'notifications/' => __DIR__ . '/graphics',
-		],
-	],
 ];
