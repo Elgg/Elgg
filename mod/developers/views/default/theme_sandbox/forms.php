@@ -45,6 +45,28 @@ $ipsum = elgg_view('developers/ipsum');
 		));
 
 		echo elgg_view_field(array(
+			'#type' => 'checkbox',
+			'name' => 'f4s2',
+			'id' => 'f4s2',
+			'value' => 1,
+			'default' => false,
+			'required' => true,
+			'#label' => 'a (.elgg-input-checkbox) - Field label',
+			'label' => 'a (.elgg-input-checkbox) - Input label',
+			'#help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox',
+		));
+		
+		echo elgg_view_input('checkbox', array(
+			'name' => 'f4s3',
+			'id' => 'f4s3',
+			'value' => 1,
+			'default' => false,
+			'required' => true,
+			'label' => 'a (.elgg-input-checkbox)',
+			'help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox using elgg_view_input',
+		));
+		
+		echo elgg_view_field(array(
 			'#type' => 'checkboxes',
 			'name' => 'f4',
 			'id' => 'f4',
@@ -60,7 +82,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'name' => 'f5',
 			'id' => 'f5',
 			'options' => array(
-				'option 1', 
+				'option 1',
 				'option 2',
 				[
 		            'text' => 'disabled',
