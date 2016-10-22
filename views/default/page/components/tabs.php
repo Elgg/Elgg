@@ -20,6 +20,9 @@
  *                        You can also set the data-ajax-href parameter of the tab,
  *                        which will override the href parameter, in case you want
  *                        to ensure the tab is clickable even before the JS is bootstrapped.
+ *                        Wrapper for the content loaded via ajax can be defined
+ *                        via 'data-ajax-target' parameter, which access a json
+ *                        encoded string of options similar to elgg_format_element()
  *                        <code>
  *                        [
  *                           ['text' => 'Tab 1', 'href' => '/dynamic', 'data-ajax-reload' => true],
@@ -61,31 +64,36 @@ foreach ($tabs as $index => $tab) {
 		$content .= elgg_format_element('div', [
 			'class' => $class,
 			'id' => "{$id}-{$index}",
-		], $tab['content']);
+				], $tab['content']);
 		unset($tab['content']);
 
 		$tab['href'] = "#{$id}-{$index}";
 	} else {
+		if (!isset($tab['data-ajax-target'])) {
+			$tab['data-ajax-target'] = json_encode([
+				'#tag_name' => 'div',
+				'class' => 'elgg-content',
+			]);
+		}
 		if (!isset($tab['data-ajax-reload'])) {
 			$tab['data-ajax-reload'] = true;
 		}
 	}
-	
+
 	$tabs[$index] = $tab;
 }
 
 $tabs = elgg_view('navigation/tabs', [
 	'tabs' => $tabs,
-]);
+		]);
 
 $content = elgg_format_element('div', [
 	'class' => 'elgg-tabs-content',
-], $content);
+		], $content);
 
 $module = elgg_extract('module', $vars, 'tabs');
 unset($vars['module']);
 echo elgg_view_module($module, $tabs, $content, $vars);
-
 ?>
 <script>
 	require(['page/components/tabs']);

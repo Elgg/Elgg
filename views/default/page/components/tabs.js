@@ -18,13 +18,13 @@ define(function (require) {
 
 		var $target = $tab.data('target');
 		if (!$target || !$target.length) {
-			return;
+			return false;
 		}
 
 		$target.siblings().addClass('hidden').removeClass('elgg-state-active');
 		$target.removeClass('hidden').addClass('elgg-state-active');
 
-		$tab.trigger('open');
+		return true;
 	}
 
 	$(document).on('click', '.elgg-tabs-component .elgg-tabs > li > a', function (e) {
@@ -49,7 +49,7 @@ define(function (require) {
 		} else {
 			// Load an ajax tab
 			if (!$target || !$target.length) {
-				var $target = $('<div>').addClass('elgg-content hidden');
+				$target = elgg.format_element($link.data('ajaxTarget') || {});
 				$content.append($target);
 				$tab.data('target', $target);
 			}
@@ -58,6 +58,7 @@ define(function (require) {
 				loadFunc = ajax.path(href, {
 					data: $link.data('ajaxQuery') || {},
 					beforeSend: function () {
+						$target.html('');
 						changeTab($tab);
 						$target.addClass('elgg-ajax-loader');
 					}
@@ -73,8 +74,10 @@ define(function (require) {
 			}
 		}
 
-		$.when(loadFunc).done(function() {
-			changeTab($tab);
+		$.when(loadFunc).done(function () {
+			if (changeTab($tab)) {
+				$tab.trigger('open');
+			}
 		});
 	});
 
