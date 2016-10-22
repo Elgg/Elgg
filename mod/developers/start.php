@@ -28,7 +28,7 @@ function developers_init() {
 	elgg_register_action('developers/entity_explorer_delete', "$action_base/entity_explorer_delete.php", 'admin');
 
 	elgg_register_ajax_view('forms/developers/ajax_demo');
-	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax_demo');
+	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax');
 }
 
 function developers_process_settings() {
