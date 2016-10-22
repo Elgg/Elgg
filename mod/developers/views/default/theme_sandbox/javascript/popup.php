@@ -14,7 +14,7 @@ echo elgg_view_field([
 		],
 		[
 			'#type' => 'button',
-			'class' => 'elgg-button elgg-button-submit mll',
+			'class' => 'elgg-button elgg-button-submit',
 			'rel' => 'popup',
 			'data-href' => "#elgg-popup-test2",
 			'data-position' => json_encode(array(
@@ -22,6 +22,24 @@ echo elgg_view_field([
 				'at' => 'left bottom',
 			)),
 			'value' => 'Load content in a popup',
+		],
+		[
+			'#type' => 'button',
+			'class' => 'elgg-button elgg-button-submit',
+			'rel' => 'popup',
+			'data-ajax-href' => 'ajax/view/theme_sandbox/components/tabs/ajax',
+			'data-ajax-reload' => true,
+			'data-ajax-query' => json_encode([
+				'content' => 'Hello, world',
+			]),
+			'data-ajax-target' => json_encode([
+				'class' => 'theme-sandbox-content-thin elgg-module-popup',
+			]),
+			'data-position' => json_encode(array(
+				'my' => 'left top',
+				'at' => 'left bottom',
+			)),
+			'value' => 'Create new ajax popup',
 		]
 	],
 ]);
