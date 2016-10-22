@@ -16,7 +16,7 @@
  *                        click via 'data-ajax-reload' parameter; by default,
  *                        all tabs will be reloading on subsequent clicks.
  *                        You can pass additional data to the ajax view via
- *                        data-ajax-query attribute (json encoded string).
+ *                        'data-ajax-query' attribute (json encoded string).
  *                        You can also set the data-ajax-href parameter of the tab,
  *                        which will override the href parameter, in case you want
  *                        to ensure the tab is clickable even before the JS is bootstrapped.
@@ -26,7 +26,7 @@
  *                           ['text' => 'Tab 2', 'href' => '/static', 'data-ajax-reload' => false],
  *                           ['text' => 'Tab 3', 'href' => '/static', 'data-ajax-reload' => false, 'data-ajax-query' => json_encode($data)],
  *                           ['text' => 'Tab 3', 'href' => '/page', 'data-ajax-href' => '/ajax/page'],
- *                           ['text' => 'Tab 4', 'href' => 'Tab content'],
+ *                           ['text' => 'Tab 4', 'content' => 'Tab content'],
  *                        ]
  *                        </code>
  */
