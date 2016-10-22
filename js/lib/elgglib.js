@@ -599,3 +599,24 @@ elgg.is_in_object_array = function(object, parent, value) {
 
 	return typeof(object[parent]) != 'undefined' && $.inArray(value, object[parent]) >= 0;
 };
+
+/**
+ * Builds a new jQuery DOM element from an array of attributes
+ *
+ * @param {object} element Element attributes
+ *                         Optional #tag_name that defies the tag name (default: div)
+ *                         Optional #text     that defines the html content of the new element (default: '')
+ * @returns {jQuery}
+ */
+elgg.format_element = function(element) {
+	var tag_name = element['#tag_name'] || 'div';
+	var text = element['#text'] || ''
+	
+	delete element['#tag_name'];
+	delete element['#text'];
+
+	return $('<' + tag_name + '>')
+			.addClass('hidden')
+			.attr(element)
+			.html(text);
+}
