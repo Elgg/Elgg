@@ -18,13 +18,13 @@ define(function (require) {
 
 		var $target = $tab.data('target');
 		if (!$target || !$target.length) {
-			return false;
+			return;
 		}
 
 		$target.siblings().addClass('hidden').removeClass('elgg-state-active');
 		$target.removeClass('hidden').addClass('elgg-state-active');
 
-		return true;
+		$tab.trigger('open');
 	}
 
 	$(document).on('click', '.elgg-tabs-component .elgg-tabs > li > a', function (e) {
@@ -38,16 +38,13 @@ define(function (require) {
 		var href = $link.data('ajaxHref') || $link.attr('href');
 		var $target = $tab.data('target');
 
+		var loadFunc = elgg.nullFunction;
+
 		if (href.indexOf('#') === 0) {
 			// Open inline tab
 			if (!$target || !$target.length) {
 				var $target = $content.find(href);
 				$tab.data('target', $target);
-			}
-
-			if (changeTab($tab)) {
-				$tab.trigger('open');
-				return;
 			}
 		} else {
 			// Load an ajax tab
@@ -57,34 +54,28 @@ define(function (require) {
 				$tab.data('target', $target);
 			}
 
-			if ($tab.data('loaded') && !$link.data('ajaxReload')) {
-				if (changeTab($tab)) {
-					$tab.trigger('open');
-					return;
-				}
+			if (!$tab.data('loaded') || $link.data('ajaxReload')) {
+				loadFunc = ajax.path(href, {
+					data: $link.data('ajaxQuery') || {},
+					beforeSend: function () {
+						changeTab($tab);
+						$target.addClass('elgg-ajax-loader');
+					}
+				}).done(function (output, statusText, jqXHR) {
+					$tab.data('loaded', true);
+					$target.removeClass('elgg-ajax-loader');
+					if (jqXHR.AjaxData.status === -1) {
+						$target.html(elgg.echo('ajax:error'));
+					} else {
+						$target.html(output);
+					}
+				});
 			}
-			
-			ajax.path(href, {
-				data: $link.data('ajaxQuery') || {},
-				beforeSend: function () {
-					changeTab($tab);
-					$target.addClass('elgg-ajax-loader');
-				}
-			}).done(function (output, statusText, jqXHR) {
-				$tab.data('loaded', true);
-				$target.removeClass('elgg-ajax-loader');
-				if (jqXHR.AjaxData.status === -1) {
-					$target.html(elgg.echo('ajax:error'));
-					return;
-				} else {
-					$target.html(output);
-				}
-
-				if (changeTab($tab)) {
-					$tab.trigger('open');
-				}
-			});
 		}
+
+		$.when(loadFunc).done(function() {
+			changeTab($tab);
+		});
 	});
 
 	// Open selected tabs
