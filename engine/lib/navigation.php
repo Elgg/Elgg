@@ -530,23 +530,12 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
-	
+
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
-	$handler = elgg_extract('handler', $params, false);
 
-	// access
-	if (elgg_is_logged_in()) {
-		$access = elgg_view('output/access', array('entity' => $entity));
-		$options = array(
-			'name' => 'access',
-			'text' => $access,
-			'href' => false,
-			'priority' => 100,
-		);
-		$return[] = \ElggMenuItem::factory($options);
-	}
-	
+	$handler = $entity->getSubtype();
+
 	if ($entity->canEdit() && $handler) {
 		// edit link
 		$options = array(
@@ -570,7 +559,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete'),
 			'title' => elgg_echo('delete:this'),
-			'href' => "$action?guid={$entity->getGUID()}",
+			'href' => "$action?guid={$entity->guid}",
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
 		);
@@ -708,7 +697,7 @@ function _elgg_nav_init() {
 		'section' => 'meta',
 	)));
 
-	elgg_register_ajax_view('navigation/menu/user_hover/contents');
+	elgg_register_ajax_view('navigation/menu/entity/contents');
 
 	// Using a view extension to ensure that themes that have replaced the item view
 	// still load the required AMD modules
@@ -729,7 +718,7 @@ function _elgg_nav_init() {
  */
 function _elgg_nav_public_pages($hook_name, $entity_type, $return_value, $params) {
 	if (is_array($return_value)) {
-		$return_value[] = 'navigation/menu/user_hover/contents';
+		$return_value[] = 'navigation/menu/entity/contents';
 	}
 
 	return $return_value;

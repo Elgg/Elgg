@@ -16,13 +16,12 @@ $input = (array) get_input("i", [], false);
 
 // verify MAC
 $data = serialize([$guid, $page_owner_guid, $contexts, $input]);
-
 if (!elgg_build_hmac($data)->matchesToken($mac)) {
 	return;
 }
 
-$user = get_user($guid);
-if (!$user) {
+$entity = get_entity($guid);
+if (!$entity) {
 	return;
 }
 
@@ -32,12 +31,10 @@ elgg_set_config("input", $input);
 elgg_set_page_owner_guid($page_owner_guid);
 
 $params = [
-	"entity" => $user,
-	"username" => $user->username,
-	"name" => $user->name,
+	"entity" => $entity,
 ];
 
-echo elgg_view_menu("user_hover", $params);
+echo elgg_view_menu("entity", $params);
 
 // revert global state
 elgg_set_context_stack($state['contexts']);

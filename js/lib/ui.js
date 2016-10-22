@@ -5,9 +5,6 @@ elgg.ui.init = function () {
 	// iOS Hover Event Class Fix
 	$('.elgg-page').attr("onclick", "return true");
 
-	// add user hover menus
-	elgg.ui.initHoverMenu();
-
 	// if the user clicks a system message (not a link inside one), make it disappear
 	$(document).on('click', '.elgg-system-messages li', function(e) {
 		if (!$(e.target).is('a')) {
@@ -95,90 +92,6 @@ elgg.ui.toggleMenu = function(event) {
 	$(this).siblings().slideToggle('medium');
 	$(this).toggleClass('elgg-menu-closed elgg-menu-opened');
 	event.preventDefault();
-};
-
-/**
- * Initialize the hover menu
- *
- * @param {Object} parent
- * @return void
- */
-elgg.ui.initHoverMenu = function(parent) {
-
-	/**
-	 * For a menu clicked, load the menu into all matching placeholders
-	 *
-	 * @param {String} mac Machine authorization code for the menu clicked
-	 */
-	function loadMenu(mac) {
-		var $all_placeholders = $(".elgg-menu-hover[rel='" + mac + "']");
-
-		// find the <ul> that contains data for this menu
-		var $ul = $all_placeholders.filter('[data-elgg-menu-data]');
-
-		if (!$ul.length) {
-			return;
-		}
-
-		elgg.get('ajax/view/navigation/menu/user_hover/contents', {
-			data: $ul.data('elggMenuData'),
-			success: function(data) {
-				if (data) {
-					// replace all existing placeholders with new menu
-					$all_placeholders.removeClass('elgg-ajax-loader')
-						.html($(data).children());
-				}
-			}
-		});
-	}
-
-	if (!parent) {
-		parent = document;
-	}
-
-	// avatar image menu link
-	$(parent).on('mouseover', ".elgg-avatar", function() {
-		$(this).children(".elgg-icon-hover-menu").show();
-	})
-	.on('mouseout', '.elgg-avatar', function() {
-		$(this).children(".elgg-icon-hover-menu").hide();
-	});
-
-
-	// avatar contextual menu
-	$(document).on('click', ".elgg-avatar > .elgg-icon-hover-menu", function(e) {
-
-		var $icon = $(this);
-
-		var $placeholder = $icon.parent().find(".elgg-menu-hover.elgg-ajax-loader");
-
-		if ($placeholder.length) {
-			loadMenu($placeholder.attr("rel"));
-		}
-
-		// check if we've attached the menu to this element already
-		var $hovermenu = $icon.data('hovermenu') || null;
-
-		if (!$hovermenu) {
-			$hovermenu = $icon.parent().find(".elgg-menu-hover");
-			$icon.data('hovermenu', $hovermenu);
-		}
-
-		require(['elgg/popup'], function(popup) {
-			if ($hovermenu.is(':visible')) {
-				// close hovermenu if arrow is clicked & menu already open
-				popup.close($hovermenu);
-			} else {
-				popup.open($icon, $hovermenu, {
-					'my': 'left top',
-					'at': 'right-15px bottom',
-					'of': $icon.closest(".elgg-avatar"),
-					'collision': 'fit fit'
-				});
-			}
-		});
-	});
-
 };
 
 /**

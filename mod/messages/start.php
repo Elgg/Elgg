@@ -42,7 +42,7 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'messages_set_url');
 
 	// Extend avatar hover menu
-	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'entity', 'messages_user_hover_menu');
 
 	// delete messages sent by a user when user is deleted
 	elgg_register_event_handler('delete', 'user', 'messages_purge');

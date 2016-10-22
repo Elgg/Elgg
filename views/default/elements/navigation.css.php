@@ -492,7 +492,7 @@
 	ENTITY AND ANNOTATION
 *************************************** */
 /* height depends on line height/font size */
-.elgg-menu-entity, .elgg-menu-annotation {
+.elgg-menu-annotation {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
@@ -500,17 +500,17 @@
 	line-height: 16px;
 	height: auto;
 }
-.elgg-menu-entity > li, .elgg-menu-annotation > li {
+.elgg-menu-annotation > li {
 	margin-left: 15px;
 }
-.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
+.elgg-menu-annotation > li > a {
 	color: #AAA;
 }
 /* need to override .elgg-menu-hz */
-.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
+.elgg-menu-annotation > li > a {
 	display: block;
 }
-.elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
+.elgg-menu-annotation > li > span {
 	vertical-align: baseline;
 }
 
@@ -707,4 +707,8 @@
 		margin-left: 0;
 		margin-right: 15px;
 	}
+}
+
+.elgg-listing-summary-menu {
+    float: right;
 }

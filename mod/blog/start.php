@@ -63,9 +63,6 @@ function blog_init() {
 	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
 	elgg_register_action('blog/delete', "$action_path/delete.php");
 
-	// entity menu
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'blog_entity_menu_setup');
-
 	// archive menu
 	elgg_register_plugin_hook_handler('register', 'menu:blog_archive', 'blog_archive_menu_setup');
 
@@ -74,6 +71,8 @@ function blog_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:blog', 'Elgg\Values::getTrue');
+
+	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'blog_set_icon_url');
 }
 
 /**
@@ -197,92 +196,6 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Add particular blog links/info to entity menu
- */
-function blog_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-
-	$entity = $params['entity'];
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler != 'blog') {
-		return $return;
-	}
-
-	if ($entity->status != 'published') {
-		// draft status replaces access
-		foreach ($return as $index => $item) {
-			if ($item->getName() == 'access') {
-				unset($return[$index]);
-			}
-		}
-
-		$status_text = elgg_echo("status:{$entity->status}");
-		$options = array(
-			'name' => 'published_status',
-			'text' => "<span>$status_text</span>",
-			'href' => false,
-			'priority' => 150,
-		);
-		$return[] = ElggMenuItem::factory($options);
-	}
-
-	return $return;
-}
-
-/**
- * Add menu items to the archive menu
- */
-function blog_archive_menu_setup($hook, $type, $return, $params) {
-
-	$page_owner = elgg_get_page_owner_entity();
-	if (empty($page_owner)) {
-		return;
-	}
-	
-	$dates = get_entity_dates('object', 'blog', $page_owner->getGUID());
-	if (!$dates) {
-		return;
-	}
-	
-	$dates = array_reverse($dates);
-	
-	if (elgg_instanceof($page_owner, 'user')) {
-		$url_segment = 'blog/archive/' . $page_owner->username;
-	} else {
-		$url_segment = 'blog/group/' . $page_owner->getGUID() . '/archive';
-	}
-	
-	$years = [];
-	foreach ($dates as $date) {
-		$timestamplow = mktime(0, 0, 0, substr($date,4,2) , 1, substr($date, 0, 4));
-		$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
-	
-		$year = substr($date, 0, 4);
-		if (!in_array($year, $years)) {
-			$return[] = ElggMenuItem::factory([
-				'name' => $year,
-				'text' => $year,
-				'href' => '#',
-			]);
-		}
-		
-		$link = $url_segment . '/' . $timestamplow . '/' . $timestamphigh;
-		$month = trim(elgg_echo('date:month:' . substr($date, 4, 2), ['']));
-		
-		$return[] = ElggMenuItem::factory([
-			'name' => $date,
-			'text' => $month,
-			'href' => $link,
-			'parent_name' => $year,
-		]);
-	}
-
-	return $return;
-}
-
-/**
  * Prepare a notification message about a published blog
  *
  * @param string                          $hook         Hook name
@@ -333,5 +246,23 @@ function blog_run_upgrades($event, $type, $details) {
 		}
 
 		elgg_set_plugin_setting('upgrade_version', 1, 'blogs');
+	}
+}
+
+function blog_set_icon_url($hook, $type, $return, $params) {
+	if ($return) {
+		return;
+	}
+
+	$entity = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params);
+	
+	if ($entity->getSubtype() != 'blog') {
+		return;
+	}
+
+	$owner = $entity->getOwnerEntity();
+	if ($owner) {
+		return $owner->getIconURL($size);
 	}
 }
