@@ -8,7 +8,7 @@ use Elgg\Logger;
 
 /**
  * Persistent, installation-wide key-value storage.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
@@ -35,7 +35,7 @@ class Datalist {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Pool     $cache  Some kind of caching implementation
 	 * @param Database $db     The database
 	 * @param Logger   $logger A logger
@@ -63,7 +63,7 @@ class Datalist {
 
 	/**
 	 * Get the value of a datalist element.
-	 * 
+	 *
 	 * Plugin authors should use elgg_get_config() and pass null for the site GUID.
 	 *
 	 * @internal Datalists are stored in the datalist table.
@@ -93,12 +93,12 @@ class Datalist {
 
 	/**
 	 * Set the value for a datalist element.
-	 * 
+	 *
 	 * Plugin authors should use elgg_save_config() and pass null for the site GUID.
-	 * 
+	 *
 	 * @warning Names should be selected so as not to collide with the names for the
 	 * site config.
-	 * 
+	 *
 	 * @warning Values set here are not available in $CONFIG until next page load.
 	 *
 	 * @param string $name  The name of the datalist
@@ -129,52 +129,6 @@ class Datalist {
 		$this->cache->put($name, $value);
 
 		return $success !== false;
-	}
-
-	/**
-	 * Run a function one time per installation.
-	 *
-	 * If you pass a timestamp as the second argument, it will run the function
-	 * only if (i) it has never been run before or (ii) the timestamp is >=
-	 * the last time it was run.
-	 *
-	 * @warning Functions are determined by their name.  If you change the name of a function
-	 * it will be run again.
-	 *
-	 * @tip Use $timelastupdatedcheck in your plugins init function to perform automated
-	 * upgrades.  Schedule a function to run once and pass the timestamp of the new release.
-	 * This will cause the run once function to be run on all installations.  To perform
-	 * additional upgrades, create new functions for each release.
-	 *
-	 * @warning The function name cannot be longer than 255 characters long due to
-	 * the current schema for the datalist table.
-	 *
-	 * @internal A datalist entry $functioname is created with the value of time().
-	 *
-	 * @param string $functionname         The name of the function you want to run.
-	 * @param int    $timelastupdatedcheck A UNIX timestamp. If time() is > than this,
-	 *                                     this function will be run again.
-	 *
-	 * @return bool
-	 * @todo deprecate
-	 */
-	public function runFunctionOnce($functionname, $timelastupdatedcheck = 0) {
-		$lastupdated = $this->get($functionname);
-		if ($lastupdated) {
-			$lastupdated = (int) $lastupdated;
-		} elseif ($lastupdated !== false) {
-			$lastupdated = 0;
-		} else {
-			// unable to check datalist
-			return false;
-		}
-		if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
-			$functionname();
-			$this->set($functionname, time());
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	/**
