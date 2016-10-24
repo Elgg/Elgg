@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Upgrade object for upgrades that need to be tracked
  * and listed in the admin area.
@@ -6,13 +7,19 @@
  * @todo Expand for all upgrades to be \ElggUpgrade subclasses.
  */
 
+use Elgg\TimeUsing;
+use Elgg\Upgrade\Batch;
+
 /**
  * Represents an upgrade that runs outside of the upgrade.php script.
  *
  * @package Elgg.Admin
  * @access private
  */
-class ElggUpgrade extends \ElggObject {
+class ElggUpgrade extends ElggObject {
+
+	use TimeUsing;
+	
 	private $requiredProperties = array(
 		'id',
 		'title',
@@ -88,16 +95,10 @@ class ElggUpgrade extends \ElggObject {
 	/**
 	 * Return instance of the class that processes the data
 	 *
-	 * @return \Elgg\BatchUpgrade
+	 * @return Batch|false
 	 */
-	public function getUpgrade() {
-		static $upgrade;
-
-		if (!$upgrade) {
-			$upgrade = new $this->class;
-		}
-
-		return $upgrade;
+	public function getBatch() {
+		return _elgg_services()->upgradeLocator->getBatch($this->class);
 	}
 
 	/**
@@ -108,7 +109,7 @@ class ElggUpgrade extends \ElggObject {
 	 */
 	public function setCompletedTime($time = null) {
 		if (!$time) {
-			$time = time();
+			$time = $this->getCurrentTime()->getTimestamp();
 		}
 
 		return $this->completed_time = $time;
@@ -170,4 +171,5 @@ class ElggUpgrade extends \ElggObject {
 
 		return $this->getPrivateSetting($name);
 	}
+
 }

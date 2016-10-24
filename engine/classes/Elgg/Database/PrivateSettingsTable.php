@@ -18,17 +18,25 @@ use Elgg\Cache\PluginSettingsCache;
  */
 class PrivateSettingsTable {
 
-	/** @var Database */
-	private $db;
+	/**
+	 * @var Database
+	 */
+	protected $db;
 
-	/** @var EntityTable */
-	private $entities;
+	/**
+	 * @var EntityTable
+	 */
+	protected $entities;
 
-	/** @var string Name of the database table */
-	private $table;
+	/**
+	 * @var string Name of the database table
+	 */
+	protected $table;
 
-	/** @var PluginSettingsCache cache for settings */
-	private $cache;
+	/**
+	 * @var PluginSettingsCache cache for settings
+	 */
+	protected $cache;
 
 	/**
 	 * Constructor
@@ -304,23 +312,27 @@ class PrivateSettingsTable {
 	 * @return mixed The setting value, or null if does not exist
 	 */
 	public function get($entity_guid, $name) {
+
 		$values = $this->cache->getAll($entity_guid);
 		if (isset($values[$name])) {
 			return $values[$name];
 		}
 
-		$entity_guid = (int) $entity_guid;
-		$name = $this->db->sanitizeString($name);
-
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return null;
+		if (!$this->entities->exists($entity_guid)) {
+			return false;
 		}
 
-		$query = "SELECT value FROM {$this->table}
-			where name = '{$name}' and entity_guid = {$entity_guid}";
-		$setting = $this->db->getDataRow($query);
+		$query = "
+			SELECT value FROM {$this->table}
+			WHERE name = :name
+			AND entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+			':name' => (string) $name,
+		];
+
+		$setting = $this->db->getDataRow($query, null, $params);
 
 		if ($setting) {
 			return $setting->value;
@@ -336,27 +348,30 @@ class PrivateSettingsTable {
 	 *
 	 * @return string[] empty array if no settings
 	 */
-	function getAll($entity_guid) {
-		$entity_guid = (int) $entity_guid;
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return false;
+	public function getAll($entity_guid) {
+		if (!$this->entities->exists($entity_guid)) {
+			return [];
 		}
 
-		$query = "SELECT * FROM {$this->table} WHERE entity_guid = {$entity_guid}";
-		$result = $this->db->getData($query);
+		$query = "
+			SELECT * FROM {$this->table}
+			WHERE entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+		];
+
+		$result = $this->db->getData($query, null, $params);
+
+		$return = [];
 
 		if ($result) {
-			$return = array();
 			foreach ($result as $r) {
 				$return[$r->name] = $r->value;
 			}
-
-			return $return;
 		}
 
-		return array();
+		return $return;
 	}
 
 	/**
@@ -371,14 +386,23 @@ class PrivateSettingsTable {
 		$this->cache->clear($entity_guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$entity_guid = (int) $entity_guid;
-		$name = $this->db->sanitizeString($name);
-		$value = $this->db->sanitizeString($value);
+		if (!$this->entities->exists($entity_guid)) {
+			return false;
+		}
 
-		$result = $this->db->insertData("INSERT into {$this->table}
+		$query = "
+			INSERT into {$this->table}
 			(entity_guid, name, value) VALUES
-			($entity_guid, '$name', '$value')
-			ON DUPLICATE KEY UPDATE value='$value'");
+			(:entity_guid, :name, :value)
+			ON DUPLICATE KEY UPDATE value = :value
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+			':name' => (string) $name,
+			':value' => (string) $value,
+		];
+
+		$result = $this->db->insertData($query, $params);
 
 		return $result !== false;
 	}
@@ -390,23 +414,21 @@ class PrivateSettingsTable {
 	 * @param string $name        The name of the setting
 	 * @return bool
 	 */
-	function remove($entity_guid, $name) {
+	public function remove($entity_guid, $name) {
 		$this->cache->clear($entity_guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$entity_guid = (int) $entity_guid;
-
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return false;
-		}
-
-		$name = $this->db->sanitizeString($name);
-
-		return $this->db->deleteData("DELETE FROM {$this->table}
-			WHERE name = '{$name}'
-			AND entity_guid = {$entity_guid}");
+		$query = "
+			DELETE FROM {$this->table}
+			WHERE name = :name
+			AND entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+			':name' => (string) $name,
+		];
+		
+		return $this->db->deleteData($query, $params);
 	}
 
 	/**
@@ -415,19 +437,19 @@ class PrivateSettingsTable {
 	 * @param int $entity_guid The Entity GUID
 	 * @return bool
 	 */
-	function removeAllForEntity($entity_guid) {
+	public function removeAllForEntity($entity_guid) {
 		$this->cache->clear($entity_guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$entity_guid = (int) $entity_guid;
+		$query = "
+			DELETE FROM {$this->table}
+			WHERE entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+		];
 
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return false;
-		}
-
-		return $this->db->deleteData("DELETE FROM {$this->table}
-			WHERE entity_guid = {$entity_guid}");
+		return $this->db->deleteData($query, $params);
 	}
+
 }

@@ -35,10 +35,9 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function insertRow(stdClass $row) {
-		$attributes = (array) $row;
+	public function insertRow(stdClass $row, array $attributes = []) {
 		$subtype = isset($row->subtype) ? $row->subtype : null;
-		$this->setup(null, $row->type, $subtype, $attributes);
+		$this->setup(null, $row->type, $subtype, array_merge($attributes, (array) $row));
 		return parent::insertRow($row);
 	}
 

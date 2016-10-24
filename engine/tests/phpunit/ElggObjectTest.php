@@ -50,9 +50,6 @@ class ElggObjectTest extends \Elgg\TestCase {
 	 */
 	public function testCanSaveNewObject() {
 
-		// We can't effectively test this without objects table mock
-		$this->markTestSkipped();
-
 		$subtype = 'test_subtype';
 		$subtype_id = add_subtype('object', $subtype);
 
@@ -71,19 +68,17 @@ class ElggObjectTest extends \Elgg\TestCase {
 		$object->setCurrentTime(); // We should be able to match timestamps
 		$now = $object->getCurrentTime()->getTimestamp();
 
-		$guid = _elgg_services()->entityTable->iterate();
-
-		$object->save();
+		$guid = $object->save();
+		$this->assertNotFalse($guid);
 
 		$object = get_entity($guid);
 
 		$this->assertEquals('object', $object->type);
 		$this->assertEquals($subtype_id, $object->subtype);
 
-		// These can't be tested for now, because we are not storing secondary attributes
-		//$this->assertEquals('Foo', $object->title);
-		//$this->assertEquals('Foo', $object->getDisplayName());
-		//$this->assertEquals('Bar', $object->description);
+		$this->assertEquals('Foo', $object->title);
+		$this->assertEquals('Foo', $object->getDisplayName());
+		$this->assertEquals('Bar', $object->description);
 
 		$this->assertEquals($user->guid, $object->getOwnerGUID());
 		$this->assertEquals($user, $object->getOwnerEntity());

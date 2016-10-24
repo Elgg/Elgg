@@ -210,4 +210,14 @@ or click below to view the group's join requests:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Group profiles',
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => '
+		New entity icon API stores icons in a predictable location on the filestore
+		relative to the entity\'s filestore directory. This upgrade aligns
+		will align group plugin with the requirements of the new API.
+	',
 );

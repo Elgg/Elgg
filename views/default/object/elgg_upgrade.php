@@ -4,12 +4,19 @@
  */
 
 $entity = elgg_extract('entity', $vars);
+/* @var $entity \ElggUpgrade */
+
+$batch = $entity->getBatch();
+if (!$batch) {
+	// Something went wrong with class resolution
+	return;
+}
 
 $data = elgg_format_element(
 	'span',
 	array(
 		'class' => 'upgrade-data hidden',
-		'data-total' => $entity->total,
+		'data-total' => $batch->countItems(),
 	)
 );
 
@@ -22,7 +29,7 @@ $timer = elgg_format_element(
 $counter = elgg_format_element(
 	'span',
 	array('class' => 'upgrade-counter float-alt'),
-	"0/$entity->total"
+	"0/{$batch->countItems()}"
 );
 
 $progressbar = elgg_format_element('div', array(
