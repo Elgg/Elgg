@@ -81,10 +81,10 @@
 .elgg-table th {
 	background-color: #DDD;
 }
-.elgg-table tr:nth-child(odd), .elgg-table tr.odd {
+.elgg-table tr:nth-child(odd) {
 	background-color: #FFF;
 }
-.elgg-table tr:nth-child(even), .elgg-table tr.even {
+.elgg-table tr:nth-child(even) {
 	background-color: #F0F0F0;
 }
 .elgg-table-alt {

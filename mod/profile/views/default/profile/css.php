@@ -59,12 +59,7 @@
 #profile-details .wire-status {
 	margin-top: 10px;
 }
-#profile-details .odd {
-	border-bottom: 1px solid #DCDCDC;
-	margin: 0;
-	padding: 5px 0;
-}
-#profile-details .even {
+.profile-fields > div {
 	border-bottom: 1px solid #DCDCDC;
 	margin: 0;
 	padding: 5px 0;

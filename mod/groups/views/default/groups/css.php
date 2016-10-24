@@ -19,8 +19,7 @@
 	padding-top: 0;
 }
 
-.groups-profile-fields .odd,
-.groups-profile-fields .even {
+.groups-profile-fields > div {
 	border-bottom: 1px solid #DCDCDC;
 	padding: 5px 0;
 	margin-bottom: 0;
