@@ -23,6 +23,20 @@ foreach ($periods as $period) {
 	if ($msg) {
 		$msg = nl2br($msg);
 	}
+	
+	if (!empty($msg) && elgg_in_context('widgets')) {
+		$wrapped_message = elgg_format_element('div', [
+			'id' => "cron_{$period}",
+			'class' => 'hidden',
+		], $msg);
+		
+		$msg = elgg_view('output/url', [
+			'href' => "#cron_{$period}",
+			'text' => elgg_echo('show'),
+			'rel' => 'toggle',
+		]) . $wrapped_message;
+	}
+	
 	$table_content .= "<tr><td>$name</td><td>$friendly_time</td><td>$date</td><td>$msg</td><tr>";
 }
 
