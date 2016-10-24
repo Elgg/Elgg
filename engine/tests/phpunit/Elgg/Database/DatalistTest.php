@@ -34,23 +34,6 @@ class DatalistTest extends \Elgg\TestCase {
 
 	}
 
-	public function testCanRunFunctionOnce() {
-
-		$func = __NAMESPACE__ .'\datalist_test_20161608';
-
-		$this->assertTrue(run_function_once($func));
-		$time = datalist_get($func);
-		$this->assertNotEmpty($time);
-
-		$this->assertFalse(run_function_once($func));
-
-		sleep(1);
-		
-		$this->assertTrue(run_function_once($func, time()));
-		$this->assertNotEquals($time, datalist_get($func));
-
-	}
-
 }
 
 function datalist_test_20161608() {}

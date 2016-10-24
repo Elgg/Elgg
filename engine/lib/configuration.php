@@ -61,7 +61,7 @@ function elgg_get_cache_path() {
 
 /**
  * Get the root directory path for this installation
- * 
+ *
  * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg
  * was always at the install root, but as of 2.0, Elgg can be installed as a
  * composer dependency, so you cannot assume that it the install root anymore.
@@ -75,9 +75,9 @@ function elgg_get_root_path() {
 
 /**
  * /path/to/elgg/engine
- * 
+ *
  * No trailing slash
- * 
+ *
  * @return string
  */
 function elgg_get_engine_path() {
@@ -133,7 +133,7 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 
 /**
  * Get the value of a datalist element.
- * 
+ *
  * Plugin authors should use elgg_get_config() and pass null for the site GUID.
  *
  * @internal Datalists are stored in the datalist table.
@@ -150,12 +150,12 @@ function datalist_get($name) {
 
 /**
  * Set the value for a datalist element.
- * 
+ *
  * Plugin authors should use elgg_save_config() and pass null for the site GUID.
- * 
+ *
  * @warning Names should be selected so as not to collide with the names for the
  * site config.
- * 
+ *
  * @warning Values set through datalist_set() are not available in $CONFIG until
  * next page load.
  *
@@ -167,37 +167,6 @@ function datalist_get($name) {
  */
 function datalist_set($name, $value) {
 	return _elgg_services()->datalist->set($name, $value);
-}
-
-/**
- * Run a function one time per installation.
- *
- * If you pass a timestamp as the second argument, it will run the function
- * only if (i) it has never been run before or (ii) the timestamp is >=
- * the last time it was run.
- *
- * @warning Functions are determined by their name.  If you change the name of a function
- * it will be run again.
- *
- * @tip Use $timelastupdatedcheck in your plugins init function to perform automated
- * upgrades.  Schedule a function to run once and pass the timestamp of the new release.
- * This will cause the run once function to be run on all installations.  To perform
- * additional upgrades, create new functions for each release.
- *
- * @warning The function name cannot be longer than 255 characters long due to
- * the current schema for the datalist table.
- *
- * @internal A datalist entry $functioname is created with the value of time().
- *
- * @param string $functionname         The name of the function you want to run.
- * @param int    $timelastupdatedcheck A UNIX timestamp. If time() is > than this,
- *                                     this function will be run again.
- *
- * @return bool
- * @todo deprecate
- */
-function run_function_once($functionname, $timelastupdatedcheck = 0) {
-	return _elgg_services()->datalist->runFunctionOnce($functionname, $timelastupdatedcheck);
 }
 
 /**
@@ -220,17 +189,17 @@ function unset_config($name, $site_guid = 0) {
 
 /**
  * Add or update a config setting.
- * 
+ *
  * Plugin authors should use elgg_set_config().
  *
  * If the config name already exists, it will be updated to the new value.
  *
  * @warning Names should be selected so as not to collide with the names for the
  * datalist (application configuration)
- * 
- * @internal These settings are stored in the dbprefix_config table and read 
+ *
+ * @internal These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
- * 
+ *
  * @internal The value is serialized so we maintain type information.
  *
  * @param string $name      The name of the configuration value
@@ -248,10 +217,10 @@ function set_config($name, $value, $site_guid = 0) {
 
 /**
  * Gets a configuration value
- * 
+ *
  * Plugin authors should use elgg_get_config().
  *
- * @internal These settings are stored in the dbprefix_config table and read 
+ * @internal These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
  *
  * @param string $name      The name of the config value

@@ -72,6 +72,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``set_default_filestore``
  * ``generate_user_password``: Use ``ElggUser::setPassword``
  * ``row_to_elggrelationship``
+ * ``run_function_once``: Use ``Elgg\Upgrade\Batch`` interface
  * ``system_messages``
  * ``notifications_plugin_pagesetup``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
