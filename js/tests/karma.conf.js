@@ -16,7 +16,7 @@ module.exports = function(config) {
 			'js/tests/prepare.js',
 
 			'vendor/bower-asset/jquery/dist/jquery.js',
-			'bower_components/sprintf/src/sprintf.js',
+			
 			'js/lib/elgglib.js',
 			'js/lib/hooks.js',
 			'js/classes/*.js',
