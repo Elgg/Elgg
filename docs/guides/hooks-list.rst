@@ -126,10 +126,6 @@ System hooks
 User hooks
 ==========
 
-**usersettings:save, user**
-	Triggered in the aggregate action to save user settings. Return false prevent sticky
-	forms from being cleared.
-
 **access:collections:write, user**
 	Filters an array of access permissions that the user ``$params['user_id']`` is allowed to save
 	content with. Permissions returned are of the form (id => 'Human Readable Name').

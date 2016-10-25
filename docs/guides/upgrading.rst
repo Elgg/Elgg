@@ -192,6 +192,7 @@ Removed hooks/events
  * Hook **object:notifications, <type>**: Use the hook **send:before, notifications**
  * Hook **output:before, layout**: Use **view_vars, page/layout/<layout_name>**
  * Hook **output:after, layout**: Use **view, page/layout/<layout_name>**
+ * Hook **usersettings:save, user**: Use your own actions to process form actions
 
 Removed forms/actions
 ---------------------

@@ -1,20 +1,17 @@
 <?php
+/**
+ * Provide a way of setting your username
+ */
 
 if (!elgg_is_admin_logged_in()) {
 	// only admins are allowed to change the username
 	return;
 }
 
-$user = elgg_get_page_owner_entity();
-if (!($user instanceof ElggUser)) {
-	return;
-}
+$form = elgg_view_form('usersettings/username', [], $vars);
 
-$body .= elgg_view_field([
-	'#type' => 'text',
-	'#help' => elgg_echo('user:username:help'),
-	'name' => 'username',
-	'value' => $user->username,
+echo elgg_view('core/settings/account/wrapper', [
+	'title' => elgg_echo('username'),
+	'intro' => elgg_echo('user:username:intro'),
+	'content' => $form,
 ]);
-
-echo elgg_view_module('info', elgg_echo('username'), $body);

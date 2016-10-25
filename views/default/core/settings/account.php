@@ -1,11 +1,6 @@
 <?php
 /**
- * Account settings form wrapper
- * 
- * @package Elgg
- * @subpackage Core
+ * Account settings view
+ *
+ * Plugins should extend this view to add sections to the settings account page.
  */
-
-echo elgg_view_form('usersettings/save', array(
-	'class' => 'elgg-form-alt',
-));
