@@ -191,8 +191,13 @@ function discussion_redirect_to_reply($reply_guid, $fallback_guid) {
 	}
 
 	$url = elgg_http_add_url_query_elements($topic->getURL(), [
-			'offset' => $offset,
-		]) . "#elgg-object-{$reply->guid}";
+		'offset' => $offset,
+	]);
+	
+	// make sure there's only one fragment (#)
+	$parts = parse_url($url);
+	$parts['fragment'] = "elgg-object-{$reply->guid}";
+	$url = elgg_http_build_url($parts, false);
 
 	forward($url);
 }
