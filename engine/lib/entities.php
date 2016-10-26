@@ -707,12 +707,11 @@ function elgg_list_registered_entities(array $options = array()) {
  * @param mixed  $entity  Entity
  * @param string $type    Entity type
  * @param string $subtype Entity subtype
- * @param string $class   Class name
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) {
+function elgg_instanceof($entity, $type = null, $subtype = null) {
 	$return = ($entity instanceof \ElggEntity);
 
 	if ($type) {
@@ -722,10 +721,6 @@ function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) 
 
 	if ($subtype) {
 		$return = $return && ($entity->getSubtype() == $subtype);
-	}
-
-	if ($class) {
-		$return = $return && ($entity instanceof $class);
 	}
 
 	return $return;
