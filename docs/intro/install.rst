@@ -136,6 +136,13 @@ Make sure you add a user to the database with all privileges and record
 the database name, username and password. You will need this information
 when installing Elgg.
 
+Set up Cron
+-----------
+
+Elgg uses timed requests to your site to perform background tasks like
+sending notifications or performing database cleanup jobs. You need
+to configure the :doc:`cron</admin/cron>` to be able to use those kind of features.
+
 Visit your Elgg site
 --------------------
 
