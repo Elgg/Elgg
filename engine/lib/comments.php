@@ -113,9 +113,14 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	}
 
 	$url = elgg_http_add_url_query_elements($container->getURL(), [
-			'offset' => $offset,
-		]) . "#elgg-object-{$comment->guid}";
-
+		'offset' => $offset,
+	]);
+	
+	// make sure there's only one fragment (#)
+	$parts = parse_url($url);
+	$parts['fragment'] = "elgg-object-{$comment->guid}";
+	$url = elgg_http_build_url($parts, false);
+	
 	forward($url);
 }
 
@@ -209,7 +214,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 
 /**
  * By default, only authors can edit their comments.
- * 
+ *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
  * @param boolean $return Can the given user edit the given entity?
@@ -273,12 +278,12 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 
 /**
  * Update comment access to match that of the container
- * 
+ *
  * @param string     $event  'update:after'
  * @param string     $type   'all'
  * @param ElggEntity $entity The updated entity
  * @return bool
- * 
+ *
  * @access private
  */
 function _elgg_comments_access_sync($event, $type, $entity) {
