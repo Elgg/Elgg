@@ -175,7 +175,9 @@ The best way to accomplish this is by configuring the path to the file using the
 
     <?php // views.php
     return [
-      'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+        'default' => [
+            'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+        ],
     ];
 
 If you've copied the script directly into your plugin instead of managing it with Composer,
@@ -185,7 +187,9 @@ you can use something like this instead:
 
     <?php // views.php
     return [
-      'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+        'default' => [
+            'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+        ],
     ];
 
 That's it! Elgg will now load this file whenever the "underscore" module is requested.
@@ -582,6 +586,8 @@ Open popup modules will always contain the following data that can be accessed v
 
  * ``trigger`` - jQuery element used to trigger the popup module to open
  * ``position`` - An object defining popup module position that was passed to ``$.position()``
+
+By default, ``target`` element will be appended to ``$('body')`` thus altering DOM hierarchy. If you need to preserve the DOM position of the popup module, you can add ``.elgg-popup-inline`` class to your trigger.
 
 Module ``elgg/widgets``
 -----------------------

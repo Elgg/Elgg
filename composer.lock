@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2b37efbdd8395123e155c1bb89b01e56",
-    "content-hash": "39e4c1634b130ddec5e628d7e353a570",
+    "hash": "53fe988f8d9e86761024d5188101dd99",
+    "content-hash": "0bc885c3ef5b9a6c0150db824d6fe648",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -1227,6 +1227,57 @@
             "time": "2015-12-24 01:37:31"
         },
         {
+            "name": "misd/linkify",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/misd-service-development/php-linkify.git",
+                "reference": "4dbe3e9f966e446a257d0f60a91f39e0b7f4f4d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/misd-service-development/php-linkify/zipball/4dbe3e9f966e446a257d0f60a91f39e0b7f4f4d6",
+                "reference": "4dbe3e9f966e446a257d0f60a91f39e0b7f4f4d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Misd\\Linkify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Wilkinson",
+                    "email": "chris.wilkinson@admin.cam.ac.uk"
+                }
+            ],
+            "description": "Converts URLs and email addresses in text into HTML links",
+            "homepage": "https://github.com/misd-service-development/php-linkify",
+            "keywords": [
+                "convert",
+                "email address",
+                "link",
+                "url"
+            ],
+            "time": "2014-05-12 11:52:18"
+        },
+        {
             "name": "mrclay/minify",
             "version": "2.3.0",
             "source": {
@@ -1327,7 +1378,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/47cd1dcac8df83b6f8a5fe85e3b743d079160643",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/9b2c146291b6a5a1d22a837e86ca77ade3941f47",
                 "reference": "47cd1dcac8df83b6f8a5fe85e3b743d079160643",
                 "shasum": ""
             },
