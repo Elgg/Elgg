@@ -2,32 +2,52 @@
 
 $ipsum = elgg_view('developers/ipsum');
 
-$link = elgg_view('output/url', array(
-	'text' => 'Popup content',
-	'href' => "#elgg-popup-test",
-	'rel' => 'popup',
-		));
+echo elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'fields' => [
+		[
+			'#type' => 'anchor',
+			'text' => 'Popup content',
+			'href' => "#elgg-popup-test",
+			'rel' => 'popup',
+		],
+		[
+			'#type' => 'button',
+			'class' => 'elgg-button elgg-button-submit',
+			'rel' => 'popup',
+			'data-href' => "#elgg-popup-test2",
+			'data-position' => json_encode(array(
+				'my' => 'left top',
+				'at' => 'left bottom',
+			)),
+			'value' => 'Load content in a popup',
+		],
+		[
+			'#type' => 'button',
+			'class' => 'elgg-button elgg-button-submit',
+			'rel' => 'popup',
+			'data-ajax-href' => 'ajax/view/theme_sandbox/components/tabs/ajax',
+			'data-ajax-reload' => true,
+			'data-ajax-query' => json_encode([
+				'content' => 'Hello, world',
+			]),
+			'data-ajax-target' => json_encode([
+				'class' => 'theme-sandbox-content-thin elgg-module-popup',
+			]),
+			'data-position' => json_encode(array(
+				'my' => 'left top',
+				'at' => 'left bottom',
+			)),
+			'value' => 'Create new ajax popup',
+		]
+	],
+]);
 
-echo $link;
 echo elgg_view_module('popup', 'Popup Test', $ipsum, array(
 	'id' => 'elgg-popup-test',
 	'class' => 'hidden theme-sandbox-content-thin',
 ));
-
-
-$button = elgg_format_element(array(
-	'#tag_name' => 'button',
-	'class' => 'elgg-button elgg-button-submit mll',
-	'rel' => 'popup',
-	'data-href' => "#elgg-popup-test2",
-	'data-position' => json_encode(array(
-		'my' => 'left top',
-		'at' => 'left bottom',
-	)),
-	'#text' => 'Load content in a popup',
-));
-
-echo $button;
 
 echo elgg_format_element(array(
 	'#tag_name' => 'div',

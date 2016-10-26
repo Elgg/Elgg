@@ -3,13 +3,21 @@
 /**
  * Object full view header
  *
- * @uses $vars['icon']        HTML for the content icon
- * @uses $vars['summary']     HTML for the content summary
+ * @uses $vars['entity']        Entity
+ * @uses $vars['icon']          HTML for the content icon
+ * @uses $vars['summary']       HTML for the content summary
  * @uses $vars['header_params'] Vars to pass to image block/header wrapper
  */
 
+$entity = elgg_extract('entity', $vars);
 $icon = elgg_extract('icon', $vars);
+
 $summary = elgg_extract('summary', $vars);
+if (!isset($summary)) {
+	$vars['title'] = false;
+	$vars['content'] = false;
+	$summary = elgg_view('object/elements/summary', $vars);
+}
 
 $header_params = (array) elgg_extract('header_params', $vars, []);
 $class = (array) elgg_extract('class', $header_params, []);

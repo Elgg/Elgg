@@ -38,53 +38,47 @@ define(function (require) {
 		var href = $link.data('ajaxHref') || $link.attr('href');
 		var $target = $tab.data('target');
 
+		var loadFunc = elgg.nullFunction;
+
 		if (href.indexOf('#') === 0) {
 			// Open inline tab
 			if (!$target || !$target.length) {
 				var $target = $content.find(href);
 				$tab.data('target', $target);
 			}
-
-			if (changeTab($tab)) {
-				$tab.trigger('open');
-				return;
-			}
 		} else {
 			// Load an ajax tab
 			if (!$target || !$target.length) {
-				var $target = $('<div>').addClass('elgg-content hidden');
+				$target = elgg.format_element($link.data('ajaxTarget') || {});
 				$content.append($target);
 				$tab.data('target', $target);
 			}
 
-			if ($tab.data('loaded') && !$link.data('ajaxReload')) {
-				if (changeTab($tab)) {
-					$tab.trigger('open');
-					return;
-				}
+			if (!$tab.data('loaded') || $link.data('ajaxReload')) {
+				loadFunc = ajax.path(href, {
+					data: $link.data('ajaxQuery') || {},
+					beforeSend: function () {
+						$target.html('');
+						changeTab($tab);
+						$target.addClass('elgg-ajax-loader');
+					}
+				}).done(function (output, statusText, jqXHR) {
+					$tab.data('loaded', true);
+					$target.removeClass('elgg-ajax-loader');
+					if (jqXHR.AjaxData.status === -1) {
+						$target.html(elgg.echo('ajax:error'));
+					} else {
+						$target.html(output);
+					}
+				});
 			}
-			
-			ajax.path(href, {
-				data: $link.data('ajaxQuery') || {},
-				beforeSend: function () {
-					changeTab($tab);
-					$target.addClass('elgg-ajax-loader');
-				}
-			}).done(function (output, statusText, jqXHR) {
-				$tab.data('loaded', true);
-				$target.removeClass('elgg-ajax-loader');
-				if (jqXHR.AjaxData.status === -1) {
-					$target.html(elgg.echo('ajax:error'));
-					return;
-				} else {
-					$target.html(output);
-				}
-
-				if (changeTab($tab)) {
-					$tab.trigger('open');
-				}
-			});
 		}
+
+		$.when(loadFunc).done(function () {
+			if (changeTab($tab)) {
+				$tab.trigger('open');
+			}
+		});
 	});
 
 	// Open selected tabs

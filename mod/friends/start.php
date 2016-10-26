@@ -22,7 +22,7 @@ function elgg_friends_plugin_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_friends_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_collections_page_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_friends_setup_user_hover_menu');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_friends_plugin_init');

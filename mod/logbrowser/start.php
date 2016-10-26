@@ -12,7 +12,7 @@ elgg_register_event_handler('init', 'system', 'logbrowser_init');
  */
 function logbrowser_init() {
 	
-	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'logbrowser_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'logbrowser_user_hover_menu');
 	
 	elgg_register_admin_menu_item('administer', 'logbrowser', 'administer_utilities');
 }

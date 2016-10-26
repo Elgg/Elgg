@@ -232,7 +232,7 @@ class Inspector {
 
 		// get JIT menu items
 		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems
-		$jit_menus = array('annotation', 'entity', 'login', 'longtext', 'owner_block', 'user_hover', 'widget');
+		$jit_menus = array('annotation', 'entity', 'login', 'longtext', 'owner_block', 'widget');
 
 		// create generic ElggEntity, ElggAnnotation, ElggUser, ElggWidget
 		$annotation = new \ElggAnnotation();
@@ -260,7 +260,6 @@ class Inspector {
 			$params = array('entity' => $entity, 'annotation' => $annotation, 'user' => $user);
 			switch ($type){
 				case 'owner_block':
-				case 'user_hover':
 					$params['entity'] = $user;
 					break;
 				case 'widget':

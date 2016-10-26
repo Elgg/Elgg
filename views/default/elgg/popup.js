@@ -5,7 +5,9 @@
  * @module elgg/popup
  * @since 2.2
  */
-define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
+define('elgg/popup', ['elgg', 'jquery', 'elgg/Ajax', 'jquery-ui'], function (elgg, $, Ajax) {
+
+	var ajax = new Ajax(false);
 
 	var popup = {
 		/**
@@ -73,17 +75,30 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 				return;
 			}
 
+			var href, targetSelector;
+
 			if (typeof $target === 'undefined') {
-				var href = $trigger.attr('href') || $trigger.data('href') || '';
-				var targetSelector = elgg.getSelectorFromUrlFragment(href);
-				$target = $(targetSelector);
+				href = $trigger.attr('href') || $trigger.data('href') || $trigger.data('ajaxHref') || '';
+				targetSelector = elgg.getSelectorFromUrlFragment(href);
+				if (targetSelector) {
+					$target = $(targetSelector);
+				} else {
+					$target = elgg.format_element($trigger.data('ajaxTarget') || {});
+					$target.uniqueId().addClass('hidden').appendTo('body');
+					targetSelector = '#' + $target.attr('id');
+				}
 			} else {
 				$target.uniqueId();
-				var targetSelector = '#' + $target.attr('id');
+				targetSelector = '#' + $target.attr('id');
+				href = targetSelector;
 			}
 
 			if (!$target.length) {
 				return;
+			}
+
+			if (!$trigger.data('ajaxReload')) {
+				$trigger.attr('href', href);
 			}
 
 			// emit a hook to allow plugins to position and control popups
@@ -116,23 +131,44 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 				popup.close($target);
 				return;
 			}
-			
+
 			popup.close(); // close any open popup modules
 
 			$target.data('trigger', $trigger); // used to remove elgg-state-active class when popup is closed
 			$target.data('position', position); // used to reposition the popup module on window manipulations
 
-			// @todo: in 3.0, do not append to 'body' and use fixed positioning with z-indexes instead
-			// @todo: use css transitions instead of $.fadeOut() to avoid collisions
-			// (with fading the DOM element is considered visible until animation is complete)
-			$target.appendTo('body')
-					.fadeIn()
+			if (!$trigger.is('.elgg-popup-inline')) {
+				$target.appendTo('body');
+			}
+
+			$target.fadeIn()
 					.addClass('elgg-state-active elgg-state-popped')
 					.position(position);
 
 			$trigger.addClass('elgg-state-active');
 
-			$target.trigger('open');
+			var loadFunc = elgg.nullFunction;
+			if (href.indexOf('#') !== 0) {
+				var data = $trigger.data('ajaxQuery') || {};
+				loadFunc = ajax.path(href, {
+					data: data,
+					beforeSend: function () {
+						$target.addClass('elgg-ajax-loader');
+					}
+				}).done(function (output, statusText, jqXHR) {
+					$target.data('loaded', true);
+					$target.removeClass('elgg-ajax-loader');
+					if (jqXHR.AjaxData.status === -1) {
+						$target.html(elgg.echo('ajax:error'));
+					} else {
+						$target.html(output);
+					}
+				});
+			}
+
+			$.when(loadFunc).done(function () {
+				$target.trigger('open');
+			});
 		},
 		/**
 		 * Hides a set of $targets. If not defined, closes all visible popup modules.
@@ -153,15 +189,21 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 					return;
 				}
 
-				var $trigger = $target.data('trigger');
-				if ($trigger.length) {
-					$trigger.removeClass('elgg-state-active');
-				}
+				$.when($target.fadeOut('fast')).done(function () {
+					$target.removeClass('elgg-state-active elgg-state-popped');
 
-				// @todo: use css transitions instead of $.fadeOut()
-				$target.fadeOut().removeClass('elgg-state-active elgg-state-popped');
+					var $trigger = $target.data('trigger');
+					if ($trigger.length) {
+						$trigger.removeClass('elgg-state-active');
+						if ($trigger.data('ajaxReload')) {
+							$target.remove();
+						}
+					}
 
-				$target.trigger('close');
+					console.log($target.trigger('close'));
+
+					
+				});
 			});
 		}
 	};

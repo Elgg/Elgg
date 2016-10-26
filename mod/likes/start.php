@@ -20,7 +20,7 @@ function likes_init() {
 
 	// registered with priority < 500 so other plugins can remove likes
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
+	elgg_register_plugin_hook_handler('register', 'menu:list_item', 'likes_entity_menu_setup', 400);
 	elgg_register_plugin_hook_handler('permissions_check', 'annotation', 'likes_permissions_check');
 	elgg_register_plugin_hook_handler('permissions_check:annotate', 'all', 'likes_permissions_check_annotate', 0);
 	
@@ -88,8 +88,9 @@ function likes_permissions_check_annotate($hook, $type, $return, $params) {
  * Add likes to entity menu at end of the menu
  */
 function likes_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
+
+	if (!elgg_extract('full_view', $params)) {
+		return;
 	}
 
 	$entity = elgg_extract('entity', $params);

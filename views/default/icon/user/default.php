@@ -7,7 +7,6 @@
  *
  * @uses $vars['entity']     The user entity. If none specified, the current user is assumed.
  * @uses $vars['size']       The size - tiny, small, medium or large. (medium)
- * @uses $vars['use_hover']  Display the hover menu? (true)
  * @uses $vars['use_link']   Wrap a link around image? (true)
  * @uses $vars['class']      Optional class added to the .elgg-avatar div
  * @uses $vars['img_class']  Optional CSS class added to img
@@ -52,13 +51,6 @@ if (isset($vars['img_class'])) {
 	$img_class = $vars['img_class'];
 }
 
-
-$use_hover = elgg_extract('use_hover', $vars, true);
-if (isset($vars['hover'])) {
-	// only 1.8.0 was released with 'hover' as the key
-	$use_hover = $vars['hover'];
-}
-
 $icon = elgg_view('output/img', array(
 	'src' => $user->getIconURL($size),
 	'alt' => $name,
@@ -66,22 +58,9 @@ $icon = elgg_view('output/img', array(
 	'class' => $img_class,
 ));
 
-$show_menu = $use_hover && (elgg_is_admin_logged_in() || !$user->isBanned());
-
 ?>
 <div class="<?php echo $class; ?>">
 <?php
-
-if ($show_menu) {
-	$params = array(
-		'entity' => $user,
-		'username' => $username,
-		'name' => $name,
-	);
-	echo elgg_view_icon('hover-menu');
-	echo elgg_view('navigation/menu/user_hover/placeholder', array('entity' => $user));
-}
-
 if ($use_link) {
 	$class = elgg_extract('link_class', $vars, '');
 	$url = elgg_extract('href', $vars, $user->getURL());

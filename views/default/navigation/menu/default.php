@@ -19,8 +19,9 @@ if (isset($vars['class'])) {
 	$class .= " {$vars['class']}";
 }
 
+$section = [];
 foreach ($vars['menu'] as $section => $menu_items) {
-	echo elgg_view('navigation/menu/elements/section', array(
+	$sections[$section] = elgg_view('navigation/menu/elements/section', array(
 		'items' => $menu_items,
 		'class' => "$class elgg-menu-{$vars['name']}-$section",
 		'section' => $section,
@@ -28,4 +29,14 @@ foreach ($vars['menu'] as $section => $menu_items) {
 		'show_section_headers' => $headers,
 		'item_class' => $item_class,
 	));
+}
+
+if (sizeof($sections) > 1) {
+	echo "<ul class=\"$class\">";
+	foreach ($sections as $menu) {
+		echo '<li>' . $menu . '</li>';
+	}
+	echo '</ul>';
+} else {
+	echo implode('', $sections);
 }
