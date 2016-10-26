@@ -27,8 +27,6 @@ function _elgg_cron_init() {
 		'weekly',
 		'monthly',
 		'yearly',
-		// reboot is deprecated and probably does not work
-		'reboot',
 	));
 
 	elgg_register_admin_menu_item('administer', 'cron', 'statistics');
@@ -65,7 +63,6 @@ function _elgg_cron_run() {
 		'weekly' => 604800,
 		'monthly' => 2628000,
 		'yearly' => 31536000,
-		'reboot' => 31536000,
 	);
 
 	foreach ($periods as $period => $interval) {

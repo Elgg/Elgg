@@ -28,11 +28,6 @@ Currently, Elgg supports the following hooks:
  * ``monthly`` - Run every month
  * ``yearly`` - Run every year
 
-.. note::
-
-	``reboot`` cron hook has been deprecated and should not be used
-
-
 How does it work?
 =================
 
