@@ -800,7 +800,8 @@ To go to the site, click here:
 	'admin:statistics:label:admins'=>"Admins",
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
-	'admin:statistics:label:version:version' => "Version",
+	'admin:statistics:label:version:version' => "Database Version",
+	'admin:statistics:label:version:code' => "Code Version",
 
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Web Server',
