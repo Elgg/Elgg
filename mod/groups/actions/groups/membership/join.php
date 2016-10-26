@@ -43,6 +43,8 @@ if ($user && ($group instanceof ElggGroup)) {
 		} else {
 			register_error(elgg_echo("groups:cantjoin"));
 		}
+	} elseif (check_entity_relationship($user->guid, 'membership_request', $group->guid)) {
+		register_error(elgg_echo("groups:joinrequest:exists"));
 	} else {
 		add_entity_relationship($user->guid, 'membership_request', $group->guid);
 
