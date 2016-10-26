@@ -59,9 +59,8 @@ $type_str = NULL;
 
 if (array_key_exists('type', $vars['params']) && array_key_exists('subtype', $vars['params'])) {
 	$type_str_tmp = "item:{$vars['params']['type']}:{$vars['params']['subtype']}";
-	$type_str_echoed = elgg_echo($type_str_tmp);
-	if ($type_str_echoed != $type_str_tmp) {
-		$type_str = $type_str_echoed;
+	if (elgg_language_key_exists($type_str_tmp)) {
+		$type_str = elgg_echo($type_str_tmp);
 	}
 }
 
@@ -74,11 +73,9 @@ if (!$type_str) {
 }
 
 // allow overrides for titles
-$search_type_str = elgg_echo("search_types:{$vars['params']['search_type']}");
-if (array_key_exists('search_type', $vars['params'])
-	&& $search_type_str != "search_types:{$vars['params']['search_type']}") {
-
-	$type_str = $search_type_str;
+$search_type = elgg_extract('search_type', $vars['params']);
+if ($search_type && elgg_language_key_exists("search_types:{$search_type}")) {
+	$type_str = elgg_echo("search_types:{$search_type}");
 }
 
 if ($show_more) {
