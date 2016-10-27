@@ -12,6 +12,13 @@ use \Elgg\Upgrade\Result;
 interface Batch {
 
 	/**
+	 * Checks whether there are items that need to be upgraded.
+	 *
+	 * @return boolean
+	 */
+	public function isRequired();
+
+	/**
 	 * Runs upgrade on a single batch of items
 	 *
 	 * @param Result $result Object that holds results of the batch

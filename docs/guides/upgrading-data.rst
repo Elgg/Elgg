@@ -59,6 +59,24 @@ The basic structure of the class is the following:
 		const VERSION = 2016120300;
 		
 		/**
+		 * Check whether the upgrade is needed
+		 *
+		 * @return bool
+		 */
+		public function isRequired() {
+		
+		}
+		
+		/**
+		 * Count the amount of items that need to be processed
+		 *
+		 * @return int
+		 */
+		public function countItems() {
+		
+		}
+		
+		/**
 		 * Run the upgrade
 		 *
 		 * @param Result $result
@@ -98,6 +116,12 @@ of eight digits and is in format ``yyyymmddnn`` where:
 
 Class methods
 ~~~~~~~~~~~~~
+
+isRequired()
+^^^^^^^^^^^^
+
+Checks the database or the dataroot whether there are items that
+need to be upgraded.
 
 countItems()
 ^^^^^^^^^^^^

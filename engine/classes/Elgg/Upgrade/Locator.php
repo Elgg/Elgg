@@ -70,7 +70,7 @@ class Locator {
 
 	/**
 	 * Creates new ElggUpgrade instance from plugin's static config
-	 * 
+	 *
 	 * @param \ElggPlugin $plugin Plugin
 	 * @return \ElggUpgrade[]
 	 */
@@ -108,7 +108,7 @@ class Locator {
 			$object->title = "{$plugin_id}:upgrade:{$version}:title";
 			$object->description = "{$plugin_id}:upgrade:{$version}:description";
 			$object->offset = 0;
-			
+
 			try {
 				$object->save();
 				$upgrades[] = $object;
@@ -143,6 +143,10 @@ class Locator {
 		// Version must be in format yyyymmddnn
 		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
 			$this->logger->error("Upgrade $class defines an invalid upgrade version: $version");
+			return false;
+		}
+
+		if (!$batch->isRequired()) {
 			return false;
 		}
 

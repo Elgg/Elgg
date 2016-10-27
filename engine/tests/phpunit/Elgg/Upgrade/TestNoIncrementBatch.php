@@ -3,11 +3,15 @@
 namespace Elgg\Upgrade;
 
 class TestNoIncrementBatch implements \Elgg\Upgrade\Batch {
-	
+
 	const INCREMENT_OFFSET = false;
 	const VERSION = 2016101901;
 
 	private $count = 100;
+
+	public function isRequired() {
+		return true;
+	}
 
 	public function countItems() {
 		return $this->count;
