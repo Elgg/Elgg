@@ -25,6 +25,7 @@ Removed views
  * ``page/layouts/walled_garden``: use ``page/layouts/default``
  * ``page/layouts/walled_garden/cancel_button``
  * ``page/layouts/two_column_left_sidebar``
+ * ``page/layouts/widgets/add_panel``
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
  * ``notifications/subscriptions/personal``
@@ -267,6 +268,14 @@ If handlers were registered with the same priority, these are called in the orde
 
 To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
 priority. Some of these handlers will most likely be called in a different order.
+
+Widget layout related changes
+-----------------------------
+
+The widget layout usage has been changed. Content is no longer drawn as part of the layout. You need to wrap you content
+in another layout and use the widgets layout as part of your content. If you want some special content to show if there
+are no widgets in the layout, you can now pass a special ``no_widgets`` parameter (as String or as a Closure).
+
 
 HtmLawed is no longer a plugin
 ------------------------------

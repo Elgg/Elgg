@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Elgg widget edit settings
  *
@@ -25,6 +25,9 @@ if (!$custom_form_section && !$access) {
 }
 
 $hidden = elgg_view('input/hidden', array('name' => 'guid', 'value' => $widget->guid));
+if (elgg_in_context('default_widgets')) {
+	$hidden .= elgg_view('input/hidden', array('name' => 'default_widgets', 'value' => 1));
+}
 $submit = elgg_view('input/submit', array('value' => elgg_echo('save')));
 
 $body = <<<___END
