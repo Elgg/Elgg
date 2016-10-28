@@ -1,13 +1,12 @@
 <?php
 /**
  * Profile layout
- * 
- * @uses $vars['entity']  The user
  */
 
-// main profile page
-$params = array(
-	'content' => elgg_view('profile/wrapper'),
-	'num_columns' => 3,
-);
-echo elgg_view_layout('widgets', $params);
+$entity = elgg_extract('entity', $vars);
+
+echo elgg_view('profile/wrapper');
+echo elgg_view_layout('widgets', [
+	'num_columns' => 2,
+	'owner_guid' => $entity->guid,
+]);
