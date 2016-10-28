@@ -6,21 +6,18 @@ elgg_gatekeeper();
 // Set context and title
 elgg_set_context('dashboard');
 elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-$title = elgg_echo('dashboard');
 
-// wrap intro message in a div
-$intro_message = elgg_view('dashboard/blurb');
-
-$params = array(
-	'content' => $intro_message,
+$content = elgg_view_layout('widgets', [
 	'num_columns' => 3,
 	'show_access' => false,
-);
-$widgets = elgg_view_layout('widgets', $params);
+	'no_widgets' => function () {
+		echo elgg_view('dashboard/blurb');
+	},
+]);
 
-$body = elgg_view_layout('one_column', array(
+$body = elgg_view_layout('one_column', [
 	'title' => false,
-	'content' => $widgets
-));
+	'content' => $content,
+]);
 
-echo elgg_view_page($title, $body);
+echo elgg_view_page(elgg_echo('dashboard'), $body);
