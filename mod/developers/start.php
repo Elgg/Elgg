@@ -172,6 +172,7 @@ function developers_wrap_views($hook, $type, $result, $params) {
 		'page/default',
 		'page/admin',
 		'page/elements/head',
+		'page/elements/html',
 	);
 
 	$view = $params['view'];
@@ -190,7 +191,15 @@ function developers_wrap_views($hook, $type, $result, $params) {
 	}
 
 	if ($result) {
-		$result = "<!-- developers:begin $view -->$result<!-- developers:end $view -->";
+		$url = elgg_normalize_url("admin/develop_tools/inspect?inspect_type=Views#z" . md5($view));
+		$anchor = elgg_view('output/url', [
+			'href' => $url,
+			'text' => $view,
+			'rel' => 'developers',
+			'hidden' => true,
+			'style' => 'display:none!important;',
+		]);
+		$result = "<!-- developers:begin $view -->$anchor$result<!-- developers:end $view -->";
 	}
 
 	return $result;
