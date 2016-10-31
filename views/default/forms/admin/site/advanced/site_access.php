@@ -6,7 +6,7 @@
 // new user registration
 $body = elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('installation:registration:label'),
+	'label' => elgg_echo('installation:registration:label'),
 	'#help' => elgg_echo('installation:registration:description'),
 	'name' => 'allow_registration',
 	'checked' => (bool)elgg_get_config('allow_registration'),
@@ -15,7 +15,7 @@ $body = elgg_view_field([
 // walled garden
 $body .= elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('installation:walled_garden:label'),
+	'label' => elgg_echo('installation:walled_garden:label'),
 	'#help' => elgg_echo('installation:walled_garden:description'),
 	'name' => 'walled_garden',
 	'checked' => (bool)elgg_get_config('walled_garden'),

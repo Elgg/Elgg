@@ -52,7 +52,7 @@ echo elgg_view_field(array(
 	'name' => 'autogen_password',
 	'value' => 1,
 	'default' => false,
-	'#label' => elgg_echo('autogen_password_option'),
+	'label' => elgg_echo('autogen_password_option'),
 	'checked' => (bool) $autogen_password,
 ));
 
@@ -77,7 +77,7 @@ echo elgg_view_field(array(
 	'name' => 'admin',
 	'value' => 1,
 	'default' => false,
-	'#label' => elgg_echo('admin_option'),
+	'label' => elgg_echo('admin_option'),
 	'checked' => $admin,
 ));
 
