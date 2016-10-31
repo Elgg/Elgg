@@ -1122,7 +1122,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'interval:weekly' => 'Weekly',
 	'interval:monthly' => 'Monthly',
 	'interval:yearly' => 'Yearly',
-	'interval:reboot' => 'On reboot',
 
 /**
  * System settings
