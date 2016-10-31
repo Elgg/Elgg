@@ -493,7 +493,13 @@ class Application {
 		define('UPGRADING', 'upgrading');
 
 		self::start();
-
+		
+		// check security settings
+		if (get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
+			// only admin's or users with a valid token can run upgrade.php
+			elgg_signed_request_gatekeeper();
+		}
+		
 		$site_url = elgg_get_config('url');
 		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 

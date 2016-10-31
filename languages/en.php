@@ -1,4 +1,5 @@
 <?php
+use Symfony\Component\Yaml\Tests\A;
 return array(
 /**
  * Sites
@@ -633,6 +634,88 @@ three sections:
 
 	'admin:options' => 'Admin options',
 
+	'admin:administer_security' => 'Security',
+	'admin:administer_security:settings' => 'Settings',
+	'admin:administer_security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
+	'admin:administer_security:settings:label:hardening' => 'Hardening',
+	'admin:administer_security:settings:label:notifications' => 'Notifications',
+	
+	'admin:administer_security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
+	'admin:administer_security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
+	
+	'admin:administer_security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
+	'admin:administer_security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
+	
+	'admin:administer_security:settings:notify_user_ban' => 'Notify the user when thier account gets (un)banned',
+	'admin:administer_security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
+	
+	'admin:administer_security:settings:protect_upgrade' => 'Protect upgrade.php',
+	'admin:administer_security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
+	'admin:administer_security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
+	
+	'admin:administer_security:settings:protect_cron' => 'Protect the /cron URLs',
+	'admin:administer_security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
+	'admin:administer_security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
+	'admin:administer_security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
+	
+	'admin:administer_security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
+	'admin:administer_security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
+	
+	'admin:administer_security:settings:email_require_password' => 'Require password to change email address',
+	'admin:administer_security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+	
+	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
+	'admin:notification:make_admin:admin:body' => 'Hi %s,
+
+%s made %s a site administrator of %s.
+
+To view the profile of the new administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
+	'admin:notification:make_admin:user:body' => 'Hi %s,
+
+%s made you a site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
+	'admin:notification:remove_admin:admin:body' => 'Hi %s,
+
+%s removed %s a site administrator of %s.
+
+To view the profile of the old administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
+	'admin:notification:remove_admin:user:body' => 'Hi %s,
+
+%s removed you as site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'user:notification:ban:subject' => 'Your account on %s was banned',
+	'user:notification:ban:body' => 'Hi %s,
+
+Your account on %s was banned.
+
+To go to the site, click here:
+%s',
+	
+	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
+	'user:notification:unban:body' => 'Hi %s,
+
+Your account on %s is no longer banned. You can use the site again.
+
+To go to the site, click here:
+%s',
+	
 /**
  * Plugins
  */
@@ -1241,9 +1324,12 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'email:settings' => "Email settings",
 	'email:address:label' => "Email address",
+	'email:address:password' => "Password",
+	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
-	'email:save:success' => "New email address saved. Verification is requested.",
+	'email:save:success' => "New email address saved.",
 	'email:save:fail' => "New email address could not be saved.",
+	'email:save:fail:password' => "The password doesn't match your current password, could not change your email address",
 
 	'friend:newfriend:subject' => "%s has made you a friend!",
 	'friend:newfriend:body' => "%s has made you a friend!

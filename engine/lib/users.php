@@ -844,6 +844,119 @@ function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
 }
 
 /**
+ * Add the user to the subscribers when (un)banning the account
+ *
+ * @param string $hook         'get'
+ * @param string $type         'subscribers'
+ * @param array  $return_value current subscribers
+ * @param arary  $params       supplied params
+ *
+ * @return void|array
+ */
+function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $params) {
+	
+	if (!get_config('security_notify_user_ban')) {
+		return;
+	}
+	
+	$event = elgg_extract('event', $params);
+	if (!($event instanceof \Elgg\Notifications\Event)) {
+		return;
+	}
+	
+	if ($event->getAction() !== 'unban') {
+		return;
+	}
+	
+	$user = $event->getObject();
+	if (!($user instanceof \ElggUser)) {
+		return;
+	}
+	
+	$return_value[$user->getGUID()] = ['email'];
+	
+	return $return_value;
+}
+
+/**
+ * Send a notification to the user that the account was banned
+ *
+ * Note: this can't be handled by the delayed notification system as it won't send notifications to banned users
+ *
+ * @param string    $event 'ban'
+ * @param string    $type  'user'
+ * @param \ElggUser $user  the user being banned
+ *
+ * @return void
+ */
+function _elgg_user_ban_notification($event, $type, $user) {
+	
+	if (!get_config('security_notify_user_ban')) {
+		return;
+	}
+	
+	if (!($user instanceof \ElggUser)) {
+		return;
+	}
+	
+	$site = elgg_get_site_entity();
+	
+	$subject = elgg_echo('user:notification:ban:subject', [$site->name], $language);
+	$body = elgg_echo('user:notification:ban:body', [
+		$recipient->name,
+		$site->name,
+		$site->getURL(),
+	], $language);
+	
+	$params = [
+		'action' => 'ban',
+		'object' => $user,
+	];
+	
+	notify_user($user->getGUID(), $site->getGUID(), $subject, $body, $params, ['email']);
+}
+
+/**
+ * Prepare the notification content for the user being unbanned
+ *
+ * @param string                           $hook         'prepare'
+ * @param string                           $type         'notification:unban:user:'
+ * @param \Elgg\Notifications\Notification $return_value current notification content
+ * @param array                            $params       supplied params
+ *
+ * @return void|\Elgg\Notifications\Notification
+ */
+function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $params) {
+	
+	if (!($return_value instanceof \Elgg\Notifications\Notification)) {
+		return;
+	}
+	
+	$recipient = elgg_extract('recipient', $params);
+	$object = elgg_extract('object', $params);
+	$language = elgg_extract('language', $params);
+	
+	if (!($recipient instanceof ElggUser) || !($object instanceof ElggUser)) {
+		return;
+	}
+	
+	if ($recipient->getGUID() !== $object->getGUID()) {
+		return;
+	}
+	
+	$site = elgg_get_site_entity();
+	
+	$return_value->subject = elgg_echo('user:notification:unban:subject', [$site->name], $language);
+	$return_value->body = elgg_echo('user:notification:unban:body', [
+		$recipient->name,
+		$site->name,
+		$site->getURL(),
+	], $language);
+	
+	return $return_value;
+}
+
+/**
  * Users initialisation function, which establishes the page handler
  *
  * @return void
@@ -882,6 +995,12 @@ function users_init() {
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
+	
+	elgg_register_notification_event('user', '', ['unban']);
+	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_ban_action');
+	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
+	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:', '_elgg_user_prepare_unban_notification');
+	
 }
 
 /**

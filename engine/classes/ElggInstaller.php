@@ -55,7 +55,7 @@ class ElggInstaller {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -959,7 +959,7 @@ class ElggInstaller {
 
 	/**
 	 * Indicates whether the webserver can add settings.php on its own or not.
-	 * 
+	 *
 	 * @param array &$report The requirements report object
 	 *
 	 * @return bool
@@ -1017,7 +1017,7 @@ class ElggInstaller {
 	
 	/**
 	 * Returns the path to the root settings.php file.
-	 * 
+	 *
 	 * @return string
 	 */
 	private function getSettingsPath() {
@@ -1357,7 +1357,7 @@ class ElggInstaller {
 	 *
 	 * @param array &$submissionVars Submitted vars
 	 * @param array $formVars        Variables in the form
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function createDataDirectory(&$submissionVars, $formVars) {
@@ -1506,6 +1506,10 @@ class ElggInstaller {
 		_elgg_services()->configTable->set('walled_garden', FALSE, $site->getGUID());
 		_elgg_services()->configTable->set('allow_user_default_access', '', $site->getGUID());
 		_elgg_services()->configTable->set('default_limit', 10, $site->getGUID());
+		_elgg_services()->configTable->set('security_protect_upgrade', true, $site->getGUID());
+		_elgg_services()->configTable->set('security_notify_admins', true, $site->getGUID());
+		_elgg_services()->configTable->set('security_notify_user_password', true, $site->getGUID());
+		_elgg_services()->configTable->set('security_email_require_password', true, $site->getGUID());
 
 		$this->setSubtypeClasses();
 

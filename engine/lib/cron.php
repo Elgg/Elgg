@@ -104,6 +104,10 @@ function _elgg_cron_page_handler($page) {
 		forward();
 	}
 
+	if (PHP_SAPI !== 'cli' && get_config('security_protect_cron')) {
+		elgg_signed_request_gatekeeper();
+	}
+	
 	$period = strtolower($page[0]);
 
 	$allowed_periods = elgg_get_config('elgg_cron_periods');
