@@ -165,6 +165,38 @@ function _elgg_widgets_set_ajax_title($hook, $type, $results, $params) {
 }
 
 /**
+ * Handle widgets pages.
+ *
+ * @param array $page Array of pages
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_widgets_page_handler($page) {
+	$segment = elgg_extract(0, $page);
+	if ($segment !== 'add_panel') {
+		return;
+	}
+	elgg_ajax_gatekeeper();
+	
+	$owner_guid = (int) get_input('owner_guid');
+	elgg_set_page_owner_guid($owner_guid);
+
+	// restoring context stack
+	$context_stack = get_input('context_stack');
+	if (!empty($context_stack)) {
+		elgg_set_context_stack($context_stack);
+	}
+	
+	echo elgg_view_resource('widgets/add_panel', [
+		'owner_guid' => $owner_guid,
+		'context' => get_input('context'),
+		'exact_match' => get_input('exact_match'),
+	]);
+	return true;
+}
+
+/**
  * Function to initialize widgets functionality
  *
  * @return void
@@ -175,6 +207,8 @@ function _elgg_widgets_init() {
 	elgg_register_action('widgets/add');
 	elgg_register_action('widgets/move');
 	elgg_register_action('widgets/delete');
+	
+	elgg_register_page_handler('widgets', '_elgg_widgets_page_handler');
 
 	elgg_register_plugin_hook_handler('output', 'ajax', '_elgg_widgets_set_ajax_title');
 }

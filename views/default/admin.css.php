@@ -1194,110 +1194,11 @@ select {
 	color: #aaa;
 }
 
-/* ***************************************
-	WIDGETS
-*************************************** */
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
-.elgg-widgets {
-	min-height: 30px;
-}
-.elgg-widget-add-control {
-	text-align: right;
-	margin: 5px 5px 15px;
-}
-.elgg-widgets-add-panel {
-	padding: 10px;
-	margin: 0 5px 15px;
-	background: #eee;
-	border: 1px solid #ccc;
-}
-.elgg-widgets-add-panel ul {
-	padding: 0;
-	margin: 0;
-}
-.elgg-widgets-add-panel li {
-	float: left;
-	margin: 2px 10px;
-	list-style: none;
-	width: 200px;
-	padding: 4px;
-	background-color: #eee;
-	border: 1px solid #ccc;
-	font-weight: bold;
-}
-.elgg-widgets-add-panel li a {
-	display: block;
-}
-.elgg-widget-single.elgg-state-available {
-	color: #333;
-	cursor: pointer;
-}
-.elgg-widget-single.elgg-state-available:hover {
-	border-color: #aaa;
-}
-.elgg-widget-single.elgg-state-unavailable {
-	color: #888;
-}
 
-.elgg-module-widget {
-	background-color: #dedede;
-	padding: 1px;
-	margin: 0 5px 15px;
-	position: relative;
-}
-.elgg-module-widget:hover {
-	background-color: #ccc;
-}
-.elgg-module-widget > .elgg-head {
-	background-color: #f5f5f5;
-	height: 26px;
-	overflow: hidden;
-}
-.elgg-module-widget.elgg-state-draggable .elgg-widget-handle {
-	cursor: move;
-}
-.elgg-module-widget > .elgg-head h3 {
-	float: left;
-	padding: 4px 45px 0 20px;
-	color: #333;
-}
-
-.elgg-widget-collapse-button {
-	color: #c5c5c5;
-	text-decoration: none;
-}
-a.elgg-widget-collapse-button:hover,
-a.elgg-widget-collapsed:hover {
-	color: #9d9d9d;
-	text-decoration: none;
-}
-a.elgg-widget-collapse-button:before {
-	content: "\25BC";
-}
-a.elgg-widget-collapsed:before {
-	content: "\25BA";
-}
-.elgg-module-widget > .elgg-body {
-	border-top: 1px solid #dedede;
-	background-color: white;
-	width: 100%;
-	overflow: hidden;
-}
-.elgg-widget-edit {
-	display: none;
-	width: 96%;
-	padding: 2%;
-	border-bottom: 1px solid #dedede;
-}
-.elgg-widget-content {
-	padding: 10px;
-}
-.elgg-widget-placeholder {
-	border: 2px dashed #dedede;
-	margin-bottom: 15px;
-}
+<?= elgg_view('elements/widgets.css', $vars) ?>
 
 /* ***************************************
 	GRID

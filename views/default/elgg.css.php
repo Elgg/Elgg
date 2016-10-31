@@ -48,6 +48,7 @@ echo elgg_view('elements/buttons.css', $vars);
 echo elgg_view('elements/icons.css', $vars);
 echo elgg_view('elements/navigation.css', $vars);
 echo elgg_view('elements/modules.css', $vars);
+echo elgg_view('elements/widgets.css', $vars);
 echo elgg_view('elements/components.css', $vars);
 echo elgg_view('elements/layout.css', $vars);
 echo elgg_view('elements/misc.css', $vars);

@@ -47,17 +47,9 @@ if (!$current_info) {
 	elgg_set_page_owner_guid(elgg_get_config('site_guid'));
 	elgg_push_context($current_info['widget_context']);
 
-	$default_widgets_input = elgg_view('input/hidden', array(
-		'name' => 'default_widgets',
-		'value' => 1
-	));
-
-	$params = array(
-		'content' => $default_widgets_input,
+	$content = elgg_view_layout('widgets', [
 		'num_columns' => $current_info['widget_columns'],
-	);
-
-	$content = elgg_view_layout('widgets', $params);
+	]);
 	elgg_pop_context();
 }
 elgg_pop_context();

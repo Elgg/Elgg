@@ -2,7 +2,7 @@
 /**
  * Elgg widgets layout
  *
- * @uses $vars['content']          Optional display box at the top of layout
+ * @uses $vars['no_widgets']       Optional string or Closure that will be show if there are no widgets
  * @uses $vars['num_columns']      Number of widget columns for this layout (3)
  * @uses $vars['show_add_widgets'] Display the add widgets button and panel (true)
  * @uses $vars['exact_match']      Widgets must match the current context (false)
@@ -35,64 +35,82 @@ if ($owner->guid != $page_owner->guid) {
 
 $context = elgg_get_context();
 
-$widget_types = elgg_get_widget_types([
-	'context' => $context,
-	'exact' => $exact_match,
-	'container' => $owner,
-]);
-
-elgg_push_context('widgets');
-
 $widgets = elgg_get_widgets($owner->guid, $context);
 
-$layout_attrs = elgg_format_attributes(array(
-	'class' => 'elgg-layout-widgets',
-	'data-page-owner-guid' => $owner->guid,
-));
-
-echo "<div $layout_attrs>";
-
-if (elgg_can_edit_widget_layout($context)) {
-	if ($show_add_widgets) {
-		echo elgg_view('page/layouts/widgets/add_button');
+$result = '';
+$no_widgets = elgg_extract('no_widgets', $vars);
+if (empty($widgets) && !empty($no_widgets)) {
+	if ($no_widgets instanceof \Closure) {
+		echo $no_widgets();
+	} else {
+		$result .= $no_widgets;
 	}
-	$params = array(
-		'widgets' => $widgets,
-		'context' => $context,
-		'exact_match' => $exact_match,
-		'show_access' => $show_access,
-	);
-	echo elgg_view('page/layouts/widgets/add_panel', $params);
 }
 
-if (isset($vars['content'])) {
-	echo $vars['content'];
+if ($show_add_widgets && elgg_can_edit_widget_layout($context)) {
+	$result .= elgg_view('page/layouts/widgets/add_button', $vars);
+}
+
+// push context after the add_button as add button uses current context
+elgg_push_context('widgets');
+
+if ($widgets) {
+	$widget_types = elgg_get_widget_types([
+		'context' => $context,
+		'exact' => $exact_match,
+		'container' => $owner,
+	]);
 }
 
 $widget_class = "elgg-col-1of{$num_columns}";
+
+// move hidden columns widgets to last visible column
+if (!isset($widgets[$num_columns])) {
+	$widgets[$num_columns] = [];
+}
+
+foreach ($widgets as $index => $column_widgets) {
+	if ($index <= $num_columns) {
+		continue;
+	}
+		
+	// append widgets to last column and retain order
+	foreach ($column_widgets as $column_widget) {
+		$widgets[$num_columns][] = $column_widget;
+	}
+	unset($widgets[$index]);
+}
+
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
-	if (isset($widgets[$column_index])) {
-		$column_widgets = $widgets[$column_index];
-	} else {
-		$column_widgets = array();
+	$column_widgets = (array) elgg_extract($column_index, $widgets, []);
+	
+	$widgets_content = '';
+	foreach ($column_widgets as $widget) {
+		if (!array_key_exists($widget->handler, $widget_types)) {
+			continue;
+		}
+		
+		$widgets_content .= elgg_view_entity($widget, ['show_access' => $show_access]);
 	}
 
-	echo "<div class=\"$widget_class elgg-widgets\" id=\"elgg-widget-col-$column_index\">";
-	if (sizeof($column_widgets) > 0) {
-		foreach ($column_widgets as $widget) {
-			if (array_key_exists($widget->handler, $widget_types)) {
-				echo elgg_view_entity($widget, array('show_access' => $show_access));
-			}
-		}
-	}
-	echo '</div>';
+	$result .= elgg_format_element('div', [
+		'id' => "elgg-widget-col-{$column_index}",
+		'class' => [
+			"elgg-col-1of{$num_columns}",
+			'elgg-widgets',
+		],
+		
+	], $widgets_content);
 }
 
 elgg_pop_context();
 
-echo elgg_view('graphics/ajax_loader', array('id' => 'elgg-widget-loader'));
+$result .= elgg_view('graphics/ajax_loader', ['id' => 'elgg-widget-loader']);
 
-echo '</div>';
+echo elgg_format_element('div', [
+	'class' => 'elgg-layout-widgets',
+	'data-page-owner-guid' => $owner->guid,
+], $result);
 
 ?>
 <script>
