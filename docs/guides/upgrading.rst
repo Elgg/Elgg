@@ -244,6 +244,7 @@ Miscellaneous API changes
  * ``ElggGroup::removeObjectFromGroup`` requires passing in an ``ElggObject`` (no longer accepts a GUID)
  * ``ElggUser::$salt`` no longer exists as an attribute, nor is it used for authentication
  * ``ElggUser::$password`` no longer exists as an attribute, nor is it used for authentication
+ * ``elgg_instanceof`` no longer supports the fourth ``class`` argument
  * ``elgg_view_icon`` no longer supports ``true`` as the 2nd argument
  * ``elgg_list_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
