@@ -244,6 +244,7 @@ Miscellaneous API changes
  * ``ElggGroup::removeObjectFromGroup`` requires passing in an ``ElggObject`` (no longer accepts a GUID)
  * ``ElggUser::$salt`` no longer exists as an attribute, nor is it used for authentication
  * ``ElggUser::$password`` no longer exists as an attribute, nor is it used for authentication
+ * ``elgg_get_widget_types`` no longer supports ``$exact`` as the 2nd argument
  * ``elgg_instanceof`` no longer supports the fourth ``class`` argument
  * ``elgg_view_icon`` no longer supports ``true`` as the 2nd argument
  * ``elgg_list_entities`` no longer supports the option ``view_type_toggle``
@@ -277,6 +278,9 @@ Widget layout related changes
 The widget layout usage has been changed. Content is no longer drawn as part of the layout. You need to wrap you content
 in another layout and use the widgets layout as part of your content. If you want some special content to show if there
 are no widgets in the layout, you can now pass a special ``no_widgets`` parameter (as String or as a Closure).
+
+When registering widgets you can no longer omit passing a context as the ``all`` context is no longer supported. You need
+to explicitely pass the contexts for which the widget is intended. 
 
 
 HtmLawed is no longer a plugin

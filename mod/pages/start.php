@@ -59,7 +59,7 @@ function pages_init() {
 	elgg_extend_view('groups/tool_latest', 'pages/group_module');
 
 	//add a widget
-	elgg_register_widget_type('pages', elgg_echo('pages'), elgg_echo('pages:widget:description'));
+	elgg_register_widget_type('pages', elgg_echo('pages'), elgg_echo('pages:widget:description'), ['profile', 'dashboard']);
 
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below
@@ -173,7 +173,7 @@ function pages_page_handler($page) {
 
 /**
  * Override the page url
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param string $url
@@ -260,8 +260,8 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	// remove delete if not owner or admin
-	if (!elgg_is_admin_logged_in() 
-		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid() 
+	if (!elgg_is_admin_logged_in()
+		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()
 		&& ! pages_can_delete_page($entity)) {
 		foreach ($return as $index => $item) {
 			if ($item->getName() == 'delete') {
@@ -283,7 +283,7 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new page
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -300,7 +300,7 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('pages:notify:body', array(
 		$owner->name,
 		$title,
@@ -457,7 +457,7 @@ function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 /**
  * Called on view_vars, input/access hook
  * Prevent ACCESS_PUBLIC from ending up as a write access option
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array $return

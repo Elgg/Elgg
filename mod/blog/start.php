@@ -55,7 +55,7 @@ function blog_init() {
 	elgg_extend_view('groups/tool_latest', 'blog/group_module');
 
 	// add a blog widget
-	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'));
+	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), ['profile', 'dashboard']);
 
 	// register actions
 	$action_path = __DIR__ . '/actions/blog';

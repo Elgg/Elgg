@@ -38,6 +38,7 @@ Once you have created your edit and view pages, you need to initialize the plugi
         'id' => 'filerepo', 
         'name' => elgg_echo('widgets:filerepo:name'), 
         'description' => elgg_echo('widgets:filerepo:description'),
+        'context' => ['profile'],
     ]);
 
 .. note::
@@ -56,6 +57,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
         'id' => 'filerepo', 
         'name' => elgg_echo('widgets:filerepo:name'), 
         'description' => elgg_echo('widgets:filerepo:description'),
+        'context' => ['profile'],
     ]);
 
     // Add a second file widget
@@ -63,6 +65,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
         'id' => 'filerepo2', 
         'name' => elgg_echo('widgets:filerepo2:name'), 
         'description' => elgg_echo('widgets:filerepo2:description'),
+        'context' => ['dashboard'],
     ]);
 
     // Add a third file widget
@@ -70,6 +73,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
         'id' => 'filerepo3', 
         'name' => elgg_echo('widgets:filerepo3:name'), 
         'description' => elgg_echo('widgets:filerepo3:description'),
+        'context' => ['profile', 'dashboard'],
     ]);
 
 Make sure you have the corresponding directories within your plugin
@@ -101,7 +105,7 @@ When registering a widget you can omit providing a name and a description. If a 
 
 How to restrict where widgets can be used
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The widget can specify the context that it can be used in (all, just profile, just dashboard, etc.). If you do not specify a context they will be available for all contexts.
+The widget can specify the context that it can be used in (just profile, just dashboard, etc.).
 
 .. code:: php
 

@@ -45,7 +45,7 @@ class WidgetsServiceTest extends \Elgg\TestCase {
 							'id' => 'widget_type_mul',
 							'name' => 'Widget name3',
 							'description' => 'Widget description3',
-							'context' => ['all'],
+							'context' => ['all', 'settings'],
 							'multiple' => true,
 		])));
 		$this->assertTrue($service->registerType(\Elgg\WidgetDefinition::factory([
@@ -82,16 +82,16 @@ class WidgetsServiceTest extends \Elgg\TestCase {
 		$this->assertFalse($service->validateType('hook_widget'));
 
 		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
-		$this->assertArrayHasKey('hook_widget', $service->getTypes());
+		$this->assertArrayHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
 		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
-		$this->assertArrayNotHasKey('hook_widget', $service->getTypes());
+		$this->assertArrayNotHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
 		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
-		$this->assertArrayHasKey('hook_widget', $service->getTypes());
+		$this->assertArrayHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
 		_elgg_services()->hooks->registerHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
-		$this->assertArrayNotHasKey('hook_widget', $service->getTypes());
+		$this->assertArrayNotHasKey('hook_widget', $service->getTypes(['context' => 'from_hook']));
 
 		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'registerWidgetsHookHandler']);
 		_elgg_services()->hooks->unregisterHandler('handlers', 'widgets', [$this, 'unregisterWidgetsHookHandler']);
@@ -112,6 +112,7 @@ class WidgetsServiceTest extends \Elgg\TestCase {
 					'id' => 'hook_widget',
 					'name' => 'hook_widget name',
 					'description' => 'hook_widget description',
+					'context' => 'from_hook',
 		]);
 
 		return $value;
@@ -145,25 +146,18 @@ class WidgetsServiceTest extends \Elgg\TestCase {
 	public function testRegistrationParametersPreserveContext($service) {
 
 		$params = array(
-			//exact, context, expected
-			array(false, 'all', array('widget_type', 'widget_type_mul')),
-			array(false, 'dashboard', array('widget_type', 'widget_type_mul', 'widget_type_con', 'widget_type_con_mul')),
-			array(false, 'profile', array('widget_type', 'widget_type_mul', 'widget_type_con')),
-			array(false, 'settings', array('widget_type', 'widget_type_mul', 'widget_type_con_mul')),
-			array(true, 'all', array('widget_type', 'widget_type_mul')),
-			array(true, 'dashboard', array('widget_type_con', 'widget_type_con_mul')),
-			array(true, 'profile', array('widget_type_con')),
-			array(true, 'settings', array('widget_type_con_mul')),
+			//context, expected
+			array('dashboard', array('widget_type', 'widget_type_mul', 'widget_type_con', 'widget_type_con_mul')),
+			array('profile', array('widget_type', 'widget_type_mul', 'widget_type_con')),
+			array('settings', array('widget_type_mul', 'widget_type_con_mul')),
+			array('all', array()),
 		);
 
 		//is returned set of ids the same as expected
 		foreach ($params as $case) {
-			list($exact, $context, $expected) = $case;
+			list($context, $expected) = $case;
 			sort($expected);
-			$actual = array_keys($service->getTypes([
-						'context' => $context,
-						'exact' => $exact,
-			]));
+			$actual = array_keys($service->getTypes(['context' => $context]));
 			sort($actual);
 			$this->assertEquals($expected, $actual);
 		}
@@ -184,21 +178,16 @@ class WidgetsServiceTest extends \Elgg\TestCase {
 			'widget_type_con_mul' => true,
 		);
 
-		$contexts = array('all', 'dashboard', 'profile', 'settings');
+		$contexts = array('dashboard', 'profile', 'settings');
 
-		foreach (array(false, true) as $exact) {
-			foreach ($contexts as $context) {
-				$items = $service->getTypes([
-					'context' => $context,
-					'exact' => $exact,
-				]);
-				foreach ($items as $id => $item) {
-					$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
-					$this->assertNotEmpty($id);
-					$this->assertInternalType('string', $id);
-					$this->assertArrayHasKey($id, $resps);
-					$this->assertSame($resps[$id], $item->multiple);
-				}
+		foreach ($contexts as $context) {
+			$items = $service->getTypes(['context' => $context]);
+			foreach ($items as $id => $item) {
+				$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
+				$this->assertNotEmpty($id);
+				$this->assertInternalType('string', $id);
+				$this->assertArrayHasKey($id, $resps);
+				$this->assertSame($resps[$id], $item->multiple);
 			}
 		}
 
@@ -218,23 +207,18 @@ class WidgetsServiceTest extends \Elgg\TestCase {
 			'widget_type_con_mul' => array('Widget name5', 'Widget description5'),
 		);
 
-		$contexts = array('all', 'dashboard', 'profile', 'settings');
+		$contexts = array('dashboard', 'profile', 'settings');
 
-		foreach (array(false, true) as $exact) {
-			foreach ($contexts as $context) {
-				$items = $service->getTypes([
-					'context' => $context,
-					'exact' => $exact,
-				]);
-				foreach ($items as $id => $item) {
-					$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
-					$this->assertNotEmpty($id);
-					$this->assertInternalType('string', $id);
-					$this->assertArrayHasKey($id, $resps);
-					list($name, $desc) = $resps[$id];
-					$this->assertSame($name, $item->name);
-					$this->assertSame($desc, $item->description);
-				}
+		foreach ($contexts as $context) {
+			$items = $service->getTypes(['context' => $context]);
+			foreach ($items as $id => $item) {
+				$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
+				$this->assertNotEmpty($id);
+				$this->assertInternalType('string', $id);
+				$this->assertArrayHasKey($id, $resps);
+				list($name, $desc) = $resps[$id];
+				$this->assertSame($name, $item->name);
+				$this->assertSame($desc, $item->description);
 			}
 		}
 

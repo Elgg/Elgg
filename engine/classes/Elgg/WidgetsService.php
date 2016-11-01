@@ -234,7 +234,6 @@ class WidgetsService {
 	 *
 	 * array (
 	 *     'context' => string (defaults to elgg_get_context()),
-	 *     'exact'   => bool (defaults to false),
 	 *     'container' => \ElggEntity (defaults to null)
 	 * )
 	 *
@@ -244,7 +243,6 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function getTypes(array $params = []) {
-		$exact = (bool) elgg_extract('exact', $params, false);
 		$context = elgg_extract('context', $params, '');
 		if (!$context) {
 			$context = elgg_get_context();
@@ -261,15 +259,9 @@ class WidgetsService {
 			if (!($widget_definition instanceof WidgetDefinition)) {
 				continue;
 			}
-			
-			if ($exact) {
-				if (in_array($context, $widget_definition->context)) {
-					$widgets[$widget_definition->id] = $widget_definition;
-				}
-			} else {
-				if (in_array('all', $widget_definition->context) || in_array($context, $widget_definition->context)) {
-					$widgets[$widget_definition->id] = $widget_definition;
-				}
+
+			if (in_array($context, $widget_definition->context)) {
+				$widgets[$widget_definition->id] = $widget_definition;
 			}
 		}
 

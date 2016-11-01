@@ -35,7 +35,7 @@ function bookmarks_init() {
 	elgg_extend_view('elgg.css', 'bookmarks/css');
 	elgg_extend_view('elgg.js', 'bookmarks/js');
 
-	elgg_register_widget_type('bookmarks', elgg_echo('bookmarks'), elgg_echo('bookmarks:widget:description'));
+	elgg_register_widget_type('bookmarks', elgg_echo('bookmarks'), elgg_echo('bookmarks:widget:description'), ['profile', 'dashboard']);
 
 	if (elgg_is_logged_in()) {
 		$user_guid = elgg_get_logged_in_user_guid();
@@ -166,7 +166,7 @@ function bookmark_set_url($hook, $type, $url, $params) {
 
 /**
  * Add a menu item to an ownerblock
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array  $return
@@ -190,7 +190,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new bookmark
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -207,7 +207,7 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('bookmarks:notify:body', array(
 		$owner->name,
 		$title,

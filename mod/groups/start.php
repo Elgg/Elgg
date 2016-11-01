@@ -47,7 +47,7 @@ function groups_init() {
 	elgg_register_action("groups/addtogroup", "$action_base/add.php");
 
 	// Add some widgets
-	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
+	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'), ['profile', 'dashboard']);
 
 	// add group activity tool option
 	if (elgg_get_plugin_setting('allow_activity', 'groups', 'yes') === 'yes') {

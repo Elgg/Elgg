@@ -3,19 +3,16 @@
  * Widget add panel
  *
  * @uses $vars['context']     The context for this widget layout
- * @uses $vars['exact_match'] Only use widgets that match the context
  * @uses $vars['owner_guid']  Container limit widgets for
  */
 
 $context = elgg_extract('context', $vars);
-$exact = elgg_extract('exact_match', $vars);
 $owner_guid = (int) elgg_extract('owner_guid', $vars);
 $owner = get_entity($owner_guid);
 
 $widgets = elgg_get_widgets($owner->guid, $context);
 $widget_types = elgg_get_widget_types([
 	'context' => $context,
-	'exact' => $exact,
 	'container' => $owner,
 ]);
 uasort($widget_types, function($a, $b) {
