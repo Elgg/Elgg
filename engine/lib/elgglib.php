@@ -225,12 +225,17 @@ function elgg_load_js($name) {
 /**
  * Request that Elgg load an AMD module onto the page.
  *
- * @param string $name The AMD module name.
+ * @param string $name   The AMD module name.
+ * @param bool   $inline If true the module will be echoed inline if in XHR
  * @return void
  * @since 1.9.0
  */
-function elgg_require_js($name) {
-	_elgg_services()->amdConfig->addDependency($name);
+function elgg_require_js($name, $inline = false) {
+	if ($inline && elgg_is_xhr()) {
+		echo elgg_format_element('script', [], "require(['{$name}'])");
+	} else {
+		_elgg_services()->amdConfig->addDependency($name);
+	}
 }
 
 /**

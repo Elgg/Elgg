@@ -25,7 +25,6 @@ echo elgg_view_menu('title:widgets', [
 				'maxWidth' => '900px',
 				'maxHeight' => '90%',
 			]),
-			'deps' => 'resources/widgets/add_panel',
 		],
 	],
 	'class' => 'elgg-menu-hz',

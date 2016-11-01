@@ -7,6 +7,8 @@
  * @uses $vars['owner_guid']  Container limit widgets for
  */
 
+elgg_require_js('resources/widgets/add_panel', true);
+
 $context = elgg_extract('context', $vars);
 $exact = elgg_extract('exact_match', $vars);
 $owner_guid = (int) elgg_extract('owner_guid', $vars);

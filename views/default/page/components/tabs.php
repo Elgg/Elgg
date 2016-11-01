@@ -86,8 +86,4 @@ $module = elgg_extract('module', $vars, 'tabs');
 unset($vars['module']);
 echo elgg_view_module($module, $tabs, $content, $vars);
 
-?>
-<script>
-	require(['page/components/tabs']);
-</script>
-
+elgg_require_js('page/components/tabs', true);
