@@ -103,23 +103,6 @@ class ElggGroup extends \ElggEntity {
 	}
 
 	/**
-	 * Wrapper around \ElggEntity::__get()
-	 *
-	 * @see \ElggEntity::__get()
-	 *
-	 * @param string $name Name
-	 * @return mixed
-	 * @todo deprecate appending group to username. Was a hack used for creating
-	 * URLs for group content. We stopped using the hack in 1.8.
-	 */
-	public function __get($name) {
-		if ($name == 'username') {
-			return 'group:' . $this->getGUID();
-		}
-		return parent::__get($name);
-	}
-
-	/**
 	 * Get an array of group members.
 	 *
 	 * @param array $options Options array. See elgg_get_entities_from_relationships
