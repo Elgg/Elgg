@@ -15,7 +15,7 @@ $body .= elgg_view_module('main', "$current_strength: $strength_text", $strength
 
 $body .= elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('admin:site:secret:regenerate'),
+	'label' => elgg_echo('admin:site:secret:regenerate'),
 	'value' => 1,
 	'name' => 'regenerate_site_secret',
 	'#help' => elgg_echo('admin:site:secret:regenerate:help'),

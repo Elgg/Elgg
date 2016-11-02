@@ -132,6 +132,7 @@ return array(
 	'groups:addedtogroup' => 'Successfully added the user to the group',
 	'groups:joinrequestnotmade' => 'Could not request to join group',
 	'groups:joinrequestmade' => 'Requested to join group',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Successfully joined group!',
 	'groups:left' => 'Successfully left group',
 	'groups:notowner' => 'Sorry, you are not the owner of this group.',

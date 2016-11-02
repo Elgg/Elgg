@@ -597,6 +597,17 @@ select {
 	background-color: #999;
 	text-decoration: none;
 }
+.elgg-button-delete {
+	border: 1px solid #FF3300;
+	background: #FF3300;
+	color: #FFF;
+}
+.elgg-button-delete:hover,
+.elgg-button-delete:focus {
+	background: #D63006;
+	text-decoration: none;
+	color: #FFF;
+}
 .elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
 	background: #dedede;

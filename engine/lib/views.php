@@ -1477,6 +1477,8 @@ function elgg_view_input($input_type, array $vars = array()) {
  *                       - #help: field help HTML
  *                       - #class: field class name
  *                      Note: Both #label and #help are printed unescaped within their wrapper element.
+ *                      Note: Some fields (like input/checkbox) need special attention because #label and label serve different purposes
+ *                      "#label" will be used as a label in the field wrapper but "label" will be used in the input view
  *
  * @return string
  * @since 2.3

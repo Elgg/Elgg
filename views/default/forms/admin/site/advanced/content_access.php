@@ -25,7 +25,7 @@ $body = elgg_view_field($field);
 
 $body .= elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('installation:allow_user_default_access:label'),
+	'label' => elgg_echo('installation:allow_user_default_access:label'),
 	'#help' => elgg_echo('installation:allow_user_default_access:description'),
 	'name' => 'allow_user_default_access',
 	'checked' => (bool)elgg_get_config('allow_user_default_access'),

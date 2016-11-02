@@ -118,9 +118,14 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	}
 
 	$url = elgg_http_add_url_query_elements($container->getURL(), [
-			'offset' => $offset,
-		]) . "#elgg-object-{$comment->guid}";
-
+		'offset' => $offset,
+	]);
+	
+	// make sure there's only one fragment (#)
+	$parts = parse_url($url);
+	$parts['fragment'] = "elgg-object-{$comment->guid}";
+	$url = elgg_http_build_url($parts, false);
+	
 	forward($url);
 }
 
