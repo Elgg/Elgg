@@ -5,8 +5,9 @@
 	<author>Core developers</author>
 	<version>3.0</version>
 	<category>content</category>
+	<category>bundled</category>
 	<description>Adds activity pages</description>
-	<website>http://www.elgg.org/</website>
+	<website>http://elgg.org/</website>
 	<requires>
 		<type>elgg_release</type>
 		<version>2.2</version>

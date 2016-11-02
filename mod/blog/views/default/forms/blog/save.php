@@ -8,164 +8,127 @@
 $blog = get_entity($vars['guid']);
 $vars['entity'] = $blog;
 
-$draft_warning = $vars['draft_warning'];
+$draft_warning = elgg_extract('draft_warning', $vars);
 if ($draft_warning) {
-	$draft_warning = '<span class="mbm elgg-text-help">' . $draft_warning . '</span>';
+	echo '<span class="mbm elgg-text-help">' . $draft_warning . '</span>';
 }
 
-$action_buttons = '';
-$delete_link = '';
-$preview_button = '';
+$categories_vars = $vars;
+$categories_vars['#type'] = 'categories';
 
-if ($vars['guid']) {
-	// add a delete button if editing
-	$delete_url = "action/blog/delete?guid={$vars['guid']}";
-	$delete_link = elgg_view('output/url', array(
-		'href' => $delete_url,
-		'text' => elgg_echo('delete'),
-		'class' => 'elgg-button elgg-button-delete float-alt',
-		'confirm' => true,
-	));
+$fields = [
+	[
+		'#label' => elgg_echo('title'),
+		'#type' => 'text',
+		'name' => 'title',
+		'id' => 'blog_title',
+		'value' => elgg_extract('title', $vars),		
+	],
+	[
+		'#label' => elgg_echo('blog:excerpt'),
+		'#type' => 'text',
+		'name' => 'excerpt',
+		'id' => 'blog_excerpt',
+		'value' => elgg_html_decode(elgg_extract('excerpt', $vars)),		
+	],
+	[
+		'#label' => elgg_echo('blog:body'),
+		'#type' => 'longtext',
+		'name' => 'description',
+		'id' => 'blog_description',
+		'value' => elgg_extract('description', $vars),		
+	],
+	[
+		'#label' => elgg_echo('tags'),
+		'#type' => 'tags',
+		'name' => 'tags',
+		'id' => 'blog_tags',
+		'value' => elgg_extract('tags', $vars),		
+	],
+	$categories_vars,
+	[
+		'#label' => elgg_echo('comments'),
+		'#type' => 'select',
+		'name' => 'comments_on',
+		'id' => 'blog_comments_on',
+		'value' => elgg_extract('comments_on', $vars),
+		'options_values' => [
+			'On' => elgg_echo('on'), 
+			'Off' => elgg_echo('off'),
+		],	
+	],
+	[
+		'#label' => elgg_echo('access'),
+		'#type' => 'access',
+		'name' => 'access_id',
+		'id' => 'blog_access_id',
+		'value' => elgg_extract('access_id', $vars),
+		'entity' => elgg_extract('entity', $vars),
+		'entity_type' => 'object',
+		'entity_subtype' => 'blog',	
+	],
+	[
+		'#label' => elgg_echo('status'),
+		'#type' => 'select',
+		'name' => 'status',
+		'id' => 'blog_status',
+		'value' => elgg_extract('status', $vars),
+		'options_values' => [
+			'draft' => elgg_echo('status:draft'),
+			'published' => elgg_echo('status:published'),
+		],	
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'container_guid',
+		'value' => elgg_get_page_owner_guid(),		
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'guid',
+		'value' => elgg_extract('guid', $vars),		
+	],
+];
+
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
 }
-
-// published blogs do not get the preview button
-if (!$vars['guid'] || ($blog && $blog->status != 'published')) {
-	$preview_button = elgg_view('input/submit', array(
-		'value' => elgg_echo('preview'),
-		'name' => 'preview',
-		'class' => 'elgg-button-submit mls',
-	));
-}
-
-$save_button = elgg_view('input/submit', array(
-	'value' => elgg_echo('save'),
-	'name' => 'save',
-));
-$action_buttons = $save_button . $preview_button . $delete_link;
-
-$title_label = elgg_echo('title');
-$title_input = elgg_view('input/text', array(
-	'name' => 'title',
-	'id' => 'blog_title',
-	'value' => $vars['title']
-));
-
-$excerpt_label = elgg_echo('blog:excerpt');
-$excerpt_input = elgg_view('input/text', array(
-	'name' => 'excerpt',
-	'id' => 'blog_excerpt',
-	'value' => elgg_html_decode($vars['excerpt'])
-));
-
-$body_label = elgg_echo('blog:body');
-$body_input = elgg_view('input/longtext', array(
-	'name' => 'description',
-	'id' => 'blog_description',
-	'value' => $vars['description']
-));
 
 $save_status = elgg_echo('blog:save_status');
-if ($vars['guid']) {
-	$entity = get_entity($vars['guid']);
-	$saved = date('F j, Y @ H:i', $entity->time_created);
+if ($blog) {
+	$saved = date('F j, Y @ H:i', $blog->time_created);
 } else {
 	$saved = elgg_echo('never');
 }
-
-$status_label = elgg_echo('status');
-$status_input = elgg_view('input/select', array(
-	'name' => 'status',
-	'id' => 'blog_status',
-	'value' => $vars['status'],
-	'options_values' => array(
-		'draft' => elgg_echo('status:draft'),
-		'published' => elgg_echo('status:published')
-	)
-));
-
-$comments_label = elgg_echo('comments');
-$comments_input = elgg_view('input/select', array(
-	'name' => 'comments_on',
-	'id' => 'blog_comments_on',
-	'value' => $vars['comments_on'],
-	'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
-));
-
-$tags_label = elgg_echo('tags');
-$tags_input = elgg_view('input/tags', array(
-	'name' => 'tags',
-	'id' => 'blog_tags',
-	'value' => $vars['tags']
-));
-
-$access_label = elgg_echo('access');
-$access_input = elgg_view('input/access', array(
-	'name' => 'access_id',
-	'id' => 'blog_access_id',
-	'value' => $vars['access_id'],
-	'entity' => $vars['entity'],
-	'entity_type' => 'object',
-	'entity_subtype' => 'blog',
-));
-
-$categories_input = elgg_view('input/categories', $vars);
-
-// hidden inputs
-$container_guid_input = elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
-$guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
-
-
-echo <<<___HTML
-
-$draft_warning
-
-<div>
-	<label for="blog_title">$title_label</label>
-	$title_input
-</div>
-
-<div>
-	<label for="blog_excerpt">$excerpt_label</label>
-	$excerpt_input
-</div>
-
-<div>
-	<label for="blog_description">$body_label</label>
-	$body_input
-</div>
-
-<div>
-	<label for="blog_tags">$tags_label</label>
-	$tags_input
-</div>
-
-$categories_input
-
-<div>
-	<label for="blog_comments_on">$comments_label</label>
-	$comments_input
-</div>
-
-<div>
-	<label for="blog_access_id">$access_label</label>
-	$access_input
-</div>
-
-<div>
-	<label for="blog_status">$status_label</label>
-	$status_input
-</div>
-
-$guid_input
-$container_guid_input
-
-___HTML;
 
 $footer = <<<___HTML
 <div class="elgg-subtext mbm">
 	$save_status <span class="blog-save-status-time">$saved</span>
 </div>
-$action_buttons
 ___HTML;
+
+$footer .= elgg_view('input/submit', [
+	'value' => elgg_echo('save'),
+	'name' => 'save',
+]);
+
+// published blogs do not get the preview button
+if (!$blog || $blog->status != 'published') {
+	$footer .= elgg_view('input/submit', [
+		'value' => elgg_echo('preview'),
+		'name' => 'preview',
+		'class' => 'elgg-button-submit mls',
+	]);
+}
+
+if ($blog) {
+	// add a delete button if editing
+	$footer .= elgg_view('output/url', [
+		'href' => "action/blog/delete?guid={$vars['guid']}",
+		'text' => elgg_echo('delete'),
+		'class' => 'elgg-button elgg-button-delete float-alt',
+		'confirm' => true,
+	]);
+}
 
 elgg_set_form_footer($footer);

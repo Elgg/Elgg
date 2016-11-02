@@ -4,7 +4,8 @@
  */
 
 $options = array(
-	'distinct' => false
+	'distinct' => false,
+	'no_results' => elgg_echo('river:none'),
 );
 
 $page_type = preg_replace('[\W]', '', elgg_extract('page_type', $vars, 'all'));
@@ -56,22 +57,17 @@ switch ($page_type) {
 }
 
 $activity = elgg_list_river($options);
-if (!$activity) {
-	$activity = elgg_echo('river:none');
-}
 
 $content = elgg_view('core/river/filter', array('selector' => $selector));
 
 $sidebar = elgg_view('core/river/sidebar');
 
-$params = array(
+$body = elgg_view_layout('content', [
 	'title' => $title,
 	'content' =>  $content . $activity,
 	'sidebar' => $sidebar,
 	'filter_context' => $page_filter,
 	'class' => 'elgg-river-layout',
-);
-
-$body = elgg_view_layout('content', $params);
+]);
 
 echo elgg_view_page($title, $body);

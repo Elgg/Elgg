@@ -21,11 +21,11 @@ function bookmarks_init() {
 	elgg_register_action('bookmarks/delete', "$action_path/delete.php");
 
 	// menus
-	elgg_register_menu_item('site', array(
+	elgg_register_menu_item('site', [
 		'name' => 'bookmarks',
 		'text' => elgg_echo('bookmarks'),
-		'href' => 'bookmarks/all'
-	));
+		'href' => 'bookmarks/all',
+	]);
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
@@ -229,23 +229,30 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
  * @param array  $params
  */
 function bookmarks_page_menu($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
-		// only show bookmarklet in bookmark pages
-		if (elgg_in_context('bookmarks')) {
-			$page_owner = elgg_get_page_owner_entity();
-			if (!$page_owner) {
-				$page_owner = elgg_get_logged_in_user_entity();
-			}
-			
-			if ($page_owner instanceof ElggGroup) {
-				$title = elgg_echo('bookmarks:bookmarklet:group');
-			} else {
-				$title = elgg_echo('bookmarks:bookmarklet');
-			}
-
-			$return[] = new ElggMenuItem('bookmarklet', $title, 'bookmarks/bookmarklet/' . $page_owner->getGUID());
-		}
+	if (!elgg_is_logged_in()) {
+		return;
 	}
+	// only show bookmarklet in bookmark pages
+	if (!elgg_in_context('bookmarks')) {
+		return;
+	}
+	
+	$page_owner = elgg_get_page_owner_entity();
+	if (!$page_owner) {
+		$page_owner = elgg_get_logged_in_user_entity();
+	}
+	
+	if ($page_owner instanceof ElggGroup) {
+		$title = elgg_echo('bookmarks:bookmarklet:group');
+	} else {
+		$title = elgg_echo('bookmarks:bookmarklet');
+	}
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'bookmarklet', 
+		'text' => $title, 
+		'href' => 'bookmarks/bookmarklet/' . $page_owner->getGUID(),
+	]);
 
 	return $return;
 }
