@@ -2,11 +2,52 @@
 
 namespace Elgg\Groups\Upgrades;
 
+/**
+ * Moves group icons owned by user to directory owned by the groups itself.
+ *
+ * BEFORE: /dataroot/<bucket>/<owner_guid>/groups/<group_guid><size>.jpg
+ * AFTER:  /dataroot/<bucket>/<group_guid>/icons/icon/<size>.jpg
+ */
 class GroupIconTransfer implements \Elgg\Upgrade\Batch {
 
 	const INCREMENT_OFFSET = true;
 
 	const VERSION = 2016101900;
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isRequired() {
+		$groups = elgg_get_entities_from_metadata([
+			'types' => 'group',
+			'metadata_names' => 'icontime',
+		]);
+
+		if (empty($groups)) {
+			return false;
+		}
+
+		$group = array_pop($groups);
+
+		$sizes = elgg_get_icon_sizes('group', $group->getSubtype());
+
+		$dataroot = elgg_get_config('dataroot');
+		$dir = (new \Elgg\EntityDirLocator($group->owner_guid))->getPath();
+		$prefix = 'groups/';
+
+		// Check whether there are icons that are still saved under the
+		// group's owner instead of the group itself.
+		foreach ($sizes as $size => $opts) {
+			$filename = "{$group->guid}{$size}.jpg";
+			$filestorename = "{$dataroot}{$dir}{$prefix}{$filename}";
+			if (file_exists($filestorename)) {
+				// A group icon was found meaning that the upgrade is needed.
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	/**
 	 * {@inheritdoc}
