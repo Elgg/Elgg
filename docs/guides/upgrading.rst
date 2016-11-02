@@ -120,6 +120,7 @@ Removed classes/interfaces
 
  * ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
  * ``Elgg_Notifications_Notification``
+ * ``Elgg\Database\EntityTable\UserFetchResultException.php``
  * ``Exportable`` and its methods ``export`` and ``getExportableValues``: Use ``toObject``
  * ``ExportException``
  * ``Importable`` and its method ``import``.

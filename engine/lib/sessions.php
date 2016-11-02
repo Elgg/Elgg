@@ -346,13 +346,6 @@ function logout() {
 		return false;
 	}
 
-	// deprecate event
-	$message = "The 'logout' event was deprecated. Register for 'logout:before' or 'logout:after'";
-	$version = "1.9";
-	if (!elgg_trigger_deprecated_event('logout', 'user', $user, $message, $version)) {
-		return false;
-	}
-
 	_elgg_services()->persistentLogin->removePersistentLogin();
 
 	// pass along any messages into new session
