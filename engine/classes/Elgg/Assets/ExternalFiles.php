@@ -14,7 +14,7 @@ namespace Elgg\Assets;
 class ExternalFiles {
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -140,6 +140,11 @@ class ExternalFiles {
 			$item->loaded = true;
 			$item->url = '';
 			$item->location = '';
+			
+			if (elgg_view_exists($name)) {
+				$item->url = elgg_get_simplecache_url($name);
+				$item->location = ($type == 'js') ? 'foot' : 'head';
+			}
 
 			$GLOBALS['_ELGG']->externals[$type]->add($item);
 			$GLOBALS['_ELGG']->externals_map[$type][$name] = $item;

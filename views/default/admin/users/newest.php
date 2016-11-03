@@ -1,8 +1,6 @@
 <?php
 
-$view = "admin/users/newest.css";
-elgg_register_css($view, elgg_get_simplecache_url($view));
-elgg_load_css($view);
+elgg_load_css('admin/users/newest.css');
 
 // newest users
 $users = elgg_list_entities([
