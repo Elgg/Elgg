@@ -1,14 +1,13 @@
 Plugins
 #######
 
-Plugins must provide a start.php and manifest.xml file in the plugin root
+Plugins must provide a manifest.xml file in the plugin root
 in order to be recognized by Elgg.
 
 start.php
 =========
 
-The start.php file bootstraps plugin by registering event listeners and plugin
-hooks.
+The start.php file bootstraps plugin by registering event listeners and plugin hooks.
 
 elgg-plugin.php
 ===============

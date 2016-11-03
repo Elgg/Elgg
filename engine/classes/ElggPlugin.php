@@ -844,9 +844,11 @@ class ElggPlugin extends \ElggObject {
 			$this->registerClasses();
 		}
 		
-		// include start file
+		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
-			$this->includeFile('start.php');
+			if ($this->canReadFile('start.php')) {
+				$this->includeFile('start.php');
+			}
 		}
 
 		// include views
@@ -861,7 +863,6 @@ class ElggPlugin extends \ElggObject {
 
 		return true;
 	}
-
 
 	/**
 	 * Includes one of the plugins files

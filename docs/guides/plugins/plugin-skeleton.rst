@@ -68,14 +68,13 @@ The following files for plugin ``example`` would go in ``/mod/example/``
 Required Files
 --------------
 
-Plugins **must** provide a ``start.php`` and ``manifest.xml`` file in the plugin root in order to be recognized by Elgg.
+Plugins **must** provide a ``manifest.xml`` file in the plugin root in order to be recognized by Elgg.
 
 Therefore the following is the minimally compliant structure:
 
 .. code::
 
     mod/example/
-        start.php
         manifest.xml
 
 Actions
