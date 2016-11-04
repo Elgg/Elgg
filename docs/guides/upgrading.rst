@@ -143,7 +143,12 @@ The storage engine for the database tables has been changed from MyISAM to InnoD
 Multi Site Changes
 ------------------
 
-Related to the removal of the multisite concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
+Pre 3.0 Elgg has some (partial) support for having multiple sites in the same database. This Multi Site concept has been completely removed in 3.0.
+Entities no longer have the site_guid attribute. This means there is no longer the ability to have entities on different sites.
+If you currently have multiple sites in your database, upgrading Elgg to 3.0 will fail. 
+You need to separate the different sites into separate databases/tables.
+
+Related to the removal of the Multi Site concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
 All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade. 
 
 Search changes
