@@ -32,8 +32,11 @@ function elgg_activity_page_handler($segments) {
 function elgg_activity_init() {
 	elgg_register_page_handler('activity', 'elgg_activity_page_handler');
 
-	$item = new \ElggMenuItem('activity', elgg_echo('activity'), 'activity');
-	elgg_register_menu_item('site', $item);
+	elgg_register_menu_item('site', [
+		'name' => 'activity',
+		'text' => elgg_echo('activity'),
+		'href' => 'activity',
+	]);
 
 	elgg_register_action('river/delete', '', 'admin');
 
