@@ -84,10 +84,10 @@ $ipsum = elgg_view('developers/ipsum');
 			'options' => array(
 				'option 1',
 				'option 2',
-				[
-		            'text' => 'disabled',
-		            'disabled' => true,
-		        ],
+					[
+					'text' => 'disabled',
+					'disabled' => true,
+				],
 			),
 			'#label' => 'Select input (dropdown) (.elgg-input-dropdown) with a disabled option:',
 		));
@@ -236,7 +236,7 @@ $ipsum = elgg_view('developers/ipsum');
 
 		$dt = new \DateTime(null, new \DateTimeZone('UTC'));
 		$hour_options = array();
-		$hour_options_ts = range(0, 24*60*60, 900); // step of 15 minutes
+		$hour_options_ts = range(0, 24 * 60 * 60, 900); // step of 15 minutes
 		foreach ($hour_options_ts as $ts) {
 			$hour_options[$ts] = $dt->setTimestamp($ts)->format('g:ia');
 		}
@@ -246,26 +246,52 @@ $ipsum = elgg_view('developers/ipsum');
 			'name' => 'f16',
 			'legend' => 'Fieldset with a legend',
 			'fields' => [
-				[
+					[
 					'#type' => 'text',
 					'#label' => 'Text field',
 					'required' => true,
 				],
-				[
+					[
 					'#type' => 'fieldset',
 					'#label' => 'Date and time fieldset',
 					'align' => 'horizontal',
 					'fields' => [
-						[
+							[
 							'#type' => 'date',
 							'value' => time(),
 							'timestamp' => true,
 							'#label' => 'Date',
 						],
-						[
+							[
 							'#type' => 'select',
 							'#label' => 'Time',
 							'options' => $hour_options,
+						],
+					],
+				],
+				[
+					'#type' => 'fieldset',
+					'#label' => 'Nested fieldset',
+					'#help' => 'Fieldset with horizontal alignment of fields',
+					'align' => 'horizontal',
+					'fields' => [
+						[
+							'#type' => 'button',
+							'type' => 'submit',
+							'text' => 'Save',
+							'icon' => 'save',
+						],
+							[
+							'#type' => 'button',
+							'text' => 'Download',
+							'icon' => 'download',
+							'class' => 'elgg-button-action',
+						],
+							[
+							'#type' => 'button',
+							'type' => 'reset',
+							'text' => 'Cancel',
+							'icon' => 'remove',
 						],
 					],
 				],
