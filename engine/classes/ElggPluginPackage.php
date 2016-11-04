@@ -26,7 +26,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $requiredFiles = array(
-		'start.php', 'manifest.xml'
+		'manifest.xml'
 	);
 
 	/**
@@ -721,7 +721,7 @@ class ElggPluginPackage {
 
 	/**
 	 * Returns the last error message.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getError() {
