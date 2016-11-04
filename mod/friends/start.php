@@ -17,7 +17,7 @@ function elgg_friends_plugin_init() {
 	elgg_register_page_handler('friendsof', '_elgg_friends_page_handler');
 	elgg_register_page_handler('collections', '_elgg_collections_page_handler');
 
-	elgg_register_widget_type('friends', elgg_echo('friends'), elgg_echo('friends:widget:description'));
+	elgg_register_widget_type('friends', elgg_echo('friends'), elgg_echo('friends:widget:description'), ['profile', 'dashboard']);
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_friends_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');

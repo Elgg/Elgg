@@ -32,7 +32,7 @@ function file_init() {
 	elgg_register_page_handler('file', 'file_page_handler');
 
 	// Add a new file widget
-	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"));
+	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"), ['profile', 'dashboard']);
 
 	// Register URL handlers for files
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'file_set_url');
@@ -244,7 +244,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  *
  * @param int  $container_guid The GUID of the container of the files
  * @param bool $friends        Whether we're looking at the container or the container's friends
- * 
+ *
  * @return string The typecloud
  */
 function file_get_type_cloud($container_guid = "", $friends = false) {

@@ -727,7 +727,7 @@ QUERY;
  */
 function _elgg_river_init() {
 
-	elgg_register_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
+	elgg_register_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'), ['profile', 'dashboard']);
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 

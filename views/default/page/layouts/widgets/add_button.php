@@ -7,7 +7,6 @@ $href_options = [
 	'context' => elgg_get_context(),
 	'context_stack' => elgg_get_context_stack(),
 	'show_access' => elgg_extract('show_access', $vars, true),
-	'exact_match' => elgg_extract('exact_match', $vars, false),
 	'owner_guid' => elgg_extract('owner_guid', $vars, elgg_get_page_owner_guid()),
 ];
 

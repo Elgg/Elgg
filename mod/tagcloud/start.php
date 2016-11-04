@@ -11,7 +11,7 @@ function tagcloud_init() {
 	
 	elgg_register_page_handler('tags', 'tagcloud_tags_page_handler');
 	
-	elgg_register_widget_type('tagcloud', elgg_echo('tagcloud:widget:title'), elgg_echo('tagcloud:widget:description'));
+	elgg_register_widget_type('tagcloud', elgg_echo('tagcloud:widget:title'), elgg_echo('tagcloud:widget:description'), ['profile', 'dashboard']);
 }
 
 

@@ -63,15 +63,14 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  * @param string|array $handler     An array of options or the identifier for the widget handler
  * @param string       $name        The name of the widget type
  * @param string       $description A description for the widget type
- * @param array        $context     An array of contexts where this
- *                                  widget is allowed (default: array('all'))
+ * @param array        $context     An array of contexts where this widget is allowed
  * @param bool         $multiple    Whether or not multiple instances of this widget
  *                                  are allowed in a single layout (default: false)
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_widget_type($handler, $name = null, $description = null, $context = array('all'), $multiple = false) {
+function elgg_register_widget_type($handler, $name = null, $description = null, $context = [], $multiple = false) {
 	if (is_array($handler)) {
 		$definition = \Elgg\WidgetDefinition::factory($handler);
 	} else {
@@ -125,18 +124,16 @@ function elgg_is_widget_type($handler, $context = null, \ElggEntity $container =
  * The contents of the array will be passed to the handlers:widgets hook.
  *
  * @param array|string $context An associative array of options or the widget context
- * @param bool         $exact   Only return widgets registered for this context (false)
  *
  * @return \Elgg\WidgetDefinition[]
  * @since 1.8.0
  */
-function elgg_get_widget_types($context = "", $exact = false) {
+function elgg_get_widget_types($context = "") {
 	if (is_array($context)) {
 		$params = $context;
 	} else {
 		$params = [
 			'context' => $context,
-			'exact' => $exact,
 			'container' => null,
 		];
 	}
@@ -191,7 +188,6 @@ function _elgg_widgets_page_handler($page) {
 	echo elgg_view_resource('widgets/add_panel', [
 		'owner_guid' => $owner_guid,
 		'context' => get_input('context'),
-		'exact_match' => get_input('exact_match'),
 	]);
 	return true;
 }
