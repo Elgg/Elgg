@@ -228,15 +228,6 @@ your new element (defaulting to the current user's container):
     $container = get_entity($container_guid);
     forward($container->getURL());
 
-Usernames and page ownership
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Groups have a simulated username of the form *group:\ GUID*, which you
-can get the value of by checking ``$group->username``. If you pass this
-username to a page on the URL line as part of the ``username`` variable
-(i.e., ``/yourpage?username=group:nnn``), Elgg will automatically
-register that group as being the owner of the page (unless overridden).
-
 Juggling users and groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 

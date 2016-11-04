@@ -107,21 +107,9 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 	$ia = elgg_set_ignore_access(true);
 
 	$username = get_input("username");
-	if ($username) {
-		// @todo using a username of group:<guid> is deprecated
-		if (substr_count($username, 'group:')) {
-			preg_match('/group\:([0-9]+)/i', $username, $matches);
-			$guid = $matches[1];
-			if ($entity = get_entity($guid)) {
-				elgg_set_ignore_access($ia);
-				return $entity->getGUID();
-			}
-		}
-
-		if ($user = get_user_by_username($username)) {
-			elgg_set_ignore_access($ia);
-			return $user->getGUID();
-		}
+	if ($user = get_user_by_username($username)) {
+		elgg_set_ignore_access($ia);
+		return $user->getGUID();
 	}
 
 	$owner = get_input("owner_guid");
