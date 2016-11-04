@@ -117,7 +117,7 @@ function search_groups_hook($hook, $type, $value, $params) {
  * Get users that match the search parameters.
  *
  * Searches on username, display name, and profile fields
- * 
+ *
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param array  $value  Empty array
@@ -138,7 +138,7 @@ function search_users_hook($hook, $type, $value, $params) {
 		
 	// username and display name
 	$fields = array('username', 'name');
-	$where = search_get_where_sql('ue', $fields, $params, FALSE);
+	$where = search_get_where_sql('ue', $fields, $params);
 
 	// profile fields
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
@@ -162,8 +162,6 @@ function search_users_hook($hook, $type, $value, $params) {
 		));
 	
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-		// no fulltext index, can't disable fulltext search in this function.
-		// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
 		$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
 		
 		$params['wheres'][] = "(($where) OR ($md_where))";

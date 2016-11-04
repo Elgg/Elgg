@@ -114,6 +114,7 @@ Removed global vars
  * ``$ENTITY_CACHE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``
  * ``$CONFIG->site_id``: Use ``elgg_get_config('site_guid')`` or ``elgg_get_site_entity()->guid``
+ * ``$CONFIG->search_info``
 
 Removed classes/interfaces
 --------------------------
@@ -127,6 +128,20 @@ Removed classes/interfaces
  * ``ImportException``
  * ``ODD`` and all classes beginning with ``ODD*``.
  * ``XmlElement``
+ 
+Schema changes
+--------------
+ 
+The storage engine for the database tables has been changed from MyISAM to InnoDB. You maybe need to optimize your database settings for this change.
+
+Search changes
+--------------
+
+The FULLTEXT indices have been removed on various tables. The search plugin will now always use a like query when performing a search.
+
+ * ``search_get_where_sql`` no longer supports the argument ``use_fulltext``
+ * ``search_get_ft_min_max`` function is removed
+ * ``$CONFIG->search_info`` is no longer provided
 
 Form and field related changes
 ------------------------------

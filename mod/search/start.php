@@ -26,13 +26,6 @@ function search_init() {
 	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
 	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
-	// get server min and max allowed chars for ft searching
-	$CONFIG->search_info = array();
-
-	$ft_min_max = search_get_ft_min_max();
-	$CONFIG->search_info['min_chars'] = $ft_min_max->min;
-	$CONFIG->search_info['max_chars'] = $ft_min_max->max;
-
 	// add in CSS for search elements
 	elgg_extend_view('elgg.css', 'search/css');
 
@@ -296,7 +289,6 @@ function search_highlight_words($words, $string) {
  * @return mixed
  */
 function search_remove_ignored_words($query, $format = 'array') {
-	global $CONFIG;
 
 	// don't worry about "s or boolean operators
 	//$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
@@ -305,24 +297,12 @@ function search_remove_ignored_words($query, $format = 'array') {
 	
 	$words = preg_split('/\s+/', $query);
 
-	$min_chars = $CONFIG->search_info['min_chars'];
-	// if > ft_min_word we're not running in literal mode.
-	if (elgg_strlen($query) >= $min_chars) {
-		// clean out any words that are ignored by mysql
-		foreach ($words as $i => $word) {
-			if (elgg_strlen($word) < $min_chars) {
-				unset ($words[$i]);
-			}
-		}
-	}
-
 	if ($format == 'string') {
 		return implode(' ', $words);
 	}
 
 	return $words;
 }
-
 
 /**
  * Passes results, and original params to the view functions for
@@ -381,7 +361,7 @@ function search_get_search_view($params, $view_type) {
  * @param array $params Original search params
  * @return str
  */
-function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
+function search_get_where_sql($table, $fields, $params) {
 	global $CONFIG;
 	$query = $params['query'];
 
@@ -391,52 +371,23 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 			$fields[$i] = "$table.$field";
 		}
 	}
-	
-	$where = '';
 
-	// if query is shorter than the min for fts words
-	// it's likely a single acronym or similar
-	// switch to literal mode
-	if (elgg_strlen($query) < $CONFIG->search_info['min_chars']) {
-		$likes = array();
-		$query = sanitise_string($query);
-		foreach ($fields as $field) {
-			$likes[] = "$field LIKE '%$query%'";
+	$likes = [];
+	$query_parts = explode(' ', $query);
+	foreach ($fields as $field) {
+		$sublikes = [];
+		foreach ($query_parts as $query_part) {
+			$query_part = sanitise_string($query_part);
+			if (strlen($query_part) == 0) {
+				continue;
+			}
+			$sublikes[] = "$field LIKE '%$query_part%'";
 		}
-		$likes_str = implode(' OR ', $likes);
-		$where = "($likes_str)";
-	} else {
-		// if we're not using full text, rewrite the query for bool mode.
-		// exploiting a feature(ish) of bool mode where +-word is the same as -word
-		if (!$use_fulltext) {
-			$query = '+' . str_replace(' ', ' +', $query);
-		}
-		
-		// if using advanced, boolean operators, or paired "s, switch into boolean mode
-		$booleans_used = preg_match("/([\-\+~])([\w]+)/i", $query);
-		$advanced_search = (isset($params['advanced_search']) && $params['advanced_search']);
-		$quotes_used = (elgg_substr_count($query, '"') >= 2); 
-		
-		if (!$use_fulltext || $booleans_used || $advanced_search || $quotes_used) {
-			$options = 'IN BOOLEAN MODE';
-		} else {
-			// natural language mode is default and this keyword isn't supported in < 5.1
-			//$options = 'IN NATURAL LANGUAGE MODE';
-			$options = '';
-		}
-		
-		// if short query, use query expansion.
-		// @todo doesn't seem to be working well.
-//		if (elgg_strlen($query) < 5) {
-//			$options .= ' WITH QUERY EXPANSION';
-//		}
-		$query = sanitise_string($query);
-
-		$fields_str = implode(',', $fields);
-		$where = "(MATCH ($fields_str) AGAINST ('$query' $options))";
+		$likes[] = '(' . implode(' AND ', $sublikes) . ')';
 	}
 
-	return $where;
+	$likes_str = implode(' OR ', $likes);
+	return "($likes_str)";
 }
 
 
@@ -509,38 +460,4 @@ Disallow: /search/
 TEXT;
 
 	return $text;
-}
-
-/**
- * Returns minimum and maximum lengths of words for MySQL search
- * This function looks for stored config values, and, if none set,
- * queries the DB and saves them
- * @return stdClass An object with min and max properties
- */
-function search_get_ft_min_max() {
-
-	$min = (int) elgg_get_config('search_ft_min_word_len');
-	$max = (int) elgg_get_config('search_ft_max_word_len');
-
-	if (!$min || !$max) {
-		// defaults from MySQL on Ubuntu Linux
-		$min = 4;
-		$max = 90;
-		try {
-			$result = get_data_row('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
-			$min = $result->min;
-			$max = $result->max;
-		} catch (DatabaseException $e) {
-			// some servers don't have these values set which leads to exception
-			// we ignore the exception
-		}
-		elgg_save_config('search_ft_min_word_len', $min);
-		elgg_save_config('search_ft_max_word_len', $max);
-	}
-
-	$ft = new stdClass();
-	$ft->min = $min;
-	$ft->max = $max;
-
-	return $ft;
 }
