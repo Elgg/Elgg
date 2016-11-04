@@ -349,37 +349,6 @@ class Annotations {
 		if (!$options) {
 			return false;
 		}
-	
-		// because of performance issues support for ordering by maxtime has been dropped
-		// @see https://github.com/Elgg/Elgg/issues/6638
-		if (isset($options['order_by']) && preg_match('~\bmaxtime\b~i', $options['order_by'])) {
-			// check if the user provided maxtime
-			$deprecated = true;
-			if (isset($options['selects'])) {
-				$selects = $options['selects'];
-				if (!is_array($selects)) {
-					$selects = array($selects);
-				}
-					
-				foreach ($selects as $select) {
-					if (preg_match('~\bmaxtime\b~i', $options['order_by'])) {
-						$deprecated = false;
-						break;
-					}
-				}
-			}
-		
-			// the user didn't provide maxtime
-			if ($deprecated) {
-				// special sorting for annotations
-				elgg_deprecated_notice(__FUNCTION__ . ": no longer orders by annotations by default. If you order"
-					. " by maxtime, you must provide that column via \$options['selects']. See"
-					. " https://github.com/Elgg/Elgg/issues/6638#issuecomment-41562034", "1.10");
-					
-				$options['selects'][] = "MAX(n_table.time_created) AS maxtime";
-				$options['group_by'] = 'n_table.entity_guid';
-			}
-		}
 		
 		$time_wheres = _elgg_get_entity_time_where_sql('n_table', $options['annotation_created_time_upper'],
 			$options['annotation_created_time_lower']);
