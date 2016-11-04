@@ -185,7 +185,6 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$time_minimum = time() - 5;
 		$this->assertTrue($this->entity->time_created > $time_minimum);
 		$this->assertTrue($this->entity->time_updated > $time_minimum);
-		$this->assertEqual($this->entity->site_guid, elgg_get_site_entity()->guid);
 		$this->assertEqual($this->entity->container_guid, elgg_get_logged_in_user_guid());
 	}
 

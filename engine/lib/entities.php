@@ -270,8 +270,6 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  * 	container_guids => null|ARR Array of container_guids
  *
- * 	site_guids => null (current_site)|ARR Array of site_guid
- *
  * 	order_by => null (time_created desc)|STR SQL order by clause
  *
  *  reverse_order_by => BOOL Reverse the default order by clause
@@ -483,15 +481,13 @@ function _elgg_get_entity_attribute_where_sql(array $options = array()) {
  * @param string $type           The type of entity
  * @param string $subtype        The subtype of entity
  * @param int    $container_guid The container GUID that the entities belong to
- * @param int    $site_guid      The site GUID
+ * @param int    $ignored        Ignored parameter
  * @param string $order_by       Order_by SQL order by clause
  *
  * @return array|false Either an array months as YYYYMM, or false on failure
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0,
-		$order_by = 'time_created') {
-	return _elgg_services()->entityTable->getDates(
-		$type, $subtype, $container_guid, $site_guid, $order_by);
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0,	$order_by = 'time_created') {
+	return _elgg_services()->entityTable->getDates($type, $subtype, $container_guid, $order_by);
 }
 
 /**
@@ -724,6 +720,29 @@ function elgg_instanceof($entity, $type = null, $subtype = null) {
 	}
 
 	return $return;
+}
+
+/**
+ * Checks options for the existing of site_guid or site_guids contents and reports a warning if found
+ *
+ * @param array $options array of options to check
+ *
+ * @return void
+ */
+function _elgg_check_unsupported_site_guid(array $options = []) {
+	$site_guid = elgg_extract('site_guid', $options, elgg_extract('site_guids', $options));
+	if ($site_guid === null) {
+		return;
+	}
+	
+	$backtrace = debug_backtrace();
+	// never show this call.
+	array_shift($backtrace);
+	
+	$warning = "Passing site_guid or site_guids to the function {$backtrace[0]['function']} in {$backtrace[0]['file']} is not supported.";
+	$warning .= "Please update your usage of the function.";
+	
+	_elgg_services()->logger->warn($warning);
 }
 
 /**

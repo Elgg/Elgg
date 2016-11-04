@@ -168,7 +168,6 @@ class ElggObjectTest extends \Elgg\TestCase {
 		$prep->subtype = $object->getSubtype();
 		$prep->owner_guid = $object->getOwnerGUID();
 		$prep->container_guid = $object->getContainerGUID();
-		$prep->site_guid = (int) $object->site_guid;
 		$prep->time_created = date('c', $object->getTimeCreated());
 		$prep->time_updated = date('c', $object->getTimeUpdated());
 		$prep->url = $object->getURL();

@@ -28,7 +28,6 @@ class ElggEntityTest extends \Elgg\TestCase {
 		$this->assertEquals(null, $this->obj->subtype);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->owner_guid);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->container_guid);
-		$this->assertEquals(null, $this->obj->site_guid);
 		$this->assertEquals(ACCESS_PRIVATE, $this->obj->access_id);
 		$this->assertEquals(null, $this->obj->time_created);
 		$this->assertEquals(null, $this->obj->time_updated);
@@ -127,7 +126,6 @@ class ElggEntityTest extends \Elgg\TestCase {
 			'time_updated',
 			'container_guid',
 			'owner_guid',
-			'site_guid',
 			'url',
 			'read_access',
 		);

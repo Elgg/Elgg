@@ -25,7 +25,7 @@ function string_to_tag_array($string) {
 	$ar = array_filter($ar, 'is_not_null');
 	$ar = array_map('strip_tags', $ar);
 	$ar = array_unique($ar);
-	return $ar;	
+	return $ar;
 }
 
 /**
@@ -57,8 +57,6 @@ function string_to_tag_array($string) {
  *
  * 	container_guids => null|INT container_guid
  *
- * 	site_guids => null (current_site)|INT site_guid
- *
  * 	created_time_lower => null|INT Created time lower boundary in epoch time
  *
  * 	created_time_upper => null|INT Created time upper boundary in epoch time
@@ -78,6 +76,8 @@ function string_to_tag_array($string) {
 function elgg_get_tags(array $options = array()) {
 	global $CONFIG;
 
+	_elgg_check_unsupported_site_guid($options);
+	
 	$defaults = array(
 		'threshold' => 1,
 		'tag_names' => array(),
@@ -89,7 +89,6 @@ function elgg_get_tags(array $options = array()) {
 
 		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
-		'site_guids' => $CONFIG->site_guid,
 
 		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
@@ -103,7 +102,7 @@ function elgg_get_tags(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid', 'tag_name');
+	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'tag_name');
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$registered_tags = elgg_get_registered_tag_metadata_names();
@@ -131,7 +130,6 @@ function elgg_get_tags(array $options = array()) {
 
 	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
-	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
 	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],

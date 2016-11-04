@@ -292,22 +292,14 @@ class Plugins {
 	 * Returns if a plugin is active for a current site.
 	 *
 	 * @param string $plugin_id The plugin ID
-	 * @param int    $site_guid The site guid
 	 * @return bool
 	 */
-	function isActive($plugin_id, $site_guid = null) {
-		$current_site_guid = elgg_get_site_entity()->guid;
-
-		if ($this->active_guids_known
-				&& ($site_guid === null || $site_guid == $current_site_guid)) {
+	function isActive($plugin_id) {
+		if ($this->active_guids_known) {
 			return isset($this->active_guids[$plugin_id]);
 		}
 
-		if ($site_guid) {
-			$site = get_entity($site_guid);
-		} else {
-			$site = elgg_get_site_entity();
-		}
+		$site = elgg_get_site_entity();
 	
 		if (!($site instanceof \ElggSite)) {
 			return false;
@@ -402,18 +394,15 @@ class Plugins {
 	/**
 	 * Returns an ordered list of plugins
 	 *
-	 * @param string $status    The status of the plugins. active, inactive, or all.
-	 * @param mixed  $site_guid Optional site guid
+	 * @param string $status The status of the plugins. active, inactive, or all.
 	 * @return \ElggPlugin[]
 	 */
-	function find($status = 'active', $site_guid = null) {
+	function find($status = 'active') {
 		$db_prefix = elgg_get_config('dbprefix');
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 	
-		if (!$site_guid) {
-			$site_guid = elgg_get_site_entity()->guid;
-		}
-	
+		$site_guid = elgg_get_site_entity()->guid;
+		
 		// grab plugins
 		$options = array(
 			'type' => 'object',

@@ -11,7 +11,7 @@ use Elgg\Filesystem\Directory;
 class Config implements Services\Config {
 	/**
 	 * Configuration storage. Is usually reference to global $CONFIG
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $config;
@@ -63,19 +63,8 @@ class Config implements Services\Config {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getSiteUrl($site_guid = 0) {
-		if ($site_guid == 0) {
-			return $this->config->wwwroot;
-		}
-	
-		$site = get_entity($site_guid);
-	
-		if (!$site instanceof \ElggSite) {
-			return false;
-		}
-		/* @var \ElggSite $site */
-	
-		return $site->url;
+	public function getSiteUrl() {
+		return $this->config->wwwroot;
 	}
 
 	/**
@@ -151,37 +140,26 @@ class Config implements Services\Config {
 	public function get($name, $site_guid = 0) {
 		$name = trim($name);
 	
-		// do not return $config value if asking for non-current site
-		if (($site_guid === 0 || $site_guid === null || $site_guid == $this->config->site_guid) && isset($this->config->$name)) {
+		if (isset($this->config->$name)) {
 			return $this->config->$name;
 		}
-	
+		
+		$value = null;
 		if ($site_guid === null) {
 			// installation wide setting
 			$value = _elgg_services()->datalist->get($name);
-		} else {
-			if ($site_guid == 0) {
-				$site_guid = (int) $this->config->site_guid;
-			}
-	
-			// hit DB only if we're not sure if value isn't already loaded
-			if (!isset($this->config->site_config_loaded) || $site_guid != $this->config->site_guid) {
-				// site specific setting
-				$value = _elgg_services()->configTable->get($name, $site_guid);
-			} else {
-				$value = null;
-			}
+		} elseif (!isset($this->config->site_config_loaded)) {
+			// site specific setting
+			$value = _elgg_services()->configTable->get($name, $site_guid);
 		}
-	
+		
 		// @todo document why we don't cache false
 		if ($value === false) {
 			return null;
 		}
 	
-		if ($site_guid == $this->config->site_guid || $site_guid === null) {
-			$this->config->$name = $value;
-		}
-	
+		$this->config->$name = $value;
+		
 		return $value;
 	}
 
@@ -217,15 +195,10 @@ class Config implements Services\Config {
 			}
 			$result = _elgg_services()->datalist->set($name, $value);
 		} else {
-			if ($site_guid == 0) {
-				$site_guid = (int) $this->config->site_guid;
-			}
-			$result = _elgg_services()->configTable->set($name, $value, $site_guid);
+			$result = _elgg_services()->configTable->set($name, $value);
 		}
-	
-		if ($site_guid === null || $site_guid == $this->config->site_guid) {
-			$this->set($name, $value);
-		}
+
+		$this->set($name, $value);
 	
 		return $result;
 	}

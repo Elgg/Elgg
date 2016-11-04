@@ -44,11 +44,11 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 		// User is not a member of the group
 		// Member-only group
 		$this->group->setContentAccessMode($membersonly);
-		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
+		$write_access = get_write_access_array($this->user->guid, true);
 		$this->assertFalse(array_key_exists($this->group->group_acl, $write_access));
 		// Unrestricted group
 		$this->group->setContentAccessMode($unrestricted);
-		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
+		$write_access = get_write_access_array($this->user->guid, true);
 		$this->assertFalse(array_key_exists($this->group->group_acl, $write_access));
 
 		// User is a member (can write to container)
@@ -56,11 +56,11 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 
 		// Member-only group
 		$this->group->setContentAccessMode($membersonly);
-		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
+		$write_access = get_write_access_array($this->user->guid, true);
 		$this->assertTrue(array_key_exists($this->group->group_acl, $write_access));
 		// Unrestricted group
 		$this->group->setContentAccessMode($unrestricted);
-		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
+		$write_access = get_write_access_array($this->user->guid, true);
 		$this->assertTrue(array_key_exists($this->group->group_acl, $write_access));
 
 		elgg_set_ignore_access($ia);

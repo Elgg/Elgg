@@ -30,7 +30,6 @@
  * @property-read  int    $guid           The unique identifier for this entity (read only)
  * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property       int    $container_guid The GUID of the entity containing this entity
- * @property       int    $site_guid      The GUID of the website this entity is associated with
  * @property       int    $access_id      Specifies the visibility level of this entity
  * @property       int    $time_created   A UNIX timestamp of when the entity was created
  * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
@@ -96,7 +95,6 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
 		$this->attributes['container_guid'] = _elgg_services()->session->getLoggedInUserGuid();
 
-		$this->attributes['site_guid'] = null;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
@@ -1216,7 +1214,7 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Returns entity icon as an ElggIcon object
 	 * The icon file may or may not exist on filestore
-	 * 
+	 *
 	 * @param string $size Size of the icon
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return \ElggIcon
@@ -1227,7 +1225,7 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Removes all icon files and metadata for the passed type of icon.
-	 * 
+	 *
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return bool
 	 */
@@ -1237,10 +1235,10 @@ abstract class ElggEntity extends \ElggData implements
 	
 	/**
 	 * Returns the timestamp of when the icon was changed.
-	 * 
+	 *
 	 * @param string $size The size of the icon
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
-	 * 
+	 *
 	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
 	 */
 	public function getIconLastChange($size, $type = 'icon') {
@@ -1313,7 +1311,7 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Gets the sites this entity is a member of
 	 *
-	 * Site membership is determined by relationships and not site_guid.
+	 * Site membership is determined by relationship.
 	 *
 	 * @param array $options Options array for elgg_get_entities_from_relationship()
 	 *                       Parameters set automatically by this method:
@@ -1326,9 +1324,6 @@ abstract class ElggEntity extends \ElggData implements
 		$options['relationship'] = 'member_of_site';
 		$options['relationship_guid'] = $this->guid;
 		$options['inverse_relationship'] = false;
-		if (!isset($options['site_guid']) || !isset($options['site_guids'])) {
-			$options['site_guids'] = ELGG_ENTITIES_ANY_VALUE;
-		}
 
 		return elgg_get_entities_from_relationship($options);
 	}
@@ -1400,12 +1395,6 @@ abstract class ElggEntity extends \ElggData implements
 		$access_id = (int)$this->attributes['access_id'];
 		$now = $this->getCurrentTime()->getTimestamp();
 		$time_created = isset($this->attributes['time_created']) ? (int)$this->attributes['time_created'] : $now;
-
-		$site_guid = $this->attributes['site_guid'];
-		if ($site_guid == 0) {
-			$site_guid = elgg_get_config('site_guid');
-		}
-		$site_guid = (int)$site_guid;
 		
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
@@ -1459,7 +1448,6 @@ abstract class ElggEntity extends \ElggData implements
 			'subtype_id' => $subtype_id,
 			'owner_guid' => $owner_guid,
 			'container_guid' => $container_guid,
-			'site_guid' => $site_guid,
 			'access_id' => $access_id,
 			'time_created' => $time_created,
 			'time_updated' => $now,
@@ -1476,7 +1464,6 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['time_created'] = (int)$time_created;
 		$this->attributes['time_updated'] = (int)$now;
 		$this->attributes['last_action'] = (int)$now;
-		$this->attributes['site_guid'] = (int)$site_guid;
 		$this->attributes['container_guid'] = (int)$container_guid;
 
 		// Save any unsaved metadata
@@ -1698,7 +1685,7 @@ abstract class ElggEntity extends \ElggData implements
 
 			$subentities = new \ElggBatch('elgg_get_entities', [
 				'wheres' => [
-					"e.container_guid = $guid OR e.owner_guid = $guid OR e.site_guid = $guid",
+					"e.container_guid = $guid OR e.owner_guid = $guid",
 					"e.guid != $guid"
 				],
 				'limit' => 0,
@@ -1870,7 +1857,7 @@ abstract class ElggEntity extends \ElggData implements
 			// this should probably be prevented in \ElggEntity instead of checked for here
 			$options = array(
 				'wheres' => array(
-					"((container_guid = $guid OR owner_guid = $guid OR site_guid = $guid)"
+					"((container_guid = $guid OR owner_guid = $guid)"
 					. " AND guid != $guid)"
 					),
 				'limit' => 0
@@ -1959,7 +1946,6 @@ abstract class ElggEntity extends \ElggData implements
 		$object->subtype = $this->getSubtype();
 		$object->owner_guid = $this->getOwnerGUID();
 		$object->container_guid = $this->getContainerGUID();
-		$object->site_guid = (int)$this->site_guid;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->time_updated = date('c', $this->getTimeUpdated());
 		$object->url = $this->getURL();

@@ -165,21 +165,16 @@ class BootService {
 	/**
 	 * Invalidate the cache item
 	 *
-	 * @param int $site_guid Site GUID or empty for current site
-	 *
 	 * @return void
 	 */
-	public function invalidateCache($site_guid = 0) {
+	public function invalidateCache() {
 		$CONFIG = _elgg_services()->config->getStorageObject();
-		if (!$site_guid) {
-			$site_guid = $CONFIG->site_guid;
-		}
-
+		
 		// this gets called a lot on plugins page, avoid thrashing cache
-		static $cleared = [];
-		if (empty($cleared[$site_guid])) {
-			$this->getStashItem($CONFIG, $site_guid)->clear();
-			$cleared[$site_guid] = true;
+		static $cleared = false;
+		if (!$cleared) {
+			$this->getStashItem($CONFIG)->clear();
+			$cleared = true;
 		}
 	}
 
@@ -202,7 +197,7 @@ class BootService {
 			return $data;
 		}
 
-		$item = $this->getStashItem($CONFIG, $CONFIG->site_guid);
+		$item = $this->getStashItem($CONFIG);
 		$item->setInvalidationMethod(Invalidation::NONE);
 		$data = $item->get();
 		if ($item->isMiss()) {
@@ -221,12 +216,11 @@ class BootService {
 	/**
 	 * Get a Stash cache item
 	 *
-	 * @param \stdClass $CONFIG    Elgg config object
-	 * @param int       $site_guid The current site GUID
+	 * @param \stdClass $CONFIG Elgg config object
 	 *
 	 * @return \Stash\Interfaces\ItemInterface
 	 */
-	private function getStashItem(\stdClass $CONFIG, $site_guid) {
+	private function getStashItem(\stdClass $CONFIG) {
 		if (!empty($CONFIG->memcache)) {
 			$options = [];
 			if (!empty($CONFIG->memcache_servers)) {
@@ -243,6 +237,6 @@ class BootService {
 				]);
 			}
 		}
-		return (new Pool($driver))->getItem("boot_data_{$site_guid}");
+		return (new Pool($driver))->getItem("boot_data");
 	}
 }

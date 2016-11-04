@@ -98,7 +98,6 @@ class ElggPlugin extends \ElggObject {
 	public function save() {
 		// own by the current site so users can be deleted without affecting plugins
 		$site = _elgg_services()->configTable->get('site');
-		$this->attributes['site_guid'] = $site->guid;
 		$this->attributes['owner_guid'] = $site->guid;
 		$this->attributes['container_guid'] = $site->guid;
 		
@@ -221,13 +220,12 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Sets the priority of the plugin
 	 *
-	 * @param mixed $priority  The priority to set. One of +1, -1, first, last, or a number.
-	 *                         If given a number, this will displace all plugins at that number
-	 *                         and set their priorities +1
-	 * @param mixed $site_guid Optional site GUID.
+	 * @param mixed $priority The priority to set. One of +1, -1, first, last, or a number.
+	 *                        If given a number, this will displace all plugins at that number
+	 *                        and set their priorities +1
 	 * @return bool
 	 */
-	public function setPriority($priority, $site_guid = null) {
+	public function setPriority($priority) {
 		if (!$this->guid) {
 			return false;
 		}
@@ -636,19 +634,14 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Is this plugin active?
 	 *
-	 * @param int $site_guid Optional site guid.
 	 * @return bool
 	 */
-	public function isActive($site_guid = null) {
+	public function isActive() {
 		if (!$this->guid) {
 			return false;
 		}
 
-		if ($site_guid) {
-			$site = get_entity($site_guid);
-		} else {
-			$site = _elgg_services()->configTable->get('site');
-		}
+		$site = _elgg_services()->configTable->get('site');
 
 		if (!($site instanceof \ElggSite)) {
 			return false;
@@ -661,13 +654,10 @@ class ElggPlugin extends \ElggObject {
 	 * Checks if this plugin can be activated on the current
 	 * Elgg installation.
 	 *
-	 * @todo remove $site_guid param or implement it
-	 *
-	 * @param mixed $site_guid Optional site guid
 	 * @return bool
 	 */
-	public function canActivate($site_guid = null) {
-		if ($this->isActive($site_guid)) {
+	public function canActivate() {
+		if ($this->isActive()) {
 			return false;
 		}
 
@@ -689,11 +679,10 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Actives the plugin for the current site.
 	 *
-	 * @param mixed $site_guid Optional site GUID.
 	 * @return bool
 	 */
-	public function activate($site_guid = null) {
-		if ($this->isActive($site_guid)) {
+	public function activate() {
+		if ($this->isActive()) {
 			return false;
 		}
 
@@ -706,7 +695,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		if (!$this->setStatus(true, $site_guid)) {
+		if (!$this->setStatus(true)) {
 			return false;
 		}
 
@@ -735,7 +724,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		if ($return === false) {
-			$this->deactivate($site_guid);
+			$this->deactivate();
 		}
 
 		return $return;
@@ -746,11 +735,10 @@ class ElggPlugin extends \ElggObject {
 	 * Elgg installation. Validates that this plugin has no
 	 * active dependants.
 	 *
-	 * @param mixed $site_guid Optional site guid
 	 * @return bool
 	 */
-	public function canDeactivate($site_guid = null) {
-		if (!$this->isActive($site_guid)) {
+	public function canDeactivate() {
+		if (!$this->isActive()) {
 			return false;
 		}
 
@@ -793,11 +781,10 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Deactivates the plugin.
 	 *
-	 * @param mixed $site_guid Optional site GUID.
 	 * @return bool
 	 */
-	public function deactivate($site_guid = null) {
-		if (!$this->isActive($site_guid)) {
+	public function deactivate() {
+		if (!$this->isActive()) {
 			return false;
 		}
 
@@ -823,7 +810,7 @@ class ElggPlugin extends \ElggObject {
 		if ($return === false) {
 			return false;
 		} else {
-			return $this->setStatus(false, $site_guid);
+			return $this->setStatus(false);
 		}
 	}
 
@@ -1037,28 +1024,19 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
-	 * Sets the plugin to active or inactive for $site_guid.
+	 * Sets the plugin to active or inactive.
 	 *
-	 * @param bool  $active    Set to active or inactive
-	 * @param mixed $site_guid Int for specific site, null for current site.
+	 * @param bool $active Set to active or inactive
 	 *
 	 * @return bool
 	 */
-	private function setStatus($active, $site_guid = null) {
+	private function setStatus($active) {
 		if (!$this->guid) {
 			return false;
 		}
 
-		if ($site_guid) {
-			$site = get_entity($site_guid);
-
-			if (!($site instanceof \ElggSite)) {
-				return false;
-			}
-		} else {
-			$site = _elgg_services()->configTable->get('site');
-		}
-
+		$site = _elgg_services()->configTable->get('site');
+		
 		if ($active) {
 			$result = add_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		} else {

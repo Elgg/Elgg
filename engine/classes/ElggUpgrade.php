@@ -46,7 +46,6 @@ class ElggUpgrade extends ElggObject {
 		$this->attributes['subtype'] = 'elgg_upgrade';
 
 		// unowned
-		$this->attributes['site_guid'] = 0;
 		$this->attributes['container_guid'] = 0;
 		$this->attributes['owner_guid'] = 0;
 

@@ -20,12 +20,11 @@ use Elgg\Filesystem\Directory;
 /**
  * Get the URL for the current (or specified) site
  *
- * @param int $site_guid The GUID of the site whose URL we want to grab
  * @return string
  * @since 1.8.0
  */
-function elgg_get_site_url($site_guid = 0) {
-	return _elgg_services()->config->getSiteUrl($site_guid);
+function elgg_get_site_url() {
+	return _elgg_services()->config->getSiteUrl();
 }
 
 /**
@@ -88,7 +87,7 @@ function elgg_get_engine_path() {
  * Get an Elgg configuration value
  *
  * @param string $name      Name of the configuration value
- * @param int    $site_guid null for installation setting, 0 for default site
+ * @param int    $site_guid null for installation setting anything else for default site
  *
  * @return mixed Configuration value or null if it does not exist
  * @since 1.8.0
@@ -122,7 +121,7 @@ function elgg_set_config($name, $value) {
  *
  * @param string $name      Configuration name (cannot be greater than 255 characters)
  * @param mixed  $value     Configuration value. Should be string for installation setting
- * @param int    $site_guid null for installation setting, 0 for default site
+ * @param int    $site_guid null for installation setting anything else for default site
  *
  * @return bool
  * @since 1.8.0
@@ -175,16 +174,15 @@ function datalist_set($name, $value) {
  * @note Internal: These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
  *
- * @param string $name      The name of the field.
- * @param int    $site_guid Optionally, the GUID of the site (default: current site).
+ * @param string $name The name of the field.
  *
  * @return bool Success or failure
  *
  * @see get_config()
  * @see set_config()
  */
-function unset_config($name, $site_guid = 0) {
-	return _elgg_services()->configTable->remove($name, $site_guid);
+function unset_config($name) {
+	return _elgg_services()->configTable->remove($name);
 }
 
 /**
@@ -204,15 +202,14 @@ function unset_config($name, $site_guid = 0) {
  *
  * @param string $name      The name of the configuration value
  * @param mixed  $value     Its value
- * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
  *
  * @return bool
  * @see unset_config()
  * @see get_config()
  * @access private
  */
-function set_config($name, $value, $site_guid = 0) {
-	return _elgg_services()->configTable->set($name, $value, $site_guid);
+function set_config($name, $value) {
+	return _elgg_services()->configTable->set($name, $value);
 }
 
 /**
@@ -224,15 +221,14 @@ function set_config($name, $value, $site_guid = 0) {
  * during system boot into $CONFIG.
  *
  * @param string $name      The name of the config value
- * @param int    $site_guid Optionally, the GUID of the site (default: current site)
  *
  * @return mixed|null
  * @see set_config()
  * @see unset_config()
  * @access private
  */
-function get_config($name, $site_guid = 0) {
-	return _elgg_services()->configTable->get($name, $site_guid);
+function get_config($name) {
+	return _elgg_services()->configTable->get($name);
 }
 
 /**
