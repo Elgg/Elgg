@@ -39,7 +39,7 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	 * {@inheritdoc}
 	 */
 	public function registerHandler($name, $type, $callback, $priority = 500) {
-		if (in_array($type, ['member', 'friend', 'member_of_site', 'attached'])
+		if (in_array($type, ['member', 'friend', 'attached'])
 				&& in_array($name, ['create', 'update', 'delete'])) {
 			$this->logger->error("'$name, $type' event is no longer triggered. Update your event registration "
 				. "to use '$name, relationship'");

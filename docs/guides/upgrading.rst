@@ -76,6 +76,9 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``run_function_once``: Use ``Elgg\Upgrade\Batch`` interface
  * ``system_messages``
  * ``notifications_plugin_pagesetup``
+ * ``ElggEntity::addToSite``
+ * ``ElggEntity::getSites``
+ * ``ElggEntity::removeFromSite``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
  * ``ElggFile::size``: Use ``getSize``
  * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
@@ -90,14 +93,17 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggMenuItem::setWeight``: Use ``setPriority``
  * ``ElggRiverItem::getPostedTime``: Use ``getTimePosted``
  * ``ElggSession`` has removed all deprecated methods
- * ``ElggSite::addObject``: Use ``addEntity``
- * ``ElggSite::addUser``: Use ``addEntity``
+ * ``ElggSite::addEntity``
+ * ``ElggSite::addObject``
+ * ``ElggSite::addUser``
+ * ``ElggSite::getEntities``: Use ``elgg_get_entities_from_relationship()``
  * ``ElggSite::getExportableValues``: Use ``toObject``
- * ``ElggSite::getMembers``: Use ``getEntities``
- * ``ElggSite::getObjects``: Use ``getEntities``
+ * ``ElggSite::getMembers``: Use ``elgg_get_entities_from_relationship()``
+ * ``ElggSite::getObjects``: Use ``elgg_get_entities_from_relationship()``
  * ``ElggSite::listMembers``: Use ``elgg_list_entities_from_relationship()``
- * ``ElggSite::removeObject``: Use ``removeEntity``
- * ``ElggSite::removeUser``: Use ``removeEntity``
+ * ``ElggSite::removeEntity``
+ * ``ElggSite::removeObject``
+ * ``ElggSite::removeUser``
  * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
  * ``Logger::getClassName``: Use ``get_class()``
  * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
@@ -133,6 +139,12 @@ Schema changes
 --------------
  
 The storage engine for the database tables has been changed from MyISAM to InnoDB. You maybe need to optimize your database settings for this change.
+
+Multi Site Changes
+------------------
+
+Related to the removal of the multisite concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
+All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade. 
 
 Search changes
 --------------
