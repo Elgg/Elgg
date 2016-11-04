@@ -50,14 +50,6 @@ function groups_prepare_form_vars($group = null) {
 		}
 	}
 
-	// handle tool options
-	$entity = ($group instanceof \ElggGroup) ? $group : null;
-	$tools = groups_get_group_tool_options($entity);
-	foreach ($tools as $group_option) {
-		$option_name = $group_option->name . "_enable";
-		$values[$option_name] = $group_option->default_on ? 'yes' : 'no';
-	}
-
 	// get current group settings
 	if ($group) {
 		foreach (array_keys($values) as $field) {
@@ -79,7 +71,20 @@ function groups_prepare_form_vars($group = null) {
 
 		$values['entity'] = $group;
 	}
-
+	
+	// handle tool options
+	$entity = ($group instanceof \ElggGroup) ? $group : null;
+	$tools = elgg_get_group_tool_options($entity);
+	foreach ($tools as $group_option) {
+		$option_name = $group_option->name . "_enable";
+		
+		$enabled = $group_option->default_on;
+		if ($entity) {
+			$enabled = $entity->isToolEnabled($group_option->name);
+		}
+		$values[$option_name] = $enabled ? 'yes' : 'no';
+	}
+	
 	// get any sticky form settings
 	if (elgg_is_sticky_form('groups')) {
 		$sticky_values = elgg_get_sticky_values('groups');
@@ -91,23 +96,4 @@ function groups_prepare_form_vars($group = null) {
 	elgg_clear_sticky_form('groups');
 
 	return $values;
-}
-
-/**
- * Function to return available group tool options
- *
- * @param \ElggGroup $group optional group
- *
- * @return array
- */
-function groups_get_group_tool_options(\ElggGroup $group = null) {
-	
-	$tool_options = elgg_get_config('group_tool_options');
-	
-	$hook_params = [
-		'group_tool_options' => $tool_options,
-		'entity' => $group,
-	];
-		
-	return (array) elgg_trigger_plugin_hook('tool_options', 'group', $hook_params, $tool_options);
 }

@@ -260,7 +260,7 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 		return;
 	}
 	
-	if ($entity->forum_enable === 'no') {
+	if (!$entity->isToolEnabled('forum')) {
 		return;
 	}
 	

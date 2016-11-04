@@ -351,7 +351,7 @@ function groups_activity_owner_block_menu($hook, $type, $return, $params) {
 		return;
 	}
 	
-	if ($entity->activity_enable === "no") {
+	if (!$entity->isToolEnabled('activity')) {
 		return;
 	}
 	

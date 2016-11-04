@@ -8,7 +8,7 @@
  * @package ElggGroups
  */
 
-$tools = groups_get_group_tool_options(elgg_extract('entity', $vars));
+$tools = elgg_get_group_tool_options(elgg_extract('entity', $vars));
 if (empty($tools)) {
 	return;
 }

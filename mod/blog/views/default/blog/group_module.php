@@ -3,10 +3,13 @@
  * Group blog module
  */
 
-$group = elgg_get_page_owner_entity();
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
+}
 
-if ($group->blog_enable == "no") {
-	return true;
+if (!$group->isToolEnabled('blog')) {
+	return;
 }
 
 $all_link = elgg_view('output/url', [

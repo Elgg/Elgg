@@ -215,20 +215,20 @@ function file_prepare_notification($hook, $type, $notification, $params) {
  * @return ElggMenuItem[]
  */
 function file_owner_block_menu($hook, $type, $return, $params) {
-	
+
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
 		$url = "file/owner/{$entity->username}";
 		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
-		if ($entity->file_enable != "no") {
+		if ($entity->isToolEnabled('file')) {
 			$url = "file/group/{$entity->guid}/all";
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
 			$return[] = $item;
 		}
 	}
-
+	
 	return $return;
 }
 

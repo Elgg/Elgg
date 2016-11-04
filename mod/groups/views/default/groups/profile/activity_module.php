@@ -12,7 +12,7 @@ if (!($group instanceof \ElggGroup)) {
 	return;
 }
 
-if ($group->activity_enable == 'no') {
+if (!$group->isToolEnabled('activity')) {
 	return;
 }
 

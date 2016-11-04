@@ -3,8 +3,12 @@
  * Group pages
  */
 
-$group = elgg_get_page_owner_entity();
-if (!$group instanceof ElggGroup || $group->pages_enable === 'no') {
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
+}
+
+if (!$group->isToolEnabled('pages')) {
 	return;
 }
 

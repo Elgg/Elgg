@@ -5,10 +5,13 @@
  * @package Bookmarks
  */
 
-$group = elgg_get_page_owner_entity();
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
+}
 
-if ($group->bookmarks_enable == "no") {
-	return true;
+if (!$group->isToolEnabled('bookmarks')) {
+	return;
 }
 
 $all_link = elgg_view('output/url', [

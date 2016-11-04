@@ -25,7 +25,8 @@ function add_group_tool_option($name, $label, $default_on = true) {
 	if (!$options) {
 		$options = [];
 	}
-	$options[] = (object) [
+	
+	$options[$name] = (object) [
 		'name' => $name,
 		'label' => $label,
 		'default_on' => $default_on,
@@ -48,14 +49,61 @@ function remove_group_tool_option($name) {
 	if (!is_array($options)) {
 		return;
 	}
-
-	foreach ($options as $i => $option) {
-		if ($option->name == $name) {
-			unset($options[$i]);
-		}
+	
+	if (!isset($options[$name])) {
+		return;
 	}
-
+	
+	unset($options[$name]);
+	
 	_elgg_config()->group_tool_options = $options;
+}
+
+/**
+ * Checks if a group has a specific tool enabled.
+ * Forward to the group if the tool is disabled.
+ *
+ * @param string $option     The group tool option to check
+ * @param int    $group_guid The group that owns the page. If not set, this
+ *                           will be pulled from elgg_get_page_owner_guid().
+ *
+ * @return void
+ * @since 3.0.0
+ */
+function elgg_group_tool_gatekeeper($option, $group_guid = null) {
+	$group_guid = $group_guid ?: elgg_get_page_owner_guid();
+	
+	$group = get_entity($group_guid);
+	if (!$group instanceof \ElggGroup) {
+		return;
+	}
+	
+	if ($group->isToolEnabled($option)) {
+		return;
+	}
+	
+	register_error(elgg_echo('groups:tool_gatekeeper'));
+	forward($group->getURL(), 'group_tool');
+}
+
+/**
+ * Function to return available group tool options
+ *
+ * @param \ElggGroup $group optional group
+ *
+ * @return array
+ * @since 3.0.0
+ */
+function elgg_get_group_tool_options(\ElggGroup $group = null) {
+	
+	$tool_options = elgg_get_config('group_tool_options');
+	
+	$hook_params = [
+		'group_tool_options' => $tool_options,
+		'entity' => $group,
+	];
+		
+	return (array) elgg_trigger_plugin_hook('tool_options', 'group', $hook_params, $tool_options);
 }
 
 /**

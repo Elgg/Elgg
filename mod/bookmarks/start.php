@@ -154,7 +154,7 @@ function bookmark_set_url($hook, $type, $url, $params) {
  * @return ElggMenuItem[]
  */
 function bookmarks_owner_block_menu($hook, $type, $return, $params) {
-	
+
 	$entity = elgg_extract('entity', $params);
 	
 	if ($entity instanceof ElggUser) {
@@ -162,13 +162,13 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
-		if ($entity->bookmarks_enable != 'no') {
+		if ($entity->isToolEnabled('bookmarks')) {
 			$url = "bookmarks/group/{$entity->guid}/all";
 			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
 			$return[] = $item;
 		}
 	}
-
+	
 	return $return;
 }
 
