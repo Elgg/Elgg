@@ -452,20 +452,6 @@ function set_last_login($user_guid) {
 }
 
 /**
- * Creates a relationship between this site and the user.
- *
- * @param string   $event       create
- * @param string   $object_type user
- * @param \ElggUser $object      User object
- *
- * @return void
- * @access private
- */
-function user_create_hook_add_site_relationship($event, $object_type, $object) {
-	add_entity_relationship($object->getGUID(), 'member_of_site', elgg_get_site_entity()->guid);
-}
-
-/**
  * Set user avatar URL
  * Replaces user avatar URL with a public URL when walled garden is disabled
  *
@@ -991,8 +977,6 @@ function users_init() {
 	elgg_register_entity_type('user', '');
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
-
-	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 	

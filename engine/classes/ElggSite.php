@@ -211,56 +211,6 @@ class ElggSite extends \ElggEntity {
 	}
 
 	/**
-	 * Adds an entity to the site.
-	 *
-	 * This adds a 'member_of_site' relationship between between the entity and
-	 * the site.
-	 *
-	 * @param \ElggEntity $entity User, group, or object entity
-	 *
-	 * @return bool
-	 */
-	public function addEntity(\ElggEntity $entity) {
-		if (elgg_instanceof($entity, 'site')) {
-			return false;
-		}
-		return add_entity_relationship($entity->guid, "member_of_site", $this->guid);
-	}
-
-	/**
-	 * Removes an entity from this site
-	 *
-	 * @param \ElggEntity $entity User, group, or object entity
-	 *
-	 * @return bool
-	 */
-	public function removeEntity($entity) {
-		if (elgg_instanceof($entity, 'site')) {
-			return false;
-		}
-		return remove_entity_relationship($entity->guid, "member_of_site", $this->guid);
-	}
-
-	/**
-	 * Get an array of entities that belong to the site.
-	 *
-	 * This only returns entities that have been explicitly added to the
-	 * site through addEntity().
-	 *
-	 * @param array $options Options array for elgg_get_entities_from_relationship()
-	 *                       Parameters set automatically by this method:
-	 *                       'relationship', 'relationship_guid', 'inverse_relationship'
-	 * @return array
-	 */
-	public function getEntities(array $options = array()) {
-		$options['relationship'] = 'member_of_site';
-		$options['relationship_guid'] = $this->guid;
-		$options['inverse_relationship'] = true;
-
-		return elgg_get_entities_from_relationship($options);
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	protected function prepareObject($object) {

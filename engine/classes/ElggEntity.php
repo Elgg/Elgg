@@ -1272,63 +1272,6 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Add this entity to a site
-	 *
-	 * This creates a 'member_of_site' relationship.
-	 *
-	 * @param \ElggSite $site The site to add this entity to
-	 *
-	 * @return bool
-	 * @todo add \ElggSite type hint once we have removed addToSite() from \ElggUser
-	 * and \ElggObject
-	 */
-	public function addToSite($site) {
-		if (!elgg_instanceof($site, 'site')) {
-			return false;
-		}
-
-		return $site->addEntity($this);
-	}
-
-	/**
-	 * Remove this entity from a site
-	 *
-	 * This deletes the 'member_of_site' relationship.
-	 *
-	 * @param \ElggSite $site The site to remove this entity from
-	 *
-	 * @return bool
-	 * @todo add \ElggSite type hint once we have removed addToSite() from \ElggUser
-	 */
-	public function removeFromSite($site) {
-		if (!elgg_instanceof($site, 'site')) {
-			return false;
-		}
-
-		return $site->removeEntity($this);
-	}
-
-	/**
-	 * Gets the sites this entity is a member of
-	 *
-	 * Site membership is determined by relationship.
-	 *
-	 * @param array $options Options array for elgg_get_entities_from_relationship()
-	 *                       Parameters set automatically by this method:
-	 *                       'relationship', 'relationship_guid', 'inverse_relationship'
-	 *
-	 * @return array
-	 * @todo add type hint when \ElggUser and \ElggObject have been updates
-	 */
-	public function getSites($options = array()) {
-		$options['relationship'] = 'member_of_site';
-		$options['relationship_guid'] = $this->guid;
-		$options['inverse_relationship'] = false;
-
-		return elgg_get_entities_from_relationship($options);
-	}
-
-	/**
 	 * Tests to see whether the object has been persisted.
 	 *
 	 * @return bool
