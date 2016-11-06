@@ -42,12 +42,11 @@ interface Config {
 	 * Before application boot, it may be unsafe to call get() for some values. You should use
 	 * getVolatile() before system boot.
 	 *
-	 * @param string $name      Name of the configuration value
-	 * @param int    $site_guid null for installation setting anything else for current site
+	 * @param string $name Name of the configuration value
 	 *
 	 * @return mixed Configuration value or null if it does not exist
 	 */
-	public function get($name, $site_guid = 0);
+	public function get($name);
 
 	/**
 	 * Get a config value for the current site if it's already loaded. This should be used instead of
@@ -74,13 +73,21 @@ interface Config {
 	/**
 	 * Save a configuration setting
 	 *
-	 * @param string $name      Configuration name (cannot be greater than 255 characters)
-	 * @param mixed  $value     Configuration value. Should be string for installation setting
-	 * @param int    $site_guid null for installation setting anything else for current site
+	 * @param string $name  Configuration name (cannot be greater than 255 characters)
+	 * @param mixed  $value Configuration value. Should be string for installation setting
 	 *
 	 * @return bool
 	 */
-	public function save($name, $value, $site_guid = 0);
+	public function save($name, $value);
+
+	/**
+	 * Removes a configuration setting
+	 *
+	 * @param string $name Configuration name
+	 *
+	 * @return bool
+	 */
+	public function remove($name);
 
 	/**
 	 * Merge the settings file into the storage object

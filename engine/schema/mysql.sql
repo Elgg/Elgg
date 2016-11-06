@@ -54,13 +54,6 @@ CREATE TABLE `prefix_config` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- application specific configuration
-CREATE TABLE `prefix_datalists` (
-  `name` varchar(255) NOT NULL,
-  `value` text NOT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- primary entity table
 CREATE TABLE `prefix_entities` (
   `guid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,

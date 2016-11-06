@@ -8,21 +8,6 @@
  */
 
 /**
- * Saves the processed upgrades to a dataset.
- *
- * @param array $processed_upgrades An array of processed upgrade filenames
- *                                  (not the path, just the file)
- * @return bool
- * @access private
- *
- * @todo this is still required because of the hack in the 2011010101 upgrade
- */
-function elgg_set_processed_upgrades(array $processed_upgrades) {
-	$processed_upgrades = array_unique($processed_upgrades);
-	return datalist_set('processed_upgrades', serialize($processed_upgrades));
-}
-
-/**
  * Returns the version of the upgrade filename.
  *
  * @param string $filename The upgrade filename. No full path.

@@ -634,7 +634,7 @@ class Database {
 		}
 
 		try {
-			$sql = "SELECT value FROM {$this->table_prefix}datalists WHERE name = 'installed'";
+			$sql = "SELECT value FROM {$this->table_prefix}config WHERE name = 'installed'";
 			$this->getConnection('read')->query($sql);
 		} catch (\DatabaseException $e) {
 			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");

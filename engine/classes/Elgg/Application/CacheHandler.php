@@ -223,7 +223,7 @@ class CacheHandler {
 		try {
 			$rows = $db->getData("
 				SELECT `name`, `value`
-				FROM {$db->prefix}datalists
+				FROM {$db->prefix}config
 				WHERE `name` IN ('dataroot', 'simplecache_enabled')
 			");
 			if (!$rows) {
@@ -239,7 +239,7 @@ class CacheHandler {
 		}
 
 		foreach ($rows as $row) {
-			$config->set($row->name, $row->value);
+			$config->set($row->name, unserialize($row->value));
 		}
 
 		if (!$config->getVolatile('cacheroot')) {

@@ -15,7 +15,7 @@ if (!$user instanceof ElggUser) {
 $title = elgg_echo('email:settings');
 
 $content = '';
-if (get_config('security_email_require_password') && ($user->getGUID() === elgg_get_logged_in_user_guid())) {
+if (elgg_get_config('security_email_require_password') && ($user->getGUID() === elgg_get_logged_in_user_guid())) {
 	// user needs to provide current password in order to be able to change his/her email address
 	$content .= elgg_view_field(array(
 		'#type' => 'password',

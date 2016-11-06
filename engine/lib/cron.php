@@ -104,7 +104,7 @@ function _elgg_cron_page_handler($page) {
 		forward();
 	}
 
-	if (PHP_SAPI !== 'cli' && get_config('security_protect_cron')) {
+	if (PHP_SAPI !== 'cli' && elgg_get_config('security_protect_cron')) {
 		elgg_signed_request_gatekeeper();
 	}
 	

@@ -90,13 +90,6 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 				$sp->pluginSettingsCache
 			);
 		});
-
-		$this->setFactory('datalist', function(MockServiceProvider $m) use ($sp) {
-			$db = $m->db;
-			$dbprefix = $db->prefix;
-			$pool = new \Elgg\Cache\Pool\InMemory();
-			return new \Elgg\Mocks\Database\Datalist($pool, $db, $sp->logger, "{$dbprefix}datalists");
-		});
 	}
 
 	/**

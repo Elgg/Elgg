@@ -355,11 +355,11 @@ directories using `open\_basedir`_. You may want to check with your
 hosting provider on this.
 
 Make sure the path is correct and ends with a /. You can check the path
-in your database in the datalists table.
+in your database in the config table.
 
 If you only have ftp access to your server and created a directory but
 do not know the path of it, you might be able to figure it out from the
-www file path set in your datalists database table. Asking for help from
+www file path set in your config database table. Asking for help from
 your hosting help team is recommended at this stage.
 
 .. _open\_basedir: http://www.php.net/manual/en/ini.core.php#ini.open-basedir

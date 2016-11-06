@@ -12,7 +12,7 @@ $settings = [
 ];
 
 foreach ($settings as $setting) {
-	set_config($setting, (bool) get_input($setting));
+	elgg_save_config($setting, (bool) get_input($setting));
 }
 
 system_message(elgg_echo('admin:configuration:success'));

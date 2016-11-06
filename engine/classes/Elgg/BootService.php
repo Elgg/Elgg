@@ -60,26 +60,26 @@ class BootService {
 		// we need this stuff before cache
 		$rows = $db->getData("
 			SELECT *
-			FROM {$db->prefix}datalists
+			FROM {$db->prefix}config
 			WHERE `name` IN ('__site_secret__', 'default_site', 'dataroot')
 		");
-		$datalists = [];
+		$configs = [];
 		foreach ($rows as $row) {
-			$datalists[$row->name] = $row->value;
+			$configs[$row->name] = unserialize($row->value);
 		}
 
 		// booting during installation
-		if (empty($datalists['dataroot'])) {
-			$datalists['dataroot'] = '';
+		if (empty($configs['dataroot'])) {
+			$configs['dataroot'] = '';
 
 			// don't use cache
 			$CONFIG->boot_cache_ttl = 0;
 		}
 
 		if (!$GLOBALS['_ELGG']->dataroot_in_settings) {
-			$CONFIG->dataroot = rtrim($datalists['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
+			$CONFIG->dataroot = rtrim($configs['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
 		}
-		$CONFIG->site_guid = (int)$datalists['default_site'];
+		$CONFIG->site_guid = (int)$configs['default_site'];
 		if (!isset($CONFIG->boot_cache_ttl)) {
 			$CONFIG->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
 		}
@@ -95,12 +95,7 @@ class BootService {
 			$this->timer->begin([__CLASS__ . '::getBootData']);
 		}
 
-		// copy earlier fetches values into the datalist cache and inject into the service
-		$datalist_cache = $data->getDatalistCache();
-		foreach (['__site_secret__', 'default_site', 'dataroot'] as $key) {
-			$datalist_cache->put($key, $datalists[$key]);
-		}
-		_elgg_services()->datalist->setCache($datalist_cache);
+		$configs_cache = $data->getConfigValues();
 
 		$CONFIG->site = $data->getSite();
 		$CONFIG->wwwroot = $CONFIG->site->url;
@@ -119,15 +114,15 @@ class BootService {
 		_elgg_services()->pluginSettingsCache->setCachedValues($data->getPluginSettings());
 
 		if (!$GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
-			$simplecache_enabled = $datalist_cache->get('simplecache_enabled');
+			$simplecache_enabled = $configs_cache['simplecache_enabled'];
 			$CONFIG->simplecache_enabled = ($simplecache_enabled === false) ? 1 : $simplecache_enabled;
 		}
 
-		$system_cache_enabled = $datalist_cache->get('system_cache_enabled');
+		$system_cache_enabled = $configs_cache['system_cache_enabled'];
 		$CONFIG->system_cache_enabled = ($system_cache_enabled === false) ? 1 : $system_cache_enabled;
 
 		// needs to be set before [init, system] for links in html head
-		$CONFIG->lastcache = (int)$datalist_cache->get("simplecache_lastupdate");
+		$CONFIG->lastcache = (int)$configs_cache['simplecache_lastupdate'];
 
 		$GLOBALS['_ELGG']->i18n_loaded_from_cache = false;
 

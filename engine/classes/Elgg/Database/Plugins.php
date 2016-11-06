@@ -224,7 +224,7 @@ class Plugins {
 	function get($plugin_id) {
 		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
 			$plugin_id = sanitize_string($plugin_id);
-			$db_prefix = get_config('dbprefix');
+			$db_prefix = elgg_get_config('dbprefix');
 
 			$options = array(
 				'type' => 'object',
@@ -267,7 +267,7 @@ class Plugins {
 	 * @access private
 	 */
 	function getMaxPriority() {
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = elgg_get_config('dbprefix');
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 		$plugin_subtype = get_subtype_id('object', 'plugin');
 	

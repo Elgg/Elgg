@@ -21,11 +21,6 @@ class BootData {
 	private $site;
 
 	/**
-	 * @var InMemory
-	 */
-	private $datalist_cache;
-
-	/**
 	 * @var array
 	 */
 	private $config_values = [];
@@ -57,18 +52,6 @@ class BootData {
 	 * @throws \InstallationException
 	 */
 	public function populate(\stdClass $config, Database $db, EntityTable $entities, Plugins $plugins) {
-		// get datalists
-		// do not store site key in cache. The others we've already fetched.
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}datalists
-			WHERE `name` NOT IN ('__site_secret__', 'default_site', 'dataroot')
-		");
-		$this->datalist_cache = new InMemory();
-		foreach ($rows as $row) {
-			$this->datalist_cache->put($row->name, $row->value);
-		}
-
 		// get subtypes
 		$rows = $db->getData("
 			SELECT *
@@ -78,12 +61,6 @@ class BootData {
 			$this->subtype_data[$row->id] = $row;
 		}
 
-		// get site entity
-		$this->site = $entities->get($config->site_guid, 'site');
-		if (!$this->site) {
-			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
-		}
-
 		// get config
 		$rows = $db->getData("
 			SELECT *
@@ -91,6 +68,32 @@ class BootData {
 		");
 		foreach ($rows as $row) {
 			$this->config_values[$row->name] = unserialize($row->value);
+		}
+		
+		if (!array_key_exists('installed', $this->config_values)) {
+			// try to fetch from old pre 3.0 datalists table
+			// need to do this to be able to perform an upgrade from 2.x to 3.0
+			try {
+				$rows = $db->getData("
+					SELECT *
+					FROM {$db->prefix}datalists
+				");
+				foreach ($rows as $row) {
+					$value = $row->value;
+					if ($row->name == 'processed_upgrades') {
+						// config table already serializes data so no need to double serialize
+						$value = unserialize($value);
+					}
+					$this->config_values[$row->name] = $value;
+				}
+			} catch (\Exception $e) {
+			}
+		}
+		
+		// get site entity
+		$this->site = $entities->get($this->config_values['default_site'], 'site');
+		if (!$this->site) {
+			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
 		// get plugins
@@ -150,15 +153,6 @@ class BootData {
 	 */
 	public function getSite() {
 		return $this->site;
-	}
-
-	/**
-	 * Get the datalists cache
-	 *
-	 * @return InMemory
-	 */
-	public function getDatalistCache() {
-		return $this->datalist_cache;
 	}
 
 	/**

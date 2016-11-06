@@ -137,7 +137,7 @@ class Config implements Services\Config {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get($name, $site_guid = 0) {
+	public function get($name) {
 		$name = trim($name);
 	
 		if (isset($this->config->$name)) {
@@ -145,12 +145,8 @@ class Config implements Services\Config {
 		}
 		
 		$value = null;
-		if ($site_guid === null) {
-			// installation wide setting
-			$value = _elgg_services()->datalist->get($name);
-		} elseif (!isset($this->config->site_config_loaded)) {
-			// site specific setting
-			$value = _elgg_services()->configTable->get($name, $site_guid);
+		if (!isset($this->config->site_config_loaded)) {
+			$value = _elgg_services()->configTable->get($name);
 		}
 		
 		// @todo document why we don't cache false
@@ -181,7 +177,7 @@ class Config implements Services\Config {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save($name, $value, $site_guid = 0) {
+	public function save($name, $value) {
 		$name = trim($name);
 	
 		if (strlen($name) > 255) {
@@ -189,16 +185,22 @@ class Config implements Services\Config {
 			return false;
 		}
 	
-		if ($site_guid === null) {
-			if (is_array($value) || is_object($value)) {
-				return false;
-			}
-			$result = _elgg_services()->datalist->set($name, $value);
-		} else {
-			$result = _elgg_services()->configTable->set($name, $value);
-		}
+		$result = _elgg_services()->configTable->set($name, $value);
 
 		$this->set($name, $value);
+	
+		return $result;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function remove($name) {
+		$name = trim($name);
+	
+		$result = _elgg_services()->configTable->remove($name);
+
+		unset($this->config->$name);
 	
 		return $result;
 	}

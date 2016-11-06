@@ -79,8 +79,8 @@ function elgg_is_admin_user($user_guid) {
 
 	// must support the old way of getting admin from metadata
 	// in order to run the upgrade to move it into the users table.
-	$version = (int) datalist_get('version');
-
+	$version = (int) elgg_get_config('version');
+	
 	if ($version < 2010040201) {
 		$admin = elgg_get_metastring_id('admin');
 		$yes = elgg_get_metastring_id('yes');

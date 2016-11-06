@@ -196,7 +196,7 @@ function system_log($object, $event) {
 	if ($object instanceof Loggable) {
 
 		/* @var \ElggEntity|\ElggExtender $object */
-		if (datalist_get('version') < 2012012000) {
+		if (elgg_get_config('version') < 2012012000) {
 			// this is a site that doesn't have the ip_address column yet
 			return;
 		}

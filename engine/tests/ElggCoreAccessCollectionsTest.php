@@ -15,7 +15,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 	public function __construct() {
 		parent::__construct();
 
-		$this->dbPrefix = get_config("dbprefix");
+		$this->dbPrefix = elgg_get_config("dbprefix");
 
 		$user = new \ElggUser();
 		$user->username = 'test_user_' . rand();

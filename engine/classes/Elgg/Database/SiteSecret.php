@@ -22,17 +22,17 @@ namespace Elgg\Database;
 class SiteSecret {
 
 	/**
-	 * @var Datalist
+	 * @var ConfigTable
 	 */
-	private $datalist;
+	private $configTable;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Datalist $datalist Datalist table
+	 * @param ConfigTable $configTable Config table
 	 */
-	public function __construct(Datalist $datalist) {
-		$this->datalist = $datalist;
+	public function __construct(ConfigTable $configTable) {
+		$this->configTable = $configTable;
 	}
 
 	/**
@@ -53,7 +53,7 @@ class SiteSecret {
 	/**
 	 * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
 	 *
-	 * Used during installation and saves as a datalist.
+	 * Used during installation and saves as a config.
 	 *
 	 * Note: Old secrets were hex encoded.
 	 *
@@ -63,7 +63,7 @@ class SiteSecret {
 	function init() {
 		$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
 
-		if ($this->datalist->set('__site_secret__', $secret)) {
+		if ($this->configTable->set('__site_secret__', $secret)) {
 			return $secret;
 		}
 
@@ -84,7 +84,7 @@ class SiteSecret {
 		if ($this->test_secret) {
 			$secret = $this->test_secret;
 		} else {
-			$secret = $this->datalist->get('__site_secret__');
+			$secret = $this->configTable->get('__site_secret__');
 		}
 		if (!$secret) {
 			$secret = $this->init();

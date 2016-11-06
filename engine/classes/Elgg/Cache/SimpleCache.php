@@ -2,7 +2,6 @@
 namespace Elgg\Cache;
 
 use Elgg\Config;
-use Elgg\Database\Datalist;
 use Elgg\ViewsService as Views;
 
 
@@ -18,22 +17,17 @@ class SimpleCache {
 	/** @var Config */
 	private $config;
 
-	/** @var Datalist */
-	private $datalist;
-
 	/** @var Views */
 	private $views;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Config   $config   Elgg's global configuration
-	 * @param Datalist $datalist Elgg's database config storage
-	 * @param Views    $views    Elgg's views registry
+	 * @param Config $config Elgg's global configuration
+	 * @param Views  $views  Elgg's views registry
 	 */
-	public function __construct(Config $config, Datalist $datalist, Views $views) {
+	public function __construct(Config $config, Views $views) {
 		$this->config = $config;
-		$this->datalist = $datalist;
 		$this->views = $views;
 	}
 
@@ -108,7 +102,6 @@ class SimpleCache {
 	function getRoot() {
 		$viewtype = elgg_get_viewtype();
 		if ($this->isEnabled()) {
-			// stored in datalist as 'simplecache_lastupdate'
 			$lastcache = (int)$this->config->get('lastcache');
 		} else {
 			$lastcache = 0;
@@ -133,8 +126,7 @@ class SimpleCache {
 	 * @return void
 	 */
 	function enable() {
-		$this->datalist->set('simplecache_enabled', 1);
-		$this->config->set('simplecache_enabled', 1);
+		$this->config->save('simplecache_enabled', 1);
 		$this->invalidate();
 	}
 
@@ -148,8 +140,7 @@ class SimpleCache {
 	 */
 	function disable() {
 		if ($this->config->get('simplecache_enabled')) {
-			$this->datalist->set('simplecache_enabled', 0);
-			$this->config->set('simplecache_enabled', 0);
+			$this->config->save('simplecache_enabled', 0);
 
 			$this->invalidate();
 		}
@@ -175,7 +166,7 @@ class SimpleCache {
 		_elgg_rmdir($this->getPath(), true);
 
 		$time = time();
-		$this->datalist->set("simplecache_lastupdate", $time);
+		$this->config->save("simplecache_lastupdate", $time);
 		$this->config->set('lastcache', $time);
 
 		return true;
@@ -189,7 +180,7 @@ class SimpleCache {
 	function init() {
 		$lastcache = $this->config->get('lastcache');
 		if (!defined('UPGRADING') && empty($lastcache)) {
-			$this->config->set('lastcache', (int)$this->datalist->get('simplecache_lastupdate'));
+			$this->config->set('lastcache', (int)$this->config->get('simplecache_lastupdate'));
 		}
 	}
 }

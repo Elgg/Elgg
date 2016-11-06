@@ -64,7 +64,7 @@ function elgg_is_system_cache_enabled() {
 /**
  * Enables the system disk cache.
  *
- * Uses the 'system_cache_enabled' datalist with a boolean value.
+ * Uses the 'system_cache_enabled' config with a boolean value.
  * Resets the system cache.
  *
  * @return void
@@ -76,7 +76,7 @@ function elgg_enable_system_cache() {
 /**
  * Disables the system disk cache.
  *
- * Uses the 'system_cache_enabled' datalist with a boolean value.
+ * Uses the 'system_cache_enabled' config with a boolean value.
  * Resets the system cache.
  *
  * @return void

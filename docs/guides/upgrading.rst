@@ -67,6 +67,8 @@ All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https:/
 All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.10.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
  * ``_elgg_manage_pagesetup``
+ * ``datalist_get``
+ * ``datalist_set``
  * ``developers_setup_menu``
  * ``get_default_filestore``
  * ``groups_setup_sidebar_menus``
@@ -139,6 +141,7 @@ Schema changes
 --------------
  
 The storage engine for the database tables has been changed from MyISAM to InnoDB. You maybe need to optimize your database settings for this change.
+The ``datalists`` table has been removed. All settings from datalists table have been merged into the ``config`` table.
 
 Multi Site Changes
 ------------------
@@ -294,6 +297,7 @@ Miscellaneous API changes
  * The URL endpoints ``js/`` and ``css/`` are no longer supported. Use ``elgg_get_simplecache_url()``.
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
  * The script ``engine/start.php`` is removed.
+ * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``. 
 
 JavaScript hook calling order may change
 ----------------------------------------

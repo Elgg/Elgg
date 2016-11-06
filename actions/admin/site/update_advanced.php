@@ -2,8 +2,8 @@
 /**
  * Updates the advanced settings for the primary site object.
  *
- * Options are saved among metadata on the site object, entries
- * in the datalist table, and entries in the config table.
+ * Options are saved among metadata on the site object
+ * and entries in the config table.
  *
  * @package Elgg.Core
  * @subpackage Administration.Site
@@ -19,7 +19,7 @@ if (!($site instanceof ElggSite)) {
 
 $site->url = rtrim(get_input('wwwroot', '', false), '/') . '/';
 
-datalist_set('path', sanitise_filepath(get_input('path', '', false)));
+elgg_save_config('path', sanitise_filepath(get_input('path', '', false)));
 $dataroot = sanitise_filepath(get_input('dataroot', '', false));
 
 // check for relative paths
@@ -37,7 +37,7 @@ if (stripos(PHP_OS, 'win') === 0) {
 	}
 }
 
-datalist_set('dataroot', $dataroot);
+elgg_save_config('dataroot', $dataroot);
 
 if ('on' === get_input('simplecache_enabled')) {
 	elgg_enable_simplecache();
@@ -59,8 +59,8 @@ if ('on' === get_input('cache_symlink_enabled') && !$cache_symlinked) {
 	}
 }
 
-set_config('simplecache_minify_js', 'on' === get_input('simplecache_minify_js'), $site->getGUID());
-set_config('simplecache_minify_css', 'on' === get_input('simplecache_minify_css'), $site->getGUID());
+elgg_save_config('simplecache_minify_js', 'on' === get_input('simplecache_minify_js'));
+elgg_save_config('simplecache_minify_css', 'on' === get_input('simplecache_minify_css'));
 
 if ('on' === get_input('system_cache_enabled')) {
 	elgg_enable_system_cache();
@@ -68,25 +68,25 @@ if ('on' === get_input('system_cache_enabled')) {
 	elgg_disable_system_cache();
 }
 
-set_config('default_access', get_input('default_access', ACCESS_PRIVATE), $site->getGUID());
+elgg_save_config('default_access', (int) get_input('default_access', ACCESS_PRIVATE));
 
 $user_default_access = ('on' === get_input('allow_user_default_access'));
-set_config('allow_user_default_access', $user_default_access, $site->getGUID());
+elgg_save_config('allow_user_default_access', $user_default_access);
 
 $debug = get_input('debug');
 if ($debug) {
-	set_config('debug', $debug, $site->getGUID());
+	elgg_save_config('debug', $debug);
 } else {
-	unset_config('debug', $site->getGUID());
+	elgg_remove_config('debug');
 }
 
 // allow new user registration?
 $allow_registration = ('on' === get_input('allow_registration', false));
-set_config('allow_registration', $allow_registration, $site->getGUID());
+elgg_save_config('allow_registration', $allow_registration);
 
 // setup walled garden
 $walled_garden = ('on' === get_input('walled_garden', false));
-set_config('walled_garden', $walled_garden, $site->getGUID());
+elgg_save_config('walled_garden', $walled_garden);
 
 $regenerate_site_secret = get_input('regenerate_site_secret', false);
 if ($regenerate_site_secret) {

@@ -15,7 +15,7 @@ $refresh_url = elgg_http_add_url_query_elements(elgg_get_site_url() . 'upgrade.p
 	'forward' => elgg_extract('forward', $vars, '/admin')
 ));
 
-if (get_config('security_protect_upgrade')) {
+if (elgg_get_config('security_protect_upgrade')) {
 	// sign the url in order to get past the protection
 	$refresh_url = elgg_http_get_signed_url($refresh_url);
 }

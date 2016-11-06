@@ -23,7 +23,7 @@ $site->name = strip_tags(get_input('sitename'));
 $site->email = get_input('siteemail');
 $site->save();
 
-set_config('language', get_input('language'), $site->guid);
+elgg_save_config('language', get_input('language'));
 
 $default_limit = (int)get_input('default_limit');
 if ($default_limit < 1) {
@@ -31,7 +31,7 @@ if ($default_limit < 1) {
 	forward(REFERER);
 }
 
-set_config('default_limit', $default_limit, $site->guid);
+elgg_save_config('default_limit', $default_limit);
 
 system_message(elgg_echo('admin:configuration:success'));
 forward(REFERER);

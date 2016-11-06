@@ -172,6 +172,7 @@ class Application {
 
 			// backward compatibility
 			'deprecated-2.1.php',
+			'deprecated-3.0.php',
 		);
 
 		// isolate global scope
@@ -441,9 +442,9 @@ class Application {
 			return $app->services->config->getVolatile('dataroot');
 		}
 
-		$dataroot = $app->services->datalist->get('dataroot');
+		$dataroot = $app->services->configTable->get('dataroot');
 		if (!$dataroot) {
-			throw new \InstallationException('The datalists table lacks a value for "dataroot".');
+			throw new \InstallationException('The config table lacks a value for "dataroot".');
 		}
 		$dataroot = rtrim($dataroot, '/\\') . DIRECTORY_SEPARATOR;
 		$app->services->config->set('dataroot', $dataroot);
@@ -495,7 +496,7 @@ class Application {
 		self::start();
 		
 		// check security settings
-		if (get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
+		if (elgg_get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
 			// only admin's or users with a valid token can run upgrade.php
 			elgg_signed_request_gatekeeper();
 		}

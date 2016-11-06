@@ -6,7 +6,7 @@
  * Add the default settings
  */
 
-set_config('security_protect_upgrade', true);
-set_config('security_notify_admins', true);
-set_config('security_notify_user_password', true);
-set_config('security_email_require_password', true);
+elgg_save_config('security_protect_upgrade', true);
+elgg_save_config('security_notify_admins', true);
+elgg_save_config('security_notify_user_password', true);
+elgg_save_config('security_email_require_password', true);
