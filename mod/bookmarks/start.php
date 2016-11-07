@@ -15,11 +15,6 @@ function bookmarks_init() {
 	$root = dirname(__FILE__);
 	elgg_register_library('elgg:bookmarks', "$root/lib/bookmarks.php");
 
-	// actions
-	$action_path = "$root/actions/bookmarks";
-	elgg_register_action('bookmarks/save', "$action_path/save.php");
-	elgg_register_action('bookmarks/delete', "$action_path/delete.php");
-
 	// menus
 	elgg_register_menu_item('site', [
 		'name' => 'bookmarks',

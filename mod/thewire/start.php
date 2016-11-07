@@ -57,11 +57,6 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:thewire', 'thewire_prepare_notification');
 	elgg_register_plugin_hook_handler('get', 'subscriptions', 'thewire_add_original_poster');
 
-	// Register actions
-	$action_base = __DIR__ . '/actions';
-	elgg_register_action("thewire/add", "$action_base/add.php");
-	elgg_register_action("thewire/delete", "$action_base/delete.php");
-
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:thewire', 'Elgg\Values::getTrue');
 

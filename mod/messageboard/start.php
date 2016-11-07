@@ -19,11 +19,6 @@ function messageboard_init() {
 	// messageboard widget - only for profile for now
 	elgg_register_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), array("profile"));
 
-	// actions
-	$action_path = dirname(__FILE__) . '/actions';
-	elgg_register_action("messageboard/add", "$action_path/add.php");
-	elgg_register_action("messageboard/delete", "$action_path/delete.php");
-
 	// delete annotations for posts
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'messageboard_annotation_menu_setup');
 }

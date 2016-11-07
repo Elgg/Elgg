@@ -22,11 +22,6 @@ function developers_init() {
 	$sandbox_css = elgg_get_simplecache_url('theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
-	$action_base = __DIR__ . '/actions/developers';
-	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
-	elgg_register_action('developers/ajax_demo', "$action_base/ajax_demo.php", 'admin');
-	elgg_register_action('developers/entity_explorer_delete', "$action_base/entity_explorer_delete.php", 'admin');
-
 	elgg_register_ajax_view('forms/developers/ajax_demo');
 	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax_demo');
 }

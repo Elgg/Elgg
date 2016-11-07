@@ -332,6 +332,7 @@ class Plugins {
 		$plugins_path = elgg_get_plugins_path();
 		$start_flags = ELGG_PLUGIN_INCLUDE_START |
 						ELGG_PLUGIN_REGISTER_VIEWS |
+						ELGG_PLUGIN_REGISTER_ACTIONS |
 						ELGG_PLUGIN_REGISTER_LANGUAGES |
 						ELGG_PLUGIN_REGISTER_CLASSES;
 	

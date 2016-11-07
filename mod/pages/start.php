@@ -27,12 +27,6 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'pages_set_url');
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
 
-	// Register some actions
-	$action_base = __DIR__ . '/actions';
-	elgg_register_action("pages/edit", "$action_base/pages/edit.php");
-	elgg_register_action("pages/delete", "$action_base/pages/delete.php");
-	elgg_register_action("annotations/page/delete", "$action_base/annotations/page/delete.php");
-
 	// Extend the main css view
 	elgg_extend_view('elgg.css', 'pages/css');
 

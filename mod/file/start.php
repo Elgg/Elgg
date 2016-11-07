@@ -51,11 +51,6 @@ function file_init() {
 	// add a file link to owner blocks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
 
-	// Register actions
-	$action_path = __DIR__ . '/actions/file';
-	elgg_register_action("file/upload", "$action_path/upload.php");
-	elgg_register_action("file/delete", "$action_path/delete.php");
-
 	// cleanup thumbnails on delete. high priority because we want to try to make sure the
 	// deletion will actually occur before we go through with this.
 	elgg_register_event_handler('delete', 'object', 'file_handle_object_delete', 999);

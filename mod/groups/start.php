@@ -31,21 +31,6 @@ function groups_init() {
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
 
-	// Register some actions
-	$action_base = __DIR__ . '/actions/groups';
-	elgg_register_action("groups/edit", "$action_base/edit.php");
-	elgg_register_action("groups/delete", "$action_base/delete.php");
-	elgg_register_action("groups/featured", "$action_base/featured.php", 'admin');
-
-	$action_base .= '/membership';
-	elgg_register_action("groups/invite", "$action_base/invite.php");
-	elgg_register_action("groups/join", "$action_base/join.php");
-	elgg_register_action("groups/leave", "$action_base/leave.php");
-	elgg_register_action("groups/remove", "$action_base/remove.php");
-	elgg_register_action("groups/killrequest", "$action_base/delete_request.php");
-	elgg_register_action("groups/killinvitation", "$action_base/delete_invite.php");
-	elgg_register_action("groups/addtogroup", "$action_base/add.php");
-
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'), ['profile', 'dashboard']);
 

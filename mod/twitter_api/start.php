@@ -37,9 +37,6 @@ function twitter_api_init() {
 	if (elgg_get_plugin_setting('wire_posts', 'twitter_api') == 'yes') {
 		elgg_register_plugin_hook_handler('status', 'user', 'twitter_api_tweet');
 	}
-
-	$actions = dirname(__FILE__) . '/actions/twitter_api';
-	elgg_register_action('twitter_api/interstitial_settings', "$actions/interstitial_settings.php", 'logged_in');
 }
 
 /**

@@ -715,7 +715,7 @@ class ElggPlugin extends \ElggObject {
 		if ($return) {
 			if ($this->canReadFile('activate.php')) {
 				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
-						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
+						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_ACTIONS;
 
 				$this->start($flags);
 
@@ -843,6 +843,11 @@ class ElggPlugin extends \ElggObject {
 			$this->registerViews();
 		}
 
+		// include actions
+		if ($flags & ELGG_PLUGIN_REGISTER_ACTIONS) {
+			$this->registerActions();
+		}
+
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
 			$this->registerLanguages();
@@ -947,6 +952,38 @@ class ElggPlugin extends \ElggObject {
 			$args = [$this->getID(), $this->guid, $failed_dir];
 			$msg = _elgg_services()->translator->translate($key, $args);
 			throw new \PluginException($msg);
+		}
+	}
+
+	/**
+	 * Registers the plugin's actions provided in the plugin config file
+	 *
+	 * @throws PluginException
+	 * @return void
+	 */
+	protected function registerActions() {
+		$actions = _elgg_services()->actions;
+
+		$spec = (array) $this->getStaticConfig('actions', []);
+		
+		foreach ($spec as $action => $action_spec) {
+			if (!is_array($action_spec)) {
+				continue;
+			}
+			
+			$options = [
+				'access' => 'logged_in',
+				'filename' => '', // assuming core action is registered
+			];
+			
+			$options = array_merge($options, $action_spec);
+			
+			$filename = "{$this->getPath()}actions/{$action}.php";
+			if (file_exists($filename)) {
+				$options['filename'] = $filename;
+			}
+			
+			$actions->register($action, $options['filename'], $options['access']);
 		}
 	}
 

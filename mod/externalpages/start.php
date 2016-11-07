@@ -23,10 +23,6 @@ function expages_init() {
 
 	// add footer links
 	expages_setup_footer_menu();
-
-	// register action
-	$actions_base = __DIR__ . '/actions';
-	elgg_register_action("expages/edit", "$actions_base/edit.php", 'admin');
 }
 
 /**

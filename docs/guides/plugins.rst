@@ -14,7 +14,10 @@ elgg-plugin.php
 
 This optional file is read by Elgg to configure various services, and must return an array if present.
 It should not be included by plugins and is not guaranteed to run at any particular time. Besides magic
-constants like ``__DIR__``, its return value should not change.
+constants like ``__DIR__``, its return value should not change. The currently supported sections are: 
+
+ * ``views``
+ * ``actions``
 
 Syntax
 ------
