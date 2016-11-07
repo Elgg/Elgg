@@ -58,7 +58,7 @@ function expages_setup_footer_menu() {
  */
 function expages_page_handler($page, $handler) {
 	if ($handler == 'expages') {
-		expages_url_forwarder($page[1]);
+		forward($page[1]);
 	}
 	$type = strtolower($handler);
 
@@ -123,16 +123,4 @@ function expages_menu_register_hook($hook, $type, $return, $params) {
 		));
 	}
 	return $return;
-}
-
-
-/**
- * Forward to the new style of URLs
- *
- * @param string $page
- */
-function expages_url_forwarder($page) {
-	global $CONFIG;
-	$url = "{$CONFIG->wwwroot}{$page}";
-	forward($url);
 }

@@ -90,18 +90,17 @@ function logrotate_get_seconds_in_period($period)
  * @return bool Were any log tables deleted
  */
 function log_browser_delete_log($time_of_delete) {
-	global $CONFIG;
-
+	$dbprefix = elgg_get_config('dbprefix');
 	$cutoff = time() - (int)$time_of_delete;
 
 	$deleted_tables = false;
-	$results = get_data("SHOW TABLES like '{$CONFIG->dbprefix}system_log_%'");
+	$results = get_data("SHOW TABLES like '{$dbprefix}system_log_%'");
 	if ($results) {
 		foreach ($results as $result) {
 			$data = (array)$result;
 			$table_name = array_shift($data);
 			// extract log table rotation time
-			$log_time = str_replace("{$CONFIG->dbprefix}system_log_", '', $table_name);
+			$log_time = str_replace("{$dbprefix}system_log_", '', $table_name);
 			if ($log_time < $cutoff) {
 				if (delete_data("DROP TABLE $table_name") !== false) {
 					// delete_data returns 0 when dropping a table (false for failure)

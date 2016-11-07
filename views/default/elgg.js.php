@@ -2,8 +2,6 @@
 /**
  * Core Elgg JavaScript file
  */
- 
-global $CONFIG;
 
 // this warning is due to the change in JS boot order in Elgg 1.9
 echo <<<JS

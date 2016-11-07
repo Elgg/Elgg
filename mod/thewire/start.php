@@ -210,8 +210,6 @@ function thewire_get_hashtags($text) {
  * @return string
  */
 function thewire_filter($text) {
-	global $CONFIG;
-
 	$text = ' ' . $text;
 
 	// email addresses
@@ -226,13 +224,13 @@ function thewire_filter($text) {
 	// usernames
 	$text = preg_replace(
 				'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
-				'$1<a href="' . $CONFIG->wwwroot . 'thewire/owner/$2">@$2</a>',
+				'$1<a href="' . elgg_get_site_url() . 'thewire/owner/$2">@$2</a>',
 				$text);
 
 	// hashtags
 	$text = preg_replace(
 				'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
-				'$1<a href="' . $CONFIG->wwwroot . 'thewire/tag/$2">#$2</a>',
+				'$1<a href="' . elgg_get_site_url() . 'thewire/tag/$2">#$2</a>',
 				$text);
 
 	$text = trim($text);
@@ -466,8 +464,7 @@ function thewire_owner_block_menu($hook, $type, $return, $params) {
  * @return array
  */
 function thewire_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->pluginspath . 'thewire/tests/regex.php';
+	$value[] = elgg_get_plugins_path() . 'thewire/tests/regex.php';
 	return $value;
 }
 
