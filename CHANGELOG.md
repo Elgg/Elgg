@@ -1,3 +1,29 @@
+<a name="2.2.3"></a>
+### 2.2.3  (2016-11-08)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Steve Clay (4)
+* Ismayil Khayredinov (1)
+* Jeroen Dalsem (1)
+* jdalsem (1)
+
+#### Bug Fixes
+
+* **blog:** correctly check if owner is a group in owner_block menu ([7f253c58](https://github.com/Elgg/Elgg/commit/7f253c5861d1e34a9d170c435dbc701941115c65))
+* **cache:** ElggFileCache now handles arbitrary cache keys ([e60b8368](https://github.com/Elgg/Elgg/commit/e60b83683a2acfb61e4e66ce901d4b02e3ce54fa))
+* **ckeditor:** ensure basepath is set before CKeditor is loaded ([d60389d2](https://github.com/Elgg/Elgg/commit/d60389d25c033addbb18faf1cd1d0eb43b5b6d7f), closes [#10304](https://github.com/Elgg/Elgg/issues/10304))
+* **composer:** composer post-update script no longer crashes ([be4235a0](https://github.com/Elgg/Elgg/commit/be4235a0a75d6bbb8f95f823dd5eff52ed27c2d6))
+* **groups:** multiple membership requests don't trigger messages ([287e6448](https://github.com/Elgg/Elgg/commit/287e64489a8a343fabbc6cf6e12dba86ea7a51b7))
+* **js:** bind to correct element for inline comment edit ([e15cba9d](https://github.com/Elgg/Elgg/commit/e15cba9db569d7f3b0cc5e8982757cd04b67942d))
+* **likes:**
+  * notification subject too long ([fc5667dc](https://github.com/Elgg/Elgg/commit/fc5667dcf83887b6a35d45bac91512ca58999843))
+  * check for a valid entity in menu setup ([9ae99e84](https://github.com/Elgg/Elgg/commit/9ae99e84f31be25d339d84393000a05527fb377b))
+* **profile:** allow admin menu items to be toggled ([ba20ce42](https://github.com/Elgg/Elgg/commit/ba20ce42168edeb72e67694cf88881d558470539))
+* **reportedcontent:** show spinner during ajax delete/archive ([5de1c90a](https://github.com/Elgg/Elgg/commit/5de1c90a7b9bd3a0ec0a52da8cb42f9e46abbb7a))
+
+
 <a name="2.2.2"></a>
 ### 2.2.2  (2016-10-02)
 
