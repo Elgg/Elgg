@@ -27,7 +27,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Constructs a test case with the given name.
-	 * Boostraps testing environment
+	 * Bootstraps testing environment
 	 * 
 	 * @param string $name
 	 * @param array  $data
@@ -51,7 +51,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Boostraps test suite
+	 * Bootstraps test suite
 	 *
 	 * @global stdClass $CONFIG Global config
 	 * @global stdClass $_ELGG  Global vars
@@ -88,6 +88,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services($sp);
 
 		_elgg_filestore_boot();
+
+		// Invalidate memcache
+		_elgg_get_memcache('new_entity_cache')->clear();
+		_elgg_get_memcache('metastrings_memcache')->clear();
 
 		self::$_mocks = null; // reset mocking service
 	}
