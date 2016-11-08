@@ -35,6 +35,11 @@ class Application {
 	private $engine_dir;
 
 	/**
+	 * @var bool
+	 */
+	private static $testing_app;
+
+	/**
 	 * Property names of the service provider to be exposed via __get()
 	 *
 	 * E.g. the presence of `'foo' => true` in the list would allow _elgg_services()->foo to
@@ -232,7 +237,7 @@ class Application {
 
 		$config = $this->services->config;
 
-		if (defined('PHPUNIT_ELGG_TESTING_APPLICATION')) {
+		if ($this->isTestingApplication()) {
 			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
 		}
 
@@ -603,5 +608,23 @@ class Application {
 
 		$this->services->setValue('request', $new);
 		_elgg_set_initial_context($new);
+	}
+
+	/**
+	 * Flag this application as running for testing (PHPUnit)
+	 * 
+	 * @param bool $testing Is testing application
+	 * @return void
+	 */
+	public static function setTestingApplication($testing = true) {
+		self::$testing_app = $testing;
+	}
+
+	/**
+	 * Checks if the application is running in PHPUnit
+	 * @return bool
+	 */
+	public static function isTestingApplication() {
+		return (bool) self::$testing_app;
 	}
 }

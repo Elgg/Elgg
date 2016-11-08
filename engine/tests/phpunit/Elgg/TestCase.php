@@ -78,12 +78,17 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$sp->config->getCookieConfig();
 
 		$app = new Application($sp);
+		Application::setTestingApplication(true);
 		Application::$_instance = $app;
 
 		// loadCore bails on repeated calls, so we need to manually inject this to make
 		// sure it happens before each test.
 		$app->loadCore();
 		_elgg_services($sp);
+
+		// Invalidate memcache
+		_elgg_get_memcache('new_entity_cache')->clear();
+		_elgg_get_memcache('metastrings_memcache')->clear();
 
 		self::$_mocks = null; // reset mocking service
 	}
@@ -93,7 +98,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 * @return array
 	 */
 	public static function getTestingConfigArray() {
-		return [
+		global $CONFIG;
+
+		if (!isset($CONFIG)) {
+			$CONFIG = new \stdClass;
+		}
+		
+		$conf = [
 			'Config_file' => false,
 			'dbprefix' => 'elgg_t_i_',
 			'boot_complete' => false,
@@ -125,6 +136,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 				'site',
 			],
 		];
+
+		foreach ($conf as $key => $val) {
+			if (!isset($CONFIG->$key)) {
+				$CONFIG->$key = $val;
+			}
+		}
+
+		return (array) $CONFIG;
 	}
 
 	/**
