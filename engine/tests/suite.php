@@ -24,13 +24,22 @@ $plugins = array(
 if (!TextReporter::inCli()) {
 	elgg_admin_gatekeeper();
 } else {
+
+	$cli_opts = getopt('', [
+		'config::', // path to config file
+	]);
+
+	if (!empty($cli_opts['config']) && file_exists($cli_opts['config'])) {
+		// File with custom config options for the suite
+		require_once $cli_opts['config'];
+		echo "Loaded custom configuration for the suite.\n";
+	}
+
 	$admin = array_shift(elgg_get_admins(array('limit' => 1)));
 	if (!login($admin)) {
 		echo "Failed to login as administrator.";
 		exit(1);
 	}
-
-	global $CONFIG;
 	
 	// activate plugins that are not activated on install
 	foreach ($plugins as $key => $id) {
@@ -42,6 +51,7 @@ if (!TextReporter::inCli()) {
 		$plugin->activate();
 	}
 
+	global $CONFIG;
 	$CONFIG->debug = 'NOTICE';
 }
 
