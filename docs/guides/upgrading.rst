@@ -13,6 +13,15 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.2 to 2.3
 ===============
 
+PHP Version
+-----------
+
+PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are secure, we now require PHP 5.6 for new installations.
+
+Existing installations can continue using PHP 5.5 until Elgg 3.0.
+
+In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may need to use ``--ignore-platform-reqs`` flag.
+
 Deprecated APIs
 ---------------
 
