@@ -525,8 +525,9 @@ class Application {
 				forward($forward_url);
 			}
 
-			// Find unprocessed batch uprade classes and save them as ElggUpgrade objects
-			$has_pending_upgrades = _elgg_services()->upgradeLocator->run();
+			// Find unprocessed batch upgrade classes and save them as ElggUpgrade objects
+			$core_upgrades = (require self::elggDir()->getPath('engine/lib/upgrades/async-upgrades.php'));
+			$has_pending_upgrades = _elgg_services()->upgradeLocator->run($core_upgrades);
 
 			if ($has_pending_upgrades) {
 				// Forward to the list of pending upgrades

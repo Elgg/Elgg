@@ -3,6 +3,8 @@
  * ElggUpgrade view
  */
 
+use Elgg\Upgrade\Batch;
+
 $entity = elgg_extract('entity', $vars);
 /* @var $entity \ElggUpgrade */
 
@@ -12,11 +14,13 @@ if (!$batch) {
 	return;
 }
 
+$count = $batch->countItems();
+
 $data = elgg_format_element(
 	'span',
 	[
 		'class' => 'upgrade-data hidden',
-		'data-total' => $batch->countItems(),
+		'data-total' => $count,
 	]
 );
 
@@ -29,7 +33,7 @@ $timer = elgg_format_element(
 $counter = elgg_format_element(
 	'span',
 	['class' => 'upgrade-counter float-alt'],
-	"0/{$batch->countItems()}"
+	$count === Batch::UNKNOWN_COUNT ? "0/???" : "0/$count"
 );
 
 $progressbar = elgg_format_element('div', [

@@ -2,10 +2,12 @@
 
 namespace Elgg\Upgrade;
 
-class TestBatch implements \Elgg\Upgrade\Batch {
+class UnknownSizeTestBatch implements \Elgg\Upgrade\Batch {
+
+	private $i = 0;
 
 	public function getVersion() {
-		return 2016101900;
+		return 2016101902;
 	}
 
 	public function needsIncrementOffset() {
@@ -17,14 +19,15 @@ class TestBatch implements \Elgg\Upgrade\Batch {
 	}
 
 	public function countItems() {
-		return 100;
+		return Batch::UNKNOWN_COUNT;
 	}
 
 	public function run(Result $result, $offset) {
-		$result->addError($offset);
-		$result->addSuccesses(15);
-		$result->addFailures(10);
+		$result->addSuccesses(10);
+		$this->i++;
+		if ($this->i === 2) {
+			$result->markComplete();
+		}
 		return $result;
 	}
-
 }
