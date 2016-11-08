@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 22:29+0300\n"
+"POT-Creation-Date: 2016-11-09 00:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -872,192 +872,192 @@ msgid "Testing docs locally"
 msgstr ""
 
 #: ../../contribute/docs.rst:12
-msgid "Elgg has a `grunt`_ script that automatically builds the docs, opens them in a browser window, and automatically reloads as you make changes (the reload takes just a few seconds)."
+msgid "Elgg has a `grunt`_ script that automatically builds the docs, opens them in a browser window, and automatically reloads as you make changes (the reload takes just a few seconds). You need `npm`_ and `sphinx`_ installed to be able to use these scripts."
 msgstr ""
 
 #: ../../contribute/docs.rst:22
 msgid "It's that easy! Grunt will continue running, watching the docs for changes and automatically rebuilding."
 msgstr ""
 
-#: ../../contribute/docs.rst:28
+#: ../../contribute/docs.rst:30
 msgid "Follow the existing document organization"
 msgstr ""
 
-#: ../../contribute/docs.rst:29
+#: ../../contribute/docs.rst:31
 msgid "The current breakdown is not necessarily the One True Way to organize docs, but consistency is better than randomness."
 msgstr ""
 
-#: ../../contribute/docs.rst:34
+#: ../../contribute/docs.rst:36
 msgid "intro/*"
 msgstr ""
 
-#: ../../contribute/docs.rst:35
+#: ../../contribute/docs.rst:37
 msgid "This is everything that brand new users need to know (installation, features, license, etc.)"
 msgstr ""
 
-#: ../../contribute/docs.rst:38
+#: ../../contribute/docs.rst:40
 msgid "admin/*"
 msgstr ""
 
-#: ../../contribute/docs.rst:39
+#: ../../contribute/docs.rst:41
 msgid "Guides for administrators. Task-oriented."
 msgstr ""
 
-#: ../../contribute/docs.rst:42
+#: ../../contribute/docs.rst:44
 msgid "guides/*"
 msgstr ""
 
-#: ../../contribute/docs.rst:43
+#: ../../contribute/docs.rst:45
 msgid "API guides for plugin developers. Cookbook-style. Example heavy. Code snippet heavy. Broken down by services (actions, i18n, routing, db, etc.). This should only discuss the public API and its behavior, not implementation details or reasoning."
 msgstr ""
 
-#: ../../contribute/docs.rst:48
+#: ../../contribute/docs.rst:50
 msgid "design/*"
 msgstr ""
 
-#: ../../contribute/docs.rst:49
+#: ../../contribute/docs.rst:51
 msgid "Design docs for people who want to get a better understanding of how/why core is built the way it is. This should discuss internal implementation details of the various services, what tradeoffs were made, and the reasoning behind the final decision. Should be useful for people who want to contribute and for communication b/w core devs."
 msgstr ""
 
-#: ../../contribute/docs.rst:55
+#: ../../contribute/docs.rst:57
 msgid "contribute/*"
 msgstr ""
 
-#: ../../contribute/docs.rst:56
+#: ../../contribute/docs.rst:58
 msgid "Contributors guides for the various ways people can participate in the project."
 msgstr ""
 
-#: ../../contribute/docs.rst:59
+#: ../../contribute/docs.rst:61
 msgid "appendix/*"
 msgstr ""
 
-#: ../../contribute/docs.rst:60
+#: ../../contribute/docs.rst:62
 msgid "More detailed/meta/background information about the project (history, roadmap, etc.)"
 msgstr ""
 
-#: ../../contribute/docs.rst:64
+#: ../../contribute/docs.rst:66
 msgid "Use \"Elgg\" in a grammatically correct way"
 msgstr ""
 
-#: ../../contribute/docs.rst:65
+#: ../../contribute/docs.rst:67
 msgid "Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is incorrect. Please don’t do this."
 msgstr ""
 
-#: ../../contribute/docs.rst:69
+#: ../../contribute/docs.rst:71
 msgid "In English, Elgg does not take an article when used as a noun. Here are some examples to emulate:"
 msgstr ""
 
-#: ../../contribute/docs.rst:68
+#: ../../contribute/docs.rst:70
 msgid "“I’m using Elgg to run my website”"
 msgstr ""
 
-#: ../../contribute/docs.rst:69
+#: ../../contribute/docs.rst:71
 msgid "“Install Elgg to get your community online”"
 msgstr ""
 
-#: ../../contribute/docs.rst:73
+#: ../../contribute/docs.rst:75
 msgid "When used as an adjective, the article applies to the main noun, so you should use one. For example:"
 msgstr ""
 
-#: ../../contribute/docs.rst:72
+#: ../../contribute/docs.rst:74
 msgid "\"Go to the Elgg community website to get help.\""
 msgstr ""
 
-#: ../../contribute/docs.rst:73
+#: ../../contribute/docs.rst:75
 msgid "\"I built an Elgg-based network yesterday\""
 msgstr ""
 
-#: ../../contribute/docs.rst:75
+#: ../../contribute/docs.rst:77
 msgid "This advice may not apply in languages other than English."
 msgstr ""
 
-#: ../../contribute/docs.rst:79
+#: ../../contribute/docs.rst:81
 msgid "Avoid first person pronouns"
 msgstr ""
 
-#: ../../contribute/docs.rst:80
+#: ../../contribute/docs.rst:82
 msgid "Refer to the reader as “you.” Do not include yourself in the normal narrative."
 msgstr ""
 
-#: ../../contribute/docs.rst:82
-#: ../../contribute/docs.rst:93
-#: ../../contribute/docs.rst:105
-#: ../../contribute/docs.rst:119
+#: ../../contribute/docs.rst:84
+#: ../../contribute/docs.rst:95
+#: ../../contribute/docs.rst:107
+#: ../../contribute/docs.rst:121
 msgid "Before:"
 msgstr ""
 
-#: ../../contribute/docs.rst:84
+#: ../../contribute/docs.rst:86
 msgid "When we’re done installing Elgg, we’ll look for some plugins!"
 msgstr ""
 
-#: ../../contribute/docs.rst:86
-#: ../../contribute/docs.rst:97
-#: ../../contribute/docs.rst:109
-#: ../../contribute/docs.rst:123
+#: ../../contribute/docs.rst:88
+#: ../../contribute/docs.rst:99
+#: ../../contribute/docs.rst:111
+#: ../../contribute/docs.rst:125
 msgid "After:"
 msgstr ""
 
-#: ../../contribute/docs.rst:88
+#: ../../contribute/docs.rst:90
 msgid "When you’re done installing Elgg, look for some plugins!"
 msgstr ""
 
-#: ../../contribute/docs.rst:90
+#: ../../contribute/docs.rst:92
 msgid "To refer to yourself (avoid this if possible), use your name and write in the third person. This clarifies to future readers/editors whose opinions are being expressed."
 msgstr ""
 
-#: ../../contribute/docs.rst:95
+#: ../../contribute/docs.rst:97
 msgid "I think the best way to do X is to use Y."
 msgstr ""
 
-#: ../../contribute/docs.rst:99
+#: ../../contribute/docs.rst:101
 msgid "Evan thinks the best way to do X is to use Y."
 msgstr ""
 
-#: ../../contribute/docs.rst:103
+#: ../../contribute/docs.rst:105
 msgid "Eliminate fluff"
 msgstr ""
 
-#: ../../contribute/docs.rst:107
+#: ../../contribute/docs.rst:109
 msgid "If you want to use a third-party javascript library within the Elgg framework, you should take care to call the ``elgg_register_js`` function to register it."
 msgstr ""
 
-#: ../../contribute/docs.rst:111
+#: ../../contribute/docs.rst:113
 msgid "To use a third-party javascript library, call ``elgg_register_js`` to register it."
 msgstr ""
 
-#: ../../contribute/docs.rst:115
+#: ../../contribute/docs.rst:117
 msgid "Prefer absolute dates over relative ones"
 msgstr ""
 
-#: ../../contribute/docs.rst:116
+#: ../../contribute/docs.rst:118
 msgid "It is not easy to tell when a particular sentence or paragraph was written, so relative dates quickly become meaningless. Absolute dates also give the reader a good indication of whether a project has been abandoned, or whether some advice might be out of date."
 msgstr ""
 
-#: ../../contribute/docs.rst:121
+#: ../../contribute/docs.rst:123
 msgid "Recently the foo was barred. Soon, the baz will be barred too."
 msgstr ""
 
-#: ../../contribute/docs.rst:125
+#: ../../contribute/docs.rst:127
 msgid "Recently (as of September 2013), the foo was barred. The baz is expected to be barred by October 2013."
 msgstr ""
 
-#: ../../contribute/docs.rst:129
+#: ../../contribute/docs.rst:131
 msgid "Do not remind the reader to contribute"
 msgstr ""
 
-#: ../../contribute/docs.rst:130
+#: ../../contribute/docs.rst:132
 msgid "Focus on addressing only the topic at hand. Constant solicitation for free work is annoying and makes the project look needy. If people want to contribute to the project, they can visit the contributor guide."
 msgstr ""
 
-#: ../../contribute/docs.rst:136
+#: ../../contribute/docs.rst:138
 msgid "Internationalizing documentation"
 msgstr ""
 
-#: ../../contribute/docs.rst:138
+#: ../../contribute/docs.rst:140
 msgid "When you change documentation, remember to update the documentation translation templates before you commit:"
 msgstr ""
 
-#: ../../contribute/docs.rst:146
+#: ../../contribute/docs.rst:148
 msgid "For more information, see http://sphinx-doc.org/latest/intl.html#translating-with-sphinx-intl"
 msgstr ""
 
@@ -1354,202 +1354,210 @@ msgid "Transifex account with access to Elgg project"
 msgstr ""
 
 #: ../../contribute/releases.rst:28
-msgid "0. Merge commits up from lower branches"
+msgid "Update composer dependencies"
 msgstr ""
 
-#: ../../contribute/releases.rst:30
+#: ../../contribute/releases.rst:29
+msgid "Since Elgg 2.3, ``composer.lock`` is committed to the repository. Therefore, if any of the composer dependencies require an update, run ``composer update`` on the corresponding branch and make a pull request with an updated ``composer.lock`` file. This will run the test suite and ensure that new dependencies do not break the build."
+msgstr ""
+
+#: ../../contribute/releases.rst:35
+msgid "Merge commits up from lower branches"
+msgstr ""
+
+#: ../../contribute/releases.rst:37
 msgid "Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other branches."
 msgstr ""
 
-#: ../../contribute/releases.rst:34
+#: ../../contribute/releases.rst:41
 msgid "For each branch"
 msgstr ""
 
-#: ../../contribute/releases.rst:36
+#: ../../contribute/releases.rst:43
 msgid "Check out the branch, make sure it's up to date, and make a new work branch with the merge. E.g. here we're merging 1.12 commits into 2.0:"
 msgstr ""
 
-#: ../../contribute/releases.rst:46
+#: ../../contribute/releases.rst:53
 msgid "If already up-to-date (no commits to merge), we can stop here for this branch."
 msgstr ""
 
-#: ../../contribute/releases.rst:48
+#: ../../contribute/releases.rst:55
 msgid "If there are conflicts, resolve them, ``git add .``, and ``git merge``."
 msgstr ""
 
-#: ../../contribute/releases.rst:50
+#: ../../contribute/releases.rst:57
 msgid "Make a PR for the branch and wait for automated tests and approval by other dev(s)."
 msgstr ""
 
-#: ../../contribute/releases.rst:56
+#: ../../contribute/releases.rst:63
 msgid "Once merged, we would repeat the process to merge 2.0 commits into 2.1."
 msgstr ""
 
-#: ../../contribute/releases.rst:59
-msgid "1. First new stable minor/major release"
-msgstr ""
-
-#: ../../contribute/releases.rst:61
-msgid "Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release."
-msgstr ""
-
-#: ../../contribute/releases.rst:64
-msgid "2. Prepare the release"
-msgstr ""
-
 #: ../../contribute/releases.rst:66
-msgid "Bring your local git clone up to date."
+msgid "First new stable minor/major release"
 msgstr ""
 
 #: ../../contribute/releases.rst:68
+msgid "Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release."
+msgstr ""
+
+#: ../../contribute/releases.rst:71
+msgid "Prepare the release"
+msgstr ""
+
+#: ../../contribute/releases.rst:73
+msgid "Bring your local git clone up to date."
+msgstr ""
+
+#: ../../contribute/releases.rst:75
 msgid "Merge latest commits up from lowest supported branch."
 msgstr ""
 
-#: ../../contribute/releases.rst:70
+#: ../../contribute/releases.rst:77
 msgid "Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR if there is anything that needs to be merged up."
 msgstr ""
 
-#: ../../contribute/releases.rst:72
+#: ../../contribute/releases.rst:79
 msgid "Install the prerequisites:"
 msgstr ""
 
-#: ../../contribute/releases.rst:81
+#: ../../contribute/releases.rst:88
 msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
 msgstr ""
 
-#: ../../contribute/releases.rst:88
+#: ../../contribute/releases.rst:95
 msgid "This creates a ``release-1.12.5`` branch in your local repo."
 msgstr ""
 
-#: ../../contribute/releases.rst:90
+#: ../../contribute/releases.rst:97
 msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
 msgstr ""
 
-#: ../../contribute/releases.rst:98
+#: ../../contribute/releases.rst:105
 msgid "Next, submit a PR via GitHub for automated testing and approval by another developer:"
 msgstr ""
 
-#: ../../contribute/releases.rst:105
-msgid "3. Tag the release"
+#: ../../contribute/releases.rst:112
+msgid "Tag the release"
 msgstr ""
 
-#: ../../contribute/releases.rst:107
+#: ../../contribute/releases.rst:114
 msgid "Once approved and merged, tag the release:"
 msgstr ""
 
-#: ../../contribute/releases.rst:115
+#: ../../contribute/releases.rst:122
 msgid "Mark GitHub release milestones as completed"
 msgstr ""
 
-#: ../../contribute/releases.rst:116
+#: ../../contribute/releases.rst:123
 msgid "Move unresolved tickets in released milestones to later milestones"
 msgstr ""
 
-#: ../../contribute/releases.rst:119
-msgid "4. Update the website"
+#: ../../contribute/releases.rst:126
+msgid "Update the website"
 msgstr ""
 
-#: ../../contribute/releases.rst:121
+#: ../../contribute/releases.rst:128
 msgid "ssh to elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:122
+#: ../../contribute/releases.rst:129
 msgid "Clone https://github.com/Elgg/elgg-scripts"
 msgstr ""
 
-#: ../../contribute/releases.rst:125
+#: ../../contribute/releases.rst:132
 msgid "Build zip package"
 msgstr ""
 
-#: ../../contribute/releases.rst:127
+#: ../../contribute/releases.rst:134
 msgid "Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage."
 msgstr ""
 
-#: ../../contribute/releases.rst:138
+#: ../../contribute/releases.rst:145
 msgid "Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version."
 msgstr ""
 
-#: ../../contribute/releases.rst:139
+#: ../../contribute/releases.rst:146
 msgid "If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg`` item in the composer requires list."
 msgstr ""
 
-#: ../../contribute/releases.rst:143
+#: ../../contribute/releases.rst:150
 msgid "Building 1.x zip packages"
 msgstr ""
 
-#: ../../contribute/releases.rst:145
+#: ../../contribute/releases.rst:152
 msgid "Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage."
 msgstr ""
 
-#: ../../contribute/releases.rst:156
+#: ../../contribute/releases.rst:163
 msgid "Update elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:158
+#: ../../contribute/releases.rst:165
 msgid "Clone https://github.com/Elgg/www.elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:159
+#: ../../contribute/releases.rst:166
 msgid "Add the new versions to ``src/Elgg/Releases.php``"
 msgstr ""
 
-#: ../../contribute/releases.rst:160
+#: ../../contribute/releases.rst:167
 msgid "Update vendors"
 msgstr ""
 
-#: ../../contribute/releases.rst:166
+#: ../../contribute/releases.rst:173
 msgid "Commit and push the changes"
 msgstr ""
 
-#: ../../contribute/releases.rst:167
+#: ../../contribute/releases.rst:174
 msgid "Pull to live site"
 msgstr ""
 
-#: ../../contribute/releases.rst:173
+#: ../../contribute/releases.rst:180
 msgid "Update dependencies"
 msgstr ""
 
-#: ../../contribute/releases.rst:181
+#: ../../contribute/releases.rst:188
 msgid "Go to community admin panel"
 msgstr ""
 
-#: ../../contribute/releases.rst:180
+#: ../../contribute/releases.rst:187
 msgid "Flush APC cache"
 msgstr ""
 
-#: ../../contribute/releases.rst:181
+#: ../../contribute/releases.rst:188
 msgid "Run upgrade"
 msgstr ""
 
-#: ../../contribute/releases.rst:184
-msgid "5. Make the announcement"
-msgstr ""
-
-#: ../../contribute/releases.rst:186
-msgid "This should be the very last thing you do."
-msgstr ""
-
-#: ../../contribute/releases.rst:188
-msgid "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version"
-msgstr ""
-
-#: ../../contribute/releases.rst:189
-msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
-msgstr ""
-
-#: ../../contribute/releases.rst:190
-msgid "Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors"
-msgstr ""
-
 #: ../../contribute/releases.rst:191
-msgid "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released"
-msgstr ""
-
-#: ../../contribute/releases.rst:192
-msgid "Tweet from the elgg `Twitter account`_"
+msgid "Make the announcement"
 msgstr ""
 
 #: ../../contribute/releases.rst:193
+msgid "This should be the very last thing you do."
+msgstr ""
+
+#: ../../contribute/releases.rst:195
+msgid "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version"
+msgstr ""
+
+#: ../../contribute/releases.rst:196
+msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
+msgstr ""
+
+#: ../../contribute/releases.rst:197
+msgid "Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors"
+msgstr ""
+
+#: ../../contribute/releases.rst:198
+msgid "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released"
+msgstr ""
+
+#: ../../contribute/releases.rst:199
+msgid "Tweet from the elgg `Twitter account`_"
+msgstr ""
+
+#: ../../contribute/releases.rst:200
 msgid "Post from the `G+ page`_"
 msgstr ""
 
