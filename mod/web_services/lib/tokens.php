@@ -12,8 +12,7 @@
  * @return bool
  */
 function create_user_token($username, $expire = 60) {
-	global $CONFIG;
-
+	$dbprefix = elgg_get_config('dbprefix');
 	$user = get_user_by_username($username);
 	$time = time() + 60 * $expire;
 
@@ -23,7 +22,7 @@ function create_user_token($username, $expire = 60) {
 		return false;
 	}
 
-	if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions
+	if (insert_data("INSERT into {$dbprefix}users_apisessions
 				(user_guid, token, expires) values
 				({$user->guid}, '$token', '$time')
 				on duplicate key update token='$token', expires='$time'")) {
@@ -43,11 +42,10 @@ function create_user_token($username, $expire = 60) {
  * @since 1.7.0
  */
 function get_user_tokens($user_guid) {
-	global $CONFIG;
-
+	$dbprefix = elgg_get_config('dbprefix');
 	$user_guid = (int)$user_guid;
 
-	$tokens = get_data("SELECT * from {$CONFIG->dbprefix}users_apisessions
+	$tokens = get_data("SELECT * from {$dbprefix}users_apisessions
 		where user_guid=$user_guid");
 
 	return $tokens;
@@ -64,13 +62,11 @@ function get_user_tokens($user_guid) {
  * @return mixed The user id attached to the token if not expired or false.
  */
 function validate_user_token($token) {
-	global $CONFIG;
-	
+	$dbprefix = elgg_get_config('dbprefix');
 	$token = sanitise_string($token);
-
 	$time = time();
 
-	$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions
+	$user = get_data_row("SELECT * from {$dbprefix}users_apisessions
 		where token='$token' and $time < expires");
 
 	if ($user) {
@@ -89,11 +85,10 @@ function validate_user_token($token) {
  * @since 1.7.0
  */
 function remove_user_token($token) {
-	global $CONFIG;
-
+	$dbprefix = elgg_get_config('dbprefix');
 	$token = sanitise_string($token);
 
-	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions
+	return delete_data("DELETE from {$dbprefix}users_apisessions
 		where token='$token'");
 }
 
@@ -104,11 +99,10 @@ function remove_user_token($token) {
  * @since 1.7.0
  */
 function remove_expired_user_tokens() {
-	global $CONFIG;
-
+	$dbprefix = elgg_get_config('dbprefix');
 	$time = time();
 
-	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions
+	return delete_data("DELETE from {$dbprefix}users_apisessions
 		where expires < $time");
 }
 

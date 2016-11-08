@@ -10,7 +10,6 @@ elgg_register_event_handler('init','system','search_init');
  * Initialize search plugin
  */
 function search_init() {
-	global $CONFIG;
 	require_once 'search_hooks.php';
 
 	// page handler for search actions and results
@@ -362,7 +361,6 @@ function search_get_search_view($params, $view_type) {
  * @return str
  */
 function search_get_where_sql($table, $fields, $params) {
-	global $CONFIG;
 	$query = $params['query'];
 
 	// add the table prefix to the fields

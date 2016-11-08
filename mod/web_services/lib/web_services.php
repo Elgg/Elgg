@@ -348,8 +348,6 @@ function serialise_parameters($method, $parameters) {
  * @access private
  */
 function api_auth_key() {
-	global $CONFIG;
-
 	// check that an API key is present
 	$api_key = get_input('api_key');
 	if ($api_key == "") {
@@ -357,7 +355,7 @@ function api_auth_key() {
 	}
 
 	// check that it is active
-	$api_user = get_api_user($CONFIG->site_guid, $api_key);
+	$api_user = get_api_user(elgg_get_site_entity()->guid, $api_key);
 	if (!$api_user) {
 		// key is not active or does not exist
 		throw new APIException(elgg_echo('APIException:BadAPIKey'));
@@ -367,7 +365,6 @@ function api_auth_key() {
 	// plugin can also return false to fail this authentication method
 	return elgg_trigger_plugin_hook('api_key', 'use', $api_key, true);
 }
-
 
 /**
  * PAM: Confirm the HMAC signature
@@ -379,13 +376,11 @@ function api_auth_key() {
  * @access private
  */
 function api_auth_hmac() {
-	global $CONFIG;
-
 	// Get api header
 	$api_header = get_and_validate_api_headers();
 
 	// Pull API user details
-	$api_user = get_api_user($CONFIG->site_guid, $api_header->api_key);
+	$api_user = get_api_user(elgg_get_site_entity()->guid, $api_header->api_key);
 
 	if (!$api_user) {
 		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),
@@ -554,8 +549,6 @@ function map_api_hash($algo) {
 function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key,
 $get_variables, $post_hash = "") {
 
-	global $CONFIG;
-
 	elgg_log("HMAC Parts: $algo, $time, $api_key, $secret_key, $get_variables, $post_hash");
 
 	$ctx = hash_init(map_api_hash($algo), HASH_HMAC, $secret_key);
@@ -623,14 +616,12 @@ function cache_hmac_check_replay($hmac) {
  * @access private
  */
 function pam_auth_usertoken() {
-	global $CONFIG;
-
 	$token = get_input('auth_token');
 	if (!$token) {
 		return false;
 	}
 	
-	$validated_userid = validate_user_token($token, $CONFIG->site_guid);
+	$validated_userid = validate_user_token($token, elgg_get_site_entity()->guid);
 
 	if ($validated_userid) {
 		$u = get_entity($validated_userid);

@@ -10,8 +10,6 @@
  * @package ElggGroups
  */
 
-global $CONFIG;
-
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $group_guid = get_input('group_guid');
 
@@ -50,7 +48,7 @@ if ($user && ($group instanceof ElggGroup)) {
 
 		$owner = $group->getOwnerEntity();
 
-		$url = "{$CONFIG->url}groups/requests/$group->guid";
+		$url = elgg_normalize_url("groups/requests/$group->guid");
 
 		$subject = elgg_echo('groups:request:subject', array(
 			$user->name,

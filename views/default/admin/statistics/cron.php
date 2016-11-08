@@ -3,7 +3,6 @@
  * Cron statistics
  */
 
-//$cronhooks = $CONFIG->hooks["cron"];
 $periods = elgg_get_config('elgg_cron_periods');
 $table_content = '';
 foreach ($periods as $period) {

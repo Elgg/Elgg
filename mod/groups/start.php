@@ -774,8 +774,7 @@ function groups_run_upgrades() {
  * @return array
  */
 function groups_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->pluginspath . 'groups/tests/write_access.php';
+	$value[] = elgg_get_plugins_path() . 'groups/tests/write_access.php';
 	return $value;
 }
 

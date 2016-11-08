@@ -20,8 +20,6 @@
 function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '',
 $content_type = 'application/octet-stream') {
 
-	global $CONFIG;
-
 	$headers = array();
 	$encoded_params = array();
 
