@@ -491,6 +491,8 @@ class EntityTable {
 	 *
 	 *  batch_size => int (25) If "batch" is used, this is the number of entities/rows to pull in before
 	 *                requesting more.
+	 *     
+	 *  ignore_access => bool (false) If set to true, entities will be fetch with access ignored.
 	 *
 	 * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an Elgg\BatchResult. false on errors.
 	 *
@@ -537,6 +539,8 @@ class EntityTable {
 			'batch_inc_offset'		=> true,
 			'batch_size'			=> 25,
 
+			'ignore_access'			=> false,
+
 			// private API
 			'__ElggBatch'			=> null,
 		);
@@ -551,6 +555,10 @@ class EntityTable {
 			unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
 
 			return new \ElggBatch([$this, 'getEntities'], $options, null, $batch_size, $batch_inc_offset);
+		}
+		
+		if ($options['ignore_access']) {
+			$old_ia = elgg_set_ignore_access(true);
 		}
 	
 		// can't use helper function with type_subtype_pair because
@@ -718,6 +726,10 @@ class EntityTable {
 				// time that unit test will break. :/
 				_elgg_services()->entityPreloader->preload($results, $props_to_preload);
 			}
+		}
+		
+		if ($options['ignore_access']) {
+			elgg_set_ignore_access($old_ia);
 		}
 
 		return $results;

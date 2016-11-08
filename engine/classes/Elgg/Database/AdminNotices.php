@@ -115,14 +115,13 @@ class AdminNotices {
 	 * @since 1.8.0
 	 */
 	function exists($id) {
-		$old_ia = elgg_set_ignore_access(true);
 		$notice = elgg_get_entities_from_metadata(array(
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id),
 			'count' => true,
+			'ignore_access' => true,
 		));
-		elgg_set_ignore_access($old_ia);
 	
 		return ($notice) ? true : false;
 	}

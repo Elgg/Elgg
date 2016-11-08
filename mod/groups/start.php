@@ -656,19 +656,16 @@ function groups_access_default_override($hook, $type, $access) {
  */
 function groups_get_invited_groups($user_guid, $return_guids = false, $options = array()) {
 
-	$ia = elgg_set_ignore_access(true);
-
 	$defaults = array(
 		'relationship' => 'invited',
 		'relationship_guid' => (int) $user_guid,
 		'inverse_relationship' => true,
 		'limit' => 0,
+		'ignore_access' => true,
 	);
 
 	$options = array_merge($defaults, $options);
 	$groups = elgg_get_entities_from_relationship($options);
-
-	elgg_set_ignore_access($ia);
 
 	if ($return_guids) {
 		$guids = array();
