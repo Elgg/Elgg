@@ -163,7 +163,7 @@ define(function (require) {
 				$(textarea).data('toggler', $toggler);
 			}
 
-			if (!visual) {
+			if (visual === false) {
 				$toggler.html(elgg.echo('ckeditor:visual'));
 			}
 
