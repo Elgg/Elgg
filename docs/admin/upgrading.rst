@@ -40,10 +40,26 @@ Basic instructions
 From 2.2 to 2.3
 ===============
 
+PHP Version
+-----------
+
+PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are secure, we now require PHP 5.6 for new installations.
+
+Existing installations can continue using PHP 5.5 until Elgg 3.0.
+
+In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may need to use ``--ignore-platform-reqs`` flag.
+
+Tests
+-----
+
  * PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\Elgg\TestCase``.
  * Some core files now sniff if	``PHPUNIT_ELGG_TESTING_APPLICATION`` constant is set to determine whether Elgg is being bootstrapped for PHPUnit tests. ``phpunit.xml`` configuration needs to updated to include this constant definition.
  * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_services()->config`` instead.
  * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
+
+Schema
+------
+
  * The database GUID columns need to be aligned. In the admin section an upgrade is available to handle this. Please make sure you have a backup available
 
 Deprecations in 2.x
