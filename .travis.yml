@@ -26,6 +26,7 @@ matrix:
   fast_finish: true
   allow_failures:
     - php: hhvm
+
   include:
     # Lint checks for PHP code and composer.json
     - php: 5.6
@@ -66,6 +67,22 @@ matrix:
        - sphinx-intl build --locale-dir=docs/locale/
        - sphinx-build -b html -D language=es -n docs docs/_build/html
 
+    # Memcached enabled
+    - php: 5.6
+      services:
+       - memcached
+       - mysql
+      env: VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
+        - phpenv config-add ./.scripts/travis/memcached.ini
+      install:
+       - composer travis:install-with-mysql
+      script:
+       - php -f ./.scripts/is_memcached_enabled.php
+       - ./vendor/bin/phpunit --configuration ./.scripts/travis/phpunit-memcached.xml
+       - php ./engine/tests/suite.php --config ./.scripts/travis/elgg-config/simpletest_memcached.php
+
     # End to end tests
     - php: 5.6
       env: E2E=true
@@ -80,19 +97,19 @@ matrix:
        - ./vendor/bin/phpunit
        - php -f ./engine/tests/suite.php
 
-services: 
- - mysql
+services:
+  - mysql
 
 before_install:
- - phpenv config-rm xdebug.ini
- - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-  
+  - phpenv config-rm xdebug.ini
+  - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+
 install: composer travis:install-with-mysql
 
 script:
- - ./vendor/bin/phpunit
- - php -f ./engine/tests/suite.php
- 
+  - ./vendor/bin/phpunit
+  - php -f ./engine/tests/suite.php
+
 notifications:
   email:
     secure: exC/ws07lLOj3Y43C89jiaKpyB8Yt7DPGSCShV4R3Wkw/hVVzjxt1BinPxzsyL5DC7APUMcTHGOhDB2oCE4ynDE6o6L9bH79fc+V8IYAiNaEIGL0AOuHdnRdGN9GMrr2jv78cZ5MctuUTkeYLaoOEyDGHmkMhqa6SufIDAY8b58=
