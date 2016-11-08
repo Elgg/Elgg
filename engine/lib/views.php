@@ -1511,6 +1511,23 @@ function elgg_view_field(array $params = []) {
 
 	// $vars passed to input/$input_name
 	$input_vars = [];
+	
+	$make_special_checkbox_label = false;
+	if ($input_type == 'checkbox' && (isset($params['label']) || isset($params['#label']))) {
+		if (isset($params['#label']) && isset($params['label'])) {
+			$params['label_tag'] = 'div';
+		} else {
+			$label = elgg_extract('label', $params);
+			$label = elgg_extract('#label', $params, $label);
+			
+			$params['#label'] = $label;
+			unset($params['label']);
+
+			// Single checkbox input view gets special treatment
+			// We don't want the field label to appear a checkbox without a label
+			$make_special_checkbox_label = true;
+		}
+	}
 
 	// first pass non-hash keys into both
 	foreach ($params as $key => $value) {
@@ -1522,14 +1539,6 @@ function elgg_view_field(array $params = []) {
 
 	// field input view needs this
 	$input_vars['input_type'] = $input_type;
-
-	if ($input_type == 'checkbox' && isset($params['#label'])) {
-		// Single checkbox input view gets special treatment
-		// We don't want the field label to appear a checkbox without a label
-		$input_vars['label'] = $element_vars['label'];
-		$input_vars['label_tag'] = 'div';
-		unset($element_vars['label']);
-	}
 
 	// field views get more data
 	$element_vars['input_type'] = $input_type;
@@ -1551,6 +1560,11 @@ function elgg_view_field(array $params = []) {
 	$element_vars['label'] = elgg_view('elements/forms/label', $element_vars);
 	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
 
+	if ($make_special_checkbox_label) {
+		$input_vars['label'] = $element_vars['label'];
+		$input_vars['label_tag'] = 'div';
+		unset($element_vars['label']);
+	}
 	$element_vars['input'] = elgg_view("elements/forms/input", $input_vars);
 
 	return elgg_view('elements/forms/field', $element_vars);
