@@ -1,3 +1,22 @@
+<a name="1.12.14"></a>
+### 1.12.14  (2016-11-08)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Ismayil Khayredinov (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **core:**
+  * outgoing email should have a message-id header ([9953687f](https://github.com/Elgg/Elgg/commit/9953687fecb570793cd273bfedc98394995de737))
+  * _elgg_send_email_notification respects other email handlers ([80bd413d](https://github.com/Elgg/Elgg/commit/80bd413d3dea1d30b1257d30fe877e6c2c1fa7b4))
+  * elgg_get_page_owner_entity will return ElggEntity ([9f8e8dda](https://github.com/Elgg/Elgg/commit/9f8e8dda8a1347074472bf2010ee5520ac4e90cd))
+* **register:** consistent forwarding upon login ([a62410dd](https://github.com/Elgg/Elgg/commit/a62410dd5b00e4dfc02d725c1fd777c87c73b186))
+* **relationships:** ElggRelationship::save returns the ID ([25754c76](https://github.com/Elgg/Elgg/commit/25754c76e50838ceac4c11ddd4d1ba09b03f2727), closes [#10373](https://github.com/Elgg/Elgg/issues/10373))
+
+
 <a name="1.12.13"></a>
 ### 1.12.13  (2016-10-02)
 
