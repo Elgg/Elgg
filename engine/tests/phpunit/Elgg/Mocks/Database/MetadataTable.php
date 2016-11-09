@@ -96,13 +96,15 @@ class MetadataTable extends DbMetadataTabe {
 	 * {@inheritdoc}
 	 */
 	public function getAll(array $options = array()) {
-		$guids = elgg_extract('guids', $options);
+		$guids = elgg_extract('guids', $options, (array) elgg_extract('guid', $options));
+		
 		$rows = [];
 		foreach ($this->rows as $id => $row) {
 			if (empty($guids) || in_array($row->entity_guid, $guids)) {
 				$rows[] = new ElggMetadata($row);
 			}
 		}
+		
 		return $rows;
 	}
 
@@ -124,7 +126,7 @@ class MetadataTable extends DbMetadataTabe {
 
 	/**
 	 * Clear query specs
-	 * 
+	 *
 	 * @param stdClass $row Data row
 	 * @return void
 	 */
@@ -139,7 +141,7 @@ class MetadataTable extends DbMetadataTabe {
 
 	/**
 	 * Add query query_specs for a metadata object
-	 * 
+	 *
 	 * @param stdClass $row Data row
 	 * @return void
 	 */
@@ -155,11 +157,9 @@ class MetadataTable extends DbMetadataTabe {
 		));
 
 		$dbprefix = elgg_get_config('dbprefix');
-		$sql = "SELECT DISTINCT  n_table.*, n.string as name, v.string as value
+		$sql = "SELECT DISTINCT  n_table.*
 			FROM {$dbprefix}metadata n_table
 				JOIN {$dbprefix}entities e ON n_table.entity_guid = e.guid
-				JOIN {$dbprefix}metastrings n on n_table.name_id = n.id
-				JOIN {$dbprefix}metastrings v on n_table.value_id = v.id
 				WHERE  (n_table.id IN ({$row->id}) AND $md_access_sql) AND $e_access_sql
 				ORDER BY n_table.time_created ASC, n_table.id ASC, n_table.id";
 
@@ -174,15 +174,15 @@ class MetadataTable extends DbMetadataTabe {
 		]);
 
 		$sql = "INSERT INTO {$dbprefix}metadata
-				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)
-				VALUES (:entity_guid, :name_id, :value_id, :value_type, :owner_guid, :time_created, :access_id)";
+				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
+				VALUES (:entity_guid, :name, :value, :value_type, :owner_guid, :time_created, :access_id)";
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
 				':entity_guid' => $row->entity_guid,
-				':name_id' => elgg_get_metastring_id($row->name),
-				':value_id' => elgg_get_metastring_id($row->value),
+				':name' => $row->name,
+				':value' => $row->value,
 				':value_type' => $row->value_type,
 				':owner_guid' => $row->owner_guid,
 				':time_created' => $row->time_created,
@@ -192,8 +192,8 @@ class MetadataTable extends DbMetadataTabe {
 		]);
 
 		$sql = "UPDATE {$dbprefix}metadata
-			SET name_id = :name_id,
-			    value_id = :value_id,
+			SET name = :name,
+			    value = :value,
 				value_type = :value_type,
 				access_id = :access_id,
 			    owner_guid = :owner_guid
@@ -202,8 +202,8 @@ class MetadataTable extends DbMetadataTabe {
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':name_id' => elgg_get_metastring_id($row->name),
-				':value_id' => elgg_get_metastring_id($row->value),
+				':name' => $row->name,
+				':value' => $row->value,
 				':value_type' => $row->value_type,
 				':owner_guid' => $row->owner_guid,
 				':access_id' => $row->access_id,

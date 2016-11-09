@@ -778,7 +778,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		if (!$this->canDeactivate($site_guid)) {
+		if (!$this->canDeactivate()) {
 			return false;
 		}
 		

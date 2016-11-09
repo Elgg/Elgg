@@ -129,6 +129,12 @@ class MetadataCache {
 		if (empty($guids)) {
 			return;
 		}
+		
+		$version = (int) elgg_get_config('version');
+		if (!empty($version) && ($version < 2016110900)) {
+			// can't use this during upgrade from 2.x to 3.0
+			return;
+		}
 
 		$access_key = $this->getAccessKey();
 
@@ -146,11 +152,6 @@ class MetadataCache {
 			'limit' => 0,
 			'callback' => false,
 			'distinct' => false,
-			'joins' => array(
-				"JOIN {$db_prefix}metastrings v ON n_table.value_id = v.id",
-				"JOIN {$db_prefix}metastrings n ON n_table.name_id = n.id",
-			),
-			'selects' => array('n.string AS name', 'v.string AS value'),
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC, n_table.id ASC',
 
 			// @todo don't know why this is necessary
@@ -209,8 +210,7 @@ class MetadataCache {
 			'guids' => $guids,
 			'limit' => 0,
 			'callback' => false,
-			'joins' => "JOIN {$db_prefix}metastrings v ON n_table.value_id = v.id",
-			'selects' => array('SUM(LENGTH(v.string)) AS bytes'),
+			'selects' => array('SUM(LENGTH(n_table.value)) AS bytes'),
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
 			'group_by' => 'n_table.entity_guid',
 		);

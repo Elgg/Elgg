@@ -12,6 +12,4 @@ return array(
 
 	'garbagecollector:error' => "ERROR",
 	'garbagecollector:ok' => "OK",
-
-	'garbagecollector:gc:metastrings' => 'Cleaning up unlinked metastrings: ',
 );

@@ -27,7 +27,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	/**
 	 * Constructs a test case with the given name.
 	 * Bootstraps testing environment
-	 * 
+	 *
 	 * @param string $name
 	 * @param array  $data
 	 * @param string $dataName
@@ -88,7 +88,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 		// Invalidate memcache
 		_elgg_get_memcache('new_entity_cache')->clear();
-		_elgg_get_memcache('metastrings_memcache')->clear();
 
 		self::$_mocks = null; // reset mocking service
 	}
@@ -189,7 +188,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('db', self::mocks()->db);
 		_elgg_services()->setValue('entityTable', self::mocks()->entityTable);
 		_elgg_services()->setValue('metadataTable', self::mocks()->metadataTable);
-		_elgg_services()->setValue('metastringsTable', self::mocks()->metastringsTable);
 		_elgg_services()->setValue('annotations', self::mocks()->annotations);
 		_elgg_services()->setValue('relationshipsTable', self::mocks()->relationshipsTable);
 		_elgg_services()->setValue('accessCollections', self::mocks()->accessCollections);

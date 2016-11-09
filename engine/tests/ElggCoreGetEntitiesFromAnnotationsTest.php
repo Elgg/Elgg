@@ -130,7 +130,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	}
 	
 	/**
-	 * This function tests the deprecated behaviour of egef_annotations 
+	 * This function tests the deprecated behaviour of egef_annotations
 	 * discussed in https://github.com/Elgg/Elgg/issues/6638
 	 */
 	public function testElggApiGettersEntitiesFromAnnotationOrderByMaxtime() {
@@ -191,7 +191,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 
 	/**
 	 * Get entities ordered by various MySQL calculations on their annotations
-	 * 
+	 *
 	 * @covers elgg_get_entities_from_annotation_calculation()
 	 */
 	public function testElggGetEntitiesFromAnnotationsCalculateX() {
@@ -299,7 +299,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 
 	/**
 	 * Get entities ordered by various MySQL calculations on their annotations constrained by a where clause
-	 * 
+	 *
 	 * @covers elgg_get_entities_from_annotation_calculation()
 	 */
 	public function testElggGetEntitiesFromAnnotationsCalculateConstrainedByWhere() {
@@ -338,7 +338,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			'annotation_values' => array_unique(call_user_func_array('array_merge', $values)),
 			'calculation' => 'sum',
 			'wheres' => array(
-				"CAST(msv.string as SIGNED) > 0"
+				"CAST(n_table.value as SIGNED) > 0"
 			)
 		);
 
@@ -354,7 +354,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			}
 			$annotations = $e->getAnnotations(array(
 				'annotation_name' => $name,
-				'where' => array("CAST(v.string AS SIGNED) > 0")
+				'where' => array("CAST(n_table.value AS SIGNED) > 0")
 			));
 			if (count($assertion_values)) {
 				$this->assertIsA($annotations, 'array');
@@ -380,7 +380,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	 * Get a count of entities using egefac()
 	 * Testing to make sure that the count includes each entity with multiple annotations of the same name only once
 	 * Irrespective of the calculation type passed
-	 * 
+	 *
 	 * @covers elgg_get_entities_from_annotation_calculation()
 	 */
 	public function testElggGetEntitiesFromAnnotationCalculationCount() {
@@ -423,7 +423,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	/**
 	 * Get a count of entities annotated with the same value but different annotation names
 	 * Irrespective of the calculation
-	 * 
+	 *
 	 * @covers elgg_get_entities_from_annotation_calculation()
 	 */
 	public function testElggGetEntitiesFromAnnotationCalculationCountFromAnnotationValues() {
@@ -461,7 +461,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	/**
 	 * Get a count of entities annotated with the same name => value annotation pairs
 	 * Irrespective of the calculation
-	 * 
+	 *
 	 * @covers elgg_get_entities_from_annotation_calculation()
 	 */
 	public function testElggGetEntitiesFromAnnotationCalculationCountFromAnnotationNameValuesPairs() {

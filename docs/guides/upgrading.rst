@@ -70,7 +70,10 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``datalist_get``
  * ``datalist_set``
  * ``developers_setup_menu``
+ * ``elgg_get_metastring_id``
+ * ``elgg_get_metastring_map``
  * ``get_default_filestore``
+ * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``
  * ``generate_user_password``: Use ``ElggUser::setPassword``
@@ -130,6 +133,7 @@ Removed classes/interfaces
  * ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
  * ``Elgg_Notifications_Notification``
  * ``Elgg\Database\EntityTable\UserFetchResultException.php``
+ * ``Elgg\Database\MetastringsTable``
  * ``Exportable`` and its methods ``export`` and ``getExportableValues``: Use ``toObject``
  * ``ExportException``
  * ``Importable`` and its method ``import``.
@@ -142,6 +146,10 @@ Schema changes
  
 The storage engine for the database tables has been changed from MyISAM to InnoDB. You maybe need to optimize your database settings for this change.
 The ``datalists`` table has been removed. All settings from datalists table have been merged into the ``config`` table.
+
+Metastrings in the database have been denormalized for performance purposes. We removed the metastrings table and put all the string values directly in the 
+metadata and annotation tables. You need to update your custom queries to reflect these changes. Also the ``msv`` and ``msn`` table aliases are no longer available.
+It is best practice not to rely on the table aliases used in core queries. If you need to use custom clauses you should do your own joins.
 
 Multi Site Changes
 ------------------

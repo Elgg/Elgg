@@ -364,39 +364,23 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
 	if (!$user_guid) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
-	$db_prefix = elgg_get_config('dbprefix');
-
-	// denormalize the md to speed things up.
-	// seriously, 10 joins if you don't.
-	$map = elgg_get_metastring_map(['toId', $user_guid, 'readYet', 0]);
 
 	if ($limit === null) {
 		$limit = elgg_get_config('default_limit');
 	}
 
-	$options = array(
-		// original options before denormalizing
-		// 'metadata_name_value_pairs' => array(
-		// 'toId' => elgg_get_logged_in_user_guid(),
-		// 'readYet' => 0,
-		// 'msg' => 1
-		// ),
-		'joins' => array(
-			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
-			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
-		),
-		'wheres' => array(
-			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
-			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
-		),
+	return elgg_get_entities_from_metadata([
+		'metadata_name_value_pairs' => [
+			'toId' => $user_guid,
+			'readYet' => 0,
+			'msg' => 1,
+		],
 		'owner_guid' => $user_guid,
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => $count,
 		'distinct' => false,
-	);
-
-	return elgg_get_entities($options);
+	]);
 }
 
 /**

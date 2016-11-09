@@ -119,14 +119,14 @@ function elgg_get_tags(array $options = array()) {
 	$wheres = $options['wheres'];
 
 	// catch for tags that were spaces
-	$wheres[] = "msv.string != ''";
+	$wheres[] = "md.value != ''";
 
 	$sanitised_tags = array();
 	foreach ($options['tag_names'] as $tag) {
 		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
 	}
 	$tags_in = implode(',', $sanitised_tags);
-	$wheres[] = "(msn.string IN ($tags_in))";
+	$wheres[] = "(md.name IN ($tags_in))";
 
 	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
@@ -151,8 +151,6 @@ function elgg_get_tags(array $options = array()) {
 	$joins = $options['joins'];
 
 	$joins[] = "JOIN {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid";
-	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings msv on msv.id = md.value_id";
-	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
 
 	// remove identical join clauses
 	$joins = array_unique($joins);
@@ -165,8 +163,7 @@ function elgg_get_tags(array $options = array()) {
 		}
 	}
 
-
-	$query  = "SELECT msv.string as tag, count(msv.id) as total ";
+	$query  = "SELECT md.value as tag, count(md.id) as total ";
 	$query .= "FROM {$CONFIG->dbprefix}entities e ";
 
 	// add joins
@@ -185,7 +182,7 @@ function elgg_get_tags(array $options = array()) {
 	$query .= _elgg_get_access_where_sql();
 
 	$threshold = sanitise_int($options['threshold']);
-	$query .= " GROUP BY msv.string HAVING total >= {$threshold} ";
+	$query .= " GROUP BY md.value HAVING total >= {$threshold} ";
 	$query .= " ORDER BY total DESC ";
 
 	$limit = sanitise_int($options['limit']);

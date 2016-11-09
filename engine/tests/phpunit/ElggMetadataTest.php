@@ -103,15 +103,15 @@ class ElggMetadataTest extends TestCase {
 		// Insert
 		$dbprefix = elgg_get_config('dbprefix');
 		$sql = "INSERT INTO {$dbprefix}metadata
-				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)
-				VALUES (:entity_guid, :name_id, :value_id, :value_type, :owner_guid, :time_created, :access_id)";
+				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
+				VALUES (:entity_guid, :name, :value, :value_type, :owner_guid, :time_created, :access_id)";
 
 		_elgg_services()->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
 				':entity_guid' => $metadata->entity_guid,
-				':name_id' => elgg_get_metastring_id('foo'),
-				':value_id' => elgg_get_metastring_id('bar'),
+				':name' => 'foo',
+				':value' => 'bar',
 				':value_type' => 'text',
 				':owner_guid' => $metadata->owner_guid,
 				':time_created' => $metadata->time_created,
