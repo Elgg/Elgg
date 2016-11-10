@@ -6,6 +6,8 @@
  * @uses $vars['owner_guid']  Container limit widgets for
  */
 
+elgg_require_js('resources/widgets/add_panel');
+
 $context = elgg_extract('context', $vars);
 $owner_guid = (int) elgg_extract('owner_guid', $vars);
 $owner = get_entity($owner_guid);

@@ -76,8 +76,6 @@ define(function (require) {
 				opts = {};
 			}
 
-			//console.log(use_element_data);
-
 			// Allow direct binding to allow grouping by rel attribute
 			if (use_element_data === false) {
 				$(selector).colorbox(lightbox.getOptions(opts));
@@ -107,7 +105,29 @@ define(function (require) {
 						opts.href = elgg.getSelectorFromUrlFragment(opts.href);
 					}
 
+					if (opts.photo || opts.inline || opts.iframe || opts.html) {
+						lightbox.open(opts);
+						return;
+					}
+						
+					var href = opts.href;
+					opts.href = false;
+					var data = opts.data;
+					opts.data = undefined;
+					
+					// open lightbox without a href so we get a loader
 					lightbox.open(opts);
+					
+					require(['elgg/Ajax'], function(Ajax) {
+						var ajax = new Ajax(false);
+						ajax.path(href, {data: data}).done(function(output) {
+							opts.html = output;
+							lightbox.open(opts);
+							
+							// clear data so next fetch will refresh contents
+							opts.html = undefined;
+						});
+					});
 				});
 		},
 
