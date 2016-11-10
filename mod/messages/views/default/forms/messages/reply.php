@@ -5,39 +5,50 @@
  * @uses $vars['message']
  */
 
+$message = elgg_extract('message', $vars);
+if (empty($message)) {
+	return;
+}
+
 // fix for RE: RE: RE: that builds on replies
 $reply_title = $vars['message']->title;
 if (strncmp($reply_title, "RE:", 3) != 0) {
 	$reply_title = "RE: " . $reply_title;
 }
 
-echo elgg_view('input/hidden', array(
-	'name' => 'recipients[]',
-	'value' => $vars['message']->fromId,
-));
-
-echo elgg_view('input/hidden', array(
-	'name' => 'original_guid',
-	'value' => $vars['message']->guid,
-));
-?>
-
-<div>
-	<label><?php echo elgg_echo("messages:title"); ?>: <br /></label>
-	<?php echo elgg_view('input/text', array(
+$fields = [
+	[
+		'#type' => 'hidden',
+		'name' => 'recipients[]',
+		'value' => $message->fromId,
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'original_guid',
+		'value' => $message->guid,
+	],
+	[
+		'#type' => 'text',
+		'#label' => elgg_echo('messages:title'),
 		'name' => 'subject',
 		'value' => $reply_title,
-	));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo("messages:message"); ?>:</label>
-	<?php echo elgg_view("input/longtext", array(
+		'required' => true,
+	],
+	[
+		'#type' => 'longtext',
+		'#label' => elgg_echo('messages:message'),
 		'name' => 'body',
-		'value' => '',
-	));
-	?>
-</div>
-<div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'))); ?>
-</div>
+		'required' => true,
+	],
+	
+];
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
+}
+
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('send'),
+]);
+
+elgg_set_form_footer($footer);
