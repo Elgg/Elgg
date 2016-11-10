@@ -1171,6 +1171,10 @@ abstract class ElggEntity extends \ElggData implements
 		if (!empty($this->url_override)) {
 			$url = $this->url_override;
 		}
+		
+		if ($url === null || $url === '') {
+			return '';
+		}
 
 		return elgg_normalize_url($url);
 	}
