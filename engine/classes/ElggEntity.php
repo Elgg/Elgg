@@ -1137,7 +1137,7 @@ abstract class ElggEntity extends \ElggData implements
 	public function getURL() {
 		$url = _elgg_services()->hooks->trigger('entity:url', $this->getType(), ['entity' => $this]);
 		
-		if ($url === null || $url === '') {
+		if ($url === null || $url === '' || $url === false) {
 			return '';
 		}
 
