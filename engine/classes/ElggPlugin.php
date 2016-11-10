@@ -822,13 +822,15 @@ class ElggPlugin extends \ElggObject {
 	 * @throws PluginException
 	 */
 	public function start($flags) {
-		//if (!$this->canActivate()) {
-		//	return false;
-		//}
 
 		// include classes
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
 			$this->registerClasses();
+			
+			$autoload_file = 'vendor/autoload.php';
+			if ($this->canReadFile($autoload_file)) {
+				require_once "{$this->path}/{$autoload_file}";
+			}
 		}
 		
 		// include start file if it exists
