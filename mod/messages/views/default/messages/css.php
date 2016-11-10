@@ -12,12 +12,6 @@
 .message.unread a {
 	color: #D40005;
 }
-.messages-buttonbank {
-	text-align: right;
-}
-.messages-buttonbank input {
-	margin-left: 10px;
-}
 
 /*** message metadata ***/
 .messages-owner {

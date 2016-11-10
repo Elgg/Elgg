@@ -35,8 +35,8 @@ $fields = [
 		'name' => 'body',
 		'value' => $body,
 		'required' => true,
+		'editor_type' => 'simple',
 	],
-	
 ];
 foreach ($fields as $field) {
 	echo elgg_view_field($field);

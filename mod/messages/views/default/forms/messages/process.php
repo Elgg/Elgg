@@ -17,29 +17,35 @@ if (!$list) {
 
 echo "<div class='messages-container'>{$list}</div>";
 
-$footer = '<div class="messages-buttonbank">';
-$footer .= elgg_view('input/submit', [
+$buttons = [];
+$buttons[] = [
 	'#type' => 'submit',
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
 	'class' => 'elgg-button-delete',
 	'title' => elgg_echo('deleteconfirm:plural'),
 	'data-confirm' => elgg_echo('deleteconfirm:plural'),
-]);
+];
 
 if (elgg_extract('folder', $vars) == 'inbox') {
-	$footer .= elgg_view('input/submit', [
+	$buttons[] = [
+		'#type' => 'submit',
 		'value' => elgg_echo('messages:markread'),
 		'name' => 'read',
-	]);
+	];
 }
 
-$footer .= elgg_view('input/button', [
+$buttons[] = [
+	'#type' => 'button',
 	'value' => elgg_echo('messages:toggle'),
-	'class' => 'elgg-button elgg-button-cancel',
+	'class' => 'elgg-button-cancel',
 	'id' => 'messages-toggle',
-]);
+];
 
-$footer .= '</div>';
+$footer = elgg_view('input/fieldset', [
+	'align' => 'horizontal',
+	'justify' => 'right',
+	'fields' => $buttons,
+]);
 
 elgg_set_form_footer($footer);

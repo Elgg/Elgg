@@ -17,6 +17,7 @@ if (!isset($vars['text']) && isset($vars['value'])) {
 }
 
 $type = elgg_extract('type', $vars, 'button', false);
+$vars['type'] = $type;
 
 $text = elgg_extract('text', $vars);
 unset($vars['text']);

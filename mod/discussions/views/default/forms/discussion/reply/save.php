@@ -39,6 +39,7 @@ echo elgg_view_field([
 	'name' => 'description',
 	'value' => $value,
 	'visual' => !$inline,
+	'editor_type' => 'simple',
 ]);
 
 $buttons = [

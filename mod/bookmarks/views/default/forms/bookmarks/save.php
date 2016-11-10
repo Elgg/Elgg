@@ -13,26 +13,27 @@ $fields = [
 		'#label' => elgg_echo('title'),
 		'#type' => 'text',
 		'name' => 'title',
-		'value' => elgg_extract('title', $vars),		
+		'value' => elgg_extract('title', $vars),
 	],
 	[
 		'#label' => elgg_echo('bookmarks:address'),
 		'#type' => 'text',
 		'name' => 'address',
-		'value' => elgg_extract('address', $vars),		
+		'value' => elgg_extract('address', $vars),
 	],
 	[
 		'#label' => elgg_echo('description'),
 		'#type' => 'longtext',
 		'name' => 'description',
-		'value' => elgg_extract('description', $vars),		
+		'value' => elgg_extract('description', $vars),
+		'editor_type' => 'simple',
 	],
 	[
 		'#label' => elgg_echo('tags'),
 		'#type' => 'tags',
 		'name' => 'tags',
 		'id' => 'blog_tags',
-		'value' => elgg_extract('tags', $vars),		
+		'value' => elgg_extract('tags', $vars),
 	],
 	$categories_vars,
 	[
@@ -42,17 +43,17 @@ $fields = [
 		'value' => elgg_extract('access_id', $vars, ACCESS_DEFAULT),
 		'entity' => get_entity(elgg_extract('guid', $vars)),
 		'entity_type' => 'object',
-		'entity_subtype' => 'bookmarks',	
+		'entity_subtype' => 'bookmarks',
 	],
 	[
 		'#type' => 'hidden',
 		'name' => 'container_guid',
-		'value' => elgg_extract('container_guid', $vars),		
+		'value' => elgg_extract('container_guid', $vars),
 	],
 	[
 		'#type' => 'hidden',
 		'name' => 'guid',
-		'value' => elgg_extract('guid', $vars),		
+		'value' => elgg_extract('guid', $vars),
 	],
 ];
 

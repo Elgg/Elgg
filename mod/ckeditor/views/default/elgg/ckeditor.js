@@ -13,42 +13,53 @@
 define(function (require) {
 	var elgg = require('elgg');
 	require('elgg/init');
+
 	var $ = require('jquery');
 	require('jquery.ckeditor');
+
 	var CKEDITOR = require('ckeditor');
-	var config = require('elgg/ckeditor/config');
 
 	var elggCKEditor = {
-		bind: function (selector) {
-			elggCKEditor.registerHandlers();
-			CKEDITOR = elgg.trigger_hook('prepare', 'ckeditor', null, CKEDITOR);
-			selector = selector || '.elgg-input-longtext';
-			if ($(selector).length === 0) {
-				return;
+		bind: function (selector, editor_config) {
+			var default_config = 'elgg/ckeditor/config';			
+			
+			if (typeof editor_config === undefined) {
+				editor_config = default_config;
 			}
-			$(selector).not('[data-cke-init]')
-					.attr('data-cke-init', true)
-					.each(function () {
-						var opts = $(this).data('editorOpts') || {};
 
-						if (opts.disabled) {
-							// Editor has been disabled
-							return;
-						}
-						delete opts.disabled;
-
-						var visual = opts.state !== 'html';
-						delete opts.state;
-
-						var config = $.extend({}, elggCKEditor.config, opts);
-						$(this).data('elggCKEeditorConfig', config);
-
-						if (!visual) {
-							elggCKEditor.init(this, visual);
-						} else {
-							$(this).ckeditor(elggCKEditor.init, config);
-						}
-					});
+			require([editor_config], function(config) {
+				elggCKEditor.config = config;
+				
+				elggCKEditor.registerHandlers();
+				CKEDITOR = elgg.trigger_hook('prepare', 'ckeditor', null, CKEDITOR);
+				selector = selector || '.elgg-input-longtext';
+				if ($(selector).length === 0) {
+					return;
+				}
+				$(selector).not('[data-cke-init]')
+						.attr('data-cke-init', true)
+						.each(function () {
+							var opts = $(this).data('editorOpts') || {};
+	
+							if (opts.disabled) {
+								// Editor has been disabled
+								return;
+							}
+							delete opts.disabled;
+	
+							var visual = opts.state !== 'html';
+							delete opts.state;
+	
+							var config = $.extend({}, elggCKEditor.config, opts);
+							$(this).data('elggCKEeditorConfig', config);
+	
+							if (!visual) {
+								elggCKEditor.init(this, visual);
+							} else {
+								$(this).ckeditor(elggCKEditor.init, config);
+							}
+						});
+			});
 		},
 
 		/**
@@ -205,17 +216,7 @@ define(function (require) {
 				}
 			});
 		},
-
-		/**
-		 * CKEditor configuration
-		 *
-		 * You can find configuration information here:
-		 * http://docs.ckeditor.com/#!/api/CKEDITOR.config
-		 */
-		config: config
 	};
-
-	elggCKEditor.bind('.elgg-input-longtext');
 
 	$(document).on('click', '.ckeditor-toggle-editor', elggCKEditor.toggleEditor);
 

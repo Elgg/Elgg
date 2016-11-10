@@ -39,6 +39,7 @@ $fields = [
 		'#label' => elgg_echo('messages:message'),
 		'name' => 'body',
 		'required' => true,
+		'editor_type' => 'simple',
 	],
 	
 ];

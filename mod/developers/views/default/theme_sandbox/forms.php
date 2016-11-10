@@ -235,6 +235,15 @@ $ipsum = elgg_view('developers/ipsum');
 		));
 
 		echo elgg_view_field(array(
+			'#type' => 'longtext',
+			'name' => 'f14c',
+			'id' => 'f14c',
+			'value' => $ipsum,
+			'editor_type' => 'simple',
+			'#label' => 'Long textarea input (.elgg-input-longtext) with the editor_type configured as "simple":',
+		));
+
+		echo elgg_view_field(array(
 			'#type' => 'number',
 			'name' => 'f15',
 			'id' => 'f15',
