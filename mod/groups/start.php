@@ -33,9 +33,9 @@ function groups_init() {
 
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'), ['profile', 'dashboard']);
-
+	
 	// add group activity tool option
-	if (elgg_get_plugin_setting('allow_activity', 'groups', 'yes') === 'yes') {
+	if (elgg_get_plugin_setting('allow_activity', 'groups') === 'yes') {
 		add_group_tool_option('activity', elgg_echo('groups:enableactivity'), true);
 		elgg_extend_view('groups/tool_latest', 'groups/profile/activity_module');
 	}

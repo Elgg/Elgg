@@ -306,14 +306,9 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed
 	 */
 	public function getSetting($name, $default = null) {
-		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
+		$values = $this->getAllSettings();
 
-		if ($values !== null) {
-			return isset($values[$name]) ? $values[$name] : $default;
-		}
-
-		$val = $this->$name;
-		return $val !== null ? $val : $default;
+		return elgg_extract($name, $values, $default);
 	}
 
 	/**
@@ -324,9 +319,12 @@ class ElggPlugin extends \ElggObject {
 	 * @return array An array of key/value pairs.
 	 */
 	public function getAllSettings() {
+		
+		$defaults = $this->getStaticConfig('settings', []);
 		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
+		
 		if ($values !== null) {
-			return $values;
+			return array_merge($defaults, $values);
 		}
 
 		if (!$this->guid) {
@@ -346,7 +344,7 @@ class ElggPlugin extends \ElggObject {
 
 		$private_settings = $this->getDatabase()->getData($q);
 
-		$return = array();
+		$return = [];
 
 		if ($private_settings) {
 			foreach ($private_settings as $setting) {
@@ -354,7 +352,7 @@ class ElggPlugin extends \ElggObject {
 			}
 		}
 
-		return $return;
+		return array_merge($defaults, $return);
 	}
 
 	/**
@@ -431,22 +429,12 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed The setting string value, the default value or false if there is no user
 	 */
 	public function getUserSetting($name, $user_guid = 0, $default = null) {
-		$user_guid = (int)$user_guid;
-
-		if ($user_guid) {
-			$user = get_entity($user_guid);
-		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
-		}
-
-		if (!($user instanceof \ElggUser)) {
+		$values = $this->getAllUserSettings($user_guid);
+		if ($values === false) {
 			return false;
 		}
-
-		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 		
-		$val = get_private_setting($user->guid, $name);
-		return $val !== null ? $val : $default;
+		return elgg_extract($name, $values, $default);
 	}
 
 	/**
@@ -470,6 +458,8 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
+		$defaults = $this->getStaticConfig('user_settings', []);
+		
 		$db_prefix = _elgg_services()->config->get('dbprefix');
 		// send an empty name so we just get the first part of the namespace
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
@@ -493,7 +483,7 @@ class ElggPlugin extends \ElggObject {
 			}
 		}
 
-		return $return;
+		return array_merge($defaults, $return);
 	}
 
 	/**
@@ -1027,17 +1017,12 @@ class ElggPlugin extends \ElggObject {
 			return $this->attributes[$name];
 		}
 
-		// @todo clean below - getPrivateSetting() should return null now
-		// No, so see if its in the private data store.
-		// get_private_setting() returns false if it doesn't exist
-		$meta = $this->getPrivateSetting($name);
-
-		if ($meta === false) {
-			// Can't find it, so return null
-			return null;
+		$result = $this->getPrivateSetting($name);
+		if ($result !== null) {
+			return $result;
 		}
-
-		return $meta;
+		$defaults = $this->getStaticConfig('settings', []);
+		return elgg_extract($name, $defaults, $result);
 	}
 
 	/**
