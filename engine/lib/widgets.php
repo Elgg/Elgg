@@ -182,13 +182,6 @@ function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
 			return 'admin/statistics/overview';
 		case 'cron_status':
 			return 'admin/statistics/cron';
-		case 'friends':
-			$owner = $widget->getOwnerEntity();
-			if (!($owner instanceof \ElggUser)) {
-				return;
-			}
-			
-			return "friends/{$owner->username}";
 		case 'new_users':
 			return 'admin/users/newest';
 		case 'online_users':

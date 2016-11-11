@@ -12,6 +12,8 @@ function elgg_friends_plugin_init() {
 
 	elgg_register_widget_type('friends', elgg_echo('friends'), elgg_echo('friends:widget:description'), ['profile', 'dashboard']);
 
+	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_friends_widget_urls');
+	
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_friends_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_collections_page_menu');
@@ -328,4 +330,33 @@ function _elgg_friends_filter_tabs($hook, $type, $items, $params) {
 		'priority' => 400,
 	]);
 	return $items;
+}
+
+
+/**
+ * Returns widget URLS used in widget titles
+ *
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param string $result URL
+ * @param array  $params Parameters
+ * @return string|null
+ * @access private
+ */
+function _elgg_friends_widget_urls($hook, $type, $result, $params) {
+	$widget = elgg_extract('entity', $params);
+	if (!($widget instanceof \ElggWidget)) {
+		return;
+	}
+	
+	if ($widget->handler !== 'friends') {
+		return;
+	}
+	
+	$owner = $widget->getOwnerEntity();
+	if (!($owner instanceof \ElggUser)) {
+		return;
+	}
+			
+	return "friends/{$owner->username}";
 }
