@@ -61,8 +61,6 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:thewire', 'Elgg\Values::getTrue');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
-
-	elgg_register_event_handler('upgrade', 'system', 'thewire_run_upgrades');
 }
 
 /**
@@ -466,13 +464,4 @@ function thewire_owner_block_menu($hook, $type, $return, $params) {
 function thewire_test($hook, $type, $value, $params) {
 	$value[] = elgg_get_plugins_path() . 'thewire/tests/regex.php';
 	return $value;
-}
-
-function thewire_run_upgrades() {
-	$path = dirname(__FILE__) . '/upgrades/';
-	$files = elgg_get_upgrade_files($path);
-	
-	foreach ($files as $file) {
-		include $path . $file;
-	}
 }

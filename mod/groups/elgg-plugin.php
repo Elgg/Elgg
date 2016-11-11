@@ -6,6 +6,9 @@ return [
 	'upgrades' => [
 		\Elgg\Groups\Upgrades\GroupIconTransfer::class,
 	],
+	'settings' => [
+		'allow_activity' => 'yes',
+	],
 	'actions' => [
 		'groups/edit' => [],
 		'groups/delete' => [],

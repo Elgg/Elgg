@@ -78,3 +78,30 @@ or
 .. warning::
 
    The ``$plugin_id`` needs to be provided when setting plugin (user)settings.
+   
+Default plugin (user) settings
+------------------------------
+
+If a plugin or a user not have a setting stored in the database, you sometimes have the need for a certain default value.
+You can pass this when using the getter functions.
+
+.. code:: php
+
+   $user_setting = elgg_get_plugin_user_setting($name, $user_guid, $plugin_id, $default);
+   
+   $plugin_setting = elgg_get_plugin_setting($name, $plugin_id, $default);
+   
+Alternatively you can also provide default plugin and user settings in the ``elgg-plugin.php`` file.
+
+.. code:: php
+
+	<?php
+
+	return [
+		'settings' => [
+		    'key' => 'value',
+		],
+		'user_settings' => [
+		    'key' => 'value',
+		],
+	];
