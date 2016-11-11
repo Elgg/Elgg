@@ -10,4 +10,10 @@ return [
 			'bookmarks/' => __DIR__ . '/graphics',
 		],
 	],
+	'widgets' => [
+		'bookmarks' => [
+			'description' => elgg_echo('bookmarks:widget:description'),
+			'context' => ['profile', 'dashboard'],
+		],
+	],
 ];

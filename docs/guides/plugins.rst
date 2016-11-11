@@ -20,6 +20,7 @@ constants like ``__DIR__``, its return value should not change. The currently su
  * ``actions``
  * ``settings``
  * ``user_settings``
+ * ``widgets``
 
 Syntax
 ------

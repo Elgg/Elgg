@@ -51,10 +51,7 @@ function pages_init() {
 	// add to groups
 	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
 	elgg_extend_view('groups/tool_latest', 'pages/group_module');
-
-	//add a widget
-	elgg_register_widget_type('pages', elgg_echo('pages'), elgg_echo('pages:widget:description'), ['profile', 'dashboard']);
-
+	
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below
 	elgg_set_config('pages', array(

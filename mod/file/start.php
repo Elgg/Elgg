@@ -31,9 +31,6 @@ function file_init() {
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('file', 'file_page_handler');
 
-	// Add a new file widget
-	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"), ['profile', 'dashboard']);
-
 	// Register URL handlers for files
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'file_set_url');
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_set_icon_url');

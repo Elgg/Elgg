@@ -11,13 +11,10 @@
  * MessageBoard initialisation
  */
 function messageboard_init() {
-	// css
+
 	elgg_extend_view('elgg.css', 'messageboard/css');
 
 	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
-
-	// messageboard widget - only for profile for now
-	elgg_register_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), array("profile"));
 
 	// delete annotations for posts
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'messageboard_annotation_menu_setup');

@@ -10,10 +10,7 @@ function tagcloud_init() {
 	elgg_extend_view('elgg.css', 'elgg/tagcloud.css');
 	
 	elgg_register_page_handler('tags', 'tagcloud_tags_page_handler');
-	
-	elgg_register_widget_type('tagcloud', elgg_echo('tagcloud:widget:title'), elgg_echo('tagcloud:widget:description'), ['profile', 'dashboard']);
 }
-
 
 /**
  * Page hander for sitewide tag cloud

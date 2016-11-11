@@ -31,9 +31,6 @@ function groups_init() {
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
 
-	// Add some widgets
-	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'), ['profile', 'dashboard']);
-	
 	// add group activity tool option
 	if (elgg_get_plugin_setting('allow_activity', 'groups') === 'yes') {
 		add_group_tool_option('activity', elgg_echo('groups:enableactivity'), true);

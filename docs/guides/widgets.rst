@@ -3,8 +3,6 @@ Widgets
 
 Widgets are content areas that users can drag around their page to customize the layout. They can typically be customized by their owner to show more/less content and determine who sees the widget. By default Elgg provides plugins for customizing the profile page and dashboard via widgets.
 
-TODO: Screenshot
-
 .. contents:: Contents
    :local:
    :depth: 2
@@ -29,7 +27,21 @@ To create a widget, create two views:
 Register the widget
 -------------------
 
-Once you have created your edit and view pages, you need to initialize the plugin widget. This is done within the plugins ``init()`` function.
+Once you have created your edit and view pages, you need to initialize the plugin widget.
+
+The easiest way to do this is to add the ``widgets`` section to your ``elgg-plugin.php`` config file.
+
+.. code:: php
+
+	return [
+		'widgets' => [
+			'filerepo' => [
+				'context' => ['profile'],
+			],
+		]
+	];
+	
+Alternatively you can also use an function to add a widget. This is done within the plugins ``init()`` function.
 
 .. code:: php
 
