@@ -275,6 +275,7 @@ Miscellaneous API changes
 
  * ``ElggBatch``: You may only access public properties
  * ``ElggEntity``: The ``tables_split`` and ``tables_loaded`` properties were removed
+ * ``ElggEntity``: Empty URLs will no longer be normalized. This means entities without URLs will no longer result in the site URL
  * ``ElggGroup::removeObjectFromGroup`` requires passing in an ``ElggObject`` (no longer accepts a GUID)
  * ``ElggUser::$salt`` no longer exists as an attribute, nor is it used for authentication
  * ``ElggUser::$password`` no longer exists as an attribute, nor is it used for authentication

@@ -1135,41 +1135,10 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return string The URL of the entity
 	 */
 	public function getURL() {
+		$url = _elgg_services()->hooks->trigger('entity:url', $this->getType(), ['entity' => $this]);
 		
-		$url = "";
-
-		// @todo remove when elgg_register_entity_url_handler() has been removed
-		if ($this->guid) {
-			global $CONFIG;
-			if (isset($CONFIG->entity_url_handler[$this->getType()][$this->getSubtype()])) {
-				$function = $CONFIG->entity_url_handler[$this->getType()][$this->getSubtype()];
-				if (is_callable($function)) {
-					$url = call_user_func($function, $this);
-				}
-			} elseif (isset($CONFIG->entity_url_handler[$this->getType()]['all'])) {
-				$function = $CONFIG->entity_url_handler[$this->getType()]['all'];
-				if (is_callable($function)) {
-					$url = call_user_func($function, $this);
-				}
-			} elseif (isset($CONFIG->entity_url_handler['all']['all'])) {
-				$function = $CONFIG->entity_url_handler['all']['all'];
-				if (is_callable($function)) {
-					$url = call_user_func($function, $this);
-				}
-			}
-
-			if ($url) {
-				$url = elgg_normalize_url($url);
-			}
-		}
-
-		$type = $this->getType();
-		$params = array('entity' => $this);
-		$url = _elgg_services()->hooks->trigger('entity:url', $type, $params, $url);
-
-		// @todo remove when \ElggEntity::setURL() has been removed
-		if (!empty($this->url_override)) {
-			$url = $this->url_override;
+		if ($url === null || $url === '' || $url === false) {
+			return '';
 		}
 
 		return elgg_normalize_url($url);

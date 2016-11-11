@@ -162,6 +162,34 @@ function _elgg_widgets_set_ajax_title($hook, $type, $results, $params) {
 }
 
 /**
+ * Returns widget URLS used in widget titles
+ *
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param string $result URL
+ * @param array  $params Parameters
+ * @return string|null
+ * @access private
+ */
+function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
+	$widget = elgg_extract('entity', $params);
+	if (!($widget instanceof \ElggWidget)) {
+		return;
+	}
+	
+	switch ($widget->handler) {
+		case 'content_stats':
+			return 'admin/statistics/overview';
+		case 'cron_status':
+			return 'admin/statistics/cron';
+		case 'new_users':
+			return 'admin/users/newest';
+		case 'online_users':
+			return 'admin/users/online';
+	}
+}
+
+/**
  * Handle widgets pages.
  *
  * @param array $page Array of pages
@@ -207,6 +235,7 @@ function _elgg_widgets_init() {
 	elgg_register_page_handler('widgets', '_elgg_widgets_page_handler');
 
 	elgg_register_plugin_hook_handler('output', 'ajax', '_elgg_widgets_set_ajax_title');
+	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_widgets_widget_urls');
 }
 
 /**

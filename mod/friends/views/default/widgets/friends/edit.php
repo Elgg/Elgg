@@ -5,13 +5,6 @@
 
 $widget = elgg_extract('entity', $vars);
 
-// handle upgrade to 1.7.2 from previous versions
-if ($widget->icon_size == 1) {
-	$widget->icon_size = 'small';
-} elseif ($widget->icon_size == 2) {
-	$widget->icon_size = 'tiny';
-}
-
 // set default value for icon size
 if (!isset($widget->icon_size)) {
 	$widget->icon_size = 'small';
