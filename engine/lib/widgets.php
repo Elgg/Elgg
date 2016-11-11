@@ -141,27 +141,6 @@ function elgg_get_widget_types($context = "") {
 }
 
 /**
- * Set the widget title on ajax return from save action
- *
- * @param string $hook    Hook name
- * @param string $type    Hook type
- * @param array  $results Array to be encoded as json
- * @param array  $params  Parameters about the request
- * @return array|null
- * @access private
- */
-function _elgg_widgets_set_ajax_title($hook, $type, $results, $params) {
-	if ($params['action'] == 'widgets/save') {
-		// @todo Elgg makes ajax so difficult - no other way to add data to output
-		$widget = get_entity(get_input('guid'));
-		if ($widget && $widget->title) {
-			$results['title'] = $widget->title;
-			return $results;
-		}
-	}
-}
-
-/**
  * Returns widget URLS used in widget titles
  *
  * @param string $hook   Hook name
@@ -234,7 +213,6 @@ function _elgg_widgets_init() {
 	
 	elgg_register_page_handler('widgets', '_elgg_widgets_page_handler');
 
-	elgg_register_plugin_hook_handler('output', 'ajax', '_elgg_widgets_set_ajax_title');
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_widgets_widget_urls');
 }
 

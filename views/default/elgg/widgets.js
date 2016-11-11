@@ -122,8 +122,8 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 		elgg.action('widgets/save', {
 			data: $(this).serialize(),
 			success: function (json) {
-				$widgetContent.html(json.output);
-				if (typeof (json.title) != "undefined") {
+				$widgetContent.html(json.output.content);
+				if (typeof (json.output.title) != "undefined") {
 					var $widgetTitle = $widgetContent.parent().parent().find('.elgg-widget-title');
 					$widgetTitle.html(json.title);
 				}
