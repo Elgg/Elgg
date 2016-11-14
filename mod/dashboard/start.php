@@ -9,7 +9,6 @@ function dashboard_init() {
 	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
 
 	elgg_extend_view('elgg.css', 'dashboard/css');
-	elgg_extend_view('elgg.js', 'dashboard/js');
 
 	if (elgg_is_logged_in()) {
 		elgg_register_menu_item('topbar', array(
