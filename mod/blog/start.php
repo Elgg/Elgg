@@ -51,9 +51,6 @@ function blog_init() {
 	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
 	elgg_extend_view('groups/tool_latest', 'blog/group_module');
 
-	// add a blog widget
-	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'), ['profile', 'dashboard']);
-
 	// entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'blog_entity_menu_setup');
 

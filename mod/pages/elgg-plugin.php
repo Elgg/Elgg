@@ -11,4 +11,10 @@ return [
 			'pages/' => __DIR__ . '/images',
 		],
 	],
+	'widgets' => [
+		'pages' => [
+			'description' => elgg_echo('pages:widget:description'),
+			'context' => ['profile', 'dashboard'],
+		],
+	],
 ];

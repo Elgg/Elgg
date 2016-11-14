@@ -37,16 +37,6 @@ function elgg_activity_init() {
 		'text' => elgg_echo('activity'),
 		'href' => 'activity',
 	]);
-
-	elgg_register_action('river/delete', '', 'admin');
-
-	elgg_register_widget_type(
-		'group_activity',
-		elgg_echo('groups:widget:group_activity:title'),
-		elgg_echo('groups:widget:group_activity:description'),
-		array('dashboard'),
-		true
-	);
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_activity_init');

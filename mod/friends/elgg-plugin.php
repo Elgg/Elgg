@@ -8,4 +8,11 @@ return [
 		'friends/collections/delete' => [],
 		'friends/collections/edit' => [],
 	],
+	'widgets' => [
+		'friends' => [
+			'description' => elgg_echo('friends:widget:description'),
+			'context' => ['profile', 'dashboard'],
+		],
+	],
 ];
+	

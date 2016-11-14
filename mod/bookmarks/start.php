@@ -30,8 +30,6 @@ function bookmarks_init() {
 	elgg_extend_view('elgg.css', 'bookmarks/css');
 	elgg_extend_view('elgg.js', 'bookmarks/js');
 
-	elgg_register_widget_type('bookmarks', elgg_echo('bookmarks'), elgg_echo('bookmarks:widget:description'), ['profile', 'dashboard']);
-
 	if (elgg_is_logged_in()) {
 		$user_guid = elgg_get_logged_in_user_guid();
 		$address = urlencode(current_page_url());

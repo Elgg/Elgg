@@ -705,7 +705,7 @@ class ElggPlugin extends \ElggObject {
 		if ($return) {
 			if ($this->canReadFile('activate.php')) {
 				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
-						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_ACTIONS;
+						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_WIDGETS | ELGG_PLUGIN_REGISTER_ACTIONS;
 
 				$this->start($flags);
 
@@ -845,6 +845,12 @@ class ElggPlugin extends \ElggObject {
 			$this->registerLanguages();
 		}
 
+		// include widgets
+		if ($flags & ELGG_PLUGIN_REGISTER_WIDGETS) {
+			// should load after views and languages because those are used during registration
+			$this->registerWidgets();
+		}
+
 		return true;
 	}
 
@@ -976,6 +982,30 @@ class ElggPlugin extends \ElggObject {
 			}
 			
 			$actions->register($action, $options['filename'], $options['access']);
+		}
+	}
+
+	/**
+	 * Registers the plugin's widgets provided in the plugin config file
+	 *
+	 * @throws PluginException
+	 * @return void
+	 */
+	protected function registerWidgets() {
+		$widgets = _elgg_services()->widgets;
+		
+		$spec = (array) $this->getStaticConfig('widgets', []);
+		foreach ($spec as $widget_id => $widget_definition) {
+			if (!is_array($widget_definition)) {
+				continue;
+			}
+			if (!isset($widget_definition['id'])) {
+				$widget_definition['id'] = $widget_id;
+			}
+			
+			$definition = \Elgg\WidgetDefinition::factory($widget_definition);
+			
+			$widgets->registerType($definition);
 		}
 	}
 
