@@ -36,4 +36,10 @@ $body = elgg_view_layout($layout, array(
 	'title' => $title,
 	'content' => $content,
 ));
-echo elgg_view_page($title, $body, $layout);
+
+$shell = $layout;
+if (!elgg_is_logged_in() && elgg_get_config('walled_garden')) {
+	$shell = 'walled_garden';
+}
+
+echo elgg_view_page($title, $body, $shell);
