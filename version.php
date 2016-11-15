@@ -11,7 +11,7 @@
 
 // YYYYMMDD = Elgg Date
 // XX = Interim incrementer
-$version = 2016110400;
+$version = 2016111500;
 
 $composerJson = file_get_contents(dirname(__FILE__) . "/composer.json");
 if ($composerJson === false) {

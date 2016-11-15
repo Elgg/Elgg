@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg 3.0.0 upgrade 2016101400
+ * Elgg 3.0.0 upgrade 2016111500
  * security-defaults
  *
  * Add the default settings
