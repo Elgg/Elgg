@@ -240,6 +240,10 @@ class ResponseFactory {
 			return $this->redirect($redirect_url, $status_code);
 		}
 
+		if ($this->ajax->isReady() && $response->isSuccessful()) {
+			return $this->respondFromContent($content, $status_code, $headers);
+		}
+
 		if ($response->isClientError() || $response->isServerError() || $response instanceof ErrorResponse) {
 			return $this->respondWithError($content, $status_code, $headers);
 		}
