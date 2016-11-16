@@ -195,7 +195,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('accessCollections', self::mocks()->accessCollections);
 		_elgg_services()->setValue('privateSettings', self::mocks()->privateSettings);
 		_elgg_services()->setValue('subtypeTable', self::mocks()->subtypeTable);
-		_elgg_services()->setValue('datalist', self::mocks()->datalist);
 
 		$dt = new DateTime();
 		_elgg_services()->entityTable->setCurrentTime($dt);

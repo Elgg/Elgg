@@ -835,9 +835,9 @@ class ElggInstaller {
 			$this->CONFIG->language = 'en';
 
 			if ($stepIndex > $settingsIndex) {
-				$this->CONFIG->site_guid = (int) _elgg_services()->datalist->get('default_site');
+				$this->CONFIG->site_guid = (int) _elgg_services()->configTable->get('default_site');
 				$this->CONFIG->site = get_entity($this->CONFIG->site_guid);
-				$this->CONFIG->dataroot = _elgg_services()->datalist->get('dataroot');
+				$this->CONFIG->dataroot = _elgg_services()->configTable->get('dataroot');
 				_elgg_services()->config->getCookieConfig();
 				_elgg_session_boot();
 			}
@@ -1487,17 +1487,17 @@ class ElggInstaller {
 		$this->CONFIG->site_guid = $guid;
 		$this->CONFIG->site = $site;
 
-		_elgg_services()->datalist->set('installed', time());
-		_elgg_services()->datalist->set('dataroot', $submissionVars['dataroot']);
-		_elgg_services()->datalist->set('default_site', $site->getGUID());
-		_elgg_services()->datalist->set('version', elgg_get_version());
-		_elgg_services()->datalist->set('simplecache_enabled', 1);
-		_elgg_services()->datalist->set('system_cache_enabled', 1);
-		_elgg_services()->datalist->set('simplecache_lastupdate', time());
+		_elgg_services()->configTable->set('installed', time());
+		_elgg_services()->configTable->set('dataroot', $submissionVars['dataroot']);
+		_elgg_services()->configTable->set('default_site', $site->getGUID());
+		_elgg_services()->configTable->set('version', elgg_get_version());
+		_elgg_services()->configTable->set('simplecache_enabled', 1);
+		_elgg_services()->configTable->set('system_cache_enabled', 1);
+		_elgg_services()->configTable->set('simplecache_lastupdate', time());
 
 		// new installations have run all the upgrades
 		$upgrades = elgg_get_upgrade_files(\Elgg\Application::elggDir()->getPath("/engine/lib/upgrades/"));
-		_elgg_services()->datalist->set('processed_upgrades', serialize($upgrades));
+		_elgg_services()->configTable->set('processed_upgrades', $upgrades);
 
 		_elgg_services()->configTable->set('view', 'default', $site->getGUID());
 		_elgg_services()->configTable->set('language', 'en', $site->getGUID());
@@ -1635,7 +1635,7 @@ class ElggInstaller {
 		if ($user->makeAdmin() == FALSE) {
 			register_error(_elgg_services()->translator->translate('install:error:adminaccess'));
 		} else {
-			_elgg_services()->datalist->set('admin_registered', 1);
+			_elgg_services()->configTable->set('admin_registered', 1);
 		}
 		elgg_set_ignore_access(false);
 

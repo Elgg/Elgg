@@ -28,7 +28,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Context                            $context
- * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
@@ -157,20 +156,14 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setValue('config', $config);
 
-		$this->setClassName('configTable', \Elgg\Database\ConfigTable::class);
+		$this->setFactory('configTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\ConfigTable($c->db, $c->boot, $c->logger);
+		});
 
 		$this->setClassName('context', \Elgg\Context::class);
 
 		$this->setFactory('crypto', function(ServiceProvider $c) {
 			return new \ElggCrypto($c->siteSecret);
-		});
-
-		$this->setFactory('datalist', function(ServiceProvider $c) {
-			// TODO(ewinslow): Add back memcached support
-			$db = $c->db;
-			$dbprefix = $db->prefix;
-			$pool = new Pool\InMemory();
-			return new \Elgg\Database\Datalist($pool, $db, $c->logger, "{$dbprefix}datalists");
 		});
 
 		$this->setFactory('db', function(ServiceProvider $c) {
@@ -394,11 +387,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
 
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
-			return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
+			return new \Elgg\Cache\SimpleCache($c->config, $c->views);
 		});
 
 		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			return new \Elgg\Database\SiteSecret($c->datalist);
+			return new \Elgg\Database\SiteSecret($c->configTable);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
@@ -408,7 +401,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
-			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config, $c->datalist);
+			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config);
 			if ($c->config->getVolatile('enable_profiling')) {
 				$cache->setTimer($c->timer);
 			}
@@ -434,7 +427,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->translator,
 				$c->events,
 				$c->hooks,
-				$c->datalist,
+				$c->config,
 				$c->logger,
 				$c->mutex
 			);

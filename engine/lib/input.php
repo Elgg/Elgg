@@ -549,7 +549,7 @@ function _elgg_htmlawed_test($hook, $type, $value, $params) {
  */
 function _elgg_disable_password_autocomplete($hook, $type, $return_value, $params) {
 	
-	if (!get_config('security_disable_password_autocomplete')) {
+	if (!elgg_get_config('security_disable_password_autocomplete')) {
 		return;
 	}
 	

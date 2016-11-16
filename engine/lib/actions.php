@@ -181,7 +181,7 @@ function generate_action_token($timestamp) {
 /**
  * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
- * Used during installation and saves as a datalist.
+ * Used during installation and saves in config table.
  *
  * Note: Old secrets were hex encoded.
  *

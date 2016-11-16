@@ -129,7 +129,6 @@ What does the data look like?
    [07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  user" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
    [07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  pass" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
    [07-Mar-2009 14:27:20] ***************** DB PROFILING ********************
-   [07-Mar-2009 14:27:20] 1 times: 'SELECT * from elggdatalists' 
    [07-Mar-2009 14:27:20] 1 times: 'SELECT * from elggentities where guid=1 and (  (access_id in (2) or (owner_guid = -1) or (access_id = 0 and owner_guid = -1)) and enabled='yes')' 
    ...
    [07-Mar-2009 14:27:20] 2 times: 'update elggmetadata set access_id = 2 where entity_guid = 1' 

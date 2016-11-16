@@ -21,13 +21,36 @@ class ConfigTable {
 	 * @var \stdClass
 	 */
 	private $CONFIG;
+	
+	/**
+	 * @var \Elgg\Database
+	 */
+	protected $db;
+	
+	/**
+	 * @var \Elgg\BootService
+	 */
+	protected $boot;
+	
+	/**
+	 * @var \Elgg\Logger
+	 */
+	protected $logger;
 
 	/**
 	 * Constructor
+	 *
+	 * @param \Elgg\Database    $db     Database
+	 * @param \Elgg\BootService $boot   BootService
+	 * @param \Elgg\Logger      $logger Logger
 	 */
-	public function __construct() {
+	public function __construct(\Elgg\Database $db, \Elgg\BootService $boot, \Elgg\Logger $logger) {
 		global $CONFIG;
 		$this->CONFIG = $CONFIG;
+		
+		$this->db = $db;
+		$this->boot = $boot;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -44,12 +67,18 @@ class ConfigTable {
 			unset($this->CONFIG->$name);
 		}
 	
-		$escaped_name = sanitize_string($name);
-		$query = "DELETE FROM {$this->CONFIG->dbprefix}config WHERE name = '$escaped_name'";
+		$query = "
+			DELETE FROM {$this->CONFIG->dbprefix}config
+			WHERE name = :name
+		";
 
-		_elgg_services()->boot->invalidateCache();
+		$params = [
+			':name' => $name,
+		];
+		
+		$this->boot->invalidateCache();
 	
-		return _elgg_services()->db->deleteData($query) !== false;
+		return $this->db->deleteData($query, $params) !== false;
 	}
 	
 	/**
@@ -58,9 +87,6 @@ class ConfigTable {
 	 * Plugin authors should use elgg_set_config().
 	 *
 	 * If the config name already exists, it will be updated to the new value.
-	 *
-	 * @warning Names should be selected so as not to collide with the names for the
-	 * datalist (application configuration)
 	 *
 	 * @note Internal: These settings are stored in the dbprefix_config table and read
 	 * during system boot into $CONFIG.
@@ -77,19 +103,44 @@ class ConfigTable {
 	
 		// cannot store anything longer than 255 characters in db, so catch before we set
 		if (elgg_strlen($name) > 255) {
-			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
+			$this->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
 		
 		$this->CONFIG->$name = $value;
 	
-		$escaped_name = sanitize_string($name);
-		$escaped_value = sanitize_string(serialize($value));
-		$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}config
-			SET name = '$escaped_name', value = '$escaped_value'
-			ON DUPLICATE KEY UPDATE value = '$escaped_value'");
+		$dbprefix = $this->CONFIG->dbprefix;
+		
+		$sql = "
+			INSERT INTO {$dbprefix}config
+			SET name = :name,
+				value = :value
+			ON DUPLICATE KEY UPDATE value = :value
+		";
+		
+		$params = [
+			':name' => $name,
+			':value' => serialize($value),
+		];
+		
+		$version = (int) $this->CONFIG->version;
+		
+		if (!empty($version) && $version < 2016102500) {
+			// need to do this the old way as long as site_guid columns have not been dropped
+			$sql = "
+				INSERT INTO {$dbprefix}config
+				SET name = :name,
+					value = :value,
+					site_guid = :site_guid
+				ON DUPLICATE KEY UPDATE value = :value
+			";
+			
+			$params[':site_guid'] = 1;
+		}
+				
+		$result = $this->db->insertData($sql, $params);
 
-		_elgg_services()->boot->invalidateCache();
+		$this->boot->invalidateCache();
 	
 		return $result !== false;
 	}
@@ -134,10 +185,16 @@ class ConfigTable {
 		if (isset($this->CONFIG->$name)) {
 			return $this->CONFIG->$name;
 		}
-	
-		$escaped_name = sanitize_string($name);
-		$result = _elgg_services()->db->getDataRow("SELECT value FROM {$this->CONFIG->dbprefix}config
-			WHERE name = '$escaped_name'");
+		
+		$sql = "
+			SELECT value
+			FROM {$this->CONFIG->dbprefix}config
+			WHERE name = :name
+		";
+			
+		$params[':name'] = $name;
+		
+		$result = $this->db->getDataRow($sql, null, $params);
 	
 		if ($result) {
 			$result = unserialize($result->value);

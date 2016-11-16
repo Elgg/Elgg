@@ -231,13 +231,13 @@ Change the installation path
 
 .. code:: sql
 
-   UPDATE `elgg_datalists` SET `value` = "/home/usery/public_html/grid/" WHERE `name` = "path";
+   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/home/userx/public_html/grid/", "/home/usery/public_html/grid/") WHERE `name` = "path";
    
 Change the data directory
 
 .. code:: sql
 
-   UPDATE `elgg_datalists` SET `value` = "/home/usery/elggdata/" WHERE `name` = "dataroot";
+   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/home/userx/elggdata/", "/home/usery/elggdata/") WHERE `name` = "dataroot";
 
 Change the site URL (if this has changed)
 
