@@ -5,6 +5,9 @@
  * @package Elgg
  * @subpackage Core
  */
+
+elgg_require_js('forms/login');
+
 echo elgg_view_field([
 	'#type' => 'text',
 

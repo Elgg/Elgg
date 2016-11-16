@@ -27,8 +27,7 @@ $persistent = (bool) get_input("persistent");
 $result = false;
 
 if (empty($username) || empty($password)) {
-	register_error(elgg_echo('login:empty'));
-	forward();
+	return elgg_error_response(elgg_echo('login:empty'));
 }
 
 // check if logging in with email address
@@ -46,16 +45,17 @@ if ($result !== true) {
 		// email addresses. Instead, this lets us give the visitor only the information
 		// they provided.
 		elgg_get_session()->set('forgotpassword:hash_missing', get_input('username'));
-		forward('forgotpassword');
+		$output = [
+			'forward' => 'forgotpassword',
+		];
+		return elgg_ok_response($output, '', 'forgotpassword');
 	}
 
-	register_error($result);
-	forward(REFERER);
+	return elgg_error_response($result);
 }
 
 if (!$user) {
-	register_error(elgg_echo('login:baduser'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('login:baduser'));
 }
 
 try {
@@ -63,8 +63,7 @@ try {
 	// re-register at least the core language file for users with language other than site default
 	register_translations(dirname(dirname(__FILE__)) . "/languages/");
 } catch (LoginException $e) {
-	register_error($e->getMessage());
-	forward(REFERER);
+	return elgg_error_response($e->getMessage());
 }
 
 // elgg_echo() caches the language and does not provide a way to change the language.
@@ -82,5 +81,8 @@ $session->remove('last_forward_from');
 $params = array('user' => $user, 'source' => $forward_source);
 $forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 
-system_message($message);
-forward($forward_url);
+$output = [
+	'forward' => $forward_url,
+];
+
+return elgg_ok_response($output, $message, $forward_url);
