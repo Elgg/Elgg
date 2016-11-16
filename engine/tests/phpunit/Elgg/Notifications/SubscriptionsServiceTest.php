@@ -8,15 +8,16 @@ namespace Elgg\Notifications;
 class SubscriptionsServiceTest extends \Elgg\TestCase {
 
 	public function setUp() {
+		
+		$this->setupMockServices();
+		
 		$this->containerGuid = 42;
 
 		// mock \ElggObject that has a container guid
-		$object = $this->getMock(
-				'\ElggObject', array('getContainerGUID'), array(), '', false);
-		$object->expects($this->any())
-				->method('getContainerGUID')
-				->will($this->returnValue($this->containerGuid));
-
+		$object = $this->mocks()->getObject([
+			'container_guid' => $this->containerGuid,
+		]);
+		
 		// mock event that holds the mock object
 		$this->event = $this->getMock(
 				'\Elgg\Notifications\Event', array('getObject'), array(), '', false);
@@ -31,9 +32,7 @@ class SubscriptionsServiceTest extends \Elgg\TestCase {
 		$this->db->expects($this->any())
 				->method('sanitizeString')
 				->will($this->returnArgument(0));
-
-		// Event class has dependency on elgg_get_logged_in_user_guid()
-		_elgg_services()->setValue('session', \ElggSession::getMock());
+		
 	}
 
 	public function testGetSubscriptionsWithNoMethodsRegistered() {
