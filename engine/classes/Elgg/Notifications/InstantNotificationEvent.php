@@ -4,6 +4,7 @@ namespace Elgg\Notifications;
 
 use ElggData;
 use ElggEntity;
+use stdClass;
 
 /**
  * Instant notification event
