@@ -372,7 +372,7 @@ return array(
 	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
 	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Invalid user',
-	'activity:owner' => 'View activity',
+	'activity:owner' => 'Activity',
 
 	'river:widget:title' => "Activity",
 	'river:widget:description' => "Display latest activity",

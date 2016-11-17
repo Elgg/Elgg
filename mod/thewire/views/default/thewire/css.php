@@ -35,3 +35,7 @@ The Wire
 .thewire-post .elgg-content {
 	margin: 10px 5px;
 }
+
+#profile-details .wire-status {
+	margin-top: 10px;
+}

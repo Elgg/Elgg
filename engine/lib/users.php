@@ -554,11 +554,6 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		$item = new \ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
-
-		$url = "activity/owner/$user->username";
-		$item = new \ElggMenuItem('activity:owner', elgg_echo('activity:owner'), $url);
-		$item->setSection('action');
-		$return[] = $item;
 	}
 
 	return $return;

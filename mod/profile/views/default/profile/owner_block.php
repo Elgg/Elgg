@@ -1,14 +1,15 @@
 <?php
 /**
  * Profile owner block
+ *
+ * @uses $vars['entity'] The user entity
  */
 
-$user = elgg_get_page_owner_entity();
-
-if (!$user) {
+$user = elgg_extract('entity', $vars);
+if (!($user instanceof \ElggUser)) {
 	// no user so we quit view
 	echo elgg_echo('viewfailure', array(__FILE__));
-	return TRUE;
+	return true;
 }
 
 $icon = elgg_view_entity_icon($user, 'large', array(
@@ -23,27 +24,16 @@ $menu = elgg()->menus->getMenu('user_hover', [
 	'username' => $user->username,
 ]);
 
-$actions = $menu->getSection('action', []);
 $admin = $menu->getSection('admin', []);
-
-$profile_actions = '';
-if (elgg_is_logged_in() && $actions) {
-	$profile_actions = '<ul class="elgg-menu profile-action-menu mvm">';
-	foreach ($actions as $action) {
-		$item = elgg_view_menu_item($action, array('class' => 'elgg-button elgg-button-action'));
-		$profile_actions .= "<li class=\"{$action->getItemClass()}\">$item</li>";
-	}
-	$profile_actions .= '</ul>';
-}
 
 // if admin, display admin links
 $admin_links = '';
-if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid()) {
+if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
 	$text = elgg_echo('admin:options');
 
 	$admin_links = '<ul class="profile-admin-menu-wrapper">';
 	$admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\">$text&hellip;</a>";
-	$admin_links .= '<ul class="elgg-menu profile-admin-menu" id="profile-menu-admin">';
+	$admin_links .= '<ul class="elgg-menu profile-admin-menu hidden" id="profile-menu-admin">';
 	foreach ($admin as $menu_item) {
 		$admin_links .= elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
 	}
@@ -62,7 +52,6 @@ echo <<<HTML
 
 <div id="profile-owner-block">
 	$icon
-	$profile_actions
 	$content_menu
 	$admin_links
 </div>

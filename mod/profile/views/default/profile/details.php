@@ -1,40 +1,34 @@
 <?php
 /**
  * Elgg user display (details)
+ *
  * @uses $vars['entity'] The user entity
+ * @uses $vars['microformats'] Mapping of fieldnames to microformats
  */
 
-$user = elgg_get_page_owner_entity();
-
-$profile_fields = elgg_get_config('profile_fields');
-
-echo '<div id="profile-details" class="elgg-body pll">';
-echo "<span class=\"hidden nickname p-nickname\">{$user->username}</span>";
-echo "<h2 class=\"p-name fn\">{$user->name}</h2>";
-
-// the controller doesn't allow non-admins to view banned users' profiles
-if ($user->isBanned()) {
-	$title = elgg_echo('banned');
-	$reason = ($user->ban_reason === 'banned') ? '' : $user->ban_reason;
-	echo "<div class='profile-banned-user'><h4 class='mbs'>$title</h4>$reason</div>";
-}
-
-echo elgg_view("profile/status", array("entity" => $user));
-
-$microformats = array(
+$microformats = [
 	'mobile' => 'tel p-tel',
 	'phone' => 'tel p-tel',
 	'website' => 'url u-url',
 	'contactemail' => 'email u-email',
-);
+];
+$microformats = array_merge($microformats, (array) elgg_extract('microformats', $vars, []));
 
+$user = elgg_extract('entity', $vars);
+
+$profile_fields = elgg_get_config('profile_fields');
+
+$fields_output = '';
 if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
-	echo '<div class="profile-fields">';
+	
+	// move description to the bottom of the list
+	if(isset($profile_fields['description'])) {
+		$temp = $profile_fields['description'];
+		unset($profile_fields['description']);
+		$profile_fields['description'] = $temp;
+	}
+	
 	foreach ($profile_fields as $shortname => $valtype) {
-		if ($shortname == "description") {
-			// skip about me and put at bottom
-			continue;
-		}
 		$value = $user->$shortname;
 
 		if (!is_null($value)) {
@@ -51,34 +45,33 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 				$value = "http://$value";
 			}
 
-			?>
-			<div>
-				<b><?php echo elgg_echo("profile:{$shortname}"); ?>: </b>
-				<?php
-					$params = array(
-						'value' => $value
-					);
-					if (isset($microformats[$shortname])) {
-						$class = $microformats[$shortname];
-					} else {
-						$class = '';
-					}
-					echo "<span class=\"$class\">";
-					echo elgg_view("output/{$valtype}", $params);
-					echo "</span>";
-				?>
+			$class = elgg_extract($shortname, $microformats, '');
+						
+			$field_title = elgg_echo("profile:{$shortname}");
+			$field_value = elgg_format_element('span', [
+				'class' => $class,
+			], elgg_view("output/{$valtype}", [
+				'value' => $value,
+			]));
+			
+			$fields_output .= <<<___FIELD
+			<div class='clearfix profile-field'>
+				<div class='elgg-col elgg-col-1of5'>
+					<b>{$field_title}:</b>
+				</div>
+				<div class='elgg-col elgg-col-4of5'>
+					{$field_value}
+				</div>
 			</div>
-			<?php
+___FIELD;
 		}
 	}
-	echo "</div>";
 }
 
-if (isset($profile_fields['description']) && $user->description) {
-	echo "<p class='profile-aboutme-title'><b>" . elgg_echo("profile:aboutme") . "</b></p>";
-	echo "<div class='profile-aboutme-contents'>";
-	echo elgg_view('output/longtext', array('value' => $user->description, 'class' => 'mtn'));
-	echo "</div>";
-}
+$result = elgg_view('profile/status', ['entity' => $user]);
+$result .= $fields_output;
 
-echo '</div>';
+echo elgg_format_element('div', [
+	'id' => 'profile-details',
+	'class' => 'elgg-body pll',
+], $result);
