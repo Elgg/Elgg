@@ -2,6 +2,8 @@
 
 namespace Elgg\FileService;
 
+use Elgg\Security\Base64Url;
+
 /**
  * File service
  * 
@@ -104,6 +106,12 @@ class File {
 		if (!$relative_path) {
 			elgg_log("Unable to resolve relative path of the file on the filestore");
 			return false;
+		}
+
+		if (preg_match('~[^a-zA-Z0-9_\./ ]~', $relative_path)) {
+			// Filenames may contain special characters that result in malformatted URLs
+			// and/or HMAC mismatches. We want to avoid that by encoding the path.
+			$relative_path = ':' . Base64Url::encode($relative_path);
 		}
 
 		$data = array(
