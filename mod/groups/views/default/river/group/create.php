@@ -13,7 +13,4 @@ $excerpt = elgg_get_excerpt($excerpt);
 echo elgg_view('river/elements/layout', array(
 	'item' => $item,
 	'message' => $excerpt,
-
-	// truthy value to bypass responses rendering
-	'responses' => ' ',
 ));

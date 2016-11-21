@@ -5,7 +5,10 @@
  * @package ElggGroups
  */
 
-$group = $vars['entity'];
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
+}
 
 $icon = elgg_view_entity_icon($group, 'tiny', $vars);
 
@@ -19,7 +22,6 @@ if (!elgg_in_context('owner_block') && !elgg_in_context('widgets')) {
 		'class' => 'elgg-menu-hz',
 	));
 }
-
 
 if ($vars['full_view']) {
 	echo elgg_view('groups/profile/summary', $vars);

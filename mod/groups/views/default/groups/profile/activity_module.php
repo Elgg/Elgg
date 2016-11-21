@@ -7,13 +7,13 @@
  * @package Groups
  */
 
-if ($vars['entity']->activity_enable == 'no') {
-	return true;
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
 }
 
-$group = $vars['entity'];
-if (!$group) {
-	return true;
+if ($group->activity_enable == 'no') {
+	return;
 }
 
 $all_link = elgg_view('output/url', array(
@@ -34,12 +34,9 @@ $content = elgg_list_river(array(
 	'wheres' => array(
 		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
 	),
+	'no_results' => elgg_echo('groups:activity:none'),
 ));
 elgg_pop_context();
-
-if (!$content) {
-	$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
-}
 
 echo elgg_view('groups/profile/module', array(
 	'title' => elgg_echo('groups:activity'),

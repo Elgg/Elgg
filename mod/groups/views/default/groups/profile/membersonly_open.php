@@ -6,12 +6,8 @@
  * @package ElggGroups
  */
 
-?>
-<p class="mtm">
-<?php
-echo elgg_echo('groups:opengroup:membersonly');
+$output = elgg_echo('groups:opengroup:membersonly');
 if (elgg_is_logged_in()) {
-	echo ' ' . elgg_echo('groups:opengroup:membersonly:join');
+	$output .= ' ' . elgg_echo('groups:opengroup:membersonly:join');
 }
-?>
-</p>
+echo "<p class='mtm'>$output</p>";
