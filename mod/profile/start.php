@@ -173,7 +173,7 @@ function _profile_topbar_menu($hook, $type, $return, $params) {
  */
 function _profile_title_menu($hook, $type, $return, $params) {
 
-	if (!elgg_in_context('profile')) {
+	if (!elgg_in_context('profile') || elgg_in_context('profile_edit')) {
 		return;
 	}
 	
