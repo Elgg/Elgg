@@ -54,9 +54,6 @@ function bookmarks_init() {
 	// Register a URL handler for bookmarks
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'bookmark_set_url');
 
-	// Register entity type for search
-	elgg_register_entity_type('object', 'bookmarks');
-
 	// Groups
 	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
 	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
@@ -242,8 +239,8 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 	}
 
 	$return[] = ElggMenuItem::factory([
-		'name' => 'bookmarklet', 
-		'text' => $title, 
+		'name' => 'bookmarklet',
+		'text' => $title,
 		'href' => 'bookmarks/bookmarklet/' . $page_owner->getGUID(),
 	]);
 

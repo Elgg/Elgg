@@ -1,6 +1,17 @@
 <?php
 
 return [
+	'entities' => [
+		[
+			'type' => 'object',
+			'subtype' => 'page',
+			'searchable' => true,
+		],
+		[
+			'type' => 'object',
+			'subtype' => 'page_top',
+		],
+	],
 	'actions' => [
 		'pages/edit' => [],
 		'pages/delete' => [],

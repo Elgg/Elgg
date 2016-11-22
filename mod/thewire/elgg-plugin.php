@@ -1,6 +1,14 @@
 <?php
 
 return [
+	'entities' => [
+		[
+			'type' => 'object',
+			'subtype' => 'thewire',
+			'class' => 'ElggWire',
+			'searchable' => true,
+		],
+	],
 	'settings' => [
 		'limit' => 140,
 	],

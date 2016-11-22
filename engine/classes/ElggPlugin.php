@@ -703,6 +703,9 @@ class ElggPlugin extends \ElggObject {
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
+			
+			$this->activateEntities();
+			
 			if ($this->canReadFile('activate.php')) {
 				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
 						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_WIDGETS | ELGG_PLUGIN_REGISTER_ACTIONS;
@@ -795,6 +798,8 @@ class ElggPlugin extends \ElggObject {
 			if ($this->canReadFile('deactivate.php')) {
 				$return = $this->includeFile('deactivate.php');
 			}
+			
+			$this->deactivateEntities();
 		}
 
 		if ($return === false) {
@@ -828,6 +833,8 @@ class ElggPlugin extends \ElggObject {
 			if ($this->canReadFile('start.php')) {
 				$this->includeFile('start.php');
 			}
+			
+			$this->registerEntities();
 		}
 	
 		// include languages
@@ -956,6 +963,25 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
+	 * Registers the plugin's entities
+	 *
+	 * @return void
+	 */
+	protected function registerEntities() {
+
+		$spec = (array) $this->getStaticConfig('entities', []);
+		if (empty($spec)) {
+			return;
+		}
+		
+		foreach ($spec as $entity) {
+			if (isset($entity['type'], $entity['subtype'], $entity['searchable']) && $entity['searchable']) {
+				elgg_register_entity_type($entity['type'], $entity['subtype']);
+			}
+		}
+	}
+
+	/**
 	 * Registers the plugin's actions provided in the plugin config file
 	 *
 	 * @throws PluginException
@@ -1035,6 +1061,47 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Activates the plugin's entities
+	 *
+	 * @return void
+	 */
+	protected function activateEntities() {
+		$spec = (array) $this->getStaticConfig('entities', []);
+		if (empty($spec)) {
+			return;
+		}
+		
+		foreach ($spec as $entity) {
+			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
+				
+				if (get_subtype_id($entity['type'], $entity['subtype'])) {
+					update_subtype($entity['type'], $entity['subtype'], $entity['class']);
+				} else {
+					add_subtype($entity['type'], $entity['subtype'], $entity['class']);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Deactivates the plugin's entities
+	 *
+	 * @return void
+	 */
+	protected function deactivateEntities() {
+		$spec = (array) $this->getStaticConfig('entities', []);
+		if (empty($spec)) {
+			return;
+		}
+		
+		foreach ($spec as $entity) {
+			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
+				update_subtype($entity['type'], $entity['subtype']);
+			}
+		}
 	}
 
 	/**

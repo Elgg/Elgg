@@ -42,9 +42,6 @@ function file_init() {
 	// add the group files tool option
 	add_group_tool_option('file', elgg_echo('groups:enablefiles'), true);
 
-	// Register entity type for search
-	elgg_register_entity_type('object', 'file');
-
 	// add a file link to owner blocks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
 

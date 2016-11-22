@@ -31,7 +31,6 @@ function discussion_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
 	// Register for search.
-	elgg_register_entity_type('object', 'discussion');
 	elgg_register_plugin_hook_handler('search', 'object:discussion', 'discussion_search_discussion');
 
 	// because replies are not comments, need of our menu item

@@ -1,6 +1,13 @@
 <?php
 
 return [
+	'entities' => [
+		[
+			'type' => 'object',
+			'subtype' => 'file',
+			'searchable' => true,
+		],
+	],
 	'actions' => [
 		'file/upload' => [],
 		'file/delete' => [],
