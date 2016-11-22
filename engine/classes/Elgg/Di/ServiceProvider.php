@@ -48,7 +48,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Stash\Pool|null                         $memcacheStashPool
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
- * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Database\Mutex                     $mutex
  * @property-read \Elgg\Notifications\NotificationsService $notifications
  * @property-read \Elgg\Cache\NullCache                    $nullCache
@@ -275,13 +274,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
 			return new \Elgg\Database\MetadataTable(
-				$c->metadataCache, $c->db, $c->entityTable, $c->events, $c->metastringsTable, $c->session);
-		});
-
-		$this->setFactory('metastringsTable', function(ServiceProvider $c) {
-			// TODO(ewinslow): Use memcache-based Pool if available...
-			$pool = new Pool\InMemory();
-			return new \Elgg\Database\MetastringsTable($pool, $c->db);
+				$c->metadataCache, $c->db, $c->entityTable, $c->events, $c->session);
 		});
 
 		$this->setFactory('mutex', function(ServiceProvider $c) {

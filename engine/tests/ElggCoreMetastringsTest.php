@@ -19,7 +19,6 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 	public function __construct() {
 		parent::__construct();
 
-		$this->metastrings = array();
 		$this->object = new \ElggObject();
 		$this->object->save();
 	}

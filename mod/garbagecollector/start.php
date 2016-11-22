@@ -21,7 +21,6 @@ function garbagecollector_init() {
 	// Register cron hook
 	elgg_register_plugin_hook_handler('cron', $period, 'garbagecollector_cron');
 	
-	elgg_register_plugin_hook_handler('gc', 'system', 'garbagecollector_orphaned_metastrings');
 	elgg_register_plugin_hook_handler('gc', 'system', 'garbagecollector_entities');
 }
 
@@ -115,55 +114,5 @@ function garbagecollector_entities() {
 		WHERE guid NOT IN (SELECT guid FROM {$dbprefix}entities)");
 		delete_data("DELETE FROM {$dbprefix}entities
 		WHERE type = '$type' AND guid NOT IN (SELECT guid FROM {$dbprefix}{$table})");
-	}
-}
-
-/**
- * Delete any orphaned entries in metastrings.
- *
- * @return void
- */
-function garbagecollector_orphaned_metastrings() {
-	$dbprefix = elgg_get_config('dbprefix');
-	
-	// Garbage collect metastrings
-	echo elgg_echo('garbagecollector:gc:metastrings');
-
-	// If memcache is enabled then we need to flush it of deleted values
-	if (is_memcache_available()) {
-		$select_query = "
-		SELECT * FROM {$dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}annotations))
-		)";
-
-		$dead = get_data($select_query);
-		if ($dead) {
-			$metastrings_memcache = _elgg_get_memcache('metastrings_memcache');
-
-			foreach ($dead as $d) {
-				$metastrings_memcache->delete(md5($d->string));
-			}
-		}
-	}
-
-	$query = "
-		DELETE FROM {$dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}annotations))
-		)";
-
-	$result = delete_data($query);
-	
-	if ($result !== false) {
-		echo elgg_echo('garbagecollector:ok');
-	} else {
-		echo elgg_echo('garbagecollector:error');
 	}
 }

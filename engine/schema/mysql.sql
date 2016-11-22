@@ -22,8 +22,8 @@ CREATE TABLE `prefix_access_collections` (
 CREATE TABLE `prefix_annotations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entity_guid` bigint(20) unsigned NOT NULL,
-  `name_id` int(11) NOT NULL,
-  `value_id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `value` text NOT NULL,
   `value_type` enum('integer','text') NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
   `access_id` int(11) NOT NULL,
@@ -31,8 +31,8 @@ CREATE TABLE `prefix_annotations` (
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`id`),
   KEY `entity_guid` (`entity_guid`),
-  KEY `name_id` (`name_id`),
-  KEY `value_id` (`value_id`),
+  KEY `name` (`name`(50)),
+  KEY `value` (`value`(50)),
   KEY `owner_guid` (`owner_guid`),
   KEY `access_id` (`access_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -131,8 +131,8 @@ CREATE TABLE `prefix_hmac_cache` (
 CREATE TABLE `prefix_metadata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entity_guid` bigint(20) unsigned NOT NULL,
-  `name_id` int(11) NOT NULL,
-  `value_id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `value` text NOT NULL,
   `value_type` enum('integer','text') NOT NULL,
   `owner_guid` bigint(20) unsigned NOT NULL,
   `access_id` int(11) NOT NULL,
@@ -140,18 +140,10 @@ CREATE TABLE `prefix_metadata` (
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`id`),
   KEY `entity_guid` (`entity_guid`),
-  KEY `name_id` (`name_id`),
-  KEY `value_id` (`value_id`),
+  KEY `name` (`name`(50)),
+  KEY `value` (`value`(50)),
   KEY `owner_guid` (`owner_guid`),
   KEY `access_id` (`access_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
--- string normalization table for metadata and annotations
-CREATE TABLE `prefix_metastrings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `string` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `string` (`string`(50))
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- secondary table for object entities

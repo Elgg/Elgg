@@ -249,7 +249,7 @@ Change the filestore data directory
 
 .. code:: sql
 
-   UPDATE elgg_metastrings set string = '/home/usery/elggdata/' WHERE id = (SELECT value_id from elgg_metadata where name_id = (SELECT * FROM (SELECT id FROM elgg_metastrings WHERE string = 'filestore::dir_root') as ms2) LIMIT 1);
+   UPDATE elgg_metadata set value = '/home/usery/elggdata/' WHERE name = 'filestore::dir_root';
 
 Finalizing the new installation
 -------------------------------

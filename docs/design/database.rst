@@ -819,9 +819,9 @@ This table contains `Metadata`_, extra information attached to an entity.
 
 -  **id** A counter.
 -  **entity\_guid** The entity this is attached to.
--  **name\_id** A link to the metastrings table defining the name
+-  **name** The name string
    table.
--  **value\_id** A link to the metastrings table defining the value.
+-  **value** The value string.
 -  **value\_type** The value class, either text or an integer.
 -  **owner\_guid** The owner GUID of the owner who set this item of
    metadata.
@@ -837,9 +837,8 @@ This table contains `Annotations`_, this is distinct from `Metadata`_.
 
 -  **id** A counter.
 -  **entity\_guid** The entity this is attached to.
--  **name\_id** A link to the metastrings table defining the type of
-   annotation.
--  **value\_id** A link to the metastrings table defining the value.
+-  **name** The name string
+-  **value** The value string
 -  **value\_type** The value class, either text or an integer.
 -  **owner\_guid** The owner GUID of the owner who set this item of
    metadata.
@@ -884,12 +883,3 @@ Table: groups\_entity
 Extra information specifically relating to groups. These are split in
 order to reduce load on the metadata table and make an obvious
 difference between attributes and metadata.
-
-Table: metastrings
-~~~~~~~~~~~~~~~~~~
-
-Metastrings contain the actual string of metadata which is linked to by
-the metadata and annotations tables.
-
-This is to avoid duplicating strings, saving space and making database
-lookups more efficient.

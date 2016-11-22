@@ -231,10 +231,8 @@ function elgg_enable_metadata(array $options) {
  * 	$options['wheres'][] = "NOT EXISTS (
  *			SELECT 1 FROM {$dbprefix}metadata md
  *			WHERE md.entity_guid = e.guid
- *				AND md.name_id = $name_metastring_id
- *				AND md.value_id = $value_metastring_id)";
- *
- * Note the metadata name and value has been denormalized in the above example.
+ *				AND md.name = $name
+ *				AND md.value = $value)";
  *
  * @see elgg_get_entities
  *
@@ -253,7 +251,7 @@ function elgg_enable_metadata(array $options) {
  *                               Currently if multiple values are sent via
  *                               an array (value => array('value1', 'value2')
  *                               the pair's operand will be forced to "IN".
- *                               If passing "IN" as the operand and a string as the value, 
+ *                               If passing "IN" as the operand and a string as the value,
  *                               the value must be a properly quoted and escaped string.
  *
  * 	metadata_name_value_pairs_operator => null|STR The operator to use for combining

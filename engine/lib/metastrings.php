@@ -8,40 +8,6 @@
  */
 
 /**
- * Gets the metastring identifier for a value.
- *
- * Elgg normalizes the names and values of annotations and metadata. This function
- * provides the identifier used as the index in the metastrings table. Plugin
- * developers should only use this if denormalizing names/values for performance
- * reasons (to avoid multiple joins on the metastrings table).
- *
- * @param string $string         The value
- * @param bool   $case_sensitive Should the retrieval be case sensitive?
- *                               If not, there may be more than one result
- *
- * @return int|array metastring id or array of ids
- * @since 1.9.0
- */
-function elgg_get_metastring_id($string, $case_sensitive = true) {
-	return _elgg_services()->metastringsTable->getId($string, $case_sensitive);
-}
-
-/**
- * Get a map of strings to their metastring identifiers (case sensitive matches)
- *
- * If you need several metastring IDs at once, use this to get a an array of them
- * instead of calling elgg_get_metastring_id() several times.
- *
- * @param string[] $strings Strings to look up
- *
- * @return int[] map of [string] => [id]
- * @since 2.1
- */
-function elgg_get_metastring_map(array $strings) {
-	return _elgg_services()->metastringsTable->getMap($strings);
-}
-
-/**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
  *
@@ -113,18 +79,15 @@ function _elgg_get_metastring_based_objects($options) {
 		// options are normalized to the plural in case we ever add support for them.
 		'metastring_names' => ELGG_ENTITIES_ANY_VALUE,
 		'metastring_values' => ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs' => ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs_operator' => 'AND',
 
 		'metastring_case_sensitive' => true,
-		//'order_by_metastring' => array(),
 		'metastring_calculation' => ELGG_ENTITIES_NO_VALUE,
 
 		'metastring_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'metastring_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
 		'metastring_owner_guids' => ELGG_ENTITIES_ANY_VALUE,
-
+		
 		'metastring_ids' => ELGG_ENTITIES_ANY_VALUE,
 
 		// sql
@@ -237,22 +200,6 @@ function _elgg_get_metastring_based_objects($options) {
 
 	$selects = $options['selects'];
 
-	// For performance reasons we don't want the joins required for metadata / annotations
-	// unless we're going through one of their callbacks.
-	// this means we expect the functions passing different callbacks to pass their required joins.
-	// If we're doing a calculation
-	$custom_callback = ($options['callback'] == 'row_to_elggmetadata'
-						|| $options['callback'] == 'row_to_elggannotation');
-	$is_calculation = $options['metastring_calculation'] ? true : false;
-
-	if ($custom_callback || $is_calculation) {
-		$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
-		$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
-
-		$selects[] = 'n.string as name';
-		$selects[] = 'v.string as value';
-	}
-
 	// add optional joins
 	$joins = array_merge($joins, $options['joins']);
 
@@ -288,7 +235,7 @@ function _elgg_get_metastring_based_objects($options) {
 		// count is over the entities
 		$query = "SELECT count($distinct e.guid) as calculation FROM {$db_prefix}$type n_table";
 	} else {
-		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
+		$query = "SELECT {$options['metastring_calculation']}(n_table.value) as calculation FROM {$db_prefix}$type n_table";
 	}
 
 	foreach ($joins as $i => $join) {
@@ -338,7 +285,7 @@ function _elgg_get_metastring_based_objects($options) {
 			$offset = sanitise_int($options['offset'], false);
 			$query .= " LIMIT $offset, $limit";
 		}
-		
+
 		$dt = get_data($query, $options['callback']);
 
 		if ($options['preload_owners'] && is_array($dt) && count($dt) > 1) {
@@ -409,8 +356,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		}
 
 		if ($names_str = implode(',', $sanitised_names)) {
-			$return['joins'][] = "JOIN {$db_prefix}metastrings msn on $table.name_id = msn.id";
-			$names_where = "(msn.string IN ($names_str))";
+			$names_where = "($table.name IN ($names_str))";
 		}
 	}
 
@@ -431,18 +377,15 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		}
 
 		if ($values_str = implode(',', $sanitised_values)) {
-			$return['joins'][] = "JOIN {$db_prefix}metastrings msv on $table.value_id = msv.id";
-			$values_where = "({$binary}msv.string IN ($values_str))";
+			$values_where = "({$binary}$table.value IN ($values_str))";
 		}
 	}
-
+	
 	if ($ids !== null) {
 		if (!is_array($ids)) {
 			$ids = array($ids);
 		}
-
 		$ids_str = implode(',', $ids);
-
 		if ($ids_str) {
 			$wheres[] = "n_table.id IN ($ids_str)";
 		}

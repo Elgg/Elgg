@@ -51,16 +51,11 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('metadataTable', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->events, $m->metastringsTable, $m->session);
+			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->events, $m->session);
 		});
 
 		$this->setFactory('annotations', function(MockServiceProvider $m) use ($sp) {
 			return new \Elgg\Mocks\Database\Annotations($m->db, $m->session, $sp->events);
-		});
-
-		$this->setFactory('metastringsTable', function(MockServiceProvider $m) {
-			$pool = new \Elgg\Cache\Pool\InMemory();
-			return new \Elgg\Mocks\Database\MetastringsTable($pool, $m->db);
 		});
 
 		$this->setFactory('relationshipsTable', function(MockServiceProvider $m) use ($sp) {

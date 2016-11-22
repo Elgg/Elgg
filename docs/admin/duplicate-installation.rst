@@ -181,20 +181,8 @@ Change the filestore data directory
 
 .. code:: sql
 
-   UPDATE elgg_metastrings SET string = '/var/data/elgg_test/' 
-   WHERE id = (
-      SELECT value_id 
-      FROM elgg_metadata 
-      WHERE name_id = (
-         SELECT * 
-         FROM (
-            SELECT id 
-            FROM elgg_metastrings 
-            WHERE string = 'filestore::dir_root'
-         ) as ms2
-      ) 
-      LIMIT 1
-   );
+   UPDATE elgg_metadata SET value = '/var/data/elgg_test/' 
+   WHERE name = 'filestore::dir_root';
 
 .. warning::
 
@@ -247,21 +235,9 @@ It is a good idea to keep a test server around to experiment with installing new
       SET url = 'http://test.myelgg.org/'";
    mysql_query($sql);
    
-   $sql = "UPDATE {$CONFIG->dbprefix}metastrings
-     SET string = '/var/data/elgg_test/' 
-     WHERE id = (
-        SELECT value_id 
-        FROM {$CONFIG->dbprefix}metadata 
-        WHERE name_id = (
-           SELECT * 
-           FROM (
-              SELECT id 
-              FROM {$CONFIG->dbprefix}metastrings 
-              WHERE string = 'filestore::dir_root'
-           ) as ms2
-        ) 
-        LIMIT 1
-     )";
+   $sql = "UPDATE {$CONFIG->dbprefix}metadata
+     SET value = '/var/data/elgg_test/' 
+     WHERE name = 'filestore::dir_root';
    mysql_query($sql);
    
    print mysql_error();

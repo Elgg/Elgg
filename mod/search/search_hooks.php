@@ -145,7 +145,6 @@ function search_users_hook($hook, $type, $value, $params) {
 	
 	if (!empty($profile_fields)) {
 		$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
-		$params['joins'][] = "JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id";
 		
 		// get the where clauses for the md names
 		// can't use egef_metadata() because the n_table join comes too late.
@@ -162,7 +161,7 @@ function search_users_hook($hook, $type, $value, $params) {
 		));
 	
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-		$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
+		$md_where = "(({$clauses['wheres'][0]}) AND md.value LIKE '%$query%')";
 		
 		$params['wheres'][] = "(($where) OR ($md_where))";
 	} else {
@@ -275,8 +274,6 @@ function search_tags_hook($hook, $type, $value, $params) {
 	// use an IN clause to grab everything that matches at once and sort
 	// out the matches later.
 	$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
-	$params['joins'][] = "JOIN {$db_prefix}metastrings msn on md.name_id = msn.id";
-	$params['joins'][] = "JOIN {$db_prefix}metastrings msv on md.value_id = msv.id";
 
 	$access = _elgg_get_access_where_sql(array('table_alias' => 'md'));
 	$sanitised_tags = array();
@@ -287,7 +284,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 	$tags_in = implode(',', $sanitised_tags);
 
-	$params['wheres'][] = "(msn.string IN ($tags_in) AND msv.string = '$query' AND $access)";
+	$params['wheres'][] = "(md.name IN ($tags_in) AND md.value = '$query' AND $access)";
 
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
