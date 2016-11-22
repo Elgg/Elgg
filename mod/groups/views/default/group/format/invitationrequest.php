@@ -1,17 +1,16 @@
 <?php
-
 /**
  * Group view for an invitation request
  *
  * @uses $vars['entity'] Group entity
  */
+
 $user = elgg_get_page_owner_entity();
 if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	return;
 }
 
 $group = elgg_extract('entity', $vars);
-
 if (!$group instanceof \ElggGroup) {
 	return true;
 }

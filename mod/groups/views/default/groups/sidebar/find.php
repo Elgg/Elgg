@@ -4,9 +4,9 @@
  *
  * @package ElggGroups
  */
-$url = elgg_get_site_url() . 'groups/search';
+
 $body = elgg_view_form('groups/find', array(
-	'action' => $url,
+	'action' => 'groups/search',
 	'method' => 'get',
 	'disable_security' => true,
 ));
