@@ -40,6 +40,21 @@ Basic instructions
 From 2.3 to 3.0
 ===============
 
+Update ``.htaccess``
+--------------------
+
+Find the line:
+
+.. code::
+
+	RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
+
+And replace it with:
+
+.. code::
+
+	RewriteRule ^(.*)$ index.php [QSA,L]
+
 Removed / changed language keys
 -------------------------------
 

@@ -214,8 +214,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public static function prepareHttpRequest($uri = '', $method = 'GET', $parameters = [], $ajax = 0, $add_csrf_tokens = false) {
 		$site_url = elgg_get_site_url();
-		$path = substr(elgg_normalize_url($uri), strlen($site_url));
-		$path_key = Application::GET_PATH_KEY;
+		$path = '/' . ltrim(substr(elgg_normalize_url($uri), strlen($site_url)), '/');
 
 		if ($add_csrf_tokens) {
 			$ts = time();
@@ -223,7 +222,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			$parameters['__elgg_token'] = _elgg_services()->actions->generateActionToken($ts);
 		}
 
-		$request = Request::create("?$path_key=" . urlencode($path), $method, $parameters);
+		$request = Request::create($path, $method, $parameters);
 
 		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
 		$session_id = _elgg_services()->session->getId();
