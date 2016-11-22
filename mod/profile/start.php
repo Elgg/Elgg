@@ -112,7 +112,7 @@ function profile_default_widgets_hook($hook, $type, $return) {
 	$return[] = array(
 		'name' => elgg_echo('profile'),
 		'widget_context' => 'profile',
-		'widget_columns' => 3,
+		'widget_columns' => 2,
 
 		'event' => 'create',
 		'entity_type' => 'user',
