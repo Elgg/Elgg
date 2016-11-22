@@ -18,6 +18,7 @@ return [
 		"jquery.colorbox.js" => "vendor/bower-asset/jquery-colorbox/jquery.colorbox-min.js",
 		"require.js" => "vendor/bower-asset/requirejs/require.js",
 		"text.js" => "vendor/bower-asset/text/text.js",
+		"sprintf.js" => "vendor/bower-asset/sprintf/src/sprintf.js",
 		
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
 		"font-awesome/css/font-awesome.css" => "vendor/fortawesome/font-awesome/css/font-awesome.min.css",
@@ -37,6 +38,5 @@ return [
 		"jquery.imgareaselect.js" => dirname(__DIR__) . "/bower_components/jquery-imgareaselect/jquery.imgareaselect.dev.js",
 		"jquery.jeditable.js" => dirname(__DIR__) . "/bower_components/jquery-jeditable/jquery.jeditable.js",
 		"jquery.ui.autocomplete.html.js" => dirname(__DIR__) . "/bower_components/jquery-ui-extensions/src/autocomplete/jquery.ui.autocomplete.html.js",
-		"sprintf.js" => dirname(__DIR__) . "/bower_components/sprintf/src/sprintf.js",
 	],
 ];

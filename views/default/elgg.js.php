@@ -50,11 +50,12 @@ foreach ($files as $file) {
 	echo "\n";
 }
 
+foreach (_elgg_get_js_site_data() as $expression => $value) {
+	$value = json_encode($value);
+	echo "{$expression} = {$value};\n";
+}
 ?>
 //<script>
-<?php foreach (_elgg_get_js_site_data() as $expression => $value): ?>
-<?= $expression ?> = <?= json_encode($value) ?>;
-<?php endforeach; ?>
 
 // page data overrides site data
 $.extend(elgg.data, elgg._data);
