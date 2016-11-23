@@ -8,11 +8,7 @@ echo <<<JS
 if (typeof elgg != 'object') {
 	throw new Error('elgg configuration object is not defined! You must include the js/initialize_elgg view in html head before JS library files!');
 }
-
 JS;
-
-// For backwards compatibility...
-echo elgg_view('sprintf.js');
 
 // We use named AMD modules and inline them here in order to save HTTP requests,
 // as these modules will be required on each page
@@ -72,7 +68,7 @@ define('jquery-ui');
 // "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
 define('jquery-ui/datepicker', jQuery.datepicker);
 
-define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
+define('elgg', ['sprintf', 'jquery', 'languages/' + elgg.get_language()], function(vsprintf, $, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 
 	return elgg;
