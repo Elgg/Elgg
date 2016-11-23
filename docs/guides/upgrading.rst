@@ -29,6 +29,7 @@ Removed views
  * ``page/layouts/widgets/add_panel``
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
+ * ``messageboard/css``
  * ``notifications/subscriptions/personal``
  * ``notifications/subscriptions/collections``
  * ``notifications/subscriptions/form``
