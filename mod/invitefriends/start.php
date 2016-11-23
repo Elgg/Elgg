@@ -41,7 +41,7 @@ function invitefriends_page_handler($page) {
 
 	$title = elgg_echo('friends:invite');
 
-	$body = elgg_view('invitefriends/form');
+	$body = elgg_view_form('invitefriends/invite');
 
 	$params = array(
 		'content' => $body,
