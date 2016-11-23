@@ -20,6 +20,7 @@ echo elgg_view_field([
 echo elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('groups:name'),
+	'required' => true,
 	'name' => 'name',
 	'value' => $name,
 ]);

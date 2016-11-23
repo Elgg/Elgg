@@ -112,7 +112,7 @@ function profile_default_widgets_hook($hook, $type, $return) {
 	$return[] = array(
 		'name' => elgg_echo('profile'),
 		'widget_context' => 'profile',
-		'widget_columns' => 3,
+		'widget_columns' => 2,
 
 		'event' => 'create',
 		'entity_type' => 'user',
@@ -173,7 +173,7 @@ function _profile_topbar_menu($hook, $type, $return, $params) {
  */
 function _profile_title_menu($hook, $type, $return, $params) {
 
-	if (!elgg_in_context('profile')) {
+	if (!elgg_in_context('profile') || elgg_in_context('profile_edit')) {
 		return;
 	}
 	

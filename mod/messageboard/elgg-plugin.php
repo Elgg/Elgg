@@ -7,7 +7,7 @@ return [
 	],
 	'widgets' => [
 		'messageboard' => [
-			'title' => elgg_echo('messageboard:board'),
+			'name' => elgg_echo('messageboard:board'),
 			'description' => elgg_echo('messageboard:desc'),
 			'context' => ['profile'],
 		],

@@ -12,7 +12,7 @@ return [
 	],
 	'widgets' => [
 		'filerepo' => [
-			'title' => elgg_echo('file'),
+			'name' => elgg_echo('file'),
 			'description' => elgg_echo('file:widget:description'),
 			'context' => ['profile', 'dashboard'],
 		],
