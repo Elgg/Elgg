@@ -8,33 +8,23 @@
 elgg_register_event_handler('init', 'system', 'logrotate_init');
 
 function logrotate_init() {
-	$period = elgg_get_plugin_setting('period', 'logrotate');
-	$delete = elgg_get_plugin_setting('delete', 'logrotate');
-	switch ($period) {
-		case 'weekly':
-		case 'monthly' :
-		case 'yearly' :
-			break;
-		default:
-			$period = 'monthly';
-	}
-
 	// Register cron hook for archival of logs
-	elgg_register_plugin_hook_handler('cron', $period, 'logrotate_archive_cron');
+	elgg_register_plugin_hook_handler('cron', 'all', 'logrotate_archive_cron');
 
-	if ($delete != 'never') {
-		// Register cron hook for deletion of selected archived logs
-		elgg_register_plugin_hook_handler('cron', $delete, 'logrotate_delete_cron');
-	}
+	// Register cron hook for deletion of selected archived logs
+	elgg_register_plugin_hook_handler('cron', 'all', 'logrotate_delete_cron');
 }
 
 /**
  * Trigger the log rotation.
  */
-function logrotate_archive_cron($hook, $entity_type, $returnvalue, $params) {
+function logrotate_archive_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logrotated");
 
 	$period = elgg_get_plugin_setting('period', 'logrotate');
+	if ($period !== $type) {
+		return;
+	}
 	$offset = logrotate_get_seconds_in_period($period);
 
 	if (!archive_log($offset)) {
@@ -47,10 +37,18 @@ function logrotate_archive_cron($hook, $entity_type, $returnvalue, $params) {
 /**
  * Trigger the log deletion.
  */
-function logrotate_delete_cron($hook, $entity_type, $returnvalue, $params) {
+function logrotate_delete_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logdeleted");
 
 	$period = elgg_get_plugin_setting('delete', 'logrotate');
+	if ($period == 'never') {
+		return;
+	}
+	
+	if ($period !== $type) {
+		return;
+	}
+	
 	$offset = logrotate_get_seconds_in_period($period);
 
 	if (!log_browser_delete_log($offset)) {
@@ -60,13 +58,11 @@ function logrotate_delete_cron($hook, $entity_type, $returnvalue, $params) {
 	return $returnvalue . $resulttext;
 }
 
-
 /**
  * @param $period
  * @return int
  */
-function logrotate_get_seconds_in_period($period)
-{
+function logrotate_get_seconds_in_period($period) {
 	$seconds_in_day = 86400;
 	switch ($period) {
 		case 'weekly':
@@ -91,7 +87,7 @@ function logrotate_get_seconds_in_period($period)
  */
 function log_browser_delete_log($time_of_delete) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$cutoff = time() - (int)$time_of_delete;
+	$cutoff = time() - (int) $time_of_delete;
 
 	$deleted_tables = false;
 	$results = get_data("SHOW TABLES like '{$dbprefix}system_log_%'");
