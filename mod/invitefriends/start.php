@@ -12,15 +12,7 @@ function invitefriends_init() {
 
 	elgg_register_plugin_hook_handler('register', 'user', 'invitefriends_add_friends');
 
-	if (elgg_is_logged_in() && elgg_get_config('allow_registration')) {
-		$params = array(
-			'name' => 'invite',
-			'text' => elgg_echo('friends:invite'),
-			'href' => "invite",
-			'contexts' => array('friends'),
-		);
-		elgg_register_menu_item('page', $params);
-	}
+	elgg_register_plugin_hook_handler('register', 'menu:page', 'invitefriends_register_page_menu');
 }
 
 /**
@@ -30,27 +22,36 @@ function invitefriends_init() {
  * @return bool
  */
 function invitefriends_page_handler($page) {
-	elgg_gatekeeper();
+	echo elgg_view_resource('invitefriends/invite');
+	return true;
+}
 
-	if (!elgg_get_config('allow_registration')) {
-		return false;
+/**
+ * Adds menu items to the page menu
+ *
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param array  $result Current items
+ * @param array  $params Hook params
+ * @return null|array
+ */
+function invitefriends_register_page_menu($hook, $type, $result, $params) {
+	if (!elgg_is_logged_in()) {
+		return;
 	}
 	
-	elgg_set_context('friends');
-	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-
-	$title = elgg_echo('friends:invite');
-
-	$body = elgg_view('invitefriends/form');
-
-	$params = array(
-		'content' => $body,
-		'title' => $title,
-	);
-	$body = elgg_view_layout('one_sidebar', $params);
-
-	echo elgg_view_page($title, $body);
-	return true;
+	if (!elgg_get_config('allow_registration')) {
+		return;
+	}
+	
+	$result[] = \ElggMenuItem::factory([
+		'name' => 'invite',
+		'text' => elgg_echo('friends:invite'),
+		'href' => 'invite',
+		'contexts' => ['friends'],
+	]);
+	
+	return $result;
 }
 
 /**
@@ -63,18 +64,28 @@ function invitefriends_page_handler($page) {
  * @return void
  */
 function invitefriends_add_friends($hook, $type, $result, $params) {
-	$user = $params['user'];
-	/* @var ElggUser $user */
-	$friend_guid = $params['friend_guid'];
-	$invite_code = $params['invitecode'];
-
-	// If $friend_guid has been set, make mutual friends
-	if ($friend_guid) {
-		if ($friend_user = get_user($friend_guid)) {
-			if (elgg_validate_invite_code($friend_user->username, $invite_code)) {
-				$user->addFriend($friend_guid, true);
-				$friend_user->addFriend($user->guid, true);
-			}
-		}
+	$user = elgg_extract('user', $params);
+	if (!($user instanceof \ElggUser)) {
+		return;
 	}
+	
+	$friend_guid = elgg_extract('friend_guid', $params);
+	$invite_code = elgg_extract('invitecode', $params);
+	
+	if (!$friend_guid) {
+		return;
+	}
+	
+	$friend_user = get_user($friend_guid);
+	if (!($friend_user instanceof \ElggUser)) {
+		return;
+	}
+
+	if (!elgg_validate_invite_code($friend_user->username, $invite_code)) {
+		return;
+	}
+	
+	// Make mutual friends
+	$user->addFriend($friend_guid, true);
+	$friend_user->addFriend($user->guid, true);
 }

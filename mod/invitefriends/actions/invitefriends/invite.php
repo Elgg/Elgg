@@ -9,8 +9,7 @@
 elgg_make_sticky_form('invitefriends');
 
 if (!elgg_get_config('allow_registration')) {
-	register_error(elgg_echo('invitefriends:registration_disabled'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('invitefriends:registration_disabled'));
 }
 
 $site = elgg_get_site_entity();
@@ -24,13 +23,12 @@ if (strlen($emails) > 0) {
 }
 
 if (!is_array($emails) || count($emails) == 0) {
-	register_error(elgg_echo('invitefriends:noemails'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('invitefriends:noemails'));
 }
 
 $current_user = elgg_get_logged_in_user_entity();
 
-$error = FALSE;
+$error = false;
 $bad_emails = array();
 $already_members = array();
 $sent_total = 0;
@@ -43,13 +41,13 @@ foreach ($emails as $email) {
 
 	// send out other email addresses
 	if (!is_email_address($email)) {
-		$error = TRUE;
+		$error = true;
 		$bad_emails[] = $email;
 		continue;
 	}
 
 	if (get_user_by_email($email)) {
-		$error = TRUE;
+		$error = true;
 		$already_members[] = $email;
 		continue;
 	}
@@ -66,11 +64,10 @@ foreach ($emails as $email) {
 		$link,
 	));
 
-	$subject = elgg_echo('invitefriends:subject', array($site->name));
+	$subject = elgg_echo('invitefriends:subject', array($site->getDisplayName()));
 
 	// create the from address
-	$site = get_entity($site->guid);
-	if ($site && $site->email) {
+	if ($site->email) {
 		$from = $site->email;
 	} else {
 		$from = 'noreply@' . $site->getDomain();
@@ -90,10 +87,10 @@ if ($error) {
 	if (count($already_members) > 0) {
 		register_error(elgg_echo('invitefriends:already_members', array(implode(', ', $already_members))));
 	}
-
-} else {
-	elgg_clear_sticky_form('invitefriends');
-	system_message(elgg_echo('invitefriends:success'));
+	
+	return elgg_error_response();
 }
 
-forward(REFERER);
+elgg_clear_sticky_form('invitefriends');
+
+return elgg_ok_response('', elgg_echo('invitefriends:success'));

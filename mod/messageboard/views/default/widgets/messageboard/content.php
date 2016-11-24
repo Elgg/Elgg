@@ -12,16 +12,16 @@ if (elgg_is_logged_in()) {
 
 echo elgg_list_annotations([
 	'annotations_name' => 'messageboard',
-	'guid' => $owner->getGUID(),
+	'guid' => $owner->guid,
 	'limit' => $widget->num_display,
 	'pagination' => false,
 	'reverse_order_by' => true,
 ]);
 
 if ($owner instanceof ElggGroup) {
-	$url = "messageboard/group/$owner->guid/all";
+	$url = "messageboard/group/{$owner->guid}/all";
 } else {
-	$url = "messageboard/owner/$owner->username";
+	$url = "messageboard/owner/{$owner->username}";
 }
 
 $more_link = elgg_view('output/url', [
@@ -32,5 +32,4 @@ $more_link = elgg_view('output/url', [
 
 echo "<div class=\"elgg-widget-more\">$more_link</div>";
 
-?>
-<script>require(['elgg/messageboard']);</script>
+elgg_require_js('elgg/messageboard');

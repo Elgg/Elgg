@@ -11,9 +11,6 @@
  * MessageBoard initialisation
  */
 function messageboard_init() {
-
-	elgg_extend_view('elgg.css', 'messageboard/css');
-
 	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
 
 	// delete annotations for posts
@@ -118,26 +115,27 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
  * Add edit and delete links for forum replies
  */
 function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
-	$annotation = $params['annotation'];
-	if ($annotation->name != 'messageboard') {
-		return $return;
+	$annotation = elgg_extract('annotation', $params);
+	if ($annotation->name !== 'messageboard') {
+		return;
 	}
 
-	if ($annotation->canEdit()) {
-		$url = elgg_http_add_url_query_elements('action/messageboard/delete', array(
-			'annotation_id' => $annotation->id,
-		));
-
-		$options = array(
-			'name' => 'delete',
-			'href' => $url,
-			'text' => elgg_view_icon('delete'),
-			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
-		);
-		$return[] = ElggMenuItem::factory($options);
+	if (!$annotation->canEdit()) {
+		return;
 	}
+	
+	$url = elgg_http_add_url_query_elements('action/messageboard/delete', array(
+		'annotation_id' => $annotation->id,
+	));
 
+	$return[] = ElggMenuItem::factory([
+		'name' => 'delete',
+		'href' => $url,
+		'text' => elgg_view_icon('delete'),
+		'confirm' => elgg_echo('deleteconfirm'),
+		'encode_text' => false,
+	]);
+	
 	return $return;
 }
 

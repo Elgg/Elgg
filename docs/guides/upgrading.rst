@@ -18,6 +18,7 @@ Removed views
  * ``resources/file/download`` 
  * ``output/checkboxes``: use ``output/tags`` if you want the same behaviour
  * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
+ * ``invitefriends/form``
  * ``page/layouts/content``: use ``page/layouts/default``
  * ``page/layouts/one_column``: use ``page/layouts/default``
  * ``page/layouts/one_sidebar``: use ``page/layouts/default``
@@ -28,6 +29,7 @@ Removed views
  * ``page/layouts/widgets/add_panel``
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
+ * ``messageboard/css``
  * ``notifications/subscriptions/personal``
  * ``notifications/subscriptions/collections``
  * ``notifications/subscriptions/form``

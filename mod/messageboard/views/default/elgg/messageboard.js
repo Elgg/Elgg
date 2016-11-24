@@ -8,7 +8,7 @@ define(function (require) {
 	var MB = {
 		init: function() {
 			var form = $('form[name=elgg-messageboard]');
-			form.on('click', 'input[type=submit]', MB.submit);
+			form.on('click', '[type=submit]', MB.submit);
 
 			// remove the default binding for confirmation since we're doing extra stuff.
 			// @todo remove if we add a hook to the requires confirmation callback

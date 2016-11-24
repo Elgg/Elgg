@@ -829,7 +829,14 @@ class ElggPlugin extends \ElggObject {
 				$this->includeFile('start.php');
 			}
 		}
-
+	
+		// include languages
+		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
+			// should be loaded before the first function that touches the static config (elgg-plugin.php)
+			// so translations can be used... for example in registering widgets
+			$this->registerLanguages();
+		}
+		
 		// include views
 		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
 			$this->registerViews();
@@ -840,14 +847,9 @@ class ElggPlugin extends \ElggObject {
 			$this->registerActions();
 		}
 
-		// include languages
-		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
-			$this->registerLanguages();
-		}
-
 		// include widgets
 		if ($flags & ELGG_PLUGIN_REGISTER_WIDGETS) {
-			// should load after views and languages because those are used during registration
+			// should load after views because those are used during registration
 			$this->registerWidgets();
 		}
 
