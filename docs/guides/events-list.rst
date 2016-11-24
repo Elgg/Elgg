@@ -94,6 +94,12 @@ User events
     to allow a plugin to determine how the user should be validated (for example,
     through an email with a validation link).
 
+**validate:after, user**
+    Triggered when user's account has been validated.
+
+**invalidate:after, user**
+    Triggered when user's account validation has been revoked.
+
 **profileupdate, user**
     User has changed profile
 
