@@ -175,15 +175,6 @@ abstract class ElggEntity extends \ElggData implements
 				return;
 			}
 
-			// Due to https://github.com/Elgg/Elgg/pull/5456#issuecomment-17785173, certain attributes
-			// will store empty strings as null in the DB. In the somewhat common case that we're re-setting
-			// the value to empty string, don't consider this a change.
-			if (in_array($name, ['title', 'name', 'description'])
-					&& $this->attributes[$name] === null
-					&& $value === "") {
-				return;
-			}
-
 			// keep original values
 			if ($this->guid && !array_key_exists($name, $this->orig_attributes)) {
 				$this->orig_attributes[$name] = $this->attributes[$name];
@@ -1574,7 +1565,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($this instanceof ElggUser && $this->banned === 'no') {
 			// temporarily ban to prevent using the site during disable
-			_elgg_services()->usersTable->markBanned($this->guid, true);
+			$this->banned = 'yes';
 			$unban_after = true;
 		} else {
 			$unban_after = false;
@@ -1633,7 +1624,7 @@ abstract class ElggEntity extends \ElggData implements
 		$disabled = $this->getDatabase()->updateData($sql, false, $params);
 
 		if ($unban_after) {
-			_elgg_services()->usersTable->markBanned($this->guid, false);
+			$this->banned = 'no';
 		}
 
 		if ($disabled) {
@@ -1754,7 +1745,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($this instanceof ElggUser) {
 			// ban to prevent using the site during delete
-			_elgg_services()->usersTable->markBanned($this->guid, true);
+			$this->banned = 'yes';
 		}
 
 		// Delete contained owned and otherwise releated objects (depth first)
@@ -1822,7 +1813,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$deleted = $this->getDatabase()->deleteData($sql, $params);
 
-		if ($deleted && in_array($this->type, ['object', 'user', 'group', 'site'])) {
+		if ($deleted && in_array($this->type, ['user'])) {
 			// delete from type-specific subtable
 			$sql = "
 				DELETE FROM {$dbprefix}{$this->type}s_entity

@@ -115,7 +115,6 @@ class Plugins {
 	function generateEntities() {
 	
 		$mod_dir = elgg_get_plugins_path();
-		$db_prefix = elgg_get_config('dbprefix');
 	
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
 		$old_ia = elgg_set_ignore_access(true);
@@ -127,13 +126,11 @@ class Plugins {
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'plugin',
-			'selects' => array('plugin_oe.*'),
-			'joins' => array("JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"),
 			'limit' => ELGG_ENTITIES_NO_VALUE,
 		);
 		$known_plugins = elgg_get_entities_from_relationship($options);
 		/* @var \ElggPlugin[] $known_plugins */
-	
+
 		if (!$known_plugins) {
 			$known_plugins = array();
 		}
@@ -199,7 +196,6 @@ class Plugins {
 		elgg_set_ignore_access($old_ia);
 
 		$this->reindexPriorities();
-
 	
 		return true;
 	}
@@ -224,19 +220,15 @@ class Plugins {
 	function get($plugin_id) {
 		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
 			$plugin_id = sanitize_string($plugin_id);
-			$db_prefix = elgg_get_config('dbprefix');
 
-			$options = array(
+			$plugins = elgg_get_entities_from_metadata([
 				'type' => 'object',
 				'subtype' => 'plugin',
-				'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
-				'selects' => array("oe.title", "oe.description"),
-				'wheres' => array("oe.title = '$plugin_id'"),
+				'metadata_name_value_pairs' => [
+					'title' => $plugin_id,
+				],
 				'limit' => 1,
-				'distinct' => false,
-			);
-
-			$plugins = elgg_get_entities($options);
+			]);
 
 			if ($plugins) {
 				return $plugins[0];
@@ -410,11 +402,10 @@ class Plugins {
 			'type' => 'object',
 			'subtype' => 'plugin',
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-			'selects' => array('plugin_oe.*', 'ps.value'),
+			'selects' => array('ps.value'),
 			'joins' => array(
 				"JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid",
-				"JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"
-				),
+			),
 			'wheres' => array("ps.name = '$priority'"),
 			// ORDER BY CAST(ps.value) is super slow. We usort() below.
 			'order_by' => false,

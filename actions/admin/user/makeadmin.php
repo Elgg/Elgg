@@ -2,11 +2,6 @@
 /**
  * Grants admin privileges to a user.
  *
- * In >=1.7.1, admin is flagged by setting the admin
- * column in the users_entity table.
- *
- * In <1.7.1, admin is a piece of metadata on the user object.
- *
  * @package Elgg.Core
  * @subpackage Administration.User
  */

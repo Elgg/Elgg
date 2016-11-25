@@ -286,13 +286,13 @@ Can I add extra fields to tables in the database?
 
 No, this is a bad idea. Learn the :doc:`data model </design/database>` and you will see that unless it's a very specific and highly customized installation, you can do everything you need within Elgg's current data model.
 
-I want to remove users. Can't I just delete them from the elgg_users_entity table?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+I want to remove users. Can't I just delete them from the tables?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 No, it will corrupt your database. Delete them through the site.
 
-I want to remove spam. Can't I just search and delete it from the elgg_objects_entity table?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+I want to remove spam. Can't I just search and delete it from the tables?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 No, it will corrupt your database. Delete it through the site.
 
@@ -346,8 +346,6 @@ The second cause would be an entity where the owner no longer exists. This could
 .. warning::
 
    Reed the section "Should I edit the database manually?". Be very carefull when editing the database directly. It can break your site. **Always** make a backup before doing this.
-
-The third cause is a user not having a username. This also indicates a database problem as this should not be possible. If it does occur, you could see this error when viewing a list of users (such as with the Members plugin). To fix, check your ``users_entity`` table for users without a username and if so, create a fake a username for that person. You should probably then delete the user through Elgg.
 
 Fixes
 ^^^^^

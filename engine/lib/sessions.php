@@ -66,29 +66,14 @@ function elgg_is_admin_logged_in() {
  * @since 1.7.1
  */
 function elgg_is_admin_user($user_guid) {
+	return true;
+	$user_guid = (int) $user_guid;
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
 	
-	$user_guid = (int)$user_guid;
-
-	$current_user = elgg_get_logged_in_user_entity();
-	if ($current_user && $current_user->guid == $user_guid) {
-		return $current_user->isAdmin();
-	}
-
-	// cannot use magic metadata here because of recursion
-	$dbprefix = elgg_get_config('dbprefix');
-	$query = "SELECT 1 FROM {$dbprefix}users_entity as e
-		WHERE (
-			e.guid = {$user_guid}
-			AND e.admin = 'yes'
-		)";
-
-	// normalizing the results from get_data()
-	// See #1242
-	$info = get_data($query);
-	if (!((is_array($info) && count($info) < 1) || $info === false)) {
-		return true;
-	}
-	return false;
+	$user = get_user($user_guid);
+	return $user->isAdmin();
 }
 
 /**
@@ -301,7 +286,7 @@ function login(\ElggUser $user, $persistent = false) {
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
 
-	set_last_login($user->guid);
+	$user->setLastLogin();
 	reset_login_failure_count($user->guid);
 
 	elgg_trigger_after_event('login', 'user', $user);
@@ -373,7 +358,8 @@ function _elgg_session_boot() {
 	}
 
 	if ($session->has('guid')) {
-		set_last_action($session->get('guid'));
+		$user = _elgg_services()->entityTable->get($session->get('guid'), 'user');
+		$user->setLastAction();
 	}
 
 	// logout a user with open session who has been banned

@@ -8,24 +8,6 @@
  */
 
 /**
- * Return the object specific details of a object by a row.
- *
- * @param int $guid The guid to retrieve
- *
- * @return bool
- * @access private
- */
-function get_object_entity_as_row($guid) {
-	$dbprefix = elgg_get_config('dbprefix');
-	$sql = "SELECT * FROM {$dbprefix}objects_entity
-		WHERE guid = :guid";
-	$params = [
-		':guid' => (int) $guid,
-	];
-	return _elgg_services()->db->getDataRow($sql, null, $params);
-}
-
-/**
  * Runs unit tests for \ElggObject
  *
  * @param string $hook   unit_test

@@ -2,8 +2,7 @@
 /**
  * Bans a user.
  *
- * User entities are banned by setting the 'banned' column
- * to 'yes' in the users_entity table.
+ * User entities are banned by setting the 'banned' metadata to 'yes'
  *
  * @package Elgg.Core
  * @subpackage Administration.User

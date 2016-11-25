@@ -8,74 +8,6 @@
  */
 
 /**
- * Return the user specific details of a user by a row.
- *
- * @param int $guid The \ElggUser guid
- *
- * @return mixed
- * @access private
- */
-function get_user_entity_as_row($guid) {
-	return _elgg_services()->usersTable->getRow($guid);
-}
-
-/**
- * Disables all of a user's entities
- *
- * @param int $owner_guid The owner GUID
- *
- * @return bool Depending on success
- */
-function disable_user_entities($owner_guid) {
-	return _elgg_services()->usersTable->disableEntities($owner_guid);
-}
-
-/**
- * Ban a user
- *
- * @param int    $user_guid The user guid
- * @param string $reason    A reason
- *
- * @return bool
- */
-function ban_user($user_guid, $reason = "") {
-	return _elgg_services()->usersTable->ban($user_guid, $reason);
-}
-
-/**
- * Unban a user.
- *
- * @param int $user_guid Unban a user.
- *
- * @return bool
- */
-function unban_user($user_guid) {
-	return _elgg_services()->usersTable->unban($user_guid);
-}
-
-/**
- * Makes user $guid an admin.
- *
- * @param int $user_guid User guid
- *
- * @return bool
- */
-function make_user_admin($user_guid) {
-	return _elgg_services()->usersTable->makeAdmin($user_guid);
-}
-
-/**
- * Removes user $guid's admin flag.
- *
- * @param int $user_guid User GUID
- *
- * @return bool
- */
-function remove_user_admin($user_guid) {
-	return _elgg_services()->usersTable->removeAdmin($user_guid);
-}
-
-/**
  * Get a user object from a GUID.
  *
  * This function returns an \ElggUser from a given GUID.
@@ -183,8 +115,6 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
 function generate_random_cleartext_password() {
 	return _elgg_services()->crypto->getRandomString(12, \ElggCrypto::CHARS_PASSWORD);
 }
-
-
 
 /**
  * Simple function which ensures that a username contains only valid characters.
@@ -421,34 +351,6 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 	$url = elgg_normalize_url('login');
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
-}
-
-/**
- * Sets the last action time of the given user to right now.
- *
- * @param int $user_guid The user GUID
- * @return void
- */
-function set_last_action($user_guid) {
-	$user = get_user($user_guid);
-	if (!$user) {
-		return;
-	}
-	_elgg_services()->usersTable->setLastAction($user);
-}
-
-/**
- * Sets the last logon time of the given user to right now.
- *
- * @param int $user_guid The user GUID
- * @return void
- */
-function set_last_login($user_guid) {
-	$user = get_user($user_guid);
-	if (!$user) {
-		return;
-	}
-	_elgg_services()->usersTable->setLastLogin($user);
 }
 
 /**
@@ -979,7 +881,6 @@ function users_init() {
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_ban_action');
 	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
 	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:', '_elgg_user_prepare_unban_notification');
-	
 }
 
 /**

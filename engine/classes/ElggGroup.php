@@ -22,23 +22,7 @@ class ElggGroup extends \ElggEntity {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['type'] = "group";
-		$this->attributes += self::getExternalAttributes();
-	}
-
-	/**
-	 * Get default values for attributes stored in a separate table
-	 *
-	 * @return array
-	 * @access private
-	 *
-	 * @see \Elgg\Database\EntityTable::getEntities
-	 */
-	final public static function getExternalAttributes() {
-		return [
-			'name' => null,
-			'description' => null,
-		];
+		$this->attributes['type'] = 'group';
 	}
 
 	/**
@@ -53,7 +37,6 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function __construct(\stdClass $row = null) {
 		$this->initializeAttributes();
-
 		if ($row) {
 			// Load the rest
 			if (!$this->load($row)) {
@@ -233,78 +216,6 @@ class ElggGroup extends \ElggEntity {
 		_elgg_services()->events->trigger('leave', 'group', $params);
 
 		return remove_entity_relationship($user->guid, 'member', $this->guid);
-	}
-
-	/**
-	 * Load the \ElggGroup data from the database
-	 *
-	 * @param mixed $guid GUID of an \ElggGroup entity or database row from entity table
-	 *
-	 * @return bool
-	 */
-	protected function load($guid) {
-		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'group', $this->attributes);
-		$attr_loader->requires_access_control = !($this instanceof \ElggPlugin);
-		$attr_loader->secondary_loader = 'get_group_entity_as_row';
-
-		$attrs = $attr_loader->getRequiredAttributes($guid);
-		if (!$attrs) {
-			return false;
-		}
-
-		$this->attributes = $attrs;
-		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_services()->entityCache->set($this);
-
-		return true;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function update() {
-		global $CONFIG;
-		
-		if (!parent::update()) {
-			return false;
-		}
-		
-		$guid = (int)$this->guid;
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
-		
-		$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-			. " name='$name', description='$description' where guid=$guid";
-
-		return $this->getDatabase()->updateData($query) !== false;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function create() {
-		global $CONFIG;
-		
-		$guid = parent::create();
-		if (!$guid) {
-			// @todo this probably means permission to create entity was denied
-			// Is returning false the correct thing to do
-			return false;
-		}
-		
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
-
-		$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-			. " (guid, name, description) values ($guid, '$name', '$description')";
-
-		$result = $this->getDatabase()->insertData($query);
-		if ($result === false) {
-			// TODO(evan): Throw an exception here?
-			return false;
-		}
-
-		return $guid;
 	}
 
 	/**

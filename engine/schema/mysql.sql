@@ -109,16 +109,6 @@ CREATE TABLE `prefix_geocode_cache` (
   UNIQUE KEY `location` (`location`)
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 
--- secondary table for group entities
-CREATE TABLE `prefix_groups_entity` (
-  `guid` bigint(20) unsigned NOT NULL,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY (`guid`),
-  KEY `name` (`name`(50)),
-  KEY `description` (`description`(50))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- cache for hmac signatures for old web services
 CREATE TABLE `prefix_hmac_cache` (
   `hmac` varchar(255) NOT NULL,
@@ -145,14 +135,6 @@ CREATE TABLE `prefix_metadata` (
   KEY `owner_guid` (`owner_guid`),
   KEY `access_id` (`access_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
--- secondary table for object entities
-CREATE TABLE `prefix_objects_entity` (
-  `guid` bigint(20) unsigned NOT NULL,
-  `title` text NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY (`guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- settings for an entity
 CREATE TABLE `prefix_private_settings` (
@@ -203,16 +185,6 @@ CREATE TABLE `prefix_river` (
   KEY `posted` (`posted`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- secondary table for site entities
-CREATE TABLE `prefix_sites_entity` (
-  `guid` bigint(20) unsigned NOT NULL,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
-  `url` varchar(255) NOT NULL,
-  PRIMARY KEY (`guid`),
-  UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- log activity for the admin
 CREATE TABLE `prefix_system_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -249,32 +221,6 @@ CREATE TABLE `prefix_users_apisessions` (
   KEY `user_guid` (`user_guid`),
   KEY `token` (`token`)
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
-
--- secondary table for user entities
-CREATE TABLE `prefix_users_entity` (
-  `guid` bigint(20) unsigned NOT NULL,
-  `name` text NOT NULL,
-  `username` varchar(128) NOT NULL DEFAULT '',
-  `password` varchar(32) NOT NULL DEFAULT '' COMMENT 'Legacy password hashes',
-  `salt` varchar(8) NOT NULL DEFAULT '' COMMENT 'Legacy password salts',
-  -- 255 chars is recommended by PHP.net to hold future hash formats
-  `password_hash` varchar(255) NOT NULL DEFAULT '',
-  `email` text NOT NULL,
-  `language` varchar(6) NOT NULL DEFAULT '',
-  `banned` enum('yes','no') NOT NULL DEFAULT 'no',
-  `admin` enum('yes','no') NOT NULL DEFAULT 'no',
-  `last_action` int(11) NOT NULL DEFAULT '0',
-  `prev_last_action` int(11) NOT NULL DEFAULT '0',
-  `last_login` int(11) NOT NULL DEFAULT '0',
-  `prev_last_login` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`guid`),
-  UNIQUE KEY `username` (`username`),
-  KEY `password` (`password`),
-  KEY `email` (`email`(50)),
-  KEY `last_action` (`last_action`),
-  KEY `last_login` (`last_login`),
-  KEY `admin` (`admin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- user remember me cookies
 CREATE TABLE `prefix_users_remember_me_cookies` (

@@ -237,11 +237,11 @@ function input_livesearch_page_handler($page) {
 				$options = array(
 					'type' => 'user',
 					'limit' => $limit,
-					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
-					'wheres' => array(
-						"ue.banned = 'no'",
-						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
-					)
+// 					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
+// 					'wheres' => array(
+// 						"ue.banned = 'no'",
+// 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
+// 					)
 				);
 				
 				$entities = elgg_get_entities($options);
@@ -337,11 +337,11 @@ function input_livesearch_page_handler($page) {
 					'limit' => $limit,
 					'relationship' => 'friend',
 					'relationship_guid' => $user->getGUID(),
-					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
-					'wheres' => array(
-						"ue.banned = 'no'",
-						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
-					)
+// 					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
+// 					'wheres' => array(
+// 						"ue.banned = 'no'",
+// 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
+// 					)
 				);
 				
 				$entities = elgg_get_entities_from_relationship($options);
