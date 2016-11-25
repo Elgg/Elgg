@@ -37,7 +37,7 @@ unset($vars['fields']);
 
 $fieldset = '';
 if ($legend) {
-	$vars['class'] = 'elgg-fieldset-has-legend';
+	$vars['class'][] = 'elgg-fieldset-has-legend';
 	$fieldset .= elgg_format_element('legend', [], $legend);
 }
 
