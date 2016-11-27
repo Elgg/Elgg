@@ -235,7 +235,7 @@ function elgg_flush_caches() {
 function _elgg_is_cache_symlinked() {
 	$link = elgg_get_root_path() . 'cache/';
 	$target = elgg_get_cache_path() . 'views_simplecache/';
-	return is_dir($link) && realpath($target) == realpath(readlink($link));
+	return is_dir($link) && realpath($target) == realpath($link);
 }
 
 /**
