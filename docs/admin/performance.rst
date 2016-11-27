@@ -95,6 +95,20 @@ configured when you installed Elgg:
 If your webserver supports following symlinks, this will serve files straight off
 disk without booting up PHP each time.
 
+For security reasons, some webservers (e.g. Apache in version 2.4) might follow the symlinks
+by default only if the owner of the symlink source and target match. If the cache symlink
+fails to work on your server, you can change the owner of the cache symlink itself (and
+not the ``/views_simplecache/`` directory) with
+
+.. code:: shell
+
+    cd /path/to/wwwroot/
+    chown -h wwwrun:www cache
+
+In this example it's assumed that the ``/views_simplecache/`` directory in the data directory is owned by the
+wwwrun account that belongs to the www group. If this is not the case on your server, you have to modify the
+chown command accordingly.
+
 System cache
 ------------
 
