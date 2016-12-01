@@ -31,7 +31,8 @@
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "nikic/php-parser": "^3.0"
     },
     "scripts": {
         "pre-install-cmd": "php .scripts/check_global_requirements.php",
