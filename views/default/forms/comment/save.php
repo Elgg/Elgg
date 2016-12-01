@@ -66,7 +66,8 @@ if ($inline) {
 	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
 		'value' => $comment_text,
-		'required' => true
+		'required' => true,
+		'editor_type' => 'simple',
 	));
 
 	echo <<<FORM

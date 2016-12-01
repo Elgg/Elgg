@@ -5,7 +5,7 @@
  *
  * @package ElggFile
  */
-// once elgg_view stops throwing all sorts of junk into $vars, we can use 
+// once elgg_view stops throwing all sorts of junk into $vars, we can use
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
@@ -56,6 +56,7 @@ $fields = [
 		'#label' => elgg_echo('description'),
 		'name' => 'description',
 		'value' => $desc,
+		'editor_type' => 'simple',
 	],
 	[
 		'#type' => 'tags',

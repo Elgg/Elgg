@@ -26,6 +26,7 @@ $fields = [
 		'value' => $desc,
 		'#label' => elgg_echo('discussion:topic:description'),
 		'required' => true,
+		'editor_type' => 'simple',
 	],
 	[
 		'#type' => 'tags',

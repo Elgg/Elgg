@@ -8,9 +8,16 @@
  * @uses $vars['text']  Text to include between <button> tags
  * @uses $vars['icon']  Optional icon name
  */
+
 $vars['class'] = elgg_extract_class($vars, 'elgg-button');
 
+if (!isset($vars['text']) && isset($vars['value'])) {
+	// Keeping this to ease the transition to 3.0
+	$vars['text'] = $vars['value'];
+}
+
 $type = elgg_extract('type', $vars, 'button', false);
+$vars['type'] = $type;
 
 $text = elgg_extract('text', $vars);
 unset($vars['text']);
