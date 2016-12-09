@@ -29,6 +29,7 @@ $body .= elgg_view_field([
 	'#help' => elgg_echo('installation:allow_user_default_access:description'),
 	'name' => 'allow_user_default_access',
 	'checked' => (bool)elgg_get_config('allow_user_default_access'),
+	'switch' => true,
 ]);
 
 echo elgg_view_module('inline', elgg_echo('admin:legend:content_access'), $body, ['id' => 'elgg-settings-advanced-content-access']);

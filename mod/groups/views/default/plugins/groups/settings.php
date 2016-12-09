@@ -27,6 +27,7 @@ $fields = [
 		'#label' => elgg_echo('groups:allowhiddengroups'),
 		'name' => 'params[hidden_groups]',
 		'default' => 'no',
+		'switch' => true,
 		'value' => 'yes',
 		'checked' => ($plugin->hidden_groups === 'yes'),
 	],
@@ -47,6 +48,7 @@ $fields = [
 		'default' => 'no',
 		'value' => 'yes',
 		'checked' => ($plugin->allow_activity === 'yes'),
+		'switch' => true,
 	],
 ];
 
