@@ -1378,6 +1378,12 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['last_action'] = (int)$now;
 		$this->attributes['container_guid'] = (int)$container_guid;
 
+		// We are writing this new entity to cache to make sure subsequent calls
+		// to get_entity() load entity from cache and not from the DB
+		// At this point, secondary attributes have not yet been written to the DB,
+		// but metadata and annotation event handlers may be calling get_entity()
+		_elgg_services()->entityCache->set($this);
+
 		// Save any unsaved metadata
 		if (sizeof($this->temp_metadata) > 0) {
 			foreach ($this->temp_metadata as $name => $value) {
