@@ -67,11 +67,7 @@ foreach ($emails as $email) {
 	$subject = elgg_echo('invitefriends:subject', array($site->getDisplayName()));
 
 	// create the from address
-	if ($site->email) {
-		$from = $site->email;
-	} else {
-		$from = 'noreply@' . $site->getDomain();
-	}
+	$from = $site->getEmailAddress();
 
 	elgg_send_email($from, $email, $subject, $message);
 	$sent_total++;

@@ -335,4 +335,21 @@ class ElggSite extends \ElggEntity {
 		// non-public page
 		return false;
 	}
+	
+	/**
+	 * Get the email address for the site
+	 *
+	 * This can be set in the basic site settings or fallback to noreply@domain
+	 *
+	 * @return string
+	 * @since 3.0.0
+	 */
+	public function getEmailAddress() {
+		$email = $this->email;
+		if (empty($email)) {
+			$email = "noreply@{$this->getDomain()}";
+		}
+		
+		return $email;
+	}
 }
