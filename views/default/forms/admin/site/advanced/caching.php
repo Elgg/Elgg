@@ -11,6 +11,7 @@ $params = array(
 	'label' => elgg_echo('installation:simplecache:label'),
 	'name' => 'simplecache_enabled',
 	'checked' => $is_simple_cache_on,
+	'switch' => true,
 );
 
 $simple_cache_warning = '<p class="elgg-text-help">' . elgg_echo('installation:simplecache:description') . '</p>';
@@ -29,6 +30,7 @@ $params = array(
 	'checked' => $cache_symlinked,
 	'class' => $simple_cache_disabled_class,
 	'label_class' => $simple_cache_disabled_class,
+	'switch' => true,
 );
 $symlink_warning = '<p class="elgg-text-help">' . elgg_echo('installation:cache_symlink:description') . '</p>';
 if ($cache_symlinked) {
@@ -51,6 +53,7 @@ $minify_js_input = elgg_view("input/checkbox", array(
 	'name' => 'simplecache_minify_js',
 	'checked' => (bool)elgg_get_config('simplecache_minify_js'),
 	'label_class' => $simple_cache_disabled_class,
+	'switch' => true,
 ));
 
 $minify_css_input = elgg_view("input/checkbox", array(
@@ -58,6 +61,7 @@ $minify_css_input = elgg_view("input/checkbox", array(
 	'name' => 'simplecache_minify_css',
 	'checked' => (bool)elgg_get_config('simplecache_minify_css'),
 	'label_class' => $simple_cache_disabled_class,
+	'switch' => true,
 ));
 
 $system_cache_input = elgg_view_field([
@@ -65,6 +69,7 @@ $system_cache_input = elgg_view_field([
 	'label' => elgg_echo('installation:systemcache:label'),
 	'help' => elgg_echo('installation:systemcache:description'),
 	'name' => 'system_cache_enabled',
+	'switch' => true,
 	'checked' => elgg_is_system_cache_enabled(),
 	'#class' => 'mtm',
 ]);

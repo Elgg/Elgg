@@ -10,6 +10,7 @@ $body = elgg_view_field([
 	'#help' => elgg_echo('installation:registration:description'),
 	'name' => 'allow_registration',
 	'checked' => (bool)elgg_get_config('allow_registration'),
+	'switch' => true,
 ]);
 
 // walled garden
@@ -19,6 +20,7 @@ $body .= elgg_view_field([
 	'#help' => elgg_echo('installation:walled_garden:description'),
 	'name' => 'walled_garden',
 	'checked' => (bool)elgg_get_config('walled_garden'),
+	'switch' => true,
 ]);
 
 echo elgg_view_module('inline', elgg_echo('admin:legend:site_access'), $body, ['id' => 'elgg-settings-advanced-site-access']);

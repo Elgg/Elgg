@@ -632,6 +632,9 @@ select {
 .elgg-input-checkbox + .elgg-field-label {
 	display: inline-block;
 }
+<?php
+echo elgg_view('elements/misc/checkbox_switch.css');
+?>
 
 /* **************************************
      DATE PICKER

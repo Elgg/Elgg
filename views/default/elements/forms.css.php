@@ -87,6 +87,10 @@ input[type="number"] {
 	display: inline;
 	padding-right: 10px;
 }
+<?php
+echo elgg_view('elements/misc/checkbox_switch.css');
+?>
+
 select {
 	max-width: 100%;
 	padding: 4px;

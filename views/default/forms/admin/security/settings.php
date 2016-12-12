@@ -11,6 +11,7 @@ $hardening .= elgg_view_field([
 	'name' => 'security_protect_upgrade',
 	'default' => 0,
 	'value' => 1,
+	'switch' => true,
 	'checked' => $protect_upgrade,
 ]);
 if ($protect_upgrade) {
@@ -31,6 +32,7 @@ $hardening .= elgg_view_field([
 	'name' => 'security_protect_cron',
 	'default' => 0,
 	'value' => 1,
+	'switch' => true,
 	'checked' => $protect_cron,
 ]);
 if ($protect_cron) {
@@ -82,6 +84,7 @@ $hardening .= elgg_view_field([
 	'name' => 'security_disable_password_autocomplete',
 	'default' => 0,
 	'value' => 1,
+	'switch' => true,
 	'checked' => (bool) get_config('security_disable_password_autocomplete'),
 ]);
 
@@ -93,6 +96,7 @@ $hardening .= elgg_view_field([
 	'name' => 'security_email_require_password',
 	'default' => 0,
 	'value' => 1,
+	'switch' => true,
 	'checked' => (bool) get_config('security_email_require_password'),
 ]);
 
@@ -111,6 +115,7 @@ $notifications .= elgg_view_field([
 	'name' => 'security_notify_admins',
 	'default' => 0,
 	'value' => 1,
+	'switch' => true,
 	'checked' => (bool) get_config('security_notify_admins'),
 ]);
 
@@ -122,6 +127,7 @@ $notifications .= elgg_view_field([
 	'name' => 'security_notify_user_admin',
 	'default' => 0,
 	'value' => 1,
+	'switch' => true,
 	'checked' => (bool) get_config('security_notify_user_admin'),
 ]);
 
@@ -133,6 +139,7 @@ $notifications .= elgg_view_field([
 	'name' => 'security_notify_user_ban',
 	'default' => 0,
 	'value' => 1,
+	'switch' => true,
 	'checked' => (bool) get_config('security_notify_user_ban'),
 ]);
 
