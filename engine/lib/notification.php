@@ -235,15 +235,17 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		return false;
 	}
 
-	$to = $recipient->email;
+	$recipient_address = new \Zend\Mail\Address($recipient->email, $recipient->getDisplayName());
+	$to = $recipient_address->toString();
 
-	$site = elgg_get_site_entity();
 	// If there's an email address, use it - but only if it's not from a user.
 	if (!($sender instanceof \ElggUser) && $sender->email) {
-		$from = $sender->email;
+		$from = Address::getFormattedEmailAddress($sender->email, $sender->getDisplayName());
 	} else {
 		// get the site email address
-		$from = $site->getEmailAddress();
+		$site = elgg_get_site_entity();
+		
+		$from = Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
 	}
 
 	return elgg_send_email($from, $to, $message->subject, $message->body, $params);
