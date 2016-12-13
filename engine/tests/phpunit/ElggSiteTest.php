@@ -11,4 +11,20 @@ class ElggSiteTest extends \Elgg\TestCase {
 		$this->assertNotNull(new \ElggSite());
 	}
 
+	public function testGetNoreplyEmailAddress() {
+		
+		$site = new \ElggSite();
+		$site->url = 'https://example.com/';
+		
+		$this->assertEquals('noreply@example.com', $site->getEmailAddress());
+	}
+	
+	public function testGetEmailAddress() {
+		
+		$site = new \ElggSite();
+		$site->url = 'https://example.com/';
+		$site->email = 'someemail@example.com';
+		
+		$this->assertEquals('someemail@example.com', $site->getEmailAddress());
+	}
 }

@@ -102,7 +102,7 @@ function elgg_register_notification_method($name) {
  *		'sms' => 'sms',
  *	]
  * </code>
- * 
+ *
  * @return array
  * @since 2.3
  */
@@ -235,17 +235,17 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		return false;
 	}
 
-	$to = $recipient->email;
+	$recipient_address = new \Zend\Mail\Address($recipient->email, $recipient->getDisplayName());
+	$to = $recipient_address->toString();
 
-	$site = elgg_get_site_entity();
 	// If there's an email address, use it - but only if it's not from a user.
 	if (!($sender instanceof \ElggUser) && $sender->email) {
-		$from = $sender->email;
-	} else if ($site->email) {
-		$from = $site->email;
+		$from = Address::getFormattedEmailAddress($sender->email, $sender->getDisplayName());
 	} else {
-		// If all else fails, use the domain of the site.
-		$from = 'noreply@' . $site->getDomain();
+		// get the site email address
+		$site = elgg_get_site_entity();
+		
+		$from = Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
 	}
 
 	return elgg_send_email($from, $to, $message->subject, $message->body, $params);
@@ -258,11 +258,11 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
  * @param string $type        Equals to 'system'
  * @param array  $returnvalue Array containing fields: 'to', 'from', 'subject', 'body', 'headers', 'params'
  * @param array  $params      The same value as $returnvalue
- * 
+ *
  * @see https://tools.ietf.org/html/rfc5322#section-3.6.4
- * 
+ *
  * @return array
- * 
+ *
  * @access private
  */
 function _elgg_notifications_smtp_default_message_id_header($hook, $type, $returnvalue, $params) {
