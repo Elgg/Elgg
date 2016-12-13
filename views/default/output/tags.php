@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg tags
  * Tags can be a single string (for one tag) or an array of strings. Accepts all output/tag options
@@ -7,9 +8,10 @@
  * @uses $vars['entity']     Optional. Entity whose tags are being displayed (metadata ->tags)
  * @uses $vars['list_class'] Optional. Additional classes to be passed to <ul> element
  * @uses $vars['item_class'] Optional. Additional classes to be passed to <li> elements
+ * @uses $vars['icon']       Optional. Icon name to be used (default: tag)
+ *                           Set to false to not render an icon
  * @uses $vars['icon_class'] Optional. Additional classes to be passed to tags icon image
  */
-
 if (isset($vars['entity'])) {
 	$vars['tags'] = $vars['entity']->tags;
 	unset($vars['entity']);
@@ -44,19 +46,30 @@ if (isset($vars['item_class'])) {
 	unset($vars['item_class']);
 }
 
+$icon_name = elgg_extract('icon', $vars, 'tag');
+unset($vars['icon']);
+
 $icon_class = elgg_extract('icon_class', $vars);
 unset($vars['icon_class']);
 
-$list_items = ''; 
+if ($icon_name === false) {
+	$icon = '';
+} else {
+	$icon = elgg_view_icon($icon_name, $icon_class);
+}
+
+$list_items = $icon;
 
 $params = $vars;
-foreach($tags as $tag) {
+foreach ($tags as $tag) {
 	if (is_string($tag) && strlen($tag) > 0) {
 		$params['value'] = $tag;
-
-		$list_items .= "<li class=\"$item_class\">";
-		$list_items .= elgg_view('output/tag', $params);
-		$list_items .= '</li>';
+		$tag_view = elgg_view('output/tag', $params);
+		$list_items .= elgg_format_element([
+			'#tag_name' => 'span',
+			'#text' => $tag_view,
+			'class' => $item_class,
+		]);
 	}
 }
 
@@ -64,15 +77,8 @@ if (empty($list_items)) {
 	return;
 }
 
-$icon = elgg_view_icon('tag', $icon_class);
-
-$list = <<<___HTML
-	<div class="clearfix">
-		<ul class="$list_class">
-			<li>$icon</li>
-			$list_items
-		</ul>
-	</div>
-___HTML;
-
-echo $list;
+echo elgg_format_element([
+	'#tag_name' => 'div',
+	'#text' => $list_items,
+	'class' => $list_class,
+]);
