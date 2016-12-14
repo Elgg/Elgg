@@ -235,9 +235,8 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		return false;
 	}
 
-	$recipient_address = new \Zend\Mail\Address($recipient->email, $recipient->getDisplayName());
-	$to = $recipient_address->toString();
-
+	$to = Address::getFormattedEmailAddress($recipient->email, $recipient->getDisplayName());
+	
 	// If there's an email address, use it - but only if it's not from a user.
 	if (!($sender instanceof \ElggUser) && $sender->email) {
 		$from = Address::getFormattedEmailAddress($sender->email, $sender->getDisplayName());
