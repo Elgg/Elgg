@@ -341,22 +341,7 @@
 	height: auto;
 }
 
-/* ***************************************
-	Tags
-*************************************** */
-.elgg-tags {
-	font-size: 85%;
-}
-.elgg-tags > li {
-	float:left;
-	margin-right: 5px;
-}
-.elgg-tags li.elgg-tag:after {
-	content: ",";
-}
-.elgg-tags li.elgg-tag:last-child:after {
-	content: "";
-}
+<?= elgg_view('elements/components/tags.css', $vars) ?>
 
 @media (max-width: 820px) {
 	.elgg-river-item input[type=text] {

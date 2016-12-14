@@ -458,6 +458,8 @@ a.elgg-maintenance-mode-warning {
 	display: inline-block;
 }
 
+<?= elgg_view('elements/components/tags.css', $vars) ?>
+
 /* ***************************************
 	FORMS AND INPUT
 *************************************** */
