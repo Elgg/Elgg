@@ -175,14 +175,6 @@ $ipsum = elgg_view('developers/ipsum');
 		));
 
 		echo elgg_view_field(array(
-			'#type' => 'autocomplete',
-			'name' => 'f11',
-			'id' => 'f11',
-			'match_on' => array('groups', 'friends'),
-			'#label' => 'Autocomplete input (.elgg-input-autocomplete):',
-		));
-
-		echo elgg_view_field(array(
 			'#type' => 'date',
 			'name' => 'f12',
 			'id' => 'f12',
@@ -207,6 +199,22 @@ $ipsum = elgg_view('developers/ipsum');
 			'#label' => 'Date input (.elgg-input-date) with custom options:',
 			'#help' => 'Select a date from 15 Jan to 15 Feb',
 		));
+		
+		echo elgg_view_field(array(
+			'#type' => 'autocomplete',
+			'name' => 'f11',
+			'id' => 'f11',
+			'match_on' => array('groups', 'friends'),
+			'#label' => 'Autocomplete input (.elgg-input-autocomplete):',
+		));
+
+		echo elgg_view_field(array(
+			'#type' => 'autocomplete',
+			'name' => 'f11s',
+			'id' => 'f11s',
+			'match_on' => array('groups', 'friends'),
+			'#label' => 'Autocomplete input to test multiple inputs (.elgg-input-autocomplete):',
+		));
 
 		echo elgg_view_field(array(
 			'#type' => 'userpicker',
@@ -217,10 +225,40 @@ $ipsum = elgg_view('developers/ipsum');
 
 		echo elgg_view_field(array(
 			'#type' => 'userpicker',
+			'name' => 'f13',
+			'id' => 'f13',
+			'values' => elgg_get_logged_in_user_guid(),
+			'#label' => 'User picker input with values (.elgg-user-picker):',
+		));
+
+		echo elgg_view_field(array(
+			'#type' => 'userpicker',
 			'name' => 'f16',
 			'id' => 'f16',
 			'limit' => 1,
-			'#label' => 'User picker input (with max 1 results) (.elgg-user-picker):',
+			'filter' => false,
+			'#label' => 'User picker input (with max 1 results and without filter) (.elgg-user-picker):',
+		));
+
+		echo elgg_view_field(array(
+			'#type' => 'grouppicker',
+			'name' => 'f17',
+			'id' => 'f17',
+			'#label' => 'Group picker input (.elgg-group-picker):',
+		));
+
+		echo elgg_view_field(array(
+			'#type' => 'objectpicker',
+			'name' => 'f18',
+			'id' => 'f18',
+			'#label' => 'Object picker input (.elgg-object-picker):',
+		));
+
+		echo elgg_view_field(array(
+			'#type' => 'objectpicker',
+			'name' => 'f18a',
+			'id' => 'f18a',
+			'#label' => 'Object picker input limited to blogs (.elgg-object-picker):',
 		));
 
 		echo elgg_view_field(array(

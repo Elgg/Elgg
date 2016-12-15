@@ -301,23 +301,7 @@ select {
 	width: 1px;
 }
 
-/* ***************************************
-	USER PICKER
-*************************************** */
-.elgg-user-picker-list li:first-child {
-	border-top: 1px dotted #ccc;
-	margin-top: 5px;
-}
-.elgg-user-picker-list > li {
-	border-bottom: 1px dotted #ccc;
-}
-.elgg-user-picker.elgg-state-disabled > input,
-.elgg-user-picker.elgg-state-disabled > label {
-	display: none;
-}
-.elgg-user-picker-remove {
-	cursor: pointer;
-}
+<?php echo elgg_view('input/entitypicker.css'); ?>
 
 /* ***************************************
 	DATE PICKER

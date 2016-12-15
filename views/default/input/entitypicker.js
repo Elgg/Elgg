@@ -1,31 +1,28 @@
-/** @module elgg/UserPicker */
-
-define(function(require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	require('jquery.ui.autocomplete.html');
+define(['jquery', 'elgg', 'input/autocomplete'], function($, elgg, autocomplete) {
 
 	/**
 	 * @param {HTMLElement} wrapper outer div
 	 * @constructor
-	 * @alias module:elgg/UserPicker
-	 *
-	 * @todo move this to /js/classes ?
 	 */
-	function UserPicker(wrapper) {
+	function EntityPicker(wrapper) {
 		this.$wrapper = $(wrapper);
-		this.$input = $('.elgg-input-user-picker', wrapper);
-		this.$ul = $('.elgg-user-picker-list', wrapper);
+		this.$input = $('.elgg-input-autocomplete', wrapper);
+		this.$ul = $('.elgg-entity-picker-list', wrapper);
 
 		var self = this,
 			data = this.$wrapper.data();
 
-		this.name = data.name || 'members';
-		this.handler = data.handler || 'livesearch';
 		this.limit = data.limit || 0;
-		this.minLength = data.minLength || 2;
-		this.isSealed = false;
 
+		this.isSealed = false;
+		
+		
+		autocomplete.init(this.$input, {
+			select: function(event, ui) {
+				self.addEntity(event, ui.item.guid, ui.item.html);
+			},
+		});
+/*
 		this.$input.autocomplete({
 			source: function(request, response) {
 				// note: "this" below will not be bound to the input, but rather
@@ -47,26 +44,19 @@ define(function(require) {
 					}
 				});
 			},
-			minLength: self.minLength,
-			html: "html",
-			select: function(event, ui) {
-				self.addUser(event, ui.item.guid, ui.item.html);
-			},
-			// turn off experimental live help - no i18n support and a little buggy
-			messages: {
-				noResults: '',
-				results: function() {}
-			}
-		});
 
-		this.$wrapper.on('click', '.elgg-user-picker-remove', function(event) {
-			self.removeUser(event);
+
+			
+		});
+*/
+		this.$wrapper.on('click', '.elgg-entity-picker-remove', function(event) {
+			self.removeEntity(event);
 		});
 
 		this.enforceLimit();
 	}
 
-	UserPicker.prototype = {
+	EntityPicker.prototype = {
 		/**
 		 * Adds a user to the select user list
 		 *
@@ -74,7 +64,7 @@ define(function(require) {
 		 * @param {Number} guid    GUID of autocomplete item selected by user
 		 * @param {String} html    HTML for autocomplete item selected by user
 		 */
-		addUser : function(event, guid, html) {
+		addEntity : function(event, guid, html) {
 			// do not allow users to be added multiple times
 			if (!$('li[data-guid="' + guid + '"]', this.$ul).length) {
 				this.$ul.append(html);
@@ -91,8 +81,8 @@ define(function(require) {
 		 *
 		 * @param {Object} event
 		 */
-		removeUser : function(event) {
-			$(event.target).closest('.elgg-user-picker-list > li').remove();
+		removeEntity : function(event) {
+			$(event.target).closest('.elgg-entity-picker-list > li').remove();
 
 			this.enforceLimit();
 
@@ -138,17 +128,12 @@ define(function(require) {
 	/**
 	 * @param {String} selector
 	 */
-	UserPicker.setup = function(selector) {
-		elgg.register_hook_handler('init', 'system', function () {
-			$(selector).each(function () {
-				// we only want to wrap each picker once
-				if (!$(this).data('initialized')) {
-					new UserPicker(this);
-					$(this).data('initialized', 1);
-				}
-			});
+	EntityPicker.init = function(selector) {
+		
+		$(selector).each(function () {
+			new EntityPicker(this);
 		});
 	};
 
-	return UserPicker;
+	return EntityPicker;
 });
