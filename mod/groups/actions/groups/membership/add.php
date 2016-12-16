@@ -21,7 +21,7 @@ if (sizeof($user_guid)) {
 
 		if ($user && elgg_instanceof($group, 'group') && $group->canEdit()) {
 			if (!$group->isMember($user)) {
-				if (groups_join_group($group, $user)) {
+				if ($group->join($user)) {
 
 					$subject = elgg_echo('groups:welcome:subject', array($group->name), $user->language);
 

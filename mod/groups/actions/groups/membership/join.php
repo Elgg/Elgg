@@ -35,7 +35,7 @@ if ($user && ($group instanceof ElggGroup)) {
 	}
 
 	if ($join) {
-		if (groups_join_group($group, $user)) {
+		if ($group->join($user)) {
 			system_message(elgg_echo("groups:joined"));
 			forward($group->getURL());
 		} else {

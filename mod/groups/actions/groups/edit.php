@@ -201,7 +201,10 @@ if ($is_new_group) {
 	// @todo this should not be necessary...
 	elgg_set_page_owner_guid($group->guid);
 
-	$group->join($user);
+	$group->join($user, [
+		'create_river_item' => false,
+	]);
+	
 	elgg_create_river_item(array(
 		'view' => 'river/group/create',
 		'action_type' => 'create',
