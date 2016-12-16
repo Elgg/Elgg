@@ -505,6 +505,20 @@ function groups_update_event_listener($event, $type, $group) {
 		$filehandler->owner_guid = $previous_owner_guid;
 		$filehandler->setFilename("groups/$group->guid.jpg");
 		$filehandler->transfer($group->owner_guid);
+
+		// Update owned metadata
+		$metadata = elgg_get_metadata([
+			'guid' => $group->guid,
+			'metadata_owner_guids' => $previous_owner_guid,
+			'limit' => 0,
+		]);
+
+		if ($metadata) {
+			foreach ($metadata as $md) {
+				$md->owner_guid = $group->owner_guid;
+				$md->save();
+			}
+		}
 	}
 
 	if (!empty($original_attributes['name'])) {

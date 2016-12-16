@@ -126,19 +126,6 @@ if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 			// container if it the group is not contained by the original owner.
 			$group->container_guid = $new_owner_guid;
 		}
-
-		$metadata = elgg_get_metadata(array(
-			'guid' => $group_guid,
-			'limit' => false,
-		));
-		if ($metadata) {
-			foreach ($metadata as $md) {
-				if ($md->owner_guid == $old_owner_guid) {
-					$md->owner_guid = $new_owner_guid;
-					$md->save();
-				}
-			}
-		}
 	}
 }
 
