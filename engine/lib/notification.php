@@ -645,6 +645,10 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
 	}
 
+	// allow others to modify the $message content
+	// eg. add html body, add attachments
+	$message = _elgg_services()->hooks->trigger('email:message', 'system', $result, $message);
+	
 	try {
 		_elgg_services()->mailer->send($message);
 	} catch (\Zend\Mail\Exception\RuntimeException $e) {
