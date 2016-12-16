@@ -47,9 +47,6 @@ function thewire_init() {
 	// Register a URL handler for thewire posts
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'thewire_set_url');
 
-	// Register for search
-	elgg_register_entity_type('object', 'thewire');
-
 	// Register for notifications
 	elgg_register_notification_event('object', 'thewire');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:thewire', 'thewire_prepare_notification');

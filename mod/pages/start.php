@@ -38,8 +38,6 @@ function pages_init() {
 	$css_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
 	elgg_register_css('jquery.treeview', $css_url);
 
-	// Register entity type for search
-	elgg_register_entity_type('object', 'page');
 	elgg_register_plugin_hook_handler('search', 'object:page', 'pages_search_pages');
 
 	// Register for notifications

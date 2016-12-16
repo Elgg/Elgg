@@ -44,9 +44,6 @@ function blog_init() {
 	// add blog link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
-	// Register for search.
-	elgg_register_entity_type('object', 'blog');
-
 	// Add group option
 	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
 	elgg_extend_view('groups/tool_latest', 'blog/group_module');
@@ -174,16 +171,16 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
 		$return[] = ElggMenuItem::factory([
-			'name' => 'blog', 
-			'text' => elgg_echo('blog'), 
+			'name' => 'blog',
+			'text' => elgg_echo('blog'),
 			'href' => "blog/owner/{$entity->username}",
 		]);
 
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->blog_enable != 'no') {
 			$return[] = ElggMenuItem::factory([
-				'name' => 'blog', 
-				'text' => elgg_echo('blog:group'), 
+				'name' => 'blog',
+				'text' => elgg_echo('blog:group'),
 				'href' => "blog/group/{$entity->guid}/all",
 			]);
 		}
