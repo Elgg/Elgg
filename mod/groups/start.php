@@ -496,17 +496,27 @@ function groups_update_event_listener($event, $type, $group) {
 	/* @var $group \ElggGroup */
 
 	$original_attributes = $group->getOriginalAttributes();
-	if (empty($original_attributes['owner_guid'])) {
-		return;
+
+	if (!empty($original_attributes['owner_guid'])) {
+		$previous_owner_guid = $original_attributes['owner_guid'];
+
+		// In addition to standard icons, groups plugin stores a copy of the original upload
+		$filehandler = new ElggFile();
+		$filehandler->owner_guid = $previous_owner_guid;
+		$filehandler->setFilename("groups/$group->guid.jpg");
+		$filehandler->transfer($group->owner_guid);
 	}
 
-	$previous_owner_guid = $original_attributes['owner_guid'];
-
-	// In addition to standard icons, groups plugin stores a copy of the original upload
-	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $previous_owner_guid;
-	$filehandler->setFilename("groups/$group->guid.jpg");
-	$filehandler->transfer($group->owner_guid);
+	if (!empty($original_attributes['name'])) {
+		// update access collection name if group name changes
+		$group_name = html_entity_decode($group->name, ENT_QUOTES, 'UTF-8');
+		$ac_name = elgg_echo('groups:group') . ": " . $group_name;
+		$acl = get_access_collection($group->group_acl);
+		if ($acl) {
+			$acl->name = $ac_name;
+			$acl->save();
+		}
+	}
 }
 
 /**
