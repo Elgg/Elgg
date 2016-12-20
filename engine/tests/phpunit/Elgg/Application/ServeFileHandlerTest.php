@@ -24,7 +24,11 @@ class ServeFileHandlerTest extends \Elgg\TestCase {
 
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
-		$file->setFilename("foobar.txt");
+
+		// Using special characters to test against files that have been
+		// uploaded prior to implementation of filename sanitization
+		// See #10608
+		$file->setFilename("foo'baž.txt");
 
 		$this->file = $file;
 	}
