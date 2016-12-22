@@ -22,16 +22,7 @@ define(function(require) {
 			}
 		});
 
-		// draggable plugin reordering
-		$('#elgg-plugin-list > ul').sortable({
-			items:                'li:has(> .elgg-state-draggable)',
-			handle:               '.elgg-head',
-			forcePlaceholderSize: true,
-			placeholder:          'elgg-widget-placeholder',
-			opacity:              0.8,
-			revert:               500,
-			stop:                 movePlugin
-		});
+		initPluginReordering();
 
 		// in-line editing for custom profile fields.
 		// @note this requires jquery.jeditable plugin
@@ -75,6 +66,18 @@ define(function(require) {
 		$(document).on('mouseenter', '.elgg-plugin-details-screenshots .elgg-plugin-screenshot', showPluginScreenshot);
 	}
 
+	function initPluginReordering() {
+		$('#elgg-plugin-list > ul').sortable({
+			items:                'li:has(> .elgg-state-draggable)',
+			handle:               '.elgg-head',
+			forcePlaceholderSize: true,
+			placeholder:          'elgg-widget-placeholder',
+			opacity:              0.8,
+			revert:               500,
+			stop:                 movePlugin
+		});
+	}
+
 	function toggleSinglePlugin(e) {
 		e.preventDefault();
 
@@ -86,10 +89,18 @@ define(function(require) {
 					return;
 				}
 
-				$('#elgg-plugin-list').html(output.list);
+				// second request because views list must be rebuilt and this can't be done
+				// within the first.
+				ajax.path('admin_plugins_refresh')
+					.done(function (output) {
 
-				// reapply category filtering
-				$(".elgg-admin-plugins-categories > li.elgg-state-selected > a").trigger('click');
+						$('#elgg-plugin-list').html(output.list);
+						$('.elgg-sidebar').html(output.sidebar);
+
+						// reapply category filtering
+						$(".elgg-admin-plugins-categories > li.elgg-state-selected > a").trigger('click');
+						initPluginReordering();
+					});
 			});
 	}
 
