@@ -150,9 +150,6 @@
 	}
 	.elgg-main {
         padding: 12px 20px 10px;
-
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		box-sizing: border-box;
     }
     .elgg-layout-one-sidebar .elgg-main,
@@ -168,9 +165,6 @@
 		float: left;
 		padding: 27px 20px 20px;
 		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05) inset;
-
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 	.elgg-sidebar-alt {
