@@ -246,6 +246,7 @@ define(function (require) {
 
 			options = options || {};
 			options.url = 'ajax/view/' + view;
+			options.method = options.method || 'GET';
 
 			// remove query
 			view = view.replace(query_pattern, '').replace(slashes_pattern, '');
@@ -274,6 +275,7 @@ define(function (require) {
 
 			options = options || {};
 			options.url = 'ajax/form/' + action;
+			options.method = options.method || 'GET';
 
 			// remove query
 			action = action.replace(query_pattern, '').replace(slashes_pattern, '');

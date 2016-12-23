@@ -52,14 +52,18 @@ define(function(require) {
 			if (html_page.indexOf('path demo') != -1) {
 				log("PASS path()");
 
-				return ajax.view('developers/ajax_demo.html');
+				return ajax.view('developers/ajax_demo.html', {
+					data: {guid: 1}
+				});
 			}
 		})
 		.then(function (div) {
 			if (div.indexOf('view demo') != -1) {
 				log("PASS view()");
 
-				return ajax.form('developers/ajax_demo');
+				return ajax.form('developers/ajax_demo', {
+					data: {guid: 1}
+				});
 			}
 		})
 		.then(function (form) {
