@@ -76,8 +76,8 @@ $fields = [
 		'id' => 'blog_status',
 		'value' => elgg_extract('status', $vars),
 		'options_values' => [
-			'draft' => elgg_echo('status:draft'),
-			'published' => elgg_echo('status:published'),
+			ElggBlog::DRAFT => elgg_echo('status:draft'),
+			ElggBlog::PUBLISHED => elgg_echo('status:published'),
 		],
 	],
 	[
@@ -98,7 +98,7 @@ foreach ($fields as $field) {
 
 $save_status = elgg_echo('blog:save_status');
 if ($blog) {
-	$saved = date('F j, Y @ H:i', $blog->time_created);
+	$saved = date('F j, Y @ H:i', $blog->time_updated);
 } else {
 	$saved = elgg_echo('never');
 }
@@ -115,7 +115,7 @@ $footer .= elgg_view('input/submit', [
 ]);
 
 // published blogs do not get the preview button
-if (!$blog || $blog->status != 'published') {
+if (!$blog || $blog->status != ElggBlog::PUBLISHED) {
 	$footer .= elgg_view('input/submit', [
 		'value' => elgg_echo('preview'),
 		'name' => 'preview',
@@ -123,7 +123,7 @@ if (!$blog || $blog->status != 'published') {
 	]);
 }
 
-if ($blog) {
+if ($blog && $blog->canDelete()) {
 	// add a delete button if editing
 	$footer .= elgg_view('output/url', [
 		'href' => "action/blog/delete?guid={$vars['guid']}",

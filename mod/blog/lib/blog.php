@@ -213,7 +213,7 @@ function blog_prepare_form_vars($post = null, $revision = null) {
 	$values = [
 		'title' => null,
 		'description' => null,
-		'status' => 'published',
+		'status' => ElggBlog::PUBLISHED,
 		'access_id' => ACCESS_DEFAULT,
 		'comments_on' => 'On',
 		'excerpt' => null,
@@ -231,7 +231,7 @@ function blog_prepare_form_vars($post = null, $revision = null) {
 			}
 		}
 
-		if ($post->status == 'draft') {
+		if ($post->status == ElggBlog::DRAFT) {
 			$values['access_id'] = $post->future_access;
 		}
 	}
