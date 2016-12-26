@@ -30,7 +30,7 @@ elgg_push_breadcrumb($blog->title);
 $params['content'] = elgg_view_entity($blog, array('full_view' => true));
 
 // check to see if we should allow comments
-if ($blog->comments_on != 'Off' && $blog->status == 'published') {
+if ($blog->comments_on != 'Off' && $blog->status == ElggBlog::PUBLISHED) {
 	$params['content'] .= elgg_view_comments($blog);
 }
 

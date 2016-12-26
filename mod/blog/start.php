@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Blogs
  *
@@ -11,7 +12,6 @@
  * - Notifications
  * - River entry for posts saved as drafts and later published
  */
-
 elgg_register_event_handler('init', 'system', 'blog_init');
 
 /**
@@ -59,6 +59,10 @@ function blog_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:blog', 'Elgg\Values::getTrue');
+
+	// Save revision text
+	elgg_register_event_handler('create', 'object', 'blog_saved_event');
+	elgg_register_event_handler('update:after', 'object', 'blog_saved_event');
 }
 
 /**
@@ -96,35 +100,35 @@ function blog_page_handler($page) {
 	switch ($page_type) {
 		case 'owner':
 			$resource_vars['username'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/owner', $resource_vars);
 			break;
 		case 'friends':
 			$resource_vars['username'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/friends', $resource_vars);
 			break;
 		case 'archive':
 			$resource_vars['username'] = elgg_extract(1, $page);
 			$resource_vars['lower'] = elgg_extract(2, $page);
 			$resource_vars['upper'] = elgg_extract(3, $page);
-			
+
 			echo elgg_view_resource('blog/archive', $resource_vars);
 			break;
 		case 'view':
 			$resource_vars['guid'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/view', $resource_vars);
 			break;
 		case 'add':
 			$resource_vars['guid'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/add', $resource_vars);
 			break;
 		case 'edit':
 			$resource_vars['guid'] = elgg_extract(1, $page);
 			$resource_vars['revision'] = elgg_extract(2, $page);
-			
+
 			echo elgg_view_resource('blog/edit', $resource_vars);
 			break;
 		case 'group':
@@ -132,7 +136,7 @@ function blog_page_handler($page) {
 			$resource_vars['subpage'] = elgg_extract(2, $page);
 			$resource_vars['lower'] = elgg_extract(3, $page);
 			$resource_vars['upper'] = elgg_extract(4, $page);
-			
+
 			echo elgg_view_resource('blog/group', $resource_vars);
 			break;
 		case 'all':
@@ -159,7 +163,7 @@ function blog_set_url($hook, $type, $url, $params) {
 	if (!elgg_instanceof($entity, 'object', 'blog')) {
 		return;
 	}
-	
+
 	$friendly_title = elgg_get_friendly_title($entity->title);
 	return "blog/view/{$entity->guid}/$friendly_title";
 }
@@ -171,17 +175,16 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
 		$return[] = ElggMenuItem::factory([
-			'name' => 'blog',
-			'text' => elgg_echo('blog'),
-			'href' => "blog/owner/{$entity->username}",
+					'name' => 'blog',
+					'text' => elgg_echo('blog'),
+					'href' => "blog/owner/{$entity->username}",
 		]);
-
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->blog_enable != 'no') {
 			$return[] = ElggMenuItem::factory([
-				'name' => 'blog',
-				'text' => elgg_echo('blog:group'),
-				'href' => "blog/group/{$entity->guid}/all",
+						'name' => 'blog',
+						'text' => elgg_echo('blog:group'),
+						'href' => "blog/group/{$entity->guid}/all",
 			]);
 		}
 	}
@@ -203,10 +206,10 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	$entity = elgg_extract('entity', $params);
-	if ($entity->status == 'published') {
+	if ($entity->status == ElggBlog::PUBLISHED) {
 		return;
 	}
-	
+
 	// draft status replaces access
 	foreach ($return as $index => $item) {
 		if ($item->getName() == 'access') {
@@ -216,10 +219,10 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 
 	$status_text = elgg_echo("status:{$entity->status}");
 	$return[] = ElggMenuItem::factory([
-		'name' => 'published_status',
-		'text' => "<span>$status_text</span>",
-		'href' => false,
-		'priority' => 150,
+				'name' => 'published_status',
+				'text' => "<span>$status_text</span>",
+				'href' => false,
+				'priority' => 150,
 	]);
 	return $return;
 }
@@ -233,42 +236,42 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 	if (empty($page_owner)) {
 		return;
 	}
-	
+
 	$dates = get_entity_dates('object', 'blog', $page_owner->getGUID());
 	if (!$dates) {
 		return;
 	}
-	
+
 	$dates = array_reverse($dates);
-	
+
 	if (elgg_instanceof($page_owner, 'user')) {
 		$url_segment = 'blog/archive/' . $page_owner->username;
 	} else {
 		$url_segment = 'blog/group/' . $page_owner->getGUID() . '/archive';
 	}
-	
+
 	$years = [];
 	foreach ($dates as $date) {
-		$timestamplow = mktime(0, 0, 0, substr($date,4,2) , 1, substr($date, 0, 4));
+		$timestamplow = mktime(0, 0, 0, substr($date, 4, 2), 1, substr($date, 0, 4));
 		$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
-	
+
 		$year = substr($date, 0, 4);
 		if (!in_array($year, $years)) {
 			$return[] = ElggMenuItem::factory([
-				'name' => $year,
-				'text' => $year,
-				'href' => '#',
+						'name' => $year,
+						'text' => $year,
+						'href' => '#',
 			]);
 		}
-		
+
 		$link = $url_segment . '/' . $timestamplow . '/' . $timestamphigh;
 		$month = trim(elgg_echo('date:month:' . substr($date, 4, 2), ['']));
-		
+
 		$return[] = ElggMenuItem::factory([
-			'name' => $date,
-			'text' => $month,
-			'href' => $link,
-			'parent_name' => $year,
+					'name' => $date,
+					'text' => $month,
+					'href' => $link,
+					'parent_name' => $year,
 		]);
 	}
 
@@ -297,7 +300,7 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
 		$entity->title,
 		$entity->getExcerpt(),
 		$entity->getURL()
-	), $language);
+			), $language);
 	$notification->summary = elgg_echo('blog:notify:summary', array($entity->title), $language);
 
 	return $notification;
@@ -310,4 +313,57 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
 	return $return_value;
+}
+
+/**
+ * Perform actions when blog is saved
+ * 
+ * @param string     $event  "create"|"update:after"
+ * @param string     $type   "object"
+ * @param ElggObject $blog Blog
+ * @return void
+ */
+function blog_saved_event($event, $type, $blog) {
+
+	if (!$blog instanceof ElggBlog) {
+		return;
+	}
+
+	$original_attributes = $blog->getOriginalAttributes();
+	$revision_text = elgg_extract('description', $original_attributes);
+	if ($revision_text) {
+		$blog->annotate('blog_revision', $revision_text);
+	}
+
+	// remove autosave draft if exists
+	$blog->deleteAnnotations('blog_auto_save');
+
+	// no longer a brand new post
+	unset($blog->new_post);
+
+	if ($blog->status != $blog->previous_status) {
+		// Blog status has changed
+
+		switch ($blog->status) {
+
+			case ElggBlog::DRAFT :
+				_elgg_delete_river(array(
+					'object_guid' => $blog->guid,
+					'action_type' => 'create',
+				));
+				break;
+
+			case ElggBlog::PUBLISHED :
+				elgg_create_river_item(array(
+					'view' => 'river/object/blog/create',
+					'action_type' => 'create',
+					'subject_guid' => $blog->owner_guid,
+					'object_guid' => $blog->guid,
+					'target_guid' => $blog->container_guid,
+				));
+
+				elgg_trigger_event('publish', 'object', $blog);
+				break;
+		}
+	}
 }

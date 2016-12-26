@@ -2,12 +2,19 @@
 /**
  * Extended class to override the time_created
  * 
- * @property string $status      The published status of the blog post (published, draft)
- * @property string $comments_on Whether commenting is allowed (Off, On)
- * @property string $excerpt     An excerpt of the blog post used when displaying the post
+ * @property string $status          The published status of the blog post (published, draft)
+ * @property string $previous_status The status before blog was saved (used by event system to detect changes in the status)
+ * @property string $comments_on     Whether commenting is allowed (Off, On)
+ * @property string $excerpt         An excerpt of the blog post used when displaying the post
  */
 class ElggBlog extends ElggObject {
 
+	use Elgg\TimeUsing;
+
+	const UNSAVED_DRAFT = 'unsaved_draft';
+	const DRAFT = 'draft';
+	const PUBLISHED = 'published';
+	
 	/**
 	 * Set subtype to blog.
 	 */
@@ -53,5 +60,28 @@ class ElggBlog extends ElggObject {
 			return elgg_get_excerpt($this->description, $length);
 		}
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function save() {
 
+		if (!isset($this->status)) {
+			$this->status = self::DRAFT;
+		}
+
+		if (!isset($this->previous_status)) {
+			$this->previous_status = self::DRAFT;
+		}
+
+		if (!isset($this->comments_on)) {
+			$this->comments_on = 'On';
+		}
+
+		if ($this->status !== $this->previous_status) {
+			$this->time_created = $this->getCurrentTime()->getTimestamp();
+		}
+		
+		return parent::save();
+	}
 }
