@@ -210,70 +210,77 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 
 	public function testSerialiseParameters() {
 
+		$evaler = function ($params) {
+			$s = serialise_parameters('test', $params);
+			return eval('return [' . substr($s, 1) . '];');
+		};
+
 		// int and bool
 		$this->registerFunction();
 		$parameters = array('param1' => 1, 'param2' => 0);
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ',1,false');
+		$this->assertIdentical($evaler($parameters), [1, false]);
 
 		// string
+		$test_string = 'testing';
 		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
-		$parameters = array('param1' => 'testing');
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",'testing'");
+		$parameters = array('param1' => $test_string);
+		$this->assertIdentical($evaler($parameters), [$test_string]);
 
 		// test string with " in it
+		$test_string = 'test"ing';
 		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
-		$parameters = array('param1' => 'test"ing');
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ',\'test"ing\'');
+		$parameters = array('param1' => $test_string);
+		$this->assertIdentical($evaler($parameters), [$test_string]);
 
 		// test string with ' in it
+		$test_string = 'test\'ing';
 		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
-		$parameters = array('param1' => 'test\'ing');
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",'test\'ing'");
+		$parameters = array('param1' => $test_string);
+		$this->assertIdentical($evaler($parameters), [$test_string]);
 
 		// test string with \ in it
+		$test_string = 'test\\ing';
 		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
-		$parameters = array('param1' => 'test\ing');
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",'test\\ing'");
+		$parameters = array('param1' => $test_string);
+		$this->assertIdentical($evaler($parameters), [$test_string]);
 
 		// test string with \' in it
+		$test_string = "test\\'ing";
 		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
-		$parameters = array('param1' => "test\'ing");
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",'test\\\\'ing'"); // test\\'ing
+		$parameters = array('param1' => $test_string);
+		$this->assertIdentical($evaler($parameters), [$test_string]);
+
+		// test string with \ at end
+		$test_string = "testing\\";
+		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
+		$parameters = array('param1' => $test_string);
+		$this->assertIdentical($evaler($parameters), [$test_string]);
+
 		// test string reported by twall in #1364
+		$test_string = '{"html":"<div><img src=\\"http://foo.com\\"/>Blah Blah</div>"}';
 		$this->registerFunction(false, false, array('param1' => array('type' => 'string')));
-		$parameters = array('param1' => '{"html":"<div><img src=\\"http://foo.com\\"/>Blah Blah</div>"}');
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",'{\"html\":\"<div><img src=\\\"http://foo.com\\\"/>Blah Blah</div>\"}'");
+		$parameters = array('param1' => $test_string);
+		$this->assertIdentical($evaler($parameters), [$test_string]);
 
 		// float
 		$this->registerFunction(false, false, array('param1' => array('type' => 'float')));
 		$parameters = array('param1' => 2.5);
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ',2.5');
+		$this->assertIdentical($evaler($parameters), [2.5]);
 
 		// indexed array of strings
 		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
-		$parameters = array('param1' => array('one', 'two'));
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",array('0'=>'one','1'=>'two')");
+		$parameters = array('param1' => ['one', 'two']);
+		$this->assertIdentical($evaler($parameters), [['one', 'two']]);
 
 		// associative array of strings
 		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
-		$parameters = array('param1' => array('first' => 'one', 'second' => 'two'));
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",array('first'=>'one','second'=>'two')");
+		$parameters = array('param1' => ['first' => 'one', 'second' => 'two']);
+		$this->assertIdentical($evaler($parameters), [['first' => 'one', 'second' => 'two']]);
 
-		// indexed array of strings
+		// indexed array of strings (all values cast to strings)
 		$this->registerFunction(false, false, array('param1' => array('type' => 'array')));
-		$parameters = array('param1' => array(1, 2));
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",array('0'=>'1','1'=>'2')");
+		$parameters = array('param1' => [1, 2]);
+		$this->assertIdentical($evaler($parameters), [['1', '2']]);
 
 		// test missing optional param
 		$this->registerFunction(false, false, [
@@ -281,8 +288,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 			'param2' => ['type' => 'int'],
 		]);
 		$parameters = ['param2' => '2'];
-		$s = serialise_parameters('test', $parameters);
-		$this->assertIdentical($s, ",null,2");
+		$this->assertIdentical($evaler($parameters), [null, 2]);
 
 		// test unknown type
 		$this->registerFunction(false, false, array('param1' => array('type' => 'bad')));

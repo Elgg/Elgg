@@ -115,25 +115,34 @@ define(function(require) {
 			expect(ajax._ajax_options.method).toEqual('POST');
 		});
 
+		it("path(): non-empty object data changes default to POST", function() {
+			ajax.path('foo', {
+				data: {bar: 'bar'}
+			});
+			expect(ajax._ajax_options.method).toEqual('POST');
+		});
+
+		it("path(): non-empty string data changes default to POST", function() {
+			ajax.path('foo', {
+				data: '?bar=bar'
+			});
+			expect(ajax._ajax_options.method).toEqual('POST');
+		});
+
+		$.each(['form', 'view'], function (i, method) {
+			it(method + "(): non-empty object data left as GET", function() {
+				ajax[method]('foo', {
+					data: {bar: 'bar'}
+				});
+				expect(ajax._ajax_options.method).toEqual('GET');
+			});
+		});
+
 		$.each(['path', 'form', 'view'], function (i, method) {
 
 			it(method + "() defaults to GET", function() {
 				ajax[method]('foo');
 				expect(ajax._ajax_options.method).toEqual('GET');
-			});
-
-			it(method + "(): non-empty object data changes default to POST", function() {
-				ajax[method]('foo', {
-					data: {bar: 'bar'}
-				});
-				expect(ajax._ajax_options.method).toEqual('POST');
-			});
-
-			it(method + "(): non-empty string data changes default to POST", function() {
-				ajax[method]('foo', {
-					data: '?bar=bar'
-				});
-				expect(ajax._ajax_options.method).toEqual('POST');
 			});
 
 			it(method + "(): empty string data leaves default as GET", function() {
