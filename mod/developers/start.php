@@ -18,6 +18,7 @@ function developers_init() {
 	elgg_register_page_handler('developers_ajax_demo', 'developers_ajax_demo_controller');
 
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
+	elgg_register_ajax_view('developers/ajax_demo.html');
 	$sandbox_css = elgg_get_simplecache_url('theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
