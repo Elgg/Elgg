@@ -179,7 +179,8 @@ class Database {
 			// @todo just allow PDO exceptions
 			// http://dev.mysql.com/doc/refman/5.1/en/error-messages-server.html
 			if ($e->getCode() == 1102 || $e->getCode() == 1049) {
-				$msg = "Elgg couldn't select the database '{$conf['database']}'. Please check that the database is created and you have access to it.";
+				$msg = "Elgg couldn't select the database '{$conf['database']}'. Please check that the database "
+					. "is created and you have access to it.";
 			} else {
 				$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			}
@@ -362,8 +363,8 @@ class Database {
 
 		if ($callback) {
 			if (!is_callable($callback)) {
-				$inspector = new \Elgg\Debug\Inspector();
-				throw new \RuntimeException('$callback must be a callable function. Given ' . $inspector->describeCallable($callback));
+				throw new \RuntimeException('$callback must be a callable function. Given '
+											. _elgg_services()->handlers->describeCallable($callback));
 			}
 			$query_id .= $this->fingerprintCallback($callback);
 		}
@@ -637,7 +638,8 @@ class Database {
 			$sql = "SELECT value FROM {$this->table_prefix}config WHERE name = 'installed'";
 			$this->getConnection('read')->query($sql);
 		} catch (\DatabaseException $e) {
-			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
+			throw new \InstallationException("Unable to handle this request. This site is not "
+				. "configured or the database is down.");
 		}
 
 		$this->installed = true;
