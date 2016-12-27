@@ -111,6 +111,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggSite::removeEntity``
  * ``ElggSite::removeObject``
  * ``ElggSite::removeUser``
+ * ``ElggSite::isPublicPage``: Logic moved to the router and should not be accessed directly
+ * ``ElggSite::checkWalledGarden``: Logic moved to the router and should not be accessed directly
  * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
  * ``Logger::getClassName``: Use ``get_class()``
  * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
