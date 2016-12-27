@@ -292,9 +292,6 @@ a.elgg-maintenance-mode-warning {
 	width: 210px;
 	float: right;
 	margin-left: 30px;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 .elgg-main > .elgg-head {
@@ -497,9 +494,6 @@ input {
 	color: #666;
 	border-radius: 5px;
 	margin: 0;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -567,9 +561,6 @@ select {
 	padding: 6px 12px;
 	margin-bottom: 5px;
 	cursor: pointer;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 

@@ -11,9 +11,6 @@
 	cursor: pointer;
 	border-radius: 3px;
 	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 .elgg-button:hover,

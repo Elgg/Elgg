@@ -21,7 +21,6 @@
     opacity: 0;
 
     /* fade out over 300ms, then jump offscreen */
-    -webkit-transition: opacity 300ms ease-in-out, left 0s linear 300ms;
     transition: opacity 300ms ease-in-out, left 0s linear 300ms;
 }
 
@@ -30,6 +29,5 @@
     opacity: 1;
 
     /* set values immediately */
-    -webkit-transition: opacity 0s, left 0s;
     transition: opacity 0s, left 0s;
 }
