@@ -930,7 +930,11 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		$this->assertContains('application/json', $response->headers->get('Content-Type'));
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
-			'error' => 'error'
+			'value' => 'error',
+			'_elgg_msgs' => [
+				'error' => ['error'],
+			],
+			'_elgg_deps' => [],
 		]);
 
 		$this->assertEquals($output, $response->getContent());
