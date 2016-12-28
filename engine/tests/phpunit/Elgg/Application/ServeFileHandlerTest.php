@@ -15,7 +15,6 @@ class ServeFileHandlerTest extends \Elgg\TestCase {
 	protected $file;
 
 	public function setUp() {
-
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
 		_elgg_services()->session->start();
@@ -24,9 +23,20 @@ class ServeFileHandlerTest extends \Elgg\TestCase {
 
 		$file = new \ElggFile();
 		$file->owner_guid = 1;
-		$file->setFilename("foobar.txt");
+
+		// Using special characters to test against files that have been
+		// uploaded prior to implementation of filename sanitization
+		// See #10608
+		$file->setFilename("Iñtërn'âtiônàl-izætiøn.txt");
+		$file->open('write');
+		$file->write('Test file!');
+		$file->close();
 
 		$this->file = $file;
+	}
+
+	public function tearDown() {
+		$this->file->delete();
 	}
 
 	function createRequest(\Elgg\FileService\File $file) {
