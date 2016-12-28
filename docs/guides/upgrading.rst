@@ -27,6 +27,7 @@ Removed views
  * ``page/layouts/walled_garden/cancel_button``
  * ``page/layouts/two_column_left_sidebar``
  * ``page/layouts/widgets/add_panel``
+ * ``page/elements/topbar_wrapper``: update your use of ``page/elements/topbar`` to include a check for a logged in user
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
  * ``messageboard/css``

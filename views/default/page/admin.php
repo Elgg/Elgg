@@ -12,43 +12,42 @@
 
 elgg_load_css('elgg.admin');
 
-// render content before head so that JavaScript and CSS can be loaded. See #4032
-$header = elgg_view('admin/header', $vars);
-
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
 $messages .= elgg_view('page/elements/admin_notices', $vars);
 
-$content = $vars["body"];
+// render content before head so that JavaScript and CSS can be loaded. See #4032
+$sections = [
+	'header' => elgg_view('admin/header', $vars),
+	'messages' => $messages,
+	'body' => elgg_extract('body', $vars),
+	'footer' => elgg_view('admin/footer', $vars),
+];
 
-$footer = elgg_view('admin/footer', $vars);
-			
-$body = <<<__BODY
-<div class="elgg-page elgg-page-admin">
-	<div class="elgg-inner">
-		<div class="elgg-page-header">
-			<div class="elgg-inner clearfix">
-				$header
-			</div>
-		</div>
-		<div class="elgg-page-messages">
-			$messages
-		</div>
-		<div class="elgg-page-body">
-			<div class="elgg-inner">
-				$content
-			</div>
-		</div>
-		<div class="elgg-page-footer">
-			<div class="elgg-inner">
-				$footer
-			</div>
-		</div>
-	</div>
-</div>
-__BODY;
+$page = '';
+foreach ($sections as $section => $content) {
+	$page .= elgg_view('page/elements/section', [
+		'section' => $section,
+		'html' => $content,
+		'page_shell' => elgg_extract('page_shell', $vars),
+	]);
+}
+
+$page = elgg_format_element('div', ['class' => 'elgg-inner'], $page);
+
+$page_vars = elgg_extract('page_attrs', $vars, []);
+$page_vars['class'] = elgg_extract_class($page_vars, ['elgg-page', 'elgg-page-admin']);
+
+$body = elgg_format_element('div', $page_vars, $page);
 
 $body .= elgg_view('page/elements/foot');
 
 $head = elgg_view('page/elements/head', $vars['head']);
 
-echo elgg_view("page/elements/html", array("head" => $head, "body" => $body));
+$params = array(
+	'head' => $head,
+	'body' => $body,
+	'body_attrs' => elgg_extract('body_attrs', $vars, []),
+	'html_attrs' => elgg_extract('html_attrs', $vars, []),
+);
+
+echo elgg_view('page/elements/html', $params);
