@@ -1,4 +1,31 @@
 <a name="2.3.0"></a>
+## 2.3.0  (2016-12-27)
+
+#### Contributors
+
+* Ismayil Khayredinov (4)
+* Steve Clay (3)
+* Jerôme Bakker (2)
+* iionly (2)
+
+#### Documentation
+
+* **core:** Improve docs about creation of cache symlink ([f984a051](https://github.com/Elgg/Elgg/commit/f984a051e3e14cc316f312475396a3222138c2e6))
+
+
+#### Bug Fixes
+
+* **ajax:** elgg/Ajax view() and form() set $vars as expected ([abf8a9ce](https://github.com/Elgg/Elgg/commit/abf8a9ce87117ab24cb62e937805750eca780de1), closes [#10667](https://github.com/Elgg/Elgg/issues/10667))
+* **core:** Check existence of cache symlink without usage of readlink() ([3e4dc6a1](https://github.com/Elgg/Elgg/commit/3e4dc6a1f2e2b20c5e31800e925ca5779a6f40cf))
+* **entities:** entity is now loaded from cache during save operations ([009f74da](https://github.com/Elgg/Elgg/commit/009f74dac2ab5c1834ec672a82e5642dc7c3ab75), closes [#10612](https://github.com/Elgg/Elgg/issues/10612))
+* **files:** mitigate issues with special chars in file names ([4a7b74ea](https://github.com/Elgg/Elgg/commit/4a7b74ea27b31be159fba9fb5c3dda405da15409))
+* **forms:** fieldset with a legend no longer overrides the class ([726cca18](https://github.com/Elgg/Elgg/commit/726cca18e23510ae1b473f3cfd8b408e557a4c83))
+* **http:** elgg/Ajax error responses with 200 status use Ajax wrapper ([1cae50cf](https://github.com/Elgg/Elgg/commit/1cae50cf025a75f32500836f3cd885fedb720b9a))
+* **notifications:** incorrect use statement no longer throws ([2a6d782b](https://github.com/Elgg/Elgg/commit/2a6d782b2978cf670a89f0fd9cb5b0ce2820a37d))
+* **web_services:** handle string params with proper escaping ([702ce46c](https://github.com/Elgg/Elgg/commit/702ce46c44aec2546f953902061166bf3f48a5af))
+
+
+<a name="2.3.0"></a>
 ## 2.3.0  (2016-11-09)
 
 #### Contributors

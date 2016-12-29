@@ -248,7 +248,7 @@ function _elgg_ws_get_parameter_names($method) {
  * @param string $method     API method name
  * @param array  $parameters Array of parameters
  *
- * @return string or exception E.g. ",'foo',2.1"
+ * @return string or exception E.g. ',"foo",2.1'
  * @throws APIException
  * @since 1.7.0
  * @access private
@@ -292,10 +292,7 @@ function serialise_parameters($method, $parameters) {
 
 				break;
 			case 'string':
-				// This is using addcslashes() to escape characters to be inside a
-				// single-quoted string literal in PHP code.
-				// TODO in 3.0, convert to simple trim(), but this won't be completely BC.
-				$serialised_parameters .= ",'" . addcslashes(trim($parameters[$key]), "'") . "'";
+				$serialised_parameters .= ',' . var_export(trim($parameters[$key]), true);
 				break;
 			case 'float':
 				$serialised_parameters .= "," . (float)trim($parameters[$key]);

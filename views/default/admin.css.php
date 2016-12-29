@@ -1386,7 +1386,6 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	padding: 3px 6px;
     margin: 3px 0;
     width: auto;
-    display: inline-block;
 }
 .elgg-plugin .elgg-state-warning {
 	background: #f4f4f4;
@@ -1395,7 +1394,10 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	padding: 3px 6px;
     margin: 3px 0;
     width: auto;
-    display: inline-block;
+}
+.elgg-plugin-list-error .elgg-state-error,
+.elgg-plugin-list-error .elgg-state-warning {
+	display: inline-block;
 }
 .elgg-plugin .elgg-state-error a,
 .elgg-plugin .elgg-state-warning a,
