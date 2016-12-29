@@ -1,94 +1,86 @@
 <?php
+
 /**
  * Page edit form body
  *
  * @package ElggPages
  */
+$fields = elgg_get_config('pages');
 
-$variables = elgg_get_config('pages');
 $user = elgg_get_logged_in_user_entity();
+
 $entity = elgg_extract('entity', $vars);
-$can_change_access = true;
-if ($user && $entity) {
-	$can_change_access = ($user->isAdmin() || $user->getGUID() == $entity->owner_guid);
+if (pages_is_page($entity)) {
+	$parent_guid = $entity->parent_guid;
+} else {
+	$parent_guid = elgg_extract('parent_guid', $vars);
 }
 
-foreach ($variables as $name => $type) {
-	// don't show read / write access inputs for non-owners or admin when editing
-	if (($type == 'access' || $type == 'write_access') && !$can_change_access) {
-		continue;
-	}
-	
-	// don't show parent picker input for top or new pages.
-	if ($name == 'parent_guid' && (!$vars['parent_guid'] || !$vars['guid'])) {
-		continue;
-	}
+foreach ($fields as $name => $type) {
 
-	if ($type == 'parent') {
-		$input_view = "pages/input/$type";
-	} else {
-		$input_view = "input/$type";
-	}
+	$field = [
+		'name' => $name,
+		'value' => $vars[$name],
+		'#type' => $type,
+		'#label' => elgg_echo("pages:$name"),
+	];
 
-?>
-<div>
-	<label><?php echo elgg_echo("pages:$name") ?></label>
-	<?php
-	if ($type != 'longtext') {
-		echo '<br />';
-	}
+	switch ($name) {
 
-		$view_vars = [
-			'name' => $name,
-			'value' => $vars[$name],
-			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
-		];
-		if ($input_view === 'input/access') {
-			$view_vars['entity'] = $entity;
-			$view_vars['entity_type'] = 'object';
-			$view_vars['entity_subtype'] = $vars['parent_guid'] ? 'page': 'page_top';
+		case 'title' :
+			$field['required'] = true;
+			break;
+
+		case 'access_id' :
+		case 'write_access_id' :
+			if (!$user->canEdit()) {
+				// Only owner and admins can change access
+				continue;
+			}
+
+			$field['entity'] = $entity;
+			$field['entity_type'] = 'object';
+			$field['entity_subtype'] = $parent_guid ? 'page' : 'page_top';
 
 			if ($name === 'write_access_id') {
-				$view_vars['purpose'] = 'write';
+				$field['purpose'] = 'write';
 				if ($entity) {
-					$view_vars['value'] = $entity->write_access_id;
-					
+					$field['value'] = $entity->write_access_id;
+
 					// no access change warning for write access input
-					$view_vars['entity_allows_comments'] = false;
+					$field['entity_allows_comments'] = false;
 				}
 			}
-		}
+			break;
 
-		echo elgg_view($input_view, $view_vars);
-	?>
-</div>
-<?php
+		case 'parent_guid' :
+			if ($entity) {
+				// Add a hidden parent guid input
+				$field['#type'] = 'hidden';
+			} else {
+				// Display a parent picker
+				$field['entity'] = $entity;
+			}
+			break;
+	}
+
+	echo elgg_view_field($field);
 }
 
-$cats = elgg_view('input/categories', $vars);
-if (!empty($cats)) {
-	echo $cats;
-}
-
-
-echo '<div class="elgg-foot">';
-if ($vars['guid']) {
-	echo elgg_view('input/hidden', [
-		'name' => 'page_guid',
-		'value' => $vars['guid'],
-	]);
-}
-echo elgg_view('input/hidden', [
-	'name' => 'container_guid',
-	'value' => $vars['container_guid'],
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'page_guid',
+	'value' => $entity->guid,
 ]);
-if (!$vars['guid']) {
-	echo elgg_view('input/hidden', [
-		'name' => 'parent_guid',
-		'value' => $vars['parent_guid'],
-	]);
-}
 
-echo elgg_view('input/submit', ['value' => elgg_echo('save')]);
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'container_guid',
+	'value' => elgg_extract('container_guid', $vars),
+]);
 
-echo '</div>';
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+elgg_set_form_footer($footer);
