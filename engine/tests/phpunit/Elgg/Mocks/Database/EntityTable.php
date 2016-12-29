@@ -136,7 +136,9 @@ class EntityTable extends DbEntityTable {
 		foreach ($attrs as $name => $value) {
 			if (!isset($entity->$name) || $entity->$name != $value) {
 				// not an attribute, so needs to be set again
-				$entity->$name = $value;
+				if ($name !== 'password_hash') {
+					$entity->$name = $value;
+				}
 			}
 		}
 		
