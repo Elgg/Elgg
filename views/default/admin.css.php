@@ -754,16 +754,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	width: 1px;
 }
 
-/* ***************************************
-	USER PICKER
-*************************************** */
-.elgg-user-picker-list li:first-child {
-	border-top: 1px dotted #ccc;
-	margin-top: 5px;
-}
-.elgg-user-picker-list > li {
-	border-bottom: 1px dotted #ccc;
-}
+<?php echo elgg_view('input/entitypicker'); ?>
 
 /* ***************************************
 	FRIENDS PICKER
