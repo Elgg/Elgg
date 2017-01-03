@@ -1817,14 +1817,25 @@ function _elgg_walled_garden_index() {
  * @access private
  */
 function _elgg_walled_garden_init() {
+	if (!elgg_get_config('walled_garden')) {
+		return;
+	}
+
 	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
 
 	elgg_register_plugin_hook_handler('register', 'menu:walled_garden', '_elgg_walled_garden_menu');
-	
-	// check for external page view
-	$site = elgg_get_site_entity();
-	if ($site) {
-		$site->checkWalledGarden();
+
+	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
+
+	if (elgg_get_config('default_access') == ACCESS_PUBLIC) {
+		elgg_set_config('default_access', ACCESS_LOGGED_IN);
+	}
+
+	elgg_register_plugin_hook_handler('access:collections:write', 'all', '_elgg_walled_garden_remove_public_access', 9999);
+
+	if (!elgg_is_logged_in()) {
+		// override the front page
+		elgg_register_page_handler('', '_elgg_walled_garden_index');
 	}
 }
 
