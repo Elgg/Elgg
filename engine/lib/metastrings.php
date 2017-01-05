@@ -634,6 +634,17 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 		"{$type}_name_value_pair", "{$type}_owner_guid");
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
+	$defaults = [
+		'metadata_names' => null,
+		'metadata_values' => null,
+		'metadata_name_value_pairs' => null,
+		'metadata_name_value_pairs_operator' => null,
+		'metadata_case_sensitive' => null,
+		'order_by_metadata' => null,
+		'metadata_owner_guids' => null,
+	];
+	$options = array_merge($defaults, $options);
+	
 	$clauses = _elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
 		$options["{$type}_values"], $options["{$type}_name_value_pairs"],
 		$options["{$type}_name_value_pairs_operator"], $options["{$type}_case_sensitive"],

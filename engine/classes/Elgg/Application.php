@@ -165,6 +165,7 @@ class Application {
 			'relationships.php',
 			'river.php',
 			'sessions.php',
+			'search.php',
 			'sites.php',
 			'statistics.php',
 			'system_log.php',

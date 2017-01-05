@@ -42,7 +42,7 @@ define(function(require) {
 					complete: spinner.stop,
 					data: {
 						term: Autocomplete.term,
-						"match_on[]": UserPicker.getSearchType(),
+						match_on: UserPicker.getSearchType(),
 						name: UserPicker.name
 					},
 					dataType: 'json',

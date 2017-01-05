@@ -176,10 +176,18 @@ $ipsum = elgg_view('developers/ipsum');
 
 		echo elgg_view_field(array(
 			'#type' => 'autocomplete',
-			'name' => 'f11',
-			'id' => 'f11',
-			'match_on' => array('groups', 'friends'),
-			'#label' => 'Autocomplete input (.elgg-input-autocomplete):',
+			'name' => 'f11a',
+			'id' => 'f11a',
+			'match_on' => 'groups',
+			'#label' => 'Groups autocomplete input (.elgg-input-autocomplete):',
+		));
+
+		echo elgg_view_field(array(
+			'#type' => 'autocomplete',
+			'name' => 'f11b',
+			'id' => 'f11b',
+			'match_on' => 'users',
+			'#label' => 'Users autocomplete input (.elgg-input-autocomplete):',
 		));
 
 		echo elgg_view_field(array(

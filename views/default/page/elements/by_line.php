@@ -6,6 +6,10 @@
  *
  * @uses $vars['entity']     The entity to show the by line for
  * @uses $vars['show_links'] Owner and container text should show as links (default: true)
+ * @uses $vars['time']       Optional timestamp.
+ *                           If set, will be used instead of time_created value.
+ *                           If set to false, will not be rendered
+ *
  */
 
 $entity = elgg_extract('entity', $vars);
@@ -32,7 +36,14 @@ if ($owner instanceof ElggEntity) {
 	$by_line[] = elgg_echo('byline', [$owner_text]);
 }
 
-$by_line[] = elgg_view_friendly_time($entity->time_created);
+$time = elgg_extract('time', $vars);
+if (!isset($time)) {
+	$time = $entity->time_created;
+}
+
+if ($time !== false) {
+	$by_line[] = elgg_view_friendly_time($time);
+}
 
 $container_entity = $entity->getContainerEntity();
 if ($container_entity instanceof ElggGroup && ($container_entity->getGUID() !== elgg_get_page_owner_guid())) {

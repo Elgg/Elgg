@@ -22,8 +22,6 @@ System hooks
 **diagnostics:report, system**
 	Filter the output for the diagnostics report download.
 
-**search_types, get_types**
-
 **cron, <period>**
 	Triggered by cron for each period.
 
@@ -609,6 +607,38 @@ Files
      * ``file`` - instance of ``ElggFile`` to write to
      * ``upload`` - instance of Symfony's ``UploadedFile``
 
+Search
+======
+**search:params, <search_type>**
+	Triggered by ``elgg_search()``. Filters search parameters (query, sorting, search fields etc) before search clauses are prepared for a given search type.
+	Elgg core only provides support for ``entities`` search type.
+
+**search:fields, <search_type>**
+**search:fields, <entity_type>**
+**search:fields, <entity_type>:<entity_subtype>**
+	Triggered by ``elgg_search()``. Filters search fields before search clauses are prepared.
+	``$return`` value contains an array of metadata and attribute names, which should be matched against the search query.
+	``$params`` array contains an array of search params passed to and filtered by ``elgg_search()``.
+
+**search:options, <search_type>**
+**search:options, <entity_type>**
+**search:options, <entity_type>:<entity_subtype>**
+	Triggered by ``elgg_search()``. Prepares search clauses (options) to be passed to the getter function.
+	Default getter function is ``elgg_get_entities()``, hence return value can contain any clauses accepted by it.
+
+**search:config, search_types**
+	Implemented in the **search** plugin.
+	Filters an array of custom search types. This allows plugins to add custom search types (e.g. tag or location search).
+
+**search:config, type_subtype_pairs**
+	Implemented in the **search** plugin.
+	Filters entity type/subtype pairs before entity search is performed.
+	Allows plugins to remove certain entity types/subtypes from search results, or to reorder search sections.
+
+**search:format, entity**
+	Implemented in the **search** plugin.
+	Allows plugins to populate entity's volatile data before it's passed to search view.
+
 .. _guides/hooks-list#other:
 
 Other
@@ -933,26 +963,6 @@ Reported Content
 **reportedcontent:delete, system**
 	Triggered before deleting the reported content object ``$params['report']``. Return false to prevent deleting.
 
-Search
-------
-
-**search, <type>:<subtype>**
-	Filter more granular search results than searching by type alone. Must return an array with ``count`` as the
-	total count of results and  ``entities`` an array of ElggUser entities.
-
-**search, tags**
-
-**search, <type>**
-	Filter the search for entities for type ``$type``. Must return an array with ``count`` as the
-	total count of results and  ``entities`` an array of ElggUser entities.
-
-**search_types, get_types**
-	Filter an array of search types. This allows plugins to add custom types that don't correspond
-	directly to entities.
-
-**search_types, get_queries**
-    Before a search this filters the types queried. This can be used to reorder
-    the display of search results.
 
 Web Services
 ------------

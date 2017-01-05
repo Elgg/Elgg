@@ -31,7 +31,8 @@ function discussion_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
 	// Register for search.
-	elgg_register_plugin_hook_handler('search', 'object:discussion', 'discussion_search_discussion');
+	elgg_register_plugin_hook_handler('search:options', 'object:discussion', 'discussion_search_discussion');
+	elgg_register_plugin_hook_handler('search:config', 'type_subtype_pairs', 'discussion_filter_type_subtype_pairs');
 
 	// because replies are not comments, need of our menu item
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
@@ -603,19 +604,52 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 function discussion_search_discussion($hook, $type, $value, $params) {
 
 	if (empty($params) || !is_array($params)) {
-		return $value;
+		return;
 	}
 
-	$subtype = elgg_extract("subtype", $params);
-	if (empty($subtype) || ($subtype !== "discussion")) {
-		return $value;
+	if (isset($params['subtypes'])) {
+		$subtypes = (array) $params['subtypes'];
+	} else {
+		$subtypes = (array) elgg_extract('subtype', $params);
+	}
+
+	if (!in_array('discussion', $subtypes)) {
+		return;
 	}
 
 	unset($params["subtype"]);
-	$params["subtypes"] = array("discussion", "discussion_reply");
+	
+	$subtypes[] = 'discussion_reply';
+	$params['subtypes'] = $subtypes;
 
-	// trigger the 'normal' object search as it can handle the added options
-	return elgg_trigger_plugin_hook('search', 'object', $params, array());
+	return $params;
+}
+
+/**
+ * Filters out discussion replies from search types as the results are combined
+ * in discussion search
+ *
+ * @see discussion_search_discussion
+ * @elgg_plugin_hook search:config type_subtype_pairs
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function discussion_filter_type_subtype_pairs(\Elgg\Hook $hook) {
+
+	$types = $hook->getValue();
+
+	if (empty($types['object'])) {
+		return;
+	}
+
+	foreach ($types['object'] as $key => $subtype) {
+		if ($subtype == 'discussion_reply') {
+			unset($types['object'][$key]);
+		}
+	}
+
+	return $types;
 }
 
 /**
