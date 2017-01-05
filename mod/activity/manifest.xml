@@ -10,7 +10,7 @@
 	<website>http://elgg.org/</website>
 	<requires>
 		<type>elgg_release</type>
-		<version>2.2</version>
+		<version>3.0</version>
 	</requires>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

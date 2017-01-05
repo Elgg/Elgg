@@ -23,6 +23,7 @@ class PostInstall {
 		self::copyFromElggToRoot("upgrade.php", "upgrade.php");
 
 		$managed_plugins = [
+			'activity',
 			'blog',
 			'bookmarks',
 			'ckeditor',
@@ -34,6 +35,8 @@ class PostInstall {
 			'embed',
 			'externalpages',
 			'file',
+			'friends',
+			'friends_collections',
 			'garbagecollector',
 			'groups',
 			'invitefriends',

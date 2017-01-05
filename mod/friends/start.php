@@ -170,7 +170,7 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
 function _elgg_friends_page_menu($hook, $type, $return, $params) {
 
 	$owner = elgg_get_page_owner_entity();
-	if (!$owner) {
+	if (!$owner instanceof ElggUser) {
 		return;
 	}
 
