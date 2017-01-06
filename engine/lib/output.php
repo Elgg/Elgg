@@ -71,18 +71,6 @@ function elgg_get_excerpt($text, $num_chars = 250) {
 }
 
 /**
- * Handles formatting of ampersands in urls
- *
- * @param string $url The URL
- *
- * @return string
- * @since 1.7.1
- */
-function elgg_format_url($url) {
-	return preg_replace('/&(?!amp;)/', '&amp;', $url);
-}
-
-/**
  * Format bytes to a human readable format
  *
  * @param int $size      File size in bytes to format

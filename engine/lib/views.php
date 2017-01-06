@@ -584,7 +584,7 @@ function _elgg_views_prepare_head($title) {
 			'rel' => 'alternative',
 			'type' => 'application/rss+xml',
 			'title' => 'RSS',
-			'href' => elgg_format_url($url),
+			'href' => $url,
 		);
 	}
 	
@@ -1747,7 +1747,6 @@ function elgg_views_add_rss_link() {
 			$url .= "?view=rss";
 		}
 
-		$url = elgg_format_url($url);
 		elgg_register_menu_item('extras', array(
 			'name' => 'rss',
 			'text' => elgg_view_icon('rss'),
