@@ -61,6 +61,11 @@ Removed views
  * ``favicon.svg``: use ``graphics/favicon.svg``
  * ``friendspicker.png``: use ``graphics/friendspicker.png``
  * ``walled_garden.jpg``: use ``graphics/walled_garden.jpg``
+ * ``core/friends/collection``
+ * ``core/friends/collections``
+ * ``core/friends/collectiontabs``
+ * ``core/friends/tablelist``
+ * ``core/friends/talbelistcountupdate``
 
 Removed functions/methods
 -------------------------
@@ -111,9 +116,12 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggSite::removeEntity``
  * ``ElggSite::removeObject``
  * ``ElggSite::removeUser``
+ * ``ElggSite::isPublicPage``: Logic moved to the router and should not be accessed directly
+ * ``ElggSite::checkWalledGarden``: Logic moved to the router and should not be accessed directly
  * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
  * ``Logger::getClassName``: Use ``get_class()``
  * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
+ * ``elgg_view_access_collections()``
  * ``ElggSession::get_ignore_access``: Use ``getIgnoreAccess``
  * ``ElggSession::set_ignore_access``: Use ``setIgnoreAccess``
  * ``profile_pagesetup``
@@ -193,6 +201,7 @@ Removed pagehandling
  * ``file/download``
  * ``groupicon``
  * ``twitterservice``
+ * ``collections/pickercallback``
 
 Removed actions
 ---------------
@@ -230,6 +239,7 @@ Removed JavaScript APIs
  * ``messageboard.js``
  * ``elgg.autocomplete`` is no longer defined.
  * ``elgg.messageboard`` is no longer defined.
+ * ``jQuery.fn.friendsPicker``
 
 Removed hooks/events
 --------------------
@@ -439,6 +449,21 @@ Default icon image files have been moved and re-mapped as follows:
  * Group icons: ``views/default/icon/group/default/$size.gif`` in the groups plugin
 
 Groups icon files have been moved from ``groups/<guid><size>.jpg`` relative to group owner's directory on filestore to a location prescribed by the entity icon service. Plugins should stop accessing files on the filestore directly and use the entity icon API. Upgrade script is available via admin interface.
+
+Autocomplete (user and friends pickers)
+---------------------------------------
+
+Friends Picker input is now rendered using ``input/userpicker``.
+
+Plugins should:
+
+ * Update overriden ``input/userpicker`` to support new ``only_friends`` parameter
+ * Remove friends picker CSS from their stylesheets
+
+Friends collections
+-------------------
+
+Friends collections UI has been moved to its own plugins - ``friends_collections``.
 
 From 2.2 to 2.3
 ===============

@@ -326,24 +326,10 @@ class ElggUser extends \ElggEntity
 	 * Removes a user as a friend
 	 *
 	 * @param int $friend_guid The GUID of the user to remove
-	 *
 	 * @return bool
 	 */
 	public function removeFriend($friend_guid) {
-		if (!get_user($friend_guid)) {
-			return false;
-		}
-
-		// @todo this should be done with a plugin hook handler on the delete relationship
-		// perform cleanup for access lists.
-		$collections = get_user_access_collections($this->guid);
-		if ($collections) {
-			foreach ($collections as $collection) {
-				remove_user_from_access_collection($friend_guid, $collection->id);
-			}
-		}
-
-		return remove_entity_relationship($this->guid, "friend", $friend_guid);
+		return $this->removeRelationship($friend_guid, 'friend');
 	}
 
 	/**

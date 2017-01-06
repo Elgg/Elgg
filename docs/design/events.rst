@@ -70,9 +70,20 @@ backwards compatibility.
 Elgg Event Handlers
 -------------------
 
-Elgg event handlers should have the following prototype:
+Elgg event handlers are callables with one of the following prototypes:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
+
+    /**
+     * @param \Elgg\Event $event The event object
+     *
+     * @return bool if false, the handler is requesting to cancel the event
+     */
+    function event_handler1(\Elgg\Event $event) {
+        ...
+    }
 
     /**
      * @param string $event       The name of the event
@@ -81,19 +92,26 @@ Elgg event handlers should have the following prototype:
      *
      * @return bool if false, the handler is requesting to cancel the event
      */
-    function event_handler($event, $object_type, $object) {
+    function event_handler2($event, $object_type, $object) {
         ...
     }
 
-If the handler returns ``false``, the event is cancelled, preventing
-execution of the other handlers. All other return values are ignored.
+In ``event_handler1``, the ``Event`` object has various methods for getting the name, object type,
+and object of the event. See the ``Elgg\Event`` interface for details.
+
+In both cases, if a handler returns ``false``, the event is cancelled, preventing execution of the
+other handlers. All other return values are ignored.
+
+.. note:: If the event type is "object" or "user", use type hint ``\Elgg\ObjectEvent`` or ``\Elgg\UserEvent`` instead, which clarify the return type of the ``getObject()`` method.
 
 Register to handle an Elgg Event
 --------------------------------
 
 Register your handler to an event using ``elgg_register_event_handler``:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
     elgg_register_event_handler($event, $object_type, $handler, $priority);
 
@@ -110,11 +128,13 @@ in the framework: system, user, object, relationship, annotation, group.
 
 Example:
 
-.. code:: php
+.. code-block:: php
 
-    // Register the function myPlugin_handle_login() to handle the
-    // user login event with priority 400.
-    elgg_register_event_handler('login', 'user', 'myPlugin_handle_login', 400);
+    <?php
+
+    // Register the function myPlugin_handle_create_object() to handle the
+    // create object event with priority 400.
+    elgg_register_event_handler('create', 'object', 'myPlugin_handle_create_object', 400);
 
 .. warning::
 
@@ -122,12 +142,35 @@ Example:
    probably not necessary as the object is saved after the event completes, but also because ``save()`` calls
    another "update" event and makes ``$object->getOriginalAttributes()`` no longer available.
 
+Invokable classes as handlers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You may use a class with an ``__invoke()`` method as a handler. Just register the class name and it will be instantiated (with no arguments) for the lifetime of the event (or hook).
+
+.. code-block:: php
+
+    <?php
+
+    namespace MyPlugin;
+
+    class UpdateObjectHandler {
+        public function __invoke(\Elgg\ObjectEvent $event) {
+
+        }
+    }
+
+    // in init, system
+    elgg_register_event_handler('update', 'object', MyPlugin\UpdateObjectHandler::class);
+
+
 Trigger an Elgg Event
 ---------------------
 
 You can trigger a custom Elgg event using ``elgg_trigger_event``:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
     if (elgg_trigger_event($event, $object_type, $object)) {
         // Proceed with doing something.
@@ -139,7 +182,9 @@ For events with ambiguous states, like logging in a user, you should use `Before
 by calling ``elgg_trigger_before_event`` or ``elgg_trigger_after_event``.
 This makes it clear for the event handler what state to expect and which events can be cancelled.
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
 	// handlers for the user, login:before event know the user isn't logged in yet.
 	if (!elgg_trigger_before_event('login', 'user', $user)) {
@@ -175,9 +220,20 @@ trigger.
 Plugin Hook Handlers
 --------------------
 
-Plugin hook handlers should have the following prototype:
+Hook handlers are callables with one of the following prototypes:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
+
+    /**
+     * @param \Elgg\Hook $hook The hook object
+     *
+     * @return mixed if not null, this will be the new value of the plugin hook
+     */
+    function plugin_hook_handler1(\Elgg\Hook $hook) {
+        ...
+    }
 
     /**
      * @param string $hook    The name of the plugin hook
@@ -187,20 +243,25 @@ Plugin hook handlers should have the following prototype:
      *
      * @return mixed if not null, this will be the new value of the plugin hook
      */
-    function plugin_hook_handler($hook, $type, $value, $params) {
+    function plugin_hook_handler2($hook, $type, $value, $params) {
         ...
     }
 
-If the handler returns no value (or ``null`` explicitly), the plugin hook value
-is not altered. Otherwise the return value becomes the new value of the plugin
-hook. It will then be passed to the next handler as ``$value``.
+In ``plugin_hook_handler1``, the ``Hook`` object has various methods for getting the name, type, value,
+and parameters of the hook. See the ``Elgg\Hook`` interface for details.
+
+In both cases, if the handler returns no value (or ``null`` explicitly), the plugin hook value
+is not altered. Otherwise the returned value becomes the new value of the plugin hook, and it
+will then be available as ``$hook->getValue()`` (or ``$value``) in the next handler.
 
 Register to handle a Plugin Hook
 --------------------------------
 
 Register your handler to a plugin hook using ``elgg_register_plugin_hook_handler``:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
     elgg_register_plugin_hook_handler($hook, $type, $handler, $priority);
 
@@ -216,7 +277,9 @@ specific to the plugin hook name.
 
 Example:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
     // Register the function myPlugin_hourly_job() to be called with priority 400.
     elgg_register_plugin_hook_handler('cron', 'hourly', 'myPlugin_hourly_job', 400);
@@ -227,7 +290,9 @@ Trigger a Plugin Hook
 
 You can trigger a custom plugin hook using ``elgg_trigger_plugin_hook``:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
     // filter $value through the handlers
     $value = elgg_trigger_plugin_hook($hook, $type, $params, $value);
@@ -249,14 +314,18 @@ The functions ``elgg_unregister_event_handler`` and ``elgg_unregister_plugin_hoo
 handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration
 functions, except there's no priority parameter.
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
     elgg_unregister_event_handler('login', 'user', 'myPlugin_handle_login');
 
 Anonymous functions or invokable objects cannot be unregistered, but dynamic method callbacks can be unregistered
 by giving the static version of the callback:
 
-.. code:: php
+.. code-block:: php
+
+    <?php
 
     $obj = new MyPlugin\Handlers();
     elgg_register_plugin_hook_handler('foo', 'bar', [$obj, 'handleFoo']);

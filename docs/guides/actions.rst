@@ -329,7 +329,7 @@ A list of bundled input types/views:
 * ``input/tags`` - renders an Elgg tags input
 * ``input/autocomplete`` - renders an Elgg entity autocomplete
 * ``input/captcha`` - placeholder view for plugins to extend
-* ``input/friendspicker`` - renders an Elgg friend picker
+* ``input/friendspicker`` - renders an Elgg friend autocomplete
 * ``input/userpicker`` - renders an Elgg user autocomplete
 * ``input/location`` renders an Elgg location input
 

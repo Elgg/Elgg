@@ -54,7 +54,7 @@ class Hmac {
 	 */
 	public function getToken() {
 		$bytes = hash_hmac($this->algo, $this->data, $this->key, true);
-		return strtr(rtrim(base64_encode($bytes), '='), '+/', '-_');
+		return Base64Url::encode($bytes);
 	}
 
 	/**

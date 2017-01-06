@@ -233,110 +233,6 @@ class ElggSite extends \ElggEntity {
 	}
 
 	/**
-	 * Halts bootup and redirects to the site front page
-	 * if site is in walled garden mode, no user is logged in,
-	 * and the URL is not a public page.
-	 *
-	 * @return void
-	 * @since 1.8.0
-	 */
-	public function checkWalledGarden() {
-		global $CONFIG;
-
-		// command line calls should not invoke the walled garden check
-		if (PHP_SAPI === 'cli') {
-			return;
-		}
-
-		if ($CONFIG->walled_garden) {
-			if ($CONFIG->default_access == ACCESS_PUBLIC) {
-				$CONFIG->default_access = ACCESS_LOGGED_IN;
-			}
-			_elgg_services()->hooks->registerHandler(
-					'access:collections:write',
-					'all',
-					'_elgg_walled_garden_remove_public_access',
-					9999);
-
-			if (!_elgg_services()->session->isLoggedIn()) {
-				// override the front page
-				elgg_register_page_handler('', '_elgg_walled_garden_index');
-
-				if (!$this->isPublicPage()) {
-					if (!elgg_is_xhr()) {
-						_elgg_services()->session->set('last_forward_from', current_page_url());
-					}
-					register_error(_elgg_services()->translator->translate('loggedinrequired'));
-					forward('', 'walled_garden');
-				}
-			}
-		}
-	}
-
-	/**
-	 * Returns if a URL is public for this site when in Walled Garden mode.
-	 *
-	 * Pages are registered to be public by {@elgg_plugin_hook public_pages walled_garden}.
-	 *
-	 * @param string $url Defaults to the current URL.
-	 *
-	 * @return bool
-	 * @since 1.8.0
-	 */
-	public function isPublicPage($url = '') {
-		global $CONFIG;
-
-		if (empty($url)) {
-			$url = current_page_url();
-
-			// do not check against URL queries
-			if ($pos = strpos($url, '?')) {
-				$url = substr($url, 0, $pos);
-			}
-		}
-
-		// always allow index page
-		if ($url == _elgg_services()->config->getSiteUrl($this->guid)) {
-			return true;
-		}
-
-		// default public pages
-		$defaults = array(
-			'walled_garden/.*',
-			'action/.*',
-			'login',
-			'register',
-			'forgotpassword',
-			'changepassword',
-			'refresh_token',
-			'ajax/view/languages.js',
-			'upgrade\.php',
-			'css/.*',
-			'js/.*',
-			'cache/[0-9]+/\w+/.*',
-			'cron/.*',
-			'services/.*',
-			'serve-file/.*',
-			'robots.txt',
-			'favicon.ico',
-		);
-
-		// include a hook for plugin authors to include public pages
-		$plugins = _elgg_services()->hooks->trigger('public_pages', 'walled_garden', null, array());
-
-		// allow public pages
-		foreach (array_merge($defaults, $plugins) as $public) {
-			$pattern = "`^{$CONFIG->url}$public/*$`i";
-			if (preg_match($pattern, $url)) {
-				return true;
-			}
-		}
-
-		// non-public page
-		return false;
-	}
-	
-	/**
 	 * Get the email address for the site
 	 *
 	 * This can be set in the basic site settings or fallback to noreply@domain
@@ -349,7 +245,7 @@ class ElggSite extends \ElggEntity {
 		if (empty($email)) {
 			$email = "noreply@{$this->getDomain()}";
 		}
-		
+
 		return $email;
 	}
 }

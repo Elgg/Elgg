@@ -38,6 +38,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggFileCache                           $fileCache
  * @property-read \ElggDiskFilestore                       $filestore
  * @property-read \Elgg\FormsService                       $forms
+ * @property-read \Elgg\HandlersService                    $handlers
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
@@ -206,8 +207,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			);
 		});
 
-		$this->setFactory('events', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('events');
+		$this->setFactory('events', function (ServiceProvider $c) {
+			$events = new \Elgg\EventsService();
+			if ($c->config->getVolatile('enable_profiling')) {
+				$events->setTimer($c->timer);
+			}
+			return $events;
 		});
 
 		$this->setFactory('externalFiles', function(ServiceProvider $c) {
@@ -226,9 +231,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\FormsService($c->views, $c->logger);
 		});
 
-		$this->setFactory('hooks', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('hooks');
-		});
+		$this->setClassName('handlers', \Elgg\HandlersService::class);
+
+		$this->setClassName('hooks', \Elgg\PluginHooksService::class);
 
 		$this->setFactory('iconService', function(ServiceProvider $c) {
 			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable);
@@ -241,8 +246,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\ImageService($imagine, $c->config);
 		});
 
-		$this->setFactory('logger', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('logger');
+		$this->setFactory('logger', function (ServiceProvider $c) {
+			return new \Elgg\Logger($c->hooks, $c->config, $c->context);
 		});
 
 		// TODO(evan): Support configurable transports...
@@ -453,31 +458,5 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
-
-	}
-
-	/**
-	 * Returns the first requested service of the logger, events, and hooks. It sets the
-	 * hooks and events up in the right order to prevent circular dependency.
-	 *
-	 * @param string $service_needed The service requested first
-	 * @return mixed
-	 */
-	protected function resolveLoggerDependencies($service_needed) {
-		$svcs['hooks'] = new \Elgg\PluginHooksService();
-
-		$svcs['logger'] = new \Elgg\Logger($svcs['hooks'], $this->config, $this->context);
-		$svcs['hooks']->setLogger($svcs['logger']);
-
-		$svcs['events'] = new \Elgg\EventsService();
-		$svcs['events']->setLogger($svcs['logger']);
-		if ($this->config->getVolatile('enable_profiling')) {
-			$svcs['events']->setTimer($this->timer);
-		}
-
-		foreach ($svcs as $key => $service) {
-			$this->setValue($key, $service);
-		}
-		return $svcs[$service_needed];
 	}
 }

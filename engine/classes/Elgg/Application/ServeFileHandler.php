@@ -9,6 +9,7 @@ use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Elgg\Security\Base64Url;
 
 /**
  * File server handler
@@ -51,7 +52,7 @@ class ServeFileHandler {
 		$response = new Response();
 		$response->prepare($request);
 
-		$path = implode('/', $request->getUrlSegments());
+		$path = implode('/', $request->getUrlSegments(true));
 		if (!preg_match('~serve-file/e(\d+)/l(\d+)/d([ia])/c([01])/([a-zA-Z0-9\-_]+)/(.*)$~', $path, $m)) {
 			return $response->setStatusCode(400)->setContent('Malformatted request URL');
 		}
@@ -77,6 +78,11 @@ class ServeFileHandler {
 		$hmac = $this->crypto->getHmac($hmac_data);
 		if (!$hmac->matchesToken($mac)) {
 			return $response->setStatusCode(403)->setContent('HMAC mistmatch');
+		}
+
+		// Path may have been encoded to avoid problems with special chars in URLs
+		if (0 === strpos($path_from_dataroot, ':')) {
+			$path_from_dataroot = Base64Url::decode(substr($path_from_dataroot, 1));
 		}
 
 		$dataroot = $this->config->getDataPath();

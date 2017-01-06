@@ -841,8 +841,14 @@ Other
 	)
 
 **public_pages, walled_garden**
-	Filter the URLs that are can be seen by logged out users if Walled Garden is
-	enabled. ``$value`` is an array of regex strings that will allow access if matched.
+	Filters a list of URLs (paths) that can be seen by logged out users in a walled garden mode.
+	Handlers must return an array of regex strings that will allow access if matched.
+	Please note that system public routes are passed as the default value to the hook,
+	and plugins must take care to not accidentally override these values.
+
+	The ``$params`` array contains:
+
+	 * ``url`` - URL of the page being tested for public accessibility
 
 **volatile, metadata**
 	Triggered when exporting an entity through the export handler. This is rare.

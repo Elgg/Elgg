@@ -217,7 +217,7 @@ $attrs = [
 			$error = $plugin->getError();
 			if ($error) {
 				?>
-				<div class="elgg-body">
+				<div class="elgg-body elgg-plugin-list-error">
 					<?php
 					echo elgg_format_element('p', [
 						'class' => $plugin->isActive() ? 'elgg-text-help' : 'elgg-text-help elgg-state-error',
