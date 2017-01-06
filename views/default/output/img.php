@@ -11,7 +11,5 @@ if (!isset($vars['alt'])) {
 }
 
 $vars['src'] = elgg_normalize_url($vars['src']);
-$vars['src'] = elgg_format_url($vars['src']);
 
-$attributes = elgg_format_attributes($vars);
-echo "<img $attributes/>";
+echo elgg_format_element('img', $vars);

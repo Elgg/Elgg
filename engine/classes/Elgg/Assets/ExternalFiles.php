@@ -49,7 +49,6 @@ class ExternalFiles {
 			return false;
 		}
 	
-		$url = elgg_format_url($url);
 		$url = elgg_normalize_url($url);
 
 		$this->bootstrap($type);

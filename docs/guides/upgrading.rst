@@ -41,6 +41,7 @@ Deprecated APIs
  * ``get_resized_image_from_uploaded_file()``: Use ``elgg_save_resized_image()`` in combination with upload API.
  * ``get_image_resize_parameters()`` will be removed.
  * ``elgg_view_input()``: Use ``elgg_view_field()``. Apologies for the API churn.
+ * ``elgg_format_url()``: Use elgg_format_element() or the "output/text" view for HTML escaping.
 
 Deprecated Views
 ----------------

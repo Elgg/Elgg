@@ -1125,7 +1125,7 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
 	$string = $scheme . $host . $port . $path . $query . $fragment;
 
 	if ($html_encode) {
-		return elgg_format_url($string);
+		return htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
 	} else {
 		return $string;
 	}
