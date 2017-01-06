@@ -584,7 +584,7 @@ function _elgg_views_prepare_head($title) {
 			'rel' => 'alternative',
 			'type' => 'application/rss+xml',
 			'title' => 'RSS',
-			'href' => elgg_format_url($url),
+			'href' => $url,
 		);
 	}
 	

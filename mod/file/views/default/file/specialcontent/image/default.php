@@ -5,16 +5,21 @@
  * @uses $vars['entity']
  */
 
+if (empty($vars['full_view'])) {
+	return;
+}
+
 $file = $vars['entity'];
 
-$image_url = $file->getIconURL('large');
-$image_url = elgg_format_url($image_url);
-$download_url = elgg_get_download_url($file);
+$img = elgg_format_element('img', [
+	'class' => 'elgg-photo',
+	'src' => $file->getIconURL('large'),
+]);
+$a = elgg_format_element([
+	'#tag_name' => 'a',
+	'#text' => $img,
+	'href' => elgg_get_download_url($file),
+	'class' => 'elgg-lightbox-photo',
+]);
 
-if ($vars['full_view']) {
-	echo <<<HTML
-		<div class="file-photo">
-			<a href="$download_url" class="elgg-lightbox-photo"><img class="elgg-photo" src="$image_url" /></a>
-		</div>
-HTML;
-}
+?><div class="file-photo"><?= $a ?></div>

@@ -88,6 +88,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``run_function_once``: Use ``Elgg\Upgrade\Batch`` interface
  * ``system_messages``
  * ``notifications_plugin_pagesetup``
+ * ``elgg_format_url()``: Use elgg_format_element() or the "output/text" view for HTML escaping.
  * ``ElggEntity::addToSite``
  * ``ElggEntity::getSites``
  * ``ElggEntity::removeFromSite``
