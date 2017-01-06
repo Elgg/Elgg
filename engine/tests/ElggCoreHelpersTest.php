@@ -72,11 +72,15 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 			'https://example.com' => 'https://example.com',
 			'http://example-time.com' => 'http://example-time.com',
 
+			'http://in:valid~url' => elgg_get_site_url() . 'http://in:valid~url',
+			'https://in:valid~url' => elgg_get_site_url() . 'https://in:valid~url',
+
 			'//example.com' => '//example.com',
 			'ftp://example.com/file' => 'ftp://example.com/file',
 			'mailto:brett@elgg.org' => 'mailto:brett@elgg.org',
 			'javascript:alert("test")' => 'javascript:alert("test")',
 			'app://endpoint' => 'app://endpoint',
+			'tel:+1111111111' => 'tel:+1111111111',
 
 			'example.com' => 'http://example.com',
 			'example.com/subpage' => 'http://example.com/subpage',
