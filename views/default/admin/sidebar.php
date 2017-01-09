@@ -1,3 +1,7 @@
+<center> 
+<a href="<?php echo $CONFIG->site->url; ?>upgrade.php">Run Upgrade</a>
+</center> <br/>
+
 <?php
 /**
  * Admin sidebar -- just outputs the page menus
