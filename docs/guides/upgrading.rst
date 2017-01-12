@@ -321,6 +321,7 @@ Miscellaneous API changes
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
  * The script ``engine/start.php`` is removed.
  * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``. 
+ * ``'route','<identifier>'`` hook can no longer be used to modify routes. Plugins should use ``'route:rewrite','<identifier>'`` hook with a handler registered before the ``'init','system'`` event is fired.
 
 JavaScript hook calling order may change
 ----------------------------------------

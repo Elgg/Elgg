@@ -33,9 +33,14 @@ define('ELGG_PLUGIN_REGISTER_CLASSES', 8);
 define('ELGG_PLUGIN_REGISTER_ACTIONS', 16);
 
 /**
+ * Tells \ElggPlugin::start() to automatically register the plugin's routes.
+ */
+define('ELGG_PLUGIN_REGISTER_ROUTES', 32);
+
+/**
  * Tells \ElggPlugin::start() to automatically register the plugin's actions.
  */
-define('ELGG_PLUGIN_REGISTER_WIDGETS', 32);
+define('ELGG_PLUGIN_REGISTER_WIDGETS', 64);
 
 /**
  * Prefix for plugin setting names

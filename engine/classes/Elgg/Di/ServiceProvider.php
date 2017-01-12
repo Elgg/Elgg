@@ -21,6 +21,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
@@ -60,12 +61,13 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Application\Database               $publicDb
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
+ * @property-read \Elgg\Router\RequestContext              $requestContext
  * @property-read \Elgg\Http\ResponseFactory               $responseFactory
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
+ * @property-read \Elgg\Router\RouteCollection             $routeCollection
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
- * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
@@ -75,10 +77,12 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
+ * @property-read \Elgg\UploadService                      $uploads
  * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\Upgrade\Locator                    $upgradeLocator
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
- * @property-read \Elgg\UploadService                      $uploads
+ * @property-read \Elgg\Router\UrlGenerator                $urlGenerator
+ * @property-read \Elgg\Router\UrlMatcher                  $urlMatcher
+ * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
@@ -339,6 +343,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
+		$this->setFactory('requestContext', function(ServiceProvider $c) {
+			$context = new \Elgg\Router\RequestContext();
+			$context->fromRequest($c->request);
+			return $context;
+		});
+
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
 			if (PHP_SAPI === 'cli') {
 				$transport = new \Elgg\Http\OutputBufferTransport();
@@ -348,9 +358,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport);
 		});
 
+		$this->setClassName('routeCollection', \Elgg\Router\RouteCollection::class);
+
 		$this->setFactory('router', function(ServiceProvider $c) {
-			// TODO(evan): Init routes from plugins or cache
-			$router = new \Elgg\Router($c->hooks);
+			$router = new \Elgg\Router($c->hooks, $c->routeCollection, $c->urlMatcher, $c->urlGenerator);
 			if ($c->config->getVolatile('enable_profiling')) {
 				$router->setTimer($c->timer);
 			}
@@ -381,8 +392,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$session = new SymfonySession($storage);
 			return new \ElggSession($session);
 		});
-
-		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
 
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
 			return new \Elgg\Cache\SimpleCache($c->config, $c->views);
@@ -431,6 +440,30 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			);
 		});
 
+		$this->setFactory('upgradeLocator', function(ServiceProvider $c) {
+			return new \Elgg\Upgrade\Locator(
+				$c->plugins,
+				$c->logger,
+				$c->privateSettings
+			);
+		});
+
+		$this->setFactory('urlGenerator', function(ServiceProvider $c) {
+			return new \Elgg\Router\UrlGenerator(
+				$c->routeCollection,
+				$c->requestContext
+			);
+		});
+
+		$this->setFactory('urlMatcher', function(ServiceProvider $c) {
+			return new \Elgg\Router\UrlMatcher(
+				$c->routeCollection,
+				$c->requestContext
+			);
+		});
+
+		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
+
 		$this->setFactory('userCapabilities', function(ServiceProvider $c) {
 			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
 		});
@@ -442,14 +475,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->entityTable,
 				$c->entityCache,
 				$c->events
-			);
-		});
-
-		$this->setFactory('upgradeLocator', function(ServiceProvider $c) {
-			return new \Elgg\Upgrade\Locator(
-				$c->plugins,
-				$c->logger,
-				$c->privateSettings
 			);
 		});
 

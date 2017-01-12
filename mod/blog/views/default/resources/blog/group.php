@@ -1,7 +1,12 @@
 <?php
 
+elgg_load_library('elgg:blog');
+
+// push all blogs breadcrumb
+elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('blog_all'));
+
 $subpage = elgg_extract('subpage', $vars);
-$page_type = elgg_extract('page_type', $vars);
+$page_type = 'group';
 $group_guid = elgg_extract('group_guid', $vars);
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
