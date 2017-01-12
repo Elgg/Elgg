@@ -18,9 +18,17 @@ if (!$blog->delete()) {
 }
 
 if ($container instanceof \ElggGroup) {
-	$forward_url = "blog/group/{$container->guid}/all";
+	$forward_url = elgg_generate_url('collection:object:blog:group', [
+		'group_guid' => $container->guid,
+		'subpage' => 'all',
+	]);
 } else {
-	$forward_url = "blog/owner/{$container->username}";
+	$foward_url = elgg_generate_url('collection:object:blog:owner', [
+		'username' => $container->username,
+	]);
 }
 
 return elgg_ok_response('', elgg_echo('blog:message:deleted_post'), $forward_url);
+
+$message = elgg_echo('blog:message:deleted_post');
+return elgg_ok_response($data, $message, $forward_url);

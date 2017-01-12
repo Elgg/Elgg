@@ -88,11 +88,18 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 					'context' => ['profile', 'dashboard'],
 				],
 			],
+			'routes' => [
+				'plugin:foo' => [
+					'path' => '/plugin/{foo?}',
+					'resource' => 'plugin/foo',
+				],
+			]
 		];
 
 		$this->assertEquals($config['entities'], $plugin->getStaticConfig('entities'));
 		$this->assertEquals($config['actions'], $plugin->getStaticConfig('actions'));
 		$this->assertEquals($config['widgets'], $plugin->getStaticConfig('widgets'));
+		$this->assertEquals($config['routes'], $plugin->getStaticConfig('routes'));
 
 		$plugin->delete();
 	}

@@ -114,7 +114,7 @@ if ($values['status'] == 'draft') {
 foreach ($values as $name => $value) {
 	$blog->$name = $value;
 }
-	
+
 if (!$blog->save()) {
 	return elgg_error_response(elgg_echo('blog:error:cannot_save'));
 }
@@ -163,7 +163,9 @@ if (($new_post || $old_status == 'draft') && $status == 'published') {
 if ($blog->status == 'published' || $save == false) {
 	$forward_url = $blog->getURL();
 } else {
-	$forward_url = "blog/edit/{$blog->guid}";
+	$forward_url = elgg_generate_url('edit:object:blog', [
+		'guid' => $blog->guid,
+	]);
 }
 
 return elgg_ok_response('', elgg_echo('blog:message:saved'), $forward_url);

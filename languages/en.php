@@ -109,6 +109,12 @@ return array(
 
 	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
+	'PageNotFoundException' => 'The page you are trying to view does not exist or you do not have permissions to view it',
+	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
+	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
+	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
+	'BadRequestException' => 'Bad request',
+
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',

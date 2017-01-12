@@ -13,7 +13,10 @@ if (!$group->isToolEnabled('blog')) {
 }
 
 $all_link = elgg_view('output/url', [
-	'href' => "blog/group/$group->guid/all",
+	'href' => elgg_generate_url('collection:object:blog:group', [
+		'group_guid' => $group->guid,
+		'subpage' => 'all',
+	]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
@@ -33,7 +36,9 @@ $content = elgg_list_entities($options);
 elgg_pop_context();
 
 $new_link = elgg_view('output/url', [
-	'href' => "blog/add/$group->guid",
+	'href' => elgg_generate_url('add:object:blog', [
+		'guid' => $group->guid,
+	]),
 	'text' => elgg_echo('blog:write'),
 	'is_trusted' => true,
 ]);

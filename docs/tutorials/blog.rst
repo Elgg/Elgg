@@ -276,7 +276,7 @@ forwarded to the site's 404 page (requested page does not exist or not found).
 In this particular example, the URL must contain either ``/my_blog/add`` or
 ``/my_blog/view/id`` where id is a valid ID of an entity with the ``my_blog`` subtype.
 More information about page handling is at
-:doc:`Page handler</guides/pagehandler>`.
+:doc:`Page handler</guides/routing>`.
 
 .. _tutorials/blog#view:
 
