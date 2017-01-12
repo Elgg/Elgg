@@ -3,4 +3,5 @@
  * General error
  */
 
-echo elgg_view_message('error', elgg_echo('error:default:content'));
+$error = elgg_extract('error', $vars, elgg_echo('error:default:content'));
+echo elgg_view_message('error', $error);

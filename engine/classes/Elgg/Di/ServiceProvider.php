@@ -75,8 +75,10 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\RedirectService                    $redirects
  * @property-read \Elgg\Http\Request                       $request
+ * @property-read \Elgg\Router\RequestContext              $requestContext
  * @property-read \Elgg\Http\ResponseFactory               $responseFactory
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
+ * @property-read \Elgg\Router\RouteCollection             $routeCollection
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Database\Seeder                    $seeder
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
@@ -95,6 +97,8 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\Upgrade\Locator                    $upgradeLocator
+ * @property-read \Elgg\Router\UrlGenerator                $urlGenerator
+ * @property-read \Elgg\Router\UrlMatcher                  $urlMatcher
  * @property-read \Elgg\UploadService                      $uploads
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
@@ -415,6 +419,12 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
+		$this->setFactory('requestContext', function(ServiceProvider $c) {
+			$context = new \Elgg\Router\RequestContext();
+			$context->fromRequest($c->request);
+			return $context;
+		});
+
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
 			if (php_sapi_name() === 'cli') {
 				$transport = new \Elgg\Http\OutputBufferTransport();
@@ -424,9 +434,12 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport);
 		});
 
+		$this->setFactory('routeCollection', function(ServiceProvider $c) {
+			return new \Elgg\Router\RouteCollection();
+		});
+
 		$this->setFactory('router', function(ServiceProvider $c) {
-			// TODO(evan): Init routes from plugins or cache
-			$router = new \Elgg\Router($c->hooks);
+			$router = new \Elgg\Router($c->hooks, $c->routeCollection, $c->urlMatcher, $c->urlGenerator);
 			if ($c->config->enable_profiling) {
 				$router->setTimer($c->timer);
 			}
@@ -496,6 +509,20 @@ class ServiceProvider extends DiContainer {
 				$c->config,
 				$c->logger,
 				$c->mutex
+			);
+		});
+
+		$this->setFactory('urlGenerator', function(ServiceProvider $c) {
+			return new \Elgg\Router\UrlGenerator(
+				$c->routeCollection,
+				$c->requestContext
+			);
+		});
+
+		$this->setFactory('urlMatcher', function(ServiceProvider $c) {
+			return new \Elgg\Router\UrlMatcher(
+				$c->routeCollection,
+				$c->requestContext
 			);
 		});
 

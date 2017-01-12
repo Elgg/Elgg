@@ -7,77 +7,78 @@
  */
 
 /**
- * Registers a page handler for a particular identifier
+ * Register a new route
  *
- * For example, you can register a function called 'blog_page_handler' for the identifier 'blog'
- * For all URLs  http://yoururl/blog/*, the blog_page_handler() function will be called.
- * The part of the URL marked with * above will be exploded on '/' characters and passed as an
- * array to that function.
- * For example, the URL http://yoururl/blog/username/friends/ would result in the call:
- * blog_page_handler(array('username','friends'), blog);
+ * Route paths can contain wildcard segments, i.e. /blog/owner/{username}
+ * To make a certain wildcard segment optional, add ? to its name,
+ * i.e. /blog/owner/{username?}
  *
- * A request to register a page handler with the same identifier as previously registered
- * handler will replace the previous one.
+ * Wildcard requirements for common named variables such as 'guid' and 'username'
+ * will be set automatically.
  *
- * The context is set to the identifier before the registered
- * page handler function is called. For the above example, the context is set to 'blog'.
+ * @warning If you are registering a route in the path of a route registered by
+ *          deprecated {@link elgg_register_page_handler}, your registration must
+ *          preceed the call to elgg_register_page_handler() in the boot sequence.
  *
- * Page handlers should return true to indicate that they handled the request.
- * Requests not handled are forwarded to the front page with a reason of 404.
- * Plugins can register for the 'forward', '404' plugin hook. @see forward()
+ * @param string $name   Unique route name
+ *                       This name can later be used to generate route URLs
+ * @param array  $params Route parameters
+ *                       - path : path of the route
+ *                       - resource : name of the resource view
+ *                       - defaults : default values of wildcard segments
+ *                       - requirements : regex patterns for wildcard segment requirements
+ *                       - methods : HTTP methods
  *
- * @param string $identifier The page type identifier
- * @param string $function   Your function name
- *
- * @return bool Depending on success
+ * @return \Elgg\Router\Route
  */
-function elgg_register_page_handler($identifier, $function) {
-	return _elgg_services()->router->registerPageHandler($identifier, $function);
+function elgg_register_route($name, array $params = []) {
+	return _elgg_services()->router->registerRoute($name, $params);
 }
 
 /**
- * Unregister a page handler for an identifier
+ * Unregister a route by its name
  *
- * Note: to replace a page handler, call elgg_register_page_handler()
+ * @param string $name Name of the route
  *
- * @param string $identifier The page type identifier
- *
- * @since 1.7.2
  * @return void
  */
-function elgg_unregister_page_handler($identifier) {
-	_elgg_services()->router->unregisterPageHandler($identifier);
+function elgg_unregister_route($name) {
+	_elgg_services()->router->unregisterRoute($name);
+}
+
+/**
+ * Generate a URL for named route
+ *
+ * @param string $name       Route name
+ * @param array  $parameters Parameters
+ *
+ * @return string
+ */
+function elgg_generate_url($name, array $parameters = []) {
+	return _elgg_services()->router->generateUrl($name, $parameters);
 }
 
 /**
  * Used at the top of a page to mark it as logged in users only.
  *
  * @return void
+ * @throws \Elgg\GatekeeperException
  * @since 1.9.0
  */
 function elgg_gatekeeper() {
 	if (!elgg_is_logged_in()) {
 		_elgg_services()->redirects->setLastForwardFrom();
-		system_message(elgg_echo('loggedinrequired'));
-		forward('/login', '403');
-	}
-}
 
-/**
- * Alias of elgg_gatekeeper()
- *
- * Used at the top of a page to mark it as logged in users only.
- *
- * @return void
- */
-function gatekeeper() {
-	elgg_gatekeeper();
+		$msg = elgg_echo('loggedinrequired');
+		throw new \Elgg\GatekeeperException($msg);
+	}
 }
 
 /**
  * Used at the top of a page to mark it as admin only.
  *
  * @return void
+ * @throws \Elgg\GatekeeperException
  * @since 1.9.0
  */
 function elgg_admin_gatekeeper() {
@@ -85,21 +86,12 @@ function elgg_admin_gatekeeper() {
 
 	if (!elgg_is_admin_logged_in()) {
 		_elgg_services()->redirects->setLastForwardFrom();
-		register_error(elgg_echo('adminrequired'));
-		forward('', '403');
+
+		$msg = elgg_echo('adminrequired');
+		throw new \Elgg\GatekeeperException($msg);
 	}
 }
 
-/**
- * Alias of elgg_admin_gatekeeper()
- *
- * Used at the top of a page to mark it as logged in admin or siteadmin only.
- *
- * @return void
- */
-function admin_gatekeeper() {
-	elgg_admin_gatekeeper();
-}
 
 /**
  * May the current user access item(s) on this page? If the page owner is a group,
@@ -112,6 +104,8 @@ function admin_gatekeeper() {
  *                         will be pulled from elgg_get_page_owner_guid().
  *
  * @return bool Will return if $forward is set to false.
+ * @throws InvalidParameterException
+ * @throws SecurityException
  * @since 1.9.0
  */
 function elgg_group_gatekeeper($forward = true, $group_guid = null) {
@@ -154,22 +148,6 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
 }
 
 /**
- * May the current user access item(s) on this page? If the page owner is a group,
- * membership, visibility, and logged in status are taken into account.
- *
- * @param bool $forward         If set to true (default), will forward the page;
- *                              if set to false, will return true or false.
- *
- * @param int  $page_owner_guid The current page owner guid. If not set, this
- *                              will be pulled from elgg_get_page_owner_guid().
- *
- * @return bool Will return if $forward is set to false.
- */
-function group_gatekeeper($forward = true, $page_owner_guid = null) {
-	return elgg_group_gatekeeper($forward, $page_owner_guid);
-}
-
-/**
  * Can the viewer see this entity?
  *
  * Tests if the entity exists and whether the viewer has access to the entity
@@ -181,7 +159,12 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
  * @param string $subtype Optional required entity subtype
  * @param bool   $forward If set to true (default), will forward the page;
  *                        if set to false, will return true or false.
+ *
  * @return bool Will return if $forward is set to false.
+ * @throws \Elgg\BadRequestException
+ * @throws \Elgg\EntityNotFoundException
+ * @throws \Elgg\EntityPermissionsException
+ * @throws \Elgg\GatekeeperException
  * @since 1.9.0
  */
 function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward = true) {
@@ -189,14 +172,14 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 	if (!$entity && $forward) {
 		if (!elgg_entity_exists($guid)) {
 			// entity doesn't exist
-			forward('', '404');
-		} elseif (!elgg_is_logged_in()) {
+			throw new \Elgg\EntityNotFoundException();
+		} else if (!elgg_is_logged_in()) {
 			// entity requires at least a logged in user
 			elgg_gatekeeper();
 		} else {
 			// user is logged in but still does not have access to it
-			register_error(elgg_echo('limited_access'));
-			forward();
+			$msg = elgg_echo('limited_access');
+			throw new \Elgg\GatekeeperException($msg);
 		}
 	} else if (!$entity) {
 		return false;
@@ -205,7 +188,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 	if ($type && !elgg_instanceof($entity, $type, $subtype)) {
 		// entity is of wrong type/subtype
 		if ($forward) {
-			forward('', '404');
+			throw new \Elgg\BadRequestException();
 		} else {
 			return false;
 		}
@@ -218,7 +201,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 	];
 	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, true)) {
 		if ($forward) {
-			forward('', '403');
+			throw new \Elgg\EntityPermissionsException();
 		} else {
 			return false;
 		}
@@ -232,22 +215,14 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
  * will end and a 400 response page will be sent.
  *
  * @return void
+ * @throws \Elgg\BadRequestException
  * @since 1.12.0
  */
 function elgg_ajax_gatekeeper() {
 	if (!elgg_is_xhr()) {
-		register_error(_elgg_services()->translator->translate('ajax:not_is_xhr'));
-		forward(null, '400');
+		$msg = elgg_echo('ajax:not_is_xhr');
+		throw new \Elgg\BadRequestException($msg);
 	}
-}
-
-/**
- * Front page handler
- *
- * @return bool
- */
-function elgg_front_page_handler() {
-	return elgg_ok_response(elgg_view_resource('index'));
 }
 
 /**
@@ -262,14 +237,16 @@ function elgg_front_page_handler() {
  *                            Can be used by handlers to redirect the client on non-ajax requests
  * @param int    $status_code HTTP status code
  *                            Status code of the HTTP response (defaults to 200)
+ *
  * @return \Elgg\Http\OkResponse
  */
 function elgg_ok_response($content = '', $message = '', $forward_url = null, $status_code = ELGG_HTTP_OK) {
 	if ($message) {
 		system_message($message);
 	}
+
 	return new \Elgg\Http\OkResponse($content, $status_code, $forward_url);
-	
+
 }
 
 /**
@@ -285,12 +262,14 @@ function elgg_ok_response($content = '', $message = '', $forward_url = null, $st
  *                            For BC reasons and due to the logic in the client-side AJAX API,
  *                            this defaults to 200. Note that the Router and AJAX API will
  *                            treat these responses as error in spite of the HTTP code assigned
+ *
  * @return \Elgg\Http\ErrorResponse
  */
 function elgg_error_response($error = '', $forward_url = REFERRER, $status_code = ELGG_HTTP_OK) {
 	if ($error) {
 		register_error($error);
 	}
+
 	return new \Elgg\Http\ErrorResponse($error, $status_code, $forward_url);
 }
 
@@ -304,6 +283,7 @@ function elgg_error_response($error = '', $forward_url = REFERRER, $status_code 
  *                            Note that the Router and AJAX API will treat these responses
  *                            as redirection in spite of the HTTP code assigned
  *                            Note that non-redirection HTTP codes will throw an exception
+ *
  * @return \Elgg\Http\RedirectResponse
  * @throws \InvalidArgumentException
  */
@@ -311,19 +291,10 @@ function elgg_redirect_response($forward_url = REFERRER, $status_code = ELGG_HTT
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }
 
-/**
- * Initializes the page handler/routing system
- *
- * @return void
- * @access private
- */
-function _elgg_page_handler_init() {
-	elgg_register_page_handler('', 'elgg_front_page_handler');
-}
 
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_page_handler_init');
+return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+
 };

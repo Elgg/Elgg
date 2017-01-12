@@ -76,7 +76,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
 
 		$this->hooks = new PluginHooksService();
-		$this->router = new Router($this->hooks);
+		$this->router = new Router($this->hooks, _elgg_services()->routeCollection, _elgg_services()->urlMatcher, _elgg_services()->urlGenerator);
 
 		$this->system_messages = new SystemMessagesService(elgg_get_session());
 
@@ -98,7 +98,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('hooks', $this->hooks);
 		_elgg_services()->setValue('request', $this->request);
 		_elgg_services()->setValue('translator', $this->translator);
-		_elgg_services()->setValue('router', new Router($this->hooks));
+		_elgg_services()->setValue('router', new Router($this->hooks, _elgg_services()->routeCollection, _elgg_services()->urlMatcher, _elgg_services()->urlGenerator));
 		$this->amd_config = _elgg_services()->amdConfig;
 		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
 		_elgg_services()->setValue('ajax', $this->ajax);
@@ -107,7 +107,13 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport);
 		_elgg_services()->setValue('responseFactory', $this->response_factory);
 
-		elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
+		elgg_register_route('ajax', [
+			'path' => '/ajax/{segments}',
+			'handler' => '_elgg_ajax_page_handler',
+			'requirements' => [
+				'segments' => '.+',
+			],
+		]);
 
 		_elgg_services()->views->autoregisterViews('', "$this->viewsDir/default", 'default');
 		_elgg_services()->views->autoregisterViews('', "$this->viewsDir/json", 'json');
@@ -142,10 +148,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 
 		$this->assertEquals($path, $response->getContent());
-
-		$this->assertEquals(array(
-			'hello' => array($this, 'hello_page_handler')
-				), $this->router->getPageHandlers());
 	}
 
 	function testFailToRegisterInvalidCallback() {

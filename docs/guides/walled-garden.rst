@@ -13,13 +13,15 @@ From the Advanced Settings page, find the option labelled "Restrict pages to log
 Exposing pages through Walled Gardens
 -------------------------------------
 
-Many plugins extend Elgg by adding pages. Walled Garden mode will prevent these pages from being viewed by logged out users. Elgg uses :ref:`plugin hook <design/events#plugin-hooks>` to manage which pages are visible through the Walled Garden.
+Many plugins extend Elgg by adding pages. Walled Garden mode will prevent these pages from being viewed by logged out users.
+Elgg uses :ref:`plugin hook <design/events#plugin-hooks>` to manage which pages are visible through the Walled Garden.
 
 Plugin authors must register pages as public if they should be viewable through Walled Gardens by responding to the ``public_pages``, ``walled_garden`` plugin hook.
 
 The returned value is an array of regexp expressions for public pages.
 
-The following code shows how to expose http://example.org/my_plugin/public_page through a Walled Garden. This assumes the plugin has registered a :doc:`pagehandler` for ``my_plugin``.
+The following code shows how to expose http://example.org/my_plugin/public_page through a Walled Garden.
+This assumes the plugin has registered a :doc:`route </guides/routing>` for ``my_plugin/public_page``.
 
 .. code-block:: php
 

@@ -40,7 +40,9 @@ if (empty($revisions)) {
 	return;
 }
 
-$load_base_url = "blog/edit/{$blog->getGUID()}";
+$load_base_url = elgg_generate_url('edit:object:blog', [
+	'guid' => $blog->guid,
+]);
 
 // show the "published revision"
 $published_item = '';
