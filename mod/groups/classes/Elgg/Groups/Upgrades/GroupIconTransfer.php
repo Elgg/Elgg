@@ -38,7 +38,11 @@ class GroupIconTransfer implements \Elgg\Upgrade\Batch {
 		// Check whether there are icons that are still saved under the
 		// group's owner instead of the group itself.
 		foreach ($sizes as $size => $opts) {
-			$filename = "{$group->guid}{$size}.jpg";
+			if ($size == 'original') {
+				$filename = "{$group->guid}.jpg";
+			} else {
+				$filename = "{$group->guid}{$size}.jpg";
+			}
 			$filestorename = "{$dataroot}{$dir}{$prefix}{$filename}";
 			if (file_exists($filestorename)) {
 				// A group icon was found meaning that the upgrade is needed.
@@ -98,7 +102,11 @@ class GroupIconTransfer implements \Elgg\Upgrade\Batch {
 		$prefix = 'groups/';
 
 		foreach ($sizes as $size => $opts) {
-			$filename = "{$group->guid}{$size}.jpg";
+			if ($size == 'original') {
+				$filename = "{$group->guid}.jpg";
+			} else {
+				$filename = "{$group->guid}{$size}.jpg";
+			}
 			$filestorename = "{$dataroot}{$dir}{$prefix}{$filename}";
 			if (!file_exists($filestorename)) {
 				// nothing to move
