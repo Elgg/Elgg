@@ -321,12 +321,11 @@
 	TITLE
 *************************************** */
 .elgg-menu-title {
-	float: right;
-	margin-top: -1px;
+	padding: 2.5px;
 }
 .elgg-menu-title > li {
 	display: inline-block;
-	margin-left: 4px;
+	padding: 2.5px;
 }
 
 /* ***************************************
