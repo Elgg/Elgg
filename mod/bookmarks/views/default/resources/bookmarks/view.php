@@ -27,8 +27,10 @@ $title = $bookmark->title;
 
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_entity($bookmark, array('full_view' => true));
-$content .= elgg_view_comments($bookmark);
+$content = elgg_view_entity($bookmark, [
+	'full_view' => true,
+	'show_responses' => true,
+]);
 
 $body = elgg_view_layout('content', array(
 	'content' => $content,

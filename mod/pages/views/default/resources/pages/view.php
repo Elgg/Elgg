@@ -33,8 +33,10 @@ if (elgg_instanceof($container, 'group')) {
 pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_entity($page, array('full_view' => true));
-$content .= elgg_view_comments($page);
+$content = elgg_view_entity($page, [
+	'full_view' => true,
+	'show_responses' => true,
+]);
 
 // can add subpage if can edit this page and write to container (such as a group)
 if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {

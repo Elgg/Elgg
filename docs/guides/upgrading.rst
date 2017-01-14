@@ -418,6 +418,15 @@ Comment notifications
  * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
  * The action for creating a comment (``action/comment/save``) was changed. If your plugin overruled this action you should have a look at it in order to prevent double notifications 
 
+Object listing views
+--------------------
+
+ * ``object/elements/full/body`` now wraps the full listing body in a ``.elgg-listing-full-body`` wrapper
+ * ``object/elements/full`` now supports ``attachments`` and ``responses`` which are rendered after listing body
+ * In core plugins, resource views no longer render comments/replies - instead they pass a ``show_responses`` flag to the entity view, which renders the responses and passes them to the full listing view. Third party plugins will need to update their uses of ``object/<subtype>`` and ``resources/<handler>/view`` views.
+ * Full discussion view is now rendered using ``object/elements/full`` view
+ * ``object/file`` now passes image (specialcontent) view as an ``attachment`` to the full listing view
+
 Menu changes
 ------------
 

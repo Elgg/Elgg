@@ -66,11 +66,16 @@ if ($full && !elgg_in_context('gallery')) {
 </div>
 HTML;
 
+	$responses = '';
+	if (elgg_extract('show_responses', $vars, false)) {
+		$responses = elgg_view_comments($bookmark);
+	}
 	echo elgg_view('object/elements/full', array(
 		'entity' => $bookmark,
 		'icon' => $owner_icon,
 		'summary' => $summary,
 		'body' => $body,
+		'responses' => $responses,
 	));
 
 } elseif (elgg_in_context('gallery')) {

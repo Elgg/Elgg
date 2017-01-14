@@ -99,14 +99,21 @@ if ($full) {
 		'title' => false,
 		'subtitle' => $subtitle,
 	);
+
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
+
+	$responses = '';
+	if (elgg_extract('show_responses', $vars, false)) {
+		$responses = elgg_view_comments($page);
+	}
 
 	echo elgg_view('object/elements/full', array(
 		'entity' => $page,
 		'icon' => $page_icon,
 		'summary' => $summary,
 		'body' => $body,
+		'responses' => $responses,
 	));
 
 } else {
