@@ -30,6 +30,7 @@ function groups_init() {
 
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
+	elgg_register_plugin_hook_handler('entity:icon:sizes', 'group', 'groups_set_icon_sizes');
 
 	// add group activity tool option
 	if (elgg_get_plugin_setting('allow_activity', 'groups') === 'yes') {
@@ -72,7 +73,6 @@ function groups_init() {
 	// Register a handler for create groups
 	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 	elgg_register_event_handler('update:after', 'group', 'groups_update_event_listener');
-	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener', 999);
 
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
@@ -502,38 +502,6 @@ function groups_update_event_listener($event, $type, $group) {
 
 	$previous_owner_guid = $original_attributes['owner_guid'];
 
-	// In addition to standard icons, groups plugin stores a copy of the original upload
-	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $previous_owner_guid;
-	$filehandler->setFilename("groups/$group->guid.jpg");
-	$filehandler->transfer($group->owner_guid);
-}
-
-/**
- * Remove groups icons on delete
- *
- * This operation is performed in an event listener to ensure that icons
- * are removed when group is deleted outside of groups/delete action flow.
- *
- * Registered with a hight priority to make sure that other handlers to not prevent
- * the deletion.
- *
- * @param string    $event "delete"
- * @param string    $type  "group"
- * @param ElggGroup $group Group entity
- * @return void
- */
-function groups_delete_event_listener($event, $type, $group) {
-
-	/* @var $group \ElggGroup */
-
-	// In addition to standard icons, groups plugin stores a copy of the original upload
-	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $group->owner_guid;
-	$filehandler->setFilename("groups/$group->guid.jpg");
-	$filehandler->delete();
-
-	$group->deleteIcon();
 }
 
 /**
@@ -1027,4 +995,20 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 	]);
 	
 	return $return;
+}
+
+/**
+ * Add 'original' to group icon sizes
+ *
+ * @elgg_plugin_hook entity:icon:sizes group
+ * 
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function groups_set_icon_sizes(\Elgg\Hook $hook) {
+
+	$sizes = $hook->getValue();
+	$sizes['original'] = [];
+
+	return $sizes;
 }
