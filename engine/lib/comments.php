@@ -218,7 +218,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 }
 
 /**
- * By default, only authors can edit their comments.
+ * Allow comment owner and group owner to edit (or delete) comments.
  *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
@@ -231,12 +231,22 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	$user = $params['user'];
-	
-	if (elgg_instanceof($entity, 'object', 'comment') && $user) {
-		return $entity->getOwnerGUID() == $user->getGUID();
+
+	if (!elgg_instanceof($entity, 'object', 'comment')) {
+		return $return;
 	}
-	
-	return $return;
+
+	if ($entity->owner_guid == $user->guid) {
+	    return true;
+	}
+
+	$commented_on = $entity->getContainerEntity();
+	$container = $commented_on->getContainerEntity();
+	if (elgg_instanceof($container, 'group') && $container->owner_guid == $user->guid) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
