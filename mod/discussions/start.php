@@ -400,7 +400,7 @@ function discussion_ecml_views_hook($hook, $type, $return_value, $params) {
 
 
 /**
- * Allow group owner and discussion owner to edit discussion replies.
+ * Allow discussion reply owner and group owner to edit (or delete) discussion replies.
  *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
@@ -422,10 +422,6 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
 	}
 
 	$discussion = $reply->getContainerEntity();
-	if ($discussion->owner_guid == $user->guid) {
-		return true;
-	}
-
 	$container = $discussion->getContainerEntity();
 	if (elgg_instanceof($container, 'group') && $container->owner_guid == $user->guid) {
 		return true;
