@@ -86,6 +86,29 @@
 .elgg-layout {
 	min-height: 360px;
 }
+
+.elgg-layout-header {
+	border-bottom: 1px solid #EBEBEB;
+	margin-bottom: 10px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.elgg-layout-header > h1,
+.elgg-layout-header > h2,
+.elgg-layout-header > h3 {
+	order: 1;
+	padding: 5px;
+	margin-right: auto; /* force flexblox to justify to the right */
+}
+
+.elgg-layout-header > .elgg-menu {
+	order: 2;
+}
+
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
@@ -109,11 +132,6 @@
 	position: relative;
 	min-height: 360px;
 	padding: 12px 0 10px 0;
-}
-.elgg-main > .elgg-head {
-	padding-bottom: 5px;
-	border-bottom: 1px solid #EBEBEB;
-	margin-bottom: 10px;
 }
 .elgg-layout-one-sidebar .elgg-main {
 	float: left;

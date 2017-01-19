@@ -89,11 +89,6 @@ h6 { font-size: 0.8em; }
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 	text-decoration: none;
 }
-.elgg-heading-main {
-	display: inline-block;
-	padding-top: 15px;
-	margin-right: 10px;
-}
 .elgg-heading-basic {
 	color: #0054A7;
 	font-size: 1.2em;
