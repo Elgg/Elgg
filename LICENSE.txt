@@ -10,7 +10,7 @@ More info: http://learn.elgg.org/en/latest/intro/license.html
 ------------------------------------------------------------------------
 
 The MIT License (MIT)
-Copyright (c) 2016 The following parties:
+Copyright (c) 2017 The following parties:
 
 	Steve Clay (steve@mrclay.org)
 	Cash Costello (cash.costello@gmail.com)
