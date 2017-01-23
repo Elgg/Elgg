@@ -66,9 +66,11 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 			'name' => "accesslevel[$shortname]",
 			'value' => $access_id,
 		]);
-
+		
 		echo elgg_view('elements/forms/field', [
-			'input' => $input . $access_input,
+			'input' => elgg_format_element('div', [
+					'class' => 'elgg-field-input',
+				], $input . $access_input),
 			'label' => elgg_view('elements/forms/label', [
 				'label' => elgg_echo("profile:$shortname"),
 				'id' => $id,

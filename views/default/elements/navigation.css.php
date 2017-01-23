@@ -536,7 +536,7 @@
 .elgg-menu-longtext {
 	float: right;
 }
-.elgg-field-label + .elgg-menu-longtext {
+.elgg-field-input > .elgg-menu-longtext {
 	margin-top: -20px;
 }
 /* ***************************************
