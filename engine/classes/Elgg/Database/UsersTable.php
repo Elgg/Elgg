@@ -482,9 +482,18 @@ class UsersTable {
 	 * @return bool
 	 */
 	public function setValidationStatus($user_guid, $status, $method = '') {
-		$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
-		$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
+		$user = get_user($user_guid);
+		if (!$user) {
+			return false;
+		}
+		$result1 = create_metadata($user->guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
+		$result2 = create_metadata($user->guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
 		if ($result1 && $result2) {
+			if ((bool) $status) {
+				elgg_trigger_after_event('validate', 'user', $user);
+			} else {
+				elgg_trigger_after_event('invalidate', 'user', $user);
+			}
 			return true;
 		} else {
 			return false;
