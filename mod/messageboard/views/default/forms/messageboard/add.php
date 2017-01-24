@@ -8,6 +8,7 @@
 
 echo elgg_view_field([
 	'#type' => 'plaintext',
+	'required' => true,
 	'name' => 'message_content',
 	'class' => 'messageboard-input',
 	'rows' => 4,

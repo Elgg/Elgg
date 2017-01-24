@@ -12,12 +12,14 @@ $fields = [
 	[
 		'#label' => elgg_echo('title'),
 		'#type' => 'text',
+		'required' => true,
 		'name' => 'title',
 		'value' => elgg_extract('title', $vars),
 	],
 	[
 		'#label' => elgg_echo('bookmarks:address'),
-		'#type' => 'text',
+		'#type' => 'url',
+		'required' => true,
 		'name' => 'address',
 		'value' => elgg_extract('address', $vars),
 	],

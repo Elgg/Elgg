@@ -21,6 +21,7 @@ $owner = elgg_get_logged_in_user_entity();
 			echo elgg_view('input/text', array(
 				'name' => 'title',
 				'value' => $title,
+				'required' => true,
 			));
 		?>
 	</label>
@@ -33,6 +34,7 @@ $owner = elgg_get_logged_in_user_entity();
 				'name' => 'address',
 				'value' => $address,
 				'readonly' => (bool)$address,
+				'required' => true,
 			]);
 			?>
 	</label>
