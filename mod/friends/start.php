@@ -8,13 +8,11 @@ function elgg_friends_plugin_init() {
 
 	elgg_register_page_handler('friends', '_elgg_friends_page_handler');
 	elgg_register_page_handler('friendsof', '_elgg_friends_page_handler');
-	elgg_register_page_handler('collections', '_elgg_collections_page_handler');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_friends_widget_urls');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_friends_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_collections_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
 }
 
@@ -89,40 +87,6 @@ function _elgg_friends_page_handler($segments, $handler) {
 }
 
 /**
- * Page handler for friends collections
- *
- * @param array $page_elements Page elements
- *
- * @return bool
- * @access private
- */
-function _elgg_collections_page_handler($page_elements) {
-	elgg_set_context('friends');
-	if (isset($page_elements[0])) {
-		switch ($page_elements[0]) {
-			case 'add':
-				elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-
-				echo elgg_view_resource("friends/collections/add");
-				return true;
-			case 'owner':
-				$user = get_user_by_username($page_elements[1]);
-				if ($user) {
-					elgg_set_page_owner_guid($user->getGUID());
-
-					echo elgg_view_resource("friends/collections/view");
-					return true;
-				}
-				break;
-			case 'pickercallback':
-				echo elgg_view_resource('friends/collections/pickercallback');
-				return true;
-		}
-	}
-	return false;
-}
-
-/**
  * Register menu items for the topbar menu
  *
  * @param string $hook
@@ -188,41 +152,6 @@ function _elgg_friends_page_menu($hook, $type, $return, $params) {
 		'contexts' => array('friends'),
 	]);
 
-	return $return;
-}
-
-/**
- * Register menu items for the collections page menu
- *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
- *
- * @access private
- *
- * @since 3.0
- */
-function _elgg_collections_page_menu($hook, $type, $return, $params) {
-
-	if (!elgg_is_logged_in()) {
-		return;
-	}
-	
-	if (elgg_get_logged_in_user_guid() !== elgg_get_page_owner_guid()) {
-		return;
-	}
-
-	$user = elgg_get_page_owner_entity();
-		
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'friends:view:collections',
-		'text' => elgg_echo('friends:collections'),
-		'href' => "collections/owner/$user->username",
-		'contexts' => array('friends'),
-	]);
-	
 	return $return;
 }
 
