@@ -115,10 +115,9 @@ function groups_fields_setup() {
 		'description' => 'longtext',
 		'briefdescription' => 'text',
 		'interests' => 'tags',
-		//'website' => 'url',
 	);
 
-	$profile_defaults = elgg_trigger_plugin_hook('profile:fields', 'group', NULL, $profile_defaults);
+	$profile_defaults = elgg_trigger_plugin_hook('profile:fields', 'group', null, $profile_defaults);
 
 	elgg_set_config('group', $profile_defaults);
 
@@ -1024,7 +1023,7 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
  * Add 'original' to group icon sizes
  *
  * @elgg_plugin_hook entity:icon:sizes group
- * 
+ *
  * @param \Elgg\Hook $hook Hook
  * @return array
  */

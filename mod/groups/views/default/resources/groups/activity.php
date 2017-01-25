@@ -50,12 +50,11 @@ if ($type != 'all') {
 $content = elgg_view('core/river/filter', array('selector' => $selector));
 $content .= elgg_list_river($options);
 
-$params = array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
 	'class' => 'elgg-river-layout',
-);
-$body = elgg_view_layout('content', $params);
+]);
 
 echo elgg_view_page($title, $body);
