@@ -293,10 +293,12 @@ The above will generate the following markup:
 
    <div class="elgg-field elgg-field-required">
       <label for="elgg-field-1" class="elgg-field-label">Blog status<span title="Required" class="elgg-required-indicator">*</span></label>
-      <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-dropdown">
-         <option value="draft">Draft</option>
-         <option value="published">Published</option>
-      </select>
+      <div class="elgg-field-input">
+      	 <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-dropdown">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+         </select>
+      </div>
       <div class="elgg-field-help elgg-text-help">
          <span class="elgg-icon-help elgg-icon"></span>This indicates whether or not the blog is visible in the feed
       </div>
