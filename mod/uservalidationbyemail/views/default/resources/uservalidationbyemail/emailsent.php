@@ -9,6 +9,9 @@ $email = $session->get('emailsent', '');
 if (!$email) {
 	forward('');
 }
+
+$session->remove('emailsent');
+
 $title = elgg_echo('uservalidationbyemail:emailsent', array($email));
 $body = elgg_view_layout('one_column', array(
 	'title' => $title,
