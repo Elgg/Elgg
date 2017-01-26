@@ -21,29 +21,31 @@ $fields = [
 		'#label' => elgg_echo('title'),
 		'#type' => 'text',
 		'name' => 'title',
+		'required' => true,
 		'id' => 'blog_title',
-		'value' => elgg_extract('title', $vars),		
+		'value' => elgg_extract('title', $vars),
 	],
 	[
 		'#label' => elgg_echo('blog:excerpt'),
 		'#type' => 'text',
 		'name' => 'excerpt',
 		'id' => 'blog_excerpt',
-		'value' => elgg_html_decode(elgg_extract('excerpt', $vars)),		
+		'value' => elgg_html_decode(elgg_extract('excerpt', $vars)),
 	],
 	[
 		'#label' => elgg_echo('blog:body'),
 		'#type' => 'longtext',
 		'name' => 'description',
+		'required' => true,
 		'id' => 'blog_description',
-		'value' => elgg_extract('description', $vars),		
+		'value' => elgg_extract('description', $vars),
 	],
 	[
 		'#label' => elgg_echo('tags'),
 		'#type' => 'tags',
 		'name' => 'tags',
 		'id' => 'blog_tags',
-		'value' => elgg_extract('tags', $vars),		
+		'value' => elgg_extract('tags', $vars),
 	],
 	$categories_vars,
 	[
@@ -53,9 +55,9 @@ $fields = [
 		'id' => 'blog_comments_on',
 		'value' => elgg_extract('comments_on', $vars),
 		'options_values' => [
-			'On' => elgg_echo('on'), 
+			'On' => elgg_echo('on'),
 			'Off' => elgg_echo('off'),
-		],	
+		],
 	],
 	[
 		'#label' => elgg_echo('access'),
@@ -65,7 +67,7 @@ $fields = [
 		'value' => elgg_extract('access_id', $vars),
 		'entity' => elgg_extract('entity', $vars),
 		'entity_type' => 'object',
-		'entity_subtype' => 'blog',	
+		'entity_subtype' => 'blog',
 	],
 	[
 		'#label' => elgg_echo('status'),
@@ -76,17 +78,17 @@ $fields = [
 		'options_values' => [
 			'draft' => elgg_echo('status:draft'),
 			'published' => elgg_echo('status:published'),
-		],	
+		],
 	],
 	[
 		'#type' => 'hidden',
 		'name' => 'container_guid',
-		'value' => elgg_get_page_owner_guid(),		
+		'value' => elgg_get_page_owner_guid(),
 	],
 	[
 		'#type' => 'hidden',
 		'name' => 'guid',
-		'value' => elgg_extract('guid', $vars),		
+		'value' => elgg_extract('guid', $vars),
 	],
 ];
 

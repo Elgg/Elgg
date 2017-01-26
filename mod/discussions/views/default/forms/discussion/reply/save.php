@@ -36,6 +36,7 @@ if ($reply) {
 echo elgg_view_field([
 	'#type' => 'longtext',
 	'#label' => $label,
+	'required' => true,
 	'name' => 'description',
 	'value' => $value,
 	'visual' => !$inline,

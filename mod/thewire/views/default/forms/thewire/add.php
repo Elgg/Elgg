@@ -39,6 +39,7 @@ $post_input = elgg_view('input/plaintext', array(
 	'id' => 'thewire-textarea',
 	'rows' => $num_lines,
 	'data-max-length' => $char_limit,
+	'required' => true,
 ));
 
 $submit_button = elgg_view('input/submit', array(

@@ -12,50 +12,40 @@ $address = get_input('address', "");
 $description = "";
 $owner = elgg_get_logged_in_user_entity();
 
-?>
+$fields = [
+	[
+		'#type' => 'text',
+		'#label' => elgg_echo('title'),
+		'name' => 'title',
+		'value' => $title,
+		'required' => true,
+	],
+	[
+		'#type' => 'url',
+		'#label' => elgg_echo('reportedcontent:address'),
+		'name' => 'address',
+		'value' => $address,
+		'readonly' => (bool)$address,
+		'required' => true,
+	],
+	[
+		'#type' => 'plaintext',
+		'#label' => elgg_echo('reportedcontent:description'),
+		'name' => 'description',
+		'value' => $description,
+	],
+];
 
-<div>
-	<label>
-		<?php
-			echo elgg_echo('title');
-			echo elgg_view('input/text', array(
-				'name' => 'title',
-				'value' => $title,
-			));
-		?>
-	</label>
-</div>
-<div>
-	<label>
-		<?php
-			echo elgg_echo('reportedcontent:address');
-			echo elgg_view('input/url', [
-				'name' => 'address',
-				'value' => $address,
-				'readonly' => (bool)$address,
-			]);
-			?>
-	</label>
-</div>
-<div>
-	<label>
-		<?php 	echo elgg_echo('reportedcontent:description'); ?>
-	</label>
-	<?php
-		echo elgg_view('input/plaintext',array(
-			'name' => 'description',
-			'value' => $description,
-		));
-	?>
-</div>
-<div class="elgg-foot">
-	<?php
-		echo elgg_view('input/submit', array(
-			'value' => elgg_echo('reportedcontent:report'),
-		));
-		echo elgg_view('input/button', [
-			'class' => 'elgg-button-cancel mls',
-			'value' => elgg_echo('cancel'),
-		]);
-	?>
-</div>
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
+}
+
+$footer = elgg_view('input/submit', array(
+	'value' => elgg_echo('reportedcontent:report'),
+));
+$footer .= elgg_view('input/button', [
+	'class' => 'elgg-button-cancel',
+	'value' => elgg_echo('cancel'),
+]);
+
+elgg_set_form_footer($footer);

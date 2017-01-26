@@ -16,6 +16,9 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+.elgg-button + .elgg-button {
+	margin-left: 5px;
+}
 .elgg-button:hover,
 .elgg-button:focus {
 	text-decoration: none;
