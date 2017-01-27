@@ -138,6 +138,23 @@
 * **metadata:** metadata access control is deprecated ([a9523d97](https://github.com/Elgg/Elgg/commit/a9523d979431016352a424fd3580ffad717c4d6b))
 
 
+<a name="2.2.4"></a>
+### 2.2.4  (2017-01-27)
+
+#### Contributors
+
+* Steve Clay (2)
+* Ismayil Khayredinov (1)
+* iionly (1)
+
+#### Bug Fixes
+
+* **ajax:** elgg/Ajax view() and form() set $vars as expected ([abf8a9ce](https://github.com/Elgg/Elgg/commit/abf8a9ce87117ab24cb62e937805750eca780de1), closes [#10667](https://github.com/Elgg/Elgg/issues/10667))
+* **core:** Check existence of cache symlink without usage of readlink() ([3e4dc6a1](https://github.com/Elgg/Elgg/commit/3e4dc6a1f2e2b20c5e31800e925ca5779a6f40cf))
+* **files:** mitigate issues with special chars in file names ([4a7b74ea](https://github.com/Elgg/Elgg/commit/4a7b74ea27b31be159fba9fb5c3dda405da15409))
+* **web_services:** handle string params with proper escaping ([702ce46c](https://github.com/Elgg/Elgg/commit/702ce46c44aec2546f953902061166bf3f48a5af))
+
+
 <a name="2.2.3"></a>
 ### 2.2.3  (2016-11-08)
 
@@ -1264,6 +1281,18 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+<a name="1.12.15"></a>
+### 1.12.15  (2017-01-25)
+
+#### Contributors
+
+* Johnny Mast (1)
+* jdalsem (1)
+
+#### Bug Fixes
+
+* **views:** corrected syntax error in input/date ([a7277f30](https://github.com/Elgg/Elgg/commit/a7277f307596f19dbc3c8415c9048a20a8493287))
 
 <a name="1.12.14"></a>
 ### 1.12.14  (2016-11-08)
