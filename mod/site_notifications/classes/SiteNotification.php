@@ -64,7 +64,7 @@ class SiteNotification extends ElggObject {
 	 * @param bool $read Has the notification been read
 	 */
 	public function setRead($read) {
-		$this->read = $read;
+		$this->read = (int)$read;
 	}
 
 	/**
