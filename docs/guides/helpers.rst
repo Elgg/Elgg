@@ -27,8 +27,8 @@ Entity and context retrieval
 - ``get_user($user_guid)`` Given a GUID, returns a full ElggUser entity
 - ``elgg_get_page_owner_guid()`` Returns the GUID of the current page owner, if there is one
 - ``elgg_get_page_owner_entity()`` Like elgg_get_page_owner_guid() but returns the full entity
-- ``get_context()`` Returns the current page's context - eg "blog" for the blog plugin, "thewire" for the wire, etc. Returns "main" as default
-- ``set_context($context)`` Forces the context to be a particular value
+- ``elgg_get_context()`` Returns the current page's context - eg "blog" for the blog plugin, "thewire" for the wire, etc. Returns "main" as default
+- ``elgg_set_context($context)`` Forces the context to be a particular value
 - ``elgg_push_context($context)`` Adds a context to the stack
 - ``elgg_pop_context()`` Removes the top context from the stack
 - ``elgg_in_context($context)`` Checks if you're in a context (this checks the complete stack, eg. 'widget' in 'groups')
