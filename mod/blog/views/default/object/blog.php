@@ -13,7 +13,6 @@ if (!$blog) {
 }
 
 $owner = $blog->getOwnerEntity();
-$categories = elgg_view('output/categories', $vars);
 $excerpt = $blog->excerpt;
 if (!$excerpt) {
 	$excerpt = elgg_get_excerpt($blog->description);
@@ -21,27 +20,26 @@ if (!$excerpt) {
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 
-$by_line = elgg_view('page/elements/by_line', $vars);
-
 // The "on" status changes for comments, so best to check for !Off
+$comments_link = '';
 if ($blog->comments_on != 'Off') {
 	$comments_count = $blog->countComments();
-	//only display if there are commments
-	if ($comments_count != 0) {
+	if ($comments_count > 0) {
+		//only display if there are commments
 		$text = elgg_echo("comments") . " ($comments_count)";
 		$comments_link = elgg_view('output/url', array(
 			'href' => $blog->getURL() . '#comments',
 			'text' => $text,
 			'is_trusted' => true,
 		));
-	} else {
-		$comments_link = '';
 	}
-} else {
-	$comments_link = '';
 }
 
-$subtitle = "$by_line $comments_link $categories";
+$subtitle = [
+	'by_line' => elgg_view('page/elements/by_line', $vars),
+	'comments_link' => $comments_link,
+	'categories' => elgg_view('output/categories', $vars),
+];
 
 $metadata = '';
 if (!elgg_in_context('widgets')) {
