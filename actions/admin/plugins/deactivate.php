@@ -47,10 +47,7 @@ if (count($plugin_guids) == 1) {
 	$plugin = get_entity($plugin_guids[0]);
 	$id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 	$url = "$url#$id";
-	$data = [
-		'list' => elgg_view('admin/plugins', ['list_only' => true]),
-	];
-	return elgg_ok_response($data, '', $url);
+	return elgg_ok_response('', '', $url);
 } else {
 	forward(REFERER);
 }
