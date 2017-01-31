@@ -284,3 +284,13 @@ $CONFIG->exception_include = '';
 //	// total time captured. .1% by default
 //	$CONFIG->profiling_minimum_percentage = .1;
 //}
+
+/**
+ * Maximum php execution time for actions (in seconds)
+ *
+ * This setting can be used to set a custom default php execution time only for all registered Elgg actions.
+ * Note that if some actions set their own execution time limit, this setting will no affect those actions.
+ *
+ * @global int $CONFIG->action_time_limit
+ */
+$CONFIG->action_time_limit = 120;

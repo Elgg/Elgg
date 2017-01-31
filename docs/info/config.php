@@ -266,6 +266,16 @@ $CONFIG->lastcache;
 $CONFIG->exception_include = '';
 
 /**
+ * Maximum php execution time for actions (in seconds)
+ *
+ * This setting can be used to set a custom php execution time specifically for Elgg actions.
+ * Note that if some actions set their own execution time limit, this setting will no affect those actions.
+ *
+ * @global int $CONFIG->action_time_limit
+ */
+$CONFIG->action_time_limit;
+
+/**
  * Paths to scan for autoloading languages.
  *
  * Languages are automatically loaded for the site or
