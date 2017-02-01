@@ -311,6 +311,8 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  *  batch_size => int (25) If "batch" is used, this is the number of entities/rows to pull in before
  *                requesting more.
+ *                
+ *  ignore_access => bool (false) If set to true, entities will be fetch with access ignored.
  *
  * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an Elgg\BatchResult. false on errors.
  *

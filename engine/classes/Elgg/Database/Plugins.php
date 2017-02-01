@@ -419,6 +419,7 @@ class Plugins {
 			// ORDER BY CAST(ps.value) is super slow. We usort() below.
 			'order_by' => false,
 			'distinct' => false,
+			'ignore_access' => true,
 		);
 	
 		switch ($status) {
@@ -441,9 +442,7 @@ class Plugins {
 				break;
 		}
 	
-		$old_ia = elgg_set_ignore_access(true);
 		$plugins = elgg_get_entities_from_relationship($options);
-		elgg_set_ignore_access($old_ia);
 
 		usort($plugins, function (\ElggPlugin $a, \ElggPlugin $b) {
 			$a_value = $a->getVolatileData('select:value');
