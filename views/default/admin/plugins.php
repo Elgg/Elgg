@@ -61,6 +61,7 @@ if ($add_context) {
 	elgg_push_context('admin');
 }
 $plugins_list = elgg_view_entity_list($installed_plugins, $list_options);
+$plugins_list .= "<div id='elgg-plugin-list-cover'></div>";
 if ($add_context) {
 	elgg_pop_context();
 }

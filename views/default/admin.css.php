@@ -1526,6 +1526,17 @@ h6 > .elgg-icon {
 	margin-left: 5px;
 }
 
+#elgg-plugin-list-cover {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	opacity: 0.5;
+}
+
 .elgg-plugin-settings {
 	font-weight: normal;
 	font-size: 0.9em;

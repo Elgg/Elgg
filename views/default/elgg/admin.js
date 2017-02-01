@@ -66,6 +66,13 @@ define(function(require) {
 		$(document).on('mouseenter', '.elgg-plugin-details-screenshots .elgg-plugin-screenshot', showPluginScreenshot);
 	}
 
+	function freezePlugins() {
+		$('#elgg-plugin-list-cover').css('display', 'block');
+	}
+	function unfreezePlugins() {
+		$('#elgg-plugin-list-cover').css('display', 'none');
+	}
+
 	function initPluginReordering() {
 		$('#elgg-plugin-list > ul').sortable({
 			items:                'li:has(> .elgg-state-draggable)',
@@ -79,6 +86,8 @@ define(function(require) {
 	}
 
 	function toggleSinglePlugin(e) {
+		freezePlugins();
+
 		e.preventDefault();
 
 		ajax.action(this.href)
@@ -100,6 +109,7 @@ define(function(require) {
 						// reapply category filtering
 						$(".elgg-admin-plugins-categories > li.elgg-state-selected > a").trigger('click');
 						initPluginReordering();
+						unfreezePlugins();
 					});
 			});
 	}
@@ -116,6 +126,8 @@ define(function(require) {
 		if (!confirm(elgg.echo('question:areyousure'))) {
 			return;
 		}
+
+		freezePlugins();
 
 		var guids = [],
 			state = $(this).data('desiredState'),
@@ -153,6 +165,8 @@ define(function(require) {
 	 * @return void
 	 */
 	function movePlugin (e, ui) {
+		freezePlugins();
+
 		// get guid from id like elgg-object-<guid>
 		var pluginGuid = ui.item.attr('id');
 		pluginGuid = pluginGuid.replace('elgg-object-', '');
@@ -171,6 +185,7 @@ define(function(require) {
 						updatePluginView($(this));
 					}
 				});
+				unfreezePlugins();
 			}
 		});
 	}
