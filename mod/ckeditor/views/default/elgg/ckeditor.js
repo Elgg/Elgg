@@ -13,7 +13,7 @@ define(function (require) {
 	require('elgg/init');
 	var $ = require('jquery');
 	require('jquery.ckeditor');
-	var CKEDITOR = require('ckeditor');
+	var CKEDITOR = require('ckeditor/ckeditor');
 	var config = require('elgg/ckeditor/config');
 
 	var elggCKEditor = {

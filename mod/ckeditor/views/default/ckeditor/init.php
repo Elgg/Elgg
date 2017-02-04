@@ -9,7 +9,7 @@ if (!elgg_extract('editor', $vars, true)) {
 }
 ?>
 <script>
-	require(['elgg/ckeditor'], function (elggCKEditor) {
+	require(['elgg/ckeditor/config', 'ckeditor/ckeditor', 'elgg/ckeditor'], function(config, CKEDITOR, elggCKEditor) {
 		elggCKEditor.bind('.elgg-input-longtext');
 	});
 </script>
