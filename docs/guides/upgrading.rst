@@ -240,6 +240,8 @@ Removed JavaScript APIs
  * ``elgg.ui.likesPopupHandler``
  * ``elgg.embed``: Use the ``elgg/embed`` module
  * ``embed/custom_insert_js``: Use the ``embed, editor`` JS hook
+ * ``elgg/ckeditor.js``: replaced by ``elgg-ckeditor.js``
+ * ``elgg/ckeditor/set-basepath.js``
  * ``elgg/ckeditor/insert.js``
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``

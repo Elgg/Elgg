@@ -25,7 +25,7 @@ if ($editor_type && elgg_view_exists("elgg/ckeditor/config/{$editor_type}.js")) 
 
 ?>
 <script>
-	require(['elgg/ckeditor'], function (elggCKEditor) {
+	require(['elgg-ckeditor'], function (elggCKEditor) {
 		elggCKEditor.bind('#<?php echo $id; ?>', '<?php echo $config; ?>');
 	});
 </script>

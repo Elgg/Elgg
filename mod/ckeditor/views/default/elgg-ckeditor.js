@@ -1,14 +1,15 @@
 /**
  * This module can be used to bind CKEditor to a textarea
  * <code>
- *	  require(['elgg/ckeditor'], function(editor) {
+ *	  require(['elgg-ckeditor'], function(editor) {
  *	      editor.bind('textarea');
  *	  });
  * </code>
  *
- * Modify the config by creating a boot module and handling the [config, ckeditor] hook.
- *
- * @module elgg/ckeditor
+ * @warning It's important this module is not renamed so that it ends with "/ckeditor". This can confuse
+ *          the CKeditor library when it sniffs its resource directory.
+ * 
+ * @module elgg-ckeditor
  */
 define(function (require) {
 	var elgg = require('elgg');
@@ -17,48 +18,44 @@ define(function (require) {
 	var $ = require('jquery');
 	require('jquery.ckeditor');
 
-	var CKEDITOR = require('ckeditor');
+	var CKEDITOR = require('ckeditor/ckeditor');
+	var DEFAULT_CONFIG_MODULE = 'elgg/ckeditor/config';
 
 	var elggCKEditor = {
-		bind: function (selector, editor_config) {
-			var default_config = 'elgg/ckeditor/config';
-			
-			if (typeof editor_config === undefined) {
-				editor_config = default_config;
-			}
+		bind: function (selector, config_module) {
+			config_module = config_module || DEFAULT_CONFIG_MODULE;
 
-			require([editor_config], function(config) {
-				elggCKEditor.config = config;
-				
+			require([config_module], function (config) {
 				elggCKEditor.registerHandlers();
 				CKEDITOR = elgg.trigger_hook('prepare', 'ckeditor', null, CKEDITOR);
 				selector = selector || '.elgg-input-longtext';
 				if ($(selector).length === 0) {
 					return;
 				}
+
 				$(selector).not('[data-cke-init]')
-						.attr('data-cke-init', true)
-						.each(function () {
-							var opts = $(this).data('editorOpts') || {};
-	
-							if (opts.disabled) {
-								// Editor has been disabled
-								return;
-							}
-							delete opts.disabled;
-	
-							var visual = opts.state !== 'html';
-							delete opts.state;
-	
-							var config = $.extend({}, elggCKEditor.config, opts);
-							$(this).data('elggCKEeditorConfig', config);
-	
-							if (!visual) {
-								elggCKEditor.init(this, visual);
-							} else {
-								$(this).ckeditor(elggCKEditor.init, config);
-							}
-						});
+					.attr('data-cke-init', true)
+					.each(function () {
+						var opts = $(this).data('editorOpts') || {};
+
+						if (opts.disabled) {
+							// Editor has been disabled
+							return;
+						}
+						delete opts.disabled;
+
+						var visual = opts.state !== 'html';
+						delete opts.state;
+
+						var FINAL_CONFIG = $.extend({}, config, opts);
+						$(this).data('elggCKEeditorConfig', FINAL_CONFIG);
+
+						if (!visual) {
+							elggCKEditor.init(this, visual);
+						} else {
+							$(this).ckeditor(elggCKEditor.init, FINAL_CONFIG);
+						}
+					});
 			});
 		},
 
@@ -100,6 +97,7 @@ define(function (require) {
 			var target = $(this).attr('href');
 			elggCKEditor.toggle($(target)[0]);
 		},
+
 		/**
 		 * Toggles the CKEditor
 		 *
@@ -117,6 +115,7 @@ define(function (require) {
 				}
 			});
 		},
+
 		/**
 		 * Resets the CKEditor
 		 * Callback function for the reset event
@@ -128,6 +127,7 @@ define(function (require) {
 			event.preventDefault();
 			elggCKEditor.reset(this);
 		},
+
 		/**
 		 * Resets the CKEditor
 		 *
@@ -141,6 +141,7 @@ define(function (require) {
 				}
 			});
 		},
+
 		/**
 		 * Focuses the CKEditor
 		 * Callback function for the focus event
@@ -152,6 +153,7 @@ define(function (require) {
 			event.preventDefault();
 			elggCKEditor.focus(this);
 		},
+
 		/**
 		 * Focuses the CKEditor
 		 *
@@ -215,7 +217,7 @@ define(function (require) {
 					}
 				}
 			});
-		},
+		}
 	};
 
 	$(document).on('click', '.ckeditor-toggle-editor', elggCKEditor.toggleEditor);
@@ -226,4 +228,3 @@ define(function (require) {
 
 	return elggCKEditor;
 });
-
