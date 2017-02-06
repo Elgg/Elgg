@@ -86,6 +86,11 @@
 	border-right: 1px solid #CCCCCC;
 }
 
+    
+.elgg-disabled-link{
+    color:gray;
+    pointer-events: none;
+}    
 /* ***************************************
 	Spacing (from OOCSS)
 *************************************** */
