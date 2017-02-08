@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-27 15:35+0100\n"
+"POT-Creation-Date: 2017-01-27 10:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,14 +18,6 @@ msgstr ""
 
 #: ../../admin/backup-restore.rst:2
 msgid "Backup and Restore"
-msgstr ""
-
-#: ../../admin/backup-restore.rst:0
-#: ../../admin/duplicate-installation.rst:0
-#: ../../admin/getting-help.rst:0
-#: ../../admin/performance.rst:0
-#: ../../admin/plugins.rst:0
-msgid "Contents"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:9
