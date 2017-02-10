@@ -6,6 +6,7 @@
  */
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 
 $subject = $item->getSubjectEntity();
 $object = $item->getObjectEntity();
@@ -29,14 +30,24 @@ $action = $item->action_type;
 $type = $item->type;
 $subtype = $item->subtype ? $item->subtype : 'default';
 
+// if activity happened in a group
+$group_string = '';
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
+	$group_link = elgg_view('output/url', [
+		'href' => $container->getURL(),
+		'text' => $container->name,
+		'is_trusted' => true,
+	]);
+	$group_string = elgg_echo('river:ingroup', [$group_link]);
+}
+
 // check summary translation keys.
 // will use the $type:$subtype if that's defined, otherwise just uses $type:default
 $key = "river:$action:$type:$subtype";
-$summary = elgg_echo($key, [$subject_link, $object_link]);
-
-if ($summary == $key) {
+if (!elgg_language_key_exists($key)) {
 	$key = "river:$action:$type:default";
-	$summary = elgg_echo($key, [$subject_link, $object_link]);
 }
+$summary = elgg_echo($key, array($subject_link, $object_link));
 
-echo $summary;
+echo trim("$summary $group_string");
