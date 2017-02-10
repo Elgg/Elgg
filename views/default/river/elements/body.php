@@ -53,21 +53,10 @@ if ($responses) {
 	$responses = "<div class=\"elgg-river-responses\">$responses</div>";
 }
 
-$group_string = '';
-$object = $item->getObjectEntity();
-$container = $object->getContainerEntity();
-if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
-	$group_link = elgg_view('output/url', array(
-		'href' => $container->getURL(),
-		'text' => $container->name,
-		'is_trusted' => true,
-	));
-	$group_string = elgg_echo('river:ingroup', array($group_link));
-}
 
 echo <<<RIVER
 $menu
-<div class="elgg-river-summary">$summary $group_string <span class="elgg-river-timestamp">$timestamp</span></div>
+<div class="elgg-river-summary">$summary <span class="elgg-river-timestamp">$timestamp</span></div>
 $message
 $attachments
 $responses
