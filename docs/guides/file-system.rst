@@ -117,7 +117,7 @@ In order to implement an action that saves a single file uploaded by a user, you
 .. code-block:: php
 
 	// in your form
-	echo elgg_view('input/file', [
+	echo elgg_view_input('file', [
 		'name' => 'upload',
 		'label' => 'Select an image to upload',
 		'help' => 'Only jpeg, gif and png images are supported',
