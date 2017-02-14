@@ -1,3 +1,35 @@
+<a name="2.3.1"></a>
+### 2.3.1  (2017-02-14)
+
+#### Contributors
+
+* Steve Clay (8)
+* Jerôme Bakker (5)
+* Jeroen Dalsem (2)
+* Ismayil Khayredinov (1)
+* Yanwei Jiang (1)
+* iionly (1)
+
+#### Bug Fixes
+
+* **access:** use ignore access only when querying the database ([fb57c02c](https://github.com/Elgg/Elgg/commit/fb57c02c7bc9fed92c848a6ceeac7d9d5a0866fe))
+* **admin:** prevents simultaneous plugin (de)activation/reordering ([907c9b67](https://github.com/Elgg/Elgg/commit/907c9b6714c4457dbb86c2aa6e692d20c9a009ea), closes [#10706](https://github.com/Elgg/Elgg/issues/10706))
+* **ajax:** elgg/Ajax now uses spinner if 2nd fetch occurs in done handler ([afef3c4e](https://github.com/Elgg/Elgg/commit/afef3c4e2f115b2365c9af179d678e2ba74b9318))
+* **comments:** use elgg/Ajax to load inline comment form ([17d93a5b](https://github.com/Elgg/Elgg/commit/17d93a5bd370a325ea21a81680b19b2c0a517437))
+* **discussions:** river entries are once again visible to logged out users ([65e6664d](https://github.com/Elgg/Elgg/commit/65e6664de7c3004e6c59a9ab8c637ef47b549568))
+* **embed:** Inserting medium thumbnail size again instead of small on embedding images ([aea45030](https://github.com/Elgg/Elgg/commit/aea45030e3618b5c449f5294cc8d18ec40fb01a0))
+* **html:** elgg_normalize_url() handles tel: links ([48a51709](https://github.com/Elgg/Elgg/commit/48a51709c956b5a676711a3febb32c65a5df1e0e), closes [#10689](https://github.com/Elgg/Elgg/issues/10689))
+* **icons:**
+  * detect image format for resizing ([dd9af8a9](https://github.com/Elgg/Elgg/commit/dd9af8a9fb72723e8b1e724c37d3e2343e157116))
+  * set correct filename for temp resizing file ([aeed7060](https://github.com/Elgg/Elgg/commit/aeed7060c394284758b899a021a4328c59571fd3))
+* **menus:** return to default of sorting menus by text ([9636790f](https://github.com/Elgg/Elgg/commit/9636790fc84c685e2f0c92fd65ea85d8eb63ea19), closes [#10737](https://github.com/Elgg/Elgg/issues/10737))
+* **security:** random byte generation improved on some systems ([03285ba7](https://github.com/Elgg/Elgg/commit/03285ba7c7090f4881797bb74c14aaf74b48c47e), closes [#10750](https://github.com/Elgg/Elgg/issues/10750))
+* **uservalidationbyemail:** unset emailsent after showing it once ([4e16cc9b](https://github.com/Elgg/Elgg/commit/4e16cc9b093f6f004dc9af426cb9c9acce00aa96))
+* **views:**
+  * elgg_view_field no longer leaves #type in attributes ([e4e316e9](https://github.com/Elgg/Elgg/commit/e4e316e9e699e0083b85559a3e707af0341eb19f), closes [#10699](https://github.com/Elgg/Elgg/issues/10699))
+  * in table lists, rows now have IDs ([e42fa636](https://github.com/Elgg/Elgg/commit/e42fa636ab73102ad55ef60463f1eeb309211f52), closes [#10696](https://github.com/Elgg/Elgg/issues/10696))
+
+
 <a name="2.3.0"></a>
 ## 2.3.0  (2016-12-27)
 
