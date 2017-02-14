@@ -253,7 +253,7 @@ class AccessCollections {
 	 * Returns the SQL where clause for enforcing read access to data.
 	 *
 	 * Note that if this code is executed in privileged mode it will return (1=1).
-	 * 
+	 *
 	 * Otherwise it returns a where clause to retrieve the data that a user has
 	 * permission to read.
 	 *
@@ -267,25 +267,25 @@ class AccessCollections {
 	 *
 	 * The results will be combined into an SQL where clause in the form:
 	 *  ((or1 OR or2 OR orN) AND (and1 AND and2 AND andN))
-	 * 
+	 *
 	 * @param array $options Array in format:
 	 *
 	 * 	table_alias => STR Optional table alias. This is based on the select and join clauses.
-	 *                     Default is 'e'. 
+	 *                     Default is 'e'.
 	 *
 	 *  user_guid => INT Optional GUID for the user that we are retrieving data for.
 	 *                   Defaults to the logged in user if null.
 	 *                   Passing 0 will build a query for a logged out user (even if there is a logged in user)
-	 * 
-	 *  use_enabled_clause => BOOL Optional. Should we append the enabled clause? The default 
+	 *
+	 *  use_enabled_clause => BOOL Optional. Should we append the enabled clause? The default
 	 *                             is set by access_show_hidden_entities().
-	 * 
+	 *
 	 *  access_column => STR Optional access column name. Default is 'access_id'.
-	 * 
+	 *
 	 *  owner_guid_column => STR Optional owner_guid column. Default is 'owner_guid'.
-	 * 
+	 *
 	 *  guid_column => STR Optional guid_column. Default is 'guid'.
-	 * 
+	 *
 	 * @return string
 	 * @access private
 	 */
@@ -402,9 +402,6 @@ class AccessCollections {
 			return true;
 		}
 
-		// See #7159. Must not allow ignore access to affect query
-		$ia = elgg_set_ignore_access(false);
-
 		$user_guid = isset($user) ? (int) $user->guid : elgg_get_logged_in_user_guid();
 
 		if ($user_guid && $user_guid == $entity->owner_guid) {
@@ -416,6 +413,9 @@ class AccessCollections {
 			// Existing users have access to entities with logged in access
 			return true;
 		}
+		
+		// See #7159. Must not allow ignore access to affect query
+		$ia = elgg_set_ignore_access(false);
 		
 		$row = $this->entities->getRow($entity->guid, $user_guid);
 
@@ -839,10 +839,10 @@ class AccessCollections {
 
 	/**
 	 * Return an array of database row objects of the access collections $entity_guid is a member of.
-	 * 
+	 *
 	 * @param int $member_guid The entity guid
 	 * @param int $site_guid   The GUID of the site (default: current site).
-	 * 
+	 *
 	 * @return array|false
 	 */
 	function getCollectionsByMember($member_guid, $site_guid = 0) {
@@ -880,7 +880,7 @@ class AccessCollections {
 	 * or 'Limited' if the user access is restricted to read-only, e.g. a friends collection the user was added to
 	 *
 	 * @param int $entity_access_id The entity's access id
-	 * 
+	 *
 	 * @return string
 	 * @since 1.11
 	 */
@@ -909,7 +909,7 @@ class AccessCollections {
 
 		// Entity access id is probably a custom access collection
 		// Check if the user has write access to it and can see it's label
-		// Admins should always be able to see the readable version	
+		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
 		if ($collection) {
