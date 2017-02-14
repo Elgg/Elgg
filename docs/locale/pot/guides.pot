@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-27 10:00+0100\n"
+"POT-Creation-Date: 2017-02-14 16:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2810,11 +2810,11 @@ msgid "``elgg_get_page_owner_entity()`` Like elgg_get_page_owner_guid() but retu
 msgstr ""
 
 #: ../../guides/helpers.rst:30
-msgid "``get_context()`` Returns the current page's context - eg \"blog\" for the blog plugin, \"thewire\" for the wire, etc. Returns \"main\" as default"
+msgid "``elgg_get_context()`` Returns the current page's context - eg \"blog\" for the blog plugin, \"thewire\" for the wire, etc. Returns \"main\" as default"
 msgstr ""
 
 #: ../../guides/helpers.rst:31
-msgid "``set_context($context)`` Forces the context to be a particular value"
+msgid "``elgg_set_context($context)`` Forces the context to be a particular value"
 msgstr ""
 
 #: ../../guides/helpers.rst:32

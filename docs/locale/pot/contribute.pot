@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-27 10:00+0100\n"
+"POT-Creation-Date: 2017-02-14 16:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1328,231 +1328,280 @@ msgid "Access to `Twitter account`_"
 msgstr ""
 
 #: ../../contribute/releases.rst:21
-msgid "Access to `G+ page`_"
-msgstr ""
-
-#: ../../contribute/releases.rst:22
 msgid "Node.js and NPM installed"
 msgstr ""
 
-#: ../../contribute/releases.rst:23
+#: ../../contribute/releases.rst:22
 msgid "Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)"
 msgstr ""
 
-#: ../../contribute/releases.rst:24
+#: ../../contribute/releases.rst:23
 msgid "Transifex client installed (``easy_install transifex-client``)"
 msgstr ""
 
-#: ../../contribute/releases.rst:25
+#: ../../contribute/releases.rst:24
 msgid "Transifex account with access to Elgg project"
 msgstr ""
 
-#: ../../contribute/releases.rst:28
+#: ../../contribute/releases.rst:27
 msgid "Update composer dependencies"
 msgstr ""
 
-#: ../../contribute/releases.rst:29
+#: ../../contribute/releases.rst:28
 msgid "Since Elgg 2.3, ``composer.lock`` is committed to the repository. Therefore, if any of the composer dependencies require an update, run ``composer update`` on the corresponding branch and make a pull request with an updated ``composer.lock`` file. This will run the test suite and ensure that new dependencies do not break the build."
 msgstr ""
 
-#: ../../contribute/releases.rst:35
+#: ../../contribute/releases.rst:34
 msgid "Merge commits up from lower branches"
 msgstr ""
 
-#: ../../contribute/releases.rst:37
+#: ../../contribute/releases.rst:36
 msgid "Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other branches."
 msgstr ""
 
-#: ../../contribute/releases.rst:41
+#: ../../contribute/releases.rst:40
 msgid "For each branch"
 msgstr ""
 
-#: ../../contribute/releases.rst:43
+#: ../../contribute/releases.rst:42
 msgid "Check out the branch, make sure it's up to date, and make a new work branch with the merge. E.g. here we're merging 1.12 commits into 2.0:"
 msgstr ""
 
-#: ../../contribute/releases.rst:53
+#: ../../contribute/releases.rst:52
 msgid "If already up-to-date (no commits to merge), we can stop here for this branch."
 msgstr ""
 
-#: ../../contribute/releases.rst:55
+#: ../../contribute/releases.rst:54
 msgid "If there are conflicts, resolve them, ``git add .``, and ``git merge``."
 msgstr ""
 
-#: ../../contribute/releases.rst:57
+#: ../../contribute/releases.rst:56
 msgid "Make a PR for the branch and wait for automated tests and approval by other dev(s)."
 msgstr ""
 
-#: ../../contribute/releases.rst:63
+#: ../../contribute/releases.rst:62
 msgid "Once merged, we would repeat the process to merge 2.0 commits into 2.1."
 msgstr ""
 
-#: ../../contribute/releases.rst:66
+#: ../../contribute/releases.rst:65
 msgid "First new stable minor/major release"
 msgstr ""
 
-#: ../../contribute/releases.rst:68
+#: ../../contribute/releases.rst:67
 msgid "Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release."
 msgstr ""
 
-#: ../../contribute/releases.rst:71
+#: ../../contribute/releases.rst:70
 msgid "Prepare the release"
 msgstr ""
 
-#: ../../contribute/releases.rst:73
+#: ../../contribute/releases.rst:72
 msgid "Bring your local git clone up to date."
 msgstr ""
 
-#: ../../contribute/releases.rst:75
+#: ../../contribute/releases.rst:74
 msgid "Merge latest commits up from lowest supported branch."
 msgstr ""
 
-#: ../../contribute/releases.rst:77
+#: ../../contribute/releases.rst:76
 msgid "Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR if there is anything that needs to be merged up."
 msgstr ""
 
-#: ../../contribute/releases.rst:79
+#: ../../contribute/releases.rst:78
 msgid "Install the prerequisites:"
 msgstr ""
 
-#: ../../contribute/releases.rst:88
+#: ../../contribute/releases.rst:87
+msgid "On Windows you need to run these command in a console with admin privileges"
+msgstr ""
+
+#: ../../contribute/releases.rst:89
 msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
 msgstr ""
 
-#: ../../contribute/releases.rst:95
+#: ../../contribute/releases.rst:96
 msgid "This creates a ``release-1.12.5`` branch in your local repo."
 msgstr ""
 
-#: ../../contribute/releases.rst:97
+#: ../../contribute/releases.rst:98
 msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
 msgstr ""
 
-#: ../../contribute/releases.rst:105
+#: ../../contribute/releases.rst:106
 msgid "Next, submit a PR via GitHub for automated testing and approval by another developer:"
 msgstr ""
 
-#: ../../contribute/releases.rst:112
+#: ../../contribute/releases.rst:113
 msgid "Tag the release"
 msgstr ""
 
-#: ../../contribute/releases.rst:114
+#: ../../contribute/releases.rst:115
 msgid "Once approved and merged, tag the release:"
 msgstr ""
 
-#: ../../contribute/releases.rst:122
-msgid "Mark GitHub release milestones as completed"
+#: ../../contribute/releases.rst:123
+msgid "Or create a release on GitHub"
 msgstr ""
 
-#: ../../contribute/releases.rst:123
-msgid "Move unresolved tickets in released milestones to later milestones"
+#: ../../contribute/releases.rst:125
+msgid "Goto releases"
 msgstr ""
 
 #: ../../contribute/releases.rst:126
-msgid "Update the website"
+msgid "Click 'Draft a new release'"
+msgstr ""
+
+#: ../../contribute/releases.rst:127
+msgid "Enter the version"
 msgstr ""
 
 #: ../../contribute/releases.rst:128
-msgid "ssh to elgg.org"
+msgid "Select the correct branch (eg 1.12 for a 1.12.x release, 2.3 for a 2.3.x release, etc)"
 msgstr ""
 
 #: ../../contribute/releases.rst:129
-msgid "Clone https://github.com/Elgg/elgg-scripts"
+msgid "Set the release title as 'Elgg {version}'"
+msgstr ""
+
+#: ../../contribute/releases.rst:130
+msgid "Paste the CHANGELOG.md part related to this release in the description"
 msgstr ""
 
 #: ../../contribute/releases.rst:132
-msgid "Build zip package"
+msgid "Some final administration"
 msgstr ""
 
 #: ../../contribute/releases.rst:134
-msgid "Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage."
+msgid "Mark GitHub release milestones as completed"
 msgstr ""
 
-#: ../../contribute/releases.rst:145
-msgid "Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version."
+#: ../../contribute/releases.rst:135
+msgid "Move unresolved tickets in released milestones to later milestones"
+msgstr ""
+
+#: ../../contribute/releases.rst:138
+msgid "Update the website"
+msgstr ""
+
+#: ../../contribute/releases.rst:140
+msgid "ssh to elgg.org"
+msgstr ""
+
+#: ../../contribute/releases.rst:141
+msgid "Clone https://github.com/Elgg/elgg-scripts"
+msgstr ""
+
+#: ../../contribute/releases.rst:144
+msgid "Build zip package"
 msgstr ""
 
 #: ../../contribute/releases.rst:146
-msgid "If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg`` item in the composer requires list."
+msgid "Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage."
 msgstr ""
 
 #: ../../contribute/releases.rst:150
-msgid "Building 1.x zip packages"
-msgstr ""
-
-#: ../../contribute/releases.rst:152
-msgid "Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage."
-msgstr ""
-
-#: ../../contribute/releases.rst:163
-msgid "Update elgg.org"
+msgid "If this is your first time on the server building a release run ``composer global require \"fxp/composer-asset-plugin:^1.2.0\"``. This will make sure you can download bower-assets during the build process."
 msgstr ""
 
 #: ../../contribute/releases.rst:165
-msgid "Clone https://github.com/Elgg/www.elgg.org"
+msgid "Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version."
 msgstr ""
 
 #: ../../contribute/releases.rst:166
-msgid "Add the new versions to ``src/Elgg/Releases.php``"
+msgid "If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg`` item in the composer requires list."
 msgstr ""
 
-#: ../../contribute/releases.rst:167
-msgid "Update vendors"
+#: ../../contribute/releases.rst:170
+msgid "Building 1.x zip packages"
 msgstr ""
 
-#: ../../contribute/releases.rst:173
-msgid "Commit and push the changes"
+#: ../../contribute/releases.rst:172
+msgid "Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage."
 msgstr ""
 
-#: ../../contribute/releases.rst:174
-msgid "Pull to live site"
+#: ../../contribute/releases.rst:183
+msgid "Update elgg.org download page"
 msgstr ""
 
-#: ../../contribute/releases.rst:180
-msgid "Update dependencies"
+#: ../../contribute/releases.rst:185
+msgid "Clone https://github.com/Elgg/community"
 msgstr ""
 
-#: ../../contribute/releases.rst:188
-msgid "Go to community admin panel"
+#: ../../contribute/releases.rst:186
+msgid "Add the new version to ``classes/Elgg/Releases.php``"
 msgstr ""
 
 #: ../../contribute/releases.rst:187
-msgid "Flush APC cache"
+#: ../../contribute/releases.rst:205
+msgid "Commit and push the changes"
 msgstr ""
 
 #: ../../contribute/releases.rst:188
-msgid "Run upgrade"
-msgstr ""
-
-#: ../../contribute/releases.rst:191
-msgid "Make the announcement"
-msgstr ""
-
-#: ../../contribute/releases.rst:193
-msgid "This should be the very last thing you do."
+msgid "Update the plugin on www.elgg.org"
 msgstr ""
 
 #: ../../contribute/releases.rst:195
-msgid "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version"
-msgstr ""
-
-#: ../../contribute/releases.rst:196
-msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
+msgid "Update elgg.org"
 msgstr ""
 
 #: ../../contribute/releases.rst:197
-msgid "Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors"
+msgid "Clone https://github.com/Elgg/www.elgg.org"
 msgstr ""
 
 #: ../../contribute/releases.rst:198
-msgid "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released"
+msgid "Change the required Elgg version in ``composer.json``"
 msgstr ""
 
 #: ../../contribute/releases.rst:199
-msgid "Tweet from the elgg `Twitter account`_"
+msgid "Update vendors"
 msgstr ""
 
-#: ../../contribute/releases.rst:200
-msgid "Post from the `G+ page`_"
+#: ../../contribute/releases.rst:206
+msgid "Pull to live site"
+msgstr ""
+
+#: ../../contribute/releases.rst:212
+msgid "Update dependencies"
+msgstr ""
+
+#: ../../contribute/releases.rst:220
+msgid "Go to community admin panel"
+msgstr ""
+
+#: ../../contribute/releases.rst:219
+msgid "Flush APC cache"
+msgstr ""
+
+#: ../../contribute/releases.rst:220
+msgid "Run upgrade"
+msgstr ""
+
+#: ../../contribute/releases.rst:223
+msgid "Make the announcement"
+msgstr ""
+
+#: ../../contribute/releases.rst:225
+msgid "This should be the very last thing you do."
+msgstr ""
+
+#: ../../contribute/releases.rst:227
+msgid "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version"
+msgstr ""
+
+#: ../../contribute/releases.rst:228
+msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
+msgstr ""
+
+#: ../../contribute/releases.rst:229
+msgid "Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors"
+msgstr ""
+
+#: ../../contribute/releases.rst:230
+msgid "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released"
+msgstr ""
+
+#: ../../contribute/releases.rst:231
+msgid "Tweet from the elgg `Twitter account`_"
 msgstr ""
 
 #: ../../contribute/services.rst:2
