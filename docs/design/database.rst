@@ -136,7 +136,6 @@ Beyond the standard ElggEntity properties, ElggUsers also support:
 -  ``name`` The user's plain text name. e.g. "Hugh Jackman"
 -  ``username`` Their login name. E.g. "hjackman"
 -  ``password`` A hashed version of their password
--  ``salt`` The salt that their password has been hashed with
 -  ``email`` Their email address
 -  ``language`` Their default language code.
 -  ``code`` Their session code (moved to a separate table in 1.9).
