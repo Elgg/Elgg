@@ -205,7 +205,7 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 		$entity->getURL()
 	), $language);
 	$notification->summary = elgg_echo('file:notify:summary', array($entity->title), $language);
-
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 

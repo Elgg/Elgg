@@ -66,6 +66,7 @@ if ($user && ($group instanceof ElggGroup)) {
 		$params = [
 			'action' => 'membership_request',
 			'object' => $group,
+			'url' => $url,
 		];
 		
 		// Notify group owner

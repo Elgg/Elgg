@@ -325,6 +325,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$params = [
 			'object' => $message_to,
 			'action' => 'send',
+			'url' => $message_to->getURL(),
 		];
 		notify_user($recipient_guid, $sender_guid, $subject, $body, $params);
 	}

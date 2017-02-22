@@ -51,6 +51,7 @@ if (count($user_guids) > 0 && elgg_instanceof($group, 'group') && $group->canEdi
 		$params = [
 			'action' => 'invite',
 			'object' => $group,
+			'url' => $url,
 		];
 
 		// Send notification

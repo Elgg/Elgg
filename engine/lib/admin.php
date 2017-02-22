@@ -833,6 +833,8 @@ function _elgg_admin_prepare_admin_notification_make_admin($hook, $type, $return
 		$object->getURL(),
 		$site->getURL(),
 	], $language);
+
+	$return_value->url = elgg_normalize_url('admin/users/admins');
 	
 	return $return_value;
 }
@@ -878,6 +880,8 @@ function _elgg_admin_prepare_admin_notification_remove_admin($hook, $type, $retu
 		$object->getURL(),
 		$site->getURL(),
 	], $language);
+
+	$return_value->url = elgg_normalize_url('admin/users/admins');
 	
 	return $return_value;
 }
@@ -956,6 +960,8 @@ function _elgg_admin_prepare_user_notification_make_admin($hook, $type, $return_
 		$site->name,
 		$site->getURL(),
 	], $language);
+
+	$return_value->url = elgg_normalize_url('admin');
 	
 	return $return_value;
 }
@@ -999,6 +1005,8 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
 		$site->name,
 		$site->getURL(),
 	], $language);
+
+	$return_value->url = false;
 	
 	return $return_value;
 }

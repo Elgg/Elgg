@@ -933,6 +933,8 @@ function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $par
 		$site->name,
 		$site->getURL(),
 	], $language);
+
+	$return_value->url = $recipient->getURL();
 	
 	return $return_value;
 }

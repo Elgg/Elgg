@@ -9,25 +9,33 @@ abstract class SiteNotificationFactory {
 	 * @param string     $message   Notification message
 	 * @param ElggUser   $actor     User who caused the notification event
 	 * @param ElggData   $object    Optional object involved in the notification event
+	 * @param string     $url       Target URL
 	 * @return SiteNotification|null
 	 */
-	public static function create($recipient, $message, $actor, $object = null) {
+	public static function create($recipient, $message, $actor, $object = null, $url = null) {
 		$note = new SiteNotification();
 		$note->owner_guid = $recipient->guid;
 		$note->container_guid = $recipient->guid;
 		$note->access_id = ACCESS_PRIVATE;
 		$note->description = $message;
-		if ($object) {
+
+		if (!isset($url) && $object) {
 			// TODO Add support for setting an URL for a notification about a new relationship
 			switch ($object->getType()) {
 				case 'annotation':
 					// Annotations do not have an URL so we use the entity URL
-					$note->setURL($object->getEntity()->getURL());
+					$url = $object->getEntity()->getURL();
 					break;
 				default:
-					$note->setURL($object->getURL());
+					$url = $object->getURL();
+					break;
 			}
 		}
+
+		if ($url && $url != elgg_get_site_url()) {
+			$note->setURL($url);
+		}
+		
 		$note->setRead(false);
 
 		if ($note->save()) {

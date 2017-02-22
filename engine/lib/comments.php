@@ -456,6 +456,8 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
 		$commenter->getDisplayName(),
 		$commenter->getURL(),
 	], $language);
+
+	$returnvalue->url = $comment->getURL();
 	
 	return $returnvalue;
 }

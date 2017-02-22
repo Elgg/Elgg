@@ -91,11 +91,12 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	if ($poster->guid != $owner->guid) {
 
 		$subject = elgg_echo('messageboard:email:subject', array(), $owner->language);
+		$url = elgg_get_site_url() . "messageboard/owner/" . $owner->username;
 
 		$body = elgg_echo('messageboard:email:body', array(
 			$poster->name,
 			$message,
-			elgg_get_site_url() . "messageboard/owner/" . $owner->username,
+			$url,
 			$poster->name,
 			$poster->getURL()
 		), $owner->language);
@@ -103,6 +104,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		$params = [
 			'action' => 'create',
 			'object' => elgg_get_annotation_from_id($result_id),
+			'url' => $url,
 		];
 		notify_user($owner->guid, $poster->guid, $subject, $body, $params);
 	}

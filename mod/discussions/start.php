@@ -335,7 +335,7 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
 		$entity->getURL()
 	), $language);
 	$notification->summary = elgg_echo('discussion:topic:notify:summary', array($entity->title), $language);
-
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 
@@ -362,7 +362,8 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 		$reply->getURL(),
 	), $language);
 	$notification->summary = elgg_echo('discussion:reply:notify:summary', array($topic->title), $language);
-
+	$notification->url = $reply->getURL();
+	
 	return $notification;
 }
 

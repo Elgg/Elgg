@@ -178,7 +178,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 	$notification->subject = $subject;
 	$notification->body = $body;
 	$notification->summary = elgg_echo('thewire:notify:summary', array($descr), $language);
-
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 
