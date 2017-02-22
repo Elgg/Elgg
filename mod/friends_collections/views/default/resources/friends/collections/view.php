@@ -29,7 +29,7 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view('collections/collection', [
 	'full_view' => true,
-	'collection' => $collection,
+	'item' => $collection,
 ]);
 
 $body = elgg_view_layout('one_sidebar', array(
