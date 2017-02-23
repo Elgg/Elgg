@@ -1605,9 +1605,11 @@ function elgg_view_tagcloud(array $options = array()) {
 /**
  * View an item in a list
  *
- * @param \ElggEntity|\ElggAnnotation $item
- * @param array  $vars Additional parameters for the rendering
- *      'item_view' Alternative view used to render list items
+ * @param mixed $item Entity, annotation, river item, or other data
+ * @param array $vars Additional parameters for the rendering
+ *                    'item_view' - Alternative view used to render list items
+ *                                  This parameter is required if rendering
+ *                                  list items that are not entity, annotation or river
  * @return string
  * @since 1.8.0
  * @access private
@@ -1620,6 +1622,12 @@ function elgg_view_list_item($item, array $vars = array()) {
 		return elgg_view_annotation($item, $vars);
 	} else if ($item instanceof \ElggRiverItem) {
 		return elgg_view_river_item($item, $vars);
+	}
+
+	$view = elgg_extract('item_view', $vars);
+	if ($view && elgg_view_exists($view)) {
+		$vars['item'] = $item;
+		return elgg_view($view, $vars);
 	}
 
 	return '';

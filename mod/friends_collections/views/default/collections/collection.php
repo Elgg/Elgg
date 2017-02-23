@@ -3,10 +3,10 @@
 /**
  * Renders a collection list item
  *
- * @uses $vars['collection'] Access collection
+ * @uses $vars['item']       Access collection
  * @uses $vars['full_view']  Summary/full view flag
  */
-$collection = elgg_extract('collection', $vars);
+$collection = elgg_extract('item', $vars);
 if (!$collection instanceof ElggAccessCollection) {
 	return;
 }
