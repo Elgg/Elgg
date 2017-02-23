@@ -36,6 +36,7 @@ Removed views
  * ``notifications/subscriptions/jsfuncs``
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
+ * ``search/startblurb``
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
@@ -66,6 +67,12 @@ Removed views
  * ``core/friends/collectiontabs``
  * ``core/friends/tablelist``
  * ``core/friends/talbelistcountupdate``
+ * ``search/no_results``
+ * ``search/layout``
+ * ``search/startblurb``
+ * ``search/header``: use ``search/search_box`` where you want to display a search form (default theme renders it in ``page/elements/sidebar``)
+ * ``search/css``: replaced with ``search/search.css``
+ * ``search/entity/object/comment``
 
 Removed functions/methods
 -------------------------
@@ -128,6 +135,11 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``profile_pagesetup``
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
+ * ``search_objects_hook``
+ * ``search_groups_hook``
+ * ``search_users_hook``
+ * ``search_tags_hook``
+ * ``search_custom_types_tags_hook``
 
 Removed global vars
 -------------------
@@ -176,11 +188,23 @@ All functions related to adding/removing this relationship has been removed. All
 Search changes
 --------------
 
-The FULLTEXT indices have been removed on various tables. The search plugin will now always use a like query when performing a search.
+New ``elgg_search()`` function consistent with ``elgg_get_entities*`` has been added to core and should be preferred for searching entities by query term.
 
+Note that the search plugin and core livesearch API/views have been affected, and any plugin dealing with the search will most likely be affected by these changes.
+
+See :doc:`search` for search documentation.
+
+ * The FULLTEXT indices have been removed on various tables. The search plugin will now always use a ``LIKE`` operand when performing a search.
  * ``search_get_where_sql`` no longer supports the argument ``use_fulltext``
  * ``search_get_ft_min_max`` function is removed
  * ``$CONFIG->search_info`` is no longer provided
+ * ``search_get_search_view`` no longer resolves views for ``list`` and ``layout`` view types. All lists and layouts are rendered using default views.
+ * ``/search`` resource is now accessible without a search term
+ * ``tags`` search type has been removed, and ``entities`` search type will search tags by default. To restrict search to ``tags`` simply pass ``fields`` array with desired tags to the search handler.
+ * ``search,<entity_type>``, ``search,<entity_type>:<entity_subtype>`` and ``search,<search_type>`` hooks have been deprecated. For improved performance use ``search:options`` hooks added to core.
+ * ``/livesearch`` no longer supports ``match_on=all`` or an array of ``match_on`` values
+ * ``/livesearch`` and ``input/autocomplete`` view can now be easily extended with custom matching logic by creating a resource view in ``views/json/resources/livesearch/<match_on>``.
+ * ``input/autocomplete`` now accepts custom data sources and query options. If implementing custom matching, make sure to validate the ``mac`` of the options data to ensure that the values were not altered.
 
 Form and field related changes
 ------------------------------
@@ -203,6 +227,7 @@ Removed pagehandling
  * ``groupicon``
  * ``twitterservice``
  * ``collections/pickercallback``
+ * ``livesearch`` no longer supports ``?match_on=all``
 
 Removed actions
 ---------------

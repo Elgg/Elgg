@@ -88,17 +88,32 @@ abstract class ElggEntity extends \ElggData implements
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['guid'] = null;
-		$this->attributes['type'] = null;
-		$this->attributes['subtype'] = null;
+		$attributes = $this->getPrimaryAttributes();
+		foreach ($attributes as $key => $value) {
+			$this->attributes[$key] = $value;
+		}
+	}
 
-		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
-		$this->attributes['container_guid'] = _elgg_services()->session->getLoggedInUserGuid();
-
-		$this->attributes['access_id'] = ACCESS_PRIVATE;
-		$this->attributes['time_updated'] = null;
-		$this->attributes['last_action'] = null;
-		$this->attributes['enabled'] = "yes";
+	/**
+	 * Get default values for attributes stored in a separate table
+	 *
+	 * @return array
+	 * @access private
+	 *
+	 * @see \Elgg\Database\EntityTable::getEntities
+	 */
+	final public static function getPrimaryAttributes() {
+		return [
+			'guid' => null,
+			'type' => null,
+			'subtype' => null,
+			'owner_guid' => _elgg_services()->session->getLoggedInUserGuid(),
+			'container_guid' => _elgg_services()->session->getLoggedInUserGuid(),
+			'access_id' => ACCESS_PRIVATE,
+			'time_updated' => null,
+			'last_action' => null,
+			'enabled' => "yes",
+		];
 	}
 
 	/**
