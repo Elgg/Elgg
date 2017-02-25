@@ -66,6 +66,7 @@ Removed views
  * ``core/friends/collectiontabs``
  * ``core/friends/tablelist``
  * ``core/friends/talbelistcountupdate``
+ * ``lightbox/elgg-colorbox-theme/colorbox-images/*```
 
 Removed functions/methods
 -------------------------
@@ -611,6 +612,12 @@ Support for fieldsets in forms
  * ``elgg_view_field()`` replaces ``elgg_view_input()``. It has a similar API, but accepts a single array.
  * ``elgg_view_field()`` supports ``#type``, ``#label``, ``#help`` and ``#class``, allowing unprefixed versions to be sent to the input view ``$vars``.
  * The new view ``input/fieldset`` can be used to render a set of fields, each rendered with ``elgg_view_field()``.
+
+Lightbox
+--------
+
+ * Lightbox css is no longer loaded as an external CSS file. Lightbox theme now extends ``elgg.css`` and ``admin.css``
+ * Default lightbox config is now defined via ``'elgg.data','site'`` server-side hook
 
 From 2.1 to 2.2
 ===============

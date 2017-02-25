@@ -1881,8 +1881,7 @@ function elgg_views_boot() {
 
 	elgg_register_simplecache_view('elgg/init.js');
 
-	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox/elgg-colorbox-theme/colorbox.css'));
-	elgg_load_css('lightbox');
+	elgg_extend_view('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
 
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
@@ -1936,6 +1935,9 @@ function elgg_views_boot() {
 	// @todo Remove in 3.0
 	elgg_extend_view('elgg.css', 'elements/pathces.css');
 	elgg_extend_view('admin.css', 'elements/pathces.css');
+
+	// Configure lightbox
+	elgg_register_plugin_hook_handler('elgg.data', 'site', '_elgg_set_lightbox_config');
 }
 
 /**
@@ -2039,6 +2041,33 @@ function _elgg_view_under_viewtype($view, $vars, $viewtype) {
 	}
 
 	return $ret;
+}
+
+/**
+ * Set lightbox config
+ * 
+ * @param string $hook   "elgg.data"
+ * @param string $type   "site"
+ * @param array  $return Data
+ * @param array  $params Hook params
+ * @return array
+ * @access private
+ */
+function _elgg_set_lightbox_config($hook, $type, $return, $params) {
+
+	$return['lightbox'] = [
+		'current' => elgg_echo('js:lightbox:current', ['{current}', '{total}']),
+		'previous' => elgg_view_icon('caret-left'),
+		'next' => elgg_view_icon('caret-right'),
+		'close' => elgg_view_icon('times'),
+		'opacity' => 0.5,
+		'maxWidth' => '990px',
+		'maxHeight' => '990px',
+		'initialWidth' => '300px',
+		'initialHeight' => '300px',
+	];
+
+	return $return;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

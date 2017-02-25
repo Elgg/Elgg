@@ -43,22 +43,17 @@ define(function (require) {
 				opts = {};
 			}
 
-			var settings = {
-				current: elgg.echo('js:lightbox:current', ['{current}', '{total}']),
-				previous: elgg.echo('previous'),
-				next: elgg.echo('next'),
-				close: elgg.echo('close'),
-				xhrError: elgg.echo('error:default'),
-				imgError: elgg.echo('error:default'),
-				opacity: 0.5,
-				maxWidth: '100%',
+			// data set server side using elgg.data,site hook
+			var defaults = elgg.data.lightbox;
+
+			if (!defaults.reposition) {
 				// don't move colorbox on small viewports https://github.com/Elgg/Elgg/issues/5312
-				reposition: $(window).height() > 600
-			};
-			
+				defaults.reposition = $(window).height() > 600;
+			}
+
 			elgg.provide('elgg.ui.lightbox');
 			
-			$.extend(settings, opts);
+			var settings = $.extend({}, defaults, opts);
 
 			return elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
 		},
@@ -129,6 +124,13 @@ define(function (require) {
 						});
 					});
 				});
+
+			$(window)
+				.off('resize.lightbox')
+				.on('resize.lightbox', function() {
+					elgg.data.lightbox.reposition = $(window).height() > 600;
+					lightbox.resize();
+			});
 		},
 
 		/**
