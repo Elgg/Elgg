@@ -157,6 +157,7 @@ function elgg_create_river_item(array $options = array()) {
  *   target_guids         => INT|ARR Target guid(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
  *   action_types         => STR|ARR The river action type(s) identifier
+ *   views                => STR|ARR River view(s)
  *   posted_time_lower    => INT     The lower bound on the time posted
  *   posted_time_upper    => INT     The upper bound on the time posted
  *
@@ -205,6 +206,7 @@ function elgg_get_river(array $options = array()) {
 		'target_guids'         => ELGG_ENTITIES_ANY_VALUE,
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
 		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
+		'views'                => ELGG_ENTITIES_ANY_VALUE,
 
 		'relationship'         => null,
 		'relationship_guid'    => null,
@@ -245,7 +247,7 @@ function elgg_get_river(array $options = array()) {
 		return new \ElggBatch('elgg_get_river', $options, null, $batch_size, $batch_inc_offset);
 	}
 
-	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
@@ -256,6 +258,7 @@ function elgg_get_river(array $options = array()) {
 	$wheres[] = _elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
+	$wheres[] = _elgg_river_get_view_where_sql($options['views']);
 	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
