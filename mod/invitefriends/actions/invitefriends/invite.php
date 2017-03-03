@@ -14,7 +14,7 @@ if (!elgg_get_config('allow_registration')) {
 
 $site = elgg_get_site_entity();
 // create the from address
-$from = \Elgg\Mail\Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
+$from = \Elgg\Email::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
 
 $emails = get_input('emails');
 $emailmessage = get_input('emailmessage');

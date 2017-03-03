@@ -152,6 +152,7 @@ Removed classes/interfaces
  * ``ImportException``
  * ``ODD`` and all classes beginning with ``ODD*``.
  * ``XmlElement``
+ * ``Elgg\Mail\Address``: use ``Elgg\Email``
  
 Schema changes
 --------------
@@ -253,6 +254,8 @@ Removed hooks/events
  * Hook **object:notifications, <type>**: Use the hook **send:before, notifications**
  * Hook **output:before, layout**: Use **view_vars, page/layout/<layout_name>**
  * Hook **output:after, layout**: Use **view, page/layout/<layout_name>**
+ * Hook **email, system**: Use more granular **<hook>, system:email** hooks
+ * Hook **email:message, system**: Use **zend:message, system:email** hook
 
 Removed forms/actions
 ---------------------
@@ -398,6 +401,19 @@ required to make the old interface work.
 
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
+
+Email delivery
+--------------
+
+To provide for more granularity in email handling and delivery, **email, system** hook has been removed.
+New email service provides for several other replacement hooks that allow plugins to control email
+content, format, and transport used for delivery.
+
+``elgg_set_email_transport()`` can now be used to replace the default Sendmail transport with another instance of
+``\Zend\Mail\Transport\TransportInterface``, e.g. SMTP, in-memory, or file transport. Note that this function
+must be called early in the boot process. Note that if you call this function on each request, using
+plugin settings to determine transport config may not be very efficient - store these settings in
+as datalist or site config values, so they are loaded from boot cache.
 
 Theme and styling changes
 -------------------------

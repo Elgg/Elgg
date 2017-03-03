@@ -200,6 +200,12 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services()->relationshipsTable->setCurrentTime($dt);
 		_elgg_services()->annotations->setCurrentTime($dt);
 		_elgg_services()->usersTable->setCurrentTime($dt);
+
+		_elgg_services()->config->set('site', self::mocks()->getSite([
+			'url' => _elgg_services()->config->get('wwwroot'),
+			'name' => 'Testing Site',
+			'description' => 'Testing Site',
+		]));
 	}
 
 	/**
