@@ -123,6 +123,13 @@ class EntityTable extends DbEntityTable {
 					'description' => null,
 				];
 				break;
+			case 'site' :
+				$external_attributes = [
+					'name' => null,
+					'description' => null,
+					'url' => null,
+				];
+				break;
 		}
 
 		$map = array_merge($primary_attributes, $external_attributes, $attributes);

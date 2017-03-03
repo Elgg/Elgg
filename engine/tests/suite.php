@@ -3,8 +3,6 @@
  * Runs unit tests.
  */
 
-use Zend\Mail\Transport\InMemory as InMemoryTransport;
-
 require_once __DIR__ . '/../../autoloader.php';
 
 \Elgg\Application::start();
@@ -69,7 +67,7 @@ foreach ($events as $type => $subtypes) {
 }
 
 // disable emails
-_elgg_services()->setValue('mailer', new InMemoryTransport());
+elgg_set_email_transport('mailer', new Zend\Mail\Transport\InMemory());
 
 // Disable maximum execution time.
 // Tests take a while...

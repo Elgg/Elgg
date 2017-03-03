@@ -5,6 +5,7 @@ namespace Elgg\Mocks\Di;
 use ElggGroup;
 use ElggObject;
 use ElggUser;
+use ElggSite;
 
 /**
  * Mocking service
@@ -140,6 +141,17 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 	public function getGroup(array $attributes = array()) {
 		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_group';
 		return $this->entityTable->setup(null, 'group', $subtype, $attributes);
+	}
+
+	/**
+	 * Setup a mock site
+	 *
+	 * @param array $attributes An array of attributes
+	 * @return ElggSite
+	 */
+	public function getSite(array $attributes = array()) {
+		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_site';
+		return $this->entityTable->setup(null, 'site', $subtype, $attributes);
 	}
 
 }

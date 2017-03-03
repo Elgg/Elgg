@@ -31,6 +31,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Context                            $context
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
+ * @property-read \Elgg\EmailService                       $emails
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
@@ -187,6 +188,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
 			return new \Elgg\DeprecationService($c->logger);
+		});
+
+		$this->setFactory('emails', function(ServiceProvider $c) {
+			return new \Elgg\EmailService($c->config, $c->hooks, $c->mailer, $c->logger);
 		});
 
 		$this->setFactory('entityCache', function(ServiceProvider $c) {
