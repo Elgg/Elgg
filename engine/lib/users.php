@@ -762,13 +762,24 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		return;
 	}
 
+	$toggle = elgg_view_icon('chevron-down', ['class' => 'elgg-state-closed']);
+	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'account',
-		'text' => elgg_echo('account'),
+		'text' => elgg_echo('account') . $toggle,
 		'href' => '#',
 		'priority' => 800,
 		'section' => 'alt',
-		'link_class' => 'elgg-topbar-dropdown',
+		'child_menu' => [
+			'display' => 'dropdown',
+			'class' => 'elgg-topbar-child-menu',
+			'data-position' => json_encode([
+				'at' => 'right+10px bottom',
+				'my' => 'right top',
+				'collision' => 'fit fit',
+			]),
+		],
 	]);
 	
 	$return[] = \ElggMenuItem::factory([
@@ -776,6 +787,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'parent_name' => 'account',
 		'href' => "settings/user/{$viewer->username}",
 		'text' => elgg_echo('settings'),
+		'icon' => 'cogs',
 		'priority' => 300,
 		'section' => 'alt',
 	]);
@@ -786,6 +798,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 			'parent_name' => 'account',
 			'href' => 'admin',
 			'text' => elgg_echo('admin'),
+			'icon' => 'tasks',
 			'priority' => 800,
 			'section' => 'alt',
 		]);
@@ -796,6 +809,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'parent_name' => 'account',
 		'href' => 'action/logout',
 		'text' => elgg_echo('logout'),
+		'icon' => 'sign-out',
 		'is_action' => true,
 		'priority' => 900,
 		'section' => 'alt',

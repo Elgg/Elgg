@@ -105,7 +105,7 @@
 	margin-right: auto; /* force flexblox to justify to the right */
 }
 
-.elgg-layout-header > .elgg-menu {
+.elgg-layout-header > .elgg-menu-container {
 	order: 2;
 }
 

@@ -3,7 +3,7 @@ $params = array(
 	'tabs' => array(
 		array('title' => 'First', 'url' => "#"),
 		array('title' => 'Second', 'url' => "#", 'selected' => true),
-		array('title' => 'Third', 'url' => "#"),
+		array('title' => 'Third', 'url' => "#", 'icon' => 'question'),
 	)
 );
 

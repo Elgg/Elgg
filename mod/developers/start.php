@@ -3,6 +3,8 @@
  * Elgg developer tools
  */
 
+use Elgg\DevelopersPlugin\Hooks;
+
 // we want to run this as soon as possible - other plugins should not need to do this
 developers_process_settings();
 
@@ -70,11 +72,10 @@ function developers_process_settings() {
 		elgg_register_ajax_view('developers/gear_popup');
 		elgg_register_simplecache_view('elgg/dev/gear.html');
 
-		// TODO use ::class in 2.0
-		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSectionVars'];
+		$handler = [Hooks::class, 'alterMenuSectionVars'];
 		elgg_register_plugin_hook_handler('view_vars', 'navigation/menu/elements/section', $handler);
 
-		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSections'];
+		$handler = [Hooks::class, 'alterMenuSections'];
 		elgg_register_plugin_hook_handler('view', 'navigation/menu/elements/section', $handler);
 	}
 }

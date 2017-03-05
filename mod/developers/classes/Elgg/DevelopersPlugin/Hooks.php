@@ -24,6 +24,15 @@ class Hooks {
 		}
 
 		$value['class'] = preg_replace('~(^|\\s)elgg-menu-page($|\\s)~', '$1elgg-menu-gear$2', $value['class']);
+
+		// remove the display options
+		foreach ($value['items'] as $item) {
+			/* @var \ElggMenuItem $item  */
+			$child_opts = $item->getChildMenuOptions();
+			unset($child_opts['display']);
+			$item->setChildMenuOptions($child_opts);
+		}
+
 		return $value;
 	}
 

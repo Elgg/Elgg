@@ -483,6 +483,41 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Prepare page menu
+ * Sets the display child menu option to "toggle" if not set
+ * Recursively marks parents of the selected item as selected (expanded)
+ *
+ * @param \Elgg\Hook $hook
+ * @access private
+ */
+function _elgg_page_menu_setup(\Elgg\Hook $hook) {
+	$menu = $hook->getValue();
+
+	foreach ($menu as $section => $menu_items) {
+		foreach ($menu_items as $menu_item) {
+			if ($menu_item instanceof ElggMenuItem) {
+				$child_menu_vars = $menu_item->getChildMenuOptions();
+				if (empty($child_menu_vars['display'])) {
+					$child_menu_vars['display'] = 'toggle';
+				}
+				$menu_item->setChildMenuOptions($child_menu_vars);
+			}
+		}
+	}
+
+	$selected_item = $hook->getParam('selected_item');
+	if ($selected_item instanceof \ElggMenuItem) {
+		$parent = $selected_item->getParent();
+		while ($parent instanceof \ElggMenuItem) {
+			$parent->setSelected();
+			$parent = $parent->getParent();
+		}
+	}
+
+	return $menu;
+}
+
+/**
  * Add the comment and like links to river actions menu
  * @access private
  */
@@ -692,6 +727,8 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
 
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
+	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_page_menu_setup', 999);
+
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');

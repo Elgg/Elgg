@@ -67,6 +67,7 @@ Removed views
  * ``core/friends/tablelist``
  * ``core/friends/talbelistcountupdate``
  * ``lightbox/elgg-colorbox-theme/colorbox-images/*```
+ * ``navigation/menu/page``: now uses ``navigation/menu/default`` and a prepare hook
 
 Removed functions/methods
 -------------------------
@@ -242,6 +243,7 @@ Removed JavaScript APIs
  * ``elgg.autocomplete`` is no longer defined.
  * ``elgg.messageboard`` is no longer defined.
  * ``jQuery.fn.friendsPicker``
+ * ``elgg.ui.toggleMenu`` is no longer defined
 
 Removed hooks/events
 --------------------
@@ -433,9 +435,14 @@ Menu changes
 
 Support for ``icon`` and ``badge`` parameters was added. Plugins should start using these parameters and prefer them to a single ``text`` parameter. CSS should be used to control visibility of the label, icon and badge, instead of conditionals in preparing menu items.
 
+All menus are now wrapped with ``nav.elgg-menu-container`` to ensure that multiple menu sections have a single parent element, and can be styled using flexbox or floats.
+
+All menu items are now identified with with ``data-menu-item`` attribute, sections - with ``data-menu-section``, containers with - ``data-menu-name`` attributes.
+
 ``topbar`` menu:
 
  * ``account`` menu item with priority ``800`` added to ``alt`` section
+ * ``account`` parent menu item uses dropdown menu API to display the submenu
  * ``site_notifications`` menu item is now a child of ``account`` with priority ``100``
  * ``usersettings`` menu item is now a child of ``account`` with priority ``300``
  * ``administration`` menu item is now a child of ``account`` with priority ``800``
