@@ -103,7 +103,9 @@ function developers_setup_menu() {
 		foreach ($inspect_options as $key => $value) {
 			elgg_register_menu_item('page', array(
 				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
-				'href' => "admin/develop_tools/inspect?inspect_type={$key}",
+				'href' => "admin/develop_tools/inspect?" . http_build_query([
+					'inspect_type' => $key,
+				]),
 				'text' => $value,
 				'context' => 'admin',
 				'section' => 'develop',

@@ -278,7 +278,9 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
  * @return string The absolute url
  */
 function elgg_normalize_url($url) {
-	if (filter_var($url, FILTER_VALIDATE_URL)) {
+	$url = str_replace(' ', '%20', $url);
+
+	if (_elgg_sane_validate_url($url)) {
 		return $url;
 	}
 
@@ -535,6 +537,37 @@ function _elgg_get_display_query($string) {
 		$display_query = preg_replace("/[^\x01-\x7F]/", "", $string);
 	}
 	return htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
+}
+
+/**
+ * Use a "fixed" filter_var() with FILTER_VALIDATE_URL that handles multi-byte chars.
+ *
+ * @param string $url URL to validate
+ * @return string|false
+ * @access private
+ */
+function _elgg_sane_validate_url($url) {
+	// based on http://php.net/manual/en/function.filter-var.php#104160
+	$res = filter_var($url, FILTER_VALIDATE_URL);
+	if ($res) {
+		return $res;
+	}
+
+	// Check if it has unicode chars.
+	$l = elgg_strlen($url);
+	if (strlen($url) == $l) {
+		return $res;
+	}
+
+	// Replace wide chars by “X”.
+	$s = '';
+	for ($i = 0; $i < $l; ++$i) {
+		$ch = elgg_substr($url, $i, 1);
+		$s .= (strlen($ch) > 1) ? 'X' : $ch;
+	}
+
+	// Re-check now.
+	return filter_var($s, FILTER_VALIDATE_URL) ? $url : false;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

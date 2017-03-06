@@ -63,6 +63,11 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 			'example.com' => 'http://example.com',
 			'example.com/subpage' => 'http://example.com/subpage',
 
+			'http://example.com/ИмяПользователя' => 'http://example.com/ИмяПользователя',
+
+			'http://example.com/a b' => 'http://example.com/a%20b',
+			'http://example.com/?a=1 2' => 'http://example.com/?a=1%202',
+
 			'page/handler' =>                	elgg_get_site_url() . 'page/handler',
 			'page/handler?p=v&p2=v2' =>      	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
 			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
