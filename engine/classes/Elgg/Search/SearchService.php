@@ -80,7 +80,7 @@ class SearchService {
 		if ($search_type == 'entities') {
 			return $this->searchEntities($params);
 		}
-		
+
 		return $this->searchCustom($params);
 	}
 
@@ -118,7 +118,7 @@ class SearchService {
 		if (!$clauses) {
 			return false;
 		}
-		
+
 		foreach (['wheres', 'joins'] as $ctype) {
 			if (isset($clauses[$ctype])) {
 				$params[$ctype] = (array) elgg_extract($ctype, $params);
@@ -188,7 +188,7 @@ class SearchService {
 		$query = elgg_extract('query', $params);
 		$partial = elgg_extract('partial_match', $params, true);
 		$tokenize = elgg_extract('tokenize', $params, true);
-		
+
 		$clauses = [
 			'wheres' => [],
 			'joins' => [],
@@ -249,13 +249,12 @@ class SearchService {
 			}
 		}
 
+		$attributes_where = '';
 		if (!empty($attribute_fields)) {
 			$attributes_where = $this->getWhereSQL('ct', $attribute_fields, $query, $partial, $tokenize);
 		}
 
 		if (!empty($metadata_fields)) {
-			$clauses['joins'][] = "JOIN {$this->db->prefix}metadata md on e.guid = md.entity_guid";
-
 			// get the where clauses for the md names
 			// can't use egef_metadata() because the n_table join comes too late.
 			$md_clauses = _elgg_entities_get_metastrings_options('metadata', [
@@ -265,10 +264,30 @@ class SearchService {
 			]);
 
 			$clauses['joins'] = array_merge($clauses['joins'], $md_clauses['joins']);
+			$clauses['order_by'] = $md_clauses['order_by'];
 
-			$metadata_where = $this->getWhereSQL('md', ['value'], $query, $partial, $tokenize);
-			$clauses['wheres'][] = "(($attributes_where) OR ((({$md_clauses['wheres'][0]}) AND $metadata_where)))";
-		} else {
+			$metadata_where = $this->getWhereSQL('n_table', ['value'], $query, $partial, $tokenize);
+
+			if ($attributes_where) {
+				$clauses['wheres'][] = "
+					($attributes_where)
+					OR
+					(
+						({$md_clauses['wheres'][0]})
+						AND
+						($metadata_where)
+					)";
+			} else {
+				$clauses['wheres'][] = "
+					({$md_clauses['wheres'][0]})
+					AND
+					($metadata_where)";
+			}
+
+			unset($md_clauses['wheres'][0]);
+			$clauses['wheres'] = array_merge($clauses['wheres'], $md_clauses['wheres']);
+
+		} else if ($attributes_where) {
 			$clauses['wheres'][] = $attributes_where;
 		}
 

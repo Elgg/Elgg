@@ -110,6 +110,7 @@ abstract class ElggEntity extends \ElggData implements
 			'owner_guid' => _elgg_services()->session->getLoggedInUserGuid(),
 			'container_guid' => _elgg_services()->session->getLoggedInUserGuid(),
 			'access_id' => ACCESS_PRIVATE,
+			'time_created' => null,
 			'time_updated' => null,
 			'last_action' => null,
 			'enabled' => "yes",

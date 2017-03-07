@@ -49,7 +49,7 @@ In addition to all parameters accepted by ``elgg_get_entities()``, ``elgg_search
 Search fields
 -------------
 
-You can customize search fields for each entity type/subtype, using ``search::fields`` hook:
+You can customize search fields for each entity type/subtype, using ``search:fields`` hook:
 
 .. code:: php
 

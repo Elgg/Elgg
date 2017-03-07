@@ -30,12 +30,27 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		// sites are a bit wonky.  Don't use them just now.
 		$this->types = array('object', 'user', 'group');
 
+		$colors = ['blue', 'red', 'purple', 'yellow', 'green'];
+		$countries = ['United States', 'Mexico', 'Canada', 'United Arab Emirates', 'Argentina'];
+		$associations = ['school', 'church', 'business', 'library', 'club'];
+		
 		// create some fun objects to play with.
 		// 5 with random subtypes
 		for ($i=0; $i<5; $i++) {
+
+			$metadata = [
+				'tags' => ['computer', 'programming'],
+				'color' => $colors[$i],
+			];
+			
 			$subtype = 'test_object_subtype_' . rand();
 			$e = new \ElggObject();
 			$e->subtype = $subtype;
+
+			foreach ($metadata as $key => $value) {
+				$e->$key = $value;
+			}
+			
 			$e->save();
 
 			$this->entities[] = $e;
@@ -44,10 +59,22 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 
 		// and users
 		for ($i=0; $i<5; $i++) {
+
+			$metadata = [
+				'country' => $countries[$i],
+				'countries_visited' => $countries,
+				'favorite_colors' => $colors,
+			];
+
 			$subtype = "test_user_subtype_" . rand();
 			$e = new \ElggUser();
 			$e->username = "test_user_" . rand();
 			$e->subtype = $subtype;
+
+			foreach ($metadata as $key => $value) {
+				$e->$key = $value;
+			}
+			
 			$e->save();
 
 			$this->entities[] = $e;
@@ -56,6 +83,12 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 
 		// and groups
 		for ($i=0; $i<5; $i++) {
+
+			$metadata = [
+				'association' => $associations[$i],
+				'countries' => $countries,
+			];
+
 			$subtype = "test_group_subtype_" . rand();
 			$e = new \ElggGroup();
 			$e->subtype = $subtype;

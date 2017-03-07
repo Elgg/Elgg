@@ -36,6 +36,26 @@ function _elgg_search_init() {
 	elgg_register_plugin_hook_handler('search:fields', 'user', \Elgg\Search\UserSearchFieldsHandler::class);
 	elgg_register_plugin_hook_handler('search:fields', 'object', \Elgg\Search\ObjectSearchFieldsHandler::class);
 	elgg_register_plugin_hook_handler('search:fields', 'group', \Elgg\Search\GroupSearchFieldsHandler::class);
+
+	// Unit testing
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_search_test');
+}
+
+
+/**
+ * Unit tests for search
+ *
+ * @param string $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_search_test($hook, $type, $value) {
+	global $CONFIG;
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreSearchTest.php";
+	return $value;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
