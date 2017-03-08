@@ -1601,22 +1601,28 @@ abstract class ElggEntity extends \ElggData implements
 
 			$ia = elgg_set_ignore_access(true);
 
-			$subentities = new \ElggBatch('elgg_get_entities', [
+			$base_options = [
 				'wheres' => [
-					"e.container_guid = $guid OR e.owner_guid = $guid",
-					"e.guid != $guid"
+					"e.guid != $guid",
 				],
-				'limit' => 0,
-			]);
-			$subentities->setIncrementOffset(false);
+				'limit' => false,
+			];
 			
-			foreach ($subentities as $subentity) {
-				/* @var $subentity \ElggEntity */
-				if (!$subentity->isEnabled()) {
-					continue;
+			foreach (['owner_guid', 'container_guid'] as $db_column) {
+				$options = $base_options;
+				$options[$db_column] = $guid;
+				
+				$subentities = new \ElggBatch('elgg_get_entities', $options);
+				$subentities->setIncrementOffset(false);
+				
+				foreach ($subentities as $subentity) {
+					/* @var $subentity \ElggEntity */
+					if (!$subentity->isEnabled()) {
+						continue;
+					}
+					add_entity_relationship($subentity->guid, 'disabled_with', $guid);
+					$subentity->disable($reason);
 				}
-				add_entity_relationship($subentity->guid, 'disabled_with', $guid);
-				$subentity->disable($reason);
 			}
 
 			access_show_hidden_entities($hidden);
@@ -1773,21 +1779,26 @@ abstract class ElggEntity extends \ElggData implements
 			// @todo there was logic in the original code that ignored
 			// entities with owner or container guids of themselves.
 			// this should probably be prevented in \ElggEntity instead of checked for here
-			$options = array(
-				'wheres' => array(
-					"((container_guid = $guid OR owner_guid = $guid)"
-					. " AND guid != $guid)"
-					),
-				'limit' => 0
-			);
-
-			$batch = new \ElggBatch('elgg_get_entities', $options);
-			$batch->setIncrementOffset(false);
-
-			foreach ($batch as $e) {
-				$e->delete(true);
+			$base_options = [
+				'wheres' => [
+					"e.guid != $guid",
+				],
+				'limit' => false,
+			];
+			
+			foreach (['owner_guid', 'container_guid'] as $db_column) {
+				$options = $base_options;
+				$options[$db_column] = $guid;
+				
+				$batch = new \ElggBatch('elgg_get_entities', $options);
+				$batch->setIncrementOffset(false);
+				
+				/* @var $e \ElggEntity */
+				foreach ($batch as $e) {
+					$e->delete(true);
+				}
 			}
-
+			
 			access_show_hidden_entities($entity_disable_override);
 			elgg_set_ignore_access($ia);
 		}
