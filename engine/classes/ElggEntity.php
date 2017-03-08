@@ -1311,7 +1311,7 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Returns entity icon as an ElggIcon object
 	 * The icon file may or may not exist on filestore
-	 * 
+	 *
 	 * @param string $size Size of the icon
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return \ElggIcon
@@ -1322,7 +1322,7 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Removes all icon files and metadata for the passed type of icon.
-	 * 
+	 *
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
 	 * @return bool
 	 */
@@ -1332,10 +1332,10 @@ abstract class ElggEntity extends \ElggData implements
 	
 	/**
 	 * Returns the timestamp of when the icon was changed.
-	 * 
+	 *
 	 * @param string $size The size of the icon
 	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
-	 * 
+	 *
 	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
 	 */
 	public function getIconLastChange($size, $type = 'icon') {
@@ -1797,22 +1797,28 @@ abstract class ElggEntity extends \ElggData implements
 
 			$ia = elgg_set_ignore_access(true);
 
-			$subentities = new \ElggBatch('elgg_get_entities', [
+			$base_options = [
 				'wheres' => [
-					"e.container_guid = $guid OR e.owner_guid = $guid OR e.site_guid = $guid",
-					"e.guid != $guid"
+					"e.guid != $guid",
 				],
-				'limit' => 0,
-			]);
-			$subentities->setIncrementOffset(false);
+				'limit' => false,
+			];
 			
-			foreach ($subentities as $subentity) {
-				/* @var $subentity \ElggEntity */
-				if (!$subentity->isEnabled()) {
-					continue;
+			foreach (['owner_guid', 'container_guid', 'site_guid'] as $db_column) {
+				$options = $base_options;
+				$options[$db_column] = $guid;
+				
+				$subentities = new \ElggBatch('elgg_get_entities', $options);
+				$subentities->setIncrementOffset(false);
+				
+				foreach ($subentities as $subentity) {
+					/* @var $subentity \ElggEntity */
+					if (!$subentity->isEnabled()) {
+						continue;
+					}
+					add_entity_relationship($subentity->guid, 'disabled_with', $guid);
+					$subentity->disable($reason);
 				}
-				add_entity_relationship($subentity->guid, 'disabled_with', $guid);
-				$subentity->disable($reason);
 			}
 
 			access_show_hidden_entities($hidden);
@@ -1969,21 +1975,26 @@ abstract class ElggEntity extends \ElggData implements
 			// @todo there was logic in the original code that ignored
 			// entities with owner or container guids of themselves.
 			// this should probably be prevented in \ElggEntity instead of checked for here
-			$options = array(
-				'wheres' => array(
-					"((container_guid = $guid OR owner_guid = $guid OR site_guid = $guid)"
-					. " AND guid != $guid)"
-					),
-				'limit' => 0
-			);
-
-			$batch = new \ElggBatch('elgg_get_entities', $options);
-			$batch->setIncrementOffset(false);
-
-			foreach ($batch as $e) {
-				$e->delete(true);
+			$base_options = [
+				'wheres' => [
+					"e.guid != $guid",
+				],
+				'limit' => false,
+			];
+			
+			foreach (['owner_guid', 'container_guid', 'site_guid'] as $db_column) {
+				$options = $base_options;
+				$options[$db_column] = $guid;
+				
+				$batch = new \ElggBatch('elgg_get_entities', $options);
+				$batch->setIncrementOffset(false);
+				
+				/* @var $e \ElggEntity */
+				foreach ($batch as $e) {
+					$e->delete(true);
+				}
 			}
-
+			
 			access_show_hidden_entities($entity_disable_override);
 			elgg_set_ignore_access($ia);
 		}
