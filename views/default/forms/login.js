@@ -6,15 +6,18 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 
 		ajax.action($form.prop('action'), {
 			data: ajax.objectify($form)
-		}).success(function(json, status, xhr) {
-			if (typeof json.forward !== 'undefined') {
+		}).done(function(json, status, jqXHR) {
+			if (jqXHR.AjaxData.status == -1) {
+				// remove the form and re-enable the /login link
+				$('#login-dropdown-box').remove();
+				$('#login-dropdown a').off('click');
+				return;
+			}
+
+			if (json && (typeof json.forward === 'string')) {
 				elgg.forward(json.forward);
-			} else if (json === '') {
-				// BC fallback if action did not return a forward url
-				// elgg_ok_response will have the forward url
-				// elgg_error_response will have the error text
-				// everything else is unknown, so forward
-				elgg.forward();				
+			} else {
+				elgg.forward();
 			}
 		});
 		
