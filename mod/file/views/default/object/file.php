@@ -65,7 +65,7 @@ if ($full && !elgg_in_context('gallery')) {
 
 	$body = elgg_view('output/longtext', array('value' => $file->description));
 
-	$file_icon = elgg_view_entity_icon($file, 'small', array('href' => false));
+	$owner_icon = elgg_view_entity_icon($owner, 'small');
 
 	$responses = '';
 	if (elgg_extract('show_responses', $vars, false)) {
@@ -74,7 +74,7 @@ if ($full && !elgg_in_context('gallery')) {
 
 	echo elgg_view('object/elements/full', array(
 		'entity' => $file,
-		'icon' => $file_icon,
+		'icon' => $owner_icon,
 		'summary' => $summary,
 		'body' => $body,
 		'attachments' => $extra,
