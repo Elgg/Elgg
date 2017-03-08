@@ -23,40 +23,28 @@ define(function (require) {
 		}
 		return null;
 	}
-
-	elgg.register_hook_handler('getOptions', 'ui.popup', popupHandler);
-
-	function setupHandlers(nameA, nameB) {
-		$(document).on('click', '.elgg-menu-item-' + nameA + ' a', function() {
-			var $menu = $(this).closest('.elgg-menu');
-
-			// Be optimistic about success
-			elgg.ui.toggleMenuItems($menu, nameB, nameA);
-
-			$menu.find('.elgg-menu-item-' + nameB + ' a').blur();
-
-			// Send the ajax request
-			elgg.action($(this).attr('href'), {
-				success: function(data) {
-					if (data.system_messages.error.length) {
-						// Something went wrong, so undo the optimistic changes
-						elgg.ui.toggleMenuItems($menu, nameA, nameB);
-					}
-
-					var func_name = data.output.num_likes > 0 ? 'removeClass' : 'addClass';
-					$(data.output.selector).text(data.output.text)[func_name]('hidden');
-				},
-				error: function() {
-					// Something went wrong, so undo the optimistic changes
-					elgg.ui.toggleMenuItems($menu, nameA, nameB);
-				}
-			});
-
-			// Don't want to actually click the link
-			return false;
-		});
+	
+	/**
+	 * Updates the likes_count menu item
+	 *
+	 * @param {String} hook    'toggle'
+	 * @param {String} type    'menu_item'
+	 * @param {Object} params  An array of info about the toggled menu items.
+	 * @param {Object} options Options to pass to
+	 *
+	 * @return void
+	 */
+	function likesToggle(hook, type, params, options) {
+		if (!params.itemClicked.hasClass('elgg-menu-item-likes') && 
+				!params.itemClicked.hasClass('elgg-menu-item-unlike') ) {
+			return;
+		}
+		
+		var $count_item = params.menu.find('.elgg-menu-item-likes-count');
+		var func_name = params.data.output.num_likes > 0 ? 'removeClass' : 'addClass';
+		$count_item.text(params.data.output.text)[func_name]('hidden');
 	}
 
-	setupHandlers('likes', 'unlike');
-	setupHandlers('unlike', 'likes');
+	elgg.register_hook_handler('getOptions', 'ui.popup', popupHandler);
+	elgg.register_hook_handler('toggle', 'menu_item', likesToggle);
 });
