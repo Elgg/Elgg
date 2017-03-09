@@ -85,4 +85,9 @@ $output = [
 	'forward' => $forward_url,
 ];
 
+if (elgg_is_xhr()) {
+	// Hold the system messages until the client refreshes the page.
+	set_input('elgg_fetch_messages', 0);
+}
+
 return elgg_ok_response($output, $message, $forward_url);
