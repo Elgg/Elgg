@@ -93,26 +93,3 @@ function garbagecollector_optimize_table($table) {
 	$table = sanitise_string($table);
 	return update_data("OPTIMIZE TABLE $table");
 }
-
-/**
- * Garbage collect stub and fragments from any broken delete/create calls
- *
- * @return void
- */
-function garbagecollector_entities() {
-	$dbprefix = elgg_get_config('dbprefix');
-
-	$tables = array(
-		'site' => 'sites_entity',
-		'object' => 'objects_entity',
-		'group' => 'groups_entity',
-		'user' => 'users_entity',
-	);
-
-	foreach ($tables as $type => $table) {
-		delete_data("DELETE FROM {$dbprefix}{$table}
-		WHERE guid NOT IN (SELECT guid FROM {$dbprefix}entities)");
-		delete_data("DELETE FROM {$dbprefix}entities
-		WHERE type = '$type' AND guid NOT IN (SELECT guid FROM {$dbprefix}{$table})");
-	}
-}

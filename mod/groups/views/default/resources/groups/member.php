@@ -30,8 +30,10 @@ $content = elgg_list_entities_from_relationship(array(
 	'relationship_guid' => elgg_get_page_owner_guid(),
 	'inverse_relationship' => false,
 	'full_view' => false,
-	'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
-	'order_by' => 'ge.name ASC',
+	'order_by_metadata' => [
+		'name' => 'name',
+		'direction' => 'ASC',
+	],
 	'no_results' => elgg_echo('groups:none'),
 ));
 

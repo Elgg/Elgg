@@ -7,8 +7,6 @@ namespace Elgg;
  * called "elggperm", and a hash of the token is stored in the DB. If the user's PHP session expires,
  * the session boot sequence will try to log the user in via the token in the cookie.
  *
- * Before Elgg 1.9, the token hashes were stored as "code" in the users_entity table.
- *
  * In Elgg 1.9, the token hashes are stored as "code" in the users_remember_me_cookies
  * table, allowing multiple browsers to maintain persistent logins.
  *

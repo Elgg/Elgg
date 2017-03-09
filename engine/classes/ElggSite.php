@@ -10,13 +10,6 @@
  *  - description
  *  - url
  *
- * Every \ElggEntity belongs to a site.
- *
- * @note Internal: \ElggSite represents a single row from the sites_entity
- * table, as well as the corresponding \ElggEntity row from the entities table.
- *
- * @warning Multiple site support isn't fully developed.
- *
  * @package    Elgg.Core
  * @subpackage DataMode.Site
  * @link       http://learn.elgg.org/en/stable/design/database.html
@@ -36,24 +29,7 @@ class ElggSite extends \ElggEntity {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['type'] = "site";
-		$this->attributes += self::getExternalAttributes();
-	}
-
-	/**
-	 * Get default values for attributes stored in a separate table
-	 *
-	 * @return array
-	 * @access private
-	 *
-	 * @see \Elgg\Database\EntityTable::getEntities
-	 */
-	final public static function getExternalAttributes() {
-		return [
-			'name' => null,
-			'description' => null,
-			'url' => null,
-		];
+		$this->attributes['type'] = 'site';
 	}
 
 	/**
@@ -76,77 +52,19 @@ class ElggSite extends \ElggEntity {
 				$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 				throw new \IOException($msg);
 			}
+			
+			$version = elgg_get_config('version');
+			if (!empty($version) && $version < 2016112500) {
+				// sites_entity table still exists
+				// load all extra table data to be able to boot/upgrade
+				$db = $this->getDatabase();
+				$query = "SELECT url FROM {$db->prefix}sites_entity WHERE guid = {$this->guid}";
+				$site_data = $db->getDataRow($query);
+				if ($site_data) {
+					$this->url = $site_data->url;
+				}
+			}
 		}
-	}
-
-	/**
-	 * Loads the full \ElggSite when given a guid.
-	 *
-	 * @param mixed $guid GUID of \ElggSite entity or database row object
-	 *
-	 * @return bool
-	 * @throws InvalidClassException
-	 */
-	protected function load($guid) {
-		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'site', $this->attributes);
-		$attr_loader->requires_access_control = !($this instanceof \ElggPlugin);
-		$attr_loader->secondary_loader = 'get_site_entity_as_row';
-
-		$attrs = $attr_loader->getRequiredAttributes($guid);
-		if (!$attrs) {
-			return false;
-		}
-
-		$this->attributes = $attrs;
-		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_services()->entityCache->set($this);
-
-		return true;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function create() {
-		global $CONFIG;
-
-		$guid = parent::create();
-
-		$name = sanitize_string($this->attributes['name']);
-		$description = sanitize_string($this->attributes['description']);
-		$url = sanitize_string($this->attributes['url']);
-
-		$query = "INSERT into {$CONFIG->dbprefix}sites_entity
-			(guid, name, description, url) values ($guid, '$name', '$description', '$url')";
-
-		$result = $this->getDatabase()->insertData($query);
-		if ($result === false) {
-			// TODO(evan): Throw an exception here?
-			return false;
-		}
-
-		return $guid;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function update() {
-		global $CONFIG;
-
-		if (!parent::update()) {
-			return false;
-		}
-
-		$guid = (int)$this->guid;
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
-		$url = sanitize_string($this->url);
-
-		$query = "UPDATE {$CONFIG->dbprefix}sites_entity
-			SET name='$name', description='$description', url='$url' WHERE guid=$guid";
-
-		return $this->getDatabase()->updateData($query) !== false;
 	}
 
 	/**
@@ -158,8 +76,7 @@ class ElggSite extends \ElggEntity {
 	 * @throws SecurityException
 	 */
 	public function delete() {
-		global $CONFIG;
-		if ($CONFIG->site->getGUID() == $this->guid) {
+		if (elgg_get_site_entity()->guid == $this->guid) {
 			throw new \SecurityException('You cannot delete the current site');
 		}
 
@@ -178,9 +95,7 @@ class ElggSite extends \ElggEntity {
 	 * @throws SecurityException
 	 */
 	public function disable($reason = "", $recursive = true) {
-		global $CONFIG;
-
-		if ($CONFIG->site->getGUID() == $this->guid) {
+		if (elgg_get_site_entity()->guid == $this->guid) {
 			throw new \SecurityException('You cannot disable the current site');
 		}
 

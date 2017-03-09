@@ -266,20 +266,9 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
  * @return string The absolute url
  */
 function elgg_normalize_url($url) {
-	// see https://bugs.php.net/bug.php?id=51192
-	// from the bookmarks save action.
-	$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
-	$php_5_3_0_to_5_3_2 = version_compare(PHP_VERSION, '5.3.0', '>=') &&
-			version_compare(PHP_VERSION, '5.3.3', '<');
+	$validated = filter_var($url, FILTER_VALIDATE_URL);
 
-	if ($php_5_2_13_and_below || $php_5_3_0_to_5_3_2) {
-		$tmp_address = str_replace("-", "", $url);
-		$validated = filter_var($tmp_address, FILTER_VALIDATE_URL);
-	} else {
-		$validated = filter_var($url, FILTER_VALIDATE_URL);
-	}
-
-	// work around for handling absoluate IRIs (RFC 3987) - see #4190
+	// work around for handling absolute IRIs (RFC 3987) - see #4190
 	if (!$validated && (strpos($url, 'http:') === 0) || (strpos($url, 'https:') === 0)) {
 		$validated = true;
 	}

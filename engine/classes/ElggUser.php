@@ -32,31 +32,7 @@ class ElggUser extends \ElggEntity
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['type'] = "user";
-		$this->attributes += self::getExternalAttributes();
-	}
-
-	/**
-	 * Get default values for attributes stored in a separate table
-	 *
-	 * @return array
-	 * @access private
-	 *
-	 * @see \Elgg\Database\EntityTable::getEntities
-	 */
-	final public static function getExternalAttributes() {
-		return [
-			'name' => null,
-			'username' => null,
-			'password_hash' => null,
-			'email' => null,
-			'language' => null,
-			'banned' => "no",
-			'admin' => 'no',
-			'prev_last_action' => null,
-			'last_login' => null,
-			'prev_last_login' => null,
-		];
+		$this->attributes['type'] = 'user';
 	}
 
 	/**
@@ -78,84 +54,32 @@ class ElggUser extends \ElggEntity
 				$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 				throw new \IOException($msg);
 			}
+			
+			$version = elgg_get_config('version');
+			if (!empty($version) && $version < 2016112500) {
+				// users_entity table still exists
+				// load all extra table data to be able to boot/upgrade
+				$db = $this->getDatabase();
+				
+				$attributes = [
+					'name', 'username', 'password_hash', 'email',
+					'language', 'banned', 'admin', 'last_action', 'prev_last_action',
+					'last_login', 'prev_last_login',
+				];
+				$query_attributes = implode(', ', $attributes);
+				$query = "SELECT $query_attributes 
+					FROM {$db->prefix}users_entity WHERE guid = {$this->guid}";
+				$user_data = $db->getDataRow($query);
+				if ($user_data) {
+					foreach ($attributes as $attribute) {
+						$this->{$attribute} = $user_data->{$attribute};
+					}
+				}
+			}
+			
 		}
-	}
-
-	/**
-	 * Load the \ElggUser data from the database
-	 *
-	 * @param mixed $guid \ElggUser GUID or \stdClass database row from entity table
-	 *
-	 * @return bool
-	 */
-	protected function load($guid) {
-		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'user', $this->attributes);
-		$attr_loader->secondary_loader = 'get_user_entity_as_row';
-
-		$attrs = $attr_loader->getRequiredAttributes($guid);
-		if (!$attrs) {
-			return false;
-		}
-
-		$this->attributes = $attrs;
-		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_services()->entityCache->set($this);
-
-		return true;
-	}
-
-
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function create() {
-		global $CONFIG;
-	
-		$guid = parent::create();
-		$name = sanitize_string($this->name);
-		$username = sanitize_string($this->username);
-		$password_hash = sanitize_string($this->password_hash);
-		$email = sanitize_string($this->email);
-		$language = sanitize_string($this->language);
-
-		$query = "INSERT into {$CONFIG->dbprefix}users_entity
-			(guid, name, username, password_hash, email, language)
-			values ($guid, '$name', '$username', '$password_hash', '$email', '$language')";
-
-		$result = $this->getDatabase()->insertData($query);
-		if ($result === false) {
-			// TODO(evan): Throw an exception here?
-			return false;
-		}
-
-		return $guid;
 	}
 	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function update() {
-		global $CONFIG;
-		
-		if (!parent::update()) {
-			return false;
-		}
-		
-		$guid = (int)$this->guid;
-		$name = sanitize_string($this->name);
-		$username = sanitize_string($this->username);
-		$password_hash = sanitize_string($this->password_hash);
-		$email = sanitize_string($this->email);
-		$language = sanitize_string($this->language);
-
-		$query = "UPDATE {$CONFIG->dbprefix}users_entity
-			SET name='$name', username='$username',
-			password_hash='$password_hash', email='$email', language='$language'
-			WHERE guid = $guid";
-
-		return $this->getDatabase()->updateData($query) !== false;
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -213,8 +137,16 @@ class ElggUser extends \ElggEntity
 	 *
 	 * @return bool
 	 */
-	public function ban($reason = "") {
-		return ban_user($this->guid, $reason);
+	public function ban($reason = '') {
+
+		if (!$this->events->trigger('ban', 'user', $this)) {
+			return false;
+		}
+		
+		$this->ban_reason = $reason;
+		$this->banned = 'yes';
+		
+		return true;
 	}
 
 	/**
@@ -223,7 +155,15 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function unban() {
-		return unban_user($this->guid);
+
+		if (!$this->events->trigger('unban', 'user', $this)) {
+			return false;
+		}
+
+		unset($this->ban_reason);
+		$this->banned = 'no';
+		
+		return true;
 	}
 
 	/**
@@ -234,6 +174,45 @@ class ElggUser extends \ElggEntity
 	public function isBanned() {
 		return $this->banned == 'yes';
 	}
+	
+	
+	/**
+	 * Sets the last action time to right now.
+	 *
+	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
+	 *
+	 * @return void
+	 */
+	public function setLastAction() {
+
+		$time = $this->getCurrentTime()->getTimestamp();
+
+		if ($this->last_action == $time) {
+			// no change required
+			return;
+		}
+
+		$this->prev_last_action = $this->last_action;
+		$this->last_action = $time;
+	}
+
+	/**
+	 * Sets the last logon time of the given user to right now.
+	 *
+	 * @return void
+	 */
+	public function setLastLogin() {
+
+		$time = $this->getCurrentTime()->getTimestamp();
+
+		if ($this->last_login == $time) {
+			// no change required
+			return;
+		}
+
+		$this->prev_last_login = $this->last_login;
+		$this->last_login = $time;
+	}
 
 	/**
 	 * Is this user admin?
@@ -241,14 +220,15 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isAdmin() {
-
+		return true;
+		
 		// for backward compatibility we need to pull this directly
 		// from the attributes instead of using the magic methods.
 		// this can be removed in 1.9
 		// return $this->admin == 'yes';
 		return $this->attributes['admin'] == 'yes';
 	}
-
+	
 	/**
 	 * Make the user an admin
 	 *
@@ -259,14 +239,15 @@ class ElggUser extends \ElggEntity
 		if ($this->isAdmin()) {
 			return true;
 		}
-
-		// If already saved, use the standard function.
-		if ($this->guid && !make_user_admin($this->guid)) {
-			return false;
+		
+		if ($this->guid) {
+			// If already saved let others know
+			if (!$this->events->trigger('make_admin', 'user', $this)) {
+				return false;
+			}
 		}
 
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'yes';
+		$user->admin = 'yes';
 
 		return true;
 	}
@@ -282,13 +263,14 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		// If already saved, use the standard function.
-		if ($this->guid && !remove_user_admin($this->guid)) {
-			return false;
+		if ($this->guid) {
+			// If already saved let others know
+			if (!$this->events->trigger('remove_admin', 'user', $this)) {
+				return false;
+			}
 		}
 
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'no';
+		$user->admin = 'no';
 
 		return true;
 	}

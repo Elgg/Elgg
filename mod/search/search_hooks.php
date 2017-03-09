@@ -22,12 +22,12 @@ function search_objects_hook($hook, $type, $value, $params) {
 	
 	$db_prefix = elgg_get_config('dbprefix');
 
-	$join = "JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid";
-	array_unshift($params['joins'], $join);
+// 	$join = "JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid";
+// 	array_unshift($params['joins'], $join);
 
-	$fields = array('title', 'description');
-	$where = search_get_where_sql('oe', $fields, $params);
-	$params['wheres'][] = $where;
+// 	$fields = array('title', 'description');
+// 	$where = search_get_where_sql('oe', $fields, $params);
+// 	$params['wheres'][] = $where;
 	
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
@@ -77,12 +77,12 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	$query = sanitise_string($params['query']);
 
-	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
-	array_unshift($params['joins'], $join);
+// 	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
+// 	array_unshift($params['joins'], $join);
 	
-	$fields = array('name', 'description');
-	$where = search_get_where_sql('ge', $fields, $params);
-	$params['wheres'][] = $where;
+// 	$fields = array('name', 'description');
+// 	$where = search_get_where_sql('ge', $fields, $params);
+// 	$params['wheres'][] = $where;
 
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
@@ -133,12 +133,12 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	$query = sanitise_string($params['query']);
 
-	$join = "JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid";
-	array_unshift($params['joins'], $join);
+// 	$join = "JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid";
+// 	array_unshift($params['joins'], $join);
 		
-	// username and display name
-	$fields = array('username', 'name');
-	$where = search_get_where_sql('ue', $fields, $params);
+// 	// username and display name
+// 	$fields = array('username', 'name');
+// 	$where = search_get_where_sql('ue', $fields, $params);
 
 	// profile fields
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
