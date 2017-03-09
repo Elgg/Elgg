@@ -87,7 +87,7 @@ class Annotations {
 		$result = false;
 	
 		$entity_guid = (int)$entity_guid;
-		$value_type = detect_extender_valuetype($value, $value_type);
+		$value_type = \ElggExtender::detectValueType($value, $value_type);
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {
@@ -157,7 +157,7 @@ class Annotations {
 		}
 	
 		$name = trim($name);
-		$value_type = detect_extender_valuetype($value, $value_type);
+		$value_type = \ElggExtender::detectValueType($value, $value_type);
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {

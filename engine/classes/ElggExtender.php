@@ -58,7 +58,7 @@ abstract class ElggExtender extends \ElggData {
 
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
-			$this->attributes['value_type'] = detect_extender_valuetype($value);
+			$this->attributes['value_type'] = self::detectValueType($value);
 		}
 	}
 
@@ -72,7 +72,7 @@ abstract class ElggExtender extends \ElggData {
 	 */
 	public function setValue($value, $value_type = '') {
 		$this->attributes['value'] = $value;
-		$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
+		$this->attributes['value_type'] = self::detectValueType($value, $value_type);
 	}
 
 	/**
@@ -315,4 +315,21 @@ abstract class ElggExtender extends \ElggData {
 		return elgg_normalize_url($url);
 	}
 
+	/**
+	 * Detect the value_type for a value to be stored as metadata or an annotation
+	 *
+	 * @param mixed  $value      The value
+	 * @param string $value_type If specified as "text" or "integer", overrides the detection.
+	 *
+	 * @return string
+	 * @access private
+	 * @internal
+	 */
+	public static function detectValueType($value, $value_type = "") {
+		if ($value_type === 'integer' || $value_type === 'text') {
+			return $value_type;
+		}
+
+		return is_int($value) ? 'integer' : 'text';
+	}
 }
