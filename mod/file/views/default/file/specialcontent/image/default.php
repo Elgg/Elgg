@@ -18,7 +18,7 @@ $img = elgg_format_element('img', [
 $a = elgg_format_element([
 	'#tag_name' => 'a',
 	'#text' => $img,
-	'href' => elgg_get_download_url($file),
+	'href' => $file->canDownload() ? $file->getDownloadURL() : $file->getIconURL('large'),
 	'class' => 'elgg-lightbox-photo',
 ]);
 

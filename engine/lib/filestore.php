@@ -441,12 +441,7 @@ function _elgg_filestore_test($hook, $type, $value) {
  * @return string
  */
 function elgg_get_download_url(\ElggFile $file, $use_cookie = true, $expires = '+2 hours') {
-	$file_svc = new Elgg\FileService\File();
-	$file_svc->setFile($file);
-	$file_svc->setExpires($expires);
-	$file_svc->setDisposition('attachment');
-	$file_svc->bindSession($use_cookie);
-	return $file_svc->getURL();
+	return $file->getDownloadURL($use_cookie, $expires);
 }
 
 /**
@@ -461,14 +456,7 @@ function elgg_get_download_url(\ElggFile $file, $use_cookie = true, $expires = '
  * @return string
  */
 function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = '') {
-	$file_svc = new Elgg\FileService\File();
-	$file_svc->setFile($file);
-	if ($expires) {
-		$file_svc->setExpires($expires);
-	}
-	$file_svc->setDisposition('inline');
-	$file_svc->bindSession($use_cookie);
-	return $file_svc->getURL();
+	return $file->getInlineURL($use_cookie, $expires);
 }
 
 /**

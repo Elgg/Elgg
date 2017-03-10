@@ -14,7 +14,7 @@ if (!elgg_extract('full_view', $vars, false)) {
 	return;
 }
 
-$download_url = elgg_get_download_url($file);
+$download_url = $file->getDownloadURL();
 $mimetype = $file->getMimeType();
 
 echo "<audio controls><source src='{$download_url}' type='{$mimetype}'></audio>";
