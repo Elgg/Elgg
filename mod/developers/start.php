@@ -115,7 +115,9 @@ function _developers_page_menu($hook, $type, $return, $params) {
 	foreach ($inspect_options as $key => $value) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
-			'href' => "admin/develop_tools/inspect?inspect_type={$key}",
+			'href' => "admin/develop_tools/inspect?" . http_build_query([
+					'inspect_type' => $key,
+			]),
 			'text' => $value,
 			'section' => 'develop',
 			'parent_name' => 'inspect',
