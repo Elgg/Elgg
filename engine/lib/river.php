@@ -669,9 +669,9 @@ function _elgg_river_test($hook, $type, $value) {
 /**
  * Disable river entries that reference a disabled entity as subject/object/target
  *
- * @param string $event The event 'disable'
- * @param string $type Type of entity being disabled 'all'
- * @param mixed $entity The entity being disabled
+ * @param string $event  The event 'disable'
+ * @param string $type   Type of entity being disabled 'all'
+ * @param mixed  $entity The entity being disabled
  * @return boolean
  * @access private
  */
@@ -696,9 +696,9 @@ QUERY;
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
  *
- * @param string $event The event 'enable'
- * @param string $type Type of entity being enabled 'all'
- * @param mixed $entity The entity being enabled
+ * @param string $event  The event 'enable'
+ * @param string $type   Type of entity being enabled 'all'
+ * @param mixed  $entity The entity being enabled
  * @return boolean
  * @access private
  */

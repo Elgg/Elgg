@@ -1011,8 +1011,7 @@ class EntityTable {
 					foreach ($paired_subtypes as $paired_subtype) {
 						if (ELGG_ENTITIES_NO_VALUE === $paired_subtype || ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
 
-							$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ?
-									ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
+							$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ? ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 						} else {
 							$valid_pairs_subtypes_count--;
 							$this->logger->notice("Type-subtype '$paired_type:$paired_subtype' does not exist!");

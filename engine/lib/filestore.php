@@ -411,9 +411,9 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
 /**
  * Unit tests for files
  *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
+ * @param string $hook  unit_test
+ * @param string $type  system
+ * @param mixed  $value Array of tests
  *
  * @return array
  * @access private

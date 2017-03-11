@@ -183,8 +183,8 @@ function elgg_get_subscriptions_for_container($container_guid) {
  *
  * This function triggers the 'enqueue', 'notification' hook.
  *
- * @param string   $action The name of the action
- * @param string   $type   The type of the object
+ * @param string    $action The name of the action
+ * @param string    $type   The type of the object
  * @param \ElggData $object The object of the event
  * @return void
  * @access private

@@ -170,8 +170,8 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 /**
  * Add an admin notice when a new \ElggUpgrade object is created.
  *
- * @param string     $event
- * @param string     $type
+ * @param string      $event
+ * @param string      $type
  * @param \ElggObject $object
  * @access private
  */
@@ -729,8 +729,8 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 /**
  * Adds default admin widgets to the admin dashboard.
  *
- * @param string $event
- * @param string $type
+ * @param string    $event
+ * @param string    $type
  * @param \ElggUser $user
  *
  * @return null|true

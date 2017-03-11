@@ -1872,7 +1872,7 @@ function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
  *
  * @param string $hook
  * @param string $type
- * @param array $accesses
+ * @param array  $accesses
  * @return array
  * @access private
  */

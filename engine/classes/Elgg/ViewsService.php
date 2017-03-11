@@ -223,10 +223,10 @@ class ViewsService {
 	 *
 	 * @see elgg_view()
 	 *
-	 * @param string  $view       The name and location of the view to use
-	 * @param array   $vars       Variables to pass to the view
-	 * @param string  $suggestion Suggestion with the deprecation message
-	 * @param string  $version    Human-readable *release* version: 1.7, 1.8, ...
+	 * @param string $view       The name and location of the view to use
+	 * @param array  $vars       Variables to pass to the view
+	 * @param string $suggestion Suggestion with the deprecation message
+	 * @param string $version    Human-readable *release* version: 1.7, 1.8, ...
 	 *
 	 * @return string The parsed view
 	 * @access private

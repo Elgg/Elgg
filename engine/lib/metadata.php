@@ -381,8 +381,8 @@ function is_metadata_independent($type, $subtype) {
 /**
  * When an entity is updated, resets the access ID on all of its child metadata
  *
- * @param string     $event       The name of the event
- * @param string     $object_type The type of object
+ * @param string      $event       The name of the event
+ * @param string      $object_type The type of object
  * @param \ElggEntity $object      The entity itself
  *
  * @return true

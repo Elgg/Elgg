@@ -132,10 +132,10 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 /**
  * Setup the menu shown with a comment
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:entity'
+ * @param string          $hook   'register'
+ * @param string          $type   'menu:entity'
  * @param \ElggMenuItem[] $return Array of \ElggMenuItem objects
- * @param array          $params Array of view vars
+ * @param array           $params Array of view vars
  *
  * @return array
  * @access private

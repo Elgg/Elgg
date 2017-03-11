@@ -32,8 +32,8 @@ function unset_config($name) {
  *
  * @internal The value is serialized so we maintain type information.
  *
- * @param string $name      The name of the configuration value
- * @param mixed  $value     Its value
+ * @param string $name  The name of the configuration value
+ * @param mixed  $value Its value
  *
  * @return bool
  * @see unset_config()
@@ -55,7 +55,7 @@ function set_config($name, $value) {
  * @internal These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
  *
- * @param string $name      The name of the config value
+ * @param string $name The name of the config value
  *
  * @return mixed|null
  * @see set_config()
