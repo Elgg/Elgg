@@ -62,7 +62,7 @@ foreach ($options as $label => $option) {
 	$vars['value'] = $option;
 
 	$radio = elgg_format_element('input', $vars);
-	$radios .= "<li><label>{$radio}{$label}</label></li>";
+	$radios .= "<li><div>{$radio}{$label}</div></li>";
 }
 
 echo elgg_format_element('ul', ['class' => $list_class, 'id' => $id], $radios);
