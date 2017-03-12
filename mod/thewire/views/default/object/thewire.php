@@ -20,7 +20,7 @@ if (!$thread_id) {
 	$post->wire_thread = $post->guid;
 }
 
-$subtitle = elgg_view('page/elements/by_line', $vars);
+$subtitle = elgg_view('object/elements/imprint', $vars);
 
 $metadata = '';
 if (!elgg_in_context('widgets')) {

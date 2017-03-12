@@ -555,8 +555,7 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	// Reply has the same access as the topic so no need to view it
-	$remove = array('access');
+	$remove = [];
 
 	$user = elgg_get_logged_in_user_entity();
 

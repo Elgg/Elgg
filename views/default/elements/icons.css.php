@@ -94,3 +94,9 @@
 .elgg-state-banned {
 	opacity: 0.5;
 }
+
+.elgg-access-icon {
+	color: inherit;
+	font-size: inherit;
+	margin-right: 5px;
+}

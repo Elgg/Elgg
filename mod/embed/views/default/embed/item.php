@@ -17,7 +17,7 @@ $title = isset($entity->name) ? $entity->name : $entity->title;
 // don't let it be too long
 $title = elgg_get_excerpt($title);
 
-$subtitle = elgg_view('page/elements/by_line', [
+$subtitle = elgg_view('object/elements/imprint', [
 	'entity' => $entity,
 	'show_links' => false,
 ]);

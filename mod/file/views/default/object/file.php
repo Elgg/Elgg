@@ -15,7 +15,7 @@ if (!$file) {
 $owner = $file->getOwnerEntity();
 $categories = elgg_view('output/categories', $vars);
 
-$by_line = elgg_view('page/elements/by_line', $vars);
+$by_line = elgg_view('object/elements/imprint', $vars);
 
 $comments_count = $file->countComments();
 //only display if there are commments

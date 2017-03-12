@@ -3,9 +3,7 @@
 *************************************** */
 .elgg-tags {
     font-size: 85%;
-    color: #AAA;
-    line-height: normal;
-    vertical-align: middle;
+    color: #999;
 }
 
 .elgg-tags > .elgg-icon {

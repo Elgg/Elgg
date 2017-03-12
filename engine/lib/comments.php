@@ -15,7 +15,6 @@
  */
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_comment_setup_entity_menu', 900);
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
@@ -127,37 +126,6 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$url = elgg_http_build_url($parts, false);
 	
 	forward($url);
-}
-
-/**
- * Setup the menu shown with a comment
- *
- * @param string         $hook   'register'
- * @param string         $type   'menu:entity'
- * @param \ElggMenuItem[] $return Array of \ElggMenuItem objects
- * @param array          $params Array of view vars
- *
- * @return array
- * @access private
- */
-function _elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-
-	$entity = $params['entity'];
-	if (!elgg_instanceof($entity, 'object', 'comment')) {
-		return $return;
-	}
-
-	// Remove edit link and access level from the menu
-	foreach ($return as $key => $item) {
-		if ($item->getName() === 'access') {
-			unset($return[$key]);
-		}
-	}
-
-	return $return;
 }
 
 /**
