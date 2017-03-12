@@ -90,6 +90,16 @@ input[type="number"] {
 	padding-right: 10px;
 }
 
+.elgg-input-radios label {
+	font-weight: normal;
+	font-size: 100%;
+}
+
+.elgg-input-checkboxes label {
+	font-weight: normal;
+	font-size: 100%;
+}
+
 .elgg-form-login, .elgg-form-account {
 	max-width: 475px;
 	margin: 0 auto;
