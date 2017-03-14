@@ -192,6 +192,7 @@ function _elgg_send_friend_notification($event, $type, $object) {
 		'action' => 'add_friend',
 		'object' => $user_one,
 		'friend' => $user_two,
+		'url' => $user_two->getURL(),
 	];
 
 	return notify_user($user_two->guid, $object->guid_one, $subject, $body, $params);

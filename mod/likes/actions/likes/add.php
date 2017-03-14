@@ -88,6 +88,7 @@ if ($entity->owner_guid != $user->guid) {
 			'action' => 'create',
 			'object' => $annotation,
 			'summary' => $summary,
+			'url' => $entity->getURL(),
 		)
 	);
 }

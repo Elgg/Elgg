@@ -34,6 +34,7 @@ if (sizeof($user_guid)) {
 					$params = [
 						'action' => 'add_membership',
 						'object' => $group,
+						'url' => $group->getURL(),
 					];
 
 					// Send welcome notification to user

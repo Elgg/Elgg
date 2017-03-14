@@ -34,6 +34,9 @@ class Notification {
 	/** @var array Additional parameters */
 	public $params;
 
+	/** @var string Target URL */
+	public $url;
+
 	/**
 	 * Create a notification
 	 *
@@ -60,6 +63,10 @@ class Notification {
 		$this->body = $body;
 		$this->summary = $summary;
 		$this->params = $params;
+
+		if (isset($this->params['url'])) {
+			$this->url = $this->params['url'];
+		}
 	}
 
 	/**
