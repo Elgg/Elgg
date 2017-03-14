@@ -196,13 +196,18 @@ class ElggWidget extends \ElggObject {
 			return;
 		}
 
-		usort($widgets, function($a, $b) {return (int) $a->order > (int) $b->order;});
+		usort(
+			$widgets, function($a, $b) {
+				return (int) $a->order > (int) $b->order;}
+		);
 
 		// remove widgets from inactive plugins
-		$widget_types = elgg_get_widget_types([
+		$widget_types = elgg_get_widget_types(
+			[
 			'context' => $this->context,
 			'container' => $this->getContainerEntity(),
-		]);
+			]
+		);
 		$inactive_widgets = array();
 		foreach ($widgets as $index => $widget) {
 			if (!array_key_exists($widget->handler, $widget_types)) {

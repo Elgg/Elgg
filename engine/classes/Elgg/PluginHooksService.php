@@ -28,8 +28,10 @@ class PluginHooksService extends \Elgg\HooksRegistrationService {
 			if (!is_callable($callback)) {
 				if ($this->logger) {
 					$inspector = new Inspector();
-					$this->logger->warn("handler for plugin hook [$hook, $type] is not callable: "
-							. $inspector->describeCallable($callback));
+					$this->logger->warn(
+						"handler for plugin hook [$hook, $type] is not callable: "
+						. $inspector->describeCallable($callback)
+					);
 				}
 				continue;
 			}

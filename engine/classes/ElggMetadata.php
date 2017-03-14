@@ -82,12 +82,16 @@ class ElggMetadata extends \ElggExtender {
 	 */
 	public function save() {
 		if ($this->id > 0) {
-			return update_metadata($this->id, $this->name, $this->value,
-				$this->value_type, $this->owner_guid, $this->access_id);
+			return update_metadata(
+				$this->id, $this->name, $this->value,
+				$this->value_type, $this->owner_guid, $this->access_id
+			);
 		} else {
 			// using create_metadata() for deprecation notices in 2.x
-			$this->id = create_metadata($this->entity_guid, $this->name, $this->value,
-				$this->value_type, $this->owner_guid, $this->access_id);
+			$this->id = create_metadata(
+				$this->entity_guid, $this->name, $this->value,
+				$this->value_type, $this->owner_guid, $this->access_id
+			);
 
 			if (!$this->id) {
 				throw new \IOException("Unable to save new " . get_class());

@@ -347,9 +347,11 @@ class NotificationsService {
 			return $deliveries;
 		}
 		
-		$recipients = array_filter($recipients, function($e) {
-			return ($e instanceof \ElggUser);
-		});
+		$recipients = array_filter(
+			$recipients, function($e) {
+				return ($e instanceof \ElggUser);
+			}
+		);
 		
 		$object = elgg_extract('object', $params);
 		$action = elgg_extract('action', $params);
@@ -542,10 +544,12 @@ class NotificationsService {
 			} else {
 				$display_name = '';
 			}
-			return $this->translator->translate($subject_key, array(
+			return $this->translator->translate(
+				$subject_key, array(
 						$actor->name,
 						$display_name,
-							), $language);
+				), $language
+			);
 		}
 
 		// Fall back to default subject
@@ -609,14 +613,16 @@ class NotificationsService {
 				$container_name = '';
 			}
 
-			return $this->translator->translate($body_key, array(
+			return $this->translator->translate(
+				$body_key, array(
 						$recipient->name,
 						$actor->name,
 						$display_name,
 						$container_name,
 						$object->description,
 						$object->getURL(),
-							), $language);
+				), $language
+			);
 		}
 
 		// Fall back to default body

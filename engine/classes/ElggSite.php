@@ -146,8 +146,10 @@ class ElggSite extends \ElggEntity {
 		// make sure the site guid is set to self if not already set
 		if (!$this->site_guid) {
 			$this->site_guid = $guid;
-			$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
-				SET site_guid = $guid WHERE guid = $guid");
+			$this->getDatabase()->updateData(
+				"UPDATE {$CONFIG->dbprefix}entities
+				SET site_guid = $guid WHERE guid = $guid"
+			);
 		}
 
 		return $guid;
@@ -432,11 +434,13 @@ class ElggSite extends \ElggEntity {
 	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
-		return array_merge(parent::getExportableValues(), array(
+		return array_merge(
+			parent::getExportableValues(), array(
 			'name',
 			'description',
 			'url',
-		));
+			)
+		);
 	}
 
 	/**
@@ -471,10 +475,11 @@ class ElggSite extends \ElggEntity {
 				$CONFIG->default_access = ACCESS_LOGGED_IN;
 			}
 			_elgg_services()->hooks->registerHandler(
-					'access:collections:write',
-					'all',
-					'_elgg_walled_garden_remove_public_access',
-					9999);
+				'access:collections:write',
+				'all',
+				'_elgg_walled_garden_remove_public_access',
+				9999
+			);
 
 			if (!_elgg_services()->session->isLoggedIn()) {
 				// override the front page

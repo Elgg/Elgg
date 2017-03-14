@@ -672,10 +672,14 @@ class ViewsService {
 	 * @access private
 	 */
 	public function cacheConfiguration(SystemCache $cache) {
-		$cache->save('view_locations', serialize([
-			'version' => '2.0',
-			'locations' => $this->locations,
-		]));
+		$cache->save(
+			'view_locations', serialize(
+				[
+				'version' => '2.0',
+				'locations' => $this->locations,
+				]
+			)
+		);
 
 		// this is saved just for the inspector and is not loaded in loadAll()
 		$cache->save('view_overrides', serialize($this->overrides));

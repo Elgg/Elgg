@@ -221,11 +221,13 @@ class CacheHandler {
 		$db = $this->application->getDb();
 
 		try {
-			$rows = $db->getData("
+			$rows = $db->getData(
+				"
 				SELECT `name`, `value`
 				FROM {$db->prefix}datalists
 				WHERE `name` IN ('dataroot', 'simplecache_enabled')
-			");
+			"
+			);
 			if (!$rows) {
 				$this->send403('Cache error: unable to get the data root');
 			}

@@ -262,8 +262,10 @@ function elgg_get_river(array $options = array()) {
 	$wheres[] = _elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
-	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
-		$options['subtypes'], $options['type_subtype_pairs']);
+	$wheres[] = _elgg_get_river_type_subtype_where_sql(
+		'rv', $options['types'],
+		$options['subtypes'], $options['type_subtype_pairs']
+	);
 
 	if ($options['posted_time_lower'] && is_int($options['posted_time_lower'])) {
 		$wheres[] = "rv.posted >= {$options['posted_time_lower']}";
@@ -288,10 +290,11 @@ function elgg_get_river(array $options = array()) {
 
 	if ($options['relationship_guid']) {
 		$clauses = elgg_get_entity_relationship_where_sql(
-				'rv.subject_guid',
-				$options['relationship'],
-				$options['relationship_guid'],
-				$options['inverse_relationship']);
+			'rv.subject_guid',
+			$options['relationship'],
+			$options['relationship_guid'],
+			$options['inverse_relationship']
+		);
 		if ($clauses) {
 			$wheres = array_merge($wheres, $clauses['wheres']);
 			$joins = array_merge($joins, $clauses['joins']);
@@ -395,11 +398,13 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		// The entity cache only holds 256. We don't want to bump out any plugins.
 		$guids = array_slice($guids, 0, 200, true);
 		// return value unneeded, just priming cache
-		elgg_get_entities(array(
+		elgg_get_entities(
+			array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
 			'distinct' => false,
-		));
+			)
+		);
 	}
 
 	// prefetch object containers, in case they were not in the targets
@@ -412,7 +417,8 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	}
 	if ($guids) {
 		$guids = array_slice($guids, 0, 200, true);
-		elgg_get_entities(array(
+		elgg_get_entities(
+			array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
 			'distinct' => false,
@@ -420,7 +426,8 @@ function _elgg_prefetch_river_entities(array $river_items) {
 			// Why specify? user containers are likely already loaded via the owners, and
 			// specifying groups allows ege() to auto-join the groups_entity table
 			'type' => 'group',
-		));
+			)
+		);
 	}
 
 	// Note: We've tried combining the above ege() calls into one (pulling containers at the same time).

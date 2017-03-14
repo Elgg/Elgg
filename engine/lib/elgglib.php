@@ -93,8 +93,10 @@ function elgg_load_library($name) {
  */
 function forward($location = "", $reason = 'system') {
 	if (headers_sent($file, $line)) {
-		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
+		throw new \SecurityException(
+			"Redirect could not be issued due to headers already being sent. Halting execution for security. "
+			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information."
+		);
 	}
 
 	_elgg_services()->responseFactory->redirect($location, $reason);
@@ -113,8 +115,10 @@ function forward($location = "", $reason = 'system') {
  */
 function elgg_set_http_header($header, $replace = true) {
 	if (headers_sent($file, $line)) {
-		_elgg_services()->logger->error("Cannot modify header information - headers already sent by
-			(output started at $file:$line)");
+		_elgg_services()->logger->error(
+			"Cannot modify header information - headers already sent by
+			(output started at $file:$line)"
+		);
 	} else {
 		header($header, $replace);
 	}
@@ -916,15 +920,19 @@ function _elgg_php_exception_handler($exception) {
 		}
 
 		if (elgg_is_admin_logged_in()) {
-			$body = elgg_view("messages/exceptions/admin_exception", array(
+			$body = elgg_view(
+				"messages/exceptions/admin_exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
-			));
+				)
+			);
 		} else {
-			$body = elgg_view("messages/exceptions/exception", array(
+			$body = elgg_view(
+				"messages/exceptions/exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
-			));
+				)
+			);
 		}
 
 		$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
@@ -2011,22 +2019,26 @@ function _elgg_init() {
 	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
 	elgg_register_page_handler('favicon.ico', '_elgg_favicon_page_handler');
 
-	elgg_register_page_handler('manifest.json', function() {
-		$site = elgg_get_site_entity();
-		$resource = new \Elgg\Http\WebAppManifestResource($site);
-		header('Content-Type: application/json;charset=utf-8');
-		echo json_encode($resource->get());
-		return true;
-	});
+	elgg_register_page_handler(
+		'manifest.json', function() {
+			$site = elgg_get_site_entity();
+			$resource = new \Elgg\Http\WebAppManifestResource($site);
+			header('Content-Type: application/json;charset=utf-8');
+			echo json_encode($resource->get());
+			return true;
+		}
+	);
 
-	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
-		$result['links']['manifest'] = [
+	elgg_register_plugin_hook_handler(
+		'head', 'page', function($hook, $type, array $result) {
+			$result['links']['manifest'] = [
 			'rel' => 'manifest',
 			'href' => elgg_normalize_url('/manifest.json'),
-		];
+			];
 
-		return $result;
-	});
+			return $result;
+		}
+	);
 
 	if (_elgg_services()->config->getVolatile('enable_profiling')) {
 		/**
@@ -2179,12 +2191,16 @@ define('ELGG_HTTP_NETWORK_AUTHENTICATION_REQUIRED', 511); // RFC6585
 define('ELGG_JSON_ENCODING', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('boot', 'system', function () {
-		_elgg_services()->boot->boot();
-	}, 1);
-	$events->registerHandler('cache:flush', 'system', function () {
-		_elgg_services()->boot->invalidateCache();
-	});
+	$events->registerHandler(
+		'boot', 'system', function () {
+			_elgg_services()->boot->boot();
+		}, 1
+	);
+	$events->registerHandler(
+		'cache:flush', 'system', function () {
+			_elgg_services()->boot->invalidateCache();
+		}
+	);
 
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);

@@ -145,10 +145,12 @@ class ResponseFactory {
 
 		if ($this->response_sent) {
 			if ($this->response_sent !== $response) {
-				_elgg_services()->logger->error('Unable to send the following response: ' . PHP_EOL
+				_elgg_services()->logger->error(
+					'Unable to send the following response: ' . PHP_EOL
 						. (string) $response . PHP_EOL
 						. 'because another response has already been sent: ' . PHP_EOL
-						. (string) $this->response_sent);
+					. (string) $this->response_sent
+				);
 			}
 		} else {
 			if (!elgg_trigger_before_event('send', 'http_response', $response)) {
@@ -186,8 +188,10 @@ class ResponseFactory {
 		$response_type = $this->parseContext();
 		$response = $this->hooks->trigger('response', $response_type, $response, $response);
 		if (!$response instanceof ResponseBuilder) {
-			throw new InvalidParameterException("Handlers for 'response','$response_type' plugin hook must "
-			. "return an instanceof " . ResponseBuilder::class);
+			throw new InvalidParameterException(
+				"Handlers for 'response','$response_type' plugin hook must "
+				. "return an instanceof " . ResponseBuilder::class
+			);
 		}
 
 		if ($response->isNotModified()) {

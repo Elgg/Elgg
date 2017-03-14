@@ -62,7 +62,8 @@ function elgg_delete_annotation_by_id($id) {
 function create_annotation($entity_guid, $name, $value, $value_type = '',
 		$owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	return _elgg_services()->annotations->create(
-		$entity_guid, $name, $value, $value_type, $owner_guid, $access_id);
+		$entity_guid, $name, $value, $value_type, $owner_guid, $access_id
+	);
 }
 
 /**

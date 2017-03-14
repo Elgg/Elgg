@@ -17,7 +17,8 @@ function _elgg_cron_init() {
 
 	elgg_register_plugin_hook_handler('cron', 'all', '_elgg_cron_monitor', 1000);
 
-	elgg_set_config('elgg_cron_periods', array(
+	elgg_set_config(
+		'elgg_cron_periods', array(
 		'minute',
 		'fiveminute',
 		'fifteenmin',
@@ -29,7 +30,8 @@ function _elgg_cron_init() {
 		'yearly',
 		// reboot is deprecated and probably does not work
 		'reboot',
-	));
+		)
+	);
 
 	elgg_register_admin_menu_item('administer', 'cron', 'statistics');
 }

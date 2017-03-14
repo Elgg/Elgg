@@ -200,17 +200,19 @@ abstract class HooksRegistrationService {
 			array_splice($registrations, count($registrations), 0, $this->registrations['all']['all']);
 		}
 
-		usort($registrations, function ($a, $b) {
-			// priority first
-			if ($a[self::REG_KEY_PRIORITY] < $b[self::REG_KEY_PRIORITY]) {
-				return -1;
+		usort(
+			$registrations, function ($a, $b) {
+				// priority first
+				if ($a[self::REG_KEY_PRIORITY] < $b[self::REG_KEY_PRIORITY]) {
+					return -1;
+				}
+				if ($a[self::REG_KEY_PRIORITY] > $b[self::REG_KEY_PRIORITY]) {
+					return 1;
+				}
+				// then insertion order
+				return ($a[self::REG_KEY_INDEX] < $b[self::REG_KEY_INDEX]) ? -1 : 1;
 			}
-			if ($a[self::REG_KEY_PRIORITY] > $b[self::REG_KEY_PRIORITY]) {
-				return 1;
-			}
-			// then insertion order
-			return ($a[self::REG_KEY_INDEX] < $b[self::REG_KEY_INDEX]) ? -1 : 1;
-		});
+		);
 
 		$handlers = [];
 		foreach ($registrations as $registration) {

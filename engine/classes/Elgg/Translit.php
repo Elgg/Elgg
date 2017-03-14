@@ -55,15 +55,18 @@ class Translit {
 
 		// more substitutions
 		// @todo put these somewhere else
-		$string = strtr($string, array(
+		$string = strtr(
+			$string, array(
 			// currency
 			"\xE2\x82\xAC" /* € */ => ' E ',
 			"\xC2\xA3" /* £ */ => ' GBP ',
-		));
+			)
+		);
 
 		// remove all ASCII except 0-9a-zA-Z, hyphen, underscore, and whitespace
 		// note: "x" modifier did not work with this pattern.
-		$string = preg_replace('~['
+		$string = preg_replace(
+			'~['
 			. '\x00-\x08'  // control chars
 			. '\x0b\x0c'   // vert tab, form feed
 			. '\x0e-\x1f'  // control chars
@@ -73,7 +76,8 @@ class Translit {
 			. '\x5b-\x5e'  // [ ... ^
 			. '\x60'       // `
 			. '\x7b-\x7f'  // { ... DEL
-			. ']~', '', $string);
+			. ']~', '', $string
+		);
 		$string = strtr($string, '', '');
 
 		// internationalization, and 日本語!

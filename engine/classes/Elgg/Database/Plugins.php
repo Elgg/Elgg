@@ -222,11 +222,12 @@ class Plugins {
 	 * @return \ElggPlugin|null
 	 */
 	function get($plugin_id) {
-		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
-			$plugin_id = sanitize_string($plugin_id);
-			$db_prefix = get_config('dbprefix');
+		return $this->plugins_by_id->get(
+			$plugin_id, function () use ($plugin_id) {
+				$plugin_id = sanitize_string($plugin_id);
+				$db_prefix = get_config('dbprefix');
 
-			$options = array(
+				$options = array(
 				'type' => 'object',
 				'subtype' => 'plugin',
 				'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
@@ -234,16 +235,17 @@ class Plugins {
 				'wheres' => array("oe.title = '$plugin_id'"),
 				'limit' => 1,
 				'distinct' => false,
-			);
+				);
 
-			$plugins = elgg_get_entities($options);
+				$plugins = elgg_get_entities($options);
 
-			if ($plugins) {
-				return $plugins[0];
+				if ($plugins) {
+					return $plugins[0];
+				}
+
+				return null;
 			}
-
-			return null;
-		});
+		);
 	}
 	
 	/**
@@ -338,10 +340,7 @@ class Plugins {
 		}
 
 		$plugins_path = elgg_get_plugins_path();
-		$start_flags = ELGG_PLUGIN_INCLUDE_START |
-						ELGG_PLUGIN_REGISTER_VIEWS |
-						ELGG_PLUGIN_REGISTER_LANGUAGES |
-						ELGG_PLUGIN_REGISTER_CLASSES;
+		$start_flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_CLASSES;
 	
 		if (!$plugins_path) {
 			return false;
@@ -383,8 +382,10 @@ class Plugins {
 				if ($disable_plugins) {
 					$plugin->deactivate();
 				
-					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-									array($id, $plugin->guid, $e->getMessage()));
+					$msg = _elgg_services()->translator->translate(
+						'PluginException:CannotStart',
+						array($id, $plugin->guid, $e->getMessage())
+					);
 					elgg_add_admin_notice("cannot_start $id", $msg);
 					$return = false;
 				}
@@ -454,16 +455,18 @@ class Plugins {
 		$plugins = elgg_get_entities_from_relationship($options);
 		elgg_set_ignore_access($old_ia);
 
-		usort($plugins, function (\ElggPlugin $a, \ElggPlugin $b) {
-			$a_value = $a->getVolatileData('select:value');
-			$b_value = $b->getVolatileData('select:value');
+		usort(
+			$plugins, function (\ElggPlugin $a, \ElggPlugin $b) {
+				$a_value = $a->getVolatileData('select:value');
+				$b_value = $b->getVolatileData('select:value');
 
-			if ($b_value !== $a_value) {
-				return $a_value - $b_value;
-			} else {
-				return $a->guid - $b->guid;
+				if ($b_value !== $a_value) {
+					return $a_value - $b_value;
+				} else {
+					return $a->guid - $b->guid;
+				}
 			}
-		});
+		);
 	
 		return $plugins;
 	}

@@ -41,8 +41,10 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	public function registerHandler($name, $type, $callback, $priority = 500) {
 		if (in_array($type, ['member', 'friend', 'member_of_site', 'attached'])
 				&& in_array($name, ['create', 'update', 'delete'])) {
-			$this->logger->error("'$name, $type' event is no longer triggered. Update your event registration "
-				. "to use '$name, relationship'");
+			$this->logger->error(
+				"'$name, $type' event is no longer triggered. Update your event registration "
+				. "to use '$name, relationship'"
+			);
 		}
 
 		if ($name === 'pagesetup' && $type === 'system') {
@@ -76,11 +78,13 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	 * @access private
 	 */
 	public function trigger($event, $type, $object = null, array $options = array()) {
-		$options = array_merge(array(
+		$options = array_merge(
+			array(
 			self::OPTION_STOPPABLE => true,
 			self::OPTION_DEPRECATION_MESSAGE => '',
 			self::OPTION_DEPRECATION_VERSION => '',
-		), $options);
+			), $options
+		);
 
 		$events = $this->hasHandler($event, $type);
 		if ($events && $options[self::OPTION_DEPRECATION_MESSAGE]) {
@@ -97,8 +101,10 @@ class EventsService extends \Elgg\HooksRegistrationService {
 		foreach ($events as $callback) {
 			if (!is_callable($callback)) {
 				if ($this->logger) {
-					$this->logger->warn("handler for event [$event, $type] is not callable: "
-										. $this->inspector->describeCallable($callback));
+					$this->logger->warn(
+						"handler for event [$event, $type] is not callable: "
+						. $this->inspector->describeCallable($callback)
+					);
 				}
 				continue;
 			}

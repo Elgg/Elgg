@@ -37,8 +37,10 @@ class Event implements NotificationEvent {
 	 */
 	public function __construct(ElggData $object, $action, ElggEntity $actor = null) {
 		if (get_class($this) == Event::class || get_class($this) == Elgg_Notifications_Event::class) {
-			_elgg_services()->deprecation->sendNotice(__CLASS__ . ' is deprecated. '
-					. 'Use ' . SubscriptionNotificationEvent::class . ' instead', '2.3');
+			_elgg_services()->deprecation->sendNotice(
+				__CLASS__ . ' is deprecated. '
+				. 'Use ' . SubscriptionNotificationEvent::class . ' instead', '2.3'
+			);
 		}
 		if (!$object instanceof ElggData) {
 			throw new InvalidArgumentException(__METHOD__ . ' expects an object as an instance of ' . ElggData::class);
@@ -111,11 +113,13 @@ class Event implements NotificationEvent {
 	 * @return string
 	 */
 	public function getDescription() {
-		return implode(':', [
+		return implode(
+			':', [
 			$this->action,
 			$this->object->getType(),
 			$this->object->getSubtype(),
-		]);
+			]
+		);
 	}
 
 	/**

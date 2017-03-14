@@ -154,10 +154,12 @@ class EntityTable {
 			return false;
 		}
 
-		$access = _elgg_get_access_where_sql([
+		$access = _elgg_get_access_where_sql(
+			[
 			'table_alias' => '',
 			'user_guid' => $user_guid,
-		]);
+			]
+		);
 
 		$sql = "SELECT * FROM {$this->db->prefix}entities
 			WHERE guid = :guid AND $access";
@@ -184,7 +186,8 @@ class EntityTable {
 			(:type, :subtype_id, :owner_guid, :site_guid, :container_guid,
 				:access_id, :time_created, :time_updated, :last_action)";
 
-		return $this->db->insertData($sql, [
+		return $this->db->insertData(
+			$sql, [
 			':type' => $row->type,
 			':subtype_id' => $row->subtype_id,
 			':owner_guid' => $row->owner_guid,
@@ -194,7 +197,8 @@ class EntityTable {
 			':time_created' => $row->time_created,
 			':time_updated' => $row->time_updated,
 			':last_action' => $row->last_action,
-		]);
+			]
+		);
 	}
 
 	/**
@@ -503,29 +507,29 @@ class EntityTable {
 
 
 		$defaults = array(
-			'types'					=>	ELGG_ENTITIES_ANY_VALUE,
-			'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
-			'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+			'types'					=> ELGG_ENTITIES_ANY_VALUE,
+			'subtypes'				=> ELGG_ENTITIES_ANY_VALUE,
+			'type_subtype_pairs'	=> ELGG_ENTITIES_ANY_VALUE,
 
-			'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
-			'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
-			'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
-			'site_guids'			=>	$this->config->get('site_guid'),
+			'guids'					=> ELGG_ENTITIES_ANY_VALUE,
+			'owner_guids'			=> ELGG_ENTITIES_ANY_VALUE,
+			'container_guids'		=> ELGG_ENTITIES_ANY_VALUE,
+			'site_guids'			=> $this->config->get('site_guid'),
 
-			'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-			'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
-			'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-			'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+			'modified_time_lower'	=> ELGG_ENTITIES_ANY_VALUE,
+			'modified_time_upper'	=> ELGG_ENTITIES_ANY_VALUE,
+			'created_time_lower'	=> ELGG_ENTITIES_ANY_VALUE,
+			'created_time_upper'	=> ELGG_ENTITIES_ANY_VALUE,
 
-			'reverse_order_by'		=>	false,
-			'order_by' 				=>	'e.time_created desc',
-			'group_by'				=>	ELGG_ENTITIES_ANY_VALUE,
-			'limit'					=>	$this->config->get('default_limit'),
-			'offset'				=>	0,
-			'count'					=>	false,
-			'selects'				=>	array(),
-			'wheres'				=>	array(),
-			'joins'					=>	array(),
+			'reverse_order_by'		=> false,
+			'order_by' 				=> 'e.time_created desc',
+			'group_by'				=> ELGG_ENTITIES_ANY_VALUE,
+			'limit'					=> $this->config->get('default_limit'),
+			'offset'				=> 0,
+			'count'					=> false,
+			'selects'				=> array(),
+			'wheres'				=> array(),
+			'joins'					=> array(),
 
 			'preload_owners'		=> false,
 			'preload_containers'	=> false,
@@ -556,8 +560,10 @@ class EntityTable {
 		// it's already an array...just need to merge it
 		if (isset($options['type_subtype_pair'])) {
 			if (isset($options['type_subtype_pairs'])) {
-				$options['type_subtype_pairs'] = array_merge($options['type_subtype_pairs'],
-					$options['type_subtype_pair']);
+				$options['type_subtype_pairs'] = array_merge(
+					$options['type_subtype_pairs'],
+					$options['type_subtype_pair']
+				);
 			} else {
 				$options['type_subtype_pairs'] = $options['type_subtype_pair'];
 			}
@@ -575,16 +581,20 @@ class EntityTable {
 
 		$wheres = $options['wheres'];
 
-		$wheres[] = $this->getEntityTypeSubtypeWhereSql('e', $options['types'],
-			$options['subtypes'], $options['type_subtype_pairs']);
+		$wheres[] = $this->getEntityTypeSubtypeWhereSql(
+			'e', $options['types'],
+			$options['subtypes'], $options['type_subtype_pairs']
+		);
 
 		$wheres[] = $this->getGuidBasedWhereSql('e.guid', $options['guids']);
 		$wheres[] = $this->getGuidBasedWhereSql('e.owner_guid', $options['owner_guids']);
 		$wheres[] = $this->getGuidBasedWhereSql('e.container_guid', $options['container_guids']);
 		$wheres[] = $this->getGuidBasedWhereSql('e.site_guid', $options['site_guids']);
 
-		$wheres[] = $this->getEntityTimeWhereSql('e', $options['created_time_upper'],
-			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
+		$wheres[] = $this->getEntityTimeWhereSql(
+			'e', $options['created_time_upper'],
+			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']
+		);
 
 		// see if any functions failed
 		// remove empty strings on successful functions
@@ -1011,8 +1021,7 @@ class EntityTable {
 					foreach ($paired_subtypes as $paired_subtype) {
 						if (ELGG_ENTITIES_NO_VALUE === $paired_subtype || ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
 
-							$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ?
-									ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
+							$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ? ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 						} else {
 							$valid_pairs_subtypes_count--;
 							$this->logger->notice("Type-subtype '$paired_type:$paired_subtype' does not exist!");

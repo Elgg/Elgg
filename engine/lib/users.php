@@ -240,8 +240,10 @@ function validate_username($username) {
 	// @todo Tidy into main unicode
 	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=';
 
-	$blacklist2 = elgg_trigger_plugin_hook('username:character_blacklist', 'user',
-		array('blacklist' => $blacklist2), $blacklist2);
+	$blacklist2 = elgg_trigger_plugin_hook(
+		'username:character_blacklist', 'user',
+		array('blacklist' => $blacklist2), $blacklist2
+	);
 
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
@@ -252,8 +254,10 @@ function validate_username($username) {
 	}
 
 	$result = true;
-	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
-		array('username' => $username), $result);
+	return elgg_trigger_plugin_hook(
+		'registeruser:validate:username', 'all',
+		array('username' => $username), $result
+	);
 }
 
 /**
@@ -277,8 +281,10 @@ function validate_password($password) {
 	}
 
 	$result = true;
-	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
-		array('password' => $password), $result);
+	return elgg_trigger_plugin_hook(
+		'registeruser:validate:password', 'all',
+		array('password' => $password), $result
+	);
 }
 
 /**
@@ -296,8 +302,10 @@ function validate_email_address($address) {
 
 	// Got here, so lets try a hook (defaulting to ok)
 	$result = true;
-	return elgg_trigger_plugin_hook('registeruser:validate:email', 'all',
-		array('email' => $address), $result);
+	return elgg_trigger_plugin_hook(
+		'registeruser:validate:email', 'all',
+		array('email' => $address), $result
+	);
 }
 
 /**
@@ -713,9 +721,11 @@ function elgg_avatar_page_handler($page) {
 		echo elgg_view_resource("avatar/edit");
 	} else {
 		elgg_deprecated_notice("/avatar/view page handler has been deprecated and will be removed. Use elgg_get_inline_url() instead.", '2.2');
-		echo elgg_view_resource("avatar/view", [
+		echo elgg_view_resource(
+			"avatar/view", [
 			'size' => elgg_extract(2, $page),
-		]);
+			]
+		);
 	}
 
 	return true;
@@ -751,41 +761,49 @@ function users_pagesetup() {
 	$viewer = elgg_get_logged_in_user_entity();
 
 	if ($owner) {
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item(
+			'page', array(
 			'name' => 'edit_avatar',
 			'href' => "avatar/edit/{$owner->username}",
 			'text' => elgg_echo('avatar:edit'),
 			'section' => '1_profile',
 			'contexts' => array('settings'),
-		));
+			)
+		);
 
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item(
+			'page', array(
 			'name' => 'edit_profile',
 			'href' => "profile/{$owner->username}/edit",
 			'text' => elgg_echo('profile:edit'),
 			'section' => '1_profile',
 			'contexts' => array('settings'),
-		));
+			)
+		);
 	}
 
 	// topbar
 	if ($viewer) {
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item(
+			'topbar', array(
 			'name' => 'usersettings',
 			'href' => "settings/user/{$viewer->username}",
 			'text' => elgg_view_icon('settings') . elgg_echo('settings'),
 			'priority' => 500,
 			'section' => 'alt',
-		));
+			)
+		);
 
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item(
+			'topbar', array(
 			'name' => 'logout',
 			'href' => "action/logout",
 			'text' => elgg_echo('logout'),
 			'is_action' => true,
 			'priority' => 1000,
 			'section' => 'alt',
-		));
+			)
+		);
 	}
 }
 

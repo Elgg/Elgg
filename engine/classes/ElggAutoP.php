@@ -95,9 +95,11 @@ class ElggAutoP {
 		// Do not load entities. May be unnecessary, better safe than sorry
 		$disable_load_entities = libxml_disable_entity_loader(true);
 
-		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' " 
+		if (!$this->_doc->loadHTML(
+			"<html><meta http-equiv='content-type' " 
 				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
-				. "</html>")) {
+			. "</html>"
+		)) {
 
 			libxml_disable_entity_loader($disable_load_entities);
 			return false;
@@ -117,9 +119,11 @@ class ElggAutoP {
 
 		// split AUTOPs into multiples at /\n\n+/
 		$html = preg_replace('/(' . $this->_unique . 'NL){2,}/', '</autop><autop>', $html);
-		$html = str_replace(array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'),
-				'<br />',
-				$html);
+		$html = str_replace(
+			array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'),
+			'<br />',
+			$html
+		);
 		$html = str_replace('<br /></autop>', '</autop>', $html);
 
 		// re-parse so we can handle new AUTOP elements

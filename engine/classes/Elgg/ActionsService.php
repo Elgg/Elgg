@@ -241,10 +241,12 @@ class ActionsService {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
 					// else says something to the contrary we assume we're ok
-					$returnval = _elgg_services()->hooks->trigger('action_gatekeeper:permissions:check', 'all', array(
+					$returnval = _elgg_services()->hooks->trigger(
+						'action_gatekeeper:permissions:check', 'all', array(
 						'token' => $token,
 						'time' => $ts
-					), true);
+						), true
+					);
 
 					if ($returnval) {
 						return true;
@@ -273,10 +275,12 @@ class ActionsService {
 			$post_count = count($req->request);
 			if ($length && $post_count < 1) {
 				// The size of $_POST or uploaded file has exceed the size limit
-				$error_msg = _elgg_services()->hooks->trigger('action_gatekeeper:upload_exceeded_msg', 'all', array(
+				$error_msg = _elgg_services()->hooks->trigger(
+					'action_gatekeeper:upload_exceeded_msg', 'all', array(
 					'post_size' => $length,
 					'visible_errors' => $visible_errors,
-				), _elgg_services()->translator->translate('actiongatekeeper:uploadexceeded'));
+					), _elgg_services()->translator->translate('actiongatekeeper:uploadexceeded')
+				);
 			} else {
 				$error_msg = _elgg_services()->translator->translate('actiongatekeeper:missingfields');
 			}

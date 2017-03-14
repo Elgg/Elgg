@@ -51,9 +51,11 @@ class UrlSigner {
 
 		$token = elgg_build_hmac($url)->getToken();
 
-		return elgg_http_add_url_query_elements($url, [
+		return elgg_http_add_url_query_elements(
+			$url, [
 			self::KEY_MAC => $token,
-		]);
+			]
+		);
 	}
 
 	/**

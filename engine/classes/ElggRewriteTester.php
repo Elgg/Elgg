@@ -117,12 +117,14 @@ class ElggRewriteTester {
 		$response = '';
 
 		if (ini_get('allow_url_fopen')) {
-			$ctx = stream_context_create(array(
+			$ctx = stream_context_create(
+				array(
 				'http' => array(
 					'follow_location' => 0,
 					'timeout' => 5,
 				),
-			));
+				)
+			);
 			$response = @file_get_contents($url, null, $ctx);
 		}
 

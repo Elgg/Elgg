@@ -82,13 +82,15 @@ function elgg_register_widget_type($handler, $name = null, $description = null, 
 			$context = array('all');
 		}
 		
-		$definition = \Elgg\WidgetDefinition::factory([
+		$definition = \Elgg\WidgetDefinition::factory(
+			[
 			'id' => $handler,
 			'name' => $name,
 			'description' => $description,
 			'context' => $context,
 			'multiple' => $multiple,
-		]);
+			]
+		);
 	}
 
 	return _elgg_services()->widgets->registerType($definition);

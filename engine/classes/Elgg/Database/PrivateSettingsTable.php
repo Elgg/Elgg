@@ -96,12 +96,14 @@ class PrivateSettingsTable {
 
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
-		$clauses = $this->getWhereSql('e',
+		$clauses = $this->getWhereSql(
+			'e',
 			$options['private_setting_names'],
 			$options['private_setting_values'],
 			$options['private_setting_name_value_pairs'],
 			$options['private_setting_name_value_pairs_operator'],
-			$options['private_setting_name_prefix']);
+			$options['private_setting_name_prefix']
+		);
 
 		if ($clauses) {
 			// merge wheres to pass to get_entities()
@@ -375,10 +377,12 @@ class PrivateSettingsTable {
 		$name = $this->db->sanitizeString($name);
 		$value = $this->db->sanitizeString($value);
 
-		$result = $this->db->insertData("INSERT into {$this->table}
+		$result = $this->db->insertData(
+			"INSERT into {$this->table}
 			(entity_guid, name, value) VALUES
 			($entity_guid, '$name', '$value')
-			ON DUPLICATE KEY UPDATE value='$value'");
+			ON DUPLICATE KEY UPDATE value='$value'"
+		);
 
 		return $result !== false;
 	}
@@ -404,9 +408,11 @@ class PrivateSettingsTable {
 
 		$name = $this->db->sanitizeString($name);
 
-		return $this->db->deleteData("DELETE FROM {$this->table}
+		return $this->db->deleteData(
+			"DELETE FROM {$this->table}
 			WHERE name = '{$name}'
-			AND entity_guid = {$entity_guid}");
+			AND entity_guid = {$entity_guid}"
+		);
 	}
 
 	/**
@@ -427,7 +433,9 @@ class PrivateSettingsTable {
 			return false;
 		}
 
-		return $this->db->deleteData("DELETE FROM {$this->table}
-			WHERE entity_guid = {$entity_guid}");
+		return $this->db->deleteData(
+			"DELETE FROM {$this->table}
+			WHERE entity_guid = {$entity_guid}"
+		);
 	}
 }

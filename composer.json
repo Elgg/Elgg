@@ -36,8 +36,11 @@
     "scripts": {
         "pre-install-cmd": "php .scripts/check_global_requirements.php",
         "lint": [
-            "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
+            "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --tab-width=4 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
             "composer validate"
+        ],
+        "lint-fixer": [
+            "phpcbf --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --tab-width=4 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib"
         ],
         "test": "phpunit",
         "travis:install": [
@@ -68,9 +71,15 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1",
-        "elgg/sniffs": "dev-master",
-        "squizlabs/php_codesniffer": "~1.5",
+        "elgg/sniffs": "3.x-dev",
+        "squizlabs/php_codesniffer": "^2.8.1",
         "simpletest/simpletest": "~1.1",
         "phpdocumentor/reflection-docblock": "~2.0"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Elgg/elgg-coding-standards.git"
+        }
+    ]
 }

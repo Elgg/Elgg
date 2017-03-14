@@ -58,11 +58,13 @@ class BootService {
 		_elgg_services()->config->getCookieConfig();
 
 		// we need this stuff before cache
-		$rows = $db->getData("
+		$rows = $db->getData(
+			"
 			SELECT *
 			FROM {$db->prefix}datalists
 			WHERE `name` IN ('__site_secret__', 'default_site', 'dataroot')
-		");
+		"
+		);
 		$datalists = [];
 		foreach ($rows as $row) {
 			$datalists[$row->name] = $row->value;
@@ -161,11 +163,13 @@ class BootService {
 		$CONFIG->site_config_loaded = true;
 
 		// invalidate on some actions just in case other invalidation triggers miss something
-		_elgg_services()->hooks->registerHandler('action', 'all', function ($action) {
-			if (0 === strpos($action, 'admin/' || $action === 'plugins/settings/save')) {
-				$this->invalidateCache();
-			}
-		}, 1);
+		_elgg_services()->hooks->registerHandler(
+			'action', 'all', function ($action) {
+				if (0 === strpos($action, 'admin/' || $action === 'plugins/settings/save')) {
+					$this->invalidateCache();
+				}
+			}, 1
+		);
 	}
 
 	/**
@@ -244,9 +248,11 @@ class BootService {
 				// we're in the installer
 				$driver = new BlackHole();
 			} else {
-				$driver = new FileSystem([
+				$driver = new FileSystem(
+					[
 					'path' => $CONFIG->dataroot,
-				]);
+					]
+				);
 			}
 		}
 		return (new Pool($driver))->getItem("boot_data_{$site_guid}");

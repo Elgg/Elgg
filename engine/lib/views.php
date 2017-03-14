@@ -1137,7 +1137,8 @@ function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
 
 	$entity_type = $entity->getType();
 
-	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
+	$annotations = elgg_trigger_plugin_hook(
+		'entity:annotate', $entity_type,
 		array(
 			'entity' => $entity,
 			'full_view' => $full_view,
@@ -1537,11 +1538,13 @@ function elgg_view_tagcloud(array $options = array()) {
 	}
 
 	$tag_data = elgg_get_tags($options);
-	return elgg_view("output/tagcloud", array(
+	return elgg_view(
+		"output/tagcloud", array(
 		'value' => $tag_data,
 		'type' => $type,
 		'subtype' => $subtype,
-	));
+		)
+	);
 }
 
 /**
@@ -1752,12 +1755,14 @@ function elgg_views_add_rss_link() {
 		}
 
 		$url = elgg_format_url($url);
-		elgg_register_menu_item('extras', array(
+		elgg_register_menu_item(
+			'extras', array(
 			'name' => 'rss',
 			'text' => elgg_view_icon('rss'),
 			'href' => $url,
 			'title' => elgg_echo('feed:rss'),
-		));
+			)
+		);
 	}
 }
 
@@ -1881,9 +1886,11 @@ function elgg_views_boot() {
 	// just provides warning to use elgg/autocomplete AMD
 	elgg_register_js('elgg.autocomplete', elgg_normalize_url('js/lib/ui.autocomplete.js'));
 
-	elgg_define_js('jquery.ui.autocomplete.html', [
+	elgg_define_js(
+		'jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
-	]);
+		]
+	);
 
 	elgg_register_js('elgg.friendspicker', elgg_get_simplecache_url('elgg/ui.friends_picker.js'));
 	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));

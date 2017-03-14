@@ -68,35 +68,37 @@ class UserCapabilities {
 		}
 
 		// Test user if possible - should default to false unless a plugin hook says otherwise
-		$default = call_user_func(function () use ($entity, $user) {
-			if (!$user) {
-				return false;
-			}
+		$default = call_user_func(
+			function () use ($entity, $user) {
+				if (!$user) {
+					return false;
+				}
 
-			// favor the persisted attributes if not saved
-			$attrs = array_merge(
+				// favor the persisted attributes if not saved
+				$attrs = array_merge(
 					[
-				'owner_guid' => $entity->owner_guid,
-				'container_guid' => $entity->container_guid,
+					'owner_guid' => $entity->owner_guid,
+					'container_guid' => $entity->container_guid,
 					], $entity->getOriginalAttributes()
-			);
+				);
 
-			if ($attrs['owner_guid'] == $user->guid) {
-				return true;
+				if ($attrs['owner_guid'] == $user->guid) {
+					return true;
+				}
+
+				if ($attrs['container_guid'] == $user->guid) {
+					return true;
+				}
+
+				if ($entity->guid == $user->guid) {
+					return true;
+				}
+
+				$container = $this->entities->get($attrs['container_guid']);
+
+				return ($container && $container->canEdit($user->guid));
 			}
-
-			if ($attrs['container_guid'] == $user->guid) {
-				return true;
-			}
-
-			if ($entity->guid == $user->guid) {
-				return true;
-			}
-
-			$container = $this->entities->get($attrs['container_guid']);
-
-			return ($container && $container->canEdit($user->guid));
-		});
+		);
 
 		$params = array('entity' => $entity, 'user' => $user);
 		return $this->hooks->trigger('permissions_check', $entity->getType(), $params, $default);

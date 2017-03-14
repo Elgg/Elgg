@@ -44,7 +44,10 @@ class Input {
 		}
 	
 		if (is_array($value)) {
-			array_walk_recursive($value, function(&$v, $k) { $v = trim($v);});
+			array_walk_recursive(
+				$value, function(&$v, $k) {
+					$v = trim($v);}
+			);
 			$this->CONFIG->input[trim($variable)] = $value;
 		} else {
 			$this->CONFIG->input[trim($variable)] = trim($value);

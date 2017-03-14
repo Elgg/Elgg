@@ -250,14 +250,14 @@ class ElggInstaller {
 		$body = elgg_view("install/pages/$step", $vars);
 				
 		echo elgg_view_page(
-				$title,
-				$body,
-				'default',
-				array(
+			$title,
+			$body,
+			'default',
+			array(
 					'step' => $step,
 					'steps' => $this->getSteps(),
 					)
-				);
+		);
 		exit;
 	}
 
@@ -546,9 +546,10 @@ class ElggInstaller {
 		// bit of a hack to get the password help to show right number of characters
 		
 		$lang = _elgg_services()->translator->getCurrentLanguage();
-		$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'] =
-				sprintf($GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'],
-				$this->CONFIG->min_password_length);
+		$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'] = sprintf(
+			$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'],
+			$this->CONFIG->min_password_length
+		);
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
 
@@ -642,11 +643,11 @@ class ElggInstaller {
 
 		// must be able to connect to database to jump install steps
 		$dbSettingsPass = $this->checkDatabaseSettings(
-				$this->CONFIG->dbuser,
-				$this->CONFIG->dbpass,
-				$this->CONFIG->dbname,
-				$this->CONFIG->dbhost
-				);
+			$this->CONFIG->dbuser,
+			$this->CONFIG->dbpass,
+			$this->CONFIG->dbname,
+			$this->CONFIG->dbhost
+		);
 
 		if ($dbSettingsPass == FALSE) {
 			return;
@@ -1224,11 +1225,11 @@ class ElggInstaller {
 		}
 
 		return $this->checkDatabaseSettings(
-					$submissionVars['dbuser'],
-					$submissionVars['dbpassword'],
-					$submissionVars['dbname'],
-					$submissionVars['dbhost']
-				);
+			$submissionVars['dbuser'],
+			$submissionVars['dbpassword'],
+			$submissionVars['dbname'],
+			$submissionVars['dbhost']
+		);
 	}
 
 	/**
@@ -1242,12 +1243,14 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function checkDatabaseSettings($user, $password, $dbname, $host) {
-		$config = new \Elgg\Database\Config((object)[
+		$config = new \Elgg\Database\Config(
+			(object)[
 			'dbhost' => $host,
 			'dbuser' => $user,
 			'dbpass' => $password,
 			'dbname' => $dbname,
-		]);
+			]
+		);
 		$db = new \Elgg\Database($config);
 
 		try {
@@ -1609,11 +1612,11 @@ class ElggInstaller {
 	protected function createAdminAccount($submissionVars, $login = FALSE) {
 		try {
 			$guid = register_user(
-					$submissionVars['username'],
-					$submissionVars['password1'],
-					$submissionVars['displayname'],
-					$submissionVars['email']
-					);
+				$submissionVars['username'],
+				$submissionVars['password1'],
+				$submissionVars['displayname'],
+				$submissionVars['email']
+			);
 		} catch (Exception $e) {
 			register_error($e->getMessage());
 			return false;

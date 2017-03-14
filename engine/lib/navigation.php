@@ -226,12 +226,14 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 		return;
 	}
 
-	elgg_register_menu_item('title', array(
+	elgg_register_menu_item(
+		'title', array(
 		'name' => $name,
 		'href' => "$handler/$name/$owner->guid",
 		'text' => elgg_echo("$handler:$name"),
 		'link_class' => 'elgg-button elgg-button-action',
-	));
+		)
+	);
 }
 
 /**
@@ -572,20 +574,24 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
 	if (elgg_get_config('allow_registration')) {
-		$return[] = \ElggMenuItem::factory(array(
+		$return[] = \ElggMenuItem::factory(
+			array(
 			'name' => 'register',
 			'href' => elgg_get_registration_url(),
 			'text' => elgg_echo('register'),
 			'link_class' => 'registration_link',
-		));
+			)
+		);
 	}
 
-	$return[] = \ElggMenuItem::factory(array(
+	$return[] = \ElggMenuItem::factory(
+		array(
 		'name' => 'forgotpassword',
 		'href' => 'forgotpassword',
 		'text' => elgg_echo('user:password:lost'),
 		'link_class' => 'forgot_link',
-	));
+		)
+	);
 
 	return $return;
 }
@@ -606,13 +612,17 @@ function _elgg_nav_init() {
 
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 
-	elgg_register_menu_item('footer', \ElggMenuItem::factory(array(
-		'name' => 'powered',
-		'text' => elgg_echo("elgg:powered"),
-		'href' => 'http://elgg.org',
-		'title' => 'Elgg ' . elgg_get_version(true),
-		'section' => 'meta',
-	)));
+	elgg_register_menu_item(
+		'footer', \ElggMenuItem::factory(
+			array(
+			'name' => 'powered',
+			'text' => elgg_echo("elgg:powered"),
+			'href' => 'http://elgg.org',
+			'title' => 'Elgg ' . elgg_get_version(true),
+			'section' => 'meta',
+			)
+		)
+	);
 
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');
 

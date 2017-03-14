@@ -459,10 +459,12 @@ class ElggFile extends ElggObject {
 
 		// need to get all filestore::* metadata because the rest are "parameters" that
 		// get passed to filestore::setParameters()
-		$mds = elgg_get_metadata([
+		$mds = elgg_get_metadata(
+			[
 			'guid' => $this->guid,
 			'where' => array("n.string LIKE 'filestore::%'"),
-		]);
+			]
+		);
 		$parameters = [];
 		foreach ($mds as $md) {
 			list(, $name) = explode("::", $md->name);
@@ -614,13 +616,15 @@ class ElggFile extends ElggObject {
 	 * @return string[]
 	 */
 	public function __sleep() {
-		return array_diff(array_keys(get_object_vars($this)), array(
+		return array_diff(
+			array_keys(get_object_vars($this)), array(
 			// Don't persist filestore, which contains CONFIG
 			// https://github.com/Elgg/Elgg/issues/9081#issuecomment-152859856
 			'filestore',
 			// a resource
 			'handle',
-		));
+			)
+		);
 	}
 
 }

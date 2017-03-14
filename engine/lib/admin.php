@@ -156,7 +156,8 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 		$name = "$parent_id:$name";
 	}
 
-	return elgg_register_menu_item('page', array(
+	return elgg_register_menu_item(
+		'page', array(
 		'name' => $name,
 		'href' => $href,
 		'text' => elgg_echo("admin:$name"),
@@ -164,7 +165,8 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 		'parent_name' => $parent_id,
 		'priority' => $priority,
 		'section' => $section
-	));
+		)
+	);
 }
 
 /**
@@ -178,10 +180,12 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
 	if ($object instanceof \ElggUpgrade) {
 		// Link to the Upgrades section
-		$link = elgg_view('output/url', array(
+		$link = elgg_view(
+			'output/url', array(
 			'href' => 'admin/upgrades',
 			'text' => elgg_echo('admin:view_upgrades'),
-		));
+			)
+		);
 
 		$message = elgg_echo('admin:pending_upgrades');
 
@@ -204,12 +208,14 @@ function _elgg_admin_init() {
 		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check', 600);
 		elgg_register_css('maintenance', elgg_get_simplecache_url('maintenance.css'));
 
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item(
+			'topbar', array(
 			'name' => 'maintenance_mode',
 			'href' => 'admin/administer_utilities/maintenance',
 			'text' => elgg_echo('admin:maintenance_mode:indicator_menu_item'),
 			'priority' => 900,
-		));
+			)
+		);
 	}
 
 	elgg_register_action('admin/user/ban', '', 'admin');
@@ -247,14 +253,16 @@ function _elgg_admin_init() {
 
 	// administer
 	// dashboard
-	elgg_register_menu_item('page', array(
+	elgg_register_menu_item(
+		'page', array(
 		'name' => 'dashboard',
 		'href' => 'admin/dashboard',
 		'text' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
 		'priority' => 10,
 		'section' => 'administer'
-	));
+		)
+	);
 	// statistics
 	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
 	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
@@ -271,24 +279,28 @@ function _elgg_admin_init() {
 
 	// configure
 	// upgrades
-	elgg_register_menu_item('page', array(
+	elgg_register_menu_item(
+		'page', array(
 		'name' => 'upgrades',
 		'href' => 'admin/upgrades',
 		'text' => elgg_echo('admin:upgrades'),
 		'context' => 'admin',
 		'priority' => 10,
 		'section' => 'configure'
-	));
+		)
+	);
 
 	// plugins
-	elgg_register_menu_item('page', array(
+	elgg_register_menu_item(
+		'page', array(
 		'name' => 'plugins',
 		'href' => 'admin/plugins',
 		'text' => elgg_echo('admin:plugins'),
 		'context' => 'admin',
 		'priority' => 75,
 		'section' => 'configure'
-	));
+		)
+	);
 
 	// settings
 	elgg_register_admin_menu_item('configure', 'appearance', null, 50);
@@ -313,23 +325,25 @@ function _elgg_admin_init() {
 	}
 
 	if (elgg_is_admin_logged_in()) {
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item(
+			'topbar', array(
 			'name' => 'administration',
 			'href' => 'admin',
 			'text' => elgg_view_icon('settings') . elgg_echo('admin'),
 			'priority' => 100,
 			'section' => 'alt',
-		));
+			)
+		);
 	}
 
 	// widgets
 	$widgets = array('online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status');
 	foreach ($widgets as $widget) {
 		elgg_register_widget_type(
-				$widget,
-				elgg_echo("admin:widget:$widget"),
-				elgg_echo("admin:widget:$widget:help"),
-				array('admin')
+			$widget,
+			elgg_echo("admin:widget:$widget"),
+			elgg_echo("admin:widget:$widget:help"),
+			array('admin')
 		);
 	}
 
@@ -356,10 +370,12 @@ function _elgg_ajax_plugins_update() {
 	_elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
-	return elgg_ok_response([
+	return elgg_ok_response(
+		[
 		'list' => elgg_view('admin/plugins', ['list_only' => true]),
 		'sidebar' => elgg_view('admin/sidebar'),
-	]);
+		]
+	);
 }
 
 /**
@@ -391,63 +407,79 @@ function _elgg_admin_pagesetup() {
 		$admin = elgg_get_logged_in_user_entity();
 
 		// setup header menu
-		elgg_register_menu_item('admin_header', array(
+		elgg_register_menu_item(
+			'admin_header', array(
 			'name' => 'admin_logout',
 			'href' => 'action/logout',
 			'text' => elgg_echo('logout'),
 			'is_trusted' => true,
 			'priority' => 1000,
-		));
+			)
+		);
 
-		elgg_register_menu_item('admin_header', array(
+		elgg_register_menu_item(
+			'admin_header', array(
 			'name' => 'view_site',
 			'href' => elgg_get_site_url(),
 			'text' => elgg_echo('admin:view_site'),
 			'is_trusted' => true,
 			'priority' => 900,
-		));
+			)
+		);
 
-		elgg_register_menu_item('admin_header', array(
+		elgg_register_menu_item(
+			'admin_header', array(
 			'name' => 'admin_profile',
 			'href' => false,
 			'text' => elgg_echo('admin:loggedin', array($admin->name)),
 			'priority' => 800,
-		));
+			)
+		);
 
 		if (elgg_get_config('elgg_maintenance_mode', null)) {
-			elgg_register_menu_item('admin_header', array(
+			elgg_register_menu_item(
+				'admin_header', array(
 				'name' => 'maintenance',
 				'href' => 'admin/administer_utilities/maintenance',
 				'text' => elgg_echo('admin:administer_utilities:maintenance'),
 				'link_class' => 'elgg-maintenance-mode-warning',
 				'priority' => 700,
-			));
+				)
+			);
 		}
 
 		// setup footer menu
-		elgg_register_menu_item('admin_footer', array(
+		elgg_register_menu_item(
+			'admin_footer', array(
 			'name' => 'faq',
 			'text' => elgg_echo('admin:footer:faq'),
 			'href' => 'http://learn.elgg.org/en/stable/appendix/faqs.html',
-		));
+			)
+		);
 
-		elgg_register_menu_item('admin_footer', array(
+		elgg_register_menu_item(
+			'admin_footer', array(
 			'name' => 'manual',
 			'text' => elgg_echo('admin:footer:manual'),
 			'href' => 'http://learn.elgg.org/en/stable/admin/index.html',
-		));
+			)
+		);
 
-		elgg_register_menu_item('admin_footer', array(
+		elgg_register_menu_item(
+			'admin_footer', array(
 			'name' => 'community_forums',
 			'text' => elgg_echo('admin:footer:community_forums'),
 			'href' => 'http://community.elgg.org/groups/all/',
-		));
+			)
+		);
 
-		elgg_register_menu_item('admin_footer', array(
+		elgg_register_menu_item(
+			'admin_footer', array(
 			'name' => 'blog',
 			'text' => elgg_echo('admin:footer:blog'),
 			'href' => 'https://community.elgg.org/blog/all',
-		));
+			)
+		);
 	}
 }
 
@@ -474,14 +506,16 @@ function _elgg_admin_add_plugin_settings_menu() {
 		$settings_view_old = 'settings/' . $plugin_id . '/edit';
 		$settings_view_new = 'plugins/' . $plugin_id . '/settings';
 		if (elgg_view_exists($settings_view_new) || elgg_view_exists($settings_view_old)) {
-			elgg_register_menu_item('page', array(
+			elgg_register_menu_item(
+				'page', array(
 				'name' => $plugin_id,
 				'href' => "admin/plugin_settings/$plugin_id",
 				'text' => $plugin->getManifest()->getName(),
 				'parent_name' => 'settings',
 				'context' => 'admin',
 				'section' => 'configure',
-			));
+				)
+			);
 		}
 	}
 }
@@ -609,10 +643,12 @@ function _elgg_admin_page_handler($page) {
 function _elgg_admin_markdown_page_handler($pages) {
 	elgg_set_context('admin');
 
-	echo elgg_view_resource('admin/plugin_text_file', [
+	echo elgg_view_resource(
+		'admin/plugin_text_file', [
 		'plugin_id' => elgg_extract(0, $pages),
 		'filename' => elgg_extract(1, $pages),
-	]);
+		]
+	);
 	return true;
 }
 

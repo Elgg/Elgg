@@ -22,13 +22,15 @@ function get_entity_statistics($owner_guid = 0) {
 	$owner_guid = (int) $owner_guid;
 	$entity_stats = array();
 
-	$grouped_entities = elgg_get_entities(array(
+	$grouped_entities = elgg_get_entities(
+		array(
 		'selects' => array('COUNT(*) as cnt'),
 		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
 		'group_by' => 'e.type, e.subtype',
 		'limit' => 0,
 		'order_by' => 'cnt DESC',
-	));
+		)
+	);
 	
 	if (!empty($grouped_entities)) {
 		foreach ($grouped_entities as $entity) {
@@ -87,9 +89,11 @@ function get_number_users($show_deactivated = false) {
  * @return string
  */
 function get_online_users(array $options = array()) {
-	$options = array_merge(array(
+	$options = array_merge(
+		array(
 		'seconds' => 600,
-	), $options);
+		), $options
+	);
 
 	return elgg_list_entities($options, 'find_active_users');
 }

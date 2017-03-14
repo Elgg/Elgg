@@ -94,9 +94,11 @@ final class PasswordService {
 		// generate email
 		$ip_address = _elgg_services()->request->getClientIp();
 		$message = _elgg_services()->translator->translate(
-			'email:changereq:body', array($user->name, $ip_address, $link), $user->language);
+			'email:changereq:body', array($user->name, $ip_address, $link), $user->language
+		);
 		$subject = _elgg_services()->translator->translate(
-			'email:changereq:subject', array(), $user->language);
+			'email:changereq:subject', array(), $user->language
+		);
 
 		$params = [
 			'action' => 'requestnewpassword',
@@ -184,7 +186,8 @@ final class PasswordService {
 		$ns = $reset ? 'resetpassword' : 'changepassword';
 
 		$message = _elgg_services()->translator->translate(
-			"email:$ns:body", array($user->username, $password), $user->language);
+			"email:$ns:body", array($user->username, $password), $user->language
+		);
 		$subject = _elgg_services()->translator->translate("email:$ns:subject", array(), $user->language);
 
 		$params = [

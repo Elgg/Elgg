@@ -58,12 +58,14 @@ class Profiler {
 		$list[] = $tree;
 
 		if ($is_root) {
-			usort($list, function ($a, $b) {
-				if ($a['duration'] == $b['duration']) {
-					return 0;
+			usort(
+				$list, function ($a, $b) {
+					if ($a['duration'] == $b['duration']) {
+						return 0;
+					}
+					return ($a['duration'] > $b['duration']) ? -1 : 1;
 				}
-				return ($a['duration'] > $b['duration']) ? -1 : 1;
-			});
+			);
 		}
 	}
 
@@ -110,10 +112,12 @@ class Profiler {
 		$profiler->flattenTree($list, $tree);
 
 		$root = elgg_get_config('path');
-		$list = array_map(function ($period) use ($root) {
-			$period['name'] = str_replace("Closure $root", "Closure ", $period['name']);
-			return "{$period['percentage']}% ({$period['duration']}) {$period['name']}";
-		}, $list);
+		$list = array_map(
+			function ($period) use ($root) {
+				$period['name'] = str_replace("Closure $root", "Closure ", $period['name']);
+				return "{$period['percentage']}% ({$period['duration']}) {$period['name']}";
+			}, $list
+		);
 
 		$data['list'] = $list;
 
@@ -158,12 +162,14 @@ class Profiler {
 		}
 
 		if (isset($ret['periods'])) {
-			usort($ret['periods'], function ($a, $b) {
-				if ($a['duration'] == $b['duration']) {
-					return 0;
+			usort(
+				$ret['periods'], function ($a, $b) {
+					if ($a['duration'] == $b['duration']) {
+						return 0;
+					}
+					return ($a['duration'] > $b['duration']) ? -1 : 1;
 				}
-				return ($a['duration'] > $b['duration']) ? -1 : 1;
-			});
+			);
 		}
 
 		return $ret;

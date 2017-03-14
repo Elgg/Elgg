@@ -52,8 +52,10 @@ abstract class ElggExtender extends \ElggData {
 	 */
 	public function __set($name, $value) {
 		if ($name === 'access_id' && $this instanceof ElggMetadata && $value != ACCESS_PUBLIC) {
-			elgg_deprecated_notice('Setting ->access_id to a value other than ACCESS_PUBLIC is deprecated. '
-				. 'All metadata will be public in 3.0.', '2.3');
+			elgg_deprecated_notice(
+				'Setting ->access_id to a value other than ACCESS_PUBLIC is deprecated. '
+				. 'All metadata will be public in 3.0.', '2.3'
+			);
 		}
 
 		$this->attributes[$name] = $value;
@@ -192,8 +194,10 @@ abstract class ElggExtender extends \ElggData {
 			$this->getType() => $this,
 		);
 		if (_elgg_services()->hooks->hasHandler('to:object', $this->getSubtype())) {
-			_elgg_services()->deprecation->sendNotice("Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
-			. "Use the generic 'to:object','{$this->getType()}' hook instead.", '2.3');
+			_elgg_services()->deprecation->sendNotice(
+				"Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
+				. "Use the generic 'to:object','{$this->getType()}' hook instead.", '2.3'
+			);
 			$object = _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
 		}
 		return _elgg_services()->hooks->trigger('to:object', $this->getType(), $params, $object);
@@ -232,8 +236,10 @@ abstract class ElggExtender extends \ElggData {
 		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		$uuid = get_uuid_from_object($this);
 
-		$meta = new ODDMetaData($uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'],
-			$this->attributes['value'], $this->attributes['type'], guid_to_uuid($this->owner_guid));
+		$meta = new ODDMetaData(
+			$uuid, guid_to_uuid($this->entity_guid), $this->attributes['name'],
+			$this->attributes['value'], $this->attributes['type'], guid_to_uuid($this->owner_guid)
+		);
 		$meta->setAttribute('published', date("r", $this->time_created));
 
 		return $meta;
