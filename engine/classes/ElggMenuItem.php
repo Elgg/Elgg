@@ -42,6 +42,9 @@ class ElggMenuItem {
 		// array Array of children objects or empty array
 		'children' => array(),
 
+		// array An array of options for child menu of the parent item
+		'child_menu' => array(),
+
 		// array Classes to apply to the li tag
 		'itemClass' => array(),
 
@@ -114,6 +117,7 @@ class ElggMenuItem {
 	 *    selected    => BOOL Is this menu item currently selected?
 	 *    confirm     => STR  If set, the link will be drawn with the output/confirmlink view instead of output/url.
 	 *    deps        => ARR  AMD modules required by this menu item
+	 *    child_menu  => ARR  Options for the child menu
 	 *    data        => ARR  Custom attributes stored in the menu item.
 	 *
 	 * @return ElggMenuItem or null on error
@@ -429,6 +433,25 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Set child menu options for a parent item
+	 * 
+	 * @param array $options Options
+	 * @return void
+	 */
+	public function setChildMenuOptions(array $options = []) {
+		$this->data['child_menu'] = $options;
+	}
+
+	/**
+	 * Returns child menu options for parent items
+	 *
+	 * @return array
+	 */
+	public function getChildMenuOptions() {
+		return $this->data['child_menu'];
+	}
+
+	/**
 	 * Set the li classes
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
@@ -449,11 +472,8 @@ class ElggMenuItem {
 	 */
 	public function getItemClass() {
 		// allow people to specify name with underscores and colons
-		$name = strtolower($this->getName());
-		$name = str_replace('_', '-', $name);
-		$name = str_replace(':', '-', $name);
-		$name = str_replace(' ', '-', $name);
-
+		$name = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($this->getName()));
+		
 		$class = implode(' ', $this->data['itemClass']);
 		if ($class) {
 			return "elgg-menu-item-$name $class";

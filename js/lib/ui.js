@@ -24,8 +24,6 @@ elgg.ui.init = function () {
 		popup.bind($('[rel="popup"]'));
 	});
 
-	$(document).on('click', '.elgg-menu-page .elgg-menu-parent', elgg.ui.toggleMenu);
-
     $(document).on('click', '*[data-confirm], .elgg-requires-confirmation', elgg.ui.requiresConfirmation);
     if ($('.elgg-requires-confirmation').length > 0) {
         elgg.deprecated_notice('Use of .elgg-requires-confirmation is deprecated by data-confirm', '1.10');
@@ -83,18 +81,6 @@ elgg.ui.toggles = function(event) {
 	$this.trigger('elgg_ui_toggle', [{
 		$toggled_elements: $elements
 	}]);
-};
-
-/**
- * Toggles a child menu when the parent is clicked
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.toggleMenu = function(event) {
-	$(this).siblings().slideToggle('medium');
-	$(this).toggleClass('elgg-menu-closed elgg-menu-opened');
-	event.preventDefault();
 };
 
 /**

@@ -258,6 +258,9 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 				'name' => $year,
 				'text' => $year,
 				'href' => '#',
+				'child_menu' => [
+					'display' => 'toggle',
+				]
 			]);
 		}
 		

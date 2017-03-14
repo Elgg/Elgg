@@ -18,6 +18,9 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 		 */
 		init: function () {
 			$(document).on('click', function (e) {
+				if (e.isDefaultPrevented()) {
+					return;
+				}
 				var $eventTargets = $(e.target).parents().andSelf();
 				if ($eventTargets.is('.elgg-state-popped')) {
 					return;

@@ -51,20 +51,6 @@
 }
 
 /* ***************************************
-	MENU ICONS
-*************************************** */
-.elgg-menu a:not(.elgg-button) .elgg-icon {
-	color: #CCC;
-	font-size: 18px;
-	line-height: 1em;
-	margin: 0 2px;
-}
-
-.elgg-menu a:not(.elgg-button):hover .elgg-icon {
-	color: #4690D6;
-}
-
-/* ***************************************
 	AVATAR ICONS
 *************************************** */
 .elgg-avatar {
