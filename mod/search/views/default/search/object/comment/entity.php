@@ -5,35 +5,35 @@
  * @uses $vars['entity'] Comment returned in a search
  */
 
-$entity = $vars['entity'];
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
 
 $owner = $entity->getOwnerEntity();
 $icon = elgg_view_entity_icon($owner, 'tiny');
 
 $container = $entity->getContainerEntity();
 
-if ($container->getType() == 'object') {
-	$title = $container->title;
-} else {
-	$title = $container->name;
+$title_text = $container->getDisplayName();
+
+if (!$title_text) {
+	$title_text = elgg_echo("item:{$container->getType()}:{$container->getSubtype()}");
 }
 
-if (!$title) {
-	$title = elgg_echo('item:' . $container->getType() . ':' . $container->getSubtype());
+if (!$title_text) {
+	$title_text = elgg_echo("item:{$container->getType()}");
 }
 
-if (!$title) {
-	$title = elgg_echo('item:' . $container->getType());
-}
+$title_text = elgg_echo('search:comment_on', [$title_text]);
 
-$title = elgg_echo('search:comment_on', array($title));
-
-$url = $entity->getURL();
-$title = "<a href=\"$url\">$title</a>";
+$title = elgg_view('output/url', [
+	'href' => $entity->getURL(),
+	'text' => $title_text,
+]);
 
 $description = $entity->getVolatileData('search_matched_description');
 
-$title = "<a href=\"$url\">$title</a>";
 $time = $entity->getVolatileData('search_time');
 
 if (!$time) {

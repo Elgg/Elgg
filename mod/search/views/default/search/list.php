@@ -19,21 +19,18 @@ $entities = $vars['results']['entities'];
 $count = $vars['results']['count'] - count($entities);
 
 if (!is_array($entities) || !count($entities)) {
-	return FALSE;
+	return;
 }
 
-$query = http_build_query(
-	array(
-		'q' => $vars['params']['query'],
-		'entity_type' => $vars['params']['type'],
-		'entity_subtype' => $vars['params']['subtype'],
-		'limit' => $vars['params']['limit'],
-		'offset' => $vars['params']['offset'],
-		'search_type' => $vars['params']['search_type'],
-		'container_guid' => $vars['params']['container_guid'],
-	//@todo include vars for sorting, order, and friend-only.
-	)
-);
+$query = http_build_query([
+	'q' => $vars['params']['query'],
+	'entity_type' => $vars['params']['type'],
+	'entity_subtype' => $vars['params']['subtype'],
+	'limit' => $vars['params']['limit'],
+	'offset' => $vars['params']['offset'],
+	'search_type' => $vars['params']['search_type'],
+	'container_guid' => $vars['params']['container_guid'],
+]);
 
 $url = elgg_get_site_url() . "search?$query";
 
@@ -41,12 +38,12 @@ $more_items = $vars['results']['count'] - ($vars['params']['offset'] + $vars['pa
 
 // get pagination
 if (array_key_exists('pagination', $vars['params']) && $vars['params']['pagination']) {
-	$nav = elgg_view('navigation/pagination', array(
+	$nav = elgg_view('navigation/pagination', [
 		'base_url' => $url,
 		'offset' => $vars['params']['offset'],
 		'count' => $vars['results']['count'],
 		'limit' => $vars['params']['limit'],
-	));
+	]);
 	$show_more = false;
 } else {
 	// faceted search page so no pagination
@@ -55,7 +52,7 @@ if (array_key_exists('pagination', $vars['params']) && $vars['params']['paginati
 }
 
 // figure out what we're dealing with.
-$type_str = NULL;
+$type_str = null;
 
 if (array_key_exists('type', $vars['params']) && array_key_exists('subtype', $vars['params'])) {
 	$type_str_tmp = "item:{$vars['params']['type']}:{$vars['params']['subtype']}";
@@ -86,12 +83,13 @@ if ($show_more) {
 	$more_link = '';
 }
 
-$body = elgg_view_title($type_str, array(
+$body = elgg_view_title($type_str, [
 	'class' => 'search-heading-category',
-));
+]);
 
 $list_body = '';
 $view_params = $vars['params'];
+
 foreach ($entities as $entity) {
 	$view_params['type'] = $entity->getType();
 	$view_params['subtype'] = $entity->getSubtype();
@@ -101,21 +99,20 @@ foreach ($entities as $entity) {
 		continue;
 	}
 	
-	$id = "elgg-{$entity->getType()}-{$entity->getGUID()}";
-	$list_body .= "<li id=\"$id\" class=\"elgg-item\">";
-	$list_body .= elgg_view($view, array(
+	$list_body .= elgg_format_element('li', [
+		'id' => "elgg-{$entity->getType()}-{$entity->getGUID()}",
+		'class' => 'elgg-item',
+	], elgg_view($view, [
 		'entity' => $entity,
 		'params' => $view_params,
-		'results' => $vars['results']
-	));
-	$list_body .= '</li>';
+		'results' => $vars['results'],
+	]));
 }
 
 if (!empty($list_body)) {
-	$body .= '<ul class="elgg-list search-list">';
-	$body .= $list_body;
-	$body .= $more_link;
-	$body .= '</ul>';
+	$body .= elgg_format_element('ul', [
+		'class' => 'elgg-list search-list',
+	], $list_body . $more_link);
 }
 
 echo $body;

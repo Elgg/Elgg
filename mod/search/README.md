@@ -18,44 +18,9 @@ Full text search developer's reference.
 
 ## 1. Overview
 
-All entities are searched through title and description using
-MySQL's native fulltext search when possible, and `'LIKE %...%'` when not.
-This can be overridden on a type/subtype basis.
-
 Entities are displayed in a standard list view consisting of a 
 title, blurb, and icon of the owning entity.  This can be overridden 
 on a type/subtype basis.
-
-Search is separated based upon types/subtypes pairs and any 
-registered custom search.
-
-**METADATA, ANNOTATIONS, AND PRIVATE DATA ARE NOT SEARCHED BY DEFAULT!**
-
-These are used in a variety of ways by plugin authors and generally 
-should not be displayed.  There are exceptions (profile fields and 
-comments) but if a plugin needs to match against metadata, 
-annotations, or private data it must register a search hook itself.
-
-
-## 2. Search and Custom Plugins
-
-To appear in search you must register your entity type and subtype
-by saying in your plugin's init function:
-
-`register_entity_type($type, $subtype);`
-
-If your plugin uses ElggEntity's standard title and description, 
-and you don't need a custom display, there is nothing else you need 
-to do for your results to appear in search.  If you would like more
-granular control of search, continue below.
-
-
-## 3. Controlling Search Results
-
-Search results can be controlled at a object:subtype level.
-	
-You can specify your own search types by responding to a hook.
-
 
 ### 3.1 Controlling Search Results - Entities Returned
 

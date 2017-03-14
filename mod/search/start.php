@@ -1,7 +1,6 @@
 <?php
 /**
  * Elgg search plugin
- *
  */
 
 elgg_register_event_handler('init','system','search_init');
@@ -10,28 +9,17 @@ elgg_register_event_handler('init','system','search_init');
  * Initialize search plugin
  */
 function search_init() {
-	require_once 'search_hooks.php';
-
 	// page handler for search actions and results
 	elgg_register_page_handler('search', 'search_page_handler');
-
-	// register some default search hooks
-	elgg_register_plugin_hook_handler('search', 'object', 'search_objects_hook');
-	elgg_register_plugin_hook_handler('search', 'user', 'search_users_hook');
-	elgg_register_plugin_hook_handler('search', 'group', 'search_groups_hook');
-
-	// tags and comments are a bit different.
-	// register a search types and a hooks for them.
-	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
-	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
 	// add in CSS for search elements
 	elgg_extend_view('elgg.css', 'search/css');
 
 	// extend view for elgg topbar search box
 	elgg_extend_view('page/elements/sidebar', 'search/header', 0);
-
-	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
+	
+	// register search result highlighting
+	elgg_register_plugin_hook_handler('format', 'search', 'search_format_search_results');
 }
 
 /**
@@ -42,17 +30,107 @@ function search_init() {
  */
 function search_page_handler($page) {
 
-	// if there is no q set, we're being called from a legacy installation
-	// it expects a search by tags.
-	// actually it doesn't, but maybe it should.
-	// maintain backward compatibility
-	if(!get_input('q', get_input('tag', NULL))) {
+	if (!get_input('q', null)) {
 		set_input('q', $page[0]);
-		//set_input('search_type', 'tags');
 	}
 
 	echo elgg_view_resource('search/index');
 	return true;
+}
+
+/**
+ * Adds extra volatile data to search results
+ *
+ * @param string      $hook   Hook name
+ * @param string      $type   Hook type
+ * @param \ElggEntity $entity Entity
+ * @param array       $params Search parameters
+ *
+ * @return void
+ */
+function search_format_search_results($hook, $type, $entity, $params) {
+	$query = elgg_extract('query', $params);
+	
+	if ($params['search_type'] == 'tags') {
+		$matched_tags_strs = [];
+		
+		// get tags for each tag name requested to find which ones matched.
+		foreach ($entity->getVolatileData('search_tag_names') as $tag_name) {
+			$tags = $entity->getTags($tag_name);
+
+			// @todo make one long tag string and run this through the highlight
+			// function.  This might be confusing as it could chop off
+			// the tag labels.
+			if (in_array(strtolower(sanitize_string($query)), array_map('strtolower', $tags))) {
+				if (is_array($tags)) {
+					$tag_name_str = elgg_echo("tag_names:$tag_name");
+					$matched_tags_strs[] = "$tag_name_str: " . implode(', ', $tags);
+				}
+			}
+		}
+
+		$title_str = elgg_get_excerpt($entity->getDisplayName());
+		$entity->setVolatileData('search_matched_title', $title_str);
+		
+		$desc_str  = elgg_get_excerpt($entity->description);
+		$entity->setVolatileData('search_matched_description', $desc_str);
+		
+		$tags_str = implode('. ', $matched_tags_strs);
+		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $query, 30, 300, true);
+		$entity->setVolatileData('search_matched_extra', $tags_str);
+		
+		return;
+	}
+		
+	if ($entity instanceof \ElggObject) {
+			
+		$title = search_get_highlighted_relevant_substrings($entity->title, $query);
+		$entity->setVolatileData('search_matched_title', $title);
+
+		$desc = search_get_highlighted_relevant_substrings($entity->description, $query);
+		$entity->setVolatileData('search_matched_description', $desc);
+		
+	} elseif ($entity instanceof \ElggGroup) {
+		$name = search_get_highlighted_relevant_substrings($entity->name, $query);
+		$entity->setVolatileData('search_matched_title', $name);
+
+		$description = search_get_highlighted_relevant_substrings($entity->description, $query);
+		$entity->setVolatileData('search_matched_description', $description);
+		
+	} elseif ($entity instanceof \ElggUser) {
+		$title = search_get_highlighted_relevant_substrings($entity->name, $query);
+	
+		// include the username if it matches but the display name doesn't.
+		if (false !== strpos($entity->username, $query)) {
+			$username = search_get_highlighted_relevant_substrings($entity->username, $query);
+			$title .= " ($username)";
+		}
+
+		$entity->setVolatileData('search_matched_title', $title);
+
+		$profile_fields = array_keys(elgg_get_config('profile_fields'));
+		if (!empty($profile_fields)) {
+			$matched = '';
+			foreach ($profile_fields as $md_name) {
+				$metadata = $entity->$md_name;
+				if (is_array($metadata)) {
+					foreach ($metadata as $text) {
+						if (stristr($text, $query)) {
+							$matched .= elgg_echo("profile:{$md_name}") . ': '
+									. search_get_highlighted_relevant_substrings($text, $query);
+						}
+					}
+				} else {
+					if (stristr($metadata, $query)) {
+						$matched .= elgg_echo("profile:{$md_name}") . ': '
+								. search_get_highlighted_relevant_substrings($metadata, $query);
+					}
+				}
+			}
+	
+			$entity->setVolatileData('search_matched_description', $matched);
+		}
+	}
 }
 
 /**
@@ -80,9 +158,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 
 	// if haystack < $max_length return the entire haystack w/formatting immediately
 	if ($haystack_length <= $max_length) {
-		$return = search_highlight_words($words, $haystack);
-
-		return $return;
+		return search_highlight_words($words, $haystack);
 	}
 
 	// get the starting positions and lengths for all matching words
@@ -97,7 +173,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 		// find the start positions for the words
 		if ($count > 1) {
 			$offset = 0;
-			while (FALSE !== $pos = elgg_strpos($haystack_lc, $word, $offset)) {
+			while (false !== $pos = elgg_strpos($haystack_lc, $word, $offset)) {
 				$start = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
 				$starts[] = $start;
 				$stop = $pos + $word_len + $min_match_context;
@@ -175,11 +251,8 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 		$return .= '...';
 	}
 
-	$return = search_highlight_words($words, $return);
-
-	return $return;
+	return search_highlight_words($words, $return);
 }
-
 
 /**
  * Takes an array of offsets and lengths and consolidates any
@@ -313,17 +386,12 @@ function search_remove_ignored_words($query, $format = 'array') {
  * @return string
  */
 function search_get_search_view($params, $view_type) {
-	switch ($view_type) {
-		case 'list':
-		case 'entity':
-		case 'layout':
-			break;
-
-		default:
-			return FALSE;
+	
+	if (!in_array($view_type, ['list', 'entity', 'layout'])) {
+		return false;
 	}
 
-	$view_order = array();
+	$view_order = [];
 
 	// check if there's a special search list view for this type:subtype
 	if (isset($params['type']) && $params['type'] && isset($params['subtype']) && $params['subtype']) {
@@ -348,114 +416,6 @@ function search_get_search_view($params, $view_type) {
 			return $view;
 		}
 	}
-
-	return FALSE;
-}
-
-/**
- * Returns a where clause for a search query.
- *
- * @param str $table Prefix for table to search on
- * @param array $fields Fields to match against
- * @param array $params Original search params
- * @return str
- */
-function search_get_where_sql($table, $fields, $params) {
-	$query = $params['query'];
-
-	// add the table prefix to the fields
-	foreach ($fields as $i => $field) {
-		if ($table) {
-			$fields[$i] = "$table.$field";
-		}
-	}
-
-	$likes = [];
-	$query_parts = explode(' ', $query);
-	foreach ($fields as $field) {
-		$sublikes = [];
-		foreach ($query_parts as $query_part) {
-			$query_part = sanitise_string($query_part);
-			if (strlen($query_part) == 0) {
-				continue;
-			}
-			$sublikes[] = "$field LIKE '%$query_part%'";
-		}
-		$likes[] = '(' . implode(' AND ', $sublikes) . ')';
-	}
-
-	$likes_str = implode(' OR ', $likes);
-	return "($likes_str)";
-}
-
-
-/**
- * Returns ORDER BY sql for insertion into elgg_get_entities().
- *
- * @param str $entities_table Prefix for entities table.
- * @param str $type_table Prefix for the type table.
- * @param str $sort ORDER BY part
- * @param str $order ASC or DESC
- * @return str
- */
-function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
-
-	$on = NULL;
-
-	switch ($sort) {
-		default:
-		case 'relevance':
-			// default is relevance descending.
-			// ascending relevancy is silly and complicated.
-			$on = '';
-			break;
-		case 'created':
-			$on = "$entities_table.time_created";
-			break;
-		case 'updated':
-			$on = "$entities_table.time_updated";
-			break;
-		case 'action_on':
-			// @todo not supported yet in core
-			$on = '';
-			break;
-		case 'alpha':
-			// @todo not support yet because both title
-			// and name columns are used for this depending
-			// on the entity, which we don't always know.  >:O
-			break;
-	}
-	$order = strtolower($order);
-	if ($order != 'asc' && $order != 'desc') {
-		$order = 'DESC';
-	}
-
-	if ($on) {
-		$order_by = "$on $order";
-	} else {
-		$order_by = '';
-	}
-
-	return $order_by;
-}
-
-/**
- * Exclude robots from indexing search pages
- *
- * This is good for performance since search is slow and there are many pages all
- * with the same content.
- *
- * @param string $hook Hook name
- * @param string $type Hook type
- * @param string $text robots.txt content for plugins
- * @return string
- */
-function search_exclude_robots($hook, $type, $text) {
-	$text .= <<<TEXT
-User-agent: *
-Disallow: /search/
-
-TEXT;
-
-	return $text;
+	
+	return false;
 }
