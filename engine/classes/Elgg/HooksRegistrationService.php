@@ -99,8 +99,8 @@ abstract class HooksRegistrationService {
 	/**
 	 * Clears all handlers for a specific hook
 	 *
-	 * @param string   $name
-	 * @param string   $type
+	 * @param string $name
+	 * @param string $type
 	 *
 	 * @return void
 	 * @access private

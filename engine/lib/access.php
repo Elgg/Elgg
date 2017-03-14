@@ -562,8 +562,8 @@ function access_init() {
  *
  * @param string $hook
  * @param string $type
- * @param bool $value
- * @param array $params
+ * @param bool   $value
+ * @param array  $params
  * @return true|null
  * @access private
  */
@@ -598,8 +598,8 @@ function elgg_override_permissions($hook, $type, $value, $params) {
  *
  * @param string $hook
  * @param string $type
- * @param array $value
- * @param array $params
+ * @param array  $value
+ * @param array  $params
  * @return array
  *
  * @access private

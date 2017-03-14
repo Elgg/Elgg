@@ -150,12 +150,9 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 	}
 
 	// we will write resized image to a temporary file and then delete it
-	$tmp_filename = time() . pathinfo($input_name, PATHINFO_BASENAME);
-	$tmp = new ElggFile();
-	$tmp->setFilename("tmp/$tmp_filename");
-	$tmp->open('write');
-	$tmp->close();
-
+	// need to add a valid image extension otherwise resizing fails
+	$tmp_filename = tempnam(sys_get_temp_dir(), 'icon_resize');
+	
 	$params = [
 		'w' => $maxwidth,
 		'h' => $maxheight,
@@ -167,15 +164,12 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		'upscale' => $upscale,
 	];
 
-	$destination = $tmp->getFilenameOnFilestore();
 	$image_bytes = false;
-	if (elgg_save_resized_image($input_name, $destination, $params)) {
-		$tmp->open('read');
-		$image_bytes = $tmp->grabFile();
-		$tmp->close();
+	if (elgg_save_resized_image($input_name, $tmp_filename, $params)) {
+		$image_bytes = file_get_contents($tmp_filename);
 	}
 
-	$tmp->delete();
+	unlink($tmp_filename);
 
 	return $image_bytes;
 }
@@ -417,9 +411,9 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
 /**
  * Unit tests for files
  *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
+ * @param string $hook  unit_test
+ * @param string $type  system
+ * @param mixed  $value Array of tests
  *
  * @return array
  * @access private
@@ -503,7 +497,7 @@ function _elgg_filestore_serve_icon_handler() {
 
 /**
  * Reset icon URLs if access_id has changed
- * 
+ *
  * @param string     $event  "update:after"
  * @param string     $type   "object"|"group"
  * @param ElggObject $entity Entity

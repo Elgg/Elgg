@@ -9,6 +9,8 @@ if (!$email) {
 	forward();
 }
 
+$session->remove('emailsent');
+
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 
 $title = elgg_echo('uservalidationbyemail:emailsent', [$email]);

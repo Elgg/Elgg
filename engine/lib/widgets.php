@@ -75,11 +75,11 @@ function elgg_register_widget_type($handler, $name = null, $description = null, 
 		$definition = \Elgg\WidgetDefinition::factory($handler);
 	} else {
 		$definition = \Elgg\WidgetDefinition::factory([
-			'id' => $handler,
-			'name' => $name,
-			'description' => $description,
-			'context' => $context,
-			'multiple' => $multiple,
+					'id' => $handler,
+					'name' => $name,
+					'description' => $description,
+					'context' => $context,
+					'multiple' => $multiple,
 		]);
 	}
 
@@ -155,7 +155,7 @@ function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
 	if (!($widget instanceof \ElggWidget)) {
 		return;
 	}
-	
+
 	switch ($widget->handler) {
 		case 'content_stats':
 			return 'admin/statistics/overview';
@@ -182,7 +182,7 @@ function _elgg_widgets_page_handler($page) {
 		return;
 	}
 	elgg_ajax_gatekeeper();
-	
+
 	$owner_guid = (int) get_input('owner_guid');
 	elgg_set_page_owner_guid($owner_guid);
 
@@ -191,7 +191,7 @@ function _elgg_widgets_page_handler($page) {
 	if (!empty($context_stack)) {
 		elgg_set_context_stack($context_stack);
 	}
-	
+
 	echo elgg_view_resource('widgets/add_panel', [
 		'owner_guid' => $owner_guid,
 		'context' => get_input('context'),
@@ -210,7 +210,7 @@ function _elgg_widgets_init() {
 	elgg_register_action('widgets/add');
 	elgg_register_action('widgets/move');
 	elgg_register_action('widgets/delete');
-	
+
 	elgg_register_page_handler('widgets', '_elgg_widgets_page_handler');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_widgets_widget_urls');
@@ -279,8 +279,8 @@ function _elgg_default_widgets_init() {
  * default widgets have been registered. See elgg_default_widgets_init() for
  * information on registering new default widget contexts.
  *
- * @param string $event  The event
- * @param string $type   The type of object
+ * @param string      $event  The event
+ * @param string      $type   The type of object
  * @param \ElggEntity $entity The entity being created
  * @return void
  * @access private

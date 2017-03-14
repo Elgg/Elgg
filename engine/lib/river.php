@@ -233,6 +233,12 @@ function elgg_get_river(array $options = array()) {
 		'joins'                => array(),
 	);
 
+	if (isset($options['view']) || isset($options['views'])) {
+		$msg = __FUNCTION__ . ' does not support the "views" option, though you may specify values for'
+			. ' the "rv.view" column using the "wheres" option.';
+		elgg_log($msg, 'WARNING');
+	}
+
 	$options = array_merge($defaults, $options);
 
 	if ($options['batch'] && !$options['count']) {
@@ -663,9 +669,9 @@ function _elgg_river_test($hook, $type, $value) {
 /**
  * Disable river entries that reference a disabled entity as subject/object/target
  *
- * @param string $event The event 'disable'
- * @param string $type Type of entity being disabled 'all'
- * @param mixed $entity The entity being disabled
+ * @param string $event  The event 'disable'
+ * @param string $type   Type of entity being disabled 'all'
+ * @param mixed  $entity The entity being disabled
  * @return boolean
  * @access private
  */
@@ -690,9 +696,9 @@ QUERY;
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
  *
- * @param string $event The event 'enable'
- * @param string $type Type of entity being enabled 'all'
- * @param mixed $entity The entity being enabled
+ * @param string $event  The event 'enable'
+ * @param string $type   Type of entity being enabled 'all'
+ * @param mixed  $entity The entity being enabled
  * @return boolean
  * @access private
  */

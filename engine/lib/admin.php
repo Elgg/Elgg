@@ -170,8 +170,8 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 /**
  * Add an admin notice when a new \ElggUpgrade object is created.
  *
- * @param string     $event
- * @param string     $type
+ * @param string      $event
+ * @param string      $type
  * @param \ElggObject $object
  * @access private
  */
@@ -347,6 +347,24 @@ function _elgg_admin_init() {
 	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
 	elgg_register_page_handler('robots.txt', '_elgg_robots_page_handler');
+	elgg_register_page_handler('admin_plugins_refresh', '_elgg_ajax_plugins_update');
+}
+
+/**
+ * Returns plugin listing and admin menu to the client (used after plugin (de)activation)
+ *
+ * @access private
+ * @return Elgg\Http\OkResponse
+ */
+function _elgg_ajax_plugins_update() {
+	elgg_admin_gatekeeper();
+	_elgg_admin_add_plugin_settings_menu();
+	elgg_set_context('admin');
+
+	return elgg_ok_response([
+		'list' => elgg_view('admin/plugins', ['list_only' => true]),
+		'sidebar' => elgg_view('admin/sidebar'),
+	]);
 }
 
 /**
@@ -711,8 +729,8 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 /**
  * Adds default admin widgets to the admin dashboard.
  *
- * @param string $event
- * @param string $type
+ * @param string    $event
+ * @param string    $type
  * @param \ElggUser $user
  *
  * @return null|true

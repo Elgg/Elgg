@@ -307,9 +307,9 @@ class NotificationsService {
 	 * ]
 	 * </code>
 	 *
-	 * @param ElggEntity  $sender     Sender of the notification
-	 * @param ElggUser[]  $recipients An array of entities to notify
-	 * @param array       $params     Notification parameters
+	 * @param ElggEntity $sender     Sender of the notification
+	 * @param ElggUser[] $recipients An array of entities to notify
+	 * @param array      $params     Notification parameters
 	 * 
 	 * @uses $params['subject']          string
 	 *                                   Default message subject

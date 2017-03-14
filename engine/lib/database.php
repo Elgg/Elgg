@@ -264,9 +264,9 @@ function _elgg_db_run_delayed_queries() {
 /**
  * Runs unit tests for the database
  *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  Array of tests
+ * @param string $hook  unit_test
+ * @param string $type  system
+ * @param array  $value Array of tests
  *
  * @return array
  * @access private

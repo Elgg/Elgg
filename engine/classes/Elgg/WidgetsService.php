@@ -175,8 +175,8 @@ class WidgetsService {
 	/**
 	 * Checks if a widget type exists for a given id
 	 *
-	 * @param string $id             Widget identifier
-	 * @param string $context        Optional context to check
+	 * @param string      $id        Widget identifier
+	 * @param string      $context   Optional context to check
 	 * @param \ElggEntity $container Optional limit widget definitions to a container
 	 *
 	 * @see elgg_is_widget_type
@@ -209,8 +209,8 @@ class WidgetsService {
 	/**
 	 * Returns widget name based on id
 	 *
-	 * @param string $id             Widget identifier
-	 * @param string $context        Context to check
+	 * @param string      $id        Widget identifier
+	 * @param string      $context   Context to check
 	 * @param \ElggEntity $container Optional limit widget definitions to a container
 	 *
 	 * @return string|boolean

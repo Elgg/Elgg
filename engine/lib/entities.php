@@ -774,9 +774,9 @@ function update_entity_last_action($guid, $posted = null) {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  Array of tests
+ * @param string $hook  unit_test
+ * @param string $type  system
+ * @param array  $value Array of tests
  *
  * @return array
  * @access private

@@ -1,3 +1,62 @@
+<a name="2.3.1"></a>
+### 2.3.1  (2017-02-14)
+
+#### Contributors
+
+* Steve Clay (8)
+* Jerôme Bakker (5)
+* Jeroen Dalsem (2)
+* Ismayil Khayredinov (1)
+* Yanwei Jiang (1)
+* iionly (1)
+
+#### Bug Fixes
+
+* **access:** use ignore access only when querying the database ([fb57c02c](https://github.com/Elgg/Elgg/commit/fb57c02c7bc9fed92c848a6ceeac7d9d5a0866fe))
+* **admin:** prevents simultaneous plugin (de)activation/reordering ([907c9b67](https://github.com/Elgg/Elgg/commit/907c9b6714c4457dbb86c2aa6e692d20c9a009ea), closes [#10706](https://github.com/Elgg/Elgg/issues/10706))
+* **ajax:** elgg/Ajax now uses spinner if 2nd fetch occurs in done handler ([afef3c4e](https://github.com/Elgg/Elgg/commit/afef3c4e2f115b2365c9af179d678e2ba74b9318))
+* **comments:** use elgg/Ajax to load inline comment form ([17d93a5b](https://github.com/Elgg/Elgg/commit/17d93a5bd370a325ea21a81680b19b2c0a517437))
+* **discussions:** river entries are once again visible to logged out users ([65e6664d](https://github.com/Elgg/Elgg/commit/65e6664de7c3004e6c59a9ab8c637ef47b549568))
+* **embed:** Inserting medium thumbnail size again instead of small on embedding images ([aea45030](https://github.com/Elgg/Elgg/commit/aea45030e3618b5c449f5294cc8d18ec40fb01a0))
+* **html:** elgg_normalize_url() handles tel: links ([48a51709](https://github.com/Elgg/Elgg/commit/48a51709c956b5a676711a3febb32c65a5df1e0e), closes [#10689](https://github.com/Elgg/Elgg/issues/10689))
+* **icons:**
+  * detect image format for resizing ([dd9af8a9](https://github.com/Elgg/Elgg/commit/dd9af8a9fb72723e8b1e724c37d3e2343e157116))
+  * set correct filename for temp resizing file ([aeed7060](https://github.com/Elgg/Elgg/commit/aeed7060c394284758b899a021a4328c59571fd3))
+* **menus:** return to default of sorting menus by text ([9636790f](https://github.com/Elgg/Elgg/commit/9636790fc84c685e2f0c92fd65ea85d8eb63ea19), closes [#10737](https://github.com/Elgg/Elgg/issues/10737))
+* **security:** random byte generation improved on some systems ([03285ba7](https://github.com/Elgg/Elgg/commit/03285ba7c7090f4881797bb74c14aaf74b48c47e), closes [#10750](https://github.com/Elgg/Elgg/issues/10750))
+* **uservalidationbyemail:** unset emailsent after showing it once ([4e16cc9b](https://github.com/Elgg/Elgg/commit/4e16cc9b093f6f004dc9af426cb9c9acce00aa96))
+* **views:**
+  * elgg_view_field no longer leaves #type in attributes ([e4e316e9](https://github.com/Elgg/Elgg/commit/e4e316e9e699e0083b85559a3e707af0341eb19f), closes [#10699](https://github.com/Elgg/Elgg/issues/10699))
+  * in table lists, rows now have IDs ([e42fa636](https://github.com/Elgg/Elgg/commit/e42fa636ab73102ad55ef60463f1eeb309211f52), closes [#10696](https://github.com/Elgg/Elgg/issues/10696))
+
+
+<a name="2.3.0"></a>
+## 2.3.0  (2016-12-27)
+
+#### Contributors
+
+* Ismayil Khayredinov (4)
+* Steve Clay (3)
+* Jerôme Bakker (2)
+* iionly (2)
+
+#### Documentation
+
+* **core:** Improve docs about creation of cache symlink ([f984a051](https://github.com/Elgg/Elgg/commit/f984a051e3e14cc316f312475396a3222138c2e6))
+
+
+#### Bug Fixes
+
+* **ajax:** elgg/Ajax view() and form() set $vars as expected ([abf8a9ce](https://github.com/Elgg/Elgg/commit/abf8a9ce87117ab24cb62e937805750eca780de1), closes [#10667](https://github.com/Elgg/Elgg/issues/10667))
+* **core:** Check existence of cache symlink without usage of readlink() ([3e4dc6a1](https://github.com/Elgg/Elgg/commit/3e4dc6a1f2e2b20c5e31800e925ca5779a6f40cf))
+* **entities:** entity is now loaded from cache during save operations ([009f74da](https://github.com/Elgg/Elgg/commit/009f74dac2ab5c1834ec672a82e5642dc7c3ab75), closes [#10612](https://github.com/Elgg/Elgg/issues/10612))
+* **files:** mitigate issues with special chars in file names ([4a7b74ea](https://github.com/Elgg/Elgg/commit/4a7b74ea27b31be159fba9fb5c3dda405da15409))
+* **forms:** fieldset with a legend no longer overrides the class ([726cca18](https://github.com/Elgg/Elgg/commit/726cca18e23510ae1b473f3cfd8b408e557a4c83))
+* **http:** elgg/Ajax error responses with 200 status use Ajax wrapper ([1cae50cf](https://github.com/Elgg/Elgg/commit/1cae50cf025a75f32500836f3cd885fedb720b9a))
+* **notifications:** incorrect use statement no longer throws ([2a6d782b](https://github.com/Elgg/Elgg/commit/2a6d782b2978cf670a89f0fd9cb5b0ce2820a37d))
+* **web_services:** handle string params with proper escaping ([702ce46c](https://github.com/Elgg/Elgg/commit/702ce46c44aec2546f953902061166bf3f48a5af))
+
+
 <a name="2.3.0"></a>
 ## 2.3.0  (2016-12-27)
 
@@ -136,6 +195,23 @@
 
 * **events:** deprecates the `pagesetup, system` event ([cf77fc07](https://github.com/Elgg/Elgg/commit/cf77fc07806c601d40508fbaf43f6d14b8dceeee))
 * **metadata:** metadata access control is deprecated ([a9523d97](https://github.com/Elgg/Elgg/commit/a9523d979431016352a424fd3580ffad717c4d6b))
+
+
+<a name="2.2.4"></a>
+### 2.2.4  (2017-01-27)
+
+#### Contributors
+
+* Steve Clay (2)
+* Ismayil Khayredinov (1)
+* iionly (1)
+
+#### Bug Fixes
+
+* **ajax:** elgg/Ajax view() and form() set $vars as expected ([abf8a9ce](https://github.com/Elgg/Elgg/commit/abf8a9ce87117ab24cb62e937805750eca780de1), closes [#10667](https://github.com/Elgg/Elgg/issues/10667))
+* **core:** Check existence of cache symlink without usage of readlink() ([3e4dc6a1](https://github.com/Elgg/Elgg/commit/3e4dc6a1f2e2b20c5e31800e925ca5779a6f40cf))
+* **files:** mitigate issues with special chars in file names ([4a7b74ea](https://github.com/Elgg/Elgg/commit/4a7b74ea27b31be159fba9fb5c3dda405da15409))
+* **web_services:** handle string params with proper escaping ([702ce46c](https://github.com/Elgg/Elgg/commit/702ce46c44aec2546f953902061166bf3f48a5af))
 
 
 <a name="2.2.3"></a>
@@ -1264,6 +1340,18 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+<a name="1.12.15"></a>
+### 1.12.15  (2017-01-25)
+
+#### Contributors
+
+* Johnny Mast (1)
+* jdalsem (1)
+
+#### Bug Fixes
+
+* **views:** corrected syntax error in input/date ([a7277f30](https://github.com/Elgg/Elgg/commit/a7277f307596f19dbc3c8415c9048a20a8493287))
 
 <a name="1.12.14"></a>
 ### 1.12.14  (2016-11-08)

@@ -342,10 +342,10 @@ function elgg_view($view, $vars = array(), $ignore1 = false, $ignore2 = false, $
  *
  * @see elgg_view()
  *
- * @param string  $view       The name and location of the view to use
- * @param array   $vars       Variables to pass to the view
- * @param string  $suggestion Suggestion with the deprecation message
- * @param string  $version    Human-readable *release* version: 1.7, 1.8, ...
+ * @param string $view       The name and location of the view to use
+ * @param array  $vars       Variables to pass to the view
+ * @param string $suggestion Suggestion with the deprecation message
+ * @param string $version    Human-readable *release* version: 1.7, 1.8, ...
  *
  * @return string The parsed view
  * @access private
@@ -1497,6 +1497,10 @@ function elgg_view_field(array $params = []) {
 
 	$hidden_types = ['hidden', 'securitytoken'];
 	if (in_array($input_type, $hidden_types)) {
+		unset($params['#type']);
+		unset($params['#label']);
+		unset($params['#help']);
+		unset($params['#class']);
 		return elgg_view("input/$input_type", $params);
 	}
 
@@ -1800,8 +1804,8 @@ function _elgg_views_send_header_x_frame_options() {
  * }
  * </code>
  *
- * @param string $view     View name. E.g. "elgg/init.js"
- * @param string $path     Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
+ * @param string $view View name. E.g. "elgg/init.js"
+ * @param string $path Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
  *
  * @return bool
  * @access private
@@ -2021,9 +2025,9 @@ function _elgg_get_js_page_data() {
  * Render a view while the global viewtype is temporarily changed. This makes sure that
  * nested views use the same viewtype.
  *
- * @param string  $view     View name
- * @param array   $vars     View vars
- * @param string  $viewtype Temporary viewtype ('' to leave current)
+ * @param string $view     View name
+ * @param array  $vars     View vars
+ * @param string $viewtype Temporary viewtype ('' to leave current)
  *
  * @return mixed
  * @access private

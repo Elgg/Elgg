@@ -365,7 +365,7 @@ function elgg_get_user_validation_status($user_guid) {
  * Page handler for account related pages
  *
  * @param array  $page_elements Page elements
- * @param string $handler The handler string
+ * @param string $handler       The handler string
  *
  * @return bool
  * @access private
@@ -564,8 +564,8 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
  *
  * @param string $hook
  * @param string $type
- * @param array $return
- * @param array $params
+ * @param array  $return
+ * @param array  $params
  * @return array
  *
  * @access private

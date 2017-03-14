@@ -423,7 +423,19 @@ elgg.deprecated_notice = function(msg, dep_version) {
  * @param {String} url The url to forward to
  */
 elgg.forward = function(url) {
-	location.href = elgg.normalize_url(url);
+	var dest = elgg.normalize_url(url);
+
+	if (dest == location.href) {
+		location.reload();
+	}
+
+	// in case the href set below just changes the hash, we want to reload. There's sadly
+	// no way to force a reload and set a different hash at the same time.
+	$(window).on('hashchange', function () {
+		location.reload();
+	});
+
+	location.href = dest;
 };
 
 /**

@@ -546,8 +546,7 @@ class ElggInstaller {
 		// bit of a hack to get the password help to show right number of characters
 		
 		$lang = _elgg_services()->translator->getCurrentLanguage();
-		$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'] =
-				sprintf($GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'],
+		$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'] = sprintf($GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'],
 				$this->CONFIG->min_password_length);
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);

@@ -109,11 +109,12 @@ class MetadataTable {
 	function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
 			$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 
-		$entity_guid = (int) $entity_guid;
-		
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
-		$owner_guid = (int) $owner_guid;
-		$allow_multiple = (boolean) $allow_multiple;
+		$entity_guid = (int)$entity_guid;
+		// name and value are encoded in add_metastring()
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
+		$time = $this->getCurrentTime()->getTimestamp();
+		$owner_guid = (int)$owner_guid;
+		$allow_multiple = (boolean)$allow_multiple;
 	
 		if (!isset($value)) {
 			return false;
@@ -198,7 +199,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
 	
 		$owner_guid = (int) $owner_guid;
 		if ($owner_guid == 0) {

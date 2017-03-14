@@ -36,27 +36,31 @@ elgg.comments.Comment.prototype = {
 	loadForm: function () {
 		var that = this;
 
-		// Get the form using ajax
-		elgg.ajax('ajax/view/core/ajax/edit_comment?guid=' + this.guid, {
-			success: function(html) {
-				// Add the form to DOM
-				that.$item.find('.elgg-body').first().append(html);
-
-				that.showForm();
-
-				var $form = that.getForm();
-
-				$form.find('.elgg-button-cancel').on('click', function () {
-					that.hideForm();
-					return false;
-				});
-
-				// save
-				$form.on('submit', function () {
-					that.submitForm();
-					return false;
-				});
-			}
+		require(['elgg/Ajax'], function(Ajax) {
+			var ajax = new Ajax();
+			
+			// Get the form using ajax
+			ajax.view('core/ajax/edit_comment?guid=' + that.guid, {
+				success: function(html) {
+					// Add the form to DOM
+					that.$item.find('.elgg-body').first().append(html);
+	
+					that.showForm();
+	
+					var $form = that.getForm();
+	
+					$form.find('.elgg-button-cancel').on('click', function () {
+						that.hideForm();
+						return false;
+					});
+	
+					// save
+					$form.on('submit', function () {
+						that.submitForm();
+						return false;
+					});
+				}
+			});
 		});
 	},
 
