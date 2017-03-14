@@ -478,6 +478,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
+	$vars['page_shell'] = $page_shell;
 
 	// head has keys 'title', 'metas', 'links'
 	$head_params = _elgg_views_prepare_head($title);
@@ -488,7 +489,6 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	$output = elgg_view("page/$page_shell", $vars);
 
-	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to modify the output
 	$output = elgg_trigger_plugin_hook('output', 'page', $vars, $output);
