@@ -283,14 +283,16 @@ class UsersTable {
 			return $entity;
 		}
 
-		$users = $this->entities->getEntitiesFromAttributes([
+		$users = $this->entities->getEntitiesFromAttributes(
+			[
 			'types' => 'user',
 			'attribute_name_value_pairs' => [
 				'name' => 'username',
 				'value' => $username,
 			],
 			'limit' => 1,
-		]);
+			]
+		);
 		return $users ? $users[0] : false;
 	}
 
@@ -305,14 +307,16 @@ class UsersTable {
 			return [];
 		}
 
-		$users = $this->entities->getEntitiesFromAttributes([
+		$users = $this->entities->getEntitiesFromAttributes(
+			[
 			'types' => 'user',
 			'attribute_name_value_pairs' => [
 				'name' => 'email',
 				'value' => $email,
 			],
 			'limit' => 1,
-		]);
+			]
+		);
 
 		return $users ? : [];
 	}
@@ -351,12 +355,14 @@ class UsersTable {
 			$limit = $this->config->get('default_limit');
 		}
 
-		$options = array_merge(array(
+		$options = array_merge(
+			array(
 			'seconds' => $seconds,
 			'limit' => $limit,
 			'offset' => $offset,
 			'count' => $count,
-		), $options);
+			), $options
+		);
 
 		// cast options we're sending to hook
 		foreach (array('seconds', 'limit', 'offset') as $key) {
@@ -380,7 +386,8 @@ class UsersTable {
 
 		$dbprefix = $this->config->get('dbprefix');
 		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
-		return elgg_get_entities(array(
+		return elgg_get_entities(
+			array(
 			'type' => 'user',
 			'limit' => $options['limit'],
 			'offset' => $options['offset'],
@@ -388,7 +395,8 @@ class UsersTable {
 			'joins' => array("join {$dbprefix}users_entity u on e.guid = u.guid"),
 			'wheres' => array("u.last_action >= {$time}"),
 			'order_by' => "u.last_action desc",
-		));
+			)
+		);
 	}
 
 	/**
@@ -567,10 +575,12 @@ class UsersTable {
 		// If we save the user to memcache during this request, then we'll end up with the
 		// old (incorrect) attributes cached (notice the above query is delayed). So it's
 		// simplest to just resave the user after all plugin code runs.
-		register_shutdown_function(function () use ($user, $time) {
-			$this->entities->updateLastAction($user, $time); // keep entity table in sync
-			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'), $time);
-		});
+		register_shutdown_function(
+			function () use ($user, $time) {
+				$this->entities->updateLastAction($user, $time); // keep entity table in sync
+				$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'), $time);
+			}
+		);
 	}
 
 	/**
@@ -611,9 +621,11 @@ class UsersTable {
 		// If we save the user to memcache during this request, then we'll end up with the
 		// old (incorrect) attributes cached. Hence we want to invalidate as late as possible.
 		// the user object gets saved
-		register_shutdown_function(function () use ($user) {
-			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
-		});
+		register_shutdown_function(
+			function () use ($user) {
+				$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+			}
+		);
 	}
 
 }

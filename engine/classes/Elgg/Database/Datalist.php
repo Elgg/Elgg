@@ -80,15 +80,17 @@ class Datalist {
 			return false;
 		}
 
-		return $this->cache->get($name, function() use ($name) {
+		return $this->cache->get(
+			$name, function() use ($name) {
 
-			$sql = "SELECT * FROM {$this->table} WHERE name = :name";
-			$params = [
+				$sql = "SELECT * FROM {$this->table} WHERE name = :name";
+				$params = [
 				':name' => $name,
-			];
-			$result = $this->db->getDataRow($sql, null, $params);
-			return $result ? $result->value : null;
-		});
+				];
+				$result = $this->db->getDataRow($sql, null, $params);
+				return $result ? $result->value : null;
+			}
+		);
 	}
 
 	/**

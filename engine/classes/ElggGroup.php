@@ -594,10 +594,12 @@ class ElggGroup extends \ElggEntity
 	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
-		return array_merge(parent::getExportableValues(), array(
+		return array_merge(
+			parent::getExportableValues(), array(
 			'name',
 			'description',
-		));
+			)
+		);
 	}
 
 	/**

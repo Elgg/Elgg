@@ -164,13 +164,17 @@ class ExternalFiles {
 		) {
 			$items = $GLOBALS['_ELGG']->externals[$type]->getElements();
 	
-			$items = array_filter($items, function($v) use ($location) {
-				return $v->loaded == true && $v->location == $location;
-			});
+			$items = array_filter(
+				$items, function($v) use ($location) {
+					return $v->loaded == true && $v->location == $location;
+				}
+			);
 			if ($items) {
-				array_walk($items, function(&$v, $k){
-					$v = $v->url;
-				});
+				array_walk(
+					$items, function(&$v, $k) {
+						$v = $v->url;
+					}
+				);
 			}
 			return $items;
 		}

@@ -165,8 +165,10 @@ function _elgg_get_metastring_based_objects($options) {
 	// it's already an array...just need to merge it
 	if (isset($options['type_subtype_pair'])) {
 		if (isset($options['type_subtype_pairs'])) {
-			$options['type_subtype_pairs'] = array_merge($options['type_subtype_pairs'],
-				$options['type_subtype_pair']);
+			$options['type_subtype_pairs'] = array_merge(
+				$options['type_subtype_pairs'],
+				$options['type_subtype_pair']
+			);
 		} else {
 			$options['type_subtype_pairs'] = $options['type_subtype_pair'];
 		}
@@ -196,23 +198,31 @@ function _elgg_get_metastring_based_objects($options) {
 	$wheres = $options['wheres'];
 
 	// entities
-	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
-		$options['subtypes'], $options['type_subtype_pairs']);
+	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql(
+		'e', $options['types'],
+		$options['subtypes'], $options['type_subtype_pairs']
+	);
 
 	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 
-	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
-		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
+	$wheres[] = _elgg_get_entity_time_where_sql(
+		'e', $options['created_time_upper'],
+		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']
+	);
 
 
-	$wheres[] = _elgg_get_entity_time_where_sql('n_table', $options['metastring_created_time_upper'],
-		$options['metastring_created_time_lower'], null, null);
+	$wheres[] = _elgg_get_entity_time_where_sql(
+		'n_table', $options['metastring_created_time_upper'],
+		$options['metastring_created_time_lower'], null, null
+	);
 
-	$wheres[] = _elgg_get_guid_based_where_sql('n_table.owner_guid',
-		$options['metastring_owner_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql(
+		'n_table.owner_guid',
+		$options['metastring_owner_guids']
+	);
 
 	// see if any functions failed
 	// remove empty strings on successful functions
@@ -262,18 +272,22 @@ function _elgg_get_metastring_based_objects($options) {
 	$joins = array_merge($joins, $options['joins']);
 
 	// metastrings
-	$metastring_clauses = _elgg_get_metastring_sql('n_table', $options['metastring_names'],
+	$metastring_clauses = _elgg_get_metastring_sql(
+		'n_table', $options['metastring_names'],
 		$options['metastring_values'], null, $options['metastring_ids'],
-		$options['metastring_case_sensitive']);
+		$options['metastring_case_sensitive']
+	);
 
 	if ($metastring_clauses) {
 		$wheres = array_merge($wheres, $metastring_clauses['wheres']);
 		$joins = array_merge($joins, $metastring_clauses['joins']);
 	} else {
-		$wheres[] = _elgg_get_access_where_sql(array(
+		$wheres[] = _elgg_get_access_where_sql(
+			array(
 			'table_alias' => 'n_table',
 			'guid_column' => 'entity_guid',
-		));
+			)
+		);
 	}
 
 	$distinct = $options['distinct'] ? "DISTINCT " : "";
@@ -461,10 +475,12 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		$wheres[] = $values_where;
 	}
 
-	$wheres[] = _elgg_get_access_where_sql(array(
+	$wheres[] = _elgg_get_access_where_sql(
+		array(
 		'table_alias' => $table,
 		'guid_column' => 'entity_guid',
-	));
+		)
+	);
 
 	if ($where = implode(' AND ', $wheres)) {
 		$return['wheres'][] = "($where)";
@@ -494,14 +510,14 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
 
 	// map the metadata_* options to metastring_* options
 	$map = array(
-		'names'					=>	'metastring_names',
-		'values'				=>	'metastring_values',
-		'case_sensitive'		=>	'metastring_case_sensitive',
-		'owner_guids'			=>	'metastring_owner_guids',
-		'created_time_lower'	=>	'metastring_created_time_lower',
-		'created_time_upper'	=>	'metastring_created_time_upper',
-		'calculation'			=>	'metastring_calculation',
-		'ids'					=>	'metastring_ids',
+		'names'					=> 'metastring_names',
+		'values'				=> 'metastring_values',
+		'case_sensitive'		=> 'metastring_case_sensitive',
+		'owner_guids'			=> 'metastring_owner_guids',
+		'created_time_lower'	=> 'metastring_created_time_lower',
+		'created_time_upper'	=> 'metastring_created_time_upper',
+		'calculation'			=> 'metastring_calculation',
+		'ids'					=> 'metastring_ids',
 	);
 
 	foreach ($prefixes as $prefix) {
@@ -568,10 +584,12 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 		if ($object->enabled == $enabled) {
 			$return = false;
 		} elseif ($object->canEdit() && (elgg_trigger_event($event, $type, $object))) {
-			$return = update_data("UPDATE $table SET enabled = :enabled where id = :id", [
+			$return = update_data(
+				"UPDATE $table SET enabled = :enabled where id = :id", [
 				':enabled' => $enabled,
 				':id' => $id,
-			]);
+				]
+			);
 		}
 	}
 
@@ -672,9 +690,11 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 			}
 
 			if (elgg_trigger_event('delete', $type, $obj) && $result) {
-				return (bool)delete_data("DELETE FROM $table WHERE id = :id", [
+				return (bool)delete_data(
+					"DELETE FROM $table WHERE id = :id", [
 					':id' => $id,
-				]);
+					]
+				);
 			}
 		}
 	}
@@ -705,10 +725,12 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 		"{$type}_name_value_pair", "{$type}_owner_guid");
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
-	$clauses = _elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
+	$clauses = _elgg_get_entity_metadata_where_sql(
+		'e', $n_table, $options["{$type}_names"],
 		$options["{$type}_values"], $options["{$type}_name_value_pairs"],
 		$options["{$type}_name_value_pairs_operator"], $options["{$type}_case_sensitive"],
-		$options["order_by_{$type}"], $options["{$type}_owner_guids"]);
+		$options["order_by_{$type}"], $options["{$type}_owner_guids"]
+	);
 
 	if ($clauses) {
 		// merge wheres to pass to elgg_get_entities()

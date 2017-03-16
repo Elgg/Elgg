@@ -112,9 +112,11 @@ class Annotations {
 		$entity = get_entity($entity_guid);
 	
 		if ($this->events->trigger('annotate', $entity->type, $entity)) {
-			$result = $this->db->insertData("INSERT INTO {$this->db->prefix}annotations
+			$result = $this->db->insertData(
+				"INSERT INTO {$this->db->prefix}annotations
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
-				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
+				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)"
+			);
 	
 			if ($result !== false) {
 				$obj = elgg_get_annotation_from_id($result);
@@ -176,10 +178,12 @@ class Annotations {
 			return false;
 		}
 	
-		$result = $this->db->updateData("UPDATE {$this->db->prefix}annotations
+		$result = $this->db->updateData(
+			"UPDATE {$this->db->prefix}annotations
 			SET name_id = $name_id, value_id = $value_id, value_type = '$value_type',
 			access_id = $access_id, owner_guid = $owner_guid
-			WHERE id = $annotation_id");
+			WHERE id = $annotation_id"
+		);
 	
 		if ($result !== false) {
 			// @todo add plugin hook that sends old and new annotation information before db access
@@ -324,18 +328,18 @@ class Annotations {
 	 */
 	function getEntities(array $options = array()) {
 		$defaults = array(
-			'annotation_names'						=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_values'						=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
+			'annotation_names'						=> ELGG_ENTITIES_ANY_VALUE,
+			'annotation_values'						=> ELGG_ENTITIES_ANY_VALUE,
+			'annotation_name_value_pairs'			=> ELGG_ENTITIES_ANY_VALUE,
 	
-			'annotation_name_value_pairs_operator'	=>	'AND',
-			'annotation_case_sensitive' 			=>	true,
-			'order_by_annotation'					=>	array(),
+			'annotation_name_value_pairs_operator'	=> 'AND',
+			'annotation_case_sensitive' 			=> true,
+			'order_by_annotation'					=> array(),
 	
-			'annotation_created_time_lower'			=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_created_time_upper'			=>	ELGG_ENTITIES_ANY_VALUE,
+			'annotation_created_time_lower'			=> ELGG_ENTITIES_ANY_VALUE,
+			'annotation_created_time_upper'			=> ELGG_ENTITIES_ANY_VALUE,
 	
-			'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
+			'annotation_owner_guids'				=> ELGG_ENTITIES_ANY_VALUE,
 		);
 	
 		$options = array_merge($defaults, $options);
@@ -372,17 +376,21 @@ class Annotations {
 			// the user didn't provide maxtime
 			if ($deprecated) {
 				// special sorting for annotations
-				elgg_deprecated_notice(__FUNCTION__ . ": no longer orders by annotations by default. If you order"
+				elgg_deprecated_notice(
+					__FUNCTION__ . ": no longer orders by annotations by default. If you order"
 					. " by maxtime, you must provide that column via \$options['selects']. See"
-					. " https://github.com/Elgg/Elgg/issues/6638#issuecomment-41562034", "1.10");
+					. " https://github.com/Elgg/Elgg/issues/6638#issuecomment-41562034", "1.10"
+				);
 					
 				$options['selects'][] = "MAX(n_table.time_created) AS maxtime";
 				$options['group_by'] = 'n_table.entity_guid';
 			}
 		}
 		
-		$time_wheres = _elgg_get_entity_time_where_sql('n_table', $options['annotation_created_time_upper'],
-			$options['annotation_created_time_lower']);
+		$time_wheres = _elgg_get_entity_time_where_sql(
+			'n_table', $options['annotation_created_time_upper'],
+			$options['annotation_created_time_lower']
+		);
 
 		if ($time_wheres) {
 			$options['wheres'][] = $time_wheres;

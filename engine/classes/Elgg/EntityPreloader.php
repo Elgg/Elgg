@@ -53,9 +53,11 @@ class EntityPreloader {
 		// If only 1 to load, not worth the overhead of elgg_get_entities(),
 		// get_entity() will handle it later.
 		if (count($guids) > 1) {
-			call_user_func($this->_callable_entity_loader, array(
+			call_user_func(
+				$this->_callable_entity_loader, array(
 				'guids' => $guids,
-			));
+				)
+			);
 		}
 	}
 

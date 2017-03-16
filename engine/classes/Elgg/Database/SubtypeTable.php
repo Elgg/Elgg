@@ -282,10 +282,12 @@ class SubtypeTable {
 	 */
 	protected function getPopulatedCache() {
 		if ($this->cache === null) {
-			$rows = $this->db->getData("
+			$rows = $this->db->getData(
+				"
 				SELECT *
 				FROM {$this->db->prefix}entity_subtypes
-			");
+			"
+			);
 
 			$this->cache = [];
 			foreach ($rows as $row) {

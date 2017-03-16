@@ -30,7 +30,7 @@ use Zend\Mail\Message;
  *    'send', 'notification:[method name]'. It receives the notification object
  *    of the namespace Elgg\Notifications;
 
-  class Notification in the params array with the
+	class Notification in the params array with the
  *    key 'notification'. The callback should return a boolean to indicate whether
  *    the message was sent.
  *
@@ -424,7 +424,8 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 
 					// Trigger handler and retrieve result.
 					try {
-						$result[$guid][$method] = call_user_func($handler, $from ? get_entity($from) : null, get_entity($guid), $subject, $message, $params
+						$result[$guid][$method] = call_user_func(
+							$handler, $from ? get_entity($from) : null, get_entity($guid), $subject, $message, $params
 						);
 					} catch (Exception $e) {
 						error_log($e->getMessage());

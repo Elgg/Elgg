@@ -416,9 +416,11 @@ class ElggMenuItem {
 	 */
 	public function getDeps() {
 		$modules = (array) $this->data['deps'];
-		return array_filter($modules, function($m) {
-			return is_string($m) && !empty($m);
-		});
+		return array_filter(
+			$modules, function($m) {
+				return is_string($m) && !empty($m);
+			}
+		);
 	}
 
 	/**

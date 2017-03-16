@@ -69,12 +69,16 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	if ($access_id === null) {
 		$access_id = ACCESS_PRIVATE;
 	} elseif ($access_id != ACCESS_PUBLIC) {
-		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-			. 'All metadata will be public in 3.0.', '2.3');
+		elgg_deprecated_notice(
+			'Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+			. 'All metadata will be public in 3.0.', '2.3'
+		);
 	}
 
-	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,
-		$value_type, $owner_guid, $access_id, $allow_multiple);
+	return _elgg_services()->metadataTable->create(
+		$entity_guid, $name, $value,
+		$value_type, $owner_guid, $access_id, $allow_multiple
+	);
 }
 
 /**
@@ -92,12 +96,16 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  */
 function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id) {
 	if ($access_id != ACCESS_PUBLIC) {
-		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-			. 'All metadata will be public in 3.0.', '2.3');
+		elgg_deprecated_notice(
+			'Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+			. 'All metadata will be public in 3.0.', '2.3'
+		);
 	}
 
-	return _elgg_services()->metadataTable->update($id, $name, $value,
-		$value_type, $owner_guid, $access_id);
+	return _elgg_services()->metadataTable->update(
+		$id, $name, $value,
+		$value_type, $owner_guid, $access_id
+	);
 }
 
 /**
@@ -123,12 +131,16 @@ function create_metadata_from_array($entity_guid, array $name_and_values, $value
 	if ($access_id === null) {
 		$access_id = ACCESS_PRIVATE;
 	} elseif ($access_id != ACCESS_PUBLIC) {
-		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-			. 'All metadata will be public in 3.0.', '2.3');
+		elgg_deprecated_notice(
+			'Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+			. 'All metadata will be public in 3.0.', '2.3'
+		);
 	}
 
-	return _elgg_services()->metadataTable->createFromArray($entity_guid, $name_and_values,
-		$value_type, $owner_guid, $access_id, $allow_multiple);
+	return _elgg_services()->metadataTable->createFromArray(
+		$entity_guid, $name_and_values,
+		$value_type, $owner_guid, $access_id, $allow_multiple
+	);
 }
 
 /**
@@ -317,8 +329,10 @@ function elgg_list_entities_from_metadata($options) {
 function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = null, $values = null,
 		$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null,
 		$owner_guids = null) {
-	return _elgg_services()->metadataTable->getEntityMetadataWhereSql($e_table, $n_table, $names,
-		$values, $pairs, $pair_operator, $case_sensitive, $order_by_metadata, $owner_guids);
+	return _elgg_services()->metadataTable->getEntityMetadataWhereSql(
+		$e_table, $n_table, $names,
+		$values, $pairs, $pair_operator, $case_sensitive, $order_by_metadata, $owner_guids
+	);
 }
 
 /**

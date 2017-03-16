@@ -185,33 +185,35 @@ class Application {
 		);
 
 		// isolate global scope
-		call_user_func(function () use ($lib_dir, $lib_files) {
+		call_user_func(
+			function () use ($lib_dir, $lib_files) {
 
-			$setups = array();
+				$setups = array();
 
-			// include library files, capturing setup functions
-			foreach ($lib_files as $file) {
-				$setup = (require_once $lib_dir->getPath($file));
+				// include library files, capturing setup functions
+				foreach ($lib_files as $file) {
+					$setup = (require_once $lib_dir->getPath($file));
 
-				if ($setup instanceof \Closure) {
-					$setups[$file] = $setup;
+					if ($setup instanceof \Closure) {
+						$setups[$file] = $setup;
+					}
+				}
+
+				// store instance to be returned by elgg()
+				self::$_instance = $this;
+
+				// set up autoloading and DIC
+				_elgg_services($this->services);
+
+				$events = $this->services->events;
+				$hooks = $this->services->hooks;
+
+				// run setups
+				foreach ($setups as $func) {
+					$func($events, $hooks);
 				}
 			}
-
-			// store instance to be returned by elgg()
-			self::$_instance = $this;
-
-			// set up autoloading and DIC
-			_elgg_services($this->services);
-
-			$events = $this->services->events;
-			$hooks = $this->services->hooks;
-
-			// run setups
-			foreach ($setups as $func) {
-				$func($events, $hooks);
-			}
-		});
+		);
 	}
 
 	/**
@@ -362,12 +364,14 @@ class Application {
 		if (self::$_instance === null) {
 			// we need to register for shutdown before Symfony registers the
 			// session_write_close() function. https://github.com/Elgg/Elgg/issues/9243
-			register_shutdown_function(function () {
-				// There are cases where we may exit before this function is defined
-				if (function_exists('_elgg_shutdown_hook')) {
-					_elgg_shutdown_hook();
+			register_shutdown_function(
+				function () {
+					// There are cases where we may exit before this function is defined
+					if (function_exists('_elgg_shutdown_hook')) {
+						_elgg_shutdown_hook();
+					}
 				}
-			});
+			);
 
 			self::$_instance = new self(new Di\ServiceProvider(new Config()));
 		}

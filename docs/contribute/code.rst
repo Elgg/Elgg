@@ -183,6 +183,17 @@ Otherwise you may need to perform an interactive rebase:
 
 .. _contribute/code#testing:
 
+Conding Standards
+=================
+
+Elgg uses PHP CodeSniffer to ensure that coding standards are respected.
+
+Our continuous integration tests check coding standards and error if those are not respected.
+
+To test if your code meets Elgg standards before making a Pull Request, run ``composer lint``.
+
+To automatically fix some coding standards violations, run ``composer lint-fixer``.
+
 Testing
 =======
 

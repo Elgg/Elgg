@@ -61,13 +61,15 @@ function _elgg_friends_page_setup() {
 
 	// topbar
 	if ($viewer) {
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item(
+			'topbar', array(
 			'name' => 'friends',
 			'href' => "friends/{$viewer->username}",
 			'text' => elgg_view_icon('users'),
 			'title' => elgg_echo('friends'),
 			'priority' => 300,
-		));
+			)
+		);
 	}
 }
 
@@ -85,21 +87,25 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 			$isFriend = $user->isFriend();
 
 			// Always emit both to make it super easy to toggle with ajax
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = \ElggMenuItem::factory(
+				array(
 				'name' => 'remove_friend',
 				'href' => elgg_add_action_tokens_to_url("action/friends/remove?friend={$user->guid}"),
 				'text' => elgg_echo('friend:remove'),
 				'section' => 'action',
 				'item_class' => $isFriend ? '' : 'hidden',
-			));
+				)
+			);
 
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = \ElggMenuItem::factory(
+				array(
 				'name' => 'add_friend',
 				'href' => elgg_add_action_tokens_to_url("action/friends/add?friend={$user->guid}"),
 				'text' => elgg_echo('friend:add'),
 				'section' => 'action',
 				'item_class' => $isFriend ? 'hidden' : '',
-			));
+				)
+			);
 		}
 	}
 
@@ -184,12 +190,14 @@ function _elgg_setup_collections_menu() {
 	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		$user = elgg_get_page_owner_entity();
 		
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item(
+			'page', array(
 			'name' => 'friends:view:collections',
 			'text' => elgg_echo('friends:collections'),
 			'href' => "collections/owner/$user->username",
 			'contexts' => array('friends')
-		));
+			)
+		);
 	}
 }
 
@@ -215,15 +223,19 @@ function _elgg_send_friend_notification($event, $type, $object) {
 	/* @var ElggUser $user_two */
 
 	// Notification subject
-	$subject = elgg_echo('friend:newfriend:subject', array(
+	$subject = elgg_echo(
+		'friend:newfriend:subject', array(
 		$user_one->name
-	), $user_two->language);
+		), $user_two->language
+	);
 
 	// Notification body
-	$body = elgg_echo("friend:newfriend:body", array(
+	$body = elgg_echo(
+		"friend:newfriend:body", array(
 		$user_one->name,
 		$user_one->getURL()
-	), $user_two->language);
+		), $user_two->language
+	);
 
 	// Notification params
 	$params = [

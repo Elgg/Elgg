@@ -124,10 +124,12 @@ abstract class ElggEntity extends \ElggData implements
 			return;
 		}
 
-		$metadata_array = elgg_get_metadata(array(
+		$metadata_array = elgg_get_metadata(
+			array(
 			'guid' => $this->guid,
 			'limit' => 0
-		));
+			)
+		);
 
 		$this->attributes['guid'] = "";
 
@@ -340,12 +342,14 @@ abstract class ElggEntity extends \ElggData implements
 			}
 		}
 
-		$md = elgg_get_metadata(array(
+		$md = elgg_get_metadata(
+			array(
 			'guid' => $guid,
 			'metadata_name' => $name,
 			'limit' => 0,
 			'distinct' => false,
-		));
+			)
+		);
 
 		$value = null;
 
@@ -436,16 +440,20 @@ abstract class ElggEntity extends \ElggData implements
 				$access_id = $this->access_id;
 			} elseif ($access_id != ACCESS_PUBLIC) {
 				$access_id = (int)$access_id;
-				elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-					. 'All metadata will be public in 3.0.', '2.3');
+				elgg_deprecated_notice(
+					'Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
+					. 'All metadata will be public in 3.0.', '2.3'
+				);
 			}
 
 			// add new md
 			$result = true;
 			foreach ($value as $value_tmp) {
 				// at this point $value is appended because it was cleared above if needed.
-				$md_id = _elgg_services()->metadataTable->create($this->guid, $name, $value_tmp, $value_type,
-						$owner_guid, $access_id, true);
+				$md_id = _elgg_services()->metadataTable->create(
+					$this->guid, $name, $value_tmp, $value_type,
+					$owner_guid, $access_id, true
+				);
 				if (!$md_id) {
 					return false;
 				}
@@ -960,13 +968,15 @@ abstract class ElggEntity extends \ElggData implements
 		if (is_int($num)) {
 			return $num;
 		} else {
-			return elgg_get_entities(array(
+			return elgg_get_entities(
+				array(
 				'type' => 'object',
 				'subtype' => 'comment',
 				'container_guid' => $this->getGUID(),
 				'count' => true,
 				'distinct' => false,
-			));
+				)
+			);
 		}
 	}
 
@@ -989,13 +999,15 @@ abstract class ElggEntity extends \ElggData implements
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggEntity::getEntitiesFromRelationship takes an options array", 1.9);
-			return elgg_get_entities_from_relationship(array(
+			return elgg_get_entities_from_relationship(
+				array(
 				'relationship' => $options,
 				'relationship_guid' => $this->getGUID(),
 				'inverse_relationship' => $inverse,
 				'limit' => $limit,
 				'offset' => $offset
-			));
+				)
+			);
 		}
 	}
 
@@ -1008,12 +1020,14 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return int|false The number of entities or false on failure
 	 */
 	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
-		return elgg_get_entities_from_relationship(array(
+		return elgg_get_entities_from_relationship(
+			array(
 			'relationship' => $relationship,
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => $inverse_relationship,
 			'count' => true
-		));
+			)
+		);
 	}
 
 	/**
@@ -1485,8 +1499,10 @@ abstract class ElggEntity extends \ElggData implements
 		$allowed_types = elgg_get_config('entity_types');
 		$type = $this->getDatabase()->sanitizeString($this->attributes['type']);
 		if (!in_array($type, $allowed_types)) {
-			throw new \InvalidParameterException('Entity type must be one of the allowed types: '
-					. implode(', ', $allowed_types));
+			throw new \InvalidParameterException(
+				'Entity type must be one of the allowed types: '
+				. implode(', ', $allowed_types)
+			);
 		}
 		
 		$subtype = $this->attributes['subtype'];
@@ -1519,16 +1535,20 @@ abstract class ElggEntity extends \ElggData implements
 		if ($owner_guid) {
 			$owner = $this->getOwnerEntity();
 			if (!$owner) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
-					. " owner $owner_guid could not be loaded.");
+				_elgg_services()->logger->error(
+					"User $user_guid tried to create a ($type, $subtype), but the given"
+					. " owner $owner_guid could not be loaded."
+				);
 				return false;
 			}
 
 			// If different owner than logged in, verify can write to container.
 
 			if ($user_guid != $owner_guid && !$owner->canWriteToContainer(0, $type, $subtype)) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype) with owner"
-					. " $owner_guid, but the user wasn't permitted to write to the owner's container.");
+				_elgg_services()->logger->error(
+					"User $user_guid tried to create a ($type, $subtype) with owner"
+					. " $owner_guid, but the user wasn't permitted to write to the owner's container."
+				);
 				return false;
 			}
 		}
@@ -1537,19 +1557,24 @@ abstract class ElggEntity extends \ElggData implements
 		if ($container_guid) {
 			$container = $this->getContainerEntity();
 			if (!$container) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
-					. " container $container_guid could not be loaded.");
+				_elgg_services()->logger->error(
+					"User $user_guid tried to create a ($type, $subtype), but the given"
+					. " container $container_guid could not be loaded."
+				);
 				return false;
 			}
 
 			if (!$container->canWriteToContainer(0, $type, $subtype)) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but was not"
-					. " permitted to write to container $container_guid.");
+				_elgg_services()->logger->error(
+					"User $user_guid tried to create a ($type, $subtype), but was not"
+					. " permitted to write to container $container_guid."
+				);
 				return false;
 			}
 		}
 
-		$result = _elgg_services()->entityTable->insertRow((object) [
+		$result = _elgg_services()->entityTable->insertRow(
+			(object) [
 			'type' => $type,
 			'subtype_id' => $subtype_id,
 			'owner_guid' => $owner_guid,
@@ -1559,7 +1584,8 @@ abstract class ElggEntity extends \ElggData implements
 			'time_created' => $time_created,
 			'time_updated' => $now,
 			'last_action' => $now,
-		]);
+			]
+		);
 
 		if (!$result) {
 			throw new \IOException("Unable to save new object's base entity information!");
@@ -1642,14 +1668,16 @@ abstract class ElggEntity extends \ElggData implements
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
 		}
 
-		$ret = _elgg_services()->entityTable->updateRow($guid, (object) [
+		$ret = _elgg_services()->entityTable->updateRow(
+			$guid, (object) [
 			'owner_guid' => $owner_guid,
 			'container_guid' => $container_guid,
 			'access_id' => $access_id,
 			'time_created' => $time_created,
 			'time_updated' => $time,
 			'guid' => $guid,
-		]);
+			]
+		);
 
 		elgg_trigger_after_event('update', $this->type, $this);
 
@@ -1882,21 +1910,25 @@ abstract class ElggEntity extends \ElggData implements
 		$old_access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 	
-		$result = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
+		$result = $this->getDatabase()->updateData(
+			"UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'yes'
-			WHERE guid = $guid");
+			WHERE guid = $guid"
+		);
 
 		$this->deleteMetadata('disable_reason');
 		$this->enableMetadata();
 		$this->enableAnnotations();
 
 		if ($recursive) {
-			$disabled_with_it = elgg_get_entities_from_relationship(array(
+			$disabled_with_it = elgg_get_entities_from_relationship(
+				array(
 				'relationship' => 'disabled_with',
 				'relationship_guid' => $guid,
 				'inverse_relationship' => true,
 				'limit' => 0,
-			));
+				)
+			);
 
 			foreach ($disabled_with_it as $e) {
 				$e->enable();
@@ -2241,8 +2273,10 @@ abstract class ElggEntity extends \ElggData implements
 		$view = elgg_view_entity($this, array('full_view' => true));
 		elgg_set_viewtype();
 
-		$tmp[] = new ODDMetaData($uuid . "volatile/renderedentity/", $uuid,
-			'renderedentity', $view, 'volatile');
+		$tmp[] = new ODDMetaData(
+			$uuid . "volatile/renderedentity/", $uuid,
+			'renderedentity', $view, 'volatile'
+		);
 
 		return $tmp;
 	}

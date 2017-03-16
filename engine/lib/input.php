@@ -254,16 +254,20 @@ function input_livesearch_page_handler($page) {
 							$value = $entity->username;
 						}
 
-						$output = elgg_view_list_item($entity, array(
+						$output = elgg_view_list_item(
+							$entity, array(
 							'use_hover' => false,
 							'use_link' => false,
 							'class' => 'elgg-autocomplete-item',
 							'title' => $entity->name, // Default title would be a link
-						));
+							)
+						);
 
-						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+						$icon = elgg_view_entity_icon(
+							$entity, 'tiny', array(
 							'use_hover' => false,
-						));
+							)
+						);
 
 						$result = array(
 							'type' => 'user',
@@ -274,10 +278,12 @@ function input_livesearch_page_handler($page) {
 							'value' => $value,
 							'icon' => $icon,
 							'url' => $entity->getURL(),
-							'html' => elgg_view('input/userpicker/item', array(
+							'html' => elgg_view(
+								'input/userpicker/item', array(
 								'entity' => $entity,
 								'input_name' => $input_name,
-							)),
+								)
+							),
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
 					}
@@ -303,17 +309,21 @@ function input_livesearch_page_handler($page) {
 				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						$output = elgg_view_list_item($entity, array(
+						$output = elgg_view_list_item(
+							$entity, array(
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 							'full_view' => false,
 							'href' => false,
 							'title' => $entity->name, // Default title would be a link
-						));
+							)
+						);
 
-						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+						$icon = elgg_view_entity_icon(
+							$entity, 'tiny', array(
 							'use_hover' => false,
-						));
+							)
+						);
 
 						$result = array(
 							'type' => 'group',
@@ -348,16 +358,20 @@ function input_livesearch_page_handler($page) {
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
 						
-						$output = elgg_view_list_item($entity, array(
+						$output = elgg_view_list_item(
+							$entity, array(
 							'use_hover' => false,
 							'use_link' => false,
 							'class' => 'elgg-autocomplete-item',
 							'title' => $entity->name, // Default title would be a link
-						));
+							)
+						);
 
-						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+						$icon = elgg_view_entity_icon(
+							$entity, 'tiny', array(
 							'use_hover' => false,
-						));
+							)
+						);
 
 						$result = array(
 							'type' => 'user',
@@ -368,10 +382,12 @@ function input_livesearch_page_handler($page) {
 							'value' => $entity->username,
 							'icon' => $icon,
 							'url' => $entity->getURL(),
-							'html' => elgg_view('input/userpicker/item', array(
+							'html' => elgg_view(
+								'input/userpicker/item', array(
 								'entity' => $entity,
 								'input_name' => $input_name,
-							)),
+								)
+							),
 						);
 						$results[$entity->name . rand(1, 100)] = $result;
 					}

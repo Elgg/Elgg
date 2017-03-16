@@ -99,9 +99,11 @@ class ConfigTable {
 	
 		$escaped_name = sanitize_string($name);
 		$escaped_value = sanitize_string(serialize($value));
-		$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}config
+		$result = _elgg_services()->db->insertData(
+			"INSERT INTO {$this->CONFIG->dbprefix}config
 			SET name = '$escaped_name', value = '$escaped_value', site_guid = $site_guid
-			ON DUPLICATE KEY UPDATE value = '$escaped_value'");
+			ON DUPLICATE KEY UPDATE value = '$escaped_value'"
+		);
 
 		_elgg_services()->boot->invalidateCache($site_guid);
 	
@@ -157,8 +159,10 @@ class ConfigTable {
 		}
 	
 		$escaped_name = sanitize_string($name);
-		$result = _elgg_services()->db->getDataRow("SELECT value FROM {$this->CONFIG->dbprefix}config
-			WHERE name = '$escaped_name' AND site_guid = $site_guid");
+		$result = _elgg_services()->db->getDataRow(
+			"SELECT value FROM {$this->CONFIG->dbprefix}config
+			WHERE name = '$escaped_name' AND site_guid = $site_guid"
+		);
 	
 		if ($result) {
 			$result = unserialize($result->value);

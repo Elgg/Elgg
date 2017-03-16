@@ -252,12 +252,14 @@ class RelationshipsTable {
 
 		$guid_col = $inverse_relationship ? "guid_two" : "guid_one";
 
-		$this->db->deleteData("
+		$this->db->deleteData(
+			"
 			DELETE er FROM {$this->db->prefix}entity_relationships AS er
 			$join
 			WHERE $guid_col = $guid
 			$where
-		", $params);
+		", $params
+		);
 
 		return true;
 	}
@@ -337,8 +339,10 @@ class RelationshipsTable {
 
 		$join_column = "e.{$options['relationship_join_on']}";
 
-		$clauses = $this->getEntityRelationshipWhereSql($join_column, $options['relationship'],
-			$options['relationship_guid'], $options['inverse_relationship']);
+		$clauses = $this->getEntityRelationshipWhereSql(
+			$join_column, $options['relationship'],
+			$options['relationship_guid'], $options['inverse_relationship']
+		);
 
 		if ($clauses) {
 			// merge wheres to pass to get_entities()
@@ -351,9 +355,11 @@ class RelationshipsTable {
 			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
 
 			// limit based on time created
-			$time_wheres = $this->entities->getEntityTimeWhereSql('r',
-					$options['relationship_created_time_upper'],
-					$options['relationship_created_time_lower']);
+			$time_wheres = $this->entities->getEntityTimeWhereSql(
+				'r',
+				$options['relationship_created_time_upper'],
+				$options['relationship_created_time_lower']
+			);
 			if ($time_wheres) {
 				$options['wheres'] = array_merge($options['wheres'], array($time_wheres));
 			}

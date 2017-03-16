@@ -94,10 +94,12 @@ class ImageService {
 			$target_size = new Box($max_width, $max_height);
 			$thumbnail = $image->resize($target_size);
 
-			$thumbnail->save($destination, [
+			$thumbnail->save(
+				$destination, [
 				'jpeg_quality' => elgg_extract('jpeg_quality', $params, self::JPEG_QUALITY),
 				'format' => $this->getFileFormat($source, $params),
-			]);
+				]
+			);
 
 			unset($image);
 			unset($thumbnail);

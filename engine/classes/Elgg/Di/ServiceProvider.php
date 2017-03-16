@@ -94,59 +94,78 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 */
 	public function __construct(\Elgg\Config $config) {
 
-		$this->setFactory('classLoader', function(ServiceProvider $c) {
-			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
-			$loader->register();
-			return $loader;
-		});
-
-		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
-			$manager = new \Elgg\AutoloadManager($c->classLoader);
-			if (!$c->config->get('AutoloaderManager_skip_storage')) {
-				$manager->setStorage($c->fileCache);
-				$manager->loadCache();
+		$this->setFactory(
+			'classLoader', function(ServiceProvider $c) {
+				$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
+				$loader->register();
+				return $loader;
 			}
-			return $manager;
-		});
+		);
 
-		$this->setFactory('accessCache', function(ServiceProvider $c) {
-			return new \ElggStaticVariableCache('access');
-		});
+		$this->setFactory(
+			'autoloadManager', function(ServiceProvider $c) {
+				$manager = new \Elgg\AutoloadManager($c->classLoader);
+				if (!$c->config->get('AutoloaderManager_skip_storage')) {
+					$manager->setStorage($c->fileCache);
+					$manager->loadCache();
+				}
+				return $manager;
+			}
+		);
 
-		$this->setFactory('accessCollections', function(ServiceProvider $c) {
-			return new \Elgg\Database\AccessCollections(
-					$c->config, $c->db, $c->entityTable, $c->accessCache, $c->hooks, $c->session, $c->translator);
-		});
+		$this->setFactory(
+			'accessCache', function(ServiceProvider $c) {
+				return new \ElggStaticVariableCache('access');
+			}
+		);
 
-		$this->setFactory('actions', function(ServiceProvider $c) {
-			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto);
-		});
+		$this->setFactory(
+			'accessCollections', function(ServiceProvider $c) {
+				return new \Elgg\Database\AccessCollections(
+					$c->config, $c->db, $c->entityTable, $c->accessCache, $c->hooks, $c->session, $c->translator
+				);
+			}
+		);
+
+		$this->setFactory(
+			'actions', function(ServiceProvider $c) {
+				return new \Elgg\ActionsService($c->config, $c->session, $c->crypto);
+			}
+		);
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
 
-		$this->setFactory('ajax', function(ServiceProvider $c) {
-			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input, $c->amdConfig);
-		});
+		$this->setFactory(
+			'ajax', function(ServiceProvider $c) {
+				return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input, $c->amdConfig);
+			}
+		);
 
-		$this->setFactory('amdConfig', function(ServiceProvider $c) {
-			$obj = new \Elgg\Amd\Config($c->hooks);
-			$obj->setBaseUrl($c->simpleCache->getRoot());
-			return $obj;
-		});
+		$this->setFactory(
+			'amdConfig', function(ServiceProvider $c) {
+				$obj = new \Elgg\Amd\Config($c->hooks);
+				$obj->setBaseUrl($c->simpleCache->getRoot());
+				return $obj;
+			}
+		);
 
-		$this->setFactory('annotations', function(ServiceProvider $c) {
-			return new \Elgg\Database\Annotations($c->db, $c->session, $c->events);
-		});
+		$this->setFactory(
+			'annotations', function(ServiceProvider $c) {
+				return new \Elgg\Database\Annotations($c->db, $c->session, $c->events);
+			}
+		);
 
 		$this->setClassName('autoP', \ElggAutoP::class);
 
-		$this->setFactory('boot', function(ServiceProvider $c) {
-			$boot = new \Elgg\BootService();
-			if ($c->config->getVolatile('enable_profiling')) {
-				$boot->setTimer($c->timer);
+		$this->setFactory(
+			'boot', function(ServiceProvider $c) {
+				$boot = new \Elgg\BootService();
+				if ($c->config->getVolatile('enable_profiling')) {
+					$boot->setTimer($c->timer);
+				}
+				return $boot;
 			}
-			return $boot;
-		});
+		);
 
 		$this->setValue('config', $config);
 
@@ -154,214 +173,281 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('context', \Elgg\Context::class);
 
-		$this->setFactory('crypto', function(ServiceProvider $c) {
-			return new \ElggCrypto($c->siteSecret);
-		});
-
-		$this->setFactory('datalist', function(ServiceProvider $c) {
-			// TODO(ewinslow): Add back memcached support
-			$db = $c->db;
-			$dbprefix = $db->prefix;
-			$pool = new Pool\InMemory();
-			return new \Elgg\Database\Datalist($pool, $db, $c->logger, "{$dbprefix}datalists");
-		});
-
-		$this->setFactory('db', function(ServiceProvider $c) {
-			// gonna need dbprefix from settings
-			$c->config->loadSettingsFile();
-			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
-
-			// we inject the logger in _elgg_engine_boot()
-			$db = new \Elgg\Database($db_config);
-
-			if ($c->config->getVolatile('profiling_sql')) {
-				$db->setTimer($c->timer);
+		$this->setFactory(
+			'crypto', function(ServiceProvider $c) {
+				return new \ElggCrypto($c->siteSecret);
 			}
+		);
 
-			return $db;
-		});
+		$this->setFactory(
+			'datalist', function(ServiceProvider $c) {
+				// TODO(ewinslow): Add back memcached support
+				$db = $c->db;
+				$dbprefix = $db->prefix;
+				$pool = new Pool\InMemory();
+				return new \Elgg\Database\Datalist($pool, $db, $c->logger, "{$dbprefix}datalists");
+			}
+		);
 
-		$this->setFactory('deprecation', function(ServiceProvider $c) {
-			return new \Elgg\DeprecationService($c->logger);
-		});
+		$this->setFactory(
+			'db', function(ServiceProvider $c) {
+				// gonna need dbprefix from settings
+				$c->config->loadSettingsFile();
+				$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
 
-		$this->setFactory('entityCache', function(ServiceProvider $c) {
-			return new \Elgg\Cache\EntityCache($c->session, $c->metadataCache);
-		});
+				// we inject the logger in _elgg_engine_boot()
+				$db = new \Elgg\Database($db_config);
 
-		$this->setFactory('entityPreloader', function(ServiceProvider $c) {
-			return new \Elgg\EntityPreloader($c->entityCache, $c->entityTable);
-		});
+				if ($c->config->getVolatile('profiling_sql')) {
+					$db->setTimer($c->timer);
+				}
 
-		$this->setFactory('entityTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\EntityTable(
-				$c->config,
-				$c->db,
-				$c->entityCache,
-				$c->metadataCache,
-				$c->subtypeTable,
-				$c->events,
-				$c->session,
-				$c->translator,
-				$c->logger
-			);
-		});
+				return $db;
+			}
+		);
 
-		$this->setFactory('events', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('events');
-		});
+		$this->setFactory(
+			'deprecation', function(ServiceProvider $c) {
+				return new \Elgg\DeprecationService($c->logger);
+			}
+		);
 
-		$this->setFactory('externalFiles', function(ServiceProvider $c) {
-			return new \Elgg\Assets\ExternalFiles($c->config->getStorageObject());
-		});
+		$this->setFactory(
+			'entityCache', function(ServiceProvider $c) {
+				return new \Elgg\Cache\EntityCache($c->session, $c->metadataCache);
+			}
+		);
 
-		$this->setFactory('fileCache', function(ServiceProvider $c) {
-			return new \ElggFileCache($c->config->getCachePath() . 'system_cache/');
-		});
+		$this->setFactory(
+			'entityPreloader', function(ServiceProvider $c) {
+				return new \Elgg\EntityPreloader($c->entityCache, $c->entityTable);
+			}
+		);
 
-		$this->setFactory('forms', function(ServiceProvider $c) {
-			return new \Elgg\FormsService($c->views, $c->logger);
-		});
+		$this->setFactory(
+			'entityTable', function(ServiceProvider $c) {
+				return new \Elgg\Database\EntityTable(
+					$c->config,
+					$c->db,
+					$c->entityCache,
+					$c->metadataCache,
+					$c->subtypeTable,
+					$c->events,
+					$c->session,
+					$c->translator,
+					$c->logger
+				);
+			}
+		);
 
-		$this->setFactory('hooks', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('hooks');
-		});
+		$this->setFactory(
+			'events', function(ServiceProvider $c) {
+				return $this->resolveLoggerDependencies('events');
+			}
+		);
 
-		$this->setFactory('iconService', function(ServiceProvider $c) {
-			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable);
-		});
+		$this->setFactory(
+			'externalFiles', function(ServiceProvider $c) {
+				return new \Elgg\Assets\ExternalFiles($c->config->getStorageObject());
+			}
+		);
+
+		$this->setFactory(
+			'fileCache', function(ServiceProvider $c) {
+				return new \ElggFileCache($c->config->getCachePath() . 'system_cache/');
+			}
+		);
+
+		$this->setFactory(
+			'forms', function(ServiceProvider $c) {
+				return new \Elgg\FormsService($c->views, $c->logger);
+			}
+		);
+
+		$this->setFactory(
+			'hooks', function(ServiceProvider $c) {
+				return $this->resolveLoggerDependencies('hooks');
+			}
+		);
+
+		$this->setFactory(
+			'iconService', function(ServiceProvider $c) {
+				return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable);
+			}
+		);
 
 		$this->setClassName('input', \Elgg\Http\Input::class);
 
-		$this->setFactory('imageService', function(ServiceProvider $c) {
-			$imagine = new \Imagine\Gd\Imagine();
-			return new \Elgg\ImageService($imagine, $c->config);
-		});
+		$this->setFactory(
+			'imageService', function(ServiceProvider $c) {
+				$imagine = new \Imagine\Gd\Imagine();
+				return new \Elgg\ImageService($imagine, $c->config);
+			}
+		);
 
-		$this->setFactory('logger', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('logger');
-		});
+		$this->setFactory(
+			'logger', function(ServiceProvider $c) {
+				return $this->resolveLoggerDependencies('logger');
+			}
+		);
 
 		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
-		$this->setFactory('menus', function(ServiceProvider $c) {
-			return new \Elgg\Menu\Service($c->hooks, $c->config);
-		});
-
-		$this->setFactory('metadataCache', function (ServiceProvider $c) {
-			return new \Elgg\Cache\MetadataCache($c->session);
-		});
-
-		$this->setFactory('memcacheStashPool', function(ServiceProvider $c) {
-			if (!$c->config->getVolatile('memcache')) {
-				return null;
+		$this->setFactory(
+			'menus', function(ServiceProvider $c) {
+				return new \Elgg\Menu\Service($c->hooks, $c->config);
 			}
+		);
 
-			$servers = $c->config->getVolatile('memcache_servers');
-			if (!$servers) {
-				return null;
+		$this->setFactory(
+			'metadataCache', function (ServiceProvider $c) {
+				return new \Elgg\Cache\MetadataCache($c->session);
 			}
-			$driver = new \Stash\Driver\Memcache([
-				'servers' => $servers,
-			]);
-			return new \Stash\Pool($driver);
-		});
+		);
 
-		$this->setFactory('metadataTable', function(ServiceProvider $c) {
-			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
-			return new \Elgg\Database\MetadataTable(
-				$c->metadataCache, $c->db, $c->entityTable, $c->events, $c->metastringsTable, $c->session);
-		});
+		$this->setFactory(
+			'memcacheStashPool', function(ServiceProvider $c) {
+				if (!$c->config->getVolatile('memcache')) {
+					return null;
+				}
 
-		$this->setFactory('metastringsTable', function(ServiceProvider $c) {
-			// TODO(ewinslow): Use memcache-based Pool if available...
-			$pool = new Pool\InMemory();
-			return new \Elgg\Database\MetastringsTable($pool, $c->db);
-		});
+				$servers = $c->config->getVolatile('memcache_servers');
+				if (!$servers) {
+					return null;
+				}
+				$driver = new \Stash\Driver\Memcache(
+					[
+					'servers' => $servers,
+					]
+				);
+				return new \Stash\Pool($driver);
+			}
+		);
 
-		$this->setFactory('mutex', function(ServiceProvider $c) {
-			return new \Elgg\Database\Mutex(
-				$c->db,
-				$c->logger
-			);
-		});
+		$this->setFactory(
+			'metadataTable', function(ServiceProvider $c) {
+				// TODO(ewinslow): Use Pool instead of MetadataCache for caching
+				return new \Elgg\Database\MetadataTable(
+					$c->metadataCache, $c->db, $c->entityTable, $c->events, $c->metastringsTable, $c->session
+				);
+			}
+		);
 
-		$this->setFactory('notifications', function(ServiceProvider $c) {
-			// @todo move queue in service provider
-			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
-			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
-			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
-		});
+		$this->setFactory(
+			'metastringsTable', function(ServiceProvider $c) {
+				// TODO(ewinslow): Use memcache-based Pool if available...
+				$pool = new Pool\InMemory();
+				return new \Elgg\Database\MetastringsTable($pool, $c->db);
+			}
+		);
+
+		$this->setFactory(
+			'mutex', function(ServiceProvider $c) {
+				return new \Elgg\Database\Mutex(
+					$c->db,
+					$c->logger
+				);
+			}
+		);
+
+		$this->setFactory(
+			'notifications', function(ServiceProvider $c) {
+				// @todo move queue in service provider
+				$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
+				$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
+				$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
+				return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
+			}
+		);
 
 		$this->setClassName('nullCache', \Elgg\Cache\NullCache::class);
 
-		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
-			$global_cookies_config = $c->config->getCookieConfig();
-			$cookie_config = $global_cookies_config['remember_me'];
-			$cookie_name = $cookie_config['name'];
-			$cookie_token = $c->request->cookies->get($cookie_name, '');
-			return new \Elgg\PersistentLoginService(
-				$c->db, $c->session, $c->crypto, $cookie_config, $cookie_token);
-		});
+		$this->setFactory(
+			'persistentLogin', function(ServiceProvider $c) {
+				$global_cookies_config = $c->config->getCookieConfig();
+				$cookie_config = $global_cookies_config['remember_me'];
+				$cookie_name = $cookie_config['name'];
+				$cookie_token = $c->request->cookies->get($cookie_name, '');
+				return new \Elgg\PersistentLoginService(
+					$c->db, $c->session, $c->crypto, $cookie_config, $cookie_token
+				);
+			}
+		);
 
 		$this->setClassName('passwords', \Elgg\PasswordService::class);
 
-		$this->setFactory('plugins', function(ServiceProvider $c) {
-			$pool = new Pool\InMemory();
-			$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
-			if ($c->config->getVolatile('enable_profiling')) {
-				$plugins->setTimer($c->timer);
+		$this->setFactory(
+			'plugins', function(ServiceProvider $c) {
+				$pool = new Pool\InMemory();
+				$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
+				if ($c->config->getVolatile('enable_profiling')) {
+					$plugins->setTimer($c->timer);
+				}
+				return $plugins;
 			}
-			return $plugins;
-		});
+		);
 
 		$this->setClassName('pluginSettingsCache', \Elgg\Cache\PluginSettingsCache::class);
 
-		$this->setFactory('privateSettings', function(ServiceProvider $c) {
-			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->pluginSettingsCache);
-		});
+		$this->setFactory(
+			'privateSettings', function(ServiceProvider $c) {
+				return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->pluginSettingsCache);
+			}
+		);
 
-		$this->setFactory('publicDb', function(ServiceProvider $c) {
-			return new \Elgg\Application\Database($c->db);
-		});
+		$this->setFactory(
+			'publicDb', function(ServiceProvider $c) {
+				return new \Elgg\Application\Database($c->db);
+			}
+		);
 
-		$this->setFactory('queryCounter', function(ServiceProvider $c) {
-			return new \Elgg\Database\QueryCounter($c->db);
-		}, false);
+		$this->setFactory(
+			'queryCounter', function(ServiceProvider $c) {
+				return new \Elgg\Database\QueryCounter($c->db);
+			}, false
+		);
 
-		$this->setFactory('relationshipsTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
-		});
+		$this->setFactory(
+			'relationshipsTable', function(ServiceProvider $c) {
+				return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
+			}
+		);
 
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
-		$this->setFactory('responseFactory', function(ServiceProvider $c) {
-			if (PHP_SAPI === 'cli') {
-				$transport = new \Elgg\Http\OutputBufferTransport();
-			} else {
-				$transport = new \Elgg\Http\HttpProtocolTransport();
+		$this->setFactory(
+			'responseFactory', function(ServiceProvider $c) {
+				if (PHP_SAPI === 'cli') {
+					$transport = new \Elgg\Http\OutputBufferTransport();
+				} else {
+					$transport = new \Elgg\Http\HttpProtocolTransport();
+				}
+				return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport);
 			}
-			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport);
-		});
+		);
 
-		$this->setFactory('router', function(ServiceProvider $c) {
-			// TODO(evan): Init routes from plugins or cache
-			$router = new \Elgg\Router($c->hooks);
-			if ($c->config->getVolatile('enable_profiling')) {
-				$router->setTimer($c->timer);
+		$this->setFactory(
+			'router', function(ServiceProvider $c) {
+				// TODO(evan): Init routes from plugins or cache
+				$router = new \Elgg\Router($c->hooks);
+				if ($c->config->getVolatile('enable_profiling')) {
+					$router->setTimer($c->timer);
+				}
+				return $router;
 			}
-			return $router;
-		});
+		);
 
-		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
-			return new \Elgg\Application\ServeFileHandler($c->crypto, $c->config);
-		});
+		$this->setFactory(
+			'serveFileHandler', function(ServiceProvider $c) {
+				return new \Elgg\Application\ServeFileHandler($c->crypto, $c->config);
+			}
+		);
 
-		$this->setFactory('session', function(ServiceProvider $c) {
-			$params = $c->config->getCookieConfig()['session'];
-			$options = [
+		$this->setFactory(
+			'session', function(ServiceProvider $c) {
+				$params = $c->config->getCookieConfig()['session'];
+				$options = [
 				// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
 				// constructor, so we must capture and inject it directly.
 				'cache_limiter' => session_cache_limiter(),
@@ -372,41 +458,52 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				'cookie_secure' => $params['secure'],
 				'cookie_httponly' => $params['httponly'],
 				'cookie_lifetime' => $params['lifetime'],
-			];
+				];
 
-			$handler = new \Elgg\Http\DatabaseSessionHandler($c->db);
-			$storage = new NativeSessionStorage($options, $handler);
-			$session = new SymfonySession($storage);
-			return new \ElggSession($session);
-		});
+				$handler = new \Elgg\Http\DatabaseSessionHandler($c->db);
+				$storage = new NativeSessionStorage($options, $handler);
+				$session = new SymfonySession($storage);
+				return new \ElggSession($session);
+			}
+		);
 
 		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
 
-		$this->setFactory('simpleCache', function(ServiceProvider $c) {
-			return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
-		});
+		$this->setFactory(
+			'simpleCache', function(ServiceProvider $c) {
+				return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
+			}
+		);
 
-		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			return new \Elgg\Database\SiteSecret($c->datalist);
-		});
+		$this->setFactory(
+			'siteSecret', function(ServiceProvider $c) {
+				return new \Elgg\Database\SiteSecret($c->datalist);
+			}
+		);
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
 
-		$this->setFactory('subtypeTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\SubtypeTable($c->db);
-		});
-
-		$this->setFactory('systemCache', function (ServiceProvider $c) {
-			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config, $c->datalist);
-			if ($c->config->getVolatile('enable_profiling')) {
-				$cache->setTimer($c->timer);
+		$this->setFactory(
+			'subtypeTable', function(ServiceProvider $c) {
+				return new \Elgg\Database\SubtypeTable($c->db);
 			}
-			return $cache;
-		});
+		);
 
-		$this->setFactory('systemMessages', function(ServiceProvider $c) {
-			return new \Elgg\SystemMessagesService($c->session);
-		});
+		$this->setFactory(
+			'systemCache', function (ServiceProvider $c) {
+				$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config, $c->datalist);
+				if ($c->config->getVolatile('enable_profiling')) {
+					$cache->setTimer($c->timer);
+				}
+				return $cache;
+			}
+		);
+
+		$this->setFactory(
+			'systemMessages', function(ServiceProvider $c) {
+				return new \Elgg\SystemMessagesService($c->session);
+			}
+		);
 
 		$this->setClassName('table_columns', \Elgg\Views\TableColumn\ColumnFactory::class);
 
@@ -414,38 +511,48 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('translator', \Elgg\I18n\Translator::class);
 
-		$this->setFactory('uploads', function(ServiceProvider $c) {
-			return new \Elgg\UploadService($c->request);
-		});
+		$this->setFactory(
+			'uploads', function(ServiceProvider $c) {
+				return new \Elgg\UploadService($c->request);
+			}
+		);
 
-		$this->setFactory('upgrades', function(ServiceProvider $c) {
-			return new \Elgg\UpgradeService(
-				$c->translator,
-				$c->events,
-				$c->hooks,
-				$c->datalist,
-				$c->logger,
-				$c->mutex
-			);
-		});
+		$this->setFactory(
+			'upgrades', function(ServiceProvider $c) {
+				return new \Elgg\UpgradeService(
+					$c->translator,
+					$c->events,
+					$c->hooks,
+					$c->datalist,
+					$c->logger,
+					$c->mutex
+				);
+			}
+		);
 
-		$this->setFactory('userCapabilities', function(ServiceProvider $c) {
-			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
-		});
+		$this->setFactory(
+			'userCapabilities', function(ServiceProvider $c) {
+				return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
+			}
+		);
 
-		$this->setFactory('usersTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\UsersTable(
-				$c->config,
-				$c->db,
-				$c->entityTable,
-				$c->entityCache,
-				$c->events
-			);
-		});
+		$this->setFactory(
+			'usersTable', function(ServiceProvider $c) {
+				return new \Elgg\Database\UsersTable(
+					$c->config,
+					$c->db,
+					$c->entityTable,
+					$c->entityCache,
+					$c->events
+				);
+			}
+		);
 
-		$this->setFactory('views', function(ServiceProvider $c) {
-			return new \Elgg\ViewsService($c->hooks, $c->logger);
-		});
+		$this->setFactory(
+			'views', function(ServiceProvider $c) {
+				return new \Elgg\ViewsService($c->hooks, $c->logger);
+			}
+		);
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
 

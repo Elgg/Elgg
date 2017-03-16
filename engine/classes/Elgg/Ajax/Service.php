@@ -125,9 +125,11 @@ class Service {
 		}
 
 		$api_response = new Response();
-		$api_response->setData((object)[
+		$api_response->setData(
+			(object)[
 					'value' => $output,
-		]);
+			]
+		);
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
 		$response = $this->buildHttpResponse($api_response);
 

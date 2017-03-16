@@ -81,9 +81,11 @@ class MetastringsTable {
 
 		$missing = array_fill_keys($string_keys, true);
 
-		$set_element = array_map(function ($string) {
-			return "BINARY '" . $this->db->sanitizeString($string) . "'";
-		}, $string_keys);
+		$set_element = array_map(
+			function ($string) {
+				return "BINARY '" . $this->db->sanitizeString($string) . "'";
+			}, $string_keys
+		);
 
 		$set = implode(',', $set_element);
 
@@ -111,32 +113,34 @@ class MetastringsTable {
 	 */
 	private function getIdCaseSensitive($string) {
 		$string = (string) $string;
-		return $this->cache->get($string, function() use ($string) {
+		return $this->cache->get(
+			$string, function() use ($string) {
 
-			$memcache = _elgg_get_memcache('metastrings_memcache');
+				$memcache = _elgg_get_memcache('metastrings_memcache');
 
-			// Stash can't handle arbitrary keys
-			$result = $memcache->load(md5($string));
-			if ($result !== false) {
-				return $result;
-			}
+				// Stash can't handle arbitrary keys
+				$result = $memcache->load(md5($string));
+				if ($result !== false) {
+					return $result;
+				}
 
-			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY :string";
-			$params = [
+				$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY :string";
+				$params = [
 				':string' => $string,
-			];
+				];
 
-			$result = $this->db->getDataRow($query, null, $params);
-			if ($result) {
-				$id = $result->id;
-			} else {
-				$id = $this->add($string);
+				$result = $this->db->getDataRow($query, null, $params);
+				if ($result) {
+					$id = $result->id;
+				} else {
+					$id = $this->add($string);
+				}
+
+				$memcache->save(md5($string), $id);
+
+				return $id;
 			}
-
-			$memcache->save(md5($string), $id);
-
-			return $id;
-		});
+		);
 	}
 
 	/**

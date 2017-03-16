@@ -358,8 +358,10 @@ function _elgg_get_guid_based_where_sql($column, $guids) {
  */
 function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
 		$time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
-	return _elgg_services()->entityTable->getEntityTimeWhereSql($table,
-		$time_created_upper, $time_created_lower, $time_updated_upper, $time_updated_lower);
+	return _elgg_services()->entityTable->getEntityTimeWhereSql(
+		$table,
+		$time_created_upper, $time_created_lower, $time_updated_upper, $time_updated_lower
+	);
 }
 
 /**
@@ -497,7 +499,8 @@ function _elgg_get_entity_attribute_where_sql(array $options = array()) {
 function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0,
 		$order_by = 'time_created') {
 	return _elgg_services()->entityTable->getDates(
-		$type, $subtype, $container_guid, $site_guid, $order_by);
+		$type, $subtype, $container_guid, $site_guid, $order_by
+	);
 }
 
 /**

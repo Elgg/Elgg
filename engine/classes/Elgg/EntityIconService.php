@@ -192,10 +192,12 @@ class EntityIconService {
 		$x2 = (int) elgg_extract('x2', $coords);
 		$y2 = (int) elgg_extract('y2', $coords);
 
-		$file = $this->hooks->trigger("entity:$type:prepare", $entity_type, [
+		$file = $this->hooks->trigger(
+			"entity:$type:prepare", $entity_type, [
 			'entity' => $entity,
 			'file' => $file,
-				], $file);
+			], $file
+		);
 
 		if (!$file instanceof ElggFile || !$file->exists() || $file->getSimpleType() !== 'image') {
 			$this->logger->error('Source file passed to ' . __METHOD__ . ' can not be resolved to a valid image');
@@ -217,13 +219,15 @@ class EntityIconService {
 					$entity->y2 = $y2;
 				}
 			}
-			$this->hooks->trigger("entity:$type:saved", $entity->getType(), [
+			$this->hooks->trigger(
+				"entity:$type:saved", $entity->getType(), [
 				'entity' => $entity,
 				'x1' => $x1,
 				'y1' => $y1,
 				'x2' => $x2,
 				'y2' => $y2,
-			]);
+				]
+			);
 			return true;
 		};
 
@@ -232,14 +236,16 @@ class EntityIconService {
 			return false;
 		};
 
-		$created = $this->hooks->trigger("entity:$type:save", $entity_type, [
+		$created = $this->hooks->trigger(
+			"entity:$type:save", $entity_type, [
 			'entity' => $entity,
 			'file' => $file,
 			'x1' => $x1,
 			'y1' => $y1,
 			'x2' => $x2,
 			'y2' => $y2,
-				], false);
+			], false
+		);
 
 		if ($created === true) {
 			return $success();
@@ -280,8 +286,10 @@ class EntityIconService {
 			$resize_params = array_merge($opts, $coords);
 			
 			if (!_elgg_services()->imageService->resize($source, $destination, $resize_params)) {
-				$this->logger->error("Failed to create {$size} icon from
-					{$file->getFilenameOnFilestore()} with coords [{$x1}, {$y1}],[{$x2}, {$y2}]");
+				$this->logger->error(
+					"Failed to create {$size} icon from
+					{$file->getFilenameOnFilestore()} with coords [{$x1}, {$y1}],[{$x2}, {$y2}]"
+				);
 				return $fail();
 			}
 		}
@@ -333,9 +341,11 @@ class EntityIconService {
 	 * @return bool
 	 */
 	public function deleteIcon(ElggEntity $entity, $type = 'icon') {
-		$delete = $this->hooks->trigger("entity:$type:delete", $entity->getType(), [
+		$delete = $this->hooks->trigger(
+			"entity:$type:delete", $entity->getType(), [
 			'entity' => $entity,
-				], true);
+			], true
+		);
 
 		if ($delete === false) {
 			return;
@@ -449,13 +459,17 @@ class EntityIconService {
 		}
 
 		if (!is_array($sizes)) {
-			throw new InvalidParameterException("The icon size configuration for image type '$type' " .
-				"must be an associative array of image size names and their properties");
+			throw new InvalidParameterException(
+				"The icon size configuration for image type '$type' " .
+				"must be an associative array of image size names and their properties"
+			);
 		}
 
 		if (empty($sizes)) {
-			$this->logger->error("Failed to find size configuration for image of type '$type' for entity type " .
-				"'$entity_type'. Use the 'entity:$type:sizes, $entity_type' hook to define the icon sizes");
+			$this->logger->error(
+				"Failed to find size configuration for image of type '$type' for entity type " .
+				"'$entity_type'. Use the 'entity:$type:sizes, $entity_type' hook to define the icon sizes"
+			);
 
 		}
 

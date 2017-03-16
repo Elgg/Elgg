@@ -100,10 +100,12 @@ class FormsService {
 
 			if (!empty($body)) {
 				// Grab the footer if one was set during form rendering
-				$body .= $this->views->renderView('elements/forms/footer', [
+				$body .= $this->views->renderView(
+					'elements/forms/footer', [
 					'footer' => $this->getFooter(),
 					'action_name' => $action,
-				]);
+					]
+				);
 			}
 			
 			$this->rendering = false;
@@ -126,8 +128,10 @@ class FormsService {
 	public function setFooter($footer = '') {
 
 		if (!$this->rendering) {
-			$this->logger->error('Form footer can only be set and retrieved during form rendering, '
-					. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+			$this->logger->error(
+				'Form footer can only be set and retrieved during form rendering, '
+				. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)'
+			);
 			return false;
 		}
 
@@ -141,8 +145,10 @@ class FormsService {
 	 */
 	public function getFooter() {
 		if (!$this->rendering) {
-			$this->logger->error('Form footer can only be set and retrieved during form rendering, '
-					. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)');
+			$this->logger->error(
+				'Form footer can only be set and retrieved during form rendering, '
+				. 'anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)'
+			);
 			return false;
 		}
 

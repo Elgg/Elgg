@@ -207,7 +207,8 @@ function elgg_get_entities_from_relationship($options) {
 function elgg_get_entity_relationship_where_sql($column, $relationship = null,
 		$relationship_guid = null, $inverse_relationship = false) {
 	return _elgg_services()->relationshipsTable->getEntityRelationshipWhereSql(
-		$column, $relationship, $relationship_guid, $inverse_relationship);
+		$column, $relationship, $relationship_guid, $inverse_relationship
+	);
 }
 
 /**

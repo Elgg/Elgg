@@ -381,12 +381,14 @@ class ElggPlugin extends \ElggObject {
 		}
 		
 		// Hook to validate setting
-		$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
+		$value = elgg_trigger_plugin_hook(
+			'setting', 'plugin', array(
 			'plugin_id' => $this->getID(),
 			'plugin' => $this,
 			'name' => $name,
 			'value' => $value,
-		), $value);
+			), $value
+		);
 		
 		return $this->setPrivateSetting($name, $value);
 	}
@@ -528,13 +530,15 @@ class ElggPlugin extends \ElggObject {
 
 		// Hook to validate setting
 		// note: this doesn't pass the namespaced name
-		$value = _elgg_services()->hooks->trigger('usersetting', 'plugin', array(
+		$value = _elgg_services()->hooks->trigger(
+			'usersetting', 'plugin', array(
 			'user' => $user,
 			'plugin' => $this,
 			'plugin_id' => $this->getID(),
 			'name' => $name,
 			'value' => $value
-		), $value);
+			), $value
+		);
 
 		// set the namespaced name.
 		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
@@ -731,8 +735,7 @@ class ElggPlugin extends \ElggObject {
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
 			if ($this->canReadFile('activate.php')) {
-				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
-						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
+				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES | ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
 
 				$this->start($flags);
 
@@ -780,13 +783,17 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		if (!empty($dependents)) {
-			$list = array_map(function(\ElggPlugin $plugin) {
-				$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getManifest()->getID());
-				return elgg_view('output/url', [
-					'text' => $plugin->getManifest()->getName(),
-					'href' => "#$css_id",
-				]);
-			}, $dependents);
+			$list = array_map(
+				function(\ElggPlugin $plugin) {
+					$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getManifest()->getID());
+					return elgg_view(
+						'output/url', [
+						'text' => $plugin->getManifest()->getName(),
+						'href' => "#$css_id",
+						]
+					);
+				}, $dependents
+			);
 			$name = $this->getManifest()->getName();
 			$list = implode(', ', $list);
 			$this->errorMsg = elgg_echo('ElggPlugin:Dependencies:ActiveDependent', [$name, $list]);
@@ -904,16 +911,20 @@ class ElggPlugin extends \ElggObject {
 		$filepath = "$this->path/$filename";
 
 		if (!$this->canReadFile($filename)) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotIncludeFile',
-							array($filename, $this->getID(), $this->guid, $this->path));
+			$msg = _elgg_services()->translator->translate(
+				'ElggPlugin:Exception:CannotIncludeFile',
+				array($filename, $this->getID(), $this->guid, $this->path)
+			);
 			throw new \PluginException($msg);
 		}
 
 		try {
 			$ret = include $filepath;
 		} catch (Exception $e) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
-				array($filename, $this->getID(), $this->guid, $this->path));
+			$msg = _elgg_services()->translator->translate(
+				'ElggPlugin:Exception:IncludeFileThrew',
+				array($filename, $this->getID(), $this->guid, $this->path)
+			);
 			throw new \PluginException($msg, 0, $e);
 		}
 

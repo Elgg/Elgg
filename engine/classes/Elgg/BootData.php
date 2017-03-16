@@ -59,21 +59,25 @@ class BootData {
 	public function populate(\stdClass $config, Database $db, EntityTable $entities, Plugins $plugins) {
 		// get datalists
 		// do not store site key in cache. The others we've already fetched.
-		$rows = $db->getData("
+		$rows = $db->getData(
+			"
 			SELECT *
 			FROM {$db->prefix}datalists
 			WHERE `name` NOT IN ('__site_secret__', 'default_site', 'dataroot')
-		");
+		"
+		);
 		$this->datalist_cache = new InMemory();
 		foreach ($rows as $row) {
 			$this->datalist_cache->put($row->name, $row->value);
 		}
 
 		// get subtypes
-		$rows = $db->getData("
+		$rows = $db->getData(
+			"
 			SELECT *
 			FROM {$db->prefix}entity_subtypes
-		");
+		"
+		);
 		foreach ($rows as $row) {
 			$this->subtype_data[$row->id] = $row;
 		}
@@ -85,11 +89,13 @@ class BootData {
 		}
 
 		// get config
-		$rows = $db->getData("
+		$rows = $db->getData(
+			"
 			SELECT *
 			FROM {$db->prefix}config
 			WHERE site_guid = {$config->site_guid}
-		");
+		"
+		);
 		foreach ($rows as $row) {
 			$this->config_values[$row->name] = unserialize($row->value);
 		}
@@ -103,9 +109,11 @@ class BootData {
 		}
 
 		// find GUIDs with not too many private settings
-		$guids = array_map(function (\ElggPlugin $plugin) {
-			return $plugin->guid;
-		}, $this->active_plugins);
+		$guids = array_map(
+			function (\ElggPlugin $plugin) {
+				return $plugin->guid;
+			}, $this->active_plugins
+		);
 
 		// find plugin GUIDs with not too many settings
 		$limit = 40;
@@ -119,23 +127,27 @@ class BootData {
 			GROUP BY entity_guid
 			HAVING COUNT(*) > $limit
 		";
-		$unsuitable_guids = $db->getData($sql, function ($row) {
-			return (int)$row->entity_guid;
-		});
+		$unsuitable_guids = $db->getData(
+			$sql, function ($row) {
+				return (int)$row->entity_guid;
+			}
+		);
 		$guids = array_values($guids);
 		$guids = array_diff($guids, $unsuitable_guids);
 
 		if ($guids) {
 			// get the settings
 			$set = implode(',', $guids);
-			$rows = $db->getData("
+			$rows = $db->getData(
+				"
 				SELECT entity_guid, `name`, `value`
 				FROM {$db->prefix}private_settings
 				WHERE entity_guid IN ($set)
 				  AND name NOT LIKE 'plugin:user_setting:%'
 				  AND name NOT LIKE 'elgg:internal:%'
 				ORDER BY entity_guid
-			");
+			"
+			);
 			// make sure we show all entities as loaded
 			$this->plugin_settings = array_fill_keys($guids, []);
 			foreach ($rows as $i => $row) {

@@ -60,6 +60,7 @@ tmtags
 Thumbs.db
 Desktop.ini
 npm-debug.log
+phpcbf-fixed.diff
 
 # Codio.com
 startup.sh

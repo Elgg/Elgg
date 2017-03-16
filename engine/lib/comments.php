@@ -43,9 +43,11 @@ function _elgg_comments_page_handler($segments) {
 	switch ($page) {
 
 		case 'edit':
-			echo elgg_view_resource('comments/edit', [
+			echo elgg_view_resource(
+				'comments/edit', [
 				'guid' => elgg_extract(1, $segments),
-			]);
+				]
+			);
 			return true;
 			break;
 
@@ -96,13 +98,15 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	}
 
 	// this won't work with threaded comments, but core doesn't support that yet
-	$count = elgg_get_entities([
+	$count = elgg_get_entities(
+		[
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $container->guid,
 		'count' => true,
 		'wheres' => ["e.guid < " . (int)$comment->guid],
-	]);
+		]
+	);
 	$limit = (int)get_input('limit');
 	if (!$limit) {
 		$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
@@ -112,9 +116,11 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 		$offset = null;
 	}
 
-	$url = elgg_http_add_url_query_elements($container->getURL(), [
+	$url = elgg_http_add_url_query_elements(
+		$container->getURL(), [
 		'offset' => $offset,
-	]);
+		]
+	);
 	
 	// make sure there's only one fragment (#)
 	$parts = parse_url($url);

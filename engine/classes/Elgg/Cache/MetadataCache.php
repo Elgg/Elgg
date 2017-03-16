@@ -154,10 +154,12 @@ class MetadataCache {
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC, n_table.id ASC',
 
 			// @todo don't know why this is necessary
-			'wheres' => array(_elgg_get_access_where_sql(array(
+			'wheres' => array(_elgg_get_access_where_sql(
+				array(
 				'table_alias' => 'n_table',
 				'guid_column' => 'entity_guid',
-			))),
+				)
+			)),
 		);
 		$data = _elgg_services()->metadataTable->getAll($options);
 

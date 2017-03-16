@@ -67,11 +67,15 @@ class ElggAnnotation extends \ElggExtender {
 	 */
 	public function save() {
 		if ($this->id > 0) {
-			return update_annotation($this->id, $this->name, $this->value, $this->value_type,
-				$this->owner_guid, $this->access_id);
+			return update_annotation(
+				$this->id, $this->name, $this->value, $this->value_type,
+				$this->owner_guid, $this->access_id
+			);
 		} else {
-			$this->id = create_annotation($this->entity_guid, $this->name, $this->value,
-				$this->value_type, $this->owner_guid, $this->access_id);
+			$this->id = create_annotation(
+				$this->entity_guid, $this->name, $this->value,
+				$this->value_type, $this->owner_guid, $this->access_id
+			);
 
 			if (!$this->id) {
 				throw new \IOException("Unable to save new " . get_class());

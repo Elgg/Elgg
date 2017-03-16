@@ -184,10 +184,12 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function validateType($id, $context = null, \ElggEntity $container = null) {
-		$types = $this->getTypes([
+		$types = $this->getTypes(
+			[
 			'context' => $context,
 			'container' => $container,
-		]);
+			]
+		);
 		$found = array_key_exists($id, $types);
 		
 		if (!$found && ($context === null)) {
@@ -219,10 +221,12 @@ class WidgetsService {
 	 * @since 2.2.0
 	 */
 	public function getNameById($id, $context = '', \ElggEntity $container = null) {
-		$types = $this->getTypes([
+		$types = $this->getTypes(
+			[
 			'context' => $context,
 			'container' => $container,
-		]);
+			]
+		);
 		if (isset($types[$id])) {
 			return $types[$id]->name;
 		}

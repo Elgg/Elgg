@@ -103,17 +103,23 @@ final class Fly implements Directory {
 			$contents = [];
 		}
 
-		$contents = array_filter($contents, function ($metadata) use ($types) {
-			return in_array($metadata['type'], $types);
-		});
-
-		return Collection\InMemory::fromArray(array_map(function ($metadata) {
-			if ($metadata['type'] === 'file') {
-				return new File($this, $metadata['path']);
+		$contents = array_filter(
+			$contents, function ($metadata) use ($types) {
+				return in_array($metadata['type'], $types);
 			}
+		);
 
-			return new self($this->fs, $this->local_path, $metadata['path']);
-		}, $contents));
+		return Collection\InMemory::fromArray(
+			array_map(
+				function ($metadata) {
+					if ($metadata['type'] === 'file') {
+						return new File($this, $metadata['path']);
+					}
+
+					return new self($this->fs, $this->local_path, $metadata['path']);
+				}, $contents
+			)
+		);
 	}
 
 	/** @inheritDoc */

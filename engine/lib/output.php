@@ -158,9 +158,11 @@ function elgg_format_attributes(array $attrs = array()) {
 		}
 
 		// Check if array contains non-scalar values and bail if so
-		$filtered_val = array_filter($val, function($e) {
-			return is_scalar($e);
-		});
+		$filtered_val = array_filter(
+			$val, function($e) {
+				return is_scalar($e);
+			}
+		);
 
 		if (count($val) != count($filtered_val)) {
 			continue;
@@ -235,10 +237,12 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
 		$is_void = $options['is_void'];
 	} else {
 		// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
-		$is_void = in_array(strtolower($tag_name), array(
+		$is_void = in_array(
+			strtolower($tag_name), array(
 			'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
 			'meta', 'param', 'source', 'track', 'wbr'
-		));
+			)
+		);
 	}
 
 	if (!empty($options['encode_text'])) {

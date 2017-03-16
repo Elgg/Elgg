@@ -299,8 +299,10 @@ function check_rate_limit_exceeded($user_guid) {
  */
 function elgg_set_cookie(\ElggCookie $cookie) {
 	if (elgg_trigger_event('init:cookie', $cookie->name, $cookie)) {
-		return setcookie($cookie->name, $cookie->value, $cookie->expire, $cookie->path,
-						$cookie->domain, $cookie->secure, $cookie->httpOnly);
+		return setcookie(
+			$cookie->name, $cookie->value, $cookie->expire, $cookie->path,
+			$cookie->domain, $cookie->secure, $cookie->httpOnly
+		);
 	}
 	return false;
 }

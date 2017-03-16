@@ -352,12 +352,14 @@ class ElggUser extends \ElggEntity
 		}
 
 		if ($create_river_item) {
-			elgg_create_river_item(array(
+			elgg_create_river_item(
+				array(
 				'view' => 'river/relationship/friend/create',
 				'action_type' => 'friend',
 				'subject_guid' => $this->guid,
 				'object_guid' => $friend_guid,
-			));
+				)
+			);
 		}
 
 		return true;
@@ -437,14 +439,16 @@ class ElggUser extends \ElggEntity
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getFriends takes an options array", 1.9);
-			return elgg_get_entities_from_relationship(array(
+			return elgg_get_entities_from_relationship(
+				array(
 				'relationship' => 'friend',
 				'relationship_guid' => $this->guid,
 				'type' => 'user',
 				'subtype' => $options,
 				'limit' => $limit,
 				'offset' => $offset,
-			));
+				)
+			);
 		}
 	}
 
@@ -469,14 +473,16 @@ class ElggUser extends \ElggEntity
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getFriendsOf takes an options array", 1.9);
-			return elgg_get_entities_from_relationship(array(
+			return elgg_get_entities_from_relationship(
+				array(
 				'relationship' => 'friend',
 				'relationship_guid' => $this->guid,
 				'type' => 'user',
 				'subtype' => $options,
 				'limit' => $limit,
 				'offset' => $offset,
-			));
+				)
+			);
 		}
 	}
 
@@ -530,13 +536,15 @@ class ElggUser extends \ElggEntity
 			return elgg_get_entities($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getObjects takes an options array", 1.9);
-			return elgg_get_entities(array(
+			return elgg_get_entities(
+				array(
 				'type' => 'object',
 				'subtype' => $options,
 				'owner_guid' => $this->getGUID(),
 				'limit' => $limit,
 				'offset' => $offset
-			));
+				)
+			);
 		}
 	}
 
@@ -561,7 +569,8 @@ class ElggUser extends \ElggEntity
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getFriendsObjects takes an options array", 1.9);
-			return elgg_get_entities_from_relationship(array(
+			return elgg_get_entities_from_relationship(
+				array(
 				'type' => 'object',
 				'subtype' => $options,
 				'limit' => $limit,
@@ -569,7 +578,8 @@ class ElggUser extends \ElggEntity
 				'relationship' => 'friend',
 				'relationship_guid' => $this->getGUID(),
 				'relationship_join_on' => 'container_guid',
-			));
+				)
+			);
 		}
 	}
 
@@ -628,11 +638,13 @@ class ElggUser extends \ElggEntity
 	 * @deprecated 1.9 Use toObject()
 	 */
 	public function getExportableValues() {
-		return array_merge(parent::getExportableValues(), array(
+		return array_merge(
+			parent::getExportableValues(), array(
 			'name',
 			'username',
 			'language',
-		));
+			)
+		);
 	}
 
 	/**

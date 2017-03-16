@@ -173,8 +173,12 @@ class ElggPluginManifest {
 		}
 
 		if (!$manifest_obj) {
-			throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidManifest',
-						array($this->getPluginID())));
+			throw new \PluginException(
+				_elgg_services()->translator->translate(
+					'PluginException:InvalidManifest',
+					array($this->getPluginID())
+				)
+			);
 		}
 
 		// set manifest api version
@@ -199,13 +203,21 @@ class ElggPluginManifest {
 		if ($class_exists) {
 			$this->parser = new $parser_class_name($manifest_obj, $this);
 		} else {
-			throw new \PluginException(_elgg_services()->translator->translate('PluginException:NoAvailableParser',
-							array($this->apiVersion, $this->getPluginID())));
+			throw new \PluginException(
+				_elgg_services()->translator->translate(
+					'PluginException:NoAvailableParser',
+					array($this->apiVersion, $this->getPluginID())
+				)
+			);
 		}
 
 		if (!$this->parser->parse()) {
-			throw new \PluginException(_elgg_services()->translator->translate('PluginException:ParserError',
-						array($this->apiVersion, $this->getPluginID())));
+			throw new \PluginException(
+				_elgg_services()->translator->translate(
+					'PluginException:ParserError',
+					array($this->apiVersion, $this->getPluginID())
+				)
+			);
 		}
 	}
 
