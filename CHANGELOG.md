@@ -1,3 +1,36 @@
+<a name="2.3.2"></a>
+### 2.3.2  (2017-03-16)
+
+#### Contributors
+
+* Steve Clay (5)
+* Ismayil Khayredinov (1)
+* Jerôme Bakker (1)
+* Matt Beckett (1)
+
+#### Performance
+
+* **db:** improved performance of disable/delete of an entity ([5adf2ecf](https://github.com/Elgg/Elgg/commit/5adf2ecfcb211cc473beadd06d83dbf7da558f14))
+
+
+#### Documentation
+
+* **security:** explains current password hashing ([d3affbd9](https://github.com/Elgg/Elgg/commit/d3affbd9287c197daba58b26d45bdd086a90f552), closes [#10778](https://github.com/Elgg/Elgg/issues/10778))
+
+
+#### Bug Fixes
+
+* **install:** explicitly allow .well-known in rewrite rules ([bb35cb9c](https://github.com/Elgg/Elgg/commit/bb35cb9c317c1176542b76592c7e70805a91b9d9))
+* **js:** make sure elgg.forward() always reloads the page ([c42b9c9c](https://github.com/Elgg/Elgg/commit/c42b9c9c8fda8508300db347ee6399a75a87eaf7))
+* **output:** elgg_normalize_url() again handles multibyte chars and spaces ([62bf31c0](https://github.com/Elgg/Elgg/commit/62bf31c0ccdaab549a7e585a4412443e09821db3), closes [#10771](https://github.com/Elgg/Elgg/issues/10771))
+* **twitter_api:** do not feed remote URLs to icon resize API ([bad30edc](https://github.com/Elgg/Elgg/commit/bad30edca34f09d5ce1f8a0d95d717c0f369964d))
+
+
+#### Deprecations
+
+* **logging:** removes warnings about metadata/annotation value casting ([97b2b51f](https://github.com/Elgg/Elgg/commit/97b2b51fc7bd049c5c8b66579a1921ae1ff84ee3), closes [#10749](https://github.com/Elgg/Elgg/issues/10749))
+
+
 <a name="2.3.1"></a>
 ### 2.3.1  (2017-02-14)
 
