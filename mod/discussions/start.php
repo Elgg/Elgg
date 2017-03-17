@@ -287,8 +287,10 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 		if ($object->canWriteToContainer(0, 'object', 'discussion_reply')) {
 				$options = array(
 				'name' => 'reply',
+				'parent_name' => 'actions',
 				'href' => "#discussion-reply-{$object->guid}",
-				'text' => elgg_view_icon('speech-bubble'),
+				'text' => elgg_echo('reply'),
+				'icon' => 'speech-bubble',
 				'title' => elgg_echo('reply:this'),
 				'rel' => 'toggle',
 				'priority' => 50,
@@ -551,10 +553,6 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-
 	// Reply has the same access as the topic so no need to view it
 	$remove = array('access');
 
@@ -564,14 +562,18 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	if ($reply->canEdit() && !elgg_in_context('activity')) {
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'edit',
+			'parent_name' => 'actions',
 			'text' => elgg_echo('edit'),
+			'icon' => 'pencil',
 			'href' => "discussion/reply/edit/{$reply->guid}",
 			'priority' => 150,
 		));
 
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'delete',
+			'parent_name' => 'actions',
 			'text' => elgg_view_icon('delete'),
+			'icon' => 'delete',
 			'href' => "action/discussion/reply/delete?guid={$reply->guid}",
 			'priority' => 150,
 			'is_action' => true,

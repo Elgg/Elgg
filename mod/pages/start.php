@@ -237,9 +237,6 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
  * Add links/info to entity menu particular to pages plugin
  */
 function pages_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
 
 	elgg_load_library('elgg:pages');
 	$entity = $params['entity'];
@@ -261,6 +258,8 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 
 	$options = array(
 		'name' => 'history',
+		'parent_name' => 'actions',
+		'icon' => 'history',
 		'text' => elgg_echo('pages:history'),
 		'href' => "pages/history/$entity->guid",
 		'priority' => 150,

@@ -546,6 +546,12 @@
 	color: #5097cf;
 	text-decoration: none;
 }
+
+.elgg-menu-entity .elgg-menu-item-actions .elgg-anchor-label,
+.elgg-menu-annotation .elgg-menu-item-actions .elgg-anchor-label,
+.elgg-menu-river .elgg-menu-item-actions .elgg-anchor-label {
+    display: none;
+}
 /* ***************************************
 	OWNER BLOCK
 *************************************** */
@@ -711,19 +717,5 @@
 	.elgg-menu-site-more > li > a:hover {
 		background-color: #60B8F7;
 		color: #FFF;
-	}
-}
-
-@media (max-width: 600px) {
-	.elgg-menu-entity,
-	.elgg-menu-annotation,
-	.elgg-menu-river {
-		margin-left: 0;
-	}
-	.elgg-menu-entity > li,
-	.elgg-menu-annotation > li,
-	.elgg-menu-river > li {
-		margin-left: 0;
-		margin-right: 15px;
 	}
 }

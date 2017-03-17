@@ -43,16 +43,13 @@ if ($blog->comments_on != 'Off') {
 
 $subtitle = "$by_line $comments_link $categories";
 
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', array(
-		'entity' => $vars['entity'],
-		'handler' => 'blog',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	));
-}
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
+	'handler' => 'blog',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+));
+
 
 if ($full) {
 

@@ -354,9 +354,6 @@ function groups_activity_owner_block_menu($hook, $type, $return, $params) {
  * Add links/info to entity menu particular to group entities
  */
 function groups_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
 
 	/* @var ElggGroup $entity */
 	$entity = $params['entity'];
@@ -404,6 +401,8 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'feature',
+			'parent_name' => 'actions',
+			'icon' => 'star',
 			'text' => elgg_echo("groups:makefeatured"),
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=feature"),
 			'priority' => 300,
@@ -413,6 +412,8 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'unfeature',
+			'parent_name' => 'actions',
+			'icon' => 'star-half',
 			'text' => elgg_echo("groups:makeunfeatured"),
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=unfeature"),
 			'priority' => 300,
@@ -447,6 +448,8 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
 			$return[] = ElggMenuItem::factory([
 				'name' => 'removeuser',
+				'parent_name' => 'actions',
+				'icon' => 'user-times',
 				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
 				'text' => elgg_echo('groups:removeuser'),
 				'confirm' => true,

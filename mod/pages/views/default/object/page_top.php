@@ -69,25 +69,20 @@ if ($comments_count != 0 && !$revision) {
 
 $subtitle = "$editor_text $comments_link $categories";
 
-$metadata = '';
-// do not show the metadata and controls in widget view
-if (!elgg_in_context('widgets')) {
-	// If we're looking at a revision, display annotation menu
-	if ($revision) {
-		$metadata = elgg_view_menu('annotation', array(
-			'annotation' => $annotation,
-			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz float-alt',
-		));
-	} else {
-		// Regular entity menu
-		$metadata = elgg_view_menu('entity', array(
-			'entity' => $vars['entity'],
-			'handler' => 'pages',
-			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz',
-		));
-	}
+if ($revision) {
+	$metadata = elgg_view_menu('annotation', array(
+		'annotation' => $annotation,
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz float-alt',
+	));
+} else {
+	// Regular entity menu
+	$metadata = elgg_view_menu('entity', array(
+		'entity' => $vars['entity'],
+		'handler' => 'pages',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	));
 }
 
 if ($full) {
