@@ -619,8 +619,9 @@ function _elgg_filestore_move_icons($event, $type, $entity) {
 			// there is already a new icon
 			// just removing the old one
 			$old_icon->delete();
-			elgg_log("Entity $entity->guid has been transferred to a new owner but an icon was left behind under {$old_icon->getFilenameOnFilestore()}. "
-			. "Old icon has been deleted", 'NOTICE');
+			elgg_log("Entity $entity->guid has been transferred to a new owner but an icon was "
+				. "left behind under {$old_icon->getFilenameOnFilestore()}. "
+				. "Old icon has been deleted", 'NOTICE');
 			continue;
 		}
 

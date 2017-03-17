@@ -494,14 +494,14 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
 
 	// map the metadata_* options to metastring_* options
 	$map = array(
-		'names'					=>	'metastring_names',
-		'values'				=>	'metastring_values',
-		'case_sensitive'		=>	'metastring_case_sensitive',
-		'owner_guids'			=>	'metastring_owner_guids',
-		'created_time_lower'	=>	'metastring_created_time_lower',
-		'created_time_upper'	=>	'metastring_created_time_upper',
-		'calculation'			=>	'metastring_calculation',
-		'ids'					=>	'metastring_ids',
+		'names'					=> 'metastring_names',
+		'values'				=> 'metastring_values',
+		'case_sensitive'		=> 'metastring_case_sensitive',
+		'owner_guids'			=> 'metastring_owner_guids',
+		'created_time_lower'	=> 'metastring_created_time_lower',
+		'created_time_upper'	=> 'metastring_created_time_upper',
+		'calculation'			=> 'metastring_calculation',
+		'ids'					=> 'metastring_ids',
 	);
 
 	foreach ($prefixes as $prefix) {
