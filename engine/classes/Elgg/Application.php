@@ -132,7 +132,6 @@ class Application {
 			// Needs to be loaded first to correctly bootstrap
 			'autoloader.php',
 			'elgglib.php',
-
 			// The order of these doesn't matter, so keep them alphabetical
 			'access.php',
 			'actions.php',
@@ -174,7 +173,6 @@ class Application {
 			'upgrade.php',
 			'views.php',
 			'widgets.php',
-
 			// backward compatibility
 			'deprecated-2.1.php',
 			'deprecated-3.0.php',
@@ -499,13 +497,13 @@ class Application {
 		define('UPGRADING', 'upgrading');
 
 		self::start();
-		
+
 		// check security settings
 		if (elgg_get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
 			// only admin's or users with a valid token can run upgrade.php
 			elgg_signed_request_gatekeeper();
 		}
-		
+
 		$site_url = elgg_get_config('url');
 		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 
@@ -555,7 +553,7 @@ class Application {
 				$msg = elgg_echo("installation:htaccess:needs_upgrade");
 				if ($msg === "installation:htaccess:needs_upgrade") {
 					$msg = "You must update your .htaccess file so that the path is injected "
-						. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+							. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
 				}
 				echo $msg;
 				exit;
@@ -613,7 +611,7 @@ class Application {
 
 	/**
 	 * Flag this application as running for testing (PHPUnit)
-	 * 
+	 *
 	 * @param bool $testing Is testing application
 	 * @return void
 	 */
