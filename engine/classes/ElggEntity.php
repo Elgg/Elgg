@@ -1602,13 +1602,13 @@ abstract class ElggEntity extends \ElggData implements
 			$ia = elgg_set_ignore_access(true);
 
 			$base_options = [
-				'wheres' => [
+					'wheres' => [
 					"e.guid != $guid",
-				],
-				'limit' => false,
-			];
-			
-			foreach (['owner_guid', 'container_guid', 'site_guid'] as $db_column) {
+					],
+					'limit' => false,
+				];
+
+			foreach (['owner_guid', 'container_guid'] as $db_column) {
 				$options = $base_options;
 				$options[$db_column] = $guid;
 				
@@ -1768,25 +1768,25 @@ abstract class ElggEntity extends \ElggData implements
 			// ban to prevent using the site during delete
 			_elgg_services()->usersTable->markBanned($this->guid, true);
 		}
-
+		
 		// Delete contained owned and otherwise releated objects (depth first)
 		if ($recursive) {
 			// Temporarily overriding access controls
 			$entity_disable_override = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
-
+			
 			// @todo there was logic in the original code that ignored
 			// entities with owner or container guids of themselves.
 			// this should probably be prevented in \ElggEntity instead of checked for here
 			$base_options = [
-				'wheres' => [
+					'wheres' => [
 					"e.guid != $guid",
-				],
-				'limit' => false,
-			];
-			
-			foreach (['owner_guid', 'container_guid', 'site_guid'] as $db_column) {
+					],
+					'limit' => false,
+				];
+
+			foreach (['owner_guid', 'container_guid'] as $db_column) {
 				$options = $base_options;
 				$options[$db_column] = $guid;
 				
