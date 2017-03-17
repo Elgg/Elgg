@@ -44,10 +44,10 @@ if (!isset($vars['height'])) {
 	$vars['height'] = $size != 'master' ? $icon_sizes[$size]['h'] : null;
 }
 
-$img_params = array(
+$img_params = [
 	'src' => $entity->getIconURL($size),
-	'alt' => $title,	
-);
+	'alt' => $title,
+];
 
 if (!empty($class)) {
 	$img_params['class'] = $class;
@@ -64,11 +64,11 @@ if (!empty($vars['height'])) {
 $img = elgg_view('output/img', $img_params);
 
 if ($url) {
-	$params = array(
+	$params = [
 		'href' => $url,
 		'text' => $img,
 		'is_trusted' => true,
-	);
+	];
 	$class = elgg_extract('link_class', $vars, '');
 	if ($class) {
 		$params['class'] = $class;

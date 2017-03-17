@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'twitter_api' => 'Twitter-kirjautuminen',
 
 	'twitter_api:requires_oauth' => 'Tämä liitännäinen vaatii, että OAuth-kirjastoliitännäinen on käytössä.',
@@ -53,4 +53,4 @@ return array(
 	'twitter_api:interstitial:password_mismatch' => 'Salasanat eivät täsmää.',
 	'twitter_api:interstitial:cannot_save' => 'Tietojen tallentaminen epäonnistui.',
 	'twitter_api:interstitial:saved' => 'Tiedot tallennettu!',
-);
+];

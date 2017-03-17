@@ -32,7 +32,7 @@ function developers_init() {
 function developers_process_settings() {
 	$settings = elgg_get_plugin_from_id('developers')->getAllSettings();
 
-	ini_set('display_errors', (int)!empty($settings['display_errors']));
+	ini_set('display_errors', (int) !empty($settings['display_errors']));
 
 	if (!empty($settings['screen_log'])) {
 		// don't show in action/simplecache
@@ -40,7 +40,7 @@ function developers_process_settings() {
 		if (!preg_match('~^(cache|action)/~', $path)) {
 			$cache = new ElggLogCache();
 			elgg_set_config('log_cache', $cache);
-			elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
+			elgg_register_plugin_hook_handler('debug', 'log', [$cache, 'insertDump']);
 			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
 				$vars['body'] .= elgg_view('developers/log');
 				return $vars;
@@ -193,17 +193,17 @@ function developers_wrap_views($hook, $type, $result, $params) {
 		return;
 	}
 
-	$excluded_bases = array('resources', 'input', 'output', 'embed', 'icon', 'json', 'xml');
+	$excluded_bases = ['resources', 'input', 'output', 'embed', 'icon', 'json', 'xml'];
 
-	$excluded_views = array(
+	$excluded_views = [
 		'page/default',
 		'page/admin',
 		'page/elements/head',
-	);
+	];
 
 	$view = $params['view'];
 
-	$view_hierarchy = explode('/',$view);
+	$view_hierarchy = explode('/', $view);
 	if (in_array($view_hierarchy[0], $excluded_bases)) {
 		return;
 	}
@@ -260,12 +260,12 @@ function developers_log_events($name, $type) {
 		$function = $stack[$index]['file'];
 	}
 
-	$msg = elgg_echo('developers:event_log_msg', array(
+	$msg = elgg_echo('developers:event_log_msg', [
 		$event_type,
 		$name,
 		$type,
 		$function,
-	));
+	]);
 	elgg_dump($msg, false);
 
 	unset($stack);
@@ -299,7 +299,7 @@ function developers_ajax_demo_controller() {
  * @return array
  */
 function developers_get_inspect_options() {
-	$options = array(
+	$options = [
 		'Actions' => elgg_echo('developers:inspect:actions'),
 		'Events' => elgg_echo('developers:inspect:events'),
 		'Menus' => elgg_echo('developers:inspect:menus'),
@@ -307,7 +307,7 @@ function developers_get_inspect_options() {
 		'Simple Cache' => elgg_echo('developers:inspect:simplecache'),
 		'Views' => elgg_echo('developers:inspect:views'),
 		'Widgets' => elgg_echo('developers:inspect:widgets'),
-	);
+	];
 	
 	if (elgg_is_active_plugin('web_services')) {
 		$options['Web Services'] = elgg_echo('developers:inspect:webservices');

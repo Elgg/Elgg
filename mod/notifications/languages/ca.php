@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	'friends:all' => 'Totes les teves amistats',
 
@@ -21,4 +21,4 @@ return array(
 
 	'notifications:subscriptions:success' => 'La teva configuració de notificacions s\'ha desat correctament.',
 
-);
+];

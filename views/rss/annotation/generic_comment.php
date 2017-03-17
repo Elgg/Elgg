@@ -13,9 +13,9 @@ $poster_name = htmlspecialchars($poster->name, ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $annotation->getTimeCreated());
 $permalink = $annotation->getURL();
 
-$title = elgg_echo('generic_comment:title', array($poster_name));
+$title = elgg_echo('generic_comment:title', [$poster_name]);
 
-$creator = elgg_view('page/components/creator', array('entity' => $annotation));
+$creator = elgg_view('page/components/creator', ['entity' => $annotation]);
 $extensions = elgg_view('extensions/item', $vars);
 
 $item = <<<__HTML

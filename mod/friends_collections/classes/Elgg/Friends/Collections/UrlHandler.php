@@ -7,7 +7,7 @@ class UrlHandler {
 	/**
 	 * Rewrite access collection URL
 	 * @elgg_plugin_hook access_collection:url access_collection
-	 * 
+	 *
 	 * @param \Elgg\Hook $hook Hook
 	 * @return string
 	 */

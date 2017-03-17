@@ -16,35 +16,34 @@ if (empty($contributors)) {
 echo '<ul class="elgg-plugin-contributors">';
 
 foreach ($contributors as $contributor) {
-	
 	if ($contributor['name']) {
-		$contributor['name'] = elgg_view('output/text', array(
+		$contributor['name'] = elgg_view('output/text', [
 			'value' => $contributor['name'],
-		));
+		]);
 	} else {
 		continue;
 	}
 	
 	if ($contributor['website']) {
-		$contributor['website'] = elgg_view('output/url', array(
+		$contributor['website'] = elgg_view('output/url', [
 			'href' => $contributor['website'],
 			'text' => $contributor['website'],
 			'is_trusted' => true,
-		));
+		]);
 	}
 	
 	if ($contributor['username']) {
-		$contributor['username'] = elgg_view('output/url', array(
+		$contributor['username'] = elgg_view('output/url', [
 			'href' => "http://community.elgg.org/profile/{$contributor['username']}/",
 			'text' => "@{$contributor['username']}",
 			'is_trusted' => true,
-		));
+		]);
 	}
 	
 	if ($contributor['description']) {
-		$contributor['description'] = elgg_view('output/text', array(
+		$contributor['description'] = elgg_view('output/text', [
 			'value' => $contributor['description'],
-		));
+		]);
 	}
 	
 	if ($contributor['name']) { // Name is requiried

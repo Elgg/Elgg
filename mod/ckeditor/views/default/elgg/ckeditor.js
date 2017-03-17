@@ -7,7 +7,7 @@
  * </code>
  *
  * Modify the config by creating a boot module and handling the [config, ckeditor] hook.
- * 
+ *
  * @module elgg/ckeditor
  */
 define(function (require) {
@@ -21,7 +21,7 @@ define(function (require) {
 
 	var elggCKEditor = {
 		bind: function (selector, editor_config) {
-			var default_config = 'elgg/ckeditor/config';			
+			var default_config = 'elgg/ckeditor/config';
 			
 			if (typeof editor_config === undefined) {
 				editor_config = default_config;
@@ -226,3 +226,4 @@ define(function (require) {
 
 	return elggCKEditor;
 });
+

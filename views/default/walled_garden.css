@@ -4,10 +4,10 @@
 
 body {
 	background-image: url('graphics/walled_garden.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top left;
-    margin: 0;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top left;
+	margin: 0;
 }
 
 .elgg-page-walled-garden {
@@ -58,3 +58,4 @@ body {
 		position: relative;
 	}
 }
+

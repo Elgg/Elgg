@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Inserisci il testo da cercare:',
 	'search:no_results' => 'Nessun risultato.',
 	'search:matched' => 'Corrispondenze:',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'di',
 	'search:unavailable_entity' => 'Elemento non disponibile',
 	'search:unknown_entity' => 'Tipo di elemento sconosciuto',
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Elementos reportados',
 	'admin:administer_utilities:reportedcontent' => 'Contenido reportado',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'No se pudo enviar el reporte.',
 	'reportedcontent:notarchived' => 'No se pudo archivar el reporte',
-);
+];

@@ -26,7 +26,7 @@ if (!$title) {
 	$title = elgg_echo('item:' . $container->getType());
 }
 
-$title = elgg_echo('search:comment_on', array($title));
+$title = elgg_echo('search:comment_on', [$title]);
 
 $url = $entity->getURL();
 $title = "<a href=\"$url\">$title</a>";

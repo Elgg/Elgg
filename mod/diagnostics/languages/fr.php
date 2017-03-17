@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:diagnostics' => 'Diagnostics du système',
 	'diagnostics' => 'Diagnostics du système',
 	'diagnostics:report' => 'Rapport de Diagnostic',
@@ -33,4 +33,4 @@ Variables globales:
 
 %s
 ------------------------------------------------------------------------',
-);
+];

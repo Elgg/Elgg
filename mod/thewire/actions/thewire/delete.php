@@ -1,7 +1,7 @@
 <?php
 /**
  * Action for deleting a wire post
- * 
+ *
  */
 
 // Get input data
@@ -10,13 +10,12 @@ $guid = (int) get_input('guid');
 // Make sure we actually have permission to edit
 $thewire = get_entity($guid);
 if (elgg_instanceof($thewire, 'object', 'thewire') && $thewire->canEdit()) {
-
 	// unset reply metadata on children
-	$children = elgg_get_entities_from_relationship(array(
+	$children = elgg_get_entities_from_relationship([
 		'relationship' => 'parent',
 		'relationship_guid' => $guid,
 		'inverse_relationship' => true,
-	));
+	]);
 	if ($children) {
 		foreach ($children as $child) {
 			$child->reply = false;

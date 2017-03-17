@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:diagnostics' => 'Systeemdiagnose',
 	'diagnostics' => 'Systeemdiagnose',
 	'diagnostics:report' => 'Diagnostisch rapport',
@@ -32,4 +32,4 @@ Algemene variabelen:
 			
 %s
 ------------------------------------------------------------------------',
-);
+];

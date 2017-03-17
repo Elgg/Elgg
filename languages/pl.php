@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 /**
  * Sites
  */
@@ -1466,4 +1466,4 @@ Nie możesz odpowiedzieć na ten e-mail.",
 
 	"field:required" => 'Required',
 
-);
+];

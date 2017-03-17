@@ -30,32 +30,32 @@ if ($page_owner->getGUID() == $message->toId) {
 }
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_entity($message, array('full_view' => true));
+$content = elgg_view_entity($message, ['full_view' => true]);
 if ($inbox) {
-	$form_params = array(
+	$form_params = [
 		'id' => 'messages-reply-form',
 		'class' => 'hidden mtl',
 		'action' => 'action/messages/send',
-	);
-	$body_params = array('message' => $message);
+	];
+	$body_params = ['message' => $message];
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
 	$from_user = get_user($message->fromId);
 	
 	if ((elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) && $from_user) {
-		elgg_register_menu_item('title', array(
+		elgg_register_menu_item('title', [
 			'name' => 'reply',
 			'href' => '#messages-reply-form',
 			'text' => elgg_echo('reply'),
 			'link_class' => 'elgg-button elgg-button-action',
 			'rel' => 'toggle',
-		));
+		]);
 	}
 }
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-));
+]);
 
 echo elgg_view_page($title, $body);

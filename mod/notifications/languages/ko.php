@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	'friends:all' => '모든 친구',
 
@@ -21,4 +21,4 @@ return array(
 
 	'notifications:subscriptions:success' => '알림 설정이 저장되었습니다.',
 
-);
+];

@@ -14,22 +14,22 @@ elgg_push_breadcrumb('#' . $tag);
 // remove # from tag
 $tag = trim($tag, '# ');
 
-$title = elgg_echo('thewire:tags', array($tag));
+$title = elgg_echo('thewire:tags', [$tag]);
 
 
-$content = elgg_list_entities_from_metadata(array(
+$content = elgg_list_entities_from_metadata([
 	'metadata_name' => 'tags',
 	'metadata_value' => $tag,
 	'metadata_case_sensitive' => false,
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'limit' => 15,
-));
+]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => false,
 	'content' => $content,
 	'title' => $title,
-));
+]);
 
 echo elgg_view_page($title, $body);

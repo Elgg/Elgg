@@ -11,7 +11,7 @@ define(function(require) {
 	 * Content access field gets disabled in the group edit form when
 	 * group is made visible only to members. When the visibility is
 	 * made less restrictive, the field is enabled again.
-	 * 
+	 *
 	 * @param {Object} event
 	 */
 	var toggleContentAccessMode = function(event) {
@@ -32,3 +32,4 @@ define(function(require) {
 		toggleContentAccessMode: toggleContentAccessMode
 	};
 });
+

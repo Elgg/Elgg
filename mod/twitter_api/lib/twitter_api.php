@@ -7,7 +7,7 @@
 
 /**
  * Get the API wrapper object
- * 
+ *
  * @param string $oauth_token        User's OAuth token
  * @param string $oauth_token_secret User's OAuth secret
  * @return TwitterOAuth|null
@@ -61,9 +61,9 @@ function twitter_api_forward() {
 	$request_link = twitter_api_get_authorize_url($callback);
 
 	// capture metadata about login to persist through redirects
-	$login_metadata = array(
+	$login_metadata = [
 		'persistent' => (bool) get_input("persistent"),
-	);
+	];
 	// capture referrer if in site, but not the twitter_api
 
 	$session = elgg_get_session();
@@ -124,15 +124,15 @@ function twitter_api_login() {
 
 	// attempt to find user and log them in.
 	// else, create a new user.
-	$options = array(
+	$options = [
 		'type' => 'user',
 		'plugin_id' => 'twitter_api',
-		'plugin_user_setting_name_value_pairs' => array(
+		'plugin_user_setting_name_value_pairs' => [
 			'access_key' => $token['oauth_token'],
 			'access_secret' => $token['oauth_token_secret'],
-		),
+		],
 		'limit' => 0,
-	);
+	];
 
 	$users = elgg_get_entities_from_plugin_user_settings($options);
 
@@ -149,7 +149,7 @@ function twitter_api_login() {
 		$twitter = $api->get('account/verify_credentials');
 
 		// backward compatibility for deprecated Twitter Login plugin
-		$user = FALSE;
+		$user = false;
 		if ($twitter_user = get_user_by_username($token['screen_name'])) {
 			if (($screen_name = $twitter_user->twitter_screen_name) && ($screen_name == $token['screen_name'])) {
 				// convert existing account
@@ -162,7 +162,7 @@ function twitter_api_login() {
 		if (!$user) {
 			$user = twitter_api_create_user($twitter);
 			$site_name = elgg_get_site_entity()->name;
-			system_message(elgg_echo('twitter_api:login:email', array($site_name)));
+			system_message(elgg_echo('twitter_api:login:email', [$site_name]));
 			$forward = "twitter_api/interstitial";
 		}
 
@@ -191,7 +191,7 @@ function twitter_api_login() {
 
 /**
  * Create a new user from Twitter information
- * 
+ *
  * @param object $twitter Twitter OAuth response
  * @return ElggUser
  */
@@ -278,15 +278,15 @@ function twitter_api_authorize() {
 	}
 
 	// make sure no other users are registered to this twitter account.
-	$options = array(
+	$options = [
 		'type' => 'user',
 		'plugin_id' => 'twitter_api',
-		'plugin_user_setting_name_value_pairs' => array(
+		'plugin_user_setting_name_value_pairs' => [
 			'access_key' => $token['oauth_token'],
 			'access_secret' => $token['oauth_token_secret'],
-		),
+		],
 		'limit' => 0
-	);
+	];
 	$users = elgg_get_entities_from_plugin_user_settings($options);
 	/* @var ElggUser[] $users */
 
@@ -305,7 +305,7 @@ function twitter_api_authorize() {
 	elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret'], 0, 'twitter_api');
 	
 	// trigger authorization hook
-	elgg_trigger_plugin_hook('authorize', 'twitter_api', array('token' => $token));
+	elgg_trigger_plugin_hook('authorize', 'twitter_api', ['token' => $token]);
 
 	system_message(elgg_echo('twitter_api:authorize:success'));
 	forward('settings/plugins', 'twitter_api');
@@ -329,7 +329,7 @@ function twitter_api_revoke() {
  *
  * @param string $callback The callback URL
  */
-function twitter_api_get_authorize_url($callback = NULL, $login = true) {
+function twitter_api_get_authorize_url($callback = null, $login = true) {
 	$session = elgg_get_session();
 
 	// request tokens from Twitter
@@ -337,10 +337,10 @@ function twitter_api_get_authorize_url($callback = NULL, $login = true) {
 	$token = $twitter->getRequestToken($callback);
 
 	// save token in session for use after authorization
-	$session->set('twitter_api', array(
+	$session->set('twitter_api', [
 		'oauth_token' => $token['oauth_token'],
 		'oauth_token_secret' => $token['oauth_token_secret'],
-	));
+	]);
 
 	return $twitter->getAuthorizeURL($token['oauth_token'], $login);
 }
@@ -351,7 +351,7 @@ function twitter_api_get_authorize_url($callback = NULL, $login = true) {
  * @param bool $oauth_verifier
  * @return array
  */
-function twitter_api_get_access_token($oauth_verifier = FALSE) {
+function twitter_api_get_access_token($oauth_verifier = false) {
 	$session = elgg_get_session();
 
 	// retrieve stored tokens

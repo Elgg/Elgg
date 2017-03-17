@@ -22,14 +22,14 @@ if (elgg_view_exists("plugins/$plugin_id/{$type}settings")) {
 }
 
 echo elgg_view_field([
-	'#type' => 'hidden', 
-	'name' => 'plugin_id', 
+	'#type' => 'hidden',
+	'name' => 'plugin_id',
 	'value' => $plugin_id,
 ]);
 
 echo elgg_view_field([
-	'#type' => 'hidden', 
-	'name' => 'user_guid', 
+	'#type' => 'hidden',
+	'name' => 'user_guid',
 	'value' => $user_guid,
 ]);
 

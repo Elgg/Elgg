@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Blocs',
 	'blog:blogs' => 'Blocs',
 	'blog:revisions' => 'Revisions',
@@ -64,4 +64,4 @@ Veure i comentar el nou missatge:
 	'blog:moreblogs' => 'Més entrades',
 	'blog:numbertodisplay' => 'Nombre d\'entrades del bloc a mostrar',
 	'blog:noblogs' => 'No hi ha entrades del bloc'
-);
+];

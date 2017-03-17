@@ -42,7 +42,7 @@
             "composer validate"
         ],
 		"lint-fixer": [
-            "phpcbf --standard=engine/standards/sniffs.xml engine/classes engine/lib"
+            "phpcbf --standard=engine/standards/sniffs.xml actions engine languages mod views"
         ],
         "test": "phpunit",
         "travis:install": [

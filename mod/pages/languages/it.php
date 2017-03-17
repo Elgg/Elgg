@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -109,4 +109,4 @@ Visualizza e commenta questa pagina:
 
 	'pages:newchild' => "Crea una sotto-pagina",
 	'pages:backtoparent' => "Torna a '%s'",
-);
+];

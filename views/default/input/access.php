@@ -29,15 +29,15 @@ unset($vars['entity_allows_comments']);
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-access');
 
 // this will be passed to plugin hooks ['access:collections:write', 'user'] and ['default', 'access']
-$params = array();
+$params = [];
 
-$keys = array(
+$keys = [
 	'entity' => null,
 	'entity_type' => null,
 	'entity_subtype' => null,
 	'container_guid' => null,
 	'purpose' => 'read',
-);
+];
 foreach ($keys as $key => $default_value) {
 	$params[$key] = elgg_extract($key, $vars, $default_value);
 	unset($vars[$key]);

@@ -1,11 +1,11 @@
 <?php
-$params = array();
-$params['menu'] = array();
-$params['menu']['default'] = array();
+$params = [];
+$params['menu'] = [];
+$params['menu']['default'] = [];
 for ($i=1; $i<=5; $i++) {
 	$params['menu']['default'][] = new ElggMenuItem($i, "Page $i", "#");
 }
-$params['menu']['alt'] = array();
+$params['menu']['alt'] = [];
 for ($i=1; $i<=3; $i++) {
 	$params['menu']['alt'][] = new ElggMenuItem($i, "Info $i", "#");
 }

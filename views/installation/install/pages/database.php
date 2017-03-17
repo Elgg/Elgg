@@ -7,8 +7,8 @@
 
 if (isset($vars['failure']) && $vars['failure']) {
 	echo elgg_autop(elgg_echo('install:database:error'));
-	$vars['refresh'] = TRUE;
-	$vars['advance'] = FALSE;
+	$vars['refresh'] = true;
+	$vars['advance'] = false;
 	echo elgg_view('install/nav', $vars);
 } else {
 	echo elgg_autop(elgg_echo('install:database:instructions'));
@@ -17,10 +17,10 @@ if (isset($vars['failure']) && $vars['failure']) {
 	
 	$url = current_page_url();
 	
-	$form_vars = array(
+	$form_vars = [
 		'action' => $url,
-		'disable_security' => TRUE,
-	);
+		'disable_security' => true,
+	];
 	
 	echo elgg_view_form('install/template', $form_vars, $vars);
 }

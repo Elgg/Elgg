@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ return array(
 
 	'pages:newchild' => "子ページを作成",
 	'pages:backtoparent' => "「 %s 」にもどる",
-);
+];

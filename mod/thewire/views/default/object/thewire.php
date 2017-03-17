@@ -25,15 +25,15 @@ $subtitle = elgg_view('page/elements/by_line', $vars);
 $metadata = '';
 if (!elgg_in_context('widgets')) {
 	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', array(
+	$metadata = elgg_view_menu('entity', [
 		'entity' => $post,
 		'handler' => 'thewire',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz',
-	));
+	]);
 }
 
-$params = array(
+$params = [
 	'entity' => $post,
 	'title' => false,
 	'metadata' => $metadata,
@@ -42,7 +42,7 @@ $params = array(
 	'tags' => false,
 	'icon' => elgg_view_entity_icon($post->getOwnerEntity(), 'tiny'),
 	'class' => 'thewire-post',
-);
+];
 $params = $params + $vars;
 echo elgg_view('object/elements/summary', $params);
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $ipsum = elgg_view('developers/ipsum');
 

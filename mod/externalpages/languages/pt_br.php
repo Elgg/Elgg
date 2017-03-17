@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -18,4 +18,4 @@ return array(
 	 */
 	'expages:posted' => "Sua página foi enviada com sucesso.",
 	'expages:error' => "Ocorreu um erro, por favor tente novamente e se o problema persistir contate o administrador",
-);
+];

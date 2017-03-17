@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Unvalidated',
 	
 	'email:validate:subject' => "%s please confirm your email address for %s!",
@@ -51,4 +51,4 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:messages:resent_validation' => 'Validation request resent.',
 	'uservalidationbyemail:messages:resent_validations' => 'Validation requests resent to all checked users.'
 
-);
+];

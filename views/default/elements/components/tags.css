@@ -2,12 +2,13 @@
 	Tags
 *************************************** */
 .elgg-tags {
-    font-size: 85%;
-    color: #AAA;
-    line-height: normal;
-    vertical-align: middle;
+	font-size: 85%;
+	color: #AAA;
+	line-height: normal;
+	vertical-align: middle;
 }
 
 .elgg-tags > .elgg-icon {
-    margin-right: 5px;
+	margin-right: 5px;
 }
+

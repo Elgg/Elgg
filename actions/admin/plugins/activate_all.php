@@ -39,10 +39,10 @@ do {
 			continue;
 		}
 
-		$ids = array(
+		$ids = [
 			'cannot_start' . $plugin->getID(),
 			'invalid_and_deactivated_' . $plugin->getID()
-		);
+		];
 
 		foreach ($ids as $id) {
 			elgg_delete_admin_notice($id);
@@ -63,7 +63,7 @@ if (count($plugins) > 0) {
 	foreach ($plugins as $plugin) {
 		$msg = $plugin->getError();
 		$string = ($msg) ? 'admin:plugins:activate:no_with_msg' : 'admin:plugins:activate:no';
-		register_error(elgg_echo($string, array($plugin->getFriendlyName(), $msg)));
+		register_error(elgg_echo($string, [$plugin->getFriendlyName(), $msg]));
 	}
 }
 

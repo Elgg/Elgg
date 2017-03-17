@@ -11,7 +11,7 @@ elgg_register_title_button('file', 'add', 'object', 'file');
 
 $title = elgg_echo('file:all');
 
-$content = elgg_list_entities(array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'file',
 	'full_view' => false,
@@ -19,16 +19,16 @@ $content = elgg_list_entities(array(
 	'preload_owners' => true,
 	'preload_containers' => true,
 	'distinct' => false,
-));
+]);
 
 $sidebar = file_get_type_cloud();
 $sidebar .= elgg_view('file/sidebar');
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => $sidebar,
-));
+]);
 
 echo elgg_view_page($title, $body);

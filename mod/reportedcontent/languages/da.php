@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Rapporterede poster',
 	'admin:administer_utilities:reportedcontent' => 'Rapporteret indhold',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Beklager, forsøget på at rapportere dette indhold fejlede.',
 	'reportedcontent:notarchived' => 'Vi kunne ikke arkivere denne rapport',
-);
+];

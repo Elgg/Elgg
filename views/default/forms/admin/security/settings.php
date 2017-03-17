@@ -36,7 +36,6 @@ $hardening .= elgg_view_field([
 	'checked' => $protect_cron,
 ]);
 if ($protect_cron) {
-	
 	$periods = elgg_get_config('elgg_cron_periods');
 	$rows = [];
 	

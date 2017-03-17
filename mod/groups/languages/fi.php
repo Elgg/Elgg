@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -209,4 +209,4 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Ryhmät',
-);
+];

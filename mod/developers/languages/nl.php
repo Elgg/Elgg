@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:sandbox' => 'Theme Sandbox',
@@ -89,4 +89,4 @@ return array(
 	'developers:settings:success' => 'Instellingen opgeslagen',
 
 	'developers:amd' => 'AMD',
-);
+];

@@ -6,7 +6,7 @@
  */
 
 if (!array_key_exists('entity', $vars) || !($vars['entity'] instanceof ElggEntity)) {
-	return FALSE;
+	return false;
 }
 
 // title cannot contain HTML but descriptions can.

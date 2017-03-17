@@ -8,4 +8,5 @@
  * @package    Elgg.Core
  * @subpackage Exceptions.Stub
  */
-class APIException extends Exception {}
+class APIException extends Exception {
+}

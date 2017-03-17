@@ -98,8 +98,7 @@ foreach ($items as $item) {
 		if ($subtype) {
 			$row_attrs['class'][] = "elgg-item-$type-$subtype";
 		}
-
-	} elseif (is_callable(array($item, 'getType'))) {
+	} elseif (is_callable([$item, 'getType'])) {
 		$type = $item->getType();
 
 		$row_attrs['id'] = "elgg-$type-{$item->id}";
@@ -109,7 +108,7 @@ foreach ($items as $item) {
 
 	$row = '';
 
-	foreach	($columns as $column) {
+	foreach ($columns as $column) {
 		$cell = trim($column->renderCell($item, $type, $vars));
 		if (!preg_match('~^<t[dh]~i', $cell)) {
 			$cell = "<td>$cell</td>";

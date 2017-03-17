@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'members:label:online' => '접속중',
 	'members:search' => '회원검색',
 	'members:title:search' => ' %s 로 회원 검색',
@@ -8,4 +8,4 @@ return array(
 	'members:title:popular' => '인기 회원',
 	'members:title:online' => '접속중인 회원',
 	'members:list:popular:none' => '친구가 없는 회원이 없습니다.',
-);
+];

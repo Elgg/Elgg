@@ -18,8 +18,8 @@ if ($group->canWriteToContainer() && isset($vars['add_link'])) {
 }
 
 echo '<li>';
-echo elgg_view_module('info', '', $vars['content'], array(
+echo elgg_view_module('info', '', $vars['content'], [
 	'header' => $header,
 	'class' => 'elgg-module-group',
-));
+]);
 echo '</li>';

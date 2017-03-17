@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-$id = (int)get_input('id');
+$id = (int) get_input('id');
 
 $items = elgg_get_river(['id' => $id]);
 if (!$items) {

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Veure i afegir comentaris a l\'enllaç:
 	'bookmarks:save:invalid' => "L'enllaç és invàlid i no es pot guardar.",
 	'bookmarks:delete:failed' => "No es pot esborrar l'adreça d'interés. Siusplau, torna-ho a provar.",
 	'bookmarks:unknown_bookmark' => 'No es pot trobar l\'enllaç especificat.',
-);
+];

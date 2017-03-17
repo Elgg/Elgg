@@ -17,17 +17,17 @@ if (!elgg_instanceof($entity, 'user') || !$entity->canEdit()) {
 	forward(REFERER);
 }
 
-$content = elgg_view('core/avatar/upload', array('entity' => $entity));
+$content = elgg_view('core/avatar/upload', ['entity' => $entity]);
 
 // only offer the crop view if an avatar has been uploaded
 if ($entity->hasIcon('master')) {
-	$content .= elgg_view('core/avatar/crop', array('entity' => $entity));
+	$content .= elgg_view('core/avatar/crop', ['entity' => $entity]);
 }
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
-);
+];
 $body = elgg_view_layout('one_sidebar', $params);
 
 echo elgg_view_page($title, $body);

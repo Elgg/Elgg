@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Enter a search term:',
 	'search:no_results' => 'No results.',
 	'search:matched' => 'Matched: ',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'by',
 	'search:unavailable_entity' => 'Unavailable Entity',
 	'search:unknown_entity' => 'Unknown Entity type',
-);
+];

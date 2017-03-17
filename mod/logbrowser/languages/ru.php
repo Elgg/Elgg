@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => 'Журнал логов',
 	'logbrowser' => 'Журнал логов',
 	'logbrowser:browse' => 'Смотреть системные логи',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => 'Типо объекта',
 	'logbrowser:object:guid' => 'GUID объекта',
 	'logbrowser:action' => 'Действие',
-);
+];

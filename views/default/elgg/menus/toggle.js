@@ -40,3 +40,4 @@ define(function (require) {
 
 	return toggle;
 });
+

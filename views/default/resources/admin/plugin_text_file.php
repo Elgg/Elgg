@@ -15,7 +15,7 @@ elgg_load_js('jquery.jeditable');
 $error = false;
 if (!$plugin) {
 	$error = elgg_echo('admin:plugins:markdown:unknown_plugin');
-	$body = elgg_view_layout('admin', array('content' => $error, 'title' => $error));
+	$body = elgg_view_layout('admin', ['content' => $error, 'title' => $error]);
 	echo elgg_view_page($error, $body, 'admin');
 	return true;
 }
@@ -35,7 +35,7 @@ if (!$file_contents) {
 
 if ($error) {
 	$title = $error;
-	$body = elgg_view_layout('admin', array('content' => $error, 'title' => $title));
+	$body = elgg_view_layout('admin', ['content' => $error, 'title' => $title]);
 	echo elgg_view_page($title, $body, 'admin');
 	return true;
 }
@@ -45,11 +45,11 @@ $title = $plugin->getManifest()->getName() . ": $filename";
 use \Michelf\MarkdownExtra;
 $text = MarkdownExtra::defaultTransform($file_contents);
 
-$body = elgg_view_layout('admin', array(
+$body = elgg_view_layout('admin', [
 	// setting classes here because there's no way to pass classes
 	// to the layout
 	'content' => '<div class="elgg-markdown">' . $text . '</div>',
 	'title' => $title
-));
+]);
 
 echo elgg_view_page($title, $body, 'admin');

@@ -34,18 +34,18 @@ function bookmarks_init() {
 		$user_guid = elgg_get_logged_in_user_guid();
 		$address = urlencode(current_page_url());
 
-		elgg_register_menu_item('extras', array(
+		elgg_register_menu_item('extras', [
 			'name' => 'bookmark',
 			'text' => elgg_echo('bookmarks:this'),
 			'icon' => 'push-pin-alt',
 			'href' => "bookmarks/add/$user_guid?address=$address",
 			'title' => elgg_echo('bookmarks:this'),
 			'rel' => 'nofollow',
-		));
+		]);
 	}
 
 	// Register for notifications
-	elgg_register_notification_event('object', 'bookmarks', array('create'));
+	elgg_register_notification_event('object', 'bookmarks', ['create']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:bookmarks', 'bookmarks_prepare_notification');
 
 	// Register bookmarks view for ecml parsing
@@ -197,15 +197,15 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language);
-	$notification->body = elgg_echo('bookmarks:notify:body', array(
+	$notification->subject = elgg_echo('bookmarks:notify:subject', [$title], $language);
+	$notification->body = elgg_echo('bookmarks:notify:body', [
 		$owner->name,
 		$title,
 		$entity->address,
 		$descr,
 		$entity->getURL()
-	), $language);
-	$notification->summary = elgg_echo('bookmarks:notify:summary', array($entity->title), $language);
+	], $language);
+	$notification->summary = elgg_echo('bookmarks:notify:summary', [$entity->title], $language);
 	$notification->url = $entity->getURL();
 	return $notification;
 }

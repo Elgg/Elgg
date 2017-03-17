@@ -6,3 +6,4 @@ define('elgg/ckeditor/set-basepath', function (require) {
 	// This global variable must be set before the editor script loading.
 	CKEDITOR_BASEPATH = elgg.get_simplecache_url('ckeditor/');
 });
+

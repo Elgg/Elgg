@@ -36,19 +36,19 @@ pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($page->title, $page->getURL());
 elgg_push_breadcrumb(elgg_echo('pages:revision'));
 
-$content = elgg_view('object/page_top', array(
+$content = elgg_view('object/page_top', [
 	'entity' => $page,
 	'revision' => $annotation,
 	'full_view' => true,
-));
+]);
 
-$sidebar = elgg_view('pages/sidebar/history', array('page' => $page));
+$sidebar = elgg_view('pages/sidebar/history', ['page' => $page]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => $sidebar,
-));
+]);
 
 echo elgg_view_page($title, $body);

@@ -1,10 +1,10 @@
 <?php
 /**
  * Core CSS
- * 
+ *
  * This file holds all the complicated/hacky stuff that you really
  * shouldn't touch or override unless you're sure you know what you're doing.
- * 
+ *
  * Provides classes that implement cross-browser support for the following features:
  *   * clearfix
  *   * fluid-width content area that doesn't wrap around floats
@@ -73,11 +73,11 @@
 }
 
 /* ***************************************
- * MENUS
- *
- * To add separators to a menu:
- * .elgg-menu-$menu > li:after {content: '|'; background: ...;}
- *************************************** */
+	* MENUS
+	*
+	* To add separators to a menu:
+	* .elgg-menu-$menu > li:after {content: '|'; background: ...;}
+	*************************************** */
 /* Enabled nesting of dropdown/flyout menus */
 .elgg-menu > li { position: relative; }
 

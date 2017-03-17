@@ -9,7 +9,7 @@ $item = $vars['item'];
 $messageboard = $item->getAnnotation();
 $excerpt = elgg_get_excerpt($messageboard->value);
 
-echo elgg_view('river/elements/layout', array(
+echo elgg_view('river/elements/layout', [
 	'item' => $item,
 	'message' => $excerpt,
-));
+]);

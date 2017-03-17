@@ -1,5 +1,5 @@
-<?php 
-$icons = array(
+<?php
+$icons = [
 	'arrow-left',
 	'arrow-right',
 	'arrow-two-head',
@@ -87,7 +87,7 @@ $icons = array(
 	'users',
 	'users-hover',
 	'video',
-);
+];
 ?>
 <p>
 	<?php echo elgg_echo('theme_sandbox:icons:blurb'); ?>
@@ -95,8 +95,8 @@ $icons = array(
 
 <ul class="elgg-gallery">
 <?php
-	foreach ($icons as $icon) {
-		echo "<li title=\"elgg-icon-$icon\" style=\"margin:10px\">" . elgg_view_icon($icon) . "</li>";
-	}
+foreach ($icons as $icon) {
+	echo "<li title=\"elgg-icon-$icon\" style=\"margin:10px\">" . elgg_view_icon($icon) . "</li>";
+}
 ?>
 </ul>

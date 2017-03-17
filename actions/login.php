@@ -70,7 +70,7 @@ try {
 // @todo we need to use the config object to store this so that the current language
 // can be changed. Refs #4171
 if ($user->language) {
-	$message = elgg_echo('loginok', array(), $user->language);
+	$message = elgg_echo('loginok', [], $user->language);
 } else {
 	$message = elgg_echo('loginok');
 }
@@ -78,7 +78,7 @@ if ($user->language) {
 // clear after login in case login fails
 $session->remove('last_forward_from');
 
-$params = array('user' => $user, 'source' => $forward_source);
+$params = ['user' => $user, 'source' => $forward_source];
 $forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 
 $output = [

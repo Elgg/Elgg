@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -80,4 +80,4 @@ return array(
 	'bookmarks:save:invalid' => "Η διεύθυνση του σελιδοδείκτη δεν είναι έγκυρη και δεν μπορεί να αποθηκευτεί.",
 	'bookmarks:delete:failed' => "Αδύνατη η διαγραφή του συνδέσμου. Παρακαλώ δοκιμάστε ξανά.",
 	'bookmarks:unknown_bookmark' => 'Αδύνατη η εύρεση του συνδέσμου',
-);
+];

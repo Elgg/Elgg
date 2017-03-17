@@ -55,7 +55,7 @@ function profile_page_handler($page) {
 		forward();
 	}
 
-	$action = NULL;
+	$action = null;
 	if (isset($page[1])) {
 		$action = $page[1];
 	}
@@ -109,7 +109,7 @@ function profile_ecml_views_hook($hook, $entity_type, $return_value) {
  * @return array
  */
 function profile_default_widgets_hook($hook, $type, $return) {
-	$return[] = array(
+	$return[] = [
 		'name' => elgg_echo('profile'),
 		'widget_context' => 'profile',
 		'widget_columns' => 2,
@@ -117,7 +117,7 @@ function profile_default_widgets_hook($hook, $type, $return) {
 		'event' => 'create',
 		'entity_type' => 'user',
 		'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
-	);
+	];
 
 	return $return;
 }
@@ -147,11 +147,11 @@ function _profile_topbar_menu($hook, $type, $return, $params) {
 		'href' => $viewer->getURL(),
 		'text' => $viewer->name,
 		'title' => elgg_echo('profile'),
-		'icon' => elgg_view('output/img', array(
+		'icon' => elgg_view('output/img', [
 			'src' => $viewer->getIconURL('topbar'),
 			'alt' => $viewer->name,
 			'class' => 'elgg-border-plain elgg-transition',
-		)),
+		]),
 		'priority' => 100,
 	]);
 	

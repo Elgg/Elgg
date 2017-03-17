@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Jak często logi systemowe powinny być archiwizowane?',
 
 	'logrotate:logrotated' => "Rotacja logów",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Plik rejestrowy usunięty\n",
 	'logrotate:lognotdeleted' => "Nie usunięto żadnych logów\n",
-);
+];

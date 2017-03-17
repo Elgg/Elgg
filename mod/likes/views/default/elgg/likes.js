@@ -60,3 +60,4 @@ define(function (require) {
 	setupHandlers('likes', 'unlike');
 	setupHandlers('unlike', 'likes');
 });
+

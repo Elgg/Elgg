@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ Wyświetl i skomentuj nową stronę:
 
 	'pages:newchild' => "Utwórz podstronę",
 	'pages:backtoparent' => "Wróć do '%s'",
-);
+];

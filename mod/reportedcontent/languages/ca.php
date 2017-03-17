@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Elements denunciats',
 	'admin:administer_utilities:reportedcontent' => 'Contingut denunciat',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Ens sap greu, hi ha hagut una errada a l&acute;hora d&acute;intentar denunciar el contingut.',
 	'reportedcontent:notarchived' => 'No s&acute;ha pogut arxivar la denúncia',
-);
+];

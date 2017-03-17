@@ -13,9 +13,9 @@ echo "</tr>";
 
 foreach ($data as $view => $arr) {
 	echo "<tr><td>";
-	echo elgg_view('admin/develop_tools/inspect/views/view_link', array(
+	echo elgg_view('admin/develop_tools/inspect/views/view_link', [
 		'view' => $view,
-	));
+	]);
 	echo "</td></tr>";
 }
 

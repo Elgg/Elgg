@@ -14,13 +14,13 @@ echo elgg_view_field([
 	'#type' => 'text',
 	'name' => 'q',
 	'required' => true,
-	'class' => 'elgg-input-search',	
+	'class' => 'elgg-input-search',
 ]);
 
 echo elgg_view_field([
 	'#type' => 'hidden',
 	'name' => 'container_guid',
-	'value' => $group->guid,	
+	'value' => $group->guid,
 ]);
 
 $footer = elgg_view_field([

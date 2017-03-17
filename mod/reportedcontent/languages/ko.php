@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => '신고된 항목',
 	'admin:administer_utilities:reportedcontent' => '신고된 내용',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => '죄송합니다. 이 내용을 신고하는데 실패하였습니다.',
 	'reportedcontent:notarchived' => '이 신고를 저장할 수 없었습니다',
-);
+];

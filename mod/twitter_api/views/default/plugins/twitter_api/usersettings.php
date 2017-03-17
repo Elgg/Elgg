@@ -18,20 +18,20 @@ if (!($site_key && $site_secret)) {
 }
 
 $site_name = elgg_get_site_entity()->name;
-echo '<div>' . elgg_echo('twitter_api:usersettings:description', array($site_name)) . '</div>';
+echo '<div>' . elgg_echo('twitter_api:usersettings:description', [$site_name]) . '</div>';
 
 if (!$access_key || !$access_secret) {
 	// send user off to validate account
 	$request_link = twitter_api_get_authorize_url(null, false);
-	echo '<div>' . elgg_echo('twitter_api:usersettings:request', array($request_link, $site_name)) . '</div>';
+	echo '<div>' . elgg_echo('twitter_api:usersettings:request', [$request_link, $site_name]) . '</div>';
 } else {
 	// if this user logged in through twitter and never set up an email address, don't
 	// let them disassociate their account.
 	if ($user->email) {
 		$url = elgg_get_site_url() . "twitter_api/revoke";
-		echo '<div>' . elgg_echo('twitter_api:usersettings:authorized', array($site_name, $twitter_name)) . '</div>';
+		echo '<div>' . elgg_echo('twitter_api:usersettings:authorized', [$site_name, $twitter_name]) . '</div>';
 		echo '<div>' . sprintf(elgg_echo('twitter_api:usersettings:revoke'), $url) . '</div>';
 	} else {
-		echo elgg_echo('twitter_api:usersettings:cannot_revoke', array(elgg_normalize_url('twitter_api/interstitial')));
+		echo elgg_echo('twitter_api:usersettings:cannot_revoke', [elgg_normalize_url('twitter_api/interstitial')]);
 	}
 }

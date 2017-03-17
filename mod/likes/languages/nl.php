@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'vindt dit leuk',
 	'likes:deleted' => 'Je vindt dit niet meer leuk',
 	'likes:see' => 'Bekijk wie dit leuk vindt',
@@ -38,4 +38,4 @@ Dank je wel!
 Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.
 ',
 	
-);
+];

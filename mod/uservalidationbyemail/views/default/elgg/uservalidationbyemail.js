@@ -41,3 +41,4 @@ define('elgg/uservalidationbyemail', function (require) {
 		init: init
 	};
 });
+

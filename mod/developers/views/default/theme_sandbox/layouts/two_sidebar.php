@@ -4,7 +4,7 @@ $ipsum = elgg_view('developers/ipsum');
 
 $page_url = current_page_url();
 
-echo elgg_view_layout('default', array(
+echo elgg_view_layout('default', [
 	'sidebar' => "<b>Primary sidebar</b>: $ipsum",
 	'sidebar_alt' => "<b>Secondary sidebar</b>: $ipsum",
 	'title' => 'Layout with two sidebars',
@@ -21,4 +21,4 @@ echo elgg_view_layout('default', array(
 		],
 	],
 	'filter_value' => get_input('filter', 'tab1'),
-));
+]);

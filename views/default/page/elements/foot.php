@@ -7,12 +7,12 @@ echo "<script>$elgg_init</script>";
 // TODO(evan): Introduce new "async" location for scripts allowed in head?
 $js = elgg_get_loaded_js('head');
 foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
+	echo elgg_format_element('script', ['src' => $url]);
 }
 
 $js = elgg_get_loaded_js('footer');
 foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
+	echo elgg_format_element('script', ['src' => $url]);
 }
 
 $deps = _elgg_services()->amdConfig->getDependencies();

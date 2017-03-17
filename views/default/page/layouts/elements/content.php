@@ -2,7 +2,7 @@
 
 /**
  * Layout content
- * 
+ *
  * @uses $vars['content'] Content
  */
 

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 /**
  * Sites
  */
@@ -1497,4 +1497,4 @@ Tähän viestiin ei voi vastata.",
 
 	"field:required" => 'Pakollinen',
 
-);
+];

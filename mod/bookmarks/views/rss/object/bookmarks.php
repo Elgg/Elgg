@@ -15,7 +15,7 @@ $permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $vars['entity']->getTimeCreated());
 
 $url_text = elgg_echo('bookmarks:address');
-$link = elgg_view('output/url', array('href' => $vars['entity']->address));
+$link = elgg_view('output/url', ['href' => $vars['entity']->address]);
 $description = $vars['entity']->description . "<p>$url_text: $link</p>";
 
 $creator = elgg_view('page/components/creator', $vars);

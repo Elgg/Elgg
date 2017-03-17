@@ -31,11 +31,10 @@ if (!is_array($emails) || count($emails) == 0) {
 $current_user = elgg_get_logged_in_user_entity();
 
 $error = false;
-$bad_emails = array();
-$already_members = array();
+$bad_emails = [];
+$already_members = [];
 $sent_total = 0;
 foreach ($emails as $email) {
-
 	$email = trim($email);
 	if (empty($email)) {
 		continue;
@@ -54,33 +53,33 @@ foreach ($emails as $email) {
 		continue;
 	}
 
-	$link = elgg_get_registration_url(array(
+	$link = elgg_get_registration_url([
 		'friend_guid' => $current_user->guid,
 		'invitecode' => generate_invite_code($current_user->username),
-	));
+	]);
 	
-	$message = elgg_echo('invitefriends:email', array(
+	$message = elgg_echo('invitefriends:email', [
 		$site->name,
 		$current_user->name,
 		$emailmessage,
 		$link,
-	));
+	]);
 
-	$subject = elgg_echo('invitefriends:subject', array($site->getDisplayName()));
+	$subject = elgg_echo('invitefriends:subject', [$site->getDisplayName()]);
 
 	elgg_send_email($from, $email, $subject, $message);
 	$sent_total++;
 }
 
 if ($error) {
-	register_error(elgg_echo('invitefriends:invitations_sent', array($sent_total)));
+	register_error(elgg_echo('invitefriends:invitations_sent', [$sent_total]));
 
 	if (count($bad_emails) > 0) {
-		register_error(elgg_echo('invitefriends:email_error', array(implode(', ', $bad_emails))));
+		register_error(elgg_echo('invitefriends:email_error', [implode(', ', $bad_emails)]));
 	}
 
 	if (count($already_members) > 0) {
-		register_error(elgg_echo('invitefriends:already_members', array(implode(', ', $already_members))));
+		register_error(elgg_echo('invitefriends:already_members', [implode(', ', $already_members)]));
 	}
 	
 	return elgg_error_response();

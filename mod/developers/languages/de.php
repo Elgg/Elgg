@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Entwickler-Werkzeuge',
 	'admin:develop_tools:sandbox' => 'Theme-Sandbox',
@@ -90,4 +90,4 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:settings:success' => 'Einstellungen gespeichert und Caches zurückgesetzt.',
 
 	'developers:amd' => 'AMD',
-);
+];

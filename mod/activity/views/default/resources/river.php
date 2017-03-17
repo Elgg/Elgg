@@ -3,10 +3,10 @@
  * Main activity stream list page
  */
 
-$options = array(
+$options = [
 	'distinct' => false,
 	'no_results' => elgg_echo('river:none'),
-);
+];
 
 $page_type = preg_replace('[\W]', '', elgg_extract('page_type', $vars, 'all'));
 $type = preg_replace('[\W]', '', get_input('type', 'all'));
@@ -38,7 +38,7 @@ switch ($page_type) {
 			forward('');
 		}
 		elgg_set_page_owner_guid($subject->guid);
-		$title = elgg_echo('river:owner', array(htmlspecialchars($subject->name, ENT_QUOTES, 'UTF-8', false)));
+		$title = elgg_echo('river:owner', [htmlspecialchars($subject->name, ENT_QUOTES, 'UTF-8', false)]);
 		$page_filter = 'subject';
 		$options['subject_guid'] = $subject->guid;
 		break;
@@ -58,7 +58,7 @@ switch ($page_type) {
 
 $activity = elgg_list_river($options);
 
-$content = elgg_view('core/river/filter', array('selector' => $selector));
+$content = elgg_view('core/river/filter', ['selector' => $selector]);
 
 $sidebar = elgg_view('core/river/sidebar');
 

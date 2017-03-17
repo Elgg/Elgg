@@ -14,7 +14,7 @@ $entity = $vars['entity'];
 $input_name = $vars['input_name'];
 
 
-$icon = elgg_view_entity_icon($entity, 'tiny', array('use_hover' => false));
+$icon = elgg_view_entity_icon($entity, 'tiny', ['use_hover' => false]);
 
 $name = $entity->name;
 if ($name == '') {

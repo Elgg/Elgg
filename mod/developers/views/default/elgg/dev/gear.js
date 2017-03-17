@@ -51,3 +51,4 @@ define(function (require) {
 		spinner.start();
 	});
 });
+

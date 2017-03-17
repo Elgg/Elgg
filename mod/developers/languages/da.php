@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Værktøjer',
 	'admin:develop_tools:sandbox' => 'Tema Sandkasse',
@@ -63,4 +63,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Indstillinger gemt',
-);
+];

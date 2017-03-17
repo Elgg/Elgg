@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Hvor ofte skal Elgg opsamle skrald?',
 
 	'garbagecollector:weekly' => 'En gang om ugen',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Rydder op i uforbundne metastrenge: ',
-);
+];

@@ -17,10 +17,9 @@ if (empty($excerpt)) {
 }
 
 // store errors to pass along
-$error = FALSE;
+$error = false;
 
 if ($title && $description) {
-
 	if ($guid) {
 		$entity = get_entity($guid);
 		if (elgg_instanceof($entity, 'object', 'blog') && $entity->canEdit()) {
@@ -41,7 +40,7 @@ if ($title && $description) {
 
 		// mark this as a brand new post so we can work out the
 		// river / revision logic in the real save action.
-		$blog->new_post = TRUE;
+		$blog->new_post = true;
 
 		if (!$blog->save()) {
 			$error = elgg_echo('blog:error:cannot_save');
@@ -54,14 +53,14 @@ if ($title && $description) {
 		// we have to delete everything or the times are wrong.
 
 		// don't save if nothing changed
-		$auto_save_annotations = $blog->getAnnotations(array(
+		$auto_save_annotations = $blog->getAnnotations([
 			'annotation_name' => 'blog_auto_save',
 			'limit' => 1,
-		));
+		]);
 		if ($auto_save_annotations) {
 			$auto_save = $auto_save_annotations[0];
 		} else {
-			$auto_save = FALSE;
+			$auto_save = false;
 		}
 
 		if (!$auto_save) {
@@ -83,11 +82,11 @@ if ($title && $description) {
 }
 
 if ($error) {
-	$json = array('success' => FALSE, 'message' => $error);
+	$json = ['success' => false, 'message' => $error];
 	echo json_encode($json);
 } else {
 	$msg = elgg_echo('blog:message:saved');
-	$json = array('success' => TRUE, 'message' => $msg, 'guid' => $blog->getGUID());
+	$json = ['success' => true, 'message' => $msg, 'guid' => $blog->getGUID()];
 	echo json_encode($json);
 }
 exit;

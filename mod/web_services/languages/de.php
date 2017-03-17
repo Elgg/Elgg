@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'APIException:ApiResultUnknown' => "Der Typ der API-Rückgabe ist unbekannt. Das sollte nicht passieren.",
 	'APIException:MissingParameterInMethod' => "Fehlender Parameter %s in Methode %s.",
 	'APIException:ParameterNotArray' => "%s scheint kein Feld zu sein.",
@@ -39,4 +39,4 @@ return array(
 
 	'system.api.list' => "Liste alle im System verfügbaren API-Aufrufe auf.",
 	'auth.gettoken' => "Dieser API-Aufruf ermöglicht es einem Benutzer ein Authentifizierungs-Token zu beziehen, das für die Authentifizierung nachfolgender API-Aufrufe verwendet werden kann. Übergebe es als Parameter auth_token.",
-);
+];

@@ -16,23 +16,23 @@ $title = elgg_echo('groups:membershiprequests');
 elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb($title);
 
-$requests = elgg_get_entities_from_relationship(array(
+$requests = elgg_get_entities_from_relationship([
 	'type' => 'user',
 	'relationship' => 'membership_request',
 	'relationship_guid' => $guid,
 	'inverse_relationship' => true,
 	'limit' => 0,
-));
-$content = elgg_view('groups/membershiprequests', array(
+]);
+$content = elgg_view('groups/membershiprequests', [
 	'requests' => $requests,
 	'entity' => $group,
-));
+]);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

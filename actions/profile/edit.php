@@ -16,11 +16,11 @@ if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
 
 // grab the defined profile field names and their load the values from POST.
 // each field can have its own access, so sort that too.
-$input = array();
+$input = [];
 $accesslevel = get_input('accesslevel');
 
 if (!is_array($accesslevel)) {
-	$accesslevel = array();
+	$accesslevel = [];
 }
 
 $profile_fields = elgg_get_config('profile_fields');
@@ -53,9 +53,9 @@ foreach ($profile_fields as $shortname => $valuetype) {
 	}
 
 	if ($valuetype == 'email' && !empty($value) && !is_email_address($value)) {
-		register_error(elgg_echo('profile:invalid_email', array(
+		register_error(elgg_echo('profile:invalid_email', [
 			elgg_echo("profile:{$shortname}")
-		)));
+		]));
 		forward(REFERER);
 	}
 	
@@ -75,16 +75,15 @@ if ($name) {
 
 // go through custom fields
 if (sizeof($input) > 0) {
-	
 	// fetch default access level for the user for use in fallback cases
 	$user_default_access = get_default_access($owner);
 	
 	foreach ($input as $shortname => $value) {
-		$options = array(
+		$options = [
 			'guid' => $owner->guid,
 			'metadata_name' => $shortname,
 			'limit' => false
-		);
+		];
 		elgg_delete_metadata($options);
 		
 		if (!is_null($value) && ($value !== '')) {
@@ -101,7 +100,7 @@ if (sizeof($input) > 0) {
 				$i = 0;
 				foreach ($value as $interval) {
 					$i++;
-					$multiple = ($i > 1) ? TRUE : FALSE;
+					$multiple = ($i > 1) ? true : false;
 					create_metadata($owner->guid, $shortname, $interval, 'text', $owner->guid, $access_id, $multiple);
 				}
 			} else {

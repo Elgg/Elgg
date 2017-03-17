@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-$params = array();
-$params['menu'] = array();
-$params['menu']['default'] = array();
+$params = [];
+$params['menu'] = [];
+$params['menu']['default'] = [];
 for ($i=1; $i<=5; $i++) {
 	$params['menu']['default'][] = new ElggMenuItem($i, "Page $i", "#");
 }

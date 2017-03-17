@@ -18,10 +18,10 @@ $page_owner = elgg_get_page_owner_entity();
 
 if (!$page_owner || !$page_owner->canEdit()) {
 	$guid = 0;
-	if($page_owner){
+	if ($page_owner) {
 		$guid = $page_owner->getGUID();
 	}
-	register_error(elgg_echo("pageownerunavailable", array($guid)));
+	register_error(elgg_echo("pageownerunavailable", [$guid]));
 	forward();
 }
 
@@ -29,9 +29,9 @@ elgg_push_breadcrumb(elgg_echo('messages:sent'));
 
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 
-$title = elgg_echo('messages:sentmessages', array($page_owner->name));
+$title = elgg_echo('messages:sentmessages', [$page_owner->name]);
 
-$list = elgg_list_entities_from_metadata(array(
+$list = elgg_list_entities_from_metadata([
 	'type' => 'object',
 	'subtype' => 'messages',
 	'metadata_name' => 'fromId',
@@ -39,18 +39,18 @@ $list = elgg_list_entities_from_metadata(array(
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 	'bulk_actions' => true
-));
+]);
 
-$body_vars = array(
+$body_vars = [
 	'folder' => 'sent',
 	'list' => $list,
-);
-$content = elgg_view_form('messages/process', array(), $body_vars);
+];
+$content = elgg_view_form('messages/process', [], $body_vars);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-));
+]);
 
 echo elgg_view_page($title, $body);

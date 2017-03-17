@@ -3,7 +3,7 @@
  * Plugin user settings
  *
  * Calls the plugin admin settings form body with type set to 'user'
- * 
+ *
  * @package Elgg.Core
  * @subpackage Plugins
  */

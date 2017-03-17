@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'Уведомления сайта',
 	'notification:method:site' => 'Сообщения',
 	'site_notifications:topbar' => 'Уведомления',
@@ -11,4 +11,4 @@ return array(
 	'site_notifications:toggle_all' => 'Отметить все',
 	'site_notifications:error:notifications_not_selected' => 'Уведомления не выбраны',
 	'site_notifications:success:delete' => 'Уведомления удалены'
-);
+];

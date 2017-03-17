@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Blog',
 	'blog:blogs' => 'Blogs',
 	'blog:revisions' => 'Revisies',
@@ -70,4 +70,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.
 	'blog:moreblogs' => 'Meer blogberichten',
 	'blog:numbertodisplay' => 'Aantal blogberichten om te tonen:',
 	'blog:noblogs' => 'Geen blogs'
-);
+];

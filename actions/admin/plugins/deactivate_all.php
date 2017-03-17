@@ -34,7 +34,7 @@ foreach ($plugins as $plugin) {
 	if (!$plugin->deactivate()) {
 		$msg = $plugin->getError();
 		$string = ($msg) ? 'admin:plugins:deactivate:no_with_msg' : 'admin:plugins:deactivate:no';
-		register_error(elgg_echo($string, array($plugin->getFriendlyName(), $plugin->getError())));
+		register_error(elgg_echo($string, [$plugin->getFriendlyName(), $plugin->getError()]));
 	}
 }
 

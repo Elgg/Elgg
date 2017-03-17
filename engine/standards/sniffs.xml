@@ -4,8 +4,7 @@
 
 	<arg name="tab-width" value="4"/>
 	<arg name="warning-severity" value="0"/>
-	<arg name="ignore" value="*/tests/*,*/upgrades/*,*/deprecated*"/>
-	<arg name="ignore" value="*/tests/*,*/upgrades/*,*/deprecated*"/>
+	<arg name="ignore" value="*/tests/*,*/upgrades/*,*/deprecated*,*/vendor*"/>
 
 	<!-- ELGG STANDARDS -->
 

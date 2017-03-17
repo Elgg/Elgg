@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Introduzca un término de búsqueda:',
 	'search:no_results' => 'Sin resultados.',
 	'search:matched' => 'Coincide: ',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'por',
 	'search:unavailable_entity' => 'Entrada no disponible',
 	'search:unknown_entity' => 'Tipo de Entidad Desconocida',
-);
+];

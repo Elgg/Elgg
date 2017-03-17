@@ -12,16 +12,16 @@ if (elgg_instanceof($group, 'group') && $group->canEdit()) {
 	elgg_set_page_owner_guid($group->getGUID());
 	elgg_push_breadcrumb($group->name, $group->getURL());
 	elgg_push_breadcrumb($title);
-	$content = elgg_view("groups/edit", array('entity' => $group));
+	$content = elgg_view("groups/edit", ['entity' => $group]);
 } else {
 	$content = elgg_echo('groups:noaccess');
 }
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

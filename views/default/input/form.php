@@ -15,10 +15,10 @@
  * @uses $vars['class'] Additional class for the form
  */
 
-$defaults = array(
+$defaults = [
 	'method' => 'post',
-	'disable_security' => FALSE,
-);
+	'disable_security' => false,
+];
 
 $vars = array_merge($defaults, $vars);
 

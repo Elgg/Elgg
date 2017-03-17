@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Sen validar',
 	
 	'email:validate:subject' => "%s confirme o seu enderezo de correo para %s",
@@ -51,4 +51,4 @@ Se non pode seguila, cópiea e péguea nun navegador manualmente.
 	'uservalidationbyemail:messages:resent_validation' => 'Enviouse de novo a solicitude de validación.',
 	'uservalidationbyemail:messages:resent_validations' => 'Enviáronse de novo as solicitudes de validación aos usuarios seleccionados.'
 
-);
+];

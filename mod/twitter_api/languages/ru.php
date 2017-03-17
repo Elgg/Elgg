@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'twitter_api' => 'Сервисы Twitter',
 
 	'twitter_api:requires_oauth' => 'Сервисы Twitter требуют, чтобы плагин OAuth был включен.',
@@ -53,4 +53,4 @@ return array(
 	'twitter_api:interstitial:password_mismatch' => 'Ваши пароли не совпадают.',
 	'twitter_api:interstitial:cannot_save' => 'Не могу сохранить аккаунт.',
 	'twitter_api:interstitial:saved' => 'Аккаунт сохранен!',
-);
+];

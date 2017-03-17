@@ -17,17 +17,17 @@ if (!isset($show_add_form)) {
 	$show_add_form = $topic->canWriteToContainer(0, 'object', 'discussion_reply');
 }
 
-$replies = elgg_list_entities(array(
+$replies = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'discussion_reply',
 	'container_guid' => $topic->guid,
 	'reverse_order_by' => true,
 	'distinct' => false,
 	'url_fragment' => 'group-replies',
-));
+]);
 
 if ($show_add_form) {
-	$form_vars = array('class' => 'mtm');
+	$form_vars = ['class' => 'mtm'];
 	$replies .= elgg_view_form('discussion/reply/save', $form_vars, $vars);
 }
 ?>

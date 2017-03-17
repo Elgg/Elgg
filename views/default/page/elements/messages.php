@@ -15,7 +15,7 @@ echo '<ul class="elgg-system-messages">';
 echo '<li class="hidden"></li>';
 
 if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object']) > 0) {
-	foreach ($vars['object'] as $type => $list ) {
+	foreach ($vars['object'] as $type => $list) {
 		foreach ($list as $message) {
 			echo "<li class=\"elgg-message elgg-state-$type\">";
 			echo elgg_autop($message);

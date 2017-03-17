@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Медиа',
 	'embed:media' => 'Вставить',
 	'embed:instructions' => 'Для вставки нажмите на файл',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'Не найдено.',
 
 	'embed:no_sections' => 'Нет возможности загрузить файлы. Ваш администратор должен активировать файловый плагин.',
-);
+];
