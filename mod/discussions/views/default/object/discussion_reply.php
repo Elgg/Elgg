@@ -10,16 +10,12 @@ if (!$reply) {
 	return true;
 }
 
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', array(
-		'entity' => $vars['entity'],
-		'handler' => 'discussion_reply',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	));
-}
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
+	'handler' => 'discussion_reply',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+		));
 
 if (elgg_in_context('activity')) {
 	$content = '<div class="elgg-output elgg-inner" data-role="comment-text">';

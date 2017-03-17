@@ -17,6 +17,13 @@ if (!$item instanceof ElggMenuItem) {
 $item_vars = [];
 
 $children = $item->getChildren();
+$child_menu_vars = $item->getChildMenuOptions();
+$allow_empty = elgg_extract('allow_empty', $child_menu_vars, true);
+
+if (empty($children) && !$allow_empty) {
+	return;
+}
+
 if (!empty($children)) {
 
 	$link_class = 'elgg-menu-closed';
@@ -27,7 +34,6 @@ if (!empty($children)) {
 
 	$item->addLinkClass('elgg-menu-parent');
 
-	$child_menu_vars = $item->getChildMenuOptions();
 	$child_menu_vars['items'] = $children;
 	$child_menu_vars['class'] = elgg_extract_class($child_menu_vars, ['elgg-menu', 'elgg-child-menu']);
 

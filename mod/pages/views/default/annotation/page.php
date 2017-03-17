@@ -42,15 +42,11 @@ $body = <<< HTML
 <p class="elgg-subtext">$subtitle</p>
 HTML;
 
-$menu = '';
-if (!elgg_in_context('widgets')) {
-	// only show annotation menu outside of widgets
-	$menu = elgg_view_menu('annotation', array(
-		'annotation' => $annotation,
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz float-alt',
-	));
-}
+$menu = elgg_view_menu('annotation', array(
+	'annotation' => $annotation,
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz float-alt',
+));
 
 $body = <<<HTML
 <div class="mbn">

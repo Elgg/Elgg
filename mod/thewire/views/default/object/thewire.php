@@ -22,16 +22,12 @@ if (!$thread_id) {
 
 $subtitle = elgg_view('page/elements/by_line', $vars);
 
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', array(
-		'entity' => $post,
-		'handler' => 'thewire',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	));
-}
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $post,
+	'handler' => 'thewire',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+));
 
 $params = array(
 	'entity' => $post,

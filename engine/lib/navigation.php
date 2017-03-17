@@ -522,6 +522,28 @@ function _elgg_page_menu_setup(\Elgg\Hook $hook) {
  * @access private
  */
 function _elgg_river_menu_setup($hook, $type, $return, $params) {
+
+	$toggle = elgg_view_icon('chevron-down', ['class' => 'elgg-state-closed']);
+	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
+	
+	$return[] = \ElggMenuItem::factory([
+				'name' => 'actions',
+				'text' => elgg_echo('river:actions'),
+				'icon' => $toggle,
+				'href' => '#',
+				'child_menu' => [
+					'display' => 'dropdown',
+					'class' => 'elgg-river-child-menu',
+					'allow_empty' => false,
+					'data-position' => json_encode([
+						'at' => 'right bottom+5px',
+						'my' => 'right top',
+						'collision' => 'fit fit',
+					]),
+				],
+				'priority' => 9999,
+	]);
+
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
 		/* @var \ElggRiverItem $item */
@@ -531,8 +553,10 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 			if ($object->canComment()) {
 				$options = array(
 					'name' => 'comment',
+					'parent_name' => 'actions',
 					'href' => "#comments-add-{$object->guid}-{$item->id}",
-					'text' => elgg_view_icon('speech-bubble'),
+					'text' => elgg_echo('comment'),
+					'icon' => 'speech-bubble',
 					'title' => elgg_echo('comment:this'),
 					'rel' => 'toggle',
 					'priority' => 50,
@@ -544,11 +568,13 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 		if ($item->canDelete()) {
 			$options = array(
 				'name' => 'delete',
+				'parent_name' => 'actions',
 				'href' => elgg_add_action_tokens_to_url("action/river/delete?id={$item->id}"),
-				'text' => elgg_view_icon('delete'),
+				'text' => elgg_echo('delete'),
+				'icon' => 'delete',
 				'title' => elgg_echo('river:delete'),
 				'confirm' => elgg_echo('deleteconfirm'),
-				'priority' => 200,
+				'priority' => 900,
 			);
 			$return[] = \ElggMenuItem::factory($options);
 		}
@@ -562,10 +588,28 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
  * @access private
  */
 function _elgg_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-	
+
+	$toggle = elgg_view_icon('chevron-down', ['class' => 'elgg-state-closed']);
+	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
+
+	$return[] = \ElggMenuItem::factory([
+				'name' => 'actions',
+				'text' => elgg_echo('entity:actions'),
+				'icon' => $toggle,
+				'href' => '#',
+				'child_menu' => [
+					'display' => 'dropdown',
+					'class' => 'elgg-entity-child-menu',
+					'allow_empty' => false,
+					'data-position' => json_encode([
+						'at' => 'right bottom+5px',
+						'my' => 'right top',
+						'collision' => 'fit fit',
+					]),
+				],
+				'priority' => 9999,
+	]);
+
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
@@ -586,7 +630,9 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		// edit link
 		$options = array(
 			'name' => 'edit',
+			'parent_name' => 'actions',
 			'text' => elgg_echo('edit'),
+			'icon' => 'pencil',
 			'title' => elgg_echo('edit:this'),
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
@@ -603,11 +649,13 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		}
 		$options = array(
 			'name' => 'delete',
-			'text' => elgg_view_icon('delete'),
+			'parent_name' => 'actions',
+			'text' => elgg_echo('delete'),
+			'icon' => 'delete',
 			'title' => elgg_echo('delete:this'),
 			'href' => "$action?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 300,
+			'priority' => 900,
 		);
 		$return[] = \ElggMenuItem::factory($options);
 	}
