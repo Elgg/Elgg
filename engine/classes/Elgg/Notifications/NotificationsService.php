@@ -759,7 +759,8 @@ class NotificationsService {
 		);
 		$hookresult = $this->hooks->trigger('object:notifications', $entity->getType(), $params, false);
 		if ($hookresult === true) {
-			elgg_deprecated_notice("Using the plugin hook 'object:notifications' has been deprecated by the hook 'send:before', 'notifications'", 1.9);
+			elgg_deprecated_notice("Using the plugin hook 'object:notifications' has been deprecated "
+				. "by the hook 'send:before', 'notifications'", 1.9);
 			return true;
 		} else {
 			return false;

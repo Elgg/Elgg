@@ -324,18 +324,18 @@ class Annotations {
 	 */
 	function getEntities(array $options = array()) {
 		$defaults = array(
-			'annotation_names'						=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_values'						=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
+			'annotation_names'						=> ELGG_ENTITIES_ANY_VALUE,
+			'annotation_values'						=> ELGG_ENTITIES_ANY_VALUE,
+			'annotation_name_value_pairs'			=> ELGG_ENTITIES_ANY_VALUE,
 	
-			'annotation_name_value_pairs_operator'	=>	'AND',
-			'annotation_case_sensitive' 			=>	true,
-			'order_by_annotation'					=>	array(),
+			'annotation_name_value_pairs_operator'	=> 'AND',
+			'annotation_case_sensitive' 			=> true,
+			'order_by_annotation'					=> array(),
 	
-			'annotation_created_time_lower'			=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_created_time_upper'			=>	ELGG_ENTITIES_ANY_VALUE,
+			'annotation_created_time_lower'			=> ELGG_ENTITIES_ANY_VALUE,
+			'annotation_created_time_upper'			=> ELGG_ENTITIES_ANY_VALUE,
 	
-			'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
+			'annotation_owner_guids'				=> ELGG_ENTITIES_ANY_VALUE,
 		);
 	
 		$options = array_merge($defaults, $options);

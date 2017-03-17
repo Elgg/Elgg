@@ -31,12 +31,13 @@
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "elgg/sniffs": "dev-master#cdb2f2b39ede62bebd2c7b55570123bcbeb372fe"
     },
     "scripts": {
         "pre-install-cmd": "php .scripts/check_global_requirements.php",
         "lint": [
-            "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
+            "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --tab-width=4 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
             "composer validate"
         ],
         "test": "phpunit",
@@ -68,7 +69,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1",
-        "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "~1.5",
         "simpletest/simpletest": "~1.1",
         "phpdocumentor/reflection-docblock": "~2.0"
