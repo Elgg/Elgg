@@ -4,13 +4,13 @@
 	clear: right;
 }
 
-.cke.cke_chrome {	
+.cke.cke_chrome {
 	box-shadow: none;
 	border-color: #CCC;
 }
 
 .cke .cke_top,
-.cke .cke_bottom {	
+.cke .cke_bottom {
 	background: transparent;
 	border-color: #CCC;
 }
@@ -32,3 +32,4 @@
 .cke_button {
 	background: none !important;
 }
+

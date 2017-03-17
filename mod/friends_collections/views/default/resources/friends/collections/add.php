@@ -34,9 +34,9 @@ if (elgg_is_sticky_form($form_name)) {
 
 $content = elgg_view_form($form_name, [], $form_vars);
 
-$body = elgg_view_layout('one_sidebar', array(
-	'title' => $title, 
+$body = elgg_view_layout('one_sidebar', [
+	'title' => $title,
 	'content' => $content
-));
+]);
 
 echo elgg_view_page($title, $body);

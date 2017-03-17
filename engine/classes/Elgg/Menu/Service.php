@@ -71,7 +71,7 @@ class Service {
 		$params = $this->hooks->trigger('parameters', "menu:$name", $params, $params);
 
 		if (!isset($params['sort_by'])) {
-			$params['sort_by'] = 'priority';
+			$params['sort_by'] = 'text';
 		}
 
 		$items = $this->hooks->trigger('register', "menu:$name", $params, $items);
@@ -114,7 +114,7 @@ class Service {
 	 */
 	function combineMenus(array $names = [], array $params = [], $new_name = '') {
 		if (!$new_name) {
-			$new_name = implode('__' , $names);
+			$new_name = implode('__', $names);
 		}
 
 		$all_items = [];

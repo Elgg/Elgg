@@ -1,6 +1,6 @@
 <?php
 use Symfony\Component\Yaml\Tests\A;
-return array(
+return [
 /**
  * Sites
  */
@@ -1610,4 +1610,4 @@ To view %s's profile, click here:
 
 	"field:required" => 'Required',
 
-);
+];

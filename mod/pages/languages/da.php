@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ Se og kommenter på den nye side:
 
 	'pages:newchild' => "Opret en underside",
 	'pages:backtoparent' => "Tilbage til '%s'",
-);
+];

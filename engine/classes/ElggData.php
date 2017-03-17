@@ -21,7 +21,7 @@ abstract class ElggData implements
 	 * Subclasses should add to this in their constructors.
 	 * Any field not appearing in this will be viewed as metadata
 	 */
-	protected $attributes = array();
+	protected $attributes = [];
 
 	/**
 	 * Initialize the attributes array.
@@ -33,7 +33,7 @@ abstract class ElggData implements
 	protected function initializeAttributes() {
 		// Create attributes array if not already created
 		if (!is_array($this->attributes)) {
-			$this->attributes = array();
+			$this->attributes = [];
 		}
 
 		$this->attributes['time_created'] = null;
@@ -93,7 +93,7 @@ abstract class ElggData implements
 
 	/**
 	 * Get a plain old object copy for public consumption
-	 * 
+	 *
 	 * @return \stdClass
 	 */
 	abstract public function toObject();

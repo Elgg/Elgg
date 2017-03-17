@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -19,4 +19,4 @@ return array(
 	 */
 	'expages:posted' => "La tua pagina è stata aggiornata con successo.",
 	'expages:error' => "Non è possibile salvare questa pagina.",
-);
+];

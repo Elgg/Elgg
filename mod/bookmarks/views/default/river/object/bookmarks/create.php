@@ -11,8 +11,8 @@ $item = $vars['item'];
 $object = $item->getObjectEntity();
 $excerpt = elgg_get_excerpt($object->description);
 
-echo elgg_view('river/elements/layout', array(
+echo elgg_view('river/elements/layout', [
 	'item' => $item,
 	'message' => $excerpt,
-	'attachments' => elgg_view('output/url', array('href' => $object->address)),
-));
+	'attachments' => elgg_view('output/url', ['href' => $object->address]),
+]);

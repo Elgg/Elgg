@@ -1,6 +1,6 @@
 <?php
-return array(
+return [
 	'ckeditor:html' => "Editor de HTML",
 	'ckeditor:visual' => "Editor visual",
 	'ckeditor:blockimagepaste' => "Non se permite pergar imaxes directamente.",
-);
+];

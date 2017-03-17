@@ -27,27 +27,27 @@ if (!$owner) {
 		<div class="groups-profile-icon">
 			<?php
 				// we don't force icons to be square so don't set width/height
-				echo elgg_view_entity_icon($group, 'large', array(
+				echo elgg_view_entity_icon($group, 'large', [
 					'href' => '',
 					'width' => '',
 					'height' => '',
-				)); 
+				]);
 			?>
 		</div>
 		<div class="groups-stats">
 			<p>
 				<b><?php echo elgg_echo("groups:owner"); ?>: </b>
 				<?php
-					echo elgg_view('output/url', array(
+					echo elgg_view('output/url', [
 						'text' => $owner->name,
 						'value' => $owner->getURL(),
 						'is_trusted' => true,
-					));
+					]);
 				?>
 			</p>
 			<p>
 			<?php
-				$num_members = $group->getMembers(array('count' => true));
+				$num_members = $group->getMembers(['count' => true]);
 				echo elgg_echo('groups:members') . ": " . $num_members;
 			?>
 			</p>

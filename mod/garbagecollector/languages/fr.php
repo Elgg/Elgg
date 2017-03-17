@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'A quelle fréquence souhaitez-vous faire tourner le ramasse-miettes ?',
 
 	'garbagecollector:weekly' => 'Une fois par semaine',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Nettoyage des chaînes meta (metastrings) non liées: ',
-);
+];

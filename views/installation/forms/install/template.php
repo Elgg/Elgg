@@ -27,8 +27,8 @@ FIELD;
 	$form_body .= $field;
 }
 
-$form_body .= elgg_view('input/submit', array(
+$form_body .= elgg_view('input/submit', [
 	'value' => elgg_echo('install:next'),
-));
+]);
 
 echo $form_body;

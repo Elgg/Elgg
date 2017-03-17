@@ -2,7 +2,7 @@
 
 /**
  * Second layout sidebar
- * 
+ *
  * @uses $vars['sidebar_alt'] Sidebar view
  */
 

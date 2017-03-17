@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -19,4 +19,4 @@ return array(
 	 */
 	'expages:posted' => "Je pagina is succesvol bijgewerkt.",
 	'expages:error' => "De pagina kon niet worden opgeslagen.",
-);
+];

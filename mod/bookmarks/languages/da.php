@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Se og kommenter på bogmærket:
 	'bookmarks:save:invalid' => "The address of the bookmark is invalid and could not be saved.",
 	'bookmarks:delete:failed' => "Bogmærket kunne ikke slettes, prøv venligst igen.",
 	'bookmarks:unknown_bookmark' => 'Kan ikke finde det specifikke bogmærke',
-);
+];

@@ -160,12 +160,12 @@ class Locator {
 	 * @return boolean
 	 */
 	public function upgradeExists($upgrade_id) {
-		$upgrade = $this->privateSettings->getEntities(array(
+		$upgrade = $this->privateSettings->getEntities([
 			'type' => 'object',
 			'subtype' => 'elgg_upgrade',
 			'private_setting_name' => 'id',
 			'private_setting_value' => $upgrade_id,
-		));
+		]);
 
 		return !empty($upgrade);
 	}

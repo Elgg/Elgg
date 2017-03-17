@@ -32,21 +32,21 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 			$isFriend = $user->isFriend();
 
 			// Always emit both to make it super easy to toggle with ajax
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = \ElggMenuItem::factory([
 				'name' => 'remove_friend',
 				'href' => elgg_add_action_tokens_to_url("action/friends/remove?friend={$user->guid}"),
 				'text' => elgg_echo('friend:remove'),
 				'section' => 'action',
 				'item_class' => $isFriend ? '' : 'hidden',
-			));
+			]);
 
-			$return[] = \ElggMenuItem::factory(array(
+			$return[] = \ElggMenuItem::factory([
 				'name' => 'add_friend',
 				'href' => elgg_add_action_tokens_to_url("action/friends/add?friend={$user->guid}"),
 				'text' => elgg_echo('friend:add'),
 				'section' => 'action',
 				'item_class' => $isFriend ? 'hidden' : '',
-			));
+			]);
 		}
 	}
 
@@ -142,14 +142,14 @@ function _elgg_friends_page_menu($hook, $type, $return, $params) {
 		'name' => 'friends',
 		'text' => elgg_echo('friends'),
 		'href' => 'friends/' . $owner->username,
-		'contexts' => array('friends'),
+		'contexts' => ['friends'],
 	]);
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends:of',
 		'text' => elgg_echo('friends:of'),
 		'href' => 'friendsof/' . $owner->username,
-		'contexts' => array('friends'),
+		'contexts' => ['friends'],
 	]);
 
 	return $return;
@@ -177,15 +177,15 @@ function _elgg_send_friend_notification($event, $type, $object) {
 	/* @var ElggUser $user_two */
 
 	// Notification subject
-	$subject = elgg_echo('friend:newfriend:subject', array(
+	$subject = elgg_echo('friend:newfriend:subject', [
 		$user_one->name
-	), $user_two->language);
+	], $user_two->language);
 
 	// Notification body
-	$body = elgg_echo("friend:newfriend:body", array(
+	$body = elgg_echo("friend:newfriend:body", [
 		$user_one->name,
 		$user_one->getURL()
-	), $user_two->language);
+	], $user_two->language);
 
 	// Notification params
 	$params = [

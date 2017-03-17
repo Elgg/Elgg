@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 /**
  * Sites
  */
@@ -1491,4 +1491,4 @@ return array(
 
 	"field:required" => '必須です',
 
-);
+];

@@ -17,7 +17,7 @@ function _elgg_cron_init() {
 
 	elgg_register_plugin_hook_handler('cron', 'all', '_elgg_cron_monitor', 1000);
 
-	elgg_set_config('elgg_cron_periods', array(
+	elgg_set_config('elgg_cron_periods', [
 		'minute',
 		'fiveminute',
 		'fifteenmin',
@@ -27,7 +27,7 @@ function _elgg_cron_init() {
 		'weekly',
 		'monthly',
 		'yearly',
-	));
+	]);
 
 	elgg_register_admin_menu_item('administer', 'cron', 'statistics');
 }
@@ -48,12 +48,12 @@ function _elgg_cron_init() {
  */
 function _elgg_cron_run() {
 	$now = time();
-	$params = array();
+	$params = [];
 	$params['time'] = $now;
 
 	$all_std_out = "";
 
-	$periods = array(
+	$periods = [
 		'minute' => 60,
 		'fiveminute' => 300,
 		'fifteenmin' => 900,
@@ -63,7 +63,7 @@ function _elgg_cron_run() {
 		'weekly' => 604800,
 		'monthly' => 2628000,
 		'yearly' => 31536000,
-	);
+	];
 
 	foreach ($periods as $period => $interval) {
 		$key = "cron_latest:$period:ts";
@@ -120,7 +120,7 @@ function _elgg_cron_page_handler($page) {
 		_elgg_cron_run();
 	} else {
 		// Get a list of parameters
-		$params = array();
+		$params = [];
 		$params['time'] = time();
 
 		// Data to return to

@@ -17,7 +17,7 @@ if ($user && ($group instanceof ElggGroup) && $group->canEdit()) {
 	// Don't allow removing group owner
 	if ($group->getOwnerGUID() != $user->getGUID()) {
 		if ($group->leave($user)) {
-			system_message(elgg_echo("groups:removed", array($user->name)));
+			system_message(elgg_echo("groups:removed", [$user->name]));
 		} else {
 			register_error(elgg_echo("groups:cantremove"));
 		}

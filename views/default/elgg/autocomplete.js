@@ -26,3 +26,4 @@ define(function (require) {
 		}
 	};
 });
+

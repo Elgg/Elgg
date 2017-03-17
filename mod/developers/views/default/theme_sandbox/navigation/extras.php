@@ -1,8 +1,8 @@
 <?php
 
-$params = array();
-$params['menu'] = array();
-$params['menu']['default'] = array();
+$params = [];
+$params['menu'] = [];
+$params['menu']['default'] = [];
 $params['menu']['default'][] = new ElggMenuItem(1, elgg_view_icon('push-pin-alt'), "#");
 $params['menu']['default'][] = new ElggMenuItem(2, elgg_view_icon('rss'), "#");
 $params['menu']['default'][] = new ElggMenuItem(3, elgg_view_icon('star-alt'), "#");
@@ -12,7 +12,7 @@ $params['class'] = 'elgg-menu-hz';
 ?>
 
 <div class="theme-sandbox-demo-sidebar">
-<?php 
+<?php
 	echo elgg_view('navigation/menu/default', $params);
 ?>
 </div>

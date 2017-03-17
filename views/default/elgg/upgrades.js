@@ -119,3 +119,4 @@ define(function(require) {
 
 	$('#upgrade-run').click(run);
 });
+

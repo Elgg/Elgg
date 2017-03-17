@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Vezi și comentează marcajul:
 	'bookmarks:save:invalid' => "Adresa marcajului este invalidă și nu s-a putut salva.",
 	'bookmarks:delete:failed' => "Marcajul tău nu s-a putut șterge. Te rugăm să reîncerci.",
 	'bookmarks:unknown_bookmark' => 'Nu s-a putut găsi marcajul specificat',
-);
+];

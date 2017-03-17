@@ -163,7 +163,7 @@ class ConfigTable {
 		// check for deprecated values.
 		// @todo might be a better spot to define this?
 		$new_name = false;
-		switch($name) {
+		switch ($name) {
 			case 'pluginspath':
 				$new_name = 'plugins_path';
 				break;

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -75,4 +75,4 @@ View and comment on the bookmark:
 	'bookmarks:save:invalid' => "The address of the bookmark is invalid and could not be saved.",
 	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
 	'bookmarks:unknown_bookmark' => 'Cannot find specified bookmark',
-);
+];

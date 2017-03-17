@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 /**
  * Sites
  */
@@ -1498,4 +1498,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 
 	"field:required" => 'Vereist',
 
-);
+];

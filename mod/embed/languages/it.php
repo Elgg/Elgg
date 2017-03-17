@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Incorpora',
 	'embed:media' => 'Incorpora contenuto',
 	'embed:instructions' => 'Clicca su qualsiasi file per incorporarlo nel tuo contenuto',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'Nessun elemento trovato',
 
 	'embed:no_sections' => 'Non abbiamo trovato alcun plugin supportato per l\'incorporamento. Chiedi all\'amministratore del sito di abilitare un plugin che supporti l\'incorporamento.',
-);
+];

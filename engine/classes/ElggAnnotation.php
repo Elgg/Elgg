@@ -41,7 +41,7 @@ class ElggAnnotation extends \ElggExtender {
 		$this->initializeAttributes();
 
 		if ($row) {
-			foreach ((array)$row as $key => $value) {
+			foreach ((array) $row as $key => $value) {
 				$this->attributes[$key] = $value;
 			}
 		}
@@ -77,7 +77,7 @@ class ElggAnnotation extends \ElggExtender {
 	public function delete() {
 		$result = _elgg_delete_metastring_based_object_by_id($this->id, 'annotation');
 		if ($result) {
-			_elgg_delete_river(array('annotation_id' => $this->id));
+			_elgg_delete_river(['annotation_id' => $this->id]);
 		}
 
 		return $result;

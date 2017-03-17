@@ -12,18 +12,18 @@
  */
 function messages_prepare_form_vars($recipient_guid = 0) {
 
-	$recipients = array();
+	$recipients = [];
 	$recipient = get_user($recipient_guid);
 	if (!empty($recipient)) {
 		$recipients[] = $recipient->getGUID();
 	}
 
 	// input names => defaults
-	$values = array(
+	$values = [
 		'subject' => '',
 		'body' => '',
 		'recipients' => $recipients,
-	);
+	];
 
 	if (elgg_is_sticky_form('messages')) {
 		foreach (array_keys($values) as $field) {

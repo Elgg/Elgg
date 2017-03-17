@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Outils',
 	'admin:develop_tools:sandbox' => 'Bac à sable du thème',
@@ -90,4 +90,4 @@ Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wra
 	'developers:settings:success' => 'Paramètres enregistrés et caches vidés',
 
 	'developers:amd' => 'AMD',
-);
+];

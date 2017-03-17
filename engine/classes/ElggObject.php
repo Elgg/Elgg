@@ -183,7 +183,7 @@ class ElggObject extends \ElggEntity {
 		$object = parent::prepareObject($object);
 		$object->title = $this->getDisplayName();
 		$object->description = $this->description;
-		$object->tags = $this->tags ? $this->tags : array();
+		$object->tags = $this->tags ? $this->tags : [];
 		return $object;
 	}
 

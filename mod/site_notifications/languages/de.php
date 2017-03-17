@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'Seiten-Benachrichtigungen',
 	'notification:method:site' => 'Seite',
 	'site_notifications:topbar' => 'Benachrichtigungen',
@@ -11,4 +11,4 @@ return array(
 	'site_notifications:toggle_all' => 'Alle auswählen',
 	'site_notifications:error:notifications_not_selected' => 'Es sind keine Benachrichtigungen ausgewählt.',
 	'site_notifications:success:delete' => 'Die Benachrichtigungen wurden gelöscht.'
-);
+];

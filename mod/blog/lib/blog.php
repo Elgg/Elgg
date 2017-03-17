@@ -11,20 +11,20 @@
  * @param int $container_guid The GUID of the page owner or NULL for all blogs
  * @return array
  */
-function blog_get_page_content_list($container_guid = NULL) {
+function blog_get_page_content_list($container_guid = null) {
 
-	$return = array();
+	$return = [];
 
 	$return['filter_context'] = $container_guid ? 'mine' : 'all';
 
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'blog',
 		'full_view' => false,
 		'no_results' => elgg_echo('blog:none'),
 		'preload_owners' => true,
 		'distinct' => false,
-	);
+	];
 
 	$current_user = elgg_get_logged_in_user_entity();
 
@@ -34,11 +34,11 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		$container = get_entity($container_guid);
 		if ($container instanceof ElggGroup) {
-		$options['container_guid'] = $container_guid;
+			$options['container_guid'] = $container_guid;
 		} else {
 			$options['owner_guid'] = $container_guid;
 		}
-		$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
+		$return['title'] = elgg_echo('blog:title:user_blogs', [$container->name]);
 
 		$crumbs_title = $container->name;
 		elgg_push_breadcrumb($crumbs_title);
@@ -89,21 +89,21 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	elgg_push_breadcrumb(elgg_echo('blog:archives'));
 
 	if ($lower) {
-		$lower = (int)$lower;
+		$lower = (int) $lower;
 	}
 
 	if ($upper) {
-		$upper = (int)$upper;
+		$upper = (int) $upper;
 	}
 
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'blog',
 		'full_view' => false,
 		'no_results' => elgg_echo('blog:none'),
 		'preload_owners' => true,
 		'distinct' => false,
-	);
+	];
 
 	if ($owner instanceof ElggGroup) {
 		$options['container_guid'] = $owner_guid;
@@ -121,38 +121,38 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 
 	$content = elgg_list_entities($options);
 
-	$title = elgg_echo('date:month:' . date('m', $lower), array(date('Y', $lower)));
+	$title = elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
 
-	return array(
+	return [
 		'content' => $content,
 		'title' => $title,
 		'filter' => '',
-	);
+	];
 }
 
 /**
  * Get page components to edit/create a blog post.
  *
- * @param string  $page     'edit' or 'new'
- * @param int     $guid     GUID of blog post or container
- * @param int     $revision Annotation id for revision to edit (optional)
+ * @param string $page     'edit' or 'new'
+ * @param int    $guid     GUID of blog post or container
+ * @param int    $revision Annotation id for revision to edit (optional)
  * @return array
  */
-function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
+function blog_get_page_content_edit($page, $guid = 0, $revision = null) {
 
 	elgg_require_js('elgg/blog/save_draft');
 
-	$return = array(
+	$return = [
 		'filter' => '',
-	);
+	];
 
-	$vars = array();
+	$vars = [];
 	$vars['id'] = 'blog-post-edit';
 	$vars['class'] = 'elgg-form-alt';
 
 	$sidebar = '';
 	if ($page == 'edit') {
-		$blog = get_entity((int)$guid);
+		$blog = get_entity((int) $guid);
 
 		$title = elgg_echo('blog:edit');
 
@@ -162,7 +162,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 			$title .= ": \"$blog->title\"";
 
 			if ($revision) {
-				$revision = elgg_get_annotation_from_id((int)$revision);
+				$revision = elgg_get_annotation_from_id((int) $revision);
 				$vars['revision'] = $revision;
 				$title .= ' ' . elgg_echo('blog:edit_revision_notice');
 
@@ -207,21 +207,21 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
  * @param ElggAnnotation $revision
  * @return array
  */
-function blog_prepare_form_vars($post = NULL, $revision = NULL) {
+function blog_prepare_form_vars($post = null, $revision = null) {
 
 	// input names => defaults
-	$values = array(
-		'title' => NULL,
-		'description' => NULL,
+	$values = [
+		'title' => null,
+		'description' => null,
 		'status' => 'published',
 		'access_id' => ACCESS_DEFAULT,
 		'comments_on' => 'On',
-		'excerpt' => NULL,
-		'tags' => NULL,
-		'container_guid' => NULL,
-		'guid' => NULL,
+		'excerpt' => null,
+		'tags' => null,
+		'container_guid' => null,
+		'guid' => null,
 		'draft_warning' => '',
-	);
+	];
 
 	if ($post) {
 		foreach (array_keys($values) as $field) {
@@ -256,10 +256,10 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 
 	// display a notice if there's an autosaved annotation
 	// and we're not editing it.
-	$auto_save_annotations = $post->getAnnotations(array(
+	$auto_save_annotations = $post->getAnnotations([
 		'annotation_name' => 'blog_auto_save',
 		'limit' => 1,
-	));
+	]);
 	if ($auto_save_annotations) {
 		$auto_save = $auto_save_annotations[0];
 	} else {

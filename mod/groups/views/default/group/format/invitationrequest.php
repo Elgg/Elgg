@@ -16,17 +16,17 @@ if (!$group instanceof \ElggGroup) {
 }
 
 $icon = elgg_view_entity_icon($group, 'small');
-$menu = elgg_view_menu('invitationrequest', array(
+$menu = elgg_view_menu('invitationrequest', [
 	'entity' => $group,
 	'user' => $user,
 	'order_by' => 'priority',
 	'class' => 'elgg-menu-hz float-alt',
-));
+]);
 
-$summary = elgg_view('group/elements/summary', array(
+$summary = elgg_view('group/elements/summary', [
 	'entity' => $group,
 	'subtitle' => $group->briefdescription,
 	'metadata' => $menu,
-));
+]);
 
 echo elgg_view_image_block($icon, $summary);

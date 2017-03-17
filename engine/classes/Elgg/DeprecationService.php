@@ -45,7 +45,7 @@ class DeprecationService {
 
 		// Get a file and line number for the log. Skip over the function that
 		// sent this notice and see who called the deprecated function itself.
-		$stack = array();
+		$stack = [];
 		$backtrace = debug_backtrace();
 		// never show this call.
 		array_shift($backtrace);

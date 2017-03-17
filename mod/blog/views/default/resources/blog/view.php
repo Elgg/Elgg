@@ -32,7 +32,7 @@ $params['content'] = elgg_view_entity($blog, [
 	'show_responses' => true,
 ]);
 
-$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
+$params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
 
 $body = elgg_view_layout('content', $params);
 

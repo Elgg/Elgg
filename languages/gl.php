@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 /**
  * Sites
  */
@@ -1491,4 +1491,4 @@ Non responda a esta mensaxe.",
 
 	"field:required" => 'Required',
 
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => 'Przeglądarka plików rejestrowych',
 	'logbrowser' => 'Przeglądarka plików rejestrowych',
 	'logbrowser:browse' => 'Przeglądaj systemowe pliki rejestrowe',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => 'Rodzaj obiektu',
 	'logbrowser:object:guid' => 'GUID obiektu',
 	'logbrowser:action' => 'Działanie',
-);
+];

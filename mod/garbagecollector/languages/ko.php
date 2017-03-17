@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Elgg 쓰레기 처리기를 얼마나 자주 실행할까요?',
 
 	'garbagecollector:weekly' => '매주',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "좋음",
 
 	'garbagecollector:gc:metastrings' => '연결되지 않은 중간문자열을 삭제하는 중입니다.',
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -19,4 +19,4 @@ return array(
 	 */
 	'expages:posted' => "ページを更新しました。",
 	'expages:error' => "このページを保存できませんでした。",
-);
+];

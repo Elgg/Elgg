@@ -77,7 +77,7 @@ class ElggBatch implements BatchResult {
 	 *
 	 * @var array
 	 */
-	private $results = array();
+	private $results = [];
 
 	/**
 	 * The function used to get results.
@@ -91,7 +91,7 @@ class ElggBatch implements BatchResult {
 	 *
 	 * @var array
 	 */
-	private $options = array();
+	private $options = [];
 
 	/**
 	 * The number of results to grab at a time.
@@ -175,7 +175,7 @@ class ElggBatch implements BatchResult {
 	 *
 	 * @var \stdClass[]
 	 */
-	private $incompleteEntities = array();
+	private $incompleteEntities = [];
 
 	/**
 	 * Total number of incomplete entities fetched
@@ -237,7 +237,7 @@ class ElggBatch implements BatchResult {
 					if ($result === true || $result === false || $result === null) {
 						$all_results = $result;
 					} else {
-						$all_results = array();
+						$all_results = [];
 					}
 				}
 
@@ -271,7 +271,7 @@ class ElggBatch implements BatchResult {
 	private function getNextResultsChunk() {
 
 		// always reset results.
-		$this->results = array();
+		$this->results = [];
 
 		if (!isset($this->validGetter)) {
 			$this->validGetter = is_callable($this->getter);
@@ -305,15 +305,15 @@ class ElggBatch implements BatchResult {
 			$offset = $this->offset + $this->totalIncompletes;
 		}
 
-		$current_options = array(
+		$current_options = [
 			'limit' => $limit,
 			'offset' => $offset,
 			'__ElggBatch' => $this,
-		);
+		];
 
 		$options = array_merge($this->options, $current_options);
 
-		$this->incompleteEntities = array();
+		$this->incompleteEntities = [];
 		$this->results = call_user_func($this->getter, $options);
 
 		// batch result sets tend to be large; we don't want to cache these.
@@ -326,7 +326,7 @@ class ElggBatch implements BatchResult {
 
 		if ($this->incompleteEntities) {
 			// pad the front of the results with nulls representing the incompletes
-			array_splice($this->results, 0, 0, array_pad(array(), $num_incomplete, null));
+			array_splice($this->results, 0, 0, array_pad([], $num_incomplete, null));
 			// ...and skip past them
 			reset($this->results);
 			for ($i = 0; $i < $num_incomplete; $i++) {
@@ -404,14 +404,14 @@ class ElggBatch implements BatchResult {
 	public function next() {
 		// if we'll be at the end.
 		if (($this->processedResults + 1) >= $this->limit && $this->limit > 0) {
-			$this->results = array();
+			$this->results = [];
 			return false;
 		}
 
 		// if we'll need new results.
 		if (($this->resultIndex + 1) >= $this->chunkSize) {
 			if (!$this->getNextResultsChunk()) {
-				$this->results = array();
+				$this->results = [];
 				return false;
 			}
 

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ return array(
 	'bookmarks:save:invalid' => "책갈피의 주소가 잘못되어 저장할 수 없습니다.",
 	'bookmarks:delete:failed' => "책갈피를 삭제할 수 없습니다. 다시 시도해 보세요.",
 	'bookmarks:unknown_bookmark' => '해당하는 책갈피를 찾을 수 없습니다.',
-);
+];

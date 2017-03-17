@@ -14,46 +14,46 @@ if (!$batch) {
 
 $data = elgg_format_element(
 	'span',
-	array(
+	[
 		'class' => 'upgrade-data hidden',
 		'data-total' => $batch->countItems(),
-	)
+	]
 );
 
 $timer = elgg_format_element(
 	'span',
-	array('class' => 'upgrade-timer'),
+	['class' => 'upgrade-timer'],
 	'00:00:00'
 );
 
 $counter = elgg_format_element(
 	'span',
-	array('class' => 'upgrade-counter float-alt'),
+	['class' => 'upgrade-counter float-alt'],
 	"0/{$batch->countItems()}"
 );
 
-$progressbar = elgg_format_element('div', array(
+$progressbar = elgg_format_element('div', [
 	'class' => 'elgg-progressbar',
-));
+]);
 
-$errors_link = elgg_view('output/url', array(
+$errors_link = elgg_view('output/url', [
 	'href' => "#upgrade-errors-{$entity->guid}",
-	'text' => elgg_echo('upgrade:error_count', array(0)),
+	'text' => elgg_echo('upgrade:error_count', [0]),
 	'rel' => 'toggle',
 	'class' => 'upgrade-error-counter',
-));
+]);
 
-$errors = elgg_format_element('ul', array(
+$errors = elgg_format_element('ul', [
 	'id' => "upgrade-errors-{$entity->guid}",
 	'class' => 'upgrade-messages elgg-message elgg-state-error hidden',
-));
+]);
 
-$params = array(
+$params = [
 	'entity' => $entity,
 	'title' => elgg_echo($entity->title),
 	'subtitle' => elgg_echo($entity->description),
 	'content' => $data . $counter . $timer . $progressbar . $errors_link . $errors,
-);
+];
 
 $body = elgg_view('object/elements/summary', $params + $vars);
 

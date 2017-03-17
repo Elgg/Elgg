@@ -3,10 +3,6 @@
  * River view for new discussion topics
  */
 
-if (!elgg_is_logged_in()) {
-	return;
-}
-
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
 
@@ -14,10 +10,10 @@ $object = $item->getObjectEntity();
 $excerpt = strip_tags($object->description);
 $excerpt = elgg_get_excerpt($excerpt);
 
-$responses = elgg_view('river/elements/discussion_replies', array('topic' => $object));
+$responses = elgg_view('river/elements/discussion_replies', ['topic' => $object]);
 
-echo elgg_view('river/elements/layout', array(
+echo elgg_view('river/elements/layout', [
 	'item' => $item,
 	'message' => $excerpt,
 	'responses' => $responses,
-));
+]);

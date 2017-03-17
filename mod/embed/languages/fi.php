@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Upota',
 	'embed:media' => 'Upota sisältöä',
 	'embed:instructions' => 'Valitse tiedosto upottaaksesi sen osaksi sisältöä.',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'Kohteita ei löytynyt.',
 
 	'embed:no_sections' => 'Upottamista tukevia liitännäisiä ei löytynyt. Pyydä sivuston ylläpitäjää ottamaan käyttöön liitännäisiä, jotka tukevat upottamista.',
-);
+];

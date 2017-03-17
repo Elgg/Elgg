@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => 'Logbrowser',
 	'logbrowser' => 'Logbrowser',
 	'logbrowser:browse' => 'Bekijk systeem-logboek',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => 'Objecttype',
 	'logbrowser:object:guid' => 'Object GUID',
 	'logbrowser:action' => 'Actie',
-);
+];

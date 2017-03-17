@@ -13,9 +13,9 @@ $poster_name = htmlspecialchars($poster->name, ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $revision->getTimeCreated());
 $permalink = $revision->getURL();
 
-$title = elgg_echo('pages:revision:subtitle', array('', $poster_name));
+$title = elgg_echo('pages:revision:subtitle', ['', $poster_name]);
 
-$creator = elgg_view('page/components/creator', array('entity' => $revision));
+$creator = elgg_view('page/components/creator', ['entity' => $revision]);
 $extensions = elgg_view('pages/extensions/item', $vars);
 
 $item = <<<__HTML

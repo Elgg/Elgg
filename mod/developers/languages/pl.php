@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Narzędzia',
 	'admin:develop_tools:sandbox' => 'Piaskownica szablonu',
@@ -79,4 +79,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Ustawienia zostały zapisane',
-);
+];

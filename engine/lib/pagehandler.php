@@ -141,11 +141,11 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
 			$forward_reason = 'member';
 		}
 
-		$msg_keys = array(
+		$msg_keys = [
 			'non_member' => 'membershiprequired',
 			'logged_out' => 'loggedinrequired',
 			'no_access' => 'noaccess',
-		);
+		];
 		register_error(elgg_echo($msg_keys[$visibility->reasonHidden]));
 		forward($forward_url, $forward_reason);
 	}

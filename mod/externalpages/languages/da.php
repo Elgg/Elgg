@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -18,4 +18,4 @@ return array(
 	 */
 	'expages:posted' => "Din side blev opdateret.",
 	'expages:error' => "Kunne ikke gemme denne side.",
-);
+];

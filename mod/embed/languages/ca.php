@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Incrustat',
 	'embed:media' => 'Contingut incrustat',
 	'embed:instructions' => 'Prem a qualsevol fitxer per incrustar-lo al teu contingut.',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'No s\'ha trobat res.',
 
 	'embed:no_sections' => 'No s\'han trobat extensions suportades. Consulta-ho amb l\'administrador del lloc per a que habiliti una extensió amb suport per incrustar recursos.',
-);
+];

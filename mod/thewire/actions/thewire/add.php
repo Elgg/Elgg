@@ -1,7 +1,7 @@
 <?php
 /**
  * Action for adding a wire post
- * 
+ *
  */
 
 // don't filter since we strip and filter escapes some characters

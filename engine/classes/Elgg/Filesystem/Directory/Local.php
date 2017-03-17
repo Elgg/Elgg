@@ -25,7 +25,7 @@ final class Local {
 
 	/**
 	 * Returns a directory that points to the root composer install.
-	 * 
+	 *
 	 * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg
 	 * was always at the install root, but as of 2.0, Elgg can be installed as a
 	 * composer dependency, so you cannot assume that it is at the root anymore.

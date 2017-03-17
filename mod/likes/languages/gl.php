@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'gusta disto',
 	'likes:deleted' => 'Eliminouse o seu «gústame».',
 	'likes:see' => 'Ver a quen lle gusta isto',
@@ -36,4 +36,4 @@ Grazas,
 %4$s
 ',
 	
-);
+];

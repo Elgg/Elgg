@@ -17,13 +17,13 @@ foreach ($categories as $key => $category) {
 	}
 
 	$key = preg_replace('/[^a-z0-9-]/i', '-', $key);
-	$link = elgg_view('output/url', array(
+	$link = elgg_view('output/url', [
 		'text' => $category,
 		'href' => '#',
 		'rel' => $key
-	));
+	]);
 
-	$list_items .= elgg_format_element('li', array(), $link);
+	$list_items .= elgg_format_element('li', [], $link);
 }
 
 $body = elgg_format_element([

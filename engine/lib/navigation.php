@@ -109,7 +109,7 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 	}
 
 	if (!isset($CONFIG->menus[$menu_name])) {
-		$CONFIG->menus[$menu_name] = array();
+		$CONFIG->menus[$menu_name] = [];
 	}
 	$CONFIG->menus[$menu_name][] = $menu_item;
 	return true;
@@ -148,7 +148,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  *
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
- * 
+ *
  * @return bool
  * @since 1.8.0
  */
@@ -226,12 +226,12 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 		return;
 	}
 
-	elgg_register_menu_item('title', array(
+	elgg_register_menu_item('title', [
 		'name' => $name,
 		'href' => "$handler/$name/$owner->guid",
 		'text' => elgg_echo("$handler:$name"),
 		'link_class' => 'elgg-button elgg-button-action',
-	));
+	]);
 }
 
 /**
@@ -248,8 +248,8 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  * @see elgg_get_breadcrumbs
  */
 function elgg_push_breadcrumb($title, $link = null) {
-	$breadcrumbs = (array)elgg_get_config('breadcrumbs');
-	$breadcrumbs[] = array('title' => $title, 'link' => $link);
+	$breadcrumbs = (array) elgg_get_config('breadcrumbs');
+	$breadcrumbs[] = ['title' => $title, 'link' => $link];
 	elgg_set_config('breadcrumbs', $breadcrumbs);
 }
 
@@ -260,10 +260,10 @@ function elgg_push_breadcrumb($title, $link = null) {
  * @since 1.8.0
  */
 function elgg_pop_breadcrumb() {
-	$breadcrumbs = (array)elgg_get_config('breadcrumbs');
+	$breadcrumbs = (array) elgg_get_config('breadcrumbs');
 
 	if (empty($breadcrumbs)) {
-		return array();
+		return [];
 	}
 
 	$popped = array_pop($breadcrumbs);
@@ -295,7 +295,7 @@ function elgg_pop_breadcrumb() {
 function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	if (!isset($breadcrumbs)) {
 		// if no crumbs set, still allow hook to populate it
-		$breadcrumbs = (array)elgg_get_config('breadcrumbs');
+		$breadcrumbs = (array) elgg_get_config('breadcrumbs');
 	}
 
 	if (!is_array($breadcrumbs)) {
@@ -303,9 +303,9 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 		$breadcrumbs = [];
 	}
 	
-	$params = array(
+	$params = [
 		'breadcrumbs' => $breadcrumbs,
-	);
+	];
 
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
@@ -348,7 +348,7 @@ function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
 
 /**
  * Returns default filter tabs (All, Mine, Friends) for the user
- * 
+ *
  * @param string   $context  Context to be used to prefix tab URLs
  * @param string   $selected Name of the selected tab
  * @param ElggUser $user     User who owns the layout (defaults to logged in user)
@@ -412,7 +412,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 		/* @var \ElggMenuItem[] $registered */
 
 		// set up featured menu items
-		$featured = array();
+		$featured = [];
 		foreach ($featured_menu_names as $name) {
 			foreach ($registered as $index => $item) {
 				if ($item->getName() == $name) {
@@ -529,27 +529,27 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 		// add comment link but annotations cannot be commented on
 		if ($item->annotation_id == 0) {
 			if ($object->canComment()) {
-				$options = array(
+				$options = [
 					'name' => 'comment',
 					'href' => "#comments-add-{$object->guid}-{$item->id}",
 					'text' => elgg_view_icon('speech-bubble'),
 					'title' => elgg_echo('comment:this'),
 					'rel' => 'toggle',
 					'priority' => 50,
-				);
+				];
 				$return[] = \ElggMenuItem::factory($options);
 			}
 		}
 		
 		if ($item->canDelete()) {
-			$options = array(
+			$options = [
 				'name' => 'delete',
 				'href' => elgg_add_action_tokens_to_url("action/river/delete?id={$item->id}"),
 				'text' => elgg_view_icon('delete'),
 				'title' => elgg_echo('river:delete'),
 				'confirm' => elgg_echo('deleteconfirm'),
 				'priority' => 200,
-			);
+			];
 			$return[] = \ElggMenuItem::factory($options);
 		}
 	}
@@ -572,25 +572,25 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 
 	// access
 	if (elgg_is_logged_in()) {
-		$access = elgg_view('output/access', array('entity' => $entity));
-		$options = array(
+		$access = elgg_view('output/access', ['entity' => $entity]);
+		$options = [
 			'name' => 'access',
 			'text' => $access,
 			'href' => false,
 			'priority' => 100,
-		);
+		];
 		$return[] = \ElggMenuItem::factory($options);
 	}
 	
 	if ($entity->canEdit() && $handler) {
 		// edit link
-		$options = array(
+		$options = [
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
 			'title' => elgg_echo('edit:this'),
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
-		);
+		];
 		$return[] = \ElggMenuItem::factory($options);
 	}
 
@@ -601,14 +601,14 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		} else {
 			$action = "action/entity/delete";
 		}
-		$options = array(
+		$options = [
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete'),
 			'title' => elgg_echo('delete:this'),
 			'href' => "$action?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
-		);
+		];
 		$return[] = \ElggMenuItem::factory($options);
 	}
 
@@ -625,32 +625,32 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 	/* @var \ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
 
-	$collapse = array(
+	$collapse = [
 		'name' => 'collapse',
 		'text' => ' ',
 		'href' => "#elgg-widget-content-$widget->guid",
 		'link_class' => 'elgg-widget-collapse-button',
 		'rel' => 'toggle',
 		'priority' => 1,
-	);
+	];
 	$return[] = \ElggMenuItem::factory($collapse);
 
 	if ($widget->canEdit()) {
-		$delete = array(
+		$delete = [
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete-alt'),
-			'title' => elgg_echo('widget:delete', array($widget->getTitle())),
+			'title' => elgg_echo('widget:delete', [$widget->getTitle()]),
 			'href' => "action/widgets/delete?widget_guid=$widget->guid",
 			'is_action' => true,
 			'link_class' => 'elgg-widget-delete-button',
 			'id' => "elgg-widget-delete-button-$widget->guid",
 			'data-elgg-widget-type' => $widget->handler,
 			'priority' => 900,
-		);
+		];
 		$return[] = \ElggMenuItem::factory($delete);
 
 		if ($show_edit) {
-			$edit = array(
+			$edit = [
 				'name' => 'settings',
 				'text' => elgg_view_icon('settings-alt'),
 				'title' => elgg_echo('widget:edit'),
@@ -658,7 +658,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 				'link_class' => "elgg-widget-edit-button",
 				'rel' => 'toggle',
 				'priority' => 800,
-			);
+			];
 			$return[] = \ElggMenuItem::factory($edit);
 		}
 	}
@@ -673,20 +673,20 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
 	if (elgg_get_config('allow_registration')) {
-		$return[] = \ElggMenuItem::factory(array(
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'register',
 			'href' => elgg_get_registration_url(),
 			'text' => elgg_echo('register'),
 			'link_class' => 'registration_link',
-		));
+		]);
 	}
 
-	$return[] = \ElggMenuItem::factory(array(
+	$return[] = \ElggMenuItem::factory([
 		'name' => 'forgotpassword',
 		'href' => 'forgotpassword',
 		'text' => elgg_echo('user:password:lost'),
 		'link_class' => 'forgot_link',
-	));
+	]);
 
 	return $return;
 }
@@ -737,13 +737,13 @@ function _elgg_nav_init() {
 
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 
-	elgg_register_menu_item('footer', \ElggMenuItem::factory(array(
+	elgg_register_menu_item('footer', \ElggMenuItem::factory([
 		'name' => 'powered',
 		'text' => elgg_echo("elgg:powered"),
 		'href' => 'http://elgg.org',
 		'title' => 'Elgg ' . elgg_get_version(true),
 		'section' => 'meta',
-	)));
+	]));
 
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');
 

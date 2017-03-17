@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 
 	'pages:newchild' => "Eine Unter-Coop-Seite erstellen",
 	'pages:backtoparent' => "Zurück zu '%s'",
-);
+];

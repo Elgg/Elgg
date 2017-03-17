@@ -10,19 +10,19 @@ class DataService {
 	/**
 	 * @var array [GUID => boolean]
 	 */
-	protected $current_user_likes = array();
+	protected $current_user_likes = [];
 
 	/**
 	 * @var array [GUID => int]
 	 */
-	protected $num_likes = array();
+	protected $num_likes = [];
 
 	/**
 	 * @param int $guid
 	 * @param int $num
 	 */
 	public function setNumLikes($guid, $num) {
-		$this->num_likes[$guid] = (int)$num;
+		$this->num_likes[$guid] = (int) $num;
 	}
 
 	/**
@@ -30,7 +30,7 @@ class DataService {
 	 * @param bool $is_liked
 	 */
 	public function setLikedByCurrentUser($guid, $is_liked) {
-		$this->current_user_likes[$guid] = (bool)$is_liked;
+		$this->current_user_likes[$guid] = (bool) $is_liked;
 	}
 
 	/**

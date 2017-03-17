@@ -14,7 +14,7 @@ $annotation = $vars['annotation'];
 $entity = get_entity($annotation->entity_guid);
 
 // Get size
-if (!in_array($vars['size'], array('small', 'medium', 'large', 'tiny', 'master', 'topbar'))) {
+if (!in_array($vars['size'], ['small', 'medium', 'large', 'tiny', 'master', 'topbar'])) {
 	$vars['size'] = "medium";
 }
 

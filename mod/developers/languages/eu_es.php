@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Tresnak',
 	'admin:develop_tools:sandbox' => 'Sandbox gaia',
@@ -79,4 +79,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Ezarpenak gordeta',
-);
+];

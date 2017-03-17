@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 function get_dir_size($dir, $total_size = 0) {
 	$handle = @opendir($dir);
 	while ($file = @readdir($handle)) {
-		if (in_array($file, array('.', '..'))) {
+		if (in_array($file, ['.', '..'])) {
 			continue;
 		}
 		if (is_dir($dir . $file)) {
@@ -78,7 +78,7 @@ function get_uploaded_file($input_name) {
  * @return bool
  * @since 2.3
  */
-function elgg_save_resized_image($source, $destination = null, array $params = array()) {
+function elgg_save_resized_image($source, $destination = null, array $params = []) {
 	return _elgg_services()->imageService->resize($source, $destination, $params);
 }
 
@@ -150,12 +150,9 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 	}
 
 	// we will write resized image to a temporary file and then delete it
-	$tmp_filename = time() . pathinfo($input_name, PATHINFO_BASENAME);
-	$tmp = new ElggFile();
-	$tmp->setFilename("tmp/$tmp_filename");
-	$tmp->open('write');
-	$tmp->close();
-
+	// need to add a valid image extension otherwise resizing fails
+	$tmp_filename = tempnam(sys_get_temp_dir(), 'icon_resize');
+	
 	$params = [
 		'w' => $maxwidth,
 		'h' => $maxheight,
@@ -167,15 +164,12 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 		'upscale' => $upscale,
 	];
 
-	$destination = $tmp->getFilenameOnFilestore();
 	$image_bytes = false;
-	if (elgg_save_resized_image($input_name, $destination, $params)) {
-		$tmp->open('read');
-		$image_bytes = $tmp->grabFile();
-		$tmp->close();
+	if (elgg_save_resized_image($input_name, $tmp_filename, $params)) {
+		$image_bytes = file_get_contents($tmp_filename);
 	}
 
-	$tmp->delete();
+	unlink($tmp_filename);
 
 	return $image_bytes;
 }
@@ -273,7 +267,7 @@ function delete_directory($directory) {
 
 	// loop through all files
 	while (($file = readdir($handle)) !== false) {
-		if (in_array($file, array('.', '..'))) {
+		if (in_array($file, ['.', '..'])) {
 			continue;
 		}
 
@@ -326,7 +320,7 @@ function _elgg_clear_entity_files($entity) {
  * @since 1.10
  */
 function elgg_get_file_simple_type($mime_type) {
-	$params = array('mime_type' => $mime_type);
+	$params = ['mime_type' => $mime_type];
 	return elgg_trigger_plugin_hook('simple_type', 'file', $params, 'general');
 }
 
@@ -503,7 +497,7 @@ function _elgg_filestore_serve_icon_handler() {
 
 /**
  * Reset icon URLs if access_id has changed
- * 
+ *
  * @param string     $event  "update:after"
  * @param string     $type   "object"|"group"
  * @param ElggObject $entity Entity

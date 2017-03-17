@@ -22,6 +22,7 @@ define(function (require) {
 		use_spinner = elgg.isNullOrUndefined(use_spinner) ? true : !!use_spinner;
 
 		var that = this;
+		var spinner_starts = 0;
 
 		/**
 		 * Fetch a value from an Ajax endpoint.
@@ -128,10 +129,14 @@ define(function (require) {
 			if (use_spinner) {
 				options.beforeSend = function () {
 					orig_options.beforeSend && orig_options.beforeSend.apply(null, arguments);
+					spinner_starts++;
 					spinner.start();
 				};
 				options.complete = function () {
-					spinner.stop();
+					spinner_starts--;
+					if (spinner_starts < 1) {
+						spinner.stop();
+					}
 					orig_options.complete && orig_options.complete.apply(null, arguments);
 				};
 			}
@@ -385,3 +390,4 @@ define(function (require) {
 
 	return Ajax;
 });
+

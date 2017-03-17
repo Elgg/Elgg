@@ -1,7 +1,7 @@
 <?php
 /**
  * Configure global notification settings
- * 
+ *
  * @uses $vars['user'] Subscriber
  */
 $user = elgg_extract('user', $vars);

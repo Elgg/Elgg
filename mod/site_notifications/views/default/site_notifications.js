@@ -70,3 +70,4 @@ elgg.site_notifications.toggle_all = function() {
 };
 
 elgg.register_hook_handler('init', 'system', elgg.site_notifications.init);
+

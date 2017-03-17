@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'members:label:online' => 'Онлайн',
 	'members:search' => 'Найти пользователей',
 	'members:title:search' => 'Поиск пользователя %s',
@@ -8,4 +8,4 @@ return array(
 	'members:title:popular' => 'Популярные',
 	'members:title:online' => 'Онлайн',
 	'members:list:popular:none' => 'Пользователи не имеют друзей.',
-);
+];

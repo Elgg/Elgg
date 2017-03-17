@@ -3,7 +3,7 @@
  * Process a set of site notifications
  */
 
-$notification_guids = get_input('notification_id', array());
+$notification_guids = get_input('notification_id', []);
 
 if (!$notification_guids) {
 	register_error(elgg_echo('site_notifications:error:notifications_not_selected'));

@@ -28,7 +28,7 @@ define(function (require) {
 		 * timezone offsets if you expect a different timezone. Timestamp is determined
 		 * by the selected values of the datepicker instance, and is therefore agnostic
 		 * to the dateFormat option.
-		 * 
+		 *
 		 * @param {string} selector Element selector
 		 * @return void
 		 * @requires jqueryui.datepicker
@@ -69,3 +69,4 @@ define(function (require) {
 
 	return datepicker;
 });
+

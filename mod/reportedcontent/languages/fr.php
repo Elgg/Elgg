@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Eléments signalés',
 	'admin:administer_utilities:reportedcontent' => 'Contenu signalé',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Désolé, la tentative de signaler ce contenu a échoué.',
 	'reportedcontent:notarchived' => 'Il a été impossible d\'archiver ce signalement',
-);
+];

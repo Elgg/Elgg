@@ -21,9 +21,8 @@ function reportedcontent_init() {
 
 
 	if (elgg_is_logged_in()) {
-
 		// Extend footer with report content link
-		elgg_register_menu_item('extras', array(
+		elgg_register_menu_item('extras', [
 			'name' => 'report_this',
 			'href' => 'reportedcontent/add',
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
@@ -33,7 +32,7 @@ function reportedcontent_init() {
 			'section' => 'default',
 			'link_class' => 'elgg-lightbox',
 			'deps' => 'elgg/reportedcontent',
-		));
+		]);
 	}
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'reportedcontent_user_hover_menu');

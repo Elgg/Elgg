@@ -62,7 +62,7 @@ class Database {
 	 *
 	 * @var array $delayed_queries Queries to be run during shutdown
 	 */
-	private $delayed_queries = array();
+	private $delayed_queries = [];
 
 	/**
 	 * @var bool $installed Is the database installed?
@@ -174,7 +174,6 @@ class Database {
 			// https://github.com/Elgg/Elgg/issues/8121
 			$sub_query = "SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')";
 			$this->connections[$type]->exec("SET SESSION sql_mode=($sub_query);");
-
 		} catch (\PDOException $e) {
 			// @todo just allow PDO exceptions
 			// http://dev.mysql.com/doc/refman/5.1/en/error-messages-server.html
@@ -250,7 +249,7 @@ class Database {
 		$this->invalidateQueryCache();
 
 		$this->executeQuery($query, $connection, $params);
-		return (int)$connection->lastInsertId();
+		return (int) $connection->lastInsertId();
 	}
 
 	/**
@@ -305,7 +304,7 @@ class Database {
 		$this->invalidateQueryCache();
 
 		$stmt = $this->executeQuery("$query", $connection, $params);
-		return (int)$stmt->rowCount();
+		return (int) $stmt->rowCount();
 	}
 
 	/**
@@ -356,7 +355,7 @@ class Database {
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
-		$query_id = (int)$single . $query . '|';
+		$query_id = (int) $single . $query . '|';
 		if ($params) {
 			$query_id .= serialize($params) . '|';
 		}
@@ -382,7 +381,7 @@ class Database {
 			}
 		}
 
-		$return = array();
+		$return = [];
 
 		$stmt = $this->executeQuery($query, $this->getConnection('read'), $params);
 		while ($row = $stmt->fetch()) {
@@ -483,8 +482,7 @@ class Database {
 	public function runSqlScript($scriptlocation) {
 		$script = file_get_contents($scriptlocation);
 		if ($script) {
-
-			$errors = array();
+			$errors = [];
 
 			// Remove MySQL '-- ' and '# ' style comments
 			$script = preg_replace('/^(?:--|#) .*$/m', '', $script);
@@ -564,7 +562,6 @@ class Database {
 			$params = $set[self::DELAYED_PARAMS];
 
 			try {
-
 				$stmt = $this->executeQuery($query, $this->getConnection($type), $params);
 
 				if (is_callable($handler)) {
@@ -581,9 +578,9 @@ class Database {
 
 	/**
 	 * Enable the query cache
-	 * 
+	 *
 	 * This does not take precedence over the \Elgg\Database\Config setting.
-	 * 
+	 *
 	 * @return void
 	 * @access private
 	 */
@@ -596,10 +593,10 @@ class Database {
 
 	/**
 	 * Disable the query cache
-	 * 
+	 *
 	 * This is useful for special scripts that pull large amounts of data back
 	 * in single queries.
-	 * 
+	 *
 	 * @return void
 	 * @access private
 	 */

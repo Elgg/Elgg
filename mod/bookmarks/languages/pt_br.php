@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Visualizado e comentado no favorito:
 	'bookmarks:save:invalid' => "O endereço do favorito é inválido e não pode ser salvo.",
 	'bookmarks:delete:failed' => "Este hiperlink favorito não pode ser apagado. Por favor, tente novamente.",
 	'bookmarks:unknown_bookmark' => 'Não foi possível encontrar favorito específico',
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'twitter_api' => 'Servizos de Twitter',
 
 	'twitter_api:requires_oauth' => '«Servizos de Twitter» necesita o complemento «Bibliotecas de OAuth».',
@@ -53,4 +53,4 @@ return array(
 	'twitter_api:interstitial:password_mismatch' => 'Os contrasinais non coinciden.',
 	'twitter_api:interstitial:cannot_save' => 'Non foi posíbel gardar os detalles da conta.',
 	'twitter_api:interstitial:saved' => 'Gardáronse os detalles da conta.',
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Vahvistamattomat käyttäjät',
 	
 	'email:validate:subject' => "%s, vahvista sähköpostiosoitteesi palveluun %s.",
@@ -51,4 +51,4 @@ Jos et voi klikata linkkiä, kopioi se selaimesi osoiteriville.
 	'uservalidationbyemail:messages:resent_validation' => 'Vahvistusviesti lähetetty uudelleen.',
 	'uservalidationbyemail:messages:resent_validations' => 'Vahvistusviesti uudellenlähetetty valituille käyttäjille.'
 
-);
+];

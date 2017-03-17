@@ -14,14 +14,14 @@
 $plugin_guids = get_input('plugin_guids');
 
 if (!is_array($plugin_guids)) {
-	$plugin_guids = array($plugin_guids);
+	$plugin_guids = [$plugin_guids];
 }
 
 foreach ($plugin_guids as $guid) {
 	$plugin = get_entity($guid);
 
 	if (!($plugin instanceof ElggPlugin)) {
-		register_error(elgg_echo('admin:plugins:deactivate:no', array($guid)));
+		register_error(elgg_echo('admin:plugins:deactivate:no', [$guid]));
 		continue;
 	}
 
@@ -30,7 +30,7 @@ foreach ($plugin_guids as $guid) {
 	} else {
 		$msg = $plugin->getError();
 		$string = ($msg) ? 'admin:plugins:deactivate:no_with_msg' : 'admin:plugins:deactivate:no';
-		register_error(elgg_echo($string, array($plugin->getFriendlyName(), $plugin->getError())));
+		register_error(elgg_echo($string, [$plugin->getFriendlyName(), $plugin->getError()]));
 	}
 }
 
@@ -40,17 +40,14 @@ elgg_flush_caches();
 
 if (count($plugin_guids) == 1) {
 	$url = 'admin/plugins';
-	$query = (string)parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+	$query = (string) parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
 	if ($query) {
 		$url .= "?$query";
 	}
 	$plugin = get_entity($plugin_guids[0]);
 	$id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 	$url = "$url#$id";
-	$data = [
-		'list' => elgg_view('admin/plugins', ['list_only' => true]),
-	];
-	return elgg_ok_response($data, '', $url);
+	return elgg_ok_response('', '', $url);
 } else {
 	forward(REFERER);
 }

@@ -14,7 +14,7 @@ if (!$fieldlist && $fieldlist !== '0') {
 } else {
 	$fieldlistarray = explode(',', $fieldlist);
 	foreach ($fieldlistarray as $key => $value) {
-		$fieldlistarray[$key] = (int)$value;
+		$fieldlistarray[$key] = (int) $value;
 	}
 	$id = max($fieldlistarray) + 1;
 }
@@ -28,7 +28,6 @@ if (($label) && ($type)) {
 	if (elgg_save_config("admin_defined_profile_$id", $label) &&
 		elgg_save_config("admin_defined_profile_type_$id", $type) &&
 		elgg_save_config('profile_custom_fields', $fieldlist)) {
-
 		system_message(elgg_echo('profile:editdefault:success'));
 	} else {
 		register_error(elgg_echo('profile:editdefault:fail'));

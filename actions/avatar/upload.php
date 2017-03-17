@@ -26,13 +26,13 @@ if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
 	system_message(elgg_echo("avatar:upload:success"));
 
 	$view = 'river/user/default/profileiconupdate';
-	_elgg_delete_river(array('subject_guid' => $owner->guid, 'view' => $view));
-	elgg_create_river_item(array(
+	_elgg_delete_river(['subject_guid' => $owner->guid, 'view' => $view]);
+	elgg_create_river_item([
 		'view' => $view,
 		'action_type' => 'update',
 		'subject_guid' => $owner->guid,
 		'object_guid' => $owner->guid,
-	));
+	]);
 }
 
 forward(REFERER);

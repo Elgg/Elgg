@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'A quelle fréquence souhaitez-vous archiver les logs du système ?',
 
 	'logrotate:logrotated' => "Rotation du log effectuée\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Fichier journal (fichier log) supprimé\n",
 	'logrotate:lognotdeleted' => "Aucun fichier journal (fichier log) n'a été supprimé\n",
-);
+];

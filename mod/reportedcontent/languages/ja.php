@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => '報告された対象',
 	'admin:administer_utilities:reportedcontent' => '報告されたコンテント',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => '申し訳ありません、このコンテントを報告しようとしましたが、失敗しました。もう一度お試しください。',
 	'reportedcontent:notarchived' => 'この報告を書庫に保存することができませんでした。',
-);
+];

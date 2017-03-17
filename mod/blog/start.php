@@ -38,7 +38,7 @@ function blog_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'blog_set_url');
 
 	// notifications
-	elgg_register_notification_event('object', 'blog', array('publish'));
+	elgg_register_notification_event('object', 'blog', ['publish']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:blog', 'blog_prepare_notification');
 
 	// add blog link to owner block
@@ -175,7 +175,6 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 			'text' => elgg_echo('blog'),
 			'href' => "blog/owner/{$entity->username}",
 		]);
-
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->blog_enable != 'no') {
 			$return[] = ElggMenuItem::factory([
@@ -249,7 +248,7 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 	
 	$years = [];
 	foreach ($dates as $date) {
-		$timestamplow = mktime(0, 0, 0, substr($date,4,2) , 1, substr($date, 0, 4));
+		$timestamplow = mktime(0, 0, 0, substr($date, 4, 2), 1, substr($date, 0, 4));
 		$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
 	
 		$year = substr($date, 0, 4);
@@ -294,14 +293,14 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
 	$language = $params['language'];
 	$method = $params['method'];
 
-	$notification->subject = elgg_echo('blog:notify:subject', array($entity->title), $language);
-	$notification->body = elgg_echo('blog:notify:body', array(
+	$notification->subject = elgg_echo('blog:notify:subject', [$entity->title], $language);
+	$notification->body = elgg_echo('blog:notify:body', [
 		$owner->name,
 		$entity->title,
 		$entity->getExcerpt(),
 		$entity->getURL()
-	), $language);
-	$notification->summary = elgg_echo('blog:notify:summary', array($entity->title), $language);
+	], $language);
+	$notification->summary = elgg_echo('blog:notify:summary', [$entity->title], $language);
 	$notification->url = $entity->getURL();
 	
 	return $notification;

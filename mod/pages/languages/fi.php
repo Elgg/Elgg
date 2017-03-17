@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ Voit lukea sivun täällä:
 
 	'pages:newchild' => "Luo alasivu",
 	'pages:backtoparent' => "Takaisin sivulle '%s'",
-);
+];

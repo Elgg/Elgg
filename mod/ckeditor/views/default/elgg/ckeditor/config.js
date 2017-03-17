@@ -22,3 +22,4 @@ define(function(require) {
 		stylesSet: false, //no additional styles.js
 	});
 });
+

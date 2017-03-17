@@ -1,7 +1,7 @@
 <?php
 /**
  * JSON profile view
- * 
+ *
  * @uses $vars['entity']
  */
 

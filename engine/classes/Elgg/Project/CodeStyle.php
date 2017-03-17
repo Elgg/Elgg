@@ -36,7 +36,7 @@ class CodeStyle {
 	 * @return array Report of notable files
 	 */
 	public function fixDirectory($root, $dry_run = false) {
-		$return = array();
+		$return = [];
 
 		$this->substr_start = strlen($this->normalizePath($root)) + 1;
 
@@ -75,7 +75,7 @@ class CodeStyle {
 	 * @return string[] File paths. All directory separators will be "/"
 	 */
 	public function findFilesToAnalyze($root) {
-		$files = array();
+		$files = [];
 		$this->substr_start = strlen($this->normalizePath($root)) + 1;
 		$this->findFiles(rtrim($root, '/\\'), $files);
 		return $files;
@@ -100,11 +100,11 @@ class CodeStyle {
 		$old = $content;
 		unset($content);
 
-		$return = array(
-			self::KEY_REMAINING => array(),
-			self::KEY_CORRECTIONS => array(),
+		$return = [
+			self::KEY_REMAINING => [],
+			self::KEY_CORRECTIONS => [],
 			self::KEY_NEW_CONTENT => null,
-		);
+		];
 
 		// remove WS after non-WS
 		$new = preg_replace('~(\S)[ \t]+(\r?\n)~', '$1$2', $old, -1, $count);
@@ -163,7 +163,7 @@ class CodeStyle {
 					}
 				}
 
-				if (in_array($relative_path, array('node_modules', 'docs/_build'))) {
+				if (in_array($relative_path, ['node_modules', 'docs/_build'])) {
 					continue;
 				}
 

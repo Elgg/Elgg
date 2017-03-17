@@ -3,7 +3,7 @@
  * Elgg log browser admin page
  *
  * @note The ElggObject this creates for each entry is temporary
- * 
+ *
  * @package ElggLogBrowser
  */
 
@@ -43,17 +43,17 @@ if ($timeupper) {
 
 $ip_address = get_input('ip_address');
 
-$refine = elgg_view('logbrowser/refine', array(
+$refine = elgg_view('logbrowser/refine', [
 	'timeupper' => $timeupper,
 	'timelower' => $timelower,
 	'ip_address' => $ip_address,
 	'username' => $search_username,
-));
+]);
 
 // Get log entries
-$log = get_system_log($user_guid, "", "", "","", $limit, $offset, false, $timeupper, $timelower,
+$log = get_system_log($user_guid, "", "", "", "", $limit, $offset, false, $timeupper, $timelower,
 		0, $ip_address);
-$count = get_system_log($user_guid, "", "", "","", $limit, $offset, true, $timeupper, $timelower,
+$count = get_system_log($user_guid, "", "", "", "", $limit, $offset, true, $timeupper, $timelower,
 		0, $ip_address);
 
 // if user does not exist, we have no results
@@ -62,13 +62,13 @@ if ($search_username && is_null($user_guid)) {
 	$count = 0;
 }
 
-$table = elgg_view('logbrowser/table', array('log_entries' => $log));
+$table = elgg_view('logbrowser/table', ['log_entries' => $log]);
 
-$nav = elgg_view('navigation/pagination',array(
+$nav = elgg_view('navigation/pagination', [
 	'offset' => $offset,
 	'count' => $count,
 	'limit' => $limit,
-));
+]);
 
 // display admin body
 $body = <<<__HTML

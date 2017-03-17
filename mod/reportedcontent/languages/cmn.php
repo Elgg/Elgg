@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => '報告的項目',
 	'admin:administer_utilities:reportedcontent' => '報告的內容',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => '抱歉，嘗試報告這個內容時失敗。',
 	'reportedcontent:notarchived' => '我們無法封存該報告',
-);
+];

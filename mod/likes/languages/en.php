@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'liked this',
 	'likes:deleted' => 'Your like has been removed',
 	'likes:see' => 'See who liked this',
@@ -36,4 +36,4 @@ Thanks,
 %4$s
 ',
 	
-);
+];

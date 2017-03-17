@@ -546,16 +546,16 @@ select {
 	padding: 0 3px;
 }
 .elgg-fieldset-horizontal .elgg-field {
-    display: inline-block;
-    margin: 0 10px 0 0;
+	display: inline-block;
+	margin: 0 10px 0 0;
 }
 
 .elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
-    margin: 0 0 0 10px;
+	margin: 0 0 0 10px;
 }
 
 .elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 
 .elgg-button {
@@ -639,7 +639,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 ?>
 
 /* **************************************
-     DATE PICKER
+	 DATE PICKER
 *************************************** */
 .ui-datepicker {
 	margin-top: 3px;
@@ -773,7 +773,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	cursor: pointer;
 }
 /* ***************************************
-      PROGRESS BAR
+	  PROGRESS BAR
 **************************************** */
 .elgg-progressbar {
 	height: 20px;
@@ -1138,7 +1138,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	PLUGINS
 **************************************** */
 #plugins-filter {
-    margin: 5px 5px 20px;
+	margin: 5px 5px 20px;
 }
 .elgg-admin-plugins-categories li {
 	padding-right: 5px;
@@ -1219,6 +1219,17 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	margin-left: 5px;
 }
 
+#elgg-plugin-list-cover {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	opacity: 0.5;
+}
+
 .elgg-plugin-settings {
 	font-weight: normal;
 	font-size: 0.9em;
@@ -1253,16 +1264,16 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	color: #8a1f11;
 	border-color: #fbc2c4;
 	padding: 3px 6px;
-    margin: 3px 0;
-    width: auto;
+	margin: 3px 0;
+	width: auto;
 }
 .elgg-plugin .elgg-state-warning {
 	background: #f4f4f4;
 	color: #000000;
 	border-color: #fbe58b;
 	padding: 3px 6px;
-    margin: 3px 0;
-    width: auto;
+	margin: 3px 0;
+	width: auto;
 }
 .elgg-plugin-list-error .elgg-state-error,
 .elgg-plugin-list-error .elgg-state-warning {

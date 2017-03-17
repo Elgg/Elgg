@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Zobacz i skomentuj nową zakładkę:
 	'bookmarks:save:invalid' => "Adres zakładki jest niepoprawny i nie mógł zostać zapisany.",
 	'bookmarks:delete:failed' => "Twoja zakładka nie mogła być skasowana. Spróbuj ponownie.",
 	'bookmarks:unknown_bookmark' => 'Nie można znaleźć wskazanej zakładki.',
-);
+];

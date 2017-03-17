@@ -13,7 +13,7 @@ if (empty($vars['value']) && $vars['value'] !== 0 && $vars['value'] !== '0') {
 	return;
 }
 
-$query_params = array();
+$query_params = [];
 
 $query_params["q"] = $vars['value'];
 $query_params["search_type"] = "tags";
@@ -33,12 +33,12 @@ unset($vars['base_url']);
 
 $url .= '?' . http_build_query($query_params);
 
-$params = array(
+$params = [
 	'href' => $url,
 	'text' => $vars['value'],
 	'encode_text' => true,
 	'rel' => 'tag',
-);
+];
 
 $params = $params + $vars;
 

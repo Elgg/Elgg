@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Wpisz słowo kluczowe:',
 	'search:no_results' => 'Brak wyników.',
 	'search:matched' => 'Dopasowano:',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'przez',
 	'search:unavailable_entity' => 'Niedostępna encja',
 	'search:unknown_entity' => 'Nieznany typ encji',
-);
+];

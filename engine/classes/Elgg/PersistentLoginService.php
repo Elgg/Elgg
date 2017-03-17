@@ -50,14 +50,14 @@ class PersistentLoginService {
 
 		$prefix = $this->db->prefix;
 		$this->table = "{$prefix}users_remember_me_cookies";
-		$this->time = is_numeric($time) ? (int)$time : time();
+		$this->time = is_numeric($time) ? (int) $time : time();
 	}
 
 	/**
 	 * Make the user's login persistent
 	 *
 	 * @param \ElggUser $user The user who logged in
-	 * 
+	 *
 	 * @return void
 	 */
 	public function makeLoginPersistent(\ElggUser $user) {
@@ -71,7 +71,7 @@ class PersistentLoginService {
 
 	/**
 	 * Remove the persisted login token from client and server
-	 * 
+	 *
 	 * @return void
 	 */
 	public function removePersistentLogin() {
@@ -89,7 +89,7 @@ class PersistentLoginService {
 	 *
 	 * @param \ElggUser $subject  The user whose password changed
 	 * @param \ElggUser $modifier The user who changed the password
-	 * 
+	 *
 	 * @return void
 	 */
 	public function handlePasswordChange(\ElggUser $subject, \ElggUser $modifier = null) {
@@ -133,7 +133,7 @@ class PersistentLoginService {
 	 * Replace the user's token if it's a legacy hexadecimal token
 	 *
 	 * @param \ElggUser $logged_in_user The logged in user
-	 * 
+	 *
 	 * @return void
 	 */
 	public function replaceLegacyToken(\ElggUser $logged_in_user) {
@@ -150,7 +150,7 @@ class PersistentLoginService {
 	 * Find a user with the given hash
 	 *
 	 * @param string $hash The hashed token
-	 * 
+	 *
 	 * @return \ElggUser|null
 	 */
 	public function getUserFromHash($hash) {
@@ -178,7 +178,7 @@ class PersistentLoginService {
 	 *
 	 * @param \ElggUser $user The user for whom we're storing the hash
 	 * @param string    $hash The hashed token
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function storeHash(\ElggUser $user, $hash) {
@@ -222,7 +222,7 @@ class PersistentLoginService {
 	 *
 	 * @param \DatabaseException $exception The exception to handle
 	 * @param string             $default   The value to return if the table doesn't exist yet
-	 * 
+	 *
 	 * @return mixed
 	 *
 	 * @throws \DatabaseException
@@ -240,7 +240,7 @@ class PersistentLoginService {
 	 * Remove all the hashes associated with a user
 	 *
 	 * @param \ElggUser $user The user for whom we're removing hashes
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function removeAllHashes(\ElggUser $user) {
@@ -256,7 +256,7 @@ class PersistentLoginService {
 	 * Create a hash from the token
 	 *
 	 * @param string $token The token to hash
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function hashToken($token) {
@@ -269,12 +269,12 @@ class PersistentLoginService {
 	 * Store the token in the client cookie (or remove the cookie)
 	 *
 	 * @param string $token Empty string to remove cookie
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function setCookie($token) {
 		$cookie = new \ElggCookie($this->cookie_config['name']);
-		foreach (array('expire', 'path', 'domain', 'secure', 'httponly') as $key) {
+		foreach (['expire', 'path', 'domain', 'secure', 'httponly'] as $key) {
 			$cookie->$key = $this->cookie_config[$key];
 		}
 		$cookie->value = $token;
@@ -288,7 +288,7 @@ class PersistentLoginService {
 	 * Store the token in the session (or remove it from the session)
 	 *
 	 * @param string $token The token to store in session. Empty string to remove.
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function setSession($token) {
@@ -315,7 +315,7 @@ class PersistentLoginService {
 	 * Is the given token a legacy MD5 hash?
 	 *
 	 * @param string $token The token to analyze
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function isLegacyToken($token) {

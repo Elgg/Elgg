@@ -17,7 +17,7 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
 	color: #444;
-    font-weight: bold;
+	font-weight: bold;
 }
 h1 {
 	font-size: 1.8em;
@@ -46,21 +46,21 @@ a {
 	top: 0;
 	left: 0;
 
-    background-color: #FFF;
-    border: 1px solid #DEDEDE;
-    padding: 10px;
+	background-color: #FFF;
+	border: 1px solid #DEDEDE;
+	padding: 10px;
 
 	border-radius: 3px;
 	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
 }
 .elgg-module-maintenance > .elgg-head {
-    padding: 20px 20px 0 20px;
+	padding: 20px 20px 0 20px;
 }
 .elgg-module-maintenance > .elgg-body {
-    padding: 0 20px;
+	padding: 0 20px;
 }
 .elgg-module-maintenance > .elgg-foot {
-    padding: 0 20px 20px 20px;
+	padding: 0 20px 20px 20px;
 }
 
 .elgg-system-messages {
@@ -237,8 +237,8 @@ input[type="number"] {
 	.elgg-page-maintenance {
 		padding: 20px;
 	}
-    .elgg-body-maintenance {
-    	margin: 40px auto 0;
-        width: auto;
-    }
+	.elgg-body-maintenance {
+		margin: 40px auto 0;
+		width: auto;
+	}
 }

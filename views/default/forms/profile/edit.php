@@ -11,24 +11,24 @@
  */
 $entity = elgg_extract('entity', $vars);
 
-echo elgg_view_field(array(
+echo elgg_view_field([
 	'#type' => 'text',
 	'name' => 'name',
 	'value' => $entity->name,
 	'#label' => elgg_echo('user:name:label'),
 	'maxlength' => 50, // hard coded in /actions/profile/edit
-));
+]);
 
 $sticky_values = elgg_get_sticky_values('profile:edit');
 
 $profile_fields = elgg_get_config('profile_fields');
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
-		$metadata = elgg_get_metadata(array(
+		$metadata = elgg_get_metadata([
 			'guid' => $entity->guid,
 			'metadata_name' => $shortname,
 			'limit' => false
-		));
+		]);
 		if ($metadata) {
 			if (is_array($metadata)) {
 				$value = '';
@@ -81,7 +81,7 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 
 elgg_clear_sticky_form('profile:edit');
 
-echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $entity->guid));
+echo elgg_view('input/hidden', ['name' => 'guid', 'value' => $entity->guid]);
 echo elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('save'),

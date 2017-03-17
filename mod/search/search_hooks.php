@@ -17,27 +17,27 @@
  */
 function search_objects_hook($hook, $type, $value, $params) {
 
-	$params['joins'] = (array) elgg_extract('joins', $params, array());
-	$params['wheres'] = (array) elgg_extract('wheres', $params, array());
+	$params['joins'] = (array) elgg_extract('joins', $params, []);
+	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 	
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$join = "JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid";
 	array_unshift($params['joins'], $join);
 
-	$fields = array('title', 'description');
+	$fields = ['title', 'description'];
 	$where = search_get_where_sql('oe', $fields, $params);
 	$params['wheres'][] = $where;
 	
-	$params['count'] = TRUE;
+	$params['count'] = true;
 	$count = elgg_get_entities($params);
 	
 	// no need to continue if nothing here.
 	if (!$count) {
-		return array('entities' => array(), 'count' => $count);
+		return ['entities' => [], 'count' => $count];
 	}
 	
-	$params['count'] = FALSE;
+	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
 	}
@@ -53,10 +53,10 @@ function search_objects_hook($hook, $type, $value, $params) {
 		$entity->setVolatileData('search_matched_description', $desc);
 	}
 
-	return array(
+	return [
 		'entities' => $entities,
 		'count' => $count,
-	);
+	];
 }
 
 /**
@@ -70,8 +70,8 @@ function search_objects_hook($hook, $type, $value, $params) {
  */
 function search_groups_hook($hook, $type, $value, $params) {
 
-	$params['joins'] = (array) elgg_extract('joins', $params, array());
-	$params['wheres'] = (array) elgg_extract('wheres', $params, array());
+	$params['joins'] = (array) elgg_extract('joins', $params, []);
+	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 	
 	$db_prefix = elgg_get_config('dbprefix');
 
@@ -80,19 +80,19 @@ function search_groups_hook($hook, $type, $value, $params) {
 	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
 	array_unshift($params['joins'], $join);
 	
-	$fields = array('name', 'description');
+	$fields = ['name', 'description'];
 	$where = search_get_where_sql('ge', $fields, $params);
 	$params['wheres'][] = $where;
 
-	$params['count'] = TRUE;
+	$params['count'] = true;
 	$count = elgg_get_entities($params);
 	
 	// no need to continue if nothing here.
 	if (!$count) {
-		return array('entities' => array(), 'count' => $count);
+		return ['entities' => [], 'count' => $count];
 	}
 	
-	$params['count'] = FALSE;
+	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
 	}
@@ -107,10 +107,10 @@ function search_groups_hook($hook, $type, $value, $params) {
 		$entity->setVolatileData('search_matched_description', $description);
 	}
 
-	return array(
+	return [
 		'entities' => $entities,
 		'count' => $count,
-	);
+	];
 }
 
 /**
@@ -126,8 +126,8 @@ function search_groups_hook($hook, $type, $value, $params) {
  */
 function search_users_hook($hook, $type, $value, $params) {
 
-	$params['joins'] = (array) elgg_extract('joins', $params, array());
-	$params['wheres'] = (array) elgg_extract('wheres', $params, array());
+	$params['joins'] = (array) elgg_extract('joins', $params, []);
+	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 	
 	$db_prefix = elgg_get_config('dbprefix');
 
@@ -137,7 +137,7 @@ function search_users_hook($hook, $type, $value, $params) {
 	array_unshift($params['joins'], $join);
 		
 	// username and display name
-	$fields = array('username', 'name');
+	$fields = ['username', 'name'];
 	$where = search_get_where_sql('ue', $fields, $params);
 
 	// profile fields
@@ -148,7 +148,7 @@ function search_users_hook($hook, $type, $value, $params) {
 		
 		// get the where clauses for the md names
 		// can't use egef_metadata() because the n_table join comes too late.
-		$clauses = _elgg_entities_get_metastrings_options('metadata', array(
+		$clauses = _elgg_entities_get_metastrings_options('metadata', [
 			'metadata_names' => $profile_fields,
 
 			// avoid notices
@@ -158,7 +158,7 @@ function search_users_hook($hook, $type, $value, $params) {
 			'metadata_case_sensitive' => null,
 			'order_by_metadata' => null,
 			'metadata_owner_guids' => null,
-		));
+		]);
 	
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
 		$md_where = "(({$clauses['wheres'][0]}) AND md.value LIKE '%$query%')";
@@ -173,10 +173,10 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	// no need to continue if nothing here.
 	if (!$count) {
-		return array('entities' => array(), 'count' => $count);
+		return ['entities' => [], 'count' => $count];
 	}
 	
-	$params['count'] = FALSE;
+	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
 	}
@@ -184,7 +184,6 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		
 		$title = search_get_highlighted_relevant_substrings($entity->name, $query);
 
 		// include the username if it matches but the display name doesn't.
@@ -218,10 +217,10 @@ function search_users_hook($hook, $type, $value, $params) {
 		}
 	}
 
-	return array(
+	return [
 		'entities' => $entities,
 		'count' => $count,
-	);
+	];
 }
 
 /**
@@ -235,8 +234,8 @@ function search_users_hook($hook, $type, $value, $params) {
  */
 function search_tags_hook($hook, $type, $value, $params) {
 
-	$params['joins'] = (array) elgg_extract('joins', $params, array());
-	$params['wheres'] = (array) elgg_extract('wheres', $params, array());
+	$params['joins'] = (array) elgg_extract('joins', $params, []);
+	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 
 	$db_prefix = elgg_get_config('dbprefix');
 
@@ -252,7 +251,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 		if (is_array($tag_names)) {
 			$search_tag_names = $tag_names;
 		} else {
-			$search_tag_names = array($tag_names);
+			$search_tag_names = [$tag_names];
 		}
 
 		// check these are valid to avoid arbitrary metadata searches.
@@ -266,7 +265,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 	}
 
 	if (!$search_tag_names) {
-		return array('entities' => array(), 'count' => $count);
+		return ['entities' => [], 'count' => $count];
 	}
 
 	// don't use elgg_get_entities_from_metadata() here because of
@@ -275,8 +274,8 @@ function search_tags_hook($hook, $type, $value, $params) {
 	// out the matches later.
 	$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
 
-	$access = _elgg_get_access_where_sql(array('table_alias' => 'md'));
-	$sanitised_tags = array();
+	$access = _elgg_get_access_where_sql(['table_alias' => 'md']);
+	$sanitised_tags = [];
 
 	foreach ($search_tag_names as $tag) {
 		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
@@ -286,15 +285,15 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 	$params['wheres'][] = "(md.name IN ($tags_in) AND md.value = '$query' AND $access)";
 
-	$params['count'] = TRUE;
+	$params['count'] = true;
 	$count = elgg_get_entities($params);
 
 	// no need to continue if nothing here.
 	if (!$count) {
-		return array('entities' => array(), 'count' => $count);
+		return ['entities' => [], 'count' => $count];
 	}
 	
-	$params['count'] = FALSE;
+	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
 	}
@@ -302,7 +301,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$matched_tags_strs = array();
+		$matched_tags_strs = [];
 
 		// get tags for each tag name requested to find which ones matched.
 		foreach ($search_tag_names as $tag_name) {
@@ -320,7 +319,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 		}
 
 		// different entities have different titles
-		switch($entity->type) {
+		switch ($entity->type) {
 			case 'site':
 			case 'user':
 			case 'group':
@@ -355,10 +354,10 @@ function search_tags_hook($hook, $type, $value, $params) {
 		$entity->setVolatileData('search_matched_extra', $tags_str);
 	}
 
-	return array(
+	return [
 		'entities' => $entities,
 		'count' => $count,
-	);
+	];
 }
 
 /**

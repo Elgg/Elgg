@@ -5,11 +5,11 @@ abstract class SiteNotificationFactory {
 	/**
 	 * Create a site notification
 	 *
-	 * @param ElggUser   $recipient Recipient of the notification
-	 * @param string     $message   Notification message
-	 * @param ElggUser   $actor     User who caused the notification event
-	 * @param ElggData   $object    Optional object involved in the notification event
-	 * @param string     $url       Target URL
+	 * @param ElggUser $recipient Recipient of the notification
+	 * @param string   $message   Notification message
+	 * @param ElggUser $actor     User who caused the notification event
+	 * @param ElggData $object    Optional object involved in the notification event
+	 * @param string   $url       Target URL
 	 * @return SiteNotification|null
 	 */
 	public static function create($recipient, $message, $actor, $object = null, $url = null) {

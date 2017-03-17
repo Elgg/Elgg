@@ -21,7 +21,7 @@ elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
 $title = elgg_echo('item:object:discussion');
 
-$options = array(
+$options = [
 	'type' => 'object',
 	'subtype' => 'discussion',
 	'limit' => max(20, elgg_get_config('default_limit')),
@@ -29,7 +29,7 @@ $options = array(
 	'full_view' => false,
 	'no_results' => elgg_echo('discussion:none'),
 	'preload_owners' => true,
-);
+];
 
 if ($target instanceof ElggUser) {
 	// Display all discussions started by the user regardless of
@@ -41,12 +41,12 @@ if ($target instanceof ElggUser) {
 
 $content = elgg_list_entities($options);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('discussion/sidebar'),
 	'filter' => '',
-);
+];
 
 $body = elgg_view_layout('content', $params);
 

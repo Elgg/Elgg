@@ -28,7 +28,7 @@ define(function(require) {
 		this.isSealed = false;
 
 		this.$input.autocomplete({
-			source: function(request, response) {				
+			source: function(request, response) {
 				// note: "this" below will not be bound to the input, but rather
 				// to an object created by the autocomplete component
 				var Autocomplete = this;

@@ -6,4 +6,5 @@ namespace Elgg;
  *
  * @since 2.3
  */
-interface BatchResult extends \Countable, \Iterator {}
+interface BatchResult extends \Countable, \Iterator {
+}

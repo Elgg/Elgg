@@ -47,11 +47,11 @@ $body .= elgg_view('page/elements/foot');
 
 $head = elgg_view('page/elements/head', $vars['head']);
 
-$params = array(
+$params = [
 	'head' => $head,
 	'body' => $body,
 	'body_attrs' => elgg_extract('body_attrs', $vars, []),
 	'html_attrs' => elgg_extract('html_attrs', $vars, []),
-);
+];
 
 echo elgg_view('page/elements/html', $params);

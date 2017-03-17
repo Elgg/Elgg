@@ -128,11 +128,10 @@ class Application {
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
 		// we're actually loading on every page (Hint: it's too much).
-		$lib_files = array(
+		$lib_files = [
 			// Needs to be loaded first to correctly bootstrap
 			'autoloader.php',
 			'elgglib.php',
-
 			// The order of these doesn't matter, so keep them alphabetical
 			'access.php',
 			'actions.php',
@@ -174,16 +173,15 @@ class Application {
 			'upgrade.php',
 			'views.php',
 			'widgets.php',
-
 			// backward compatibility
 			'deprecated-2.1.php',
 			'deprecated-3.0.php',
-		);
+		];
 
 		// isolate global scope
 		call_user_func(function () use ($lib_dir, $lib_files) {
 
-			$setups = array();
+			$setups = [];
 
 			// include library files, capturing setup functions
 			foreach ($lib_files as $file) {
@@ -499,19 +497,19 @@ class Application {
 		define('UPGRADING', 'upgrading');
 
 		self::start();
-		
+
 		// check security settings
 		if (elgg_get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
 			// only admin's or users with a valid token can run upgrade.php
 			elgg_signed_request_gatekeeper();
 		}
-		
+
 		$site_url = elgg_get_config('url');
 		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 
 		// turn any full in-site URLs into absolute paths
 		$forward_url = get_input('forward', '/admin', false);
-		$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
+		$forward_url = str_replace([$site_url, $site_host], '/', $forward_url);
 
 		if (strpos($forward_url, '/') !== 0) {
 			$forward_url = '/' . $forward_url;
@@ -555,15 +553,15 @@ class Application {
 				$msg = elgg_echo("installation:htaccess:needs_upgrade");
 				if ($msg === "installation:htaccess:needs_upgrade") {
 					$msg = "You must update your .htaccess file so that the path is injected "
-						. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+							. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
 				}
 				echo $msg;
 				exit;
 			}
 
-			$vars = array(
+			$vars = [
 				'forward' => $forward_url
-			);
+			];
 
 			// reset cache to have latest translations available during upgrade
 			elgg_reset_system_cache();
@@ -583,7 +581,7 @@ class Application {
 	private function setupPath() {
 		if (!isset($_GET[self::GET_PATH_KEY]) || is_array($_GET[self::GET_PATH_KEY])) {
 			if (php_sapi_name() === 'cli-server') {
-				$_GET[self::GET_PATH_KEY] = (string)parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+				$_GET[self::GET_PATH_KEY] = (string) parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 			} else {
 				$_GET[self::GET_PATH_KEY] = '/';
 			}
@@ -613,7 +611,7 @@ class Application {
 
 	/**
 	 * Flag this application as running for testing (PHPUnit)
-	 * 
+	 *
 	 * @param bool $testing Is testing application
 	 * @return void
 	 */

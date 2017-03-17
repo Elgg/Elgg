@@ -40,7 +40,7 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 			$class = elgg_extract('class', $info, '');
 			$id = elgg_extract('id', $info, '');
 
-			$selected = elgg_extract('selected', $info, FALSE);
+			$selected = elgg_extract('selected', $info, false);
 			if ($selected) {
 				$class .= ' elgg-state-selected';
 			}

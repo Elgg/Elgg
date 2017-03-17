@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Gemelde items',
 	'admin:administer_utilities:reportedcontent' => 'Gemelde inhoud',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Sorry, de poging om deze inhoud te melden is mislukt.',
 	'reportedcontent:notarchived' => 'Het was niet mogelijk om deze melding te archiveren',
-);
+];

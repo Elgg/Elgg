@@ -37,12 +37,12 @@ foreach ($breadcrumbs as $breadcrumb) {
 	// on input, but we can't guarantee that other users of this view and of elgg_push_breadcrumb()
 	// will do so.
 	if (!empty($breadcrumb['link'])) {
-		$crumb = elgg_view('output/url', array(
+		$crumb = elgg_view('output/url', [
 			'href' => $breadcrumb['link'],
 			'text' => $breadcrumb['title'],
 			'encode_text' => true,
 			'is_trusted' => true,
-		));
+		]);
 	} else {
 		$crumb = htmlspecialchars($breadcrumb['title'], ENT_QUOTES, 'UTF-8', false);
 	}

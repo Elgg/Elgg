@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -65,4 +65,4 @@ Du kan ikke svare på denne mail.",
 
 	'messageboard:failure' => "En uventet fejl skete under tilføjelsen af din besked. Prøv venligst igen.",
 
-);
+];

@@ -13,7 +13,7 @@ $code = get_input('c');
 
 try {
 	validate_password($password);
-} catch(RegistrationException $e) {
+} catch (RegistrationException $e) {
 	register_error($e->getMessage());
 	forward(REFERER);
 }

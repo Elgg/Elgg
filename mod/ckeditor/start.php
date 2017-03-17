@@ -14,14 +14,14 @@ function ckeditor_init() {
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/reset.css', 100);
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/typography.css', 100);
 
-	elgg_define_js('ckeditor', array(
+	elgg_define_js('ckeditor', [
 		'deps' => ['elgg/ckeditor/set-basepath'],
 		'exports' => 'CKEDITOR',
-	));
-	elgg_define_js('jquery.ckeditor', array(
-		'deps' => array('jquery', 'ckeditor'),
+	]);
+	elgg_define_js('jquery.ckeditor', [
+		'deps' => ['jquery', 'ckeditor'],
 		'exports' => 'jQuery.fn.ckeditor',
-	));
+	]);
 
 	// need to set basepath early
 	elgg_extend_view('elgg.js', 'elgg/ckeditor/set-basepath.js');
@@ -39,12 +39,12 @@ function ckeditor_longtext_menu($hook, $type, $items, $vars) {
 		return;
 	}
 	
-	$items[] = ElggMenuItem::factory(array(
+	$items[] = ElggMenuItem::factory([
 		'name' => 'ckeditor_toggler',
 		'link_class' => 'ckeditor-toggle-editor elgg-longtext-control hidden',
 		'href' => "#{$id}",
 		'text' => elgg_echo('ckeditor:html'),
-	));
+	]);
 
 	return $items;
 }

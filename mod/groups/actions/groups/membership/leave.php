@@ -8,7 +8,7 @@
 $user_guid = get_input('user_guid');
 $group_guid = get_input('group_guid');
 
-$user = NULL;
+$user = null;
 if (!$user_guid) {
 	$user = elgg_get_logged_in_user_entity();
 } else {

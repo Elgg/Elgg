@@ -28,7 +28,7 @@ function elgg_get_site_entity() {
 function get_site_entity_as_row($guid) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
+	$guid = (int) $guid;
 	return get_data_row("SELECT * FROM {$CONFIG->dbprefix}sites_entity WHERE guid = $guid");
 }
 

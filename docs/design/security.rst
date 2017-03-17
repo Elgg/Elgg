@@ -19,22 +19,12 @@ Password validation
 
 The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in ``/elgg-config/settings.php``. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook.
 
-Password salting
-----------------
-
-Elgg salts passwords with a unique 8 character random string. The salt is generated each time the password is set. The main security advantages of the salting are:
- * preventing anyone with access to the database from conducting a precomputed dictionary attack
- * preventing a site administration from noting users with the same password.
-
 Password hashing
 ----------------
 
-The hashed password is computed using md5 from the user's password text and the salt.
+Passwords are never stored, only salted hashes produced with bcrypt. This is done via the standard ``password_hash()`` function. On older systems, the ``password-compat`` polyfill is used, but the algorithm is identical.
 
-Password storage
-----------------
-
-The hashed password and the salt are stored in the users table. Neither are stored in any cookies on a user's computer.
+Elgg installations created before version 1.10 may have residual "legacy" password hashes created using salted MD5. These are migrated to bcrypt as users log in, and will be completely removed when a system is upgraded to Elgg 3.0. In the meantime we're happy to assist site owners to manually remove these legacy hashes, though it would force those users to reset their passwords.
 
 Password throttling
 -------------------

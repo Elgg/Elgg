@@ -18,7 +18,6 @@ if ($entity instanceof ElggSite) {
 $entity_info = '<table class="elgg-table">';
 
 foreach ($entity_rows as $entity_row) {
-	
 	$value = elgg_view('output/text', ['value' => $entity->$entity_row]);
 	
 	$entity_info .= '<tr>';

@@ -18,7 +18,7 @@ elgg_push_breadcrumb($owner->name);
 
 elgg_register_title_button('file', 'add', 'object', 'file');
 
-$params = array();
+$params = [];
 
 if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// user looking at own files
@@ -32,7 +32,7 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	$params['filter'] = '';
 }
 
-$title = elgg_echo("file:user", array($owner->name));
+$title = elgg_echo("file:user", [$owner->name]);
 
 // List files
 $options = [

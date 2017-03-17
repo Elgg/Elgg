@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -55,4 +55,4 @@ return array(
 	 */
 	'thewire:settings:limit' => "Maximum aantal karakters voor Wire-berichten:",
 	'thewire:settings:limit:none' => "Geen limiet",
-);
+];

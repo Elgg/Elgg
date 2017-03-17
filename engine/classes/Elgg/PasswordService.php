@@ -3,7 +3,7 @@ namespace Elgg;
 
 /**
  * PRIVATE CLASS. API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * @package Elgg.Core
  * @access  private
  * @since   1.10.0
@@ -63,7 +63,7 @@ final class PasswordService {
 	 * @return bool
 	 */
 	function sendNewPasswordRequest($user_guid) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 
 		$user = _elgg_services()->entityTable->get($user_guid);
 		if (!$user instanceof \ElggUser) {
@@ -82,9 +82,9 @@ final class PasswordService {
 		// generate email
 		$ip_address = _elgg_services()->request->getClientIp();
 		$message = _elgg_services()->translator->translate(
-			'email:changereq:body', array($user->name, $ip_address, $link), $user->language);
+			'email:changereq:body', [$user->name, $ip_address, $link], $user->language);
 		$subject = _elgg_services()->translator->translate(
-			'email:changereq:subject', array(), $user->language);
+			'email:changereq:subject', [], $user->language);
 
 		$params = [
 			'action' => 'requestnewpassword',
@@ -117,7 +117,7 @@ final class PasswordService {
 		$user->setPassword($password);
 
 		$ia = elgg_set_ignore_access(true);
-		$result = (bool)$user->save();
+		$result = (bool) $user->save();
 		elgg_set_ignore_access($ia);
 
 		return $result;
@@ -133,7 +133,7 @@ final class PasswordService {
 	 * @return bool True on success
 	 */
 	function executeNewPasswordReset($user_guid, $conf_code, $password = null) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 		$user = get_entity($user_guid);
 
 		if ($password === null) {
@@ -172,8 +172,8 @@ final class PasswordService {
 		$ns = $reset ? 'resetpassword' : 'changepassword';
 
 		$message = _elgg_services()->translator->translate(
-			"email:$ns:body", array($user->username, $password), $user->language);
-		$subject = _elgg_services()->translator->translate("email:$ns:subject", array(), $user->language);
+			"email:$ns:body", [$user->username, $password], $user->language);
+		$subject = _elgg_services()->translator->translate("email:$ns:subject", [], $user->language);
 
 		$params = [
 			'action' => $ns,

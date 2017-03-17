@@ -55,11 +55,11 @@ class Translit {
 
 		// more substitutions
 		// @todo put these somewhere else
-		$string = strtr($string, array(
+		$string = strtr($string, [
 			// currency
 			"\xE2\x82\xAC" /* € */ => ' E ',
 			"\xC2\xA3" /* £ */ => ' GBP ',
-		));
+		]);
 
 		// remove all ASCII except 0-9a-zA-Z, hyphen, underscore, and whitespace
 		// note: "x" modifier did not work with this pattern.
@@ -123,7 +123,7 @@ class Translit {
 	 * @return array
 	 */
 	static public function getAsciiTranslitMap() {
-		return array(
+		return [
 			// Decompositions for Latin-1 Supplement
 			"\xC2\xAA" /* ª */ => 'a', "\xC2\xBA" /* º */ => 'o', "\xC3\x80" /* À */ => 'A',
 			"\xC3\x81" /* Á */ => 'A', "\xC3\x82" /* Â */ => 'A', "\xC3\x83" /* Ã */ => 'A',
@@ -247,7 +247,7 @@ class Translit {
 			"\xE1\xBB\xA4" /* Ụ */ => 'U', "\xE1\xBB\xA5" /* ụ */ => 'u',
 			"\xE1\xBB\xB0" /* Ự */ => 'U', "\xE1\xBB\xB1" /* ự */ => 'u',
 			"\xE1\xBB\xB4" /* Ỵ */ => 'Y', "\xE1\xBB\xB5" /* ỵ */ => 'y',
-		);
+		];
 	}
 
 	/**

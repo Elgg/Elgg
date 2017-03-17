@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -65,4 +65,4 @@ Du kannst auf diese Email NICHT antworten.",
 
 	'messageboard:failure' => "Beim Speichern Deiner Nachricht ist ein unerwarteter Fehler aufgetreten. Bitte versuche es noch einmal.",
 
-);
+];

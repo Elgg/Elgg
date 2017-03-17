@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Inaktiv',
 	
 	'email:validate:subject' => "%s, bitte bestätige Deine Email-Adresse!",
@@ -51,4 +51,4 @@ Wenn Du nicht direkt auf den Link klicken kannst, kopiere ihn bitte von Hand in 
 	'uservalidationbyemail:messages:resent_validation' => 'Bestätigungs-Email gesendet.',
 	'uservalidationbyemail:messages:resent_validations' => 'Die Bestätigungs-Email wurde erneut an alle markierten Benutzeraccount gesendet.'
 
-);
+];

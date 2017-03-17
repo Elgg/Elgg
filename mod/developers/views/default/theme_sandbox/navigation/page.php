@@ -1,9 +1,9 @@
 <?php
 
-$params = array();
+$params = [];
 $params['name'] = 'sandbox_page';
-$params['menu'] = array();
-$params['menu']['default'] = array();
+$params['menu'] = [];
+$params['menu']['default'] = [];
 for ($i = 1; $i <= 5; $i++) {
 	$params['menu']['default'][] = ElggMenuItem::factory([
 			'name' => $i,
@@ -31,7 +31,7 @@ $second_item->setChildMenuOptions([
 ?>
 
 <div class="theme-sandbox-demo-sidebar">
-<?php 
+<?php
 	echo elgg_view('navigation/menu/page', $params);
 ?>
 </div>

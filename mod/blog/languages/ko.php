@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => '블로그',
 	'blog:blogs' => '블로그',
 	'blog:revisions' => '개정',
@@ -64,4 +64,4 @@ return array(
 	'blog:moreblogs' => '블로그글 더보기',
 	'blog:numbertodisplay' => '출력할 블로그글의 수',
 	'blog:noblogs' => '블로그글이 없습니다.'
-);
+];

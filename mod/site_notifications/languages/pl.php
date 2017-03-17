@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'Powiadomienia',
 	'notification:method:site' => 'Strona',
 	'site_notifications:topbar' => 'Powiadomienia',
@@ -11,4 +11,4 @@ return array(
 	'site_notifications:toggle_all' => 'Przełącz wszystkie',
 	'site_notifications:error:notifications_not_selected' => 'Nie wybrano żadnych powiadomień',
 	'site_notifications:success:delete' => 'Powiadomienia usunięte'
-);
+];

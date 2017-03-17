@@ -92,3 +92,4 @@ define(function (require) {
 	$('.elgg-tabs-component .elgg-tabs > li.elgg-state-selected > a').trigger('click');
 });
 
+

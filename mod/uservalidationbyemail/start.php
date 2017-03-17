@@ -80,16 +80,16 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	// set context so our canEdit() override works
 	elgg_push_context('uservalidationbyemail_new_user');
 	$hidden_entities = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
+	access_show_hidden_entities(true);
 
 	// Don't do a recursive disable.  Any entities owned by the user at this point
 	// are products of plugins that hook into create user and might need
 	// access to the entities.
 	// @todo That ^ sounds like a specific case...would be nice to track it down...
-	$user->disable('uservalidationbyemail_new_user', FALSE);
+	$user->disable('uservalidationbyemail_new_user', false);
 
 	// set user as unvalidated and send out validation email
-	elgg_set_user_validation_status($user->guid, FALSE);
+	elgg_set_user_validation_status($user->guid, false);
 	uservalidationbyemail_request_validation($user->guid);
 
 	elgg_pop_context();
@@ -138,7 +138,7 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 
 	$context = elgg_get_context();
 	if ($context == 'uservalidationbyemail_new_user' || $context == 'uservalidationbyemail_validate_user') {
-		return TRUE;
+		return true;
 	}
 
 	return;
@@ -160,7 +160,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 
 	// See if the user exists and isn't validated
 	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
+	access_show_hidden_entities(true);
 
 	// check if logging in with email address
 	if (strpos($username, '@') !== false) {
@@ -213,7 +213,7 @@ function uservalidationbyemail_page_handler($page) {
  */
 function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 	if ($user instanceof ElggUser && !$user->validated) {
-		elgg_set_user_validation_status($user->guid, TRUE, 'admin_user');
+		elgg_set_user_validation_status($user->guid, true, 'admin_user');
 	}
 }
 
@@ -238,7 +238,7 @@ function uservalidationbyemail_public_pages($hook, $type, $return_value, $params
  */
 function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
+	access_show_hidden_entities(true);
 
 	if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {
 		// send new validation email

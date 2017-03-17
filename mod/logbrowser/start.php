@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg log browser.
- * 
+ *
  * @package ElggLogBrowser
  */
 

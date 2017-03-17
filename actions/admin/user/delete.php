@@ -23,7 +23,7 @@ $username = $user->username;
 
 if (($user instanceof ElggUser) && ($user->canEdit())) {
 	if ($user->delete()) {
-		system_message(elgg_echo('admin:user:delete:yes', array($name)));
+		system_message(elgg_echo('admin:user:delete:yes', [$name]));
 	} else {
 		register_error(elgg_echo('admin:user:delete:no'));
 	}
@@ -33,7 +33,7 @@ if (($user instanceof ElggUser) && ($user->canEdit())) {
 
 // forward to user administration if on a user's page as it no longer exists
 $forward = REFERER;
-if (strpos($_SERVER['HTTP_REFERER'], $username) != FALSE) {
+if (strpos($_SERVER['HTTP_REFERER'], $username) != false) {
 	$forward = "admin/users/newest";
 }
 

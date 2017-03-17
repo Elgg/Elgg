@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -67,4 +67,4 @@ You cannot reply to this email.",
 
 	'messageboard:failure' => "An unexpected error occurred when adding your message. Please try again.",
 
-);
+];

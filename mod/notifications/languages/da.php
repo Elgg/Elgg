@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	'friends:all' => 'Alle venner',
 
@@ -21,4 +21,4 @@ return array(
 
 	'notifications:subscriptions:success' => 'Dine indstillinger for beskeder er blevet gemt.',
 
-);
+];

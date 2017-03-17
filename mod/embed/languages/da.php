@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Embed',
 	'embed:media' => 'Embed indhold',
 	'embed:instructions' => 'Klik på en fil for at embedde den i dit indhold.',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'Ingen emner fundet.',
 
 	'embed:no_sections' => 'No supported embed plugins found. Ask the site administrator to enabled a plugin with embed support.',
-);
+];
