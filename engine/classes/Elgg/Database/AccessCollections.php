@@ -912,25 +912,19 @@ class AccessCollections {
 			return $access_array[$access];
 		}
 
-		$user_guid = $this->session->getLoggedInUserGuid();
-		if (!$user_guid) {
-			// return 'Limited' if there is no logged in user
-			return $translator->translate('access:limited:label');
-		}
-
 		// Entity access id is probably a custom access collection
 		// Check if the user has write access to it and can see it's label
 		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
-		if ($collection) {
-			if (($collection->owner_guid == $user_guid) || $this->session->isAdminLoggedIn()) {
-				return $collection->name;
-			}
+		$user_guid = $this->session->getLoggedInUserGuid();
+		
+		if (!$collection || !$user_guid) {
+			// return 'Limited' if there is no logged in user or collection can not be loaded
+			return $translator->translate('access:limited:label');
 		}
 
-		// return 'Limited' if the user does not have access to the access collection
-		return $translator->translate('access:limited:label');
+		return $collection->getDisplayName();
 	}
 
 }
