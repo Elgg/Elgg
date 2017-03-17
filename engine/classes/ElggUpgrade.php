@@ -20,12 +20,12 @@ class ElggUpgrade extends ElggObject {
 
 	use TimeUsing;
 	
-	private $requiredProperties = array(
+	private $requiredProperties = [
 		'id',
 		'title',
 		'description',
 		'class',
-	);
+	];
 
 	/**
 	 * Do not use.

@@ -19,7 +19,7 @@
 function get_group_entity_as_row($guid) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
+	$guid = (int) $guid;
 
 	return get_data_row("SELECT * from {$CONFIG->dbprefix}groups_entity where guid=$guid");
 }
@@ -40,7 +40,7 @@ function add_group_tool_option($name, $label, $default_on = true) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->group_tool_options)) {
-		$CONFIG->group_tool_options = array();
+		$CONFIG->group_tool_options = [];
 	}
 
 	$group_tool_option = new \stdClass;

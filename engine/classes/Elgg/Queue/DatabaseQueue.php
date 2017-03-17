@@ -7,7 +7,7 @@ namespace Elgg\Queue;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Queue
  * @since      1.9.0
@@ -96,7 +96,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 		$name = $this->db->sanitizeString($this->name);
 
 		$result = $this->db->getDataRow("SELECT COUNT(id) AS total FROM {$prefix}queue WHERE name = '$name'");
-		return (int)$result->total;
+		return (int) $result->total;
 	}
 }
 

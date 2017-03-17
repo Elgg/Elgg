@@ -41,7 +41,7 @@
  * @return mixed int If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */
-function elgg_get_entities_from_private_settings(array $options = array()) {
+function elgg_get_entities_from_private_settings(array $options = []) {
 	return _elgg_services()->privateSettings->getEntities($options);
 }
 

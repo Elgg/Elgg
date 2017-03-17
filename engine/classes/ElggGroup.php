@@ -5,7 +5,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Groups
- * 
+ *
  * @property string $name        A short name that captures the purpose of the group
  * @property string $description A longer body of content that gives more details about the group
  */
@@ -193,12 +193,12 @@ class ElggGroup extends \ElggEntity {
 			return false;
 		}
 
-		$result = (bool)check_entity_relationship($user->guid, 'member', $this->guid);
+		$result = (bool) check_entity_relationship($user->guid, 'member', $this->guid);
 
-		$params = array(
+		$params = [
 			'user' => $user,
 			'group' => $this,
-		);
+		];
 		return _elgg_services()->hooks->trigger('is_member', 'group', $params, $result);
 	}
 
@@ -213,7 +213,7 @@ class ElggGroup extends \ElggEntity {
 		$result = add_entity_relationship($user->guid, 'member', $this->guid);
 	
 		if ($result) {
-			$params = array('group' => $this, 'user' => $user);
+			$params = ['group' => $this, 'user' => $user];
 			_elgg_services()->events->trigger('join', 'group', $params);
 		}
 	
@@ -229,7 +229,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function leave(\ElggUser $user) {
 		// event needs to be triggered while user is still member of group to have access to group acl
-		$params = array('group' => $this, 'user' => $user);
+		$params = ['group' => $this, 'user' => $user];
 		_elgg_services()->events->trigger('leave', 'group', $params);
 
 		return remove_entity_relationship($user->guid, 'member', $this->guid);
@@ -269,7 +269,7 @@ class ElggGroup extends \ElggEntity {
 			return false;
 		}
 		
-		$guid = (int)$this->guid;
+		$guid = (int) $this->guid;
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
 		

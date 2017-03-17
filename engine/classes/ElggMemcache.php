@@ -47,7 +47,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		}
 		
 		// make sure memcache is reset
-		_elgg_services()->events->registerHandler('cache:flush', 'system', array($this, 'clear'));
+		_elgg_services()->events->registerHandler('cache:flush', 'system', [$this, 'clear']);
 	}
 
 	/**

@@ -40,12 +40,12 @@ class EventsService extends HooksRegistrationService {
 	 * @see elgg_trigger_after_event
 	 * @access private
 	 */
-	public function trigger($name, $type, $object = null, array $options = array()) {
-		$options = array_merge(array(
+	public function trigger($name, $type, $object = null, array $options = []) {
+		$options = array_merge([
 			self::OPTION_STOPPABLE => true,
 			self::OPTION_DEPRECATION_MESSAGE => '',
 			self::OPTION_DEPRECATION_VERSION => '',
-		), $options);
+		], $options);
 
 		$handlers = $this->hasHandler($name, $type);
 		if ($handlers && $options[self::OPTION_DEPRECATION_MESSAGE]) {
@@ -129,9 +129,9 @@ class EventsService extends HooksRegistrationService {
 	 * @since 2.0.0
 	 */
 	public function triggerAfter($event, $object_type, $object = null) {
-		$options = array(
+		$options = [
 			self::OPTION_STOPPABLE => false,
-		);
+		];
 		return $this->trigger("$event:after", $object_type, $object, $options);
 	}
 
@@ -149,10 +149,10 @@ class EventsService extends HooksRegistrationService {
 	 * @see trigger
 	 */
 	function triggerDeprecated($event, $object_type, $object = null, $message, $version) {
-		$options = array(
+		$options = [
 			self::OPTION_DEPRECATION_MESSAGE => $message,
 			self::OPTION_DEPRECATION_VERSION => $version,
-		);
+		];
 		return $this->trigger($event, $object_type, $object, $options);
 	}
 }

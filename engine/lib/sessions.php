@@ -67,7 +67,7 @@ function elgg_is_admin_logged_in() {
  */
 function elgg_is_admin_user($user_guid) {
 	
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 
 	$current_user = elgg_get_logged_in_user_entity();
 	if ($current_user && $current_user->guid == $user_guid) {
@@ -108,7 +108,7 @@ function elgg_is_admin_user($user_guid) {
  */
 function elgg_authenticate($username, $password) {
 	$pam = new \ElggPAM('user');
-	$credentials = array('username' => $username, 'password' => $password);
+	$credentials = ['username' => $username, 'password' => $password];
 	$result = $pam->authenticate($credentials);
 	if (!$result) {
 		return $pam->getFailureMessage();
@@ -128,7 +128,7 @@ function elgg_authenticate($username, $password) {
  * @throws LoginException
  * @access private
  */
-function pam_auth_userpass(array $credentials = array()) {
+function pam_auth_userpass(array $credentials = []) {
 
 	if (!isset($credentials['username']) || !isset($credentials['password'])) {
 		return false;
@@ -167,11 +167,11 @@ function pam_auth_userpass(array $credentials = array()) {
  * @return bool
  */
 function log_login_failure($user_guid) {
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int) $user->getPrivateSetting("login_failures");
 		$fails++;
 
 		$user->setPrivateSetting("login_failures", $fails);
@@ -190,11 +190,11 @@ function log_login_failure($user_guid) {
  * @return bool true on success (success = user has no logged failed attempts)
  */
 function reset_login_failure_count($user_guid) {
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int) $user->getPrivateSetting("login_failures");
 
 		if ($fails) {
 			for ($n = 1; $n <= $fails; $n++) {
@@ -223,11 +223,11 @@ function reset_login_failure_count($user_guid) {
 function check_rate_limit_exceeded($user_guid) {
 	// 5 failures in 5 minutes causes temporary block on logins
 	$limit = 5;
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int) $user->getPrivateSetting("login_failures");
 		if ($fails >= $limit) {
 			$cnt = 0;
 			$time = time();

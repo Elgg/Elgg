@@ -6,4 +6,5 @@
  * @package    Elgg.Core
  * @subpackage Exception
  */
-class IOException extends \Exception {}
+class IOException extends \Exception {
+}

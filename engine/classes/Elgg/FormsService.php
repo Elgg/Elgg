@@ -77,11 +77,11 @@ class FormsService {
 	 *
 	 * @return string The complete form
 	 */
-	public function render($action, $form_vars = array(), $body_vars = array()) {
+	public function render($action, $form_vars = [], $body_vars = []) {
 
-		$defaults = array(
+		$defaults = [
 			'action' => elgg_normalize_url("action/$action"),
-		);
+		];
 
 		// append elgg-form class to any class options set
 		$form_vars['class'] = (array) elgg_extract('class', $form_vars, []);

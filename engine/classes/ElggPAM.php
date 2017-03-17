@@ -18,12 +18,12 @@ class ElggPAM {
 
 	/**
 	 * \ElggPAM constructor
-	 * 
+	 *
 	 * @param string $policy PAM policy type: user, api, or plugin-defined policies
 	 */
 	public function __construct($policy) {
 		$this->policy = $policy;
-		$this->messages = array('sufficient' => array(), 'required' => array());
+		$this->messages = ['sufficient' => [], 'required' => []];
 	}
 
 	/**
@@ -41,7 +41,7 @@ class ElggPAM {
 	 * @param array $credentials Credentials array dependant on policy type
 	 * @return bool
 	 */
-	public function authenticate($credentials = array()) {
+	public function authenticate($credentials = []) {
 		global $_PAM_HANDLERS;
 
 		if (!isset($_PAM_HANDLERS[$this->policy]) ||
@@ -89,7 +89,7 @@ class ElggPAM {
 
 	/**
 	 * Get a failure message to display to user
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getFailureMessage() {

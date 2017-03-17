@@ -78,7 +78,6 @@ abstract class HooksRegistrationService {
 		$matcher = $this->getMatcher($callback);
 
 		foreach ($this->registrations[$name][$type] as $i => $registration) {
-
 			if ($matcher) {
 				if (!$matcher->matches($registration[self::REG_KEY_HANDLER])) {
 					continue;

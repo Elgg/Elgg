@@ -100,7 +100,6 @@ class Annotations {
 		$entity = get_entity($entity_guid);
 	
 		if ($this->events->trigger('annotate', $entity->type, $entity)) {
-			
 			$sql = "INSERT INTO {$this->db->prefix}annotations
 				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
 				VALUES
@@ -217,7 +216,7 @@ class Annotations {
 	 *
 	 * @return \ElggAnnotation[]|mixed
 	 */
-	function find(array $options = array()) {
+	function find(array $options = []) {
 
 		// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
 		if (isset($options['count']) && $options['count']) {
@@ -321,26 +320,26 @@ class Annotations {
 	 *
 	 * @return mixed If count, int. If not count, array. false on errors.
 	 */
-	function getEntities(array $options = array()) {
-		$defaults = array(
+	function getEntities(array $options = []) {
+		$defaults = [
 			'annotation_names'						=>	ELGG_ENTITIES_ANY_VALUE,
 			'annotation_values'						=>	ELGG_ENTITIES_ANY_VALUE,
 			'annotation_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
 	
 			'annotation_name_value_pairs_operator'	=>	'AND',
 			'annotation_case_sensitive' 			=>	true,
-			'order_by_annotation'					=>	array(),
+			'order_by_annotation'					=>	[],
 	
 			'annotation_created_time_lower'			=>	ELGG_ENTITIES_ANY_VALUE,
 			'annotation_created_time_upper'			=>	ELGG_ENTITIES_ANY_VALUE,
 	
 			'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
-		);
+		];
 	
 		$options = array_merge($defaults, $options);
 	
-		$singulars = array('annotation_name', 'annotation_value',
-		'annotation_name_value_pair', 'annotation_owner_guid');
+		$singulars = ['annotation_name', 'annotation_value',
+		'annotation_name_value_pair', 'annotation_owner_guid'];
 	
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 		$options = _elgg_entities_get_metastrings_options('annotation', $options);
@@ -398,10 +397,10 @@ class Annotations {
 		}
 		
 		$db_prefix = $this->db->prefix;
-		$defaults = array(
+		$defaults = [
 			'calculation' => 'sum',
 			'order_by' => 'annotation_calculation desc'
-		);
+		];
 	
 		$options = array_merge($defaults, $options);
 	

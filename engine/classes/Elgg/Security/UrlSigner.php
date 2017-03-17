@@ -16,7 +16,7 @@ class UrlSigner {
 	 * Normalizes and signs the URL with SHA256 HMAC key
 	 *
 	 * @note Signed URLs do not offer CSRF protection and should not be used instead of action tokens.
-	 * 
+	 *
 	 * @param string $url     URL to sign
 	 * @param string $expires Expiration time
 	 *                        Accepts a string suitable for strtotime()

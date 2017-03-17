@@ -7,4 +7,5 @@
  * @package    Elgg.Core
  * @subpackage Exceptions.Stub
  */
-class LoginException extends \Exception {}
+class LoginException extends \Exception {
+}

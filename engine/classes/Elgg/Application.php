@@ -128,7 +128,7 @@ class Application {
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
 		// we're actually loading on every page (Hint: it's too much).
-		$lib_files = array(
+		$lib_files = [
 			// Needs to be loaded first to correctly bootstrap
 			'autoloader.php',
 			'elgglib.php',
@@ -176,12 +176,12 @@ class Application {
 			// backward compatibility
 			'deprecated-2.1.php',
 			'deprecated-3.0.php',
-		);
+		];
 
 		// isolate global scope
 		call_user_func(function () use ($lib_dir, $lib_files) {
 
-			$setups = array();
+			$setups = [];
 
 			// include library files, capturing setup functions
 			foreach ($lib_files as $file) {
@@ -509,7 +509,7 @@ class Application {
 
 		// turn any full in-site URLs into absolute paths
 		$forward_url = get_input('forward', '/admin', false);
-		$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
+		$forward_url = str_replace([$site_url, $site_host], '/', $forward_url);
 
 		if (strpos($forward_url, '/') !== 0) {
 			$forward_url = '/' . $forward_url;
@@ -559,9 +559,9 @@ class Application {
 				exit;
 			}
 
-			$vars = array(
+			$vars = [
 				'forward' => $forward_url
-			);
+			];
 
 			// reset cache to have latest translations available during upgrade
 			elgg_reset_system_cache();
@@ -581,7 +581,7 @@ class Application {
 	private function setupPath() {
 		if (!isset($_GET[self::GET_PATH_KEY]) || is_array($_GET[self::GET_PATH_KEY])) {
 			if (php_sapi_name() === 'cli-server') {
-				$_GET[self::GET_PATH_KEY] = (string)parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+				$_GET[self::GET_PATH_KEY] = (string) parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 			} else {
 				$_GET[self::GET_PATH_KEY] = '/';
 			}

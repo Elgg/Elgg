@@ -18,7 +18,7 @@ class Response implements \Elgg\Services\AjaxResponse {
 	 * {@inheritdoc}
 	 */
 	public function setTtl($ttl = 0) {
-		$this->ttl = (int)max($ttl, 0);
+		$this->ttl = (int) max($ttl, 0);
 		return $this;
 	}
 

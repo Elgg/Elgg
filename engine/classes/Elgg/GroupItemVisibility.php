@@ -40,7 +40,7 @@ class GroupItemVisibility {
 		// cache because this may be called repeatedly during river display, and
 		// due to need to check group visibility, cache will be disabled for some
 		// get_entity() calls
-		static $cache = array();
+		static $cache = [];
 
 		if (!$container_guid) {
 			return new \Elgg\GroupItemVisibility();

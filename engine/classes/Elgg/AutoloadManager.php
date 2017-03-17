@@ -4,7 +4,7 @@ namespace Elgg;
  * Manages core autoloading and caching of class maps
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Autoloader
  */
@@ -22,7 +22,7 @@ class AutoloadManager {
 	/**
 	 * @var array directories that have already been scanned for classes
 	 */
-	protected $scannedDirs = array();
+	protected $scannedDirs = [];
 
 	/**
 	 * @var bool was data in the manager altered?
@@ -36,7 +36,7 @@ class AutoloadManager {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param \Elgg\ClassLoader $loader Class loader object
 	 */
 	public function __construct(\Elgg\ClassLoader $loader) {
@@ -75,7 +75,7 @@ class AutoloadManager {
 	 */
 	protected function scanClassesDir($dir) {
 		$dir = new \DirectoryIterator($dir);
-		$map = array();
+		$map = [];
 
 		foreach ($dir as $file) {
 			/* @var \SplFileInfo $file */
@@ -146,7 +146,7 @@ class AutoloadManager {
 
 	/**
 	 * Some method that does something
-	 * 
+	 *
 	 * @todo what is a spec?
 	 * @return bool|array
 	 */
@@ -177,7 +177,7 @@ class AutoloadManager {
 
 	/**
 	 * Get the class loader
-	 * 
+	 *
 	 * @return \Elgg\ClassLoader
 	 */
 	public function getLoader() {
@@ -186,7 +186,7 @@ class AutoloadManager {
 
 	/**
 	 * Set the cache storage object
-	 * 
+	 *
 	 * @param \ElggCache $storage Cache object
 	 * @return void
 	 */

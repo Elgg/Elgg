@@ -144,11 +144,11 @@ class ElggFile extends ElggObject {
 		}
 
 		$original_filename = isset($this) && $this instanceof $class ? $this->originalfilename : basename($file);
-		$params = array(
+		$params = [
 			'filename' => $file,
 			'original_filename' => $original_filename, // @see file upload action
 			'default' => $default,
-		);
+		];
 		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);
 	}
 
@@ -359,9 +359,9 @@ class ElggFile extends ElggObject {
 	 * Transfer a file to a new owner and sets a new filename,
 	 * copies file contents to a new location.
 	 *
-	 * This is an alternative to using rename() which fails to move files to 
+	 * This is an alternative to using rename() which fails to move files to
 	 * a non-existent directory under new owner's filestore directory
-	 * 
+	 *
 	 * @param int    $owner_guid New owner's guid
 	 * @param string $filename   New filename (uses old filename if not set)
 	 * @return bool
@@ -401,7 +401,7 @@ class ElggFile extends ElggObject {
 	 * calling this method.
 	 *
 	 * @param UploadedFile $upload Uploaded file object
-	 * @return bool 
+	 * @return bool
 	 */
 	public function acceptUploadedFile(UploadedFile $upload) {
 		if (!$upload->isValid()) {
@@ -463,10 +463,10 @@ class ElggFile extends ElggObject {
 	 * @return string[]
 	 */
 	public function __sleep() {
-		return array_diff(array_keys(get_object_vars($this)), array(
+		return array_diff(array_keys(get_object_vars($this)), [
 			// a resource
 			'handle',
-		));
+		]);
 	}
 
 }

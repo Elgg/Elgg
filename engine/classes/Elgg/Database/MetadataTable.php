@@ -22,7 +22,7 @@ class MetadataTable {
 	use \Elgg\TimeUsing;
 
 	/** @var array */
-	protected $independents = array();
+	protected $independents = [];
 	
 	/** @var Cache */
 	protected $cache;
@@ -134,7 +134,7 @@ class MetadataTable {
 			':name' => $name,
 		]);
 		if ($existing && !$allow_multiple) {
-			$id = (int)$existing->id;
+			$id = (int) $existing->id;
 			$result = $this->update($id, $name, $value, $value_type, $owner_guid, $access_id);
 	
 			if (!$result) {
@@ -143,7 +143,7 @@ class MetadataTable {
 		} else {
 			// Support boolean types
 			if (is_bool($value)) {
-				$value = (int)$value;
+				$value = (int) $value;
 			}
 		
 			// If ok then add it
@@ -164,7 +164,6 @@ class MetadataTable {
 			if ($id !== false) {
 				$obj = $this->get($id);
 				if ($this->events->trigger('create', 'metadata', $obj)) {
-
 					$this->cache->clear($entity_guid);
 	
 					return $id;
@@ -210,7 +209,7 @@ class MetadataTable {
 	
 		// Support boolean types (as integers)
 		if (is_bool($value)) {
-			$value = (int)$value;
+			$value = (int) $value;
 		}
 	
 		// If ok then add it
@@ -232,7 +231,6 @@ class MetadataTable {
 		]);
 		
 		if ($result !== false) {
-	
 			$this->cache->clear($md->entity_guid);
 	
 			// @todo this event tells you the metadata has been updated, but does not
@@ -303,7 +301,7 @@ class MetadataTable {
 	 *
 	 * @return \ElggMetadata[]|mixed
 	 */
-	function getAll(array $options = array()) {
+	function getAll(array $options = []) {
 	
 		// @todo remove support for count shortcut - see #4393
 		// support shortcut of 'count' => true for 'metadata_calculation' => 'count'
@@ -444,23 +442,23 @@ class MetadataTable {
 	 *
 	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
 	 */
-	function getEntities(array $options = array()) {
-		$defaults = array(
+	function getEntities(array $options = []) {
+		$defaults = [
 			'metadata_names'                     => ELGG_ENTITIES_ANY_VALUE,
 			'metadata_values'                    => ELGG_ENTITIES_ANY_VALUE,
 			'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
 	
 			'metadata_name_value_pairs_operator' => 'AND',
 			'metadata_case_sensitive'            => true,
-			'order_by_metadata'                  => array(),
+			'order_by_metadata'                  => [],
 	
 			'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,
-		);
+		];
 	
 		$options = array_merge($defaults, $options);
 	
-		$singulars = array('metadata_name', 'metadata_value',
-			'metadata_name_value_pair', 'metadata_owner_guid');
+		$singulars = ['metadata_name', 'metadata_value',
+			'metadata_name_value_pair', 'metadata_owner_guid'];
 	
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 	
@@ -516,30 +514,30 @@ class MetadataTable {
 		// only supported on values.
 		$binary = ($case_sensitive) ? ' BINARY ' : '';
 	
-		$access = _elgg_get_access_where_sql(array(
+		$access = _elgg_get_access_where_sql([
 			'table_alias' => 'n_table',
 			'guid_column' => 'entity_guid',
-		));
+		]);
 	
-		$return = array (
-			'joins' => array (),
-			'wheres' => array(),
-			'orders' => array()
-		);
+		$return =  [
+			'joins' =>  [],
+			'wheres' => [],
+			'orders' => []
+		];
 	
 		$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table on
 			{$e_table}.guid = n_table.entity_guid";
 	
-		$wheres = array();
+		$wheres = [];
 	
 		// get names wheres and joins
 		$names_where = '';
 		if ($names !== null) {
 			if (!is_array($names)) {
-				$names = array($names);
+				$names = [$names];
 			}
 	
-			$sanitised_names = array();
+			$sanitised_names = [];
 			foreach ($names as $name) {
 				// normalise to 0.
 				if (!$name) {
@@ -557,10 +555,10 @@ class MetadataTable {
 		$values_where = '';
 		if ($values !== null) {
 			if (!is_array($values)) {
-				$values = array($values);
+				$values = [$values];
 			}
 	
-			$sanitised_values = array();
+			$sanitised_values = [];
 			foreach ($values as $value) {
 				// normalize to 0
 				if (!$value) {
@@ -587,10 +585,10 @@ class MetadataTable {
 		if (is_array($pairs)) {
 			// check if this is an array of pairs or just a single pair.
 			if (isset($pairs['name']) || isset($pairs['value'])) {
-				$pairs = array($pairs);
+				$pairs = [$pairs];
 			}
 	
-			$pair_wheres = array();
+			$pair_wheres = [];
 	
 			// @todo when the pairs are > 3 should probably split the query up to
 			// denormalize the strings table.
@@ -599,10 +597,10 @@ class MetadataTable {
 				// @todo move this elsewhere?
 				// support shortcut 'n' => 'v' method.
 				if (!is_array($pair)) {
-					$pair = array(
+					$pair = [
 						'name' => $index,
 						'value' => $pair
-					);
+					];
 				}
 	
 				// must have at least a name and value
@@ -628,24 +626,24 @@ class MetadataTable {
 				// for comparing
 				$trimmed_operand = trim(strtolower($operand));
 	
-				$access = _elgg_get_access_where_sql(array(
+				$access = _elgg_get_access_where_sql([
 					'table_alias' => "n_table{$i}",
 					'guid_column' => 'entity_guid',
-				));
+				]);
 
 				// certain operands can't work well with strings that can be interpreted as numbers
 				// for direct comparisons like IN, =, != we treat them as strings
 				// gt/lt comparisons need to stay unencapsulated because strings '5' > '15'
 				// see https://github.com/Elgg/Elgg/issues/7009
-				$num_safe_operands = array('>', '<', '>=', '<=');
+				$num_safe_operands = ['>', '<', '>=', '<='];
 				$num_test_operand = trim(strtoupper($operand));
 	
 				if (is_numeric($pair['value']) && in_array($num_test_operand, $num_safe_operands)) {
 					$value = $this->db->sanitizeString($pair['value']);
 				} else if (is_bool($pair['value'])) {
-					$value = (int)$pair['value'];
+					$value = (int) $pair['value'];
 				} else if (is_array($pair['value'])) {
-					$values_array = array();
+					$values_array = [];
 	
 					foreach ($pair['value'] as $pair_value) {
 						if (is_numeric($pair_value) && !in_array($num_test_operand, $num_safe_operands)) {
@@ -690,7 +688,7 @@ class MetadataTable {
 				$sanitised = array_map('sanitise_int', $owner_guids);
 				$owner_str = implode(',', $sanitised);
 			} else {
-				$owner_str = (int)$owner_guids;
+				$owner_str = (int) $owner_guids;
 			}
 	
 			$wheres[] = "(n_table.owner_guid IN ($owner_str))";
@@ -703,7 +701,7 @@ class MetadataTable {
 		if (is_array($order_by_metadata)) {
 			if ((count($order_by_metadata) > 0) && !isset($order_by_metadata[0])) {
 				// singleton, so fix
-				$order_by_metadata = array($order_by_metadata);
+				$order_by_metadata = [$order_by_metadata];
 			}
 			foreach ($order_by_metadata as $order_by) {
 				if (is_array($order_by) && isset($order_by['name'])) {
@@ -716,10 +714,10 @@ class MetadataTable {
 					$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table{$i}
 						on {$e_table}.guid = n_table{$i}.entity_guid";
 	
-					$access = _elgg_get_access_where_sql(array(
+					$access = _elgg_get_access_where_sql([
 						'table_alias' => "n_table{$i}",
 						'guid_column' => 'entity_guid',
-					));
+					]);
 	
 					$return['wheres'][] = "(n_table{$i}.name = '$name' AND $access)";
 					if (isset($order_by['as']) && $order_by['as'] == 'integer') {
@@ -761,7 +759,7 @@ class MetadataTable {
 	 */
 	function registerMetadataAsIndependent($type, $subtype = '*') {
 		if (!isset($this->independents[$type])) {
-			$this->independents[$type] = array();
+			$this->independents[$type] = [];
 		}
 		
 		$this->independents[$type][$subtype] = true;
@@ -798,8 +796,8 @@ class MetadataTable {
 	function handleUpdate($event, $object_type, $object) {
 		if ($object instanceof \ElggEntity) {
 			if (!$this->isMetadataIndependent($object->getType(), $object->getSubtype())) {
-				$access_id = (int)$object->access_id;
-				$guid = (int)$object->getGUID();
+				$access_id = (int) $object->access_id;
+				$guid = (int) $object->getGUID();
 				$query = "update {$this->table} set access_id = {$access_id} where entity_guid = {$guid}";
 				$this->db->updateData($query);
 			}

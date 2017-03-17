@@ -500,11 +500,11 @@ class EntityTable {
 	 * @see elgg_get_entities_from_annotations()
 	 * @see elgg_list_entities()
 	 */
-	public function getEntities(array $options = array()) {
+	public function getEntities(array $options = []) {
 
 		_elgg_check_unsupported_site_guid($options);
 		
-		$defaults = array(
+		$defaults = [
 			'types'					=>	ELGG_ENTITIES_ANY_VALUE,
 			'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
 			'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
@@ -524,9 +524,9 @@ class EntityTable {
 			'limit'					=>	$this->config->get('default_limit'),
 			'offset'				=>	0,
 			'count'					=>	false,
-			'selects'				=>	array(),
-			'wheres'				=>	array(),
-			'joins'					=>	array(),
+			'selects'				=>	[],
+			'wheres'				=>	[],
+			'joins'					=>	[],
 
 			'preload_owners'		=> false,
 			'preload_containers'	=> false,
@@ -539,7 +539,7 @@ class EntityTable {
 
 			// private API
 			'__ElggBatch'			=> null,
-		);
+		];
 
 		$options = array_merge($defaults, $options);
 
@@ -564,14 +564,14 @@ class EntityTable {
 			}
 		}
 
-		$singulars = array('type', 'subtype', 'guid', 'owner_guid', 'container_guid');
+		$singulars = ['type', 'subtype', 'guid', 'owner_guid', 'container_guid'];
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 		$options = $this->autoJoinTables($options);
 
 		// evaluate where clauses
 		if (!is_array($options['wheres'])) {
-			$options['wheres'] = array($options['wheres']);
+			$options['wheres'] = [$options['wheres']];
 		}
 
 		$wheres = $options['wheres'];
@@ -601,7 +601,7 @@ class EntityTable {
 
 		// evaluate join clauses
 		if (!is_array($options['joins'])) {
-			$options['joins'] = array($options['joins']);
+			$options['joins'] = [$options['joins']];
 		}
 
 		// remove identical join clauses
@@ -685,7 +685,7 @@ class EntityTable {
 		}
 
 		// populate entity and metadata caches, and prepare $entities for preloader
-		$guids = array();
+		$guids = [];
 		foreach ($results as $item) {
 			// A custom callback could result in items that aren't \ElggEntity's, so check for them
 			if ($item instanceof ElggEntity) {
@@ -792,19 +792,19 @@ class EntityTable {
 		// Keys are types, values are columns that, if present, suggest that the secondary
 		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
 		// will fetch any missing attributes.
-		$types_to_optimize = array(
+		$types_to_optimize = [
 			'object' => 'title',
 			'user' => 'password_hash',
 			'group' => 'name',
 			'site' => 'url',
-		);
+		];
 
 		$rows = $this->db->getData($sql);
 
 		// guids to look up in each type
-		$lookup_types = array();
+		$lookup_types = [];
 		// maps GUIDs to the $rows key
-		$guid_to_key = array();
+		$guid_to_key = [];
 
 		if (isset($rows[0]->type, $rows[0]->subtype)
 				&& $rows[0]->type === 'object'
@@ -812,7 +812,7 @@ class EntityTable {
 			// Likely the entire resultset is plugins, which have already been optimized
 			// to JOIN the secondary table. In this case we allow retrieving from cache,
 			// but abandon the extra queries.
-			$types_to_optimize = array();
+			$types_to_optimize = [];
 		}
 
 		// First pass: use cache where possible, gather GUIDs that we're optimizing
@@ -905,14 +905,14 @@ class EntityTable {
 		$valid_types = $this->config->get('entity_types');
 
 		// pairs override
-		$wheres = array();
+		$wheres = [];
 		if (!is_array($pairs)) {
 			if (!is_array($types)) {
-				$types = array($types);
+				$types = [$types];
 			}
 
 			if ($subtypes && !is_array($subtypes)) {
-				$subtypes = array($subtypes);
+				$subtypes = [$subtypes];
 			}
 
 			// decrementer for valid types.  Return false if no valid types
@@ -943,7 +943,7 @@ class EntityTable {
 			// subtypes are based upon types, so we need to look at each
 			// type individually to get the right subtype id.
 			foreach ($types as $type) {
-				$subtype_ids = array();
+				$subtype_ids = [];
 				if ($subtypes) {
 					foreach ($subtypes as $subtype) {
 						// check that the subtype is valid
@@ -994,7 +994,7 @@ class EntityTable {
 					unset($pairs[array_search($paired_type, $pairs)]);
 				} else {
 					if ($paired_subtypes && !is_array($paired_subtypes)) {
-						$pairs[$paired_type] = array($paired_subtypes);
+						$pairs[$paired_type] = [$paired_subtypes];
 					}
 					$valid_pairs_subtypes_count += count($paired_subtypes);
 				}
@@ -1007,10 +1007,9 @@ class EntityTable {
 				// this will always be an array because of line 2027, right?
 				// no...some overly clever person can say pair => array('object' => null)
 				if (is_array($paired_subtypes)) {
-					$paired_subtype_ids = array();
+					$paired_subtype_ids = [];
 					foreach ($paired_subtypes as $paired_subtype) {
 						if (ELGG_ENTITIES_NO_VALUE === $paired_subtype || ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
-
 							$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ?
 									ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 						} else {
@@ -1065,10 +1064,10 @@ class EntityTable {
 
 		// normalize and sanitise owners
 		if (!is_array($guids)) {
-			$guids = array($guids);
+			$guids = [$guids];
 		}
 
-		$guids_sanitized = array();
+		$guids_sanitized = [];
 		foreach ($guids as $guid) {
 			if ($guid !== ELGG_ENTITIES_NO_VALUE) {
 				$guid = sanitise_int($guid);
@@ -1107,7 +1106,7 @@ class EntityTable {
 	public function getEntityTimeWhereSql($table, $time_created_upper = null,
 	$time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
 
-		$wheres = array();
+		$wheres = [];
 
 		// exploit PHP's loose typing (quack) to check that they are INTs and not str cast to 0
 		if ($time_created_upper && $time_created_upper == sanitise_int($time_created_upper)) {
@@ -1165,15 +1164,15 @@ class EntityTable {
 	 * @throws InvalidArgumentException
 	 * @todo Does not support ordering by attributes or using an attribute pair shortcut like this ('title' => 'foo')
 	 */
-	public function getEntitiesFromAttributes(array $options = array()) {
-		$defaults = array(
+	public function getEntitiesFromAttributes(array $options = []) {
+		$defaults = [
 			'attribute_name_value_pairs' => ELGG_ENTITIES_ANY_VALUE,
 			'attribute_name_value_pairs_operator' => 'AND',
-		);
+		];
 
 		$options = array_merge($defaults, $options);
 
-		$singulars = array('type', 'attribute_name_value_pair');
+		$singulars = ['type', 'attribute_name_value_pair'];
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 		$clauses = _elgg_get_entity_attribute_where_sql($options);
@@ -1181,18 +1180,18 @@ class EntityTable {
 		if ($clauses) {
 			// merge wheres to pass to elgg_get_entities()
 			if (isset($options['wheres']) && !is_array($options['wheres'])) {
-				$options['wheres'] = array($options['wheres']);
+				$options['wheres'] = [$options['wheres']];
 			} elseif (!isset($options['wheres'])) {
-				$options['wheres'] = array();
+				$options['wheres'] = [];
 			}
 
 			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
 
 			// merge joins to pass to elgg_get_entities()
 			if (isset($options['joins']) && !is_array($options['joins'])) {
-				$options['joins'] = array($options['joins']);
+				$options['joins'] = [$options['joins']];
 			} elseif (!isset($options['joins'])) {
-				$options['joins'] = array();
+				$options['joins'] = [];
 			}
 
 			$options['joins'] = array_merge($options['joins'], $clauses['joins']);
@@ -1208,7 +1207,7 @@ class EntityTable {
 	 * @access private
 	 * @throws InvalidArgumentException
 	 */
-	public function getEntityAttributeWhereSql(array $options = array()) {
+	public function getEntityAttributeWhereSql(array $options = []) {
 
 		if (!isset($options['types'])) {
 			throw new InvalidArgumentException("The entity type must be defined for elgg_get_entities_from_attributes()");
@@ -1225,17 +1224,17 @@ class EntityTable {
 		}
 
 		// @todo the types should be defined somewhere (as constant on \ElggEntity?)
-		if (!in_array($type, array('group', 'object', 'site', 'user'))) {
+		if (!in_array($type, ['group', 'object', 'site', 'user'])) {
 			throw new InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
 		}
 
 
 		$type_table = "{$this->db->prefix}{$type}s_entity";
 
-		$return = array(
-			'joins' => array(),
-			'wheres' => array(),
-		);
+		$return = [
+			'joins' => [],
+			'wheres' => [],
+		];
 
 		// short circuit if nothing requested
 		if ($options['attribute_name_value_pairs'] == ELGG_ENTITIES_ANY_VALUE) {
@@ -1246,15 +1245,15 @@ class EntityTable {
 			throw new InvalidArgumentException("attribute_name_value_pairs must be an array for elgg_get_entities_from_attributes()");
 		}
 
-		$wheres = array();
+		$wheres = [];
 
 		// check if this is an array of pairs or just a single pair.
 		$pairs = $options['attribute_name_value_pairs'];
 		if (isset($pairs['name']) || isset($pairs['value'])) {
-			$pairs = array($pairs);
+			$pairs = [$pairs];
 		}
 
-		$pair_wheres = array();
+		$pair_wheres = [];
 		foreach ($pairs as $index => $pair) {
 			// must have at least a name and value
 			if (!isset($pair['name']) || !isset($pair['value'])) {
@@ -1270,7 +1269,7 @@ class EntityTable {
 			if (is_numeric($pair['value'])) {
 				$value = sanitize_string($pair['value']);
 			} else if (is_array($pair['value'])) {
-				$values_array = array();
+				$values_array = [];
 				foreach ($pair['value'] as $pair_value) {
 					if (is_numeric($pair_value)) {
 						$values_array[] = sanitize_string($pair_value);
@@ -1325,7 +1324,7 @@ class EntityTable {
 	 */
 	public function getDates($type = '', $subtype = '', $container_guid = 0, $order_by = 'time_created') {
 
-		$where = array();
+		$where = [];
 
 		if ($type != "") {
 			$type = sanitise_string($type);
@@ -1377,7 +1376,7 @@ class EntityTable {
 			}
 		}
 
-		$where[] = _elgg_get_access_where_sql(array('table_alias' => ''));
+		$where[] = _elgg_get_access_where_sql(['table_alias' => '']);
 
 		$sql = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth
 			FROM {$this->db->prefix}entities where ";
@@ -1388,7 +1387,7 @@ class EntityTable {
 
 		$sql .= "1=1 ORDER BY $order_by";
 		if ($result = $this->db->getData($sql)) {
-			$endresult = array();
+			$endresult = [];
 			foreach ($result as $res) {
 				$endresult[] = $res->yearmonth;
 			}
@@ -1462,7 +1461,7 @@ class EntityTable {
 		if (!$user) {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller
 			// should cancel the check and return false
-			$message = $this->translator->translate('UserFetchFailureException', array($guid));
+			$message = $this->translator->translate('UserFetchFailureException', [$guid]);
 			$this->logger->warn($message);
 
 			throw new UserFetchFailureException();

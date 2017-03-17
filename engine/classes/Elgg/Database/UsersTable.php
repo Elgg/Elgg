@@ -331,25 +331,25 @@ class UsersTable {
 	 */
 	public function findActive(array $options = []) {
 	
-		$options = array_merge(array(
+		$options = array_merge([
 			'seconds' => 600,
 			'limit' => $this->config->get('default_limit'),
-		), $options);
+		], $options);
 
 		// cast options we're sending to hook
-		foreach (array('seconds', 'limit', 'offset') as $key) {
+		foreach (['seconds', 'limit', 'offset'] as $key) {
 			$options[$key] = (int) $options[$key];
 		}
 		$options['count'] = (bool) $options['count'];
 
 		// allow plugins to override
-		$params = array(
+		$params = [
 			'seconds' => $options['seconds'],
 			'limit' => $options['limit'],
 			'offset' => $options['offset'],
 			'count' => $options['count'],
 			'options' => $options,
-		);
+		];
 		$data = _elgg_services()->hooks->trigger('find_active_users', 'system', $params, null);
 		// check null because the handler could legitimately return falsey values.
 		if ($data !== null) {
@@ -358,15 +358,15 @@ class UsersTable {
 
 		$dbprefix = $this->config->get('dbprefix');
 		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
-		return elgg_get_entities(array(
+		return elgg_get_entities([
 			'type' => 'user',
 			'limit' => $options['limit'],
 			'offset' => $options['offset'],
 			'count' => $options['count'],
-			'joins' => array("join {$dbprefix}users_entity u on e.guid = u.guid"),
-			'wheres' => array("u.last_action >= {$time}"),
+			'joins' => ["join {$dbprefix}users_entity u on e.guid = u.guid"],
+			'wheres' => ["u.last_action >= {$time}"],
 			'order_by' => "u.last_action desc",
-		));
+		]);
 	}
 
 	/**

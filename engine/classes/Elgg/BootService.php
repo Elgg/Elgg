@@ -79,7 +79,7 @@ class BootService {
 		if (!$GLOBALS['_ELGG']->dataroot_in_settings) {
 			$CONFIG->dataroot = rtrim($configs['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
 		}
-		$CONFIG->site_guid = (int)$configs['default_site'];
+		$CONFIG->site_guid = (int) $configs['default_site'];
 		if (!isset($CONFIG->boot_cache_ttl)) {
 			$CONFIG->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
 		}
@@ -122,7 +122,7 @@ class BootService {
 		$CONFIG->system_cache_enabled = ($system_cache_enabled === false) ? 1 : $system_cache_enabled;
 
 		// needs to be set before [init, system] for links in html head
-		$CONFIG->lastcache = (int)$configs_cache['simplecache_lastupdate'];
+		$CONFIG->lastcache = (int) $configs_cache['simplecache_lastupdate'];
 
 		$GLOBALS['_ELGG']->i18n_loaded_from_cache = false;
 

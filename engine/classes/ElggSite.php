@@ -138,7 +138,7 @@ class ElggSite extends \ElggEntity {
 			return false;
 		}
 
-		$guid = (int)$this->guid;
+		$guid = (int) $this->guid;
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
 		$url = sanitize_string($this->url);

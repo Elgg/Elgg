@@ -13,9 +13,9 @@ use InvalidArgumentException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Use the elgg_* versions instead.
- * 
+ *
  * @access private
  * @since 2.2
  */
@@ -98,7 +98,7 @@ class UserCapabilities {
 			return ($container && $container->canEdit($user->guid));
 		});
 
-		$params = array('entity' => $entity, 'user' => $user);
+		$params = ['entity' => $entity, 'user' => $user];
 		return $this->hooks->trigger('permissions_check', $entity->getType(), $params, $default);
 	}
 

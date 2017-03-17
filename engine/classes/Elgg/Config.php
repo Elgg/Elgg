@@ -90,16 +90,16 @@ class Config implements Services\Config {
 
 		// set cookie values for session and remember me
 		if (!isset($c->cookies)) {
-			$c->cookies = array();
+			$c->cookies = [];
 		}
 		if (!isset($c->cookies['session'])) {
-			$c->cookies['session'] = array();
+			$c->cookies['session'] = [];
 		}
 		$session_defaults = session_get_cookie_params();
 		$session_defaults['name'] = 'Elgg';
 		$c->cookies['session'] = array_merge($session_defaults, $c->cookies['session']);
 		if (!isset($c->cookies['remember_me'])) {
-			$c->cookies['remember_me'] = array();
+			$c->cookies['remember_me'] = [];
 		}
 		$session_defaults['name'] = 'elggperm';
 		$session_defaults['expire'] = strtotime("+30 days");

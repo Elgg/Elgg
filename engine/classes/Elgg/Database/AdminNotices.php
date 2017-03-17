@@ -51,7 +51,7 @@ class AdminNotices {
 
 		elgg_set_ignore_access($old_ia);
 
-		return (bool)$result;
+		return (bool) $result;
 	}
 	
 	/**
@@ -73,7 +73,7 @@ class AdminNotices {
 		
 		$result = true;
 		
-		$notices = elgg_get_entities_from_metadata(array(
+		$notices = elgg_get_entities_from_metadata([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name' => 'admin_notice_id',
@@ -81,7 +81,7 @@ class AdminNotices {
 			'limit' => false,
 			'batch' => true,
 			'batch_inc_offset' => false,
-		));
+		]);
 
 		// in case a bad plugin adds many, let it remove them all at once.
 		foreach ($notices as $notice) {
@@ -98,12 +98,12 @@ class AdminNotices {
 	 * @return array Array of admin notices
 	 */
 	function find($limit = 10) {
-		return elgg_get_entities_from_metadata(array(
+		return elgg_get_entities_from_metadata([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'limit' => $limit,
 			'distinct' => false,
-		));
+		]);
 	}
 	
 	/**
@@ -116,12 +116,12 @@ class AdminNotices {
 	 */
 	function exists($id) {
 		$old_ia = elgg_set_ignore_access(true);
-		$notice = elgg_get_entities_from_metadata(array(
+		$notice = elgg_get_entities_from_metadata([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
-			'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id),
+			'metadata_name_value_pair' => ['name' => 'admin_notice_id', 'value' => $id],
 			'count' => true,
-		));
+		]);
 		elgg_set_ignore_access($old_ia);
 	
 		return ($notice) ? true : false;
