@@ -243,26 +243,21 @@ function twitter_api_update_user_avatar($user, $file_location) {
 	// @todo Should probably check that it's an image file.
 	$file_location = str_replace('_normal.jpg', '.jpg', $file_location);
 
-	$icon_sizes = elgg_get_icon_sizes('user');
+	$raw_bytes = file_get_contents($file_location);
+	if (empty($raw_bytes)) {
+		return;
+	}
 
 	$filehandler = new ElggFile();
 	$filehandler->owner_guid = $user->getGUID();
-	foreach ($icon_sizes as $size => $dimensions) {
-		$image = get_resized_image_from_existing_file(
-			$file_location,
-			$dimensions['w'],
-			$dimensions['h'],
-			$dimensions['square']
-		);
+	$filehandler->setFilename("tmp/twitter.jpg");
+	$filehandler->open('write');
+	$filehandler->write($raw_bytes);
+	$filehandler->close();
 
-		$filehandler->setFilename("profile/$user->guid$size.jpg");
-		$filehandler->open('write');
-		$filehandler->write($image);
-		$filehandler->close();
-	}
-	
-	// update user's icontime
-	$user->icontime = time();
+	$user->saveIconFromElggFile($filehandler);
+
+	$filehandler->delete();
 }
 
 /**
