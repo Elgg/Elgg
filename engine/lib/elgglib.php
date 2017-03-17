@@ -664,7 +664,7 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  *
  * @see elgg_trigger_event
  */
-function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message, $version) {
+function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message = null, $version = null) {
 	return _elgg_services()->events->triggerDeprecated($event, $object_type, $object, $message, $version);
 }
 

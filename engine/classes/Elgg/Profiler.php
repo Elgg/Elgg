@@ -45,7 +45,7 @@ class Profiler {
 	 * @param string $prefix Prefix of period string. Leave empty.
 	 * @return void
 	 */
-	public function flattenTree(array &$list = [], array $tree, $prefix = '') {
+	public function flattenTree(array &$list = [], array $tree = [], $prefix = '') {
 		$is_root = empty($list);
 
 		if (isset($tree['periods'])) {

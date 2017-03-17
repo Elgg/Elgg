@@ -824,7 +824,7 @@ class Plugins {
 	 * @return array
 	 * @see \ElggPlugin::getAllUserSettings()
 	 */
-	function getAllUserSettings($user_guid = 0, $plugin_id, $return_obj = false) {
+	function getAllUserSettings($user_guid = 0, $plugin_id = null, $return_obj = false) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -856,7 +856,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::setUserSetting()
 	 */
-	function setUserSetting($name, $value, $user_guid = 0, $plugin_id) {
+	function setUserSetting($name, $value, $user_guid = 0, $plugin_id = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -875,7 +875,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetUserSetting()
 	 */
-	function unsetUserSetting($name, $user_guid = 0, $plugin_id) {
+	function unsetUserSetting($name, $user_guid = 0, $plugin_id = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -895,7 +895,7 @@ class Plugins {
 	 * @return mixed
 	 * @see \ElggPlugin::getUserSetting()
 	 */
-	function getUserSetting($name, $user_guid = 0, $plugin_id, $default = null) {
+	function getUserSetting($name, $user_guid = 0, $plugin_id = null, $default = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;

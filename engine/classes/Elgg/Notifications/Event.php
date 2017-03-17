@@ -36,7 +36,7 @@ class Event implements NotificationEvent {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct(ElggData $object, $action, ElggEntity $actor = null) {
-		if (get_class($this) == Event::class || get_class($this) == Elgg_Notifications_Event::class) {
+		if (get_class($this) == Event::class) {
 			_elgg_services()->deprecation->sendNotice(__CLASS__ . ' is deprecated. '
 					. 'Use ' . SubscriptionNotificationEvent::class . ' instead', '2.3');
 		}
@@ -136,16 +136,5 @@ class Event implements NotificationEvent {
 		}
 		return $obj;
 	}
-}
-
-/**
- * Notification event
- *
- * @package    Elgg.Core
- * @subpackage Notifications
- * @since      1.9.0
- * @deprecated 2.3
- */
-class Elgg_Notifications_Event extends Event {
 }
 

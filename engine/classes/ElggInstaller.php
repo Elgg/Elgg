@@ -951,14 +951,12 @@ class ElggInstaller {
 		return $formVars;
 	}
 
-	/**
-	 * Requirement checks support methods
-	 */
+	/* Requirement checks support methods */
 
 	/**
 	 * Indicates whether the webserver can add settings.php on its own or not.
 	 *
-	 * @param array &$report The requirements report object
+	 * @param array $report The requirements report object
 	 *
 	 * @return bool
 	 */
@@ -990,7 +988,7 @@ class ElggInstaller {
 	/**
 	 * Check that the settings file exists
 	 *
-	 * @param array &$report The requirements report array
+	 * @param array $report The requirements report array
 	 *
 	 * @return bool
 	 */
@@ -1025,7 +1023,7 @@ class ElggInstaller {
 	/**
 	 * Check version of PHP, extensions, and variables
 	 *
-	 * @param array &$report The requirements report array
+	 * @param array $report The requirements report array
 	 *
 	 * @return void
 	 */
@@ -1057,7 +1055,7 @@ class ElggInstaller {
 	/**
 	 * Check the server's PHP extensions
 	 *
-	 * @param array &$phpReport The PHP requirements report array
+	 * @param array $phpReport The PHP requirements report array
 	 *
 	 * @return void
 	 */
@@ -1094,7 +1092,7 @@ class ElggInstaller {
 	/**
 	 * Check PHP parameters
 	 *
-	 * @param array &$phpReport The PHP requirements report array
+	 * @param array $phpReport The PHP requirements report array
 	 *
 	 * @return void
 	 */
@@ -1140,7 +1138,7 @@ class ElggInstaller {
 	/**
 	 * Confirm that the rewrite rules are firing
 	 *
-	 * @param array &$report The requirements report array
+	 * @param array $report The requirements report array
 	 *
 	 * @return void
 	 */
@@ -1353,8 +1351,8 @@ class ElggInstaller {
 	/**
 	 * Create the data directory if requested
 	 *
-	 * @param array &$submissionVars Submitted vars
-	 * @param array $formVars        Variables in the form
+	 * @param array $submissionVars Submitted vars
+	 * @param array $formVars       Variables in the form
 	 *
 	 * @return bool
 	 */
