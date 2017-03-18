@@ -49,6 +49,10 @@ server {
 	# Max post size
 	client_max_body_size 8M;
 
+	location ~ /.well-known {
+        	allow all;
+	}
+
 	location ~ (^\.|/\.) {
 		return 403;
 	}

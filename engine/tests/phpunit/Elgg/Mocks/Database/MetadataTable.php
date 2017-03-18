@@ -61,7 +61,7 @@ class MetadataTable extends DbMetadataTabe {
 			'value' => $value,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
 			'access_id' => (int) $access_id,
-			'value_type' => detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type))),
+			'value_type' => \ElggExtender::detectValueType($value, trim($value_type)),
 		];
 
 		$this->rows[$id] = $row;
@@ -81,7 +81,7 @@ class MetadataTable extends DbMetadataTabe {
 		$row = $this->rows[$id];
 		$row->name = $name;
 		$row->value = $value;
-		$row->value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$row->value_type = \ElggExtender::detectValueType($value, trim($value_type));
 		$row->owner_guid = $owner_guid;
 		$row->access_id = $access_id;
 
