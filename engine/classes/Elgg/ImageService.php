@@ -6,6 +6,7 @@ use Exception;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Point;
+use Elgg\Filesystem\MimeTypeDetector;
 
 /**
  * Image manipulation service
@@ -74,15 +75,15 @@ class ImageService {
 			$width = $image->getSize()->getWidth();
 			$height = $image->getSize()->getHeight();
 
-			$params = $this->normalizeResizeParameters($width, $height, $params);
+			$resize_params = $this->normalizeResizeParameters($width, $height, $params);
 
-			$max_width = elgg_extract('w', $params);
-			$max_height = elgg_extract('h', $params);
+			$max_width = elgg_extract('w', $resize_params);
+			$max_height = elgg_extract('h', $resize_params);
 
-			$x1 = (int) elgg_extract('x1', $params, 0);
-			$y1 = (int) elgg_extract('y1', $params, 0);
-			$x2 = (int) elgg_extract('x2', $params, 0);
-			$y2 = (int) elgg_extract('y2', $params, 0);
+			$x1 = (int) elgg_extract('x1', $resize_params, 0);
+			$y1 = (int) elgg_extract('y1', $resize_params, 0);
+			$x2 = (int) elgg_extract('x2', $resize_params, 0);
+			$y2 = (int) elgg_extract('y2', $resize_params, 0);
 
 			if ($x2 > $x1 && $y2 > $y1) {
 				$crop_start = new Point($x1, $y1);
@@ -95,6 +96,7 @@ class ImageService {
 
 			$thumbnail->save($destination, [
 				'jpeg_quality' => elgg_extract('jpeg_quality', $params, self::JPEG_QUALITY),
+				'format' => $this->getFileFormat($source, $params),
 			]);
 
 			unset($image);
@@ -198,4 +200,37 @@ class ImageService {
 		];
 	}
 
+	/**
+	 * Determine the image file format, this is needed for correct resizing
+	 *
+	 * @param string $filename path to the file
+	 * @param array  $params   array of resizing params (can contain 'format' to set save format)
+	 *
+	 * @see https://github.com/Elgg/Elgg/issues/10686
+	 * @return void|string
+	 */
+	protected function getFileFormat($filename, $params) {
+		
+		$accepted_formats = [
+			'image/jpeg' => 'jpeg',
+			'image/pjpeg' => 'jpeg',
+			'image/png' => 'png',
+			'image/x-png' => 'png',
+			'image/gif' => 'gif',
+			'image/vnd.wap.wbmp' => 'wbmp',
+			'image/x‑xbitmap' => 'xbm',
+			'image/x‑xbm' => 'xbm',
+		];
+		
+		// was a valid output format supplied
+		$format = elgg_extract('format', $params);
+		if (in_array($format, $accepted_formats)) {
+			return $format;
+		}
+		
+		$mime_detector = new MimeTypeDetector();
+		$mime = $mime_detector->getType($filename);
+		
+		return elgg_extract($mime, $accepted_formats);
+	}
 }

@@ -367,9 +367,6 @@ class AccessCollections {
 			return true;
 		}
 
-		// See #7159. Must not allow ignore access to affect query
-		$ia = elgg_set_ignore_access(false);
-
 		$user_guid = isset($user) ? (int) $user->guid : elgg_get_logged_in_user_guid();
 
 		if ($user_guid && $user_guid == $entity->owner_guid) {
@@ -382,6 +379,9 @@ class AccessCollections {
 			return true;
 		}
 
+		// See #7159. Must not allow ignore access to affect query
+		$ia = elgg_set_ignore_access(false);
+		
 		$row = $this->entities->getRow($entity->guid, $user_guid);
 
 		elgg_set_ignore_access($ia);
@@ -685,7 +685,7 @@ class AccessCollections {
 	 * Transforms a database row to an instance of ElggAccessCollection
 	 *
 	 * @param \stdClass $row Database row
-	 * @return ElggAccessCollection
+	 * @return \ElggAccessCollection
 	 */
 	public function rowToElggAccessCollection(\stdClass $row) {
 		return new \ElggAccessCollection($row);

@@ -70,6 +70,12 @@ class ElggCrypto {
 	 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 */
 	public function getRandomBytes($length) {
+		if (is_callable('random_bytes')) {
+			try {
+				return random_bytes($length);
+			} catch (\Exception $e) {}
+		}
+
 		$SSLstr = '4'; // http://xkcd.com/221/
 
 		/**
@@ -132,6 +138,9 @@ class ElggCrypto {
 			if ($handle) {
 				$entropy .= @fread($handle, $bytes);
 			} else {
+				// In the future we should consider outright refusing to generate bytes without an
+				// official random source, as many consider hacks like this irresponsible.
+
 				// Measure the time that the operations will take on average
 				for ($i = 0; $i < 3; $i++) {
 					$c1 = microtime(true);
@@ -145,7 +154,14 @@ class ElggCrypto {
 
 				// Based on the above measurement determine the total rounds
 				// in order to bound the total running time.
-				$rounds = (int) ($msec_per_round * 50 / (int) (($c2 - $c1) * 1000000));
+				if ($c2 - $c1 == 0) {
+					// This occurs on some Windows systems. On a late 2013 MacBook Pro, 2.6 GHz Intel Core i7
+					// this averaged 400, so we're just going with that. With all the other entropy gathered
+					// this should be sufficient.
+					$rounds = 400;
+				} else {
+					$rounds = (int) ($msec_per_round * 50 / (int) (($c2 - $c1) * 1000000));
+				}
 
 				// Take the additional measurements. On average we can expect
 				// at least $bits_per_round bits of entropy from each measurement.
