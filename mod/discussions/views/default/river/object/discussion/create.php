@@ -3,10 +3,6 @@
  * River view for new discussion topics
  */
 
-if (!elgg_is_logged_in()) {
-	return;
-}
-
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
 

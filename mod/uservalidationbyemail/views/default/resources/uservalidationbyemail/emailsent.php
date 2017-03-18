@@ -4,10 +4,13 @@ if (elgg_is_logged_in()) {
 	forward();
 }
 
-$email = elgg_get_session()->get('emailsent', '');
+$session = elgg_get_session();
+$email = $session->get('emailsent', '');
 if (!$email) {
 	forward();
 }
+
+$session->remove('emailsent');
 
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 
