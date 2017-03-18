@@ -18,7 +18,6 @@ Requirements
 * Commit access to http://github.com/Elgg/Elgg
 * Admin access to https://elgg.org/
 * Access to `Twitter account`_
-* Access to `G+ page`_
 * Node.js and NPM installed
 * Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)
 * Transifex client installed (``easy_install transifex-client``)
@@ -85,6 +84,8 @@ Install the prerequisites:
     easy_install sphinx-intl
     easy_install transifex-client
 
+.. note:: On Windows you need to run these command in a console with admin privileges
+
 Run the ``release.php`` script. For example, to release 1.12.5:
 
 .. code:: sh
@@ -119,6 +120,17 @@ Once approved and merged, tag the release:
     git tag -a ${version} -m'Elgg ${version}'
     git push --tags origin release-${version}
 
+Or create a release on GitHub
+
+* Goto releases
+* Click 'Draft a new release'
+* Enter the version
+* Select the correct branch (eg 1.12 for a 1.12.x release, 2.3 for a 2.3.x release, etc)
+* Set the release title as 'Elgg {version}'
+* Paste the CHANGELOG.md part related to this release in the description
+
+Some final administration
+
 * Mark GitHub release milestones as completed
 * Move unresolved tickets in released milestones to later milestones
 
@@ -133,11 +145,19 @@ Build zip package
 
 Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage.
 
+.. note::
+
+	If this is your first time on the server building a release run ``composer global require "fxp/composer-asset-plugin:^1.2.0"``.
+	This will make sure you can download bower-assets during the build process.
+
 .. code:: sh
 
+	# login as user deploy
+	sudo -su deploy
+	
     # regular release
     ./elgg-starter-project.sh master 2.0.4 /var/www/www.elgg.org/download/
-
+	
     # MIT release
     ./elgg-starter-project.sh master 2.0.4-mit /var/www/www.elgg.org/download/
 
@@ -159,11 +179,23 @@ Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without argum
     # MIT release
     ./build.sh 1.12.5 1.12.5-mit /var/www/www.elgg.org/download/
 
+Update elgg.org download page
+-----------------------------
+
+* Clone https://github.com/Elgg/community
+* Add the new version to ``classes/Elgg/Releases.php``
+* Commit and push the changes
+* Update the plugin on www.elgg.org
+
+.. code:: sh
+
+	composer update elgg/community
+
 Update elgg.org
 ---------------
 
 * Clone https://github.com/Elgg/www.elgg.org
-* Add the new versions to ``src/Elgg/Releases.php``
+* Change the required Elgg version in ``composer.json``
 * Update vendors
 
 .. code:: sh
@@ -197,8 +229,5 @@ This should be the very last thing you do.
 #. Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors
 #. Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released
 #. Tweet from the elgg `Twitter account`_
-#. Post from the `G+ page`_
 
-.. _G+ page: https://plus.google.com/+ElggOrg
 .. _Twitter account: https://twitter.com/elgg
-
