@@ -4,6 +4,7 @@
 define(function (require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
+	var click = require('elgg/click');
 
 	/**
 	 * Repositions the likes popup
@@ -57,6 +58,10 @@ define(function (require) {
 		});
 	}
 
-	setupHandlers('likes', 'unlike');
-	setupHandlers('unlike', 'likes');
+	// temp hack to emulate slow loading
+	setTimeout(function () {
+		setupHandlers('likes', 'unlike');
+		setupHandlers('unlike', 'likes');
+		click.replay('likes');
+	}, 5000);
 });
