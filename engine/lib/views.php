@@ -1497,6 +1497,10 @@ function elgg_view_field(array $params = []) {
 
 	$hidden_types = ['hidden', 'securitytoken'];
 	if (in_array($input_type, $hidden_types)) {
+		unset($params['#type']);
+		unset($params['#label']);
+		unset($params['#help']);
+		unset($params['#class']);
 		return elgg_view("input/$input_type", $params);
 	}
 

@@ -31,47 +31,23 @@ class ElggExtenderTest extends \Elgg\TestCase {
 	}
 
 	public function testIntsAreTypedAsInteger() {
-		$this->assertSame('integer', detect_extender_valuetype(-1));
-		$this->assertSame('integer', detect_extender_valuetype(0));
-		$this->assertSame('integer', detect_extender_valuetype(2));
+		$this->assertSame('integer', \ElggExtender::detectValueType(-1));
+		$this->assertSame('integer', \ElggExtender::detectValueType(0));
+		$this->assertSame('integer', \ElggExtender::detectValueType(2));
 	}
 
 	public function testFloatsAndNumericsAndStringableObjectsAreTypedAsText() {
-		$this->assertSame('text', detect_extender_valuetype(3.14));
-		$this->assertSame('text', detect_extender_valuetype('3.14'));
-		$this->assertSame('text', detect_extender_valuetype(new ElggExtenderTest_Object));
-	}
-
-	public function testOthersTypedAsTextWithWarning() {
-		_elgg_services()->logger->disable();
-
-		$this->assertSame('text', detect_extender_valuetype(null));
-		$this->assertSame('text', detect_extender_valuetype(true));
-		$this->assertSame('text', detect_extender_valuetype((object) []));
-
-		$expected = [
-			[
-				'message' => 'Metadata and annotations store only integers and strings. NULL given.',
-        		'level' => 300,
-			],
-			[
-				'message' => 'Metadata and annotations store only integers and strings. boolean given.',
-				'level' => 300,
-			],
-			[
-				'message' => 'Metadata and annotations store only integers and strings. object given.',
-        		'level' => 300,
-			]
-		];
-		$this->assertSame($expected, _elgg_services()->logger->enable());
+		$this->assertSame('text', \ElggExtender::detectValueType(3.14));
+		$this->assertSame('text', \ElggExtender::detectValueType('3.14'));
+		$this->assertSame('text', \ElggExtender::detectValueType(new ElggExtenderTest_Object));
 	}
 
 	public function testAcceptRecognizedTypes() {
-		$this->assertSame('text', detect_extender_valuetype(123, 'text'));
-		$this->assertSame('integer', detect_extender_valuetype(123, 'invalid'));
+		$this->assertSame('text', \ElggExtender::detectValueType(123, 'text'));
+		$this->assertSame('integer', \ElggExtender::detectValueType(123, 'invalid'));
 
-		$this->assertSame('integer', detect_extender_valuetype('hello', 'integer'));
-		$this->assertSame('text', detect_extender_valuetype('hello', 'invalid'));
+		$this->assertSame('integer', \ElggExtender::detectValueType('hello', 'integer'));
+		$this->assertSame('text', \ElggExtender::detectValueType('hello', 'invalid'));
 	}
 
 }
