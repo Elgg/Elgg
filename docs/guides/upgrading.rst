@@ -132,6 +132,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``profile_pagesetup``
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
+ * ``groups_join_group``: Use ``ElggGroup::join()``. Note that the access is no longer ignored, so hook handlers must ensure they have access to group metadata, in case a hidden group hasn't been fully loaded.
 
 Removed global vars
 -------------------
@@ -326,6 +327,16 @@ Miscellaneous API changes
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
  * The script ``engine/start.php`` is removed.
  * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``. 
+
+Groups plugin
+-------------
+
+``groups_join_group()`` has been removed, plugins should use ``ElggGroup::join()``. Note that the ignored access is no longer set,
+so events/hooks listening to membership changes need to ensure they have access to group entity metadata. This ensures consistency
+in permissions API - handlers can reliably call ``can*()`` methods and set ignored access whenever needed.
+
+``'join','group'`` and ``'leave','group'`` events have been deprecated by plugin hooks with the same name.
+These hooks can be used to terminate the join/leave.
 
 JavaScript hook calling order may change
 ----------------------------------------

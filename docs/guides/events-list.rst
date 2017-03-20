@@ -128,12 +128,6 @@ Relationship events
     Triggered before a relationship is deleted. Return false to prevent it
     from being deleted.
 
-**join, group**
-    Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.
-
-**leave, group**
-    Triggered before the user ``$params['user']`` has left the group ``$params['group']``.
-
 Entity events
 =============
 

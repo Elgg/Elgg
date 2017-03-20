@@ -74,8 +74,8 @@ function groups_init() {
 	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 	elgg_register_event_handler('update:after', 'group', 'groups_update_event_listener');
 
-	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
-	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
+	elgg_register_plugin_hook_handler('join', 'group', 'groups_user_join_event_listener');
+	elgg_register_plugin_hook_handler('leave', 'group', 'groups_user_leave_event_listener');
 
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
@@ -569,24 +569,63 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 }
 
 /**
- * Listens to a group join event and adds a user to the group's access control
+ * Listens to a group join hook and:
+ *  - adds a user to the group's access control
+ *  - adds a river entry
+ *  - removes 'invited' and 'membership_request' relationships
  *
+ * @elgg_plugin_hook join group
+ * 
+ * @param string $hook   "join"
+ * @param string $type   "group"
+ * @param bool   $result If join is successful
+ * @param array  $params Hook params
+ * @return void
  */
-function groups_user_join_event_listener($event, $object_type, $object) {
+function groups_user_join_event_listener($hook, $type, $result, $params) {
 
-	$group = $object['group'];
-	$user = $object['user'];
-	$acl = $group->group_acl;
+	if (!$result) {
+		// joining has been terminated by another plugin
+		return;
+	}
+	
+	$group = elgg_extract('group', $params);
+	$user = elgg_extract('user', $params);
 
-	add_user_to_access_collection($user->guid, $acl);
+	// In case of a hidden group, metadata may not be yet accessible
+	$ia = elgg_set_ignore_access();
+	$group_acl = $group->group_acl;
+	elgg_set_ignore_access($ia);
+	
+	add_user_to_access_collection($user->guid, $group_acl);
 
-	return true;
+	// Remove any invite or join request flags
+	remove_entity_relationship($group->guid, 'invited', $user->guid);
+	remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+
+	if (elgg_extract('create_river_item', $params, true)) {
+		elgg_create_river_item(array(
+			'view' => 'river/relationship/member/create',
+			'action_type' => 'join',
+			'subject_guid' => $user->guid,
+			'object_guid' => $group->guid,
+		));
+	}
 }
 
 /**
  * Make sure users are added to the access collection
+ *
+ * @elgg_plugin_hook access:collections:add_user collection
+ *
+ * @param string $hook   "access:collections:add_user"
+ * @param string $type   "collection"
+ * @param bool   $return If adding is successful
+ * @param array  $params Hook params
+ * @return void
+ *
  */
-function groups_access_collection_override($hook, $entity_type, $returnvalue, $params) {
+function groups_access_collection_override($hook, $type, $return, $params) {
 	if (isset($params['collection'])) {
 		if (elgg_instanceof(get_entity($params['collection']->owner_guid), 'group')) {
 			return true;
@@ -597,16 +636,26 @@ function groups_access_collection_override($hook, $entity_type, $returnvalue, $p
 /**
  * Listens to a group leave event and removes a user from the group's access control
  *
+ * @elgg_plugin_hook leave group
+ *
+ * @param string $hook   "leave"
+ * @param string $type   "group"
+ * @param bool   $result If leave is successful
+ * @param array  $params Hook params
+ * @return void
  */
-function groups_user_leave_event_listener($event, $object_type, $object) {
+function groups_user_leave_event_listener($hook, $type, $result, $params) {
 
-	$group = $object['group'];
-	$user = $object['user'];
-	$acl = $group->group_acl;
+	if (!$result) {
+		// leaving has been terminated by another plugin
+		return;
+	}
 
-	remove_user_from_access_collection($user->guid, $acl);
+	$group = elgg_extract('group', $params);
+	$user = elgg_extract('user', $params);
 
-	return true;
+	remove_user_from_access_collection($user->guid, $group->group_acl);
+
 }
 
 /**
@@ -670,41 +719,6 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 }
 
 /**
- * Join a user to a group, add river event, clean-up invitations
- *
- * @param ElggGroup $group
- * @param ElggUser  $user
- * @return bool
- */
-function groups_join_group($group, $user) {
-
-	// access ignore so user can be added to access collection of invisible group
-	$ia = elgg_set_ignore_access(TRUE);
-	$result = $group->join($user);
-	elgg_set_ignore_access($ia);
-
-	if ($result) {
-		// flush user's access info so the collection is added
-		get_access_list($user->guid, 0, true);
-
-		// Remove any invite or join request flags
-		remove_entity_relationship($group->guid, 'invited', $user->guid);
-		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
-
-		elgg_create_river_item(array(
-			'view' => 'river/relationship/member/create',
-			'action_type' => 'join',
-			'subject_guid' => $user->guid,
-			'object_guid' => $group->guid,
-		));
-
-		return true;
-	}
-
-	return false;
-}
-
-/**
  * Function to use on groups for access. It will house private, loggedin, public,
  * and the group itself. This is when you don't want other groups or access lists
  * in the access options available.
@@ -762,6 +776,7 @@ function groups_run_upgrades() {
  */
 function groups_test($hook, $type, $value, $params) {
 	$value[] = elgg_get_plugins_path() . 'groups/tests/write_access.php';
+	$value[] = elgg_get_plugins_path() . 'groups/tests/access_collections.php';
 	return $value;
 }
 

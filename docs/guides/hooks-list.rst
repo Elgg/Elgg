@@ -886,6 +886,12 @@ Groups
 **tool_options, group**
 	Use this hook to influence the available group tool options
 
+**join, group**
+    Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.
+
+**leave, group**
+    Triggered before the user ``$params['user']`` has left the group ``$params['group']``.
+
 HTMLawed
 --------
 

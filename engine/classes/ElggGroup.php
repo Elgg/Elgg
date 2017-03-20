@@ -205,32 +205,62 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * Join a user to this group.
 	 *
-	 * @param \ElggUser $user User joining the group.
+	 * @note Plugins listening to 'create','relationship' event and 'join','group'
+	 * hook need to make sure they set ignored access when accessing group metadata,
+	 * as it may have not yet been loaded.
 	 *
-	 * @return bool Whether joining was successful.
+	 * @param \ElggUser $user   User joining the group.
+	 * @param array     $params Additional params to pass to the 'join','group' event
+	 * @return bool
 	 */
-	public function join(\ElggUser $user) {
-		$result = add_entity_relationship($user->guid, 'member', $this->guid);
-	
-		if ($result) {
-			$params = array('group' => $this, 'user' => $user);
+	public function join(\ElggUser $user, array $params = []) {
+
+		if (!add_entity_relationship($user->guid, 'member', $this->guid)) {
+			return false;
+		}
+
+		$params['group'] = $this;
+		$params['user'] = $user;
+		if (_elgg_services()->events->hasHandler('join', 'group')) {
+			elgg_deprecated_notice("
+					'join', 'group' event has been deprecated. 
+					Use 'join','group' plugin hook instead.
+				", '3.0');
 			_elgg_services()->events->trigger('join', 'group', $params);
 		}
-	
-		return $result;
+
+		if (!_elgg_services()->hooks->trigger('join', 'group', $params, true)) {
+			remove_entity_relationship($user->guid, 'member', $this->guid);
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
 	 * Remove a user from the group.
 	 *
-	 * @param \ElggUser $user User to remove from the group.
-	 *
+	 * @param \ElggUser $user   User to remove from the group
+	 * @param array     $params Additional params to pass to the 'leave','group' hook
 	 * @return bool Whether the user was removed from the group.
 	 */
-	public function leave(\ElggUser $user) {
-		// event needs to be triggered while user is still member of group to have access to group acl
-		$params = array('group' => $this, 'user' => $user);
-		_elgg_services()->events->trigger('leave', 'group', $params);
+	public function leave(\ElggUser $user, array $params = []) {
+
+		// hook needs to be triggered while user is still member of group to have access to group acl
+		$params['group'] = $this;
+		$params['user'] = $user;
+		
+		if (_elgg_services()->events->hasHandler('leave', 'group')) {
+			elgg_deprecated_notice("
+					'leave', 'group' event has been deprecated.
+					Use 'leave','group' plugin hook instead.
+				", '3.0');
+			_elgg_services()->events->trigger('leave', 'group', $params);
+		}
+
+		if (!_elgg_services()->hooks->trigger('leave', 'group', $params, true)) {
+			return false;
+		}
 
 		return remove_entity_relationship($user->guid, 'member', $this->guid);
 	}
