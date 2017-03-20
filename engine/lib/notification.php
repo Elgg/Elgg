@@ -1,7 +1,10 @@
 <?php
 
 use Elgg\Mail\Address;
-use Zend\Mail\Message;
+use Zend\Mail\Message as EmailMessage;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
+use Zend\Mime\Mime;
 
 /**
  * Adding a New Notification Event
@@ -593,21 +596,17 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		throw new \NotificationException($msg);
 	}
 
-	$headers = array(
-		"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
-		"MIME-Version" => "1.0",
-		"Content-Transfer-Encoding" => "8bit",
-	);
+	$headers = [];
 
 	// return true/false to stop elgg_send_email() from sending
-	$mail_params = array(
+	$mail_params = [
 		'to' => $to,
 		'from' => $from,
 		'subject' => $subject,
 		'body' => $body,
 		'headers' => $headers,
 		'params' => $params,
-	);
+	];
 
 	// $mail_params is passed as both params and return value. The former is for backwards
 	// compatibility. The latter is so handlers can now alter the contents/headers of
@@ -619,34 +618,67 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	}
 
 	// strip name from to and from
-
 	$to_address = Address::fromString($result['to']);
 	$from_address = Address::fromString($result['from']);
 
-
+	// make subject
 	$subject = elgg_strip_tags($result['subject']);
 	$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
 	$subject = trim($subject);
-
-	$body = elgg_strip_tags($result['body']);
-	$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
-	$body = wordwrap($body);
-
-	$message = new Message();
+	
+	// build email message
+	$message = new EmailMessage();
 	$message->setEncoding('UTF-8');
 	$message->addFrom($from_address);
 	$message->addTo($to_address);
 	$message->setSubject($subject);
-	$message->setBody($body);
+	
+	// make the email body
+	$mime_body = new MimeMessage();
+	
+	// make plaintext message part
+	$plaintext = elgg_view('core/mail/plaintext', [
+		'subject' => $subject,
+		'body' => $result['body'],
+	]);
+	if (!empty($plaintext)) {
+		$plain_part = new MimePart($plaintext);
+		$plain_part->setType(Mime::TYPE_TEXT);
+		$plain_part->setCharset('UTF-8');
+		
+		$mime_body->addPart($plain_part);
+	}
+	
+	// make html message part
+	$html = elgg_view('core/mail/html', [
+		'subject' => $subject,
+		'body' => $result['body'],
+	]);
+	if (!empty($html)) {
+		// CSS inliner for email clients (eg Outlook, Thunderbird)
+		$html = _elgg_notifications_css_inliner($html);
+		
+		$html_part = new MimePart($html);
+		$html_part->setType(Mime::TYPE_HTML);
+		$html_part->setCharset('UTF-8');
+		
+		$mime_body->addPart($html_part);
+	}
+	
+	// set message body
+	$message->setBody($mime_body);
 
 	foreach ($result['headers'] as $headerName => $headerValue) {
 		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
 	}
-
+	
+	// set content type correctly
+	$message->getHeaders()->get('content-type')->setType('multipart/alternative');
+	
 	// allow others to modify the $message content
-	// eg. add html body, add attachments
+	// eg. add attachments
 	$message = _elgg_services()->hooks->trigger('email:message', 'system', $result, $message);
 	
 	try {
@@ -657,6 +689,44 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	}
 
 	return true;
+}
+
+/**
+ * This function converts CSS to inline style, the CSS needs to be found in a <style> element
+ *
+ * @param string $html_text the html text to be converted
+ *
+ * @return string
+ */
+function _elgg_notifications_css_inliner($html_text) {
+	
+	if (empty($html_text) || !defined('XML_DOCUMENT_NODE')) {
+		return $html_text;
+	}
+	
+	$css = '';
+	
+	// set custom error handling
+	libxml_use_internal_errors(true);
+	
+	$dom = new DOMDocument();
+	$dom->loadHTML($html_text);
+	
+	$styles = $dom->getElementsByTagName('style');
+	if (!empty($styles)) {
+		$style_count = $styles->length;
+		
+		for ($i = 0; $i < $style_count; $i++) {
+			$css .= $styles->item($i)->nodeValue;
+		}
+	}
+	
+	// clear error log
+	libxml_clear_errors();
+	
+	$emo = new Pelago\Emogrifier($html_text, $css);
+	
+	return $emo->emogrify();
 }
 
 /**
