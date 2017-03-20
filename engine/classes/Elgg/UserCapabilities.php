@@ -378,4 +378,28 @@ class UserCapabilities {
 		return $this->hooks->trigger('permissions_check:annotate', $entity->getType(), $params, $return);
 	}
 
+	/**
+	 * Can a user download a file?
+	 *
+	 * @tip Can be overridden by registering for the permissions_check:download,file plugin hook.
+	 *
+	 * @param ElggFile $entity    File entity
+	 * @param int      $user_guid User guid (default is logged in user)
+	 * @param bool     $default   Default permission
+	 * @return bool
+	 */
+	public function canDownload(ElggFile $entity, $user_guid = 0, $default = true) {
+		try {
+			$user = $this->entities->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
+		}
+
+		$params = [
+			'entity' => $entity,
+			'user' => $user
+		];
+		return $this->hooks->trigger('permissions_check:download', 'file', $params, $default);
+	}
+
 }
