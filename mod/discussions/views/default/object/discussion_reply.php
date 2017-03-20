@@ -35,7 +35,7 @@ if (elgg_in_context('activity')) {
 	));
 }
 
-$subtitle = elgg_view('page/elements/by_line', ['entity' => $reply]);
+$subtitle = elgg_view('object/elements/imprint', ['entity' => $reply]);
 
 $params = array(
 	'entity' => $reply,

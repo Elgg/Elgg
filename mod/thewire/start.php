@@ -396,7 +396,7 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 
 	foreach ($value as $index => $item) {
 		$name = $item->getName();
-		if ($name == 'access' || $name == 'edit') {
+		if ($name == 'edit') {
 			unset($value[$index]);
 		}
 	}

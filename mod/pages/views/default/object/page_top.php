@@ -43,15 +43,7 @@ if ($revision) {
 
 $page_icon = elgg_view('pages/icon', array('annotation' => $annotation, 'size' => 'small'));
 
-$editor = get_entity($annotation->owner_guid);
-$editor_link = elgg_view('output/url', array(
-	'href' => "pages/owner/$editor->username",
-	'text' => $editor->name,
-	'is_trusted' => true,
-));
-
-$date = elgg_view_friendly_time($annotation->time_created);
-$editor_text = elgg_echo('pages:strapline', array($date, $editor_link));
+$editor_text = elgg_view('object/elements/imprint', $vars);
 $categories = elgg_view('output/categories', $vars);
 
 $comments_count = $page->countComments();

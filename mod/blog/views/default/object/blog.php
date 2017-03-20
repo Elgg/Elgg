@@ -21,7 +21,7 @@ if (!$excerpt) {
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 
-$by_line = elgg_view('page/elements/by_line', $vars);
+$by_line = elgg_view('object/elements/imprint', $vars);
 
 // The "on" status changes for comments, so best to check for !Off
 if ($blog->comments_on != 'Off') {

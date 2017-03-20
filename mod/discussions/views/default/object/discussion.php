@@ -23,7 +23,7 @@ $excerpt = elgg_get_excerpt($topic->description);
 
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 
-$by_line = elgg_view('page/elements/by_line', $vars);
+$by_line = elgg_view('object/elements/imprint', $vars);
 
 $replies_link = '';
 $reply_text = '';

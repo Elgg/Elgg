@@ -69,6 +69,7 @@ Removed views
  * ``core/friends/talbelistcountupdate``
  * ``lightbox/elgg-colorbox-theme/colorbox-images/*```
  * ``navigation/menu/page``: now uses ``navigation/menu/default`` and a prepare hook
+ * ``page/elements/by_line``: Use ``object/elements/imprint``
 
 Removed functions/methods
 -------------------------
@@ -457,6 +458,10 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 ``extras`` menu:
 
  * ``bookmark``, ``report_this`` and ``rss`` menu items now use ``icon`` parameter
+
+``entity`` menu:
+
+ * ``access`` menu item has been removed. Access information is now rendered in the entity byline.
 
 Entity icons
 ------------

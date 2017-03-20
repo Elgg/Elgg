@@ -50,6 +50,17 @@
 }
 
 /* ***************************************
+	List Item
+*************************************** */
+.elgg-listing-imprint > span {
+    margin-right: 10px;
+}
+
+.elgg-listing-imprint .elgg-icon {
+    margin-right: 5px;
+}
+
+/* ***************************************
 	Gallery
 *************************************** */
 .elgg-gallery {

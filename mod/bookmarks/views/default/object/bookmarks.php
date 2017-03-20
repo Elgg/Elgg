@@ -19,7 +19,7 @@ $categories = elgg_view('output/categories', $vars);
 $link = elgg_view('output/url', array('href' => $bookmark->address));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
-$by_line = elgg_view('page/elements/by_line', $vars);
+$by_line = elgg_view('object/elements/imprint', $vars);
 
 $comments_count = $bookmark->countComments();
 //only display if there are commments

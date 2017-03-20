@@ -569,18 +569,6 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
-
-	// access
-	if (elgg_is_logged_in()) {
-		$access = elgg_view('output/access', array('entity' => $entity));
-		$options = array(
-			'name' => 'access',
-			'text' => $access,
-			'href' => false,
-			'priority' => 100,
-		);
-		$return[] = \ElggMenuItem::factory($options);
-	}
 	
 	if ($entity->canEdit() && $handler) {
 		// edit link

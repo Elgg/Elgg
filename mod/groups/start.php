@@ -367,7 +367,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 	/* @var ElggMenuItem $item */
 	foreach ($return as $index => $item) {
-		if (in_array($item->getName(), array('access', 'likes', 'unlike', 'edit', 'delete'))) {
+		if (in_array($item->getName(), array('likes', 'unlike', 'edit', 'delete'))) {
 			unset($return[$index]);
 		}
 	}
