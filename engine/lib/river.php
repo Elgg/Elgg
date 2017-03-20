@@ -233,6 +233,12 @@ function elgg_get_river(array $options = array()) {
 		'joins'                => array(),
 	);
 
+	if (isset($options['view']) || isset($options['views'])) {
+		$msg = __FUNCTION__ . ' does not support the "views" option, though you may specify values for'
+			. ' the "rv.view" column using the "wheres" option.';
+		elgg_log($msg, 'WARNING');
+	}
+
 	$options = array_merge($defaults, $options);
 
 	if ($options['batch'] && !$options['count']) {

@@ -110,11 +110,10 @@ class MetadataTable {
 			$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 
 		$entity_guid = (int) $entity_guid;
-		
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
 		$owner_guid = (int) $owner_guid;
 		$allow_multiple = (boolean) $allow_multiple;
-	
+
 		if (!isset($value)) {
 			return false;
 		}
@@ -198,7 +197,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
 	
 		$owner_guid = (int) $owner_guid;
 		if ($owner_guid == 0) {

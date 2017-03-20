@@ -44,7 +44,11 @@ function elgg_delete_river(array $options = array()) {
 
 	// allow core to use this in 2.x w/o warnings
 	if (empty($options['__bypass_notice'])) {
-		elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_river() and call delete() on the returned item(s)', '2.3');
+		$msg = __FUNCTION__ . ' is deprecated. Use elgg_get_river() and call delete() on the returned item(s)';
+		if (isset($options['view']) || isset($options['views'])) {
+			$msg .= '. You must use the "wheres" option to specify value(s) for the "rv.view" column.';
+		}
+		elgg_deprecated_notice($msg, '2.3');
 	}
 
 	$defaults = array(
