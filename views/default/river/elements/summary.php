@@ -29,14 +29,27 @@ $action = $item->action_type;
 $type = $item->type;
 $subtype = $item->subtype ? $item->subtype : 'default';
 
+//if activity happened in a group
+$group_string = '';
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
+	$group_link = elgg_view('output/url', array(
+		'href' => $container->getURL(),
+		'text' => $container->name,
+		'is_trusted' => true,
+	));
+	$group_string = elgg_echo('river:ingroup', array($group_link));
+}
+
 // check summary translation keys.
 // will use the $type:$subtype if that's defined, otherwise just uses $type:default
 $key = "river:$action:$type:$subtype";
 $summary = elgg_echo($key, array($subject_link, $object_link));
-
+$summary .= ' ' . $group_string;
 if ($summary == $key) {
 	$key = "river:$action:$type:default";
 	$summary = elgg_echo($key, array($subject_link, $object_link));
+    $summary .= ' ' . $group_string;
 }
 
 echo $summary;
