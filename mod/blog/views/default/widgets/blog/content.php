@@ -22,7 +22,9 @@ if (empty($content)) {
 echo $content;
 
 $more_link = elgg_view('output/url', [
-	'href' => 'blog/owner/' . $widget->getOwnerEntity()->username,
+	'href' => elgg_generate_url('blog_owner', [
+		'username' => $widget->getOwnerEntity()->username,
+	]),
 	'text' => elgg_echo('blog:moreblogs'),
 	'is_trusted' => true,
 ]);

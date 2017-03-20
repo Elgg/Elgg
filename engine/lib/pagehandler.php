@@ -6,6 +6,18 @@
  * @subpackage Routing
  */
 
+function elgg_register_route($name, array $params = []) {
+	return _elgg_services()->router->registerRoute($name, $params);
+}
+
+function elgg_unregister_route($name) {
+	return _elgg_services()->router->unregisterRoute($name);
+}
+
+function elgg_generate_url($name, array $parameters = []) {
+	return _elgg_services()->router->generateUrl($name, $parameters);
+}
+
 /**
  * Registers a page handler for a particular identifier
  *

@@ -33,7 +33,8 @@
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
         "htmlawed/htmlawed": "^1.1.22",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "symfony/routing": "^3.2"
     },
     "scripts": {
         "pre-install-cmd": "php .scripts/check_global_requirements.php",

@@ -1,6 +1,11 @@
 <?php
 
-$page_type = elgg_extract('page_type', $vars);
+elgg_load_library('elgg:blog');
+
+// push all blogs breadcrumb
+elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('blog_all'));
+
+$page_type = 'owner';
 $username = elgg_extract('username', $vars);
 
 $user = get_user_by_username($username);

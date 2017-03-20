@@ -1,6 +1,11 @@
 <?php
 
-$page_type = elgg_extract('page_type', $vars);
+elgg_load_library('elgg:blog');
+
+// push all blogs breadcrumb
+elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('blog_all'));
+
+$page_type = 'view';
 $guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'object', 'blog');
@@ -20,9 +25,9 @@ $container = $blog->getContainerEntity();
 $crumbs_title = $container->name;
 
 if (elgg_instanceof($container, 'group')) {
-	elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
+	elgg_push_breadcrumb($crumbs_title, elgg_generate_url('blog_group', ['guid' => $container->guid]));
 } else {
-	elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
+	elgg_push_breadcrumb($crumbs_title, elgg_generate_url('blog_owner', ['username' => $container->username]));
 }
 
 elgg_push_breadcrumb($blog->title);
