@@ -273,7 +273,7 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 			'text' => elgg_echo('all'),
 			'href' =>  file_type_cloud_get_url($all, $friends),
 		));
-		
+
 		foreach ($types as $type) {
 			elgg_register_menu_item('page', array(
 				'name' => "file:$type->tag",
@@ -282,7 +282,7 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 			));
 		}
 	}
-	
+
 	// returning the view is needed for BC
 	$params = array(
 		'friends' => $friends,
@@ -479,7 +479,7 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 	if (!elgg_instanceof($entity, 'object', 'file')) {
 		return;
 	}
-	
+
 	switch ($size) {
 		case 'small' :
 			$filename_prefix = 'thumb';

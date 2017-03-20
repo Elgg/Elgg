@@ -1,8 +1,5 @@
 <?php
 
-use Elgg\Mail\Address;
-use Zend\Mail\Message;
-
 /**
  * Adding a New Notification Event
  * ===============================
@@ -221,8 +218,10 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		return;
 	}
 	
-	/* @var \Elgg\Notifications\Notification $message */
 	$message = $params['notification'];
+	if (!$message instanceof \Elgg\Notifications\Notification) {
+		return false;
+	}
 
 	$sender = $message->getSender();
 	$recipient = $message->getRecipient();
@@ -235,39 +234,32 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		return false;
 	}
 
-	$to = Address::getFormattedEmailAddress($recipient->email, $recipient->getDisplayName());
-	
-	// If there's an email address, use it - but only if it's not from a user.
-	if (!($sender instanceof \ElggUser) && $sender->email) {
-		$from = Address::getFormattedEmailAddress($sender->email, $sender->getDisplayName());
-	} else {
-		// get the site email address
-		$site = elgg_get_site_entity();
-		
-		$from = Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
-	}
+	$email = \Elgg\Email::factory([
+		'from' => $sender,
+		'to' => $recipient,
+		'subject' => $message->subject,
+		'body' => $message->body,
+		'params' => $params,
+	]);
 
-	return elgg_send_email($from, $to, $message->subject, $message->body, $params);
+	return _elgg_services()->emails->send($email);
 }
 
 /**
  * Adds default Message-ID header to all e-mails
  *
- * @param string $hook        Equals to 'email'
- * @param string $type        Equals to 'system'
- * @param array  $returnvalue Array containing fields: 'to', 'from', 'subject', 'body', 'headers', 'params'
- * @param array  $params      The same value as $returnvalue
+ * @param string      $hook   "prepare"
+ * @param string      $type   "system:email"
+ * @param \Elgg\Email $email  Email instance
  *
  * @see https://tools.ietf.org/html/rfc5322#section-3.6.4
  *
  * @return array
- *
  * @access private
  */
-function _elgg_notifications_smtp_default_message_id_header($hook, $type, $returnvalue, $params) {
+function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email) {
 	
-	if (!is_array($returnvalue) || !is_array($returnvalue['params'])) {
-		// another hook handler returned a non-array, let's not override it
+	if (!$email instanceof \Elgg\Email) {
 		return;
 	}
 	
@@ -276,44 +268,36 @@ function _elgg_notifications_smtp_default_message_id_header($hook, $type, $retur
 	
 	$mt = microtime(true);
 	
-	$returnvalue['headers']['Message-ID'] = "<{$url_path}.default.{$mt}@{$hostname}>";
+	$email->addHeader('Message-ID', "<{$url_path}.default.{$mt}@{$hostname}>");
 	
-	return $returnvalue;
+	return $email;
 }
 /**
  * Adds default thread SMTP headers to group messages correctly.
  * Note that it won't be sufficient for some email clients. Ie. Gmail is looking at message subject anyway.
- *
- * @param string $hook        Equals to 'email'
- * @param string $type        Equals to 'system'
- * @param array  $returnvalue Array containing fields: 'to', 'from', 'subject', 'body', 'headers', 'params'
- * @param array  $params      The same value as $returnvalue
+ * 
+ * @param string      $hook   "prepare"
+ * @param string      $type   "system:email"
+ * @param \Elgg\Email $email  Email instance
  * @return array
  * @access private
  */
-function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $params) {
+function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {
 
-	if (!is_array($returnvalue) || !is_array($returnvalue['params'])) {
-		// another hook handler returned a non-array, let's not override it
-		return;
-	}
+	$notificationParams = $email->getParams();
 
-	$notificationParams = elgg_extract('params', $returnvalue, array());
-	/** @var \Elgg\Notifications\Notification */
 	$notification = elgg_extract('notification', $notificationParams);
-
-	if (!($notification instanceof \Elgg\Notifications\Notification)) {
-		return $returnvalue;
+	if (!$notification instanceof \Elgg\Notifications\Notification) {
+		return;
 	}
 
 	$hostname = parse_url(elgg_get_site_url(), PHP_URL_HOST);
 	$urlPath = parse_url(elgg_get_site_url(), PHP_URL_PATH);
 
 	$object = elgg_extract('object', $notification->params);
-	/** @var \Elgg\Notifications\Event $event */
 	$event = elgg_extract('event', $notification->params);
 
-	if (($object instanceof \ElggEntity) && ($event instanceof \Elgg\Notifications\NotificationEvent)) {
+	if ($object instanceof \ElggEntity && $event instanceof \Elgg\Notifications\NotificationEvent) {
 		if ($event->getAction() === 'create') {
 			// create event happens once per entity and we need to guarantee message id uniqueness
 			// and at the same time have thread message id that we don't need to store
@@ -322,19 +306,19 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
 			$mt = microtime(true);
 			$messageId = "<{$urlPath}.entity.{$object->guid}.$mt@{$hostname}>";
 		}
-		$returnvalue['headers']["Message-ID"] = $messageId;
-		$container = $object->getContainerEntity();
+
+		$email->addHeader("Message-ID", $messageId);
 
 		// let's just thread comments by default
-		if (($container instanceof \ElggEntity) && ($object instanceof \ElggComment)) {
-
+		$container = $object->getContainerEntity();
+		if ($container instanceof \ElggEntity && $object instanceof \ElggComment) {
 			$threadMessageId = "<{$urlPath}.entity.{$container->guid}@{$hostname}>";
-			$returnvalue['headers']['In-Reply-To'] = $threadMessageId;
-			$returnvalue['headers']['References'] = $threadMessageId;
+			$email->addHeader('In-Reply-To', $threadMessageId);
+			$email->addHeader('References', $threadMessageId);
 		}
 	}
 
-	return $returnvalue;
+	return $email;
 }
 
 /**
@@ -347,8 +331,8 @@ function _elgg_notifications_init() {
 	// add email notifications
 	elgg_register_notification_method('email');
 	elgg_register_plugin_hook_handler('send', 'notification:email', '_elgg_send_email_notification');
-	elgg_register_plugin_hook_handler('email', 'system', '_elgg_notifications_smtp_default_message_id_header', 1);
-	elgg_register_plugin_hook_handler('email', 'system', '_elgg_notifications_smtp_thread_headers');
+	elgg_register_plugin_hook_handler('prepare', 'system:email', '_elgg_notifications_smtp_default_message_id_header', 1);
+	elgg_register_plugin_hook_handler('prepare', 'system:email', '_elgg_notifications_smtp_thread_headers');
 
 	// add ability to set personal notification method
 	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
@@ -572,91 +556,43 @@ function set_user_notification_setting($user_guid, $method, $value) {
 /**
  * Send an email to any email address
  *
- * @param string $from    Email address or string: "name <email>"
- * @param string $to      Email address or string: "name <email>"
- * @param string $subject The subject of the message
- * @param string $body    The message body
- * @param array  $params  Optional parameters (none used in this function)
- *
+ * @param \Elgg\Email $email Email
  * @return bool
- * @throws NotificationException
  * @since 1.7.2
  */
-function elgg_send_email($from, $to, $subject, $body, array $params = null) {
-	if (!$from) {
-		$msg = "Missing a required parameter, '" . 'from' . "'";
-		throw new \NotificationException($msg);
+function elgg_send_email($email) {
+
+	if (!$email instanceof \Elgg\Email) {
+		elgg_deprecated_notice(__FUNCTION__ . '
+			 should be given a single instance of \Elgg\Email
+		', '3.0');
+
+		$args = func_get_args();
+		$email = \Elgg\Email::factory([
+			'from' => array_shift($args),
+			'to' => array_shift($args),
+			'subject' => array_shift($args),
+			'body' => array_shift($args),
+			'params' => array_shift($args) ? : [],
+		]);
 	}
 
-	if (!$to) {
-		$msg = "Missing a required parameter, '" . 'to' . "'";
-		throw new \NotificationException($msg);
-	}
+	return _elgg_services()->emails->send($email);
+}
 
-	$headers = array(
-		"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
-		"MIME-Version" => "1.0",
-		"Content-Transfer-Encoding" => "8bit",
-	);
-
-	// return true/false to stop elgg_send_email() from sending
-	$mail_params = array(
-		'to' => $to,
-		'from' => $from,
-		'subject' => $subject,
-		'body' => $body,
-		'headers' => $headers,
-		'params' => $params,
-	);
-
-	// $mail_params is passed as both params and return value. The former is for backwards
-	// compatibility. The latter is so handlers can now alter the contents/headers of
-	// the email by returning the array
-	$result = _elgg_services()->hooks->trigger('email', 'system', $mail_params, $mail_params);
-	if (!is_array($result)) {
-		// don't need null check: Handlers can't set a hook value to null!
-		return (bool) $result;
-	}
-
-	// strip name from to and from
-
-	$to_address = Address::fromString($result['to']);
-	$from_address = Address::fromString($result['from']);
-
-
-	$subject = elgg_strip_tags($result['subject']);
-	$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-	// Sanitise subject by stripping line endings
-	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
-	$subject = trim($subject);
-
-	$body = elgg_strip_tags($result['body']);
-	$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
-	$body = wordwrap($body);
-
-	$message = new Message();
-	$message->setEncoding('UTF-8');
-	$message->addFrom($from_address);
-	$message->addTo($to_address);
-	$message->setSubject($subject);
-	$message->setBody($body);
-
-	foreach ($result['headers'] as $headerName => $headerValue) {
-		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
-	}
-
-	// allow others to modify the $message content
-	// eg. add html body, add attachments
-	$message = _elgg_services()->hooks->trigger('email:message', 'system', $result, $message);
-	
-	try {
-		_elgg_services()->mailer->send($message);
-	} catch (\Zend\Mail\Exception\RuntimeException $e) {
-		_elgg_services()->logger->error($e->getMessage());
-		return false;
-	}
-
-	return true;
+/**
+ * Replace default email transport
+ *
+ * @note If you are replacing the transport persistently, e.g. on each page request via
+ * a plugin, avoid using plugin settings to store transport configuration, as it
+ * may be expensive to fetch these settings. Instead, configure the transport
+ * via elgg-config/settings.php or use site config DB storage.
+ * 
+ * @param \Zend\Mail\Transport\TransportInterface $mailer Transport
+ * @return void
+ */
+function elgg_set_email_transport(\Zend\Mail\Transport\TransportInterface $mailer) {
+	_elgg_services()->setValue('mailer', $mailer);
 }
 
 /**
