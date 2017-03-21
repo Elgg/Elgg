@@ -216,7 +216,7 @@ class BootService {
 	 * @return \Stash\Interfaces\ItemInterface
 	 */
 	private function getStashItem(\stdClass $CONFIG) {
-		if (!empty($CONFIG->memcache) && class_exists('Memcache')) {
+		if (!empty($CONFIG->memcache) && class_exists('Memcached')) {
 			$options = [];
 			if (!empty($CONFIG->memcache_servers)) {
 				$options['servers'] = $CONFIG->memcache_servers;
