@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "type": "project",
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "ext-pdo": "*",
         "ext-gd": "*",
         "ext-json": "*",

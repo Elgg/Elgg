@@ -12,6 +12,11 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+System Requirements
+-------------------
+
+ * PHP 7.0+ is now required to run Elgg
+
 Removed views
 -------------
 
