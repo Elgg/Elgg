@@ -2,7 +2,6 @@ language: php
 php:
  - 5.6
  - 7.0
- - hhvm
 
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
@@ -81,6 +80,16 @@ matrix:
        - php -f ./.scripts/is_memcached_enabled.php
        - ./vendor/bin/phpunit --configuration ./.scripts/travis/phpunit-memcached.xml
        - php ./engine/tests/suite.php --config ./.scripts/travis/elgg-config/simpletest_memcached.php
+
+    # HHVM build
+    - php: hhvm
+      env: E2E=true
+      before_install:
+      install:
+       - composer travis:install-with-mysql
+      script:
+       - ./vendor/bin/phpunit
+       - php -f ./engine/tests/suite.php
 
     # End to end tests
     - php: 5.6
