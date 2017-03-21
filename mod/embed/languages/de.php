@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Einbetten',
 	'embed:media' => 'Inhalt einbetten',
 	'embed:instructions' => 'Klicke eine verfügbare Datei an, um sie in Deinen Eintrag einzubetten.',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'Keine Datei zum Einbetten vorhanden.',
 
 	'embed:no_sections' => 'Es wurden keine Plugins gefunden, die das Einbetten von Inhalten unterstützen. Bitte den Admin der Community-Seite ein solches Plugin (oder auch entsprechend den Anforderungen ggf. mehrere) zu aktivieren.',
-);
+];

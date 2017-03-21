@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => '工具',
 	'admin:develop_tools:sandbox' => '主题测试盒',
@@ -86,4 +86,4 @@ return array(
 	'developers:settings:success' => '设置已保存，缓存已更新。',
 
 	'developers:amd' => 'AMD',
-);
+];

@@ -32,9 +32,9 @@ $content = elgg_view('collections/collection', [
 	'item' => $collection,
 ]);
 
-$body = elgg_view_layout('one_sidebar', array(
-	'title' => $title, 
+$body = elgg_view_layout('one_sidebar', [
+	'title' => $title,
 	'content' => $content
-));
+]);
 
 echo elgg_view_page($title, $body);

@@ -152,31 +152,33 @@ class ElggWidget extends \ElggObject {
 	 * @since 1.8.0
 	 */
 	public function move($column, $rank) {
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => 'widget',
 			'container_guid' => $this->container_guid,
 			'limit' => false,
-			'private_setting_name_value_pairs' => array(
-				array('name' => 'context', 'value' => $this->getContext()),
-				array('name' => 'column', 'value' => $column)
-			)
-		);
+			'private_setting_name_value_pairs' => [
+				['name' => 'context', 'value' => $this->getContext()],
+				['name' => 'column', 'value' => $column]
+			]
+		];
 		$widgets = elgg_get_entities_from_private_settings($options);
 		if (!$widgets) {
-			$this->column = (int)$column;
+			$this->column = (int) $column;
 			$this->order = 0;
 			return;
 		}
 
-		usort($widgets, function($a, $b) {return (int) $a->order > (int) $b->order;});
+		usort($widgets, function($a, $b) {return (int) $a->order > (int) $b->order;
+
+		});
 
 		// remove widgets from inactive plugins
 		$widget_types = elgg_get_widget_types([
 			'context' => $this->context,
 			'container' => $this->getContainerEntity(),
 		]);
-		$inactive_widgets = array();
+		$inactive_widgets = [];
 		foreach ($widgets as $index => $widget) {
 			if (!array_key_exists($widget->handler, $widget_types)) {
 				$inactive_widgets[] = $widget;
@@ -258,10 +260,10 @@ class ElggWidget extends \ElggObject {
 
 		// plugin hook handlers should return true to indicate the settings have
 		// been saved so that default code does not run
-		$hook_params = array(
+		$hook_params = [
 			'widget' => $this,
 			'params' => $params
-		);
+		];
 		if (_elgg_services()->hooks->trigger('widget_settings', $this->handler, $hook_params, false) == true) {
 			return true;
 		}

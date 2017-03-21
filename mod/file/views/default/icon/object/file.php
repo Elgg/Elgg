@@ -49,11 +49,11 @@ $img = elgg_view('output/img', [
 	'src' => $entity->getIconURL($size),
 		]);
 if ($url) {
-	$params = array(
+	$params = [
 		'href' => $url,
 		'text' => $img,
 		'is_trusted' => true,
-	);
+	];
 	if (isset($vars['link_class'])) {
 		$params['class'] = $vars['link_class'];
 	}

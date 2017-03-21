@@ -21,11 +21,11 @@ if ($default_access === null) {
 }
 
 $title = elgg_echo('default_access:settings');
-$content = elgg_view_field(array(
+$content = elgg_view_field([
 	'#type' => 'access',
 	'name' => 'default_access',
 	'value' => $default_access,
 	'#label' => elgg_echo('default_access:label'),
-		));
+		]);
 
 echo elgg_view_module('info', $title, $content);

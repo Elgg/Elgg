@@ -22,13 +22,13 @@ $subtitle = elgg_view('object/elements/imprint', [
 	'show_links' => false,
 ]);
 
-$image = elgg_view_entity_icon($entity, 'small', array('link_class' => 'embed-insert'));
+$image = elgg_view_entity_icon($entity, 'small', ['link_class' => 'embed-insert']);
 
-$params = array(
+$params = [
 	'title' => $title,
 	'entity' => $entity,
 	'subtitle' => $subtitle,
-	'tags' => FALSE,
+	'tags' => false,
 	'icon' => $image,
-);
+];
 echo elgg_view('object/elements/summary', $params);

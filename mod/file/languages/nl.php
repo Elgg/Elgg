@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -104,4 +104,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 	'file:noaccess' => "Je hebt onvoldoende rechten om dit bestand aan te passen",
 	'file:cannotload' => "Er was een fout tijdens het uploaden van het bestand",
 	'file:nofile' => "Selecteer een bestand",
-);
+];

@@ -73,7 +73,6 @@ define(function (require) {
 						}
 					}
 				});
-
 			}
 
 			event.preventDefault();
@@ -88,3 +87,4 @@ define(function (require) {
 	 */
 	elgg.thewire = TW;
 });
+

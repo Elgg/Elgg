@@ -10,7 +10,7 @@ if (!$owner) {
 	return true;
 }
 
-$title = elgg_echo('thewire:by', array($owner->name));
+$title = elgg_echo('thewire:by', [$owner->name]);
 
 $permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $vars['entity']->getTimeCreated());

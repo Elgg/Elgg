@@ -28,7 +28,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 	}
 	
 	if ($guid) {
-		$page_owner_guid = (int)$guid;
+		$page_owner_guid = (int) $guid;
 	}
 
 	if (isset($page_owner_guid)) {
@@ -37,7 +37,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 
 	// return guid of page owner entity
 	// Note: core registers default_page_owner_handler() to handle this hook.
-	$guid = (int)elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
+	$guid = (int) elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
 
 	if ($guid) {
 		$page_owner_guid = $guid;

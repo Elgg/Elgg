@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => '垃圾收集工作多长时间执行一次？',
 
 	'garbagecollector:weekly' => '每周一次',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => '清除未连接的 meta 字串：',
-);
+];

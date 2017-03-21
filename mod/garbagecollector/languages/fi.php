@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Kuinka usein siivoustoiminto ajetaan?',
 
 	'garbagecollector:weekly' => 'Kerran viikossa',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Poistetaan turhat merkkijonot metatiedoista: ',
-);
+];

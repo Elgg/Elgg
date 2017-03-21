@@ -30,12 +30,12 @@ $content = elgg_view_entity($topic, [
 	'show_responses' => true,
 ]);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $topic->title,
 	'sidebar' => elgg_view('discussion/sidebar'),
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($topic->title, $body);

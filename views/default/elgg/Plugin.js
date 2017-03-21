@@ -31,3 +31,4 @@ define(function (require) {
 
 	return Plugin;
 });
+

@@ -11,13 +11,13 @@ if (!elgg_instanceof($topic, 'object', 'discussion')) {
 	return;
 }
 
-$options = array(
+$options = [
 	'type' => 'object',
 	'subtype' => 'discussion_reply',
 	'container_guid' => $topic->guid,
 	'count' => true,
 	'distinct' => false,
-);
+];
 
 $count = elgg_get_entities($options);
 
@@ -33,22 +33,22 @@ if ($count) {
 	// these comments with the latest at the bottom.
 	$replies = array_reverse($replies);
 
-	echo elgg_view_entity_list($replies, array('list_class' => 'elgg-river-comments'));
+	echo elgg_view_entity_list($replies, ['list_class' => 'elgg-river-comments']);
 
 	if ($count > 3) {
 		$more_count = $count - 3;
-		$params = array(
+		$params = [
 			'href' => $topic->getURL(),
-			'text' => elgg_echo('river:comments:more', array($more_count)),
+			'text' => elgg_echo('river:comments:more', [$more_count]),
 			'is_trusted' => true,
-		);
+		];
 		$link = elgg_view('output/url', $params);
 		echo "<div class=\"elgg-river-more\">$link</div>";
 	}
 }
 
 if ($topic->canWriteToContainer(0, 'object', 'discussion_reply')) {
-	$form_vars = array('id' => "discussion-reply-{$topic->guid}", 'class' => 'hidden');
-	$body_vars = array('topic' => $topic, 'inline' => true);
+	$form_vars = ['id' => "discussion-reply-{$topic->guid}", 'class' => 'hidden'];
+	$body_vars = ['topic' => $topic, 'inline' => true];
 	echo elgg_view_form('discussion/reply/save', $form_vars, $body_vars);
 }

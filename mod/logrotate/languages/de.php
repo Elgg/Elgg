@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Wie oft sollen die Einträge im Systemlog archiviert werden?',
 
 	'logrotate:logrotated' => "Die alten Einträge im Log wurden archiviert.\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Das Log wurde gelöscht.\n",
 	'logrotate:lognotdeleted' => "Es wurden keine Logs gelöscht.\n",
-);
+];

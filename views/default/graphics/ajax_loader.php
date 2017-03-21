@@ -10,7 +10,7 @@
  * @uses $vars['hidden'] Begin hidden? (true)
  */
 
-$attributes = array();
+$attributes = [];
 
 if (isset($vars['id'])) {
 	$attributes['id'] = $vars['id'];

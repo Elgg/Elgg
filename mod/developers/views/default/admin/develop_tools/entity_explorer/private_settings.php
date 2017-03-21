@@ -12,7 +12,6 @@ if (empty($private_settings)) {
 	$private_settings_info .= '</tr>';
 	
 	foreach ($private_settings as $key => $value) {
-		
 		$key_val = elgg_view('output/text', ['value' => $key]);
 		$value = elgg_view('output/text', ['value' => $value]);
 		

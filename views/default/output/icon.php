@@ -10,7 +10,7 @@
 */
 
 // these 'old' Elgg 1.x sprite icons will be converted to the FontAwesome version
-$translated_icons = array(
+$translated_icons = [
 	"arrow-two-head" => "arrows-h",
 	"attention" => "exclamation-triangle",
 	"cell-phone" => "mobile",
@@ -53,7 +53,7 @@ $translated_icons = array(
 	"twitter" => "twitter-square",
 	"undo" => "reply",
 	"video" => "film"
-);
+];
 
 $convert = (bool) elgg_extract('convert', $vars, true);
 unset($vars['convert']);

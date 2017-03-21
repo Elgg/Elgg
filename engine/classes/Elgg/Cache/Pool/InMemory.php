@@ -6,9 +6,9 @@ use Stash;
 
 /**
  * An in-memory implementation of a cache pool.
- * 
+ *
  * NB: Data put into this cache is not persisted between requests.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @since 1.10.0
@@ -19,7 +19,7 @@ final class InMemory implements Pool {
 	/**
 	 * @var array
 	 */
-	private $values = array();
+	private $values = [];
 	
 	/** @inheritDoc */
 	public function get($key, callable $callback = null, $default = null) {

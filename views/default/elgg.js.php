@@ -15,7 +15,7 @@ JS;
 echo elgg_view('elgg/popup.js');
 
 $elggDir = \Elgg\Application::elggDir();
-$files = array(
+$files = [
 	// these must come first
 	$elggDir->getPath("js/lib/elgglib.js"),
 
@@ -37,7 +37,7 @@ $files = array(
 
 	//ui
 	$elggDir->getPath("js/lib/ui.js"),
-);
+];
 
 
 foreach ($files as $file) {

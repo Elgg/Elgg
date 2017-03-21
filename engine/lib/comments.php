@@ -45,7 +45,6 @@ function _elgg_comments_page_handler($segments) {
 
 	$page = elgg_extract(0, $segments);
 	switch ($page) {
-
 		case 'edit':
 			echo elgg_view_resource('comments/edit', [
 				'guid' => elgg_extract(1, $segments),
@@ -105,9 +104,9 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 		'subtype' => 'comment',
 		'container_guid' => $container->guid,
 		'count' => true,
-		'wheres' => ["e.guid < " . (int)$comment->guid],
+		'wheres' => ["e.guid < " . (int) $comment->guid],
 	]);
-	$limit = (int)get_input('limit');
+	$limit = (int) get_input('limit');
 	if (!$limit) {
 		$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
 	}
@@ -267,15 +266,15 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 	// need to override access in case comments ended up with ACCESS_PRIVATE
 	// and to ensure write permissions
 	$ia = elgg_set_ignore_access(true);
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $entity->getGUID(),
-		'wheres' => array(
+		'wheres' => [
 			"e.access_id != {$entity->access_id}"
-		),
+		],
 		'limit' => 0,
-	);
+	];
 
 	$batch = new \ElggBatch('elgg_get_entities', $options, null, 25, false);
 	foreach ($batch as $comment) {

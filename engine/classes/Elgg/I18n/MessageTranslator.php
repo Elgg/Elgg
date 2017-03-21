@@ -19,7 +19,7 @@ class MessageTranslator implements TranslatorInterface {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Locale        $defaultLocale The fallback locale
 	 * @param MessageBundle $messages      Messages that this translator is aware of
 	 */

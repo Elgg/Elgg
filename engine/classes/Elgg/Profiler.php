@@ -45,7 +45,7 @@ class Profiler {
 	 * @param string $prefix Prefix of period string. Leave empty.
 	 * @return void
 	 */
-	public function flattenTree(array &$list = [], array $tree, $prefix = '') {
+	public function flattenTree(array &$list = [], array $tree = [], $prefix = '') {
 		$is_root = empty($list);
 
 		if (isset($tree['periods'])) {
@@ -216,8 +216,8 @@ class Profiler {
 	private function diffMicrotime($start, $end) {
 		list($start_usec, $start_sec) = explode(" ", $start);
 		list($end_usec, $end_sec) = explode(" ", $end);
-		$diff_sec = (int)$end_sec - (int)$start_sec;
-		$diff_usec = (float)$end_usec - (float)$start_usec;
-		return (float)$diff_sec + $diff_usec;
+		$diff_sec = (int) $end_sec - (int) $start_sec;
+		$diff_usec = (float) $end_usec - (float) $start_usec;
+		return (float) $diff_sec + $diff_usec;
 	}
 }

@@ -43,7 +43,7 @@ if (strcmp($password, $password2) != 0) {
 
 // For now, just try and register the user
 try {
-	$guid = register_user($username, $password, $name, $email, TRUE);
+	$guid = register_user($username, $password, $name, $email, true);
 
 	if ($guid) {
 		$new_user = get_entity($guid);
@@ -53,7 +53,7 @@ try {
 
 		elgg_clear_sticky_form('useradd');
 
-		$new_user->admin_created = TRUE;
+		$new_user->admin_created = true;
 		// @todo ugh, saving a guid as metadata!
 		$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
@@ -61,14 +61,14 @@ try {
 		// language of the current user (admin), so we need to fix it here.
 		$new_user->language = $language;
 
-		$subject = elgg_echo('useradd:subject', array(), $new_user->language);
-		$body = elgg_echo('useradd:body', array(
+		$subject = elgg_echo('useradd:subject', [], $new_user->language);
+		$body = elgg_echo('useradd:body', [
 			$name,
 			elgg_get_site_entity()->name,
 			elgg_get_site_entity()->url,
 			$username,
 			$password,
-		), $new_user->language);
+		], $new_user->language);
 
 		notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body, [
 			'action' => 'useradd',
@@ -76,7 +76,7 @@ try {
 			'password' => $password,
 		]);
 
-		system_message(elgg_echo("adduser:ok", array(elgg_get_site_entity()->name)));
+		system_message(elgg_echo("adduser:ok", [elgg_get_site_entity()->name]));
 	} else {
 		register_error(elgg_echo("adduser:bad"));
 	}

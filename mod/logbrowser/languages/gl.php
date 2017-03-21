@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => 'Navegador do rexistro',
 	'logbrowser' => 'Navegador do rexistr',
 	'logbrowser:browse' => 'Navegar polo rexistro do sistema',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => 'Tipo de obxecto',
 	'logbrowser:object:guid' => 'GUID do obxecto',
 	'logbrowser:action' => 'Acción',
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg-Installation',
 	'install:welcome' => 'Wilkommen',
 	'install:requirements' => 'Überprüfung der Systemvoraussetzungen',
@@ -153,8 +153,8 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:rewrite:altserver' => 'Der Test der Rewrite-Regeln ist fehlgeschlagen. Du mußt die Rewrite-Regeln von Elgg selbst zur Konfiguration Deines Webservers hinzufügen und es dann wieder versuchen.',
 	'install:error:rewrite:unknown' => 'Uups. Es war nicht möglich festzustellen, welches Webserver-Programm auf Deinem Server verwendet wird. Darüber hinaus ist der Test der Rewrite-Regeln von Elgg fehlgeschlagen. Es ist leider nicht möglich, spezifischere Hinweise zu den Ursachen des Problems zu geben. Bitte folge dem Link zu Hinweisen bei Installationsproblemen.',
 	'install:warning:rewrite:unknown' => 'Dein Server unterstützt die automatische Prüfung von Rewrite-Regeln nicht und Dein Browser unterstützt es nicht, mit Hilfe von Javascript die Rewrite-Regeln auf Funktionsfähigkeit zu überprüfen. Du kannst die Installation fortsetzen, aber es kann sein, das Deine Community-Seite nicht einwandfrei funktionieren wird. Du kannst die Überprüfung der Rewrite-Regeln selbst durchführen, indem Du diesem Link folgst: <a href="%s" target="_blank">Test</a>. Du wirst die Meldung \'success\' bekommen, wenn die Rewrite-Regeln funktionieren.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Es ist ein nicht behebbarer Fehler aufgetreten. Der Fehler wurde protokolliert. Wenn Du der Seitenadministrator bist, prüfe bitte die Konfiguration in settings.php. Andernfalls leite bitte leite folgende Informationen an den Seitenadministrator weiter:',
 	'DatabaseException:WrongCredentials' => "Elgg konnte mit den gegebenen Verbindungsparametern keine Verbindung zur Datenbank herstellen. Bitte prüfe die Konfiguration in settings.php.",
-);
+];

@@ -44,7 +44,7 @@ if (isset($vars['base_url']) && $vars['base_url']) {
 $base_url_has_fragment = preg_match('~#.~', $base_url);
 
 $get_href = function ($offset) use ($base_url, $base_url_has_fragment, $offset_key, $url_fragment) {
-	$link = elgg_http_add_url_query_elements($base_url, array($offset_key => $offset));
+	$link = elgg_http_add_url_query_elements($base_url, [$offset_key => $offset]);
 	if (!$base_url_has_fragment && $offset) {
 		$link .= "#$url_fragment";
 	}
@@ -59,7 +59,7 @@ if ($count <= $limit && $offset == 0) {
 $total_pages = (int) ceil($count / $limit);
 $current_page = (int) ceil($offset / $limit) + 1;
 
-$pages = array();
+$pages = [];
 
 // determine starting page
 $start_page = max(min([$current_page - 2, $total_pages - 4]), 1);
@@ -129,7 +129,7 @@ if ($current_page == $total_pages) {
 }
 
 $list ="";
-foreach ($pages as $page_num => $page) {	
+foreach ($pages as $page_num => $page) {
 	if ($page_num == $current_page) {
 		$list .= elgg_format_element('li', ['class' => 'elgg-state-selected'], "<span>$page_num</span>");
 	} else {
@@ -147,19 +147,19 @@ foreach ($pages as $page_num => $page) {
 		}
 		
 		if ($href && !$disabled) {
-			$link = elgg_view('output/url', array(
+			$link = elgg_view('output/url', [
 				'href' => $href,
 				'text' => $text,
 				'is_trusted' => true,
-			));
+			]);
 		} else {
 			$link = elgg_format_element('span', [], $page['text']);
 		}
 		
-		$element_options = array();
+		$element_options = [];
 		if ($disabled) {
 			$element_options['class'] = 'elgg-state-disabled';
-		}			
+		}
 			
 		$list .= elgg_format_element('li', $element_options, $link);
 	}

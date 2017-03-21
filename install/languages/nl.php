@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg installatie',
 	'install:welcome' => 'Welkom',
 	'install:requirements' => 'Nakijken van de vereisten',
@@ -152,8 +152,8 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:error:rewrite:altserver' => 'De rewrite rules test is mislukt. Je moet de webserver configureren met de juiste rewrite rules en het opnieuw proberen.',
 	'install:error:rewrite:unknown' => 'Oef. We kunnen niet bepalen welke webserver op je site draait en de rewrite rules test is gefaald. We kunnen je geen specifiek advies geven om het op te lossen. Check de troubleshooting link voor meer informatie.',
 	'install:warning:rewrite:unknown' => 'Je server ondersteunt niet het automatisch testen van de rewrite rules en je browser ondersteunt niet de controle via JavaScript. Je kunt de installatie vervolgen, maar je kunt problemen met je site ervaren. Je kunt de rewrite rules handmatig testen via deze link: <a href="%s" target="_blank">test</a>. Je zult het woord success zien als het werkt.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Er is een onherstelbare fout opgetreden en gelogd. Indien je de beheerder bent, controleer je settings bestand. Ben je geen beheerder, neem dan contact op met een sitebeheerder met de volgende informatie:',
 	'DatabaseException:WrongCredentials' => "Elgg kan met deze instellingen niet met de database verbinden. Controleer het settings bestand.",
-);
+];

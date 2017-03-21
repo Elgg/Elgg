@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Ilmiannetut kohteet',
 	'admin:administer_utilities:reportedcontent' => 'Asiaton sisältö',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Ilmoituksen tekeminen epäonnistui.',
 	'reportedcontent:notarchived' => 'Ilmoituksen arkistoiminen epäonnistui',
-);
+];

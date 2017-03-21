@@ -221,7 +221,7 @@ function _elgg_get_plugin_dependency_strings($dep) {
  * @since 1.8.0
  * @see \ElggPlugin::getAllUserSettings()
  */
-function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id, $return_obj = false) {
+function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $return_obj = false) {
 	return _elgg_services()->plugins->getAllUserSettings($user_guid, $plugin_id, $return_obj);
 }
 
@@ -237,7 +237,7 @@ function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id, $return_o
  * @since 1.8.0
  * @see \ElggPlugin::setUserSetting()
  */
-function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id) {
+function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id = null) {
 	return _elgg_services()->plugins->setUserSetting($name, $value, $user_guid, $plugin_id);
 }
 
@@ -252,7 +252,7 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id)
  * @since 1.8.0
  * @see \ElggPlugin::unsetUserSetting()
  */
-function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id) {
+function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) {
 	return _elgg_services()->plugins->unsetUserSetting($name, $user_guid, $plugin_id);
 }
 
@@ -268,7 +268,7 @@ function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id) {
  * @since 1.8.0
  * @see \ElggPlugin::getUserSetting()
  */
-function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id, $default = null) {
+function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null, $default = null) {
 	return _elgg_services()->plugins->getUserSetting($name, $user_guid, $plugin_id, $default);
 }
 
@@ -357,7 +357,7 @@ function elgg_unset_all_plugin_settings($plugin_id) {
  * @return mixed int If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */
-function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
+function elgg_get_entities_from_plugin_user_settings(array $options = []) {
 	return _elgg_services()->plugins->getEntitiesFromUserSettings($options);
 }
 
@@ -397,8 +397,8 @@ function _elgg_plugins_init() {
 	 * @see \Elgg\Database\Plugins::invalidateIsActiveCache
 	 */
 	$svc = _elgg_services()->plugins;
-	elgg_register_event_handler('deactivate', 'plugin', array($svc, 'invalidateIsActiveCache'));
-	elgg_register_event_handler('activate', 'plugin', array($svc, 'invalidateIsActiveCache'));
+	elgg_register_event_handler('deactivate', 'plugin', [$svc, 'invalidateIsActiveCache']);
+	elgg_register_event_handler('activate', 'plugin', [$svc, 'invalidateIsActiveCache']);
 
 	elgg_register_action("plugins/settings/save", '', 'admin');
 	elgg_register_action("plugins/usersettings/save");

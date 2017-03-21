@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -97,4 +97,4 @@ return array(
 	'file:noaccess' => "Немте дозволе да мењате овај фајл",
 	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Морате да означите фајл",
-);
+];

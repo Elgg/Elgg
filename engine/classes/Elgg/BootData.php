@@ -122,7 +122,7 @@ class BootData {
 			HAVING COUNT(*) > $limit
 		";
 		$unsuitable_guids = $db->getData($sql, function ($row) {
-			return (int)$row->entity_guid;
+			return (int) $row->entity_guid;
 		});
 		$guids = array_values($guids);
 		$guids = array_diff($guids, $unsuitable_guids);

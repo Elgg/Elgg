@@ -17,8 +17,8 @@ elgg_register_plugin_hook_handler('ajax_response', 'action:developers/ajax_demo'
 
 elgg_ajax_gatekeeper();
 
-$arg1 = (int)get_input('arg1');
-$arg2 = (int)get_input('arg2');
+$arg1 = (int) get_input('arg1');
+$arg2 = (int) get_input('arg2');
 
 system_message('Hello from action');
 

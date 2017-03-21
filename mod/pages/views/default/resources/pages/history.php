@@ -30,18 +30,18 @@ elgg_push_breadcrumb(elgg_echo('pages:history'));
 
 $title = $page->title . ": " . elgg_echo('pages:history');
 
-$content = elgg_list_annotations(array(
+$content = elgg_list_annotations([
 	'guid' => $page_guid,
 	'annotation_name' => 'page',
 	'limit' => max(20, elgg_get_config('default_limit')),
 	'order_by' => "n_table.time_created desc",
-));
+]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('pages/sidebar/navigation', array('page' => $page)),
-));
+	'sidebar' => elgg_view('pages/sidebar/navigation', ['page' => $page]),
+]);
 
 echo elgg_view_page($title, $body);

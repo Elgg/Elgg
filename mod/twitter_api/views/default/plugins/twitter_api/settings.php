@@ -3,53 +3,53 @@
  * Twitter API plugin settings
  */
 
-$instructions = elgg_echo('twitter_api:settings:instructions', array(elgg_get_site_url()));
+$instructions = elgg_echo('twitter_api:settings:instructions', [elgg_get_site_url()]);
 
 $consumer_key_string = elgg_echo('twitter_api:consumer_key');
-$consumer_key_view = elgg_view('input/text', array(
+$consumer_key_view = elgg_view('input/text', [
 	'name' => 'params[consumer_key]',
 	'value' => $vars['entity']->consumer_key,
 	'class' => 'elgg-input-thin',
-));
+]);
 
 $consumer_secret_string = elgg_echo('twitter_api:consumer_secret');
-$consumer_secret_view = elgg_view('input/text', array(
+$consumer_secret_view = elgg_view('input/text', [
 	'name' => 'params[consumer_secret]',
 	'value' => $vars['entity']->consumer_secret,
 	'class' => 'elgg-input-thin',
-));
+]);
 
 $sign_on_with_twitter_string = elgg_echo('twitter_api:login');
-$sign_on_with_twitter_view = elgg_view('input/select', array(
+$sign_on_with_twitter_view = elgg_view('input/select', [
 	'name' => 'params[sign_on]',
-	'options_values' => array(
+	'options_values' => [
 		'yes' => elgg_echo('option:yes'),
 		'no' => elgg_echo('option:no'),
-	),
+	],
 	'value' => $vars['entity']->sign_on ? $vars['entity']->sign_on : 'no',
-));
+]);
 
 $new_users_with_twitter = elgg_echo('twitter_api:new_users');
-$new_users_with_twitter_view = elgg_view('input/select', array(
+$new_users_with_twitter_view = elgg_view('input/select', [
 	'name' => 'params[new_users]',
-	'options_values' => array(
+	'options_values' => [
 		'yes' => elgg_echo('option:yes'),
 		'no' => elgg_echo('option:no'),
-	),
+	],
 	'value' => $vars['entity']->new_users ? $vars['entity']->new_users : 'no',
-));
+]);
 
 $post_to_twitter = '';
 if (elgg_is_active_plugin('thewire')) {
 	$post_to_twitter_string = elgg_echo('twitter_api:post_to_twitter');
-	$post_to_twitter_view = elgg_view('input/dropdown', array(
+	$post_to_twitter_view = elgg_view('input/dropdown', [
 		'name' => 'params[wire_posts]',
-		'options_values' => array(
+		'options_values' => [
 			'yes' => elgg_echo('option:yes'),
 			'no' => elgg_echo('option:no'),
-		),
+		],
 		'value' => $vars['entity']->wire_posts ? $vars['entity']->wire_posts : 'no',
-	));
+	]);
 	$post_to_twitter = "<div>$post_to_twitter_string $post_to_twitter_view</div>";
 }
 

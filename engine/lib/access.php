@@ -116,7 +116,7 @@ function get_access_array($user_guid = 0, $ignored = 0, $flush = false) {
  *
  * @return int default access id (see ACCESS defines in elgglib.php)
  */
-function get_default_access(ElggUser $user = null, array $input_params = array()) {
+function get_default_access(ElggUser $user = null, array $input_params = []) {
 	global $CONFIG;
 
 	// site default access
@@ -133,11 +133,11 @@ function get_default_access(ElggUser $user = null, array $input_params = array()
 		}
 	}
 
-	$params = array(
+	$params = [
 		'user' => $user,
 		'default_access' => $default_access,
 		'input_params' => $input_params,
-	);
+	];
 	return _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
 }
 
@@ -212,7 +212,7 @@ function access_get_show_hidden_status() {
  * @return string
  * @access private
  */
-function _elgg_get_access_where_sql(array $options = array()) {
+function _elgg_get_access_where_sql(array $options = []) {
 	return _elgg_services()->accessCollections->getWhereSql($options);
 }
 
@@ -265,7 +265,7 @@ function has_access_to_entity($entity, $user = null) {
  *
  * @return array List of access permissions
  */
-function get_write_access_array($user_guid = 0, $ignored = 0, $flush = false, array $input_params = array()) {
+function get_write_access_array($user_guid = 0, $ignored = 0, $flush = false, array $input_params = []) {
 	return _elgg_services()->accessCollections->getWriteAccessArray($user_guid, $flush, $input_params);
 }
 
@@ -443,7 +443,7 @@ function get_members_of_access_collection($collection_id, $guids_only = false, a
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
-function elgg_get_entities_from_access_id(array $options = array()) {
+function elgg_get_entities_from_access_id(array $options = []) {
 	// restrict the resultset to access collection provided
 	if (!isset($options['access_id'])) {
 		return false;
@@ -455,10 +455,10 @@ function elgg_get_entities_from_access_id(array $options = array()) {
 		if (is_array($options['wheres'])) {
 			$options['wheres'][] = $where;
 		} else {
-			$options['wheres'] = array($options['wheres'], $where);
+			$options['wheres'] = [$options['wheres'], $where];
 		}
 	} else {
-		$options['wheres'] = array($where);
+		$options['wheres'] = [$where];
 	}
 
 	// return entities with the desired options
@@ -475,7 +475,7 @@ function elgg_get_entities_from_access_id(array $options = array()) {
  *
  * @return string
  */
-function elgg_list_entities_from_access_id(array $options = array()) {
+function elgg_list_entities_from_access_id(array $options = []) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_access_id');
 }
 

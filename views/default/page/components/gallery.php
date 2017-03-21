@@ -60,7 +60,7 @@ foreach ($items as $item) {
 
 	if ($item instanceof \ElggEntity) {
 		$li_attrs['id'] = "elgg-{$item->getType()}-{$item->getGUID()}";
-	} else if (is_callable(array($item, 'getType'))) {
+	} else if (is_callable([$item, 'getType'])) {
 		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
 	}
 

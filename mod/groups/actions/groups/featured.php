@@ -1,4 +1,4 @@
-<?php	
+<?php
 /**
  * Feature a group
  *
@@ -18,10 +18,10 @@ if (!elgg_instanceof($group, 'group')) {
 //get the action, is it to feature or unfeature
 if ($action == "feature") {
 	$group->featured_group = "yes";
-	system_message(elgg_echo('groups:featuredon', array($group->name)));
+	system_message(elgg_echo('groups:featuredon', [$group->name]));
 } else {
 	$group->deleteMetadata('featured_group');
-	system_message(elgg_echo('groups:unfeatured', array($group->name)));
+	system_message(elgg_echo('groups:unfeatured', [$group->name]));
 }
 
 forward(REFERER);

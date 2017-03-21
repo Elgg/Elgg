@@ -16,7 +16,7 @@ class PluginSettingsCache {
 	 *
 	 * @var array GUID => string[]
 	 */
-	private $values = array();
+	private $values = [];
 
 	/**
 	 * Set the settings cache for known plugins

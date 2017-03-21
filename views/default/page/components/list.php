@@ -69,7 +69,7 @@ foreach ($items as $item) {
 		if ($subtype) {
 			$li_attrs['class'][] = "elgg-item-$type-$subtype";
 		}
-	} elseif (is_callable(array($item, 'getType'))) {
+	} elseif (is_callable([$item, 'getType'])) {
 		$type = $item->getType();
 
 		$li_attrs['id'] = "item-$type-{$item->id}";

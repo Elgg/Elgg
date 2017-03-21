@@ -86,7 +86,7 @@ function elgg_format_bytes($size, $precision = 2) {
 	}
 
 	$base = log($size) / log(1024);
-	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');
+	$suffixes = ['B', 'kB', 'MB', 'GB', 'TB'];
 
 	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
 }
@@ -114,7 +114,7 @@ function elgg_format_bytes($size, $precision = 2) {
  *
  * @return string
  */
-function elgg_format_attributes(array $attrs = array()) {
+function elgg_format_attributes(array $attrs = []) {
 	if (!is_array($attrs) || empty($attrs)) {
 		return '';
 	}
@@ -193,7 +193,7 @@ function elgg_format_attributes(array $attrs = array()) {
  * @throws InvalidArgumentException
  * @since 1.9.0
  */
-function elgg_format_element($tag_name, array $attributes = array(), $text = '', array $options = array()) {
+function elgg_format_element($tag_name, array $attributes = [], $text = '', array $options = []) {
 	if (is_array($tag_name)) {
 		$args = $tag_name;
 
@@ -223,10 +223,10 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
 		$is_void = $options['is_void'];
 	} else {
 		// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
-		$is_void = in_array(strtolower($tag_name), array(
+		$is_void = in_array(strtolower($tag_name), [
 			'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
 			'meta', 'param', 'source', 'track', 'wbr'
-		));
+		]);
 	}
 
 	if (!empty($options['encode_text'])) {
@@ -313,7 +313,7 @@ function elgg_normalize_url($url) {
 function elgg_get_friendly_title($title) {
 
 	// return a URL friendly title to short circuit normal title formatting
-	$params = array('title' => $title);
+	$params = ['title' => $title];
 	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, null);
 	if ($result) {
 		return $result;
@@ -345,13 +345,13 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	}
 
 	// return a time string to short circuit normal time formatting
-	$params = array('time' => $time, 'current_time' => $current_time);
+	$params = ['time' => $time, 'current_time' => $current_time];
 	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, null);
 	if ($result) {
 		return $result;
 	}
 
-	$diff = abs((int)$current_time - (int)$time);
+	$diff = abs((int) $current_time - (int) $time);
 
 	$minute = 60;
 	$hour = $minute * 60;
@@ -376,10 +376,10 @@ function elgg_get_friendly_time($time, $current_time = null) {
 		$diff = 1;
 	}
 	
-	$future = ((int)$current_time - (int)$time < 0) ? ':future' : '';
+	$future = ((int) $current_time - (int) $time < 0) ? ':future' : '';
 	$singular = ($diff == 1) ? ':singular' : '';
 
-	return elgg_echo("friendlytime{$future}{$granularity}{$singular}", array($diff));
+	return elgg_echo("friendlytime{$future}{$granularity}{$singular}", [$diff]);
 }
 
 /**
@@ -479,14 +479,14 @@ function elgg_strip_tags($string, $allowable_tags = null) {
  */
 function elgg_html_decode($string) {
 	$string = str_replace(
-		array('&gt;', '&lt;', '&amp;', '&quot;', '&#039;'),
-		array('&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'),
+		['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
+		['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],
 		$string
 	);
 	$string = html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
 	$string = str_replace(
-		array('&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'),
-		array('&gt;', '&lt;', '&amp;', '&quot;', '&#039;'),
+		['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],
+		['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
 		$string
 	);
 	return $string;

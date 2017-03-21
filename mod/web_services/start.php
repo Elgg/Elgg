@@ -29,10 +29,10 @@ function ws_init() {
 	elgg_ws_expose_function(
 		"auth.gettoken",
 		"auth_gettoken",
-		array(
-			'username' => array ('type' => 'string'),
-			'password' => array ('type' => 'string'),
-		),
+		[
+			'username' =>  ['type' => 'string'],
+			'password' =>  ['type' => 'string'],
+		],
 		elgg_echo('auth.gettoken'),
 		'POST',
 		false,
@@ -46,7 +46,7 @@ function ws_init() {
 
 /**
  * Handle a web service request
- * 
+ *
  * Handles requests of format: http://site/services/api/handler/response_format/request
  * The first element after 'services/api/' is the service handler name as
  * registered by {@link register_service_handler()}.
@@ -57,7 +57,7 @@ function ws_init() {
  * function registered by {@link register_service_handler()}.
  *
  * If a service handler isn't found, a 404 header is sent.
- * 
+ *
  * @param array $segments URL segments
  * @return bool
  */
@@ -98,11 +98,11 @@ function ws_page_handler($segments) {
  *  )
  */
 global $API_METHODS;
-$API_METHODS = array();
+$API_METHODS = [];
 
 /** Define a global array of errors */
 global $ERRORS;
-$ERRORS = array();
+$ERRORS = [];
 
 /**
  * Expose a function as a web service.
@@ -158,28 +158,28 @@ function elgg_ws_expose_function(
 	}
 
 	// does not check whether this method has already been exposed - good idea?
-	$API_METHODS[$method] = array();
+	$API_METHODS[$method] = [];
 
 	$API_METHODS[$method]["description"] = $description;
 
 	// does not check whether callable - done in execute_method()
 	$API_METHODS[$method]["function"] = $function;
 
-	if ($parameters != NULL) {
+	if ($parameters != null) {
 		if (!is_array($parameters)) {
-			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', [$method]);
 			throw new InvalidParameterException($msg);
 		}
 
 		// catch common mistake of not setting up param array correctly
 		$first = current($parameters);
 		if (!is_array($first)) {
-			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', [$method]);
 			throw new InvalidParameterException($msg);
 		}
 	}
 
-	if ($parameters != NULL) {
+	if ($parameters != null) {
 		// ensure the required flag is set correctly in default case for each parameter
 		foreach ($parameters as $key => $value) {
 			// check if 'required' was specified - if not, make it true
@@ -201,7 +201,7 @@ function elgg_ws_expose_function(
 			break;
 		default :
 			$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod',
-			array($call_method, $method));
+			[$call_method, $method]);
 
 			throw new InvalidParameterException($msg);
 	}
@@ -210,7 +210,7 @@ function elgg_ws_expose_function(
 
 	$API_METHODS[$method]["require_user_auth"] = $require_user_auth;
 
-	$API_METHODS[$method]["assoc"] = (bool)$assoc;
+	$API_METHODS[$method]["assoc"] = (bool) $assoc;
 
 	return true;
 }
@@ -256,7 +256,7 @@ function elgg_ws_register_service_handler($handler, $function) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->servicehandler)) {
-		$CONFIG->servicehandler = array();
+		$CONFIG->servicehandler = [];
 	}
 	if (is_callable($function, true)) {
 		$CONFIG->servicehandler[$handler] = $function;
@@ -343,7 +343,7 @@ function ws_rest_handler() {
 	}
 
 	// Output the result
-	echo elgg_view_page($method, elgg_view("api/output", array("result" => $result)));
+	echo elgg_view_page($method, elgg_view("api/output", ["result" => $result]));
 }
 
 /**
@@ -366,7 +366,7 @@ function ws_unit_test($hook, $type, $value, $params) {
 
 /**
  * Filters system API list to remove PHP internal function names
- * 
+ *
  * @param string $hook   "rest:output"
  * @param string $type   "system.api.list"
  * @param array  $return API list
@@ -376,7 +376,7 @@ function ws_unit_test($hook, $type, $value, $params) {
 function ws_system_api_list_hook($hook, $type, $return, $params) {
 
 	if (!empty($return) && is_array($return)) {
-		foreach($return as $method => $settings) {
+		foreach ($return as $method => $settings) {
 			unset($return[$method]['function']);
 		}
 	}

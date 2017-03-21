@@ -8,7 +8,7 @@
 $enabled = false;
 
 // none of the following may be empty
-$params = array(
+$params = [
 	// database parameters
 	'dbuser' => '',
 	'dbpassword' => '',
@@ -25,7 +25,7 @@ $params = array(
 	'email' => '',
 	'username' => '',
 	'password' => '',
-);
+];
 
 
 // Do not edit below this line. //////////////////////////////
@@ -47,7 +47,7 @@ require_once __DIR__ . "/../../autoloader.php";
 $installer = new ElggInstaller();
 
 // install and create the .htaccess file
-$installer->batchInstall($params, TRUE);
+$installer->batchInstall($params, true);
 
 // at this point installation has completed (otherwise an exception halted execution).
 // try to rewrite the script to disable it.

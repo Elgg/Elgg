@@ -93,7 +93,7 @@ function log_browser_delete_log($time_of_delete) {
 	$results = get_data("SHOW TABLES like '{$dbprefix}system_log_%'");
 	if ($results) {
 		foreach ($results as $result) {
-			$data = (array)$result;
+			$data = (array) $result;
 			$table_name = array_shift($data);
 			// extract log table rotation time
 			$log_time = str_replace("{$dbprefix}system_log_", '', $table_name);

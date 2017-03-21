@@ -12,9 +12,9 @@ elgg_load_css('maintenance');
 
 elgg_set_http_header("HTTP/1.1 503 Service Unavailable");
 
-$body = elgg_view_layout('maintenance', array(
+$body = elgg_view_layout('maintenance', [
 	'message' => $message,
 	'site' => $site,
-));
+]);
 
 echo elgg_view_page($site->name, $body, 'maintenance');

@@ -16,3 +16,4 @@ define(function (require) {
 		elgg.register_error('Elgg Error Message');
 	});
 });
+

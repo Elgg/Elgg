@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Blogit',
 	'blog:blogs' => 'Blogit',
 	'blog:revisions' => 'Versiot',
@@ -63,4 +63,4 @@ Voit lukea blogikirjoituksen täällä:
 	'blog:moreblogs' => 'Lisää blogiviestejä',
 	'blog:numbertodisplay' => 'Näytettävien kohteiden määrä',
 	'blog:noblogs' => 'Ei blogiviestejä'
-);
+];

@@ -10,9 +10,9 @@ $guid = $vars['entity']->guid;
 
 // display the number of likes
 if ($num_of_likes == 1) {
-	$likes_string = elgg_echo('likes:userlikedthis', array($num_of_likes));
+	$likes_string = elgg_echo('likes:userlikedthis', [$num_of_likes]);
 } else {
-	$likes_string = elgg_echo('likes:userslikedthis', array($num_of_likes));
+	$likes_string = elgg_echo('likes:userslikedthis', [$num_of_likes]);
 }
 
 $class = 'elgg-lightbox elgg-non-link';
@@ -20,7 +20,7 @@ if (!$num_of_likes) {
 	$class .= ' hidden';
 }
 
-$params = array(
+$params = [
 	'text' => $likes_string,
 	'title' => elgg_echo('likes:see'),
 	'class' => $class,
@@ -30,5 +30,5 @@ $params = array(
 		'maxHeight' => '85%',
 		'href' => elgg_normalize_url("ajax/view/likes/popup?guid=$guid")
 	]),
-);
+];
 echo elgg_view('output/url', $params);

@@ -12,30 +12,30 @@
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
 
-$menu = elgg_view_menu('river', array(
+$menu = elgg_view_menu('river', [
 	'item' => $item,
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
-));
+]);
 
 // river item header
 $timestamp = elgg_view_friendly_time($item->getTimePosted());
 
 $summary = elgg_extract('summary', $vars);
 if ($summary === null) {
-	$summary = elgg_view('river/elements/summary', array(
+	$summary = elgg_view('river/elements/summary', [
 		'item' => $vars['item'],
-	));
+	]);
 }
 
 if ($summary === false) {
 	$subject = $item->getSubjectEntity();
-	$summary = elgg_view('output/url', array(
+	$summary = elgg_view('output/url', [
 		'href' => $subject->getURL(),
 		'text' => $subject->name,
 		'class' => 'elgg-river-subject',
 		'is_trusted' => true,
-	));
+	]);
 }
 
 $message = elgg_extract('message', $vars);
@@ -57,12 +57,12 @@ $group_string = '';
 $object = $item->getObjectEntity();
 $container = $object->getContainerEntity();
 if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
-	$group_link = elgg_view('output/url', array(
+	$group_link = elgg_view('output/url', [
 		'href' => $container->getURL(),
 		'text' => $container->name,
 		'is_trusted' => true,
-	));
-	$group_string = elgg_echo('river:ingroup', array($group_link));
+	]);
+	$group_string = elgg_echo('river:ingroup', [$group_link]);
 }
 
 echo <<<RIVER

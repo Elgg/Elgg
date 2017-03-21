@@ -1,7 +1,7 @@
 <?php
 /**
  * Message for non-members on closed membership group profile pages.
- * 
+ *
  * @package ElggGroups
  */
 

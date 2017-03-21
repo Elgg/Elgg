@@ -12,8 +12,8 @@ $content .= elgg_view_layout('widgets', [
 	'owner_guid' => $user->guid,
 ]);
 
-$body = elgg_view_layout('one_column', array(
+$body = elgg_view_layout('one_column', [
 	'content' => $content,
 	'title' => $user->getDisplayName(),
-));
+]);
 echo elgg_view_page($user->name, $body);

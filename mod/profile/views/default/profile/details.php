@@ -20,9 +20,8 @@ $profile_fields = elgg_get_config('profile_fields');
 
 $fields_output = '';
 if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
-	
 	// move description to the bottom of the list
-	if(isset($profile_fields['description'])) {
+	if (isset($profile_fields['description'])) {
 		$temp = $profile_fields['description'];
 		unset($profile_fields['description']);
 		$profile_fields['description'] = $temp;
@@ -32,7 +31,6 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 		$value = $user->$shortname;
 
 		if (!is_null($value)) {
-
 			// fix profile URLs populated by https://github.com/Elgg/Elgg/issues/5232
 			// @todo Replace with upgrade script, only need to alter users with last_update after 1.8.13
 			if ($valtype == 'url' && $value == 'http://') {

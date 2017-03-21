@@ -25,7 +25,7 @@ class WidgetsService {
 	 * @see \Elgg\WidgetsService::getWidgets()
 	 * @var array
 	 */
-	private $widgetCache = array();
+	private $widgetCache = [];
 
 	/**
 	 * @see elgg_get_widgets
@@ -39,25 +39,25 @@ class WidgetsService {
 			return $this->widgetCache[$widget_cache_key];
 		}
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => $owner_guid,
 			'private_setting_name' => 'context',
 			'private_setting_value' => $context,
 			'limit' => 0,
-		);
+		];
 		$widgets = elgg_get_entities_from_private_settings($options);
 		if (!$widgets) {
-			return array();
+			return [];
 		}
 
-		$sorted_widgets = array();
+		$sorted_widgets = [];
 		foreach ($widgets as $widget) {
-			if (!isset($sorted_widgets[(int)$widget->column])) {
-				$sorted_widgets[(int)$widget->column] = array();
+			if (!isset($sorted_widgets[(int) $widget->column])) {
+				$sorted_widgets[(int) $widget->column] = [];
 			}
-			$sorted_widgets[(int)$widget->column][$widget->order] = $widget;
+			$sorted_widgets[(int) $widget->column][$widget->order] = $widget;
 		}
 
 		foreach ($sorted_widgets as $col => $widgets) {
@@ -125,11 +125,11 @@ class WidgetsService {
 			$return = false;
 		}
 
-		$params = array(
+		$params = [
 			'user' => $user,
 			'context' => $context,
 			'page_owner' => elgg_get_page_owner_entity(),
-		);
+		];
 		return _elgg_services()->hooks->trigger('permissions_check', 'widget_layout', $params, $return);
 	}
 

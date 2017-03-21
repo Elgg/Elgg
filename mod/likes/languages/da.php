@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'synes godt om dette',
 	'likes:deleted' => 'Din tilkendegivelse "synes godt om" er blevet fjernet',
 	'likes:see' => 'Se hvem der synes godt om dette',
@@ -36,4 +36,4 @@ Thanks,
 %4$s
 ',
 	
-);
+];

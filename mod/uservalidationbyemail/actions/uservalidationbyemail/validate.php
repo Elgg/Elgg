@@ -7,7 +7,7 @@
  */
 
 $user_guids = get_input('user_guids');
-$error = FALSE;
+$error = false;
 
 if (!$user_guids) {
 	register_error(elgg_echo('uservalidationbyemail:errors:unknown_users'));
@@ -15,21 +15,21 @@ if (!$user_guids) {
 }
 
 $access = access_get_show_hidden_status();
-access_show_hidden_entities(TRUE);
+access_show_hidden_entities(true);
 
 foreach ($user_guids as $guid) {
 	$user = get_entity($guid);
 	if (!$user instanceof ElggUser) {
-		$error = TRUE;
+		$error = true;
 		continue;
 	}
 
 	// only validate if not validated
 	$is_validated = elgg_get_user_validation_status($guid);
-	$validate_success = elgg_set_user_validation_status($guid, TRUE, 'manual');
+	$validate_success = elgg_set_user_validation_status($guid, true, 'manual');
 
-	if ($is_validated !== FALSE || !($validate_success && $user->enable())) {
-		$error = TRUE;
+	if ($is_validated !== false || !($validate_success && $user->enable())) {
+		$error = true;
 		continue;
 	}
 }

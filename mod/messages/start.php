@@ -16,19 +16,19 @@ function messages_init() {
 
 	// add page menu items
 	if (elgg_is_logged_in()) {
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item('page', [
 			'name' => 'messages:inbox',
 			'text' => elgg_echo('messages:inbox'),
 			'href' => "messages/inbox/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));
+		]);
 		
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item('page', [
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
 			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));
+		]);
 	}
 
 	// Extend system CSS with our own styles, which are defined in the messages/css view
@@ -141,7 +141,7 @@ function messages_register_topbar($hook, $type, $items, $params) {
 
 	$num_messages = (int) messages_count_unread();
 	if ($num_messages) {
-		$title .= " (" . elgg_echo("messages:unreadcount", array($num_messages)) . ")";
+		$title .= " (" . elgg_echo("messages:unreadcount", [$num_messages]) . ")";
 	}
 
 	$items[] = ElggMenuItem::factory([
@@ -311,14 +311,14 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
 		
-		$subject = elgg_echo('messages:email:subject', array(), $recipient->language);
-		$body = elgg_echo('messages:email:body', array(
+		$subject = elgg_echo('messages:email:subject', [], $recipient->language);
+		$body = elgg_echo('messages:email:body', [
 				$sender->name,
 				$message_contents,
 				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
 				$sender->name,
 				elgg_get_site_url() . "messages/compose?send_to=" . $sender_guid
-			),
+			],
 			$recipient->language
 		);
 
@@ -429,13 +429,13 @@ function messages_purge($event, $type, $user) {
 	access_show_hidden_entities(true);
 	$ia = elgg_set_ignore_access(true);
 
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'messages',
 		'metadata_name' => 'fromId',
 		'metadata_value' => $user->getGUID(),
 		'limit' => 0,
-	);
+	];
 	$batch = new ElggBatch('elgg_get_entities_from_metadata', $options);
 	foreach ($batch as $e) {
 		$e->delete();

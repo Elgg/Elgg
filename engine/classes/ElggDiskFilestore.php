@@ -294,7 +294,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @return array
 	 */
 	public function getParameters() {
-		return array("dir_root" => $this->dir_root);
+		return ["dir_root" => $this->dir_root];
 	}
 
 	/**

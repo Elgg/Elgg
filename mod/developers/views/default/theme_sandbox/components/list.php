@@ -21,4 +21,4 @@ $obj4 = new ThemeSandboxObject();
 $obj4->title = "Object 4";
 $obj4->description = $ipsum;
 
-echo elgg_view('page/components/list', array('items' => array($obj1, $obj2, $obj3, $obj4)));
+echo elgg_view('page/components/list', ['items' => [$obj1, $obj2, $obj3, $obj4]]);

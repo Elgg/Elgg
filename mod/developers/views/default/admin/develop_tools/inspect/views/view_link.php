@@ -10,12 +10,12 @@ $href = "admin/develop_tools/inspect?inspect_type=Views#{$id}";
 
 if (get_input('inspect_type')) {
 	// don't lose the viewtype
-	$href = elgg_http_add_url_query_elements($href, array(
+	$href = elgg_http_add_url_query_elements($href, [
 		'type' => get_input('type')
-	));
+	]);
 }
 
-echo elgg_view('output/url', array(
+echo elgg_view('output/url', [
 	'href' => $href,
 	'text' => $text,
-));
+]);

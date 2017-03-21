@@ -6,32 +6,32 @@
 $filler = "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\n";
 
 // build list of units (denominators are keys, values are arrays of nominators)
-$units = array(1 => array(1),);
+$units = [1 => [1],];
 
 // keep map to avoid duplicates. keys are rounded to thousands (avoid float issues)
-$percentages = array(
-	'100' => array(1, 1),
-);
+$percentages = [
+	'100' => [1, 1],
+];
 
 for ($den = 2; $den <= 6; $den++) {
 	for ($num = 1; $num < $den; $num++) {
 		// avoid duplicates
-		$rounded_percentage = (string)round($num / $den, 3);
+		$rounded_percentage = (string) round($num / $den, 3);
 		if ($num > 1 && isset($percentages[$rounded_percentage])) {
 			continue;
 		}
-		$percentages[$rounded_percentage] = array($num, $den);
+		$percentages[$rounded_percentage] = [$num, $den];
 		$units[$den][] = $num;
 	}
 }
 
 // build rows
-$rows = array();
+$rows = [];
 $total = 0;
 for ($den = 1; $den <= count($units); $den++) {
 	// may take multiple rows to use up available units
 	while ($units[$den]) {
-		$row = array();
+		$row = [];
 		$nom = array_shift($units[$den]);
 		$row[] = "$nom/$den";
 		$total += $nom;
@@ -53,9 +53,9 @@ for ($den = 1; $den <= count($units); $den++) {
 
 <div class="theme-sandbox-grid-demo">
 	<h3 class="theme-sandbox-section-heading">6 Column Grid</h3>
-<?php foreach ($rows as $row): ?>
+<?php foreach ($rows as $row) : ?>
 <div class="elgg-grid theme-sandbox-grid-demo-solid">
-	<?php foreach ($row as $col):
+	<?php foreach ($row as $col) :
 		$class = "elgg-col elgg-col-" . str_replace('/', 'of', $col);
 		$text = str_replace(' ', '<br/>', $class);
 	?>

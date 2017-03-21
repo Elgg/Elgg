@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Instalação do Elgg',
 	'install:welcome' => 'Bem-vindo',
 	'install:requirements' => 'Verificando requisitos',
@@ -153,8 +153,8 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:error:rewrite:altserver' => 'O teste com as regras de redirecionamento (rewrite rules) falhou. Voce precisa configurar seu servidor web com as regras de escrita do Elgg e tentar novamente.',
 	'install:error:rewrite:unknown' => 'Não foi possivel identificar qual o tipo de servidor web esta funcionando no seu servidor e ocorreu uma falha com as regras de redirecionamento (rewrite rules).  Não nos é possivel fornecer qualquer tipo de conselho. Por favor verifique o link de solução de problemas <i>(troubleshooting link)</i>.',
 	'install:warning:rewrite:unknown' => 'Seu servidor nao suporta testes automaticos das regras de redirecionamento (rewrite rules). Você pode continuar a instalação.  Contudo voce pode ter problemas com seu site. Voce pode realizar os testes manualmente com as regras de escrita clicando neste link: <a href="%s" target="_blank">teste</a>. Voce visualizará a palavra SUCESSO se as regras estiverem funcionando.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Um erro irrecuperavel ocorreu e foi registrado. se voce for o administrador do site verifique seus arquivos de configuracoes, ou entre em contato com o administrador do site com as seguintes informacoes:',
 	'DatabaseException:WrongCredentials' => "Elgg nao pode se conectar ao banco de dados usando as credenciais informadas.  Verifique seu arquivo de configuracoes.",
-);
+];

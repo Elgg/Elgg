@@ -5,6 +5,6 @@
 
 $type = get_input('type', 'about');
 
-echo elgg_view('expages/menu', array('type' => $type));
+echo elgg_view('expages/menu', ['type' => $type]);
 
-echo elgg_view_form('expages/edit', array('class' => 'elgg-form-settings'), array('type' => $type));
+echo elgg_view_form('expages/edit', ['class' => 'elgg-form-settings'], ['type' => $type]);

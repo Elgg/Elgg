@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Blogi',
 	'blog:blogs' => 'Blogi',
 	'blog:revisions' => 'Wersje',
@@ -63,4 +63,4 @@ Zobacz i skomentuj nowy wpis na blogu:
 	'blog:moreblogs' => 'Więcej wpisów na blogu',
 	'blog:numbertodisplay' => 'Ilość wyświetlanych wpisów',
 	'blog:noblogs' => 'Brak wpisów na blogu'
-);
+];

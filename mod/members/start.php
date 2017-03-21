@@ -18,7 +18,7 @@ function members_init() {
 	$item = new ElggMenuItem('members', elgg_echo('members'), 'members');
 	elgg_register_menu_item('site', $item);
 
-	$list_types = array('newest', 'alpha', 'popular', 'online');
+	$list_types = ['newest', 'alpha', 'popular', 'online'];
 
 	foreach ($list_types as $type) {
 		elgg_register_plugin_hook_handler('members:list', $type, "members_list_$type");
@@ -111,10 +111,10 @@ function members_list_alpha($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function members_nav_popular($hook, $type, $returnvalue, $params) {
-	$returnvalue['popular'] = array(
+	$returnvalue['popular'] = [
 		'title' => elgg_echo('sort:popular'),
 		'url' => "members/popular",
-	);
+	];
 	return $returnvalue;
 }
 
@@ -128,10 +128,10 @@ function members_nav_popular($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function members_nav_newest($hook, $type, $returnvalue, $params) {
-	$returnvalue['newest'] = array(
+	$returnvalue['newest'] = [
 		'title' => elgg_echo('sort:newest'),
 		'url' => "members/newest",
-	);
+	];
 	return $returnvalue;
 }
 
@@ -145,10 +145,10 @@ function members_nav_newest($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function members_nav_online($hook, $type, $returnvalue, $params) {
-	$returnvalue['online'] = array(
+	$returnvalue['online'] = [
 		'title' => elgg_echo('members:label:online'),
 		'url' => "members/online",
-	);
+	];
 	return $returnvalue;
 }
 
@@ -162,10 +162,10 @@ function members_nav_online($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function members_nav_alpha($hook, $type, $returnvalue, $params) {
-	$returnvalue['alpha'] = array(
+	$returnvalue['alpha'] = [
 		'title' => elgg_echo('sort:alpha'),
 		'url' => "members/alpha",
-	);
+	];
 	return $returnvalue;
 }
 

@@ -9,7 +9,7 @@ namespace Elgg;
  * output could be different for those two contexts ('blog' vs 'widget').
  *
  * Pages that pass through the page handling system set the context to the
- * first string after the root url. Example: http://example.org/elgg/bookmarks/ 
+ * first string after the root url. Example: http://example.org/elgg/bookmarks/
  * results in the initial context being set to 'bookmarks'.
  *
  * The context is a stack so that for a widget on a profile, the context stack
@@ -23,7 +23,7 @@ namespace Elgg;
  */
 final class Context {
 	
-	private $stack = array();
+	private $stack = [];
 	
 	/**
 	 * Get the most recently pushed context value.

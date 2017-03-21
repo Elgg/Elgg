@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => '赞这个',
 	'likes:deleted' => '你的点赞已经移除',
 	'likes:see' => '看看谁赞过这个',
@@ -35,4 +35,4 @@ return array(
 多谢，
 %4$s',
 	
-);
+];

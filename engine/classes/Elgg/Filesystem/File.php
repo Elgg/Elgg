@@ -3,9 +3,9 @@ namespace Elgg\Filesystem;
 
 /**
  * Represents a file that may or may not actually exist.
- * 
+ *
  * @since 1.10.0
- * 
+ *
  * @access private
  */
 class File {
@@ -18,7 +18,7 @@ class File {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Directory $directory The directory where this file resides
 	 * @param string    $path      The path to this file relative to the directory
 	 */
@@ -43,7 +43,7 @@ class File {
 	
 	/**
 	 * Get the text content of this file. Empty string if it doesn't exist.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getContents() {
@@ -76,9 +76,9 @@ class File {
 	
 	/**
 	 * Do a PHP include of the file and return the result.
-	 * 
+	 *
 	 * TODO(ewinslow): This may only work for local filesystems?
-	 * 
+	 *
 	 * @return mixed
 	 */
 	public function includeFile() {

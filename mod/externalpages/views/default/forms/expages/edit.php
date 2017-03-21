@@ -1,19 +1,19 @@
 <?php
 /**
  * Edit form body for external pages
- * 
+ *
  * @uses $vars['type']
- * 
+ *
  */
 
 $type = $vars['type'];
 
 //grab the required entity
-$page_contents = elgg_get_entities(array(
+$page_contents = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => $type,
 	'limit' => 1,
-));
+]);
 
 if ($page_contents) {
 	$description = $page_contents[0]->description;
@@ -24,28 +24,28 @@ if ($page_contents) {
 }
 
 // set the required form variables
-$input_area = elgg_view('input/longtext', array(
+$input_area = elgg_view('input/longtext', [
 	'name' => 'expagescontent',
 	'value' => $description,
-));
-$submit_input = elgg_view('input/submit', array(
+]);
+$submit_input = elgg_view('input/submit', [
 	'name' => 'submit',
 	'value' => elgg_echo('save'),
-));
-$view_page = elgg_view('output/url', array(
+]);
+$view_page = elgg_view('output/url', [
 	'text' => elgg_echo('expages:edit:viewpage'),
 	'href' => $type,
 	'target' => '_blank',
 	'class' => 'elgg-button elgg-button-action float-alt',
-));
-$hidden_type = elgg_view('input/hidden', array(
+]);
+$hidden_type = elgg_view('input/hidden', [
 	'name' => 'content_type',
 	'value' => $type,
-));
-$hidden_guid = elgg_view('input/hidden', array(
+]);
+$hidden_guid = elgg_view('input/hidden', [
 	'name' => 'guid',
 	'value' => $guid,
-));
+]);
 
 $external_page_title = elgg_echo("expages:$type");
 

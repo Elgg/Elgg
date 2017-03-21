@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg 安裝',
 	'install:welcome' => '歡迎',
 	'install:requirements' => '需求檢查',
@@ -153,8 +153,8 @@ return array(
 	'install:error:rewrite:altserver' => '改寫規則測試失敗。您需要組配網頁伺服器與 Elgg 的改寫規則並再次嘗試。',
 	'install:error:rewrite:unknown' => '哎呀，我們無法認出在主機中運行什麼樣的網頁伺服器，而它的改寫規則失敗。我們無法提供任何特定的建言。請看看疑難排解鏈結。',
 	'install:warning:rewrite:unknown' => '您的伺服器不支援自動的改寫規則測試，而您的瀏覽器不支援經由 JavaScript 的檢查。您可以繼續進行安裝，但是也許會遇到一些站臺問題。您可以藉由按下這個鏈結，來手動<a href="%s" target="_blank ">測試</a>改寫規則。如果規則發生作用，您將會看到成功的字樣。',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => '發生了無法回復的錯誤，並且已經記錄下來。如果您是站臺管理者，請檢查您的設定檔案；否則請聯絡站臺管理者，並附上以下資訊：',
 	'DatabaseException:WrongCredentials' => "Elgg 無法利用給定的憑據與資料庫連線。請檢查設定檔案。",
-);
+];

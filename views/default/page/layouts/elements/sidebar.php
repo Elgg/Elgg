@@ -2,7 +2,7 @@
 
 /**
  * Layout sidebar
- * 
+ *
  * @uses $vars['sidebar'] Sidebar view
  */
 

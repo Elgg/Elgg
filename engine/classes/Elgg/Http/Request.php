@@ -24,7 +24,7 @@ class Request extends SymfonyRequest {
 			$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
 		}
 		if (!$path) {
-			return array();
+			return [];
 		}
 
 		return explode('/', $path);

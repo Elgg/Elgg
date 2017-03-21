@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'Notificaciones del Sitio',
 	'notification:method:site' => 'Sitio',
 	'site_notifications:topbar' => 'Notificaciones',
@@ -11,4 +11,4 @@ return array(
 	'site_notifications:toggle_all' => 'Activar/desactivar todos',
 	'site_notifications:error:notifications_not_selected' => 'No hay notificaciones selecionadas.',
 	'site_notifications:success:delete' => 'Notificaciones eliminadas.'
-);
+];

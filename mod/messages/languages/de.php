@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	/**
 	* Menu items and titles
 	*/
@@ -81,4 +81,4 @@ Du kannst auf diese Email NICHT antworten.",
 
 	'messages:deleted_sender' => 'Ehemaliges Mitglied',
 
-);
+];

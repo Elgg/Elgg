@@ -27,7 +27,7 @@ $attr = [
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);
 
-$content = elgg_list_entities(array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'comment',
 	'container_guid' => $vars['entity']->guid,
@@ -37,10 +37,10 @@ $content = elgg_list_entities(array(
 	'preload_owners' => true,
 	'distinct' => false,
 	'url_fragment' => $attr['id'],
-));
+]);
 
 if ($show_add_form) {
-	$content .= elgg_view_form('comment/save', array(), $vars);
+	$content .= elgg_view_form('comment/save', [], $vars);
 }
 
 echo elgg_format_element('div', $attr, $content);

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'システムログを保管する頻度',
 
 	'logrotate:logrotated' => "ログをローテートしました\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "ログを削除しました\n",
 	'logrotate:lognotdeleted' => "削除したログはありません\n",
-);
+];

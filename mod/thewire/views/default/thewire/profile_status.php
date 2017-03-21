@@ -8,12 +8,12 @@
 $owner = $vars['entity']->guid;
 
 //grab the user's latest from the wire
-$params = array(
+$params = [
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'owner_guid' => $owner,
 	'limit' => 1,
-);
+];
 $latest_wire = elgg_get_entities($params);
 
 if ($latest_wire && count($latest_wire) > 0) {
@@ -24,21 +24,20 @@ if ($latest_wire && count($latest_wire) > 0) {
 	$button = '';
 	if ($owner == elgg_get_logged_in_user_guid()) {
 		$url_to_wire = "thewire/owner/" . $vars['entity']->username;
-		$button = elgg_view('output/url', array(
+		$button = elgg_view('output/url', [
 			'text' => elgg_echo('update'),
 			'href' => $url_to_wire,
 			'class' => 'elgg-button elgg-button-action float-alt',
 			'is_trusted' => true,
-		));
+		]);
 	}
 
 	$body = $content . $time;
-	$content = elgg_view_image_block('', $body, array('image_alt' => $button));
+	$content = elgg_view_image_block('', $body, ['image_alt' => $button]);
 
 	echo <<< HTML
 <div class="wire-status elgg-border-plain pam mbm clearfix">
 	$content
 </div>
 HTML;
-
 }

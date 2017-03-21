@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => 'Visualiseur de journal',
 	'logbrowser' => 'Visualiseur de journal',
 	'logbrowser:browse' => 'Visualiser les journaux système',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => 'Type d\'objet',
 	'logbrowser:object:guid' => 'GUID de l\'objet',
 	'logbrowser:action' => 'Action',
-);
+];

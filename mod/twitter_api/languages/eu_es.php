@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'twitter_api' => 'Twitter Zerbitzuak',
 
 	'twitter_api:requires_oauth' => 'Twitter Zerbitzuak OAuth Liburutegi plugina behar du gaitu ahal izateko.',
@@ -53,4 +53,4 @@ return array(
 	'twitter_api:interstitial:password_mismatch' => 'Zure pasahitzak ez datoz bat.',
 	'twitter_api:interstitial:cannot_save' => 'Ezin dira kontuko xehetasunak gorde.',
 	'twitter_api:interstitial:saved' => 'Kontuko xehetasunak  gorde dira!',
-);
+];

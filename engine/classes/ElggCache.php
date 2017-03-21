@@ -18,7 +18,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 * Set the constructor.
 	 */
 	public function __construct() {
-		$this->variables = array();
+		$this->variables = [];
 	}
 
 	/**
@@ -31,7 +31,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 */
 	public function setVariable($variable, $value) {
 		if (!is_array($this->variables)) {
-			$this->variables = array();
+			$this->variables = [];
 		}
 
 		$this->variables[$variable] = $value;
@@ -83,7 +83,7 @@ abstract class ElggCache implements \ArrayAccess {
 	 * @return bool
 	 */
 	public function __isset($key) {
-		return (bool)$this->load($key);
+		return (bool) $this->load($key);
 	}
 
 	/**

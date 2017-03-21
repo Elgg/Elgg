@@ -15,11 +15,11 @@ if (!$form_body) {
 
 $additional_class = preg_replace('/[^a-z0-9-]/i', '-', "elgg-form-widgets-save-{$widget->handler}");
 
-$form = elgg_view('input/form', array(
+$form = elgg_view('input/form', [
 	'action' => 'action/widgets/save',
 	'body' => $form_body,
 	'class' => "elgg-form-widgets-save $additional_class",
-));
+]);
 ?>
 
 <div class="elgg-widget-edit" id="widget-edit-<?php echo $widget->guid; ?>">

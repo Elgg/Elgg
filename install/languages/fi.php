@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elggin asennus',
 	'install:welcome' => 'Tervetuloa',
 	'install:requirements' => 'Vaatimusten tarkistaminen',
@@ -153,8 +153,8 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:error:rewrite:altserver' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Sinun pitää konfiguroida palvelimellesi Elggin vaatimat uudelleenohjaukseen liittyvät säännöt.',
 	'install:error:rewrite:unknown' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Emme saaneet selvitettyä käyttämääsi web-palvelinta, joten emme pysty tarjoamaan ratkaisua ongelmaan. Voit yrittää etsiä apua sivun alalaidasta löytyvien linkkien kautta.',
 	'install:warning:rewrite:unknown' => 'Palvelimesi ei tue polkujen uudelleenohjaamisen automaattista testaamista, ja selaimesi ei tue sen testaamista JavaScriptin avulla. You can continue the installation, but you may experience problems with your site. Voit testata uudelleenohjausta tästä linkistä: <a href="%s" target="_blank">Testaa</a>.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Tapahtui virhe. Jos olet sivuston ylläpitäjä, tarkista asetustiedosto. Muussa tapauksessa ota yhteys sivuston ylläpitoon, ja toimita oheiset tiedot:',
 	'DatabaseException:WrongCredentials' => "Elgg ei saanut yhteyttä tietokantaan. Tarkista asetustiedosto.",
-);
+];

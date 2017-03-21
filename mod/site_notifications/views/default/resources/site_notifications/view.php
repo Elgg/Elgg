@@ -17,25 +17,25 @@ elgg_push_breadcrumb($page_owner->name);
 
 $title = elgg_echo('site_notifications');
 
-$list = elgg_list_entities_from_metadata(array(
+$list = elgg_list_entities_from_metadata([
 	'type' => 'object',
 	'subtype' => 'site_notification',
 	'owner_guid' => $page_owner->guid,
 	'full_view' => false,
 	'metadata_name' => 'read',
 	'metadata_value' => false,
-));
+]);
 
-$body_vars = array(
+$body_vars = [
 	'list' => $list
-);
+];
 
-$form = elgg_view_form("site_notifications/process", array(), $body_vars);
+$form = elgg_view_form("site_notifications/process", [], $body_vars);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'content' => $form,
 	'title' => $title,
 	'filter' => '',
-));
+]);
 
 echo elgg_view_page($title, $body);

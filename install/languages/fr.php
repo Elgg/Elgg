@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Installation d\'Elgg',
 	'install:welcome' => 'Bienvenue',
 	'install:requirements' => 'Vérification des pré-requis',
@@ -154,8 +154,8 @@ Une cause moins probable est qu'Apache est configuré avec un alias pour votre r
 	'install:error:rewrite:altserver' => 'Le test des règles de réécriture a échoué. Vous devez configurer votre serveur web avec les règles de réécriture d\'Elgg et réessayer.',
 	'install:error:rewrite:unknown' => 'Euh... Nous ne pouvons pas comprendre quel type de serveur Web est utilisé sur votre serveur et cela a fait échouer la mise en place des règles de réécriture. Nous ne pouvons pas vous donner de conseil particulier dans ce cas. Veuillez SVP vérifier le lien de dépannage.',
 	'install:warning:rewrite:unknown' => 'Votre serveur ne supporte pas le test automatique des règles de réécriture. Vous pouvez continuer l\'installation, mais il est possible que vous rencontriez des problèmes avec votre site. Vous pouvez tester manuellement les règles de réécriture en cliquant sur ce lien : <a href="%s" target="_blank">test</a>. Vous verrez le mot "succès" si les redirections fonctionnent.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Une erreur irrécupérable s\'est produite et a été enregistrée. Si vous êtes l\'administrateur du site, vérifiez le fichier de configuration, sinon, veuillez SVP contacter l\'administrateur du site en fournissant les informations suivantes : ',
 	'DatabaseException:WrongCredentials' => "Elgg n'a pas pu se connecter à la base de données en utilisant les données fournies. Vérifiez le fichier de configuration. ",
-);
+];

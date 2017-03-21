@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'twitter_api' => 'Services Twitter',
 
 	'twitter_api:requires_oauth' => 'Les Services Twitter nécessitent l\'activation du plugin des bibliothèques OAuth pour pouvoir être activés.',
@@ -53,4 +53,4 @@ return array(
 	'twitter_api:interstitial:password_mismatch' => 'Vos mots de passe ne correspondent pas.',
 	'twitter_api:interstitial:cannot_save' => 'Impossible d\'enregistrer les informations du compte.',
 	'twitter_api:interstitial:saved' => 'Informations du compte enregistrées !',
-);
+];

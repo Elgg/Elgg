@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  */
 
 $note = get_entity(get_input('guid'));

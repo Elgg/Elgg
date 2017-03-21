@@ -65,7 +65,7 @@ class InstantNotificationEvent implements NotificationEvent {
 	 * @note Note that the actor and the object of the notification event
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getActorGUID() {
@@ -78,7 +78,7 @@ class InstantNotificationEvent implements NotificationEvent {
 	 * @note Note that the actor and the object of the notification event
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
-	 * 
+	 *
 	 * @return ElggData|false|null
 	 */
 	public function getObject() {

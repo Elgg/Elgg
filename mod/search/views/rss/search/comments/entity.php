@@ -19,7 +19,7 @@ if ($author) {
 
 // @todo Sometimes we find comments on entities we can't display...
 if ($entity->getVolatileData('search_unavailable_entity')) {
-	$title = elgg_echo('search:comment_on', array(elgg_echo('search:unavailable_entity')));
+	$title = elgg_echo('search:comment_on', [elgg_echo('search:unavailable_entity')]);
 } else {
 	if ($entity->getType() == 'object') {
 		$title = $entity->title;
@@ -35,7 +35,7 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 		$title = elgg_echo('item:' . $entity->getType());
 	}
 
-	$title = elgg_echo('search:comment_on', array($title));
+	$title = elgg_echo('search:comment_on', [$title]);
 	$title .= ' ' . elgg_echo('search:comment_by') . ' ' . $author_name;
 	$url = $entity->getURL() . '#annotation-' . $comment_data['annotation_id'];
 }

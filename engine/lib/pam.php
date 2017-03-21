@@ -21,7 +21,7 @@
  */
 
 global $_PAM_HANDLERS;
-$_PAM_HANDLERS = array();
+$_PAM_HANDLERS = [];
 
 /**
  * Register a PAM handler.
@@ -44,7 +44,7 @@ function register_pam_handler($handler, $importance = "sufficient", $policy = "u
 
 	// setup array for this type of pam if not already set
 	if (!isset($_PAM_HANDLERS[$policy])) {
-		$_PAM_HANDLERS[$policy] = array();
+		$_PAM_HANDLERS[$policy] = [];
 	}
 
 	// @todo remove requirement that $handle be a global function

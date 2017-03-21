@@ -5,7 +5,7 @@ use Elgg\Structs\Collection;
 
 /**
  * Uses native PHP array to implement the Collection interface.
- * 
+ *
  * @since 1.10
  *
  * @access private
@@ -16,10 +16,10 @@ final class InMemory implements Collection {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param array $items The set of items in the collection
 	 */
-	private function __construct(array $items = array()) {
+	private function __construct(array $items = []) {
 		$this->items = $items;
 	}
 	
@@ -40,7 +40,7 @@ final class InMemory implements Collection {
 	
 	/** @inheritDoc */
 	public function filter(callable $filter) {
-		$results = array();
+		$results = [];
 		
 		foreach ($this->items as $item) {
 			if ($filter($item)) {
@@ -58,7 +58,7 @@ final class InMemory implements Collection {
 	
 	/** @inheritDoc */
 	public function map(callable $mapper) {
-		$results = array();
+		$results = [];
 		foreach ($this->items as $item) {
 			$results[] = $mapper($item);
 		}
@@ -77,14 +77,14 @@ final class InMemory implements Collection {
 	
 	/** @inheritDoc */
 	public function valid() {
-		return key($this->items) !== NULL;
+		return key($this->items) !== null;
 	}
 	
 	/**
 	 * Factory function for converting from an array to a ton of items.
-	 * 
+	 *
 	 * @param array $items The list of objects to include. Generics come later.
-	 * 
+	 *
 	 * @return self
 	 */
 	public static function fromArray(array $items) {

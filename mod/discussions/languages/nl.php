@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'discussion' => 'Discussies',
 	'discussion:add' => 'Nieuw discussieonderwerp',
 	'discussion:latest' => 'Laatste discussies',
@@ -100,4 +100,4 @@ Je kunt de discussie hier bekijken en er op reageren:
 
 	'discussion:reply:edited' => "Je hebt de reactie succesvol bewerkt.",
 	'discussion:reply:error' => "Er was een probleem tijdens het bewerken van de reactie.",
-);
+];

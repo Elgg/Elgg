@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => '이것에 공감합니다',
 	'likes:deleted' => '공감을 제거하였습니다.',
 	'likes:see' => '누가 이것을 공감하는지 봅니다.',
@@ -36,4 +36,4 @@ return array(
 %4$s
 ',
 	
-);
+];

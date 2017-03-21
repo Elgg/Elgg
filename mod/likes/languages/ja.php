@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => '「like」にしました',
 	'likes:deleted' => 'あなたの「like」を削除しました',
 	'likes:see' => '「like」を押した人',
@@ -36,4 +36,4 @@ return array(
 %4$s
 ',
 	
-);
+];

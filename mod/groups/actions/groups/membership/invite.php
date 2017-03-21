@@ -9,7 +9,7 @@ $logged_in_user = elgg_get_logged_in_user_entity();
 
 $user_guids = get_input('user_guid');
 if (!is_array($user_guids)) {
-	$user_guids = array($user_guids);
+	$user_guids = [$user_guids];
 }
 $group_guid = get_input('group_guid');
 $group = get_entity($group_guid);
@@ -36,17 +36,17 @@ if (count($user_guids) > 0 && elgg_instanceof($group, 'group') && $group->canEdi
 
 		$url = elgg_normalize_url("groups/invitations/$user->username");
 
-		$subject = elgg_echo('groups:invite:subject', array(
+		$subject = elgg_echo('groups:invite:subject', [
 			$user->name,
 			$group->name
-		), $user->language);
+		], $user->language);
 
-		$body = elgg_echo('groups:invite:body', array(
+		$body = elgg_echo('groups:invite:body', [
 			$user->name,
 			$logged_in_user->name,
 			$group->name,
 			$url,
-		), $user->language);
+		], $user->language);
 		
 		$params = [
 			'action' => 'invite',

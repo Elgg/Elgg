@@ -4,15 +4,15 @@
  */
 
 // simple cache
-$is_simple_cache_on = (bool)elgg_get_config('simplecache_enabled');
+$is_simple_cache_on = (bool) elgg_get_config('simplecache_enabled');
 $simple_cache_disabled_class = $is_simple_cache_on ? '' : 'elgg-state-disabled';
 
-$params = array(
+$params = [
 	'label' => elgg_echo('installation:simplecache:label'),
 	'name' => 'simplecache_enabled',
 	'checked' => $is_simple_cache_on,
 	'switch' => true,
-);
+];
 
 $simple_cache_warning = '<p class="elgg-text-help">' . elgg_echo('installation:simplecache:description') . '</p>';
 if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
@@ -24,14 +24,14 @@ if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
 $simple_cache_input = elgg_view("input/checkbox", $params);
 
 $cache_symlinked = _elgg_is_cache_symlinked();
-$params = array(
+$params = [
 	'label' => elgg_echo('installation:cache_symlink:label'),
 	'name' => 'cache_symlink_enabled',
 	'checked' => $cache_symlinked,
 	'class' => $simple_cache_disabled_class,
 	'label_class' => $simple_cache_disabled_class,
 	'switch' => true,
-);
+];
 $symlink_warning = '<p class="elgg-text-help">' . elgg_echo('installation:cache_symlink:description') . '</p>';
 if ($cache_symlinked) {
 	$params['class'] = 'elgg-state-disabled';
@@ -48,21 +48,21 @@ $symlink_warning .= elgg_format_element('span', ['class' => 'elgg-text-help'], $
 
 // minify
 $minify_description = elgg_echo('installation:minify:description');
-$minify_js_input = elgg_view("input/checkbox", array(
+$minify_js_input = elgg_view("input/checkbox", [
 	'label' => elgg_echo('installation:minify_js:label'),
 	'name' => 'simplecache_minify_js',
-	'checked' => (bool)elgg_get_config('simplecache_minify_js'),
+	'checked' => (bool) elgg_get_config('simplecache_minify_js'),
 	'label_class' => $simple_cache_disabled_class,
 	'switch' => true,
-));
+]);
 
-$minify_css_input = elgg_view("input/checkbox", array(
+$minify_css_input = elgg_view("input/checkbox", [
 	'label' => elgg_echo('installation:minify_css:label'),
 	'name' => 'simplecache_minify_css',
-	'checked' => (bool)elgg_get_config('simplecache_minify_css'),
+	'checked' => (bool) elgg_get_config('simplecache_minify_css'),
 	'label_class' => $simple_cache_disabled_class,
 	'switch' => true,
-));
+]);
 
 $system_cache_input = elgg_view_field([
 	'#type' => 'checkbox',

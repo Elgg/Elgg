@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Как часто Вы хотите запускать Elgg-мусорщика?',
 
 	'garbagecollector:weekly' => 'Раз в неделю',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Очищаем несвязанные метастроки: ',
-);
+];

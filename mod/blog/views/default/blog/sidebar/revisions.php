@@ -6,7 +6,7 @@
  */
 
 //If editing a post, show the previous revisions and drafts.
-$blog = elgg_extract('entity', $vars, FALSE);
+$blog = elgg_extract('entity', $vars, false);
 
 if (!elgg_instanceof($blog, 'object', 'blog')) {
 	return;
@@ -17,7 +17,7 @@ if (!$blog->canEdit()) {
 }
 
 $owner = $blog->getOwnerEntity();
-$revisions = array();
+$revisions = [];
 
 $auto_save_annotations = $blog->getAnnotations([
 	'annotation_name' => 'blog_auto_save',
@@ -65,11 +65,11 @@ foreach ($revisions as $revision) {
 		$revision_lang = elgg_echo('blog:revision') . " $n";
 	}
 	
-	$load = elgg_view('output/url', array(
+	$load = elgg_view('output/url', [
 		'href' => "$load_base_url/$revision->id",
 		'text' => $revision_lang,
 		'is_trusted' => true,
-	));
+	]);
 
 	$revisions_list .= elgg_format_element('li', ['class' => 'auto-saved'], "$load: $time");
 	

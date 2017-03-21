@@ -5,7 +5,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Core
- * 
+ *
  * @property-read int    $id            The unique identifier (read-only)
  * @property-read int    $subject_guid  The GUID of the actor
  * @property-read int    $object_guid   The GUID of the object
@@ -44,10 +44,10 @@ class ElggRiverItem {
 		}
 
 		// the casting is to support typed serialization like json
-		$int_types = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'access_id', 'posted');
+		$int_types = ['id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'access_id', 'posted'];
 		foreach ($object as $key => $value) {
 			if (in_array($key, $int_types)) {
-				$this->$key = (int)$value;
+				$this->$key = (int) $value;
 			} else {
 				$this->$key = $value;
 			}
@@ -56,7 +56,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the subject of this river item
-	 * 
+	 *
 	 * @return \ElggEntity
 	 */
 	public function getSubjectEntity() {
@@ -83,7 +83,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the Annotation for this river item
-	 * 
+	 *
 	 * @return \ElggAnnotation
 	 */
 	public function getAnnotation() {
@@ -101,16 +101,16 @@ class ElggRiverItem {
 
 	/**
 	 * Get the time this activity was posted
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getTimePosted() {
-		return (int)$this->posted;
+		return (int) $this->posted;
 	}
 
 	/**
 	 * Get the type of the object
-	 * 
+	 *
 	 * This is required for elgg_view_list_item(). All the other data types
 	 * (entities, extenders, relationships) have a type/subtype.
 	 *
@@ -122,7 +122,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the subtype of the object
-	 * 
+	 *
 	 * This is required for elgg_view_list_item().
 	 *
 	 * @return string 'item'
@@ -174,7 +174,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get a plain old object copy for public consumption
-	 * 
+	 *
 	 * @return \stdClass
 	 */
 	public function toObject() {
@@ -187,7 +187,7 @@ class ElggRiverItem {
 		$object->action = $this->action_type;
 		$object->time_posted = date('c', $this->getTimePosted());
 		$object->enabled = $this->enabled;
-		$params = array('item' => $this);
+		$params = ['item' => $this];
 		return _elgg_services()->hooks->trigger('to:object', 'river_item', $params, $object);
 	}
 

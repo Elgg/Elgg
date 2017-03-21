@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Как часто архивировать лог?',
 
 	'logrotate:logrotated' => "Лог прокручен\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Журнал удален\n",
 	'logrotate:lognotdeleted' => "Ошибка при удалении\n",
-);
+];

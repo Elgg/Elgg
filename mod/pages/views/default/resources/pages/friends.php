@@ -17,7 +17,7 @@ elgg_register_title_button('pages', 'add', 'object', 'page_top');
 
 $title = elgg_echo('pages:friends');
 
-$content = elgg_list_entities_from_relationship(array(
+$content = elgg_list_entities_from_relationship([
 	'type' => 'object',
 	'subtype' => 'page_top',
 	'full_view' => false,
@@ -27,13 +27,13 @@ $content = elgg_list_entities_from_relationship(array(
 	'no_results' => elgg_echo('pages:none'),
 	'preload_owners' => true,
 	'preload_containers' => true,
-));
+]);
 
-$params = array(
+$params = [
 	'filter_context' => 'friends',
 	'content' => $content,
 	'title' => $title,
-);
+];
 
 $body = elgg_view_layout('content', $params);
 

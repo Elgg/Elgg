@@ -13,7 +13,7 @@ class MetadataCache {
 	 *
 	 * @var array
 	 */
-	protected $values = array();
+	protected $values = [];
 
 	/**
 	 * @var \ElggSession
@@ -101,7 +101,7 @@ class MetadataCache {
 	 * @return void
 	 */
 	public function clearAll() {
-		$this->values = array();
+		$this->values = [];
 	}
 
 	/**
@@ -139,7 +139,7 @@ class MetadataCache {
 		$access_key = $this->getAccessKey();
 
 		if (!is_array($guids)) {
-			$guids = array($guids);
+			$guids = [$guids];
 		}
 		$guids = array_unique($guids);
 
@@ -147,7 +147,7 @@ class MetadataCache {
 		//$guids = $this->filterMetadataHeavyEntities($guids);
 
 		$db_prefix = _elgg_services()->db->prefix;
-		$options = array(
+		$options = [
 			'guids' => $guids,
 			'limit' => 0,
 			'callback' => false,
@@ -155,11 +155,11 @@ class MetadataCache {
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC, n_table.id ASC',
 
 			// @todo don't know why this is necessary
-			'wheres' => array(_elgg_get_access_where_sql(array(
+			'wheres' => [_elgg_get_access_where_sql([
 				'table_alias' => 'n_table',
 				'guid_column' => 'entity_guid',
-			))),
-		);
+			])],
+		];
 		$data = _elgg_services()->metadataTable->getAll($options);
 
 		// make sure we show all entities as loaded
@@ -169,7 +169,7 @@ class MetadataCache {
 
 		// build up metadata for each entity, save when GUID changes (or data ends)
 		$last_guid = null;
-		$metadata = array();
+		$metadata = [];
 		$last_row_idx = count($data) - 1;
 		foreach ($data as $i => $row) {
 			$name = $row->name;
@@ -179,7 +179,7 @@ class MetadataCache {
 				if ($last_guid) {
 					$this->values[$access_key][$last_guid] = $metadata;
 				}
-				$metadata = array();
+				$metadata = [];
 			}
 			if (isset($metadata[$name])) {
 				$metadata[$name] = (array) $metadata[$name];
@@ -206,14 +206,14 @@ class MetadataCache {
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
 		$db_prefix = _elgg_services()->config->get('dbprefix');
 
-		$options = array(
+		$options = [
 			'guids' => $guids,
 			'limit' => 0,
 			'callback' => false,
-			'selects' => array('SUM(LENGTH(n_table.value)) AS bytes'),
+			'selects' => ['SUM(LENGTH(n_table.value)) AS bytes'],
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
 			'group_by' => 'n_table.entity_guid',
-		);
+		];
 		$data = _elgg_services()->metadataTable->getAll($options);
 		// don't cache if metadata for entity is over 10MB (or rolled INT)
 		foreach ($data as $row) {
@@ -233,6 +233,6 @@ class MetadataCache {
 		if ($this->session->getIgnoreAccess()) {
 			return "ignored";
 		}
-		return (string)$this->session->getLoggedInUserGuid();
+		return (string) $this->session->getLoggedInUserGuid();
 	}
 }

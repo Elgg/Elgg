@@ -25,12 +25,12 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-dropdown');
 
-$defaults = array(
+$defaults = [
 	'disabled' => false,
 	'value' => '',
-	'options_values' => array(),
-	'options' => array(),
-);
+	'options_values' => [],
+	'options' => [],
+];
 
 $vars = array_merge($defaults, $vars);
 
@@ -40,7 +40,7 @@ unset($vars['options_values']);
 $options = $vars['options'];
 unset($vars['options']);
 
-$value = is_array($vars['value']) ? $vars['value'] : array($vars['value']);
+$value = is_array($vars['value']) ? $vars['value'] : [$vars['value']];
 $value = array_map('strval', $value);
 unset($vars['value']);
 
@@ -48,20 +48,19 @@ $vars['multiple'] = !empty($vars['multiple']);
 
 // Add trailing [] to name if multiple is enabled to allow the form to send multiple values
 if ($vars['multiple'] && !empty($vars['name']) && is_string($vars['name'])) {
-    if (substr($vars['name'], -2) != '[]') {
-        $vars['name'] = $vars['name'] . '[]';
-    }
+	if (substr($vars['name'], -2) != '[]') {
+		$vars['name'] = $vars['name'] . '[]';
+	}
 }
 
 $options_list = '';
 
 if ($options_values) {
 	foreach ($options_values as $opt_value => $option) {
-
-		$option_attrs = array(
+		$option_attrs = [
 			'value' => $opt_value,
-			'selected' => in_array((string)$opt_value, $value),
-		);
+			'selected' => in_array((string) $opt_value, $value),
+		];
 
 		if (is_array($option)) {
 			$text = elgg_extract('text', $option, '');
@@ -80,7 +79,6 @@ if ($options_values) {
 } else {
 	if (is_array($options)) {
 		foreach ($options as $option) {
-
 			if (is_array($option)) {
 				$text = elgg_extract('text', $option, '');
 				unset($option['text']);
@@ -90,12 +88,12 @@ if ($options_values) {
 				}
 
 				$option_attrs = [
-					'selected' => in_array((string)$text, $value),
+					'selected' => in_array((string) $text, $value),
 				];
 				$option_attrs = array_merge($option_attrs, $option);
 			} else {
 				$option_attrs = [
-					'selected' => in_array((string)$option, $value),
+					'selected' => in_array((string) $option, $value),
 				];
 
 				$text = $option;

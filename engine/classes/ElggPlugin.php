@@ -195,7 +195,7 @@ class ElggPlugin extends \ElggObject {
 	public function getAvailableTextFiles() {
 		$filenames = $this->getPackage()->getTextFilenames();
 
-		$files = array();
+		$files = [];
 		foreach ($filenames as $filename) {
 			if ($this->canReadFile($filename)) {
 				$files[$filename] = "$this->path/$filename";
@@ -371,12 +371,12 @@ class ElggPlugin extends \ElggObject {
 		}
 		
 		// Hook to validate setting
-		$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
+		$value = elgg_trigger_plugin_hook('setting', 'plugin', [
 			'plugin_id' => $this->getID(),
 			'plugin' => $this,
 			'name' => $name,
 			'value' => $value,
-		), $value);
+		], $value);
 		
 		return $this->setPrivateSetting($name, $value);
 	}
@@ -446,7 +446,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return array An array of key/value pairs.
 	 */
 	public function getAllUserSettings($user_guid = 0) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -472,7 +472,7 @@ class ElggPlugin extends \ElggObject {
 
 		$private_settings = $this->getDatabase()->getData($q);
 
-		$return = array();
+		$return = [];
 
 		if ($private_settings) {
 			foreach ($private_settings as $setting) {
@@ -496,7 +496,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed The new setting ID or false
 	 */
 	public function setUserSetting($name, $value, $user_guid = 0) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -510,13 +510,13 @@ class ElggPlugin extends \ElggObject {
 
 		// Hook to validate setting
 		// note: this doesn't pass the namespaced name
-		$value = _elgg_services()->hooks->trigger('usersetting', 'plugin', array(
+		$value = _elgg_services()->hooks->trigger('usersetting', 'plugin', [
 			'user' => $user,
 			'plugin' => $this,
 			'plugin_id' => $this->getID(),
 			'name' => $name,
 			'value' => $value
-		), $value);
+		], $value);
 
 		// set the namespaced name.
 		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
@@ -532,7 +532,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetUserSetting($name, $user_guid = 0) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -604,12 +604,12 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function isValid() {
 		if (!$this->getID()) {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:MissingID', array($this->guid));
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:MissingID', [$this->guid]);
 			return false;
 		}
 
 		if (!$this->getPackage() instanceof \ElggPluginPackage) {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:NoPluginPackagePackage', array($this->getID(), $this->guid));
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:NoPluginPackagePackage', [$this->getID(), $this->guid]);
 			return false;
 		}
 
@@ -693,17 +693,16 @@ class ElggPlugin extends \ElggObject {
 		// emit an event. returning false will make this not be activated.
 		// we need to do this after it's been fully activated
 		// or the deactivate will be confused.
-		$params = array(
+		$params = [
 			'plugin_id' => $this->getID(),
 			'plugin_entity' => $this,
-		);
+		];
 
 		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
 
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
-			
 			$this->activateEntities();
 			
 			if ($this->canReadFile('activate.php')) {
@@ -786,10 +785,10 @@ class ElggPlugin extends \ElggObject {
 		}
 		
 		// emit an event. returning false will cause this to not be deactivated.
-		$params = array(
+		$params = [
 			'plugin_id' => $this->getID(),
 			'plugin_entity' => $this,
-		);
+		];
 
 		$return = _elgg_services()->events->trigger('deactivate', 'plugin', $params);
 
@@ -876,7 +875,7 @@ class ElggPlugin extends \ElggObject {
 
 		if (!$this->canReadFile($filename)) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotIncludeFile',
-							array($filename, $this->getID(), $this->guid, $this->path));
+							[$filename, $this->getID(), $this->guid, $this->path]);
 			throw new \PluginException($msg);
 		}
 
@@ -884,7 +883,7 @@ class ElggPlugin extends \ElggObject {
 			$ret = include $filepath;
 		} catch (Exception $e) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
-				array($filename, $this->getID(), $this->guid, $this->path));
+				[$filename, $this->getID(), $this->guid, $this->path]);
 			throw new \PluginException($msg, 0, $e);
 		}
 
@@ -1076,7 +1075,6 @@ class ElggPlugin extends \ElggObject {
 		
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
-				
 				if (get_subtype_id($entity['type'], $entity['subtype'])) {
 					update_subtype($entity['type'], $entity['subtype'], $entity['class']);
 				} else {

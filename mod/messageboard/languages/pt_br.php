@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -67,4 +67,4 @@ Por favor, não responda este email.",
 
 	'messageboard:failure' => "Ocorreu um erro ao adicionar a mensagem. Por favor, tente novamente.",
 
-);
+];

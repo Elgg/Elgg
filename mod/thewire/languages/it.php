@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -56,4 +56,4 @@ return array(
 	 */
 	'thewire:settings:limit' => "Numero massimo di caratteri per gli aggiornamenti di stato:",
 	'thewire:settings:limit:none' => "Nessun limite",
-);
+];

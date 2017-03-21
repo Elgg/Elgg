@@ -28,14 +28,14 @@ if (elgg_is_logged_in()) {
 
 $title = elgg_echo('register');
 
-$form_params = array(
+$form_params = [
 	'class' => 'elgg-form-account',
-);
+];
 
-$body_params = array(
+$body_params = [
 	'friend_guid' => $friend_guid,
 	'invitecode' => $invitecode
-);
+];
 $content = elgg_view_form('register', $form_params, $body_params);
 
 $content .= elgg_view('help/register');

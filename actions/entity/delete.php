@@ -29,7 +29,7 @@ $subtype = $entity->getSubtype();
 $container = $entity->getContainerEntity();
 
 if (!$entity->delete()) {
-	register_error(elgg_echo('entity:delete:fail', array($display_name)));
+	register_error(elgg_echo('entity:delete:fail', [$display_name]));
 	forward(REFERRER);
 }
 
@@ -51,15 +51,15 @@ if (!$forward_url) {
 	}
 }
 
-$success_keys = array(
+$success_keys = [
 	"entity:delete:$type:$subtype:success",
 	"entity:delete:$type:success",
 	"entity:delete:success",
-);
+];
 
 foreach ($success_keys as $success_key) {
 	if (elgg_language_key_exists($success_key)) {
-		system_message(elgg_echo($success_key, array($display_name)));
+		system_message(elgg_echo($success_key, [$display_name]));
 		break;
 	}
 }

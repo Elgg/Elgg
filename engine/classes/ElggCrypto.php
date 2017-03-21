@@ -73,7 +73,8 @@ class ElggCrypto {
 		if (is_callable('random_bytes')) {
 			try {
 				return random_bytes($length);
-			} catch (\Exception $e) {}
+			} catch (\Exception $e) {
+			}
 		}
 
 		$SSLstr = '4'; // http://xkcd.com/221/
@@ -180,7 +181,6 @@ class ElggCrypto {
 
 			// We assume sha1 is a deterministic extractor for the $entropy variable.
 			$str .= sha1($entropy, true);
-
 		} while ($length > strlen($str));
 
 		if ($handle) {

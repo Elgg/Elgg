@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -97,4 +97,4 @@ Vexa e deixe un comentario no ficheiro:
 	'file:noaccess' => "Non ten permisos para cambiar o ficheiro.",
 	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Debe seleccionar un ficheiro.",
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Ferramentas',
 	'admin:develop_tools:sandbox' => 'Temas',
@@ -78,4 +78,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Configurações salvas',
-);
+];

@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg reported content: delete action
- * 
+ *
  * @package ElggReportedContent
  */
 
@@ -14,7 +14,7 @@ if (!$report || $report->getSubtype() !== "reported_content" || !$report->canEdi
 }
 
 // give another plugin a chance to override
-if (!elgg_trigger_plugin_hook('reportedcontent:delete', 'system', array('report' => $report), true)) {
+if (!elgg_trigger_plugin_hook('reportedcontent:delete', 'system', ['report' => $report], true)) {
 	register_error(elgg_echo("reportedcontent:notdeleted"));
 	forward(REFERER);
 }

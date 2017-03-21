@@ -76,7 +76,7 @@ class EntityIconService {
 	 * @param array      $coords     An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIconFromUploadedFile(ElggEntity $entity, $input_name, $type = 'icon', array $coords = array()) {
+	public function saveIconFromUploadedFile(ElggEntity $entity, $input_name, $type = 'icon', array $coords = []) {
 		$files = $this->request->files;
 		if (!$files->has($input_name)) {
 			return false;
@@ -117,7 +117,7 @@ class EntityIconService {
 	 * @return bool
 	 * @throws InvalidParameterException
 	 */
-	public function saveIconFromLocalFile(ElggEntity $entity, $filename, $type = 'icon', array $coords = array()) {
+	public function saveIconFromLocalFile(ElggEntity $entity, $filename, $type = 'icon', array $coords = []) {
 		if (!file_exists($filename) || !is_readable($filename)) {
 			throw new InvalidParameterException(__METHOD__ . " expects a readable local file. $filename is not readable");
 		}
@@ -150,7 +150,7 @@ class EntityIconService {
 	 * @return bool
 	 * @throws InvalidParameterException
 	 */
-	public function saveIconFromElggFile(ElggEntity $entity, ElggFile $file, $type = 'icon', array $coords = array()) {
+	public function saveIconFromElggFile(ElggEntity $entity, ElggFile $file, $type = 'icon', array $coords = []) {
 		if (!$file->exists()) {
 			throw new InvalidParameterException(__METHOD__ . ' expects an instance of ElggFile with an existing file on filestore');
 		}
@@ -182,7 +182,7 @@ class EntityIconService {
 	 * @param array      $coords An array of cropping coordinates x1, y1, x2, y2
 	 * @return bool
 	 */
-	public function saveIcon(ElggEntity $entity, ElggFile $file, $type = 'icon', array $coords = array()) {
+	public function saveIcon(ElggEntity $entity, ElggFile $file, $type = 'icon', array $coords = []) {
 
 		$entity_type = $entity->getType();
 		$entity_subtype = $entity->getSubtype();
@@ -248,7 +248,6 @@ class EntityIconService {
 		$sizes = $this->getSizes($entity_type, $entity_subtype, $type);
 
 		foreach ($sizes as $size => $opts) {
-
 			$square = (bool) elgg_extract('square', $opts);
 
 			if ($type === 'icon' && $cropping_mode) {
@@ -366,12 +365,12 @@ class EntityIconService {
 	 *                           or an array of parameters including 'size'
 	 * @return string|void
 	 */
-	public function getIconURL(ElggEntity $entity, $params = array()) {
+	public function getIconURL(ElggEntity $entity, $params = []) {
 		if (is_array($params)) {
 			$size = elgg_extract('size', $params, 'medium');
 		} else {
 			$size = is_string($params) ? $params : 'medium';
-			$params = array();
+			$params = [];
 		}
 
 		$size = elgg_strtolower($size);
@@ -399,7 +398,7 @@ class EntityIconService {
 
 	/**
 	 * Returns default/fallback icon
-	 * 
+	 *
 	 * @param ElggEntity $entity Entity
 	 * @param array      $params Icon params
 	 * @return string
@@ -490,7 +489,6 @@ class EntityIconService {
 		if (empty($sizes)) {
 			$this->logger->error("Failed to find size configuration for image of type '$type' for entity type " .
 				"'$entity_type'. Use the 'entity:$type:sizes, $entity_type' hook to define the icon sizes");
-
 		}
 
 		return $sizes;

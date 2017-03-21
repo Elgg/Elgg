@@ -9,17 +9,17 @@ elgg_load_js('jquery.imgareaselect');
 elgg_load_js('elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
 
-$master_img = elgg_view('output/img', array(
+$master_img = elgg_view('output/img', [
 	'src' => $vars['entity']->getIconUrl('master'),
 	'alt' => elgg_echo('avatar'),
 	'class' => 'mrl',
 	'id' => 'user-avatar-cropper',
-));
+]);
 
-$preview_img = elgg_view('output/img', array(
+$preview_img = elgg_view('output/img', [
 	'src' => $vars['entity']->getIconUrl('master'),
 	'alt' => elgg_echo('avatar'),
-));
+]);
 
 ?>
 <div class="clearfix">
@@ -29,14 +29,14 @@ $preview_img = elgg_view('output/img', array(
 </div>
 <div class="elgg-foot">
 <?php
-$coords = array('x1', 'x2', 'y1', 'y2');
+$coords = ['x1', 'x2', 'y1', 'y2'];
 foreach ($coords as $coord) {
-	echo elgg_view('input/hidden', array('name' => $coord, 'value' => $vars['entity']->$coord));
+	echo elgg_view('input/hidden', ['name' => $coord, 'value' => $vars['entity']->$coord]);
 }
 
-echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['entity']->guid));
+echo elgg_view('input/hidden', ['name' => 'guid', 'value' => $vars['entity']->guid]);
 
-echo elgg_view('input/submit', array('value' => elgg_echo('avatar:create')));
+echo elgg_view('input/submit', ['value' => elgg_echo('avatar:create')]);
 
 ?>
 </div>

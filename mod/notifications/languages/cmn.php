@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	'friends:all' => '所有朋友',
 
@@ -21,4 +21,4 @@ return array(
 
 	'notifications:subscriptions:success' => '您的通知設定值已儲存。',
 
-);
+];

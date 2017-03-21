@@ -14,12 +14,12 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-password');
 
-$defaults = array(
+$defaults = [
 	'disabled' => false,
 	'autocapitalize' => 'off',
 	'autocorrect' => 'off',
 	'type' => 'password'
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

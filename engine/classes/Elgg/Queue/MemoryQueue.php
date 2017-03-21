@@ -3,11 +3,11 @@ namespace Elgg\Queue;
 
 /**
  * FIFO queue that is memory based (not persistent)
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Queue
  * @since      1.9.0
@@ -15,20 +15,20 @@ namespace Elgg\Queue;
 class MemoryQueue implements \Elgg\Queue\Queue {
 
 	/* @var array */
-	protected $queue = array();
+	protected $queue = [];
 
 	/**
 	 * Create a queue
 	 */
 	public function __construct() {
-		$this->queue = array();
+		$this->queue = [];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function enqueue($item) {
-		return (bool)array_push($this->queue, $item);
+		return (bool) array_push($this->queue, $item);
 	}
 
 	/**
@@ -42,7 +42,7 @@ class MemoryQueue implements \Elgg\Queue\Queue {
 	 * {@inheritdoc}
 	 */
 	public function clear() {
-		$this->queue = array();
+		$this->queue = [];
 	}
 
 	/**

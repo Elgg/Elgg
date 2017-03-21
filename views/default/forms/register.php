@@ -15,7 +15,7 @@ if (elgg_is_sticky_form('register')) {
 
 	elgg_clear_sticky_form('register');
 } else {
-	$values = array();
+	$values = [];
 }
 
 $password = $password2 = '';

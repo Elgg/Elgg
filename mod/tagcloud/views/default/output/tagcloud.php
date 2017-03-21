@@ -15,7 +15,6 @@ if (empty($vars['tagcloud']) && !empty($vars['value'])) {
 }
 
 if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
-	
 	$counter = 0;
 	$max = 0;
 	
@@ -28,10 +27,9 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	$params = $vars;
 	unset($params['tagcloud']);
 
-	$tags = array();
+	$tags = [];
 
 	foreach ($vars['tagcloud'] as $tag) {
-
 		$params['value'] = $tag->tag;
 
 		// protecting against division by zero warnings

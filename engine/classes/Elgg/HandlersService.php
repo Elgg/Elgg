@@ -103,7 +103,6 @@ class HandlersService {
 		if (is_string($callable)
 			&& preg_match(DiContainer::CLASS_NAME_PATTERN_53, $callable)
 			&& class_exists($callable)) {
-
 			// @todo Eventually a more advanced DIC could auto-inject dependencies
 			$callable = new $callable;
 		}
@@ -120,7 +119,7 @@ class HandlersService {
 	 */
 	private function acceptsObject($callable) {
 		// note: caching string callables didn't help any
-		$type = (string)$this->getParamTypeForCallable($callable);
+		$type = (string) $this->getParamTypeForCallable($callable);
 		if (0 === strpos($type, 'Elgg\\')) {
 			// probably right. We can just assume and let PHP handle it
 			return true;
@@ -160,7 +159,7 @@ class HandlersService {
 		if (method_exists($param, 'getType')
 				&& ($type = $param->getType())
 				&& $type->isBuiltin()) {
-			return (string)$type;
+			return (string) $type;
 		}
 
 		// can be dropped when dropping PHP7 support:
@@ -174,7 +173,7 @@ class HandlersService {
 		}
 
 		// ReflectionParameter::__toString() doesn't require loading class
-		if (preg_match('~\[\s\<\w+?>\s([\S]+)~s', (string)$param, $m)) {
+		if (preg_match('~\[\s\<\w+?>\s([\S]+)~s', (string) $param, $m)) {
 			if ($m[1][0] !== '$') {
 				return $m[1];
 			}
@@ -196,7 +195,7 @@ class HandlersService {
 		if (is_string($callable)) {
 			return $callable;
 		}
-		if (is_array($callable) && array_keys($callable) === array(0, 1) && is_string($callable[1])) {
+		if (is_array($callable) && array_keys($callable) === [0, 1] && is_string($callable[1])) {
 			if (is_string($callable[0])) {
 				return "{$callable[0]}::{$callable[1]}";
 			}

@@ -16,9 +16,9 @@ if (!elgg_instanceof($comment, 'object', 'comment') || !$comment->canEdit()) {
 	return false;
 }
 
-$form_vars = array(
+$form_vars = [
 	'class' => 'hidden mvl',
 	'id' => "edit-comment-{$guid}",
-);
-$body_vars = array('comment' => $comment);
+];
+$body_vars = ['comment' => $comment];
 echo elgg_view_form('comment/save', $form_vars, $body_vars);

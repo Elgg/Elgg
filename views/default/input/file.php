@@ -16,10 +16,10 @@ if (!empty($vars['value'])) {
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-file');
 
-$defaults = array(
+$defaults = [
 	'disabled' => false,
 	'type' => 'file'
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

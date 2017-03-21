@@ -6,16 +6,16 @@
 // The URL segment after members/
 $page = elgg_extract('page', $vars);
 
-$tabs = elgg_trigger_plugin_hook('members:config', 'tabs', null, array());
+$tabs = elgg_trigger_plugin_hook('members:config', 'tabs', null, []);
 
 foreach ($tabs as $type => $values) {
 	$tabs[$type]['selected'] = ($page == $type);
 }
-$filter = elgg_view('navigation/tabs', array('tabs' => $tabs));
+$filter = elgg_view('navigation/tabs', ['tabs' => $tabs]);
 
-$params = array(
-	'options' => array('type' => 'user', 'full_view' => false),
-);
+$params = [
+	'options' => ['type' => 'user', 'full_view' => false],
+];
 
 $content = elgg_trigger_plugin_hook('members:list', $page, $params, null);
 if ($content === null) {
@@ -24,12 +24,12 @@ if ($content === null) {
 
 $title = elgg_echo("members:title:{$page}");
 
-$params = array(
+$params = [
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
 	'title' => $title,
 	'filter' => $filter,
-);
+];
 
 $body = elgg_view_layout('content', $params);
 

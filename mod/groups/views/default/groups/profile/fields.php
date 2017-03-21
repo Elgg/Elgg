@@ -19,7 +19,7 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 			continue;
 		}
 
-		$options = array('value' => $group->$key);
+		$options = ['value' => $group->$key];
 		if ($valtype == 'tags') {
 			$options['tag_names'] = $key;
 		}

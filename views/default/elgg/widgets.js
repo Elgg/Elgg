@@ -160,3 +160,4 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 
 	return widgets;
 });
+

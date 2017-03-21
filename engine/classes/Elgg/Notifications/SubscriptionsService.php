@@ -34,7 +34,7 @@ class SubscriptionsService {
 	 * @param Database $db      Database object
 	 * @param array    $methods Notification delivery method names
 	 */
-	public function __construct(Database $db, array $methods = array()) {
+	public function __construct(Database $db, array $methods = []) {
 		$this->db = $db;
 		$this->methods = $methods;
 	}
@@ -53,7 +53,7 @@ class SubscriptionsService {
 	 */
 	public function getSubscriptions(NotificationEvent $event) {
 
-		$subscriptions = array();
+		$subscriptions = [];
 
 		if (!$this->methods) {
 			return $subscriptions;
@@ -74,7 +74,7 @@ class SubscriptionsService {
 			}
 		}
 
-		$params = array('event' => $event, 'origin' => Notification::ORIGIN_SUBSCRIPTIONS);
+		$params = ['event' => $event, 'origin' => Notification::ORIGIN_SUBSCRIPTIONS];
 		return _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 	}
 
@@ -92,7 +92,7 @@ class SubscriptionsService {
 	 */
 	public function getSubscriptionsForContainer($container_guid) {
 
-		$subscriptions = array();
+		$subscriptions = [];
 
 		if (!$this->methods) {
 			return $subscriptions;
@@ -155,9 +155,9 @@ class SubscriptionsService {
 		// create IN clause
 		$rels = $this->getMethodRelationships();
 		if (!$rels) {
-			return array();
+			return [];
 		}
-		array_walk($rels, array($this->db, 'sanitizeString'));
+		array_walk($rels, [$this->db, 'sanitizeString']);
 		$methods_string = "'" . implode("','", $rels) . "'";
 
 		$db_prefix = $this->db->prefix;
@@ -175,7 +175,7 @@ class SubscriptionsService {
 	 */
 	protected function getMethodRelationships() {
 		$prefix = self::RELATIONSHIP_PREFIX;
-		$names = array();
+		$names = [];
 		foreach ($this->methods as $method) {
 			$names[] = "$prefix$method";
 		}

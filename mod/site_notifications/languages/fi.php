@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'Ilmoitukset',
 	'notification:method:site' => 'Ilmoitukset',
 	'site_notifications:topbar' => 'Ilmoitukset',
@@ -11,4 +11,4 @@ return array(
 	'site_notifications:toggle_all' => 'Valitse kaikki',
 	'site_notifications:error:notifications_not_selected' => 'Valitse vähintään yksi ilmoitus',
 	'site_notifications:success:delete' => 'Poistettiin valitut ilmoitukset'
-);
+];

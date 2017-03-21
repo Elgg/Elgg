@@ -7,13 +7,13 @@
  * @uses $vars['sysmessages'] System message array
  */
 
-$messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+$messages = elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]);
 $content = elgg_view('page/elements/body', $vars);
-$title_link = elgg_view('output/url', array(
+$title_link = elgg_view('output/url', [
 	'text' => 'Theme Sandbox',
 	'href' => 'theme_preview/intro',
 	'is_trusted' => true,
-));
+]);
 
 $header = "<h1 class=\"theme-sandbox-site-heading\">$title_link</h1>";
 if (get_input("site_menu", false)) {
@@ -45,4 +45,4 @@ $body .= elgg_view('page/elements/foot');
 
 $head = elgg_view('page/elements/head', $vars);
 
-echo elgg_view("page/elements/html", array("head" => $head, "body" => $body));
+echo elgg_view("page/elements/html", ["head" => $head, "body" => $body]);

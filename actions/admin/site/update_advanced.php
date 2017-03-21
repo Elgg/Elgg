@@ -25,13 +25,13 @@ $dataroot = sanitise_filepath(get_input('dataroot', '', false));
 // check for relative paths
 if (stripos(PHP_OS, 'win') === 0) {
 	if (strpos($dataroot, ':') !== 1) {
-		$msg = elgg_echo('admin:configuration:dataroot:relative_path', array($dataroot));
+		$msg = elgg_echo('admin:configuration:dataroot:relative_path', [$dataroot]);
 		register_error($msg);
 		forward(REFERER);
 	}
 } else {
 	if (strpos($dataroot, '/') !== 0) {
-		$msg = elgg_echo('admin:configuration:dataroot:relative_path', array($dataroot));
+		$msg = elgg_echo('admin:configuration:dataroot:relative_path', [$dataroot]);
 		register_error($msg);
 		forward(REFERER);
 	}

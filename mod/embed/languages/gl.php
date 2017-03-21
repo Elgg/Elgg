@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Incrustar',
 	'embed:media' => 'Incrustar o contido',
 	'embed:instructions' => 'Prema calquera ficheiro para incrustalo no seu contido.',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'Non se atopou ningún elemento',
 
 	'embed:no_sections' => 'Non se atopou ningún complemento de incrustación compatíbel. Solicítelle ao administrador que active un complemento compatíbel con incrustacións.',
-);
+];

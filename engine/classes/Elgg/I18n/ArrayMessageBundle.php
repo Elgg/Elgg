@@ -3,14 +3,14 @@ namespace Elgg\I18n;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Uses an array as a source for the message bundle.
- * 
+ *
  * This is mostly useful for testing so we can configure translators
  * in-memory instead of going to the file system.
- * 
+ *
  * @since 1.11
- * 
+ *
  * @access private
  */
 final class ArrayMessageBundle implements MessageBundle {
@@ -20,7 +20,7 @@ final class ArrayMessageBundle implements MessageBundle {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param array $messages Map of locales to maps of keys to message-templates
 	 */
 	public function __construct(array $messages) {
