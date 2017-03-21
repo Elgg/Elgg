@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	/**
 	* Menu items and titles
 	*/
@@ -82,4 +82,4 @@ Være venlig ikke at svare på denne email.",
 
 	'messages:deleted_sender' => 'Slettet bruger',
 
-);
+];

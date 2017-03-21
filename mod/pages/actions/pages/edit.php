@@ -6,7 +6,7 @@
  */
 
 $variables = elgg_get_config('pages');
-$input = array();
+$input = [];
 foreach ($variables as $name => $type) {
 	if ($name == 'title') {
 		$input[$name] = htmlspecialchars(get_input($name, '', false), ENT_QUOTES, 'UTF-8');
@@ -19,9 +19,9 @@ foreach ($variables as $name => $type) {
 }
 
 // Get guids
-$page_guid = (int)get_input('page_guid');
-$container_guid = (int)get_input('container_guid');
-$parent_guid = (int)get_input('parent_guid');
+$page_guid = (int) get_input('page_guid');
+$container_guid = (int) get_input('container_guid');
+$parent_guid = (int) get_input('parent_guid');
 
 elgg_make_sticky_form('page');
 
@@ -108,12 +108,12 @@ $page->annotate('page', $page->description, $page->access_id);
 system_message(elgg_echo('pages:saved'));
 
 if ($new_page) {
-	elgg_create_river_item(array(
+	elgg_create_river_item([
 		'view' => 'river/object/page/create',
 		'action_type' => 'create',
 		'subject_guid' => elgg_get_logged_in_user_guid(),
 		'object_guid' => $page->guid,
-	));
+	]);
 }
 
 forward($page->getURL());

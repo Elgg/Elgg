@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -209,4 +209,4 @@ edo klikatu hurrengoan taldeko eskaerak ikusteko:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Taldeko profilak',
-);
+];

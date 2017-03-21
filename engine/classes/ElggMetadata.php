@@ -41,7 +41,7 @@ class ElggMetadata extends \ElggExtender {
 		$this->initializeAttributes();
 
 		if ($row) {
-			foreach ((array)$row as $key => $value) {
+			foreach ((array) $row as $key => $value) {
 				$this->attributes[$key] = $value;
 			}
 		}

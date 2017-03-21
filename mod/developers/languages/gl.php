@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Ferramentas',
 	'admin:develop_tools:sandbox' => 'Zona de probas de temas',
@@ -86,4 +86,4 @@ return array(
 	'developers:settings:success' => 'Gardouse a configuración.',
 
 	'developers:amd' => 'AMD',
-);
+];

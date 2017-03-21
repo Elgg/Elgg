@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ return array(
 	'bookmarks:save:invalid' => "书签的地址无效，无法保存。",
 	'bookmarks:delete:failed' => "书签无法删除。请重试。",
 	'bookmarks:unknown_bookmark' => '无法找到特定的书签。',
-);
+];

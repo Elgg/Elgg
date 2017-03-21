@@ -34,15 +34,15 @@ foreach ($variables as $name => $type) {
 <div>
 	<label><?php echo elgg_echo("pages:$name") ?></label>
 	<?php
-		if ($type != 'longtext') {
-			echo '<br />';
-		}
+	if ($type != 'longtext') {
+		echo '<br />';
+	}
 
-		$view_vars = array(
+		$view_vars = [
 			'name' => $name,
 			'value' => $vars[$name],
 			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
-		);
+		];
 		if ($input_view === 'input/access') {
 			$view_vars['entity'] = $entity;
 			$view_vars['entity_type'] = 'object';
@@ -73,22 +73,22 @@ if (!empty($cats)) {
 
 echo '<div class="elgg-foot">';
 if ($vars['guid']) {
-	echo elgg_view('input/hidden', array(
+	echo elgg_view('input/hidden', [
 		'name' => 'page_guid',
 		'value' => $vars['guid'],
-	));
+	]);
 }
-echo elgg_view('input/hidden', array(
+echo elgg_view('input/hidden', [
 	'name' => 'container_guid',
 	'value' => $vars['container_guid'],
-));
+]);
 if (!$vars['guid']) {
-	echo elgg_view('input/hidden', array(
+	echo elgg_view('input/hidden', [
 		'name' => 'parent_guid',
 		'value' => $vars['parent_guid'],
-	));
+	]);
 }
 
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+echo elgg_view('input/submit', ['value' => elgg_echo('save')]);
 
 echo '</div>';

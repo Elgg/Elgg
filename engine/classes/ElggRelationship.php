@@ -4,7 +4,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Core
- * 
+ *
  * @property int    $id           The unique identifier (read-only)
  * @property int    $guid_one     The GUID of the subject of the relationship
  * @property string $relationship The type of the relationship (limit of 50 characters long)
@@ -24,11 +24,11 @@ class ElggRelationship extends \ElggData {
 	public function __construct(\stdClass $row) {
 		$this->initializeAttributes();
 
-		foreach ((array)$row as $key => $value) {
+		foreach ((array) $row as $key => $value) {
 			$this->attributes[$key] = $value;
 		}
 
-		$this->attributes['id'] = (int)$this->attributes['id'];
+		$this->attributes['id'] = (int) $this->attributes['id'];
 	}
 
 	/**
@@ -139,7 +139,7 @@ class ElggRelationship extends \ElggData {
 		}
 
 		$type = $this->getType();
-		$params = array('relationship' => $this);
+		$params = ['relationship' => $this];
 		$url = _elgg_services()->hooks->trigger('relationship:url', $type, $params, $url);
 
 		return elgg_normalize_url($url);
@@ -155,7 +155,7 @@ class ElggRelationship extends \ElggData {
 		$object->relationship = $this->relationship;
 		$object->object_guid = $this->guid_two;
 		$object->time_created = date('c', $this->getTimeCreated());
-		$params = array('relationship' => $this);
+		$params = ['relationship' => $this];
 		return _elgg_services()->hooks->trigger('to:object', 'relationship', $params, $object);
 	}
 

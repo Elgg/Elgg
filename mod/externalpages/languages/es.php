@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -19,4 +19,4 @@ return array(
 	 */
 	'expages:posted' => "La p&aacute;gina ha sido guardada correctamente.",
 	'expages:error' => "No se pudo guardar la p&aacute;gina.",
-);
+];

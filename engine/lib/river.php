@@ -36,7 +36,7 @@
  * @return int|ElggRiverItem|bool River ID/item or false on failure
  * @since 1.9
  */
-function elgg_create_river_item(array $options = array()) {
+function elgg_create_river_item(array $options = []) {
 	$view = elgg_extract('view', $options);
 	// use default viewtype for when called from web services api
 	if (empty($view) || !(elgg_view_exists($view, 'default'))) {
@@ -80,7 +80,7 @@ function elgg_create_river_item(array $options = array()) {
 
 	$return_item = elgg_extract('return_item', $options, false);
 
-	$values = array(
+	$values = [
 		'type' => $object->getType(),
 		'subtype' => $object->getSubtype(),
 		'action_type' => $action_type,
@@ -91,8 +91,8 @@ function elgg_create_river_item(array $options = array()) {
 		'target_guid' => $target_guid,
 		'annotation_id' => $annotation_id,
 		'posted' => $posted,
-	);
-	$col_types = array(
+	];
+	$col_types = [
 		'type' => 'string',
 		'subtype' => 'string',
 		'action_type' => 'string',
@@ -103,7 +103,7 @@ function elgg_create_river_item(array $options = array()) {
 		'target_guid' => 'int',
 		'annotation_id' => 'int',
 		'posted' => 'int',
-	);
+	];
 
 	// return false to stop insert
 	$values = elgg_trigger_plugin_hook('creating', 'river', null, $values);
@@ -117,7 +117,7 @@ function elgg_create_river_item(array $options = array()) {
 	foreach ($values as $name => $value) {
 		$sql_columns[] = $name;
 		$sql_values[] = ":$name";
-		$query_params[":$name"] = ($col_types[$name] === 'int') ? (int)$value : $value;
+		$query_params[":$name"] = ($col_types[$name] === 'int') ? (int) $value : $value;
 	}
 	$sql = "
 		INSERT INTO {$dbprefix}river (" . implode(',', $sql_columns) . ")
@@ -133,7 +133,7 @@ function elgg_create_river_item(array $options = array()) {
 	$object->updateLastAction($values['posted']);
 
 	$ia = elgg_set_ignore_access(true);
-	$river_items = elgg_get_river(array('id' => $id));
+	$river_items = elgg_get_river(['id' => $id]);
 	elgg_set_ignore_access($ia);
 
 	if (!$river_items) {
@@ -194,10 +194,10 @@ function elgg_create_river_item(array $options = array()) {
  * @return \ElggRiverItem[]|\Elgg\BatchResult|array|int
  * @since 1.8.0
  */
-function elgg_get_river(array $options = array()) {
+function elgg_get_river(array $options = []) {
 	global $CONFIG;
 
-	$defaults = array(
+	$defaults = [
 		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
 
 		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
@@ -229,9 +229,9 @@ function elgg_get_river(array $options = array()) {
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
 
-		'wheres'               => array(),
-		'joins'                => array(),
-	);
+		'wheres'               => [],
+		'joins'                => [],
+	];
 
 	if (isset($options['view']) || isset($options['views'])) {
 		$msg = __FUNCTION__ . ' does not support the "views" option, though you may specify values for'
@@ -251,7 +251,7 @@ function elgg_get_river(array $options = array()) {
 		return new \ElggBatch('elgg_get_river', $options, null, $batch_size, $batch_inc_offset);
 	}
 
-	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$singulars = ['id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype'];
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
@@ -280,7 +280,7 @@ function elgg_get_river(array $options = array()) {
 	$dbprefix = elgg_get_config('dbprefix');
 
 	// joins
-	$joins = array();
+	$joins = [];
 	$joins[] = "JOIN {$dbprefix}entities oe ON rv.object_guid = oe.guid";
 
 	// LEFT JOIN is used because all river items do not necessarily have target
@@ -338,8 +338,8 @@ function elgg_get_river(array $options = array()) {
 	}
 
 	// Make sure that user has access to all the entities referenced by each river item
-	$object_access_where = _elgg_get_access_where_sql(array('table_alias' => 'oe'));
-	$target_access_where = _elgg_get_access_where_sql(array('table_alias' => 'te'));
+	$object_access_where = _elgg_get_access_where_sql(['table_alias' => 'oe']);
+	$target_access_where = _elgg_get_access_where_sql(['table_alias' => 'te']);
 
 	// We use LEFT JOIN with entities table but the WHERE clauses are used
 	// regardless if a JOIN is successfully made. The "te.guid IS NULL" is
@@ -367,7 +367,7 @@ function elgg_get_river(array $options = array()) {
 		return $river_items;
 	} else {
 		$total = get_data_row($query);
-		return (int)$total->total;
+		return (int) $total->total;
 	}
 }
 
@@ -379,7 +379,7 @@ function elgg_get_river(array $options = array()) {
  */
 function _elgg_prefetch_river_entities(array $river_items) {
 	// prefetch objects, subjects and targets
-	$guids = array();
+	$guids = [];
 	foreach ($river_items as $item) {
 		if ($item->subject_guid && !_elgg_services()->entityCache->get($item->subject_guid)) {
 			$guids[$item->subject_guid] = true;
@@ -395,15 +395,15 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		// The entity cache only holds 256. We don't want to bump out any plugins.
 		$guids = array_slice($guids, 0, 200, true);
 		// return value unneeded, just priming cache
-		elgg_get_entities(array(
+		elgg_get_entities([
 			'guids' => array_keys($guids),
 			'limit' => 0,
 			'distinct' => false,
-		));
+		]);
 	}
 
 	// prefetch object containers, in case they were not in the targets
-	$guids = array();
+	$guids = [];
 	foreach ($river_items as $item) {
 		$object = $item->getObjectEntity();
 		if ($object->container_guid && !_elgg_services()->entityCache->get($object->container_guid)) {
@@ -412,7 +412,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	}
 	if ($guids) {
 		$guids = array_slice($guids, 0, 200, true);
-		elgg_get_entities(array(
+		elgg_get_entities([
 			'guids' => array_keys($guids),
 			'limit' => 0,
 			'distinct' => false,
@@ -420,7 +420,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 			// Why specify? user containers are likely already loaded via the owners, and
 			// specifying groups allows ege() to auto-join the groups_entity table
 			'type' => 'group',
-		));
+		]);
 	}
 
 	// Note: We've tried combining the above ege() calls into one (pulling containers at the same time).
@@ -438,16 +438,16 @@ function _elgg_prefetch_river_entities(array $river_items) {
  * @return string
  * @since 1.8.0
  */
-function elgg_list_river(array $options = array()) {
+function elgg_list_river(array $options = []) {
 	elgg_register_rss_link();
 
-	$defaults = array(
+	$defaults = [
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', max(20, elgg_get_config('default_limit'))), 0),
 		'pagination' => true,
 		'list_class' => 'elgg-list-river',
 		'no_results' => '',
-	);
+	];
 
 	$options = array_merge($defaults, $options);
 
@@ -463,7 +463,7 @@ function elgg_list_river(array $options = array()) {
 		$options['count'] = false;
 		$items = elgg_get_river($options);
 	} else {
-		$items = array();
+		$items = [];
 	}
 
 	$options['count'] = $count;
@@ -510,15 +510,15 @@ function _elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pair
 		return '';
 	}
 
-	$wheres = array();
-	$types_wheres = array();
-	$subtypes_wheres = array();
+	$wheres = [];
+	$types_wheres = [];
+	$subtypes_wheres = [];
 
 	// if no pairs, use types and subtypes
 	if (!is_array($pairs)) {
 		if ($types) {
 			if (!is_array($types)) {
-				$types = array($types);
+				$types = [$types];
 			}
 			foreach ($types as $type) {
 				$type = sanitise_string($type);
@@ -528,7 +528,7 @@ function _elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pair
 
 		if ($subtypes) {
 			if (!is_array($subtypes)) {
-				$subtypes = array($subtypes);
+				$subtypes = [$subtypes];
 			}
 			foreach ($subtypes as $subtype) {
 				$subtype = sanitise_string($subtype);
@@ -537,15 +537,14 @@ function _elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pair
 		}
 
 		if (is_array($types_wheres) && count($types_wheres)) {
-			$types_wheres = array(implode(' OR ', $types_wheres));
+			$types_wheres = [implode(' OR ', $types_wheres)];
 		}
 
 		if (is_array($subtypes_wheres) && count($subtypes_wheres)) {
-			$subtypes_wheres = array('(' . implode(' OR ', $subtypes_wheres) . ')');
+			$subtypes_wheres = ['(' . implode(' OR ', $subtypes_wheres) . ')'];
 		}
 
-		$wheres = array(implode(' AND ', array_merge($types_wheres, $subtypes_wheres)));
-
+		$wheres = [implode(' AND ', array_merge($types_wheres, $subtypes_wheres))];
 	} else {
 		// using type/subtype pairs
 		foreach ($pairs as $paired_type => $paired_subtypes) {
@@ -593,7 +592,7 @@ function _elgg_river_get_action_where_sql($types) {
 	}
 
 	// sanitize types array
-	$types_sanitized = array();
+	$types_sanitized = [];
 	foreach ($types as $type) {
 		$types_sanitized[] = sanitise_string($type);
 	}
@@ -622,7 +621,7 @@ function _elgg_river_get_view_where_sql($views) {
 	}
 
 	// sanitize views array
-	$views_sanitized = array();
+	$views_sanitized = [];
 	foreach ($views as $view) {
 		$views_sanitized[] = sanitise_string($view);
 	}

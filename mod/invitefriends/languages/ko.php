@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'friends:invite' => '친구 초대',
 	
@@ -30,4 +30,4 @@ return array(
 
 가입하면 자동으로 친구로 등록됩니다.',
 	
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'ツール',
 	'admin:develop_tools:sandbox' => 'テーマの見本',
@@ -89,4 +89,4 @@ return array(
 	'developers:settings:success' => '設定を保存しました',
 
 	'developers:amd' => 'AMD',
-);
+];

@@ -11,7 +11,7 @@ use ElggSession;
  * Use the elgg_* versions instead.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Actions
  * @since      1.9.0
@@ -44,11 +44,11 @@ class ActionsService {
 	 *
 	 * @var array
 	 */
-	private $actions = array();
+	private $actions = [];
 
-	/** 
+	/**
 	 * The current action being processed
-	 * @var string 
+	 * @var string
 	 */
 	private $currentAction = null;
 
@@ -74,7 +74,7 @@ class ActionsService {
 	 * Executes an action
 	 * If called from action() redirect will be issued by the response factory
 	 * If called as /action page handler response will be handled by \Elgg\Router
-	 * 
+	 *
 	 * @param string $action    Action name
 	 * @param string $forwarder URL to forward to after completion
 	 * @return ResponseBuilder|null
@@ -90,11 +90,11 @@ class ActionsService {
 		// remove plugins that are incompatible.
 		// Login and logout are for convenience.
 		// file/download (see #2010)
-		$exceptions = array(
+		$exceptions = [
 			'admin/plugins/disable',
 			'logout',
 			'file/download',
-		);
+		];
 	
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
@@ -201,10 +201,10 @@ class ActionsService {
 			$access = 'admin';
 		}
 	
-		$this->actions[$action] = array(
+		$this->actions[$action] = [
 			'file' => $filename,
 			'access' => $access,
-		);
+		];
 		return true;
 	}
 	
@@ -241,10 +241,10 @@ class ActionsService {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
 					// else says something to the contrary we assume we're ok
-					$returnval = _elgg_services()->hooks->trigger('action_gatekeeper:permissions:check', 'all', array(
+					$returnval = _elgg_services()->hooks->trigger('action_gatekeeper:permissions:check', 'all', [
 						'token' => $token,
 						'time' => $ts
-					), true);
+					], true);
 
 					if ($returnval) {
 						return true;
@@ -254,7 +254,7 @@ class ActionsService {
 				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
-						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array($this->config->getSiteUrl())));
+						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', [$this->config->getSiteUrl()]));
 					} else {
 						register_error(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
 					}
@@ -262,7 +262,7 @@ class ActionsService {
 			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
-					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array($this->config->getSiteUrl())));
+					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', [$this->config->getSiteUrl()]));
 				} else {
 					register_error(_elgg_services()->translator->translate('actiongatekeeper:tokeninvalid'));
 				}
@@ -273,10 +273,10 @@ class ActionsService {
 			$post_count = count($req->request);
 			if ($length && $post_count < 1) {
 				// The size of $_POST or uploaded file has exceed the size limit
-				$error_msg = _elgg_services()->hooks->trigger('action_gatekeeper:upload_exceeded_msg', 'all', array(
+				$error_msg = _elgg_services()->hooks->trigger('action_gatekeeper:upload_exceeded_msg', 'all', [
 					'post_size' => $length,
 					'visible_errors' => $visible_errors,
-				), _elgg_services()->translator->translate('actiongatekeeper:uploadexceeded'));
+				], _elgg_services()->translator->translate('actiongatekeeper:uploadexceeded'));
 			} else {
 				$error_msg = _elgg_services()->translator->translate('actiongatekeeper:missingfields');
 			}
@@ -290,9 +290,9 @@ class ActionsService {
 
 	/**
 	 * Is the token timestamp within acceptable range?
-	 * 
+	 *
 	 * @param int $ts timestamp from the CSRF token
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function validateTokenTimestamp($ts) {
@@ -313,7 +313,7 @@ class ActionsService {
 			$timeout = 2;
 		}
 		$hour = 60 * 60;
-		return (int)((float)$timeout * $hour);
+		return (int) ((float) $timeout * $hour);
 	}
 
 	/**
@@ -328,9 +328,9 @@ class ActionsService {
 			}
 
 			$token = get_input('__elgg_token');
-			$ts = (int)get_input('__elgg_ts');
+			$ts = (int) get_input('__elgg_ts');
 			if ($token && $this->validateTokenTimestamp($ts)) {
-				// The tokens are present and the time looks valid: this is probably a mismatch due to the 
+				// The tokens are present and the time looks valid: this is probably a mismatch due to the
 				// login form being on a different domain.
 				register_error(_elgg_services()->translator->translate('actiongatekeeper:crosssitelogin'));
 				_elgg_services()->responseFactory->redirect('login', 'csrf');
@@ -381,7 +381,7 @@ class ActionsService {
 			}
 		}
 
-		return _elgg_services()->crypto->getHmac([(int)$timestamp, $session_token], 'md5')
+		return _elgg_services()->crypto->getHmac([(int) $timestamp, $session_token], 'md5')
 			->getToken();
 	}
 	
@@ -440,7 +440,7 @@ class ActionsService {
 
 	/**
 	 * Get all actions
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getAllActions() {
@@ -461,8 +461,8 @@ class ActionsService {
 		// the page's session_token might have expired (not matching __elgg_session in the session), but
 		// we still allow it to be given to validate the tokens in the page.
 		$session_token = get_input('session_token', null, false);
-		$pairs = (array)get_input('pairs', array(), false);
-		$valid_tokens = (object)array();
+		$pairs = (array) get_input('pairs', [], false);
+		$valid_tokens = (object) [];
 		foreach ($pairs as $pair) {
 			list($ts, $token) = explode(',', $pair, 2);
 			if ($this->validateTokenOwnership($token, $ts, $session_token)) {
@@ -472,16 +472,16 @@ class ActionsService {
 
 		$ts = $this->getCurrentTime()->getTimestamp();
 		$token = $this->generateActionToken($ts);
-		$data = array(
-			'token' => array(
+		$data = [
+			'token' => [
 				'__elgg_ts' => $ts,
 				'__elgg_token' => $token,
 				'logged_in' => $this->session->isLoggedIn(),
-			),
+			],
 			'valid_tokens' => $valid_tokens,
 			'session_token' => $this->session->get('__elgg_session'),
 			'user_guid' => $this->session->getLoggedInUserGuid(),
-		);
+		];
 
 		elgg_set_http_header("Content-Type: application/json;charset=utf-8");
 		return elgg_ok_response($data);

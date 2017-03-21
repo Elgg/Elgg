@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Osadź',
 	'embed:media' => 'Osadź treść',
 	'embed:instructions' => 'Kliknij na dowolnym pliku aby osadzić go w treści.',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'Nie znaleziono elementów.',
 
 	'embed:no_sections' => 'Nie znaleziono wspieranych wtyczek osadzających. Zapytaj administratora o wtyczki wspierające osadzanie.',
-);
+];

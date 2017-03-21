@@ -220,7 +220,7 @@ function elgg_get_entity_relationship_where_sql($column, $relationship = null,
  *
  * @return string The viewable list of entities
  */
-function elgg_list_entities_from_relationship(array $options = array()) {
+function elgg_list_entities_from_relationship(array $options = []) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_relationship');
 }
 
@@ -234,7 +234,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  * @return \ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */
-function elgg_get_entities_from_relationship_count(array $options = array()) {
+function elgg_get_entities_from_relationship_count(array $options = []) {
 	return _elgg_services()->relationshipsTable->getEntitiesFromCount($options);
 }
 

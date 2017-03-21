@@ -11,31 +11,31 @@ if (!pages_is_page($page)) {
 	return;
 }
 
-$icon = elgg_view("pages/icon", array(
+$icon = elgg_view("pages/icon", [
 	'annotation' => $annotation,
 	'size' => 'small',
-));
+]);
 
 $owner_guid = $annotation->owner_guid;
 $owner = get_entity($owner_guid);
 if (!$owner) {
 	return;
 }
-$owner_link = elgg_view('output/url', array(
+$owner_link = elgg_view('output/url', [
 	'href' => $owner->getURL(),
 	'text' => $owner->name,
 	'is_trusted' => true,
-));
+]);
 
 $date = elgg_view_friendly_time($annotation->time_created);
 
-$title_link = elgg_view('output/url', array(
+$title_link = elgg_view('output/url', [
 	'href' => $annotation->getURL(),
 	'text' => $page->title,
 	'is_trusted' => true,
-));
+]);
 
-$subtitle = elgg_echo('pages:revision:subtitle', array($date, $owner_link));
+$subtitle = elgg_echo('pages:revision:subtitle', [$date, $owner_link]);
 
 $body = <<< HTML
 <h3>$title_link</h3>
@@ -45,11 +45,11 @@ HTML;
 $menu = '';
 if (!elgg_in_context('widgets')) {
 	// only show annotation menu outside of widgets
-	$menu = elgg_view_menu('annotation', array(
+	$menu = elgg_view_menu('annotation', [
 		'annotation' => $annotation,
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
-	));
+	]);
 }
 
 $body = <<<HTML

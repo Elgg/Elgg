@@ -39,3 +39,4 @@ input:checked ~ .elgg-input-checkbox-switch:after {
 .elgg-input-single-checkbox label + .elgg-field-label {
 	display: inline-block;
 }
+

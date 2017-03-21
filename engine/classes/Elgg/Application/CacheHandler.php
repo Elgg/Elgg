@@ -100,7 +100,6 @@ class CacheHandler {
 
 		// we can't use $config->get yet. It fails before the core is booted
 		if (!$config->getVolatile('simplecache_enabled')) {
-
 			$this->application->bootCore();
 
 			if (!$this->isCacheableView($view)) {
@@ -135,7 +134,7 @@ class CacheHandler {
 			$this->send403("Requested view is not an asset");
 		}
 
-		$lastcache = (int)$config->get('lastcache');
+		$lastcache = (int) $config->get('lastcache');
 
 		$filename = $config->getVolatile('cacheroot') . "views_simplecache/$lastcache/$viewtype/$view";
 
@@ -168,25 +167,25 @@ class CacheHandler {
 	public function parsePath($path) {
 		// no '..'
 		if (false !== strpos($path, '..')) {
-			return array();
+			return [];
 		}
 		// only alphanumeric characters plus /, ., -, and _
 		if (preg_match('#[^a-zA-Z0-9/\.\-_]#', $path)) {
-			return array();
+			return [];
 		}
 
 		// testing showed regex to be marginally faster than array / string functions over 100000 reps
 		// it won't make a difference in real life and regex is easier to read.
 		// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
 		if (!preg_match('#^/cache/([0-9]+)/([^/]+)/(.+)$#', $path, $matches)) {
-			return array();
+			return [];
 		}
 
-		return array(
+		return [
 			'ts' => $matches[1],
 			'viewtype' => $matches[2],
 			'view' => $matches[3],
-		);
+		];
 	}
 
 	/**
@@ -351,11 +350,11 @@ class CacheHandler {
 		$content = $this->renderView($view, $viewtype);
 
 		$hook_type = $this->getViewFileType($view);
-		$hook_params = array(
+		$hook_params = [
 			'view' => $view,
 			'viewtype' => $viewtype,
 			'view_content' => $content,
-		);
+		];
 		return \_elgg_services()->hooks->trigger('simplecache:generate', $hook_type, $hook_params, $content);
 	}
 

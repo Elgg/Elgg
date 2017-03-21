@@ -2,14 +2,14 @@
 /**
  * Elgg checkbox input
  * Displays a checkbox input tag
- * 
+ *
  * @package Elgg
  * @subpackage Core
  *
  *
  * Pass input tag attributes as key value pairs. For a list of allowable
  * attributes, see http://www.w3schools.com/tags/tag_input.asp
- * 
+ *
  * @uses $vars['name']        Name of the checkbox
  * @uses $vars['value']       Value of the checkbox
  * @uses $vars['default']     The default value to submit if not checked.
@@ -24,11 +24,11 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-checkbox');
 
-$defaults = array(
+$defaults = [
 	'default' => 0,
 	'disabled' => false,
 	'type' => 'checkbox'
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

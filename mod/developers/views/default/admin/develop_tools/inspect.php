@@ -24,17 +24,17 @@ switch ($inspect_type) {
 		}
 
 		$data = $inspector->getViews($viewtype);
-		$page = elgg_view($view_name, array(
+		$page = elgg_view($view_name, [
 			"data" => $data,
 			"viewtypes" => $viewtypes,
 			"viewtype" => $viewtype,
-		));
+		]);
 		break;
 	default:
 		$data = $inspector->$method();
-		$page = elgg_view($view_name, array(
+		$page = elgg_view($view_name, [
 			"data" => $data,
-		));
+		]);
 		break;
 }
 

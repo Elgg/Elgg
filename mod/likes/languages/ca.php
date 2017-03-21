@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'li agrada això',
 	'likes:deleted' => 'El teu "m\'agrada" s\'ha eliminat',
 	'likes:see' => 'Mira a qui li agrada',
@@ -35,4 +35,4 @@ o mira el perfil de %2$s aquí:
 Gràcies,
 %4$s',
 	
-);
+];

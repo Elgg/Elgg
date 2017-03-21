@@ -14,7 +14,7 @@
 function file_prepare_form_vars($file = null) {
 
 	// input names => defaults
-	$values = array(
+	$values = [
 		'title' => '',
 		'description' => '',
 		'access_id' => ACCESS_DEFAULT,
@@ -22,7 +22,7 @@ function file_prepare_form_vars($file = null) {
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
 		'entity' => $file,
-	);
+	];
 
 	if ($file) {
 		foreach (array_keys($values) as $field) {

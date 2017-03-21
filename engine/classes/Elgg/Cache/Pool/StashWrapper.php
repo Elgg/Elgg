@@ -7,7 +7,7 @@ use Stash;
 
 /**
  * Defers to Stash for the meat of the caching logic.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @since 1.10.0
@@ -32,7 +32,7 @@ final class StashWrapper implements Pool {
 	public function get($key, callable $callback = null, $default = null) {
 		assert(is_string($key) || is_int($key));
 
-		$item = $this->stash->getItem((string)$key);
+		$item = $this->stash->getItem((string) $key);
 
 		$result = $item->get();
 
@@ -55,14 +55,14 @@ final class StashWrapper implements Pool {
 	public function invalidate($key) {
 		assert(is_string($key) || is_int($key));
 		
-		$this->stash->getItem((string)$key)->clear();
+		$this->stash->getItem((string) $key)->clear();
 	}
 	
 	/** @inheritDoc */
 	public function put($key, $value) {
 		assert(is_string($key) || is_int($key));
 
-		$this->stash->getItem((string)$key)->set($value);
+		$this->stash->getItem((string) $key)->set($value);
 	}
 	
 	/**

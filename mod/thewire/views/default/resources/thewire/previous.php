@@ -11,10 +11,10 @@ if ($parent) {
 	$body = elgg_view_entity($parent);
 }
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => false,
 	'content' => $body,
 	'title' => $title,
-));
+]);
 
 echo elgg_view_page($title, $body);

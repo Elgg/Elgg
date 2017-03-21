@@ -1,7 +1,7 @@
 <?php
 /**
  * Profile info box
- * 
+ *
  * @uses $vars['entity'] The user entity
  */
 

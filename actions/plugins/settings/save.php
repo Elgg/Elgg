@@ -17,7 +17,7 @@ $plugin_id = get_input('plugin_id');
 $plugin = elgg_get_plugin_from_id($plugin_id);
 
 if (!($plugin instanceof ElggPlugin)) {
-	register_error(elgg_echo('plugins:settings:save:fail', array($plugin_id)));
+	register_error(elgg_echo('plugins:settings:save:fail', [$plugin_id]));
 	forward(REFERER);
 }
 
@@ -32,12 +32,12 @@ if (elgg_action_exists("$plugin_id/settings/save")) {
 	foreach ($params as $k => $v) {
 		$result = $plugin->setSetting($k, $v);
 		if (!$result) {
-			register_error(elgg_echo('plugins:settings:save:fail', array($plugin_name)));
+			register_error(elgg_echo('plugins:settings:save:fail', [$plugin_name]));
 			forward(REFERER);
 			exit;
 		}
 	}
 }
 
-system_message(elgg_echo('plugins:settings:save:ok', array($plugin_name)));
+system_message(elgg_echo('plugins:settings:save:ok', [$plugin_name]));
 forward(REFERER);

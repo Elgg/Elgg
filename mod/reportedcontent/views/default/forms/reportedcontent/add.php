@@ -25,7 +25,7 @@ $fields = [
 		'#label' => elgg_echo('reportedcontent:address'),
 		'name' => 'address',
 		'value' => $address,
-		'readonly' => (bool)$address,
+		'readonly' => (bool) $address,
 		'required' => true,
 	],
 	[
@@ -40,9 +40,9 @@ foreach ($fields as $field) {
 	echo elgg_view_field($field);
 }
 
-$footer = elgg_view('input/submit', array(
+$footer = elgg_view('input/submit', [
 	'value' => elgg_echo('reportedcontent:report'),
-));
+]);
 $footer .= elgg_view('input/button', [
 	'class' => 'elgg-button-cancel',
 	'value' => elgg_echo('cancel'),

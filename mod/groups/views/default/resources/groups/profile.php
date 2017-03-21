@@ -14,14 +14,14 @@ elgg_push_breadcrumb($group->name);
 
 groups_register_profile_buttons($group);
 
-$content = elgg_view('groups/profile/layout', array('entity' => $group));
+$content = elgg_view('groups/profile/layout', ['entity' => $group]);
 $sidebar = '';
 
 if (elgg_group_gatekeeper(false)) {
 	if (elgg_is_active_plugin('search')) {
-		$sidebar .= elgg_view('groups/sidebar/search', array('entity' => $group));
+		$sidebar .= elgg_view('groups/sidebar/search', ['entity' => $group]);
 	}
-	$sidebar .= elgg_view('groups/sidebar/members', array('entity' => $group));
+	$sidebar .= elgg_view('groups/sidebar/members', ['entity' => $group]);
 
 	$subscribed = false;
 	if (elgg_is_active_plugin('notifications')) {
@@ -37,17 +37,17 @@ if (elgg_group_gatekeeper(false)) {
 		}
 	}
 
-	$sidebar .= elgg_view('groups/sidebar/my_status', array(
+	$sidebar .= elgg_view('groups/sidebar/my_status', [
 		'entity' => $group,
 		'subscribed' => $subscribed
-	));
+	]);
 }
 
-$params = array(
+$params = [
 	'content' => $content,
 	'sidebar' => $sidebar,
 	'title' => $group->name,
-);
+];
 $body = elgg_view_layout('one_sidebar', $params);
 
 echo elgg_view_page($group->name, $body);

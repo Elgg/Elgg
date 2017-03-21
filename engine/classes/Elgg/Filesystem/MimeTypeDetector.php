@@ -26,7 +26,7 @@ class MimeTypeDetector {
 	/**
 	 * @var array
 	 */
-	public $extensions = array(
+	public $extensions = [
 		'txt' => 'text/plain',
 		'htm' => 'text/html',
 		'html' => 'text/html',
@@ -103,7 +103,7 @@ class MimeTypeDetector {
 		'onetmp' => 'application/msonenote',
 		'onepkg' => 'application/msonenote',
 		'thmx' => 'application/vnd.ms-officetheme',
-	);
+	];
 
 	/**
 	 * Sniff the MIME type

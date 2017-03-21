@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -97,4 +97,4 @@ return array(
 	'file:noaccess' => "あなたには、このファイルを変更する権限がありません。",
 	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "ファイルを選択して下さい。",
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Τα στοιχεία που αναφέρθηκαν',
 	'admin:administer_utilities:reportedcontent' => 'Περιεχόμενο που έχει αναφερθεί',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Λυπούμαστε, η προσπάθεια αναφοράς αυτού του περιεχομένου απέτυχε',
 	'reportedcontent:notarchived' => 'Δεν ήταν δυνατή η αρχειοθέτηση αυτής της αναφοράς',
-);
+];

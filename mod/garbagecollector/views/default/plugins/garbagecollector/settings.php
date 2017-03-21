@@ -15,14 +15,14 @@ if (!$period) {
 	<?php echo elgg_echo('garbagecollector:period'); ?>
 	
 	<?php
-		echo elgg_view('input/select', array(
+		echo elgg_view('input/select', [
 			'name' => 'params[period]',
-			'options_values' => array(
+			'options_values' => [
 				'weekly' => elgg_echo('garbagecollector:weekly'),
 				'monthly' => elgg_echo('garbagecollector:monthly'),
 				'yearly' => elgg_echo('garbagecollector:yearly'),
-			),
+			],
 			'value' => $period
-		));
+		]);
 	?>
 </div>

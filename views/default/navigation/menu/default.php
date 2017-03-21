@@ -22,19 +22,18 @@ $class = elgg_extract_class($vars, ["elgg-menu", "elgg-menu-{$name_class_selecto
 $menu_view = '';
 
 foreach ($vars['menu'] as $section => $menu_items) {
-	
 	$section_class = $class;
 	$section_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($section));
 	$section_class[] = "elgg-menu-{$name_class_selector}-{$section_class_selector}";
 	
-	$menu_view .= elgg_view('navigation/menu/elements/section', array(
+	$menu_view .= elgg_view('navigation/menu/elements/section', [
 		'items' => $menu_items,
 		'class' => $section_class,
 		'section' => $section,
 		'name' => $name,
 		'show_section_headers' => $show_section_headers,
 		'item_class' => $item_class,
-	));
+	]);
 }
 
 if ($menu_view) {

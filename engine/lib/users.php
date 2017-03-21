@@ -205,13 +205,13 @@ function validate_username($username) {
 	}
 
 	if (strlen($username) < $CONFIG->minusername) {
-		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
+		$msg = elgg_echo('registration:usernametooshort', [$CONFIG->minusername]);
 		throw new \RegistrationException($msg);
 	}
 
 	// username in the database has a limit of 128 characters
 	if (strlen($username) > 128) {
-		$msg = elgg_echo('registration:usernametoolong', array(128));
+		$msg = elgg_echo('registration:usernametoolong', [128]);
 		throw new \RegistrationException($msg);
 	}
 
@@ -235,11 +235,11 @@ function validate_username($username) {
 	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=';
 
 	$blacklist2 = elgg_trigger_plugin_hook('username:character_blacklist', 'user',
-		array('blacklist' => $blacklist2), $blacklist2);
+		['blacklist' => $blacklist2], $blacklist2);
 
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
-			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
+			$msg = elgg_echo('registration:invalidchars', [$blacklist2[$n], $blacklist2]);
 			$msg = htmlspecialchars($msg, ENT_QUOTES, 'UTF-8');
 			throw new \RegistrationException($msg);
 		}
@@ -247,7 +247,7 @@ function validate_username($username) {
 
 	$result = true;
 	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
-		array('username' => $username), $result);
+		['username' => $username], $result);
 }
 
 /**
@@ -266,13 +266,13 @@ function validate_password($password) {
 	}
 
 	if (strlen($password) < $CONFIG->min_password_length) {
-		$msg = elgg_echo('registration:passwordtooshort', array($CONFIG->min_password_length));
+		$msg = elgg_echo('registration:passwordtooshort', [$CONFIG->min_password_length]);
 		throw new \RegistrationException($msg);
 	}
 
 	$result = true;
 	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
-		array('password' => $password), $result);
+		['password' => $password], $result);
 }
 
 /**
@@ -291,7 +291,7 @@ function validate_email_address($address) {
 	// Got here, so lets try a hook (defaulting to ok)
 	$result = true;
 	return elgg_trigger_plugin_hook('registeruser:validate:email', 'all',
-		array('email' => $address), $result);
+		['email' => $address], $result);
 }
 
 /**
@@ -516,7 +516,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	}
 
 	if (elgg_is_admin_logged_in()) {
-		$actions = array();
+		$actions = [];
 		if (!$user->isBanned()) {
 			$actions[] = 'ban';
 		} else {
@@ -583,24 +583,24 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 
 	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
-		$options = array(
+		$options = [
 			'name' => 'banned',
 			'text' => "<span>$banned</span>",
 			'href' => false,
 			'priority' => 0,
-		);
-		$return = array(\ElggMenuItem::factory($options));
+		];
+		$return = [\ElggMenuItem::factory($options)];
 	} else {
-		$return = array();
+		$return = [];
 		$location = $entity->location;
 		if (is_string($location) && $location !== '') {
 			$location = htmlspecialchars($location, ENT_QUOTES, 'UTF-8', false);
-			$options = array(
+			$options = [
 				'name' => 'location',
 				'text' => "<span>$location</span>",
 				'href' => false,
 				'priority' => 150,
-			);
+			];
 			$return[] = \ElggMenuItem::factory($options);
 		}
 	}
@@ -619,7 +619,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 function elgg_profile_fields_setup() {
 	global $CONFIG;
 
-	$profile_defaults = array (
+	$profile_defaults =  [
 		'description' => 'longtext',
 		'briefdescription' => 'text',
 		'location' => 'location',
@@ -630,9 +630,9 @@ function elgg_profile_fields_setup() {
 		'mobile' => 'text',
 		'website' => 'url',
 		'twitter' => 'text',
-	);
+	];
 
-	$loaded_defaults = array();
+	$loaded_defaults = [];
 	$fieldlist = elgg_get_config('profile_custom_fields');
 	if ($fieldlist || $fieldlist === '0') {
 		$fieldlistarray = explode(',', $fieldlist);
@@ -640,7 +640,7 @@ function elgg_profile_fields_setup() {
 			if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
 				$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
 				$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
-				add_translation(get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
+				add_translation(get_current_language(), ["profile:admin_defined_profile_{$listitem}" => $translation]);
 			}
 		}
 	}
@@ -657,7 +657,7 @@ function elgg_profile_fields_setup() {
 		if ($type == 'tags' || $type == 'location' || $type == 'tag') {
 			elgg_register_tag_metadata_name($name);
 			// register a tag name translation
-			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("profile:$name")));
+			add_translation(get_current_language(), ["tag_names:$name" => elgg_echo("profile:$name")]);
 		}
 	}
 }
@@ -727,7 +727,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 		'href' => "avatar/edit/{$owner->username}",
 		'text' => elgg_echo('avatar:edit'),
 		'section' => '1_profile',
-		'contexts' => array('settings'),
+		'contexts' => ['settings'],
 	]);
 	
 	$return[] = \ElggMenuItem::factory([
@@ -735,7 +735,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 		'href' => "profile/{$owner->username}/edit",
 		'text' => elgg_echo('profile:edit'),
 		'section' => '1_profile',
-		'contexts' => array('settings'),
+		'contexts' => ['settings'],
 	]);
 	
 	return $return;

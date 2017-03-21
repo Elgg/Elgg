@@ -30,11 +30,11 @@ function pages_init() {
 	// Extend the main css view
 	elgg_extend_view('elgg.css', 'pages/css');
 
-	elgg_define_js('jquery.treeview', array(
+	elgg_define_js('jquery.treeview', [
 		'src' => '/mod/pages/vendors/jquery-treeview/jquery.treeview.min.js',
 		'exports' => 'jQuery.fn.treeview',
-		'deps' => array('jquery'),
-	));
+		'deps' => ['jquery'],
+	]);
 	$css_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
 	elgg_register_css('jquery.treeview', $css_url);
 
@@ -52,14 +52,14 @@ function pages_init() {
 	
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below
-	elgg_set_config('pages', array(
+	elgg_set_config('pages', [
 		'title' => 'text',
 		'description' => 'longtext',
 		'tags' => 'tags',
 		'parent_guid' => 'parent',
 		'access_id' => 'access',
 		'write_access_id' => 'access',
-	));
+	]);
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
 
@@ -259,12 +259,12 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 		}
 	}
 
-	$options = array(
+	$options = [
 		'name' => 'history',
 		'text' => elgg_echo('pages:history'),
 		'href' => "pages/history/$entity->guid",
 		'priority' => 150,
-	);
+	];
 	$return[] = ElggMenuItem::factory($options);
 
 	return $return;
@@ -289,14 +289,14 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language);
-	$notification->body = elgg_echo('pages:notify:body', array(
+	$notification->subject = elgg_echo('pages:notify:subject', [$title], $language);
+	$notification->body = elgg_echo('pages:notify:body', [
 		$owner->name,
 		$title,
 		$descr,
 		$entity->getURL(),
-	), $language);
-	$notification->summary = elgg_echo('pages:notify:summary', array($entity->title), $language);
+	], $language);
+	$notification->summary = elgg_echo('pages:notify:summary', [$entity->title], $language);
 	$notification->url = $entity->getURL();
 	return $notification;
 }
@@ -417,7 +417,7 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
  * @access private
  */
 function pages_is_page($value) {
-	return ($value instanceof ElggObject) && in_array($value->getSubtype(), array('page', 'page_top'));
+	return ($value instanceof ElggObject) && in_array($value->getSubtype(), ['page', 'page_top']);
 }
 
 /**
@@ -432,7 +432,7 @@ function pages_is_page($value) {
  */
 function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 	if (empty($params['input_params']['entity_subtype'])
-			|| !in_array($params['input_params']['entity_subtype'], array('page', 'page_top'))) {
+			|| !in_array($params['input_params']['entity_subtype'], ['page', 'page_top'])) {
 		return null;
 	}
 
@@ -498,8 +498,8 @@ function pages_search_pages($hook, $type, $value, $params) {
 	}
 
 	unset($params["subtype"]);
-	$params["subtypes"] = array("page_top", "page");
+	$params["subtypes"] = ["page_top", "page"];
 
 	// trigger the 'normal' object search as it can handle the added options
-	return elgg_trigger_plugin_hook('search', 'object', $params, array());
+	return elgg_trigger_plugin_hook('search', 'object', $params, []);
 }

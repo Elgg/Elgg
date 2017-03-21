@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:diagnostics' => '시스템 진단',
 	'diagnostics' => '시스템 진단',
 	'diagnostics:report' => '진단 보고서',
@@ -33,4 +33,4 @@ PHP 정보:
 
 %s
 ------------------------------------------------------------------------',
-);
+];

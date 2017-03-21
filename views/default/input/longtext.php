@@ -22,12 +22,12 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-longtext');
 
-$defaults = array(
+$defaults = [
 	'value' => '',
 	'rows' => '10',
 	'cols' => '50',
 	'id' => "elgg-input-" . base_convert(mt_rand(), 10, 36),
-);
+];
 
 $vars = array_merge($defaults, $vars);
 
@@ -45,10 +45,10 @@ $vars['data-editor-opts'] = json_encode($editor_opts);
 $value = htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8');
 unset($vars['value']);
 
-echo elgg_view_menu('longtext', array(
+echo elgg_view_menu('longtext', [
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 	'id' => $vars['id'],
-));
+]);
 
 echo elgg_format_element('textarea', $vars, $value);

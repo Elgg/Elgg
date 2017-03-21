@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => 'Lokiselain',
 	'logbrowser' => 'Lokiselain',
 	'logbrowser:browse' => 'Selaa järjestelmän lokia',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => 'Kohteen tyyppi',
 	'logbrowser:object:guid' => 'Kohteen GUID',
 	'logbrowser:action' => 'Toiminto',
-);
+];

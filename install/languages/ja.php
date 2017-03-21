@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg インストール',
 	'install:welcome' => 'こんにちは、ようこそ',
 	'install:requirements' => '必要条件の確認',
@@ -152,8 +152,8 @@ return array(
 	'install:error:rewrite:altserver' => 'リライトルールがのテストに失敗しました。Elggリライトルールでwebサーバを設定してもう一度テストをこころみてください。',
 	'install:error:rewrite:unknown' => 'あなたのサーバで起動されているwebサーバを特定することができませんでした。リライトルールにも失敗したようです。残念ですがアドバイスも出来そうにありません。問題解決リンクをチェックしてみてください。',
 	'install:warning:rewrite:unknown' => 'あなたのサーバはリライトルールの自動テストをサポートしていないようです。その上、あなたのご使用のブラウザはJavaScriptでのチェッキングをサポートしていません。インストールを続行できますが、問題が発生することがあるかもしれません。次のリンクをクリックすれば、リライトルールを手動でテストすることができます：<a href="%s" target="_blank">テスト</a>。テストがうまく行けば success（成功）の文字が表示されるはずです。',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => '対応できないエラーが発生しそれをログに記録しました。あなたがサイトの管理者の方でしたら、ファイルをチェックしてみてください。そうでないならサイトの管理者に次の情報をお知らせください。:',
 	'DatabaseException:WrongCredentials' => "Elgg は与えられた証明では接続出来ませんでした。設定ファイルをチェックしてみてください。",
-);
+];

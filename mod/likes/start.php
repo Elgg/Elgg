@@ -77,7 +77,7 @@ function likes_permissions_check_annotate($hook, $type, $return, $params) {
 	$type = $entity->type;
 	$subtype = $entity->getSubtype();
 
-	return (bool)elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+	return (bool) elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
 }
 
 /**
@@ -95,7 +95,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 
 	$type = $entity->type;
 	$subtype = $entity->getSubtype();
-	$likable = (bool)elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+	$likable = (bool) elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
 	if (!$likable) {
 		return $return;
 	}
@@ -104,7 +104,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
 		
 		// Always register both. That makes it super easy to toggle with javascript
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = ElggMenuItem::factory([
 			'name' => 'likes',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
 			'text' => elgg_view_icon('thumbs-up'),
@@ -112,8 +112,8 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 			'item_class' => $hasLiked ? 'hidden' : '',
 			'priority' => 1000,
 			'deps' => ['elgg/likes'],
-		));
-		$return[] = ElggMenuItem::factory(array(
+		]);
+		$return[] = ElggMenuItem::factory([
 			'name' => 'unlike',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
 			'text' => elgg_view_icon('thumbs-up-alt'),
@@ -121,19 +121,19 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 			'item_class' => $hasLiked ? '' : 'hidden',
 			'priority' => 1000,
 			'deps' => ['elgg/likes'],
-		));
+		]);
 	}
 	
 	// likes count
-	$count = elgg_view('likes/count', array('entity' => $entity));
+	$count = elgg_view('likes/count', ['entity' => $entity]);
 	if ($count) {
-		$options = array(
+		$options = [
 			'name' => 'likes_count',
 			'text' => $count,
 			'href' => false,
 			'priority' => 1001,
 			'deps' => ['elgg/likes'],
-		);
+		];
 		$return[] = ElggMenuItem::factory($options);
 	}
 
@@ -168,7 +168,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 	$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($object->guid);
 
 	// Always register both. That makes it super easy to toggle with javascript
-	$return[] = ElggMenuItem::factory(array(
+	$return[] = ElggMenuItem::factory([
 		'name' => 'likes',
 		'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
 		'text' => elgg_view_icon('thumbs-up'),
@@ -176,8 +176,8 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		'item_class' => $hasLiked ? 'hidden' : '',
 		'priority' => 100,
 		'deps' => ['elgg/likes'],
-	));
-	$return[] = ElggMenuItem::factory(array(
+	]);
+	$return[] = ElggMenuItem::factory([
 		'name' => 'unlike',
 		'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
 		'text' => elgg_view_icon('thumbs-up-alt'),
@@ -185,18 +185,18 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		'item_class' => $hasLiked ? '' : 'hidden',
 		'priority' => 100,
 		'deps' => ['elgg/likes'],
-	));
+	]);
 
 	// likes count
-	$count = elgg_view('likes/count', array('entity' => $object));
+	$count = elgg_view('likes/count', ['entity' => $object]);
 	if ($count) {
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = ElggMenuItem::factory([
 			'name' => 'likes_count',
 			'text' => $count,
 			'href' => false,
 			'priority' => 101,
 			'deps' => ['elgg/likes'],
-		));
+		]);
 	}
 
 	return $return;
@@ -211,7 +211,7 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
  */
 function likes_count(ElggEntity $entity) {
 	$type = $entity->getType();
-	$params = array('entity' => $entity);
+	$params = ['entity' => $entity];
 	$number = elgg_trigger_plugin_hook('likes:count', $type, $params, false);
 
 	if ($number) {

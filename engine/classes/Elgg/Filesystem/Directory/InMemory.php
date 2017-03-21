@@ -14,7 +14,7 @@ final class InMemory {
 
 	/**
 	 * Shorthand for generating a new in-memory-only filesystem.
-	 * 
+	 *
 	 * @param array $files A structure like  ['/path' => 'contents']
 	 *
 	 * @return Directory

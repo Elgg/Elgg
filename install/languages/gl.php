@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Instalación de Elgg',
 	'install:welcome' => 'Benvida',
 	'install:requirements' => 'Comprobación de requisitos',
@@ -155,8 +155,8 @@ Outra causa, menos probábel, é que Apache estea configurado con un alias para 
 	'install:error:rewrite:altserver' => 'Non se pasou a proba das regras de reescritura. Ten que configurar o servidor web coas regras de reescritura de Elgg e intentalo de novo',
 	'install:error:rewrite:unknown' => 'Uf. Non foi posíbel determinar o tipo de servidor web que está a usar, e non pasou a proba das regras de reescritura. Non podemos aconsellalo sobre como solucionar o seu problema específico. Bótelle unha ollada á ligazón sobre solución de problemas.',
 	'install:warning:rewrite:unknown' => 'O servidor non permite probar automaticamente as regras de reescritura, e o navegador non permite probalas mediante JavaScript. Pode continuar a instalación, pero pode que ao rematar o sitio lle dea problemas. Para probar manualmente as regras de reescritura, siga esta ligazón: <a href="%s" target="_blank">probar</a>. Se as regras funcionan, aparecerá a palabra «success».',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Produciuse un erro do que non é posíbel recuperarse, e quedou rexistrado. Se vostede é o administrador do sistema, comprobe que a información do ficheiro de configuración é correcta. En caso contrario, póñase en contacto co administrador e facilítelle a seguinte información:',
 	'DatabaseException:WrongCredentials' => "Elgg non puido conectar coa base de datos mediante o nome de usuario e contrasinal facilitados. Revise o ficheiro de configuración.",
-);
+];

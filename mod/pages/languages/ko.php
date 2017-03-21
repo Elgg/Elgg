@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -109,4 +109,4 @@ return array(
 
 	'pages:newchild' => "하위 페이지 만들기",
 	'pages:backtoparent' => "'%s'로 돌아감",
-);
+];

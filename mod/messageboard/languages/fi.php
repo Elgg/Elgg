@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -67,4 +67,4 @@ Tähän viestiin ei voi vastata.",
 
 	'messageboard:failure' => "Viestin tallentamisessa tapahtui odottamaton virhe. Yritä uudelleen.",
 
-);
+];

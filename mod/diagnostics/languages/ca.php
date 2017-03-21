@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:diagnostics' => 'Diagnòstic del sistema',
 	'diagnostics' => 'Diagnòstic del sistema',
 	'diagnostics:report' => 'Informe del diagnòstic',
@@ -25,4 +25,4 @@ Generat %s per %s
 
 %s
 ------------------------------------------------------------------------',
-);
+];

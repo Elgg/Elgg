@@ -8,7 +8,7 @@ if (empty($data)) {
 $views = elgg_extract('views', $data);
 $global_hooks = elgg_extract('global_hooks', $data);
 $filtered_views = elgg_extract('filtered_views', $data);
-$input_filtered_views = (array)elgg_extract('input_filtered_views', $data);
+$input_filtered_views = (array) elgg_extract('input_filtered_views', $data);
 
 $root = elgg_get_root_path();
 $strip = function ($file) use ($root) {
@@ -26,16 +26,16 @@ foreach ($viewtypes as $type) {
 	if ($type !== "default") {
 		$href .= "&type={$type}";
 	}
-	elgg_register_menu_item('developers_inspect_viewtype', array(
+	elgg_register_menu_item('developers_inspect_viewtype', [
 		'name' => $type,
 		'text' => $type,
 		'href' => $href,
-	));
+	]);
 }
 
-echo elgg_view_menu('developers_inspect_viewtype', array(
+echo elgg_view_menu('developers_inspect_viewtype', [
 	'class' => 'elgg-tabs mbm',
-));
+]);
 
 if ($global_hooks) {
 	array_walk($global_hooks, function (&$hook) {
@@ -69,7 +69,7 @@ foreach ($views as $view => $components) {
 		$rowspan += 1;
 		$id = "z" . md5("view_vars, $view");
 		$link = "<a href='?inspect_type=Plugin%20Hooks#$id'>view_vars, $view</a>";
-		$col2 = elgg_echo('developers:inspect:views:input_filtered', array($link));
+		$col2 = elgg_echo('developers:inspect:views:input_filtered', [$link]);
 
 		$extra_rows .= "<tr><td>&nbsp;</td><td>$col2</td></tr>";
 	}
@@ -78,7 +78,7 @@ foreach ($views as $view => $components) {
 		$rowspan += 1;
 		$id = "z" . md5("view, $view");
 		$link = "<a href='?inspect_type=Plugin%20Hooks#$id'>view, $view</a>";
-		$col2 = elgg_echo('developers:inspect:views:filtered', array($link));
+		$col2 = elgg_echo('developers:inspect:views:filtered', [$link]);
 
 		$extra_rows .= "<tr><td>&nbsp;</td><td>$col2</td></tr>";
 	}
@@ -98,10 +98,10 @@ foreach ($views as $view => $components) {
 		} elseif ($priority != 500) {
 			$href = $make_id($component->view);
 			echo "<td>$priority</td>";
-			$link = elgg_view('admin/develop_tools/inspect/views/view_link', array(
+			$link = elgg_view('admin/develop_tools/inspect/views/view_link', [
 				'view' => $component->view,
 				'text' => $file,
-			));
+			]);
 			echo "<td style='opacity:.6'>$link</td>";
 		} else {
 			echo "<td>$priority</td>";

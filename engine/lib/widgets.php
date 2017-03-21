@@ -243,7 +243,7 @@ function _elgg_widgets_init() {
  */
 function _elgg_default_widgets_init() {
 	global $CONFIG;
-	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, array());
+	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
 
 	$CONFIG->default_widget_info = $default_widgets;
 
@@ -254,7 +254,7 @@ function _elgg_default_widgets_init() {
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_default_widgets_permissions_override');
 
 		// only register the callback once per event
-		$events = array();
+		$events = [];
 		foreach ($default_widgets as $info) {
 			if (!is_array($info)) {
 				continue;
@@ -300,21 +300,20 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 	foreach ($default_widget_info as $info) {
 		if ($info['entity_type'] == $type) {
 			if ($info['entity_subtype'] == ELGG_ENTITIES_ANY_VALUE || $info['entity_subtype'] == $subtype) {
-
 				// need to be able to access everything
 				$old_ia = elgg_set_ignore_access(true);
 				elgg_push_context('create_default_widgets');
 
 				// pull in by widget context with widget owners as the site
 				// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
-				$options = array(
+				$options = [
 					'type' => 'object',
 					'subtype' => 'widget',
 					'owner_guid' => elgg_get_site_entity()->guid,
 					'private_setting_name' => 'context',
 					'private_setting_value' => $info['widget_context'],
 					'limit' => 0
-				);
+				];
 
 				$widgets = elgg_get_entities_from_private_settings($options);
 				/* @var \ElggWidget[] $widgets */

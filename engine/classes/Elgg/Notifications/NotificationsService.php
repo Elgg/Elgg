@@ -49,16 +49,16 @@ class NotificationsService {
 	protected $logger;
 	
 	/** @var array Registered notification events */
-	protected $events = array();
+	protected $events = [];
 
 	/** @var array Registered notification methods */
-	protected $methods = array();
+	protected $methods = [];
 
 	/** @var array Deprecated notification handlers */
-	protected $deprHandlers = array();
+	protected $deprHandlers = [];
 
 	/** @var array Deprecated message subjects */
-	protected $deprSubjects = array();
+	protected $deprSubjects = [];
 
 	/**
 	 * Constructor
@@ -92,13 +92,13 @@ class NotificationsService {
 	 * @see elgg_register_notification_event()
 	 * @access private
 	 */
-	public function registerEvent($type, $subtype, array $actions = array()) {
+	public function registerEvent($type, $subtype, array $actions = []) {
 
 		if (!isset($this->events[$type])) {
-			$this->events[$type] = array();
+			$this->events[$type] = [];
 		}
 		if (!isset($this->events[$type][$subtype])) {
-			$this->events[$type][$subtype] = array();
+			$this->events[$type][$subtype] = [];
 		}
 
 		$action_list =& $this->events[$type][$subtype];
@@ -179,10 +179,10 @@ class NotificationsService {
 			}
 
 			if ($registered) {
-				$params = array(
+				$params = [
 					'action' => $action,
 					'object' => $object,
-				);
+				];
 				$registered = $this->hooks->trigger('enqueue', 'notification', $params, $registered);
 			}
 
@@ -310,7 +310,7 @@ class NotificationsService {
 	 * @param ElggEntity  $sender     Sender of the notification
 	 * @param ElggUser[]  $recipients An array of entities to notify
 	 * @param array       $params     Notification parameters
-	 * 
+	 *
 	 * @uses $params['subject']          string
 	 *                                   Default message subject
 	 * @uses $params['body']             string
@@ -363,7 +363,6 @@ class NotificationsService {
 		$subscriptions = [];
 
 		foreach ($recipients as $recipient) {
-
 			// Are we overriding delivery?
 			$methods = $methods_override;
 			if (empty($methods)) {
@@ -483,10 +482,10 @@ class NotificationsService {
 
 		if ($this->hooks->hasHandler('send', "notification:$method")) {
 			// return true to indicate the notification has been sent
-			$params = array(
+			$params = [
 				'notification' => $notification,
 				'event' => $event,
-			);
+			];
 
 			$result = $this->hooks->trigger('send', "notification:$method", $params, false);
 			if ($this->logger->getLevel() == Logger::INFO) {
@@ -505,7 +504,7 @@ class NotificationsService {
 			$subject = $notification->subject;
 			$body = $notification->body;
 			$params = $notification->params;
-			return (bool) _elgg_notify_user($userGuid, $senderGuid, $subject, $body, $params, array($method));
+			return (bool) _elgg_notify_user($userGuid, $senderGuid, $subject, $body, $params, [$method]);
 		}
 	}
 
@@ -537,14 +536,14 @@ class NotificationsService {
 			} else {
 				$display_name = '';
 			}
-			return $this->translator->translate($subject_key, array(
+			return $this->translator->translate($subject_key, [
 						$actor->name,
 						$display_name,
-							), $language);
+							], $language);
 		}
 
 		// Fall back to default subject
-		return $this->translator->translate('notification:subject', array($actor->name), $language);
+		return $this->translator->translate('notification:subject', [$actor->name], $language);
 	}
 
 	/**
@@ -604,18 +603,18 @@ class NotificationsService {
 				$container_name = '';
 			}
 
-			return $this->translator->translate($body_key, array(
+			return $this->translator->translate($body_key, [
 						$recipient->name,
 						$actor->name,
 						$display_name,
 						$container_name,
 						$object->description,
 						$object->getURL(),
-							), $language);
+							], $language);
 		}
 
 		// Fall back to default body
-		return $this->translator->translate('notification:body', array($object->getURL()), $language);
+		return $this->translator->translate('notification:body', [$object->getURL()], $language);
 	}
 
 	/**
@@ -650,7 +649,7 @@ class NotificationsService {
 	 * @return array
 	 */
 	public function getMethodsAsDeprecatedGlobal() {
-		$data = array();
+		$data = [];
 		foreach ($this->methods as $method) {
 			$data[$method] = 'empty';
 		}
@@ -670,11 +669,11 @@ class NotificationsService {
 		if (!$entity) {
 			return $notification;
 		}
-		$params = array(
+		$params = [
 			'entity' => $entity,
 			'to_entity' => $notification->getRecipient(),
 			'method' => $method,
-		);
+		];
 		$subject = $this->getDeprecatedNotificationSubject($entity->getType(), $entity->getSubtype());
 		$string = $subject . ": " . $entity->getURL();
 		$body = $this->hooks->trigger('notify:entity:message', $entity->getType(), $params, $string);
@@ -704,7 +703,7 @@ class NotificationsService {
 		}
 
 		if (!isset($this->deprSubjects[$type])) {
-			$this->deprSubjects[$type] = array();
+			$this->deprSubjects[$type] = [];
 		}
 
 		$this->deprSubjects[$type][$subtype] = $subject;

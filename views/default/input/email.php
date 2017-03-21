@@ -11,12 +11,12 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-email');
 
-$defaults = array(
+$defaults = [
 	'disabled' => false,
 	'autocapitalize' => 'off',
 	'autocorrect' => 'off',
 	'type' => 'email'
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

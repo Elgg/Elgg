@@ -45,7 +45,7 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 		return false;
 	}
 
-	$upgrade_files = array();
+	$upgrade_files = [];
 
 	while ($upgrade_file = readdir($handle)) {
 		// make sure this is a well formed upgrade.

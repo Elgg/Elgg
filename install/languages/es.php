@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Instalación de Elgg',
 	'install:welcome' => 'Bienvenido!',
 	'install:requirements' => 'Verificación de requerimientos',
@@ -153,8 +153,8 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:error:rewrite:altserver' => 'La prueba de la reescritura de reglas ha fallado. Debe configurar su servidor web con reescritura de reglas e intentar nuevamente.',
 	'install:error:rewrite:unknown' => 'Oof. No podemos saber qué tipo de servidor web se encuentra ejecutando y falló la reescritura de reglas. No podemos ofrecer ninguna ayuda específica. Por favor verifique el enlace de solución de problemas.',
 	'install:warning:rewrite:unknown' => 'Su servidor no soporta la prueba automática de reescritura de reglas. Puede continuar con la instalación, pero puede experimentar problemas con el sitio. Puede probar manualmente las reescritura de reglas accediento a este enlace: <a href="%s" target="_blank">pruebas</a>. Observará la palabra success si la ejecución ha sido exitosa.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. If you are the site administrator check your settings file, otherwise contact the site administrator with the following information:',
 	'DatabaseException:WrongCredentials' => "Elgg no puede conectar con la base de datos, usando los credenciales. Consulte en el archivo 'settings'.",
-);
+];

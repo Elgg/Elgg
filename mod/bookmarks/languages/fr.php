@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Voir et commenter ce signet:
 	'bookmarks:save:invalid' => "L’adresse du signet est invalide et ne peut donc pas être enregistrée.",
 	'bookmarks:delete:failed' => "Votre signet n'a pas pu être supprimé. Merci de réessayer.",
 	'bookmarks:unknown_bookmark' => 'Impossible de trouver le signet spécifié',
-);
+];

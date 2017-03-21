@@ -69,7 +69,6 @@ class BatchUpgrader {
 		$has_errors = (bool) $upgrade->has_errors;
 		
 		while ($count > $processed && (microtime(true) - $started) < $this->config->get('batch_run_time_in_secs')) {
-			
 			$result = $batch->run(new Result(), $offset);
 
 			$failure_count = $result->getFailureCount();
@@ -124,11 +123,11 @@ class BatchUpgrader {
 		}
 
 		// Give feedback to the user interface about the current batch.
-		return array(
+		return [
 			'errors' => $errors,
 			'numErrors' => $batch_failure_count,
 			'numSuccess' => $batch_success_count,
-		);
+		];
 	}
 
 }

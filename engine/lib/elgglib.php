@@ -37,7 +37,7 @@ function elgg_register_library($name, $location) {
 
 	$libraries = $config->get('libraries');
 	if ($libraries === null) {
-		$libraries = array();
+		$libraries = [];
 	}
 	$libraries[$name] = $location;
 	$config->set('libraries', $libraries);
@@ -55,7 +55,7 @@ function elgg_register_library($name, $location) {
  * @since 1.8.0
  */
 function elgg_load_library($name) {
-	static $loaded_libraries = array();
+	static $loaded_libraries = [];
 
 	if (in_array($name, $loaded_libraries)) {
 		return;
@@ -376,8 +376,7 @@ function elgg_get_loaded_external_files($type, $location) {
  *
  * @return array Filenames in $directory, in the form $directory/filename.
  */
-function elgg_get_file_list($directory, $exceptions = array(), $list = array(),
-$extensions = null) {
+function elgg_get_file_list($directory, $exceptions = [], $list = [], $extensions = null) {
 
 	$directory = sanitise_filepath($directory);
 	if ($handle = opendir($directory)) {
@@ -664,7 +663,7 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  *
  * @see elgg_trigger_event
  */
-function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message, $version) {
+function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message = null, $version = null) {
 	return _elgg_services()->events->triggerDeprecated($event, $object_type, $object, $message, $version);
 }
 
@@ -910,15 +909,15 @@ function _elgg_php_exception_handler($exception) {
 		}
 
 		if (elgg_is_admin_logged_in()) {
-			$body = elgg_view("messages/exceptions/admin_exception", array(
+			$body = elgg_view("messages/exceptions/admin_exception", [
 				'object' => $exception,
 				'ts' => $timestamp
-			));
+			]);
 		} else {
-			$body = elgg_view("messages/exceptions/exception", array(
+			$body = elgg_view("messages/exceptions/exception", [
 				'object' => $exception,
 				'ts' => $timestamp
-			));
+			]);
 		}
 
 		$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
@@ -1011,12 +1010,12 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * @since 1.7.0
  */
 function elgg_log($message, $level = 'NOTICE') {
-	static $levels = array(
+	static $levels = [
 		'INFO' => 200,
 		'NOTICE' => 250,
 		'WARNING' => 300,
 		'ERROR' => 400,
-	);
+	];
 
 	if (!isset($levels[$level])) {
 		throw new \InvalidArgumentException("Invalid \$level value");
@@ -1139,7 +1138,7 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 	if (isset($components['query'])) {
 		$query = elgg_parse_str($components['query']);
 	} else {
-		$query = array();
+		$query = [];
 	}
 
 	if (isset($query['__elgg_ts']) && isset($query['__elgg_token'])) {
@@ -1167,7 +1166,7 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
  * @since 1.7.0
  */
 function elgg_http_remove_url_query_element($url, $element) {
-	return elgg_http_add_url_query_elements($url, array($element => null));
+	return elgg_http_add_url_query_elements($url, [$element => null]);
 }
 
 /**
@@ -1186,7 +1185,7 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	if (isset($url_array['query'])) {
 		$query = elgg_parse_str($url_array['query']);
 	} else {
-		$query = array();
+		$query = [];
 	}
 
 	foreach ($elements as $k => $v) {
@@ -1224,7 +1223,7 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
+function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'limit']) {
 	$url1 = elgg_normalize_url($url1);
 	$url2 = elgg_normalize_url($url2);
 
@@ -1245,7 +1244,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	}
 
 	// compare basic bits
-	$parts = array('scheme', 'host', 'path');
+	$parts = ['scheme', 'host', 'path'];
 
 	foreach ($parts as $part) {
 		if ((isset($url1_info[$part]) && isset($url2_info[$part]))
@@ -1265,8 +1264,8 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	}
 
 	// compare get params that might be out of order
-	$url1_params = array();
-	$url2_params = array();
+	$url1_params = [];
+	$url2_params = [];
 
 	if (isset($url1_info['query'])) {
 		if ($url1_info['query'] = html_entity_decode($url1_info['query'])) {
@@ -1407,10 +1406,9 @@ function elgg_extract_class(array $array, $existing = []) {
  *
  * @return bool
  */
-function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC,
-$sort_type = SORT_LOCALE_STRING) {
+function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, $sort_type = SORT_LOCALE_STRING) {
 
-	$sort = array();
+	$sort = [];
 
 	foreach ($array as $v) {
 		if (isset($v[$element])) {
@@ -1459,7 +1457,7 @@ function elgg_get_ini_setting_in_bytes($setting) {
 
 	// convert INI setting when shorthand notation is used
 	$last = strtolower($val[strlen($val) - 1]);
-	switch($last) {
+	switch ($last) {
 		case 'g':
 			$val *= 1024;
 			// fallthrough intentional
@@ -1515,7 +1513,7 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
 			} else {
 				// Test for array refs #2641
 				if (!is_array($options[$singular])) {
-					$options[$plural] = array($options[$singular]);
+					$options[$plural] = [$options[$singular]];
 				} else {
 					$options[$plural] = $options[$singular];
 				}
@@ -1550,7 +1548,7 @@ function _elgg_shutdown_hook() {
 		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
-		$time = (float)(microtime(true) - $GLOBALS['START_MICROTIME']);
+		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);
 		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
@@ -1603,7 +1601,7 @@ function _elgg_ajax_page_handler($segments) {
 		}
 
 		// pull out GET parameters through filter
-		$vars = array();
+		$vars = [];
 		foreach (_elgg_services()->request->query->keys() as $name) {
 			$vars[$name] = get_input($name);
 		}
@@ -1633,7 +1631,7 @@ function _elgg_ajax_page_handler($segments) {
 			}
 		} else {
 			$action = implode('/', array_slice($segments, 1));
-			$output = elgg_view_form($action, array(), $vars);
+			$output = elgg_view_form($action, [], $vars);
 		}
 
 		if ($content_type) {
@@ -1752,29 +1750,29 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
 	}
 
 	// at least one of these is required.
-	$required = array(
+	$required = [
 		// generic restraints
 		'guid', 'guids'
-	);
+	];
 
 	switch ($type) {
 		case 'metadata':
-			$metadata_required = array(
+			$metadata_required = [
 				'metadata_owner_guid', 'metadata_owner_guids',
 				'metadata_name', 'metadata_names',
 				'metadata_value', 'metadata_values'
-			);
+			];
 
 			$required = array_merge($required, $metadata_required);
 			break;
 
 		case 'annotations':
 		case 'annotation':
-			$annotations_required = array(
+			$annotations_required = [
 				'annotation_owner_guid', 'annotation_owner_guids',
 				'annotation_name', 'annotation_names',
 				'annotation_value', 'annotation_values'
-			);
+			];
 
 			$required = array_merge($required, $annotations_required);
 			break;

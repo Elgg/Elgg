@@ -32,7 +32,7 @@ class StickyForms {
 		}
 
 		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', array());
+		$data = $session->get('sticky_forms', []);
 		$req = _elgg_services()->request;
 	
 		// will go through XSS filtering in elgg_get_sticky_value()
@@ -58,7 +58,7 @@ class StickyForms {
 	 */
 	function clearStickyForm($form_name) {
 		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', array());
+		$data = $session->get('sticky_forms', []);
 		unset($data[$form_name]);
 		$session->set('sticky_forms', $data);
 	}
@@ -72,7 +72,7 @@ class StickyForms {
 	 */
 	function isStickyForm($form_name) {
 		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', array());
+		$data = $session->get('sticky_forms', []);
 		return isset($data[$form_name]);
 	}
 	
@@ -90,7 +90,7 @@ class StickyForms {
 	 */
 	function getStickyValue($form_name, $variable = '', $default = null, $filter_result = true) {
 		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', array());
+		$data = $session->get('sticky_forms', []);
 		if (isset($data[$form_name][$variable])) {
 			$value = $data[$form_name][$variable];
 			if ($filter_result) {
@@ -112,9 +112,9 @@ class StickyForms {
 	 */
 	function getStickyValues($form_name, $filter_result = true) {
 		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', array());
+		$data = $session->get('sticky_forms', []);
 		if (!isset($data[$form_name])) {
-			return array();
+			return [];
 		}
 	
 		$values = $data[$form_name];
@@ -137,7 +137,7 @@ class StickyForms {
 	 */
 	function clearStickyValue($form_name, $variable) {
 		$session = _elgg_services()->session;
-		$data = $session->get('sticky_forms', array());
+		$data = $session->get('sticky_forms', []);
 		unset($data[$form_name][$variable]);
 		$session->set('sticky_forms', $data);
 	}

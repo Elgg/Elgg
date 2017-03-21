@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Zenbat bider nahi duzu sistemaren loga artxibatua izatea?',
 
 	'logrotate:logrotated' => "Loga biratuta\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Ezabatutako loga\n",
 	'logrotate:lognotdeleted' => "Ez dago ezabatutako logik\n",
-);
+];

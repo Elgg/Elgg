@@ -2,7 +2,7 @@
 
 elgg_signed_request_gatekeeper();
 
-$user_guid = get_input('u', FALSE);
+$user_guid = get_input('u', false);
 
 // new users are not enabled by default.
 $access_status = access_get_show_hidden_status();
@@ -23,7 +23,7 @@ elgg_pop_context();
 
 try {
 	login($user);
-} catch(LoginException $e){
+} catch (LoginException $e) {
 	register_error($e->getMessage());
 }
 

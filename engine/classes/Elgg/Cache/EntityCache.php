@@ -69,7 +69,7 @@ class EntityCache {
 
 	/**
 	 * Returns cached user entity by username
-	 * 
+	 *
 	 * @param string $username Username
 	 * @return \ElggUser|false
 	 */
@@ -119,7 +119,7 @@ class EntityCache {
 	 * @return void
 	 */
 	public function remove($guid) {
-		$guid = (int)$guid;
+		$guid = (int) $guid;
 		
 		if (!isset($this->entities[$guid])) {
 			return;

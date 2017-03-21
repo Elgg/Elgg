@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Työkalut',
 	'admin:develop_tools:sandbox' => 'Teemojen kehittäminen',
@@ -86,4 +86,4 @@ return array(
 	'developers:settings:success' => 'Asetukset tallennettu',
 
 	'developers:amd' => 'AMD',
-);
+];

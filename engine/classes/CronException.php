@@ -7,4 +7,5 @@
  * @package    Elgg
  * @subpackage Exceptions.Stub
  */
-class CronException extends \Exception {}
+class CronException extends \Exception {
+}

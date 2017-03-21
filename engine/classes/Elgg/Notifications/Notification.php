@@ -3,7 +3,7 @@ namespace Elgg\Notifications;
 
 /**
  * Notification container
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.10
@@ -49,7 +49,7 @@ class Notification {
 	 * @param array       $params   Optional array of parameters
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct(\ElggEntity $from, \ElggEntity $to, $language, $subject, $body, $summary = '', array $params = array()) {
+	public function __construct(\ElggEntity $from, \ElggEntity $to, $language, $subject, $body, $summary = '', array $params = []) {
 		if (!$from) {
 			throw new \InvalidArgumentException('$from is not a valid \ElggEntity');
 		}

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -65,4 +65,4 @@ return array(
 
 	'messageboard:failure' => "Παρουσιάστηκε μη αναμενόμενο σφάλμα κατά την προσθήκη του μηνύματος σας. Παρακαλούμε δοκιμάστε ξανά.",
 
-);
+];

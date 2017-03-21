@@ -55,7 +55,7 @@ function site_notifications_page_handler($segments) {
  */
 function site_notifications_set_topbar() {
 	if (elgg_is_logged_in()) {
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item('topbar', [
 			'name' => 'site_notifications',
 			'parent_name' => 'account',
 			'href' => 'site_notifications/view/' . elgg_get_logged_in_user_entity()->username,
@@ -63,7 +63,7 @@ function site_notifications_set_topbar() {
 			'icon' => 'bell',
 			'priority' => 100,
 			'section' => 'alt',
-		));
+		]);
 	}
 }
 

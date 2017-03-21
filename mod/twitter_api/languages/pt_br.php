@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'twitter_api' => 'Servicos do Twitter',
 
 	'twitter_api:requires_oauth' => 'Servicos do Twitter necessitam que o plugin da Biblioteca \'OAuth\' esteja habilitado.',
@@ -53,4 +53,4 @@ return array(
 	'twitter_api:interstitial:password_mismatch' => 'Suas senhas não são iguais.',
 	'twitter_api:interstitial:cannot_save' => 'Não foi possível salvar os detalhes da conta.',
 	'twitter_api:interstitial:saved' => 'Detalhes da conta foram salvos.',
-);
+];

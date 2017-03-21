@@ -9,7 +9,7 @@
 $page_owner_guid = (int) get_input('page_owner_guid');
 $handler = get_input('handler');
 $context = get_input('context');
-$show_access = (bool)get_input('show_access', true);
+$show_access = (bool) get_input('show_access', true);
 $column = (int) get_input('column', 1);
 $default_widgets = (int) get_input('default_widgets', 0);
 

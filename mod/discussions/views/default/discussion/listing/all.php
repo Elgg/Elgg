@@ -5,7 +5,7 @@
  *
  * @uses $vars['container_type'] Container type filter to apply
  */
-$options = array(
+$options = [
 	'type' => 'object',
 	'subtype' => 'discussion',
 	'order_by' => 'e.last_action desc',
@@ -14,7 +14,7 @@ $options = array(
 	'no_results' => elgg_echo('discussion:none'),
 	'preload_owners' => true,
 	'preload_containers' => true,
-);
+];
 
 $container_type = elgg_extract('container_type', $vars);
 if ($container_type) {

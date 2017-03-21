@@ -155,6 +155,7 @@ Removed classes/interfaces
  * ``ImportException``
  * ``ODD`` and all classes beginning with ``ODD*``.
  * ``XmlElement``
+ * ``Elgg_Notifications_Event``: Use ``\Elgg\Notifications\Event``
  
 Schema changes
 --------------

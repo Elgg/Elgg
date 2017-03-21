@@ -12,5 +12,5 @@
 	<p>
 		<?php echo elgg_echo("avatar:create:instructions"); ?>
 	</p>
-	<?php echo elgg_view_form('avatar/crop', array(), $vars); ?>
+	<?php echo elgg_view_form('avatar/crop', [], $vars); ?>
 </div>

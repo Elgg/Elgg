@@ -12,7 +12,7 @@
 
 elgg_load_css('elgg.admin');
 
-$messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+$messages = elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]);
 $messages .= elgg_view('page/elements/admin_notices', $vars);
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
@@ -43,11 +43,11 @@ $body .= elgg_view('page/elements/foot');
 
 $head = elgg_view('page/elements/head', $vars['head']);
 
-$params = array(
+$params = [
 	'head' => $head,
 	'body' => $body,
 	'body_attrs' => elgg_extract('body_attrs', $vars, []),
 	'html_attrs' => elgg_extract('html_attrs', $vars, []),
-);
+];
 
 echo elgg_view('page/elements/html', $params);

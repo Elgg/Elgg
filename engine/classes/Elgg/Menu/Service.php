@@ -114,7 +114,7 @@ class Service {
 	 */
 	function combineMenus(array $names = [], array $params = [], $new_name = '') {
 		if (!$new_name) {
-			$new_name = implode('__' , $names);
+			$new_name = implode('__', $names);
 		}
 
 		$all_items = [];

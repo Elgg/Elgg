@@ -73,14 +73,14 @@ function string_to_tag_array($string) {
  * 						   otherwise, array of objects with ->tag and ->total values
  * @since 1.7.1
  */
-function elgg_get_tags(array $options = array()) {
+function elgg_get_tags(array $options = []) {
 	global $CONFIG;
 
 	_elgg_check_unsupported_site_guid($options);
 	
-	$defaults = array(
+	$defaults = [
 		'threshold' => 1,
-		'tag_names' => array(),
+		'tag_names' => [],
 		'limit' => elgg_get_config('default_limit'),
 
 		'types' => ELGG_ENTITIES_ANY_VALUE,
@@ -95,14 +95,14 @@ function elgg_get_tags(array $options = array()) {
 		'created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
-		'joins' => array(),
-		'wheres' => array(),
-	);
+		'joins' => [],
+		'wheres' => [],
+	];
 
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'tag_name');
+	$singulars = ['type', 'subtype', 'owner_guid', 'container_guid', 'tag_name'];
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$registered_tags = elgg_get_registered_tag_metadata_names();
@@ -121,7 +121,7 @@ function elgg_get_tags(array $options = array()) {
 	// catch for tags that were spaces
 	$wheres[] = "md.value != ''";
 
-	$sanitised_tags = array();
+	$sanitised_tags = [];
 	foreach ($options['tag_names'] as $tag) {
 		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
 	}
@@ -203,7 +203,7 @@ function elgg_get_tags(array $options = array()) {
  */
 function elgg_register_tag_metadata_name($name) {
 	if (!isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) {
-		$GLOBALS['_ELGG']->registered_tag_metadata_names = array();
+		$GLOBALS['_ELGG']->registered_tag_metadata_names = [];
 	}
 
 	if (!in_array($name, $GLOBALS['_ELGG']->registered_tag_metadata_names)) {
@@ -220,7 +220,7 @@ function elgg_register_tag_metadata_name($name) {
  * @since 1.7.0
  */
 function elgg_get_registered_tag_metadata_names() {
-	$names = (isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) ? $GLOBALS['_ELGG']->registered_tag_metadata_names : array();
+	$names = (isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) ? $GLOBALS['_ELGG']->registered_tag_metadata_names : [];
 
 	return $names;
 }

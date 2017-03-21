@@ -18,12 +18,12 @@
  */
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-date');
 
-$defaults = array(
+$defaults = [
 	'value' => '',
 	'disabled' => false,
 	'timestamp' => false,
 	'type' => 'text'
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

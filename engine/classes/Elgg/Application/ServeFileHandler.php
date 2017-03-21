@@ -63,13 +63,13 @@ class ServeFileHandler {
 			return $response->setStatusCode(403)->setContent('URL has expired');
 		}
 
-		$hmac_data = array(
+		$hmac_data = [
 			'expires' => (int) $expires,
 			'last_updated' => (int) $last_updated,
 			'disposition' => $disposition,
 			'path' => $path_from_dataroot,
 			'use_cookie' => (int) $use_cookie,
-		);
+		];
 		if ((bool) $use_cookie) {
 			$hmac_data['cookie'] = $this->getCookieValue($request);
 		}
@@ -121,7 +121,7 @@ class ServeFileHandler {
 		if ($sendfile_type) {
 			$request->headers->set('X-Sendfile-Type', $sendfile_type);
 
-			$mapping = (string)$this->config->getVolatile('X-Accel-Mapping');
+			$mapping = (string) $this->config->getVolatile('X-Accel-Mapping');
 			$request->headers->set('X-Accel-Mapping', $mapping);
 
 			$response->trustXSendfileTypeHeader();

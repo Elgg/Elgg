@@ -61,7 +61,7 @@ class ExternalFiles {
 		}
 	
 		// no negative priorities right now.
-		$priority = max((int)$priority, 0);
+		$priority = max((int) $priority, 0);
 	
 		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
 	
@@ -178,7 +178,7 @@ class ExternalFiles {
 			}
 			return $items;
 		}
-		return array();
+		return [];
 	}
 	
 	/**
@@ -190,7 +190,7 @@ class ExternalFiles {
 	protected function bootstrap($type) {
 
 		if (!isset($GLOBALS['_ELGG']->externals)) {
-			$GLOBALS['_ELGG']->externals = array();
+			$GLOBALS['_ELGG']->externals = [];
 		}
 	
 		if (!isset($GLOBALS['_ELGG']->externals[$type]) || !$GLOBALS['_ELGG']->externals[$type] instanceof \ElggPriorityList) {
@@ -198,11 +198,11 @@ class ExternalFiles {
 		}
 	
 		if (!isset($GLOBALS['_ELGG']->externals_map)) {
-			$GLOBALS['_ELGG']->externals_map = array();
+			$GLOBALS['_ELGG']->externals_map = [];
 		}
 	
 		if (!isset($GLOBALS['_ELGG']->externals_map[$type])) {
-			$GLOBALS['_ELGG']->externals_map[$type] = array();
+			$GLOBALS['_ELGG']->externals_map[$type] = [];
 		}
 	}
 }

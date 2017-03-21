@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -67,4 +67,4 @@ Siusplau, no responguis aquest correu electrònic, recorda que és el sistema qu
 
 	'messageboard:failure' => "Error xungo, el sistema no en té ni idea de què està passant. Torna-ho a provar o posa't en contacte amb els/les administradors/es.",
 
-);
+];

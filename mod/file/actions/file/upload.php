@@ -62,7 +62,6 @@ $file->container_guid = $container_guid;
 $file->tags = string_to_tag_array($tags);
 
 if ($uploaded_file && $uploaded_file->isValid()) {
-
 	if ($file->acceptUploadedFile($uploaded_file)) {
 		$guid = $file->save();
 	}
@@ -82,7 +81,7 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 
 	if (isset($reset_icon_urls)) {
 		// we touch the thumbs because we want new URLs from \Elgg\FileService\File::getURL
-		$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
+		$thumbnails = [$file->thumbnail, $file->smallthumb, $file->largethumb];
 		foreach ($thumbnails as $thumbnail) {
 			$thumbfile = new ElggFile();
 			$thumbfile->owner_guid = $file->owner_guid;
@@ -104,12 +103,12 @@ if ($new_file) {
 	if ($guid) {
 		$message = elgg_echo("file:saved");
 		system_message($message);
-		elgg_create_river_item(array(
+		elgg_create_river_item([
 			'view' => 'river/object/file/create',
 			'action_type' => 'create',
 			'subject_guid' => elgg_get_logged_in_user_guid(),
 			'object_guid' => $file->guid,
-		));
+		]);
 	} else {
 		// failed to save file object - nothing we can do about this
 		$error = elgg_echo("file:uploadfailed");
@@ -122,7 +121,6 @@ if ($new_file) {
 	} else {
 		forward("file/owner/$container->username");
 	}
-
 } else {
 	if ($guid) {
 		system_message(elgg_echo("file:saved"));

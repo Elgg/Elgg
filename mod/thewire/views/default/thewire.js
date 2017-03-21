@@ -75,10 +75,10 @@ elgg.thewire.viewPrevious = function(event) {
 				}
 			}
 		});
-
 	}
 
 	event.preventDefault();
 };
 
 elgg.register_hook_handler('init', 'system', elgg.thewire.init);
+

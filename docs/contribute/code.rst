@@ -181,6 +181,30 @@ Otherwise you may need to perform an interactive rebase:
 4. ``git push -f your_remote your_branch`` to force push the branch (updating your PR).
 5. Rename the PR title to match
 
+
+.. _contribute/code#standards:
+
+Coding Standards
+================
+
+Elgg uses set of standards that are based partially on PEAR and PSR2 standards. You can view the ruleset in ``vendor/elgg/sniffs/elgg.xml``.
+
+To check your code for standard violations (provided you have installed Elgg with dev dependencies), run:
+
+.. code::
+
+    phpcs --standard=vendor/elgg/sniffs/elgg.xml -s path/to/dir/to/check
+
+
+To automatically fix fixable violations, run:
+
+.. code::
+
+    phpcbf --standard=vendor/elgg/sniffs/elgg.xml path/to/dir/to/fix
+
+To check core directories, you can use shortcut ``composer lint`` and ``composer lint-fixer``.
+
+
 .. _contribute/code#testing:
 
 Testing

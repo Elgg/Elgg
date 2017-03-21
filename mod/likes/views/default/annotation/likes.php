@@ -17,12 +17,12 @@ if (!$user) {
 	return true;
 }
 
-$user_icon = elgg_view_entity_icon($user, 'tiny', array('use_hover' => false));
-$user_link = elgg_view('output/url', array(
+$user_icon = elgg_view_entity_icon($user, 'tiny', ['use_hover' => false]);
+$user_link = elgg_view('output/url', [
 	'href' => $user->getURL(),
 	'text' => $user->name,
 	'is_trusted' => true,
-));
+]);
 
 $likes_string = elgg_echo('likes:this');
 
@@ -30,12 +30,12 @@ $friendlytime = elgg_view_friendly_time($like->time_created);
 
 $delete_button = '';
 if ($like->canEdit()) {
-	$delete_button = elgg_view("output/url",array(
-    	'href' => "action/likes/delete?id={$like->id}",
-    	'text' => elgg_view_icon('delete', 'float-alt'),
-    	'confirm' => elgg_echo('likes:delete:confirm'),
-    	'encode_text' => false,
-    ));
+	$delete_button = elgg_view("output/url", [
+		'href' => "action/likes/delete?id={$like->id}",
+		'text' => elgg_view_icon('delete', 'float-alt'),
+		'confirm' => elgg_echo('likes:delete:confirm'),
+		'encode_text' => false,
+	]);
 }
 
 $body = <<<HTML

@@ -5,7 +5,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Core
- * 
+ *
  * @property-read int    $id         The unique identifier (read-only)
  * @property      int    $owner_guid GUID of the owner
  * @property      string $name       Name of the collection
@@ -89,7 +89,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Check if user can this collection
-	 * 
+	 *
 	 * @param int $user_guid GUID of the user
 	 * @return bool
 	 */
@@ -99,7 +99,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Returns members of the access collection
-	 * 
+	 *
 	 * @param array $options ege options
 	 * @return ElggEntity|int|false
 	 */
@@ -109,7 +109,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Checks if user is already in access collection
-	 * 
+	 *
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */
@@ -119,7 +119,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Adds a new member to access collection
-	 * 
+	 *
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */
@@ -129,7 +129,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Removes a user from access collection
-	 * 
+	 *
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */

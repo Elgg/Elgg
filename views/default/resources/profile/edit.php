@@ -22,12 +22,12 @@ elgg_push_context('profile_edit');
 
 $title = elgg_echo('profile:edit');
 
-$content = elgg_view_form('profile/edit', array(), array('entity' => $user));
+$content = elgg_view_form('profile/edit', [], ['entity' => $user]);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
-);
+];
 $body = elgg_view_layout('one_sidebar', $params);
 
 echo elgg_view_page($title, $body);

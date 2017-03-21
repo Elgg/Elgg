@@ -161,7 +161,7 @@ function create_metadata_from_array($entity_guid, array $name_and_values, $value
  * @return \ElggMetadata[]|mixed
  * @since 1.8.0
  */
-function elgg_get_metadata(array $options = array()) {
+function elgg_get_metadata(array $options = []) {
 	return _elgg_services()->metadataTable->getAll($options);
 }
 
@@ -271,7 +271,7 @@ function elgg_enable_metadata(array $options) {
  * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
-function elgg_get_entities_from_metadata(array $options = array()) {
+function elgg_get_entities_from_metadata(array $options = []) {
 	return _elgg_services()->metadataTable->getEntities($options);
 }
 
@@ -328,7 +328,7 @@ function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = null, 
  * @return array Array of strings
  */
 function metadata_array_to_values($array) {
-	$valuearray = array();
+	$valuearray = [];
 
 	if (is_array($array)) {
 		foreach ($array as $element) {

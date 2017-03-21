@@ -1,7 +1,7 @@
 <?php
-$params = array();
-$params['menu'] = array();
-$params['menu']['default'] = array();
+$params = [];
+$params['menu'] = [];
+$params['menu']['default'] = [];
 $params['menu']['default'][] = new ElggMenuItem(1, "Public", false);
 $params['menu']['default'][] = new ElggMenuItem(2, "Edit", "#");
 $params['menu']['default'][] = new ElggMenuItem(3, elgg_view_icon('thumbs-up'), "#");

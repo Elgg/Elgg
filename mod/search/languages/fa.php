@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'یک واژه برای جستجو وارد کنید:',
 	'search:no_results' => 'بدون نتیجه.',
 	'search:matched' => 'همسان:',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'توسط',
 	'search:unavailable_entity' => 'نهاد در دسترس نیست',
 	'search:unknown_entity' => 'نوع نهاد ناشناخته',
-);
+];

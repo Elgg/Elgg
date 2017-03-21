@@ -23,8 +23,8 @@ if (empty($friends)) {
 
 echo elgg_view_field([
 	'#type' => 'friendspicker',
-	'entities' => $friends, 
-	'name' => 'user_guid', 
+	'entities' => $friends,
+	'name' => 'user_guid',
 	'highlight' => 'all',
 ]);
 

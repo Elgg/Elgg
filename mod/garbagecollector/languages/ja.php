@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'ガベージコレクションをする頻度',
 
 	'garbagecollector:weekly' => '１週間に１回',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'どこからもリンクされていないメタ文字を削除中',
-);
+];

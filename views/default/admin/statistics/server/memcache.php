@@ -11,7 +11,6 @@ if (!elgg_get_config('memcache') || empty($servers) || !is_memcache_available())
 $memcache = new Memcache;
 
 foreach ($servers as $server) {
-
 	$title = "{$server[0]}:{$server[1]}";
 
 	$memcache->connect($server[0], $server[1]);

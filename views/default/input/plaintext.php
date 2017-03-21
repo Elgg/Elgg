@@ -14,12 +14,12 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-plaintext');
 
-$defaults = array(
+$defaults = [
 	'value' => '',
 	'rows' => '10',
 	'cols' => '50',
 	'disabled' => false,
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

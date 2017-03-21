@@ -28,14 +28,14 @@
  *
  */
 
-$defaults = array(
+$defaults = [
 	'align' => 'vertical',
-	'value' => array(),
+	'value' => [],
 	'default' => 0,
 	'disabled' => false,
-	'options' => array(),
+	'options' => [],
 	'name' => '',
-);
+];
 
 $vars = array_merge($defaults, $vars);
 
@@ -55,7 +55,7 @@ unset($vars['id']);
 if (is_array($vars['value'])) {
 	$values = array_map('elgg_strtolower', $vars['value']);
 } else {
-	$values = array(elgg_strtolower($vars['value']));
+	$values = [elgg_strtolower($vars['value'])];
 }
 
 $input_vars = $vars;

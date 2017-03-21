@@ -6,4 +6,5 @@ namespace Elgg\I18n;
  *
  * @access private
  */
-class InvalidLocaleException extends \InvalidArgumentException {}
+class InvalidLocaleException extends \InvalidArgumentException {
+}

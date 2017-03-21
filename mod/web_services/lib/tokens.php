@@ -43,7 +43,7 @@ function create_user_token($username, $expire = 60) {
  */
 function get_user_tokens($user_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 
 	$tokens = get_data("SELECT * from {$dbprefix}users_apisessions
 		where user_guid=$user_guid");

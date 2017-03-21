@@ -11,7 +11,7 @@ class ElggMenuBuilder {
 	/**
 	 * @var \ElggMenuItem[]
 	 */
-	protected $menu = array();
+	protected $menu = [];
 
 	protected $selected = null;
 
@@ -61,12 +61,12 @@ class ElggMenuBuilder {
 	 */
 	protected function selectFromContext() {
 		if (!isset($this->menu)) {
-			$this->menu = array();
+			$this->menu = [];
 			return;
 		}
 
 		// get menu items for this context
-		$selected_menu = array();
+		$selected_menu = [];
 		foreach ($this->menu as $menu_item) {
 			if (!is_object($menu_item)) {
 				_elgg_services()->logger->error("A non-object was passed to \ElggMenuBuilder");
@@ -82,14 +82,14 @@ class ElggMenuBuilder {
 
 	/**
 	 * Group the menu items into sections
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function setupSections() {
-		$sectioned_menu = array();
+		$sectioned_menu = [];
 		foreach ($this->menu as $menu_item) {
 			if (!isset($sectioned_menu[$menu_item->getSection()])) {
-				$sectioned_menu[$menu_item->getSection()] = array();
+				$sectioned_menu[$menu_item->getSection()] = [];
 			}
 			$sectioned_menu[$menu_item->getSection()][] = $menu_item;
 		}
@@ -103,12 +103,12 @@ class ElggMenuBuilder {
 	 * @return void
 	 */
 	protected function setupTrees() {
-		$menu_tree = array();
+		$menu_tree = [];
 
 		foreach ($this->menu as $key => $section) {
-			$parents = array();
-			$children = array();
-			$all_menu_items = array();
+			$parents = [];
+			$children = [];
+			$all_menu_items = [];
 			
 			// divide base nodes from children
 			foreach ($section as $menu_item) {
@@ -124,7 +124,7 @@ class ElggMenuBuilder {
 				}
 				
 				$all_menu_items[$menu_item_name] = $menu_item;
-			} 
+			}
 			
 			if (empty($all_menu_items)) {
 				// empty sections can be skipped
@@ -145,7 +145,7 @@ class ElggMenuBuilder {
 								
 				if (!array_key_exists($parent_name, $all_menu_items)) {
 					// orphaned child, inform authorities and skip to next item
-					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:OrphanedChild', array($menu_item_name, $parent_name));
+					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:OrphanedChild', [$menu_item_name, $parent_name]);
 					_elgg_services()->logger->notice($message);
 					
 					continue;
@@ -156,7 +156,7 @@ class ElggMenuBuilder {
 					$menu_item->setParent($all_menu_items[$parent_name]);
 				} else {
 					// menu item already existed in parents children, report the duplicate registration
-					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:DuplicateChild', array($menu_item_name));
+					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:DuplicateChild', [$menu_item_name]);
 					_elgg_services()->logger->notice($message);
 					
 					continue;
@@ -243,7 +243,7 @@ class ElggMenuBuilder {
 
 			// depth first traversal of tree
 			foreach ($section as $root) {
-				$stack = array();
+				$stack = [];
 				array_push($stack, $root);
 				while (!empty($stack)) {
 					$node = array_pop($stack);

@@ -30,3 +30,4 @@ define(function(require) {
 		e.preventDefault();
 	});
 });
+

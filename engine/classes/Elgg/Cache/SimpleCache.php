@@ -102,7 +102,7 @@ class SimpleCache {
 	function getRoot() {
 		$viewtype = elgg_get_viewtype();
 		if ($this->isEnabled()) {
-			$lastcache = (int)$this->config->get('lastcache');
+			$lastcache = (int) $this->config->get('lastcache');
 		} else {
 			$lastcache = 0;
 		}
@@ -180,7 +180,7 @@ class SimpleCache {
 	function init() {
 		$lastcache = $this->config->get('lastcache');
 		if (!defined('UPGRADING') && empty($lastcache)) {
-			$this->config->set('lastcache', (int)$this->config->get('simplecache_lastupdate'));
+			$this->config->set('lastcache', (int) $this->config->get('simplecache_lastupdate'));
 		}
 	}
 }

@@ -41,7 +41,7 @@ class RelationshipsTable {
 	 * Constructor
 	 *
 	 * @param Database      $db       Elgg Database
-	 * @param EntityTable   $entities Entity table 
+	 * @param EntityTable   $entities Entity table
 	 * @param MetadataTable $metadata Metadata table
 	 * @param EventsService $events   Events service
 	 */
@@ -93,7 +93,7 @@ class RelationshipsTable {
 	 * @return bool
 	 */
 	public function delete($id, $call_event = true) {
-		$id = (int)$id;
+		$id = (int) $id;
 
 		$relationship = $this->get($id);
 
@@ -141,8 +141,8 @@ class RelationshipsTable {
 				ON DUPLICATE KEY UPDATE time_created = :time
 		";
 		$params = [
-			':guid1' => (int)$guid_one,
-			':guid2' => (int)$guid_two,
+			':guid1' => (int) $guid_one,
+			':guid2' => (int) $guid_two,
 			':relationship' => $relationship,
 			':time' => $this->getCurrentTime()->getTimestamp(),
 		];
@@ -183,8 +183,8 @@ class RelationshipsTable {
 			LIMIT 1
 		";
 		$params = [
-			':guid1' => (int)$guid_one,
-			':guid2' => (int)$guid_two,
+			':guid1' => (int) $guid_one,
+			':guid2' => (int) $guid_two,
 			':relationship' => $relationship,
 		];
 		$row = $this->rowToElggRelationship($this->db->getDataRow($query, null, $params));
@@ -272,7 +272,7 @@ class RelationshipsTable {
 	 * @return \ElggRelationship[]
 	 */
 	public function getAll($guid, $inverse_relationship = false) {
-		$params[':guid'] = (int)$guid;
+		$params[':guid'] = (int) $guid;
 
 		$where = ($inverse_relationship ? "guid_two = :guid" : "guid_one = :guid");
 
@@ -323,7 +323,7 @@ class RelationshipsTable {
 	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
 	 */
 	public function getEntities($options) {
-		$defaults = array(
+		$defaults = [
 			'relationship' => null,
 			'relationship_guid' => null,
 			'inverse_relationship' => false,
@@ -331,7 +331,7 @@ class RelationshipsTable {
 
 			'relationship_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 			'relationship_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
-		);
+		];
 
 		$options = array_merge($defaults, $options);
 
@@ -343,9 +343,9 @@ class RelationshipsTable {
 		if ($clauses) {
 			// merge wheres to pass to get_entities()
 			if (isset($options['wheres']) && !is_array($options['wheres'])) {
-				$options['wheres'] = array($options['wheres']);
+				$options['wheres'] = [$options['wheres']];
 			} elseif (!isset($options['wheres'])) {
-				$options['wheres'] = array();
+				$options['wheres'] = [];
 			}
 
 			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
@@ -355,24 +355,24 @@ class RelationshipsTable {
 					$options['relationship_created_time_upper'],
 					$options['relationship_created_time_lower']);
 			if ($time_wheres) {
-				$options['wheres'] = array_merge($options['wheres'], array($time_wheres));
+				$options['wheres'] = array_merge($options['wheres'], [$time_wheres]);
 			}
 			// merge joins to pass to get_entities()
 			if (isset($options['joins']) && !is_array($options['joins'])) {
-				$options['joins'] = array($options['joins']);
+				$options['joins'] = [$options['joins']];
 			} elseif (!isset($options['joins'])) {
-				$options['joins'] = array();
+				$options['joins'] = [];
 			}
 
 			$options['joins'] = array_merge($options['joins'], $clauses['joins']);
 
 			if (isset($options['selects']) && !is_array($options['selects'])) {
-				$options['selects'] = array($options['selects']);
+				$options['selects'] = [$options['selects']];
 			} elseif (!isset($options['selects'])) {
-				$options['selects'] = array();
+				$options['selects'] = [];
 			}
 
-			$select = array('r.id');
+			$select = ['r.id'];
 
 			$options['selects'] = array_merge($options['selects'], $select);
 
@@ -405,8 +405,8 @@ class RelationshipsTable {
 			return '';
 		}
 
-		$wheres = array();
-		$joins = array();
+		$wheres = [];
+		$joins = [];
 		$group_by = '';
 
 		if ($inverse_relationship) {
@@ -432,8 +432,7 @@ class RelationshipsTable {
 		}
 
 		if ($where_str = implode(' AND ', $wheres)) {
-
-			return array('wheres' => array("($where_str)"), 'joins' => $joins, 'group_by' => $group_by);
+			return ['wheres' => ["($where_str)"], 'joins' => $joins, 'group_by' => $group_by];
 		}
 
 		return '';
@@ -448,7 +447,7 @@ class RelationshipsTable {
 	 *
 	 * @return \ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
 	 */
-	public function getEntitiesFromCount(array $options = array()) {
+	public function getEntitiesFromCount(array $options = []) {
 		$options['selects'][] = "COUNT(e.guid) as total";
 		$options['group_by'] = 'r.guid_two';
 		$options['order_by'] = 'total desc';

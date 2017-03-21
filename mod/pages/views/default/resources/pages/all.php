@@ -12,20 +12,20 @@ elgg_push_breadcrumb(elgg_echo('pages'));
 
 elgg_register_title_button('pages', 'add', 'object', 'page_top');
 
-$content = elgg_list_entities(array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'page_top',
 	'full_view' => false,
 	'no_results' => elgg_echo('pages:none'),
 	'preload_owners' => true,
 	'preload_containers' => true,
-));
+]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar'),
-));
+]);
 
 echo elgg_view_page($title, $body);

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Indtast et søgeord:',
 	'search:no_results' => 'Ingen resultater...',
 	'search:matched' => 'Match: ',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'af',
 	'search:unavailable_entity' => 'Utilgængelig søgeterm',
 	'search:unknown_entity' => 'Ukendt Entitets type',
-);
+];

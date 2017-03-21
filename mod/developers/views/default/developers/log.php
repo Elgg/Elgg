@@ -9,7 +9,7 @@ $items = $cache->get();
 // stop collecting messages
 elgg_unregister_plugin_hook_handler('debug', 'log', [$cache, 'insertDump']);
 
-$pres = array();
+$pres = [];
 if ($items) {
 	foreach ($items as $item) {
 		$pres[] = '<pre>' . print_r($item, true) . '</pre>';

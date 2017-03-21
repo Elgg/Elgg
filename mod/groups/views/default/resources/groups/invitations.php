@@ -21,11 +21,11 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view('groups/invitationrequests');
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

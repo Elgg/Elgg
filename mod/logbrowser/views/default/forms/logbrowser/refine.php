@@ -23,32 +23,32 @@ $ip_address = elgg_extract('ip_address', $vars);
 $username = elgg_extract('username', $vars);
 
 $form = "<div>" . elgg_echo('logbrowser:user');
-$form .= elgg_view('input/text', array(
+$form .= elgg_view('input/text', [
 	'name' => 'search_username',
 	'value' => $username,
-)) . "</div>";
+]) . "</div>";
 
 $form .= "<div>" . elgg_echo('logbrowser:ip_address');
-$form .= elgg_view('input/text', array(
+$form .= elgg_view('input/text', [
 	'name' => 'ip_address',
 	'value' => $ip_address,
-)) . "</div>";
+]) . "</div>";
 
 $form .= "<div>" . elgg_echo('logbrowser:starttime');
-$form .= elgg_view('input/text', array(
+$form .= elgg_view('input/text', [
 	'name' => 'timelower',
 	'value' => $lowerval,
-)) . "</div>";
+]) . "</div>";
 
 $form .= "<div>" . elgg_echo('logbrowser:endtime');
-$form .= elgg_view('input/text', array(
+$form .= elgg_view('input/text', [
 	'name' => 'timeupper',
 	'value' => $upperval,
-))  . "</div>";
+])  . "</div>";
 $form .= '<div class="elgg-foot">';
-$form .= elgg_view('input/submit', array(
+$form .= elgg_view('input/submit', [
 	'value' => elgg_echo('search'),
-));
+]);
 $form .= '</div>';
 
 echo $form;

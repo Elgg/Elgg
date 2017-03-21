@@ -36,15 +36,15 @@ if (elgg_get_config('allow_registration')) {
 			// note: To catch all new users, even those created by an admin,
 			// register for the create, user event instead.
 			// only passing vars that aren't in ElggUser.
-			$params = array(
+			$params = [
 				'user' => $new_user,
 				'password' => $password,
 				'friend_guid' => $friend_guid,
 				'invitecode' => $invitecode
-			);
+			];
 
 			// @todo should registration be allowed no matter what the plugins return?
-			if (!elgg_trigger_plugin_hook('register', 'user', $params, TRUE)) {
+			if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
 				$ia = elgg_set_ignore_access(true);
 				$new_user->delete();
 				elgg_set_ignore_access($ia);
@@ -57,7 +57,7 @@ if (elgg_get_config('allow_registration')) {
 			elgg_clear_sticky_form('register');
 
 			if ($new_user->enabled == "yes") {
-				system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
+				system_message(elgg_echo("registerok", [elgg_get_site_entity()->name]));
 
 				// if exception thrown, this probably means there is a validation
 				// plugin that has disabled the user
@@ -73,7 +73,7 @@ if (elgg_get_config('allow_registration')) {
 						$forward_url = '';
 						$forward_source = null;
 					}
-					$params = array('user' => $new_user, 'source' => $forward_source);
+					$params = ['user' => $new_user, 'source' => $forward_source];
 					$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 					forward($forward_url);
 				} catch (LoginException $e) {

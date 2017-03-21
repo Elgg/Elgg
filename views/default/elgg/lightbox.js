@@ -130,7 +130,7 @@ define(function (require) {
 				.on('resize.lightbox', function() {
 					elgg.data.lightbox.reposition = $(window).height() > 600;
 					lightbox.resize();
-			});
+				});
 		},
 
 		/**

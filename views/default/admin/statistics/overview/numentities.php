@@ -5,7 +5,6 @@ $rows = '';
 foreach ($entity_stats as $k => $entry) {
 	arsort($entry);
 	foreach ($entry as $a => $b) {
-
 		if ($a == "__base__") {
 			$a = elgg_echo("item:{$k}");
 			if (empty($a))

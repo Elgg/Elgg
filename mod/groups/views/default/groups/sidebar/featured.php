@@ -7,12 +7,12 @@
 
 elgg_push_context('widgets');
 
-$content = elgg_list_entities_from_metadata(array(
+$content = elgg_list_entities_from_metadata([
 	'metadata_name' => 'featured_group',
 	'metadata_value' => 'yes',
 	'type' => 'group',
 	'pagination' => false,
-));
+]);
 
 elgg_pop_context();
 

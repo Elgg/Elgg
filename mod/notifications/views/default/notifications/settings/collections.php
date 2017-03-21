@@ -1,7 +1,7 @@
 <?php
 /**
  * Configure settings that will be applied to new users in friend collections
- * 
+ *
  * @uses $vars['user'] Subscriber
  */
 $user = elgg_extract('user', $vars);

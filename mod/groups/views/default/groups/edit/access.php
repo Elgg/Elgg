@@ -76,7 +76,7 @@ if ($entity) {
 	}
 }
 
-echo elgg_view_field($access_mode_params);	
+echo elgg_view_field($access_mode_params);
 
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
 	$members = [];

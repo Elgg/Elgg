@@ -7,7 +7,6 @@ if (empty($data)) {
 }
 
 foreach ($data as $key => $arr) {
-
 	$menu = "<table class='elgg-table-alt'>";
 	
 	foreach ($arr as $subkey => $value) {
@@ -25,5 +24,4 @@ foreach ($data as $key => $arr) {
 	$menu .= "</table>";
 	
 	echo elgg_view_module("inline", $key, $menu);
-	
 }

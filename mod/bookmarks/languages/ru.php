@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ return array(
 	'bookmarks:save:invalid' => "Адрес закладки не корректный - она не будет сохранена.",
 	'bookmarks:delete:failed' => "Простите, Ваша закладка не может быть удалена. Попробуйте снова.",
 	'bookmarks:unknown_bookmark' => 'Не могу найти указанную закладку',
-);
+];

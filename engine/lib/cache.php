@@ -185,7 +185,7 @@ function _elgg_rmdir($dir, $empty = false) {
 		_elgg_services()->logger->warn(__FUNCTION__ . ' called with empty $dir');
 		return true;
 	}
-	$files = array_diff(scandir($dir), array('.', '..'));
+	$files = array_diff(scandir($dir), ['.', '..']);
 	
 	foreach ($files as $file) {
 		if (is_dir("$dir/$file")) {
@@ -225,7 +225,7 @@ function elgg_flush_caches() {
 
 /**
  * Checks if /cache directory has been symlinked to views simplecache directory
- * 
+ *
  * @return bool
  * @access private
  */
@@ -244,7 +244,7 @@ function _elgg_is_cache_symlinked() {
 
 /**
  * Symlinks /cache directory to views simplecache directory
- * 
+ *
  * @return bool
  * @access private
  */

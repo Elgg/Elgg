@@ -30,7 +30,7 @@ function create_api_user() {
  * Find an API User's details based on the provided public api key.
  * These users are not users in the traditional sense.
  *
- * @param string $api_key   The API Key
+ * @param string $api_key The API Key
  *
  * @return mixed stdClass representing the database row or false.
  */
@@ -47,7 +47,7 @@ function get_api_user($api_key) {
 /**
  * Revoke an api user key.
  *
- * @param string $api_key   The API Key (public).
+ * @param string $api_key The API Key (public).
  *
  * @return bool
  */
