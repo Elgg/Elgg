@@ -68,7 +68,7 @@ matrix:
     # Memcached enabled
     - php: 7.0
       services:
-       - memcached
+       - memcache
        - mysql
       env: VARIA=true
       before_install:
