@@ -498,16 +498,22 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		return;
 	}
 	
-	if (elgg_get_logged_in_user_guid() == $user->guid) {
-		$url = "profile/$user->username/edit";
-		$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
-		$item->setSection('action');
-		$return[] = $item;
+	if ($user->canEdit()) {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'profile:edit',
+			'text' => elgg_echo('profile:edit'),
+			'icon' => 'address-card',
+			'href' => "profile/$user->username/edit",
+			'section' => (elgg_get_logged_in_user_guid() == $user->guid)? 'action' : 'admin',
+		]);
 
-		$url = "avatar/edit/$user->username";
-		$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
-		$item->setSection('action');
-		$return[] = $item;
+		$return[] = ElggMenuItem::factory([
+			'name' => 'avatar:edit',
+			'text' => elgg_echo('avatar:edit'),
+			'icon' => 'image',
+			'href' => "avatar/edit/$user->username",
+			'section' => (elgg_get_logged_in_user_guid() == $user->guid)? 'action' : 'admin',
+		]);
 	}
 
 	// prevent admins from banning or deleting themselves
@@ -515,46 +521,76 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	if (elgg_is_admin_logged_in()) {
-		$actions = [];
-		if (!$user->isBanned()) {
-			$actions[] = 'ban';
-		} else {
-			$actions[] = 'unban';
-		}
-		$actions[] = 'delete';
-		$actions[] = 'resetpassword';
-		if (!$user->isAdmin()) {
-			$actions[] = 'makeadmin';
-		} else {
-			$actions[] = 'removeadmin';
-		}
-
-		foreach ($actions as $action) {
-			$url = "action/admin/user/$action?guid={$user->guid}";
-			$url = elgg_add_action_tokens_to_url($url);
-			$item = new \ElggMenuItem($action, elgg_echo($action), $url);
-			$item->setSection('admin');
-			$item->setConfirmText(true);
-
-			$return[] = $item;
-		}
-
-		$url = "profile/$user->username/edit";
-		$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
-		$item->setSection('admin');
-		$return[] = $item;
-		
-		$url = "avatar/edit/$user->username";
-		$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
-		$item->setSection('admin');
-		$return[] = $item;
-		
-		$url = "settings/user/$user->username";
-		$item = new \ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
-		$item->setSection('admin');
-		$return[] = $item;
+	if (!elgg_is_admin_logged_in()) {
+		return $return;
 	}
+	
+	// following items are admin only
+	if (!$user->isBanned()) {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'ban',
+			'text' => elgg_echo('ban'),
+			'icon' => 'ban',
+			'href' => "action/admin/user/ban?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	} else {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'unban',
+			'text' => elgg_echo('unban'),
+			'icon' => 'ban',
+			'href' => "action/admin/user/unban?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	}
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'delete',
+		'text' => elgg_echo('delete'),
+		'icon' => 'delete',
+		'href' => "action/admin/user/delete?guid={$user->guid}",
+		'confirm' => true,
+		'section' => 'admin',
+	]);
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'resetpassword',
+		'text' => elgg_echo('resetpassword'),
+		'icon' => 'refresh',
+		'href' => "action/admin/user/resetpassword?guid={$user->guid}",
+		'confirm' => true,
+		'section' => 'admin',
+	]);
+	
+	if (!$user->isAdmin()) {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'makeadmin',
+			'text' => elgg_echo('makeadmin'),
+			'icon' => 'level-up',
+			'href' => "action/admin/user/makeadmin?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	} else {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'removeadmin',
+			'text' => elgg_echo('removeadmin'),
+			'icon' => 'level-down',
+			'href' => "action/admin/user/removeadmin?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	}
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'settings:edit',
+		'text' => elgg_echo('settings:edit'),
+		'icon' => 'cogs',
+		'href' => "settings/user/$user->username",
+		'section' => 'admin',
+	]);
 
 	return $return;
 }

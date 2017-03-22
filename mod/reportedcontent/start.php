@@ -84,6 +84,7 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'reportuser',
 		'text' => elgg_echo('reportedcontent:user'),
+		'icon' => 'report-this',
 		'href' => $href,
 		'section' => 'action',
 		'link_class' => 'elgg-lightbox',
