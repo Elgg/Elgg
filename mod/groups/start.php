@@ -63,6 +63,7 @@ function groups_init() {
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
 	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
+	elgg_register_plugin_hook_handler('access_collection:name', 'access_collection', 'groups_set_access_collection_name');
 
 	// Register profile menu hook
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
@@ -527,45 +528,88 @@ function groups_update_event_listener($event, $type, $group) {
 }
 
 /**
- * Return the write access for the current group if the user has write access to it.
+ * Return the write access for the current group if the user has write access to it
+ *
+ * @elgg_plugin_hook access:collection:write all
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
  */
-function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 
-	$user_guid = sanitise_int(elgg_extract('user_id', $params), false);
+	$user_guid = $hook->getParam('user_id');
 	$user = get_user($user_guid);
-	if (empty($user)) {
-		return $returnvalue;
+	if (!$user) {
+		return;
 	}
 
 	$page_owner = elgg_get_page_owner_entity();
-	if (!($page_owner instanceof ElggGroup)) {
-		return $returnvalue;
+	if (!$page_owner instanceof ElggGroup) {
+		return;
 	}
 
 	if (!$page_owner->canWriteToContainer($user_guid)) {
-		return $returnvalue;
+		return;
 	}
 
-	// check group content access rules
 	$allowed_access = [
-		ACCESS_PRIVATE
+		ACCESS_PRIVATE,
+		$page_owner->group_acl,
 	];
 
 	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 		$allowed_access[] = ACCESS_LOGGED_IN;
-		$allowed_access[] = ACCESS_PUBLIC;
-	}
-
-	foreach ($returnvalue as $access_id => $access_string) {
-		if (!in_array($access_id, $allowed_access)) {
-			unset($returnvalue[$access_id]);
+		if (!elgg_get_config('walled_garden')) {
+			$allowed_access[] = ACCESS_PUBLIC;
 		}
 	}
 
-	// add write access to the group
-	$returnvalue[$page_owner->group_acl] = elgg_echo('groups:acl', [$page_owner->name]);
+	$write_acls = $hook->getValue();
 
-	return $returnvalue;
+	// add write access to the group
+	$collection = get_access_collection($page_owner->group_acl);
+	if ($collection) {
+		$write_acls[$page_owner->group_acl] = $collection->getDisplayName();
+	}
+
+	foreach (array_keys($write_acls) as $access_id) {
+		if (!in_array($access_id, $allowed_access)) {
+			unset($write_acls[$access_id]);
+		}
+	}
+
+	return $write_acls;
+}
+
+/**
+ * Return the write access for the current group if the user has write access to it
+ *
+ * @elgg_plugin_hook access_collection:display_name access_collection
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function groups_set_access_collection_name(\Elgg\Hook $hook) {
+
+	$access_collection = $hook->getParam('access_collection');
+	if (!$access_collection instanceof ElggAccessCollection) {
+		return;
+	}
+
+	$owner = $access_collection->getOwnerEntity();
+	if (!$owner instanceof ElggGroup) {
+		return;
+	}
+	
+	$page_owner = elgg_get_page_owner_entity();
+
+	if ($page_owner->guid == $owner->guid) {
+		return elgg_echo('groups:acl:in_context');
+	}
+
+	if ($owner->canWriteToContainer()) {
+		return elgg_echo('groups:acl', [$owner->getDisplayName()]);
+	}
 }
 
 /**
@@ -712,12 +756,21 @@ function groups_join_group($group, $user) {
  * @return array
  */
 function group_access_options($group) {
+
 	$access_array = [
-		ACCESS_PRIVATE => 'private',
-		ACCESS_LOGGED_IN => 'logged in users',
-		ACCESS_PUBLIC => 'public',
-		$group->group_acl => elgg_echo('groups:acl', [$group->name]),
+		ACCESS_PRIVATE => elgg_echo('PRIVATE'),
+		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
 	];
+
+	if (!elgg_get_config('walled_garden')) {
+		$access_array[ACCESS_PUBLIC] = elgg_echo('PUBLIC');
+	}
+
+	$collection = get_access_collection($group->group_acl);
+	if ($collection) {
+		$access_array[$collection->id] = $collection->getDisplayName();
+	}
+	
 	return $access_array;
 }
 

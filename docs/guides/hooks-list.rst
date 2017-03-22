@@ -174,6 +174,57 @@ Object hooks
 **likes:count, <entity_type>**
 	Return the number of likes for ``$params['entity']``.
 
+Access hooks
+============
+
+**access_collection:url, access_collection**
+	Can be used to filter the URL of the access collection.
+
+	The ``$params`` array will contain:
+
+	 * ``access_collection`` - `ElggAccessCollection`
+
+**access_collection:name, access_collection**
+	Can be used to filter the display name (readable access level) of the access collection.
+
+	The ``$params`` array will contain:
+
+	 * ``access_collection`` - `ElggAccessCollection`
+
+**access:collections:read, user**
+	Filters an array of access IDs that the user ``$params['user_id']`` can see.
+
+	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
+
+**access:collections:write, user**
+	Filters an array of access IDs that the user ``$params['user_id']`` can write to. In
+	get_write_access_array(), this hook filters the return value, so it can be used to alter
+	the available options in the input/access view. For core plugins, the value "input_params"
+	has the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
+	"container_guid" (int) are provided. An empty entity value generally means the form is to
+	create a new object.
+
+	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
+
+**access:collections:addcollection, collection**
+	Triggered after an access collection ``$params['collection_id']`` is created.
+
+**access:collections:deletecollection, collection**
+	Triggered before an access collection ``$params['collection_id']`` is deleted.
+	Return false to prevent deletion.
+
+**access:collections:add_user, collection**
+	Triggered before adding user ``$params['user_id']`` to collection ``$params['collection_id']``.
+	Return false to prevent adding.
+
+**access:collections:remove_user, collection**
+	Triggered before removing user ``$params['user_id']`` to collection ``$params['collection_id']``.
+	Return false to prevent removal.
+
+**get_sql, access**
+    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
+
+
 Action hooks
 ============
 
@@ -301,39 +352,6 @@ Permission hooks
 
 **api_key, use**
 	Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated.
-
-**access:collections:read, user**
-	Filters an array of access IDs that the user ``$params['user_id']`` can see.
-
-	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
-
-**access:collections:write, user**
-	Filters an array of access IDs that the user ``$params['user_id']`` can write to. In
-	get_write_access_array(), this hook filters the return value, so it can be used to alter
-	the available options in the input/access view. For core plugins, the value "input_params"
-	has the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
-	"container_guid" (int) are provided. An empty entity value generally means the form is to
-	create a new object.
-
-	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
-
-**access:collections:addcollection, collection**
-	Triggered after an access collection ``$params['collection_id']`` is created.
-
-**access:collections:deletecollection, collection**
-	Triggered before an access collection ``$params['collection_id']`` is deleted.
-	Return false to prevent deletion.
-
-**access:collections:add_user, collection**
-	Triggered before adding user ``$params['user_id']`` to collection ``$params['collection_id']``.
-	Return false to prevent adding.
-
-**access:collections:remove_user, collection**
-	Triggered before removing user ``$params['user_id']`` to collection ``$params['collection_id']``.
-	Return false to prevent removal.
-
-**get_sql, access**
-    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
 **gatekeeper, <entity_type>:<entity_subtype>**
     Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.

@@ -70,6 +70,45 @@ class ElggAccessCollection extends ElggData {
 	}
 
 	/**
+	 * Returns owner entity of the collection
+	 * @return \ElggEntity|false
+	 */
+	public function getOwnerEntity() {
+		return _elgg_services()->entityTable->get($this->owner_guid);
+	}
+
+	/**
+	 * Get readable access level name for this collection
+	 * @return string
+	 */
+	public function getDisplayName() {
+
+		$filter = function($name = null) {
+			if (!isset($name)) {
+				$name = _elgg_services()->translator->translate('access:limited:label');
+			}
+			$params = [
+				'access_collection' => $this,
+			];
+			return _elgg_services()->hooks->trigger('access_collection:name', $this->getType(), $params, $name);
+		};
+
+		$user = _elgg_services()->session->getLoggedInUser();
+		$owner = $this->getOwnerEntity();
+		if (!$user || !$owner) {
+			// User is not logged in or does not access to the owner entity:
+			// return default 'Limited' label
+			return $filter();
+		}
+		
+		if ($user->isAdmin() || $owner->guid == $user->guid) {
+			return $filter($this->name);
+		}
+
+		return $filter();
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function save() {

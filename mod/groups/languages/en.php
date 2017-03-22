@@ -80,6 +80,7 @@ return [
 	'groups:search:none' => "No matching groups were found",
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:activity' => "Group activity",
 	'groups:enableactivity' => 'Enable group activity',
