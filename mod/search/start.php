@@ -32,6 +32,8 @@ function search_init() {
 	elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 
 	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
+	
+	elgg_register_plugin_hook_handler('view_vars', 'output/tag', 'search_output_tag');
 }
 
 /**
@@ -458,4 +460,35 @@ Disallow: /search/
 TEXT;
 
 	return $text;
+}
+
+/**
+ * Adds search 'href' to output/tag view vars
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function search_output_tag(\Elgg\Hook $hook) {
+	$vars = $hook->getValue();
+	if (isset($vars['href'])) {
+		// leave unaltered
+		return;
+	}
+	
+	$query_params = [
+		'q' => elgg_extract('value', $vars),
+		'search_type' => 'tags',
+		'type' => elgg_extract('type', $vars, null, false),
+		'subtype' => elgg_extract('subtype', $vars, null, false),
+	];
+		
+	$url = elgg_extract('base_url', $vars, 'search');
+	
+	unset($vars['base_url']);
+	unset($vars['type']);
+	unset($vars['subtype']);
+	
+	$vars['href'] = elgg_http_add_url_query_elements($url, $query_params);
+	
+	return $vars;
 }
