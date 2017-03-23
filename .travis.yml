@@ -22,8 +22,6 @@ branches:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: hhvm
 
   include:
     # Lint checks for PHP code and composer.json
@@ -82,7 +80,9 @@ matrix:
        - php ./engine/tests/suite.php --config ./.scripts/travis/elgg-config/simpletest_memcached.php
 
     # HHVM build
-    - php: hhvm
+    - php: hhvm-3.15
+      dist: trusty
+      sudo: required
       env: E2E=true
       before_install:
       install:
