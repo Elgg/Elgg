@@ -35,7 +35,7 @@
 $class = elgg_extract_class($vars, [
 	'elgg-layout',
 	'clearfix'
-]);
+		]);
 unset($vars['class']);
 
 // Prepare layout sidebar
@@ -45,24 +45,25 @@ if ($vars['sidebar'] !== false) {
 	// sidebar navigation items
 	$vars['sidebar'] = elgg_view('page/elements/sidebar', $vars);
 }
-$sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
+$vars['sidebar'] = elgg_view('page/layouts/elements/sidebar', $vars);
 
 // Prepare second layout sidebar
-$sidebar_alt = '';
-if ($sidebar) {
-	$vars['sidebar_alt'] = elgg_extract('sidebar_alt', $vars, false);
-	if ($vars['sidebar_alt'] !== false) {
-		// In a default layout, we want to make sure we render
-		// sidebar navigation items
-		$vars['sidebar_alt'] = elgg_view('page/elements/sidebar_alt', $vars);
-	}
-	$sidebar_alt = elgg_view('page/layouts/elements/sidebar_alt', $vars);
+$vars['sidebar_alt'] = elgg_extract('sidebar_alt', $vars, '');
+if ($vars['sidebar_alt'] !== false) {
+	// In a default layout, we want to make sure we render
+	// sidebar navigation items
+	$vars['sidebar_alt'] = elgg_view('page/elements/sidebar_alt', $vars);
 }
+$vars['sidebar_alt'] = elgg_view('page/layouts/elements/sidebar_alt', $vars);
 
-if ($sidebar && $sidebar_alt) {
+$vars['content'] = elgg_view('page/layouts/elements/main', $vars);
+
+if ($vars['sidebar'] && $vars['sidebar_alt']) {
 	$class[] = 'elgg-layout-two-sidebar';
-} else if ($sidebar) {
+} else if ($vars['sidebar']) {
 	$class[] = 'elgg-layout-one-sidebar';
+} else if ($vars['sidebar_alt']) {
+	$class[] = 'elgg-layout-one-sidebar-alt';
 } else {
 	$class[] = 'elgg-layout-one-column';
 }
@@ -71,4 +72,4 @@ $body = elgg_view('page/layouts/elements/body', $vars);
 
 echo elgg_format_element('div', [
 	'class' => $class,
-], $sidebar_alt . $body . $sidebar);
+		], $body);

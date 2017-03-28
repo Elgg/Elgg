@@ -10,7 +10,6 @@ elgg_require_js('forms/login');
 
 echo elgg_view_field([
 	'#type' => 'text',
-
 	'name' => 'username',
 	'autofocus' => true,
 	'required' => true,
@@ -34,23 +33,16 @@ if (isset($vars['returntoreferer'])) {
 	]);
 }
 
-ob_start();
-?>
-<div class="elgg-foot">
-	<label class="mtm float-alt">
-		<input type="checkbox" name="persistent" value="true" />
-		<?php echo elgg_echo('user:persistent'); ?>
-	</label>
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'label' => elgg_echo('user:persistent'),
+	'name' => 'persistent',
+	'value' => true,
+]);
 
-	<?php
-	echo elgg_view('input/submit', ['value' => elgg_echo('login')]);
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('login'),
+]);
 
-	echo elgg_view_menu('login', [
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-general elgg-menu-hz mtm',
-	]);
-	?>
-</div>
-<?php
-$footer = ob_get_clean();
 elgg_set_form_footer($footer);

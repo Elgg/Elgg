@@ -31,7 +31,7 @@ $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
 // build reordering links
 $links = '';
-$classes = ['elgg-plugin'];
+$classes = ['elgg-plugin', 'w-100'];
 
 if ($reordering) {
 	$classes[] = 'elgg-state-draggable';
@@ -190,7 +190,7 @@ $attrs = [
 ];
 ?>
 <div <?= elgg_format_attributes($attrs) ?>>
-	<div class="elgg-image-block">
+	<div class="elgg-image-block d-flex w-100">
 		<div class="elgg-image">
 			<div>
 				<?php echo $action_button; ?>

@@ -7,7 +7,9 @@ if ($user) {
 	$sidebar = null;
 } else {
 	$title = elgg_echo('welcome');
-	$sidebar = elgg_view('core/account/login_box');
+	$sidebar = elgg_view('core/account/login_box', [
+		'class' => 'card',
+	]);
 }
 
 $params = [

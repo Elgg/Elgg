@@ -14,4 +14,5 @@ if (!$num_display) {
 echo get_online_users([
 	'pagination' => false,
 	'limit' => $num_display,
+	'list_class' => 'list-group-flush',
 ]);

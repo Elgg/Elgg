@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg navigation library
  * Functions for managing menus and other navigational elements
@@ -84,8 +85,8 @@
  *                          deps     => STR  One or more AMD modules to require
  *
  *                          Additional options that the view output/url takes can be
- *							passed in the array. Custom options can be added by using
- *							the 'data' key with the	value being an associative array.
+ * 							passed in the array. Custom options can be added by using
+ * 							the 'data' key with the	value being an associative array.
  *
  * @return bool False if the item could not be added
  * @since 1.8.0
@@ -212,7 +213,7 @@ function elgg_get_menu_item($menu_name, $item_name) {
  * @since 1.8.0
  */
 function elgg_register_title_button($handler = null, $name = 'add', $entity_type = 'all', $entity_subtype = 'all') {
-	
+
 	if (!$handler) {
 		$handler = elgg_get_context();
 	}
@@ -302,7 +303,7 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 		_elgg_services()->logger->error(__FUNCTION__ . ' expects breadcrumbs as an array');
 		$breadcrumbs = [];
 	}
-	
+
 	$params = [
 		'breadcrumbs' => $breadcrumbs,
 	];
@@ -335,15 +336,190 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
 	// remove last crumb if not a link
 	$last_crumb = end($breadcrumbs);
-	if (empty($last_crumb['link'])) {
+	if (empty($last_crumb['link']) && empty($last_crumb['href'])) {
 		array_pop($breadcrumbs);
 	}
 
 	// apply excerpt to titles
 	foreach (array_keys($breadcrumbs) as $i) {
-		$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+		if (isset($breadcrumbs[$i]['title'])) {
+			$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+		} else if (isset($breadcrumbs[$i]['text'])) {
+			$breadcrumbs[$i]['text'] = elgg_get_excerpt($breadcrumbs[$i]['text'], 100);
+		}
 	}
+
+	$home = [
+		'icon' => 'home',
+		'href' => elgg_get_site_url(),
+		'text' => '',
+	];
+
+	array_unshift($breadcrumbs, $home);
+
 	return $breadcrumbs;
+}
+
+/**
+ * Replaces breadcrumb stack
+ * 
+ * @param array $breadcrumbs Breadcrumbs
+ * @return void
+ * @since 3.0.0
+ */
+function elgg_set_breadcrumbs(array $breadcrumbs = []) {
+	elgg_set_config('breadcrumbs', $breadcrumbs);
+}
+
+/**
+ * Recurses into the parent tree of the entity and builds breadcrumbs
+ * 
+ * @param ElggEntity $entity     Entity
+ * @param string     $identifier Route identifier of the current page
+ *                               Defaults to current route identifier
+ * @return array
+ * @since 3.0.0
+ * @access private
+ */
+function _elgg_prepare_parent_breadcrumbs($entity, $identifier) {
+	$breadcrumbs = [];
+	if (!$entity instanceof ElggEntity) {
+		return $breadcrumbs;
+	}
+
+	if ($entity instanceof ElggUser) {
+		$breadcrumbs[] = [
+			'text' => elgg_echo($identifier),
+			'href' => "$identifier/owner/$entity->guid",
+			'data-guid' => $entity->guid,
+			'data-listing-type' => 'owner',
+		];
+	} else if ($entity instanceof ElggGroup) {
+		$breadcrumbs[] = [
+			'text' => elgg_echo($identifier),
+			'href' => "$identifier/group/$entity->guid",
+			'data-guid' => $entity->guid,
+			'data-listing-type' => 'group',
+		];
+	}
+
+	$breadcrumbs[] = [
+		'id' => 'elgg-breadcrumb-target-container',
+		'text' => $entity->getDisplayName(),
+		'dropdown' => elgg_view('page/elements/owner_block', [
+			'owner_block_owner' => $entity,
+			'owner_block_header' => false,
+		]),
+		'icon' => elgg_view('output/img', [
+			'src' => $entity->getIconURL('tiny'),
+			'class' => 'rounded-circle',
+		]),
+		'href' => $entity->getURL(),
+		'data-guid' => $entity->guid,
+		'data-listing-type' => 'profile',
+	];
+
+	if ($entity instanceof ElggObject) {
+		$parent_crumbs = _elgg_prepare_parent_breadcrumbs($entity->getContainerEntity(), $identifier);
+		$breadcrumbs = array_merge($breadcrumbs, $parent_crumbs);
+	}
+
+	return array_reverse($breadcrumbs);
+}
+
+/**
+ * Prepare entity breadcrumbs
+ * 
+ * @param ElggEntity $entity     Entity
+ * @param string     $identifier Route identifier of the current page
+ *                               Defaults to current route identifier
+ * @param bool       $link_self  Add link to self
+ * @return array
+ * @since 3.0.0
+ * @access private
+ */
+function _elgg_prepare_entity_breadcrumbs(ElggEntity $entity, $identifier = null, $link_self = false) {
+
+	if (!isset($identifier)) {
+		$identifier = _elgg_services()->request->getFirstUrlSegment();
+	}
+
+	$breadcrumbs = _elgg_prepare_parent_breadcrumbs($entity->getContainerEntity(), $identifier);
+
+	$breadcrumbs[] = [
+		'text' => $entity->getDisplayName(),
+		'href' => ($link_self) ? $entity->getURL() : false,
+		'data-guid' => $entity->guid,
+		'data-listing-type' => 'profile',
+	];
+
+	$params = [
+		'breadcrumbs' => $breadcrumbs,
+		'entity' => $entity,
+		'identifier' => $identifier,
+		'link_self' => $link_self,
+	];
+
+	$breadcrumbs = _elgg_services()->hooks->trigger('breadcrumbs', $entity->getType(), $params, $breadcrumbs);
+	if (!is_array($breadcrumbs)) {
+		_elgg_services()->logger->error("\"breadcrumbs, {$entity->getType()}\" hook must return an array of breadcrumbs");
+		return [];
+	}
+
+	return $breadcrumbs;
+}
+
+/**
+ * Prepare listing breadcrumbs
+ *
+ * @param array      $listing_type Listing type, e.g. 'all', 'owner', 'group', 'friends'
+ * @param string     $identifier   Identifier of the route
+ * @param ElggEntity $target       Target entity
+ * @return array
+ * @since 3.0.0
+ * @access private
+ */
+function _elgg_prepare_listing_breadcrumbs($listing_type, $identifier = null, ElggEntity $target = null) {
+
+	if (!isset($identifier)) {
+		$identifier = _elgg_services()->request->getFirstUrlSegment();
+	}
+
+	$breadcrumbs = _elgg_prepare_parent_breadcrumbs($target, $identifier);
+	
+	switch ($listing_type) {
+		case 'friends' :
+			array_pop($breadcrumbs);
+			$breadcrumbs[] = [
+				'text' => elgg_echo('friends'),
+				'href' => "friends/$target->username",
+				'data-guid' => $target->guid,
+				'data-listing-type' => 'friends',
+			];
+			break;
+
+		case 'all' :
+		case 'owner' :
+		case 'group' :
+			array_pop($breadcrumbs);
+			break;
+	}
+
+	$params = [
+		'breadcrumbs' => $breadcrumbs,
+		'target' => $target,
+		'identifier' => $identifier,
+		'listing_type' => $listing_type,
+	];
+
+	$breadcrumbs = _elgg_services()->hooks->trigger('breadcrumbs', 'listing', $params, $breadcrumbs);
+	if (!is_array($breadcrumbs)) {
+		_elgg_services()->logger->error('"breadcrumbs, listing" hook must return an array of breadcrumbs');
+		return [];
+	}
+
+	return $breadcrumbs;
+
 }
 
 /**
@@ -369,18 +545,18 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 	$items = [];
 	if ($user) {
 		$items[] = ElggMenuItem::factory([
-			'name' => 'all',
-			'text' => elgg_echo('all'),
-			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
-			'selected' => ($selected == 'all'),
-			'priority' => 200,
+					'name' => 'all',
+					'text' => elgg_echo('all'),
+					'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
+					'selected' => ($selected == 'all'),
+					'priority' => 200,
 		]);
 		$items[] = ElggMenuItem::factory([
-			'name' => 'mine',
-			'text' => elgg_echo('mine'),
-			'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "$context/owner/{$user->username}",
-			'selected' => ($selected == 'mine'),
-			'priority' => 300,
+					'name' => 'mine',
+					'text' => elgg_echo('mine'),
+					'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "$context/owner/{$user->username}",
+					'selected' => ($selected == 'mine'),
+					'priority' => 300,
 		]);
 	}
 
@@ -445,7 +621,28 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 			$return['more'] = array_splice($return['default'], $max_display_items);
 		}
 	}
-	
+
+	if (!empty($return['more'])) {
+		$return['default'][] = ElggMenuItem::factory([
+					'name' => 'more',
+					'priority' => 9999,
+					'text' => elgg_echo('more'),
+					'href' => '#',
+					'child_menu' => [
+						'display' => 'dropdown',
+						'class' => 'elgg-more',
+					],
+		]);
+
+		foreach ($return['more'] as $item) {
+			$item->setSection('default');
+			$item->setParentName('more');
+			$return['default'][] = $item;
+		}
+	}
+
+	unset($return['more']);
+
 	// check if we have anything selected
 	$selected = false;
 	foreach ($return as $section) {
@@ -458,7 +655,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 			}
 		}
 	}
-	
+
 	if (!$selected) {
 		// nothing selected, match name to context or match url
 		$current_url = current_page_url();
@@ -522,6 +719,19 @@ function _elgg_page_menu_setup(\Elgg\Hook $hook) {
  * @access private
  */
 function _elgg_river_menu_setup($hook, $type, $return, $params) {
+
+	$return[] = \ElggMenuItem::factory([
+				'name' => 'actions',
+				'text' => elgg_echo('river:actions'),
+				'href' => '#',
+				'child_menu' => [
+					'display' => 'dropdown',
+					'class' => 'elgg-river-child-menu dropdown-menu-right',
+					'allow_empty' => false,
+				],
+				'priority' => 9999,
+	]);
+
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
 		/* @var \ElggRiverItem $item */
@@ -531,8 +741,10 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 			if ($object->canComment()) {
 				$options = [
 					'name' => 'comment',
+					'parent_name' => 'actions',
 					'href' => "#comments-add-{$object->guid}-{$item->id}",
-					'text' => elgg_view_icon('speech-bubble'),
+					'text' => elgg_echo('comment'),
+					'icon' => 'speech-bubble',
 					'title' => elgg_echo('comment:this'),
 					'rel' => 'toggle',
 					'priority' => 50,
@@ -540,17 +752,18 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 				$return[] = \ElggMenuItem::factory($options);
 			}
 		}
-		
+
 		if ($item->canDelete()) {
-			$options = [
-				'name' => 'delete',
-				'href' => elgg_add_action_tokens_to_url("action/river/delete?id={$item->id}"),
-				'text' => elgg_view_icon('delete'),
-				'title' => elgg_echo('river:delete'),
-				'confirm' => elgg_echo('deleteconfirm'),
-				'priority' => 200,
-			];
-			$return[] = \ElggMenuItem::factory($options);
+			$return[] = \ElggMenuItem::factory([
+						'name' => 'delete',
+						'parent_name' => 'actions',
+						'href' => elgg_add_action_tokens_to_url("action/river/delete?id={$item->id}"),
+						'text' => elgg_echo('delete'),
+						'icon' => 'delete',
+						'title' => elgg_echo('river:delete'),
+						'confirm' => elgg_echo('deleteconfirm'),
+						'priority' => 900,
+			]);
 		}
 	}
 
@@ -562,19 +775,30 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
  * @access private
  */
 function _elgg_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-	
+
+	$return[] = \ElggMenuItem::factory([
+				'name' => 'actions',
+				'text' => elgg_echo('entity:actions'),
+				'href' => '#',
+				'child_menu' => [
+					'display' => 'dropdown',
+					'class' => 'elgg-entity-child-menu dropdown-menu-right',
+					'allow_empty' => false,
+				],
+				'priority' => 9999,
+	]);
+
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
-	
+
 	if ($entity->canEdit() && $handler) {
 		// edit link
 		$options = [
 			'name' => 'edit',
+			'parent_name' => 'actions',
 			'text' => elgg_echo('edit'),
+			'icon' => 'pencil',
 			'title' => elgg_echo('edit:this'),
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
@@ -582,22 +806,23 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		$return[] = \ElggMenuItem::factory($options);
 	}
 
-	if ($entity->canDelete() && $handler) {
+	if ($entity->canDelete()) {
 		// delete link
-		if (elgg_action_exists("$handler/delete")) {
+		if ($handler && elgg_action_exists("$handler/delete")) {
 			$action = "action/$handler/delete";
 		} else {
 			$action = "action/entity/delete";
 		}
-		$options = [
-			'name' => 'delete',
-			'text' => elgg_view_icon('delete'),
-			'title' => elgg_echo('delete:this'),
-			'href' => "$action?guid={$entity->getGUID()}",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 300,
-		];
-		$return[] = \ElggMenuItem::factory($options);
+		$return[] = \ElggMenuItem::factory([
+					'name' => 'delete',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('delete'),
+					'icon' => 'delete',
+					'title' => elgg_echo('delete:this'),
+					'href' => "$action?guid={$entity->getGUID()}",
+					'confirm' => elgg_echo('deleteconfirm'),
+					'priority' => 900,
+		]);
 	}
 
 	return $return;
@@ -612,16 +837,6 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 	$widget = $params['entity'];
 	/* @var \ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
-
-	$collapse = [
-		'name' => 'collapse',
-		'text' => ' ',
-		'href' => "#elgg-widget-content-$widget->guid",
-		'link_class' => 'elgg-widget-collapse-button',
-		'rel' => 'toggle',
-		'priority' => 1,
-	];
-	$return[] = \ElggMenuItem::factory($collapse);
 
 	if ($widget->canEdit()) {
 		$delete = [
@@ -662,18 +877,18 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
 	if (elgg_get_config('allow_registration')) {
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'register',
-			'href' => elgg_get_registration_url(),
-			'text' => elgg_echo('register'),
-			'link_class' => 'registration_link',
+					'name' => 'register',
+					'href' => elgg_get_registration_url(),
+					'text' => elgg_echo('register'),
+					'link_class' => 'registration_link',
 		]);
 	}
 
 	$return[] = \ElggMenuItem::factory([
-		'name' => 'forgotpassword',
-		'href' => 'forgotpassword',
-		'text' => elgg_echo('user:password:lost'),
-		'link_class' => 'forgot_link',
+				'name' => 'forgotpassword',
+				'href' => 'forgotpassword',
+				'text' => elgg_echo('user:password:lost'),
+				'link_class' => 'forgot_link',
 	]);
 
 	return $return;
@@ -688,20 +903,20 @@ function _elgg_extras_menu_setup($hook, $type, $return, $params) {
 	if (!elgg_is_logged_in()) {
 		return;
 	}
-	
+
 	if (!_elgg_has_rss_link()) {
 		return;
 	}
 
 	$url = current_page_url();
 	$return[] = ElggMenuItem::factory([
-		'name' => 'rss',
-		'text' => elgg_echo('feed:rss'),
-		'icon' => 'rss',
-		'href' => elgg_http_add_url_query_elements($url, [
-			'view' => 'rss',
-		]),
-		'title' => elgg_echo('feed:rss'),
+				'name' => 'rss',
+				'text' => elgg_echo('feed:rss'),
+				'icon' => 'rss',
+				'href' => elgg_http_add_url_query_elements($url, [
+					'view' => 'rss',
+				]),
+				'title' => elgg_echo('feed:rss'),
 	]);
 
 	return $return;
@@ -726,11 +941,11 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 
 	elgg_register_menu_item('footer', \ElggMenuItem::factory([
-		'name' => 'powered',
-		'text' => elgg_echo("elgg:powered"),
-		'href' => 'http://elgg.org',
-		'title' => 'Elgg ' . elgg_get_version(true),
-		'section' => 'meta',
+				'name' => 'powered',
+				'text' => elgg_echo("elgg:powered"),
+				'href' => 'http://elgg.org',
+				'title' => 'Elgg ' . elgg_get_version(true),
+				'section' => 'meta',
 	]));
 
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');

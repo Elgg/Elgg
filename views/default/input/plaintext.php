@@ -12,7 +12,7 @@
  * @uses $vars['disabled']
  */
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-plaintext');
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-plaintext form-control');
 
 $defaults = [
 	'value' => '',

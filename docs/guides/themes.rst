@@ -111,41 +111,6 @@ Preview” page to start tracking your theme's progress.
 
 Customizing the front page
 ==========================
-The main Elgg index page runs a plugin hook called 'index,system'. If this
-returns true, it assumes that another front page has been drawn and
-doesn't display the default page.
 
-Therefore, you can override it by registering a function to the
-'index,system' plugin hook and then returning true from that function.
-
-Here's a quick overview:
-
--  Create your new plugin
-
--  In the start.php you will need something like the following:
-
-.. code:: php
-
-    <?php
-
-    function pluginname_init() {
-        // Replace the default index page
-        elgg_register_plugin_hook_handler('index', 'system', 'new_index');
-    }
-
-    function new_index() {
-        if (!include_once(dirname(dirname(__FILE__)) . "/pluginname/pages/index.php"))
-            return false;
-        
-        return true;
-    }
-
-    // register for the init, system event when our plugin start.php is loaded
-    elgg_register_event_handler('init', 'system', 'pluginname_init');
-    ?>
-
--  Then, create an index page (/pluginname/pages/index.php) and use that
-   to put the content you would like on the front page of your Elgg
-   site.
-
-
+To customize the look of the front page, overload the ``resources/index`` view in your
+custom plugin. You can also check the example included with the ``custom_index`` plugin.

@@ -84,6 +84,8 @@ function pages_init() {
 	
 	// prevent public write access
 	elgg_register_plugin_hook_handler('view_vars', 'input/access', 'pages_write_access_vars');
+
+	elgg_register_plugin_hook_handler('breadcrumbs', 'object', 'pages_prepare_entity_breadcrumbs');
 }
 
 /**
@@ -237,9 +239,6 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
  * Add links/info to entity menu particular to pages plugin
  */
 function pages_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
 
 	elgg_load_library('elgg:pages');
 	$entity = $params['entity'];
@@ -261,6 +260,8 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 
 	$options = [
 		'name' => 'history',
+		'parent_name' => 'actions',
+		'icon' => 'history',
 		'text' => elgg_echo('pages:history'),
 		'href' => "pages/history/$entity->guid",
 		'priority' => 150,
@@ -502,4 +503,28 @@ function pages_search_pages($hook, $type, $value, $params) {
 
 	// trigger the 'normal' object search as it can handle the added options
 	return elgg_trigger_plugin_hook('search', 'object', $params, []);
+}
+
+/**
+ * Prepare page breadcrumbs
+ * 
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function pages_prepare_entity_breadcrumbs(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!pages_is_page($entity)) {
+		return;
+	}
+
+	$breadcrumbs = $hook->getValue();
+
+	$last = array_pop($breadcrumbs);
+	
+	$parent_breadcrumbs = pages_prepare_parent_breadcrumbs($entity);
+	$breadcrumbs = array_merge($breadcrumbs, $parent_breadcrumbs);
+
+	array_push($breadcrumbs, $last);
+	return $breadcrumbs;
 }

@@ -28,11 +28,11 @@ foreach ($widgets as $column_widgets) {
 	}
 }
 
-$result = elgg_autop(elgg_echo('widgets:add:description'));
+$result = elgg_format_element('div', ['class' => 'lead card-block'], elgg_echo('widgets:add:description'));
 
 $list_items = '';
 foreach ($widget_types as $handler => $widget_type) {
-	$class = [];
+	$class = ['list-group-item d-flex justify-content-end'];
 	// check if widget added and only one instance allowed
 	if (!$widget_type->multiple && in_array($handler, $current_handlers)) {
 		$class[] = 'elgg-state-unavailable';
@@ -42,9 +42,9 @@ foreach ($widget_types as $handler => $widget_type) {
 
 	$class[] = $widget_type->multiple ? 'elgg-widget-multiple' : 'elgg-widget-single';
 	
-	$item_content = '<div class="elgg-widgets-add-actions">';
+	$item_content = '<div class="elgg-widgets-add-actions flex-last w-25 text-right">';
 	if (!$widget_type->multiple) {
-		$item_content .= elgg_format_element('span', ['class' => 'elgg-quiet'], elgg_echo('widget:unavailable'));
+		$item_content .= elgg_format_element('span', [], elgg_echo('widget:unavailable'));
 	}
 	$add_link = elgg_http_add_url_query_elements('action/widgets/add', [
 		'handler' => $handler,
@@ -61,12 +61,15 @@ foreach ($widget_types as $handler => $widget_type) {
 		'is_action' => true,
 	]);
 	$item_content .= '</div>';
-	
-	$item_content .= "<h4>{$widget_type->name}</h4>";
-	
+
+	$item_content .= '<div class="elgg-widgets-add-info mr-auto w-75">';
+
+	$item_content .= "<h5>{$widget_type->name}</h5>";
 	if ($widget_type->description) {
-		$item_content .= elgg_format_element('div', ['class' => 'elgg-quiet'], $widget_type->description);
+		$item_content .= elgg_format_element('div', ['class' => 'elgg-text-help'], $widget_type->description);
 	}
+
+	$item_content .= '</div>';
 	
 	$list_items .= elgg_format_element('li', [
 		'class' => $class,
@@ -74,6 +77,8 @@ foreach ($widget_types as $handler => $widget_type) {
 	], $item_content);
 }
 
-$result .= "<ul>$list_items</ul>";
+$result .= "<ul class=\"list-group list-group-flush\">$list_items</ul>";
 
-echo elgg_view_module('info', elgg_echo('widgets:add'), $result, ['class' => 'elgg-widgets-add-panel']);
+echo elgg_view_module('aside', elgg_echo('widgets:add'), $result, [
+	'class' => 'elgg-widgets-add-panel card',
+]);

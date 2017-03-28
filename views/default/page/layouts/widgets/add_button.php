@@ -26,5 +26,6 @@ echo elgg_view_menu('title:widgets', [
 			]),
 		],
 	],
-	'class' => 'elgg-menu-hz',
+	'class' => 'elgg-menu-hz justify-content-end',
+	'#class' => 'col',
 ]);

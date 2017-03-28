@@ -11,8 +11,11 @@ return [
 		 */
 		"jquery.js" => "vendor/bower-asset/jquery/dist/jquery.min.js",
 		"jquery.min.map" => "vendor/bower-asset/jquery/dist/jquery.min.map",
-		"jquery-migrate.js" => "vendor/bower-asset/jquery-migrate/jquery-migrate.min.js",
+		"jquery-migrate.js" => "vendors/jquery-migrate-3.0.0.min.js",
 		"jquery-ui.js" => "vendor/bower-asset/jquery-ui/jquery-ui.min.js",
+
+		"twbs/" => "vendor/twbs/bootstrap/dist/",
+		"tether.js" => "vendor/bower-asset/tether/dist/js/tether.min.js",
 
 		"jquery.form.js" => "vendor/bower-asset/jquery-form/jquery.form.js",
 		"jquery.colorbox.js" => "vendor/bower-asset/jquery-colorbox/jquery.colorbox-min.js",

@@ -187,6 +187,8 @@ Child menus can be configured using ``child_menu`` factory option on the parent 
 
 ``child_menu`` options array accepts ``display`` parameter, which can be used
 to set the child menu to open as ``dropdown`` or be displayed via ``toggle``.
+``allow_empty`` parameter can be used to remove the parent item, if the child
+menu is empty.
 All other key value pairs will be passed as attributes to the ``ul`` element.
 
 
@@ -200,11 +202,6 @@ All other key value pairs will be passed as attributes to the ``ul`` element.
 		'child_menu' => [
 			'display' => 'dropdown',
 			'class' => 'elgg-additional-child-menu-class',
-			'data-position' => json_encode([
-				'at' => 'right bottom',
-				'my' => 'right top',
-				'collision' => 'fit fit',
-			]),
 			'data-foo' => 'bar',
 			'id' => 'dropdown-menu-id',
 		],

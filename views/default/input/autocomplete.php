@@ -13,11 +13,7 @@
  * @uses $vars['class']       Additional CSS class
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-input-autocomplete {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-input-autocomplete";
-}
+$vars['class'] = elgg_extract_class($vars, ['elgg-input-autocomplete', 'form-control']);
 
 $defaults = [
 	'value' => '',

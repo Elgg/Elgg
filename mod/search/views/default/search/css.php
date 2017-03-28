@@ -8,16 +8,20 @@
 /**********************************
 Search plugin
 ***********************************/
-.elgg-search-header {
-	display: block;
-	position: relative;
-	margin-bottom: 15px;
+.elgg-menu-topbar-search {
+    margin-right: auto;
 }
-.elgg-search input[type=text] {
-	width: 100%;
+
+.search-input {
+    border: none;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
 }
-.elgg-search input[type=submit] {
-	display: none;
+
+.search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.4);
+    color: #fff;
 }
 .search-list li {
 	padding: 5px 0 0;

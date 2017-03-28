@@ -15,6 +15,11 @@ if ($page == 'friends') {
 	return;
 }
 
-$content = elgg_view_menu('blog_archive', ['class' => 'elgg-menu-page']);
+$content = elgg_view_menu('blog_archive', [
+	'class' => 'elgg-menu-page flex-column list-group list-group-flush',
+	'item_class' => 'list-group-item',
+]);
 
-echo elgg_view_module('aside', elgg_echo('blog:archives'), $content);
+echo elgg_view_module('aside', elgg_echo('blog:archives'), $content, [
+	'class' => 'card',
+]);

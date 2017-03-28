@@ -13,7 +13,10 @@ if (elgg_is_logged_in()) {
 }
 
 $title = elgg_echo('login');
-$content = elgg_view('core/account/login_box', ['title' => false]);
+$content = elgg_view('core/account/login_box', [
+	'title' => false,
+	'class' => 'card',
+]);
 
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 

@@ -14,7 +14,7 @@ if (!empty($vars['value'])) {
 	echo elgg_echo('fileexists') . "<br />";
 }
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-file');
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-file form-control-file');
 
 $defaults = [
 	'disabled' => false,

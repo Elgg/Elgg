@@ -26,7 +26,7 @@ if (isset($vars['options_values'])) {
 $entity_allows_comments = elgg_extract('entity_allows_comments', $vars, true);
 unset($vars['entity_allows_comments']);
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-access');
+$vars['class'] = elgg_extract_class($vars, ['elgg-input-access', 'form-control']);
 
 // this will be passed to plugin hooks ['access:collections:write', 'user'] and ['default', 'access']
 $params = [];
@@ -108,5 +108,5 @@ if ($show_override_notice) {
 }
 echo elgg_view('input/select', $vars);
 if ($show_override_notice) {
-	echo elgg_format_element('p', ['class' => 'elgg-text-help'], elgg_echo('access:overridenotice'));
+	echo elgg_format_element('small', ['class' => 'elgg-text-help form-text text-muted'], elgg_echo('access:overridenotice'));
 }

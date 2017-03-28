@@ -15,6 +15,7 @@ $options = [
 	'limit' => $num_display,
 	'pagination' => false,
 	'no_results' => elgg_echo('river:none'),
+	'list_class' => 'list-group-flush',
 ];
 
 if (elgg_in_context('dashboard')) {

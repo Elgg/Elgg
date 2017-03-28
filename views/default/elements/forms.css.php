@@ -6,27 +6,6 @@
 /* ***************************************
 	Form Elements
 *************************************** */
-fieldset > div, .elgg-field {
-	margin-bottom: 15px;
-}
-fieldset > div:last-child {
-	margin-bottom: 0;
-}
-.elgg-form-alt > fieldset > .elgg-foot {
-	border-top: 1px solid #DCDCDC;
-	padding: 10px 0;
-}
-label, .elgg-field-label {
-	font-weight: bold;
-	color: #333;
-	font-size: 110%;
-}
-.elgg-field-label {
-	display: block;
-}
-label.elgg-state-disabled, .elgg-field-label.elgg-state-disabled {
-	opacity: 0.6;
-}
 .elgg-required-indicator {
 	font-size: 110%;
 	font-weight: bold;
@@ -34,82 +13,29 @@ label.elgg-state-disabled, .elgg-field-label.elgg-state-disabled {
 	display: inline;
 	padding: 0 5px;
 }
-input, textarea {
-	border: 1px solid #DCDCDC;
-	color: #666;
-	font: 100% Arial, Helvetica, sans-serif;
-	padding: 7px 6px;
-	width: 100%;
-	border-radius: 3px;
 
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-input[type=email]:focus,
-input[type=password]:focus,
-input[type=text]:focus,
-input[type=number]:focus,
-input[type=url]:focus,
-textarea:focus {
-	border: solid 1px #C2C2C2;
-	background: #F0F0F0;
-	/* We remove outlines from specific input types so we can leave the browser
-	   defaults (like glows) for everything else */
-	outline: 0 none;
-}
 .elgg-longtext-control {
 	float: right;
 	margin-left: 14px;
 	font-size: 80%;
 	cursor: pointer;
 }
-.elgg-input-access {
-	margin: 5px 0 0 0;
-}
 
-input[type="checkbox"],
-input[type="radio"] {
-	margin: 0 3px 0 0;
-	padding: 0;
-	border: none;
-	width: auto;
-}
-input[type="number"] {
-	-moz-appearance: textfield;
-}
-.elgg-input-checkbox + label,
-.elgg-input-checkbox + .elgg-field-label {
-	display: inline-block;
-}
-.elgg-input-checkboxes.elgg-horizontal li,
-.elgg-input-radios.elgg-horizontal li {
-	display: inline;
-	padding-right: 10px;
-}
 <?php
 echo elgg_view('elements/misc/checkbox_switch.css');
 ?>
 
-select {
-	max-width: 100%;
-	padding: 4px;
+.elgg-login-box, .elgg-register-box {
+	max-width: 475px;
+	margin: 0 auto;
 }
-.elgg-form-account {
-	margin-bottom: 15px;
-}
+
 .elgg-form-login, .elgg-form-account {
 	max-width: 475px;
 	margin: 0 auto;
 }
 
-.elgg-fieldset-has-legend {
-	border: 1px solid #dedede;
-	padding: 10px;
-}
-
 .elgg-fieldset-horizontal .elgg-field {
-	display: inline-block;
 	margin: 0 10px 0 0;
 }
 
@@ -135,7 +61,7 @@ select {
 }
 .ui-autocomplete {
 	background-color: #FFF;
-	border: 1px solid #DCDCDC;
+	border: 1px solid #ddd;
 	overflow: hidden;
 	border-radius: 3px;
 }
@@ -257,7 +183,7 @@ select {
 	text-decoration: none;
 }
 .ui-datepicker-calendar .ui-state-default {
-	border: 1px solid #DCDCDC;
+	border: 1px solid #ddd;
 	color: #5097CF;;
 	background: #FAFAFA;
 }
@@ -274,11 +200,15 @@ select {
 	background: #E4ECF5;
 }
 
-/* ***************************************
-	MISC
-*****************************************/
-.elgg-sidebar input[type=text],
-.elgg-sidebar input[type=number],
-.elgg-sidebar input[type=password] {
-	box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+
+
+.elgg-output-field-label {
+    margin: 0 0 5px;
+    font-size: 90%;
+}
+
+.elgg-output-field-value {
+    display: block;
+    width: 100%;
+    overflow: hidden;
 }

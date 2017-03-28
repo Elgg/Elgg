@@ -40,7 +40,12 @@ $content = elgg_list_entities([
 ]);
 
 if ($show_add_form) {
-	$content .= elgg_view_form('comment/save', [], $vars);
+	$form = elgg_view_form('comment/save', [
+		'class' => 'card-block',
+	], $vars);
+	$content .= elgg_view_module('aside', elgg_echo('generic_comments:add'), $form, [
+		'class' => 'card',
+	]);
 }
 
 echo elgg_format_element('div', $attr, $content);

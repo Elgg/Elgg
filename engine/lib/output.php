@@ -235,6 +235,7 @@ function elgg_format_element($tag_name, array $attributes = [], $text = '', arra
 	}
 
 	if ($attributes) {
+		$attributes = elgg_trigger_plugin_hook('prepare', 'output:attributes', $options, $attributes);
 		$attrs = elgg_format_attributes($attributes);
 		if ($attrs !== '') {
 			$attrs = " $attrs";

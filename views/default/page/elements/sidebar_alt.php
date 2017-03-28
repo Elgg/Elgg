@@ -8,5 +8,4 @@
  */
 
 $sidebar = elgg_extract('sidebar_alt', $vars, '');
-
 echo $sidebar;

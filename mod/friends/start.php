@@ -25,7 +25,10 @@ elgg_register_event_handler('init', 'system', 'elgg_friends_plugin_init');
  */
 function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
-	/* @var \ElggUser $user */
+	
+	if (!$user instanceof ElggUser) {
+		return;
+	}
 
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() != $user->guid) {
@@ -112,7 +115,9 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
 		'text' => elgg_echo('friends'),
 		'icon' => 'users',
 		'title' => elgg_echo('friends'),
-		'priority' => 300,
+		'priority' => 200,
+		'section' => 'alt',
+		'parent_name' => 'account',
 	]);
 	
 	return $return;

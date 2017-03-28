@@ -10,6 +10,6 @@ if (!$help) {
 	return;
 }
 
-echo elgg_format_element('div', [
-	'class' => 'elgg-field-help elgg-text-help',
+echo elgg_format_element('small', [
+	'class' => 'elgg-field-help elgg-text-help form-text text-muted',
 		], $help);

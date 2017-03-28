@@ -14,7 +14,7 @@ $version_info .= elgg_echo('admin:statistics:label:version:version') . ' - ' . $
 $version_info .= elgg_echo('admin:statistics:label:version:code') . ' - ' . $code_version;
 
 ?>
-<table class="elgg-table-alt">
+<table class="elgg-table-alt table table-striped">
 	<tr>
 		<td><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
 		<td><?php echo $version_info; ?></td>

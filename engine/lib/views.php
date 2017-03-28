@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg's view system.
  *
@@ -45,7 +46,6 @@
  * @package Elgg.Core
  * @subpackage Views
  */
-
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
 use Elgg\Includer;
@@ -158,7 +158,6 @@ function elgg_is_registered_viewtype($viewtype) {
 	return in_array($viewtype, $GLOBALS['_ELGG']->view_types);
 }
 
-
 /**
  * Checks if $viewtype is a string suitable for use as a viewtype name
  *
@@ -242,7 +241,7 @@ function elgg_unregister_ajax_view($view) {
  * @since 1.9.0
  */
 function elgg_register_external_view($view, $cacheable = false) {
-	
+
 	_elgg_services()->ajax->registerView($view);
 
 	if ($cacheable) {
@@ -481,7 +480,8 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	$vars['page_shell'] = $page_shell;
 
 	// head has keys 'title', 'metas', 'links'
-	$head_params = _elgg_views_prepare_head($title);
+	$entity = elgg_extract('entity', $vars);
+	$head_params = _elgg_views_prepare_head($title, $entity);
 
 	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
 
@@ -495,6 +495,235 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 
 	$timer->end([__FUNCTION__]);
 	return $output;
+}
+
+/**
+ * Renders a listing page
+ *
+ * @param array   $listing      Listing details
+ *                               - identifier - identifier of the route, e.g. 'blog'
+ *                               - type       - listing type, e.g. 'all'|'owner'|'group'|'friends'
+ *                               - target     - target entity, e.g. a group or a user
+ *                               - entity_type - type of entity being listed
+ *                               - entity_subtype - subtype of entity being listing
+ *                              Listing view must exist as listing/<identifier>/<type>,
+ *                              or listing parameters must specify entity type and subtype for default listing types
+ * @param array   $content_vars Vars to pass to the content view
+ * @param array   $layout_vars  Vars to pass to the layout view
+ * @param array   $page_vars    Vars to pass to the page shell view
+ * @return string
+ */
+function elgg_view_listing_page(array $listing = [], array $content_vars = [], array $layout_vars = [], array $page_vars = []) {
+
+	$identifier = elgg_extract('identifier', $listing);
+	if (!isset($identifier)) {
+		$identifier = _elgg_services()->request->getFirstUrlSegment();
+	}
+	$listing_type = elgg_extract('type', $listing, 'all');
+	
+	$entity_type = elgg_extract('entity_type', $listing);
+	$entity_subtype = elgg_extract('entity_subtype', $listing);
+
+	$target = elgg_extract('target', $listing);
+
+	$content_vars = array_merge($content_vars, $listing);
+	$content_vars['identifier'] = $identifier;
+
+	if (!elgg_get_page_owner_guid()) {
+		if ($target instanceof ElggGroup || $target instanceof ElggUser) {
+			elgg_set_page_owner_guid($target->guid);
+		} else if ($target instanceof ElggObject) {
+			elgg_set_page_owner_guid($target->container_guid);
+		}
+	}
+
+	if ($entity_type && $entity_subtype) {
+		elgg_register_title_button($identifier, 'add', $entity_type, $entity_subtype);
+	}
+
+	elgg_group_gatekeeper();
+
+	$title_params = [];
+	if (elgg_instanceof($target)) {
+		$title_params = [$target->getDisplayName()];
+	}
+
+	if (elgg_language_key_exists("listing:$identifier:$listing_type")) {
+		$title = elgg_echo("listing:$identifier:$listing_type", $title_params);
+	} else {
+		$title = elgg_echo($identifier);
+	}
+
+	if (!isset($layout_vars['title'])) {
+		$layout_vars['title'] = $title;
+	}
+
+	$elements = ['header', 'content', 'sidebar', 'sidebar_alt', 'footer'];
+
+	$sidebar = elgg_extract('sidebar', $layout_vars, '');
+	unset($layout_vars['sidebar']);
+	$sidebar_alt = elgg_extract('sidebar_alt', $layout_vars, '');
+	unset($layout_vars['sidebar_alt']);
+
+	foreach ($elements as $element) {
+		if (isset($layout_vars[$element])) {
+			continue;
+		}
+
+		$views = [
+			"page/layouts/listing/$identifier/$listing_type/$element",
+			"page/layouts/listing/$listing_type/$element",
+			"page/layouts/listing/$element",
+		];
+
+		foreach ($views as $view_name) {
+			if (elgg_view_exists($view_name)) {
+				$view = elgg_view($view_name, $content_vars);
+				if ($view) {
+					$layout_vars[$element] = $view;
+				}
+				break;
+			}
+		}
+	}
+
+	$layout_vars['sidebar'] .= $sidebar;
+	$layout_vars['sidebar_alt'] .= $sidebar_alt;
+
+	// Sidebar view automatically renders these, which we don't want
+	// We will explicitly render them if needed in the listing layout sidebar view
+	$layout_vars['owner_block'] = false;
+	$layout_vars['page_menu'] = false;
+
+	if (!isset($layout_vars['filter']) && !isset($layout_vars['filter_id'])) {
+		if (in_array($listing_type, ['all', 'owner', 'friends'])) {
+			$selected = $listing_type;
+			if ($listing_type == 'owner' && $target && $target->guid == elgg_get_logged_in_user_guid()) {
+				$selected == 'mine';
+			}
+			$layout_vars['filter'] = elgg_get_filter_tabs($identifier, $listing_type);
+		} else {
+			$layout_vars['filter_id'] = "listing:$identifier";
+		}
+		$layout_vars['filter_value'] = $listing_type;
+	}
+
+	$layout_vars['class'] = elgg_extract_class($layout_vars, [
+		"elgg-layout-listing",
+		"elgg-layout-$listing_type-listing",
+		"elgg-layout-$identifier-$listing_type-listing",
+	]);
+
+	if (!isset($layout_vars['breadcrumbs'])) {
+		$layout_vars['breadcrumbs'] = _elgg_prepare_listing_breadcrumbs($listing_type, $identifier, $target);
+	}
+
+	$layout = elgg_view_layout('listing', $layout_vars);
+
+	$page_vars['class'] = elgg_extract_class($page_vars, [
+		"elgg-page-listing",
+		"elgg-page-$listing_type-listing",
+		"elgg-page-$identifier-$listing_type-listing",
+	]);
+
+	return elgg_view_page($title, $layout, 'listing', $page_vars);
+}
+
+/**
+ * Renders a profile page for an entity
+ *
+ * @param ElggEntity $entity       Entity
+ * @param array      $content_vars Vars to pass to the content view
+ * @param array      $layout_vars  Vars to pass to the layout view
+ * @param array      $page_vars    Vars to pass to the page shell view
+ * @return string
+ */
+function elgg_view_profile_page(ElggEntity $entity, array $content_vars = [], array $layout_vars = [], array $page_vars = []) {
+
+	$content_vars['entity'] = $entity;
+	$layout_vars['entity'] = $entity;
+	$page_vars['entity'] = $entity;
+
+	if (!elgg_get_page_owner_guid()) {
+		if ($entity instanceof ElggGroup || $entity instanceof ElggUser) {
+			elgg_set_page_owner_guid($entity->guid);
+		} else if ($entity instanceof ElggObject) {
+			elgg_set_page_owner_guid($entity->container_guid);
+		}
+	}
+
+	elgg_group_gatekeeper();
+
+	$title = $entity->getDisplayName();
+
+	if (!isset($layout_vars['title'])) {
+		$layout_vars['title'] = $title;
+	}
+
+	$type = $entity->getType();
+	$subtype = $entity->getSubtype() ?: 'default';
+
+	$elements = ['header', 'content', 'sidebar', 'sidebar_alt', 'footer'];
+
+	$sidebar = elgg_extract('sidebar', $layout_vars, '');
+	unset($layout_vars['sidebar']);
+	$sidebar_alt = elgg_extract('sidebar_alt', $layout_vars, '');
+	unset($layout_vars['sidebar_alt']);
+	
+	foreach ($elements as $element) {
+		if (isset($layout_vars[$element])) {
+			continue;
+		}
+
+		$views = [
+			"page/layouts/profile/$type/$subtype/$element",
+			"page/layouts/profile/$type/$element",
+			"page/layouts/profile/$element",
+		];
+
+		foreach ($views as $view_name) {
+			if (elgg_view_exists($view_name)) {
+				$view = elgg_view($view_name, $content_vars);
+				if ($view) {
+					$layout_vars[$element] = $view;
+				}
+				break;
+			}
+		}
+	}
+
+	$layout_vars['sidebar'] .= $sidebar;
+	$layout_vars['sidebar_alt'] .= $sidebar_alt;
+
+	// Sidebar view automatically renders these, which we don't want
+	// We will explicitly render them if needed in the profile layout sidebar view
+	$layout_vars['owner_block'] = false;
+	$layout_vars['page_menu'] = false;
+
+	if (!isset($layout_vars['filter']) && !isset($layout_vars['filter_id'])) {
+		$layout_vars['filter_id'] = 'profile';
+		$layout_vars['filter_value'] = 'index';
+	}
+
+	$layout_vars['class'] = elgg_extract_class($layout_vars, [
+		"elgg-layout-profile",
+		"elgg-layout-$type-profile",
+		"elgg-layout-$type-$subtype-profile",
+	]);
+
+	if (!isset($layout_vars['breadcrumbs'])) {
+		$layout_vars['breadcrumbs'] = _elgg_prepare_entity_breadcrumbs($entity);
+	}
+
+	$layout = elgg_view_layout('profile', $layout_vars);
+
+	$page_vars['class'] = elgg_extract_class($page_vars, [
+		"elgg-page-profile",
+		"elgg-page-$type-profile",
+		"elgg-page-$type-$subtype-profile",
+	]);
+
+	return elgg_view_page($title, $layout, 'profile', $page_vars);
 }
 
 /**
@@ -532,15 +761,25 @@ function elgg_view_resource($name, array $vars = []) {
 /**
  * Prepare the variables for the html head
  *
- * @param string $title Page title for <head>
+ * @param string     $title  Page title for <head>
+ * @param ElggEntity $entity Page entity
  * @return array
  * @access private
  */
-function _elgg_views_prepare_head($title) {
+function _elgg_views_prepare_head($title, $entity = null) {
 	$params = [
 		'links' => [],
 		'metas' => [],
 	];
+
+	$description = elgg_get_config('sitedescription');
+
+	if ($entity instanceof ElggEntity) {
+		if (empty($title)) {
+			$title = $entity->getDisplayName();
+		}
+		$description = elgg_get_excerpt($entity->description);
+	}
 
 	if (empty($title)) {
 		$params['title'] = elgg_get_config('sitename');
@@ -555,7 +794,7 @@ function _elgg_views_prepare_head($title) {
 
 	$params['metas']['description'] = [
 		'name' => 'description',
-		'content' => elgg_get_config('sitedescription')
+		'content' => $description,
 	];
 
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
@@ -571,7 +810,7 @@ function _elgg_views_prepare_head($title) {
 		'name' => 'apple-mobile-web-app-capable',
 		'content' => 'yes',
 	];
-	
+
 	// RSS feed link
 	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
@@ -587,10 +826,9 @@ function _elgg_views_prepare_head($title) {
 			'href' => $url,
 		];
 	}
-	
+
 	return $params;
 }
-
 
 /**
  * Add favicon link tags to HTML head
@@ -775,7 +1013,7 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
 		$vars['filter_id'] = $context;
 		$vars['filter_value'] = $selected;
 	}
-	
+
 	return $vars;
 }
 
@@ -891,7 +1129,7 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
 		if (preg_match('~<[a-z]~', $text)) {
 			return $text;
 		} else {
-			return elgg_format_element('span', ['class' => 'elgg-non-link'], $text);
+			return elgg_format_element('span', ['class' => 'elgg-non-link nav-link'], $text);
 		}
 	}
 
@@ -1198,11 +1436,10 @@ function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
 
 	$entity_type = $entity->getType();
 
-	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
-		[
-			'entity' => $entity,
-			'full_view' => $full_view,
-		]
+	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type, [
+		'entity' => $entity,
+		'full_view' => $full_view,
+			]
 	);
 
 	return $annotations;
@@ -1514,23 +1751,6 @@ function elgg_view_field(array $params = []) {
 
 	// $vars passed to input/$input_name
 	$input_vars = [];
-	
-	$make_special_checkbox_label = false;
-	if ($input_type == 'checkbox' && (isset($params['label']) || isset($params['#label']))) {
-		if (isset($params['#label']) && isset($params['label'])) {
-			$params['label_tag'] = 'div';
-		} else {
-			$label = elgg_extract('label', $params);
-			$label = elgg_extract('#label', $params, $label);
-			
-			$params['#label'] = $label;
-			unset($params['label']);
-
-			// Single checkbox input view gets special treatment
-			// We don't want the field label to appear a checkbox without a label
-			$make_special_checkbox_label = true;
-		}
-	}
 
 	// first pass non-hash keys into both
 	foreach ($params as $key => $value) {
@@ -1545,7 +1765,7 @@ function elgg_view_field(array $params = []) {
 
 	// field views get more data
 	$element_vars['input_type'] = $input_type;
-	
+
 	unset($element_vars['class']);
 	if (isset($params['#class'])) {
 		$element_vars['class'] = $params['#class'];
@@ -1558,16 +1778,24 @@ function elgg_view_field(array $params = []) {
 	if (isset($params['#label'])) {
 		$element_vars['label'] = $params['#label'];
 	}
-	
+
+	if ($input_type == 'checkbox') {
+		if (!isset($input_vars['label'])) {
+			$input_vars['label'] = $element_vars['label'];
+			unset($element_vars['label']);
+		}
+
+		if (isset($element_vars['label'])) {
+			$input_vars['label_tag'] = 'div';
+		} else {
+			$input_vars['help'] = elgg_view('elements/forms/help', $element_vars);
+			unset($element_vars['help']);
+		}
+	}
+
 	// wrap if present
 	$element_vars['label'] = elgg_view('elements/forms/label', $element_vars);
 	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
-
-	if ($make_special_checkbox_label) {
-		$input_vars['label'] = $element_vars['label'];
-		$input_vars['label_tag'] = 'div';
-		unset($element_vars['label']);
-	}
 	$element_vars['input'] = elgg_view("elements/forms/input", $input_vars);
 
 	return elgg_view('elements/forms/field', $element_vars);
@@ -1756,7 +1984,6 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 	}
 }
 
-
 /**
  * Inserts module names into anonymous modules by handling the "simplecache:generate" hook.
  *
@@ -1829,7 +2056,7 @@ function _elgg_view_may_be_altered($view, $path) {
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);
-	
+
 	return realpath($view_path) !== realpath($expected_path);
 }
 
@@ -1859,10 +2086,12 @@ function elgg_views_boot() {
 	}
 
 	// on every page
-
 	// jQuery and UI must come before require. See #9024
 	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
 	elgg_load_js('jquery');
+
+	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('jquery-migrate.js'), 'head');
+	elgg_load_js('jquery-migrate');
 
 	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
 	elgg_load_js('jquery-ui');
@@ -1873,9 +2102,19 @@ function elgg_views_boot() {
 	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
 	elgg_load_js('require');
 
+	elgg_define_js('tether', [
+		'src' => elgg_get_simplecache_url('tether.js'),
+		'exports' => 'window.Tether',
+	]);
+
+	elgg_define_js('twbs', [
+		'src' => elgg_get_simplecache_url('twbs/js/bootstrap.min.js'),
+		'deps' => ['jquery', 'tether'],
+	]);
+
 	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_js('elgg');
-	
+
 	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/font-awesome.css'));
 	elgg_load_css('font-awesome');
 
@@ -1899,7 +2138,7 @@ function elgg_views_boot() {
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
 	elgg_register_ajax_view('languages.js');
-	
+
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
@@ -1909,7 +2148,7 @@ function elgg_views_boot() {
 	// registered with high priority for BC
 	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
-	
+
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
 	$view_path = _elgg_services()->views->view_path;
 	$viewtype_dirs = scandir($view_path);
@@ -1926,7 +2165,7 @@ function elgg_views_boot() {
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
 			'small' => ['w' => 40, 'h' => 40, 'square' => true, 'upscale' => true],
 			'medium' => ['w' => 100, 'h' => 100, 'square' => true, 'upscale' => true],
-			'large' => ['w' => 200, 'h' => 200, 'square' => false, 'upscale' => false],
+			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
 			'master' => ['w' => 550, 'h' => 550, 'square' => false, 'upscale' => false],
 		];
 		elgg_set_config('icon_sizes', $icon_sizes);
@@ -1962,7 +2201,6 @@ function _elgg_get_js_site_data() {
 		'elgg.version' => elgg_get_version(),
 		'elgg.release' => elgg_get_version(true),
 		'elgg.config.wwwroot' => elgg_get_site_url(),
-
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 		'elgg.security.interval' => (int) _elgg_services()->actions->getActionTokenTimeout() * 333,
 		'elgg.config.language' => $language,
@@ -2073,6 +2311,56 @@ function _elgg_set_lightbox_config($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Prepare element attributes for compaitibility with Bootstrap
+ * 
+ * @param \Elgg\Hook $hook $hook
+ * @return array
+ */
+function _elgg_bootstrap_theme(\Elgg\Hook $hook) {
+	$bootstrap = $hook->getParam('bootstrap', true);
+	if ($bootstrap === false) {
+		return;
+	}
+
+	$attributes = $hook->getValue();
+
+	$bootstrap_class_map = [
+		// Typography
+		'elgg-heading-site' => 'display-2',
+		'elgg-text-help' => 'small text-muted',
+		'elgg-subtext' => 'small text-muted',
+		// Buttons
+		'elgg-button' => 'btn',
+		'elgg-button-submit' => 'btn-success',
+		'elgg-button-action' => 'btn-primary',
+		'elgg-button-cancel' => 'btn-warning',
+		'elgg-button-delete' => 'btn-danger',
+		'elgg-button-special' => 'btn-info',
+		// Forms
+		'elgg-field' => 'form-group',
+		'elgg-input' => 'form-control',
+	];
+
+	$classes = (array) elgg_extract('class', $attributes, '');
+	foreach ($classes as $class) {
+		$subclasses = explode(' ', $class);
+		foreach ($subclasses as $subclass) {
+			if (!array_key_exists($subclass, $bootstrap_class_map)) {
+				continue;
+			}
+			$bootstrap_class = $bootstrap_class_map[$subclass];
+			if (!in_array($bootstrap_class, $classes)) {
+				$classes[] = $bootstrap_class;
+			}
+		}
+	}
+
+	$attributes['class'] = $classes;
+	return $attributes;
+}
+
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('boot', 'system', 'elgg_views_boot');
+	$hooks->registerHandler('prepare', 'output:attributes', '_elgg_bootstrap_theme');
 };

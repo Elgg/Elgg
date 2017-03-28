@@ -85,7 +85,6 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 		'name' => 'reportuser',
 		'text' => elgg_echo('reportedcontent:user'),
 		'href' => $href,
-		'section' => 'action',
 		'link_class' => 'elgg-lightbox',
 		'deps' => 'elgg/reportedcontent',
 	]);

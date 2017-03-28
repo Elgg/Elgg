@@ -9,7 +9,7 @@
  * @uses $vars['icon']  Optional icon name
  */
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-button');
+$vars['class'] = elgg_extract_class($vars, 'elgg-button btn');
 
 if (!isset($vars['text']) && isset($vars['value'])) {
 	// Keeping this to ease the transition to 3.0
@@ -37,11 +37,11 @@ if ($icon && !preg_match('/^</', $icon)) {
 
 switch ($type) {
 	case 'submit':
-		$vars['class'][] = 'elgg-button-submit';
+		$vars['class'][] = 'elgg-button-submit btn-success';
 		break;
 
 	case 'reset':
-		$vars['class'][] = 'elgg-button-cancel';
+		$vars['class'][] = 'elgg-button-cancel brn-warning';
 		break;
 }
 

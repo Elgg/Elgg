@@ -10,7 +10,9 @@
  * @uses $vars['title']   Optional title string
  */
 
-$class = elgg_extract_class($vars, [
+elgg_push_breadcrumb(elgg_echo('admin'), 'admin');
+
+$vars['class'] = elgg_extract_class($vars, [
 	'elgg-layout',
 	'elgg-layout-one-sidebar',
 	'elgg-layout-admin',
@@ -18,13 +20,7 @@ $class = elgg_extract_class($vars, [
 ]);
 unset($vars['class']);
 
-$vars['breadcrumbs'] = false;
+$vars['owner_block'] = false;
+$vars['page_menu_params']['show_section_headers'] = true;
 
-$vars['sidebar'] = elgg_view('admin/sidebar', $vars);
-
-$sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
-$body = elgg_view('page/layouts/elements/body', $vars);
-
-echo elgg_format_element('div', [
-	'class' => $class,
-], $sidebar . $body);
+echo elgg_view('page/layouts/default', $vars);

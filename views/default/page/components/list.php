@@ -20,6 +20,8 @@
  * @uses $vars['no_results']   Message to display if no results (string|Closure)
  */
 $items = $vars['items'];
+unset($vars['items']);
+
 $count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
@@ -34,17 +36,22 @@ if (!is_array($items) || count($items) == 0) {
 	return;
 }
 
-$list_classes = ['elgg-list'];
+$list_classes = ['elgg-list', 'list-group'];
 if (isset($vars['list_class'])) {
 	$list_classes[] = $vars['list_class'];
 }
 
-$item_classes = ['elgg-item'];
+$item_classes = ['elgg-item', 'list-group-item'];
 if (isset($vars['item_class'])) {
 	$item_classes[] = $vars['item_class'];
 }
 
-$nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
+$nav = '';
+if ($pagination && is_string($pagination)) {
+	$nav = $pagination;
+} else if ($pagination) {
+	$nav = elgg_view('navigation/pagination', $vars);
+}
 
 $index = 0;
 $list_items = '';

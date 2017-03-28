@@ -1,10 +1,10 @@
 <?php
+
 /**
  * File renderer.
  *
  * @package ElggFile
  */
-
 $full = elgg_extract('full_view', $vars, false);
 $file = elgg_extract('entity', $vars, false);
 
@@ -13,9 +13,6 @@ if (!$file) {
 }
 
 $owner = $file->getOwnerEntity();
-$categories = elgg_view('output/categories', $vars);
-
-$by_line = elgg_view('object/elements/imprint', $vars);
 
 $comments_count = $file->countComments();
 //only display if there are commments
@@ -30,10 +27,10 @@ if ($comments_count != 0) {
 	$comments_link = '';
 }
 
-$subtitle = "$by_line $comments_link $categories";
+$subtitle = "$comments_link";
 
 $metadata = '';
-if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
+if (!elgg_in_context('gallery')) {
 	// only show entity menu outside of widgets and gallery view
 	$metadata = elgg_view_menu('entity', [
 		'entity' => $vars['entity'],
@@ -54,14 +51,17 @@ if ($full && !elgg_in_context('gallery')) {
 		$extra = elgg_view("file/specialcontent/$base_type/default", $vars);
 	}
 
-	$params = [
-		'entity' => $file,
-		'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-	];
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
+	$summary = '';
+	if (elgg_extract('show_summary', $vars, true)) {
+		$params = [
+			'entity' => $file,
+			'title' => false,
+			'metadata' => $metadata,
+			'subtitle' => $subtitle,
+		];
+		$params = $params + $vars;
+		$summary = elgg_view('object/elements/summary', $params);
+	}
 
 	$body = elgg_view('output/longtext', ['value' => $file->description]);
 

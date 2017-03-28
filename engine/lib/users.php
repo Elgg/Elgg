@@ -759,26 +759,29 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 	
 	$viewer = elgg_get_logged_in_user_entity();
 	if (!$viewer) {
-		return;
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'login',
+			'text' => elgg_view('core/account/login_dropdown'),
+			'href' => false,
+			'priority' => 800,
+			'section' => 'alt',
+		]);
+		return $return;
 	}
-
-	$toggle = elgg_view_icon('chevron-down', ['class' => 'elgg-state-closed']);
-	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'account',
-		'text' => elgg_echo('account') . $toggle,
+		'text' => $viewer->getDisplayName(),
+		'icon' => elgg_view('output/img', [
+			'src' => $viewer->getIconURL('tiny'),
+			'alt' => $viewer->getDisplayName(),
+		]),
 		'href' => '#',
 		'priority' => 800,
 		'section' => 'alt',
 		'child_menu' => [
 			'display' => 'dropdown',
 			'class' => 'elgg-topbar-child-menu',
-			'data-position' => json_encode([
-				'at' => 'right+10px bottom',
-				'my' => 'right top',
-				'collision' => 'fit fit',
-			]),
 		],
 	]);
 	

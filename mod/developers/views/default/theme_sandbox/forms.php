@@ -77,7 +77,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'label' => 'a (.elgg-input-checkbox) - Input label',
 			'#help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox (label and #label)',
 		]);
-		
+
 		echo elgg_view_input('checkbox', [
 			'name' => 'f4s3',
 			'id' => 'f4s3',
@@ -87,7 +87,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'label' => 'a (.elgg-input-checkbox)',
 			'help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox using elgg_view_input',
 		]);
-		
+
 		echo elgg_view_field([
 			'#type' => 'checkboxes',
 			'name' => 'f4',
@@ -118,10 +118,10 @@ $ipsum = elgg_view('developers/ipsum');
 			'options' => [
 				'option 1',
 				'option 2',
-					[
+				[
 					'text' => 'disabled',
 					'disabled' => true,
-					],
+				],
 			],
 			'#label' => 'Select input (dropdown) (.elgg-input-dropdown) with a disabled option:',
 		]);
@@ -289,30 +289,30 @@ $ipsum = elgg_view('developers/ipsum');
 			'name' => 'f16',
 			'legend' => 'Fieldset with a legend',
 			'fields' => [
-					[
+				[
 					'#type' => 'text',
 					'#label' => 'Text field',
 					'required' => true,
-					],
-					[
+				],
+				[
 					'#type' => 'fieldset',
 					'#label' => 'Date and time fieldset',
 					'align' => 'horizontal',
 					'fields' => [
-							[
+						[
 							'#type' => 'date',
 							'value' => time(),
 							'timestamp' => true,
 							'#label' => 'Date',
-							],
-							[
+						],
+						[
 							'#type' => 'select',
 							'#label' => 'Time',
 							'options' => $hour_options,
-							],
+						],
 					],
-					],
-					[
+				],
+				[
 					'#type' => 'fieldset',
 					'#label' => 'Nested fieldset',
 					'#help' => 'Fieldset with horizontal alignment of fields',
@@ -324,20 +324,20 @@ $ipsum = elgg_view('developers/ipsum');
 							'text' => 'Save',
 							'icon' => 'save',
 						],
-							[
+						[
 							'#type' => 'button',
 							'text' => 'Download',
 							'icon' => 'download',
 							'class' => 'elgg-button-action',
-							],
-							[
+						],
+						[
 							'#type' => 'button',
 							'type' => 'reset',
 							'text' => 'Cancel',
 							'icon' => 'remove',
-							],
+						],
 					],
-					],
+				],
 			]
 		]);
 		?>

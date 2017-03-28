@@ -35,6 +35,7 @@ $content = elgg_list_river([
 		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
 	],
 	'no_results' => elgg_echo('groups:activity:none'),
+	'list_class' => 'list-group-flush',
 ]);
 elgg_pop_context();
 

@@ -6,24 +6,11 @@
  * @uses $vars['content']
  */
 
-$title = elgg_view_title($vars['title'], ['class' => 'theme-sandbox-page-heading']);
-$content = elgg_extract('content', $vars);
+$sidebar = elgg_extract('sidebar', $vars, '');
+$sidebar .= elgg_view_menu('theme_sandbox', [
+	'sort_by' => 'name',
+	'class' => 'nav-pills flex-column',
+]);
+$vars['sidebar'] = $sidebar;
 
-$sidebar_menu = elgg_view_menu('theme_sandbox', ['sort_by' => 'name']);
-$sidebar = elgg_view_module('theme-sandbox-nav', 'Sections', $sidebar_menu);
-
-echo <<<HTML
-<div class="elgg-layout clearfix theme-sandbox-layout">
-	<div class="theme-sandbox-sidebar">
-		$sidebar
-	</div>
-	<div class="theme-sandbox-main elgg-body">
-		<div class="elgg-head clearfix">
-			$title
-		</div>
-		<div class="theme-sandbox-content elgg-body">
-			$content
-		</div>
-	</div>
-</div>
-HTML;
+echo elgg_view('page/layouts/default', $vars);

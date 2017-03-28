@@ -25,9 +25,11 @@ $body = elgg_list_entities_from_relationship([
 	'order_by' => 'r.time_created DESC',
 	'pagination' => false,
 	'list_type' => 'gallery',
-	'gallery_class' => 'elgg-gallery-users',
+	'gallery_class' => 'elgg-gallery-users card-block d-flex flex-wrap justify-content-center p-1',
 ]);
 
-$body .= "<div class='center mts'>$all_link</div>";
+$body .= "<div class='center card-block'>$all_link</div>";
 
-echo elgg_view_module('aside', elgg_echo('groups:members'), $body);
+echo elgg_view_module('aside', elgg_echo('groups:members'), $body, [
+	'class' => 'card',
+]);

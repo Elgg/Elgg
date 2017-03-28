@@ -19,4 +19,5 @@ echo elgg_list_entities([
 	'joins' => ["JOIN {$db_prefix}users_entity ue on ue.guid = e.guid"],
 	'pagination' => false,
 	'limit' => $num_display,
+	'list_class' => 'list-group-flush',
 ]);

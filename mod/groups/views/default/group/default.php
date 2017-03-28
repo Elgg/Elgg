@@ -13,7 +13,7 @@ if (!($group instanceof \ElggGroup)) {
 $icon = elgg_view_entity_icon($group, 'tiny', $vars);
 
 $metadata = '';
-if (!elgg_in_context('owner_block') && !elgg_in_context('widgets')) {
+if (!elgg_in_context('owner_block')) {
 	// only show entity menu outside of widgets and owner block
 	$metadata = elgg_view_menu('entity', [
 		'entity' => $group,

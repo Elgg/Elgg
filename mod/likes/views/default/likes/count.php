@@ -15,7 +15,7 @@ if ($num_of_likes == 1) {
 	$likes_string = elgg_echo('likes:userslikedthis', [$num_of_likes]);
 }
 
-$class = 'elgg-lightbox elgg-non-link';
+$class = 'elgg-lightbox elgg-non-link nav-link';
 if (!$num_of_likes) {
 	$class .= ' hidden';
 }

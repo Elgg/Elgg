@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg checkbox input
  * Displays a checkbox input tag
@@ -21,8 +22,7 @@
  * @uses $vars['label_class'] Optional class for the label
  * @uses $vars['label_tag']   HTML tag that wraps concatinated label and input. Defaults to 'label'.
  */
-
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-checkbox');
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-checkbox form-check-input');
 
 $defaults = [
 	'default' => 0,
@@ -57,12 +57,43 @@ if ($switch) {
 	$input .= elgg_format_element('span', ['class' => 'elgg-input-checkbox-switch']);
 }
 
+$help = elgg_extract('help', $vars);
+
 if (!empty($label)) {
 	$html_tag = elgg_extract('label_tag', $vars, 'label', false);
-	if ($switch && ($html_tag !== 'label')) {
-		$input = elgg_format_element('label', [], $input);
+
+	if ($required) {
+		$indicator = elgg_extract('required_indicator', $vars);
+		if (!isset($indicator)) {
+			$indicator = elgg_format_element([
+				'#tag_name' => 'span',
+				'title' => elgg_echo('field:required'),
+				'class' => 'elgg-required-indicator',
+				'#text' => "&ast;",
+			]);
+		}
+		if ($indicator) {
+			$label .= $indicator;
+		}
 	}
-	echo elgg_format_element($html_tag, ['class' => $label_class], "$input $label");
+
+	if ($switch) {
+		$item_class = [];
+	} else {
+		$label_class[] = 'form-check-label';
+
+		$item_class = ['form-check'];
+		if (elgg_extract('align', $vars) == 'horizontal') {
+			$item_class[] = 'form-check-inline';
+		}
+	}
+
+	$input = elgg_format_element($html_tag, ['class' => $label_class], "$input $label $help");
+
+	echo elgg_format_element('div', [
+		'class' => $item_class,
+			], $input);
 } else {
 	echo $input;
+	echo $help;
 }

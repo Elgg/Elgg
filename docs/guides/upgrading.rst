@@ -373,6 +373,10 @@ As a result of these changes:
  * layout views and subviews now receive ``identifier`` and ``segments`` of the page being rendered
  * layout parameters are available to title and filter menu hooks, which allows resources to provide additional context information, for example, an ``$entity`` in case of a profile resource
 
+``elgg_view_profile_page()`` should now be preferred for rendering profile/content item pages. It provides for more granularity in how we handle layouts, as well as allows to render a page with ``$entity`` parameter being present during shell rendering (this has numerous benefits, including the ability to set page meta tags specific to the entity without having to sniff the URL). Consequently, ``title`` and ``page`` menus will receive the entity parameter.
+
+Page shell and layout views have been decomposed to provide for more extension points. Additionally ``.elgg-inner`` is now wrapped within a page section view allowing themes to go full screen width.
+
 Plugins and themes should:
 
  * Update calls to ``elgg_view_layout()`` to use ``default`` layout
@@ -409,14 +413,16 @@ Theme and styling changes
 
 Aalborg theme is no longer bundled with Elgg, instead all styles have been either moved to core views or to an appropriate core plugin.
 
-This change may affect themes and plugins that were developed without Aalborg stylesheets loaded or were relying on a certain priority of views with Aalborg stylesheets loaded.
+Elgg has been integrated with .. _Bootstrap 4: http://getbootstrap.com/, so plugins and theme can now use all CSS and JS components included with the framework.
+
+Elgg core theme has been stripped down and now heavily relies on Bootstrap CSS class names. ``elgg-`` prefixed classes on all core components will remain intact and can be used to apply additional styling.
 
 Notable changes in plugins:
 
  * search plugin no longer extends ``page/elements/header`` and instead extends ``page/elements/sidebar``
  * ``.elgg-icon`` no longer has a global ``font-size``, ``line-height`` or ``color``: these values will be inherited from parent items
  * Support for ``.elgg-icon-hover`` has been dropped
- * Admin theme now reuses icon classes from ``elements/icons.css``
+ * Admin theme has been dropped and admin interface now uses core ``elgg.css`` with minor additional styling
 
 Comment notifications
 ---------------------

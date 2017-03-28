@@ -38,10 +38,12 @@ if ($tags === '') {
 $metadata = elgg_view('object/elements/summary/metadata', $vars);
 $title = elgg_view('object/elements/summary/title', $vars);
 $subtitle = elgg_view('object/elements/summary/subtitle', $vars);
+$imprint = elgg_view('object/elements/summary/imprint', $vars);
+$categories = elgg_view('object/elements/summary/categories', $vars);
 $extensions = elgg_view('object/summary/extend', $vars);
 $content = elgg_view('object/elements/summary/content', $vars);
 
-$summary = $metadata . $title . $subtitle . $tags . $extensions . $content;
+$summary = $metadata . $title . $subtitle . $imprint . $tags . $extensions . $content;
 
 $icon = elgg_extract('icon', $vars);
 if (isset($icon)) {

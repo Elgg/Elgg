@@ -9,12 +9,15 @@ $content = elgg_list_river([
 	'no_results' => elgg_echo('river:none'),
 ]);
 
-$login_box = elgg_view('core/account/login_box');
-
-$body = elgg_view_layout('one_sidebar', [
-	'title' => $title,
-	'content' => $content,
-	'sidebar' => $login_box,
+$login_box = elgg_view('core/account/login_box', [
+	'class' => 'card',
 ]);
 
-echo elgg_view_page(null, $body);
+echo elgg_view_listing_page([
+	'identifier' => 'activity',
+	'type' => 'all',
+	'entity_type' => false,
+	'entity_subtype' => false,
+], [
+	'sidebar' => $login_box,
+]);

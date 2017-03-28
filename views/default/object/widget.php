@@ -18,9 +18,16 @@ $widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$han
 
 $widget_class = elgg_extract_class($vars, $widget_instance);
 $widget_class[] = $widget->canEdit() ? 'elgg-state-draggable' : 'elgg-state-fixed';
+$widget_class[] = 'card';
+
+$controls = elgg_view('object/widget/elements/controls', [
+	'widget' => $widget,
+	'show_edit' => $widget->canEdit(),
+]);
 
 echo elgg_view_module('widget', '', elgg_view('object/widget/body', $vars), [
 	'class' => $widget_class,
 	'id' => "elgg-widget-$widget->guid",
 	'header' => elgg_view('object/widget/header', $vars),
+	'controls' => $controls,
 ]);

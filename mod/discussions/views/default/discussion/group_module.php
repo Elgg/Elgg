@@ -26,6 +26,7 @@ $options = [
 	'full_view' => false,
 	'pagination' => false,
 	'no_results' => elgg_echo('discussion:none'),
+	'list_class' => 'list-group-flush',
 ];
 $content = elgg_list_entities($options);
 elgg_pop_context();

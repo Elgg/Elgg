@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Elgg file plugin
  *
  * @package ElggFile
  */
-
 elgg_register_event_handler('init', 'system', 'file_init');
 
 /**
@@ -45,31 +45,33 @@ function file_init() {
 	// add a file link to owner blocks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
 
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'file_entity_menu_setup');
+
 	// cleanup thumbnails on delete. high priority because we want to try to make sure the
 	// deletion will actually occur before we go through with this.
 	elgg_register_event_handler('delete', 'object', 'file_handle_object_delete', 999);
 
 	// embed support
 	$item = ElggMenuItem::factory([
-		'name' => 'file',
-		'text' => elgg_echo('file'),
-		'priority' => 10,
-		'data' => [
-			'options' => [
-				'type' => 'object',
-				'subtype' => 'file',
-			],
-		],
+				'name' => 'file',
+				'text' => elgg_echo('file'),
+				'priority' => 10,
+				'data' => [
+					'options' => [
+						'type' => 'object',
+						'subtype' => 'file',
+					],
+				],
 	]);
 	elgg_register_menu_item('embed', $item);
 
 	$item = ElggMenuItem::factory([
-		'name' => 'file_upload',
-		'text' => elgg_echo('file:upload'),
-		'priority' => 100,
-		'data' => [
-			'view' => 'embed/file_upload/content',
-		],
+				'name' => 'file_upload',
+				'text' => elgg_echo('file:upload'),
+				'priority' => 100,
+				'data' => [
+					'view' => 'embed/file_upload/content',
+				],
 	]);
 
 	elgg_register_menu_item('embed', $item);
@@ -203,7 +205,7 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 		$title,
 		$descr,
 		$entity->getURL()
-	], $language);
+			], $language);
 	$notification->summary = elgg_echo('file:notify:summary', [$entity->title], $language);
 	$notification->url = $entity->getURL();
 	return $notification;
@@ -271,18 +273,18 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 		elgg_register_menu_item('page', [
 			'name' => 'file:all',
 			'text' => elgg_echo('all'),
-			'href' =>  file_type_cloud_get_url($all, $friends),
+			'href' => file_type_cloud_get_url($all, $friends),
 		]);
-		
+
 		foreach ($types as $type) {
 			elgg_register_menu_item('page', [
 				'name' => "file:$type->tag",
 				'text' => elgg_echo("file:type:$type->tag"),
-				'href' =>  file_type_cloud_get_url($type, $friends),
+				'href' => file_type_cloud_get_url($type, $friends),
 			]);
 		}
 	}
-	
+
 	// returning the view is needed for BC
 	$params = [
 		'friends' => $friends,
@@ -479,7 +481,7 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 	if (!elgg_instanceof($entity, 'object', 'file')) {
 		return;
 	}
-	
+
 	switch ($size) {
 		case 'small' :
 			$filename_prefix = 'thumb';
@@ -511,4 +513,57 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 		$icon->setFilename($filename);
 	}
 	return $icon;
+}
+
+/**
+ * Setup entity menu
+ * 
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ */
+function file_entity_menu_setup(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof ElggFile) {
+		return;
+	}
+
+	$menu = $hook->getValue();
+
+	$menu[] = \ElggMenuItem::factory([
+		'name' => 'download',
+		'parent_name' => 'actions',
+		'text' => elgg_echo('download'),
+		'icon' => 'download',
+		'href' => elgg_get_download_url($entity),
+		'priority' => 100,
+	]);
+
+	if ($entity->canEdit()) {
+		$menu[] = \ElggMenuItem::factory([
+					'name' => 'edit',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('edit'),
+					'icon' => 'pencil',
+					'title' => elgg_echo('edit:this'),
+					'href' => "file/edit/$entity->guid",
+					'priority' => 200,
+		]);
+	}
+
+	if ($entity->canDelete()) {
+		$menu[] = \ElggMenuItem::factory([
+					'name' => 'delete',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('delete'),
+					'icon' => 'delete',
+					'title' => elgg_echo('delete:this'),
+					'href' => "action/file/delete?guid={$entity->getGUID()}",
+					'confirm' => elgg_echo('deleteconfirm'),
+					'priority' => 900,
+					'link_class' => 'text-danger',
+		]);
+	}
+	
+	return $menu;
 }

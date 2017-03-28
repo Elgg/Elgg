@@ -33,6 +33,6 @@ if (!$is_locked) {
 }
 
 echo elgg_view_menu('admin_control_panel', [
-	'class' => 'elgg-menu-hz',
-	'item_class' => 'mrm',
+	'class' => 'elgg-menu-hz justify-content-center card-block',
+	'item_class' => 'm-1',
 ]);

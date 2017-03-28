@@ -1,14 +1,16 @@
 <?php
+
 /**
  * Forum topic entity view
  */
-
 $full = elgg_extract('full_view', $vars, false);
 $topic = elgg_extract('entity', $vars, false);
 
 if (!$topic) {
 	return;
 }
+
+elgg_require_js('elgg/discussion');
 
 $poster = $topic->getOwnerEntity();
 if (!$poster) {
@@ -23,8 +25,6 @@ $excerpt = elgg_get_excerpt($topic->description);
 
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 
-$by_line = elgg_view('object/elements/imprint', $vars);
-
 $replies_link = '';
 $reply_text = '';
 
@@ -34,7 +34,7 @@ $num_replies = elgg_get_entities([
 	'container_guid' => $topic->getGUID(),
 	'count' => true,
 	'distinct' => false,
-]);
+		]);
 
 if ($num_replies != 0) {
 	$last_reply = elgg_get_entities([
@@ -65,30 +65,28 @@ if ($num_replies != 0) {
 	]);
 }
 
-// do not show the metadata and controls in widget view
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $vars['entity'],
-		'handler' => 'discussion',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	]);
-}
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
+	'handler' => 'discussion',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+		));
 
 if ($full) {
-	$subtitle = "$by_line $replies_link";
+	$subtitle = "$replies_link";
 
-	$params = [
-		'entity' => $topic,
-		'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-	];
+	$summary = '';
+	if (elgg_extract('show_summary', $vars, true)) {
+		$params = [
+			'entity' => $topic,
+			'title' => false,
+			'metadata' => $metadata,
+			'subtitle' => $subtitle,
+		];
 
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
+		$params = $params + $vars;
+		$summary = elgg_view('object/elements/summary', $params);
+	}
 
 	$body = elgg_view('output/longtext', [
 		'value' => $topic->description,
@@ -116,7 +114,7 @@ if ($full) {
 	]);
 } else {
 	// brief view
-	$subtitle = "$by_line $replies_link <span class=\"float-alt\">$reply_text</span>";
+	$subtitle = "$replies_link <span class=\"float-alt\">$reply_text</span>";
 
 	$params = [
 		'entity' => $topic,

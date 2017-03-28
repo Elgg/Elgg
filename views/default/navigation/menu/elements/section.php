@@ -27,8 +27,8 @@ unset($vars['section']);
 $vars['data-menu-section'] = $section;
 
 if ($headers) {
-	echo elgg_format_element('h2', [
-		'class' => 'elgg-menu-section-header',
+	echo elgg_format_element('h5', [
+		'class' => 'elgg-menu-section-header p-2 m-0',
 			], elgg_echo("menu:$name:header:$section"));
 }
 

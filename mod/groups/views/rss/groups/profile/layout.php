@@ -9,6 +9,10 @@
 
 $entities = elgg_get_config('registered_entities');
 
+if (!elgg_group_gatekeeper(false)) {
+	return;
+}
+
 if (!empty($entities['object'])) {
 	echo elgg_list_entities([
 		'type' => 'object',

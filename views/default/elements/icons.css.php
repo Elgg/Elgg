@@ -20,6 +20,7 @@
 	bottom: 0;
 	margin: 0;
 	cursor: pointer;
+	font-size: 1rem;
 }
 .elgg-avatar > .elgg-icon-hover-menu:before {
 	position: absolute;

@@ -21,8 +21,8 @@
         "elgg/data_views": "~1.0",
         "zendframework/zend-mail": "~2.4",
         "league/flysystem": "~1.0",
-        "bower-asset/jquery": "^2.1.4",
-        "bower-asset/jquery-ui": "~1.11.4",
+        "bower-asset/jquery": "^3.1.1",
+        "bower-asset/jquery-ui": "~1.12.1",
         "bower-asset/text": "^2.0.4",
         "bower-asset/requirejs": "^2.1.18",
         "bower-asset/jquery-form": "^3.51",
@@ -33,7 +33,9 @@
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
         "htmlawed/htmlawed": "^1.1.22",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "twbs/bootstrap": "^4.0.0",
+        "bower-asset/tether": "^1.4.0"
     },
     "config": {
         "process-timeout": 0

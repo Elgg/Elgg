@@ -222,7 +222,8 @@ return array(
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
-
+	'widgets:settings:empty' => 'This widget does not have any settings',
+	
 /**
  * Groups
  */
@@ -1610,4 +1611,13 @@ To view %s's profile, click here:
 
 	"field:required" => 'Required',
 
+	'river:actions' => 'Actions',
+	'entity:actions' => 'Actions',
+	'annotation:actions' => 'Actions',
+
+	'meta_block:owner' => 'Owner',
+	'meta_block:group' => 'Group',
+	'meta_block:time_created' => 'Created',
+	'meta_block:time_updated' => 'Last updated',
+	
 );

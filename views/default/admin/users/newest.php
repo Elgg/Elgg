@@ -16,7 +16,7 @@ $users = elgg_list_entities([
 			'format' => 'friendly',
 		]),
 	],
-	'list_class' => 'elgg-newest-users',
+	'list_class' => 'elgg-newest-users table table-striped',
 ]);
 
 echo elgg_view_module('inline', elgg_echo('admin:users:newest'), $users);

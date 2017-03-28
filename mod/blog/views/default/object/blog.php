@@ -9,19 +9,17 @@ $full = elgg_extract('full_view', $vars, false);
 $blog = elgg_extract('entity', $vars, false);
 
 if (!$blog) {
-	return true;
+	return;
 }
 
 $owner = $blog->getOwnerEntity();
-$categories = elgg_view('output/categories', $vars);
+
 $excerpt = $blog->excerpt;
 if (!$excerpt) {
 	$excerpt = elgg_get_excerpt($blog->description);
 }
 
-$owner_icon = elgg_view_entity_icon($owner, 'tiny');
-
-$by_line = elgg_view('object/elements/imprint', $vars);
+$owner_icon = elgg_view_entity_icon($owner, 'small');
 
 // The "on" status changes for comments, so best to check for !Off
 if ($blog->comments_on != 'Off') {
@@ -41,18 +39,14 @@ if ($blog->comments_on != 'Off') {
 	$comments_link = '';
 }
 
-$subtitle = "$by_line $comments_link $categories";
+$subtitle = $comments_link;
 
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $vars['entity'],
-		'handler' => 'blog',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	]);
-}
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
+	'handler' => 'blog',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+));
 
 if ($full) {
 	$body = elgg_view('output/longtext', [
@@ -60,14 +54,16 @@ if ($full) {
 		'class' => 'blog-post',
 	]);
 
-	$params = [
-		'entity' => $blog,
-		'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-	];
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
+	$summary = '';
+	if (elgg_extract('show_summary', $vars, true)) {
+		$params = [
+			'entity' => $blog,
+			'title' => false,
+			'metadata' => $metadata,
+			'subtitle' => $subtitle,
+		];
+		$summary = elgg_view('object/elements/summary', $vars + $params);
+	}
 
 	$responses = '';
 	if (elgg_extract('show_responses', $vars, false)) {
@@ -79,7 +75,7 @@ if ($full) {
 
 	echo elgg_view('object/elements/full', [
 		'entity' => $blog,
-		'summary' => $summary,
+		'summary' => elgg_extract('show_summary', $vars, true) ? $summary : '',
 		'icon' => $owner_icon,
 		'body' => $body,
 		'responses' => $responses,

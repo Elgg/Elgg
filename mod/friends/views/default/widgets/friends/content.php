@@ -16,7 +16,7 @@ if (!$num_display) {
 	$num_display = 12;
 }
 
-echo elgg_list_entities_from_relationship([
+$list = elgg_list_entities_from_relationship([
 	'type' => 'user',
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
@@ -26,3 +26,7 @@ echo elgg_list_entities_from_relationship([
 	'pagination' => false,
 	'no_results' => elgg_echo('friends:none'),
 ]);
+
+echo elgg_format_element('div', [
+	'class' => 'card-block',
+], $list);

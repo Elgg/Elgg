@@ -23,31 +23,39 @@
  */
 
 $breadcrumbs = elgg_extract('breadcrumbs', $vars);
+unset($vars['breadcrumbs']);
+
 $breadcrumbs = elgg_get_breadcrumbs($breadcrumbs);
 
 if (!is_array($breadcrumbs) || empty($breadcrumbs)) {
 	return;
 }
 
-$attrs['class'] = elgg_extract_class($vars, ['elgg-menu', 'elgg-breadcrumbs']);
-$lis = '';
+$vars['class'] = elgg_extract_class($vars, ['elgg-menu', 'elgg-menu-hz', 'elgg-breadcrumbs', 'breadcrumb', 'flex-wrap']);
 
-foreach ($breadcrumbs as $breadcrumb) {
-	// We have to escape text (without double-encoding). Titles in core plugins are HTML escaped
-	// on input, but we can't guarantee that other users of this view and of elgg_push_breadcrumb()
-	// will do so.
-	if (!empty($breadcrumb['link'])) {
-		$crumb = elgg_view('output/url', [
-			'href' => $breadcrumb['link'],
-			'text' => $breadcrumb['title'],
-			'encode_text' => true,
-			'is_trusted' => true,
-		]);
-	} else {
-		$crumb = htmlspecialchars($breadcrumb['title'], ENT_QUOTES, 'UTF-8', false);
+foreach ($breadcrumbs as $key => &$breadcrumb) {
+
+	$breadcrumb['name'] = "breadcrumb$key";
+
+	if (!isset($breadcrumb['href']) && isset($breadcrumb['link'])) {
+		$breadcrumb['href'] = $breadcrumb['link'];
+		unset($breadcrumb['link']);
 	}
 
-	$lis .= "<li>$crumb</li>";
+	if (!isset($breadcrumb['text']) && isset($breadcrumb['title'])) {
+		$breadcrumb['text'] = $breadcrumb['title'];
+		unset($breadcrumb['title']);
+	}
+
+	if (empty($breadcrumb['href'])) {
+		$breadcrumb['link_class'] = 'active';
+	}
+
 }
 
-echo elgg_format_element('ul', $attrs, $lis);
+$params = $vars;
+$params['items'] = $breadcrumbs;
+$params['item_class'] = 'breadcrumb-item';
+$params['sort_by'] = 'priority';
+
+echo elgg_view_menu('breadcrumbs', $params);

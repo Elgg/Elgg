@@ -406,7 +406,9 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	if (elgg_is_logged_in()) {
 		$options = [
 			'name' => 'reply',
+			'parent_name' => 'actions',
 			'text' => elgg_echo('reply'),
+			'icon' => 'speech-bubble',
 			'href' => "thewire/reply/$entity->guid",
 			'priority' => 150,
 		];
@@ -416,6 +418,8 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	if ($entity->reply) {
 		$options = [
 			'name' => 'previous',
+			'parent_name' => 'actions',
+			'icon' => 'angle-double-left',
 			'text' => elgg_echo('previous'),
 			'href' => "thewire/previous/$entity->guid",
 			'priority' => 160,
@@ -427,6 +431,8 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 
 	$options = [
 		'name' => 'thread',
+		'parent_name' => 'actions',
+		'icon' => 'comments-o',
 		'text' => elgg_echo('thewire:thread'),
 		'href' => "thewire/thread/$entity->wire_thread",
 		'priority' => 170,

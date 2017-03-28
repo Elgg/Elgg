@@ -21,16 +21,14 @@
  *                            Set to false to not render an icon
  *                            Default is determined by access level ('user', 'globe', 'lock', or 'cog')
  */
-
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$imprint = elgg_view('object/elements/byline', $vars);
-$imprint .= elgg_view('object/elements/time', $vars);
-$imprint .= elgg_view('object/elements/access', $vars);
+echo elgg_view_menu('entity_imprint', $vars + [
+	'#class' => 'elgg-listing-imprint',
+	'class' => 'flex-wrap',
+	'sort_by' => 'priority',
+]);
 
-echo elgg_format_element('div', [
-	'class' => 'elgg-listing-imprint',
-], $imprint);

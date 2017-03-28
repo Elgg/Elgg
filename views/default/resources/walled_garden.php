@@ -1,7 +1,10 @@
 <?php
 
 $body = elgg_view_layout('default', [
-	'content' => elgg_view('core/account/login_box', ['title' => false]),
+	'content' => elgg_view('core/account/login_box', [
+		'title' => false,
+		'class' => 'card',
+	]),
 	'title' => elgg_echo('login'),
 	'sidebar' => false,
 ]);

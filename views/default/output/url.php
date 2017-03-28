@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg URL display
  * Displays a URL as a link
@@ -17,8 +18,8 @@
  * @uses string $vars['icon']        Name of the Elgg icon, or icon HTML, appended before the text label
  * @uses string $vars['badge']       HTML content of the badge appended after the text label
  * @uses int    $vars['excerpt_length'] Length of the URL excerpt if text is not given.
+ * @uses string $vars['dropdown'     Contents of the dropdown this anchor toggles
  */
-
 $excerpt_length = elgg_extract('excerpt_length', $vars, 100);
 unset($vars['excerpt_length']);
 
@@ -28,7 +29,7 @@ if (!empty($vars['confirm']) && !isset($vars['is_action'])) {
 
 if (!empty($vars['confirm'])) {
 	$vars['data-confirm'] = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
-	
+
 	// if (bool) true use defaults
 	if ($vars['data-confirm'] === true) {
 		$vars['data-confirm'] = elgg_echo('question:areyousure');
@@ -91,9 +92,27 @@ unset($vars['confirm']);
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-anchor');
 
+$dropdown = elgg_extract('dropdown', $vars);
+unset($vars['dropdown']);
+
+if ($dropdown) {
+	$vars['href'] = '#';
+	$vars['class'][] = 'dropdown-toggle nav-link';
+	$vars['data-toggle'] = 'dropdown';
+	$vars['aria-haspopup'] = true;
+	$vars['aria-expanded'] = false;
+	$dropdown_class = (array) elgg_extract('dropdown_class', $vars, []);
+	unset($dropdown_class);
+	$dropdown_class[] = 'dropdown-menu';
+	$dropdown = elgg_format_element('div', [
+		'class' => $dropdown_class,
+		'aria-labelledby' => elgg_extract('id', $vars),
+	], $dropdown);
+}
+
 $text = elgg_format_element('span', [
 	'class' => 'elgg-anchor-label',
-], $text);
+		], $text);
 
 $icon = elgg_extract('icon', $vars, '');
 unset($vars['icon']);
@@ -111,8 +130,9 @@ if (!is_null($badge)) {
 	$badge = elgg_format_element([
 		'#tag_name' => 'span',
 		'#text' => $badge,
-		'class' => 'elgg-badge',
+		'class' => 'elgg-badge badge badge-default',
 	]);
 }
 
 echo elgg_format_element('a', $vars, $icon . $text . $badge);
+echo $dropdown;

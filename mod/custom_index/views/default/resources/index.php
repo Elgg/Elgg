@@ -51,7 +51,9 @@ unset($list_params['subtype']);
 $groups = elgg_list_entities($list_params);
 
 //grab the login form
-$login = elgg_view("core/account/login_box");
+$login = elgg_view("core/account/login_box", [
+	'class' => 'card',
+]);
 
 elgg_pop_context();
 

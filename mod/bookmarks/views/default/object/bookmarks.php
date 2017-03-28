@@ -37,7 +37,7 @@ if ($comments_count != 0) {
 $subtitle = "$by_line $comments_link $categories";
 
 $metadata = '';
-if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
+if (!elgg_in_context('gallery')) {
 	// only show entity menu outside of widgets and gallery view
 	$metadata = elgg_view_menu('entity', [
 		'entity' => $vars['entity'],
