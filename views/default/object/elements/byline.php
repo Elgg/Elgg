@@ -18,9 +18,6 @@ if (!$entity instanceof ElggEntity) {
 $show_links = elgg_extract('show_links', $vars, true);
 
 $byline_str = elgg_extract('byline', $vars);
-if ($byline_str === false) {
-	return;
-}
 
 if (!isset($byline_str)) {
 	$parts = [];
@@ -64,6 +61,6 @@ if (!isset($byline_str)) {
 	$byline_str = implode(' ', $parts);
 }
 
-echo elgg_format_element('span', [
-	'class' => 'elgg-listing-byline',
-		], $byline_str);
+if ($byline_str) {
+	echo $byline_str;
+}

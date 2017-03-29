@@ -36,17 +36,27 @@ if (!is_array($items) || count($items) == 0) {
 
 elgg_push_context('gallery');
 
-$list_classes = ['elgg-gallery'];
+$list_classes = [
+	'elgg-gallery',
+	'd-flex',
+	'flex-wrap',
+	'justify-content-center',
+	'align-items-stretch',
+];
+
 if (isset($vars['gallery_class'])) {
 	$list_classes[] = $vars['gallery_class'];
 }
 
-$item_classes = ['elgg-item'];
-if (isset($vars['item_class'])) {
-	$item_classes[] = $vars['item_class'];
-}
+$item_classes = (array) elgg_extract('item_class', $vars, []);
+$item_classes[] = 'elgg-item';
 
-$nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
+$nav = '';
+if ($pagination && is_string($pagination)) {
+	$nav = $pagination;
+} else if ($pagination) {
+	$nav = elgg_view('navigation/pagination', $vars);
+}
 
 $index = 0;
 $list_items = '';

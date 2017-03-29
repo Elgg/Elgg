@@ -1124,13 +1124,10 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
 
 	if ($item->getHref() === false || $item->getHref() === null) {
 		$text = $item->getText();
-
-		// if contains elements, don't wrap
 		if (preg_match('~<[a-z]~', $text)) {
-			return $text;
-		} else {
-			return elgg_format_element('span', ['class' => 'elgg-non-link nav-link'], $text);
+			$vars['tag'] = 'div';
 		}
+		return elgg_view('output/inline_block', $vars);
 	}
 
 	if (!isset($vars['rel']) && !isset($vars['is_trusted'])) {
@@ -1363,7 +1360,7 @@ function elgg_view_entity_list($entities, array $vars = []) {
 
 	$vars = array_merge($defaults, $vars);
 
-	if (!$vars["limit"] && !$vars["offset"]) {
+	if (!$vars["limit"] && !$vars["offset"] && !isset($vars['pagination'])) {
 		// no need for pagination if listing is unlimited
 		$vars["pagination"] = false;
 	}
@@ -2330,6 +2327,7 @@ function _elgg_bootstrap_theme(\Elgg\Hook $hook) {
 		'elgg-heading-site' => 'display-2',
 		'elgg-text-help' => 'small text-muted',
 		'elgg-subtext' => 'small text-muted',
+
 		// Buttons
 		'elgg-button' => 'btn',
 		'elgg-button-submit' => 'btn-success',
@@ -2337,6 +2335,7 @@ function _elgg_bootstrap_theme(\Elgg\Hook $hook) {
 		'elgg-button-cancel' => 'btn-warning',
 		'elgg-button-delete' => 'btn-danger',
 		'elgg-button-special' => 'btn-info',
+
 		// Forms
 		'elgg-field' => 'form-group',
 		'elgg-input' => 'form-control',

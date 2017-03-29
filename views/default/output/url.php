@@ -18,7 +18,7 @@
  * @uses string $vars['icon']        Name of the Elgg icon, or icon HTML, appended before the text label
  * @uses string $vars['badge']       HTML content of the badge appended after the text label
  * @uses int    $vars['excerpt_length'] Length of the URL excerpt if text is not given.
- * @uses string $vars['dropdown'     Contents of the dropdown this anchor toggles
+ * @uses string $vars['dropdown']    Contents of the dropdown this anchor toggles
  */
 $excerpt_length = elgg_extract('excerpt_length', $vars, 100);
 unset($vars['excerpt_length']);
@@ -96,7 +96,6 @@ $dropdown = elgg_extract('dropdown', $vars);
 unset($vars['dropdown']);
 
 if ($dropdown) {
-	$vars['href'] = '#';
 	$vars['class'][] = 'dropdown-toggle nav-link';
 	$vars['data-toggle'] = 'dropdown';
 	$vars['aria-haspopup'] = true;

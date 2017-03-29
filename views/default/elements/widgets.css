@@ -49,8 +49,12 @@
     background: repeating-linear-gradient(-45deg, #ffffff, #ffffff 10px, #ddd 10px, #ddd 20px);
 }
 .elgg-widget-more {
-	padding: 10px;
+	padding: 0.75em;
 	display: inline-block;
 	text-align: center;
 	width: 100%;
+}
+
+.elgg-module-widget .elgg-no-results + .elgg-widget-more {
+    border-top: 1px solid #ddd;
 }

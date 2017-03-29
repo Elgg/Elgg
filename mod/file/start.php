@@ -156,7 +156,7 @@ function file_page_handler($page) {
 function file_register_toggle() {
 	$url = elgg_http_remove_url_query_element(current_page_url(), 'list_type');
 
-	if (get_input('list_type', 'list') == 'list') {
+	if (get_input('list_type', 'gallery') == 'list') {
 		$list_type = "gallery";
 		$icon = elgg_view_icon('grid');
 	} else {

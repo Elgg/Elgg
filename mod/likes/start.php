@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Likes plugin
  *
@@ -8,7 +9,6 @@
  * elgg_register_plugin_hook_handler('likes:is_likable', 'object:mysubtype', 'Elgg\Values::getTrue');
  * </code>
  */
-
 elgg_register_event_handler('init', 'system', 'likes_init');
 
 function likes_init() {
@@ -21,9 +21,12 @@ function likes_init() {
 	// registered with priority < 500 so other plugins can remove likes
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
+	elgg_register_plugin_hook_handler('register', 'menu:entity_imprint', 'likes_setup_entity_imprint');
+
 	elgg_register_plugin_hook_handler('permissions_check', 'annotation', 'likes_permissions_check');
 	elgg_register_plugin_hook_handler('permissions_check:annotate', 'all', 'likes_permissions_check_annotate', 0);
-		
+
+
 	elgg_register_ajax_view('likes/popup');
 }
 
@@ -38,17 +41,17 @@ function likes_init() {
  * @return bool
  */
 function likes_permissions_check($hook, $type, $return, $params) {
-	
+
 	$annotation = elgg_extract('annotation', $params);
 	if (!$annotation || $annotation->name !== 'likes') {
 		return $return;
 	}
-	
+
 	$owner = $annotation->getOwnerEntity();
 	if (!$owner) {
 		return $return;
 	}
-	
+
 	return $owner->canEdit();
 }
 
@@ -84,9 +87,6 @@ function likes_permissions_check_annotate($hook, $type, $return, $params) {
  * Add likes to entity menu at end of the menu
  */
 function likes_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
 
 	$entity = elgg_extract('entity', $params);
 	if (!($entity instanceof \ElggEntity)) {
@@ -100,42 +100,35 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	if ($entity->canAnnotate(0, 'likes')) {
-		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
-		
-		// Always register both. That makes it super easy to toggle with javascript
-		$return[] = ElggMenuItem::factory([
-			'name' => 'likes',
-			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
-			'text' => elgg_view_icon('thumbs-up'),
-			'title' => elgg_echo('likes:likethis'),
-			'item_class' => $hasLiked ? 'hidden' : '',
-			'priority' => 1000,
-			'deps' => ['elgg/likes'],
-		]);
-		$return[] = ElggMenuItem::factory([
-			'name' => 'unlike',
-			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
-			'text' => elgg_view_icon('thumbs-up-alt'),
-			'title' => elgg_echo('likes:remove'),
-			'item_class' => $hasLiked ? '' : 'hidden',
-			'priority' => 1000,
-			'deps' => ['elgg/likes'],
-		]);
+	if (!$entity->canAnnotate(0, 'likes')) {
+		return;
 	}
-	
-	// likes count
-	$count = elgg_view('likes/count', ['entity' => $entity]);
-	if ($count) {
-		$options = [
-			'name' => 'likes_count',
-			'text' => $count,
-			'href' => false,
-			'priority' => 1001,
-			'deps' => ['elgg/likes'],
-		];
-		$return[] = ElggMenuItem::factory($options);
-	}
+
+	$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
+
+	// Always register both. That makes it super easy to toggle with javascript
+	$return[] = ElggMenuItem::factory([
+				'name' => 'likes',
+				'parent_name' => 'actions',
+				'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
+				'text' => elgg_echo('likes:like:add'),
+				'title' => elgg_echo('likes:likethis'),
+				'icon' => 'heart',
+				'item_class' => $hasLiked ? 'hidden' : '',
+				'priority' => 100,
+				'deps' => ['elgg/likes'],
+	]);
+	$return[] = ElggMenuItem::factory([
+				'name' => 'unlike',
+				'parent_name' => 'actions',
+				'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
+				'text' => elgg_echo('likes:like:remove'),
+				'title' => elgg_echo('likes:remove'),
+				'icon' => 'heart-o',
+				'item_class' => $hasLiked ? '' : 'hidden',
+				'priority' => 100,
+				'deps' => ['elgg/likes'],
+	]);
 
 	return $return;
 }
@@ -160,44 +153,57 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		return;
 	}
 
-	$object = $item->getObjectEntity();
-	if (!$object || !$object->canAnnotate(0, 'likes')) {
+	$entity = $item->getObjectEntity();
+	if (!$entity || !$entity->canAnnotate(0, 'likes')) {
 		return;
 	}
 
-	$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($object->guid);
+	$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
 
-	// Always register both. That makes it super easy to toggle with javascript
 	$return[] = ElggMenuItem::factory([
-		'name' => 'likes',
-		'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
-		'text' => elgg_view_icon('thumbs-up'),
-		'title' => elgg_echo('likes:likethis'),
-		'item_class' => $hasLiked ? 'hidden' : '',
-		'priority' => 100,
-		'deps' => ['elgg/likes'],
+				'name' => 'likes',
+				'parent_name' => 'actions',
+				'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
+				'text' => elgg_echo('likes:like:add'),
+				'title' => elgg_echo('likes:likethis'),
+				'icon' => 'heart',
+				'item_class' => $hasLiked ? 'hidden' : '',
+				'priority' => 100,
+				'deps' => ['elgg/likes'],
 	]);
 	$return[] = ElggMenuItem::factory([
-		'name' => 'unlike',
-		'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
-		'text' => elgg_view_icon('thumbs-up-alt'),
-		'title' => elgg_echo('likes:remove'),
-		'item_class' => $hasLiked ? '' : 'hidden',
-		'priority' => 100,
-		'deps' => ['elgg/likes'],
+				'name' => 'unlike',
+				'parent_name' => 'actions',
+				'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
+				'text' => elgg_echo('likes:like:remove'),
+				'title' => elgg_echo('likes:remove'),
+				'icon' => 'heart-o',
+				'item_class' => $hasLiked ? '' : 'hidden',
+				'priority' => 100,
+				'deps' => ['elgg/likes'],
 	]);
 
-	// likes count
-	$count = elgg_view('likes/count', ['entity' => $object]);
-	if ($count) {
-		$return[] = ElggMenuItem::factory([
-			'name' => 'likes_count',
-			'text' => $count,
-			'href' => false,
-			'priority' => 101,
-			'deps' => ['elgg/likes'],
-		]);
-	}
+	$num_of_likes = \Elgg\Likes\DataService::instance()->getNumLikes($entity);
+
+	$return[] = ElggMenuItem::factory([
+				'name' => 'likes_count',
+				'text' => elgg_format_element('span', [
+					'class' => 'elgg-counter',
+					'data-channel' => "likes:$entity->guid",
+						], $num_of_likes),
+				'title' => elgg_echo('likes:see'),
+				'icon' => 'heart',
+				'href' => '#',
+				'item_class' => $num_of_likes ? '' : 'hidden',
+				'link_class' => 'elgg-lightbox',
+				'data-likes-guid' => $entity->guid,
+				'data-colorbox-opts' => json_encode([
+					'maxHeight' => '85%',
+					'href' => elgg_normalize_url("ajax/view/likes/popup?guid=$entity->guid")
+				]),
+				'priority' => 100,
+				'deps' => ['elgg/likes'],
+	]);
 
 	return $return;
 }
@@ -219,4 +225,52 @@ function likes_count(ElggEntity $entity) {
 	} else {
 		return $entity->countAnnotations('likes');
 	}
+}
+
+/**
+ * Setup entity imprint
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ */
+function likes_setup_entity_imprint(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!$entity) {
+		return;
+	}
+	$type = $entity->getType();
+	$subtype = $entity->getSubtype();
+
+	$likable = (bool) elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+	if (!$likable) {
+		return;
+	}
+
+	$menu = $hook->getValue();
+
+
+	$num_of_likes = \Elgg\Likes\DataService::instance()->getNumLikes($entity);
+
+	$menu[] = ElggMenuItem::factory([
+				'name' => 'likes_count',
+				'text' => elgg_format_element('span', [
+					'class' => 'elgg-counter',
+					'data-channel' => "likes:$entity->guid",
+						], $num_of_likes),
+				'title' => elgg_echo('likes:see'),
+				'icon' => 'heart',
+				'href' => '#',
+				'item_class' => $num_of_likes ? '' : 'hidden',
+				'link_class' => 'elgg-lightbox',
+				'data-likes-guid' => $entity->guid,
+				'data-colorbox-opts' => json_encode([
+					'maxHeight' => '85%',
+					'href' => elgg_normalize_url("ajax/view/likes/popup?guid=$entity->guid")
+				]),
+				'priority' => 800,
+				'deps' => ['elgg/likes'],
+	]);
+
+	return $menu;
 }

@@ -30,12 +30,13 @@
 		height: 100%;
 		background-repeat: no-repeat;
 		background-position: 50%;
+		background-size: cover;
 		filter: grayscale(1);
 		opacity: 0.5;
 	}
 
 	.elgg-layout-header-nav {
-		color: #aaa;
+		color: #666;
 		padding: 10px;
 	}
 	.elgg-layout-header-heading {
@@ -106,10 +107,6 @@
 
 	.elgg-profile-layout-header .elgg-menu-title {
 		justify-content: center;
-		margin: 2em auto;
-	}
-
-	.elgg-profile-layout-header .elgg-listing-imprint {
 		margin: 2em auto;
 	}
 

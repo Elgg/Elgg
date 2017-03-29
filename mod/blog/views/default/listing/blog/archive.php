@@ -23,9 +23,9 @@ $options = [
 ];
 
 if ($owner instanceof ElggGroup) {
-	$options['container_guid'] = $owner_guid;
+	$options['container_guid'] = $owner->guid;
 } elseif ($owner instanceof ElggUser) {
-	$options['owner_guid'] = $owner_guid;
+	$options['owner_guid'] = $owner->guid;
 }
 
 if ($lower) {

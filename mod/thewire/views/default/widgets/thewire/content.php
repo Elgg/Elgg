@@ -11,6 +11,7 @@ $content = elgg_list_entities([
 	'container_guid' => $widget->owner_guid,
 	'limit' => $widget->num_display,
 	'pagination' => elgg_view('navigation/more', [
+		'#class' => 'elgg-widget-more',
 		'href' => "thewire/owner/" . $widget->getOwnerEntity()->username,
 		'text' => elgg_echo('thewire:moreposts'),
 		'is_trusted' => true,

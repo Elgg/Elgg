@@ -486,7 +486,7 @@ function _elgg_prepare_listing_breadcrumbs($listing_type, $identifier = null, El
 	}
 
 	$breadcrumbs = _elgg_prepare_parent_breadcrumbs($target, $identifier);
-	
+
 	switch ($listing_type) {
 		case 'friends' :
 			array_pop($breadcrumbs);
@@ -519,7 +519,6 @@ function _elgg_prepare_listing_breadcrumbs($listing_type, $identifier = null, El
 	}
 
 	return $breadcrumbs;
-
 }
 
 /**
@@ -735,22 +734,35 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
 		/* @var \ElggRiverItem $item */
-		$object = $item->getObjectEntity();
+		$entity = $item->getObjectEntity();
 		// add comment link but annotations cannot be commented on
 		if ($item->annotation_id == 0) {
-			if ($object->canComment()) {
+			if ($entity->canComment()) {
 				$options = [
 					'name' => 'comment',
 					'parent_name' => 'actions',
-					'href' => "#comments-add-{$object->guid}-{$item->id}",
+					'href' => "#comments-add-{$entity->guid}-{$item->id}",
 					'text' => elgg_echo('comment'),
 					'icon' => 'speech-bubble',
 					'title' => elgg_echo('comment:this'),
-					'rel' => 'toggle',
-					'priority' => 50,
+					'priority' => 100,
 				];
 				$return[] = \ElggMenuItem::factory($options);
 			}
+
+			$comments_count = $entity->countComments();
+			$return[] = ElggMenuItem::factory([
+						'name' => 'comments',
+						'href' => $entity->getURL() . '#comments',
+						'title' => elgg_echo("comments"),
+						'text' => elgg_format_element('span', [
+							'class' => 'elgg-counter',
+							'data-channel' => "comments:$entity->guid",
+								], $comments_count),
+						'icon' => 'comments',
+						'item_class' => $comments_count ? '' : 'hidden',
+						'priority' => 100,
+			]);
 		}
 
 		if ($item->canDelete()) {
@@ -763,6 +775,7 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 						'title' => elgg_echo('river:delete'),
 						'confirm' => elgg_echo('deleteconfirm'),
 						'priority' => 900,
+						'class' => 'text-danger',
 			]);
 		}
 	}
@@ -790,11 +803,21 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
-	$handler = elgg_extract('handler', $params, false);
+	$handler = elgg_extract('handler', $params);
+	
+	if ($entity->canComment()) {
+		$return[] = \ElggMenuItem::factory([
+					'name' => 'comment',
+					'parent_name' => 'actions',
+					'href' => $entity->getURL() . '#comments-add',
+					'text' => elgg_echo("comment"),
+					'icon' => 'comment',
+					'priority' => 100,
+		]);
+	}
 
 	if ($entity->canEdit() && $handler) {
-		// edit link
-		$options = [
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'edit',
 			'parent_name' => 'actions',
 			'text' => elgg_echo('edit'),
@@ -802,13 +825,11 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'title' => elgg_echo('edit:this'),
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
-		];
-		$return[] = \ElggMenuItem::factory($options);
+		]);
 	}
 
-	if ($entity->canDelete()) {
-		// delete link
-		if ($handler && elgg_action_exists("$handler/delete")) {
+	if ($entity->canDelete() && $handler) {
+		if (elgg_action_exists("$handler/delete")) {
 			$action = "action/$handler/delete";
 		} else {
 			$action = "action/entity/delete";
@@ -821,6 +842,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 					'title' => elgg_echo('delete:this'),
 					'href' => "$action?guid={$entity->getGUID()}",
 					'confirm' => elgg_echo('deleteconfirm'),
+					'link_class' => 'text-danger',
 					'priority' => 900,
 		]);
 	}

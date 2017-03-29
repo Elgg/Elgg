@@ -59,6 +59,10 @@ function blog_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:blog', 'Elgg\Values::getTrue');
+
+	// imprint
+	elgg_register_plugin_hook_handler('register', 'menu:entity_imprint', 'blog_setup_entity_imprint');
+	elgg_register_plugin_hook_handler('register', 'menu:meta_block', 'blog_setup_entity_meta_block');
 }
 
 /**
@@ -194,7 +198,7 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 function blog_entity_menu_setup($hook, $type, $return, $params) {
 
 	$entity = elgg_extract('entity', $params);
-	
+
 	if (!$entity instanceof ElggBlog) {
 		return;
 	}
@@ -213,28 +217,18 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 
 	if ($entity->canDelete()) {
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'delete',
-			'parent_name' => 'actions',
-			'text' => elgg_echo('delete'),
-			'icon' => 'delete',
-			'title' => elgg_echo('delete:this'),
-			'href' => "action/blog/delete?guid={$entity->getGUID()}",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 900,
-			'link_class' => 'text-danger',
+					'name' => 'delete',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('delete'),
+					'icon' => 'delete',
+					'title' => elgg_echo('delete:this'),
+					'href' => "action/blog/delete?guid={$entity->getGUID()}",
+					'confirm' => elgg_echo('deleteconfirm'),
+					'priority' => 900,
+					'link_class' => 'text-danger',
 		]);
 	}
 
-	if ($entity->status !== 'published') {
-		$status_text = elgg_echo("status:{$entity->status}");
-		$return[] = ElggMenuItem::factory([
-					'name' => 'published_status',
-					'text' => $status_text,
-					'href' => false,
-					'priority' => 150,
-		]);
-	}
-	
 	return $return;
 }
 
@@ -328,4 +322,85 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
 	return $return_value;
+}
+
+/**
+ * Setup blog imprint
+ * 
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ */
+function blog_setup_entity_imprint(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof ElggBlog) {
+		return;
+	}
+
+	$menu = $hook->getValue();
+
+	if ($entity->status !== 'published') {
+		$status_text = elgg_echo("status:{$entity->status}");
+		$menu[] = ElggMenuItem::factory([
+					'name' => 'published_status',
+					'text' => elgg_format_element('span', [
+						'class' => 'elgg-badge badge badge-default',
+							], $status_text),
+					'href' => false,
+					'priority' => 50,
+		]);
+		foreach ($menu as $key => $item) {
+			if (in_array($item->getName(), ['access'])) {
+				unset($menu[$key]);
+			}
+		}
+	}
+
+	// The "on" status changes for comments, so best to check for !Off
+	if ($entity->comments_on == 'Off') {
+		foreach ($menu as $key => $item) {
+			if (in_array($item->getName(), ['comments'])) {
+				unset($menu[$key]);
+			}
+		}
+	}
+
+	return $menu;
+}
+
+/**
+ * Setup meta block
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ */
+function blog_setup_entity_meta_block(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof ElggBlog) {
+		return;
+	}
+
+	$menu = $hook->getValue();
+
+	$status_text = elgg_echo("status:{$entity->status}");
+	$menu[] = ElggMenuItem::factory([
+				'name' => 'published_status',
+				'text' => elgg_view('output/field', [
+					'label' => elgg_echo('status'),
+					'value' => $status_text,
+				]),
+				'href' => false,
+				'priority' => 800,
+	]);
+
+	if ($entity->status != 'published') {
+		foreach ($menu as $key => $item) {
+			if (in_array($item->getName(), ['access'])) {
+				unset($menu[$key]);
+			}
+		}
+	}
+
+	return $menu;
 }

@@ -14,7 +14,3 @@
 .elgg-menu > .elgg-menu-item-likes-count:not(:first-child) {
     margin: 0;
 }
-
-.elgg-menu > .elgg-menu-item-likes-count:not(:first-child) > a {
-    margin-left: 15px;
-}

@@ -17,6 +17,9 @@ return [
 
 	'river:likes' => 'likes %s %s',
 
+	'likes:like:add' => 'Like',
+	'likes:like:remove' => 'Unlike',
+	
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s likes your post "%s"',
 	'likes:notifications:body' =>

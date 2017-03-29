@@ -9,7 +9,12 @@
 	text-align: center;
 	margin: 15px 0;
 }
+
 .file-gallery-item {
-	text-align: center;
-	width: 165px;
+	height: 100%;
+}
+
+.file-gallery-item img {
+	width: 100%;
+	height: auto;
 }

@@ -12,7 +12,7 @@ if (!$user) {
 
 $listing = [
 	'identifier' => 'blog',
-	'type' => 'archie',
+	'type' => 'archive',
 	'target' => $user,
 	'entity_type' => 'object',
 	'entity_subtype' => 'blog',

@@ -31,7 +31,6 @@ if (!isset($subpage) || $subpage == 'all') {
 		]),
 	]);
 } else {
-
 	$listing = [
 		'identifier' => 'blog',
 		'type' => 'archive',

@@ -14,21 +14,6 @@ if (!$file) {
 
 $owner = $file->getOwnerEntity();
 
-$comments_count = $file->countComments();
-//only display if there are commments
-if ($comments_count != 0) {
-	$text = elgg_echo("comments") . " ($comments_count)";
-	$comments_link = elgg_view('output/url', [
-		'href' => $file->getURL() . '#comments',
-		'text' => $text,
-		'is_trusted' => true,
-	]);
-} else {
-	$comments_link = '';
-}
-
-$subtitle = "$comments_link";
-
 $metadata = '';
 if (!elgg_in_context('gallery')) {
 	// only show entity menu outside of widgets and gallery view
@@ -57,7 +42,6 @@ if ($full && !elgg_in_context('gallery')) {
 			'entity' => $file,
 			'title' => false,
 			'metadata' => $metadata,
-			'subtitle' => $subtitle,
 		];
 		$params = $params + $vars;
 		$summary = elgg_view('object/elements/summary', $params);
@@ -81,11 +65,7 @@ if ($full && !elgg_in_context('gallery')) {
 		'responses' => $responses,
 	]);
 } elseif (elgg_in_context('gallery')) {
-	echo '<div class="file-gallery-item">';
-	echo "<h3>" . $file->title . "</h3>";
-	echo elgg_view_entity_icon($file, 'medium');
-	echo "<p class='subtitle'>$owner_link $date</p>";
-	echo '</div>';
+	echo elgg_view('object/file/card', $vars);
 } else {
 	// brief view
 	$excerpt = elgg_get_excerpt($file->description);

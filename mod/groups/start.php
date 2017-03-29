@@ -1131,28 +1131,22 @@ function _groups_setup_imprint(\Elgg\Hook $hook) {
 
 	$menu = $hook->getValue();
 
-	// membership type
-	if ($entity->isPublicMembership()) {
-		$mem = elgg_echo("groups:open");
-	} else {
-		$mem = elgg_echo("groups:closed");
-	}
-
-	$options = [
+	$menu[] = ElggMenuItem::factory([
 		'name' => 'membership',
-		'text' => $mem,
+		'text' => $entity->isPublicMembership() ? elgg_echo('groups:open') : elgg_echo('groups:closed'),
 		'href' => false,
 		'priority' => 200,
-	];
-	$menu[] = ElggMenuItem::factory($options);
+	]);
 
-	// number of members
-	$num_members = $entity->getMembers(['count' => true]);
-	$members_string = elgg_echo('groups:members_count', [$num_members]);
+	$members = $entity->getMembers(['count' => true]);
 	$menu[] = ElggMenuItem::factory([
 				'name' => 'members',
-				'text' => $members_string,
+				'text' => elgg_view_icon('users') . elgg_format_element('span', [
+					'class' => 'elgg-counter',
+					'data-channel' => "members:$entity->guid",
+				], $members),
 				'href' => false,
+				'title' => elgg_echo('groups:members'),
 				'priority' => 300,
 	]);
 
@@ -1160,7 +1154,7 @@ function _groups_setup_imprint(\Elgg\Hook $hook) {
 		$menu[] = ElggMenuItem::factory([
 					'name' => 'featured',
 					'text' => elgg_format_element('span', [
-						'class' => 'elgg-badge badge',
+						'class' => 'elgg-badge badge badge-primary',
 							], elgg_echo("groups:is_featured")),
 					'href' => false,
 					'priority' => 100,

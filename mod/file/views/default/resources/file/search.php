@@ -62,12 +62,20 @@ if ($listtype == "gallery") {
 	$limit = 12;
 }
 
+$list_type = get_input('list_type', 'gallery');
+$item_class = [];
+if ($list_type == 'gallery') {
+	$item_class = ['col-12', 'col-md-6', 'col-lg-4'];
+}
+
 $params = [
 	'type' => 'object',
 	'subtype' => 'file',
 	'limit' => $limit,
 	'full_view' => false,
 	'preload_owners' => true,
+	'item_class' => $item_class,
+	'list_type' => $list_type,
 ];
 
 if ($owner instanceof ElggUser) {

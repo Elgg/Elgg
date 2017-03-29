@@ -26,18 +26,8 @@
 	margin-left: 5px;
 }
 
-.elgg-badge {
-	display: inline-block;
-	margin-left: 5px;
-	color: #fff;
-	background-color: #777;
-	padding: 3px 7px;
-	line-height: 1;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	border-radius: 10px;
-	font-size: 90%;
+.elgg-anchor.elgg-friendly-time {
+    color: inherit;
 }
 
 .elgg-menu-topbar .elgg-badge {
@@ -121,15 +111,13 @@
 	display: none;
 }
 
-.elgg-menu .elgg-anchor-icon {
-	color: inherit;
-	font-size: inherit;
+.elgg-child-menu .elgg-anchor-icon {
 	width: 25px;
     text-align: center;
     display: inline-block;
 }
 
-.elgg-menu .elgg-anchor-icon + .elgg-anchor-label {
+.elgg-menu .elgg-anchor-icon + * {
 	margin-left: 5px;
 }
 
@@ -202,9 +190,6 @@
 .elgg-menu-page > li {
 	padding: 0;
 }
-.elgg-menu-page > li > a {
-	display: block;
-}
 
 /* ***************************************
 	HOVER MENU
@@ -267,8 +252,8 @@
 .elgg-menu-longtext {
 	float: right;
 }
-.elgg-field-input .elgg-menu-longtext {
-	margin-top: -40px;
+.elgg-field-label + .elgg-field-input .elgg-menu-longtext {
+	margin-top: -35px;
 }
 
 /* ***************************************
@@ -281,10 +266,15 @@
 /* ***************************************
 	ENTITY IMPRINT
 *************************************** */
-.elgg-menu-entity-imprint > li {
-    padding: 0 1em 0 0;
+.elgg-profile-layout-header .elgg-menu-entity-imprint {
+	margin: 2em auto;
 }
-.elgg-menu-entity-imprint > li > a,
-.elgg-menu-entity-imprint > li > span:not(.badge) {
-	padding: 0;
+.elgg-menu-entity-imprint .elgg-icon + * {
+    margin-left: 5px;
+}
+
+.elgg-menu-entity-imprint .nav-link {
+	font-size: 0.9em;
+	padding: 0 1em 0 0;
+	color: inherit;
 }

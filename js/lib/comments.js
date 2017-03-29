@@ -104,6 +104,7 @@ elgg.comments.Comment.prototype = {
 		if ($form.length) {
 			if ($form.data('hidden')) {
 				this.showForm();
+				$form.find('input[type="text"],textarea').first().focus();
 			} else {
 				this.hideForm();
 			}

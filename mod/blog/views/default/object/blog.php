@@ -21,26 +21,6 @@ if (!$excerpt) {
 
 $owner_icon = elgg_view_entity_icon($owner, 'small');
 
-// The "on" status changes for comments, so best to check for !Off
-if ($blog->comments_on != 'Off') {
-	$comments_count = $blog->countComments();
-	//only display if there are commments
-	if ($comments_count != 0) {
-		$text = elgg_echo("comments") . " ($comments_count)";
-		$comments_link = elgg_view('output/url', [
-			'href' => $blog->getURL() . '#comments',
-			'text' => $text,
-			'is_trusted' => true,
-		]);
-	} else {
-		$comments_link = '';
-	}
-} else {
-	$comments_link = '';
-}
-
-$subtitle = $comments_link;
-
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $vars['entity'],
 	'handler' => 'blog',
@@ -60,7 +40,6 @@ if ($full) {
 			'entity' => $blog,
 			'title' => false,
 			'metadata' => $metadata,
-			'subtitle' => $subtitle,
 		];
 		$summary = elgg_view('object/elements/summary', $vars + $params);
 	}

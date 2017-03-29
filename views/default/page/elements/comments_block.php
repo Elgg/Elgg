@@ -72,8 +72,9 @@ $body = elgg_list_entities($options + [
 	'list_class' => 'elgg-latest-comments list-group-flush',
 	'full_view' => false,
 	'no_results' => elgg_echo('generic_comment:none'),
+	'list_type' => 'list',
 		]);
 
-echo elgg_view_module('card', $title, $body, [
+echo elgg_view_module('aside', $title, $body, [
 	'class' => 'card',
 ]);

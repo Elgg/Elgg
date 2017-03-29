@@ -44,7 +44,7 @@ define(function (require) {
 					}
 
 					var func_name = data.output.num_likes > 0 ? 'removeClass' : 'addClass';
-					$(data.output.selector).text(data.output.text)[func_name]('hidden');
+					$(data.output.selector).text(data.output.text).closest('[data-menu-item]')[func_name]('hidden');
 				},
 				error: function() {
 					// Something went wrong, so undo the optimistic changes

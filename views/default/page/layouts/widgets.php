@@ -9,7 +9,9 @@
  * @uses $vars['show_access']      Show the access control (true)
  * @uses $vars['owner_guid']       Widget owner GUID (optional, defaults to page owner GUID)
  */
-$num_columns = elgg_extract('num_columns', $vars, 3);
+$num_columns = elgg_extract('num_columns', $vars, 2, false);
+$grid_columns = floor(12 / $num_columns);
+
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $show_access = elgg_extract('show_access', $vars, true);
 $owner_guid = elgg_extract('owner_guid', $vars);
@@ -62,8 +64,6 @@ if ($widgets) {
 	]);
 }
 
-$widget_class = "elgg-col-1of{$num_columns}";
-
 // move hidden columns widgets to last visible column
 if (!isset($widgets[$num_columns])) {
 	$widgets[$num_columns] = [];
@@ -101,7 +101,7 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 			"elgg-col-1of{$num_columns}",
 			'elgg-widgets',
 			'col-12',
-			'col-md-6',
+			"col-md-$grid_columns",
 		],
 			], $widgets_content);
 }

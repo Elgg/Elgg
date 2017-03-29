@@ -57,21 +57,61 @@ function _elgg_setup_object_imprint(\Elgg\Hook $hook) {
 	if ($time) {
 		$menu['time'] = ElggMenuItem::factory([
 					'name' => 'time',
+					'icon' => elgg_extract('time_icon', $vars, 'history'),
 					'href' => false,
 					'text' => $time,
-					'priority' => 200,
+					'priority' => 110,
 		]);
 	}
 
 	$access = elgg_view('object/elements/access', $vars);
 	if ($access) {
+
+		$access_id = elgg_extract('access', $vars);
+		if (!isset($access_id)) {
+			$access_id = $entity->access_id;
+		}
+
+		switch ($access_id) {
+			case ACCESS_FRIENDS :
+				$icon_name = 'user';
+				break;
+			case ACCESS_PUBLIC :
+			case ACCESS_LOGGED_IN :
+				$icon_name = 'globe';
+				break;
+			case ACCESS_PRIVATE :
+				$icon_name = 'lock';
+				break;
+			default:
+				$icon_name = 'cog';
+				break;
+		}
+
+		$icon_name = elgg_extract('access_icon', $vars, $icon_name);
+
 		$menu['access'] = ElggMenuItem::factory([
 					'name' => 'access',
+					'icon' => $icon_name,
 					'href' => false,
 					'text' => $access,
-					'priority' => 300,
+					'priority' => 120,
 		]);
 	}
+
+	$comments_count = $entity->countComments();
+	$menu['comments'] = ElggMenuItem::factory([
+				'name' => 'comments',
+				'href' => $entity->getURL() . '#comments',
+				'title' => elgg_echo("comments"),
+				'text' => elgg_format_element('span', [
+					'class' => 'elgg-counter',
+					'data-channel' => "comments:$entity->guid",
+						], $comments_count),
+				'icon' => 'comments',
+				'item_class' => $comments_count ? '' : 'hidden',
+				'priority' => 200,
+	]);
 
 	return $menu;
 }
@@ -150,16 +190,16 @@ function _elgg_setup_object_meta_block(\Elgg\Hook $hook) {
 	}
 
 	$menu[] = ElggMenuItem::factory([
-					'name' => 'access',
-					'href' => false,
-					'text' => elgg_view('output/field', [
-						'label' => elgg_echo('access'),
-						'value' => elgg_view('output/access', [
-							'entity' => $entity,
-						]),
+				'name' => 'access',
+				'href' => false,
+				'text' => elgg_view('output/field', [
+					'label' => elgg_echo('access'),
+					'value' => elgg_view('output/access', [
+						'entity' => $entity,
 					]),
-					'priority' => 400,
-		]);
+				]),
+				'priority' => 400,
+	]);
 
 	if ($entity->tags) {
 		$menu[] = ElggMenuItem::factory([
