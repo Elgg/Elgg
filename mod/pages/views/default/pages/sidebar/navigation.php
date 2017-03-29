@@ -23,7 +23,9 @@ if (!$content) {
 	$content = '<p>' . elgg_echo('pages:none') . '</p>';
 }
 
-echo elgg_view_module('aside', $title, $content);
+echo elgg_view_module('aside', $title, $content, [
+	'class' => 'card',
+]);
 
 ?>
 <script>

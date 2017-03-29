@@ -8,6 +8,7 @@
 
 .pages-nav a {
 	color: #444;
+	padding: 0;
 }
 .pages-nav.treeview ul {
 	background-color: transparent;

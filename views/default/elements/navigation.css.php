@@ -176,6 +176,11 @@
 .elgg-menu-page + .elgg-menu-page {
 	margin-top: 5px;
 }
+.elgg-menu-page .elgg-child-menu {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
 .elgg-menu-page .elgg-menu-closed:before, 
 .elgg-menu-page .elgg-menu-opened:before {
 	display: inline-block;

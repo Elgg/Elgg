@@ -12,10 +12,13 @@ if ($vars['page']) {
 		'guid' => $vars['page']->guid,
 		'annotation_name' => 'page',
 		'limit' => max(20, elgg_get_config('default_limit')),
-		'reverse_order_by' => true
+		'reverse_order_by' => true,
+		'list_class' => 'list-group-flush',
 	];
 	elgg_push_context('widgets');
 	$content = elgg_list_annotations($options);
 }
 
-echo elgg_view_module('aside', $title, $content);
+echo elgg_view_module('aside', $title, $content, [
+	'class' => 'card',
+]);
