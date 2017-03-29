@@ -13,6 +13,7 @@ CREATE TABLE `prefix_access_collection_membership` (
 CREATE TABLE `prefix_access_collections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
+  `subtype` varchar(255) NOT NULL DEFAULT '',
   `owner_guid` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `owner_guid` (`owner_guid`)

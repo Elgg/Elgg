@@ -5,7 +5,7 @@
  *
  * @package Elgg
  * @subpackage Test
- * 
+ *
  * TODO(ewinslow): Move this to Elgg\Database\AccessCollectionsTest
  */
 class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
@@ -365,9 +365,6 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		];
 
 		$actual = get_write_access_array($this->user->guid, null, true);
-
-		// remove ACCESS_FRIENDS in case it's added by an enabled plugin
-		unset($actual[ACCESS_FRIENDS]);
 
 		$actual = array_keys($actual);
 		
