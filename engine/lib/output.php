@@ -44,7 +44,12 @@ function elgg_parse_emails($text) {
  * @return string
  **/
 function elgg_autop($string) {
-	return _elgg_services()->autoP->process($string);
+	try {
+		return _elgg_services()->autoP->process($string);
+	} catch (\RuntimeException $e) {
+		_elgg_services()->logger->warn('ElggAutoP failed to process the string: ' . $e->getMessage());
+		return $string;
+	}
 }
 
 /**

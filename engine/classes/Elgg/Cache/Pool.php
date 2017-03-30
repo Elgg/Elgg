@@ -25,6 +25,7 @@ interface Pool {
 	 * @param mixed         $default  Default value returned if the value is missing and no callback is provided
 	 *
 	 * @return mixed The cache value or the $default if no value and no callable
+	 * @throws \InvalidArgumentException if $key is not string or int
 	 */
 	public function get($key, callable $callback = null, $default = null);
 	
@@ -38,6 +39,7 @@ interface Pool {
 	 * @param string|int $key A plain string ID for the cache entry to invalidate.
 	 *
 	 * @return void
+	 * @throws \InvalidArgumentException if $key is not string or int
 	 */
 	public function invalidate($key);
 
@@ -52,6 +54,7 @@ interface Pool {
 	 * @param mixed      $value The cache value
 	 *
 	 * @return void
+	 * @throws \InvalidArgumentException if $key is not string or int
 	 */
 	public function put($key, $value);
 }

@@ -105,8 +105,20 @@ class ElggAutoP {
 		libxml_disable_entity_loader($disable_load_entities);
 
 		$this->_xpath = new DOMXPath($this->_doc);
+
 		// start processing recursively at the BODY element
 		$nodeList = $this->_xpath->query('//body[1]');
+		if ($nodeList->item(0) instanceof DOMText) {
+			// May be https://github.com/facebook/hhvm/issues/7745
+			// Um... try again?
+			$this->_xpath = new DOMXPath($this->_doc);
+			$nodeList = $this->_xpath->query('//body[1]');
+
+			if ($nodeList->item(0) instanceof DOMText) {
+				// not going to work
+				throw new \RuntimeException('DOMXPath::query for BODY element returned a text node');
+			}
+		}
 		$this->addParagraphs($nodeList->item(0));
 
 		// serialize back to HTML

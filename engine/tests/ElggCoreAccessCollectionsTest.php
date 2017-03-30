@@ -23,7 +23,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->setPassword(rand());
+		$user->setPassword((string)rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
@@ -85,7 +85,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->setPassword(rand());
+		$user->setPassword((string)rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
