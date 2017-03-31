@@ -11,6 +11,12 @@ elgg_register_title_button('file', 'add', 'object', 'file');
 
 $title = elgg_echo('file:all');
 
+$list_type = get_input('list_type', 'gallery');
+$item_class = [];
+if ($list_type == 'gallery') {
+	$item_class = ['col-12', 'col-md-6', 'col-lg-4'];
+}
+
 $content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'file',
@@ -19,6 +25,8 @@ $content = elgg_list_entities([
 	'preload_owners' => true,
 	'preload_containers' => true,
 	'distinct' => false,
+	'list_type' => $list_type,
+	'item_class' => $item_class,
 ]);
 
 $sidebar = file_get_type_cloud();

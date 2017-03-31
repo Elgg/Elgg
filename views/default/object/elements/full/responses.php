@@ -12,5 +12,5 @@ if (!$responses) {
 }
 
 echo elgg_format_element('div', [
-	'class' => 'elgg-listing-full-responses',
+	'class' => ['elgg-listing-full-responses'],
 ], $responses);

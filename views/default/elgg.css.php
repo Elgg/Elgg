@@ -6,26 +6,7 @@
  * @subpackage UI
  */
 
-/*
- * Colors:
- *  #4690D6 - elgg light blue
- *  #0054A7 - elgg dark blue
- *  #e4ecf5 - elgg very light blue
- */
-
-/*******************************************************************************
-
-Base CSS
- * CSS reset
- * core
- * helpers (moved to end to have a higher priority)
- * grid
-
-*******************************************************************************/
-echo elgg_view('elements/reset.css', $vars);
-echo elgg_view('elements/core.css', $vars);
-echo elgg_view('elements/grid.css', $vars);
-
+echo elgg_view('twbs/css/bootstrap.css');
 
 /*******************************************************************************
 

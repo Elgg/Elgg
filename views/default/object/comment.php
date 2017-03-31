@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Elgg comment view
  *
  * @uses $vars['entity']    ElggComment
  * @uses $vars['full_view'] Display full view or brief view
  */
-
 $full_view = elgg_extract('full_view', $vars, true);
 
 $comment = $vars['entity'];
@@ -26,7 +26,6 @@ $entity_title = $entity->title ? $entity->title : elgg_echo('untitled');
 $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 
 if ($full_view) {
-	$anchor = "<a name=\"comment-{$comment->getGUID()}\"></a>";
 
 	$menu = elgg_view_menu('entity', [
 		'entity' => $comment,
@@ -34,45 +33,20 @@ if ($full_view) {
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
 	]);
-	
-	if (elgg_in_context('activity')) {
-		$comment_text = '<div class="elgg-output elgg-inner" data-role="comment-text">';
-		$comment_text .= elgg_view('output/text', [
-			'value' => elgg_get_excerpt($comment->description),
-		]);
-		$comment_text .= '</div>';
 
-		$time_link = elgg_view('output/url', [
-			'href' => $comment->getURL(),
-			'text' => $friendlytime,
-			'is_trusted' => true,
-		]);
-	} else {
-		$comment_text = elgg_view('output/longtext', [
-			'value' => $comment->description,
-			'class' => 'elgg-inner',
-			'data-role' => 'comment-text',
-		]);
+	$comment_text = elgg_view('output/longtext', [
+		'value' => $comment->description,
+		'class' => 'elgg-inner',
+		'data-role' => 'comment-text',
+	]);
 
-		$time_link = elgg_view('output/url', [
-			'href' => $comment->getURL(),
-			'text' => $friendlytime,
-			'is_trusted' => true,
-		]);
-	}
-	$body = <<<HTML
-$anchor
-<div class="mbn">
-	$menu
-	$commenter_link
-	<span class="elgg-subtext">
-		$time_link
-	</span>
-	$comment_text
-</div>
-HTML;
-
-	echo elgg_view_image_block($commenter_icon, $body);
+	echo elgg_view('object/elements/summary', [
+		'entity' => $comment,
+		'metadata' => $menu,
+		'icon' => $commenter_icon,
+		'content' => $comment_text,
+		'access' => false,
+	]);
 } else {
 	// brief view
 

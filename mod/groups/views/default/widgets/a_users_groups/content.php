@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Elgg file widget view
  */
-
 $widget = elgg_extract('entity', $vars);
 
 echo elgg_list_entities_from_relationship([
@@ -10,13 +10,12 @@ echo elgg_list_entities_from_relationship([
 	'relationship' => 'member',
 	'relationship_guid' => $widget->owner_guid,
 	'limit' => $widget->num_display,
-	'pagination' => false,
+	'pagination' => elgg_view('navigation/more', [
+		'#class' => 'elgg-widgets-more',
+		'href' => 'groups/member/' . $widget->getOwnerEntity()->username,
+		'text' => elgg_echo('groups:more'),
+		'is_trusted' => true,
+	]),
 	'no_results' => elgg_echo('groups:none'),
+	'list_class' => 'list-group-flush',
 ]);
-
-$more_link = elgg_view('output/url', [
-	'href' => 'groups/member/' . $widget->getOwnerEntity()->username,
-	'text' => elgg_echo('groups:more'),
-	'is_trusted' => true,
-]);
-echo "<div class=\"elgg-widget-more\">$more_link</div>";

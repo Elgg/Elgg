@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg objects
  * Functions to manage multiple or single objects in an Elgg install
@@ -26,6 +27,198 @@ function get_object_entity_as_row($guid) {
 }
 
 /**
+ * Setup object imprint
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ * @access private
+ */
+function _elgg_setup_object_imprint(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+
+	if (!$entity instanceof \ElggObject) {
+		return;
+	}
+
+	$vars = $hook->getParams();
+	$menu = $hook->getValue();
+
+	$byline = elgg_view('object/elements/byline', $vars);
+	if ($byline) {
+		$menu['byline'] = ElggMenuItem::factory([
+					'name' => 'byline',
+					'href' => false,
+					'text' => $byline,
+					'priority' => 100,
+		]);
+	}
+
+	$time = elgg_view('object/elements/time', $vars);
+	if ($time) {
+		$menu['time'] = ElggMenuItem::factory([
+					'name' => 'time',
+					'icon' => elgg_extract('time_icon', $vars, 'history'),
+					'href' => false,
+					'text' => $time,
+					'priority' => 110,
+		]);
+	}
+
+	$access = elgg_view('object/elements/access', $vars);
+	if ($access) {
+
+		$access_id = elgg_extract('access', $vars);
+		if (!isset($access_id)) {
+			$access_id = $entity->access_id;
+		}
+
+		switch ($access_id) {
+			case ACCESS_FRIENDS :
+				$icon_name = 'user';
+				break;
+			case ACCESS_PUBLIC :
+			case ACCESS_LOGGED_IN :
+				$icon_name = 'globe';
+				break;
+			case ACCESS_PRIVATE :
+				$icon_name = 'lock';
+				break;
+			default:
+				$icon_name = 'cog';
+				break;
+		}
+
+		$icon_name = elgg_extract('access_icon', $vars, $icon_name);
+
+		$menu['access'] = ElggMenuItem::factory([
+					'name' => 'access',
+					'icon' => $icon_name,
+					'href' => false,
+					'text' => $access,
+					'priority' => 120,
+		]);
+	}
+
+	$comments_count = $entity->countComments();
+	$menu['comments'] = ElggMenuItem::factory([
+				'name' => 'comments',
+				'href' => $entity->getURL() . '#comments',
+				'title' => elgg_echo("comments"),
+				'text' => elgg_format_element('span', [
+					'class' => 'elgg-counter',
+					'data-channel' => "comments:$entity->guid",
+						], $comments_count),
+				'icon' => 'comments',
+				'item_class' => $comments_count ? '' : 'hidden',
+				'priority' => 200,
+	]);
+
+	return $menu;
+}
+
+/**
+ * Setup object meta block
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ * @access private
+ */
+function _elgg_setup_object_meta_block(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+
+	if (!$entity instanceof \ElggObject) {
+		return;
+	}
+
+	$vars = $hook->getParams();
+	$menu = $hook->getValue();
+
+	$owner = $entity->getOwnerEntity();
+	if ($owner) {
+		$menu[] = ElggMenuItem::factory([
+					'name' => 'owner',
+					'href' => false,
+					'text' => elgg_view('output/field', [
+						'label' => elgg_echo('meta_block:owner'),
+						'value' => elgg_view('output/url', [
+							'href' => $owner->getURL(),
+							'text' => $owner->getDisplayName(),
+						])
+					]),
+					'priority' => 100,
+		]);
+	}
+
+	$container = $entity->getContainerEntity();
+	if ($container instanceof ElggGroup) {
+		$menu[] = ElggMenuItem::factory([
+					'name' => 'container',
+					'href' => false,
+					'text' => elgg_view('output/field', [
+						'label' => elgg_echo('meta_block:group'),
+						'value' => elgg_view('output/url', [
+							'href' => $container->getURL(),
+							'text' => $container->getDisplayName(),
+						])
+					]),
+					'priority' => 200,
+		]);
+	}
+
+	if ($entity->time_created) {
+		$menu[] = ElggMenuItem::factory([
+					'name' => 'time_created',
+					'href' => false,
+					'text' => elgg_view('output/field', [
+						'label' => elgg_echo('meta_block:time_created'),
+						'value' => date('j M, Y H:i', $entity->time_created),
+					]),
+					'priority' => 300,
+		]);
+	}
+
+	if ($entity->time_updated) {
+		$menu[] = ElggMenuItem::factory([
+					'name' => 'time_updated',
+					'href' => false,
+					'text' => elgg_view('output/field', [
+						'label' => elgg_echo('meta_block:time_updated'),
+						'value' => date('j M, Y H:i', $entity->time_updated),
+					]),
+					'priority' => 400,
+		]);
+	}
+
+	$menu[] = ElggMenuItem::factory([
+				'name' => 'access',
+				'href' => false,
+				'text' => elgg_view('output/field', [
+					'label' => elgg_echo('access'),
+					'value' => elgg_view('output/access', [
+						'entity' => $entity,
+					]),
+				]),
+				'priority' => 400,
+	]);
+
+	if ($entity->tags) {
+		$menu[] = ElggMenuItem::factory([
+					'name' => 'tags',
+					'href' => false,
+					'text' => elgg_view('output/field', [
+						'label' => elgg_echo('tags'),
+						'value' => elgg_view('output/tags', [
+							'entity' => $entity,
+						])
+					]),
+					'priority' => 500,
+		]);
+	}
+
+	return $menu;
+}
+
+/**
  * Runs unit tests for \ElggObject
  *
  * @param string $hook   unit_test
@@ -44,4 +237,6 @@ function _elgg_objects_test($hook, $type, $value, $params) {
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$hooks->registerHandler('unit_test', 'system', '_elgg_objects_test');
+	$hooks->registerHandler('register', 'menu:entity_imprint', '_elgg_setup_object_imprint');
+	$hooks->registerHandler('register', 'menu:meta_block', '_elgg_setup_object_meta_block');
 };

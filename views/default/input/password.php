@@ -12,7 +12,7 @@
  * @uses $vars['always_empty'] If for some reason you want to set a value to a password field, set this field to false. Best practice is to not populate password fields.
  */
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-password');
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-password form-control');
 
 $defaults = [
 	'disabled' => false,

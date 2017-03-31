@@ -3,7 +3,7 @@
 /**
  * Renders a standard HTML page shell
  *
- * @uses $vars['section']     An array of page sections to render
+ * @uses $vars['sections']    An array of page sections to render
  * @uses $vars['html_attrs']  Attributes of the <html> tag
  * @uses $vars['head']        Parameters for the <head> element
  * @uses $vars['body_attrs']  Attributes of the <body> tag
@@ -38,10 +38,10 @@ foreach ($sections as $section => $content) {
 	]);
 }
 
-$page_vars = elgg_extract('page_attrs', $vars, []);
-$page_vars['class'] = elgg_extract_class($page_vars, ['elgg-page', 'elgg-page-default']);
+$page_params = elgg_extract('page_attrs', $vars, []);
+$page_params['class'] = elgg_extract_class($page_params, ['elgg-page', 'elgg-page-default']);
 
-$body = elgg_format_element('div', $page_vars, $page);
+$body = elgg_format_element('div', $page_params, $page);
 
 $body .= elgg_view('page/elements/foot');
 

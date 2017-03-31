@@ -12,6 +12,7 @@ $content = elgg_list_entities_from_metadata([
 	'metadata_value' => 'yes',
 	'type' => 'group',
 	'pagination' => false,
+	'list_class' => 'list-group-flush',
 ]);
 
 elgg_pop_context();
@@ -20,4 +21,6 @@ if (empty($content)) {
 	return;
 }
 
-echo elgg_view_module('aside', elgg_echo('groups:featured'), $content);
+echo elgg_view_module('aside', elgg_echo('groups:featured'), $content, [
+	'class' => 'card',
+]);

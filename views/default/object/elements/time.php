@@ -7,9 +7,6 @@
  * @uses $vars['time']        Time of the post
  *                            If not set, will display the time when the entity was created (time_created attribute)
  *                            If set to false, time string will not be rendered
- * @uses $vars['time_icon']   Icon name to be used with time info
- *                            Set to false to not render an icon
- *                            Default is 'history'
  */
 
 $entity = elgg_extract('entity', $vars);
@@ -25,16 +22,10 @@ if (!$time) {
 	return;
 }
 
-$icon_name = elgg_extract('time_icon', $vars, 'history');
-if ($icon_name === false) {
-	$icon = '';
-} else {
-	$icon = elgg_view_icon($icon_name);
-}
+$friendly_time = elgg_view_friendly_time($time);
 
-$time_str = $icon . elgg_view_friendly_time($time);
-
-echo elgg_format_element('span', [
-	'class' => 'elgg-listing-time',
-		], $time_str);
-
+echo elgg_view('output/url', [
+	'href' => $entity->getURL(),
+	'text' => $friendly_time,
+	'class' => 'elgg-friendly-time',
+]);

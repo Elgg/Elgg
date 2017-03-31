@@ -1,0 +1,6 @@
+<?php
+
+/**
+ * Meta block footer
+ */
+

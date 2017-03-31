@@ -347,7 +347,7 @@ elgg.system_messages = function(msgs, delay, type) {
 		return;
 	}
 
-	var classes = ['elgg-message'],
+	var classes = ['elgg-message alert'],
 		messages_html = [],
 		appendMessage = function(msg) {
 			messages_html.push('<li class="' + classes.join(' ') + '"><p>' + msg + '</p></li>');
@@ -367,9 +367,9 @@ elgg.system_messages = function(msgs, delay, type) {
 	}
 
 	if (type === 'error') {
-		classes.push('elgg-state-error');
+		classes.push('elgg-state-error alert-danger');
 	} else {
-		classes.push('elgg-state-success');
+		classes.push('elgg-state-success alert-success');
 	}
 
 	msgs.forEach(appendMessage);

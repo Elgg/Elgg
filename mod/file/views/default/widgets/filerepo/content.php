@@ -12,6 +12,7 @@ $content = elgg_list_entities([
 	'limit' => $widget->num_display,
 	'pagination' => false,
 	'distinct' => false,
+	'list_class' => 'list-group-flush',
 ]);
 
 
@@ -27,4 +28,5 @@ $more_link = elgg_view('output/url', [
 	'text' => elgg_echo('file:more'),
 	'is_trusted' => true,
 ]);
+
 echo "<div class=\"elgg-widget-more\">$more_link</div>";

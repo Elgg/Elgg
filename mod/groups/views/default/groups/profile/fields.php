@@ -1,11 +1,18 @@
 <?php
+
 /**
  * Group profile fields
  */
-
 $group = $vars['entity'];
 
+if (!$group instanceof ElggGroup) {
+	echo elgg_echo('groups:notfound');
+	return;
+}
+
 $profile_fields = elgg_get_config('group');
+
+$fields_result = '';
 
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $key => $valtype) {
@@ -24,11 +31,29 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 			$options['tag_names'] = $key;
 		}
 
-		echo "<div>";
-		echo "<b>";
-		echo elgg_echo("groups:$key");
-		echo ": </b>";
-		echo elgg_view("output/$valtype", $options);
-		echo "</div>";
+		$label = elgg_echo("groups:$key");
+		$value = elgg_view("output/$valtype", $options);
+
+		$field = elgg_view('output/field', [
+			'label' => $label,
+			'value' => $value,
+		]);
+		if ($field) {
+			$fields_result .= elgg_format_element('div', [
+				'class' => 'list-group-item groups-profile-field',
+					], $field);
+		}
 	}
 }
+
+if (empty($fields_result)) {
+	return;
+}
+
+$result = elgg_format_element('div', [
+	'class' => 'list-group list-group-flush',
+], $fields_result);
+
+echo elgg_format_element('div', [
+	'class' => 'groups-profile-fields card'
+], $result);

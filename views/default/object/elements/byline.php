@@ -8,6 +8,7 @@
  *                            If not set, will display default author/container information
  *                            If set to false, byline will not be rendered
  * @uses $vars['show_links']  Owner and container text should show as links (default: true)
+ * @uses $vars['show_icons']  Show owner icon
  */
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
@@ -17,15 +18,18 @@ if (!$entity instanceof ElggEntity) {
 $show_links = elgg_extract('show_links', $vars, true);
 
 $byline_str = elgg_extract('byline', $vars);
-if ($byline_str === false) {
-	return;
-}
 
 if (!isset($byline_str)) {
 	$parts = [];
 
 	$owner = $entity->getOwnerEntity();
 	if ($owner instanceof ElggEntity) {
+		if (elgg_extract('show_icons', $vars, false)) {
+			$parts[] = elgg_view_entity_icon($owner, 'small', [
+				'class' => 'elgg-listing-byline-icon',
+				'img_class' => 'rounded-circle',
+			]);
+		}
 		if ($show_links) {
 			$owner_text = elgg_view('output/url', [
 				'href' => $owner->getURL(),
@@ -57,6 +61,6 @@ if (!isset($byline_str)) {
 	$byline_str = implode(' ', $parts);
 }
 
-echo elgg_format_element('span', [
-	'class' => 'elgg-listing-byline',
-		], $byline_str);
+if ($byline_str) {
+	echo $byline_str;
+}

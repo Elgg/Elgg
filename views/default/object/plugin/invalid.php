@@ -18,8 +18,8 @@ $message = elgg_echo('admin:plugins:warning:invalid', [$plugin->getError()]);
 $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 ?>
 
-<div class="elgg-state-draggable elgg-plugin elgg-state-inactive elgg-state-cannot-activate" id="<?php echo $css_id; ?>">
-	<div class="elgg-image-block">
+<div class="elgg-state-draggable elgg-plugin elgg-state-inactive elgg-state-cannot-activate w-100" id="<?php echo $css_id; ?>">
+	<div class="elgg-image-block d-flex w-100">
 		<div class="elgg-image">
 			<div>
 				<?php

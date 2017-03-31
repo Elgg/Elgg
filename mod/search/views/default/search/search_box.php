@@ -13,10 +13,7 @@ if (array_key_exists('value', $vars)) {
 	$value = $value;
 }
 
-$class = "elgg-search";
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
+$class = elgg_extract_class($vars, 'elgg-search form-inline');
 
 // @todo - create function for sanitization of strings for display in 1.8
 // encode <,>,&, quotes and characters above 127
@@ -32,7 +29,7 @@ $placeholder = htmlspecialchars(elgg_echo('search'), ENT_QUOTES, 'UTF-8');
 
 $search_attrs = elgg_format_attributes([
 	'type' => 'text',
-	'class' => 'search-input',
+	'class' => 'search-input form-control',
 	'size' => '21',
 	'name' => 'q',
 	'autocapitalize' => 'off',
@@ -42,10 +39,10 @@ $search_attrs = elgg_format_attributes([
 ]);
 ?>
 
-<form class="<?php echo $class; ?>" action="<?php echo elgg_get_site_url(); ?>search" method="get">
+<form class="<?php echo implode(' ', $class); ?>" action="<?php echo elgg_get_site_url(); ?>search" method="get">
 	<fieldset>
 		<input placeholder="<?php echo $placeholder; ?>" <?php echo $search_attrs; ?> />
 		<input type="hidden" name="search_type" value="all" />
-		<input type="submit" value="<?php echo elgg_echo('search:go'); ?>" class="search-submit-button" />
+		<input type="submit" value="<?php echo elgg_echo('search:go'); ?>" class="search-submit-button hidden" />
 	</fieldset>
 </form>

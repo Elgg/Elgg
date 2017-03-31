@@ -13,21 +13,24 @@ $actions = elgg_extract('action', $vars['menu'], null);
 $main = elgg_extract('default', $vars['menu'], null);
 $admin = elgg_extract('admin', $vars['menu'], null);
 
-echo '<ul class="elgg-menu elgg-menu-hover">';
+echo '<ul class="elgg-menu elgg-menu-hover dropdown-menu nav flex-column">';
 
 // name and username
 $name_link = elgg_view('output/url', [
 	'href' => $user->getURL(),
-	'text' => "<span class=\"elgg-heading-basic\">$user->name</span>&#64;$user->username",
+	'text' => "<span class=\"elgg-heading-basic d-block\">$user->name</span><span class=\"d-block\">&#64;$user->username</span>",
 	'is_trusted' => true,
+	'class' => 'nav-link',
 ]);
-echo "<li>$name_link</li>";
+echo "<li class=\"nav-item\">$name_link</li>";
 
 // actions
 if (elgg_is_logged_in() && $actions) {
-	echo '<li>';
+	echo '<li class="dropdown-divider"></li>';
+	echo '<li class="nav-item">';
+	
 	echo elgg_view('navigation/menu/elements/section', [
-		'class' => "elgg-menu elgg-menu-hover-actions",
+		'class' => "elgg-menu elgg-menu-hover-actions nav flex-column",
 		'items' => $actions,
 	]);
 	echo '</li>';
@@ -35,10 +38,12 @@ if (elgg_is_logged_in() && $actions) {
 
 // main
 if ($main) {
-	echo '<li>';
+	echo '<li class="dropdown-divider"></li>';
+
+	echo '<li class="nav-item">';
 	
 	echo elgg_view('navigation/menu/elements/section', [
-		'class' => 'elgg-menu elgg-menu-hover-default',
+		'class' => 'elgg-menu elgg-menu-hover-default nav flex-column',
 		'items' => $main,
 	]);
 	
@@ -47,10 +52,11 @@ if ($main) {
 
 // admin
 if (elgg_is_admin_logged_in() && $admin) {
-	echo '<li>';
+	echo '<li class="dropdown-divider"></li>';
+	echo '<li class="nav-item">';
 	
 	echo elgg_view('navigation/menu/elements/section', [
-		'class' => 'elgg-menu elgg-menu-hover-admin',
+		'class' => 'elgg-menu elgg-menu-hover-admin nav flex-column',
 		'items' => $admin,
 	]);
 	

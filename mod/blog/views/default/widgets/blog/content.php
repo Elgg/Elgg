@@ -12,6 +12,7 @@ $content = elgg_list_entities([
 	'limit' => $widget->num_display,
 	'pagination' => false,
 	'distinct' => false,
+	'list_class' => 'list-group-flush',
 ]);
 
 if (empty($content)) {

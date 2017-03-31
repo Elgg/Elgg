@@ -16,7 +16,7 @@ $object_stats = elgg_extract('object', $entity_stats);
 arsort($object_stats);
 $object_stats = array_slice($object_stats, 0, $num_display);
 
-echo '<table class="elgg-table-alt">';
+echo '<table class="elgg-table-alt table table-striped">';
 echo '<tr><th>' . elgg_echo('widget:content_stats:type') . '</th>';
 echo '<th>' . elgg_echo('widget:content_stats:number') . '</th></tr>';
 foreach ($object_stats as $subtype => $num) {

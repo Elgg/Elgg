@@ -101,9 +101,27 @@ System hooks
     returning them, allowing a plugin to alter breadcrumb strategy site-wide.
     ``$params`` array includes:
 
-      * ``breadcrumbs`` - an array of bredcrumbs, each with ``title`` and ``link`` keys
+      * ``breadcrumbs`` - an array of breadcrumbs, each with ``title`` and ``link`` keys
       * ``identifier`` - route identifier of the current page
       * ``segments`` - route segments of the current page
+
+**breadcrumbs, <entity_type>**
+	Filters entity breadcrumbs in a layout built with ``elgg_view_profile_page()``
+    ``$params`` array includes:
+
+      * ``breadcrumbs`` - an array of original breadcrumbs, each with ``title`` and ``link`` keys
+      * ``entity`` - entity at the end of the breadcrumb stack
+      * ``identifier`` - route identifier of the current page
+      * ``link_self`` - whether calling script expects last entity breadcrumb to be linked
+
+**breadcrumbs, listing**
+	Filters listing breadcrumbs in a layout built with ``elgg_view_listing_page()``
+    ``$params`` array includes:
+
+      * ``breadcrumbs`` - an array of original breadcrumbs, each with ``title`` and ``link`` keys
+      * ``target`` - target entity of the listing
+      * ``identifier`` - route identifier of the current page
+      * ``listing_type`` - type of listing, e.g. 'all', 'friends', 'owner', 'group'
 
 **add, river**
 

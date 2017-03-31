@@ -14,6 +14,7 @@
  */
 $type = elgg_extract('type', $vars, false);
 $title = elgg_extract('title', $vars, '');
+$controls = elgg_extract('controls', $vars, '');
 $body = elgg_extract('body', $vars, '');
 $footer = elgg_extract('footer', $vars, '');
 $show_inner = elgg_extract('show_inner', $vars, false);
@@ -29,11 +30,19 @@ if ($type) {
 
 $header = elgg_extract('header', $vars);
 if ($title) {
-	$header = elgg_format_element('h3', [], $title);
+	$header = elgg_format_element('h4', [
+		'class' => 'elgg-module-title',
+	], $title);
 }
 
-if ($header !== null) {
-	$header = elgg_format_element('div', ['class' => 'elgg-head'], $header);
+if ($controls) {
+	$controls = elgg_format_element('div', [
+		'class' => 'elgg-module-controls',
+	], $controls);
+}
+
+if ($header || $controls) {
+	$header = elgg_format_element('div', ['class' => 'elgg-head clearfix'], $controls . $header);
 }
 $body = elgg_format_element('div', ['class' => 'elgg-body'], $body);
 if ($footer) {

@@ -10,7 +10,7 @@ $strength_msg = elgg_echo("site_secret:strength_msg:$strength");
 
 $body = '<p>' . elgg_echo('admin:site:secret:intro') . '</p>';
 $body .= elgg_view_module('main', "$current_strength: $strength_text", $strength_msg, [
-	'class' => ($strength != 'strong') ? 'elgg-message elgg-state-error' : 'elgg-message elgg-state-success',
+	'class' => ($strength != 'strong') ? 'elgg-message elgg-state-error alert alert-danger' : 'elgg-message elgg-state-success alert alert-success',
 ]);
 
 $body .= elgg_view_field([

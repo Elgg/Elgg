@@ -1,4 +1,5 @@
 <?php
+
 /**
  * View for page object
  *
@@ -8,8 +9,6 @@
  * @uses $vars['full_view'] Whether to display the full view
  * @uses $vars['revision']  This parameter not supported by elgg_view_entity()
  */
-
-
 $full = elgg_extract('full_view', $vars, false);
 $page = elgg_extract('entity', $vars, false);
 $revision = elgg_extract('revision', $vars, false);
@@ -43,9 +42,6 @@ if ($revision) {
 
 $page_icon = elgg_view('pages/icon', ['annotation' => $annotation, 'size' => 'small']);
 
-$editor_text = elgg_view('object/elements/imprint', $vars);
-$categories = elgg_view('output/categories', $vars);
-
 $comments_count = $page->countComments();
 //only display if there are commments
 if ($comments_count != 0 && !$revision) {
@@ -59,41 +55,37 @@ if ($comments_count != 0 && !$revision) {
 	$comments_link = '';
 }
 
-$subtitle = "$editor_text $comments_link $categories";
+$subtitle = "$comments_link";
 
-$metadata = '';
-// do not show the metadata and controls in widget view
-if (!elgg_in_context('widgets')) {
-	// If we're looking at a revision, display annotation menu
-	if ($revision) {
-		$metadata = elgg_view_menu('annotation', [
-			'annotation' => $annotation,
-			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz float-alt',
-		]);
-	} else {
-		// Regular entity menu
-		$metadata = elgg_view_menu('entity', [
-			'entity' => $vars['entity'],
-			'handler' => 'pages',
-			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz',
-		]);
-	}
+if ($revision) {
+	$metadata = elgg_view_menu('annotation', array(
+		'annotation' => $annotation,
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz float-alt',
+	));
+} else {
+	// Regular entity menu
+	$metadata = elgg_view_menu('entity', array(
+		'entity' => $vars['entity'],
+		'handler' => 'pages',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	));
 }
 
 if ($full) {
 	$body = elgg_view('output/longtext', ['value' => $annotation->value]);
 
-	$params = [
-		'entity' => $page,
-		'metadata' => $metadata,
-		'title' => false,
-		'subtitle' => $subtitle,
-	];
-
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
+	$summary = '';
+	if (elgg_extract('show_summary', $vars, true)) {
+		$params = [
+			'entity' => $page,
+			'metadata' => $metadata,
+			'title' => false,
+			'subtitle' => $subtitle,
+		];
+		$summary = elgg_view('object/elements/summary', $vars + $params);
+	}
 
 	$responses = '';
 	if (elgg_extract('show_responses', $vars, false)) {

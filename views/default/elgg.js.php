@@ -63,12 +63,14 @@ define('jquery', function () {
 });
 define('jquery-ui');
 
+window.Tether = require(['tether']);
+
 // The datepicker language modules depend on "../datepicker", so to avoid RequireJS from
 // trying to load that, we define it manually here. The lang modules have names like
 // "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
 define('jquery-ui/datepicker', jQuery.datepicker);
 
-define('elgg', ['sprintf', 'jquery', 'languages/' + elgg.get_language()], function(vsprintf, $, translations) {
+define('elgg', ['sprintf', 'jquery', 'languages/' + elgg.get_language(), 'twbs'], function(vsprintf, $, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 
 	return elgg;

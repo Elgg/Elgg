@@ -21,7 +21,7 @@ if (!$limit) {
 
 $attr = [
 	'id' => elgg_extract('id', $vars, 'comments'),
-	'class' => elgg_extract_class($vars, 'elgg-comments'),
+	'class' => elgg_extract_class($vars, 'elgg-comments card'),
 ];
 
 // work around for deprecation code in elgg_view()
@@ -37,10 +37,15 @@ $content = elgg_list_entities([
 	'preload_owners' => true,
 	'distinct' => false,
 	'url_fragment' => $attr['id'],
+	'list_class' => 'list-group-flush',
+	'list_type' => 'list',
 ]);
 
 if ($show_add_form) {
-	$content .= elgg_view_form('comment/save', [], $vars);
+	$content .= elgg_view_form('comment/save', [
+		'class' => 'card-block',
+		'id' => 'comments-add',
+	], $vars);
 }
 
 echo elgg_format_element('div', $attr, $content);

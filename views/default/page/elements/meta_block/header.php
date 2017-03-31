@@ -1,0 +1,5 @@
+<?php
+
+/**
+ * Meta block header
+ */

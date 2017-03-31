@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg widgets layout
  *
@@ -8,8 +9,9 @@
  * @uses $vars['show_access']      Show the access control (true)
  * @uses $vars['owner_guid']       Widget owner GUID (optional, defaults to page owner GUID)
  */
+$num_columns = elgg_extract('num_columns', $vars, 2, false);
+$grid_columns = floor(12 / $num_columns);
 
-$num_columns = elgg_extract('num_columns', $vars, 3);
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $show_access = elgg_extract('show_access', $vars, true);
 $owner_guid = elgg_extract('owner_guid', $vars);
@@ -46,7 +48,10 @@ if (empty($widgets) && !empty($no_widgets)) {
 }
 
 if ($show_add_widgets && elgg_can_edit_widget_layout($context)) {
-	$result .= elgg_view('page/layouts/widgets/add_button', $vars);
+	$header = elgg_view('page/layouts/widgets/add_button', $vars);
+	$result .= elgg_format_element('div', [
+		'class' => 'row',
+	], $header);
 }
 
 // push context after the add_button as add button uses current context
@@ -59,8 +64,6 @@ if ($widgets) {
 	]);
 }
 
-$widget_class = "elgg-col-1of{$num_columns}";
-
 // move hidden columns widgets to last visible column
 if (!isset($widgets[$num_columns])) {
 	$widgets[$num_columns] = [];
@@ -70,7 +73,7 @@ foreach ($widgets as $index => $column_widgets) {
 	if ($index <= $num_columns) {
 		continue;
 	}
-		
+
 	// append widgets to last column and retain order
 	foreach ($column_widgets as $column_widget) {
 		$widgets[$num_columns][] = $column_widget;
@@ -78,27 +81,34 @@ foreach ($widgets as $index => $column_widgets) {
 	unset($widgets[$index]);
 }
 
+$columns = '';
+
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	$column_widgets = (array) elgg_extract($column_index, $widgets, []);
-	
+
 	$widgets_content = '';
 	foreach ($column_widgets as $widget) {
 		if (!array_key_exists($widget->handler, $widget_types)) {
 			continue;
 		}
-		
+
 		$widgets_content .= elgg_view_entity($widget, ['show_access' => $show_access]);
 	}
 
-	$result .= elgg_format_element('div', [
+	$columns .= elgg_format_element('div', [
 		'id' => "elgg-widget-col-{$column_index}",
 		'class' => [
 			"elgg-col-1of{$num_columns}",
 			'elgg-widgets',
+			'col-12',
+			"col-md-$grid_columns",
 		],
-		
-	], $widgets_content);
+			], $widgets_content);
 }
+
+$result .= elgg_format_element('div', [
+	'class' => 'elgg-widgets-grid row',
+], $columns);
 
 elgg_pop_context();
 
@@ -107,13 +117,12 @@ $result .= elgg_view('graphics/ajax_loader', ['id' => 'elgg-widget-loader']);
 echo elgg_format_element('div', [
 	'class' => 'elgg-layout-widgets',
 	'data-page-owner-guid' => $owner->guid,
-], $result);
-
+		], $result);
 ?>
 <script>
-require(['elgg/widgets'], function (widgets) {
-	widgets.init();
-});
+	require(['elgg/widgets'], function (widgets) {
+		widgets.init();
+	});
 </script>
 <?php
 

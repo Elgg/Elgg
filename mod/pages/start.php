@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Elgg Pages
  *
  * @package ElggPages
  */
-
 elgg_register_event_handler('init', 'system', 'pages_init');
 
 /**
@@ -49,7 +49,7 @@ function pages_init() {
 	// add to groups
 	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
 	elgg_extend_view('groups/tool_latest', 'pages/group_module');
-	
+
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below
 	elgg_set_config('pages', [
@@ -81,9 +81,11 @@ function pages_init() {
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:page', 'Elgg\Values::getTrue');
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:page_top', 'Elgg\Values::getTrue');
-	
+
 	// prevent public write access
 	elgg_register_plugin_hook_handler('view_vars', 'input/access', 'pages_write_access_vars');
+
+	elgg_register_plugin_hook_handler('breadcrumbs', 'object', 'pages_prepare_entity_breadcrumbs');
 }
 
 /**
@@ -107,7 +109,7 @@ function pages_init() {
 function pages_page_handler($page) {
 
 	elgg_load_library('elgg:pages');
-	
+
 	if (!isset($page[0])) {
 		$page[0] = 'all';
 	}
@@ -237,21 +239,17 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
  * Add links/info to entity menu particular to pages plugin
  */
 function pages_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
+
+	$entity = elgg_extract('entity', $params);
+
+	if (!pages_is_page($entity)) {
+		return;
 	}
 
 	elgg_load_library('elgg:pages');
-	$entity = $params['entity'];
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler != 'pages') {
-		return $return;
-	}
-
+	
 	// remove delete if not owner or admin
-	if (!elgg_is_admin_logged_in()
-		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()
-		&& ! pages_can_delete_page($entity)) {
+	if (!elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $entity->getOwnerGuid() && !pages_can_delete_page($entity)) {
 		foreach ($return as $index => $item) {
 			if ($item->getName() == 'delete') {
 				unset($return[$index]);
@@ -259,13 +257,55 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 		}
 	}
 
-	$options = [
+	$return[] = ElggMenuItem::factory([
 		'name' => 'history',
+		'parent_name' => 'actions',
+		'icon' => 'history',
 		'text' => elgg_echo('pages:history'),
 		'href' => "pages/history/$entity->guid",
 		'priority' => 150,
-	];
-	$return[] = ElggMenuItem::factory($options);
+	]);
+
+	$container = $entity->getContainerEntity();
+	if ($container && $entity->canEdit()) {
+		// can add subpage if can edit this page and write to container (such as a group)
+		if ($container->canWriteToContainer(0, 'object', 'page')) {
+			$return[] = ElggMenuItem::factory([
+				'name' => 'subpage',
+				'parent_name' => 'actions',
+				'href' =>  "pages/add/$entity->guid",
+				'text' => elgg_echo('pages:newchild'),
+				'icon' => 'plus',
+				'priority' => 200,
+			]);
+		}
+	}
+
+	if ($entity->canEdit()) {
+		$return[] = \ElggMenuItem::factory([
+					'name' => 'edit',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('edit'),
+					'icon' => 'pencil',
+					'title' => elgg_echo('edit:this'),
+					'href' => "pages/edit/$entity->guid",
+					'priority' => 200,
+		]);
+	}
+
+	if ($entity->canDelete()) {
+		$return[] = \ElggMenuItem::factory([
+					'name' => 'delete',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('delete'),
+					'icon' => 'delete',
+					'title' => elgg_echo('delete:this'),
+					'href' => "action/pages/delete?guid={$entity->getGUID()}",
+					'confirm' => elgg_echo('deleteconfirm'),
+					'priority' => 900,
+					'link_class' => 'text-danger',
+		]);
+	}
 
 	return $return;
 }
@@ -295,7 +335,7 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 		$title,
 		$descr,
 		$entity->getURL(),
-	], $language);
+			], $language);
 	$notification->summary = elgg_echo('pages:notify:summary', [$entity->title], $language);
 	$notification->url = $entity->getURL();
 	return $notification;
@@ -431,8 +471,7 @@ function pages_is_page($value) {
  * @return array
  */
 function pages_write_access_options_hook($hook, $type, $return_value, $params) {
-	if (empty($params['input_params']['entity_subtype'])
-			|| !in_array($params['input_params']['entity_subtype'], ['page', 'page_top'])) {
+	if (empty($params['input_params']['entity_subtype']) || !in_array($params['input_params']['entity_subtype'], ['page', 'page_top'])) {
 		return null;
 	}
 
@@ -441,7 +480,6 @@ function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 		return $return_value;
 	}
 }
-
 
 /**
  * Called on view_vars, input/access hook
@@ -454,27 +492,27 @@ function pages_write_access_options_hook($hook, $type, $return_value, $params) {
  * @return array
  */
 function pages_write_access_vars($hook, $type, $return, $params) {
-	
+
 	if ($return['name'] != 'write_access_id') {
 		return $return;
 	}
-	
+
 	if ($return['purpose'] != 'write') {
 		return $return;
 	}
-	
+
 	if ($return['value'] != ACCESS_PUBLIC && $return['value'] != ACCESS_DEFAULT) {
 		return $return;
 	}
-	
+
 	$default_access = get_default_access();
-	
+
 	if ($return['value'] == ACCESS_PUBLIC || $default_access == ACCESS_PUBLIC) {
 		// is the value public, or default which resolves to public?
 		// if so we'll set it to logged in, the next most permissible write access level
 		$return['value'] = ACCESS_LOGGED_IN;
 	}
-	
+
 	return $return;
 }
 
@@ -502,4 +540,28 @@ function pages_search_pages($hook, $type, $value, $params) {
 
 	// trigger the 'normal' object search as it can handle the added options
 	return elgg_trigger_plugin_hook('search', 'object', $params, []);
+}
+
+/**
+ * Prepare page breadcrumbs
+ * 
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function pages_prepare_entity_breadcrumbs(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!pages_is_page($entity)) {
+		return;
+	}
+
+	$breadcrumbs = $hook->getValue();
+
+	$last = array_pop($breadcrumbs);
+
+	$parent_breadcrumbs = pages_prepare_parent_breadcrumbs($entity);
+	$breadcrumbs = array_merge($breadcrumbs, $parent_breadcrumbs);
+
+	array_push($breadcrumbs, $last);
+	return $breadcrumbs;
 }

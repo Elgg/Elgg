@@ -26,9 +26,13 @@ $body = elgg_view('object/elements/full/body', $vars);
 $attachments = elgg_view('object/elements/full/attachments', $vars);
 $responses = elgg_view('object/elements/full/responses', $vars);
 
+$main = elgg_format_element('div', [
+	'class' => 'elgg-listing-full-main card',
+], $header . $body . $attachments);
+
 echo elgg_format_element('div', [
 	'class' => $class,
 	'data-guid' => $entity->guid,
-		], $header . $body . $attachments . $responses);
+		], $main . $responses);
 
 

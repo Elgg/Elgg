@@ -10,4 +10,7 @@ $output = elgg_echo('groups:opengroup:membersonly');
 if (elgg_is_logged_in()) {
 	$output .= ' ' . elgg_echo('groups:opengroup:membersonly:join');
 }
-echo "<p class='mtm'>$output</p>";
+
+echo elgg_format_element('div', [
+	'class' => 'alert alert-danger',
+		], $output);

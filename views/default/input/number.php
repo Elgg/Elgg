@@ -9,7 +9,7 @@
  * @uses $vars['class'] Additional CSS class
  */
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-number');
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-number form-control');
 
 $defaults = [
 	'value' => '',

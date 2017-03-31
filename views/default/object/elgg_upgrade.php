@@ -45,7 +45,7 @@ $errors_link = elgg_view('output/url', [
 
 $errors = elgg_format_element('ul', [
 	'id' => "upgrade-errors-{$entity->guid}",
-	'class' => 'upgrade-messages elgg-message elgg-state-error hidden',
+	'class' => 'upgrade-messages elgg-message elgg-state-error alert alert-danger hidden',
 ]);
 
 $params = [

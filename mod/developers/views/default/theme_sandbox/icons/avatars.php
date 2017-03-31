@@ -4,7 +4,7 @@
 	
 	$sizes = ['large', 'medium', 'small', 'tiny'];
 ?>
-<table class="theme-sandbox-table">
+<table class="table table-striped">
 	<tr>
 		<th></th>
 		<?php

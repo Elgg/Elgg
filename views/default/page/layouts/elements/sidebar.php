@@ -7,10 +7,10 @@
  */
 
 $sidebar = elgg_extract('sidebar', $vars);
-if ($sidebar === false) {
+if (!$sidebar) {
 	return;
 }
 ?>
-<div class="elgg-sidebar elgg-layout-sidebar clearfix">
+<div class="elgg-sidebar elgg-layout-sidebar clearfix flex-last">
 	<?= $sidebar ?>
 </div>

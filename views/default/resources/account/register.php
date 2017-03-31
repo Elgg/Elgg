@@ -18,33 +18,21 @@ if (elgg_get_config('allow_registration') == false) {
 	forward();
 }
 
-$friend_guid = (int) get_input('friend_guid', 0);
-$invitecode = get_input('invitecode');
-
 // only logged out people need to register
 if (elgg_is_logged_in()) {
 	forward();
 }
 
-$title = elgg_echo('register');
-
-$form_params = [
-	'class' => 'elgg-form-account',
-];
-
-$body_params = [
-	'friend_guid' => $friend_guid,
-	'invitecode' => $invitecode
-];
-$content = elgg_view_form('register', $form_params, $body_params);
-
-$content .= elgg_view('help/register');
+$content = elgg_view('core/account/register_box', [
+	'class' => 'card',
+	'title' => '',
+]);
 
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 
 $body = elgg_view_layout('default', [
 	'content' => $content,
-	'title' => $title,
+	'title' => elgg_echo('register'),
 	'sidebar' => false,
 ]);
 echo elgg_view_page($title, $body, $shell);

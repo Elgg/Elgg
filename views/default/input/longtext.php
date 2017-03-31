@@ -20,7 +20,7 @@
  * @uses $vars['editor_options'] Additional options to pass to the editor
  */
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-longtext');
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-longtext form-control');
 
 $defaults = [
 	'value' => '',

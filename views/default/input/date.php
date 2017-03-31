@@ -16,7 +16,7 @@
  * @uses $vars['timestamp'] Store as a Unix timestamp in seconds. Default = false
  * @uses $vars['datepicker_options'] An array of options to pass to the jQuery UI datepicker
  */
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-date');
+$vars['class'] = elgg_extract_class($vars, 'elgg-input-date form-control');
 
 $defaults = [
 	'value' => '',

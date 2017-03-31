@@ -59,7 +59,7 @@ define(function(require) {
 				// Display only the errors that haven't already been shown
 				$(json.system_messages.error).each(function(key, message) {
 					if (jQuery.inArray(message, errorMessages) === -1) {
-						var msg = '<li class="elgg-message elgg-state-error">' + message + '</li>';
+						var msg = '<li class="elgg-message elgg-state-error alert alert-danger">' + message + '</li>';
 						$('#upgrade-messages').append(msg);
 
 						// Add this error to the displayed errors

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Display the latest related comments
  *
@@ -9,7 +10,6 @@
  * @uses $vars['container_guid'] The container of the content being commented on
  * @uses $vars['limit']          The number of comments to display
  */
-
 $options = [
 	'type' => 'object',
 	'subtype' => 'comment',
@@ -67,16 +67,14 @@ if ($subtypes) {
 }
 
 $title = elgg_echo('generic_comments:latest');
-$comments = elgg_get_entities($options);
-if ($comments) {
-	$body = elgg_view('page/components/list', [
-		'items' => $comments,
-		'pagination' => false,
-		'list_class' => 'elgg-latest-comments',
-		'full_view' => false,
-	]);
-} else {
-	$body = '<p>' . elgg_echo('generic_comment:none') . '</p>';
-}
+$body = elgg_list_entities($options + [
+	'pagination' => false,
+	'list_class' => 'elgg-latest-comments list-group-flush',
+	'full_view' => false,
+	'no_results' => elgg_echo('generic_comment:none'),
+	'list_type' => 'list',
+		]);
 
-echo elgg_view_module('aside', $title, $body);
+echo elgg_view_module('aside', $title, $body, [
+	'class' => 'card',
+]);

@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Elgg user display (details)
  *
  * @uses $vars['entity'] The user entity
  * @uses $vars['microformats'] Mapping of fieldnames to microformats
  */
-
 $microformats = [
 	'mobile' => 'tel p-tel',
 	'phone' => 'tel p-tel',
@@ -17,6 +17,7 @@ $microformats = array_merge($microformats, (array) elgg_extract('microformats', 
 $user = elgg_extract('entity', $vars);
 
 $profile_fields = elgg_get_config('profile_fields');
+unset($profile_fields['briefdescription']);
 
 $fields_output = '';
 if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
@@ -26,7 +27,7 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 		unset($profile_fields['description']);
 		$profile_fields['description'] = $temp;
 	}
-	
+
 	foreach ($profile_fields as $shortname => $valtype) {
 		$value = $user->$shortname;
 
@@ -44,32 +45,40 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 			}
 
 			$class = elgg_extract($shortname, $microformats, '');
-						
+
 			$field_title = elgg_echo("profile:{$shortname}");
 			$field_value = elgg_format_element('span', [
 				'class' => $class,
-			], elgg_view("output/{$valtype}", [
+					], elgg_view("output/{$valtype}", [
 				'value' => $value,
 			]));
-			
-			$fields_output .= <<<___FIELD
-			<div class='clearfix profile-field'>
-				<div class='elgg-col elgg-col-1of5'>
-					<b>{$field_title}:</b>
-				</div>
-				<div class='elgg-col elgg-col-4of5'>
-					{$field_value}
-				</div>
-			</div>
-___FIELD;
+
+			$fields_output .= elgg_view('output/field', [
+				'label' => $field_title,
+				'value' => $field_value,
+				'class' => 'profile-field list-group-item',
+			]);
 		}
 	}
 }
 
-$result = elgg_view('profile/status', ['entity' => $user]);
-$result .= $fields_output;
+if (empty($fields_output)) {
+	return;
+}
+
+$result = '';
+$user = elgg_extract('entity', $vars);
+if ($user->isBanned()) {
+	$title = elgg_echo('banned');
+	$reason = ($user->ban_reason === 'banned') ? '' : " $user->ban_reason";
+	$result .= "<div class='alert alert-danger'><h5>$title</h5><div?$reason</div></div>";
+}
+
+$result .= elgg_format_element('div', [
+	'class' => 'list-group list-group-flush',
+		], $fields_output);
 
 echo elgg_format_element('div', [
 	'id' => 'profile-details',
-	'class' => 'elgg-body pll',
-], $result);
+	'class' => 'profile-details clearfix h-card vcard card',
+		], $result);

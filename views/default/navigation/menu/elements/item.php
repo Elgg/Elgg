@@ -14,9 +14,19 @@ if (!$item instanceof ElggMenuItem) {
 	return;
 }
 
+$item->addItemClass('nav-item');
+$item->addLinkClass('nav-link');
+
 $item_vars = [];
 
 $children = $item->getChildren();
+$child_menu_vars = $item->getChildMenuOptions();
+$allow_empty = elgg_extract('allow_empty', $child_menu_vars, true);
+
+if (empty($children) && !$allow_empty) {
+	return;
+}
+
 if (!empty($children)) {
 	$link_class = 'elgg-menu-closed';
 	if ($item->getSelected()) {
@@ -26,7 +36,6 @@ if (!empty($children)) {
 
 	$item->addLinkClass('elgg-menu-parent');
 
-	$child_menu_vars = $item->getChildMenuOptions();
 	$child_menu_vars['items'] = $children;
 	$child_menu_vars['class'] = elgg_extract_class($child_menu_vars, ['elgg-menu', 'elgg-child-menu']);
 
@@ -35,8 +44,13 @@ if (!empty($children)) {
 
 	switch ($display) {
 		case 'dropdown' :
-			$item->addDeps(['elgg/menus/dropdown']);
-			$item->addItemClass('elgg-menu-item-has-dropdown');
+			$child_menu_vars['class'][] = 'dropdown-menu';
+			$item->addItemClass('dropdown');
+			$item->addLinkClass('dropdown-toggle');
+			$item->{'data-toggle'} = 'dropdown';
+			$item->role = 'button';
+			$item->{'aria-haspopup'} = true;
+			$item->{'aria-expanded'} = false;
 			break;
 
 		case 'toggle' :
@@ -53,6 +67,7 @@ $item_vars['data-menu-item'] = $item->getName();
 $item_vars['class'][] = $item->getItemClass();
 if ($item->getSelected()) {
 	$item_vars['class'][] = "elgg-state-selected";
+	$item->addLinkClass('active');
 }
 if (!empty($vars['item_class'])) {
 	$item_vars['class'][] = $vars['item_class'];

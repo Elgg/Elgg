@@ -44,7 +44,7 @@ $list_class = elgg_extract_class($vars, ['elgg-input-radios', "elgg-{$vars['alig
 unset($vars['class']);
 unset($vars['align']);
 
-$vars['class'] = 'elgg-input-radio';
+$vars['class'] = 'elgg-input-radio form-check-input';
 
 if (is_array($vars['value'])) {
 	$vars['value'] = array_map('elgg_strtolower', $vars['value']);
@@ -57,11 +57,25 @@ unset($vars['value']);
 
 $radios = '';
 foreach ($options as $label => $option) {
+	
 	$vars['checked'] = in_array(elgg_strtolower($option), $value);
 	$vars['value'] = $option;
 
 	$radio = elgg_format_element('input', $vars);
-	$radios .= "<li><label>{$radio}{$label}</label></li>";
+
+	$label = elgg_format_element('span', [], $label);
+	$label = elgg_format_element('label', [
+		'class' => 'form-check-label',
+	], $radio . $label);
+
+	$item_class = ['form-check'];
+	if (elgg_extract('align', $vars) == 'horizontal') {
+		$item_class[] = 'form-check-inline';
+	}
+
+	$radios .= elgg_format_element('div', [
+		'class' => $item_class,
+	], $label);
 }
 
-echo elgg_format_element('ul', ['class' => $list_class, 'id' => $id], $radios);
+echo elgg_format_element('div', ['class' => $list_class, 'id' => $id], $radios);

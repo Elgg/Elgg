@@ -4,43 +4,47 @@
 	Modules
 *************************************** */
 .elgg-module {
-	overflow: hidden;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 
-/* Aside */
-.elgg-module-aside .elgg-head {
-	border-bottom: 1px solid #DCDCDC;
+.elgg-module-controls {
+	float: right;
+	padding: 0.5em;
+	color: #aaa;
+}
 
-	margin-bottom: 5px;
-	padding-bottom: 5px;
+.elgg-module > .elgg-head h4 {
+	font-weight: normal;
+	font-size: 1.2em;
+	padding: .5em 0.5em 0.5em 1em;
+	margin: 0;
+}
+
+.elgg-module-aside > .elgg-head {
+	border-bottom: 1px solid #ddd;
+}
+
+.elgg-sidebar .card, .elgg-sidebar-alt .card {
+    margin-bottom: 15px;
+}
+
+.elgg-sidebar .card .elgg-module, .elgg-sidebar-alt .card .elgg-module {
+    margin: 0;
 }
 
 /* Info */
 .elgg-module-info > .elgg-head {
-	background-color: #F0F0F0;
-	padding: 10px;
-	margin-bottom: 10px;
-	height: auto;
-	overflow: hidden;
-	box-shadow: inset 0 0 1px #FFFFFF;
-}
-.elgg-module-info > .elgg-head * {
-	color: #444;
+	background-color: #eceeef;
 }
 
 /* Popup */
 .elgg-module-popup {
 	background-color: #FFF;
-	border: 1px solid #DCDCDC;
+	border: 1px solid #ddd;
 	z-index: 9999;
 	margin-bottom: 0;
-	padding: 5px;
 	border-radius: 3px;
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-}
-.elgg-module-popup > .elgg-head {
-	margin-bottom: 5px;
 }
 .elgg-module-popup > .elgg-head * {
 	color: #0054A7;
@@ -64,15 +68,14 @@
 
 /* Featured */
 .elgg-module-featured {
-	border: 1px solid #DCDCDC;
+	border: 1px solid #ddd;
 	border-radius: 3px;
 }
 .elgg-module-featured > .elgg-head {
 	background-color: #F0F0F0;
 	padding: 10px;
 	height: auto;
-	overflow: hidden;
-	border-bottom: 1px solid #DCDCDC;
+	border-bottom: 1px solid #ddd;
 	box-shadow: inset 0 0 1px #FFFFFF;
 }
 .elgg-module-featured > .elgg-head * {

@@ -11,6 +11,6 @@ if (!$sidebar_alt) {
 	return;
 }
 ?>
-<div class="elgg-sidebar-alt elgg-layout-sidebar-alt clearfix">
+<div class="elgg-sidebar-alt elgg-layout-sidebar-alt clearfix flex-first">
 	<?= $sidebar_alt ?>
 </div>

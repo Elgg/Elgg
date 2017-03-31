@@ -10,4 +10,4 @@ if (!$title) {
 	return;
 }
 ?>
-<h3 class="elgg-listing-summary-title"><?= $title ?></h3>
+<h5 class="elgg-listing-summary-title"><?= $title ?></h5>

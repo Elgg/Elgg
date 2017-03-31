@@ -34,6 +34,12 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 
 $title = elgg_echo("file:user", [$owner->name]);
 
+$list_type = get_input('list_type', 'gallery');
+$item_class = [];
+if ($list_type == 'gallery') {
+	$item_class = ['col-12', 'col-md-6', 'col-lg-4'];
+}
+
 // List files
 $options = [
 	'type' => 'object',
@@ -42,6 +48,8 @@ $options = [
 	'no_results' => elgg_echo("file:none"),
 	'preload_owners' => true,
 	'distinct' => false,
+	'list_type' => $list_type,
+	'item_class' => $item_class,
 ];
 
 if ($owner instanceof ElggGroup) {

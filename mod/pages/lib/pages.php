@@ -55,8 +55,10 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
  * Recurses the page tree and adds the breadcrumbs for all ancestors
  *
  * @param ElggObject $page Page entity
+ * @param bool       $push true to push to the stack
  */
-function pages_prepare_parent_breadcrumbs($page) {
+function pages_prepare_parent_breadcrumbs($page, $push = true) {
+	$crumbs = [];
 	if ($page && $page->parent_guid) {
 		$parents = [];
 		$parent = get_entity($page->parent_guid);
@@ -66,9 +68,18 @@ function pages_prepare_parent_breadcrumbs($page) {
 		}
 		while ($parents) {
 			$parent = array_pop($parents);
+			if ($push) {
 			elgg_push_breadcrumb($parent->title, $parent->getURL());
+			}
+
+			$crumbs[] = [
+				'text' => $parent->title,
+				'href' => $parent->getURL(),
+			];
 		}
 	}
+
+	return $crumbs;
 }
 
 /**

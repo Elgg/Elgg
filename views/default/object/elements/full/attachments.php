@@ -12,5 +12,5 @@ if (!$attachments) {
 }
 
 echo elgg_format_element('div', [
-	'class' => 'elgg-listing-full-attachments',
+	'class' => ['elgg-listing-full-attachments', 'card-block'],
 ], $attachments);

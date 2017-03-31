@@ -25,4 +25,4 @@ foreach ($entity_stats as $k => $entry) {
 	}
 }
 
-echo "<table class='elgg-table-alt'>$rows</table>";
+echo "<table class='elgg-table-alt table table-striped'>$rows</table>";

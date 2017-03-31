@@ -4,12 +4,13 @@
  *
  * @uses $vars['footer'] Footer view
  */
-
 $footer = elgg_extract('footer', $vars);
 if (!isset($footer) || empty($footer)) {
 	return;
 }
 ?>
 <div class="elgg-foot elgg-layout-footer clearfix">
-	<?= $footer ?>
+	<div class="elgg-inner container">
+		<?= $footer ?>
+	</div>
 </div>

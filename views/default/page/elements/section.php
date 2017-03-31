@@ -19,13 +19,9 @@ if (!empty($html)) {
 		$class[] = "elgg-page-$section";
 	}
 
-	$inner = elgg_format_element('div', [
-		'class' => 'elgg-inner',
-			], $html);
-
 	echo elgg_format_element('div', [
 		'class' => $class,
-			], $inner);
+			], $html);
 }
 
 if ($section && elgg_view_exists("page/elements/$section/after")) {

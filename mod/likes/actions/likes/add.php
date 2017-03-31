@@ -97,14 +97,9 @@ system_message(elgg_echo("likes:likes"));
 
 if (elgg_is_xhr()) {
 	$num_of_likes = likes_count($entity);
-	if ($num_of_likes == 1) {
-		$likes_string = elgg_echo('likes:userlikedthis', [$num_of_likes]);
-	} else {
-		$likes_string = elgg_echo('likes:userslikedthis', [$num_of_likes]);
-	}
 	echo json_encode([
-		'text' => $likes_string,
-		'selector' => "[data-likes-guid={$entity->guid}]",
+		'text' => $num_of_likes,
+		'selector' => ".elgg-counter[data-channel=\"likes:{$entity->guid}\"]",
 		'num_likes' => $num_of_likes,
 	]);
 }

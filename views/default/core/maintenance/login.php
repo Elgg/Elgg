@@ -6,4 +6,5 @@
 echo elgg_view('core/account/login_box', [
 	'module' => 'maintenance-login',
 	'title' => elgg_echo('admin:login'),
+	'class' => 'card',
 ]);

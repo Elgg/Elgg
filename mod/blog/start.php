@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Blogs
  *
@@ -11,7 +12,6 @@
  * - Notifications
  * - River entry for posts saved as drafts and later published
  */
-
 elgg_register_event_handler('init', 'system', 'blog_init');
 
 /**
@@ -59,6 +59,10 @@ function blog_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:blog', 'Elgg\Values::getTrue');
+
+	// imprint
+	elgg_register_plugin_hook_handler('register', 'menu:entity_imprint', 'blog_setup_entity_imprint');
+	elgg_register_plugin_hook_handler('register', 'menu:meta_block', 'blog_setup_entity_meta_block');
 }
 
 /**
@@ -96,35 +100,35 @@ function blog_page_handler($page) {
 	switch ($page_type) {
 		case 'owner':
 			$resource_vars['username'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/owner', $resource_vars);
 			break;
 		case 'friends':
 			$resource_vars['username'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/friends', $resource_vars);
 			break;
 		case 'archive':
 			$resource_vars['username'] = elgg_extract(1, $page);
 			$resource_vars['lower'] = elgg_extract(2, $page);
 			$resource_vars['upper'] = elgg_extract(3, $page);
-			
+
 			echo elgg_view_resource('blog/archive', $resource_vars);
 			break;
 		case 'view':
 			$resource_vars['guid'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/view', $resource_vars);
 			break;
 		case 'add':
 			$resource_vars['guid'] = elgg_extract(1, $page);
-			
+
 			echo elgg_view_resource('blog/add', $resource_vars);
 			break;
 		case 'edit':
 			$resource_vars['guid'] = elgg_extract(1, $page);
 			$resource_vars['revision'] = elgg_extract(2, $page);
-			
+
 			echo elgg_view_resource('blog/edit', $resource_vars);
 			break;
 		case 'group':
@@ -132,7 +136,7 @@ function blog_page_handler($page) {
 			$resource_vars['subpage'] = elgg_extract(2, $page);
 			$resource_vars['lower'] = elgg_extract(3, $page);
 			$resource_vars['upper'] = elgg_extract(4, $page);
-			
+
 			echo elgg_view_resource('blog/group', $resource_vars);
 			break;
 		case 'all':
@@ -159,7 +163,7 @@ function blog_set_url($hook, $type, $url, $params) {
 	if (!elgg_instanceof($entity, 'object', 'blog')) {
 		return;
 	}
-	
+
 	$friendly_title = elgg_get_friendly_title($entity->title);
 	return "blog/view/{$entity->guid}/$friendly_title";
 }
@@ -171,16 +175,16 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
 		$return[] = ElggMenuItem::factory([
-			'name' => 'blog',
-			'text' => elgg_echo('blog'),
-			'href' => "blog/owner/{$entity->username}",
+					'name' => 'blog',
+					'text' => elgg_echo('blog'),
+					'href' => "blog/owner/{$entity->username}",
 		]);
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->blog_enable != 'no') {
 			$return[] = ElggMenuItem::factory([
-				'name' => 'blog',
-				'text' => elgg_echo('blog:group'),
-				'href' => "blog/group/{$entity->guid}/all",
+						'name' => 'blog',
+						'text' => elgg_echo('blog:group'),
+						'href' => "blog/group/{$entity->guid}/all",
 			]);
 		}
 	}
@@ -192,27 +196,39 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
  * Add particular blog links/info to entity menu
  */
 function blog_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return;
-	}
-
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler !== 'blog') {
-		return;
-	}
 
 	$entity = elgg_extract('entity', $params);
-	if ($entity->status == 'published') {
+
+	if (!$entity instanceof ElggBlog) {
 		return;
 	}
 
-	$status_text = elgg_echo("status:{$entity->status}");
-	$return[] = ElggMenuItem::factory([
-		'name' => 'published_status',
-		'text' => "<span>$status_text</span>",
-		'href' => false,
-		'priority' => 150,
-	]);
+	if ($entity->canEdit()) {
+		$return[] = \ElggMenuItem::factory([
+					'name' => 'edit',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('edit'),
+					'icon' => 'pencil',
+					'title' => elgg_echo('edit:this'),
+					'href' => "blog/edit/$entity->guid",
+					'priority' => 200,
+		]);
+	}
+
+	if ($entity->canDelete()) {
+		$return[] = \ElggMenuItem::factory([
+					'name' => 'delete',
+					'parent_name' => 'actions',
+					'text' => elgg_echo('delete'),
+					'icon' => 'delete',
+					'title' => elgg_echo('delete:this'),
+					'href' => "action/blog/delete?guid={$entity->getGUID()}",
+					'confirm' => elgg_echo('deleteconfirm'),
+					'priority' => 900,
+					'link_class' => 'text-danger',
+		]);
+	}
+
 	return $return;
 }
 
@@ -225,45 +241,45 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 	if (empty($page_owner)) {
 		return;
 	}
-	
+
 	$dates = get_entity_dates('object', 'blog', $page_owner->getGUID());
 	if (!$dates) {
 		return;
 	}
-	
+
 	$dates = array_reverse($dates);
-	
+
 	if (elgg_instanceof($page_owner, 'user')) {
 		$url_segment = 'blog/archive/' . $page_owner->username;
 	} else {
 		$url_segment = 'blog/group/' . $page_owner->getGUID() . '/archive';
 	}
-	
+
 	$years = [];
 	foreach ($dates as $date) {
 		$timestamplow = mktime(0, 0, 0, substr($date, 4, 2), 1, substr($date, 0, 4));
 		$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
-	
+
 		$year = substr($date, 0, 4);
 		if (!in_array($year, $years)) {
 			$return[] = ElggMenuItem::factory([
-				'name' => $year,
-				'text' => $year,
-				'href' => '#',
-				'child_menu' => [
-					'display' => 'toggle',
-				]
+						'name' => $year,
+						'text' => $year,
+						'href' => '#',
+						'child_menu' => [
+							'display' => 'toggle',
+						]
 			]);
 		}
-		
+
 		$link = $url_segment . '/' . $timestamplow . '/' . $timestamphigh;
 		$month = trim(elgg_echo('date:month:' . substr($date, 4, 2), ['']));
-		
+
 		$return[] = ElggMenuItem::factory([
-			'name' => $date,
-			'text' => $month,
-			'href' => $link,
-			'parent_name' => $year,
+					'name' => $date,
+					'text' => $month,
+					'href' => $link,
+					'parent_name' => $year,
 		]);
 	}
 
@@ -292,10 +308,10 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
 		$entity->title,
 		$entity->getExcerpt(),
 		$entity->getURL()
-	], $language);
+			], $language);
 	$notification->summary = elgg_echo('blog:notify:summary', [$entity->title], $language);
 	$notification->url = $entity->getURL();
-	
+
 	return $notification;
 }
 
@@ -306,4 +322,85 @@ function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
 	return $return_value;
+}
+
+/**
+ * Setup blog imprint
+ * 
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ */
+function blog_setup_entity_imprint(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof ElggBlog) {
+		return;
+	}
+
+	$menu = $hook->getValue();
+
+	if ($entity->status !== 'published') {
+		$status_text = elgg_echo("status:{$entity->status}");
+		$menu[] = ElggMenuItem::factory([
+					'name' => 'published_status',
+					'text' => elgg_format_element('span', [
+						'class' => 'elgg-badge badge badge-default',
+							], $status_text),
+					'href' => false,
+					'priority' => 50,
+		]);
+		foreach ($menu as $key => $item) {
+			if (in_array($item->getName(), ['access'])) {
+				unset($menu[$key]);
+			}
+		}
+	}
+
+	// The "on" status changes for comments, so best to check for !Off
+	if ($entity->comments_on == 'Off') {
+		foreach ($menu as $key => $item) {
+			if (in_array($item->getName(), ['comments'])) {
+				unset($menu[$key]);
+			}
+		}
+	}
+
+	return $menu;
+}
+
+/**
+ * Setup meta block
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return ElggMenuItem[]
+ */
+function blog_setup_entity_meta_block(\Elgg\Hook $hook) {
+
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof ElggBlog) {
+		return;
+	}
+
+	$menu = $hook->getValue();
+
+	$status_text = elgg_echo("status:{$entity->status}");
+	$menu[] = ElggMenuItem::factory([
+				'name' => 'published_status',
+				'text' => elgg_view('output/field', [
+					'label' => elgg_echo('status'),
+					'value' => $status_text,
+				]),
+				'href' => false,
+				'priority' => 800,
+	]);
+
+	if ($entity->status != 'published') {
+		foreach ($menu as $key => $item) {
+			if (in_array($item->getName(), ['access'])) {
+				unset($menu[$key]);
+			}
+		}
+	}
+
+	return $menu;
 }

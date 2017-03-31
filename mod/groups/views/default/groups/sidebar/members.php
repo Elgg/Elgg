@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Group members sidebar
  *
@@ -7,14 +8,7 @@
  * @uses $vars['entity'] Group entity
  * @uses $vars['limit']  The number of members to display
  */
-
 $limit = elgg_extract('limit', $vars, 14);
-
-$all_link = elgg_view('output/url', [
-	'href' => 'groups/members/' . $vars['entity']->guid,
-	'text' => elgg_echo('groups:members:more'),
-	'is_trusted' => true,
-]);
 
 $body = elgg_list_entities_from_relationship([
 	'relationship' => 'member',
@@ -23,11 +17,15 @@ $body = elgg_list_entities_from_relationship([
 	'type' => 'user',
 	'limit' => $limit,
 	'order_by' => 'r.time_created DESC',
-	'pagination' => false,
+	'pagination' => elgg_view('navigation/more', [
+		'#class' => 'center',
+		'href' => 'groups/members/' . $vars['entity']->guid,
+		'text' => elgg_echo('groups:members:more'),
+	]),
 	'list_type' => 'gallery',
-	'gallery_class' => 'elgg-gallery-users',
+	'gallery_class' => 'elgg-gallery-users card-block',
+		]);
+
+echo elgg_view_module('aside', elgg_echo('groups:members'), $body, [
+	'class' => 'card',
 ]);
-
-$body .= "<div class='center mts'>$all_link</div>";
-
-echo elgg_view_module('aside', elgg_echo('groups:members'), $body);

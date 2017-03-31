@@ -10,26 +10,25 @@ if (empty($categories)) {
 	return;
 }
 
-$list_items = '';
+$items = [];
+
 foreach ($categories as $key => $category) {
 	if (empty($key)) {
 		continue;
 	}
 
 	$key = preg_replace('/[^a-z0-9-]/i', '-', $key);
-	$link = elgg_view('output/url', [
+	$items[] = [
+		'name' => "category$key",
 		'text' => $category,
 		'href' => '#',
 		'rel' => $key
-	]);
-
-	$list_items .= elgg_format_element('li', [], $link);
+	];
 }
 
-$body = elgg_format_element([
-	'#tag_name' => 'ul',
-	'class' => 'elgg-admin-plugins-categories elgg-admin-sidebar-menu elgg-menu-hz',
-	'#text' => $list_items,
+$body = elgg_view_menu('plugins:filter', [
+	'items' => $items,
+	'class' => 'elgg-admin-plugins-categories elgg-admin-sidebar-menu elgg-menu-hz nav flex-column',
 ]);
 
 echo elgg_view_module('', elgg_echo('filter'), $body, [

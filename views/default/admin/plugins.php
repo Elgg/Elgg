@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg administration plugin screen
  *
@@ -6,7 +7,6 @@
  *
  * @uses $vars['list_only']
  */
-
 $list_only = (bool) elgg_extract('list_only', $vars);
 
 // @todo this should occur in the controller code
@@ -28,8 +28,7 @@ foreach ($installed_plugins as $id => $plugin) {
 			}
 			if ($disable_plugins) {
 				// force disable and warn
-				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-						elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getId()]));
+				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(), elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getId()]));
 				$plugin->deactivate();
 			}
 		}
@@ -90,7 +89,7 @@ $categories = array_merge($common_categories, $categories);
 $category_form = elgg_view("admin/plugins/filter", [
 	'category' => "all",
 	'category_options' => $categories
-]);
+		]);
 
 elgg_register_menu_item('title', [
 	'name' => 'activate-all',
@@ -107,9 +106,12 @@ elgg_register_menu_item('title', [
 	'data-desired-state' => 'inactive',
 ]);
 
-echo $category_form;
-echo elgg_format_element(
-	'div',
-	['id' => 'elgg-plugin-list'],
-	$plugins_list
-);
+
+echo elgg_view_layout('default', [
+	'header' => '',
+	'sidebar' => false,
+	'sidebar_alt' => $category_form,
+	'content' => elgg_format_element(
+			'div', ['id' => 'elgg-plugin-list'], $plugins_list
+	),
+]);

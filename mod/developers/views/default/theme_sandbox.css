@@ -57,62 +57,16 @@
 	color: #666;
 }
 
-.elgg-menu-theme-sandbox > li {
-	padding: 4px 20px;
-}
-.elgg-menu-theme-sandbox > li.elgg-state-selected {
-	background-color: #E4E4E4;
-	border-radius: 3px;
-}
-.elgg-menu-theme-sandbox > li.elgg-state-selected > a {
-	color: #333
-}
-.elgg-menu-theme-sandbox a,
-.elgg-menu-theme-sandbox a:hover,
-.elgg-menu-theme-sandbox a:focus {
-	color: #777;
-	text-decoration: none;
-}
-.elgg-menu-theme-sandbox a:hover,
-.elgg-menu-theme-sandbox a:focus {
-	text-decoration: underline;
-}
-
 .elgg-module-theme-sandbox-demo > .elgg-head {
-	background: #e4e4e4;
 	padding: 5px;
 	margin-bottom: 10px;
-	border-radius: 3px;
-}
-.elgg-module-theme-sandbox-demo > .elgg-head * {
-	color: #333;
-}
-.elgg-module-theme-sandbox-demo > .elgg-body {
-	position: relative;
-}
-
-.theme-sandbox-table {
-	width: 100%;
-	border-top: 1px solid #ccc;
-}
-.theme-sandbox-table td, .theme-sandbox-table th {
-	padding: 4px 8px;
-	border: 1px solid #ccc;
-}
-.theme-sandbox-table th {
-	font-weight: bold;
-	color: #666;
-}
-.theme-sandbox-table tr:nth-child(odd) {
-	background-color: #fff;
-}
-.theme-sandbox-table tr:nth-child(even) {
-	background-color: #f0f0f0;
+	border-bottom: 1px solid #dcdcdc;
 }
 
 .theme-sandbox-grid-demo {
 	margin-bottom: 30px;
 }
+
 .theme-sandbox-grid-demo-solid > .elgg-col > .elgg-inner {
 	background-color: #999;
 	color: #fff;

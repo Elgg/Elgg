@@ -21,4 +21,5 @@ echo elgg_list_river([
 	'joins' => ["JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid"],
 	'wheres' => ["(e1.container_guid = $guid)"],
 	'no_results' => elgg_echo('groups:widget:group_activity:content:noactivity'),
+	'list_class' => 'list-group-flush',
 ]);

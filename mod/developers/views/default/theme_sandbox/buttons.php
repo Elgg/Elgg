@@ -1,4 +1,4 @@
-<table class="theme-sandbox-table">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Anchor links</th>
@@ -9,38 +9,134 @@
 	<tbody>
 		<tr>
 			<th>Base (.elgg-button)</th>
-			<td><a href="#" class="elgg-button">anchor</a></td>
-			<td><a href="#" class="elgg-button elgg-state-disabled">anchor</a></td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button',
+					'text' => 'Button',
+				]);
+				?>
+			</td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-state-disabled',
+					'text' => 'Button',
+				]);
+				?>
+			</td>
 		</tr>
 		<tr>
 			<th>Action (.elgg-button-action)</th>
-			<td><a href="#" class="elgg-button elgg-button-action">anchor</a></td>
-			<td><a href="#" class="elgg-button elgg-button-action elgg-state-disabled">anchor</a></td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-action',
+					'text' => 'Action',
+				]);
+				?>
+			</td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-action elgg-state-disabled',
+					'text' => 'Action',
+				]);
+				?>
+			</td>
 		</tr>
 		<tr>
 			<th>Cancel (.elgg-button-cancel)</th>
-			<td><a href="#" class="elgg-button elgg-button-cancel">anchor</a></td>
-			<td><a href="#" class="elgg-button elgg-button-cancel elgg-state-disabled">anchor</a></td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-cancel',
+					'text' => 'Cancel',
+				]);
+				?>
+			</td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-cancel elgg-state-disabled',
+					'text' => 'Cancel',
+				]);
+				?>
+			</td>
 		</tr>
 		<tr>
 			<th>Submit (.elgg-button-submit)</th>
-			<td><a href="#" class="elgg-button elgg-button-submit">anchor</a></td>
-			<td><a href="#" class="elgg-button elgg-button-submit elgg-state-disabled">anchor</a></td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-submit',
+					'text' => 'Submit',
+				]);
+				?>
+			</td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-submit elgg-state-disabled',
+					'text' => 'Submit',
+				]);
+				?>
+			</td>
 		</tr>
 		<tr>
 			<th>Special (.elgg-button-special)</th>
-			<td><a href="#" class="elgg-button elgg-button-special">anchor</a></td>
-			<td><a href="#" class="elgg-button elgg-button-special elgg-state-disabled">anchor</a></td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-special',
+					'text' => 'Special',
+				]);
+				?>
+			</td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-special elgg-state-disabled',
+					'text' => 'Special',
+				]);
+				?>
+			</td>
 		</tr>
 		<tr>
 			<th>Delete (.elgg-button-delete)</th>
-			<td><a href="#" class="elgg-button elgg-button-delete">anchor</a></td>
-			<td><a href="#" class="elgg-button elgg-button-delete elgg-state-disabled">anchor</a></td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-delete',
+					'text' => 'Delete',
+				]);
+				?>
+			</td>
+			<td>
+				<?=
+				elgg_view('output/url', [
+					'href' => '#',
+					'class' => 'elgg-button elgg-button-delete elgg-state-disabled',
+					'text' => 'Delete',
+				]);
+				?>
+			</td>
 		</tr>
 	</tbody>
 </table>
 
-<table class="theme-sandbox-table mtl">
+<table class="table table-striped mtl">
 	<thead>
 		<tr>
 			<th>Input type="submit"</th>

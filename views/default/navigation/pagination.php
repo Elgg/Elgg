@@ -130,8 +130,14 @@ if ($current_page == $total_pages) {
 
 $list ="";
 foreach ($pages as $page_num => $page) {
+	$li_class = ['page-item'];
 	if ($page_num == $current_page) {
-		$list .= elgg_format_element('li', ['class' => 'elgg-state-selected'], "<span>$page_num</span>");
+		$li_class[] = 'elgg-state-selected';
+		$li_class[] = 'active';
+		$link = elgg_format_element('span', [
+				'class' => 'page-link',
+			], $page_num);
+		$list .= elgg_format_element('li', ['class' => $li_class], $link);
 	} else {
 		$href = elgg_extract('href', $page);
 		$text = elgg_extract('text', $page, $page_num);
@@ -151,18 +157,23 @@ foreach ($pages as $page_num => $page) {
 				'href' => $href,
 				'text' => $text,
 				'is_trusted' => true,
+				'class' => 'page-link',
 			]);
 		} else {
-			$link = elgg_format_element('span', [], $page['text']);
+			$link = elgg_format_element('span', [
+				'class' => 'page-link',
+			], $page['text']);
 		}
 		
 		$element_options = [];
 		if ($disabled) {
-			$element_options['class'] = 'elgg-state-disabled';
+			$li_class[] = 'elgg-state-disabled';
+			$li_class[] = 'disabled';
 		}
-			
+
+		$element_options['class'] = $li_class;
 		$list .= elgg_format_element('li', $element_options, $link);
 	}
 }
 
-echo elgg_format_element('ul', ['class' => 'elgg-pagination'], $list);
+echo elgg_format_element('ul', ['class' => 'elgg-pagination pagination justify-content-center'], $list);

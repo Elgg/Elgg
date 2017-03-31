@@ -18,6 +18,12 @@ elgg_register_title_button('file', 'add', 'object', 'file');
 
 $title = elgg_echo("file:friends");
 
+$list_type = get_input('list_type', 'gallery');
+$item_class = [];
+if ($list_type == 'gallery') {
+	$item_class = ['col-12', 'col-md-6', 'col-lg-4'];
+}
+
 $content = elgg_list_entities_from_relationship([
 	'type' => 'object',
 	'subtype' => 'file',
@@ -28,6 +34,8 @@ $content = elgg_list_entities_from_relationship([
 	'no_results' => elgg_echo("file:none"),
 	'preload_owners' => true,
 	'preload_containers' => true,
+	'list_type' => $list_type,
+	'item_class' => $item_class,
 ]);
 
 $sidebar = file_get_type_cloud($owner->guid, true);

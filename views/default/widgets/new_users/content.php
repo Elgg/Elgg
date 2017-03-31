@@ -17,4 +17,5 @@ echo elgg_list_entities([
 	'full_view' => false,
 	'pagination' => false,
 	'limit' => $num_display,
+	'list_class' => 'list-group-flush',
 ]);

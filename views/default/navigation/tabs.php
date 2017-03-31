@@ -19,9 +19,9 @@ $options = $vars;
 $type = elgg_extract('type', $vars, 'horizontal');
 
 if ($type == 'horizontal') {
-	$options['class'] = "elgg-tabs elgg-htabs";
+	$options['class'] = "elgg-tabs elgg-htabs nav nav-tabs";
 } else {
-	$options['class'] = "elgg-tabs elgg-vtabs";
+	$options['class'] = "elgg-tabs elgg-vtabs nav flex-column";
 }
 if (isset($vars['class'])) {
 	$options['class'] = "{$options['class']} {$vars['class']}";
@@ -37,17 +37,14 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 	<ul <?php echo $attributes; ?>>
 		<?php
 		foreach ($vars['tabs'] as $info) {
-			$class = elgg_extract('class', $info, '');
+			$class = elgg_extract_class($info, 'nav-item');
 			$id = elgg_extract('id', $info, '');
 
 			$selected = elgg_extract('selected', $info, false);
 			if ($selected) {
-				$class .= ' elgg-state-selected';
+				$class[] = ' elgg-state-selected';
 			}
-
-			$class_str = ($class) ? "class=\"$class\"" : '';
-			$id_str = ($id) ? "id=\"$id\"" : '';
-
+			
 			$options = $info;
 			unset($options['class']);
 			unset($options['id']);
@@ -66,6 +63,11 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 				unset($options['link_class']);
 			}
 
+			$options['class'] = elgg_extract_class($options, 'nav-link');
+			if ($selected) {
+				$options['class'] = elgg_extract_class($options, 'active');
+			}
+
 			if (isset($info['link_id'])) {
 				$options['id'] = $options['link_id'];
 				unset($options['link_id']);
@@ -73,7 +75,10 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 
 			$link = elgg_view('output/url', $options);
 
-			echo "<li $id_str $class_str>$link</li>";
+			echo elgg_format_element('li', [
+				'class' => $class,
+				'id' => $id,
+			], $link);
 		}
 		?>
 	</ul>

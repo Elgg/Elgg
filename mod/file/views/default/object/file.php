@@ -1,10 +1,10 @@
 <?php
+
 /**
  * File renderer.
  *
  * @package ElggFile
  */
-
 $full = elgg_extract('full_view', $vars, false);
 $file = elgg_extract('entity', $vars, false);
 
@@ -13,27 +13,9 @@ if (!$file) {
 }
 
 $owner = $file->getOwnerEntity();
-$categories = elgg_view('output/categories', $vars);
-
-$by_line = elgg_view('object/elements/imprint', $vars);
-
-$comments_count = $file->countComments();
-//only display if there are commments
-if ($comments_count != 0) {
-	$text = elgg_echo("comments") . " ($comments_count)";
-	$comments_link = elgg_view('output/url', [
-		'href' => $file->getURL() . '#comments',
-		'text' => $text,
-		'is_trusted' => true,
-	]);
-} else {
-	$comments_link = '';
-}
-
-$subtitle = "$by_line $comments_link $categories";
 
 $metadata = '';
-if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
+if (!elgg_in_context('gallery')) {
 	// only show entity menu outside of widgets and gallery view
 	$metadata = elgg_view_menu('entity', [
 		'entity' => $vars['entity'],
@@ -54,14 +36,16 @@ if ($full && !elgg_in_context('gallery')) {
 		$extra = elgg_view("file/specialcontent/$base_type/default", $vars);
 	}
 
-	$params = [
-		'entity' => $file,
-		'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
-	];
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
+	$summary = '';
+	if (elgg_extract('show_summary', $vars, true)) {
+		$params = [
+			'entity' => $file,
+			'title' => false,
+			'metadata' => $metadata,
+		];
+		$params = $params + $vars;
+		$summary = elgg_view('object/elements/summary', $params);
+	}
 
 	$body = elgg_view('output/longtext', ['value' => $file->description]);
 
@@ -81,11 +65,7 @@ if ($full && !elgg_in_context('gallery')) {
 		'responses' => $responses,
 	]);
 } elseif (elgg_in_context('gallery')) {
-	echo '<div class="file-gallery-item">';
-	echo "<h3>" . $file->title . "</h3>";
-	echo elgg_view_entity_icon($file, 'medium');
-	echo "<p class='subtitle'>$owner_link $date</p>";
-	echo '</div>';
+	echo elgg_view('object/file/card', $vars);
 } else {
 	// brief view
 	$excerpt = elgg_get_excerpt($file->description);

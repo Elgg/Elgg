@@ -1,34 +1,37 @@
 <?php
+
 /**
  * Count of who has liked something
  *
- *  @uses $vars['entity']
+ *  @uses $entity
  */
-
-$num_of_likes = \Elgg\Likes\DataService::instance()->getNumLikes($vars['entity']);
-$guid = $vars['entity']->guid;
-
-// display the number of likes
-if ($num_of_likes == 1) {
-	$likes_string = elgg_echo('likes:userlikedthis', [$num_of_likes]);
-} else {
-	$likes_string = elgg_echo('likes:userslikedthis', [$num_of_likes]);
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
 }
 
-$class = 'elgg-lightbox elgg-non-link';
+$num_of_likes = \Elgg\Likes\DataService::instance()->getNumLikes($entity);
+
+$class = [
+	'elgg-lightbox',
+	'nav-link',
+];
 if (!$num_of_likes) {
-	$class .= ' hidden';
+	$class[] = 'hidden';
 }
 
-$params = [
-	'text' => $likes_string,
+echo elgg_view('output/url', [
+	'text' => elgg_format_element('span', [
+		'class' => 'elgg-counter',
+		'data-channel' => "likes:$entity->guid",
+			], $num_of_likes),
 	'title' => elgg_echo('likes:see'),
 	'class' => $class,
+	'icon' => 'heart',
 	'href' => '#',
-	'data-likes-guid' => $vars['entity']->guid,
+	'data-likes-guid' => $entity->guid,
 	'data-colorbox-opts' => json_encode([
 		'maxHeight' => '85%',
-		'href' => elgg_normalize_url("ajax/view/likes/popup?guid=$guid")
+		'href' => elgg_normalize_url("ajax/view/likes/popup?guid=$entity->guid")
 	]),
-];
-echo elgg_view('output/url', $params);
+]);

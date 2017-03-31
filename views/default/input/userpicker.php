@@ -31,13 +31,15 @@ $handler = htmlspecialchars($handler, ENT_QUOTES, 'UTF-8');
 $limit = (int) elgg_extract('limit', $vars, 0);
 ?>
 <div class="elgg-user-picker" data-limit="<?php echo $limit ?>" data-name="<?php echo $name ?>" data-handler="<?php echo $handler ?>">
-	<input type="text" class="elgg-input-user-picker" size="30"/>
+	<input type="text" class="elgg-input-user-picker form-control" size="30"/>
 	<?php echo elgg_view('input/hidden', ['name' => $vars['name']]); ?>
 	<?php
 	if (!elgg_extract('only_friends', $vars, false)) {
 		?>
-		<input type="checkbox" name="match_on" value="true" />
-		<label><?php echo elgg_echo('userpicker:only_friends'); ?></label>
+		<label class="form-check-label">
+			<input type="checkbox" class="form-check-input" name="match_on" value="true" />
+			<?php echo elgg_echo('userpicker:only_friends'); ?>
+		</label>
 		<?php
 	}
 	?>

@@ -2,6 +2,7 @@
 
 /* The Elgg CSS reset forces the scrollbar which we don't want */
 html, body {
+	font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 	height: auto;
 	margin: 0;
 }
@@ -26,10 +27,10 @@ ol {
 	padding-left: .4em;
 }
 table {
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
 }
 table td {
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
 	padding: 3px 5px;
 }
 img {

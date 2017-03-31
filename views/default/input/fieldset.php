@@ -16,6 +16,7 @@
 
 $vars['class'] = elgg_extract_class($vars, [
 	'elgg-fieldset',
+	'form-group',
 	'clearfix',
 ]);
 
@@ -44,5 +45,14 @@ if ($legend) {
 foreach ($fields as $field) {
 	$fieldset .= elgg_view_field($field);
 }
+
+$inner_class = ['elgg-fieldset-body'];
+if ($align == 'horizontal') {
+	$inner_class[] = 'form-inline';
+}
+
+$fieldset = elgg_format_element('div', [
+	'class' => $inner_class,
+], $fieldset);
 
 echo elgg_format_element('fieldset', $vars, $fieldset);

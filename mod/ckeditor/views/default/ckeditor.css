@@ -6,19 +6,20 @@
 
 .cke.cke_chrome {
 	box-shadow: none;
-	border-color: #CCC;
+	border-color: rgba(0,0,0,.15);
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 .cke .cke_top,
 .cke .cke_bottom {
 	background: transparent;
-	border-color: #CCC;
+	border-color: rgba(0,0,0,.05);
 }
 
 .cke .cke_toolgroup {
-	border-radius: 0px;
-	border-color: #CCC;
 	background: transparent;
+	border: none;
 }
 
 .cke_bottom .cke_wordcount {
