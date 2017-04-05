@@ -129,7 +129,7 @@ class RouterTest extends \Elgg\TestCase {
 
 		$this->assertTrue($registered);
 
-		$path = "hello/1/\xE2\x82\xAC"; // euro sign
+		$path = "hello/1/%E2%82%AC"; // euro sign
 
 		ob_start();
 		$handled = $this->router->route($this->prepareHttpRequest($path));

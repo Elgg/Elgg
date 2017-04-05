@@ -80,6 +80,5 @@ server {
 		include /etc/nginx/fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME $document_root/index.php;
 		fastcgi_param SCRIPT_NAME     /index.php;
-		fastcgi_param QUERY_STRING    __elgg_uri=$uri&$args;
 	}
 }

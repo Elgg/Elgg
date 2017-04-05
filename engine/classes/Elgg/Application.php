@@ -20,7 +20,6 @@ use Elgg\Filesystem\Directory;
  */
 class Application {
 
-	const GET_PATH_KEY = '__elgg_uri';
 	const REWRITE_TEST_TOKEN = '__testing_rewrite';
 	const REWRITE_TEST_OUTPUT = 'success';
 
@@ -383,7 +382,7 @@ class Application {
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
 	public function run() {
-		$path = $this->setupPath();
+		$path = $this->services->request->getPathInfo();
 
 		// allow testing from the upgrade page before the site is upgraded.
 		if (isset($_GET[self::REWRITE_TEST_TOKEN])) {
@@ -554,8 +553,7 @@ class Application {
 				// note: translation may not be available until after upgrade
 				$msg = elgg_echo("installation:htaccess:needs_upgrade");
 				if ($msg === "installation:htaccess:needs_upgrade") {
-					$msg = "You must update your .htaccess file so that the path is injected "
-						. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+					$msg = "You must update your .htaccess file (use install/config/htaccess.dist as a guide).";
 				}
 				echo $msg;
 				exit;
@@ -573,26 +571,6 @@ class Application {
 		}
 
 		forward($forward_url);
-	}
-
-	/**
-	 * Get the request URI and store it in $_GET['__elgg_uri']
-	 *
-	 * @return string e.g. "cache/123..."
-	 */
-	private function setupPath() {
-		if (!isset($_GET[self::GET_PATH_KEY]) || is_array($_GET[self::GET_PATH_KEY])) {
-			if (php_sapi_name() === 'cli-server') {
-				$_GET[self::GET_PATH_KEY] = (string) parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-			} else {
-				$_GET[self::GET_PATH_KEY] = '/';
-			}
-		}
-
-		// normalize
-		$_GET[self::GET_PATH_KEY] = '/' . trim($_GET[self::GET_PATH_KEY], '/');
-
-		return $_GET[self::GET_PATH_KEY];
 	}
 
 	/**
