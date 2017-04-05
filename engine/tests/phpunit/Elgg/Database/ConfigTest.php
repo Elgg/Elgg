@@ -30,12 +30,14 @@ class ConfigTest extends \Elgg\TestCase {
 			'user' => 'user',
 			'password' => 'xxxx',
 			'database' => 'elgg',
+			'encoding' => 'utf8mb4',
 		);
 		$CONFIG = new \stdClass();
 		$CONFIG->dbhost = $ans['host'];
 		$CONFIG->dbuser = $ans['user'];
 		$CONFIG->dbpass = $ans['password'];
 		$CONFIG->dbname = $ans['database'];
+		$CONFIG->dbencoding = $ans['encoding'];
 		$conf = new \Elgg\Database\Config($CONFIG);
 		$this->assertEquals($ans, $conf->getConnectionConfig());
 	}
@@ -46,6 +48,7 @@ class ConfigTest extends \Elgg\TestCase {
 			'user' => 'user',
 			'password' => 'xxxx',
 			'database' => 'elgg',
+			'encoding' => 'utf8',
 		);
 		$CONFIG = new \stdClass();
 		$CONFIG->db['write']['dbhost'] = $ans['host'];
@@ -63,12 +66,14 @@ class ConfigTest extends \Elgg\TestCase {
 				'user' => 'user0',
 				'password' => 'xxxx0',
 				'database' => 'elgg0',
+				'encoding' => 'utf8',
 			),
 			1 => array(
 				'host' => 1,
 				'user' => 'user1',
 				'password' => 'xxxx1',
 				'database' => 'elgg1',
+				'encoding' => 'utf8',
 			),
 		);
 		$CONFIG = new \stdClass();
@@ -93,6 +98,7 @@ class ConfigTest extends \Elgg\TestCase {
 			'user' => 'user',
 			'password' => 'xxxx',
 			'database' => 'elgg',
+			'encoding' => 'utf8',
 		);
 		$CONFIG = new \stdClass();
 		$CONFIG->db['write'] = new \stdClass();
@@ -112,12 +118,14 @@ class ConfigTest extends \Elgg\TestCase {
 				'user' => 'user0',
 				'password' => 'xxxx0',
 				'database' => 'elgg0',
+				'encoding' => 'utf8',
 			),
 			1 => array(
 				'host' => 1,
 				'user' => 'user1',
 				'password' => 'xxxx1',
 				'database' => 'elgg1',
+				'encoding' => 'utf8',
 			),
 		);
 		$CONFIG = new \stdClass();

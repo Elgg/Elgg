@@ -122,7 +122,6 @@ return [
 	'install:error:settings' => '設定ファイルを作成できませんでした。',
 	'install:error:databasesettings' => 'これらの設定ではデータベースに接続することができません。',
 	'install:error:database_prefix' => 'データベースのプレフィックスに不適当な文字があります',
-	'install:error:oldmysql' => 'MySQL のバージョンは、5.0以上でないといけません。あなたのサーバはバージョン %s を使用しています。',
 	'install:error:nodatabase' => 'データベース %s を使用出来ません。おそらく存在しないものと思われます。',
 	'install:error:cannotloadtables' => 'データベーステーブルを読み込むことができません。',
 	'install:error:tables_exist' => 'ご指定のデータベースにはすでにElggのテーブルが存在しています。これらのテーブルをドロップ（破棄）するか、インストーラーをリスタートする必要があります。リスタートを選択された場合は、その既存のテーブルを使用できないか試みてみます。インストーラーをリスタートするには、あなたのブラウザのアドレスバーに表示されているURLから \'?step=database\' の部分を削除したあと、Enterキーを押してください。',
