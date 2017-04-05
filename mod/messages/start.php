@@ -401,12 +401,21 @@ function messages_count_unread($user_guid = 0) {
 function messages_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 
-	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
-		$url = "messages/compose?send_to={$user->guid}";
-		$item = new ElggMenuItem('send', elgg_echo('messages:sendmessage'), $url);
-		$item->setSection('action');
-		$return[] = $item;
+	if (!elgg_is_logged_in()) {
+		return;
 	}
+	
+	if (elgg_get_logged_in_user_guid() == $user->guid) {
+		return;
+	}
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'send',
+		'text' => elgg_echo('messages:sendmessage'),
+		'icon' => 'mail',
+		'href' => "messages/compose?send_to={$user->guid}",
+		'section' => 'action',
+	]);
 
 	return $return;
 }

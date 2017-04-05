@@ -33,7 +33,7 @@ if (elgg_get_context() == 'gallery') {
 	echo $icon;
 } else {
 	$metadata = '';
-	if (!elgg_in_context('owner_block') && !elgg_in_context('widgets')) {
+	if (!elgg_in_context('owner_block') && !elgg_in_context('widgets') && !elgg_in_context('user_hover')) {
 		$metadata = elgg_view_menu('entity', [
 			'entity' => $entity,
 			'sort_by' => 'priority',

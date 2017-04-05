@@ -31,13 +31,14 @@ elgg_set_context_stack($contexts);
 elgg_set_config("input", $input);
 elgg_set_page_owner_guid($page_owner_guid);
 
-$params = [
-	"entity" => $user,
-	"username" => $user->username,
-	"name" => $user->name,
-];
+$menu = elgg_view_menu('user_hover', [
+	'entity' => $user,
+	'username' => $user->username,
+	'name' => $user->name,
+]);
 
-echo elgg_view_menu("user_hover", $params);
+// wrapping in a li as it is inject into a ul via javascript
+echo elgg_format_element('li', [], $menu);
 
 // revert global state
 elgg_set_context_stack($state['contexts']);

@@ -23,10 +23,13 @@ function logbrowser_init() {
 function logbrowser_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 
-	$url = "admin/administer_utilities/logbrowser?user_guid={$user->guid}";
-	$item = new ElggMenuItem('logbrowser', elgg_echo('logbrowser:explore'), $url);
-	$item->setSection('admin');
-	$return[] = $item;
-
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'logbrowser',
+		'href' => "admin/administer_utilities/logbrowser?user_guid={$user->guid}",
+		'text' => elgg_echo('logbrowser:explore'),
+		'icon' => 'search',
+		'section' => 'admin',
+	]);
+	
 	return $return;
 }

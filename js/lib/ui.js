@@ -112,7 +112,7 @@ elgg.ui.initHoverMenu = function(parent) {
 				if (data) {
 					// replace all existing placeholders with new menu
 					$all_placeholders.removeClass('elgg-ajax-loader')
-						.html($(data).children());
+						.html($(data));
 				}
 			}
 		});
@@ -157,7 +157,7 @@ elgg.ui.initHoverMenu = function(parent) {
 			} else {
 				popup.open($icon, $hovermenu, {
 					'my': 'left top',
-					'at': 'right-15px bottom',
+					'at': 'left top',
 					'of': $icon.closest(".elgg-avatar"),
 					'collision': 'fit fit'
 				});

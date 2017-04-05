@@ -450,6 +450,7 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 				'name' => 'removeuser',
 				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
 				'text' => elgg_echo('groups:removeuser'),
+				'icon' => 'user-times',
 				'confirm' => true,
 				'priority' => 999,
 			]);
