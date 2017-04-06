@@ -15,6 +15,7 @@ if (!$item instanceof ElggMenuItem) {
 }
 
 $item_vars = [];
+$child_menu_view = '';
 
 $children = $item->getChildren();
 if (!empty($children)) {

@@ -46,7 +46,7 @@ switch ($access_id) {
 		}
 		if ($owner instanceof ElggGroup) {
 			$class[] = 'elgg-access-group';
-			$membership = $container->membership;
+			$membership = $owner->membership;
 			if ($membership == ACCESS_PUBLIC) {
 				$class[] = 'elgg-access-group-open';
 			} else {
