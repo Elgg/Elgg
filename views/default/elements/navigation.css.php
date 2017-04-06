@@ -246,6 +246,10 @@
 	float: right;
 }
 
+.elgg-topbar-child-menu > li > a {
+	padding: 10px 20px 10px 15px;
+}
+
 .elgg-menu-topbar-default .elgg-icon {
     font-size: 18px;
     vertical-align: middle;
