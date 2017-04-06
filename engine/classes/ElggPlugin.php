@@ -826,6 +826,13 @@ class ElggPlugin extends \ElggObject {
 				require_once "{$this->path}/{$autoload_file}";
 			}
 		}
+
+		// include languages
+		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
+			// should be loaded before the first function that touches the static config (elgg-plugin.php)
+			// so translations can be used... for example in registering widgets
+			$this->registerLanguages();
+		}
 		
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
@@ -834,13 +841,6 @@ class ElggPlugin extends \ElggObject {
 			}
 			
 			$this->registerEntities();
-		}
-	
-		// include languages
-		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
-			// should be loaded before the first function that touches the static config (elgg-plugin.php)
-			// so translations can be used... for example in registering widgets
-			$this->registerLanguages();
 		}
 		
 		// include views

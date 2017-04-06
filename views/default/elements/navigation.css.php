@@ -404,6 +404,9 @@
 /* ***************************************
 	PAGE MENU
 *************************************** */
+.elgg-menu-page {
+	margin-bottom: 20px;
+}
 .elgg-menu-page-container > ul + ul {
 	margin-top: 15px;
 }

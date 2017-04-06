@@ -604,7 +604,7 @@ function groups_set_access_collection_name(\Elgg\Hook $hook) {
 	
 	$page_owner = elgg_get_page_owner_entity();
 
-	if ($page_owner->guid == $owner->guid) {
+	if ($page_owner && $page_owner->guid == $owner->guid) {
 		return elgg_echo('groups:acl:in_context');
 	}
 
