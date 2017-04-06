@@ -77,6 +77,9 @@ function developers_process_settings() {
 
 		$handler = [Hooks::class, 'alterMenuSections'];
 		elgg_register_plugin_hook_handler('view', 'navigation/menu/elements/section', $handler);
+
+		$handler = [Hooks::class, 'alterMenu'];
+		elgg_register_plugin_hook_handler('view', 'navigation/menu/default', $handler);
 	}
 }
 

@@ -18,12 +18,15 @@ class Hooks {
 	 * @return mixed
 	 */
 	public static function alterMenuSectionVars($hook, $type, $value, $params) {
-		// I would avoid using context, but we have to use it already for alterMenuSections()
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
 
-		$value['class'] = preg_replace('~(^|\\s)elgg-menu-page($|\\s)~', '$1elgg-menu-gear$2', $value['class']);
+		$idx = array_search('elgg-menu-page', $value['class']);
+		if ($idx !== false) {
+			unset($value['class'][$idx]);
+			$value['class'][] = 'elgg-menu-gear';
+		}
 
 		// remove the display options
 		foreach ($value['items'] as $item) {
@@ -47,14 +50,32 @@ class Hooks {
 	 * @return mixed
 	 */
 	public static function alterMenuSections($hook, $type, $output, $params) {
-		// I tried avoiding using context, but not enough data is passed down into
-		// this hook to reason if we're in the gear popup view
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
 
-		if (false === strpos($params['vars']['class'], 'elgg-child-menu')) {
+		if (in_array('elgg-developers-gear', $params['vars']['class'])) {
 			return "<section>$output</section>";
 		}
+	}
+
+	/**
+	 * Alter output of complete menu in "gear" popup
+	 *
+	 * @param string $hook   'view'
+	 * @param string $type   'navigation/menu/default'
+	 * @param array  $output Menu HTML
+	 * @param array  $params Hook params
+	 *
+	 * @return mixed
+	 */
+	public static function alterMenu($hook, $type, $output, $params) {
+		if (!elgg_in_context('developers_gear')) {
+			return;
+		}
+
+		$output = preg_replace('~^<nav\b[^>]+>~', '', $output);
+		$output = preg_replace('~^</nav>$~', '', $output);
+		return $output;
 	}
 }
