@@ -87,6 +87,14 @@ input[type="number"] {
 	display: inline;
 	padding-right: 10px;
 }
+.elgg-input-radios label {
+	font-weight: normal;
+	font-size: 100%;
+}
+.elgg-input-checkboxes label {
+	font-weight: normal;
+	font-size: 100%;
+}
 select {
 	max-width: 100%;
 	padding: 4px; 
