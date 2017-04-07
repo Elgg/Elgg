@@ -63,8 +63,6 @@ define('elgg/lightbox', function (require) {
 				opts = {};
 			}
 
-			//console.log(use_element_data);
-
 			// Allow direct binding to allow grouping by rel attribute
 			if (use_element_data === false) {
 				$(selector).colorbox(lightbox.getOptions(opts));
@@ -78,7 +76,8 @@ define('elgg/lightbox', function (require) {
 					var $this = $(this),
 							href = $this.prop('href') || $this.prop('src'),
 							// Note: data-colorbox was reserved https://github.com/jackmoore/colorbox/issues/435
-							dataOpts = $this.data('colorboxOpts');
+							dataOpts = $this.data('colorboxOpts'),
+							currentOpts = {};
 
 					if (!$.isPlainObject(dataOpts)) {
 						dataOpts = {};
@@ -89,12 +88,12 @@ define('elgg/lightbox', function (require) {
 					}
 
 					// merge data- options into opts
-					$.extend(opts, dataOpts);
-					if (opts.inline && opts.href) {
-						opts.href = elgg.getSelectorFromUrlFragment(opts.href);
+					$.extend(currentOpts, opts, dataOpts);
+					if (currentOpts.inline && currentOpts.href) {
+						currentOpts.href = elgg.getSelectorFromUrlFragment(currentOpts.href);
 					}
 
-					lightbox.open(opts);
+					lightbox.open(currentOpts);
 				});
 		},
 
