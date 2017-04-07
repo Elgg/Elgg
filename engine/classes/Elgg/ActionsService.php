@@ -173,6 +173,12 @@ class ActionsService {
 			return $forward('actionnotfound', ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
+		// set the maximum execution time for actions
+		$action_timeout = $this->config->get('action_time_limit');
+		if (isset($action_timeout)) {
+			set_time_limit($action_timeout);
+		}
+
 		$result = Includer::includeFile($file);
 		if ($result instanceof ResponseBuilder) {
 			ob_end_clean();
