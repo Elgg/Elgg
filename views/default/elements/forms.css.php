@@ -41,9 +41,6 @@ input, textarea {
 	padding: 7px 6px;
 	width: 100%;
 	border-radius: 3px;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 input[type=email]:focus,

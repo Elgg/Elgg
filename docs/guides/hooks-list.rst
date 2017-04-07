@@ -94,7 +94,11 @@ System hooks
 	or return ``false`` to cancel the item creation.
 
 **simplecache:generate, <view>**
-	Triggered when generating the cached content of a view.
+	Filters the view output for a ``/cache`` URL when simplecache is enabled.
+
+**cache:generate, <view>**
+	Filters the view output for a ``/cache`` URL when simplecache is disabled. Note this will be fired
+	for every ``/cache`` request--no Expires headers are used when simplecache is disabled.
 
 **prepare, breadcrumbs**
     In ``elgg_get_breadcrumbs()``, this filters the registered breadcrumbs before

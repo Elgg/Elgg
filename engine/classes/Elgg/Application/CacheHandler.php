@@ -105,7 +105,7 @@ class CacheHandler {
 			if (!$this->isCacheableView($view)) {
 				$this->send403("Requested view is not an asset");
 			} else {
-				$content = $this->renderView($view, $viewtype);
+				$content = $this->getProcessedView($view, $viewtype);
 				$etag = '"' . md5($content) . '"';
 				$this->sendRevalidateHeaders($etag);
 				$this->handle304($etag);
@@ -151,7 +151,7 @@ class CacheHandler {
 			file_put_contents($filename, $content);
 		} else {
 			// if wrong timestamp, don't send HTTP cache
-			$content = $this->renderView($view, $viewtype);
+			$content = $this->getProcessedView($view, $viewtype);
 		}
 
 		echo $content;
@@ -349,13 +349,18 @@ class CacheHandler {
 	protected function getProcessedView($view, $viewtype) {
 		$content = $this->renderView($view, $viewtype);
 
+		if ($this->config->getVolatile('simplecache_enabled')) {
+			$hook_name = 'simplecache:generate';
+		} else {
+			$hook_name = 'cache:generate';
+		}
 		$hook_type = $this->getViewFileType($view);
 		$hook_params = [
 			'view' => $view,
 			'viewtype' => $viewtype,
 			'view_content' => $content,
 		];
-		return \_elgg_services()->hooks->trigger('simplecache:generate', $hook_type, $hook_params, $content);
+		return \_elgg_services()->hooks->trigger($hook_name, $hook_type, $hook_params, $content);
 	}
 
 	/**

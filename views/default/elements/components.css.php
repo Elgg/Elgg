@@ -291,7 +291,6 @@
 /* Comment highlighting that automatically fades away */
 .elgg-comments .elgg-state-highlight,
 .elgg-river-comments .elgg-state-highlight {
-	-webkit-animation: comment-highlight 5s; /* Chrome, Safari, Opera */
 	animation: comment-highlight 5s;
 }
 /* Chrome, Safari, Opera */
@@ -344,8 +343,6 @@
 	padding: 3px;
 	background-color: #FFF;
 
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 
 	max-width: 100%;
