@@ -29,12 +29,16 @@ $sign_on_with_twitter_view = elgg_view('input/select', array(
 	'value' => $vars['entity']->sign_on ? $vars['entity']->sign_on : 'no',
 ));
 
+$registration_key = elgg_get_config('allow_registration') ? 'option:yes' : 'option:no';
+$allow_registration = elgg_echo($registration_key);
+
 $new_users_with_twitter = elgg_echo('twitter_api:new_users');
 $new_users_with_twitter_view = elgg_view('input/select', array(
 	'name' => 'params[new_users]',
 	'options_values' => array(
-		'yes' => elgg_echo('option:yes'),
-		'no' => elgg_echo('option:no'),
+		'yes' => elgg_echo('twitter_api:new_users:yes'),
+		'no' => elgg_echo('twitter_api:new_users:no', [$allow_registration]),
+		'never' => elgg_echo('twitter_api:new_users:never')
 	),
 	'value' => $vars['entity']->new_users ? $vars['entity']->new_users : 'no',
 ));
