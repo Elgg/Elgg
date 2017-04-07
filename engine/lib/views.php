@@ -1756,6 +1756,27 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 	}
 }
 
+/**
+ * Preprocesses CSS views sent by /cache URLs
+ *
+ * @param string $hook    The name of the hook "simplecache:generate" or "cache:generate"
+ * @param string $type    "css"
+ * @param string $content Content of the view
+ * @param array  $params  Array of parameters
+ *
+ * @return string|null View content
+ * @access private
+ */
+function _elgg_views_preprocess_css($hook, $type, $content, $params) {
+	$options = [
+		'minify' => false, // minify handled by _elgg_views_minify
+		'formatter' => 'single-line', // shows lowest byte size
+		'versioning' => false, // versioning done by Elgg
+		'rewrite_import_urls' => false,
+	];
+	
+	return csscrush_string($content, $options);
+}
 
 /**
  * Inserts module names into anonymous modules by handling the "simplecache:generate" hook.
@@ -1899,7 +1920,11 @@ function elgg_views_boot() {
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
 	elgg_register_ajax_view('languages.js');
-	
+
+	// pre-process CSS regardless of simplecache
+	elgg_register_plugin_hook_handler('cache:generate', 'css', '_elgg_views_preprocess_css');
+	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_preprocess_css');
+
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');

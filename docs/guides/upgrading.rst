@@ -419,6 +419,8 @@ Notable changes in plugins:
  * Admin theme now reuses icon classes from ``elements/icons.css``
  * User "hover" icons are no longer covered with a "caret" icon.
 
+Also note, CSS views served via ``/cache`` URLs are pre-processed using `CSS Crush <http://the-echoplex.net/csscrush/>`_. If you make references to CSS variables or other elements, the definition must be located within the same view output. E.g. A variable defined in ``elgg.css`` cannot be referenced in a separate CSS file like ``colorbox.css``.
+
 Comment notifications
 ---------------------
 
