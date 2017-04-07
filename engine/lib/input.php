@@ -395,20 +395,23 @@ function input_livesearch_page_handler($page) {
  *
  * Called on the 'validate', 'input' plugin hook
  *
- * Triggers the 'config', 'htmlawed' plugin hook so that plugins can change
- * htmlawed's configuration. For information on configuraton options, see
+ * htmLawed's $config argument is filtered by the [config, htmlawed] hook.
+ * htmLawed's $spec argument is filtered by the [spec, htmlawed] hook.
+ *
+ * For information on these arguments, see
  * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s2.2
  *
  * @param string $hook   Hook name
  * @param string $type   The type of hook
  * @param mixed  $result Data to filter
  * @param array  $params Not used
+ *
  * @return mixed
  */
 function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 	$var = $result;
 
-	$htmlawed_config = [
+	$config = [
 		// seems to handle about everything we need.
 		'safe' => true,
 
@@ -426,27 +429,27 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 
 	// add nofollow to all links on output
 	if (!elgg_in_context('input')) {
-		$htmlawed_config['anti_link_spam'] = ['/./', ''];
+		$config['anti_link_spam'] = ['/./', ''];
 	}
 
-	$htmlawed_config = elgg_trigger_plugin_hook('config', 'htmlawed', null, $htmlawed_config);
+	$config = elgg_trigger_plugin_hook('config', 'htmlawed', null, $config);
+	$spec = elgg_trigger_plugin_hook('spec', 'htmlawed', null, '');
 
 	if (!is_array($var)) {
-		$result = htmLawed($var, $htmlawed_config);
+		return htmLawed($var, $config, $spec);
 	} else {
-		array_walk_recursive($var, '_elgg_htmLawedArray', $htmlawed_config);
-		$result = $var;
+		array_walk_recursive($var, '_elgg_htmLawedArray', [$config, $spec]);
+		return $var;
 	}
-
-	return $result;
 }
 
 // @codingStandardsIgnoreStart
 /**
  * wrapper function for htmlawed for handling arrays
  */
-function _elgg_htmLawedArray(&$v, $k, $htmlawed_config) {
-	$v = htmLawed($v, $htmlawed_config);
+function _elgg_htmLawedArray(&$v, $k, $config_spec) {
+	list ($config, $spec) = $config_spec;
+	$v = htmLawed($v, $config, $spec);
 }
 // @codingStandardsIgnoreEnd
 
