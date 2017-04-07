@@ -417,6 +417,7 @@ Notable changes in plugins:
  * ``.elgg-icon`` no longer has a global ``font-size``, ``line-height`` or ``color``: these values will be inherited from parent items
  * Support for ``.elgg-icon-hover`` has been dropped
  * Admin theme now reuses icon classes from ``elements/icons.css``
+ * User "hover" icons are no longer covered with a "caret" icon.
 
 Comment notifications
 ---------------------

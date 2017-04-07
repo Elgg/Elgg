@@ -122,17 +122,9 @@ elgg.ui.initHoverMenu = function(parent) {
 		parent = document;
 	}
 
-	// avatar image menu link
-	$(parent).on('mouseover', ".elgg-avatar", function() {
-		$(this).children(".elgg-icon-hover-menu").show();
-	})
-	.on('mouseout', '.elgg-avatar', function() {
-		$(this).children(".elgg-icon-hover-menu").hide();
-	});
-
-
 	// avatar contextual menu
-	$(document).on('click', ".elgg-avatar > .elgg-icon-hover-menu", function(e) {
+	$(document).on('click', ".elgg-avatar > a", function(e) {
+		e.preventDefault();
 
 		var $icon = $(this);
 
