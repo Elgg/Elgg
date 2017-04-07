@@ -911,7 +911,10 @@ HTMLawed
 	Filter the HTMLawed allowed style array.
 
 **config, htmlawed**
-	Filter the HTMLawed config array.
+	Filter the HTMLawed ``$config`` array.
+
+**spec, htmlawed**
+	Filter the HTMLawed ``$spec`` string (default empty).
 
 Likes
 -----
