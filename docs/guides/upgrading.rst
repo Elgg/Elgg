@@ -96,6 +96,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggEntity::addToSite``
  * ``ElggEntity::getSites``
  * ``ElggEntity::removeFromSite``
+ * ``ElggEntity::isFullyLoaded``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
  * ``ElggFile::size``: Use ``getSize``
  * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
