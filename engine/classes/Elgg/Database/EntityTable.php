@@ -501,44 +501,43 @@ class EntityTable {
 	 * @see elgg_list_entities()
 	 */
 	public function getEntities(array $options = []) {
-
 		_elgg_check_unsupported_site_guid($options);
-		
+
 		$defaults = [
-			'types'					=>	ELGG_ENTITIES_ANY_VALUE,
-			'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
-			'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+			'types'                 => ELGG_ENTITIES_ANY_VALUE,
+			'subtypes'              => ELGG_ENTITIES_ANY_VALUE,
+			'type_subtype_pairs'    => ELGG_ENTITIES_ANY_VALUE,
 
-			'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
-			'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
-			'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
+			'guids'                 => ELGG_ENTITIES_ANY_VALUE,
+			'owner_guids'           => ELGG_ENTITIES_ANY_VALUE,
+			'container_guids'       => ELGG_ENTITIES_ANY_VALUE,
 
-			'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-			'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
-			'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-			'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+			'modified_time_lower'   => ELGG_ENTITIES_ANY_VALUE,
+			'modified_time_upper'   => ELGG_ENTITIES_ANY_VALUE,
+			'created_time_lower'    => ELGG_ENTITIES_ANY_VALUE,
+			'created_time_upper'    => ELGG_ENTITIES_ANY_VALUE,
 
-			'reverse_order_by'		=>	false,
-			'order_by' 				=>	'e.time_created desc',
-			'group_by'				=>	ELGG_ENTITIES_ANY_VALUE,
-			'limit'					=>	$this->config->get('default_limit'),
-			'offset'				=>	0,
-			'count'					=>	false,
-			'selects'				=>	[],
-			'wheres'				=>	[],
-			'joins'					=>	[],
+			'reverse_order_by'      => false,
+			'order_by'              => 'e.time_created desc',
+			'group_by'              => ELGG_ENTITIES_ANY_VALUE,
+			'limit'                 => $this->config->get('default_limit'),
+			'offset'                => 0,
+			'count'                 => false,
+			'selects'               => [],
+			'wheres'                => [],
+			'joins'                 => [],
 
-			'preload_owners'		=> false,
-			'preload_containers'	=> false,
-			'callback'				=> 'entity_row_to_elggstar',
-			'distinct'				=> true,
+			'preload_owners'        => false,
+			'preload_containers'    => false,
+			'callback'              => 'entity_row_to_elggstar',
+			'distinct'              => true,
 
-			'batch'					=> false,
-			'batch_inc_offset'		=> true,
-			'batch_size'			=> 25,
+			'batch'                 => false,
+			'batch_inc_offset'      => true,
+			'batch_size'            => 25,
 
 			// private API
-			'__ElggBatch'			=> null,
+			'__ElggBatch'           => null,
 		];
 
 		$options = array_merge($defaults, $options);

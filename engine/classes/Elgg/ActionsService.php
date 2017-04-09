@@ -260,7 +260,10 @@ class ActionsService {
 				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
-						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', [$this->config->getSiteUrl()]));
+						register_error(_elgg_services()->translator->translate(
+							'js:security:token_refresh_failed',
+							[$this->config->getSiteUrl()]
+						));
 					} else {
 						register_error(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
 					}
