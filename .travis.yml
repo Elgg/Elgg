@@ -28,7 +28,6 @@ matrix:
        - composer install
       script:
        - bash .scripts/travis/check_commit_msgs.sh
-       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
        - composer validate
        
     # Build and test javascript
