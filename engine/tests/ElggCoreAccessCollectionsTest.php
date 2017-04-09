@@ -441,7 +441,8 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		$members = get_members_of_access_collection($id);
 
-		$this->assertEqual([$member1, $member2], $members);
+		$this->assertTrue(in_array($member1, $members, true));
+		$this->assertTrue(in_array($member2, $members, true));
 
 		$acl->removeMember($member2->guid);
 
