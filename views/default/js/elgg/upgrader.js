@@ -12,6 +12,7 @@ define(function(require) {
 	var elgg = require('elgg');
 	var spinner = require('elgg/spinner');
 
+	var UNKNOWN_COUNT = -1;
 	var upgrades = $('.elgg-item-object-elgg_upgrade');
 	var upgrade;
 	var guid;
@@ -28,6 +29,11 @@ define(function(require) {
 	var total;
 	var messages = [];
 	var messageList;
+	var percentage = 0;
+
+	// used to fake the progressbar if we don't know the total
+	var FAKE_TOTAL = 1000000;
+	var fakeDone = 0;
 
 	/**
 	 * Initializes the upgrade page
@@ -35,7 +41,7 @@ define(function(require) {
 	 * Makes the upgrade button visible and adds a progress bar
 	 * to each upgrade.
 	 */
-	function init () {
+	function init() {
 		// Display the button only if there are pending upgrades
 		if ($('.elgg-item-object-elgg_upgrade').length) {
 			$('#elgg-upgrades-run').removeClass('hidden').click(run);
@@ -45,14 +51,14 @@ define(function(require) {
 			// Initialize progressbar
 			$(value).find('.elgg-progressbar').progressbar();
 		});
-	};
+	}
 
 	/**
 	 * Runs all individual upgrades one at a time
 	 *
 	 * @param {Object} e Event object
 	 */
-	function run (e) {
+	function run(e) {
 		e.preventDefault();
 
 		// Replace button with spinner when upgrade starts
@@ -63,12 +69,12 @@ define(function(require) {
 		runUpgrade();
 
 		return false;
-	};
+	}
 
 	/**
 	 * Takes care of processing a single upgrade in multiple batches
 	 */
-	function runUpgrade () {
+	function runUpgrade() {
 		upgrade = $(upgrade);
 		progressbar = upgrade.find('.elgg-progressbar');
 		counter = upgrade.find('.upgrade-counter');
@@ -87,26 +93,25 @@ define(function(require) {
 		// Initialize progressbar
 		$(upgrade).find('.elgg-progressbar').progressbar({
 			value: 0,
-			max: total
+			max: (total == UNKNOWN_COUNT) ? FAKE_TOTAL : total
 		});
 
 		upgradeStartTime = new Date().getTime();
+		percentage = 0;
 
 		processBatch();
-	};
+	}
 
 	/**
 	 * Takes care of upgrading a single batch of items
 	 */
-	function processBatch () {
+	function processBatch() {
 		var options = {
 			data: {guid: guid},
 			dataType: 'json'
 		};
 
 		options.data = elgg.security.addToken(options.data);
-
-		var upgradeCount = $('#upgrade-count');
 
 		options.success = function(json) {
 			// Append possible errors after the progressbar
@@ -133,10 +138,20 @@ define(function(require) {
 			numProcessed += (numSuccess + numError);
 
 			// Increase success statistics
-			counter.text(numProcessed + '/' + total);
+			if (total == UNKNOWN_COUNT) {
+				counter.text(numProcessed + '/???');
+			} else {
+				counter.text(numProcessed + '/' + total);
+			}
 
 			// Increase the progress bar
-			progressbar.progressbar({ value: numProcessed });
+			if (total == UNKNOWN_COUNT) {
+				fakeDone = Math.round(FAKE_TOTAL - (FAKE_TOTAL - fakeDone) / 2);
+				progressbar.progressbar({value: fakeDone});
+			} else {
+				percentage = parseInt(numProcessed * 100 / total);
+				progressbar.progressbar({value: numProcessed});
+			}
 
 			if (numError > 0) {
 				errorCounter
@@ -146,19 +161,22 @@ define(function(require) {
 
 			updateCounter();
 
-			var percentage = 0;
-			if (numProcessed < total) {
-				percentage = parseInt(numProcessed * 100 / total);
-
-				// Increase percentage
-				percent.html(percentage + '%');
-
-				// Start next upgrade call
-				processBatch();
+			var done;
+			if (total == UNKNOWN_COUNT) {
+				done = json.output.isComplete;
 			} else {
+				done = numProcessed >= total;
+			}
+
+			if (done) {
 				if (numError > 0) {
 					// Upgrade finished with errors. Give instructions on how to proceed.
 					elgg.register_error(elgg.echo('upgrade:finished_with_errors'));
+				}
+
+				if (total == UNKNOWN_COUNT) {
+					counter.text(numProcessed + '/' + numProcessed);
+					progressbar.progressbar({value: FAKE_TOTAL});
 				}
 
 				// Increase percentage
@@ -178,18 +196,29 @@ define(function(require) {
 					spinner.stop();
 					$('#upgrade-finished').removeClass('hidden');
 				}
+				return;
 			}
+
+			// carry on...
+			if (total != UNKNOWN_COUNT) {
+				percentage = parseInt(numProcessed * 100 / total);
+				// Increase percentage
+				percent.html(percentage + '%');
+			}
+
+			// Start next upgrade call
+			processBatch();
 		};
 
 		// We use post() instead of action() so we can catch error messages
 		// and display them manually underneath the upgrade view.
 		return elgg.post('action/admin/upgrade', options);
-	};
+	}
 
 	/**
 	 * Displays estimated amount of time needed for a single upgrade to finish
 	 */
-	function updateCounter () {
+	function updateCounter() {
 		var now = new Date().getTime();
 
 		// How many milliseconds ago the last batch was started
@@ -224,7 +253,7 @@ define(function(require) {
 		var value = hours + ':' + minutes + ':' + seconds;
 
 		timer.html(value);
-	};
+	}
 
 	/**
 	 * Rounds hours, minutes or seconds and adds a leading zero if necessary
@@ -232,7 +261,7 @@ define(function(require) {
 	 * @param {String} time
 	 * @return {String} time
 	 */
-	function formatDigits (time) {
+	function formatDigits(time) {
 		time = Math.floor(time);
 
 		if (time < 1) {
@@ -244,7 +273,7 @@ define(function(require) {
 		}
 
 		return time;
-	};
+	}
 
 	init();
 });

@@ -21,6 +21,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
@@ -77,7 +78,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\Upgrade\Locator                    $upgradeLocator
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\UploadService                      $uploads
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable

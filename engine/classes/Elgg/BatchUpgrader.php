@@ -2,8 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Upgrade\Batch;
 use ElggUpgrade;
-use Elgg\Config;
 use Elgg\Upgrade\Result;
 
 /**
@@ -37,10 +37,10 @@ class BatchUpgrader {
 	}
 
 	/**
-	 * Run single upgrade batch
+	 * Call the upgrade's run() for a short period of time, or until it completes
 	 *
 	 * @param ElggUpgrade $upgrade Upgrade to run
-	 * @return void
+	 * @return array
 	 * @throws \RuntimeException
 	 */
 	public function run(ElggUpgrade $upgrade) {
@@ -67,8 +67,22 @@ class BatchUpgrader {
 		$processed = (int) $upgrade->processed;
 		$offset = (int) $upgrade->offset;
 		$has_errors = (bool) $upgrade->has_errors;
+
+		/** @var Result $result */
+		$result = null;
+
+		$condition = function () use (&$count, &$processed, &$result, $started) {
+			if ((microtime(true) - $started) >= $this->config->get('batch_run_time_in_secs')) {
+				return false;
+			}
+			if ($result && $result->wasMarkedComplete()) {
+				return false;
+			}
+
+			return ($count === Batch::UNKNOWN_COUNT || ($count > $processed));
+		};
 		
-		while ($count > $processed && (microtime(true) - $started) < $this->config->get('batch_run_time_in_secs')) {
+		while ($condition()) {
 			$result = $batch->run(new Result(), $offset);
 
 			$failure_count = $result->getFailureCount();
@@ -79,7 +93,7 @@ class BatchUpgrader {
 
 			$total = $failure_count + $success_count;
 			
-			if ($batch::INCREMENT_OFFSET) {
+			if ($batch->needsIncrementOffset()) {
 				// Offset needs to incremented by the total amount of processed
 				// items so the upgrade we won't get stuck upgrading the same
 				// items over and over.
@@ -105,7 +119,7 @@ class BatchUpgrader {
 		$upgrade->offset = $offset;
 		$upgrade->has_errors = $has_errors;
 		
-		$completed = $processed >= $batch->countItems();
+		$completed = ($result && $result->wasMarkedComplete()) || ($processed >= $count);
 		if ($completed) {
 			// Upgrade is finished
 			if ($has_errors) {
@@ -127,6 +141,7 @@ class BatchUpgrader {
 			'errors' => $errors,
 			'numErrors' => $batch_failure_count,
 			'numSuccess' => $batch_success_count,
+			'isComplete' => $result && $result->wasMarkedComplete(),
 		];
 	}
 

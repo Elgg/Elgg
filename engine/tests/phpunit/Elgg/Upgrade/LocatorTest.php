@@ -36,22 +36,13 @@ class LocatorTest extends \Elgg\TestCase {
 		$this->markTestIncomplete();
 	}
 
-	public function testCanGetPluginUpgrades() {
-		$this->plugin
-			->expects($this->any())
-			->method('getStaticConfig')
-			->will($this->returnCallback(function($name) {
-				if ($name == 'upgrades') {
-					return [\Elgg\Upgrade\TestBatch::class];
-				}
-			}));
+	public function testCanGetPluginUpgrade() {
+		$class = \Elgg\Upgrade\TestBatch::class;
 
-		$upgrades = _elgg_services()->upgradeLocator->getUpgrades($this->plugin);
-
-		$this->assertNotEmpty($upgrades);
-
-		$upgrade = array_shift($upgrades);
+		$upgrade = _elgg_services()->upgradeLocator->getUpgrade($class, 'test_plugin');
 		/* @var $upgrade \ElggUpgrade */
+
+		$this->assertNotEmpty($upgrade);
 
 		$this->assertInstanceOf(\ElggUpgrade::class, $upgrade);
 		$this->assertEquals('test_plugin:2016101900', $upgrade->id);
@@ -66,18 +57,10 @@ class LocatorTest extends \Elgg\TestCase {
 	}
 
 	public function testIgnoresNonRequiredUpgrade() {
-		// Mock an upgrade that does not need to be ran
-		$this->plugin
-			->expects($this->any())
-			->method('getStaticConfig')
-			->will($this->returnCallback(function($name) {
-				if ($name == 'upgrades') {
-					return [\Elgg\Upgrade\NonRequiredTestBatch::class];
-				}
-			}));
+		$class = \Elgg\Upgrade\NonRequiredTestBatch::class;
 
-		$upgrades = _elgg_services()->upgradeLocator->getUpgrades($this->plugin);
+		$upgrade = _elgg_services()->upgradeLocator->getUpgrade($class, 'test_plugin');
 
-		$this->assertEmpty($upgrades);
+		$this->assertEmpty($upgrade);
 	}
 }
