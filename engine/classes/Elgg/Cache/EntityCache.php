@@ -55,12 +55,12 @@ class EntityCache {
 	 *
 	 * @param int $guid The GUID
 	 *
-	 * @return \ElggEntity|false false if entity not cached, or not fully loaded
+	 * @return \ElggEntity|false false if entity not cached
 	 */
 	public function get($guid) {
 		$guid = (int) $guid;
 
-		if (isset($this->entities[$guid]) && $this->entities[$guid]->isFullyLoaded()) {
+		if (isset($this->entities[$guid])) {
 			return $this->entities[$guid];
 		}
 

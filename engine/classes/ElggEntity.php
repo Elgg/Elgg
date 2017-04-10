@@ -1241,15 +1241,6 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Tests to see whether the object has been persisted.
-	 *
-	 * @return bool
-	 */
-	public function isFullyLoaded() {
-		return (bool) $this->guid;
-	}
-
-	/**
 	 * Save an entity.
 	 *
 	 * @return bool|int
