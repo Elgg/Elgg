@@ -738,10 +738,15 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
 	$backtrace = debug_backtrace();
 	// never show this call.
 	array_shift($backtrace);
-	
-	$warning = "Passing site_guid or site_guids to the function {$backtrace[0]['function']} in {$backtrace[0]['file']} is not supported.";
-	$warning .= "Please update your usage of the function.";
-	
+
+	if (!empty($backtrace[0]['class'])) {
+		$warning = "Passing site_guid or site_guids to the method {$backtrace[0]['class']}::{$backtrace[0]['file']} is not supported.";
+		$warning .= "Please update your usage of the method.";
+	} else {
+		$warning = "Passing site_guid or site_guids to the function {$backtrace[0]['function']} in {$backtrace[0]['file']} is not supported.";
+		$warning .= "Please update your usage of the function.";
+	}
+
 	_elgg_services()->logger->warn($warning);
 }
 

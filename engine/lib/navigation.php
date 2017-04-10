@@ -104,7 +104,8 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 	}
 
 	if (!$menu_item instanceof ElggMenuItem) {
-		elgg_log('Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options', 'ERROR');
+		elgg_log('Second argument of elgg_register_menu_item() must be an instance of '
+			. 'ElggMenuItem or an array of menu item factory options', 'ERROR');
 		return false;
 	}
 

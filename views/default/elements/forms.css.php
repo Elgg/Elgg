@@ -95,6 +95,16 @@ select {
 .elgg-form-account {
 	margin-bottom: 15px;
 }
+.elgg-input-radios label {
+	font-weight: normal;
+	font-size: 100%;
+}
+
+.elgg-input-checkboxes label {
+	font-weight: normal;
+	font-size: 100%;
+}
+
 .elgg-form-login, .elgg-form-account {
 	max-width: 475px;
 	margin: 0 auto;
@@ -137,7 +147,7 @@ select {
 	border-radius: 3px;
 }
 .ui-autocomplete .ui-menu-item {
-	padding: 0px 4px;
+	padding: 0 4px;
 	border-radius: 3px;
 }
 .ui-autocomplete .ui-menu-item:hover {

@@ -84,7 +84,8 @@ define(function (require) {
 					var $this = $(this),
 							href = $this.prop('href') || $this.prop('src'),
 							// Note: data-colorbox was reserved https://github.com/jackmoore/colorbox/issues/435
-							dataOpts = $this.data('colorboxOpts');
+							dataOpts = $this.data('colorboxOpts'),
+							currentOpts = {};
 
 					if (!$.isPlainObject(dataOpts)) {
 						dataOpts = {};
@@ -95,32 +96,32 @@ define(function (require) {
 					}
 
 					// merge data- options into opts
-					$.extend(opts, dataOpts);
-					if (opts.inline && opts.href) {
-						opts.href = elgg.getSelectorFromUrlFragment(opts.href);
+					$.extend(currentOpts, opts, dataOpts);
+					if (currentOpts.inline && currentOpts.href) {
+						currentOpts.href = elgg.getSelectorFromUrlFragment(currentOpts.href);
 					}
 
-					if (opts.photo || opts.inline || opts.iframe || opts.html) {
-						lightbox.open(opts);
+					if (currentOpts.photo || currentOpts.inline || currentOpts.iframe || currentOpts.html) {
+						lightbox.open(currentOpts);
 						return;
 					}
 						
-					var href = opts.href;
-					opts.href = false;
-					var data = opts.data;
-					opts.data = undefined;
+					href = currentOpts.href;
+					currentOpts.href = false;
+					var data = currentOpts.data;
+					currentOpts.data = undefined;
 					
 					// open lightbox without a href so we get a loader
-					lightbox.open(opts);
+					lightbox.open(currentOpts);
 					
 					require(['elgg/Ajax'], function(Ajax) {
 						var ajax = new Ajax(false);
 						ajax.path(href, {data: data}).done(function(output) {
-							opts.html = output;
-							lightbox.open(opts);
+							currentOpts.html = output;
+							lightbox.open(currentOpts);
 							
 							// clear data so next fetch will refresh contents
-							opts.html = undefined;
+							currentOpts.html = undefined;
 						});
 					});
 				});
