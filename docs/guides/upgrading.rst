@@ -30,6 +30,8 @@ Removed views
  * ``page/elements/topbar_wrapper``: update your use of ``page/elements/topbar`` to include a check for a logged in user
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
+ * ``likes/count``: modifications can now be done to the ``likes_count`` menu item
+ * ``likes/css``: likes now uses ``elgg/likes.css``
  * ``messageboard/css``
  * ``notifications/subscriptions/personal``
  * ``notifications/subscriptions/collections``
@@ -395,6 +397,11 @@ Plugins and themes should:
  * Update hook registrations for ``output:before, layout`` to ``view_vars, page/layout/<layout_name>``
  * Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``
  * RSS extras menu is now registered with ``register, menu:extras`` hook
+
+Likes plugin
+------------
+
+Likes no longer uses Elgg's toggle API, so only a single ``likes`` menu item is used. The add/remove actions no longer return Ajax values directly, as likes status data is now returned with *every* Ajax request that sends a "guid". When the number of likes is zero, the ``likes_count`` menu item is now hidden by adding `.hidden` to the LI element, instead of the anchor. Also the ``likes_count`` menu item is a regular link, and is no longer created by the ``likes/count`` view.
 
 Notifications plugin
 --------------------

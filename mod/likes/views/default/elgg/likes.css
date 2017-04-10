@@ -1,0 +1,12 @@
+
+.elgg-likes-popup {
+	width: 345px;
+}
+
+.elgg-menu .elgg-menu-item-likes + .elgg-menu-item-likes-count {
+	margin-left: 8px;
+}
+
+.elgg-menu-item-likes .elgg-icon-thumbs-up.elgg-state-active {
+	color: #5097cf;
+}
