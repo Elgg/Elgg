@@ -65,7 +65,7 @@ function elgg_delete_metadata_by_id($id) {
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
 		$access_id = null, $allow_multiple = false) {
-
+	
 	if ($access_id === null) {
 		$access_id = ACCESS_PRIVATE;
 	} elseif ($access_id != ACCESS_PUBLIC) {
@@ -91,6 +91,11 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  * @return bool
  */
 function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id) {
+	
+	if(strlen($value)>=50) {
+		elgg_log("MYSQL: $error", 'WARNING');
+	}
+	
 	if ($access_id != ACCESS_PUBLIC) {
 		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
 			. 'All metadata will be public in 3.0.', '2.3');
