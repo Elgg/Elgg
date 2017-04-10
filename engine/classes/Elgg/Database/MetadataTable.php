@@ -18,7 +18,7 @@ use Elgg\Cache\MetadataCache as Cache;
  * @since      1.10.0
  */
 class MetadataTable {
-
+ 
 	use \Elgg\TimeUsing;
 
 	/** @var array */
