@@ -123,7 +123,10 @@ class MetadataTable {
 		}
 	
 		$access_id = (int) $access_id;
-	
+		
+		if (strlen($value) >= 50) {
+		elgg_log("$name", 'WARNING');
+		}
 		$query = "SELECT * FROM {$this->table}
 			WHERE entity_guid = :entity_guid and name = :name LIMIT 1";
 
@@ -208,6 +211,10 @@ class MetadataTable {
 		// Support boolean types (as integers)
 		if (is_bool($value)) {
 			$value = (int) $value;
+		}
+		
+		if (strlen($value) >= 50) {
+		elgg_log("$name", 'WARNING');
 		}
 	
 		// If ok then add it
