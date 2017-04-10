@@ -42,8 +42,7 @@ class MetadataTable {
 	/** @var string */
 	protected $table;
 	
-	//this constant checks that column size is not exceeded
-	const MAX_VALUE_LENGTH = 65535;
+	const MYSQL_TEXT_BYTE_LIMIT = 65535;
 
 	/**
 	 * Constructor
@@ -127,7 +126,7 @@ class MetadataTable {
 	
 		$access_id = (int) $access_id;
 		
-		if (strlen($value) >= self::MAX_VALUE_LENGTH) {
+		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
 			elgg_log($name, 'WARNING');
 		}
 		$query = "SELECT * FROM {$this->table}
@@ -216,7 +215,7 @@ class MetadataTable {
 			$value = (int) $value;
 		}
 		
-		if (strlen($value) >= self::MAX_VALUE_LENGTH) {
+		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
 			elgg_log($name, 'WARNING');
 		}
 	
