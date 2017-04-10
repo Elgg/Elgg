@@ -122,7 +122,6 @@ if ($full) {
 		'entity' => $topic,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-		'tags' => $tags,
 		'content' => $excerpt,
 		'icon' => $poster_icon,
 	];
