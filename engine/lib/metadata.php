@@ -92,7 +92,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  */
 function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id) {
 	
-	if(strlen($value)>=50) {
+	if (strlen($value) >= 50) {
 		elgg_log(" ", 'WARNING');
 	}
 	
