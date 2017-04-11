@@ -11,14 +11,21 @@
 *************************************** */
 .elgg-image-block {
 	padding: 10px 0;
+	display: flex;
+	align-items: flex-start;
+}
+.elgg-image-block:after {
+	display: none;
 }
 .elgg-image-block .elgg-image {
-	float: left;
 	margin-right: 8px;
 }
 .elgg-image-block .elgg-image-alt {
-	float: right;
 	margin-left: 8px;
+	order: 1;
+}
+.elgg-image-block > .elgg-body {
+	flex: 1;
 }
 
 /* ***************************************
@@ -293,11 +300,6 @@
 .elgg-river-comments .elgg-state-highlight {
 	animation: comment-highlight 5s;
 }
-/* Chrome, Safari, Opera */
-@-webkit-keyframes comment-highlight {
-	from {background: #dff2ff;}
-	to {background: white;}
-}
 /* Standard syntax */
 @keyframes comment-highlight {
 	from {background: #dff2ff;}
@@ -342,9 +344,7 @@
 	border: 1px solid #DCDCDC;
 	padding: 3px;
 	background-color: #FFF;
-
 	box-sizing: border-box;
-
 	max-width: 100%;
 	height: auto;
 }

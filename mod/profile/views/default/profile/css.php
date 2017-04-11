@@ -13,18 +13,21 @@
 	float: left;
 	margin-bottom: 15px;
 }
-.profile .elgg-inner {
+.profile > .elgg-inner {
 	border: 1px solid #ebebeb;
 	border-radius: 3px;
+	margin: 0 5px;
+	display: flex;
+	align-items: flex-start;
 }
 #profile-details {
 	padding: 15px;
+	flex: 1;
 }
 
 /*** ownerblock ***/
 #profile-owner-block {
 	width: 200px;
-	float: left;
 	border-right: 1px solid #ebebeb;
 	padding: 15px;
 }

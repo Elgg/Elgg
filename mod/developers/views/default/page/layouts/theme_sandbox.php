@@ -17,11 +17,11 @@ echo <<<HTML
 	<div class="theme-sandbox-sidebar">
 		$sidebar
 	</div>
-	<div class="theme-sandbox-main elgg-body">
+	<div class="theme-sandbox-main">
 		<div class="elgg-head clearfix">
 			$title
 		</div>
-		<div class="theme-sandbox-content elgg-body">
+		<div class="theme-sandbox-content">
 			$content
 		</div>
 	</div>
