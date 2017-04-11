@@ -41,7 +41,6 @@ class MetadataTable {
 	
 	/** @var string */
 	protected $table;
-	
 	const MYSQL_TEXT_BYTE_LIMIT = 65535;
 
 	/**
@@ -125,7 +124,6 @@ class MetadataTable {
 		}
 	
 		$access_id = (int) $access_id;
-		
 		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
  			elgg_log("Metadata {$name} is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
  		}
@@ -215,7 +213,6 @@ class MetadataTable {
 		if (is_bool($value)) {
 			$value = (int) $value;
 		}
-		
 		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
  			elgg_log("Metadata {$name} is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
  		}
