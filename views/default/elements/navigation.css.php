@@ -616,21 +616,13 @@
 /* ***************************************
 	WIDGET MENU
 *************************************** */
+.elgg-menu-widget-container {
+	float: right;
+	margin-right: 15px;
+}
 .elgg-menu-widget > li {
-	position: absolute;
-	top: 8px;
 	display: inline-block;
-	width: 18px;
-	height: 18px;
-}
-.elgg-menu-widget > .elgg-menu-item-collapse {
-	left: 10px;
-}
-.elgg-menu-widget > .elgg-menu-item-delete {
-	right: 10px;
-}
-.elgg-menu-widget > .elgg-menu-item-settings {
-	right: 32px;
+	margin-left: 10px;
 }
 
 @media (max-width: 820px) {

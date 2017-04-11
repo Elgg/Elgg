@@ -614,16 +614,6 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 	/* @var \ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
 
-	$collapse = [
-		'name' => 'collapse',
-		'text' => ' ',
-		'href' => "#elgg-widget-content-$widget->guid",
-		'link_class' => 'elgg-widget-collapse-button',
-		'rel' => 'toggle',
-		'priority' => 1,
-	];
-	$return[] = \ElggMenuItem::factory($collapse);
-
 	if ($widget->canEdit()) {
 		$delete = [
 			'name' => 'delete',
