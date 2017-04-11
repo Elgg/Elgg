@@ -89,9 +89,17 @@ class BootData {
 			} catch (\Exception $e) {
 			}
 		}
+
+		// don't pull in old config values
+		/**
+		 * @see \Elgg\Config::__construct sets this
+		 */
+		unset($this->config_values['path']);
+		unset($this->config_values['dataroot']);
+		unset($this->config_values['default_site']);
 		
 		// get site entity
-		$this->site = $entities->get($this->config_values['default_site'], 'site');
+		$this->site = $entities->get(1, 'site');
 		if (!$this->site) {
 			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}

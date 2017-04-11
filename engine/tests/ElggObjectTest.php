@@ -218,7 +218,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggRecursiveDelete() {
-		$types = array('\ElggGroup', '\ElggObject', '\ElggUser', '\ElggSite');
+		$types = array('\ElggGroup', '\ElggObject', '\ElggUser');
 		$db_prefix = elgg_get_config('dbprefix');
 
 		foreach ($types as $type) {

@@ -11,6 +11,8 @@
 /**
  * The full path where Elgg is installed.
  *
+ * This is set in \Elgg\Config::__construct
+ *
  * @global string $CONFIG->path;
  */
 $CONFIG->path;
@@ -58,7 +60,7 @@ $CONFIG->language;
 $CONFIG->installed;
 
 /**
- * The guid of the current site object.
+ * The guid of the site object (1)
  *
  * @global int $CONFIG->site_guid
  */

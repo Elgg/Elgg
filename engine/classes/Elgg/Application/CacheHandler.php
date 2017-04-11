@@ -95,9 +95,6 @@ class CacheHandler {
 			header("Content-Type: $content_type");
 		}
 
-		// this may/may not have to connect to the DB
-		$this->setupSimplecache();
-
 		// we can't use $config->get yet. It fails before the core is booted
 		if (!$config->getVolatile('simplecache_enabled')) {
 			$this->application->bootCore();
@@ -119,7 +116,7 @@ class CacheHandler {
 		$this->handle304($etag);
 
 		// trust the client but check for an existing cache file
-		$filename = $config->getVolatile('cacheroot') . "views_simplecache/$ts/$viewtype/$view";
+		$filename = $config->getCachePath() . "views_simplecache/$ts/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
@@ -136,7 +133,7 @@ class CacheHandler {
 
 		$lastcache = (int) $config->get('lastcache');
 
-		$filename = $config->getVolatile('cacheroot') . "views_simplecache/$lastcache/$viewtype/$view";
+		$filename = $config->getCachePath() . "views_simplecache/$lastcache/$viewtype/$view";
 
 		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag);
@@ -200,54 +197,6 @@ class CacheHandler {
 			return in_array($m[1],  _elgg_services()->translator->getAllLanguageCodes());
 		}
 		return _elgg_services()->views->isCacheableView($view);
-	}
-
-	/**
-	 * Do a minimal engine load
-	 *
-	 * @return void
-	 */
-	protected function setupSimplecache() {
-		// we can't use Elgg\Config::get yet. It fails before the core is booted
-		$config = $this->config;
-		$config->loadSettingsFile();
-
-		if ($config->getVolatile('cacheroot') && $config->getVolatile('simplecache_enabled') !== null) {
-			// we can work with these...
-			return;
-		}
-
-		$db = $this->application->getDb();
-
-		try {
-			$rows = $db->getData("
-				SELECT `name`, `value`
-				FROM {$db->prefix}config
-				WHERE `name` IN ('dataroot', 'simplecache_enabled')
-			");
-			if (!$rows) {
-				$this->send403('Cache error: unable to get the data root');
-			}
-		} catch (\DatabaseException $e) {
-			if (0 === strpos($e->getMessage(), "Elgg couldn't connect")) {
-				$this->send403('Cache error: unable to connect to database server');
-			} else {
-				$this->send403('Cache error: unable to connect to Elgg database');
-			}
-			exit; // unnecessary, but helps PhpStorm understand
-		}
-
-		foreach ($rows as $row) {
-			$config->set($row->name, unserialize($row->value));
-		}
-
-		if (!$config->getVolatile('cacheroot')) {
-			$dataroot = $config->getVolatile('dataroot');
-			if (!$dataroot) {
-				$this->send403('Cache error: unable to get the cache root');
-			}
-			$config->set('cacheroot', $dataroot);
-		}
 	}
 
 	/**

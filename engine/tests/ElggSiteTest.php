@@ -63,16 +63,9 @@ class ElggCoreSiteTest extends \ElggCoreUnitTest {
 		$this->assertIdentical($entity_attributes, $attributes);
 	}
 
-	public function testElggSiteSaveAndDelete() {
-		$guid = $this->site->save();
-		$this->assertIsA($guid, 'int');
-		$this->assertTrue($guid > 0);
-		$this->assertIdentical(true, $this->site->delete());
-	}
-
 	public function testElggSiteGetUrl() {
 		$this->site->url = 'http://example.com/';
-		$this->assertIdentical($this->site->getURL(), 'http://example.com/');
+		$this->assertIdentical($this->site->getURL(), elgg_get_site_url());
 	}
 }
 

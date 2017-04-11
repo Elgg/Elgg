@@ -3,7 +3,6 @@
  * The advanced site settings form
  */
 
-echo elgg_view('forms/admin/site/advanced/system', $vars);
 echo elgg_view('forms/admin/site/advanced/caching', $vars);
 echo elgg_view('forms/admin/site/advanced/content_access', $vars);
 echo elgg_view('forms/admin/site/advanced/site_access', $vars);

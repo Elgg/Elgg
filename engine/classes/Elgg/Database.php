@@ -174,10 +174,10 @@ class Database {
 			// https://github.com/Elgg/Elgg/issues/8121
 			$sub_query = "SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')";
 			$this->connections[$type]->exec("SET SESSION sql_mode=($sub_query);");
-		} catch (\PDOException $e) {
+		} catch (\Exception $e) {
 			// @todo just allow PDO exceptions
 			// http://dev.mysql.com/doc/refman/5.1/en/error-messages-server.html
-			if ($e->getCode() == 1102 || $e->getCode() == 1049) {
+			if ($e instanceof \PDOException && ($e->getCode() == 1102 || $e->getCode() == 1049)) {
 				$msg = "Elgg couldn't select the database '{$conf['database']}'. "
 					. "Please check that the database is created and you have access to it.";
 			} else {
