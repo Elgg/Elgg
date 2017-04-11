@@ -42,7 +42,6 @@ class MetadataTable {
 	/** @var string */
 	protected $table;
 	const MYSQL_TEXT_BYTE_LIMIT = 65535;
-
 	/**
 	 * Constructor
 	 *
@@ -124,10 +123,9 @@ class MetadataTable {
 		}
 	
 		$access_id = (int) $access_id;
-		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
- 			elgg_log("Metadata {$name} is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+		if (strlen($value) >= self::MYSQL_TEXT_BYTE_LIMIT) {
+ 			elgg_log("Metadata '$name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
  		}
-	
 		$query = "SELECT * FROM {$this->table}
 			WHERE entity_guid = :entity_guid and name = :name LIMIT 1";
 
@@ -214,9 +212,8 @@ class MetadataTable {
 			$value = (int) $value;
 		}
 		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
- 			elgg_log("Metadata {$name} is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+ 			elgg_log("Metadata '$name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
  		}
-	
 		// If ok then add it
 		$query = "UPDATE {$this->table}
 			SET name = :name,
