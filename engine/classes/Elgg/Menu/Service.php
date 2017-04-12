@@ -119,7 +119,7 @@ class Service {
 
 		$all_items = [];
 		foreach ($names as $name) {
-			$items = $this->getMenu($name, $params)->getItems();
+			$items = $this->getUnpreparedMenu($name, $params)->getItems();
 
 			foreach ($items as $item) {
 				$section = $item->getSection();
