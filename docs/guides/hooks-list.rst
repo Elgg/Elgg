@@ -511,6 +511,10 @@ Routing
     its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for
     the original path.
 
+**rewrite, url-path**
+	Allows filtering URL paths passed to ``elgg_normalize_url()``. Only site-relative URL paths are passed through
+	this, and handlers can return another path or a full URL.
+
 **route:rewrite, <identifier>**
 	Allows altering the site-relative URL path. See :doc:`routing` for details.
 

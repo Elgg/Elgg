@@ -256,58 +256,6 @@ function elgg_format_element($tag_name, array $attributes = [], $text = '', arra
 }
 
 /**
- * Converts shorthand urls to absolute urls.
- *
- * No change is made if the URL: is absolute, protocol-relative, starts with a protocol/fragment/query.
- *
- * @example
- * elgg_normalize_url('');                   // 'http://my.site.com/'
- * elgg_normalize_url('dashboard');          // 'http://my.site.com/dashboard'
- * elgg_normalize_url('http://google.com/'); // no change
- * elgg_normalize_url('//google.com/');      // no change
- *
- * @param string $url The URL to normalize
- *
- * @return string The absolute url
- */
-function elgg_normalize_url($url) {
-	$url = str_replace(' ', '%20', $url);
-
-	if (_elgg_sane_validate_url($url)) {
-		return $url;
-	}
-
-	if (preg_match("#^([a-z]+)\\:#", $url, $m)) {
-		// we don't let http/https: URLs fail filter_var(), but anything else starting with a protocol
-		// is OK
-		if ($m[1] !== 'http' && $m[1] !== 'https') {
-			return $url;
-		}
-	}
-
-	if (preg_match("#^(\\#|\\?|//)#", $url)) {
-		// starts with '//' (protocol-relative link), query, or fragment
-		return $url;
-	}
-
-	if (preg_match("#^[^/]*\\.php(\\?.*)?$#", $url)) {
-		// root PHP scripts: 'install.php', 'install.php?step=step'. We don't want to confuse these
-		// for domain names.
-		return elgg_get_site_url() . $url;
-	}
-
-	if (preg_match("#^[^/?]*\\.#", $url)) {
-		// URLs starting with domain: 'example.com', 'example.com/subpage'
-		return "http://$url";
-	}
-
-	// 'page/handler', 'mod/plugin/file.php'
-	// trim off any leading / because the site URL is stored
-	// with a trailing /
-	return elgg_get_site_url() . ltrim($url, '/');
-}
-
-/**
  * When given a title, returns a version suitable for inclusion in a URL
  *
  * @param string $title The title
@@ -495,6 +443,85 @@ function elgg_html_decode($string) {
 		$string
 	);
 	return $string;
+}
+
+/**
+ * Converts shorthand URLs to absolute URLs.
+ *
+ * No change is made if the URL: is absolute, protocol-relative, starts with a protocol/fragment/query.
+ *
+ * If the given URL is a path from the site root, it will be filtered by the [rewrite, url-path] hook
+ * and then be re-normalized.
+ *
+ * @example
+ * elgg_normalize_url('');                   // 'http://my.site.com/'
+ * elgg_normalize_url('dashboard');          // 'http://my.site.com/dashboard'
+ * elgg_normalize_url('http://google.com/'); // no change
+ * elgg_normalize_url('//google.com/');      // no change
+ *
+ * @param string $url The URL to normalize
+ *
+ * @return string The absolute URL
+ */
+function elgg_normalize_url($url = '') {
+	return _elgg_normalize_url($url, true);
+}
+
+/**
+ * Provides logic for elgg_normalize_url()
+ *
+ * @param string $url       URL given to elgg_normalize_url()
+ * @param bool   $call_hook Call the rewrite hook?
+ *
+ * @return string
+ * @access private
+ * @internal
+ */
+function _elgg_normalize_url($url, $call_hook) {
+	$url = str_replace(' ', '%20', $url);
+
+	if (_elgg_sane_validate_url($url)) {
+		return $url;
+	}
+
+	if (preg_match("#^([a-z]+)\\:#", $url, $m)) {
+		// we don't let http/https: URLs fail filter_var(), but anything else starting with a protocol
+		// is OK
+		if ($m[1] !== 'http' && $m[1] !== 'https') {
+			return $url;
+		}
+	}
+
+	if (preg_match("#^(\\#|\\?|//)#", $url)) {
+		// starts with '//' (protocol-relative link), query, or fragment
+		return $url;
+	}
+
+	if (preg_match("#^[^/]*\\.php(\\?.*)?$#", $url)) {
+		// root PHP scripts: 'install.php', 'install.php?step=step'. We don't want to confuse these
+		// for domain names.
+		return elgg_get_site_url() . $url;
+	}
+
+	if (preg_match("#^[^/?]*\\.#", $url)) {
+		// URLs starting with domain: 'example.com', 'example.com/subpage'
+		return "http://$url";
+	}
+
+	// 'page/handler', 'mod/plugin/file.php'
+	// trim off any leading / because the site URL is stored
+	// with a trailing /
+	$path = ltrim($url, '/');
+
+	if ($call_hook) {
+		$prev_path = $path;
+		$path = elgg_trigger_plugin_hook('rewrite', 'url-path', null, $path);
+		if ($path !== $prev_path) {
+			return _elgg_normalize_url($path, false);
+		}
+	}
+
+	return elgg_get_site_url() . $path;
 }
 
 /**
