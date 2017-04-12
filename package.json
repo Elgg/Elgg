@@ -12,8 +12,8 @@
   },
   "homepage": "https://github.com/Elgg/Elgg",
   "scripts": {
-    "test": "node_modules/karma/bin/karma start js/tests/karma.conf.js --single-run",
-    "chrome": "node_modules/karma/bin/karma start js/tests/karma.conf.js --browsers Chrome"
+    "test": "node_modules/karma/bin/karma start engine/tests/js/karma.conf.js --single-run",
+    "chrome": "node_modules/karma/bin/karma start engine/tests/js/karma.conf.js --browsers Chrome"
   },
   "devDependencies": {
     "elgg-conventional-changelog": "~0.1.2",

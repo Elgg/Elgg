@@ -5,7 +5,7 @@ module.exports = function(config) {
 	config.set({
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: '../..',
+		basePath: '../../..',
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -13,21 +13,20 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'js/tests/prepare.js',
+			'engine/tests/js/prepare.js',
 
 			'vendor/bower-asset/jquery/dist/jquery.js',
 			
-			'js/lib/elgglib.js',
-			'js/lib/hooks.js',
-			'js/classes/*.js',
-			'js/lib/*.js',
+			'engine/js/elgglib.js',
+			'engine/js/hooks.js',
+			'engine/js/*.js',
 
-			{pattern:'js/tests/*Test.js',included: false},
+			{pattern:'engine/tests/js/*Test.js',included:false},
 			{pattern:'views/default/**/*.js',included:false},
 			{pattern:'vendor/bower-asset/**/*.js',included:false},
 			{pattern:'node_modules/**/*.js',included:false},
 
-			'js/tests/requirejs.config.js'
+			'engine/tests/js/requirejs.config.js'
 		],
 
 
