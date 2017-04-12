@@ -115,7 +115,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
  * Add a like button to river actions
  */
 function likes_river_menu_setup($hook, $type, $return, $params) {
-	if (!elgg_is_logged_in() || elgg_in_context('widgets')) {
+	if (elgg_in_context('widgets')) {
 		return;
 	}
 
