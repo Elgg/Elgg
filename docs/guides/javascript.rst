@@ -842,7 +842,7 @@ Third-party assets
 
 We recommend managing third-party scripts and styles with Composer.
 Elgg core uses ``fxp/composer-asset-plugin`` for this purpose.
-This plugin allows you to pull dependencies from the Bower or NPM package repositories,
+This plugin allows you to pull dependencies from the Bower or Yarn package repositories,
 but using the Composer command-line tool.
 
 For example, to include jQuery, you could run the following Composer commands:
