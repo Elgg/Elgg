@@ -1307,7 +1307,11 @@ abstract class ElggEntity extends \ElggData implements
 		$container_guid = (int) $container_guid;
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
+			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
+		}
+	
+		if ($access_id == ACCESS_FRIENDS) {
+			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in elgglib.php');
 		}
 
 		$user_guid = elgg_get_logged_in_user_guid();
@@ -1435,6 +1439,10 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
+		}
+
+		if ($access_id == ACCESS_FRIENDS) {
+			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in elgglib.php');
 		}
 
 		$ret = _elgg_services()->entityTable->updateRow($guid, (object) [

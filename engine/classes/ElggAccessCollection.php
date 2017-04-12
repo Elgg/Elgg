@@ -9,6 +9,7 @@
  * @property-read int    $id         The unique identifier (read-only)
  * @property      int    $owner_guid GUID of the owner
  * @property      string $name       Name of the collection
+ * @property      string $subtype    Subtype of the collection
  */
 class ElggAccessCollection extends ElggData {
 
@@ -38,6 +39,7 @@ class ElggAccessCollection extends ElggData {
 		$this->attributes['id'] = null;
 		$this->attributes['owner_guid'] = null;
 		$this->attributes['name'] = null;
+		$this->attributes['subtype'] = null;
 	}
 
 	/**
@@ -49,7 +51,7 @@ class ElggAccessCollection extends ElggData {
 	 * @throws RuntimeException
 	 */
 	public function __set($name, $value) {
-		if (in_array($name, ['id', 'owner_guid'])) {
+		if (in_array($name, ['id', 'owner_guid', 'subtype'])) {
 			throw new RuntimeException("$name can not be set at runtime");
 		}
 		$this->attributes[$name] = $value;
@@ -230,7 +232,7 @@ class ElggAccessCollection extends ElggData {
 	 * {@inheritdoc}
 	 */
 	public function getSubtype() {
-		return $this->name;
+		return $this->subtype;
 	}
 
 }

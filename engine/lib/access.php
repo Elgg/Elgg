@@ -300,13 +300,14 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
  *
  * @param string $name       The name of the collection.
  * @param int    $owner_guid The GUID of the owner (default: currently logged in user).
+ * @param string $subtype    The subtype indicates the usage of the acl
  *
  * @return int|false The collection ID if successful and false on failure.
  * @see update_access_collection()
  * @see delete_access_collection()
  */
-function create_access_collection($name, $owner_guid = 0) {
-	return _elgg_services()->accessCollections->create($name, $owner_guid);
+function create_access_collection($name, $owner_guid = 0, $subtype = null) {
+	return _elgg_services()->accessCollections->create($name, $owner_guid, $subtype);
 }
 
 /**
@@ -594,6 +595,108 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 }
 
 /**
+ * Creates a Friends ACL for a user
+ *
+ * @param \Elgg\Event $event
+ *
+ * @return void
+ */
+function access_friends_acl_create(\Elgg\Event $event) {
+	$user = $event->getObject();
+	if (!($user instanceof \ElggUser)) {
+		return;
+	}
+	
+	create_access_collection('friends', $user->guid, 'friends');
+}
+
+/**
+ * Adds the friend to the user friend ACL
+ *
+ * @param \Elgg\Event $event
+ *
+ * @return void
+ */
+function access_friends_acl_add_friend(\Elgg\Event $event) {
+	$relationship_object = $event->getObject();
+	if (!($relationship_object instanceof \ElggRelationship)) {
+		return;
+	}
+	
+	if ($relationship_object->relationship !== 'friend') {
+		return;
+	}
+	
+	$user = get_user($relationship_object->guid_one);
+	$friend = get_user($relationship_object->guid_two);
+	
+	if (!$user || !$friend) {
+		return;
+	}
+	
+	$acls = _elgg_services()->accessCollections->getEntityCollectionsBySubtype($user->guid, 'friends');
+	if (empty($acls)) {
+		return;
+	}
+	
+	$friends_acl = $acls[0];
+	$friends_acl->addMember($friend->guid);
+}
+
+/**
+ * Adds the friend to the user friend ACL
+ *
+ * @param \Elgg\Event $event
+ *
+ * @return void
+ */
+function access_friends_acl_remove_friend(\Elgg\Event $event) {
+	$relationship_object = $event->getObject();
+	if (!($relationship_object instanceof \ElggRelationship)) {
+		return;
+	}
+	
+	if ($relationship_object->relationship !== 'friend') {
+		return;
+	}
+	
+	$user = get_user($relationship_object->guid_one);
+	$friend = get_user($relationship_object->guid_two);
+	
+	if (!$user || !$friend) {
+		return;
+	}
+	
+	$acls = _elgg_services()->accessCollections->getEntityCollectionsByName($user->guid, 'friends');
+	if (empty($acls)) {
+		return;
+	}
+	
+	$friends_acl = $acls[0];
+	$friends_acl->removeMember($friend->guid);
+}
+
+/**
+ * Shows correct name of the friends ACL
+ *
+ * @param \Elgg\Hook $hook
+ *
+ * @return void
+ */
+function access_friends_acl_get_name(\Elgg\Hook $hook) {
+	$access_collection = $hook->getParam('access_collection');
+	if (!($access_collection instanceof ElggAccessCollection)) {
+		return;
+	}
+	
+	if ($access_collection->getSubtype() !== 'friends') {
+		return;
+	}
+	
+	return elgg_echo('access:friends:label');
+}
+
+/**
  * Runs unit tests for the access library
  *
  * @param string $hook
@@ -615,7 +718,13 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	// Tell the access functions the system has booted, plugins are loaded,
 	// and the user is logged in so it can start caching
 	$events->registerHandler('ready', 'system', 'access_init');
-
+	
+	// friends ACL events
+	$events->registerHandler('create', 'user', 'access_friends_acl_create');
+	$events->registerHandler('create', 'relationship', 'access_friends_acl_add_friend');
+	$events->registerHandler('delete', 'relationship', 'access_friends_acl_remove_friend');
+	$hooks->registerHandler('access_collection:name', 'access_collection', 'access_friends_acl_get_name');
+	
 	// For overrided permissions
 	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions', 600);
 	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions', 600);

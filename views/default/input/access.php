@@ -63,6 +63,13 @@ if (!$params['container_guid'] && $container) {
 	$params['container_guid'] = $container->guid;
 }
 
+if ($vars['value'] == ACCESS_FRIENDS) {
+	unset($vars['value']);
+	if (elgg_is_logged_in()) {
+		// @todo add users friends acl id
+	}
+}
+
 // don't call get_default_access() unless we need it
 if (!isset($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
 	if ($entity) {
