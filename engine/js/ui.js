@@ -173,25 +173,6 @@ elgg.ui.requiresConfirmation = function(e) {
 };
 
 /**
- * Repositions the login popup
- *
- * @param {String} hook    'getOptions'
- * @param {String} type    'ui.popup'
- * @param {Object} params  An array of info about the target and source.
- * @param {Object} options Options to pass to
- *
- * @return {Object}
- */
-elgg.ui.loginHandler = function(hook, type, params, options) {
-	if (params.target.attr('id') == 'login-dropdown-box') {
-		options.my = 'right top';
-		options.at = 'right bottom';
-		return options;
-	}
-	return null;
-};
-
-/**
  * This function registers two menu items that are actions that are the opposite
  * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
  *
@@ -259,4 +240,3 @@ elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);

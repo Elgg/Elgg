@@ -16,6 +16,10 @@ $body = elgg_view_form('login', [], ['returntoreferer' => true]);
 			'rel' => 'popup',
 			'class' => 'elgg-button elgg-button-dropdown',
 			'text' => elgg_echo('login'),
+			'data-position' => json_encode([
+				'my' => 'right top',
+				'at' => 'right bottom',
+			]),
 		]);
 		echo elgg_view_module('dropdown', '', $body, ['id' => 'login-dropdown-box']);
 	?>
