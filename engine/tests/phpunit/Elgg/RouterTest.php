@@ -1508,7 +1508,6 @@ class RouterTest extends \Elgg\TestCase {
 			['js/javascript.js', true],
 			['cache/0/foo/bar', true],
 			['cache/foo/bar', false],
-			['cron/run', true],
 			['services/rest/json', true],
 			['serve-file/foo', true],
 			['/robots.txt', true], // need slash to properly normalize url
