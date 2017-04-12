@@ -39,6 +39,7 @@ Removed views
  * ``notifications/subscriptions/jsfuncs``
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
+ * ``river/item``: use elgg_view_river_item() to render river items
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
