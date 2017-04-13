@@ -255,8 +255,6 @@ CREATE TABLE `prefix_users_entity` (
   `guid` bigint(20) unsigned NOT NULL,
   `name` text NOT NULL,
   `username` varchar(128) NOT NULL DEFAULT '',
-  `password` varchar(32) NOT NULL DEFAULT '' COMMENT 'Legacy password hashes',
-  `salt` varchar(8) NOT NULL DEFAULT '' COMMENT 'Legacy password salts',
   -- 255 chars is recommended by PHP.net to hold future hash formats
   `password_hash` varchar(255) NOT NULL DEFAULT '',
   `email` text NOT NULL,
@@ -269,7 +267,6 @@ CREATE TABLE `prefix_users_entity` (
   `prev_last_login` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`),
   UNIQUE KEY `username` (`username`),
-  KEY `password` (`password`),
   KEY `email` (`email`(50)),
   KEY `last_action` (`last_action`),
   KEY `last_login` (`last_login`),
