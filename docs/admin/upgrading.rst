@@ -81,6 +81,11 @@ New 3.0 installations require MySQL 5.5.3 and use the utf8mb4 character set and 
 
 The upgrade **does not make these changes**. We will make available instructions to manually upgrade the database and a small change that needs to be made in the ``.env.php`` file.
 
+Miscellaneous changes
+---------------------
+
+The settings "Allow visitors to register" and "Restrict pages to logged-in users" now appear on the Basic Settings admin page.
+
 From 2.2 to 2.3
 ===============
 

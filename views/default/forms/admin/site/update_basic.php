@@ -15,6 +15,32 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
+	'#type' => 'select',
+	'name' => 'language',
+	'#label' => elgg_echo('installation:language'),
+	'value' => elgg_get_config('language'),
+	'options_values' => get_installed_translations(),
+]);
+
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'label' => elgg_echo('installation:registration:label'),
+	'#help' => elgg_echo('installation:registration:description'),
+	'name' => 'allow_registration',
+	'checked' => (bool) elgg_get_config('allow_registration'),
+	'switch' => true,
+]);
+
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'label' => elgg_echo('installation:walled_garden:label'),
+	'#help' => elgg_echo('installation:walled_garden:description'),
+	'name' => 'walled_garden',
+	'checked' => (bool) elgg_get_config('walled_garden'),
+	'switch' => true,
+]);
+
+echo elgg_view_field([
 	'#type' => 'email',
 	'name' => 'siteemail',
 	'#label' => elgg_echo('installation:siteemail'),
@@ -31,13 +57,15 @@ echo elgg_view_field([
 	'step' => 1,
 ]);
 
-echo elgg_view_field([
-	'#type' => 'select',
-	'name' => 'language',
-	'#label' => elgg_echo('installation:language'),
-	'value' => elgg_get_config('language'),
-	'options_values' => get_installed_translations(),
+$save = elgg_view('input/submit', [
+	'value' => elgg_echo('save'),
 ]);
 
-$footer = elgg_view('input/submit', ['value' => elgg_echo('save')]);
+$save_go = elgg_view('input/submit', [
+	'text' => elgg_echo('save_go', [elgg_echo('admin:settings:advanced')]),
+	'name' => 'after_save',
+	'value' => 'admin/settings/advanced',
+]);
+
+$footer = "$save $save_go";
 elgg_set_form_footer($footer);

@@ -120,6 +120,8 @@ return array(
 	'save:fail' => 'There was a failure saving your data',
 	'save:success' => 'Your data was saved',
 
+	'forward:error' => 'Sorry. An error occurred while redirecting to you to another site.',
+
 	'error:default:title' => 'Oops...',
 	'error:default:content' => 'Oops... something went wrong.',
 	'error:400:title' => 'Bad request',
@@ -920,6 +922,7 @@ These changes will only affect new users on the site.',
  */
 
 	'save' => "Save",
+	'save_go' => "Save, and go to %s",
 	'reset' => 'Reset',
 	'publish' => "Publish",
 	'cancel' => "Cancel",
@@ -1209,9 +1212,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:debug:info' => 'Log everything',
 
 	// Walled Garden support
-	'installation:registration:description' => 'User registration is enabled by default. Turn this off if you do not want people to register on their own.',
-	'installation:registration:label' => 'Allow new users to register',
-	'installation:walled_garden:description' => 'Enable this to prevent non-members from viewing the site except for web pages marked as public (such as login and registration).',
+	'installation:registration:description' => 'If enabled, visitors can create their own user accounts.',
+	'installation:registration:label' => 'Allow visitors to register',
+	'installation:walled_garden:description' => 'If enabled, logged-out visitors can see only pages marked public (such as login and registration).',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
 
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",

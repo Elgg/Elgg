@@ -256,9 +256,8 @@ function elgg_format_element($tag_name, array $attributes = [], $text = '', arra
 }
 
 /**
- * Converts shorthand urls to absolute urls.
- *
- * No change is made if the URL: is absolute, protocol-relative, starts with a protocol/fragment/query.
+ * Converts shorthand URLs to absolute URLs, unless the given URL is absolute, protocol-relative,
+ * or starts with a protocol/fragment/query
  *
  * @example
  * elgg_normalize_url('');                   // 'http://my.site.com/'
@@ -268,7 +267,7 @@ function elgg_format_element($tag_name, array $attributes = [], $text = '', arra
  *
  * @param string $url The URL to normalize
  *
- * @return string The absolute url
+ * @return string The absolute URL
  */
 function elgg_normalize_url($url) {
 	$url = str_replace(' ', '%20', $url);
@@ -305,6 +304,28 @@ function elgg_normalize_url($url) {
 	// trim off any leading / because the site URL is stored
 	// with a trailing /
 	return elgg_get_site_url() . ltrim($url, '/');
+}
+
+/**
+ * From untrusted input, get a site URL safe for forwarding.
+ *
+ * @param string $unsafe_url URL from untrusted input
+ *
+ * @return bool|string Normalized URL or false if given URL was not a path.
+ *
+ * @since 3.0.0
+ */
+function elgg_normalize_site_url($unsafe_url) {
+	if (!is_string($unsafe_url)) {
+		return false;
+	}
+
+	$unsafe_url = elgg_normalize_url($unsafe_url);
+	if (0 === strpos($unsafe_url, elgg_get_site_url())) {
+		return $unsafe_url;
+	}
+
+	return false;
 }
 
 /**
