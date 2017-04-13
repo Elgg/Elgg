@@ -79,8 +79,7 @@ function elgg_load_library($name) {
 /**
  * Forward to $location.
  *
- * Sends a 'Location: $location' header and exists.  If headers have
- * already been sent, throws an exception.
+ * Sends a 'Location: $location' header and exits.  If headers have already been sent, throws an exception.
  *
  * @param string $location URL to forward to browser to. This can be a path
  *                         relative to the network's URL.
@@ -89,7 +88,7 @@ function elgg_load_library($name) {
  *                         'system'.
  *
  * @return void
- * @throws SecurityException
+ * @throws SecurityException|InvalidParameterException
  */
 function forward($location = "", $reason = 'system') {
 	if (headers_sent($file, $line)) {

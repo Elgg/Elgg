@@ -50,14 +50,6 @@ if ($debug) {
 	elgg_remove_config('debug');
 }
 
-// allow new user registration?
-$allow_registration = ('on' === get_input('allow_registration', false));
-elgg_save_config('allow_registration', $allow_registration);
-
-// setup walled garden
-$walled_garden = ('on' === get_input('walled_garden', false));
-elgg_save_config('walled_garden', $walled_garden);
-
 $regenerate_site_secret = get_input('regenerate_site_secret', false);
 if ($regenerate_site_secret) {
 	// if you cancel this even you should present a message to the user
