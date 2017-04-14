@@ -417,7 +417,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 	if ($featured_menu_names || $custom_menu_items) {
 		// we have featured or custom menu items
 
-		$registered = $return['default'];
+		$registered = isset($return['default']) ? $return['default'] : [];
 		/* @var \ElggMenuItem[] $registered */
 
 		// set up featured menu items

@@ -403,6 +403,10 @@ class Plugins {
 	 * @return \ElggPlugin[]
 	 */
 	function find($status = 'active') {
+		if (!_elgg_services()->db) {
+			return [];
+		}
+
 		$db_prefix = _elgg_config()->dbprefix;
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 		$site_guid = 1;

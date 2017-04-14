@@ -22,7 +22,7 @@ class Request extends SymfonyRequest {
 	 * @return string[]
 	 */
 	public function getUrlSegments($raw = false) {
-		$path = trim($this->getPathInfo(), '/');
+		$path = trim($this->getElggPath(), '/');
 		if (!$raw) {
 			$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
 		}
@@ -62,6 +62,20 @@ class Request extends SymfonyRequest {
 		} else {
 			return '';
 		}
+	}
+
+	/**
+	 * Get the Request URI minus querystring
+	 *
+	 * @return string
+	 */
+	public function getElggPath() {
+		if (php_sapi_name() === 'cli-server') {
+			$path = $this->getRequestUri();
+		} else {
+			$path = $this->getPathInfo();
+		}
+		return preg_replace('~(\?.*)$~', '', $path);
 	}
 
 	/**
@@ -123,5 +137,40 @@ class Request extends SymfonyRequest {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Is PHP running the CLI server front controller
+	 *
+	 * @return bool
+	 */
+	public function isCliServer() {
+		return php_sapi_name() === 'cli-server';
+	}
+
+	/**
+	 * Is the request pointing to a file that the CLI server can handle?
+	 *
+	 * @param string $root Root directory
+	 *
+	 * @return bool
+	 */
+	public function isCliServable($root) {
+		$file = rtrim($root, '\\/') . $this->getElggPath();
+		if (!is_file($file)) {
+			return false;
+		}
+
+		// http://php.net/manual/en/features.commandline.webserver.php
+		$extensions = ".3gp, .apk, .avi, .bmp, .css, .csv, .doc, .docx, .flac, .gif, .gz, .gzip, .htm, .html, .ics, .jpe, .jpeg, .jpg, .js, .kml, .kmz, .m4a, .mov, .mp3, .mp4, .mpeg, .mpg, .odp, .ods, .odt, .oga, .ogg, .ogv, .pdf, .pdf, .png, .pps, .pptx, .qt, .svg, .swf, .tar, .text, .tif, .txt, .wav, .webm, .wmv, .xls, .xlsx, .xml, .xsl, .xsd, and .zip";
+
+		// The CLI server routes ALL requests here (even existing files), so we have to check for these.
+		$ext = pathinfo($file, PATHINFO_EXTENSION);
+		if (!$ext) {
+			return false;
+		}
+
+		$ext = preg_quote($ext, '~');
+		return (bool) preg_match("~\\.{$ext}[,$]~", $extensions);
 	}
 }

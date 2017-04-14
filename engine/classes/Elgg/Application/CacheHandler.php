@@ -77,8 +77,8 @@ class CacheHandler {
 	 */
 	public function handleRequest(Request $request) {
 		$config = $this->config;
-		
-		$parsed = $this->parsePath($request->getPathInfo());
+
+		$parsed = $this->parsePath($request->getElggPath());
 		if (!$parsed) {
 			return $this->send403();
 		}

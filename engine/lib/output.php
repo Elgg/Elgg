@@ -567,10 +567,3 @@ function _elgg_sane_validate_url($url) {
 	// Re-check now.
 	return filter_var($s, FILTER_VALIDATE_URL) ? $url : false;
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-};

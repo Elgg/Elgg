@@ -275,6 +275,22 @@ class Application {
 		// in case not loaded already
 		$this->loadCore();
 
+		if (!$this->services->db) {
+			// no database boot!
+			elgg_views_boot();
+			$this->services->session->start();
+			$this->services->translator->loadTranslations();
+
+			actions_init();
+			_elgg_init();
+			_elgg_input_init();
+			_elgg_nav_init();
+
+			$config->boot_complete = true;
+			$config->lock('boot_complete');
+			return;
+		}
+
 		// Connect to database, load language files, load configuration, init session
 		$this->services->boot->boot($this->services);
 
@@ -460,12 +476,8 @@ class Application {
 		$config = $this->services->config;
 		$request = $this->services->request;
 
-		$path = $request->getPathInfo();
-
-		if (php_sapi_name() === 'cli-server') {
-			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
-			if ($path !== '/' && Directory\Local::projectRoot()->isFile($path)) {
-				// serve the requested resource as-is.
+		if ($request->isCliServer()) {
+			if ($request->isCliServable(Paths::project())) {
 				return false;
 			}
 
@@ -475,12 +487,12 @@ class Application {
 			$config->wwwroot_cli_server = $www_root;
 		}
 
-		if (0 === strpos($path, '/cache/')) {
+		if (0 === strpos($request->getElggPath(), '/cache/')) {
 			$this->services->cacheHandler->handleRequest($request)->prepare($request)->send();
 			return true;
 		}
 
-		if (0 === strpos($path, '/serve-file/')) {
+		if (0 === strpos($request->getElggPath(), '/serve-file/')) {
 			$this->services->serveFileHandler->getResponse($request)->send();
 			return true;
 		}
@@ -489,10 +501,12 @@ class Application {
 
 		// TODO use formal Response object instead
 		// This is to set the charset to UTF-8.
-		header("Content-Type: text/html;charset=utf-8");
+		header("Content-Type: text/html;charset=utf-8", true);
 
-		// fetch new request from services in case it was replaced by route:rewrite
-		if (!$this->services->router->route($this->services->request)) {
+		// re-fetch new request from services in case it was replaced by route:rewrite
+		$request = $this->services->request;
+
+		if (!$this->services->router->route($request)) {
 			forward('', '404');
 		}
 	}

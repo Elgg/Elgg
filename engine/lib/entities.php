@@ -245,6 +245,9 @@ function entity_row_to_elggstar($row) {
  * @return \ElggEntity The correct Elgg or custom object based upon entity type and subtype
  */
 function get_entity($guid) {
+	if ($guid == 1) {
+		return _elgg_config()->site;
+	}
 	return _elgg_services()->entityTable->get($guid);
 }
 
