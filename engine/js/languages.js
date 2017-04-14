@@ -22,13 +22,8 @@ elgg.add_translation = function(lang, translations) {
  * @return {String}
  */
 elgg.get_language = function() {
-	var user = elgg.get_logged_in_user_entity();
-
-	if (user && user.language) {
-		return user.language;
-	}
-
-	return elgg.config.language;
+	// set by _elgg_get_js_page_data()
+	return elgg.config.current_language;
 };
 
 /**

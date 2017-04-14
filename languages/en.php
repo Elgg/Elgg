@@ -1,5 +1,5 @@
 <?php
-use Symfony\Component\Yaml\Tests\A;
+
 return array(
 /**
  * Sites

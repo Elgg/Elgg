@@ -1921,6 +1921,7 @@ function elgg_views_boot() {
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
 	elgg_register_ajax_view('languages.js');
+	elgg_register_simplecache_view('languages/en.js');
 
 	// pre-process CSS regardless of simplecache
 	elgg_register_plugin_hook_handler('cache:generate', 'css', '_elgg_views_preprocess_css');
@@ -2013,6 +2014,7 @@ function _elgg_get_js_page_data() {
 			'lastcache' => (int) elgg_get_config('lastcache'),
 			'viewtype' => elgg_get_viewtype(),
 			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
+			'current_language' => get_current_language(),
 		],
 		'security' => [
 			'token' => [
