@@ -18,7 +18,12 @@ define(function(require) {
 		$(document).off('click', '.elgg-system-messages li');
 		$(document).on('click', '.elgg-system-messages li', function(e) {
 			if (!$(e.target).is('a')) {
-				$(this).stop().slideUp('medium');
+				var $this = $(this);
+
+				// slideUp allows dismissals without notices shifting around unpredictably
+				$this.clearQueue().slideUp(100, function () {
+					$this.remove();
+				});
 			}
 		});
 
@@ -40,9 +45,6 @@ define(function(require) {
 			handle: 'span.elgg-state-draggable',
 			stop: moveProfileField
 		});
-
-		// admin notices delete ajax
-		$('a.elgg-admin-notice').click(deleteNotice);
 
 		// disable checkboxes (readonly does not work for them)
 		$(document).on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {
@@ -250,22 +252,6 @@ define(function(require) {
 
 		elgg.action('profile/fields/reorder', {
 			fieldorder: orderStr
-		});
-	}
-
-	/**
-	 * Fires the ajax action to delete the admin notice then hides the notice.
-	 *
-	 * @return void
-	 */
-	function deleteNotice (e) {
-		e.preventDefault();
-		var $container = $(this).closest('p');
-
-		elgg.action($(this).attr('href'), {
-			success: function(json) {
-				$container.slideUp('medium');
-			}
 		});
 	}
 

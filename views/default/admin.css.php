@@ -259,21 +259,7 @@ a.elgg-maintenance-mode-warning {
 	text-decoration: underline;
 }
 
-.elgg-admin-notices p {
-	color: #3B8BC9;
-	background-color: #E7F1F9;
-	border: 1px solid #B1D1E9;
-	padding: 20px;
-	border-radius: 3px;
-}
-.elgg-admin-notices a.elgg-admin-notice {
-	float: right;
-	text-decoration: none;
-}
-
-.elgg-admin-notices a {
-	text-decoration: underline;
-}
+<?= elgg_view('elements/components/admin_notices.css') ?>
 
 /* ***************************************
 	BODY

@@ -11,7 +11,12 @@ elgg.ui.init = function () {
 	// if the user clicks a system message (not a link inside one), make it disappear
 	$(document).on('click', '.elgg-system-messages li', function(e) {
 		if (!$(e.target).is('a')) {
-			$(this).stop().fadeOut('fast');
+			var $this = $(this);
+
+			// slideUp allows dismissals without notices shifting around unpredictably
+			$this.clearQueue().slideUp(100, function () {
+				$this.remove();
+			});
 		}
 	});
 
