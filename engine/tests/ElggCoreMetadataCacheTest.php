@@ -102,46 +102,6 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 		$this->assertFalse($cache->isLoaded(2));
 	}
 
-	public function testCacheIsSegregatedByAccessState() {
-		$session = ElggSession::getMock();
-		$cache = new MetadataCache($session);
-		$cache->inject(1, ['foo' => 'bar']);
-
-		$session->setIgnoreAccess();
-		$this->assertFalse($cache->isLoaded(1));
-
-		$session->setIgnoreAccess(false);
-		$this->assertTrue($cache->isLoaded(1));
-
-		$user = elgg_get_entities(['type' => 'user', 'limit' => 1]);
-		$user = $user[0];
-		$cache->inject(1, ['foo' => 'bar']);
-
-		$session->setLoggedInUser($user);
-		$this->assertFalse($cache->isLoaded(1));
-	}
-
-	public function testClearActsOnAllAccessStates() {
-		$session = ElggSession::getMock();
-		$cache = new MetadataCache($session);
-
-		$session->setIgnoreAccess(false);
-		$cache->inject(1, ['foo' => 'bar']);
-
-		$session->setIgnoreAccess(true);
-		$cache->clear(1);
-		$session->setIgnoreAccess(false);
-		$this->assertFalse($cache->isLoaded(1));
-
-		$session->setIgnoreAccess(true);
-		$cache->inject(1, ['foo' => 'bar']);
-
-		$session->setIgnoreAccess(false);
-		$cache->clear(1);
-		$session->setIgnoreAccess(true);
-		$this->assertFalse($cache->isLoaded(1));
-	}
-
 	public function testMetadataReadsFillsCache() {
 		// test that reads fill cache
 		$this->obj1->setMetadata($this->name, [1, 2]);
@@ -170,7 +130,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 		// setMetadata
 		$this->cache->inject($this->guid1, ['foo' => 'bar']);
 		$this->obj1->setMetadata($this->name, $this->value);
-		$this->assertFalse($this->cache->isLoaded($this->obj1));
+		$this->assertFalse($this->cache->isLoaded($this->guid1));
 
 		// deleteMetadata
 		$this->cache->inject($this->guid1, ['foo' => 'bar']);

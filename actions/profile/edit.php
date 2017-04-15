@@ -79,6 +79,9 @@ if (sizeof($input) > 0) {
 	$user_default_access = get_default_access($owner);
 	
 	foreach ($input as $shortname => $value) {
+		$owner->deleteAnnotations("profile:$shortname");
+
+		// for BC, keep storing fields in MD, but we'll read annotations only
 		$options = [
 			'guid' => $owner->guid,
 			'metadata_name' => $shortname,
@@ -96,15 +99,18 @@ if (sizeof($input) > 0) {
 				// this should never be executed since the access level should always be set
 				$access_id = $user_default_access;
 			}
-			if (is_array($value)) {
-				$i = 0;
-				foreach ($value as $interval) {
-					$i++;
-					$multiple = ($i > 1) ? true : false;
-					create_metadata($owner->guid, $shortname, $interval, 'text', $owner->guid, $access_id, $multiple);
-				}
-			} else {
-				create_metadata($owner->getGUID(), $shortname, $value, 'text', $owner->getGUID(), $access_id);
+
+			if (!is_array($value)) {
+				$value = [$value];
+			}
+			foreach ($value as $interval) {
+				create_annotation($owner->guid, "profile:$shortname", $interval, 'text', $owner->guid, $access_id);
+			}
+
+			// for BC, keep storing fields in MD, but we'll read annotations only
+			foreach (array_values($value) as $i => $interval) {
+				$multiple = ($i > 0);
+				create_metadata($owner->guid, $shortname, $interval, 'text', $owner->guid, null, $multiple);
 			}
 		}
 	}

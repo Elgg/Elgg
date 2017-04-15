@@ -147,7 +147,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 		
 		$user = $this->actor;
 
-		$metadata_id = create_metadata($object->guid, 'test_metadata_name', 'test_metadata_value', 'text', $this->actor->guid, ACCESS_PUBLIC);
+		$metadata_id = create_metadata($object->guid, 'test_metadata_name', 'test_metadata_value', 'text', $this->actor->guid);
 		$metadata = elgg_get_metadata_from_id($metadata_id);
 
 		$annotation_id = $object->annotate('test_annotation_name', 'test_annotation_value', 'text', $this->actor->guid, ACCESS_PUBLIC);
@@ -693,7 +693,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 		$to1 = $this->mocks()->getUser();
 
 		$to2 = $this->mocks()->getUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid, ACCESS_PUBLIC);
+		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
 
 		$to3 = $this->mocks()->getUser();
 
@@ -772,7 +772,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 		$to1 = $this->mocks()->getUser();
 
 		$to2 = $this->mocks()->getUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid, ACCESS_PUBLIC);
+		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
 		
 		$to3 = $this->mocks()->getUser();
 
@@ -847,7 +847,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 		$to1 = $this->mocks()->getUser();
 
 		$to2 = $this->mocks()->getUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid, ACCESS_PUBLIC);
+		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
 
 		$subject = 'Test message';
 		$body = 'Lorem ipsum';
@@ -899,10 +899,10 @@ abstract class NotificationsServiceTestCase extends TestCase {
 
 		$from = $this->mocks()->getUser();
 		$to1 = $this->mocks()->getUser();
-		create_metadata($to1->guid, 'notification:method:test_method', true, '', $to1->guid, ACCESS_PUBLIC);
+		create_metadata($to1->guid, 'notification:method:test_method', true, '', $to1->guid);
 
 		$to2 = $this->mocks()->getUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid, ACCESS_PUBLIC);
+		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
 
 		$subject = 'Test message';
 		$body = 'Lorem ipsum';

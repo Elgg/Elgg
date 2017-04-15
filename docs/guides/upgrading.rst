@@ -170,7 +170,15 @@ Metastrings in the database have been denormalized for performance purposes. We 
 metadata and annotation tables. You need to update your custom queries to reflect these changes. Also the ``msv`` and ``msn`` table aliases are no longer available.
 It is best practice not to rely on the table aliases used in core queries. If you need to use custom clauses you should do your own joins.
 
+
 From the "users_entity" table, the ``password`` and ``hash`` columns have been removed.
+
+Metadata no longer are access-controlled
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Metadata is available in all contexts. If your plugin created metadata with restricted access, those restrictions will not be honored. You should use annotations or entities instead, which do provide access control.
+
+Do not read or write to the ``access_id`` property on ElggMetadata objects.
 
 Multi Site Changes
 ------------------

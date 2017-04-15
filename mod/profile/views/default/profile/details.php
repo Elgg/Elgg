@@ -20,6 +20,7 @@ $profile_fields = elgg_get_config('profile_fields');
 
 $fields_output = '';
 if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
+
 	// move description to the bottom of the list
 	if (isset($profile_fields['description'])) {
 		$temp = $profile_fields['description'];
@@ -28,41 +29,44 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 	}
 	
 	foreach ($profile_fields as $shortname => $valtype) {
-		$value = $user->$shortname;
+		$annotations = $user->getAnnotations([
+			'annotation_names' => "profile:$shortname",
+			'limit' => false,
+		]);
+		$values = array_map(function (ElggAnnotation $a) {
+			return $a->value;
+		}, $annotations);
 
-		if (!is_null($value)) {
-			// fix profile URLs populated by https://github.com/Elgg/Elgg/issues/5232
-			// @todo Replace with upgrade script, only need to alter users with last_update after 1.8.13
-			if ($valtype == 'url' && $value == 'http://') {
-				$user->$shortname = '';
-				continue;
-			}
-
-			// validate urls
-			if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
-				$value = "http://$value";
-			}
-
-			$class = elgg_extract($shortname, $microformats, '');
-						
-			$field_title = elgg_echo("profile:{$shortname}");
-			$field_value = elgg_format_element('span', [
-				'class' => $class,
-			], elgg_view("output/{$valtype}", [
-				'value' => $value,
-			]));
-			
-			$fields_output .= <<<___FIELD
-			<div class='clearfix profile-field'>
-				<div class='elgg-col elgg-col-1of5'>
-					<b>{$field_title}:</b>
-				</div>
-				<div class='elgg-col elgg-col-4of5'>
-					{$field_value}
-				</div>
-			</div>
-___FIELD;
+		if (!$values) {
+			continue;
 		}
+		// emulate metadata API
+		$value = (count($values) === 1) ? $values[0] : $values;
+
+		// validate urls
+		if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
+			$value = "http://$value";
+		}
+
+		$class = elgg_extract($shortname, $microformats, '');
+
+		$field_title = elgg_echo("profile:{$shortname}");
+		$field_value = elgg_format_element('span', [
+			'class' => $class,
+		], elgg_view("output/{$valtype}", [
+			'value' => $value,
+		]));
+
+		$fields_output .= <<<___FIELD
+		<div class='clearfix profile-field'>
+			<div class='elgg-col elgg-col-1of5'>
+				<b>{$field_title}:</b>
+			</div>
+			<div class='elgg-col elgg-col-4of5'>
+				{$field_value}
+			</div>
+		</div>
+___FIELD;
 	}
 }
 
