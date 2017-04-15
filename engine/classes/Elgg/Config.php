@@ -114,10 +114,7 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function getDataPath() {
-		if (!isset($this->config->dataroot)) {
-			\Elgg\Application::getDataPath();
-		}
-
+		$this->loadSettingsFile();
 		return $this->config->dataroot;
 	}
 
@@ -126,11 +123,6 @@ class Config implements Services\Config {
 	 */
 	public function getCachePath() {
 		$this->loadSettingsFile();
-
-		if (!isset($this->config->cacheroot)) {
-			$this->config->cacheroot = $this->getDataPath();
-		}
-
 		return $this->config->cacheroot;
 	}
 
@@ -249,17 +241,19 @@ class Config implements Services\Config {
 
 		require_once $path;
 
-		// normalize commonly needed values
-		if (isset($CONFIG->dataroot)) {
-			$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-			$GLOBALS['_ELGG']->dataroot_in_settings = true;
-		} else {
-			$GLOBALS['_ELGG']->dataroot_in_settings = false;
+		if (empty($CONFIG->dataroot)) {
+			echo 'The Elgg settings file is missing $CONFIG->dataroot.';
+			exit;
 		}
+
+		// normalize commonly needed values
+		$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
 		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
 
-		if (!empty($CONFIG->cacheroot)) {
+		if (empty($CONFIG->cacheroot)) {
+			$CONFIG->cacheroot = $CONFIG->dataroot;
+		} else {
 			$CONFIG->cacheroot = rtrim($CONFIG->cacheroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		}
 

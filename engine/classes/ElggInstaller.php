@@ -125,7 +125,7 @@ class ElggInstaller {
 		// check if this is an install being resumed
 		$this->resumeInstall($step);
 
-		$this->finishBootstraping($step);
+		$this->finishBootstrapping($step);
 
 		$params = $this->getPostVariables();
 
@@ -224,7 +224,7 @@ class ElggInstaller {
 		}
 
 		// load remaining core libraries
-		$this->finishBootstraping('settings');
+		$this->finishBootstrapping('settings');
 
 		if (!$this->saveSiteSettings($params)) {
 			throw new InstallationException(_elgg_services()->translator->translate('install:error:savesitesettings'));
@@ -360,6 +360,16 @@ class ElggInstaller {
 				'value' => 'elgg_',
 				'required' => true,
 				],
+			'dataroot' => [
+				'type' => 'text',
+				'value' => '',
+				'required' => true,
+			],
+			'wwwroot' => [
+				'type' => 'url',
+				'value' => _elgg_services()->config->getSiteUrl(),
+				'required' => true,
+			],
 			'timezone' => [
 				'type' => 'dropdown',
 				'value' => 'UTC',
@@ -424,8 +434,6 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function settings($submissionVars) {
-		
-
 		$formVars = [
 			'sitename' => [
 				'type' => 'text',
@@ -436,16 +444,6 @@ class ElggInstaller {
 				'type' => 'email',
 				'value' => '',
 				'required' => false,
-				],
-			'wwwroot' => [
-				'type' => 'url',
-				'value' => _elgg_services()->config->getSiteUrl(),
-				'required' => true,
-				],
-			'dataroot' => [
-				'type' => 'text',
-				'value' => '',
-				'required' => true,
 				],
 			'siteaccess' => [
 				'type' => 'access',
@@ -762,7 +760,7 @@ class ElggInstaller {
 	 * @return void
 	 * @throws InstallationException
 	 */
-	protected function finishBootstraping($step) {
+	protected function finishBootstrapping($step) {
 
 		$dbIndex = array_search('database', $this->getSteps());
 		$settingsIndex = array_search('settings', $this->getSteps());
@@ -833,9 +831,8 @@ class ElggInstaller {
 			$this->CONFIG->language = 'en';
 
 			if ($stepIndex > $settingsIndex) {
-				$this->CONFIG->site_guid = (int) _elgg_services()->configTable->get('default_site');
-				$this->CONFIG->site = get_entity($this->CONFIG->site_guid);
-				$this->CONFIG->dataroot = _elgg_services()->configTable->get('dataroot');
+				$this->CONFIG->site_guid = 1;
+				$this->CONFIG->site = get_entity(1);
 				_elgg_services()->config->getCookieConfig();
 				_elgg_session_boot();
 			}
@@ -854,7 +851,7 @@ class ElggInstaller {
 
 		$this->CONFIG->wwwroot = $this->getBaseUrl();
 		$this->CONFIG->url = $this->CONFIG->wwwroot;
-		$this->CONFIG->path = \Elgg\Application::elggDir()->getPath() . "/";
+		$this->CONFIG->path = Directory\Local::root()->getPath('/');
 		$this->view_path = $this->CONFIG->path . 'views/';
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
 		$this->CONFIG->context = [];
@@ -993,8 +990,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function checkSettingsFile(&$report = []) {
-		
-
 		if (!file_exists($this->getSettingsPath())) {
 			return false;
 		}
@@ -1143,8 +1138,6 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function checkRewriteRules(&$report) {
-		
-
 		$tester = new ElggRewriteTester();
 		$url = _elgg_services()->config->getSiteUrl() . "rewrite.php";
 		$report['rewrite'] = [$tester->run($url, Directory\Local::root()->getPath())];
@@ -1203,6 +1196,44 @@ class ElggInstaller {
 			if ($info['required'] == true && !$submissionVars[$field]) {
 				$name = _elgg_services()->translator->translate("install:database:label:$field");
 				register_error(_elgg_services()->translator->translate('install:error:requiredfield', [$name]));
+				return false;
+			}
+		}
+
+		// check that data root is absolute path
+		if (stripos(PHP_OS, 'win') === 0) {
+			if (strpos($submissionVars['dataroot'], ':') !== 1) {
+				$msg = _elgg_services()->translator->translate('install:error:relative_path', [$submissionVars['dataroot']]);
+				register_error($msg);
+				return false;
+			}
+		} else {
+			if (strpos($submissionVars['dataroot'], '/') !== 0) {
+				$msg = _elgg_services()->translator->translate('install:error:relative_path', [$submissionVars['dataroot']]);
+				register_error($msg);
+				return false;
+			}
+		}
+
+		// check that data root exists
+		if (!is_dir($submissionVars['dataroot'])) {
+			$msg = _elgg_services()->translator->translate('install:error:datadirectoryexists', [$submissionVars['dataroot']]);
+			register_error($msg);
+			return false;
+		}
+
+		// check that data root is writable
+		if (!is_writable($submissionVars['dataroot'])) {
+			$msg = _elgg_services()->translator->translate('install:error:writedatadirectory', [$submissionVars['dataroot']]);
+			register_error($msg);
+			return false;
+		}
+
+		if (!isset($this->CONFIG->data_dir_override) || !$this->CONFIG->data_dir_override) {
+			// check that data root is not subdirectory of Elgg root
+			if (stripos($submissionVars['dataroot'], $this->CONFIG->path) === 0) {
+				$msg = _elgg_services()->translator->translate('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
+				register_error($msg);
 				return false;
 			}
 		}
@@ -1300,8 +1331,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function connectToDatabase() {
-		
-
 		if (!include_once($this->getSettingsPath())) {
 			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
 			return false;
@@ -1328,8 +1357,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function installDatabase() {
-		
-
 		try {
 			_elgg_services()->db->runSqlScript(\Elgg\Application::elggDir()->getPath("/engine/schema/mysql.sql"));
 		} catch (Exception $e) {
@@ -1391,51 +1418,11 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function validateSettingsVars($submissionVars, $formVars) {
-		
-
 		foreach ($formVars as $field => $info) {
 			$submissionVars[$field] = trim($submissionVars[$field]);
 			if ($info['required'] == true && $submissionVars[$field] === '') {
 				$name = _elgg_services()->translator->translate("install:settings:label:$field");
 				register_error(_elgg_services()->translator->translate('install:error:requiredfield', [$name]));
-				return false;
-			}
-		}
-
-		// check that data root is absolute path
-		if (stripos(PHP_OS, 'win') === 0) {
-			if (strpos($submissionVars['dataroot'], ':') !== 1) {
-				$msg = _elgg_services()->translator->translate('install:error:relative_path', [$submissionVars['dataroot']]);
-				register_error($msg);
-				return false;
-			}
-		} else {
-			if (strpos($submissionVars['dataroot'], '/') !== 0) {
-				$msg = _elgg_services()->translator->translate('install:error:relative_path', [$submissionVars['dataroot']]);
-				register_error($msg);
-				return false;
-			}
-		}
-
-		// check that data root exists
-		if (!file_exists($submissionVars['dataroot'])) {
-			$msg = _elgg_services()->translator->translate('install:error:datadirectoryexists', [$submissionVars['dataroot']]);
-			register_error($msg);
-			return false;
-		}
-
-		// check that data root is writable
-		if (!is_writable($submissionVars['dataroot'])) {
-			$msg = _elgg_services()->translator->translate('install:error:writedatadirectory', [$submissionVars['dataroot']]);
-			register_error($msg);
-			return false;
-		}
-
-		if (!isset($this->CONFIG->data_dir_override) || !$this->CONFIG->data_dir_override) {
-			// check that data root is not subdirectory of Elgg root
-			if (stripos($submissionVars['dataroot'], $submissionVars['path']) === 0) {
-				$msg = _elgg_services()->translator->translate('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
-				register_error($msg);
 				return false;
 			}
 		}
@@ -1461,31 +1448,22 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function saveSiteSettings($submissionVars) {
-		
-
-		// ensure that file path, data path, and www root end in /
-		$submissionVars['dataroot'] = sanitise_filepath($submissionVars['dataroot']);
-		$submissionVars['wwwroot'] = sanitise_filepath($submissionVars['wwwroot']);
-
 		$site = new ElggSite();
 		$site->name = strip_tags($submissionVars['sitename']);
-		$site->url = $submissionVars['wwwroot'];
 		$site->access_id = ACCESS_PUBLIC;
 		$site->email = $submissionVars['siteemail'];
 		$guid = $site->save();
 
-		if (!$guid) {
+		if ($guid !== 1) {
 			register_error(_elgg_services()->translator->translate('install:error:createsite'));
 			return false;
 		}
 
 		// bootstrap site info
-		$this->CONFIG->site_guid = $guid;
+		$this->CONFIG->site_guid = 1;
 		$this->CONFIG->site = $site;
 
 		_elgg_services()->configTable->set('installed', time());
-		_elgg_services()->configTable->set('dataroot', $submissionVars['dataroot']);
-		_elgg_services()->configTable->set('default_site', $site->getGUID());
 		_elgg_services()->configTable->set('version', elgg_get_version());
 		_elgg_services()->configTable->set('simplecache_enabled', 1);
 		_elgg_services()->configTable->set('system_cache_enabled', 1);
@@ -1495,17 +1473,17 @@ class ElggInstaller {
 		$upgrades = elgg_get_upgrade_files(\Elgg\Application::elggDir()->getPath("/engine/lib/upgrades/"));
 		_elgg_services()->configTable->set('processed_upgrades', $upgrades);
 
-		_elgg_services()->configTable->set('view', 'default', $site->getGUID());
-		_elgg_services()->configTable->set('language', 'en', $site->getGUID());
-		_elgg_services()->configTable->set('default_access', $submissionVars['siteaccess'], $site->getGUID());
-		_elgg_services()->configTable->set('allow_registration', true, $site->getGUID());
-		_elgg_services()->configTable->set('walled_garden', false, $site->getGUID());
-		_elgg_services()->configTable->set('allow_user_default_access', '', $site->getGUID());
-		_elgg_services()->configTable->set('default_limit', 10, $site->getGUID());
-		_elgg_services()->configTable->set('security_protect_upgrade', true, $site->getGUID());
-		_elgg_services()->configTable->set('security_notify_admins', true, $site->getGUID());
-		_elgg_services()->configTable->set('security_notify_user_password', true, $site->getGUID());
-		_elgg_services()->configTable->set('security_email_require_password', true, $site->getGUID());
+		_elgg_services()->configTable->set('view', 'default');
+		_elgg_services()->configTable->set('language', 'en');
+		_elgg_services()->configTable->set('default_access', $submissionVars['siteaccess']);
+		_elgg_services()->configTable->set('allow_registration', true);
+		_elgg_services()->configTable->set('walled_garden', false);
+		_elgg_services()->configTable->set('allow_user_default_access', '');
+		_elgg_services()->configTable->set('default_limit', 10);
+		_elgg_services()->configTable->set('security_protect_upgrade', true);
+		_elgg_services()->configTable->set('security_notify_admins', true);
+		_elgg_services()->configTable->set('security_notify_user_password', true);
+		_elgg_services()->configTable->set('security_email_require_password', true);
 
 		$this->setSubtypeClasses();
 

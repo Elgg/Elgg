@@ -33,27 +33,6 @@ function get_site_entity_as_row($guid) {
 }
 
 /**
- * Return the site via a url.
- *
- * @param string $url The URL of a site
- *
- * @return mixed
- */
-function get_site_by_url($url) {
-	global $CONFIG;
-
-	$url = sanitise_string($url);
-
-	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where url='$url'");
-
-	if ($row) {
-		return get_entity($row->guid);
-	}
-
-	return false;
-}
-
-/**
  * Unit tests for sites
  *
  * @param string $hook   unit_test

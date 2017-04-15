@@ -15,6 +15,7 @@ From 2.x to 3.0
 Removed views
 -------------
 
+ * ``forms/admin/site/advanced/system``
  * ``resources/file/download`` 
  * ``output/checkboxes``: use ``output/tags`` if you want the same behaviour
  * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
@@ -94,7 +95,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``run_function_once``: Use ``Elgg\Upgrade\Batch`` interface
  * ``system_messages``
  * ``notifications_plugin_pagesetup``
- * ``elgg_format_url()``: Use elgg_format_element() or the "output/text" view for HTML escaping.
+ * ``elgg_format_url``: Use elgg_format_element() or the "output/text" view for HTML escaping.
+ * ``get_site_by_url``
  * ``ElggEntity::addToSite``
  * ``ElggEntity::getSites``
  * ``ElggEntity::removeFromSite``
@@ -142,7 +144,7 @@ Removed global vars
  * ``$DEFAULT_FILE_STORE``
  * ``$ENTITY_CACHE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``
- * ``$CONFIG->site_id``: Use ``elgg_get_config('site_guid')`` or ``elgg_get_site_entity()->guid``
+ * ``$CONFIG->site_id``: Use ``1``
  * ``$CONFIG->search_info``
 
 Removed classes/interfaces
@@ -189,7 +191,12 @@ If you currently have multiple sites in your database, upgrading Elgg to 3.0 wil
 You need to separate the different sites into separate databases/tables.
 
 Related to the removal of the Multi Site concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
-All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade. 
+All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade.
+
+Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the `$CONFIG->wwwroot` set in
+settings.php, or computed by Symphony Request.
+
+``ElggSite::save()`` will fail if it isn't the main site.
 
 Search changes
 --------------
@@ -341,7 +348,8 @@ Miscellaneous API changes
  * The URL endpoints ``js/`` and ``css/`` are no longer supported. Use ``elgg_get_simplecache_url()``.
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
  * The script ``engine/start.php`` is removed.
- * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``. 
+ * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``.
+ * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used.
 
 JavaScript hook calling order may change
 ----------------------------------------

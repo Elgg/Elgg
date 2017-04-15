@@ -44,7 +44,7 @@ if (!$current_info) {
 	$content = elgg_echo('admin:default_widgets:unknown_type');
 } else {
 	// default widgets are owned and saved to the site.
-	elgg_set_page_owner_guid(elgg_get_config('site_guid'));
+	elgg_set_page_owner_guid(1);
 	elgg_push_context($current_info['widget_context']);
 
 	$content = elgg_view_layout('widgets', [

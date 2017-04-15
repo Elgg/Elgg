@@ -40,6 +40,18 @@ Basic instructions
 From 2.3 to 3.0
 ===============
 
+Update ``settings.php``
+-----------------------
+
+On your working 2.3 installation:
+
+1. Open your ``settings.php`` file.
+2. In the browser, open the site's Advanced Settings page in the admin area
+3. Copy the **data directory** path into your settings file as ``$CONFIG->dataroot``.
+4. Copy the **site URL** into your settings file as ``$CONFIG->wwwroot``.
+
+.. warning:: Elgg 3.0 **will not operate** at all without ``$CONFIG->dataroot`` set in ``settings.php``.
+
 Update ``.htaccess``
 --------------------
 

@@ -57,29 +57,7 @@ class BootService {
 		// set cookie values for session and remember me
 		_elgg_services()->config->getCookieConfig();
 
-		// we need this stuff before cache
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}config
-			WHERE `name` IN ('__site_secret__', 'default_site', 'dataroot')
-		");
-		$configs = [];
-		foreach ($rows as $row) {
-			$configs[$row->name] = unserialize($row->value);
-		}
-
-		// booting during installation
-		if (empty($configs['dataroot'])) {
-			$configs['dataroot'] = '';
-
-			// don't use cache
-			$CONFIG->boot_cache_ttl = 0;
-		}
-
-		if (!$GLOBALS['_ELGG']->dataroot_in_settings) {
-			$CONFIG->dataroot = rtrim($configs['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
-		}
-		$CONFIG->site_guid = (int) $configs['default_site'];
+		$CONFIG->site_guid = 1;
 		if (!isset($CONFIG->boot_cache_ttl)) {
 			$CONFIG->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
 		}
@@ -98,7 +76,6 @@ class BootService {
 		$configs_cache = $data->getConfigValues();
 
 		$CONFIG->site = $data->getSite();
-		$CONFIG->wwwroot = $CONFIG->site->url;
 		$CONFIG->sitename = $CONFIG->site->name;
 		$CONFIG->sitedescription = $CONFIG->site->description;
 		$CONFIG->url = $CONFIG->wwwroot;

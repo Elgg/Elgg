@@ -93,7 +93,7 @@ class Application {
 			$GLOBALS['_ELGG'] = new \stdClass();
 		}
 
-		$this->engine_dir = __DIR__ . '/../..';
+		$this->engine_dir = dirname(dirname(__DIR__));
 	}
 
 	/**
@@ -246,6 +246,7 @@ class Application {
 		}
 
 		$this->loadSettings();
+		$this->resolveWebRoot();
 
 		$config->set('boot_complete', false);
 
@@ -382,7 +383,10 @@ class Application {
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
 	public function run() {
-		$path = $this->services->request->getPathInfo();
+		$config = $this->services->config;
+
+		$request = $this->services->request;
+		$path = $request->getPathInfo();
 
 		// allow testing from the upgrade page before the site is upgraded.
 		if (isset($_GET[self::REWRITE_TEST_TOKEN])) {
@@ -393,17 +397,18 @@ class Application {
 		}
 
 		if (php_sapi_name() === 'cli-server') {
-			$www_root = "http://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}/";
-			$this->services->config->set('wwwroot', $www_root);
+			// overwrite value from settings
+			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
+			$config->set('wwwroot', $www_root);
 		}
 
 		if (0 === strpos($path, '/cache/')) {
-			(new Application\CacheHandler($this, $this->services->config, $_SERVER))->handleRequest($path);
+			(new Application\CacheHandler($this, $config, $_SERVER))->handleRequest($path);
 			return true;
 		}
 
 		if (0 === strpos($path, '/serve-file/')) {
-			$this->services->serveFileHandler->getResponse($this->services->request)->send();
+			$this->services->serveFileHandler->getResponse($request)->send();
 			return true;
 		}
 
@@ -425,34 +430,19 @@ class Application {
 		// TODO use formal Response object instead
 		header("Content-Type: text/html;charset=utf-8");
 
+		// fetch new request from services in case it was replaced by route:rewrite
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
 	}
 
 	/**
-	 * Determine the Elgg data directory with trailing slash, save it to config, and return it
-	 *
-	 * @todo Consider a better place for this logic? We need it before boot
+	 * Get the Elgg data directory with trailing slash
 	 *
 	 * @return string
-	 * @throws \InstallationException
 	 */
 	public static function getDataPath() {
-		$app = self::create();
-		$app->services->config->loadSettingsFile();
-
-		if ($GLOBALS['_ELGG']->dataroot_in_settings) {
-			return $app->services->config->getVolatile('dataroot');
-		}
-
-		$dataroot = $app->services->configTable->get('dataroot');
-		if (!$dataroot) {
-			throw new \InstallationException('The config table lacks a value for "dataroot".');
-		}
-		$dataroot = rtrim($dataroot, '/\\') . DIRECTORY_SEPARATOR;
-		$app->services->config->set('dataroot', $dataroot);
-		return $dataroot;
+		return self::create()->services->config->getDataPath();
 	}
 
 	/**
@@ -588,6 +578,22 @@ class Application {
 
 		$this->services->setValue('request', $new);
 		_elgg_set_initial_context($new);
+	}
+
+	/**
+	 * Make sure config has a non-empty wwwroot. Calculate from request if missing.
+	 *
+	 * @return void
+	 */
+	private function resolveWebRoot() {
+		$config = $this->services->config;
+		$request = $this->services->request;
+
+		$config->loadSettingsFile();
+		if (!$config->getVolatile('wwwroot')) {
+			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
+			$config->set('wwwroot', $www_root);
+		}
 	}
 
 	/**

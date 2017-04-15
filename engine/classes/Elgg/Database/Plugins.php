@@ -402,8 +402,7 @@ class Plugins {
 	function find($status = 'active') {
 		$db_prefix = elgg_get_config('dbprefix');
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
-	
-		$site_guid = elgg_get_site_entity()->guid;
+		$site_guid = 1;
 		
 		// grab plugins
 		$options = [

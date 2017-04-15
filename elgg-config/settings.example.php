@@ -32,6 +32,22 @@ if (!isset($CONFIG)) {
  */
 
 /**
+ * The full file path for Elgg data storage. E.g. "/path/to/elgg-data/"
+ *
+ * @global string $CONFIG->dataroot
+ */
+$CONFIG->dataroot = "{{dataroot}}";
+
+/**
+ * The installation root URL of the site. E.g. "https://example.org/elgg/"
+ *
+ * If not provided, this is sniffed from the Symfony Request object
+ *
+ * @global string $CONFIG->wwwroot
+ */
+$CONFIG->wwwroot = "{{wwwroot}}";
+
+/**
  * The database username
  *
  * @global string $CONFIG->dbuser
@@ -123,13 +139,11 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 /**
  * Better caching performance
  *
- * Configuring the location of your data directory and enabling simplecache in
- * the settings.php file improves caching performance. It allows Elgg to skip
- * connecting to the database when serving cached JavaScript and CSS files. If
- * you uncomment and configure these settings, you will not be able to change
- * them from the Elgg advanced settings page.
+ * Configuring simplecache in the settings.php file improves caching performance.
+ * It allows Elgg to skip connecting to the database when serving cached JavaScript
+ * and CSS files. If you uncomment and configure these settings, you will not be able
+ * to change them from the Elgg advanced settings page.
  */
-//$CONFIG->dataroot = "";
 //$CONFIG->simplecache_enabled = true;
 
 /**
