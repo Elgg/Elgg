@@ -612,6 +612,13 @@ function cache_hmac_check_replay($hmac) {
 function pam_auth_usertoken() {
 	$token = get_input('auth_token');
 	if (!$token) {
+
+        //Allow loggedin user to call services
+        $u = elgg_get_logged_in_user_entity();
+        if (($u instanceof ElggUser)) {
+            return $u;
+        }
+
 		return false;
 	}
 	
