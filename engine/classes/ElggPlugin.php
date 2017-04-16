@@ -97,7 +97,7 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function save() {
 		// own by the current site so users can be deleted without affecting plugins
-		$site = _elgg_services()->configTable->get('site');
+		$site = elgg_get_site_entity();
 		$this->attributes['owner_guid'] = $site->guid;
 		$this->attributes['container_guid'] = $site->guid;
 		
@@ -230,7 +230,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 		// if no priority assume a priority of 1
 		$old_priority = (int) $this->getPriority();
@@ -274,13 +274,13 @@ class ElggPlugin extends \ElggObject {
 			}
 
 			// displace the ones affected by this change
-			$q = "UPDATE {$db_prefix}private_settings
+			$q = "UPDATE {$db->prefix}private_settings
 				SET value = CAST(value as unsigned) $op 1
 				WHERE entity_guid != $this->guid
 				AND name = '$name'
 				AND $where";
 
-			if (!$this->getDatabase()->updateData($q)) {
+			if (!$db->updateData($q)) {
 				return false;
 			}
 
@@ -404,16 +404,16 @@ class ElggPlugin extends \ElggObject {
 		_elgg_services()->pluginSettingsCache->clear($this->guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
 
-		$q = "DELETE FROM {$db_prefix}private_settings
+		$q = "DELETE FROM {$db->prefix}private_settings
 			WHERE entity_guid = $this->guid
 			AND name NOT LIKE '$us_prefix%'
 			AND name NOT LIKE '$is_prefix%'";
 
-		return $this->getDatabase()->deleteData($q);
+		return $db->deleteData($q);
 	}
 
 
@@ -563,14 +563,14 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllUserSettings($user_guid) {
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
-		$q = "DELETE FROM {$db_prefix}private_settings
+		$q = "DELETE FROM {$db->prefix}private_settings
 			WHERE entity_guid = $user_guid
 			AND name LIKE '$ps_prefix%'";
 
-		return $this->getDatabase()->deleteData($q);
+		return $db->deleteData($q);
 	}
 
 	/**
@@ -582,13 +582,13 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllUsersSettings() {
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
-		$q = "DELETE FROM {$db_prefix}private_settings
+		$q = "DELETE FROM {$db->prefix}private_settings
 			WHERE name LIKE '$ps_prefix%'";
 
-		return $this->getDatabase()->deleteData($q);
+		return $db->deleteData($q);
 	}
 
 
@@ -631,7 +631,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$site = _elgg_services()->configTable->get('site');
+		$site = elgg_get_site_entity();
 
 		if (!($site instanceof \ElggSite)) {
 			return false;
@@ -1157,8 +1157,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$site = _elgg_services()->configTable->get('site');
-		
+		$site = elgg_get_site_entity();
 		if ($active) {
 			$result = add_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		} else {

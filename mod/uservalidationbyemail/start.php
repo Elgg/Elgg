@@ -55,7 +55,7 @@ function uservalidationbyemail_init() {
  * @param string $type
  * @param bool   $value
  * @param array  $params
- * @return bool
+ * @return void
  */
 function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	$user = elgg_extract('user', $params);
@@ -68,12 +68,12 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	// another plugin is requesting that registration be terminated
 	// no need for uservalidationbyemail
 	if (!$value) {
-		return $value;
+		return;
 	}
 
 	// has the user already been validated?
-	if (elgg_get_user_validation_status($user->guid) == true) {
-		return $value;
+	if (elgg_get_user_validation_status($user->guid)) {
+		return;
 	}
 
 	// disable user to prevent showing up on the site
@@ -94,8 +94,6 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 
 	elgg_pop_context();
 	access_show_hidden_entities($hidden_entities);
-
-	return $value;
 }
 
 /**
