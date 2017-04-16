@@ -259,8 +259,8 @@ class Application {
 		$events = $this->services->events;
 
 		// Connect to database, load language files, load configuration, init session
-		// Plugins can't use this event because they haven't been loaded yet.
-		$events->trigger('boot', 'system');
+		$this->services->boot->boot();
+		elgg_views_boot();
 
 		// Load the plugins that are active
 		$this->services->plugins->load();
@@ -577,7 +577,7 @@ class Application {
 		}
 
 		$this->services->setValue('request', $new);
-		_elgg_set_initial_context($new);
+		$this->services->context->initialize($new);
 	}
 
 	/**

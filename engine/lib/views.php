@@ -2100,7 +2100,3 @@ function _elgg_set_lightbox_config($hook, $type, $return, $params) {
 
 	return $return;
 }
-
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('boot', 'system', 'elgg_views_boot');
-};

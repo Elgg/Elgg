@@ -8,9 +8,6 @@ List of events in core
 System events
 =============
 
-**boot, system**
-    First event triggered. Triggered before plugins have been loaded.
-
 **plugins_boot, system**
     Triggered just after the plugins are loaded. Rarely used. init, system is used instead.
 

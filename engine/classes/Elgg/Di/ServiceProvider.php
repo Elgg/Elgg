@@ -160,7 +160,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database\ConfigTable($c->db, $c->boot, $c->logger);
 		});
 
-		$this->setClassName('context', \Elgg\Context::class);
+		$this->setFactory('context', function(ServiceProvider $c) {
+			$context = new \Elgg\Context();
+			$context->initialize($c->request);
+			return $context;
+		});
 
 		$this->setFactory('crypto', function(ServiceProvider $c) {
 			return new \ElggCrypto($c->siteSecret);
