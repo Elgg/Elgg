@@ -1358,7 +1358,7 @@ function elgg_view_river_item($item, array $vars = []) {
 
 	$river_views = [
 		elgg_extract('item_view', $vars, ''),
-		"river/item",
+		$view,
 	];
 
 	$contents = '';
