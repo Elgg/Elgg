@@ -84,11 +84,11 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function save() {
 		$db = $this->getDatabase();
-		$rows = $db->getDataRow("
+		$row = $db->getDataRow("
 			SELECT guid FROM {$db->prefix}sites_entity
 		");
-		if ($rows) {
-			if ($rows[0]->guid == $this->attributes['guid']) {
+		if ($row) {
+			if ($row->guid == $this->attributes['guid']) {
 				// can save active site
 				return parent::save();
 			}
