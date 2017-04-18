@@ -16,7 +16,7 @@
     "chrome": "node_modules/karma/bin/karma start js/tests/karma.conf.js --browsers Chrome"
   },
   "devDependencies": {
-    "elgg-conventional-changelog": "~0.1.2",
+    "elgg-conventional-changelog": "~0.1.4",
     "grunt": "~0.4.5",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-connect": "~0.9.0",

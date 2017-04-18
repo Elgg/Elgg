@@ -47,6 +47,8 @@ Install the prerequisites:
    easy_install sphinx-intl
    easy_install transifex-client
 
+Check the top of ``CHANGELOG.md`` for any release notes. Clean and tighten language if necessary. The release script will update this file.
+
 Run the ``release.php`` script. For example, to release 1.9.1:
 
 .. code:: sh

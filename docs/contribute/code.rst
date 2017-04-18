@@ -158,6 +158,23 @@ or symlink to it in the directory ``.git/hooks/commit-msg``.
     chmod u+x .scripts/validate_commit_msg.php
     ln -s .scripts/validate_commit_msg.php .git/hooks/commit-msg/validate_commit_msg.php
 
+Adding release notes
+--------------------
+
+If a commit adds a critical change that users/developers should know about (e.g. deprecates an API), you may want
+to add notes to the next release. Just add them to the top of ``CHANGELOG.md`` with a line break in between. E.g.
+
+.. code::
+
+	These are notes to go with the 9.0.1 release.
+
+	<a name="9.0.0"></a>
+	### 9.0.0  (2025-01-01)
+
+	...
+
+.. note:: Release notes may not contain the string ``<a name="``.
+
 Rewriting commit messages
 -------------------------
 If your PR does not conform to the standard commit message format, we'll ask you to rewrite it.
