@@ -6,8 +6,10 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses string $vars['text']        The string between the <a></a> tags.
- * @uses string $vars['href']        The unencoded url string
+ * @uses string $vars['text']        The HTML between the <a></a> tags.
+ * @uses string $vars['href']        The raw, un-encoded URL.
+ *                                   "" = current URL.
+ *                                   "/" = site home page.
  * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
  * @uses bool   $vars['is_action']   Is this a link to an action (false)
  * @uses bool   $vars['is_trusted']  Is this link trusted (false)
