@@ -1,6 +1,8 @@
 <?php
 /**
  * Core Elgg JavaScript file
+ *
+ * Includes all code in /engine/js/.
  */
 
 // this warning is due to the change in JS boot order in Elgg 1.9
@@ -14,29 +16,29 @@ JS;
 // as these modules will be required on each page
 echo elgg_view('elgg/popup.js');
 
-$elggDir = \Elgg\Application::elggDir();
+$elggDir = \Elgg\Application::elggDir()->chroot('engine/js/');
 $files = [
 	// these must come first
-	$elggDir->getPath("js/lib/elgglib.js"),
+	$elggDir->getPath("elgglib.js"),
 
 	// class definitions
-	$elggDir->getPath("js/classes/ElggEntity.js"),
-	$elggDir->getPath("js/classes/ElggUser.js"),
-	$elggDir->getPath("js/classes/ElggPriorityList.js"),
+	$elggDir->getPath("ElggEntity.js"),
+	$elggDir->getPath("ElggUser.js"),
+	$elggDir->getPath("ElggPriorityList.js"),
 
 	//libraries
-	$elggDir->getPath("js/lib/prototypes.js"),
-	$elggDir->getPath("js/lib/hooks.js"),
-	$elggDir->getPath("js/lib/security.js"),
-	$elggDir->getPath("js/lib/languages.js"),
-	$elggDir->getPath("js/lib/ajax.js"),
-	$elggDir->getPath("js/lib/session.js"),
-	$elggDir->getPath("js/lib/pageowner.js"),
-	$elggDir->getPath("js/lib/configuration.js"),
-	$elggDir->getPath("js/lib/comments.js"),
+	$elggDir->getPath("prototypes.js"),
+	$elggDir->getPath("hooks.js"),
+	$elggDir->getPath("security.js"),
+	$elggDir->getPath("languages.js"),
+	$elggDir->getPath("ajax.js"),
+	$elggDir->getPath("session.js"),
+	$elggDir->getPath("pageowner.js"),
+	$elggDir->getPath("configuration.js"),
+	$elggDir->getPath("comments.js"),
 
 	//ui
-	$elggDir->getPath("js/lib/ui.js"),
+	$elggDir->getPath("ui.js"),
 ];
 
 

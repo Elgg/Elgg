@@ -24,15 +24,12 @@ return [
 		"font-awesome/css/font-awesome.css" => "vendor/fortawesome/font-awesome/css/font-awesome.min.css",
 		"font-awesome/fonts/" => "vendor/fortawesome/font-awesome/fonts",
 
+		// For datepicker. More info in the jquery-ui.js view
+		"jquery-ui/i18n/" => "vendor/bower-asset/jquery-ui/ui/minified/i18n",
+
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.
 		 */
-
-		"elgg/ui.avatar_cropper.js" => dirname(__DIR__) . "/js/lib/ui.avatar_cropper.js",
-		"elgg/ui.friends_picker.js" => dirname(__DIR__) . "/js/lib/ui.friends_picker.js",
-
-		// For datepicker. More info in the jquery-ui.js view
-		"jquery-ui/i18n/" => "vendor/bower-asset/jquery-ui/ui/minified/i18n",
 
 		"jquery.imgareaselect.css" => dirname(__DIR__) . "/bower_components/jquery-imgareaselect/distfiles/css/imgareaselect-deprecated.css",
 		"jquery.imgareaselect.js" => dirname(__DIR__) . "/bower_components/jquery-imgareaselect/jquery.imgareaselect.dev.js",
