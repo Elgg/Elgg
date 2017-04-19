@@ -154,6 +154,10 @@ class Database {
 
 		// Set DB for UTF8
 		mysql_query("SET NAMES utf8", $this->dbLinks[$dblinkname]);
+
+		// https://github.com/Elgg/Elgg/issues/8121
+		$sub_query = "SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')";
+		mysql_query("SET SESSION sql_mode=($sub_query);", $this->dbLinks[$dblinkname]);
 	}
 
 	/**
