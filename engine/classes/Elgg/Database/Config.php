@@ -83,7 +83,6 @@ class Config {
 	 * @return array
 	 */
 	public function getConnectionConfig($type = self::READ_WRITE) {
-		$config = [];
 		switch ($type) {
 			case self::READ:
 			case self::WRITE:
@@ -92,6 +91,12 @@ class Config {
 			default:
 				$config = $this->getGeneralConnectionConfig();
 				break;
+		}
+
+		if (!empty($this->config->dbencoding)) {
+			$config['encoding'] = $this->config->dbencoding;
+		} else {
+			$config['encoding'] = 'utf8';
 		}
 
 		return $config;

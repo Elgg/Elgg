@@ -163,7 +163,7 @@ class Database {
 			'user' => $conf['user'],
 			'password' => $conf['password'],
 			'host' => $conf['host'],
-			'charset' => 'utf8',
+			'charset' => $conf['encoding'],
 			'driver' => 'pdo_mysql',
 		];
 

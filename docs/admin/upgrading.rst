@@ -72,6 +72,12 @@ Removed / changed language keys
 
  * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
 
+New MySQL schema features are not applied
+-----------------------------------------
+
+New 3.0 installations require MySQL 5.5.3 and use the utf8mb4 character set and LONGTEXT content columns (notably allowing storing longer content and extended characters like emoji).
+
+The upgrade **does not make these changes**. We will make available instructions to manually upgrade the database and a small change that needs to be made in the ``settings.php`` file.
 
 From 2.2 to 2.3
 ===============

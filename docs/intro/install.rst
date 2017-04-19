@@ -10,14 +10,14 @@ Get your own instance of Elgg running in no time.
 Requirements
 ============
 
--  MySQL 5+
--  PHP 5.6+ with the following extensions:
+- MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)
+- PHP 5.6+ with the following extensions:
 
    -  GD (for graphics processing)
    -  `Multibyte String support`_ (for i18n)
    -  Proper configuration and ability to send email through an MTA
 
--  Web server with support for URL rewriting
+- Web server with support for URL rewriting
 
 Official support is provided for the following configurations:
 

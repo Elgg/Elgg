@@ -89,6 +89,17 @@ $CONFIG->dbhost = '{{dbhost}}';
 $CONFIG->dbprefix = '{{dbprefix}}';
 
 /**
+ * The database encoding.
+ *
+ * If installing a fresh instance of Elgg 3.x or later, this MUST be set to "utf8mb4".
+ * If you've upgraded an earlier Elgg version, do not set this until you have
+ * manually converted your Elgg tables to utf8mb4.
+ *
+ * @global string $CONFIG->dbencoding
+ */
+$CONFIG->dbencoding = 'utf8mb4';
+
+/**
  * Multiple database connections
  *
  * Elgg supports master/slave MySQL configurations. The master should be set as
