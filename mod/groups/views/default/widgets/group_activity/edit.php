@@ -5,8 +5,12 @@
 
 $widget = elgg_extract('entity', $vars);
 
-// once autocomplete is working use that
-$groups = $widget->getOwnerEntity()->getGroups(['limit' => false]);
+// Widget owner might not be a user entity (e.g. on default widgets config page it's an ElggSite entity)
+$owner = $widget->getOwnerEntity();
+if (!($owner instanceof ElggUser)) {
+	$owner = elgg_get_logged_in_user_entity();
+}
+$groups = $owner->getGroups(['limit' => false]);
 $mygroups = [];
 if (!$widget->group_guid) {
 	$mygroups[0] = '';
