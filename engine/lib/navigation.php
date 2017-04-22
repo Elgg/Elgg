@@ -91,8 +91,6 @@
  * @since 1.8.0
  */
 function elgg_register_menu_item($menu_name, $menu_item) {
-	global $CONFIG;
-
 	if (is_array($menu_item)) {
 		$options = $menu_item;
 		$menu_item = \ElggMenuItem::factory($options);
@@ -109,10 +107,10 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 		return false;
 	}
 
-	if (!isset($CONFIG->menus[$menu_name])) {
-		$CONFIG->menus[$menu_name] = [];
-	}
-	$CONFIG->menus[$menu_name][] = $menu_item;
+	$menus = _elgg_services()->config->get('menus', []);
+	$menus[$menu_name][] = $menu_item;
+	elgg_set_config('menus', $menus);
+
 	return true;
 }
 
@@ -126,17 +124,17 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  * @since 1.8.0
  */
 function elgg_unregister_menu_item($menu_name, $item_name) {
-	global $CONFIG;
-
-	if (empty($CONFIG->menus[$menu_name])) {
+	$menus = _elgg_services()->config->get('menus', []);
+	if (!$menus) {
 		return null;
 	}
 
-	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+	foreach ($menus[$menu_name] as $index => $menu_object) {
 		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object instanceof ElggMenuItem && $menu_object->getName() == $item_name) {
-			$item = $CONFIG->menus[$menu_name][$index];
-			unset($CONFIG->menus[$menu_name][$index]);
+			$item = $menus[$menu_name][$index];
+			unset($menus[$menu_name][$index]);
+			elgg_set_config('menus', $menus);
 			return $item;
 		}
 	}
@@ -154,13 +152,13 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  * @since 1.8.0
  */
 function elgg_is_menu_item_registered($menu_name, $item_name) {
-	global $CONFIG;
+	$menus = _elgg_services()->config->get('menus', []);
 
-	if (!isset($CONFIG->menus[$menu_name])) {
+	if (!isset($menus[$menu_name])) {
 		return false;
 	}
 
-	foreach ($CONFIG->menus[$menu_name] as $menu_object) {
+	foreach ($menus[$menu_name] as $menu_object) {
 		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			return true;
@@ -180,16 +178,16 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
  * @since 1.9.0
  */
 function elgg_get_menu_item($menu_name, $item_name) {
-	global $CONFIG;
+	$menus = _elgg_services()->config->get('menus', []);
 
-	if (!isset($CONFIG->menus[$menu_name])) {
+	if (!isset($menus[$menu_name])) {
 		return null;
 	}
 
-	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+	foreach ($menus[$menu_name] as $index => $menu_object) {
 		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
-			return $CONFIG->menus[$menu_name][$index];
+			return $menus[$menu_name][$index];
 		}
 	}
 

@@ -2,6 +2,7 @@
 namespace Elgg;
 
 use Elgg\Filesystem\Directory;
+use Elgg\Database\ConfigTable;
 
 /**
  * Access to configuration values
@@ -25,6 +26,11 @@ class Config implements Services\Config {
 	 * @var bool
 	 */
 	private $cookies_configured = false;
+
+	/**
+	 * @var ConfigTable Do not use directly. Use getConfigTable().
+	 */
+	private $config_table;
 
 	/**
 	 * Constructor
@@ -129,21 +135,21 @@ class Config implements Services\Config {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get($name) {
+	public function get($name, $default = null) {
 		$name = trim($name);
 	
 		if (isset($this->config->$name)) {
 			return $this->config->$name;
 		}
-		
-		$value = null;
-		if (!isset($this->config->site_config_loaded)) {
-			$value = _elgg_services()->configTable->get($name);
+
+		if (!empty($this->config->site_config_loaded)) {
+			return $default;
 		}
 		
-		// @todo document why we don't cache false
-		if ($value === false) {
-			return null;
+		$value = $this->getConfigTable()->get($name);
+
+		if ($value === null) {
+			return $default;
 		}
 	
 		$this->config->$name = $value;
@@ -176,8 +182,8 @@ class Config implements Services\Config {
 			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
-	
-		$result = _elgg_services()->configTable->set($name, $value);
+
+		$result = $this->getConfigTable()->set($name, $value);
 
 		$this->set($name, $value);
 	
@@ -189,8 +195,8 @@ class Config implements Services\Config {
 	 */
 	public function remove($name) {
 		$name = trim($name);
-	
-		$result = _elgg_services()->configTable->remove($name);
+
+		$result = $this->getConfigTable()->remove($name);
 
 		unset($this->config->$name);
 	
@@ -280,5 +286,38 @@ class Config implements Services\Config {
 	 */
 	public function getStorageObject() {
 		return $this->config;
+	}
+
+	/**
+	 * Set the config table service (must be set)
+	 *
+	 * This is a necessary evil until we refactor so that the service provider has no dependencies.
+	 *
+	 * @param ConfigTable $table
+	 * @return void
+	 *
+	 * @access private
+	 * @internal
+	 */
+	public function setConfigTable(ConfigTable $table) {
+		$this->config_table = $table;
+	}
+
+	/**
+	 * Get the config table API
+	 *
+	 * @return ConfigTable
+	 */
+	private function getConfigTable() {
+		if (!$this->config_table) {
+			if (!function_exists('_elgg_services')) {
+				throw new \RuntimeException('setConfigTable() must be called before using API that' .
+					' uses the database.');
+			}
+
+			$this->config_table = _elgg_services()->configTable;
+		}
+
+		return $this->config_table;
 	}
 }

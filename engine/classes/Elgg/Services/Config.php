@@ -42,11 +42,12 @@ interface Config {
 	 * Before application boot, it may be unsafe to call get() for some values. You should use
 	 * getVolatile() before system boot.
 	 *
-	 * @param string $name Name of the configuration value
+	 * @param string $name    Name of the configuration value
+	 * @param mixed  $default Values returned if not set
 	 *
-	 * @return mixed Configuration value or null if it does not exist
+	 * @return mixed Configuration value or default if it does not exist
 	 */
-	public function get($name);
+	public function get($name, $default = null);
 
 	/**
 	 * Get a config value for the current site if it's already loaded. This should be used instead of
