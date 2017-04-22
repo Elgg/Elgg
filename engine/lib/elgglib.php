@@ -2066,9 +2066,6 @@ define('ELGG_HTTP_NETWORK_AUTHENTICATION_REQUIRED', 511); // RFC6585
 define('ELGG_JSON_ENCODING', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('boot', 'system', function () {
-		_elgg_services()->boot->boot();
-	}, 1);
 	$events->registerHandler('cache:flush', 'system', function () {
 		_elgg_services()->boot->invalidateCache();
 	});

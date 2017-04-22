@@ -775,7 +775,6 @@ class ElggInstaller {
 		if (!$useElggSession) {
 			session_name('Elgg_install');
 			session_start();
-			_elgg_services()->events->unregisterHandler('boot', 'system', 'session_init');
 		}
 
 		if ($stepIndex > $dbIndex) {

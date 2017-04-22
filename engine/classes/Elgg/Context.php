@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Http\Request;
+
 /**
  * Manages a global stack of strings for sharing information about the current execution context
  *
@@ -24,7 +26,7 @@ namespace Elgg;
 final class Context {
 	
 	private $stack = [];
-	
+
 	/**
 	 * Get the most recently pushed context value.
 	 *
@@ -107,5 +109,23 @@ final class Context {
 	 */
 	public function fromArray(array $stack) {
 		$this->stack = array_map('strval', $stack);
+	}
+
+	/**
+	 * Initialize the context from the request
+	 *
+	 * @param Request $request Elgg request
+	 * @return void
+	 */
+	public function initialize(Request $request) {
+		// don't do this for *_handler.php, etc.
+		if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
+			$context = $request->getFirstUrlSegment();
+			if (!$context) {
+				$context = 'main';
+			}
+
+			$this->stack = [$context];
+		}
 	}
 }

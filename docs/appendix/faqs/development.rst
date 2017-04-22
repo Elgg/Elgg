@@ -143,27 +143,17 @@ What does the data look like?
 What events are triggered on every page load?
 ---------------------------------------------
 
-There are 5 :doc:`Elgg events </design/events>` that are triggered on every page load:
+There are 4 :doc:`Elgg events </design/events>` that are triggered on every page load:
 
-1. boot, system
-2. plugins_boot, system
-3. init, system
-4. ready, system
-5. shutdown, system
+#. plugins_boot, system
+#. init, system
+#. ready, system
+#. shutdown, system
 
+The first three are triggered in ``Elgg\Application::bootCore``. **shutdown, system** is triggered in ``_elgg_shutdown_hook`` after
+the response has been sent to the client. They are all :doc:`documented </guides/events-list>`.
 
-The *boot*, *system* event is triggered before the plugins get loaded. There does not appear to be any difference between the timing of the next two events: *plugins_boot*, *system* and *init*, *system* so plugins tend to use *init*, *system*. This event is triggered in ``Elgg\Application::bootCore``. The *ready*, *system* event is triggered after all plugins are fully loaded and the engine is ready to serve pages. The *shutdown*, *system* event is triggered after the page has been sent to the requester and is handled through the PHP function ``register_shutdown_function()``.
-
-There are :doc:`other events </guides/events-list>` that are triggered by the Elgg core but they happen occasionally (such as when a user logs in).
-
-What variables are reserved by Elgg?
-------------------------------------
-
-- ``$CONFIG``
-- ``$vars``
-- ``$autofeed``
-- ``$_GET['action']`` / ``$_POST['action']``
-- ``$viewtype``
+There are other events triggered by Elgg occasionally (such as when a user logs in).
 
 Copy a plugin
 -------------

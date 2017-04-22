@@ -115,6 +115,8 @@ class BootService {
 		if ($CONFIG->system_cache_enabled) {
 			_elgg_services()->systemCache->loadAll();
 		}
+
+		// we don't store langs in boot data because it varies by user
 		_elgg_services()->translator->loadTranslations();
 
 		// we always need site->email and user->icontime, so load them together
