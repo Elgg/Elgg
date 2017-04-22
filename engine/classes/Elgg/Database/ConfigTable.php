@@ -2,26 +2,15 @@
 namespace Elgg\Database;
 
 /**
- * These settings are stored in the dbprefix_config table and read
- * during system boot into $CONFIG.
+ * Manipulates values in the dbprefix_config table. Do not use to read/write $CONFIG.
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
+ * @since  1.10.0
  */
 class ConfigTable {
 		
-	/**
-	 * Global Elgg configuration
-	 *
-	 * @var \stdClass
-	 */
-	private $CONFIG;
-	
 	/**
 	 * @var \Elgg\Database
 	 */
@@ -45,9 +34,6 @@ class ConfigTable {
 	 * @param \Elgg\Logger      $logger Logger
 	 */
 	public function __construct(\Elgg\Database $db, \Elgg\BootService $boot, \Elgg\Logger $logger) {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
-		
 		$this->db = $db;
 		$this->boot = $boot;
 		$this->logger = $logger;
@@ -63,12 +49,8 @@ class ConfigTable {
 	function remove($name) {
 		$name = trim($name);
 	
-		if (isset($this->CONFIG->$name)) {
-			unset($this->CONFIG->$name);
-		}
-	
 		$query = "
-			DELETE FROM {$this->CONFIG->dbprefix}config
+			DELETE FROM {$this->db->prefix}config
 			WHERE name = :name
 		";
 
@@ -84,12 +66,12 @@ class ConfigTable {
 	/**
 	 * Add or update a config setting.
 	 *
-	 * Plugin authors should use elgg_set_config().
+	 * Plugin authors should use elgg_save_config().
 	 *
 	 * If the config name already exists, it will be updated to the new value.
 	 *
 	 * @note Internal: These settings are stored in the dbprefix_config table and read
-	 * during system boot into $CONFIG.
+	 * during system boot into the config service.
 	 *
 	 * @note Internal: The value is serialized so we maintain type information.
 	 *
@@ -106,13 +88,9 @@ class ConfigTable {
 			$this->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
-		
-		$this->CONFIG->$name = $value;
 	
-		$dbprefix = $this->CONFIG->dbprefix;
-		
 		$sql = "
-			INSERT INTO {$dbprefix}config
+			INSERT INTO {$this->db->prefix}config
 			SET name = :name,
 				value = :value
 			ON DUPLICATE KEY UPDATE value = :value
@@ -123,12 +101,12 @@ class ConfigTable {
 			':value' => serialize($value),
 		];
 		
-		$version = (int) $this->CONFIG->version;
+		$version = (int) elgg_get_config('version');
 		
 		if (!empty($version) && $version < 2016102500) {
 			// need to do this the old way as long as site_guid columns have not been dropped
 			$sql = "
-				INSERT INTO {$dbprefix}config
+				INSERT INTO {$this->db->prefix}config
 				SET name = :name,
 					value = :value,
 					site_guid = :site_guid
@@ -151,7 +129,7 @@ class ConfigTable {
 	 * Plugin authors should use elgg_get_config().
 	 *
 	 * @note Internal: These settings are stored in the dbprefix_config table and read
-	 * during system boot into $CONFIG.
+	 * during system boot into the config service.
 	 *
 	 * @param string $name The name of the config value
 	 *
@@ -160,48 +138,17 @@ class ConfigTable {
 	function get($name) {
 		$name = trim($name);
 	
-		// check for deprecated values.
-		// @todo might be a better spot to define this?
-		$new_name = false;
-		switch ($name) {
-			case 'pluginspath':
-				$new_name = 'plugins_path';
-				break;
-	
-			case 'sitename':
-				$new_name = 'site_name';
-				break;
-		}
-	
-		// @todo these haven't really been implemented in Elgg 1.8. Complete in 1.9.
-		// show dep message
-		if ($new_name) {
-			//	$msg = "Config value $name has been renamed as $new_name";
-			$name = $new_name;
-			//	elgg_deprecated_notice($msg, $dep_version);
-		}
-	
-		// decide from where to return the value
-		if (isset($this->CONFIG->$name)) {
-			return $this->CONFIG->$name;
-		}
-		
 		$sql = "
 			SELECT value
-			FROM {$this->CONFIG->dbprefix}config
+			FROM {$this->db->prefix}config
 			WHERE name = :name
 		";
 			
 		$params[':name'] = $name;
 		
 		$result = $this->db->getDataRow($sql, null, $params);
-	
 		if ($result) {
-			$result = unserialize($result->value);
-	
-			$this->CONFIG->$name = $result;
-	
-			return $result;
+			return unserialize($result->value);
 		}
 	
 		return null;
