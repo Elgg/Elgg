@@ -14,12 +14,12 @@ function ckeditor_init() {
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/reset.css', 100);
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/typography.css', 100);
 
-	elgg_define_js('ckeditor', array(
+	elgg_define_js('ckeditor/ckeditor', array(
 		'deps' => ['elgg/ckeditor/set-basepath'],
 		'exports' => 'CKEDITOR',
 	));
 	elgg_define_js('jquery.ckeditor', array(
-		'deps' => array('jquery', 'ckeditor'),
+		'deps' => array('jquery', 'ckeditor/ckeditor'),
 		'exports' => 'jQuery.fn.ckeditor',
 	));
 
