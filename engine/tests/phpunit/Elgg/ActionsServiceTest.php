@@ -59,7 +59,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		$this->request = $this->prepareHttpRequest();
 		_elgg_services()->setValue('request', $this->request);
 
-		$this->translator = new Translator();
+		$this->translator = new Translator($config);
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
 
 		$this->hooks = new PluginHooksService();

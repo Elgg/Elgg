@@ -418,7 +418,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('timer', \Elgg\Timer::class);
 
-		$this->setClassName('translator', \Elgg\I18n\Translator::class);
+		$this->setFactory('translator', function(ServiceProvider $c) {
+			return new \Elgg\I18n\Translator($c->config);
+		});
 
 		$this->setFactory('uploads', function(ServiceProvider $c) {
 			return new \Elgg\UploadService($c->request);
