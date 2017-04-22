@@ -40,6 +40,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggDiskFilestore                       $filestore
  * @property-read \Elgg\FormsService                       $forms
  * @property-read \Elgg\HandlersService                    $handlers
+ * @property-read \Elgg\Security\HmacFactory               $hmac
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
@@ -166,9 +167,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $context;
 		});
 
-		$this->setFactory('crypto', function(ServiceProvider $c) {
-			return new \ElggCrypto($c->siteSecret);
-		});
+		$this->setClassName('crypto', \ElggCrypto::class);
 
 		$this->setFactory('db', function(ServiceProvider $c) {
 			// gonna need dbprefix from settings
@@ -236,6 +235,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('handlers', \Elgg\HandlersService::class);
+
+		$this->setFactory('hmac', function(ServiceProvider $c) {
+			return new \Elgg\Security\HmacFactory($c->siteSecret, $c->crypto);
+		});
 
 		$this->setClassName('hooks', \Elgg\PluginHooksService::class);
 
@@ -362,7 +365,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
-			return new \Elgg\Application\ServeFileHandler($c->crypto, $c->config);
+			return new \Elgg\Application\ServeFileHandler($c->hmac, $c->config);
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {

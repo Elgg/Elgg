@@ -132,7 +132,7 @@ class File {
 		}
 
 		ksort($data);
-		$mac = _elgg_services()->crypto->getHmac($data)->getToken();
+		$mac = _elgg_services()->hmac->getHmac($data)->getToken();
 
 		$url_segments = [
 			'serve-file',

@@ -1,7 +1,5 @@
 <?php
 
-use \Elgg\Database\SiteSecret;
-
 /**
  * \ElggCrypto
  *
@@ -21,20 +19,6 @@ class ElggCrypto {
 	 * Character set for hexadecimal
 	 */
 	const CHARS_HEX = '0123456789abcdef';
-
-	/**
-	 * @var SiteSecret
-	 */
-	private $site_secret;
-
-	/**
-	 * Constructor
-	 *
-	 * @param SiteSecret $site_secret Secret service
-	 */
-	public function __construct(SiteSecret $site_secret = null) {
-		$this->site_secret = $site_secret;
-	}
 
 	/**
 	 * Generate a string of highly randomized bytes (over the full 8-bit range).
@@ -188,22 +172,6 @@ class ElggCrypto {
 		}
 
 		return substr($str, 0, $length);
-	}
-
-	/**
-	 * Get an HMAC token builder/validator object
-	 *
-	 * @param mixed  $data HMAC data or serializable data
-	 * @param string $algo Hash algorithm
-	 * @param string $key  Optional key (default uses site secret)
-	 *
-	 * @return \Elgg\Security\Hmac
-	 */
-	public function getHmac($data, $algo = 'sha256', $key = '') {
-		if (!$key) {
-			$key = $this->site_secret->get(true);
-		}
-		return new Elgg\Security\Hmac($key, [$this, 'areEqual'], $data, $algo);
 	}
 
 	/**

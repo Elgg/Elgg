@@ -450,7 +450,7 @@ class UsersTable {
 	 */
 	public function generateInviteCode($username) {
 		$time = $this->getCurrentTime()->getTimestamp();
-		return "$time." . _elgg_services()->crypto->getHmac([(int) $time, $username])->getToken();
+		return "$time." . _elgg_services()->hmac->getHmac([(int) $time, $username])->getToken();
 	}
 
 	/**
@@ -470,7 +470,7 @@ class UsersTable {
 		$time = $m[1];
 		$mac = $m[2];
 
-		return _elgg_services()->crypto->getHmac([(int) $time, $username])->matchesToken($mac);
+		return _elgg_services()->hmac->getHmac([(int) $time, $username])->matchesToken($mac);
 	}
 
 	/**
