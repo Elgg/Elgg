@@ -13,8 +13,8 @@ define(function (require) {
 	require('elgg/init');
 	var $ = require('jquery');
 	require('jquery.ckeditor');
-	var CKEDITOR = require('ckeditor');
-	var config = require('elgg/ckeditor/config');
+	var CKEDITOR = require('elgg_ckeditor');
+	var config = require('elgg/ckeditor_essentials/config');
 
 	var elggCKEditor = {
 		bind: function (selector) {
@@ -54,7 +54,7 @@ define(function (require) {
 		 */
 		registerHandlers: function () {
 			elgg.register_hook_handler('prepare', 'ckeditor', function (hook, type, params, CKEDITOR) {
-				CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('elgg/ckeditor/blockimagepaste.js'), '');
+				CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('elgg/ckeditor_essentials/blockimagepaste.js'), '');
 				CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
 				return CKEDITOR;
 			});
