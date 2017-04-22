@@ -15,7 +15,6 @@ function ckeditor_init() {
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/typography.css', 100);
 
 	elgg_define_js('ckeditor', array(
-		'deps' => ['elgg/ckeditor/set-basepath'],
 		'exports' => 'CKEDITOR',
 	));
 	elgg_define_js('jquery.ckeditor', array(
@@ -24,7 +23,7 @@ function ckeditor_init() {
 	));
 
 	// need to set basepath early
-	elgg_extend_view('elgg.js', 'elgg/ckeditor/set-basepath.js');
+	elgg_extend_view('elgg.js', 'elgg/ckeditor/set-basepath', 499);
 	
 	elgg_extend_view('input/longtext', 'ckeditor/init');
 
