@@ -38,7 +38,7 @@ function likes_init() {
 }
 
 /**
- * Only allow annotation owner (or someone who can edit the owner, like an admin) to delete like
+ * Allow like annotation owner, owner of liked entity and group owner to delete like annotations.
  *
  * @param string $hook   "permissions_check"
  * @param string $type   "annotation"
@@ -49,16 +49,32 @@ function likes_init() {
  */
 function likes_permissions_check($hook, $type, $return, $params) {
 	$annotation = elgg_extract('annotation', $params);
+	$user = $params['user'];
+
 	if (!$annotation || $annotation->name !== 'likes') {
 		return $return;
 	}
-	
-	$owner = $annotation->getOwnerEntity();
-	if (!$owner) {
-		return $return;
+
+	if ($annotation->owner_guid == $user->guid) {
+	    return true;
 	}
-	
-	return $owner->canEdit();
+
+	$liked_on = get_entity($annotation->entity_guid);
+	if ($liked_on->owner_guid == $user->guid) {
+	    return true;
+	}
+
+	$container = $liked_on->getContainerEntity();
+	if (elgg_instanceof($container, 'group') && $container->owner_guid == $user->guid) {
+		return true;
+	} else if ((elgg_instanceof($liked_on, 'object', 'comment') || elgg_instanceof($liked_on, 'object', 'discussion_reply')) && elgg_instanceof($container, 'object')) {
+		$container = $container->getContainerEntity();
+		if (elgg_instanceof($container, 'group') && $container->owner_guid == $user->guid) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /**
