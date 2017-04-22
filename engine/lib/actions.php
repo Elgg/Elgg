@@ -116,7 +116,7 @@ function elgg_unregister_action($action) {
  * @since 1.11
  */
 function elgg_build_hmac($data) {
-	return _elgg_services()->crypto->getHmac($data);
+	return _elgg_services()->hmac->getHmac($data);
 }
 
 /**

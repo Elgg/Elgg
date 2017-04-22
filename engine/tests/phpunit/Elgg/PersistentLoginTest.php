@@ -75,7 +75,6 @@ class PersistentLoginTest extends \Elgg\TestCase {
 				->will($this->returnCallback(array($this, 'mock_sanitizeString')));
 
 		$this->cryptoMock = $this->getMockBuilder('\ElggCrypto')
-				->setConstructorArgs([_elgg_services()->siteSecret])
 				->getMock();
 		$this->cryptoMock->expects($this->any())
 				->method('getRandomString')

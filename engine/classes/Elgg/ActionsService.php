@@ -390,7 +390,7 @@ class ActionsService {
 			}
 		}
 
-		return _elgg_services()->crypto->getHmac([(int) $timestamp, $session_token], 'md5')
+		return _elgg_services()->hmac->getHmac([(int) $timestamp, $session_token], 'md5')
 			->getToken();
 	}
 	

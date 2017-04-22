@@ -10,6 +10,7 @@ use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Elgg\Security\Base64Url;
+use Elgg\Security\HmacFactory;
 
 /**
  * File server handler
@@ -21,9 +22,9 @@ use Elgg\Security\Base64Url;
 class ServeFileHandler {
 
 	/**
-	 * @var \ElggCrypto
+	 * @var HmacFactory
 	 */
-	private $crypto;
+	private $hmac;
 
 	/**
 	 * @var Config
@@ -33,11 +34,11 @@ class ServeFileHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param \ElggCrypto $crypto Crypto service
+	 * @param HmacFactory $hmac   HMAC service
 	 * @param Config      $config Config service
 	 */
-	public function __construct(\ElggCrypto $crypto, Config $config) {
-		$this->crypto = $crypto;
+	public function __construct(HmacFactory $hmac, Config $config) {
+		$this->hmac = $hmac;
 		$this->config = $config;
 	}
 
@@ -75,7 +76,7 @@ class ServeFileHandler {
 		}
 		ksort($hmac_data);
 
-		$hmac = $this->crypto->getHmac($hmac_data);
+		$hmac = $this->hmac->getHmac($hmac_data);
 		if (!$hmac->matchesToken($mac)) {
 			return $response->setStatusCode(403)->setContent('HMAC mistmatch');
 		}
@@ -150,5 +151,4 @@ class ServeFileHandler {
 		$session_name = $config['session']['name'];
 		return $request->cookies->get($session_name, '');
 	}
-
 }
