@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\I18n;
 
+use Elgg\Config;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -11,18 +13,17 @@ namespace Elgg\I18n;
 class Translator {
 
 	/**
-	 * Global Elgg configuration
-	 *
-	 * @var \stdClass
+	 * @var Config
 	 */
-	private $CONFIG;
+	private $config;
 
 	/**
-	 * Initializes new translator
+	 * Constructor
+	 *
+	 * @param Config $config Elgg config
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(Config $config) {
+		$this->config = $config;
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
 	}
 
@@ -158,15 +159,14 @@ class Translator {
 			$language = $user->language;
 		}
 
-		if ((!$language) && (isset($this->CONFIG->language)) && ($this->CONFIG->language)) {
-			$language = $this->CONFIG->language;
+		if (!$language) {
+			$site_language = $this->config->getVolatile('language');
+			if ($site_language) {
+				$language = $site_language;
+			}
 		}
 
-		if ($language) {
-			return $language;
-		}
-
-		return false;
+		return $language ? $language : false;
 	}
 
 	/**
@@ -358,14 +358,12 @@ class Translator {
 	 * @return void
 	 */
 	public function reloadAllTranslations() {
-
-
-		static $LANG_RELOAD_ALL_RUN;
-		if ($LANG_RELOAD_ALL_RUN) {
+		static $was_already_called;
+		if ($was_already_called) {
 			return;
 		}
 
-		if ($GLOBALS['_ELGG']->i18n_loaded_from_cache) {
+		if (!empty($GLOBALS['_ELGG']->i18n_loaded_from_cache)) {
 			$cache = elgg_get_system_cache();
 			$cache_dir = $cache->getVariable("cache_path");
 			$filenames = elgg_get_file_list($cache_dir, [], [], [".lang"]);
@@ -387,7 +385,7 @@ class Translator {
 			}
 		}
 
-		$LANG_RELOAD_ALL_RUN = true;
+		$was_already_called = true;
 	}
 
 	/**
