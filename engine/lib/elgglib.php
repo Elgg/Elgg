@@ -878,7 +878,7 @@ function _elgg_php_exception_handler($exception) {
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 
-	global $CONFIG;
+	$CONFIG = _elgg_services()->config->getStorageObject();
 
 	try {
 		// allow custom scripts to trigger on exception
@@ -980,7 +980,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 			break;
 
 		default:
-			global $CONFIG;
+			$CONFIG = _elgg_services()->config->getStorageObject();
 			if (isset($CONFIG->debug) && $CONFIG->debug === 'NOTICE') {
 				if (!elgg_log("PHP (errno $errno): $error", 'NOTICE')) {
 					error_log("PHP NOTICE: $error");

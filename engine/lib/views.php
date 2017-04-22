@@ -1866,8 +1866,6 @@ function _elgg_view_may_be_altered($view, $path) {
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
-	global $CONFIG;
-
 	if (!elgg_get_config('system_cache_loaded')) {
 		// Core view files in /views
 		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));

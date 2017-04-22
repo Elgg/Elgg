@@ -346,15 +346,12 @@ function logout() {
 function _elgg_session_boot() {
 	_elgg_services()->timer->begin([__FUNCTION__]);
 
-	elgg_register_action('login', '', 'public');
-	elgg_register_action('logout');
-	register_pam_handler('pam_auth_userpass');
-
 	$session = _elgg_services()->session;
 	$session->start();
 
 	// test whether we have a user session
 	if ($session->has('guid')) {
+		/** @var ElggUser $user */
 		$user = _elgg_services()->entityTable->get($session->get('guid'), 'user');
 		if (!$user) {
 			// OMG user has been deleted.
@@ -386,3 +383,7 @@ function _elgg_session_boot() {
 	_elgg_services()->timer->end([__FUNCTION__]);
 	return true;
 }
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	register_pam_handler('pam_auth_userpass');
+};

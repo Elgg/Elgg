@@ -147,6 +147,7 @@ Removed global vars
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``
  * ``$CONFIG->site_id``: Use ``1``
  * ``$CONFIG->search_info``
+ * ``$CONFIG->input``: Use ``set_input`` and ``get_input``
 
 Removed classes/interfaces
 --------------------------

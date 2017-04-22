@@ -186,8 +186,7 @@ class ElggSite extends \ElggEntity {
 	 * @throws SecurityException
 	 */
 	public function delete() {
-		global $CONFIG;
-		if ($CONFIG->site->getGUID() == $this->guid) {
+		if ($this->guid == 1) {
 			throw new \SecurityException('You cannot delete the current site');
 		}
 
