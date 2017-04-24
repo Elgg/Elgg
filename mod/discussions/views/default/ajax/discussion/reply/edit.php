@@ -17,6 +17,5 @@ $form_vars = array(
 );
 $body_vars = array(
 	'entity' => $reply,
-	'inline' => true,
 );
 echo elgg_view_form('discussion/reply/save', $form_vars, $body_vars);
