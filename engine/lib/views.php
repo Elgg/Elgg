@@ -1947,7 +1947,7 @@ function elgg_views_boot() {
 	}
 
 	// set default icon sizes - can be overridden in settings.php or with plugin
-	if (!isset($CONFIG->icon_sizes)) {
+	if (!_elgg_services()->config->getVolatile('icon_sizes')) {
 		$icon_sizes = [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
