@@ -3,14 +3,15 @@
 /**
  * Renders a standard HTML page shell
  *
- * @uses $vars['section']     An array of page sections to render
- * @uses $vars['html_attrs']  Attributes of the <html> tag
- * @uses $vars['head']        Parameters for the <head> element
- * @uses $vars['body_attrs']  Attributes of the <body> tag
- * @uses $vars['page_attrs']  Attributes of the .elgg-page container
- * @uses $vars['title']       Title of the page
- * @uses $vars['body']        The main content of the page
- * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
+ * @uses $vars['section']       An array of page sections to render
+ * @uses $vars['html_attrs']    Attributes of the <html> tag
+ * @uses $vars['head']          Parameters for the <head> element
+ * @uses $vars['body_attrs']    Attributes of the <body> tag
+ * @uses $vars['page_attrs']    Attributes of the .elgg-page container
+ * @uses $vars['title']         Title of the page
+ * @uses $vars['body']          The main content of the page
+ * @uses $vars['sysmessages']   A 2d array of various message registers, passed from system_messages()
+ * @uses $vars['admin_notices'] Array of ElggObject admin notices
  */
 
 $sections = elgg_extract('sections', $vars);
@@ -24,6 +25,9 @@ if (empty($sections)) {
 		'topbar' => elgg_view('page/elements/topbar', $vars),
 		'header' => elgg_view('page/elements/header', $vars),
 		'navbar' => elgg_view('page/elements/navbar', $vars),
+		'admin-notices' => elgg_view('page/elements/admin_notices', [
+			'notices' => $vars['admin_notices'],
+		]),
 		'body' => elgg_view('page/elements/body', $vars),
 		'footer' => elgg_view('page/elements/footer', $vars),
 	];

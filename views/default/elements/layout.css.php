@@ -25,6 +25,7 @@
 	margin: 0 auto;
 	height: auto;
 }
+.elgg-page-default .elgg-page-admin-notices > .elgg-inner,
 .elgg-page-default .elgg-page-body > .elgg-inner {
 	max-width: 990px;
 	margin: 0 auto;
@@ -58,6 +59,8 @@
 .elgg-system-messages li {
 	margin-top: 10px;
 }
+
+<?= elgg_view('elements/components/admin_notices.css') ?>
 
 /***** PAGE HEADER ******/
 .elgg-page-header {

@@ -93,17 +93,17 @@ class AdminNotices {
 	/**
 	 * Get admin notices. An admin must be logged in since the notices are private.
 	 *
-	 * @param int $limit Limit
+	 * @param array $options Query options
 	 *
-	 * @return array Array of admin notices
+	 * @return \ElggObject[] Admin notices
 	 */
-	function find($limit = 10) {
-		return elgg_get_entities_from_metadata([
+	function find(array $options = []) {
+		$options = array_merge($options, [
 			'type' => 'object',
 			'subtype' => 'admin_notice',
-			'limit' => $limit,
-			'distinct' => false,
 		]);
+
+		return _elgg_services()->metadataTable->getEntities($options);
 	}
 	
 	/**

@@ -301,6 +301,7 @@ APIs that now accept only an ``$options`` array
  * ``ElggUser::getFriendsObjects`` (as part of ``Friendable``)
  * ``ElggUser::getObjects`` (as part of ``Friendable``)
  * ``find_active_users``
+ * ``elgg_get_admin_notices``
 
 Plugin functions that now require an explicit ``$plugin_id``
 ------------------------------------------------------------

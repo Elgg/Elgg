@@ -8,13 +8,15 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'], 'object', 'admin_
 	$message = $notice->description;
 
 	$delete = elgg_view('output/url', [
-		'href' => "action/admin/delete_admin_notice?guid=$notice->guid",
+		'href' => "action/admin/delete_admin_notice?guid={$notice->guid}",
 		'text' => elgg_view_icon('delete'),
 		'is_action' => true,
 		'class' => 'elgg-admin-notice',
 		'is_trusted' => true,
 	]);
 
-	echo "<p>$delete$message</p>";
+	echo "<p>$delete $message</p>";
+
+	elgg_require_js('elgg/admin_notices');
 }
 

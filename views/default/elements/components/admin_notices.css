@@ -1,0 +1,25 @@
+
+.elgg-admin-notices {
+	margin: 15px 0;
+}
+.elgg-item-object-admin_notice {
+	margin: 5px 0;
+}
+.elgg-admin-notices p {
+	color: #3B8BC9;
+	background-color: #E7F1F9;
+	border: 1px solid #B1D1E9;
+	padding: 15px 20px;
+	border-radius: 3px;
+}
+.elgg-admin-notices a.elgg-admin-notice {
+	float: right;
+	text-decoration: none;
+}
+.elgg-admin-notices a {
+	text-decoration: underline;
+}
+
+.elgg-page-admin .elgg-admin-notices {
+	margin: 0;
+}

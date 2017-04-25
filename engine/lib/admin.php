@@ -96,17 +96,17 @@ function elgg_delete_admin_notice($id) {
 /**
  * Get admin notices. An admin must be logged in since the notices are private.
  *
- * @param int $limit Limit
+ * @param array $options Query options
  *
- * @return array Array of admin notices
+ * @return ElggObject[] Admin notices
  * @since 1.8.0
  */
-function elgg_get_admin_notices($limit = 10) {
-	return _elgg_services()->adminNotices->find($limit);
+function elgg_get_admin_notices(array $options = []) {
+	return _elgg_services()->adminNotices->find($options);
 }
 
 /**
- * Check if an admin notice is currently active.
+ * Check if an admin notice is currently active. (Ignores access)
  *
  * @param string $id The unique ID used to register the notice.
  *
