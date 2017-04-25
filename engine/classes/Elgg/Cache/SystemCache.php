@@ -3,6 +3,7 @@ namespace Elgg\Cache;
 
 use Elgg\Profilable;
 use Elgg\Config;
+use Elgg\ViewsService;
 use ElggFileCache;
 
 /**
@@ -131,12 +132,6 @@ class SystemCache {
 			return;
 		}
 
-		$data = $this->load('view_types');
-		if (!is_string($data)) {
-			return;
-		}
-		$GLOBALS['_ELGG']->view_types = unserialize($data);
-
 		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
 
 		$this->config->set('system_cache_loaded', true);
@@ -159,15 +154,13 @@ class SystemCache {
 
 		// cache system data if enabled and not loaded
 		if (!$this->config->getVolatile('system_cache_loaded')) {
-			$this->save('view_types', serialize($GLOBALS['_ELGG']->view_types));
-
 			_elgg_services()->views->cacheConfiguration($this);
 		}
 	
-		if (!$GLOBALS['_ELGG']->i18n_loaded_from_cache) {
+		if (!_elgg_services()->translator->wasLoadedFromCache()) {
 			_elgg_services()->translator->reloadAllTranslations();
 
-			foreach ($GLOBALS['_ELGG']->translations as $lang => $map) {
+			foreach (_elgg_services()->translator->getLoadedTranslations() as $lang => $map) {
 				$this->save("$lang.lang", serialize($map));
 			}
 		}

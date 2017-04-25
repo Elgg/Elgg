@@ -170,7 +170,9 @@ function developers_decorate_all_translations() {
  * @param string $language Language code like "en"
  */
 function _developers_decorate_translations($language) {
-	foreach ($GLOBALS['_ELGG']->translations[$language] as $key => &$value) {
+	$translations = _elgg_services()->translator->getLoadedTranslations();
+
+	foreach ($translations[$language] as $key => &$value) {
 		$needle = " ($key)";
 		
 		// if $value doesn't already end with " ($key)", append it

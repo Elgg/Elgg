@@ -15,7 +15,7 @@ $params = [
 ];
 
 $simple_cache_warning = '<p class="elgg-text-help">' . elgg_echo('installation:simplecache:description') . '</p>';
-if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
+if (elgg_get_config('_simplecache_enabled_in_settings')) {
 	$params['class'] = 'elgg-state-disabled';
 	$params['label_class'] = 'elgg-state-disabled';
 	

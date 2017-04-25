@@ -160,8 +160,8 @@ class Config implements Services\Config {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getVolatile($name) {
-		return isset($this->config->{$name}) ? $this->config->{$name} : null;
+	public function getVolatile($name, $default = null) {
+		return isset($this->config->{$name}) ? $this->config->{$name} : $default;
 	}
 
 	/**
@@ -255,7 +255,7 @@ class Config implements Services\Config {
 		// normalize commonly needed values
 		$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
+		$CONFIG->_simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
 
 		if (empty($CONFIG->cacheroot)) {
 			$CONFIG->cacheroot = $CONFIG->dataroot;
@@ -271,21 +271,6 @@ class Config implements Services\Config {
 		}
 
 		$this->settings_loaded = true;
-	}
-
-	/**
-	 * Get the raw \stdClass object used for storage.
-	 *
-	 * We need this, for now, to construct some services.
-	 *
-	 * @internal Do not use this plugins or new core code!
-	 * @todo Get rid of this.
-	 *
-	 * @return \stdClass
-	 * @access private
-	 */
-	public function getStorageObject() {
-		return $this->config;
 	}
 
 	/**

@@ -878,17 +878,17 @@ function _elgg_php_exception_handler($exception) {
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 
-	$CONFIG = _elgg_services()->config->getStorageObject();
+	$exception_include = _elgg_services()->config->getVolatile('exception_include');
 
 	try {
 		// allow custom scripts to trigger on exception
 		// $CONFIG->exception_include can be set locally in settings.php
 		// value should be a system path to a file to include
-		if (!empty($CONFIG->exception_include) && is_file($CONFIG->exception_include)) {
+		if ($exception_include && is_file($exception_include)) {
 			ob_start();
 
 			// don't isolate, these scripts may use the local $exception var.
-			include $CONFIG->exception_include;
+			include $exception_include;
 
 			$exception_output = ob_get_clean();
 			
@@ -980,8 +980,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 			break;
 
 		default:
-			$CONFIG = _elgg_services()->config->getStorageObject();
-			if (isset($CONFIG->debug) && $CONFIG->debug === 'NOTICE') {
+			if (_elgg_services()->config->getVolatile('debug') === 'NOTICE') {
 				if (!elgg_log("PHP (errno $errno): $error", 'NOTICE')) {
 					error_log("PHP NOTICE: $error");
 				}
