@@ -283,19 +283,19 @@ Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests.
 .. _Karma: http://karma-runner.github.io/0.8/index.html
 .. _Jasmine: http://pivotal.github.io/jasmine/
 
-You will need to have nodejs and npm installed.
+You will need to have nodejs and yarn installed.
 
 First install all the development dependencies:
 
 .. code::
 
-   npm install
+   yarn
 
 Run through the tests just once and then quit:
 
 .. code::
 
-   npm test
+   yarn test
 
 You can also run tests continuously during development so they run on each save:
 
@@ -310,7 +310,7 @@ You can run the test suite inside Chrome dev tools:
 
 .. code::
 
-   npm run chrome
+   yarn run chrome
 
 This will output a URL like ``http://localhost:9876/``.
 

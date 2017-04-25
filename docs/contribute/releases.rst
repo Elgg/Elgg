@@ -18,7 +18,7 @@ Requirements
 * Commit access to http://github.com/Elgg/Elgg
 * Admin access to https://elgg.org/
 * Access to `Twitter account`_
-* Node.js and NPM installed
+* Node.js and Yarn installed
 * Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
@@ -79,7 +79,7 @@ Install the prerequisites:
 
 .. code:: sh
 
-    npm install elgg-conventional-changelog
+    yarn install elgg-conventional-changelog
     easy_install sphinx
     easy_install sphinx-intl
     easy_install transifex-client
