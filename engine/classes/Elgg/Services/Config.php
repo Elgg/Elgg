@@ -53,11 +53,12 @@ interface Config {
 	 * Get a config value for the current site if it's already loaded. This should be used instead of
 	 * reading directly from global $CONFIG.
 	 *
-	 * @param string $name Name of the configuration value
+	 * @param string $name    Name of the configuration value
+	 * @param mixed  $default Values returned if not set
 	 *
 	 * @return mixed Returns null if value isn't set
 	 */
-	public function getVolatile($name);
+	public function getVolatile($name, $default = null);
 
 	/**
 	 * Set an Elgg configuration value

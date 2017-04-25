@@ -131,15 +131,7 @@ function _elgg_get_initial_viewtype() {
  * @return bool
  */
 function elgg_register_viewtype($viewtype) {
-	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
-		$GLOBALS['_ELGG']->view_types = [];
-	}
-
-	if (!in_array($viewtype, $GLOBALS['_ELGG']->view_types)) {
-		$GLOBALS['_ELGG']->view_types[] = $viewtype;
-	}
-
-	return true;
+	return _elgg_services()->views->registerViewtype($viewtype);
 }
 
 /**
@@ -151,11 +143,7 @@ function elgg_register_viewtype($viewtype) {
  * @since 1.9.0
  */
 function elgg_is_registered_viewtype($viewtype) {
-	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
-		return false;
-	}
-
-	return in_array($viewtype, $GLOBALS['_ELGG']->view_types);
+	return _elgg_services()->views->isRegisteredViewtype($viewtype);
 }
 
 

@@ -353,7 +353,7 @@ class Plugins {
 			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_VIEWS;
 		}
 	
-		if (!empty($GLOBALS['_ELGG']->i18n_loaded_from_cache)) {
+		if (_elgg_services()->translator->wasLoadedFromCache()) {
 			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_LANGUAGES;
 		}
 	

@@ -109,20 +109,24 @@ class ElggUser extends \ElggEntity
 	 * {@inheritdoc}
 	 */
 	protected function create() {
-		global $CONFIG;
-	
 		$guid = parent::create();
-		$name = sanitize_string($this->name);
-		$username = sanitize_string($this->username);
-		$password_hash = sanitize_string($this->password_hash);
-		$email = sanitize_string($this->email);
-		$language = sanitize_string($this->language);
 
-		$query = "INSERT into {$CONFIG->dbprefix}users_entity
+		$db = $this->getDatabase();
+		$query = "
+			INSERT INTO {$db->prefix}users_entity
 			(guid, name, username, password_hash, email, language)
-			values ($guid, '$name', '$username', '$password_hash', '$email', '$language')";
+			values (:guid, :name, :username, :password_hash, :email, :language)
+		";
+		$params = [
+			':guid' => $guid,
+			':name' => (string) $this->name,
+			':username' => (string) $this->username,
+			':password_hash' => (string) $this->password_hash,
+			':email' => (string) $this->email,
+			':language' => (string) $this->language,
+		];
 
-		$result = $this->getDatabase()->insertData($query);
+		$result = $db->insertData($query, $params);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
@@ -135,25 +139,27 @@ class ElggUser extends \ElggEntity
 	 * {@inheritdoc}
 	 */
 	protected function update() {
-		global $CONFIG;
-		
 		if (!parent::update()) {
 			return false;
 		}
 		
-		$guid = (int) $this->guid;
-		$name = sanitize_string($this->name);
-		$username = sanitize_string($this->username);
-		$password_hash = sanitize_string($this->password_hash);
-		$email = sanitize_string($this->email);
-		$language = sanitize_string($this->language);
+		$db = $this->getDatabase();
+		$query = "
+			UPDATE {$db->prefix}users_entity
+			SET name = :name, username = :username,
+			password_hash = :password_hash, email = :email, language = :language
+			WHERE guid = :guid
+		";
+		$params = [
+			':guid' => $this->guid,
+			':name' => (string) $this->name,
+			':username' => (string) $this->username,
+			':password_hash' => (string) $this->password_hash,
+			':email' => (string) $this->email,
+			':language' => (string) $this->language,
+		];
 
-		$query = "UPDATE {$CONFIG->dbprefix}users_entity
-			SET name='$name', username='$username',
-			password_hash='$password_hash', email='$email', language='$language'
-			WHERE guid = $guid";
-
-		return $this->getDatabase()->updateData($query) !== false;
+		return $db->updateData($query, false, $params) !== false;
 	}
 
 	/**

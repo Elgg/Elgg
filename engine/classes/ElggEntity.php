@@ -1659,15 +1659,16 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		global $CONFIG;
-	
 		// Override access only visible entities
 		$old_access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-	
-		$result = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
+
+		$db = $this->getDatabase();
+		$result = $db->updateData("
+			UPDATE {$db->prefix}entities
 			SET enabled = 'yes'
-			WHERE guid = $guid");
+			WHERE guid = $guid
+		");
 
 		$this->deleteMetadata('disable_reason');
 		$this->enableMetadata();

@@ -82,17 +82,6 @@ class Application {
 
 		$services->timer->begin([]);
 
-		/**
-		 * This was introduced in 2.0 in order to remove all internal non-API state from $CONFIG. This will
-		 * be a breaking change, but frees us to refactor in 2.x without fear of plugins depending on
-		 * $CONFIG.
-		 *
-		 * @access private
-		 */
-		if (!isset($GLOBALS['_ELGG'])) {
-			$GLOBALS['_ELGG'] = new \stdClass();
-		}
-
 		$this->engine_dir = dirname(dirname(__DIR__));
 	}
 

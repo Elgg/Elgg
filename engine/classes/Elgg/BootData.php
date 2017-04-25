@@ -43,7 +43,6 @@ class BootData {
 	/**
 	 * Populate the boot data
 	 *
-	 * @param \stdClass      $config   Elgg CONFIG object
 	 * @param \Elgg\Database $db       Elgg database
 	 * @param EntityTable    $entities Entities service
 	 * @param Plugins        $plugins  Plugins service
@@ -51,7 +50,7 @@ class BootData {
 	 * @return void
 	 * @throws \InstallationException
 	 */
-	public function populate(\stdClass $config, Database $db, EntityTable $entities, Plugins $plugins) {
+	public function populate(Database $db, EntityTable $entities, Plugins $plugins) {
 		// get subtypes
 		$rows = $db->getData("
 			SELECT *
@@ -164,7 +163,7 @@ class BootData {
 	}
 
 	/**
-	 * Get config values to merge into $CONFIG
+	 * Get config values to merge into the config service
 	 *
 	 * @return array
 	 */

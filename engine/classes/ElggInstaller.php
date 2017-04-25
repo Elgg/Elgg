@@ -68,11 +68,6 @@ class ElggInstaller {
 		if (!isset($CONFIG)) {
 			$CONFIG = new stdClass;
 		}
-		
-		global $_ELGG;
-		if (!isset($_ELGG)) {
-			$_ELGG = new stdClass;
-		}
 
 		$this->CONFIG = $CONFIG;
 
@@ -452,13 +447,6 @@ class ElggInstaller {
 				],
 		];
 
-		// if Apache, we give user option of having Elgg create data directory
-		//if (ElggRewriteTester::guessWebServer() == 'apache') {
-		//	$formVars['dataroot']['type'] = 'combo';
-		//	$GLOBALS['_ELGG']->translations['en']['install:settings:help:dataroot'] =
-		//			$GLOBALS['_ELGG']->translations['en']['install:settings:help:dataroot:apache'];
-		//}
-
 		if ($this->isAction) {
 			do {
 				//if (!$this->createDataDirectory($submissionVars, $formVars)) {
@@ -522,6 +510,8 @@ class ElggInstaller {
 				'required' => true,
 				],
 		];
+
+		$translator = _elgg_services()->translator;
 		
 		if ($this->isAction) {
 			do {
@@ -533,18 +523,22 @@ class ElggInstaller {
 					break;
 				}
 
-				system_message(_elgg_services()->translator->translate('install:success:admin'));
+				system_message($translator->translate('install:success:admin'));
 
 				$this->continueToNextStep('admin');
 			} while (false);  // PHP doesn't support breaking out of if statements
 		}
 
-		// bit of a hack to get the password help to show right number of characters
-		
-		$lang = _elgg_services()->translator->getCurrentLanguage();
-		$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'] =
-				sprintf($GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'],
-				$this->CONFIG->min_password_length);
+		// Bit of a hack to get the password help to show right number of characters
+		// We burn the value into the stored translation.
+		$lang = $translator->getCurrentLanguage();
+		$translations = $translator->getLoadedTranslations();
+		$translator->addTranslation($lang, [
+			'install:admin:help:password1' => sprintf(
+				$translations[$lang]['install:admin:help:password1'],
+				$this->CONFIG->min_password_length
+			),
+		]);
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
 

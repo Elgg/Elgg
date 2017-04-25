@@ -69,9 +69,14 @@ class AccessCollections {
 	protected $membership_table;
 
 	/**
+	 * @var bool
+	 */
+	protected $init_complete = false;
+
+	/**
 	 * Constructor
 	 *
-	 * @param Config                  $config     Config
+	 * @param Conf                    $config     Config
 	 * @param Database                $db         Database
 	 * @param EntityTable             $entities   Entity table
 	 * @param ElggStaticVariableCache $cache      Access cache
@@ -97,6 +102,15 @@ class AccessCollections {
 
 		$this->table = "{$this->db->prefix}access_collections";
 		$this->membership_table = "{$this->db->prefix}access_collection_membership";
+	}
+
+	/**
+	 * Mark the access system as initialized
+	 *
+	 * @return void
+	 */
+	public function markInitComplete() {
+		$this->init_complete = true;
 	}
 
 	/**
@@ -148,8 +162,6 @@ class AccessCollections {
 	 * @return array An array of access collections ids
 	 */
 	public function getAccessArray($user_guid = 0, $flush = false) {
-		global $init_finished;
-
 		$cache = $this->access_cache;
 
 		if ($flush) {
@@ -202,7 +214,7 @@ class AccessCollections {
 				}
 			}
 
-			if ($init_finished) {
+			if ($this->init_complete) {
 				$cache[$hash] = $access_array;
 			}
 		}
@@ -415,7 +427,6 @@ class AccessCollections {
 	 * @return array List of access permissions
 	 */
 	public function getWriteAccessArray($user_guid = 0, $flush = false, array $input_params = []) {
-		global $init_finished;
 		$cache = $this->access_cache;
 
 		if ($flush) {
@@ -447,7 +458,7 @@ class AccessCollections {
 				}
 			}
 
-			if ($init_finished) {
+			if ($this->init_complete) {
 				$cache[$hash] = $access_array;
 			}
 		}

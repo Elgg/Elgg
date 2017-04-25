@@ -5,34 +5,10 @@ namespace Elgg\Assets;
 class ExternalFilesTest extends \Elgg\TestCase {
 
 	public function testPreservesInputConfigData() {
-		$config = new \stdClass();
-		$list = new \ElggPriorityList();
-		$obj1 = (object) array(
-					'name' => 'bar1',
-					'url' => '#',
-					'loaded' => false,
-					'location' => 'custom_location'
-		);
-		$obj2 = (object) array(
-					'name' => 'bar2',
-					'url' => 'http://elgg.org/',
-					'loaded' => true,
-					'location' => 'custom_location'
-		);
-
-		$list->add($obj1, 600);
-		$list->add($obj2, 300);
-		$GLOBALS['_ELGG']->externals = array(
-			'foo' => $list
-		);
-		$GLOBALS['_ELGG']->externals_map = array(
-			'foo' => array(
-				'bar1' => $obj1,
-				'bar2' => $obj2,
-			)
-		);
-
-		$externalFiles = new \Elgg\Assets\ExternalFiles($config);
+		$externalFiles = new \Elgg\Assets\ExternalFiles();
+		$externalFiles->register('foo', 'bar1', '#', 'custom_location', 600);
+		$externalFiles->register('foo', 'bar2', 'http://elgg.org/', 'custom_location', 300);
+		$externalFiles->load('foo', 'bar2');
 
 		$this->assertEquals(array(
 			300 => 'http://elgg.org/'

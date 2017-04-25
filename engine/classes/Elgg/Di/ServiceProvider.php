@@ -172,7 +172,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('db', function(ServiceProvider $c) {
 			// gonna need dbprefix from settings
 			$c->config->loadSettingsFile();
-			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
+			$db_config = \Elgg\Database\Config::fromElggConfig($c->config);
 
 			// we inject the logger in _elgg_engine_boot()
 			$db = new \Elgg\Database($db_config);
@@ -218,9 +218,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $events;
 		});
 
-		$this->setFactory('externalFiles', function(ServiceProvider $c) {
-			return new \Elgg\Assets\ExternalFiles($c->config->getStorageObject());
-		});
+		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);
 
 		$this->setFactory('fileCache', function(ServiceProvider $c) {
 			return new \ElggFileCache($c->config->getCachePath() . 'system_cache/');

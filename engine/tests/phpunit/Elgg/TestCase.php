@@ -53,7 +53,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 * Bootstraps test suite
 	 *
 	 * @global stdClass $CONFIG Global config
-	 * @global stdClass $_ELGG  Global vars
 	 * @return void
 	 */
 	public static function bootstrap() {
