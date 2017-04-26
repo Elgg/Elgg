@@ -4,6 +4,7 @@ namespace Elgg;
 
 use DateTime;
 use Elgg\Cache\Pool\InMemory;
+use Elgg\Database\SiteSecret;
 use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Http\Request;
@@ -71,7 +72,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 		$sp->setValue('mailer', new InMemoryTransport());
 
-		$sp->siteSecret->setTestingSecret('z1234567890123456789012345678901');
+		$sp->setValue('siteSecret', new SiteSecret('z1234567890123456789012345678901'));
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();

@@ -394,8 +394,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			$c->config->setConfigTable($c->configTable);
-			return new \Elgg\Database\SiteSecret($c->config);
+			return \Elgg\Database\SiteSecret::load($c->config, $c->configTable);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
