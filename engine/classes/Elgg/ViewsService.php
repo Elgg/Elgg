@@ -82,11 +82,6 @@ class ViewsService {
 	private $view_types = [];
 
 	/**
-	 * @var string Absolute path of the views directory
-	 */
-	public $view_path;
-
-	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks  The hooks service

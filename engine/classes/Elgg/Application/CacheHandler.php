@@ -96,7 +96,7 @@ class CacheHandler {
 		}
 
 		// we can't use $config->get yet. It fails before the core is booted
-		if (!$config->getVolatile('simplecache_enabled')) {
+		if (!$config->get('simplecache_enabled')) {
 			$this->application->bootCore();
 
 			if (!$this->isCacheableView($view)) {
@@ -298,7 +298,7 @@ class CacheHandler {
 	protected function getProcessedView($view, $viewtype) {
 		$content = $this->renderView($view, $viewtype);
 
-		if ($this->config->getVolatile('simplecache_enabled')) {
+		if ($this->config->get('simplecache_enabled')) {
 			$hook_name = 'simplecache:generate';
 		} else {
 			$hook_name = 'cache:generate';

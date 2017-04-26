@@ -118,11 +118,11 @@ class ServeFileHandler {
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
 		
-		$sendfile_type = $this->config->getVolatile('X-Sendfile-Type');
+		$sendfile_type = $this->config->get('X-Sendfile-Type');
 		if ($sendfile_type) {
 			$request->headers->set('X-Sendfile-Type', $sendfile_type);
 
-			$mapping = (string) $this->config->getVolatile('X-Accel-Mapping');
+			$mapping = (string) $this->config->get('X-Accel-Mapping');
 			$request->headers->set('X-Accel-Mapping', $mapping);
 
 			$response->trustXSendfileTypeHeader();

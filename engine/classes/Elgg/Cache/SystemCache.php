@@ -86,7 +86,7 @@ class SystemCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool) $this->config->getVolatile('system_cache_enabled');
+		return (bool) $this->config->get('system_cache_enabled');
 	}
 	
 	/**
@@ -153,7 +153,7 @@ class SystemCache {
 		}
 
 		// cache system data if enabled and not loaded
-		if (!$this->config->getVolatile('system_cache_loaded')) {
+		if (!$this->config->get('system_cache_loaded')) {
 			_elgg_services()->views->cacheConfiguration($this);
 		}
 	

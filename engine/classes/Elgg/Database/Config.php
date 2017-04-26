@@ -53,7 +53,7 @@ class Config {
 	public static function fromElggConfig(ElggConfig $config) {
 		$obj = new \stdClass();
 		foreach (array_keys(get_class_vars(__CLASS__)) as $prop) {
-			$obj->{$prop} = $config->getVolatile($prop);
+			$obj->{$prop} = $config->get($prop);
 		}
 		return new self($obj);
 	}

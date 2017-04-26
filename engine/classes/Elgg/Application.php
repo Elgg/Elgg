@@ -230,7 +230,7 @@ class Application {
 			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
 		}
 
-		if ($config->getVolatile('boot_complete')) {
+		if ($config->get('boot_complete')) {
 			return;
 		}
 
@@ -579,7 +579,7 @@ class Application {
 		$request = $this->services->request;
 
 		$config->loadSettingsFile();
-		if (!$config->getVolatile('wwwroot')) {
+		if (!$config->get('wwwroot')) {
 			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
 			$config->set('wwwroot', $www_root);
 		}
