@@ -36,6 +36,11 @@ class Application {
 	/**
 	 * @var bool
 	 */
+	private static $core_loaded = false;
+
+	/**
+	 * @var bool
+	 */
 	private static $testing_app;
 
 	/**
@@ -107,7 +112,7 @@ class Application {
 	 * @internal
 	 */
 	public function loadCore() {
-		if (function_exists('elgg')) {
+		if (self::$core_loaded) {
 			return;
 		}
 
@@ -175,8 +180,10 @@ class Application {
 
 			// include library files, capturing setup functions
 			foreach ($lib_files as $file) {
-				$setup = (require_once $lib_dir->getPath($file));
-
+				$setup = (include_once $lib_dir->getPath($file));
+				if (!$setup) {
+					throw new \InstallationException("Elgg installation is missing file engine/lib/$file");
+				}
 				if ($setup instanceof \Closure) {
 					$setups[$file] = $setup;
 				}
@@ -196,6 +203,8 @@ class Application {
 				$func($events, $hooks);
 			}
 		});
+
+		self::$core_loaded = true;
 	}
 
 	/**
@@ -245,8 +254,6 @@ class Application {
 		// in case not loaded already
 		$this->loadCore();
 
-		$events = $this->services->events;
-
 		// Connect to database, load language files, load configuration, init session
 		$this->services->boot->boot();
 		elgg_views_boot();
@@ -293,6 +300,8 @@ class Application {
 		}
 
 		$this->allowPathRewrite();
+
+		$events = $this->services->events;
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');
@@ -352,6 +361,7 @@ class Application {
 			});
 
 			self::$_instance = new self(new Di\ServiceProvider(new Config()));
+			self::$_instance->initErrorHandling();
 		}
 
 		return self::$_instance;
@@ -422,6 +432,18 @@ class Application {
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
+	}
+
+	/**
+	 * Use this application to handle errors and exceptions
+	 *
+	 * @access private
+	 * @return void
+	 * @internal
+	 */
+	public function initErrorHandling() {
+		set_error_handler([$this, 'handleErrors']);
+		set_exception_handler([$this, 'handleExceptions']);
 	}
 
 	/**
@@ -600,5 +622,160 @@ class Application {
 	 */
 	public static function isTestingApplication() {
 		return (bool) self::$testing_app;
+	}
+
+	/**
+	 * Intercepts, logs, and displays uncaught exceptions.
+	 *
+	 * To use a viewtype other than failsafe, create the views:
+	 *  <viewtype>/messages/exceptions/admin_exception
+	 *  <viewtype>/messages/exceptions/exception
+	 * See the json viewtype for an example.
+	 *
+	 * @warning This function should never be called directly.
+	 *
+	 * @see http://www.php.net/set-exception-handler
+	 *
+	 * @param \Exception $exception The exception being handled
+	 *
+	 * @return void
+	 * @access private
+	 */
+	public function handleExceptions(\Exception $exception) {
+		$timestamp = time();
+		error_log("Exception at time $timestamp: $exception");
+
+		// Wipe any existing output buffer
+		ob_end_clean();
+
+		// make sure the error isn't cached
+		header("Cache-Control: no-cache, must-revalidate", true);
+		header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+
+		if (!self::$core_loaded) {
+			http_response_code(500);
+			echo "Exception loading Elgg core. Check log at time $timestamp";
+			return;
+		}
+
+		try {
+			$exception_include = $this->services->config->get('exception_include');
+
+			// allow custom scripts to trigger on exception
+			// $CONFIG->exception_include can be set locally in settings.php
+			// value should be a system path to a file to include
+			if ($exception_include && is_file($exception_include)) {
+				ob_start();
+
+				// don't isolate, these scripts may use the local $exception var.
+				include $exception_include;
+
+				$exception_output = ob_get_clean();
+
+				// if content is returned from the custom handler we will output
+				// that instead of our default failsafe view
+				if (!empty($exception_output)) {
+					echo $exception_output;
+					exit;
+				}
+			}
+
+			if (elgg_is_xhr()) {
+				elgg_set_viewtype('json');
+				$response = new \Symfony\Component\HttpFoundation\JsonResponse(null, 500);
+			} else {
+				elgg_set_viewtype('failsafe');
+				$response = new \Symfony\Component\HttpFoundation\Response('', 500);
+			}
+
+			if (elgg_is_admin_logged_in()) {
+				$body = elgg_view("messages/exceptions/admin_exception", [
+					'object' => $exception,
+					'ts' => $timestamp
+				]);
+			} else {
+				$body = elgg_view("messages/exceptions/exception", [
+					'object' => $exception,
+					'ts' => $timestamp
+				]);
+			}
+
+			$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
+			$response->send();
+		} catch (\Exception $e) {
+			$timestamp = time();
+			$message = $e->getMessage();
+			http_response_code(500);
+			echo "Fatal error in exception handler. Check log for Exception at time $timestamp";
+			error_log("Exception at time $timestamp : fatal error in exception handler : $message");
+		}
+	}
+
+	/**
+	 * Intercepts catchable PHP errors.
+	 *
+	 * @warning This function should never be called directly.
+	 *
+	 * @internal
+	 * For catchable fatal errors, throws an Exception with the error.
+	 *
+	 * For non-fatal errors, depending upon the debug settings, either
+	 * log the error or ignore it.
+	 *
+	 * @see http://www.php.net/set-error-handler
+	 *
+	 * @param int    $errno    The level of the error raised
+	 * @param string $errmsg   The error message
+	 * @param string $filename The filename the error was raised in
+	 * @param int    $linenum  The line number the error was raised at
+	 * @param array  $vars     An array that points to the active symbol table where error occurred
+	 *
+	 * @return true
+	 * @throws \Exception
+	 * @access private
+	 */
+	public function handleErrors($errno, $errmsg, $filename, $linenum, $vars) {
+		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
+
+		$log = function ($message, $level) {
+			if (self::$core_loaded) {
+				return elgg_log($message, $level);
+			}
+
+			return false;
+		};
+
+		switch ($errno) {
+			case E_USER_ERROR:
+				if (!$log("PHP: $error", 'ERROR')) {
+					error_log("PHP ERROR: $error");
+				}
+				if (self::$core_loaded) {
+					register_error("ERROR: $error");
+				}
+
+				// Since this is a fatal error, we want to stop any further execution but do so gracefully.
+				throw new \Exception($error);
+				break;
+
+			case E_WARNING :
+			case E_USER_WARNING :
+			case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
+
+				// check if the error wasn't suppressed by the error control operator (@)
+				if (error_reporting() && !$log("PHP: $error", 'WARNING')) {
+					error_log("PHP WARNING: $error");
+				}
+				break;
+
+			default:
+				if (_elgg_services()->config->get('debug') === 'NOTICE') {
+					if (!$log("PHP (errno $errno): $error", 'NOTICE')) {
+						error_log("PHP NOTICE: $error");
+					}
+				}
+		}
+
+		return true;
 	}
 }
