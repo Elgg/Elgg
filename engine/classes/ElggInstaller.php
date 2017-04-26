@@ -120,7 +120,9 @@ class ElggInstaller {
 
 		$params = $this->getPostVariables();
 
-		$this->$step($params);
+		$method = "run" . ucwords($step);
+
+		$this->$method($params);
 	}
 
 	/**
@@ -153,8 +155,6 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	public function batchInstall(array $params, $createHtaccess = false) {
-		
-
 		restore_error_handler();
 		restore_exception_handler();
 
@@ -263,7 +263,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function welcome($vars) {
+	protected function runWelcome($vars) {
 		$this->render('welcome');
 	}
 
@@ -276,7 +276,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function requirements($vars) {
+	protected function runRequirements($vars) {
 
 		$report = [];
 
@@ -323,7 +323,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function database($submissionVars) {
+	protected function runDatabase($submissionVars) {
 
 		$formVars = [
 			'dbuser' => [
@@ -424,7 +424,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function settings($submissionVars) {
+	protected function runSettings($submissionVars) {
 		$formVars = [
 			'sitename' => [
 				'type' => 'text',
@@ -477,7 +477,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function admin($submissionVars) {
+	protected function runAdmin($submissionVars) {
 		$formVars = [
 			'displayname' => [
 				'type' => 'text',
@@ -546,7 +546,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function complete() {
+	protected function runComplete() {
 
 		$params = [];
 		if ($this->autoLogin) {
