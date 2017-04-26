@@ -218,7 +218,7 @@ abstract class ElggExtender extends \ElggData {
 		// @todo remove when elgg_register_extender_url_handler() has been removed
 		if ($this->id) {
 			$function = "";
-			$handlers = _elgg_services()->config->getVolatile('extender_url_handler');
+			$handlers = _elgg_services()->config->get('extender_url_handler');
 			if (isset($handlers[$type][$subtype])) {
 				$function = $handlers[$type][$subtype];
 			}

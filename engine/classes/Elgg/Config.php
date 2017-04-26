@@ -136,31 +136,6 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function get($name, $default = null) {
-		$name = trim($name);
-	
-		if (isset($this->config->$name)) {
-			return $this->config->$name;
-		}
-
-		if (!empty($this->config->site_config_loaded)) {
-			return $default;
-		}
-		
-		$value = $this->getConfigTable()->get($name);
-
-		if ($value === null) {
-			return $default;
-		}
-	
-		$this->config->$name = $value;
-		
-		return $value;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getVolatile($name, $default = null) {
 		return isset($this->config->{$name}) ? $this->config->{$name} : $default;
 	}
 
@@ -168,7 +143,6 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function set($name, $value) {
-		$name = trim($name);
 		$this->config->$name = $value;
 	}
 
@@ -176,8 +150,6 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function save($name, $value) {
-		$name = trim($name);
-	
 		if (strlen($name) > 255) {
 			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
@@ -194,8 +166,6 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function remove($name) {
-		$name = trim($name);
-
 		$result = $this->getConfigTable()->remove($name);
 
 		unset($this->config->$name);
@@ -226,7 +196,7 @@ class Config implements Services\Config {
 
 		// No settings means a fresh install
 		if (!is_file($path)) {
-			if ($this->getVolatile('installer_running')) {
+			if ($this->get('installer_running')) {
 				$this->settings_loaded = true;
 				return;
 			}

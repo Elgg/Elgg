@@ -118,7 +118,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			// \Elgg\Config::get() falls back to loading config values from database
 			// for undefined keys. This flag ensures we do not attempt reading data
 			// from database during tests
-			'site_config_loaded' => true,
 			'icon_sizes' => array(
 				'topbar' => array('w' => 16, 'h' => 16, 'square' => true, 'upscale' => true),
 				'tiny' => array('w' => 25, 'h' => 25, 'square' => true, 'upscale' => true),

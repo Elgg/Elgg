@@ -878,7 +878,7 @@ function _elgg_php_exception_handler($exception) {
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 
-	$exception_include = _elgg_services()->config->getVolatile('exception_include');
+	$exception_include = _elgg_services()->config->get('exception_include');
 
 	try {
 		// allow custom scripts to trigger on exception
@@ -980,7 +980,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 			break;
 
 		default:
-			if (_elgg_services()->config->getVolatile('debug') === 'NOTICE') {
+			if (_elgg_services()->config->get('debug') === 'NOTICE') {
 				if (!elgg_log("PHP (errno $errno): $error", 'NOTICE')) {
 					error_log("PHP NOTICE: $error");
 				}
@@ -1914,7 +1914,7 @@ function _elgg_init() {
 		return $result;
 	});
 
-	if (_elgg_services()->config->getVolatile('enable_profiling')) {
+	if (_elgg_services()->config->get('enable_profiling')) {
 		/**
 		 * @see \Elgg\Profiler::handlePageOutput
 		 */

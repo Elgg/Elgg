@@ -353,6 +353,7 @@ Miscellaneous API changes
  * The script ``engine/start.php`` is removed.
  * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``.
  * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used.
+ * Config functions like ``elgg_get_config`` no longer trim keys.
 
 JavaScript hook calling order may change
 ----------------------------------------

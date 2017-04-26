@@ -58,7 +58,7 @@ class BootService {
 		_elgg_services()->config->getCookieConfig();
 
 		$config->set('site_guid', 1);
-		if ($config->getVolatile('boot_cache_ttl') === null) {
+		if ($config->get('boot_cache_ttl') === null) {
 			$config->set('boot_cache_ttl', self::DEFAULT_BOOT_CACHE_TTL);
 		}
 
@@ -79,7 +79,7 @@ class BootService {
 		$config->set('site', $site);
 		$config->set('sitename', $site->name);
 		$config->set('sitedescription', $site->description);
-		$config->set('url', $config->getVolatile('wwwroot'));
+		$config->set('url', $config->get('wwwroot'));
 
 		_elgg_services()->subtypeTable->setCachedValues($data->getSubtypeData());
 
@@ -91,7 +91,7 @@ class BootService {
 
 		_elgg_services()->pluginSettingsCache->setCachedValues($data->getPluginSettings());
 
-		if (!$config->getVolatile('_simplecache_enabled_in_settings')) {
+		if (!$config->get('_simplecache_enabled_in_settings')) {
 			$simplecache_enabled = $configs_cache['simplecache_enabled'];
 			$config->set('simplecache_enabled', ($simplecache_enabled === false) ? 1 : $simplecache_enabled);
 		}
@@ -102,16 +102,14 @@ class BootService {
 		// needs to be set before [init, system] for links in html head
 		$config->set('lastcache', (int) $configs_cache['simplecache_lastupdate']);
 
-		if ($config->getVolatile('debug')) {
-			_elgg_services()->logger->setLevel($config->getVolatile('debug'));
+		if ($config->get('debug')) {
+			_elgg_services()->logger->setLevel($config->get('debug'));
 			_elgg_services()->logger->setDisplay(true);
 		}
 
-		_elgg_services()->views->view_path = \Elgg\Application::elggDir()->getPath("/views/");
-
 		// finish boot sequence
 		_elgg_session_boot();
-		if ($config->getVolatile('system_cache_enabled')) {
+		if ($config->get('system_cache_enabled')) {
 			_elgg_services()->systemCache->loadAll();
 		}
 
@@ -123,9 +121,6 @@ class BootService {
 		if ($user_guid) {
 			_elgg_services()->metadataCache->populateFromEntities([$user_guid]);
 		}
-
-		// gives hint to get() how to approach missing values
-		$config->set('site_config_loaded', true);
 
 		// invalidate on some actions just in case other invalidation triggers miss something
 		_elgg_services()->hooks->registerHandler('action', 'all', function ($action) {
@@ -162,7 +157,7 @@ class BootService {
 	private function getBootData(Config $config, Database $db) {
 		$config->set('_boot_cache_hit', false);
 
-		if (!$config->getVolatile('boot_cache_ttl')) {
+		if (!$config->get('boot_cache_ttl')) {
 			$data = new BootData();
 			$data->populate($db, _elgg_services()->entityTable, _elgg_services()->plugins);
 			return $data;
@@ -175,7 +170,7 @@ class BootService {
 			$data = new BootData();
 			$data->populate($db, _elgg_services()->entityTable, _elgg_services()->plugins);
 			$item->set($data);
-			$item->expiresAfter($config->getVolatile('boot_cache_ttl'));
+			$item->expiresAfter($config->get('boot_cache_ttl'));
 			$item->save();
 		} else {
 			$config->set('_boot_cache_hit', true);
@@ -192,14 +187,14 @@ class BootService {
 	 * @return \Stash\Interfaces\ItemInterface
 	 */
 	private function getStashItem(Config $config) {
-		if ($config->getVolatile('memcache') && class_exists('Memcache')) {
+		if ($config->get('memcache') && class_exists('Memcache')) {
 			$options = [];
-			if ($config->getVolatile('memcache_servers')) {
-				$options['servers'] = $config->getVolatile('memcache_servers');
+			if ($config->get('memcache_servers')) {
+				$options['servers'] = $config->get('memcache_servers');
 			}
 			$driver = new Memcache($options);
 		} else {
-			if (!$config->getVolatile('dataroot')) {
+			if (!$config->get('dataroot')) {
 				// we're in the installer
 				$driver = new BlackHole();
 			} else {

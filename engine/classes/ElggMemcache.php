@@ -166,7 +166,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 * @return void
 	 */
 	public function setNamespace($namespace = "default") {
-		$config_prefix = _elgg_services()->config->getVolatile('memcache_namespace_prefix');
+		$config_prefix = _elgg_services()->config->get('memcache_namespace_prefix');
 		if ($config_prefix) {
 			$namespace = $config_prefix . $namespace;
 		}

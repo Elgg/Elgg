@@ -37,10 +37,9 @@ interface Config {
 	public function getCachePath();
 
 	/**
-	 * Get an Elgg configuration value, possibly loading it from the DB's config table
+	 * Get an Elgg configuration value if it's been set or loaded during the boot process.
 	 *
-	 * Before application boot, it may be unsafe to call get() for some values. You should use
-	 * getVolatile() before system boot.
+	 * Before \Elgg\BootService::boot, values from the database will not be present.
 	 *
 	 * @param string $name    Name of the configuration value
 	 * @param mixed  $default Values returned if not set
@@ -48,17 +47,6 @@ interface Config {
 	 * @return mixed Configuration value or default if it does not exist
 	 */
 	public function get($name, $default = null);
-
-	/**
-	 * Get a config value for the current site if it's already loaded. This should be used instead of
-	 * reading directly from global $CONFIG.
-	 *
-	 * @param string $name    Name of the configuration value
-	 * @param mixed  $default Values returned if not set
-	 *
-	 * @return mixed Returns null if value isn't set
-	 */
-	public function getVolatile($name, $default = null);
 
 	/**
 	 * Set an Elgg configuration value
