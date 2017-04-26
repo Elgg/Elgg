@@ -426,7 +426,7 @@ class RouterTest extends \Elgg\TestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertEquals(elgg_view('response', [], false, false, 'json'), $response->getContent());
+		$this->assertEquals(elgg_view('response', [], 'json'), $response->getContent());
 		$this->assertContains('application/json', $response->headers->get('Content-Type'));
 		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
@@ -672,7 +672,7 @@ class RouterTest extends \Elgg\TestCase {
 		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		// no forward, so API outputs view contents
-		$this->assertEquals(elgg_view('response', [], false, false, 'json'), $response->getContent());
+		$this->assertEquals(elgg_view('response', [], 'json'), $response->getContent());
 	}
 
 	public function testCanRespondToAjaxRequestForPageThatForwards() {

@@ -337,6 +337,7 @@ Miscellaneous API changes
  * ``ElggUser::$password`` no longer exists as an attribute, nor is it used for authentication
  * ``elgg_get_widget_types`` no longer supports ``$exact`` as the 2nd argument
  * ``elgg_instanceof`` no longer supports the fourth ``class`` argument
+ * ``elgg_view``: The 3rd and 4th (unused) arguments have been removed. If you use the ``$viewtype`` argument, you must update your usage.
  * ``elgg_view_icon`` no longer supports ``true`` as the 2nd argument
  * ``elgg_list_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
