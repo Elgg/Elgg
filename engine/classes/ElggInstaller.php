@@ -1349,6 +1349,7 @@ class ElggInstaller {
 	protected function installDatabase() {
 		try {
 			_elgg_services()->db->runSqlScript(\Elgg\Application::elggDir()->getPath("/engine/schema/mysql.sql"));
+			init_site_secret();
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
 			if (strpos($msg, 'already exists')) {

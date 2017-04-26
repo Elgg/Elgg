@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Database\SiteSecret;
 use Elgg\Filesystem\Directory\Local;
 use Stash\Driver\BlackHole;
 use Stash\Driver\FileSystem;
@@ -86,6 +87,9 @@ class BootService {
 		foreach ($data->getConfigValues() as $key => $value) {
 			$config->set($key, $value);
 		}
+
+		// set this up right away so we get it removed from config and know if it's going to fail
+		_elgg_services()->siteSecret->get();
 
 		_elgg_services()->plugins->setBootPlugins($data->getActivePlugins());
 
