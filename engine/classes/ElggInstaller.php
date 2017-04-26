@@ -79,9 +79,6 @@ class ElggInstaller {
 
 		elgg_set_viewtype('installation');
 
-		set_error_handler('_elgg_php_error_handler');
-		set_exception_handler('_elgg_php_exception_handler');
-
 		_elgg_services()->config->set('simplecache_enabled', false);
 		_elgg_services()->translator->registerTranslations(\Elgg\Application::elggDir()->getPath("/install/languages/"), true);
 		_elgg_services()->views->registerPluginViews(\Elgg\Application::elggDir()->getPath("/"));
@@ -769,51 +766,10 @@ class ElggInstaller {
 
 		if ($stepIndex > $dbIndex) {
 			// once the database has been created, load rest of engine
-			
-			$lib_dir = \Elgg\Application::elggDir()->chroot('/engine/lib/');
+
+			// @todo we already use Application::loadCore in the constructor. Why not can this whole block be replaced with elgg()->bootCore()?
 
 			$this->loadSettingsFile();
-
-			$lib_files = [
-				// these want to be loaded first apparently?
-				'autoloader.php',
-				'database.php',
-				'actions.php',
-
-				'admin.php',
-				'annotations.php',
-				'cron.php',
-				'entities.php',
-				'extender.php',
-				'filestore.php',
-				'group.php',
-				'mb_wrapper.php',
-				'memcache.php',
-				'metadata.php',
-				'metastrings.php',
-				'navigation.php',
-				'notification.php',
-				'objects.php',
-				'pagehandler.php',
-				'pam.php',
-				'plugins.php',
-				'private_settings.php',
-				'relationships.php',
-				'river.php',
-				'sites.php',
-				'statistics.php',
-				'tags.php',
-				'user_settings.php',
-				'users.php',
-				'upgrade.php',
-				'widgets.php',
-			];
-
-			foreach ($lib_files as $file) {
-				if (!include_once($lib_dir->getPath($file))) {
-					throw new InstallationException('InstallationException:MissingLibrary', [$file]);
-				}
-			}
 
 			_elgg_services()->db->setupConnections();
 			_elgg_services()->translator->registerTranslations(\Elgg\Application::elggDir()->getPath("/languages/"));

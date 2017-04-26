@@ -33,10 +33,6 @@ class BootService {
 	 * @return void
 	 */
 	public function boot() {
-		// Register the error handlers
-		set_error_handler('_elgg_php_error_handler');
-		set_exception_handler('_elgg_php_exception_handler');
-
 		$db = _elgg_services()->db;
 
 		// we inject the logger here to allow use of DB without loading core
