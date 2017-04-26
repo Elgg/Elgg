@@ -326,15 +326,13 @@ function elgg_list_views($viewtype = 'default') {
  *
  * @param string  $view     The name and location of the view to use
  * @param array   $vars     Variables to pass to the view.
- * @param boolean $ignore1  This argument is ignored and will be removed eventually
- * @param boolean $ignore2  This argument is ignored and will be removed eventually
  * @param string  $viewtype If set, forces the viewtype for the elgg_view call to be
  *                          this value (default: standard detection)
  *
  * @return string The parsed view
  */
-function elgg_view($view, $vars = [], $ignore1 = false, $ignore2 = false, $viewtype = '') {
-	return _elgg_services()->views->renderView($view, $vars, $ignore1, $viewtype);
+function elgg_view($view, $vars = [], $viewtype = '') {
+	return _elgg_services()->views->renderView($view, $vars, $viewtype);
 }
 
 /**
@@ -516,7 +514,7 @@ function elgg_view_resource($name, array $vars = []) {
 	}
 
 	if (elgg_get_viewtype() !== 'default' && elgg_view_exists($view, 'default')) {
-		return _elgg_services()->views->renderView($view, $vars, false, 'default');
+		return _elgg_services()->views->renderView($view, $vars, 'default');
 	}
 
 	_elgg_services()->logger->error("The view $view is missing.");
@@ -926,13 +924,11 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  * @param array       $vars   Array of variables to pass to the entity view.
  *      'full_view'        Whether to show a full or condensed view. (Default: true)
  *      'item_view'        Alternative view used to render this entity
- * @param boolean     $bypass Ignored and will be removed eventually
- * @param boolean     $debug  Complain if views are missing
  *
  * @return string HTML to display or false
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(\ElggEntity $entity, array $vars = [], $bypass = false, $debug = false) {
+function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof \ElggEntity)) {
@@ -964,7 +960,7 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = [], $bypass = false
 	$contents = '';
 	foreach ($entity_views as $view) {
 		if (elgg_view_exists($view)) {
-			$contents = elgg_view($view, $vars, $bypass, $debug);
+			$contents = elgg_view($view, $vars);
 			break;
 		}
 	}
@@ -1041,12 +1037,10 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
  * @param \ElggAnnotation $annotation The annotation to display
  * @param array           $vars       Variable array for view.
  *      'item_view'  Alternative view used to render an annotation
- * @param bool            $bypass     Ignored and will be removed eventually
- * @param bool            $debug      Complain if views are missing
  *
  * @return string/false Rendered annotation
  */
-function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = [], $bypass = false, $debug = false) {
+function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
 	elgg_register_rss_link();
 
 	$defaults = [
@@ -1070,7 +1064,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = [], $by
 	$contents = '';
 	foreach ($annotation_views as $view) {
 		if (elgg_view_exists($view)) {
-			$contents = elgg_view($view, $vars, $bypass, $debug);
+			$contents = elgg_view($view, $vars);
 			break;
 		}
 	}

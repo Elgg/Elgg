@@ -10,7 +10,7 @@ $item = $vars['item'];
 $output = elgg_view($item->getView(), $vars);
 
 if (empty($output)) {
-	$output = elgg_view($item->getView(), $vars, false, false, 'default');
+	$output = elgg_view($item->getView(), $vars, 'default');
 }
 
 $rss_item = <<<__ITEM
