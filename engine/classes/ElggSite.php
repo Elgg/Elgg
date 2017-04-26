@@ -481,9 +481,7 @@ class ElggSite extends \ElggEntity {
 				elgg_register_page_handler('', '_elgg_walled_garden_index');
 
 				if (!$this->isPublicPage()) {
-					if (!elgg_is_xhr()) {
-						_elgg_services()->session->set('last_forward_from', current_page_url());
-					}
+					_elgg_services()->redirects->setLastForwardFrom();
 					register_error(_elgg_services()->translator->translate('loggedinrequired'));
 					forward('', 'walled_garden');
 				}

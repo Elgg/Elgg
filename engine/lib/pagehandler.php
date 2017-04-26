@@ -57,7 +57,7 @@ function elgg_unregister_page_handler($identifier) {
  */
 function elgg_gatekeeper() {
 	if (!elgg_is_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
+		_elgg_services()->redirects->setLastForwardFrom();
 		system_message(elgg_echo('loggedinrequired'));
 		forward('/login', 'login');
 	}
@@ -84,7 +84,7 @@ function elgg_admin_gatekeeper() {
 	elgg_gatekeeper();
 
 	if (!elgg_is_admin_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
+		_elgg_services()->redirects->setLastForwardFrom();
 		register_error(elgg_echo('adminrequired'));
 		forward('', 'admin');
 	}
@@ -135,7 +135,7 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
 		$forward_url = $group ? $group->getURL() : '';
 
 		if (!elgg_is_logged_in()) {
-			_elgg_services()->session->set('last_forward_from', current_page_url());
+			_elgg_services()->redirects->setLastForwardFrom();
 			$forward_reason = 'login';
 		} else {
 			$forward_reason = 'member';
