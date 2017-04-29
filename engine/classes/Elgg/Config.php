@@ -247,6 +247,11 @@ class Config implements Services\Config {
 
 		require_once $path;
 
+		if (php_sapi_name() === 'cli-server' && !empty($CONFIG->wwwroot_cli_server)) {
+			// override wwwroot from settings file
+			$CONFIG->wwwroot = $CONFIG->wwwroot_cli_server;
+		}
+
 		if (empty($CONFIG->dataroot)) {
 			echo 'The Elgg settings file is missing $CONFIG->dataroot.';
 			exit;

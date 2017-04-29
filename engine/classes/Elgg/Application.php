@@ -397,9 +397,16 @@ class Application {
 		}
 
 		if (php_sapi_name() === 'cli-server') {
+			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
+			if ($path !== '/' && Directory\Local::root()->isFile($path)) {
+				// serve the requested resource as-is.
+				return false;
+			}
+
 			// overwrite value from settings
 			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
 			$config->set('wwwroot', $www_root);
+			$config->set('wwwroot_cli_server', $www_root);
 		}
 
 		if (0 === strpos($path, '/cache/')) {
@@ -415,14 +422,6 @@ class Application {
 		if ($path === '/rewrite.php') {
 			require Directory\Local::root()->getPath("install.php");
 			return true;
-		}
-
-		if (php_sapi_name() === 'cli-server') {
-			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
-			if ($path !== '/' && Directory\Local::root()->isFile($path)) {
-				// serve the requested resource as-is.
-				return false;
-			}
 		}
 
 		$this->bootCore();
