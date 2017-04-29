@@ -9,7 +9,7 @@
  *
  * Elgg's configuration is split among 1 table and 1 file:
  * - dbprefix_config
- * - engine/settings.php (See {@link settings.example.php})
+ * - engine/.env.php (See {@link .env.php.example})
  *
  * Upon system boot, all values in dbprefix_config are read into $CONFIG.
  */
@@ -49,7 +49,7 @@ function elgg_get_data_path() {
 /**
  * Get the cache directory path for this installation.
  *
- * If not set in settings.php, the data path will be returned.
+ * If not set in settings, the data path will be returned.
  *
  * @return string
  */

@@ -3,14 +3,12 @@ namespace Elgg\Application;
 
 use Elgg\Application;
 use Elgg\Config;
-
+use Elgg\Http\Request;
 
 /**
  * Simplecache handler
  *
  * @access private
- *
- * @package Elgg.Core
  */
 class CacheHandler {
 	
@@ -50,20 +48,22 @@ class CacheHandler {
 	/** @var Config */
 	private $config;
 
-	/** @var array */
-	private $server_vars;
+	/** @var Request */
+	private $request;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Application $app         Elgg Application
-	 * @param Config      $config      Elgg configuration
-	 * @param array       $server_vars Server vars
+	 * @param Application $app                 Elgg Application
+	 * @param Config      $config              Elgg configuration
+	 * @param Request     $request             HTTP request
+	 * @param bool        $simplecache_enabled Is the simplecache enabled?
 	 */
-	public function __construct(Application $app, Config $config, $server_vars) {
+	public function __construct(Application $app, Config $config, Request $request, $simplecache_enabled) {
 		$this->application = $app;
 		$this->config = $config;
-		$this->server_vars = $server_vars;
+		$this->request = $request;
+		$this->simplecache_enabled = $simplecache_enabled;
 	}
 
 	/**
@@ -95,8 +95,7 @@ class CacheHandler {
 			header("Content-Type: $content_type");
 		}
 
-		// we can't use $config->get yet. It fails before the core is booted
-		if (!$config->get('simplecache_enabled')) {
+		if (!$this->simplecache_enabled) {
 			$this->application->bootCore();
 
 			if (!$this->isCacheableView($view)) {
@@ -232,12 +231,13 @@ class CacheHandler {
 	 * @return void
 	 */
 	protected function handle304($etag) {
-		if (!isset($this->server_vars['HTTP_IF_NONE_MATCH'])) {
+		$if_none_match = $this->request->headers->get('If-None-Match');
+		if ($if_none_match === null) {
 			return;
 		}
 
 		// strip -gzip for #9427
-		$if_none_match = str_replace('-gzip', '', trim($this->server_vars['HTTP_IF_NONE_MATCH']));
+		$if_none_match = str_replace('-gzip', '', trim($if_none_match));
 		if ($if_none_match === $etag) {
 			header("HTTP/1.1 304 Not Modified");
 			exit;
@@ -298,7 +298,7 @@ class CacheHandler {
 	protected function getProcessedView($view, $viewtype) {
 		$content = $this->renderView($view, $viewtype);
 
-		if ($this->config->get('simplecache_enabled')) {
+		if ($this->simplecache_enabled) {
 			$hook_name = 'simplecache:generate';
 		} else {
 			$hook_name = 'cache:generate';

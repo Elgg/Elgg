@@ -24,24 +24,26 @@ Run the following in cloud9's terminal:
 .. code:: sh
 
     rm -rf * # Clear out the c9 hello-world stuff
-    composer create-project elgg/elgg:~1.11 . # the hotness
+    composer create-project elgg/elgg:~3.0 . # the hotness
     cp install/config/htaccess.dist .htaccess
-    cp elgg-config/settings.example.php elgg-config/settings.php
+    cp elgg-config/.env.php.example elgg-config/.env.php
     mysql-ctl start # start c9's local mysql server
     mkdir ../elgg-data # setup data dir for Elgg
 
-Configure ``settings.php`` to be like so:
+Configure ``.env.php`` to be like so:
 
-.. code:: php
+	# Must set timezone explicitly!
+    ELGG_DEFAULT_TZ="{{timezone}}"
 
-    // Must set timezone explicitly!
-    date_default_timezone_set('America/Los_Angeles');
-    
-    $CONFIG->dbuser = getenv('C9_USER');
-    $CONFIG->dbpass = '';
-    $CONFIG->dbname = 'c9';
-    $CONFIG->dbhost = getenv('IP');
-    $CONFIG->dbprefix = 'elgg_';
+    ELGG_DATAROOT="path/to/elgg-data"
+    ELGG_WWWROOT="https://{workspace}-{username}.c9.io/"
+
+    ELGG_DBUSER="${C9_USER}"
+    ELGG_DBPASS=""
+    ELGG_DBNAME="c9"
+    ELGG_DBHOST="${IP}"
+    ELGG_DBPREFIX="elgg_"
+
 
 3. Complete the install process from Elgg's UI
 ==============================================

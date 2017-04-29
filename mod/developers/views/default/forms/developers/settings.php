@@ -36,7 +36,7 @@ foreach ($vars['data'] as $name => $info) {
 	}
 	echo '<span class="elgg-text-help">' . elgg_echo("developers:help:$name") . '</span>';
 	if ($info['readonly']) {
-		echo '<span class="elgg-text-help">' . elgg_echo('admin:settings:in_settings_file') . '</span>';
+		echo '<span class="elgg-text-help">' . elgg_echo('admin:settings:in_settings_file2') . '</span>';
 	}
 	echo '</div>';
 }

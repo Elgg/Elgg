@@ -510,7 +510,7 @@ return array(
 	'admin:settings:advanced' => 'Lisäasetukset',
 	'admin:site:description' => "Tämän hallintapaneelin avulla voit vaikuttaa sivustosi yleisiin asetuksiin. Valitse vaihtoehto alta aloittaaksesi.",
 	'admin:site:opt:linktext' => "Hallinnoi sivuston asetuksia...",
-	'admin:settings:in_settings_file' => 'Tämä asetus on määritetty asetustiedostossa (settings.php)',
+	'admin:settings:in_settings_file2' => 'Tämä asetus on määritetty asetustiedostossa (elgg-config/.env.php)',
 
 	'admin:legend:security' => 'Tietoturva',
 	'admin:site:secret:intro' => 'Elgg käyttää salausavainta erilaisten tietoturvaa parantavien koodiavainten luomiseen.',

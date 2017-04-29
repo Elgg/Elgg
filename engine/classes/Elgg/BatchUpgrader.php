@@ -30,7 +30,7 @@ class BatchUpgrader {
 	public function __construct(Config $config) {
 		$this->config = $config;
 
-		// Custom limit can be defined in elgg-config/settings.php if necessary
+		// Custom limit can be defined in elgg-config/.env.php if necessary
 		if (empty($this->config->get('batch_run_time_in_secs'))) {
 			$this->config->set('batch_run_time_in_secs', 4);
 		}

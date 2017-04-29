@@ -1,6 +1,7 @@
 # ignore Elgg configuration
 /engine/settings.php
 /elgg-config/settings.php
+/elgg-config/.env.php
 /.htaccess
 /mod/*
 /composer.phar
@@ -67,6 +68,7 @@ phpcbf-fixed.diff
 startup.sh
 
 # don't ignore special configs
+!/elgg-config/.env.php.example
 !/.mailmap
 !/.travis.yml
 !/.scrutinizer.yml

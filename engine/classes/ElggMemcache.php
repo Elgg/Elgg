@@ -159,7 +159,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	/**
 	 * Set the namespace of this cache.
 	 *
-	 * This will also add the Memcache namespace prefix as defined in settings.php
+	 * This will also add the Memcache namespace prefix as defined in .env.php
 	 *
 	 * @param string $namespace Namespace for cache
 	 *

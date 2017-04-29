@@ -75,6 +75,7 @@ class Application {
 	 */
 	public function __construct(ServiceProvider $services) {
 		$this->services = $services;
+		$this->services->setValue('app', $this);
 
 		/**
 		 * The time with microseconds when the Elgg engine was started.
@@ -91,7 +92,7 @@ class Application {
 	}
 
 	/**
-	 * Load settings.php
+	 * Load settings from ENV/.env.php
 	 *
 	 * This is done automatically during the boot process or before requesting a database object
 	 *
@@ -318,7 +319,7 @@ class Application {
 	/**
 	 * Get a Database wrapper for performing queries without booting Elgg
 	 *
-	 * If settings.php has not been loaded, it will be loaded to configure the DB connection.
+	 * If settings has not been loaded, it will be loaded to configure the DB connection.
 	 *
 	 * @note Before boot, the Database instance will not yet be bound to a Logger.
 	 *
@@ -409,7 +410,7 @@ class Application {
 		}
 
 		if (0 === strpos($path, '/cache/')) {
-			(new Application\CacheHandler($this, $config, $_SERVER))->handleRequest($path);
+			$this->services->cacheHandler->handleRequest($path);
 			return true;
 		}
 
@@ -659,11 +660,10 @@ class Application {
 		}
 
 		try {
+			// allow custom scripts to trigger on exception
+			// value in .env.php should be a system path to a file to include
 			$exception_include = $this->services->config->get('exception_include');
 
-			// allow custom scripts to trigger on exception
-			// $CONFIG->exception_include can be set locally in settings.php
-			// value should be a system path to a file to include
 			if ($exception_include && is_file($exception_include)) {
 				ob_start();
 
@@ -769,7 +769,8 @@ class Application {
 				break;
 
 			default:
-				if (_elgg_services()->config->get('debug') === 'NOTICE') {
+				$is_notice = !empty($GLOBALS['CONFIG']) && ($GLOBALS['CONFIG'] === 'NOTICE');
+				if ($is_notice) {
 					if (!$log("PHP (errno $errno): $error", 'NOTICE')) {
 						error_log("PHP NOTICE: $error");
 					}

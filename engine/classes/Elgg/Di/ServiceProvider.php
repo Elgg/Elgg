@@ -20,10 +20,12 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Ajax\Service                       $ajax
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
+ * @property-read \Elgg\Application                        $app
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
+ * @property-read \Elgg\Application\CacheHandler           $cacheHandler
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
@@ -131,6 +133,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $obj;
 		});
 
+		// "app" is set by \Elgg\Application::__construct
+
 		$this->setFactory('annotations', function(ServiceProvider $c) {
 			return new \Elgg\Database\Annotations($c->db, $c->session, $c->events);
 		});
@@ -147,6 +151,14 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('batchUpgrader', function(ServiceProvider $c) {
 			return new \Elgg\BatchUpgrader($c->config);
+		});
+
+		$this->setFactory('cacheHandler', function(ServiceProvider $c) {
+			$simplecache_enabled = $c->config->get('simplecache_enabled');
+			if ($simplecache_enabled === null) {
+				$simplecache_enabled = $c->configTable->get('simplecache_enabled');
+			}
+			return new \Elgg\Application\CacheHandler($c->app, $c->config, $c->request, $simplecache_enabled);
 		});
 
 		$this->setFactory('classLoader', function(ServiceProvider $c) {

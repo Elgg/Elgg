@@ -3,7 +3,7 @@
 /**
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
- * This is defined in the global $CONFIG->exception_include in settings.php
+ * This is defined in ELGG_EXCEPTION_INCLUDE in .env.php
  * 
  * The script will have access to the following variables as part of the scope
  * global $CONFIG

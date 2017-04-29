@@ -195,8 +195,8 @@ You need to separate the different sites into separate databases/tables.
 Related to the removal of the Multi Site concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
 All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade.
 
-Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the `$CONFIG->wwwroot` set in
-settings.php, or computed by Symphony Request.
+Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the ``ELGG_WWWROOT`` set in
+``.env.php``, or computed by Symphony Request.
 
 ``ElggSite::save()`` will fail if it isn't the main site.
 
@@ -352,7 +352,7 @@ Miscellaneous API changes
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
  * The script ``engine/start.php`` is removed.
  * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``.
- * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used.
+ * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The .env.php file values (or environmental vars) are always used.
  * Config functions like ``elgg_get_config`` no longer trim keys.
 
 JavaScript hook calling order may change

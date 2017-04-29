@@ -12,7 +12,8 @@ class CacheHandlerTest extends \Elgg\TestCase {
 	public function setUp() {
 		$app = elgg();
 		$config = _elgg_services()->config;
-		$this->handler = new CacheHandler($app, $config, []);
+		$request = _elgg_services()->request;
+		$this->handler = new CacheHandler($app, $config, $request, true);
 	}
 
 	protected function _testParseFail($input) {

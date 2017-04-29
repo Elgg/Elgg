@@ -142,7 +142,7 @@ class ElggInstaller {
 	 * account. If it fails, an exception is thrown. It does not check any of
 	 * the requirements as the multiple step web installer does.
 	 *
-	 * If the settings.php file exists, it will use that rather than the parameters
+	 * If the .env.php file exists, it will use that rather than the parameters
 	 * passed to this function.
 	 *
 	 * @param array $params         Array of key value pairs
@@ -314,7 +314,7 @@ class ElggInstaller {
 	/**
 	 * Database set up controller
 	 *
-	 * Creates the settings.php file and creates the database tables
+	 * Creates the .env.php file and creates the database tables
 	 *
 	 * @param array $submissionVars Submitted form variables
 	 *
@@ -615,15 +615,8 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function setInstallStatus() {
-		$settings_found = false;
-		foreach (_elgg_services()->config->getSettingsPaths() as $path) {
-			if (is_file($path) && is_readable($path)) {
-				$settings_found = true;
-				break;
-			}
-		}
-
-		if (!$settings_found) {
+		$path = _elgg_services()->config->getSettingsPath();
+		if (!is_file($path) || !is_readable($path)) {
 			return;
 		}
 
@@ -856,7 +849,7 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Load settings.php
+	 * Load settings
 	 *
 	 * @return void
 	 * @throws InstallationException
@@ -909,7 +902,7 @@ class ElggInstaller {
 	/* Requirement checks support methods */
 
 	/**
-	 * Indicates whether the webserver can add settings.php on its own or not.
+	 * Indicates whether the webserver can add .env.php on its own or not.
 	 *
 	 * @param array $report The requirements report object
 	 *
@@ -965,12 +958,12 @@ class ElggInstaller {
 	}
 	
 	/**
-	 * Returns the path to the root settings.php file.
+	 * Returns the path to the root .env.php file.
 	 *
 	 * @return string
 	 */
 	private function getSettingsPath() {
-		return Directory\Local::root()->getPath("elgg-config/settings.php");
+		return Directory\Local::root()->getPath("elgg-config/.env.php");
 	}
 
 	/**
@@ -1263,7 +1256,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function createSettingsFile($params) {
-		$template = \Elgg\Application::elggDir()->getContents("elgg-config/settings.example.php");
+		$template = \Elgg\Application::elggDir()->getContents("elgg-config/.env.php.example");
 		if (!$template) {
 			register_error(_elgg_services()->translator->translate('install:error:readsettingsphp'));
 			return false;

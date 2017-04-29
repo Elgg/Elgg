@@ -152,12 +152,12 @@ from there. The first account that you create at the end of the
 installation process will be an administrator account.
 
 
-A note on settings.php and .htaccess
-------------------------------------
+A note on .env.php and .htaccess
+--------------------------------
 
 The Elgg installer will try to create two files for you:
 
--  ``elgg-config/settings.php``, which contains local environment configuration for your installation
+-  ``elgg-config/.env.php``, which contains local environment configuration for your installation
 -  ``.htaccess``, which allows Elgg to generate dynamic URLs
 
 If these files can't be automatically generated, for example because the
@@ -169,10 +169,10 @@ those two files, complete the install process, and them change the
 permissions back to their original settings. If, for some reason, this
 won't work, you will need to:
 
--  In ``elgg-config/``, copy ``settings.example.php`` to ``settings.php``, open it up
+-  In ``elgg-config/``, copy ``.env.php.example`` to ``.env.php``, open it up
    in a text editor and fill in your database details
 -  On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``
--  On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents
+-  On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust its contents
 
 Other Configurations
 ====================

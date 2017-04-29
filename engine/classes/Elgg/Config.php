@@ -3,6 +3,7 @@ namespace Elgg;
 
 use Elgg\Filesystem\Directory;
 use Elgg\Database\ConfigTable;
+use Dotenv\Dotenv;
 
 /**
  * Access to configuration values
@@ -52,13 +53,13 @@ class Config implements Services\Config {
 			 * Configuration values.
 			 *
 			 * The $CONFIG global contains configuration values required
-			 * for running Elgg as defined in the settings.php file.
+			 * for running Elgg as defined in the .env.php file.
 			 *
 			 * Plugin authors are encouraged to use elgg_get_config() instead of accessing
 			 * the global directly.
 			 *
 			 * @see elgg_get_config()
-			 * @see engine/settings.php
+			 * @see engine/.env.php
 			 * @global \stdClass $CONFIG
 			 */
 			global $CONFIG;
@@ -81,7 +82,7 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * Set up and return the cookie configuration array resolved from settings.php
+	 * Set up and return the cookie configuration array resolved from settings
 	 *
 	 * @return array
 	 */
@@ -125,7 +126,11 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the cache directory path for this installation
+	 *
+	 * If not set in settings, the data path will be returned.
+	 *
+	 * @return string
 	 */
 	public function getCachePath() {
 		$this->loadSettingsFile();
@@ -174,17 +179,13 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * Get expected settings file paths
+	 * Get settings file path
 	 *
-	 * @return string[]
+	 * @return string
 	 * @array private
 	 */
-	public function getSettingsPaths() {
-		$root = Directory\Local::root();
-		return [
-			$root->getPath('engine/settings.php'),
-			$root->getPath('elgg-config/settings.php'),
-		];
+	public function getSettingsPath() {
+		return Directory\Local::root()->getPath('elgg-config/.env.php');
 	}
 
 	/**
@@ -202,11 +203,7 @@ class Config implements Services\Config {
 			}
 			$path = $this->config->Config_file;
 		} else {
-			foreach ($this->getSettingsPaths() as $path) {
-				if (is_file($path)) {
-					break;
-				}
-			}
+			$path = Directory\Local::root()->getPath('elgg-config/.env.php');
 		}
 
 		// No settings means a fresh install
@@ -228,9 +225,31 @@ class Config implements Services\Config {
 		// we assume settings is going to write to CONFIG, but we may need to copy its values
 		// into our local config
 		global $CONFIG;
-		$global_is_bound = (isset($CONFIG) && $CONFIG === $this->config);
 
-		require_once $path;
+		$global_is_bound = false;
+		if (isset($CONFIG)) {
+			if ($CONFIG === $this->config) {
+				$global_is_bound = true;
+			}
+		} else {
+			$CONFIG = new \stdClass();
+		}
+
+		$dotenv = new Dotenv(dirname($path), basename($path));
+		$dotenv->load();
+
+		$dotenv->required([
+			'ELGG_DATAROOT',
+			'ELGG_DBPREFIX',
+			'ELGG_DBUSER',
+			'ELGG_DBPASS',
+			'ELGG_DBNAME',
+			'ELGG_DBHOST',
+		]);
+
+		foreach ($this->readEnv() as $key => $value) {
+			$CONFIG->{$key} = $value;
+		}
 
 		if (php_sapi_name() === 'cli-server' && !empty($CONFIG->wwwroot_cli_server)) {
 			// override wwwroot from settings file
@@ -276,6 +295,124 @@ class Config implements Services\Config {
 	 */
 	public function setConfigTable(ConfigTable $table) {
 		$this->config_table = $table;
+	}
+
+	/**
+	 * Read config values from $_ENV
+	 *
+	 * @return array
+	 */
+	public function readEnv() {
+
+		$config = [];
+
+		$casters = [
+			'memcache' => 'boolval',
+			'simplecache_enabled' => 'boolval',
+			'broken_mta' => 'boolval',
+			'db_disable_query_cache' => 'boolval',
+			'auto_disable_plugins' => 'boolval',
+			'enable_profiling' => 'boolval',
+			'profiling_sql' => 'boolval',
+			'boot_cache_ttl' => 'intval',
+			'min_password_length' => 'intval',
+			'action_time_limit' => 'intval',
+		];
+
+		// ELGG_SOMETHING becomes $config['something']
+		foreach ($_ENV as $key => $value) {
+			if (0 !== strpos($key, 'ELGG_')) {
+				continue;
+			}
+
+			$new_key = strtolower(substr($key, 5));
+
+			if (isset($casters[$new_key])) {
+				$new_val = $casters[$new_key]($value);
+			} else {
+				$new_val = $value;
+			}
+
+			$config[$new_key] = $new_val;
+		}
+
+		// must come before cookies because we use strtotime()
+		if (isset($config['default_tz'])) {
+			date_default_timezone_set($config['default_tz']);
+		} else {
+			date_default_timezone_set('UTC');
+		}
+		unset($config['default_tz']);
+
+		// cookies
+		foreach (['', 'remember_'] as $prefix) {
+			$key = ($prefix === '') ? 'cookies' : 'remember_me';
+
+			if (isset($config["{$prefix}cookie_defaults_source"])
+				&& ($config["{$prefix}cookie_defaults_source"] === 'session_get_cookie_params'))
+			{
+				$config[$key]['session'] = session_get_cookie_params();
+			}
+			if (isset($config["{$prefix}cookie_name"])) {
+				$config[$key]['session']['name'] = $config["{$prefix}cookie_name"];
+			}
+			if (isset($config["{$prefix}cookie_domain"])) {
+				$config[$key]['session']['domain'] = $config["{$prefix}cookie_domain"];
+			}
+			if (isset($config["{$prefix}cookie_path"])) {
+				$config[$key]['session']['path'] = $config["{$prefix}cookie_path"];
+			}
+			if (isset($config["{$prefix}cookie_secure"])) {
+				$config[$key]['session']['secure'] = (bool)$config["{$prefix}cookie_secure"];
+			}
+			if (isset($config["{$prefix}cookie_httponly"])) {
+				$config[$key]['session']['httponly'] = (bool)$config["{$prefix}cookie_httponly"];
+			}
+			if (isset($config["{$prefix}cookie_expire"])) {
+				$time = strtotime($config["{$prefix}cookie_expire"]);
+				$config[$key]['session']['expire'] = $time;
+			}
+
+			unset($config["{$prefix}cookie_defaults_source"]);
+			unset($config["{$prefix}cookie_name"]);
+			unset($config["{$prefix}cookie_domain"]);
+			unset($config["{$prefix}cookie_secure"]);
+			unset($config["{$prefix}cookie_httponly"]);
+			unset($config["{$prefix}cookie_expire"]);
+		}
+
+		// split DBs
+		if (isset($config['read1_dbuser'])) {
+			// allow multi-DB
+			$config['db']['split'] = true;
+			foreach (['dbuser', 'dbpass', 'dbname', 'dbhost'] as $key) {
+				$config['db']['write'][$key] = $config[$key];
+			}
+
+			$i = 1;
+			while (isset($config["read{$i}_dbuser"])) {
+				foreach (['dbuser', 'dbpass', 'dbname', 'dbhost'] as $key) {
+					$config_key = "read{$i}_{$key}";
+					$config['db']['read'][$i - 1] = $config[$config_key];
+					unset($config[$config_key]);
+				}
+				$i++;
+			}
+		}
+
+		// memcache
+		$i = 1;
+		while (isset($config["memcache{$i}_host"])) {
+			$config['memcache_servers'][] = [
+				$config["memcache{$i}_host"],
+				$config["memcache{$i}_port"],
+			];
+			unset($config["memcache{$i}_host"]);
+			unset($config["memcache{$i}_port"]);
+			$i++;
+		}
+
+		return $config;
 	}
 
 	/**
