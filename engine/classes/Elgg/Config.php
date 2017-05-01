@@ -10,7 +10,7 @@ use Dotenv\Dotenv;
  *
  * @since 1.10.0
  */
-class Config implements Services\Config {
+class Config {
 	/**
 	 * Configuration storage. Is usually reference to global $CONFIG
 	 *
@@ -68,14 +68,18 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the URL for the current (or specified) site
+	 *
+	 * @return string
 	 */
 	public function getSiteUrl() {
 		return $this->config->wwwroot;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the plugin path for this installation
+	 *
+	 * @return string
 	 */
 	public function getPluginsPath() {
 		return $this->config->pluginspath;
@@ -118,7 +122,9 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get the data directory path for this installation
+	 *
+	 * @return string
 	 */
 	public function getDataPath() {
 		$this->loadSettingsFile();
@@ -138,21 +144,40 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Get an Elgg configuration value if it's been set or loaded during the boot process.
+	 *
+	 * Before \Elgg\BootService::boot, values from the database will not be present.
+	 *
+	 * @param string $name    Name of the configuration value
+	 * @param mixed  $default Values returned if not set
+	 *
+	 * @return mixed Configuration value or default if it does not exist
 	 */
 	public function get($name, $default = null) {
 		return isset($this->config->{$name}) ? $this->config->{$name} : $default;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Set an Elgg configuration value
+	 *
+	 * @warning This does not persist the configuration setting. Use elgg_save_config()
+	 *
+	 * @param string $name  Name of the configuration value
+	 * @param mixed  $value Value
+	 *
+	 * @return void
 	 */
 	public function set($name, $value) {
 		$this->config->$name = $value;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Save a configuration setting
+	 *
+	 * @param string $name  Configuration name (cannot be greater than 255 characters)
+	 * @param mixed  $value Configuration value. Should be string for installation setting
+	 *
+	 * @return bool
 	 */
 	public function save($name, $value) {
 		if (strlen($name) > 255) {
@@ -168,7 +193,11 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Removes a configuration setting
+	 *
+	 * @param string $name Configuration name
+	 *
+	 * @return bool
 	 */
 	public function remove($name) {
 		$result = $this->getConfigTable()->remove($name);
@@ -189,7 +218,13 @@ class Config implements Services\Config {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Merge the settings file into the storage object
+	 *
+	 * A particular location can be specified via $CONFIG->Config_file
+	 *
+	 * To skip settings loading, set $CONFIG->Config_file to false
+	 *
+	 * @return void
 	 */
 	public function loadSettingsFile() {
 		if ($this->settings_loaded) {
