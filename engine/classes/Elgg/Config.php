@@ -1,6 +1,7 @@
 <?php
 namespace Elgg;
 
+use Elgg\Database\SiteSecret;
 use Elgg\Filesystem\Directory;
 use Elgg\Database\ConfigTable;
 use Dotenv\Dotenv;
@@ -369,6 +370,11 @@ class Config {
 			}
 
 			$config[$new_key] = $new_val;
+		}
+
+		if (!empty($config['site_secret'])) {
+			$config[SiteSecret::CONFIG_KEY] = $config['site_secret'];
+			unset($config['site_secret']);
 		}
 
 		// must come before cookies because we use strtotime()
