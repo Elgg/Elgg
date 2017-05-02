@@ -236,8 +236,12 @@ class CacheHandler {
 			return;
 		}
 
-		// strip -gzip for #9427
-		$if_none_match = str_replace('-gzip', '', trim($if_none_match));
+		// strip -gzip and leading /W
+		$if_none_match = trim($if_none_match);
+		if (0 === strpos($if_none_match, 'W/')) {
+			$if_none_match = substr($if_none_match, 2);
+		}
+		$if_none_match = str_replace('-gzip', '', $if_none_match);
 		if ($if_none_match === $etag) {
 			header("HTTP/1.1 304 Not Modified");
 			exit;
