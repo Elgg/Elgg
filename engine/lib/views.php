@@ -1359,6 +1359,7 @@ function elgg_view_river_item($item, array $vars = []) {
 
 	$river_views = [
 		elgg_extract('item_view', $vars, ''),
+		"river/item", // important for other viewtypes, e.g. "rss"
 		$view,
 	];
 
