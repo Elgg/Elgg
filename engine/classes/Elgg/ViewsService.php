@@ -4,6 +4,7 @@ namespace Elgg;
 use Elgg\Application\CacheHandler;
 use Elgg\Cache\SystemCache;
 use Elgg\Filesystem\Directory;
+use Elgg\Http\Input;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -75,6 +76,11 @@ class ViewsService {
 	private $cache;
 
 	/**
+	 * @var Input
+	 */
+	private $input;
+
+	/**
 	 * A list of valid view types as discovered.
 	 *
 	 * @var array
@@ -82,14 +88,92 @@ class ViewsService {
 	private $view_types = [];
 
 	/**
+	 * @var string
+	 */
+	private $viewtype;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks  The hooks service
 	 * @param Logger             $logger Logger
+	 * @param Input              $input  Input service
 	 */
-	public function __construct(PluginHooksService $hooks, Logger $logger) {
+	public function __construct(PluginHooksService $hooks, Logger $logger, Input $input = null) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
+		$this->input = $input;
+	}
+
+	/**
+	 * Set the viewtype
+	 *
+	 * @param string $viewtype Viewtype
+	 *
+	 * @return bool
+	 */
+	public function setViewtype($viewtype = '') {
+		if (!$viewtype) {
+			$this->viewtype = null;
+			return true;
+		}
+		if ($this->isValidViewtype($viewtype)) {
+			$this->viewtype = $viewtype;
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the viewtype
+	 *
+	 * @return string
+	 */
+	public function getViewtype() {
+		if ($this->viewtype === null) {
+			$this->viewtype = $this->resolveViewtype();
+		}
+		return $this->viewtype;
+	}
+
+	/**
+	 * Resolve the initial viewtype
+	 *
+	 * @return string
+	 */
+	private function resolveViewtype() {
+		if ($this->input) {
+			$view = $this->input->get('view', '', false);
+			if ($this->isValidViewtype($view)) {
+				return $view;
+			}
+		}
+		$view = elgg_get_config('view');
+		if ($this->isValidViewtype($view)) {
+			return $view;
+		}
+
+		return 'default';
+	}
+
+	/**
+	 * Checks if $viewtype is a string suitable for use as a viewtype name
+	 *
+	 * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
+	 *
+	 * @return bool
+	 */
+	public function isValidViewtype($viewtype) {
+		if (!is_string($viewtype) || $viewtype === '') {
+			return false;
+		}
+
+		if (preg_match('/\W/', $viewtype)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -305,8 +389,8 @@ class ViewsService {
 		}
 
 		// Get the current viewtype
-		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
-			$viewtype = elgg_get_viewtype();
+		if ($viewtype === '' || !$this->isValidViewtype($viewtype)) {
+			$viewtype = $this->getViewtype();
 		}
 
 		// allow altering $vars
@@ -410,8 +494,8 @@ class ViewsService {
 		}
 		
 		// Detect view type
-		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
-			$viewtype = elgg_get_viewtype();
+		if ($viewtype === '' || !$this->isValidViewtype($viewtype)) {
+			$viewtype = $this->getViewtype();
 		}
 
 		
@@ -526,7 +610,7 @@ class ViewsService {
 		}
 
 		// build list of viewtypes to check
-		$current_viewtype = elgg_get_viewtype();
+		$current_viewtype = $this->getViewtype();
 		$viewtypes = [$current_viewtype];
 
 		if ($this->doesViewtypeFallback($current_viewtype) && $current_viewtype != 'default') {

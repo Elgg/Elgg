@@ -142,6 +142,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
 Removed global vars
 -------------------
 
+ * ``$CURRENT_SYSTEM_VIEWTYPE``
  * ``$DEFAULT_FILE_STORE``
  * ``$ENTITY_CACHE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``

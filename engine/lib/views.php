@@ -51,15 +51,6 @@ use Elgg\Menu\UnpreparedMenu;
 use Elgg\Includer;
 
 /**
- * The viewtype override.
- *
- * @global string $CURRENT_SYSTEM_VIEWTYPE
- * @see elgg_set_viewtype()
- */
-global $CURRENT_SYSTEM_VIEWTYPE;
-$CURRENT_SYSTEM_VIEWTYPE = "";
-
-/**
  * Manually set the viewtype.
  *
  * View types are detected automatically.  This function allows
@@ -71,12 +62,8 @@ $CURRENT_SYSTEM_VIEWTYPE = "";
  *
  * @return bool
  */
-function elgg_set_viewtype($viewtype = "") {
-	global $CURRENT_SYSTEM_VIEWTYPE;
-
-	$CURRENT_SYSTEM_VIEWTYPE = $viewtype;
-
-	return true;
+function elgg_set_viewtype($viewtype = '') {
+	return _elgg_services()->views->setViewtype($viewtype);
 }
 
 /**
@@ -85,43 +72,11 @@ function elgg_set_viewtype($viewtype = "") {
  * Viewtypes are automatically detected and can be set with $_REQUEST['view']
  * or {@link elgg_set_viewtype()}.
  *
- * @note Internal: Viewtype is determined in this order:
- *  - $CURRENT_SYSTEM_VIEWTYPE Any overrides by {@link elgg_set_viewtype()}
- *  - $CONFIG->view  The default view as saved in the DB.
- *
- * @return string The view.
+ * @return string The viewtype
  * @see elgg_set_viewtype()
  */
 function elgg_get_viewtype() {
-	global $CURRENT_SYSTEM_VIEWTYPE;
-
-	if (empty($CURRENT_SYSTEM_VIEWTYPE)) {
-		$CURRENT_SYSTEM_VIEWTYPE = _elgg_get_initial_viewtype();
-	}
-
-	return $CURRENT_SYSTEM_VIEWTYPE;
-}
-
-/**
- * Get the initial viewtype
- *
- * @return string
- * @access private
- * @since 2.0.0
- */
-function _elgg_get_initial_viewtype() {
-	global $CONFIG;
-
-	$viewtype = get_input('view', '', false);
-	if (_elgg_is_valid_viewtype($viewtype)) {
-		return $viewtype;
-	}
-
-	if (isset($CONFIG->view) && _elgg_is_valid_viewtype($CONFIG->view)) {
-		return $CONFIG->view;
-	}
-
-	return 'default';
+	return _elgg_services()->views->getViewtype();
 }
 
 /**
@@ -157,15 +112,7 @@ function elgg_is_registered_viewtype($viewtype) {
  * @since 1.9
  */
 function _elgg_is_valid_viewtype($viewtype) {
-	if (!is_string($viewtype) || $viewtype === '') {
-		return false;
-	}
-
-	if (preg_match('/\W/', $viewtype)) {
-		return false;
-	}
-
-	return true;
+	return _elgg_services()->views->isValidViewtype($viewtype);
 }
 
 /**
@@ -1341,6 +1288,7 @@ function elgg_view_river_item($item, array $vars = []) {
 
 	$river_views = [
 		elgg_extract('item_view', $vars, ''),
+		"river/item", // important for other viewtypes, e.g. "rss"
 		$view,
 	];
 

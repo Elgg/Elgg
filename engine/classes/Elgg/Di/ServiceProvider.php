@@ -473,7 +473,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('views', function(ServiceProvider $c) {
-			return new \Elgg\ViewsService($c->hooks, $c->logger);
+			return new \Elgg\ViewsService($c->hooks, $c->logger, $c->input);
 		});
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
