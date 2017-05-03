@@ -15,7 +15,7 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
  * unless writing their own SQL queries.  Use {@link \ElggEntity::getSubtype()}
  * to return the string subtype.
  *
- * @internal Subtypes are stored in the entity_subtypes table.  There is a foreign
+ * Subtypes are stored in the entity_subtypes table.  There is a foreign
  * key in the entities table.
  *
  * @param string $type    Type
