@@ -2,6 +2,8 @@
 namespace Elgg\Database;
 
 use Elgg\Config as ElggConfig;
+use Elgg\Database;
+use ElggCrypto;
 
 /**
  * Manages a site-specific secret key, encoded as a 32 byte string "secret"
@@ -16,63 +18,25 @@ use Elgg\Config as ElggConfig;
  * weak keys. You can check key string using getStrength().
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
+ * @since  1.10.0
  */
 class SiteSecret {
 
 	const CONFIG_KEY = '__site_secret__';
 
 	/**
-	 * @var ElggConfig
-	 */
-	private $config;
-
-	/**
 	 * Constructor
 	 *
-	 * @param ElggConfig $config Config service
+	 * @param string $key Site key (32 hex chars, or "z" and 31 base64 chars)
 	 */
-	public function __construct(ElggConfig $config) {
-		$this->config = $config;
+	public function __construct($key) {
+		$this->key = $key;
 	}
 
 	/**
 	 * @var string
 	 */
-	private $test_secret = '';
-
-	/**
-	 * Set a secret to be used in testing
-	 *
-	 * @param string $secret Testing site secret. 32 alphanums starting with "z"
-	 * @return void
-	 */
-	public function setTestingSecret($secret) {
-		$this->test_secret = $secret;
-	}
-
-	/**
-	 * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
-	 *
-	 * Used during installation and saves as a config.
-	 *
-	 * Note: Old secrets were hex encoded.
-	 *
-	 * @return mixed The site secret hash or false
-	 * @access private
-	 */
-	function init() {
-		$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
-
-		if ($this->config->save(self::CONFIG_KEY, $secret)) {
-			return $secret;
-		}
-
-		return false;
-	}
+	private $key;
 
 	/**
 	 * Returns the site secret.
@@ -84,33 +48,30 @@ class SiteSecret {
 	 * @return string Site secret.
 	 * @access private
 	 */
-	function get($raw = false) {
-		if ($this->test_secret) {
-			$secret = $this->test_secret;
-		} else {
-			$secret = $this->config->get(self::CONFIG_KEY);
-		}
-		if (!$secret) {
-			$secret = $this->init();
+	public function get($raw = false) {
+		if (!$this->key) {
+			throw new \RuntimeException('Secret key is not set');
 		}
 
-		if ($raw) {
-			// try to return binary key
-			if ($secret[0] === 'z') {
-				// new keys are "z" + base64URL
-				$base64 = strtr(substr($secret, 1), '-_', '+/');
-				$key = base64_decode($base64);
-				if ($key !== false) {
-					// on failure, at least return string key :/
-					return $key;
-				}
-			} else {
-				// old keys are hex
-				return hex2bin($secret);
+		if (!$raw) {
+			return $this->key;
+		}
+
+		// try to return binary key
+		if ($this->key[0] === 'z') {
+			// new keys are "z" + base64URL
+			$base64 = strtr(substr($this->key, 1), '-_', '+/');
+			$key = base64_decode($base64);
+			if ($key !== false) {
+				return $key;
 			}
+
+			// on failure, at least return string key :/
+			return $this->key;
 		}
 
-		return $secret;
+		// old keys are hex
+		return hex2bin($this->key);
 	}
 
 	/**
@@ -122,7 +83,7 @@ class SiteSecret {
 	 * @return string "strong", "moderate", or "weak"
 	 * @access private
 	 */
-	function getStrength() {
+	public function getStrength() {
 		$secret = $this->get();
 		if ($secret[0] !== 'z') {
 			$rand_max = getrandmax();
@@ -134,5 +95,45 @@ class SiteSecret {
 			}
 		}
 		return 'strong';
+	}
+
+	/**
+	 * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL)
+	 * and save to config table.
+	 *
+	 * Used during installation or regeneration.
+	 *
+	 * @param ElggCrypto  $crypto Crypto service
+	 * @param ConfigTable $table  Config table
+	 * @return SiteSecret
+	 */
+	public static function regenerate(ElggCrypto $crypto, ConfigTable $table) {
+		$key = 'z' . $crypto->getRandomString(31);
+
+		$table->set(self::CONFIG_KEY, $key);
+
+		return new self($key);
+	}
+
+	/**
+	 * Build a SiteSecret from config/storage, and remove the value from config memory.
+	 *
+	 * @param ElggConfig  $config Config service
+	 * @param ConfigTable $table  Config table
+	 *
+	 * @return SiteSecret
+	 */
+	public static function load(ElggConfig $config, ConfigTable $table) {
+		// in case it's in settings.php
+		$key = $config->get(self::CONFIG_KEY);
+		if ($key) {
+			// don't leave this sitting around in config, which is more likely
+			// to get dumped.
+			$config->set(self::CONFIG_KEY, null);
+		} else {
+			$key = $table->get(self::CONFIG_KEY);
+		}
+
+		return new self($key);
 	}
 }

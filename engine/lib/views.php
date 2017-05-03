@@ -131,15 +131,7 @@ function _elgg_get_initial_viewtype() {
  * @return bool
  */
 function elgg_register_viewtype($viewtype) {
-	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
-		$GLOBALS['_ELGG']->view_types = [];
-	}
-
-	if (!in_array($viewtype, $GLOBALS['_ELGG']->view_types)) {
-		$GLOBALS['_ELGG']->view_types[] = $viewtype;
-	}
-
-	return true;
+	return _elgg_services()->views->registerViewtype($viewtype);
 }
 
 /**
@@ -151,11 +143,7 @@ function elgg_register_viewtype($viewtype) {
  * @since 1.9.0
  */
 function elgg_is_registered_viewtype($viewtype) {
-	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
-		return false;
-	}
-
-	return in_array($viewtype, $GLOBALS['_ELGG']->view_types);
+	return _elgg_services()->views->isRegisteredViewtype($viewtype);
 }
 
 
@@ -1708,7 +1696,7 @@ function _elgg_has_rss_link() {
 		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
 		return $GLOBALS['autofeed'];
 	}
-	return (bool) _elgg_services()->config->getVolatile('_elgg_autofeed');
+	return (bool) _elgg_services()->config->get('_elgg_autofeed');
 }
 
 /**
@@ -1939,7 +1927,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
 	
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
-	$view_path = _elgg_services()->views->view_path;
+	$view_path = \Elgg\Application::elggDir()->getPath("/views/");
 	$viewtype_dirs = scandir($view_path);
 	foreach ($viewtype_dirs as $viewtype) {
 		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {
@@ -1948,7 +1936,7 @@ function elgg_views_boot() {
 	}
 
 	// set default icon sizes - can be overridden in settings.php or with plugin
-	if (!_elgg_services()->config->getVolatile('icon_sizes')) {
+	if (!_elgg_services()->config->get('icon_sizes')) {
 		$icon_sizes = [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],

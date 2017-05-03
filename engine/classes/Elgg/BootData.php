@@ -5,7 +5,7 @@ namespace Elgg;
 use Elgg\Database;
 use Elgg\Database\EntityTable;
 use Elgg\Database\Plugins;
-use Elgg\Cache\Pool\InMemory;
+use Elgg\Database\SiteSecret;
 
 /**
  * Serializable collection of data used to boot Elgg
@@ -43,15 +43,14 @@ class BootData {
 	/**
 	 * Populate the boot data
 	 *
-	 * @param \stdClass      $config   Elgg CONFIG object
-	 * @param \Elgg\Database $db       Elgg database
-	 * @param EntityTable    $entities Entities service
-	 * @param Plugins        $plugins  Plugins service
+	 * @param Database    $db       Elgg database
+	 * @param EntityTable $entities Entities service
+	 * @param Plugins     $plugins  Plugins service
 	 *
 	 * @return void
 	 * @throws \InstallationException
 	 */
-	public function populate(\stdClass $config, Database $db, EntityTable $entities, Plugins $plugins) {
+	public function populate(Database $db, EntityTable $entities, Plugins $plugins) {
 		// get subtypes
 		$rows = $db->getData("
 			SELECT *
@@ -61,11 +60,14 @@ class BootData {
 			$this->subtype_data[$row->id] = $row;
 		}
 
-		// get config
+		// get config, but not site secret. We don't want it cached.
 		$rows = $db->getData("
 			SELECT *
 			FROM {$db->prefix}config
-		");
+			WHERE name != :key
+		", null, [
+			':key' => SiteSecret::CONFIG_KEY,
+		]);
 		foreach ($rows as $row) {
 			$this->config_values[$row->name] = unserialize($row->value);
 		}
@@ -164,7 +166,7 @@ class BootData {
 	}
 
 	/**
-	 * Get config values to merge into $CONFIG
+	 * Get config values to merge into the config service
 	 *
 	 * @return array
 	 */

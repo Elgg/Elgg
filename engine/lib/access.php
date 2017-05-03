@@ -525,26 +525,14 @@ function elgg_check_access_overrides($user_guid = 0) {
 }
 
 /**
- * A flag to set if Elgg's access initialization is finished.
- *
- * @global bool $init_finished
- * @access private
- * @todo This is required to tell the access system to start caching because
- * calls are made while in ignore access mode and before the user is logged in.
- */
-$init_finished = false;
-
-/**
  * A quick and dirty way to make sure the access permissions have been correctly set up
  *
  * @elgg_event_handler init system
- * @todo Invesigate
  *
  * @return void
  */
 function access_init() {
-	global $init_finished;
-	$init_finished = true;
+	_elgg_services()->accessCollections->markInitComplete();
 }
 
 /**

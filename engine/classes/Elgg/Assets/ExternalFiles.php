@@ -1,36 +1,26 @@
 <?php
 namespace Elgg\Assets;
 
+use ElggPriorityList;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Assets
- * @since      1.10.0
+ * @since  1.10.0
  */
 class ExternalFiles {
-	/**
-	 * Global Elgg configuration
-	 *
-	 * @var \stdClass
-	 */
-	private $CONFIG;
 
 	/**
-	 * Constructor
-	 *
-	 * @param \stdClass $config Predefined configuration in format used by global $CONFIG variable
+	 * @var ElggPriorityList[]
 	 */
-	public function __construct(\stdClass $config = null) {
-		if (!($config instanceof \stdClass)) {
-			$config = new \stdClass();
-		}
-		$this->CONFIG = $config;
-	}
-	
+	protected $externals = [];
+
+	/**
+	 * @var array
+	 */
+	protected $externals_map = [];
+
 	/**
 	 * Core registration function for external files
 	 *
@@ -43,15 +33,13 @@ class ExternalFiles {
 	 * @return bool
 	 */
 	public function register($type, $name, $url, $location, $priority = 500) {
-		
-	
 		if (empty($name) || empty($url)) {
 			return false;
 		}
 	
 		$url = elgg_normalize_url($url);
 
-		$this->bootstrap($type);
+		$this->setupType($type);
 	
 		$name = trim(strtolower($name));
 	
@@ -63,7 +51,7 @@ class ExternalFiles {
 		// no negative priorities right now.
 		$priority = max((int) $priority, 0);
 	
-		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
+		$item = elgg_extract($name, $this->externals_map[$type]);
 	
 		if ($item) {
 			// updating a registered item
@@ -72,21 +60,21 @@ class ExternalFiles {
 			$item->location = $location;
 	
 			// if loaded before registered, that means it hasn't been added to the list yet
-			if ($GLOBALS['_ELGG']->externals[$type]->contains($item)) {
-				$priority = $GLOBALS['_ELGG']->externals[$type]->move($item, $priority);
+			if ($this->externals[$type]->contains($item)) {
+				$priority = $this->externals[$type]->move($item, $priority);
 			} else {
-				$priority = $GLOBALS['_ELGG']->externals[$type]->add($item, $priority);
+				$priority = $this->externals[$type]->add($item, $priority);
 			}
 		} else {
-			$item = new \stdClass();
-			$item->loaded = false;
-			$item->url = $url;
-			$item->location = $location;
-	
-			$priority = $GLOBALS['_ELGG']->externals[$type]->add($item, $priority);
+			$item = (object) [
+				'loaded' => false,
+				'url' => $url,
+				'location' => $location,
+			];
+			$priority = $this->externals[$type]->add($item, $priority);
 		}
 
-		$GLOBALS['_ELGG']->externals_map[$type][$name] = $item;
+		$this->externals_map[$type][$name] = $item;
 	
 		return $priority !== false;
 	}
@@ -100,18 +88,43 @@ class ExternalFiles {
 	 * @return bool
 	 */
 	public function unregister($type, $name) {
-
-		$this->bootstrap($type);
+		$this->setupType($type);
 	
 		$name = trim(strtolower($name));
-		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
+		$item = elgg_extract($name, $this->externals_map[$type]);
 	
 		if ($item) {
-			unset($GLOBALS['_ELGG']->externals_map[$type][$name]);
-			return $GLOBALS['_ELGG']->externals[$type]->remove($item);
+			unset($this->externals_map[$type][$name]);
+			return $this->externals[$type]->remove($item);
 		}
 	
 		return false;
+	}
+
+	/**
+	 * Get metadata for a registered file
+	 *
+	 * @param string $type
+	 * @param string $name
+	 *
+	 * @return \stdClass|null
+	 */
+	public function getFile($type, $name) {
+		$this->setupType($type);
+
+		$name = trim(strtolower($name));
+		if (!isset($this->externals_map[$type][$name])) {
+			return null;
+		}
+
+		$item = $this->externals_map[$type][$name];
+		$priority = $this->externals[$type]->getPriority($item);
+
+		// don't allow internal properties to be altered
+		$clone = clone $item;
+		$clone->priority = $priority;
+
+		return $clone;
 	}
 	
 	/**
@@ -123,30 +136,28 @@ class ExternalFiles {
 	 * @return void
 	 */
 	public function load($type, $name) {
-		
-	
-		$this->bootstrap($type);
+		$this->setupType($type);
 	
 		$name = trim(strtolower($name));
 	
-		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
+		$item = elgg_extract($name, $this->externals_map[$type]);
 	
 		if ($item) {
 			// update a registered item
 			$item->loaded = true;
 		} else {
-			$item = new \stdClass();
-			$item->loaded = true;
-			$item->url = '';
-			$item->location = '';
-			
+			$item = (object) [
+				'loaded' => true,
+				'url' => '',
+				'location' => '',
+			];
 			if (elgg_view_exists($name)) {
 				$item->url = elgg_get_simplecache_url($name);
 				$item->location = ($type == 'js') ? 'foot' : 'head';
 			}
 
-			$GLOBALS['_ELGG']->externals[$type]->add($item);
-			$GLOBALS['_ELGG']->externals_map[$type][$name] = $item;
+			$this->externals[$type]->add($item);
+			$this->externals_map[$type][$name] = $item;
 		}
 	}
 	
@@ -156,53 +167,75 @@ class ExternalFiles {
 	 * @param string $type     Type of file: js or css
 	 * @param string $location Page location
 	 *
-	 * @return array
+	 * @return string[] URLs of files to load
 	 */
 	public function getLoadedFiles($type, $location) {
-		
-	
-		if (
-			isset($GLOBALS['_ELGG']->externals)
-			&& isset($GLOBALS['_ELGG']->externals[$type])
-			&& $GLOBALS['_ELGG']->externals[$type] instanceof \ElggPriorityList
-		) {
-			$items = $GLOBALS['_ELGG']->externals[$type]->getElements();
-	
-			$items = array_filter($items, function($v) use ($location) {
-				return $v->loaded == true && $v->location == $location;
-			});
-			if ($items) {
-				array_walk($items, function(&$v, $k){
-					$v = $v->url;
-				});
-			}
-			return $items;
+		if (!isset($this->externals[$type])) {
+			return [];
 		}
-		return [];
+
+		$items = $this->externals[$type]->getElements();
+
+		$items = array_filter($items, function($v) use ($location) {
+			return $v->loaded == true && $v->location == $location;
+		});
+		if ($items) {
+			array_walk($items, function(&$v, $k){
+				$v = $v->url;
+			});
+		}
+		return $items;
+	}
+
+	/**
+	 * Get registered file objects
+	 *
+	 * @param string $type     Type of file: js or css
+	 * @param string $location Page location
+	 *
+	 * @return \stdClass[]
+	 */
+	public function getRegisteredFiles($type, $location) {
+		if (!isset($this->externals[$type])) {
+			return [];
+		}
+
+		$ret = [];
+		$items = $this->externals[$type]->getElements();
+		$items = array_filter($items, function($v) use ($location) {
+			return ($v->location == $location);
+		});
+
+		foreach ($items as $item) {
+			$ret[] = clone $item;
+		}
+
+		return $ret;
+	}
+
+	/**
+	 * Unregister all files
+	 *
+	 * @return void
+	 */
+	public function reset() {
+		$this->externals = [];
+		$this->externals_map = [];
 	}
 	
 	/**
-	 * Bootstraps the externals data structure in $_ELGG.
+	 * Bootstraps the externals data structure
 	 *
 	 * @param string $type The type of external, js or css.
-	 * @return null
+	 * @return void
 	 */
-	protected function bootstrap($type) {
-
-		if (!isset($GLOBALS['_ELGG']->externals)) {
-			$GLOBALS['_ELGG']->externals = [];
+	protected function setupType($type) {
+		if (!isset($this->externals[$type])) {
+			$this->externals[$type] = new \ElggPriorityList();
 		}
 	
-		if (!isset($GLOBALS['_ELGG']->externals[$type]) || !$GLOBALS['_ELGG']->externals[$type] instanceof \ElggPriorityList) {
-			$GLOBALS['_ELGG']->externals[$type] = new \ElggPriorityList();
-		}
-	
-		if (!isset($GLOBALS['_ELGG']->externals_map)) {
-			$GLOBALS['_ELGG']->externals_map = [];
-		}
-	
-		if (!isset($GLOBALS['_ELGG']->externals_map[$type])) {
-			$GLOBALS['_ELGG']->externals_map[$type] = [];
+		if (!isset($this->externals_map[$type])) {
+			$this->externals_map[$type] = [];
 		}
 	}
 }

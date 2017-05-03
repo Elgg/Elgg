@@ -196,33 +196,27 @@ function elgg_get_tags(array $options = []) {
  * This is required if you are using a non-standard metadata name
  * for your tags.
  *
+ * Because tags are simply names of metadata, This is used
+ * in search to prevent data exposure by searching on
+ * arbitrary metadata.
+ *
  * @param string $name Tag name
  *
  * @return bool
  * @since 1.7.0
  */
 function elgg_register_tag_metadata_name($name) {
-	if (!isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) {
-		$GLOBALS['_ELGG']->registered_tag_metadata_names = [];
-	}
-
-	if (!in_array($name, $GLOBALS['_ELGG']->registered_tag_metadata_names)) {
-		$GLOBALS['_ELGG']->registered_tag_metadata_names[] = $name;
-	}
-
-	return true;
+	return _elgg_services()->metadataTable->registerTagName($name);
 }
 
 /**
  * Returns an array of valid metadata names for tags.
  *
- * @return array
+ * @return string[]
  * @since 1.7.0
  */
 function elgg_get_registered_tag_metadata_names() {
-	$names = (isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) ? $GLOBALS['_ELGG']->registered_tag_metadata_names : [];
-
-	return $names;
+	return _elgg_services()->metadataTable->getTagNames();
 }
 
 /**

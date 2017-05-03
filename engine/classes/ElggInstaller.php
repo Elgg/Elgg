@@ -51,8 +51,6 @@ class ElggInstaller {
 
 	protected $autoLogin = true;
 
-	private $view_path = '';
-
 	/**
 	 * Global Elgg configuration
 	 *
@@ -68,11 +66,6 @@ class ElggInstaller {
 		if (!isset($CONFIG)) {
 			$CONFIG = new stdClass;
 		}
-		
-		global $_ELGG;
-		if (!isset($_ELGG)) {
-			$_ELGG = new stdClass;
-		}
 
 		$this->CONFIG = $CONFIG;
 
@@ -82,14 +75,9 @@ class ElggInstaller {
 
 		$this->bootstrapEngine();
 
-		_elgg_services()->views->view_path = $this->view_path;
-		
 		_elgg_services()->setValue('session', \ElggSession::getMock());
 
 		elgg_set_viewtype('installation');
-
-		set_error_handler('_elgg_php_error_handler');
-		set_exception_handler('_elgg_php_exception_handler');
 
 		_elgg_services()->config->set('simplecache_enabled', false);
 		_elgg_services()->translator->registerTranslations(\Elgg\Application::elggDir()->getPath("/install/languages/"), true);
@@ -129,7 +117,9 @@ class ElggInstaller {
 
 		$params = $this->getPostVariables();
 
-		$this->$step($params);
+		$method = "run" . ucwords($step);
+
+		$this->$method($params);
 	}
 
 	/**
@@ -162,8 +152,6 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	public function batchInstall(array $params, $createHtaccess = false) {
-		
-
 		restore_error_handler();
 		restore_exception_handler();
 
@@ -272,7 +260,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function welcome($vars) {
+	protected function runWelcome($vars) {
 		$this->render('welcome');
 	}
 
@@ -285,7 +273,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function requirements($vars) {
+	protected function runRequirements($vars) {
 
 		$report = [];
 
@@ -332,7 +320,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function database($submissionVars) {
+	protected function runDatabase($submissionVars) {
 
 		$formVars = [
 			'dbuser' => [
@@ -433,7 +421,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function settings($submissionVars) {
+	protected function runSettings($submissionVars) {
 		$formVars = [
 			'sitename' => [
 				'type' => 'text',
@@ -451,13 +439,6 @@ class ElggInstaller {
 				'required' => true,
 				],
 		];
-
-		// if Apache, we give user option of having Elgg create data directory
-		//if (ElggRewriteTester::guessWebServer() == 'apache') {
-		//	$formVars['dataroot']['type'] = 'combo';
-		//	$GLOBALS['_ELGG']->translations['en']['install:settings:help:dataroot'] =
-		//			$GLOBALS['_ELGG']->translations['en']['install:settings:help:dataroot:apache'];
-		//}
 
 		if ($this->isAction) {
 			do {
@@ -493,7 +474,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function admin($submissionVars) {
+	protected function runAdmin($submissionVars) {
 		$formVars = [
 			'displayname' => [
 				'type' => 'text',
@@ -522,6 +503,8 @@ class ElggInstaller {
 				'required' => true,
 				],
 		];
+
+		$translator = _elgg_services()->translator;
 		
 		if ($this->isAction) {
 			do {
@@ -533,18 +516,22 @@ class ElggInstaller {
 					break;
 				}
 
-				system_message(_elgg_services()->translator->translate('install:success:admin'));
+				system_message($translator->translate('install:success:admin'));
 
 				$this->continueToNextStep('admin');
 			} while (false);  // PHP doesn't support breaking out of if statements
 		}
 
-		// bit of a hack to get the password help to show right number of characters
-		
-		$lang = _elgg_services()->translator->getCurrentLanguage();
-		$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'] =
-				sprintf($GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'],
-				$this->CONFIG->min_password_length);
+		// Bit of a hack to get the password help to show right number of characters
+		// We burn the value into the stored translation.
+		$lang = $translator->getCurrentLanguage();
+		$translations = $translator->getLoadedTranslations();
+		$translator->addTranslation($lang, [
+			'install:admin:help:password1' => sprintf(
+				$translations[$lang]['install:admin:help:password1'],
+				$this->CONFIG->min_password_length
+			),
+		]);
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
 
@@ -556,7 +543,7 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	protected function complete() {
+	protected function runComplete() {
 
 		$params = [];
 		if ($this->autoLogin) {
@@ -779,51 +766,10 @@ class ElggInstaller {
 
 		if ($stepIndex > $dbIndex) {
 			// once the database has been created, load rest of engine
-			
-			$lib_dir = \Elgg\Application::elggDir()->chroot('/engine/lib/');
+
+			// @todo we already use Application::loadCore in the constructor. Why not can this whole block be replaced with elgg()->bootCore()?
 
 			$this->loadSettingsFile();
-
-			$lib_files = [
-				// these want to be loaded first apparently?
-				'autoloader.php',
-				'database.php',
-				'actions.php',
-
-				'admin.php',
-				'annotations.php',
-				'cron.php',
-				'entities.php',
-				'extender.php',
-				'filestore.php',
-				'group.php',
-				'mb_wrapper.php',
-				'memcache.php',
-				'metadata.php',
-				'metastrings.php',
-				'navigation.php',
-				'notification.php',
-				'objects.php',
-				'pagehandler.php',
-				'pam.php',
-				'plugins.php',
-				'private_settings.php',
-				'relationships.php',
-				'river.php',
-				'sites.php',
-				'statistics.php',
-				'tags.php',
-				'user_settings.php',
-				'users.php',
-				'upgrade.php',
-				'widgets.php',
-			];
-
-			foreach ($lib_files as $file) {
-				if (!include_once($lib_dir->getPath($file))) {
-					throw new InstallationException('InstallationException:MissingLibrary', [$file]);
-				}
-			}
 
 			_elgg_services()->db->setupConnections();
 			_elgg_services()->translator->registerTranslations(\Elgg\Application::elggDir()->getPath("/languages/"));
@@ -854,7 +800,6 @@ class ElggInstaller {
 		$this->CONFIG->wwwroot = $this->getBaseUrl();
 		$this->CONFIG->url = $this->CONFIG->wwwroot;
 		$this->CONFIG->path = Directory\Local::root()->getPath('/');
-		$this->view_path = $this->CONFIG->path . 'views/';
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
 		$this->CONFIG->context = [];
 		$this->CONFIG->entity_types = ['group', 'object', 'site', 'user'];
@@ -1360,6 +1305,7 @@ class ElggInstaller {
 	protected function installDatabase() {
 		try {
 			_elgg_services()->db->runSqlScript(\Elgg\Application::elggDir()->getPath("/engine/schema/mysql.sql"));
+			init_site_secret();
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
 			if (strpos($msg, 'already exists')) {

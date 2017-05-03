@@ -136,39 +136,13 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function get($name, $default = null) {
-		$name = trim($name);
-	
-		if (isset($this->config->$name)) {
-			return $this->config->$name;
-		}
-
-		if (!empty($this->config->site_config_loaded)) {
-			return $default;
-		}
-		
-		$value = $this->getConfigTable()->get($name);
-
-		if ($value === null) {
-			return $default;
-		}
-	
-		$this->config->$name = $value;
-		
-		return $value;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getVolatile($name) {
-		return isset($this->config->{$name}) ? $this->config->{$name} : null;
+		return isset($this->config->{$name}) ? $this->config->{$name} : $default;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function set($name, $value) {
-		$name = trim($name);
 		$this->config->$name = $value;
 	}
 
@@ -176,8 +150,6 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function save($name, $value) {
-		$name = trim($name);
-	
 		if (strlen($name) > 255) {
 			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
@@ -194,8 +166,6 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function remove($name) {
-		$name = trim($name);
-
 		$result = $this->getConfigTable()->remove($name);
 
 		unset($this->config->$name);
@@ -226,7 +196,7 @@ class Config implements Services\Config {
 
 		// No settings means a fresh install
 		if (!is_file($path)) {
-			if ($this->getVolatile('installer_running')) {
+			if ($this->get('installer_running')) {
 				$this->settings_loaded = true;
 				return;
 			}
@@ -255,7 +225,7 @@ class Config implements Services\Config {
 		// normalize commonly needed values
 		$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
+		$CONFIG->_simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
 
 		if (empty($CONFIG->cacheroot)) {
 			$CONFIG->cacheroot = $CONFIG->dataroot;
@@ -271,21 +241,6 @@ class Config implements Services\Config {
 		}
 
 		$this->settings_loaded = true;
-	}
-
-	/**
-	 * Get the raw \stdClass object used for storage.
-	 *
-	 * We need this, for now, to construct some services.
-	 *
-	 * @internal Do not use this plugins or new core code!
-	 * @todo Get rid of this.
-	 *
-	 * @return \stdClass
-	 * @access private
-	 */
-	public function getStorageObject() {
-		return $this->config;
 	}
 
 	/**

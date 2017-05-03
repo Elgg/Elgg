@@ -139,7 +139,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('boot', function(ServiceProvider $c) {
 			$boot = new \Elgg\BootService();
-			if ($c->config->getVolatile('enable_profiling')) {
+			if ($c->config->get('enable_profiling')) {
 				$boot->setTimer($c->timer);
 			}
 			return $boot;
@@ -172,12 +172,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('db', function(ServiceProvider $c) {
 			// gonna need dbprefix from settings
 			$c->config->loadSettingsFile();
-			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
+			$db_config = \Elgg\Database\Config::fromElggConfig($c->config);
 
 			// we inject the logger in _elgg_engine_boot()
 			$db = new \Elgg\Database($db_config);
 
-			if ($c->config->getVolatile('profiling_sql')) {
+			if ($c->config->get('profiling_sql')) {
 				$db->setTimer($c->timer);
 			}
 
@@ -212,15 +212,13 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('events', function (ServiceProvider $c) {
 			$events = new \Elgg\EventsService();
-			if ($c->config->getVolatile('enable_profiling')) {
+			if ($c->config->get('enable_profiling')) {
 				$events->setTimer($c->timer);
 			}
 			return $events;
 		});
 
-		$this->setFactory('externalFiles', function(ServiceProvider $c) {
-			return new \Elgg\Assets\ExternalFiles($c->config->getStorageObject());
-		});
+		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);
 
 		$this->setFactory('fileCache', function(ServiceProvider $c) {
 			return new \ElggFileCache($c->config->getCachePath() . 'system_cache/');
@@ -269,11 +267,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('memcacheStashPool', function(ServiceProvider $c) {
-			if (!$c->config->getVolatile('memcache')) {
+			if (!$c->config->get('memcache')) {
 				return null;
 			}
 
-			$servers = $c->config->getVolatile('memcache_servers');
+			$servers = $c->config->get('memcache_servers');
 			if (!$servers) {
 				return null;
 			}
@@ -320,7 +318,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('plugins', function(ServiceProvider $c) {
 			$pool = new Pool\InMemory();
 			$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
-			if ($c->config->getVolatile('enable_profiling')) {
+			if ($c->config->get('enable_profiling')) {
 				$plugins->setTimer($c->timer);
 			}
 			return $plugins;
@@ -358,7 +356,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('router', function(ServiceProvider $c) {
 			// TODO(evan): Init routes from plugins or cache
 			$router = new \Elgg\Router($c->hooks);
-			if ($c->config->getVolatile('enable_profiling')) {
+			if ($c->config->get('enable_profiling')) {
 				$router->setTimer($c->timer);
 			}
 			return $router;
@@ -396,8 +394,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			$c->config->setConfigTable($c->configTable);
-			return new \Elgg\Database\SiteSecret($c->config);
+			return \Elgg\Database\SiteSecret::load($c->config, $c->configTable);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
@@ -408,7 +405,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
 			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config);
-			if ($c->config->getVolatile('enable_profiling')) {
+			if ($c->config->get('enable_profiling')) {
 				$cache->setTimer($c->timer);
 			}
 			return $cache;

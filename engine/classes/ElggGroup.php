@@ -263,42 +263,46 @@ class ElggGroup extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function update() {
-		global $CONFIG;
-		
 		if (!parent::update()) {
 			return false;
 		}
-		
-		$guid = (int) $this->guid;
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
-		
-		$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-			. " name='$name', description='$description' where guid=$guid";
 
-		return $this->getDatabase()->updateData($query) !== false;
+		$db = $this->getDatabase();
+		$query = "
+			UPDATE {$db->prefix}groups_entity
+			SET name = :name, description = :description
+			WHERE guid = :guid
+		";
+		$params = [
+			':name' => (string) $this->name,
+			':description' => (string) $this->description,
+			':guid' => $this->guid,
+		];
+		return $db->updateData($query, false, $params) !== false;
 	}
 	
 	/**
 	 * {@inheritdoc}
 	 */
 	protected function create() {
-		global $CONFIG;
-		
 		$guid = parent::create();
 		if (!$guid) {
 			// @todo this probably means permission to create entity was denied
 			// Is returning false the correct thing to do
 			return false;
 		}
-		
-		$name = sanitize_string($this->name);
-		$description = sanitize_string($this->description);
 
-		$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-			. " (guid, name, description) values ($guid, '$name', '$description')";
-
-		$result = $this->getDatabase()->insertData($query);
+		$db = $this->getDatabase();
+		$query = "
+			INSERT INTO {$db->prefix}groups_entity
+			(guid, name, description) VALUES (:guid, :name, :description)
+		";
+		$params = [
+			':guid' => $this->guid,
+			':name' => (string) $this->name,
+			':description' => (string) $this->description,
+		];
+		$result = $db->insertData($query, $params);
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;

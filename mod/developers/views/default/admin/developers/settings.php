@@ -8,7 +8,7 @@ $data = [
 		'type' => 'checkbox',
 		'value' => 1,
 		'checked' => elgg_get_config('simplecache_enabled') == 1,
-		'readonly' => $GLOBALS['_ELGG']->simplecache_enabled_in_settings,
+		'readonly' => elgg_get_config('_simplecache_enabled_in_settings'),
 	],
 
 	'system_cache' => [

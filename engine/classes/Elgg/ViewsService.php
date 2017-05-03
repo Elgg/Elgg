@@ -73,11 +73,13 @@ class ViewsService {
 	 * @var SystemCache|null This is set if the views are configured via cache
 	 */
 	private $cache;
-	
+
 	/**
-	 * @var string Absolute path of the views directory
+	 * A list of valid view types as discovered.
+	 *
+	 * @var array
 	 */
-	public $view_path;
+	private $view_types = [];
 
 	/**
 	 * Constructor
@@ -88,6 +90,30 @@ class ViewsService {
 	public function __construct(PluginHooksService $hooks, Logger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
+	}
+
+	/**
+	 * Checks if $viewtype is registered.
+	 *
+	 * @param string $viewtype The viewtype name
+	 *
+	 * @return bool
+	 */
+	public function isRegisteredViewtype($viewtype) {
+		return in_array($viewtype, $this->view_types);
+	}
+
+	/**
+	 * Register a viewtype.
+	 *
+	 * @param string $viewtype The view type to register
+	 * @return bool
+	 */
+	public function registerViewtype($viewtype) {
+		if (!$this->isRegisteredViewtype($viewtype)) {
+			$this->view_types[] = $viewtype;
+		}
+		return true;
 	}
 	
 	/**
@@ -647,6 +673,16 @@ class ViewsService {
 	 * @access private
 	 */
 	public function configureFromCache(SystemCache $cache) {
+		$data = $cache->load('view_types');
+		if (!is_string($data)) {
+			return false;
+		}
+		$data = unserialize($data);
+		if (!is_array($data)) {
+			return false;
+		}
+		$this->view_types = $data;
+
 		$data = $cache->load('view_locations');
 		if (!is_string($data)) {
 			return false;
@@ -677,6 +713,8 @@ class ViewsService {
 
 		// this is saved just for the inspector and is not loaded in loadAll()
 		$cache->save('view_overrides', serialize($this->overrides));
+
+		$cache->save('view_types', serialize($this->view_types));
 	}
 
 	/**

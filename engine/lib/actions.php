@@ -9,6 +9,7 @@
  */
 
 use Elgg\Http\ResponseBuilder;
+use Elgg\Database\SiteSecret;
 
 /**
  * Handle a request for an action
@@ -179,31 +180,15 @@ function generate_action_token($timestamp) {
 }
 
 /**
- * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
+ * Regenerate a new site key (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
- * Used during installation and saves in config table.
- *
- * Note: Old secrets were hex encoded.
- *
- * @return mixed The site secret hash or false
+ * @return mixed The site secret hash
  * @access private
- * @todo Move to better file.
  */
 function init_site_secret() {
-	return _elgg_services()->siteSecret->init();
-}
-
-/**
- * Returns the site secret.
- *
- * Used to generate difficult to guess hashes for sessions and action tokens.
- *
- * @return string Site secret.
- * @access private
- * @todo Move to better file.
- */
-function get_site_secret() {
-	return _elgg_services()->siteSecret->get();
+	$secret = SiteSecret::regenerate(_elgg_services()->crypto, _elgg_services()->configTable);
+	_elgg_services()->setValue('siteSecret', $secret);
+	return $secret->get();
 }
 
 /**

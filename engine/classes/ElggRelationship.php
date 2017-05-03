@@ -117,16 +117,16 @@ class ElggRelationship extends \ElggData {
 		$url = '';
 		// @todo remove when elgg_register_relationship_url_handler() has been removed
 		if ($this->id) {
-			global $CONFIG;
-
 			$subtype = $this->getSubtype();
 
 			$function = "";
-			if (isset($CONFIG->relationship_url_handler[$subtype])) {
-				$function = $CONFIG->relationship_url_handler[$subtype];
+			$handlers = _elgg_services()->config->get('relationship_url_handler');
+
+			if (isset($handlers[$subtype])) {
+				$function = $handlers[$subtype];
 			}
-			if (isset($CONFIG->relationship_url_handler['all'])) {
-				$function = $CONFIG->relationship_url_handler['all'];
+			if (isset($handlers['all'])) {
+				$function = $handlers['all'];
 			}
 
 			if (is_callable($function)) {
