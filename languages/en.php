@@ -810,6 +810,7 @@ These changes will only affect new users on the site.',
 	'usersettings:statistics:label:email' => "Email",
 	'usersettings:statistics:label:membersince' => "Member since",
 	'usersettings:statistics:label:lastlogin' => "Last logged in",
+    'usersettings:edit'=> 'Edit %s',
 
 /**
  * Activity river

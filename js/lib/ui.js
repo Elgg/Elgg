@@ -35,6 +35,18 @@ elgg.ui.init = function () {
 	if ($('.elgg-autofocus').length > 0) {
 		elgg.deprecated_notice('Use of .elgg-autofocus is deprecated by html5 autofocus', 1.9);
 	}
+    $(document).on('click', '.elgg-user-settings-edit', function(){
+        var $previous_text = $(this).attr('data-edit-text');
+        console.log($previous_text);
+        if ($(this).hasClass('elgg-state-active')){
+            $(this).text(elgg.echo('cancel'));
+            $('.elgg-user-settings-edit').not(this).addClass('elgg-disabled-link');             
+        }else{
+            $(this).text($previous_text);
+            $('.elgg-user-settings-edit').not(this).removeClass('elgg-disabled-link');   
+        }
+        
+    });
 
 	elgg.ui.initAccessInputs();
 
