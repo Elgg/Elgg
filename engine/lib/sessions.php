@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\SystemMessagesService;
+
 /**
  * Elgg session management
  * Functions to manage logins
@@ -328,9 +330,9 @@ function logout() {
 	_elgg_services()->persistentLogin->removePersistentLogin();
 
 	// pass along any messages into new session
-	$old_msg = $session->get('msg');
+	$old_msg = $session->get(SystemMessagesService::SESSION_KEY, []);
 	$session->invalidate();
-	$session->set('msg', $old_msg);
+	$session->set(SystemMessagesService::SESSION_KEY, $old_msg);
 
 	elgg_trigger_after_event('logout', 'user', $user);
 
