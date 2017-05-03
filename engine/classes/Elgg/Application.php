@@ -246,18 +246,16 @@ class Application {
 		}
 
 		$this->loadSettings();
-		$this->resolveWebRoot();
-
-		$config->set('boot_complete', false);
-
-		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
-		$config->set('default_limit', 10);
+		if (!$config->get('wwwroot')) {
+			$config->set('wwwroot', $this->services->request->sniffElggUrl());
+		}
 
 		// in case not loaded already
 		$this->loadCore();
 
 		// Connect to database, load language files, load configuration, init session
 		$this->services->boot->boot();
+
 		elgg_views_boot();
 
 		// Load the plugins that are active
@@ -589,20 +587,6 @@ class Application {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Make sure config has a non-empty wwwroot. Calculate from request if missing.
-	 *
-	 * @return void
-	 */
-	private function resolveWebRoot() {
-		$config = $this->services->config;
-
-		$config->loadSettingsFile();
-		if (!$config->get('wwwroot')) {
-			$config->set('wwwroot', $this->services->request->sniffElggUrl());
-		}
 	}
 
 	/**

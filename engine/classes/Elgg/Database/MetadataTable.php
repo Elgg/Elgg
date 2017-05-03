@@ -237,8 +237,6 @@ class MetadataTable {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
-		$access_id = ACCESS_PUBLIC;
-
 		// Support boolean types (as integers)
 		if (is_bool($value)) {
 			$value = (int) $value;
@@ -259,8 +257,8 @@ class MetadataTable {
 			':name' => $name,
 			':value' => $value,
 			':value_type' => $value_type,
-			':access_id' => $access_id,
 			':owner_guid' => $owner_guid,
+			':access_id' => ACCESS_PUBLIC,
 			':id' => $id,
 		]);
 		

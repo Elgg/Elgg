@@ -48,8 +48,6 @@ class MetadataTable extends DbMetadataTabe {
 		$this->iterator++;
 		$id = $this->iterator;
 
-		$time = $this->getCurrentTime()->getTimestamp();
-
 		$row = (object) [
 			'type' => 'metadata',
 			'id' => $id,
@@ -155,7 +153,7 @@ class MetadataTable extends DbMetadataTabe {
 			FROM {$dbprefix}metadata n_table
 				JOIN {$dbprefix}entities e ON n_table.entity_guid = e.guid
 				WHERE  (n_table.id IN ({$row->id})) AND $e_access_sql
-				ORDER BY n_table.time_created ASC, n_table.id ASC, n_table.id";
+				ORDER BY n_table.time_created ASC, n_table.id ASC, n_table.id LIMIT 0, 10";
 		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
@@ -178,8 +176,8 @@ class MetadataTable extends DbMetadataTabe {
 				':name' => $row->name,
 				':value' => $row->value,
 				':value_type' => $row->value_type,
-				':owner_guid' => $row->owner_guid,
-				':time_created' => $row->time_created,
+				':owner_guid' => (int) $row->owner_guid,
+				':time_created' => (int) $row->time_created,
 				':access_id' => ACCESS_PUBLIC,
 			],
 			'insert_id' => $row->id,

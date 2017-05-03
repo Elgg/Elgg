@@ -56,6 +56,13 @@ class Config {
 		if (empty($config->language)) {
 			$config->language = 'en';
 		}
+		if (empty($config->default_limit)) {
+			// will be overridden by the DB value, but needed early.
+			$config->default_limit = 10;
+		}
+		if (!isset($config->boot_complete)) {
+			$config->boot_complete = false;
+		}
 
 		$this->config = $config;
 

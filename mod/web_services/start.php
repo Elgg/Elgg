@@ -142,7 +142,7 @@ $ERRORS = [];
 function elgg_ws_expose_function(
 	$method,
 	$function,
-	array $parameters = null,
+	$parameters = null,
 	$description = "",
 	$call_method = "GET",
 	$require_api_auth = false,
