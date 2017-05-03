@@ -403,7 +403,7 @@ class Application {
 		}
 
 		if (0 === strpos($path, '/cache/')) {
-			$this->services->cacheHandler->handleRequest($path);
+			$this->services->cacheHandler->handleRequest($request)->prepare($request)->send();
 			return true;
 		}
 

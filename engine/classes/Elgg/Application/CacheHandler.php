@@ -4,6 +4,9 @@ namespace Elgg\Application;
 use Elgg\Application;
 use Elgg\Config;
 use Elgg\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Simplecache handler
@@ -70,64 +73,77 @@ class CacheHandler {
 	 * Handle a request for a cached view
 	 *
 	 * @param array $path URL path
-	 * @return void
+	 * @return Response (unprepared)
 	 */
-	public function handleRequest($path) {
+	public function handleRequest(Request $request) {
 		$config = $this->config;
 		
-		$request = $this->parsePath($path);
-		if (!$request) {
-			$this->send403();
+		$parsed = $this->parsePath($request->getPathInfo());
+		if (!$parsed) {
+			return $this->send403();
 		}
 		
-		$ts = $request['ts'];
-		$view = $request['view'];
-		$viewtype = $request['viewtype'];
+		$ts = $parsed['ts'];
+		$view = $parsed['view'];
+		$viewtype = $parsed['viewtype'];
 
 		$content_type = $this->getContentType($view);
 		if (empty($content_type)) {
-			$this->send403("Asset must have a valid file extension");
+			return $this->send403("Asset must have a valid file extension");
 		}
 
+		$response = Response::create();
 		if (in_array($content_type, self::$utf8_content_types)) {
-			header("Content-Type: $content_type;charset=utf-8");
+			$response->headers->set('Content-Type', "$content_type;charset=utf-8", true);
 		} else {
-			header("Content-Type: $content_type");
+			$response->headers->set('Content-Type', $content_type, true);
 		}
 
 		if (!$this->simplecache_enabled) {
 			$this->application->bootCore();
+			header_remove('Cache-Control');
+			header_remove('Pragma');
+			header_remove('Expires');
 
 			if (!$this->isCacheableView($view)) {
-				$this->send403("Requested view is not an asset");
-			} else {
-				$content = $this->getProcessedView($view, $viewtype);
-				$etag = '"' . md5($content) . '"';
-				$this->sendRevalidateHeaders($etag);
-				$this->handle304($etag);
-
-				echo $content;
+				return $this->send403("Requested view is not an asset");
 			}
-			exit;
+
+			$content = $this->getProcessedView($view, $viewtype);
+			if ($content === false) {
+				return $this->send403();
+			}
+
+			$etag = '"' . md5($content) . '"';
+			$this->setRevalidateHeaders($etag, $response);
+			if ($this->is304($etag)) {
+				return Response::create()->setNotModified();
+			}
+
+			return $response->setContent($content);
 		}
 
 		$etag = "\"$ts\"";
-		$this->handle304($etag);
+		if ($this->is304($etag)) {
+			return Response::create()->setNotModified();
+		}
 
 		// trust the client but check for an existing cache file
 		$filename = $config->getCachePath() . "views_simplecache/$ts/$viewtype/$view";
 		if (file_exists($filename)) {
-			$this->sendCacheHeaders($etag);
-			readfile($filename);
-			exit;
+			$this->sendCacheHeaders($etag, $response);
+			return BinaryFileResponse::create($filename, 200, $response->headers->all());
 		}
 
 		// the hard way
 		$this->application->bootCore();
+		header_remove('Cache-Control');
+		header_remove('Pragma');
+		header_remove('Expires');
 
 		elgg_set_viewtype($viewtype);
 		if (!$this->isCacheableView($view)) {
-			$this->send403("Requested view is not an asset");
+			return $this->send403("Requested view is not an asset");
 		}
 
 		$lastcache = (int) $config->get('lastcache');
@@ -135,7 +151,7 @@ class CacheHandler {
 		$filename = $config->getCachePath() . "views_simplecache/$lastcache/$viewtype/$view";
 
 		if ($lastcache == $ts) {
-			$this->sendCacheHeaders($etag);
+			$this->sendCacheHeaders($etag, $response);
 
 			$content = $this->getProcessedView($view, $viewtype);
 
@@ -150,8 +166,7 @@ class CacheHandler {
 			$content = $this->getProcessedView($view, $viewtype);
 		}
 
-		echo $content;
-		exit;
+		return $response->setContent($content);
 	}
 
 	/**
@@ -204,11 +219,10 @@ class CacheHandler {
 	 * @param string $etag ETag value
 	 * @return void
 	 */
-	protected function sendCacheHeaders($etag) {
-		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-		header("Pragma: public", true);
-		header("Cache-Control: public", true);
-		header("ETag: $etag");
+	protected function sendCacheHeaders($etag, Response $response) {
+		$response->setSharedMaxAge(86400 * 30 * 6);
+		$response->setMaxAge(86400 * 30 * 6);
+		$response->headers->set('ETag', $etag);
 	}
 
 	/**
@@ -217,23 +231,21 @@ class CacheHandler {
 	 * @param string $etag ETag value
 	 * @return void
 	 */
-	protected function sendRevalidateHeaders($etag) {
-		header_remove('Expires');
-		header("Pragma: public", true);
-		header("Cache-Control: public, max-age=0, must-revalidate", true);
-		header("ETag: $etag");
+	protected function setRevalidateHeaders($etag, Response $response) {
+		$response->headers->set('Cache-Control', "public, max-age=0, must-revalidate", true);
+		$response->headers->set('ETag', $etag);
 	}
 
 	/**
 	 * Send a 304 and exit() if the ETag matches the request
 	 *
 	 * @param string $etag ETag value
-	 * @return void
+	 * @return bool
 	 */
-	protected function handle304($etag) {
+	protected function is304($etag) {
 		$if_none_match = $this->request->headers->get('If-None-Match');
 		if ($if_none_match === null) {
-			return;
+			return false;
 		}
 
 		// strip -gzip and leading /W
@@ -242,10 +254,8 @@ class CacheHandler {
 			$if_none_match = substr($if_none_match, 2);
 		}
 		$if_none_match = str_replace('-gzip', '', $if_none_match);
-		if ($if_none_match === $etag) {
-			header("HTTP/1.1 304 Not Modified");
-			exit;
-		}
+
+		return ($if_none_match === $etag);
 	}
 
 	/**
@@ -254,8 +264,9 @@ class CacheHandler {
 	 * @param string $view The view name
 	 *
 	 * @return string|null
+	 * @access private
 	 */
-	protected function getContentType($view) {
+	public function getContentType($view) {
 		$extension = $this->getViewFileType($view);
 		
 		if (isset(self::$extensions[$extension])) {
@@ -275,8 +286,9 @@ class CacheHandler {
 	 *
 	 * @param string $view The view name
 	 * @return string
+	 * @access private
 	 */
-	private function getViewFileType($view) {
+	public function getViewFileType($view) {
 		$extension = (new \SplFileInfo($view))->getExtension();
 		$hasValidExtension = isset(self::$extensions[$extension]);
 
@@ -296,11 +308,14 @@ class CacheHandler {
 	 *
 	 * @param string $view     The view name
 	 * @param string $viewtype The viewtype
-	 * @return string
+	 * @return string|false
 	 * @see CacheHandler::renderView()
 	 */
 	protected function getProcessedView($view, $viewtype) {
 		$content = $this->renderView($view, $viewtype);
+		if ($content === false) {
+			return false;
+		}
 
 		if ($this->simplecache_enabled) {
 			$hook_name = 'simplecache:generate';
@@ -321,7 +336,7 @@ class CacheHandler {
 	 *
 	 * @param string $view     The view name
 	 * @param string $viewtype The viewtype
-	 * @return string
+	 * @return string|false
 	 */
 	protected function renderView($view, $viewtype) {
 		elgg_set_viewtype($viewtype);
@@ -334,7 +349,7 @@ class CacheHandler {
 		}
 
 		if (!elgg_view_exists($view)) {
-			$this->send403();
+			return false;
 		}
 
 		// disable error reporting so we don't cache problems
@@ -347,12 +362,10 @@ class CacheHandler {
 	 * Send an error message to requestor
 	 *
 	 * @param string $msg Optional message text
-	 * @return void
+	 * @return Response
 	 */
 	protected function send403($msg = 'Cache error: bad request') {
-		header('HTTP/1.1 403 Forbidden');
-		echo $msg;
-		exit;
+		return Response::create($msg, 403);
 	}
 }
 
