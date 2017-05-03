@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Filesystem\Directory;
+use Elgg\Application;
 
 /**
  * Elgg Installer.
@@ -25,9 +26,6 @@ use Elgg\Filesystem\Directory;
  * .htaccess of his own that overrides the protection for his user directory. The
  * best solution is server level configuration that turns off AllowOverride for the
  * data directory. See ticket #3453 for discussion on this.
- *
- * @package    Elgg.Core
- * @subpackage Installer
  */
 class ElggInstaller {
 	
@@ -52,36 +50,25 @@ class ElggInstaller {
 	protected $autoLogin = true;
 
 	/**
-	 * Global Elgg configuration
-	 *
-	 * @var \stdClass
-	 */
-	private $CONFIG;
-
-	/**
 	 * Constructor bootstraps the Elgg engine
 	 */
 	public function __construct() {
-		global $CONFIG;
-		if (!isset($CONFIG)) {
-			$CONFIG = new stdClass;
+		Application::create()->loadCore();
+
+		$this->isAction = _elgg_services()->request->getMethod() === 'POST';
+
+		$config = _elgg_services()->config;
+		$config->set('wwwroot', _elgg_services()->request->sniffElggUrl());
+		$config->set('installer_running', true);
+		if (!$config->get('dbencoding')) {
+			$config->set('dbencoding', 'utf8mb4');
 		}
-
-		$this->CONFIG = $CONFIG;
-
-		$this->isAction = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST';
-
-		$this->bootstrapConfig();
-
-		$this->bootstrapEngine();
+		$config->set('simplecache_enabled', false);
 
 		_elgg_services()->setValue('session', \ElggSession::getMock());
-
-		elgg_set_viewtype('installation');
-
-		_elgg_services()->config->set('simplecache_enabled', false);
-		_elgg_services()->translator->registerTranslations(\Elgg\Application::elggDir()->getPath("/install/languages/"), true);
-		_elgg_services()->views->registerPluginViews(\Elgg\Application::elggDir()->getPath("/"));
+		_elgg_services()->views->setViewtype('installation');
+		_elgg_services()->translator->registerTranslations(Application::elggDir()->getPath("/install/languages/"), true);
+		_elgg_services()->views->registerPluginViews(Application::elggDir()->getPath("/"));
 	}
 	
 	/**
@@ -93,14 +80,6 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	public function run($step) {
-		global $CONFIG;
-		
-		// language needs to be set before the first call to elgg_echo()
-		$CONFIG->language = 'en';
-
-		// check if this is a URL rewrite test coming in
-		$this->processRewriteTest();
-
 		if (!in_array($step, $this->getSteps())) {
 			$msg = _elgg_services()->translator->translate('InstallationException:UnknownStep', [$step]);
 			throw new InstallationException($msg);
@@ -115,10 +94,9 @@ class ElggInstaller {
 
 		$this->finishBootstrapping($step);
 
-		$params = $this->getPostVariables();
+		$params = _elgg_services()->request->request->all();
 
 		$method = "run" . ucwords($step);
-
 		$this->$method($params);
 	}
 
@@ -188,7 +166,7 @@ class ElggInstaller {
 
 		if ($createHtaccess) {
 			$rewriteTester = new ElggRewriteTester();
-			if (!$rewriteTester->createHtaccess($params['wwwroot'], Directory\Local::root()->getPath())) {
+			if (!$rewriteTester->createHtaccess($params['wwwroot'])) {
 				throw new InstallationException(_elgg_services()->translator->translate('install:error:htaccess'));
 			}
 		}
@@ -355,7 +333,7 @@ class ElggInstaller {
 			],
 			'wwwroot' => [
 				'type' => 'url',
-				'value' => _elgg_services()->config->getSiteUrl(),
+				'value' => _elgg_services()->request->sniffElggUrl(),
 				'required' => true,
 			],
 			'timezone' => [
@@ -372,32 +350,32 @@ class ElggInstaller {
 		}
 
 		if ($this->isAction) {
-			do {
+			call_user_func(function () use ($submissionVars, $formVars) {
 				// only create settings file if it doesn't exist
 				if (!$this->checkSettingsFile()) {
 					if (!$this->validateDatabaseVars($submissionVars, $formVars)) {
 						// error so we break out of action and serve same page
-						break;
+						return;
 					}
 
 					if (!$this->createSettingsFile($submissionVars)) {
-						break;
+						return;
 					}
 				}
 
 				// check db version and connect
 				if (!$this->connectToDatabase()) {
-					break;
+					return;
 				}
 
 				if (!$this->installDatabase()) {
-					break;
+					return;
 				}
 
 				system_message(_elgg_services()->translator->translate('install:success:database'));
 
 				$this->continueToNextStep('database');
-			} while (false);  // PHP doesn't support breaking out of if statements
+			});
 		}
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
@@ -441,23 +419,19 @@ class ElggInstaller {
 		];
 
 		if ($this->isAction) {
-			do {
-				//if (!$this->createDataDirectory($submissionVars, $formVars)) {
-				//	break;
-				//}
-
+			call_user_func(function () use ($submissionVars, $formVars) {
 				if (!$this->validateSettingsVars($submissionVars, $formVars)) {
-					break;
+					return;
 				}
 
 				if (!$this->saveSiteSettings($submissionVars)) {
-					break;
+					return;
 				}
 
 				system_message(_elgg_services()->translator->translate('install:success:settings'));
 
 				$this->continueToNextStep('settings');
-			} while (false);  // PHP doesn't support breaking out of if statements
+			});
 		}
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
@@ -507,7 +481,7 @@ class ElggInstaller {
 		$translator = _elgg_services()->translator;
 		
 		if ($this->isAction) {
-			call_user_func(function () use ($submissionVars, $formVars) {
+			call_user_func(function () use ($submissionVars, $formVars, $translator) {
 				if (!$this->validateAdminVars($submissionVars, $formVars)) {
 					return;
 				}
@@ -529,7 +503,7 @@ class ElggInstaller {
 		$translator->addTranslation($lang, [
 			'install:admin:help:password1' => sprintf(
 				$translations[$lang]['install:admin:help:password1'],
-				$this->CONFIG->min_password_length
+				elgg_get_config('min_password_length')
 			),
 		]);
 
@@ -628,19 +602,17 @@ class ElggInstaller {
 
 		// must be able to connect to database to jump install steps
 		$dbSettingsPass = $this->checkDatabaseSettings(
-				$this->CONFIG->dbuser,
-				$this->CONFIG->dbpass,
-				$this->CONFIG->dbname,
-				$this->CONFIG->dbhost
-				);
+			elgg_get_config('dbuser'),
+			elgg_get_config('dbpass'),
+			elgg_get_config('dbname'),
+			elgg_get_config('dbhost')
+		);
 
 		if ($dbSettingsPass == false) {
 			return;
 		}
 
-		if (!include_once(\Elgg\Application::elggDir()->getPath("engine/lib/database.php"))) {
-			throw new InstallationException(_elgg_services()->translator->translate('InstallationException:MissingLibrary', ['database.php']));
-		}
+		$prefix = elgg_get_config('dbprefix');
 
 		// check that the config table has been created
 		$query = "show tables";
@@ -648,7 +620,7 @@ class ElggInstaller {
 		if ($result) {
 			foreach ($result as $table) {
 				$table = (array) $table;
-				if (in_array("{$this->CONFIG->dbprefix}config", $table)) {
+				if (in_array("{$prefix}config", $table)) {
 					$this->status['database'] = true;
 				}
 			}
@@ -661,7 +633,7 @@ class ElggInstaller {
 		}
 
 		// check that the config table has entries
-		$query = "SELECT COUNT(*) AS total FROM {$this->CONFIG->dbprefix}config";
+		$query = "SELECT COUNT(*) AS total FROM {$prefix}config";
 		$result = _elgg_services()->db->getData($query);
 		if ($result && $result[0]->total > 0) {
 			$this->status['settings'] = true;
@@ -670,7 +642,7 @@ class ElggInstaller {
 		}
 
 		// check that the users entity table has an entry
-		$query = "SELECT COUNT(*) AS total FROM {$this->CONFIG->dbprefix}users_entity";
+		$query = "SELECT COUNT(*) AS total FROM {$prefix}users_entity";
 		$result = _elgg_services()->db->getData($query);
 		if ($result && $result[0]->total > 0) {
 			$this->status['admin'] = true;
@@ -727,19 +699,8 @@ class ElggInstaller {
 	}
 
 	/**
-	 * Bootstraping
+	 * Bootstrapping
 	 */
-
-	/**
-	 * Load the essential libraries of the engine
-	 *
-	 * @return void
-	 */
-	protected function bootstrapEngine() {
-		$config = new \Elgg\Config($this->CONFIG);
-		$services = new \Elgg\Di\ServiceProvider($config);
-		(new \Elgg\Application($services))->loadCore();
-	}
 
 	/**
 	 * Load remaining engine libraries and complete bootstrapping
@@ -770,84 +731,11 @@ class ElggInstaller {
 		if ($stepIndex > $dbIndex) {
 			// once the database has been created, load rest of engine
 
-			// @todo we already use Application::loadCore in the constructor. Why not can this whole block be replaced with elgg()->bootCore()?
+			// dummy site needed to boot
+			elgg_set_config('site', new ElggSite());
 
-			$this->loadSettingsFile();
-
-			_elgg_services()->db->setupConnections();
-			_elgg_services()->translator->registerTranslations(\Elgg\Application::elggDir()->getPath("/languages/"));
-			$this->CONFIG->language = 'en';
-
-			if ($stepIndex > $settingsIndex) {
-				$this->CONFIG->site_guid = 1;
-				$this->CONFIG->site = get_entity(1);
-				_elgg_services()->config->getCookieConfig();
-				_elgg_session_boot();
-			}
-
-			_elgg_services()->events->trigger('init', 'system');
+			Application::$_instance->bootCore();
 		}
-	}
-
-	/**
-	 * Set up configuration variables
-	 *
-	 * @return void
-	 */
-	protected function bootstrapConfig() {
-		$this->CONFIG->installer_running = true;
-
-		if (empty($this->CONFIG->dbencoding)) {
-			$this->CONFIG->dbencoding = 'utf8mb4';
-		}
-		$this->CONFIG->wwwroot = $this->getBaseUrl();
-		$this->CONFIG->url = $this->CONFIG->wwwroot;
-		$this->CONFIG->path = Directory\Local::root()->getPath('/');
-		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
-		$this->CONFIG->context = [];
-		$this->CONFIG->entity_types = ['group', 'object', 'site', 'user'];
-
-		// required by elgg_view_page()
-		$this->CONFIG->sitename = '';
-		$this->CONFIG->sitedescription = '';
-
-		// required by Elgg\Config::get
-		$this->CONFIG->site_guid = 1;
-	}
-	
-	/**
-	 * @return bool Whether the install process is encrypted.
-	 */
-	private function isHttps() {
-		return (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") ||
-			(!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
-	}
-
-	/**
-	 * Get the best guess at the base URL
-	 *
-	 * @note Cannot use current_page_url() because it depends on $this->CONFIG->wwwroot
-	 * @todo Should this be a core function?
-	 *
-	 * @return string
-	 */
-	protected function getBaseUrl() {
-		$protocol = $this->isHttps() ? 'https' : 'http';
-		
-		if (isset($_SERVER["SERVER_PORT"])) {
-			$port = ':' . $_SERVER["SERVER_PORT"];
-		} else {
-			$port = '';
-		}
-		if ($port == ':80' || $port == ':443') {
-			$port = '';
-		}
-		$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-		$cutoff = strpos($uri, 'install.php');
-		$uri = substr($uri, 0, $cutoff);
-		$serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-
-		return "$protocol://{$serverName}$port{$uri}";
 	}
 
 	/**
@@ -868,23 +756,6 @@ class ElggInstaller {
 	/**
 	 * Action handling methods
 	 */
-
-	/**
-	 * Return an associative array of post variables
-	 * (could be selective based on expected variables)
-	 *
-	 * Does not filter as person installing the site should not be attempting
-	 * XSS attacks. If filtering is added, it should not be done for passwords.
-	 *
-	 * @return array
-	 */
-	protected function getPostVariables() {
-		$vars = [];
-		foreach ($_POST as $k => $v) {
-			$vars[$k] = $v;
-		}
-		return $vars;
-	}
 
 	/**
 	 * If form is reshown, remember previously submitted variables
@@ -912,7 +783,7 @@ class ElggInstaller {
 	 */
 	protected function isInstallDirWritable(&$report) {
 		$root = Directory\Local::root()->getPath();
-		$abs_path = \Elgg\Application::elggDir()->getPath('elgg-config');
+		$abs_path = Application::elggDir()->getPath('elgg-config');
 
 		if (0 === strpos($abs_path, $root)) {
 			$relative_path = substr($abs_path, strlen($root));
@@ -1092,21 +963,11 @@ class ElggInstaller {
 	 */
 	protected function checkRewriteRules(&$report) {
 		$tester = new ElggRewriteTester();
-		$url = _elgg_services()->config->getSiteUrl() . "rewrite.php";
+		$url = _elgg_services()->config->getSiteUrl();
+		$url .= Application::REWRITE_TEST_TOKEN . '?' . http_build_query([
+			Application::REWRITE_TEST_TOKEN => '1',
+		]);
 		$report['rewrite'] = [$tester->run($url, Directory\Local::root()->getPath())];
-	}
-
-	/**
-	 * Check if the request is coming from the URL rewrite test on the
-	 * requirements page.
-	 *
-	 * @return void
-	 */
-	protected function processRewriteTest() {
-		if (strpos($_SERVER['REQUEST_URI'], 'rewrite.php') !== false) {
-			echo \Elgg\Application::REWRITE_TEST_OUTPUT;
-			exit;
-		}
 	}
 
 	/**
@@ -1182,9 +1043,9 @@ class ElggInstaller {
 			return false;
 		}
 
-		if (!isset($this->CONFIG->data_dir_override) || !$this->CONFIG->data_dir_override) {
+		if (!elgg_get_config('data_dir_override')) {
 			// check that data root is not subdirectory of Elgg root
-			if (stripos($submissionVars['dataroot'], $this->CONFIG->path) === 0) {
+			if (stripos($submissionVars['dataroot'], elgg_get_config('path')) === 0) {
 				$msg = _elgg_services()->translator->translate('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
 				register_error($msg);
 				return false;
@@ -1258,7 +1119,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function createSettingsFile($params) {
-		$template = \Elgg\Application::elggDir()->getContents("elgg-config/.env.php.example");
+		$template = Application::elggDir()->getContents("elgg-config/.env.php.example");
 		if (!$template) {
 			register_error(_elgg_services()->translator->translate('install:error:readsettingsphp'));
 			return false;
@@ -1283,16 +1144,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function connectToDatabase() {
-		if (!include_once($this->getSettingsPath())) {
-			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
-			return false;
-		}
-
-		if (!include_once(\Elgg\Application::elggDir()->getPath("engine/lib/database.php"))) {
-			register_error('Could not load database.php');
-			return false;
-		}
-
 		try {
 			_elgg_services()->db->setupConnections();
 		} catch (DatabaseException $e) {
@@ -1310,7 +1161,7 @@ class ElggInstaller {
 	 */
 	protected function installDatabase() {
 		try {
-			_elgg_services()->db->runSqlScript(\Elgg\Application::elggDir()->getPath("/engine/schema/mysql.sql"));
+			_elgg_services()->db->runSqlScript(Application::elggDir()->getPath("/engine/schema/mysql.sql"));
 			init_site_secret();
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
@@ -1406,64 +1257,40 @@ class ElggInstaller {
 		$site->access_id = ACCESS_PUBLIC;
 		$site->email = $submissionVars['siteemail'];
 		$guid = $site->save();
+		elgg_set_config('site', $site);
 
 		if ($guid !== 1) {
 			register_error(_elgg_services()->translator->translate('install:error:createsite'));
 			return false;
 		}
 
-		// bootstrap site info
-		$this->CONFIG->site_guid = 1;
-		$this->CONFIG->site = $site;
-
-		_elgg_services()->configTable->set('installed', time());
-		_elgg_services()->configTable->set('version', elgg_get_version());
-		_elgg_services()->configTable->set('simplecache_enabled', 1);
-		_elgg_services()->configTable->set('system_cache_enabled', 1);
-		_elgg_services()->configTable->set('simplecache_lastupdate', time());
-
 		// new installations have run all the upgrades
-		$upgrades = elgg_get_upgrade_files(\Elgg\Application::elggDir()->getPath("/engine/lib/upgrades/"));
-		_elgg_services()->configTable->set('processed_upgrades', $upgrades);
+		$upgrades = elgg_get_upgrade_files(Application::elggDir()->getPath("/engine/lib/upgrades/"));
 
-		_elgg_services()->configTable->set('view', 'default');
-		_elgg_services()->configTable->set('language', 'en');
-		_elgg_services()->configTable->set('default_access', $submissionVars['siteaccess']);
-		_elgg_services()->configTable->set('allow_registration', false);
-		_elgg_services()->configTable->set('walled_garden', false);
-		_elgg_services()->configTable->set('allow_user_default_access', '');
-		_elgg_services()->configTable->set('default_limit', 10);
-		_elgg_services()->configTable->set('security_protect_upgrade', true);
-		_elgg_services()->configTable->set('security_notify_admins', true);
-		_elgg_services()->configTable->set('security_notify_user_password', true);
-		_elgg_services()->configTable->set('security_email_require_password', true);
+		$sets = [
+			'installed' => time(),
+			'version' => elgg_get_version(),
+			'simplecache_enabled' => 1,
+			'system_cache_enabled' => 1,
+			'simplecache_lastupdate' => time(),
+			'processed_upgrades' => $upgrades,
+			'language' => 'en',
+			'default_access' => $submissionVars['siteaccess'],
+			'allow_registration' => false,
+			'walled_garden' => false,
+			'allow_user_default_access' => '',
+			'default_limit' => 10,
+			'security_protect_upgrade' => true,
+			'security_notify_admins' => true,
+			'security_notify_user_password' => true,
+			'security_email_require_password' => true,
+		];
+		foreach ($sets as $key => $value) {
+			elgg_save_config($key, $value);
+			elgg_set_config($key, $value);
+		}
 
-		$this->setSubtypeClasses();
-
-		$this->enablePlugins();
-
-		return true;
-	}
-
-	/**
-	 * Register classes for core objects
-	 *
-	 * @return void
-	 */
-	protected function setSubtypeClasses() {
-		add_subtype("object", "plugin", "ElggPlugin");
-		add_subtype("object", "file", "ElggFile");
-		add_subtype("object", "widget", "ElggWidget");
-		add_subtype("object", "comment", "ElggComment");
-		add_subtype("object", "elgg_upgrade", 'ElggUpgrade');
-	}
-
-	/**
-	 * Enable a set of default plugins
-	 *
-	 * @return void
-	 */
-	protected function enablePlugins() {
+		// Enable a set of default plugins
 		_elgg_generate_plugin_entities();
 		$plugins = elgg_get_plugins('any');
 		foreach ($plugins as $plugin) {
@@ -1476,6 +1303,8 @@ class ElggInstaller {
 				}
 			}
 		}
+
+		return true;
 	}
 
 	/**

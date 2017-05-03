@@ -65,11 +65,6 @@ class Database {
 	private $delayed_queries = [];
 
 	/**
-	 * @var bool $installed Is the database installed?
-	 */
-	private $installed = false;
-
-	/**
 	 * @var \Elgg\Database\Config $config Database configuration
 	 */
 	private $config;
@@ -626,20 +621,13 @@ class Database {
 	 * @access private
 	 */
 	public function assertInstalled() {
-
-		if ($this->installed) {
-			return;
-		}
-
 		try {
 			$sql = "SELECT value FROM {$this->table_prefix}config WHERE name = 'installed'";
 			$this->getConnection('read')->query($sql);
-		} catch (\DatabaseException $e) {
+		} catch (\Exception $e) {
 			throw new \InstallationException("Unable to handle this request. This site is not "
 				. "configured or the database is down.");
 		}
-
-		$this->installed = true;
 	}
 
 	/**

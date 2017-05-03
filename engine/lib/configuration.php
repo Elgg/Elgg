@@ -124,6 +124,9 @@ function elgg_set_config($name, $value) {
  * @since 1.8.0
  */
 function elgg_save_config($name, $value) {
+	// behavior before 3.0 was that this also set config
+	elgg_set_config($name, $value);
+
 	return _elgg_services()->config->save($name, $value);
 }
 

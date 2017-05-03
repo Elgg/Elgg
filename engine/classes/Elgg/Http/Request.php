@@ -88,4 +88,20 @@ class Request extends SymfonyRequest {
 			|| $this->request->get('X-Requested-With') === 'XMLHttpRequest');
 		// GET/POST check is necessary for jQuery.form and other iframe-based "ajax". #8735
 	}
+
+	/**
+	 * Sniff the Elgg site URL with trailing slash
+	 *
+	 * @return string
+	 */
+	public function sniffElggUrl() {
+		$base_url = $this->getBaseUrl();
+
+		// baseURL may end with the PHP script
+		if ('.php' === substr($base_url, -4)) {
+			$base_url = dirname($base_url);
+		}
+
+		return rtrim($this->getSchemeAndHttpHost() . $base_url, '/') . '/';
+	}
 }

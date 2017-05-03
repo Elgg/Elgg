@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
+use Elgg\Http\Request;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -291,15 +292,6 @@ class Application {
 			}
 		}
 
-
-		// @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
-		// and then move this code in there.
-		// This validates the view type - first opportunity to do it is after plugins load.
-		$viewtype = elgg_get_viewtype();
-		if (!elgg_is_registered_viewtype($viewtype)) {
-			elgg_set_viewtype('default');
-		}
-
 		$this->allowPathRewrite();
 
 		$events = $this->services->events;
@@ -349,8 +341,10 @@ class Application {
 	 * If the singleton is already set, it's returned.
 	 *
 	 * @return self
+	 * @access private
+	 * @internal Do not use.
 	 */
-	private static function create() {
+	public static function create() {
 		if (self::$_instance === null) {
 			// we need to register for shutdown before Symfony registers the
 			// session_write_close() function. https://github.com/Elgg/Elgg/issues/9243
@@ -362,7 +356,9 @@ class Application {
 			});
 
 			self::$_instance = new self(new Di\ServiceProvider(new Config()));
-			self::$_instance->initErrorHandling();
+
+			set_error_handler([self::$_instance, 'handleErrors']);
+			set_exception_handler([self::$_instance, 'handleExceptions']);
 		}
 
 		return self::$_instance;
@@ -384,17 +380,14 @@ class Application {
 	 */
 	public function run() {
 		$config = $this->services->config;
-
 		$request = $this->services->request;
-		$path = $request->getPathInfo();
 
-		// allow testing from the upgrade page before the site is upgraded.
-		if (isset($_GET[self::REWRITE_TEST_TOKEN])) {
-			if (false !== strpos($path, self::REWRITE_TEST_TOKEN)) {
-				echo self::REWRITE_TEST_OUTPUT;
-			}
+		if ($this->isRewriteCheck($request)) {
+			echo self::REWRITE_TEST_OUTPUT;
 			return true;
 		}
+
+		$path = $request->getPathInfo();
 
 		if (php_sapi_name() === 'cli-server') {
 			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
@@ -433,18 +426,6 @@ class Application {
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
-	}
-
-	/**
-	 * Use this application to handle errors and exceptions
-	 *
-	 * @access private
-	 * @return void
-	 * @internal
-	 */
-	public function initErrorHandling() {
-		set_error_handler([$this, 'handleErrors']);
-		set_exception_handler([$this, 'handleExceptions']);
 	}
 
 	/**
@@ -592,18 +573,35 @@ class Application {
 	}
 
 	/**
+	 * Is the request for checking URL rewriting?
+	 *
+	 * @param Request $request Elgg request
+	 *
+	 * @return bool
+	 */
+	private function isRewriteCheck(Request $request) {
+		if ($request->getPathInfo() !== ('/' . self::REWRITE_TEST_TOKEN)) {
+			return false;
+		}
+
+		if (!$request->get(self::REWRITE_TEST_TOKEN)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Make sure config has a non-empty wwwroot. Calculate from request if missing.
 	 *
 	 * @return void
 	 */
 	private function resolveWebRoot() {
 		$config = $this->services->config;
-		$request = $this->services->request;
 
 		$config->loadSettingsFile();
 		if (!$config->get('wwwroot')) {
-			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
-			$config->set('wwwroot', $www_root);
+			$config->set('wwwroot', $this->services->request->sniffElggUrl());
 		}
 	}
 
@@ -642,7 +640,7 @@ class Application {
 	 * @return void
 	 * @access private
 	 */
-	public function handleExceptions(\Exception $exception) {
+	public function handleExceptions($exception) {
 		$timestamp = time();
 		error_log("Exception at time $timestamp: $exception");
 
@@ -652,6 +650,10 @@ class Application {
 		// make sure the error isn't cached
 		header("Cache-Control: no-cache, must-revalidate", true);
 		header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+
+		if ($exception instanceof \InstallationException) {
+			forward('/install.php');
+		}
 
 		if (!self::$core_loaded) {
 			http_response_code(500);

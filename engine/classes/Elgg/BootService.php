@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Database\SiteSecret;
 use Elgg\Filesystem\Directory\Local;
 use Stash\Driver\BlackHole;
 use Stash\Driver\FileSystem;
@@ -42,19 +41,10 @@ class BootService {
 		$db->assertInstalled();
 
 		$config = _elgg_services()->config;
-		$local_path = Local::root()->getPath();
-
-		// setup stuff available without any DB info
-		$config->set('path', $local_path);
-		$config->set('plugins_path', "{$local_path}mod/");
-		$config->set('pluginspath', "{$local_path}mod/");
-		$config->set('entity_types', ['group', 'object', 'site', 'user']);
-		$config->set('language', 'en');
 
 		// set cookie values for session and remember me
 		_elgg_services()->config->getCookieConfig();
 
-		$config->set('site_guid', 1);
 		if ($config->get('boot_cache_ttl') === null) {
 			$config->set('boot_cache_ttl', self::DEFAULT_BOOT_CACHE_TTL);
 		}
@@ -73,6 +63,13 @@ class BootService {
 		$configs_cache = $data->getConfigValues();
 
 		$site = $data->getSite();
+		if (!$site) {
+			// must be set in config
+			$site = $config->get('site');
+			if (!$site instanceof \ElggSite) {
+				throw new \RuntimeException('Before installation, config->site must have an unsaved ElggSite.');
+			}
+		}
 		$config->set('site', $site);
 		$config->set('sitename', $site->name);
 		$config->set('sitedescription', $site->description);

@@ -46,8 +46,18 @@ class Config {
 		if (!$config) {
 			$config = new \stdClass();
 		}
+
+		$local_path = Directory\Local::root()->getPath();
+		$config->path = $local_path;
+		$config->plugins_path = "{$local_path}mod/";
+		$config->pluginspath = "{$local_path}mod/";
+		$config->entity_types = ['group', 'object', 'site', 'user'];
+		$config->site_guid = 1;
+		if (empty($config->language)) {
+			$config->language = 'en';
+		}
+
 		$this->config = $config;
-		$this->config->path = Directory\Local::root()->getPath('/');
 
 		if ($set_global) {
 			/**

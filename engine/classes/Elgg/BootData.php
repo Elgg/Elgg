@@ -16,9 +16,9 @@ use Elgg\Database\SiteSecret;
 class BootData {
 
 	/**
-	 * @var \ElggSite
+	 * @var \ElggSite|false
 	 */
-	private $site;
+	private $site = false;
 
 	/**
 	 * @var array
@@ -71,8 +71,8 @@ class BootData {
 		foreach ($rows as $row) {
 			$this->config_values[$row->name] = unserialize($row->value);
 		}
-		
-		if (!array_key_exists('installed', $this->config_values)) {
+
+		if (!$this->isInstalled()) {
 			// try to fetch from old pre 3.0 datalists table
 			// need to do this to be able to perform an upgrade from 2.x to 3.0
 			try {
@@ -102,7 +102,7 @@ class BootData {
 		
 		// get site entity
 		$this->site = $entities->get(1, 'site');
-		if (!$this->site) {
+		if (!$this->site && $this->isInstalled()) {
 			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
@@ -159,7 +159,7 @@ class BootData {
 	/**
 	 * Get the site entity
 	 *
-	 * @return \ElggSite
+	 * @return \ElggSite|false False if not installed
 	 */
 	public function getSite() {
 		return $this->site;
@@ -199,5 +199,14 @@ class BootData {
 	 */
 	public function getPluginSettings() {
 		return $this->plugin_settings;
+	}
+
+	/**
+	 * Is the "installed" key in config values?
+	 *
+	 * @return bool
+	 */
+	public function isInstalled() {
+		return array_key_exists('installed', $this->config_values);
 	}
 }
