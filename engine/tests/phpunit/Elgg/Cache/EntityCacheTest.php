@@ -175,6 +175,7 @@ class EntityCacheTest extends \Elgg\TestCase {
 			'time_updated' => $time,
 			'last_action' => $time,
 		]);
+		/** @var \ElggObject $object */
 		
 		$this->assertEquals($object, _elgg_services()->entityCache->get($object->guid));
 
@@ -184,7 +185,6 @@ class EntityCacheTest extends \Elgg\TestCase {
 		
 		$this->assertNotEquals($posted, $time);
 		$this->assertEquals($posted, $object->last_action);
-
 	}
 
 	public function testRemovesBannedUserFromCache() {

@@ -1403,7 +1403,7 @@ class EntityTable {
 	 *
 	 * @param ElggEntity $entity Entity annotation|relationship action carried out on
 	 * @param int        $posted Timestamp of last action
-	 * @return int|false
+	 * @return int
 	 * @access private
 	 */
 	public function updateLastAction(ElggEntity $entity, $posted = null) {
@@ -1423,15 +1423,9 @@ class EntityTable {
 			':guid' => (int) $entity->guid,
 		];
 		
-		$result = $this->db->updateData($query, true, $params);
-		if ($result) {
-			$entity->last_action = $posted;
-			_elgg_services()->entityCache->set($entity);
-			$entity->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
-			return (int) $posted;
-		}
+		$this->db->updateData($query, true, $params);
 
-		return false;
+		return (int) $posted;
 	}
 
 	/**

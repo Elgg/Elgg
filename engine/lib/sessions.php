@@ -361,25 +361,20 @@ function _elgg_session_boot() {
 			forward('');
 		}
 
-		$session->setLoggedInUser($user);
-
 		_elgg_services()->persistentLogin->replaceLegacyToken($user);
 	} else {
 		$user = _elgg_services()->persistentLogin->bootSession();
-		if ($user) {
-			$session->setLoggedInUser($user);
+	}
+
+	if ($user) {
+		$session->setLoggedInUser($user);
+		set_last_action($user);
+
+		// logout a user with open session who has been banned
+		if ($user->isBanned()) {
+			logout();
+			return false;
 		}
-	}
-
-	if ($session->has('guid')) {
-		set_last_action($session->get('guid'));
-	}
-
-	// logout a user with open session who has been banned
-	$user = $session->getLoggedInUser();
-	if ($user && $user->isBanned()) {
-		logout();
-		return false;
 	}
 
 	_elgg_services()->timer->end([__FUNCTION__]);

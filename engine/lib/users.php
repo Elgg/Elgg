@@ -426,11 +426,16 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 /**
  * Sets the last action time of the given user to right now.
  *
- * @param int $user_guid The user GUID
+ * @param ElggUser|int $user The user or GUID
  * @return void
  */
-function set_last_action($user_guid) {
-	$user = get_user($user_guid);
+function set_last_action($user) {
+	if (!$user) {
+		return;
+	}
+	if (!$user instanceof ElggUser) {
+		$user = get_user($user);
+	}
 	if (!$user) {
 		return;
 	}
