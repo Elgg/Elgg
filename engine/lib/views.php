@@ -80,29 +80,6 @@ function elgg_get_viewtype() {
 }
 
 /**
- * Register a viewtype.
- *
- * @param string $viewtype The view type to register
- * @return bool
- */
-function elgg_register_viewtype($viewtype) {
-	return _elgg_services()->views->registerViewtype($viewtype);
-}
-
-/**
- * Checks if $viewtype is registered.
- *
- * @param string $viewtype The viewtype name
- *
- * @return bool
- * @since 1.9.0
- */
-function elgg_is_registered_viewtype($viewtype) {
-	return _elgg_services()->views->isRegisteredViewtype($viewtype);
-}
-
-
-/**
  * Checks if $viewtype is a string suitable for use as a viewtype name
  *
  * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
@@ -1866,15 +1843,6 @@ function elgg_views_boot() {
 	// registered with high priority for BC
 	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
-	
-	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
-	$view_path = \Elgg\Application::elggDir()->getPath("/views/");
-	$viewtype_dirs = scandir($view_path);
-	foreach ($viewtype_dirs as $viewtype) {
-		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {
-			elgg_register_viewtype($viewtype);
-		}
-	}
 
 	// set default icon sizes - can be overridden with plugin
 	if (!_elgg_services()->config->get('icon_sizes')) {

@@ -81,13 +81,6 @@ class ViewsService {
 	private $input;
 
 	/**
-	 * A list of valid view types as discovered.
-	 *
-	 * @var array
-	 */
-	private $view_types = [];
-
-	/**
 	 * @var string
 	 */
 	private $viewtype;
@@ -176,30 +169,6 @@ class ViewsService {
 		return true;
 	}
 
-	/**
-	 * Checks if $viewtype is registered.
-	 *
-	 * @param string $viewtype The viewtype name
-	 *
-	 * @return bool
-	 */
-	public function isRegisteredViewtype($viewtype) {
-		return in_array($viewtype, $this->view_types);
-	}
-
-	/**
-	 * Register a viewtype.
-	 *
-	 * @param string $viewtype The view type to register
-	 * @return bool
-	 */
-	public function registerViewtype($viewtype) {
-		if (!$this->isRegisteredViewtype($viewtype)) {
-			$this->view_types[] = $viewtype;
-		}
-		return true;
-	}
-	
 	/**
 	 * Takes a view name and returns the canonical name for that view.
 	 *
@@ -660,9 +629,7 @@ class ViewsService {
 			$view_type_dir = $view_dir . $view_type;
 
 			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
-				if ($this->autoregisterViews('', $view_type_dir, $view_type)) {
-					elgg_register_viewtype($view_type);
-				} else {
+				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
 					$failed_dir = $view_type_dir;
 					return false;
 				}
@@ -757,16 +724,6 @@ class ViewsService {
 	 * @access private
 	 */
 	public function configureFromCache(SystemCache $cache) {
-		$data = $cache->load('view_types');
-		if (!is_string($data)) {
-			return false;
-		}
-		$data = unserialize($data);
-		if (!is_array($data)) {
-			return false;
-		}
-		$this->view_types = $data;
-
 		$data = $cache->load('view_locations');
 		if (!is_string($data)) {
 			return false;
@@ -797,8 +754,6 @@ class ViewsService {
 
 		// this is saved just for the inspector and is not loaded in loadAll()
 		$cache->save('view_overrides', serialize($this->overrides));
-
-		$cache->save('view_types', serialize($this->view_types));
 	}
 
 	/**
