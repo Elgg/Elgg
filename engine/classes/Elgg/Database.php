@@ -614,23 +614,6 @@ class Database {
 	}
 
 	/**
-	 * Test that the Elgg database is installed
-	 *
-	 * @return void
-	 * @throws \InstallationException
-	 * @access private
-	 */
-	public function assertInstalled() {
-		try {
-			$sql = "SELECT value FROM {$this->table_prefix}config WHERE name = 'installed'";
-			$this->getConnection('read')->query($sql);
-		} catch (\Exception $e) {
-			throw new \InstallationException("Unable to handle this request. This site is not "
-				. "configured or the database is down.");
-		}
-	}
-
-	/**
 	 * Get the number of queries made to the database
 	 *
 	 * @return int

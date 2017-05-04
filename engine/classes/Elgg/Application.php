@@ -619,7 +619,7 @@ class Application {
 	 *
 	 * @see http://www.php.net/set-exception-handler
 	 *
-	 * @param \Exception $exception The exception being handled
+	 * @param \Exception|\Error $exception The exception/error being handled
 	 *
 	 * @return void
 	 * @access private

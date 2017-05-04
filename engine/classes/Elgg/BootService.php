@@ -33,14 +33,10 @@ class BootService {
 	 */
 	public function boot() {
 		$db = _elgg_services()->db;
+		$config = _elgg_services()->config;
 
 		// we inject the logger here to allow use of DB without loading core
 		$db->setLogger(_elgg_services()->logger);
-
-		$db->setupConnections();
-		$db->assertInstalled();
-
-		$config = _elgg_services()->config;
 
 		// set cookie values for session and remember me
 		_elgg_services()->config->getCookieConfig();

@@ -51,6 +51,25 @@ class BootData {
 	 * @throws \InstallationException
 	 */
 	public function populate(Database $db, EntityTable $entities, Plugins $plugins) {
+
+		// get config, but not site secret. We don't want it cached.
+		try {
+			$sql = "
+				SELECT *
+				FROM {$db->prefix}config
+				WHERE name != :key
+			";
+			$rows = $db->getData($sql, null, [':key' => SiteSecret::CONFIG_KEY]);
+		} catch (\Exception $e) {
+			throw new \InstallationException("Unable to handle this request. This site is not "
+				. "configured or the database is down.");
+		}
+
+		// we want this outside try {} so unserialization exceptions aren't caught.
+		foreach ($rows as $row) {
+			$this->config_values[$row->name] = unserialize($row->value);
+		}
+
 		// get subtypes
 		$rows = $db->getData("
 			SELECT *
@@ -58,18 +77,6 @@ class BootData {
 		");
 		foreach ($rows as $row) {
 			$this->subtype_data[$row->id] = $row;
-		}
-
-		// get config, but not site secret. We don't want it cached.
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}config
-			WHERE name != :key
-		", null, [
-			':key' => SiteSecret::CONFIG_KEY,
-		]);
-		foreach ($rows as $row) {
-			$this->config_values[$row->name] = unserialize($row->value);
 		}
 
 		if (!$this->isInstalled()) {
