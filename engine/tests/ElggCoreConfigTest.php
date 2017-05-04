@@ -61,7 +61,7 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 	public function testGetConfigAlreadyLoadedForCurrentSite() {
 		global $CONFIG;
 		$CONFIG->foo_unit_test = 35;
-		$this->assertIdentical(35, elgg_get_config('foo_unit_test'));
+		$this->assertIdentical(35, _elgg_config()->foo_unit_test);
 		unset($CONFIG->foo_unit_test);
 	}
 
@@ -84,10 +84,5 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 		$this->assertIdentical($value, elgg_get_config($name));
 		$this->assertIdentical($value, $CONFIG->$name);
 		$this->assertTrue(elgg_remove_config($name));
-	}
-
-	public function testGetUsesDefault() {
-		$this->assertSame(null, _elgg_services()->config->get('not_a_key'));
-		$this->assertSame([], _elgg_services()->config->get('not_a_key', []));
 	}
 }

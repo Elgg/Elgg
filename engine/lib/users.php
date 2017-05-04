@@ -475,7 +475,7 @@ function user_avatar_hook($hook, $type, $return, $params) {
 		return;
 	}
 
-	if (elgg_get_config('walled_garden')) {
+	if (_elgg_config()->walled_garden) {
 		return;
 	}
 
@@ -674,7 +674,7 @@ function elgg_profile_fields_setup() {
 	];
 
 	$loaded_defaults = [];
-	$fieldlist = elgg_get_config('profile_custom_fields');
+	$fieldlist = _elgg_config()->profile_custom_fields;
 	if ($fieldlist || $fieldlist === '0') {
 		$fieldlistarray = explode(',', $fieldlist);
 		foreach ($fieldlistarray as $listitem) {
@@ -894,7 +894,7 @@ function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
  */
 function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_notify_user_ban')) {
+	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
 	
@@ -930,7 +930,7 @@ function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $pa
  */
 function _elgg_user_ban_notification($event, $type, $user) {
 	
-	if (!elgg_get_config('security_notify_user_ban')) {
+	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
 	

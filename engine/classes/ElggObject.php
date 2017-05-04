@@ -113,7 +113,7 @@ class ElggObject extends \ElggEntity {
 			return false;
 		}
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		$query = "INSERT INTO {$dbprefix}objects_entity
 			(guid, title, description)
 			VALUES
@@ -144,7 +144,7 @@ class ElggObject extends \ElggEntity {
 			return false;
 		}
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		$query = "
 			UPDATE {$dbprefix}objects_entity

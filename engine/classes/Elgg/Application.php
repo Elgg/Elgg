@@ -5,6 +5,8 @@ namespace Elgg;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Http\Request;
+use Elgg\Filesystem\Directory\Local;
+use ConfigurationException;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -28,11 +30,6 @@ class Application {
 	 * @var ServiceProvider
 	 */
 	private $services;
-
-	/**
-	 * @var string
-	 */
-	private $engine_dir;
 
 	/**
 	 * @var bool
@@ -75,33 +72,16 @@ class Application {
 	 * @param ServiceProvider $services Elgg services provider
 	 */
 	public function __construct(ServiceProvider $services) {
-		$this->services = $services;
-		$this->services->setValue('app', $this);
+		$services->timer->begin([]);
+		$services->setValue('app', $this);
 
-		/**
-		 * The time with microseconds when the Elgg engine was started.
-		 *
-		 * @global float
-		 */
-		if (!isset($GLOBALS['START_MICROTIME'])) {
-			$GLOBALS['START_MICROTIME'] = microtime(true);
+		$config = $services->config;
+		$config->init();
+		if (!$config->wwwroot) {
+			$config->wwwroot = $services->request->sniffElggUrl();
 		}
 
-		$services->timer->begin([]);
-
-		$this->engine_dir = dirname(dirname(__DIR__));
-	}
-
-	/**
-	 * Load settings from ENV/.env.php
-	 *
-	 * This is done automatically during the boot process or before requesting a database object
-	 *
-	 * @see Config::loadSettingsFile
-	 * @return void
-	 */
-	public function loadSettings() {
-		$this->services->config->loadSettingsFile();
+		$this->services = $services;
 	}
 
 	/**
@@ -215,7 +195,7 @@ class Application {
 	 * @return self
 	 */
 	public static function start() {
-		$app = self::create();
+		$app = self::factory();
 		$app->bootCore();
 		return $app;
 	}
@@ -234,40 +214,33 @@ class Application {
 	 * @return void
 	 */
 	public function bootCore() {
-
 		$config = $this->services->config;
 
 		if ($this->isTestingApplication()) {
 			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
 		}
 
-		if ($config->get('boot_complete')) {
+		if ($config->boot_complete) {
 			return;
-		}
-
-		$this->loadSettings();
-		if (!$config->get('wwwroot')) {
-			$config->set('wwwroot', $this->services->request->sniffElggUrl());
 		}
 
 		// in case not loaded already
 		$this->loadCore();
 
 		// Connect to database, load language files, load configuration, init session
-		$this->services->boot->boot();
+		$this->services->boot->boot($this->services);
 
 		elgg_views_boot();
 
 		// Load the plugins that are active
 		$this->services->plugins->load();
 
-		$root = Directory\Local::root();
-		if ($root->getPath() != self::elggDir()->getPath()) {
+		if ($config->project_root != $config->elgg_root) {
 			// Elgg is installed as a composer dep, so try to treat the root directory
 			// as a custom plugin that is always loaded last and can't be disabled...
-			if (!elgg_get_config('system_cache_loaded')) {
+			if (!$config->system_cache_loaded) {
 				// configure view locations for the custom plugin (not Elgg core)
-				$viewsFile = $root->getFile('views.php');
+				$viewsFile = Local::projectRoot()->getFile('views.php');
 				if ($viewsFile->exists()) {
 					$viewsSpec = $viewsFile->includeFile();
 					if (is_array($viewsSpec)) {
@@ -276,15 +249,15 @@ class Application {
 				}
 
 				// find views for the custom plugin (not Elgg core)
-				_elgg_services()->views->registerPluginViews($root->getPath());
+				$this->services->views->registerPluginViews($config->project_root);
 			}
 
-			if (!elgg_get_config('i18n_loaded_from_cache')) {
-				_elgg_services()->translator->registerPluginTranslations($root->getPath());
+			if (!$config->i18n_loaded_from_cache) {
+				$this->services->translator->registerPluginTranslations($config->project_root);
 			}
 
 			// This is root directory start.php
-			$root_start = $root->getPath("start.php");
+			$root_start = "{$config->project_root}start.php";
 			if (is_file($root_start)) {
 				require $root_start;
 			}
@@ -300,7 +273,7 @@ class Application {
 		// Complete the boot process for both engine and plugins
 		$events->trigger('init', 'system');
 
-		$config->set('boot_complete', true);
+		$config->boot_complete = true;
 
 		// System loaded and ready
 		$events->trigger('ready', 'system');
@@ -338,12 +311,51 @@ class Application {
 	 * Creates a new, trivial instance of Elgg\Application and set it as the singleton instance.
 	 * If the singleton is already set, it's returned.
 	 *
+	 * @param array $spec Specification for initial call.
 	 * @return self
-	 * @access private
-	 * @internal Do not use.
+	 * @throws ConfigurationException
 	 */
-	public static function create() {
-		if (self::$_instance === null) {
+	public static function factory(array $spec = []) {
+		if (self::$_instance !== null) {
+			return self::$_instance;
+		}
+
+		$defaults = [
+			'service_provider' => null,
+			'config' => null,
+			'settings_path' => null,
+			'handle_exceptions' => true,
+			'handle_shutdown' => true,
+			'overwrite_global_config' => true,
+			'set_start_time' => true,
+		];
+		$spec = array_merge($defaults, $spec);
+
+		if ($spec['set_start_time']) {
+			/**
+			 * The time with microseconds when the Elgg engine was started.
+			 *
+			 * @global float
+			 */
+			if (!isset($GLOBALS['START_MICROTIME'])) {
+				$GLOBALS['START_MICROTIME'] = microtime(true);
+			}
+		}
+
+		if (!$spec['service_provider']) {
+			if (!$spec['config']) {
+				$spec['config'] = Config::factory($spec['settings_path']);
+			}
+			$spec['service_provider'] = new ServiceProvider($spec['config']);
+		}
+		self::$_instance = new self($spec['service_provider']);
+
+		if ($spec['handle_exceptions']) {
+			set_error_handler([self::$_instance, 'handleErrors']);
+			set_exception_handler([self::$_instance, 'handleExceptions']);
+		}
+
+		if ($spec['handle_shutdown']) {
 			// we need to register for shutdown before Symfony registers the
 			// session_write_close() function. https://github.com/Elgg/Elgg/issues/9243
 			register_shutdown_function(function () {
@@ -352,11 +364,13 @@ class Application {
 					_elgg_shutdown_hook();
 				}
 			});
+		}
 
-			self::$_instance = new self(new Di\ServiceProvider(new Config()));
+		if ($spec['overwrite_global_config']) {
+			global $CONFIG;
 
-			set_error_handler([self::$_instance, 'handleErrors']);
-			set_exception_handler([self::$_instance, 'handleExceptions']);
+			// this will be buggy be at least PHP will log failures
+			$CONFIG = $spec['service_provider']->config;
 		}
 
 		return self::$_instance;
@@ -368,7 +382,7 @@ class Application {
 	 * @return bool True if Elgg will handle the request, false if the server should (PHP-CLI server)
 	 */
 	public static function index() {
-		return self::create()->run();
+		return self::factory()->run();
 	}
 
 	/**
@@ -389,15 +403,15 @@ class Application {
 
 		if (php_sapi_name() === 'cli-server') {
 			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
-			if ($path !== '/' && Directory\Local::root()->isFile($path)) {
+			if ($path !== '/' && Directory\Local::projectRoot()->isFile($path)) {
 				// serve the requested resource as-is.
 				return false;
 			}
 
 			// overwrite value from settings
 			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
-			$config->set('wwwroot', $www_root);
-			$config->set('wwwroot_cli_server', $www_root);
+			$config->wwwroot = $www_root;
+			$config->wwwroot_cli_server = $www_root;
 		}
 
 		if (0 === strpos($path, '/cache/')) {
@@ -411,7 +425,7 @@ class Application {
 		}
 
 		if ($path === '/rewrite.php') {
-			require Directory\Local::root()->getPath("install.php");
+			require Directory\Local::projectRoot()->getPath("install.php");
 			return true;
 		}
 
@@ -432,7 +446,7 @@ class Application {
 	 * @return string
 	 */
 	public static function getDataPath() {
-		return self::create()->services->config->getDataPath();
+		return self::factory()->services->config->dataroot;
 	}
 
 	/**
@@ -441,8 +455,35 @@ class Application {
 	 *
 	 * @return Directory
 	 */
-	public static function elggDir() /*: Directory*/ {
-		return Directory\Local::fromPath(realpath(__DIR__ . '/../../..'));
+	public static function elggDir() {
+		return Local::elggRoot();
+	}
+
+	/**
+	 * Returns a directory that points to the project root, where composer is installed.
+	 *
+	 * @return Directory
+	 */
+	public static function projectDir() {
+		return Local::projectRoot();
+	}
+
+	/**
+	 * Get path of the .env.php settings file
+	 *
+	 * @return string
+	 */
+	public static function getDefaultSettingsPath() {
+		return Local::projectRoot()->getPath('elgg-config/.env.php');
+	}
+
+	/**
+	 * Get path of the settings.php settings file
+	 *
+	 * @return string
+	 */
+	public static function getLegacySettingsPath() {
+		return Local::projectRoot()->getPath('elgg-config/settings.php');
 	}
 
 	/**
@@ -480,12 +521,12 @@ class Application {
 		self::start();
 		
 		// check security settings
-		if (elgg_get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
+		if (_elgg_config()->security_protect_upgrade && !elgg_is_admin_logged_in()) {
 			// only admin's or users with a valid token can run upgrade.php
 			elgg_signed_request_gatekeeper();
 		}
 		
-		$site_url = elgg_get_config('url');
+		$site_url = _elgg_config()->url;
 		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 
 		// turn any full in-site URLs into absolute paths
@@ -648,7 +689,7 @@ class Application {
 		try {
 			// allow custom scripts to trigger on exception
 			// value in .env.php should be a system path to a file to include
-			$exception_include = $this->services->config->get('exception_include');
+			$exception_include = $this->services->config->exception_include;
 
 			if ($exception_include && is_file($exception_include)) {
 				ob_start();
@@ -755,7 +796,16 @@ class Application {
 				break;
 
 			default:
-				$is_notice = !empty($GLOBALS['CONFIG']) && ($GLOBALS['CONFIG'] === 'NOTICE');
+				if (function_exists('_elgg_config')) {
+					$config = _elgg_config();
+				} else {
+					$config = isset($GLOBALS['CONFIG']) ? $GLOBALS['CONFIG'] : null;
+				}
+				if (!$config) {
+					return true;
+				}
+
+				$is_notice = ($config->debug === 'NOTICE');
 				if ($is_notice) {
 					if (!$log("PHP (errno $errno): $error", 'NOTICE')) {
 						error_log("PHP NOTICE: $error");

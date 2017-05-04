@@ -14,7 +14,7 @@ class TranslatorTest extends \Elgg\TestCase {
 	public $translator;
 
 	public function setUp() {
-		$this->translator = new Translator(_elgg_services()->config);
+		$this->translator = new Translator(_elgg_config());
 		$this->translator->addTranslation('en', [$this->key => 'Dummy']);
 		$this->translator->addTranslation('es', [$this->key => 'Estúpido']);
 	}

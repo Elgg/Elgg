@@ -107,9 +107,13 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 		return false;
 	}
 
-	$menus = _elgg_services()->config->get('menus', []);
+	$menus = _elgg_config()->menus;
+	if (!$menus) {
+		$menus = [];
+	}
+
 	$menus[$menu_name][] = $menu_item;
-	elgg_set_config('menus', $menus);
+	_elgg_config()->menus = $menus;
 
 	return true;
 }
@@ -124,7 +128,7 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  * @since 1.8.0
  */
 function elgg_unregister_menu_item($menu_name, $item_name) {
-	$menus = _elgg_services()->config->get('menus', []);
+	$menus = _elgg_config()->menus;
 	if (!$menus) {
 		return null;
 	}
@@ -152,7 +156,10 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  * @since 1.8.0
  */
 function elgg_is_menu_item_registered($menu_name, $item_name) {
-	$menus = _elgg_services()->config->get('menus', []);
+	$menus = _elgg_config()->menus;
+	if (!$menus) {
+		return false;
+	}
 
 	if (!isset($menus[$menu_name])) {
 		return false;
@@ -178,7 +185,10 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
  * @since 1.9.0
  */
 function elgg_get_menu_item($menu_name, $item_name) {
-	$menus = _elgg_services()->config->get('menus', []);
+	$menus = _elgg_config()->menus;
+	if (!$menus) {
+		return null;
+	}
 
 	if (!isset($menus[$menu_name])) {
 		return null;
@@ -247,7 +257,7 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  * @see elgg_get_breadcrumbs
  */
 function elgg_push_breadcrumb($title, $link = null) {
-	$breadcrumbs = (array) elgg_get_config('breadcrumbs');
+	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
 	$breadcrumbs[] = ['title' => $title, 'link' => $link];
 	elgg_set_config('breadcrumbs', $breadcrumbs);
 }
@@ -259,7 +269,7 @@ function elgg_push_breadcrumb($title, $link = null) {
  * @since 1.8.0
  */
 function elgg_pop_breadcrumb() {
-	$breadcrumbs = (array) elgg_get_config('breadcrumbs');
+	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
 
 	if (empty($breadcrumbs)) {
 		return [];
@@ -294,7 +304,7 @@ function elgg_pop_breadcrumb() {
 function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	if (!isset($breadcrumbs)) {
 		// if no crumbs set, still allow hook to populate it
-		$breadcrumbs = (array) elgg_get_config('breadcrumbs');
+		$breadcrumbs = (array) _elgg_config()->breadcrumbs;
 	}
 
 	if (!is_array($breadcrumbs)) {
@@ -402,8 +412,8 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
  */
 function _elgg_site_menu_setup($hook, $type, $return, $params) {
 
-	$featured_menu_names = elgg_get_config('site_featured_menu_names');
-	$custom_menu_items = elgg_get_config('site_custom_menu_items');
+	$featured_menu_names = _elgg_config()->site_featured_menu_names;
+	$custom_menu_items = _elgg_config()->site_custom_menu_items;
 	if ($featured_menu_names || $custom_menu_items) {
 		// we have featured or custom menu items
 
@@ -649,7 +659,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
  */
 function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
-	if (elgg_get_config('allow_registration')) {
+	if (_elgg_config()->allow_registration) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'register',
 			'href' => elgg_get_registration_url(),

@@ -177,7 +177,7 @@ function discussion_redirect_to_reply($reply_guid, $fallback_guid) {
 	]);
 	$limit = (int) get_input('limit', 0);
 	if (!$limit) {
-		$limit = _elgg_services()->config->get('default_limit');
+		$limit = _elgg_config()->default_limit;
 	}
 	$offset = floor($count / $limit) * $limit;
 	if (!$offset) {

@@ -212,7 +212,7 @@ class Translator {
 		}
 
 		if (!$language) {
-			$site_language = $this->config->get('language');
+			$site_language = $this->config->language;
 			if ($site_language) {
 				$language = $site_language;
 			}

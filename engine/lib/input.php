@@ -193,7 +193,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  * @access private
  */
 function input_livesearch_page_handler($page) {
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 
 	// only return results to logged in users.
 	if (!$user = elgg_get_logged_in_user_entity()) {
@@ -227,7 +227,7 @@ function input_livesearch_page_handler($page) {
 		$owner_guid = $user->getGUID();
 	}
 
-	$limit = sanitise_int(get_input('limit', elgg_get_config('default_limit')));
+	$limit = sanitise_int(get_input('limit', _elgg_config()->default_limit));
 
 	// grab a list of entities and send them in json.
 	$results = [];
@@ -549,7 +549,7 @@ function _elgg_htmlawed_test($hook, $type, $value, $params) {
  */
 function _elgg_disable_password_autocomplete($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_disable_password_autocomplete')) {
+	if (!_elgg_config()->security_disable_password_autocomplete) {
 		return;
 	}
 	

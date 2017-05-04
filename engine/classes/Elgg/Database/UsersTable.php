@@ -333,7 +333,7 @@ class UsersTable {
 	
 		$options = array_merge([
 			'seconds' => 600,
-			'limit' => $this->config->get('default_limit'),
+			'limit' => $this->config->default_limit,
 		], $options);
 
 		// cast options we're sending to hook
@@ -356,7 +356,7 @@ class UsersTable {
 			return $data;
 		}
 
-		$dbprefix = $this->config->get('dbprefix');
+		$dbprefix = $this->config->dbprefix;
 		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
 		return elgg_get_entities([
 			'type' => 'user',

@@ -146,7 +146,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$obj->test = $md_values;
 
 		// check only these md exists
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid";
 		$data = get_data($q);
 

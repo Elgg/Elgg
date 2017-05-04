@@ -37,19 +37,16 @@ function get_group_entity_as_row($guid) {
  * @since 1.5.0
  */
 function add_group_tool_option($name, $label, $default_on = true) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->group_tool_options)) {
-		$CONFIG->group_tool_options = [];
+	$options = _elgg_config()->group_tool_options;
+	if (!$options) {
+		$options = [];
 	}
-
-	$group_tool_option = new \stdClass;
-
-	$group_tool_option->name = $name;
-	$group_tool_option->label = $label;
-	$group_tool_option->default_on = $default_on;
-
-	$CONFIG->group_tool_options[] = $group_tool_option;
+	$options[] = (object) [
+		'name' => $name,
+		'label' => $label,
+		'default_on' => $default_on,
+	];
+	_elgg_config()->group_tool_options = $options;
 }
 
 /**
@@ -65,15 +62,18 @@ function add_group_tool_option($name, $label, $default_on = true) {
 function remove_group_tool_option($name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->group_tool_options)) {
+	$options = _elgg_config()->group_tool_options;
+	if (!is_array($options)) {
 		return;
 	}
 
-	foreach ($CONFIG->group_tool_options as $i => $option) {
+	foreach ($options as $i => $option) {
 		if ($option->name == $name) {
-			unset($CONFIG->group_tool_options[$i]);
+			unset($options[$i]);
 		}
 	}
+
+	_elgg_config()->group_tool_options = $options;
 }
 
 /**

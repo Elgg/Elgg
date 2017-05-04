@@ -24,7 +24,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	}
 
 	public function testCanGetEntitiesByAnnotationCreationTime() {
-		$prefix = elgg_get_config('dbprefix');
+		$prefix = _elgg_config()->dbprefix;
 		$users = elgg_get_entities(array('type' => 'user', 'limit' => 1));
 
 		// create some test annotations

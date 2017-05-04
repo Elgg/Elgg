@@ -125,11 +125,11 @@ class SiteSecret {
 	 */
 	public static function load(ElggConfig $config, ConfigTable $table) {
 		// in case it's in settings
-		$key = $config->get(self::CONFIG_KEY);
+		$key = $config->{self::CONFIG_KEY};
 		if ($key) {
 			// don't leave this sitting around in config, which is more likely
 			// to get dumped.
-			$config->set(self::CONFIG_KEY, null);
+			$config->{self::CONFIG_KEY} = null;
 		} else {
 			$key = $table->get(self::CONFIG_KEY);
 		}

@@ -81,7 +81,7 @@ function elgg_get_tags(array $options = []) {
 	$defaults = [
 		'threshold' => 1,
 		'tag_names' => [],
-		'limit' => elgg_get_config('default_limit'),
+		'limit' => _elgg_config()->default_limit,
 
 		'types' => ELGG_ENTITIES_ANY_VALUE,
 		'subtypes' => ELGG_ENTITIES_ANY_VALUE,

@@ -191,7 +191,7 @@ class UpgradeService {
 	 * @return mixed Array of processed upgrade filenames or false
 	 */
 	protected function getProcessedUpgrades() {
-		return $this->config->get('processed_upgrades');
+		return $this->config->processed_upgrades;
 	}
 
 	/**
@@ -261,7 +261,7 @@ class UpgradeService {
 		}
 
 		if ($processed_upgrades === null) {
-			$processed_upgrades = $this->config->get('processed_upgrades');
+			$processed_upgrades = $this->config->processed_upgrades;
 			if (!is_array($processed_upgrades)) {
 				$processed_upgrades = [];
 			}
@@ -277,7 +277,7 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function processUpgrades() {
-		$dbversion = (int) $this->config->get('version');
+		$dbversion = (int) $this->config->version;
 
 		if ($this->upgradeCode($dbversion)) {
 			system_message($this->translator->translate('upgrade:core'));

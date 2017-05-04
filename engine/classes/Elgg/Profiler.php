@@ -96,7 +96,7 @@ class Profiler {
 	 */
 	public static function handlePageOutput($hook, $type, $html, $params) {
 		$profiler = new self();
-		$min_percentage = elgg_get_config('profiling_minimum_percentage');
+		$min_percentage = _elgg_config()->profiling_minimum_percentage;
 		if ($min_percentage !== null) {
 			$profiler->minimum_percentage = $min_percentage;
 		}
@@ -109,7 +109,7 @@ class Profiler {
 		$list = [];
 		$profiler->flattenTree($list, $tree);
 
-		$root = elgg_get_config('path');
+		$root = _elgg_config()->path;
 		$list = array_map(function ($period) use ($root) {
 			$period['name'] = str_replace("Closure $root", "Closure ", $period['name']);
 			return "{$period['percentage']}% ({$period['duration']}) {$period['name']}";

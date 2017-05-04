@@ -102,7 +102,7 @@ class ElggRewriteTester {
 	 * @return boolean
 	 */
 	public function runLocalhostAccessTest() {
-		$url = _elgg_services()->config->getSiteUrl();
+		$url = _elgg_config()->wwwroot;
 		return (bool) $this->fetchUrl($url);
 	}
 
@@ -147,7 +147,7 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function createHtaccess($url) {
-		$root = Directory\Local::root();
+		$root = Directory\Local::projectRoot();
 		$file = $root->getFile(".htaccess");
 		if ($file->exists()) {
 			// check that this is the Elgg .htaccess

@@ -11,7 +11,7 @@ use Elgg\TestCase;
 class Database extends DbDatabase {
 
 	/**
-	 * @var stdClass[]
+	 * @var \stdClass[]
 	 */
 	private $query_specs = [];
 
@@ -30,7 +30,8 @@ class Database extends DbDatabase {
 	 * {@inheritdoc}
 	 */
 	public function __construct(Config $config, Logger $logger = null) {
-		parent::__construct($config, $logger);
+		parent::__construct($config);
+		$this->setLogger($logger);
 		$this->test = TestCase::getInstance();
 	}
 

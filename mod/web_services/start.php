@@ -253,13 +253,13 @@ function list_all_apis() {
  * @return bool Depending on success
  */
 function elgg_ws_register_service_handler($handler, $function) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->servicehandler)) {
-		$CONFIG->servicehandler = [];
+	$servicehandler = _elgg_config()->servicehandler;
+	if (!$servicehandler) {
+		$servicehandler = [];
 	}
 	if (is_callable($function, true)) {
-		$CONFIG->servicehandler[$handler] = $function;
+		$servicehandler[$handler] = $function;
+		_elgg_config()->servicehandler = $servicehandler;
 		return true;
 	}
 
@@ -275,10 +275,11 @@ function elgg_ws_register_service_handler($handler, $function) {
  * @return void
  */
 function elgg_ws_unregister_service_handler($handler) {
-	global $CONFIG;
+	$servicehandler = _elgg_config()->servicehandler;
 
-	if (isset($CONFIG->servicehandler, $CONFIG->servicehandler[$handler])) {
-		unset($CONFIG->servicehandler[$handler]);
+	if (isset($servicehandler, $servicehandler[$handler])) {
+		unset($servicehandler[$handler]);
+		_elgg_config()->servicehandler = $servicehandler;
 	}
 }
 

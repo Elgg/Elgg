@@ -33,7 +33,9 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		
 		$this->setFactory('db', function(MockServiceProvider $m) use ($sp) {
 			$config = $this->getTestingDatabaseConfig();
-			return new \Elgg\Mocks\Database($config, $sp->logger);
+			$db = new \Elgg\Mocks\Database($config);
+			$db->setLogger($sp->logger);
+			return $db;
 		});
 
 		$this->setFactory('entityTable', function(MockServiceProvider $m) use ($sp) {
@@ -104,7 +106,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		$conf->db['write'][0]['dbpass'] = 'xxxx1';
 		$conf->db['write'][0]['dbname'] = 'elgg1';
 
-		$conf->dbprefix = elgg_get_config('dbprefix');
+		$conf->dbprefix = _elgg_config()->dbprefix;
 
 		return new \Elgg\Database\Config($conf);
 	}

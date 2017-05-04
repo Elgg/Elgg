@@ -7,8 +7,8 @@ $data = [
 	'simple_cache' => [
 		'type' => 'checkbox',
 		'value' => 1,
-		'checked' => elgg_get_config('simplecache_enabled') == 1,
-		'readonly' => elgg_get_config('_simplecache_enabled_in_settings'),
+		'checked' => _elgg_config()->simplecache_enabled == 1,
+		'readonly' => _elgg_config()->_simplecache_enabled_in_settings,
 	],
 
 	'system_cache' => [
@@ -27,7 +27,7 @@ $data = [
 
 	'debug_level' => [
 		'type' => 'dropdown',
-		'value' => elgg_get_config('debug'),
+		'value' => _elgg_config()->debug,
 		'options_values' => [
 			false => elgg_echo('developers:debug:off'),
 			'ERROR' => elgg_echo('developers:debug:error'),

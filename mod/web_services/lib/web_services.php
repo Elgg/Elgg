@@ -755,12 +755,14 @@ function service_handler($handler, $request) {
 
 	elgg_set_viewtype($response_format);
 
-	if (!isset($CONFIG->servicehandler) || empty($handler)) {
+	$servicehandler = _elgg_config()->servicehandler;
+
+	if (!isset($servicehandler) || empty($handler)) {
 		// no handlers set or bad url
 		header("HTTP/1.0 404 Not Found");
 		exit;
-	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
-		$function = $CONFIG->servicehandler[$handler];
+	} else if (isset($servicehandler[$handler]) && is_callable($servicehandler[$handler])) {
+		$function = $servicehandler[$handler];
 		call_user_func($function, $request, $handler);
 	} else {
 		// no handler for this web service

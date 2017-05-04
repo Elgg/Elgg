@@ -3,19 +3,16 @@ namespace Elgg\Cache;
 
 use Elgg\Profilable;
 use Elgg\Config;
-use Elgg\ViewsService;
 use ElggFileCache;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * System Cache
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Cache
- * @since      1.10.0
+ * @since  1.10.0
  */
 class SystemCache {
+
 	use Profilable;
 
 	/**
@@ -86,7 +83,7 @@ class SystemCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool) $this->config->get('system_cache_enabled');
+		return (bool) $this->config->system_cache_enabled;
 	}
 	
 	/**
@@ -116,32 +113,6 @@ class SystemCache {
 	}
 	
 	/**
-	 * Loads the system cache during engine boot
-	 *
-	 * @see elgg_reset_system_cache()
-	 * @access private
-	 */
-	function loadAll() {
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
-
-		$this->config->set('system_cache_loaded', false);
-
-		if (!_elgg_services()->views->configureFromCache($this)) {
-			return;
-		}
-
-		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
-
-		$this->config->set('system_cache_loaded', true);
-
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
-	}
-	
-	/**
 	 * Initializes the simplecache lastcache variable and creates system cache files
 	 * when appropriate.
 	 *
@@ -153,7 +124,7 @@ class SystemCache {
 		}
 
 		// cache system data if enabled and not loaded
-		if (!$this->config->get('system_cache_loaded')) {
+		if (!$this->config->system_cache_loaded) {
 			_elgg_services()->views->cacheConfiguration($this);
 		}
 	

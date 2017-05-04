@@ -177,7 +177,7 @@ class ElggUser extends \ElggEntity
 		if ($fallback !== null) {
 			return $fallback;
 		}
-		return elgg_get_config('language');
+		return _elgg_config()->language;
 	}
 
 	/**

@@ -104,13 +104,13 @@ function _elgg_cron_page_handler($page) {
 		forward();
 	}
 
-	if (PHP_SAPI !== 'cli' && elgg_get_config('security_protect_cron')) {
+	if (PHP_SAPI !== 'cli' && _elgg_config()->security_protect_cron) {
 		elgg_signed_request_gatekeeper();
 	}
 	
 	$period = strtolower($page[0]);
 
-	$allowed_periods = elgg_get_config('elgg_cron_periods');
+	$allowed_periods = _elgg_config()->elgg_cron_periods;
 
 	if (($period != 'run') && !in_array($period, $allowed_periods)) {
 		throw new \CronException("$period is not a recognized cron period.");
@@ -154,7 +154,7 @@ function _elgg_cron_page_handler($page) {
  */
 function _elgg_cron_monitor($hook, $period, $output, $params) {
 	$time = $params['time'];
-	$periods = elgg_get_config('elgg_cron_periods');
+	$periods = _elgg_config()->elgg_cron_periods;
 
 	if (in_array($period, $periods)) {
 		$key = "cron_latest:$period:ts";

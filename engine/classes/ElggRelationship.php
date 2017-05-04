@@ -120,7 +120,7 @@ class ElggRelationship extends \ElggData {
 			$subtype = $this->getSubtype();
 
 			$function = "";
-			$handlers = _elgg_services()->config->get('relationship_url_handler');
+			$handlers = _elgg_config()->relationship_url_handler;
 
 			if (isset($handlers[$subtype])) {
 				$function = $handlers[$subtype];

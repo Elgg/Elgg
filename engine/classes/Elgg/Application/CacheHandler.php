@@ -129,7 +129,7 @@ class CacheHandler {
 		}
 
 		// trust the client but check for an existing cache file
-		$filename = $config->getCachePath() . "views_simplecache/$ts/$viewtype/$view";
+		$filename = $config->cacheroot . "views_simplecache/$ts/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag, $response);
 			return BinaryFileResponse::create($filename, 200, $response->headers->all());
@@ -146,9 +146,9 @@ class CacheHandler {
 			return $this->send403("Requested view is not an asset");
 		}
 
-		$lastcache = (int) $config->get('lastcache');
+		$lastcache = (int) $config->lastcache;
 
-		$filename = $config->getCachePath() . "views_simplecache/$lastcache/$viewtype/$view";
+		$filename = $config->cacheroot . "views_simplecache/$lastcache/$viewtype/$view";
 
 		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag, $response);
@@ -353,7 +353,7 @@ class CacheHandler {
 		}
 
 		// disable error reporting so we don't cache problems
-		$this->config->set('debug', null);
+		$this->config->debug = null;
 
 		return elgg_view($view, $vars);
 	}

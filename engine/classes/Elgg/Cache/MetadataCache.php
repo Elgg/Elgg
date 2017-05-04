@@ -121,7 +121,7 @@ class MetadataCache {
 			return;
 		}
 		
-		$version = (int) elgg_get_config('version');
+		$version = (int) _elgg_config()->version;
 		if (!empty($version) && ($version < 2016110900)) {
 			// can't use this during upgrade from 2.x to 3.0
 			return;
@@ -187,7 +187,7 @@ class MetadataCache {
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 
 		$options = [
 			'guids' => $guids,

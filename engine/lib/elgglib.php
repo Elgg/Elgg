@@ -33,14 +33,12 @@ function elgg() {
  * @since 1.8.0
  */
 function elgg_register_library($name, $location) {
-	$config = _elgg_services()->config;
-
-	$libraries = $config->get('libraries');
+	$libraries = _elgg_config()->libraries;
 	if ($libraries === null) {
 		$libraries = [];
 	}
 	$libraries[$name] = $location;
-	$config->set('libraries', $libraries);
+	_elgg_config()->libraries = $libraries;
 }
 
 /**
@@ -61,7 +59,7 @@ function elgg_load_library($name) {
 		return;
 	}
 
-	$libraries = _elgg_services()->config->get('libraries');
+	$libraries = _elgg_config()->libraries;
 
 	if (!isset($libraries[$name])) {
 		$error = "$name is not a registered library";
@@ -1672,7 +1670,7 @@ function _elgg_walled_garden_index() {
  * @access private
  */
 function _elgg_walled_garden_init() {
-	if (!elgg_get_config('walled_garden')) {
+	if (!_elgg_config()->walled_garden) {
 		return;
 	}
 
@@ -1682,7 +1680,7 @@ function _elgg_walled_garden_init() {
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 
-	if (elgg_get_config('default_access') == ACCESS_PUBLIC) {
+	if (_elgg_config()->default_access == ACCESS_PUBLIC) {
 		elgg_set_config('default_access', ACCESS_LOGGED_IN);
 	}
 
@@ -1772,7 +1770,7 @@ function _elgg_init() {
 		return $result;
 	});
 
-	if (_elgg_services()->config->get('enable_profiling')) {
+	if (_elgg_config()->enable_profiling) {
 		/**
 		 * @see \Elgg\Profiler::handlePageOutput
 		 */

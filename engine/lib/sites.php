@@ -14,7 +14,7 @@
  * @since 1.8.0
  */
 function elgg_get_site_entity() {
-	return elgg_get_config('site');
+	return _elgg_config()->site;
 }
 
 /**

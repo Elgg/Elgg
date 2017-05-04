@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Di;
 
+use Elgg\Config;
 use Elgg\Cache\Pool;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
@@ -85,23 +86,23 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
+ * @property-read \Elgg\Cache\ViewCacher                   $viewCacher
  * @property-read \Elgg\WidgetsService                     $widgets
  *
- * @package Elgg.Core
  * @access private
  */
-class ServiceProvider extends \Elgg\Di\DiContainer {
+class ServiceProvider extends DiContainer {
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Config $config Elgg Config service
+	 * @param Config $config Elgg Config service
 	 */
-	public function __construct(\Elgg\Config $config) {
+	public function __construct(Config $config) {
 
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
-			if (!$c->config->get('AutoloaderManager_skip_storage')) {
+			if (!$c->config->AutoloaderManager_skip_storage) {
 				$manager->setStorage($c->fileCache);
 				$manager->loadCache();
 			}
@@ -143,7 +144,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('boot', function(ServiceProvider $c) {
 			$boot = new \Elgg\BootService();
-			if ($c->config->get('enable_profiling')) {
+			if ($c->config->enable_profiling) {
 				$boot->setTimer($c->timer);
 			}
 			return $boot;
@@ -154,7 +155,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('cacheHandler', function(ServiceProvider $c) {
-			$simplecache_enabled = $c->config->get('simplecache_enabled');
+			$simplecache_enabled = $c->config->simplecache_enabled;
 			if ($simplecache_enabled === null) {
 				$simplecache_enabled = $c->configTable->get('simplecache_enabled');
 			}
@@ -183,13 +184,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('db', function(ServiceProvider $c) {
 			// gonna need dbprefix from settings
-			$c->config->loadSettingsFile();
 			$db_config = \Elgg\Database\Config::fromElggConfig($c->config);
 
 			// we inject the logger in _elgg_engine_boot()
 			$db = new \Elgg\Database($db_config);
 
-			if ($c->config->get('profiling_sql')) {
+			if ($c->config->profiling_sql) {
 				$db->setTimer($c->timer);
 			}
 
@@ -224,7 +224,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('events', function (ServiceProvider $c) {
 			$events = new \Elgg\EventsService();
-			if ($c->config->get('enable_profiling')) {
+			if ($c->config->enable_profiling) {
 				$events->setTimer($c->timer);
 			}
 			return $events;
@@ -233,11 +233,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);
 
 		$this->setFactory('fileCache', function(ServiceProvider $c) {
-			return new \ElggFileCache($c->config->getCachePath() . 'system_cache/');
+			return new \ElggFileCache($c->config->cacheroot . 'system_cache/');
 		});
 
 		$this->setFactory('filestore', function(ServiceProvider $c) {
-			return new \ElggDiskFilestore($c->config->getDataPath());
+			return new \ElggDiskFilestore($c->config->dataroot);
 		});
 
 		$this->setFactory('forms', function(ServiceProvider $c) {
@@ -279,11 +279,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('memcacheStashPool', function(ServiceProvider $c) {
-			if (!$c->config->get('memcache')) {
+			if (!$c->config->memcache) {
 				return null;
 			}
 
-			$servers = $c->config->get('memcache_servers');
+			$servers = $c->config->memcache_servers;
 			if (!$servers) {
 				return null;
 			}
@@ -330,7 +330,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('plugins', function(ServiceProvider $c) {
 			$pool = new Pool\InMemory();
 			$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
-			if ($c->config->get('enable_profiling')) {
+			if ($c->config->enable_profiling) {
 				$plugins->setTimer($c->timer);
 			}
 			return $plugins;
@@ -368,7 +368,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('router', function(ServiceProvider $c) {
 			// TODO(evan): Init routes from plugins or cache
 			$router = new \Elgg\Router($c->hooks);
-			if ($c->config->get('enable_profiling')) {
+			if ($c->config->enable_profiling) {
 				$router->setTimer($c->timer);
 			}
 			return $router;
@@ -417,7 +417,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
 			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config);
-			if ($c->config->get('enable_profiling')) {
+			if ($c->config->enable_profiling) {
 				$cache->setTimer($c->timer);
 			}
 			return $cache;
@@ -474,6 +474,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('views', function(ServiceProvider $c) {
 			return new \Elgg\ViewsService($c->hooks, $c->logger, $c->input);
+		});
+
+		$this->setFactory('viewCacher', function(ServiceProvider $c) {
+			return new \Elgg\Cache\ViewCacher($c->views, $c->config);
 		});
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);

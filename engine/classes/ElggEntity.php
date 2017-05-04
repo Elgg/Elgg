@@ -1273,11 +1273,10 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	protected function create() {
 
-		$allowed_types = elgg_get_config('entity_types');
-		$type = $this->getDatabase()->sanitizeString($this->attributes['type']);
-		if (!in_array($type, $allowed_types)) {
+		$type = $this->attributes['type'];
+		if (!in_array($type, \Elgg\Config::getEntityTypes())) {
 			throw new \InvalidParameterException('Entity type must be one of the allowed types: '
-					. implode(', ', $allowed_types));
+					. implode(', ', \Elgg\Config::getEntityTypes()));
 		}
 		
 		$subtype = $this->attributes['subtype'];
@@ -1569,7 +1568,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->disable_reason = $reason;
 		}
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		
 		$guid = (int) $this->guid;
 		
@@ -1807,7 +1806,7 @@ abstract class ElggEntity extends \ElggData implements
 		_elgg_invalidate_cache_for_entity($guid);
 		_elgg_invalidate_memcache_for_entity($guid);
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		
 		$sql = "
 			DELETE FROM {$dbprefix}entities

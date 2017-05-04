@@ -58,7 +58,7 @@ class EntityTableTest extends \Elgg\TestCase {
 		$last_action = $object->updateLastAction();
 		$this->assertEquals($last_action, $object->last_action);
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		$sql = "
 			UPDATE {$dbprefix}entities
 			SET last_action = :last_action

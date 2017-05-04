@@ -2,6 +2,7 @@
 
 use Elgg\Filesystem\Directory;
 use Elgg\Application;
+use Elgg\Config;
 
 /**
  * Elgg Installer.
@@ -53,17 +54,17 @@ class ElggInstaller {
 	 * Constructor bootstraps the Elgg engine
 	 */
 	public function __construct() {
-		Application::create()->loadCore();
+		Application::factory()->loadCore();
 
 		$this->isAction = _elgg_services()->request->getMethod() === 'POST';
 
-		$config = _elgg_services()->config;
-		$config->set('wwwroot', _elgg_services()->request->sniffElggUrl());
-		$config->set('installer_running', true);
-		if (!$config->get('dbencoding')) {
-			$config->set('dbencoding', 'utf8mb4');
+		$config = _elgg_config();
+		$config->wwwroot = _elgg_services()->request->sniffElggUrl();
+		$config->installer_running = true;
+		if (!$config->dbencoding) {
+			$config->dbencoding = 'utf8mb4';
 		}
-		$config->set('simplecache_enabled', false);
+		$config->simplecache_enabled = false;
 
 		_elgg_services()->setValue('session', \ElggSession::getMock());
 		_elgg_services()->views->setViewtype('installation');
@@ -503,7 +504,7 @@ class ElggInstaller {
 		$translator->addTranslation($lang, [
 			'install:admin:help:password1' => sprintf(
 				$translations[$lang]['install:admin:help:password1'],
-				elgg_get_config('min_password_length')
+				_elgg_config()->min_password_length
 			),
 		]);
 
@@ -581,7 +582,7 @@ class ElggInstaller {
 	 */
 	protected function getNextStepUrl($currentStep) {
 		$nextStep = $this->getNextStep($currentStep);
-		return _elgg_services()->config->getSiteUrl() . "install.php?step=$nextStep";
+		return _elgg_config()->wwwroot . "install.php?step=$nextStep";
 	}
 
 	/**
@@ -591,28 +592,28 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function setInstallStatus() {
-		$path = _elgg_services()->config->getSettingsPath();
+		$path = Application::getDefaultSettingsPath();
 		if (!is_file($path) || !is_readable($path)) {
 			return;
 		}
 
-		$this->loadSettingsFile();
+		exit('rework');
 
 		$this->status['config'] = true;
 
 		// must be able to connect to database to jump install steps
 		$dbSettingsPass = $this->checkDatabaseSettings(
-			elgg_get_config('dbuser'),
-			elgg_get_config('dbpass'),
-			elgg_get_config('dbname'),
-			elgg_get_config('dbhost')
+			_elgg_config()->dbuser,
+			_elgg_config()->dbpass,
+			_elgg_config()->dbname,
+			_elgg_config()->dbhost
 		);
 
 		if ($dbSettingsPass == false) {
 			return;
 		}
 
-		$prefix = elgg_get_config('dbprefix');
+		$prefix = _elgg_config()->dbprefix;
 
 		// check that the config table has been created
 		$query = "show tables";
@@ -745,8 +746,10 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function loadSettingsFile() {
+		echo "rewrite";
+		exit;
 		try {
-			_elgg_services()->config->loadSettingsFile();
+//			_elgg_config()->loadSettingsFile();
 		} catch (\Exception $e) {
 			$msg = _elgg_services()->translator->translate('InstallationException:CannotLoadSettings');
 			throw new InstallationException($msg, 0, $e);
@@ -782,7 +785,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function isInstallDirWritable(&$report) {
-		$root = Directory\Local::root()->getPath();
+		$root = Directory\Local::projectRoot()->getPath();
 		$abs_path = Application::elggDir()->getPath('elgg-config');
 
 		if (0 === strpos($abs_path, $root)) {
@@ -792,7 +795,7 @@ class ElggInstaller {
 		}
 		$relative_path = rtrim($relative_path, '/\\');
 
-		$writable = is_writable(Directory\Local::root()->getPath('elgg-config'));
+		$writable = is_writable(Directory\Local::projectRoot()->getPath('elgg-config'));
 		if (!$writable) {
 			$report['settings'] = [
 				[
@@ -836,7 +839,7 @@ class ElggInstaller {
 	 * @return string
 	 */
 	private function getSettingsPath() {
-		return Directory\Local::root()->getPath("elgg-config/.env.php");
+		return Directory\Local::projectRoot()->getPath("elgg-config/.env.php");
 	}
 
 	/**
@@ -963,11 +966,11 @@ class ElggInstaller {
 	 */
 	protected function checkRewriteRules(&$report) {
 		$tester = new ElggRewriteTester();
-		$url = _elgg_services()->config->getSiteUrl();
+		$url = _elgg_config()->wwwroot;
 		$url .= Application::REWRITE_TEST_TOKEN . '?' . http_build_query([
 			Application::REWRITE_TEST_TOKEN => '1',
 		]);
-		$report['rewrite'] = [$tester->run($url, Directory\Local::root()->getPath())];
+		$report['rewrite'] = [$tester->run($url, Directory\Local::projectRoot()->getPath())];
 	}
 
 	/**
@@ -1043,9 +1046,9 @@ class ElggInstaller {
 			return false;
 		}
 
-		if (!elgg_get_config('data_dir_override')) {
+		if (!_elgg_config()->data_dir_override) {
 			// check that data root is not subdirectory of Elgg root
-			if (stripos($submissionVars['dataroot'], elgg_get_config('path')) === 0) {
+			if (stripos($submissionVars['dataroot'], _elgg_config()->path) === 0) {
 				$msg = _elgg_services()->translator->translate('install:error:locationdatadirectory', [$submissionVars['dataroot']]);
 				register_error($msg);
 				return false;

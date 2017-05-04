@@ -48,7 +48,7 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 	$subtype = sanitise_string($subtype);
 	$ip_address = sanitise_string($ip_address);
 	if ($limit === null) {
-		$limit = elgg_get_config('default_limit');
+		$limit = _elgg_config()->default_limit;
 	}
 	$limit = (int) $limit;
 	$offset = (int) $offset;
@@ -194,7 +194,7 @@ function system_log($object, $event) {
 
 	if ($object instanceof Loggable) {
 		/* @var \ElggEntity|\ElggExtender $object */
-		if (elgg_get_config('version') < 2012012000) {
+		if (_elgg_config()->version < 2012012000) {
 			// this is a site that doesn't have the ip_address column yet
 			return;
 		}

@@ -16,7 +16,7 @@
  * @access private
  */
 function get_object_entity_as_row($guid) {
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 	$sql = "SELECT * FROM {$dbprefix}objects_entity
 		WHERE guid = :guid";
 	$params = [

@@ -794,7 +794,7 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testDistinctCanBeDisabled() {
-		$prefix = _elgg_services()->config->get('dbprefix');
+		$prefix = _elgg_config()->dbprefix;
 		$options = array(
 			'callback' => '',
 			'joins' => array(

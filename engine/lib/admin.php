@@ -774,7 +774,7 @@ function _elgg_add_admin_widgets($event, $type, $user) {
  */
 function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_notify_admins')) {
+	if (!_elgg_config()->security_notify_admins) {
 		return;
 	}
 	
@@ -915,7 +915,7 @@ function _elgg_admin_prepare_admin_notification_remove_admin($hook, $type, $retu
  */
 function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_notify_user_admin')) {
+	if (!_elgg_config()->security_notify_user_admin) {
 		return;
 	}
 	

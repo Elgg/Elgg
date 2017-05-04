@@ -19,24 +19,24 @@ final class Local {
 	 *
 	 * @return Directory
 	 */
-	public static function fromPath(/*string*/ $path) /*: Directory*/ {
+	public static function fromPath($path) {
 		return Fly::createLocal($path);
 	}
 
 	/**
-	 * Returns a directory that points to the root composer install.
+	 * Get the root composer install directory.
 	 *
-	 * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg
+	 * @note This is not the same as the Elgg root! In the Elgg 1.x series, Elgg
 	 * was always at the install root, but as of 2.0, Elgg can be installed as a
 	 * composer dependency, so you cannot assume that it is at the root anymore.
 	 *
 	 * @return Directory
 	 */
-	public static function root() /*: Directory*/ {
+	public static function projectRoot() {
 		static $dir;
 		
-		if (!isset($dir)) {
-			$dir = self::fromPath(realpath(__DIR__ . '/../../../../..'));
+		if ($dir === null) {
+			$dir = self::elggRoot();
 			// Assumes composer vendor location hasn't been customized...
 			if (!$dir->isFile('vendor/autoload.php')) {
 				// Assume we're is installed at vendor/{vendor}/{package}
@@ -44,6 +44,23 @@ final class Local {
 			}
 		}
 		
+		return $dir;
+	}
+
+	/**
+	 * Get the Elgg root directory.
+	 *
+	 * @note This is not the same as the project root! See projectRoot().
+	 *
+	 * @return Directory
+	 */
+	public static function elggRoot() {
+		static $dir;
+
+		if ($dir === null) {
+			$dir = self::fromPath(realpath(__DIR__ . '/../../../../..'));
+		}
+
 		return $dir;
 	}
 }

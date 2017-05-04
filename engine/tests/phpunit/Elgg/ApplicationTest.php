@@ -9,8 +9,18 @@ class ApplicationTest extends \Elgg\TestCase {
 	}
 
 	function testStartsTimer() {
+		$app = Application::$_instance;
+
+		Application::$_instance = null;
 		unset($GLOBALS['START_MICROTIME']);
-		new Application(_elgg_services());
+
+		Application::factory([
+			'handle_shutdown' => false,
+			'handle_exceptions' => false,
+			'overwrite_global_config' => false,
+			'config' => new Config(TestCase::getTestingConfigArray()),
+		]);
+		Application::$_instance = $app;
 
 		$this->assertTrue(is_float($GLOBALS['START_MICROTIME']));
 	}

@@ -5,6 +5,7 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Elgg\Database\Config as DbConfig;
 
 /**
  * The Elgg database
@@ -16,6 +17,7 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
  */
 class Database {
 	use Profilable;
+	use Loggable;
 
 	const DELAYED_QUERY = 'q';
 	const DELAYED_TYPE = 't';
@@ -70,35 +72,14 @@ class Database {
 	private $config;
 
 	/**
-	 * @var \Elgg\Logger $logger The logger
-	 */
-	private $logger;
-
-	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database\Config $config Database configuration
-	 * @param \Elgg\Logger          $logger The logger
+	 * @param DbConfig $config Database configuration
 	 */
-	public function __construct(\Elgg\Database\Config $config, \Elgg\Logger $logger = null) {
-
-		$this->logger = $logger;
+	public function __construct(DbConfig $config) {
 		$this->config = $config;
-
 		$this->table_prefix = $config->getTablePrefix();
-
 		$this->enableQueryCache();
-	}
-
-	/**
-	 * Set the logger object
-	 *
-	 * @param Logger $logger The logger
-	 * @return void
-	 * @access private
-	 */
-	public function setLogger(Logger $logger) {
-		$this->logger = $logger;
 	}
 
 	/**

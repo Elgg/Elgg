@@ -142,7 +142,7 @@ class ViewsService {
 				return $view;
 			}
 		}
-		$view = elgg_get_config('view');
+		$view = _elgg_config()->view;
 		if ($this->isValidViewtype($view)) {
 			return $view;
 		}
@@ -661,7 +661,7 @@ class ViewsService {
 						// absolute path
 					} else {
 						// relative path
-						$path = Directory\Local::root()->getPath($path);
+						$path = Directory\Local::projectRoot()->getPath($path);
 					}
 
 					if (substr($view, -1) === '/') {

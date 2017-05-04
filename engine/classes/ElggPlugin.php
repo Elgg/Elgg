@@ -59,7 +59,7 @@ class ElggPlugin extends \ElggObject {
 		if (is_object($path)) {
 			// database object
 			parent::__construct($path);
-			$this->path = _elgg_services()->config->getPluginsPath() . $this->getID();
+			$this->path = _elgg_config()->plugins_path . $this->getID();
 			_elgg_cache_plugin_by_id($this);
 			return;
 		}
@@ -331,7 +331,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		// need to remove all namespaced private settings.
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
@@ -460,7 +460,7 @@ class ElggPlugin extends \ElggObject {
 
 		$defaults = $this->getStaticConfig('user_settings', []);
 		
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		// send an empty name so we just get the first part of the namespace
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$ps_prefix_len = strlen($ps_prefix);

@@ -82,7 +82,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 
 		// break entities such that the first fetch has one incomplete
 		// and the second and third fetches have only incompletes!
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		delete_data("
 			DELETE FROM {$db_prefix}objects_entity
 			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
@@ -133,7 +133,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 
 		// break entities such that the first fetch has one incomplete
 		// and the second and third fetches have only incompletes!
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		delete_data("
 			DELETE FROM {$db_prefix}objects_entity
 			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
