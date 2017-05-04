@@ -289,7 +289,7 @@ class NotificationsService {
 			}
 		}
 
-		$this->logger->notice("Results for the notification event {$event->getDescription()}: " . print_r($result, true));
+		$this->logger->info("Results for the notification event {$event->getDescription()}: " . print_r($result, true));
 		return $result;
 	}
 
