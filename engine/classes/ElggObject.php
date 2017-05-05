@@ -83,6 +83,8 @@ class ElggObject extends \ElggEntity {
 	 *
 	 * @return bool
 	 * @throws InvalidClassException
+	 *
+	 * @uses get_object_entity_as_row
 	 */
 	protected function load($guid) {
 		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'object', $this->attributes);

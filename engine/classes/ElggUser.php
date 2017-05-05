@@ -87,6 +87,8 @@ class ElggUser extends \ElggEntity
 	 * @param mixed $guid \ElggUser GUID or \stdClass database row from entity table
 	 *
 	 * @return bool
+	 *
+	 * @uses get_user_entity_as_row
 	 */
 	protected function load($guid) {
 		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'user', $this->attributes);

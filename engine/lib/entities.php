@@ -176,6 +176,49 @@ function get_entity_as_row($guid) {
 }
 
 /**
+ * Return the site specific details of a site by a row.
+ *
+ * @param int $guid The site GUID
+ *
+ * @return mixed
+ * @access private
+ */
+function get_site_entity_as_row($guid) {
+	$guid = (int) $guid;
+	$prefix = _elgg_config()->dbprefix;
+	return get_data_row("SELECT * FROM {$prefix}sites_entity WHERE guid = $guid");
+}
+
+/**
+ * Return the object specific details of a object by a row.
+ *
+ * @param int $guid The guid to retrieve
+ *
+ * @return bool
+ * @access private
+ */
+function get_object_entity_as_row($guid) {
+	$dbprefix = _elgg_config()->dbprefix;
+	$sql = "SELECT * FROM {$dbprefix}objects_entity WHERE guid = :guid";
+	$params = [
+		':guid' => (int) $guid,
+	];
+	return _elgg_services()->db->getDataRow($sql, null, $params);
+}
+
+/**
+ * Return the user specific details of a user by a row.
+ *
+ * @param int $guid The \ElggUser guid
+ *
+ * @return mixed
+ * @access private
+ */
+function get_user_entity_as_row($guid) {
+	return _elgg_services()->usersTable->getRow($guid);
+}
+
+/**
  * Create an Elgg* object from a given entity row.
  *
  * Handles loading all tables into the correct class.
@@ -233,6 +276,16 @@ function elgg_entity_exists($guid) {
  */
 function elgg_enable_entity($guid, $recursive = true) {
 	return _elgg_services()->entityTable->enable($guid, $recursive);
+}
+
+/**
+ * Get the current site entity
+ *
+ * @return \ElggSite
+ * @since 1.8.0
+ */
+function elgg_get_site_entity() {
+	return _elgg_config()->site;
 }
 
 /**
@@ -800,6 +853,8 @@ function _elgg_entities_test($hook, $type, $value) {
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggSiteTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggObjectTest.php';
 	return $value;
 }
 

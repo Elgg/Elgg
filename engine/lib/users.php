@@ -8,18 +8,6 @@
  */
 
 /**
- * Return the user specific details of a user by a row.
- *
- * @param int $guid The \ElggUser guid
- *
- * @return mixed
- * @access private
- */
-function get_user_entity_as_row($guid) {
-	return _elgg_services()->usersTable->getRow($guid);
-}
-
-/**
  * Disables all of a user's entities
  *
  * @param int $owner_guid The owner GUID
@@ -183,8 +171,6 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
 function generate_random_cleartext_password() {
 	return _elgg_services()->crypto->getRandomString(12, \ElggCrypto::CHARS_PASSWORD);
 }
-
-
 
 /**
  * Simple function which ensures that a username contains only valid characters.

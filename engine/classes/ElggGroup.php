@@ -241,6 +241,8 @@ class ElggGroup extends \ElggEntity {
 	 * @param mixed $guid GUID of an \ElggGroup entity or database row from entity table
 	 *
 	 * @return bool
+	 *
+	 * @uses get_group_entity_as_row
 	 */
 	protected function load($guid) {
 		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'group', $this->attributes);

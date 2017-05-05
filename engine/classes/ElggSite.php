@@ -107,6 +107,8 @@ class ElggSite extends \ElggEntity {
 	 *
 	 * @return bool
 	 * @throws InvalidClassException
+	 *
+	 * @uses get_site_entity_as_row
 	 */
 	protected function load($guid) {
 		// TODO(steve) we only have 1 site, simplify this...
