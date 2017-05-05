@@ -3,6 +3,7 @@
 use Elgg\Filesystem\Directory;
 use Elgg\Application;
 use Elgg\Config;
+use Elgg\Project\Paths;
 
 /**
  * Elgg Installer.
@@ -68,8 +69,8 @@ class ElggInstaller {
 
 		_elgg_services()->setValue('session', \ElggSession::getMock());
 		_elgg_services()->views->setViewtype('installation');
-		_elgg_services()->translator->registerTranslations(Application::elggDir()->getPath("/install/languages/"), true);
-		_elgg_services()->views->registerPluginViews(Application::elggDir()->getPath("/"));
+		_elgg_services()->translator->registerTranslations(Paths::elgg() . "install/languages/", true);
+		_elgg_services()->views->registerPluginViews(Paths::elgg());
 	}
 	
 	/**
@@ -592,7 +593,7 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function setInstallStatus() {
-		$path = Application::getDefaultSettingsPath();
+		$path = Paths::settingsFile();
 		if (!is_file($path) || !is_readable($path)) {
 			return;
 		}
@@ -785,22 +786,12 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function isInstallDirWritable(&$report) {
-		$root = Directory\Local::projectRoot()->getPath();
-		$abs_path = Application::elggDir()->getPath('elgg-config');
-
-		if (0 === strpos($abs_path, $root)) {
-			$relative_path = substr($abs_path, strlen($root));
-		} else {
-			$relative_path = $abs_path;
-		}
-		$relative_path = rtrim($relative_path, '/\\');
-
-		$writable = is_writable(Directory\Local::projectRoot()->getPath('elgg-config'));
-		if (!$writable) {
+		if (!is_writable(Paths::projectConfig())) {
+			$msg = _elgg_services()->translator->translate('install:check:installdir', [Paths::PATH_TO_CONFIG]);
 			$report['settings'] = [
 				[
 					'severity' => 'failure',
-					'message' => _elgg_services()->translator->translate('install:check:installdir', [$relative_path]),
+					'message' => $msg,
 				]
 			];
 			return false;
@@ -839,7 +830,7 @@ class ElggInstaller {
 	 * @return string
 	 */
 	private function getSettingsPath() {
-		return Directory\Local::projectRoot()->getPath("elgg-config/.env.php");
+		return Paths::project() . "elgg-config/.env.php";
 	}
 
 	/**
@@ -970,7 +961,7 @@ class ElggInstaller {
 		$url .= Application::REWRITE_TEST_TOKEN . '?' . http_build_query([
 			Application::REWRITE_TEST_TOKEN => '1',
 		]);
-		$report['rewrite'] = [$tester->run($url, Directory\Local::projectRoot()->getPath())];
+		$report['rewrite'] = [$tester->run($url, Paths::project())];
 	}
 
 	/**
@@ -1164,7 +1155,7 @@ class ElggInstaller {
 	 */
 	protected function installDatabase() {
 		try {
-			_elgg_services()->db->runSqlScript(Application::elggDir()->getPath("/engine/schema/mysql.sql"));
+			_elgg_services()->db->runSqlScript(Paths::elgg() . "engine/schema/mysql.sql");
 			init_site_secret();
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
@@ -1268,7 +1259,7 @@ class ElggInstaller {
 		}
 
 		// new installations have run all the upgrades
-		$upgrades = elgg_get_upgrade_files(Application::elggDir()->getPath("/engine/lib/upgrades/"));
+		$upgrades = elgg_get_upgrade_files(Paths::elgg() . "engine/lib/upgrades/");
 
 		$sets = [
 			'installed' => time(),

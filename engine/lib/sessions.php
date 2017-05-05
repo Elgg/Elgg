@@ -385,8 +385,7 @@ function _elgg_session_boot(ServiceProvider $services) {
 }
 
 /**
- * @param \Elgg\EventsService            $events
- * @param \Elgg\HooksRegistrationService $hooks
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	register_pam_handler('pam_auth_userpass');

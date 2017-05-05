@@ -2,6 +2,7 @@
 namespace Elgg\Filesystem\Directory;
 
 use Elgg\Filesystem\Directory;
+use Elgg\Project\Paths;
 
 /**
  * Namespace for generating local filesystems.
@@ -36,12 +37,7 @@ final class Local {
 		static $dir;
 		
 		if ($dir === null) {
-			$dir = self::elggRoot();
-			// Assumes composer vendor location hasn't been customized...
-			if (!$dir->isFile('vendor/autoload.php')) {
-				// Assume we're is installed at vendor/{vendor}/{package}
-				$dir = self::fromPath(realpath($dir->getPath() . '/../../..'));
-			}
+			$dir = self::fromPath(Paths::project());
 		}
 		
 		return $dir;
@@ -58,7 +54,7 @@ final class Local {
 		static $dir;
 
 		if ($dir === null) {
-			$dir = self::fromPath(realpath(__DIR__ . '/../../../../..'));
+			$dir = self::fromPath(Paths::elgg());
 		}
 
 		return $dir;

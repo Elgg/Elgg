@@ -759,6 +759,9 @@ function _elgg_nav_public_pages($hook_name, $entity_type, $return_value, $params
 	return $return_value;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_nav_init');
 };

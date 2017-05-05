@@ -7,6 +7,7 @@ use Elgg\Database\ConfigTable;
 use Dotenv\Dotenv;
 use Elgg\Filesystem\Directory\Local;
 use ConfigurationException;
+use Elgg\Project\Paths;
 
 /**
  * Access to configuration values
@@ -164,9 +165,9 @@ class Config {
 		if ($settings_path) {
 			$config = self::fromFile($settings_path, $reason1);
 		} else {
-			$config = self::fromFile(Application::getDefaultSettingsPath(), $reason1);
+			$config = self::fromFile(Paths::settingsFile(Paths::SETTINGS_ENV), $reason1);
 			if (!$config) {
-				$config = self::fromFile(Application::getLegacySettingsPath(), $reason2);
+				$config = self::fromFile(Paths::settingsFile(Paths::SETTINGS_PHP), $reason2);
 			}
 		}
 
@@ -226,6 +227,8 @@ class Config {
 	 *
 	 * @return void
 	 * @throws ConfigurationException
+	 * @access private
+	 * @internal Do not use
 	 */
 	public function init() {
 		$project_root = Local::projectRoot()->getPath();

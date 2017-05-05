@@ -2,8 +2,8 @@
 namespace Elgg\Cache;
 
 use Elgg\Includer;
+use Elgg\Project\Paths;
 use Elgg\ViewsService;
-use Elgg\Filesystem\Directory\Local;
 use Elgg\Config;
 
 class ViewCacher {
@@ -32,10 +32,10 @@ class ViewCacher {
 	public function registerCoreViews() {
 		if (!$this->config->system_cache_loaded) {
 			// Core view files in /views
-			$this->views->registerPluginViews(Local::projectRoot()->getPath());
+			$this->views->registerPluginViews(Paths::project());
 
 			// Core view definitions in /engine/views.php
-			$file = $this->config->elgg_root . 'engine/views.php';
+			$file = Paths::elgg() . 'engine/views.php';
 			if (is_file($file)) {
 				$spec = Includer::includeFile($file);
 				if (is_array($spec)) {

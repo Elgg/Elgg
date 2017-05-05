@@ -1756,8 +1756,7 @@ function _elgg_view_may_be_altered($view, $path) {
 		$expected_path = $path;
 	} else {
 		// relative path
-		$root = dirname(dirname(__DIR__));
-		$expected_path = "$root/views/$viewtype/" . ltrim($path, '/\\');
+		$expected_path = \Elgg\Project\Paths::elgg() . "views/$viewtype/" . ltrim($path, '/\\');
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);

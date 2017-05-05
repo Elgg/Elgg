@@ -106,6 +106,9 @@ function statistics_init() {
 	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/login_history');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', 'statistics_init');
 };

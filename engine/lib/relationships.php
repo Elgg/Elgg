@@ -276,6 +276,9 @@ function _elgg_relationship_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_relationships_test');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_relationship_init');
 };

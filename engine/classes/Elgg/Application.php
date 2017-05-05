@@ -7,6 +7,7 @@ use Elgg\Filesystem\Directory;
 use Elgg\Http\Request;
 use Elgg\Filesystem\Directory\Local;
 use ConfigurationException;
+use Elgg\Project\Paths;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -85,106 +86,56 @@ class Application {
 	}
 
 	/**
-	 * Load all Elgg procedural code and wire up boot events, but don't boot
+	 * Define all Elgg global functions and constants, wire up boot events, but don't boot
 	 *
-	 * This is used for internal testing purposes
+	 * This includes all the .php files in engine/lib (not upgrades). If a script returns a function,
+	 * it is queued and executed at the end.
 	 *
 	 * @return void
 	 * @access private
 	 * @internal
+	 * @throws \InstallationException
 	 */
 	public function loadCore() {
 		if (self::$core_loaded) {
 			return;
 		}
 
-		$lib_dir = self::elggDir()->chroot("engine/lib");
+		$setups = [];
+		$path = Paths::elgg() . 'engine/lib';
 
-		// load the rest of the library files from engine/lib/
-		// All on separate lines to make diffs easy to read + make it apparent how much
-		// we're actually loading on every page (Hint: it's too much).
-		$lib_files = [
-			// Needs to be loaded first to correctly bootstrap
-			'autoloader.php',
-			'elgglib.php',
-
-			// The order of these doesn't matter, so keep them alphabetical
-			'access.php',
-			'actions.php',
-			'admin.php',
-			'annotations.php',
-			'cache.php',
-			'comments.php',
-			'configuration.php',
-			'cron.php',
-			'database.php',
-			'entities.php',
-			'extender.php',
-			'filestore.php',
-			'group.php',
-			'input.php',
-			'languages.php',
-			'mb_wrapper.php',
-			'memcache.php',
-			'metadata.php',
-			'metastrings.php',
-			'navigation.php',
-			'notification.php',
-			'objects.php',
-			'output.php',
-			'pagehandler.php',
-			'pageowner.php',
-			'pam.php',
-			'plugins.php',
-			'private_settings.php',
-			'relationships.php',
-			'river.php',
-			'sessions.php',
-			'sites.php',
-			'statistics.php',
-			'system_log.php',
-			'tags.php',
-			'user_settings.php',
-			'users.php',
-			'upgrade.php',
-			'views.php',
-			'widgets.php',
-
-			// backward compatibility
-			'deprecated-2.1.php',
-			'deprecated-3.0.php',
-		];
-
-		// isolate global scope
-		call_user_func(function () use ($lib_dir, $lib_files) {
-
-			$setups = [];
-
-			// include library files, capturing setup functions
-			foreach ($lib_files as $file) {
-				$setup = (include_once $lib_dir->getPath($file));
-				if (!$setup) {
-					throw new \InstallationException("Elgg installation is missing file engine/lib/$file");
-				}
-				if ($setup instanceof \Closure) {
-					$setups[$file] = $setup;
-				}
+		$files = scandir($path, SCANDIR_SORT_ASCENDING);
+		$files = array_filter($files, function ($file) use ($path) {
+			if (!is_file("$path/$file")) {
+				return false;
 			}
-
-			// store instance to be returned by elgg()
-			self::$_instance = $this;
-
-			// set up autoloading and DIC
-			_elgg_services($this->services);
-
-			$events = $this->services->events;
-			$hooks = $this->services->hooks;
-
-			// run setups
-			foreach ($setups as $func) {
-				$func($events, $hooks);
-			}
+			return substr($file, -4) === '.php';
 		});
+
+		// include library files, capturing setup functions
+		foreach ($files as $file) {
+			$return = Includer::includeFile("$path/$file");
+			if (!$return) {
+				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
+			}
+			if ($return instanceof \Closure) {
+				$setups[$file] = $return;
+			}
+		}
+
+		// store instance to be returned by elgg()
+		self::$_instance = $this;
+
+		// allow global services access. :(
+		_elgg_services($this->services);
+
+		$events = $this->services->events;
+		$hooks = $this->services->hooks;
+
+		// run setups
+		foreach ($setups as $func) {
+			$func($events, $hooks);
+		}
 
 		self::$core_loaded = true;
 	}
@@ -235,16 +186,16 @@ class Application {
 		// Load the plugins that are active
 		$this->services->plugins->load();
 
-		if ($config->project_root != $config->elgg_root) {
+		if (Paths::project() != Paths::elgg()) {
 			// Elgg is installed as a composer dep, so try to treat the root directory
 			// as a custom plugin that is always loaded last and can't be disabled...
 			if (!$config->system_cache_loaded) {
 				// configure view locations for the custom plugin (not Elgg core)
-				$viewsFile = Local::projectRoot()->getFile('views.php');
-				if ($viewsFile->exists()) {
-					$viewsSpec = $viewsFile->includeFile();
+				$viewsFile = Paths::project() . 'views.php';
+				if (is_file($viewsFile)) {
+					$viewsSpec = Includer::includeFile($viewsFile);
 					if (is_array($viewsSpec)) {
-						_elgg_services()->views->mergeViewsSpec($viewsSpec);
+						$this->services->views->mergeViewsSpec($viewsSpec);
 					}
 				}
 
@@ -289,7 +240,6 @@ class Application {
 	 * @return \Elgg\Application\Database
 	 */
 	public function getDb() {
-		$this->loadSettings();
 		return $this->services->publicDb;
 	}
 
@@ -424,29 +374,16 @@ class Application {
 			return true;
 		}
 
-		if ($path === '/rewrite.php') {
-			require Directory\Local::projectRoot()->getPath("install.php");
-			return true;
-		}
-
 		$this->bootCore();
 
 		// TODO use formal Response object instead
+		// This is to set the charset to UTF-8.
 		header("Content-Type: text/html;charset=utf-8");
 
 		// fetch new request from services in case it was replaced by route:rewrite
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
-	}
-
-	/**
-	 * Get the Elgg data directory with trailing slash
-	 *
-	 * @return string
-	 */
-	public static function getDataPath() {
-		return self::factory()->services->config->dataroot;
 	}
 
 	/**
@@ -466,24 +403,6 @@ class Application {
 	 */
 	public static function projectDir() {
 		return Local::projectRoot();
-	}
-
-	/**
-	 * Get path of the .env.php settings file
-	 *
-	 * @return string
-	 */
-	public static function getDefaultSettingsPath() {
-		return Local::projectRoot()->getPath('elgg-config/.env.php');
-	}
-
-	/**
-	 * Get path of the settings.php settings file
-	 *
-	 * @return string
-	 */
-	public static function getLegacySettingsPath() {
-		return Local::projectRoot()->getPath('elgg-config/settings.php');
 	}
 
 	/**
@@ -797,22 +716,29 @@ class Application {
 
 			default:
 				if (function_exists('_elgg_config')) {
-					$config = _elgg_config();
+					$debug = _elgg_config()->debug;
 				} else {
-					$config = isset($GLOBALS['CONFIG']) ? $GLOBALS['CONFIG'] : null;
+					$debug = isset($GLOBALS['CONFIG']->debug) ? $GLOBALS['CONFIG']->debug : null;
 				}
-				if (!$config) {
+				if ($debug !== 'NOTICE') {
 					return true;
 				}
 
-				$is_notice = ($config->debug === 'NOTICE');
-				if ($is_notice) {
-					if (!$log("PHP (errno $errno): $error", 'NOTICE')) {
-						error_log("PHP NOTICE: $error");
-					}
+				if (!$log("PHP (errno $errno): $error", 'NOTICE')) {
+					error_log("PHP NOTICE: $error");
 				}
 		}
 
 		return true;
+	}
+
+	/**
+	 * Does nothing.
+	 *
+	 * @return void
+	 * @deprecated
+	 */
+	public function loadSettings() {
+		trigger_error(__METHOD__ . ' is no longer needed and will be removed.');
 	}
 }

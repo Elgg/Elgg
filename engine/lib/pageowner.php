@@ -251,6 +251,9 @@ function elgg_set_context_stack(array $stack) {
 	_elgg_services()->context->fromArray($stack);
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$hooks->registerHandler('page_owner', 'system', 'default_page_owner_handler');
 };

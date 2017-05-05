@@ -323,6 +323,9 @@ function system_log_listener($event, $object_type, $object) {
 	return true;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	/** Register event to listen to all events **/
 	$events->registerHandler('all', 'all', 'system_log_listener', 400);

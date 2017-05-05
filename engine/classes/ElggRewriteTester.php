@@ -1,13 +1,11 @@
 <?php
 
 use Elgg\Filesystem\Directory;
+use Elgg\Application;
 
 /**
  * Elgg RewriteTester.
  * Test if URL rewriting is working.
- *
- * @package    Elgg.Core
- * @subpackage Installer
  */
 class ElggRewriteTester {
 	protected $webserver;
@@ -92,7 +90,7 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function runRewriteTest($url) {
-		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === \Elgg\Application::REWRITE_TEST_OUTPUT);
+		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === Application::REWRITE_TEST_OUTPUT);
 		return $this->serverSupportsRemoteRead;
 	}
 	
@@ -176,7 +174,7 @@ class ElggRewriteTester {
 		}
 
 		// create the .htaccess file
-		$result = copy(\Elgg\Application::elggDir()->getPath("install/config/htaccess.dist"), $file->getPath());
+		$result = copy(Application::elggDir()->getPath("install/config/htaccess.dist"), $file->getPath());
 		if (!$result) {
 			$this->htaccessIssue = 'cannot_copy';
 			return false;

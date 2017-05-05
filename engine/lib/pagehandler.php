@@ -363,6 +363,9 @@ function _elgg_page_handler_init() {
 	elgg_register_page_handler('', 'elgg_front_page_handler');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_page_handler_init');
 };

@@ -6,57 +6,6 @@
 
 use Elgg\Filesystem\Directory;
 
-
-/**
- * Tells \ElggPlugin::start() to include the start.php file.
- */
-define('ELGG_PLUGIN_INCLUDE_START', 1);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's views.
- */
-define('ELGG_PLUGIN_REGISTER_VIEWS', 2);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's languages.
- */
-define('ELGG_PLUGIN_REGISTER_LANGUAGES', 4);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's classes.
- */
-define('ELGG_PLUGIN_REGISTER_CLASSES', 8);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's actions.
- */
-define('ELGG_PLUGIN_REGISTER_ACTIONS', 16);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's actions.
- */
-define('ELGG_PLUGIN_REGISTER_WIDGETS', 32);
-
-/**
- * Prefix for plugin setting names
- *
- * @todo Can't namespace these because many plugins directly call
- * private settings via $entity->$name.
- */
-//define('ELGG_PLUGIN_SETTING_PREFIX', 'plugin:setting:');
-
-/**
- * Prefix for plugin user setting names
- */
-define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
-
-/**
- * Internal settings prefix
- *
- * @todo This could be resolved by promoting \ElggPlugin to a 5th type.
- */
-define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
-
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities
@@ -79,7 +28,7 @@ function _elgg_generate_plugin_entities() {
  * @access private
  */
 function _elgg_cache_plugin_by_id(\ElggPlugin $plugin) {
-	return _elgg_services()->plugins->cache($plugin);
+	_elgg_services()->plugins->cache($plugin);
 }
 
 /**
@@ -411,6 +360,9 @@ function _elgg_plugins_init() {
 	elgg_register_action('admin/plugins/set_priority', '', 'admin');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_plugins_init');
 };

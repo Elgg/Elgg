@@ -533,7 +533,7 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
  * @return array
  */
 function _elgg_htmlawed_test($hook, $type, $value, $params) {
-	$value[] = dirname(__DIR__) . '/tests/ElggHtmLawedTest.php';
+	$value[] = \Elgg\Project\Paths::elgg() . 'engine/tests/ElggHtmLawedTest.php';
 	return $value;
 }
 
@@ -575,6 +575,9 @@ function _elgg_input_init() {
 	elgg_register_plugin_hook_handler('view_vars', 'input/password', '_elgg_disable_password_autocomplete');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_input_init');
 };
