@@ -1,7 +1,6 @@
 # ignore Elgg configuration
 /engine/settings.php
-/elgg-config/settings.php
-/elgg-config/.env.php
+/elgg-config/*
 /.htaccess
 /mod/*
 /composer.phar
