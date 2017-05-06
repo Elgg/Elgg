@@ -22,6 +22,7 @@ foreach ($vars['data'] as $name => $info) {
 			'value' => $info['value'],
 			'checked' => $info['checked'],
 			'class' => $class,
+			'disabled' => $info['disabled'],
 		]);
 		echo ' ' . elgg_echo("developers:label:$name", $echo_vars) . '</label>';
 	} else {
@@ -31,6 +32,7 @@ foreach ($vars['data'] as $name => $info) {
 			'value' => $info['value'],
 			'options_values' => $info['options_values'],
 			'class' => $class,
+			'disabled' => $info['disabled'],
 		]);
 		echo '</label>';
 	}

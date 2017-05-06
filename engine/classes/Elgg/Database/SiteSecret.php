@@ -116,23 +116,37 @@ class SiteSecret {
 	}
 
 	/**
-	 * Build a SiteSecret from config/storage, and remove the value from config memory.
+	 * Create from config/storage.
 	 *
-	 * @param ElggConfig  $config Config service
-	 * @param ConfigTable $table  Config table
+	 * @param ConfigTable $table Config table
 	 *
 	 * @return SiteSecret
+	 * @throws \InstallationException
 	 */
-	public static function load(ElggConfig $config, ConfigTable $table) {
-		// in case it's in settings
-		$key = $config->{self::CONFIG_KEY};
-		if ($key) {
-			// don't leave this sitting around in config, which is more likely
-			// to get dumped.
-			$config->{self::CONFIG_KEY} = null;
-		} else {
-			$key = $table->get(self::CONFIG_KEY);
+	public static function fromDatabase(ConfigTable $table) {
+		$key = $table->get(self::CONFIG_KEY);
+		if (!$key) {
+			throw new \InstallationException('Site secret is not in the config table.');
 		}
+
+		return new self($key);
+	}
+
+	/**
+	 * Create from a config value. If successful, the value will be erased from config.
+	 *
+	 * @param ElggConfig $config Config
+	 *
+	 * @return SiteSecret|false
+	 */
+	public static function fromConfig(ElggConfig $config) {
+		$key = $config->{self::CONFIG_KEY};
+		if (!$key) {
+			return false;
+		}
+
+		// Don't leave this sitting around in config, in case it gets dumped
+		unset($config->{self::CONFIG_KEY});
 
 		return new self($key);
 	}

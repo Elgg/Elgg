@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Http\Request;
@@ -26,6 +27,8 @@ class Application {
 
 	const REWRITE_TEST_TOKEN = '__testing_rewrite';
 	const REWRITE_TEST_OUTPUT = 'success';
+	const DEFAULT_LANG = 'en';
+	const DEFAULT_LIMIT = 10;
 
 	/**
 	 * @var ServiceProvider
@@ -71,18 +74,95 @@ class Application {
 	 * Upon construction, no actions are taken to load or boot Elgg.
 	 *
 	 * @param ServiceProvider $services Elgg services provider
+	 * @throws ConfigurationException
 	 */
 	public function __construct(ServiceProvider $services) {
-		$services->timer->begin([]);
+		$this->services = $services;
 		$services->setValue('app', $this);
 
-		$config = $services->config;
-		$config->init();
-		if (!$config->wwwroot) {
-			$config->wwwroot = $services->request->sniffElggUrl();
+		$this->initConfig();
+	}
+
+	/**
+	 * Validate, normalize, fill in missing values, and lock some
+	 *
+	 * @return void
+	 * @throws ConfigurationException
+	 */
+	private function initConfig() {
+		$config = $this->services->config;
+
+		$this->services->timer->begin([]);
+
+		// Until DB loads, let's log problems
+		if ($config->debug === null) {
+			$config->debug = 'NOTICE';
 		}
 
-		$this->services = $services;
+		if ($config->dataroot) {
+			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
+		} else {
+			throw new ConfigurationException('Config value "dataroot" is required.');
+		}
+		$config->lock('dataroot');
+
+		if ($config->cacheroot) {
+			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
+		} else {
+			$config->cacheroot = $config->dataroot;
+		}
+		$config->lock('cacheroot');
+
+		if ($config->wwwroot) {
+			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
+		} else {
+			$config->wwwroot = $this->services->request->sniffElggUrl();
+		}
+		$config->lock('wwwroot');
+
+		if (!$config->language) {
+			$config->language = self::DEFAULT_LANG;
+		}
+
+		if ($config->default_limit) {
+			$config->lock('default_limit');
+		} else {
+			$config->default_limit = self::DEFAULT_LIMIT;
+		}
+
+		$locked_props = [
+			'site_guid' => 1,
+			'path' => Paths::project(),
+			'plugins_path' => Paths::project() . "mod/",
+			'pluginspath' => Paths::project() . "mod/",
+			'url' => $config->wwwroot,
+		];
+		foreach ($locked_props as $name => $value) {
+			$config->$name = $value;
+			$config->lock($name);
+		}
+
+		// move sensitive credentials into isolated services
+		$this->services->dbConfig;
+
+		// move sensitive credentials into isolated services
+		$secret = SiteSecret::fromConfig($config);
+		if ($secret) {
+			$this->services->setValue('siteSecret', $secret);
+		}
+
+		$config->boot_complete = false;
+	}
+
+	/**
+	 * Get the DB credentials.
+	 *
+	 * We no longer leave DB credentials in the config in case it gets accidentally dumped.
+	 *
+	 * @return \Elgg\Database\Config
+	 */
+	public function getDbConfig() {
+		return $this->services->dbConfig;
 	}
 
 	/**
@@ -128,6 +208,9 @@ class Application {
 
 		// allow global services access. :(
 		_elgg_services($this->services);
+
+		// setup logger and inject into config
+		//$this->services->config->setLogger($this->services->logger);
 
 		$events = $this->services->events;
 		$hooks = $this->services->hooks;
@@ -200,15 +283,15 @@ class Application {
 				}
 
 				// find views for the custom plugin (not Elgg core)
-				$this->services->views->registerPluginViews($config->project_root);
+				$this->services->views->registerPluginViews(Paths::project());
 			}
 
 			if (!$config->i18n_loaded_from_cache) {
-				$this->services->translator->registerPluginTranslations($config->project_root);
+				$this->services->translator->registerPluginTranslations(Paths::project());
 			}
 
 			// This is root directory start.php
-			$root_start = "{$config->project_root}start.php";
+			$root_start = Paths::project() . "start.php";
 			if (is_file($root_start)) {
 				require $root_start;
 			}
@@ -225,6 +308,7 @@ class Application {
 		$events->trigger('init', 'system');
 
 		$config->boot_complete = true;
+		$config->lock('boot_complete');
 
 		// System loaded and ready
 		$events->trigger('ready', 'system');

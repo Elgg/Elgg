@@ -33,6 +33,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Context                            $context
  * @property-read \Elgg\Database                           $db
+ * @property-read \Elgg\Database\Config                    $dbConfig
  * @property-read \Elgg\DeprecationService                 $deprecation
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
@@ -134,7 +135,11 @@ class ServiceProvider extends DiContainer {
 			return $obj;
 		});
 
-		// "app" is set by \Elgg\Application::__construct
+		/**
+		 * "app" is set when the application is constructed
+		 *
+		 * @see \Elgg\Application::__construct "app"
+		 */
 
 		$this->setFactory('annotations', function(ServiceProvider $c) {
 			return new \Elgg\Database\Annotations($c->db, $c->session, $c->events);
@@ -183,17 +188,28 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('crypto', \ElggCrypto::class);
 
 		$this->setFactory('db', function(ServiceProvider $c) {
-			// gonna need dbprefix from settings
-			$db_config = \Elgg\Database\Config::fromElggConfig($c->config);
-
-			// we inject the logger in _elgg_engine_boot()
-			$db = new \Elgg\Database($db_config);
+			$db = new \Elgg\Database($c->dbConfig);
+			$db->setLogger($c->logger);
 
 			if ($c->config->profiling_sql) {
 				$db->setTimer($c->timer);
 			}
 
 			return $db;
+		});
+
+		$this->setFactory('dbConfig', function(ServiceProvider $c) {
+			$config = $c->config;
+			$db_config = \Elgg\Database\Config::fromElggConfig($config);
+
+			// get this stuff out of config!
+			unset($config->db);
+			unset($config->dbname);
+			unset($config->dbhost);
+			unset($config->dbuser);
+			unset($config->dbpass);
+
+			return $db_config;
 		});
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
@@ -264,7 +280,9 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
-			return new \Elgg\Logger($c->hooks, $c->config, $c->context);
+			$logger = new \Elgg\Logger($c->hooks, $c->context);
+			$logger->setLevel($c->config->debug);
+			return $logger;
 		});
 
 		// TODO(evan): Support configurable transports...
@@ -405,8 +423,13 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Cache\SimpleCache($c->config, $c->views);
 		});
 
+		/**
+		 * If the key is in the settings file, this is injected early.
+		 *
+		 * @see \Elgg\Application::initConfig
+		 */
 		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			return \Elgg\Database\SiteSecret::load($c->config, $c->configTable);
+			return \Elgg\Database\SiteSecret::fromDatabase($c->configTable);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);

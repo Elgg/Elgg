@@ -29,7 +29,10 @@ class TranslatorTest extends \Elgg\TestCase {
 
 	public function testCheckLanguageKeyExists() {
 		$this->assertTrue($this->translator->languageKeyExists($this->key));
+
+		_elgg_services()->logger->disable();
 		$this->assertFalse($this->translator->languageKeyExists('__elgg_php_unit:test_key:missing'));
+		_elgg_services()->logger->enable();
 	}
 
 	public function testCanTranslate() {
@@ -48,7 +51,9 @@ class TranslatorTest extends \Elgg\TestCase {
 
 	public function testFallsBackToEnglish() {
 		$this->translator->addTranslation('en', ["{$this->key}a" => 'Dummy A']);
+		_elgg_services()->logger->disable();
 		$this->assertEquals('Dummy A', $this->translator->translate("{$this->key}a", [], 'es'));
+		_elgg_services()->logger->enable();
 	}
 
 	public function testIssuesNoticeOnMissingKey() {
@@ -84,6 +89,8 @@ class TranslatorTest extends \Elgg\TestCase {
 	}
 
 	public function testDoesNotProcessArgsOnKey() {
+		_elgg_services()->logger->disable();
 		$this->assertEquals('nonexistent:%s', $this->translator->translate('nonexistent:%s', [1]));
+		_elgg_services()->logger->enable();
 	}
 }

@@ -36,10 +36,6 @@ class BootService {
 		$db = $services->db;
 		$config = $services->config;
 
-		// we inject the logger here to allow use of DB without loading core
-		$db->setLogger($services->logger);
-		$config->setLogger($services->logger);
-
 		// set cookie values for session and remember me
 		$config->getCookieConfig();
 
@@ -83,7 +79,7 @@ class BootService {
 
 		$services->pluginSettingsCache->setCachedValues($data->getPluginSettings());
 
-		if (!$config->_simplecache_enabled_in_settings) {
+		if ($config->getInitialValue('simplecache_enabled') === null) {
 			$simplecache_enabled = $configs_cache['simplecache_enabled'];
 			$config->simplecache_enabled = ($simplecache_enabled === false) ? 1 : $simplecache_enabled;
 		}
@@ -94,8 +90,13 @@ class BootService {
 		// needs to be set before [init, system] for links in html head
 		$config->lastcache = (int) $configs_cache['simplecache_lastupdate'];
 
+		if (!$config->hasInitialValue('debug')) {
+			// we were using NOTICE temporarily
+			$config->debug = isset($configs_cache['debug']) ? $configs_cache['debug'] : '';
+		}
+
+		$services->logger->setLevel($config->debug);
 		if ($config->debug) {
-			$services->logger->setLevel($config->debug);
 			$services->logger->setDisplay(true);
 		}
 

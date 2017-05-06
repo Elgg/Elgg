@@ -8,6 +8,7 @@ use Dotenv\Dotenv;
 use Elgg\Filesystem\Directory\Local;
 use ConfigurationException;
 use Elgg\Project\Paths;
+use Elgg\Services\ConfigApi;
 
 /**
  * Access to configuration values
@@ -26,12 +27,12 @@ use Elgg\Project\Paths;
  * @property string        $cacheroot    Path of cache storage with trailing "/"
  * @property string        $dataroot     Path of data storage with trailing "/"
  * @property bool          $data_dir_override
- * @property string        $dbprefix
  * @property string        $dbencoding
  * @property string        $dbname
  * @property string        $dbuser
  * @property string        $dbhost
  * @property string        $dbpass
+ * @property string        $dbprefix
  * @property string        $debug
  * @property int           $default_access
  * @property int           $default_limit
@@ -40,7 +41,6 @@ use Elgg\Project\Paths;
  * @property bool          $elgg_load_sync_code
  * @property array         $elgg_lazy_hover_menus
  * @property bool          $elgg_maintenance_mode
- * @property string        $elgg_root    Path of Elgg codebase with trailing "/"
  * @property string        $elgg_settings_file
  * @property bool          $enable_profiling
  * @property mixed         $embed_tab
@@ -60,15 +60,14 @@ use Elgg\Project\Paths;
  * @property array         $menus
  * @property int           $min_password_length
  * @property string[]      $pages
- * @property string        $path         Alias of "project_root"
- * @property string        $pluginspath
- * @property string        $plugins_path Path of project "mod/" directory
+ * @property-read string   $path         Path of composer install with trailing "/"
+ * @property-read string   $pluginspath  Alias of plugins_path
+ * @property-read string   $plugins_path Path of project "mod/" directory
  * @property array         $profile_custom_fields
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
  * @property array         $processed_upgrades
- * @property string        $project_root Path of composer install with trailing "/"
  * @property string[]      $registered_entities
  * @property bool          $security_disable_password_autocomplete
  * @property bool          $security_email_require_password
@@ -86,7 +85,7 @@ use Elgg\Project\Paths;
  * @property string        $sitename
  * @property string[]      $site_custom_menu_items
  * @property string[]      $site_featured_menu_names
- * @property int           $site_guid
+ * @property-read int      $site_guid
  * @property bool          $system_cache_enabled
  * @property bool          $system_cache_loaded
  * @property string        $url          Alias of "wwwroot"
@@ -98,10 +97,19 @@ use Elgg\Project\Paths;
  * @property string        $x_accel_mapping
  * @property bool          $_boot_cache_hit
  * @property bool          $_elgg_autofeed
- * @property bool          $_simplecache_enabled_in_settings
  */
 class Config {
 	use Loggable;
+
+	const SENSITIVE_PROPS = [
+		'__site_secret__',
+		'db',
+		'dbhost',
+		'dbuser',
+		'dbpass',
+		'dbname',
+		'profiler_secret_get_var'
+	];
 
 	/**
 	 * @var array Configuration storage
@@ -124,14 +132,9 @@ class Config {
 	private $config_table;
 
 	/**
-	 * @var string[]
+	 * @var array
 	 */
-	private $alias_properties = [
-		// do not create circular aliases!
-		'project_root' => 'path',
-		'pluginspath' => 'plugins_path',
-		'url' => 'wwwroot',
-	];
+	private $locked = [];
 
 	/**
 	 * Constructor
@@ -142,6 +145,11 @@ class Config {
 	 */
 	public function __construct(array $values = []) {
 		$this->values = $values;
+
+		// Don't keep copies of these in case config gets dumped
+		foreach (self::SENSITIVE_PROPS as $name) {
+			unset($values[$name]);
+		}
 		$this->initial_values = $values;
 	}
 
@@ -218,49 +226,9 @@ class Config {
 		}
 
 		$config->elgg_settings_file = $path;
+		$config->lock('elgg_settings_file');
 
 		return $config;
-	}
-
-	/**
-	 * Set up and validate the config values. Called when the Application is constructed.
-	 *
-	 * @return void
-	 * @throws ConfigurationException
-	 * @access private
-	 * @internal Do not use
-	 */
-	public function init() {
-		$project_root = Local::projectRoot()->getPath();
-		$defaults = [
-			'elgg_root' => Local::elggRoot()->getPath(),
-			'path' => $project_root,
-			'plugins_path' => "{$project_root}mod/",
-			'site_guid' => 1,
-			'language' => 'en',
-			'default_limit' => 10,
-			'boot_complete' => false,
-		];
-
-		$this->values = array_merge($defaults, $this->values);
-
-		if (empty($this->values['dataroot'])) {
-			throw new ConfigurationException('Config value "dataroot" is required.');
-		}
-
-		$trailing_slashes = [
-			'elgg_root' => DIRECTORY_SEPARATOR,
-			'project_root' => DIRECTORY_SEPARATOR,
-			'dataroot' => DIRECTORY_SEPARATOR,
-			'cacheroot' => DIRECTORY_SEPARATOR,
-			'plugins_path' => DIRECTORY_SEPARATOR,
-			'wwwroot' => '/',
-		];
-		foreach ($trailing_slashes as $key => $slash) {
-			if (!empty($this->values[$key])) {
-				$this->values[$key] = rtrim($this->values[$key], '\\/') . $slash;
-			}
-		}
 	}
 
 	/**
@@ -273,20 +241,6 @@ class Config {
 		foreach ($values as $name => $value) {
 			$this->__set($name, $value);
 		}
-	}
-
-	/**
-	 * Get all values
-	 *
-	 * @return array
-	 */
-	public function getValues() {
-		$values = $this->values;
-		foreach ($this->alias_properties as $alias => $real) {
-			$values[$alias] = $values[$real];
-		}
-
-		return $values;
 	}
 
 	/**
@@ -337,10 +291,6 @@ class Config {
 			return $this->values[$name];
 		}
 
-		if (isset($this->alias_properties[$name])) {
-			return $this->__get($this->alias_properties[$name]);
-		}
-
 		return null;
 	}
 
@@ -355,6 +305,38 @@ class Config {
 	}
 
 	/**
+	 * Was a value available at construction time? (From .env.php)
+	 *
+	 * @param string $name Name
+	 *
+	 * @return bool
+	 */
+	public function hasInitialValue($name) {
+		return isset($this->initial_values[$name]);
+	}
+
+	/**
+	 * Make a value read-only
+	 *
+	 * @param string $name Name
+	 * @return void
+	 */
+	public function lock($name) {
+		$this->locked[$name] = true;
+	}
+
+	/**
+	 * Is this value locked?
+	 *
+	 * @param string $name Name
+	 *
+	 * @return bool
+	 */
+	public function isLocked($name) {
+		return isset($this->locked[$name]);
+	}
+
+	/**
 	 * Set an Elgg configuration value
 	 *
 	 * @warning This does not persist the configuration setting. Use elgg_save_config()
@@ -364,9 +346,10 @@ class Config {
 	 * @return void
 	 */
 	public function __set($name, $value) {
-		if (isset($this->alias_properties[$name])) {
-			$name = $this->alias_properties[$name];
+		if ($this->wasWarnedLocked($name)) {
+			return;
 		}
+
 		$this->values[$name] = $value;
 	}
 
@@ -387,11 +370,15 @@ class Config {
 	 * @return void
 	 */
 	public function __unset($name) {
+		if ($this->wasWarnedLocked($name)) {
+			return;
+		}
+
 		unset($this->values[$name]);
 	}
 
 	/**
-	 * Save a configuration setting
+	 * Save a configuration setting to the database
 	 *
 	 * @param string $name  Name (cannot be greater than 255 characters)
 	 * @param mixed  $value Value
@@ -399,6 +386,10 @@ class Config {
 	 * @return bool
 	 */
 	public function save($name, $value) {
+		if ($this->wasWarnedLocked($name)) {
+			return false;
+		}
+
 		if (strlen($name) > 255) {
 			if ($this->logger) {
 				$this->logger->error("The name length for configuration variables cannot be greater than 255");
@@ -414,18 +405,39 @@ class Config {
 	}
 
 	/**
-	 * Removes a configuration setting
+	 * Removes a configuration setting from the database
 	 *
 	 * @param string $name Configuration name
 	 *
 	 * @return bool
 	 */
 	public function remove($name) {
+		if ($this->wasWarnedLocked($name)) {
+			return false;
+		}
+
 		$result = $this->getConfigTable()->remove($name);
 
 		unset($this->values[$name]);
 	
 		return $result;
+	}
+
+	/**
+	 * Log a read-only warning if the name is read-only
+	 *
+	 * @param string $name Name
+	 * @return bool
+	 */
+	private function wasWarnedLocked($name) {
+		if (!isset($this->locked[$name])) {
+			return false;
+		}
+
+		if ($this->logger) {
+			$this->logger->warn("The property $name is read-only.");
+		}
+		return true;
 	}
 
 	/**

@@ -134,6 +134,10 @@ class EntityTable extends DbEntityTable {
 		$entity = $this->rowToElggStar($this->rows[$guid]);
 
 		foreach ($attrs as $name => $value) {
+			if ($name === 'subtype' || $name === 'subtype_id') {
+				continue;
+			}
+
 			if (!isset($entity->$name) || $entity->$name != $value) {
 				// not an attribute, so needs to be set again
 				if ($name !== 'password_hash') {

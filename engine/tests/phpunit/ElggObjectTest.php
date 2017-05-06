@@ -74,7 +74,10 @@ class ElggObjectTest extends \Elgg\TestCase {
 		$object = get_entity($guid);
 
 		$this->assertEquals('object', $object->type);
+
+		_elgg_services()->logger->disable();
 		$this->assertEquals($subtype_id, $object->subtype);
+		_elgg_services()->logger->enable();
 
 		$this->assertEquals('Foo', $object->title);
 		$this->assertEquals('Foo', $object->getDisplayName());
