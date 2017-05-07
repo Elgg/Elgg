@@ -33,7 +33,7 @@
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
-        "htmlawed/htmlawed": "^1.1.22",
+        "htmlawed/htmlawed": "^1.2",
         "imagine/imagine": "^0.6.3"
     },
     "config": {
