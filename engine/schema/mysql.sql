@@ -110,7 +110,8 @@ INSERT INTO `prefix_entity_subtypes`
   ('object', 'file', 'ElggFile'),
   ('object', 'widget', 'ElggWidget'),
   ('object', 'comment', 'ElggComment'),
-  ('object', 'elgg_upgrade', 'ElggUpgrade');
+  ('object', 'elgg_upgrade', 'ElggUpgrade'),
+  ('object', 'admin_notice', '');
 
 -- cache lookups of latitude and longitude for place names
 CREATE TABLE `prefix_geocode_cache` (

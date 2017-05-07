@@ -1,7 +1,7 @@
 <?php
 namespace Elgg\Database;
 
-use Elgg\Config as ElggConfig;
+use Elgg\Config;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -9,7 +9,7 @@ use Elgg\Config as ElggConfig;
  * @access private
  * @since  1.9.0
  */
-class Config {
+class DbConfig {
 
 	const READ = 'read';
 	const WRITE = 'write';
@@ -46,11 +46,11 @@ class Config {
 	/**
 	 * Construct from an Elgg Config
 	 *
-	 * @param ElggConfig $config Elgg config
+	 * @param Config $config Elgg config
 	 *
-	 * @return Config
+	 * @return DbConfig
 	 */
-	public static function fromElggConfig(ElggConfig $config) {
+	public static function fromElggConfig(Config $config) {
 		$obj = new \stdClass();
 		foreach (array_keys(get_class_vars(__CLASS__)) as $prop) {
 			$obj->{$prop} = $config->{$prop};

@@ -5,7 +5,7 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
-use Elgg\Database\Config as DbConfig;
+use Elgg\Database\DbConfig as DbConfig;
 
 /**
  * The Elgg database
@@ -67,16 +67,26 @@ class Database {
 	private $delayed_queries = [];
 
 	/**
-	 * @var \Elgg\Database\Config $config Database configuration
+	 * @var \Elgg\Database\DbConfig $config Database configuration
 	 */
 	private $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param DbConfig $config Database configuration
+	 * @param DbConfig $config DB configuration
 	 */
 	public function __construct(DbConfig $config) {
+		$this->resetConnections($config);
+	}
+
+	/**
+	 * Reset the connections with new credentials
+	 *
+	 * @param DbConfig $config DB config
+	 */
+	public function resetConnections(DbConfig $config) {
+		$this->connections = [];
 		$this->config = $config;
 		$this->table_prefix = $config->getTablePrefix();
 		$this->enableQueryCache();

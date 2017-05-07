@@ -5,10 +5,8 @@ use Elgg\Config\EnvReader;
 use Elgg\Filesystem\Directory;
 use Elgg\Database\ConfigTable;
 use Dotenv\Dotenv;
-use Elgg\Filesystem\Directory\Local;
 use ConfigurationException;
 use Elgg\Project\Paths;
-use Elgg\Services\ConfigApi;
 
 /**
  * Access to configuration values
@@ -25,8 +23,10 @@ use Elgg\Services\ConfigApi;
  * @property int           $boot_cache_ttl
  * @property array         $breadcrumbs
  * @property string        $cacheroot    Path of cache storage with trailing "/"
+ * @property bool          $Config_locks The application will lock some settings (default true)
  * @property string        $dataroot     Path of data storage with trailing "/"
  * @property bool          $data_dir_override
+ * @property array         $db
  * @property string        $dbencoding
  * @property string        $dbname
  * @property string        $dbuser
@@ -241,6 +241,15 @@ class Config {
 		foreach ($values as $name => $value) {
 			$this->__set($name, $value);
 		}
+	}
+
+	/**
+	 * Get all values
+	 *
+	 * @return array
+	 */
+	public function getValues() {
+		return $this->values;
 	}
 
 	/**

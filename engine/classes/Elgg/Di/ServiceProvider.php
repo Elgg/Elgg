@@ -33,7 +33,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Context                            $context
  * @property-read \Elgg\Database                           $db
- * @property-read \Elgg\Database\Config                    $dbConfig
+ * @property-read \Elgg\Database\DbConfig                  $dbConfig
  * @property-read \Elgg\DeprecationService                 $deprecation
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
@@ -200,7 +200,7 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('dbConfig', function(ServiceProvider $c) {
 			$config = $c->config;
-			$db_config = \Elgg\Database\Config::fromElggConfig($config);
+			$db_config = \Elgg\Database\DbConfig::fromElggConfig($config);
 
 			// get this stuff out of config!
 			unset($config->db);
@@ -397,24 +397,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {
-			$params = $c->config->getCookieConfig()['session'];
-			$options = [
-				// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
-				// constructor, so we must capture and inject it directly.
-				'cache_limiter' => session_cache_limiter(),
-
-				'name' => $params['name'],
-				'cookie_path' => $params['path'],
-				'cookie_domain' => $params['domain'],
-				'cookie_secure' => $params['secure'],
-				'cookie_httponly' => $params['httponly'],
-				'cookie_lifetime' => $params['lifetime'],
-			];
-
-			$handler = new \Elgg\Http\DatabaseSessionHandler($c->db);
-			$storage = new NativeSessionStorage($options, $handler);
-			$session = new SymfonySession($storage);
-			return new \ElggSession($session);
+			return \ElggSession::fromDatabase($c->config, $c->db);
 		});
 
 		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);

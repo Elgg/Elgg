@@ -79,20 +79,25 @@ class BootService {
 
 		$services->pluginSettingsCache->setCachedValues($data->getPluginSettings());
 
+		$configs_cache = array_merge([
+			'simplecache_enabled' => 0,
+			'system_cache_enabled' => false,
+			'simplecache_lastupdate' => 0,
+			'debug' => '',
+		], $configs_cache);
+
 		if ($config->getInitialValue('simplecache_enabled') === null) {
-			$simplecache_enabled = $configs_cache['simplecache_enabled'];
-			$config->simplecache_enabled = ($simplecache_enabled === false) ? 1 : $simplecache_enabled;
+			$config->simplecache_enabled = $configs_cache['simplecache_enabled'];
 		}
 
-		$system_cache_enabled = $configs_cache['system_cache_enabled'];
-		$config->system_cache_enabled = ($system_cache_enabled === false) ? 1 : $system_cache_enabled;
+		$config->system_cache_enabled = $configs_cache['system_cache_enabled'];
 
 		// needs to be set before [init, system] for links in html head
 		$config->lastcache = (int) $configs_cache['simplecache_lastupdate'];
 
 		if (!$config->hasInitialValue('debug')) {
 			// we were using NOTICE temporarily
-			$config->debug = isset($configs_cache['debug']) ? $configs_cache['debug'] : '';
+			$config->debug = $configs_cache['debug'];
 		}
 
 		$services->logger->setLevel($config->debug);

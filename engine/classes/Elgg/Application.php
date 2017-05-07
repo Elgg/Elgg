@@ -25,8 +25,6 @@ use Elgg\Project\Paths;
  */
 class Application {
 
-	const REWRITE_TEST_TOKEN = '__testing_rewrite';
-	const REWRITE_TEST_OUTPUT = 'success';
 	const DEFAULT_LANG = 'en';
 	const DEFAULT_LIMIT = 10;
 
@@ -92,6 +90,20 @@ class Application {
 	private function initConfig() {
 		$config = $this->services->config;
 
+		if ($config->Config_locks === null) {
+			$config->Config_locks = true;
+		}
+
+		if ($config->Config_locks) {
+			$lock = function ($name) use ($config) {
+				$config->lock($name);
+			};
+		} else {
+			// the installer needs to build an application with defaults then update
+			// them after they're validated, so we don't want to lock them.
+			$lock = function () {};
+		}
+
 		$this->services->timer->begin([]);
 
 		// Until DB loads, let's log problems
@@ -102,30 +114,32 @@ class Application {
 		if ($config->dataroot) {
 			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
 		} else {
-			throw new ConfigurationException('Config value "dataroot" is required.');
+			if (!$config->installer_running) {
+				throw new ConfigurationException('Config value "dataroot" is required.');
+			}
 		}
-		$config->lock('dataroot');
+		$lock('dataroot');
 
 		if ($config->cacheroot) {
 			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
 		} else {
 			$config->cacheroot = $config->dataroot;
 		}
-		$config->lock('cacheroot');
+		$lock('cacheroot');
 
 		if ($config->wwwroot) {
 			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
 		} else {
 			$config->wwwroot = $this->services->request->sniffElggUrl();
 		}
-		$config->lock('wwwroot');
+		$lock('wwwroot');
 
 		if (!$config->language) {
 			$config->language = self::DEFAULT_LANG;
 		}
 
 		if ($config->default_limit) {
-			$config->lock('default_limit');
+			$lock('default_limit');
 		} else {
 			$config->default_limit = self::DEFAULT_LIMIT;
 		}
@@ -139,7 +153,7 @@ class Application {
 		];
 		foreach ($locked_props as $name => $value) {
 			$config->$name = $value;
-			$config->lock($name);
+			$lock($name);
 		}
 
 		// move sensitive credentials into isolated services
@@ -159,7 +173,7 @@ class Application {
 	 *
 	 * We no longer leave DB credentials in the config in case it gets accidentally dumped.
 	 *
-	 * @return \Elgg\Database\Config
+	 * @return \Elgg\Database\DbConfig
 	 */
 	public function getDbConfig() {
 		return $this->services->dbConfig;
@@ -416,6 +430,13 @@ class Application {
 	 * @return bool True if Elgg will handle the request, false if the server should (PHP-CLI server)
 	 */
 	public static function index() {
+		$req = Request::createFromGlobals();
+		/** @var Request $req */
+		if ($req->isRewriteCheck()) {
+			echo Request::REWRITE_TEST_OUTPUT;
+			return true;
+		}
+
 		return self::factory()->run();
 	}
 
@@ -427,11 +448,6 @@ class Application {
 	public function run() {
 		$config = $this->services->config;
 		$request = $this->services->request;
-
-		if ($this->isRewriteCheck($request)) {
-			echo self::REWRITE_TEST_OUTPUT;
-			return true;
-		}
 
 		$path = $request->getPathInfo();
 
@@ -497,8 +513,7 @@ class Application {
 	public static function install() {
 		ini_set('display_errors', 1);
 		$installer = new \ElggInstaller();
-		$step = get_input('step', 'welcome');
-		$installer->run($step);
+		$installer->run();
 	}
 
 	/**
@@ -612,25 +627,6 @@ class Application {
 
 		$this->services->setValue('request', $new);
 		$this->services->context->initialize($new);
-	}
-
-	/**
-	 * Is the request for checking URL rewriting?
-	 *
-	 * @param Request $request Elgg request
-	 *
-	 * @return bool
-	 */
-	private function isRewriteCheck(Request $request) {
-		if ($request->getPathInfo() !== ('/' . self::REWRITE_TEST_TOKEN)) {
-			return false;
-		}
-
-		if (!$request->get(self::REWRITE_TEST_TOKEN)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	/**

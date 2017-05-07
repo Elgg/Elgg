@@ -11,6 +11,9 @@ use Elgg\Application;
  */
 class Request extends SymfonyRequest {
 
+	const REWRITE_TEST_TOKEN = '__testing_rewrite';
+	const REWRITE_TEST_OUTPUT = 'success';
+
 	/**
 	 * Get the Elgg URL segments
 	 *
@@ -103,5 +106,22 @@ class Request extends SymfonyRequest {
 		}
 
 		return rtrim($this->getSchemeAndHttpHost() . $base_url, '/') . '/';
+	}
+
+	/**
+	 * Is the request for checking URL rewriting?
+	 *
+	 * @return bool
+	 */
+	public function isRewriteCheck() {
+		if ($this->getPathInfo() !== ('/' . self::REWRITE_TEST_TOKEN)) {
+			return false;
+		}
+
+		if (!$this->get(self::REWRITE_TEST_TOKEN)) {
+			return false;
+		}
+
+		return true;
 	}
 }

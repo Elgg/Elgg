@@ -92,7 +92,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 	/**
 	 * Setup testing database config
 	 *
-	 * @return \Elgg\Database\Config
+	 * @return \Elgg\Database\DbConfig
 	 */
 	public function getTestingDatabaseConfig() {
 		$conf = new \stdClass();
@@ -108,7 +108,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 
 		$conf->dbprefix = _elgg_config()->dbprefix;
 
-		return new \Elgg\Database\Config($conf);
+		return new \Elgg\Database\DbConfig($conf);
 	}
 
 	/**
