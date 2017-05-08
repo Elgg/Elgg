@@ -73,6 +73,12 @@ class ElggMetadata extends \ElggExtender {
 	 */
 	public function save() {
 		if ($this->id > 0) {
+		     //if version of mysql is less than 5.7.5 if wouldn't have strict_trans_table function 
+		     if(strcmp(mysql_get_server_info(),"5.7.5")<=0){
+			     throw new \IOException("Unable to save new " . get_class());
+			     //error message so that string size can be checked
+		        }
+			
 			return update_metadata($this->id, $this->name, $this->value,
 				$this->value_type, $this->owner_guid);
 		} else {
