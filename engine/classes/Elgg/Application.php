@@ -376,6 +376,7 @@ class Application {
 			'handle_shutdown' => true,
 			'overwrite_global_config' => true,
 			'set_start_time' => true,
+			'request' => null,
 		];
 		$spec = array_merge($defaults, $spec);
 
@@ -396,6 +397,15 @@ class Application {
 			}
 			$spec['service_provider'] = new ServiceProvider($spec['config']);
 		}
+
+		if ($spec['request']) {
+			if ($spec['request'] instanceof Request) {
+				$spec['service_provider']->setValue('request', $spec['request']);
+			} else {
+				throw new \InvalidArgumentException("Given request is not a " . Request::class);
+			}
+		}
+
 		self::$_instance = new self($spec['service_provider']);
 
 		if ($spec['handle_exceptions']) {
@@ -432,12 +442,13 @@ class Application {
 	public static function index() {
 		$req = Request::createFromGlobals();
 		/** @var Request $req */
+
 		if ($req->isRewriteCheck()) {
 			echo Request::REWRITE_TEST_OUTPUT;
 			return true;
 		}
 
-		return self::factory()->run();
+		return self::factory(['request' => $req])->run();
 	}
 
 	/**
