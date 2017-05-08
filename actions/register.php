@@ -26,7 +26,11 @@ if (elgg_get_config('allow_registration')) {
 		if (strcmp($password, $password2) != 0) {
 			throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
 		}
-
+		//this statement checks if email entered has a correct format 
+		if (strpos($email, '@') == false) {
+   			throw new RegistrationException(elgg_echo('RegistrationException:EnterCorrectEmail'));
+				}
+		
 		$guid = register_user($username, $password, $name, $email);
 
 		if ($guid) {
