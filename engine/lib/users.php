@@ -793,7 +793,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
 
 	// If JS fails here, allow easy access to place where they can upgrade/flush caches
-	$href = elgg_is_admin_logged_in() ? elgg_get_login_url() : '#';
+	$href = elgg_is_admin_logged_in() ? 'admin' : '#';
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'account',
