@@ -231,6 +231,20 @@ class Config implements Services\Config {
 	}
 
 	/**
+	 * Get expected settings file paths
+	 *
+	 * @return string[]
+	 * @array private
+	 */
+	public function getSettingsPaths() {
+		$root = Directory\Local::root();
+		return [
+			$root->getPath('engine/settings.php'),
+			$root->getPath('elgg-config/settings.php'),
+		];
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function loadSettingsFile() {
@@ -245,9 +259,10 @@ class Config implements Services\Config {
 			}
 			$path = $this->config->Config_file;
 		} else {
-			$path = Directory\Local::root()->getPath('engine/settings.php');
-			if (!is_file($path)) {
-				$path = Directory\Local::root()->getPath('elgg-config/settings.php');
+			foreach ($this->getSettingsPaths() as $path) {
+				if (is_file($path)) {
+					break;
+				}
 			}
 		}
 

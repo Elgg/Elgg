@@ -632,7 +632,15 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function setInstallStatus() {
-		if (!is_readable($this->getSettingsPath())) {
+		$settings_found = false;
+		foreach (_elgg_services()->config->getSettingsPaths() as $path) {
+			if (is_file($path) && is_readable($path)) {
+				$settings_found = true;
+				break;
+			}
+		}
+
+		if (!$settings_found) {
 			return;
 		}
 
@@ -914,8 +922,11 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function loadSettingsFile() {
-		if (!include_once($this->getSettingsPath())) {
-			throw new InstallationException(_elgg_services()->translator->translate('InstallationException:CannotLoadSettings'));
+		try {
+			_elgg_services()->config->loadSettingsFile();
+		} catch (\Exception $e) {
+			$msg = _elgg_services()->translator->translate('InstallationException:CannotLoadSettings');
+			throw new InstallationException($msg, 0, $e);
 		}
 	}
 
@@ -999,9 +1010,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function checkSettingsFile(&$report = array()) {
-		
-
-		if (!file_exists($this->getSettingsPath())) {
+		if (!is_file($this->getSettingsPath())) {
 			return FALSE;
 		}
 
@@ -1306,8 +1315,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function connectToDatabase() {
-		
-
 		if (!include_once($this->getSettingsPath())) {
 			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
 			return FALSE;
