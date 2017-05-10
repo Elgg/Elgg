@@ -49,6 +49,7 @@
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
 use Elgg\Includer;
+use Elgg\Project\Paths;
 
 /**
  * Manually set the viewtype.
@@ -1756,7 +1757,7 @@ function _elgg_view_may_be_altered($view, $path) {
 		$expected_path = $path;
 	} else {
 		// relative path
-		$expected_path = \Elgg\Project\Paths::elgg() . "views/$viewtype/" . ltrim($path, '/\\');
+		$expected_path = Paths::elgg() . "views/$viewtype/" . ltrim($path, '/\\');
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);

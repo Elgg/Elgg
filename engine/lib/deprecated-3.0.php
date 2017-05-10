@@ -3,9 +3,6 @@
 /**
  * Removes a config setting.
  *
- * @note Internal: These settings are stored in the dbprefix_config table and read
- * during system boot into $CONFIG.
- *
  * @param string $name The name of the field.
  *
  * @return bool Success or failure
@@ -27,11 +24,6 @@ function unset_config($name) {
  *
  * If the config name already exists, it will be updated to the new value.
  *
- * @internal These settings are stored in the dbprefix_config table and read
- * during system boot into $CONFIG.
- *
- * @internal The value is serialized so we maintain type information.
- *
  * @param string $name      The name of the configuration value
  * @param mixed  $value     Its value
  *
@@ -51,9 +43,6 @@ function set_config($name, $value) {
  * Gets a configuration value
  *
  * Plugin authors should use elgg_get_config().
- *
- * @internal These settings are stored in the dbprefix_config table and read
- * during system boot into $CONFIG.
  *
  * @param string $name      The name of the config value
  *

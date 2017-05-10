@@ -7,6 +7,8 @@
  * @subpackage DataModel.User
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Disables all of a user's entities
  *
@@ -183,15 +185,15 @@ function generate_random_cleartext_password() {
  * @throws RegistrationException on invalid
  */
 function validate_username($username) {
-	global $CONFIG;
+	$config = _elgg_config();
 
 	// Basic, check length
-	if (!isset($CONFIG->minusername)) {
-		$CONFIG->minusername = 4;
+	if (!isset($config->minusername)) {
+		$config->minusername = 4;
 	}
 
-	if (strlen($username) < $CONFIG->minusername) {
-		$msg = elgg_echo('registration:usernametooshort', [$CONFIG->minusername]);
+	if (strlen($username) < $config->minusername) {
+		$msg = elgg_echo('registration:usernametooshort', [$config->minusername]);
 		throw new \RegistrationException($msg);
 	}
 
@@ -245,14 +247,14 @@ function validate_username($username) {
  * @throws RegistrationException on invalid
  */
 function validate_password($password) {
-	global $CONFIG;
+	$config = _elgg_config();
 
-	if (!isset($CONFIG->min_password_length)) {
-		$CONFIG->min_password_length = 6;
+	if (!isset($config->min_password_length)) {
+		$config->min_password_length = 6;
 	}
 
-	if (strlen($password) < $CONFIG->min_password_length) {
-		$msg = elgg_echo('registration:passwordtooshort', [$CONFIG->min_password_length]);
+	if (strlen($password) < $config->min_password_length) {
+		$msg = elgg_echo('registration:passwordtooshort', [$config->min_password_length]);
 		throw new \RegistrationException($msg);
 	}
 
@@ -644,8 +646,6 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
  * @access private
  */
 function elgg_profile_fields_setup() {
-	global $CONFIG;
-
 	$profile_defaults =  [
 		'description' => 'longtext',
 		'briefdescription' => 'text',
@@ -673,14 +673,14 @@ function elgg_profile_fields_setup() {
 	}
 
 	if (count($loaded_defaults)) {
-		$CONFIG->profile_using_custom = true;
+		_elgg_config()->profile_using_custom = true;
 		$profile_defaults = $loaded_defaults;
 	}
 
-	$CONFIG->profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', null, $profile_defaults);
+	_elgg_config()->profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', null, $profile_defaults);
 
 	// register any tag metadata names
-	foreach ($CONFIG->profile_fields as $name => $type) {
+	foreach (_elgg_config()->profile_fields as $name => $type) {
 		if ($type == 'tags' || $type == 'location' || $type == 'tag') {
 			elgg_register_tag_metadata_name($name);
 			// register a tag name translation
@@ -1043,8 +1043,7 @@ function users_init() {
  * @access private
  */
 function users_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggUserTest.php";
+	$value[] = Paths::elgg() . "engine/tests/ElggUserTest.php";
 	return $value;
 }
 

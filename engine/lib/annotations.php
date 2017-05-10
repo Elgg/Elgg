@@ -7,6 +7,8 @@
  * @subpackage Core
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Convert a database row to a new \ElggAnnotation
  *
@@ -333,8 +335,7 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
  * @access private
  */
 function _elgg_annotations_test($hook, $type, $tests) {
-	global $CONFIG;
-	$tests[] = $CONFIG->path . 'engine/tests/ElggCoreAnnotationAPITest.php';
+	$tests[] = Paths::project() . 'engine/tests/ElggCoreAnnotationAPITest.php';
 	return $tests;
 }
 

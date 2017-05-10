@@ -20,7 +20,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 *
 	 * @param string      $namespace The namespace for this cache to write to
 	 * @param \Stash\Pool $pool      The cache pool to use. Default is memcache.
-	 * @param int         $ttl       The TTL in seconds. Default is from $CONFIG->memcache_expires.
+	 * @param int         $ttl       The TTL in seconds. Default is from ELGG_MEMCACHE_EXPIRES.
 	 *
 	 * @throws ConfigurationException
 	 *

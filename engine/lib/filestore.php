@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Elgg\Project\Paths;
 
 /**
  * Get the size of the specified directory.
@@ -419,8 +420,7 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
  * @access private
  */
 function _elgg_filestore_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCoreFilestoreTest.php";
+	$value[] = Paths::elgg() . "engine/tests/ElggCoreFilestoreTest.php";
 	return $value;
 }
 

@@ -3,7 +3,7 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
-use Elgg\Database\EntityTable\UserFetchFailureException;
+use Elgg\Project\Paths;
 
 /**
  * Return the id for a given subtype.
@@ -597,8 +597,6 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function elgg_unregister_entity_type($type, $subtype = null) {
-	global $CONFIG;
-
 	$type = strtolower($type);
 	if (!in_array($type, \Elgg\Config::getEntityTypes())) {
 		return false;
@@ -846,18 +844,17 @@ function update_entity_last_action($guid, $posted = null) {
  * @access private
  */
 function _elgg_entities_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAttributeLoaderTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggSiteTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggObjectTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggEntityTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAttributeLoaderTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggSiteTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggObjectTest.php';
 	return $value;
 }
 

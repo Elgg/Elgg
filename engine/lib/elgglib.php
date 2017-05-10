@@ -2,6 +2,7 @@
 
 use Elgg\Filesystem\Directory;
 use Elgg\Http\ResponseBuilder;
+use Elgg\Project\Paths;
 
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
@@ -524,11 +525,6 @@ function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * Internal note: Events are stored in $CONFIG->events as:
- * <code>
- * $CONFIG->events[$event][$type][$priority] = $callback;
- * </code>
- *
  * @param string $event       The event type
  * @param string $object_type The object type
  * @param string $callback    The handler callback
@@ -690,11 +686,6 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
  *  - mixed $params An optional array of parameters.  Used to provide additional
  *  information to plugins.
  *
- * @note Internal: Plugin hooks are stored in $CONFIG->hooks as:
- * <code>
- * $CONFIG->hooks[$hook][$type][$priority] = $callback;
- * </code>
- *
  * @tip Plugin hooks are similar to Elgg Events in that Elgg emits
  * a plugin hook when certain actions occur, but a plugin hook allows you to alter the
  * parameters, as well as halt execution.
@@ -850,9 +841,9 @@ function elgg_get_ordered_event_handlers($event, $type) {
 /**
  * Display or log a message.
  *
- * If $level is >= to the debug setting in {@link $CONFIG->debug}, the
+ * If $level is >= to the debug setting in {@link ELGG_DEBUG}, the
  * message will be sent to {@link elgg_dump()}.  Messages with lower
- * priority than {@link $CONFIG->debug} are ignored.
+ * priority than {@link ELGG_DEBUG} are ignored.
  *
  * Outputs all levels but NOTICE to screen by default.
  *
@@ -1791,11 +1782,10 @@ function _elgg_init() {
  * @access private
  */
 function _elgg_api_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggTravisInstallTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreHelpersTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRegressionBugsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggBatchTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggTravisInstallTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreHelpersTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreRegressionBugsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggBatchTest.php';
 	return $value;
 }
 

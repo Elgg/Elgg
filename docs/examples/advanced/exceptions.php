@@ -6,7 +6,6 @@
  * This is defined in ELGG_EXCEPTION_INCLUDE in .env.php
  * 
  * The script will have access to the following variables as part of the scope
- * global $CONFIG
  * $exception - the unhandled exception
  * 
  * @warning - the database may not be available

@@ -1,11 +1,10 @@
 <?php
 /**
- * Stub info for $CONFIG global options.
+ * Legacy documentation for the old $CONFIG object. In Elgg 3.0 this is a reference to
+ * the Config service.
  *
- * @tip Plugins should never use the $CONFIG array directly.
- *
- * @package    Elgg.Core
- * @subpackage Configuration
+ * @warning DO NOT USE $CONFIG except in a legacy settings.php file. Note that it will be unset
+ *          by the boot process after reading.
  */
 
 /**

@@ -8,6 +8,8 @@
  * @subpackage DataModel.Group
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Get the group entity.
  *
@@ -17,11 +19,10 @@
  * @access private
  */
 function get_group_entity_as_row($guid) {
-	global $CONFIG;
-
 	$guid = (int) $guid;
 
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}groups_entity where guid=$guid");
+	$prefix = _elgg_config()->dbprefix;
+	return get_data_row("SELECT * from {$prefix}groups_entity where guid=$guid");
 }
 
 /**
@@ -60,8 +61,6 @@ function add_group_tool_option($name, $label, $default_on = true) {
  * @since 1.7.5
  */
 function remove_group_tool_option($name) {
-	global $CONFIG;
-
 	$options = _elgg_config()->group_tool_options;
 	if (!is_array($options)) {
 		return;
@@ -110,8 +109,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
  * @access private
  */
 function _elgg_groups_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggGroupTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggGroupTest.php';
 	return $value;
 }
 

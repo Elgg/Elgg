@@ -242,10 +242,9 @@ function _elgg_widgets_init() {
  * @access private
  */
 function _elgg_default_widgets_init() {
-	global $CONFIG;
 	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
 
-	$CONFIG->default_widget_info = $default_widgets;
+	_elgg_config()->default_widget_info = $default_widgets;
 
 	if ($default_widgets) {
 		elgg_register_admin_menu_item('configure', 'default_widgets', 'appearance');

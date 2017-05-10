@@ -2,6 +2,7 @@
 
 use Elgg\Mail\Address;
 use Zend\Mail\Message;
+use Elgg\Project\Paths;
 
 /**
  * Adding a New Notification Event
@@ -702,8 +703,7 @@ function _elgg_save_notification_user_settings() {
  * @access private
  */
 function _elgg_notifications_test($hook, $type, $tests) {
-	global $CONFIG;
-	$tests[] = "{$CONFIG->path}engine/tests/ElggCoreDatabaseQueueTest.php";
+	$tests[] = Paths::elgg() . "engine/tests/ElggCoreDatabaseQueueTest.php";
 	return $tests;
 }
 

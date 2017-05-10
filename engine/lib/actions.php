@@ -78,14 +78,6 @@ function action($action, $forwarder = "") {
  *
  * @tip You don't need to use Elgg\Application in your action files.
  *
- * @note Internal: Actions are saved in $CONFIG->actions as an array in the form:
- * <code>
- * array(
- * 	'file' => '/location/to/file.php',
- * 	'access' => 'public', 'logged_in', or 'admin'
- * )
- * </code>
- *
  * @param string $action   The name of the action (eg "register", "account/settings/save")
  * @param string $filename Optionally, the filename where this action is located. If not specified,
  *                         will assume the action is in elgg/actions/<action>.php

@@ -5,6 +5,7 @@
  */
 
 use Elgg\Filesystem\Directory;
+use Elgg\Project\Paths;
 
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
@@ -322,8 +323,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
  * @access private
  */
 function _elgg_plugins_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCorePluginsAPITest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCorePluginsAPITest.php';
 	return $value;
 }
 

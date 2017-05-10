@@ -33,15 +33,15 @@
  * @since 1.8.0
  */
 function elgg_get_admins(array $options = []) {
-	global $CONFIG;
+	$config = _elgg_config();
 
 	if (isset($options['joins'])) {
 		if (!is_array($options['joins'])) {
 			$options['joins'] = [$options['joins']];
 		}
-		$options['joins'][] = "join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid";
+		$options['joins'][] = "join {$config->dbprefix}users_entity u on e.guid=u.guid";
 	} else {
-		$options['joins'] = ["join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid"];
+		$options['joins'] = ["join {$config->dbprefix}users_entity u on e.guid=u.guid"];
 	}
 
 	if (isset($options['wheres'])) {

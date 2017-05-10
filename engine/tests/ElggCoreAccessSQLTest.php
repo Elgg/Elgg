@@ -234,7 +234,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	}
 
 	protected function getFriendsClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$table_alias = $table_alias ? $table_alias . '.' : '';
 	
 		return "{$table_alias}access_id = " . ACCESS_FRIENDS . "

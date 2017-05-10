@@ -7,6 +7,8 @@
  * @since 1.9
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Comments initialization function
  *
@@ -441,8 +443,7 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
  * @access private
  */
 function _elgg_comments_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCommentTest.php";
+	$value[] = Paths::elgg() . "engine/tests/ElggCommentTest.php";
 	return $value;
 }
 

@@ -6,6 +6,8 @@
  * @subpackage DataModel.Relationship
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Get a relationship by its ID
  *
@@ -262,8 +264,7 @@ function elgg_list_entities_from_relationship_count($options) {
  * @access private
  */
 function _elgg_relationships_test($hook, $type, $tests) {
-	global $CONFIG;
-	$tests[] = $CONFIG->path . 'engine/tests/ElggRelationshipTest.php';
+	$tests[] = Paths::elgg() . 'engine/tests/ElggRelationshipTest.php';
 	return $tests;
 }
 

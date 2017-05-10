@@ -7,6 +7,8 @@
  * @subpackage DataModel.Metadata
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Convert a database row to a new \ElggMetadata
  *
@@ -379,9 +381,8 @@ function _elgg_invalidate_metadata_cache($action, array $options) {
  * @access private
  */
 function _elgg_metadata_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataAPITest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataCacheTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetadataAPITest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetadataCacheTest.php';
 	return $value;
 }
 

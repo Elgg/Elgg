@@ -125,7 +125,7 @@ function delete_data($query, array $params = []) {
  * and a newline character (\n or \r\n) with only one statement per line.
  *
  * The special string 'prefix_' is replaced with the database prefix
- * as defined in {@link $CONFIG->dbprefix}.
+ * as defined in {@link ELGG_DBPREFIX}.
  *
  * @warning Errors do not halt execution of the script.  If a line
  * generates an error, the error message is saved and the

@@ -7,6 +7,8 @@
  * @subpackage River
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Adds an item to the river.
  *
@@ -195,8 +197,6 @@ function elgg_create_river_item(array $options = []) {
  * @since 1.8.0
  */
 function elgg_get_river(array $options = []) {
-	global $CONFIG;
-
 	$defaults = [
 		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
 
@@ -313,16 +313,17 @@ function elgg_get_river(array $options = []) {
 
 	// remove identical where clauses
 	$wheres = array_unique($wheres);
+	$prefix = _elgg_config()->dbprefix;
 
 	if (!$options['count']) {
 		$distinct = $options['distinct'] ? "DISTINCT" : "";
 
-		$query = "SELECT $distinct rv.* FROM {$CONFIG->dbprefix}river rv ";
+		$query = "SELECT $distinct rv.* FROM {$prefix}river rv ";
 	} else {
 		// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than IDs
 		$count_expr = $options['distinct'] ? "DISTINCT rv.id" : "*";
 
-		$query = "SELECT COUNT($count_expr) as total FROM {$CONFIG->dbprefix}river rv ";
+		$query = "SELECT COUNT($count_expr) as total FROM {$prefix}river rv ";
 	}
 
 	// add joins
@@ -660,8 +661,7 @@ function update_river_access_by_object($object_guid, $access_id) {
  * @access private
  */
 function _elgg_river_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRiverAPITest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreRiverAPITest.php';
 	return $value;
 }
 

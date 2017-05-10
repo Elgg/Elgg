@@ -10,8 +10,6 @@
  * Elgg's configuration is split among 1 table and 1 file:
  * - dbprefix_config
  * - engine/.env.php (See {@link .env.php.example})
- *
- * Upon system boot, all values in dbprefix_config are read into $CONFIG.
  */
 
 use Elgg\Filesystem\Directory;

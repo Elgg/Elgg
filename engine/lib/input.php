@@ -7,6 +7,8 @@
  * @subpackage Input
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Get some input from variables passed submitted through GET or POST.
  *
@@ -533,7 +535,7 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
  * @return array
  */
 function _elgg_htmlawed_test($hook, $type, $value, $params) {
-	$value[] = \Elgg\Project\Paths::elgg() . 'engine/tests/ElggHtmLawedTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggHtmLawedTest.php';
 	return $value;
 }
 

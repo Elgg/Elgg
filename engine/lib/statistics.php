@@ -55,16 +55,15 @@ function get_entity_statistics($owner_guid = 0) {
  * @return int
  */
 function get_number_users($show_deactivated = false) {
-	global $CONFIG;
-
 	$access = "";
 
 	if (!$show_deactivated) {
 		$access = "and " . _elgg_get_access_where_sql(['table_alias' => '']);
 	}
 
+	$prefix = _elgg_config()->dbprefix;
 	$query = "SELECT count(*) as count
-		from {$CONFIG->dbprefix}entities where type='user' $access";
+		from {$prefix}entities where type='user' $access";
 
 	$result = get_data_row($query);
 
