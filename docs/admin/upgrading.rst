@@ -21,6 +21,8 @@ Advice
 Basic instructions
 ==================
 
+#. Log in as an admin to your site
+#. Disable caching in Advanced Settings
 #. **Back up your database, data directory, and code**
 #. Download the new version of Elgg from http://elgg.org
 #. Update the files
