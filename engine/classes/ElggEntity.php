@@ -45,11 +45,6 @@ abstract class ElggEntity extends \ElggData implements
 {
 	
 	/**
-	 * If set, overrides the value of getURL()
-	 */
-	protected $url_override;
-
-	/**
 	 * Holds metadata until entity is saved.  Once the entity is saved,
 	 * metadata are written immediately to the database.
 	 */
@@ -1401,7 +1396,7 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	protected function update() {
 		
-		_elgg_services()->boot->invalidateCache($this->guid);
+		_elgg_services()->boot->invalidateCache();
 
 		if (!$this->canEdit()) {
 			return false;
