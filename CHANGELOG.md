@@ -1,3 +1,26 @@
+<a name="1.12.16"></a>
+### 1.12.16  (2017-05-10)
+
+#### Contributors
+
+* Steve Clay (3)
+* iionly (2)
+* Jerôme Bakker (1)
+
+#### Documentation
+
+* **admin:** start upgrade by logging in/clearing caches ([cf78468a](https://github.com/Elgg/Elgg/commit/cf78468a95c1f6c202872905be5ece61fe3dd7e1), closes [#10898](https://github.com/Elgg/Elgg/issues/10898))
+
+
+#### Bug Fixes
+
+* **groups:** remove membership request when user is already member ([4f158e1d](https://github.com/Elgg/Elgg/commit/4f158e1d7f1036b725d04048632bd8b615dc9f4d))
+* **htaccess:** removing of obsolete entry in htaccess.dist incompatible with Apache 2.4 ([f2e8efab](https://github.com/Elgg/Elgg/commit/f2e8efab96778f60cfe264114215cb860550f5b8))
+* **search:**
+  * no longer fatals if comment container hidden ([16a753a9](https://github.com/Elgg/Elgg/commit/16a753a90e50138ebdaa256749d6a571fb3c46d7), closes [#10902](https://github.com/Elgg/Elgg/issues/10902))
+  * allows get_sql, access hook to be used correctly ([98835bc4](https://github.com/Elgg/Elgg/commit/98835bc43bc9503be2cb41f2610a5648f079ae0e), closes [#10884](https://github.com/Elgg/Elgg/issues/10884))
+
+
 <a name="1.12.15"></a>
 ### 1.12.15  (2017-01-25)
 

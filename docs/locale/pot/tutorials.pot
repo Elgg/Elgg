@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 22:01+0300\n"
+"POT-Creation-Date: 2017-05-10 10:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,11 +26,6 @@ msgstr ""
 
 #: ../../tutorials/blog.rst:6
 msgid "This duplicates features in the bundled blog plugin, so be sure to disable that while working on your own version."
-msgstr ""
-
-#: ../../tutorials/blog.rst:0
-#: ../../tutorials/widget.rst:0
-msgid "Contents"
 msgstr ""
 
 #: ../../tutorials/blog.rst:14
