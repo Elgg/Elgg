@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 22:01+0300\n"
+"POT-Creation-Date: 2017-05-10 10:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,23 +156,6 @@ msgstr ""
 
 #: ../../guides/actions.rst:12
 msgid ":doc:`i18n`"
-msgstr ""
-
-#: ../../guides/actions.rst:0
-#: ../../guides/database.rst:0
-#: ../../guides/events-list.rst:0
-#: ../../guides/guidelines.rst:0
-#: ../../guides/hooks-list.rst:0
-#: ../../guides/javascript.rst:0
-#: ../../guides/menus.rst:0
-#: ../../guides/notifications.rst:0
-#: ../../guides/plugins/dependencies.rst:0
-#: ../../guides/themes.rst:0
-#: ../../guides/upgrading.rst:0
-#: ../../guides/views.rst:0
-#: ../../guides/web-services.rst:0
-#: ../../guides/widgets.rst:0
-msgid "Contents"
 msgstr ""
 
 #: ../../guides/actions.rst:19

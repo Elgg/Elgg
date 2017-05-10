@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 22:01+0300\n"
+"POT-Creation-Date: 2017-05-10 10:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,12 +117,6 @@ msgstr ""
 
 #: ../../design/database.rst:4
 msgid "A thorough discussion of Elgg's data model design and motivation."
-msgstr ""
-
-#: ../../design/database.rst:0
-#: ../../design/events.rst:0
-#: ../../design/security.rst:0
-msgid "Contents"
 msgstr ""
 
 #: ../../design/database.rst:13
