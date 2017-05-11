@@ -96,7 +96,7 @@ class CacheHandler {
 		}
 
 		// we can't use $config->get yet. It fails before the core is booted
-		if (!$config->getVolatile('simplecache_enabled')) {
+		if (!$config->get('simplecache_enabled')) {
 			$this->application->bootCore();
 
 			if (!$this->isCacheableView($view)) {

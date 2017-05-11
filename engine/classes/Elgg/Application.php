@@ -403,6 +403,11 @@ class Application {
 		}
 
 		if (0 === strpos($path, '/cache/')) {
+			$config->loadSettingsFile();
+			if ($config->getVolatile('simplecache_enabled') === null) {
+				// allow the value to be loaded if needed
+				$config->setConfigTable($this->services->configTable);
+			}
 			(new Application\CacheHandler($this, $config, $_SERVER))->handleRequest($path);
 			return true;
 		}
