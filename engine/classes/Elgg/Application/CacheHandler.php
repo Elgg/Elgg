@@ -157,10 +157,13 @@ class CacheHandler {
 
 			$dir_name = dirname($filename);
 			if (!is_dir($dir_name)) {
-				mkdir($dir_name, 0700, true);
+				// PHP and the server accessing the cache symlink may be a different user. And here
+				// it's safe to make everything readable anyway.
+				mkdir($dir_name, 0775, true);
 			}
 
 			file_put_contents($filename, $content);
+			chmod($filename, 0664);
 		} else {
 			// if wrong timestamp, don't send HTTP cache
 			$content = $this->getProcessedView($view, $viewtype);
