@@ -1,10 +1,7 @@
 <?php
 
 /**
- * Class representing a container for other elgg entities.
- *
- * @package    Elgg.Core
- * @subpackage Groups
+ * A group entity, used as a container for other entities.
  *
  * @property string $name        A short name that captures the purpose of the group
  * @property string $description A longer body of content that gives more details about the group
@@ -15,66 +12,10 @@ class ElggGroup extends \ElggEntity {
 	const CONTENT_ACCESS_MODE_MEMBERS_ONLY = 'members_only';
 
 	/**
-	 * Sets the type to group.
-	 *
-	 * @return void
-	 */
-	protected function initializeAttributes() {
-		parent::initializeAttributes();
-
-		$this->attributes['type'] = "group";
-		$this->attributes += self::getExternalAttributes();
-	}
-
-	/**
-	 * Get default values for attributes stored in a separate table
-	 *
-	 * @return array
-	 * @access private
-	 *
-	 * @see \Elgg\Database\EntityTable::getEntities
-	 */
-	final public static function getExternalAttributes() {
-		return [
-			'name' => null,
-			'description' => null,
-		];
-	}
-
-	/**
-	 * Construct a new group entity
-	 *
-	 * Plugin developers should only use the constructor to create a new entity.
-	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
-	 *
-	 * @param \stdClass $row Database row result. Default is null to create a new group.
-	 *
-	 * @throws IOException|InvalidParameterException if there was a problem creating the group.
-	 */
-	public function __construct(\stdClass $row = null) {
-		$this->initializeAttributes();
-
-		if ($row) {
-			// Load the rest
-			if (!$this->load($row)) {
-				$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
-				throw new \IOException($msg);
-			}
-		}
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
-	public function getDisplayName() {
-		return $this->name;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setDisplayName($displayName) {
-		$this->name = $displayName;
+	public function getType() {
+		return 'group';
 	}
 
 	/**
@@ -233,84 +174,6 @@ class ElggGroup extends \ElggEntity {
 		_elgg_services()->events->trigger('leave', 'group', $params);
 
 		return remove_entity_relationship($user->guid, 'member', $this->guid);
-	}
-
-	/**
-	 * Load the \ElggGroup data from the database
-	 *
-	 * @param mixed $guid GUID of an \ElggGroup entity or database row from entity table
-	 *
-	 * @return bool
-	 *
-	 * @uses get_group_entity_as_row
-	 */
-	protected function load($guid) {
-		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'group', $this->attributes);
-		$attr_loader->requires_access_control = !($this instanceof \ElggPlugin);
-		$attr_loader->secondary_loader = 'get_group_entity_as_row';
-
-		$attrs = $attr_loader->getRequiredAttributes($guid);
-		if (!$attrs) {
-			return false;
-		}
-
-		$this->attributes = $attrs;
-		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_services()->entityCache->set($this);
-
-		return true;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function update() {
-		if (!parent::update()) {
-			return false;
-		}
-
-		$db = $this->getDatabase();
-		$query = "
-			UPDATE {$db->prefix}groups_entity
-			SET name = :name, description = :description
-			WHERE guid = :guid
-		";
-		$params = [
-			':name' => (string) $this->name,
-			':description' => (string) $this->description,
-			':guid' => $this->guid,
-		];
-		return $db->updateData($query, false, $params) !== false;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function create() {
-		$guid = parent::create();
-		if (!$guid) {
-			// @todo this probably means permission to create entity was denied
-			// Is returning false the correct thing to do
-			return false;
-		}
-
-		$db = $this->getDatabase();
-		$query = "
-			INSERT INTO {$db->prefix}groups_entity
-			(guid, name, description) VALUES (:guid, :name, :description)
-		";
-		$params = [
-			':guid' => $this->guid,
-			':name' => (string) $this->name,
-			':description' => (string) $this->description,
-		];
-		$result = $db->insertData($query, $params);
-		if ($result === false) {
-			// TODO(evan): Throw an exception here?
-			return false;
-		}
-
-		return $guid;
 	}
 
 	/**

@@ -176,16 +176,12 @@ class AttributeLoader {
 	 * "secondary" attributes (e.g. those in {prefix}objects_entity), but can load all at once if a
 	 * combined loader is available.
 	 *
-	 * @param mixed $row a row loaded from DB (array or \stdClass) or a GUID
+	 * @param mixed $row a row loaded from DB (array or \stdClass)
 	 * @return array will be empty if failed to load all attributes (access control or entity doesn't exist)
 	 *
 	 * @throws \InvalidArgumentException|\LogicException|\IncompleteEntityException
 	 */
-	public function getRequiredAttributes($row) {
-		if (!is_array($row) && !($row instanceof \stdClass)) {
-			// assume row is the GUID
-			$row = ['guid' => $row];
-		}
+	public function getRequiredAttributes(\stdClass $row) {
 		$row = (array) $row;
 		if (empty($row['guid'])) {
 			throw new \InvalidArgumentException('$row must be or contain a GUID');

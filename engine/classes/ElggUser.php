@@ -1,11 +1,6 @@
 <?php
 /**
- * \ElggUser
- *
- * Representation of a "user" in the system.
- *
- * @package    Elgg.Core
- * @subpackage DataModel.User
+ * A user entity
  *
  * @property      string $name             The display name that the user will be known by in the network
  * @property      string $username         The short, reference name for the user in the network
@@ -24,144 +19,10 @@ class ElggUser extends \ElggEntity
 	implements Friendable {
 
 	/**
-	 * Initialize the attributes array.
-	 * This is vital to distinguish between metadata and base attributes.
-	 *
-	 * @return void
-	 */
-	protected function initializeAttributes() {
-		parent::initializeAttributes();
-
-		$this->attributes['type'] = "user";
-		$this->attributes += self::getExternalAttributes();
-	}
-
-	/**
-	 * Get default values for attributes stored in a separate table
-	 *
-	 * @return array
-	 * @access private
-	 *
-	 * @see \Elgg\Database\EntityTable::getEntities
-	 */
-	final public static function getExternalAttributes() {
-		return [
-			'name' => null,
-			'username' => null,
-			'password_hash' => null,
-			'email' => null,
-			'language' => null,
-			'banned' => "no",
-			'admin' => 'no',
-			'prev_last_action' => null,
-			'last_login' => null,
-			'prev_last_login' => null,
-		];
-	}
-
-	/**
-	 * Construct a new user entity
-	 *
-	 * Plugin developers should only use the constructor to create a new entity.
-	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
-	 *
-	 * @param \stdClass $row Database row result. Default is null to create a new user.
-	 *
-	 * @throws IOException|InvalidParameterException if there was a problem creating the user.
-	 */
-	public function __construct(\stdClass $row = null) {
-		$this->initializeAttributes();
-
-		if ($row) {
-			// Load the rest
-			if (!$this->load($row)) {
-				$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
-				throw new \IOException($msg);
-			}
-		}
-	}
-
-	/**
-	 * Load the \ElggUser data from the database
-	 *
-	 * @param mixed $guid \ElggUser GUID or \stdClass database row from entity table
-	 *
-	 * @return bool
-	 *
-	 * @uses get_user_entity_as_row
-	 */
-	protected function load($guid) {
-		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'user', $this->attributes);
-		$attr_loader->secondary_loader = 'get_user_entity_as_row';
-
-		$attrs = $attr_loader->getRequiredAttributes($guid);
-		if (!$attrs) {
-			return false;
-		}
-
-		$this->attributes = $attrs;
-		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_services()->entityCache->set($this);
-
-		return true;
-	}
-
-
-	/**
 	 * {@inheritdoc}
 	 */
-	protected function create() {
-		$guid = parent::create();
-
-		$db = $this->getDatabase();
-		$query = "
-			INSERT INTO {$db->prefix}users_entity
-			(guid, name, username, password_hash, email, language)
-			values (:guid, :name, :username, :password_hash, :email, :language)
-		";
-		$params = [
-			':guid' => $guid,
-			':name' => (string) $this->name,
-			':username' => (string) $this->username,
-			':password_hash' => (string) $this->password_hash,
-			':email' => (string) $this->email,
-			':language' => (string) $this->language,
-		];
-
-		$result = $db->insertData($query, $params);
-		if ($result === false) {
-			// TODO(evan): Throw an exception here?
-			return false;
-		}
-
-		return $guid;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function update() {
-		if (!parent::update()) {
-			return false;
-		}
-		
-		$db = $this->getDatabase();
-		$query = "
-			UPDATE {$db->prefix}users_entity
-			SET name = :name, username = :username,
-			password_hash = :password_hash, email = :email, language = :language
-			WHERE guid = :guid
-		";
-		$params = [
-			':guid' => $this->guid,
-			':name' => (string) $this->name,
-			':username' => (string) $this->username,
-			':password_hash' => (string) $this->password_hash,
-			':email' => (string) $this->email,
-			':language' => (string) $this->language,
-		];
-
-		return $db->updateData($query, false, $params) !== false;
+	public function getType() {
+		return 'user';
 	}
 
 	/**
@@ -180,20 +41,6 @@ class ElggUser extends \ElggEntity
 			return $fallback;
 		}
 		return _elgg_config()->language;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDisplayName() {
-		return $this->name;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setDisplayName($displayName) {
-		$this->name = $displayName;
 	}
 
 	/**

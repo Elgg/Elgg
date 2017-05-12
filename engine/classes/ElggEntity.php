@@ -72,7 +72,30 @@ abstract class ElggEntity extends \ElggData implements
 	 * Holds the original (persisted) attribute values that have been changed but not yet saved.
 	 */
 	protected $orig_attributes = [];
-	
+
+	/**
+	 * Create a new entity.
+	 *
+	 * Plugin developers should only use the constructor to create a new entity.
+	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
+	 *
+	 * If no arguments are passed, it creates a new entity.
+	 * If a database result is passed as a \stdClass instance, it instantiates
+	 * that entity.
+	 *
+	 * @param \stdClass $row Database row result. Default is null to create a new object.
+	 *
+	 * @throws IOException If cannot load remaining data from db
+	 */
+	public function __construct(\stdClass $row = null) {
+		$this->initializeAttributes();
+
+		if ($row && !$this->load($row)) {
+			$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
+			throw new \IOException($msg);
+		}
+	}
+
 	/**
 	 * Initialize the attributes array.
 	 *
@@ -94,6 +117,9 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = "yes";
+
+		$this->attributes['type'] = $this->getType();
+		$this->attributes += self::getExtraAttributeDefaults($this->getType());
 	}
 
 	/**
@@ -247,15 +273,21 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @return string The title or name of this entity.
 	 */
-	abstract public function getDisplayName();
+	public function getDisplayName() {
+		$attr = $this->getSecondaryTableColumns()[0];
+		return $this->$attr;
+	}
 
 	/**
 	 * Sets the title or name of this entity.
 	 *
-	 * @param string $displayName The title or name of this entity.
+	 * @param string $display_name The title or name of this entity.
 	 * @return void
 	 */
-	abstract public function setDisplayName($displayName);
+	public function setDisplayName($display_name) {
+		$attr = $this->getSecondaryTableColumns()[0];
+		$this->$attr = $display_name;
+	}
 
 	/**
 	 * Return the value of a piece of metadata.
@@ -1036,6 +1068,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return string The entity type
 	 */
 	public function getType() {
+		// this is just for the PHPUnit mocking framework
 		return $this->type;
 	}
 
@@ -1252,7 +1285,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		return $guid;
 	}
-	
+
 	/**
 	 * Create a new entry in the entities table.
 	 *
@@ -1328,7 +1361,8 @@ abstract class ElggEntity extends \ElggData implements
 			}
 		}
 
-		$result = _elgg_services()->entityTable->insertRow((object) [
+		// Create primary table row
+		$guid = _elgg_services()->entityTable->insertRow((object) [
 			'type' => $type,
 			'subtype_id' => $subtype_id,
 			'owner_guid' => $owner_guid,
@@ -1339,30 +1373,66 @@ abstract class ElggEntity extends \ElggData implements
 			'last_action' => $now,
 		], $this->attributes);
 
-		if (!$result) {
+		if (!$guid) {
 			throw new \IOException("Unable to save new object's base entity information!");
 		}
+
+		// We are writing this new entity to cache to make sure subsequent calls
+		// to get_entity() load the entity from cache and not from the DB. This
+		// MUST come before the metadata and annotation writes below!
+		_elgg_services()->entityCache->set($this);
 	
 		// for BC with 1.8, ->subtype always returns ID, ->getSubtype() the string
 		$this->attributes['subtype'] = (int) $subtype_id;
-		$this->attributes['guid'] = (int) $result;
+		$this->attributes['guid'] = (int) $guid;
 		$this->attributes['time_created'] = (int) $time_created;
 		$this->attributes['time_updated'] = (int) $now;
 		$this->attributes['last_action'] = (int) $now;
 		$this->attributes['container_guid'] = (int) $container_guid;
 
-		// We are writing this new entity to cache to make sure subsequent calls
-		// to get_entity() load entity from cache and not from the DB
-		// At this point, secondary attributes have not yet been written to the DB,
-		// but metadata and annotation event handlers may be calling get_entity()
-		_elgg_services()->entityCache->set($this);
+		// Create secondary table row
+		$attrs = $this->getSecondaryTableColumns();
+
+		$column_names = implode(', ', $attrs);
+		$values = implode(', ', array_map(function ($attr) {
+			return ":$attr";
+		}, $attrs));
+
+		$params = [
+			':guid' => $guid,
+		];
+		foreach ($attrs as $attr) {
+			$params[":$attr"] = ($attr === 'url') ? '' : (string) $this->attributes[$attr];
+		}
+
+		$db = $this->getDatabase();
+		$query = "
+			INSERT INTO {$db->prefix}{$this->type}s_entity
+			(guid, $column_names) VALUES (:guid, $values)
+		";
+
+		if ($db->insertData($query, $params) === false) {
+			// Uh oh, couldn't save secondary
+			$query = "
+				DELETE FROM {$db->prefix}entities
+				WHERE guid = :guid
+			";
+			$params = [
+				':guid' => $guid,
+			];
+			$db->deleteData($query, $params);
+
+			_elgg_services()->entityCache->remove($guid);
+
+			throw new \IOException("Unable to save new object's secondary entity information!");
+		}
 
 		// Save any unsaved metadata
 		if (sizeof($this->temp_metadata) > 0) {
 			foreach ($this->temp_metadata as $name => $value) {
 				$this->$name = $value;
 			}
-			
+
 			$this->temp_metadata = [];
 		}
 
@@ -1371,7 +1441,7 @@ abstract class ElggEntity extends \ElggData implements
 			foreach ($this->temp_annotations as $name => $value) {
 				$this->annotate($name, $value);
 			}
-			
+
 			$this->temp_annotations = [];
 		}
 
@@ -1380,11 +1450,11 @@ abstract class ElggEntity extends \ElggData implements
 			foreach ($this->temp_private_settings as $name => $value) {
 				$this->setPrivateSetting($name, $value);
 			}
-			
+
 			$this->temp_private_settings = [];
 		}
 		
-		return $result;
+		return $guid;
 	}
 
 	/**
@@ -1419,6 +1489,7 @@ abstract class ElggEntity extends \ElggData implements
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
 		}
 
+		// Update primary table
 		$ret = _elgg_services()->entityTable->updateRow($guid, (object) [
 			'owner_guid' => $owner_guid,
 			'container_guid' => $container_guid,
@@ -1427,6 +1498,35 @@ abstract class ElggEntity extends \ElggData implements
 			'time_updated' => $time,
 			'guid' => $guid,
 		]);
+		if ($ret === false) {
+			return false;
+		}
+
+		$this->attributes['time_updated'] = $time;
+
+		// Update secondary table
+		$attrs = $this->getSecondaryTableColumns();
+
+		$sets = array_map(function ($attr) {
+			return "$attr = :$attr";
+		}, $attrs);
+		$sets = implode(', ', $sets);
+
+		foreach ($attrs as $attr) {
+			$params[":$attr"] = ($attr === 'url') ? '' : (string) $this->attributes[$attr];
+		}
+		$params[':guid'] = $this->guid;
+
+		$db = $this->getDatabase();
+		$query = "
+			UPDATE {$db->prefix}{$this->type}s_entity
+			SET $sets
+			WHERE guid = :guid
+		";
+
+		if ($db->updateData($query, false, $params) === false) {
+			return false;
+		}
 
 		elgg_trigger_after_event('update', $this->type, $this);
 
@@ -1435,69 +1535,108 @@ abstract class ElggEntity extends \ElggData implements
 			update_river_access_by_object($guid, $access_id);
 		}
 
-		if ($ret !== false) {
-			$this->attributes['time_updated'] = $time;
-		}
-
 		$this->orig_attributes = [];
 
 		// Handle cases where there was no error BUT no rows were updated!
-		return $ret !== false;
+		return true;
 	}
 
 	/**
 	 * Loads attributes from the entities table into the object.
 	 *
-	 * @param mixed $guid GUID of entity or \stdClass object from entities table
+	 * @param \stdClass $row Object of properties from database row(s)
 	 *
 	 * @return bool
 	 */
-	protected function load($guid) {
-		if ($guid instanceof \stdClass) {
-			$row = $guid;
-		} else {
-			$row = get_entity_as_row($guid);
+	protected function load(\stdClass $row) {
+		$type = $this->type;
+
+		$attr_loader = new \Elgg\AttributeLoader(get_class($this), $type, $this->attributes);
+		if ($type === 'user' || $this instanceof ElggPlugin) {
+			$attr_loader->requires_access_control = false;
+		}
+		$attr_loader->secondary_loader = "get_{$type}_entity_as_row";
+
+		$attrs = $attr_loader->getRequiredAttributes($row);
+		if (!$attrs) {
+			return false;
 		}
 
-		if ($row) {
-			// Create the array if necessary - all subclasses should test before creating
-			if (!is_array($this->attributes)) {
-				$this->attributes = [];
-			}
+		$this->attributes = $attrs;
 
-			// Now put these into the attributes array as core values
-			$objarray = (array) $row;
-			foreach ($objarray as $key => $value) {
-				$this->attributes[$key] = $value;
-			}
-
-			// guid needs to be an int  https://github.com/elgg/elgg/issues/4111
-			$this->attributes['guid'] = (int) $this->attributes['guid'];
-
-			// for BC with 1.8, ->subtype always returns ID, ->getSubtype() the string
-			$this->attributes['subtype'] = (int) $this->attributes['subtype'];
-
-			// Cache object handle
-			if ($this->attributes['guid']) {
-				_elgg_services()->entityCache->set($this);
-			}
-
-			return true;
+		foreach ($attr_loader->getAdditionalSelectValues() as $name => $value) {
+			$this->setVolatileData("select:$name", $value);
 		}
 
-		return false;
+		_elgg_services()->entityCache->set($this);
+
+		return true;
 	}
 
 	/**
-	 * Stores non-attributes from the loading of the entity as volatile data
+	 * Get the added columns (besides GUID) stored in the secondary table
 	 *
-	 * @param array $data Key value array
-	 * @return void
+	 * @return string[]
+	 * @throws \InvalidArgumentException
 	 */
-	protected function loadAdditionalSelectValues(array $data) {
-		foreach ($data as $name => $value) {
-			$this->setVolatileData("select:$name", $value);
+	private function getSecondaryTableColumns() {
+		// Note: the title or name column must come first. See getDisplayName().
+		if ($this instanceof ElggObject) {
+			return ['title', 'description'];
 		}
+		if ($this instanceof ElggUser) {
+			return ['name', 'username', 'password_hash', 'email', 'language'];
+		}
+		if ($this instanceof ElggGroup) {
+			return ['name', 'description'];
+		}
+		if ($this instanceof ElggSite) {
+			return ['name', 'description', 'url'];
+		}
+		throw new \InvalidArgumentException("Not a recognized type: " . get_class($this));
+	}
+
+	/**
+	 * Get default values for the attributes not defined in \ElggEntity::initializeAttributes
+	 *
+	 * @param string $type Entity type
+	 *
+	 * @return array
+	 * @access private
+	 */
+	public static function getExtraAttributeDefaults($type) {
+		switch ($type) {
+			case 'object':
+				return [
+					'title' => null,
+					'description' => null,
+				];
+			case 'user':
+				return [
+					'name' => null,
+					'username' => null,
+					'password_hash' => null,
+					'email' => null,
+					'language' => null,
+					'banned' => "no",
+					'admin' => 'no',
+					'prev_last_action' => null,
+					'last_login' => null,
+					'prev_last_login' => null,
+				];
+			case 'group':
+				return [
+					'name' => null,
+					'description' => null,
+				];
+			case 'site':
+				return [
+					'name' => null,
+					'description' => null,
+					'url' => null,
+				];
+		}
+		throw new \InvalidArgumentException("Not a recognized type: $type");
 	}
 	
 	/**

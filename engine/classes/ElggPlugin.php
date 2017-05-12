@@ -83,7 +83,7 @@ class ElggPlugin extends \ElggObject {
 		$existing_plugin = elgg_get_plugin_from_id($plugin_id);
 
 		if ($existing_plugin) {
-			$this->load($existing_plugin->guid);
+			$this->load((object) ['guid' => $existing_plugin->guid]);
 		}
 
 		_elgg_cache_plugin_by_id($this);
