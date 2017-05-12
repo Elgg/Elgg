@@ -13,8 +13,8 @@ class ElggEntityTest extends \Elgg\TestCase {
 
 	protected function setUp() {
 		_elgg_services()->setValue('session', \ElggSession::getMock());
-		$this->obj = $this->getMockForAbstractClass('\ElggEntity');
-		$reflection = new ReflectionClass('\ElggEntity');
+		$this->obj = $this->getMockForAbstractClass('\ElggObject');
+		$reflection = new ReflectionClass('\ElggObject');
 		$method = $reflection->getMethod('initializeAttributes');
 		if (method_exists($method, 'setAccessible')) {
 			$method->setAccessible(true);
@@ -24,7 +24,7 @@ class ElggEntityTest extends \Elgg\TestCase {
 
 	public function testDefaultAttributes() {
 		$this->assertEquals(null, $this->obj->guid);
-		$this->assertEquals(null, $this->obj->type);
+		$this->assertEquals('object', $this->obj->type);
 		$this->assertEquals(null, $this->obj->subtype);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->owner_guid);
 		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->obj->container_guid);
@@ -68,7 +68,6 @@ class ElggEntityTest extends \Elgg\TestCase {
 	}
 
 	public function testSimpleGetters() {
-		$this->obj->type = 'foo';
 		$this->obj->subtype = 'subtype';
 		$this->obj->owner_guid = 77;
 		$this->obj->access_id = 2;
@@ -93,21 +92,6 @@ class ElggEntityTest extends \Elgg\TestCase {
 		$this->assertEquals('', $this->obj->access_id);
 	}
 
-	/**
-	 * @expectedException InvalidParameterException
-	 */
-	public function testSaveWithoutType() {
-		$db = $this->getMock('\Elgg\Database', array('getData', 'sanitizeString'), array(), '', false
-		);
-		$db->expects($this->any())
-				->method('sanitizeString')
-				->will($this->returnArgument(0));
-		_elgg_services()->setValue('db', $db);
-
-		// requires type to be set
-		$this->obj->save();
-	}
-
 	public function testIsEnabled() {
 		$this->assertTrue($this->obj->isEnabled());
 	}
@@ -120,6 +104,9 @@ class ElggEntityTest extends \Elgg\TestCase {
 	public function testToObject() {
 		$keys = array(
 			'guid',
+			'title',
+			'description',
+			'tags',
 			'type',
 			'subtype',
 			'time_created',
