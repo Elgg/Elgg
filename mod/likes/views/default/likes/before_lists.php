@@ -7,9 +7,13 @@
  */
 
 $user = elgg_get_logged_in_user_entity();
+$list_class = elgg_extract('list_class', $vars);
+if (!is_array($list_class)) {
+	$list_class = explode(' ', $list_class);
+}
 if ($user
 		&& !elgg_in_context('widgets')
-		&& ($vars['list_class'] === 'elgg-list-river' || $vars['list_class'] === 'elgg-list-entity')
+		&& (in_array('elgg-list-river', $list_class) || in_array('elgg-list-entity', $list_class))
 		&& (count($vars['items']) > 2)) {
 	$preloader = new \Elgg\Likes\Preloader(\Elgg\Likes\DataService::instance());
 	$preloader->preloadForList($vars['items']);
