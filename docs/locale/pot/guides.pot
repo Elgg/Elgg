@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-16 11:43+0100\n"
+"POT-Creation-Date: 2017-05-16 09:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -701,385 +701,385 @@ msgstr ""
 msgid "To execute it, use ``ajax.action('<action_name>', options)``:"
 msgstr ""
 
-#: ../../guides/ajax.rst:82
+#: ../../guides/ajax.rst:83
 msgid "Notes for actions:"
 msgstr ""
 
-#: ../../guides/ajax.rst:86
+#: ../../guides/ajax.rst:87
 msgid "All hooks have type ``action:<action_name>``. So in this case, three hooks will be triggered:"
 msgstr ""
 
-#: ../../guides/ajax.rst:85
+#: ../../guides/ajax.rst:86
 msgid "client-side ``\"ajax_request_data\", \"action:do_math\"`` to filter the request data (before it's sent)"
 msgstr ""
 
-#: ../../guides/ajax.rst:86
+#: ../../guides/ajax.rst:87
 msgid "server-side ``\"ajax_response\", \"action:do_math\"`` to filter the response (after the action runs)"
 msgstr ""
 
-#: ../../guides/ajax.rst:87
+#: ../../guides/ajax.rst:88
 msgid "client-side ``\"ajax_response_data\", \"action:do_math\"`` to filter the response data (before the calling code receives it)"
 msgstr ""
 
-#: ../../guides/ajax.rst:88
+#: ../../guides/ajax.rst:89
 msgid "CSRF tokens are added to the request data."
 msgstr ""
 
-#: ../../guides/ajax.rst:89
+#: ../../guides/ajax.rst:90
 msgid "The default method is ``POST``."
 msgstr ""
 
-#: ../../guides/ajax.rst:90
+#: ../../guides/ajax.rst:91
 msgid "An absolute action URL can be given in place of the action name."
 msgstr ""
 
-#: ../../guides/ajax.rst:91
+#: ../../guides/ajax.rst:92
 msgid "Using ``forward()`` in an action simply sends the response. The URL given in not returned to the client."
 msgstr ""
 
-#: ../../guides/ajax.rst:93
+#: ../../guides/ajax.rst:94
 msgid "When setting ``data``, use ``ajax.objectify($form)`` instead of ``$form.serialize()``. Doing so allows the ``ajax_request_data`` plugin hook to fire and other plugins to alter/piggyback on the request."
 msgstr ""
 
-#: ../../guides/ajax.rst:97
+#: ../../guides/ajax.rst:98
 msgid "Fetching data"
 msgstr ""
 
-#: ../../guides/ajax.rst:99
+#: ../../guides/ajax.rst:100
 msgid "Consider this PHP script that runs at ``http://example.org/myplugin_time``."
 msgstr ""
 
-#: ../../guides/ajax.rst:117
+#: ../../guides/ajax.rst:118
 msgid "To fetch its output, use ``ajax.path('<url_path>', options)``."
 msgstr ""
 
-#: ../../guides/ajax.rst:132
+#: ../../guides/ajax.rst:134
 msgid "Notes for paths:"
 msgstr ""
 
-#: ../../guides/ajax.rst:134
+#: ../../guides/ajax.rst:136
 msgid "The 3 hooks (see Actions above) will have type ``path:<url_path>``. In this case, \"path:myplugin_time\"."
 msgstr ""
 
-#: ../../guides/ajax.rst:135
+#: ../../guides/ajax.rst:137
 msgid "If the page handler echoes a regular web page, ``output`` will be a string containing the HTML."
 msgstr ""
 
-#: ../../guides/ajax.rst:136
+#: ../../guides/ajax.rst:138
 msgid "An absolute URL can be given in place of the path name."
 msgstr ""
 
-#: ../../guides/ajax.rst:139
+#: ../../guides/ajax.rst:141
 msgid "Fetching views"
 msgstr ""
 
-#: ../../guides/ajax.rst:141
+#: ../../guides/ajax.rst:143
 msgid "Consider this view:"
 msgstr ""
 
-#: ../../guides/ajax.rst:160
+#: ../../guides/ajax.rst:162
 msgid "Since it's a PHP file, we must register it for Ajax first:"
 msgstr ""
 
-#: ../../guides/ajax.rst:168
+#: ../../guides/ajax.rst:170
 msgid "To fetch the view, use ``ajax.view('<view_name>', options)``:"
 msgstr ""
 
-#: ../../guides/ajax.rst:186
+#: ../../guides/ajax.rst:189
 msgid "Notes for views:"
 msgstr ""
 
-#: ../../guides/ajax.rst:188
+#: ../../guides/ajax.rst:191
 msgid "The 3 hooks (see Actions above) will have type ``view:<view_name>``. In this case, \"view:myplugin/get_link\"."
 msgstr ""
 
-#: ../../guides/ajax.rst:189
-#: ../../guides/ajax.rst:226
+#: ../../guides/ajax.rst:192
+#: ../../guides/ajax.rst:230
 msgid "``output`` will be a string with the rendered view."
 msgstr ""
 
-#: ../../guides/ajax.rst:190
+#: ../../guides/ajax.rst:193
 msgid "The request data are injected into ``$vars`` in the view."
 msgstr ""
 
-#: ../../guides/ajax.rst:191
-#: ../../guides/ajax.rst:228
+#: ../../guides/ajax.rst:194
+#: ../../guides/ajax.rst:232
 msgid "If the request data contains ``guid``, the system sets ``$vars['entity']`` to the corresponding entity or ``false`` if it can't be loaded."
 msgstr ""
 
-#: ../../guides/ajax.rst:195
-#: ../../guides/ajax.rst:239
+#: ../../guides/ajax.rst:198
+#: ../../guides/ajax.rst:243
 msgid "In ajax views and forms, note that ``$vars`` can be populated by client input. The data is filtered like ``get_input()``, but may not be the type you're expecting or may have unexpected keys."
 msgstr ""
 
-#: ../../guides/ajax.rst:200
+#: ../../guides/ajax.rst:203
 msgid "Fetching forms"
 msgstr ""
 
-#: ../../guides/ajax.rst:202
+#: ../../guides/ajax.rst:205
 msgid "Consider we have a form view. We register it for Ajax:"
 msgstr ""
 
-#: ../../guides/ajax.rst:209
+#: ../../guides/ajax.rst:212
 msgid "To fetch this using ``ajax.form('<action_name>', options)``."
 msgstr ""
 
-#: ../../guides/ajax.rst:223
+#: ../../guides/ajax.rst:227
 msgid "Notes for forms:"
 msgstr ""
 
-#: ../../guides/ajax.rst:225
+#: ../../guides/ajax.rst:229
 msgid "The 3 hooks (see Actions above) will have type ``form:<action_name>``. In this case, \"form:myplugin/add\"."
 msgstr ""
 
-#: ../../guides/ajax.rst:227
+#: ../../guides/ajax.rst:231
 msgid "The request data are injected into ``$vars`` in your form view."
 msgstr ""
 
-#: ../../guides/ajax.rst:232
-#: ../../guides/ajax.rst:513
+#: ../../guides/ajax.rst:236
+#: ../../guides/ajax.rst:517
 msgid "Only the request data are passed to the requested form view (i.e. as a third parameter accepted by ``elgg_view_form()``). If you need to pass attributes or parameters of the form element rendered by the ``input/form`` view (i.e. normally passed as a second parameter to ``elgg_view_form()``), use the server-side hook ``view_vars, input/form``."
 msgstr ""
 
-#: ../../guides/ajax.rst:244
+#: ../../guides/ajax.rst:248
 msgid "Piggybacking on an Ajax request"
 msgstr ""
 
-#: ../../guides/ajax.rst:246
+#: ../../guides/ajax.rst:250
 msgid "The client-side ``ajax_request_data`` hook can be used to append or filter data being sent by an ``elgg/Ajax`` request."
 msgstr ""
 
-#: ../../guides/ajax.rst:248
+#: ../../guides/ajax.rst:252
 msgid "Let's say when the view ``foo`` is fetched, we want to also send the server some data:"
 msgstr ""
 
-#: ../../guides/ajax.rst:264
+#: ../../guides/ajax.rst:268
 msgid "This data can be read server-side via ``get_input('bar');``."
 msgstr ""
 
-#: ../../guides/ajax.rst:266
+#: ../../guides/ajax.rst:270
 msgid "If data was given as a string (e.g. ``$form.serialize()``), the request hooks are not triggered."
 msgstr ""
 
-#: ../../guides/ajax.rst:269
+#: ../../guides/ajax.rst:273
 msgid "Piggybacking on an Ajax response"
 msgstr ""
 
-#: ../../guides/ajax.rst:271
+#: ../../guides/ajax.rst:275
 msgid "The server-side ``ajax_response`` hook can be used to append or filter response data (or metadata)."
 msgstr ""
 
-#: ../../guides/ajax.rst:273
+#: ../../guides/ajax.rst:277
 msgid "Let's say when the view ``foo`` is fetched, we want to also send the client some additional data:"
 msgstr ""
 
-#: ../../guides/ajax.rst:293
+#: ../../guides/ajax.rst:297
 msgid "To capture the metadata send back to the client, we use the client-side ``ajax_response`` hook:"
 msgstr ""
 
-#: ../../guides/ajax.rst:312
+#: ../../guides/ajax.rst:316
 msgid "Only ``data.value`` is returned to the ``success`` function or available via the `Deferred` interface."
 msgstr ""
 
-#: ../../guides/ajax.rst:314
+#: ../../guides/ajax.rst:318
 msgid "Elgg uses these same hooks to deliver system messages over ``elgg/Ajax`` responses."
 msgstr ""
 
-#: ../../guides/ajax.rst:317
+#: ../../guides/ajax.rst:321
 msgid "Handling errors"
 msgstr ""
 
-#: ../../guides/ajax.rst:319
+#: ../../guides/ajax.rst:323
 msgid "Responses basically fall into three categories:"
 msgstr ""
 
-#: ../../guides/ajax.rst:321
+#: ../../guides/ajax.rst:325
 msgid "HTTP success (200) with status ``0``. No ``register_error()`` calls were made on the server."
 msgstr ""
 
-#: ../../guides/ajax.rst:322
+#: ../../guides/ajax.rst:326
 msgid "HTTP success (200) with status ``-1``. ``register_error()`` was called."
 msgstr ""
 
-#: ../../guides/ajax.rst:323
+#: ../../guides/ajax.rst:327
 msgid "HTTP error (4xx/5xx). E.g. calling an action with stale tokens, or a server exception. In this case the ``done`` and ``success`` callbacks are not called."
 msgstr ""
 
-#: ../../guides/ajax.rst:325
+#: ../../guides/ajax.rst:329
 msgid "You may need only worry about the 2nd case. We can do this by looking at ``jqXHR.AjaxData.status``:"
 msgstr ""
 
-#: ../../guides/ajax.rst:339
+#: ../../guides/ajax.rst:343
 msgid "Requiring AMD modules"
 msgstr ""
 
-#: ../../guides/ajax.rst:341
+#: ../../guides/ajax.rst:345
 msgid "Each response from an Ajax service will contain a list of AMD modules required server side with `elgg_require_js()`. When response data is unwrapped, these modules will be loaded asynchronously - plugins should not expect these modules to be loaded in their `$.done()` and `$.then()` handlers and must use `require()` for any modules they depend on. Additionally AMD modules should not expect the DOM to have been altered by an Ajax request when they are loaded - DOM events should be delegated and manipulations on DOM elements should be delayed until all Ajax requests have been resolved."
 msgstr ""
 
-#: ../../guides/ajax.rst:350
+#: ../../guides/ajax.rst:354
 msgid "Legacy elgg.ajax APIs"
 msgstr ""
 
-#: ../../guides/ajax.rst:352
+#: ../../guides/ajax.rst:356
 msgid "Elgg 1.8 introduced ``elgg.action``, ``elgg.get``, ``elgg.getJSON``, and other methods which behave less consistently both client-side and server-side."
 msgstr ""
 
-#: ../../guides/ajax.rst:355
+#: ../../guides/ajax.rst:359
 msgid "Legacy elgg.action"
 msgstr ""
 
-#: ../../guides/ajax.rst:357
+#: ../../guides/ajax.rst:361
 msgid "Differences:"
 msgstr ""
 
-#: ../../guides/ajax.rst:359
+#: ../../guides/ajax.rst:363
 msgid "you must manually pull the ``output`` from the returned wrapper"
 msgstr ""
 
-#: ../../guides/ajax.rst:360
+#: ../../guides/ajax.rst:364
 msgid "the ``success`` handler will fire even if the action is prevented"
 msgstr ""
 
-#: ../../guides/ajax.rst:361
+#: ../../guides/ajax.rst:365
 msgid "the ``success`` handler will receive a wrapper object. You must look for ``wrapper.output``"
 msgstr ""
 
-#: ../../guides/ajax.rst:362
+#: ../../guides/ajax.rst:366
 msgid "no ajax hooks"
 msgstr ""
 
-#: ../../guides/ajax.rst:385
+#: ../../guides/ajax.rst:389
 msgid "elgg.action notes"
 msgstr ""
 
-#: ../../guides/ajax.rst:387
+#: ../../guides/ajax.rst:391
 msgid "It's best to echo a non-empty string, as this is easy to validate in the ``success`` function. If the action was not allowed to run for some reason, ``wrapper.output`` will be an empty string."
 msgstr ""
 
-#: ../../guides/ajax.rst:389
+#: ../../guides/ajax.rst:393
 msgid "You may want to use the :doc:`elgg/spinner</guides/javascript>` module."
 msgstr ""
 
-#: ../../guides/ajax.rst:390
+#: ../../guides/ajax.rst:394
 msgid "Elgg does not use ``wrapper.status`` for anything, but a call to ``register_error()`` causes it to be set to ``-1``."
 msgstr ""
 
-#: ../../guides/ajax.rst:392
+#: ../../guides/ajax.rst:396
 msgid "If the action echoes a non-JSON string, ``wrapper.output`` will contain that string."
 msgstr ""
 
-#: ../../guides/ajax.rst:393
+#: ../../guides/ajax.rst:397
 msgid "``elgg.action`` is based on ``jQuery.ajax`` and returns a ``jqXHR`` object (like a Promise), if you should want to use it."
 msgstr ""
 
-#: ../../guides/ajax.rst:394
+#: ../../guides/ajax.rst:398
 msgid "After the PHP action completes, other plugins can alter the wrapper via the plugin hook ``'output', 'ajax'``, which filters the wrapper as an array (not a JSON string)."
 msgstr ""
 
-#: ../../guides/ajax.rst:396
+#: ../../guides/ajax.rst:400
 msgid "A ``forward()`` call forces the action to be processed and output immediately, with the ``wrapper.forward_url`` value set to the normalized location given."
 msgstr ""
 
-#: ../../guides/ajax.rst:398
+#: ../../guides/ajax.rst:402
 msgid "To make sure Ajax actions can only be executed via XHR, use ``elgg_ajax_gatekeeper()``."
 msgstr ""
 
-#: ../../guides/ajax.rst:401
+#: ../../guides/ajax.rst:405
 msgid "elgg.action JSON response wrapper"
 msgstr ""
 
-#: ../../guides/ajax.rst:415
+#: ../../guides/ajax.rst:419
 msgid "It's probably best to rely only on the ``output`` key, and validate it in case the PHP action could not run for some reason, e.g. the user was logged out or a CSRF attack did not provide tokens."
 msgstr ""
 
-#: ../../guides/ajax.rst:420
+#: ../../guides/ajax.rst:424
 msgid "If ``forward()`` is used in response to a legacy ajax request (e.g. ``elgg.ajax``), Elgg will *always* respond with this wrapper, **even if not in an action**."
 msgstr ""
 
-#: ../../guides/ajax.rst:424
+#: ../../guides/ajax.rst:428
 msgid "Legacy view fetching"
 msgstr ""
 
-#: ../../guides/ajax.rst:426
+#: ../../guides/ajax.rst:430
 msgid "A plugin can use a view script to handle XHR ``GET`` requests. Here's a simple example of a view that returns a link to an object given by its GUID:"
 msgstr ""
 
-#: ../../guides/ajax.rst:462
+#: ../../guides/ajax.rst:466
 msgid "The Ajax view system works significantly differently than the action system."
 msgstr ""
 
-#: ../../guides/ajax.rst:464
+#: ../../guides/ajax.rst:468
 msgid "There are no access controls based on session status."
 msgstr ""
 
-#: ../../guides/ajax.rst:465
+#: ../../guides/ajax.rst:469
 msgid "Non-XHR requests are automatically rejected."
 msgstr ""
 
-#: ../../guides/ajax.rst:466
+#: ../../guides/ajax.rst:470
 msgid "GET vars are injected into ``$vars`` in the view."
 msgstr ""
 
-#: ../../guides/ajax.rst:467
+#: ../../guides/ajax.rst:471
 msgid "If the request contains ``$_GET['guid']``, the system sets ``$vars['entity']`` to the corresponding entity or ``false`` if it can't be loaded."
 msgstr ""
 
-#: ../../guides/ajax.rst:469
+#: ../../guides/ajax.rst:473
 msgid "There's no \"wrapper\" object placed around the view output."
 msgstr ""
 
-#: ../../guides/ajax.rst:470
+#: ../../guides/ajax.rst:474
 msgid "System messages/errors shouldn't be used, as they don't display until the user loads another page."
 msgstr ""
 
-#: ../../guides/ajax.rst:471
+#: ../../guides/ajax.rst:475
 msgid "Depending on the view's suffix (.js, .html, .css, etc.), a corresponding Content-Type header is added."
 msgstr ""
 
-#: ../../guides/ajax.rst:475
-#: ../../guides/ajax.rst:520
+#: ../../guides/ajax.rst:479
+#: ../../guides/ajax.rst:524
 msgid "In ajax views and forms, note that ``$vars`` can be populated by client input. The data is filtered like"
 msgstr ""
 
-#: ../../guides/ajax.rst:476
-#: ../../guides/ajax.rst:521
+#: ../../guides/ajax.rst:480
+#: ../../guides/ajax.rst:525
 msgid "``get_input()``, but may not be the type you're expecting or may have unexpected keys."
 msgstr ""
 
-#: ../../guides/ajax.rst:479
+#: ../../guides/ajax.rst:483
 msgid "Returning JSON from a view"
 msgstr ""
 
-#: ../../guides/ajax.rst:481
+#: ../../guides/ajax.rst:485
 msgid "If the view outputs encoded JSON, you must use ``elgg.getJSON`` to fetch it (or use some other method to set jQuery's ajax option ``dataType`` to ``json``). Your ``success`` function will be passed the decoded Object."
 msgstr ""
 
-#: ../../guides/ajax.rst:484
+#: ../../guides/ajax.rst:488
 msgid "Here's an example of fetching a view that returns a JSON-encoded array of times:"
 msgstr ""
 
-#: ../../guides/ajax.rst:495
+#: ../../guides/ajax.rst:499
 msgid "Legacy form fetching"
 msgstr ""
 
-#: ../../guides/ajax.rst:497
+#: ../../guides/ajax.rst:501
 msgid "If you register a form view (name starting with ``forms/``), you can fetch it pre-rendered with ``elgg_view_form()``. Simply use ``ajax/form/<action>`` (instead of ``ajax/view/<view_name>``):"
 msgstr ""
 
-#: ../../guides/ajax.rst:525
+#: ../../guides/ajax.rst:529
 msgid "Legacy helper functions"
 msgstr ""
 
-#: ../../guides/ajax.rst:527
+#: ../../guides/ajax.rst:531
 msgid "These functions extend jQuery's native Ajax features."
 msgstr ""
 
-#: ../../guides/ajax.rst:529
+#: ../../guides/ajax.rst:533
 msgid "``elgg.get()`` is a wrapper for jQuery's ``$.ajax()``, but forces ``GET`` and does URL normalization."
 msgstr ""
 
-#: ../../guides/ajax.rst:540
+#: ../../guides/ajax.rst:544
 msgid "``elgg.post()`` is a wrapper for jQuery's ``$.ajax()``, but forces ``POST`` and does URL normalization."
 msgstr ""
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1afa080278628e1f6171cfa878c04bc8",
+    "content-hash": "26ec856aed612527df79243a5e798312",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -2094,7 +2094,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Elgg coding standards",
-            "time": "2017-03-17T15:30:58+00:00"
+            "time": "2017-03-17 15:30:58"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
