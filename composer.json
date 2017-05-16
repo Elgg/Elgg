@@ -31,8 +31,7 @@
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
-        "imagine/imagine": "^0.6.3",
-        "elgg/sniffs": "dev-master#cdb2f2b39ede62bebd2c7b55570123bcbeb372fe"
+        "imagine/imagine": "^0.6.3"
     },
     "scripts": {
         "pre-install-cmd": "php .scripts/check_global_requirements.php",
@@ -71,6 +70,7 @@
         "phpunit/phpunit": "~4.1",
         "squizlabs/php_codesniffer": "~1.5",
         "simpletest/simpletest": "~1.1",
-        "phpdocumentor/reflection-docblock": "~2.0"
+        "phpdocumentor/reflection-docblock": "~2.0",
+        "elgg/sniffs": "2.x-dev"
     }
 }
