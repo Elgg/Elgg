@@ -1475,6 +1475,10 @@ function elgg_get_ini_setting_in_bytes($setting) {
 
 	// convert INI setting when shorthand notation is used
 	$last = strtolower($val[strlen($val) - 1]);
+	if (in_array($last, ['g', 'm', 'k'])) {
+		$val = substr($val, 0, -1);
+	}
+	$val = (int) $val;
 	switch($last) {
 		case 'g':
 			$val *= 1024;
