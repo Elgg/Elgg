@@ -226,8 +226,8 @@ class Application {
 		// setup logger and inject into config
 		//$this->services->config->setLogger($this->services->logger);
 
-		$events = $this->services->events;
 		$hooks = $this->services->hooks;
+		$events = $hooks->getEvents();
 
 		// run setups
 		foreach ($setups as $func) {
@@ -329,7 +329,7 @@ class Application {
 
 		$this->allowPathRewrite();
 
-		$events = $this->services->events;
+		$events = $this->services->hooks->getEvents();
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');

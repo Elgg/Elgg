@@ -176,7 +176,7 @@ class ViewsService {
 	 *
 	 * @return string The canonical view name.
 	 */
-	public function canonicalizeViewName($alias) {
+	public static function canonicalizeViewName($alias) {
 		if (!is_string($alias)) {
 			return false;
 		}
@@ -268,7 +268,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function setViewDir($view, $location, $viewtype = '') {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		if (empty($viewtype)) {
 			$viewtype = 'default';
@@ -311,7 +311,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		$rendered = $this->renderView($view, $vars, '', false);
 		if ($rendered) {
@@ -341,7 +341,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderView($view, array $vars = [], $viewtype = '', $issue_missing_notice = true) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
 			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
@@ -456,7 +456,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 		
 		if (empty($view) || !is_string($view)) {
 			return false;
@@ -497,8 +497,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function extendView($view, $view_extension, $priority = 501) {
-		$view = $this->canonicalizeViewName($view);
-		$view_extension = $this->canonicalizeViewName($view_extension);
+		$view = self::canonicalizeViewName($view);
+		$view_extension = self::canonicalizeViewName($view_extension);
 
 		if (!isset($this->extensions[$view])) {
 			$this->extensions[$view][500] = (string) $view;
@@ -543,8 +543,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function unextendView($view, $view_extension) {
-		$view = $this->canonicalizeViewName($view);
-		$view_extension = $this->canonicalizeViewName($view_extension);
+		$view = self::canonicalizeViewName($view);
+		$view_extension = self::canonicalizeViewName($view_extension);
 
 		if (!isset($this->extensions[$view])) {
 			return false;
@@ -564,7 +564,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		$this->simplecache_views[$view] = true;
 	}
@@ -573,7 +573,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function isCacheableView($view) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 		if (isset($this->simplecache_views[$view])) {
 			return true;
 		}
@@ -766,7 +766,7 @@ class ViewsService {
 	 * @return void
 	 */
 	private function setViewLocation($view, $viewtype, $path) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 		$path = strtr($path, '\\', '/');
 
 		if (isset($this->locations[$viewtype][$view]) && $path !== $this->locations[$viewtype][$view]) {

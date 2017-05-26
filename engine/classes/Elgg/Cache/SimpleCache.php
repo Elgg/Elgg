@@ -2,7 +2,7 @@
 namespace Elgg\Cache;
 
 use Elgg\Config;
-use Elgg\ViewsService as Views;
+use Elgg\ViewsService;
 
 
 /**
@@ -17,18 +17,13 @@ class SimpleCache {
 	/** @var Config */
 	private $config;
 
-	/** @var Views */
-	private $views;
-
 	/**
 	 * Constructor
 	 *
 	 * @param Config $config Elgg's global configuration
-	 * @param Views  $views  Elgg's views registry
 	 */
-	public function __construct(Config $config, Views $views) {
+	public function __construct(Config $config) {
 		$this->config = $config;
-		$this->views = $views;
 	}
 
 	/**
@@ -46,7 +41,7 @@ class SimpleCache {
 	 * @see elgg_get_simplecache_url()
 	 */
 	function registerView($view_name) {
-		$view_name = $this->views->canonicalizeViewName($view_name);
+		$view_name = ViewsService::canonicalizeViewName($view_name);
 		elgg_register_external_view($view_name, true);
 	}
 
@@ -86,7 +81,7 @@ class SimpleCache {
 			$view = "$view/$subview";
 		}
 
-		$view = $this->views->canonicalizeViewName($view);
+		$view = ViewsService::canonicalizeViewName($view);
 
 		// should be normalized to canonical form by now: `getUrl('blog/save_draft.js')`
 		$this->registerView($view);

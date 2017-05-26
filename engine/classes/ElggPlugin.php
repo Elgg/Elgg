@@ -698,7 +698,7 @@ class ElggPlugin extends \ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
+		$return = _elgg_services()->hooks->getEvents()->trigger('activate', 'plugin', $params);
 
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
@@ -790,7 +790,7 @@ class ElggPlugin extends \ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->events->trigger('deactivate', 'plugin', $params);
+		$return = _elgg_services()->hooks->getEvents()->trigger('deactivate', 'plugin', $params);
 
 		// run any deactivate code
 		if ($return) {

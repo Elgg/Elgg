@@ -42,7 +42,6 @@ class UpgradeService {
 	 * Constructor
 	 *
 	 * @param \Elgg\i18n\Translator    $translator Translation service
-	 * @param \Elgg\EventsService      $events     Events service
 	 * @param \Elgg\PluginHooksService $hooks      Plugin hook service
 	 * @param \Elgg\Config             $config     Config
 	 * @param \Elgg\Logger             $logger     Logger
@@ -50,13 +49,11 @@ class UpgradeService {
 	 */
 	public function __construct(
 			\Elgg\i18n\Translator $translator,
-			\Elgg\EventsService $events,
 			\Elgg\PluginHooksService $hooks,
 			\Elgg\Config $config,
 			\Elgg\Logger $logger,
 			\Elgg\Database\Mutex $mutex) {
 		$this->translator = $translator;
-		$this->events = $events;
 		$this->hooks = $hooks;
 		$this->config = $config;
 		$this->logger = $logger;
@@ -82,8 +79,8 @@ class UpgradeService {
 		}
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
-		$this->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
-		$this->events->unregisterHandler('all', 'all', 'system_log_listener');
+		$this->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		$this->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 
 		// turn off time limit
 		set_time_limit(0);
@@ -92,7 +89,7 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
-		$this->events->trigger('upgrade', 'system', null);
+		$this->hooks->getEvents()->trigger('upgrade', 'system', null);
 		elgg_flush_caches();
 
 		$this->mutex->unlock('upgrade');
@@ -287,7 +284,7 @@ class UpgradeService {
 			$upgrade_details->from = $dbversion;
 			$upgrade_details->to = elgg_get_version();
 
-			$this->events->trigger('upgrade', 'upgrade', $upgrade_details);
+			$this->hooks->getEvents()->trigger('upgrade', 'upgrade', $upgrade_details);
 
 			return true;
 		}

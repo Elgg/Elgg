@@ -1269,7 +1269,7 @@ abstract class ElggEntity extends \ElggData implements
 			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid && !_elgg_services()->events->trigger('create', $this->type, $this)) {
+			if ($guid && !_elgg_services()->hooks->getEvents()->trigger('create', $this->type, $this)) {
 				// plugins that return false to event don't need to override the access system
 				$ia = elgg_set_ignore_access(true);
 				$this->delete();
@@ -1473,7 +1473,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		// give old update event a chance to stop the update
-		if (!_elgg_services()->events->trigger('update', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('update', $this->type, $this)) {
 			return false;
 		}
 
@@ -1682,7 +1682,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!_elgg_services()->events->trigger('disable', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('disable', $this->type, $this)) {
 			return false;
 		}
 		
@@ -1762,7 +1762,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($disabled) {
 			$this->attributes['enabled'] = 'no';
-			_elgg_services()->events->trigger('disable:after', $this->type, $this);
+			_elgg_services()->hooks->getEvents()->trigger('disable:after', $this->type, $this);
 		}
 
 		return (bool) $disabled;
@@ -1784,7 +1784,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!_elgg_services()->events->trigger('enable', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('enable', $this->type, $this)) {
 			return false;
 		}
 		
@@ -1825,7 +1825,7 @@ abstract class ElggEntity extends \ElggData implements
 	
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
-			_elgg_services()->events->trigger('enable:after', $this->type, $this);
+			_elgg_services()->hooks->getEvents()->trigger('enable:after', $this->type, $this);
 		}
 
 		return $result;
@@ -1873,7 +1873,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		// now trigger an event to let others know this entity is about to be deleted
 		// so they can prevent it or take their own actions
-		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('delete', $this->type, $this)) {
 			return false;
 		}
 
