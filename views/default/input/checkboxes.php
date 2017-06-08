@@ -76,6 +76,7 @@ foreach ($vars['options'] as $label => $value) {
 	$input_vars['checked'] = in_array(elgg_strtolower($value), $values);
 	$input_vars['value'] = $value;
 	$input_vars['label'] = $label;
+	$input_vars['label_tag'] = 'div';
 	
 	$input = elgg_view('input/checkbox', $input_vars);
 
