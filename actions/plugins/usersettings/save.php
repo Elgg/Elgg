@@ -43,12 +43,8 @@ if (elgg_action_exists("$plugin_id/usersettings/save")) {
 	action("$plugin_id/usersettings/save");
 } else {
 	foreach ($params as $k => $v) {
-		if (is_array($v)) {
-			elgg_log('Plugin user settings cannot store arrays.', 'ERROR');
-			$result = false;
-		} else {
-			$result = $plugin->setUserSetting($k, $v, $user->guid);
-		}
+		
+		$result = $plugin->setUserSetting($k, $v, $user->guid);
 		if (!$result) {
 			register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
 			forward(REFERER);

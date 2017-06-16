@@ -388,6 +388,11 @@ class ElggPlugin extends \ElggObject {
 			'value' => $value,
 		), $value);
 		
+		if (is_array($value)) {
+			elgg_log('Plugin settings cannot store arrays.', 'ERROR');
+			return false;
+		}
+		
 		return $this->setPrivateSetting($name, $value);
 	}
 
@@ -535,7 +540,12 @@ class ElggPlugin extends \ElggObject {
 			'name' => $name,
 			'value' => $value
 		), $value);
-
+		
+		if (is_array($value)) {
+			elgg_log('Plugin user settings cannot store arrays.', 'ERROR');
+			$result = false;
+		}
+		
 		// set the namespaced name.
 		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 
