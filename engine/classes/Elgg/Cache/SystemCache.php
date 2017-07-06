@@ -85,7 +85,7 @@ class SystemCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool)$this->config->getVolatile('system_cache_enabled');
+		return (bool) $this->config->getVolatile('system_cache_enabled');
 	}
 	
 	/**
@@ -165,7 +165,6 @@ class SystemCache {
 		}
 	
 		if (!$GLOBALS['_ELGG']->i18n_loaded_from_cache) {
-
 			_elgg_services()->translator->reloadAllTranslations();
 
 			foreach ($GLOBALS['_ELGG']->translations as $lang => $map) {

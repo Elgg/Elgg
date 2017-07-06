@@ -20,7 +20,6 @@ use Elgg\Filesystem\Directory;
  */
 class Application {
 
-	const GET_PATH_KEY = '__elgg_uri';
 	const REWRITE_TEST_TOKEN = '__testing_rewrite';
 	const REWRITE_TEST_OUTPUT = 'success';
 
@@ -94,7 +93,7 @@ class Application {
 			$GLOBALS['_ELGG'] = new \stdClass();
 		}
 
-		$this->engine_dir = __DIR__ . '/../..';
+		$this->engine_dir = dirname(dirname(__DIR__));
 	}
 
 	/**
@@ -128,7 +127,7 @@ class Application {
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
 		// we're actually loading on every page (Hint: it's too much).
-		$lib_files = array(
+		$lib_files = [
 			// Needs to be loaded first to correctly bootstrap
 			'autoloader.php',
 			'elgglib.php',
@@ -178,12 +177,12 @@ class Application {
 			// backward compatibility
 			'deprecated-2.1.php',
 			'deprecated-3.0.php',
-		);
+		];
 
 		// isolate global scope
 		call_user_func(function () use ($lib_dir, $lib_files) {
 
-			$setups = array();
+			$setups = [];
 
 			// include library files, capturing setup functions
 			foreach ($lib_files as $file) {
@@ -247,6 +246,7 @@ class Application {
 		}
 
 		$this->loadSettings();
+		$this->resolveWebRoot();
 
 		$config->set('boot_complete', false);
 
@@ -259,8 +259,8 @@ class Application {
 		$events = $this->services->events;
 
 		// Connect to database, load language files, load configuration, init session
-		// Plugins can't use this event because they haven't been loaded yet.
-		$events->trigger('boot', 'system');
+		$this->services->boot->boot();
+		elgg_views_boot();
 
 		// Load the plugins that are active
 		$this->services->plugins->load();
@@ -383,7 +383,10 @@ class Application {
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
 	public function run() {
-		$path = $this->setupPath();
+		$config = $this->services->config;
+
+		$request = $this->services->request;
+		$path = $request->getPathInfo();
 
 		// allow testing from the upgrade page before the site is upgraded.
 		if (isset($_GET[self::REWRITE_TEST_TOKEN])) {
@@ -394,17 +397,18 @@ class Application {
 		}
 
 		if (php_sapi_name() === 'cli-server') {
-			$www_root = "http://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}/";
-			$this->services->config->set('wwwroot', $www_root);
+			// overwrite value from settings
+			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
+			$config->set('wwwroot', $www_root);
 		}
 
 		if (0 === strpos($path, '/cache/')) {
-			(new Application\CacheHandler($this, $this->services->config, $_SERVER))->handleRequest($path);
+			(new Application\CacheHandler($this, $config, $_SERVER))->handleRequest($path);
 			return true;
 		}
 
 		if (0 === strpos($path, '/serve-file/')) {
-			$this->services->serveFileHandler->getResponse($this->services->request)->send();
+			$this->services->serveFileHandler->getResponse($request)->send();
 			return true;
 		}
 
@@ -426,34 +430,19 @@ class Application {
 		// TODO use formal Response object instead
 		header("Content-Type: text/html;charset=utf-8");
 
+		// fetch new request from services in case it was replaced by route:rewrite
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
 	}
 
 	/**
-	 * Determine the Elgg data directory with trailing slash, save it to config, and return it
-	 *
-	 * @todo Consider a better place for this logic? We need it before boot
+	 * Get the Elgg data directory with trailing slash
 	 *
 	 * @return string
-	 * @throws \InstallationException
 	 */
 	public static function getDataPath() {
-		$app = self::create();
-		$app->services->config->loadSettingsFile();
-
-		if ($GLOBALS['_ELGG']->dataroot_in_settings) {
-			return $app->services->config->getVolatile('dataroot');
-		}
-
-		$dataroot = $app->services->configTable->get('dataroot');
-		if (!$dataroot) {
-			throw new \InstallationException('The config table lacks a value for "dataroot".');
-		}
-		$dataroot = rtrim($dataroot, '/\\') . DIRECTORY_SEPARATOR;
-		$app->services->config->set('dataroot', $dataroot);
-		return $dataroot;
+		return self::create()->services->config->getDataPath();
 	}
 
 	/**
@@ -511,7 +500,7 @@ class Application {
 
 		// turn any full in-site URLs into absolute paths
 		$forward_url = get_input('forward', '/admin', false);
-		$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
+		$forward_url = str_replace([$site_url, $site_host], '/', $forward_url);
 
 		if (strpos($forward_url, '/') !== 0) {
 			$forward_url = '/' . $forward_url;
@@ -526,8 +515,9 @@ class Application {
 				forward($forward_url);
 			}
 
-			// Find unprocessed batch uprade classes and save them as ElggUpgrade objects
-			$has_pending_upgrades = _elgg_services()->upgradeLocator->run();
+			// Find unprocessed batch upgrade classes and save them as ElggUpgrade objects
+			$core_upgrades = (require self::elggDir()->getPath('engine/lib/upgrades/async-upgrades.php'));
+			$has_pending_upgrades = _elgg_services()->upgradeLocator->run($core_upgrades);
 
 			if ($has_pending_upgrades) {
 				// Forward to the list of pending upgrades
@@ -554,16 +544,15 @@ class Application {
 				// note: translation may not be available until after upgrade
 				$msg = elgg_echo("installation:htaccess:needs_upgrade");
 				if ($msg === "installation:htaccess:needs_upgrade") {
-					$msg = "You must update your .htaccess file so that the path is injected "
-						. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+					$msg = "You must update your .htaccess file (use install/config/htaccess.dist as a guide).";
 				}
 				echo $msg;
 				exit;
 			}
 
-			$vars = array(
+			$vars = [
 				'forward' => $forward_url
-			);
+			];
 
 			// reset cache to have latest translations available during upgrade
 			elgg_reset_system_cache();
@@ -573,26 +562,6 @@ class Application {
 		}
 
 		forward($forward_url);
-	}
-
-	/**
-	 * Get the request URI and store it in $_GET['__elgg_uri']
-	 *
-	 * @return string e.g. "cache/123..."
-	 */
-	private function setupPath() {
-		if (!isset($_GET[self::GET_PATH_KEY]) || is_array($_GET[self::GET_PATH_KEY])) {
-			if (php_sapi_name() === 'cli-server') {
-				$_GET[self::GET_PATH_KEY] = (string)parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-			} else {
-				$_GET[self::GET_PATH_KEY] = '/';
-			}
-		}
-
-		// normalize
-		$_GET[self::GET_PATH_KEY] = '/' . trim($_GET[self::GET_PATH_KEY], '/');
-
-		return $_GET[self::GET_PATH_KEY];
 	}
 
 	/**
@@ -608,12 +577,28 @@ class Application {
 		}
 
 		$this->services->setValue('request', $new);
-		_elgg_set_initial_context($new);
+		$this->services->context->initialize($new);
+	}
+
+	/**
+	 * Make sure config has a non-empty wwwroot. Calculate from request if missing.
+	 *
+	 * @return void
+	 */
+	private function resolveWebRoot() {
+		$config = $this->services->config;
+		$request = $this->services->request;
+
+		$config->loadSettingsFile();
+		if (!$config->getVolatile('wwwroot')) {
+			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
+			$config->set('wwwroot', $www_root);
+		}
 	}
 
 	/**
 	 * Flag this application as running for testing (PHPUnit)
-	 * 
+	 *
 	 * @param bool $testing Is testing application
 	 * @return void
 	 */

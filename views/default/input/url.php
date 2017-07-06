@@ -11,13 +11,13 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-url');
 
-$defaults = array(
+$defaults = [
 	'value' => '',
 	'disabled' => false,
 	'autocapitalize' => 'off',
 	'autocorrect' => 'off',
 	'type' => 'url'
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

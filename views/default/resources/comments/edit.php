@@ -24,16 +24,16 @@ $title = elgg_echo('generic_comments:edit');
 elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());
 elgg_push_breadcrumb($title);
 
-$params = array(
+$params = [
 	'entity' => $target,
 	'comment' => $comment,
-);
+];
 $content = elgg_view_form('comment/save', null, $params);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 echo elgg_view_page($title, $body);

@@ -8,7 +8,7 @@
  */
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
-$messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+$messages = elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]);
 $content = $vars['body'];
 
 $title = elgg_extract('title', $vars, elgg_get_site_entity()->name);
@@ -32,5 +32,5 @@ $body = <<<__BODY
 </div>
 __BODY;
 
-echo elgg_view("page/elements/html", array('head' => $head, 'body' => $body));
+echo elgg_view("page/elements/html", ['head' => $head, 'body' => $body]);
 

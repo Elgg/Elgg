@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Geef een zoekterm op:',
 	'search:no_results' => 'Geen resultaten:',
 	'search:matched' => 'Gevonden:',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'door',
 	'search:unavailable_entity' => 'Niet beschikbare Entity',
 	'search:unknown_entity' => 'Onbekend Entity type',
-);
+];

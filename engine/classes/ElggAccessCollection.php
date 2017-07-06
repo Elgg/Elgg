@@ -5,7 +5,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Core
- * 
+ *
  * @property-read int    $id         The unique identifier (read-only)
  * @property      int    $owner_guid GUID of the owner
  * @property      string $name       Name of the collection
@@ -70,6 +70,45 @@ class ElggAccessCollection extends ElggData {
 	}
 
 	/**
+	 * Returns owner entity of the collection
+	 * @return \ElggEntity|false
+	 */
+	public function getOwnerEntity() {
+		return _elgg_services()->entityTable->get($this->owner_guid);
+	}
+
+	/**
+	 * Get readable access level name for this collection
+	 * @return string
+	 */
+	public function getDisplayName() {
+
+		$filter = function($name = null) {
+			if (!isset($name)) {
+				$name = _elgg_services()->translator->translate('access:limited:label');
+			}
+			$params = [
+				'access_collection' => $this,
+			];
+			return _elgg_services()->hooks->trigger('access_collection:name', $this->getType(), $params, $name);
+		};
+
+		$user = _elgg_services()->session->getLoggedInUser();
+		$owner = $this->getOwnerEntity();
+		if (!$user || !$owner) {
+			// User is not logged in or does not access to the owner entity:
+			// return default 'Limited' label
+			return $filter();
+		}
+		
+		if ($user->isAdmin() || $owner->guid == $user->guid) {
+			return $filter($this->name);
+		}
+
+		return $filter();
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function save() {
@@ -89,7 +128,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Check if user can this collection
-	 * 
+	 *
 	 * @param int $user_guid GUID of the user
 	 * @return bool
 	 */
@@ -99,7 +138,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Returns members of the access collection
-	 * 
+	 *
 	 * @param array $options ege options
 	 * @return ElggEntity|int|false
 	 */
@@ -109,7 +148,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Checks if user is already in access collection
-	 * 
+	 *
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */
@@ -119,7 +158,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Adds a new member to access collection
-	 * 
+	 *
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */
@@ -129,7 +168,7 @@ class ElggAccessCollection extends ElggData {
 
 	/**
 	 * Removes a user from access collection
-	 * 
+	 *
 	 * @param int $member_guid GUID of the user
 	 * @return bool
 	 */

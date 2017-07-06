@@ -2,7 +2,7 @@
 
 $file = new ElggFile();
 
-$mapping = array(
+$mapping = [
 	'general' => 'general',
 	'application' => 'application',
 	'audio' => 'music',
@@ -16,9 +16,9 @@ $mapping = array(
 	'application/vnd.oasis.opendocument.text' => 'openoffice',
 	'application/zip' => 'archive',
 	'text/v-card' => 'vcard',
-);
+];
 
-$sizes = array('large', 'medium', 'small', 'tiny');
+$sizes = ['large', 'medium', 'small', 'tiny'];
 ?>
 <table class="theme-sandbox-table">
 	<tr>

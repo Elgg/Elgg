@@ -2,37 +2,37 @@
 
 $ipsum = elgg_view('developers/ipsum');
 
-$link = elgg_view('output/url', array(
+$link = elgg_view('output/url', [
 	'text' => 'Popup content',
 	'href' => "#elgg-popup-test",
 	'rel' => 'popup',
-		));
+		]);
 
 echo $link;
-echo elgg_view_module('popup', 'Popup Test', $ipsum, array(
+echo elgg_view_module('popup', 'Popup Test', $ipsum, [
 	'id' => 'elgg-popup-test',
 	'class' => 'hidden theme-sandbox-content-thin',
-));
+]);
 
 
-$button = elgg_format_element(array(
+$button = elgg_format_element([
 	'#tag_name' => 'button',
 	'class' => 'elgg-button elgg-button-submit mll',
 	'rel' => 'popup',
 	'data-href' => "#elgg-popup-test2",
-	'data-position' => json_encode(array(
+	'data-position' => json_encode([
 		'my' => 'left top',
 		'at' => 'left bottom',
-	)),
+	]),
 	'#text' => 'Load content in a popup',
-));
+]);
 
 echo $button;
 
-echo elgg_format_element(array(
+echo elgg_format_element([
 	'#tag_name' => 'div',
 	'id' => 'elgg-popup-test2',
 	'class' => 'hidden theme-sandbox-content-thin elgg-module-popup',
-));
+]);
 
 elgg_require_js('theme_sandbox/javascript/popup');

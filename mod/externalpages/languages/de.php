@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -19,4 +19,4 @@ return array(
 	 */
 	'expages:posted' => "Dein Seiten-Eintrag wurde gespeichert.",
 	'expages:error' => "Beim Speichern der Seite ist ein Fehler aufgetreten.",
-);
+];

@@ -12,6 +12,8 @@ final class Result {
 
 	private $success_count = 0;
 
+	private $is_complete = false;
+
 	/**
 	 * Add new error message to the batch
 	 *
@@ -46,7 +48,7 @@ final class Result {
 	/**
 	 * Get count of failures within the current batch
 	 *
-	 * @return $failure_count Amount of failures
+	 * @return int $failure_count Amount of failures
 	 */
 	public function getFailureCount() {
 		return $this->failure_count;
@@ -65,9 +67,29 @@ final class Result {
 	/**
 	 * Get count of successfully upgraded items within the current batch
 	 *
-	 * @return $failure_count Amount of failures
+	 * @return int $failure_count Amount of failures
 	 */
 	public function getSuccessCount() {
 		return $this->success_count;
+	}
+
+	/**
+	 * Mark the upgrade as complete (not necessarily successful)
+	 *
+	 * @return void
+	 */
+	public function markComplete() {
+		$this->is_complete = true;
+	}
+
+	/**
+	 * Has the upgrade been marked complete?
+	 *
+	 * @internal
+	 * @access private
+	 * @return bool
+	 */
+	public function wasMarkedComplete() {
+		return $this->is_complete === true;
 	}
 }

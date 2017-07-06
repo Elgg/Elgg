@@ -18,7 +18,7 @@ elgg_register_title_button('file', 'add', 'object', 'file');
 
 $title = elgg_echo("file:friends");
 
-$content = elgg_list_entities_from_relationship(array(
+$content = elgg_list_entities_from_relationship([
 	'type' => 'object',
 	'subtype' => 'file',
 	'full_view' => false,
@@ -28,15 +28,15 @@ $content = elgg_list_entities_from_relationship(array(
 	'no_results' => elgg_echo("file:none"),
 	'preload_owners' => true,
 	'preload_containers' => true,
-));
+]);
 
 $sidebar = file_get_type_cloud($owner->guid, true);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter_context' => 'friends',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => $sidebar,
-));
+]);
 
 echo elgg_view_page($title, $body);

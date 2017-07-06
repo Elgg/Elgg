@@ -68,7 +68,7 @@ function elgg_get_cache_path() {
  * @since 1.8.0
  */
 function elgg_get_root_path() {
-	return Directory\Local::root()->getPath('/');
+	return _elgg_services()->config->get('path');
 }
 
 /**

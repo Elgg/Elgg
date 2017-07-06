@@ -11,18 +11,35 @@ class ElggSiteTest extends \Elgg\TestCase {
 		$this->assertNotNull(new \ElggSite());
 	}
 
-	public function testGetNoreplyEmailAddress() {
-		
+	public function testSettingUrlHasNoEffect() {
 		$site = new \ElggSite();
-		$site->url = 'https://example.com/';
-		
-		$this->assertEquals('noreply@example.com', $site->getEmailAddress());
+
+		$url = $site->url;
+
+		_elgg_services()->logger->disable();
+		$site->url = 'https://google.com/';
+		$this->assertEquals($url, $site->url);
+
+		$errors = _elgg_services()->logger->enable();
+		$expected_error = [
+			'message' => 'ElggSite::url cannot be set',
+			'level' => 300,
+		];
+		$this->assertEquals($errors[0], $expected_error);
+	}
+
+	public function testNoreplyEmailAddressBasedOnUrl() {
+		$site = new \ElggSite();
+		// no email set
+
+		/**
+		 * @see \Elgg\TestCase::getTestingConfigArray Sets URL
+		 */
+		$this->assertEquals('noreply@localhost', $site->getEmailAddress());
 	}
 	
 	public function testGetEmailAddress() {
-		
 		$site = new \ElggSite();
-		$site->url = 'https://example.com/';
 		$site->email = 'someemail@example.com';
 		
 		$this->assertEquals('someemail@example.com', $site->getEmailAddress());

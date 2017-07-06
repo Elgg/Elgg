@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => 'ログブラウザ',
 	'logbrowser' => 'ログブラウザ',
 	'logbrowser:browse' => 'システムログの閲覧',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => 'Object type',
 	'logbrowser:object:guid' => 'Object GUID',
 	'logbrowser:action' => 'Action',
-);
+];

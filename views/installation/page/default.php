@@ -15,9 +15,9 @@ $title .= " : {$vars['title']}";
 elgg_set_http_header('Content-type: text/html; charset=utf-8');
 
 // turn off browser caching
-elgg_set_http_header('Pragma: public', TRUE);
-elgg_set_http_header("Cache-Control: no-cache, must-revalidate", TRUE);
-elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
+elgg_set_http_header('Pragma: public', true);
+elgg_set_http_header("Cache-Control: no-cache, must-revalidate", true);
+elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 
 $isElggAtRoot = Elgg\Application::elggDir()->getPath() === Directory\Local::root()->getPath();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
@@ -46,7 +46,7 @@ $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 					</aside>
 					<main class="elgg-body" role="main">
 						<h1><?php echo $vars['title']; ?></h1>
-						<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
+						<?php echo elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]); ?>
 						<?php echo $vars['body']; ?>
 					</main>
 				</div>

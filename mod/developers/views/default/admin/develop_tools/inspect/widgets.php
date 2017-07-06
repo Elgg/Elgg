@@ -15,10 +15,10 @@ echo "</tr>";
 
 foreach ($data as $name => $arr) {
 	$view = "widgets/$name/content";
-	$link = elgg_view('admin/develop_tools/inspect/views/view_link', array(
+	$link = elgg_view('admin/develop_tools/inspect/views/view_link', [
 		'view' => $view,
 		'text' => $name,
-	));
+	]);
 
 	echo "<tr>";
 	echo "<td>$link</td>";

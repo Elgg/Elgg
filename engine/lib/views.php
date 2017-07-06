@@ -132,7 +132,7 @@ function _elgg_get_initial_viewtype() {
  */
 function elgg_register_viewtype($viewtype) {
 	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
-		$GLOBALS['_ELGG']->view_types = array();
+		$GLOBALS['_ELGG']->view_types = [];
 	}
 
 	if (!in_array($viewtype, $GLOBALS['_ELGG']->view_types)) {
@@ -333,7 +333,7 @@ function elgg_list_views($viewtype = 'default') {
  *
  * @return string The parsed view
  */
-function elgg_view($view, $vars = array(), $ignore1 = false, $ignore2 = false, $viewtype = '') {
+function elgg_view($view, $vars = [], $ignore1 = false, $ignore2 = false, $viewtype = '') {
 	return _elgg_services()->views->renderView($view, $vars, $ignore1, $viewtype);
 }
 
@@ -444,14 +444,14 @@ function elgg_prepend_css_urls($css, $path) {
  * @return string The contents of the page
  * @since  1.8
  */
-function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
+function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	$timer = _elgg_services()->timer;
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);
 	}
 	$timer->begin([__FUNCTION__]);
 
-	$params = array();
+	$params = [];
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
 	array_shift($params['segments']);
@@ -466,9 +466,9 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 		if (isset($messages['error'])) {
 			// always make sure error is the first type
-			$errors = array(
+			$errors = [
 				'error' => $messages['error']
-			);
+			];
 
 			unset($messages['error']);
 			$messages = array_merge($errors, $messages);
@@ -478,6 +478,8 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
+	$vars['admin_notices'] = elgg_is_admin_logged_in() ? elgg_get_admin_notices() : [];
+	$vars['page_shell'] = $page_shell;
 
 	// head has keys 'title', 'metas', 'links'
 	$head_params = _elgg_views_prepare_head($title);
@@ -488,7 +490,6 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	$output = elgg_view("page/$page_shell", $vars);
 
-	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to modify the output
 	$output = elgg_trigger_plugin_hook('output', 'page', $vars, $output);
@@ -537,10 +538,10 @@ function elgg_view_resource($name, array $vars = []) {
  * @access private
  */
 function _elgg_views_prepare_head($title) {
-	$params = array(
-		'links' => array(),
-		'metas' => array(),
-	);
+	$params = [
+		'links' => [],
+		'metas' => [],
+	];
 
 	if (empty($title)) {
 		$params['title'] = elgg_get_config('sitename');
@@ -548,44 +549,44 @@ function _elgg_views_prepare_head($title) {
 		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
 	}
 
-	$params['metas']['content-type'] = array(
+	$params['metas']['content-type'] = [
 		'http-equiv' => 'Content-Type',
 		'content' => 'text/html; charset=utf-8',
-	);
+	];
 
-	$params['metas']['description'] = array(
+	$params['metas']['description'] = [
 		'name' => 'description',
 		'content' => elgg_get_config('sitedescription')
-	);
+	];
 
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
-	$params['metas']['viewport'] = array(
+	$params['metas']['viewport'] = [
 		'name' => 'viewport',
 		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
-	);
-	$params['metas']['mobile-web-app-capable'] = array(
+	];
+	$params['metas']['mobile-web-app-capable'] = [
 		'name' => 'mobile-web-app-capable',
 		'content' => 'yes',
-	);
-	$params['metas']['apple-mobile-web-app-capable'] = array(
+	];
+	$params['metas']['apple-mobile-web-app-capable'] = [
 		'name' => 'apple-mobile-web-app-capable',
 		'content' => 'yes',
-	);
+	];
 	
 	// RSS feed link
 	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
-		if (substr_count($url,'?')) {
+		if (substr_count($url, '?')) {
 			$url .= "&view=rss";
 		} else {
 			$url .= "?view=rss";
 		}
-		$params['links']['rss'] = array(
+		$params['links']['rss'] = [
 			'rel' => 'alternative',
 			'type' => 'application/rss+xml',
 			'title' => 'RSS',
 			'href' => $url,
-		);
+		];
 	}
 	
 	return $params;
@@ -610,46 +611,46 @@ function _elgg_views_prepare_head($title) {
  */
 function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) {
 
-	$head_params['links']['apple-touch-icon'] = array(
+	$head_params['links']['apple-touch-icon'] = [
 		'rel' => 'apple-touch-icon',
 		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
-	);
+	];
 
 	// favicons
-	$head_params['links']['icon-ico'] = array(
+	$head_params['links']['icon-ico'] = [
 		'rel' => 'icon',
 		'href' => elgg_get_simplecache_url('graphics/favicon.ico'),
-	);
-	$head_params['links']['icon-vector'] = array(
+	];
+	$head_params['links']['icon-vector'] = [
 		'rel' => 'icon',
 		'sizes' => '16x16 32x32 48x48 64x64 128x128',
 		'type' => 'image/svg+xml',
 		'href' => elgg_get_simplecache_url('graphics/favicon.svg'),
-	);
-	$head_params['links']['icon-16'] = array(
+	];
+	$head_params['links']['icon-16'] = [
 		'rel' => 'icon',
 		'sizes' => '16x16',
 		'type' => 'image/png',
 		'href' => elgg_get_simplecache_url('graphics/favicon-16.png'),
-	);
-	$head_params['links']['icon-32'] = array(
+	];
+	$head_params['links']['icon-32'] = [
 		'rel' => 'icon',
 		'sizes' => '32x32',
 		'type' => 'image/png',
 		'href' => elgg_get_simplecache_url('graphics/favicon-32.png'),
-	);
-	$head_params['links']['icon-64'] = array(
+	];
+	$head_params['links']['icon-64'] = [
 		'rel' => 'icon',
 		'sizes' => '64x64',
 		'type' => 'image/png',
 		'href' => elgg_get_simplecache_url('graphics/favicon-64.png'),
-	);
-	$head_params['links']['icon-128'] = array(
+	];
+	$head_params['links']['icon-128'] = [
 		'rel' => 'icon',
 		'sizes' => '128x128',
 		'type' => 'image/png',
 		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
-	);
+	];
 
 	return $head_params;
 }
@@ -682,7 +683,7 @@ function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) 
  *                            based on the current route.
  * @return string
  */
-function elgg_view_layout($layout_name, $vars = array()) {
+function elgg_view_layout($layout_name, $vars = []) {
 	$timer = _elgg_services()->timer;
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);
@@ -834,14 +835,13 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_menu($menu, array $vars = array()) {
+function elgg_view_menu($menu, array $vars = []) {
 
 	$menu_view = elgg_extract('menu_view', $vars);
 	unset($vars['menu_view']);
 
 	if (is_string($menu)) {
 		$menu = _elgg_services()->menus->getMenu($menu, $vars);
-
 	} elseif ($menu instanceof UnpreparedMenu) {
 		$menu = _elgg_services()->menus->prepareMenu($menu);
 	}
@@ -874,7 +874,7 @@ function elgg_view_menu($menu, array $vars = array()) {
  * @return string
  * @since 1.9.0
  */
-function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
+function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
 	if (!isset($vars['class'])) {
 		$vars['class'] = 'elgg-menu-content';
 	}
@@ -892,7 +892,7 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 		if (preg_match('~<[a-z]~', $text)) {
 			return $text;
 		} else {
-			return elgg_format_element('span', array('class' => 'elgg-non-link'), $text);
+			return elgg_format_element('span', ['class' => 'elgg-non-link'], $text);
 		}
 	}
 
@@ -932,7 +932,7 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
  * @return string HTML to display or false
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(\ElggEntity $entity, array $vars = array(), $bypass = false, $debug = false) {
+function elgg_view_entity(\ElggEntity $entity, array $vars = [], $bypass = false, $debug = false) {
 
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof \ElggEntity)) {
@@ -941,9 +941,9 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = array(), $bypass = 
 
 	elgg_register_rss_link();
 
-	$defaults = array(
+	$defaults = [
 		'full_view' => true,
-	);
+	];
 
 	$vars = array_merge($defaults, $vars);
 
@@ -955,11 +955,11 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = array(), $bypass = 
 		$entity_subtype = 'default';
 	}
 
-	$entity_views = array(
+	$entity_views = [
 		elgg_extract('item_view', $vars, ''),
 		"$entity_type/$entity_subtype",
 		"$entity_type/default",
-	);
+	];
 
 	$contents = '';
 	foreach ($entity_views as $view) {
@@ -995,7 +995,7 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = array(), $bypass = 
  *
  * @return string HTML to display or false
  */
-function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = array()) {
+function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []) {
 
 	// No point continuing if entity is null
 	if (!$entity || !($entity instanceof \ElggEntity)) {
@@ -1046,12 +1046,12 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = ar
  *
  * @return string/false Rendered annotation
  */
-function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array(), $bypass = false, $debug = false) {
+function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = [], $bypass = false, $debug = false) {
 	elgg_register_rss_link();
 
-	$defaults = array(
+	$defaults = [
 		'full_view' => true,
-	);
+	];
 
 	$vars = array_merge($defaults, $vars);
 	$vars['annotation'] = $annotation;
@@ -1061,11 +1061,11 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
 		return false;
 	}
 
-	$annotation_views = array(
+	$annotation_views = [
 		elgg_extract('item_view', $vars, ''),
 		"annotation/$name",
 		"annotation/default",
-	);
+	];
 
 	$contents = '';
 	foreach ($annotation_views as $view) {
@@ -1107,13 +1107,13 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *
  * @return string The rendered list of entities
  */
-function elgg_view_entity_list($entities, array $vars = array()) {
-	$offset = (int)get_input('offset', 0);
+function elgg_view_entity_list($entities, array $vars = []) {
+	$offset = (int) get_input('offset', 0);
 
 	// list type can be passed as request parameter
 	$list_type = get_input('list_type', 'list');
 
-	$defaults = array(
+	$defaults = [
 		'items' => $entities,
 		'list_class' => 'elgg-list-entity',
 		'full_view' => true,
@@ -1122,7 +1122,7 @@ function elgg_view_entity_list($entities, array $vars = array()) {
 		'list_type_toggle' => false,
 		'offset' => $offset,
 		'limit' => null,
-	);
+	];
 
 	$vars = array_merge($defaults, $vars);
 
@@ -1158,15 +1158,15 @@ function elgg_view_entity_list($entities, array $vars = array()) {
  * @return string The list of annotations
  * @access private
  */
-function elgg_view_annotation_list($annotations, array $vars = array()) {
-	$defaults = array(
+function elgg_view_annotation_list($annotations, array $vars = []) {
+	$defaults = [
 		'items' => $annotations,
 		'offset' => null,
 		'limit' => null,
 		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
 		'full_view' => true,
 		'offset_key' => 'annoff',
-	);
+	];
 
 	$vars = array_merge($defaults, $vars);
 
@@ -1200,10 +1200,10 @@ function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
 	$entity_type = $entity->getType();
 
 	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
-		array(
+		[
 			'entity' => $entity,
 			'full_view' => $full_view,
-		)
+		]
 	);
 
 	return $annotations;
@@ -1219,7 +1219,7 @@ function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
  *
  * @return string The HTML (etc)
  */
-function elgg_view_title($title, array $vars = array()) {
+function elgg_view_title($title, array $vars = []) {
 	$vars['title'] = $title;
 
 	return elgg_view('page/elements/title', $vars);
@@ -1256,7 +1256,7 @@ function elgg_view_friendly_time($time) {
  *
  * @return string|false Rendered comments or false on failure
  */
-function elgg_view_comments($entity, $add_comment = true, array $vars = array()) {
+function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
 	if (!($entity instanceof \ElggEntity)) {
 		return false;
 	}
@@ -1279,6 +1279,9 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = array())
  * Fixed width media on the side (image, icon, flash, etc.).
  * Descriptive content filling the rest of the column.
  *
+ * @note Use the $vars "image_alt" key to set an image on the right. If you do, you may pass
+ *       in an empty string for $image to have only the right image.
+ *
  * This is a shortcut for {@elgg_view page/components/image_block}.
  *
  * @param string $image The icon and other information
@@ -1288,7 +1291,7 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = array())
  * @return string
  * @since 1.8.0
  */
-function elgg_view_image_block($image, $body, $vars = array()) {
+function elgg_view_image_block($image, $body, $vars = []) {
 	$vars['image'] = $image;
 	$vars['body'] = $body;
 	return elgg_view('page/components/image_block', $vars);
@@ -1309,7 +1312,7 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  * @return string
  * @since 1.8.0
  */
-function elgg_view_module($type, $title, $body, array $vars = array()) {
+function elgg_view_module($type, $title, $body, array $vars = []) {
 	$vars['type'] = $type;
 	$vars['title'] = $title;
 	$vars['body'] = $body;
@@ -1324,7 +1327,7 @@ function elgg_view_module($type, $title, $body, array $vars = array()) {
  *      'item_view'  Alternative view to render the item
  * @return string returns empty string if could not be rendered
  */
-function elgg_view_river_item($item, array $vars = array()) {
+function elgg_view_river_item($item, array $vars = []) {
 	if (!($item instanceof \ElggRiverItem)) {
 		return '';
 	}
@@ -1354,10 +1357,11 @@ function elgg_view_river_item($item, array $vars = array()) {
 
 	$vars['item'] = $item;
 
-	$river_views = array(
+	$river_views = [
 		elgg_extract('item_view', $vars, ''),
-		"river/item",
-	);
+		"river/item", // important for other viewtypes, e.g. "rss"
+		$view,
+	];
 
 	$contents = '';
 	foreach ($river_views as $view) {
@@ -1404,7 +1408,7 @@ function elgg_view_river_item($item, array $vars = array()) {
  *
  * @return string The complete form
  */
-function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
+function elgg_view_form($action, $form_vars = [], $body_vars = []) {
 	return _elgg_services()->forms->render($action, $form_vars, $body_vars);
 }
 
@@ -1444,7 +1448,7 @@ function elgg_get_form_footer() {
  * @since 2.1
  * @deprecated 2.3 Use elgg_view_field()
  */
-function elgg_view_input($input_type, array $vars = array()) {
+function elgg_view_input($input_type, array $vars = []) {
 
 	elgg_deprecated_notice(__FUNCTION__ . '() is deprecated. Use elgg_view_field()', '2.3');
 
@@ -1497,6 +1501,10 @@ function elgg_view_field(array $params = []) {
 
 	$hidden_types = ['hidden', 'securitytoken'];
 	if (in_array($input_type, $hidden_types)) {
+		unset($params['#type']);
+		unset($params['#label']);
+		unset($params['#help']);
+		unset($params['#class']);
 		return elgg_view("input/$input_type", $params);
 	}
 
@@ -1584,7 +1592,7 @@ function elgg_view_field(array $params = []) {
  * @return string
  * @since 1.7.1
  */
-function elgg_view_tagcloud(array $options = array()) {
+function elgg_view_tagcloud(array $options = []) {
 
 	$type = $subtype = '';
 	if (isset($options['type'])) {
@@ -1595,24 +1603,26 @@ function elgg_view_tagcloud(array $options = array()) {
 	}
 
 	$tag_data = elgg_get_tags($options);
-	return elgg_view("output/tagcloud", array(
+	return elgg_view("output/tagcloud", [
 		'value' => $tag_data,
 		'type' => $type,
 		'subtype' => $subtype,
-	));
+	]);
 }
 
 /**
  * View an item in a list
  *
- * @param \ElggEntity|\ElggAnnotation $item
- * @param array  $vars Additional parameters for the rendering
- *      'item_view' Alternative view used to render list items
+ * @param mixed $item Entity, annotation, river item, or other data
+ * @param array $vars Additional parameters for the rendering
+ *                    'item_view' - Alternative view used to render list items
+ *                                  This parameter is required if rendering
+ *                                  list items that are not entity, annotation or river
  * @return string
  * @since 1.8.0
  * @access private
  */
-function elgg_view_list_item($item, array $vars = array()) {
+function elgg_view_list_item($item, array $vars = []) {
 
 	if ($item instanceof \ElggEntity) {
 		return elgg_view_entity($item, $vars);
@@ -1620,6 +1630,12 @@ function elgg_view_list_item($item, array $vars = array()) {
 		return elgg_view_annotation($item, $vars);
 	} else if ($item instanceof \ElggRiverItem) {
 		return elgg_view_river_item($item, $vars);
+	}
+
+	$view = elgg_extract('item_view', $vars);
+	if ($view && elgg_view_exists($view)) {
+		$vars['item'] = $item;
+		return elgg_view($view, $vars);
 	}
 
 	return '';
@@ -1637,13 +1653,13 @@ function elgg_view_list_item($item, array $vars = array()) {
  * @return string The html for displaying an icon
  * @throws InvalidArgumentException
  */
-function elgg_view_icon($name, $vars = array()) {
+function elgg_view_icon($name, $vars = []) {
 	if (empty($vars)) {
-		$vars = array();
+		$vars = [];
 	}
 
 	if (is_string($vars)) {
-		$vars = array('class' => $vars);
+		$vars = ['class' => $vars];
 	}
 
 	if (!is_array($vars)) {
@@ -1651,11 +1667,11 @@ function elgg_view_icon($name, $vars = array()) {
 	}
 
 	if (!array_key_exists('class', $vars)) {
-		$vars['class'] = array();
+		$vars['class'] = [];
 	}
 
 	if (!is_array($vars['class'])) {
-		$vars['class'] = array($vars['class']);
+		$vars['class'] = [$vars['class']];
 	}
 
 	$vars['class'][] = "elgg-icon-$name";
@@ -1692,7 +1708,7 @@ function _elgg_has_rss_link() {
 		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
 		return $GLOBALS['autofeed'];
 	}
-	return (bool)_elgg_services()->config->getVolatile('_elgg_autofeed');
+	return (bool) _elgg_services()->config->getVolatile('_elgg_autofeed');
 }
 
 /**
@@ -1745,6 +1761,27 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 	}
 }
 
+/**
+ * Preprocesses CSS views sent by /cache URLs
+ *
+ * @param string $hook    The name of the hook "simplecache:generate" or "cache:generate"
+ * @param string $type    "css"
+ * @param string $content Content of the view
+ * @param array  $params  Array of parameters
+ *
+ * @return string|null View content
+ * @access private
+ */
+function _elgg_views_preprocess_css($hook, $type, $content, $params) {
+	$options = [
+		'minify' => false, // minify handled by _elgg_views_minify
+		'formatter' => 'single-line', // shows lowest byte size
+		'versioning' => false, // versioning done by Elgg
+		'rewrite_import_urls' => false,
+	];
+	
+	return csscrush_string($content, $options);
+}
 
 /**
  * Inserts module names into anonymous modules by handling the "simplecache:generate" hook.
@@ -1831,8 +1868,6 @@ function _elgg_view_may_be_altered($view, $path) {
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
-	global $CONFIG;
-
 	if (!elgg_get_config('system_cache_loaded')) {
 		// Core view files in /views
 		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
@@ -1873,8 +1908,7 @@ function elgg_views_boot() {
 
 	elgg_register_simplecache_view('elgg/init.js');
 
-	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox/elgg-colorbox-theme/colorbox.css'));
-	elgg_load_css('lightbox');
+	elgg_extend_view('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
 
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
@@ -1889,7 +1923,11 @@ function elgg_views_boot() {
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
 	elgg_register_ajax_view('languages.js');
-	
+
+	// pre-process CSS regardless of simplecache
+	elgg_register_plugin_hook_handler('cache:generate', 'css', '_elgg_views_preprocess_css');
+	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_preprocess_css');
+
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
@@ -1910,15 +1948,15 @@ function elgg_views_boot() {
 	}
 
 	// set default icon sizes - can be overridden in settings.php or with plugin
-	if (!isset($CONFIG->icon_sizes)) {
-		$icon_sizes = array(
-			'topbar' => array('w' => 16, 'h' => 16, 'square' => true, 'upscale' => true),
-			'tiny' => array('w' => 25, 'h' => 25, 'square' => true, 'upscale' => true),
-			'small' => array('w' => 40, 'h' => 40, 'square' => true, 'upscale' => true),
-			'medium' => array('w' => 100, 'h' => 100, 'square' => true, 'upscale' => true),
-			'large' => array('w' => 200, 'h' => 200, 'square' => false, 'upscale' => false),
-			'master' => array('w' => 550, 'h' => 550, 'square' => false, 'upscale' => false),
-		);
+	if (!_elgg_services()->config->getVolatile('icon_sizes')) {
+		$icon_sizes = [
+			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
+			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
+			'small' => ['w' => 40, 'h' => 40, 'square' => true, 'upscale' => true],
+			'medium' => ['w' => 100, 'h' => 100, 'square' => true, 'upscale' => true],
+			'large' => ['w' => 200, 'h' => 200, 'square' => false, 'upscale' => false],
+			'master' => ['w' => 550, 'h' => 550, 'square' => false, 'upscale' => false],
+		];
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}
 
@@ -1928,6 +1966,9 @@ function elgg_views_boot() {
 	// @todo Remove in 3.0
 	elgg_extend_view('elgg.css', 'elements/pathces.css');
 	elgg_extend_view('admin.css', 'elements/pathces.css');
+
+	// Configure lightbox
+	elgg_register_plugin_hook_handler('elgg.data', 'site', '_elgg_set_lightbox_config');
 }
 
 /**
@@ -1945,13 +1986,13 @@ function _elgg_get_js_site_data() {
 	}
 
 	return [
-		'elgg.data' => (object)elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
+		'elgg.data' => (object) elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
 		'elgg.version' => elgg_get_version(),
 		'elgg.release' => elgg_get_version(true),
 		'elgg.config.wwwroot' => elgg_get_site_url(),
 
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
-		'elgg.security.interval' => (int)_elgg_services()->actions->getActionTokenTimeout() * 333,
+		'elgg.security.interval' => (int) _elgg_services()->actions->getActionTokenTimeout() * 333,
 		'elgg.config.language' => $language,
 	];
 }
@@ -1969,24 +2010,24 @@ function _elgg_get_js_page_data() {
 		$data = [];
 	}
 
-	$elgg = array(
-		'config' => array(
+	$elgg = [
+		'config' => [
 			'lastcache' => (int) elgg_get_config('lastcache'),
 			'viewtype' => elgg_get_viewtype(),
 			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
-		),
-		'security' => array(
-			'token' => array(
+		],
+		'security' => [
+			'token' => [
 				'__elgg_ts' => $ts = time(),
 				'__elgg_token' => generate_action_token($ts),
-			),
-		),
-		'session' => array(
+			],
+		],
+		'session' => [
 			'user' => null,
 			'token' => _elgg_services()->session->get('__elgg_session'),
-		),
+		],
 		'_data' => (object) $data,
-	);
+	];
 
 	if (elgg_get_config('elgg_load_sync_code')) {
 		$elgg['config']['load_sync_code'] = true;
@@ -2033,6 +2074,29 @@ function _elgg_view_under_viewtype($view, $vars, $viewtype) {
 	return $ret;
 }
 
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('boot', 'system', 'elgg_views_boot');
-};
+/**
+ * Set lightbox config
+ *
+ * @param string $hook   "elgg.data"
+ * @param string $type   "site"
+ * @param array  $return Data
+ * @param array  $params Hook params
+ * @return array
+ * @access private
+ */
+function _elgg_set_lightbox_config($hook, $type, $return, $params) {
+
+	$return['lightbox'] = [
+		'current' => elgg_echo('js:lightbox:current', ['{current}', '{total}']),
+		'previous' => elgg_view_icon('caret-left'),
+		'next' => elgg_view_icon('caret-right'),
+		'close' => elgg_view_icon('times'),
+		'opacity' => 0.5,
+		'maxWidth' => '990px',
+		'maxHeight' => '990px',
+		'initialWidth' => '300px',
+		'initialHeight' => '300px',
+	];
+
+	return $return;
+}

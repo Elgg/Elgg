@@ -4,13 +4,18 @@ namespace Elgg\Upgrade;
 
 class TestNoIncrementBatch implements \Elgg\Upgrade\Batch {
 
-	const INCREMENT_OFFSET = false;
-	const VERSION = 2016101901;
+	public function getVersion() {
+		return 2016101901;
+	}
+
+	public function needsIncrementOffset() {
+		return false;
+	}
 
 	private $count = 100;
 
-	public function isRequired() {
-		return true;
+	public function shouldBeSkipped() {
+		return false;
 	}
 
 	public function countItems() {

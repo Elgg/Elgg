@@ -4,7 +4,7 @@
 	Modules
 *************************************** */
 .elgg-module {
-	overflow: hidden;
+	display: block;
 	margin-bottom: 20px;
 }
 

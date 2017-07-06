@@ -69,10 +69,10 @@ class UpgradeService {
 	 * @return array $result Associative array containing possible errors
 	 */
 	public function run() {
-		$result = array(
+		$result = [
 			'failure' => false,
 			'reason' => '',
-		);
+		];
 
 		// prevent someone from running the upgrade script in parallel (see #4643)
 		if (!$this->mutex->lock('upgrade')) {
@@ -228,7 +228,7 @@ class UpgradeService {
 			return false;
 		}
 
-		$upgrade_files = array();
+		$upgrade_files = [];
 
 		while ($upgrade_file = readdir($handle)) {
 			// make sure this is a wellformed upgrade.
@@ -263,7 +263,7 @@ class UpgradeService {
 		if ($processed_upgrades === null) {
 			$processed_upgrades = $this->config->get('processed_upgrades');
 			if (!is_array($processed_upgrades)) {
-				$processed_upgrades = array();
+				$processed_upgrades = [];
 			}
 		}
 

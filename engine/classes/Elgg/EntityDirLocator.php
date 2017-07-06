@@ -10,7 +10,7 @@ namespace Elgg;
  *       being used directly.
  *
  * @access private
- * 
+ *
  * @package Elgg.Core
  */
 class EntityDirLocator {
@@ -22,7 +22,7 @@ class EntityDirLocator {
 
 	/**
 	 * Find an entity's data dir.
-	 * 
+	 *
 	 * @param int $guid GUID of the entity.
 	 *
 	 * @throws \InvalidArgumentException

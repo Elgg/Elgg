@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -117,4 +117,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 
 	'pages:newchild' => "Maak een subpagina",
 	'pages:backtoparent' => "Terug naar '%s'",
-);
+];

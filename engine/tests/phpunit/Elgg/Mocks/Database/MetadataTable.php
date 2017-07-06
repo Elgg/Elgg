@@ -30,7 +30,7 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+	public function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $ignore = null, $allow_multiple = false) {
 		$entity = get_entity((int) $entity_guid);
 		if (!$entity) {
 			return false;
@@ -45,8 +45,6 @@ class MetadataTable extends DbMetadataTabe {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 
-		$access_id = (int) $access_id;
-
 		$this->iterator++;
 		$id = $this->iterator;
 
@@ -60,36 +58,36 @@ class MetadataTable extends DbMetadataTabe {
 			'name' => $name,
 			'value' => $value,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
-			'access_id' => (int) $access_id,
-			'value_type' => detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type))),
+			'access_id' => ACCESS_PUBLIC,
+			'value_type' => \ElggExtender::detectValueType($value, trim($value_type)),
 		];
 
 		$this->rows[$id] = $row;
 
 		$this->addQuerySpecs($row);
 
-		return parent::create($entity_guid, $name, $value, $value_type, $owner_guid, $access_id, $allow_multiple);
+		return parent::create($entity_guid, $name, $value, $value_type, $owner_guid, null, $allow_multiple);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function update($id, $name, $value, $value_type, $owner_guid, $access_id) {
+	public function update($id, $name, $value, $value_type, $owner_guid) {
 		if (!isset($this->rows[$id])) {
 			return false;
 		}
 		$row = $this->rows[$id];
 		$row->name = $name;
 		$row->value = $value;
-		$row->value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$row->value_type = \ElggExtender::detectValueType($value, trim($value_type));
 		$row->owner_guid = $owner_guid;
-		$row->access_id = $access_id;
+		$row->access_id = ACCESS_PUBLIC;
 
 		$this->rows[$id] = $row;
 
 		$this->addQuerySpecs($row);
 
-		return parent::update($id, $name, $value, $value_type, $owner_guid, $access_id);
+		return parent::update($id, $name, $value, $value_type, $owner_guid);
 	}
 
 	/**
@@ -151,18 +149,14 @@ class MetadataTable extends DbMetadataTabe {
 
 		// Return this metadata object when _elgg_get_metastring_based_objects() is called
 		$e_access_sql = _elgg_get_access_where_sql(array('table_alias' => 'e'));
-		$md_access_sql = _elgg_get_access_where_sql(array(
-			'table_alias' => 'n_table',
-			'guid_column' => 'entity_guid',
-		));
-
+		
 		$dbprefix = elgg_get_config('dbprefix');
 		$sql = "SELECT DISTINCT  n_table.*
 			FROM {$dbprefix}metadata n_table
 				JOIN {$dbprefix}entities e ON n_table.entity_guid = e.guid
-				WHERE  (n_table.id IN ({$row->id}) AND $md_access_sql) AND $e_access_sql
+				WHERE  (n_table.id IN ({$row->id})) AND $e_access_sql
 				ORDER BY n_table.time_created ASC, n_table.id ASC, n_table.id";
-
+		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'results' => function() use ($row) {
@@ -186,7 +180,7 @@ class MetadataTable extends DbMetadataTabe {
 				':value_type' => $row->value_type,
 				':owner_guid' => $row->owner_guid,
 				':time_created' => $row->time_created,
-				':access_id' => $row->access_id,
+				':access_id' => ACCESS_PUBLIC,
 			],
 			'insert_id' => $row->id,
 		]);
@@ -206,7 +200,7 @@ class MetadataTable extends DbMetadataTabe {
 				':value' => $row->value,
 				':value_type' => $row->value_type,
 				':owner_guid' => $row->owner_guid,
-				':access_id' => $row->access_id,
+				':access_id' => ACCESS_PUBLIC,
 				':id' => $row->id,
 			],
 			'results' => function() use ($row) {

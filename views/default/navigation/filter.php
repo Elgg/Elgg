@@ -2,7 +2,7 @@
 
 /**
  * Renders a filter menu
- * 
+ *
  * @uses $vars['filter']       An optional array of filter tabs
  *                             Array items should be suitable for usage with
  *                             elgg_register_menu_item()

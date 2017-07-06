@@ -15,7 +15,6 @@
  */
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_comment_setup_entity_menu', 900);
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
@@ -46,7 +45,6 @@ function _elgg_comments_page_handler($segments) {
 
 	$page = elgg_extract(0, $segments);
 	switch ($page) {
-
 		case 'edit':
 			echo elgg_view_resource('comments/edit', [
 				'guid' => elgg_extract(1, $segments),
@@ -106,9 +104,9 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 		'subtype' => 'comment',
 		'container_guid' => $container->guid,
 		'count' => true,
-		'wheres' => ["e.guid < " . (int)$comment->guid],
+		'wheres' => ["e.guid < " . (int) $comment->guid],
 	]);
-	$limit = (int)get_input('limit');
+	$limit = (int) get_input('limit');
 	if (!$limit) {
 		$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
 	}
@@ -127,37 +125,6 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$url = elgg_http_build_url($parts, false);
 	
 	forward($url);
-}
-
-/**
- * Setup the menu shown with a comment
- *
- * @param string         $hook   'register'
- * @param string         $type   'menu:entity'
- * @param \ElggMenuItem[] $return Array of \ElggMenuItem objects
- * @param array          $params Array of view vars
- *
- * @return array
- * @access private
- */
-function _elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-
-	$entity = $params['entity'];
-	if (!elgg_instanceof($entity, 'object', 'comment')) {
-		return $return;
-	}
-
-	// Remove edit link and access level from the menu
-	foreach ($return as $key => $item) {
-		if ($item->getName() === 'access') {
-			unset($return[$key]);
-		}
-	}
-
-	return $return;
 }
 
 /**
@@ -299,15 +266,15 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 	// need to override access in case comments ended up with ACCESS_PRIVATE
 	// and to ensure write permissions
 	$ia = elgg_set_ignore_access(true);
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $entity->getGUID(),
-		'wheres' => array(
+		'wheres' => [
 			"e.access_id != {$entity->access_id}"
-		),
+		],
 		'limit' => 0,
-	);
+	];
 
 	$batch = new \ElggBatch('elgg_get_entities', $options, null, 25, false);
 	foreach ($batch as $comment) {
@@ -456,6 +423,8 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
 		$commenter->getDisplayName(),
 		$commenter->getURL(),
 	], $language);
+
+	$returnvalue->url = $comment->getURL();
 	
 	return $returnvalue;
 }

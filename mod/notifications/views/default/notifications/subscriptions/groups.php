@@ -13,16 +13,16 @@ if (!$user instanceof ElggUser) {
 // the user is subscribed to
 $dbprefix = elgg_get_config('dbprefix');
 $options = [
-	'selects' => array('GROUP_CONCAT(ers.relationship) as relationships'),
+	'selects' => ['GROUP_CONCAT(ers.relationship) as relationships'],
 	'types' => 'group',
-	'joins' => array(
+	'joins' => [
 		"JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
 		"JOIN {$dbprefix}entity_relationships ers 
 			ON e.guid = ers.guid_two AND ers.guid_one = $user->guid",
-	),
-	'wheres' => array(
+	],
+	'wheres' => [
 		"ers.relationship = 'member' OR ers.relationship LIKE 'notify%'"
-	),
+	],
 	'group_by' => 'e.guid',
 	'order_by' => 'ge.name',
 	'offset_key' => 'subscriptions_groups',

@@ -9,7 +9,7 @@ elgg_register_event_handler('init', 'system', 'notifications_plugin_init');
 
 function notifications_plugin_init() {
 
-	elgg_extend_view('elgg.css','notifications.css');
+	elgg_extend_view('elgg.css', 'notifications.css');
 
 	elgg_register_page_handler('notifications', 'notifications_page_handler');
 	
@@ -127,7 +127,7 @@ function notifications_relationship_remove($event, $object_type, $relationship) 
 	}
 	
 	$methods = array_keys(_elgg_services()->notifications->getMethodsAsDeprecatedGlobal());
-	foreach($methods as $method) {
+	foreach ($methods as $method) {
 		elgg_remove_subscription($relationship->guid_one, $method, $relationship->guid_two);
 	}
 }
@@ -159,7 +159,7 @@ function notifications_update_friend_notify($event, $object_type, $relationship)
 		$collections_preferences = $user->$metaname;
 		if ($collections_preferences) {
 			if (!empty($collections_preferences) && !is_array($collections_preferences)) {
-				$collections_preferences = array($collections_preferences);
+				$collections_preferences = [$collections_preferences];
 			}
 			if (is_array($collections_preferences)) {
 				// -1 means all friends is on - should be a define
@@ -202,7 +202,7 @@ function notifications_update_collection_notify($event, $object_type, $returnval
 			continue;
 		}
 		if (!is_array($collections_preferences)) {
-			$collections_preferences = array($collections_preferences);
+			$collections_preferences = [$collections_preferences];
 		}
 		if (in_array(-1, $collections_preferences)) {
 			// if "all friends" notify is on, we don't change any notifications

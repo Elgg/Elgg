@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Bitácoras',
 	'blog:blogs' => 'Bitácoras',
 	'blog:revisions' => 'Revisións',
@@ -63,4 +63,4 @@ Véxao e deixe un comentario desde:
 	'blog:moreblogs' => 'Máis artigos',
 	'blog:numbertodisplay' => 'Número de artigos para mostrar.',
 	'blog:noblogs' => 'Non hai artigos.'
-);
+];

@@ -19,14 +19,14 @@ if (isset($vars['class'])) {
 	$vars['class'] = "elgg-input-autocomplete";
 }
 
-$defaults = array(
+$defaults = [
 	'value' => '',
 	'disabled' => false,
-);
+];
 
 $vars = array_merge($defaults, $vars);
 
-$params = array();
+$params = [];
 if (isset($vars['match_on'])) {
 	$params['match_on'] = $vars['match_on'];
 	unset($vars['match_on']);

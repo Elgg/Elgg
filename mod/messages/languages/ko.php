@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	/**
 	* Menu items and titles
 	*/
@@ -82,4 +82,4 @@ return array(
 
 	'messages:deleted_sender' => '삭제된 사용자',
 
-);
+];

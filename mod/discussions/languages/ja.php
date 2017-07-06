@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'discussion' => '会議室',
 	'discussion:add' => '議題を追加',
 	'discussion:latest' => '最新の話題',
@@ -96,4 +96,4 @@ return array(
 
 	'discussion:reply:edited' => "投稿を編集しました。",
 	'discussion:reply:error' => "投稿を編集する際に問題が発生しました。",
-);
+];

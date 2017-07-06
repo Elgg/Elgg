@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'Notificações do site',
 	'notification:method:site' => 'Site',
 	'site_notifications:topbar' => 'Notificações',
@@ -8,4 +8,4 @@ return array(
 	'site_notifications:no_access' => 'Você não tem acesso a esta página. Talvez você precise fazer login.',
 	'site_notifications:no_delete' => 'Não é possível apagar',
 	'site_notifications:empty' => 'Nenhum notificação',
-);
+];

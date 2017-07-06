@@ -109,7 +109,7 @@ function twitter_api_tweet($hook, $type, $returnvalue, $params) {
 		return;
 	}
 
-	$api->post('statuses/update', array('status' => $params['message']));
+	$api->post('statuses/update', ['status' => $params['message']]);
 }
 
 /**
@@ -119,18 +119,18 @@ function twitter_api_tweet($hook, $type, $returnvalue, $params) {
  * @param array $options
  * @return array
  */
-function twitter_api_fetch_tweets($user_guid, $options = array()) {
+function twitter_api_fetch_tweets($user_guid, $options = []) {
 
 	// check user settings
 	$access_key = elgg_get_plugin_user_setting('access_key', $user_guid, 'twitter_api');
 	$access_secret = elgg_get_plugin_user_setting('access_secret', $user_guid, 'twitter_api');
 	if (!($access_key && $access_secret)) {
-		return FALSE;
+		return false;
 	}
 
 	$api = twitter_api_get_api_object($access_key, $access_secret);
 	if (!$api) {
-		return FALSE;
+		return false;
 	}
 
 	return $api->get('statuses/user_timeline', $options);

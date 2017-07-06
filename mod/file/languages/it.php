@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -96,4 +96,4 @@ Visualizza e commenta il nuovo file:
 	'file:noaccess' => "Non hai il permesso di modificare questo file",
 	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Devi selezionare un file",
-);
+];

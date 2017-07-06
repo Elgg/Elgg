@@ -136,7 +136,6 @@ Beyond the standard ElggEntity properties, ElggUsers also support:
 -  ``name`` The user's plain text name. e.g. "Hugh Jackman"
 -  ``username`` Their login name. E.g. "hjackman"
 -  ``password`` A hashed version of their password
--  ``salt`` The salt that their password has been hashed with
 -  ``email`` Their email address
 -  ``language`` Their default language code.
 -  ``code`` Their session code (moved to a separate table in 1.9).
@@ -310,6 +309,9 @@ Each annotation has:
 -  An access permission distinct from the entity it's attached to
 -  An owner
 
+Like metadata, values are stored as strings unless the value given is a PHP integer (``is_int($value)`` is true),
+or unless the ``$vartype`` is manually specified as ``integer``.
+
 Adding an annotation
 --------------------
 
@@ -384,12 +386,14 @@ Under the hood, metadata is stored as an instance of the
 practice (although if you're interested, see the ``ElggMetadata`` class
 reference). What you need to know is:
 
--  Metadata has an owner and access ID (see note below), both of which may be different
-   to the owner of the entity it's attached to
+-  Metadata has an owner, which may be different to the owner of the entity
+   it's attached to
 -  You can potentially have multiple items of each type of metadata
    attached to a single entity
+-  Like annotations, values are stored as strings unless the value given is a PHP integer (``is_int($value)`` is true),
+   or unless the ``$value_type`` is manually specified as ``integer`` (see below).
 
-.. note:: Metadata's ``access_id`` value will be ignored in Elgg 3.0 and all metadata values will be available in all contexts.
+.. note:: As of Elgg 3.0, metadata no longer have ``access_id``.
 
 The simple case
 ---------------
@@ -418,7 +422,6 @@ Or to add a couple of tags to an object:
 When adding metadata like this:
 
 -  The owner is set to the currently logged-in user
--  Access permissions are inherited from the entity (see note below)
 -  Reassigning a piece of metadata will overwrite the old value
 
 This is suitable for most purposes. Be careful to note which attributes
@@ -429,7 +432,7 @@ built in attributes. As an example, if you changed the access id of an
 ElggObject, you need to save it or the change isn't pushed to the
 database.
 
-.. note:: Metadata's ``access_id`` value will be ignored in Elgg 3.0 and all metadata values will be available in all contexts.
+.. note:: As of Elgg 3.0, metadata's ``access_id`` property is ignored.
 
 Reading metadata
 ~~~~~~~~~~~~~~~~
@@ -478,9 +481,9 @@ defined as follows:
             $entity_guid,           // The GUID of the parent entity
             $name,                  // The name of the metadata (eg 'tags')
             $value,                 // The metadata value
-            $value_type,            // Currently either 'string' or 'integer'
+            $value_type,            // Currently either 'text' or 'integer'
             $owner_guid,            // The owner of the metadata
-            $access_id = 0,         // The access restriction
+            $ignored = null,        // Provide null here
             $allow_multiple = false // Do we have more than one value?
             )
 
@@ -489,9 +492,7 @@ the example of a date of birth attached to a user):
 
 .. code:: php
 
-    create_metadata($user_guid, 'dob', $dob_timestamp, 'integer', $_SESSION['guid'], $access_id);
-
-.. note:: ``$access_id`` will be ignored in Elgg 3.0 and all metadata values will be available in all contexts. Always set it to ``ACCESS_PUBLIC`` for compatibility with Elgg 3.0.
+    create_metadata($user_guid, 'dob', $dob_timestamp, 'integer', $_SESSION['guid']);
 
 For multiple values, you will need to iterate through and call
 ``create_metadata`` on each one. The following piece of code comes from
@@ -503,7 +504,7 @@ the profile save action:
     foreach ($value as $interval) {
         $i++;
         $multiple = ($i != 1);
-        create_metadata($user->guid, $shortname, $interval, 'text', $user->guid, $access_id, $multiple);
+        create_metadata($user->guid, $shortname, $interval, 'text', $user->guid, null, $multiple);
     }
 
 Note that the *allow multiple* setting is set to *false* in the first

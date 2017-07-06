@@ -40,3 +40,4 @@ elgg.installer.rewriteTest = function(url, success_msg, nextURL) {
 		}
 	});
 };
+

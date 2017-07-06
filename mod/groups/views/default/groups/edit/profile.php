@@ -27,7 +27,6 @@ echo elgg_view_field([
 
 // show the configured group profile fields
 foreach ($group_profile_fields as $shortname => $valtype) {
-	
 	$options = [
 		'#type' => $valtype,
 		'name' => $shortname,

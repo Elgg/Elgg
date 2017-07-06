@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Блог',
 	'blog:blogs' => 'Блоги',
 	'blog:revisions' => 'Редакции',
@@ -63,4 +63,4 @@ return array(
 	'blog:moreblogs' => 'Показать больше постов',
 	'blog:numbertodisplay' => 'Число отображаемых постов',
 	'blog:noblogs' => 'Нет постов'
-);
+];

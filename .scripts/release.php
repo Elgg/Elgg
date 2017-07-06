@@ -37,7 +37,7 @@ $branch = "release-$version";
 // Setup. Version checks are here so we fail early if any deps are missing
 run_commands([
 	"git --version",
-	"npm --version",
+	"yarn version",
 	"node --version",
 	"sphinx-build --version",
 
@@ -58,7 +58,7 @@ file_put_contents($composer_path, $json);
 run_commands(array(
 	"sphinx-build -b gettext docs docs/locale/pot",
 	"sphinx-intl build --locale-dir=docs/locale/",
-	"npm install && npm update",
+	"yarn install && yarn update",
 	"node .scripts/write-changelog.js",
 	"git add .",
 	"git commit -am \"chore(release): v$version\"",

@@ -28,19 +28,18 @@ $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 if ($full_view) {
 	$anchor = "<a name=\"comment-{$comment->getGUID()}\"></a>";
 
-	$menu = elgg_view_menu('entity', array(
+	$menu = elgg_view_menu('entity', [
 		'entity' => $comment,
 		'handler' => 'comment',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
-	));
+	]);
 	
 	if (elgg_in_context('activity')) {
-
 		$comment_text = '<div class="elgg-output elgg-inner" data-role="comment-text">';
-		$comment_text .= elgg_view('output/text', array(
+		$comment_text .= elgg_view('output/text', [
 			'value' => elgg_get_excerpt($comment->description),
-		));
+		]);
 		$comment_text .= '</div>';
 
 		$time_link = elgg_view('output/url', [
@@ -48,13 +47,12 @@ if ($full_view) {
 			'text' => $friendlytime,
 			'is_trusted' => true,
 		]);
-
 	} else {
-		$comment_text = elgg_view('output/longtext', array(
+		$comment_text = elgg_view('output/longtext', [
 			'value' => $comment->description,
 			'class' => 'elgg-inner',
 			'data-role' => 'comment-text',
-		));
+		]);
 
 		$time_link = elgg_view('output/url', [
 			'href' => $comment->getURL(),
@@ -75,12 +73,11 @@ $anchor
 HTML;
 
 	echo elgg_view_image_block($commenter_icon, $body);
-
 } else {
 	// brief view
 
 	$excerpt = elgg_get_excerpt($comment->description, 80);
-	$posted = elgg_echo('generic_comment:on', array($commenter_link, $entity_link));
+	$posted = elgg_echo('generic_comment:on', [$commenter_link, $entity_link]);
 
 	$body = <<<HTML
 <span class="elgg-subtext">

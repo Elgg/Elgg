@@ -185,7 +185,7 @@ function _elgg_rmdir($dir, $empty = false) {
 		_elgg_services()->logger->warn(__FUNCTION__ . ' called with empty $dir');
 		return true;
 	}
-	$files = array_diff(scandir($dir), array('.', '..'));
+	$files = array_diff(scandir($dir), ['.', '..']);
 	
 	foreach ($files as $file) {
 		if (is_dir("$dir/$file")) {
@@ -225,14 +225,64 @@ function elgg_flush_caches() {
 
 /**
  * Checks if /cache directory has been symlinked to views simplecache directory
- * 
+ *
  * @return bool
  * @access private
  */
 function _elgg_is_cache_symlinked() {
-	$link = elgg_get_root_path() . 'cache/';
-	$target = elgg_get_cache_path() . 'views_simplecache/';
-	return is_dir($link) && realpath($target) == realpath($link);
+	$root_path = elgg_get_root_path();
+	$cache_path = elgg_get_cache_path();
+
+	$simplecache_path = "{$cache_path}views_simplecache";
+	$symlink_path = "{$root_path}cache";
+
+	if (!is_dir($simplecache_path)) {
+		return false;
+	}
+	return is_dir($symlink_path) && realpath($simplecache_path) == realpath($symlink_path);
+}
+
+/**
+ * Symlinks /cache directory to views simplecache directory
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_symlink_cache() {
+
+	if (_elgg_is_cache_symlinked()) {
+		// Symlink exists, no need to proceed
+		return true;
+	}
+
+	$root_path = elgg_get_root_path();
+	$cache_path = elgg_get_cache_path();
+
+	$simplecache_path = "{$cache_path}views_simplecache";
+	$symlink_path = "{$root_path}cache";
+
+	if (is_dir($symlink_path)) {
+		// Cache directory already exists
+		// We can not proceed without overwriting files
+		return false;
+	}
+
+	if (!is_dir($simplecache_path)) {
+		// Views simplecache directory has not yet been created
+		mkdir($simplecache_path, 0700, true);
+	}
+
+	symlink($simplecache_path, $symlink_path);
+
+	if (_elgg_is_cache_symlinked()) {
+		return true;
+	}
+
+	if (is_dir($symlink_path)) {
+		unlink($symlink_path);
+	}
+	
+	return false;
 }
 
 /**

@@ -7,7 +7,7 @@
  * @uses $vars['list_only']
  */
 
-$list_only = (bool)elgg_extract('list_only', $vars);
+$list_only = (bool) elgg_extract('list_only', $vars);
 
 // @todo this should occur in the controller code
 _elgg_generate_plugin_entities();
@@ -17,7 +17,7 @@ $installed_plugins = elgg_get_plugins('any');
 // Get a list of the all categories
 // and trim down the plugin list if we're not viewing all categories.
 // @todo this could be cached somewhere after have the manifest loaded
-$categories = array();
+$categories = [];
 
 foreach ($installed_plugins as $id => $plugin) {
 	if (!$plugin->isValid()) {
@@ -29,7 +29,7 @@ foreach ($installed_plugins as $id => $plugin) {
 			if ($disable_plugins) {
 				// force disable and warn
 				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-						elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
+						elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getId()]));
 				$plugin->deactivate();
 			}
 		}
@@ -61,6 +61,7 @@ if ($add_context) {
 	elgg_push_context('admin');
 }
 $plugins_list = elgg_view_entity_list($installed_plugins, $list_options);
+$plugins_list .= "<div id='elgg-plugin-list-cover'></div>";
 if ($add_context) {
 	elgg_pop_context();
 }

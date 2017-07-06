@@ -4,7 +4,6 @@ namespace Elgg\Upgrade;
 
 use Elgg\Database\PrivateSettingsTable;
 use Elgg\Database\Plugins;
-use Elgg\Upgrade\Batch;
 use Elgg\Logger;
 use ElggUpgrade;
 
@@ -37,31 +36,51 @@ class Locator {
 	/**
 	 * Constructor
 	 *
-	 * @param Plugins              $plugins         Plugins
-	 * @param Logger               $logger          Logger
-	 * @param PrivateSettingsTable $privateSettings PrivateSettingsTable
+	 * @param Plugins              $plugins          Plugins
+	 * @param Logger               $logger           Logger
+	 * @param PrivateSettingsTable $private_settings PrivateSettingsTable
 	 */
-	public function __construct(
-	Plugins $plugins, Logger $logger, PrivateSettingsTable $privateSettings) {
+	public function __construct(Plugins $plugins, Logger $logger, PrivateSettingsTable $private_settings) {
 		$this->plugins = $plugins;
 		$this->logger = $logger;
-		$this->privateSettings = $privateSettings;
+		$this->privateSettings = $private_settings;
 	}
 
 	/**
 	 * Looks for upgrades and saves them as ElggUpgrade entities
 	 *
+	 * @param string[] $core_upgrades Class names of core upgrades
+	 *
 	 * @return boolean $pending_upgrades Are there pending upgrades
 	 */
-	public function run() {
+	public function run(array $core_upgrades) {
 		$pending_upgrades = false;
+
+		// Check for core upgrades
+		foreach ($core_upgrades as $class) {
+			$upgrade = $this->getUpgrade($class, 'core');
+
+			if ($upgrade) {
+				$pending_upgrades = true;
+			}
+		}
 
 		$plugins = $this->plugins->find('active');
 
+		// Check for plugin upgrades
 		foreach ($plugins as $plugin) {
-			$upgrades = $this->getUpgrades($plugin);
-			if (!empty($upgrades)) {
-				$pending_upgrades = true;
+			$batches = $plugin->getStaticConfig('upgrades');
+
+			if (empty($batches)) {
+				continue;
+			}
+
+			$plugin_id = $plugin->getID();
+
+			foreach ($batches as $class) {
+				if ($this->getUpgrade($class, $plugin_id)) {
+					$pending_upgrades = true;
+				}
 			}
 		}
 
@@ -69,62 +88,49 @@ class Locator {
 	}
 
 	/**
-	 * Creates new ElggUpgrade instance from plugin's static config
+	 * Gets intance of an ElggUpgrade based on the given class and id
 	 *
-	 * @param \ElggPlugin $plugin Plugin
-	 * @return \ElggUpgrade[]
+	 * @param string $class Class implementing Elgg\Upgrade\Batch
+	 * @param string $id    Either plugin_id or "core"
+	 * @return ElggUpgrade|null
 	 */
-	public function getUpgrades(\ElggPlugin $plugin) {
+	public function getUpgrade($class, $id) {
+		$batch = $this->getBatch($class);
 
-		$upgrades = [];
-		$batches = $plugin->getStaticConfig('upgrades');
-
-		if (empty($batches)) {
-			// No upgrades available for this plugin
-			return $upgrades;
+		if (!$batch) {
+			return;
 		}
 
-		$plugin_id = $plugin->getID();
+		$version = $batch->getVersion();
+		$upgrade_id = "{$id}:{$version}";
 
-		foreach ($batches as $class) {
-			$batch = $this->getBatch($class);
-			if (!$batch) {
-				continue;
-			}
-
-			$version = $batch::VERSION;
-			$upgrade_id = "{$plugin_id}:{$version}";
-
-			// Database holds the information of which upgrades have been processed
-			if ($this->upgradeExists($upgrade_id)) {
-				$this->logger->info("Upgrade $upgrade_id has already been processed");
-				continue;
-			}
-
-			// Create a new ElggUpgrade to represent the upgrade in the database
-			$object = new ElggUpgrade();
-			$object->setId($upgrade_id);
-			$object->setClass($class);
-			$object->title = "{$plugin_id}:upgrade:{$version}:title";
-			$object->description = "{$plugin_id}:upgrade:{$version}:description";
-			$object->offset = 0;
-
-			try {
-				$object->save();
-				$upgrades[] = $object;
-			} catch (\UnexpectedValueException $ex) {
-				$this->logger->error($ex->getMessage());
-			}
+		// Database holds the information of which upgrades have been processed
+		if ($this->upgradeExists($upgrade_id)) {
+			$this->logger->info("Upgrade $id has already been processed");
+			return;
 		}
 
-		return $upgrades;
+		// Create a new ElggUpgrade to represent the upgrade in the database
+		$object = new ElggUpgrade();
+		$object->setId($upgrade_id);
+		$object->setClass($class);
+		$object->title = "{$id}:upgrade:{$version}:title";
+		$object->description = "{$id}:upgrade:{$version}:description";
+		$object->offset = 0;
+
+		try {
+			$object->save();
+			return $object;
+		} catch (\UnexpectedValueException $ex) {
+			$this->logger->error($ex->getMessage());
+		}
 	}
 
 	/**
 	 * Validates class and returns an instance of batch
 	 *
 	 * @param string $class The fully qualified class name
-	 * @return boolean True if valid upgrade
+	 * @return Batch|false if invalid upgrade
 	 */
 	public function getBatch($class) {
 		if (!class_exists($class)) {
@@ -134,19 +140,21 @@ class Locator {
 
 		$batch = new $class;
 		if (!$batch instanceof Batch) {
-			$this->logger->error("Upgrade class $class should implement Elgg\Upgrade\Batch");
+			$this->logger->error("Upgrade class $class should implement " . Batch::class);
 			return false;
 		}
 
-		$version = $batch::VERSION;
+		// check version before shouldBeSkipped() so authors can get immediate feedback on an
+		// invalid batch.
+		$version = $batch->getVersion();
 
 		// Version must be in format yyyymmddnn
 		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
-			$this->logger->error("Upgrade $class defines an invalid upgrade version: $version");
+			$this->logger->error("Upgrade $class returned an invalid version: $version");
 			return false;
 		}
 
-		if (!$batch->isRequired()) {
+		if ($batch->shouldBeSkipped()) {
 			return false;
 		}
 
@@ -160,14 +168,17 @@ class Locator {
 	 * @return boolean
 	 */
 	public function upgradeExists($upgrade_id) {
-		$upgrade = $this->privateSettings->getEntities(array(
+		$upgrade = $this->privateSettings->getEntities([
 			'type' => 'object',
 			'subtype' => 'elgg_upgrade',
-			'private_setting_name' => 'id',
-			'private_setting_value' => $upgrade_id,
-		));
+			'private_setting_name_value_pairs' => [
+				[
+					'name' => 'id',
+					'value' => (string) $upgrade_id,
+				],
+			],
+		]);
 
 		return !empty($upgrade);
 	}
-
 }

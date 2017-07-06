@@ -64,7 +64,7 @@ final class Fly implements Directory {
 
 	/** @inheritDoc */
 	public function getContents($path) {
-		return (string)$this->fs->read($this->getInternalPath($path));
+		return (string) $this->fs->read($this->getInternalPath($path));
 	}
 
 	/** @inheritDoc */

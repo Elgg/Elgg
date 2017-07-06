@@ -52,8 +52,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 		_elgg_filestore_init(); // we will need simpletype hook to work
 
 		$this->hooks = new \Elgg\PluginHooksService();
-		$path_key = \Elgg\Application::GET_PATH_KEY;
-		$this->request = \Elgg\Http\Request::create("?$path_key=action/upload");
+		$this->request = \Elgg\Http\Request::create("/action/upload");
 		$this->logger = new \Elgg\Logger($this->hooks, $this->config(), new \Elgg\Context());
 
 		$this->setupMockServices(false);
@@ -879,8 +878,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 	 */
 	public function testServeIconSends400ForMalformattedRequest() {
 
-		$path_key = \Elgg\Application::GET_PATH_KEY;
-		$this->request = \Elgg\Http\Request::create("?$path_key=serve-icon/x/large");
+		$this->request = \Elgg\Http\Request::create("/serve-icon/x/large");
 
 		$service = $this->createService();
 		$service->setCurrentTime();
@@ -897,8 +895,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 	 */
 	public function testServeIconSends404ForNonExistentGuid() {
 
-		$path_key = \Elgg\Application::GET_PATH_KEY;
-		$this->request = \Elgg\Http\Request::create("?$path_key=serve-icon/55/small");
+		$this->request = \Elgg\Http\Request::create("/serve-icon/55/small");
 
 		$service = $this->createService();
 		$service->setCurrentTime();
@@ -919,8 +916,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 		$file->owner_guid = 1;
 		$file->setFilename('600x300.jpg');
 
-		$path_key = \Elgg\Application::GET_PATH_KEY;
-		$this->request = \Elgg\Http\Request::create("?$path_key=serve-icon/{$this->entity->guid}/small");
+		$this->request = \Elgg\Http\Request::create("/serve-icon/{$this->entity->guid}/small");
 
 		$service = $this->createService();
 		$service->setCurrentTime();

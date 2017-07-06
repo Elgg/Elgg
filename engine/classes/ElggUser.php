@@ -141,7 +141,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 		
-		$guid = (int)$this->guid;
+		$guid = (int) $this->guid;
 		$name = sanitize_string($this->name);
 		$username = sanitize_string($this->username);
 		$password_hash = sanitize_string($this->password_hash);
@@ -154,6 +154,24 @@ class ElggUser extends \ElggEntity
 			WHERE guid = $guid";
 
 		return $this->getDatabase()->updateData($query) !== false;
+	}
+
+	/**
+	 * Get user language or default to site language
+	 *
+	 * @param string $fallback If this is provided, it will be returned if the user doesn't have a language set.
+	 *                         If null, the site language will be returned.
+	 *
+	 * @return string
+	 */
+	public function getLanguage($fallback = null) {
+		if (!empty($this->language)) {
+			return $this->language;
+		}
+		if ($fallback !== null) {
+			return $fallback;
+		}
+		return elgg_get_config('language');
 	}
 
 	/**
@@ -184,7 +202,7 @@ class ElggUser extends \ElggEntity
 			case 'last_login':
 			case 'prev_last_login':
 				if ($value !== null) {
-					$this->attributes[$name] = (int)$value;
+					$this->attributes[$name] = (int) $value;
 				} else {
 					$this->attributes[$name] = null;
 				}
@@ -311,12 +329,12 @@ class ElggUser extends \ElggEntity
 		}
 
 		if ($create_river_item) {
-			elgg_create_river_item(array(
+			elgg_create_river_item([
 				'view' => 'river/relationship/friend/create',
 				'action_type' => 'friend',
 				'subject_guid' => $this->guid,
 				'object_guid' => $friend_guid,
-			));
+			]);
 		}
 
 		return true;
@@ -349,7 +367,7 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isFriendsWith($user_guid) {
-		return (bool)check_entity_relationship($this->guid, "friend", $user_guid);
+		return (bool) check_entity_relationship($this->guid, "friend", $user_guid);
 	}
 
 	/**
@@ -360,7 +378,7 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isFriendOf($user_guid) {
-		return (bool)check_entity_relationship($user_guid, "friend", $this->guid);
+		return (bool) check_entity_relationship($user_guid, "friend", $this->guid);
 	}
 
 	/**
@@ -501,7 +519,7 @@ class ElggUser extends \ElggEntity
 	 *       'ajax' => false, // disabled
 	 *    ]
 	 * </code>
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getNotificationSettings() {

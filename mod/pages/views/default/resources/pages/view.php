@@ -41,19 +41,19 @@ $content = elgg_view_entity($page, [
 // can add subpage if can edit this page and write to container (such as a group)
 if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
 	$url = "pages/add/$page->guid";
-	elgg_register_menu_item('title', array(
+	elgg_register_menu_item('title', [
 			'name' => 'subpage',
 			'href' => $url,
 			'text' => elgg_echo('pages:newchild'),
 			'link_class' => 'elgg-button elgg-button-action',
-	));
+	]);
 }
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar/navigation'),
-));
+]);
 
 echo elgg_view_page($title, $body);

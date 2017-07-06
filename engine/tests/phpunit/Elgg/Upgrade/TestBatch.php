@@ -4,11 +4,16 @@ namespace Elgg\Upgrade;
 
 class TestBatch implements \Elgg\Upgrade\Batch {
 
-	const INCREMENT_OFFSET = true;
-	const VERSION = 2016101900;
+	public function getVersion() {
+		return 2016101900;
+	}
 
-	public function isRequired() {
+	public function needsIncrementOffset() {
 		return true;
+	}
+
+	public function shouldBeSkipped() {
+		return false;
 	}
 
 	public function countItems() {

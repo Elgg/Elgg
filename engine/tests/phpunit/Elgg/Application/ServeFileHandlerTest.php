@@ -43,8 +43,7 @@ class ServeFileHandlerTest extends \Elgg\TestCase {
 		$site_url = elgg_get_site_url();
 		$url = $file->getURL();
 		$path = substr($url, strlen($site_url));
-		$path_key = \Elgg\Application::GET_PATH_KEY;
-		$request = \Elgg\Http\Request::create("?$path_key=$path");
+		$request = \Elgg\Http\Request::create("/$path");
 
 		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
 		$session_id = _elgg_services()->session->getId();

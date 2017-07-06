@@ -8,7 +8,7 @@ use stdClass;
 
 /**
  * Subscription notification event
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @deprecated 2.3
@@ -32,11 +32,11 @@ class Event implements NotificationEvent {
 	 * @param ElggData   $object The object of the event (ElggEntity)
 	 * @param string     $action The name of the action (default: create)
 	 * @param ElggEntity $actor  The entity that caused the event (default: logged in user)
-	 * 
+	 *
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct(ElggData $object, $action, ElggEntity $actor = null) {
-		if (get_class($this) == Event::class || get_class($this) == Elgg_Notifications_Event::class) {
+		if (get_class($this) == Event::class) {
 			_elgg_services()->deprecation->sendNotice(__CLASS__ . ' is deprecated. '
 					. 'Use ' . SubscriptionNotificationEvent::class . ' instead', '2.3');
 		}
@@ -89,7 +89,7 @@ class Event implements NotificationEvent {
 	 * @note Note that the actor and the object of the notification event
 	 * may have been deleted/disabled since the event was serialized and
 	 * stored in the database.
-	 * 
+	 *
 	 * @return ElggData|false|null
 	 */
 	public function getObject() {
@@ -137,14 +137,4 @@ class Event implements NotificationEvent {
 		return $obj;
 	}
 }
-
-/**
- * Notification event
- * 
- * @package    Elgg.Core
- * @subpackage Notifications
- * @since      1.9.0
- * @deprecated 2.3
- */
-class Elgg_Notifications_Event extends Event {}
 

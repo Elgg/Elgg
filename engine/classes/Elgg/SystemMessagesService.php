@@ -94,7 +94,7 @@ class SystemMessagesService {
 	 */
 	public function addSuccessMessage($message) {
 		$set = $this->loadRegisters();
-		foreach ((array)$message as $str) {
+		foreach ((array) $message as $str) {
 			$set->success[] = $str;
 		}
 		$this->saveRegisters($set);
@@ -109,7 +109,7 @@ class SystemMessagesService {
 	 */
 	public function addErrorMessage($error) {
 		$set = $this->loadRegisters();
-		foreach ((array)$error as $str) {
+		foreach ((array) $error as $str) {
 			$set->error[] = $str;
 		}
 		$this->saveRegisters($set);
@@ -121,7 +121,7 @@ class SystemMessagesService {
 	 * @return RegisterSet
 	 */
 	public function loadRegisters() {
-		$registers = $this->session->get(self::SESSION_KEY, array());
+		$registers = $this->session->get(self::SESSION_KEY, []);
 		$set = new RegisterSet();
 		foreach ($registers as $key => $register) {
 			$set->{$key} = $register;

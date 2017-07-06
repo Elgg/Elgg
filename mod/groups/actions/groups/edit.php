@@ -11,7 +11,7 @@
 elgg_make_sticky_form('groups');
 
 // Get group fields
-$input = array();
+$input = [];
 foreach (elgg_get_config('group') as $shortname => $valuetype) {
 	$value = get_input($shortname);
 
@@ -115,7 +115,7 @@ if ($group->membership === null || $value !== null) {
 	$group->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
 }
 
-$group->setContentAccessMode((string)get_input('content_access_mode'));
+$group->setContentAccessMode((string) get_input('content_access_mode'));
 
 if ($is_new_group) {
 	$group->access_id = ACCESS_PUBLIC;
@@ -124,7 +124,7 @@ if ($is_new_group) {
 $old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
 
 $value = get_input('owner_guid');
-$new_owner_guid = ($value === null) ? $old_owner_guid : (int)$value;
+$new_owner_guid = ($value === null) ? $old_owner_guid : (int) $value;
 
 if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 	// verify new owner is member and old owner/admin is logged in
@@ -154,7 +154,7 @@ if ($is_new_group) {
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$value = get_input('vis');
 	if ($is_new_group || $value !== null) {
-		$visibility = (int)$value;
+		$visibility = (int) $value;
 
 		if ($visibility == ACCESS_PRIVATE) {
 			// Make this group visible only to group members. We need to use
@@ -179,17 +179,16 @@ elgg_clear_sticky_form('groups');
 
 // group creator needs to be member of new group and river entry created
 if ($is_new_group) {
-
 	// @todo this should not be necessary...
 	elgg_set_page_owner_guid($group->guid);
 
 	$group->join($user);
-	elgg_create_river_item(array(
+	elgg_create_river_item([
 		'view' => 'river/group/create',
 		'action_type' => 'create',
 		'subject_guid' => $user->guid,
 		'object_guid' => $group->guid,
-	));
+	]);
 }
 
 $group->saveIconFromUploadedFile('icon');

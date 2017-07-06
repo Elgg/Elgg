@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => '输入搜索词',
 	'search:no_results' => '没有结果。',
 	'search:matched' => '匹配：',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'by',
 	'search:unavailable_entity' => '不可用实体',
 	'search:unknown_entity' => '未知的实体类型',
-);
+];

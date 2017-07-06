@@ -3,8 +3,8 @@
  * Output view for elgg_get_excerpt
  *
  * @uses $vars['text'] The text to get the excerpt for
- * @uses $vars['num_chars'] The max number of characters of the excerpt 
- * @uses $vars['suffix'] The suffix to be added if text is cut 
+ * @uses $vars['num_chars'] The max number of characters of the excerpt
+ * @uses $vars['suffix'] The suffix to be added if text is cut
  */
 
 $text = elgg_extract('text', $vars);

@@ -3,7 +3,7 @@
  * Configure site maintenance mode
  */
 
-$mode = (int)get_input('mode');
+$mode = (int) get_input('mode');
 $message = get_input('message');
 
 $site = elgg_get_site_entity();

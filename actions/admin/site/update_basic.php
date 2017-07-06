@@ -25,7 +25,7 @@ $site->save();
 
 elgg_save_config('language', get_input('language'));
 
-$default_limit = (int)get_input('default_limit');
+$default_limit = (int) get_input('default_limit');
 if ($default_limit < 1) {
 	register_error(elgg_echo('admin:configuration:default_limit'));
 	forward(REFERER);

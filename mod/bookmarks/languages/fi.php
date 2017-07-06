@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Lue ja kommentoi kirjanmerkkiä:
 	'bookmarks:save:invalid' => "Kirjanmerkin osoite oli virheellinen, joten sitä ei voitu tallentaa.",
 	'bookmarks:delete:failed' => "Kirjanmerkin poistaminen epäonnistui. Yritä uudelleen.",
 	'bookmarks:unknown_bookmark' => 'Kirjanmerkkiä ei löytynyt',
-);
+];

@@ -1,23 +1,33 @@
-define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
-	var ajax = new Ajax();
-	
+define(function(require) {
+	var $ = require('jquery');
+	var elgg = require('elgg');
+	var Ajax = require('elgg/Ajax');
+	var spinner = require('elgg/spinner');
+
+	// manage Spinner manually
+	var ajax = new Ajax(false);
+
 	$(document).on('submit', '.elgg-form-login', function(e) {
 		var $form = $(this);
 
+		spinner.start();
 		ajax.action($form.prop('action'), {
 			data: ajax.objectify($form)
-		}).success(function(json, status, xhr) {
-			if (typeof json.forward !== 'undefined') {
+		}).done(function(json, status, jqXHR) {
+			if (jqXHR.AjaxData.status == -1) {
+				$('input[name=password]', $form).val('').focus();
+				spinner.stop();
+				return;
+			}
+
+			if (json && (typeof json.forward === 'string')) {
 				elgg.forward(json.forward);
-			} else if (json === '') {
-				// BC fallback if action did not return a forward url
-				// elgg_ok_response will have the forward url
-				// elgg_error_response will have the error text
-				// everything else is unknown, so forward
-				elgg.forward();				
+			} else {
+				elgg.forward();
 			}
 		});
-		
+
 		e.preventDefault();
 	});
 });
+

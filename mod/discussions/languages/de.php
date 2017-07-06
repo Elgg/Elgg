@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'discussion' => 'Diskussionen',
 	'discussion:add' => 'Neue Diskussion hinzufügen',
 	'discussion:latest' => 'Neueste Diskussionen',
@@ -96,4 +96,4 @@ Schau Dir die Diskussion an und antworte selbst darauf:
 
 	'discussion:reply:edited' => "Die Änderung wurde gespeichert.",
 	'discussion:reply:error' => "Beim Speichern der Änderung ist ein Problem aufgetreten.",
-);
+];

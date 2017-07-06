@@ -7,9 +7,9 @@ $item = ElggMenuItem::factory([
 	'deps' => ['theme_sandbox/navigation/require'],
 ]);
 
-$params = array();
-$params['menu'] = array();
-$params['menu']['default'] = array();
+$params = [];
+$params['menu'] = [];
+$params['menu']['default'] = [];
 $params['menu']['default'][] = $item;
 $params['name'] = 'require';
 $params['class'] = 'elgg-menu-hz';
@@ -17,7 +17,7 @@ $params['class'] = 'elgg-menu-hz';
 ?>
 
 <div class="theme-sandbox-demo-sidebar">
-<?php 
+<?php
 	echo elgg_view('navigation/menu/default', $params);
 ?>
 </div>

@@ -173,9 +173,9 @@ function discussion_redirect_to_reply($reply_guid, $fallback_guid) {
 		'subtype' => $reply->getSubtype(),
 		'container_guid' => $topic->guid,
 		'count' => true,
-		'wheres' => ["e.guid < " . (int)$reply->guid],
+		'wheres' => ["e.guid < " . (int) $reply->guid],
 	]);
-	$limit = (int)get_input('limit', 0);
+	$limit = (int) get_input('limit', 0);
 	if (!$limit) {
 		$limit = _elgg_services()->config->get('default_limit');
 	}
@@ -285,15 +285,15 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($object, 'object', 'discussion')) {
 		/* @var $object ElggObject */
 		if ($object->canWriteToContainer(0, 'object', 'discussion_reply')) {
-				$options = array(
+				$options = [
 				'name' => 'reply',
 				'href' => "#discussion-reply-{$object->guid}",
 				'text' => elgg_view_icon('speech-bubble'),
 				'title' => elgg_echo('reply:this'),
 				'rel' => 'toggle',
 				'priority' => 50,
-			);
-			$return[] = ElggMenuItem::factory($options);
+				];
+				$return[] = ElggMenuItem::factory($options);
 		}
 	} else if (elgg_instanceof($object, 'object', 'discussion_reply')) {
 		/* @var $object ElggDiscussionReply */
@@ -327,15 +327,15 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('discussion:topic:notify:subject', array($title), $language);
-	$notification->body = elgg_echo('discussion:topic:notify:body', array(
+	$notification->subject = elgg_echo('discussion:topic:notify:subject', [$title], $language);
+	$notification->body = elgg_echo('discussion:topic:notify:body', [
 		$owner->name,
 		$title,
 		$descr,
 		$entity->getURL()
-	), $language);
-	$notification->summary = elgg_echo('discussion:topic:notify:summary', array($entity->title), $language);
-
+	], $language);
+	$notification->summary = elgg_echo('discussion:topic:notify:summary', [$entity->title], $language);
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 
@@ -354,15 +354,16 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 	$poster = $reply->getOwnerEntity();
 	$language = elgg_extract('language', $params);
 
-	$notification->subject = elgg_echo('discussion:reply:notify:subject', array($topic->title), $language);
-	$notification->body = elgg_echo('discussion:reply:notify:body', array(
+	$notification->subject = elgg_echo('discussion:reply:notify:subject', [$topic->title], $language);
+	$notification->body = elgg_echo('discussion:reply:notify:body', [
 		$poster->name,
 		$topic->title,
 		$reply->description,
 		$reply->getURL(),
-	), $language);
-	$notification->summary = elgg_echo('discussion:reply:notify:summary', array($topic->title), $language);
-
+	], $language);
+	$notification->summary = elgg_echo('discussion:reply:notify:summary', [$topic->title], $language);
+	$notification->url = $reply->getURL();
+	
 	return $notification;
 }
 
@@ -508,12 +509,12 @@ function discussion_update_reply_access_ids($event, $type, $object) {
 	}
 
 	$ia = elgg_set_ignore_access(true);
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'discussion_reply',
 		'container_guid' => $object->getGUID(),
 		'limit' => 0,
-	);
+	];
 	$batch = new ElggBatch('elgg_get_entities', $options);
 	foreach ($batch as $reply) {
 		if ($reply->access_id == $object->access_id) {
@@ -554,28 +555,27 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	// Reply has the same access as the topic so no need to view it
-	$remove = array('access');
+	$remove = [];
 
 	$user = elgg_get_logged_in_user_entity();
 
 	// Allow discussion topic owner, group owner and admins to edit and delete
 	if ($reply->canEdit() && !elgg_in_context('activity')) {
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = ElggMenuItem::factory([
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
 			'href' => "discussion/reply/edit/{$reply->guid}",
 			'priority' => 150,
-		));
+		]);
 
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = ElggMenuItem::factory([
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete'),
 			'href' => "action/discussion/reply/delete?guid={$reply->guid}",
 			'priority' => 150,
 			'is_action' => true,
 			'confirm' => elgg_echo('deleteconfirm'),
-		));
+		]);
 	} else {
 		// Edit and delete links can be removed from all other users
 		$remove[] = 'edit';
@@ -612,10 +612,10 @@ function discussion_search_discussion($hook, $type, $value, $params) {
 	}
 
 	unset($params["subtype"]);
-	$params["subtypes"] = array("discussion", "discussion_reply");
+	$params["subtypes"] = ["discussion", "discussion_reply"];
 
 	// trigger the 'normal' object search as it can handle the added options
-	return elgg_trigger_plugin_hook('search', 'object', $params, array());
+	return elgg_trigger_plugin_hook('search', 'object', $params, []);
 }
 
 /**
@@ -624,9 +624,9 @@ function discussion_search_discussion($hook, $type, $value, $params) {
  * @param ElggObject $topic Topic object if editing
  * @return array
  */
-function discussion_prepare_form_vars($topic = NULL) {
+function discussion_prepare_form_vars($topic = null) {
 	// input names => defaults
-	$values = array(
+	$values = [
 		'title' => '',
 		'description' => '',
 		'status' => '',
@@ -635,7 +635,7 @@ function discussion_prepare_form_vars($topic = NULL) {
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
 		'topic' => $topic,
-	);
+	];
 
 	if ($topic) {
 		foreach (array_keys($values) as $field) {

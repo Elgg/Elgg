@@ -50,8 +50,10 @@ define(function (require) {
 			var value = textArea.val();
 			var result = textArea.val();
 			// this is a temporary work-around for #3971
-			if (content.indexOf('thumbnail.php') != -1) {
-				content = content.replace('size=small', 'size=medium');
+			if (content.indexOf('/serve-icon/') != -1) {
+				content = content.replace(/\/serve-icon\/[0-9]*\/small/g, function replacer(match) {
+					return match.replace('small', 'medium');
+				});
 			}
 
 			textArea.focus();
@@ -116,9 +118,7 @@ define(function (require) {
 							$('.embed-throbber').hide();
 							$('.embed-wrapper .elgg-form-file-upload').show();
 						}
-					}
-
-					// ie 7 and 8 have a null response because of the use of an iFrame
+					} // ie 7 and 8 have a null response because of the use of an iFrame
 					// so just show the list after upload.
 					// http://jquery.malsup.com/form/#file-upload claims you can wrap JSON
 					// in a textarea, but a quick test didn't work, and that is fairly
@@ -177,3 +177,4 @@ define(function (require) {
 
 	return embed;
 });
+

@@ -5,9 +5,9 @@
 
 $title =  elgg_view_title(elgg_echo('embed:media'));
 
-$menu = elgg_view_menu('embed', array(
+$menu = elgg_view_menu('embed', [
 	'sort_by' => 'priority'
-));
+]);
 
 $selected = elgg_get_config('embed_tab');
 if ($selected->getData('view')) {
@@ -23,14 +23,14 @@ if ($selected->getData('view')) {
 	}
 }
 
-$tab .= elgg_view('graphics/ajax_loader', array(
+$tab .= elgg_view('graphics/ajax_loader', [
 	'class' => 'embed-throbber mtl',
-));
+]);
 
-$container_info = elgg_view('input/hidden', array(
+$container_info = elgg_view('input/hidden', [
 	'name' => 'embed_container_guid',
 	'value' => elgg_get_page_owner_guid(),
-));
+]);
 
 echo <<<HTML
 <div class="embed-wrapper">

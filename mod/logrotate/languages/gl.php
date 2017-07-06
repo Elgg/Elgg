@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Con que frecuencia debe arquivarse o rexistro do sistema?',
 
 	'logrotate:logrotated' => "Rotouse o rexistro\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Eliminouse o rexistro.\n",
 	'logrotate:lognotdeleted' => "Non se eliminou ningún rexistro.\n",
-);
+];

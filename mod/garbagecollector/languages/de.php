@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Wie oft soll der Garbage Collector ausgeführt werden?',
 
 	'garbagecollector:weekly' => 'Einmal pro Woche',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Entfernen nicht-verlinkter Metastrings: ',
-);
+];

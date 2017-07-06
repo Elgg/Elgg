@@ -2,29 +2,36 @@
 
 namespace Elgg\Groups\Upgrades;
 
+use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\Result;
+
 /**
  * Moves group icons owned by user to directory owned by the groups itself.
  *
  * BEFORE: /dataroot/<bucket>/<owner_guid>/groups/<group_guid><size>.jpg
  * AFTER:  /dataroot/<bucket>/<group_guid>/icons/icon/<size>.jpg
  */
-class GroupIconTransfer implements \Elgg\Upgrade\Batch {
+class GroupIconTransfer implements Batch {
 
-	const INCREMENT_OFFSET = true;
+	public function getVersion() {
+		return 2016101900;
+	}
 
-	const VERSION = 2016101900;
+	public function needsIncrementOffset() {
+		return true;
+	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isRequired() {
+	public function shouldBeSkipped() {
 		$groups = elgg_get_entities_from_metadata([
 			'types' => 'group',
 			'metadata_names' => 'icontime',
 		]);
 
 		if (empty($groups)) {
-			return false;
+			return true;
 		}
 
 		$group = array_pop($groups);
@@ -46,11 +53,11 @@ class GroupIconTransfer implements \Elgg\Upgrade\Batch {
 			$filestorename = "{$dataroot}{$dir}{$prefix}{$filename}";
 			if (file_exists($filestorename)) {
 				// A group icon was found meaning that the upgrade is needed.
-				return true;
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	/**
@@ -66,7 +73,7 @@ class GroupIconTransfer implements \Elgg\Upgrade\Batch {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function run(\Elgg\Upgrade\Result $result, $offset) {
+	public function run(Result $result, $offset) {
 
 		$groups = elgg_get_entities([
 			'types' => 'group',
@@ -89,11 +96,11 @@ class GroupIconTransfer implements \Elgg\Upgrade\Batch {
 	 * In 3.0, we are moving these to default filestore location
 	 * relative to group's filestore directory
 	 *
-	 * @param \ElggGroup           $group  Group entity
-	 * @param \Elgg\Upgrade\Result $result Upgrade result
-	 * @return \Elgg\Upgrade\Result
+	 * @param \ElggGroup $group  Group entity
+	 * @param Result     $result Upgrade result
+	 * @return Result
 	 */
-	public function transferIcons(\ElggGroup $group, \Elgg\Upgrade\Result $result) {
+	public function transferIcons(\ElggGroup $group, Result $result) {
 
 		$sizes = elgg_get_icon_sizes('group', $group->getSubtype());
 

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Strumenti',
 	'admin:develop_tools:sandbox' => 'Sandbox per i temi',
@@ -86,4 +86,4 @@ return array(
 	'developers:settings:success' => 'Impostazioni salvate e cache rinfrescata',
 
 	'developers:amd' => 'AMD',
-);
+];

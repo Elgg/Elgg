@@ -55,12 +55,12 @@ class EntityCache {
 	 *
 	 * @param int $guid The GUID
 	 *
-	 * @return \ElggEntity|false false if entity not cached, or not fully loaded
+	 * @return \ElggEntity|false false if entity not cached
 	 */
 	public function get($guid) {
 		$guid = (int) $guid;
 
-		if (isset($this->entities[$guid]) && $this->entities[$guid]->isFullyLoaded()) {
+		if (isset($this->entities[$guid])) {
 			return $this->entities[$guid];
 		}
 
@@ -69,7 +69,7 @@ class EntityCache {
 
 	/**
 	 * Returns cached user entity by username
-	 * 
+	 *
 	 * @param string $username Username
 	 * @return \ElggUser|false
 	 */
@@ -119,7 +119,7 @@ class EntityCache {
 	 * @return void
 	 */
 	public function remove($guid) {
-		$guid = (int)$guid;
+		$guid = (int) $guid;
 		
 		if (!isset($this->entities[$guid])) {
 			return;

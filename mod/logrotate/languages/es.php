@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => '&iquest;Qu&eacute; frecuencioa deseas para rotar los registros?',
 
 	'logrotate:logrotated' => "Registro rotado\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Registro borrado\n",
 	'logrotate:lognotdeleted' => "Ningún log fue eliminado",
-);
+];

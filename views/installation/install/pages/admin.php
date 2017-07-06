@@ -9,9 +9,9 @@ $vars['type'] = 'admin';
 
 $url = current_page_url();
 
-$form_vars = array(
+$form_vars = [
 	'action' => $url,
-	'disable_security' => TRUE,
-);
+	'disable_security' => true,
+];
 
 echo elgg_view_form('install/template', $form_vars, $vars);

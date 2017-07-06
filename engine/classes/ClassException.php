@@ -7,4 +7,5 @@
  * @package    Elgg.Core
  * @subpackage Exceptions.Stub
  */
-class ClassException extends \Exception {}
+class ClassException extends \Exception {
+}

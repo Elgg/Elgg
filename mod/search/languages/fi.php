@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Syötä hakusana:',
 	'search:no_results' => 'Ei hakutuloksia.',
 	'search:matched' => 'Matched: ',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'käyttäjältä',
 	'search:unavailable_entity' => 'Kohde, jota ei saatavilla',
 	'search:unknown_entity' => 'Tuntematon kohdetyyppi',
-);
+];

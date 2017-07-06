@@ -11,7 +11,12 @@ elgg.ui.init = function () {
 	// if the user clicks a system message (not a link inside one), make it disappear
 	$(document).on('click', '.elgg-system-messages li', function(e) {
 		if (!$(e.target).is('a')) {
-			$(this).stop().fadeOut('fast');
+			var $this = $(this);
+
+			// slideUp allows dismissals without notices shifting around unpredictably
+			$this.clearQueue().slideUp(100, function () {
+				$this.remove();
+			});
 		}
 	});
 
@@ -23,8 +28,6 @@ elgg.ui.init = function () {
 	require(['elgg/popup'], function(popup) {
 		popup.bind($('[rel="popup"]'));
 	});
-
-	$(document).on('click', '.elgg-menu-page .elgg-menu-parent', elgg.ui.toggleMenu);
 
     $(document).on('click', '*[data-confirm], .elgg-requires-confirmation', elgg.ui.requiresConfirmation);
     if ($('.elgg-requires-confirmation').length > 0) {
@@ -86,18 +89,6 @@ elgg.ui.toggles = function(event) {
 };
 
 /**
- * Toggles a child menu when the parent is clicked
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.toggleMenu = function(event) {
-	$(this).siblings().slideToggle('medium');
-	$(this).toggleClass('elgg-menu-closed elgg-menu-opened');
-	event.preventDefault();
-};
-
-/**
  * Initialize the hover menu
  *
  * @param {Object} parent
@@ -126,7 +117,7 @@ elgg.ui.initHoverMenu = function(parent) {
 				if (data) {
 					// replace all existing placeholders with new menu
 					$all_placeholders.removeClass('elgg-ajax-loader')
-						.html($(data).children());
+						.html($(data));
 				}
 			}
 		});
@@ -136,17 +127,9 @@ elgg.ui.initHoverMenu = function(parent) {
 		parent = document;
 	}
 
-	// avatar image menu link
-	$(parent).on('mouseover', ".elgg-avatar", function() {
-		$(this).children(".elgg-icon-hover-menu").show();
-	})
-	.on('mouseout', '.elgg-avatar', function() {
-		$(this).children(".elgg-icon-hover-menu").hide();
-	});
-
-
 	// avatar contextual menu
-	$(document).on('click', ".elgg-avatar > .elgg-icon-hover-menu", function(e) {
+	$(document).on('click', ".elgg-avatar > a", function(e) {
+		e.preventDefault();
 
 		var $icon = $(this);
 
@@ -171,7 +154,7 @@ elgg.ui.initHoverMenu = function(parent) {
 			} else {
 				popup.open($icon, $hovermenu, {
 					'my': 'left top',
-					'at': 'right-15px bottom',
+					'at': 'left top',
 					'of': $icon.closest(".elgg-avatar"),
 					'collision': 'fit fit'
 				});
@@ -192,25 +175,6 @@ elgg.ui.requiresConfirmation = function(e) {
 	if (!confirm(confirmText)) {
 		return false;
 	}
-};
-
-/**
- * Repositions the login popup
- *
- * @param {String} hook    'getOptions'
- * @param {String} type    'ui.popup'
- * @param {Object} params  An array of info about the target and source.
- * @param {Object} options Options to pass to
- *
- * @return {Object}
- */
-elgg.ui.loginHandler = function(hook, type, params, options) {
-	if (params.target.attr('id') == 'login-dropdown-box') {
-		options.my = 'right top';
-		options.at = 'right bottom';
-		return options;
-	}
-	return null;
 };
 
 /**
@@ -281,4 +245,3 @@ elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);

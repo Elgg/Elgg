@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Eines',
 	'admin:develop_tools:sandbox' => 'Proves del tema',
@@ -79,4 +79,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Configuracions desades',
-);
+];

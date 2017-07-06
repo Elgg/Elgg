@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Quanto di frequente devono essere archiviati i log di sistema?',
 
 	'logrotate:logrotated' => "Log ruotati\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Log eliminato\n",
 	'logrotate:lognotdeleted' => "Nessun log eliminato\n",
-);
+];

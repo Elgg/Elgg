@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Niezatwierdzony',
 	
 	'email:validate:subject' => "%s proszę potwierdź swój adres e-mail!",
@@ -44,4 +44,4 @@ Proszę potwierdź swój adres e-mail poprzez klikniecie poniższego linku :
 	'uservalidationbyemail:messages:resent_validation' => 'Wysłano e-mail potwierdzający.',
 	'uservalidationbyemail:messages:resent_validations' => 'Wysłano e-maile potwierdzające do wszystkich zaznaczonych użytkowników.'
 
-);
+];

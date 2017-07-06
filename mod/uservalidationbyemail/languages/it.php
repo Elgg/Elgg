@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Non convalidato',
 	
 	'email:validate:subject' => "%s per favore conferma il tuo indirizzo email per %s!",
@@ -51,4 +51,4 @@ Controlla anche la cartella Spam, potrebbe succedere che al primo invio da parte
 	'uservalidationbyemail:messages:resent_validation' => 'Richiesta di validazione reinviata',
 	'uservalidationbyemail:messages:resent_validations' => 'Richieste di validazione reinviate a tutti gli utenti selezionati'
 
-);
+];

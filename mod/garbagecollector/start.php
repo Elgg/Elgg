@@ -33,13 +33,13 @@ function garbagecollector_cron($hook, $entity_type, $returnvalue, $params) {
 
 	// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
 	$rv = true;
-	$period = elgg_get_plugin_setting('period','garbagecollector');
-	elgg_trigger_plugin_hook('gc', 'system', array('period' => $period));
+	$period = elgg_get_plugin_setting('period', 'garbagecollector');
+	elgg_trigger_plugin_hook('gc', 'system', ['period' => $period]);
 
 	// Now we optimize all tables
 	$tables = garbagecollector_get_tables();
 	foreach ($tables as $table) {
-		echo elgg_echo('garbagecollector:optimize', array($table));
+		echo elgg_echo('garbagecollector:optimize', [$table]);
 
 		if (garbagecollector_optimize_table($table) !== false) {
 			echo elgg_echo('garbagecollector:ok');
@@ -68,7 +68,7 @@ function garbagecollector_get_tables() {
 	$table_prefix = elgg_get_config('dbprefix');
 	$result = get_data("SHOW TABLES LIKE '$table_prefix%'");
 
-	$tables = array();
+	$tables = [];
 	if (is_array($result) && !empty($result)) {
 		foreach ($result as $row) {
 			$row = (array) $row;
@@ -102,12 +102,12 @@ function garbagecollector_optimize_table($table) {
 function garbagecollector_entities() {
 	$dbprefix = elgg_get_config('dbprefix');
 
-	$tables = array(
+	$tables = [
 		'site' => 'sites_entity',
 		'object' => 'objects_entity',
 		'group' => 'groups_entity',
 		'user' => 'users_entity',
-	);
+	];
 
 	foreach ($tables as $type => $table) {
 		delete_data("DELETE FROM {$dbprefix}{$table}

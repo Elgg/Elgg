@@ -2,7 +2,7 @@
 
 /**
  * Friends preferences
- * 
+ *
  * @uses $vars['user'] Subscriber
  */
 $user = elgg_extract('user', $vars);
@@ -13,16 +13,16 @@ if (!$user instanceof ElggUser) {
 // Returns a list of all friends, as well as anyone else who the user is subscribed to
 $dbprefix = elgg_get_config('dbprefix');
 $options = [
-	'selects' => array('GROUP_CONCAT(ers.relationship) as relationships'),
+	'selects' => ['GROUP_CONCAT(ers.relationship) as relationships'],
 	'types' => 'user',
-	'joins' => array(
+	'joins' => [
 		"JOIN {$dbprefix}users_entity ue ON ue.guid = e.guid",
 		"JOIN {$dbprefix}entity_relationships ers 
 			ON e.guid = ers.guid_two AND ers.guid_one = $user->guid",
-	),
-	'wheres' => array(
+	],
+	'wheres' => [
 		"ers.relationship = 'friend' OR ers.relationship LIKE 'notify%'"
-	),
+	],
 	'order_by' => 'ue.name',
 	'group_by' => 'e.guid',
 	'offset_key' => 'subscriptions_users',

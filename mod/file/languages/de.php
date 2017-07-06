@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -97,4 +97,4 @@ Schau Dir die Datei an und schreibe einen Kommentar:
 	'file:noaccess' => "Du hast keine Berechtigung, um diesen Datei-Eintrag zu ändern.",
 	'file:cannotload' => "Beim Hochladen dieser Datei ist ein Fehler aufgetreten.",
 	'file:nofile' => "Du mußt eine Datei auswählen.",
-);
+];

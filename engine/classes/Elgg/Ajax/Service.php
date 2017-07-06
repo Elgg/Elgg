@@ -63,15 +63,8 @@ class Service {
 		$this->input = $input;
 		$this->amd_config = $amdConfig;
 
-		if ($this->input->get('elgg_fetch_messages', true)) {
-			$message_filter = [$this, 'appendMessages'];
-			$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $message_filter, 999);
-		}
-
-		if ($this->input->get('elgg_fetch_deps', true)) {
-			$deps_filter = [$this, 'appendDeps'];
-			$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $deps_filter, 999);
-		}
+		$message_filter = [$this, 'prepareResponse'];
+		$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $message_filter, 999);
 	}
 
 	/**
@@ -125,7 +118,7 @@ class Service {
 		}
 
 		$api_response = new Response();
-		$api_response->setData((object)[
+		$api_response->setData((object) [
 					'value' => $output,
 		]);
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
@@ -228,7 +221,7 @@ class Service {
 	}
 
 	/**
-	 * Send system messages back with the response
+	 * Prepare the response with additional metadata, like system messages and required AMD modules
 	 *
 	 * @param string       $hook     "ajax_response"
 	 * @param string       $type     "all"
@@ -239,31 +232,19 @@ class Service {
 	 * @access private
 	 * @internal
 	 */
-	public function appendMessages($hook, $type, $response, $params) {
+	public function prepareResponse($hook, $type, $response, $params) {
 		if (!$response instanceof AjaxResponse) {
 			return;
 		}
-		$response->getData()->_elgg_msgs = (object)$this->msgs->dumpRegister();
-		return $response;
-	}
 
-	/**
-	 * Send required AMD modules list back with the response
-	 *
-	 * @param string       $hook     "ajax_response"
-	 * @param string       $type     "all"
-	 * @param AjaxResponse $response Ajax response
-	 * @param array        $params   Hook params
-	 *
-	 * @return AjaxResponse
-	 * @access private
-	 * @internal
-	 */
-	public function appendDeps($hook, $type, $response, $params) {
-		if (!$response instanceof AjaxResponse) {
-			return;
+		if ($this->input->get('elgg_fetch_messages', true)) {
+			$response->getData()->_elgg_msgs = (object) $this->msgs->dumpRegister();
 		}
-		$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
+
+		if ($this->input->get('elgg_fetch_deps', true)) {
+			$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
+		}
+
 		return $response;
 	}
 

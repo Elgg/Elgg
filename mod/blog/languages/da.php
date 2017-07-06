@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Blogs',
 	'blog:blogs' => 'Blogs',
 	'blog:revisions' => 'Revision',
@@ -63,4 +63,4 @@ Se og kommenter på det nye blog indlæg:
 	'blog:moreblogs' => 'Flere blogindlæg',
 	'blog:numbertodisplay' => 'Antal af blogindlæg, der skal vises',
 	'blog:noblogs' => 'Ingen blogindlæg'
-);
+];

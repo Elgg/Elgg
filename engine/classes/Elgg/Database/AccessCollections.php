@@ -207,9 +207,9 @@ class AccessCollections {
 			}
 		}
 
-		$options = array(
+		$options = [
 			'user_id' => $user_guid,
-		);
+		];
 
 		// see the warning in the docs for this function about infinite loop potential
 		return $this->hooks->trigger('access:collections:read', 'user', $options, $access_array);
@@ -255,16 +255,16 @@ class AccessCollections {
 	 * @return string
 	 * @access private
 	 */
-	public function getWhereSql(array $options = array()) {
+	public function getWhereSql(array $options = []) {
 
-		$defaults = array(
+		$defaults = [
 			'table_alias' => 'e',
 			'user_guid' => $this->session->getLoggedInUserGuid(),
 			'use_enabled_clause' => !access_get_show_hidden_status(),
 			'access_column' => 'access_id',
 			'owner_guid_column' => 'owner_guid',
 			'guid_column' => 'guid',
-		);
+		];
 
 		foreach ($options as $key => $value) {
 			if (is_null($value)) {
@@ -278,7 +278,7 @@ class AccessCollections {
 		// just in case someone passes a . at the end
 		$options['table_alias'] = rtrim($options['table_alias'], '.');
 
-		foreach (array('table_alias', 'access_column', 'owner_guid_column', 'guid_column') as $key) {
+		foreach (['table_alias', 'access_column', 'owner_guid_column', 'guid_column'] as $key) {
 			$options[$key] = sanitize_string($options[$key]);
 		}
 		$options['user_guid'] = sanitize_int($options['user_guid'], false);
@@ -290,10 +290,10 @@ class AccessCollections {
 			$options['ignore_access'] = elgg_check_access_overrides($options['user_guid']);
 		}
 
-		$clauses = array(
-			'ors' => array(),
-			'ands' => array()
-		);
+		$clauses = [
+			'ors' => [],
+			'ands' => []
+		];
 
 		$prefix = $this->db->prefix;
 
@@ -367,9 +367,6 @@ class AccessCollections {
 			return true;
 		}
 
-		// See #7159. Must not allow ignore access to affect query
-		$ia = elgg_set_ignore_access(false);
-
 		$user_guid = isset($user) ? (int) $user->guid : elgg_get_logged_in_user_guid();
 
 		if ($user_guid && $user_guid == $entity->owner_guid) {
@@ -382,6 +379,9 @@ class AccessCollections {
 			return true;
 		}
 
+		// See #7159. Must not allow ignore access to affect query
+		$ia = elgg_set_ignore_access(false);
+		
 		$row = $this->entities->getRow($entity->guid, $user_guid);
 
 		elgg_set_ignore_access($ia);
@@ -414,7 +414,7 @@ class AccessCollections {
 	 *
 	 * @return array List of access permissions
 	 */
-	public function getWriteAccessArray($user_guid = 0, $flush = false, array $input_params = array()) {
+	public function getWriteAccessArray($user_guid = 0, $flush = false, array $input_params = []) {
 		global $init_finished;
 		$cache = $this->access_cache;
 
@@ -434,11 +434,11 @@ class AccessCollections {
 			$access_array = $cache[$hash];
 		} else {
 			// @todo is there such a thing as public write access?
-			$access_array = array(
+			$access_array = [
 				ACCESS_PRIVATE => $this->getReadableAccessLevel(ACCESS_PRIVATE),
 				ACCESS_LOGGED_IN => $this->getReadableAccessLevel(ACCESS_LOGGED_IN),
 				ACCESS_PUBLIC => $this->getReadableAccessLevel(ACCESS_PUBLIC)
-			);
+			];
 
 			$collections = $this->getEntityCollections($user_guid);
 			if ($collections) {
@@ -452,10 +452,10 @@ class AccessCollections {
 			}
 		}
 
-		$options = array(
+		$options = [
 			'user_id' => $user_guid,
 			'input_params' => $input_params,
-		);
+		];
 		return $this->hooks->trigger('access:collections:write', 'user', $options, $access_array);
 	}
 
@@ -538,11 +538,11 @@ class AccessCollections {
 
 		$this->access_cache->clear();
 
-		$hook_params = array(
+		$hook_params = [
 			'collection_id' => $id,
 			'name' => $name,
 			'owner_guid' => $owner_guid,
-		);
+		];
 
 		if (!$this->hooks->trigger('access:collections:addcollection', 'collection', $hook_params, true)) {
 			$this->delete($id);
@@ -685,7 +685,7 @@ class AccessCollections {
 	 * Transforms a database row to an instance of ElggAccessCollection
 	 *
 	 * @param \stdClass $row Database row
-	 * @return ElggAccessCollection
+	 * @return \ElggAccessCollection
 	 */
 	public function rowToElggAccessCollection(\stdClass $row) {
 		return new \ElggAccessCollection($row);
@@ -752,10 +752,10 @@ class AccessCollections {
 			return false;
 		}
 
-		$hook_params = array(
+		$hook_params = [
 			'collection_id' => $collection->id,
 			'user_guid' => (int) $user_guid
-		);
+		];
 
 		$result = $this->hooks->trigger('access:collections:add_user', 'collection', $hook_params, true);
 		if ($result == false) {
@@ -791,10 +791,10 @@ class AccessCollections {
 	 */
 	public function removeUser($user_guid, $collection_id) {
 
-		$params = array(
+		$params = [
 			'collection_id' => (int) $collection_id,
 			'user_guid' => (int) $user_guid,
-		);
+		];
 
 		if (!$this->hooks->trigger('access:collections:remove_user', 'collection', $params, true)) {
 			return false;
@@ -901,21 +901,15 @@ class AccessCollections {
 		$translator = $this->translator;
 
 		// Check if entity access id is a defined global constant
-		$access_array = array(
+		$access_array = [
 			ACCESS_PRIVATE => $translator->translate("PRIVATE"),
 			ACCESS_FRIENDS => $translator->translate("access:friends:label"),
 			ACCESS_LOGGED_IN => $translator->translate("LOGGED_IN"),
 			ACCESS_PUBLIC => $translator->translate("PUBLIC"),
-		);
+		];
 
 		if (array_key_exists($access, $access_array)) {
 			return $access_array[$access];
-		}
-
-		$user_guid = $this->session->getLoggedInUserGuid();
-		if (!$user_guid) {
-			// return 'Limited' if there is no logged in user
-			return $translator->translate('access:limited:label');
 		}
 
 		// Entity access id is probably a custom access collection
@@ -923,14 +917,14 @@ class AccessCollections {
 		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
-		if ($collection) {
-			if (($collection->owner_guid == $user_guid) || $this->session->isAdminLoggedIn()) {
-				return $collection->name;
-			}
+		$user_guid = $this->session->getLoggedInUserGuid();
+		
+		if (!$collection || !$user_guid) {
+			// return 'Limited' if there is no logged in user or collection can not be loaded
+			return $translator->translate('access:limited:label');
 		}
 
-		// return 'Limited' if the user does not have access to the access collection
-		return $translator->translate('access:limited:label');
+		return $collection->getDisplayName();
 	}
 
 }

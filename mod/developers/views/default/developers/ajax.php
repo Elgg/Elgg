@@ -12,8 +12,8 @@ $resize_button = elgg_view('input/button', [
 ]);
 
 echo '<div class="mam" style="width: 400px;">';
-echo elgg_view_module('aside', 'Lightbox Test', $ipsum, array(
+echo elgg_view_module('aside', 'Lightbox Test', $ipsum, [
 	'id' => 'elgg-lightbox-test',
 	'footer' => $resize_button,
-));
+]);
 echo '</div>';

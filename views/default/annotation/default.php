@@ -16,13 +16,13 @@ if (!$owner) {
 $icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = "<a href=\"{$owner->getURL()}\">$owner->name</a>";
 
-$menu = elgg_view_menu('annotation', array(
+$menu = elgg_view_menu('annotation', [
 	'annotation' => $annotation,
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz float-alt',
-));
+]);
 
-$text = elgg_view("output/longtext", array("value" => $annotation->value));
+$text = elgg_view("output/longtext", ["value" => $annotation->value]);
 
 $friendlytime = elgg_view_friendly_time($annotation->time_created);
 

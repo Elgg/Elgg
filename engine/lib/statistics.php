@@ -20,21 +20,21 @@
 function get_entity_statistics($owner_guid = 0) {
 
 	$owner_guid = (int) $owner_guid;
-	$entity_stats = array();
+	$entity_stats = [];
 
-	$grouped_entities = elgg_get_entities(array(
-		'selects' => array('COUNT(*) as cnt'),
+	$grouped_entities = elgg_get_entities([
+		'selects' => ['COUNT(*) as cnt'],
 		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
 		'group_by' => 'e.type, e.subtype',
 		'limit' => 0,
 		'order_by' => 'cnt DESC',
-	));
+	]);
 	
 	if (!empty($grouped_entities)) {
 		foreach ($grouped_entities as $entity) {
 			$type = $entity->getType();
 			if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {
-				$entity_stats[$type] = array();
+				$entity_stats[$type] = [];
 			}
 			$subtype = $entity->getSubtype();
 			if (!$subtype) {
@@ -60,7 +60,7 @@ function get_number_users($show_deactivated = false) {
 	$access = "";
 
 	if (!$show_deactivated) {
-		$access = "and " . _elgg_get_access_where_sql(array('table_alias' => ''));
+		$access = "and " . _elgg_get_access_where_sql(['table_alias' => '']);
 	}
 
 	$query = "SELECT count(*) as count
@@ -86,10 +86,10 @@ function get_number_users($show_deactivated = false) {
  *
  * @return string
  */
-function get_online_users(array $options = array()) {
-	$options = array_merge(array(
+function get_online_users(array $options = []) {
+	$options = array_merge([
 		'seconds' => 600,
-	), $options);
+	], $options);
 
 	return elgg_list_entities($options, 'find_active_users');
 }

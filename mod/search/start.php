@@ -4,7 +4,7 @@
  *
  */
 
-elgg_register_event_handler('init','system','search_init');
+elgg_register_event_handler('init', 'system', 'search_init');
 
 /**
  * Initialize search plugin
@@ -32,6 +32,8 @@ function search_init() {
 	elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 
 	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
+	
+	elgg_register_plugin_hook_handler('view_vars', 'output/tag', 'search_output_tag');
 }
 
 /**
@@ -46,7 +48,7 @@ function search_page_handler($page) {
 	// it expects a search by tags.
 	// actually it doesn't, but maybe it should.
 	// maintain backward compatibility
-	if(!get_input('q', get_input('tag', NULL))) {
+	if (!get_input('q', get_input('tag', null))) {
 		set_input('q', $page[0]);
 		//set_input('search_type', 'tags');
 	}
@@ -61,9 +63,9 @@ function search_page_handler($page) {
  *
  * @param string $haystack
  * @param string $query
- * @param int $min_match_context = 30
- * @param int $max_length = 300
- * @param bool $tag_match Search is for tags. Don't ignore words.
+ * @param int    $min_match_context = 30
+ * @param int    $max_length        = 300
+ * @param bool   $tag_match         Search is for tags. Don't ignore words.
  * @return string
  */
 function search_get_highlighted_relevant_substrings($haystack, $query, $min_match_context = 30, $max_length = 300, $tag_match = false) {
@@ -75,7 +77,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	if (!$tag_match) {
 		$words = search_remove_ignored_words($query, 'array');
 	} else {
-		$words = array();
+		$words = [];
 	}
 
 	// if haystack < $max_length return the entire haystack w/formatting immediately
@@ -86,8 +88,8 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	}
 
 	// get the starting positions and lengths for all matching words
-	$starts = array();
-	$lengths = array();
+	$starts = [];
+	$lengths = [];
 	foreach ($words as $word) {
 		$word = elgg_strtolower($word);
 		$count = elgg_substr_count($haystack_lc, $word);
@@ -97,7 +99,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 		// find the start positions for the words
 		if ($count > 1) {
 			$offset = 0;
-			while (FALSE !== $pos = elgg_strpos($haystack_lc, $word, $offset)) {
+			while (false !== $pos = elgg_strpos($haystack_lc, $word, $offset)) {
 				$start = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
 				$starts[] = $start;
 				$stop = $pos + $word_len + $min_match_context;
@@ -127,8 +129,8 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	if ($total_length < $max_length && $offsets) {
 		$add_length = floor((($max_length - $total_length) / count($offsets)) / 2);
 
-		$starts = array();
-		$lengths = array();
+		$starts = [];
+		$lengths = [];
 		foreach ($offsets as $offset => $length) {
 			$start = ($offset - $add_length > 0) ? $offset - $add_length : 0;
 			$length = $length + $add_length;
@@ -145,7 +147,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	// the others as needed to fit within $max_length.
 	arsort($offsets);
 
-	$return_strs = array();
+	$return_strs = [];
 	$total_length = 0;
 	foreach ($offsets as $start => $length) {
 		$string = trim(elgg_substr($haystack, $start, $length));
@@ -199,14 +201,14 @@ function search_consolidate_substrings($offsets, $lengths) {
 	// reset the indexes maintaining association with the original offsets.
 	$offsets = array_merge($offsets);
 
-	$new_lengths = array();
+	$new_lengths = [];
 	foreach ($offsets as $i => $offset) {
 		$new_lengths[] = $lengths[$i];
 	}
 
 	$lengths = $new_lengths;
 
-	$return = array();
+	$return = [];
 	$count = count($offsets);
 	for ($i=0; $i<$count; $i++) {
 		$offset = $offsets[$i];
@@ -234,18 +236,18 @@ function search_consolidate_substrings($offsets, $lengths) {
 /**
  * Safely highlights the words in $words found in $string avoiding recursion
  *
- * @param array $words
+ * @param array  $words
  * @param string $string
  * @return string
  */
 function search_highlight_words($words, $string) {
 	$i = 1;
-	$replace_html = array(
+	$replace_html = [
 		'strong' => rand(10000, 99999),
 		'class' => rand(10000, 99999),
 		'search-highlight' => rand(10000, 99999),
 		'search-highlight-color' => rand(10000, 99999)
-	);
+	];
 
 	foreach ($words as $word) {
 		// remove any boolean mode operators
@@ -284,7 +286,7 @@ function search_highlight_words($words, $string) {
  * it's taken literally.)
  *
  * @param array $query
- * @param str $format Return as an array or a string
+ * @param str   $format Return as an array or a string
  * @return mixed
  */
 function search_remove_ignored_words($query, $format = 'array') {
@@ -307,8 +309,8 @@ function search_remove_ignored_words($query, $format = 'array') {
  * Passes results, and original params to the view functions for
  * search type.
  *
- * @param array $results
- * @param array $params
+ * @param array  $results
+ * @param array  $params
  * @param string $view_type = list, entity or layout
  * @return string
  */
@@ -320,10 +322,10 @@ function search_get_search_view($params, $view_type) {
 			break;
 
 		default:
-			return FALSE;
+			return false;
 	}
 
-	$view_order = array();
+	$view_order = [];
 
 	// check if there's a special search list view for this type:subtype
 	if (isset($params['type']) && $params['type'] && isset($params['subtype']) && $params['subtype']) {
@@ -349,13 +351,13 @@ function search_get_search_view($params, $view_type) {
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
  * Returns a where clause for a search query.
  *
- * @param str $table Prefix for table to search on
+ * @param str   $table  Prefix for table to search on
  * @param array $fields Fields to match against
  * @param array $params Original search params
  * @return str
@@ -393,14 +395,14 @@ function search_get_where_sql($table, $fields, $params) {
  * Returns ORDER BY sql for insertion into elgg_get_entities().
  *
  * @param str $entities_table Prefix for entities table.
- * @param str $type_table Prefix for the type table.
- * @param str $sort ORDER BY part
- * @param str $order ASC or DESC
+ * @param str $type_table     Prefix for the type table.
+ * @param str $sort           ORDER BY part
+ * @param str $order          ASC or DESC
  * @return str
  */
 function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 
-	$on = NULL;
+	$on = null;
 
 	switch ($sort) {
 		default:
@@ -458,4 +460,35 @@ Disallow: /search/
 TEXT;
 
 	return $text;
+}
+
+/**
+ * Adds search 'href' to output/tag view vars
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function search_output_tag(\Elgg\Hook $hook) {
+	$vars = $hook->getValue();
+	if (isset($vars['href'])) {
+		// leave unaltered
+		return;
+	}
+	
+	$query_params = [
+		'q' => elgg_extract('value', $vars),
+		'search_type' => 'tags',
+		'type' => elgg_extract('type', $vars, null, false),
+		'subtype' => elgg_extract('subtype', $vars, null, false),
+	];
+		
+	$url = elgg_extract('base_url', $vars, 'search');
+	
+	unset($vars['base_url']);
+	unset($vars['type']);
+	unset($vars['subtype']);
+	
+	$vars['href'] = elgg_http_add_url_query_elements($url, $query_params);
+	
+	return $vars;
 }

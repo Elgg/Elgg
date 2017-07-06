@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	/**
 	* Menu items and titles
 	*/
@@ -82,4 +82,4 @@ Tähän sähköpostiviestiin ei voi vastata.",
 
 	'messages:deleted_sender' => 'Poistettu käyttäjä',
 
-);
+];

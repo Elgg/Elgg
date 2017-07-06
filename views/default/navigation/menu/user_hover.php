@@ -8,53 +8,65 @@
  * @uses $vars['menu']      Menu array provided by elgg_view_menu()
  */
 
-$user = $vars['entity'];
-$actions = elgg_extract('action', $vars['menu'], null);
-$main = elgg_extract('default', $vars['menu'], null);
-$admin = elgg_extract('admin', $vars['menu'], null);
+$actions = elgg_extract('action', $vars['menu'], []);
+$main = elgg_extract('default', $vars['menu'], []);
+$admin = elgg_extract('admin', $vars['menu'], []);
 
-echo '<ul class="elgg-menu elgg-menu-hover">';
+$user = elgg_extract('entity', $vars);
+if (!($user instanceof ElggUser)) {
+	return;
+}
 
-// name and username
-$name_link = elgg_view('output/url', array(
-	'href' => $user->getURL(),
-	'text' => "<span class=\"elgg-heading-basic\">$user->name</span>&#64;$user->username",
-	'is_trusted' => true,
-));
-echo "<li>$name_link</li>";
+elgg_push_context('user_hover');
+
+if (elgg_is_admin_logged_in() && $admin) {
+	$actions[] = \ElggMenuItem::factory([
+		'name' => 'toggle_admin',
+		'text' => elgg_echo('admin:options'),
+		'icon' => 'ellipsis-v',
+		'href' => '#',
+		'data-toggle-selector' => ".hover_toggle_admin_{$user->guid}",
+		'rel' => 'toggle',
+	]);
+}
+
+$user_info = elgg_view_entity($user, [
+	'full_view' => false,
+	'use_hover' => false,
+	'size' => 'medium',
+]);
+
+$card = elgg_format_element('div', ['class' => 'elgg-menu-hover-card'], $user_info);
 
 // actions
 if (elgg_is_logged_in() && $actions) {
-	echo '<li>';
-	echo elgg_view('navigation/menu/elements/section', array(
+	$card .= elgg_view('navigation/menu/elements/section', [
 		'class' => "elgg-menu elgg-menu-hover-actions",
 		'items' => $actions,
-	));
-	echo '</li>';
+	]);
 }
 
 // main
 if ($main) {
-	echo '<li>';
-	
-	echo elgg_view('navigation/menu/elements/section', array(
+	$card .= elgg_view('navigation/menu/elements/section', [
 		'class' => 'elgg-menu elgg-menu-hover-default',
 		'items' => $main,
-	));
-	
-	echo '</li>';
+	]);
 }
+
+echo elgg_format_element('div', ['class' => 'elgg-menu-hover-card-container'], $card);
 
 // admin
 if (elgg_is_admin_logged_in() && $admin) {
-	echo '<li>';
-	
-	echo elgg_view('navigation/menu/elements/section', array(
-		'class' => 'elgg-menu elgg-menu-hover-admin',
+	echo elgg_view('navigation/menu/elements/section', [
+		'class' => [
+			'elgg-menu',
+			'elgg-menu-hover-admin',
+			'hidden',
+			"hover_toggle_admin_{$user->guid}",
+		],
 		'items' => $admin,
-	));
-	
-	echo '</li>';
+	]);
 }
 
-echo '</ul>';
+elgg_pop_context();

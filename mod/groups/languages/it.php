@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -209,4 +209,4 @@ o clicca qui sotto per vedere le richieste di adesione al gruppo:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Profili del gruppo',
-);
+];

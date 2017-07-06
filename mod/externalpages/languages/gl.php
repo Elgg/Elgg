@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -19,4 +19,4 @@ return array(
 	 */
 	'expages:posted' => "Actualizouse a páxina.",
 	'expages:error' => "Non é posíbel gardar a páxina.",
-);
+];

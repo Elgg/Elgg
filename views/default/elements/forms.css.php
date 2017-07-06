@@ -41,9 +41,6 @@ input, textarea {
 	padding: 7px 6px;
 	width: 100%;
 	border-radius: 3px;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 input[type=email]:focus,
@@ -98,6 +95,16 @@ select {
 .elgg-form-account {
 	margin-bottom: 15px;
 }
+.elgg-input-radios label {
+	font-weight: normal;
+	font-size: 100%;
+}
+
+.elgg-input-checkboxes label {
+	font-weight: normal;
+	font-size: 100%;
+}
+
 .elgg-form-login, .elgg-form-account {
 	max-width: 475px;
 	margin: 0 auto;
@@ -109,16 +116,16 @@ select {
 }
 
 .elgg-fieldset-horizontal .elgg-field {
-    display: inline-block;
-    margin: 0 10px 0 0;
+	display: inline-block;
+	margin: 0 10px 0 0;
 }
 
 .elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
-    margin: 0 0 0 10px;
+	margin: 0 0 0 10px;
 }
 
 .elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 
 /* ***************************************
@@ -140,7 +147,7 @@ select {
 	border-radius: 3px;
 }
 .ui-autocomplete .ui-menu-item {
-	padding: 0px 4px;
+	padding: 0 4px;
 	border-radius: 3px;
 }
 .ui-autocomplete .ui-menu-item:hover {

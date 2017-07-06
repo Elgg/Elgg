@@ -2,6 +2,7 @@
 namespace Elgg;
 
 use Elgg\Filesystem\Directory;
+use Elgg\Database\ConfigTable;
 
 /**
  * Access to configuration values
@@ -25,6 +26,11 @@ class Config implements Services\Config {
 	 * @var bool
 	 */
 	private $cookies_configured = false;
+
+	/**
+	 * @var ConfigTable Do not use directly. Use getConfigTable().
+	 */
+	private $config_table;
 
 	/**
 	 * Constructor
@@ -90,16 +96,16 @@ class Config implements Services\Config {
 
 		// set cookie values for session and remember me
 		if (!isset($c->cookies)) {
-			$c->cookies = array();
+			$c->cookies = [];
 		}
 		if (!isset($c->cookies['session'])) {
-			$c->cookies['session'] = array();
+			$c->cookies['session'] = [];
 		}
 		$session_defaults = session_get_cookie_params();
 		$session_defaults['name'] = 'Elgg';
 		$c->cookies['session'] = array_merge($session_defaults, $c->cookies['session']);
 		if (!isset($c->cookies['remember_me'])) {
-			$c->cookies['remember_me'] = array();
+			$c->cookies['remember_me'] = [];
 		}
 		$session_defaults['name'] = 'elggperm';
 		$session_defaults['expire'] = strtotime("+30 days");
@@ -114,10 +120,7 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function getDataPath() {
-		if (!isset($this->config->dataroot)) {
-			\Elgg\Application::getDataPath();
-		}
-
+		$this->loadSettingsFile();
 		return $this->config->dataroot;
 	}
 
@@ -126,32 +129,27 @@ class Config implements Services\Config {
 	 */
 	public function getCachePath() {
 		$this->loadSettingsFile();
-
-		if (!isset($this->config->cacheroot)) {
-			$this->config->cacheroot = $this->getDataPath();
-		}
-
 		return $this->config->cacheroot;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get($name) {
+	public function get($name, $default = null) {
 		$name = trim($name);
 	
 		if (isset($this->config->$name)) {
 			return $this->config->$name;
 		}
-		
-		$value = null;
-		if (!isset($this->config->site_config_loaded)) {
-			$value = _elgg_services()->configTable->get($name);
+
+		if (!empty($this->config->site_config_loaded)) {
+			return $default;
 		}
 		
-		// @todo document why we don't cache false
-		if ($value === false) {
-			return null;
+		$value = $this->getConfigTable()->get($name);
+
+		if ($value === null) {
+			return $default;
 		}
 	
 		$this->config->$name = $value;
@@ -184,8 +182,8 @@ class Config implements Services\Config {
 			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
-	
-		$result = _elgg_services()->configTable->set($name, $value);
+
+		$result = $this->getConfigTable()->set($name, $value);
 
 		$this->set($name, $value);
 	
@@ -197,8 +195,8 @@ class Config implements Services\Config {
 	 */
 	public function remove($name) {
 		$name = trim($name);
-	
-		$result = _elgg_services()->configTable->remove($name);
+
+		$result = $this->getConfigTable()->remove($name);
 
 		unset($this->config->$name);
 	
@@ -249,17 +247,19 @@ class Config implements Services\Config {
 
 		require_once $path;
 
-		// normalize commonly needed values
-		if (isset($CONFIG->dataroot)) {
-			$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-			$GLOBALS['_ELGG']->dataroot_in_settings = true;
-		} else {
-			$GLOBALS['_ELGG']->dataroot_in_settings = false;
+		if (empty($CONFIG->dataroot)) {
+			echo 'The Elgg settings file is missing $CONFIG->dataroot.';
+			exit;
 		}
+
+		// normalize commonly needed values
+		$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
 		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
 
-		if (!empty($CONFIG->cacheroot)) {
+		if (empty($CONFIG->cacheroot)) {
+			$CONFIG->cacheroot = $CONFIG->dataroot;
+		} else {
 			$CONFIG->cacheroot = rtrim($CONFIG->cacheroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		}
 
@@ -286,5 +286,38 @@ class Config implements Services\Config {
 	 */
 	public function getStorageObject() {
 		return $this->config;
+	}
+
+	/**
+	 * Set the config table service (must be set)
+	 *
+	 * This is a necessary evil until we refactor so that the service provider has no dependencies.
+	 *
+	 * @param ConfigTable $table
+	 * @return void
+	 *
+	 * @access private
+	 * @internal
+	 */
+	public function setConfigTable(ConfigTable $table) {
+		$this->config_table = $table;
+	}
+
+	/**
+	 * Get the config table API
+	 *
+	 * @return ConfigTable
+	 */
+	private function getConfigTable() {
+		if (!$this->config_table) {
+			if (!function_exists('_elgg_services')) {
+				throw new \RuntimeException('setConfigTable() must be called before using API that' .
+					' uses the database.');
+			}
+
+			$this->config_table = _elgg_services()->configTable;
+		}
+
+		return $this->config_table;
 	}
 }

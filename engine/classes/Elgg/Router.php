@@ -22,7 +22,7 @@ class Router {
 
 	use Profilable;
 
-	private $handlers = array();
+	private $handlers = [];
 	private $hooks;
 
 	/**
@@ -68,11 +68,11 @@ class Router {
 
 		// return false to stop processing the request (because you handled it)
 		// return a new $result array if you want to route the request differently
-		$old = array(
+		$old = [
 			'identifier' => $identifier,
 			'handler' => $identifier, // backward compatibility
 			'segments' => $segments,
-		);
+		];
 
 		if ($this->timer) {
 			$this->timer->begin(['build page']);
@@ -154,7 +154,7 @@ class Router {
 
 	/**
 	 * Get page handlers as array of identifier => callback
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getPageHandlers() {
@@ -177,10 +177,10 @@ class Router {
 			$identifier = '';
 		}
 
-		$old = array(
+		$old = [
 			'identifier' => $identifier,
 			'segments' => $segments,
-		);
+		];
 		$new = _elgg_services()->hooks->trigger('route:rewrite', $identifier, $old, $old);
 		if ($new === $old) {
 			return $request;
@@ -226,7 +226,7 @@ class Router {
 		}
 
 		// default public pages
-		$defaults = array(
+		$defaults = [
 			'walled_garden/.*',
 			'action/.*',
 			'login',
@@ -244,7 +244,7 @@ class Router {
 			'serve-file/.*',
 			'robots.txt',
 			'favicon.ico',
-		);
+		];
 
 		$params = [
 			'url' => $url,

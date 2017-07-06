@@ -8,7 +8,7 @@
 $subject = strip_tags(get_input('subject'));
 $body = get_input('body');
 $recipients = (array) get_input('recipients');
-$original_msg_guid = (int)get_input('original_guid');
+$original_msg_guid = (int) get_input('original_guid');
 
 elgg_make_sticky_form('messages');
 

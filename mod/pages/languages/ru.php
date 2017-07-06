@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ return array(
 
 	'pages:newchild' => "Создать дочерний документ",
 	'pages:backtoparent' => "Назад к '%s'",
-);
+];

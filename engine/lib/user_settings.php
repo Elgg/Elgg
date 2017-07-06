@@ -31,10 +31,10 @@ function _elgg_set_user_password() {
 	if ($user && $password) {
 		// let admin user change anyone's password without knowing it except his own.
 		if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
-			$credentials = array(
+			$credentials = [
 				'username' => $user->username,
 				'password' => $current_password
-			);
+			];
 
 			try {
 				pam_auth_userpass($credentials);

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Kuinka usein järjestelmän loki tulisi arkistoida?',
 
 	'logrotate:logrotated' => "Loki arkistoitu\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Loki poistettu\n",
 	'logrotate:lognotdeleted' => "Lokeja ei poistettu\n",
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'aime',
 	'likes:deleted' => 'Votre appréciation a été retirée',
 	'likes:see' => 'Voir les membres qui aiment',
@@ -35,4 +35,4 @@ Merci,
 %4$s
 ',
 	
-);
+];

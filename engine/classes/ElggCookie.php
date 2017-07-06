@@ -35,7 +35,7 @@ class ElggCookie {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $name The name of the cookie.
 	 */
 	public function __construct($name) {
@@ -44,7 +44,7 @@ class ElggCookie {
 
 	/**
 	 * Get an attribute
-	 * 
+	 *
 	 * @param string $name Attribute name
 	 * @return mixed
 	 */

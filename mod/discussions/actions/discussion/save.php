@@ -67,13 +67,13 @@ elgg_clear_sticky_form('topic');
 if ($new_topic) {
 	system_message(elgg_echo('discussion:topic:created'));
 
-	elgg_create_river_item(array(
+	elgg_create_river_item([
 		'view' => 'river/object/discussion/create',
 		'action_type' => 'create',
 		'subject_guid' => elgg_get_logged_in_user_guid(),
 		'object_guid' => $topic->guid,
 		'target_guid' => $container_guid,
-	));
+	]);
 } else {
 	system_message(elgg_echo('discussion:topic:updated'));
 }

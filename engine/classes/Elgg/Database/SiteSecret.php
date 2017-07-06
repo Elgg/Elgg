@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\Config as ElggConfig;
+
 /**
  * Manages a site-specific secret key, encoded as a 32 byte string "secret"
  *
@@ -21,18 +23,20 @@ namespace Elgg\Database;
  */
 class SiteSecret {
 
+	const CONFIG_KEY = '__site_secret__';
+
 	/**
-	 * @var ConfigTable
+	 * @var ElggConfig
 	 */
-	private $configTable;
+	private $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param ConfigTable $configTable Config table
+	 * @param ElggConfig $config Config service
 	 */
-	public function __construct(ConfigTable $configTable) {
-		$this->configTable = $configTable;
+	public function __construct(ElggConfig $config) {
+		$this->config = $config;
 	}
 
 	/**
@@ -63,7 +67,7 @@ class SiteSecret {
 	function init() {
 		$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
 
-		if ($this->configTable->set('__site_secret__', $secret)) {
+		if ($this->config->save(self::CONFIG_KEY, $secret)) {
 			return $secret;
 		}
 
@@ -84,7 +88,7 @@ class SiteSecret {
 		if ($this->test_secret) {
 			$secret = $this->test_secret;
 		} else {
-			$secret = $this->configTable->get('__site_secret__');
+			$secret = $this->config->get(self::CONFIG_KEY);
 		}
 		if (!$secret) {
 			$secret = $this->init();

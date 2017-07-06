@@ -86,7 +86,7 @@ class ElggHMACCache extends ElggCache {
 	public function __destruct() {
 		$dbprefix = elgg_get_config('dbprefix');
 		$time = time();
-		$age = (int)$this->getVariable("max_age");
+		$age = (int) $this->getVariable("max_age");
 
 		$expires = $time - $age;
 

@@ -36,7 +36,7 @@ function file_init() {
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_set_icon_url');
 
 	// Register for notifications
-	elgg_register_notification_event('object', 'file', array('create'));
+	elgg_register_notification_event('object', 'file', ['create']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:file', 'file_prepare_notification');
 
 	// add the group files tool option
@@ -50,27 +50,27 @@ function file_init() {
 	elgg_register_event_handler('delete', 'object', 'file_handle_object_delete', 999);
 
 	// embed support
-	$item = ElggMenuItem::factory(array(
+	$item = ElggMenuItem::factory([
 		'name' => 'file',
 		'text' => elgg_echo('file'),
 		'priority' => 10,
-		'data' => array(
-			'options' => array(
+		'data' => [
+			'options' => [
 				'type' => 'object',
 				'subtype' => 'file',
-			),
-		),
-	));
+			],
+		],
+	]);
 	elgg_register_menu_item('embed', $item);
 
-	$item = ElggMenuItem::factory(array(
+	$item = ElggMenuItem::factory([
 		'name' => 'file_upload',
 		'text' => elgg_echo('file:upload'),
 		'priority' => 100,
-		'data' => array(
+		'data' => [
 			'view' => 'embed/file_upload/content',
-		),
-	));
+		],
+	]);
 
 	elgg_register_menu_item('embed', $item);
 
@@ -169,13 +169,13 @@ function file_register_toggle() {
 	}
 
 
-	elgg_register_menu_item('extras', array(
+	elgg_register_menu_item('extras', [
 		'name' => 'file_list',
 		'text' => $icon,
 		'href' => $url,
 		'title' => elgg_echo("file:list:$list_type"),
 		'priority' => 1000,
-	));
+	]);
 }
 
 /**
@@ -197,15 +197,15 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('file:notify:subject', array($entity->title), $language);
-	$notification->body = elgg_echo('file:notify:body', array(
+	$notification->subject = elgg_echo('file:notify:subject', [$entity->title], $language);
+	$notification->body = elgg_echo('file:notify:body', [
 		$owner->name,
 		$title,
 		$descr,
 		$entity->getURL()
-	), $language);
-	$notification->summary = elgg_echo('file:notify:summary', array($entity->title), $language);
-
+	], $language);
+	$notification->summary = elgg_echo('file:notify:summary', [$entity->title], $language);
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 
@@ -244,9 +244,9 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 	if ($friends && $container) {
 		// tags interface does not support pulling tags on friends' content so
 		// we need to grab all friends
-		$friend_entities = $container->getFriends(array('limit' => 0));
+		$friend_entities = $container->getFriends(['limit' => 0]);
 		if ($friend_entities) {
-			$friend_guids = array();
+			$friend_guids = [];
 			foreach ($friend_entities as $friend) {
 				$friend_guids[] = $friend->getGUID();
 			}
@@ -255,39 +255,39 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 	}
 
 	elgg_register_tag_metadata_name('simpletype');
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'file',
 		'container_guids' => $container_guids,
 		'threshold' => 0,
 		'limit' => 10,
-		'tag_names' => array('simpletype')
-	);
+		'tag_names' => ['simpletype']
+	];
 	$types = elgg_get_tags($options);
 
 	if ($types) {
 		$all = new stdClass;
 		$all->tag = 'all';
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item('page', [
 			'name' => 'file:all',
 			'text' => elgg_echo('all'),
 			'href' =>  file_type_cloud_get_url($all, $friends),
-		));
+		]);
 		
 		foreach ($types as $type) {
-			elgg_register_menu_item('page', array(
+			elgg_register_menu_item('page', [
 				'name' => "file:$type->tag",
 				'text' => elgg_echo("file:type:$type->tag"),
 				'href' =>  file_type_cloud_get_url($type, $friends),
-			));
+			]);
 		}
 	}
 	
 	// returning the view is needed for BC
-	$params = array(
+	$params = [
 		'friends' => $friends,
 		'types' => $types,
-	);
+	];
 
 	return elgg_view('file/typecloud', $params);
 }
@@ -353,7 +353,7 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			return $thumb_url;
 		}
 
-		$mapping = array(
+		$mapping = [
 			'application/excel' => 'excel',
 			'application/msword' => 'word',
 			'application/ogg' => 'music',
@@ -375,7 +375,7 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			'audio' => 'music',
 			'text' => 'text',
 			'video' => 'video',
-		);
+		];
 
 		$mime = $file->getMimeType();
 		if ($mime) {
@@ -465,10 +465,10 @@ function file_set_custom_icon_sizes($hook, $type, $return, $params) {
 /**
  * Set custom file thumbnail location
  *
- * @param string     $hook   "entity:icon:file"
- * @param string     $type   "object"
- * @param \ElggIcon  $icon   Icon file
- * @param array      $params Hook params
+ * @param string    $hook   "entity:icon:file"
+ * @param string    $type   "object"
+ * @param \ElggIcon $icon   Icon file
+ * @param array     $params Hook params
  * @return \ElggIcon
  */
 function file_set_icon_file($hook, $type, $icon, $params) {

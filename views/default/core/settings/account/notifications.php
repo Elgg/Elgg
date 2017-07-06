@@ -15,21 +15,20 @@ $rows = '';
 
 // Loop through options
 foreach ($NOTIFICATION_HANDLERS as $k => $v) {
-
 	if ($notification_settings->$k) {
 		$val = "yes";
 	} else {
 		$val = "no";
 	}
 
-	$radio = elgg_view('input/radio', array(
+	$radio = elgg_view('input/radio', [
 		'name' => "method[$k]",
 		'value' => $val,
-		'options' => array(
+		'options' => [
 			elgg_echo('option:yes') => 'yes',
 			elgg_echo('option:no') => 'no'
-		),
-	));
+		],
+	]);
 
 	$cells = '<td class="prm pbl">' . elgg_echo("notification:method:$k") . ': </td>';
 	$cells .= "<td>$radio</td>";

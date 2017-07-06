@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	'friends:all' => 'All friends',
 
@@ -23,4 +23,4 @@ return array(
 
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
 
-);
+];

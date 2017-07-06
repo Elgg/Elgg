@@ -13,21 +13,21 @@ if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
 	forward(REFERER);
 }
 
-$content = elgg_view_form('groups/invite', array(
+$content = elgg_view_form('groups/invite', [
 	'id' => 'invite_to_group',
 	'class' => 'elgg-form-alt mtm',
-), array(
+], [
 	'entity' => $group,
-));
+]);
 
 elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb(elgg_echo('groups:invite'));
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

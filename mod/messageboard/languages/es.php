@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -65,4 +65,4 @@ No se puede responder a este email.",
 
 	'messageboard:failure' => "Ocurri&oacute; un error desconocido al guardar el mensaje. Intenta de nuevo.",
 
-);
+];

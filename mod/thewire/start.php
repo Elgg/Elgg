@@ -76,7 +76,7 @@ function thewire_init() {
 function thewire_page_handler($page) {
 
 	if (!isset($page[0])) {
-		$page = array('all');
+		$page = ['all'];
 	}
 
 	switch ($page[0]) {
@@ -162,23 +162,23 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 	$method = $params['method'];
 	$descr = $entity->description;
 
-	$subject = elgg_echo('thewire:notify:subject', array($owner->name), $language);
+	$subject = elgg_echo('thewire:notify:subject', [$owner->name], $language);
 	if ($entity->reply) {
 		$parent = thewire_get_parent($entity->guid);
 		if ($parent) {
 			$parent_owner = $parent->getOwnerEntity();
-			$body = elgg_echo('thewire:notify:reply', array($owner->name, $parent_owner->name), $language);
+			$body = elgg_echo('thewire:notify:reply', [$owner->name, $parent_owner->name], $language);
 		}
 	} else {
-		$body = elgg_echo('thewire:notify:post', array($owner->name), $language);
+		$body = elgg_echo('thewire:notify:post', [$owner->name], $language);
 	}
 	$body .= "\n\n" . $descr . "\n\n";
-	$body .= elgg_echo('thewire:notify:footer', array($entity->getURL()), $language);
+	$body .= elgg_echo('thewire:notify:footer', [$entity->getURL()], $language);
 
 	$notification->subject = $subject;
 	$notification->body = $body;
-	$notification->summary = elgg_echo('thewire:notify:summary', array($descr), $language);
-
+	$notification->summary = elgg_echo('thewire:notify:summary', [$descr], $language);
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 
@@ -191,7 +191,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 function thewire_get_hashtags($text) {
 	// beginning of text or white space followed by hashtag
 	// hashtag must begin with # and contain at least one character not digit, space, or punctuation
-	$matches = array();
+	$matches = [];
 	preg_match_all('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', $text, $matches);
 	return $matches[2];
 }
@@ -284,21 +284,21 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	}
 
 	if ($guid) {
-		elgg_create_river_item(array(
+		elgg_create_river_item([
 			'view' => 'river/object/thewire/create',
 			'action_type' => 'create',
 			'subject_guid' => $post->owner_guid,
 			'object_guid' => $post->guid,
-		));
+		]);
 
 		// let other plugins know we are setting a user status
-		$params = array(
+		$params = [
 			'entity' => $post,
 			'user' => $post->getOwnerEntity(),
 			'message' => $post->description,
 			'url' => $post->getURL(),
 			'origin' => 'thewire',
-		);
+		];
 		elgg_trigger_plugin_hook('status', 'user', $params);
 	}
 	
@@ -319,14 +319,14 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 	$event = $params['event'];
 	$entity = $event->getObject();
 	if ($entity && elgg_instanceof($entity, 'object', 'thewire')) {
-		$parent = $entity->getEntitiesFromRelationship(array('relationship' => 'parent'));
+		$parent = $entity->getEntitiesFromRelationship(['relationship' => 'parent']);
 		if ($parent) {
 			$parent = $parent[0];
 			// do not add a subscription if reply was to self
 			if ($parent->getOwnerGUID() !== $entity->getOwnerGUID()) {
 				if (!array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
-					$personal_methods = (array)get_user_notification_settings($parent->getOwnerGUID());
-					$methods = array();
+					$personal_methods = (array) get_user_notification_settings($parent->getOwnerGUID());
+					$methods = [];
 					foreach ($personal_methods as $method => $state) {
 						if ($state) {
 							$methods[] = $method;
@@ -348,11 +348,11 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
  * @return guid
  */
 function thewire_latest_guid() {
-	$post = elgg_get_entities(array(
+	$post = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'thewire',
 		'limit' => 1,
-	));
+	]);
 	if ($post) {
 		return $post[0]->guid;
 	} else {
@@ -367,10 +367,10 @@ function thewire_latest_guid() {
  * @return ElggObject or null
  */
 function thewire_get_parent($post_guid) {
-	$parents = elgg_get_entities_from_relationship(array(
+	$parents = elgg_get_entities_from_relationship([
 		'relationship' => 'parent',
 		'relationship_guid' => $post_guid,
-	));
+	]);
 	if ($parents) {
 		return $parents[0];
 	}
@@ -396,7 +396,7 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 
 	foreach ($value as $index => $item) {
 		$name = $item->getName();
-		if ($name == 'access' || $name == 'edit') {
+		if ($name == 'edit') {
 			unset($value[$index]);
 		}
 	}
@@ -404,33 +404,33 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	$entity = $params['entity'];
 
 	if (elgg_is_logged_in()) {
-		$options = array(
+		$options = [
 			'name' => 'reply',
 			'text' => elgg_echo('reply'),
 			'href' => "thewire/reply/$entity->guid",
 			'priority' => 150,
-		);
+		];
 		$value[] = ElggMenuItem::factory($options);
 	}
 
 	if ($entity->reply) {
-		$options = array(
+		$options = [
 			'name' => 'previous',
 			'text' => elgg_echo('previous'),
 			'href' => "thewire/previous/$entity->guid",
 			'priority' => 160,
 			'link_class' => 'thewire-previous',
 			'title' => elgg_echo('thewire:previous:help'),
-		);
+		];
 		$value[] = ElggMenuItem::factory($options);
 	}
 
-	$options = array(
+	$options = [
 		'name' => 'thread',
 		'text' => elgg_echo('thewire:thread'),
 		'href' => "thewire/thread/$entity->wire_thread",
 		'priority' => 170,
-	);
+	];
 	$value[] = ElggMenuItem::factory($options);
 
 	return $value;

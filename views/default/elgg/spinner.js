@@ -58,3 +58,4 @@ define(function (require) {
 
 	return spinner;
 });
+

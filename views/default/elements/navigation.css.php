@@ -10,6 +10,14 @@
 
 .elgg-anchor * {
 	display: inline;
+}
+
+.elgg-anchor .elgg-icon {
+	color: inherit;
+	font-size: inherit;
+}
+
+.elgg-anchor img {
 	vertical-align: middle;
 }
 
@@ -162,6 +170,55 @@
 }
 
 /* ***************************************
+	MENUS
+*************************************** */
+.elgg-menu-item-has-dropdown .elgg-child-menu {
+	display: none;
+}
+
+.elgg-menu-item-has-toggle > .elgg-child-menu {
+	display: none;
+	margin-left: 15px;
+}
+.elgg-menu-item-has-toggle.elgg-state-selected > .elgg-child-menu {
+	display: block;
+}
+
+.elgg-menu > li > a .elgg-icon.elgg-state-opened,
+.elgg-menu > li > a .elgg-icon.elgg-state-closed {
+    font-size: 9px;
+    color: inherit;
+    line-height: inherit;
+    margin: 0 5px;
+}
+
+.elgg-menu > li > .elgg-menu-opened .elgg-icon.elgg-state-opened {
+	display: inline-block;
+}
+.elgg-menu > li > .elgg-menu-opened .elgg-icon.elgg-state-closed {
+	display: none;
+}
+.elgg-menu > li > .elgg-menu-closed .elgg-icon.elgg-state-closed {
+	display: inline-block;
+}
+.elgg-menu > li > .elgg-menu-closed .elgg-icon.elgg-state-opened {
+	display: none;
+}
+
+.elgg-menu .elgg-anchor-icon {
+	color: inherit;
+	font-size: inherit;
+}
+
+.elgg-menu .elgg-anchor-icon + .elgg-anchor-label {
+	margin-left: 5px;
+}
+
+.elgg-menu a:hover .elgg-icon {
+	color: inherit;
+}
+
+/* ***************************************
 	TOPBAR MENU
 *************************************** */
 .elgg-menu-topbar {
@@ -176,7 +233,7 @@
 .elgg-menu-topbar > li > a {
 	color: #EEE;
 	margin: 0 13px;
-	line-height: 32px; /* topbar height */
+	line-height: 30px; /* topbar height minus border width */
 	vertical-align: middle;
 }
 
@@ -189,42 +246,16 @@
 	float: right;
 }
 
-.elgg-menu-topbar > li > .elgg-topbar-dropdown:hover {
-	color: #EEE;
-	cursor: default;
+.elgg-topbar-child-menu > li > a {
+	padding: 10px 20px 10px 15px;
 }
-.elgg-menu-topbar-alt ul {
-	position: absolute;
-	display: none;
-	background-color: #FFF;
-	border: 1px solid #DEDEDE;
-	text-align: left;
-	top: 33px;
-	margin-left: -100px;
-	width: 180px;
 
-	border-radius: 0 0 3px 3px;
-	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
-}
-.elgg-menu-topbar-alt li ul > li > a {
-	text-decoration: none;
-	padding: 10px 20px;
-	background-color: #FFF;
-	color: #444;
-}
-.elgg-menu-topbar-alt li ul > li > a:hover {
-	background-color: #F0F0F0;
-	color: #444;
-}
-.elgg-menu-topbar-alt > li:hover > ul {
-	display: block;
+.elgg-menu-topbar-default .elgg-icon {
+    font-size: 18px;
+    vertical-align: middle;
 }
 .elgg-menu-topbar-default .elgg-anchor-label {
 	display: none;
-}
-.elgg-menu-item-account > a:after {
-	content: "\bb";
-	margin-left: 6px;
 }
 .elgg-button-nav {
 	display: none;
@@ -247,7 +278,7 @@
 	.elgg-menu-topbar-default > li:first-child a {
 		margin-left: 0;
 	}
-	.elgg-menu-topbar-alt > li > a.elgg-topbar-dropdown {
+	.elgg-menu-topbar-alt > li:last-child a {
 		margin-right: 0;
 	}
 }
@@ -374,7 +405,10 @@
 	PAGE MENU
 *************************************** */
 .elgg-menu-page {
-	margin-bottom: 15px;
+	margin-bottom: 20px;
+}
+.elgg-menu-page-container > ul + ul {
+	margin-top: 15px;
 }
 .elgg-menu-page a {
 	color: #444;
@@ -389,14 +423,8 @@
 	color: #999;
 	text-decoration: underline;
 }
-.elgg-menu-page .elgg-child-menu {
-	display: none;
-	margin-left: 15px;
-}
-.elgg-menu-page .elgg-state-selected > .elgg-child-menu {
-	display: block;
-}
-.elgg-menu-page .elgg-menu-closed:before, .elgg-menu-opened:before {
+.elgg-menu-page .elgg-menu-closed:before,
+.elgg-menu-page .elgg-menu-opened:before {
 	display: inline-block;
 	padding-right: 4px;
 }
@@ -415,34 +443,49 @@
 	position: absolute;
 	z-index: 10000;
 	overflow: hidden;
-	min-width: 180px;
-	max-width: 250px;
 	border: 1px solid #DEDEDE;
 	background-color: #FFF;
+	margin-right: 10px;
 
 	border-radius: 0 3px 3px 3px;
 	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
 }
-.elgg-menu-hover > li {
-	border-bottom: 1px solid #ddd;
+
+.elgg-menu-hover-card-container {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 500px;
 }
-.elgg-menu-hover > li:last-child {
-	border-bottom: none;
+
+.elgg-menu-hover-card {
+	padding: 8px 16px;
+	min-width: 300px;
+	flex: 2;
 }
-.elgg-menu-hover .elgg-heading-basic {
-	display: block;
+
+.elgg-menu-hover .elgg-menu > li a {
+	padding: 8px 16px;
+	color: #666;
 }
-.elgg-menu-hover > li a {
-	padding: 6px 18px;
+.elgg-menu-hover .elgg-anchor-icon + .elgg-anchor-label {
+	margin-left: 12px;
 }
-.elgg-menu-hover a:hover {
+.elgg-menu-hover .elgg-menu a:hover {
 	background-color: #F0F0F0;
 	text-decoration: none;
 }
-.elgg-menu-hover-admin a {
-	color: #FF0000;
+.elgg-menu-hover-actions,
+.elgg-menu-hover-default {
+	border-left: 1px solid #efefef;
+	flex: 1;
+	white-space: nowrap;
 }
-.elgg-menu-hover-admin a:hover {
+
+.elgg-menu-hover-admin {
+	border-top: 1px solid #efefef;
+}
+
+.elgg-menu-hover .elgg-menu-hover-admin a:hover {
 	color: #FFF;
 	background-color: #FF0000;
 }
@@ -490,29 +533,37 @@
 /* ***************************************
 	ENTITY AND ANNOTATION
 *************************************** */
-/* height depends on line height/font size */
-.elgg-menu-entity, .elgg-menu-annotation {
+.elgg-menu-entity-container,
+.elgg-menu-annotation-container,
+.elgg-menu-river-container {
 	float: right;
 	margin-left: 15px;
-	font-size: 90%;
-	color: #AAA;
-	line-height: 16px;
-	height: auto;
 }
-.elgg-menu-entity > li, .elgg-menu-annotation > li {
+.elgg-menu-entity,
+.elgg-menu-annotation,
+.elgg-menu-river {
+	font-size: 90%;
+	color: #aaaaaa;
+	line-height: normal;
+	height: auto;
+	vertical-align: middle;
+}
+.elgg-menu-entity > li:not(:first-child),
+.elgg-menu-annotation > li:not(:first-child),
+.elgg-menu-river > li:not(:first-child) {
 	margin-left: 15px;
 }
-.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
-	color: #AAA;
+.elgg-menu-entity > li > a,
+.elgg-menu-annotation > li > a,
+.elgg-menu-river > li > a {
+	color: inherit;
 }
-/* need to override .elgg-menu-hz */
-.elgg-menu-entity > li > a, .elgg-menu-annotation > li > a {
-	display: block;
+.elgg-menu-entity > li > a:hover,
+.elgg-menu-annotation > li > a:hover,
+.elgg-menu-river > li > a:hover {
+	color: #5097cf;
+	text-decoration: none;
 }
-.elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
-	vertical-align: baseline;
-}
-
 /* ***************************************
 	OWNER BLOCK
 *************************************** */
@@ -539,41 +590,24 @@
 .elgg-field-input > .elgg-menu-longtext {
 	margin-top: -20px;
 }
-/* ***************************************
-	RIVER
-*************************************** */
-.elgg-menu-river {
-	float: right;
-	margin-left: 15px;
-	font-size: 90%;
-	color: #AAA;
-	line-height: 16px;
-	height: 16px;
-}
-.elgg-menu-river > li {
-	display: inline-block;
-	margin-left: 5px;
-}
-.elgg-menu-river > li > a {
-	color: #AAA;
-	height: 16px;
-}
-/* need to override .elgg-menu-hz */
-.elgg-menu-river > li > a {
-	display: block;
-}
-.elgg-menu-river > li > span {
-	vertical-align: baseline;
-}
 
 /* ***************************************
 	SIDEBAR EXTRAS (rss, bookmark, etc)
 *************************************** */
 .elgg-menu-extras {
 	margin-bottom: 15px;
+	color: #aaaaaa;
+	font-size: 18px;
 }
-.elgg-menu-extras li {
-	padding-right: 5px;
+.elgg-menu-extras > li {
+	padding-right: 15px;
+}
+.elgg-menu-extras > li > a {
+	color: inherit;
+}
+.elgg-menu-extras > li > a:hover {
+	color: #5097cf;
+	text-decoration: none;
 }
 .elgg-menu-extras .elgg-menu-item-rss .elgg-anchor-label {
 	display: none;
@@ -582,21 +616,13 @@
 /* ***************************************
 	WIDGET MENU
 *************************************** */
+.elgg-menu-widget-container {
+	float: right;
+	margin-right: 15px;
+}
 .elgg-menu-widget > li {
-	position: absolute;
-	top: 8px;
 	display: inline-block;
-	width: 18px;
-	height: 18px;
-}
-.elgg-menu-widget > .elgg-menu-item-collapse {
-	left: 10px;
-}
-.elgg-menu-widget > .elgg-menu-item-delete {
-	right: 10px;
-}
-.elgg-menu-widget > .elgg-menu-item-settings {
-	right: 32px;
+	margin-left: 10px;
 }
 
 @media (max-width: 820px) {
@@ -699,10 +725,14 @@
 }
 
 @media (max-width: 600px) {
-	.elgg-menu-entity, .elgg-menu-annotation {
+	.elgg-menu-entity,
+	.elgg-menu-annotation,
+	.elgg-menu-river {
 		margin-left: 0;
 	}
-	.elgg-menu-entity > li, .elgg-menu-annotation > li {
+	.elgg-menu-entity > li,
+	.elgg-menu-annotation > li,
+	.elgg-menu-river > li {
 		margin-left: 0;
 		margin-right: 15px;
 	}

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'На что жалуются',
 	'admin:administer_utilities:reportedcontent' => 'Пожаловаться',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Простите, пожаловаться не получилось. Пожалуйтесь на эту ошибку.',
 	'reportedcontent:notarchived' => 'Простите, невозможно заархивировать жалобу.',
-);
+];

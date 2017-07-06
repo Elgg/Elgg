@@ -22,17 +22,17 @@ function css_permissions_override() {
 <div class="elgg-body mal">
 	<?php echo elgg_view('theme_sandbox/header', $vars); ?>
 <?php
-$w = array();
+$w = [];
 for ($i=1; $i<=6; $i++) {
 	$obj = new ElggWidget();
 	$obj->handler = 'friends';
 	$obj->title = "Widget $i";
 	$w[] = $obj;
 }
-$column1 = array($w[0], $w[1]);
-$column2 = array($w[2], $w[3]);
-$column3 = array($w[4], $w[5]);
-$widgets = array(1 => $column1, 2 => $column2, 3 => $column3);
+$column1 = [$w[0], $w[1]];
+$column2 = [$w[2], $w[3]];
+$column3 = [$w[4], $w[5]];
+$widgets = [1 => $column1, 2 => $column2, 3 => $column3];
 $num_columns = 3;
 
 echo '<div class="elgg-layout-widgets">';

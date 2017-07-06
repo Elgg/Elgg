@@ -33,19 +33,19 @@ if ($page_owner instanceof ElggGroup) {
 
 $content .= elgg_list_entities($options);
 
-$title = elgg_echo('bookmarks:owner', array($page_owner->name));
+$title = elgg_echo('bookmarks:owner', [$page_owner->name]);
 
 $filter_context = '';
 if ($page_owner->getGUID() == elgg_get_logged_in_user_guid()) {
 	$filter_context = 'mine';
 }
 
-$vars = array(
+$vars = [
 	'filter_context' => $filter_context,
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('bookmarks/sidebar'),
-);
+];
 
 // don't show filter if out of filter context
 if ($page_owner instanceof ElggGroup) {

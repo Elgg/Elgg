@@ -14,7 +14,7 @@ $plugin = $vars['entity'];
 
 $id = $plugin->getID();
 $path = htmlspecialchars($plugin->getPath());
-$message = elgg_echo('admin:plugins:warning:invalid', array($plugin->getError()));
+$message = elgg_echo('admin:plugins:warning:invalid', [$plugin->getError()]);
 $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 ?>
 

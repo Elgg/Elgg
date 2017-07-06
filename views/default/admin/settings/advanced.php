@@ -6,4 +6,4 @@
  * @subpackage Core
  */
 
-echo elgg_view_form('admin/site/update_advanced', array('class' => 'elgg-form-settings'));
+echo elgg_view_form('admin/site/update_advanced', ['class' => 'elgg-form-settings']);

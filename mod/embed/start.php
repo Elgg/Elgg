@@ -31,8 +31,8 @@ function embed_init() {
  *
  * @param string $hook
  * @param string $type
- * @param array $items
- * @param array $vars
+ * @param array  $items
+ * @param array  $vars
  * @return array
  */
 function embed_longtext_menu($hook, $type, $items, $vars) {
@@ -60,7 +60,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		]);
 	}
 
-	$items[] = ElggMenuItem::factory(array(
+	$items[] = ElggMenuItem::factory([
 		'name' => 'embed',
 		'href' => 'javascript:',
 		'data-colorbox-opts' => json_encode([
@@ -71,7 +71,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$id} elgg-lightbox",
 		'deps' => ['elgg/embed'],
 		'priority' => 10,
-	));
+	]);
 
 	return $items;
 }
@@ -81,8 +81,8 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
  *
  * @param string $hook
  * @param string $type
- * @param array $items
- * @param array $vars
+ * @param array  $items
+ * @param array  $vars
  */
 function embed_select_tab($hook, $type, $items, $vars) {
 
@@ -111,7 +111,7 @@ function embed_page_handler($page) {
 
 	elgg_ajax_gatekeeper();
 
-	$container_guid = (int)get_input('container_guid');
+	$container_guid = (int) get_input('container_guid');
 	if ($container_guid) {
 		$container = get_entity($container_guid);
 
@@ -136,12 +136,12 @@ function embed_page_handler($page) {
  * @param array $vars     Display parameters
  * @return string
  */
-function embed_list_items($entities, $vars = array()) {
+function embed_list_items($entities, $vars = []) {
 
-	$defaults = array(
+	$defaults = [
 		'items' => $entities,
 		'list_class' => 'elgg-list-entity',
-	);
+	];
 
 	$vars = array_merge($defaults, $vars);
 
@@ -154,9 +154,9 @@ function embed_list_items($entities, $vars = array()) {
  * @param array $options
  * @return array
  */
-function embed_get_list_options($options = array()) {
+function embed_get_list_options($options = []) {
 
-	$container_guids = array(elgg_get_logged_in_user_guid());
+	$container_guids = [elgg_get_logged_in_user_guid()];
 	if (elgg_get_page_owner_guid()) {
 		$page_owner_guid = elgg_get_page_owner_guid();
 		if ($page_owner_guid != elgg_get_logged_in_user_guid()) {
@@ -164,11 +164,11 @@ function embed_get_list_options($options = array()) {
 		}
 	}
 
-	$defaults = array(
+	$defaults = [
 		'limit' => 6,
 		'container_guids' => $container_guids,
 		'item_class' => 'embed-item',
-	);
+	];
 
 	$options = array_merge($defaults, $options);
 
@@ -178,7 +178,7 @@ function embed_get_list_options($options = array()) {
 /**
  * Substitutes thumbnail's inline URL with a permanent URL
  * Registered with a very late priority of 1000 to ensure we replace all previous values
- * 
+ *
  * @param string $hook   "entity:icon:url"
  * @param string $type   "object"
  * @param string $return URL

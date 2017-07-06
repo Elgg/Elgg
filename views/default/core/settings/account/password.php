@@ -17,24 +17,24 @@ $title = elgg_echo('user:set:password');
 // only make the admin user enter current password for changing his own password.
 $admin = '';
 if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
-	$admin .= elgg_view_field(array(
+	$admin .= elgg_view_field([
 	'#type' => 'password',
 		'name' => 'current_password',
 		'#label' => elgg_echo('user:current_password:label'),
-	));
+	]);
 }
 
-$password = elgg_view_field(array(
+$password = elgg_view_field([
 	'#type' => 'password',
 	'name' => 'password',
 	'#label' => elgg_echo('user:password:label'),
-		));
+		]);
 
-$password2 = elgg_view_field(array(
+$password2 = elgg_view_field([
 	'#type' => 'password',
 	'name' => 'password2',
 	'#label' => elgg_echo('user:password2:label')
-		));
+		]);
 
 $content = $admin . $password . $password2;
 

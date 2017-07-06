@@ -51,7 +51,7 @@ class ResponseFactory {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Request            $request   HTTP request
 	 * @param PluginHooksService $hooks     Plugin hooks service
 	 * @param AjaxService        $ajax      AJAX service
@@ -110,7 +110,7 @@ class ResponseFactory {
 	 * @param array   $headers An array of response headers
 	 * @return Response
 	 */
-	public function prepareResponse($content = '', $status = 200, array $headers = array()) {
+	public function prepareResponse($content = '', $status = 200, array $headers = []) {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
 		$response = new Response($content, $status, $header_bag->all());
@@ -127,7 +127,7 @@ class ResponseFactory {
 	 * @return SymfonyRedirectResponse
 	 * @throws InvalidArgumentException
 	 */
-	public function prepareRedirectResponse($url, $status = 302, array $headers = array()) {
+	public function prepareRedirectResponse($url, $status = 302, array $headers = []) {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
 		$response = new SymfonyRedirectResponse($url, $status, $header_bag->all());
@@ -211,7 +211,7 @@ class ResponseFactory {
 		}
 
 		if ($response->getForwardURL() !== null && !$is_xhr) {
-			// non-xhr requests should issue a forward if redirect url is set 
+			// non-xhr requests should issue a forward if redirect url is set
 			// unless it's an error, in which case we serve an error page
 			if ($this->isAction() || (!$response->isClientError() && !$response->isServerError())) {
 				$response->setStatusCode(ELGG_HTTP_FOUND);
@@ -516,7 +516,7 @@ class ResponseFactory {
 	/**
 	 * Normalizes content into serializable data by walking through arrays
 	 * and objectifying Elgg entities
-	 * 
+	 *
 	 * @param mixed $content Data to normalize
 	 * @return mixed
 	 */

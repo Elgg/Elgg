@@ -180,6 +180,51 @@ You can now add new items to the menu like this:
 Furthermore it is now possible to modify the menu using the hooks
 ``'register', 'menu:my_menu'`` and ``'prepare', 'menu:my_menu'``.
 
+Child Dropdown Menus
+====================
+
+Child menus can be configured using ``child_menu`` factory option on the parent item.
+
+``child_menu`` options array accepts ``display`` parameter, which can be used
+to set the child menu to open as ``dropdown`` or be displayed via ``toggle``.
+All other key value pairs will be passed as attributes to the ``ul`` element.
+
+
+.. code-block:: php
+
+	// Register a parent menu item that has a dropdown submenu
+	elgg_register_menu_item('my_menu', array(
+		'name' => 'parent_item',
+		'href' => '#',
+		'text' => 'Show dropdown menu',
+		'child_menu' => [
+			'display' => 'dropdown',
+			'class' => 'elgg-additional-child-menu-class',
+			'data-position' => json_encode([
+				'at' => 'right bottom',
+				'my' => 'right top',
+				'collision' => 'fit fit',
+			]),
+			'data-foo' => 'bar',
+			'id' => 'dropdown-menu-id',
+		],
+	));
+
+	// Register a parent menu item that has a hidden submenu toggled when item is clicked
+	elgg_register_menu_item('my_menu', array(
+		'name' => 'parent_item',
+		'href' => '#',
+		'text' => 'Show submenu',
+		'child_menu' => [
+			'display' => 'dropdown',
+			'class' => 'elgg-additional-submenu-class',
+			'data-toggle-duration' => 'medium',
+			'data-foo' => 'bar2',
+			'id' => 'submenu-id',
+		],
+	));
+
+
 Theming
 =======
 

@@ -17,10 +17,10 @@
 
 .elgg-subscription-description,
 .elgg-subscription-methods {
-    display: table-cell;
-    width: 50%;
-    vertical-align: middle;
-    padding: 10px;
+	display: table-cell;
+	width: 50%;
+	vertical-align: middle;
+	padding: 10px;
 	border-bottom: 1px solid #DCDCDC;
 }
 

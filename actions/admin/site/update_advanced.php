@@ -17,44 +17,14 @@ if (!($site instanceof ElggSite)) {
 	throw new InstallationException("Passing a non-ElggSite to an ElggSite constructor!");
 }
 
-$site->url = rtrim(get_input('wwwroot', '', false), '/') . '/';
-
-elgg_save_config('path', sanitise_filepath(get_input('path', '', false)));
-$dataroot = sanitise_filepath(get_input('dataroot', '', false));
-
-// check for relative paths
-if (stripos(PHP_OS, 'win') === 0) {
-	if (strpos($dataroot, ':') !== 1) {
-		$msg = elgg_echo('admin:configuration:dataroot:relative_path', array($dataroot));
-		register_error($msg);
-		forward(REFERER);
-	}
-} else {
-	if (strpos($dataroot, '/') !== 0) {
-		$msg = elgg_echo('admin:configuration:dataroot:relative_path', array($dataroot));
-		register_error($msg);
-		forward(REFERER);
-	}
-}
-
-elgg_save_config('dataroot', $dataroot);
-
 if ('on' === get_input('simplecache_enabled')) {
 	elgg_enable_simplecache();
 } else {
 	elgg_disable_simplecache();
 }
 
-$cache_symlinked = _elgg_is_cache_symlinked();
-if ('on' === get_input('cache_symlink_enabled') && !$cache_symlinked) {
-	if (!is_dir(elgg_get_root_path() . 'cache/')) {
-		$cache_symlinked = symlink(elgg_get_cache_path() . 'views_simplecache/', elgg_get_root_path() . 'cache/');
-	}
-	if (!_elgg_is_cache_symlinked()) {
-		unlink(elgg_get_root_path() . 'cache/');
-		$cache_symlinked = false;
-	}
-	if (!$cache_symlinked) {
+if ('on' === get_input('cache_symlink_enabled')) {
+	if (!_elgg_symlink_cache()) {
 		register_error(elgg_echo('installation:cache_symlink:error'));
 	}
 }

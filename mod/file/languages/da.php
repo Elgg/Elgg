@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -97,4 +97,4 @@ See og kommenter på filen:
 	'file:noaccess' => "Du har ikke tilladelse ti at ændre denne fil",
 	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Du skal vælge en fil",
-);
+];

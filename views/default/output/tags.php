@@ -32,7 +32,7 @@ $tags = $vars['tags'];
 unset($vars['tags']);
 
 if (!is_array($tags)) {
-	$tags = array($tags);
+	$tags = [$tags];
 }
 
 $list_class = "elgg-tags";

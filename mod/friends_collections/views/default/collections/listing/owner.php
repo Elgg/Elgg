@@ -12,24 +12,12 @@ if (!$entity) {
 }
 
 $collections = get_user_access_collections($entity->guid);
-if (empty($collections)) {
-	echo elgg_format_element('p', [
-		'class' => 'elgg-no-results',
-	], elgg_echo('friends:collections:no_results'));
-}
 
-$lis = '';
-foreach ($collections as $collection) {
-	$view = elgg_view('collections/collection', [
-		'full_view' => false,
-		'collection' => $collection,
-	]);
-
-	$lis .= elgg_format_element('li', [
-		'class' => 'elgg-item elgg-item-access-collection',
-	], $view);
-}
-
-echo elgg_format_element('ul', [
-	'class' => 'elgg-list elgg-list-access-collections',
-], $lis);
+echo elgg_view('page/components/list', [
+	'items' => $collections,
+	'item_view' => 'collections/collection',
+	'item_class' => 'elgg-item-access-collection',
+	'list_class' => 'elgg-list-access-collections',
+	'pagination' => false,
+	'no_results' => elgg_echo('friends:collections:no_results'),
+]);

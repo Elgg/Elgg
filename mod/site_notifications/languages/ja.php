@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'サイト通知機能',
 	'notification:method:site' => 'サイト',
 	'site_notifications:topbar' => '通知',
@@ -11,4 +11,4 @@ return array(
 	'site_notifications:toggle_all' => '全てを選択',
 	'site_notifications:error:notifications_not_selected' => '通知が選択されていません。',
 	'site_notifications:success:delete' => '通知が削除されました'
-);
+];

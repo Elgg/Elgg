@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => '未確認ユーザ',
 	
 	'email:validate:subject' => "【登録確認メール】%s様、%sで登録されたメールアドレスにお送りしています",
@@ -53,4 +53,4 @@ return array(
 	'uservalidationbyemail:messages:resent_validation' => '確認メールを送信しました。',
 	'uservalidationbyemail:messages:resent_validations' => 'チェックしたユーザ全員に確認メールを再送しました。'
 
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -55,4 +55,4 @@ return array(
 	 */
 	'thewire:settings:limit' => "Maximum number of characters for wire messages:",
 	'thewire:settings:limit:none' => "No limit",
-);
+];

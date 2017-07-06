@@ -205,13 +205,13 @@ function validate_username($username) {
 	}
 
 	if (strlen($username) < $CONFIG->minusername) {
-		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
+		$msg = elgg_echo('registration:usernametooshort', [$CONFIG->minusername]);
 		throw new \RegistrationException($msg);
 	}
 
 	// username in the database has a limit of 128 characters
 	if (strlen($username) > 128) {
-		$msg = elgg_echo('registration:usernametoolong', array(128));
+		$msg = elgg_echo('registration:usernametoolong', [128]);
 		throw new \RegistrationException($msg);
 	}
 
@@ -235,11 +235,11 @@ function validate_username($username) {
 	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=';
 
 	$blacklist2 = elgg_trigger_plugin_hook('username:character_blacklist', 'user',
-		array('blacklist' => $blacklist2), $blacklist2);
+		['blacklist' => $blacklist2], $blacklist2);
 
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
-			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
+			$msg = elgg_echo('registration:invalidchars', [$blacklist2[$n], $blacklist2]);
 			$msg = htmlspecialchars($msg, ENT_QUOTES, 'UTF-8');
 			throw new \RegistrationException($msg);
 		}
@@ -247,7 +247,7 @@ function validate_username($username) {
 
 	$result = true;
 	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
-		array('username' => $username), $result);
+		['username' => $username], $result);
 }
 
 /**
@@ -266,13 +266,13 @@ function validate_password($password) {
 	}
 
 	if (strlen($password) < $CONFIG->min_password_length) {
-		$msg = elgg_echo('registration:passwordtooshort', array($CONFIG->min_password_length));
+		$msg = elgg_echo('registration:passwordtooshort', [$CONFIG->min_password_length]);
 		throw new \RegistrationException($msg);
 	}
 
 	$result = true;
 	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
-		array('password' => $password), $result);
+		['password' => $password], $result);
 }
 
 /**
@@ -291,7 +291,7 @@ function validate_email_address($address) {
 	// Got here, so lets try a hook (defaulting to ok)
 	$result = true;
 	return elgg_trigger_plugin_hook('registeruser:validate:email', 'all',
-		array('email' => $address), $result);
+		['email' => $address], $result);
 }
 
 /**
@@ -498,16 +498,22 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		return;
 	}
 	
-	if (elgg_get_logged_in_user_guid() == $user->guid) {
-		$url = "profile/$user->username/edit";
-		$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
-		$item->setSection('action');
-		$return[] = $item;
+	if ($user->canEdit()) {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'profile:edit',
+			'text' => elgg_echo('profile:edit'),
+			'icon' => 'address-card',
+			'href' => "profile/$user->username/edit",
+			'section' => (elgg_get_logged_in_user_guid() == $user->guid)? 'action' : 'admin',
+		]);
 
-		$url = "avatar/edit/$user->username";
-		$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
-		$item->setSection('action');
-		$return[] = $item;
+		$return[] = ElggMenuItem::factory([
+			'name' => 'avatar:edit',
+			'text' => elgg_echo('avatar:edit'),
+			'icon' => 'image',
+			'href' => "avatar/edit/$user->username",
+			'section' => (elgg_get_logged_in_user_guid() == $user->guid)? 'action' : 'admin',
+		]);
 	}
 
 	// prevent admins from banning or deleting themselves
@@ -515,46 +521,76 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	if (elgg_is_admin_logged_in()) {
-		$actions = array();
-		if (!$user->isBanned()) {
-			$actions[] = 'ban';
-		} else {
-			$actions[] = 'unban';
-		}
-		$actions[] = 'delete';
-		$actions[] = 'resetpassword';
-		if (!$user->isAdmin()) {
-			$actions[] = 'makeadmin';
-		} else {
-			$actions[] = 'removeadmin';
-		}
-
-		foreach ($actions as $action) {
-			$url = "action/admin/user/$action?guid={$user->guid}";
-			$url = elgg_add_action_tokens_to_url($url);
-			$item = new \ElggMenuItem($action, elgg_echo($action), $url);
-			$item->setSection('admin');
-			$item->setConfirmText(true);
-
-			$return[] = $item;
-		}
-
-		$url = "profile/$user->username/edit";
-		$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
-		$item->setSection('admin');
-		$return[] = $item;
-		
-		$url = "avatar/edit/$user->username";
-		$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
-		$item->setSection('admin');
-		$return[] = $item;
-		
-		$url = "settings/user/$user->username";
-		$item = new \ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
-		$item->setSection('admin');
-		$return[] = $item;
+	if (!elgg_is_admin_logged_in()) {
+		return $return;
 	}
+	
+	// following items are admin only
+	if (!$user->isBanned()) {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'ban',
+			'text' => elgg_echo('ban'),
+			'icon' => 'ban',
+			'href' => "action/admin/user/ban?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	} else {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'unban',
+			'text' => elgg_echo('unban'),
+			'icon' => 'ban',
+			'href' => "action/admin/user/unban?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	}
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'delete',
+		'text' => elgg_echo('delete'),
+		'icon' => 'delete',
+		'href' => "action/admin/user/delete?guid={$user->guid}",
+		'confirm' => true,
+		'section' => 'admin',
+	]);
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'resetpassword',
+		'text' => elgg_echo('resetpassword'),
+		'icon' => 'refresh',
+		'href' => "action/admin/user/resetpassword?guid={$user->guid}",
+		'confirm' => true,
+		'section' => 'admin',
+	]);
+	
+	if (!$user->isAdmin()) {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'makeadmin',
+			'text' => elgg_echo('makeadmin'),
+			'icon' => 'level-up',
+			'href' => "action/admin/user/makeadmin?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	} else {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'removeadmin',
+			'text' => elgg_echo('removeadmin'),
+			'icon' => 'level-down',
+			'href' => "action/admin/user/removeadmin?guid={$user->guid}",
+			'confirm' => true,
+			'section' => 'admin',
+		]);
+	}
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'settings:edit',
+		'text' => elgg_echo('settings:edit'),
+		'icon' => 'cogs',
+		'href' => "settings/user/$user->username",
+		'section' => 'admin',
+	]);
 
 	return $return;
 }
@@ -583,24 +619,24 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 
 	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
-		$options = array(
+		$options = [
 			'name' => 'banned',
 			'text' => "<span>$banned</span>",
 			'href' => false,
 			'priority' => 0,
-		);
-		$return = array(\ElggMenuItem::factory($options));
+		];
+		$return = [\ElggMenuItem::factory($options)];
 	} else {
-		$return = array();
+		$return = [];
 		$location = $entity->location;
 		if (is_string($location) && $location !== '') {
 			$location = htmlspecialchars($location, ENT_QUOTES, 'UTF-8', false);
-			$options = array(
+			$options = [
 				'name' => 'location',
 				'text' => "<span>$location</span>",
 				'href' => false,
 				'priority' => 150,
-			);
+			];
 			$return[] = \ElggMenuItem::factory($options);
 		}
 	}
@@ -619,7 +655,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 function elgg_profile_fields_setup() {
 	global $CONFIG;
 
-	$profile_defaults = array (
+	$profile_defaults =  [
 		'description' => 'longtext',
 		'briefdescription' => 'text',
 		'location' => 'location',
@@ -630,9 +666,9 @@ function elgg_profile_fields_setup() {
 		'mobile' => 'text',
 		'website' => 'url',
 		'twitter' => 'text',
-	);
+	];
 
-	$loaded_defaults = array();
+	$loaded_defaults = [];
 	$fieldlist = elgg_get_config('profile_custom_fields');
 	if ($fieldlist || $fieldlist === '0') {
 		$fieldlistarray = explode(',', $fieldlist);
@@ -640,7 +676,7 @@ function elgg_profile_fields_setup() {
 			if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
 				$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
 				$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
-				add_translation(get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
+				add_translation(get_current_language(), ["profile:admin_defined_profile_{$listitem}" => $translation]);
 			}
 		}
 	}
@@ -657,7 +693,7 @@ function elgg_profile_fields_setup() {
 		if ($type == 'tags' || $type == 'location' || $type == 'tag') {
 			elgg_register_tag_metadata_name($name);
 			// register a tag name translation
-			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("profile:$name")));
+			add_translation(get_current_language(), ["tag_names:$name" => elgg_echo("profile:$name")]);
 		}
 	}
 }
@@ -727,7 +763,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 		'href' => "avatar/edit/{$owner->username}",
 		'text' => elgg_echo('avatar:edit'),
 		'section' => '1_profile',
-		'contexts' => array('settings'),
+		'contexts' => ['settings'],
 	]);
 	
 	$return[] = \ElggMenuItem::factory([
@@ -735,7 +771,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 		'href' => "profile/{$owner->username}/edit",
 		'text' => elgg_echo('profile:edit'),
 		'section' => '1_profile',
-		'contexts' => array('settings'),
+		'contexts' => ['settings'],
 	]);
 	
 	return $return;
@@ -762,13 +798,27 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		return;
 	}
 
+	$toggle = elgg_view_icon('chevron-down', ['class' => 'elgg-state-closed']);
+	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
+
+	// If JS fails here, allow easy access to place where they can upgrade/flush caches
+	$href = elgg_is_admin_logged_in() ? elgg_get_login_url() : '#';
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'account',
-		'text' => elgg_echo('account'),
-		'href' => '#',
+		'text' => elgg_echo('account') . $toggle,
+		'href' => $href,
 		'priority' => 800,
 		'section' => 'alt',
-		'link_class' => 'elgg-topbar-dropdown',
+		'child_menu' => [
+			'display' => 'dropdown',
+			'class' => 'elgg-topbar-child-menu',
+			'data-position' => json_encode([
+				'at' => 'right+10px bottom',
+				'my' => 'right top',
+				'collision' => 'fit fit',
+			]),
+		],
 	]);
 	
 	$return[] = \ElggMenuItem::factory([
@@ -776,6 +826,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'parent_name' => 'account',
 		'href' => "settings/user/{$viewer->username}",
 		'text' => elgg_echo('settings'),
+		'icon' => 'cogs',
 		'priority' => 300,
 		'section' => 'alt',
 	]);
@@ -786,6 +837,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 			'parent_name' => 'account',
 			'href' => 'admin',
 			'text' => elgg_echo('admin'),
+			'icon' => 'tasks',
 			'priority' => 800,
 			'section' => 'alt',
 		]);
@@ -796,6 +848,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'parent_name' => 'account',
 		'href' => 'action/logout',
 		'text' => elgg_echo('logout'),
+		'icon' => 'sign-out',
 		'is_action' => true,
 		'priority' => 900,
 		'section' => 'alt',
@@ -933,6 +986,8 @@ function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $par
 		$site->name,
 		$site->getURL(),
 	], $language);
+
+	$return_value->url = $recipient->getURL();
 	
 	return $return_value;
 }
@@ -955,7 +1010,9 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
-	
+
+	elgg_register_action('login', '', 'public');
+	elgg_register_action('logout');
 	elgg_register_action('register', '', 'public');
 	elgg_register_action('useradd', '', 'admin');
 	elgg_register_action('avatar/upload');

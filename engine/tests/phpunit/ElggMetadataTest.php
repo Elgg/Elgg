@@ -3,6 +3,12 @@
 use Elgg\TestCase;
 
 /**
+ * Metadata operations are mocked in \Elgg\Mocks\Database\MetadataTable table
+ * Any changes to the SQL queries in the metadata table/API should be reflected there
+ * For elgg_get_metadata_from_id() to work with the mocks, the SQL query must be
+ * an exact match, so any new commas, brackets and clauses need to be reflected in the
+ * mock class.
+ * 
  * @group ElggMetadata
  */
 class ElggMetadataTest extends TestCase {
@@ -22,6 +28,8 @@ class ElggMetadataTest extends TestCase {
 		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
 		$metadata = elgg_get_metadata_from_id($id);
 
+		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
+		
 		$this->assertEquals('metadata', $metadata->getType());
 		$this->assertEquals('foo', $metadata->getSubtype());
 		$this->assertInstanceOf(stdClass::class, $metadata->toObject());
@@ -50,6 +58,8 @@ class ElggMetadataTest extends TestCase {
 		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
 		$metadata = elgg_get_metadata_from_id($id);
 
+		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
+		
 		_elgg_services()->hooks->backup();
 
 		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function($hook, $type, $return, $params) use ($metadata) {
@@ -76,8 +86,10 @@ class ElggMetadataTest extends TestCase {
 		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
 		$metadata = elgg_get_metadata_from_id($id);
 
+		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
+		
 		// Default access level is private
-		$this->assertEquals(ACCESS_PRIVATE, $metadata->access_id);
+		$this->assertEquals(ACCESS_PUBLIC, $metadata->access_id);
 		
 		$this->assertTrue($metadata->canEdit($owner->guid));
 		$this->assertFalse($metadata->canEdit($other->guid));
@@ -97,7 +109,7 @@ class ElggMetadataTest extends TestCase {
 		$metadata->name = 'foo';
 		$metadata->value = 'bar';
 		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
-
+		
 		$id = _elgg_services()->metadataTable->iterator + 1;
 
 		// Insert
@@ -137,6 +149,8 @@ class ElggMetadataTest extends TestCase {
 		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
 		$metadata = elgg_get_metadata_from_id($id);
 
+		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
+		
 		$dbprefix = elgg_get_config('dbprefix');
 		_elgg_services()->db->addQuerySpec([
 			'sql' => "DELETE FROM {$dbprefix}metadata WHERE id = :id",
@@ -164,6 +178,8 @@ class ElggMetadataTest extends TestCase {
 		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
 		$metadata = elgg_get_metadata_from_id($id);
 
+		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
+		
 		$this->assertTrue($metadata->disable());
 
 		$this->assertEquals('no', $metadata->enabled);

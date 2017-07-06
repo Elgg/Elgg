@@ -28,7 +28,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 	}
 	
 	if ($guid) {
-		$page_owner_guid = (int)$guid;
+		$page_owner_guid = (int) $guid;
 	}
 
 	if (isset($page_owner_guid)) {
@@ -37,7 +37,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 
 	// return guid of page owner entity
 	// Note: core registers default_page_owner_handler() to handle this hook.
-	$guid = (int)elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
+	$guid = (int) elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
 
 	if ($guid) {
 		$page_owner_guid = $guid;
@@ -251,37 +251,6 @@ function elgg_set_context_stack(array $stack) {
 	_elgg_services()->context->fromArray($stack);
 }
 
-/**
- * Set an initial context if using index.php front controller.
- *
- * @param Request $request Elgg HTTP request
- * @return void
- * @access private
- */
-function _elgg_set_initial_context(\Elgg\Http\Request $request) {
-	// don't do this for *_handler.php, etc.
-	if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
-		$context = $request->getFirstUrlSegment();
-		if (!$context) {
-			$context = 'main';
-		}
-
-		_elgg_services()->context->set($context);
-	}
-}
-
-/**
- * Initializes the page owner functions
- *
- * @return void
- * @access private
- */
-function page_owner_boot() {
-	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
-
-	_elgg_set_initial_context(_elgg_services()->request);
-}
-
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('boot', 'system', 'page_owner_boot');
+	$hooks->registerHandler('page_owner', 'system', 'default_page_owner_handler');
 };

@@ -63,13 +63,13 @@ if ($reply_guid) {
 		forward(REFERER);
 	}
 
-	elgg_create_river_item(array(
+	elgg_create_river_item([
 		'view' => 'river/object/discussion_reply/create',
 		'action_type' => 'reply',
 		'subject_guid' => $user->guid,
 		'object_guid' => $reply->guid,
 		'target_guid' => $topic->guid,
-	));
+	]);
 
 	system_message(elgg_echo('discussion:post:success'));
 }

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -86,4 +86,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.',
 	'bookmarks:save:invalid' => "Het adres van de favoriet is ongeldig en kon niet worden opgeslagen.",
 	'bookmarks:delete:failed' => "Je favoriet kon niet worden verwijderd. Probeer het nogmaals.",
 	'bookmarks:unknown_bookmark' => 'Kan deze favoriet niet vinden',
-);
+];

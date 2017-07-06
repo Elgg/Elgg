@@ -12,7 +12,7 @@ class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 	 *
 	 * @var array
 	 */
-	protected $validAttributes = array(
+	protected $validAttributes = [
 		'name',
 		'author',
 		'version',
@@ -33,16 +33,16 @@ class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 		'repository',
 		'bugtracker',
 		'donations',
-	);
+	];
 
 	/**
 	 * Required attributes for a valid 1.8 manifest
 	 *
 	 * @var array
 	 */
-	protected $requiredAttributes = array(
+	protected $requiredAttributes = [
 		'name', 'author', 'version', 'description', 'requires'
-	);
+	];
 
 	/**
 	 * Parse a manifest object from 1.8 and later
@@ -52,7 +52,7 @@ class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 	 * @throws PluginException
 	 */
 	public function parse() {
-		$parsed = array();
+		$parsed = [];
 		foreach ($this->manifestObject->children as $element) {
 			switch ($element->name) {
 				// single elements
@@ -88,7 +88,7 @@ class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 						return false;
 					}
 
-					$info = array();
+					$info = [];
 					foreach ($element->children as $child_element) {
 						$info[$child_element->name] = $child_element->content;
 					}
@@ -102,7 +102,7 @@ class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 		foreach ($this->requiredAttributes as $attr) {
 			if (!array_key_exists($attr, $parsed)) {
 				throw new \PluginException(_elgg_services()->translator->translate('PluginException:ParserErrorMissingRequiredAttribute',
-							array($attr, $this->caller->getPluginID())));
+							[$attr, $this->caller->getPluginID()]));
 			}
 		}
 

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Herramientas',
 	'admin:develop_tools:sandbox' => 'Sanbox del Tema',
@@ -79,4 +79,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Configuraciones almacenadas',
-);
+];

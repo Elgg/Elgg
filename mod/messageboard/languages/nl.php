@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -69,4 +69,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 
 	'messageboard:failure' => "Er is een fout opgetreden tijdens het toevoegen van je bericht. Probeer het nogmaals.",
 
-);
+];

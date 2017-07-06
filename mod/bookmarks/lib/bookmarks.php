@@ -13,7 +13,7 @@
  */
 function bookmarks_prepare_form_vars($bookmark = null) {
 	// input names => defaults
-	$values = array(
+	$values = [
 		'title' => get_input('title', ''), // bookmarklet support
 		'address' => get_input('address', ''),
 		'description' => '',
@@ -22,7 +22,7 @@ function bookmarks_prepare_form_vars($bookmark = null) {
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
 		'entity' => $bookmark,
-	);
+	];
 
 	if ($bookmark) {
 		foreach (array_keys($values) as $field) {

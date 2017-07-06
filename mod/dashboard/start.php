@@ -11,13 +11,13 @@ function dashboard_init() {
 	elgg_extend_view('elgg.css', 'dashboard/css');
 
 	if (elgg_is_logged_in()) {
-		elgg_register_menu_item('topbar', array(
+		elgg_register_menu_item('topbar', [
 			'name' => 'dashboard',
 			'href' => 'dashboard',
 			'text' => elgg_echo('dashboard'),
 			'priority' => 100,
 			'section' => 'alt',
-		));
+		]);
 	}
 	
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
@@ -42,7 +42,7 @@ function dashboard_page_handler() {
  * @return array
  */
 function dashboard_default_widgets($hook, $type, $return, $params) {
-	$return[] = array(
+	$return[] = [
 		'name' => elgg_echo('dashboard'),
 		'widget_context' => 'dashboard',
 		'widget_columns' => 3,
@@ -50,7 +50,7 @@ function dashboard_default_widgets($hook, $type, $return, $params) {
 		'event' => 'create',
 		'entity_type' => 'user',
 		'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
-	);
+	];
 
 	return $return;
 }

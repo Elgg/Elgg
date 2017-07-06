@@ -38,9 +38,9 @@ $content = elgg_view('collections/listing/owner', [
 	'entity' => $user,
 ]);
 
-$body = elgg_view_layout('one_sidebar', array(
+$body = elgg_view_layout('one_sidebar', [
 	'content' => $content,
 	'title' => $title,
-));
+]);
 
 echo elgg_view_page($title, $body);

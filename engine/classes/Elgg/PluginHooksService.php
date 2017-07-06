@@ -5,11 +5,11 @@ use Elgg\HooksRegistrationService\Hook;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Use the elgg_* versions instead.
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Hooks
  * @since      1.9.0
@@ -33,7 +33,6 @@ class PluginHooksService extends HooksRegistrationService {
 		$handlers_svc = _elgg_services()->handlers;
 
 		foreach ($this->getOrderedHandlers($name, $type) as $handler) {
-
 			$exit_warning = null;
 
 			if (in_array($name, ['forward', 'action', 'route'])) {

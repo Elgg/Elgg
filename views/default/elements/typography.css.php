@@ -96,14 +96,8 @@ h6 { font-size: 0.8em; }
 }
 
 .elgg-subtext {
-	color: #666;
+	color: #999;
 	font-size: 85%;
-	line-height: 1.4em;
-	font-style: italic;
-}
-
-.elgg-subtext time {
-	color: #666;
 }
 
 .elgg-text-help {
@@ -160,12 +154,5 @@ h6 { font-size: 0.8em; }
 	}
 	.elgg-heading-site, .elgg-heading-site:hover {
 		font-size: 1.6em;
-	}
-}
-
-@media (max-width: 600px) {
-	.elgg-subtext {
-		float: left;
-		margin-right: 15px;
 	}
 }

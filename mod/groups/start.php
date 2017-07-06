@@ -63,6 +63,7 @@ function groups_init() {
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
 	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
+	elgg_register_plugin_hook_handler('access_collection:name', 'access_collection', 'groups_set_access_collection_name');
 
 	// Register profile menu hook
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
@@ -111,11 +112,11 @@ function groups_init() {
  */
 function groups_fields_setup() {
 
-	$profile_defaults = array(
+	$profile_defaults = [
 		'description' => 'longtext',
 		'briefdescription' => 'text',
 		'interests' => 'tags',
-	);
+	];
 
 	$profile_defaults = elgg_trigger_plugin_hook('profile:fields', 'group', null, $profile_defaults);
 
@@ -128,7 +129,7 @@ function groups_fields_setup() {
 
 			// only shows up in search but why not just set this in en.php as doing it here
 			// means you cannot override it in a plugin
-			add_translation(get_current_language(), array("tag_names:$name" => elgg_echo("groups:$name")));
+			add_translation(get_current_language(), ["tag_names:$name" => elgg_echo("groups:$name")]);
 		}
 	}
 }
@@ -162,18 +163,18 @@ function _groups_page_menu_group_profile($hook, $type, $return, $params) {
 		return;
 	}
 	
-	$count = elgg_get_entities_from_relationship(array(
+	$count = elgg_get_entities_from_relationship([
 		'type' => 'user',
 		'relationship' => 'membership_request',
 		'relationship_guid' => $page_owner->guid,
 		'inverse_relationship' => true,
 		'count' => true,
-	));
+	]);
 
 	$text = elgg_echo('groups:membershiprequests');
 	$title = $text;
 	if ($count) {
-		$title = elgg_echo('groups:membershiprequests:pending', array($count));
+		$title = elgg_echo('groups:membershiprequests:pending', [$count]);
 	}
 	
 	$return[] = \ElggMenuItem::factory([
@@ -241,7 +242,7 @@ function _groups_page_menu($hook, $type, $return, $params) {
 	$text = elgg_echo('groups:invitations');
 	$title = $text;
 	if ($invitation_count) {
-		$title = elgg_echo('groups:invitations:pending', array($invitation_count));
+		$title = elgg_echo('groups:invitations:pending', [$invitation_count]);
 	}
 
 	$return[] = \ElggMenuItem::factory([
@@ -367,7 +368,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 	/* @var ElggMenuItem $item */
 	foreach ($return as $index => $item) {
-		if (in_array($item->getName(), array('access', 'likes', 'unlike', 'edit', 'delete'))) {
+		if (in_array($item->getName(), ['likes', 'unlike', 'edit', 'delete'])) {
 			unset($return[$index]);
 		}
 	}
@@ -379,46 +380,46 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 		$mem = elgg_echo("groups:closed");
 	}
 
-	$options = array(
+	$options = [
 		'name' => 'membership',
 		'text' => $mem,
 		'href' => false,
 		'priority' => 100,
-	);
+	];
 	$return[] = ElggMenuItem::factory($options);
 
 	// number of members
-	$num_members = $entity->getMembers(array('count' => true));
+	$num_members = $entity->getMembers(['count' => true]);
 	$members_string = elgg_echo('groups:member');
-	$options = array(
+	$options = [
 		'name' => 'members',
 		'text' => $num_members . ' ' . $members_string,
 		'href' => false,
 		'priority' => 200,
-	);
+	];
 	$return[] = ElggMenuItem::factory($options);
 
 	// feature link
 	if (elgg_is_admin_logged_in()) {
 		$isFeatured = $entity->featured_group == "yes";
 
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = ElggMenuItem::factory([
 			'name' => 'feature',
 			'text' => elgg_echo("groups:makefeatured"),
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=feature"),
 			'priority' => 300,
 			'item_class' => $isFeatured ? 'hidden' : '',
 			'deps' => 'groups/navigation',
-		));
+		]);
 
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = ElggMenuItem::factory([
 			'name' => 'unfeature',
 			'text' => elgg_echo("groups:makeunfeatured"),
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=unfeature"),
 			'priority' => 300,
 			'item_class' => $isFeatured ? '' : 'hidden',
 			'deps' => 'groups/navigation',
-		));
+		]);
 	}
 
 	return $return;
@@ -449,6 +450,7 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 				'name' => 'removeuser',
 				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
 				'text' => elgg_echo('groups:removeuser'),
+				'icon' => 'user-times',
 				'confirm' => true,
 				'priority' => 999,
 			]);
@@ -527,45 +529,88 @@ function groups_update_event_listener($event, $type, $group) {
 }
 
 /**
- * Return the write access for the current group if the user has write access to it.
+ * Return the write access for the current group if the user has write access to it
+ *
+ * @elgg_plugin_hook access:collection:write all
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
  */
-function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 
-	$user_guid = sanitise_int(elgg_extract('user_id', $params), false);
+	$user_guid = $hook->getParam('user_id');
 	$user = get_user($user_guid);
-	if (empty($user)) {
-		return $returnvalue;
+	if (!$user) {
+		return;
 	}
 
 	$page_owner = elgg_get_page_owner_entity();
-	if (!($page_owner instanceof ElggGroup)) {
-		return $returnvalue;
+	if (!$page_owner instanceof ElggGroup) {
+		return;
 	}
 
 	if (!$page_owner->canWriteToContainer($user_guid)) {
-		return $returnvalue;
+		return;
 	}
 
-	// check group content access rules
-	$allowed_access = array(
-		ACCESS_PRIVATE
-	);
+	$allowed_access = [
+		ACCESS_PRIVATE,
+		$page_owner->group_acl,
+	];
 
 	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 		$allowed_access[] = ACCESS_LOGGED_IN;
-		$allowed_access[] = ACCESS_PUBLIC;
-	}
-
-	foreach ($returnvalue as $access_id => $access_string) {
-		if (!in_array($access_id, $allowed_access)) {
-			unset($returnvalue[$access_id]);
+		if (!elgg_get_config('walled_garden')) {
+			$allowed_access[] = ACCESS_PUBLIC;
 		}
 	}
 
-	// add write access to the group
-	$returnvalue[$page_owner->group_acl] = elgg_echo('groups:acl', array($page_owner->name));
+	$write_acls = $hook->getValue();
 
-	return $returnvalue;
+	// add write access to the group
+	$collection = get_access_collection($page_owner->group_acl);
+	if ($collection) {
+		$write_acls[$page_owner->group_acl] = $collection->getDisplayName();
+	}
+
+	foreach (array_keys($write_acls) as $access_id) {
+		if (!in_array($access_id, $allowed_access)) {
+			unset($write_acls[$access_id]);
+		}
+	}
+
+	return $write_acls;
+}
+
+/**
+ * Return the write access for the current group if the user has write access to it
+ *
+ * @elgg_plugin_hook access_collection:display_name access_collection
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function groups_set_access_collection_name(\Elgg\Hook $hook) {
+
+	$access_collection = $hook->getParam('access_collection');
+	if (!$access_collection instanceof ElggAccessCollection) {
+		return;
+	}
+
+	$owner = $access_collection->getOwnerEntity();
+	if (!$owner instanceof ElggGroup) {
+		return;
+	}
+	
+	$page_owner = elgg_get_page_owner_entity();
+
+	if ($page_owner && $page_owner->guid == $owner->guid) {
+		return elgg_echo('groups:acl:in_context');
+	}
+
+	if ($owner->canWriteToContainer()) {
+		return elgg_echo('groups:acl', [$owner->getDisplayName()]);
+	}
 }
 
 /**
@@ -641,16 +686,16 @@ function groups_access_default_override($hook, $type, $access) {
  *
  * @return mixed ElggGroups or guids depending on $return_guids, or count
  */
-function groups_get_invited_groups($user_guid, $return_guids = false, $options = array()) {
+function groups_get_invited_groups($user_guid, $return_guids = false, $options = []) {
 
 	$ia = elgg_set_ignore_access(true);
 
-	$defaults = array(
+	$defaults = [
 		'relationship' => 'invited',
 		'relationship_guid' => (int) $user_guid,
 		'inverse_relationship' => true,
 		'limit' => 0,
-	);
+	];
 
 	$options = array_merge($defaults, $options);
 	$groups = elgg_get_entities_from_relationship($options);
@@ -658,7 +703,7 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 	elgg_set_ignore_access($ia);
 
 	if ($return_guids) {
-		$guids = array();
+		$guids = [];
 		foreach ($groups as $group) {
 			$guids[] = $group->getGUID();
 		}
@@ -679,7 +724,7 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 function groups_join_group($group, $user) {
 
 	// access ignore so user can be added to access collection of invisible group
-	$ia = elgg_set_ignore_access(TRUE);
+	$ia = elgg_set_ignore_access(true);
 	$result = $group->join($user);
 	elgg_set_ignore_access($ia);
 
@@ -691,12 +736,12 @@ function groups_join_group($group, $user) {
 		remove_entity_relationship($group->guid, 'invited', $user->guid);
 		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
 
-		elgg_create_river_item(array(
+		elgg_create_river_item([
 			'view' => 'river/relationship/member/create',
 			'action_type' => 'join',
 			'subject_guid' => $user->guid,
 			'object_guid' => $group->guid,
-		));
+		]);
 
 		return true;
 	}
@@ -712,12 +757,21 @@ function groups_join_group($group, $user) {
  * @return array
  */
 function group_access_options($group) {
-	$access_array = array(
-		ACCESS_PRIVATE => 'private',
-		ACCESS_LOGGED_IN => 'logged in users',
-		ACCESS_PUBLIC => 'public',
-		$group->group_acl => elgg_echo('groups:acl', array($group->name)),
-	);
+
+	$access_array = [
+		ACCESS_PRIVATE => elgg_echo('PRIVATE'),
+		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
+	];
+
+	if (!elgg_get_config('walled_garden')) {
+		$access_array[ACCESS_PUBLIC] = elgg_echo('PUBLIC');
+	}
+
+	$collection = get_access_collection($group->group_acl);
+	if ($collection) {
+		$access_array[$collection->id] = $collection->getDisplayName();
+	}
+	
 	return $access_array;
 }
 
@@ -728,10 +782,10 @@ function activity_profile_menu($hook, $entity_type, $return_value, $params) {
 		return;
 	}
 
-	$return_value[] = array(
+	$return_value[] = [
 		'text' => elgg_echo('groups:activity'),
 		'href' => "groups/activity/{$params['owner']->guid}"
-	);
+	];
 	return $return_value;
 }
 
@@ -787,33 +841,33 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
 		return $menu;
 	}
 
-	$accept_url = elgg_http_add_url_query_elements('action/groups/join', array(
+	$accept_url = elgg_http_add_url_query_elements('action/groups/join', [
 		'user_guid' => $user->guid,
 		'group_guid' => $group->guid,
-	));
+	]);
 
-	$menu[] = \ElggMenuItem::factory(array(
+	$menu[] = \ElggMenuItem::factory([
 		'name' => 'accept',
 		'href' => $accept_url,
 		'is_action' => true,
 		'text' => elgg_echo('accept'),
 		'link_class' => 'elgg-button elgg-button-submit',
 		'is_trusted' => true,
-	));
+	]);
 
-	$delete_url = elgg_http_add_url_query_elements('action/groups/killinvitation', array(
+	$delete_url = elgg_http_add_url_query_elements('action/groups/killinvitation', [
 		'user_guid' => $user->guid,
 		'group_guid' => $group->guid,
-	));
+	]);
 
-	$menu[] = \ElggMenuItem::factory(array(
+	$menu[] = \ElggMenuItem::factory([
 		'name' => 'delete',
 		'href' => $delete_url,
 		'is_action' => true,
 		'confirm' => elgg_echo('groups:invite:remove:check'),
 		'text' => elgg_echo('delete'),
 		'link_class' => 'elgg-button elgg-button-delete mlm',
-	));
+	]);
 
 	return $menu;
 }
@@ -895,13 +949,13 @@ function groups_prepare_profile_buttons($hook, $type, $items, $params) {
 	}
 
 	foreach ($actions as $action => $url) {
-		$items[] = ElggMenuItem::factory(array(
+		$items[] = ElggMenuItem::factory([
 			'name' => $action,
 			'href' => elgg_normalize_url($url),
 			'text' => elgg_echo($action),
 			'is_action' => 0 === strpos($url, 'action'),
 			'link_class' => 'elgg-button elgg-button-action',
-		));
+		]);
 	}
 
 	return $items;
@@ -934,7 +988,6 @@ function groups_default_page_owner_handler($hook, $type, $return, $params) {
 	$page = array_shift($segments);
 
 	switch ($page) {
-
 		case 'add' :
 			$guid = array_shift($segments);
 			if (!$guid) {

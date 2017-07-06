@@ -1,12 +1,12 @@
 <?php
 /**
  * Elgg custom index layout
- * 
+ *
  * This is just a helper view to make it easier to use Elgg's
  * page-rendering helper functions like elgg_view_page.
  */
 
-$mod_params = array('class' => 'elgg-module-highlight');
+$mod_params = ['class' => 'elgg-module-highlight'];
 
 ?>
 

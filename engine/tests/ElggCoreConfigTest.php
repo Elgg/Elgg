@@ -18,7 +18,6 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 	}
 
 	public function testSetConfigWithNewName() {
-		global $CONFIG;
 		$name = 'foo' . rand(0, 1000);
 		$value = 'test';
 		$this->assertTrue(elgg_save_config($name, $value));
@@ -85,5 +84,10 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 		$this->assertIdentical($value, elgg_get_config($name));
 		$this->assertIdentical($value, $CONFIG->$name);
 		$this->assertTrue(elgg_remove_config($name));
+	}
+
+	public function testGetUsesDefault() {
+		$this->assertSame(null, _elgg_services()->config->get('not_a_key'));
+		$this->assertSame([], _elgg_services()->config->get('not_a_key', []));
 	}
 }

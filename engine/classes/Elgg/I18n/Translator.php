@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\I18n;
 
+use Elgg\Config;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -11,18 +13,17 @@ namespace Elgg\I18n;
 class Translator {
 
 	/**
-	 * Global Elgg configuration
-	 *
-	 * @var \stdClass
+	 * @var Config
 	 */
-	private $CONFIG;
+	private $config;
 
 	/**
-	 * Initializes new translator
+	 * Constructor
+	 *
+	 * @param Config $config Elgg config
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(Config $config) {
+		$this->config = $config;
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
 	}
 
@@ -107,7 +108,7 @@ class Translator {
 	public function addTranslation($country_code, $language_array) {
 
 		if (!isset($GLOBALS['_ELGG']->translations)) {
-			$GLOBALS['_ELGG']->translations = array();
+			$GLOBALS['_ELGG']->translations = [];
 		}
 
 		$country_code = strtolower($country_code);
@@ -158,15 +159,14 @@ class Translator {
 			$language = $user->language;
 		}
 
-		if ((!$language) && (isset($this->CONFIG->language)) && ($this->CONFIG->language)) {
-			$language = $this->CONFIG->language;
+		if (!$language) {
+			$site_language = $this->config->getVolatile('language');
+			if ($site_language) {
+				$language = $site_language;
+			}
 		}
 
-		if ($language) {
-			return $language;
-		}
-
-		return false;
+		return $language ? $language : false;
 	}
 
 	/**
@@ -187,9 +187,9 @@ class Translator {
 			$loaded = true;
 
 			if ($language) {
-				$languages = array($language);
+				$languages = [$language];
 			} else {
-				$languages = array_unique(array('en', $this->getCurrentLanguage()));
+				$languages = array_unique(['en', $this->getCurrentLanguage()]);
 			}
 
 			foreach ($languages as $language) {
@@ -262,7 +262,7 @@ class Translator {
 			// Register translations from the plugin languages directory
 			if (!$this->registerTranslations($languages_path, false, $language)) {
 				throw new \PluginException(sprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
-					array($plugin->getID(), $plugin->guid, $languages_path)));
+					[$plugin->getID(), $plugin->guid, $languages_path]));
 			}
 		}
 	}
@@ -300,23 +300,23 @@ class Translator {
 
 		// Make a note of this path just incase we need to register this language later
 		if (!isset($GLOBALS['_ELGG']->language_paths)) {
-			$GLOBALS['_ELGG']->language_paths = array();
+			$GLOBALS['_ELGG']->language_paths = [];
 		}
 		$GLOBALS['_ELGG']->language_paths[$path] = true;
 
 		_elgg_services()->logger->info("Translations loaded from: $path");
 
 		if ($language) {
-			$load_language_files = array("$language.php");
+			$load_language_files = ["$language.php"];
 			$load_all = false;
 		} else {
 			// Get the current language based on site defaults and user preference
 			$current_language = $this->getCurrentLanguage();
 
-			$load_language_files = array(
+			$load_language_files = [
 				'en.php',
 				"$current_language.php"
-			);
+			];
 
 			$load_language_files = array_unique($load_language_files);
 		}
@@ -358,17 +358,15 @@ class Translator {
 	 * @return void
 	 */
 	public function reloadAllTranslations() {
-
-
-		static $LANG_RELOAD_ALL_RUN;
-		if ($LANG_RELOAD_ALL_RUN) {
+		static $was_already_called;
+		if ($was_already_called) {
 			return;
 		}
 
-		if ($GLOBALS['_ELGG']->i18n_loaded_from_cache) {
+		if (!empty($GLOBALS['_ELGG']->i18n_loaded_from_cache)) {
 			$cache = elgg_get_system_cache();
 			$cache_dir = $cache->getVariable("cache_path");
-			$filenames = elgg_get_file_list($cache_dir, array(), array(), array(".lang"));
+			$filenames = elgg_get_file_list($cache_dir, [], [], [".lang"]);
 			foreach ($filenames as $filename) {
 				// Look for files matching for example 'en.lang', 'cmn.lang' or 'pt_br.lang'.
 				// Note that this regex is just for the system cache. The original language
@@ -387,7 +385,7 @@ class Translator {
 			}
 		}
 
-		$LANG_RELOAD_ALL_RUN = true;
+		$was_already_called = true;
 	}
 
 	/**
@@ -402,7 +400,7 @@ class Translator {
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
 
-		$installed = array();
+		$installed = [];
 
 		$admin_logged_in = _elgg_services()->session->isAdminLoggedIn();
 
@@ -472,7 +470,7 @@ class Translator {
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
 
-		$missing = array();
+		$missing = [];
 
 		foreach ($GLOBALS['_ELGG']->translations['en'] as $k => $v) {
 			if ((!isset($GLOBALS['_ELGG']->translations[$language][$k]))

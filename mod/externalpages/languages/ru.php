@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -18,4 +18,4 @@ return array(
 	 */
 	'expages:posted' => "Страница успешно сохранена.",
 	'expages:error' => "Ошибка при сохранении.",
-);
+];

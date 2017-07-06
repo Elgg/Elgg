@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Jak często uruchamiać oczyszczanie w Elgg?',
 
 	'garbagecollector:weekly' => 'Raz na tydzień',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Oczyszczam nie połączone znaczniki metastrings:',
-);
+];

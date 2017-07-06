@@ -21,9 +21,10 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\AutoloadManager                    $autoloadManager
+ * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\ClassLoader                        $classLoader
- * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
@@ -39,6 +40,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggDiskFilestore                       $filestore
  * @property-read \Elgg\FormsService                       $forms
  * @property-read \Elgg\HandlersService                    $handlers
+ * @property-read \Elgg\Security\HmacFactory               $hmac
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
@@ -65,7 +67,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
- * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
@@ -75,9 +76,9 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
+ * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\Upgrade\Locator                    $upgradeLocator
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\UploadService                      $uploads
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
@@ -95,12 +96,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 * @param \Elgg\Config $config Elgg Config service
 	 */
 	public function __construct(\Elgg\Config $config) {
-
-		$this->setFactory('classLoader', function(ServiceProvider $c) {
-			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
-			$loader->register();
-			return $loader;
-		});
 
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
@@ -154,17 +149,25 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\BatchUpgrader($c->config);
 		});
 
+		$this->setFactory('classLoader', function(ServiceProvider $c) {
+			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
+			$loader->register();
+			return $loader;
+		});
+
 		$this->setValue('config', $config);
 
 		$this->setFactory('configTable', function(ServiceProvider $c) {
 			return new \Elgg\Database\ConfigTable($c->db, $c->boot, $c->logger);
 		});
 
-		$this->setClassName('context', \Elgg\Context::class);
-
-		$this->setFactory('crypto', function(ServiceProvider $c) {
-			return new \ElggCrypto($c->siteSecret);
+		$this->setFactory('context', function(ServiceProvider $c) {
+			$context = new \Elgg\Context();
+			$context->initialize($c->request);
+			return $context;
 		});
+
+		$this->setClassName('crypto', \ElggCrypto::class);
 
 		$this->setFactory('db', function(ServiceProvider $c) {
 			// gonna need dbprefix from settings
@@ -232,6 +235,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('handlers', \Elgg\HandlersService::class);
+
+		$this->setFactory('hmac', function(ServiceProvider $c) {
+			return new \Elgg\Security\HmacFactory($c->siteSecret, $c->crypto);
+		});
 
 		$this->setClassName('hooks', \Elgg\PluginHooksService::class);
 
@@ -358,7 +365,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
-			return new \Elgg\Application\ServeFileHandler($c->crypto, $c->config);
+			return new \Elgg\Application\ServeFileHandler($c->hmac, $c->config);
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {
@@ -389,7 +396,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			return new \Elgg\Database\SiteSecret($c->configTable);
+			$c->config->setConfigTable($c->configTable);
+			return new \Elgg\Database\SiteSecret($c->config);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
@@ -414,7 +422,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('timer', \Elgg\Timer::class);
 
-		$this->setClassName('translator', \Elgg\I18n\Translator::class);
+		$this->setFactory('translator', function(ServiceProvider $c) {
+			return new \Elgg\I18n\Translator($c->config);
+		});
 
 		$this->setFactory('uploads', function(ServiceProvider $c) {
 			return new \Elgg\UploadService($c->request);

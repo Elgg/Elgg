@@ -38,7 +38,7 @@ function _elgg_invalidate_memcache_for_entity($entity_guid) {
  * @access private
  */
 function _elgg_get_memcache($namespace = 'default') {
-	static $caches = array();
+	static $caches = [];
 
 	$cache_pool = _elgg_services()->memcacheStashPool;
 	if (!$cache_pool) {

@@ -25,19 +25,19 @@ elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
 elgg_push_breadcrumb($topic->title, $topic->getURL());
 elgg_push_breadcrumb($title);
 
-$params = array(
+$params = [
 	'guid' => $reply->guid,
 	'hidden' => false,
-);
+];
 
 $content = elgg_view('ajax/discussion/reply/edit', $params);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('discussion/sidebar/edit'),
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

@@ -11,19 +11,19 @@ Testing docs locally
 --------------------
 Elgg has a `grunt`_ script that automatically builds the docs, opens them in a browser
 window, and automatically reloads as you make changes (the reload takes just a few
-seconds). You need `npm`_ and `sphinx`_ installed to be able to use these scripts.
+seconds). You need `yarn`_ and `sphinx`_ installed to be able to use these scripts.
 
 .. code:: sh
 
    cd path/to/elgg/
-   npm install
+   yarn
    grunt
 
 It's that easy! Grunt will continue running, watching the docs for changes and
 automatically rebuilding.
 
 .. _grunt: http://gruntjs.com/
-.. _npm: https://nodejs.org/
+.. _yarn: https://yarnpkg.com/
 .. _sphinx: http://www.sphinx-doc.org/
 
 Follow the existing document organization

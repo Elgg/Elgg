@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -55,4 +55,4 @@ return array(
 	 */
 	'thewire:settings:limit' => "Максимальное количество символов сообщения:",
 	'thewire:settings:limit:none' => "Без ограничения",
-);
+];

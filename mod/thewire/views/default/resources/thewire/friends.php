@@ -15,12 +15,12 @@ elgg_push_breadcrumb($owner->name, "thewire/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
 if (elgg_get_logged_in_user_guid() == $owner->guid) {
-	$form_vars = array('class' => 'thewire-form');
+	$form_vars = ['class' => 'thewire-form'];
 	$content = elgg_view_form('thewire/add', $form_vars);
 	$content .= elgg_view('input/urlshortener');
 }
 
-$content .= elgg_list_entities_from_relationship(array(
+$content .= elgg_list_entities_from_relationship([
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'full_view' => false,
@@ -28,12 +28,12 @@ $content .= elgg_list_entities_from_relationship(array(
 	'relationship_guid' => $owner->guid,
 	'relationship_join_on' => 'container_guid',
 	'preload_owners' => true,
-));
+]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter_context' => 'friends',
 	'content' => $content,
 	'title' => $title,
-));
+]);
 
 echo elgg_view_page($title, $body);

@@ -21,7 +21,7 @@ class WebAppManifestResource {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param ElggSite $site The site serving this manifest.
 	 */
 	public function __construct(ElggSite $site) {
@@ -30,7 +30,7 @@ class WebAppManifestResource {
 	
 	/**
 	 * Behavior for HTTP GET method
-	 * 
+	 *
 	 * @return array
 	 */
 	public function get() {

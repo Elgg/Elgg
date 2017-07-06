@@ -88,9 +88,9 @@ class ElggStaticVariableCache extends \ElggSharedMemoryCache {
 		$namespace = $this->getNamespace();
 
 		if (!isset(\ElggStaticVariableCache::$__cache)) {
-			\ElggStaticVariableCache::$__cache = array();
+			\ElggStaticVariableCache::$__cache = [];
 		}
 
-		\ElggStaticVariableCache::$__cache[$namespace] = array();
+		\ElggStaticVariableCache::$__cache[$namespace] = [];
 	}
 }

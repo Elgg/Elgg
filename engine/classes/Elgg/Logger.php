@@ -20,13 +20,13 @@ class Logger {
 	const NOTICE = 250;
 	const INFO = 200;
 
-	protected static $levels = array(
+	protected static $levels = [
 		0 => 'OFF',
 		200 => 'INFO',
 		250 => 'NOTICE',
 		300 => 'WARNING',
 		400 => 'ERROR',
-	);
+	];
 
 	/**
 	 * @var int The logging level
@@ -212,12 +212,12 @@ class Logger {
 	protected function process($data, $display, $level) {
 		
 		// plugin can return false to stop the default logging method
-		$params = array(
+		$params = [
 			'level' => $level,
 			'msg' => $data,
 			'display' => $display,
 			'to_screen' => $display,
-		);
+		];
 
 		if (!$this->hooks->trigger('debug', 'log', $params, true)) {
 			return;

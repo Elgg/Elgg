@@ -7,7 +7,7 @@
  */
 
 $action_type = get_input('action_type');
-$valid_actions = array('delete', 'resend_validation', 'validate');
+$valid_actions = ['delete', 'resend_validation', 'validate'];
 
 if (!in_array($action_type, $valid_actions)) {
 	forward(REFERRER);
