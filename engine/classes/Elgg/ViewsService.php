@@ -234,7 +234,7 @@ class ViewsService {
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
 		$view = $this->canonicalizeViewName($view);
 
-		$rendered = $this->renderView($view, $vars, false, '', false);
+		$rendered = $this->renderView($view, $vars, '', false);
 		if ($rendered) {
 			elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 3);
 		}
@@ -261,7 +261,7 @@ class ViewsService {
 	/**
 	 * @access private
 	 */
-	public function renderView($view, array $vars = [], $ignored = false, $viewtype = '', $issue_missing_notice = true) {
+	public function renderView($view, array $vars = [], $viewtype = '', $issue_missing_notice = true) {
 		$view = $this->canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {

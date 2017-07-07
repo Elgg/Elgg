@@ -91,7 +91,7 @@ class ViewsServiceTest extends \Elgg\TestCase {
 	public function testViewsCanExistBasedOnViewtypeFallback() {
 		$this->views->registerViewtypeFallback('mobile');
 		$this->assertTrue($this->views->viewExists('js/interpreted.js', 'mobile'));
-		$this->assertEquals('// PHP', $this->views->renderView('js/interpreted.js', array(), false, 'mobile'));
+		$this->assertEquals('// PHP', $this->views->renderView('js/interpreted.js', array(), 'mobile'));
 	}
 
 	public function testCanRegisterViewsAsCacheable() {
