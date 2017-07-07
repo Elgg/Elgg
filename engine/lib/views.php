@@ -332,6 +332,10 @@ function elgg_list_views($viewtype = 'default') {
  * @return string The parsed view
  */
 function elgg_view($view, $vars = [], $viewtype = '') {
+	if (func_num_args() == 5) {
+		elgg_log(__FUNCTION__ . ' now has only 3 arguments. Update your usage.', 'ERROR');
+		$viewtype = func_get_arg(4);
+	}
 	return _elgg_services()->views->renderView($view, $vars, $viewtype);
 }
 
