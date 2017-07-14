@@ -88,6 +88,40 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		}
 	}
 
+	public function testElggNormalizeCallsRewriteHookForPaths() {
+		$calls = 0;
+		$handler = function (\Elgg\Hook $hook) use (&$calls) {
+			$calls++;
+			switch ($hook->getValue()) {
+				case 'bad': return 'good';
+				case 'eg': return '//example.com/';
+				case '': return 'main';
+			}
+		};
+
+		elgg_register_plugin_hook_handler('rewrite', 'url-path', $handler);
+
+		$dont_calls = [
+			'http://example.com/bad',
+			'https://example.com/bad',
+			'//example.com/bad',
+			'example.com/bad',
+			'rootfile.php',
+		];
+		foreach ($dont_calls as $url) {
+			elgg_normalize_url($url);
+			$this->assertSame($calls, 0, "elgg_normalize_url('$url') called rewrite hook");
+		}
+
+		$this->assertSame(elgg_normalize_url('bad'), elgg_get_site_url() . 'good');
+		$this->assertSame(elgg_normalize_url('/bad'), elgg_get_site_url() . 'good');
+		$this->assertSame(elgg_normalize_url('badd'), elgg_get_site_url() . 'badd');
+		$this->assertSame(elgg_normalize_url(''), elgg_get_site_url() . 'main');
+		$this->assertSame(elgg_normalize_url('eg'), '//example.com/');
+
+		elgg_unregister_plugin_hook_handler('rewrite', 'url-path', $handler);
+	}
+
 	/**
 	 * Test elgg_register_js()
 	 */

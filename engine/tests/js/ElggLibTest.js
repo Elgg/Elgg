@@ -121,7 +121,7 @@ define(function(require) {
 			
 			afterEach(function() {
 				elgg.config.wwwroot = wwwroot;
-			})
+			});
 			
 			it("prepends elgg.config.wwroot to relative URLs", function() {
 				[
@@ -174,6 +174,50 @@ define(function(require) {
 				].forEach(function(args) {
 					expect(elgg.normalize_url(args[0])).toBe(args[1]);
 				});
+			});
+
+			it("calls rewrite hook for paths", function () {
+				elgg.register_hook_handler('rewrite', 'url-path', function (hook, type, params, value) {
+					switch (value + "") {
+						case 'bad': return 'good';
+						case 'eg': return '//example.com/';
+						case '': return 'main';
+					}
+				});
+
+				expect(elgg.normalize_url('bad')).toBe(elgg.config.wwwroot + 'good');
+				expect(elgg.normalize_url('/bad')).toBe(elgg.config.wwwroot + 'good');
+				expect(elgg.normalize_url('badd')).toBe(elgg.config.wwwroot + 'badd');
+				expect(elgg.normalize_url()).toBe(elgg.config.wwwroot + 'main');
+				expect(elgg.normalize_url('eg')).toBe('//example.com/');
+
+				delete elgg.config.hooks.rewrite['url-path'];
+			});
+
+			it("doesn't call rewrite hook for non-paths", function () {
+				var calls = 0;
+				elgg.register_hook_handler('rewrite', 'url-path', function (hook, type, params, value) {
+					calls++;
+					switch (value + "") {
+						case 'bad': return 'good';
+						case 'eg': return '//example.com/';
+						case '': return 'main';
+					}
+				});
+
+				[
+					'http://example.com/bad',
+					'https://example.com/bad',
+					'//example.com/bad',
+					'example.com/bad',
+					'rootfile.php'
+				].forEach(function (url) {
+					elgg.normalize_url(url);
+				});
+
+				expect(calls).toBe(0);
+
+				delete elgg.config.hooks.rewrite['url-path'];
 			});
 		});
 

@@ -309,6 +309,8 @@ Normalize a URL relative to the elgg root:
     // "http://localhost/elgg/blog"
     elgg.normalize_url('/blog');
 
+If a site-relative path is given (e.g. "blog" or "/blog"), it's first filtered by the hook ``rewrite, url-path``.
+
 ``elgg.forward()``
 
 Redirect to a new page.
@@ -836,6 +838,9 @@ Available hooks
 
 **insert, editor**
     This hook is triggered by the embed plugin and can be used to filter content before it is inserted into the textarea. This hook can also be used by WYSIWYG editors to insert content using their own API (in this case the handler should return ``false``). See ckeditor plugin for an example.
+
+**rewrite, url-path**
+    Filters site-relative paths given to ``elgg.normalize_url()``.
 
 Third-party assets
 ==================

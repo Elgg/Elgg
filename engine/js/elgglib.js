@@ -270,9 +270,6 @@ elgg.inherit = function(Child, Parent) {
  * @return {String} The extended url
  */
 elgg.normalize_url = function(url) {
-	url = url || '';
-	elgg.assertTypeOf('string', url);
-
 	function validate(url) {
 		url = elgg.parse_url(url);
 		if (url.scheme){
@@ -292,46 +289,58 @@ elgg.normalize_url = function(url) {
 			return false;
 		}
 		return true;
-	};
-
-	// ignore anything with a recognized scheme
-	if (url.indexOf('http:') === 0 ||
-		url.indexOf('https:') === 0 ||
-		url.indexOf('javascript:') === 0 ||
-		url.indexOf('mailto:') === 0 ) {
-		return url;
 	}
 
-	// all normal URLs including mailto:
-	else if (validate(url)) {
-		return url;
+	function normalize(url, call_hook) {
+		url = url || '';
+		elgg.assertTypeOf('string', url);
+
+		// ignore anything with a recognized scheme
+		if (url.indexOf('http:') === 0 ||
+			url.indexOf('https:') === 0 ||
+			url.indexOf('javascript:') === 0 ||
+			url.indexOf('mailto:') === 0 ) {
+			return url;
+		}
+
+		// all normal URLs including mailto:
+		else if (validate(url)) {
+			return url;
+		}
+
+		// '//example.com' (Shortcut for protocol.)
+		// '?query=test', #target
+		else if ((new RegExp("^(\\#|\\?|//)", "i")).test(url)) {
+			return url;
+		}
+
+		// watch those double escapes in JS.
+
+		// 'install.php', 'install.php?step=step'
+		else if ((new RegExp("^[^\/]*\\.php(\\?.*)?$", "i")).test(url)) {
+			return elgg.config.wwwroot + url.ltrim('/');
+		}
+
+		// 'example.com', 'example.com/subpage'
+		else if ((new RegExp("^[^/]*\\.", "i")).test(url)) {
+			return 'http://' + url;
+		}
+
+		// 'page/handler', 'mod/plugin/file.php'
+		var path = url.ltrim('/');
+
+		if (call_hook) {
+			var prev_path = path;
+			path = elgg.trigger_hook('rewrite', 'url-path', null, path);
+			if (path !== prev_path) {
+				return normalize(path, false);
+			}
+		}
+
+		return elgg.config.wwwroot + path;
 	}
 
-	// '//example.com' (Shortcut for protocol.)
-	// '?query=test', #target
-	else if ((new RegExp("^(\\#|\\?|//)", "i")).test(url)) {
-		return url;
-	}
-
-
-	// watch those double escapes in JS.
-
-	// 'install.php', 'install.php?step=step'
-	else if ((new RegExp("^[^\/]*\\.php(\\?.*)?$", "i")).test(url)) {
-		return elgg.config.wwwroot + url.ltrim('/');
-	}
-
-	// 'example.com', 'example.com/subpage'
-	else if ((new RegExp("^[^/]*\\.", "i")).test(url)) {
-		return 'http://' + url;
-	}
-
-	// 'page/handler', 'mod/plugin/file.php'
-	else {
-		// trim off any leading / because the site URL is stored
-		// with a trailing /
-		return elgg.config.wwwroot + url.ltrim('/');
-	}
+	return normalize(url, true);
 };
 
 /**

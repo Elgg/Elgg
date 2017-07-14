@@ -355,6 +355,13 @@ Miscellaneous API changes
  * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``.
  * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used.
 
+Many URL paths can be rewritten
+-------------------------------
+
+While the ``route:rewrite`` hook allows rewriting the request URL path, most output URL paths (within the site) can now be rewritten by the ``rewrite, url-path`` hook. Only paths like ``foo/bar`` passed through ``elgg_normalize_url()`` are filtered, but this usage is widespread enough to be useful.
+
+Always generate URLs by passing a path into ``elgg_normalize_url()`` like ``elgg_normalize_url("foo/view/$guid/$title")``. Any Elgg code that does not should be considered a bug.
+
 JavaScript hook calling order may change
 ----------------------------------------
 
