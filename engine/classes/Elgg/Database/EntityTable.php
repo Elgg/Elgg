@@ -753,18 +753,16 @@ class EntityTable {
 
 		// We use reset() because $options['types'] may not have a numeric key
 		$type = reset($options['types']);
-		if (empty($join_types[$type])) {
-			return $options;
-		}
 
 		// Get the columns we'll need to select. We can't use st.* because the order_by
 		// clause may reference "guid", which MySQL will complain about being ambiguous
-		if (!is_callable([$join_types[$type], 'getExternalAttributes'])) {
-			// for some reason can't get external attributes.
+		try {
+			$attributes = \ElggEntity::getExtraAttributeDefaults($type);
+		} catch (\Exception $e) {
+			$this->logger->error("Unrecognized type: $type");
 			return $options;
 		}
 
-		$attributes = $join_types[$type]::getExternalAttributes();
 		foreach (array_keys($attributes) as $col) {
 			$options['selects'][] = "st.$col";
 		}
