@@ -109,6 +109,8 @@ If you are ready to proceed, click the Next button.",
 
 	'install:complete:instructions' => 'Your Elgg site is now ready to be used. Click the button below to be taken to your site.',
 	'install:complete:gotosite' => 'Go to site',
+	'install:complete:admin_notice' => 'Welcome to your Elgg site! For more options, see the %s.',
+	'install:complete:admin_notice:link_text' => 'settings pages',
 
 	'InstallationException:UnknownStep' => '%s is an unknown installation step.',
 	'InstallationException:MissingLibrary' => 'Could not load %s',

@@ -524,19 +524,19 @@ class ElggInstaller {
 		];
 		
 		if ($this->isAction) {
-			do {
+			call_user_func(function () use ($submissionVars, $formVars) {
 				if (!$this->validateAdminVars($submissionVars, $formVars)) {
-					break;
+					return;
 				}
 
 				if (!$this->createAdminAccount($submissionVars, $this->autoLogin)) {
-					break;
+					return;
 				}
 
 				system_message(_elgg_services()->translator->translate('install:success:admin'));
 
 				$this->continueToNextStep('admin');
-			} while (false);  // PHP doesn't support breaking out of if statements
+			});
 		}
 
 		// bit of a hack to get the password help to show right number of characters
@@ -558,14 +558,16 @@ class ElggInstaller {
 	 */
 	protected function complete() {
 
-		$params = [];
-		if ($this->autoLogin) {
-			$params['destination'] = 'admin';
-		} else {
-			$params['destination'] = 'index.php';
-		}
+		// nudge to check out settings
+		$link = elgg_format_element([
+			'#tag_name' => 'a',
+			'#text' => _elgg_services()->translator->translate('install:complete:admin_notice:link_text'),
+			'href' => elgg_normalize_url('admin/settings/basic'),
+		]);
+		$notice = _elgg_services()->translator->translate('install:complete:admin_notice', [$link]);
+		elgg_add_admin_notice('fresh_install', $notice);
 
-		$this->render('complete', $params);
+		$this->render('complete');
 	}
 
 	/**
@@ -1477,7 +1479,7 @@ class ElggInstaller {
 		_elgg_services()->configTable->set('view', 'default');
 		_elgg_services()->configTable->set('language', 'en');
 		_elgg_services()->configTable->set('default_access', $submissionVars['siteaccess']);
-		_elgg_services()->configTable->set('allow_registration', true);
+		_elgg_services()->configTable->set('allow_registration', false);
 		_elgg_services()->configTable->set('walled_garden', false);
 		_elgg_services()->configTable->set('allow_user_default_access', '');
 		_elgg_services()->configTable->set('default_limit', 10);

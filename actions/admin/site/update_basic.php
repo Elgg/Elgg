@@ -23,6 +23,14 @@ $site->name = strip_tags(get_input('sitename'));
 $site->email = get_input('siteemail');
 $site->save();
 
+// allow new user registration?
+$allow_registration = ('on' === get_input('allow_registration', false));
+elgg_save_config('allow_registration', $allow_registration);
+
+// setup walled garden
+$walled_garden = ('on' === get_input('walled_garden', false));
+elgg_save_config('walled_garden', $walled_garden);
+
 elgg_save_config('language', get_input('language'));
 
 $default_limit = (int) get_input('default_limit');
@@ -34,4 +42,6 @@ if ($default_limit < 1) {
 elgg_save_config('default_limit', $default_limit);
 
 system_message(elgg_echo('admin:configuration:success'));
-forward(REFERER);
+
+$after_save = elgg_normalize_site_url(get_input('after_save'));
+forward($after_save ? $after_save : REFERER);
