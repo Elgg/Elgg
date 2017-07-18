@@ -645,6 +645,9 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	$message->setSubject($subject);
 	$message->setBody($body);
 
+	foreach ($result['headers'] as $headerName => $headerValue) {
+
+	}
 
 	// allow others to modify the $message content
 	// eg. add html body, add attachments
