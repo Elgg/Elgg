@@ -543,7 +543,7 @@ class ElggPlugin extends \ElggObject {
 		
 		if (is_array($value)) {
 			elgg_log('Plugin user settings cannot store arrays.', 'ERROR');
-			$result = false;
+			return false;
 		}
 		
 		// set the namespaced name.
