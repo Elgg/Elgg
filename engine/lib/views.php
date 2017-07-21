@@ -1958,13 +1958,6 @@ function elgg_views_boot() {
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}
 
-	// Patches and features that were included between major releases
-	// sometimes require additional styling, but adding them to core CSS files
-	// is not always feasible, because those can be replaced by themes.
-	// @todo Remove in 3.0
-	elgg_extend_view('elgg.css', 'elements/pathces.css');
-	elgg_extend_view('admin.css', 'elements/pathces.css');
-
 	// Configure lightbox
 	elgg_register_plugin_hook_handler('elgg.data', 'site', '_elgg_set_lightbox_config');
 }

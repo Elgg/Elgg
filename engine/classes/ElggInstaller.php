@@ -804,7 +804,6 @@ class ElggInstaller {
 				'annotations.php',
 				'cron.php',
 				'entities.php',
-				'extender.php',
 				'filestore.php',
 				'group.php',
 				'mb_wrapper.php',
