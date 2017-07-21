@@ -207,6 +207,16 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 		}
 	}
 
+	public function testSanitizeRejectsArrays() {
+		try {
+			sanitise_string(['foo']);
+			$this->fail();
+		} catch (\DatabaseException $e) {
+			$this->assertEqual($e->getMessage(), 'Elgg\\Database::sanitizeString() and serialize_string() '
+				. 'cannot accept arrays.');
+		}
+	}
+
 	public function testCanDelayQuery() {
 		$sql = "
 			SELECT *

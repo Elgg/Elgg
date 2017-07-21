@@ -453,7 +453,7 @@ class ElggBatch implements BatchResult {
 			throw new RuntimeException("Getter is not callable: " . $inspector->describeCallable($this->getter));
 		}
 
-		$options = $this->options + ['count' => true];
+		$options = array_merge($this->options, ['count' => true]);
 
 		return call_user_func($this->getter, $options);
 	}

@@ -1,3 +1,31 @@
+<a name="2.3.3"></a>
+### 2.3.3  (2017-05-16)
+
+#### Contributors
+
+* Steve Clay (9)
+* Jerôme Bakker (4)
+* iionly (2)
+
+#### Documentation
+
+* **ajax:** normalize code whitespace ([e8437621](https://github.com/Elgg/Elgg/commit/e8437621d03c26cd5a247de09e3beefb06c0d5cb))
+
+
+#### Bug Fixes
+
+* **db:** warn devs about sanitizing array values ([0e7347b8](https://github.com/Elgg/Elgg/commit/0e7347b869142ab68814f59897ff19400c144f69), closes [#10921](https://github.com/Elgg/Elgg/issues/10921))
+* **discussions:** ajax reply form is again a textarea ([cb77158b](https://github.com/Elgg/Elgg/commit/cb77158b003cc4408f2138cdcd356407c4b767d5), closes [#10936](https://github.com/Elgg/Elgg/issues/10936))
+* **forms:** no label but normal text styling for checkboxes and radio input field options text ([9fdaefeb](https://github.com/Elgg/Elgg/commit/9fdaefeb24e9ed9b8a6d5d3c7cf73795e7dd1850))
+* **groups:** group activity widget can be added as default dashboard widget again without error ([1f468ac9](https://github.com/Elgg/Elgg/commit/1f468ac98df04b0cff4edddcef45e545623b5cc9))
+* **installer:** now sees settings file in old location ([be80d39e](https://github.com/Elgg/Elgg/commit/be80d39e0687cb9941eb6fbbe8257d475a2c2e89), closes [#10942](https://github.com/Elgg/Elgg/issues/10942))
+* **js:** set correct options for each individual lightbox ([a82eab75](https://github.com/Elgg/Elgg/commit/a82eab7580ea96eacf3109eb4fa12721cb44ce9f))
+* **menus:**
+  * log error if factory missing 'name' or 'text' ([23f68fe2](https://github.com/Elgg/Elgg/commit/23f68fe22276b0a7d74ba499f8309b954316c675))
+  * fixes combineMenus() in menu service ([b0708798](https://github.com/Elgg/Elgg/commit/b0708798bf2b114c911df241ab1daf4414feaf1f))
+* **routing:** no longer forwards to ajax/file service URLs after login ([af6e2a68](https://github.com/Elgg/Elgg/commit/af6e2a68cfce696a94341e27e09d009004f22bba), closes [#10695](https://github.com/Elgg/Elgg/issues/10695))
+
+
 <a name="2.3.2"></a>
 ### 2.3.2  (2017-03-16)
 
@@ -1373,6 +1401,28 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+<a name="1.12.16"></a>
+### 1.12.16  (2017-05-10)
+
+#### Contributors
+
+* Steve Clay (3)
+* iionly (2)
+* Jerôme Bakker (1)
+
+#### Documentation
+
+* **admin:** start upgrade by logging in/clearing caches ([cf78468a](https://github.com/Elgg/Elgg/commit/cf78468a95c1f6c202872905be5ece61fe3dd7e1), closes [#10898](https://github.com/Elgg/Elgg/issues/10898))
+
+
+#### Bug Fixes
+
+* **groups:** remove membership request when user is already member ([4f158e1d](https://github.com/Elgg/Elgg/commit/4f158e1d7f1036b725d04048632bd8b615dc9f4d))
+* **htaccess:** removing of obsolete entry in htaccess.dist incompatible with Apache 2.4 ([f2e8efab](https://github.com/Elgg/Elgg/commit/f2e8efab96778f60cfe264114215cb860550f5b8))
+* **search:**
+  * no longer fatals if comment container hidden ([16a753a9](https://github.com/Elgg/Elgg/commit/16a753a90e50138ebdaa256749d6a571fb3c46d7), closes [#10902](https://github.com/Elgg/Elgg/issues/10902))
+  * allows get_sql, access hook to be used correctly ([98835bc4](https://github.com/Elgg/Elgg/commit/98835bc43bc9503be2cb41f2610a5648f079ae0e), closes [#10884](https://github.com/Elgg/Elgg/issues/10884))
 
 <a name="1.12.15"></a>
 ### 1.12.15  (2017-01-25)

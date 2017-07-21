@@ -681,6 +681,9 @@ class Database {
 	 * @deprecated Use query parameters where possible
 	 */
 	public function sanitizeString($value) {
+		if (is_array($value)) {
+			throw new \DatabaseException(__METHOD__ . '() and serialize_string() cannot accept arrays.');
+		}
 		$quoted = $this->getConnection('read')->quote($value);
 		if ($quoted[0] !== "'" || substr($quoted, -1) !== "'") {
 			throw new \DatabaseException("PDO::quote did not return surrounding single quotes.");

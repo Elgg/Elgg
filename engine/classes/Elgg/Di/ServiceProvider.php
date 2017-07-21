@@ -61,6 +61,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
  * @property-read \Elgg\Application\Database               $publicDb
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
+ * @property-read \Elgg\RedirectService                    $redirects
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Http\ResponseFactory               $responseFactory
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
@@ -339,6 +340,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('queryCounter', function(ServiceProvider $c) {
 			return new \Elgg\Database\QueryCounter($c->db);
 		}, false);
+
+		$this->setFactory('redirects', function(ServiceProvider $c) {
+			$url = current_page_url();
+			$is_xhr = $c->request->isXmlHttpRequest();
+			return new \Elgg\RedirectService($c->session, $is_xhr, $c->config->getSiteUrl(), $url);
+		});
 
 		$this->setFactory('relationshipsTable', function(ServiceProvider $c) {
 			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
