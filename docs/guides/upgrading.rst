@@ -84,6 +84,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``_elgg_manage_pagesetup``
  * ``datalist_get``
  * ``datalist_set``
+ * ``detect_extender_valuetype``
  * ``developers_setup_menu``
  * ``elgg_get_metastring_id``
  * ``elgg_get_metastring_map``

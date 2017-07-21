@@ -143,7 +143,6 @@ class Application {
 			'cron.php',
 			'database.php',
 			'entities.php',
-			'extender.php',
 			'filestore.php',
 			'group.php',
 			'input.php',
