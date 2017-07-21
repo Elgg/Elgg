@@ -134,8 +134,6 @@ What does the data look like?
    [07-Mar-2009 14:27:20] 2 times: 'update elggmetadata set access_id = 2 where entity_guid = 1' 
    [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggentities set owner_guid='0', access_id='2', container_guid='0', time_updated='1236461868' WHERE guid=1' 
    [07-Mar-2009 14:27:20] 1 times: 'SELECT guid from elggsites_entity where guid = 1' 
-   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggsites_entity set name='3124/944', description='', url='http://example.org/' where guid=1' 
-   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggusers_entity set prev_last_action = last_action, last_action = 1236461868 where guid = 2' 
    [07-Mar-2009 14:27:20] DB Queries for this page: 56
    [07-Mar-2009 14:27:20] ***************************************************
    [07-Mar-2009 14:27:20] Page /action/admin/site/update_basic generated in 0.36997294426 seconds

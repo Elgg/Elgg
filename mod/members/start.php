@@ -92,13 +92,14 @@ function members_list_alpha($hook, $type, $returnvalue, $params) {
 		return;
 	}
 	
-	$dbprefix = elgg_get_config('dbprefix');
 	$options = elgg_extract('options', $params);
 	
-	$options['joins'][] = "JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid";
-	$options['order_by'] = 'ue.name ASC';
+	$options['order_by_metadata'] = [
+		'name' => 'name',
+		'direction' => 'ASC',
+	];
 	
-	return elgg_list_entities($options);
+	return elgg_list_entities_from_metadata($options);
 }
 
 /**

@@ -115,23 +115,18 @@ class Plugins {
 	function generateEntities() {
 	
 		$mod_dir = elgg_get_plugins_path();
-		$db_prefix = elgg_get_config('dbprefix');
 	
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
 		$old_ia = elgg_set_ignore_access(true);
 	
 		// show hidden entities so that we can enable them if appropriate
-		$old_access = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-	
-		$options = [
+		$old_access = access_show_hidden_entities(true);
+		
+		$known_plugins = elgg_get_entities_from_relationship([
 			'type' => 'object',
 			'subtype' => 'plugin',
-			'selects' => ['plugin_oe.*'],
-			'joins' => ["JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"],
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-		];
-		$known_plugins = elgg_get_entities_from_relationship($options);
+		]);
 		/* @var \ElggPlugin[] $known_plugins */
 	
 		if (!$known_plugins) {
@@ -199,7 +194,6 @@ class Plugins {
 		elgg_set_ignore_access($old_ia);
 
 		$this->reindexPriorities();
-
 	
 		return true;
 	}
@@ -224,19 +218,15 @@ class Plugins {
 	function get($plugin_id) {
 		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
 			$plugin_id = sanitize_string($plugin_id);
-			$db_prefix = elgg_get_config('dbprefix');
-
-			$options = [
+			
+			$plugins = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'plugin',
-				'joins' => ["JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"],
-				'selects' => ["oe.title", "oe.description"],
-				'wheres' => ["oe.title = '$plugin_id'"],
+				'metadata_name_value_pairs' => [
+					'title' => $plugin_id,
+				],
 				'limit' => 1,
-				'distinct' => false,
-			];
-
-			$plugins = elgg_get_entities($options);
+			]);
 
 			if ($plugins) {
 				return $plugins[0];
@@ -409,11 +399,10 @@ class Plugins {
 			'type' => 'object',
 			'subtype' => 'plugin',
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-			'selects' => ['plugin_oe.*', 'ps.value'],
+			'selects' => ['ps.value'],
 			'joins' => [
 				"JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid",
-				"JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"
-				],
+			],
 			'wheres' => ["ps.name = '$priority'"],
 			// ORDER BY CAST(ps.value) is super slow. We usort() below.
 			'order_by' => false,

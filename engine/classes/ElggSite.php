@@ -10,11 +10,6 @@
  *  - description
  *  - url
  *
- * Every \ElggEntity belongs to a site.
- *
- * @note Internal: \ElggSite represents a single row from the sites_entity
- * table, as well as the corresponding \ElggEntity row from the entities table.
- *
  * @link       http://learn.elgg.org/en/stable/design/database.html
  *
  * @property      string $name        The name or title of the website
@@ -36,7 +31,7 @@ class ElggSite extends \ElggEntity {
 	public function save() {
 		$db = $this->getDatabase();
 		$row = $db->getDataRow("
-			SELECT guid FROM {$db->prefix}sites_entity
+			SELECT guid FROM {$db->prefix}entities where type='site'
 		");
 		if ($row) {
 			if ($row->guid == $this->attributes['guid']) {

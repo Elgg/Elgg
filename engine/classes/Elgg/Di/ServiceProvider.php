@@ -458,7 +458,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->db,
 				$c->entityTable,
 				$c->entityCache,
-				$c->events
+				$c->events,
+				$c->metadataTable
 			);
 		});
 

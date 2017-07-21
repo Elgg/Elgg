@@ -33,27 +33,14 @@
  * @since 1.8.0
  */
 function elgg_get_admins(array $options = []) {
-	global $CONFIG;
-
-	if (isset($options['joins'])) {
-		if (!is_array($options['joins'])) {
-			$options['joins'] = [$options['joins']];
-		}
-		$options['joins'][] = "join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid";
-	} else {
-		$options['joins'] = ["join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid"];
+	if (!isset($options['metadata_name_value_pairs'])) {
+		$options['metadata_name_value_pairs'] = [];
 	}
+	$options['metadata_name_value_pairs'][] = [
+		'admin' => 'yes',
+	];
 
-	if (isset($options['wheres'])) {
-		if (!is_array($options['wheres'])) {
-			$options['wheres'] = [$options['wheres']];
-		}
-		$options['wheres'][] = "u.admin = 'yes'";
-	} else {
-		$options['wheres'][] = "u.admin = 'yes'";
-	}
-
-	return elgg_get_entities($options);
+	return elgg_get_entities_from_metadata($options);
 }
 
 /**

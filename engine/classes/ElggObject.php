@@ -6,12 +6,6 @@
  * They are a child class of \ElggEntity, so receive all the benefits of the Entities,
  * but also include a title and description field.
  *
- * An \ElggObject represents a row from the objects_entity table, as well
- * as the related row in the entities table as represented by the parent
- * \ElggEntity object.
- *
- * @note Internal: Title and description are stored in the objects_entity table.
- *
  * @property string $title       The title, name, or summary of this object
  * @property string $description The body, description, or content of the object
  * @property array  $tags        Tags that describe the object (metadata)
@@ -32,7 +26,7 @@ class ElggObject extends \ElggEntity {
 		$object = parent::prepareObject($object);
 		$object->title = $this->getDisplayName();
 		$object->description = $this->description;
-		$object->tags = $this->tags ? $this->tags : [];
+		$object->tags = $this->tags ?: [];
 		return $object;
 	}
 
