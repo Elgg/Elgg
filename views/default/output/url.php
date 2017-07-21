@@ -38,6 +38,10 @@ if (!empty($vars['confirm'])) {
 }
 
 $url = elgg_extract('href', $vars, null);
+if ($url === false) {
+	$url = 'javascript:void(0);';
+}
+
 if (!$url && isset($vars['value'])) {
 	$url = trim($vars['value']);
 	unset($vars['value']);
