@@ -23,13 +23,9 @@ echo elgg_view_field([
 	'options_values' => $mygroups,
 ]);
 
-// set default value
-if (!isset($widget->num_display)) {
-	$widget->num_display = 8;
-}
-
 echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
+	'default' => 8,
 ]);
 
 echo elgg_view('input/hidden', ['name' => 'title']);

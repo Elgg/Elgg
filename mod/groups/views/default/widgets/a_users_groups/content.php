@@ -5,11 +5,13 @@
 
 $widget = elgg_extract('entity', $vars);
 
+$num_display = (int) $widget->num_display ?: 4;
+
 echo elgg_list_entities_from_relationship([
 	'type' => 'group',
 	'relationship' => 'member',
 	'relationship_guid' => $widget->owner_guid,
-	'limit' => $widget->num_display,
+	'limit' => $num_display,
 	'pagination' => false,
 	'no_results' => elgg_echo('groups:none'),
 ]);

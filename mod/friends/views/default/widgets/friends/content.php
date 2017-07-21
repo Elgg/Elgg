@@ -21,7 +21,7 @@ echo elgg_list_entities_from_relationship([
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
 	'limit' => $num_display,
-	'size' => $widget->icon_size,
+	'size' => $widget->icon_size ?: 'small',
 	'list_type' => 'gallery',
 	'pagination' => false,
 	'no_results' => elgg_echo('friends:none'),

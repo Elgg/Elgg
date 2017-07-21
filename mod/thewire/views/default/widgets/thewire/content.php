@@ -5,11 +5,13 @@
 
 $widget = elgg_extract('entity', $vars);
 
+$num_display = (int) $widget->num_display ?: 4;
+
 $content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'container_guid' => $widget->owner_guid,
-	'limit' => $widget->num_display,
+	'limit' => $num_display,
 	'pagination' => false,
 ]);
 
