@@ -176,10 +176,13 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			}
 			return false;
 		};
-		$options = [];
+		$options = [
+			// Due to 10992, if count was present and false, it would fail
+			'count' => false,
+		];
 
 		$count1 = count(new ElggBatch($getter, $options));
-		$count2 = $getter($options + ['count' => true]);
+		$count2 = $getter(array_merge($options, ['count' => true]));
 
 		$this->assertEqual($count1, $count2);
 	}
@@ -194,7 +197,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		];
 		$guids1 = elgg_get_entities($options);
 
-		$batch = elgg_get_entities($options + ['batch' => true]);
+		$batch = elgg_get_entities(array_merge($options, ['batch' => true]));
 
 		$this->assertIsA($batch, BatchResult::class);
 		/* @var ElggBatch $batch */
