@@ -178,6 +178,7 @@ Other Configurations
 ====================
 
  * :doc:`Cloud9 <./install/cloud9>`
+ * :doc:`Homestead <./install/homestead>`
  * :doc:`EasyPHP <./install/easyphp>`
  * :doc:`IIS <./install/iis>`
  * :doc:`MAMP <./install/mamp>`
