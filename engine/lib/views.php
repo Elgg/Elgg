@@ -877,25 +877,16 @@ function elgg_view_menu($menu, array $vars = []) {
  * @since 1.9.0
  */
 function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
-	if (!isset($vars['class'])) {
-		$vars['class'] = 'elgg-menu-content';
-	}
 
 	$vars = array_merge($item->getValues(), $vars);
-
+	$vars['class'] = elgg_extract_class($vars, ['elgg-menu-content']);
+	
 	if ($item->getLinkClass()) {
-		$vars['class'] .= ' ' . $item->getLinkClass();
+		$vars['class'][] = $item->getLinkClass();
 	}
 
 	if ($item->getHref() === false || $item->getHref() === null) {
-		$text = $item->getText();
-
-		// if contains elements, don't wrap
-		if (preg_match('~<[a-z]~', $text)) {
-			return $text;
-		} else {
-			return elgg_format_element('span', ['class' => 'elgg-non-link'], $text);
-		}
+		$vars['class'][] = 'elgg-non-link';
 	}
 
 	if (!isset($vars['rel']) && !isset($vars['is_trusted'])) {
