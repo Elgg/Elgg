@@ -198,6 +198,8 @@ function _elgg_admin_init() {
 
 	$url = elgg_get_simplecache_url('admin.css');
 	elgg_register_css('elgg.admin', $url);
+
+	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
 		
 	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');
