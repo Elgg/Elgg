@@ -11,6 +11,10 @@ $owner = $entity->getOwnerEntity();
 $icon = elgg_view_entity_icon($owner, 'tiny');
 
 $container = $entity->getContainerEntity();
+if (!$container) {
+	elgg_log("Search found comment {$entity->guid}, but the user cannot see its container.", 'WARNING');
+	return;
+}
 
 if ($container->getType() == 'object') {
 	$title = $container->title;

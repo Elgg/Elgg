@@ -44,40 +44,41 @@ Consider this action:
 
 .. code-block:: php
 
-	// in myplugin/actions/do_math.php
+    // in myplugin/actions/do_math.php
 
-	elgg_ajax_gatekeeper();
+    elgg_ajax_gatekeeper();
 
-	$arg1 = (int)get_input('arg1');
-	$arg2 = (int)get_input('arg2');
+    $arg1 = (int)get_input('arg1');
+    $arg2 = (int)get_input('arg2');
 
-	// will be rendered client-side
-	system_message('We did it!');
+    // will be rendered client-side
+    system_message('We did it!');
 
-	echo json_encode([
-		'sum' => $arg1 + $arg2,
-		'product' => $arg1 * $arg2,
-	]);
+    echo json_encode([
+        'sum' => $arg1 + $arg2,
+        'product' => $arg1 * $arg2,
+    ]);
 
 To execute it, use ``ajax.action('<action_name>', options)``:
 
 .. code-block:: js
 
-	var Ajax = require('elgg/Ajax');
-	var ajax = new Ajax();
+    var Ajax = require('elgg/Ajax');
+    var ajax = new Ajax();
 
-	ajax.action('do_math', {
-		data: {
-			arg1: 1,
-			arg2: 2
-		},
-	}).done(function (output, statusText, jqXHR) {
-	    if (jqXHR.AjaxData.status == -1) {
-	        return;
-	    }
-		alert(output.sum);
-		alert(output.product);
-	});
+    ajax.action('do_math', {
+        data: {
+            arg1: 1,
+            arg2: 2
+        },
+    }).done(function (output, statusText, jqXHR) {
+        if (jqXHR.AjaxData.status == -1) {
+            return;
+        }
+        
+        alert(output.sum);
+        alert(output.product);
+    });
 
 Notes for actions:
 
@@ -100,34 +101,35 @@ Consider this PHP script that runs at ``http://example.org/myplugin_time``.
 
 .. code-block:: php
 
-	// in myplugin/start.php
-	elgg_register_page_handler('myplugin_time', 'myplugin_get_time');
+    // in myplugin/start.php
+    elgg_register_page_handler('myplugin_time', 'myplugin_get_time');
 
-	function myplugin_get_time() {
-		elgg_ajax_gatekeeper();
+    function myplugin_get_time() {
+        elgg_ajax_gatekeeper();
 
-		echo json_encode([
-			'rfc2822' => date(DATE_RFC2822),
-			'day' => date('l'),
-		]);
+        echo json_encode([
+            'rfc2822' => date(DATE_RFC2822),
+            'day' => date('l'),
+        ]);
 
-		return true;
-	}
+        return true;
+    }
 
 To fetch its output, use ``ajax.path('<url_path>', options)``.
 
 .. code-block:: js
 
     var Ajax = require('elgg/Ajax');
-	var ajax = new Ajax();
+    var ajax = new Ajax();
 
-	ajax.path('myplugin_time').done(function (output, statusText, jqXHR) {
-	    if (jqXHR.AjaxData.status == -1) {
-	        return;
-	    }
-		alert(output.rfc2822);
-		alert(output.day);
-	});
+    ajax.path('myplugin_time').done(function (output, statusText, jqXHR) {
+        if (jqXHR.AjaxData.status == -1) {
+            return;
+        }
+        
+        alert(output.rfc2822);
+        alert(output.day);
+    });
 
 Notes for paths:
 
@@ -142,46 +144,47 @@ Consider this view:
 
 .. code-block:: php
 
-	// in myplugin/views/default/myplugin/get_link.php
+    // in myplugin/views/default/myplugin/get_link.php
 
-	if (empty($vars['entity']) || !$vars['entity'] instanceof ElggObject) {
-		return;
-	}
+    if (empty($vars['entity']) || !$vars['entity'] instanceof ElggObject) {
+        return;
+    }
 
-	$object = $vars['entity'];
-	/* @var ElggObject $object */
+    $object = $vars['entity'];
+    /* @var ElggObject $object */
 
-	echo elgg_view('output/url', [
-		'text' => $object->getDisplayName(),
-		'href' => $object->getUrl(),
-		'is_trusted' => true,
-	]);
+    echo elgg_view('output/url', [
+        'text' => $object->getDisplayName(),
+        'href' => $object->getUrl(),
+        'is_trusted' => true,
+    ]);
 
 Since it's a PHP file, we must register it for Ajax first:
 
 .. code-block:: php
 
-	// in myplugin_init()
-	elgg_register_ajax_view('myplugin/get_link');
+    // in myplugin_init()
+    elgg_register_ajax_view('myplugin/get_link');
 
 
 To fetch the view, use ``ajax.view('<view_name>', options)``:
 
 .. code-block:: js
 
-	var Ajax = require('elgg/Ajax');
-	var ajax = new Ajax();
+    var Ajax = require('elgg/Ajax');
+    var ajax = new Ajax();
 
-	ajax.view('myplugin/get_link', {
-		data: {
-			guid: 123 // querystring
-		},
-	}).done(function (output, statusText, jqXHR) {
-	    if (jqXHR.AjaxData.status == -1) {
-	        return;
-	    }
-		$('.myplugin-link').html(output);
-	});
+    ajax.view('myplugin/get_link', {
+        data: {
+            guid: 123 // querystring
+        },
+    }).done(function (output, statusText, jqXHR) {
+        if (jqXHR.AjaxData.status == -1) {
+            return;
+        }
+        
+        $('.myplugin-link').html(output);
+    });
 
 Notes for views:
 
@@ -203,22 +206,23 @@ Consider we have a form view. We register it for Ajax:
 
 .. code-block:: php
 
-	// in myplugin_init()
-	elgg_register_ajax_view('forms/myplugin/add');
+    // in myplugin_init()
+    elgg_register_ajax_view('forms/myplugin/add');
 
 To fetch this using ``ajax.form('<action_name>', options)``.
 
 .. code-block:: js
 
-	var Ajax = require('elgg/Ajax');
-	var ajax = new Ajax();
+    var Ajax = require('elgg/Ajax');
+    var ajax = new Ajax();
 
-	ajax.form('myplugin/add').done(function (output, statusText, jqXHR) {
-	    if (jqXHR.AjaxData.status == -1) {
-	        return;
-	    }
-		$('.myplugin-form-container').html(output);
-	});
+    ajax.form('myplugin/add').done(function (output, statusText, jqXHR) {
+        if (jqXHR.AjaxData.status == -1) {
+            return;
+        }
+        
+        $('.myplugin-form-container').html(output);
+    });
 
 Notes for forms:
 
@@ -253,7 +257,7 @@ Let's say when the view ``foo`` is fetched, we want to also send the server some
     var Ajax = require('elgg/Ajax');
     var elgg = require('elgg');
 
-	var ajax = new Ajax();
+    var ajax = new Ajax();
 
     elgg.register_hook_handler(Ajax.REQUEST_DATA_HOOK, 'view:foo', function (name, type, params, data) {
         // send some data back
@@ -287,8 +291,8 @@ Let's say when the view ``foo`` is fetched, we want to also send the client some
         return $response;
     }
 
-	// in myplugin_init()
-	elgg_register_plugin_hook_handler(AjaxResponse::RESPONSE_HOOK, 'view:foo', 'myplugin_append_ajax');
+    // in myplugin_init()
+    elgg_register_plugin_hook_handler(AjaxResponse::RESPONSE_HOOK, 'view:foo', 'myplugin_append_ajax');
 
 To capture the metadata send back to the client, we use the client-side ``ajax_response`` hook:
 
@@ -326,14 +330,14 @@ You may need only worry about the 2nd case. We can do this by looking at ``jqXHR
 
 .. code-block:: js
 
-	ajax.action('entity/delete?guid=123').done(function (value, statusText, jqXHR) {
+    ajax.action('entity/delete?guid=123').done(function (value, statusText, jqXHR) {
         if (jqXHR.AjaxData.status == -1) {
             // a server error was already displayed
             return;
         }
 
-		// remove element from the page
-	});
+        // remove element from the page
+    });
 
 Requiring AMD modules
 ---------------------
@@ -363,22 +367,22 @@ Differences:
 
 .. code-block:: js
 
-   elgg.action('do_math', {
-     data: {
-       arg1: 1,
-       arg2: 2
-     },
-     success: function (wrapper) {
-       if (wrapper.output) {
-         alert(wrapper.output.sum);
-         alert(wrapper.output.product);
-       } else {
-         // the system prevented the action from running, but we really don't
-         // know why
-         elgg.ajax.handleAjaxError();
-       }
-     }
-   });
+    elgg.action('do_math', {
+        data: {
+            arg1: 1,
+            arg2: 2
+        },
+        success: function (wrapper) {
+            if (wrapper.output) {
+                alert(wrapper.output.sum);
+                alert(wrapper.output.product);
+            } else {
+                // the system prevented the action from running, but we really don't
+                // know why
+                elgg.ajax.handleAjaxError();
+            }
+        }
+    });
 
 
 elgg.action notes
@@ -402,13 +406,13 @@ elgg.action JSON response wrapper
 
 .. code::
 
-   {
-     current_url: {String} "http://example.org/action/example/math", // not very useful
-     forward_url: {String} "http://example.org/foo", ...if forward('foo') was called
-     output: {String|Object} from echo in action
-     status: {Number} 0 = success. -1 = an error was registered.
-     system_messages: {Object}
-   }
+    {
+        current_url: {String} "http://example.org/action/example/math", // not very useful
+        forward_url: {String} "http://example.org/foo", ...if forward('foo') was called
+        output: {String|Object} from echo in action
+        status: {Number} 0 = success. -1 = an error was registered.
+        system_messages: {Object}
+    }
 
 .. warning::
 
@@ -451,12 +455,12 @@ link to an object given by its GUID:
 .. code-block:: js
 
     elgg.get('ajax/view/myplugin/get_link', {
-      data: {
-        guid: 123 // querystring
-      },
-      success: function (output) {
-        $('.myplugin-link').html(output);
-      }
+        data: {
+            guid: 123 // querystring
+        },
+        success: function (output) {
+            $('.myplugin-link').html(output);
+        }
     });
 
 The Ajax view system works significantly differently than the action system.
@@ -486,9 +490,9 @@ Here's an example of fetching a view that returns a JSON-encoded array of times:
 .. code-block:: js
 
     elgg.getJSON('ajax/view/myplugin/get_times', {
-      success: function (data) {
-        alert('The time is ' + data.friendly_time);
-      }
+        success: function (data) {
+            alert('The time is ' + data.friendly_time);
+        }
     });
 
 Legacy form fetching
@@ -505,9 +509,9 @@ Simply use ``ajax/form/<action>`` (instead of ``ajax/view/<view_name>``):
 .. code-block:: js
 
     elgg.get('ajax/form/myplugin/add', {
-      success: function (output) {
-        $('.myplugin-form-container').html(output);
-      }
+        success: function (output) {
+            $('.myplugin-form-container').html(output);
+        }
     });
 
 Only the request data are passed to the requested form view (i.e. as a third parameter accepted by
@@ -530,11 +534,11 @@ These functions extend jQuery's native Ajax features.
 
 .. code-block:: js
 
-   // normalizes the url to the current <site_url>/activity
-   elgg.get('/activity', {
-      success: function(resultText, success, xhr) {
-         console.log(resultText);
-      }
-   });
+    // normalizes the url to the current <site_url>/activity
+    elgg.get('/activity', {
+        success: function(resultText, success, xhr) {
+            console.log(resultText);
+        }
+    });
 
 ``elgg.post()`` is a wrapper for jQuery's ``$.ajax()``, but forces ``POST`` and does URL normalization.

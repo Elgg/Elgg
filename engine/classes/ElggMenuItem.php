@@ -101,8 +101,12 @@ class ElggMenuItem {
 	 *
 	 *    name        => STR  Menu item identifier (required)
 	 *    text        => STR  Menu item display text as HTML (required)
-	 *    href        => STR  Menu item URL (required) (false for non-links.
-	 *                        @warning If you disable the href the <a> tag will
+	 *    href        => STR  Menu item URL (required)
+	 *                        false = do not create a link.
+	 *                        null = current URL.
+	 *                        "" = current URL.
+	 *                        "/" = site home page.
+	 *                        @warning If href is false, the <a> tag will
 	 *                        not appear, so the link_class will not apply. If you
 	 *                        put <a> tags in manually through the 'text' option
 	 *                        the default CSS selector .elgg-menu-$menu > li > a
@@ -124,6 +128,7 @@ class ElggMenuItem {
 	 */
 	public static function factory($options) {
 		if (!isset($options['name']) || !isset($options['text'])) {
+			elgg_log(__METHOD__ . ': $options "name" and "text" are required.', 'ERROR');
 			return null;
 		}
 		if (!isset($options['href'])) {

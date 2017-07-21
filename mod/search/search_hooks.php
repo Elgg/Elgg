@@ -274,7 +274,10 @@ function search_tags_hook($hook, $type, $value, $params) {
 	// out the matches later.
 	$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
 
-	$access = _elgg_get_access_where_sql(['table_alias' => 'md']);
+	$access = _elgg_get_access_where_sql([
+		'table_alias' => 'md',
+		'guid_column' => 'entity_guid',
+	]);
 	$sanitised_tags = [];
 
 	foreach ($search_tag_names as $tag) {

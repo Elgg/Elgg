@@ -43,10 +43,8 @@ if (elgg_action_exists("$plugin_id/usersettings/save")) {
 	action("$plugin_id/usersettings/save");
 } else {
 	foreach ($params as $k => $v) {
-		// Save
+		
 		$result = $plugin->setUserSetting($k, $v, $user->guid);
-
-		// Error?
 		if (!$result) {
 			register_error(elgg_echo('plugins:usersettings:save:fail', [$plugin_name]));
 			forward(REFERER);

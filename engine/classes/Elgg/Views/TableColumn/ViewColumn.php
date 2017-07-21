@@ -51,11 +51,11 @@ class ViewColumn implements TableColumn {
 	 * {@inheritdoc}
 	 */
 	public function renderCell($item, $type, $item_vars) {
-		$vars = $this->vars + [
+		$vars = array_merge($this->vars, [
 			'item' => $item,
 			'item_vars' => $item_vars,
 			'type' => $type,
-		];
+		]);
 
 		return elgg_view($this->view, $vars);
 	}
