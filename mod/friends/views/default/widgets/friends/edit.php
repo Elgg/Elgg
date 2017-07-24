@@ -5,11 +5,6 @@
 
 $widget = elgg_extract('entity', $vars);
 
-// set default value for icon size
-if (!isset($widget->icon_size)) {
-	$widget->icon_size = 'small';
-}
-
 echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
 	'default' => 12,
@@ -21,7 +16,7 @@ echo elgg_view_field([
 	'#type' => 'select',
 	'name' => 'params[icon_size]',
 	'#label' => elgg_echo('friends:icon_size'),
-	'value' => $widget->icon_size,
+	'value' => $widget->icon_size ?: 'small',
 	'options_values' => [
 		'small' => elgg_echo('friends:small'),
 		'tiny' => elgg_echo('friends:tiny'),

@@ -5,7 +5,7 @@
 
 $widget = elgg_extract('entity', $vars);
 
-$num = (int) $widget->num_display;
+$num = (int) $widget->num_display ?: 8;
 $guid = (int) $widget->group_guid;
 
 if (empty($guid)) {

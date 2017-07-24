@@ -18,7 +18,8 @@ $options = [
 ];
 
 if (elgg_in_context('dashboard')) {
-	if ($widget->content_type == 'friends') {
+	$content_type = $widget->content_type ?: 'friends';
+	if ($content_type == 'friends') {
 		$options['relationship_guid'] = $widget->getOwnerGUID();
 		$options['relationship'] = 'friend';
 	}

@@ -3,10 +3,14 @@
  * List the latest reports
  */
 
+$widget = elgg_extract('entity', $vars);
+
+$num_display = (int) $widget->num_display ?: 4;
+
 $list = elgg_list_entities_from_metadata([
 	'type' => 'object',
 	'subtype' => 'reported_content',
-	'limit' => $vars['entity']->num_display,
+	'limit' => $num_display,
 	'pagination' => false,
 	'order_by_metadata' => [
 		'name' => 'state',

@@ -10,10 +10,12 @@ if (elgg_is_logged_in()) {
 	echo elgg_view_form('messageboard/add', ['name' => 'elgg-messageboard']);
 }
 
+$num_display = (int) $widget->num_display ?: 5;
+
 echo elgg_list_annotations([
 	'annotations_name' => 'messageboard',
 	'guid' => $owner->guid,
-	'limit' => $widget->num_display,
+	'limit' => $num_display,
 	'pagination' => false,
 	'reverse_order_by' => true,
 ]);
