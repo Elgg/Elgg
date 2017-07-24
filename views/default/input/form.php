@@ -13,6 +13,7 @@
  * @uses $vars['enctype'] Set to 'multipart/form-data' if uploading a file
  * @uses $vars['disable_security'] turn off CSRF security by setting to true
  * @uses $vars['class'] Additional class for the form
+ * @uses $vars['ignore_empty_body'] Boolean (default true) to determine if an empty body should return continue
  */
 
 $defaults = [
@@ -26,8 +27,15 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-form');
 $vars['action'] = elgg_normalize_url($vars['action']);
 $vars['method'] = strtolower($vars['method']);
 
+$ignore_empty_body = (bool) elgg_extract('ignore_empty_body', $vars, true);
+unset($vars['ignore_empty_body']);
+
 $body = $vars['body'];
 unset($vars['body']);
+
+if (!$ignore_empty_body && empty($body)) {
+	return;
+}
 
 // Generate a security header
 if (!$vars['disable_security']) {

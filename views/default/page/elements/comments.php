@@ -43,4 +43,8 @@ if ($show_add_form) {
 	$content .= elgg_view_form('comment/save', [], $vars);
 }
 
+if (empty($content)) {
+	return;
+}
+
 echo elgg_format_element('div', $attr, $content);
