@@ -19,6 +19,8 @@
  *                               $vars['options'] when defined. When "option"
  *                               is passed as an array, the same behaviour is used
  *                               as when the $vars['options'] is passed an array to.
+ *                               If the array contains an array of 'options' an optgroup will be drawn with 'label' as the
+ *                               optgroup label.
  * @uses $vars['multiple']       If true, multiselect of values will be allowed in the select box
  * @uses $vars['class']          Additional CSS class
  */
@@ -61,9 +63,7 @@ if ($vars['multiple'] && !empty($vars['name']) && is_string($vars['name'])) {
 	}
 }
 
-$options_list = '';
-
-foreach ($options_values as $opt_value => $option) {
+$render_option = function($opt_value, $option) {
 	$option_attrs = [
 		'value' => $opt_value,
 		'selected' => in_array((string) $opt_value, $value),
@@ -81,8 +81,25 @@ foreach ($options_values as $opt_value => $option) {
 	} else {
 		$text = $option;
 	}
+	
+	return elgg_format_element('option', $option_attrs, $text);
+};
 
-	$options_list .= elgg_format_element('option', $option_attrs, $text);
+$options_list = '';
+foreach ($options_values as $opt_value => $option) {
+	$options = elgg_extract('options', $option);
+	if (is_array($options)) {
+		$optgroup_attrs = $option;
+		unset($optgroup_attrs['options']);
+		
+		$optgroup = '';
+		foreach ($options as $group_opt_value => $group_option) {
+			$optgroup .= $render_option($group_opt_value, $group_option);
+		}
+		$options_list .= elgg_format_element('optgroup', $optgroup_attrs, $optgroup);
+	} else {
+		$options_list .= $render_option($opt_value, $option);
+	}
 }
 
 echo elgg_format_element('select', $vars, $options_list);
