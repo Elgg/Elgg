@@ -17,8 +17,6 @@ echo elgg_view_module('theme-sandbox-demo', "Page Menu (.elgg-menu-page)", elgg_
 
 echo elgg_view_module('theme-sandbox-demo', "Filter Menu (.elgg-menu-filter)", elgg_view('theme_sandbox/navigation/filter'));
 
-echo elgg_view_module('theme-sandbox-demo', "Extras Menu (.elgg-menu-extras and .elgg-menu-hz)", elgg_view('theme_sandbox/navigation/extras'));
-
 echo elgg_view_module('theme-sandbox-demo', "Entity Menu (.elgg-menu-entity and .elgg-menu-hz)", elgg_view('theme_sandbox/navigation/entity'));
 
 echo elgg_view_module('theme-sandbox-demo', "Owner Block Menu (.elgg-menu-owner-block)", elgg_view('theme_sandbox/navigation/owner_block'));

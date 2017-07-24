@@ -419,7 +419,6 @@ Plugins and themes should:
  * Update their use of ``navigation/breadcrumbs`` to pass ``$vars['breadcrumbs']`` to ``elgg_get_breadcrumbs()``
  * Update hook registrations for ``output:before, layout`` to ``view_vars, page/layout/<layout_name>``
  * Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``
- * RSS extras menu is now registered with ``register, menu:extras`` hook
 
 Likes plugin
 ------------
@@ -492,10 +491,6 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
  * ``friends`` menu item now uses ``icon`` parameter
  * ``messages`` menu item now uses ``icon`` and ``badge`` parameters
 
-``extras`` menu:
-
- * ``bookmark``, ``report_this`` and ``rss`` menu items now use ``icon`` parameter
-
 ``entity`` menu:
 
  * ``access`` menu item has been removed. Access information is now rendered in the entity byline.
@@ -508,6 +503,10 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 ``widget`` menu:
 
  * ``collapse`` menu item has been removed and CSS updated accordingly
+
+``extras`` menu:
+
+This menu has been removed from the page layout. Menu items that registered for this menu have been moved to other menus.
 
 Entity icons
 ------------

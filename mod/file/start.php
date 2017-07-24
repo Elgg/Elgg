@@ -139,7 +139,6 @@ function file_page_handler($page) {
 			break;
 		case 'all':
 			file_register_toggle();
-			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
 			echo elgg_view_resource('file/all');
 			break;
 		default:
@@ -149,27 +148,21 @@ function file_page_handler($page) {
 }
 
 /**
- * Adds a toggle to extra menu for switching between list and gallery views
+ * Adds a toggle to filter menu for switching between list and gallery views
  */
 function file_register_toggle() {
-	$url = elgg_http_remove_url_query_element(current_page_url(), 'list_type');
 
 	if (get_input('list_type', 'list') == 'list') {
-		$list_type = "gallery";
+		$list_type = 'gallery';
 		$icon = elgg_view_icon('grid');
 	} else {
-		$list_type = "list";
+		$list_type = 'list';
 		$icon = elgg_view_icon('list');
 	}
 
-	if (substr_count($url, '?')) {
-		$url .= "&list_type=" . $list_type;
-	} else {
-		$url .= "?list_type=" . $list_type;
-	}
-
-
-	elgg_register_menu_item('extras', [
+	$url = elgg_http_add_url_query_elements(current_page_url(), ['list_type' => $list_type]);
+	
+	elgg_register_menu_item('filter:file', [
 		'name' => 'file_list',
 		'text' => $icon,
 		'href' => $url,

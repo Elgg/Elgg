@@ -328,7 +328,8 @@ return array(
 /**
  * Feeds
  */
-	'feed:rss' => 'RSS feed for this page',
+	'feed:rss' => 'RSS',
+	'feed:rss:title' => 'RSS feed for this page',
 /**
  * Links
  */

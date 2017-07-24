@@ -13,3 +13,6 @@
 	text-align: center;
 	width: 165px;
 }
+.elgg-menu-filter .elgg-menu-item-file-list {
+	float: right;
+}
