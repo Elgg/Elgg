@@ -10,7 +10,6 @@
 	Profile
 *************************************** */
 .profile {
-	float: left;
 	margin-bottom: 15px;
 }
 .profile > .elgg-inner {
@@ -69,9 +68,5 @@
 	#profile-owner-block {
 		border-right: none;
 		width: auto;
-	}
-	#profile-details {
-		display: block;
-		float: left;
 	}
 }
