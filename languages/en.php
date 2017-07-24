@@ -559,8 +559,10 @@ return array(
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 	'admin:widget:cron_status' => 'Cron status',
 	'admin:widget:cron_status:help' => 'Shows the status of the last time cron jobs finished',
-	'widget:content_stats:type' => 'Content type',
-	'widget:content_stats:number' => 'Number',
+	'admin:statistics:numentities:type' => 'Content type',
+	'admin:statistics:numentities:number' => 'Number',
+	'admin:statistics:numentities:searchable' => 'Searchable',
+	'admin:statistics:numentities:other' => 'Other',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
