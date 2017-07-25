@@ -37,7 +37,14 @@ function reportedcontent_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'reportedcontent_user_hover_menu');
 
-	elgg_register_admin_menu_item('administer', 'reportedcontent', 'administer_utilities');
+	elgg_register_menu_item('page', [
+		'name' => 'administer_utilities:reportedcontent',
+		'text' => elgg_echo('admin:administer_utilities:reportedcontent'),
+		'href' => 'admin/administer_utilities/reportedcontent',
+		'section' => 'administer',
+		'parent_name' => 'administer_utilities',
+		'context' => 'admin',
+	]);
 }
 
 /**

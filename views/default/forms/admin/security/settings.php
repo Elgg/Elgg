@@ -6,8 +6,8 @@ $hardening = '';
 $protect_upgrade = (bool) get_config('security_protect_upgrade');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:administer_security:settings:protect_upgrade'),
-	'#help' => elgg_echo('admin:administer_security:settings:protect_upgrade:help'),
+	'label' => elgg_echo('admin:security:settings:protect_upgrade'),
+	'#help' => elgg_echo('admin:security:settings:protect_upgrade:help'),
 	'name' => 'security_protect_upgrade',
 	'default' => 0,
 	'value' => 1,
@@ -20,15 +20,15 @@ if ($protect_upgrade) {
 	
 	$hardening .= elgg_format_element('div', [
 		'class' => 'elgg-divide-left plm',
-	], elgg_echo('admin:administer_security:settings:protect_upgrade:token') . $url);
+	], elgg_echo('admin:security:settings:protect_upgrade:token') . $url);
 }
 
 // protect /cron
 $protect_cron = (bool) get_config('security_protect_cron');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:administer_security:settings:protect_cron'),
-	'#help' => elgg_echo('admin:administer_security:settings:protect_cron:help'),
+	'label' => elgg_echo('admin:security:settings:protect_cron'),
+	'#help' => elgg_echo('admin:security:settings:protect_cron:help'),
 	'name' => 'security_protect_cron',
 	'default' => 0,
 	'value' => 1,
@@ -62,9 +62,9 @@ if ($protect_cron) {
 		'class' => 'elgg-table mvm hidden',
 	], implode('', $rows));
 	
-	$content = elgg_echo('admin:administer_security:settings:protect_cron:token');
+	$content = elgg_echo('admin:security:settings:protect_cron:token');
 	$content .= ' ' . elgg_view('output/url', [
-		'text' => elgg_echo('admin:administer_security:settings:protect_cron:toggle'),
+		'text' => elgg_echo('admin:security:settings:protect_cron:toggle'),
 		'href' => '#security-cron-urls',
 		'rel' => 'toggle',
 	]);
@@ -78,8 +78,8 @@ if ($protect_cron) {
 // disable autocomplete on password forms
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:administer_security:settings:disable_password_autocomplete'),
-	'#help' => elgg_echo('admin:administer_security:settings:disable_password_autocomplete:help'),
+	'label' => elgg_echo('admin:security:settings:disable_password_autocomplete'),
+	'#help' => elgg_echo('admin:security:settings:disable_password_autocomplete:help'),
 	'name' => 'security_disable_password_autocomplete',
 	'default' => 0,
 	'value' => 1,
@@ -90,8 +90,8 @@ $hardening .= elgg_view_field([
 // require password the changing email address
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:administer_security:settings:email_require_password'),
-	'#help' => elgg_echo('admin:administer_security:settings:email_require_password:help'),
+	'label' => elgg_echo('admin:security:settings:email_require_password'),
+	'#help' => elgg_echo('admin:security:settings:email_require_password:help'),
 	'name' => 'security_email_require_password',
 	'default' => 0,
 	'value' => 1,
@@ -102,15 +102,15 @@ $hardening .= elgg_view_field([
 // allow others to extend this section
 $hardening .= elgg_view('admin/security/settings/extend/hardening');
 
-echo elgg_view_module('inline', elgg_echo('admin:administer_security:settings:label:hardening'), $hardening);
+echo elgg_view_module('inline', elgg_echo('admin:security:settings:label:hardening'), $hardening);
 
 // notifications
 $notifications = '';
 // notify admins about add/remove of another admin
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:administer_security:settings:notify_admins'),
-	'#help' => elgg_echo('admin:administer_security:settings:notify_admins:help'),
+	'label' => elgg_echo('admin:security:settings:notify_admins'),
+	'#help' => elgg_echo('admin:security:settings:notify_admins:help'),
 	'name' => 'security_notify_admins',
 	'default' => 0,
 	'value' => 1,
@@ -121,8 +121,8 @@ $notifications .= elgg_view_field([
 // notify user about add/remove admin of his/her account
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:administer_security:settings:notify_user_admin'),
-	'#help' => elgg_echo('admin:administer_security:settings:notify_user_admin:help'),
+	'label' => elgg_echo('admin:security:settings:notify_user_admin'),
+	'#help' => elgg_echo('admin:security:settings:notify_user_admin:help'),
 	'name' => 'security_notify_user_admin',
 	'default' => 0,
 	'value' => 1,
@@ -133,8 +133,8 @@ $notifications .= elgg_view_field([
 // notify user about (un)ban of his/her account
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:administer_security:settings:notify_user_ban'),
-	'#help' => elgg_echo('admin:administer_security:settings:notify_user_ban:help'),
+	'label' => elgg_echo('admin:security:settings:notify_user_ban'),
+	'#help' => elgg_echo('admin:security:settings:notify_user_ban:help'),
 	'name' => 'security_notify_user_ban',
 	'default' => 0,
 	'value' => 1,
@@ -145,7 +145,7 @@ $notifications .= elgg_view_field([
 // allow others to extend this section
 $notifications .= elgg_view('admin/security/settings/extend/notification');
 
-echo elgg_view_module('inline', elgg_echo('admin:administer_security:settings:label:notifications'), $notifications);
+echo elgg_view_module('inline', elgg_echo('admin:security:settings:label:notifications'), $notifications);
 
 // footer
 $footer = elgg_view_field([

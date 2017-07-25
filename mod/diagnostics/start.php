@@ -11,9 +11,13 @@ elgg_register_event_handler('init', 'system', 'diagnostics_init');
  * Initialise the diagnostics tool
  */
 function diagnostics_init() {
-
-	// Add admin menu item
-	elgg_register_admin_menu_item('administer', 'diagnostics', 'administer_utilities');
+	elgg_register_menu_item('page', [
+		'name' => 'diagnostics',
+		'text' => elgg_echo('admin:diagnostics'),
+		'href' => 'admin/diagnostics',
+		'section' => 'information',
+		'context' => 'admin',
+	]);
 }
 
 /**

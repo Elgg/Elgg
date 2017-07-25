@@ -5,7 +5,7 @@ return [
 	 * Menu items and titles
 	 */
 	'expages' => "Site pages",
-	'admin:appearance:expages' => "Site Pages",
+	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "About",
 	'expages:terms' => "Terms",

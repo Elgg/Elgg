@@ -4,7 +4,7 @@
  */
 
 $add = elgg_view_form('profile/fields/add', ['class' => 'elgg-form-settings'], []);
-$list = elgg_view('admin/appearance/profile_fields/list');
+$list = elgg_view('admin/configure_utilities/profile_fields/list');
 
 $reset = elgg_view('output/url', [
 	'text' => elgg_echo('reset'),

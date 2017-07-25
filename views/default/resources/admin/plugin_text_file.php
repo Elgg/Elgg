@@ -6,7 +6,6 @@ $plugin = elgg_get_plugin_from_id($plugin_id);
 $filename = elgg_extract('filename', $vars);
 
 elgg_admin_gatekeeper();
-_elgg_admin_add_plugin_settings_menu();
 
 elgg_unregister_css('elgg');
 elgg_require_js('elgg/admin');

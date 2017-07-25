@@ -68,3 +68,55 @@ function get_config($name) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_config().', '3.0');
 	return elgg_get_config($name);
 }
+
+/**
+ * Add an admin area section or child section.
+ * This is a wrapper for elgg_register_menu_item().
+ *
+ * Used in conjuction with http://elgg.org/admin/section_id/child_section style
+ * page handler. See the documentation at the top of this file for more details
+ * on that.
+ *
+ * The text of the menu item is obtained from elgg_echo(admin:$parent_id:$menu_id)
+ *
+ * This function handles registering the parent if it has not been registered.
+ *
+ * @param string $section   The menu section to add to
+ * @param string $menu_id   The unique ID of section
+ * @param string $parent_id If a child section, the parent section id
+ * @param int    $priority  The menu item priority
+ *
+ * @return bool
+ * @since 1.8.0
+ * 
+ * @deprecated Use elgg_remove_config()
+ */
+function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $priority = 100) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_register_menu_item().', '3.0');
+	// make sure parent is registered
+	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
+		elgg_register_admin_menu_item($section, $parent_id);
+	}
+
+	// in the admin section parents never have links
+	if ($parent_id) {
+		$href = "admin/$parent_id/$menu_id";
+	} else {
+		$href = "admin/$menu_id";
+	}
+
+	$name = $menu_id;
+	if ($parent_id) {
+		$name = "$parent_id:$name";
+	}
+
+	return elgg_register_menu_item('page', [
+		'name' => $name,
+		'href' => $href,
+		'text' => elgg_echo("admin:$name"),
+		'context' => 'admin',
+		'parent_name' => $parent_id,
+		'priority' => $priority,
+		'section' => $section
+	]);
+}
