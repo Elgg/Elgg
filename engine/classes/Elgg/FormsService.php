@@ -91,6 +91,8 @@ class FormsService {
 
 		$form_vars['action_name'] = $action;
 		
+		$form_vars['ignore_empty_body'] = (bool) elgg_extract('ignore_empty_body', $form_vars, false);
+		
 		if (!isset($form_vars['body'])) {
 			$this->rendering = true;
 			$this->footer = '';
