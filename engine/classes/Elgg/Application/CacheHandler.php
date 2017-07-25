@@ -23,6 +23,7 @@ class CacheHandler {
 		'jpeg' => "image/jpeg",
 		'jpg' => "image/jpeg",
 		'js' => "application/javascript",
+		'json' => "application/json",
 		'png' => "image/png",
 		'svg' => "image/svg+xml",
 		'swf' => "application/x-shockwave-flash",
@@ -40,6 +41,7 @@ class CacheHandler {
 		"text/css",
 		"text/html",
 		"application/javascript",
+		"application/json",
 		"image/svg+xml",
 		"text/xml",
 	];
