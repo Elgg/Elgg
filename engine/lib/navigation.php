@@ -612,12 +612,13 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
  */
 function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 
-	$widget = $params['entity'];
-	/* @var \ElggWidget $widget */
-	$show_edit = elgg_extract('show_edit', $params, true);
-
-	if ($widget->canEdit()) {
-		$delete = [
+	$widget = elgg_extract('entity', $params);
+	if (!($widget instanceof \ElggWidget)) {
+		return;
+	}
+	
+	if ($widget->canDelete()) {
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete-alt'),
 			'title' => elgg_echo('widget:delete', [$widget->getTitle()]),
@@ -627,21 +628,20 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 			'id' => "elgg-widget-delete-button-$widget->guid",
 			'data-elgg-widget-type' => $widget->handler,
 			'priority' => 900,
-		];
-		$return[] = \ElggMenuItem::factory($delete);
-
-		if ($show_edit) {
-			$edit = [
-				'name' => 'settings',
-				'text' => elgg_view_icon('settings-alt'),
-				'title' => elgg_echo('widget:edit'),
-				'href' => "#widget-edit-$widget->guid",
-				'link_class' => "elgg-widget-edit-button",
-				'rel' => 'toggle',
-				'priority' => 800,
-			];
-			$return[] = \ElggMenuItem::factory($edit);
-		}
+		]);
+	}
+	
+	$show_edit = elgg_extract('show_edit', $params, $widget->canEdit());
+	if ($show_edit) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'settings',
+			'text' => elgg_view_icon('settings-alt'),
+			'title' => elgg_echo('widget:edit'),
+			'href' => "#widget-edit-$widget->guid",
+			'link_class' => "elgg-widget-edit-button",
+			'rel' => 'toggle',
+			'priority' => 800,
+		]);
 	}
 
 	return $return;
