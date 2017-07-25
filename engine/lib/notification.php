@@ -276,7 +276,7 @@ function _elgg_notifications_smtp_default_message_id_header($hook, $type, $retur
 	
 	$mt = microtime(true);
 	
-	$returnvalue['headers']['Message-ID'] = "<{$url_path}.default.{$mt}@{$hostname}>";
+	// $returnvalue['headers']['Message-ID'] = "<{$url_path}.default.{$mt}@{$hostname}>";
 	
 	return $returnvalue;
 }
@@ -646,7 +646,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	$message->setBody($body);
 
 	foreach ($result['headers'] as $headerName => $headerValue) {
-		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
+
 	}
 
 	// allow others to modify the $message content
