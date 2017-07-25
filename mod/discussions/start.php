@@ -635,6 +635,7 @@ function discussion_prepare_form_vars($topic = null) {
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
 		'topic' => $topic,
+		'entity' => $topic,
 	];
 
 	if ($topic) {
