@@ -1205,6 +1205,11 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	}
 	$string = elgg_http_build_url($url_array, false);
 
+	// Restore relative protocol to url if missing and is provided as part of the initial url (see #9874)
+	if (!isset($url['scheme']) && (substr($url, 0, 2) == '//')) {
+		$string = "//{$string}";
+	}
+	
 	return $string;
 }
 
