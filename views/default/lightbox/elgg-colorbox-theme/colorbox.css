@@ -54,10 +54,6 @@
 	box-sizing: border-box;
 }
 
-#cboxLoadedContent > .elgg-module:only-child {
-	padding: 0;
-}
-
 #cboxTitle {
 	position: absolute;
 	bottom: -35px;
@@ -127,6 +123,7 @@
 }
 
 #cboxLoadingOverlay {
+	/* note: due to extension, this path is computed relative to elgg.css/admin.css */
 	background: transparent url(graphics/ajax_loader_bw.gif) no-repeat center center;
 	background-size: 30px;
 }
