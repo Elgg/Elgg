@@ -23,7 +23,7 @@ if (!empty($url)) {
 $title = "<h3 class='elgg-widget-title'>{$title_text}</h3>";
 $controls = elgg_view('object/widget/elements/controls', [
 	'widget' => $widget,
-	'show_edit' => $widget->canEdit(),
+	'show_edit' => elgg_extract('show_edit', $vars, $widget->canEdit()),
 ]);
 
 echo "<div class='elgg-widget-handle clearfix'>{$title}{$controls}</div>";
