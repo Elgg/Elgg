@@ -220,6 +220,7 @@ function blog_prepare_form_vars($post = null, $revision = null) {
 		'tags' => null,
 		'container_guid' => null,
 		'guid' => null,
+		'entity' => $post,
 		'draft_warning' => '',
 	];
 
