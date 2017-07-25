@@ -9,7 +9,7 @@ class ErrorResponse extends OkResponse {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $error       Error message
 	 * @param int    $status_code HTTP status code
 	 * @param string $forward_url Forward url

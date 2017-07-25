@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg インストール',
 	'install:welcome' => 'こんにちは、ようこそ',
 	'install:requirements' => '必要条件の確認',
@@ -72,18 +72,18 @@ return array(
 
 	'install:settings:label:sitename' => 'サイトの名前',
 	'install:settings:label:siteemail' => 'サイトのEmailアドレス',
-	'install:settings:label:wwwroot' => 'サイトのURL',
+	'install:database:label:wwwroot' => 'サイトのURL',
 	'install:settings:label:path' => 'Elgg インストールディレクトリ',
-	'install:settings:label:dataroot' => 'データディレクトリ',
+	'install:database:label:dataroot' => 'データディレクトリ',
 	'install:settings:label:language' => 'サイトて使用する言語',
 	'install:settings:label:siteaccess' => '規定のサイトアクセス',
 	'install:label:combo:dataroot' => 'Elgg はデータディレクトリを作成します。',
 
 	'install:settings:help:sitename' => '新しくElggを導入するサイトの名前',
 	'install:settings:help:siteemail' => 'Elggがユーザと連絡するときに使用するEmailアドレス',
-	'install:settings:help:wwwroot' => 'このサイトのアドレス (たいていはElgg はたいていはこのアドレスを正しく推定します)',
+	'install:database:help:wwwroot' => 'このサイトのアドレス (たいていはElgg はたいていはこのアドレスを正しく推定します)',
 	'install:settings:help:path' => 'Elggのコードが格納されているディレクトリ(たいていはElggはこのアドレスを正しく推定します)',
-	'install:settings:help:dataroot' => 'Elggがファイルを保存するために使用するディレクトリで、あなたが前もって作成しておかなければなりません。(「次」をクリックするとこのディレクトリのパーミションをチェックします)',
+	'install:database:help:dataroot' => 'Elggがファイルを保存するために使用するディレクトリで、あなたが前もって作成しておかなければなりません。(「次」をクリックするとこのディレクトリのパーミションをチェックします)',
 	'install:settings:help:dataroot:apache' => '次のいずれかを選択してください。１．データディレクトリを作成する。２．ユーザファイルを入れておくためにあなたがすでに作成したディレクトリ名を入力する。(「次」をクリックするとこのディレクトリのパーミッションをチェクします)',
 	'install:settings:help:language' => 'このサイトの既定の言語',
 	'install:settings:help:siteaccess' => 'ユーザが新規作成したコンテントの既定のアクセスレベル',
@@ -122,7 +122,6 @@ return array(
 	'install:error:settings' => '設定ファイルを作成できませんでした。',
 	'install:error:databasesettings' => 'これらの設定ではデータベースに接続することができません。',
 	'install:error:database_prefix' => 'データベースのプレフィックスに不適当な文字があります',
-	'install:error:oldmysql' => 'MySQL のバージョンは、5.0以上でないといけません。あなたのサーバはバージョン %s を使用しています。',
 	'install:error:nodatabase' => 'データベース %s を使用出来ません。おそらく存在しないものと思われます。',
 	'install:error:cannotloadtables' => 'データベーステーブルを読み込むことができません。',
 	'install:error:tables_exist' => 'ご指定のデータベースにはすでにElggのテーブルが存在しています。これらのテーブルをドロップ（破棄）するか、インストーラーをリスタートする必要があります。リスタートを選択された場合は、その既存のテーブルを使用できないか試みてみます。インストーラーをリスタートするには、あなたのブラウザのアドレスバーに表示されているURLから \'?step=database\' の部分を削除したあと、Enterキーを押してください。',
@@ -152,8 +151,8 @@ return array(
 	'install:error:rewrite:altserver' => 'リライトルールがのテストに失敗しました。Elggリライトルールでwebサーバを設定してもう一度テストをこころみてください。',
 	'install:error:rewrite:unknown' => 'あなたのサーバで起動されているwebサーバを特定することができませんでした。リライトルールにも失敗したようです。残念ですがアドバイスも出来そうにありません。問題解決リンクをチェックしてみてください。',
 	'install:warning:rewrite:unknown' => 'あなたのサーバはリライトルールの自動テストをサポートしていないようです。その上、あなたのご使用のブラウザはJavaScriptでのチェッキングをサポートしていません。インストールを続行できますが、問題が発生することがあるかもしれません。次のリンクをクリックすれば、リライトルールを手動でテストすることができます：<a href="%s" target="_blank">テスト</a>。テストがうまく行けば success（成功）の文字が表示されるはずです。',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => '対応できないエラーが発生しそれをログに記録しました。あなたがサイトの管理者の方でしたら、ファイルをチェックしてみてください。そうでないならサイトの管理者に次の情報をお知らせください。:',
 	'DatabaseException:WrongCredentials' => "Elgg は与えられた証明では接続出来ませんでした。設定ファイルをチェックしてみてください。",
-);
+];

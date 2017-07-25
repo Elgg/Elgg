@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group UpgradeService
+ */
 class ElggUpgradeTest extends \Elgg\TestCase {
 
 	/**
@@ -16,8 +19,14 @@ class ElggUpgradeTest extends \Elgg\TestCase {
 				->getMock();
 
 		$this->obj->_callable_egefps = array($this, 'mock_egefps');
+
+		_elgg_services()->logger->disable();
 	}
 
+	public function tearDown() {
+		_elgg_services()->logger->enable();
+	}
+	
 	public function mock_egefps($options) {
 		return array();
 	}
@@ -83,5 +92,16 @@ class ElggUpgradeTest extends \Elgg\TestCase {
 		$this->obj->description = 'Test';
 		$this->obj->title = 'Test';
 		$this->obj->save();
+	}
+
+	public function testCanInstantiateBatchRunner() {
+		$this->obj->setClass('\InvalidClass');
+		$this->assertFalse($this->obj->getBatch());
+
+		$this->obj->setClass(\Elgg\Upgrade\InvalidBatch::class);
+		$this->assertFalse($this->obj->getBatch());
+
+		$this->obj->setClass(\Elgg\Upgrade\TestBatch::class);
+		$this->assertInstanceOf(\Elgg\Upgrade\TestBatch::class, $this->obj->getBatch());
 	}
 }

@@ -31,7 +31,7 @@ function groups_register_profile_buttons($group) {
  * @return array
  */
 function groups_prepare_form_vars($group = null) {
-	$values = array(
+	$values = [
 		'name' => '',
 		'membership' => ACCESS_PUBLIC,
 		'vis' => ACCESS_PUBLIC,
@@ -39,7 +39,7 @@ function groups_prepare_form_vars($group = null) {
 		'entity' => null,
 		'owner_guid' => elgg_get_logged_in_user_guid(),
 		'content_access_mode' => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED
-	);
+	];
 
 	// handle customizable profile fields
 	$fields = elgg_get_config('group');

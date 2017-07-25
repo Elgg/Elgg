@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Access Collections tests
  *
@@ -15,14 +16,14 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 	public function __construct() {
 		parent::__construct();
 
-		$this->dbPrefix = get_config("dbprefix");
+		$this->dbPrefix = elgg_get_config("dbprefix");
 
 		$user = new \ElggUser();
 		$user->username = 'test_user_' . rand();
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->setPassword(rand());
+		$user->setPassword((string)rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
@@ -40,7 +41,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 	}
 
 	public function testCreateGetDeleteACL() {
-		
+
 		$acl_name = 'test access collection';
 		$acl_id = create_access_collection($acl_name);
 
@@ -84,7 +85,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->setPassword(rand());
+		$user->setPassword((string)rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
@@ -146,11 +147,17 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$this->assertTrue($result);
 		elgg_set_ignore_access($ia);
 
-		// should be false since IA is off
+		$logged_in_user = _elgg_services()->session->getLoggedInUser();
+		_elgg_services()->session->removeLoggedInUser();
+
 		$ia = elgg_set_ignore_access(false);
-		$result = can_edit_access_collection($acl_id);
-		$this->assertFalse($result);
+		$result = can_edit_access_collection($acl_id, $this->user->guid);
+		$result_no_user = can_edit_access_collection($acl_id);
+		$this->assertTrue($result);
+		$this->assertFalse($result_no_user);
 		elgg_set_ignore_access($ia);
+
+		_elgg_services()->session->setLoggedInUser($logged_in_user);
 
 		delete_access_collection($acl_id);
 	}
@@ -165,7 +172,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 			'acl_id' => $acl_id,
 			'user' => $this->user
 		);
-		
+
 		function test_acl_access_hook($hook, $type, $value, $params) {
 			global $acl_test_info;
 			if ($params['user_id'] == $acl_test_info['user']->guid) {
@@ -196,7 +203,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		if (!elgg_is_active_plugin('groups')) {
 			return;
 		}
-		
+
 		$group = new \ElggGroup();
 		$group->name = 'Test group';
 		$group->save();
@@ -207,7 +214,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		// removing group and acl
 		$this->assertTrue($group->delete());
-		
+
 		$acl = get_access_collection($group->group_acl);
 		$this->assertFalse($acl);
 
@@ -246,7 +253,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 			$this->assertFalse($can_edit);
 		}
 
-		 elgg_set_ignore_access($ia);
+		elgg_set_ignore_access($ia);
 
 		$group->delete();
 	}
@@ -271,13 +278,13 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		$user->delete();
 	}
-	
+
 	public function testAddMemberToACLRemoveMember() {
 		// create a new user to check against
 		$user = new \ElggUser();
 		$user->username = 'access_test_user';
 		$user->save();
-		
+
 		$acl_id = create_access_collection('test acl');
 
 		$result = add_user_to_access_collection($user->guid, $acl_id);
@@ -285,7 +292,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		if ($result) {
 			$this->assertTrue($user->delete());
-			
+
 			// since there are no more members this should return false
 			$acl_members = get_members_of_access_collection($acl_id, true);
 			$this->assertFalse($acl_members);
@@ -293,4 +300,185 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		delete_access_collection($acl_id);
 	}
+
+	public function testCanGetGuestReadAcccessArray() {
+		$logged_in_user = _elgg_services()->session->getLoggedInUser();
+		_elgg_services()->session->removeLoggedInUser();
+
+		$expected = [ACCESS_PUBLIC];
+		$actual = get_access_array();
+		$this->assertEqual($expected, $actual);
+
+		_elgg_services()->session->setLoggedInUser($logged_in_user);
+	}
+
+	public function testCanGetReadAccessArray() {
+
+		$ia = elgg_set_ignore_access(false);
+
+		// Default access array
+		$expected = [ACCESS_PUBLIC, ACCESS_LOGGED_IN];
+		$actual = get_access_array($this->user->guid);
+
+		sort($expected);
+		sort($actual);
+		$this->assertEqual($expected, $actual);
+
+		$owned_collection_id = create_access_collection('test', $this->user->guid);
+
+		$joined_collection_id = create_access_collection('test2');
+		add_user_to_access_collection($this->user->guid, $joined_collection_id);
+
+		$expected[] = $owned_collection_id;
+		$expected[] = $joined_collection_id;
+
+		$actual = get_access_array($this->user->guid, null, true);
+
+		sort($expected);
+		sort($actual);
+		$this->assertEqual($expected, $actual);
+
+		elgg_set_ignore_access();
+
+		$expected[] = ACCESS_PRIVATE;
+		$actual = get_access_array($this->user->guid, null, true);
+
+		sort($expected);
+		sort($actual);
+		$this->assertEqual($expected, $actual);
+
+		delete_access_collection($owned_collection_id);
+		delete_access_collection($joined_collection_id);
+		
+		elgg_set_ignore_access($ia);
+	}
+
+	public function testCanGetWriteAccessArray() {
+
+		$owned_collection_id = create_access_collection('test', $this->user->guid);
+
+		$expected = [
+			ACCESS_PUBLIC,
+			ACCESS_LOGGED_IN,
+			ACCESS_PRIVATE,
+			$owned_collection_id,
+		];
+
+		$actual = get_write_access_array($this->user->guid, null, true);
+
+		// remove ACCESS_FRIENDS in case it's added by an enabled plugin
+		unset($actual[ACCESS_FRIENDS]);
+
+		$actual = array_keys($actual);
+		
+		sort($expected);
+		sort($actual);
+		$this->assertEqual($expected, $actual);
+
+	}
+
+	public function testCanGetAccessCollection() {
+
+		$owned_collection_id = create_access_collection('test', $this->user->guid);
+
+		$acl = get_access_collection($owned_collection_id);
+
+		$this->assertIsA($acl, ElggAccessCollection::class);
+		$this->assertEqual($acl->id, $owned_collection_id);
+		$this->assertEqual($acl->owner_guid, $this->user->guid);
+		$this->assertEqual($acl->name, 'test');
+
+		// We don't add owners to collection by default
+		$this->assertFalse($acl->hasMember($this->user->guid));
+
+	}
+
+	public function testCanSaveAccessCollection() {
+
+		$id = create_access_collection('test_collection', $this->user->guid);
+
+		$acl = new ElggAccessCollection((object) [
+			'id' => $id,
+			'owner_guid' => $this->user->guid,
+			'name' => 'test_collection',
+		]);
+		
+		$loaded_acl = get_access_collection($id);
+
+		$this->assertEqual($loaded_acl->id, $id);
+		$this->assertEqual($loaded_acl->name, 'test_collection');
+		$this->assertEqual($loaded_acl->owner_guid, $this->user->guid);
+
+		$acl->name = 'test_collection_edited';
+		$acl->save();
+
+		$loaded_acl = get_access_collection($id);
+
+		$this->assertEqual($loaded_acl->id, $id);
+		$this->assertEqual($loaded_acl->name, 'test_collection_edited');
+		$this->assertEqual($loaded_acl->owner_guid, $this->user->guid);
+
+		$this->assertTrue($acl->delete());
+
+		$this->assertFalse(get_access_collection($id));
+	}
+
+	public function testCanUpdateAccessCollectionMembership() {
+
+		$member1 = new \ElggUser();
+		$member1->username = 'access_test_user' . rand();
+		$member1->save();
+
+		$member2 = new \ElggUser();
+		$member2->username = 'access_test_user' . rand();
+		$member2->save();
+
+		$id = create_access_collection('test_collection', $this->user->guid);
+		$acl = get_access_collection($id);
+		
+		$acl->addMember($member1->guid);
+		$acl->addMember($member2->guid);
+
+		$members = get_members_of_access_collection($id);
+
+		$this->assertTrue(in_array($member1, $members, true));
+		$this->assertTrue(in_array($member2, $members, true));
+
+		$acl->removeMember($member2->guid);
+
+		$members = get_members_of_access_collection($id);
+		
+		$this->assertEqual([$member1], $members);
+
+		$this->assertTrue($acl->hasMember($member1->guid));
+
+		$member_guids = get_members_of_access_collection($id, true);
+
+		$this->assertEqual([$member1->guid], $member_guids);
+
+		$member1->delete();
+		$member2->delete();
+	}
+
+	public function testCanEditAccessCollection() {
+
+		$member = new \ElggUser();
+		$member->username = 'access_test_user' . rand();
+		$member->save();
+
+		$ia = elgg_set_ignore_access(false);
+
+		$collection_id = create_access_collection('test', $this->user->guid);
+		add_user_to_access_collection($member->guid, $collection_id);
+
+		$acl = get_access_collection($collection_id);
+
+		$this->assertTrue($acl->canEdit($this->user->guid));
+		$this->assertFalse($acl->canEdit($member->guid));
+
+		elgg_set_ignore_access($ia);
+
+		$member->delete();
+	}
+
 }

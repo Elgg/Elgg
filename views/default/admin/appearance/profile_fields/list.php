@@ -1,14 +1,14 @@
 <?php
 /**
  * Profile fields.
- * 
+ *
  * @todo Needs some review
  */
 
 // List form elements
 $n = 0;
-$loaded_defaults = array();
-$items = array();
+$loaded_defaults = [];
+$items = [];
 $fieldlist = elgg_get_config('profile_custom_fields');
 if ($fieldlist || $fieldlist === '0') {
 	$fieldlistarray = explode(',', $fieldlist);
@@ -30,15 +30,14 @@ if ($fieldlist || $fieldlist === '0') {
 <?php
 
 foreach ($items as $item) {
-	echo elgg_view("profile/", array('value' => $item->translation));
+	echo elgg_view("profile/", ['value' => $item->translation]);
 
-	//$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
-	$url = elgg_view('output/url', array(
+	$url = elgg_view('output/url', [
 		'href' => "action/profile/fields/delete?id={$item->shortname}",
 		'text' => elgg_view_icon('delete-alt'),
 		'is_action' => true,
 		'is_trusted' => true,
-	));
+	]);
 	$type = elgg_echo($item->type);
 	$drag_arrow = elgg_view_icon("drag-arrow", "elgg-state-draggable");
 	echo <<<HTML

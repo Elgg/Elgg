@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -65,4 +65,4 @@ return array(
 
 	'messageboard:failure' => "書き込みの際に何からのエラーが発生しました。もう一度お試しください。",
 
-);
+];

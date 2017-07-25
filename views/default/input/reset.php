@@ -1,14 +1,10 @@
 <?php
 /**
- * Create a reset input button
+ * Renders a <button type="reset">
  *
- * @package Elgg
- * @subpackage Core
- * 
- * @uses $vars['class'] CSS class that replaces elgg-button-cancel
+ * @uses $vars['text'] Text of the button
  */
 
 $vars['type'] = 'reset';
-$vars['class'] = elgg_extract('class', $vars, 'elgg-button-cancel');
 
 echo elgg_view('input/button', $vars);

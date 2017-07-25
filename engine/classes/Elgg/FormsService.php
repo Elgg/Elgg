@@ -77,11 +77,11 @@ class FormsService {
 	 *
 	 * @return string The complete form
 	 */
-	public function render($action, $form_vars = array(), $body_vars = array()) {
+	public function render($action, $form_vars = [], $body_vars = []) {
 
-		$defaults = array(
+		$defaults = [
 			'action' => elgg_normalize_url("action/$action"),
-		);
+		];
 
 		// append elgg-form class to any class options set
 		$form_vars['class'] = (array) elgg_extract('class', $form_vars, []);
@@ -90,6 +90,8 @@ class FormsService {
 		$form_vars = array_merge($defaults, $form_vars);
 
 		$form_vars['action_name'] = $action;
+		
+		$form_vars['ignore_empty_body'] = (bool) elgg_extract('ignore_empty_body', $form_vars, false);
 		
 		if (!isset($form_vars['body'])) {
 			$this->rendering = true;

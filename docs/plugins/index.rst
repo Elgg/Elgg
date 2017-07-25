@@ -19,12 +19,16 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
 
 The following plugins are also bundled with Elgg, but are not (yet) documented
 
+- activity
 - bookmarks
 - ckeditor
 - custom_index
 - developers
+- discussions
 - embed
 - externalpages
+- friends
+- friends_collections
 - garbagecollector
 - invitefriends
 - legacy_urls

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Non validés',
 	
 	'email:validate:subject' => "%s veuillez SVP confirmer votre adresse email pour %s !",
@@ -52,4 +52,4 @@ Si vous ne recevez rien, veuillez vérifier votre dossier Spam ou Courrier Indé
 	'uservalidationbyemail:messages:resent_validation' => 'La demande de confirmation a bien été renvoyée.',
 	'uservalidationbyemail:messages:resent_validations' => 'Les demandes de confirmation ont bien été renvoyées aux utilisateurs sélectionnés.'
 
-);
+];

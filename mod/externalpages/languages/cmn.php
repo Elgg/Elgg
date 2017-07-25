@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -18,4 +18,4 @@ return array(
 	 */
 	'expages:posted' => "您的頁面已成功更新。",
 	'expages:error' => "無法儲存這個頁面。",
-);
+];

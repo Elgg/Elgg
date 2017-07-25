@@ -8,4 +8,5 @@
  * @package    Elgg.Core
  * @subpackage Exception
  */
-class PluginException extends \Exception {}
+class PluginException extends \Exception {
+}

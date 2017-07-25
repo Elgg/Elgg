@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Instalación de Elgg',
 	'install:welcome' => 'Bienvenido!',
 	'install:requirements' => 'Verificación de requerimientos',
@@ -72,18 +72,18 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 
 	'install:settings:label:sitename' => 'Nombre del Sitio',
 	'install:settings:label:siteemail' => 'Dirección de Email del Sitio',
-	'install:settings:label:wwwroot' => 'URL del Sitio',
+	'install:database:label:wwwroot' => 'URL del Sitio',
 	'install:settings:label:path' => 'Directorio de Instalación de Elgg',
-	'install:settings:label:dataroot' => 'Directorio Data',
+	'install:database:label:dataroot' => 'Directorio Data',
 	'install:settings:label:language' => 'Idioma del Sitio',
 	'install:settings:label:siteaccess' => 'Acceso por Defecto',
 	'install:label:combo:dataroot' => 'Elgg crea el directorio data',
 
 	'install:settings:help:sitename' => 'El nombre de su nuevo sitio Elgg',
 	'install:settings:help:siteemail' => 'Dirección de Email utilizada por Elgg para comunicaciones a los usuarios',
-	'install:settings:help:wwwroot' => 'La dirección de esde sitio (normalmente Elgg la selecciona correctamnete)',
+	'install:database:help:wwwroot' => 'La dirección de esde sitio (normalmente Elgg la selecciona correctamnete)',
 	'install:settings:help:path' => 'El directorio en donde se almacena el código de Elgg (normalmente Elgg lo selecciona correctamente)',
-	'install:settings:help:dataroot' => 'El directorio que ha creado para que Elgg guarde archivos (se validarán los permisos sobre este directorio cuando presione el botón de siguiente)',
+	'install:database:help:dataroot' => 'El directorio que ha creado para que Elgg guarde archivos (se validarán los permisos sobre este directorio cuando presione el botón de siguiente)',
 	'install:settings:help:dataroot:apache' => 'Tiene la opción de que Elgg cree el directorio o de seleccionar uno que ya haya creado (se validarán los permisos sobre este directorio cuando presione el botón de siguiente)',
 	'install:settings:help:language' => 'El idioma por defecto para el sitio',
 	'install:settings:help:siteaccess' => 'El nivel de acceso por defecto al crear nuevo contenido los usuarios',
@@ -122,7 +122,7 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:error:settings' => 'No se pudo crear el archivo de configuración',
 	'install:error:databasesettings' => 'No se pudo conectar a la base de datos con la información provista',
 	'install:error:database_prefix' => 'Invalid characters in database prefix',
-	'install:error:oldmysql' => 'MySQL debe ser una versión 5.0 o superior. Su servidor se encuentra utilizando la versión %s.',
+	'install:error:oldmysql2' => 'MySQL debe ser una versión 5.5.3 o superior. Su servidor se encuentra utilizando la versión %s.',
 	'install:error:nodatabase' => 'No se pudo acceder a la base de datos %s. Puede que no exista.',
 	'install:error:cannotloadtables' => 'No se pueden cargar las tablas de la base de datos',
 	'install:error:tables_exist' => 'Se encontraron tablas de Elgg preexistentes en la base de datos. Debe eliminarlas o reiniciar el instalador para intentar utilizarlas. Para reiniciar el instalador, quite \'?step=database\' de la URL en la barra de direcciones de su explorador y presione ENTER.',
@@ -153,8 +153,8 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:error:rewrite:altserver' => 'La prueba de la reescritura de reglas ha fallado. Debe configurar su servidor web con reescritura de reglas e intentar nuevamente.',
 	'install:error:rewrite:unknown' => 'Oof. No podemos saber qué tipo de servidor web se encuentra ejecutando y falló la reescritura de reglas. No podemos ofrecer ninguna ayuda específica. Por favor verifique el enlace de solución de problemas.',
 	'install:warning:rewrite:unknown' => 'Su servidor no soporta la prueba automática de reescritura de reglas. Puede continuar con la instalación, pero puede experimentar problemas con el sitio. Puede probar manualmente las reescritura de reglas accediento a este enlace: <a href="%s" target="_blank">pruebas</a>. Observará la palabra success si la ejecución ha sido exitosa.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. If you are the site administrator check your settings file, otherwise contact the site administrator with the following information:',
 	'DatabaseException:WrongCredentials' => "Elgg no puede conectar con la base de datos, usando los credenciales. Consulte en el archivo 'settings'.",
-);
+];

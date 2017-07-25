@@ -25,6 +25,7 @@
 	margin: 0 auto;
 	height: auto;
 }
+.elgg-page-default .elgg-page-admin-notices > .elgg-inner,
 .elgg-page-default .elgg-page-body > .elgg-inner {
 	max-width: 990px;
 	margin: 0 auto;
@@ -59,6 +60,8 @@
 	margin-top: 10px;
 }
 
+<?= elgg_view('elements/components/admin_notices.css') ?>
+
 /***** PAGE HEADER ******/
 .elgg-page-header {
 	padding: 5px 20px 10px;
@@ -86,6 +89,52 @@
 .elgg-layout {
 	min-height: 360px;
 }
+
+.elgg-layout-header {
+	padding-bottom: 5px;
+	border-bottom: 1px solid #EBEBEB;
+	margin-bottom: 10px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.elgg-layout-header > h1,
+.elgg-layout-header > h2,
+.elgg-layout-header > h3 {
+	order: 1;
+	padding: 5px;
+	margin-right: auto; /* force flexblox to justify to the right */
+}
+
+.elgg-layout-header > .elgg-menu-container {
+	order: 2;
+}
+
+.elgg-layout-one-sidebar,
+.elgg-layout-two-sidebar {
+	display: flex;
+	align-items: flex-start;
+}
+.elgg-layout-one-sidebar > .elgg-body,
+.elgg-layout-two-sidebar > .elgg-body {
+	flex: 1;
+}
+.elgg-layout-one-sidebar > .elgg-sidebar {
+	float: none;
+	order: 1;
+}
+.elgg-layout-two-sidebar > .elgg-sidebar {
+	float: none;
+	order: 2;
+}
+.elgg-layout-two-sidebar > .elgg-sidebar-alt {
+	float: none;
+	order: 0;
+}
+
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
@@ -94,7 +143,7 @@
 	padding: 32px 0 20px 30px;
 	float: right;
 	width: 21.212121%;
-	margin: 0;
+	margin: 0 0 0 30px;
 	border-left: 1px solid #EBEBEB;
 }
 .elgg-sidebar-alt {
@@ -109,19 +158,6 @@
 	position: relative;
 	min-height: 360px;
 	padding: 12px 0 10px 0;
-}
-.elgg-main > .elgg-head {
-	padding-bottom: 5px;
-	border-bottom: 1px solid #EBEBEB;
-	margin-bottom: 10px;
-}
-.elgg-layout-one-sidebar .elgg-main {
-	float: left;
-	width: 72.525252%;
-}
-.elgg-layout-two-sidebar .elgg-main {
-	float: left;
-	width: 50.101010%;
 }
 
 /***** PAGE FOOTER ******/
@@ -150,11 +186,12 @@
 	}
 	.elgg-main {
         padding: 12px 20px 10px;
-
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		box-sizing: border-box;
     }
+	.elgg-layout-one-sidebar,
+	.elgg-layout-two-sidebar {
+		display: block;
+	}
     .elgg-layout-one-sidebar .elgg-main,
 	.elgg-layout-two-sidebar .elgg-main {
         width: 100%;
@@ -165,12 +202,9 @@
 		border-bottom: 1px solid #DCDCDC;
 		background-color: #FAFAFA;
 		width: 100%;
-		float: left;
 		padding: 27px 20px 20px;
+		margin: 0;
 		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05) inset;
-
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 	.elgg-sidebar-alt {

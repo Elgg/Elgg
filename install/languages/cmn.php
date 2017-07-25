@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg 安裝',
 	'install:welcome' => '歡迎',
 	'install:requirements' => '需求檢查',
@@ -72,18 +72,18 @@ return array(
 
 	'install:settings:label:sitename' => '站臺名稱',
 	'install:settings:label:siteemail' => '站臺電子郵件地址',
-	'install:settings:label:wwwroot' => '站臺網址',
+	'install:database:label:wwwroot' => '站臺網址',
 	'install:settings:label:path' => 'Elgg 安裝目錄',
-	'install:settings:label:dataroot' => '資料目錄',
+	'install:database:label:dataroot' => '資料目錄',
 	'install:settings:label:language' => '站臺語言',
 	'install:settings:label:siteaccess' => '預設站臺存取',
 	'install:label:combo:dataroot' => 'Elgg 建立資料目錄',
 
 	'install:settings:help:sitename' => '新建 Elgg 站臺的名稱',
 	'install:settings:help:siteemail' => 'Elgg 用於聯絡使用者的電子郵件地址',
-	'install:settings:help:wwwroot' => '站臺的網址 (Elgg 通常能夠正確猜測)',
+	'install:database:help:wwwroot' => '站臺的網址 (Elgg 通常能夠正確猜測)',
 	'install:settings:help:path' => '您置放 Elgg 程式碼的目錄位置 (Elgg 通常能夠正確猜測)',
-	'install:settings:help:dataroot' => '您所建立用於 Elgg 儲存檔案的目錄 (當您按「下一步」時，將會檢查這個目錄的權限)。它必須是絕對路徑。',
+	'install:database:help:dataroot' => '您所建立用於 Elgg 儲存檔案的目錄 (當您按「下一步」時，將會檢查這個目錄的權限)。它必須是絕對路徑。',
 	'install:settings:help:dataroot:apache' => '您可以選擇讓 Elgg 建立資料目錄，或是輸入您已建立用於儲存使用者檔案的目錄 (當您按「下一步」時，將會檢查這個目錄的權限)',
 	'install:settings:help:language' => '站臺使用的預設語言',
 	'install:settings:help:siteaccess' => '新使用者建立內容時的預設存取等級',
@@ -122,7 +122,7 @@ return array(
 	'install:error:settings' => '無法建立設定值檔案',
 	'install:error:databasesettings' => '無法以這些設定值連線到資料庫。',
 	'install:error:database_prefix' => '在資料庫前綴中有無效字元',
-	'install:error:oldmysql' => 'MySQL 必須是版本 5.0 或以上。伺服器正在使用 %s。',
+	'install:error:oldmysql2' => 'MySQL 必須是版本 5.5.3 或以上。伺服器正在使用 %s。',
 	'install:error:nodatabase' => '無法使用資料庫 %s。它可能不存在。',
 	'install:error:cannotloadtables' => '無法載入資料表格',
 	'install:error:tables_exist' => '在資料庫中已有 Elgg 表格。您需要選擇丟棄那些表格，或是重新啟動安裝程式而我們將試圖去使用它們。如果要重新啟動安裝程式，請自瀏覽器網址列中移除 \'?step=database\' 並按下輸入鍵。',
@@ -153,8 +153,8 @@ return array(
 	'install:error:rewrite:altserver' => '改寫規則測試失敗。您需要組配網頁伺服器與 Elgg 的改寫規則並再次嘗試。',
 	'install:error:rewrite:unknown' => '哎呀，我們無法認出在主機中運行什麼樣的網頁伺服器，而它的改寫規則失敗。我們無法提供任何特定的建言。請看看疑難排解鏈結。',
 	'install:warning:rewrite:unknown' => '您的伺服器不支援自動的改寫規則測試，而您的瀏覽器不支援經由 JavaScript 的檢查。您可以繼續進行安裝，但是也許會遇到一些站臺問題。您可以藉由按下這個鏈結，來手動<a href="%s" target="_blank ">測試</a>改寫規則。如果規則發生作用，您將會看到成功的字樣。',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => '發生了無法回復的錯誤，並且已經記錄下來。如果您是站臺管理者，請檢查您的設定檔案；否則請聯絡站臺管理者，並附上以下資訊：',
 	'DatabaseException:WrongCredentials' => "Elgg 無法利用給定的憑據與資料庫連線。請檢查設定檔案。",
-);
+];

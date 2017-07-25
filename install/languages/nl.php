@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg installatie',
 	'install:welcome' => 'Welkom',
 	'install:requirements' => 'Nakijken van de vereisten',
@@ -72,18 +72,18 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 
 	'install:settings:label:sitename' => 'Sitenaam',
 	'install:settings:label:siteemail' => 'Site e-mailadres',
-	'install:settings:label:wwwroot' => 'Site URL',
+	'install:database:label:wwwroot' => 'Site URL',
 	'install:settings:label:path' => 'Elgg installatiemap',
-	'install:settings:label:dataroot' => 'Datamap',
+	'install:database:label:dataroot' => 'Datamap',
 	'install:settings:label:language' => 'Sitetaal',
 	'install:settings:label:siteaccess' => 'Standaard toegangsniveau van de site',
 	'install:label:combo:dataroot' => 'Elgg maakt de datamap aan',
 
 	'install:settings:help:sitename' => 'De naam van je nieuwe Elgg site',
 	'install:settings:help:siteemail' => 'E-mail adres gebruikt door Elgg voor de communicatie met gebruikers ',
-	'install:settings:help:wwwroot' => 'Het adres van de site (Elgg raadt dit meestal correct)',
+	'install:database:help:wwwroot' => 'Het adres van de site (Elgg raadt dit meestal correct)',
 	'install:settings:help:path' => 'De map waar je de Elgg code opgeladen hebt (Elgg raadt dit meestal correct)',
-	'install:settings:help:dataroot' => 'De map die je aanmaakte voor Elgg om bestanden op te slaan (de bevoegdheden van deze map zullen nagekeken worden als je op volgende klik). Dit moet een absoluut path zijn.',
+	'install:database:help:dataroot' => 'De map die je aanmaakte voor Elgg om bestanden op te slaan (de bevoegdheden van deze map zullen nagekeken worden als je op volgende klik). Dit moet een absoluut path zijn.',
 	'install:settings:help:dataroot:apache' => 'Je hebt de optie dat Elgg de datamap aanmaakt of Elgg gebruikt de map die jij al aanmaakte om gebruikers bestanden in op te slaan (de bevoegdheden van deze map zullen nagekeken worden als je op volgende klik)',
 	'install:settings:help:language' => 'De standaard taal van de site',
 	'install:settings:help:siteaccess' => 'Het standaard toegangsniveau voor nieuwe gegevens aangemaakt door gebruikers',
@@ -122,7 +122,7 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:error:settings' => 'Er kon geen instellingen bestand aangemaakt worden',
 	'install:error:databasesettings' => 'Kon met deze instellingen niet met de database verbinden.',
 	'install:error:database_prefix' => 'Ongeldige karakters in het database voorvoegsel',
-	'install:error:oldmysql' => 'MySQL moet versie 5.0 zijn of hoger. Jouw server gebruikt %s.',
+	'install:error:oldmysql2' => 'MySQL moet versie 5.5.3 zijn of hoger. Jouw server gebruikt %s.',
 	'install:error:nodatabase' => 'Niet mogelijk om database %s te gebruiken. Mogelijk bestaat hij niet.',
 	'install:error:cannotloadtables' => 'Kan de database tables niet laden',
 	'install:error:tables_exist' => 'Er bestaan alreeds Elgg tabellen in de database. Je moet eerst deze tabellen verwijderen of herstart de installatie en we zullen proberen deze tabellen te gebruiken. Om de installatie te herstarten verwijder \'?step=database\' uit de URL in de adresbalk van je browser en druk op Enter.',
@@ -152,8 +152,8 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:error:rewrite:altserver' => 'De rewrite rules test is mislukt. Je moet de webserver configureren met de juiste rewrite rules en het opnieuw proberen.',
 	'install:error:rewrite:unknown' => 'Oef. We kunnen niet bepalen welke webserver op je site draait en de rewrite rules test is gefaald. We kunnen je geen specifiek advies geven om het op te lossen. Check de troubleshooting link voor meer informatie.',
 	'install:warning:rewrite:unknown' => 'Je server ondersteunt niet het automatisch testen van de rewrite rules en je browser ondersteunt niet de controle via JavaScript. Je kunt de installatie vervolgen, maar je kunt problemen met je site ervaren. Je kunt de rewrite rules handmatig testen via deze link: <a href="%s" target="_blank">test</a>. Je zult het woord success zien als het werkt.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Er is een onherstelbare fout opgetreden en gelogd. Indien je de beheerder bent, controleer je settings bestand. Ben je geen beheerder, neem dan contact op met een sitebeheerder met de volgende informatie:',
 	'DatabaseException:WrongCredentials' => "Elgg kan met deze instellingen niet met de database verbinden. Controleer het settings bestand.",
-);
+];

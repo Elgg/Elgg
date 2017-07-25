@@ -11,7 +11,7 @@
 $plugin = elgg_extract('plugin', $vars, false);
 $deps = $plugin->getPackage()->checkDependencies(true);
 
-$columns = array('type', 'name', 'expected_value', 'local_value', 'comment');
+$columns = ['type', 'name', 'expected_value', 'local_value', 'comment'];
 
 echo '<table class="elgg-plugin-dependencies styled elgg-table"><tr>';
 
@@ -22,7 +22,6 @@ foreach ($columns as $column) {
 
 echo '</tr>';
 
-$row = 'odd';
 foreach ($deps as $dep) {
 	$fields = _elgg_get_plugin_dependency_strings($dep);
 	$type = $dep['type'];
@@ -35,15 +34,13 @@ foreach ($deps as $dep) {
 		$class = "elgg-state-error elgg-dependency elgg-dependency-$type";
 	}
 
-	echo "<tr class=\"$row\">";
+	echo "<tr>";
 
 	foreach ($columns as $column) {
 		echo "<td class=\"pas $class\">{$fields[$column]}</td>";
 	}
 
 	echo '</tr>';
-
-	$row = ($row == 'odd') ? 'even' : 'odd';
 }
 
 echo '</table>';

@@ -29,12 +29,12 @@ switch ($sort) {
 	default:
 		$db_prefix = elgg_get_config('dbprefix');
 		
-		$options['joins'] = array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid");
+		$options['joins'] = ["JOIN {$db_prefix}users_entity u ON e.guid=u.guid"];
 		$options['order_by'] = 'u.name ASC';
 		break;
 }
 
-$title = elgg_echo('groups:members:title', array($group->name));
+$title = elgg_echo('groups:members:title', [$group->name]);
 
 $tabs = elgg_view_menu('groups_members', [
 	'entity' => $group,
@@ -44,11 +44,11 @@ $tabs = elgg_view_menu('groups_members', [
 
 $content = elgg_list_entities_from_relationship($options);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'filter' => $tabs,
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);

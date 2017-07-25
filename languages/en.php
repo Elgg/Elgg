@@ -1,4 +1,5 @@
 <?php
+
 return array(
 /**
  * Sites
@@ -119,6 +120,8 @@ return array(
 	'save:fail' => 'There was a failure saving your data',
 	'save:success' => 'Your data was saved',
 
+	'forward:error' => 'Sorry. An error occurred while redirecting to you to another site.',
+
 	'error:default:title' => 'Oops...',
 	'error:default:content' => 'Oops... something went wrong.',
 	'error:400:title' => 'Bad request',
@@ -205,7 +208,6 @@ return array(
 
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to the page.",
-	'widgets:panel:close' => "Close widgets panel",
 	'widgets:position:fixed' => '(Fixed position on page)',
 	'widget:unavailable' => 'You have already added this widget',
 	'widget:numbertodisplay' => 'Number of items to display',
@@ -264,24 +266,6 @@ return array(
 	'friends:of:owned' => "People who have made %s a friend",
 
 	'friends:of' => "Friends of",
-	'friends:collections' => "Friend collections",
-	'collections:add' => "New collection",
-	'friends:collections:add' => "New friends collection",
-	'friends:addfriends' => "Select friends",
-	'friends:collectionname' => "Collection name",
-	'friends:collectionfriends' => "Friends in collection",
-	'friends:collectionedit' => "Edit this collection",
-	'friends:nocollections' => "You do not have any collections yet.",
-	'friends:collectiondeleted' => "Your collection has been deleted.",
-	'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
-	'friends:collectionadded' => "Your collection was successfully created",
-	'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
-	'friends:collections:members' => "Collection members",
-	'friends:collections:edit' => "Edit collection",
-	'friends:collections:edited' => "Saved collection",
-	'friends:collection:edit_failed' => 'Could not save collection.',
-
-	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "You're not allowed to edit this user's avatar",
@@ -385,7 +369,7 @@ return array(
 	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
 	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Invalid user',
-	'activity:owner' => 'View activity',
+	'activity:owner' => 'Activity',
 
 	'river:widget:title' => "Activity",
 	'river:widget:description' => "Display latest activity",
@@ -554,7 +538,8 @@ return array(
 	'admin:administer_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
 	'admin:upgrades:run' => 'Run upgrades now',
-	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s)is not an instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s) is not an instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -587,8 +572,10 @@ return array(
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 	'admin:widget:cron_status' => 'Cron status',
 	'admin:widget:cron_status:help' => 'Shows the status of the last time cron jobs finished',
-	'widget:content_stats:type' => 'Content type',
-	'widget:content_stats:number' => 'Number',
+	'admin:statistics:numentities:type' => 'Content type',
+	'admin:statistics:numentities:number' => 'Number',
+	'admin:statistics:numentities:searchable' => 'Searchable',
+	'admin:statistics:numentities:other' => 'Other',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
@@ -645,6 +632,88 @@ three sections:
 
 	'admin:options' => 'Admin options',
 
+	'admin:administer_security' => 'Security',
+	'admin:administer_security:settings' => 'Settings',
+	'admin:administer_security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
+	'admin:administer_security:settings:label:hardening' => 'Hardening',
+	'admin:administer_security:settings:label:notifications' => 'Notifications',
+	
+	'admin:administer_security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
+	'admin:administer_security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
+	
+	'admin:administer_security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
+	'admin:administer_security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
+	
+	'admin:administer_security:settings:notify_user_ban' => 'Notify the user when thier account gets (un)banned',
+	'admin:administer_security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
+	
+	'admin:administer_security:settings:protect_upgrade' => 'Protect upgrade.php',
+	'admin:administer_security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
+	'admin:administer_security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
+	
+	'admin:administer_security:settings:protect_cron' => 'Protect the /cron URLs',
+	'admin:administer_security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
+	'admin:administer_security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
+	'admin:administer_security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
+	
+	'admin:administer_security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
+	'admin:administer_security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
+	
+	'admin:administer_security:settings:email_require_password' => 'Require password to change email address',
+	'admin:administer_security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+	
+	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
+	'admin:notification:make_admin:admin:body' => 'Hi %s,
+
+%s made %s a site administrator of %s.
+
+To view the profile of the new administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
+	'admin:notification:make_admin:user:body' => 'Hi %s,
+
+%s made you a site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
+	'admin:notification:remove_admin:admin:body' => 'Hi %s,
+
+%s removed %s a site administrator of %s.
+
+To view the profile of the old administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
+	'admin:notification:remove_admin:user:body' => 'Hi %s,
+
+%s removed you as site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'user:notification:ban:subject' => 'Your account on %s was banned',
+	'user:notification:ban:body' => 'Hi %s,
+
+Your account on %s was banned.
+
+To go to the site, click here:
+%s',
+	
+	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
+	'user:notification:unban:body' => 'Hi %s,
+
+Your account on %s is no longer banned. You can use the site again.
+
+To go to the site, click here:
+%s',
+	
 /**
  * Plugins
  */
@@ -730,7 +799,8 @@ three sections:
 	'admin:statistics:label:admins'=>"Admins",
 	'admin:statistics:label:version' => "Elgg version",
 	'admin:statistics:label:version:release' => "Release",
-	'admin:statistics:label:version:version' => "Version",
+	'admin:statistics:label:version:version' => "Database Version",
+	'admin:statistics:label:version:code' => "Code Version",
 
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Web Server',
@@ -867,6 +937,7 @@ These changes will only affect new users on the site.',
  */
 
 	'save' => "Save",
+	'save_go' => "Save, and go to %s",
 	'reset' => 'Reset',
 	'publish' => "Publish",
 	'cancel' => "Cancel",
@@ -1134,7 +1205,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'interval:weekly' => 'Weekly',
 	'interval:monthly' => 'Monthly',
 	'interval:yearly' => 'Yearly',
-	'interval:reboot' => 'On reboot',
 
 /**
  * System settings
@@ -1157,9 +1227,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:debug:info' => 'Log everything',
 
 	// Walled Garden support
-	'installation:registration:description' => 'User registration is enabled by default. Turn this off if you do not want people to register on their own.',
-	'installation:registration:label' => 'Allow new users to register',
-	'installation:walled_garden:description' => 'Enable this to prevent non-members from viewing the site except for web pages marked as public (such as login and registration).',
+	'installation:registration:description' => 'If enabled, visitors can create their own user accounts.',
+	'installation:registration:label' => 'Allow visitors to register',
+	'installation:walled_garden:description' => 'If enabled, logged-out visitors can see only pages marked public (such as login and registration).',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
 
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
@@ -1184,7 +1254,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:minify_js:label' => "Compress JavaScript (recommended)",
 	'installation:minify_css:label' => "Compress CSS (recommended)",
 
-	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file so that the path is injected into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).",
+	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file (use install/config/htaccess.dist as a guide).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg cannot connect to itself to test rewrite rules properly. Check that curl is working and there are no IP restrictions preventing localhost connections.",
 
 	'installation:systemcache:description' => "The system cache decreases the loading time of Elgg by caching data to files.",
@@ -1254,9 +1324,12 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'email:settings' => "Email settings",
 	'email:address:label' => "Email address",
+	'email:address:password' => "Password",
+	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
-	'email:save:success' => "New email address saved. Verification is requested.",
+	'email:save:success' => "New email address saved.",
 	'email:save:fail' => "New email address could not be saved.",
+	'email:save:fail:password' => "The password doesn't match your current password, could not change your email address",
 
 	'friend:newfriend:subject' => "%s has made you a friend!",
 	'friend:newfriend:body' => "%s has made you a friend!

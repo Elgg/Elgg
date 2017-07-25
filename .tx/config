@@ -67,6 +67,12 @@ source_file = mod/externalpages/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
+[elgg-core-2.friends_collections]
+file_filter = mod/friends_collections/languages/<lang>.php
+source_file = mod/friends_collections/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
 [elgg-core-2.file]
 file_filter = mod/file/languages/<lang>.php
 source_file = mod/file/languages/en.php

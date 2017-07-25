@@ -1,7 +1,7 @@
 <?php
 /**
  * A library for building an API client
- * 
+ *
  * Load the library 'elgg:ws:client' to use the functions in this library
  */
 
@@ -20,10 +20,8 @@
 function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '',
 $content_type = 'application/octet-stream') {
 
-	global $CONFIG;
-
-	$headers = array();
-	$encoded_params = array();
+	$headers = [];
+	$encoded_params = [];
 
 	$method = strtoupper($method);
 	switch (strtoupper($method)) {
@@ -31,7 +29,7 @@ $content_type = 'application/octet-stream') {
 		case 'POST' :
 			break;
 		default:
-			$msg = elgg_echo('NotImplementedException:CallMethodNotImplemented', array($method));
+			$msg = elgg_echo('NotImplementedException:CallMethodNotImplemented', [$method]);
 			throw new NotImplementedException($msg);
 	}
 
@@ -80,15 +78,15 @@ $content_type = 'application/octet-stream') {
 	}
 
 	// Opt array
-	$http_opts = array(
+	$http_opts = [
 		'method' => $method,
 		'header' => serialise_api_headers($headers)
-	);
+	];
 	if ($method == 'POST') {
 		$http_opts['content'] = $post_data;
 	}
 
-	$opts = array('http' => $http_opts);
+	$opts = ['http' => $http_opts];
 
 	// Send context
 	$context = stream_context_create($opts);
@@ -140,7 +138,7 @@ $content_type = 'application/octet-stream') {
  * @return array
  */
 function get_standard_api_key_array($secret_key, $api_key) {
-	return array('public' => $api_key, 'private' => $secret_key);
+	return ['public' => $api_key, 'private' => $secret_key];
 }
 
 /**

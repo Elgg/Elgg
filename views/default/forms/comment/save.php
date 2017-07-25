@@ -23,51 +23,51 @@ $inline = elgg_extract('inline', $vars, false);
 
 $entity_guid_input = '';
 if ($entity) {
-	$entity_guid_input = elgg_view('input/hidden', array(
+	$entity_guid_input = elgg_view('input/hidden', [
 		'name' => 'entity_guid',
 		'value' => $entity->guid,
-	));
+	]);
 }
 
 $comment_text = '';
 $comment_guid_input = '';
 if ($comment && $comment->canEdit()) {
-	$entity_guid_input = elgg_view('input/hidden', array(
+	$entity_guid_input = elgg_view('input/hidden', [
 		'name' => 'comment_guid',
 		'value' => $comment->guid,
-	));
+	]);
 	$comment_label  = elgg_echo("generic_comments:edit");
-	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('save')));
+	$submit_input = elgg_view('input/submit', ['value' => elgg_echo('save')]);
 	$comment_text = $comment->description;
 } else {
 	$comment_label  = elgg_echo("generic_comments:add");
-	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('comment')));
+	$submit_input = elgg_view('input/submit', ['value' => elgg_echo('comment')]);
 }
 
 $cancel_button = '';
 if ($comment) {
-	$cancel_button = elgg_view('input/button', array(
+	$cancel_button = elgg_view('input/button', [
 		'value' => elgg_echo('cancel'),
 		'class' => 'elgg-button-cancel mlm',
 		'href' => $entity ? $entity->getURL() : '#',
-	));
+	]);
 }
 
 if ($inline) {
-	$comment_input = elgg_view('input/text', array(
+	$comment_input = elgg_view('input/text', [
 		'name' => 'generic_comment',
 		'value' => $comment_text,
 		'required' => true
-	));
+	]);
 
 	echo $comment_input . $entity_guid_input . $comment_guid_input . $submit_input;
 } else {
-
-	$comment_input = elgg_view('input/longtext', array(
+	$comment_input = elgg_view('input/longtext', [
 		'name' => 'generic_comment',
 		'value' => $comment_text,
-		'required' => true
-	));
+		'required' => true,
+		'editor_type' => 'simple',
+	]);
 
 	echo <<<FORM
 <div>

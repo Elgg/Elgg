@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Vexa e deixe un comentario no marcador:
 	'bookmarks:save:invalid' => "O enderezo do marcador non é válido e non foi posíbel gardalo.",
 	'bookmarks:delete:failed' => "Non foi posíbel eliminar o marcador. Inténteo de novo",
 	'bookmarks:unknown_bookmark' => 'Non é posíbel atopar o marcador indicado',
-);
+];

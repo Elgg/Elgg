@@ -4,11 +4,11 @@
  */
 
 // Tag search
-$params = array(
+$params = [
 	'method' => 'get',
 	'action' => 'members/search',
 	'disable_security' => true,
-);
+];
 
 $body = elgg_view_form('members/search', $params);
 

@@ -16,32 +16,24 @@
  */
 function parse_urls($text) {
 
-	// URI specification: http://www.ietf.org/rfc/rfc3986.txt
-	// This varies from the specification in the following ways:
-	//  * Supports non-ascii characters
-	//  * Does not allow parentheses and single quotes
-	//  * Cuts off commas, exclamation points, and periods off as last character
-
-	// @todo this causes problems with <attr = "val">
-	// must be in <attr="val"> format (no space).
-	// By default htmlawed rewrites tags to this format.
-	// if PHP supported conditional negative lookbehinds we could use this:
-	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	$r = preg_replace_callback('/(?<![=\/"\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\']+)/i',
-	function($matches) {
-		$url = $matches[1];
-		$punc = '';
-		$last = substr($url, -1, 1);
-		if (in_array($last, array(".", "!", ",", "(", ")"))) {
-			$punc = $last;
-			$url = rtrim($url, ".!,()");
-		}
-		$urltext = str_replace("/", "/<wbr />", $url);
+	$linkify = new \Misd\Linkify\Linkify();
 		
-		return "<a href=\"$url\" rel=\"nofollow\">$urltext</a>$punc";
-	}, $text);
+	return $linkify->processUrls($text, ['attr' => ['rel' => 'nofollow']]);
+}
 
-	return $r;
+/**
+ * Takes a string and turns any email addresses into formatted links
+ *
+ * @param string $text The input string
+ *
+ * @return string The output string with formatted links
+ *
+ * @since 2.3
+ */
+function elgg_parse_emails($text) {
+	$linkify = new \Misd\Linkify\Linkify();
+		
+	return $linkify->processEmails($text, ['attr' => ['rel' => 'nofollow']]);
 }
 
 /**
@@ -52,7 +44,12 @@ function parse_urls($text) {
  * @return string
  **/
 function elgg_autop($string) {
-	return _elgg_services()->autoP->process($string);
+	try {
+		return _elgg_services()->autoP->process($string);
+	} catch (\RuntimeException $e) {
+		_elgg_services()->logger->warn('ElggAutoP failed to process the string: ' . $e->getMessage());
+		return $string;
+	}
 }
 
 /**
@@ -79,18 +76,6 @@ function elgg_get_excerpt($text, $num_chars = 250) {
 }
 
 /**
- * Handles formatting of ampersands in urls
- *
- * @param string $url The URL
- *
- * @return string
- * @since 1.7.1
- */
-function elgg_format_url($url) {
-	return preg_replace('/&(?!amp;)/', '&amp;', $url);
-}
-
-/**
  * Format bytes to a human readable format
  *
  * @param int $size      File size in bytes to format
@@ -106,7 +91,7 @@ function elgg_format_bytes($size, $precision = 2) {
 	}
 
 	$base = log($size) / log(1024);
-	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');
+	$suffixes = ['B', 'kB', 'MB', 'GB', 'TB'];
 
 	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
 }
@@ -134,7 +119,7 @@ function elgg_format_bytes($size, $precision = 2) {
  *
  * @return string
  */
-function elgg_format_attributes(array $attrs = array()) {
+function elgg_format_attributes(array $attrs = []) {
 	if (!is_array($attrs) || empty($attrs)) {
 		return '';
 	}
@@ -213,7 +198,7 @@ function elgg_format_attributes(array $attrs = array()) {
  * @throws InvalidArgumentException
  * @since 1.9.0
  */
-function elgg_format_element($tag_name, array $attributes = array(), $text = '', array $options = array()) {
+function elgg_format_element($tag_name, array $attributes = [], $text = '', array $options = []) {
 	if (is_array($tag_name)) {
 		$args = $tag_name;
 
@@ -243,10 +228,10 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
 		$is_void = $options['is_void'];
 	} else {
 		// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
-		$is_void = in_array(strtolower($tag_name), array(
+		$is_void = in_array(strtolower($tag_name), [
 			'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
 			'meta', 'param', 'source', 'track', 'wbr'
-		));
+		]);
 	}
 
 	if (!empty($options['encode_text'])) {
@@ -271,9 +256,8 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
 }
 
 /**
- * Converts shorthand urls to absolute urls.
- *
- * If the url is already absolute or protocol-relative, no change is made.
+ * Converts shorthand URLs to absolute URLs, unless the given URL is absolute, protocol-relative,
+ * or starts with a protocol/fragment/query
  *
  * @example
  * elgg_normalize_url('');                   // 'http://my.site.com/'
@@ -283,56 +267,65 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
  *
  * @param string $url The URL to normalize
  *
- * @return string The absolute url
+ * @return string The absolute URL
  */
 function elgg_normalize_url($url) {
-	// see https://bugs.php.net/bug.php?id=51192
-	// from the bookmarks save action.
-	$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
-	$php_5_3_0_to_5_3_2 = version_compare(PHP_VERSION, '5.3.0', '>=') &&
-			version_compare(PHP_VERSION, '5.3.3', '<');
+	$url = str_replace(' ', '%20', $url);
 
-	if ($php_5_2_13_and_below || $php_5_3_0_to_5_3_2) {
-		$tmp_address = str_replace("-", "", $url);
-		$validated = filter_var($tmp_address, FILTER_VALIDATE_URL);
-	} else {
-		$validated = filter_var($url, FILTER_VALIDATE_URL);
+	if (_elgg_sane_validate_url($url)) {
+		return $url;
 	}
 
-	// work around for handling absoluate IRIs (RFC 3987) - see #4190
-	if (!$validated && (strpos($url, 'http:') === 0) || (strpos($url, 'https:') === 0)) {
-		$validated = true;
+	if (preg_match("#^([a-z]+)\\:#", $url, $m)) {
+		// we don't let http/https: URLs fail filter_var(), but anything else starting with a protocol
+		// is OK
+		if ($m[1] !== 'http' && $m[1] !== 'https') {
+			return $url;
+		}
 	}
 
-	if ($validated) {
-		// all normal URLs including mailto:
+	if (preg_match("#^(\\#|\\?|//)#", $url)) {
+		// starts with '//' (protocol-relative link), query, or fragment
 		return $url;
+	}
 
-	} elseif (preg_match("#^(\#|\?|//)#i", $url)) {
-		// '//example.com' (Shortcut for protocol.)
-		// '?query=test', #target
-		return $url;
-	
-	} elseif (stripos($url, 'javascript:') === 0 || stripos($url, 'mailto:') === 0) {
-		// 'javascript:' and 'mailto:'
-		// Not covered in FILTER_VALIDATE_URL
-		return $url;
-
-	} elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
-		// 'install.php', 'install.php?step=step'
+	if (preg_match("#^[^/]*\\.php(\\?.*)?$#", $url)) {
+		// root PHP scripts: 'install.php', 'install.php?step=step'. We don't want to confuse these
+		// for domain names.
 		return elgg_get_site_url() . $url;
-
-	} elseif (preg_match("#^[^/?]*\.#i", $url)) {
-		// 'example.com', 'example.com/subpage'
-		return "http://$url";
-
-	} else {
-		// 'page/handler', 'mod/plugin/file.php'
-
-		// trim off any leading / because the site URL is stored
-		// with a trailing /
-		return elgg_get_site_url() . ltrim($url, '/');
 	}
+
+	if (preg_match("#^[^/?]*\\.#", $url)) {
+		// URLs starting with domain: 'example.com', 'example.com/subpage'
+		return "http://$url";
+	}
+
+	// 'page/handler', 'mod/plugin/file.php'
+	// trim off any leading / because the site URL is stored
+	// with a trailing /
+	return elgg_get_site_url() . ltrim($url, '/');
+}
+
+/**
+ * From untrusted input, get a site URL safe for forwarding.
+ *
+ * @param string $unsafe_url URL from untrusted input
+ *
+ * @return bool|string Normalized URL or false if given URL was not a path.
+ *
+ * @since 3.0.0
+ */
+function elgg_normalize_site_url($unsafe_url) {
+	if (!is_string($unsafe_url)) {
+		return false;
+	}
+
+	$unsafe_url = elgg_normalize_url($unsafe_url);
+	if (0 === strpos($unsafe_url, elgg_get_site_url())) {
+		return $unsafe_url;
+	}
+
+	return false;
 }
 
 /**
@@ -346,7 +339,7 @@ function elgg_normalize_url($url) {
 function elgg_get_friendly_title($title) {
 
 	// return a URL friendly title to short circuit normal title formatting
-	$params = array('title' => $title);
+	$params = ['title' => $title];
 	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, null);
 	if ($result) {
 		return $result;
@@ -378,13 +371,13 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	}
 
 	// return a time string to short circuit normal time formatting
-	$params = array('time' => $time, 'current_time' => $current_time);
+	$params = ['time' => $time, 'current_time' => $current_time];
 	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, null);
 	if ($result) {
 		return $result;
 	}
 
-	$diff = abs((int)$current_time - (int)$time);
+	$diff = abs((int) $current_time - (int) $time);
 
 	$minute = 60;
 	$hour = $minute * 60;
@@ -409,10 +402,10 @@ function elgg_get_friendly_time($time, $current_time = null) {
 		$diff = 1;
 	}
 	
-	$future = ((int)$current_time - (int)$time < 0) ? ':future' : '';
+	$future = ((int) $current_time - (int) $time < 0) ? ':future' : '';
 	$singular = ($diff == 1) ? ':singular' : '';
 
-	return elgg_echo("friendlytime{$future}{$granularity}{$singular}", array($diff));
+	return elgg_echo("friendlytime{$future}{$granularity}{$singular}", [$diff]);
 }
 
 /**
@@ -512,14 +505,14 @@ function elgg_strip_tags($string, $allowable_tags = null) {
  */
 function elgg_html_decode($string) {
 	$string = str_replace(
-		array('&gt;', '&lt;', '&amp;', '&quot;', '&#039;'),
-		array('&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'),
+		['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
+		['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],
 		$string
 	);
 	$string = html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
 	$string = str_replace(
-		array('&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'),
-		array('&gt;', '&lt;', '&amp;', '&quot;', '&#039;'),
+		['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],
+		['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
 		$string
 	);
 	return $string;
@@ -542,6 +535,37 @@ function _elgg_get_display_query($string) {
 		$display_query = preg_replace("/[^\x01-\x7F]/", "", $string);
 	}
 	return htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
+}
+
+/**
+ * Use a "fixed" filter_var() with FILTER_VALIDATE_URL that handles multi-byte chars.
+ *
+ * @param string $url URL to validate
+ * @return string|false
+ * @access private
+ */
+function _elgg_sane_validate_url($url) {
+	// based on http://php.net/manual/en/function.filter-var.php#104160
+	$res = filter_var($url, FILTER_VALIDATE_URL);
+	if ($res) {
+		return $res;
+	}
+
+	// Check if it has unicode chars.
+	$l = elgg_strlen($url);
+	if (strlen($url) == $l) {
+		return $res;
+	}
+
+	// Replace wide chars by “X”.
+	$s = '';
+	for ($i = 0; $i < $l; ++$i) {
+		$ch = elgg_substr($url, $i, 1);
+		$s .= (strlen($ch) > 1) ? 'X' : $ch;
+	}
+
+	// Re-check now.
+	return filter_var($s, FILTER_VALIDATE_URL) ? $url : false;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

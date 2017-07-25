@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	/**
 	* Menu items and titles
 	*/
@@ -82,4 +82,4 @@ Non puoi rispondere a questa email.",
 
 	'messages:deleted_sender' => 'Utente cancellato',
 
-);
+];

@@ -42,7 +42,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$attributes['subtype'] = null;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
-		$attributes['site_guid'] = null;
 		$attributes['access_id'] = ACCESS_PRIVATE;
 		$attributes['time_created'] = null;
 		$attributes['time_updated'] = null;
@@ -142,7 +141,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 			'time_updated',
 			'container_guid',
 			'owner_guid',
-			'site_guid',
 			'url',
 			'read_access',
 			'title',
@@ -204,7 +202,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$this->assertFalse(get_entity($guid1));
 		$this->assertFalse(get_entity($guid2));
 
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = elgg_get_config('dbprefix');
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
 		$r = get_data_row($q);
 		$this->assertEqual('no', $r->enabled);
@@ -220,7 +218,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggRecursiveDelete() {
-		$types = array('\ElggGroup', '\ElggObject', '\ElggUser', '\ElggSite');
+		$types = array('\ElggGroup', '\ElggObject', '\ElggUser');
 		$db_prefix = elgg_get_config('dbprefix');
 
 		foreach ($types as $type) {

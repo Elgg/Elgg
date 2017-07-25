@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Введите запрос:',
 	'search:no_results' => 'Ничего не найдено',
 	'search:matched' => 'Найдено: ',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'от',
 	'search:unavailable_entity' => 'Недоступно',
 	'search:unknown_entity' => 'Неизвестный тип ресурса',
-);
+];

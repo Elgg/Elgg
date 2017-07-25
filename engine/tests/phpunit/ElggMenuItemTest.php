@@ -210,8 +210,16 @@ class ElggMenuItemTest extends \Elgg\TestCase {
 		$logged = _elgg_services()->logger->enable();
 		$this->assertEquals([
 			[
+				'message' => 'ElggMenuItem::factory: $options "name" and "text" are required.',
+				'level' => 400,
+			],
+			[
 				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',
 				'level' => 300,
+			],
+			[
+				'message' => 'ElggMenuItem::factory: $options "name" and "text" are required.',
+				'level' => 400,
 			],
 			[
 				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',

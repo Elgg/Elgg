@@ -10,34 +10,30 @@
 	Profile
 *************************************** */
 .profile {
-	float: left;
 	margin-bottom: 15px;
 }
-.profile .elgg-inner {
-	border: 1px solid #DCDCDC;
+.profile > .elgg-inner {
+	border: 1px solid #ebebeb;
 	border-radius: 3px;
+	margin: 0 5px;
+	display: flex;
+	align-items: flex-start;
 }
 #profile-details {
 	padding: 15px;
+	flex: 1;
 }
 
 /*** ownerblock ***/
 #profile-owner-block {
 	width: 200px;
-	float: left;
-	border-right: 1px solid #DCDCDC;
+	border-right: 1px solid #ebebeb;
 	padding: 15px;
 }
 #profile-owner-block .large {
 	margin-bottom: 10px;
 }
-#profile-owner-block a.elgg-button-action {
-	margin-bottom: 4px;
-	display: table;
-}
-.profile-admin-menu {
-	display: none;
-}
+
 .profile-admin-menu-wrapper a {
 	display: block;
 	margin: 3px 0 5px 0;
@@ -56,45 +52,21 @@
 	color: #000;
 }
 /*** profile details ***/
-#profile-details .wire-status {
-	margin-top: 10px;
-}
-#profile-details .odd {
-	border-bottom: 1px solid #DCDCDC;
+.profile-field {
+	border-bottom: 1px solid #ebebeb;
 	margin: 0;
-	padding: 5px 0;
+	padding: 10px 0;
 }
-#profile-details .even {
-	border-bottom: 1px solid #DCDCDC;
+
+/* fix for about me field */
+.profile-field .elgg-output {
 	margin: 0;
-	padding: 5px 0;
 }
-.profile-aboutme-title {
-	margin: 0;
-	padding: 5px 4px 2px 0;
-}
-.profile-aboutme-contents {
-	padding: 0;
-}
-.profile-banned-user {
-	margin: 10px 0;
-	padding: 20px;
-	color: #B94A48;
-	background-color: #F8E8E8;
-	border: 1px solid #E5B7B5;
-	border-radius: 5px;
-}
-.profile-banned-user h4 {
-	color: #B94A48;
-}
+
 @media (max-width: 600px) {
 
 	#profile-owner-block {
 		border-right: none;
 		width: auto;
-	}
-	#profile-details {
-		display: block;
-		float: left;
 	}
 }

@@ -31,7 +31,7 @@ class Plugins {
 	/**
 	 * @var string[] Active plugins, with plugin ID => GUID. Missing keys imply inactive plugins.
 	 */
-	private $active_guids = array();
+	private $active_guids = [];
 
 	/**
 	 * @var bool Has $active_guids been populated?
@@ -86,7 +86,7 @@ class Plugins {
 			$dir = elgg_get_plugins_path();
 		}
 	
-		$plugin_dirs = array();
+		$plugin_dirs = [];
 		$handle = opendir($dir);
 	
 		if ($handle) {
@@ -124,22 +124,22 @@ class Plugins {
 		$old_access = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 	
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => 'plugin',
-			'selects' => array('plugin_oe.*'),
-			'joins' => array("JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"),
+			'selects' => ['plugin_oe.*'],
+			'joins' => ["JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"],
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-		);
+		];
 		$known_plugins = elgg_get_entities_from_relationship($options);
 		/* @var \ElggPlugin[] $known_plugins */
 	
 		if (!$known_plugins) {
-			$known_plugins = array();
+			$known_plugins = [];
 		}
 	
 		// map paths to indexes
-		$id_map = array();
+		$id_map = [];
 		foreach ($known_plugins as $i => $plugin) {
 			// if the ID is wrong, delete the plugin because we can never load it.
 			$id = $plugin->getID();
@@ -224,17 +224,17 @@ class Plugins {
 	function get($plugin_id) {
 		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
 			$plugin_id = sanitize_string($plugin_id);
-			$db_prefix = get_config('dbprefix');
+			$db_prefix = elgg_get_config('dbprefix');
 
-			$options = array(
+			$options = [
 				'type' => 'object',
 				'subtype' => 'plugin',
-				'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
-				'selects' => array("oe.title", "oe.description"),
-				'wheres' => array("oe.title = '$plugin_id'"),
+				'joins' => ["JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"],
+				'selects' => ["oe.title", "oe.description"],
+				'wheres' => ["oe.title = '$plugin_id'"],
 				'limit' => 1,
 				'distinct' => false,
-			);
+			];
 
 			$plugins = elgg_get_entities($options);
 
@@ -257,7 +257,7 @@ class Plugins {
 	 * @return bool
 	 */
 	function exists($id) {
-		return (bool)$this->get($id);
+		return (bool) $this->get($id);
 	}
 	
 	/**
@@ -267,7 +267,7 @@ class Plugins {
 	 * @access private
 	 */
 	function getMaxPriority() {
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = elgg_get_config('dbprefix');
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 		$plugin_subtype = get_subtype_id('object', 'plugin');
 	
@@ -292,22 +292,14 @@ class Plugins {
 	 * Returns if a plugin is active for a current site.
 	 *
 	 * @param string $plugin_id The plugin ID
-	 * @param int    $site_guid The site guid
 	 * @return bool
 	 */
-	function isActive($plugin_id, $site_guid = null) {
-		$current_site_guid = elgg_get_site_entity()->guid;
-
-		if ($this->active_guids_known
-				&& ($site_guid === null || $site_guid == $current_site_guid)) {
+	function isActive($plugin_id) {
+		if ($this->active_guids_known) {
 			return isset($this->active_guids[$plugin_id]);
 		}
 
-		if ($site_guid) {
-			$site = get_entity($site_guid);
-		} else {
-			$site = elgg_get_site_entity();
-		}
+		$site = elgg_get_site_entity();
 	
 		if (!($site instanceof \ElggSite)) {
 			return false;
@@ -340,7 +332,9 @@ class Plugins {
 		$plugins_path = elgg_get_plugins_path();
 		$start_flags = ELGG_PLUGIN_INCLUDE_START |
 						ELGG_PLUGIN_REGISTER_VIEWS |
+						ELGG_PLUGIN_REGISTER_ACTIONS |
 						ELGG_PLUGIN_REGISTER_LANGUAGES |
+						ELGG_PLUGIN_REGISTER_WIDGETS |
 						ELGG_PLUGIN_REGISTER_CLASSES;
 	
 		if (!$plugins_path) {
@@ -384,7 +378,7 @@ class Plugins {
 					$plugin->deactivate();
 				
 					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-									array($id, $plugin->guid, $e->getMessage()));
+									[$id, $plugin->guid, $e->getMessage()]);
 					elgg_add_admin_notice("cannot_start $id", $msg);
 					$return = false;
 				}
@@ -402,33 +396,29 @@ class Plugins {
 	/**
 	 * Returns an ordered list of plugins
 	 *
-	 * @param string $status    The status of the plugins. active, inactive, or all.
-	 * @param mixed  $site_guid Optional site guid
+	 * @param string $status The status of the plugins. active, inactive, or all.
 	 * @return \ElggPlugin[]
 	 */
-	function find($status = 'active', $site_guid = null) {
+	function find($status = 'active') {
 		$db_prefix = elgg_get_config('dbprefix');
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
-	
-		if (!$site_guid) {
-			$site_guid = elgg_get_site_entity()->guid;
-		}
-	
+		$site_guid = 1;
+		
 		// grab plugins
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => 'plugin',
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-			'selects' => array('plugin_oe.*', 'ps.value'),
-			'joins' => array(
+			'selects' => ['plugin_oe.*', 'ps.value'],
+			'joins' => [
 				"JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid",
 				"JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"
-				),
-			'wheres' => array("ps.name = '$priority'"),
+				],
+			'wheres' => ["ps.name = '$priority'"],
 			// ORDER BY CAST(ps.value) is super slow. We usort() below.
 			'order_by' => false,
 			'distinct' => false,
-		);
+		];
 	
 		switch ($status) {
 			case 'active':
@@ -495,7 +485,7 @@ class Plugins {
 		// though we do start with 1
 		$order = array_values($order);
 	
-		$missing_plugins = array();
+		$missing_plugins = [];
 		/* @var \ElggPlugin[] $missing_plugins */
 	
 		foreach ($plugins as $plugin) {
@@ -600,20 +590,20 @@ class Plugins {
 		if ($this->provides_cache === null) {
 			$active_plugins = $this->find('active');
 		
-			$provides = array();
+			$provides = [];
 	
 			foreach ($active_plugins as $plugin) {
-				$plugin_provides = array();
+				$plugin_provides = [];
 				$manifest = $plugin->getManifest();
 				if ($manifest instanceof \ElggPluginManifest) {
 					$plugin_provides = $plugin->getManifest()->getProvides();
 				}
 				if ($plugin_provides) {
 					foreach ($plugin_provides as $provided) {
-						$provides[$provided['type']][$provided['name']] = array(
+						$provides[$provided['type']][$provided['name']] = [
 							'version' => $provided['version'],
 							'provided_by' => $plugin->getID()
-						);
+						];
 					}
 				}
 			}
@@ -656,7 +646,7 @@ class Plugins {
 	 * @access private
 	 */
 	public function invalidateIsActiveCache() {
-		$this->active_guids = array();
+		$this->active_guids = [];
 		$this->active_guids_known = false;
 	}
 	
@@ -678,10 +668,10 @@ class Plugins {
 	function checkProvides($type, $name, $version = null, $comparison = 'ge') {
 		$provided = $this->getProvides($type, $name);
 		if (!$provided) {
-			return array(
+			return [
 				'status' => false,
 				'value' => ''
-			);
+			];
 		}
 	
 		if ($version) {
@@ -690,10 +680,10 @@ class Plugins {
 			$status = true;
 		}
 	
-		return array(
+		return [
 			'status' => $status,
 			'value' => $provided['version']
-		);
+		];
 	}
 	
 	/**
@@ -722,7 +712,7 @@ class Plugins {
 	
 		// rewrite some of these to be more readable
 		$comparison = elgg_extract('comparison', $info);
-		switch($comparison) {
+		switch ($comparison) {
 			case 'lt':
 				$comparison = '<';
 				break;
@@ -748,7 +738,7 @@ class Plugins {
 		'provides'	'plugin oauth_lib'	1.3		--		--
 		'priority'	'before blog'		--		after	'move it'
 		*/
-		$strings = array();
+		$strings = [];
 		$strings['type'] = $translator->translate('ElggPlugin:Dependencies:' . ucwords($dep_system));
 	
 		switch ($type) {
@@ -770,7 +760,7 @@ class Plugins {
 			
 			case 'php_extension':
 				// PHP Extension %s [version]
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpExtension', array($info['name']));
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpExtension', [$info['name']]);
 				if ($info['version']) {
 					$strings['expected_value'] = "$comparison {$info['version']}";
 					$strings['local_value'] = $dep['value'];
@@ -782,14 +772,14 @@ class Plugins {
 				break;
 	
 			case 'php_ini':
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpIni', array($info['name']));
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpIni', [$info['name']]);
 				$strings['expected_value'] = "$comparison {$info['value']}";
 				$strings['local_value'] = $dep['value'];
 				$strings['comment'] = '';
 				break;
 	
 			case 'plugin':
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Plugin', array($info['name']));
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Plugin', [$info['name']]);
 				$expected = $info['version'] ? "$comparison {$info['version']}" : $translator->translate('any');
 				$strings['expected_value'] = $expected;
 				$strings['local_value'] = $dep['value'] ? $dep['value'] : '--';
@@ -800,8 +790,8 @@ class Plugins {
 				$expected_priority = ucwords($info['priority']);
 				$real_priority = ucwords($dep['value']);
 				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Priority');
-				$strings['expected_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$expected_priority", array($info['plugin']));
-				$strings['local_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$real_priority", array($info['plugin']));
+				$strings['expected_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$expected_priority", [$info['plugin']]);
+				$strings['local_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$real_priority", [$info['plugin']]);
 				$strings['comment'] = '';
 				break;
 		}
@@ -833,13 +823,13 @@ class Plugins {
 	 * @return array
 	 * @see \ElggPlugin::getAllUserSettings()
 	 */
-	function getAllUserSettings($user_guid = 0, $plugin_id, $return_obj = false) {
+	function getAllUserSettings($user_guid = 0, $plugin_id = null, $return_obj = false) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
 	
-		$settings = $plugin->getAllUserSettings((int)$user_guid);
+		$settings = $plugin->getAllUserSettings((int) $user_guid);
 	
 		if ($settings && $return_obj) {
 			$return = new \stdClass;
@@ -865,13 +855,13 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::setUserSetting()
 	 */
-	function setUserSetting($name, $value, $user_guid = 0, $plugin_id) {
+	function setUserSetting($name, $value, $user_guid = 0, $plugin_id = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
 
-		return $plugin->setUserSetting($name, $value, (int)$user_guid);
+		return $plugin->setUserSetting($name, $value, (int) $user_guid);
 	}
 	
 	/**
@@ -884,13 +874,13 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetUserSetting()
 	 */
-	function unsetUserSetting($name, $user_guid = 0, $plugin_id) {
+	function unsetUserSetting($name, $user_guid = 0, $plugin_id = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
 
-		return $plugin->unsetUserSetting($name, (int)$user_guid);
+		return $plugin->unsetUserSetting($name, (int) $user_guid);
 	}
 	
 	/**
@@ -904,13 +894,13 @@ class Plugins {
 	 * @return mixed
 	 * @see \ElggPlugin::getUserSetting()
 	 */
-	function getUserSetting($name, $user_guid = 0, $plugin_id, $default = null) {
+	function getUserSetting($name, $user_guid = 0, $plugin_id = null, $default = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
 
-		return $plugin->getUserSetting($name, (int)$user_guid, $default);
+		return $plugin->getUserSetting($name, (int) $user_guid, $default);
 	}
 	
 	/**
@@ -1013,19 +1003,19 @@ class Plugins {
 	 *
 	 * @return mixed int If count, int. If not count, array. false on errors.
 	 */
-	function getEntitiesFromUserSettings(array $options = array()) {
-		$singulars = array('plugin_user_setting_name', 'plugin_user_setting_value',
-			'plugin_user_setting_name_value_pair');
+	function getEntitiesFromUserSettings(array $options = []) {
+		$singulars = ['plugin_user_setting_name', 'plugin_user_setting_value',
+			'plugin_user_setting_name_value_pair'];
 	
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 	
 		// rewrite plugin_user_setting_name_* to the right PS ones.
-		$map = array(
+		$map = [
 			'plugin_user_setting_names' => 'private_setting_names',
 			'plugin_user_setting_values' => 'private_setting_values',
 			'plugin_user_setting_name_value_pairs' => 'private_setting_name_value_pairs',
 			'plugin_user_setting_name_value_pairs_operator' => 'private_setting_name_value_pairs_operator',
-		);
+		];
 	
 		foreach ($map as $plugin => $private) {
 			if (!isset($options[$plugin])) {
@@ -1034,7 +1024,7 @@ class Plugins {
 	
 			if (isset($options[$private])) {
 				if (!is_array($options[$private])) {
-					$options[$private] = array($options[$private]);
+					$options[$private] = [$options[$private]];
 				}
 	
 				$options[$private] = array_merge($options[$private], $options[$plugin]);

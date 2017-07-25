@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -55,4 +55,4 @@ return array(
 	 */
 	'thewire:settings:limit' => "Maximal erlaubte Anzahl an Zeichen in Nachrichten im Heißen Draht:",
 	'thewire:settings:limit:none' => "Kein Limit",
-);
+];

@@ -6,48 +6,62 @@
  * @uses ElggEntity $vars['entity'] Optional. The entity whose access ID to display. If provided, additional logic is used to determine CSS classes
  * @uses int        $vars['value']  Optional. Access ID to display.
  */
-$access_class = 'elgg-access';
+$class = elgg_extract_class($vars, 'elgg-access');
 
-//sort out the access level for display
-if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
-	$access_id = $vars['entity']->access_id;
+$access_id = elgg_extract('value', $vars);
 
-	// if within a group or shared access collection display group name and open/closed membership status
-	// @todo have a better way to do this instead of checking against subtype / class.
-	$container = $vars['entity']->getContainerEntity();
-
-	if ($container && $container instanceof ElggGroup) {
-		// we decided to show that the item is in a group, rather than its actual access level
-		// not required. Group ACLs are prepended with "Group: " when written.
-		//$access_id_string = elgg_echo('groups:group') . $container->name;
-		$membership = $container->membership;
-
-		if ($membership == ACCESS_PUBLIC) {
-			$access_class .= ' elgg-access-group-open';
-		} else {
-			$access_class .= ' elgg-access-group-closed';
-		}
-
-		// @todo this is plugin specific code in core. Should be removed.
-	} elseif ($container && $container->getSubtype() == 'shared_access') {
-		$access_class .= ' shared_collection';
-	} elseif ($access_id == ACCESS_PRIVATE) {
-		$access_class .= ' elgg-access-private';
-	}
-} else if (isset($vars['value'])) {
-	$access_id = $vars['value'];
+$entity = elgg_extract('entity', $vars);
+if ($entity instanceof ElggEntity) {
+	$access_id = $entity->access_id;
 }
 
 if (!isset($access_id)) {
-	return true;
+	return;
 }
 
 $access_id_string = get_readable_access_level($access_id);
 
+switch ($access_id) {
+	case ACCESS_FRIENDS :
+		$class[] = 'elgg-access-friends';
+		break;
+
+	case ACCESS_PUBLIC :
+		$class[] = 'elgg-access-public';
+		break;
+
+	case ACCESS_LOGGED_IN :
+		$class[] = 'elgg-access-loggedin';
+		break;
+
+	case ACCESS_PRIVATE :
+		$class[] = 'elgg-access-private';
+		break;
+	
+	default:
+		$collection = get_access_collection($access_id);
+		$owner = false;
+		if ($collection) {
+			$owner = get_entity($collection->owner_guid);
+		}
+		if ($owner instanceof ElggGroup) {
+			$class[] = 'elgg-access-group';
+			$membership = $owner->membership;
+			if ($membership == ACCESS_PUBLIC) {
+				$class[] = 'elgg-access-group-open';
+			} else {
+				$class[] = 'elgg-access-group-closed';
+			}
+		} else {
+			$class[] = 'elgg-access-limited';
+		}
+		break;
+}
+
 echo elgg_format_element([
 	'#tag_name' => 'span',
 	'title' => elgg_echo('access:help'),
-	'class' => $access_class,
+	'class' => $class,
 	'#text' => $access_id_string,
 	'#options' => [
 		'encode_text' => true,

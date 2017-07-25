@@ -9,13 +9,14 @@ use ElggUser;
 /**
  * Mocking service
  *
- * @property-read \Elgg\Mocks\Database                    $db                 Database
- * @property-read \Elgg\Mocks\Database\EntityTable        $entityTable        Entity mocks
- * @property-read \Elgg\Mocks\Database\MetadataTable      $metadataTable      Metadata mocks
- * @property-read \Elgg\Mocks\Database\Annotations        $annotations        Annotation mocks
- * @property-read \Elgg\Mocks\Database\RelationshipsTable $relationshipsTable Annotation mocks
- * @property-read \Elgg\Mocks\Database\SubtypeTable       $subtypeTable       Subtype table mock
- * @property-read \Elgg\Mocks\Database\AccessCollections  $accessCollections  ACL table mock
+ * @property-read \Elgg\Mocks\Database                      $db                 Database
+ * @property-read \Elgg\Mocks\Database\EntityTable          $entityTable        Entity mocks
+ * @property-read \Elgg\Mocks\Database\MetadataTable        $metadataTable      Metadata mocks
+ * @property-read \Elgg\Mocks\Database\Annotations          $annotations        Annotation mocks
+ * @property-read \Elgg\Mocks\Database\RelationshipsTable   $relationshipsTable Annotation mocks
+ * @property-read \Elgg\Mocks\Database\SubtypeTable         $subtypeTable       Subtype table mock
+ * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections  ACL table mock
+ * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings    Private settings table mock
  *
  * @since 2.3
  */
@@ -50,16 +51,11 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('metadataTable', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->events, $m->metastringsTable, $m->session);
+			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->events, $m->session);
 		});
 
 		$this->setFactory('annotations', function(MockServiceProvider $m) use ($sp) {
 			return new \Elgg\Mocks\Database\Annotations($m->db, $m->session, $sp->events);
-		});
-
-		$this->setFactory('metastringsTable', function(MockServiceProvider $m) {
-			$pool = new \Elgg\Cache\Pool\InMemory();
-			return new \Elgg\Mocks\Database\MetastringsTable($pool, $m->db);
 		});
 
 		$this->setFactory('relationshipsTable', function(MockServiceProvider $m) use ($sp) {
@@ -82,11 +78,12 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 			);
 		});
 
-		$this->setFactory('datalist', function(MockServiceProvider $m) use ($sp) {
-			$db = $m->db;
-			$dbprefix = $db->prefix;
-			$pool = new \Elgg\Cache\Pool\InMemory();
-			return new \Elgg\Mocks\Database\Datalist($pool, $db, $sp->logger, "{$dbprefix}datalists");
+		$this->setFactory('privateSettings', function(MockServiceProvider $m) use ($sp) {
+			return new \Elgg\Mocks\Database\PrivateSettingsTable(
+				$m->db,
+				$m->entityTable,
+				$sp->pluginSettingsCache
+			);
 		});
 	}
 

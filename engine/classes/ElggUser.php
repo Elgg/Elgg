@@ -1,11 +1,6 @@
 <?php
 /**
- * \ElggUser
- *
- * Representation of a "user" in the system.
- *
- * @package    Elgg.Core
- * @subpackage DataModel.User
+ * A user entity
  *
  * @property      string $name             The display name that the user will be known by in the network
  * @property      string $username         The short, reference name for the user in the network
@@ -24,150 +19,28 @@ class ElggUser extends \ElggEntity
 	implements Friendable {
 
 	/**
-	 * Initialize the attributes array.
-	 * This is vital to distinguish between metadata and base attributes.
-	 *
-	 * @return void
-	 */
-	protected function initializeAttributes() {
-		parent::initializeAttributes();
-
-		$this->attributes['type'] = "user";
-		$this->attributes += self::getExternalAttributes();
-	}
-
-	/**
-	 * Get default values for attributes stored in a separate table
-	 *
-	 * @return array
-	 * @access private
-	 *
-	 * @see \Elgg\Database\EntityTable::getEntities
-	 */
-	final public static function getExternalAttributes() {
-		return [
-			'name' => null,
-			'username' => null,
-			'password_hash' => null,
-			'email' => null,
-			'language' => null,
-			'banned' => "no",
-			'admin' => 'no',
-			'prev_last_action' => null,
-			'last_login' => null,
-			'prev_last_login' => null,
-		];
-	}
-
-	/**
-	 * Construct a new user entity
-	 *
-	 * Plugin developers should only use the constructor to create a new entity.
-	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
-	 *
-	 * @param \stdClass $row Database row result. Default is null to create a new user.
-	 *
-	 * @throws IOException|InvalidParameterException if there was a problem creating the user.
-	 */
-	public function __construct(\stdClass $row = null) {
-		$this->initializeAttributes();
-
-		if ($row) {
-			// Load the rest
-			if (!$this->load($row)) {
-				$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
-				throw new \IOException($msg);
-			}
-		}
-	}
-
-	/**
-	 * Load the \ElggUser data from the database
-	 *
-	 * @param mixed $guid \ElggUser GUID or \stdClass database row from entity table
-	 *
-	 * @return bool
-	 */
-	protected function load($guid) {
-		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'user', $this->attributes);
-		$attr_loader->secondary_loader = 'get_user_entity_as_row';
-
-		$attrs = $attr_loader->getRequiredAttributes($guid);
-		if (!$attrs) {
-			return false;
-		}
-
-		$this->attributes = $attrs;
-		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_services()->entityCache->set($this);
-
-		return true;
-	}
-
-
-	/**
 	 * {@inheritdoc}
 	 */
-	protected function create() {
-		global $CONFIG;
-	
-		$guid = parent::create();
-		$name = sanitize_string($this->name);
-		$username = sanitize_string($this->username);
-		$password_hash = sanitize_string($this->password_hash);
-		$email = sanitize_string($this->email);
-		$language = sanitize_string($this->language);
+	public function getType() {
+		return 'user';
+	}
 
-		$query = "INSERT into {$CONFIG->dbprefix}users_entity
-			(guid, name, username, password_hash, email, language)
-			values ($guid, '$name', '$username', '$password_hash', '$email', '$language')";
-
-		$result = $this->getDatabase()->insertData($query);
-		if ($result === false) {
-			// TODO(evan): Throw an exception here?
-			return false;
+	/**
+	 * Get user language or default to site language
+	 *
+	 * @param string $fallback If this is provided, it will be returned if the user doesn't have a language set.
+	 *                         If null, the site language will be returned.
+	 *
+	 * @return string
+	 */
+	public function getLanguage($fallback = null) {
+		if (!empty($this->language)) {
+			return $this->language;
 		}
-
-		return $guid;
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function update() {
-		global $CONFIG;
-		
-		if (!parent::update()) {
-			return false;
+		if ($fallback !== null) {
+			return $fallback;
 		}
-		
-		$guid = (int)$this->guid;
-		$name = sanitize_string($this->name);
-		$username = sanitize_string($this->username);
-		$password_hash = sanitize_string($this->password_hash);
-		$email = sanitize_string($this->email);
-		$language = sanitize_string($this->language);
-
-		$query = "UPDATE {$CONFIG->dbprefix}users_entity
-			SET name='$name', username='$username',
-			password_hash='$password_hash', email='$email', language='$language'
-			WHERE guid = $guid";
-
-		return $this->getDatabase()->updateData($query) !== false;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDisplayName() {
-		return $this->name;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setDisplayName($displayName) {
-		$this->name = $displayName;
+		return elgg_get_config('language');
 	}
 
 	/**
@@ -184,7 +57,7 @@ class ElggUser extends \ElggEntity
 			case 'last_login':
 			case 'prev_last_login':
 				if ($value !== null) {
-					$this->attributes[$name] = (int)$value;
+					$this->attributes[$name] = (int) $value;
 				} else {
 					$this->attributes[$name] = null;
 				}
@@ -311,12 +184,12 @@ class ElggUser extends \ElggEntity
 		}
 
 		if ($create_river_item) {
-			elgg_create_river_item(array(
+			elgg_create_river_item([
 				'view' => 'river/relationship/friend/create',
 				'action_type' => 'friend',
 				'subject_guid' => $this->guid,
 				'object_guid' => $friend_guid,
-			));
+			]);
 		}
 
 		return true;
@@ -326,24 +199,10 @@ class ElggUser extends \ElggEntity
 	 * Removes a user as a friend
 	 *
 	 * @param int $friend_guid The GUID of the user to remove
-	 *
 	 * @return bool
 	 */
 	public function removeFriend($friend_guid) {
-		if (!get_user($friend_guid)) {
-			return false;
-		}
-
-		// @todo this should be done with a plugin hook handler on the delete relationship
-		// perform cleanup for access lists.
-		$collections = get_user_access_collections($this->guid);
-		if ($collections) {
-			foreach ($collections as $collection) {
-				remove_user_from_access_collection($friend_guid, $collection->id);
-			}
-		}
-
-		return remove_entity_relationship($this->guid, "friend", $friend_guid);
+		return $this->removeRelationship($friend_guid, 'friend');
 	}
 
 	/**
@@ -363,7 +222,7 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isFriendsWith($user_guid) {
-		return (bool)check_entity_relationship($this->guid, "friend", $user_guid);
+		return (bool) check_entity_relationship($this->guid, "friend", $user_guid);
 	}
 
 	/**
@@ -374,7 +233,7 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isFriendOf($user_guid) {
-		return (bool)check_entity_relationship($user_guid, "friend", $this->guid);
+		return (bool) check_entity_relationship($user_guid, "friend", $this->guid);
 	}
 
 	/**
@@ -469,12 +328,13 @@ class ElggUser extends \ElggEntity
 	 *
 	 * @see \ElggEntity::canComment()
 	 *
-	 * @param int $user_guid User guid (default is logged in user)
+	 * @param int  $user_guid User guid (default is logged in user)
+	 * @param bool $default   Default permission
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	public function canComment($user_guid = 0) {
-		$result = parent::canComment($user_guid);
+	public function canComment($user_guid = 0, $default = null) {
+		$result = parent::canComment($user_guid, $default);
 		if ($result !== null) {
 			return $result;
 		}
@@ -514,7 +374,7 @@ class ElggUser extends \ElggEntity
 	 *       'ajax' => false, // disabled
 	 *    ]
 	 * </code>
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getNotificationSettings() {

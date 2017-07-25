@@ -21,16 +21,16 @@ elgg_push_breadcrumb($title);
 
 $db_prefix = elgg_get_config('dbprefix');
 
-$options = array(
-	'joins' => array(
+$options = [
+	'joins' => [
 		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
 		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
-	),
-	'wheres' => array(
+	],
+	'wheres' => [
 		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
-	),
+	],
 	'no_results' => elgg_echo('groups:activity:none'),
-);
+];
 
 $type = preg_replace('[\W]', '', get_input('type', 'all'));
 $subtype = preg_replace('[\W]', '', get_input('subtype', ''));
@@ -47,15 +47,14 @@ if ($type != 'all') {
 	}
 }
 
-$content = elgg_view('core/river/filter', array('selector' => $selector));
+$content = elgg_view('core/river/filter', ['selector' => $selector]);
 $content .= elgg_list_river($options);
 
-$params = array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
 	'class' => 'elgg-river-layout',
-);
-$body = elgg_view_layout('content', $params);
+]);
 
 echo elgg_view_page($title, $body);

@@ -5,55 +5,62 @@
  * @package Bookmarks
  */
 
-$title = elgg_extract('title', $vars, '');
-$desc = elgg_extract('description', $vars, '');
-$address = elgg_extract('address', $vars, '');
-$tags = elgg_extract('tags', $vars, '');
-$access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
-$container_guid = elgg_extract('container_guid', $vars);
-$guid = elgg_extract('guid', $vars, null);
+$categories_vars = $vars;
+$categories_vars['#type'] = 'categories';
 
-?>
-<div>
-	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('bookmarks:address'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'address', 'value' => $address)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
-</div>
-<?php
-
-$categories = elgg_view('input/categories', $vars);
-if ($categories) {
-	echo $categories;
-}
-
-?>
-<div>
-	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array(
+$fields = [
+	[
+		'#label' => elgg_echo('title'),
+		'#type' => 'text',
+		'required' => true,
+		'name' => 'title',
+		'value' => elgg_extract('title', $vars),
+	],
+	[
+		'#label' => elgg_echo('bookmarks:address'),
+		'#type' => 'url',
+		'required' => true,
+		'name' => 'address',
+		'value' => elgg_extract('address', $vars),
+	],
+	[
+		'#label' => elgg_echo('description'),
+		'#type' => 'longtext',
+		'name' => 'description',
+		'value' => elgg_extract('description', $vars),
+		'editor_type' => 'simple',
+	],
+	[
+		'#label' => elgg_echo('tags'),
+		'#type' => 'tags',
+		'name' => 'tags',
+		'id' => 'blog_tags',
+		'value' => elgg_extract('tags', $vars),
+	],
+	$categories_vars,
+	[
+		'#label' => elgg_echo('access'),
+		'#type' => 'access',
 		'name' => 'access_id',
-		'value' => $access_id,
-		'entity' => get_entity($guid),
+		'value' => elgg_extract('access_id', $vars, ACCESS_DEFAULT),
+		'entity' => get_entity(elgg_extract('guid', $vars)),
 		'entity_type' => 'object',
 		'entity_subtype' => 'bookmarks',
-	)); ?>
-</div>
-<?php
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'container_guid',
+		'value' => elgg_extract('container_guid', $vars),
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'guid',
+		'value' => elgg_extract('guid', $vars),
+	],
+];
 
-echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
-
-if ($guid) {
-	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
 }
 
 $footer = elgg_view_field([
@@ -61,4 +68,3 @@ $footer = elgg_view_field([
 	'value' => elgg_echo('save'),
 ]);
 elgg_set_form_footer($footer);
-

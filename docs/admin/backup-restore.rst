@@ -231,13 +231,13 @@ Change the installation path
 
 .. code:: sql
 
-   UPDATE `elgg_datalists` SET `value` = "/home/usery/public_html/grid/" WHERE `name` = "path";
+   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/home/userx/public_html/grid/", "/home/usery/public_html/grid/") WHERE `name` = "path";
    
 Change the data directory
 
 .. code:: sql
 
-   UPDATE `elgg_datalists` SET `value` = "/home/usery/elggdata/" WHERE `name` = "dataroot";
+   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/home/userx/elggdata/", "/home/usery/elggdata/") WHERE `name` = "dataroot";
 
 Change the site URL (if this has changed)
 
@@ -249,7 +249,7 @@ Change the filestore data directory
 
 .. code:: sql
 
-   UPDATE elgg_metastrings set string = '/home/usery/elggdata/' WHERE id = (SELECT value_id from elgg_metadata where name_id = (SELECT * FROM (SELECT id FROM elgg_metastrings WHERE string = 'filestore::dir_root') as ms2) LIMIT 1);
+   UPDATE elgg_metadata set value = '/home/usery/elggdata/' WHERE name = 'filestore::dir_root';
 
 Finalizing the new installation
 -------------------------------

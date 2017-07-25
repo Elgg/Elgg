@@ -26,6 +26,7 @@ $fields = [
 		'value' => $desc,
 		'#label' => elgg_echo('discussion:topic:description'),
 		'required' => true,
+		'editor_type' => 'simple',
 	],
 	[
 		'#type' => 'tags',
@@ -37,10 +38,10 @@ $fields = [
 		'#type' => 'select',
 		'name' => 'status',
 		'value' => $status,
-		'options_values' => array(
+		'options_values' => [
 			'open' => elgg_echo('status:open'),
 			'closed' => elgg_echo('status:closed'),
-		),
+		],
 		'#label' => elgg_echo('discussion:topic:status'),
 	],
 	[

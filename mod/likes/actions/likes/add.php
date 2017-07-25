@@ -46,26 +46,36 @@ if ($entity->owner_guid != $user->guid) {
 
 	$title_str = $entity->getDisplayName();
 	if (!$title_str) {
-		$title_str = elgg_get_excerpt($entity->description);
+		$title_str = elgg_get_excerpt($entity->description, 80);
 	}
 
 	$site = elgg_get_site_entity();
 
-	$subject = elgg_echo('likes:notifications:subject', array(
+	// summary for site_notifications
+	$summary = elgg_echo('likes:notifications:subject', [
 			$user->name,
 			$title_str
-		),
+		],
+		$owner->language
+	);
+	
+	// prevent long subjects in mail
+	$title_str = elgg_get_excerpt($title_str, 80);
+	$subject = elgg_echo('likes:notifications:subject', [
+			$user->name,
+			$title_str
+		],
 		$owner->language
 	);
 
-	$body = elgg_echo('likes:notifications:body', array(
+	$body = elgg_echo('likes:notifications:body', [
 			$owner->name,
 			$user->name,
 			$title_str,
 			$site->name,
 			$entity->getURL(),
 			$user->getURL()
-		),
+		],
 		$owner->language
 	);
 
@@ -74,28 +84,16 @@ if ($entity->owner_guid != $user->guid) {
 		$user->guid,
 		$subject,
 		$body,
-		array(
+		[
 			'action' => 'create',
 			'object' => $annotation,
-		)
+			'summary' => $summary,
+			'url' => $entity->getURL(),
+		]
 	);
 }
 
 system_message(elgg_echo("likes:likes"));
-
-if (elgg_is_xhr()) {
-	$num_of_likes = likes_count($entity);
-	if ($num_of_likes == 1) {
-		$likes_string = elgg_echo('likes:userlikedthis', array($num_of_likes));
-	} else {
-		$likes_string = elgg_echo('likes:userslikedthis', array($num_of_likes));
-	}
-	echo json_encode([
-		'text' => $likes_string,
-		'selector' => "[data-likes-guid={$entity->guid}]",
-		'num_likes' => $num_of_likes,
-	]);
-}
 
 // Forward back to the page where the user 'liked' the object
 forward(REFERER);

@@ -234,7 +234,7 @@ class ViewsService {
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
 		$view = $this->canonicalizeViewName($view);
 
-		$rendered = $this->renderView($view, $vars, false, '', false);
+		$rendered = $this->renderView($view, $vars, '', false);
 		if ($rendered) {
 			elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 3);
 		}
@@ -261,7 +261,7 @@ class ViewsService {
 	/**
 	 * @access private
 	 */
-	public function renderView($view, array $vars = [], $ignored = false, $viewtype = '', $issue_missing_notice = true) {
+	public function renderView($view, array $vars = [], $viewtype = '', $issue_missing_notice = true) {
 		$view = $this->canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
@@ -275,7 +275,7 @@ class ViewsService {
 
 		if (!is_array($vars)) {
 			$this->logger->log("Vars in views must be an array: $view", 'ERROR');
-			$vars = array();
+			$vars = [];
 		}
 
 		// Get the current viewtype
@@ -293,7 +293,7 @@ class ViewsService {
 
 		// allow $vars to hijack output
 		if (isset($vars[self::OUTPUT_KEY])) {
-			return (string)$vars[self::OUTPUT_KEY];
+			return (string) $vars[self::OUTPUT_KEY];
 		}
 
 		$view_orig = $view;
@@ -302,7 +302,6 @@ class ViewsService {
 
 		$content = '';
 		foreach ($viewlist as $view) {
-
 			$rendering = $this->renderViewFile($view, $vars, $viewtype, $issue_missing_notice);
 			if ($rendering !== false) {
 				$content .= $rendering;
@@ -311,7 +310,6 @@ class ViewsService {
 
 			// attempt to load default view
 			if ($viewtype !== 'default' && $this->doesViewtypeFallback($viewtype)) {
-
 				$rendering = $this->renderViewFile($view, $vars, 'default', $issue_missing_notice);
 				if ($rendering !== false) {
 					$content .= $rendering;
@@ -503,7 +501,7 @@ class ViewsService {
 
 		// build list of viewtypes to check
 		$current_viewtype = elgg_get_viewtype();
-		$viewtypes = array($current_viewtype);
+		$viewtypes = [$current_viewtype];
 
 		if ($this->doesViewtypeFallback($current_viewtype) && $current_viewtype != 'default') {
 			$viewtypes[] = 'default';

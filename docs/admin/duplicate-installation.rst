@@ -160,14 +160,14 @@ Change the installation path
 
 .. code:: sql
 
-   UPDATE `elgg_datalists` SET `value` = "/var/www/elgg_test/" WHERE `name` = "path";
+   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/") WHERE `name` = "path";
 
 Change the data directory
 -------------------------
 
 .. code:: sql
 
-   UPDATE `elgg_datalists` SET `value` = "/var/data/elgg_test/" WHERE `name` = "dataroot";
+   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/") WHERE `name` = "dataroot";
 
 Change the site URL
 -------------------
@@ -181,20 +181,8 @@ Change the filestore data directory
 
 .. code:: sql
 
-   UPDATE elgg_metastrings SET string = '/var/data/elgg_test/' 
-   WHERE id = (
-      SELECT value_id 
-      FROM elgg_metadata 
-      WHERE name_id = (
-         SELECT * 
-         FROM (
-            SELECT id 
-            FROM elgg_metastrings 
-            WHERE string = 'filestore::dir_root'
-         ) as ms2
-      ) 
-      LIMIT 1
-   );
+   UPDATE elgg_metadata SET value = '/var/data/elgg_test/' 
+   WHERE name = 'filestore::dir_root';
 
 .. warning::
 
@@ -231,14 +219,14 @@ It is a good idea to keep a test server around to experiment with installing new
    $con = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass);
    mysql_select_db($CONFIG->dbname, $con);
    
-   $sql = "UPDATE {$CONFIG->dbprefix}datalists
-      SET value = '/var/www/test_elgg/'
+   $sql = "UPDATE {$CONFIG->dbprefix}config
+      SET value = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/")
       WHERE name = 'path'";
    mysql_query($sql);
    print mysql_error();
    
-   $sql = "UPDATE {$CONFIG->dbprefix}datalists 
-      SET value = '/var/data/test_elgg/'
+   $sql = "UPDATE {$CONFIG->dbprefix}config 
+      SET value = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/")
       WHERE name = 'dataroot'";
    mysql_query($sql);
    print mysql_error();
@@ -247,21 +235,9 @@ It is a good idea to keep a test server around to experiment with installing new
       SET url = 'http://test.myelgg.org/'";
    mysql_query($sql);
    
-   $sql = "UPDATE {$CONFIG->dbprefix}metastrings
-     SET string = '/var/data/elgg_test/' 
-     WHERE id = (
-        SELECT value_id 
-        FROM {$CONFIG->dbprefix}metadata 
-        WHERE name_id = (
-           SELECT * 
-           FROM (
-              SELECT id 
-              FROM {$CONFIG->dbprefix}metastrings 
-              WHERE string = 'filestore::dir_root'
-           ) as ms2
-        ) 
-        LIMIT 1
-     )";
+   $sql = "UPDATE {$CONFIG->dbprefix}metadata
+     SET value = '/var/data/elgg_test/' 
+     WHERE name = 'filestore::dir_root';
    mysql_query($sql);
    
    print mysql_error();

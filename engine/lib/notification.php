@@ -30,7 +30,7 @@ use Zend\Mail\Message;
  *    'send', 'notification:[method name]'. It receives the notification object
  *    of the namespace Elgg\Notifications;
 
-  class Notification in the params array with the
+	class Notification in the params array with the
  *    key 'notification'. The callback should return a boolean to indicate whether
  *    the message was sent.
  *
@@ -62,7 +62,7 @@ use Zend\Mail\Message;
  * @return void
  * @since 1.9
  */
-function elgg_register_notification_event($object_type, $object_subtype, array $actions = array()) {
+function elgg_register_notification_event($object_type, $object_subtype, array $actions = []) {
 	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $actions);
 }
 
@@ -102,7 +102,7 @@ function elgg_register_notification_method($name) {
  *		'sms' => 'sms',
  *	]
  * </code>
- * 
+ *
  * @return array
  * @since 2.3
  */
@@ -235,17 +235,16 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		return false;
 	}
 
-	$to = $recipient->email;
-
-	$site = elgg_get_site_entity();
+	$to = Address::getFormattedEmailAddress($recipient->email, $recipient->getDisplayName());
+	
 	// If there's an email address, use it - but only if it's not from a user.
 	if (!($sender instanceof \ElggUser) && $sender->email) {
-		$from = $sender->email;
-	} else if ($site->email) {
-		$from = $site->email;
+		$from = Address::getFormattedEmailAddress($sender->email, $sender->getDisplayName());
 	} else {
-		// If all else fails, use the domain of the site.
-		$from = 'noreply@' . $site->getDomain();
+		// get the site email address
+		$site = elgg_get_site_entity();
+		
+		$from = Address::getFormattedEmailAddress($site->getEmailAddress(), $site->getDisplayName());
 	}
 
 	return elgg_send_email($from, $to, $message->subject, $message->body, $params);
@@ -258,11 +257,11 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
  * @param string $type        Equals to 'system'
  * @param array  $returnvalue Array containing fields: 'to', 'from', 'subject', 'body', 'headers', 'params'
  * @param array  $params      The same value as $returnvalue
- * 
+ *
  * @see https://tools.ietf.org/html/rfc5322#section-3.6.4
- * 
+ *
  * @return array
- * 
+ *
  * @access private
  */
 function _elgg_notifications_smtp_default_message_id_header($hook, $type, $returnvalue, $params) {
@@ -299,7 +298,7 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
 		return;
 	}
 
-	$notificationParams = elgg_extract('params', $returnvalue, array());
+	$notificationParams = elgg_extract('params', $returnvalue, []);
 	/** @var \Elgg\Notifications\Notification */
 	$notification = elgg_extract('notification', $notificationParams);
 
@@ -328,7 +327,6 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
 
 		// let's just thread comments by default
 		if (($container instanceof \ElggEntity) && ($object instanceof \ElggComment)) {
-
 			$threadMessageId = "<{$urlPath}.entity.{$container->guid}@{$hostname}>";
 			$returnvalue['headers']['In-Reply-To'] = $threadMessageId;
 			$returnvalue['headers']['References'] = $threadMessageId;
@@ -377,27 +375,27 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 
 	// Sanitise
 	if (!is_array($to)) {
-		$to = array((int) $to);
+		$to = [(int) $to];
 	}
 	$from = (int) $from;
 	//$subject = sanitise_string($subject);
 	// Get notification methods
 	if (($methods_override) && (!is_array($methods_override))) {
-		$methods_override = array($methods_override);
+		$methods_override = [$methods_override];
 	}
 
-	$result = array();
+	$result = [];
 
 	foreach ($to as $guid) {
 		// Results for a user are...
-		$result[$guid] = array();
+		$result[$guid] = [];
 
 		if ($guid) { // Is the guid > 0?
 			// Are we overriding delivery?
 			$methods = $methods_override;
 			if (!$methods) {
 				$tmp = get_user_notification_settings($guid);
-				$methods = array();
+				$methods = [];
 				// $tmp may be false. don't cast
 				if (is_object($tmp)) {
 					foreach ($tmp as $k => $v) {
@@ -412,7 +410,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 			if ($methods) {
 				// Deliver
 				foreach ($methods as $method) {
-
 					$handler = $notify_service->getDeprecatedHandler($method);
 					/* @var callable $handler */
 					if (!$handler || !is_callable($handler)) {
@@ -424,7 +421,13 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 
 					// Trigger handler and retrieve result.
 					try {
-						$result[$guid][$method] = call_user_func($handler, $from ? get_entity($from) : null, get_entity($guid), $subject, $message, $params
+						$result[$guid][$method] = call_user_func(
+							$handler,
+							$from ? get_entity($from) : null,
+							get_entity($guid),
+							$subject,
+							$message,
+							$params
 						);
 					} catch (Exception $e) {
 						error_log($e->getMessage());
@@ -485,7 +488,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  * @return array Compound array of each delivery user/delivery method's success or failure.
  * @throws NotificationException
  */
-function notify_user($to, $from = 0, $subject = '', $message = '', array $params = array(), $methods_override = null) {
+function notify_user($to, $from = 0, $subject = '', $message = '', array $params = [], $methods_override = null) {
 
 	$params['subject'] = $subject;
 	$params['body'] = $message;
@@ -594,21 +597,21 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		throw new \NotificationException($msg);
 	}
 
-	$headers = array(
+	$headers = [
 		"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
 		"MIME-Version" => "1.0",
 		"Content-Transfer-Encoding" => "8bit",
-	);
+	];
 
 	// return true/false to stop elgg_send_email() from sending
-	$mail_params = array(
+	$mail_params = [
 		'to' => $to,
 		'from' => $from,
 		'subject' => $subject,
 		'body' => $body,
 		'headers' => $headers,
 		'params' => $params,
-	);
+	];
 
 	// $mail_params is passed as both params and return value. The former is for backwards
 	// compatibility. The latter is so handlers can now alter the contents/headers of
@@ -646,6 +649,10 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
 	}
 
+	// allow others to modify the $message content
+	// eg. add html body, add attachments
+	$message = _elgg_services()->hooks->trigger('email:message', 'system', $result, $message);
+	
 	try {
 		_elgg_services()->mailer->send($message);
 	} catch (\Zend\Mail\Exception\RuntimeException $e) {

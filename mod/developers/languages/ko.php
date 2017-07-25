@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => '도구',
 	'admin:develop_tools:sandbox' => '테마 모래상자',
@@ -63,4 +63,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => '설정 저장됨.',
-);
+];

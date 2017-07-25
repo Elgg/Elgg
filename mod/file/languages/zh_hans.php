@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -97,4 +97,4 @@ return array(
 	'file:noaccess' => "你没有权限修改这个文件",
 	'file:cannotload' => "上传文件存在错误",
 	'file:nofile' => "你必须选择一个文件",
-);
+];

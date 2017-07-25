@@ -11,7 +11,7 @@
  * @subpackage DataModel.Extender
  * @see        \ElggAnnotation
  * @see        \ElggMetadata
- * 
+ *
  * @property string $type         annotation or metadata (read-only after save)
  * @property int    $id           The unique identifier (read-only)
  * @property int    $entity_guid  The GUID of the entity that this extender describes
@@ -51,20 +51,18 @@ abstract class ElggExtender extends \ElggData {
 	 * @return void
 	 */
 	public function __set($name, $value) {
-		if ($name === 'access_id' && $this instanceof ElggMetadata && $value != ACCESS_PUBLIC) {
-			elgg_deprecated_notice('Setting ->access_id to a value other than ACCESS_PUBLIC is deprecated. '
-				. 'All metadata will be public in 3.0.', '2.3');
+		if ($name === 'access_id' && $this instanceof ElggMetadata) {
+			$value = ACCESS_PUBLIC;
 		}
-
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
-			$this->attributes['value_type'] = detect_extender_valuetype($value);
+			$this->attributes['value_type'] = self::detectValueType($value);
 		}
 	}
 
 	/**
 	 * Set the value of the extender
-	 * 
+	 *
 	 * @param mixed  $value      The value being set
 	 * @param string $value_type The type of the : 'integer' or 'text'
 	 * @return void
@@ -72,7 +70,7 @@ abstract class ElggExtender extends \ElggData {
 	 */
 	public function setValue($value, $value_type = '') {
 		$this->attributes['value'] = $value;
-		$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
+		$this->attributes['value_type'] = self::detectValueType($value, $value_type);
 	}
 
 	/**
@@ -86,7 +84,7 @@ abstract class ElggExtender extends \ElggData {
 			if ($name == 'value') {
 				switch ($this->attributes['value_type']) {
 					case 'integer' :
-						return (int)$this->attributes['value'];
+						return (int) $this->attributes['value'];
 						break;
 					case 'text' :
 						return $this->attributes['value'];
@@ -96,6 +94,10 @@ abstract class ElggExtender extends \ElggData {
 						throw new \UnexpectedValueException($msg);
 						break;
 				}
+			}
+
+			if ($name === 'access_id' && $this instanceof ElggMetadata) {
+				return ACCESS_PUBLIC;
 			}
 
 			return $this->attributes[$name];
@@ -154,10 +156,10 @@ abstract class ElggExtender extends \ElggData {
 		$object->value = $this->value;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
-		$params = array(
+		$params = [
 			$this->getSubtype() => $this, // deprecated use
 			$this->getType() => $this,
-		);
+		];
 		if (_elgg_services()->hooks->hasHandler('to:object', $this->getSubtype())) {
 			_elgg_services()->deprecation->sendNotice("Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
 			. "Use the generic 'to:object','{$this->getType()}' hook instead.", '2.3');
@@ -236,10 +238,27 @@ abstract class ElggExtender extends \ElggData {
 			}
 		}
 
-		$params = array('extender' => $this);
+		$params = ['extender' => $this];
 		$url = _elgg_services()->hooks->trigger('extender:url', $type, $params, $url);
 
 		return elgg_normalize_url($url);
 	}
 
+	/**
+	 * Detect the value_type for a value to be stored as metadata or an annotation
+	 *
+	 * @param mixed  $value      The value
+	 * @param string $value_type If specified as "text" or "integer", overrides the detection.
+	 *
+	 * @return string
+	 * @access private
+	 * @internal
+	 */
+	public static function detectValueType($value, $value_type = "") {
+		if ($value_type === 'integer' || $value_type === 'text') {
+			return $value_type;
+		}
+
+		return is_int($value) ? 'integer' : 'text';
+	}
 }

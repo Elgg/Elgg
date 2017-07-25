@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -55,4 +55,4 @@ return array(
 	 */
 	'thewire:settings:limit' => "Nombre maximum de caractères pour chaque commentaire :",
 	'thewire:settings:limit:none' => "Pas de limite",
-);
+];

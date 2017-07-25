@@ -106,8 +106,7 @@ class ResponseFactoryTest extends \Elgg\TestCase {
 	public function createRequest($uri = '', $method = 'POST', $parameters = [], $xhr = false) {
 		$site_url = elgg_get_site_url();
 		$path = substr(elgg_normalize_url($uri), strlen($site_url));
-		$path_key = Application::GET_PATH_KEY;
-		$request = Request::create("?$path_key=$path", $method, $parameters);
+		$request = Request::create("/$path", $method, $parameters);
 
 		$cookie_name = $this->config->getCookieConfig()['session']['name'];
 		$session_id = $this->session->getId();

@@ -25,11 +25,11 @@ if (!$user instanceof ElggUser) {
 
 $title = elgg_echo('changepassword');
 
-$params = array(
+$params = [
 	'guid' => $user_guid,
 	'code' => $code,
-);
-$content = elgg_view_form('user/changepassword', array('class' => 'elgg-form-account'), $params);
+];
+$content = elgg_view_form('user/changepassword', ['class' => 'elgg-form-account'], $params);
 
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 

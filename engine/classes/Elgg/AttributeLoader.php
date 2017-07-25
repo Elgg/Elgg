@@ -16,28 +16,26 @@ class AttributeLoader {
 	 *
 	 * @todo require this to be injected and get it from \ElggEntity
 	 */
-	protected static $primary_attr_names = array(
+	protected static $primary_attr_names = [
 		'guid',
 		'type',
 		'subtype',
 		'owner_guid',
 		'container_guid',
-		'site_guid',
 		'access_id',
 		'time_created',
 		'time_updated',
 		'last_action',
 		'enabled',
-	);
+	];
 
 	/**
 	 * @var array names of attributes in all entities that should be stored as integer values
 	 */
-	protected static $integer_attr_names = array(
+	protected static $integer_attr_names = [
 		'guid',
 		'owner_guid',
 		'container_guid',
-		'site_guid',
 		'access_id',
 		'time_created',
 		'time_updated',
@@ -46,22 +44,22 @@ class AttributeLoader {
 		'prev_last_action',
 		'last_login',
 		'prev_last_login'
-	);
+	];
 
 	/**
 	 * @var array names of attributes in all entities that should be stored as null if empty
 	 */
-	protected static $null_attr_names = array(
+	protected static $null_attr_names = [
 		'name',
 		'title',
 		'description',
 		'url',
-	);
+	];
 
 	/**
 	 * @var array names of secondary attributes required for the entity
 	 */
-	protected $secondary_attr_names = array();
+	protected $secondary_attr_names = [];
 
 	/**
 	 * @var string entity type (not class) required for fetched primaries
@@ -101,7 +99,7 @@ class AttributeLoader {
 	/**
 	 * @var array retrieved values that are not attributes
 	 */
-	protected $additional_select_values = array();
+	protected $additional_select_values = [];
 
 	/**
 	 * Constructor
@@ -134,7 +132,7 @@ class AttributeLoader {
 	 * @return array
 	 */
 	protected function isMissingPrimaries($row) {
-		return array_diff(self::$primary_attr_names, array_keys($row)) !== array();
+		return array_diff(self::$primary_attr_names, array_keys($row)) !== [];
 	}
 
 	/**
@@ -144,7 +142,7 @@ class AttributeLoader {
 	 * @return array
 	 */
 	protected function isMissingSecondaries($row) {
-		return array_diff($this->secondary_attr_names, array_keys($row)) !== array();
+		return array_diff($this->secondary_attr_names, array_keys($row)) !== [];
 	}
 
 	/**
@@ -178,16 +176,12 @@ class AttributeLoader {
 	 * "secondary" attributes (e.g. those in {prefix}objects_entity), but can load all at once if a
 	 * combined loader is available.
 	 *
-	 * @param mixed $row a row loaded from DB (array or \stdClass) or a GUID
+	 * @param mixed $row a row loaded from DB (array or \stdClass)
 	 * @return array will be empty if failed to load all attributes (access control or entity doesn't exist)
 	 *
 	 * @throws \InvalidArgumentException|\LogicException|\IncompleteEntityException
 	 */
-	public function getRequiredAttributes($row) {
-		if (!is_array($row) && !($row instanceof \stdClass)) {
-			// assume row is the GUID
-			$row = array('guid' => $row);
-		}
+	public function getRequiredAttributes(\stdClass $row) {
 		$row = (array) $row;
 		if (empty($row['guid'])) {
 			throw new \InvalidArgumentException('$row must be or contain a GUID');
@@ -200,7 +194,7 @@ class AttributeLoader {
 		if (($was_missing_primaries || $was_missing_secondaries) && is_callable($this->full_loader)) {
 			$fetched = (array) call_user_func($this->full_loader, $row['guid']);
 			if (!$fetched) {
-				return array();
+				return [];
 			}
 			$row = array_merge($row, $fetched);
 			$this->checkType($row);
@@ -217,7 +211,7 @@ class AttributeLoader {
 					elgg_set_ignore_access($ignoring_access);
 				}
 				if (!$fetched) {
-					return array();
+					return [];
 				}
 				$row = array_merge($row, $fetched);
 			}
@@ -240,7 +234,7 @@ class AttributeLoader {
 
 		$row = $this->filterAddedColumns($row);
 
-		$row['subtype'] = (int)$row['subtype'];
+		$row['subtype'] = (int) $row['subtype'];
 
 		// set to null when reading empty value, to match default empty value; See #5456
 		foreach (self::$null_attr_names as $key) {

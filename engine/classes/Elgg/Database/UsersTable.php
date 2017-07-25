@@ -122,7 +122,7 @@ class UsersTable {
 			return false;
 		}
 
-		create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
+		$user->ban_reason = $reason;
 
 		_elgg_invalidate_cache_for_entity($user_guid);
 		_elgg_invalidate_memcache_for_entity($user_guid);
@@ -177,7 +177,7 @@ class UsersTable {
 			return false;
 		}
 
-		create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
+		$user->deleteMetadata('ban_reason');
 
 		_elgg_invalidate_cache_for_entity($user_guid);
 		_elgg_invalidate_memcache_for_entity($user_guid);
@@ -331,25 +331,25 @@ class UsersTable {
 	 */
 	public function findActive(array $options = []) {
 	
-		$options = array_merge(array(
+		$options = array_merge([
 			'seconds' => 600,
 			'limit' => $this->config->get('default_limit'),
-		), $options);
+		], $options);
 
 		// cast options we're sending to hook
-		foreach (array('seconds', 'limit', 'offset') as $key) {
+		foreach (['seconds', 'limit', 'offset'] as $key) {
 			$options[$key] = (int) $options[$key];
 		}
 		$options['count'] = (bool) $options['count'];
 
 		// allow plugins to override
-		$params = array(
+		$params = [
 			'seconds' => $options['seconds'],
 			'limit' => $options['limit'],
 			'offset' => $options['offset'],
 			'count' => $options['count'],
 			'options' => $options,
-		);
+		];
 		$data = _elgg_services()->hooks->trigger('find_active_users', 'system', $params, null);
 		// check null because the handler could legitimately return falsey values.
 		if ($data !== null) {
@@ -358,15 +358,15 @@ class UsersTable {
 
 		$dbprefix = $this->config->get('dbprefix');
 		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
-		return elgg_get_entities(array(
+		return elgg_get_entities([
 			'type' => 'user',
 			'limit' => $options['limit'],
 			'offset' => $options['offset'],
 			'count' => $options['count'],
-			'joins' => array("join {$dbprefix}users_entity u on e.guid = u.guid"),
-			'wheres' => array("u.last_action >= {$time}"),
+			'joins' => ["join {$dbprefix}users_entity u on e.guid = u.guid"],
+			'wheres' => ["u.last_action >= {$time}"],
 			'order_by' => "u.last_action desc",
-		));
+		]);
 	}
 
 	/**
@@ -450,7 +450,7 @@ class UsersTable {
 	 */
 	public function generateInviteCode($username) {
 		$time = $this->getCurrentTime()->getTimestamp();
-		return "$time." . _elgg_services()->crypto->getHmac([(int) $time, $username])->getToken();
+		return "$time." . _elgg_services()->hmac->getHmac([(int) $time, $username])->getToken();
 	}
 
 	/**
@@ -470,7 +470,7 @@ class UsersTable {
 		$time = $m[1];
 		$mac = $m[2];
 
-		return _elgg_services()->crypto->getHmac([(int) $time, $username])->matchesToken($mac);
+		return _elgg_services()->hmac->getHmac([(int) $time, $username])->matchesToken($mac);
 	}
 
 	/**
@@ -482,9 +482,19 @@ class UsersTable {
 	 * @return bool
 	 */
 	public function setValidationStatus($user_guid, $status, $method = '') {
-		$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
-		$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
+		$user = get_user($user_guid);
+		if (!$user) {
+			return false;
+		}
+
+		$result1 = create_metadata($user->guid, 'validated', (int) $status);
+		$result2 = create_metadata($user->guid, 'validated_method', $method);
 		if ($result1 && $result2) {
+			if ((bool) $status) {
+				elgg_trigger_after_event('validate', 'user', $user);
+			} else {
+				elgg_trigger_after_event('invalidate', 'user', $user);
+			}
 			return true;
 		} else {
 			return false;
@@ -593,5 +603,4 @@ class UsersTable {
 			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 		});
 	}
-
 }

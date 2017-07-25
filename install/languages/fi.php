@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elggin asennus',
 	'install:welcome' => 'Tervetuloa',
 	'install:requirements' => 'Vaatimusten tarkistaminen',
@@ -72,18 +72,18 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 
 	'install:settings:label:sitename' => 'Sivuston nimi',
 	'install:settings:label:siteemail' => 'Sivuston sähköpostiosoite',
-	'install:settings:label:wwwroot' => 'Sivuston URL-osoite',
+	'install:database:label:wwwroot' => 'Sivuston URL-osoite',
 	'install:settings:label:path' => 'Elggin asennushakemisto',
-	'install:settings:label:dataroot' => 'Datahakemisto',
+	'install:database:label:dataroot' => 'Datahakemisto',
 	'install:settings:label:language' => 'Sivuston oletuskieli',
 	'install:settings:label:siteaccess' => 'Sivuston sisältöjen oletuslukuoikeus',
 	'install:label:combo:dataroot' => 'Elgg luo datahakemiston',
 
 	'install:settings:help:sitename' => 'Elgg-sivustosi nimi',
 	'install:settings:help:siteemail' => 'Sähköpostiosoite, jota käytetään lähettäjänä Elggistä lähetettävissä sähköposteissa',
-	'install:settings:help:wwwroot' => 'Sivuston osoite (Elgg arvaa tämän yleensä oikein)',
+	'install:database:help:wwwroot' => 'Sivuston osoite (Elgg arvaa tämän yleensä oikein)',
 	'install:settings:help:path' => 'Hakemisto, johon sijoitit Elggin lähdekoodin (Elgg arvaa tämän yleensä oikein)',
-	'install:settings:help:dataroot' => 'Hakemisto, jonka loit Elggiin lisättäviä tiedostoja varten (hakemiston kirjoitusoikeudet tarkistetaan, kun siirryt seuraavaan vaiheeseen). Tämän täytyy olla absoluuttinen polku.',
+	'install:database:help:dataroot' => 'Hakemisto, jonka loit Elggiin lisättäviä tiedostoja varten (hakemiston kirjoitusoikeudet tarkistetaan, kun siirryt seuraavaan vaiheeseen). Tämän täytyy olla absoluuttinen polku.',
 	'install:settings:help:dataroot:apache' => 'Voit joko antaa Elggin luoda datahakemiston, tai voit syöttää hakemiston, jonka olet jo luonut (hakemiston kirjoitusoikeudet tarkistetaan, kun siirryt seuraavaan vaiheeseen)',
 	'install:settings:help:language' => 'Sivuston käyttöliittymässä oletuksen käytettävä kieli',
 	'install:settings:help:siteaccess' => 'Sivustolle luotaville sisällöille oletuksena annettava lukuoikeus',
@@ -122,7 +122,7 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:error:settings' => 'Ei voida luoda asetustiedostoa',
 	'install:error:databasesettings' => 'Tietokantaan yhdistäminen ei onnistunut annetuilla tiedoilla.',
 	'install:error:database_prefix' => 'Tietokantataulujen etuliite sisältää virheellisiä merkkejä',
-	'install:error:oldmysql' => 'MySQL-versio pitää olla vähintään 5.0. Palvelimesi käyttää versiota %s.',
+	'install:error:oldmysql2' => 'MySQL-versio pitää olla vähintään 5.5.3. Palvelimesi käyttää versiota %s.',
 	'install:error:nodatabase' => 'Tietokantaan %s ei saada yhteyttä.',
 	'install:error:cannotloadtables' => 'Tietokantataulujen lataaminen ei onnistu',
 	'install:error:tables_exist' => 'Tietokannassa on jo olemassa Elggin tauluja. Sinun pitää joko poistaa taulut tai aloittaa asennus uudelleen, jolloin Elgg voi yrittää ottaa taulut käyttöön. Aloittaaksesi asennuksen uudelleen, poista \'?step=database\' selaimesi osoiteriviltä ja siirry kyseiseen osoitteeseen.',
@@ -153,8 +153,8 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:error:rewrite:altserver' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Sinun pitää konfiguroida palvelimellesi Elggin vaatimat uudelleenohjaukseen liittyvät säännöt.',
 	'install:error:rewrite:unknown' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Emme saaneet selvitettyä käyttämääsi web-palvelinta, joten emme pysty tarjoamaan ratkaisua ongelmaan. Voit yrittää etsiä apua sivun alalaidasta löytyvien linkkien kautta.',
 	'install:warning:rewrite:unknown' => 'Palvelimesi ei tue polkujen uudelleenohjaamisen automaattista testaamista, ja selaimesi ei tue sen testaamista JavaScriptin avulla. You can continue the installation, but you may experience problems with your site. Voit testata uudelleenohjausta tästä linkistä: <a href="%s" target="_blank">Testaa</a>.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Tapahtui virhe. Jos olet sivuston ylläpitäjä, tarkista asetustiedosto. Muussa tapauksessa ota yhteys sivuston ylläpitoon, ja toimita oheiset tiedot:',
 	'DatabaseException:WrongCredentials' => "Elgg ei saanut yhteyttä tietokantaan. Tarkista asetustiedosto.",
-);
+];

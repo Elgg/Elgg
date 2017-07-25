@@ -1,7 +1,7 @@
 <?php
 /**
  * JSON layout view
- * 
+ *
  * @uses $vars['content']
  */
 

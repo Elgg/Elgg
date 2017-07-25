@@ -181,6 +181,30 @@ Otherwise you may need to perform an interactive rebase:
 4. ``git push -f your_remote your_branch`` to force push the branch (updating your PR).
 5. Rename the PR title to match
 
+
+.. _contribute/code#standards:
+
+Coding Standards
+================
+
+Elgg uses set of standards that are based partially on PEAR and PSR2 standards. You can view the ruleset in ``vendor/elgg/sniffs/elgg.xml``.
+
+To check your code for standard violations (provided you have installed Elgg with dev dependencies), run:
+
+.. code::
+
+    phpcs --standard=vendor/elgg/sniffs/elgg.xml -s path/to/dir/to/check
+
+
+To automatically fix fixable violations, run:
+
+.. code::
+
+    phpcbf --standard=vendor/elgg/sniffs/elgg.xml path/to/dir/to/fix
+
+To check core directories, you can use shortcut ``composer lint`` and ``composer lint-fixer``.
+
+
 .. _contribute/code#testing:
 
 Testing
@@ -259,19 +283,19 @@ Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests.
 .. _Karma: http://karma-runner.github.io/0.8/index.html
 .. _Jasmine: http://pivotal.github.io/jasmine/
 
-You will need to have nodejs and npm installed.
+You will need to have nodejs and yarn installed.
 
 First install all the development dependencies:
 
 .. code::
 
-   npm install
+   yarn
 
 Run through the tests just once and then quit:
 
 .. code::
 
-   npm test
+   yarn test
 
 You can also run tests continuously during development so they run on each save:
 
@@ -286,7 +310,7 @@ You can run the test suite inside Chrome dev tools:
 
 .. code::
 
-   npm run chrome
+   yarn run chrome
 
 This will output a URL like ``http://localhost:9876/``.
 

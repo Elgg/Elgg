@@ -4,6 +4,7 @@ namespace Elgg\Menu;
 use Elgg\PluginHooksService;
 use Elgg\Config;
 use ElggMenuBuilder;
+use ElggMenuItem;
 
 /**
  * Methods to construct and prepare menus for rendering
@@ -71,7 +72,7 @@ class Service {
 		$params = $this->hooks->trigger('parameters', "menu:$name", $params, $params);
 
 		if (!isset($params['sort_by'])) {
-			$params['sort_by'] = 'priority';
+			$params['sort_by'] = 'text';
 		}
 
 		$items = $this->hooks->trigger('register', "menu:$name", $params, $items);
@@ -114,12 +115,12 @@ class Service {
 	 */
 	function combineMenus(array $names = [], array $params = [], $new_name = '') {
 		if (!$new_name) {
-			$new_name = implode('__' , $names);
+			$new_name = implode('__', $names);
 		}
 
 		$all_items = [];
 		foreach ($names as $name) {
-			$items = $this->getMenu($name, $params)->getItems();
+			$items = $this->getUnpreparedMenu($name, $params)->getItems();
 
 			foreach ($items as $item) {
 				$section = $item->getSection();
@@ -148,10 +149,10 @@ class Service {
 		foreach ($items as $item) {
 			if (is_array($item)) {
 				$options = $item;
-				$item = \ElggMenuItem::factory($options);
+				$item = ElggMenuItem::factory($options);
 			}
 
-			if (!$item instanceof \ElggMenuItem) {
+			if (!$item instanceof ElggMenuItem) {
 				continue;
 			}
 			
@@ -160,5 +161,4 @@ class Service {
 
 		return $prepared_items;
 	}
-
 }

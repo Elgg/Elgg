@@ -27,26 +27,18 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'pages_set_url');
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
 
-	// Register some actions
-	$action_base = __DIR__ . '/actions';
-	elgg_register_action("pages/edit", "$action_base/pages/edit.php");
-	elgg_register_action("pages/delete", "$action_base/pages/delete.php");
-	elgg_register_action("annotations/page/delete", "$action_base/annotations/page/delete.php");
-
 	// Extend the main css view
 	elgg_extend_view('elgg.css', 'pages/css');
 
-	elgg_define_js('jquery.treeview', array(
+	elgg_define_js('jquery.treeview', [
 		'src' => '/mod/pages/vendors/jquery-treeview/jquery.treeview.min.js',
 		'exports' => 'jQuery.fn.treeview',
-		'deps' => array('jquery'),
-	));
+		'deps' => ['jquery'],
+	]);
 	$css_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
 	elgg_register_css('jquery.treeview', $css_url);
 
-	// Register entity type for search
-	elgg_register_entity_type('object', 'page');
-	elgg_register_entity_type('object', 'page_top');
+	elgg_register_plugin_hook_handler('search', 'object:page', 'pages_search_pages');
 
 	// Register for notifications
 	elgg_register_notification_event('object', 'page');
@@ -57,20 +49,17 @@ function pages_init() {
 	// add to groups
 	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
 	elgg_extend_view('groups/tool_latest', 'pages/group_module');
-
-	//add a widget
-	elgg_register_widget_type('pages', elgg_echo('pages'), elgg_echo('pages:widget:description'));
-
+	
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below
-	elgg_set_config('pages', array(
+	elgg_set_config('pages', [
 		'title' => 'text',
 		'description' => 'longtext',
 		'tags' => 'tags',
 		'parent_guid' => 'parent',
 		'access_id' => 'access',
 		'write_access_id' => 'access',
-	));
+	]);
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
 
@@ -173,7 +162,7 @@ function pages_page_handler($page) {
 
 /**
  * Override the page url
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param string $url
@@ -260,8 +249,8 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	// remove delete if not owner or admin
-	if (!elgg_is_admin_logged_in() 
-		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid() 
+	if (!elgg_is_admin_logged_in()
+		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()
 		&& ! pages_can_delete_page($entity)) {
 		foreach ($return as $index => $item) {
 			if ($item->getName() == 'delete') {
@@ -270,12 +259,12 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 		}
 	}
 
-	$options = array(
+	$options = [
 		'name' => 'history',
 		'text' => elgg_echo('pages:history'),
 		'href' => "pages/history/$entity->guid",
 		'priority' => 150,
-	);
+	];
 	$return[] = ElggMenuItem::factory($options);
 
 	return $return;
@@ -283,7 +272,7 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new page
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -300,15 +289,15 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language); 
-	$notification->body = elgg_echo('pages:notify:body', array(
+	$notification->subject = elgg_echo('pages:notify:subject', [$title], $language);
+	$notification->body = elgg_echo('pages:notify:body', [
 		$owner->name,
 		$title,
 		$descr,
 		$entity->getURL(),
-	), $language);
-	$notification->summary = elgg_echo('pages:notify:summary', array($entity->title), $language);
-
+	], $language);
+	$notification->summary = elgg_echo('pages:notify:summary', [$entity->title], $language);
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 
@@ -428,7 +417,7 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
  * @access private
  */
 function pages_is_page($value) {
-	return ($value instanceof ElggObject) && in_array($value->getSubtype(), array('page', 'page_top'));
+	return ($value instanceof ElggObject) && in_array($value->getSubtype(), ['page', 'page_top']);
 }
 
 /**
@@ -443,7 +432,7 @@ function pages_is_page($value) {
  */
 function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 	if (empty($params['input_params']['entity_subtype'])
-			|| !in_array($params['input_params']['entity_subtype'], array('page', 'page_top'))) {
+			|| !in_array($params['input_params']['entity_subtype'], ['page', 'page_top'])) {
 		return null;
 	}
 
@@ -457,7 +446,7 @@ function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 /**
  * Called on view_vars, input/access hook
  * Prevent ACCESS_PUBLIC from ending up as a write access option
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array $return
@@ -487,4 +476,30 @@ function pages_write_access_vars($hook, $type, $return, $params) {
 	}
 	
 	return $return;
+}
+
+/**
+ * Search in both top pages and sub pages
+ *
+ * @param string $hook   the name of the hook
+ * @param string $type   the type of the hook
+ * @param mixed  $value  the current return value
+ * @param array  $params supplied params
+ */
+function pages_search_pages($hook, $type, $value, $params) {
+
+	if (empty($params) || !is_array($params)) {
+		return $value;
+	}
+
+	$subtype = elgg_extract("subtype", $params);
+	if (empty($subtype) || ($subtype !== "page")) {
+		return $value;
+	}
+
+	unset($params["subtype"]);
+	$params["subtypes"] = ["page_top", "page"];
+
+	// trigger the 'normal' object search as it can handle the added options
+	return elgg_trigger_plugin_hook('search', 'object', $params, []);
 }

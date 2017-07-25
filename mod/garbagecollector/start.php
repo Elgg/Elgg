@@ -21,7 +21,6 @@ function garbagecollector_init() {
 	// Register cron hook
 	elgg_register_plugin_hook_handler('cron', $period, 'garbagecollector_cron');
 	
-	elgg_register_plugin_hook_handler('gc', 'system', 'garbagecollector_orphaned_metastrings');
 	elgg_register_plugin_hook_handler('gc', 'system', 'garbagecollector_entities');
 }
 
@@ -34,13 +33,13 @@ function garbagecollector_cron($hook, $entity_type, $returnvalue, $params) {
 
 	// Now, because we are nice, trigger a plugin hook to let other plugins do some GC
 	$rv = true;
-	$period = elgg_get_plugin_setting('period','garbagecollector');
-	elgg_trigger_plugin_hook('gc', 'system', array('period' => $period));
+	$period = elgg_get_plugin_setting('period', 'garbagecollector');
+	elgg_trigger_plugin_hook('gc', 'system', ['period' => $period]);
 
 	// Now we optimize all tables
 	$tables = garbagecollector_get_tables();
 	foreach ($tables as $table) {
-		echo elgg_echo('garbagecollector:optimize', array($table));
+		echo elgg_echo('garbagecollector:optimize', [$table]);
 
 		if (garbagecollector_optimize_table($table) !== false) {
 			echo elgg_echo('garbagecollector:ok');
@@ -69,7 +68,7 @@ function garbagecollector_get_tables() {
 	$table_prefix = elgg_get_config('dbprefix');
 	$result = get_data("SHOW TABLES LIKE '$table_prefix%'");
 
-	$tables = array();
+	$tables = [];
 	if (is_array($result) && !empty($result)) {
 		foreach ($result as $row) {
 			$row = (array) $row;
@@ -103,67 +102,17 @@ function garbagecollector_optimize_table($table) {
 function garbagecollector_entities() {
 	$dbprefix = elgg_get_config('dbprefix');
 
-	$tables = array(
+	$tables = [
 		'site' => 'sites_entity',
 		'object' => 'objects_entity',
 		'group' => 'groups_entity',
 		'user' => 'users_entity',
-	);
+	];
 
 	foreach ($tables as $type => $table) {
 		delete_data("DELETE FROM {$dbprefix}{$table}
 		WHERE guid NOT IN (SELECT guid FROM {$dbprefix}entities)");
 		delete_data("DELETE FROM {$dbprefix}entities
 		WHERE type = '$type' AND guid NOT IN (SELECT guid FROM {$dbprefix}{$table})");
-	}
-}
-
-/**
- * Delete any orphaned entries in metastrings.
- *
- * @return void
- */
-function garbagecollector_orphaned_metastrings() {
-	$dbprefix = elgg_get_config('dbprefix');
-	
-	// Garbage collect metastrings
-	echo elgg_echo('garbagecollector:gc:metastrings');
-
-	// If memcache is enabled then we need to flush it of deleted values
-	if (is_memcache_available()) {
-		$select_query = "
-		SELECT * FROM {$dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}annotations))
-		)";
-
-		$dead = get_data($select_query);
-		if ($dead) {
-			$metastrings_memcache = _elgg_get_memcache('metastrings_memcache');
-
-			foreach ($dead as $d) {
-				$metastrings_memcache->delete(md5($d->string));
-			}
-		}
-	}
-
-	$query = "
-		DELETE FROM {$dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$dbprefix}annotations))
-		)";
-
-	$result = delete_data($query);
-	
-	if ($result !== false) {
-		echo elgg_echo('garbagecollector:ok');
-	} else {
-		echo elgg_echo('garbagecollector:error');
 	}
 }

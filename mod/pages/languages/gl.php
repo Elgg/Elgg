@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ Vexa e deixe un comentario na páxina:
 
 	'pages:newchild' => "Crear unha subpáxina",
 	'pages:backtoparent' => "Volver a «%s»",
-);
+];

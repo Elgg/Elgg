@@ -1,7 +1,7 @@
 <?php
 /**
  * Layout footer
- * 
+ *
  * @uses $vars['footer'] Footer view
  */
 

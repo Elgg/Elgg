@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:administer_utilities:logbrowser' => '記錄檔瀏覽器',
 	'logbrowser' => '記錄檔瀏覽器',
 	'logbrowser:browse' => '瀏覽系統日誌',
@@ -17,4 +17,4 @@ return array(
 	'logbrowser:object' => '物件類型',
 	'logbrowser:object:guid' => '物件 GUID',
 	'logbrowser:action' => '動作',
-);
+];

@@ -259,21 +259,7 @@ a.elgg-maintenance-mode-warning {
 	text-decoration: underline;
 }
 
-.elgg-admin-notices p {
-	color: #3B8BC9;
-	background-color: #E7F1F9;
-	border: 1px solid #B1D1E9;
-	padding: 20px;
-	border-radius: 3px;
-}
-.elgg-admin-notices a.elgg-admin-notice {
-	float: right;
-	text-decoration: none;
-}
-
-.elgg-admin-notices a {
-	text-decoration: underline;
-}
+<?= elgg_view('elements/components/admin_notices.css') ?>
 
 /* ***************************************
 	BODY
@@ -292,9 +278,6 @@ a.elgg-maintenance-mode-warning {
 	width: 210px;
 	float: right;
 	margin-left: 30px;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 .elgg-main > .elgg-head {
@@ -458,6 +441,8 @@ a.elgg-maintenance-mode-warning {
 	display: inline-block;
 }
 
+<?= elgg_view('elements/components/tags.css', $vars) ?>
+
 /* ***************************************
 	FORMS AND INPUT
 *************************************** */
@@ -495,9 +480,6 @@ input {
 	color: #666;
 	border-radius: 5px;
 	margin: 0;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -544,16 +526,16 @@ select {
 	padding: 0 3px;
 }
 .elgg-fieldset-horizontal .elgg-field {
-    display: inline-block;
-    margin: 0 10px 0 0;
+	display: inline-block;
+	margin: 0 10px 0 0;
 }
 
 .elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
-    margin: 0 0 0 10px;
+	margin: 0 0 0 10px;
 }
 
 .elgg-fieldset-horizontal.elgg-justify-center .elgg-field {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 
 .elgg-button {
@@ -565,9 +547,6 @@ select {
 	padding: 6px 12px;
 	margin-bottom: 5px;
 	cursor: pointer;
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -597,6 +576,17 @@ select {
 	background-color: #999;
 	text-decoration: none;
 }
+.elgg-button-delete {
+	border: 1px solid #FF3300;
+	background: #FF3300;
+	color: #FFF;
+}
+.elgg-button-delete:hover,
+.elgg-button-delete:focus {
+	background: #D63006;
+	text-decoration: none;
+	color: #FFF;
+}
 .elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
 	background: #dedede;
@@ -621,9 +611,12 @@ select {
 .elgg-input-checkbox + .elgg-field-label {
 	display: inline-block;
 }
+<?php
+echo elgg_view('elements/misc/checkbox_switch.css');
+?>
 
 /* **************************************
-     DATE PICKER
+	 DATE PICKER
 *************************************** */
 .ui-datepicker {
 	margin-top: 3px;
@@ -741,154 +734,23 @@ select {
 /* ***************************************
 	USER PICKER
 *************************************** */
-.elgg-user-picker-list li:first-child {
-	border-top: 1px dotted #ccc;
+.elgg-user-picker-list > li:first-child {
+	border-top: 1px solid #ccc;
 	margin-top: 5px;
 }
 .elgg-user-picker-list > li {
-	border-bottom: 1px dotted #ccc;
+	padding: 0 10px;
+	border-bottom: 1px solid #ccc;
 }
-
+.elgg-user-picker.elgg-state-disabled > input,
+.elgg-user-picker.elgg-state-disabled > label {
+	display: none;
+}
+.elgg-user-picker-remove {
+	cursor: pointer;
+}
 /* ***************************************
-	FRIENDS PICKER
-*************************************** */
-.friends-picker-main-wrapper {
-	margin-bottom: 15px;
-}
-.friends-picker-container h3 {
-	font-size:4em !important;
-	text-align: left;
-	margin:10px 0 20px !important;
-	color:#999 !important;
-	background: none !important;
-	padding:0 !important;
-}
-.friends-picker .friends-picker-container .panel ul {
-	text-align: left;
-	margin: 0;
-	padding:0;
-}
-.friends-picker-wrapper {
-	margin: 0;
-	padding:0;
-	position: relative;
-	width: 730px;
-}
-.friends-picker {
-	position: relative;
-	overflow: hidden;
-	margin: 0;
-	padding:0;
-	width: 730px;
-	height: auto;
-	background-color: #dedede;
-	border-radius: 8px;
-}
-.friendspicker-savebuttons {
-	background: white;
-	border-radius: 8px;
-	margin:0 10px 10px;
-}
-.friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
-	position: relative;
-	left: 0;
-	top: 0;
-	width: 100%;
-	list-style-type: none;
-}
-.friends-picker .friends-picker-container .panel {
-	float:left;
-	height: 100%;
-	position: relative;
-	width: 730px;
-	margin: 0;
-	padding:0;
-}
-.friends-picker .friends-picker-container .panel .wrapper {
-	margin: 0;
-	padding:4px 10px 10px 10px;
-	min-height: 230px;
-}
-.friends-picker-navigation {
-	margin: 0 0 10px;
-	padding:0 0 10px;
-	border-bottom:1px solid #ccc;
-}
-.friends-picker-navigation ul {
-	list-style: none;
-	padding-left: 0;
-}
-.friends-picker-navigation ul li {
-	float: left;
-	margin:0;
-	background:white;
-}
-.friends-picker-navigation a {
-	font-weight: bold;
-	text-align: center;
-	background: white;
-	color: #999;
-	text-decoration: none;
-	display: block;
-	padding: 0;
-	width:20px;
-	border-radius: 4px;
-}
-.tabHasContent {
-	background: white;
-	color:#333 !important;
-}
-.friends-picker-navigation li a:hover {
-	background: #333;
-	color:white !important;
-}
-.friends-picker-navigation li a.current {
-	background: #4690D6;
-	color:white !important;
-}
-.friends-picker-navigation-l, .friends-picker-navigation-r {
-	position: absolute;
-	top: 46px;
-	text-indent: -9000em;
-}
-.friends-picker-navigation-l a, .friends-picker-navigation-r a {
-	display: block;
-	height: 40px;
-	width: 40px;
-}
-.friends-picker-navigation-l {
-	right: 48px;
-	z-index:1;
-}
-.friends-picker-navigation-r {
-	right: 0;
-	z-index:1;
-}
-.friends-picker-navigation-l {
-	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat left top;
-}
-.friends-picker-navigation-r {
-	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat -60px top;
-}
-.friends-picker-navigation-l:hover {
-	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat left -44px;
-}
-.friends-picker-navigation-r:hover {
-	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat -60px -44px;
-}
-.friendspicker-savebuttons .elgg-button-submit,
-.friendspicker-savebuttons .elgg-button-cancel {
-	margin:5px 20px 5px 5px;
-}
-.friendspicker-members-table {
-	background: #dedede;
-	border-radius: 8px;
-	margin:10px 0 0;
-	padding:10px 10px 0;
-}
-
-/* ***************************************
-      PROGRESS BAR
+	  PROGRESS BAR
 **************************************** */
 .elgg-progressbar {
 	height: 20px;
@@ -1136,22 +998,13 @@ select {
 /* ***************************************
 	WIDGET MENU
 *************************************** */
+.elgg-menu-widget-container {
+	float: right;
+	margin-right: 15px;
+}
 .elgg-menu-widget > li {
-	position: absolute;
-	top: 4px;
 	display: inline-block;
-	width: 18px;
-	height: 18px;
-	padding: 2px 2px 0 0;
-}
-.elgg-menu-widget > .elgg-menu-item-collapse {
-	left: 5px;
-}
-.elgg-menu-widget > .elgg-menu-item-delete {
-	right: 5px;
-}
-.elgg-menu-widget > .elgg-menu-item-settings {
-	right: 25px;
+	margin-left: 10px;
 }
 
 /* ***************************************
@@ -1194,110 +1047,11 @@ select {
 	color: #aaa;
 }
 
-/* ***************************************
-	WIDGETS
-*************************************** */
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
-.elgg-widgets {
-	min-height: 30px;
-}
-.elgg-widget-add-control {
-	text-align: right;
-	margin: 5px 5px 15px;
-}
-.elgg-widgets-add-panel {
-	padding: 10px;
-	margin: 0 5px 15px;
-	background: #eee;
-	border: 1px solid #ccc;
-}
-.elgg-widgets-add-panel ul {
-	padding: 0;
-	margin: 0;
-}
-.elgg-widgets-add-panel li {
-	float: left;
-	margin: 2px 10px;
-	list-style: none;
-	width: 200px;
-	padding: 4px;
-	background-color: #eee;
-	border: 1px solid #ccc;
-	font-weight: bold;
-}
-.elgg-widgets-add-panel li a {
-	display: block;
-}
-.elgg-widget-single.elgg-state-available {
-	color: #333;
-	cursor: pointer;
-}
-.elgg-widget-single.elgg-state-available:hover {
-	border-color: #aaa;
-}
-.elgg-widget-single.elgg-state-unavailable {
-	color: #888;
-}
 
-.elgg-module-widget {
-	background-color: #dedede;
-	padding: 1px;
-	margin: 0 5px 15px;
-	position: relative;
-}
-.elgg-module-widget:hover {
-	background-color: #ccc;
-}
-.elgg-module-widget > .elgg-head {
-	background-color: #f5f5f5;
-	height: 26px;
-	overflow: hidden;
-}
-.elgg-module-widget.elgg-state-draggable .elgg-widget-handle {
-	cursor: move;
-}
-.elgg-module-widget > .elgg-head h3 {
-	float: left;
-	padding: 4px 45px 0 20px;
-	color: #333;
-}
-
-.elgg-widget-collapse-button {
-	color: #c5c5c5;
-	text-decoration: none;
-}
-a.elgg-widget-collapse-button:hover,
-a.elgg-widget-collapsed:hover {
-	color: #9d9d9d;
-	text-decoration: none;
-}
-a.elgg-widget-collapse-button:before {
-	content: "\25BC";
-}
-a.elgg-widget-collapsed:before {
-	content: "\25BA";
-}
-.elgg-module-widget > .elgg-body {
-	border-top: 1px solid #dedede;
-	background-color: white;
-	width: 100%;
-	overflow: hidden;
-}
-.elgg-widget-edit {
-	display: none;
-	width: 96%;
-	padding: 2%;
-	border-bottom: 1px solid #dedede;
-}
-.elgg-widget-content {
-	padding: 10px;
-}
-.elgg-widget-placeholder {
-	border: 2px dashed #dedede;
-	margin-bottom: 15px;
-}
+<?= elgg_view('elements/widgets.css', $vars) ?>
 
 /* ***************************************
 	GRID
@@ -1352,7 +1106,7 @@ a.elgg-widget-collapsed:before {
 	PLUGINS
 **************************************** */
 #plugins-filter {
-    margin: 5px 5px 20px;
+	margin: 5px 5px 20px;
 }
 .elgg-admin-plugins-categories li {
 	padding-right: 5px;
@@ -1433,6 +1187,17 @@ a.elgg-widget-collapsed:before {
 	margin-left: 5px;
 }
 
+#elgg-plugin-list-cover {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	opacity: 0.5;
+}
+
 .elgg-plugin-settings {
 	font-weight: normal;
 	font-size: 0.9em;
@@ -1467,18 +1232,20 @@ a.elgg-widget-collapsed:before {
 	color: #8a1f11;
 	border-color: #fbc2c4;
 	padding: 3px 6px;
-    margin: 3px 0;
-    width: auto;
-    display: inline-block;
+	margin: 3px 0;
+	width: auto;
 }
 .elgg-plugin .elgg-state-warning {
 	background: #f4f4f4;
 	color: #000000;
 	border-color: #fbe58b;
 	padding: 3px 6px;
-    margin: 3px 0;
-    width: auto;
-    display: inline-block;
+	margin: 3px 0;
+	width: auto;
+}
+.elgg-plugin-list-error .elgg-state-error,
+.elgg-plugin-list-error .elgg-state-warning {
+	display: inline-block;
 }
 .elgg-plugin .elgg-state-error a,
 .elgg-plugin .elgg-state-warning a,

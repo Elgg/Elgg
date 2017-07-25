@@ -11,12 +11,11 @@ if (!elgg_instanceof($reply, 'object', 'discussion_reply') || !$reply->canEdit()
 	return false;
 }
 
-$form_vars = array(
+$form_vars = [
 	'class' => ($hidden ? 'hidden ' : '') . 'mvl',
 	'id' => "edit-discussion-reply-{$guid}",
-);
-$body_vars = array(
+];
+$body_vars = [
 	'entity' => $reply,
-	'inline' => true,
-);
+];
 echo elgg_view_form('discussion/reply/save', $form_vars, $body_vars);

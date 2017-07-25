@@ -5,19 +5,26 @@
  * @package ElggMessageBoard
  */
 
-echo elgg_view('input/plaintext', array(
+
+echo elgg_view_field([
+	'#type' => 'plaintext',
+	'required' => true,
 	'name' => 'message_content',
-	'class' => 'messageboard-input mbs'
-));
+	'class' => 'messageboard-input',
+	'rows' => 4,
+]);
 
-echo elgg_view('input/hidden', array(
+echo elgg_view_field([
+	'#type' => 'hidden',
 	'name' => 'owner_guid',
-	'value' => elgg_get_page_owner_guid()
-));
+	'value' => elgg_get_page_owner_guid(),
+]);
 
-echo elgg_view('input/submit', array(
-	'value' => elgg_echo('post')
-));
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('post'),
+]);
 
-?>
-<script>require(['elgg/messageboard']);</script>
+elgg_set_form_footer($footer);
+
+elgg_require_js('elgg/messageboard');

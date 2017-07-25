@@ -39,7 +39,7 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 			$by_user[$key] = (int) $val;
 		}
 	} else {
-		$by_user = (int)$by_user;
+		$by_user = (int) $by_user;
 	}
 	
 	$event = sanitise_string($event);
@@ -50,10 +50,10 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 	if ($limit === null) {
 		$limit = elgg_get_config('default_limit');
 	}
-	$limit = (int)$limit;
-	$offset = (int)$offset;
+	$limit = (int) $limit;
+	$offset = (int) $offset;
 
-	$where = array();
+	$where = [];
 
 	if ($by_user_orig !== "" && $by_user_orig !== false && $by_user_orig !== null) {
 		if (is_int($by_user)) {
@@ -124,7 +124,7 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 function get_log_entry($entry_id) {
 	global $CONFIG;
 
-	$entry_id = (int)$entry_id;
+	$entry_id = (int) $entry_id;
 
 	return get_data_row("SELECT * from {$CONFIG->dbprefix}system_log where id=$entry_id");
 }
@@ -152,11 +152,11 @@ function get_object_from_log_entry($entry) {
 		return false;
 	}
 
-	$getters = array(
+	$getters = [
 		'ElggAnnotation' => 'elgg_get_annotation_from_id',
 		'ElggMetadata' => 'elgg_get_metadata_from_id',
 		'ElggRelationship' => 'get_relationship',
-	);
+	];
 
 	if (isset($getters[$class]) && is_callable($getters[$class])) {
 		$object = call_user_func($getters[$class], $id);
@@ -168,7 +168,6 @@ function get_object_from_log_entry($entry) {
 			$object = new $class($entry->object_id);
 			return $object;
 		} catch (Exception $e) {
-			
 		}
 	}
 
@@ -194,21 +193,20 @@ function system_log($object, $event) {
 	static $cache_size = 0;
 
 	if ($object instanceof Loggable) {
-
 		/* @var \ElggEntity|\ElggExtender $object */
-		if (datalist_get('version') < 2012012000) {
+		if (elgg_get_config('version') < 2012012000) {
 			// this is a site that doesn't have the ip_address column yet
 			return;
 		}
 
 		// reset cache if it has grown too large
 		if (!is_array($log_cache) || $cache_size > 500) {
-			$log_cache = array();
+			$log_cache = [];
 			$cache_size = 0;
 		}
 
 		// Has loggable interface, extract the necessary information and store
-		$object_id = (int)$object->getSystemLogID();
+		$object_id = (int) $object->getSystemLogID();
 		$object_class = get_class($object);
 		$object_type = $object->getType();
 		$object_subtype = $object->getSubtype();
@@ -264,7 +262,7 @@ function system_log($object, $event) {
 function archive_log($offset = 0) {
 	global $CONFIG;
 
-	$offset = (int)$offset;
+	$offset = (int) $offset;
 	$now = time(); // Take a snapshot of now
 
 	$ts = $now - $offset;
@@ -319,7 +317,7 @@ function system_log_default_logger($event, $object_type, $object) {
  */
 function system_log_listener($event, $object_type, $object) {
 	if (($object_type != 'systemlog') && ($event != 'log')) {
-		elgg_trigger_event('log', 'systemlog', array('object' => $object, 'event' => $event));
+		elgg_trigger_event('log', 'systemlog', ['object' => $object, 'event' => $event]);
 	}
 
 	return true;

@@ -25,7 +25,7 @@ class WidgetsService {
 	 * @see \Elgg\WidgetsService::getWidgets()
 	 * @var array
 	 */
-	private $widgetCache = array();
+	private $widgetCache = [];
 
 	/**
 	 * @see elgg_get_widgets
@@ -39,25 +39,25 @@ class WidgetsService {
 			return $this->widgetCache[$widget_cache_key];
 		}
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => $owner_guid,
 			'private_setting_name' => 'context',
 			'private_setting_value' => $context,
 			'limit' => 0,
-		);
+		];
 		$widgets = elgg_get_entities_from_private_settings($options);
 		if (!$widgets) {
-			return array();
+			return [];
 		}
 
-		$sorted_widgets = array();
+		$sorted_widgets = [];
 		foreach ($widgets as $widget) {
-			if (!isset($sorted_widgets[(int)$widget->column])) {
-				$sorted_widgets[(int)$widget->column] = array();
+			if (!isset($sorted_widgets[(int) $widget->column])) {
+				$sorted_widgets[(int) $widget->column] = [];
 			}
-			$sorted_widgets[(int)$widget->column][$widget->order] = $widget;
+			$sorted_widgets[(int) $widget->column][$widget->order] = $widget;
 		}
 
 		foreach ($sorted_widgets as $col => $widgets) {
@@ -125,11 +125,11 @@ class WidgetsService {
 			$return = false;
 		}
 
-		$params = array(
+		$params = [
 			'user' => $user,
 			'context' => $context,
 			'page_owner' => elgg_get_page_owner_entity(),
-		);
+		];
 		return _elgg_services()->hooks->trigger('permissions_check', 'widget_layout', $params, $return);
 	}
 
@@ -234,7 +234,6 @@ class WidgetsService {
 	 *
 	 * array (
 	 *     'context' => string (defaults to elgg_get_context()),
-	 *     'exact'   => bool (defaults to false),
 	 *     'container' => \ElggEntity (defaults to null)
 	 * )
 	 *
@@ -244,7 +243,6 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function getTypes(array $params = []) {
-		$exact = (bool) elgg_extract('exact', $params, false);
 		$context = elgg_extract('context', $params, '');
 		if (!$context) {
 			$context = elgg_get_context();
@@ -261,15 +259,9 @@ class WidgetsService {
 			if (!($widget_definition instanceof WidgetDefinition)) {
 				continue;
 			}
-			
-			if ($exact) {
-				if (in_array($context, $widget_definition->context)) {
-					$widgets[$widget_definition->id] = $widget_definition;
-				}
-			} else {
-				if (in_array('all', $widget_definition->context) || in_array($context, $widget_definition->context)) {
-					$widgets[$widget_definition->id] = $widget_definition;
-				}
+
+			if (in_array($context, $widget_definition->context)) {
+				$widgets[$widget_definition->id] = $widget_definition;
 			}
 		}
 

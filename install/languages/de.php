@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Elgg-Installation',
 	'install:welcome' => 'Wilkommen',
 	'install:requirements' => 'Überprüfung der Systemvoraussetzungen',
@@ -72,18 +72,18 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 
 	'install:settings:label:sitename' => 'Seiten-Name',
 	'install:settings:label:siteemail' => 'Email-Adresse',
-	'install:settings:label:wwwroot' => 'URL der Seite',
+	'install:database:label:wwwroot' => 'URL der Seite',
 	'install:settings:label:path' => 'Elgg-Installationsverzeichnis',
-	'install:settings:label:dataroot' => 'Datenverzeichnis',
+	'install:database:label:dataroot' => 'Datenverzeichnis',
 	'install:settings:label:language' => 'Sprache der Seite',
 	'install:settings:label:siteaccess' => 'Standard-Zugangslevel',
 	'install:label:combo:dataroot' => 'Datenverzeichnis von Elgg anlegen lassen',
 
 	'install:settings:help:sitename' => 'Der Name Deiner neuen Elgg Community-Seite',
 	'install:settings:help:siteemail' => 'Die Email-Adresse die von Elgg für die Kommunikation mit Benutzern verwendet wird',
-	'install:settings:help:wwwroot' => 'Die Adresse der Community-Seite (Elgg kann sie in den meisten Fällen korrekt erkennen)',
+	'install:database:help:wwwroot' => 'Die Adresse der Community-Seite (Elgg kann sie in den meisten Fällen korrekt erkennen)',
 	'install:settings:help:path' => 'Das Verzeichnis auf dem Server, in das Du den Elgg-Code kopiert hast (Elgg kann es in den meisten Fällen korrekt erkennen)',
-	'install:settings:help:dataroot' => 'Das Verzeichnis, das Du auf dem Server angelegt hast, in dem Elgg Dateien speichern kann (die Zugriffrechte werden beim Klicken auf den "Weiter"-Knopf überprüft). Es muss ein vollständiger (absoluter) Pfad eingegeben werden.',
+	'install:database:help:dataroot' => 'Das Verzeichnis, das Du auf dem Server angelegt hast, in dem Elgg Dateien speichern kann (die Zugriffrechte werden beim Klicken auf den "Weiter"-Knopf überprüft). Es muss ein vollständiger (absoluter) Pfad eingegeben werden.',
 	'install:settings:help:dataroot:apache' => 'Du hast die Wahl, Elgg das Datenverzeichnis für die Speicherung von Benutzer-Dateien anlegen zu lassen oder den Pfad zum bereits angelegten Datenverzeichnis einzugeben (die Zugriffrechte dieses Verzeichnisses werden beim Klicken auf den "Weiter"-Knopf überprüft)',
 	'install:settings:help:language' => 'Die Standardsprache für Deine Community-Seite',
 	'install:settings:help:siteaccess' => 'Der Standard-Zugangslevel für neu von Benutzern erzeugte Inhalte',
@@ -122,7 +122,7 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:settings' => 'Die settings-Datei konnte nicht erzeugt werden.',
 	'install:error:databasesettings' => 'Elgg konnte mit den eingegebenen Verbindungsparametern keine Verbindung mit der Datenbank herstellen.',
 	'install:error:database_prefix' => 'Das eingegebene Tabellen-Prefix enthält unzulässige Zeichen.',
-	'install:error:oldmysql' => 'Voraussetzung für Elgg ist MySQL in Version 5.0 oder neuer. Dein Server verwendet Version %s.',
+	'install:error:oldmysql2' => 'Voraussetzung für Elgg ist MySQL in Version 5.5.3 oder neuer. Dein Server verwendet Version %s.',
 	'install:error:nodatabase' => 'Der Zugriff auf die Datenbank %s ist nicht möglich. Möglicherweise ist die Datenbank nicht vorhanden.',
 	'install:error:cannotloadtables' => 'Der Zugriff auf die Tabellen der Datenbank ist nicht möglich.',
 	'install:error:tables_exist' => 'In der Datenbank ist bereits eine Elgg-Tabellenstruktur vorhanden. Du mußt entweder diese Tabellen aus der Datenbank löschen oder die Installation neu starten. Bei einem Neustart kann versucht werden, die bestehende Tabellenstruktur zu verwenden. Um die Installation neu zu starten, entferne \'?step=database\' aus der URL in der Adressleiste Deines Browsers und drücke \'Enter\'.',
@@ -153,8 +153,8 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:rewrite:altserver' => 'Der Test der Rewrite-Regeln ist fehlgeschlagen. Du mußt die Rewrite-Regeln von Elgg selbst zur Konfiguration Deines Webservers hinzufügen und es dann wieder versuchen.',
 	'install:error:rewrite:unknown' => 'Uups. Es war nicht möglich festzustellen, welches Webserver-Programm auf Deinem Server verwendet wird. Darüber hinaus ist der Test der Rewrite-Regeln von Elgg fehlgeschlagen. Es ist leider nicht möglich, spezifischere Hinweise zu den Ursachen des Problems zu geben. Bitte folge dem Link zu Hinweisen bei Installationsproblemen.',
 	'install:warning:rewrite:unknown' => 'Dein Server unterstützt die automatische Prüfung von Rewrite-Regeln nicht und Dein Browser unterstützt es nicht, mit Hilfe von Javascript die Rewrite-Regeln auf Funktionsfähigkeit zu überprüfen. Du kannst die Installation fortsetzen, aber es kann sein, das Deine Community-Seite nicht einwandfrei funktionieren wird. Du kannst die Überprüfung der Rewrite-Regeln selbst durchführen, indem Du diesem Link folgst: <a href="%s" target="_blank">Test</a>. Du wirst die Meldung \'success\' bekommen, wenn die Rewrite-Regeln funktionieren.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Es ist ein nicht behebbarer Fehler aufgetreten. Der Fehler wurde protokolliert. Wenn Du der Seitenadministrator bist, prüfe bitte die Konfiguration in settings.php. Andernfalls leite bitte leite folgende Informationen an den Seitenadministrator weiter:',
 	'DatabaseException:WrongCredentials' => "Elgg konnte mit den gegebenen Verbindungsparametern keine Verbindung zur Datenbank herstellen. Bitte prüfe die Konfiguration in settings.php.",
-);
+];

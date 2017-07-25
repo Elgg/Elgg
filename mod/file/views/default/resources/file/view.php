@@ -28,20 +28,22 @@ $title = $file->title;
 
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_entity($file, array('full_view' => true));
-$content .= elgg_view_comments($file);
+$content = elgg_view_entity($file, [
+	'full_view' => true,
+	'show_responses' => true,
+]);
 
-elgg_register_menu_item('title', array(
+elgg_register_menu_item('title', [
 	'name' => 'download',
 	'text' => elgg_echo('download'),
 	'href' => elgg_get_download_url($file),
 	'link_class' => 'elgg-button elgg-button-action',
-));
+]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-));
+]);
 
 echo elgg_view_page($title, $body);

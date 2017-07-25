@@ -5,6 +5,9 @@
  * @package Elgg
  * @subpackage Core
  */
+
+elgg_require_js('forms/login');
+
 echo elgg_view_field([
 	'#type' => 'text',
 
@@ -40,12 +43,12 @@ ob_start();
 	</label>
 
 	<?php
-	echo elgg_view('input/submit', array('value' => elgg_echo('login')));
+	echo elgg_view('input/submit', ['value' => elgg_echo('login')]);
 
-	echo elgg_view_menu('login', array(
+	echo elgg_view_menu('login', [
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-general elgg-menu-hz mtm',
-	));
+	]);
 	?>
 </div>
 <?php

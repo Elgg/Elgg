@@ -25,7 +25,7 @@ function string_to_tag_array($string) {
 	$ar = array_filter($ar, 'is_not_null');
 	$ar = array_map('strip_tags', $ar);
 	$ar = array_unique($ar);
-	return $ar;	
+	return $ar;
 }
 
 /**
@@ -57,8 +57,6 @@ function string_to_tag_array($string) {
  *
  * 	container_guids => null|INT container_guid
  *
- * 	site_guids => null (current_site)|INT site_guid
- *
  * 	created_time_lower => null|INT Created time lower boundary in epoch time
  *
  * 	created_time_upper => null|INT Created time upper boundary in epoch time
@@ -75,12 +73,14 @@ function string_to_tag_array($string) {
  * 						   otherwise, array of objects with ->tag and ->total values
  * @since 1.7.1
  */
-function elgg_get_tags(array $options = array()) {
+function elgg_get_tags(array $options = []) {
 	global $CONFIG;
 
-	$defaults = array(
+	_elgg_check_unsupported_site_guid($options);
+	
+	$defaults = [
 		'threshold' => 1,
-		'tag_names' => array(),
+		'tag_names' => [],
 		'limit' => elgg_get_config('default_limit'),
 
 		'types' => ELGG_ENTITIES_ANY_VALUE,
@@ -89,21 +89,20 @@ function elgg_get_tags(array $options = array()) {
 
 		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
-		'site_guids' => $CONFIG->site_guid,
 
 		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 		'created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
-		'joins' => array(),
-		'wheres' => array(),
-	);
+		'joins' => [],
+		'wheres' => [],
+	];
 
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid', 'tag_name');
+	$singulars = ['type', 'subtype', 'owner_guid', 'container_guid', 'tag_name'];
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$registered_tags = elgg_get_registered_tag_metadata_names();
@@ -120,18 +119,17 @@ function elgg_get_tags(array $options = array()) {
 	$wheres = $options['wheres'];
 
 	// catch for tags that were spaces
-	$wheres[] = "msv.string != ''";
+	$wheres[] = "md.value != ''";
 
-	$sanitised_tags = array();
+	$sanitised_tags = [];
 	foreach ($options['tag_names'] as $tag) {
 		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
 	}
 	$tags_in = implode(',', $sanitised_tags);
-	$wheres[] = "(msn.string IN ($tags_in))";
+	$wheres[] = "(md.name IN ($tags_in))";
 
 	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
-	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
 	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
@@ -153,8 +151,6 @@ function elgg_get_tags(array $options = array()) {
 	$joins = $options['joins'];
 
 	$joins[] = "JOIN {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid";
-	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings msv on msv.id = md.value_id";
-	$joins[] = "JOIN {$CONFIG->dbprefix}metastrings msn on md.name_id = msn.id";
 
 	// remove identical join clauses
 	$joins = array_unique($joins);
@@ -167,8 +163,7 @@ function elgg_get_tags(array $options = array()) {
 		}
 	}
 
-
-	$query  = "SELECT msv.string as tag, count(msv.id) as total ";
+	$query  = "SELECT md.value as tag, count(md.id) as total ";
 	$query .= "FROM {$CONFIG->dbprefix}entities e ";
 
 	// add joins
@@ -187,7 +182,7 @@ function elgg_get_tags(array $options = array()) {
 	$query .= _elgg_get_access_where_sql();
 
 	$threshold = sanitise_int($options['threshold']);
-	$query .= " GROUP BY msv.string HAVING total >= {$threshold} ";
+	$query .= " GROUP BY md.value HAVING total >= {$threshold} ";
 	$query .= " ORDER BY total DESC ";
 
 	$limit = sanitise_int($options['limit']);
@@ -208,7 +203,7 @@ function elgg_get_tags(array $options = array()) {
  */
 function elgg_register_tag_metadata_name($name) {
 	if (!isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) {
-		$GLOBALS['_ELGG']->registered_tag_metadata_names = array();
+		$GLOBALS['_ELGG']->registered_tag_metadata_names = [];
 	}
 
 	if (!in_array($name, $GLOBALS['_ELGG']->registered_tag_metadata_names)) {
@@ -225,7 +220,7 @@ function elgg_register_tag_metadata_name($name) {
  * @since 1.7.0
  */
 function elgg_get_registered_tag_metadata_names() {
-	$names = (isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) ? $GLOBALS['_ELGG']->registered_tag_metadata_names : array();
+	$names = (isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) ? $GLOBALS['_ELGG']->registered_tag_metadata_names : [];
 
 	return $names;
 }

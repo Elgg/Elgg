@@ -28,6 +28,25 @@ The ``mod/example/actions/example.php`` script will now be run whenever a form i
 
 .. warning:: A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension.
 
+Registering actions using plugin config file
+--------------------------------------------
+You can also register actions via the :doc:`elgg-plugin</guides/plugins>` config file. 
+To do this you need to provide an action section in the config file. 
+The location of the action files are assumed to be in the plugin folder  ``/actions``.
+
+.. code:: php
+
+	<?php
+
+	return [
+		'actions' => [
+		    'blog/save' => [], // all defaults
+		    'blog/delete' => [ // all custom
+		          'access' => 'admin',
+		          'filename' => __DIR__ . 'actions/blog/remove.php',
+		    ],
+		],
+	];
 
 Permissions
 -----------
@@ -274,10 +293,12 @@ The above will generate the following markup:
 
    <div class="elgg-field elgg-field-required">
       <label for="elgg-field-1" class="elgg-field-label">Blog status<span title="Required" class="elgg-required-indicator">*</span></label>
-      <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-dropdown">
-         <option value="draft">Draft</option>
-         <option value="published">Published</option>
-      </select>
+      <div class="elgg-field-input">
+      	 <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-dropdown">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+         </select>
+      </div>
       <div class="elgg-field-help elgg-text-help">
          <span class="elgg-icon-help elgg-icon"></span>This indicates whether or not the blog is visible in the feed
       </div>
@@ -310,7 +331,7 @@ A list of bundled input types/views:
 * ``input/tags`` - renders an Elgg tags input
 * ``input/autocomplete`` - renders an Elgg entity autocomplete
 * ``input/captcha`` - placeholder view for plugins to extend
-* ``input/friendspicker`` - renders an Elgg friend picker
+* ``input/friendspicker`` - renders an Elgg friend autocomplete
 * ``input/userpicker`` - renders an Elgg user autocomplete
 * ``input/location`` renders an Elgg location input
 

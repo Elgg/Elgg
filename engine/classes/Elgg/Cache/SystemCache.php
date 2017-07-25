@@ -4,7 +4,6 @@ namespace Elgg\Cache;
 use Elgg\Profilable;
 use Elgg\Config;
 use ElggFileCache;
-use Elgg\Database\Datalist;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -29,21 +28,14 @@ class SystemCache {
 	private $cache;
 
 	/**
-	 * @var Datalist
-	 */
-	private $datalist;
-
-	/**
 	 * Constructor
 	 *
-	 * @param ElggFileCache $cache    Elgg disk cache
-	 * @param Config        $config   Elgg config
-	 * @param Datalist      $datalist Elgg datalist
+	 * @param ElggFileCache $cache  Elgg disk cache
+	 * @param Config        $config Elgg config
 	 */
-	public function __construct(ElggFileCache $cache, Config $config, Datalist $datalist) {
+	public function __construct(ElggFileCache $cache, Config $config) {
 		$this->cache = $cache;
 		$this->config = $config;
-		$this->datalist = $datalist;
 	}
 
 	/**
@@ -93,34 +85,32 @@ class SystemCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool)$this->config->getVolatile('system_cache_enabled');
+		return (bool) $this->config->getVolatile('system_cache_enabled');
 	}
 	
 	/**
 	 * Enables the system disk cache.
 	 *
-	 * Uses the 'system_cache_enabled' datalist with a boolean value.
+	 * Uses the 'system_cache_enabled' config with a boolean value.
 	 * Resets the system cache.
 	 *
 	 * @return void
 	 */
 	function enable() {
-		$this->datalist->set('system_cache_enabled', 1);
-		$this->config->set('system_cache_enabled', 1);
+		$this->config->save('system_cache_enabled', 1);
 		$this->reset();
 	}
 	
 	/**
 	 * Disables the system disk cache.
 	 *
-	 * Uses the 'system_cache_enabled' datalist with a boolean value.
+	 * Uses the 'system_cache_enabled' config with a boolean value.
 	 * Resets the system cache.
 	 *
 	 * @return void
 	 */
 	function disable() {
-		$this->datalist->set('system_cache_enabled', 0);
-		$this->config->set('system_cache_enabled', 0);
+		$this->config->save('system_cache_enabled', 0);
 		$this->reset();
 	}
 	
@@ -175,7 +165,6 @@ class SystemCache {
 		}
 	
 		if (!$GLOBALS['_ELGG']->i18n_loaded_from_cache) {
-
 			_elgg_services()->translator->reloadAllTranslations();
 
 			foreach ($GLOBALS['_ELGG']->translations as $lang => $map) {

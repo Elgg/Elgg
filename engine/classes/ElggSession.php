@@ -228,7 +228,7 @@ class ElggSession {
 	 * @return bool
 	 */
 	public function isLoggedIn() {
-		return (bool)$this->getLoggedInUser();
+		return (bool) $this->getLoggedInUser();
 	}
 
 	/**

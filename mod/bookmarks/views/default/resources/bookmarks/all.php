@@ -10,7 +10,7 @@ elgg_push_breadcrumb(elgg_echo('bookmarks'));
 
 elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
-$content = elgg_list_entities(array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'bookmarks',
 	'full_view' => false,
@@ -19,15 +19,15 @@ $content = elgg_list_entities(array(
 	'preload_owners' => true,
 	'preload_containers' => true,
 	'distinct' => false,
-));
+]);
 
 $title = elgg_echo('bookmarks:everyone');
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('bookmarks/sidebar'),
-));
+]);
 
 echo elgg_view_page($title, $body);

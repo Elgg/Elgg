@@ -6,11 +6,11 @@ namespace Elgg\Cache;
  *
  * A fixed sized cache that removes the element used last when it reaches its
  * size limit.
- * 
+ *
  * Based on https://github.com/cash/LRUCache
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Cache
  */
@@ -23,7 +23,7 @@ class LRUCache implements \ArrayAccess {
 	 *
 	 * @var array
 	 */
-	protected $data = array();
+	protected $data = [];
 
 	/**
 	 * Create a LRU Cache
@@ -112,16 +112,16 @@ class LRUCache implements \ArrayAccess {
 
 	/**
 	 * Clear the cache
-	 * 
+	 *
 	 * @return void
 	 */
 	public function clear() {
-		$this->data = array();
+		$this->data = [];
 	}
 
 	/**
 	 * Moves the element from current position to end of array
-	 * 
+	 *
 	 * @param int|string $key The key
 	 * @return void
 	 */

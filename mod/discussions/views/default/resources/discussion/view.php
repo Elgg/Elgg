@@ -25,23 +25,17 @@ if ($container instanceof ElggGroup) {
 elgg_push_breadcrumb($container->getDisplayName(), $owner_url);
 elgg_push_breadcrumb($topic->title);
 
-$params = array(
-	'topic' => $topic,
-	'show_add_form' => $topic->canWriteToContainer(0, 'object', 'discussion_reply'),
-);
+$content = elgg_view_entity($topic, [
+	'full_view' => true,
+	'show_responses' => true,
+]);
 
-$content = elgg_view_entity($topic, array('full_view' => true));
-$content .= elgg_view('discussion/replies', $params);
-if ($topic->status == 'closed') {
-	$content .= elgg_view('discussion/closed');
-}
-
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $topic->title,
 	'sidebar' => elgg_view('discussion/sidebar'),
 	'filter' => '',
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($topic->title, $body);

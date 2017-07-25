@@ -27,6 +27,7 @@ foreach ($tools as $group_option) {
 			'name' => $group_option_toggle_name,
 			'value' => 'yes',
 			'default' => 'no',
+			'switch' => true,
 			'checked' => ($value === 'yes') ? true : false,
 			'label' => $group_option->label,
 		]),

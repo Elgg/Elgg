@@ -10,24 +10,11 @@
 /**
  * Get an \ElggSite entity (default is current site)
  *
- * @param int $site_guid Optional. Site GUID.
- *
  * @return \ElggSite|false
  * @since 1.8.0
  */
-function elgg_get_site_entity($site_guid = 0) {
-	global $CONFIG;
-
-	if ($site_guid == 0) {
-		return $CONFIG->site;
-	}
-
-	$site = _elgg_services()->entityTable->get($site_guid);
-	if (!$site instanceof \ElggSite) {
-		return false;
-	}
-
-	return $site;
+function elgg_get_site_entity() {
+	return elgg_get_config('site');
 }
 
 /**
@@ -41,29 +28,8 @@ function elgg_get_site_entity($site_guid = 0) {
 function get_site_entity_as_row($guid) {
 	global $CONFIG;
 
-	$guid = (int)$guid;
+	$guid = (int) $guid;
 	return get_data_row("SELECT * FROM {$CONFIG->dbprefix}sites_entity WHERE guid = $guid");
-}
-
-/**
- * Return the site via a url.
- *
- * @param string $url The URL of a site
- *
- * @return mixed
- */
-function get_site_by_url($url) {
-	global $CONFIG;
-
-	$url = sanitise_string($url);
-
-	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}sites_entity where url='$url'");
-
-	if ($row) {
-		return get_entity($row->guid);
-	}
-
-	return false;
 }
 
 /**

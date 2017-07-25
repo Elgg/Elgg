@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Инструменты',
 	'admin:develop_tools:sandbox' => 'Песочница Темы',
@@ -63,4 +63,4 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Настройки сохранены',
-);
+];

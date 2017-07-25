@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ Ver y comentar en el marcador:
 	'bookmarks:save:invalid' => "La direcci&oacute;n es inv&aacute;lida y no pudo ser guardada.",
 	'bookmarks:delete:failed' => "El marcador no pudo ser borrado. Intenta de nuevo.",
 	'bookmarks:unknown_bookmark' => 'No se puede encontrar el marcador requerido',
-);
+];

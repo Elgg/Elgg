@@ -14,4 +14,9 @@
 		<type>elgg_release</type>
 		<version>1.9</version>
 	</requires>
+	<requires>
+		<type>priority</type>
+		<plugin>activity</plugin>
+		<priority>after</priority>
+	</requires>
 </plugin_manifest>

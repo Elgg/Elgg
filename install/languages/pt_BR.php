@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Instalação do Elgg',
 	'install:welcome' => 'Bem-vindo',
 	'install:requirements' => 'Verificando requisitos',
@@ -72,18 +72,18 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 
 	'install:settings:label:sitename' => 'Nome do Site <i>(Site Name)</i>',
 	'install:settings:label:siteemail' => 'Endereco de email do site <i>(Site Email Address)</i>',
-	'install:settings:label:wwwroot' => 'URL do site <i>(Site URL)</i>',
+	'install:database:label:wwwroot' => 'URL do site <i>(Site URL)</i>',
 	'install:settings:label:path' => 'Diretorio de instalacão do Elgg <i>(Install Directory)</i>',
-	'install:settings:label:dataroot' => 'Diretorio de dados <i>(Data Directory)</i>',
+	'install:database:label:dataroot' => 'Diretorio de dados <i>(Data Directory)</i>',
 	'install:settings:label:language' => 'Linguagem do site <i>(Site Language)</i>',
 	'install:settings:label:siteaccess' => 'Acesso padrão de segurança do site <i>(Default Site Access)</i>',
 	'install:label:combo:dataroot' => 'Elgg cria um diretório de dados',
 
 	'install:settings:help:sitename' => 'O nome do seu novo site Elgg',
 	'install:settings:help:siteemail' => 'Endereço de email usado pelo Elgg para comunicação com os usuários',
-	'install:settings:help:wwwroot' => 'O endereço do site (Elgg geralmente atribui isto corretamente)',
+	'install:database:help:wwwroot' => 'O endereço do site (Elgg geralmente atribui isto corretamente)',
 	'install:settings:help:path' => 'O diretório onde voce pretende colocar o código do Elgg (Elgg geralmente atribui isto corretamente)',
-	'install:settings:help:dataroot' => 'O diretorio que voce criou para o Elgg salvar os arquivos (as permissões deste diretório serão verificadas quando voce clicar em PROXIMO)',
+	'install:database:help:dataroot' => 'O diretorio que voce criou para o Elgg salvar os arquivos (as permissões deste diretório serão verificadas quando voce clicar em PROXIMO)',
 	'install:settings:help:dataroot:apache' => 'Você possui a opção do Elgg criar o diretório de dados ou entrar com o diretório que você já havia criada para guardar os arquivos (as permissões deste diretório serão checadas quando você clicar em PROXIMO)',
 	'install:settings:help:language' => 'A linguagem padrao do site',
 	'install:settings:help:siteaccess' => 'O nivel de acesso padrao para os novos conteúdos criados pelos usuários',
@@ -122,7 +122,7 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:error:settings' => 'Não foi possivel criar o arquivo de configurações <i>(settings file)</i>',
 	'install:error:databasesettings' => 'Não foi possivel conectar ao banco de dados com estas configurações.',
 	'install:error:database_prefix' => 'Caracteres invalidos no prefixo da base de dados (database prefix)',
-	'install:error:oldmysql' => 'MySQL deve ser da versao 5.0 ou superior. Seu servidor está usando %s.',
+	'install:error:oldmysql2' => 'MySQL deve ser da versao 5.5.3 ou superior. Seu servidor está usando %s.',
 	'install:error:nodatabase' => 'Não foi possivel usar o banco de dados %s. Ele pode não existir.',
 	'install:error:cannotloadtables' => 'Não foi possivel carregar as tabelas da base de dados',
 	'install:error:tables_exist' => 'Já existem tabelas do Elgg no banco de dados. Voce precisa apagar estas tabelas ou reiniciar o instalador e nos tentaremos utiliza-las. Para reiniciar o instalar, remova o <b>\'?step=database\' </b> do URL no seu endereco na barra do navegador e pressione ENTER.',
@@ -153,8 +153,8 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:error:rewrite:altserver' => 'O teste com as regras de redirecionamento (rewrite rules) falhou. Voce precisa configurar seu servidor web com as regras de escrita do Elgg e tentar novamente.',
 	'install:error:rewrite:unknown' => 'Não foi possivel identificar qual o tipo de servidor web esta funcionando no seu servidor e ocorreu uma falha com as regras de redirecionamento (rewrite rules).  Não nos é possivel fornecer qualquer tipo de conselho. Por favor verifique o link de solução de problemas <i>(troubleshooting link)</i>.',
 	'install:warning:rewrite:unknown' => 'Seu servidor nao suporta testes automaticos das regras de redirecionamento (rewrite rules). Você pode continuar a instalação.  Contudo voce pode ter problemas com seu site. Voce pode realizar os testes manualmente com as regras de escrita clicando neste link: <a href="%s" target="_blank">teste</a>. Voce visualizará a palavra SUCESSO se as regras estiverem funcionando.',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Um erro irrecuperavel ocorreu e foi registrado. se voce for o administrador do site verifique seus arquivos de configuracoes, ou entre em contato com o administrador do site com as seguintes informacoes:',
 	'DatabaseException:WrongCredentials' => "Elgg nao pode se conectar ao banco de dados usando as credenciais informadas.  Verifique seu arquivo de configuracoes.",
-);
+];

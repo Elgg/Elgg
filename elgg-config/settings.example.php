@@ -32,6 +32,22 @@ if (!isset($CONFIG)) {
  */
 
 /**
+ * The full file path for Elgg data storage. E.g. "/path/to/elgg-data/"
+ *
+ * @global string $CONFIG->dataroot
+ */
+$CONFIG->dataroot = "{{dataroot}}";
+
+/**
+ * The installation root URL of the site. E.g. "https://example.org/elgg/"
+ *
+ * If not provided, this is sniffed from the Symfony Request object
+ *
+ * @global string $CONFIG->wwwroot
+ */
+$CONFIG->wwwroot = "{{wwwroot}}";
+
+/**
  * The database username
  *
  * @global string $CONFIG->dbuser
@@ -71,6 +87,17 @@ $CONFIG->dbhost = '{{dbhost}}';
  * @global string $CONFIG->dbprefix
  */
 $CONFIG->dbprefix = '{{dbprefix}}';
+
+/**
+ * The database encoding.
+ *
+ * If installing a fresh instance of Elgg 3.x or later, this MUST be set to "utf8mb4".
+ * If you've upgraded an earlier Elgg version, do not set this until you have
+ * manually converted your Elgg tables to utf8mb4.
+ *
+ * @global string $CONFIG->dbencoding
+ */
+$CONFIG->dbencoding = 'utf8mb4';
 
 /**
  * Multiple database connections
@@ -123,13 +150,11 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 /**
  * Better caching performance
  *
- * Configuring the location of your data directory and enabling simplecache in
- * the settings.php file improves caching performance. It allows Elgg to skip
- * connecting to the database when serving cached JavaScript and CSS files. If
- * you uncomment and configure these settings, you will not be able to change
- * them from the Elgg advanced settings page.
+ * Configuring simplecache in the settings.php file improves caching performance.
+ * It allows Elgg to skip connecting to the database when serving cached JavaScript
+ * and CSS files. If you uncomment and configure these settings, you will not be able
+ * to change them from the Elgg advanced settings page.
  */
-//$CONFIG->dataroot = "";
 //$CONFIG->simplecache_enabled = true;
 
 /**
@@ -284,3 +309,13 @@ $CONFIG->exception_include = '';
 //	// total time captured. .1% by default
 //	$CONFIG->profiling_minimum_percentage = .1;
 //}
+
+/**
+ * Maximum php execution time for actions (in seconds)
+ *
+ * This setting can be used to set a custom default php execution time only for all registered Elgg actions.
+ * Note that if some actions set their own execution time limit, this setting will no affect those actions.
+ *
+ * @global int $CONFIG->action_time_limit
+ */
+$CONFIG->action_time_limit = 120;

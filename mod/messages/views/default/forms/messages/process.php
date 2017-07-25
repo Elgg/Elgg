@@ -4,41 +4,48 @@
  *
  * Provides form body for mass deleting messages
  *
- * @uses $vars['list'] List of messages
- * 
+ * @uses $vars['list']   List of messages
+ * @uses $vars['folder'] The folder currently looking at
+ *
  */
 
-$messages = $vars['list'];
-if (!$messages) {
+$list = elgg_extract('list', $vars);
+if (!$list) {
 	echo elgg_echo('messages:nomessages');
 	return true;
 }
 
-echo '<div class="messages-container">';
-echo $messages;
-echo '</div>';
+echo "<div class='messages-container'>{$list}</div>";
 
-echo '<div class="elgg-foot messages-buttonbank">';
-
-echo elgg_view('input/submit', array(
+$buttons = [];
+$buttons[] = [
+	'#type' => 'submit',
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
 	'class' => 'elgg-button-delete',
 	'title' => elgg_echo('deleteconfirm:plural'),
-	'data-confirm' => elgg_echo('deleteconfirm:plural')
-));
+	'data-confirm' => elgg_echo('deleteconfirm:plural'),
+];
 
-if ($vars['folder'] == "inbox") {
-	echo elgg_view('input/submit', array(
+if (elgg_extract('folder', $vars) == 'inbox') {
+	$buttons[] = [
+		'#type' => 'submit',
 		'value' => elgg_echo('messages:markread'),
 		'name' => 'read',
-	));
+	];
 }
 
-echo elgg_view('input/button', array(
+$buttons[] = [
+	'#type' => 'button',
 	'value' => elgg_echo('messages:toggle'),
-	'class' => 'elgg-button elgg-button-cancel',
+	'class' => 'elgg-button-cancel',
 	'id' => 'messages-toggle',
-));
+];
 
-echo '</div>';
+$footer = elgg_view('input/fieldset', [
+	'align' => 'horizontal',
+	'justify' => 'right',
+	'fields' => $buttons,
+]);
+
+elgg_set_form_footer($footer);

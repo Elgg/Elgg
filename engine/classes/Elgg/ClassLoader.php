@@ -48,9 +48,9 @@ namespace Elgg;
  */
 class ClassLoader {
 
-	protected $namespaces = array();
-	protected $prefixes = array();
-	protected $fallbacks = array();
+	protected $namespaces = [];
+	protected $prefixes = [];
+	protected $fallbacks = [];
 
 	/**
 	 * @var \Elgg\ClassMap Map of classes to files
@@ -59,7 +59,7 @@ class ClassLoader {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param \Elgg\ClassMap $map Class map
 	 */
 	public function __construct(\Elgg\ClassMap $map) {
@@ -68,7 +68,7 @@ class ClassLoader {
 
 	/**
 	 * Get the class map
-	 * 
+	 *
 	 * @return \Elgg\ClassMap
 	 */
 	public function getClassMap() {
@@ -101,7 +101,7 @@ class ClassLoader {
 	 */
 	public function registerNamespaces(array $namespaces) {
 		foreach ($namespaces as $namespace => $locations) {
-			$this->namespaces[$namespace] = (array)$locations;
+			$this->namespaces[$namespace] = (array) $locations;
 		}
 	}
 
@@ -113,7 +113,7 @@ class ClassLoader {
 	 * @return void
 	 */
 	public function registerNamespace($namespace, $paths) {
-		$this->namespaces[$namespace] = (array)$paths;
+		$this->namespaces[$namespace] = (array) $paths;
 	}
 
 	/**
@@ -124,7 +124,7 @@ class ClassLoader {
 	 */
 	public function registerPrefixes(array $classes) {
 		foreach ($classes as $prefix => $locations) {
-			$this->prefixes[$prefix] = (array)$locations;
+			$this->prefixes[$prefix] = (array) $locations;
 		}
 	}
 
@@ -136,7 +136,7 @@ class ClassLoader {
 	 * @return void
 	 */
 	public function registerPrefix($prefix, $paths) {
-		$this->prefixes[$prefix] = (array)$paths;
+		$this->prefixes[$prefix] = (array) $paths;
 	}
 
 	/**
@@ -151,11 +151,11 @@ class ClassLoader {
 
 	/**
 	 * Registers this instance as an autoloader.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function register() {
-		spl_autoload_register(array($this, 'loadClass'));
+		spl_autoload_register([$this, 'loadClass']);
 	}
 
 	/**
@@ -211,7 +211,6 @@ class ClassLoader {
 					}
 				}
 			}
-
 		} else {
 			// PEAR-like class name
 			$normalizedClass = str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';

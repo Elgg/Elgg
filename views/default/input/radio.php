@@ -18,14 +18,14 @@
  * @uses $vars['align']    'horizontal' or 'vertical' Default: 'vertical'
  */
 
-$defaults = array(
+$defaults = [
 	'align' => 'vertical',
-	'value' => array(),
+	'value' => [],
 	'disabled' => false,
-	'options' => array(),
+	'options' => [],
 	'name' => '',
 	'type' => 'radio'
-);
+];
 
 $vars = array_merge($defaults, $vars);
 
@@ -49,7 +49,7 @@ $vars['class'] = 'elgg-input-radio';
 if (is_array($vars['value'])) {
 	$vars['value'] = array_map('elgg_strtolower', $vars['value']);
 } else {
-	$vars['value'] = array(elgg_strtolower($vars['value']));
+	$vars['value'] = [elgg_strtolower($vars['value'])];
 }
 
 $value = $vars['value'];
@@ -57,7 +57,6 @@ unset($vars['value']);
 
 $radios = '';
 foreach ($options as $label => $option) {
-
 	$vars['checked'] = in_array(elgg_strtolower($option), $value);
 	$vars['value'] = $option;
 

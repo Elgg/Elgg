@@ -83,7 +83,6 @@ class Config {
 	 * @return array
 	 */
 	public function getConnectionConfig($type = self::READ_WRITE) {
-		$config = array();
 		switch ($type) {
 			case self::READ:
 			case self::WRITE:
@@ -92,6 +91,12 @@ class Config {
 			default:
 				$config = $this->getGeneralConnectionConfig();
 				break;
+		}
+
+		if (!empty($this->config->dbencoding)) {
+			$config['encoding'] = $this->config->dbencoding;
+		} else {
+			$config['encoding'] = 'utf8';
 		}
 
 		return $config;
@@ -103,12 +108,12 @@ class Config {
 	 * @return array
 	 */
 	protected function getGeneralConnectionConfig() {
-		return array(
+		return [
 			'host' => $this->config->dbhost,
 			'user' => $this->config->dbuser,
 			'password' => $this->config->dbpass,
 			'database' => $this->config->dbname,
-		);
+		];
 	}
 
 	/**
@@ -120,38 +125,38 @@ class Config {
 	protected function getParticularConnectionConfig($type) {
 		if (is_object($this->config->db[$type])) {
 			// old style single connection (Elgg < 1.9)
-			$config = array(
+			$config = [
 				'host' => $this->config->db[$type]->dbhost,
 				'user' => $this->config->db[$type]->dbuser,
 				'password' => $this->config->db[$type]->dbpass,
 				'database' => $this->config->db[$type]->dbname,
-			);
+			];
 		} else if (array_key_exists('dbhost', $this->config->db[$type])) {
 			// new style single connection
-			$config = array(
+			$config = [
 				'host' => $this->config->db[$type]['dbhost'],
 				'user' => $this->config->db[$type]['dbuser'],
 				'password' => $this->config->db[$type]['dbpass'],
 				'database' => $this->config->db[$type]['dbname'],
-			);
+			];
 		} else if (is_object(current($this->config->db[$type]))) {
 			// old style multiple connections
 			$index = array_rand($this->config->db[$type]);
-			$config = array(
+			$config = [
 				'host' => $this->config->db[$type][$index]->dbhost,
 				'user' => $this->config->db[$type][$index]->dbuser,
 				'password' => $this->config->db[$type][$index]->dbpass,
 				'database' => $this->config->db[$type][$index]->dbname,
-			);
+			];
 		} else {
 			// new style multiple connections
 			$index = array_rand($this->config->db[$type]);
-			$config = array(
+			$config = [
 				'host' => $this->config->db[$type][$index]['dbhost'],
 				'user' => $this->config->db[$type][$index]['dbuser'],
 				'password' => $this->config->db[$type][$index]['dbpass'],
 				'database' => $this->config->db[$type][$index]['dbname'],
-			);
+			];
 		}
 
 		return $config;

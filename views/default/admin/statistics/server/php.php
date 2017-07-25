@@ -19,31 +19,31 @@ if ($upload_max_filesize > $post_max_size) {
 
 ?>
 <table class="elgg-table-alt">
-	<tr class="odd">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:server:label:php_version'); ?> :</b></td>
 		<td><?php echo phpversion(); ?></td>
 	</tr>
-	<tr class="even">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:server:label:php_ini'); ?> :</b></td>
 		<td><?php echo php_ini_loaded_file(); ?></td>
 	</tr>
-	<tr class="odd">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:server:label:php_log'); ?> :</b></td>
 		<td><?php echo $php_log; ?></td>
 	</tr>
-	<tr class="even">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:server:label:mem_avail'); ?> :</b></td>
 		<td><?php echo number_format(elgg_get_ini_setting_in_bytes('memory_limit')); ?></td>
 	</tr>
-	<tr class="odd">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:server:label:mem_used'); ?> :</b></td>
 		<td><?php echo number_format(memory_get_peak_usage()); ?></td>
 	</tr>
-	<tr class="even">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:server:label:post_max_size'); ?> :</b></td>
 		<td><?php echo number_format($post_max_size); ?></td>
 	</tr>
-	<tr class="odd">
+	<tr>
 		<td><b><?php echo elgg_echo('admin:server:label:upload_max_filesize'); ?> :</b></td>
 		<td><?php echo number_format($upload_max_filesize) . '&nbsp; ' . $post_max_size_warning; ?></td>
 	</tr>

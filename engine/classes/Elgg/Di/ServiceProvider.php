@@ -21,14 +21,14 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\AutoloadManager                    $autoloadManager
+ * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\ClassLoader                        $classLoader
- * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Context                            $context
- * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
@@ -39,6 +39,8 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggFileCache                           $fileCache
  * @property-read \ElggDiskFilestore                       $filestore
  * @property-read \Elgg\FormsService                       $forms
+ * @property-read \Elgg\HandlersService                    $handlers
+ * @property-read \Elgg\Security\HmacFactory               $hmac
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
@@ -49,7 +51,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Stash\Pool|null                         $memcacheStashPool
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
- * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Database\Mutex                     $mutex
  * @property-read \Elgg\Notifications\NotificationsService $notifications
  * @property-read \Elgg\Cache\NullCache                    $nullCache
@@ -60,13 +61,13 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
  * @property-read \Elgg\Application\Database               $publicDb
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
+ * @property-read \Elgg\RedirectService                    $redirects
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Http\ResponseFactory               $responseFactory
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
- * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
@@ -76,9 +77,9 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
+ * @property-read \Elgg\Security\UrlSigner                 $urlSigner
  * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\Upgrade\Locator                    $upgradeLocator
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\UploadService                      $uploads
  * @property-read \Elgg\UserCapabilities                   $userCapabilities
  * @property-read \Elgg\Database\UsersTable                $usersTable
@@ -96,12 +97,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 * @param \Elgg\Config $config Elgg Config service
 	 */
 	public function __construct(\Elgg\Config $config) {
-
-		$this->setFactory('classLoader', function(ServiceProvider $c) {
-			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
-			$loader->register();
-			return $loader;
-		});
 
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
@@ -155,23 +150,25 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\BatchUpgrader($c->config);
 		});
 
+		$this->setFactory('classLoader', function(ServiceProvider $c) {
+			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
+			$loader->register();
+			return $loader;
+		});
+
 		$this->setValue('config', $config);
 
-		$this->setClassName('configTable', \Elgg\Database\ConfigTable::class);
-
-		$this->setClassName('context', \Elgg\Context::class);
-
-		$this->setFactory('crypto', function(ServiceProvider $c) {
-			return new \ElggCrypto($c->siteSecret);
+		$this->setFactory('configTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\ConfigTable($c->db, $c->boot, $c->logger);
 		});
 
-		$this->setFactory('datalist', function(ServiceProvider $c) {
-			// TODO(ewinslow): Add back memcached support
-			$db = $c->db;
-			$dbprefix = $db->prefix;
-			$pool = new Pool\InMemory();
-			return new \Elgg\Database\Datalist($pool, $db, $c->logger, "{$dbprefix}datalists");
+		$this->setFactory('context', function(ServiceProvider $c) {
+			$context = new \Elgg\Context();
+			$context->initialize($c->request);
+			return $context;
 		});
+
+		$this->setClassName('crypto', \ElggCrypto::class);
 
 		$this->setFactory('db', function(ServiceProvider $c) {
 			// gonna need dbprefix from settings
@@ -214,8 +211,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			);
 		});
 
-		$this->setFactory('events', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('events');
+		$this->setFactory('events', function (ServiceProvider $c) {
+			$events = new \Elgg\EventsService();
+			if ($c->config->getVolatile('enable_profiling')) {
+				$events->setTimer($c->timer);
+			}
+			return $events;
 		});
 
 		$this->setFactory('externalFiles', function(ServiceProvider $c) {
@@ -234,9 +235,13 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\FormsService($c->views, $c->logger);
 		});
 
-		$this->setFactory('hooks', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('hooks');
+		$this->setClassName('handlers', \Elgg\HandlersService::class);
+
+		$this->setFactory('hmac', function(ServiceProvider $c) {
+			return new \Elgg\Security\HmacFactory($c->siteSecret, $c->crypto);
 		});
+
+		$this->setClassName('hooks', \Elgg\PluginHooksService::class);
 
 		$this->setFactory('iconService', function(ServiceProvider $c) {
 			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable);
@@ -249,8 +254,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\ImageService($imagine, $c->config);
 		});
 
-		$this->setFactory('logger', function(ServiceProvider $c) {
-			return $this->resolveLoggerDependencies('logger');
+		$this->setFactory('logger', function (ServiceProvider $c) {
+			return new \Elgg\Logger($c->hooks, $c->config, $c->context);
 		});
 
 		// TODO(evan): Support configurable transports...
@@ -282,13 +287,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
 			return new \Elgg\Database\MetadataTable(
-				$c->metadataCache, $c->db, $c->entityTable, $c->events, $c->metastringsTable, $c->session);
-		});
-
-		$this->setFactory('metastringsTable', function(ServiceProvider $c) {
-			// TODO(ewinslow): Use memcache-based Pool if available...
-			$pool = new Pool\InMemory();
-			return new \Elgg\Database\MetastringsTable($pool, $c->db);
+				$c->metadataCache, $c->db, $c->entityTable, $c->events, $c->session);
 		});
 
 		$this->setFactory('mutex', function(ServiceProvider $c) {
@@ -342,6 +341,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database\QueryCounter($c->db);
 		}, false);
 
+		$this->setFactory('redirects', function(ServiceProvider $c) {
+			$url = current_page_url();
+			$is_xhr = $c->request->isXmlHttpRequest();
+			return new \Elgg\RedirectService($c->session, $is_xhr, $c->config->getSiteUrl(), $url);
+		});
+
 		$this->setFactory('relationshipsTable', function(ServiceProvider $c) {
 			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
 		});
@@ -367,7 +372,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
-			return new \Elgg\Application\ServeFileHandler($c->crypto, $c->config);
+			return new \Elgg\Application\ServeFileHandler($c->hmac, $c->config);
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {
@@ -394,11 +399,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
 
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
-			return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
+			return new \Elgg\Cache\SimpleCache($c->config, $c->views);
 		});
 
 		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			return new \Elgg\Database\SiteSecret($c->datalist);
+			$c->config->setConfigTable($c->configTable);
+			return new \Elgg\Database\SiteSecret($c->config);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
@@ -408,7 +414,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
-			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config, $c->datalist);
+			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config);
 			if ($c->config->getVolatile('enable_profiling')) {
 				$cache->setTimer($c->timer);
 			}
@@ -423,7 +429,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('timer', \Elgg\Timer::class);
 
-		$this->setClassName('translator', \Elgg\I18n\Translator::class);
+		$this->setFactory('translator', function(ServiceProvider $c) {
+			return new \Elgg\I18n\Translator($c->config);
+		});
 
 		$this->setFactory('uploads', function(ServiceProvider $c) {
 			return new \Elgg\UploadService($c->request);
@@ -434,7 +442,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->translator,
 				$c->events,
 				$c->hooks,
-				$c->datalist,
+				$c->config,
 				$c->logger,
 				$c->mutex
 			);
@@ -467,31 +475,5 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
-
-	}
-
-	/**
-	 * Returns the first requested service of the logger, events, and hooks. It sets the
-	 * hooks and events up in the right order to prevent circular dependency.
-	 *
-	 * @param string $service_needed The service requested first
-	 * @return mixed
-	 */
-	protected function resolveLoggerDependencies($service_needed) {
-		$svcs['hooks'] = new \Elgg\PluginHooksService();
-
-		$svcs['logger'] = new \Elgg\Logger($svcs['hooks'], $this->config, $this->context);
-		$svcs['hooks']->setLogger($svcs['logger']);
-
-		$svcs['events'] = new \Elgg\EventsService();
-		$svcs['events']->setLogger($svcs['logger']);
-		if ($this->config->getVolatile('enable_profiling')) {
-			$svcs['events']->setTimer($this->timer);
-		}
-
-		foreach ($svcs as $key => $service) {
-			$this->setValue($key, $service);
-		}
-		return $svcs[$service_needed];
 	}
 }

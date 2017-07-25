@@ -1,11 +1,10 @@
 <phpunit bootstrap="./vendor/autoload.php">
 	<testsuites>
-		<testsuite name="All Tests">
+		<testsuite name="core">
 			<directory>./engine/tests/phpunit/</directory>
 			<directory>./engine/classes/</directory>
 		</testsuite>
 	</testsuites>
-
 	<filter>
 		<blacklist>
 			<directory suffix=".php">/engine/tests</directory>
@@ -16,6 +15,13 @@
 			<directory suffix=".php">/docs</directory>
 		</blacklist>
 	</filter>
+	<listeners>
+		<listener class="\Elgg\TestListener">
+			<arguments>
+				<string>./engine/tests/phpunit/elgg-config/</string>
+			</arguments>
+		</listener>
+	</listeners>
 	<php>
 		<const name="PHPUNIT_ELGG_TESTING_APPLICATION" value="true"/>
 	</php>

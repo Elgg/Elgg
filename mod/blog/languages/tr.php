@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Bloglar',
 	'blog:blogs' => 'Bloglar',
 	'blog:revisions' => 'Düzeltmeler',
@@ -63,4 +63,4 @@ Blog gönderisini görüntüle ve yorum yap:
 	'blog:moreblogs' => 'Daha fazla blog gönderisi',
 	'blog:numbertodisplay' => 'Gösterilecek blog gönderisi sayısı',
 	'blog:noblogs' => 'Blog gönderisi yok'
-);
+];

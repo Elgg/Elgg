@@ -26,12 +26,12 @@ $title = elgg_echo('pages:add');
 elgg_push_breadcrumb($title);
 
 $vars = pages_prepare_form_vars(null, $parent_guid);
-$content = elgg_view_form('pages/edit', array(), $vars);
+$content = elgg_view_form('pages/edit', [], $vars);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
-));
+]);
 
 echo elgg_view_page($title, $body);

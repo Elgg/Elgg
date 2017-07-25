@@ -27,5 +27,3 @@ GET="$LWPR -m GET -d"
 @weekly $GET ${ELGG}cron/weekly/
 @monthly $GET ${ELGG}cron/monthly/
 @yearly $GET ${ELGG}cron/yearly/
-# reboot is deprecated and probably doesn't work
-@reboot $GET ${ELGG}cron/reboot/

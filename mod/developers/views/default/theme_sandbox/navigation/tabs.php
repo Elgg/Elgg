@@ -1,10 +1,10 @@
 <?php
-$params = array(
-	'tabs' => array(
-		array('title' => 'First', 'url' => "#"),
-		array('title' => 'Second', 'url' => "#", 'selected' => true),
-		array('title' => 'Third', 'url' => "#"),
-	)
-);
+$params = [
+	'tabs' => [
+		['title' => 'First', 'url' => "#"],
+		['title' => 'Second', 'url' => "#", 'selected' => true],
+		['title' => 'Third', 'url' => "#", 'icon' => 'question'],
+	]
+];
 
 echo elgg_view('navigation/tabs', $params);

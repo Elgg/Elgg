@@ -20,7 +20,7 @@ class SubscriptionsService {
 	const RELATIONSHIP_PREFIX = 'notify';
 
 	/**
-	 *  @var array Array of strings. Delivery names as registered with 
+	 *  @var array Array of strings. Delivery names as registered with
 	 *             elgg_register_notification_method()
 	 */
 	public $methods;
@@ -34,7 +34,7 @@ class SubscriptionsService {
 	 * @param Database $db      Database object
 	 * @param array    $methods Notification delivery method names
 	 */
-	public function __construct(Database $db, array $methods = array()) {
+	public function __construct(Database $db, array $methods = []) {
 		$this->db = $db;
 		$this->methods = $methods;
 	}
@@ -53,7 +53,7 @@ class SubscriptionsService {
 	 */
 	public function getSubscriptions(NotificationEvent $event) {
 
-		$subscriptions = array();
+		$subscriptions = [];
 
 		if (!$this->methods) {
 			return $subscriptions;
@@ -64,7 +64,8 @@ class SubscriptionsService {
 			return $subscriptions;
 		}
 		
-		if ($object instanceof \ElggEntity) {
+		// get subscribers only for \ElggEntity if it isn't private
+		if (($object instanceof \ElggEntity) && ($object->access_id !== ACCESS_PRIVATE)) {
 			$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
 			$records = $this->getSubscriptionRecords($object->getContainerGUID());
 			foreach ($records as $record) {
@@ -73,7 +74,7 @@ class SubscriptionsService {
 			}
 		}
 
-		$params = array('event' => $event, 'origin' => Notification::ORIGIN_SUBSCRIPTIONS);
+		$params = ['event' => $event, 'origin' => Notification::ORIGIN_SUBSCRIPTIONS];
 		return _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 	}
 
@@ -91,7 +92,7 @@ class SubscriptionsService {
 	 */
 	public function getSubscriptionsForContainer($container_guid) {
 
-		$subscriptions = array();
+		$subscriptions = [];
 
 		if (!$this->methods) {
 			return $subscriptions;
@@ -109,9 +110,9 @@ class SubscriptionsService {
 
 	/**
 	 * Subscribe a user to notifications about a target entity
-	 * 
+	 *
 	 * This method will return false if the subscription already exists.
-	 * 
+	 *
 	 * @param int    $userGuid   The GUID of the user to subscribe to notifications
 	 * @param string $method     The delivery method of the notifications
 	 * @param int    $targetGuid The entity to receive notifications about
@@ -127,7 +128,7 @@ class SubscriptionsService {
 
 	/**
 	 * Unsubscribe a user to notifications about a target entity
-	 * 
+	 *
 	 * @param int    $userGuid   The GUID of the user to unsubscribe to notifications
 	 * @param string $method     The delivery method of the notifications to stop
 	 * @param int    $targetGuid The entity to stop receiving notifications about
@@ -154,9 +155,9 @@ class SubscriptionsService {
 		// create IN clause
 		$rels = $this->getMethodRelationships();
 		if (!$rels) {
-			return array();
+			return [];
 		}
-		array_walk($rels, array($this->db, 'sanitizeString'));
+		array_walk($rels, [$this->db, 'sanitizeString']);
 		$methods_string = "'" . implode("','", $rels) . "'";
 
 		$db_prefix = $this->db->prefix;
@@ -169,12 +170,12 @@ class SubscriptionsService {
 
 	/**
 	 * Get the relationship names for notifications
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function getMethodRelationships() {
 		$prefix = self::RELATIONSHIP_PREFIX;
-		$names = array();
+		$names = [];
 		foreach ($this->methods as $method) {
 			$names[] = "$prefix$method";
 		}

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	/**
 	* Menu items and titles
 	*/
@@ -79,4 +79,4 @@ Merci de ne pas répondre à cet email automatique.",
 
 	'messages:deleted_sender' => 'Utilisateur effacé',
 
-);
+];

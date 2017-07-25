@@ -1,6 +1,6 @@
 <?php
-return array(
+return [
 	'profile' => 'Profil',
 	'profile:notfound' => 'Üzgünüz. İstediğiniz profili bulamadık.',
 
-);
+];

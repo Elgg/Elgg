@@ -3,16 +3,16 @@
  * The HTML head
  *
  * @internal It's dangerous to alter this view.
- * 
+ *
  * @uses $vars['title'] The page title
  * @uses $vars['metas'] Array of meta elements
  * @uses $vars['links'] Array of links
  */
 
-$metas = elgg_extract('metas', $vars, array());
-$links = elgg_extract('links', $vars, array());
+$metas = elgg_extract('metas', $vars, []);
+$links = elgg_extract('links', $vars, []);
 
-echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
+echo elgg_format_element('title', [], $vars['title'], ['encode_text' => true]);
 foreach ($metas as $attributes) {
 	echo elgg_format_element('meta', $attributes);
 }
@@ -23,7 +23,7 @@ foreach ($links as $attributes) {
 $stylesheets = elgg_get_loaded_css();
 
 foreach ($stylesheets as $url) {
-	echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
+	echo elgg_format_element('link', ['rel' => 'stylesheet', 'href' => $url]);
 }
 
 // A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC

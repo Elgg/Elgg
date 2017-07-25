@@ -19,12 +19,12 @@ class Request extends SymfonyRequest {
 	 * @return string[]
 	 */
 	public function getUrlSegments($raw = false) {
-		$path = trim($this->query->get(Application::GET_PATH_KEY), '/');
+		$path = trim($this->getPathInfo(), '/');
 		if (!$raw) {
 			$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
 		}
 		if (!$path) {
-			return array();
+			return [];
 		}
 
 		return explode('/', $path);
@@ -38,9 +38,11 @@ class Request extends SymfonyRequest {
 	 * @return Request
 	 */
 	public function setUrlSegments(array $segments) {
-		$query = $this->query->all();
-		$query[Application::GET_PATH_KEY] = '/' . implode('/', $segments);
-		return $this->duplicate($query);
+		$base_path = trim($this->getBasePath(), '/');
+		$server = $this->server->all();
+		$server['REQUEST_URI'] = "$base_path/" . implode('/', $segments);
+
+		return $this->duplicate(null, null, null, null, null, $server);
 	}
 
 	/**

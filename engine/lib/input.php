@@ -56,7 +56,7 @@ function filter_tags($var) {
 
 /**
  * Returns the current page's complete URL.
- * 
+ *
  * It uses the configured site URL for the hostname rather than depending on
  * what the server uses to populate $_SERVER.
  *
@@ -209,17 +209,17 @@ function input_livesearch_page_handler($page) {
 	$q = sanitise_string($q);
 
 	// replace mysql vars with escaped strings
-	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
+	$q = str_replace(['_', '%'], ['\_', '\%'], $q);
 
 	$match_on = get_input('match_on', 'all');
 
 	if (!is_array($match_on)) {
-		$match_on = array($match_on);
+		$match_on = [$match_on];
 	}
 
 	// all = users and groups
 	if (in_array('all', $match_on)) {
-		$match_on = array('users', 'groups');
+		$match_on = ['users', 'groups'];
 	}
 
 	$owner_guid = ELGG_ENTITIES_ANY_VALUE;
@@ -230,42 +230,41 @@ function input_livesearch_page_handler($page) {
 	$limit = sanitise_int(get_input('limit', elgg_get_config('default_limit')));
 
 	// grab a list of entities and send them in json.
-	$results = array();
+	$results = [];
 	foreach ($match_on as $match_type) {
 		switch ($match_type) {
 			case 'users':
-				$options = array(
+				$options = [
 					'type' => 'user',
 					'limit' => $limit,
-					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
-					'wheres' => array(
+					'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+					'wheres' => [
 						"ue.banned = 'no'",
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
-					)
-				);
+					]
+				];
 				
 				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
 						if (in_array('groups', $match_on)) {
 							$value = $entity->guid;
 						} else {
 							$value = $entity->username;
 						}
 
-						$output = elgg_view_list_item($entity, array(
+						$output = elgg_view_list_item($entity, [
 							'use_hover' => false,
 							'use_link' => false,
 							'class' => 'elgg-autocomplete-item',
 							'title' => $entity->name, // Default title would be a link
-						));
+						]);
 
-						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+						$icon = elgg_view_entity_icon($entity, 'tiny', [
 							'use_hover' => false,
-						));
+						]);
 
-						$result = array(
+						$result = [
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
@@ -274,11 +273,11 @@ function input_livesearch_page_handler($page) {
 							'value' => $value,
 							'icon' => $icon,
 							'url' => $entity->getURL(),
-							'html' => elgg_view('input/userpicker/item', array(
+							'html' => elgg_view('input/userpicker/item', [
 								'entity' => $entity,
 								'input_name' => $input_name,
-							)),
-						);
+							]),
+						];
 						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
@@ -290,32 +289,32 @@ function input_livesearch_page_handler($page) {
 					continue;
 				}
 				
-				$options = array(
+				$options = [
 					'type' => 'group',
 					'limit' => $limit,
 					'owner_guid' => $owner_guid,
-					'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
-					'wheres' => array(
+					'joins' => ["JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"],
+					'wheres' => [
 						"(ge.name LIKE '$q%' OR ge.name LIKE '% $q%' OR ge.description LIKE '% $q%')"
-					)
-				);
+					]
+				];
 				
 				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						$output = elgg_view_list_item($entity, array(
+						$output = elgg_view_list_item($entity, [
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 							'full_view' => false,
 							'href' => false,
 							'title' => $entity->name, // Default title would be a link
-						));
+						]);
 
-						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+						$icon = elgg_view_entity_icon($entity, 'tiny', [
 							'use_hover' => false,
-						));
+						]);
 
-						$result = array(
+						$result = [
 							'type' => 'group',
 							'name' => $entity->name,
 							'desc' => strip_tags($entity->description),
@@ -324,7 +323,7 @@ function input_livesearch_page_handler($page) {
 							'value' => $entity->guid,
 							'icon' => $icon,
 							'url' => $entity->getURL(),
-						);
+						];
 
 						$results[$entity->name . rand(1, 100)] = $result;
 					}
@@ -332,34 +331,33 @@ function input_livesearch_page_handler($page) {
 				break;
 
 			case 'friends':
-				$options = array(
+				$options = [
 					'type' => 'user',
 					'limit' => $limit,
 					'relationship' => 'friend',
 					'relationship_guid' => $user->getGUID(),
-					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
-					'wheres' => array(
+					'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+					'wheres' => [
 						"ue.banned = 'no'",
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
-					)
-				);
+					]
+				];
 				
 				$entities = elgg_get_entities_from_relationship($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
-						$output = elgg_view_list_item($entity, array(
+						$output = elgg_view_list_item($entity, [
 							'use_hover' => false,
 							'use_link' => false,
 							'class' => 'elgg-autocomplete-item',
 							'title' => $entity->name, // Default title would be a link
-						));
+						]);
 
-						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+						$icon = elgg_view_entity_icon($entity, 'tiny', [
 							'use_hover' => false,
-						));
+						]);
 
-						$result = array(
+						$result = [
 							'type' => 'user',
 							'name' => $entity->name,
 							'desc' => $entity->username,
@@ -368,11 +366,11 @@ function input_livesearch_page_handler($page) {
 							'value' => $entity->username,
 							'icon' => $icon,
 							'url' => $entity->getURL(),
-							'html' => elgg_view('input/userpicker/item', array(
+							'html' => elgg_view('input/userpicker/item', [
 								'entity' => $entity,
 								'input_name' => $input_name,
-							)),
-						);
+							]),
+						];
 						$results[$entity->name . rand(1, 100)] = $result;
 					}
 				}
@@ -397,20 +395,23 @@ function input_livesearch_page_handler($page) {
  *
  * Called on the 'validate', 'input' plugin hook
  *
- * Triggers the 'config', 'htmlawed' plugin hook so that plugins can change
- * htmlawed's configuration. For information on configuraton options, see
+ * htmLawed's $config argument is filtered by the [config, htmlawed] hook.
+ * htmLawed's $spec argument is filtered by the [spec, htmlawed] hook.
+ *
+ * For information on these arguments, see
  * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s2.2
  *
  * @param string $hook   Hook name
  * @param string $type   The type of hook
  * @param mixed  $result Data to filter
  * @param array  $params Not used
+ *
  * @return mixed
  */
 function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 	$var = $result;
 
-	$htmlawed_config = array(
+	$config = [
 		// seems to handle about everything we need.
 		'safe' => true,
 
@@ -424,31 +425,31 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
 		// apparent this doesn't work.
 		// 'style:color,cursor,text-align,font-size,font-weight,font-style,border,margin,padding,float'
-	);
+	];
 
 	// add nofollow to all links on output
 	if (!elgg_in_context('input')) {
-		$htmlawed_config['anti_link_spam'] = array('/./', '');
+		$config['anti_link_spam'] = ['/./', ''];
 	}
 
-	$htmlawed_config = elgg_trigger_plugin_hook('config', 'htmlawed', null, $htmlawed_config);
+	$config = elgg_trigger_plugin_hook('config', 'htmlawed', null, $config);
+	$spec = elgg_trigger_plugin_hook('spec', 'htmlawed', null, '');
 
 	if (!is_array($var)) {
-		$result = htmLawed($var, $htmlawed_config);
+		return htmLawed($var, $config, $spec);
 	} else {
-		array_walk_recursive($var, '_elgg_htmLawedArray', $htmlawed_config);
-		$result = $var;
+		array_walk_recursive($var, '_elgg_htmLawedArray', [$config, $spec]);
+		return $var;
 	}
-
-	return $result;
 }
 
 // @codingStandardsIgnoreStart
 /**
  * wrapper function for htmlawed for handling arrays
  */
-function _elgg_htmLawedArray(&$v, $k, $htmlawed_config) {
-	$v = htmLawed($v, $htmlawed_config);
+function _elgg_htmLawedArray(&$v, $k, $config_spec) {
+	list ($config, $spec) = $config_spec;
+	$v = htmLawed($v, $config, $spec);
 }
 // @codingStandardsIgnoreEnd
 
@@ -471,15 +472,15 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 	}
 
 	// this list should be coordinated with the WYSIWYG editor used (tinymce, ckeditor, etc.)
-	$allowed_styles = array(
+	$allowed_styles = [
 		'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
 		'font-weight', 'font-style', 'border', 'border-top', 'background-color',
 		'border-bottom', 'border-left', 'border-right',
 		'margin', 'margin-top', 'margin-bottom', 'margin-left',
 		'margin-right',	'padding', 'float', 'text-decoration'
-	);
+	];
 
-	$params = array('tag' => $element);
+	$params = ['tag' => $element];
 	$allowed_styles = elgg_trigger_plugin_hook('allowed_styles', 'htmlawed', $params, $allowed_styles);
 
 	// must return something.
@@ -507,7 +508,6 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 				$style_str = trim($style_str);
 				$string .= " style=\"$style_str\"";
 			}
-
 		} else {
 			$string .= " $attr=\"$value\"";
 		}
@@ -538,6 +538,27 @@ function _elgg_htmlawed_test($hook, $type, $value, $params) {
 }
 
 /**
+ * Disable the autocomplete feature on password fields
+ *
+ * @param string $hook         'view_vars'
+ * @param string $type         'input/password'
+ * @param array  $return_value the current view vars
+ * @param array  $params       supplied params
+ *
+ * @return void|array
+ */
+function _elgg_disable_password_autocomplete($hook, $type, $return_value, $params) {
+	
+	if (!elgg_get_config('security_disable_password_autocomplete')) {
+		return;
+	}
+	
+	$return_value['autocomplete'] = 'off';
+	
+	return $return_value;
+}
+
+/**
  * Initialize the input library
  *
  * @return void
@@ -550,6 +571,8 @@ function _elgg_input_init() {
 	elgg_register_plugin_hook_handler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_htmlawed_test');
+	
+	elgg_register_plugin_hook_handler('view_vars', 'input/password', '_elgg_disable_password_autocomplete');
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

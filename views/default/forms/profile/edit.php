@@ -10,42 +10,38 @@
  * @uses vars['entity']
  */
 $entity = elgg_extract('entity', $vars);
+/* @var ElggUser $entity */
 
-echo elgg_view_field(array(
+echo elgg_view_field([
 	'#type' => 'text',
 	'name' => 'name',
 	'value' => $entity->name,
 	'#label' => elgg_echo('user:name:label'),
 	'maxlength' => 50, // hard coded in /actions/profile/edit
-));
+]);
 
 $sticky_values = elgg_get_sticky_values('profile:edit');
 
 $profile_fields = elgg_get_config('profile_fields');
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
-		$metadata = elgg_get_metadata(array(
-			'guid' => $entity->guid,
-			'metadata_name' => $shortname,
-			'limit' => false
-		));
-		if ($metadata) {
-			if (is_array($metadata)) {
-				$value = '';
-				foreach ($metadata as $md) {
-					if (!empty($value)) {
-						$value .= ', ';
-					}
-					$value .= $md->value;
-					$access_id = $md->access_id;
+
+		$annotations = $entity->getAnnotations([
+			'annotation_names' => "profile:$shortname",
+			'limit' => false,
+		]);
+		$access_id = ACCESS_DEFAULT;
+		if ($annotations) {
+			$value = '';
+			foreach ($annotations as $annotation) {
+				if (!empty($value)) {
+					$value .= ', ';
 				}
-			} else {
-				$value = $metadata->value;
-				$access_id = $metadata->access_id;
+				$value .= $annotation->value;
+				$access_id = $annotation->access_id;
 			}
 		} else {
 			$value = '';
-			$access_id = ACCESS_DEFAULT;
 		}
 
 		// sticky form values take precedence over saved ones
@@ -66,9 +62,11 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 			'name' => "accesslevel[$shortname]",
 			'value' => $access_id,
 		]);
-
+		
 		echo elgg_view('elements/forms/field', [
-			'input' => $input . $access_input,
+			'input' => elgg_format_element('div', [
+					'class' => 'elgg-field-input',
+				], $input . $access_input),
 			'label' => elgg_view('elements/forms/label', [
 				'label' => elgg_echo("profile:$shortname"),
 				'id' => $id,
@@ -79,7 +77,7 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 
 elgg_clear_sticky_form('profile:edit');
 
-echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $entity->guid));
+echo elgg_view('input/hidden', ['name' => 'guid', 'value' => $entity->guid]);
 echo elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('save'),

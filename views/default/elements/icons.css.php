@@ -45,23 +45,9 @@
 	AJAX LOADER
 *************************************** */
 .elgg-ajax-loader {
-	background: white url(ajax_loader_bw.gif) no-repeat center center;
+	background: white url('graphics/ajax_loader_bw.gif') no-repeat center center;
 	min-height: 31px;
 	min-width: 31px;
-}
-
-/* ***************************************
-	MENU ICONS
-*************************************** */
-.elgg-menu a:not(.elgg-button) .elgg-icon {
-	color: #CCC;
-	font-size: 18px;
-	line-height: 1em;
-	margin: 0 2px;
-}
-
-.elgg-menu a:not(.elgg-button):hover .elgg-icon {
-	color: #4690D6;
 }
 
 /* ***************************************
@@ -107,4 +93,10 @@
 }
 .elgg-state-banned {
 	opacity: 0.5;
+}
+
+.elgg-access-icon {
+	color: inherit;
+	font-size: inherit;
+	margin-right: 5px;
 }

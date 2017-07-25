@@ -83,7 +83,7 @@ class ElggPlugin extends \ElggObject {
 		$existing_plugin = elgg_get_plugin_from_id($plugin_id);
 
 		if ($existing_plugin) {
-			$this->load($existing_plugin->guid);
+			$this->load((object) ['guid' => $existing_plugin->guid]);
 		}
 
 		_elgg_cache_plugin_by_id($this);
@@ -97,8 +97,7 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function save() {
 		// own by the current site so users can be deleted without affecting plugins
-		$site = _elgg_services()->configTable->get('site');
-		$this->attributes['site_guid'] = $site->guid;
+		$site = elgg_get_site_entity();
 		$this->attributes['owner_guid'] = $site->guid;
 		$this->attributes['container_guid'] = $site->guid;
 		
@@ -196,7 +195,7 @@ class ElggPlugin extends \ElggObject {
 	public function getAvailableTextFiles() {
 		$filenames = $this->getPackage()->getTextFilenames();
 
-		$files = array();
+		$files = [];
 		foreach ($filenames as $filename) {
 			if ($this->canReadFile($filename)) {
 				$files[$filename] = "$this->path/$filename";
@@ -221,18 +220,17 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Sets the priority of the plugin
 	 *
-	 * @param mixed $priority  The priority to set. One of +1, -1, first, last, or a number.
-	 *                         If given a number, this will displace all plugins at that number
-	 *                         and set their priorities +1
-	 * @param mixed $site_guid Optional site GUID.
+	 * @param mixed $priority The priority to set. One of +1, -1, first, last, or a number.
+	 *                        If given a number, this will displace all plugins at that number
+	 *                        and set their priorities +1
 	 * @return bool
 	 */
-	public function setPriority($priority, $site_guid = null) {
+	public function setPriority($priority) {
 		if (!$this->guid) {
 			return false;
 		}
 
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 		// if no priority assume a priority of 1
 		$old_priority = (int) $this->getPriority();
@@ -276,13 +274,13 @@ class ElggPlugin extends \ElggObject {
 			}
 
 			// displace the ones affected by this change
-			$q = "UPDATE {$db_prefix}private_settings
+			$q = "UPDATE {$db->prefix}private_settings
 				SET value = CAST(value as unsigned) $op 1
 				WHERE entity_guid != $this->guid
 				AND name = '$name'
 				AND $where";
 
-			if (!$this->getDatabase()->updateData($q)) {
+			if (!$db->updateData($q)) {
 				return false;
 			}
 
@@ -308,14 +306,9 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed
 	 */
 	public function getSetting($name, $default = null) {
-		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
+		$values = $this->getAllSettings();
 
-		if ($values !== null) {
-			return isset($values[$name]) ? $values[$name] : $default;
-		}
-
-		$val = $this->$name;
-		return $val !== null ? $val : $default;
+		return elgg_extract($name, $values, $default);
 	}
 
 	/**
@@ -326,9 +319,12 @@ class ElggPlugin extends \ElggObject {
 	 * @return array An array of key/value pairs.
 	 */
 	public function getAllSettings() {
+		
+		$defaults = $this->getStaticConfig('settings', []);
 		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
+		
 		if ($values !== null) {
-			return $values;
+			return array_merge($defaults, $values);
 		}
 
 		if (!$this->guid) {
@@ -348,7 +344,7 @@ class ElggPlugin extends \ElggObject {
 
 		$private_settings = $this->getDatabase()->getData($q);
 
-		$return = array();
+		$return = [];
 
 		if ($private_settings) {
 			foreach ($private_settings as $setting) {
@@ -356,7 +352,7 @@ class ElggPlugin extends \ElggObject {
 			}
 		}
 
-		return $return;
+		return array_merge($defaults, $return);
 	}
 
 	/**
@@ -375,12 +371,17 @@ class ElggPlugin extends \ElggObject {
 		}
 		
 		// Hook to validate setting
-		$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
+		$value = elgg_trigger_plugin_hook('setting', 'plugin', [
 			'plugin_id' => $this->getID(),
 			'plugin' => $this,
 			'name' => $name,
 			'value' => $value,
-		), $value);
+		], $value);
+		
+		if (is_array($value)) {
+			elgg_log('Plugin settings cannot store arrays.', 'ERROR');
+			return false;
+		}
 		
 		return $this->setPrivateSetting($name, $value);
 	}
@@ -408,16 +409,16 @@ class ElggPlugin extends \ElggObject {
 		_elgg_services()->pluginSettingsCache->clear($this->guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
 
-		$q = "DELETE FROM {$db_prefix}private_settings
+		$q = "DELETE FROM {$db->prefix}private_settings
 			WHERE entity_guid = $this->guid
 			AND name NOT LIKE '$us_prefix%'
 			AND name NOT LIKE '$is_prefix%'";
 
-		return $this->getDatabase()->deleteData($q);
+		return $db->deleteData($q);
 	}
 
 
@@ -433,22 +434,12 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed The setting string value, the default value or false if there is no user
 	 */
 	public function getUserSetting($name, $user_guid = 0, $default = null) {
-		$user_guid = (int)$user_guid;
-
-		if ($user_guid) {
-			$user = get_entity($user_guid);
-		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
-		}
-
-		if (!($user instanceof \ElggUser)) {
+		$values = $this->getAllUserSettings($user_guid);
+		if ($values === false) {
 			return false;
 		}
-
-		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 		
-		$val = get_private_setting($user->guid, $name);
-		return $val !== null ? $val : $default;
+		return elgg_extract($name, $values, $default);
 	}
 
 	/**
@@ -460,7 +451,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return array An array of key/value pairs.
 	 */
 	public function getAllUserSettings($user_guid = 0) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -472,6 +463,8 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
+		$defaults = $this->getStaticConfig('user_settings', []);
+		
 		$db_prefix = _elgg_services()->config->get('dbprefix');
 		// send an empty name so we just get the first part of the namespace
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
@@ -484,7 +477,7 @@ class ElggPlugin extends \ElggObject {
 
 		$private_settings = $this->getDatabase()->getData($q);
 
-		$return = array();
+		$return = [];
 
 		if ($private_settings) {
 			foreach ($private_settings as $setting) {
@@ -495,7 +488,7 @@ class ElggPlugin extends \ElggObject {
 			}
 		}
 
-		return $return;
+		return array_merge($defaults, $return);
 	}
 
 	/**
@@ -508,7 +501,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed The new setting ID or false
 	 */
 	public function setUserSetting($name, $value, $user_guid = 0) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -522,14 +515,19 @@ class ElggPlugin extends \ElggObject {
 
 		// Hook to validate setting
 		// note: this doesn't pass the namespaced name
-		$value = _elgg_services()->hooks->trigger('usersetting', 'plugin', array(
+		$value = _elgg_services()->hooks->trigger('usersetting', 'plugin', [
 			'user' => $user,
 			'plugin' => $this,
 			'plugin_id' => $this->getID(),
 			'name' => $name,
 			'value' => $value
-		), $value);
-
+		], $value);
+		
+		if (is_array($value)) {
+			elgg_log('Plugin user settings cannot store arrays.', 'ERROR');
+			return false;
+		}
+		
 		// set the namespaced name.
 		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 
@@ -544,7 +542,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetUserSetting($name, $user_guid = 0) {
-		$user_guid = (int)$user_guid;
+		$user_guid = (int) $user_guid;
 
 		if ($user_guid) {
 			$user = get_entity($user_guid);
@@ -575,14 +573,14 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllUserSettings($user_guid) {
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
-		$q = "DELETE FROM {$db_prefix}private_settings
+		$q = "DELETE FROM {$db->prefix}private_settings
 			WHERE entity_guid = $user_guid
 			AND name LIKE '$ps_prefix%'";
 
-		return $this->getDatabase()->deleteData($q);
+		return $db->deleteData($q);
 	}
 
 	/**
@@ -594,13 +592,13 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllUsersSettings() {
-		$db_prefix = _elgg_services()->configTable->get('dbprefix');
+		$db = $this->getDatabase();
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
-		$q = "DELETE FROM {$db_prefix}private_settings
+		$q = "DELETE FROM {$db->prefix}private_settings
 			WHERE name LIKE '$ps_prefix%'";
 
-		return $this->getDatabase()->deleteData($q);
+		return $db->deleteData($q);
 	}
 
 
@@ -616,12 +614,12 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function isValid() {
 		if (!$this->getID()) {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:MissingID', array($this->guid));
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:MissingID', [$this->guid]);
 			return false;
 		}
 
 		if (!$this->getPackage() instanceof \ElggPluginPackage) {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:NoPluginPackagePackage', array($this->getID(), $this->guid));
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:NoPluginPackagePackage', [$this->getID(), $this->guid]);
 			return false;
 		}
 
@@ -636,19 +634,14 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Is this plugin active?
 	 *
-	 * @param int $site_guid Optional site guid.
 	 * @return bool
 	 */
-	public function isActive($site_guid = null) {
+	public function isActive() {
 		if (!$this->guid) {
 			return false;
 		}
 
-		if ($site_guid) {
-			$site = get_entity($site_guid);
-		} else {
-			$site = _elgg_services()->configTable->get('site');
-		}
+		$site = elgg_get_site_entity();
 
 		if (!($site instanceof \ElggSite)) {
 			return false;
@@ -661,13 +654,10 @@ class ElggPlugin extends \ElggObject {
 	 * Checks if this plugin can be activated on the current
 	 * Elgg installation.
 	 *
-	 * @todo remove $site_guid param or implement it
-	 *
-	 * @param mixed $site_guid Optional site guid
 	 * @return bool
 	 */
-	public function canActivate($site_guid = null) {
-		if ($this->isActive($site_guid)) {
+	public function canActivate() {
+		if ($this->isActive()) {
 			return false;
 		}
 
@@ -689,11 +679,10 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Actives the plugin for the current site.
 	 *
-	 * @param mixed $site_guid Optional site GUID.
 	 * @return bool
 	 */
-	public function activate($site_guid = null) {
-		if ($this->isActive($site_guid)) {
+	public function activate() {
+		if ($this->isActive()) {
 			return false;
 		}
 
@@ -706,7 +695,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		if (!$this->setStatus(true, $site_guid)) {
+		if (!$this->setStatus(true)) {
 			return false;
 		}
 
@@ -714,19 +703,21 @@ class ElggPlugin extends \ElggObject {
 		// emit an event. returning false will make this not be activated.
 		// we need to do this after it's been fully activated
 		// or the deactivate will be confused.
-		$params = array(
+		$params = [
 			'plugin_id' => $this->getID(),
 			'plugin_entity' => $this,
-		);
+		];
 
 		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
 
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
+			$this->activateEntities();
+			
 			if ($this->canReadFile('activate.php')) {
 				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
-						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS;
+						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_WIDGETS | ELGG_PLUGIN_REGISTER_ACTIONS;
 
 				$this->start($flags);
 
@@ -735,7 +726,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		if ($return === false) {
-			$this->deactivate($site_guid);
+			$this->deactivate();
 		}
 
 		return $return;
@@ -746,11 +737,10 @@ class ElggPlugin extends \ElggObject {
 	 * Elgg installation. Validates that this plugin has no
 	 * active dependants.
 	 *
-	 * @param mixed $site_guid Optional site guid
 	 * @return bool
 	 */
-	public function canDeactivate($site_guid = null) {
-		if (!$this->isActive($site_guid)) {
+	public function canDeactivate() {
+		if (!$this->isActive()) {
 			return false;
 		}
 
@@ -793,23 +783,22 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Deactivates the plugin.
 	 *
-	 * @param mixed $site_guid Optional site GUID.
 	 * @return bool
 	 */
-	public function deactivate($site_guid = null) {
-		if (!$this->isActive($site_guid)) {
+	public function deactivate() {
+		if (!$this->isActive()) {
 			return false;
 		}
 
-		if (!$this->canDeactivate($site_guid)) {
+		if (!$this->canDeactivate()) {
 			return false;
 		}
 		
 		// emit an event. returning false will cause this to not be deactivated.
-		$params = array(
+		$params = [
 			'plugin_id' => $this->getID(),
 			'plugin_entity' => $this,
-		);
+		];
 
 		$return = _elgg_services()->events->trigger('deactivate', 'plugin', $params);
 
@@ -818,12 +807,14 @@ class ElggPlugin extends \ElggObject {
 			if ($this->canReadFile('deactivate.php')) {
 				$return = $this->includeFile('deactivate.php');
 			}
+			
+			$this->deactivateEntities();
 		}
 
 		if ($return === false) {
 			return false;
 		} else {
-			return $this->setStatus(false, $site_guid);
+			return $this->setStatus(false);
 		}
 	}
 
@@ -835,33 +826,51 @@ class ElggPlugin extends \ElggObject {
 	 * @throws PluginException
 	 */
 	public function start($flags) {
-		//if (!$this->canActivate()) {
-		//	return false;
-		//}
 
 		// include classes
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
 			$this->registerClasses();
-		}
-		
-		// include start file
-		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
-			$this->includeFile('start.php');
+			
+			$autoload_file = 'vendor/autoload.php';
+			if ($this->canReadFile($autoload_file)) {
+				require_once "{$this->path}/{$autoload_file}";
+			}
 		}
 
+		// include languages
+		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
+			// should be loaded before the first function that touches the static config (elgg-plugin.php)
+			// so translations can be used... for example in registering widgets
+			$this->registerLanguages();
+		}
+		
+		// include start file if it exists
+		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
+			if ($this->canReadFile('start.php')) {
+				$this->includeFile('start.php');
+			}
+			
+			$this->registerEntities();
+		}
+		
 		// include views
 		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
 			$this->registerViews();
 		}
 
-		// include languages
-		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
-			$this->registerLanguages();
+		// include actions
+		if ($flags & ELGG_PLUGIN_REGISTER_ACTIONS) {
+			$this->registerActions();
+		}
+
+		// include widgets
+		if ($flags & ELGG_PLUGIN_REGISTER_WIDGETS) {
+			// should load after views because those are used during registration
+			$this->registerWidgets();
 		}
 
 		return true;
 	}
-
 
 	/**
 	 * Includes one of the plugins files
@@ -876,7 +885,7 @@ class ElggPlugin extends \ElggObject {
 
 		if (!$this->canReadFile($filename)) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotIncludeFile',
-							array($filename, $this->getID(), $this->guid, $this->path));
+							[$filename, $this->getID(), $this->guid, $this->path]);
 			throw new \PluginException($msg);
 		}
 
@@ -884,7 +893,7 @@ class ElggPlugin extends \ElggObject {
 			$ret = include $filepath;
 		} catch (Exception $e) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
-				array($filename, $this->getID(), $this->guid, $this->path));
+				[$filename, $this->getID(), $this->guid, $this->path]);
 			throw new \PluginException($msg, 0, $e);
 		}
 
@@ -963,6 +972,81 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
+	 * Registers the plugin's entities
+	 *
+	 * @return void
+	 */
+	protected function registerEntities() {
+
+		$spec = (array) $this->getStaticConfig('entities', []);
+		if (empty($spec)) {
+			return;
+		}
+		
+		foreach ($spec as $entity) {
+			if (isset($entity['type'], $entity['subtype'], $entity['searchable']) && $entity['searchable']) {
+				elgg_register_entity_type($entity['type'], $entity['subtype']);
+			}
+		}
+	}
+
+	/**
+	 * Registers the plugin's actions provided in the plugin config file
+	 *
+	 * @throws PluginException
+	 * @return void
+	 */
+	protected function registerActions() {
+		$actions = _elgg_services()->actions;
+
+		$spec = (array) $this->getStaticConfig('actions', []);
+		
+		foreach ($spec as $action => $action_spec) {
+			if (!is_array($action_spec)) {
+				continue;
+			}
+			
+			$options = [
+				'access' => 'logged_in',
+				'filename' => '', // assuming core action is registered
+			];
+			
+			$options = array_merge($options, $action_spec);
+			
+			$filename = "{$this->getPath()}actions/{$action}.php";
+			if (file_exists($filename)) {
+				$options['filename'] = $filename;
+			}
+			
+			$actions->register($action, $options['filename'], $options['access']);
+		}
+	}
+
+	/**
+	 * Registers the plugin's widgets provided in the plugin config file
+	 *
+	 * @throws PluginException
+	 * @return void
+	 */
+	protected function registerWidgets() {
+		$widgets = _elgg_services()->widgets;
+		
+		$spec = (array) $this->getStaticConfig('widgets', []);
+		foreach ($spec as $widget_id => $widget_definition) {
+			if (!is_array($widget_definition)) {
+				continue;
+			}
+			if (!isset($widget_definition['id'])) {
+				$widget_definition['id'] = $widget_id;
+			}
+			
+			$definition = \Elgg\WidgetDefinition::factory($widget_definition);
+			
+			$widgets->registerType($definition);
+		}
+	}
+
+	/**
 	 * Registers the plugin's languages
 	 *
 	 * @throws PluginException
@@ -989,6 +1073,46 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
+	 * Activates the plugin's entities
+	 *
+	 * @return void
+	 */
+	protected function activateEntities() {
+		$spec = (array) $this->getStaticConfig('entities', []);
+		if (empty($spec)) {
+			return;
+		}
+		
+		foreach ($spec as $entity) {
+			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
+				if (get_subtype_id($entity['type'], $entity['subtype'])) {
+					update_subtype($entity['type'], $entity['subtype'], $entity['class']);
+				} else {
+					add_subtype($entity['type'], $entity['subtype'], $entity['class']);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Deactivates the plugin's entities
+	 *
+	 * @return void
+	 */
+	protected function deactivateEntities() {
+		$spec = (array) $this->getStaticConfig('entities', []);
+		if (empty($spec)) {
+			return;
+		}
+		
+		foreach ($spec as $entity) {
+			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
+				update_subtype($entity['type'], $entity['subtype']);
+			}
+		}
+	}
+
+	/**
 	 * Get an attribute or private setting value
 	 *
 	 * @param string $name Name of the attribute or private setting
@@ -1000,17 +1124,12 @@ class ElggPlugin extends \ElggObject {
 			return $this->attributes[$name];
 		}
 
-		// @todo clean below - getPrivateSetting() should return null now
-		// No, so see if its in the private data store.
-		// get_private_setting() returns false if it doesn't exist
-		$meta = $this->getPrivateSetting($name);
-
-		if ($meta === false) {
-			// Can't find it, so return null
-			return null;
+		$result = $this->getPrivateSetting($name);
+		if ($result !== null) {
+			return $result;
 		}
-
-		return $meta;
+		$defaults = $this->getStaticConfig('settings', []);
+		return elgg_extract($name, $defaults, $result);
 	}
 
 	/**
@@ -1037,28 +1156,18 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
-	 * Sets the plugin to active or inactive for $site_guid.
+	 * Sets the plugin to active or inactive.
 	 *
-	 * @param bool  $active    Set to active or inactive
-	 * @param mixed $site_guid Int for specific site, null for current site.
+	 * @param bool $active Set to active or inactive
 	 *
 	 * @return bool
 	 */
-	private function setStatus($active, $site_guid = null) {
+	private function setStatus($active) {
 		if (!$this->guid) {
 			return false;
 		}
 
-		if ($site_guid) {
-			$site = get_entity($site_guid);
-
-			if (!($site instanceof \ElggSite)) {
-				return false;
-			}
-		} else {
-			$site = _elgg_services()->configTable->get('site');
-		}
-
+		$site = elgg_get_site_entity();
 		if ($active) {
 			$result = add_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		} else {

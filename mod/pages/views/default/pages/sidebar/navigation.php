@@ -18,7 +18,7 @@ $title = elgg_echo('pages:navigation');
 
 pages_register_navigation_tree(elgg_get_page_owner_entity());
 
-$content = elgg_view_menu('pages_nav', array('class' => 'pages-nav'));
+$content = elgg_view_menu('pages_nav', ['class' => 'pages-nav']);
 if (!$content) {
 	$content = '<p>' . elgg_echo('pages:none') . '</p>';
 }

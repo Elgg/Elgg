@@ -34,22 +34,6 @@ abstract class HooksRegistrationService {
 	private $backups = [];
 
 	/**
-	 * @var \Elgg\Logger
-	 */
-	protected $logger;
-
-	/**
-	 * Set a logger instance, e.g. for reporting uncallable handlers
-	 *
-	 * @param \Elgg\Logger $logger The logger
-	 * @return self
-	 */
-	public function setLogger(\Elgg\Logger $logger = null) {
-		$this->logger = $logger;
-		return $this;
-	}
-	
-	/**
 	 * Registers a handler.
 	 *
 	 * @warning This doesn't check if a callback is valid to be called, only if it is in the
@@ -94,7 +78,6 @@ abstract class HooksRegistrationService {
 		$matcher = $this->getMatcher($callback);
 
 		foreach ($this->registrations[$name][$type] as $i => $registration) {
-
 			if ($matcher) {
 				if (!$matcher->matches($registration[self::REG_KEY_HANDLER])) {
 					continue;

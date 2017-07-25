@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -18,4 +18,4 @@ return array(
 	 */
 	'expages:posted' => "페이지가 성공적으로 갱신되었습니다.",
 	'expages:error' => "이 페이지를 저장할 수 없슴.",
-);
+];

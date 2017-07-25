@@ -8,9 +8,6 @@ List of events in core
 System events
 =============
 
-**boot, system**
-    First event triggered. Triggered before plugins have been loaded.
-
 **plugins_boot, system**
     Triggered just after the plugins are loaded. Rarely used. init, system is used instead.
 
@@ -89,6 +86,12 @@ User events
     When a user registers, the user's account is disabled. This event is triggered
     to allow a plugin to determine how the user should be validated (for example,
     through an email with a validation link).
+
+**validate:after, user**
+    Triggered when user's account has been validated.
+
+**invalidate:after, user**
+    Triggered when user's account validation has been revoked.
 
 **profileupdate, user**
     User has changed profile

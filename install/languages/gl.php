@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'install:title' => 'Instalación de Elgg',
 	'install:welcome' => 'Benvida',
 	'install:requirements' => 'Comprobación de requisitos',
@@ -73,18 +73,18 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 
 	'install:settings:label:sitename' => 'Nome',
 	'install:settings:label:siteemail' => 'Enderezo de correo',
-	'install:settings:label:wwwroot' => 'URL',
+	'install:database:label:wwwroot' => 'URL',
 	'install:settings:label:path' => 'Cartafol de instalación',
-	'install:settings:label:dataroot' => 'Cartafol de datos',
+	'install:database:label:dataroot' => 'Cartafol de datos',
 	'install:settings:label:language' => 'Idioma',
 	'install:settings:label:siteaccess' => 'Acceso predeterminado',
 	'install:label:combo:dataroot' => 'Elgg crea o cartafol de datos',
 
 	'install:settings:help:sitename' => 'Nome do novo sitio Elgg.',
 	'install:settings:help:siteemail' => 'Enderezo de correo electrónico que Elgg empregará para contactar con usuarios.',
-	'install:settings:help:wwwroot' => 'O enderezo do sitio (Elgg adoita determinar o valor correcto automaticamente)',
+	'install:database:help:wwwroot' => 'O enderezo do sitio (Elgg adoita determinar o valor correcto automaticamente)',
 	'install:settings:help:path' => 'O cartafol onde estará o código de Elgg (Elgg adoita atopar o cartafol automaticamente).',
-	'install:settings:help:dataroot' => 'O cartafol que creou para que Elgg garde os ficheiros (cando prema «Seguinte» comprobaranse os permisos do cartafol). Debe ser unha ruta absoluta.',
+	'install:database:help:dataroot' => 'O cartafol que creou para que Elgg garde os ficheiros (cando prema «Seguinte» comprobaranse os permisos do cartafol). Debe ser unha ruta absoluta.',
 	'install:settings:help:dataroot:apache' => 'Pode permitir que Elgg cree o cartafol de datos ou pode indicar o cartafol que vostede xa creou para gardar os ficheiros dos usuarios (ao premer «Seguinte» comprobaranse os permisos do cartafol).',
 	'install:settings:help:language' => 'O idioma predeterminado do sitio.',
 	'install:settings:help:siteaccess' => 'O nivel de acceso predeterminado para o novo contido que creen os usuarios.',
@@ -123,7 +123,7 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 	'install:error:settings' => 'Non foi posíbel crear o ficheiro de configuración.',
 	'install:error:databasesettings' => 'Non foi posíbel conectarse á base de datos coa información de conexión indicada.',
 	'install:error:database_prefix' => 'O prefixo da base de datos contén caracteres que non son válidos.',
-	'install:error:oldmysql' => 'O servidor de bases de datos debe ser un MySQL 5.0 ou unha versión superior. O servidor actual usa MySQL %s.',
+	'install:error:oldmysql2' => 'O servidor de bases de datos debe ser un MySQL 5.5.3 ou unha versión superior. O servidor actual usa MySQL %s.',
 	'install:error:nodatabase' => 'Non foi posíbel usar a base de datos «%s». Pode que non exista.',
 	'install:error:cannotloadtables' => 'Non foi posíbel cargar as táboas da base de datos.',
 	'install:error:tables_exist' => 'A base de datos xa contén táboas de Elgg. Ten que eliminar esas táboas ou reiniciar o instalador e intentar facer uso delas. Para reiniciar o instalador, elimine a parte de «?step=database» do URL na barra do URL do navegador, e prema Intro.',
@@ -155,8 +155,8 @@ Outra causa, menos probábel, é que Apache estea configurado con un alias para 
 	'install:error:rewrite:altserver' => 'Non se pasou a proba das regras de reescritura. Ten que configurar o servidor web coas regras de reescritura de Elgg e intentalo de novo',
 	'install:error:rewrite:unknown' => 'Uf. Non foi posíbel determinar o tipo de servidor web que está a usar, e non pasou a proba das regras de reescritura. Non podemos aconsellalo sobre como solucionar o seu problema específico. Bótelle unha ollada á ligazón sobre solución de problemas.',
 	'install:warning:rewrite:unknown' => 'O servidor non permite probar automaticamente as regras de reescritura, e o navegador non permite probalas mediante JavaScript. Pode continuar a instalación, pero pode que ao rematar o sitio lle dea problemas. Para probar manualmente as regras de reescritura, siga esta ligazón: <a href="%s" target="_blank">probar</a>. Se as regras funcionan, aparecerá a palabra «success».',
-    
+	
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Produciuse un erro do que non é posíbel recuperarse, e quedou rexistrado. Se vostede é o administrador do sistema, comprobe que a información do ficheiro de configuración é correcta. En caso contrario, póñase en contacto co administrador e facilítelle a seguinte información:',
 	'DatabaseException:WrongCredentials' => "Elgg non puido conectar coa base de datos mediante o nome de usuario e contrasinal facilitados. Revise o ficheiro de configuración.",
-);
+];

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Cada quan s\'ha d\'executar la neteja d\'escombraries de l\'Elgg?',
 
 	'garbagecollector:weekly' => 'Un cop a la setmana',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Netejant els vincles sense metastrings.',
-);
+];

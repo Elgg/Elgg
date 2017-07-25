@@ -24,9 +24,9 @@ class UpgradeService {
 	private $hooks;
 
 	/**
-	 * @var \Elgg\Database\Datalist
+	 * @var \Elgg\Config
 	 */
-	private $datalist;
+	private $config;
 
 	/**
 	 * @var \Elgg\Logger
@@ -44,7 +44,7 @@ class UpgradeService {
 	 * @param \Elgg\i18n\Translator    $translator Translation service
 	 * @param \Elgg\EventsService      $events     Events service
 	 * @param \Elgg\PluginHooksService $hooks      Plugin hook service
-	 * @param \Elgg\Database\Datalist  $datalist   Datalist table
+	 * @param \Elgg\Config             $config     Config
 	 * @param \Elgg\Logger             $logger     Logger
 	 * @param \Elgg\Database\Mutex     $mutex      Database mutex service
 	 */
@@ -52,13 +52,14 @@ class UpgradeService {
 			\Elgg\i18n\Translator $translator,
 			\Elgg\EventsService $events,
 			\Elgg\PluginHooksService $hooks,
-			\Elgg\Database\Datalist $datalist,
+			\Elgg\Config $config,
 			\Elgg\Logger $logger,
 			\Elgg\Database\Mutex $mutex) {
 		$this->translator = $translator;
 		$this->events = $events;
 		$this->hooks = $hooks;
-		$this->datalist = $datalist;
+		$this->config = $config;
+		$this->logger = $logger;
 		$this->mutex = $mutex;
 	}
 
@@ -68,10 +69,10 @@ class UpgradeService {
 	 * @return array $result Associative array containing possible errors
 	 */
 	public function run() {
-		$result = array(
+		$result = [
 			'failure' => false,
 			'reason' => '',
-		);
+		];
 
 		// prevent someone from running the upgrade script in parallel (see #4643)
 		if (!$this->mutex->lock('upgrade')) {
@@ -157,7 +158,7 @@ class UpgradeService {
 				// don't set the version to a lower number in instances where an upgrade
 				// has been merged from a lower version of Elgg
 				if ($upgrade_version > $version) {
-					$this->datalist->set('version', $upgrade_version);
+					$this->config->save('version', $upgrade_version);
 				}
 
 				// incrementally set upgrade so we know where to start if something fails.
@@ -181,7 +182,7 @@ class UpgradeService {
 		$processed_upgrades = $this->getProcessedUpgrades();
 		$processed_upgrades[] = $upgrade;
 		$processed_upgrades = array_unique($processed_upgrades);
-		return $this->datalist->set('processed_upgrades', serialize($processed_upgrades));
+		return $this->config->save('processed_upgrades', $processed_upgrades);
 	}
 
 	/**
@@ -190,9 +191,7 @@ class UpgradeService {
 	 * @return mixed Array of processed upgrade filenames or false
 	 */
 	protected function getProcessedUpgrades() {
-		$upgrades = $this->datalist->get('processed_upgrades');
-		$unserialized = unserialize($upgrades);
-		return $unserialized;
+		return $this->config->get('processed_upgrades');
 	}
 
 	/**
@@ -229,7 +228,7 @@ class UpgradeService {
 			return false;
 		}
 
-		$upgrade_files = array();
+		$upgrade_files = [];
 
 		while ($upgrade_file = readdir($handle)) {
 			// make sure this is a wellformed upgrade.
@@ -262,9 +261,9 @@ class UpgradeService {
 		}
 
 		if ($processed_upgrades === null) {
-			$processed_upgrades = unserialize($this->datalist->get('processed_upgrades'));
+			$processed_upgrades = $this->config->get('processed_upgrades');
 			if (!is_array($processed_upgrades)) {
-				$processed_upgrades = array();
+				$processed_upgrades = [];
 			}
 		}
 
@@ -278,7 +277,7 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function processUpgrades() {
-		$dbversion = (int) $this->datalist->get('version');
+		$dbversion = (int) $this->config->get('version');
 
 		if ($this->upgradeCode($dbversion)) {
 			system_message($this->translator->translate('upgrade:core'));
@@ -296,4 +295,3 @@ class UpgradeService {
 		return false;
 	}
 }
-

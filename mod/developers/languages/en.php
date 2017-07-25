@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	// menu
 	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:sandbox' => 'Theme Sandbox',
@@ -101,4 +101,4 @@ return array(
 	'developers:settings:success' => 'Settings saved and caches flushed',
 
 	'developers:amd' => 'AMD',
-);
+];

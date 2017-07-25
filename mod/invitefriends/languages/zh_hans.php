@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'friends:invite' => '邀请朋友',
 	
@@ -30,4 +30,4 @@ return array(
 
 您注册成功后将自动与他（她）成为好友。',
 	
-);
+];

@@ -6,7 +6,6 @@
  * @subpackage Test
  */
 class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
-	protected $metastrings;
 
 	/**
 	 * Called before each test method.

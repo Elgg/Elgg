@@ -66,9 +66,8 @@ function elgg_is_admin_logged_in() {
  * @since 1.7.1
  */
 function elgg_is_admin_user($user_guid) {
-	global $CONFIG;
-
-	$user_guid = (int)$user_guid;
+	
+	$user_guid = (int) $user_guid;
 
 	$current_user = elgg_get_logged_in_user_entity();
 	if ($current_user && $current_user->guid == $user_guid) {
@@ -76,32 +75,12 @@ function elgg_is_admin_user($user_guid) {
 	}
 
 	// cannot use magic metadata here because of recursion
-
-	// must support the old way of getting admin from metadata
-	// in order to run the upgrade to move it into the users table.
-	$version = (int) datalist_get('version');
-
-	if ($version < 2010040201) {
-		$admin = elgg_get_metastring_id('admin');
-		$yes = elgg_get_metastring_id('yes');
-		$one = elgg_get_metastring_id('1');
-
-		$query = "SELECT 1 FROM {$CONFIG->dbprefix}users_entity as e,
-			{$CONFIG->dbprefix}metadata as md
-			WHERE (
-				md.name_id = '$admin'
-				AND md.value_id IN ('$yes', '$one')
-				AND e.guid = md.entity_guid
-				AND e.guid = {$user_guid}
-				AND e.banned = 'no'
-			)";
-	} else {
-		$query = "SELECT 1 FROM {$CONFIG->dbprefix}users_entity as e
-			WHERE (
-				e.guid = {$user_guid}
-				AND e.admin = 'yes'
-			)";
-	}
+	$dbprefix = elgg_get_config('dbprefix');
+	$query = "SELECT 1 FROM {$dbprefix}users_entity as e
+		WHERE (
+			e.guid = {$user_guid}
+			AND e.admin = 'yes'
+		)";
 
 	// normalizing the results from get_data()
 	// See #1242
@@ -129,7 +108,7 @@ function elgg_is_admin_user($user_guid) {
  */
 function elgg_authenticate($username, $password) {
 	$pam = new \ElggPAM('user');
-	$credentials = array('username' => $username, 'password' => $password);
+	$credentials = ['username' => $username, 'password' => $password];
 	$result = $pam->authenticate($credentials);
 	if (!$result) {
 		return $pam->getFailureMessage();
@@ -149,7 +128,7 @@ function elgg_authenticate($username, $password) {
  * @throws LoginException
  * @access private
  */
-function pam_auth_userpass(array $credentials = array()) {
+function pam_auth_userpass(array $credentials = []) {
 
 	if (!isset($credentials['username']) || !isset($credentials['password'])) {
 		return false;
@@ -188,11 +167,11 @@ function pam_auth_userpass(array $credentials = array()) {
  * @return bool
  */
 function log_login_failure($user_guid) {
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int) $user->getPrivateSetting("login_failures");
 		$fails++;
 
 		$user->setPrivateSetting("login_failures", $fails);
@@ -211,11 +190,11 @@ function log_login_failure($user_guid) {
  * @return bool true on success (success = user has no logged failed attempts)
  */
 function reset_login_failure_count($user_guid) {
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int) $user->getPrivateSetting("login_failures");
 
 		if ($fails) {
 			for ($n = 1; $n <= $fails; $n++) {
@@ -244,11 +223,11 @@ function reset_login_failure_count($user_guid) {
 function check_rate_limit_exceeded($user_guid) {
 	// 5 failures in 5 minutes causes temporary block on logins
 	$limit = 5;
-	$user_guid = (int)$user_guid;
+	$user_guid = (int) $user_guid;
 	$user = get_entity($user_guid);
 
 	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int)$user->getPrivateSetting("login_failures");
+		$fails = (int) $user->getPrivateSetting("login_failures");
 		if ($fails >= $limit) {
 			$cnt = 0;
 			$time = time();
@@ -346,13 +325,6 @@ function logout() {
 		return false;
 	}
 
-	// deprecate event
-	$message = "The 'logout' event was deprecated. Register for 'logout:before' or 'logout:after'";
-	$version = "1.9";
-	if (!elgg_trigger_deprecated_event('logout', 'user', $user, $message, $version)) {
-		return false;
-	}
-
 	_elgg_services()->persistentLogin->removePersistentLogin();
 
 	// pass along any messages into new session
@@ -374,15 +346,12 @@ function logout() {
 function _elgg_session_boot() {
 	_elgg_services()->timer->begin([__FUNCTION__]);
 
-	elgg_register_action('login', '', 'public');
-	elgg_register_action('logout');
-	register_pam_handler('pam_auth_userpass');
-
 	$session = _elgg_services()->session;
 	$session->start();
 
 	// test whether we have a user session
 	if ($session->has('guid')) {
+		/** @var ElggUser $user */
 		$user = _elgg_services()->entityTable->get($session->get('guid'), 'user');
 		if (!$user) {
 			// OMG user has been deleted.
@@ -414,3 +383,7 @@ function _elgg_session_boot() {
 	_elgg_services()->timer->end([__FUNCTION__]);
 	return true;
 }
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	register_pam_handler('pam_auth_userpass');
+};

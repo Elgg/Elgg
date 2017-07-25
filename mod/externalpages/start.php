@@ -23,18 +23,14 @@ function expages_init() {
 
 	// add footer links
 	expages_setup_footer_menu();
-
-	// register action
-	$actions_base = __DIR__ . '/actions';
-	elgg_register_action("expages/edit", "$actions_base/edit.php", 'admin');
 }
 
 /**
  * Extend the public pages range
  *
  */
-function expages_public($hook, $handler, $return, $params){
-	$pages = array('about', 'terms', 'privacy');
+function expages_public($hook, $handler, $return, $params) {
+	$pages = ['about', 'terms', 'privacy'];
 	return array_merge($pages, $return);
 }
 
@@ -42,7 +38,7 @@ function expages_public($hook, $handler, $return, $params){
  * Setup the links to site pages
  */
 function expages_setup_footer_menu() {
-	$pages = array('about', 'terms', 'privacy');
+	$pages = ['about', 'terms', 'privacy'];
 	foreach ($pages as $page) {
 		$url = "$page";
 		$wg_item = new ElggMenuItem($page, elgg_echo("expages:$page"), $url);
@@ -62,7 +58,7 @@ function expages_setup_footer_menu() {
  */
 function expages_page_handler($page, $handler) {
 	if ($handler == 'expages') {
-		expages_url_forwarder($page[1]);
+		forward($page[1]);
 	}
 	$type = strtolower($handler);
 
@@ -82,12 +78,12 @@ function expages_page_handler($page, $handler) {
 	]);
 	
 	if (elgg_is_admin_logged_in()) {
-		elgg_register_menu_item('title', array(
+		elgg_register_menu_item('title', [
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
 			'href' => "admin/appearance/expages?type=$type",
 			'link_class' => 'elgg-button elgg-button-action',
-		));
+		]);
 	}
 	
 	$shell = 'default';
@@ -117,26 +113,14 @@ function expages_page_handler($page, $handler) {
 function expages_menu_register_hook($hook, $type, $return, $params) {
 	$type = elgg_extract('type', $params);
 		
-	$pages = array('about', 'terms', 'privacy');
+	$pages = ['about', 'terms', 'privacy'];
 	foreach ($pages as $page) {
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = ElggMenuItem::factory([
 			'name' => $page,
 			'text' => elgg_echo("expages:$page"),
 			'href' => "admin/appearance/expages?type=$page",
 			'selected' => $page === $type,
-		));
+		]);
 	}
 	return $return;
-}
-
-
-/**
- * Forward to the new style of URLs
- *
- * @param string $page
- */
-function expages_url_forwarder($page) {
-	global $CONFIG;
-	$url = "{$CONFIG->wwwroot}{$page}";
-	forward($url);
 }

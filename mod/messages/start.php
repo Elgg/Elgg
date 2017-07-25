@@ -16,19 +16,19 @@ function messages_init() {
 
 	// add page menu items
 	if (elgg_is_logged_in()) {
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item('page', [
 			'name' => 'messages:inbox',
 			'text' => elgg_echo('messages:inbox'),
 			'href' => "messages/inbox/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));
+		]);
 		
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item('page', [
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
 			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));		
+		]);
 	}
 
 	// Extend system CSS with our own styles, which are defined in the messages/css view
@@ -54,12 +54,6 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('permissions_check:metadata', 'object', 'messages_can_edit_metadata');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'messages_can_edit');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
-
-	// Register actions
-	$action_path = __DIR__ . '/actions/messages';
-	elgg_register_action("messages/send", "$action_path/send.php");
-	elgg_register_action("messages/delete", "$action_path/delete.php");
-	elgg_register_action("messages/process", "$action_path/process.php");
 
 	// Topbar menu. We assume this menu will render *after* a message is rendered. If a refactor/plugin
 	// causes it to render first, the unread count notification will not update until the next page.
@@ -147,7 +141,7 @@ function messages_register_topbar($hook, $type, $items, $params) {
 
 	$num_messages = (int) messages_count_unread();
 	if ($num_messages) {
-		$title .= " (" . elgg_echo("messages:unreadcount", array($num_messages)) . ")";
+		$title .= " (" . elgg_echo("messages:unreadcount", [$num_messages]) . ")";
 	}
 
 	$items[] = ElggMenuItem::factory([
@@ -317,20 +311,21 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
 		
-		$subject = elgg_echo('messages:email:subject', array(), $recipient->language);
-		$body = elgg_echo('messages:email:body', array(
+		$subject = elgg_echo('messages:email:subject', [], $recipient->language);
+		$body = elgg_echo('messages:email:body', [
 				$sender->name,
 				$message_contents,
 				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
 				$sender->name,
 				elgg_get_site_url() . "messages/compose?send_to=" . $sender_guid
-			),
+			],
 			$recipient->language
 		);
 
 		$params = [
 			'object' => $message_to,
 			'action' => 'send',
+			'url' => $message_to->getURL(),
 		];
 		notify_user($recipient_guid, $sender_guid, $subject, $body, $params);
 	}
@@ -370,39 +365,23 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
 	if (!$user_guid) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
-	$db_prefix = elgg_get_config('dbprefix');
-
-	// denormalize the md to speed things up.
-	// seriously, 10 joins if you don't.
-	$map = elgg_get_metastring_map(['toId', $user_guid, 'readYet', 0]);
 
 	if ($limit === null) {
 		$limit = elgg_get_config('default_limit');
 	}
 
-	$options = array(
-		// original options before denormalizing
-		// 'metadata_name_value_pairs' => array(
-		// 'toId' => elgg_get_logged_in_user_guid(),
-		// 'readYet' => 0,
-		// 'msg' => 1
-		// ),
-		'joins' => array(
-			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
-			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
-		),
-		'wheres' => array(
-			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
-			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
-		),
+	return elgg_get_entities_from_metadata([
+		'metadata_name_value_pairs' => [
+			'toId' => $user_guid,
+			'readYet' => 0,
+			'msg' => 1,
+		],
 		'owner_guid' => $user_guid,
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => $count,
 		'distinct' => false,
-	);
-
-	return elgg_get_entities($options);
+	]);
 }
 
 /**
@@ -422,12 +401,21 @@ function messages_count_unread($user_guid = 0) {
 function messages_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 
-	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
-		$url = "messages/compose?send_to={$user->guid}";
-		$item = new ElggMenuItem('send', elgg_echo('messages:sendmessage'), $url);
-		$item->setSection('action');
-		$return[] = $item;
+	if (!elgg_is_logged_in()) {
+		return;
 	}
+	
+	if (elgg_get_logged_in_user_guid() == $user->guid) {
+		return;
+	}
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'send',
+		'text' => elgg_echo('messages:sendmessage'),
+		'icon' => 'mail',
+		'href' => "messages/compose?send_to={$user->guid}",
+		'section' => 'action',
+	]);
 
 	return $return;
 }
@@ -450,13 +438,13 @@ function messages_purge($event, $type, $user) {
 	access_show_hidden_entities(true);
 	$ia = elgg_set_ignore_access(true);
 
-	$options = array(
+	$options = [
 		'type' => 'object',
 		'subtype' => 'messages',
 		'metadata_name' => 'fromId',
 		'metadata_value' => $user->getGUID(),
 		'limit' => 0,
-	);
+	];
 	$batch = new ElggBatch('elgg_get_entities_from_metadata', $options);
 	foreach ($batch as $e) {
 		$e->delete();

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => '얼마나 자주 시스템 로그를 보관하겠습니까?',
 
 	'logrotate:logrotated' => "로그 순환됨\n",
@@ -14,4 +14,4 @@ return array(
 		
 	'logrotate:logdeleted' => "로그 삭제됨\n",
 	'logrotate:lognotdeleted' => "삭제된 로그가 없슴\n",
-);
+];

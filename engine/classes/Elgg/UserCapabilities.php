@@ -13,9 +13,9 @@ use InvalidArgumentException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Use the elgg_* versions instead.
- * 
+ *
  * @access private
  * @since 2.2
  */
@@ -98,7 +98,7 @@ class UserCapabilities {
 			return ($container && $container->canEdit($user->guid));
 		});
 
-		$params = array('entity' => $entity, 'user' => $user);
+		$params = ['entity' => $entity, 'user' => $user];
 		return $this->hooks->trigger('permissions_check', $entity->getType(), $params, $default);
 	}
 
@@ -315,10 +315,10 @@ class UserCapabilities {
 	 *
 	 * @param ElggEntity $entity    Object entity
 	 * @param int        $user_guid User guid (default is logged in user)
-	 *
+	 * @param bool       $default   Default permission
 	 * @return bool
 	 */
-	public function canComment(ElggEntity $entity, $user_guid = 0) {
+	public function canComment(ElggEntity $entity, $user_guid = 0, $default = null) {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -331,7 +331,7 @@ class UserCapabilities {
 			'entity' => $entity,
 			'user' => $user
 		];
-		return $this->hooks->trigger('permissions_check:comment', $entity->getType(), $params, null);
+		return $this->hooks->trigger('permissions_check:comment', $entity->getType(), $params, $default);
 	}
 
 	/**

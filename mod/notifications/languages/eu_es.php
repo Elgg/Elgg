@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	'friends:all' => 'Lagun guztiak',
 
@@ -21,4 +21,4 @@ return array(
 
 	'notifications:subscriptions:success' => 'Zure jakinarazpen ezarpenak gorde egin dira.',
 
-);
+];

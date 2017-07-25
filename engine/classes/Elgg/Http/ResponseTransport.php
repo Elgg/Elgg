@@ -14,7 +14,7 @@ interface ResponseTransport {
 
 	/**
 	 * Sends HTTP response to the requester
-	 * 
+	 *
 	 * @param Response $response Symfony Response
 	 * @return bool
 	 */

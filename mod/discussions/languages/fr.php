@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'discussion' => 'Discussions',
 	'discussion:add' => 'Ajouter un sujet de discussion',
 	'discussion:latest' => 'Dernières discussions',
@@ -96,4 +96,4 @@ Voir la discussion et répondre :
 
 	'discussion:reply:edited' => "Vous avez bien modifié cette discussion.",
 	'discussion:reply:error' => "Il y a eu un problème lors de la modification de la discussion.",
-);
+];

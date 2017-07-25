@@ -6,6 +6,7 @@
  */
 
 ?>
+/*<style>*/
 .groups-profile > .elgg-image {
 	margin-right: 20px;
 }
@@ -19,8 +20,7 @@
 	padding-top: 0;
 }
 
-.groups-profile-fields .odd,
-.groups-profile-fields .even {
+.groups-profile-fields > div {
 	border-bottom: 1px solid #DCDCDC;
 	padding: 5px 0;
 	margin-bottom: 0;
@@ -59,9 +59,14 @@
 }
 
 @media (max-width: 600px) {
+	.groups-profile {
+		display: block;
+	}
 	.groups-profile-fields {
-		float: left;
-		padding-left: 0;
+		padding-top: 20px;
+	}
+	.profile > .elgg-inner {
+		display: block;
 	}
 
 	#groups-tools > li {

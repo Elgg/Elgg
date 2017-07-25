@@ -11,18 +11,7 @@
  * MessageBoard initialisation
  */
 function messageboard_init() {
-	// css
-	elgg_extend_view('elgg.css', 'messageboard/css');
-
 	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
-
-	// messageboard widget - only for profile for now
-	elgg_register_widget_type('messageboard', elgg_echo("messageboard:board"), elgg_echo("messageboard:desc"), array("profile"));
-
-	// actions
-	$action_path = dirname(__FILE__) . '/actions';
-	elgg_register_action("messageboard/add", "$action_path/add.php");
-	elgg_register_action("messageboard/delete", "$action_path/delete.php");
 
 	// delete annotations for posts
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'messageboard_annotation_menu_setup');
@@ -76,10 +65,10 @@ function messageboard_page_handler($page) {
 /**
  * Add messageboard post
  *
- * @param ElggUser $poster User posting the message
- * @param ElggUser $owner User who owns the message board
- * @param string $message The posted message
- * @param int $access_id Access level (see defines in elgglib.php)
+ * @param ElggUser $poster    User posting the message
+ * @param ElggUser $owner     User who owns the message board
+ * @param string   $message   The posted message
+ * @param int      $access_id Access level (see defines in elgglib.php)
  * @return bool
  */
 function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
@@ -89,31 +78,32 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		return false;
 	}
 
-	elgg_create_river_item(array(
+	elgg_create_river_item([
 		'view' => 'river/object/messageboard/create',
 		'action_type' => 'messageboard',
 		'subject_guid' => $poster->guid,
 		'object_guid' => $owner->guid,
 		'access_id' => $access_id,
 		'annotation_id' => $result_id,
-	));
+	]);
 
 	// Send notification only if poster isn't the owner
 	if ($poster->guid != $owner->guid) {
+		$subject = elgg_echo('messageboard:email:subject', [], $owner->language);
+		$url = elgg_get_site_url() . "messageboard/owner/" . $owner->username;
 
-		$subject = elgg_echo('messageboard:email:subject', array(), $owner->language);
-
-		$body = elgg_echo('messageboard:email:body', array(
+		$body = elgg_echo('messageboard:email:body', [
 			$poster->name,
 			$message,
-			elgg_get_site_url() . "messageboard/owner/" . $owner->username,
+			$url,
 			$poster->name,
 			$poster->getURL()
-		), $owner->language);
+		], $owner->language);
 
 		$params = [
 			'action' => 'create',
 			'object' => elgg_get_annotation_from_id($result_id),
+			'url' => $url,
 		];
 		notify_user($owner->guid, $poster->guid, $subject, $body, $params);
 	}
@@ -126,26 +116,27 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
  * Add edit and delete links for forum replies
  */
 function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
-	$annotation = $params['annotation'];
-	if ($annotation->name != 'messageboard') {
-		return $return;
+	$annotation = elgg_extract('annotation', $params);
+	if ($annotation->name !== 'messageboard') {
+		return;
 	}
 
-	if ($annotation->canEdit()) {
-		$url = elgg_http_add_url_query_elements('action/messageboard/delete', array(
-			'annotation_id' => $annotation->id,
-		));
-
-		$options = array(
-			'name' => 'delete',
-			'href' => $url,
-			'text' => elgg_view_icon('delete'),
-			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
-		);
-		$return[] = ElggMenuItem::factory($options);
+	if (!$annotation->canEdit()) {
+		return;
 	}
+	
+	$url = elgg_http_add_url_query_elements('action/messageboard/delete', [
+		'annotation_id' => $annotation->id,
+	]);
 
+	$return[] = ElggMenuItem::factory([
+		'name' => 'delete',
+		'href' => $url,
+		'text' => elgg_view_icon('delete'),
+		'confirm' => elgg_echo('deleteconfirm'),
+		'encode_text' => false,
+	]);
+	
 	return $return;
 }
 

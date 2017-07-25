@@ -30,7 +30,7 @@ $children = new ElggBatch('elgg_get_entities_from_metadata', [
 ]);
 
 $db_prefix = elgg_get_config('dbprefix');
-$subtype_id = (int)get_subtype_id('object', 'page_top');
+$subtype_id = (int) get_subtype_id('object', 'page_top');
 
 foreach ($children as $child) {
 	if ($parent) {
@@ -39,7 +39,7 @@ foreach ($children as $child) {
 	}
 
 	// If no parent, we need to transform $child to a page_top
-	$child_guid = (int)$child->guid;
+	$child_guid = (int) $child->guid;
 
 	update_data("
 		UPDATE {$db_prefix}entities
@@ -47,10 +47,10 @@ foreach ($children as $child) {
 		WHERE guid = $child_guid
 	");
 
-	elgg_delete_metadata(array(
+	elgg_delete_metadata([
 		'guid' => $child_guid,
 		'metadata_name' => 'parent_guid',
-	));
+	]);
 
 	_elgg_invalidate_cache_for_entity($child_guid);
 	_elgg_invalidate_memcache_for_entity($child_guid);

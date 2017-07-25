@@ -57,7 +57,7 @@ class StashWrapperTest extends \Elgg\TestCase implements \Elgg\Cache\Pool\TestCa
 	 */
 	public function testPutComplainsAboutInvalidKeys($key) {
 		$pool = StashWrapper::createEphemeral();
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
+		$this->setExpectedException('InvalidArgumentException');
 		$pool->put($key, 'foo');
 	}
 
@@ -66,7 +66,7 @@ class StashWrapperTest extends \Elgg\TestCase implements \Elgg\Cache\Pool\TestCa
 	 */
 	public function testGetComplainsAboutInvalidKeys($key) {
 		$pool = StashWrapper::createEphemeral();
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
+		$this->setExpectedException('InvalidArgumentException');
 		$pool->get($key, function () {
 			return 'foo';
 		});
@@ -77,7 +77,7 @@ class StashWrapperTest extends \Elgg\TestCase implements \Elgg\Cache\Pool\TestCa
 	 */
 	public function testInvalidateComplainsAboutInvalidKeys($key) {
 		$pool = StashWrapper::createEphemeral();
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
+		$this->setExpectedException('InvalidArgumentException');
 		$pool->invalidate($key);
 	}
 
@@ -107,5 +107,4 @@ class StashWrapperTest extends \Elgg\TestCase implements \Elgg\Cache\Pool\TestCa
 		$pool = StashWrapper::createEphemeral();
 		$this->markTestIncomplete();
 	}
-
 }

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'members:label:online' => '在线',
 	'members:search' => '搜索成员',
 	'members:title:search' => '成员搜索 %s',
@@ -9,4 +9,4 @@ return array(
 	'members:title:online' => '在线的成员',
 	'members:title:alpha' => '全部成员',
 	'members:list:popular:none' => '没有成员有好友。',
-);
+];

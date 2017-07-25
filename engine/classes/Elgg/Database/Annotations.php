@@ -83,39 +83,38 @@ class Annotations {
 	 */
 	function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 		
-	
 		$result = false;
 	
-		$entity_guid = (int)$entity_guid;
-		$value_type = detect_extender_valuetype($value, $value_type);
-	
-		$owner_guid = (int)$owner_guid;
+		$entity_guid = (int) $entity_guid;
+		$value_type = \ElggExtender::detectValueType($value, $value_type);
+
+		$owner_guid = (int) $owner_guid;
 		if ($owner_guid == 0) {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
-		$access_id = (int)$access_id;
-		$time = $this->getCurrentTime()->getTimestamp();
-	
-		$value_id = elgg_get_metastring_id($value);
-		if (!$value_id) {
-			return false;
-		}
-	
-		$name_id = elgg_get_metastring_id($name);
-		if (!$name_id) {
-			return false;
-		}
-	
+		$access_id = (int) $access_id;
+		
 		// @todo we don't check that the entity is loaded which means the user may
 		// not have access to the entity
 		$entity = get_entity($entity_guid);
 	
 		if ($this->events->trigger('annotate', $entity->type, $entity)) {
-			$result = $this->db->insertData("INSERT INTO {$this->db->prefix}annotations
-				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
-				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
+			$sql = "INSERT INTO {$this->db->prefix}annotations
+				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
+				VALUES
+				(:entity_guid, :name, :value, :value_type, :owner_guid, :time_created, :access_id)";
 	
+			$result = $this->db->insertData($sql, [
+				':entity_guid' => $entity_guid,
+				':name' => $name,
+				':value' => $value,
+				':value_type' => $value_type,
+				':owner_guid' => $owner_guid,
+				':time_created' => $this->getCurrentTime()->getTimestamp(),
+				':access_id' => $access_id,
+			]);
+				
 			if ($result !== false) {
 				$obj = elgg_get_annotation_from_id($result);
 				if ($this->events->trigger('create', 'annotation', $obj)) {
@@ -144,9 +143,8 @@ class Annotations {
 	 * @return bool
 	 */
 	function update($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
-		
-	
-		$annotation_id = (int)$annotation_id;
+
+		$annotation_id = (int) $annotation_id;
 	
 		$annotation = $this->get($annotation_id);
 		if (!$annotation) {
@@ -157,30 +155,30 @@ class Annotations {
 		}
 	
 		$name = trim($name);
-		$value_type = detect_extender_valuetype($value, $value_type);
+		$value_type = \ElggExtender::detectValueType($value, $value_type);
 	
-		$owner_guid = (int)$owner_guid;
+		$owner_guid = (int) $owner_guid;
 		if ($owner_guid == 0) {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
-		$access_id = (int)$access_id;
-	
-		$value_id = elgg_get_metastring_id($value);
-		if (!$value_id) {
-			return false;
-		}
-	
-		$name_id = elgg_get_metastring_id($name);
-		if (!$name_id) {
-			return false;
-		}
-	
-		$result = $this->db->updateData("UPDATE {$this->db->prefix}annotations
-			SET name_id = $name_id, value_id = $value_id, value_type = '$value_type',
-			access_id = $access_id, owner_guid = $owner_guid
-			WHERE id = $annotation_id");
-	
+		$access_id = (int) $access_id;
+				
+		$sql = "UPDATE {$this->db->prefix}annotations
+			(name, value, value_type, access_id, owner_guid)
+			VALUES
+			(:name, :value, :value_type, :access_id, :owner_guid)
+			WHERE id = :annotation_id";
+
+		$result = $this->db->updateData($sql, false, [
+			':name' => $name,
+			':value' => $value,
+			':value_type' => $value_type,
+			':access_id' => $access_id,
+			':owner_guid' => $owner_guid,
+			':annotation_id' => $annotation_id,
+		]);
+			
 		if ($result !== false) {
 			// @todo add plugin hook that sends old and new annotation information before db access
 			$obj = $this->get($annotation_id);
@@ -218,7 +216,7 @@ class Annotations {
 	 *
 	 * @return \ElggAnnotation[]|mixed
 	 */
-	function find(array $options = array()) {
+	function find(array $options = []) {
 
 		// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
 		if (isset($options['count']) && $options['count']) {
@@ -322,63 +320,30 @@ class Annotations {
 	 *
 	 * @return mixed If count, int. If not count, array. false on errors.
 	 */
-	function getEntities(array $options = array()) {
-		$defaults = array(
-			'annotation_names'						=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_values'						=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
-	
-			'annotation_name_value_pairs_operator'	=>	'AND',
-			'annotation_case_sensitive' 			=>	true,
-			'order_by_annotation'					=>	array(),
-	
-			'annotation_created_time_lower'			=>	ELGG_ENTITIES_ANY_VALUE,
-			'annotation_created_time_upper'			=>	ELGG_ENTITIES_ANY_VALUE,
-	
-			'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
-		);
+	function getEntities(array $options = []) {
+		$defaults = [
+			'annotation_names'                      => ELGG_ENTITIES_ANY_VALUE,
+			'annotation_values'                     => ELGG_ENTITIES_ANY_VALUE,
+			'annotation_name_value_pairs'           => ELGG_ENTITIES_ANY_VALUE,
+
+			'annotation_name_value_pairs_operator'  => 'AND',
+			'annotation_case_sensitive'             => true,
+			'order_by_annotation'                   => [],
+
+			'annotation_created_time_lower'         => ELGG_ENTITIES_ANY_VALUE,
+			'annotation_created_time_upper'         => ELGG_ENTITIES_ANY_VALUE,
+			'annotation_owner_guids'                => ELGG_ENTITIES_ANY_VALUE,
+		];
 	
 		$options = array_merge($defaults, $options);
 	
-		$singulars = array('annotation_name', 'annotation_value',
-		'annotation_name_value_pair', 'annotation_owner_guid');
+		$singulars = ['annotation_name', 'annotation_value', 'annotation_name_value_pair', 'annotation_owner_guid'];
 	
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 		$options = _elgg_entities_get_metastrings_options('annotation', $options);
 	
 		if (!$options) {
 			return false;
-		}
-	
-		// because of performance issues support for ordering by maxtime has been dropped
-		// @see https://github.com/Elgg/Elgg/issues/6638
-		if (isset($options['order_by']) && preg_match('~\bmaxtime\b~i', $options['order_by'])) {
-			// check if the user provided maxtime
-			$deprecated = true;
-			if (isset($options['selects'])) {
-				$selects = $options['selects'];
-				if (!is_array($selects)) {
-					$selects = array($selects);
-				}
-					
-				foreach ($selects as $select) {
-					if (preg_match('~\bmaxtime\b~i', $options['order_by'])) {
-						$deprecated = false;
-						break;
-					}
-				}
-			}
-		
-			// the user didn't provide maxtime
-			if ($deprecated) {
-				// special sorting for annotations
-				elgg_deprecated_notice(__FUNCTION__ . ": no longer orders by annotations by default. If you order"
-					. " by maxtime, you must provide that column via \$options['selects']. See"
-					. " https://github.com/Elgg/Elgg/issues/6638#issuecomment-41562034", "1.10");
-					
-				$options['selects'][] = "MAX(n_table.time_created) AS maxtime";
-				$options['group_by'] = 'n_table.entity_guid';
-			}
 		}
 		
 		$time_wheres = _elgg_get_entity_time_where_sql('n_table', $options['annotation_created_time_upper'],
@@ -414,7 +379,7 @@ class Annotations {
 	 * 	'metadata_names'         => The name of metadata on the entity.
 	 * 	'metadata_values'        => The value of metadata on the entitiy.
 	 * 	'callback'               => Callback function to pass each row through.
-	 *                              @tip This function is different from other ege* functions, 
+	 *                              @tip This function is different from other ege* functions,
 	 *                              as it uses a metastring-based getter function { @link elgg_get_annotations() },
 	 *                              therefore the callback function should be a derivative of { @link entity_row_to_elggstar() }
 	 *                              and not of { @link row_to_annotation() }
@@ -430,10 +395,10 @@ class Annotations {
 		}
 		
 		$db_prefix = $this->db->prefix;
-		$defaults = array(
+		$defaults = [
 			'calculation' => 'sum',
 			'order_by' => 'annotation_calculation desc'
-		);
+		];
 	
 		$options = array_merge($defaults, $options);
 	
@@ -441,11 +406,7 @@ class Annotations {
 	
 		// you must cast this as an int or it sorts wrong.
 		$options['selects'][] = 'e.*';
-		$options['selects'][] = "$function(CAST(a_msv.string AS signed)) AS annotation_calculation";
-	
-		// need our own join to get the values because the lower level functions don't
-		// add all the joins if it's a different callback.
-		$options['joins'][] = "JOIN {$db_prefix}metastrings a_msv ON n_table.value_id = a_msv.id";
+		$options['selects'][] = "$function(CAST(n_table.value AS signed)) AS annotation_calculation";
 	
 		// don't need access control because it's taken care of by elgg_get_annotations.
 		$options['group_by'] = 'n_table.entity_guid';
@@ -468,25 +429,22 @@ class Annotations {
 	 * @return bool
 	 */
 	function exists($entity_guid, $annotation_type, $owner_guid = null) {
-		
 	
 		if (!$owner_guid && !($owner_guid = $this->session->getLoggedInUserGuid())) {
 			return false;
 		}
+		
+		$sql = "SELECT id FROM {$this->db->prefix}annotations
+				WHERE owner_guid = :owner_guid
+				AND entity_guid = :entity_guid
+				AND name = :annotation_type";
+
+		$result = $this->db->getDataRow($sql, null, [
+			':owner_guid' => (int) $owner_guid,
+			':entity_guid' => (int) $entity_guid,
+			':annotation_type' => $annotation_type,
+		]);
 	
-		$entity_guid = sanitize_int($entity_guid);
-		$owner_guid = sanitize_int($owner_guid);
-		$annotation_type = sanitize_string($annotation_type);
-	
-		$sql = "SELECT a.id FROM {$this->db->prefix}annotations a" .
-				" JOIN {$this->db->prefix}metastrings m ON a.name_id = m.id" .
-				" WHERE a.owner_guid = $owner_guid AND a.entity_guid = $entity_guid" .
-				" AND m.string = '$annotation_type'";
-	
-		if ($this->db->getDataRow($sql)) {
-			return true;
-		}
-	
-		return false;
+		return (bool) $result;
 	}
 }

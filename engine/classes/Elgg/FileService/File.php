@@ -2,9 +2,11 @@
 
 namespace Elgg\FileService;
 
+use Elgg\Security\Base64Url;
+
 /**
  * File service
- * 
+ *
  * @access private
  */
 class File {
@@ -13,7 +15,7 @@ class File {
 	const ATTACHMENT = 'attachment';
 
 	/**
-	 * @var \ElggFile 
+	 * @var \ElggFile
 	 */
 	private $file;
 
@@ -67,7 +69,7 @@ class File {
 	 * @return void
 	 */
 	public function setDisposition($disposition = self::ATTACHMENT) {
-		if (!in_array($disposition, array(self::ATTACHMENT, self::INLINE))) {
+		if (!in_array($disposition, [self::ATTACHMENT, self::INLINE])) {
 			throw new \InvalidArgumentException("Disposition $disposition is not supported in " . __CLASS__);
 		}
 		$this->disposition = $disposition;
@@ -106,12 +108,18 @@ class File {
 			return false;
 		}
 
-		$data = array(
+		if (preg_match('~[^a-zA-Z0-9_\./ ]~', $relative_path)) {
+			// Filenames may contain special characters that result in malformatted URLs
+			// and/or HMAC mismatches. We want to avoid that by encoding the path.
+			$relative_path = ':' . Base64Url::encode($relative_path);
+		}
+
+		$data = [
 			'expires' => isset($this->expires) ? $this->expires : 0,
 			'last_updated' => filemtime($this->file->getFilenameOnFilestore()),
 			'disposition' => $this->disposition == self::INLINE ? 'i' : 'a',
 			'path' => $relative_path,
-		);
+		];
 
 		if ($this->use_cookie) {
 			$data['cookie'] = _elgg_services()->session->getId();
@@ -124,9 +132,9 @@ class File {
 		}
 
 		ksort($data);
-		$mac = _elgg_services()->crypto->getHmac($data)->getToken();
+		$mac = _elgg_services()->hmac->getHmac($data)->getToken();
 
-		$url_segments = array(
+		$url_segments = [
 			'serve-file',
 			"e{$data['expires']}",
 			"l{$data['last_updated']}",
@@ -134,7 +142,7 @@ class File {
 			"c{$data['use_cookie']}",
 			$mac,
 			$relative_path,
-		);
+		];
 
 		return elgg_normalize_url(implode('/', $url_segments));
 	}

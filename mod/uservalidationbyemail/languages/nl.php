@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Ongevalideerd',
 	
 	'email:validate:subject' => "%s, bevestig alsjeblieft je e-mailadres voor %s!",
@@ -54,4 +54,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 	'uservalidationbyemail:messages:resent_validation' => 'Validatie opnieuw verzonden',
 	'uservalidationbyemail:messages:resent_validations' => 'Validatie opnieuw verzonden aan alle geselecteerde gebruikers.'
 
-);
+];

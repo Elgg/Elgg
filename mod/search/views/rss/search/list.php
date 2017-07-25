@@ -9,16 +9,16 @@
 $entities = $vars['results']['entities'];
 
 if (!is_array($entities) || !count($entities)) {
-	return FALSE;
+	return false;
 }
 
 foreach ($entities as $entity) {
 	if ($view = search_get_search_view($vars['params'], 'entity')) {
-		$body .= elgg_view($view, array(
+		$body .= elgg_view($view, [
 			'entity' => $entity,
 			'params' => $vars['params'],
 			'results' => $vars['results']
-		));
+		]);
 	}
 }
 

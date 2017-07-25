@@ -6,4 +6,7 @@
  * @subpackage Core
  */
 
-echo elgg_view_form('admin/site/update_basic', array('class' => 'elgg-form-settings'));
+// added in "complete" step of the installer
+elgg_delete_admin_notice('fresh_install');
+
+echo elgg_view_form('admin/site/update_basic', ['class' => 'elgg-form-settings']);

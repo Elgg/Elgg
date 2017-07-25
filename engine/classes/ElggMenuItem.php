@@ -17,12 +17,12 @@ class ElggMenuItem {
 	/**
 	 * @var array Non-rendered data about the menu item
 	 */
-	protected $data = array(
+	protected $data = [
 		// string Identifier of the menu
 		'name' => '',
 
 		// array Page contexts this menu item should appear on
-		'contexts' => array('all'),
+		'contexts' => ['all'],
 
 		// string Menu section identifier
 		'section' => 'default',
@@ -40,17 +40,20 @@ class ElggMenuItem {
 		'parent' => null,
 
 		// array Array of children objects or empty array
-		'children' => array(),
+		'children' => [],
+
+		// array An array of options for child menu of the parent item
+		'child_menu' => [],
 
 		// array Classes to apply to the li tag
-		'itemClass' => array(),
+		'itemClass' => [],
 
 		// array Classes to apply to the anchor tag
-		'linkClass' => array(),
+		'linkClass' => [],
 
 		// array AMD modules required by this menu item
-		'deps' => array()
-	);
+		'deps' => []
+	];
 
 	/**
 	 * @var string The menu display string (HTML)
@@ -98,8 +101,12 @@ class ElggMenuItem {
 	 *
 	 *    name        => STR  Menu item identifier (required)
 	 *    text        => STR  Menu item display text as HTML (required)
-	 *    href        => STR  Menu item URL (required) (false for non-links.
-	 *                        @warning If you disable the href the <a> tag will
+	 *    href        => STR  Menu item URL (required)
+	 *                        false = do not create a link.
+	 *                        null = current URL.
+	 *                        "" = current URL.
+	 *                        "/" = site home page.
+	 *                        @warning If href is false, the <a> tag will
 	 *                        not appear, so the link_class will not apply. If you
 	 *                        put <a> tags in manually through the 'text' option
 	 *                        the default CSS selector .elgg-menu-$menu > li > a
@@ -114,12 +121,14 @@ class ElggMenuItem {
 	 *    selected    => BOOL Is this menu item currently selected?
 	 *    confirm     => STR  If set, the link will be drawn with the output/confirmlink view instead of output/url.
 	 *    deps        => ARR  AMD modules required by this menu item
+	 *    child_menu  => ARR  Options for the child menu
 	 *    data        => ARR  Custom attributes stored in the menu item.
 	 *
 	 * @return ElggMenuItem or null on error
 	 */
 	public static function factory($options) {
 		if (!isset($options['name']) || !isset($options['text'])) {
+			elgg_log(__METHOD__ . ': $options "name" and "text" are required.', 'ERROR');
 			return null;
 		}
 		if (!isset($options['href'])) {
@@ -222,7 +231,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the display text of the menu item
-	 * 
+	 *
 	 * @param string $text The display text as HTML
 	 * @return void
 	 */
@@ -267,7 +276,7 @@ class ElggMenuItem {
 	 */
 	public function setContext($contexts) {
 		if (is_string($contexts)) {
-			$contexts = array($contexts);
+			$contexts = [$contexts];
 		}
 		$this->data['contexts'] = $contexts;
 	}
@@ -370,7 +379,7 @@ class ElggMenuItem {
 	 */
 	public function setLinkClass($class) {
 		if (!is_array($class)) {
-			$this->data['linkClass'] = array($class);
+			$this->data['linkClass'] = [$class];
 		} else {
 			$this->data['linkClass'] = $class;
 		}
@@ -429,6 +438,25 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Set child menu options for a parent item
+	 *
+	 * @param array $options Options
+	 * @return void
+	 */
+	public function setChildMenuOptions(array $options = []) {
+		$this->data['child_menu'] = $options;
+	}
+
+	/**
+	 * Returns child menu options for parent items
+	 *
+	 * @return array
+	 */
+	public function getChildMenuOptions() {
+		return $this->data['child_menu'];
+	}
+
+	/**
 	 * Set the li classes
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
@@ -436,7 +464,7 @@ class ElggMenuItem {
 	 */
 	public function setItemClass($class) {
 		if (!is_array($class)) {
-			$this->data['itemClass'] = array($class);
+			$this->data['itemClass'] = [$class];
 		} else {
 			$this->data['itemClass'] = $class;
 		}
@@ -449,11 +477,8 @@ class ElggMenuItem {
 	 */
 	public function getItemClass() {
 		// allow people to specify name with underscores and colons
-		$name = strtolower($this->getName());
-		$name = str_replace('_', '-', $name);
-		$name = str_replace(':', '-', $name);
-		$name = str_replace(' ', '-', $name);
-
+		$name = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($this->getName()));
+		
 		$class = implode(' ', $this->data['itemClass']);
 		if ($class) {
 			return "elgg-menu-item-$name $class";
@@ -549,7 +574,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the parent menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param \ElggMenuItem $parent The parent of this menu item
@@ -562,7 +587,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get the parent menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @return \ElggMenuItem or null
@@ -574,7 +599,7 @@ class ElggMenuItem {
 
 	/**
 	 * Add a child menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param \ElggMenuItem $item A child menu item
@@ -587,7 +612,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the menu item's children
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param ElggMenuItem[] $children Array of items
@@ -600,7 +625,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get the children menu items
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @return ElggMenuItem[]
@@ -612,7 +637,7 @@ class ElggMenuItem {
 
 	/**
 	 * Sort the children
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param string $sortFunction A function that is passed to usort()
@@ -628,7 +653,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get all the values for this menu item. Useful for rendering.
-	 * 
+	 *
 	 * @return array
 	 * @since 1.9.0
 	 */

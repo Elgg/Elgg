@@ -21,7 +21,7 @@ if ($user) {
 		register_error(elgg_echo('user:password:changereq:fail'));
 	}
 } else {
-	register_error(elgg_echo('user:username:notfound', array($username)));
+	register_error(elgg_echo('user:username:notfound', [$username]));
 }
 
 forward();

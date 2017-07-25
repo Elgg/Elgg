@@ -90,7 +90,7 @@ All plugins reside in the ``mod`` directory of your Elgg installation.
 To install a new plugin:
  * extract (unzip) contents of the plugin distribution package
  * copy/FTP the extracted folder into the ``mod`` directory of your Elgg
-   installation, making sure that ``manifest.xml`` and ``start.php`` are
+   installation, making sure that ``manifest.xml`` is
    directly under the plugin directory (e.g. if you were to install a plugin called
    ``my_elgg_plugin``, plugin's manifest would need to be found at
    ``mod/my_elgg_plugin/manifest.xml``)

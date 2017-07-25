@@ -25,6 +25,7 @@
 !/mod/externalpages/
 !/mod/file/
 !/mod/friends/
+!/mod/friends_collections/
 !/mod/garbagecollector/
 !/mod/groups/
 !/mod/invitefriends/
@@ -60,6 +61,7 @@ tmtags
 Thumbs.db
 Desktop.ini
 npm-debug.log
+phpcbf-fixed.diff
 
 # Codio.com
 startup.sh

@@ -21,6 +21,8 @@ Advice
 Basic instructions
 ==================
 
+#. Log in as an admin to your site
+#. Disable caching in Advanced Settings
 #. **Back up your database, data directory, and code**
 #. Download the new version of Elgg from http://elgg.org
 #. Update the files
@@ -40,19 +42,73 @@ Basic instructions
 From 2.3 to 3.0
 ===============
 
+Update ``settings.php``
+-----------------------
+
+On your working 2.3 installation:
+
+1. Open your ``settings.php`` file.
+2. In the browser, open the site's Advanced Settings page in the admin area
+3. Copy the **data directory** path into your settings file as ``$CONFIG->dataroot``.
+4. Copy the **site URL** into your settings file as ``$CONFIG->wwwroot``.
+
+.. warning:: Elgg 3.0 **will not operate** at all without ``$CONFIG->dataroot`` set in ``settings.php``.
+
+Update ``.htaccess``
+--------------------
+
+Find the line:
+
+.. code::
+
+	RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
+
+And replace it with:
+
+.. code::
+
+	RewriteRule ^(.*)$ index.php [QSA,L]
+
 Removed / changed language keys
 -------------------------------
 
  * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
 
+New MySQL schema features are not applied
+-----------------------------------------
+
+New 3.0 installations require MySQL 5.5.3 and use the utf8mb4 character set and LONGTEXT content columns (notably allowing storing longer content and extended characters like emoji).
+
+The upgrade **does not make these changes**. We will make available instructions to manually upgrade the database and a small change that needs to be made in the ``settings.php`` file.
+
+Miscellaneous changes
+---------------------
+
+The settings "Allow visitors to register" and "Restrict pages to logged-in users" now appear on the Basic Settings admin page.
 
 From 2.2 to 2.3
 ===============
+
+PHP Version
+-----------
+
+PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are secure, we now require PHP 5.6 for new installations.
+
+Existing installations can continue using PHP 5.5 until Elgg 3.0.
+
+In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may need to use ``--ignore-platform-reqs`` flag.
+
+Tests
+-----
 
  * PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\Elgg\TestCase``.
  * Some core files now sniff if	``PHPUNIT_ELGG_TESTING_APPLICATION`` constant is set to determine whether Elgg is being bootstrapped for PHPUnit tests. ``phpunit.xml`` configuration needs to updated to include this constant definition.
  * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_services()->config`` instead.
  * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
+
+Schema
+------
+
  * The database GUID columns need to be aligned. In the admin section an upgrade is available to handle this. Please make sure you have a backup available
 
 From 2.3 to 3.0

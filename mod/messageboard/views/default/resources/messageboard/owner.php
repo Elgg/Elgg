@@ -15,16 +15,16 @@ $history_user = get_user_by_username($history_username);
 
 elgg_push_breadcrumb($page_owner->name, $page_owner->getURL());
 
-$options = array(
+$options = [
 	'annotations_name' => 'messageboard',
 	'guid' => $page_owner_guid,
 	'reverse_order_by' => true,
 	'preload_owners' => true,
-);
+];
 
 if ($history_user) {
 	$options['annotations_owner_guid'] = $history_user->getGUID();
-	$title = elgg_echo('messageboard:owner_history', array($history_user->name, $page_owner->name));
+	$title = elgg_echo('messageboard:owner_history', [$history_user->name, $page_owner->name]);
 
 	if ($page_owner instanceof ElggGroup) {
 		$mb_url = "messageboard/group/$page_owner->guid/all";
@@ -32,7 +32,7 @@ if ($history_user) {
 		$mb_url = "messageboard/owner/$page_owner->username";
 	}
 } else {
-	$title = elgg_echo('messageboard:owner', array($page_owner->name));
+	$title = elgg_echo('messageboard:owner', [$page_owner->name]);
 	$mb_url = '';
 }
 
@@ -48,12 +48,12 @@ if (!$content) {
 	$content = elgg_echo('messageboard:none');
 }
 
-$vars = array(
+$vars = [
 	'filter' => false,
 	'content' => $content,
 	'title' => $title,
 	'reverse_order_by' => true
-);
+];
 
 $body = elgg_view_layout('content', $vars);
 

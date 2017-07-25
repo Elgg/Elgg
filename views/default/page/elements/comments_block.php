@@ -10,14 +10,14 @@
  * @uses $vars['limit']          The number of comments to display
  */
 
-$options = array(
+$options = [
 	'type' => 'object',
 	'subtype' => 'comment',
 	'limit' => elgg_extract('limit', $vars, 4),
-	'wheres' => array(),
+	'wheres' => [],
 	'preload_owners' => true,
 	'distinct' => false,
-);
+];
 
 $owner_guid = elgg_extract('owner_guid', $vars);
 $container_guid = elgg_extract('container_guid', $vars);
@@ -27,7 +27,7 @@ if ($owner_guid || $container_guid || $subtypes) {
 	$db_prefix = elgg_get_config('dbprefix');
 
 	// Join on the entities table to check container subtype and/or owner
-	$options['joins'] = array("JOIN {$db_prefix}entities ce ON e.container_guid = ce.guid");
+	$options['joins'] = ["JOIN {$db_prefix}entities ce ON e.container_guid = ce.guid"];
 }
 
 // If owner is defined, view only the comments that have
@@ -46,9 +46,9 @@ if ($container_guid) {
 // posted on objects that belong to any of those subtypes
 if ($subtypes) {
 	if (is_array($subtypes)) {
-		$subtype_ids = array();
+		$subtype_ids = [];
 		foreach ($subtypes as $subtype) {
-			$id = (int)get_subtype_id('object', $subtype);
+			$id = (int) get_subtype_id('object', $subtype);
 			if ($id) {
 				$subtype_ids[] = $id;
 			}
@@ -61,7 +61,7 @@ if ($subtypes) {
 			$options['wheres'][] = "1 = -1";
 		}
 	} else {
-		$subtype_id = (int)get_subtype_id('object', $subtypes);
+		$subtype_id = (int) get_subtype_id('object', $subtypes);
 		$options['wheres'][] = "ce.subtype = $subtype_id";
 	}
 }
@@ -69,12 +69,12 @@ if ($subtypes) {
 $title = elgg_echo('generic_comments:latest');
 $comments = elgg_get_entities($options);
 if ($comments) {
-	$body = elgg_view('page/components/list', array(
+	$body = elgg_view('page/components/list', [
 		'items' => $comments,
 		'pagination' => false,
 		'list_class' => 'elgg-latest-comments',
 		'full_view' => false,
-	));
+	]);
 } else {
 	$body = '<p>' . elgg_echo('generic_comment:none') . '</p>';
 }

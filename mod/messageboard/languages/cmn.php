@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -67,4 +67,4 @@ return array(
 
 	'messageboard:failure' => "加入您的留言時發生了非預期的錯誤。請再試一次。",
 
-);
+];

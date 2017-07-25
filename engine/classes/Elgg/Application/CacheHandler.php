@@ -23,6 +23,7 @@ class CacheHandler {
 		'jpeg' => "image/jpeg",
 		'jpg' => "image/jpeg",
 		'js' => "application/javascript",
+		'json' => "application/json",
 		'png' => "image/png",
 		'svg' => "image/svg+xml",
 		'swf' => "application/x-shockwave-flash",
@@ -40,6 +41,7 @@ class CacheHandler {
 		"text/css",
 		"text/html",
 		"application/javascript",
+		"application/json",
 		"image/svg+xml",
 		"text/xml",
 	];
@@ -95,18 +97,14 @@ class CacheHandler {
 			header("Content-Type: $content_type");
 		}
 
-		// this may/may not have to connect to the DB
-		$this->setupSimplecache();
-
 		// we can't use $config->get yet. It fails before the core is booted
-		if (!$config->getVolatile('simplecache_enabled')) {
-
+		if (!$config->get('simplecache_enabled')) {
 			$this->application->bootCore();
 
 			if (!$this->isCacheableView($view)) {
 				$this->send403("Requested view is not an asset");
 			} else {
-				$content = $this->renderView($view, $viewtype);
+				$content = $this->getProcessedView($view, $viewtype);
 				$etag = '"' . md5($content) . '"';
 				$this->sendRevalidateHeaders($etag);
 				$this->handle304($etag);
@@ -120,7 +118,7 @@ class CacheHandler {
 		$this->handle304($etag);
 
 		// trust the client but check for an existing cache file
-		$filename = $config->getVolatile('cacheroot') . "views_simplecache/$ts/$viewtype/$view";
+		$filename = $config->getCachePath() . "views_simplecache/$ts/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
@@ -135,9 +133,9 @@ class CacheHandler {
 			$this->send403("Requested view is not an asset");
 		}
 
-		$lastcache = (int)$config->get('lastcache');
+		$lastcache = (int) $config->get('lastcache');
 
-		$filename = $config->getVolatile('cacheroot') . "views_simplecache/$lastcache/$viewtype/$view";
+		$filename = $config->getCachePath() . "views_simplecache/$lastcache/$viewtype/$view";
 
 		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag);
@@ -146,13 +144,16 @@ class CacheHandler {
 
 			$dir_name = dirname($filename);
 			if (!is_dir($dir_name)) {
-				mkdir($dir_name, 0700, true);
+				// PHP and the server accessing the cache symlink may be a different user. And here
+				// it's safe to make everything readable anyway.
+				mkdir($dir_name, 0775, true);
 			}
 
 			file_put_contents($filename, $content);
+			chmod($filename, 0664);
 		} else {
 			// if wrong timestamp, don't send HTTP cache
-			$content = $this->renderView($view, $viewtype);
+			$content = $this->getProcessedView($view, $viewtype);
 		}
 
 		echo $content;
@@ -168,25 +169,25 @@ class CacheHandler {
 	public function parsePath($path) {
 		// no '..'
 		if (false !== strpos($path, '..')) {
-			return array();
+			return [];
 		}
 		// only alphanumeric characters plus /, ., -, and _
 		if (preg_match('#[^a-zA-Z0-9/\.\-_]#', $path)) {
-			return array();
+			return [];
 		}
 
 		// testing showed regex to be marginally faster than array / string functions over 100000 reps
 		// it won't make a difference in real life and regex is easier to read.
 		// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
 		if (!preg_match('#^/cache/([0-9]+)/([^/]+)/(.+)$#', $path, $matches)) {
-			return array();
+			return [];
 		}
 
-		return array(
+		return [
 			'ts' => $matches[1],
 			'viewtype' => $matches[2],
 			'view' => $matches[3],
-		);
+		];
 	}
 
 	/**
@@ -201,54 +202,6 @@ class CacheHandler {
 			return in_array($m[1],  _elgg_services()->translator->getAllLanguageCodes());
 		}
 		return _elgg_services()->views->isCacheableView($view);
-	}
-
-	/**
-	 * Do a minimal engine load
-	 *
-	 * @return void
-	 */
-	protected function setupSimplecache() {
-		// we can't use Elgg\Config::get yet. It fails before the core is booted
-		$config = $this->config;
-		$config->loadSettingsFile();
-
-		if ($config->getVolatile('cacheroot') && $config->getVolatile('simplecache_enabled') !== null) {
-			// we can work with these...
-			return;
-		}
-
-		$db = $this->application->getDb();
-
-		try {
-			$rows = $db->getData("
-				SELECT `name`, `value`
-				FROM {$db->prefix}datalists
-				WHERE `name` IN ('dataroot', 'simplecache_enabled')
-			");
-			if (!$rows) {
-				$this->send403('Cache error: unable to get the data root');
-			}
-		} catch (\DatabaseException $e) {
-			if (0 === strpos($e->getMessage(), "Elgg couldn't connect")) {
-				$this->send403('Cache error: unable to connect to database server');
-			} else {
-				$this->send403('Cache error: unable to connect to Elgg database');
-			}
-			exit; // unnecessary, but helps PhpStorm understand
-		}
-
-		foreach ($rows as $row) {
-			$config->set($row->name, $row->value);
-		}
-
-		if (!$config->getVolatile('cacheroot')) {
-			$dataroot = $config->getVolatile('dataroot');
-			if (!$dataroot) {
-				$this->send403('Cache error: unable to get the cache root');
-			}
-			$config->set('cacheroot', $dataroot);
-		}
 	}
 
 	/**
@@ -350,13 +303,18 @@ class CacheHandler {
 	protected function getProcessedView($view, $viewtype) {
 		$content = $this->renderView($view, $viewtype);
 
+		if ($this->config->getVolatile('simplecache_enabled')) {
+			$hook_name = 'simplecache:generate';
+		} else {
+			$hook_name = 'cache:generate';
+		}
 		$hook_type = $this->getViewFileType($view);
-		$hook_params = array(
+		$hook_params = [
 			'view' => $view,
 			'viewtype' => $viewtype,
 			'view_content' => $content,
-		);
-		return \_elgg_services()->hooks->trigger('simplecache:generate', $hook_type, $hook_params, $content);
+		];
+		return \_elgg_services()->hooks->trigger($hook_name, $hook_type, $hook_params, $content);
 	}
 
 	/**

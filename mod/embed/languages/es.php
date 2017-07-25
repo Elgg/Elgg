@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'embed:embed' => 'Incrustado',
 	'embed:media' => 'Contenido incrustado',
 	'embed:instructions' => 'Click en cualquier archivo paraincrustar en el contenido.',
@@ -11,4 +11,4 @@ return array(
 	'embed:no_section_content' => 'No hay elementos encontrados.',
 
 	'embed:no_sections' => 'No se han encontrado plugins de contenido incrustado admitido. Pregunte al administrador del sitio para habilitar un plugin con el soporte de contenido incrustado apropiado.',
-);
+];

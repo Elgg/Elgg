@@ -15,17 +15,12 @@ function bookmarks_init() {
 	$root = dirname(__FILE__);
 	elgg_register_library('elgg:bookmarks', "$root/lib/bookmarks.php");
 
-	// actions
-	$action_path = "$root/actions/bookmarks";
-	elgg_register_action('bookmarks/save', "$action_path/save.php");
-	elgg_register_action('bookmarks/delete', "$action_path/delete.php");
-
 	// menus
-	elgg_register_menu_item('site', array(
+	elgg_register_menu_item('site', [
 		'name' => 'bookmarks',
 		'text' => elgg_echo('bookmarks'),
-		'href' => 'bookmarks/all'
-	));
+		'href' => 'bookmarks/all',
+	]);
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
@@ -35,24 +30,22 @@ function bookmarks_init() {
 	elgg_extend_view('elgg.css', 'bookmarks/css');
 	elgg_extend_view('elgg.js', 'bookmarks/js');
 
-	elgg_register_widget_type('bookmarks', elgg_echo('bookmarks'), elgg_echo('bookmarks:widget:description'));
-
 	if (elgg_is_logged_in()) {
 		$user_guid = elgg_get_logged_in_user_guid();
 		$address = urlencode(current_page_url());
 
-		elgg_register_menu_item('extras', array(
+		elgg_register_menu_item('extras', [
 			'name' => 'bookmark',
 			'text' => elgg_echo('bookmarks:this'),
 			'icon' => 'push-pin-alt',
 			'href' => "bookmarks/add/$user_guid?address=$address",
 			'title' => elgg_echo('bookmarks:this'),
 			'rel' => 'nofollow',
-		));
+		]);
 	}
 
 	// Register for notifications
-	elgg_register_notification_event('object', 'bookmarks', array('create'));
+	elgg_register_notification_event('object', 'bookmarks', ['create']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:bookmarks', 'bookmarks_prepare_notification');
 
 	// Register bookmarks view for ecml parsing
@@ -60,9 +53,6 @@ function bookmarks_init() {
 
 	// Register a URL handler for bookmarks
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'bookmark_set_url');
-
-	// Register entity type for search
-	elgg_register_entity_type('object', 'bookmarks');
 
 	// Groups
 	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
@@ -166,7 +156,7 @@ function bookmark_set_url($hook, $type, $url, $params) {
 
 /**
  * Add a menu item to an ownerblock
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array  $return
@@ -190,7 +180,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new bookmark
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -207,16 +197,16 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language); 
-	$notification->body = elgg_echo('bookmarks:notify:body', array(
+	$notification->subject = elgg_echo('bookmarks:notify:subject', [$title], $language);
+	$notification->body = elgg_echo('bookmarks:notify:body', [
 		$owner->name,
 		$title,
 		$entity->address,
 		$descr,
 		$entity->getURL()
-	), $language);
-	$notification->summary = elgg_echo('bookmarks:notify:summary', array($entity->title), $language);
-
+	], $language);
+	$notification->summary = elgg_echo('bookmarks:notify:summary', [$entity->title], $language);
+	$notification->url = $entity->getURL();
 	return $notification;
 }
 
@@ -229,23 +219,30 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
  * @param array  $params
  */
 function bookmarks_page_menu($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
-		// only show bookmarklet in bookmark pages
-		if (elgg_in_context('bookmarks')) {
-			$page_owner = elgg_get_page_owner_entity();
-			if (!$page_owner) {
-				$page_owner = elgg_get_logged_in_user_entity();
-			}
-			
-			if ($page_owner instanceof ElggGroup) {
-				$title = elgg_echo('bookmarks:bookmarklet:group');
-			} else {
-				$title = elgg_echo('bookmarks:bookmarklet');
-			}
-
-			$return[] = new ElggMenuItem('bookmarklet', $title, 'bookmarks/bookmarklet/' . $page_owner->getGUID());
-		}
+	if (!elgg_is_logged_in()) {
+		return;
 	}
+	// only show bookmarklet in bookmark pages
+	if (!elgg_in_context('bookmarks')) {
+		return;
+	}
+	
+	$page_owner = elgg_get_page_owner_entity();
+	if (!$page_owner) {
+		$page_owner = elgg_get_logged_in_user_entity();
+	}
+	
+	if ($page_owner instanceof ElggGroup) {
+		$title = elgg_echo('bookmarks:bookmarklet:group');
+	} else {
+		$title = elgg_echo('bookmarks:bookmarklet');
+	}
+
+	$return[] = ElggMenuItem::factory([
+		'name' => 'bookmarklet',
+		'text' => $title,
+		'href' => 'bookmarks/bookmarklet/' . $page_owner->getGUID(),
+	]);
 
 	return $return;
 }

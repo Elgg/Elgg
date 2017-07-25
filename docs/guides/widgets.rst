@@ -3,8 +3,6 @@ Widgets
 
 Widgets are content areas that users can drag around their page to customize the layout. They can typically be customized by their owner to show more/less content and determine who sees the widget. By default Elgg provides plugins for customizing the profile page and dashboard via widgets.
 
-TODO: Screenshot
-
 .. contents:: Contents
    :local:
    :depth: 2
@@ -29,7 +27,21 @@ To create a widget, create two views:
 Register the widget
 -------------------
 
-Once you have created your edit and view pages, you need to initialize the plugin widget. This is done within the plugins ``init()`` function.
+Once you have created your edit and view pages, you need to initialize the plugin widget.
+
+The easiest way to do this is to add the ``widgets`` section to your ``elgg-plugin.php`` config file.
+
+.. code:: php
+
+	return [
+		'widgets' => [
+			'filerepo' => [
+				'context' => ['profile'],
+			],
+		]
+	];
+	
+Alternatively you can also use an function to add a widget. This is done within the plugins ``init()`` function.
 
 .. code:: php
 
@@ -38,6 +50,7 @@ Once you have created your edit and view pages, you need to initialize the plugi
         'id' => 'filerepo', 
         'name' => elgg_echo('widgets:filerepo:name'), 
         'description' => elgg_echo('widgets:filerepo:description'),
+        'context' => ['profile'],
     ]);
 
 .. note::
@@ -56,6 +69,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
         'id' => 'filerepo', 
         'name' => elgg_echo('widgets:filerepo:name'), 
         'description' => elgg_echo('widgets:filerepo:description'),
+        'context' => ['profile'],
     ]);
 
     // Add a second file widget
@@ -63,6 +77,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
         'id' => 'filerepo2', 
         'name' => elgg_echo('widgets:filerepo2:name'), 
         'description' => elgg_echo('widgets:filerepo2:description'),
+        'context' => ['dashboard'],
     ]);
 
     // Add a third file widget
@@ -70,6 +85,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
         'id' => 'filerepo3', 
         'name' => elgg_echo('widgets:filerepo3:name'), 
         'description' => elgg_echo('widgets:filerepo3:description'),
+        'context' => ['profile', 'dashboard'],
     ]);
 
 Make sure you have the corresponding directories within your plugin
@@ -101,7 +117,7 @@ When registering a widget you can omit providing a name and a description. If a 
 
 How to restrict where widgets can be used
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The widget can specify the context that it can be used in (all, just profile, just dashboard, etc.). If you do not specify a context they will be available for all contexts.
+The widget can specify the context that it can be used in (just profile, just dashboard, etc.).
 
 .. code:: php
 

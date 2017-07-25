@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'garbagecollector:period' => 'Quanto spesso Elgg dovrebbe raccogliere ed eliminare la "spazzatura"?',
 
 	'garbagecollector:weekly' => 'Una volta alla settimana',
@@ -14,4 +14,4 @@ return array(
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Pulendo metastring non linkate:',
-);
+];

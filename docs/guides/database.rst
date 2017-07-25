@@ -19,8 +19,6 @@ variables or properties. The built-in properties are:
 
 -  **``guid``** The entity's GUID; set automatically
 -  **``owner_guid``** The owning user's GUID
--  **``site_guid``** The owning site's GUID. This is set automatically
-   when an instance of ``ElggObject`` gets created)
 -  **``subtype``** A single-word arbitrary string that defines what kind
    of object it is, for example ``blog``
 -  **``access_id``** An integer representing the access level of the
@@ -309,21 +307,30 @@ Elgg aware of the new mapping. Following is an example class extension:
         // more customizations here
     }
 
-    function committee_init() {
-        
-        register_entity_type('group', 'committee');
-        
-        // Tell Elgg that group subtype "committee" should be loaded using the Committee class
-        // If you ever change the name of the class, use update_subtype() to change it
-        add_subtype('group', 'committee', 'Committee');
-    }
+In your plugins ``elgg-plugin.php`` file add the ``entities`` section.
 
-    register_elgg_event_handler('init', 'system', 'committee_init');
+.. code:: php
+
+    <?php // mod/example/elgg-plugin.php
+    return [
+        // entities registration
+        'entities' => [
+			[
+				'type' => 'group',
+				'subtype' => 'committee',
+				'class' => 'Committee',
+				'searchable' => true, 
+			],
+		],
+    ];
+    
+The entities will be registered upon activation of the plugin.
     
 Now if you invoke ``get_entity()`` with the GUID of a committee object,
 you'll get back an object of type Committee.
 
-This template was extracted from the definition of ElggFile.
+.. note::
+	If you ever change the name of the class, use ``update_subtype()`` to change it as part of an upgrade
 
 Advanced features
 -----------------

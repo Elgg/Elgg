@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => '검색할 말을 입력하세요:',
 	'search:no_results' => '결과가 없습니다.',
 	'search:matched' => '찾음:',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => '의',
 	'search:unavailable_entity' => '없는 항목',
 	'search:unknown_entity' => '알수없는 항목 종류',
-);
+];

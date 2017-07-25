@@ -511,6 +511,19 @@ you can improve performance a bit by preloading all owner entities:
 
 See also :doc:`this background information on Elgg's database </design/database>`.
 
+If you want to show a message when the list does not contain items to list, you can pass
+a ``no_results`` message. If you want even more controle over the ``no_results`` message you
+can also pass a Closure (an anonymous function).
+
+.. code-block:: php
+
+	echo elgg_list_entities([
+	    'type' => 'object',
+	    'subtype' => 'blog',
+
+	    'no_results' => elgg_echo('notfound'),
+	]);
+
 Rendering a list with an alternate view
 ---------------------------------------
 

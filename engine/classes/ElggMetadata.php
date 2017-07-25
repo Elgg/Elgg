@@ -41,10 +41,12 @@ class ElggMetadata extends \ElggExtender {
 		$this->initializeAttributes();
 
 		if ($row) {
-			foreach ((array)$row as $key => $value) {
+			foreach ((array) $row as $key => $value) {
 				$this->attributes[$key] = $value;
 			}
 		}
+
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
 	}
 
 	/**
@@ -72,11 +74,11 @@ class ElggMetadata extends \ElggExtender {
 	public function save() {
 		if ($this->id > 0) {
 			return update_metadata($this->id, $this->name, $this->value,
-				$this->value_type, $this->owner_guid, $this->access_id);
+				$this->value_type, $this->owner_guid);
 		} else {
 			// using create_metadata() for deprecation notices in 2.x
 			$this->id = create_metadata($this->entity_guid, $this->name, $this->value,
-				$this->value_type, $this->owner_guid, $this->access_id);
+				$this->value_type, $this->owner_guid);
 
 			if (!$this->id) {
 				throw new \IOException("Unable to save new " . get_class());

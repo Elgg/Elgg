@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\Config as ElggConfig;
+
 /**
  * Manages a site-specific secret key, encoded as a 32 byte string "secret"
  *
@@ -21,18 +23,20 @@ namespace Elgg\Database;
  */
 class SiteSecret {
 
+	const CONFIG_KEY = '__site_secret__';
+
 	/**
-	 * @var Datalist
+	 * @var ElggConfig
 	 */
-	private $datalist;
+	private $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Datalist $datalist Datalist table
+	 * @param ElggConfig $config Config service
 	 */
-	public function __construct(Datalist $datalist) {
-		$this->datalist = $datalist;
+	public function __construct(ElggConfig $config) {
+		$this->config = $config;
 	}
 
 	/**
@@ -53,7 +57,7 @@ class SiteSecret {
 	/**
 	 * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
 	 *
-	 * Used during installation and saves as a datalist.
+	 * Used during installation and saves as a config.
 	 *
 	 * Note: Old secrets were hex encoded.
 	 *
@@ -63,7 +67,7 @@ class SiteSecret {
 	function init() {
 		$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
 
-		if ($this->datalist->set('__site_secret__', $secret)) {
+		if ($this->config->save(self::CONFIG_KEY, $secret)) {
 			return $secret;
 		}
 
@@ -84,7 +88,7 @@ class SiteSecret {
 		if ($this->test_secret) {
 			$secret = $this->test_secret;
 		} else {
-			$secret = $this->datalist->get('__site_secret__');
+			$secret = $this->config->get(self::CONFIG_KEY);
 		}
 		if (!$secret) {
 			$secret = $this->init();

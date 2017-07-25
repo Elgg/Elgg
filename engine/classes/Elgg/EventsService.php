@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
-use Elgg\Debug\Inspector;
+
+use Elgg\HooksRegistrationService\Hook;
+use Elgg\HooksRegistrationService\Event;
 
 /**
  * Service for Events
@@ -11,7 +13,7 @@ use Elgg\Debug\Inspector;
  * @subpackage Hooks
  * @since      1.9.0
  */
-class EventsService extends \Elgg\HooksRegistrationService {
+class EventsService extends HooksRegistrationService {
 	use Profilable;
 
 	const OPTION_STOPPABLE = 'stoppable';
@@ -19,30 +21,13 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	const OPTION_DEPRECATION_VERSION = 'deprecation_version';
 
 	/**
-	 * @var Inspector
-	 */
-	private $inspector;
-
-	/**
-	 * Constructor
-	 *
-	 * @param Inspector $inspector Inspector
-	 */
-	public function __construct(Inspector $inspector = null) {
-		if (!$inspector) {
-			$inspector = new Inspector();
-		}
-		$this->inspector = $inspector;
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function registerHandler($name, $type, $callback, $priority = 500) {
-		if (in_array($type, ['member', 'friend', 'member_of_site', 'attached'])
+		if (in_array($type, ['member', 'friend', 'attached'])
 				&& in_array($name, ['create', 'update', 'delete'])) {
-			$this->logger->error("'$name, $type' event is no longer triggered. Update your event registration "
-				. "to use '$name, relationship'");
+			_elgg_services()->logger->error("'$name, $type' event is no longer triggered. "
+				. "Update your event registration to use '$name, relationship'");
 		}
 
 		return parent::registerHandler($name, $type, $callback, $priority);
@@ -55,42 +40,46 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	 * @see elgg_trigger_after_event
 	 * @access private
 	 */
-	public function trigger($event, $type, $object = null, array $options = array()) {
-		$options = array_merge(array(
+	public function trigger($name, $type, $object = null, array $options = []) {
+		$options = array_merge([
 			self::OPTION_STOPPABLE => true,
 			self::OPTION_DEPRECATION_MESSAGE => '',
 			self::OPTION_DEPRECATION_VERSION => '',
-		), $options);
+		], $options);
 
-		$events = $this->hasHandler($event, $type);
-		if ($events && $options[self::OPTION_DEPRECATION_MESSAGE]) {
-			elgg_deprecated_notice(
+		$handlers = $this->hasHandler($name, $type);
+		if ($handlers && $options[self::OPTION_DEPRECATION_MESSAGE]) {
+			_elgg_services()->deprecation->sendNotice(
 				$options[self::OPTION_DEPRECATION_MESSAGE],
 				$options[self::OPTION_DEPRECATION_VERSION],
 				2
 			);
 		}
 
-		$events = $this->getOrderedHandlers($event, $type);
-		$args = array($event, $type, $object);
+		$handlers = $this->getOrderedHandlers($name, $type);
+		$handler_svc = _elgg_services()->handlers;
 
-		foreach ($events as $callback) {
-			if (!is_callable($callback)) {
-				if ($this->logger) {
-					$this->logger->warn("handler for event [$event, $type] is not callable: "
-										. $this->inspector->describeCallable($callback));
-				}
-				continue;
+		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
+		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
+		// creating objects for every triggering is expensive.
+		$event = 'event';
+		/* @var Event|string */
+
+		foreach ($handlers as $handler) {
+			$handler_description = false;
+			if ($this->timer && $type === 'system' && $name !== 'shutdown') {
+				$handler_description = $handler_svc->describeCallable($handler) . "()";
+				$this->timer->begin(["[$name,$type]", $handler_description]);
 			}
 
-			if ($this->timer && $type === 'system' && $event !== 'shutdown') {
-				$callback_as_string = $this->inspector->describeCallable($callback) . "()";
+			list($success, $return, $event) = $handler_svc->call($handler, $event, [$name, $type, $object]);
 
-				$this->timer->begin(["[$event,$type]", $callback_as_string]);
-				$return = call_user_func_array($callback, $args);
-				$this->timer->end(["[$event,$type]", $callback_as_string]);
-			} else {
-				$return = call_user_func_array($callback, $args);
+			if ($handler_description) {
+				$this->timer->end(["[$name,$type]", $handler_description]);
+			}
+
+			if (!$success) {
+				continue;
 			}
 
 			if (!empty($options[self::OPTION_STOPPABLE]) && ($return === false)) {
@@ -140,9 +129,9 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	 * @since 2.0.0
 	 */
 	public function triggerAfter($event, $object_type, $object = null) {
-		$options = array(
+		$options = [
 			self::OPTION_STOPPABLE => false,
-		);
+		];
 		return $this->trigger("$event:after", $object_type, $object, $options);
 	}
 
@@ -159,11 +148,11 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	 *
 	 * @see trigger
 	 */
-	function triggerDeprecated($event, $object_type, $object = null, $message, $version) {
-		$options = array(
+	function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
+		$options = [
 			self::OPTION_DEPRECATION_MESSAGE => $message,
 			self::OPTION_DEPRECATION_VERSION => $version,
-		);
+		];
 		return $this->trigger($event, $object_type, $object, $options);
 	}
 }

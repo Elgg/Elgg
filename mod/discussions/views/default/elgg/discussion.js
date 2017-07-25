@@ -130,3 +130,4 @@ define(function (require) {
 	 */
 	elgg.discussion.Reply = Reply;
 });
+

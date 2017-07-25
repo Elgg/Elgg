@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Ιστολόγια',
 	'blog:blogs' => 'Ιστολόγια',
 	'blog:revisions' => 'Αναθεωρήσεις',
@@ -63,4 +63,4 @@ return array(
 	'blog:moreblogs' => 'Περισσότερες αναρτήσεις',
 	'blog:numbertodisplay' => 'Αριθμός αναρτήσεων για εμφάνιση',
 	'blog:noblogs' => 'Δεν υπάρχουν αναρτήσεις'
-);
+];

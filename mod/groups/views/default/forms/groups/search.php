@@ -5,15 +5,27 @@
  * @uses $vars['entity'] ElggGroup
  */
 
-$params = array(
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
+}
+
+echo elgg_view_field([
+	'#type' => 'text',
 	'name' => 'q',
-	'class' => 'elgg-input-search mbm',
-);
-echo elgg_view('input/text', $params);
+	'required' => true,
+	'class' => 'elgg-input-search',
+]);
 
-echo elgg_view('input/hidden', array(
+echo elgg_view_field([
+	'#type' => 'hidden',
 	'name' => 'container_guid',
-	'value' => $vars['entity']->getGUID(),
-));
+	'value' => $group->guid,
+]);
 
-echo elgg_view('input/submit', array('value' => elgg_echo('search:go')));
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('search:go'),
+]);
+
+elgg_set_form_footer($footer);

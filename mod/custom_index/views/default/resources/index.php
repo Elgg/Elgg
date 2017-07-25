@@ -1,23 +1,25 @@
 <?php
 /**
  * Elgg custom index page
- * 
- * You can edit the content of this page with your own layout and style. 
+ *
+ * You can edit the content of this page with your own layout and style.
  * Whatever you put in this view will appear on the front page of your site.
- * 
+ *
  */
+
+elgg_load_css('resources/index.css');
 
 elgg_push_context('front');
 
 elgg_push_context('widgets');
 
-$list_params = array(
+$list_params = [
 	'type' => 'object',
 	'limit' => 4,
 	'full_view' => false,
 	'list_type_toggle' => false,
 	'pagination' => false,
-);
+];
 
 //grab the latest 4 blog posts
 $list_params['subtype'] = 'blog';
@@ -32,7 +34,7 @@ $list_params['subtype'] = 'file';
 $files = elgg_list_entities($list_params);
 
 //get the newest members who have an avatar
-$newest_members = elgg_list_entities_from_metadata(array(
+$newest_members = elgg_list_entities_from_metadata([
 	'metadata_names' => 'icontime',
 	'type' => 'user',
 	'limit' => 10,
@@ -41,7 +43,7 @@ $newest_members = elgg_list_entities_from_metadata(array(
 	'list_type' => 'gallery',
 	'gallery_class' => 'elgg-gallery-users',
 	'size' => 'small',
-));
+]);
 
 //newest groups
 $list_params['type'] = 'group';
@@ -54,14 +56,14 @@ $login = elgg_view("core/account/login_box");
 elgg_pop_context();
 
 // lay out the content
-$vars = array(
+$vars = [
 	'blogs' => $blogs,
 	'bookmarks' => $bookmarks,
 	'files' => $files,
 	'groups' => $groups,
 	'login' => $login,
 	'members' => $newest_members,
-);
+];
 
 $body = elgg_view('custom_index/content', $vars);
 

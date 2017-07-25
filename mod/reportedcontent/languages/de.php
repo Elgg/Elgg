@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'item:object:reported_content' => 'Gemeldete Beiträge',
 	'admin:administer_utilities:reportedcontent' => 'Gemeldete Beiträge',
@@ -32,4 +32,4 @@ return array(
 
 	'reportedcontent:failed' => 'Entschuldigung, leider ist der Versuch, diesen Beitrag zu melden, gescheitert.',
 	'reportedcontent:notarchived' => 'Die Meldung konnte nicht archiviert werden.',
-);
+];

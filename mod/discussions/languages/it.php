@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'discussion' => 'Forum',
 	'discussion:add' => 'Aggiungi argomento',
 	'discussion:latest' => 'Ultimi argomenti',
@@ -98,4 +98,4 @@ Visualizza e rispondi qui:
 
 	'discussion:reply:edited' => "Hai modificato con successo il post",
 	'discussion:reply:error' => "Problema durante la modifica del post",
-);
+];

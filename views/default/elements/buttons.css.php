@@ -11,10 +11,10 @@
 	cursor: pointer;
 	border-radius: 3px;
 	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+.elgg-button + .elgg-button {
+	margin-left: 5px;
 }
 .elgg-button:hover,
 .elgg-button:focus {
@@ -96,4 +96,8 @@
 	padding: 14px 20px;
 	margin: 15px 0;
 	border-radius: 5px;
+}
+
+.elgg-button-icon + .elgg-button-label {
+	margin-left: 10px;
 }

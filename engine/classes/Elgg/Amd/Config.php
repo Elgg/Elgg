@@ -6,14 +6,14 @@ namespace Elgg\Amd;
  *
  * @package    Elgg.Core
  * @subpackage JavaScript
- * 
+ *
  * @access private
  */
 class Config {
 	private $baseUrl = '';
-	private $paths = array();
-	private $shim = array();
-	private $dependencies = array();
+	private $paths = [];
+	private $shim = [];
+	private $dependencies = [];
 
 	/**
 	 * @var \Elgg\PluginHooksService
@@ -53,7 +53,7 @@ class Config {
 		}
 
 		if (!isset($this->paths[$name])) {
-			$this->paths[$name] = array();
+			$this->paths[$name] = [];
 		}
 
 		array_unshift($this->paths[$name], $path);
@@ -94,14 +94,14 @@ class Config {
 	 * @throws \InvalidParameterException
 	 */
 	public function addShim($name, array $config) {
-		$deps = elgg_extract('deps', $config, array());
+		$deps = elgg_extract('deps', $config, []);
 		$exports = elgg_extract('exports', $config);
 
 		if (empty($deps) && empty($exports)) {
 			throw new \InvalidParameterException("Shimmed modules must have deps or exports");
 		}
 
-		$this->shim[$name] = array();
+		$this->shim[$name] = [];
 
 		if (!empty($deps)) {
 			$this->shim[$name]['deps'] = $deps;
@@ -182,9 +182,9 @@ class Config {
 	 *
 	 * @return void
 	 */
-	public function addModule($name, array $config = array()) {
+	public function addModule($name, array $config = []) {
 		$url = elgg_extract('url', $config);
-		$deps = elgg_extract('deps', $config, array());
+		$deps = elgg_extract('deps', $config, []);
 		$exports = elgg_extract('exports', $config);
 
 		if (!empty($url)) {
@@ -241,17 +241,17 @@ class Config {
 	 * @return array
 	 */
 	public function getConfig() {
-		$defaults = array(
+		$defaults = [
 			'baseUrl' => $this->baseUrl,
 			'paths' => $this->paths,
 			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
 			'waitSeconds' => 20,
-		);
+		];
 		
-		$params = array(
+		$params = [
 			'defaults' => $defaults
-		);
+		];
 		
 		return  $this->hooks->trigger('config', 'amd', $params, $defaults);
 	}

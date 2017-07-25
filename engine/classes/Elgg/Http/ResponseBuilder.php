@@ -6,7 +6,7 @@ use InvalidArgumentException;
 
 /**
  * HTTP response builder interface
- * 
+ *
  * @access private
  */
 interface ResponseBuilder {

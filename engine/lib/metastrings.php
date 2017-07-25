@@ -8,40 +8,6 @@
  */
 
 /**
- * Gets the metastring identifier for a value.
- *
- * Elgg normalizes the names and values of annotations and metadata. This function
- * provides the identifier used as the index in the metastrings table. Plugin
- * developers should only use this if denormalizing names/values for performance
- * reasons (to avoid multiple joins on the metastrings table).
- *
- * @param string $string         The value
- * @param bool   $case_sensitive Should the retrieval be case sensitive?
- *                               If not, there may be more than one result
- *
- * @return int|array metastring id or array of ids
- * @since 1.9.0
- */
-function elgg_get_metastring_id($string, $case_sensitive = true) {
-	return _elgg_services()->metastringsTable->getId($string, $case_sensitive);
-}
-
-/**
- * Get a map of strings to their metastring identifiers (case sensitive matches)
- *
- * If you need several metastring IDs at once, use this to get a an array of them
- * instead of calling elgg_get_metastring_id() several times.
- *
- * @param string[] $strings Strings to look up
- *
- * @return int[] map of [string] => [id]
- * @since 2.1
- */
-function elgg_get_metastring_map(array $strings) {
-	return _elgg_services()->metastringsTable->getMap($strings);
-}
-
-/**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
  *
@@ -95,7 +61,7 @@ function _elgg_get_metastring_based_objects($options) {
 			return false;
 	}
 
-	$defaults = array(
+	$defaults = [
 		// entities
 		'types' => ELGG_ENTITIES_ANY_VALUE,
 		'subtypes' => ELGG_ENTITIES_ANY_VALUE,
@@ -104,7 +70,6 @@ function _elgg_get_metastring_based_objects($options) {
 		'guids' => ELGG_ENTITIES_ANY_VALUE,
 		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
-		'site_guids' => get_config('site_guid'),
 
 		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
@@ -114,18 +79,15 @@ function _elgg_get_metastring_based_objects($options) {
 		// options are normalized to the plural in case we ever add support for them.
 		'metastring_names' => ELGG_ENTITIES_ANY_VALUE,
 		'metastring_values' => ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs' => ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs_operator' => 'AND',
 
 		'metastring_case_sensitive' => true,
-		//'order_by_metastring' => array(),
 		'metastring_calculation' => ELGG_ENTITIES_NO_VALUE,
 
 		'metastring_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'metastring_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
 		'metastring_owner_guids' => ELGG_ENTITIES_ANY_VALUE,
-
+		
 		'metastring_ids' => ELGG_ENTITIES_ANY_VALUE,
 
 		// sql
@@ -133,9 +95,9 @@ function _elgg_get_metastring_based_objects($options) {
 		'limit' => elgg_get_config('default_limit'),
 		'offset' => 0,
 		'count' => false,
-		'selects' => array(),
-		'wheres' => array(),
-		'joins' => array(),
+		'selects' => [],
+		'wheres' => [],
+		'joins' => [],
 
 		'distinct' => true,
 		'preload_owners' => false,
@@ -144,10 +106,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'batch' => false,
 		'batch_inc_offset' => true,
 		'batch_size' => 25,
-	);
-
-	// @todo Ignore site_guid right now because of #2910
-	$options['site_guid'] = ELGG_ENTITIES_ANY_VALUE;
+	];
 
 	$options = array_merge($defaults, $options);
 
@@ -172,13 +131,13 @@ function _elgg_get_metastring_based_objects($options) {
 		}
 	}
 
-	$singulars = array(
+	$singulars = [
 		'type', 'subtype', 'type_subtype_pair',
-		'guid', 'owner_guid', 'container_guid', 'site_guid',
+		'guid', 'owner_guid', 'container_guid',
 		'metastring_name', 'metastring_value',
 		'metastring_owner_guid', 'metastring_id',
 		'select', 'where', 'join'
-	);
+	];
 
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
@@ -190,7 +149,7 @@ function _elgg_get_metastring_based_objects($options) {
 
 	// evaluate where clauses
 	if (!is_array($options['wheres'])) {
-		$options['wheres'] = array($options['wheres']);
+		$options['wheres'] = [$options['wheres']];
 	}
 
 	$wheres = $options['wheres'];
@@ -202,7 +161,6 @@ function _elgg_get_metastring_based_objects($options) {
 	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 
 	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
@@ -229,34 +187,18 @@ function _elgg_get_metastring_based_objects($options) {
 
 	// evaluate join clauses
 	if (!is_array($options['joins'])) {
-		$options['joins'] = array($options['joins']);
+		$options['joins'] = [$options['joins']];
 	}
 
-	$joins = array();
+	$joins = [];
 	$joins[] = "JOIN {$db_prefix}entities e ON n_table.entity_guid = e.guid";
 
 	// evaluate selects
 	if (!is_array($options['selects'])) {
-		$options['selects'] = array($options['selects']);
+		$options['selects'] = [$options['selects']];
 	}
 
 	$selects = $options['selects'];
-
-	// For performance reasons we don't want the joins required for metadata / annotations
-	// unless we're going through one of their callbacks.
-	// this means we expect the functions passing different callbacks to pass their required joins.
-	// If we're doing a calculation
-	$custom_callback = ($options['callback'] == 'row_to_elggmetadata'
-						|| $options['callback'] == 'row_to_elggannotation');
-	$is_calculation = $options['metastring_calculation'] ? true : false;
-
-	if ($custom_callback || $is_calculation) {
-		$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
-		$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";
-
-		$selects[] = 'n.string as name';
-		$selects[] = 'v.string as value';
-	}
 
 	// add optional joins
 	$joins = array_merge($joins, $options['joins']);
@@ -264,16 +206,18 @@ function _elgg_get_metastring_based_objects($options) {
 	// metastrings
 	$metastring_clauses = _elgg_get_metastring_sql('n_table', $options['metastring_names'],
 		$options['metastring_values'], null, $options['metastring_ids'],
-		$options['metastring_case_sensitive']);
+		$options['metastring_case_sensitive'], $type);
 
 	if ($metastring_clauses) {
 		$wheres = array_merge($wheres, $metastring_clauses['wheres']);
 		$joins = array_merge($joins, $metastring_clauses['joins']);
 	} else {
-		$wheres[] = _elgg_get_access_where_sql(array(
-			'table_alias' => 'n_table',
-			'guid_column' => 'entity_guid',
-		));
+		if ($type === 'annotations') {
+			$wheres[] = _elgg_get_access_where_sql([
+				'table_alias' => 'n_table',
+				'guid_column' => 'entity_guid',
+			]);
+		}
 	}
 
 	$distinct = $options['distinct'] ? "DISTINCT " : "";
@@ -293,7 +237,7 @@ function _elgg_get_metastring_based_objects($options) {
 		// count is over the entities
 		$query = "SELECT count($distinct e.guid) as calculation FROM {$db_prefix}$type n_table";
 	} else {
-		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
+		$query = "SELECT {$options['metastring_calculation']}(n_table.value) as calculation FROM {$db_prefix}$type n_table";
 	}
 
 	foreach ($joins as $i => $join) {
@@ -320,7 +264,7 @@ function _elgg_get_metastring_based_objects($options) {
 	}
 
 	// Add access controls
-	$query .= _elgg_get_access_where_sql(array('table_alias' => 'e'));
+	$query .= _elgg_get_access_where_sql(['table_alias' => 'e']);
 
 	// reverse order by
 	if (isset($options['reverse_order_by']) && $options['reverse_order_by']) {
@@ -343,7 +287,7 @@ function _elgg_get_metastring_based_objects($options) {
 			$offset = sanitise_int($options['offset'], false);
 			$query .= " LIMIT $offset, $limit";
 		}
-		
+
 		$dt = get_data($query, $options['callback']);
 
 		if ($options['preload_owners'] && is_array($dt) && count($dt) > 1) {
@@ -368,19 +312,23 @@ function _elgg_get_metastring_based_objects($options) {
  * @param array  $pairs          Name / value pairs. Not currently used.
  * @param array  $ids            Metastring IDs
  * @param bool   $case_sensitive Should name and values be case sensitive?
+ * @param string $type           "metadata" or "annotations"
  *
  * @return array
  * @access private
  */
 function _elgg_get_metastring_sql($table, $names = null, $values = null,
-	$pairs = null, $ids = null, $case_sensitive = false) {
+	$pairs = null, $ids = null, $case_sensitive = false, $type = null) {
+
+	if ($type !== 'metadata' && $type !== 'annotations') {
+		throw new \InvalidArgumentException('$type must be "metadata" or "annotations"');
+	}
 
 	if ((!$names && $names !== 0)
 		&& (!$values && $values !== 0)
 		&& !$ids
 		&& (!$pairs && $pairs !== 0)) {
-
-		return array();
+		return [];
 	}
 
 	$db_prefix = elgg_get_config('dbprefix');
@@ -390,21 +338,21 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 	// only supported on values.
 	$binary = ($case_sensitive) ? ' BINARY ' : '';
 
-	$return = array (
-		'joins' => array (),
-		'wheres' => array()
-	);
+	$return =  [
+		'joins' =>  [],
+		'wheres' => []
+	];
 
-	$wheres = array();
+	$wheres = [];
 
 	// get names wheres and joins
 	$names_where = '';
 	if ($names !== null) {
 		if (!is_array($names)) {
-			$names = array($names);
+			$names = [$names];
 		}
 
-		$sanitised_names = array();
+		$sanitised_names = [];
 		foreach ($names as $name) {
 			// normalise to 0.
 			if (!$name) {
@@ -414,8 +362,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		}
 
 		if ($names_str = implode(',', $sanitised_names)) {
-			$return['joins'][] = "JOIN {$db_prefix}metastrings msn on $table.name_id = msn.id";
-			$names_where = "(msn.string IN ($names_str))";
+			$names_where = "($table.name IN ($names_str))";
 		}
 	}
 
@@ -423,10 +370,10 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 	$values_where = '';
 	if ($values !== null) {
 		if (!is_array($values)) {
-			$values = array($values);
+			$values = [$values];
 		}
 
-		$sanitised_values = array();
+		$sanitised_values = [];
 		foreach ($values as $value) {
 			// normalize to 0
 			if (!$value) {
@@ -436,18 +383,15 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		}
 
 		if ($values_str = implode(',', $sanitised_values)) {
-			$return['joins'][] = "JOIN {$db_prefix}metastrings msv on $table.value_id = msv.id";
-			$values_where = "({$binary}msv.string IN ($values_str))";
+			$values_where = "({$binary}$table.value IN ($values_str))";
 		}
 	}
-
+	
 	if ($ids !== null) {
 		if (!is_array($ids)) {
-			$ids = array($ids);
+			$ids = [$ids];
 		}
-
 		$ids_str = implode(',', $ids);
-
 		if ($ids_str) {
 			$wheres[] = "n_table.id IN ($ids_str)";
 		}
@@ -461,10 +405,12 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		$wheres[] = $values_where;
 	}
 
-	$wheres[] = _elgg_get_access_where_sql(array(
-		'table_alias' => $table,
-		'guid_column' => 'entity_guid',
-	));
+	if ($type === 'annotations') {
+		$wheres[] = _elgg_get_access_where_sql([
+			'table_alias' => $table,
+			'guid_column' => 'entity_guid',
+		]);
+	}
 
 	if ($where = implode(' AND ', $wheres)) {
 		$return['wheres'][] = "($where)";
@@ -480,7 +426,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
  * @return array
  * @access private
  */
-function _elgg_normalize_metastrings_options(array $options = array()) {
+function _elgg_normalize_metastrings_options(array $options = []) {
 
 	// support either metastrings_type or metastring_type
 	// because I've made this mistake many times and hunting it down is a pain...
@@ -490,22 +436,22 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
 	$options['metastring_type'] = $type;
 
 	// support annotation_ and annotations_ because they're way too easy to confuse
-	$prefixes = array('metadata_', 'annotation_', 'annotations_');
+	$prefixes = ['metadata_', 'annotation_', 'annotations_'];
 
 	// map the metadata_* options to metastring_* options
-	$map = array(
-		'names'					=>	'metastring_names',
-		'values'				=>	'metastring_values',
-		'case_sensitive'		=>	'metastring_case_sensitive',
-		'owner_guids'			=>	'metastring_owner_guids',
-		'created_time_lower'	=>	'metastring_created_time_lower',
-		'created_time_upper'	=>	'metastring_created_time_upper',
-		'calculation'			=>	'metastring_calculation',
-		'ids'					=>	'metastring_ids',
-	);
+	$map = [
+		'names'                 => 'metastring_names',
+		'values'                => 'metastring_values',
+		'case_sensitive'        => 'metastring_case_sensitive',
+		'owner_guids'           => 'metastring_owner_guids',
+		'created_time_lower'    => 'metastring_created_time_lower',
+		'created_time_upper'    => 'metastring_created_time_upper',
+		'calculation'           => 'metastring_calculation',
+		'ids'                   => 'metastring_ids',
+	];
 
 	foreach ($prefixes as $prefix) {
-		$singulars = array("{$prefix}name", "{$prefix}value", "{$prefix}owner_guid", "{$prefix}id");
+		$singulars = ["{$prefix}name", "{$prefix}value", "{$prefix}owner_guid", "{$prefix}id"];
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 		foreach ($map as $specific => $normalized) {
@@ -534,7 +480,7 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
  * @access private
  */
 function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
-	$id = (int)$id;
+	$id = (int) $id;
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$object = _elgg_get_metastring_based_object_from_id($id, $type);
@@ -611,15 +557,15 @@ function _elgg_batch_metastring_based_objects(array $options, $callback, $inc_of
  * @access private
  */
 function _elgg_get_metastring_based_object_from_id($id, $type) {
-	$id = (int)$id;
+	$id = (int) $id;
 	if (!$id) {
 		return false;
 	}
 
-	$options = array(
+	$options = [
 		'metastring_type' => $type,
 		'metastring_id' => $id,
-	);
+	];
 
 	$obj = _elgg_get_metastring_based_objects($options);
 
@@ -639,7 +585,7 @@ function _elgg_get_metastring_based_object_from_id($id, $type) {
  * @access private
  */
 function _elgg_delete_metastring_based_object_by_id($id, $type) {
-	$id = (int)$id;
+	$id = (int) $id;
 	$db_prefix = elgg_get_config('dbprefix');
 
 	switch ($type) {
@@ -663,7 +609,7 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	if ($obj) {
 		if ($obj->canEdit()) {
 			if (elgg_trigger_event('delete', $type, $obj)) {
-				return (bool)delete_data("DELETE FROM $table WHERE id = :id", [
+				return (bool) delete_data("DELETE FROM $table WHERE id = :id", [
 					':id' => $id,
 				]);
 			}
@@ -683,7 +629,7 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
  * @access private
  */
 function _elgg_entities_get_metastrings_options($type, $options) {
-	$valid_types = array('metadata', 'annotation');
+	$valid_types = ['metadata', 'annotation'];
 	if (!in_array($type, $valid_types)) {
 		return false;
 	}
@@ -692,8 +638,8 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 	// is plural (elgg_annotations) so rewrite for the table name.
 	$n_table = ($type == 'annotation') ? 'annotations' : $type;
 
-	$singulars = array("{$type}_name", "{$type}_value",
-		"{$type}_name_value_pair", "{$type}_owner_guid");
+	$singulars = ["{$type}_name", "{$type}_value",
+		"{$type}_name_value_pair", "{$type}_owner_guid"];
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$clauses = _elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
@@ -704,18 +650,18 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 	if ($clauses) {
 		// merge wheres to pass to elgg_get_entities()
 		if (isset($options['wheres']) && !is_array($options['wheres'])) {
-			$options['wheres'] = array($options['wheres']);
+			$options['wheres'] = [$options['wheres']];
 		} elseif (!isset($options['wheres'])) {
-			$options['wheres'] = array();
+			$options['wheres'] = [];
 		}
 
 		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
 
 		// merge joins to pass to elgg_get_entities()
 		if (isset($options['joins']) && !is_array($options['joins'])) {
-			$options['joins'] = array($options['joins']);
+			$options['joins'] = [$options['joins']];
 		} elseif (!isset($options['joins'])) {
-			$options['joins'] = array();
+			$options['joins'] = [];
 		}
 
 		$options['joins'] = array_merge($options['joins'], $clauses['joins']);

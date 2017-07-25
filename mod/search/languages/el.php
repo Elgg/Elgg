@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'search:enter_term' => 'Εισάγετε μια φράση για αναζήτηση:',
 	'search:no_results' => 'Δεν υπάρχουν αποτελέσματα.',
 	'search:matched' => 'Matched:',
@@ -17,4 +17,4 @@ return array(
 	'search:comment_by' => 'από',
 	'search:unavailable_entity' => 'Μη Διαθέσιμη Οντότητα',
 	'search:unknown_entity' => 'Μη διαθέσιμος τύπος οντότητας',
-);
+];

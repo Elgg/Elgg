@@ -2,12 +2,12 @@
 /**
  * Elgg admin header
  */
- 
+	
 $admin_title = elgg_get_site_entity()->name . ' ' . elgg_echo('admin');
 
-$options = array(
+$options = [
 	'sort_by' => 'priority'
-);
+];
 
 ?>
 

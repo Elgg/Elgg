@@ -18,17 +18,25 @@ use Elgg\Cache\PluginSettingsCache;
  */
 class PrivateSettingsTable {
 
-	/** @var Database */
-	private $db;
+	/**
+	 * @var Database
+	 */
+	protected $db;
 
-	/** @var EntityTable */
-	private $entities;
+	/**
+	 * @var EntityTable
+	 */
+	protected $entities;
 
-	/** @var string Name of the database table */
-	private $table;
+	/**
+	 * @var string Name of the database table
+	 */
+	protected $table;
 
-	/** @var PluginSettingsCache cache for settings */
-	private $cache;
+	/**
+	 * @var PluginSettingsCache cache for settings
+	 */
+	protected $cache;
 
 	/**
 	 * Constructor
@@ -77,22 +85,22 @@ class PrivateSettingsTable {
 	 *
 	 * @return mixed int If count, int. If not count, array. false on errors.
 	 */
-	public function getEntities(array $options = array()) {
-		$defaults = array(
+	public function getEntities(array $options = []) {
+		$defaults = [
 			'private_setting_names'                     => ELGG_ENTITIES_ANY_VALUE,
 			'private_setting_values'                    => ELGG_ENTITIES_ANY_VALUE,
 			'private_setting_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
 			'private_setting_name_value_pairs_operator' => 'AND',
 			'private_setting_name_prefix'               => '',
-		);
+		];
 
 		$options = array_merge($defaults, $options);
 
-		$singulars = array(
+		$singulars = [
 			'private_setting_name',
 			'private_setting_value',
 			'private_setting_name_value_pair',
-		);
+		];
 
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
@@ -106,18 +114,18 @@ class PrivateSettingsTable {
 		if ($clauses) {
 			// merge wheres to pass to get_entities()
 			if (isset($options['wheres']) && !is_array($options['wheres'])) {
-				$options['wheres'] = array($options['wheres']);
+				$options['wheres'] = [$options['wheres']];
 			} elseif (!isset($options['wheres'])) {
-				$options['wheres'] = array();
+				$options['wheres'] = [];
 			}
 
 			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
 
 			// merge joins to pass to get_entities()
 			if (isset($options['joins']) && !is_array($options['joins'])) {
-				$options['joins'] = array($options['joins']);
+				$options['joins'] = [$options['joins']];
 			} elseif (!isset($options['joins'])) {
-				$options['joins'] = array();
+				$options['joins'] = [];
 			}
 
 			$options['joins'] = array_merge($options['joins'], $clauses['joins']);
@@ -142,24 +150,24 @@ class PrivateSettingsTable {
 
 		// @todo short circuit test
 
-		$return = array (
-			'joins' => array (),
-			'wheres' => array(),
-		);
+		$return =  [
+			'joins' =>  [],
+			'wheres' => [],
+		];
 
 		$return['joins'][] = "JOIN {$this->table} ps on
 			{$table}.guid = ps.entity_guid";
 
-		$wheres = array();
+		$wheres = [];
 
 		// get names wheres
 		$names_where = '';
 		if ($names !== null) {
 			if (!is_array($names)) {
-				$names = array($names);
+				$names = [$names];
 			}
 
-			$sanitised_names = array();
+			$sanitised_names = [];
 			foreach ($names as $name) {
 				$name = $name_prefix . $name;
 				$sanitised_names[] = '\'' . $this->db->sanitizeString($name) . '\'';
@@ -175,10 +183,10 @@ class PrivateSettingsTable {
 		$values_where = '';
 		if ($values !== null) {
 			if (!is_array($values)) {
-				$values = array($values);
+				$values = [$values];
 			}
 
-			$sanitised_values = array();
+			$sanitised_values = [];
 			foreach ($values as $value) {
 				// normalize to 0
 				if (!$value) {
@@ -208,19 +216,19 @@ class PrivateSettingsTable {
 
 			// check if this is an array of pairs or just a single pair.
 			if (isset($pairs['name']) || isset($pairs['value'])) {
-				$pairs = array($pairs);
+				$pairs = [$pairs];
 			}
 
-			$pair_wheres = array();
+			$pair_wheres = [];
 
 			foreach ($pairs as $index => $pair) {
 				// @todo move this elsewhere?
 				// support shortcut 'n' => 'v' method.
 				if (!is_array($pair)) {
-					$pair = array(
+					$pair = [
 						'name' => $index,
 						'value' => $pair
-					);
+					];
 				}
 
 				// must have at least a name and value
@@ -243,7 +251,7 @@ class PrivateSettingsTable {
 				if (is_numeric($pair['value'])) {
 					$value = $this->db->sanitizeString($pair['value']);
 				} else if (is_array($pair['value'])) {
-					$values_array = array();
+					$values_array = [];
 
 					foreach ($pair['value'] as $pair_value) {
 						if (is_numeric($pair_value)) {
@@ -304,23 +312,27 @@ class PrivateSettingsTable {
 	 * @return mixed The setting value, or null if does not exist
 	 */
 	public function get($entity_guid, $name) {
+
 		$values = $this->cache->getAll($entity_guid);
 		if (isset($values[$name])) {
 			return $values[$name];
 		}
 
-		$entity_guid = (int) $entity_guid;
-		$name = $this->db->sanitizeString($name);
-
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return null;
+		if (!$this->entities->exists($entity_guid)) {
+			return false;
 		}
 
-		$query = "SELECT value FROM {$this->table}
-			where name = '{$name}' and entity_guid = {$entity_guid}";
-		$setting = $this->db->getDataRow($query);
+		$query = "
+			SELECT value FROM {$this->table}
+			WHERE name = :name
+			AND entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+			':name' => (string) $name,
+		];
+
+		$setting = $this->db->getDataRow($query, null, $params);
 
 		if ($setting) {
 			return $setting->value;
@@ -336,27 +348,30 @@ class PrivateSettingsTable {
 	 *
 	 * @return string[] empty array if no settings
 	 */
-	function getAll($entity_guid) {
-		$entity_guid = (int) $entity_guid;
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return false;
+	public function getAll($entity_guid) {
+		if (!$this->entities->exists($entity_guid)) {
+			return [];
 		}
 
-		$query = "SELECT * FROM {$this->table} WHERE entity_guid = {$entity_guid}";
-		$result = $this->db->getData($query);
+		$query = "
+			SELECT * FROM {$this->table}
+			WHERE entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+		];
+
+		$result = $this->db->getData($query, null, $params);
+
+		$return = [];
 
 		if ($result) {
-			$return = array();
 			foreach ($result as $r) {
 				$return[$r->name] = $r->value;
 			}
-
-			return $return;
 		}
 
-		return array();
+		return $return;
 	}
 
 	/**
@@ -371,14 +386,23 @@ class PrivateSettingsTable {
 		$this->cache->clear($entity_guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$entity_guid = (int) $entity_guid;
-		$name = $this->db->sanitizeString($name);
-		$value = $this->db->sanitizeString($value);
+		if (!$this->entities->exists($entity_guid)) {
+			return false;
+		}
 
-		$result = $this->db->insertData("INSERT into {$this->table}
+		$query = "
+			INSERT into {$this->table}
 			(entity_guid, name, value) VALUES
-			($entity_guid, '$name', '$value')
-			ON DUPLICATE KEY UPDATE value='$value'");
+			(:entity_guid, :name, :value)
+			ON DUPLICATE KEY UPDATE value = :value
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+			':name' => (string) $name,
+			':value' => (string) $value,
+		];
+
+		$result = $this->db->insertData($query, $params);
 
 		return $result !== false;
 	}
@@ -390,23 +414,21 @@ class PrivateSettingsTable {
 	 * @param string $name        The name of the setting
 	 * @return bool
 	 */
-	function remove($entity_guid, $name) {
+	public function remove($entity_guid, $name) {
 		$this->cache->clear($entity_guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$entity_guid = (int) $entity_guid;
-
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return false;
-		}
-
-		$name = $this->db->sanitizeString($name);
-
-		return $this->db->deleteData("DELETE FROM {$this->table}
-			WHERE name = '{$name}'
-			AND entity_guid = {$entity_guid}");
+		$query = "
+			DELETE FROM {$this->table}
+			WHERE name = :name
+			AND entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+			':name' => (string) $name,
+		];
+		
+		return $this->db->deleteData($query, $params);
 	}
 
 	/**
@@ -415,19 +437,19 @@ class PrivateSettingsTable {
 	 * @param int $entity_guid The Entity GUID
 	 * @return bool
 	 */
-	function removeAllForEntity($entity_guid) {
+	public function removeAllForEntity($entity_guid) {
 		$this->cache->clear($entity_guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$entity_guid = (int) $entity_guid;
+		$query = "
+			DELETE FROM {$this->table}
+			WHERE entity_guid = :entity_guid
+		";
+		$params = [
+			':entity_guid' => (int) $entity_guid,
+		];
 
-		$entity = $this->entities->get($entity_guid);
-
-		if (!$entity instanceof \ElggEntity) {
-			return false;
-		}
-
-		return $this->db->deleteData("DELETE FROM {$this->table}
-			WHERE entity_guid = {$entity_guid}");
+		return $this->db->deleteData($query, $params);
 	}
+
 }

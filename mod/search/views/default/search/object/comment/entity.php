@@ -11,6 +11,10 @@ $owner = $entity->getOwnerEntity();
 $icon = elgg_view_entity_icon($owner, 'tiny');
 
 $container = $entity->getContainerEntity();
+if (!$container) {
+	elgg_log("Search found comment {$entity->guid}, but the user cannot see its container.", 'WARNING');
+	return;
+}
 
 if ($container->getType() == 'object') {
 	$title = $container->title;
@@ -26,7 +30,7 @@ if (!$title) {
 	$title = elgg_echo('item:' . $container->getType());
 }
 
-$title = elgg_echo('search:comment_on', array($title));
+$title = elgg_echo('search:comment_on', [$title]);
 
 $url = $entity->getURL();
 $title = "<a href=\"$url\">$title</a>";

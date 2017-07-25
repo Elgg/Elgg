@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -81,4 +81,4 @@ return array(
 	'bookmarks:save:invalid' => "このブックマークのアドレスはどこか間違っていますので、保存することはできませんでした。",
 	'bookmarks:delete:failed' => "ブックマークから削除できませんでした。もう一度試してみてください。",
 	'bookmarks:unknown_bookmark' => 'お探しのブックマークを見つけることができません。',
-);
+];

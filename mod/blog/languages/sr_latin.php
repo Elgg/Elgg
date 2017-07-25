@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'Blogovi',
 	'blog:blogs' => 'Blogovi',
 	'blog:revisions' => 'Revizije',
@@ -61,4 +61,4 @@ Pogledaj i komentariši članak:
 	'blog:moreblogs' => 'Još blog postova',
 	'blog:numbertodisplay' => 'Broj članaka za prikaz',
 	'blog:noblogs' => 'Nema blog postova'
-);
+];

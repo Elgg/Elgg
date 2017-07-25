@@ -57,29 +57,7 @@ class BootService {
 		// set cookie values for session and remember me
 		_elgg_services()->config->getCookieConfig();
 
-		// we need this stuff before cache
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}datalists
-			WHERE `name` IN ('__site_secret__', 'default_site', 'dataroot')
-		");
-		$datalists = [];
-		foreach ($rows as $row) {
-			$datalists[$row->name] = $row->value;
-		}
-
-		// booting during installation
-		if (empty($datalists['dataroot'])) {
-			$datalists['dataroot'] = '';
-
-			// don't use cache
-			$CONFIG->boot_cache_ttl = 0;
-		}
-
-		if (!$GLOBALS['_ELGG']->dataroot_in_settings) {
-			$CONFIG->dataroot = rtrim($datalists['dataroot'], '/\\') . DIRECTORY_SEPARATOR;
-		}
-		$CONFIG->site_guid = (int)$datalists['default_site'];
+		$CONFIG->site_guid = 1;
 		if (!isset($CONFIG->boot_cache_ttl)) {
 			$CONFIG->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
 		}
@@ -95,15 +73,9 @@ class BootService {
 			$this->timer->begin([__CLASS__ . '::getBootData']);
 		}
 
-		// copy earlier fetches values into the datalist cache and inject into the service
-		$datalist_cache = $data->getDatalistCache();
-		foreach (['__site_secret__', 'default_site', 'dataroot'] as $key) {
-			$datalist_cache->put($key, $datalists[$key]);
-		}
-		_elgg_services()->datalist->setCache($datalist_cache);
+		$configs_cache = $data->getConfigValues();
 
 		$CONFIG->site = $data->getSite();
-		$CONFIG->wwwroot = $CONFIG->site->url;
 		$CONFIG->sitename = $CONFIG->site->name;
 		$CONFIG->sitedescription = $CONFIG->site->description;
 		$CONFIG->url = $CONFIG->wwwroot;
@@ -119,15 +91,15 @@ class BootService {
 		_elgg_services()->pluginSettingsCache->setCachedValues($data->getPluginSettings());
 
 		if (!$GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
-			$simplecache_enabled = $datalist_cache->get('simplecache_enabled');
+			$simplecache_enabled = $configs_cache['simplecache_enabled'];
 			$CONFIG->simplecache_enabled = ($simplecache_enabled === false) ? 1 : $simplecache_enabled;
 		}
 
-		$system_cache_enabled = $datalist_cache->get('system_cache_enabled');
+		$system_cache_enabled = $configs_cache['system_cache_enabled'];
 		$CONFIG->system_cache_enabled = ($system_cache_enabled === false) ? 1 : $system_cache_enabled;
 
 		// needs to be set before [init, system] for links in html head
-		$CONFIG->lastcache = (int)$datalist_cache->get("simplecache_lastupdate");
+		$CONFIG->lastcache = (int) $configs_cache['simplecache_lastupdate'];
 
 		$GLOBALS['_ELGG']->i18n_loaded_from_cache = false;
 
@@ -143,6 +115,8 @@ class BootService {
 		if ($CONFIG->system_cache_enabled) {
 			_elgg_services()->systemCache->loadAll();
 		}
+
+		// we don't store langs in boot data because it varies by user
 		_elgg_services()->translator->loadTranslations();
 
 		// we always need site->email and user->icontime, so load them together
@@ -165,21 +139,16 @@ class BootService {
 	/**
 	 * Invalidate the cache item
 	 *
-	 * @param int $site_guid Site GUID or empty for current site
-	 *
 	 * @return void
 	 */
-	public function invalidateCache($site_guid = 0) {
+	public function invalidateCache() {
 		$CONFIG = _elgg_services()->config->getStorageObject();
-		if (!$site_guid) {
-			$site_guid = $CONFIG->site_guid;
-		}
-
+		
 		// this gets called a lot on plugins page, avoid thrashing cache
-		static $cleared = [];
-		if (empty($cleared[$site_guid])) {
-			$this->getStashItem($CONFIG, $site_guid)->clear();
-			$cleared[$site_guid] = true;
+		static $cleared = false;
+		if (!$cleared) {
+			$this->getStashItem($CONFIG)->clear();
+			$cleared = true;
 		}
 	}
 
@@ -202,7 +171,7 @@ class BootService {
 			return $data;
 		}
 
-		$item = $this->getStashItem($CONFIG, $CONFIG->site_guid);
+		$item = $this->getStashItem($CONFIG);
 		$item->setInvalidationMethod(Invalidation::NONE);
 		$data = $item->get();
 		if ($item->isMiss()) {
@@ -221,13 +190,12 @@ class BootService {
 	/**
 	 * Get a Stash cache item
 	 *
-	 * @param \stdClass $CONFIG    Elgg config object
-	 * @param int       $site_guid The current site GUID
+	 * @param \stdClass $CONFIG Elgg config object
 	 *
 	 * @return \Stash\Interfaces\ItemInterface
 	 */
-	private function getStashItem(\stdClass $CONFIG, $site_guid) {
-		if (!empty($CONFIG->memcache)) {
+	private function getStashItem(\stdClass $CONFIG) {
+		if (!empty($CONFIG->memcache) && class_exists('Memcache')) {
 			$options = [];
 			if (!empty($CONFIG->memcache_servers)) {
 				$options['servers'] = $CONFIG->memcache_servers;
@@ -243,6 +211,6 @@ class BootService {
 				]);
 			}
 		}
-		return (new Pool($driver))->getItem("boot_data_{$site_guid}");
+		return (new Pool($driver))->getItem("boot_data");
 	}
 }

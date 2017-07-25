@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'members:label:online' => 'Online',
 	'members:search' => 'Căutare participanți',
 	'members:title:search' => 'Căutare participanți %s',
@@ -8,4 +8,4 @@ return array(
 	'members:title:popular' => 'Cei mai activi participanți',
 	'members:title:online' => 'Participanți online',
 	'members:list:popular:none' => 'Nu există prieteni membri',
-);
+];

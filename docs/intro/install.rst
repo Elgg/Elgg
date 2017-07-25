@@ -10,14 +10,14 @@ Get your own instance of Elgg running in no time.
 Requirements
 ============
 
--  MySQL 5+
--  PHP 5.5+ with the following extensions:
+- MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)
+- PHP 5.6+ with the following extensions:
 
    -  GD (for graphics processing)
    -  `Multibyte String support`_ (for i18n)
    -  Proper configuration and ability to send email through an MTA
 
--  Web server with support for URL rewriting
+- Web server with support for URL rewriting
 
 Official support is provided for the following configurations:
 
@@ -135,6 +135,13 @@ tools:
 Make sure you add a user to the database with all privileges and record
 the database name, username and password. You will need this information
 when installing Elgg.
+
+Set up Cron
+-----------
+
+Elgg uses timed requests to your site to perform background tasks like
+sending notifications or performing database cleanup jobs. You need
+to configure the :doc:`cron</admin/cron>` to be able to use those kind of features.
 
 Visit your Elgg site
 --------------------
@@ -348,11 +355,11 @@ directories using `open\_basedir`_. You may want to check with your
 hosting provider on this.
 
 Make sure the path is correct and ends with a /. You can check the path
-in your database in the datalists table.
+in your database in the config table.
 
 If you only have ftp access to your server and created a directory but
 do not know the path of it, you might be able to figure it out from the
-www file path set in your datalists database table. Asking for help from
+www file path set in your config database table. Asking for help from
 your hosting help team is recommended at this stage.
 
 .. _open\_basedir: http://www.php.net/manual/en/ini.core.php#ini.open-basedir

@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Com que frequência deve o sistema arquivar o \'log\' ?',
 
 	'logrotate:logrotated' => "Log arquivado
@@ -16,4 +16,4 @@ return array(
 		
 	'logrotate:logdeleted' => "Log apagado",
 	'logrotate:lognotdeleted' => "Erro ao apagar o log",
-);
+];

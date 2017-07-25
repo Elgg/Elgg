@@ -34,11 +34,11 @@ if ($comment_guid) {
 
 		if (elgg_is_xhr()) {
 			// @todo move to its own view object/comment/content in 1.x
-			echo elgg_view('output/longtext', array(
+			echo elgg_view('output/longtext', [
 				'value' => $comment->description,
 				'class' => 'elgg-inner',
 				'data-role' => 'comment-text',
-			));
+			]);
 		}
 	} else {
 		register_error(elgg_echo('generic_comment:failure'));
@@ -66,13 +66,13 @@ if ($comment_guid) {
 	}
 
 	// Add to river
-	elgg_create_river_item(array(
+	elgg_create_river_item([
 		'view' => 'river/object/comment/create',
 		'action_type' => 'comment',
 		'subject_guid' => $user->guid,
 		'object_guid' => $guid,
 		'target_guid' => $entity_guid,
-	));
+	]);
 
 	system_message(elgg_echo('generic_comment:posted'));
 }

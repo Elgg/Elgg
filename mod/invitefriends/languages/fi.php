@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	'friends:invite' => 'Kutsu kavereita',
 	
@@ -30,4 +30,4 @@ Liittyäksesi sivustolle klikkaa tästä:
 
 Tulette automaattisesti toistenne kavereiksi luodessasi käyttäjätilisi.',
 	
-);
+];

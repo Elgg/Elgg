@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -67,4 +67,4 @@ return array(
 
 	'messageboard:failure' => "Простите, при размещении записи произошла ошибка. Попробуйте снова.",
 
-);
+];

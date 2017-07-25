@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'tykkää tästä',
 	'likes:deleted' => 'Tykkäys poistettu',
 	'likes:see' => 'Katso, ketkä tykkäsivät tästä',
@@ -34,4 +34,4 @@ Terveisin,
 %4$s
 ',
 	
-);
+];

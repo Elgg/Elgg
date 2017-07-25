@@ -9,64 +9,58 @@
  * @package ElggGroups
  */
 
-$entity = elgg_extract("entity", $vars, false);
-$membership = elgg_extract("membership", $vars);
-$visibility = elgg_extract("vis", $vars);
-$owner_guid = elgg_extract("owner_guid", $vars);
-$content_access_mode = elgg_extract("content_access_mode", $vars);
+$entity = elgg_extract('entity', $vars, false);
+$membership = elgg_extract('membership', $vars);
+$visibility = elgg_extract('vis', $vars);
+$owner_guid = elgg_extract('owner_guid', $vars);
+$content_access_mode = elgg_extract('content_access_mode', $vars);
 
-?>
-<div>
-	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label><br />
-	<?php echo elgg_view("input/select", array(
-		"name" => "membership",
-		"id" => "groups-membership",
-		"value" => $membership,
-		"options_values" => array(
-			ACCESS_PRIVATE => elgg_echo("groups:access:private"),
-			ACCESS_PUBLIC => elgg_echo("groups:access:public"),
-		)
-	));
-	?>
-</div>
+echo elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('groups:membership'),
+	'name' => 'membership',
+	'id' => 'groups-membership',
+	'value' => $membership,
+	'options_values' => [
+		ACCESS_PRIVATE => elgg_echo('groups:access:private'),
+		ACCESS_PUBLIC => elgg_echo('groups:access:public'),
+	],
+]);
 
-<?php if (elgg_get_plugin_setting("hidden_groups", "groups") == "yes"): ?>
-	<div>
-		<label for="groups-vis"><?php echo elgg_echo("groups:visibility"); ?></label><br />
-		<?php
-		$visibility_options =  array(
-			ACCESS_PRIVATE => elgg_echo("groups:access:group"),
-			ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-			ACCESS_PUBLIC => elgg_echo("PUBLIC"),
-		);
-		if (elgg_get_config("walled_garden")) {
-			unset($visibility_options[ACCESS_PUBLIC]);
-		}
+if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
+	$visibility_options = [
+		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
+		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
+		ACCESS_PUBLIC => elgg_echo('PUBLIC'),
+	];
+	if (elgg_get_config('walled_garden')) {
+		unset($visibility_options[ACCESS_PUBLIC]);
+	}
 		
-		echo elgg_view("input/access", array(
-			"name" => "vis",
-			"id" => "groups-vis",
-			"value" => $visibility,
-			"options_values" => $visibility_options,
-			'entity' => $entity,
-			'entity_type' => 'group',
-			'entity_subtype' => '',
-		));
-		?>
-	</div>
-<?php endif; ?>
+	echo elgg_view_field([
+		'#type' => 'access',
+		'#label' => elgg_echo('groups:visibility'),
+		'name' => 'vis',
+		'id' => 'groups-vis',
+		'value' => $visibility,
+		'options_values' => $visibility_options,
+		'entity' => $entity,
+		'entity_type' => 'group',
+		'entity_subtype' => '',
+	]);
+}
 
-<?php
-
-$access_mode_params = array(
-	"name" => "content_access_mode",
-	"id" => "groups-content-access-mode",
-	"value" => $content_access_mode,
-	"options_values" => array(
-		ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo("groups:content_access_mode:unrestricted"),
-		ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo("groups:content_access_mode:membersonly"),
-	)
-);
+$access_mode_params = [
+	'#type' => 'select',
+	'#label' => elgg_echo('groups:content_access_mode'),
+	'name' => 'content_access_mode',
+	'id' => 'groups-content-access-mode',
+	'value' => $content_access_mode,
+	'options_values' => [
+		ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
+		ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
+	],
+];
 
 if ($entity) {
 	// Disable content_access_mode field for hidden groups because the setting
@@ -74,62 +68,50 @@ if ($entity) {
 	if ($entity->access_id === $entity->group_acl) {
 		$access_mode_params['disabled'] = 'disabled';
 	}
+	
+	if ($entity->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) {
+		// Warn the user that changing the content access mode to more
+		// restrictive will not affect the existing group content
+		$access_mode_params['#help'] = elgg_echo('groups:content_access_mode:warning');
+	}
 }
-?>
-<div>
-	<label for="groups-content-access-mode"><?php echo elgg_echo("groups:content_access_mode"); ?></label><br />
-	<?php
-		echo elgg_view("input/select", $access_mode_params);
 
-		if ($entity && $entity->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) {
-			// Warn the user that changing the content access mode to more
-			// restrictive will not affect the existing group content
-			$access_mode_warning = elgg_echo("groups:content_access_mode:warning");
-			echo "<span class='elgg-text-help'>$access_mode_warning</span>";
-		}
-	?>
-</div>
-
-<?php
+echo elgg_view_field($access_mode_params);
 
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
-	$members = array();
+	$members = [];
 
 	$dbprefix = elgg_get_config('dbprefix');
-	$options = array(
-		"type" => "user",
-		"relationship" => "member",
-		"relationship_guid" => $entity->getGUID(),
-		"inverse_relationship" => true,
-		"limit" => false,
-		"callback" => false,
-		"joins" => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
-		"selects" => ['ue.*'],
-		"order_by" => 'ue.name ASC',
-	);
 
-	$batch = new ElggBatch("elgg_get_entities_from_relationship", $options);
+	$batch = new ElggBatch('elgg_get_entities_from_relationship', [
+		'type' => 'user',
+		'relationship' => 'member',
+		'relationship_guid' => $entity->getGUID(),
+		'inverse_relationship' => true,
+		'limit' => false,
+		'callback' => false,
+		'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+		'selects' => ['ue.*'],
+		'order_by' => 'ue.name ASC',
+	]);
 	foreach ($batch as $member) {
 		$option_text = "$member->name (@$member->username)";
 		$members[$member->guid] = htmlspecialchars($option_text, ENT_QUOTES, "UTF-8", false);
 	}
-	?>
-
-	<div>
-		<label for="groups-owner-guid"><?php echo elgg_echo("groups:owner"); ?></label><br />
-		<?php
-			echo elgg_view("input/select", array(
-				"name" => "owner_guid",
-				"id" => "groups-owner-guid",
-				"value" =>  $owner_guid,
-				"options_values" => $members,
-				"class" => "groups-owner-input",
-			));
-
-			if ($owner_guid == elgg_get_logged_in_user_guid()) {
-				echo "<span class='elgg-text-help'>" . elgg_echo("groups:owner:warning") . "</span>";
-			}
-		?>
-	</div>
-<?php
+	
+	$owner_guid_options = [
+		'#type' => 'select',
+		'#label' => elgg_echo('groups:owner'),
+		'name' => 'owner_guid',
+		'id' => 'groups-owner-guid',
+		'value' =>  $owner_guid,
+		'options_values' => $members,
+		'class' => 'groups-owner-input',
+	];
+	
+	if ($owner_guid == elgg_get_logged_in_user_guid()) {
+		$owner_guid_options['#help'] = elgg_echo('groups:owner:warning');
+	}
+	
+	echo elgg_view_field($owner_guid_options);
 }

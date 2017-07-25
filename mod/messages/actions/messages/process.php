@@ -3,7 +3,7 @@
  * Process a set of messages
  */
 
-$message_guids = get_input('message_id', array());
+$message_guids = get_input('message_id', []);
 
 if (!$message_guids) {
 	register_error(elgg_echo('messages:error:messages_not_selected'));

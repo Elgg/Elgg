@@ -7,4 +7,5 @@
  * @package    Elgg.Core
  * @subpackage Exceptions
  */
-class ClassNotFoundException extends \ClassException {}
+class ClassNotFoundException extends \ClassException {
+}

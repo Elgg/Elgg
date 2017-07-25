@@ -3,9 +3,6 @@
  * Group join river view.
  */
 
-echo elgg_view('river/elements/layout', array(
+echo elgg_view('river/elements/layout', [
 	'item' => $vars['item'],
-
-	// truthy value to bypass responses rendering
-	'responses' => ' ',
-));
+]);

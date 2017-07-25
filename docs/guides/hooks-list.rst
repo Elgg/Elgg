@@ -94,7 +94,11 @@ System hooks
 	or return ``false`` to cancel the item creation.
 
 **simplecache:generate, <view>**
-	Triggered when generating the cached content of a view.
+	Filters the view output for a ``/cache`` URL when simplecache is enabled.
+
+**cache:generate, <view>**
+	Filters the view output for a ``/cache`` URL when simplecache is disabled. Note this will be fired
+	for every ``/cache`` request--no Expires headers are used when simplecache is disabled.
 
 **prepare, breadcrumbs**
     In ``elgg_get_breadcrumbs()``, this filters the registered breadcrumbs before
@@ -173,6 +177,57 @@ Object hooks
 
 **likes:count, <entity_type>**
 	Return the number of likes for ``$params['entity']``.
+
+Access hooks
+============
+
+**access_collection:url, access_collection**
+	Can be used to filter the URL of the access collection.
+
+	The ``$params`` array will contain:
+
+	 * ``access_collection`` - `ElggAccessCollection`
+
+**access_collection:name, access_collection**
+	Can be used to filter the display name (readable access level) of the access collection.
+
+	The ``$params`` array will contain:
+
+	 * ``access_collection`` - `ElggAccessCollection`
+
+**access:collections:read, user**
+	Filters an array of access IDs that the user ``$params['user_id']`` can see.
+
+	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
+
+**access:collections:write, user**
+	Filters an array of access IDs that the user ``$params['user_id']`` can write to. In
+	get_write_access_array(), this hook filters the return value, so it can be used to alter
+	the available options in the input/access view. For core plugins, the value "input_params"
+	has the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
+	"container_guid" (int) are provided. An empty entity value generally means the form is to
+	create a new object.
+
+	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
+
+**access:collections:addcollection, collection**
+	Triggered after an access collection ``$params['collection_id']`` is created.
+
+**access:collections:deletecollection, collection**
+	Triggered before an access collection ``$params['collection_id']`` is deleted.
+	Return false to prevent deletion.
+
+**access:collections:add_user, collection**
+	Triggered before adding user ``$params['user_id']`` to collection ``$params['collection_id']``.
+	Return false to prevent adding.
+
+**access:collections:remove_user, collection**
+	Triggered before removing user ``$params['user_id']`` to collection ``$params['collection_id']``.
+	Return false to prevent removal.
+
+**get_sql, access**
+    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
+
 
 Action hooks
 ============
@@ -302,39 +357,6 @@ Permission hooks
 **api_key, use**
 	Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated.
 
-**access:collections:read, user**
-	Filters an array of access IDs that the user ``$params['user_id']`` can see.
-
-	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
-
-**access:collections:write, user**
-	Filters an array of access IDs that the user ``$params['user_id']`` can write to. In
-	get_write_access_array(), this hook filters the return value, so it can be used to alter
-	the available options in the input/access view. For core plugins, the value "input_params"
-	has the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
-	"container_guid" (int) are provided. An empty entity value generally means the form is to
-	create a new object.
-
-	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
-
-**access:collections:addcollection, collection**
-	Triggered after an access collection ``$params['collection_id']`` is created.
-
-**access:collections:deletecollection, collection**
-	Triggered before an access collection ``$params['collection_id']`` is deleted.
-	Return false to prevent deletion.
-
-**access:collections:add_user, collection**
-	Triggered before adding user ``$params['user_id']`` to collection ``$params['collection_id']``.
-	Return false to prevent adding.
-
-**access:collections:remove_user, collection**
-	Triggered before removing user ``$params['user_id']`` to collection ``$params['collection_id']``.
-	Return false to prevent removal.
-
-**get_sql, access**
-    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
-
 **gatekeeper, <entity_type>:<entity_subtype>**
     Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.
 
@@ -454,6 +476,20 @@ Note that not all hooks apply to instant notifications.
 	 * ``headers`` - an array of headers
 	 * ``params`` - other parameters inherited from the notification object or passed directly to ``elgg_send_email()``
 
+**email:message, system**
+	Triggered by ``elgg_send_email()``.
+	Applies to **subscriptions** and **instant** notifications with ``email`` method.
+	This hook allows you to alter an instance of ``\Zend\Mail\Message`` before it is passed to the email transport.
+	
+	``$params`` contains:
+
+	 * ``to`` - email address or string in the form ``Name <name@example.org>`` of the recipient
+	 * ``from`` - email address or string in the form ``Name <name@example.org>`` of the sender
+	 * ``subject`` - subject line of the email
+	 * ``body`` - body of the email
+	 * ``headers`` - an array of headers
+	 * ``params`` - other parameters inherited from the notification object or passed directly to ``elgg_send_email()``
+
 **send:after, notifications**
 	Triggered after all notifications in the queue for the notifications event have been processed.
 	Applies to **subscriptions** and **instant** notifications.
@@ -541,7 +577,7 @@ Views
              'rel' => 'icon',
              'sizes' => '16x16',
              'type' => 'image/png',
-		     'href' => elgg_get_simplecache_url('favicon-16.png'),
+		     'href' => elgg_get_simplecache_url('graphics/favicon-16.png'),
           ],
        ],
     ];
@@ -827,8 +863,14 @@ Other
 	)
 
 **public_pages, walled_garden**
-	Filter the URLs that are can be seen by logged out users if Walled Garden is
-	enabled. ``$value`` is an array of regex strings that will allow access if matched.
+	Filters a list of URLs (paths) that can be seen by logged out users in a walled garden mode.
+	Handlers must return an array of regex strings that will allow access if matched.
+	Please note that system public routes are passed as the default value to the hook,
+	and plugins must take care to not accidentally override these values.
+
+	The ``$params`` array contains:
+
+	 * ``url`` - URL of the page being tested for public accessibility
 
 **volatile, metadata**
 	Triggered when exporting an entity through the export handler. This is rare.
@@ -873,7 +915,10 @@ HTMLawed
 	Filter the HTMLawed allowed style array.
 
 **config, htmlawed**
-	Filter the HTMLawed config array.
+	Filter the HTMLawed ``$config`` array.
+
+**spec, htmlawed**
+	Filter the HTMLawed ``$spec`` string (default empty).
 
 Likes
 -----

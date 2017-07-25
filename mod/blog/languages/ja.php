@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => 'ブログ',
 	'blog:blogs' => 'ブログ',
 	'blog:revisions' => '変更履歴',
@@ -63,4 +63,4 @@ return array(
 	'blog:moreblogs' => '別のブログ記事',
 	'blog:numbertodisplay' => 'ブログ記事の表示件数',
 	'blog:noblogs' => 'ブログ記事は一つもありません'
-);
+];

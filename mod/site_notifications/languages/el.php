@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'site_notifications' => 'Ειδοποιήσεις Ιστότοπου',
 	'notification:method:site' => 'Ιστότοπος',
 	'site_notifications:topbar' => 'Ειδοποιήσεις',
@@ -11,4 +11,4 @@ return array(
 	'site_notifications:toggle_all' => 'Εναλλαγή όλων',
 	'site_notifications:error:notifications_not_selected' => 'Δεν επιλέχθηκαν ειδοποιήσεις',
 	'site_notifications:success:delete' => 'Οι ειδοποιήσεις διαγράφτηκαν'
-);
+];

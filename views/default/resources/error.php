@@ -16,7 +16,7 @@ if (elgg_view_exists("errors/$type")) {
 	$content = elgg_view("errors/default", $params);
 }
 
-$httpCodes = array(
+$httpCodes = [
 	'400' => 'Bad Request',
 	'401' => 'Unauthorized',
 	'403' => 'Forbidden',
@@ -24,7 +24,7 @@ $httpCodes = array(
 	'407' => 'Proxy Authentication Required',
 	'500' => 'Internal Server Error',
 	'503' => 'Service Unavailable',
-);
+];
 
 if (isset($httpCodes[$type])) {
 	elgg_set_http_header("HTTP/1.1 $type {$httpCodes[$type]}");
@@ -32,8 +32,14 @@ if (isset($httpCodes[$type])) {
 
 $layout = elgg_in_context('admin') && elgg_is_admin_logged_in() ? 'admin' : 'error';
 
-$body = elgg_view_layout($layout, array(
+$body = elgg_view_layout($layout, [
 	'title' => $title,
 	'content' => $content,
-));
-echo elgg_view_page($title, $body, $layout);
+]);
+
+$shell = $layout;
+if (!elgg_is_logged_in() && elgg_get_config('walled_garden')) {
+	$shell = 'walled_garden';
+}
+
+echo elgg_view_page($title, $body, $shell);

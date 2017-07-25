@@ -6,13 +6,16 @@
  * @subpackage Test
  */
 class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
-	protected $metastrings;
+
+	/**
+	 * @var ElggObject
+	 */
+	protected $object;
 
 	/**
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->metastrings = array();
 		$this->object = new \ElggObject();
 	}
 
@@ -24,36 +27,10 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		unset($this->object);
 	}
 
-	public function testGetMetastringById() {
-		foreach (array('metaUnitTest', 'metaunittest', 'METAUNITTEST') as $string) {
-			// since there is no guarantee that metastrings are garbage collected
-			// between unit test runs, we delete before testing
-			$this->delete_metastrings($string);
-			$this->create_metastring($string);
-		}
-
-		// lookup metastring id
-		$cs_ids = elgg_get_metastring_id('metaUnitTest', true);
-		$this->assertEqual($cs_ids, $this->metastrings['metaUnitTest']);
-
-		// lookup all metastrings, ignoring case
-		$cs_ids = elgg_get_metastring_id('metaUnitTest', false);
-		$this->assertEqual(count($cs_ids), 3);
-		$this->assertEqual(count($cs_ids), count($this->metastrings));
-		foreach ($cs_ids as $string )
-		{
-			$this->assertTrue(in_array($string, $this->metastrings));
-		}
-	}
-
 	public function testElggGetEntitiesFromMetadata() {
-		global $METASTRINGS_CACHE;
-		$METASTRINGS_CACHE = array();
-
+		
 		$this->object->title = 'Meta Unit Test';
 		$this->object->save();
-		$this->create_metastring('metaUnitTest');
-		$this->create_metastring('tested');
 
 		// create_metadata returns id of metadata on success
 		$this->assertNotEqual(false, create_metadata($this->object->guid, 'metaUnitTest', 'tested'));
@@ -82,8 +59,8 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$this->object->save();
 
 		$guid = $this->object->getGUID();
-		create_metadata($guid, 'tested', 'tested1', 'text', 0, ACCESS_PUBLIC, true);
-		create_metadata($guid, 'tested', 'tested2', 'text', 0, ACCESS_PUBLIC, true);
+		create_metadata($guid, 'tested', 'tested1', 'text', 0, null, true);
+		create_metadata($guid, 'tested', 'tested2', 'text', 0, null, true);
 
 		$count = (int)elgg_get_metadata(array(
 			'metadata_names' => array('tested'),
@@ -128,11 +105,11 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$pair = array('name' => 'test' , 'value' => false);
 		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', null, null, $pair);
 		$where = preg_replace( '/\s+/', ' ', $result['wheres'][0]);
-		$this->assertTrue(strpos($where, "msn1.string = 'test' AND BINARY msv1.string = 0") > 0);
+		$this->assertTrue(strpos($where, "n_table1.name = 'test' AND BINARY n_table1.value = 0") > 0);
 
 		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', array('test'), array(false));
 		$where = preg_replace( '/\s+/', ' ', $result['wheres'][0]);
-		$this->assertTrue(strpos($where, "msn.string IN ('test')) AND ( BINARY msv.string IN ('0')"));
+		$this->assertTrue(strpos($where, "n_table.name IN ('test')) AND ( BINARY n_table.value IN ('0')"));
 	}
 
 	// Make sure metadata with multiple values is correctly deleted when re-written
@@ -259,28 +236,5 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 
 		$obj->delete();
 		elgg_set_ignore_access($ia);
-	}
-
-	protected function delete_metastrings($string) {
-		global $CONFIG, $METASTRINGS_CACHE;
-		$METASTRINGS_CACHE = array();
-
-		_elgg_get_memcache('metastrings_memcache')->delete(md5($string));
-
-		$string = sanitise_string($string);
-		_elgg_services()->db->deleteData("
-			DELETE FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$string'
-		");
-	}
-
-	protected function create_metastring($string) {
-		global $CONFIG, $METASTRINGS_CACHE;
-		$METASTRINGS_CACHE = array();
-
-		$string = sanitise_string($string);
-		$id = _elgg_services()->db->insertData("
-			INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$string')
-		");
-		$this->metastrings[$string] = $id;
 	}
 }

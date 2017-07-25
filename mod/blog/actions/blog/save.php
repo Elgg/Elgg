@@ -15,10 +15,10 @@
 elgg_make_sticky_form('blog');
 
 // save or preview
-$save = (bool)get_input('save');
+$save = (bool) get_input('save');
 
 // store errors to pass along
-$error = FALSE;
+$error = false;
 $error_forward_url = REFERER;
 $user = elgg_get_logged_in_user_entity();
 
@@ -40,14 +40,14 @@ if ($guid) {
 } else {
 	$blog = new ElggBlog();
 	$blog->subtype = 'blog';
-	$new_post = TRUE;
+	$new_post = true;
 }
 
 // set the previous status for the hooks to update the time_created and river entries
 $old_status = $blog->status;
 
 // set defaults and required values.
-$values = array(
+$values = [
 	'title' => '',
 	'description' => '',
 	'status' => 'draft',
@@ -55,11 +55,11 @@ $values = array(
 	'comments_on' => 'On',
 	'excerpt' => '',
 	'tags' => '',
-	'container_guid' => (int)get_input('container_guid'),
-);
+	'container_guid' => (int) get_input('container_guid'),
+];
 
 // fail if a required entity isn't set
-$required = array('title', 'description');
+$required = ['title', 'description'];
 
 // load from POST and do sanity and access checking
 foreach ($values as $name => $default) {
@@ -150,12 +150,12 @@ if (!$error) {
 		// add to river if changing status or published, regardless of new post
 		// because we remove it for drafts.
 		if (($new_post || $old_status == 'draft') && $status == 'published') {
-			elgg_create_river_item(array(
+			elgg_create_river_item([
 				'view' => 'river/object/blog/create',
 				'action_type' => 'create',
 				'subject_guid' => $blog->owner_guid,
 				'object_guid' => $blog->getGUID(),
-			));
+			]);
 
 			elgg_trigger_event('publish', 'object', $blog);
 
@@ -165,10 +165,10 @@ if (!$error) {
 				$blog->save();
 			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
-			_elgg_delete_river(array(
+			_elgg_delete_river([
 				'object_guid' => $blog->guid,
 				'action_type' => 'create',
-			));
+			]);
 		}
 
 		if ($blog->status == 'published' || $save == false) {

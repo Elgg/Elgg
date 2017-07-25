@@ -18,8 +18,7 @@ $export = $result->export();
 			<?php
 				if ($result instanceof SuccessResult)
 					echo "OK";
-				else
-					echo "**** ERROR ({$export->status}) ****";
+			else echo "**** ERROR ({$export->status}) ****";
 			?>
 		</td></tr>
 

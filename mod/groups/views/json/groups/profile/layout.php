@@ -1,7 +1,7 @@
 <?php
 /**
  * JSON group profile view
- * 
+ *
  * @uses $vars['entity']
  */
 

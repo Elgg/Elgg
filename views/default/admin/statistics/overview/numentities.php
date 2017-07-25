@@ -1,40 +1,51 @@
 <?php
 // Get entity statistics
 $entity_stats = get_entity_statistics();
-$even_odd = "";
-?>		
-<table class="elgg-table-alt">
-<?php
-foreach ($entity_stats as $k => $entry) {
-	arsort($entry);
-	foreach ($entry as $a => $b) {
 
-		//This function controls the alternating class
-		$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
+$registered_entity_types = get_registered_entity_types();
 
-		if ($a == "__base__") {
-			$a = elgg_echo("item:{$k}");
-			if (empty($a))
-				$a = $k;
+$searchable = [];
+$other = [];
+
+foreach ($entity_stats as $type => $subtypes) {
+	foreach ($subtypes as $subtype => $value) {
+		
+		$is_registered = false;
+		if ($subtype == '__base__') {
+			$is_registered = array_key_exists($type, $registered_entity_types);
+			$name = elgg_echo("item:$type");
 		} else {
-			if (empty($a)) {
-				$a = elgg_echo("item:{$k}");
-			} else {
-				$a = elgg_echo("item:{$k}:{$a}");
-			}
-
-			if (empty($a)) {
-				$a = "$k $a";
-			}
+			$is_registered = in_array($subtype, $registered_entity_types[$type]);
+			$name = elgg_echo("item:$type:$subtype");
 		}
 		
-		echo <<< END
-			<tr class="{$even_odd}">
-				<td>{$a}:</td>
-				<td>{$b}</td>
-			</tr>
-END;
+		if ($is_registered) {
+			$searchable[$name] = $value;
+		} else {
+			$other[$name] = $value;
 		}
 	}
-?>
-</table>
+}
+
+arsort($searchable);
+arsort($other);
+
+$header = '<tr><th>' . elgg_echo('admin:statistics:numentities:type') . '</th>';
+$header .= '<th>' . elgg_echo('admin:statistics:numentities:number') . '</th></tr>';
+
+$rows = '';
+
+foreach ($searchable as $name => $value) {
+	$rows .= "<tr><td>{$name}:</td><td>{$value}</td></tr>";
+}
+echo '<h4>' . elgg_echo('admin:statistics:numentities:searchable') . '</h4>';
+echo "<table class='elgg-table-alt'>{$header}{$rows}</table>";
+echo '<br />';
+
+
+$rows = '';
+foreach ($other as $name => $value) {
+	$rows .= "<tr><td>{$name}:</td><td>{$value}</td></tr>";
+}
+echo '<h4>' . elgg_echo('admin:statistics:numentities:other') . '</h4>';
+echo "<table class='elgg-table-alt'>{$header}{$rows}</table>";

@@ -7,12 +7,12 @@ if (!get_entity($guid)) {
 	return;
 }
 
-$list = elgg_list_annotations(array(
+$list = elgg_list_annotations([
 	'guid' => $guid,
 	'annotation_name' => 'likes',
 	'limit' => 99,
 	'preload_owners' => true,
 	'pagination' => false,
-));
+]);
 
 echo elgg_format_element('div', ['class' => 'elgg-likes-popup'], $list);

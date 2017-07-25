@@ -8,7 +8,6 @@ use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Http\Request;
 use Elgg\Mocks\Di\MockServiceProvider;
-use ElggSession;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
@@ -27,8 +26,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Constructs a test case with the given name.
-	 * Boostraps testing environment
-	 * 
+	 * Bootstraps testing environment
+	 *
 	 * @param string $name
 	 * @param array  $data
 	 * @param string $dataName
@@ -51,7 +50,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Boostraps test suite
+	 * Bootstraps test suite
 	 *
 	 * @global stdClass $CONFIG Global config
 	 * @global stdClass $_ELGG  Global vars
@@ -79,12 +78,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		$sp->config->getCookieConfig();
 
 		$app = new Application($sp);
+		Application::setTestingApplication(true);
 		Application::$_instance = $app;
 
 		// loadCore bails on repeated calls, so we need to manually inject this to make
 		// sure it happens before each test.
 		$app->loadCore();
 		_elgg_services($sp);
+
+		// Invalidate memcache
+		_elgg_get_memcache('new_entity_cache')->clear();
 
 		self::$_mocks = null; // reset mocking service
 	}
@@ -94,7 +97,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 * @return array
 	 */
 	public static function getTestingConfigArray() {
-		return [
+		global $CONFIG;
+
+		if (!isset($CONFIG)) {
+			$CONFIG = new \stdClass;
+		}
+		
+		$conf = [
 			'Config_file' => false,
 			'dbprefix' => 'elgg_t_i_',
 			'boot_complete' => false,
@@ -126,6 +135,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 				'site',
 			],
 		];
+
+		foreach ($conf as $key => $val) {
+			if (!isset($CONFIG->$key)) {
+				$CONFIG->$key = $val;
+			}
+		}
+
+		return (array) $CONFIG;
 	}
 
 	/**
@@ -166,17 +183,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			// Individual tests can reset service providers to get a clean global state
 			self::bootstrap();
 		}
-
+		
 		_elgg_services()->setValue('session', self::mocks()->session);
 		_elgg_services()->setValue('db', self::mocks()->db);
 		_elgg_services()->setValue('entityTable', self::mocks()->entityTable);
 		_elgg_services()->setValue('metadataTable', self::mocks()->metadataTable);
-		_elgg_services()->setValue('metastringsTable', self::mocks()->metastringsTable);
 		_elgg_services()->setValue('annotations', self::mocks()->annotations);
 		_elgg_services()->setValue('relationshipsTable', self::mocks()->relationshipsTable);
 		_elgg_services()->setValue('accessCollections', self::mocks()->accessCollections);
+		_elgg_services()->setValue('privateSettings', self::mocks()->privateSettings);
 		_elgg_services()->setValue('subtypeTable', self::mocks()->subtypeTable);
-		_elgg_services()->setValue('datalist', self::mocks()->datalist);
 
 		$dt = new DateTime();
 		_elgg_services()->entityTable->setCurrentTime($dt);
@@ -198,8 +214,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public static function prepareHttpRequest($uri = '', $method = 'GET', $parameters = [], $ajax = 0, $add_csrf_tokens = false) {
 		$site_url = elgg_get_site_url();
-		$path = substr(elgg_normalize_url($uri), strlen($site_url));
-		$path_key = Application::GET_PATH_KEY;
+		$path = '/' . ltrim(substr(elgg_normalize_url($uri), strlen($site_url)), '/');
 
 		if ($add_csrf_tokens) {
 			$ts = time();
@@ -207,7 +222,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 			$parameters['__elgg_token'] = _elgg_services()->actions->generateActionToken($ts);
 		}
 
-		$request = Request::create("?$path_key=" . urlencode($path), $method, $parameters);
+		$request = Request::create($path, $method, $parameters);
 
 		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
 		$session_id = _elgg_services()->session->getId();

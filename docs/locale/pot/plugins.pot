@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-02 15:39-0400\n"
+"POT-Creation-Date: 2017-05-16 09:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "Dashboard"
 msgstr ""
 
 #: ../../plugins/dashboard.rst:10
-msgid "An typical Elgg dashboard"
+msgid "A typical Elgg dashboard"
 msgstr ""
 
 #: ../../plugins/dashboard.rst:12
@@ -49,7 +49,7 @@ msgid "Diagnostics"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:4
-msgid "For the technically savvy user, system diagnostics enables you to quickly evaluate the server environment, Elgg code, and plugins of an Elgg install. System diagnostics is a core plugin that comes turned on by default with Elgg. To download the diagnostics file, follow the steps below. The file is a dump of all sorts of useful information."
+msgid "For the technically savvy user, system diagnostics enables you to quickly evaluate the server environment, Elgg code, and plugins of an Elgg install. Diagnostics is a core system plugin that comes turned on by default with Elgg. To download the diagnostics file, follow the steps below. The file is a dump of all sorts of useful information."
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:6
@@ -61,7 +61,7 @@ msgid "Log in as Administrator"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:9
-msgid "Go to Administration -> Administer -> Utilities ->System diagnostics"
+msgid "Go to Administration -> Administer -> Utilities ->System Diagnostics"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:10

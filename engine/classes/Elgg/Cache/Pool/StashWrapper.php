@@ -2,12 +2,12 @@
 namespace Elgg\Cache\Pool;
 
 use Elgg\Cache\Pool;
-
 use Stash;
+use InvalidArgumentException;
 
 /**
  * Defers to Stash for the meat of the caching logic.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @since 1.10.0
@@ -30,9 +30,11 @@ final class StashWrapper implements Pool {
 
 	/** @inheritDoc */
 	public function get($key, callable $callback = null, $default = null) {
-		assert(is_string($key) || is_int($key));
+		if (!is_string($key) && !is_int($key)) {
+			throw new InvalidArgumentException('key must be string or integer');
+		}
 
-		$item = $this->stash->getItem((string)$key);
+		$item = $this->stash->getItem((string) $key);
 
 		$result = $item->get();
 
@@ -53,22 +55,26 @@ final class StashWrapper implements Pool {
 
 	/** @inheritDoc */
 	public function invalidate($key) {
-		assert(is_string($key) || is_int($key));
+		if (!is_string($key) && !is_int($key)) {
+			throw new InvalidArgumentException('key must be string or integer');
+		}
 		
-		$this->stash->getItem((string)$key)->clear();
+		$this->stash->getItem((string) $key)->clear();
 	}
 	
 	/** @inheritDoc */
 	public function put($key, $value) {
-		assert(is_string($key) || is_int($key));
+		if (!is_string($key) && !is_int($key)) {
+			throw new InvalidArgumentException('key must be string or integer');
+		}
 
-		$this->stash->getItem((string)$key)->set($value);
+		$this->stash->getItem((string) $key)->set($value);
 	}
 	
 	/**
 	 * Create an in-memory implementation of the pool.
 	 *
-	 * @return StashPool
+	 * @return StashWrapper
 	 */
 	public static function createEphemeral() {
 		return new self(new Stash\Pool(new Stash\Driver\Ephemeral()));

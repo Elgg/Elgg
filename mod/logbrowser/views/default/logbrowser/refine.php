@@ -28,5 +28,5 @@ if (!isset($vars['user_guid']) && !isset($vars['username'])) {
 $module = elgg_view_module('inline', elgg_echo('logbrowser:search'), $form, $module_options);
 ?>
 <div id="logbrowser-search-area" class="mbm">
-    <?php echo $toggle_link . $module; ?>
+	<?php echo $toggle_link . $module; ?>
 </div>

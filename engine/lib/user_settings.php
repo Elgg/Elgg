@@ -31,10 +31,10 @@ function _elgg_set_user_password() {
 	if ($user && $password) {
 		// let admin user change anyone's password without knowing it except his own.
 		if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
-			$credentials = array(
+			$credentials = [
 				'username' => $user->username,
 				'password' => $current_password
-			);
+			];
 
 			try {
 				pam_auth_userpass($credentials);
@@ -262,29 +262,38 @@ function _elgg_set_user_email() {
 		return false;
 	}
 
-	if ($user) {
-		if (strcmp($email, $user->email) != 0) {
-			if (!get_user_by_email($email)) {
-				if ($user->email != $email) {
-
-					$user->email = $email;
-					if ($user->save()) {
-						system_message(elgg_echo('email:save:success'));
-						return true;
-					} else {
-						register_error(elgg_echo('email:save:fail'));
-					}
-				}
-			} else {
-				register_error(elgg_echo('registration:dupeemail'));
-			}
+	if (!($user instanceof ElggUser)) {
+		register_error(elgg_echo('email:save:fail'));
+		return false;
+	}
+	
+	if (strcmp($email, $user->email) === 0) {
+		// no change
+		return;
+	}
+	
+	if (elgg_get_config('security_email_require_password') && ($user->getGUID() === elgg_get_logged_in_user_guid())) {
+		// validate password
+		$pwd = get_input('email_password');
+		$auth = elgg_authenticate($user->username, $pwd);
+		if ($auth !== true) {
+			register_error(elgg_echo('email:save:fail:password'));
+			return false;
+		}
+	}
+	
+	if (!get_user_by_email($email)) {
+		$user->email = $email;
+		if ($user->save()) {
+			system_message(elgg_echo('email:save:success'));
+			return true;
 		} else {
-			// no change
-			return;
+			register_error(elgg_echo('email:save:fail'));
 		}
 	} else {
-		register_error(elgg_echo('email:save:fail'));
+		register_error(elgg_echo('registration:dupeemail'));
 	}
+	
 	return false;
 }
 

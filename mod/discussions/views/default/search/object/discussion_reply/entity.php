@@ -45,7 +45,7 @@ $extra_info = $entity->getVolatileData('search_matched_extra');
 $url = $entity->getVolatileData('search_url');
 
 if (!$title) {
-	$title = elgg_echo('discussion:search:title', array($topic->title));
+	$title = elgg_echo('discussion:search:title', [$topic->title]);
 }
 
 if (!$url) {

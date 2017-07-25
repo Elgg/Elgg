@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	'discussion' => 'Keskustelut',
 	'discussion:add' => 'Lisää uusi keskustelu',
 	'discussion:latest' => 'Uusimmat keskustelut',
@@ -96,4 +96,4 @@ Osallistu keskusteluun:
 
 	'discussion:reply:edited' => "Vastaus tallennettu",
 	'discussion:reply:error' => "Vastauksen tallentaminen epäonnistui",
-);
+];

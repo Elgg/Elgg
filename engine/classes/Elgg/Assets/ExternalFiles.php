@@ -14,7 +14,7 @@ namespace Elgg\Assets;
 class ExternalFiles {
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -49,7 +49,6 @@ class ExternalFiles {
 			return false;
 		}
 	
-		$url = elgg_format_url($url);
 		$url = elgg_normalize_url($url);
 
 		$this->bootstrap($type);
@@ -62,7 +61,7 @@ class ExternalFiles {
 		}
 	
 		// no negative priorities right now.
-		$priority = max((int)$priority, 0);
+		$priority = max((int) $priority, 0);
 	
 		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
 	
@@ -140,6 +139,11 @@ class ExternalFiles {
 			$item->loaded = true;
 			$item->url = '';
 			$item->location = '';
+			
+			if (elgg_view_exists($name)) {
+				$item->url = elgg_get_simplecache_url($name);
+				$item->location = ($type == 'js') ? 'foot' : 'head';
+			}
 
 			$GLOBALS['_ELGG']->externals[$type]->add($item);
 			$GLOBALS['_ELGG']->externals_map[$type][$name] = $item;
@@ -174,7 +178,7 @@ class ExternalFiles {
 			}
 			return $items;
 		}
-		return array();
+		return [];
 	}
 	
 	/**
@@ -186,7 +190,7 @@ class ExternalFiles {
 	protected function bootstrap($type) {
 
 		if (!isset($GLOBALS['_ELGG']->externals)) {
-			$GLOBALS['_ELGG']->externals = array();
+			$GLOBALS['_ELGG']->externals = [];
 		}
 	
 		if (!isset($GLOBALS['_ELGG']->externals[$type]) || !$GLOBALS['_ELGG']->externals[$type] instanceof \ElggPriorityList) {
@@ -194,11 +198,11 @@ class ExternalFiles {
 		}
 	
 		if (!isset($GLOBALS['_ELGG']->externals_map)) {
-			$GLOBALS['_ELGG']->externals_map = array();
+			$GLOBALS['_ELGG']->externals_map = [];
 		}
 	
 		if (!isset($GLOBALS['_ELGG']->externals_map[$type])) {
-			$GLOBALS['_ELGG']->externals_map[$type] = array();
+			$GLOBALS['_ELGG']->externals_map[$type] = [];
 		}
 	}
 }

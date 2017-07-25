@@ -5,11 +5,13 @@
 
 $widget = elgg_extract('entity', $vars);
 
+$num_display = (int) $widget->pages_num ?: 5;
+
 $content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'page_top',
 	'container_guid' => $widget->owner_guid,
-	'limit' => $widget->pages_num,
+	'limit' => $num_display,
 	'pagination' => false,
 ]);
 

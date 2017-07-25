@@ -19,17 +19,9 @@ function profile_init() {
 	// Register a URL handler for users
 	elgg_register_plugin_hook_handler('entity:url', 'user', 'profile_set_url');
 
-	elgg_register_simplecache_view('icon/user/default/tiny');
-	elgg_register_simplecache_view('icon/user/default/topbar');
-	elgg_register_simplecache_view('icon/user/default/small');
-	elgg_register_simplecache_view('icon/user/default/medium');
-	elgg_register_simplecache_view('icon/user/default/large');
-	elgg_register_simplecache_view('icon/user/default/master');
-
 	elgg_register_page_handler('profile', 'profile_page_handler');
 
 	elgg_extend_view('elgg.css', 'profile/css');
-	elgg_extend_view('elgg.js', 'profile/js');
 
 	// allow ECML in parts of the profile
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
@@ -38,6 +30,7 @@ function profile_init() {
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'profile_default_widgets_hook');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_profile_topbar_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '_profile_title_menu');
 }
 
 /**
@@ -62,11 +55,11 @@ function profile_page_handler($page) {
 		forward();
 	}
 
-	$action = NULL;
+	$action = null;
 	if (isset($page[1])) {
 		$action = $page[1];
 	}
-
+	
 	if ($action == 'edit') {
 		// use the core profile edit page
 		echo elgg_view_resource('profile/edit');
@@ -116,15 +109,15 @@ function profile_ecml_views_hook($hook, $entity_type, $return_value) {
  * @return array
  */
 function profile_default_widgets_hook($hook, $type, $return) {
-	$return[] = array(
+	$return[] = [
 		'name' => elgg_echo('profile'),
 		'widget_context' => 'profile',
-		'widget_columns' => 3,
+		'widget_columns' => 2,
 
 		'event' => 'create',
 		'entity_type' => 'user',
 		'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
-	);
+	];
 
 	return $return;
 }
@@ -154,13 +147,49 @@ function _profile_topbar_menu($hook, $type, $return, $params) {
 		'href' => $viewer->getURL(),
 		'text' => $viewer->name,
 		'title' => elgg_echo('profile'),
-		'icon' => elgg_view('output/img', array(
+		'icon' => elgg_view('output/img', [
 			'src' => $viewer->getIconURL('topbar'),
 			'alt' => $viewer->name,
 			'class' => 'elgg-border-plain elgg-transition',
-		)),
+		]),
 		'priority' => 100,
 	]);
+	
+	return $return;
+}
+
+/**
+ * Register menu items for the title menu
+ *
+ * @param string $hook   Hook
+ * @param string $type   Type
+ * @param array  $return Current return value
+ * @param array  $params Hook parameters
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _profile_title_menu($hook, $type, $return, $params) {
+
+	if (!elgg_in_context('profile') || elgg_in_context('profile_edit')) {
+		return;
+	}
+	
+	$user = elgg_get_page_owner_entity();
+	
+	// grab the actions and admin menu items from user hover
+	$menu = elgg()->menus->getMenu('user_hover', [
+		'entity' => $user,
+		'username' => $user->username,
+	]);
+	
+	$actions = $menu->getSection('action', []);
+	foreach ($actions as $action) {
+		$action->addLinkClass('elgg-button elgg-button-action');
+		$return[] = $action;
+	}
 	
 	return $return;
 }

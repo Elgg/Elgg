@@ -3,7 +3,7 @@
  * Compose message form
  *
  * @package ElggMessages
- * @uses $vars['$recipient_username']
+ * @uses $vars['recipients']
  * @uses $vars['subject']
  * @uses $vars['body']
  */
@@ -12,35 +12,39 @@ $recipients = elgg_extract('recipients', $vars);
 $subject = elgg_extract('subject', $vars, '');
 $body = elgg_extract('body', $vars, '');
 
-$recipient_autocomplete = elgg_view('input/userpicker', array(
-	'name' => 'recipients',
-	'values' => $recipients,
-	'limit' => 1,
-));
-
-?>
-<div>
-	<label><?php echo elgg_echo("email:to"); ?>: </label>
-	<?php echo $recipient_autocomplete; ?>
-	<span class="elgg-text-help"><?php echo elgg_echo("messages:to:help"); ?></span>
-	
-</div>
-<div>
-	<label><?php echo elgg_echo("messages:title"); ?>: <br /></label>
-	<?php echo elgg_view('input/text', array(
+$fields = [
+	[
+		'#type' => 'userpicker',
+		'#label' => elgg_echo('email:to'),
+		'#help' => elgg_echo('messages:to:help'),
+		'name' => 'recipients',
+		'values' => $recipients,
+		'limit' => 1,
+		'required' => true,
+	],
+	[
+		'#type' => 'text',
+		'#label' => elgg_echo('messages:title'),
 		'name' => 'subject',
 		'value' => $subject,
-	));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo("messages:message"); ?>:</label>
-	<?php echo elgg_view("input/longtext", array(
+		'required' => true,
+	],
+	[
+		'#type' => 'longtext',
+		'#label' => elgg_echo('messages:message'),
 		'name' => 'body',
 		'value' => $body,
-	));
-	?>
-</div>
-<div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'))); ?>
-</div>
+		'required' => true,
+		'editor_type' => 'simple',
+	],
+];
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
+}
+
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('send'),
+]);
+
+elgg_set_form_footer($footer);

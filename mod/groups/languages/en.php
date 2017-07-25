@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -80,6 +80,7 @@ return array(
 	'groups:search:none' => "No matching groups were found",
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:activity' => "Group activity",
 	'groups:enableactivity' => 'Enable group activity',
@@ -132,6 +133,7 @@ return array(
 	'groups:addedtogroup' => 'Successfully added the user to the group',
 	'groups:joinrequestnotmade' => 'Could not request to join group',
 	'groups:joinrequestmade' => 'Requested to join group',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Successfully joined group!',
 	'groups:left' => 'Successfully left group',
 	'groups:notowner' => 'Sorry, you are not the owner of this group.',
@@ -210,4 +212,14 @@ or click below to view the group's join requests:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Group profiles',
-);
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => '
+		New entity icon API stores icons in a predictable location on the filestore
+		relative to the entity\'s filestore directory. This upgrade aligns
+		will align group plugin with the requirements of the new API.
+	',
+];

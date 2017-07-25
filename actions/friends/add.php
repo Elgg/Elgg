@@ -16,9 +16,9 @@ if (!$friend) {
 }
 
 if (!elgg_get_logged_in_user_entity()->addFriend($friend->guid, true)) {
-	register_error(elgg_echo("friends:add:failure", array($friend->name)));
+	register_error(elgg_echo("friends:add:failure", [$friend->name]));
 	forward(REFERER);
 }
 
-system_message(elgg_echo("friends:add:successful", array($friend->name)));
+system_message(elgg_echo("friends:add:successful", [$friend->name]));
 forward(REFERER);

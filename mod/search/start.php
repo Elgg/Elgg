@@ -4,13 +4,12 @@
  *
  */
 
-elgg_register_event_handler('init','system','search_init');
+elgg_register_event_handler('init', 'system', 'search_init');
 
 /**
  * Initialize search plugin
  */
 function search_init() {
-	global $CONFIG;
 	require_once 'search_hooks.php';
 
 	// page handler for search actions and results
@@ -26,13 +25,6 @@ function search_init() {
 	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
 	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
-	// get server min and max allowed chars for ft searching
-	$CONFIG->search_info = array();
-
-	$ft_min_max = search_get_ft_min_max();
-	$CONFIG->search_info['min_chars'] = $ft_min_max->min;
-	$CONFIG->search_info['max_chars'] = $ft_min_max->max;
-
 	// add in CSS for search elements
 	elgg_extend_view('elgg.css', 'search/css');
 
@@ -40,6 +32,8 @@ function search_init() {
 	elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 
 	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
+	
+	elgg_register_plugin_hook_handler('view_vars', 'output/tag', 'search_output_tag');
 }
 
 /**
@@ -54,7 +48,7 @@ function search_page_handler($page) {
 	// it expects a search by tags.
 	// actually it doesn't, but maybe it should.
 	// maintain backward compatibility
-	if(!get_input('q', get_input('tag', NULL))) {
+	if (!get_input('q', get_input('tag', null))) {
 		set_input('q', $page[0]);
 		//set_input('search_type', 'tags');
 	}
@@ -69,9 +63,9 @@ function search_page_handler($page) {
  *
  * @param string $haystack
  * @param string $query
- * @param int $min_match_context = 30
- * @param int $max_length = 300
- * @param bool $tag_match Search is for tags. Don't ignore words.
+ * @param int    $min_match_context = 30
+ * @param int    $max_length        = 300
+ * @param bool   $tag_match         Search is for tags. Don't ignore words.
  * @return string
  */
 function search_get_highlighted_relevant_substrings($haystack, $query, $min_match_context = 30, $max_length = 300, $tag_match = false) {
@@ -83,7 +77,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	if (!$tag_match) {
 		$words = search_remove_ignored_words($query, 'array');
 	} else {
-		$words = array();
+		$words = [];
 	}
 
 	// if haystack < $max_length return the entire haystack w/formatting immediately
@@ -94,8 +88,8 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	}
 
 	// get the starting positions and lengths for all matching words
-	$starts = array();
-	$lengths = array();
+	$starts = [];
+	$lengths = [];
 	foreach ($words as $word) {
 		$word = elgg_strtolower($word);
 		$count = elgg_substr_count($haystack_lc, $word);
@@ -105,7 +99,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 		// find the start positions for the words
 		if ($count > 1) {
 			$offset = 0;
-			while (FALSE !== $pos = elgg_strpos($haystack_lc, $word, $offset)) {
+			while (false !== $pos = elgg_strpos($haystack_lc, $word, $offset)) {
 				$start = ($pos - $min_match_context > 0) ? $pos - $min_match_context : 0;
 				$starts[] = $start;
 				$stop = $pos + $word_len + $min_match_context;
@@ -135,8 +129,8 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	if ($total_length < $max_length && $offsets) {
 		$add_length = floor((($max_length - $total_length) / count($offsets)) / 2);
 
-		$starts = array();
-		$lengths = array();
+		$starts = [];
+		$lengths = [];
 		foreach ($offsets as $offset => $length) {
 			$start = ($offset - $add_length > 0) ? $offset - $add_length : 0;
 			$length = $length + $add_length;
@@ -153,7 +147,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 	// the others as needed to fit within $max_length.
 	arsort($offsets);
 
-	$return_strs = array();
+	$return_strs = [];
 	$total_length = 0;
 	foreach ($offsets as $start => $length) {
 		$string = trim(elgg_substr($haystack, $start, $length));
@@ -207,14 +201,14 @@ function search_consolidate_substrings($offsets, $lengths) {
 	// reset the indexes maintaining association with the original offsets.
 	$offsets = array_merge($offsets);
 
-	$new_lengths = array();
+	$new_lengths = [];
 	foreach ($offsets as $i => $offset) {
 		$new_lengths[] = $lengths[$i];
 	}
 
 	$lengths = $new_lengths;
 
-	$return = array();
+	$return = [];
 	$count = count($offsets);
 	for ($i=0; $i<$count; $i++) {
 		$offset = $offsets[$i];
@@ -242,18 +236,18 @@ function search_consolidate_substrings($offsets, $lengths) {
 /**
  * Safely highlights the words in $words found in $string avoiding recursion
  *
- * @param array $words
+ * @param array  $words
  * @param string $string
  * @return string
  */
 function search_highlight_words($words, $string) {
 	$i = 1;
-	$replace_html = array(
+	$replace_html = [
 		'strong' => rand(10000, 99999),
 		'class' => rand(10000, 99999),
 		'search-highlight' => rand(10000, 99999),
 		'search-highlight-color' => rand(10000, 99999)
-	);
+	];
 
 	foreach ($words as $word) {
 		// remove any boolean mode operators
@@ -292,11 +286,10 @@ function search_highlight_words($words, $string) {
  * it's taken literally.)
  *
  * @param array $query
- * @param str $format Return as an array or a string
+ * @param str   $format Return as an array or a string
  * @return mixed
  */
 function search_remove_ignored_words($query, $format = 'array') {
-	global $CONFIG;
 
 	// don't worry about "s or boolean operators
 	//$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
@@ -305,17 +298,6 @@ function search_remove_ignored_words($query, $format = 'array') {
 	
 	$words = preg_split('/\s+/', $query);
 
-	$min_chars = $CONFIG->search_info['min_chars'];
-	// if > ft_min_word we're not running in literal mode.
-	if (elgg_strlen($query) >= $min_chars) {
-		// clean out any words that are ignored by mysql
-		foreach ($words as $i => $word) {
-			if (elgg_strlen($word) < $min_chars) {
-				unset ($words[$i]);
-			}
-		}
-	}
-
 	if ($format == 'string') {
 		return implode(' ', $words);
 	}
@@ -323,13 +305,12 @@ function search_remove_ignored_words($query, $format = 'array') {
 	return $words;
 }
 
-
 /**
  * Passes results, and original params to the view functions for
  * search type.
  *
- * @param array $results
- * @param array $params
+ * @param array  $results
+ * @param array  $params
  * @param string $view_type = list, entity or layout
  * @return string
  */
@@ -341,10 +322,10 @@ function search_get_search_view($params, $view_type) {
 			break;
 
 		default:
-			return FALSE;
+			return false;
 	}
 
-	$view_order = array();
+	$view_order = [];
 
 	// check if there's a special search list view for this type:subtype
 	if (isset($params['type']) && $params['type'] && isset($params['subtype']) && $params['subtype']) {
@@ -370,19 +351,18 @@ function search_get_search_view($params, $view_type) {
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
  * Returns a where clause for a search query.
  *
- * @param str $table Prefix for table to search on
+ * @param str   $table  Prefix for table to search on
  * @param array $fields Fields to match against
  * @param array $params Original search params
  * @return str
  */
-function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
-	global $CONFIG;
+function search_get_where_sql($table, $fields, $params) {
 	$query = $params['query'];
 
 	// add the table prefix to the fields
@@ -391,52 +371,23 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 			$fields[$i] = "$table.$field";
 		}
 	}
-	
-	$where = '';
 
-	// if query is shorter than the min for fts words
-	// it's likely a single acronym or similar
-	// switch to literal mode
-	if (elgg_strlen($query) < $CONFIG->search_info['min_chars']) {
-		$likes = array();
-		$query = sanitise_string($query);
-		foreach ($fields as $field) {
-			$likes[] = "$field LIKE '%$query%'";
+	$likes = [];
+	$query_parts = explode(' ', $query);
+	foreach ($fields as $field) {
+		$sublikes = [];
+		foreach ($query_parts as $query_part) {
+			$query_part = sanitise_string($query_part);
+			if (strlen($query_part) == 0) {
+				continue;
+			}
+			$sublikes[] = "$field LIKE '%$query_part%'";
 		}
-		$likes_str = implode(' OR ', $likes);
-		$where = "($likes_str)";
-	} else {
-		// if we're not using full text, rewrite the query for bool mode.
-		// exploiting a feature(ish) of bool mode where +-word is the same as -word
-		if (!$use_fulltext) {
-			$query = '+' . str_replace(' ', ' +', $query);
-		}
-		
-		// if using advanced, boolean operators, or paired "s, switch into boolean mode
-		$booleans_used = preg_match("/([\-\+~])([\w]+)/i", $query);
-		$advanced_search = (isset($params['advanced_search']) && $params['advanced_search']);
-		$quotes_used = (elgg_substr_count($query, '"') >= 2); 
-		
-		if (!$use_fulltext || $booleans_used || $advanced_search || $quotes_used) {
-			$options = 'IN BOOLEAN MODE';
-		} else {
-			// natural language mode is default and this keyword isn't supported in < 5.1
-			//$options = 'IN NATURAL LANGUAGE MODE';
-			$options = '';
-		}
-		
-		// if short query, use query expansion.
-		// @todo doesn't seem to be working well.
-//		if (elgg_strlen($query) < 5) {
-//			$options .= ' WITH QUERY EXPANSION';
-//		}
-		$query = sanitise_string($query);
-
-		$fields_str = implode(',', $fields);
-		$where = "(MATCH ($fields_str) AGAINST ('$query' $options))";
+		$likes[] = '(' . implode(' AND ', $sublikes) . ')';
 	}
 
-	return $where;
+	$likes_str = implode(' OR ', $likes);
+	return "($likes_str)";
 }
 
 
@@ -444,14 +395,14 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
  * Returns ORDER BY sql for insertion into elgg_get_entities().
  *
  * @param str $entities_table Prefix for entities table.
- * @param str $type_table Prefix for the type table.
- * @param str $sort ORDER BY part
- * @param str $order ASC or DESC
+ * @param str $type_table     Prefix for the type table.
+ * @param str $sort           ORDER BY part
+ * @param str $order          ASC or DESC
  * @return str
  */
 function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 
-	$on = NULL;
+	$on = null;
 
 	switch ($sort) {
 		default:
@@ -512,35 +463,32 @@ TEXT;
 }
 
 /**
- * Returns minimum and maximum lengths of words for MySQL search
- * This function looks for stored config values, and, if none set,
- * queries the DB and saves them
- * @return stdClass An object with min and max properties
+ * Adds search 'href' to output/tag view vars
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
  */
-function search_get_ft_min_max() {
-
-	$min = (int) elgg_get_config('search_ft_min_word_len');
-	$max = (int) elgg_get_config('search_ft_max_word_len');
-
-	if (!$min || !$max) {
-		// defaults from MySQL on Ubuntu Linux
-		$min = 4;
-		$max = 90;
-		try {
-			$result = get_data_row('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
-			$min = $result->min;
-			$max = $result->max;
-		} catch (DatabaseException $e) {
-			// some servers don't have these values set which leads to exception
-			// we ignore the exception
-		}
-		elgg_save_config('search_ft_min_word_len', $min);
-		elgg_save_config('search_ft_max_word_len', $max);
+function search_output_tag(\Elgg\Hook $hook) {
+	$vars = $hook->getValue();
+	if (isset($vars['href'])) {
+		// leave unaltered
+		return;
 	}
-
-	$ft = new stdClass();
-	$ft->min = $min;
-	$ft->max = $max;
-
-	return $ft;
+	
+	$query_params = [
+		'q' => elgg_extract('value', $vars),
+		'search_type' => 'tags',
+		'type' => elgg_extract('type', $vars, null, false),
+		'subtype' => elgg_extract('subtype', $vars, null, false),
+	];
+		
+	$url = elgg_extract('base_url', $vars, 'search');
+	
+	unset($vars['base_url']);
+	unset($vars['type']);
+	unset($vars['subtype']);
+	
+	$vars['href'] = elgg_http_add_url_query_elements($url, $query_params);
+	
+	return $vars;
 }

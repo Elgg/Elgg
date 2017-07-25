@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -224,4 +224,4 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Groepsprofielen',
-);
+];

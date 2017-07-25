@@ -99,7 +99,7 @@ elgg.discussion.Reply.prototype = {
 
 /**
  * Initialize discussion reply inline editing
- * 
+ *
  * @return void
  */
 elgg.discussion.init = function() {

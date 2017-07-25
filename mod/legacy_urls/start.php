@@ -28,7 +28,7 @@ function legacy_urls_init() {
  * a) Displays an error page with the new URL
  * b) Forwards to the new URL and displays an error message
  * c) Silently forwards to the new URL
- * 
+ *
  * @param string $url Relative or absolute URL
  * @return mixed
  */
@@ -43,8 +43,8 @@ function legacy_urls_redirect($url) {
 
 	switch ($method) {
 		case 'landing':
-			$content = elgg_view('legacy_urls/message', array('url' => $url));
-			$body = elgg_view_layout('error', array('content' => $content));
+			$content = elgg_view('legacy_urls/message', ['url' => $url]);
+			$body = elgg_view_layout('error', ['content' => $content]);
 			echo elgg_view_page('', $body, 'error');
 			return true;
 			break;
@@ -63,13 +63,13 @@ function legacy_urls_redirect($url) {
 
 /**
  * Adds query parameters to URL for redirect
- * 
+ *
  * @param string $url        The URL
  * @param array  $query_vars Additional query parameters in associate array
  * @return string
  */
-function legacy_urls_prepare_url($url, array $query_vars = array()) {
-	$params = array();
+function legacy_urls_prepare_url($url, array $query_vars = []) {
+	$params = [];
 	// Elgg munges the request in htaccess rules so cannot use $_GET
 	$query = parse_url(_elgg_services()->request->server->get('REQUEST_URI'), PHP_URL_QUERY);
 	if ($query) {
@@ -77,11 +77,7 @@ function legacy_urls_prepare_url($url, array $query_vars = array()) {
 	}
 	$params = array_merge($params, $query_vars);
 	if ($params) {
-		if (!empty($params['__elgg_uri'])) {
-			// on multiple redirects, __elgg_uri is appended to the URL causing infinite loops #8494
-			unset($params['__elgg_uri']);
-		}
-		return elgg_http_add_url_query_elements($url, $params);		
+		return elgg_http_add_url_query_elements($url, $params);
 	} else {
 		return $url;
 	}
@@ -95,7 +91,7 @@ function legacy_urls_prepare_url($url, array $query_vars = array()) {
  */
 function legacy_urls_tag_handler($segments) {
 	$tag = $segments[0];
-	$url = legacy_urls_prepare_url('search', array('q' => $tag));
+	$url = legacy_urls_prepare_url('search', ['q' => $tag]);
 	return legacy_urls_redirect($url);
 }
 
@@ -112,7 +108,7 @@ function legacy_urls_pg_handler($segments) {
 
 /**
  * Blog forwarder
- * 
+ *
  * 1.0-1.7.5
  * Group blogs page: /blog/group:<container_guid>/
  * Group blog view:  /blog/group:<container_guid>/read/<guid>/<title>
@@ -155,7 +151,7 @@ function legacy_urls_blog_forward($hook, $type, $result) {
 	if ($page[0] == "read") {
 		$url = "blog/view/{$page[1]}/";
 		legacy_urls_redirect(legacy_urls_prepare_url($url));
-		return false;		
+		return false;
 	}
 
 	// user usernames
@@ -230,7 +226,7 @@ function legacy_urls_bookmarks_forward($hook, $type, $result) {
 	if ($page[0] == "read") {
 		$url = "bookmarks/view/{$page[1]}/";
 		legacy_urls_redirect(legacy_urls_prepare_url($url));
-		return false;		
+		return false;
 	}
 
 	$user = get_user_by_username($page[0]);
@@ -311,7 +307,7 @@ function legacy_urls_groups_forward($hook, $type, $result) {
 
 	if (is_numeric($page[0])) {
 		$group = get_entity($page[0]);
-		if (elgg_instanceof($group, 'group', '', 'ElggGroup')) {
+		if ($group instanceof \ElggGroup) {
 			legacy_urls_redirect(legacy_urls_prepare_url($group->getURL()));
 			return false;
 		}
@@ -327,7 +323,7 @@ function legacy_urls_groups_forward($hook, $type, $result) {
 /**
  * User settings forwarder
  * /settings/plugins/
- * 
+ *
  * @param $hook   string "route"
  * @param $type   string "settings"
  * @param $result mixed  Old identifier and segments
@@ -387,7 +383,7 @@ function legacy_urls_messageboard_forward($hook, $type, $result) {
 	$page = array_pad($page, 4, "");
 
 	// if the first part is a username, forward to new format
-	$new_section_one = array('owner', 'add', 'group');
+	$new_section_one = ['owner', 'add', 'group'];
 	if (isset($page[0]) && !in_array($page[0], $new_section_one) && get_user_by_username($page[0])) {
 		$url = "messageboard/owner/{$page[0]}";
 		legacy_urls_redirect(legacy_urls_prepare_url($url));

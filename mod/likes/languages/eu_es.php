@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'likes:this' => 'hau gustoko',
 	'likes:deleted' => 'Zure gustokoa kendu da',
 	'likes:see' => 'Nork gustoko duen ikusi',
@@ -36,4 +36,4 @@ Eskerrik asko,
 %4$s
 ',
 	
-);
+];

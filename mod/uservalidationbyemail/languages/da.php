@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Ikke valideret',
 	
 	'email:validate:subject' => "%s vær venlig at bekræfte din e-mail adresse for %s!",
@@ -51,4 +51,4 @@ Hvis du ikke kan klikke på linket så kopier og indsæt det i din browser manue
 	'uservalidationbyemail:messages:resent_validation' => 'Anmodning om validering gensendt.',
 	'uservalidationbyemail:messages:resent_validations' => 'Anmodning om validering gensendt til alle markerede brugere.'
 
-);
+];

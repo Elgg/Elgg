@@ -49,6 +49,10 @@ server {
 	# Max post size
 	client_max_body_size 8M;
 
+	location ~ /.well-known {
+        	allow all;
+	}
+
 	location ~ (^\.|/\.) {
 		return 403;
 	}
@@ -58,6 +62,12 @@ server {
 	}
 
 	location / {
+		try_files $uri $uri/ @elgg;
+	}
+
+	location /cache/ {
+		disable_symlinks off;
+		expires 1y;
 		try_files $uri $uri/ @elgg;
 	}
 
@@ -76,6 +86,5 @@ server {
 		include /etc/nginx/fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME $document_root/index.php;
 		fastcgi_param SCRIPT_NAME     /index.php;
-		fastcgi_param QUERY_STRING    __elgg_uri=$uri&$args;
 	}
 }

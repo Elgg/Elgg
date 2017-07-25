@@ -4,7 +4,6 @@ namespace Elgg\Database;
 
 use Elgg\Database;
 use Elgg\Database\EntityTable;
-use Elgg\Database\MetastringsTable;
 use Elgg\EventsService as Events;
 use ElggSession as Session;
 use Elgg\Cache\MetadataCache as Cache;
@@ -23,7 +22,7 @@ class MetadataTable {
 	use \Elgg\TimeUsing;
 
 	/** @var array */
-	protected $independents = array();
+	protected $independents = [];
 	
 	/** @var Cache */
 	protected $cache;
@@ -33,10 +32,7 @@ class MetadataTable {
 	
 	/** @var EntityTable */
 	protected $entityTable;
-	
-	/** @var MetastringsTable */
-	protected $metastringsTable;
-	
+		
 	/** @var Events */
 	protected $events;
 	
@@ -45,29 +41,26 @@ class MetadataTable {
 	
 	/** @var string */
 	protected $table;
-
+	const MYSQL_TEXT_BYTE_LIMIT = 65535;
 	/**
 	 * Constructor
-	 * 
-	 * @param Cache            $cache            A cache for this table
-	 * @param Database         $db               The Elgg database
-	 * @param EntityTable      $entityTable      The entities table
-	 * @param Events           $events           The events registry
-	 * @param MetastringsTable $metastringsTable The metastrings table
-	 * @param Session          $session          The session
+	 *
+	 * @param Cache       $cache       A cache for this table
+	 * @param Database    $db          The Elgg database
+	 * @param EntityTable $entityTable The entities table
+	 * @param Events      $events      The events registry
+	 * @param Session     $session     The session
 	 */
 	public function __construct(
 			Cache $cache,
 			Database $db,
 			EntityTable $entityTable,
 			Events $events,
-			MetastringsTable $metastringsTable,
 			Session $session) {
 		$this->cache = $cache;
 		$this->db = $db;
 		$this->entityTable = $entityTable;
 		$this->events = $events;
-		$this->metastringsTable = $metastringsTable;
 		$this->session = $session;
 		$this->table = $this->db->prefix . "metadata";
 	}
@@ -108,21 +101,19 @@ class MetadataTable {
 	 * @param string $value          Value of the metadata
 	 * @param string $value_type     'text', 'integer', or '' for automatic detection
 	 * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
-	 * @param int    $access_id      Default is ACCESS_PRIVATE
+	 * @param int    $ignored        This argument is not used
 	 * @param bool   $allow_multiple Allow multiple values for one key. Default is false
 	 *
 	 * @return int|false id of metadata or false if failure
 	 */
 	function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
-			$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+			$ignored = ACCESS_PRIVATE, $allow_multiple = false) {
 
-		$entity_guid = (int)$entity_guid;
-		// name and value are encoded in add_metastring()
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
-		$time = $this->getCurrentTime()->getTimestamp();
-		$owner_guid = (int)$owner_guid;
-		$allow_multiple = (boolean)$allow_multiple;
-	
+		$entity_guid = (int) $entity_guid;
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
+		$owner_guid = (int) $owner_guid;
+		$allow_multiple = (boolean) $allow_multiple;
+
 		if (!isset($value)) {
 			return false;
 		}
@@ -130,63 +121,51 @@ class MetadataTable {
 		if ($owner_guid == 0) {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
-	
-		$access_id = (int) $access_id;
-	
+
+		$access_id = ACCESS_PUBLIC;
+
+		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
+			elgg_log("Metadata '$name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+		}
+
 		$query = "SELECT * FROM {$this->table}
-			WHERE entity_guid = :entity_guid and name_id = :name_id LIMIT 1";
+			WHERE entity_guid = :entity_guid and name = :name LIMIT 1";
 
-		$params = [
+		$existing = $this->db->getDataRow($query, null, [
 			':entity_guid' => $entity_guid,
-			':name_id' => $this->metastringsTable->getId($name)
-		];
-
-		$existing = $this->db->getDataRow($query, null, $params);
+			':name' => $name,
+		]);
 		if ($existing && !$allow_multiple) {
-			$id = (int)$existing->id;
-			$result = $this->update($id, $name, $value, $value_type, $owner_guid, $access_id);
-	
+			$id = (int) $existing->id;
+			$result = $this->update($id, $name, $value, $value_type, $owner_guid);
+
 			if (!$result) {
 				return false;
 			}
 		} else {
 			// Support boolean types
 			if (is_bool($value)) {
-				$value = (int)$value;
+				$value = (int) $value;
 			}
-	
-			// Add the metastrings
-			$value_id = $this->metastringsTable->getId($value);
-			if (!$value_id) {
-				return false;
-			}
-	
-			$name_id = $this->metastringsTable->getId($name);
-			if (!$name_id) {
-				return false;
-			}
-	
+		
 			// If ok then add it
 			$query = "INSERT INTO {$this->table}
-				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)
-				VALUES (:entity_guid, :name_id, :value_id, :value_type, :owner_guid, :time_created, :access_id)";
-
-			$params = [
-				':entity_guid' => $entity_guid,
-				':name_id' => $name_id,
-				':value_id' => $value_id,
-				':value_type' => $value_type,
-				':owner_guid' => $owner_guid,
-				':time_created' => $time,
-				':access_id' => $access_id,
-			];
+				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
+				VALUES (:entity_guid, :name, :value, :value_type, :owner_guid, :time_created, :access_id)";
 			
-			$id = $this->db->insertData($query, $params);
+			$id = $this->db->insertData($query, [
+				':entity_guid' => $entity_guid,
+				':name' => $name,
+				':value' => $value,
+				':value_type' => $value_type,
+				':owner_guid' => (int) $owner_guid,
+				':time_created' => $this->getCurrentTime()->getTimestamp(),
+				':access_id' => $access_id,
+			]);
 			
 			if ($id !== false) {
 				$obj = $this->get($id);
 				if ($this->events->trigger('create', 'metadata', $obj)) {
-
 					$this->cache->clear($entity_guid);
 	
 					return $id;
@@ -207,13 +186,12 @@ class MetadataTable {
 	 * @param string $value      Metadata value
 	 * @param string $value_type Value type
 	 * @param int    $owner_guid Owner guid
-	 * @param int    $access_id  Access ID
 	 *
 	 * @return bool
 	 */
-	function update($id, $name, $value, $value_type, $owner_guid, $access_id) {
-		$id = (int)$id;
-	
+	function update($id, $name, $value, $value_type, $owner_guid) {
+		$id = (int) $id;
+
 		if (!$md = $this->get($id)) {
 			return false;
 		}
@@ -221,52 +199,41 @@ class MetadataTable {
 			return false;
 		}
 	
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
 	
-		$owner_guid = (int)$owner_guid;
+		$owner_guid = (int) $owner_guid;
 		if ($owner_guid == 0) {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
-		$access_id = (int)$access_id;
-	
+		$access_id = ACCESS_PUBLIC;
+
 		// Support boolean types (as integers)
 		if (is_bool($value)) {
-			$value = (int)$value;
+			$value = (int) $value;
 		}
-	
-		$value_id = $this->metastringsTable->getId($value);
-		if (!$value_id) {
-			return false;
+		if (strlen($value) > self::MYSQL_TEXT_BYTE_LIMIT) {
+			elgg_log("Metadata '$name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
 		}
-	
-		$name_id = $this->metastringsTable->getId($name);
-		if (!$name_id) {
-			return false;
-		}
-	
 		// If ok then add it
 		$query = "UPDATE {$this->table}
-			SET name_id = :name_id,
-			    value_id = :value_id,
+			SET name = :name,
+			    value = :value,
 				value_type = :value_type,
 				access_id = :access_id,
 			    owner_guid = :owner_guid
 			WHERE id = :id";
-
-		$params = [
-			':name_id' => $name_id,
-			':value_id' => $value_id,
+		
+		$result = $this->db->updateData($query, false, [
+			':name' => $name,
+			':value' => $value,
 			':value_type' => $value_type,
 			':access_id' => $access_id,
 			':owner_guid' => $owner_guid,
 			':id' => $id,
-		];
-		
-		$result = $this->db->updateData($query, false, $params);
+		]);
 		
 		if ($result !== false) {
-	
 			$this->cache->clear($md->entity_guid);
 	
 			// @todo this event tells you the metadata has been updated, but does not
@@ -290,17 +257,17 @@ class MetadataTable {
 	 * @param array  $name_and_values Associative array - a value can be a string, number, bool
 	 * @param string $value_type      'text', 'integer', or '' for automatic detection
 	 * @param int    $owner_guid      GUID of entity that owns the metadata
-	 * @param int    $access_id       Default is ACCESS_PRIVATE
+	 * @param int    $ignored         This argument is not used
 	 * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
 	 *
 	 * @return bool
 	 */
 	function createFromArray($entity_guid, array $name_and_values, $value_type, $owner_guid,
-			$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+			$ignored = ACCESS_PRIVATE, $allow_multiple = false) {
 	
 		foreach ($name_and_values as $k => $v) {
 			$result = $this->create($entity_guid, $k, $v, $value_type, $owner_guid,
-				$access_id, $allow_multiple);
+				null, $allow_multiple);
 			if (!$result) {
 				return false;
 			}
@@ -337,7 +304,7 @@ class MetadataTable {
 	 *
 	 * @return \ElggMetadata[]|mixed
 	 */
-	function getAll(array $options = array()) {
+	function getAll(array $options = []) {
 	
 		// @todo remove support for count shortcut - see #4393
 		// support shortcut of 'count' => true for 'metadata_calculation' => 'count'
@@ -437,8 +404,8 @@ class MetadataTable {
 	 * 	$options['wheres'][] = "NOT EXISTS (
 	 *			SELECT 1 FROM {$dbprefix}metadata md
 	 *			WHERE md.entity_guid = e.guid
-	 *				AND md.name_id = $name_metastring_id
-	 *				AND md.value_id = $value_metastring_id)";
+	 *				AND md.name = $name
+	 *				AND md.value = $value)";
 	 *
 	 * Note the metadata name and value has been denormalized in the above example.
 	 *
@@ -459,7 +426,7 @@ class MetadataTable {
 	 *                               Currently if multiple values are sent via
 	 *                               an array (value => array('value1', 'value2')
 	 *                               the pair's operand will be forced to "IN".
-	 *                               If passing "IN" as the operand and a string as the value, 
+	 *                               If passing "IN" as the operand and a string as the value,
 	 *                               the value must be a properly quoted and escaped string.
 	 *
 	 * 	metadata_name_value_pairs_operator => null|STR The operator to use for combining
@@ -478,23 +445,23 @@ class MetadataTable {
 	 *
 	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
 	 */
-	function getEntities(array $options = array()) {
-		$defaults = array(
+	function getEntities(array $options = []) {
+		$defaults = [
 			'metadata_names'                     => ELGG_ENTITIES_ANY_VALUE,
 			'metadata_values'                    => ELGG_ENTITIES_ANY_VALUE,
 			'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
 	
 			'metadata_name_value_pairs_operator' => 'AND',
 			'metadata_case_sensitive'            => true,
-			'order_by_metadata'                  => array(),
+			'order_by_metadata'                  => [],
 	
 			'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,
-		);
+		];
 	
 		$options = array_merge($defaults, $options);
 	
-		$singulars = array('metadata_name', 'metadata_value',
-			'metadata_name_value_pair', 'metadata_owner_guid');
+		$singulars = ['metadata_name', 'metadata_value',
+			'metadata_name_value_pair', 'metadata_owner_guid'];
 	
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 	
@@ -550,31 +517,25 @@ class MetadataTable {
 		// only supported on values.
 		$binary = ($case_sensitive) ? ' BINARY ' : '';
 	
-		$access = _elgg_get_access_where_sql(array(
-			'table_alias' => 'n_table',
-			'guid_column' => 'entity_guid',
-		));
-	
-		$return = array (
-			'joins' => array (),
-			'wheres' => array(),
-			'orders' => array()
-		);
-	
-		// will always want to join these tables if pulling metastrings.
+		$return =  [
+			'joins' =>  [],
+			'wheres' => [],
+			'orders' => [],
+		];
+
 		$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table on
 			{$e_table}.guid = n_table.entity_guid";
 	
-		$wheres = array();
+		$wheres = [];
 	
 		// get names wheres and joins
 		$names_where = '';
 		if ($names !== null) {
 			if (!is_array($names)) {
-				$names = array($names);
+				$names = [$names];
 			}
 	
-			$sanitised_names = array();
+			$sanitised_names = [];
 			foreach ($names as $name) {
 				// normalise to 0.
 				if (!$name) {
@@ -584,8 +545,7 @@ class MetadataTable {
 			}
 	
 			if ($names_str = implode(',', $sanitised_names)) {
-				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn on n_table.name_id = msn.id";
-				$names_where = "(msn.string IN ($names_str))";
+				$names_where = "(n_table.name IN ($names_str))";
 			}
 		}
 	
@@ -593,10 +553,10 @@ class MetadataTable {
 		$values_where = '';
 		if ($values !== null) {
 			if (!is_array($values)) {
-				$values = array($values);
+				$values = [$values];
 			}
 	
-			$sanitised_values = array();
+			$sanitised_values = [];
 			foreach ($values as $value) {
 				// normalize to 0
 				if (!$value) {
@@ -606,17 +566,16 @@ class MetadataTable {
 			}
 	
 			if ($values_str = implode(',', $sanitised_values)) {
-				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv on n_table.value_id = msv.id";
-				$values_where = "({$binary}msv.string IN ($values_str))";
+				$values_where = "({$binary}n_table.value IN ($values_str))";
 			}
 		}
 	
 		if ($names_where && $values_where) {
-			$wheres[] = "($names_where AND $values_where AND $access)";
+			$wheres[] = "($names_where AND $values_where)";
 		} elseif ($names_where) {
-			$wheres[] = "($names_where AND $access)";
+			$wheres[] = "($names_where)";
 		} elseif ($values_where) {
-			$wheres[] = "($values_where AND $access)";
+			$wheres[] = "($values_where)";
 		}
 	
 		// add pairs
@@ -624,10 +583,10 @@ class MetadataTable {
 		if (is_array($pairs)) {
 			// check if this is an array of pairs or just a single pair.
 			if (isset($pairs['name']) || isset($pairs['value'])) {
-				$pairs = array($pairs);
+				$pairs = [$pairs];
 			}
 	
-			$pair_wheres = array();
+			$pair_wheres = [];
 	
 			// @todo when the pairs are > 3 should probably split the query up to
 			// denormalize the strings table.
@@ -636,10 +595,10 @@ class MetadataTable {
 				// @todo move this elsewhere?
 				// support shortcut 'n' => 'v' method.
 				if (!is_array($pair)) {
-					$pair = array(
+					$pair = [
 						'name' => $index,
 						'value' => $pair
-					);
+					];
 				}
 	
 				// must have at least a name and value
@@ -665,24 +624,19 @@ class MetadataTable {
 				// for comparing
 				$trimmed_operand = trim(strtolower($operand));
 	
-				$access = _elgg_get_access_where_sql(array(
-					'table_alias' => "n_table{$i}",
-					'guid_column' => 'entity_guid',
-				));
-
 				// certain operands can't work well with strings that can be interpreted as numbers
 				// for direct comparisons like IN, =, != we treat them as strings
 				// gt/lt comparisons need to stay unencapsulated because strings '5' > '15'
 				// see https://github.com/Elgg/Elgg/issues/7009
-				$num_safe_operands = array('>', '<', '>=', '<=');
+				$num_safe_operands = ['>', '<', '>=', '<='];
 				$num_test_operand = trim(strtoupper($operand));
 	
 				if (is_numeric($pair['value']) && in_array($num_test_operand, $num_safe_operands)) {
 					$value = $this->db->sanitizeString($pair['value']);
 				} else if (is_bool($pair['value'])) {
-					$value = (int)$pair['value'];
+					$value = (int) $pair['value'];
 				} else if (is_array($pair['value'])) {
-					$values_array = array();
+					$values_array = [];
 	
 					foreach ($pair['value'] as $pair_value) {
 						if (is_numeric($pair_value) && !in_array($num_test_operand, $num_safe_operands)) {
@@ -707,17 +661,12 @@ class MetadataTable {
 	
 				$name = $this->db->sanitizeString($pair['name']);
 	
-				// @todo The multiple joins are only needed when the operator is AND
 				$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table{$i}
 					on {$e_table}.guid = n_table{$i}.entity_guid";
-				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
-					on n_table{$i}.name_id = msn{$i}.id";
-				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv{$i}
-					on n_table{$i}.value_id = msv{$i}.id";
-	
-				$pair_wheres[] = "(msn{$i}.string = '$name' AND {$pair_binary}msv{$i}.string
-					$operand $value AND $access)";
-	
+
+				$pair_wheres[] = "(n_table{$i}.name = '$name' AND {$pair_binary}n_table{$i}.value
+					$operand $value)";
+
 				$i++;
 			}
 	
@@ -732,7 +681,7 @@ class MetadataTable {
 				$sanitised = array_map('sanitise_int', $owner_guids);
 				$owner_str = implode(',', $sanitised);
 			} else {
-				$owner_str = (int)$owner_guids;
+				$owner_str = (int) $owner_guids;
 			}
 	
 			$wheres[] = "(n_table.owner_guid IN ($owner_str))";
@@ -745,7 +694,7 @@ class MetadataTable {
 		if (is_array($order_by_metadata)) {
 			if ((count($order_by_metadata) > 0) && !isset($order_by_metadata[0])) {
 				// singleton, so fix
-				$order_by_metadata = array($order_by_metadata);
+				$order_by_metadata = [$order_by_metadata];
 			}
 			foreach ($order_by_metadata as $order_by) {
 				if (is_array($order_by) && isset($order_by['name'])) {
@@ -757,21 +706,13 @@ class MetadataTable {
 					}
 					$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table{$i}
 						on {$e_table}.guid = n_table{$i}.entity_guid";
-					$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
-						on n_table{$i}.name_id = msn{$i}.id";
-					$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv{$i}
-						on n_table{$i}.value_id = msv{$i}.id";
 	
-					$access = _elgg_get_access_where_sql(array(
-						'table_alias' => "n_table{$i}",
-						'guid_column' => 'entity_guid',
-					));
-	
-					$return['wheres'][] = "(msn{$i}.string = '$name' AND $access)";
+					$return['wheres'][] = "(n_table{$i}.name = '$name')";
+
 					if (isset($order_by['as']) && $order_by['as'] == 'integer') {
-						$return['orders'][] = "CAST(msv{$i}.string AS SIGNED) $direction";
+						$return['orders'][] = "CAST(n_table{$i}.value AS SIGNED) $direction";
 					} else {
-						$return['orders'][] = "msv{$i}.string $direction";
+						$return['orders'][] = "n_table{$i}.value $direction";
 					}
 					$i++;
 				}
@@ -807,7 +748,7 @@ class MetadataTable {
 	 */
 	function registerMetadataAsIndependent($type, $subtype = '*') {
 		if (!isset($this->independents[$type])) {
-			$this->independents[$type] = array();
+			$this->independents[$type] = [];
 		}
 		
 		$this->independents[$type][$subtype] = true;
@@ -830,27 +771,4 @@ class MetadataTable {
 		return !empty($this->independents[$type][$subtype])
 			|| !empty($this->independents[$type]['*']);
 	}
-	
-	/**
-	 * When an entity is updated, resets the access ID on all of its child metadata
-	 *
-	 * @param string      $event       The name of the event
-	 * @param string      $object_type The type of object
-	 * @param \ElggEntity $object      The entity itself
-	 *
-	 * @return true
-	 * @access private Set as private in 1.9.0
-	 */
-	function handleUpdate($event, $object_type, $object) {
-		if ($object instanceof \ElggEntity) {
-			if (!$this->isMetadataIndependent($object->getType(), $object->getSubtype())) {
-				$access_id = (int)$object->access_id;
-				$guid = (int)$object->getGUID();
-				$query = "update {$this->table} set access_id = {$access_id} where entity_guid = {$guid}";
-				$this->db->updateData($query);
-			}
-		}
-		return true;
-	}
-	
 }

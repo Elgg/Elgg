@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg report action
- * 
+ *
  * @package ElggReportContent
  */
 $title = get_input('title');
@@ -30,7 +30,7 @@ if (!$report->save()) {
 	$fail();
 }
 
-if (!elgg_trigger_plugin_hook('reportedcontent:add', 'system', array('report' => $report), true)) {
+if (!elgg_trigger_plugin_hook('reportedcontent:add', 'system', ['report' => $report], true)) {
 	$report->delete();
 	$fail();
 }

@@ -2,7 +2,7 @@
 
 /**
  * Header for layouts
- * 
+ *
  * @uses $vars['title']  Title
  * @uses $vars['header'] Optional override for the header
  */

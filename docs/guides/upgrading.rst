@@ -15,8 +15,11 @@ From 2.x to 3.0
 Removed views
 -------------
 
- * ``resources/file/download``
+ * ``forms/admin/site/advanced/system``
+ * ``resources/file/download`` 
+ * ``output/checkboxes``: use ``output/tags`` if you want the same behaviour
  * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
+ * ``invitefriends/form``
  * ``page/layouts/content``: use ``page/layouts/default``
  * ``page/layouts/one_column``: use ``page/layouts/default``
  * ``page/layouts/one_sidebar``: use ``page/layouts/default``
@@ -24,14 +27,20 @@ Removed views
  * ``page/layouts/walled_garden``: use ``page/layouts/default``
  * ``page/layouts/walled_garden/cancel_button``
  * ``page/layouts/two_column_left_sidebar``
+ * ``page/layouts/widgets/add_panel``
+ * ``page/elements/topbar_wrapper``: update your use of ``page/elements/topbar`` to include a check for a logged in user
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
+ * ``likes/count``: modifications can now be done to the ``likes_count`` menu item
+ * ``likes/css``: likes now uses ``elgg/likes.css``
+ * ``messageboard/css``
  * ``notifications/subscriptions/personal``
  * ``notifications/subscriptions/collections``
  * ``notifications/subscriptions/form``
  * ``notifications/subscriptions/jsfuncs``
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
+ * ``river/item``: use elgg_view_river_item() to render river items
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
@@ -47,6 +56,24 @@ Removed views
  * ``spacer.gif``
  * ``toptoolbar_background.gif``
  * ``two_sidebar_background.gif``
+ * ``ajax_loader_bw.gif``: use ``graphics/ajax_loader_bw.gif``
+ * ``elgg_logo.png``: use ``graphics/elgg_logo.png``
+ * ``favicon-128.png``: use ``graphics/favicon-128.png``
+ * ``favicon-16.png``: use ``graphics/favicon-16.png``
+ * ``favicon-32.png``: use ``graphics/favicon-32.png``
+ * ``favicon-64.png``: use ``graphics/favicon-64.png``
+ * ``favicon.ico``: use ``graphics/favicon.ico``
+ * ``favicon.svg``: use ``graphics/favicon.svg``
+ * ``friendspicker.png``: use ``graphics/friendspicker.png``
+ * ``walled_garden.jpg``: use ``graphics/walled_garden.jpg``
+ * ``core/friends/collection``
+ * ``core/friends/collections``
+ * ``core/friends/collectiontabs``
+ * ``core/friends/tablelist``
+ * ``core/friends/talbelistcountupdate``
+ * ``lightbox/elgg-colorbox-theme/colorbox-images/*```
+ * ``navigation/menu/page``: now uses ``navigation/menu/default`` and a prepare hook
+ * ``page/elements/by_line``: Use ``object/elements/imprint``
 
 Removed functions/methods
 -------------------------
@@ -55,14 +82,27 @@ All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https:/
 All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.10.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
  * ``_elgg_manage_pagesetup``
+ * ``datalist_get``
+ * ``datalist_set``
+ * ``detect_extender_valuetype``
  * ``developers_setup_menu``
+ * ``elgg_get_metastring_id``
+ * ``elgg_get_metastring_map``
  * ``get_default_filestore``
+ * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``
  * ``generate_user_password``: Use ``ElggUser::setPassword``
  * ``row_to_elggrelationship``
+ * ``run_function_once``: Use ``Elgg\Upgrade\Batch`` interface
  * ``system_messages``
  * ``notifications_plugin_pagesetup``
+ * ``elgg_format_url``: Use elgg_format_element() or the "output/text" view for HTML escaping.
+ * ``get_site_by_url``
+ * ``ElggEntity::addToSite``
+ * ``ElggEntity::getSites``
+ * ``ElggEntity::removeFromSite``
+ * ``ElggEntity::isFullyLoaded``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
  * ``ElggFile::size``: Use ``getSize``
  * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
@@ -77,17 +117,23 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggMenuItem::setWeight``: Use ``setPriority``
  * ``ElggRiverItem::getPostedTime``: Use ``getTimePosted``
  * ``ElggSession`` has removed all deprecated methods
- * ``ElggSite::addObject``: Use ``addEntity``
- * ``ElggSite::addUser``: Use ``addEntity``
+ * ``ElggSite::addEntity``
+ * ``ElggSite::addObject``
+ * ``ElggSite::addUser``
+ * ``ElggSite::getEntities``: Use ``elgg_get_entities_from_relationship()``
  * ``ElggSite::getExportableValues``: Use ``toObject``
- * ``ElggSite::getMembers``: Use ``getEntities``
- * ``ElggSite::getObjects``: Use ``getEntities``
+ * ``ElggSite::getMembers``: Use ``elgg_get_entities_from_relationship()``
+ * ``ElggSite::getObjects``: Use ``elgg_get_entities_from_relationship()``
  * ``ElggSite::listMembers``: Use ``elgg_list_entities_from_relationship()``
- * ``ElggSite::removeObject``: Use ``removeEntity``
- * ``ElggSite::removeUser``: Use ``removeEntity``
+ * ``ElggSite::removeEntity``
+ * ``ElggSite::removeObject``
+ * ``ElggSite::removeUser``
+ * ``ElggSite::isPublicPage``: Logic moved to the router and should not be accessed directly
+ * ``ElggSite::checkWalledGarden``: Logic moved to the router and should not be accessed directly
  * ``ElggUser::countObjects``: Use ``elgg_get_entities()``
  * ``Logger::getClassName``: Use ``get_class()``
  * ``Elgg\Application\Database::getTablePrefix``: Read the ``prefix`` property
+ * ``elgg_view_access_collections()``
  * ``ElggSession::get_ignore_access``: Use ``getIgnoreAccess``
  * ``ElggSession::set_ignore_access``: Use ``setIgnoreAccess``
  * ``profile_pagesetup``
@@ -100,26 +146,78 @@ Removed global vars
  * ``$DEFAULT_FILE_STORE``
  * ``$ENTITY_CACHE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``
- * ``$CONFIG->site_id``: Use ``elgg_get_config('site_guid')`` or ``elgg_get_site_entity()->guid``
+ * ``$CONFIG->site_id``: Use ``1``
+ * ``$CONFIG->search_info``
+ * ``$CONFIG->input``: Use ``set_input`` and ``get_input``
 
 Removed classes/interfaces
 --------------------------
 
  * ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
  * ``Elgg_Notifications_Notification``
+ * ``Elgg\Database\EntityTable\UserFetchResultException.php``
+ * ``Elgg\Database\MetastringsTable``
  * ``Exportable`` and its methods ``export`` and ``getExportableValues``: Use ``toObject``
  * ``ExportException``
  * ``Importable`` and its method ``import``.
  * ``ImportException``
  * ``ODD`` and all classes beginning with ``ODD*``.
  * ``XmlElement``
+ * ``Elgg_Notifications_Event``: Use ``\Elgg\Notifications\Event``
+ 
+Schema changes
+--------------
+ 
+The storage engine for the database tables has been changed from MyISAM to InnoDB. You maybe need to optimize your database settings for this change.
+The ``datalists`` table has been removed. All settings from datalists table have been merged into the ``config`` table.
+
+Metastrings in the database have been denormalized for performance purposes. We removed the metastrings table and put all the string values directly in the 
+metadata and annotation tables. You need to update your custom queries to reflect these changes. Also the ``msv`` and ``msn`` table aliases are no longer available.
+It is best practice not to rely on the table aliases used in core queries. If you need to use custom clauses you should do your own joins.
+
+
+From the "users_entity" table, the ``password`` and ``hash`` columns have been removed.
+
+Metadata no longer are access-controlled
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Metadata is available in all contexts. If your plugin created metadata with restricted access, those restrictions will not be honored. You should use annotations or entities instead, which do provide access control.
+
+Do not read or write to the ``access_id`` property on ElggMetadata objects.
+
+Multi Site Changes
+------------------
+
+Pre 3.0 Elgg has some (partial) support for having multiple sites in the same database. This Multi Site concept has been completely removed in 3.0.
+Entities no longer have the site_guid attribute. This means there is no longer the ability to have entities on different sites.
+If you currently have multiple sites in your database, upgrading Elgg to 3.0 will fail. 
+You need to separate the different sites into separate databases/tables.
+
+Related to the removal of the Multi Site concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
+All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade.
+
+Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the `$CONFIG->wwwroot` set in
+settings.php, or computed by Symphony Request.
+
+``ElggSite::save()`` will fail if it isn't the main site.
+
+Search changes
+--------------
+
+The FULLTEXT indices have been removed on various tables. The search plugin will now always use a like query when performing a search.
+
+ * ``search_get_where_sql`` no longer supports the argument ``use_fulltext``
+ * ``search_get_ft_min_max`` function is removed
+ * ``$CONFIG->search_info`` is no longer provided
 
 Form and field related changes
 ------------------------------
 
  * ``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false
+ * ``input/submit``, ``input/reset`` and ``input/button`` are now rendered with a ``<button>`` instead of the ``<input>`` tag. These input view also accept ``text`` and ``icon`` parameters.
  * ``output/url`` now sets ``.elgg-anchor`` class on anchor elements and accepts ``icon`` parameter. If no ``text`` is set, the ``href`` parameter used as a label will be restricted to 100 characters.
  * ``output/url`` now supports a ``badge`` parameter, which can be used where a counter, a badge, or similar is required as a postfix (mainly in menu items that have counters).
+ * ``output/tags`` no longer uses ``<ul>`` tags with floats and instead it relies on inherently inline elements such as ``<span>`` and ``<a>``
 
 Removed libraries
 -----------------
@@ -132,6 +230,7 @@ Removed pagehandling
  * ``file/download``
  * ``groupicon``
  * ``twitterservice``
+ * ``collections/pickercallback``
 
 Removed actions
 ---------------
@@ -164,11 +263,15 @@ Removed JavaScript APIs
  * ``elgg.ui.likesPopupHandler``
  * ``elgg.embed``: Use the ``elgg/embed`` module
  * ``embed/custom_insert_js``: Use the ``embed, editor`` JS hook
+ * ``elgg/ckeditor.js``: replaced by ``elgg-ckeditor.js``
+ * ``elgg/ckeditor/set-basepath.js``
  * ``elgg/ckeditor/insert.js``
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``
  * ``elgg.autocomplete`` is no longer defined.
  * ``elgg.messageboard`` is no longer defined.
+ * ``jQuery.fn.friendsPicker``
+ * ``elgg.ui.toggleMenu`` is no longer defined
 
 Removed hooks/events
 --------------------
@@ -199,6 +302,7 @@ APIs that now accept only an ``$options`` array
  * ``ElggUser::getFriendsObjects`` (as part of ``Friendable``)
  * ``ElggUser::getObjects`` (as part of ``Friendable``)
  * ``find_active_users``
+ * ``elgg_get_admin_notices``
 
 Plugin functions that now require an explicit ``$plugin_id``
 ------------------------------------------------------------
@@ -228,9 +332,13 @@ Miscellaneous API changes
 
  * ``ElggBatch``: You may only access public properties
  * ``ElggEntity``: The ``tables_split`` and ``tables_loaded`` properties were removed
+ * ``ElggEntity``: Empty URLs will no longer be normalized. This means entities without URLs will no longer result in the site URL
  * ``ElggGroup::removeObjectFromGroup`` requires passing in an ``ElggObject`` (no longer accepts a GUID)
  * ``ElggUser::$salt`` no longer exists as an attribute, nor is it used for authentication
  * ``ElggUser::$password`` no longer exists as an attribute, nor is it used for authentication
+ * ``elgg_get_widget_types`` no longer supports ``$exact`` as the 2nd argument
+ * ``elgg_instanceof`` no longer supports the fourth ``class`` argument
+ * ``elgg_view``: The 3rd and 4th (unused) arguments have been removed. If you use the ``$viewtype`` argument, you must update your usage.
  * ``elgg_view_icon`` no longer supports ``true`` as the 2nd argument
  * ``elgg_list_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
@@ -239,9 +347,14 @@ Miscellaneous API changes
  * ``Application::getDb()`` no longer returns an instance of ``Elgg\Database``, but rather a ``Elgg\Application\Database``
  * ``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files.
  * ``elgg_get_config('siteemail')`` is no longer available. Use ``elgg_get_site_entity()->email``.
+ * Group entities do no longer have the magic ``username`` attribute.
+ * Pagehandling will no longer detect ``group:<guid>`` in the URL
+ * The CRON interval ``reboot`` is removed.
  * The URL endpoints ``js/`` and ``css/`` are no longer supported. Use ``elgg_get_simplecache_url()``.
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
  * The script ``engine/start.php`` is removed.
+ * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``.
+ * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used.
 
 JavaScript hook calling order may change
 ----------------------------------------
@@ -255,6 +368,17 @@ If handlers were registered with the same priority, these are called in the orde
 
 To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in
 priority. Some of these handlers will most likely be called in a different order.
+
+Widget layout related changes
+-----------------------------
+
+The widget layout usage has been changed. Content is no longer drawn as part of the layout. You need to wrap you content
+in another layout and use the widgets layout as part of your content. If you want some special content to show if there
+are no widgets in the layout, you can now pass a special ``no_widgets`` parameter (as String or as a Closure).
+
+When registering widgets you can no longer omit passing a context as the ``all`` context is no longer supported. You need
+to explicitely pass the contexts for which the widget is intended. 
+
 
 HtmLawed is no longer a plugin
 ------------------------------
@@ -297,6 +421,11 @@ Plugins and themes should:
  * Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``
  * RSS extras menu is now registered with ``register, menu:extras`` hook
 
+Likes plugin
+------------
+
+Likes no longer uses Elgg's toggle API, so only a single ``likes`` menu item is used. The add/remove actions no longer return Ajax values directly, as likes status data is now returned with *every* Ajax request that sends a "guid". When the number of likes is zero, the ``likes_count`` menu item is now hidden by adding `.hidden` to the LI element, instead of the anchor. Also the ``likes_count`` menu item is a regular link, and is no longer created by the ``likes/count`` view.
+
 Notifications plugin
 --------------------
 
@@ -321,6 +450,9 @@ Notable changes in plugins:
  * ``.elgg-icon`` no longer has a global ``font-size``, ``line-height`` or ``color``: these values will be inherited from parent items
  * Support for ``.elgg-icon-hover`` has been dropped
  * Admin theme now reuses icon classes from ``elements/icons.css``
+ * User "hover" icons are no longer covered with a "caret" icon.
+
+Also note, CSS views served via ``/cache`` URLs are pre-processed using `CSS Crush <http://the-echoplex.net/csscrush/>`_. If you make references to CSS variables or other elements, the definition must be located within the same view output. E.g. A variable defined in ``elgg.css`` cannot be referenced in a separate CSS file like ``colorbox.css``.
 
 Comment notifications
 ---------------------
@@ -328,14 +460,28 @@ Comment notifications
  * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
  * The action for creating a comment (``action/comment/save``) was changed. If your plugin overruled this action you should have a look at it in order to prevent double notifications 
 
+Object listing views
+--------------------
+
+ * ``object/elements/full/body`` now wraps the full listing body in a ``.elgg-listing-full-body`` wrapper
+ * ``object/elements/full`` now supports ``attachments`` and ``responses`` which are rendered after listing body
+ * In core plugins, resource views no longer render comments/replies - instead they pass a ``show_responses`` flag to the entity view, which renders the responses and passes them to the full listing view. Third party plugins will need to update their uses of ``object/<subtype>`` and ``resources/<handler>/view`` views.
+ * Full discussion view is now rendered using ``object/elements/full`` view
+ * ``object/file`` now passes image (specialcontent) view as an ``attachment`` to the full listing view
+
 Menu changes
 ------------
 
 Support for ``icon`` and ``badge`` parameters was added. Plugins should start using these parameters and prefer them to a single ``text`` parameter. CSS should be used to control visibility of the label, icon and badge, instead of conditionals in preparing menu items.
 
+All menus are now wrapped with ``nav.elgg-menu-container`` to ensure that multiple menu sections have a single parent element, and can be styled using flexbox or floats.
+
+All menu items are now identified with with ``data-menu-item`` attribute, sections - with ``data-menu-section``, containers with - ``data-menu-name`` attributes.
+
 ``topbar`` menu:
 
  * ``account`` menu item with priority ``800`` added to ``alt`` section
+ * ``account`` parent menu item uses dropdown menu API to display the submenu
  * ``site_notifications`` menu item is now a child of ``account`` with priority ``100``
  * ``usersettings`` menu item is now a child of ``account`` with priority ``300``
  * ``administration`` menu item is now a child of ``account`` with priority ``800``
@@ -350,6 +496,19 @@ Support for ``icon`` and ``badge`` parameters was added. Plugins should start us
 
  * ``bookmark``, ``report_this`` and ``rss`` menu items now use ``icon`` parameter
 
+``entity`` menu:
+
+ * ``access`` menu item has been removed. Access information is now rendered in the entity byline.
+ 
+``user_hover`` menu:
+ 
+ * All items use the ``icon`` parameter.
+ * The layout of the dropdown has been changed. If you have modified the look and feel of this dropdown, you might need to update your HTML/CSS.
+
+``widget`` menu:
+
+ * ``collapse`` menu item has been removed and CSS updated accordingly
+
 Entity icons
 ------------
 
@@ -359,8 +518,43 @@ Default icon image files have been moved and re-mapped as follows:
  * User icons: ``views/default/icon/user/default/$size.gif``
  * Group icons: ``views/default/icon/group/default/$size.gif`` in the groups plugin
 
+Groups icon files have been moved from ``groups/<guid><size>.jpg`` relative to group owner's directory on filestore to a location prescribed by the entity icon service. Plugins should stop accessing files on the filestore directly and use the entity icon API. Upgrade script is available via admin interface.
+
+Autocomplete (user and friends pickers)
+---------------------------------------
+
+Friends Picker input is now rendered using ``input/userpicker``.
+
+Plugins should:
+
+ * Update overriden ``input/userpicker`` to support new ``only_friends`` parameter
+ * Remove friends picker CSS from their stylesheets
+
+Friends collections
+-------------------
+
+Friends collections UI has been moved to its own plugins - ``friends_collections``.
+
+Layout of ``.elgg-body`` elements
+---------------------------------
+
+In 3.0, these elements by default no longer stretch to fill available space in a block
+context. They still clear floats and allow breaking words to wrap text.
+
+Core modules and layouts that relied on space-filling have been reworked for Flexbox and
+we encourage devs to do the same, rather than use the problematic ``overflow: hidden``.
+
 From 2.2 to 2.3
 ===============
+
+PHP Version
+-----------
+
+PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are secure, we now require PHP 5.6 for new installations.
+
+Existing installations can continue using PHP 5.5 until Elgg 3.0.
+
+In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may need to use ``--ignore-platform-reqs`` flag.
 
 Deprecated APIs
 ---------------
@@ -486,6 +680,12 @@ Support for fieldsets in forms
  * ``elgg_view_field()`` replaces ``elgg_view_input()``. It has a similar API, but accepts a single array.
  * ``elgg_view_field()`` supports ``#type``, ``#label``, ``#help`` and ``#class``, allowing unprefixed versions to be sent to the input view ``$vars``.
  * The new view ``input/fieldset`` can be used to render a set of fields, each rendered with ``elgg_view_field()``.
+
+Lightbox
+--------
+
+ * Lightbox css is no longer loaded as an external CSS file. Lightbox theme now extends ``elgg.css`` and ``admin.css``
+ * Default lightbox config is now defined via ``'elgg.data','site'`` server-side hook
 
 From 2.1 to 2.2
 ===============

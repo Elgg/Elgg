@@ -4,11 +4,11 @@
  *
  * @package ElggGroups
  */
-$url = elgg_get_site_url() . 'groups/search';
-$body = elgg_view_form('groups/find', array(
-	'action' => $url,
+
+$body = elgg_view_form('groups/find', [
+	'action' => 'groups/search',
 	'method' => 'get',
 	'disable_security' => true,
-));
+]);
 
 echo elgg_view_module('aside', elgg_echo('groups:searchtag'), $body);

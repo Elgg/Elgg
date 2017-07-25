@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'admin:users:unvalidated' => 'Непровереный',
 	
 	'email:validate:subject' => "%s пожалуйста, подтвердите свой email для %s!",
@@ -51,4 +51,4 @@ return array(
 	'uservalidationbyemail:messages:resent_validation' => 'Запрос на подтверждение переслан.',
 	'uservalidationbyemail:messages:resent_validations' => 'Запрос отправлен всем отмеченным пользователям.'
 
-);
+];

@@ -57,24 +57,15 @@ function elgg_delete_metadata_by_id($id) {
  * @param string $value          Value of the metadata
  * @param string $value_type     'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
- * @param int    $access_id      Access level of the metadata (deprecated). Default in 2.x is ACCESS_PRIVATE, but
- *                               use ACCESS_PUBLIC for compatibility with Elgg 3.0
+ * @param null   $ignored        This argument is not used
  * @param bool   $allow_multiple Allow multiple values for one key. Default is false
  *
  * @return int|false id of metadata or false if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
-		$access_id = null, $allow_multiple = false) {
-
-	if ($access_id === null) {
-		$access_id = ACCESS_PRIVATE;
-	} elseif ($access_id != ACCESS_PUBLIC) {
-		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-			. 'All metadata will be public in 3.0.', '2.3');
-	}
-
+		$ignored = null, $allow_multiple = false) {
 	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,
-		$value_type, $owner_guid, $access_id, $allow_multiple);
+		$value_type, $owner_guid, null, $allow_multiple);
 }
 
 /**
@@ -85,19 +76,12 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  * @param string $value      Metadata value
  * @param string $value_type Value type
  * @param int    $owner_guid Owner guid
- * @param int    $access_id  Access level of the metadata (deprecated). Use ACCESS_PUBLIC for compatibility
- *                           with Elgg 3.0
  *
  * @return bool
  */
-function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id) {
-	if ($access_id != ACCESS_PUBLIC) {
-		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-			. 'All metadata will be public in 3.0.', '2.3');
-	}
-
+function update_metadata($id, $name, $value, $value_type, $owner_guid) {
 	return _elgg_services()->metadataTable->update($id, $name, $value,
-		$value_type, $owner_guid, $access_id);
+		$value_type, $owner_guid);
 }
 
 /**
@@ -111,24 +95,16 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
  * @param array  $name_and_values Associative array - a value can be a string, number, bool
  * @param string $value_type      'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid      GUID of entity that owns the metadata
- * @param int    $access_id       Access level of the metadata (deprecated). Default in 2.x is ACCESS_PRIVATE, but
- *                                use ACCESS_PUBLIC for compatibility with Elgg 3.0
+ * @param null   $ignored         This argument is not used
  * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
  *
  * @return bool
  */
 function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid,
-		$access_id = null, $allow_multiple = false) {
-
-	if ($access_id === null) {
-		$access_id = ACCESS_PRIVATE;
-	} elseif ($access_id != ACCESS_PUBLIC) {
-		elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-			. 'All metadata will be public in 3.0.', '2.3');
-	}
+		$ignored = null, $allow_multiple = false) {
 
 	return _elgg_services()->metadataTable->createFromArray($entity_guid, $name_and_values,
-		$value_type, $owner_guid, $access_id, $allow_multiple);
+		$value_type, $owner_guid, null, $allow_multiple);
 }
 
 /**
@@ -161,7 +137,7 @@ function create_metadata_from_array($entity_guid, array $name_and_values, $value
  * @return \ElggMetadata[]|mixed
  * @since 1.8.0
  */
-function elgg_get_metadata(array $options = array()) {
+function elgg_get_metadata(array $options = []) {
 	return _elgg_services()->metadataTable->getAll($options);
 }
 
@@ -231,10 +207,8 @@ function elgg_enable_metadata(array $options) {
  * 	$options['wheres'][] = "NOT EXISTS (
  *			SELECT 1 FROM {$dbprefix}metadata md
  *			WHERE md.entity_guid = e.guid
- *				AND md.name_id = $name_metastring_id
- *				AND md.value_id = $value_metastring_id)";
- *
- * Note the metadata name and value has been denormalized in the above example.
+ *				AND md.name = $name
+ *				AND md.value = $value)";
  *
  * @see elgg_get_entities
  *
@@ -253,7 +227,7 @@ function elgg_enable_metadata(array $options) {
  *                               Currently if multiple values are sent via
  *                               an array (value => array('value1', 'value2')
  *                               the pair's operand will be forced to "IN".
- *                               If passing "IN" as the operand and a string as the value, 
+ *                               If passing "IN" as the operand and a string as the value,
  *                               the value must be a properly quoted and escaped string.
  *
  * 	metadata_name_value_pairs_operator => null|STR The operator to use for combining
@@ -273,7 +247,7 @@ function elgg_enable_metadata(array $options) {
  * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
-function elgg_get_entities_from_metadata(array $options = array()) {
+function elgg_get_entities_from_metadata(array $options = []) {
 	return _elgg_services()->metadataTable->getEntities($options);
 }
 
@@ -330,7 +304,7 @@ function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = null, 
  * @return array Array of strings
  */
 function metadata_array_to_values($array) {
-	$valuearray = array();
+	$valuearray = [];
 
 	if (is_array($array)) {
 		foreach ($array as $element) {
@@ -381,20 +355,6 @@ function is_metadata_independent($type, $subtype) {
 }
 
 /**
- * When an entity is updated, resets the access ID on all of its child metadata
- *
- * @param string     $event       The name of the event
- * @param string     $object_type The type of object
- * @param \ElggEntity $object      The entity itself
- *
- * @return true
- * @access private Set as private in 1.9.0
- */
-function metadata_update($event, $object_type, $object) {
-	return _elgg_services()->metadataTable->handleUpdate($event, $object_type, $object);
-}
-
-/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
@@ -426,8 +386,5 @@ function _elgg_metadata_test($hook, $type, $value, $params) {
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	/** Call a function whenever an entity is updated **/
-	$events->registerHandler('update', 'all', 'metadata_update', 600);
-
 	$hooks->registerHandler('unit_test', 'system', '_elgg_metadata_test');
 };

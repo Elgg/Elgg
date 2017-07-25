@@ -7,7 +7,7 @@
  *
  * In DIV elements, Ps are only added when there would be at
  * least two of them.
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Output
  */
@@ -81,7 +81,7 @@ class ElggAutoP {
 	 */
 	public function process($html) {
 		// normalize whitespace
-		$html = str_replace(array("\r\n", "\r"), "\n", $html);
+		$html = str_replace(["\r\n", "\r"], "\n", $html);
 
 		// allows preserving entities untouched
 		$html = str_replace('&', $this->_unique . 'AMP', $html);
@@ -95,10 +95,9 @@ class ElggAutoP {
 		// Do not load entities. May be unnecessary, better safe than sorry
 		$disable_load_entities = libxml_disable_entity_loader(true);
 
-		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' " 
+		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' "
 				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
 				. "</html>")) {
-
 			libxml_disable_entity_loader($disable_load_entities);
 			return false;
 		}
@@ -106,8 +105,20 @@ class ElggAutoP {
 		libxml_disable_entity_loader($disable_load_entities);
 
 		$this->_xpath = new DOMXPath($this->_doc);
+
 		// start processing recursively at the BODY element
 		$nodeList = $this->_xpath->query('//body[1]');
+		if ($nodeList->item(0) instanceof DOMText) {
+			// May be https://github.com/facebook/hhvm/issues/7745
+			// Um... try again?
+			$this->_xpath = new DOMXPath($this->_doc);
+			$nodeList = $this->_xpath->query('//body[1]');
+
+			if ($nodeList->item(0) instanceof DOMText) {
+				// not going to work
+				throw new \RuntimeException('DOMXPath::query for BODY element returned a text node');
+			}
+		}
 		$this->addParagraphs($nodeList->item(0));
 
 		// serialize back to HTML
@@ -117,7 +128,7 @@ class ElggAutoP {
 
 		// split AUTOPs into multiples at /\n\n+/
 		$html = preg_replace('/(' . $this->_unique . 'NL){2,}/', '</autop><autop>', $html);
-		$html = str_replace(array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'),
+		$html = str_replace([$this->_unique . 'BR', $this->_unique . 'NL', '<br>'],
 				'<br />',
 				$html);
 		$html = str_replace('<br /></autop>', '</autop>', $html);
@@ -195,8 +206,8 @@ class ElggAutoP {
 	 */
 	protected function addParagraphs(DOMElement $el) {
 		// no need to call recursively, just queue up
-		$elsToProcess = array($el);
-		$inlinesToProcess = array();
+		$elsToProcess = [$el];
+		$inlinesToProcess = [];
 		while ($el = array_shift($elsToProcess)) {
 			// if true, we can alter all child nodes, if not, we'll just call
 			// addParagraphs on each element in the descendInto list

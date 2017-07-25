@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'blog' => '博客',
 	'blog:blogs' => '博客',
 	'blog:revisions' => '修订',
@@ -63,4 +63,4 @@ return array(
 	'blog:moreblogs' => '更多博文',
 	'blog:numbertodisplay' => '要显示的博文数',
 	'blog:noblogs' => '没有博文'
-);
+];

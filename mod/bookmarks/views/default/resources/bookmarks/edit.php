@@ -20,12 +20,12 @@ $title = elgg_echo('bookmarks:edit');
 elgg_push_breadcrumb($title);
 
 $vars = bookmarks_prepare_form_vars($bookmark);
-$content = elgg_view_form('bookmarks/save', array(), $vars);
+$content = elgg_view_form('bookmarks/save', [], $vars);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
-));
+]);
 
 echo elgg_view_page($title, $body);

@@ -28,7 +28,7 @@ $anchor4 = elgg_view('output/url', [
 	'href' => '#anchor2',
 	'text' => 'Image anchor',
 	'icon' => elgg_view('output/img', [
-		'src' => elgg_get_simplecache_url('favicon-16.png'),
+		'src' => elgg_get_simplecache_url('graphics/favicon-16.png'),
 		'alt' => 'favicon',
 	]),
 ]);

@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Http\Request;
+
 /**
  * Manages a global stack of strings for sharing information about the current execution context
  *
@@ -9,7 +11,7 @@ namespace Elgg;
  * output could be different for those two contexts ('blog' vs 'widget').
  *
  * Pages that pass through the page handling system set the context to the
- * first string after the root url. Example: http://example.org/elgg/bookmarks/ 
+ * first string after the root url. Example: http://example.org/elgg/bookmarks/
  * results in the initial context being set to 'bookmarks'.
  *
  * The context is a stack so that for a widget on a profile, the context stack
@@ -23,8 +25,8 @@ namespace Elgg;
  */
 final class Context {
 	
-	private $stack = array();
-	
+	private $stack = [];
+
 	/**
 	 * Get the most recently pushed context value.
 	 *
@@ -107,5 +109,23 @@ final class Context {
 	 */
 	public function fromArray(array $stack) {
 		$this->stack = array_map('strval', $stack);
+	}
+
+	/**
+	 * Initialize the context from the request
+	 *
+	 * @param Request $request Elgg request
+	 * @return void
+	 */
+	public function initialize(Request $request) {
+		// don't do this for *_handler.php, etc.
+		if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
+			$context = $request->getFirstUrlSegment();
+			if (!$context) {
+				$context = 'main';
+			}
+
+			$this->stack = [$context];
+		}
 	}
 }

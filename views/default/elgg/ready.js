@@ -10,3 +10,4 @@ define(function(require) {
 
 	elgg.trigger_hook('ready', 'system');
 });
+

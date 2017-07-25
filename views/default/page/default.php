@@ -1,70 +1,61 @@
 <?php
+
 /**
- * Elgg pageshell
- * The standard HTML page shell that everything else fits into
+ * Renders a standard HTML page shell
  *
- * @package Elgg
- * @subpackage Core
- *
- * @uses $vars['head']        Parameters for the <head> element
- * @uses $vars['body_attrs']  Attributes of the <body> tag
- * @uses $vars['body']        The main content of the page
- * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
+ * @uses $vars['section']       An array of page sections to render
+ * @uses $vars['html_attrs']    Attributes of the <html> tag
+ * @uses $vars['head']          Parameters for the <head> element
+ * @uses $vars['body_attrs']    Attributes of the <body> tag
+ * @uses $vars['page_attrs']    Attributes of the .elgg-page container
+ * @uses $vars['title']         Title of the page
+ * @uses $vars['body']          The main content of the page
+ * @uses $vars['sysmessages']   A 2d array of various message registers, passed from system_messages()
+ * @uses $vars['admin_notices'] Array of ElggObject admin notices
  */
 
-// render content before head so that JavaScript and CSS can be loaded. See #4032
+$sections = elgg_extract('sections', $vars);
 
-$messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+if (empty($sections)) {
+	// render content before head so that JavaScript and CSS can be loaded. See #4032
+	$sections = [
+		'messages' => elgg_view('page/elements/messages', [
+			'object' => $vars['sysmessages'],
+		]),
+		'topbar' => elgg_view('page/elements/topbar', $vars),
+		'header' => elgg_view('page/elements/header', $vars),
+		'navbar' => elgg_view('page/elements/navbar', $vars),
+		'admin-notices' => elgg_view('page/elements/admin_notices', [
+			'notices' => $vars['admin_notices'],
+		]),
+		'body' => elgg_view('page/elements/body', $vars),
+		'footer' => elgg_view('page/elements/footer', $vars),
+	];
+}
 
-$header = elgg_view('page/elements/header', $vars);
-$navbar = elgg_view('page/elements/navbar', $vars);
-$content = elgg_view('page/elements/body', $vars);
-$footer = elgg_view('page/elements/footer', $vars);
+$page = '';
+foreach ($sections as $section => $content) {
+	$page .= elgg_view('page/elements/section', [
+		'section' => $section,
+		'html' => $content,
+		'page_shell' => elgg_extract('page_shell', $vars),
+	]);
+}
 
-$body = <<<__BODY
-<div class="elgg-page elgg-page-default">
-	<div class="elgg-page-messages">
-		$messages
-	</div>
-__BODY;
+$page_vars = elgg_extract('page_attrs', $vars, []);
+$page_vars['class'] = elgg_extract_class($page_vars, ['elgg-page', 'elgg-page-default']);
 
-$body .= elgg_view('page/elements/topbar_wrapper', $vars);
-
-$body .= <<<__BODY
-	<div class="elgg-page-header">
-		<div class="elgg-inner">
-			$header
-		</div>
-	</div>
-	<div class="elgg-page-navbar">
-		<div class="elgg-inner">
-			$navbar
-		</div>
-	</div>
-	<div class="elgg-page-body">
-		<div class="elgg-inner">
-			$content
-		</div>
-	</div>
-	<div class="elgg-page-footer">
-		<div class="elgg-inner">
-			$footer
-		</div>
-	</div>
-</div>
-__BODY;
+$body = elgg_format_element('div', $page_vars, $page);
 
 $body .= elgg_view('page/elements/foot');
 
 $head = elgg_view('page/elements/head', $vars['head']);
 
-$params = array(
+$params = [
 	'head' => $head,
 	'body' => $body,
-);
+	'body_attrs' => elgg_extract('body_attrs', $vars, []),
+	'html_attrs' => elgg_extract('html_attrs', $vars, []),
+];
 
-if (isset($vars['body_attrs'])) {
-	$params['body_attrs'] = $vars['body_attrs'];
-}
-
-echo elgg_view("page/elements/html", $params);
+echo elgg_view('page/elements/html', $params);

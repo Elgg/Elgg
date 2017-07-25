@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'twitter_api' => 'Twitter Services',
 
 	'twitter_api:requires_oauth' => 'Twitter Services vereist dat de OAuth libraries-plugin is ingeschakeld.',
@@ -53,4 +53,4 @@ return array(
 	'twitter_api:interstitial:password_mismatch' => 'Je wachtwoorden komen niet overeen.',
 	'twitter_api:interstitial:cannot_save' => 'De accountdetails kunnen niet worden opgeslagen.',
 	'twitter_api:interstitial:saved' => 'Accountdetails opgeslagen!',
-);
+];

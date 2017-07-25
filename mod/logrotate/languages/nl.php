@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 	'logrotate:period' => 'Hoe vaak moet het systeemlogboek worden gearchiveerd?',
 
 	'logrotate:logrotated' => "Logboek gearchiveerd",
@@ -15,4 +15,4 @@ return array(
 	'logrotate:logdeleted' => "Log verwijderd
 ",
 	'logrotate:lognotdeleted' => "Fout tijdens het verwijderen van de log",
-);
+];

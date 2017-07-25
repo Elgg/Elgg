@@ -27,14 +27,12 @@ if (elgg_instanceof($container, 'group')) {
 
 elgg_push_breadcrumb($blog->title);
 
-$params['content'] = elgg_view_entity($blog, array('full_view' => true));
+$params['content'] = elgg_view_entity($blog, [
+	'full_view' => true,
+	'show_responses' => true,
+]);
 
-// check to see if we should allow comments
-if ($blog->comments_on != 'Off' && $blog->status == 'published') {
-	$params['content'] .= elgg_view_comments($blog);
-}
-
-$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
+$params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
 
 $body = elgg_view_layout('content', $params);
 

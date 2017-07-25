@@ -270,8 +270,6 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  * 	container_guids => null|ARR Array of container_guids
  *
- * 	site_guids => null (current_site)|ARR Array of site_guid
- *
  * 	order_by => null (time_created desc)|STR SQL order by clause
  *
  *  reverse_order_by => BOOL Reverse the default order by clause
@@ -323,7 +321,7 @@ function elgg_enable_entity($guid, $recursive = true) {
  * @see elgg_get_entities_from_annotations()
  * @see elgg_list_entities()
  */
-function elgg_get_entities(array $options = array()) {
+function elgg_get_entities(array $options = []) {
 	return _elgg_services()->entityTable->getEntities($options);
 }
 
@@ -390,36 +388,42 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  * @see elgg_get_entities()
  * @see elgg_view_entity_list()
  */
-function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
+function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities',
 	$viewer = 'elgg_view_entity_list') {
 
 	elgg_register_rss_link();
 
 	$offset_key = isset($options['offset_key']) ? $options['offset_key'] : 'offset';
 
-	$defaults = array(
+	$defaults = [
 		'offset' => (int) max(get_input($offset_key, 0), 0),
 		'limit' => (int) max(get_input('limit', elgg_get_config('default_limit')), 0),
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => true,
 		'no_results' => '',
-	);
+	];
 
 	$options = array_merge($defaults, $options);
 
-	$options['count'] = true;
-	$count = call_user_func($getter, $options);
-
-	if ($count > 0) {
+	$entities = [];
+	
+	if (!$options['pagination']) {
 		$options['count'] = false;
 		$entities = call_user_func($getter, $options);
+		unset($options['count']);
 	} else {
-		$entities = array();
+		$options['count'] = true;
+		$count = call_user_func($getter, $options);
+	
+		if ($count > 0) {
+			$options['count'] = false;
+			$entities = call_user_func($getter, $options);
+		}
+
+		$options['count'] = $count;
 	}
-
-	$options['count'] = $count;
-
+	
 	return call_user_func($viewer, $entities, $options);
 }
 
@@ -455,7 +459,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  * @throws InvalidArgumentException
  * @todo Does not support ordering by attributes or using an attribute pair shortcut like this ('title' => 'foo')
  */
-function elgg_get_entities_from_attributes(array $options = array()) {
+function elgg_get_entities_from_attributes(array $options = []) {
 	return _elgg_services()->entityTable->getEntitiesFromAttributes($options);
 }
 
@@ -467,7 +471,7 @@ function elgg_get_entities_from_attributes(array $options = array()) {
  * @access private
  * @throws InvalidArgumentException
  */
-function _elgg_get_entity_attribute_where_sql(array $options = array()) {
+function _elgg_get_entity_attribute_where_sql(array $options = []) {
 	return _elgg_services()->entityTable->getEntityAttributeWhereSql($options);
 }
 
@@ -483,15 +487,13 @@ function _elgg_get_entity_attribute_where_sql(array $options = array()) {
  * @param string $type           The type of entity
  * @param string $subtype        The subtype of entity
  * @param int    $container_guid The container GUID that the entities belong to
- * @param int    $site_guid      The site GUID
+ * @param int    $ignored        Ignored parameter
  * @param string $order_by       Order_by SQL order by clause
  *
  * @return array|false Either an array months as YYYYMM, or false on failure
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0,
-		$order_by = 'time_created') {
-	return _elgg_services()->entityTable->getDates(
-		$type, $subtype, $container_guid, $site_guid, $order_by);
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'time_created') {
+	return _elgg_services()->entityTable->getDates($type, $subtype, $container_guid, $order_by);
 }
 
 /**
@@ -517,11 +519,11 @@ function elgg_register_entity_type($type, $subtype = null) {
 	}
 
 	if (!isset($CONFIG->registered_entities)) {
-		$CONFIG->registered_entities = array();
+		$CONFIG->registered_entities = [];
 	}
 
 	if (!isset($CONFIG->registered_entities[$type])) {
-		$CONFIG->registered_entities[$type] = array();
+		$CONFIG->registered_entities[$type] = [];
 	}
 
 	if ($subtype) {
@@ -648,18 +650,18 @@ function is_registered_entity_type($type, $subtype = null) {
  * @return string A viewable list of entities
  * @since 1.7.0
  */
-function elgg_list_registered_entities(array $options = array()) {
+function elgg_list_registered_entities(array $options = []) {
 	elgg_register_rss_link();
 
-	$defaults = array(
+	$defaults = [
 		'full_view' => false,
 		'allowed_types' => true,
 		'list_type_toggle' => false,
 		'pagination' => true,
 		'offset' => 0,
-		'types' => array(),
-		'type_subtype_pairs' => array(),
-	);
+		'types' => [],
+		'type_subtype_pairs' => [],
+	];
 
 	$options = array_merge($defaults, $options);
 
@@ -683,15 +685,15 @@ function elgg_list_registered_entities(array $options = array()) {
 	}
 
 	if (!empty($options['type_subtype_pairs'])) {
-		$count = elgg_get_entities(array_merge(array('count' => true), $options));
+		$count = elgg_get_entities(array_merge(['count' => true], $options));
 		if ($count > 0) {
 			$entities = elgg_get_entities($options);
 		} else {
-			$entities = array();
+			$entities = [];
 		}
 	} else {
 		$count = 0;
-		$entities = array();
+		$entities = [];
 	}
 
 	$options['count'] = $count;
@@ -707,12 +709,11 @@ function elgg_list_registered_entities(array $options = array()) {
  * @param mixed  $entity  Entity
  * @param string $type    Entity type
  * @param string $subtype Entity subtype
- * @param string $class   Class name
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) {
+function elgg_instanceof($entity, $type = null, $subtype = null) {
 	$return = ($entity instanceof \ElggEntity);
 
 	if ($type) {
@@ -724,11 +725,35 @@ function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) 
 		$return = $return && ($entity->getSubtype() == $subtype);
 	}
 
-	if ($class) {
-		$return = $return && ($entity instanceof $class);
+	return $return;
+}
+
+/**
+ * Checks options for the existing of site_guid or site_guids contents and reports a warning if found
+ *
+ * @param array $options array of options to check
+ *
+ * @return void
+ */
+function _elgg_check_unsupported_site_guid(array $options = []) {
+	$site_guid = elgg_extract('site_guid', $options, elgg_extract('site_guids', $options));
+	if ($site_guid === null) {
+		return;
+	}
+	
+	$backtrace = debug_backtrace();
+	// never show this call.
+	array_shift($backtrace);
+
+	if (!empty($backtrace[0]['class'])) {
+		$warning = "Passing site_guid or site_guids to the method {$backtrace[0]['class']}::{$backtrace[0]['file']} is not supported.";
+		$warning .= "Please update your usage of the method.";
+	} else {
+		$warning = "Passing site_guid or site_guids to the function {$backtrace[0]['function']} in {$backtrace[0]['file']} is not supported.";
+		$warning .= "Please update your usage of the function.";
 	}
 
-	return $return;
+	_elgg_services()->logger->warn($warning);
 }
 
 /**

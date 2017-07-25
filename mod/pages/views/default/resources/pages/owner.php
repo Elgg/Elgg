@@ -13,20 +13,20 @@ if (!$owner) {
 // access check for closed groups
 elgg_group_gatekeeper();
 
-$title = elgg_echo('pages:owner', array($owner->name));
+$title = elgg_echo('pages:owner', [$owner->name]);
 
 elgg_push_breadcrumb($owner->name);
 
 elgg_register_title_button('pages', 'add', 'object', 'page_top');
 
-$content = elgg_list_entities(array(
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'page_top',
 	'container_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 	'no_results' => elgg_echo('pages:none'),
 	'preload_owners' => true,
-));
+]);
 
 $filter_context = '';
 if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {
@@ -36,12 +36,12 @@ if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {
 $sidebar = elgg_view('pages/sidebar/navigation');
 $sidebar .= elgg_view('pages/sidebar');
 
-$params = array(
+$params = [
 	'filter_context' => $filter_context,
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => $sidebar,
-);
+];
 
 if (elgg_instanceof($owner, 'group')) {
 	$params['filter'] = '';

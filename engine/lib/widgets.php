@@ -63,15 +63,14 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  * @param string|array $handler     An array of options or the identifier for the widget handler
  * @param string       $name        The name of the widget type
  * @param string       $description A description for the widget type
- * @param array        $context     An array of contexts where this
- *                                  widget is allowed (default: array('all'))
+ * @param array        $context     An array of contexts where this widget is allowed
  * @param bool         $multiple    Whether or not multiple instances of this widget
  *                                  are allowed in a single layout (default: false)
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_widget_type($handler, $name = null, $description = null, $context = array('all'), $multiple = false) {
+function elgg_register_widget_type($handler, $name = null, $description = null, $context = [], $multiple = false) {
 	if (is_array($handler)) {
 		$definition = \Elgg\WidgetDefinition::factory($handler);
 	} else {
@@ -125,18 +124,16 @@ function elgg_is_widget_type($handler, $context = null, \ElggEntity $container =
  * The contents of the array will be passed to the handlers:widgets hook.
  *
  * @param array|string $context An associative array of options or the widget context
- * @param bool         $exact   Only return widgets registered for this context (false)
  *
  * @return \Elgg\WidgetDefinition[]
  * @since 1.8.0
  */
-function elgg_get_widget_types($context = "", $exact = false) {
+function elgg_get_widget_types($context = "") {
 	if (is_array($context)) {
 		$params = $context;
 	} else {
 		$params = [
 			'context' => $context,
-			'exact' => $exact,
 			'container' => null,
 		];
 	}
@@ -144,24 +141,62 @@ function elgg_get_widget_types($context = "", $exact = false) {
 }
 
 /**
- * Set the widget title on ajax return from save action
+ * Returns widget URLS used in widget titles
  *
- * @param string $hook    Hook name
- * @param string $type    Hook type
- * @param array  $results Array to be encoded as json
- * @param array  $params  Parameters about the request
- * @return array|null
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param string $result URL
+ * @param array  $params Parameters
+ * @return string|null
  * @access private
  */
-function _elgg_widgets_set_ajax_title($hook, $type, $results, $params) {
-	if ($params['action'] == 'widgets/save') {
-		// @todo Elgg makes ajax so difficult - no other way to add data to output
-		$widget = get_entity(get_input('guid'));
-		if ($widget && $widget->title) {
-			$results['title'] = $widget->title;
-			return $results;
-		}
+function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
+	$widget = elgg_extract('entity', $params);
+	if (!($widget instanceof \ElggWidget)) {
+		return;
 	}
+	
+	switch ($widget->handler) {
+		case 'content_stats':
+			return 'admin/statistics/overview';
+		case 'cron_status':
+			return 'admin/statistics/cron';
+		case 'new_users':
+			return 'admin/users/newest';
+		case 'online_users':
+			return 'admin/users/online';
+	}
+}
+
+/**
+ * Handle widgets pages.
+ *
+ * @param array $page Array of pages
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_widgets_page_handler($page) {
+	$segment = elgg_extract(0, $page);
+	if ($segment !== 'add_panel') {
+		return;
+	}
+	elgg_ajax_gatekeeper();
+	
+	$owner_guid = (int) get_input('owner_guid');
+	elgg_set_page_owner_guid($owner_guid);
+
+	// restoring context stack
+	$context_stack = get_input('context_stack');
+	if (!empty($context_stack)) {
+		elgg_set_context_stack($context_stack);
+	}
+	
+	echo elgg_view_resource('widgets/add_panel', [
+		'owner_guid' => $owner_guid,
+		'context' => get_input('context'),
+	]);
+	return true;
 }
 
 /**
@@ -175,8 +210,10 @@ function _elgg_widgets_init() {
 	elgg_register_action('widgets/add');
 	elgg_register_action('widgets/move');
 	elgg_register_action('widgets/delete');
+	
+	elgg_register_page_handler('widgets', '_elgg_widgets_page_handler');
 
-	elgg_register_plugin_hook_handler('output', 'ajax', '_elgg_widgets_set_ajax_title');
+	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_widgets_widget_urls');
 }
 
 /**
@@ -206,7 +243,7 @@ function _elgg_widgets_init() {
  */
 function _elgg_default_widgets_init() {
 	global $CONFIG;
-	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, array());
+	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
 
 	$CONFIG->default_widget_info = $default_widgets;
 
@@ -217,7 +254,7 @@ function _elgg_default_widgets_init() {
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_default_widgets_permissions_override');
 
 		// only register the callback once per event
-		$events = array();
+		$events = [];
 		foreach ($default_widgets as $info) {
 			if (!is_array($info)) {
 				continue;
@@ -263,21 +300,20 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 	foreach ($default_widget_info as $info) {
 		if ($info['entity_type'] == $type) {
 			if ($info['entity_subtype'] == ELGG_ENTITIES_ANY_VALUE || $info['entity_subtype'] == $subtype) {
-
 				// need to be able to access everything
 				$old_ia = elgg_set_ignore_access(true);
 				elgg_push_context('create_default_widgets');
 
 				// pull in by widget context with widget owners as the site
 				// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
-				$options = array(
+				$options = [
 					'type' => 'object',
 					'subtype' => 'widget',
 					'owner_guid' => elgg_get_site_entity()->guid,
 					'private_setting_name' => 'context',
 					'private_setting_value' => $info['widget_context'],
 					'limit' => 0
-				);
+				];
 
 				$widgets = elgg_get_entities_from_private_settings($options);
 				/* @var \ElggWidget[] $widgets */
