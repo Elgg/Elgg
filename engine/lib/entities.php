@@ -406,18 +406,24 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities',
 
 	$options = array_merge($defaults, $options);
 
-	$options['count'] = true;
-	$count = call_user_func($getter, $options);
-
-	if ($count > 0) {
+	$entities = [];
+	
+	if (!$options['pagination']) {
 		$options['count'] = false;
 		$entities = call_user_func($getter, $options);
+		unset($options['count']);
 	} else {
-		$entities = [];
+		$options['count'] = true;
+		$count = call_user_func($getter, $options);
+	
+		if ($count > 0) {
+			$options['count'] = false;
+			$entities = call_user_func($getter, $options);
+		}
+
+		$options['count'] = $count;
 	}
-
-	$options['count'] = $count;
-
+	
 	return call_user_func($viewer, $entities, $options);
 }
 
