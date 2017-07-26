@@ -351,25 +351,29 @@ function groups_set_url($hook, $type, $url, $params) {
  * @return string Relative URL
  */
 function groups_set_icon_url($hook, $type, $url, $params) {
-
+	
+	/* @var $entity \ElggGroup */
 	$entity = elgg_extract('entity', $params);
-	/* @var $group \ElggGroup */
-
+	
 	$size = elgg_extract('size', $params, 'medium');
-
+	
 	$icontime = $entity->icontime;
 	if (null === $icontime) {
 		// handle missing metadata (pre 1.7 installations)
 		$icon = $entity->getIcon('large');
 		$icontime = $icon->exists() ? time() : 0;
 		create_metadata($entity->guid, 'icontime', $icontime, 'integer', $entity->owner_guid, ACCESS_PUBLIC);
-}
-
+	}
+	
 	$icon = $entity->getIcon($size);
-	$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
-	if (!$url) {
+	if ($icon->exists()) {
+		// user uploaded group icon
+		$url = elgg_get_inline_url($icon, true); // binding to session due to complexity in group access controls
+	} else {
+		// show default group icon
 		$url = elgg_get_simplecache_url("groups/default{$size}.gif");
 	}
+	
 	return $url;
 }
 
@@ -574,7 +578,7 @@ function groups_update_event_listener($event, $type, $group) {
  *
  * Registered with a hight priority to make sure that other handlers to not prevent
  * the deletion.
- * 
+ *
  * @param string   $event "delete"
  * @param string   $type  "group"
  * @param ElggGrup $group Group entity
