@@ -77,7 +77,7 @@ blockquote, q {
 	BASICS
 *************************************** */
 body {
-	background-color: #eee;
+	background-color: #fafbfc;
 	font-size: 90%;
 	line-height: 1.4em;
 	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
@@ -88,8 +88,8 @@ h1, h2, h3, h4, h5, h6 {
 	color: #666;
 }
 h1 { font-size: 1.8em; }
-h2 { font-size: 1.5em; line-height: 1.1em; }
-h3 { font-size: 1.2em; }
+h2 { font-size: 1.5em; line-height: 1.1em; font-weight: 300; }
+h3 { font-size: 1.2em; font-weight: 300; }
 h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
@@ -162,7 +162,7 @@ p {
 *************************************** */
 .elgg-page > .elgg-inner {
 	margin: 0 auto;
-	padding: 20px 40px 0;
+	padding: 0 40px;
 	min-width: 800px;
 	max-width: 1600px;
 }
@@ -171,7 +171,7 @@ p {
 	HEADER
 *************************************** */
 .elgg-page-header {
-	background-color: #111;
+	background-color: #24292e;
 	border: 1px solid #999;
 	padding: 20px;
 }
@@ -189,16 +189,21 @@ p {
 	color: white;
 	text-decoration: none;
 }
+.elgg-heading-site small {
+	font-size: 65%;
+	font-weight: 300;
+}
+
 .elgg-menu-user,
 .elgg-menu-admin-header {
 	float: right;
-	margin: 8px 8px 0 0;
+	margin: 4px 8px 0 0;
 }
 .elgg-menu-user,
 .elgg-menu-admin-header,
 .elgg-menu-user a,
 .elgg-menu-admin-header a {
-	color: #999999;
+	color: rgba(255,255,255,0.75);
 }
 .elgg-menu-user a,
 .elgg-menu-admin-header a {
@@ -225,6 +230,9 @@ p {
 }
 a.elgg-maintenance-mode-warning {
 	color: #d00;
+}
+.elgg-menu-item-admin-profile .elgg-avatar {
+	margin-left: 5px;
 }
 
 /* ***************************************
@@ -291,13 +299,12 @@ a.elgg-maintenance-mode-warning {
 	FOOTER
 *************************************** */
 .elgg-page-footer {
-	background-color: #111;
+	background-color: #24292e;
 	border: 1px solid #999;
 	padding: 10px 20px;
-	margin-bottom: 10px;
 }
 .elgg-page-footer a {
-	color: #ddd;
+	color: rgba(255,255,255,0.75);
 	font-weight: bold;
 	text-decoration: none;
 }
@@ -841,16 +848,17 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 /* ***************************************
 	SIDEBAR MENU
 *************************************** */
+.elgg-admin-sidebar-menu {
+	padding-top: 15px;
+}
 .elgg-admin-sidebar-menu a {
-	border: 1px solid red;
 	display: block;
 	padding: 5px;
 	color: #333;
 	cursor: pointer;
 	text-decoration: none;
 	margin-bottom: 2px;
-	border: 1px solid #CCC;
-	border-radius: 5px;
+	border: 1px solid #ddd;
 }
 .elgg-admin-sidebar-menu a:hover {
 	text-decoration: none;
@@ -859,7 +867,9 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	border: 1px solid black;
 }
 .elgg-admin-sidebar-menu li.elgg-state-selected > a {
+	color: #fff;
 	background-color: #BBB;
+	border-color: #BBB;
 }
 .elgg-admin-sidebar-menu .elgg-menu-closed:before {
 	content: "\25B8";
@@ -881,6 +891,10 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 }
 .elgg-admin-sidebar-menu ul.elgg-menu-page {
 	padding-bottom: 15px;
+}
+.elgg-admin-sidebar-menu nav > ul > li > a:not(.elgg-menu-parent):before {
+	content: "";
+	padding-left: .65em;
 }
 
 /* ***************************************
@@ -912,6 +926,9 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 .elgg-menu-footer li:last-child:after {
 	content: "";
 }
+.elgg-menu-admin-footer a {
+	font-weight: 300;
+}
 
 /* ***************************************
 	GENERAL MENU
@@ -934,39 +951,57 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	display: none;
 	position: absolute;
 	z-index: 10000;
-
-	width: 165px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	border: solid 1px #E5E5E5;
-	border-color: #E5E5E5 #999 #999 #E5E5E5;
+	overflow: hidden;
+	border: 1px solid #DEDEDE;
 	background-color: #FFF;
-	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.50);
+	margin-right: 10px;
+
+	border-radius: 0 3px 3px 3px;
+	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
 }
-.elgg-menu-hover > li {
-	border-bottom: 1px solid #ddd;
+
+.elgg-menu-hover-card-container {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 500px;
 }
-.elgg-menu-hover > li:last-child {
-	border-bottom: none;
+
+.elgg-menu-hover-card {
+	padding: 8px 16px;
+	min-width: 300px;
+	flex: 2;
 }
-.elgg-menu-hover .elgg-heading-basic {
-	display: block;
+
+.elgg-menu-hover .elgg-menu > li a {
+	padding: 8px 16px;
+	color: #666;
 }
-.elgg-menu-hover a {
-	display: block;
-	padding: 2px 8px;
-	font-size: 92%;
+.elgg-menu-hover .elgg-anchor-icon + .elgg-anchor-label {
+	margin-left: 12px;
 }
-.elgg-menu-hover a:hover {
-	background: #ccc;
+.elgg-menu-hover .elgg-menu a:hover {
+	background-color: #F0F0F0;
 	text-decoration: none;
 }
-.elgg-menu-hover-admin a {
-	color: red;
+.elgg-menu-hover-actions,
+.elgg-menu-hover-default {
+	border-left: 1px solid #efefef;
+	flex: 1;
+	white-space: nowrap;
 }
-.elgg-menu-hover-admin a:hover {
-	color: white;
-	background-color: red;
+
+.elgg-menu-hover-admin {
+	border-top: 1px solid #efefef;
+}
+
+.elgg-menu-hover .elgg-menu-hover-admin a:hover {
+	color: #FFF;
+	background-color: #FF0000;
+}
+
+/* admin differences */
+.elgg-menu-hover .elgg-menu > li a {
+	display: block;
 }
 
 /* ***************************************
@@ -1049,6 +1084,9 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
+}
+.elgg-module-widget > .elgg-head h3 {
+	font-weight: 600;
 }
 
 <?= elgg_view('elements/widgets.css', $vars) ?>
@@ -1555,7 +1593,7 @@ html {
 }
 @media (max-width: 1030px) {
 	.elgg-page > .elgg-inner {
-		padding: 20px 20px 0;
+		padding: 0 20px;
 		width: auto;
 		min-width: 0;
 	}
@@ -1579,7 +1617,7 @@ html {
 	#elgg-admin-nav-collapse {
 		display: none;
 		width: 100%;
-		background-color: #111;
+		background-color: #24292e;
 	}
 	.elgg-sidebar {
 		position: static;
@@ -1588,7 +1626,7 @@ html {
 		top: 0;
 		width: auto;
 		float: none;
-		background-color: #111;
+		background-color: #24292e;
 		margin: 0;
 	}
 	.elgg-module-main {
@@ -1599,6 +1637,9 @@ html {
 		padding: 30px;
 	}
 	/* Sidebar menu */
+	.elgg-admin-sidebar-menu h2 {
+		color: #ddd;
+	}
 	.elgg-admin-sidebar-menu a {
 		padding: 8px 12px;
 		color: #999;

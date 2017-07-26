@@ -2,18 +2,11 @@
 /**
  * Elgg admin header
  */
-	
-$admin_title = elgg_get_site_entity()->name . ' ' . elgg_echo('admin');
-
-$options = [
-	'sort_by' => 'priority'
-];
-
 ?>
 
 <h1 class="elgg-heading-site">
-	<a href="<?php echo elgg_get_site_url(); ?>admin">
-		<?php echo $admin_title; ?>
+	<a href="<?= elgg_get_site_url(); ?>admin">
+		<?= elgg_get_site_entity()->name ?> <small><?= elgg_echo('admin') ?></small>
 	</a>
 </h1>
 
@@ -23,4 +16,4 @@ $options = [
 	<span class="icon-bar"></span>
 </a>
 
-<?php echo elgg_view_menu('admin_header', $options); ?>
+<?php echo elgg_view_menu('admin_header', ['sort_by' => 'priority']); ?>
