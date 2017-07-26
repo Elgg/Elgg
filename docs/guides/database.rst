@@ -178,15 +178,15 @@ objects. These methods save all sizes of icons defined in the system.
 	$object->description = 'An example object with an icon.';
 	
 	// from an uploaded file
-	$object->setIconFromUploadedFile('file_upload_input');
+	$object->saveIconFromUploadedFile('file_upload_input');
 
 	// from a local file
-	$object->setIconFromLocalFile('/var/data/generic_icon.png');
+	$object->saveIconFromLocalFile('/var/data/generic_icon.png');
 
 	// from a saved ElggFile object
 	$file = get_entity(123);
 	if ($file instanceof ElggFile) {
-		$object->setIconFromElggFile($file);
+		$object->saveIconFromElggFile($file);
 	}
 	
 	$object->save();
@@ -230,7 +230,7 @@ might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as
 
 .. code:: php
 
-	$object->setIconFromUploadedFile('uploaded_photo', 'cover_photo');
+	$object->saveIconFromUploadedFile('uploaded_photo', 'cover_photo');
 
 	$object->getIconUrl([
 		'size' => 'medium',
