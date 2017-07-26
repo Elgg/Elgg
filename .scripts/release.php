@@ -54,12 +54,16 @@ $composer_config->version = $version;
 $json = $encoding->encode($composer_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 file_put_contents($composer_path, $json);
 
-// Generate changelog
+// make the new release
 run_commands(array(
+	// update hash in composer.lock, because version was updated and now there is a mismatch between .json and .lock
+	"composer update --lock",
+	// Generate changelog
 	"sphinx-build -b gettext docs docs/locale/pot",
 	"sphinx-intl build --locale-dir=docs/locale/",
 	"npm install && npm update",
 	"node .scripts/write-changelog.js",
+	// commit everything to github
 	"git add .",
 	"git commit -am \"chore(release): v$version\"",
 ));
