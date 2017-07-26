@@ -98,6 +98,7 @@ elgg_register_menu_item('title', [
 	'text' => elgg_echo('admin:plugins:activate_all'),
 	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
 	'data-desired-state' => 'active',
+	'is_action' => true,
 ]);
 elgg_register_menu_item('title', [
 	'name' => 'dactivate-all',
@@ -105,6 +106,7 @@ elgg_register_menu_item('title', [
 	'text' => elgg_echo('admin:plugins:deactivate_all'),
 	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
 	'data-desired-state' => 'inactive',
+	'is_action' => true,
 ]);
 
 echo $category_form;
