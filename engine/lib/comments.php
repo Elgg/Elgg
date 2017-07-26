@@ -396,13 +396,13 @@ function _elgg_comments_prepare_content_owner_notification($hook, $type, $return
 function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params) {
 	
 	$comment = elgg_extract('object', $params);
-	if (!elgg_instanceof($object, 'object', 'comment')) {
+	if (!elgg_instanceof($comment, 'object', 'comment')) {
 		// can't use instanceof ElggComment as discussion replies inherit
 		return;
 	}
 	
 	/* @var $content \ElggEntity */
-	$content = $object->getContainerEntity();
+	$content = $comment->getContainerEntity();
 	$recipient = elgg_extract('recipient', $params);
 	if ($content->getOwnerGUID() === $recipient->getGUID()) {
 		// the content owner, this is handled in other hook
