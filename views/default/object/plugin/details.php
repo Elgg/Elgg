@@ -248,4 +248,4 @@ $body .= "</div>";
 
 $body .= "</div>";
 
-echo elgg_view_module("plugin-details", $plugin->getManifest()->getName(), $body);
+echo elgg_view_module("plugin-details", $plugin->getDisplayName(), $body);

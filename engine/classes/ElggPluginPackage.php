@@ -400,12 +400,12 @@ class ElggPluginPackage {
 					$result = $this->checkDepPlugin($conflict, $enabled_plugins, false);
 
 					// rewrite the conflict to show the originating plugin
-					$conflict['name'] = $plugin->getManifest()->getName();
+					$conflict['name'] = $plugin->getDisplayName();
 
 					if (!$full_report && !$result['status']) {
 						$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getManifest()->getID());
 						$link = elgg_view('output/url', [
-							'text' => $plugin->getManifest()->getName(),
+							'text' => $plugin->getDisplayName(),
 							'href' => "#$css_id",
 						]);
 

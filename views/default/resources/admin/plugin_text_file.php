@@ -39,7 +39,7 @@ if ($error) {
 	return true;
 }
 
-$title = $plugin->getManifest()->getName() . ": $filename";
+$title = $plugin->getDisplayName() . ": $filename";
 
 use \Michelf\MarkdownExtra;
 $text = MarkdownExtra::defaultTransform($file_contents);

@@ -202,7 +202,7 @@ $attrs = [
 				echo $links;
 				$url_options = [
 					"href" => "ajax/view/object/plugin/details?guid=" . $plugin->getGUID(),
-					"text" => $plugin->getManifest()->getName(),
+					"text" => $plugin->getDisplayName(),
 					"class" => "elgg-lightbox elgg-plugin-title",
 				];
 				echo elgg_view("output/url", $url_options);

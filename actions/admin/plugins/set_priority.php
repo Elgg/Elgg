@@ -23,12 +23,10 @@ if (!($plugin instanceof ElggPlugin)) {
 	forward(REFERER);
 }
 
-if ($plugin->setPriority($priority)) {
-	//system_message(elgg_echo('admin:plugins:set_priority:yes', array($plugin->getManifest()->getName())));
-} else {
+if (!$plugin->setPriority($priority)) {
 	$msg = $plugin->getError();
 	$string = ($msg) ? 'admin:plugins:set_priority:no_with_msg' : 'admin:plugins:set_priority:no';
-	register_error(elgg_echo($string, [$plugin->getDisplayName(), $plugin->getError()]));
+	register_error(elgg_echo($string, [$plugin->getDisplayName(), $msg]));
 }
 
 // don't regenerate the simplecache because the plugin won't be

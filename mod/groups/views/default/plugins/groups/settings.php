@@ -3,7 +3,7 @@
  * Groups plugin settings
  */
 
-$plugin = $vars['entity'];
+$plugin = elgg_extract('entity', $vars);
 /* @var ElggPlugin $plugin */
 
 // set default value

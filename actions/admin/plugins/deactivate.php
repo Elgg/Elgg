@@ -25,12 +25,10 @@ foreach ($plugin_guids as $guid) {
 		continue;
 	}
 
-	if ($plugin->deactivate()) {
-		//system_message(elgg_echo('admin:plugins:deactivate:yes', array($plugin->getManifest()->getName())));
-	} else {
+	if (!$plugin->deactivate()) {
 		$msg = $plugin->getError();
 		$string = ($msg) ? 'admin:plugins:deactivate:no_with_msg' : 'admin:plugins:deactivate:no';
-		register_error(elgg_echo($string, [$plugin->getDisplayName(), $plugin->getError()]));
+		register_error(elgg_echo($string, [$plugin->getDisplayName(), $msg]));
 	}
 }
 

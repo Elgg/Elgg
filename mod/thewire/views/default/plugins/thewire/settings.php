@@ -3,12 +3,13 @@
  * The wire plugin settings
  */
 
-$plugin = $vars['entity'];
+$plugin = elgg_extract('entity', $vars);
 
-$label = elgg_echo('thewire:settings:limit');
-$input = elgg_view('input/select', [
+echo elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('thewire:settings:limit'),
 	'name' => 'params[limit]',
-	'value' => (int) $vars['entity']->limit,
+	'value' => (int) $plugin->limit,
 	'id' => 'thewire-limit',
 	'options_values' => [
 		0 => elgg_echo('thewire:settings:limit:none'),
@@ -16,10 +17,3 @@ $input = elgg_view('input/select', [
 		250 => '250',
 	],
 ]);
-
-echo <<<HTML
-<div>
-	<label for="thewire-limit">$label</label>
-	$input
-</div>
-HTML;
