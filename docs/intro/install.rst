@@ -79,6 +79,8 @@ With Composer (recommended if comfortable with CLI):
     composer create-project elgg/starter-project:dev-master .
     composer install
     composer install # 2nd call is currently required
+    vendor/bin/elgg-cli install # follow the questions to provide installation details
+
 
 From pre-packaged zip (recommended if not comfortable with CLI):
 

@@ -246,7 +246,11 @@ class Config implements Services\Config {
 				return;
 			}
 
-			header("Location: install.php");
+			if (PHP_SAPI == 'cli') {
+				fwrite(STDERR, "Elgg is not installed. Run 'elgg-cli install' command, or install Elgg using http kernel.\n");
+			} else {
+				header("Location: install.php");
+			}
 			exit;
 		}
 

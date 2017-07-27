@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+if (PHP_SAPI !== 'cli') {
+	echo "You must use the command line to run this script.\n";
+	die(1);
+}
+
+// Load dependencies
+// Check various installation paths, which may vary depending on how Elgg was installed
+$files = [
+	__DIR__ . '/../../autoload.php',
+	__DIR__ . '/../vendor/autoload.php',
+	__DIR__ . '/vendor/autoload.php',
+];
+
+foreach ($files as $file) {
+	if (file_exists($file)) {
+		require_once $file;
+	}
+}
+
+if (!class_exists('\Elgg\Application')) {
+	fwrite(STDERR, "Composer dependencies are not installed "
+			. "or you are trying to run the script outside of an Elgg installation's root directory.\n");
+	die(2);
+}
+
+$path = Elgg\Filesystem\Directory\Local::root()->getPath('engine/settings.php');
+if (!is_file($path)) {
+	$path = Elgg\Filesystem\Directory\Local::root()->getPath('elgg-config/settings.php');
+}
+$installed = is_file($path);
+
+if ($installed) {
+    \Elgg\Application::start();
+    _elgg_services()->cli->run();
+} else {
+    $cli = new Symfony\Component\Console\Application();
+    $cli->add(new \Elgg\Cli\InstallCommand());
+    $cli->run();
+}
