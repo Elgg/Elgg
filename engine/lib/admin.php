@@ -308,6 +308,7 @@ function _elgg_admin_init() {
 	// for performance reasons.
 
 	// appearance
+	elgg_register_admin_menu_item('configure', 'look_and_feel', 'appearance', 20);
 	elgg_register_admin_menu_item('configure', 'menu_items', 'appearance', 30);
 	elgg_register_admin_menu_item('configure', 'profile_fields', 'appearance', 40);
 	// default widgets is added via an event handler elgg_default_widgets_init() in widgets.php

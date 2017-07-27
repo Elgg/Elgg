@@ -308,6 +308,7 @@ return array(
 	'profile:field:location' => 'Location',
 	'profile:field:date' => 'Date',
 
+	'admin:appearance:look_and_feel' => 'Look And Feel',
 	'admin:appearance:profile_fields' => 'Edit Profile Fields',
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
@@ -323,7 +324,19 @@ return array(
 	'profile:field_too_long' => 'Cannot save your profile information because the "%s" section is too long.',
 	'profile:noaccess' => "You do not have permission to edit this profile.",
 	'profile:invalid_email' => '%s must be a valid email address.',
+		
+	'admin:look_and_feel:info' => 'On this page you can control different items related to the look and feel of the site.',
 
+	'admin:look_and_feel:elgg_branding:label' => 'Remove Elgg branding',
+	'admin:look_and_feel:elgg_branding:help' => 'Throughout the site there are various links and logo\'s that show this site is made using Elgg.',
+	'admin:look_and_feel:elgg_branding:confirm' => 'Are you sure you wish to remove the Elgg branding? Consider donating on https://elgg.org/supporter.php.',
+	
+	'admin:look_and_feel:favicon:label' => 'Upload favicon',
+	'admin:look_and_feel:favicon:help' => 'The uploaded favicon will replace the default favicon',
+		
+	'admin:look_and_feel:walledgarden_background:label' => 'Upload walled garden background',
+	'admin:look_and_feel:walledgarden_background:help' => 'This will replace the default background image of the walled garden index page',
+	
 
 /**
  * Feeds
