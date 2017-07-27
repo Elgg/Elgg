@@ -77,7 +77,7 @@ blockquote, q {
 	BASICS
 *************************************** */
 body {
-	background-color: #fafbfc;
+	background-color: #f5f5f5;
 	font-size: 90%;
 	line-height: 1.4em;
 	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
@@ -158,11 +158,15 @@ p {
 }
 
 /* ***************************************
-	PAGE WRAPPER
+	PAGE SECTIONS
 *************************************** */
-.elgg-page > .elgg-inner {
+.elgg-page-section {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.elgg-page-section > .elgg-inner {
 	margin: 0 auto;
-	padding: 0 40px;
 	min-width: 800px;
 	max-width: 1600px;
 }
@@ -172,7 +176,6 @@ p {
 *************************************** */
 .elgg-page-header {
 	background-color: #24292e;
-	border: 1px solid #999;
 	padding: 20px;
 }
 .elgg-heading-site {
@@ -197,7 +200,6 @@ p {
 .elgg-menu-user,
 .elgg-menu-admin-header {
 	float: right;
-	margin: 4px 8px 0 0;
 }
 .elgg-menu-user,
 .elgg-menu-admin-header,
@@ -233,23 +235,19 @@ a.elgg-maintenance-mode-warning {
 }
 .elgg-menu-item-admin-profile .elgg-avatar {
 	margin-left: 5px;
+	vertical-align: sub;
 }
 
 /* ***************************************
 	MESSAGES
 *************************************** */
-.elgg-page-messages {
-	padding: 20px 0 0;
-	margin-bottom: -10px;
-}
 .elgg-system-messages p {
 	margin: 0;
 }
 .elgg-message {
 	padding: 20px;
-	margin-bottom: 10px;
+	margin-top: 10px;
 	border: 1px solid #ddd;
-	border-radius: 3px;
 	cursor: pointer;
 }
 .elgg-message.elgg-state-error {
@@ -273,11 +271,10 @@ a.elgg-maintenance-mode-warning {
 	BODY
 *************************************** */
 .elgg-page-body {
-	padding: 20px 0;
+	padding: 30px 0;
 }
 .elgg-main {
 	background-color: #fff;
-	border: 1px solid #ccc;
 	padding: 20px;
 	position: relative;
 	min-height: 400px;
@@ -300,8 +297,8 @@ a.elgg-maintenance-mode-warning {
 *************************************** */
 .elgg-page-footer {
 	background-color: #24292e;
-	border: 1px solid #999;
-	padding: 10px 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 .elgg-page-footer a {
 	color: rgba(255,255,255,0.75);
@@ -495,9 +492,20 @@ input {
 .elgg-input-number,
 .elgg-input-tags,
 .elgg-input-url,
+.elgg-input-email,
+.elgg-input-password,
 .elgg-input-plaintext,
 .elgg-input-longtext {
-	width: 98%;
+	width: 100%;
+}
+
+.elgg-input-text,
+.elgg-input-number,
+.elgg-input-tags,
+.elgg-input-url,
+.elgg-input-email,
+.elgg-input-password {
+	max-width: 400px;
 }
 .elgg-input-thin {
 	width: 400px;
@@ -601,13 +609,6 @@ select {
 	cursor: default;
 	cursor: not-allowed;
 	border-color: #adadad;
-}
-
-.elgg-form-useradd input[type=text],
-.elgg-form-useradd input[type=number],
-.elgg-form-useradd input[type=password],
-.elgg-form-useradd input[type=email] {
-	width: 300px;
 }
 
 .elgg-form-settings {
@@ -786,14 +787,14 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	margin: 0 6px 0 0;
 	text-align: center;
 }
-.elgg-pagination a, .elgg-pagination span {
+.elgg-pagination span {
 	padding: 2px 6px;
 	color: #333;
 	border: 1px solid #333;
 	font-size: 12px;
 	text-decoration: none;
 }
-.elgg-pagination a:hover {
+.elgg-pagination a:hover span {
 	background: #333;
 	color: white;
 	text-decoration: none;
@@ -848,23 +849,19 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 /* ***************************************
 	SIDEBAR MENU
 *************************************** */
-.elgg-admin-sidebar-menu {
-	padding-top: 15px;
-}
 .elgg-admin-sidebar-menu a {
 	display: block;
 	padding: 5px;
 	color: #333;
+	background: white;
 	cursor: pointer;
 	text-decoration: none;
-	margin-bottom: 2px;
-	border: 1px solid #ddd;
+	margin-bottom: 3px;
 }
 .elgg-admin-sidebar-menu a:hover {
 	text-decoration: none;
 	background: black;
 	color: white;
-	border: 1px solid black;
 }
 .elgg-admin-sidebar-menu li.elgg-state-selected > a {
 	color: #fff;
@@ -887,12 +884,12 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	display: block;
 }
 .elgg-admin-sidebar-menu h2 {
-	padding-bottom: 5px;
+	padding-bottom: 10px;
 }
 .elgg-admin-sidebar-menu ul.elgg-menu-page {
 	padding-bottom: 15px;
 }
-.elgg-admin-sidebar-menu nav > ul > li > a:not(.elgg-menu-parent):before {
+.elgg-admin-sidebar-menu a:not(.elgg-menu-parent):before {
 	content: "";
 	padding-left: .65em;
 }
@@ -1592,9 +1589,7 @@ html {
 	margin-top: 5px;
 }
 @media (max-width: 1030px) {
-	.elgg-page > .elgg-inner {
-		padding: 0 20px;
-		width: auto;
+	.elgg-page-section > .elgg-inner {
 		min-width: 0;
 	}
 	.elgg-col-1of2 {
@@ -1616,8 +1611,7 @@ html {
 	}
 	#elgg-admin-nav-collapse {
 		display: none;
-		width: 100%;
-		background-color: #24292e;
+		padding: 0 10px;
 	}
 	.elgg-sidebar {
 		position: static;
@@ -1626,52 +1620,9 @@ html {
 		top: 0;
 		width: auto;
 		float: none;
-		background-color: #24292e;
 		margin: 0;
-	}
-	.elgg-module-main {
-		border: none;
-		padding: 0;
 	}
 	.elgg-module-main > .elgg-body {
 		padding: 30px;
-	}
-	/* Sidebar menu */
-	.elgg-admin-sidebar-menu h2 {
-		color: #ddd;
-	}
-	.elgg-admin-sidebar-menu a {
-		padding: 8px 12px;
-		color: #999;
-		margin-bottom: 0;
-		border-radius: 0;
-		border-color: #111;
-		border-style: solid;
-		border-width: 0 0 0 4px;
-	}
-	.elgg-admin-sidebar-menu a:hover {
-		border-color: #333;
-		border-style: solid;
-		border-width: 0 0 0 4px;
-		background: #111;
-	}
-	.elgg-admin-sidebar-menu li.elgg-state-selected > a {
-		color: #fff;
-		border-color: #4787B8;
-		border-style: solid;
-		border-width: 0 0 0 4px;
-		background: #111;
-	}
-	.elgg-admin-sidebar-menu li {
-		border-color: #222;
-		border-style: solid;
-		border-width: 0 0 1px 0;
-	}
-}
-@media (max-width: 480px) {
-	.elgg-form-useradd input[type=text],
-	.elgg-form-useradd input[type=number],
-	.elgg-form-useradd input[type=password] {
-		width: 100%;
 	}
 }
