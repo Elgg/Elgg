@@ -12,10 +12,11 @@ if (!($entity instanceof ElggUser)) {
 	return;
 }
 
+$size = elgg_extract('size', $vars, 'tiny');
+$icon = elgg_view_entity_icon($entity, $size, $vars);
+
 if (elgg_get_context() == 'gallery') {
-	$size = elgg_extract('size', $vars, 'tiny');
-	
-	echo elgg_view_entity_icon($entity, $size, $vars);
+	echo $icon;
 	return;
 }
 	

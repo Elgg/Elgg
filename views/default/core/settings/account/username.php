@@ -10,7 +10,7 @@ if (!($user instanceof ElggUser)) {
 	return;
 }
 
-$body .= elgg_view_field([
+$body = elgg_view_field([
 	'#type' => 'text',
 	'#help' => elgg_echo('user:username:help'),
 	'name' => 'username',
