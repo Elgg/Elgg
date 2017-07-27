@@ -32,7 +32,7 @@ if (!$plugin) {
 if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
 	$title = elgg_echo($plugin_id . ':usersettings:title');
 } else {
-	$title = $plugin->getManifest()->getName();
+	$title = $plugin->getDisplayName();
 }
 
 $username = elgg_extract('username', $vars);

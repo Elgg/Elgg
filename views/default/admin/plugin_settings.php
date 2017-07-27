@@ -17,7 +17,7 @@ $vars['entity'] = $plugin;
 $settings = false;
 
 if (elgg_view_exists("plugins/$plugin_id/settings")) {
-	$title = $plugin->getManifest()->getName();
+	$title = $plugin->getDisplayName();
 
 	$params = ['id' => "$plugin_id-settings", 'class' => 'elgg-form-settings'];
 	$body = elgg_view_form("plugins/settings/save", $params, $vars);

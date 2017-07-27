@@ -549,7 +549,7 @@ function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
 		if (!elgg_view_exists("plugins/{$plugin_id}/settings") ) {
 			continue;
 		}
-		$plugin_name = $plugin->getManifest()->getName();
+		$plugin_name = $plugin->getDisplayName();
 		$plugins_with_settings[$plugin_name] = [
 			'name' => $plugin_id,
 			'href' => "admin/plugin_settings/$plugin_id",

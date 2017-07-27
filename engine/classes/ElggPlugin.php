@@ -780,11 +780,11 @@ class ElggPlugin extends \ElggObject {
 			$list = array_map(function(\ElggPlugin $plugin) {
 				$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getManifest()->getID());
 				return elgg_view('output/url', [
-					'text' => $plugin->getManifest()->getName(),
+					'text' => $plugin->getDisplayName(),
 					'href' => "#$css_id",
 				]);
 			}, $dependents);
-			$name = $this->getManifest()->getName();
+			$name = $this->getDisplayName();
 			$list = implode(', ', $list);
 			$this->errorMsg = elgg_echo('ElggPlugin:Dependencies:ActiveDependent', [$name, $list]);
 			return false;
