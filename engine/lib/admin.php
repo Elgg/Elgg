@@ -2,10 +2,6 @@
 /**
  * Elgg admin functions.
  *
- * Admin menu items
- * Elgg has a convenience function for adding menu items to the sidebar of the
- * admin area. @see elgg_register_admin_menu_item()
- *
  * Admin pages
  * Plugins no not need to provide their own page handler to add a page to the
  * admin area. A view placed at admin/<section>/<subsection> can be access
@@ -118,56 +114,6 @@ function elgg_admin_notice_exists($id) {
 }
 
 /**
- * Add an admin area section or child section.
- * This is a wrapper for elgg_register_menu_item().
- *
- * Used in conjuction with http://elgg.org/admin/section_id/child_section style
- * page handler. See the documentation at the top of this file for more details
- * on that.
- *
- * The text of the menu item is obtained from elgg_echo(admin:$parent_id:$menu_id)
- *
- * This function handles registering the parent if it has not been registered.
- *
- * @param string $section   The menu section to add to
- * @param string $menu_id   The unique ID of section
- * @param string $parent_id If a child section, the parent section id
- * @param int    $priority  The menu item priority
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $priority = 100) {
-
-	// make sure parent is registered
-	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
-		elgg_register_admin_menu_item($section, $parent_id);
-	}
-
-	// in the admin section parents never have links
-	if ($parent_id) {
-		$href = "admin/$parent_id/$menu_id";
-	} else {
-		$href = null;
-	}
-
-	$name = $menu_id;
-	if ($parent_id) {
-		$name = "$parent_id:$name";
-	}
-
-	return elgg_register_menu_item('page', [
-		'name' => $name,
-		'href' => $href,
-		'text' => elgg_echo("admin:$name"),
-		'context' => 'admin',
-		'parent_name' => $parent_id,
-		'priority' => $priority,
-		'section' => $section
-	]);
-}
-
-/**
  * Add an admin notice when a new \ElggUpgrade object is created.
  *
  * @param string     $event
@@ -196,13 +142,14 @@ function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
  */
 function _elgg_admin_init() {
 
-	$url = elgg_get_simplecache_url('admin.css');
-	elgg_register_css('elgg.admin', $url);
+	elgg_register_css('elgg.admin', elgg_get_simplecache_url('admin.css'));
 
 	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
 		
 	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu_plugin_settings');
 
 	// maintenance mode
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
@@ -212,7 +159,7 @@ function _elgg_admin_init() {
 
 		elgg_register_menu_item('topbar', [
 			'name' => 'maintenance_mode',
-			'href' => 'admin/administer_utilities/maintenance',
+			'href' => 'admin/configure_utilities/maintenance',
 			'text' => elgg_echo('admin:maintenance_mode:indicator_menu_item'),
 			'priority' => 900,
 		]);
@@ -251,75 +198,6 @@ function _elgg_admin_init() {
 	elgg_register_simplecache_view('admin.css');
 
 	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
-
-	// administer
-	// dashboard
-	elgg_register_menu_item('page', [
-		'name' => 'dashboard',
-		'href' => 'admin',
-		'text' => elgg_echo('admin:dashboard'),
-		'context' => 'admin',
-		'priority' => 10,
-		'section' => 'administer'
-	]);
-	// statistics
-	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
-	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
-	elgg_register_admin_menu_item('administer', 'server', 'statistics');
-	//utilities
-	elgg_register_admin_menu_item('administer', 'maintenance', 'administer_utilities');
-	// security
-	elgg_register_admin_menu_item('administer', 'settings', 'administer_security');
-
-	// users
-	elgg_register_admin_menu_item('administer', 'users', null, 20);
-	elgg_register_admin_menu_item('administer', 'online', 'users', 10);
-	elgg_register_admin_menu_item('administer', 'admins', 'users', 20);
-	elgg_register_admin_menu_item('administer', 'newest', 'users', 30);
-	elgg_register_admin_menu_item('administer', 'add', 'users', 40);
-
-	// configure
-	// upgrades
-	elgg_register_menu_item('page', [
-		'name' => 'upgrades',
-		'href' => 'admin/upgrades',
-		'text' => elgg_echo('admin:upgrades'),
-		'context' => 'admin',
-		'priority' => 10,
-		'section' => 'configure'
-	]);
-
-	// plugins
-	elgg_register_menu_item('page', [
-		'name' => 'plugins',
-		'href' => 'admin/plugins',
-		'text' => elgg_echo('admin:plugins'),
-		'context' => 'admin',
-		'priority' => 75,
-		'section' => 'configure'
-	]);
-
-	// settings
-	elgg_register_admin_menu_item('configure', 'appearance', null, 50);
-	elgg_register_admin_menu_item('configure', 'settings', null, 100);
-	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
-	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
-	// plugin settings are added in _elgg_admin_add_plugin_settings_menu() via the admin page handler
-	// for performance reasons.
-
-	// appearance
-	elgg_register_admin_menu_item('configure', 'menu_items', 'appearance', 30);
-	elgg_register_admin_menu_item('configure', 'profile_fields', 'appearance', 40);
-	// default widgets is added via an event handler elgg_default_widgets_init() in widgets.php
-	// because it requires additional setup.
-
-	// configure utilities
-	elgg_register_admin_menu_item('configure', 'robots', 'configure_utilities');
-
-	// we want plugin settings menu items to be sorted alphabetical
-	if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
-		elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_admin_sort_page_menu');
-	}
 
 	// widgets
 	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
@@ -360,7 +238,6 @@ function _elgg_admin_init() {
  */
 function _elgg_ajax_plugins_update() {
 	elgg_admin_gatekeeper();
-	_elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
 	return elgg_ok_response([
@@ -421,8 +298,8 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 	if (elgg_get_config('elgg_maintenance_mode')) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'maintenance',
-			'href' => 'admin/administer_utilities/maintenance',
-			'text' => elgg_echo('admin:administer_utilities:maintenance'),
+			'href' => 'admin/configure_utilities/maintenance',
+			'text' => elgg_echo('admin:configure_utilities:maintenance'),
 			'link_class' => 'elgg-maintenance-mode-warning',
 			'priority' => 700,
 		]);
@@ -477,72 +354,234 @@ function _elgg_admin_footer_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Create the plugin settings page menu.
+ * Register menu items for the page menu
  *
- * This is done in a separate function called from the admin
- * page handler because of performance concerns.
+ * @param \Elgg\Hook $hook
+ * @return array
  *
- * @return void
  * @access private
- * @since 1.8.0
+ *
+ * @see _elgg_default_widgets_init for default widgets menu items setup
+ *
+ * @since 3.0
  */
-function _elgg_admin_add_plugin_settings_menu() {
+function _elgg_admin_page_menu(\Elgg\Hook $hook) {
+	if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$return = $hook->getValue();
 
+	// administer
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'dashboard',
+		'href' => 'admin',
+		'text' => elgg_echo('admin:dashboard'),
+		'priority' => 10,
+		'section' => 'administer',
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'plugins',
+		'href' => 'admin/plugins',
+		'text' => elgg_echo('admin:plugins'),
+		'priority' => 30,
+		'section' => 'administer',
+	]);
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'users',
+		'text' => elgg_echo('admin:users'),
+		'priority' => 40,
+		'section' => 'administer',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'users:online',
+		'text' => elgg_echo('admin:users:online'),
+		'href' => 'admin/users/online',
+		'priority' => 10,
+		'section' => 'administer',
+		'parent_name' => 'users',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'users:admins',
+		'text' => elgg_echo('admin:users:admins'),
+		'href' => 'admin/users/admins',
+		'priority' => 20,
+		'section' => 'administer',
+		'parent_name' => 'users',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'users:newest',
+		'text' => elgg_echo('admin:users:newest'),
+		'href' => 'admin/users/newest',
+		'priority' => 30,
+		'section' => 'administer',
+		'parent_name' => 'users',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'users:add',
+		'text' => elgg_echo('admin:users:add'),
+		'href' => 'admin/users/add',
+		'priority' => 40,
+		'section' => 'administer',
+		'parent_name' => 'users',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'upgrades',
+		'href' => 'admin/upgrades',
+		'text' => elgg_echo('admin:upgrades'),
+		'priority' => 600,
+		'section' => 'administer',
+	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'administer_utilities',
+		'text' => elgg_echo('admin:administer_utilities'),
+		'priority' => 50,
+		'section' => 'administer',
+	]);
+	
+	// configure
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'settings:basic',
+		'href' => 'admin/settings/basic',
+		'text' => elgg_echo('admin:settings:basic'),
+		'priority' => 10,
+		'section' => 'configure',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'settings:advanced',
+		'href' => 'admin/settings/advanced',
+		'text' => elgg_echo('admin:settings:advanced'),
+		'priority' => 20,
+		'section' => 'configure',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'security',
+		'href' => 'admin/security',
+		'text' => elgg_echo('admin:security'),
+		'priority' => 30,
+		'section' => 'configure',
+	]);
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'configure_utilities',
+		'text' => elgg_echo('admin:configure_utilities'),
+		'priority' => 600,
+		'section' => 'configure',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'configure_utilities:maintenance',
+		'text' => elgg_echo('admin:configure_utilities:maintenance'),
+		'href' => 'admin/configure_utilities/maintenance',
+		'section' => 'configure',
+		'parent_name' => 'configure_utilities',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'configure_utilities:menu_items',
+		'text' => elgg_echo('admin:configure_utilities:menu_items'),
+		'href' => 'admin/configure_utilities/menu_items',
+		'section' => 'configure',
+		'parent_name' => 'configure_utilities',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'configure_utilities:profile_fields',
+		'text' => elgg_echo('admin:configure_utilities:profile_fields'),
+		'href' => 'admin/configure_utilities/profile_fields',
+		'section' => 'configure',
+		'parent_name' => 'configure_utilities',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'configure_utilities:robots',
+		'text' => elgg_echo('admin:configure_utilities:robots'),
+		'href' => 'admin/configure_utilities/robots',
+		'section' => 'configure',
+		'parent_name' => 'configure_utilities',
+	]);
+	
+	// information
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'statistics',
+		'href' => 'admin/statistics',
+		'text' => elgg_echo('admin:statistics'),
+		'section' => 'information',
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'server',
+		'href' => 'admin/server',
+		'text' => elgg_echo('admin:server'),
+		'section' => 'information',
+	]);
+		
+	return $return;
+}
+
+/**
+ * Register plugin settings menu items for the admin page menu
+ *
+ * @note Plugin settings are alphabetically sorted in the submenu
+ *
+ * @param \Elgg\Hook $hook
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
+	if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	// plugin settings
 	$active_plugins = elgg_get_plugins('active');
 	if (!$active_plugins) {
 		// nothing added because no items
 		return;
 	}
-
+	
+	$plugins_with_settings = [];
+	
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 		$settings_view_old = 'settings/' . $plugin_id . '/edit';
 		$settings_view_new = 'plugins/' . $plugin_id . '/settings';
-		if (elgg_view_exists($settings_view_new) || elgg_view_exists($settings_view_old)) {
-			elgg_register_menu_item('page', [
-				'name' => $plugin_id,
-				'href' => "admin/plugin_settings/$plugin_id",
-				'text' => $plugin->getManifest()->getName(),
-				'parent_name' => 'settings',
-				'context' => 'admin',
-				'section' => 'configure',
-			]);
+		
+		if (!elgg_view_exists($settings_view_new) && !elgg_view_exists($settings_view_old)) {
+			continue;
 		}
+		$plugin_name = $plugin->getManifest()->getName();
+		$plugins_with_settings[$plugin_name] = [
+			'name' => $plugin_id,
+			'href' => "admin/plugin_settings/$plugin_id",
+			'text' => $plugin_name,
+			'parent_name' => 'plugin_settings',
+			'section' => 'configure',
+		];
 	}
-}
-
-/**
- * Sort the plugin settings menu items
- *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- *
- * @return void
- * @since 1.8.0
- * @access private
- */
-function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
-	$configure_items = $return['configure'];
-	if (is_array($configure_items)) {
-		/* @var \ElggMenuItem[] $configure_items */
-		foreach ($configure_items as $menu_item) {
-			if ($menu_item->getName() == 'settings') {
-				$settings = $menu_item;
-			}
-		}
-
-		if (!empty($settings) && $settings instanceof \ElggMenuItem) {
-			// keep the basic and advanced settings at the top
-			/* @var \ElggMenuItem $settings */
-			$children = $settings->getChildren();
-			$site_settings = array_splice($children, 0, 2);
-			usort($children, [\ElggMenuBuilder::class, 'compareByText']);
-			array_splice($children, 0, 0, $site_settings);
-			$settings->setChildren($children);
-		}
+	
+	if (empty($plugins_with_settings)) {
+		return;
 	}
+
+	$return = $hook->getValue();
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'plugin_settings',
+		'text' => elgg_echo('admin:plugin_settings'),
+		'section' => 'configure',
+	]);
+	
+	ksort($plugins_with_settings);
+	$priority = 0;
+	foreach ($plugins_with_settings as $plugin_item) {
+		$priority += 10;
+		$plugin_item['priority'] = $priority;
+		$return[] = \ElggMenuItem::factory($plugin_item);
+	}
+	
+	return $return;
 }
 
 /**
@@ -555,7 +594,6 @@ function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
  */
 function _elgg_admin_page_handler($page) {
 	elgg_admin_gatekeeper();
-	_elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');

@@ -1,6 +1,6 @@
 <?php
 return [
-	'admin:administer_utilities:diagnostics' => 'System Diagnostics',
+	'admin:diagnostics' => 'System Diagnostics',
 	'diagnostics' => 'System diagnostics',
 	'diagnostics:report' => 'Diagnostics Report',
 	'diagnostics:description' => 'The following diagnostic report can be useful for diagnosing problems with Elgg. The developers of Elgg may request that you attach it to a bug report.',

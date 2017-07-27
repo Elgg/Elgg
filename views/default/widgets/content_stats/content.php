@@ -37,7 +37,7 @@ echo '</table>';
 
 echo '<div class="mtm elgg-widget-more">';
 echo elgg_view('output/url', [
-	'href' => 'admin/statistics/overview',
+	'href' => 'admin/statistics/numentities',
 	'text' => elgg_echo('more'),
 	'is_trusted' => true,
 ]);

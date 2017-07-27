@@ -308,7 +308,7 @@ return array(
 	'profile:field:location' => 'Location',
 	'profile:field:date' => 'Date',
 
-	'admin:appearance:profile_fields' => 'Edit Profile Fields',
+	'admin:configure_utilities:profile_fields' => 'Edit Profile Fields',
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
@@ -478,6 +478,7 @@ return array(
 	'menu:page:header:administer' => 'Administer',
 	'menu:page:header:configure' => 'Configure',
 	'menu:page:header:develop' => 'Develop',
+	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Other',
 
 	'admin:view_site' => 'View site',
@@ -494,10 +495,9 @@ return array(
 	'admin' => "Administration",
 	'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
 
-	'admin:statistics' => "Statistics",
-	'admin:statistics:overview' => 'Overview',
-	'admin:statistics:server' => 'Server Info',
-	'admin:statistics:cron' => 'Cron',
+	'admin:statistics' => 'Statistics',
+	'admin:server' => 'Server',
+	'admin:cron' => 'Cron',
 	'admin:cron:record' => 'Latest Cron Jobs',
 	'admin:cron:period' => 'Cron period',
 	'admin:cron:friendly' => 'Last completed',
@@ -523,7 +523,7 @@ return array(
 	'admin:users:opt:description' => "Configure users and account information. ",
 	'admin:users:find' => 'Find',
 
-	'admin:administer_utilities:maintenance' => 'Maintenance mode',
+	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
 	'admin:upgrades:run' => 'Run upgrades now',
 	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s) is not an instance of ElggUpgrade',
@@ -620,35 +620,35 @@ three sections:
 
 	'admin:options' => 'Admin options',
 
-	'admin:administer_security' => 'Security',
-	'admin:administer_security:settings' => 'Settings',
-	'admin:administer_security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
-	'admin:administer_security:settings:label:hardening' => 'Hardening',
-	'admin:administer_security:settings:label:notifications' => 'Notifications',
+	'admin:security' => 'Security',
+	'admin:security:settings' => 'Settings',
+	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
+	'admin:security:settings:label:hardening' => 'Hardening',
+	'admin:security:settings:label:notifications' => 'Notifications',
 	
-	'admin:administer_security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
-	'admin:administer_security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
+	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
+	'admin:security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
 	
-	'admin:administer_security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
-	'admin:administer_security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
+	'admin:security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
+	'admin:security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
 	
-	'admin:administer_security:settings:notify_user_ban' => 'Notify the user when thier account gets (un)banned',
-	'admin:administer_security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
+	'admin:security:settings:notify_user_ban' => 'Notify the user when thier account gets (un)banned',
+	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
 	
-	'admin:administer_security:settings:protect_upgrade' => 'Protect upgrade.php',
-	'admin:administer_security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
-	'admin:administer_security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
+	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
+	'admin:security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
+	'admin:security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
 	
-	'admin:administer_security:settings:protect_cron' => 'Protect the /cron URLs',
-	'admin:administer_security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
-	'admin:administer_security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
-	'admin:administer_security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
+	'admin:security:settings:protect_cron' => 'Protect the /cron URLs',
+	'admin:security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
+	'admin:security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
+	'admin:security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
 	
-	'admin:administer_security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
-	'admin:administer_security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
+	'admin:security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
+	'admin:security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
 	
-	'admin:administer_security:settings:email_require_password' => 'Require password to change email address',
-	'admin:administer_security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+	'admin:security:settings:email_require_password' => 'Require password to change email address',
+	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
 	
 	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
 	'admin:notification:make_admin:admin:body' => 'Hi %s,
@@ -779,7 +779,7 @@ To go to the site, click here:
 	'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available.",
 	'admin:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'admin:statistics:opt:linktext' => "View statistics...",
-	'admin:statistics:label:basic' => "Basic site statistics",
+	'admin:statistics:label:user' => "User statistics",
 	'admin:statistics:label:numentities' => "Entities on site",
 	'admin:statistics:label:numusers' => "Number of users",
 	'admin:statistics:label:numonline' => "Number of users online",
@@ -790,6 +790,7 @@ To go to the site, click here:
 	'admin:statistics:label:version:version' => "Database Version",
 	'admin:statistics:label:version:code' => "Code Version",
 
+	'admin:server:label:elgg' => 'Elgg',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Web Server',
 	'admin:server:label:server' => 'Server',
@@ -831,7 +832,7 @@ To go to the site, click here:
 	'admin:user:removeadmin:no' => "We could not remove administrator privileges from this user.",
 	'admin:user:self:removeadmin:no' => "You cannot remove your own administrator privileges.",
 
-	'admin:appearance:menu_items' => 'Menu Items',
+	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configure main menu items',
 	'admin:menu_items:description' => 'Select which menu items you want to show as featured links.  Unused items will be added as "More" at the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Remove links from tool bar menu?',
@@ -839,7 +840,7 @@ To go to the site, click here:
 	'admin:add_menu_item' => 'Add a custom menu item',
 	'admin:add_menu_item:description' => 'Fill out the Display name and URL to add custom items to your navigation menu.',
 
-	'admin:appearance:default_widgets' => 'Default Widgets',
+	'admin:configure_utilities:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Unknown widget type',
 	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
 These changes will only affect new users on the site.',

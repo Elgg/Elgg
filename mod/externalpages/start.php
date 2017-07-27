@@ -19,7 +19,14 @@ function expages_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:expages', 'expages_menu_register_hook');
 
 	// add a menu item for the admin edit page
-	elgg_register_admin_menu_item('configure', 'expages', 'appearance');
+	elgg_register_menu_item('page', [
+		'name' => 'configure_utilities:expages',
+		'text' => elgg_echo('admin:configure_utilities:expages'),
+		'href' => 'admin/configure_utilities/expages',
+		'section' => 'configure',
+		'parent_name' => 'configure_utilities',
+		'context' => 'admin',
+	]);
 
 	// add footer links
 	expages_setup_footer_menu();
@@ -87,7 +94,7 @@ function expages_page_handler($page, $handler) {
 		elgg_register_menu_item('title', [
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
-			'href' => "admin/appearance/expages?type=$type",
+			'href' => "admin/configure_utilities/expages?type=$type",
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
 	}
@@ -124,7 +131,7 @@ function expages_menu_register_hook($hook, $type, $return, $params) {
 		$return[] = ElggMenuItem::factory([
 			'name' => $page,
 			'text' => elgg_echo("expages:$page"),
-			'href' => "admin/appearance/expages?type=$page",
+			'href' => "admin/configure_utilities/expages?type=$page",
 			'selected' => $page === $type,
 		]);
 	}

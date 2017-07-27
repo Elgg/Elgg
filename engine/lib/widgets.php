@@ -158,9 +158,9 @@ function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
 	
 	switch ($widget->handler) {
 		case 'content_stats':
-			return 'admin/statistics/overview';
+			return 'admin/statistics/numentities';
 		case 'cron_status':
-			return 'admin/statistics/cron';
+			return 'admin/cron';
 		case 'new_users':
 			return 'admin/users/newest';
 		case 'online_users':
@@ -248,8 +248,15 @@ function _elgg_default_widgets_init() {
 	$CONFIG->default_widget_info = $default_widgets;
 
 	if ($default_widgets) {
-		elgg_register_admin_menu_item('configure', 'default_widgets', 'appearance');
-
+		elgg_register_menu_item('page', [
+			'name' => 'default_widgets',
+			'text' => elgg_echo('admin:configure_utilities:default_widgets'),
+			'href' => 'admin/configure_utilities/default_widgets',
+			'section' => 'configure',
+			'parent_name' => 'configure_utilities',
+			'context' => 'admin',
+		]);
+		
 		// override permissions for creating widget on logged out / just created entities
 		elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_default_widgets_permissions_override');
 

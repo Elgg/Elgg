@@ -1,2 +1,2 @@
 <?php
-echo elgg_view('admin/statistics/cron');
+echo elgg_view('admin/cron');

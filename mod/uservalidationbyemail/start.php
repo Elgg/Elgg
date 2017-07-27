@@ -39,8 +39,15 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
 
 	// admin interface to manually validate users
-	elgg_register_admin_menu_item('administer', 'unvalidated', 'users');
-
+	elgg_register_menu_item('page', [
+		'name' => 'users:unvalidated',
+		'text' => elgg_echo('admin:users:unvalidated'),
+		'href' => 'admin/users/unvalidated',
+		'section' => 'administer',
+		'parent_name' => 'users',
+		'context' => 'admin',
+	]);
+	
 	elgg_extend_view('admin.css', 'uservalidationbyemail/css');
 
 	// inline module

@@ -1,7 +1,6 @@
 <?php
 
 elgg_admin_gatekeeper();
-_elgg_admin_add_plugin_settings_menu();
 
 elgg_push_context('admin');
 elgg_push_context('developers_gear');

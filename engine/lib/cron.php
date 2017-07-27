@@ -29,7 +29,13 @@ function _elgg_cron_init() {
 		'yearly',
 	]);
 
-	elgg_register_admin_menu_item('administer', 'cron', 'statistics');
+	elgg_register_menu_item('page', [
+		'name' => 'cron',
+		'text' => elgg_echo('admin:cron'),
+		'href' => 'admin/cron',
+		'section' => 'information',
+		'context' => 'admin',
+	]);
 }
 
 /**

@@ -40,6 +40,17 @@ Examples
 
 	// Remove the "Elgg" logo from the topbar menu
 	elgg_unregister_menu_item('topbar', 'elgg_logo');
+	
+Admin menu
+==========
+
+You can also register `page` menu items to the admin backend menu. When registering for the admin menu you can set the context of
+the menu items to `admin` so the menu items only show in the `admin` context. There are 3 default sections to add your menu items to.
+ 
+ - `administer` for daily tasks, usermanagement and other actionable tasks
+ - `configure` for settings, configuration and utilities that configure stuff
+ - `information` for statistics, overview of information or status
+
 
 Advanced usage
 ==============
