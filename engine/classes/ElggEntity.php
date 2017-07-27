@@ -1754,6 +1754,7 @@ abstract class ElggEntity extends \ElggData implements
 		$this->disableAnnotations();
 
 		_elgg_services()->entityCache->remove($guid);
+		_elgg_get_memcache('new_entity_cache')->delete($guid);
 		
 		$sql = "
 			UPDATE {$dbprefix}entities
