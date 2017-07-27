@@ -14,6 +14,7 @@ $title = elgg_echo('friends:invite');
 $body = elgg_view_layout('default', [
 	'content' => elgg_view_form('invitefriends/invite'),
 	'title' => $title,
+	'show_owner_block_menu' => false,
 ]);
 
 echo elgg_view_page($title, $body);

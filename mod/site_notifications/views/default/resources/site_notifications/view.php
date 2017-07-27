@@ -36,6 +36,7 @@ $body = elgg_view_layout('content', [
 	'content' => $form,
 	'title' => $title,
 	'filter' => '',
+	'show_owner_block_menu' => false,
 ]);
 
 echo elgg_view_page($title, $body);

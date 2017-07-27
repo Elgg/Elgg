@@ -27,6 +27,7 @@ $content = elgg_view_form('profile/edit', [], ['entity' => $user]);
 $params = [
 	'content' => $content,
 	'title' => $title,
+	'show_owner_block_menu' => false,
 ];
 $body = elgg_view_layout('one_sidebar', $params);
 

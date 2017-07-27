@@ -34,7 +34,8 @@ $content = elgg_view('collections/collection', [
 
 $body = elgg_view_layout('one_sidebar', [
 	'title' => $title,
-	'content' => $content
+	'content' => $content,
+	'show_owner_block_menu' => false,
 ]);
 
 echo elgg_view_page($title, $body);
