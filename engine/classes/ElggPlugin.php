@@ -128,15 +128,28 @@ class ElggPlugin extends \ElggObject {
 	 * Returns the manifest's name if available, otherwise the ID.
 	 *
 	 * @return string
-	 * @since 1.8.1
+	 * @since 3.0
 	 */
-	public function getFriendlyName() {
+	public function getDisplayName() {
 		$manifest = $this->getManifest();
 		if ($manifest) {
 			return $manifest->getName();
 		}
 
 		return $this->getID();
+	}
+
+	/**
+	 * Returns the manifest's name if available, otherwise the ID.
+	 *
+	 * @return string
+	 * @since 1.8.1
+	 * @deprecated 3.0
+	 */
+	public function getFriendlyName() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use getDisplayName().', '3.0');
+	
+		return $this->getDisplayName();
 	}
 
 	/**

@@ -397,7 +397,7 @@ function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
 		if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
 			$title = elgg_echo($plugin_id . ':usersettings:title');
 		} else {
-			$title = $plugin->getFriendlyName();
+			$title = $plugin->getDisplayName();
 		}
 		
 		$return[] = \ElggMenuItem::factory([
