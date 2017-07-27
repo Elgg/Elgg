@@ -72,6 +72,6 @@ For example, for a weekly cron job, enter the command as http://www.example.com/
 To see if your cron jobs are running, visit Statistics > Cron in your Elgg admin
 panel.
 
-__ http://docs.cpanel.net/twiki/bin/view/AllDocumentation/CpanelDocs/CronJobs
+__ https://docs.cpanel.net/display/ALD/Cron+Jobs
 
 
