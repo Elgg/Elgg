@@ -18,7 +18,7 @@ class ElggRelationshipTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		_elgg_services()->events->backup();
+		_elgg_services()->hooks->getEvents()->backup();
 
 		$this->entity1 = new ElggObject();
 		$this->entity1->subtype = 'elgg_relationship_test';
@@ -53,7 +53,7 @@ class ElggRelationshipTest extends ElggCoreUnitTest {
 		}
 		remove_subtype('object', 'elgg_relationship_test');
 
-		_elgg_services()->events->restore();
+		_elgg_services()->hooks->getEvents()->restore();
 	}
 	
 	/**

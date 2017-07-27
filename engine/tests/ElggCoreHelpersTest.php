@@ -12,8 +12,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		unset($GLOBALS['_ELGG']->externals);
-		unset($GLOBALS['_ELGG']->externals_map);
+		_elgg_services()->externalFiles->reset();
 	}
 
 	/**
@@ -95,15 +94,10 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		// specify name
 		$result = elgg_register_js('key', 'http://test1.com', 'footer');
 		$this->assertTrue($result);
-		$this->assertTrue(isset($GLOBALS['_ELGG']->externals_map['js']['key']));
 
-		$item = $GLOBALS['_ELGG']->externals_map['js']['key'];
-		$this->assertTrue($GLOBALS['_ELGG']->externals['js']->contains($item));
-
-		$priority = $GLOBALS['_ELGG']->externals['js']->getPriority($item);
-		$this->assertTrue($priority !== false);
-
-		$item = $GLOBALS['_ELGG']->externals['js']->getElement($priority);
+		$item = _elgg_services()->externalFiles->getFile('js', 'key');
+		$this->assertNotNull($item);
+		$this->assertTrue($item->priority !== false);
 		$this->assertIdentical('http://test1.com', $item->url);
 
 		// send a bad url
@@ -118,15 +112,10 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		// specify name
 		$result = elgg_register_css('key', 'http://test1.com');
 		$this->assertTrue($result);
-		$this->assertTrue(isset($GLOBALS['_ELGG']->externals_map['css']['key']));
 
-		$item = $GLOBALS['_ELGG']->externals_map['css']['key'];
-		$this->assertTrue($GLOBALS['_ELGG']->externals['css']->contains($item));
-
-		$priority = $GLOBALS['_ELGG']->externals['css']->getPriority($item);
-		$this->assertTrue($priority !== false);
-
-		$item = $GLOBALS['_ELGG']->externals['css']->getElement($priority);
+		$item = _elgg_services()->externalFiles->getFile('css', 'key');
+		$this->assertNotNull($item);
+		$this->assertTrue($item->priority !== false);
 		$this->assertIdentical('http://test1.com', $item->url);
 	}
 
@@ -134,9 +123,14 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	 * Test elgg_unregister_js()
 	 */
 	public function testElggUnregisterJS() {
-		$base = trim(elgg_get_site_url(), "/");
+		$api = _elgg_services()->externalFiles;
 
-		$urls = array('id1' => "$base/urla", 'id2' => "$base/urlb", 'id3' => "$base/urlc");
+		$base = trim(elgg_get_site_url(), "/");
+		$urls = [
+			'id1' => "$base/urla",
+			'id2' => "$base/urlb",
+			'id3' => "$base/urlc",
+		];
 		
 		foreach ($urls as $id => $url) {
 			elgg_register_js($id, $url);
@@ -144,40 +138,31 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 
 		$result = elgg_unregister_js('id1');
 		$this->assertTrue($result);
+		$this->assertNull($api->getFile('js', 'id1'));
 
-		$js = $GLOBALS['_ELGG']->externals['js'];
-		$elements = $js->getElements();
-		$this->assertFalse(isset($GLOBALS['_ELGG']->externals_map['js']['id1']));
-		
+		$elements = $api->getRegisteredFiles('js', 'head');
+
 		foreach ($elements as $element) {
 			if (isset($element->name)) {
 				$this->assertFalse($element->name == 'id1');
 			}
 		}
 
-		$result = elgg_unregister_js('id1');
-		$this->assertFalse($result);
+		$this->assertFalse(elgg_unregister_js('id1'));
 
-		$result = elgg_unregister_js('', 'does_not_exist');
-		$this->assertFalse($result);
+		$this->assertFalse(elgg_unregister_js('does_not_exist'));
 
-		$result = elgg_unregister_js('id2');
-		$elements = $js->getElements();
+		elgg_unregister_js('id2');
 
-		$this->assertFalse(isset($GLOBALS['_ELGG']->externals_map['js']['id2']));
+		$elements = $api->getRegisteredFiles('js', 'head');
 		foreach ($elements as $element) {
 			if (isset($element->name)) {
 				$this->assertFalse($element->name == 'id2');
 			}
 		}
 
-		$this->assertTrue(isset($GLOBALS['_ELGG']->externals_map['js']['id3']));
-
-		$priority = $GLOBALS['_ELGG']->externals['js']->getPriority($GLOBALS['_ELGG']->externals_map['js']['id3']);
+		$priority = $api->getFile('js', 'id3')->priority;
 		$this->assertTrue($priority !== false);
-
-		$item = $GLOBALS['_ELGG']->externals['js']->getElement($priority);
-		$this->assertIdentical($urls['id3'], $item->url);
 	}
 
 	/**

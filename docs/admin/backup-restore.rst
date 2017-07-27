@@ -206,24 +206,9 @@ Bringing it all together
 
 The restored elgg installation knows **nothing** about the new database name, database username, directory structure, etc. That's what we're going to address here.
 
-Edit ``/public_html/elgg-config/settings.php`` on the new hosting provider to reflect the database information for the database that you just created.
+Edit ``/public_html/elgg-config/.env.php`` on the new hosting provider to reflect the database information for the database that you just created.
 
-.. code:: php
-
-   // Database username
-   $CONFIG->dbuser = 'usery_elgg';
-   
-   // Database password
-   $CONFIG->dbpass = 'dbpassword';
-   
-   // Database name
-   $CONFIG->dbname = 'usery_elgg';
-   
-   // Database server
-   // (For most configurations, you can leave this as 'localhost')
-   $CONFIG->dbhost = 'localhost';
-
-Upload the ``settings.php`` file back to the new host - overwriting the existing file.
+Upload the ``.env.php`` file back to the new host - overwriting the existing file.
 
 Open the phpMyAdmin tool on the new host from the CPanel. Select the ``usery_elgg`` database on the left and click the SQL tab on the top of the page. Run the following SQL queries against the ``usery_elgg`` database:
 

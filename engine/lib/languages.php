@@ -133,6 +133,3 @@ function get_missing_language_keys($language) {
 function elgg_language_key_exists($key, $language = 'en') {
 	return _elgg_services()->translator->languageKeyExists($key, $language);
 }
-
-return function(\Elgg\EventsService $events) {
-};

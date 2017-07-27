@@ -44,11 +44,6 @@ class Logger {
 	protected $hooks;
 
 	/**
-	 * @var Config
-	 */
-	private $config;
-
-	/**
 	 * @var Context
 	 */
 	private $context;
@@ -62,11 +57,9 @@ class Logger {
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   Hooks service
-	 * @param Config             $config  Config service
 	 * @param Context            $context Context service
 	 */
-	public function __construct(PluginHooksService $hooks, Config $config, Context $context) {
-		$this->config = $config;
+	public function __construct(PluginHooksService $hooks, Context $context) {
 		$this->hooks = $hooks;
 		$this->context = $context;
 	}
@@ -78,12 +71,30 @@ class Logger {
 	 * @return void
 	 */
 	public function setLevel($level) {
+		if (!$level) {
+			// 0 or empty string
+			$this->level = self::OFF;
+			return;
+		}
+
 		// @todo Elgg has used string constants for logging levels
 		if (is_string($level)) {
-			$levelStringsToInts = array_flip(self::$levels);
-			$level = $levelStringsToInts[$level];
+			$level = strtoupper($level);
+			$level = array_search($level, self::$levels);
+
+			if ($level !== false) {
+				$this->level = $level;
+			} else {
+				$this->warn(__METHOD__ .": invalid level ignored.");
+			}
+			return;
 		}
-		$this->level = $level;
+
+		if (isset(self::$levels[$level])) {
+			$this->level = $level;
+		} else {
+			$this->warn(__METHOD__ .": invalid level ignored.");
+		}
 	}
 
 	/**

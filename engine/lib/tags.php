@@ -74,14 +74,12 @@ function string_to_tag_array($string) {
  * @since 1.7.1
  */
 function elgg_get_tags(array $options = []) {
-	global $CONFIG;
-
 	_elgg_check_unsupported_site_guid($options);
 	
 	$defaults = [
 		'threshold' => 1,
 		'tag_names' => [],
-		'limit' => elgg_get_config('default_limit'),
+		'limit' => _elgg_config()->default_limit,
 
 		'types' => ELGG_ENTITIES_ANY_VALUE,
 		'subtypes' => ELGG_ENTITIES_ANY_VALUE,
@@ -150,7 +148,8 @@ function elgg_get_tags(array $options = []) {
 
 	$joins = $options['joins'];
 
-	$joins[] = "JOIN {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid";
+	$prefix = _elgg_config()->dbprefix;
+	$joins[] = "JOIN {$prefix}metadata md on md.entity_guid = e.guid";
 
 	// remove identical join clauses
 	$joins = array_unique($joins);
@@ -164,7 +163,7 @@ function elgg_get_tags(array $options = []) {
 	}
 
 	$query  = "SELECT md.value as tag, count(md.id) as total ";
-	$query .= "FROM {$CONFIG->dbprefix}entities e ";
+	$query .= "FROM {$prefix}entities e ";
 
 	// add joins
 	foreach ($joins as $j) {
@@ -196,33 +195,27 @@ function elgg_get_tags(array $options = []) {
  * This is required if you are using a non-standard metadata name
  * for your tags.
  *
+ * Because tags are simply names of metadata, This is used
+ * in search to prevent data exposure by searching on
+ * arbitrary metadata.
+ *
  * @param string $name Tag name
  *
  * @return bool
  * @since 1.7.0
  */
 function elgg_register_tag_metadata_name($name) {
-	if (!isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) {
-		$GLOBALS['_ELGG']->registered_tag_metadata_names = [];
-	}
-
-	if (!in_array($name, $GLOBALS['_ELGG']->registered_tag_metadata_names)) {
-		$GLOBALS['_ELGG']->registered_tag_metadata_names[] = $name;
-	}
-
-	return true;
+	return _elgg_services()->metadataTable->registerTagName($name);
 }
 
 /**
  * Returns an array of valid metadata names for tags.
  *
- * @return array
+ * @return string[]
  * @since 1.7.0
  */
 function elgg_get_registered_tag_metadata_names() {
-	$names = (isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) ? $GLOBALS['_ELGG']->registered_tag_metadata_names : [];
-
-	return $names;
+	return _elgg_services()->metadataTable->getTagNames();
 }
 
 /**
@@ -233,6 +226,9 @@ function _elgg_tags_init() {
 	elgg_register_tag_metadata_name('tags');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_tags_init');
 };

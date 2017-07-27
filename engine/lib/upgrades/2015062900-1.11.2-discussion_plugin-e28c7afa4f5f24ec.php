@@ -8,7 +8,7 @@
  * 'groupforumtopic' into 'discussion'.
  */
 
-$dbprefix = elgg_get_config('dbprefix');
+$dbprefix = _elgg_config()->dbprefix;
 
 // Update subtype "groupforumtopic" into "discussion"
 update_data("UPDATE {$dbprefix}entity_subtypes

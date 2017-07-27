@@ -2,15 +2,9 @@
 namespace Elgg;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * Base class for events and hooks
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Hooks
- * @since      1.9.0
  */
 abstract class HooksRegistrationService {
 
@@ -68,7 +62,7 @@ abstract class HooksRegistrationService {
 	 */
 	public function unregisterHandler($name, $type, $callback) {
 		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
-			$type = _elgg_services()->views->canonicalizeViewName($type);
+			$type = ViewsService::canonicalizeViewName($type);
 		}
 
 		if (empty($this->registrations[$name][$type])) {

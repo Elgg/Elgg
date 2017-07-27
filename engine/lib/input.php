@@ -7,6 +7,8 @@
  * @subpackage Input
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Get some input from variables passed submitted through GET or POST.
  *
@@ -193,7 +195,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  * @access private
  */
 function input_livesearch_page_handler($page) {
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 
 	// only return results to logged in users.
 	if (!$user = elgg_get_logged_in_user_entity()) {
@@ -227,7 +229,7 @@ function input_livesearch_page_handler($page) {
 		$owner_guid = $user->getGUID();
 	}
 
-	$limit = sanitise_int(get_input('limit', elgg_get_config('default_limit')));
+	$limit = sanitise_int(get_input('limit', _elgg_config()->default_limit));
 
 	// grab a list of entities and send them in json.
 	$results = [];
@@ -533,7 +535,7 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
  * @return array
  */
 function _elgg_htmlawed_test($hook, $type, $value, $params) {
-	$value[] = dirname(__DIR__) . '/tests/ElggHtmLawedTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggHtmLawedTest.php';
 	return $value;
 }
 
@@ -549,7 +551,7 @@ function _elgg_htmlawed_test($hook, $type, $value, $params) {
  */
 function _elgg_disable_password_autocomplete($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_disable_password_autocomplete')) {
+	if (!_elgg_config()->security_disable_password_autocomplete) {
 		return;
 	}
 	
@@ -575,6 +577,9 @@ function _elgg_input_init() {
 	elgg_register_plugin_hook_handler('view_vars', 'input/password', '_elgg_disable_password_autocomplete');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_input_init');
 };

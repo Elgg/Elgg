@@ -520,7 +520,7 @@ class EntityTable {
 			'reverse_order_by'      => false,
 			'order_by'              => 'e.time_created desc',
 			'group_by'              => ELGG_ENTITIES_ANY_VALUE,
-			'limit'                 => $this->config->get('default_limit'),
+			'limit'                 => $this->config->default_limit,
 			'offset'                => 0,
 			'count'                 => false,
 			'selects'               => [],
@@ -898,9 +898,6 @@ class EntityTable {
 			return '';
 		}
 
-		// these are the only valid types for entities in elgg
-		$valid_types = $this->config->get('entity_types');
-
 		// pairs override
 		$wheres = [];
 		if (!is_array($pairs)) {
@@ -923,7 +920,7 @@ class EntityTable {
 			//
 			// yes this is duplicating a foreach on $types.
 			foreach ($types as $type) {
-				if (!in_array($type, $valid_types)) {
+				if (!in_array($type, \Elgg\Config::getEntityTypes())) {
 					$valid_types_count--;
 					unset($types[array_search($type, $types)]);
 				} else {
@@ -986,7 +983,7 @@ class EntityTable {
 			// and subtypes we have before hitting the subtype section.
 			// also normalize the subtypes into arrays here.
 			foreach ($pairs as $paired_type => $paired_subtypes) {
-				if (!in_array($paired_type, $valid_types)) {
+				if (!in_array($paired_type, \Elgg\Config::getEntityTypes())) {
 					$valid_pairs_count--;
 					unset($pairs[array_search($paired_type, $pairs)]);
 				} else {
@@ -1401,7 +1398,7 @@ class EntityTable {
 	 *
 	 * @param ElggEntity $entity Entity annotation|relationship action carried out on
 	 * @param int        $posted Timestamp of last action
-	 * @return int|false
+	 * @return int
 	 * @access private
 	 */
 	public function updateLastAction(ElggEntity $entity, $posted = null) {
@@ -1421,15 +1418,9 @@ class EntityTable {
 			':guid' => (int) $entity->guid,
 		];
 		
-		$result = $this->db->updateData($query, true, $params);
-		if ($result) {
-			$entity->last_action = $posted;
-			_elgg_services()->entityCache->set($entity);
-			$entity->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
-			return (int) $posted;
-		}
+		$this->db->updateData($query, true, $params);
 
-		return false;
+		return (int) $posted;
 	}
 
 	/**

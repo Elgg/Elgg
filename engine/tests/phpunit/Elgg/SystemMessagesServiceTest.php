@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\SystemMessages\RegisterSet;
-
 class SystemMessagesServiceTest extends \Elgg\TestCase {
 
 	/**
@@ -39,7 +37,7 @@ class SystemMessagesServiceTest extends \Elgg\TestCase {
 	function testMessagesStoredInSession() {
 		$this->svc->addSuccessMessage('s1');
 
-		$this->assertEquals(['success' => ['s1']], $this->session->get('msg'));
+		$this->assertEquals(['success' => ['s1']], $this->session->get(SystemMessagesService::SESSION_KEY));
 	}
 
 	function testCanDumpOneRegister() {

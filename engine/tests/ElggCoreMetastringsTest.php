@@ -68,7 +68,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 	}
 
 	public function testDeleteByID() {
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		$annotation = $this->createAnnotations(1);
 		$metadata = $this->createMetadata(1);
 
@@ -85,7 +85,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 	}
 
 	public function testGetMetastringObjectFromID() {
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		$annotation = $this->createAnnotations(1);
 		$metadata = $this->createMetadata(1);
 
@@ -134,7 +134,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 	}
 
 	public function testEnableDisableByID() {
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		$annotation = $this->createAnnotations(1);
 		$metadata = $this->createMetadata(1);
 

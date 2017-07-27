@@ -53,7 +53,7 @@ class Router {
 			$segments = [];
 		}
 
-		$is_walled_garden = _elgg_services()->config->get('walled_garden');
+		$is_walled_garden = _elgg_config()->walled_garden;
 		$is_logged_in = _elgg_services()->session->isLoggedIn();
 		$url = elgg_normalize_url($identifier . '/' . implode('/', $segments));
 		
@@ -66,8 +66,6 @@ class Router {
 			return false;
 		}
 
-		// return false to stop processing the request (because you handled it)
-		// return a new $result array if you want to route the request differently
 		$old = [
 			'identifier' => $identifier,
 			'handler' => $identifier, // backward compatibility
@@ -79,8 +77,11 @@ class Router {
 		}
 
 		ob_start();
-
 		$result = $this->hooks->trigger('route', $identifier, $old, $old);
+
+		// false: request was handled, stop processing.
+		// array: compare to old params.
+
 		if ($result === false) {
 			$output = ob_get_clean();
 			$response = elgg_ok_response($output);
@@ -218,7 +219,7 @@ class Router {
 		$url = elgg_http_build_url($parts);
 		$url = rtrim($url, '/') . '/';
 
-		$site_url = _elgg_services()->config->getSiteUrl();
+		$site_url = _elgg_config()->wwwroot;
 
 		if ($url == $site_url) {
 			// always allow index page

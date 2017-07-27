@@ -21,7 +21,7 @@ class ElggFileTest extends \Elgg\TestCase {
 
 		$this->file = $file;
 
-		$dataroot = elgg_get_config('dataroot');
+		$dataroot = _elgg_config()->dataroot;
 		if (is_dir($dataroot . '1/2/')) {
 			// we use this for writing new files
 			_elgg_rmdir($dataroot . '1/2/');
@@ -29,7 +29,7 @@ class ElggFileTest extends \Elgg\TestCase {
 	}
 
 	public function tearDown() {
-		$dataroot = elgg_get_config('dataroot');
+		$dataroot = _elgg_config()->dataroot;
 		if (is_dir($dataroot . '1/2/')) {
 			// we use this for writing new files
 			_elgg_rmdir($dataroot . '1/2/');
@@ -144,7 +144,7 @@ class ElggFileTest extends \Elgg\TestCase {
 		$contents = $this->file->grabFile();
 		$this->assertTrue($this->file->close());
 
-		$dataroot = _elgg_services()->config->get('dataroot');
+		$dataroot = _elgg_config()->dataroot;
 		$expected = file_get_contents("{$dataroot}1/1/foobar.txt");
 
 		$this->assertEquals($expected, $contents);
@@ -236,7 +236,7 @@ class ElggFileTest extends \Elgg\TestCase {
 
 		$filename = "foo/bar.txt";
 
-		$dataroot = _elgg_services()->config->get('dataroot');
+		$dataroot = _elgg_config()->dataroot;
 		$dir = new \Elgg\EntityDirLocator(123);
 
 		$file = new ElggFile();
@@ -256,7 +256,7 @@ class ElggFileTest extends \Elgg\TestCase {
 
 		$symlink_name = "symlink.txt";
 
-		$dataroot = _elgg_services()->config->get('dataroot');
+		$dataroot = _elgg_config()->dataroot;
 		$dir = new \Elgg\EntityDirLocator(2);
 
 		// Remove symlink in case it exists
@@ -382,7 +382,7 @@ class ElggFileTest extends \Elgg\TestCase {
 	 */
 	public function testCanTransferFile() {
 
-		$dataroot = elgg_get_config('dataroot');
+		$dataroot = _elgg_config()->dataroot;
 
 		$file = new \ElggFile();
 		$file->owner_guid = 3;

@@ -34,7 +34,8 @@
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
         "htmlawed/htmlawed": "^1.1.22",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "vlucas/phpdotenv": "^2.4"
     },
     "config": {
         "process-timeout": 0

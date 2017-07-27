@@ -277,7 +277,10 @@ class EntityIconService {
 			$destination = $icon->getFilenameOnFilestore();
 
 			$resize_params = array_merge($opts, $coords);
-			
+
+			$image_service = _elgg_services()->imageService;
+			$image_service->setLogger($this->logger);
+
 			if (!_elgg_services()->imageService->resize($source, $destination, $resize_params)) {
 				$this->logger->error("Failed to create {$size} icon from
 					{$file->getFilenameOnFilestore()} with coords [{$x1}, {$y1}],[{$x2}, {$y2}]");
@@ -470,7 +473,7 @@ class EntityIconService {
 			$type = 'icon';
 		}
 		if ($type == 'icon') {
-			$sizes = $this->config->get('icon_sizes');
+			$sizes = $this->config->icon_sizes;
 		}
 		$params = [
 			'type' => $type,

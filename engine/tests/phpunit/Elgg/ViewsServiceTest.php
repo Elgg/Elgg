@@ -155,7 +155,7 @@ class ViewsServiceTest extends \Elgg\TestCase {
 	 * @dataProvider getExampleNormalizedViews
 	 */
 	public function testDefaultNormalizeBehavior($canonical, $alias) {
-		$this->assertEquals($canonical, $this->views->canonicalizeViewName($alias));
+		$this->assertEquals($canonical, ViewsService::canonicalizeViewName($alias));
 	}
 
 	public function testCanListViews() {

@@ -83,7 +83,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 		$this->clearQuerySpecs($row->id);
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		// Insert a new relationship
 		$sql = "

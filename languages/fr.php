@@ -510,7 +510,7 @@ return array(
 	'admin:settings:advanced' => 'Configuration avancée',
 	'admin:site:description' => "Ce menu vous permet de définir les paramètres globaux de votre site. Choisissez une option ci-dessous pour commencer.",
 	'admin:site:opt:linktext' => "Configurer le site...",
-	'admin:settings:in_settings_file' => 'Ce paramètre est configuré dans settings.php',
+	'admin:settings:in_settings_file2' => 'Ce paramètre est configuré dans elgg-config/.env.php',
 
 	'admin:legend:security' => 'Sécurité',
 	'admin:site:secret:intro' => 'Elgg utilise une clé afin de sécuriser les jetons de sécurité pour divers usages.',
