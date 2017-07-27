@@ -25,8 +25,7 @@ class BatchUpgraderTest extends TestCase {
 		$upgrade->description = 'test_plugin:upgrade:2016101900:title';
 		$upgrade->save();
 		
-		$config = _elgg_services()->config;
-		$upgrader = new BatchUpgrader($config);
+		$upgrader = new BatchUpgrader(_elgg_config());
 		$result = $upgrader->run($upgrade);
 
 		$expected = [
@@ -52,8 +51,7 @@ class BatchUpgraderTest extends TestCase {
 		$upgrade->offset = 50;
 		$upgrade->has_errors = false;
 
-		$config = _elgg_services()->config;
-		$upgrader = new BatchUpgrader($config);
+		$upgrader = new BatchUpgrader(_elgg_config());
 		$result = $upgrader->run($upgrade);
 
 		$expected = [
@@ -75,8 +73,7 @@ class BatchUpgraderTest extends TestCase {
 		$upgrade->description = 'test_plugin:upgrade:2016101901:title';
 		$upgrade->save();
 		
-		$config = _elgg_services()->config;
-		$upgrader = new BatchUpgrader($config);
+		$upgrader = new BatchUpgrader(_elgg_config());
 		$result = $upgrader->run($upgrade);
 
 		$expected = [
@@ -98,8 +95,7 @@ class BatchUpgraderTest extends TestCase {
 		$upgrade->description = 'test_plugin:upgrade:2016101902:title';
 		$upgrade->save();
 
-		$config = _elgg_services()->config;
-		$upgrader = new BatchUpgrader($config);
+		$upgrader = new BatchUpgrader(_elgg_config());
 		$result = $upgrader->run($upgrade);
 
 		$expected = [

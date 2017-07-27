@@ -51,8 +51,7 @@ if (!TextReporter::inCli()) {
 		$plugin->activate();
 	}
 
-	global $CONFIG;
-	$CONFIG->debug = 'NOTICE';
+	_elgg_config()->debug = 'NOTICE';
 }
 
 // turn off system log

@@ -49,7 +49,7 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 	}
 
 	public function testSetConfigWithCurrentSite() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$name = 'foo' . rand(0, 1000);
 		$value = 99;
 		$this->assertTrue(elgg_save_config($name, $value));
@@ -59,9 +59,9 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 	}
 
 	public function testGetConfigAlreadyLoadedForCurrentSite() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$CONFIG->foo_unit_test = 35;
-		$this->assertIdentical(35, elgg_get_config('foo_unit_test'));
+		$this->assertIdentical(35, _elgg_config()->foo_unit_test);
 		unset($CONFIG->foo_unit_test);
 	}
 
@@ -70,24 +70,19 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 	}
 
 	public function testUnsetConfigClearsGlobalForCurrentSite() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$CONFIG->foo_unit_test = 35;
 		$this->assertIdentical(true, elgg_remove_config('foo_unit_test'));
 		$this->assertTrue(!isset($CONFIG->foo_unit_test));
 	}
 
 	public function testElggSaveConfigForCurrentSiteConfig() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$name = 'foo' . rand(0, 1000);
 		$value = 'test';
 		$this->assertTrue(elgg_save_config($name, $value));
 		$this->assertIdentical($value, elgg_get_config($name));
 		$this->assertIdentical($value, $CONFIG->$name);
 		$this->assertTrue(elgg_remove_config($name));
-	}
-
-	public function testGetUsesDefault() {
-		$this->assertSame(null, _elgg_services()->config->get('not_a_key'));
-		$this->assertSame([], _elgg_services()->config->get('not_a_key', []));
 	}
 }

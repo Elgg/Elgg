@@ -4,14 +4,14 @@ namespace Elgg\Mocks;
 
 use Doctrine\DBAL\Connection;
 use Elgg\Database as DbDatabase;
-use Elgg\Database\Config;
+use Elgg\Database\DbConfig;
 use Elgg\Logger;
 use Elgg\TestCase;
 
 class Database extends DbDatabase {
 
 	/**
-	 * @var stdClass[]
+	 * @var \stdClass[]
 	 */
 	private $query_specs = [];
 
@@ -29,8 +29,9 @@ class Database extends DbDatabase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(Config $config, Logger $logger = null) {
-		parent::__construct($config, $logger);
+	public function __construct(DbConfig $config, Logger $logger = null) {
+		parent::__construct($config);
+		$this->setLogger($logger);
 		$this->test = TestCase::getInstance();
 	}
 

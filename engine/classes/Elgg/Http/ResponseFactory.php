@@ -139,7 +139,7 @@ class ResponseFactory {
 	 * Send a response
 	 *
 	 * @param Response $response Response object
-	 * @return Response
+	 * @return Response|false
 	 */
 	public function send(Response $response) {
 
@@ -168,6 +168,7 @@ class ResponseFactory {
 
 	/**
 	 * Returns a response that was sent to the client
+	 *
 	 * @return Response|false
 	 */
 	public function getSentResponse() {
@@ -180,6 +181,7 @@ class ResponseFactory {
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 * @return Response
+	 * @throws \InvalidParameterException
 	 */
 	public function respond(ResponseBuilder $response) {
 
@@ -258,7 +260,7 @@ class ResponseFactory {
 	 * @param int    $status_code HTTP status code
 	 * @param array  $headers     HTTP headers (will be discarded on AJAX requests)
 	 * @return Response
-	 * @throws InvalidParameterException
+	 * @throws \InvalidParameterException
 	 */
 	public function respondWithError($error, $status_code = ELGG_HTTP_BAD_REQUEST, array $headers = []) {
 		if ($this->ajax->isReady()) {
@@ -302,8 +304,9 @@ class ResponseFactory {
 	 *
 	 * @param string $content     Response body
 	 * @param int    $status_code HTTP status code
-	 * @param array  $headers     HTTP headers (will be discarded for AJAX requets)
-	 * @return type
+	 * @param array  $headers     HTTP headers (will be discarded for AJAX requests)
+	 *
+	 * @return Response|false
 	 */
 	public function respondFromContent($content = '', $status_code = ELGG_HTTP_OK, array $headers = []) {
 

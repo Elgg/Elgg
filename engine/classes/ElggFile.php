@@ -450,7 +450,7 @@ class ElggFile extends ElggObject {
 			$mime_type = $this->detectMimeType(null, $upload->getClientMimeType());
 			$this->setMimeType($mime_type);
 			$this->simpletype = elgg_get_file_simple_type($mime_type);
-			_elgg_services()->events->triggerAfter('upload', 'file', $this);
+			_elgg_services()->hooks->getEvents()->triggerAfter('upload', 'file', $this);
 			return true;
 		}
 		

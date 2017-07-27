@@ -3,6 +3,10 @@
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Elgg\Http\DatabaseSessionHandler;
+use Elgg\Config;
+use Elgg\Database;
 
 /**
  * Elgg Session Management
@@ -290,6 +294,62 @@ class ElggSession {
 	 */
 	public static function getMock() {
 		$storage = new MockArraySessionStorage();
+		$session = new Session($storage);
+		return new self($session);
+	}
+
+	/**
+	 * Create a session stored in the DB.
+	 *
+	 * @param Config   $config Config
+	 * @param Database $db     Database
+	 *
+	 * @return ElggSession
+	 */
+	public static function fromDatabase(Config $config, Database $db) {
+		$params = $config->getCookieConfig()['session'];
+		$options = [
+			// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
+			// constructor, so we must capture and inject it directly.
+			'cache_limiter' => session_cache_limiter(),
+
+			'name' => $params['name'],
+			'cookie_path' => $params['path'],
+			'cookie_domain' => $params['domain'],
+			'cookie_secure' => $params['secure'],
+			'cookie_httponly' => $params['httponly'],
+			'cookie_lifetime' => $params['lifetime'],
+		];
+
+		$handler = new DatabaseSessionHandler($db);
+		$storage = new NativeSessionStorage($options, $handler);
+		$session = new Session($storage);
+		return new self($session);
+	}
+
+	/**
+	 * Create a session stored in files
+	 *
+	 * @param Config $config Config
+	 *
+	 * @return ElggSession
+	 */
+	public static function fromFiles(Config $config) {
+		$params = $config->getCookieConfig()['session'];
+		$options = [
+			// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
+			// constructor, so we must capture and inject it directly.
+			'cache_limiter' => session_cache_limiter(),
+
+			'name' => $params['name'],
+			'cookie_path' => $params['path'],
+			'cookie_domain' => $params['domain'],
+			'cookie_secure' => $params['secure'],
+			'cookie_httponly' => $params['httponly'],
+			'cookie_lifetime' => $params['lifetime'],
+		];
+
+		$storage = new NativeSessionStorage($options);
 		$session = new Session($storage);
 		return new self($session);
 	}

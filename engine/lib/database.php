@@ -125,7 +125,7 @@ function delete_data($query, array $params = []) {
  * and a newline character (\n or \r\n) with only one statement per line.
  *
  * The special string 'prefix_' is replaced with the database prefix
- * as defined in {@link $CONFIG->dbprefix}.
+ * as defined in {@link ELGG_DBPREFIX}.
  *
  * @warning Errors do not halt execution of the script.  If a line
  * generates an error, the error message is saved and the
@@ -287,6 +287,9 @@ function _elgg_db_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_db_test');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_db_init');
 };

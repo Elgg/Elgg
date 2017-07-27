@@ -37,7 +37,7 @@ class SubtypeTableTest extends \Elgg\TestCase {
 	}
 
 	public function setupFetchAllQuery() {
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		$this->db->addQuerySpec([
 			'sql' => "SELECT * FROM {$dbprefix}entity_subtypes",
 			'results' => [$this, 'fetchAllResults'],
@@ -80,7 +80,7 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 	public function testCanAddSubtype() {
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		$type = 'object';
 		$subtype = 'bar';
@@ -107,7 +107,7 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 	public function testCanUpdateSubtype() {
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		$this->setupFetchAllQuery();
 
@@ -138,7 +138,7 @@ class SubtypeTableTest extends \Elgg\TestCase {
 
 	public function testCanRemoveSubtype() {
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		$this->setupFetchAllQuery();
 

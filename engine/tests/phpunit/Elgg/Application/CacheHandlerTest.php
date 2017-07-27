@@ -11,8 +11,8 @@ class CacheHandlerTest extends \Elgg\TestCase {
 
 	public function setUp() {
 		$app = elgg();
-		$config = _elgg_services()->config;
-		$this->handler = new CacheHandler($app, $config, []);
+		$request = _elgg_services()->request;
+		$this->handler = new CacheHandler($app, _elgg_config(), $request, true);
 	}
 
 	protected function _testParseFail($input) {
@@ -52,19 +52,14 @@ class CacheHandlerTest extends \Elgg\TestCase {
 	}
 
 	public function testGetViewFileTypeHandlesJs() {
-		$this->markTestIncomplete("getViewFileType() is private/protected");
-
 		$type = $this->handler->getViewFileType('js/some/view.js');
 
 		$this->assertEquals('js', $type);
 	}
 
 	public function testGetContentTypeHandlesJs() {
-		$this->markTestIncomplete("getContentType() is private/protected");
-
 		$mediaType = $this->handler->getContentType('view.js');
 
 		$this->assertEquals('application/javascript', $mediaType);
 	}
-
 }

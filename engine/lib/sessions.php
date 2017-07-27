@@ -1,5 +1,8 @@
 <?php
 
+use Elgg\SystemMessagesService;
+use Elgg\Di\ServiceProvider;
+
 /**
  * Elgg session management
  * Functions to manage logins
@@ -75,7 +78,7 @@ function elgg_is_admin_user($user_guid) {
 	}
 
 	// cannot use magic metadata here because of recursion
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 	$query = "SELECT 1 FROM {$dbprefix}users_entity as e
 		WHERE (
 			e.guid = {$user_guid}
@@ -328,9 +331,9 @@ function logout() {
 	_elgg_services()->persistentLogin->removePersistentLogin();
 
 	// pass along any messages into new session
-	$old_msg = $session->get('msg');
+	$old_msg = $session->get(SystemMessagesService::SESSION_KEY, []);
 	$session->invalidate();
-	$session->set('msg', $old_msg);
+	$session->set(SystemMessagesService::SESSION_KEY, $old_msg);
 
 	elgg_trigger_after_event('logout', 'user', $user);
 
@@ -340,50 +343,50 @@ function logout() {
 /**
  * Initializes the session and checks for the remember me cookie
  *
+ * @param ServiceProvider $services Services
  * @return bool
+ * @throws SecurityException
  * @access private
  */
-function _elgg_session_boot() {
-	_elgg_services()->timer->begin([__FUNCTION__]);
+function _elgg_session_boot(ServiceProvider $services) {
+	$services->timer->begin([__FUNCTION__]);
 
-	$session = _elgg_services()->session;
+	$session = $services->session;
 	$session->start();
 
 	// test whether we have a user session
 	if ($session->has('guid')) {
 		/** @var ElggUser $user */
-		$user = _elgg_services()->entityTable->get($session->get('guid'), 'user');
+		$user = $services->entityTable->get($session->get('guid'), 'user');
 		if (!$user) {
 			// OMG user has been deleted.
 			$session->invalidate();
 			forward('');
 		}
 
-		$session->setLoggedInUser($user);
-
-		_elgg_services()->persistentLogin->replaceLegacyToken($user);
+		$services->persistentLogin->replaceLegacyToken($user);
 	} else {
-		$user = _elgg_services()->persistentLogin->bootSession();
-		if ($user) {
-			$session->setLoggedInUser($user);
+		$user = $services->persistentLogin->bootSession();
+	}
+
+	if ($user) {
+		$session->setLoggedInUser($user);
+		set_last_action($user);
+
+		// logout a user with open session who has been banned
+		if ($user->isBanned()) {
+			logout();
+			return false;
 		}
 	}
 
-	if ($session->has('guid')) {
-		set_last_action($session->get('guid'));
-	}
-
-	// logout a user with open session who has been banned
-	$user = $session->getLoggedInUser();
-	if ($user && $user->isBanned()) {
-		logout();
-		return false;
-	}
-
-	_elgg_services()->timer->end([__FUNCTION__]);
+	$services->timer->end([__FUNCTION__]);
 	return true;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	register_pam_handler('pam_auth_userpass');
 };

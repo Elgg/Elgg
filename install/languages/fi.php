@@ -40,11 +40,11 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:check:php:register_globals' => 'Register globals -asetus täytyy olla pois päältä.',
 	'install:check:php:session.auto_start' => "session.auto_start -asetus täytyy olla pois päältä. Muuta se palvelimesi asetustiedostoon tai lisää se Elggin .htaccess-tiedostoon.",
 
-	'install:check:installdir' => 'Web-palvelimellasi ei ole oikeuksia luoda settings.php -tiedostoa asennushakemistoon. Sinulla on kaksi vaihtoehtoa:
+	'install:check:installdir' => 'Web-palvelimellasi ei ole oikeuksia luoda .env.php -tiedostoa asennushakemistoon. Sinulla on kaksi vaihtoehtoa:
 
 ⇥⇥1. Muuta elgg-config -hakemiston oikeudet
 
-⇥⇥2. Kopioi tiedosto %s/settings.example.php muotoon elgg-config/settings.php ja lue tiedostosta löytyvät ohjeet tietokanta-asetusten syöttämiseen.',
+⇥⇥2. Kopioi tiedosto %s/.env.php.example muotoon elgg-config/.env.php ja lue tiedostosta löytyvät ohjeet tietokanta-asetusten syöttämiseen.',
 	'install:check:readsettings' => 'Elggin engine-hakemistossa on asetustiedosto, mutta web-palvelin ei voi lukea sitä. Voit joko poistaa tiedoston tai antaa web-palvelimelle oikeuden lukea se.',
 
 	'install:check:php:success' => "Palvelimesi PHP vastaa kaikkia Elggin tarpeita.",
@@ -126,8 +126,8 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:error:nodatabase' => 'Tietokantaan %s ei saada yhteyttä.',
 	'install:error:cannotloadtables' => 'Tietokantataulujen lataaminen ei onnistu',
 	'install:error:tables_exist' => 'Tietokannassa on jo olemassa Elggin tauluja. Sinun pitää joko poistaa taulut tai aloittaa asennus uudelleen, jolloin Elgg voi yrittää ottaa taulut käyttöön. Aloittaaksesi asennuksen uudelleen, poista \'?step=database\' selaimesi osoiteriviltä ja siirry kyseiseen osoitteeseen.',
-	'install:error:readsettingsphp' => 'Tiedoston /elgg-config/settings.example.php lukeminen epäonnistui',
-	'install:error:writesettingphp' => 'Tiedostoon /elgg-config/settings.php kirjoittaminen epäonnistui',
+	'install:error:readsettingsphp' => 'Tiedoston /elgg-config/.env.php.example lukeminen epäonnistui',
+	'install:error:writesettingphp' => 'Tiedostoon /elgg-config/.env.php kirjoittaminen epäonnistui',
 	'install:error:requiredfield' => '%s on pakollinen kenttä',
 	'install:error:relative_path' => 'Datahakemistolle syöttämäsi sijainti "%s" ei ole absoluuttinen polku',
 	'install:error:datadirectoryexists' => 'Datahakemistoa %s ei ole olemassa.',

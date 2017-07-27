@@ -19,7 +19,7 @@ elgg_set_http_header('Pragma: public', true);
 elgg_set_http_header("Cache-Control: no-cache, must-revalidate", true);
 elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 
-$isElggAtRoot = Elgg\Application::elggDir()->getPath() === Directory\Local::root()->getPath();
+$isElggAtRoot = Elgg\Application::elggDir()->getPath() === Directory\Local::projectRoot()->getPath();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 
 ?>

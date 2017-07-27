@@ -1,6 +1,9 @@
 <?php
 namespace Elgg\Cache;
 
+use ElggSharedMemoryCache;
+use Elgg\Cache\NullCache;
+
 /**
  * In memory cache of known metadata values stored by entity.
  *
@@ -21,12 +24,20 @@ class MetadataCache {
 	protected $session;
 
 	/**
+	 * @var ElggSharedMemoryCache
+	 */
+	protected $cache;
+
+	/**
 	 * Constructor
 	 *
-	 * @param \ElggSession $session The session service
+	 * @param ElggSharedMemoryCache $cache Cache
 	 */
-	public function __construct(\ElggSession $session) {
-		$this->session = $session;
+	public function __construct(ElggSharedMemoryCache $cache = null) {
+		if (!$cache) {
+			$cache = new NullCache();
+		}
+		$this->cache = $cache;
 	}
 
 	/**
@@ -67,13 +78,14 @@ class MetadataCache {
 	}
 
 	/**
-	 * Forget about all metadata for an entity. For safety this affects all access states.
+	 * Forget about all metadata for an entity.
 	 *
 	 * @param int $entity_guid The GUID of the entity
 	 * @return void
 	 */
 	public function clear($entity_guid) {
 		unset($this->values[$entity_guid]);
+		$this->cache->delete($entity_guid);
 	}
 
 	/**
@@ -92,6 +104,9 @@ class MetadataCache {
 	 * @return void
 	 */
 	public function clearAll() {
+		foreach (array_keys($this->values) as $guid) {
+			$this->cache->delete($guid);
+		}
 		$this->values = [];
 	}
 
@@ -121,7 +136,7 @@ class MetadataCache {
 			return;
 		}
 		
-		$version = (int) elgg_get_config('version');
+		$version = (int) _elgg_config()->version;
 		if (!empty($version) && ($version < 2016110900)) {
 			// can't use this during upgrade from 2.x to 3.0
 			return;
@@ -132,10 +147,20 @@ class MetadataCache {
 		}
 		$guids = array_unique($guids);
 
+		foreach ($guids as $i => $guid) {
+			$value = $this->cache->load($guid);
+			if ($value !== false) {
+				$this->values[$guid] = unserialize($value);
+				unset($guids[$i]);
+			}
+		}
+		if (empty($guids)) {
+			return;
+		}
+
 		// could be useful at some point in future
 		//$guids = $this->filterMetadataHeavyEntities($guids);
 
-		$db_prefix = _elgg_services()->db->prefix;
 		$options = [
 			'guids' => $guids,
 			'limit' => 0,
@@ -175,6 +200,10 @@ class MetadataCache {
 			}
 			$last_guid = $guid;
 		}
+
+		foreach ($guids as $guid) {
+			$this->cache->save($guid, serialize($this->values[$guid]));
+		}
 	}
 
 	/**
@@ -187,7 +216,7 @@ class MetadataCache {
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 
 		$options = [
 			'guids' => $guids,

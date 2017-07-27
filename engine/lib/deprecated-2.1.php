@@ -40,8 +40,6 @@ function _elgg_delete_river(array $options = []) {
  * @deprecated 2.3 Use elgg_get_river() and call delete() on the returned item(s)
  */
 function elgg_delete_river(array $options = array()) {
-	global $CONFIG;
-
 	// allow core to use this in 2.x w/o warnings
 	if (empty($options['__bypass_notice'])) {
 		$msg = __FUNCTION__ . ' is deprecated. Use elgg_get_river() and call delete() on the returned item(s)';
@@ -112,7 +110,8 @@ function elgg_delete_river(array $options = array()) {
 	// remove identical where clauses
 	$wheres = array_unique($wheres);
 
-	$query = "DELETE rv.* FROM {$CONFIG->dbprefix}river rv ";
+	$prefix = _elgg_config()->dbprefix;
+	$query = "DELETE rv.* FROM {$prefix}river rv ";
 
 	// remove identical join clauses
 	$joins = array_unique($options['joins']);

@@ -15,6 +15,7 @@ use Elgg\Filesystem\MimeTypeDetector;
  * @access private
  */
 class ImageService {
+	use Loggable;
 
 	const JPEG_QUALITY = 75;
 
@@ -102,7 +103,8 @@ class ImageService {
 			unset($image);
 			unset($thumbnail);
 		} catch (Exception $ex) {
-			_elgg_services()->logger->error($ex->getMessage());
+			$logger = $this->logger ? $this->logger : _elgg_services()->logger;
+			$logger->error($ex->getMessage());
 			return false;
 		}
 

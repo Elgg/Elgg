@@ -7,17 +7,7 @@
  * @subpackage DataModel.User
  */
 
-/**
- * Return the user specific details of a user by a row.
- *
- * @param int $guid The \ElggUser guid
- *
- * @return mixed
- * @access private
- */
-function get_user_entity_as_row($guid) {
-	return _elgg_services()->usersTable->getRow($guid);
-}
+use Elgg\Project\Paths;
 
 /**
  * Disables all of a user's entities
@@ -184,8 +174,6 @@ function generate_random_cleartext_password() {
 	return _elgg_services()->crypto->getRandomString(12, \ElggCrypto::CHARS_PASSWORD);
 }
 
-
-
 /**
  * Simple function which ensures that a username contains only valid characters.
  *
@@ -197,15 +185,15 @@ function generate_random_cleartext_password() {
  * @throws RegistrationException on invalid
  */
 function validate_username($username) {
-	global $CONFIG;
+	$config = _elgg_config();
 
 	// Basic, check length
-	if (!isset($CONFIG->minusername)) {
-		$CONFIG->minusername = 4;
+	if (!isset($config->minusername)) {
+		$config->minusername = 4;
 	}
 
-	if (strlen($username) < $CONFIG->minusername) {
-		$msg = elgg_echo('registration:usernametooshort', [$CONFIG->minusername]);
+	if (strlen($username) < $config->minusername) {
+		$msg = elgg_echo('registration:usernametooshort', [$config->minusername]);
 		throw new \RegistrationException($msg);
 	}
 
@@ -259,14 +247,14 @@ function validate_username($username) {
  * @throws RegistrationException on invalid
  */
 function validate_password($password) {
-	global $CONFIG;
+	$config = _elgg_config();
 
-	if (!isset($CONFIG->min_password_length)) {
-		$CONFIG->min_password_length = 6;
+	if (!isset($config->min_password_length)) {
+		$config->min_password_length = 6;
 	}
 
-	if (strlen($password) < $CONFIG->min_password_length) {
-		$msg = elgg_echo('registration:passwordtooshort', [$CONFIG->min_password_length]);
+	if (strlen($password) < $config->min_password_length) {
+		$msg = elgg_echo('registration:passwordtooshort', [$config->min_password_length]);
 		throw new \RegistrationException($msg);
 	}
 
@@ -426,11 +414,16 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 /**
  * Sets the last action time of the given user to right now.
  *
- * @param int $user_guid The user GUID
+ * @param ElggUser|int $user The user or GUID
  * @return void
  */
-function set_last_action($user_guid) {
-	$user = get_user($user_guid);
+function set_last_action($user) {
+	if (!$user) {
+		return;
+	}
+	if (!$user instanceof ElggUser) {
+		$user = get_user($user);
+	}
 	if (!$user) {
 		return;
 	}
@@ -470,7 +463,7 @@ function user_avatar_hook($hook, $type, $return, $params) {
 		return;
 	}
 
-	if (elgg_get_config('walled_garden')) {
+	if (_elgg_config()->walled_garden) {
 		return;
 	}
 
@@ -653,8 +646,6 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
  * @access private
  */
 function elgg_profile_fields_setup() {
-	global $CONFIG;
-
 	$profile_defaults =  [
 		'description' => 'longtext',
 		'briefdescription' => 'text',
@@ -669,7 +660,7 @@ function elgg_profile_fields_setup() {
 	];
 
 	$loaded_defaults = [];
-	$fieldlist = elgg_get_config('profile_custom_fields');
+	$fieldlist = _elgg_config()->profile_custom_fields;
 	if ($fieldlist || $fieldlist === '0') {
 		$fieldlistarray = explode(',', $fieldlist);
 		foreach ($fieldlistarray as $listitem) {
@@ -682,14 +673,14 @@ function elgg_profile_fields_setup() {
 	}
 
 	if (count($loaded_defaults)) {
-		$CONFIG->profile_using_custom = true;
+		_elgg_config()->profile_using_custom = true;
 		$profile_defaults = $loaded_defaults;
 	}
 
-	$CONFIG->profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', null, $profile_defaults);
+	_elgg_config()->profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', null, $profile_defaults);
 
 	// register any tag metadata names
-	foreach ($CONFIG->profile_fields as $name => $type) {
+	foreach (_elgg_config()->profile_fields as $name => $type) {
 		if ($type == 'tags' || $type == 'location' || $type == 'tag') {
 			elgg_register_tag_metadata_name($name);
 			// register a tag name translation
@@ -802,7 +793,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
 
 	// If JS fails here, allow easy access to place where they can upgrade/flush caches
-	$href = elgg_is_admin_logged_in() ? elgg_get_login_url() : '#';
+	$href = elgg_is_admin_logged_in() ? 'admin' : '#';
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'account',
@@ -889,7 +880,7 @@ function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
  */
 function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_notify_user_ban')) {
+	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
 	
@@ -925,7 +916,7 @@ function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $pa
  */
 function _elgg_user_ban_notification($event, $type, $user) {
 	
-	if (!elgg_get_config('security_notify_user_ban')) {
+	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
 	
@@ -934,10 +925,11 @@ function _elgg_user_ban_notification($event, $type, $user) {
 	}
 	
 	$site = elgg_get_site_entity();
+	$language = $user->getLanguage();
 	
 	$subject = elgg_echo('user:notification:ban:subject', [$site->name], $language);
 	$body = elgg_echo('user:notification:ban:body', [
-		$recipient->name,
+		$user->name,
 		$site->name,
 		$site->getURL(),
 	], $language);
@@ -1051,11 +1043,13 @@ function users_init() {
  * @access private
  */
 function users_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggUserTest.php";
+	$value[] = Paths::elgg() . "engine/tests/ElggUserTest.php";
 	return $value;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', 'users_init', 0);
 	$events->registerHandler('init', 'system', 'elgg_profile_fields_setup', 10000); // Ensure this runs after other plugins

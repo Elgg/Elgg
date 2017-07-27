@@ -12,6 +12,13 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+``$CONFIG`` is removed!
+-----------------------
+
+Not exactly, however you **must** audit its usage and *should* replace it with ``elgg_get_config()`` and ``elgg_set_config()``, as recommended since Elgg 1.9.
+
+The global ``$CONFIG`` is now a proxy for Elgg's configuration container, and modifications **will fail** if you try to alter array properties directly. E.g. ``$CONFIG->cool_fruit[] = 'Pear';``. The silver lining is that failures will emit NOTICEs.
+
 Removed views
 -------------
 
@@ -88,6 +95,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``developers_setup_menu``
  * ``elgg_get_metastring_id``
  * ``elgg_get_metastring_map``
+ * ``elgg_register_viewtype``
+ * ``elgg_is_registered_viewtype``
  * ``get_default_filestore``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
@@ -143,6 +152,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
 Removed global vars
 -------------------
 
+ * ``$CURRENT_SYSTEM_VIEWTYPE``
  * ``$DEFAULT_FILE_STORE``
  * ``$ENTITY_CACHE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``
@@ -196,8 +206,8 @@ You need to separate the different sites into separate databases/tables.
 Related to the removal of the Multi Site concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
 All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade.
 
-Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the `$CONFIG->wwwroot` set in
-settings.php, or computed by Symphony Request.
+Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the ``ELGG_WWWROOT`` set in
+``.env.php``, or computed by Symphony Request.
 
 ``ElggSite::save()`` will fail if it isn't the main site.
 
@@ -354,7 +364,10 @@ Miscellaneous API changes
  * The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system.
  * The script ``engine/start.php`` is removed.
  * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``.
- * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used.
+ * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The .env.php file values (or environmental vars) are always used.
+ * Config functions like ``elgg_get_config`` no longer trim keys.
+ * If you override the view ``navigation/menu/user_hover/placeholder``, you must change the config key ``lazy_hover:menus`` to ``elgg_lazy_hover_menus``.
+ * The config value ``entity_types`` is no longer present or used.
 
 JavaScript hook calling order may change
 ----------------------------------------

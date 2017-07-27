@@ -8,6 +8,8 @@
  * @subpackage DataModel.Group
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Get the group entity.
  *
@@ -17,11 +19,10 @@
  * @access private
  */
 function get_group_entity_as_row($guid) {
-	global $CONFIG;
-
 	$guid = (int) $guid;
 
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}groups_entity where guid=$guid");
+	$prefix = _elgg_config()->dbprefix;
+	return get_data_row("SELECT * from {$prefix}groups_entity where guid=$guid");
 }
 
 /**
@@ -37,19 +38,16 @@ function get_group_entity_as_row($guid) {
  * @since 1.5.0
  */
 function add_group_tool_option($name, $label, $default_on = true) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->group_tool_options)) {
-		$CONFIG->group_tool_options = [];
+	$options = _elgg_config()->group_tool_options;
+	if (!$options) {
+		$options = [];
 	}
-
-	$group_tool_option = new \stdClass;
-
-	$group_tool_option->name = $name;
-	$group_tool_option->label = $label;
-	$group_tool_option->default_on = $default_on;
-
-	$CONFIG->group_tool_options[] = $group_tool_option;
+	$options[] = (object) [
+		'name' => $name,
+		'label' => $label,
+		'default_on' => $default_on,
+	];
+	_elgg_config()->group_tool_options = $options;
 }
 
 /**
@@ -63,17 +61,18 @@ function add_group_tool_option($name, $label, $default_on = true) {
  * @since 1.7.5
  */
 function remove_group_tool_option($name) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->group_tool_options)) {
+	$options = _elgg_config()->group_tool_options;
+	if (!is_array($options)) {
 		return;
 	}
 
-	foreach ($CONFIG->group_tool_options as $i => $option) {
+	foreach ($options as $i => $option) {
 		if ($option->name == $name) {
-			unset($CONFIG->group_tool_options[$i]);
+			unset($options[$i]);
 		}
 	}
+
+	_elgg_config()->group_tool_options = $options;
 }
 
 /**
@@ -110,8 +109,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
  * @access private
  */
 function _elgg_groups_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggGroupTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggGroupTest.php';
 	return $value;
 }
 
@@ -124,6 +122,9 @@ function _elgg_groups_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_groups_test');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_groups_init');
 };

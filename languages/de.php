@@ -510,7 +510,7 @@ return array(
 	'admin:settings:advanced' => 'Erweiterte Einstellungen',
 	'admin:site:description' => "Hier kannst Du einige globale Einstellungen für Deine Community-Seite vornehmen.",
 	'admin:site:opt:linktext' => "Community-Seite konfigurieren...",
-	'admin:settings:in_settings_file' => 'Diese Einstellung kann in settings.php angepasst werden.',
+	'admin:settings:in_settings_file2' => 'Diese Einstellung kann in elgg-config/.env.php angepasst werden.',
 
 	'admin:legend:security' => 'Sicherheit',
 	'admin:site:secret:intro' => 'Elgg verwendet einen seitenspezifischen Geheimschlüssel, um darauf basierend Sicherheits-Token zu generieren, die für verschiedenen Authentifizierungszwecke verwendet werden.',

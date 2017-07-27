@@ -30,9 +30,9 @@ class BatchUpgrader {
 	public function __construct(Config $config) {
 		$this->config = $config;
 
-		// Custom limit can be defined in elgg-config/settings.php if necessary
-		if (empty($this->config->get('batch_run_time_in_secs'))) {
-			$this->config->set('batch_run_time_in_secs', 4);
+		// Custom limit can be defined in elgg-config/.env.php if necessary
+		if (empty($this->config->batch_run_time_in_secs)) {
+			$this->config->batch_run_time_in_secs = 4;
 		}
 	}
 
@@ -72,7 +72,7 @@ class BatchUpgrader {
 		$result = null;
 
 		$condition = function () use (&$count, &$processed, &$result, $started) {
-			if ((microtime(true) - $started) >= $this->config->get('batch_run_time_in_secs')) {
+			if ((microtime(true) - $started) >= $this->config->batch_run_time_in_secs) {
 				return false;
 			}
 			if ($result && $result->wasMarkedComplete()) {

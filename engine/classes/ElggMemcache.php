@@ -20,7 +20,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 *
 	 * @param string      $namespace The namespace for this cache to write to
 	 * @param \Stash\Pool $pool      The cache pool to use. Default is memcache.
-	 * @param int         $ttl       The TTL in seconds. Default is from $CONFIG->memcache_expires.
+	 * @param int         $ttl       The TTL in seconds. Default is from ELGG_MEMCACHE_EXPIRES.
 	 *
 	 * @throws ConfigurationException
 	 *
@@ -40,14 +40,14 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		$this->stash_pool = $pool;
 
 		if ($ttl === null) {
-			$ttl = _elgg_services()->config->get('memcache_expires');
+			$ttl = _elgg_config()->memcache_expires;
 		}
 		if (isset($ttl)) {
 			$this->ttl = $ttl;
 		}
 		
 		// make sure memcache is reset
-		_elgg_services()->events->registerHandler('cache:flush', 'system', [$this, 'clear']);
+		_elgg_services()->hooks->getEvents()->registerHandler('cache:flush', 'system', [$this, 'clear']);
 	}
 
 	/**
@@ -159,14 +159,14 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	/**
 	 * Set the namespace of this cache.
 	 *
-	 * This will also add the Memcache namespace prefix as defined in settings.php
+	 * This will also add the Memcache namespace prefix as defined in .env.php
 	 *
 	 * @param string $namespace Namespace for cache
 	 *
 	 * @return void
 	 */
 	public function setNamespace($namespace = "default") {
-		$config_prefix = _elgg_services()->config->getVolatile('memcache_namespace_prefix');
+		$config_prefix = _elgg_config()->memcache_namespace_prefix;
 		if ($config_prefix) {
 			$namespace = $config_prefix . $namespace;
 		}

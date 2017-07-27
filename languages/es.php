@@ -510,7 +510,7 @@ return array(
 	'admin:settings:advanced' => 'Configuraci&oacute;n Avanzada',
 	'admin:site:description' => "Este panel de administraci&oacute;n le permite gestionar la configuraci&oacute;n global de la red. Selecciona una opci&oacute;n debajo para comenzar",
 	'admin:site:opt:linktext' => "Configurar sitio..",
-	'admin:settings:in_settings_file' => 'Esta opción se configura en settings.php',
+	'admin:settings:in_settings_file2' => 'Esta opción se configura en elgg-config/.env.php',
 
 	'admin:legend:security' => 'Seguridad',
 	'admin:site:secret:intro' => 'Elgg usa una clave para crear tokens de seguridad para varios propósitos.',

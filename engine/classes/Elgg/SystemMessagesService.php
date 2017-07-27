@@ -18,7 +18,7 @@ class SystemMessagesService {
 
 	const SUCCESS = 'success';
 	const ERROR = 'error';
-	const SESSION_KEY = 'msg';
+	const SESSION_KEY = '_elgg_msgs';
 
 	/**
 	 * @var \ElggSession

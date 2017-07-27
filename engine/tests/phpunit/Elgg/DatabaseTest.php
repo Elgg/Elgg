@@ -90,7 +90,7 @@ class Elgg_DatabaseTest extends \Elgg\TestCase {
 	private function getDbMock() {
 		return $this->getMock(
 						\Elgg\Database::class, array('updateData'), array(
-					new \Elgg\Database\Config((object) array('dbprefix' => 'test_')),
+					new \Elgg\Database\DbConfig((object) array('dbprefix' => 'test_')),
 					_elgg_services()->logger
 						)
 		);

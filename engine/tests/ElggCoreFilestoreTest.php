@@ -22,7 +22,7 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 	}
 	
 	public function testFilenameOnFilestore() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		
 		// create a user to own the file
 		$user = $this->createTestUser();
@@ -49,7 +49,7 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 	}
 
 	function testElggFileDelete() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		
 		$user = $this->createTestUser();
 		$filestore = $this->filestore;

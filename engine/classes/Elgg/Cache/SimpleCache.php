@@ -2,7 +2,7 @@
 namespace Elgg\Cache;
 
 use Elgg\Config;
-use Elgg\ViewsService as Views;
+use Elgg\ViewsService;
 
 
 /**
@@ -17,18 +17,13 @@ class SimpleCache {
 	/** @var Config */
 	private $config;
 
-	/** @var Views */
-	private $views;
-
 	/**
 	 * Constructor
 	 *
 	 * @param Config $config Elgg's global configuration
-	 * @param Views  $views  Elgg's views registry
 	 */
-	public function __construct(Config $config, Views $views) {
+	public function __construct(Config $config) {
 		$this->config = $config;
-		$this->views = $views;
 	}
 
 	/**
@@ -46,7 +41,7 @@ class SimpleCache {
 	 * @see elgg_get_simplecache_url()
 	 */
 	function registerView($view_name) {
-		$view_name = $this->views->canonicalizeViewName($view_name);
+		$view_name = ViewsService::canonicalizeViewName($view_name);
 		elgg_register_external_view($view_name, true);
 	}
 
@@ -86,7 +81,7 @@ class SimpleCache {
 			$view = "$view/$subview";
 		}
 
-		$view = $this->views->canonicalizeViewName($view);
+		$view = ViewsService::canonicalizeViewName($view);
 
 		// should be normalized to canonical form by now: `getUrl('blog/save_draft.js')`
 		$this->registerView($view);
@@ -102,7 +97,7 @@ class SimpleCache {
 	function getRoot() {
 		$viewtype = elgg_get_viewtype();
 		if ($this->isEnabled()) {
-			$lastcache = (int) $this->config->get('lastcache');
+			$lastcache = (int) $this->config->lastcache;
 		} else {
 			$lastcache = 0;
 		}
@@ -116,7 +111,7 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool) $this->config->get('simplecache_enabled');
+		return (bool) $this->config->simplecache_enabled;
 	}
 
 	/**
@@ -139,7 +134,7 @@ class SimpleCache {
 	 * @return void
 	 */
 	function disable() {
-		if ($this->config->get('simplecache_enabled')) {
+		if ($this->config->simplecache_enabled) {
 			$this->config->save('simplecache_enabled', 0);
 
 			$this->invalidate();
@@ -152,7 +147,7 @@ class SimpleCache {
 	 * @return string
 	 */
 	private function getPath() {
-		$realpath = realpath($this->config->getCachePath());
+		$realpath = realpath($this->config->cacheroot);
 		return rtrim($realpath, DIRECTORY_SEPARATOR) . "/views_simplecache";
 	}
 
@@ -167,7 +162,7 @@ class SimpleCache {
 
 		$time = time();
 		$this->config->save("simplecache_lastupdate", $time);
-		$this->config->set('lastcache', $time);
+		$this->config->lastcache = $time;
 
 		return true;
 	}
@@ -178,9 +173,9 @@ class SimpleCache {
 	 * @return void
 	 */
 	function init() {
-		$lastcache = $this->config->get('lastcache');
+		$lastcache = $this->config->lastcache;
 		if (!defined('UPGRADING') && empty($lastcache)) {
-			$this->config->set('lastcache', (int) $this->config->get('simplecache_lastupdate'));
+			$this->config->lastcache = (int) $this->config->simplecache_lastupdate;
 		}
 	}
 }
