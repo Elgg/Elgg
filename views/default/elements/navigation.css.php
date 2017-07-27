@@ -592,28 +592,6 @@
 }
 
 /* ***************************************
-	SIDEBAR EXTRAS (rss, bookmark, etc)
-*************************************** */
-.elgg-menu-extras {
-	margin-bottom: 15px;
-	color: #aaaaaa;
-	font-size: 18px;
-}
-.elgg-menu-extras > li {
-	padding-right: 15px;
-}
-.elgg-menu-extras > li > a {
-	color: inherit;
-}
-.elgg-menu-extras > li > a:hover {
-	color: #5097cf;
-	text-decoration: none;
-}
-.elgg-menu-extras .elgg-menu-item-rss .elgg-anchor-label {
-	display: none;
-}
-
-/* ***************************************
 	WIDGET MENU
 *************************************** */
 .elgg-menu-widget-container {

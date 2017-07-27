@@ -30,20 +30,6 @@ function bookmarks_init() {
 	elgg_extend_view('elgg.css', 'bookmarks/css');
 	elgg_extend_view('elgg.js', 'bookmarks/js');
 
-	if (elgg_is_logged_in()) {
-		$user_guid = elgg_get_logged_in_user_guid();
-		$address = urlencode(current_page_url());
-
-		elgg_register_menu_item('extras', [
-			'name' => 'bookmark',
-			'text' => elgg_echo('bookmarks:this'),
-			'icon' => 'push-pin-alt',
-			'href' => "bookmarks/add/$user_guid?address=$address",
-			'title' => elgg_echo('bookmarks:this'),
-			'rel' => 'nofollow',
-		]);
-	}
-
 	// Register for notifications
 	elgg_register_notification_event('object', 'bookmarks', ['create']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:bookmarks', 'bookmarks_prepare_notification');

@@ -22,12 +22,12 @@ function reportedcontent_init() {
 
 	if (elgg_is_logged_in()) {
 		// Extend footer with report content link
-		elgg_register_menu_item('extras', [
+		elgg_register_menu_item('footer', [
 			'name' => 'report_this',
 			'href' => 'reportedcontent/add',
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
 			'text' => elgg_echo('reportedcontent:this'),
-			'icon' => 'report-this',
+			'icon' => 'exclamation-triangle',
 			'priority' => 500,
 			'section' => 'default',
 			'link_class' => 'elgg-lightbox',

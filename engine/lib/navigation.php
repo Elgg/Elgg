@@ -31,7 +31,6 @@
  *     page   Page menu usually shown in a sidebar. Uses Elgg's context.
  *     topbar Topbar menu shown on every page. The default has two sections.
  *     footer Like the topbar but in the footer.
- *     extras Links about content on the page. The RSS link is added to this.
  *
  * Dynamic menus (also called just-in-time menus):
  *     user_hover  Avatar hover menu. The user entity is passed as a parameter.
@@ -673,10 +672,10 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Add the RSS link to the extras menu
+ * Add the RSS link to the menu
  * @access private
  */
-function _elgg_extras_menu_setup($hook, $type, $return, $params) {
+function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 
 	if (!elgg_is_logged_in()) {
 		return;
@@ -694,7 +693,7 @@ function _elgg_extras_menu_setup($hook, $type, $return, $params) {
 		'href' => elgg_http_add_url_query_elements($url, [
 			'view' => 'rss',
 		]),
-		'title' => elgg_echo('feed:rss'),
+		'title' => elgg_echo('feed:rss:title'),
 	]);
 
 	return $return;
@@ -714,7 +713,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:extras', '_elgg_extras_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:footer', '_elgg_rss_menu_setup');
 
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 
@@ -724,6 +723,7 @@ function _elgg_nav_init() {
 		'href' => 'http://elgg.org',
 		'title' => 'Elgg ' . elgg_get_version(true),
 		'section' => 'meta',
+		'priority' => 600,
 	]));
 
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');
