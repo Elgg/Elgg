@@ -545,10 +545,8 @@ function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
 	
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
-		$settings_view_old = 'settings/' . $plugin_id . '/edit';
-		$settings_view_new = 'plugins/' . $plugin_id . '/settings';
 		
-		if (!elgg_view_exists($settings_view_new) && !elgg_view_exists($settings_view_old)) {
+		if (!elgg_view_exists("plugins/{$plugin_id}/settings") ) {
 			continue;
 		}
 		$plugin_name = $plugin->getManifest()->getName();
@@ -616,8 +614,7 @@ function _elgg_admin_page_handler($page) {
 
 	// special page for plugin settings since we create the form for them
 	if ($page[0] == 'plugin_settings') {
-		if (isset($page[1]) && (elgg_view_exists("settings/{$page[1]}/edit") ||
-				elgg_view_exists("plugins/{$page[1]}/settings"))) {
+		if (isset($page[1]) && (elgg_view_exists("plugins/{$page[1]}/settings"))) {
 			$view = 'admin/plugin_settings';
 			$plugin = elgg_get_plugin_from_id($page[1]);
 			$vars['plugin'] = $plugin;
