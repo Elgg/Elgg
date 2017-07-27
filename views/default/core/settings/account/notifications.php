@@ -7,7 +7,7 @@
  */
 
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-$notification_settings = get_user_notification_settings(elgg_get_page_owner_guid());
+$notification_settings = elgg_get_page_owner_entity()->getNotificationSettings();
 
 $title = elgg_echo('notifications:usersettings');
 

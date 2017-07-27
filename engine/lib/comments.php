@@ -318,7 +318,7 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 		return;
 	}
 	
-	$notification_settings = get_user_notification_settings($content_owner->getGUID());
+	$notification_settings = $content_owner->getNotificationSettings();
 	if (empty($notification_settings)) {
 		return;
 	}

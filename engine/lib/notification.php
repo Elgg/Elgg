@@ -390,49 +390,62 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 		// Results for a user are...
 		$result[$guid] = [];
 
-		if ($guid) { // Is the guid > 0?
-			// Are we overriding delivery?
-			$methods = $methods_override;
-			if (!$methods) {
-				$tmp = get_user_notification_settings($guid);
-				$methods = [];
-				// $tmp may be false. don't cast
-				if (is_object($tmp)) {
-					foreach ($tmp as $k => $v) {
-						// Add method if method is turned on for user!
-						if ($v) {
-							$methods[] = $k;
-						}
-					}
+		$recipient = get_entity($guid);
+		if (empty($recipient)) {
+			continue;
+		}
+		
+		// Are we overriding delivery?
+		$methods = $methods_override;
+		if (empty($methods)) {
+			$methods = [];
+			
+			if (!($recipient instanceof ElggUser)) {
+				// not sending to a user so can't get user notification settings
+				continue;
+			}
+			
+			$tmp = $recipient->getNotificationSettings();
+			if (empty($tmp)) {
+				// user has no notification settings
+				continue;
+			}
+			
+			foreach ($tmp as $k => $v) {
+				// Add method if method is turned on for user!
+				if ($v) {
+					$methods[] = $k;
 				}
 			}
+		}
 
-			if ($methods) {
-				// Deliver
-				foreach ($methods as $method) {
-					$handler = $notify_service->getDeprecatedHandler($method);
-					/* @var callable $handler */
-					if (!$handler || !is_callable($handler)) {
-						elgg_log("No handler registered for the method $method", 'WARNING');
-						continue;
-					}
+		if (empty($methods)) {
+			continue;
+		}
+		
+		// Deliver
+		foreach ($methods as $method) {
+			$handler = $notify_service->getDeprecatedHandler($method);
+			/* @var callable $handler */
+			if (!$handler || !is_callable($handler)) {
+				elgg_log("No handler registered for the method $method", 'WARNING');
+				continue;
+			}
 
-					elgg_log("Sending message to $guid using $method");
+			elgg_log("Sending message to $guid using $method");
 
-					// Trigger handler and retrieve result.
-					try {
-						$result[$guid][$method] = call_user_func(
-							$handler,
-							$from ? get_entity($from) : null,
-							get_entity($guid),
-							$subject,
-							$message,
-							$params
-						);
-					} catch (Exception $e) {
-						error_log($e->getMessage());
-					}
-				}
+			// Trigger handler and retrieve result.
+			try {
+				$result[$guid][$method] = call_user_func(
+					$handler,
+					$from ? get_entity($from) : null,
+					get_entity($guid),
+					$subject,
+					$message,
+					$params
+				);
+			} catch (Exception $e) {
+				elgg_log($e->getMessage(), 'ERROR');
 			}
 		}
 	}

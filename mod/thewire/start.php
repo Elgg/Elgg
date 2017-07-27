@@ -310,33 +310,53 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
  * @param string $type          Hook type
  * @param array  $subscriptions Subscriptions for a notification event
  * @param array  $params        Parameters including the event
- * @return array
+ *
+ * @return void|array
  */
 function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
-	$event = $params['event'];
+	$event = elgg_extract('event', $params);
 	$entity = $event->getObject();
-	if ($entity && elgg_instanceof($entity, 'object', 'thewire')) {
-		$parent = $entity->getEntitiesFromRelationship(['relationship' => 'parent']);
-		if ($parent) {
-			$parent = $parent[0];
-			// do not add a subscription if reply was to self
-			if ($parent->getOwnerGUID() !== $entity->getOwnerGUID()) {
-				if (!array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
-					$personal_methods = (array) get_user_notification_settings($parent->getOwnerGUID());
-					$methods = [];
-					foreach ($personal_methods as $method => $state) {
-						if ($state) {
-							$methods[] = $method;
-						}
-					}
-					if ($methods) {
-						$subscriptions[$parent->getOwnerGUID()] = $methods;
-						return $subscriptions;
-					}
-				}
-			}
+	if (!($entity instanceof ElggWire)) {
+		return;
+	}
+	
+	$parents = $entity->getEntitiesFromRelationship([
+		'type' => 'object',
+		'subtype' => 'thewire',
+		'relationship' => 'parent',
+	]);
+	if (empty($parents)) {
+		return ;
+	}
+	
+	/* @var $parent ElggWire */
+	$parent = $parents[0];
+	// do not add a subscription if reply was to self
+	if ($parent->getOwnerGUID() === $entity->getOwnerGUID()) {
+		return;
+	}
+	
+	if (array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
+		// already in the list
+		return;
+	}
+	
+	/* @var $parent_owner ElggUser */
+	$parent_owner = $parent->getOwnerEntity();
+	$personal_methods = $parent_owner->getNotificationSettings();
+	$methods = [];
+	foreach ($personal_methods as $method => $state) {
+		if ($state) {
+			$methods[] = $method;
 		}
 	}
+	
+	if (empty($methods)) {
+		return;
+	}
+	
+	$subscriptions[$parent->getOwnerGUID()] = $methods;
+	return $subscriptions;
 }
 
 /**
