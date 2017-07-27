@@ -9,22 +9,6 @@
  */
 
 /**
- * Get the group entity.
- *
- * @param int $guid GUID for a group
- *
- * @return array|false
- * @access private
- */
-function get_group_entity_as_row($guid) {
-	global $CONFIG;
-
-	$guid = (int) $guid;
-
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}groups_entity where guid=$guid");
-}
-
-/**
  * Adds a group tool option
  *
  * @see remove_group_tool_option().

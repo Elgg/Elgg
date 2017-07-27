@@ -16,7 +16,6 @@ $options = [
 	'selects' => ['GROUP_CONCAT(ers.relationship) as relationships'],
 	'types' => 'group',
 	'joins' => [
-		"JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
 		"JOIN {$dbprefix}entity_relationships ers 
 			ON e.guid = ers.guid_two AND ers.guid_one = $user->guid",
 	],
@@ -24,7 +23,10 @@ $options = [
 		"ers.relationship = 'member' OR ers.relationship LIKE 'notify%'"
 	],
 	'group_by' => 'e.guid',
-	'order_by' => 'ge.name',
+	'order_by_metadata' => [
+		'name' => 'name',
+		'direction' => 'ASC',
+	],
 	'offset_key' => 'subscriptions_groups',
 	'item_view' => 'notifications/subscriptions/record',
 	'user' => $user,
@@ -32,4 +34,4 @@ $options = [
 	'limit' => max(20, elgg_get_config('default_limit')),
 ];
 
-echo elgg_list_entities($options);
+echo elgg_list_entities_from_metadata($options);

@@ -10,13 +10,12 @@ if (!$num_display) {
 	$num_display = 5;
 }
 
-$db_prefix = elgg_get_config('dbprefix');
-
-echo elgg_list_entities([
+echo elgg_list_entities_from_metadata([
 	'type' => 'user',
 	'subtype'=> null,
-	'wheres' => ["ue.banned = 'yes'"],
-	'joins' => ["JOIN {$db_prefix}users_entity ue on ue.guid = e.guid"],
+	'metadata_name_value_pairs' => [
+		'banned' => 'yes',
+	],
 	'pagination' => false,
 	'limit' => $num_display,
 ]);

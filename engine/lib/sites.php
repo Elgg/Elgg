@@ -18,21 +18,6 @@ function elgg_get_site_entity() {
 }
 
 /**
- * Return the site specific details of a site by a row.
- *
- * @param int $guid The site GUID
- *
- * @return mixed
- * @access private
- */
-function get_site_entity_as_row($guid) {
-	global $CONFIG;
-
-	$guid = (int) $guid;
-	return get_data_row("SELECT * FROM {$CONFIG->dbprefix}sites_entity WHERE guid = $guid");
-}
-
-/**
  * Unit tests for sites
  *
  * @param string $hook   unit_test

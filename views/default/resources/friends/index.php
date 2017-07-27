@@ -10,18 +10,18 @@ $owner = elgg_get_page_owner_entity();
 
 $title = elgg_echo("friends:owned", [$owner->name]);
 
-$dbprefix = elgg_get_config('dbprefix');
-$options = [
+$content = elgg_list_entities_from_relationship([
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->getGUID(),
 	'inverse_relationship' => false,
 	'type' => 'user',
-	'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
-	'order_by' => 'ue.name ASC',
+	'order_by_metadata' => [
+		'name' => 'name',
+		'direction' => 'ASC',
+	],
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
-];
-$content = elgg_list_entities_from_relationship($options);
+]);
 
 $params = [
 	'content' => $content,

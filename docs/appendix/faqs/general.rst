@@ -286,13 +286,13 @@ Can I add extra fields to tables in the database?
 
 No, this is a bad idea. Learn the :doc:`data model </design/database>` and you will see that unless it's a very specific and highly customized installation, you can do everything you need within Elgg's current data model.
 
-I want to remove users. Can't I just delete them from the elgg_users_entity table?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+I want to remove users. Can't I just delete them from the tables?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 No, it will corrupt your database. Delete them through the site.
 
-I want to remove spam. Can't I just search and delete it from the elgg_objects_entity table?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+I want to remove spam. Can't I just search and delete it from the tables?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 No, it will corrupt your database. Delete it through the site.
 
@@ -339,15 +339,13 @@ Session length is controlled by your php configuration. You will first need to l
 File is missing an owner
 ------------------------
 
-There are three causes for this error. You could have an entity in your database that has an ``owner_guid`` of ``0``. This should be extremely rare and may only occur if your database/server crashes during a write operation.
+There are two causes for this error. You could have an entity in your database that has an ``owner_guid`` of ``0``. This should be extremely rare and may only occur if your database/server crashes during a write operation.
 
 The second cause would be an entity where the owner no longer exists. This could occur if a plugin is turned off that was involved in the creation of the entity and then the owner is deleted but the delete operation failed (because the plugin is turned off). If you can figure out entity is causing this, look in your ``entities`` table and change the ``owner_guid`` to your own and then you can delete the entity through Elgg.
 
 .. warning::
 
    Reed the section "Should I edit the database manually?". Be very carefull when editing the database directly. It can break your site. **Always** make a backup before doing this.
-
-The third cause is a user not having a username. This also indicates a database problem as this should not be possible. If it does occur, you could see this error when viewing a list of users (such as with the Members plugin). To fix, check your ``users_entity`` table for users without a username and if so, create a fake a username for that person. You should probably then delete the user through Elgg.
 
 Fixes
 ^^^^^

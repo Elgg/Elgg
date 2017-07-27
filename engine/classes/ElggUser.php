@@ -86,8 +86,15 @@ class ElggUser extends \ElggEntity
 	 *
 	 * @return bool
 	 */
-	public function ban($reason = "") {
-		return ban_user($this->guid, $reason);
+	public function ban($reason = '') {
+		if (!$this->events->trigger('ban', 'user', $this)) {
+			return false;
+		}
+
+		$this->ban_reason = $reason;
+		$this->banned = 'yes';
+		
+		return true;
 	}
 
 	/**
@@ -96,7 +103,14 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function unban() {
-		return unban_user($this->guid);
+		if (!$this->events->trigger('unban', 'user', $this)) {
+			return false;
+		}
+		
+		unset($this->ban_reason);
+		$this->banned = 'no';
+
+		return true;
 	}
 
 	/**
@@ -107,6 +121,44 @@ class ElggUser extends \ElggEntity
 	public function isBanned() {
 		return $this->banned == 'yes';
 	}
+	
+	/**
+	 * Sets the last action time to right now.
+	 *
+	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
+	 *
+	 * @return void
+	 */
+	public function setLastAction() {
+
+		$time = $this->getCurrentTime()->getTimestamp();
+
+		if ($this->last_action == $time) {
+			// no change required
+			return;
+		}
+
+		$this->prev_last_action = $this->last_action;
+		$this->last_action = $time;
+	}
+
+	/**
+	 * Sets the last logon time of the given user to right now.
+	 *
+	 * @return void
+	 */
+	public function setLastLogin() {
+
+		$time = $this->getCurrentTime()->getTimestamp();
+
+		if ($this->last_login == $time) {
+			// no change required
+			return;
+		}
+
+		$this->prev_last_login = $this->last_login;
+		$this->last_login = $time;
+	}
 
 	/**
 	 * Is this user admin?
@@ -114,12 +166,7 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isAdmin() {
-
-		// for backward compatibility we need to pull this directly
-		// from the attributes instead of using the magic methods.
-		// this can be removed in 1.9
-		// return $this->admin == 'yes';
-		return $this->attributes['admin'] == 'yes';
+		return $this->admin == 'yes';
 	}
 
 	/**
@@ -132,15 +179,16 @@ class ElggUser extends \ElggEntity
 		if ($this->isAdmin()) {
 			return true;
 		}
-
-		// If already saved, use the standard function.
-		if ($this->guid && !make_user_admin($this->guid)) {
-			return false;
+		
+		if ($this->guid) {
+			// If already saved let others know
+			if (!$this->events->trigger('make_admin', 'user', $this)) {
+				return false;
+			}
 		}
-
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'yes';
-
+		
+		$this->admin = 'yes';
+		
 		return true;
 	}
 
@@ -154,14 +202,15 @@ class ElggUser extends \ElggEntity
 		if (!$this->isAdmin()) {
 			return true;
 		}
-
-		// If already saved, use the standard function.
-		if ($this->guid && !remove_user_admin($this->guid)) {
-			return false;
+		
+		if ($this->guid) {
+			// If already saved let others know
+			if (!$this->events->trigger('remove_admin', 'user', $this)) {
+				return false;
+			}
 		}
 
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'no';
+		$this->admin = 'no';
 
 		return true;
 	}

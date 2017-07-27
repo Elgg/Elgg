@@ -52,7 +52,7 @@ class AnnotationMigration implements Batch {
 			FROM {$db->prefix}metadata
 			WHERE `name` = :old_name
 			AND entity_guid IN (
-				SELECT guid FROM {$db->prefix}users_entity
+				SELECT guid FROM {$db->prefix}entities WHERE type='user'
 			)
 		";
 		try {
