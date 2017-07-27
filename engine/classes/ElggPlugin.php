@@ -59,7 +59,7 @@ class ElggPlugin extends \ElggObject {
 		if (is_object($path)) {
 			// database object
 			parent::__construct($path);
-			$this->path = _elgg_services()->config->getPluginsPath() . $this->getID();
+			$this->path = _elgg_config()->plugins_path . $this->getID();
 			_elgg_cache_plugin_by_id($this);
 			return;
 		}
@@ -344,7 +344,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		// need to remove all namespaced private settings.
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
@@ -478,7 +478,7 @@ class ElggPlugin extends \ElggObject {
 
 		$defaults = $this->getStaticConfig('user_settings', []);
 		
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		// send an empty name so we just get the first part of the namespace
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$ps_prefix_len = strlen($ps_prefix);
@@ -721,7 +721,7 @@ class ElggPlugin extends \ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
+		$return = _elgg_services()->hooks->getEvents()->trigger('activate', 'plugin', $params);
 
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
@@ -813,7 +813,7 @@ class ElggPlugin extends \ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->events->trigger('deactivate', 'plugin', $params);
+		$return = _elgg_services()->hooks->getEvents()->trigger('deactivate', 'plugin', $params);
 
 		// run any deactivate code
 		if ($return) {
@@ -1006,31 +1006,45 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Registers the plugin's actions provided in the plugin config file
 	 *
-	 * @throws PluginException
 	 * @return void
 	 */
 	protected function registerActions() {
-		$actions = _elgg_services()->actions;
+		self::addActionsFromStaticConfig($this->getStaticConfig('actions', []), $this->getPath());
+	}
 
-		$spec = (array) $this->getStaticConfig('actions', []);
-		
+	/**
+	 * Register a plugin's actions provided in the config file
+	 *
+	 * @todo move to a static config service
+	 *
+	 * @param array  $spec      'actions' section of static config
+	 * @param string $root_path Plugin path
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public static function addActionsFromStaticConfig(array $spec, $root_path) {
+		$actions = _elgg_services()->actions;
+		$root_path = rtrim($root_path, '/\\');
+
 		foreach ($spec as $action => $action_spec) {
 			if (!is_array($action_spec)) {
 				continue;
 			}
-			
+
 			$options = [
 				'access' => 'logged_in',
 				'filename' => '', // assuming core action is registered
 			];
-			
+
 			$options = array_merge($options, $action_spec);
-			
-			$filename = "{$this->getPath()}actions/{$action}.php";
-			if (file_exists($filename)) {
+
+			$filename = "$root_path/actions/{$action}.php";
+			if (is_file($filename)) {
 				$options['filename'] = $filename;
 			}
-			
+
 			$actions->register($action, $options['filename'], $options['access']);
 		}
 	}

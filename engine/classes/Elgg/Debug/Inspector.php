@@ -19,7 +19,7 @@ class Inspector {
 	 * @return array [event,type] => array(handlers)
 	 */
 	public function getEvents() {
-		return $this->buildHandlerTree(_elgg_services()->events->getAllHandlers());
+		return $this->buildHandlerTree(_elgg_services()->hooks->getEvents()->getAllHandlers());
 	}
 
 	/**
@@ -226,7 +226,7 @@ class Inspector {
 	 */
 	public function getMenus() {
 
-		$menus = elgg_get_config('menus');
+		$menus = _elgg_config()->menus;
 
 		// get JIT menu items
 		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems

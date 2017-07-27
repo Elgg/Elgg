@@ -23,6 +23,16 @@ function _elgg_services(\Elgg\Di\ServiceProvider $services = null) {
 }
 
 /**
+ * Get the Elgg config service
+ *
+ * @return \Elgg\Config
+ * @access private
+ */
+function _elgg_config() {
+	return _elgg_services()->config;
+}
+
+/**
  * Delete the autoload system cache
  *
  * @access private
@@ -70,6 +80,9 @@ function elgg_register_class($class, $location) {
 	return true;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache', 600);
 };

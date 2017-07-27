@@ -8,6 +8,7 @@
 
 $variables = $vars['variables'];
 $type = $vars['type'];
+$form_body = '';
 
 foreach ($variables as $name => $params) {
 	$label = elgg_echo("install:$type:label:$name");

@@ -71,8 +71,8 @@ Simplecache
 By default, views are cached in the Elgg data directory for a given period of time.
 This removes the need for a view to be regenerated on every page load.
 
-This can be disabled by setting ``$CONFIG->simplecache_enabled = false;``
-For best performance, make sure this value is set to ``true``.
+This can be disabled by setting ``ELGG_SIMPLECACHE_ENABLED=""``
+For best performance, make sure this value is set to ``"1"``.
 
 This does lead to artifacts during development if you are editing themes in your plugin
 as the cached version will be used in preference to the one provided by your plugin.
@@ -117,8 +117,8 @@ discovered (profiling indicated that page load took a non-linear amount
 of time the more plugins were enabled due to view discovery).
 Elgg also caches information like the language mapping and class map.
 
-This can be disabled by setting ``$CONFIG->system_cache_enabled = false;``
-For best performance, make sure this value is set to ``true``.
+This can be disabled by setting ``ELGG_SYSTEM_CACHE_ENABLED=""``
+For best performance, make sure this value is set to ``"1"``.
 
 This is currently stored in files in your dataroot (although later
 versions of Elgg may use memcache). As with the simple cache it is
@@ -133,8 +133,8 @@ Boot cache (experimental)
 -------------------------
 
 Elgg has the ability to cache numerous resources created and fetched during
-the boot process. To enable this cache you must set a TTL in your ``settings.php``
-file: ``$CONFIG->boot_cache_ttl = 10;``
+the boot process. To enable this cache you must set a TTL in your ``.env.php``
+file: ``ELGG_BOOT_CACHE_TTL="10"``
 
 A small TTL is recommended because it brings all the benefits of caching under load
 while reducing the harm if Elgg's cache invalidation strategy should miss something.
@@ -150,7 +150,7 @@ the end of the page or use the ``execute_delayed_*`` functionality.
 This cache will be automatically cleared at the end of a page load.
 
 You may experience memory problems if you use the Elgg framework as a library in a PHP CLI script.
-This can be disabled by setting ``$CONFIG->db_disable_query_cache = true;``
+This can be disabled by setting ``ELGG_DB_DISABLE_QUERY_CACHE="1"``
 
 
 Etags and Expires headers
@@ -183,23 +183,20 @@ Installation requirements:
 
 Configuration:
 
-Uncomment and populate the following sections in ``settings.php``
+Uncomment and populate the following sections in ``.env.php``
 
-.. code:: php
-
-    $CONFIG->memcache = true;
-    
-    $CONFIG->memcache_servers = array (
-        array('server1', 11211),
-        array('server2', 11211)
-    );
+	ELGG_MEMCACHE="1"
+	ELGG_MEMCACHE1_HOST="server1"
+	ELGG_MEMCACHE1_PORT="11211"
+	ELGG_MEMCACHE2_HOST="server2"
+	ELGG_MEMCACHE2_PORT="11211"
 
 Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want 
 to add a namespace prefix. In order to do this, uncomment the following line
 
 .. code:: php
 
-	$CONFIG->memcache_namespace_prefix = '';
+	ELGG_MEMCACHE_NAMESPACE_PREFIX="myprefix"
 
 Squid
 -----
@@ -221,7 +218,7 @@ Direct file serving
 -------------------
 
 If your server can be configured to support the X-Sendfile or X-Accel headers,
-you can configure it to be used in ``settings.php``. This allows your web server to
+you can configure it to be used in ``.env.php``. This allows your web server to
 directly stream files to the client instead of using PHP's ``readfile()``.
 
 Hosting

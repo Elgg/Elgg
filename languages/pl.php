@@ -503,7 +503,7 @@ return array(
 	'admin:settings:advanced' => 'Ustawienia zaawansowane',
 	'admin:site:description' => "Ten panel umożliwia globalne ustawienia witryny. Wybierz opcję poniżej, aby rozpocząć.",
 	'admin:site:opt:linktext' => "Konfiguracja strony...",
-	'admin:settings:in_settings_file' => 'Opcja jest skonfigurowana w pliku settings.php',
+	'admin:settings:in_settings_file2' => 'Opcja jest skonfigurowana w pliku elgg-config/.env.php',
 
 	'admin:legend:security' => 'Bezpieczeństwo',
 	'admin:site:secret:intro' => 'Elgg używa sekretnego klucza strony do tworzenia tokenów bezpieczeństwa do różnych celów.',

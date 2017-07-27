@@ -40,12 +40,12 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:check:php:register_globals' => 'Register globals muss auf dem Server ausgeschaltet sein, d.h. der Wert der PHP-Variable register_globals muss \'0\' sein.',
 	'install:check:php:session.auto_start' => "Auf dem Server muss session.auto_start ausgeschaltet sein, damit Elgg einwandfrei funktioniert. Ändere diese Einstellung entweder in der PHP-Konfiguration php.ini oder setze den Wert dieser PHP-Variable in der .htaccess-Datei von Elgg.",
 
-	'install:check:installdir' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Installationsverzeichnis von Elgg die Datei settings.php zu erzeugen. Du hast zwei Möglichkeiten:
+	'install:check:installdir' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Installationsverzeichnis von Elgg die Datei .env.php zu erzeugen. Du hast zwei Möglichkeiten:
 
 		1. Ändere (nur während der Installation!) die Schreibberechtigung für das Verzeichnis elgg-config Deiner Elgg-Installation,
 
-		2. Lege die Datei settings.php selbst an, indem Du die Datei %s/settings.example.php in das Verzeichnis elgg-config kopierst und zu settings.php umbenennst. Folge dann den Anweisungen in dieser Datei, um die Verbindungsparameter für Deine Datenbank einzutragen.',
-	'install:check:readsettings' => 'Im Installationsverzeichnis von Elgg ist eine Konfigurationsdatei namens settings.php vorhanden, aber es fehlt die notwendige Leseberechtigung. Du kannst entweder die Datei löschen, damit sie neu angelegt werden kann oder Du kannst die Leseberechtigungen der Datei anpassen.',
+		2. Lege die Datei .env.php selbst an, indem Du die Datei %s/.env.php.example in das Verzeichnis elgg-config kopierst und zu .env.php umbenennst. Folge dann den Anweisungen in dieser Datei, um die Verbindungsparameter für Deine Datenbank einzutragen.',
+	'install:check:readsettings' => 'Im Installationsverzeichnis von Elgg ist eine Konfigurationsdatei namens .env.php vorhanden, aber es fehlt die notwendige Leseberechtigung. Du kannst entweder die Datei löschen, damit sie neu angelegt werden kann oder Du kannst die Leseberechtigungen der Datei anpassen.',
 
 	'install:check:php:success' => "Die PHP-Konfiguration auf Deinem Server erfüllt alle notwendigen Voraussetzungen für Elgg.",
 	'install:check:rewrite:success' => 'Die Überprüfung der konfigurierten rewrite-Regeln war erfolgreich.',
@@ -126,8 +126,8 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:nodatabase' => 'Der Zugriff auf die Datenbank %s ist nicht möglich. Möglicherweise ist die Datenbank nicht vorhanden.',
 	'install:error:cannotloadtables' => 'Der Zugriff auf die Tabellen der Datenbank ist nicht möglich.',
 	'install:error:tables_exist' => 'In der Datenbank ist bereits eine Elgg-Tabellenstruktur vorhanden. Du mußt entweder diese Tabellen aus der Datenbank löschen oder die Installation neu starten. Bei einem Neustart kann versucht werden, die bestehende Tabellenstruktur zu verwenden. Um die Installation neu zu starten, entferne \'?step=database\' aus der URL in der Adressleiste Deines Browsers und drücke \'Enter\'.',
-	'install:error:readsettingsphp' => 'Die Datei /elgg-config/settings.example.php ist nicht lesbar.',
-	'install:error:writesettingphp' => 'Es ist nicht möglich, in die Datei /elgg-config/settings.php zu schreiben bzw. diese Datei anzulegen.',
+	'install:error:readsettingsphp' => 'Die Datei /elgg-config/.env.php.example ist nicht lesbar.',
+	'install:error:writesettingphp' => 'Es ist nicht möglich, in die Datei /elgg-config/.env.php zu schreiben bzw. diese Datei anzulegen.',
 	'install:error:requiredfield' => '%s ist eine notwendige Eingabe.',
 	'install:error:relative_path' => 'Der eingegebene Pfad "%s" scheint keine absolute Pfadangabe für Dein Datenverzeichnis zu sein.',
 	'install:error:datadirectoryexists' => 'Dein Datenverzeichnis %s ist nicht vorhanden.',
@@ -155,6 +155,6 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:warning:rewrite:unknown' => 'Dein Server unterstützt die automatische Prüfung von Rewrite-Regeln nicht und Dein Browser unterstützt es nicht, mit Hilfe von Javascript die Rewrite-Regeln auf Funktionsfähigkeit zu überprüfen. Du kannst die Installation fortsetzen, aber es kann sein, das Deine Community-Seite nicht einwandfrei funktionieren wird. Du kannst die Überprüfung der Rewrite-Regeln selbst durchführen, indem Du diesem Link folgst: <a href="%s" target="_blank">Test</a>. Du wirst die Meldung \'success\' bekommen, wenn die Rewrite-Regeln funktionieren.',
 	
 	// Bring over some error messages you might see in setup
-	'exception:contact_admin' => 'Es ist ein nicht behebbarer Fehler aufgetreten. Der Fehler wurde protokolliert. Wenn Du der Seitenadministrator bist, prüfe bitte die Konfiguration in settings.php. Andernfalls leite bitte leite folgende Informationen an den Seitenadministrator weiter:',
-	'DatabaseException:WrongCredentials' => "Elgg konnte mit den gegebenen Verbindungsparametern keine Verbindung zur Datenbank herstellen. Bitte prüfe die Konfiguration in settings.php.",
+	'exception:contact_admin' => 'Es ist ein nicht behebbarer Fehler aufgetreten. Der Fehler wurde protokolliert. Wenn Du der Seitenadministrator bist, prüfe bitte die Konfiguration in .env.php. Andernfalls leite bitte leite folgende Informationen an den Seitenadministrator weiter:',
+	'DatabaseException:WrongCredentials' => "Elgg konnte mit den gegebenen Verbindungsparametern keine Verbindung zur Datenbank herstellen. Bitte prüfe die Konfiguration in .env.php.",
 ];

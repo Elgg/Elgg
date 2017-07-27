@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Elgg\Project\Paths;
 
 /**
  * Get the size of the specified directory.
@@ -305,7 +306,7 @@ function delete_directory($directory) {
  */
 function _elgg_clear_entity_files($entity) {
 	$dir = new \Elgg\EntityDirLocator($entity->guid);
-	$file_path = elgg_get_config('dataroot') . $dir;
+	$file_path = _elgg_config()->dataroot . $dir;
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
 	}
@@ -419,8 +420,7 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
  * @access private
  */
 function _elgg_filestore_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCoreFilestoreTest.php";
+	$value[] = Paths::elgg() . "engine/tests/ElggCoreFilestoreTest.php";
 	return $value;
 }
 
@@ -596,6 +596,9 @@ function elgg_get_uploaded_files($input_name) {
 	return _elgg_services()->uploads->getUploadedFiles($input_name);
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
 };

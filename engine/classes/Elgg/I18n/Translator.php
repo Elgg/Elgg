@@ -18,6 +18,47 @@ class Translator {
 	private $config;
 
 	/**
+	 * @var array
+	 */
+	private $translations = [];
+
+	/**
+	 * @var bool
+	 */
+	private $is_initialized = false;
+
+	/**
+	 * @var string
+	 */
+	private $current_language = null;
+
+	/**
+	 * Paths to scan for autoloading languages.
+	 *
+	 * Languages are automatically loaded for the site or
+	 * user's default language.  Plugins can extend or override strings.
+	 * language_paths is an array of paths to scan for PHP files matching
+	 * the default language.  The order of paths is determined by the plugin load order,
+	 * with later entries overriding earlier.  Language files within these paths are
+	 * named as the two-letter ISO 639-1 country codes for the language they represent.
+	 *
+	 * @link http://en.wikipedia.org/wiki/ISO_639-1
+	 *
+	 * @var array (paths are keys)
+	 */
+	private $language_paths = [];
+
+	/**
+	 * @var bool
+	 */
+	private $was_reloaded = false;
+
+	/**
+	 * @var bool
+	 */
+	private $loaded_from_cache = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Config $config Elgg config
@@ -25,6 +66,22 @@ class Translator {
 	public function __construct(Config $config) {
 		$this->config = $config;
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function wasLoadedFromCache() {
+		return $this->loaded_from_cache;
+	}
+
+	/**
+	 * Get a map of all loaded translations
+	 *
+	 * @return array
+	 */
+	public function getLoadedTranslations() {
+		return $this->translations;
 	}
 
 	/**
@@ -39,9 +96,6 @@ class Translator {
 	 * or the original language string.
 	 */
 	public function translate($message_key, array $args = [], $language = "") {
-		// TODO find a way to cache getLanguage() and get rid of this
-		static $CURRENT_LANGUAGE;
-		
 		if (!is_string($message_key) || strlen($message_key) < 1) {
 			_elgg_services()->logger->warn(
 				'$message_key needs to be a string in ' . __METHOD__ . '(), ' . gettype($message_key) . ' provided'
@@ -49,11 +103,11 @@ class Translator {
 			return '';
 		}
 		
-		if (!$CURRENT_LANGUAGE) {
-			$CURRENT_LANGUAGE = $this->getCurrentLanguage();
+		if ($this->current_language === null) {
+			$this->current_language = $this->getCurrentLanguage();
 		}
 		if (!$language) {
-			$language = $CURRENT_LANGUAGE;
+			$language = $this->current_language;
 		}
 
 		$this->ensureTranslationsLoaded($language);
@@ -66,8 +120,8 @@ class Translator {
 		$langs['en'] = true;
 
 		foreach (array_keys($langs) as $try_lang) {
-			if (isset($GLOBALS['_ELGG']->translations[$try_lang][$message_key])) {
-				$string = $GLOBALS['_ELGG']->translations[$try_lang][$message_key];
+			if (isset($this->translations[$try_lang][$message_key])) {
+				$string = $this->translations[$try_lang][$message_key];
 
 				// only pass through if we have arguments to allow backward compatibility
 				// with manual sprintf() calls.
@@ -106,24 +160,22 @@ class Translator {
 	 * @return bool Depending on success
 	 */
 	public function addTranslation($country_code, $language_array) {
-
-		if (!isset($GLOBALS['_ELGG']->translations)) {
-			$GLOBALS['_ELGG']->translations = [];
-		}
-
 		$country_code = strtolower($country_code);
 		$country_code = trim($country_code);
-		if (is_array($language_array) && $country_code != "") {
-			if (sizeof($language_array) > 0) {
-				if (!isset($GLOBALS['_ELGG']->translations[$country_code])) {
-					$GLOBALS['_ELGG']->translations[$country_code] = $language_array;
-				} else {
-					$GLOBALS['_ELGG']->translations[$country_code] = $language_array + $GLOBALS['_ELGG']->translations[$country_code];
-				}
-			}
-			return true;
+
+		if (!is_array($language_array) || $country_code === "") {
+			return false;
 		}
-		return false;
+
+		if (count($language_array) > 0) {
+			if (!isset($this->translations[$country_code])) {
+				$this->translations[$country_code] = $language_array;
+			} else {
+				$this->translations[$country_code] = $language_array + $this->translations[$country_code];
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -160,7 +212,7 @@ class Translator {
 		}
 
 		if (!$language) {
-			$site_language = $this->config->getVolatile('language');
+			$site_language = $this->config->language;
 			if ($site_language) {
 				$language = $site_language;
 			}
@@ -202,9 +254,9 @@ class Translator {
 			}
 
 			if ($loaded) {
-				$GLOBALS['_ELGG']->i18n_loaded_from_cache = true;
-				// this is here to force
-				$GLOBALS['_ELGG']->language_paths[$this->defaultPath] = true;
+				$this->loaded_from_cache = true;
+				$this->language_paths[$this->defaultPath] = true;
+				$this->is_initialized = true;
 				return;
 			}
 		}
@@ -298,11 +350,9 @@ class Translator {
 	public function registerTranslations($path, $load_all = false, $language = null) {
 		$path = sanitise_filepath($path);
 
-		// Make a note of this path just incase we need to register this language later
-		if (!isset($GLOBALS['_ELGG']->language_paths)) {
-			$GLOBALS['_ELGG']->language_paths = [];
-		}
-		$GLOBALS['_ELGG']->language_paths[$path] = true;
+		// Make a note of this path just in case we need to register this language later
+		$this->language_paths[$path] = true;
+		$this->is_initialized = true;
 
 		_elgg_services()->logger->info("Translations loaded from: $path");
 
@@ -335,7 +385,7 @@ class Translator {
 			}
 
 			if (in_array($language_file, $load_language_files) || $load_all) {
-				$result = include_once($path . $language_file);
+				$result = (include $path . $language_file);
 				if ($result === false) {
 					$return = false;
 					continue;
@@ -358,12 +408,11 @@ class Translator {
 	 * @return void
 	 */
 	public function reloadAllTranslations() {
-		static $was_already_called;
-		if ($was_already_called) {
+		if ($this->was_reloaded) {
 			return;
 		}
 
-		if (!empty($GLOBALS['_ELGG']->i18n_loaded_from_cache)) {
+		if ($this->loaded_from_cache) {
 			$cache = elgg_get_system_cache();
 			$cache_dir = $cache->getVariable("cache_path");
 			$filenames = elgg_get_file_list($cache_dir, [], [], [".lang"]);
@@ -380,12 +429,12 @@ class Translator {
 				}
 			}
 		} else {
-			foreach ($GLOBALS['_ELGG']->language_paths as $path => $dummy) {
+			foreach (array_keys($this->language_paths) as $path) {
 				$this->registerTranslations($path, true);
 			}
 		}
 
-		$was_already_called = true;
+		$this->was_reloaded = true;
 	}
 
 	/**
@@ -395,8 +444,6 @@ class Translator {
 	 * @return array
 	 */
 	public function getInstalledTranslations() {
-
-
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
 
@@ -404,7 +451,7 @@ class Translator {
 
 		$admin_logged_in = _elgg_services()->session->isAdminLoggedIn();
 
-		foreach ($GLOBALS['_ELGG']->translations as $k => $v) {
+		foreach ($this->translations as $k => $v) {
 			if ($this->languageKeyExists($k, $k)) {
 				$lang = $this->translate($k, [], $k);
 			} else {
@@ -441,7 +488,7 @@ class Translator {
 
 		$language = sanitise_string($language);
 
-		$en = count($GLOBALS['_ELGG']->translations['en']);
+		$en = count($this->translations['en']);
 
 		$missing = $this->getMissingLanguageKeys($language);
 		if ($missing) {
@@ -450,7 +497,6 @@ class Translator {
 			$missing = 0;
 		}
 
-		//$lang = count($GLOBALS['_ELGG']->translations[$language]);
 		$lang = $en - $missing;
 
 		return round(($lang / $en) * 100, 2);
@@ -472,9 +518,9 @@ class Translator {
 
 		$missing = [];
 
-		foreach ($GLOBALS['_ELGG']->translations['en'] as $k => $v) {
-			if ((!isset($GLOBALS['_ELGG']->translations[$language][$k]))
-			|| ($GLOBALS['_ELGG']->translations[$language][$k] == $GLOBALS['_ELGG']->translations['en'][$k])) {
+		foreach ($this->translations['en'] as $k => $v) {
+			if ((!isset($this->translations[$language][$k]))
+			|| ($this->translations[$language][$k] == $this->translations['en'][$k])) {
 				$missing[] = $k;
 			}
 		}
@@ -502,11 +548,11 @@ class Translator {
 
 		$this->ensureTranslationsLoaded($language);
 
-		if (!array_key_exists($language, $GLOBALS['_ELGG']->translations)) {
+		if (!array_key_exists($language, $this->translations)) {
 			return false;
 		}
 
-		return array_key_exists($key, $GLOBALS['_ELGG']->translations[$language]);
+		return array_key_exists($key, $this->translations[$language]);
 	}
 
 	/**
@@ -516,12 +562,12 @@ class Translator {
 	 * @return void
 	 */
 	private function ensureTranslationsLoaded($language) {
-		if (!isset($GLOBALS['_ELGG']->translations)) {
+		if (!$this->is_initialized) {
 			// this means we probably had an exception before translations were initialized
 			$this->registerTranslations($this->defaultPath);
 		}
 
-		if (!isset($GLOBALS['_ELGG']->translations[$language])) {
+		if (!isset($this->translations[$language])) {
 			// The language being requested is not the same as the language of the
 			// logged in user, so we will have to load it separately. (Most likely
 			// we're sending a notification and the recipient is using a different

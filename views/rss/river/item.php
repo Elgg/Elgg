@@ -6,6 +6,7 @@
  */
 
 $item = $vars['item'];
+/** @var ElggRiverItem $item */
 
 $output = elgg_view($item->getView(), $vars);
 

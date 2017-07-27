@@ -8,58 +8,54 @@ class EventsServiceTest extends \Elgg\TestCase {
 
 	public $counter = 0;
 
+	/**
+	 * @var EventsService
+	 */
+	public $events;
+
 	public function setUp() {
 		$this->counter = 0;
+		$this->events = new EventsService(new HandlersService());
 	}
 
 	public function testTriggerCallsRegisteredHandlersAndReturnsTrue() {
-		$events = new EventsService();
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
-		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
-
-		$this->assertTrue($events->trigger('foo', 'bar'));
+		$this->assertTrue($this->events->trigger('foo', 'bar'));
 		$this->assertEquals($this->counter, 2);
 	}
 
 	public function testFalseStopsPropagationAndReturnsFalse() {
-		$events = new EventsService();
+		$this->events->registerHandler('foo', 'bar', 'Elgg\Values::getFalse');
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$events->registerHandler('foo', 'bar', 'Elgg\Values::getFalse');
-		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
-
-		$this->assertFalse($events->trigger('foo', 'bar'));
+		$this->assertFalse($this->events->trigger('foo', 'bar'));
 		$this->assertEquals($this->counter, 0);
 	}
 
 	public function testNullDoesNotStopPropagation() {
-		$events = new EventsService();
+		$this->events->registerHandler('foo', 'bar', 'Elgg\Values::getNull');
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$events->registerHandler('foo', 'bar', 'Elgg\Values::getNull');
-		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
-
-		$this->assertTrue($events->trigger('foo', 'bar'));
+		$this->assertTrue($this->events->trigger('foo', 'bar'));
 		$this->assertEquals($this->counter, 1);
 	}
 
 	public function testUnstoppableEventsCantBeStoppedAndReturnTrue() {
-		$events = new EventsService();
+		$this->events->registerHandler('foo', 'bar', 'Elgg\Values::getFalse');
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$events->registerHandler('foo', 'bar', 'Elgg\Values::getFalse');
-		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
-
-		$this->assertTrue($events->trigger('foo', 'bar', null, array(
+		$this->assertTrue($this->events->trigger('foo', 'bar', null, array(
 			EventsService::OPTION_STOPPABLE => false
 		)));
 		$this->assertEquals($this->counter, 1);
 	}
 
 	public function testUncallableHandlersAreLogged() {
-		$events = new EventsService();
-
 		_elgg_services()->logger->disable();
-		$events->registerHandler('foo', 'bar', array(new \stdClass(), 'uncallableMethod'));
-		$events->trigger('foo', 'bar');
+		$this->events->registerHandler('foo', 'bar', array(new \stdClass(), 'uncallableMethod'));
+		$this->events->trigger('foo', 'bar');
 
 		$logged = _elgg_services()->logger->enable();
 
@@ -73,12 +69,11 @@ class EventsServiceTest extends \Elgg\TestCase {
 	}
 
 	public function testEventTypeHintReceivesObject() {
-		$events = new EventsService();
 		$handler = new TestEventHandler();
 
-		$events->registerHandler('foo', 'bar', $handler);
+		$this->events->registerHandler('foo', 'bar', $handler);
 
-		$this->assertFalse($events->trigger('foo', 'bar', null));
+		$this->assertFalse($this->events->trigger('foo', 'bar', null));
 		$this->assertCount(1, TestEventHandler::$invocations);
 		$this->assertCount(1, TestEventHandler::$invocations[0]["args"]);
 		$this->assertInstanceOf(Event::class, TestEventHandler::$invocations[0]["args"][0]);
@@ -87,12 +82,10 @@ class EventsServiceTest extends \Elgg\TestCase {
 	}
 
 	public function testInvokableClassNamesGetEventObject() {
-		$events = new EventsService();
+		$this->events->registerHandler('foo', 'bar', TestEventHandler::class);
+		$this->events->registerHandler('foo', 'bar', TestEventHandler::class);
 
-		$events->registerHandler('foo', 'bar', TestEventHandler::class);
-		$events->registerHandler('foo', 'bar', TestEventHandler::class);
-
-		$this->assertEquals(false, $events->trigger('foo', 'bar', null));
+		$this->assertEquals(false, $this->events->trigger('foo', 'bar', null));
 		$this->assertCount(1, TestEventHandler::$invocations);
 		$this->assertCount(1, TestEventHandler::$invocations[0]["args"]);
 		$this->assertInstanceOf(Event::class, TestEventHandler::$invocations[0]["args"][0]);

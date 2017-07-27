@@ -508,7 +508,7 @@ return array(
 	'admin:settings:advanced' => 'Configuración avanzada',
 	'admin:site:description' => "Este panel de administración permítelle controlar a configuración global do sitio. Escolla unha das seguintes opcións para comezar.",
 	'admin:site:opt:linktext' => "Configurar o sitio…",
-	'admin:settings:in_settings_file' => 'A opción está configurada en «settings.php».',
+	'admin:settings:in_settings_file2' => 'A opción está configurada en «elgg-config/.env.php».',
 
 	'admin:legend:security' => 'Seguranza',
 	'admin:site:secret:intro' => 'Elgg usa unha chave para crear códigos de seguridade para varios fins.',

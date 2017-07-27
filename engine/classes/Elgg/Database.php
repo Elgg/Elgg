@@ -5,6 +5,7 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Elgg\Database\DbConfig as DbConfig;
 
 /**
  * The Elgg database
@@ -16,6 +17,7 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
  */
 class Database {
 	use Profilable;
+	use Loggable;
 
 	const DELAYED_QUERY = 'q';
 	const DELAYED_TYPE = 't';
@@ -65,45 +67,29 @@ class Database {
 	private $delayed_queries = [];
 
 	/**
-	 * @var bool $installed Is the database installed?
-	 */
-	private $installed = false;
-
-	/**
-	 * @var \Elgg\Database\Config $config Database configuration
+	 * @var \Elgg\Database\DbConfig $config Database configuration
 	 */
 	private $config;
 
 	/**
-	 * @var \Elgg\Logger $logger The logger
-	 */
-	private $logger;
-
-	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database\Config $config Database configuration
-	 * @param \Elgg\Logger          $logger The logger
+	 * @param DbConfig $config DB configuration
 	 */
-	public function __construct(\Elgg\Database\Config $config, \Elgg\Logger $logger = null) {
-
-		$this->logger = $logger;
-		$this->config = $config;
-
-		$this->table_prefix = $config->getTablePrefix();
-
-		$this->enableQueryCache();
+	public function __construct(DbConfig $config) {
+		$this->resetConnections($config);
 	}
 
 	/**
-	 * Set the logger object
+	 * Reset the connections with new credentials
 	 *
-	 * @param Logger $logger The logger
-	 * @return void
-	 * @access private
+	 * @param DbConfig $config DB config
 	 */
-	public function setLogger(Logger $logger) {
-		$this->logger = $logger;
+	public function resetConnections(DbConfig $config) {
+		$this->connections = [];
+		$this->config = $config;
+		$this->table_prefix = $config->getTablePrefix();
+		$this->enableQueryCache();
 	}
 
 	/**
@@ -616,30 +602,6 @@ class Database {
 				$this->logger->info("Query cache invalidated");
 			}
 		}
-	}
-
-	/**
-	 * Test that the Elgg database is installed
-	 *
-	 * @return void
-	 * @throws \InstallationException
-	 * @access private
-	 */
-	public function assertInstalled() {
-
-		if ($this->installed) {
-			return;
-		}
-
-		try {
-			$sql = "SELECT value FROM {$this->table_prefix}config WHERE name = 'installed'";
-			$this->getConnection('read')->query($sql);
-		} catch (\DatabaseException $e) {
-			throw new \InstallationException("Unable to handle this request. This site is not "
-				. "configured or the database is down.");
-		}
-
-		$this->installed = true;
 	}
 
 	/**

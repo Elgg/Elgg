@@ -510,7 +510,7 @@ return array(
 	'admin:settings:advanced' => '詳細設定',
 	'admin:site:description' => "この管理パネルでは、インストールしたサイト全体に関わる設定をコントロールすることができます。はじめるには、以下のオプションを選択してください。",
 	'admin:site:opt:linktext' => "サイトの構築..",
-	'admin:settings:in_settings_file' => 'この設定は、settings.php 内で行えます。',
+	'admin:settings:in_settings_file2' => 'この設定は、elgg-config/.env.php 内で行えます。',
 
 	'admin:legend:security' => 'セキュリティ',
 	'admin:site:secret:intro' => 'Elgg は様々な目的で使用するセキュリティートークンを作成するためのキーを1つ使用します。',

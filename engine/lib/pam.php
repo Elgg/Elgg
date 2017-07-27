@@ -20,9 +20,6 @@
  * @subpackage Authentication.PAM
  */
 
-global $_PAM_HANDLERS;
-$_PAM_HANDLERS = [];
-
 /**
  * Register a PAM handler.
  *
@@ -40,19 +37,17 @@ $_PAM_HANDLERS = [];
  * @return bool
  */
 function register_pam_handler($handler, $importance = "sufficient", $policy = "user") {
-	global $_PAM_HANDLERS;
-
 	// setup array for this type of pam if not already set
-	if (!isset($_PAM_HANDLERS[$policy])) {
-		$_PAM_HANDLERS[$policy] = [];
+	if (!isset(\ElggPAM::$_handlers[$policy])) {
+		\ElggPAM::$_handlers[$policy] = [];
 	}
 
 	// @todo remove requirement that $handle be a global function
 	if (is_string($handler) && is_callable($handler, true)) {
-		$_PAM_HANDLERS[$policy][$handler] = new \stdClass;
+		\ElggPAM::$_handlers[$policy][$handler] = new \stdClass;
 
-		$_PAM_HANDLERS[$policy][$handler]->handler = $handler;
-		$_PAM_HANDLERS[$policy][$handler]->importance = strtolower($importance);
+		\ElggPAM::$_handlers[$policy][$handler]->handler = $handler;
+		\ElggPAM::$_handlers[$policy][$handler]->importance = strtolower($importance);
 
 		return true;
 	}
@@ -70,7 +65,5 @@ function register_pam_handler($handler, $importance = "sufficient", $policy = "u
  * @since 1.7.0
  */
 function unregister_pam_handler($handler, $policy = "user") {
-	global $_PAM_HANDLERS;
-
-	unset($_PAM_HANDLERS[$policy][$handler]);
+	unset(\ElggPAM::$_handlers[$policy][$handler]);
 }

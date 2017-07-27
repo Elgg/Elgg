@@ -11,10 +11,13 @@ class WidgetsServiceTest extends \Elgg\TestCase {
 	public function testRegisterTypeParametersControl() {
 		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
 
+		_elgg_services()->logger->disable();
 		$definition = \Elgg\WidgetDefinition::factory([
 					'id' => 'widget_test',
 					'name' => 'Widget name',
 		]);
+		_elgg_services()->logger->enable();
+
 		$this->assertTrue($service->registerType($definition));
 
 		$definition->id = null;

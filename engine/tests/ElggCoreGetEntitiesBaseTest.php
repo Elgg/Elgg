@@ -72,8 +72,6 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	 * Called after each test object.
 	 */
 	public function __destruct() {
-		global $CONFIG;
-
 		foreach ($this->entities as $e) {
 			$e->delete();
 		}

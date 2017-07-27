@@ -104,6 +104,15 @@ CREATE TABLE `prefix_entity_subtypes` (
   UNIQUE KEY `type` (`type`,`subtype`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `prefix_entity_subtypes`
+  (type, subtype, class) VALUES
+  ('object', 'plugin', 'ElggPlugin'),
+  ('object', 'file', 'ElggFile'),
+  ('object', 'widget', 'ElggWidget'),
+  ('object', 'comment', 'ElggComment'),
+  ('object', 'elgg_upgrade', 'ElggUpgrade'),
+  ('object', 'admin_notice', '');
+
 -- cache lookups of latitude and longitude for place names
 CREATE TABLE `prefix_geocode_cache` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

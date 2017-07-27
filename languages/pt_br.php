@@ -503,7 +503,7 @@ return array(
 	'admin:settings:advanced' => 'Configurações Avançadas',
 	'admin:site:description' => "Este painel do administrador permite a você controlar as configurações do seu site. Escolha uma das opções abaixo para iniciar.",
 	'admin:site:opt:linktext' => "Configurar o site...",
-	'admin:settings:in_settings_file' => 'EStas configura��es estao no arquivo settings.php',
+	'admin:settings:in_settings_file2' => 'EStas configura��es estao no arquivo elgg-config/.env.php',
 
 	'admin:legend:security' => 'Seguranca',
 	'admin:site:secret:intro' => 'Elgg usa uma chave para criar tokens de seguranca para varios propositos.',

@@ -83,12 +83,6 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$object->delete();
 	}
 
-	public function testElggUserConstructorByDbRow() {
-		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
-		$user = new \ElggUser($row);
-		$this->assertIdenticalEntities($user, elgg_get_logged_in_user_entity());
-	}
-
 	public function testElggUserSave() {
 		// new object
 		$this->AssertEqual($this->user->getGUID(), 0);
@@ -144,7 +138,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggUserMakeAdmin() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 
 		// need to save user to have a guid
 		$guid = $this->user->save();
@@ -160,7 +154,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggUserRemoveAdmin() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 
 		// need to save user to have a guid
 		$guid = $this->user->save();
@@ -221,7 +215,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	}
 
 	protected function fetchUser($guid) {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 
 		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}users_entity WHERE guid = '$guid'");
 	}

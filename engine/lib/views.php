@@ -49,15 +49,7 @@
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
 use Elgg\Includer;
-
-/**
- * The viewtype override.
- *
- * @global string $CURRENT_SYSTEM_VIEWTYPE
- * @see elgg_set_viewtype()
- */
-global $CURRENT_SYSTEM_VIEWTYPE;
-$CURRENT_SYSTEM_VIEWTYPE = "";
+use Elgg\Project\Paths;
 
 /**
  * Manually set the viewtype.
@@ -71,12 +63,8 @@ $CURRENT_SYSTEM_VIEWTYPE = "";
  *
  * @return bool
  */
-function elgg_set_viewtype($viewtype = "") {
-	global $CURRENT_SYSTEM_VIEWTYPE;
-
-	$CURRENT_SYSTEM_VIEWTYPE = $viewtype;
-
-	return true;
+function elgg_set_viewtype($viewtype = '') {
+	return _elgg_services()->views->setViewtype($viewtype);
 }
 
 /**
@@ -85,79 +73,12 @@ function elgg_set_viewtype($viewtype = "") {
  * Viewtypes are automatically detected and can be set with $_REQUEST['view']
  * or {@link elgg_set_viewtype()}.
  *
- * @note Internal: Viewtype is determined in this order:
- *  - $CURRENT_SYSTEM_VIEWTYPE Any overrides by {@link elgg_set_viewtype()}
- *  - $CONFIG->view  The default view as saved in the DB.
- *
- * @return string The view.
+ * @return string The viewtype
  * @see elgg_set_viewtype()
  */
 function elgg_get_viewtype() {
-	global $CURRENT_SYSTEM_VIEWTYPE;
-
-	if (empty($CURRENT_SYSTEM_VIEWTYPE)) {
-		$CURRENT_SYSTEM_VIEWTYPE = _elgg_get_initial_viewtype();
-	}
-
-	return $CURRENT_SYSTEM_VIEWTYPE;
+	return _elgg_services()->views->getViewtype();
 }
-
-/**
- * Get the initial viewtype
- *
- * @return string
- * @access private
- * @since 2.0.0
- */
-function _elgg_get_initial_viewtype() {
-	global $CONFIG;
-
-	$viewtype = get_input('view', '', false);
-	if (_elgg_is_valid_viewtype($viewtype)) {
-		return $viewtype;
-	}
-
-	if (isset($CONFIG->view) && _elgg_is_valid_viewtype($CONFIG->view)) {
-		return $CONFIG->view;
-	}
-
-	return 'default';
-}
-
-/**
- * Register a viewtype.
- *
- * @param string $viewtype The view type to register
- * @return bool
- */
-function elgg_register_viewtype($viewtype) {
-	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
-		$GLOBALS['_ELGG']->view_types = [];
-	}
-
-	if (!in_array($viewtype, $GLOBALS['_ELGG']->view_types)) {
-		$GLOBALS['_ELGG']->view_types[] = $viewtype;
-	}
-
-	return true;
-}
-
-/**
- * Checks if $viewtype is registered.
- *
- * @param string $viewtype The viewtype name
- *
- * @return bool
- * @since 1.9.0
- */
-function elgg_is_registered_viewtype($viewtype) {
-	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
-		return false;
-	}
-
-	return in_array($viewtype, $GLOBALS['_ELGG']->view_types);
-}
-
 
 /**
  * Checks if $viewtype is a string suitable for use as a viewtype name
@@ -169,15 +90,7 @@ function elgg_is_registered_viewtype($viewtype) {
  * @since 1.9
  */
 function _elgg_is_valid_viewtype($viewtype) {
-	if (!is_string($viewtype) || $viewtype === '') {
-		return false;
-	}
-
-	if (preg_match('/\W/', $viewtype)) {
-		return false;
-	}
-
-	return true;
+	return _elgg_services()->views->isValidViewtype($viewtype);
 }
 
 /**
@@ -546,9 +459,9 @@ function _elgg_views_prepare_head($title) {
 	];
 
 	if (empty($title)) {
-		$params['title'] = elgg_get_config('sitename');
+		$params['title'] = _elgg_config()->sitename;
 	} else {
-		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
+		$params['title'] = $title . ' : ' . _elgg_config()->sitename;
 	}
 
 	$params['metas']['content-type'] = [
@@ -558,7 +471,7 @@ function _elgg_views_prepare_head($title) {
 
 	$params['metas']['description'] = [
 		'name' => 'description',
-		'content' => elgg_get_config('sitedescription')
+		'content' => _elgg_config()->sitedescription
 	];
 
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
@@ -1674,7 +1587,7 @@ function elgg_view_icon($name, $vars = []) {
  * @return void
  */
 function elgg_register_rss_link() {
-	_elgg_services()->config->set('_elgg_autofeed', true);
+	_elgg_config()->_elgg_autofeed = true;
 }
 
 /**
@@ -1683,7 +1596,7 @@ function elgg_register_rss_link() {
  * @return void
  */
 function elgg_unregister_rss_link() {
-	_elgg_services()->config->set('_elgg_autofeed', false);
+	_elgg_config()->_elgg_autofeed = false;
 }
 
 /**
@@ -1697,7 +1610,7 @@ function _elgg_has_rss_link() {
 		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
 		return $GLOBALS['autofeed'];
 	}
-	return (bool) _elgg_services()->config->getVolatile('_elgg_autofeed');
+	return (bool) _elgg_config()->_elgg_autofeed;
 }
 
 /**
@@ -1739,11 +1652,11 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 	}
 
 	if ($type == 'js') {
-		if (elgg_get_config('simplecache_minify_js')) {
+		if (_elgg_config()->simplecache_minify_js) {
 			return JSMin::minify($content);
 		}
 	} elseif ($type == 'css') {
-		if (elgg_get_config('simplecache_minify_css')) {
+		if (_elgg_config()->simplecache_minify_css) {
 			$cssmin = new CSSmin();
 			return $cssmin->run($content);
 		}
@@ -1839,8 +1752,7 @@ function _elgg_view_may_be_altered($view, $path) {
 		$expected_path = $path;
 	} else {
 		// relative path
-		$root = dirname(dirname(__DIR__));
-		$expected_path = "$root/views/$viewtype/" . ltrim($path, '/\\');
+		$expected_path = Paths::elgg() . "views/$viewtype/" . ltrim($path, '/\\');
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);
@@ -1857,21 +1769,7 @@ function _elgg_view_may_be_altered($view, $path) {
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
-	if (!elgg_get_config('system_cache_loaded')) {
-		// Core view files in /views
-		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
-
-		// Core view definitions in /engine/views.php
-		$file = dirname(__DIR__) . '/views.php';
-		if (is_file($file)) {
-			$spec = Includer::includeFile($file);
-			if (is_array($spec)) {
-				_elgg_services()->views->mergeViewsSpec($spec);
-			}
-		}
-	}
-
-	// on every page
+	_elgg_services()->viewCacher->registerCoreViews();
 
 	// jQuery and UI must come before require. See #9024
 	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
@@ -1926,18 +1824,9 @@ function elgg_views_boot() {
 	// registered with high priority for BC
 	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
-	
-	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
-	$view_path = _elgg_services()->views->view_path;
-	$viewtype_dirs = scandir($view_path);
-	foreach ($viewtype_dirs as $viewtype) {
-		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {
-			elgg_register_viewtype($viewtype);
-		}
-	}
 
-	// set default icon sizes - can be overridden in settings.php or with plugin
-	if (!_elgg_services()->config->getVolatile('icon_sizes')) {
+	// set default icon sizes - can be overridden with plugin
+	if (!_elgg_config()->icon_sizes) {
 		$icon_sizes = [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
@@ -1962,7 +1851,7 @@ function elgg_views_boot() {
  * @access private
  */
 function _elgg_get_js_site_data() {
-	$language = elgg_get_config('language');
+	$language = _elgg_config()->language;
 	if (!$language) {
 		$language = 'en';
 	}
@@ -1994,9 +1883,10 @@ function _elgg_get_js_page_data() {
 
 	$elgg = [
 		'config' => [
-			'lastcache' => (int) elgg_get_config('lastcache'),
+			'lastcache' => (int) _elgg_config()->lastcache,
 			'viewtype' => elgg_get_viewtype(),
 			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
+			'current_language' => get_current_language(),
 		],
 		'security' => [
 			'token' => [
@@ -2011,7 +1901,7 @@ function _elgg_get_js_page_data() {
 		'_data' => (object) $data,
 	];
 
-	if (elgg_get_config('elgg_load_sync_code')) {
+	if (_elgg_config()->elgg_load_sync_code) {
 		$elgg['config']['load_sync_code'] = true;
 	}
 

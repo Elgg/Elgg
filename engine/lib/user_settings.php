@@ -272,7 +272,7 @@ function _elgg_set_user_email() {
 		return;
 	}
 	
-	if (elgg_get_config('security_email_require_password') && ($user->getGUID() === elgg_get_logged_in_user_guid())) {
+	if (_elgg_config()->security_email_require_password && ($user->getGUID() === elgg_get_logged_in_user_guid())) {
 		// validate password
 		$pwd = get_input('email_password');
 		$auth = elgg_authenticate($user->username, $pwd);
@@ -308,7 +308,7 @@ function _elgg_set_user_email() {
  */
 function _elgg_set_user_default_access() {
 
-	if (!elgg_get_config('allow_user_default_access')) {
+	if (!_elgg_config()->allow_user_default_access) {
 		return;
 	}
 
@@ -525,6 +525,9 @@ function _elgg_user_settings_init() {
 	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_user_settings_init');
 };

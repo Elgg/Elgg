@@ -40,11 +40,11 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:check:php:register_globals' => 'Register globals moet uitgeschakeld zijn.',
 	'install:check:php:session.auto_start' => "session.auto_start moet uitgeschakeld zijn om Elgg te laten werken. Verander de configuratie van je server of voeg deze richtlijn toe aan het .htaccess bestand van Elgg.",
 
-	'install:check:installdir' => 'Jouw webserver heeft onvoldoende rechten om het settings.php bestand in de engine map aan te maken. Je hebt twee keuzes:
+	'install:check:installdir' => 'Jouw webserver heeft onvoldoende rechten om het .env.php bestand in de engine map aan te maken. Je hebt twee keuzes:
 
 1. Wijzig de bevoegdheden van de elgg-config map
 
-2. Kopieer het bestand %s/settings.example.php naar elgg-config/settings.php en volg de aanwijzingen in het bestand om je databasegegevens in te stellen.',
+2. Kopieer het bestand %s/.env.php.example naar elgg-config/.env.php en volg de aanwijzingen in het bestand om je databasegegevens in te stellen.',
 	'install:check:readsettings' => 'Er staat een instellingenbestand in de installatie map, maar de webserver kan dit niet lezen. Je kunt het bestand verwijderen of de leesbevoegdheden ervan wijzigen.',
 
 	'install:check:php:success' => "De PHP van jouw webserver voldoet aan de eisen van Elgg.",
@@ -126,8 +126,8 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:error:nodatabase' => 'Niet mogelijk om database %s te gebruiken. Mogelijk bestaat hij niet.',
 	'install:error:cannotloadtables' => 'Kan de database tables niet laden',
 	'install:error:tables_exist' => 'Er bestaan alreeds Elgg tabellen in de database. Je moet eerst deze tabellen verwijderen of herstart de installatie en we zullen proberen deze tabellen te gebruiken. Om de installatie te herstarten verwijder \'?step=database\' uit de URL in de adresbalk van je browser en druk op Enter.',
-	'install:error:readsettingsphp' => 'Kan /elgg-config/settings.example.php niet lezen',
-	'install:error:writesettingphp' => 'Kan niet naar /elgg-config/settings.php schrijven',
+	'install:error:readsettingsphp' => 'Kan /elgg-config/.env.php.example niet lezen',
+	'install:error:writesettingphp' => 'Kan niet naar /elgg-config/.env.php schrijven',
 	'install:error:requiredfield' => '%s is vereist',
 	'install:error:relative_path' => 'We denken dat "%s" niet een absoluut pad is naar je data map',
 	'install:error:datadirectoryexists' => 'Je data map %s bestaat niet.',

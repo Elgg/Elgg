@@ -74,7 +74,10 @@ class ElggObjectTest extends \Elgg\TestCase {
 		$object = get_entity($guid);
 
 		$this->assertEquals('object', $object->type);
+
+		_elgg_services()->logger->disable();
 		$this->assertEquals($subtype_id, $object->subtype);
+		_elgg_services()->logger->enable();
 
 		$this->assertEquals('Foo', $object->title);
 		$this->assertEquals('Foo', $object->getDisplayName());
@@ -103,7 +106,7 @@ class ElggObjectTest extends \Elgg\TestCase {
 		$object->setCurrentTime();
 
 		// Update river
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		$query = "
 			UPDATE {$dbprefix}river
 				SET access_id = :access_id
