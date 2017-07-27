@@ -36,7 +36,6 @@ foreach ($NOTIFICATION_HANDLERS as $k => $v) {
 	$rows .= "<tr>$cells</tr>";
 }
 
-$content = '';
-$content .= "<table>$rows</table>";
+$content = "<table>$rows</table>";
 
 echo elgg_view_module('info', $title, $content);
