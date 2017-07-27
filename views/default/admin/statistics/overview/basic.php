@@ -16,11 +16,11 @@ $version_info .= elgg_echo('admin:statistics:label:version:code') . ' - ' . $cod
 ?>
 <table class="elgg-table-alt">
 	<tr>
-		<td><b><?php echo elgg_echo('admin:statistics:label:version'); ?> :</b></td>
-		<td><?php echo $version_info; ?></td>
+		<td><b><?= elgg_echo('admin:statistics:label:version'); ?></b></td>
+		<td><?= $version_info; ?></td>
 	</tr>
 	<tr>
-		<td><b><?php echo elgg_echo('admin:statistics:label:numusers'); ?> :</b></td>
-		<td><?php echo $users_stats; ?> <?php echo elgg_echo('active'); ?> / <?php echo $total_users; ?> <?php echo elgg_echo('total') ?></td>
+		<td><b><?= elgg_echo('admin:statistics:label:numusers'); ?></b></td>
+		<td><?= $users_stats; ?> <?= elgg_echo('active'); ?> / <?= $total_users; ?> <?= elgg_echo('total') ?></td>
 	</tr>
 </table>

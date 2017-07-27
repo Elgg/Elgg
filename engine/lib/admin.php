@@ -256,7 +256,7 @@ function _elgg_admin_init() {
 	// dashboard
 	elgg_register_menu_item('page', [
 		'name' => 'dashboard',
-		'href' => 'admin/dashboard',
+		'href' => 'admin',
 		'text' => elgg_echo('admin:dashboard'),
 		'context' => 'admin',
 		'priority' => 10,
@@ -389,12 +389,25 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 
 	$admin = elgg_get_logged_in_user_entity();
 
+	$admin_icon = elgg_view_entity_icon($admin, 'tiny');
+	$admin_link = elgg_view('output/url', [
+		'href' => $admin->getURL(),
+		'text' => $admin->name,
+	]);
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'admin_profile',
+		'href' => false,
+		'text' => "$admin_link $admin_icon",
+		'priority' => 1000,
+	]);
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'admin_logout',
 		'href' => 'action/logout',
 		'text' => elgg_echo('logout'),
 		'is_trusted' => true,
-		'priority' => 1000,
+		'priority' => 900,
 	]);
 
 	$return[] = \ElggMenuItem::factory([
@@ -402,17 +415,10 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 		'href' => elgg_get_site_url(),
 		'text' => elgg_echo('admin:view_site'),
 		'is_trusted' => true,
-		'priority' => 900,
-	]);
-
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'admin_profile',
-		'href' => false,
-		'text' => elgg_echo('admin:loggedin', [$admin->name]),
 		'priority' => 800,
 	]);
 
-	if (elgg_get_config('elgg_maintenance_mode', null)) {
+	if (elgg_get_config('elgg_maintenance_mode')) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'maintenance',
 			'href' => 'admin/administer_utilities/maintenance',

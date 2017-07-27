@@ -36,7 +36,7 @@ $header .= '<th>' . elgg_echo('admin:statistics:numentities:number') . '</th></t
 $rows = '';
 
 foreach ($searchable as $name => $value) {
-	$rows .= "<tr><td>{$name}:</td><td>{$value}</td></tr>";
+	$rows .= "<tr><td>{$name}</td><td>{$value}</td></tr>";
 }
 echo '<h4>' . elgg_echo('admin:statistics:numentities:searchable') . '</h4>';
 echo "<table class='elgg-table-alt'>{$header}{$rows}</table>";
@@ -45,7 +45,7 @@ echo '<br />';
 
 $rows = '';
 foreach ($other as $name => $value) {
-	$rows .= "<tr><td>{$name}:</td><td>{$value}</td></tr>";
+	$rows .= "<tr><td>{$name}</td><td>{$value}</td></tr>";
 }
 echo '<h4>' . elgg_echo('admin:statistics:numentities:other') . '</h4>';
 echo "<table class='elgg-table-alt'>{$header}{$rows}</table>";

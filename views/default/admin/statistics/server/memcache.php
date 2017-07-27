@@ -24,7 +24,7 @@ foreach ($servers as $server) {
 		foreach ($stats as $key => $value) {
 			?>
 			<tr>
-				<td><b><?= $key ?> :</b></td>
+				<td><b><?= $key ?></b></td>
 				<td><?= $value ?></td>
 			</tr>
 			<?php
