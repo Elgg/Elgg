@@ -253,7 +253,7 @@ class Translator {
 			if (!file_exists($language_file)) {
 				// This plugin doesn't have translations for the requested language
 
-				$name = $plugin->getFriendlyName();
+				$name = $plugin->getDisplayName();
 				_elgg_services()->logger->notice("Plugin $name is missing translations for $language language");
 
 				continue;

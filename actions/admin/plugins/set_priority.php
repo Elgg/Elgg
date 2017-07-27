@@ -28,7 +28,7 @@ if ($plugin->setPriority($priority)) {
 } else {
 	$msg = $plugin->getError();
 	$string = ($msg) ? 'admin:plugins:set_priority:no_with_msg' : 'admin:plugins:set_priority:no';
-	register_error(elgg_echo($string, [$plugin->getFriendlyName(), $plugin->getError()]));
+	register_error(elgg_echo($string, [$plugin->getDisplayName(), $plugin->getError()]));
 }
 
 // don't regenerate the simplecache because the plugin won't be

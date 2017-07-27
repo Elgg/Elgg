@@ -63,7 +63,7 @@ if (count($plugins) > 0) {
 	foreach ($plugins as $plugin) {
 		$msg = $plugin->getError();
 		$string = ($msg) ? 'admin:plugins:activate:no_with_msg' : 'admin:plugins:activate:no';
-		register_error(elgg_echo($string, [$plugin->getFriendlyName(), $msg]));
+		register_error(elgg_echo($string, [$plugin->getDisplayName(), $msg]));
 	}
 }
 
