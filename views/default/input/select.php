@@ -19,6 +19,8 @@
  *                               $vars['options'] when defined. When "option"
  *                               is passed as an array, the same behaviour is used
  *                               as when the $vars['options'] is passed an array to.
+ *                               If the array contains an array of 'options' an optgroup will be drawn with 'label' as the
+ *                               optgroup label.
  * @uses $vars['multiple']       If true, multiselect of values will be allowed in the select box
  * @uses $vars['class']          Additional CSS class
  */
@@ -28,17 +30,25 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-input-dropdown');
 $defaults = [
 	'disabled' => false,
 	'value' => '',
-	'options_values' => [],
-	'options' => [],
 ];
 
 $vars = array_merge($defaults, $vars);
 
-$options_values = $vars['options_values'];
-unset($vars['options_values']);
-
-$options = $vars['options'];
+// turn options into options_values
+$options = elgg_extract('options', $vars, []);
+$options_values = [];
+foreach ($options as $option) {
+	$key = $option;
+	if (is_array($option)) {
+		$key = elgg_extract('text', $option, '');
+	}
+	$options_values[$key] = $option;
+}
 unset($vars['options']);
+
+// provided options_values trump options
+$options_values = elgg_extract('options_values', $vars, $options_values);
+unset($vars['options_values']);
 
 $value = is_array($vars['value']) ? $vars['value'] : [$vars['value']];
 $value = array_map('strval', $value);
@@ -53,54 +63,42 @@ if ($vars['multiple'] && !empty($vars['name']) && is_string($vars['name'])) {
 	}
 }
 
-$options_list = '';
+$render_option = function($opt_value, $option) {
+	$option_attrs = [
+		'value' => $opt_value,
+		'selected' => in_array((string) $opt_value, $value),
+	];
 
-if ($options_values) {
-	foreach ($options_values as $opt_value => $option) {
-		$option_attrs = [
-			'value' => $opt_value,
-			'selected' => in_array((string) $opt_value, $value),
-		];
-
-		if (is_array($option)) {
-			$text = elgg_extract('text', $option, '');
-			unset($option['text']);
-			if (!$text) {
-				elgg_log('No text defined for input/select option with value "' . $opt_value . '"', 'ERROR');
-			}
-
-			$option_attrs = array_merge($option_attrs, $option);
-		} else {
-			$text = $option;
+	if (is_array($option)) {
+		$text = elgg_extract('text', $option);
+		unset($option['text']);
+		
+		if (!is_string($text) && !is_numeric($text)) {
+			elgg_log('No text defined for input/select option with value "' . $opt_value . '"', 'ERROR');
 		}
 
-		$options_list .= elgg_format_element('option', $option_attrs, $text);
+		$option_attrs = array_merge($option_attrs, $option);
+	} else {
+		$text = $option;
 	}
-} else {
+	
+	return elgg_format_element('option', $option_attrs, $text);
+};
+
+$options_list = '';
+foreach ($options_values as $opt_value => $option) {
+	$options = elgg_extract('options', $option);
 	if (is_array($options)) {
-		foreach ($options as $option) {
-			if (is_array($option)) {
-				$text = elgg_extract('text', $option, '');
-				unset($option['text']);
-
-				if (!$text) {
-					elgg_log('No text defined for input/select option', 'ERROR');
-				}
-
-				$option_attrs = [
-					'selected' => in_array((string) $text, $value),
-				];
-				$option_attrs = array_merge($option_attrs, $option);
-			} else {
-				$option_attrs = [
-					'selected' => in_array((string) $option, $value),
-				];
-
-				$text = $option;
-			}
-
-			$options_list .= elgg_format_element('option', $option_attrs, $text);
+		$optgroup_attrs = $option;
+		unset($optgroup_attrs['options']);
+		
+		$optgroup = '';
+		foreach ($options as $group_opt_value => $group_option) {
+			$optgroup .= $render_option($group_opt_value, $group_option);
 		}
+		$options_list .= elgg_format_element('optgroup', $optgroup_attrs, $optgroup);
+	} else {
+		$options_list .= $render_option($opt_value, $option);
 	}
 }
 
