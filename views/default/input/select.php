@@ -63,7 +63,7 @@ if ($vars['multiple'] && !empty($vars['name']) && is_string($vars['name'])) {
 	}
 }
 
-$render_option = function($opt_value, $option) {
+$render_option = function($opt_value, $option) use ($value) {
 	$option_attrs = [
 		'value' => $opt_value,
 		'selected' => in_array((string) $opt_value, $value),
