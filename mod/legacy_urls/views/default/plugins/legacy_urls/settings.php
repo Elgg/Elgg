@@ -8,26 +8,18 @@
  *  * landing page with redirect in 5 seconds
  */
 
-// set default value
-if (!isset($vars['entity']->redirect_method)) {
-	$vars['entity']->redirect_method = 'immediate';
-}
+$plugin = elgg_extract('entity', $vars);
 
-$method_label = elgg_echo('legacy_urls:instructions');
+$redirect_method = $plugin->redirect_method ?: 'immediate';
 
-$method_input = elgg_view('input/radio', [
+echo elgg_view_field([
+	'#type' => 'radio',
+	'#label' => elgg_echo('legacy_urls:instructions'),
 	'name' => 'params[redirect_method]',
-	'value' => $vars['entity']->redirect_method,
+	'value' => $redirect_method,
 	'options' => [
 		elgg_echo('legacy_urls:immediate') => 'immediate',
 		elgg_echo('legacy_urls:immediate_error') => 'immediate_error',
 		elgg_echo('legacy_urls:landing') => 'landing',
 	]
 ]);
-
-echo <<<HTML
-<div>
-	<label>$method_label</label>
-	$method_input
-</div>
-HTML;
