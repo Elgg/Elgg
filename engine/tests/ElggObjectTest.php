@@ -202,7 +202,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$this->assertFalse(get_entity($guid1));
 		$this->assertFalse(get_entity($guid2));
 
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
 		$r = get_data_row($q);
 		$this->assertEqual('no', $r->enabled);
@@ -219,7 +219,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 
 	public function testElggRecursiveDelete() {
 		$types = array('\ElggGroup', '\ElggObject', '\ElggUser');
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 
 		foreach ($types as $type) {
 			$parent = new $type();
@@ -267,12 +267,12 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	}
 
 	protected function get_object_row($guid) {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}objects_entity WHERE guid='$guid'");
 	}
 
 	protected function get_entity_row($guid) {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='$guid'");
 	}
 }

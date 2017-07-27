@@ -40,11 +40,11 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:check:php:register_globals' => 'Debe desactivarse el registro de globales.',
 	'install:check:php:session.auto_start' => "session.auto_start debe desactivarse para que Elgg funcione. Modifique la configuración de su servidor o agregue la directiva al archivo .htaccess de Elgg.",
 
-	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
+	'install:check:installdir' => 'Your web server does not have permission to create the .env.php file in your installation directory. You have two choices:
 
 		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+		2. Copy the file %s/.env.php.example to elgg-config/.env.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Existe un archivo settings en el directorio engine pero el servidor no puede leerlo. Puede eliminar el archivo o modificar los permisos sobre el mismo.',
 
 	'install:check:php:success' => "El PHP de su servidor satisface todos los requerimientos de Elgg.",
@@ -126,8 +126,8 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:error:nodatabase' => 'No se pudo acceder a la base de datos %s. Puede que no exista.',
 	'install:error:cannotloadtables' => 'No se pueden cargar las tablas de la base de datos',
 	'install:error:tables_exist' => 'Se encontraron tablas de Elgg preexistentes en la base de datos. Debe eliminarlas o reiniciar el instalador para intentar utilizarlas. Para reiniciar el instalador, quite \'?step=database\' de la URL en la barra de direcciones de su explorador y presione ENTER.',
-	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/.env.php.example',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/.env.php',
 	'install:error:requiredfield' => '%s es requerido',
 	'install:error:relative_path' => 'We don\'t think "%s" is an absolute path for your data directory',
 	'install:error:datadirectoryexists' => 'El directorio de datos (data) %s no existe.',

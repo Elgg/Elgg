@@ -19,7 +19,7 @@ There are many reasons you may want to duplicate an Elgg installation: moving th
 
 Also at least 5 pieces of information must be changed from the copied installation:
 
-- ``elgg-config/settings.php`` file which could also be in the pre 2.0 location ``engine/settings.php``
+- ``elgg-config/.env.php`` file.
 - ``.htaccess`` file (Apache) or Nginx configuration depending on server used
 - database entry for your site entity
 - database entry for the installation path
@@ -92,56 +92,10 @@ If you don't have shell access to your server and have to ftp the data, you may 
    
    You also need to delete the views cache on the test server after the copy process. This is a directory called ``views_simplecache`` in your data directory and the directory called ``system_cache`` .
 
-Edit settings.php
-=================
+Edit .env.php
+=============
 
-The ``elgg-config/settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` and find the lines that look like this:
-
-.. code:: php
-   
-   // Database username
-   $CONFIG->dbuser = 'db_user';
-   
-   // Database password
-   $CONFIG->dbpass = 'db_password';
-   
-   // Database name
-   $CONFIG->dbname = 'elgg_production';
- 
-   // Database server
-   // (For most configurations, you can leave this as 'localhost')
-   $CONFIG->dbhost = 'localhost';
-   
-   // Database table prefix
-   // If you're sharing a database with other applications, you will want to use this
-   // to differentiate Elgg's tables.
-   $CONFIG->dbprefix = 'elgg';
-   
-We need to change these lines to match our new installation:
-
-.. code:: php
-   
-   // Database username
-   $CONFIG->dbuser = 'db_user';
-   
-   // Database password
-   $CONFIG->dbpass = 'db_password';
-   
-   // Database name
-   $CONFIG->dbname = 'elgg_test';
-   
-   // Database server
-   // (For most configurations, you can leave this as 'localhost')
-   $CONFIG->dbhost = 'localhost';
-   
-   // Database table prefix
-   // If you're sharing a database with other applications, you will want to use this
-   // to differentiate Elgg's tables.
-   $CONFIG->dbprefix = 'elgg';
-
-.. note::
-
-   Notice the ``$CONFIG->dbname`` has changed to reflect our new database.
+The ``elgg-config/.env.php`` file contains the database, ``dataroot``, and ``wwwroot`` configuration details. These need to be adjusted for your new test Elgg installation.
 
 Copy Elgg Database
 ==================
@@ -154,43 +108,6 @@ Database Entries
 ================
 
 We must now change 4 entries in the database. This is easily accomplished with 4 simple SQL commands:
-
-Change the installation path
-----------------------------
-
-.. code:: sql
-
-   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/") WHERE `name` = "path";
-
-Change the data directory
--------------------------
-
-.. code:: sql
-
-   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/") WHERE `name` = "dataroot";
-
-Change the site URL
--------------------
-
-.. code:: sql
-
-   UPDATE `elgg_sites_entity` SET `url` = "http://test.myelgg.org/";
-
-Change the filestore data directory
------------------------------------
-
-.. code:: sql
-
-   UPDATE elgg_metadata SET value = '/var/data/elgg_test/' 
-   WHERE name = 'filestore::dir_root';
-
-.. warning::
-
-   Only change the first path above!!
-
-.. warning::
-
-   If you have a plugin that uses custom filestores (contains an ``ElggFile::setFilestore`` method call or sets metadata with names like ``filestore::*``), then query above may not be safe (it overwrites *all* filesystem ``dir_root`` locations). Please seek guidance via the Elgg community.
 
 Check .htaccess
 ===============
@@ -212,35 +129,7 @@ To regenerate cached data, make sure to run ``http://test.myelgg.org/upgrade.php
 Tips
 ====
 
-It is a good idea to keep a test server around to experiment with installing new mods and doing development work. If you automate restorations to the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/elgg-config/settings.php`` file will allow seamless re-writing of the MySQL database entries.
-
-.. code:: php
-
-   $con = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass);
-   mysql_select_db($CONFIG->dbname, $con);
-   
-   $sql = "UPDATE {$CONFIG->dbprefix}config
-      SET value = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/")
-      WHERE name = 'path'";
-   mysql_query($sql);
-   print mysql_error();
-   
-   $sql = "UPDATE {$CONFIG->dbprefix}config 
-      SET value = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/")
-      WHERE name = 'dataroot'";
-   mysql_query($sql);
-   print mysql_error();
-   
-   $sql = "UPDATE {$CONFIG->dbprefix}sites_entity
-      SET url = 'http://test.myelgg.org/'";
-   mysql_query($sql);
-   
-   $sql = "UPDATE {$CONFIG->dbprefix}metadata
-     SET value = '/var/data/elgg_test/' 
-     WHERE name = 'filestore::dir_root';
-   mysql_query($sql);
-   
-   print mysql_error();
+It is a good idea to keep a test server around to experiment with installing new mods and doing development work.
 
 Related
 =======

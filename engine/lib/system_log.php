@@ -31,8 +31,6 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 						$offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0,
 						$ip_address = "") {
 
-	global $CONFIG;
-
 	$by_user_orig = $by_user;
 	if (is_array($by_user) && sizeof($by_user) > 0) {
 		foreach ($by_user as $key => $val) {
@@ -48,7 +46,7 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 	$subtype = sanitise_string($subtype);
 	$ip_address = sanitise_string($ip_address);
 	if ($limit === null) {
-		$limit = elgg_get_config('default_limit');
+		$limit = _elgg_config()->default_limit;
 	}
 	$limit = (int) $limit;
 	$offset = (int) $offset;
@@ -92,7 +90,9 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 	if ($count) {
 		$select = "count(*) as count";
 	}
-	$query = "SELECT $select from {$CONFIG->dbprefix}system_log where 1 ";
+
+	$prefix = _elgg_config()->dbprefix;
+	$query = "SELECT $select from {$prefix}system_log where 1 ";
 	foreach ($where as $w) {
 		$query .= " and $w";
 	}
@@ -122,11 +122,10 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
  * @return mixed
  */
 function get_log_entry($entry_id) {
-	global $CONFIG;
-
 	$entry_id = (int) $entry_id;
 
-	return get_data_row("SELECT * from {$CONFIG->dbprefix}system_log where id=$entry_id");
+	$prefix = _elgg_config()->dbprefix;
+	return get_data_row("SELECT * from {$prefix}system_log where id=$entry_id");
 }
 
 /**
@@ -188,13 +187,12 @@ function get_object_from_log_entry($entry) {
  * @return void
  */
 function system_log($object, $event) {
-	global $CONFIG;
 	static $log_cache;
 	static $cache_size = 0;
 
 	if ($object instanceof Loggable) {
 		/* @var \ElggEntity|\ElggExtender $object */
-		if (elgg_get_config('version') < 2012012000) {
+		if (_elgg_config()->version < 2012012000) {
 			// this is a site that doesn't have the ip_address column yet
 			return;
 		}
@@ -237,7 +235,8 @@ function system_log($object, $event) {
 
 		// Create log if we haven't already created it
 		if (!isset($log_cache[$time][$object_id][$event])) {
-			$query = "INSERT into {$CONFIG->dbprefix}system_log
+			$prefix = _elgg_config()->dbprefix;
+			$query = "INSERT into {$prefix}system_log
 				(object_id, object_class, object_type, object_subtype, event,
 				performed_by_guid, owner_guid, access_id, enabled, time_created, ip_address)
 			VALUES
@@ -260,16 +259,15 @@ function system_log($object, $event) {
  * @return bool
  */
 function archive_log($offset = 0) {
-	global $CONFIG;
-
 	$offset = (int) $offset;
 	$now = time(); // Take a snapshot of now
+	$prefix = _elgg_config()->dbprefix;
 
 	$ts = $now - $offset;
 
 	// create table
-	$query = "CREATE TABLE {$CONFIG->dbprefix}system_log_$now as
-		SELECT * from {$CONFIG->dbprefix}system_log WHERE time_created<$ts";
+	$query = "CREATE TABLE {$prefix}system_log_$now as
+		SELECT * from {$prefix}system_log WHERE time_created<$ts";
 
 	if (!update_data($query)) {
 		return false;
@@ -277,12 +275,12 @@ function archive_log($offset = 0) {
 
 	// delete
 	// Don't delete on time since we are running in a concurrent environment
-	if (delete_data("DELETE from {$CONFIG->dbprefix}system_log WHERE time_created<$ts") === false) {
+	if (delete_data("DELETE from {$prefix}system_log WHERE time_created<$ts") === false) {
 		return false;
 	}
 
 	// alter table to engine
-	if (!update_data("ALTER TABLE {$CONFIG->dbprefix}system_log_$now engine=archive")) {
+	if (!update_data("ALTER TABLE {$prefix}system_log_$now engine=archive")) {
 		return false;
 	}
 
@@ -323,6 +321,9 @@ function system_log_listener($event, $object_type, $object) {
 	return true;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	/** Register event to listen to all events **/
 	$events->registerHandler('all', 'all', 'system_log_listener', 400);

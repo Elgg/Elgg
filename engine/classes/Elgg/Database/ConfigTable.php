@@ -47,8 +47,6 @@ class ConfigTable {
 	 * @return bool Success or failure
 	 */
 	function remove($name) {
-		$name = trim($name);
-	
 		$query = "
 			DELETE FROM {$this->db->prefix}config
 			WHERE name = :name
@@ -81,8 +79,6 @@ class ConfigTable {
 	 * @return bool
 	 */
 	function set($name, $value) {
-		$name = trim($name);
-	
 		// cannot store anything longer than 255 characters in db, so catch before we set
 		if (elgg_strlen($name) > 255) {
 			$this->logger->error("The name length for configuration variables cannot be greater than 255");
@@ -101,7 +97,7 @@ class ConfigTable {
 			':value' => serialize($value),
 		];
 		
-		$version = (int) elgg_get_config('version');
+		$version = (int) _elgg_config()->version;
 		
 		if (!empty($version) && $version < 2016102500) {
 			// need to do this the old way as long as site_guid columns have not been dropped
@@ -136,8 +132,6 @@ class ConfigTable {
 	 * @return mixed|null
 	 */
 	function get($name) {
-		$name = trim($name);
-	
 		$sql = "
 			SELECT value
 			FROM {$this->db->prefix}config

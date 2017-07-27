@@ -81,6 +81,17 @@ class DeprecationWrapper implements \ArrayAccess {
 	}
 
 	/**
+	 * Is a property set?
+	 *
+	 * @param string $name  Property name
+	 * @return bool
+	 */
+	public function __isset($name) {
+		$this->displayWarning();
+		return isset($this->object->$name);
+	}
+
+	/**
 	 * Call a method on the object
 	 *
 	 * @param string $name      Method name

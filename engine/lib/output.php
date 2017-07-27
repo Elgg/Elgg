@@ -567,7 +567,3 @@ function _elgg_sane_validate_url($url) {
 	// Re-check now.
 	return filter_var($s, FILTER_VALIDATE_URL) ? $url : false;
 }
-
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-};

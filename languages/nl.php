@@ -517,7 +517,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:settings:advanced' => 'Geavanceerde instellingen',
 	'admin:site:description' => "Via dit beheerpaneel kun je de algemene instellingen van de site beheren. Kies een optie om te beginnen.",
 	'admin:site:opt:linktext' => "Configureer site",
-	'admin:settings:in_settings_file' => 'Deze instelling configureer je in settings.php',
+	'admin:settings:in_settings_file2' => 'Deze instelling configureer je in elgg-config/.env.php',
 
 	'admin:legend:security' => 'Veiligheid',
 	'admin:site:secret:intro' => 'Elgg gebruikt een sleutel om veiligheidstokens voor verschillende doeleinden te genereren. ',

@@ -90,13 +90,13 @@ abstract class GenericResult {
 	 * Override this to include any more specific information, however api results
 	 * should be attached to the class using setResult().
 	 *
-	 * if $CONFIG->debug is set then additional information about the runtime environment and
+	 * if ELGG_DEBUG is set then additional information about the runtime environment and
 	 * authentication will be returned.
 	 *
 	 * @return stdClass Object containing the serialised result.
 	 */
 	public function export() {
-		global $ERRORS, $CONFIG, $_PAM_HANDLERS_MSG;
+		global $ERRORS, $_PAM_HANDLERS_MSG;
 
 		$result = new stdClass;
 
@@ -110,7 +110,7 @@ abstract class GenericResult {
 			$result->result = $resultdata;
 		}
 
-		if (isset($CONFIG->debug)) {
+		if (elgg_get_config('debug')) {
 			if (count($ERRORS)) {
 				$result->runtime_errors = $ERRORS;
 			}

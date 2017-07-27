@@ -31,7 +31,7 @@ Basic instructions
 #. Merge any new changes to the rewrite rules
     * For Apache from ``install/config/htaccess.dist`` into ``.htaccess``
     * For Nginx from ``install/config/nginx.dist`` into your server configuration (usually inside ``/etc/nginx/sites-enabled``)
-#. Merge any new changes from ``settings.example.php`` into ``settings.php``
+#. Merge any new changes from ``.env.php.example`` into ``.env.php``
 #. Visit http://your-elgg-site.com/upgrade.php
 
 .. note::
@@ -42,17 +42,19 @@ Basic instructions
 From 2.3 to 3.0
 ===============
 
-Update ``settings.php``
------------------------
+Migrate ``settings.php`` to ``.env.php``
+----------------------------------------
 
 On your working 2.3 installation:
 
-1. Open your ``settings.php`` file.
-2. In the browser, open the site's Advanced Settings page in the admin area
-3. Copy the **data directory** path into your settings file as ``$CONFIG->dataroot``.
-4. Copy the **site URL** into your settings file as ``$CONFIG->wwwroot``.
+1. Open your ``elgg-config/settings.php`` file.
+2. Create the file ``elgg-config/.env.php``.
+3. Copy the ``settings.php`` values into the corresponding format in ``.env.php``.
+4. In the browser, open the site's Advanced Settings page in the admin area
+5. Copy the **data directory** path into ``.env.php`` as ``ELGG_DATAROOT``.
+6. Copy the **site URL** into ``.env.php`` as ``ELGG_WWWROOT``.
 
-.. warning:: Elgg 3.0 **will not operate** at all without ``$CONFIG->dataroot`` set in ``settings.php``.
+.. warning:: Elgg 3.0 **will not operate** at all without ``ELGG_DATAROOT`` set in ``.env.php`` (or an environment variable).
 
 Update ``.htaccess``
 --------------------
@@ -79,7 +81,12 @@ New MySQL schema features are not applied
 
 New 3.0 installations require MySQL 5.5.3 and use the utf8mb4 character set and LONGTEXT content columns (notably allowing storing longer content and extended characters like emoji).
 
-The upgrade **does not make these changes**. We will make available instructions to manually upgrade the database and a small change that needs to be made in the ``settings.php`` file.
+The upgrade **does not make these changes**. We will make available instructions to manually upgrade the database and a small change that needs to be made in the ``.env.php`` file.
+
+Miscellaneous changes
+---------------------
+
+The settings "Allow visitors to register" and "Restrict pages to logged-in users" now appear on the Basic Settings admin page.
 
 Miscellaneous changes
 ---------------------
@@ -103,7 +110,7 @@ Tests
 
  * PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\Elgg\TestCase``.
  * Some core files now sniff if	``PHPUNIT_ELGG_TESTING_APPLICATION`` constant is set to determine whether Elgg is being bootstrapped for PHPUnit tests. ``phpunit.xml`` configuration needs to updated to include this constant definition.
- * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_services()->config`` instead.
+ * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_config()`` instead.
  * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
 
 Schema

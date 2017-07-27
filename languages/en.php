@@ -534,7 +534,7 @@ return array(
 	'admin:settings:advanced' => 'Advanced Settings',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
-	'admin:settings:in_settings_file' => 'This setting is configured in settings.php',
+	'admin:settings:in_settings_file2' => 'This setting is configured in elgg-config/.env.php',
 
 	'admin:legend:security' => 'Security',
 	'admin:site:secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',

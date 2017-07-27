@@ -3,10 +3,9 @@
 class ElggCoreViewtypeTest extends \Elgg\TestCase {
 
 	protected function setUp() {
-		global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
-		$CURRENT_SYSTEM_VIEWTYPE = '';
 		set_input('view', '');
-		unset($CONFIG->view);
+		elgg_set_config('view', null);
+		elgg_set_viewtype('');
 	}
 
 	protected function tearDown() {
@@ -28,8 +27,7 @@ class ElggCoreViewtypeTest extends \Elgg\TestCase {
 	}
 
 	public function testConfigSetsInitialViewtype() {
-		global $CONFIG;
-		$CONFIG->view = 'bar';
+		elgg_set_config('view', 'bar');
 
 		$this->assertEquals('bar', elgg_get_viewtype());
 	}
@@ -42,13 +40,11 @@ class ElggCoreViewtypeTest extends \Elgg\TestCase {
 	}
 
 	public function testSettingConfigDoesNotChangeViewtype() {
-		global $CONFIG;
-
 		$this->assertEquals('default', elgg_get_viewtype());
 
-		$CONFIG->view = 'foo';
+		elgg_set_config('view', 'foo');
 		$this->assertEquals('default', elgg_get_viewtype());
-		unset($CONFIG->view);
+		elgg_set_config('view', null);
 	}
 
 	public function testElggIsValidViewtype() {

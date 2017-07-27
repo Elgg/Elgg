@@ -7,6 +7,8 @@
  * @subpackage DataModel.MetaStrings
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
@@ -92,7 +94,7 @@ function _elgg_get_metastring_based_objects($options) {
 
 		// sql
 		'order_by' => 'n_table.time_created ASC, n_table.id ASC',
-		'limit' => elgg_get_config('default_limit'),
+		'limit' => _elgg_config()->default_limit,
 		'offset' => 0,
 		'count' => false,
 		'selects' => [],
@@ -145,7 +147,7 @@ function _elgg_get_metastring_based_objects($options) {
 		return false;
 	}
 
-	$db_prefix = elgg_get_config('dbprefix');
+	$db_prefix = _elgg_config()->dbprefix;
 
 	// evaluate where clauses
 	if (!is_array($options['wheres'])) {
@@ -331,7 +333,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		return [];
 	}
 
-	$db_prefix = elgg_get_config('dbprefix');
+	$db_prefix = _elgg_config()->dbprefix;
 
 	// binary forces byte-to-byte comparision of strings, making
 	// it case- and diacritical-mark- sensitive.
@@ -481,7 +483,7 @@ function _elgg_normalize_metastrings_options(array $options = []) {
  */
 function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 	$id = (int) $id;
-	$db_prefix = elgg_get_config('dbprefix');
+	$db_prefix = _elgg_config()->dbprefix;
 
 	$object = _elgg_get_metastring_based_object_from_id($id, $type);
 
@@ -586,7 +588,7 @@ function _elgg_get_metastring_based_object_from_id($id, $type) {
  */
 function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	$id = (int) $id;
-	$db_prefix = elgg_get_config('dbprefix');
+	$db_prefix = _elgg_config()->dbprefix;
 
 	switch ($type) {
 		case 'annotations':
@@ -690,11 +692,13 @@ function _elgg_entities_get_metastrings_options($type, $options) {
  * @access private
  */
 function _elgg_metastrings_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetastringsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetastringsTest.php';
 	return $value;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$hooks->registerHandler('unit_test', 'system', '_elgg_metastrings_test');
 };

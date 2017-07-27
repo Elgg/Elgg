@@ -1,17 +1,14 @@
 <?php
 namespace Elgg;
 
-use Elgg\HooksRegistrationService\Hook;
 use Elgg\HooksRegistrationService\Event;
 
 /**
- * Service for Events
+ * Events service
+ *
+ * @tip Use ->hooks->getEvents() from the service provider.
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Hooks
- * @since      1.9.0
  */
 class EventsService extends HooksRegistrationService {
 	use Profilable;
@@ -19,6 +16,29 @@ class EventsService extends HooksRegistrationService {
 	const OPTION_STOPPABLE = 'stoppable';
 	const OPTION_DEPRECATION_MESSAGE = 'deprecation_message';
 	const OPTION_DEPRECATION_VERSION = 'deprecation_version';
+
+	/**
+	 * @var HandlersService
+	 */
+	private $handlers;
+
+	/**
+	 * Constructor
+	 *
+	 * @param HandlersService $handlers Handlers
+	 */
+	public function __construct(HandlersService $handlers) {
+		$this->handlers = $handlers;
+	}
+
+	/**
+	 * Get the handlers service in use
+	 *
+	 * @return HandlersService
+	 */
+	public function getHandlersService() {
+		return $this->handlers;
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -57,7 +77,6 @@ class EventsService extends HooksRegistrationService {
 		}
 
 		$handlers = $this->getOrderedHandlers($name, $type);
-		$handler_svc = _elgg_services()->handlers;
 
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
 		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
@@ -68,11 +87,11 @@ class EventsService extends HooksRegistrationService {
 		foreach ($handlers as $handler) {
 			$handler_description = false;
 			if ($this->timer && $type === 'system' && $name !== 'shutdown') {
-				$handler_description = $handler_svc->describeCallable($handler) . "()";
+				$handler_description = $this->handlers->describeCallable($handler) . "()";
 				$this->timer->begin(["[$name,$type]", $handler_description]);
 			}
 
-			list($success, $return, $event) = $handler_svc->call($handler, $event, [$name, $type, $object]);
+			list($success, $return, $event) = $this->handlers->call($handler, $event, [$name, $type, $object]);
 
 			if ($handler_description) {
 				$this->timer->end(["[$name,$type]", $handler_description]);

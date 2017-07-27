@@ -44,7 +44,7 @@ return [
 
 		1. Elgg インストールディレクトリの elgg-config ディレクトリのパーミッションを変更する
 
-		2. %s/settings.example.php ファイルを elgg-config/settings.php にコピーして、そのファイルの中に書かれている setting your database parameters （データベースパラメータの設定）に従ってください。',
+		2. %s/.env.php.example ファイルを elgg-config/.env.php にコピーして、そのファイルの中に書かれている setting your database parameters （データベースパラメータの設定）に従ってください。',
 	'install:check:readsettings' => '設定ファイルはengineディレクトリにあるのですが、Webサーバがそのファイル読むことができませんでした。ファイルを削除するか、ファイルのパーミションを読み込み許可に変更してください。',
 
 	'install:check:php:success' => "あなたのサーバのPHPはElggの全ての必要女権を満たしています。",
@@ -125,8 +125,8 @@ return [
 	'install:error:nodatabase' => 'データベース %s を使用出来ません。おそらく存在しないものと思われます。',
 	'install:error:cannotloadtables' => 'データベーステーブルを読み込むことができません。',
 	'install:error:tables_exist' => 'ご指定のデータベースにはすでにElggのテーブルが存在しています。これらのテーブルをドロップ（破棄）するか、インストーラーをリスタートする必要があります。リスタートを選択された場合は、その既存のテーブルを使用できないか試みてみます。インストーラーをリスタートするには、あなたのブラウザのアドレスバーに表示されているURLから \'?step=database\' の部分を削除したあと、Enterキーを押してください。',
-	'install:error:readsettingsphp' => '/elgg-config/settings.example.php ファイルを読み込めません',
-	'install:error:writesettingphp' => '/elgg-config/settings.php ファイルに書き込めません',
+	'install:error:readsettingsphp' => '/elgg-config/.env.php.example ファイルを読み込めません',
+	'install:error:writesettingphp' => '/elgg-config/.env.php ファイルに書き込めません',
 	'install:error:requiredfield' => '%s が必須です',
 	'install:error:relative_path' => 'データディレクトリ用に指定された「 %s 」は絶対パスでは無いと思われます。',
 	'install:error:datadirectoryexists' => 'データディレクトリ用に指定された「 %s 」は存在しません。',

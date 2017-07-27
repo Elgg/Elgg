@@ -1,11 +1,17 @@
 <?php
+
 /**
- * \ElggPAM Pluggable Authentication Module
- *
- * @package    Elgg.Core
- * @subpackage Authentication
+ * Pluggable Authentication Module
  */
 class ElggPAM {
+
+	/**
+	 * @var array
+	 * @access private
+	 * @todo move state into a PAM service
+	 */
+	public static $_handlers = [];
+
 	/**
 	 * @var string PAM policy type: user, api or plugin-defined policies
 	 */
@@ -42,16 +48,14 @@ class ElggPAM {
 	 * @return bool
 	 */
 	public function authenticate($credentials = []) {
-		global $_PAM_HANDLERS;
-
-		if (!isset($_PAM_HANDLERS[$this->policy]) ||
-			!is_array($_PAM_HANDLERS[$this->policy])) {
+		if (!isset(self::$_handlers[$this->policy]) ||
+			!is_array(self::$_handlers[$this->policy])) {
 			return false;
 		}
 
 		$authenticated = false;
 
-		foreach ($_PAM_HANDLERS[$this->policy] as $v) {
+		foreach (self::$_handlers[$this->policy] as $v) {
 			$handler = $v->handler;
 			if (!is_callable($handler)) {
 				continue;

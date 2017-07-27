@@ -188,7 +188,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		$actions = $this->actions->getAllActions();
 		$this->assertArrayHasKey('login', $actions);
 		$this->assertEquals([
-			'file' => realpath(Filesystem\Directory\Local::root()->getPath() . 'actions/login.php'),
+			'file' => realpath(Filesystem\Directory\Local::projectRoot()->getPath() . 'actions/login.php'),
 			'access' => 'logged_in',
 				], $actions['login']);
 	}

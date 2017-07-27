@@ -5,7 +5,7 @@ namespace Elgg;
 use Elgg\Database;
 use Elgg\Database\EntityTable;
 use Elgg\Database\Plugins;
-use Elgg\Cache\Pool\InMemory;
+use Elgg\Database\SiteSecret;
 
 /**
  * Serializable collection of data used to boot Elgg
@@ -16,9 +16,9 @@ use Elgg\Cache\Pool\InMemory;
 class BootData {
 
 	/**
-	 * @var \ElggSite
+	 * @var \ElggSite|false
 	 */
-	private $site;
+	private $site = false;
 
 	/**
 	 * @var array
@@ -43,15 +43,33 @@ class BootData {
 	/**
 	 * Populate the boot data
 	 *
-	 * @param \stdClass      $config   Elgg CONFIG object
-	 * @param \Elgg\Database $db       Elgg database
-	 * @param EntityTable    $entities Entities service
-	 * @param Plugins        $plugins  Plugins service
+	 * @param Database    $db       Elgg database
+	 * @param EntityTable $entities Entities service
+	 * @param Plugins     $plugins  Plugins service
 	 *
 	 * @return void
 	 * @throws \InstallationException
 	 */
-	public function populate(\stdClass $config, Database $db, EntityTable $entities, Plugins $plugins) {
+	public function populate(Database $db, EntityTable $entities, Plugins $plugins) {
+
+		// get config, but not site secret. We don't want it cached.
+		try {
+			$sql = "
+				SELECT *
+				FROM {$db->prefix}config
+				WHERE name != :key
+			";
+			$rows = $db->getData($sql, null, [':key' => SiteSecret::CONFIG_KEY]);
+		} catch (\Exception $e) {
+			throw new \InstallationException("Unable to handle this request. This site is not "
+				. "configured or the database is down.");
+		}
+
+		// we want this outside try {} so unserialization exceptions aren't caught.
+		foreach ($rows as $row) {
+			$this->config_values[$row->name] = unserialize($row->value);
+		}
+
 		// get subtypes
 		$rows = $db->getData("
 			SELECT *
@@ -61,16 +79,7 @@ class BootData {
 			$this->subtype_data[$row->id] = $row;
 		}
 
-		// get config
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}config
-		");
-		foreach ($rows as $row) {
-			$this->config_values[$row->name] = unserialize($row->value);
-		}
-		
-		if (!array_key_exists('installed', $this->config_values)) {
+		if (!$this->isInstalled()) {
 			// try to fetch from old pre 3.0 datalists table
 			// need to do this to be able to perform an upgrade from 2.x to 3.0
 			try {
@@ -100,7 +109,7 @@ class BootData {
 		
 		// get site entity
 		$this->site = $entities->get(1, 'site');
-		if (!$this->site) {
+		if (!$this->site && $this->isInstalled()) {
 			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
@@ -157,14 +166,14 @@ class BootData {
 	/**
 	 * Get the site entity
 	 *
-	 * @return \ElggSite
+	 * @return \ElggSite|false False if not installed
 	 */
 	public function getSite() {
 		return $this->site;
 	}
 
 	/**
-	 * Get config values to merge into $CONFIG
+	 * Get config values to merge into the config service
 	 *
 	 * @return array
 	 */
@@ -197,5 +206,14 @@ class BootData {
 	 */
 	public function getPluginSettings() {
 		return $this->plugin_settings;
+	}
+
+	/**
+	 * Is the "installed" key in config values?
+	 *
+	 * @return bool
+	 */
+	public function isInstalled() {
+		return array_key_exists('installed', $this->config_values);
 	}
 }
