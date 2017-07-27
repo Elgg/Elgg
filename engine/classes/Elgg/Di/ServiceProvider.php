@@ -18,20 +18,21 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\ActionsService                     $actions
  * @property-read \Elgg\Database\AdminNotices              $adminNotices
  * @property-read \Elgg\Ajax\Service                       $ajax
- * @property-read \Elgg\Amd\Config                         $amdConfig
- * @property-read \Elgg\Database\Annotations               $annotations
- * @property-read \ElggAutoP                               $autoP
- * @property-read \Elgg\AutoloadManager                    $autoloadManager
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
- * @property-read \Elgg\BootService                        $boot
- * @property-read \Elgg\ClassLoader                        $classLoader
- * @property-read \ElggCrypto                              $crypto
- * @property-read \Elgg\Config                             $config
- * @property-read \Elgg\Database\ConfigTable               $configTable
- * @property-read \Elgg\Context                            $context
- * @property-read \Elgg\Database                           $db
- * @property-read \Elgg\DeprecationService                 $deprecation
- * @property-read \Elgg\Cache\EntityCache                  $entityCache
+ * @property-read \Elgg\Amd\Config           $amdConfig
+ * @property-read \Elgg\Database\Annotations $annotations
+ * @property-read \ElggAutoP                 $autoP
+ * @property-read \Elgg\AutoloadManager      $autoloadManager
+ * @property-read \Elgg\BatchUpgrader        $batchUpgrader
+ * @property-read \Elgg\BootService          $boot
+ * @property-read \Elgg\ClassLoader          $classLoader
+ * @property-read \Elgg\Cli                  $cli
+ * @property-read \ElggCrypto                $crypto
+ * @property-read \Elgg\Config               $config
+ * @property-read \Elgg\Database\ConfigTable $configTable
+ * @property-read \Elgg\Context              $context
+ * @property-read \Elgg\Database             $db
+ * @property-read \Elgg\DeprecationService   $deprecation
+ * @property-read \Elgg\Cache\EntityCache    $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
@@ -154,6 +155,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
 			$loader->register();
 			return $loader;
+		});
+
+		$this->setFactory('cli', function(ServiceProvider $c) {
+			$version = elgg_get_version(true);
+			$console = new \Symfony\Component\Console\Application('Elgg', $version);
+			return new \Elgg\Cli($console, $c->hooks);
 		});
 
 		$this->setValue('config', $config);

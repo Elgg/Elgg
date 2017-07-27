@@ -34,7 +34,9 @@
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
         "htmlawed/htmlawed": "^1.1.22",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "symfony/console": "~3.3",
+        "symfony/var-dumper": "~3.3"
     },
     "config": {
         "process-timeout": 0
@@ -87,5 +89,8 @@
             "type": "vcs",
             "url": "https://github.com/elgg/elgg-coding-standards"
         }
+    ],
+    "bin": [
+        "elgg-cli"
     ]
 }
