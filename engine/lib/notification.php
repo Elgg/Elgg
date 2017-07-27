@@ -80,7 +80,7 @@ function elgg_unregister_notification_event($object_type, $object_subtype) {
 
 /**
  * Register a delivery method for notifications
- * 
+ *
  * Register for the 'send', 'notification:[method name]' plugin hook to handle
  * sending a notification. A notification object is in the params array for the
  * hook with the key 'notification'. See \Elgg\Notifications\Notification.
@@ -102,7 +102,7 @@ function elgg_register_notification_method($name) {
  *		'sms' => 'sms',
  *	]
  * </code>
- * 
+ *
  * @return array
  * @since 2.3
  */
@@ -206,7 +206,7 @@ function _elgg_notifications_cron() {
 
 /**
  * Send an email notification
- * 
+ *
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param bool   $result Has anyone sent a message yet?
@@ -258,11 +258,11 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
  * @param string $type        Equals to 'system'
  * @param array  $returnvalue Array containing fields: 'to', 'from', 'subject', 'body', 'headers', 'params'
  * @param array  $params      The same value as $returnvalue
- * 
+ *
  * @see https://tools.ietf.org/html/rfc5322#section-3.6.4
- * 
+ *
  * @return array
- * 
+ *
  * @access private
  */
 function _elgg_notifications_smtp_default_message_id_header($hook, $type, $returnvalue, $params) {
@@ -277,7 +277,7 @@ function _elgg_notifications_smtp_default_message_id_header($hook, $type, $retur
 	
 	$mt = microtime(true);
 	
-	$returnvalue['headers']['Message-ID'] = "<{$url_path}.default.{$mt}@{$hostname}>";
+	$returnvalue['headers']['Message-ID'] = "{$url_path}.default.{$mt}@{$hostname}";
 	
 	return $returnvalue;
 }
@@ -318,10 +318,10 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
 		if ($event->getAction() === 'create') {
 			// create event happens once per entity and we need to guarantee message id uniqueness
 			// and at the same time have thread message id that we don't need to store
-			$messageId = "<{$urlPath}.entity.{$object->guid}@{$hostname}>";
+			$messageId = "{$urlPath}.entity.{$object->guid}@{$hostname}";
 		} else {
 			$mt = microtime(true);
-			$messageId = "<{$urlPath}.entity.{$object->guid}.$mt@{$hostname}>";
+			$messageId = "{$urlPath}.entity.{$object->guid}.$mt@{$hostname}";
 		}
 		$returnvalue['headers']["Message-ID"] = $messageId;
 		$container = $object->getContainerEntity();
@@ -649,7 +649,10 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	$message->setBody($body);
 
 	foreach ($result['headers'] as $headerName => $headerValue) {
-		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
+		// Create a headerline in the format 'name: value'
+		// This is done to force correct class detection for each header type
+		// which influences the output of the header in the message
+		$message->getHeaders()->addHeaderLine("{$headerName}: {$headerValue}");
 	}
 
 	try {
