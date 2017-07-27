@@ -26,6 +26,9 @@ if ($type != 'all') {
 
 switch ($page_type) {
 	case 'mine':
+		
+		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+		
 		$title = elgg_echo('river:mine');
 		$page_filter = 'mine';
 		$options['subject_guid'] = elgg_get_logged_in_user_guid();
