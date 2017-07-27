@@ -1,15 +1,22 @@
 The follow individuals, companies, or entities have contributed significant 
 code to the Elgg project and share the copyright. (In alphabetical order.)
 
+Jerôme Bakker (jeabakker@elgg.org)
+Matt Beckett (matt@elgg.org)
 Steve Clay (steve@mrclay.org)
 Cash Costello (cash.costello@gmail.com)
+Jeroen Dalsem (jdalsem@elgg.org)
+Juho Jaakkola (juho@elgg.org)
+Per Jensen
+Ismayil Khayredinov (ismayil@elgg.org)
 Brett Profitt (brett.profitt@gmail.com)
+Paweł Sroka (pawel@elgg.org)
 Dave Tosh (davidgtosh@gmail.com)
 Ben Werdmuller (ben@benwerd.com)
 Evan Winslow (evan.b.winslow@gmail.com)
 
 Organizations:
-The MITRE Corportation (jricher@mitre.org)
+The MITRE Corportation (bprofitt@mitre.org)
 Curverider Ltd (info@elgg.com)
 
 When adding to this list, update the list of copyright owners in LICENSE.txt.
