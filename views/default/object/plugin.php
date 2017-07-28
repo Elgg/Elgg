@@ -7,14 +7,18 @@
  *
  */
 
-$plugin = $vars['entity'];
+$plugin = elgg_extract('entity', $vars);
+if (!($plugin instanceof \ElggPlugin)) {
+	return;
+}
 
 if (!elgg_in_context('admin')) {
 	echo elgg_view('object/default', $vars);
-} else {
-	if (!$plugin->isValid()) {
-		echo elgg_view('object/plugin/invalid', $vars);
-	} else {
-		echo elgg_view('object/plugin/full', $vars);
-	}
+	return;
 }
+if (!$plugin->isValid()) {
+	echo elgg_view('object/plugin/invalid', $vars);
+	return;
+}
+
+echo elgg_view('object/plugin/full', $vars);

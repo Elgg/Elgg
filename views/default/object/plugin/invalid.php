@@ -10,39 +10,27 @@
  * @subpackage Plugins
  */
 /* @var ElggPlugin $plugin */
-$plugin = $vars['entity'];
+$plugin = elgg_extract('entity', $vars);
 
-$id = $plugin->getID();
-$path = htmlspecialchars($plugin->getPath());
-$message = elgg_echo('admin:plugins:warning:invalid', [$plugin->getError()]);
-$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
-?>
+$plugin_id = $plugin->getID();
 
-<div class="elgg-state-draggable elgg-plugin elgg-state-inactive elgg-state-cannot-activate" id="<?php echo $css_id; ?>">
-	<div class="elgg-image-block">
-		<div class="elgg-image">
-			<div>
-				<?php
-				echo elgg_view('output/url', [
-					'href' => '',
-					'text' => elgg_echo('admin:plugins:cannot_activate'),
-				]);
-				?>
-			</div>
-		</div>
-		<div class="elgg-body">
-			<div class="elgg-head">
-				<div class="elgg-plugin-title">
-					<?php echo $id ?>
-				</div>
-			</div>
-			<div class="elgg-body">
-				<p class="elgg-text-help elgg-state-error">
-					<?php echo $message; ?>
-					<?php echo elgg_echo('admin:plugins:label:location') . ": " . $path; ?>
-				</p>
-				<p class="elgg-text-help"><?php echo elgg_echo('admin:plugins:warning:invalid:check_docs'); ?></p>
-			</div>
-		</div>
-	</div>
-</div>
+$body = "<div class='elgg-plugin-title'>{$plugin_id}</div>";
+
+$error = elgg_echo('admin:plugins:warning:invalid', [$plugin->getError()]);
+$error .= elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath());
+
+$message = elgg_format_element('p', [
+	'class' => 'elgg-text-help elgg-state-error',
+], $error);
+$message .= elgg_format_element('p', [
+	'class' => 'elgg-text-help',
+], elgg_echo('admin:plugins:warning:invalid:check_docs'));
+
+$body .= "<div>$message</div>";
+
+$result = elgg_view_image_block(elgg_echo('admin:plugins:cannot_activate'), $body);
+echo elgg_format_element('div', [
+	'class' => 'elgg-state-draggable elgg-plugin elgg-state-inactive elgg-state-cannot-activate',
+	'id' => preg_replace('/[^a-z0-9-]/i', '-', $plugin_id),
+	'data-guid' => $plugin->guid,
+], $result);
