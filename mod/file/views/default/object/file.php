@@ -79,6 +79,7 @@ if ($full && !elgg_in_context('gallery')) {
 		'body' => $body,
 		'attachments' => $extra,
 		'responses' => $responses,
+		'show_navigation' => true,
 	]);
 } elseif (elgg_in_context('gallery')) {
 	echo '<div class="file-gallery-item">';
