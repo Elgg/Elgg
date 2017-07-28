@@ -1188,6 +1188,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 .elgg-plugin-list-description {
 	display: inline-block;
 	color: #999;
+	margin-left: 5px;
 }
 
 .elgg-plugin.elgg-state-active,
@@ -1236,7 +1237,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 .elgg-plugin-settings {
 	font-weight: normal;
 	font-size: 0.9em;
-	margin: 0 5px;
+	margin-left: 5px;
 }
 .elgg-plugin-contributors {
 	list-style-position: inside;
@@ -1269,6 +1270,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	padding: 3px 6px;
 	margin: 3px 0;
 	width: auto;
+	display: inline-block;
 }
 .elgg-plugin .elgg-state-warning {
 	background: #f4f4f4;
@@ -1278,10 +1280,7 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	margin: 3px 0;
 	width: auto;
 }
-.elgg-plugin-list-error .elgg-state-error,
-.elgg-plugin-list-error .elgg-state-warning {
-	display: inline-block;
-}
+
 .elgg-plugin .elgg-state-error a,
 .elgg-plugin .elgg-state-warning a,
 .elgg-plugin .elgg-text-help a {
@@ -1296,20 +1295,9 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 	color: #666;
 }
 
-.elgg-plugin-more {
-	background-color: #eee;
-	border-radius: 8px;
-	padding: 5px 10px;
-	margin: 4px 0;
-}
 ul.elgg-plugin-categories, ul.elgg-plugin-categories > li,
 ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 	display: inline;
-}
-
-.elgg-plugin .elgg-menu-hz > li:after {
-	content: ",";
-	padding-right: 10px;
 }
 
 .elgg-module-plugin-details .elgg-plugin {
