@@ -596,44 +596,6 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Setup the menu shown with an entity
- *
- * @param string $hook
- * @param string $type
- * @param array $return
- * @param array $params
- * @return array
- *
- * @access private
- */
-function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-
-	$entity = $params['entity'];
-	if (!elgg_instanceof($entity, 'user')) {
-		return $return;
-	}
-	/* @var \ElggUser $entity */
-
-	$return = [];
-	$location = $entity->location;
-	if (is_string($location) && $location !== '') {
-		$location = htmlspecialchars($location, ENT_QUOTES, 'UTF-8', false);
-		$options = [
-			'name' => 'location',
-			'text' => "<span>$location</span>",
-			'href' => false,
-			'priority' => 150,
-		];
-		$return[] = \ElggMenuItem::factory($options);
-	}
-
-	return $return;
-}
-
-/**
  * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
  * add and delete fields.
  *
@@ -1016,8 +978,6 @@ function users_init() {
 
 	// Register the user type
 	elgg_register_entity_type('user', '');
-
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 	
