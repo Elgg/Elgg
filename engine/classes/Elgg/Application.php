@@ -4,6 +4,8 @@ namespace Elgg;
 
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
+use Exception;
+use InstallationException;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -484,6 +486,7 @@ class Application {
 
 		define('UPGRADING', 'upgrading');
 
+		self::migrate();
 		self::start();
 		
 		// check security settings
@@ -559,6 +562,62 @@ class Application {
 		}
 
 		forward($forward_url);
+	}
+
+	/**
+	 * Runs database migrations
+	 *
+	 * @throws InstallationException
+	 * @return bool
+	 */
+	public static function migrate() {
+		try {
+			$conf = self::elggDir()->getPath('engine/schema/settings.php');
+			if (!$conf) {
+				throw new Exception('Settings file is required to run database migrations.');
+			}
+
+			$app = new \Phinx\Console\PhinxApplication();
+			$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
+				'configuration' => $conf,
+			]);
+			$log = $wrapper->getMigrate();
+			error_log($log);
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+			error_log($e->getTraceAsString());
+			throw new InstallationException($e->getMessage(), $e->getCode());
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns configuration array for database migrations
+	 * @return array
+	 */
+	public static function getMigrationSettings() {
+		$config = self::create()->services->config;
+		$config->loadSettingsFile();
+
+		return [
+			"paths" => [
+				"migrations" => self::elggDir()->getPath('engine/schema/migrations/'),
+			],
+			"environments" => [
+				"default_migration_table" => "{$config->getVolatile('dbprefix')}migrations",
+				"default_database" => "prod",
+				"prod" => [
+					"adapter" => "mysql",
+					"host" => $config->getVolatile('dbhost'),
+					"name" => $config->getVolatile('dbname'),
+					"user" => $config->getVolatile('dbuser'),
+					"pass" => $config->getVolatile('dbpass'),
+					"charset" => $config->getVolatile('dbencoding'),
+					"table_prefix" => $config->getVolatile('dbprefix'),
+				],
+			],
+		];
 	}
 
 	/**
