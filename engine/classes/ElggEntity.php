@@ -1937,9 +1937,10 @@ abstract class ElggEntity extends \ElggData implements
 		access_show_hidden_entities($entity_disable_override);
 		elgg_set_ignore_access($ia);
 
-		_elgg_delete_river(['subject_guid' => $guid]);
-		_elgg_delete_river(['object_guid' => $guid]);
-		_elgg_delete_river(['target_guid' => $guid]);
+		$batch = new ElggBatch('elgg_get_river', ['subject_guid' => $guid], 'elgg_batch_delete_callback', 25, false);
+		$batch = new ElggBatch('elgg_get_river', ['object_guid' => $guid], 'elgg_batch_delete_callback', 25, false);
+		$batch = new ElggBatch('elgg_get_river', ['target_guid' => $guid], 'elgg_batch_delete_callback', 25, false);
+		
 		remove_all_private_settings($guid);
 
 		_elgg_invalidate_cache_for_entity($guid);

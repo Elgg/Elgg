@@ -165,10 +165,10 @@ if (!$error) {
 				$blog->save();
 			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
-			_elgg_delete_river([
+			$batch = new ElggBatch('elgg_get_river', [
 				'object_guid' => $blog->guid,
 				'action_type' => 'create',
-			]);
+			], 'elgg_batch_delete_callback', 25, false);
 		}
 
 		if ($blog->status == 'published' || $save == false) {

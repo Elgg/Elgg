@@ -31,8 +31,14 @@ if (!$owner->saveIconFromElggFile($owner->getIcon('master'), 'icon', $coords)) {
 }
 
 system_message(elgg_echo('avatar:crop:success'));
+// river item
 $view = 'river/user/default/profileiconupdate';
-_elgg_delete_river(['subject_guid' => $owner->guid, 'view' => $view]);
+// remove old river items
+$batch = new ElggBatch('elgg_get_river', [
+	'subject_guid' => $owner->guid,
+	'view' => $view,
+], 'elgg_batch_delete_callback', 25, false);
+// create new river item
 elgg_create_river_item([
 	'view' => $view,
 	'action_type' => 'update',

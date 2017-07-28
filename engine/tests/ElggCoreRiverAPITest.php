@@ -18,13 +18,21 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 		$id = elgg_create_river_item($params);
 		$this->assertTrue(is_int($id));
-		$this->assertTrue(_elgg_delete_river(array('id' => $id)));
+		
+		$batch = new \ElggBatch('elgg_get_river', [
+			'id' => $id,
+		], 'elgg_batch_delete_callback', 25, false);
+		$this->assertTrue($batch->callbackResult);
 
 		$params['return_item'] = true;
 		$item = elgg_create_river_item($params);
 
 		$this->assertIsA($item, ElggRiveritem::class);
-		$this->assertTrue(_elgg_delete_river(array('id' => $item->id)));
+		
+		$batch = new \ElggBatch('elgg_get_river', [
+			'id' => $item->id,
+		], 'elgg_batch_delete_callback', 25, false);
+		$this->assertTrue($batch->callbackResult);
 	}
 
 	public function testRiverCreationEmitsHookAndEvent() {
@@ -187,8 +195,10 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		elgg_register_event_handler('delete:before', 'river', $handler);
 		elgg_register_event_handler('delete:after', 'river', $handler);
 
-		_elgg_delete_river(['id' => $id]);
-
+		$batch = new \ElggBatch('elgg_get_river', [
+			'id' => $id,
+		], 'elgg_batch_delete_callback', 25, false);
+		
 		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', $handler);
 		elgg_unregister_event_handler('delete:before', 'river', $handler);
 		elgg_unregister_event_handler('delete:after', 'river', $handler);
