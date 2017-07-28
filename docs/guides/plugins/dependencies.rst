@@ -66,7 +66,7 @@ Suggest another plugin:
 
    <suggests>
       <type>plugin</type>
-      <name>twitter_api</name>
+      <name>profile</name>
       <version>1.0</version>
    </suggests>
 
