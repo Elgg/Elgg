@@ -40,11 +40,11 @@ if (!elgg_in_context('owner_block') && !elgg_in_context('widgets') && !elgg_in_c
 }
 
 if ($entity->isBanned()) {
-	$banned = elgg_echo('banned');
 	$params = [
 		'entity' => $entity,
 		'title' => $title,
 		'metadata' => $metadata,
+		'subtitle' => elgg_echo('banned'),
 	];
 } else {
 	$params = [
