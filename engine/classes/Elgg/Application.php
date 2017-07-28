@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
@@ -9,6 +10,8 @@ use Elgg\Http\Request;
 use Elgg\Filesystem\Directory\Local;
 use ConfigurationException;
 use Elgg\Project\Paths;
+use Exception;
+use InstallationException;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -569,6 +572,7 @@ class Application {
 
 		define('UPGRADING', 'upgrading');
 
+		self::migrate();
 		self::start();
 		
 		// check security settings
@@ -644,6 +648,67 @@ class Application {
 		}
 
 		$forward($forward_url);
+	}
+
+	/**
+	 * Runs database migrations
+	 *
+	 * @throws InstallationException
+	 * @return bool
+	 */
+	public static function migrate() {
+		try {
+			$conf = self::elggDir()->getPath('engine/schema/settings.php');
+			if (!$conf) {
+				throw new Exception('Settings file is required to run database migrations.');
+			}
+
+			$app = new \Phinx\Console\PhinxApplication();
+			$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
+				'configuration' => $conf,
+			]);
+			$log = $wrapper->getMigrate();
+			error_log($log);
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+			error_log($e->getTraceAsString());
+			throw new InstallationException($e->getMessage(), $e->getCode());
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns configuration array for database migrations
+	 * @return array
+	 */
+	public static function getMigrationSettings() {
+		$config = Config::factory();
+		$db_config = DbConfig::fromElggConfig($config);
+		if ($db_config->isDatabaseSplit()) {
+			$conn = $db_config->getConnectionConfig(DbConfig::WRITE);
+		} else {
+			$conn = $db_config->getConnectionConfig();
+		}
+
+		return [
+			"paths" => [
+				"migrations" => Paths::elgg() . 'engine/schema/migrations/',
+			],
+			"environments" => [
+				"default_migration_table" => "{$conn['prefix']}migrations",
+				"default_database" => "prod",
+				"prod" => [
+					"adapter" => "mysql",
+					"host" => $conn['host'],
+					"name" => $conn['database'],
+					"user" => $conn['user'],
+					"pass" => $conn['password'],
+					"charset" => $conn['encoding'],
+					"table_prefix" => $conn['prefix'],
+				],
+			],
+		];
 	}
 
 	/**

@@ -36,7 +36,8 @@
         "league/flysystem-memory": "^1.0",
         "vanilla/htmlawed": "~2.2.0",
         "imagine/imagine": "^0.6.3",
-        "bower-asset/jquery-treeview": "^1.4"
+        "bower-asset/jquery-treeview": "^1.4",
+        "robmorgan/phinx": "^0.8.1"
     },
     "config": {
         "process-timeout": 0
