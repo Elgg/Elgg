@@ -742,6 +742,8 @@ class ElggPlugin extends \ElggObject {
 			$this->deactivate();
 		}
 
+		_elgg_services()->events->trigger('cache:flush', 'system');
+		
 		return $return;
 	}
 
@@ -827,6 +829,7 @@ class ElggPlugin extends \ElggObject {
 		if ($return === false) {
 			return false;
 		} else {
+			_elgg_services()->events->trigger('cache:flush', 'system');
 			return $this->setStatus(false);
 		}
 	}
