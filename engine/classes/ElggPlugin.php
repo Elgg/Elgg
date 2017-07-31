@@ -227,7 +227,7 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function getPriority() {
 		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
-		return $this->$name;
+		return $this->getSetting($name);
 	}
 
 	/**
@@ -347,13 +347,11 @@ class ElggPlugin extends \ElggObject {
 		$db_prefix = _elgg_services()->config->get('dbprefix');
 		// need to remove all namespaced private settings.
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
-		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
 
 		// Get private settings for user
 		$q = "SELECT * FROM {$db_prefix}private_settings
 			WHERE entity_guid = $this->guid
-			AND name NOT LIKE '$us_prefix%'
-			AND name NOT LIKE '$is_prefix%'";
+			AND name NOT LIKE '$us_prefix%'";
 
 		$private_settings = $this->getDatabase()->getData($q);
 
