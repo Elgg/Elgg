@@ -3,9 +3,10 @@
  * Elgg owner block
  * Displays page ownership information
  *
+ * @uses $vars['show_owner_block_menu'] (bool) Show the owner_block menu for the current page owner (default: true)
+ *
  * @package Elgg
  * @subpackage Core
- *
  */
 
 elgg_push_context('owner_block');
@@ -15,7 +16,10 @@ $owner = elgg_get_page_owner_entity();
 if ($owner instanceof ElggGroup || $owner instanceof ElggUser) {
 	$header = elgg_view_entity($owner, ['full_view' => false]);
 
-	$body = elgg_view_menu('owner_block', ['entity' => $owner]);
+	$body = '';
+	if (elgg_extract('show_owner_block_menu', $vars, true)) {
+		$body .= elgg_view_menu('owner_block', ['entity' => $owner]);
+	}
 
 	$body .= elgg_view('page/elements/owner_block/extend', $vars);
 

@@ -8,8 +8,7 @@
  * @access private
  */
 function elgg_activity_page_handler($segments) {
-	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-
+	
 	// make a URL segment available in page handler script
 	$page_type = elgg_extract(0, $segments, 'all');
 	$page_type = preg_replace('[\W]', '', $page_type);

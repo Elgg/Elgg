@@ -27,6 +27,7 @@ if ($entity->hasIcon('master')) {
 $params = [
 	'content' => $content,
 	'title' => $title,
+	'show_owner_block_menu' => false,
 ];
 $body = elgg_view_layout('one_sidebar', $params);
 

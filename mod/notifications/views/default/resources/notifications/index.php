@@ -33,6 +33,7 @@ $content = elgg_view('notifications/personal', [
 $layout = elgg_view_layout('one_sidebar', [
 	'content' => $content,
 	'title' => $title,
+	'show_owner_block_menu' => false,
 ]);
 
 echo elgg_view_page($title, $layout);

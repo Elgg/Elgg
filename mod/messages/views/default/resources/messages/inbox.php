@@ -50,6 +50,7 @@ $body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => elgg_echo('messages:inbox'),
 	'filter' => '',
+	'show_owner_block_menu' => false,
 ]);
 
 echo elgg_view_page($title, $body);

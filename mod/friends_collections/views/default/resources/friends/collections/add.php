@@ -36,7 +36,8 @@ $content = elgg_view_form($form_name, [], $form_vars);
 
 $body = elgg_view_layout('one_sidebar', [
 	'title' => $title,
-	'content' => $content
+	'content' => $content,
+	'show_owner_block_menu' => false,
 ]);
 
 echo elgg_view_page($title, $body);
