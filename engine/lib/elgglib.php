@@ -1748,7 +1748,7 @@ function elgg_batch_delete_callback($object) {
  * potentially dangerous operations.
  *
  * @param array  $options Options array
- * @param string $type    Options type: metadata or annotation
+ * @param string $type    Options type: metadata, annotation or river
  * @return bool
  * @access private
  */
@@ -1785,6 +1785,18 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
 			$required = array_merge($required, $annotations_required);
 			break;
 
+		case 'river':
+			// overriding generic restraints as guids isn't supported in river
+			$required = [
+				'id', 'ids',
+				'subject_guid', 'subject_guids',
+				'object_guid', 'object_guids',
+				'target_guid', 'target_guids',
+				'annotation_id', 'annotation_ids',
+				'view', 'views',
+			];
+			break;
+		
 		default:
 			return false;
 	}

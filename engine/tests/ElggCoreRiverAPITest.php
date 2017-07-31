@@ -18,13 +18,13 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 		$id = elgg_create_river_item($params);
 		$this->assertTrue(is_int($id));
-		$this->assertTrue(_elgg_delete_river(array('id' => $id)));
+		$this->assertTrue(elgg_delete_river(array('id' => $id)));
 
 		$params['return_item'] = true;
 		$item = elgg_create_river_item($params);
 
 		$this->assertIsA($item, ElggRiveritem::class);
-		$this->assertTrue(_elgg_delete_river(array('id' => $item->id)));
+		$this->assertTrue(elgg_delete_river(array('id' => $item->id)));
 	}
 
 	public function testRiverCreationEmitsHookAndEvent() {
@@ -168,7 +168,7 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		$this->assertTrue($item->delete());
 	}
 
-	public function testDeprecatedDeleteRiverFunctionBypassesEventsPerms() {
+	public function testDeleteRiverFunctionTriggersEventsPerms() {
 		$entity = $this->getSomeEntity();
 		$params = array(
 			'view' => 'river/relationship/friend/create',
@@ -178,22 +178,22 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		);
 		$id = elgg_create_river_item($params);
 
-		$fired = false;
-		$handler = function () use (&$fired) {
-			$fired = true;
+		$events_fired = 0;
+		$handler = function () use (&$events_fired) {
+			$events_fired++;
 		};
 
 		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', $handler);
 		elgg_register_event_handler('delete:before', 'river', $handler);
 		elgg_register_event_handler('delete:after', 'river', $handler);
 
-		_elgg_delete_river(['id' => $id]);
+		elgg_delete_river(['id' => $id]);
 
 		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', $handler);
 		elgg_unregister_event_handler('delete:before', 'river', $handler);
 		elgg_unregister_event_handler('delete:after', 'river', $handler);
 
-		$this->assertFalse($fired);
+		$this->assertEqual($events_fired, 3);
 	}
 
 	public function testElggCreateRiverItemMissingRequiredParam() {

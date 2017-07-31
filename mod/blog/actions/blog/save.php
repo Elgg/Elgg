@@ -165,9 +165,10 @@ if (!$error) {
 				$blog->save();
 			}
 		} elseif ($old_status == 'published' && $status == 'draft') {
-			_elgg_delete_river([
+			elgg_delete_river([
 				'object_guid' => $blog->guid,
 				'action_type' => 'create',
+				'limit' => false,
 			]);
 		}
 

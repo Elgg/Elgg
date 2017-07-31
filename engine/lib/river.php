@@ -372,6 +372,32 @@ function elgg_get_river(array $options = []) {
 }
 
 /**
+ * Delete river items based on $options.
+ *
+ * @warning Unlike elgg_get_river() this will not accept an empty options array!
+ *          This requires at least one constraint: id(s), annotation_id(s)
+ *          subject_guid(s), object_guid(s), target_guid(s)
+ *          or view(s) must be set.
+ *
+ * @param array $options An options array. {@link elgg_get_river()}
+ *
+ * @return bool|null true on success, false on failure, null if no metadata to delete.
+ *
+ * @since 1.8.0
+ */
+function elgg_delete_river(array $options = []) {
+	
+	if (!_elgg_is_valid_options_for_batch_operation($options, 'river')) {
+		// requirements not met
+		return false;
+	}
+	
+	$batch = new ElggBatch('elgg_get_river', $options, 'elgg_batch_delete_callback', 25, false);
+	
+	return $batch->callbackResult;
+}
+
+/**
  * Prefetch entities that will be displayed in the river.
  *
  * @param \ElggRiverItem[] $river_items
