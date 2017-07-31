@@ -30,6 +30,7 @@ Removed views
  * ``page/layouts/widgets/add_panel``
  * ``page/elements/topbar_wrapper``: update your use of ``page/elements/topbar`` to include a check for a logged in user
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
+ * ``groups/my_status``
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
  * ``likes/count``: modifications can now be done to the ``likes_count`` menu item
  * ``likes/css``: likes now uses ``elgg/likes.css``
@@ -507,6 +508,10 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 ``extras`` menu:
 
 This menu has been removed from the page layout. Menu items that registered for this menu have been moved to other menus.
+
+``groups:my_status`` menu:
+
+This menu has been removed from the group profile page.
 
 Entity icons
 ------------
