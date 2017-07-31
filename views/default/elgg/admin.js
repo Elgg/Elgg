@@ -78,7 +78,7 @@ define(function(require) {
 	function initPluginReordering() {
 		$('#elgg-plugin-list > ul').sortable({
 			items:                'li:has(> .elgg-state-draggable)',
-			handle:               '.elgg-head',
+			handle:               '.elgg-body',
 			forcePlaceholderSize: true,
 			placeholder:          'elgg-widget-placeholder',
 			opacity:              0.8,
