@@ -373,31 +373,6 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 		}
 	}
 
-	// membership type
-	if ($entity->isPublicMembership()) {
-		$mem = elgg_echo("groups:open");
-	} else {
-		$mem = elgg_echo("groups:closed");
-	}
-
-	$options = [
-		'name' => 'membership',
-		'text' => $mem,
-		'href' => false,
-		'priority' => 100,
-	];
-	$return[] = ElggMenuItem::factory($options);
-
-	// number of members
-	$num_members = $entity->getMembers(['count' => true]);
-	$members_string = elgg_echo('groups:member');
-	$options = [
-		'name' => 'members',
-		'text' => $num_members . ' ' . $members_string,
-		'href' => false,
-		'priority' => 200,
-	];
-	$return[] = ElggMenuItem::factory($options);
 
 	// feature link
 	if (elgg_is_admin_logged_in()) {
