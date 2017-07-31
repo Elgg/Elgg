@@ -227,6 +227,7 @@ function _elgg_admin_init() {
 	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
 	elgg_register_page_handler('robots.txt', '_elgg_robots_page_handler');
+	elgg_register_page_handler('phpinfo', '_elgg_phpinfo_page_handler');
 	elgg_register_page_handler('admin_plugins_refresh', '_elgg_ajax_plugins_update');
 }
 
@@ -675,6 +676,16 @@ function _elgg_admin_markdown_page_handler($pages) {
  */
 function _elgg_robots_page_handler() {
 	echo elgg_view_resource('robots.txt');
+	return true;
+}
+
+/**
+ * Handle request for phpinfo
+ *
+ * @access private
+ */
+function _elgg_phpinfo_page_handler() {
+	echo elgg_view_resource('phpinfo');
 	return true;
 }
 

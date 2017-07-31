@@ -792,6 +792,7 @@ To go to the site, click here:
 
 	'admin:server:label:elgg' => 'Elgg',
 	'admin:server:label:php' => 'PHP',
+	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'Web Server',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Log Location',

@@ -48,3 +48,14 @@ if ($upload_max_filesize > $post_max_size) {
 		<td><?= number_format($upload_max_filesize) . '&nbsp; ' . $post_max_size_warning; ?></td>
 	</tr>
 </table>
+<?php
+// Show phpinfo page
+if (elgg_get_config('allow_phpinfo') !== true) {
+	return;
+}
+
+echo elgg_format_element('div', ['class' => 'mts'], elgg_view('output/url', [
+	'text' => elgg_echo('admin:server:label:phpinfo'),
+	'href' => 'phpinfo',
+	'target' => '_blank',
+]));

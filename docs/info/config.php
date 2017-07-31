@@ -278,6 +278,16 @@ $CONFIG->exception_include = '';
 $CONFIG->action_time_limit;
 
 /**
+ * Allow access to PHPInfo
+ *
+ * This setting can be used to allow site administrators access to the PHPInfo page.
+ * By default this is not allowed.
+ *
+ * @global bool $CONFIG->allow_phpinfo
+ */
+$CONFIG->allow_phpinfo = false;
+
+/**
  * Paths to scan for autoloading languages.
  *
  * Languages are automatically loaded for the site or
