@@ -99,6 +99,41 @@
 }
 
 /* ***************************************
+	ENTITY NAVIGATION
+*************************************** */
+
+.elgg-menu-entity-navigation {
+	margin-top: 10px;
+	
+	a {
+		padding: 6px 15px;
+		color: #444;
+		border: 1px solid #DCDCDC;
+	}
+	a:hover {
+		color: #999;
+		text-decoration: none;
+	}
+	
+	.elgg-menu-item-previous {
+		float: left;
+		
+		> a:before {
+			content: "\ab";
+			margin-right: 6px;
+		}
+	}
+	.elgg-menu-item-next {
+		float: right;
+		
+		> a:after {
+			content: "\bb";
+			margin-left: 6px;
+		}
+	}
+}
+
+/* ***************************************
 	TABS
 *************************************** */
 .elgg-tabs {

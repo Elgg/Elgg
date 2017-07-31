@@ -606,6 +606,62 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Entity navigation menu is previous/next link for an entity
+ *
+ * @param \Elgg\Hook hook
+ *
+ * @access private
+ */
+function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+	if (!$entity) {
+		return;
+	}
+
+	$return = $hook->getValue();
+
+	$options = [
+		'type' => $entity->getType(),
+		'subtype' => $entity->getSubtype(),
+		'container_guid' => $entity->container_guid,
+		'wheres' => ["e.guid != {$entity->guid}"],
+		'limit' => 1,
+	];
+	
+	$previous_options = $options;
+	$previous_options['created_time_upper'] = $entity->time_created;
+	$previous_options['order_by'] = 'e.time_created DESC, e.guid DESC';
+	
+	$previous = elgg_get_entities($previous_options);
+	if ($previous) {
+		$previous = $previous[0];
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'previous',
+			'text' => elgg_echo('previous'),
+			'href' => $previous->getUrl(),
+			'title' => $previous->getDisplayName(),
+		]);
+	}
+	
+	$next_options = $options;
+	$next_options['created_time_lower'] = $entity->time_created;
+	$next_options['order_by'] = 'e.time_created ASC, e.guid ASC';
+	
+	$next = elgg_get_entities($next_options);
+	if ($next) {
+		$next = $next[0];
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'next',
+			'text' => elgg_echo('next'),
+			'href' => $next->getUrl(),
+			'title' => $next->getDisplayName(),
+		]);
+	}
+	
+	return $return;
+}
+
+/**
  * Widget menu is a set of widget controls
  * @access private
  */
@@ -714,6 +770,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:footer', '_elgg_rss_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity_navigation', '_elgg_entity_navigation_menu_setup');
 
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 

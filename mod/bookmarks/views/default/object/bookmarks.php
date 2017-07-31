@@ -75,6 +75,7 @@ HTML;
 		'summary' => $summary,
 		'body' => $body,
 		'responses' => $responses,
+		'show_navigation' => true,
 	]);
 } elseif (elgg_in_context('gallery')) {
 	echo <<<HTML

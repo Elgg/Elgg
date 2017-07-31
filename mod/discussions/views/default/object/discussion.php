@@ -113,6 +113,7 @@ if ($full) {
 		'summary' => $summary,
 		'body' => $body,
 		'responses' => $responses,
+		'show_navigation' => true,
 	]);
 } else {
 	// brief view
