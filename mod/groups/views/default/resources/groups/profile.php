@@ -23,23 +23,8 @@ if (elgg_group_gatekeeper(false)) {
 	}
 	$sidebar .= elgg_view('groups/sidebar/members', ['entity' => $group]);
 
-	$subscribed = false;
-	if (elgg_is_active_plugin('notifications')) {
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-			$relationship = check_entity_relationship(elgg_get_logged_in_user_guid(),
-					'notify' . $method, $guid);
-
-			if ($relationship) {
-				$subscribed = true;
-				break;
-			}
-		}
-	}
-
 	$sidebar .= elgg_view('groups/sidebar/my_status', [
 		'entity' => $group,
-		'subscribed' => $subscribed
 	]);
 }
 
