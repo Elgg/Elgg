@@ -189,12 +189,6 @@ function _elgg_admin_init() {
 	
 	elgg_register_action('admin/security/settings', '', 'admin');
 
-	elgg_register_action('profile/fields/reset', '', 'admin');
-	elgg_register_action('profile/fields/add', '', 'admin');
-	elgg_register_action('profile/fields/edit', '', 'admin');
-	elgg_register_action('profile/fields/delete', '', 'admin');
-	elgg_register_action('profile/fields/reorder', '', 'admin');
-
 	elgg_register_simplecache_view('admin.css');
 
 	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
@@ -483,13 +477,6 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 		'name' => 'configure_utilities:menu_items',
 		'text' => elgg_echo('admin:configure_utilities:menu_items'),
 		'href' => 'admin/configure_utilities/menu_items',
-		'section' => 'configure',
-		'parent_name' => 'configure_utilities',
-	]);
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'configure_utilities:profile_fields',
-		'text' => elgg_echo('admin:configure_utilities:profile_fields'),
-		'href' => 'admin/configure_utilities/profile_fields',
 		'section' => 'configure',
 		'parent_name' => 'configure_utilities',
 	]);

@@ -438,6 +438,11 @@ required to make the old interface work.
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
 
+Profile plugin
+--------------
+
+All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data. 
+
 Theme and styling changes
 -------------------------
 
