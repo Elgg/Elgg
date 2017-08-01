@@ -632,4 +632,45 @@ class UserCapabilitiesTest extends TestCase {
 		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 	}
 
+	/**
+	 * @group UserCapabilities
+	 * @group FileService
+	 */
+	public function testCanDownloadFileByDefault() {
+
+		add_subtype('object', 'file', \ElggFile::class);
+
+		$owner = $this->mocks()->getUser();
+		$viewer = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
+			'subtype' => 'file',
+			'owner_guid' => $owner->guid,
+		]);
+
+		$this->assertTrue($entity->canDownload());
+		$this->assertTrue($entity->canDownload($owner->guid));
+		$this->assertTrue($entity->canDownload($viewer->guid));
+	}
+
+	/**
+	 * @group UserCapabilities
+	 * @group FileService
+	 */
+	public function testCanAlterDownloadPermissions() {
+
+		add_subtype('object', 'file', \ElggFile::class);
+
+		$owner = $this->mocks()->getUser();
+		$viewer = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
+			'subtype' => 'file',
+			'owner_guid' => $owner->guid,
+		]);
+
+		$this->hooks->registerHandler('permissions_check:download', 'file', [Values::class, 'getFalse']);
+
+		$this->assertFalse($entity->canDownload());
+		$this->assertFalse($entity->canDownload($owner->guid));
+		$this->assertFalse($entity->canDownload($viewer->guid));
+	}
 }

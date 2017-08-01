@@ -33,12 +33,14 @@ $content = elgg_view_entity($file, [
 	'show_responses' => true,
 ]);
 
-elgg_register_menu_item('title', [
-	'name' => 'download',
-	'text' => elgg_echo('download'),
-	'href' => elgg_get_download_url($file),
-	'link_class' => 'elgg-button elgg-button-action',
-]);
+if ($file->canDownload()) {
+	elgg_register_menu_item('title', [
+		'name' => 'download',
+		'text' => elgg_echo('download'),
+		'href' => $file->getDownloadURL(),
+		'link_class' => 'elgg-button elgg-button-action',
+	]);
+}
 
 $body = elgg_view_layout('content', [
 	'content' => $content,
