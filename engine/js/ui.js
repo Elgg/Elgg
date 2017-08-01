@@ -99,46 +99,46 @@ elgg.ui.initHoverMenu = function(parent) {
 	/**
 	 * For a menu clicked, load the menu into all matching placeholders
 	 *
-	 * @param {String} mac Machine authorization code for the menu clicked
+	 * @param {String}   mac      Machine authorization code for the menu clicked
+	 * @param {Function} callback a callback function to call when the loading of het menu was succesfull
 	 */
-	function loadMenu(mac) {
+	function loadMenu(mac, callback) {
 		var $all_placeholders = $(".elgg-menu-hover[rel='" + mac + "']");
-
+		
 		// find the <ul> that contains data for this menu
 		var $ul = $all_placeholders.filter('[data-elgg-menu-data]');
 
 		if (!$ul.length) {
 			return;
 		}
-
-		elgg.get('ajax/view/navigation/menu/user_hover/contents', {
-			data: $ul.data('elggMenuData'),
-			success: function(data) {
-				if (data) {
-					// replace all existing placeholders with new menu
-					$all_placeholders.removeClass('elgg-ajax-loader')
-						.html($(data));
+		
+		require(['elgg/Ajax'], function(Ajax) {
+			var ajax = new Ajax(false);
+			ajax.view('navigation/menu/user_hover/contents', {
+				data: $ul.data('elggMenuData'),
+				success: function(data) {
+					if (data) {
+						// replace all existing placeholders with new menu
+						$all_placeholders.html($(data));
+					}
+					
+					if (typeof callback === 'function') {
+						callback();
+					}
+				},
+				complete: function() {
+					$all_placeholders.removeAttr('data-menu-placeholder');
 				}
-			}
+			});
 		});
 	}
-
-	if (!parent) {
-		parent = document;
-	}
-
-	// avatar contextual menu
-	$(document).on('click', ".elgg-avatar > a", function(e) {
-		e.preventDefault();
-
-		var $icon = $(this);
-
-		var $placeholder = $icon.parent().find(".elgg-menu-hover.elgg-ajax-loader");
-
-		if ($placeholder.length) {
-			loadMenu($placeholder.attr("rel"));
-		}
-
+	
+	/**
+	 * Show the hover menu in a popup module
+	 * 
+	 * @params {jQuery} $icon the user icon which was clicked
+	 */
+	function showPopup($icon) {
 		// check if we've attached the menu to this element already
 		var $hovermenu = $icon.data('hovermenu') || null;
 
@@ -160,6 +160,27 @@ elgg.ui.initHoverMenu = function(parent) {
 				});
 			}
 		});
+	}
+
+	if (!parent) {
+		parent = document;
+	}
+
+	// avatar contextual menu
+	$(document).on('click', ".elgg-avatar > a", function(e) {
+		e.preventDefault();
+
+		var $icon = $(this);
+
+		var $placeholder = $icon.parent().find(".elgg-menu-hover[data-menu-placeholder]");
+
+		if ($placeholder.length) {
+			loadMenu($placeholder.attr("rel"), function() {
+				showPopup($icon);
+			});
+		} else {
+			showPopup($icon);
+		}
 	});
 
 };
