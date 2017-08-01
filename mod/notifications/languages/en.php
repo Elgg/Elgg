@@ -22,5 +22,8 @@ return [
 	'notifications:subscriptions:success' => 'Your notifications settings have been saved.',
 
 	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
 
 ];

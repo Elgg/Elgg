@@ -10,37 +10,18 @@ $group = get_entity($guid);
 
 elgg_push_context('group_profile');
 
-elgg_push_breadcrumb($group->name);
+elgg_push_breadcrumb($group->getDisplayName());
 
 groups_register_profile_buttons($group);
 
 $content = elgg_view('groups/profile/layout', ['entity' => $group]);
-$sidebar = '';
 
+$sidebar = '';
 if (elgg_group_gatekeeper(false)) {
 	if (elgg_is_active_plugin('search')) {
 		$sidebar .= elgg_view('groups/sidebar/search', ['entity' => $group]);
 	}
 	$sidebar .= elgg_view('groups/sidebar/members', ['entity' => $group]);
-
-	$subscribed = false;
-	if (elgg_is_active_plugin('notifications')) {
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-			$relationship = check_entity_relationship(elgg_get_logged_in_user_guid(),
-					'notify' . $method, $guid);
-
-			if ($relationship) {
-				$subscribed = true;
-				break;
-			}
-		}
-	}
-
-	$sidebar .= elgg_view('groups/sidebar/my_status', [
-		'entity' => $group,
-		'subscribed' => $subscribed
-	]);
 }
 
 $params = [
@@ -50,4 +31,4 @@ $params = [
 ];
 $body = elgg_view_layout('one_sidebar', $params);
 
-echo elgg_view_page($group->name, $body);
+echo elgg_view_page($group->getDisplayName(), $body);
