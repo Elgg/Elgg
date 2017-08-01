@@ -125,7 +125,6 @@ class BootData {
 			FROM {$db->prefix}private_settings
 			WHERE entity_guid IN ($set)
 			  AND name NOT LIKE 'plugin:user_setting:%'
-			  AND name NOT LIKE 'elgg:internal:%'
 			GROUP BY entity_guid
 			HAVING COUNT(*) > $limit
 		";
@@ -143,7 +142,6 @@ class BootData {
 				FROM {$db->prefix}private_settings
 				WHERE entity_guid IN ($set)
 				  AND name NOT LIKE 'plugin:user_setting:%'
-				  AND name NOT LIKE 'elgg:internal:%'
 				ORDER BY entity_guid
 			");
 			// make sure we show all entities as loaded
