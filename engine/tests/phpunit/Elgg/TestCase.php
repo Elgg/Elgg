@@ -44,7 +44,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 	 */
 	public static function getInstance() {
 		if (!isset(self::$_instance)) {
-			new self();
+			new static();
 		}
 		return self::$_instance;
 	}

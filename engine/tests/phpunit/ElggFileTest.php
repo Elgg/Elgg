@@ -79,7 +79,7 @@ class ElggFileTest extends \Elgg\TestCase {
 	}
 
 	/**
-	 * @group FileService
+	 * @group        FileService
 	 * @dataProvider providerSimpleTypeMap
 	 */
 	public function testCanParseSimpleType($mime_type, $simple_type) {
@@ -89,22 +89,64 @@ class ElggFileTest extends \Elgg\TestCase {
 	}
 
 	function providerSimpleTypeMap() {
-		return array(
-			array('x-world/x-svr', 'general'),
-			array('application/msword', 'document'),
-			array('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'document'),
-			array('application/vnd.oasis.opendocument.text', 'document'),
-			array('application/pdf', 'document'),
-			array('application/ogg', 'audio'),
-			array('text/css', 'document'),
-			array('text/plain', 'document'),
-			array('audio/midi', 'audio'),
-			array('audio/mpeg', 'audio'),
-			array('image/jpeg', 'image'),
-			array('image/bmp', 'image'),
-			array('video/mpeg', 'video'),
-			array('video/quicktime', 'video'),
-		);
+		return [
+			[
+				'x-world/x-svr',
+				'general'
+			],
+			[
+				'application/msword',
+				'document'
+			],
+			[
+				'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+				'document'
+			],
+			[
+				'application/vnd.oasis.opendocument.text',
+				'document'
+			],
+			[
+				'application/pdf',
+				'document'
+			],
+			[
+				'application/ogg',
+				'audio'
+			],
+			[
+				'text/css',
+				'document'
+			],
+			[
+				'text/plain',
+				'document'
+			],
+			[
+				'audio/midi',
+				'audio'
+			],
+			[
+				'audio/mpeg',
+				'audio'
+			],
+			[
+				'image/jpeg',
+				'image'
+			],
+			[
+				'image/bmp',
+				'image'
+			],
+			[
+				'video/mpeg',
+				'video'
+			],
+			[
+				'video/quicktime',
+				'video'
+			],
+		];
 	}
 
 	/**
@@ -415,4 +457,64 @@ class ElggFileTest extends \Elgg\TestCase {
 		_elgg_rmdir("{$dataroot}1/4/");
 	}
 
+	/**
+	 * @group FileService
+	 */
+	public function testCanGetDownloadUrl() {
+
+		_elgg_services()->hooks->backup();
+
+		$file = new ElggFile();
+		$file->owner_guid = 2;
+		$file->setFilename('download-url.txt');
+		$file->open('write');
+		$file->close();
+
+		$this->assertEquals(elgg_get_download_url($file), $file->getDownloadURL());
+		$this->assertEquals(elgg_get_download_url($file, false), $file->getDownloadURL(false));
+		$this->assertEquals(elgg_get_download_url($file, null, strtotime('+2 minutes')), $file->getDownloadURL(false, strtotime('+2 minutes')));
+
+		_elgg_services()->hooks->registerHandler('download:url', 'file', function (\Elgg\Hook $hook) {
+			$file = $hook->getEntityParam();
+
+			return elgg_normalize_url("download/{$file->originalfilename}");
+		});
+
+		$this->assertEquals(elgg_normalize_url("download/{$file->originalfilename}"), $file->getDownloadURL());
+
+		_elgg_services()->hooks->restore();
+
+		$file->delete();
+	}
+
+	/**
+	 * @group FileService
+	 */
+	public function testCanGetInlineUrl() {
+
+		_elgg_services()->hooks->backup();
+
+		$file = new ElggFile();
+		$file->owner_guid = 2;
+		$file->setFilename('inline-url.txt');
+		$file->open('write');
+		$file->close();
+
+		$this->assertEquals(elgg_get_inline_url($file), $file->getInlineURL());
+		$this->assertEquals(elgg_get_inline_url($file, false), $file->getInlineURL(false));
+		$this->assertEquals(elgg_get_inline_url($file, null, strtotime('+2 minutes')), $file->getInlineURL(false, strtotime('+2 minutes')));
+
+		_elgg_services()->hooks->registerHandler('inline:url', 'file', function (\Elgg\Hook $hook) {
+			$file = $hook->getEntityParam();
+
+			return elgg_normalize_url("download/{$file->originalfilename}");
+		});
+
+		$this->assertEquals(elgg_normalize_url("download/{$file->originalfilename}"), $file->getInlineUrl());
+
+		_elgg_services()->hooks->restore();
+
+		$file->delete();
+
+	}
 }
