@@ -172,8 +172,13 @@ class ElggHtmLawedTest extends ElggCoreUnitTest {
 			'<ul><li>item</li></ul>' => '<ul><li>item</li></ul>',
 
 			// 'deny_attribute' => 'class, on*',
-			'<span class="elgg-inner">Test</span>' => '<span>Test</span>',
+			'<div class="elgg-inner">Test</div>' => '<div>Test</div>',
 			'<button onclick="javascript:alert(\'test\')">Test</button>' => '<button>Test</button>',
+			
+			// naked span stripping
+			// https://github.com/vanilla/htmlawed/commit/995ef0ae4865d817a391ac62978f9d0e41d8a18b
+			'<span>Test</span>' => 'Test',
+			'<span id="test">Test</span>' => '<span id="test">Test</span>',
 		);
 
 		// test elements filtered by "safe" option

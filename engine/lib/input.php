@@ -436,7 +436,7 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 	$spec = elgg_trigger_plugin_hook('spec', 'htmlawed', null, '');
 
 	if (!is_array($var)) {
-		return htmLawed($var, $config, $spec);
+		return Htmlawed::filter($var, $config, $spec);
 	} else {
 		array_walk_recursive($var, '_elgg_htmLawedArray', [$config, $spec]);
 		return $var;
@@ -449,7 +449,7 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
  */
 function _elgg_htmLawedArray(&$v, $k, $config_spec) {
 	list ($config, $spec) = $config_spec;
-	$v = htmLawed($v, $config, $spec);
+	$v = Htmlawed::filter($v, $config, $spec);
 }
 // @codingStandardsIgnoreEnd
 
