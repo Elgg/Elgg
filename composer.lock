@@ -4,24 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8ca2c9228ad0a9b444f12a3e07ab716",
+    "content-hash": "3fe54e2f52ef715bc6219586f30908ba",
     "packages": [
-        {
-            "name": "bower-asset/jeditable",
-            "version": "1.7.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tuupola/jquery_jeditable.git",
-                "reference": "2e6cceb34190b8584a85c500e3e5c942ed1610e3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tuupola/jquery_jeditable/zipball/2e6cceb34190b8584a85c500e3e5c942ed1610e3",
-                "reference": "2e6cceb34190b8584a85c500e3e5c942ed1610e3",
-                "shasum": ""
-            },
-            "type": "bower-asset-library"
-        },
         {
             "name": "bower-asset/jquery",
             "version": "2.2.4",

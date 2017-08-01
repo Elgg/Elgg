@@ -191,8 +191,6 @@ function _elgg_admin_init() {
 
 	elgg_register_simplecache_view('admin.css');
 
-	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
-
 	// widgets
 	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
 	foreach ($widgets as $widget) {
@@ -584,8 +582,6 @@ function _elgg_admin_page_handler($page) {
 
 	elgg_unregister_css('elgg');
 	elgg_require_js('elgg/admin');
-
-	elgg_load_js('jquery.jeditable');
 
 	// default to dashboard
 	if (!isset($page[0]) || empty($page[0])) {

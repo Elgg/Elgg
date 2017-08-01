@@ -268,6 +268,7 @@ Removed JavaScript APIs
  * ``elgg/ckeditor.js``: replaced by ``elgg-ckeditor.js``
  * ``elgg/ckeditor/set-basepath.js``
  * ``elgg/ckeditor/insert.js``
+ * ``jquery.jeditable``
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``
  * ``elgg.autocomplete`` is no longer defined.

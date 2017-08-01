@@ -9,7 +9,6 @@ elgg_admin_gatekeeper();
 
 elgg_unregister_css('elgg');
 elgg_require_js('elgg/admin');
-elgg_load_js('jquery.jeditable');
 
 $error = false;
 if (!$plugin) {
