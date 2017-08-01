@@ -2,6 +2,9 @@
 /**
  * Displays a subscription record with preference choices
  *
+ * @tip for correct styling this view should be wrapped in an element with the class 'elgg-subscription-record'
+ *      which is wrapped in an element with the class 'elgg-subscriptions'
+ *
  * @uses $vars['user']   Subscriber
  * @uses $vars['entity'] Target entity of the subscription
  */
@@ -50,18 +53,13 @@ foreach ($methods as $method) {
 	$label = elgg_echo("notification:method:$method");
 	$method_options[$label] = $method;
 }
-?>
-<div class="elgg-subscription-record">
-	<div class="elgg-subscription-description">
-		<?= elgg_view_image_block($icon, $name) ?>
-	</div>
-	<?php
-	echo elgg_view_input('checkboxes', [
-		'name' => "subscriptions[$entity->guid]",
-		'options' => $method_options,
-		'value' => $preferred_methods,
-		'align' => 'horizontal',
-		'field_class' => 'elgg-subscription-methods',
-	]);
-	?>
-</div>
+
+echo elgg_format_element('div', ['class' => 'elgg-subscription-description'], elgg_view_image_block($icon, $name));
+echo elgg_view_field([
+	'#type' => 'checkboxes',
+	'#class' => 'elgg-subscription-methods',
+	'name' => "subscriptions[$entity->guid]",
+	'options' => $method_options,
+	'value' => $preferred_methods,
+	'align' => 'horizontal',
+]);
