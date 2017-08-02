@@ -127,6 +127,7 @@ define(function(require) {
 
 		if (!guids.length) {
 			elgg.register_error(elgg.echo('admin:plugins:already:' + state));
+			unfreezePlugins();
 			return;
 		}
 
