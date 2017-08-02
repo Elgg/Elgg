@@ -22,7 +22,9 @@ return [
 		
 		"jquery.imgareaselect.css" => "vendor/bower-asset/jquery.imgareaselect/distfiles/css/imgareaselect-deprecated.css",
 		"jquery.imgareaselect.js" => "vendor/bower-asset/jquery.imgareaselect/jquery.imgareaselect.dev.js",
-				
+
+		"jquery-treeview/" => "vendor/bower-asset/jquery-treeview/",
+
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
 		"font-awesome/css/font-awesome.css" => "vendor/fortawesome/font-awesome/css/font-awesome.min.css",
 		"font-awesome/fonts/" => "vendor/fortawesome/font-awesome/fonts",

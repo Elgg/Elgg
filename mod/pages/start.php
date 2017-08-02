@@ -30,14 +30,6 @@ function pages_init() {
 	// Extend the main css view
 	elgg_extend_view('elgg.css', 'pages/css');
 
-	elgg_define_js('jquery.treeview', [
-		'src' => '/mod/pages/vendors/jquery-treeview/jquery.treeview.min.js',
-		'exports' => 'jQuery.fn.treeview',
-		'deps' => ['jquery'],
-	]);
-	$css_url = 'mod/pages/vendors/jquery-treeview/jquery.treeview.css';
-	elgg_register_css('jquery.treeview', $css_url);
-
 	elgg_register_plugin_hook_handler('search', 'object:page', 'pages_search_pages');
 
 	// Register for notifications

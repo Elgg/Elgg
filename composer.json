@@ -35,7 +35,8 @@
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
         "vanilla/htmlawed": "~2.2.0",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "bower-asset/jquery-treeview": "^1.4"
     },
     "config": {
         "process-timeout": 0
