@@ -7,6 +7,8 @@
  * @uses $vars['list_only']
  */
 
+elgg_require_js('admin/plugins');
+
 $list_only = (bool) elgg_extract('list_only', $vars, false);
 
 // @todo this should occur in the controller code

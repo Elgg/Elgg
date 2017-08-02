@@ -29,15 +29,7 @@ elgg.ui.init = function () {
 		popup.bind($('[rel="popup"]'));
 	});
 
-    $(document).on('click', '*[data-confirm], .elgg-requires-confirmation', elgg.ui.requiresConfirmation);
-    if ($('.elgg-requires-confirmation').length > 0) {
-        elgg.deprecated_notice('Use of .elgg-requires-confirmation is deprecated by data-confirm', '1.10');
-    }
-
-	$('.elgg-autofocus').focus();
-	if ($('.elgg-autofocus').length > 0) {
-		elgg.deprecated_notice('Use of .elgg-autofocus is deprecated by html5 autofocus', 1.9);
-	}
+    $(document).on('click', '*[data-confirm]', elgg.ui.requiresConfirmation);
 
 	// Allow element to be highlighted using CSS if its id is found from the URL
 	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
