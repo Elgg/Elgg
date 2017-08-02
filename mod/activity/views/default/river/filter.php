@@ -5,7 +5,7 @@
  * @uses $vars[]
  */
 
-$registered_entities = get_registered_entity_types();
+$registered_entities = elgg_extract('registered_entity_types', $vars, get_registered_entity_types());
 if (empty($registered_entities)) {
 	return;
 }
@@ -19,7 +19,7 @@ $options = [
 
 foreach ($registered_entities as $type => $subtypes) {
 	// subtype will always be an array.
-	if (!count($subtypes)) {
+	if (empty($subtypes)) {
 		$options["type=$type"] = elgg_echo('river:select', [elgg_echo("item:$type")]);
 		continue;
 	}
