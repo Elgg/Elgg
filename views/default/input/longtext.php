@@ -42,7 +42,7 @@ unset($vars['visual']);
 
 $vars['data-editor-opts'] = json_encode($editor_opts);
 
-$value = htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8');
+$value = htmlspecialchars($vars['value'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 unset($vars['value']);
 
 echo elgg_view_menu('longtext', [

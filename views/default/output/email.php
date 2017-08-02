@@ -10,8 +10,10 @@
  *
  */
 
-$encoded_value = htmlspecialchars($vars['value'], ENT_QUOTES, 'UTF-8');
-
 if (!empty($vars['value'])) {
-	echo "<a href=\"mailto:$encoded_value\">$encoded_value</a>";
+	echo elgg_view('output/url', [
+		'href' => 'mailto:' . $vars['value'],
+		'text' => $vars['value'],
+		'encode_text' => true,
+	]);
 }

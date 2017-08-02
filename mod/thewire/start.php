@@ -252,7 +252,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	}
 
 	// no html tags allowed so we escape
-	$post->description = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');
+	$post->description = htmlspecialchars($text, ENT_NOQUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 	$post->method = $method; //method: site, email, api, ...
 
