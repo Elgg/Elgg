@@ -3,14 +3,24 @@
  * Add a new field to the set of custom profile fields
  */
 
-echo elgg_view('output/longtext', [
-	'value' => elgg_echo('profile:explainchangefields'),
+// need to have a gatekeeper as this form is used via ajax
+elgg_admin_gatekeeper();
+
+$id = elgg_extract('id', $vars);
+$label = $id ? elgg_get_config("admin_defined_profile_$id") : null;
+$type = $id ? elgg_get_config("admin_defined_profile_type_$id") : null;
+
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'id',
+	'value' => $id,
 ]);
 
 echo elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('profile:label'),
 	'name' => 'label',
+	'value' => $label,
 ]);
 
 echo elgg_view_field([
@@ -26,12 +36,12 @@ echo elgg_view_field([
 		'location' => elgg_echo('profile:field:location'),
 		'date' => elgg_echo('profile:field:date'),
 	],
+	'value' => $type,
 ]);
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'name' => elgg_echo('add'),
-	'value' => elgg_echo('add'),
+	'value' => elgg_echo('save'),
 ]);
 
 elgg_set_form_footer($footer);

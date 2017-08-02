@@ -43,7 +43,7 @@ JavaScript
 ==========
 
 Elgg uses an AMD-compatible JavaScript system provided by require.js. Bundled with Elgg are jQuery
-1.11.0, jQuery UI 1.10.4, jQuery Form v20140304, jQuery jeditable, and jQuery UI Autocomplete.
+1.11.0, jQuery UI 1.10.4, jQuery Form v20140304, and jQuery UI Autocomplete.
 
 Plugins can load their own JS libs.
 

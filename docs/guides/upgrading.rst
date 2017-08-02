@@ -42,6 +42,7 @@ Removed views
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
  * ``river/item``: use elgg_view_river_item() to render river items
+ * ``river/user/default/profileupdate``
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
@@ -267,6 +268,7 @@ Removed JavaScript APIs
  * ``elgg/ckeditor.js``: replaced by ``elgg-ckeditor.js``
  * ``elgg/ckeditor/set-basepath.js``
  * ``elgg/ckeditor/insert.js``
+ * ``jquery.jeditable``
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``
  * ``elgg.autocomplete`` is no longer defined.
@@ -436,6 +438,11 @@ required to make the old interface work.
 
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
+
+Profile plugin
+--------------
+
+All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data. 
 
 Theme and styling changes
 -------------------------

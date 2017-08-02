@@ -6,10 +6,7 @@
 
 $id = get_input('id');
 
-$fieldlist = elgg_get_config('profile_custom_fields');
-if (!$fieldlist) {
-	$fieldlist = '';
-}
+$fieldlist = elgg_get_config('profile_custom_fields') ?: '';
 
 $fieldlist = str_replace("{$id},", "", $fieldlist);
 $fieldlist = str_replace(",{$id}", "", $fieldlist);
@@ -19,9 +16,8 @@ if ($id &&
 	elgg_remove_config("admin_defined_profile_$id") &&
 	elgg_remove_config("admin_defined_profile_type_$id") &&
 	elgg_save_config('profile_custom_fields', $fieldlist)) {
-	system_message(elgg_echo('profile:editdefault:delete:success'));
-} else {
-	register_error(elgg_echo('profile:editdefault:delete:fail'));
-}
 
-forward(REFERER);
+	return elgg_ok_response('', elgg_echo('profile:editdefault:delete:success'));
+} else {
+	return elgg_error_response(elgg_echo('profile:editdefault:delete:fail'));
+}

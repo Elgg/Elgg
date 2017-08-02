@@ -78,6 +78,19 @@ class ElggUser extends \ElggEntity
 				break;
 		}
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getURL() {
+		
+		$result = parent::getURL();
+		if ($result !== '') {
+			return $result;
+		}
+		
+		return elgg_normalize_url("user/view/{$this->guid}");
+	}
 
 	/**
 	 * Ban this user.
