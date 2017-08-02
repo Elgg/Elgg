@@ -26,7 +26,7 @@ function developers_init() {
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
 	elgg_register_ajax_view('forms/developers/ajax_demo');
-	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax_demo');
+	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax');
 }
 
 function developers_process_settings() {
