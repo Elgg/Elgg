@@ -398,7 +398,6 @@ class ElggPluginManifest {
 			'friends_collections',
 			'garbagecollector',
 			'groups',
-			'htmlawed',
 			'invitefriends',
 			'legacy_urls',
 			'likes',

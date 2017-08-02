@@ -15,7 +15,6 @@ require_once __DIR__ . '/ElggCoreGetEntitiesBaseTest.php';
 // plugins that contain unit tests
 $plugins = array(
 	'groups',
-	'htmlawed',
 	'thewire',
 	'web_services'
 );
