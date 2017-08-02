@@ -16,7 +16,7 @@ Removed views
 -------------
 
  * ``forms/admin/site/advanced/system``
- * ``resources/file/download`` 
+ * ``resources/file/download``
  * ``output/checkboxes``: use ``output/tags`` if you want the same behaviour
  * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
  * ``invitefriends/form``
@@ -166,7 +166,8 @@ Removed classes/interfaces
  * ``ODD`` and all classes beginning with ``ODD*``.
  * ``XmlElement``
  * ``Elgg_Notifications_Event``: Use ``\Elgg\Notifications\Event``
- 
+ * ``Elgg\Mail\Address``: use ``Elgg\Email``
+
 Schema changes
 --------------
  
@@ -286,6 +287,8 @@ Removed hooks/events
  * Hook **object:notifications, <type>**: Use the hook **send:before, notifications**
  * Hook **output:before, layout**: Use **view_vars, page/layout/<layout_name>**
  * Hook **output:after, layout**: Use **view, page/layout/<layout_name>**
+ * Hook **email, system**: Use more granular **<hook>, system:email** hooks
+ * Hook **email:message, system**: Use **zend:message, system:email** hook
 
 Removed forms/actions
 ---------------------
@@ -444,6 +447,19 @@ Profile plugin
 
 All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data. 
 
+Email delivery
+--------------
+
+To provide for more granularity in email handling and delivery, **email, system** hook has been removed.
+New email service provides for several other replacement hooks that allow plugins to control email
+content, format, and transport used for delivery.
+
+``elgg_set_email_transport()`` can now be used to replace the default Sendmail transport with another instance of
+``\Zend\Mail\Transport\TransportInterface``, e.g. SMTP, in-memory, or file transport. Note that this function
+must be called early in the boot process. Note that if you call this function on each request, using
+plugin settings to determine transport config may not be very efficient - store these settings in
+as datalist or site config values, so they are loaded from boot cache.
+
 Theme and styling changes
 -------------------------
 
@@ -502,9 +518,9 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 ``entity`` menu:
 
  * ``access`` menu item has been removed. Access information is now rendered in the entity byline.
- 
+
 ``user_hover`` menu:
- 
+
  * All items use the ``icon`` parameter.
  * The layout of the dropdown has been changed. If you have modified the look and feel of this dropdown, you might need to update your HTML/CSS.
 

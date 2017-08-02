@@ -469,35 +469,6 @@ Note that not all hooks apply to instant notifications.
 
 	 * ``notification`` - a notification object ``\Elgg\Notifications\Notification``
 
-**email, system**
-	Triggered by ``elgg_send_email()``.
-	Applies to **subscriptions** and **instant** notifications with ``email`` method.
-	This hook can be used to alter email parameters (subject, body, headers etc) - the handler should return an array of altered parameters.
-	This hook can also be used to implement a custom email transport (in place of Elgg's default plaintext ``\Zend\Mail\Transport\Sendmail``) - the handler must return ``true`` or ``false`` to indicate whether the email was sent using a custom transport.
-
-	``$params`` contains:
-
-	 * ``to`` - email address or string in the form ``Name <name@example.org>`` of the recipient
-	 * ``from`` - email address or string in the form ``Name <name@example.org>`` of the sender
-	 * ``subject`` - subject line of the email
-	 * ``body`` - body of the email
-	 * ``headers`` - an array of headers
-	 * ``params`` - other parameters inherited from the notification object or passed directly to ``elgg_send_email()``
-
-**email:message, system**
-	Triggered by ``elgg_send_email()``.
-	Applies to **subscriptions** and **instant** notifications with ``email`` method.
-	This hook allows you to alter an instance of ``\Zend\Mail\Message`` before it is passed to the email transport.
-	
-	``$params`` contains:
-
-	 * ``to`` - email address or string in the form ``Name <name@example.org>`` of the recipient
-	 * ``from`` - email address or string in the form ``Name <name@example.org>`` of the sender
-	 * ``subject`` - subject line of the email
-	 * ``body`` - body of the email
-	 * ``headers`` - an array of headers
-	 * ``params`` - other parameters inherited from the notification object or passed directly to ``elgg_send_email()``
-
 **send:after, notifications**
 	Triggered after all notifications in the queue for the notifications event have been processed.
 	Applies to **subscriptions** and **instant** notifications.
@@ -508,6 +479,46 @@ Note that not all hooks apply to instant notifications.
 	 * ``subscriptions`` - a list of subscriptions. See ``'get', 'subscriptions'`` hook for details
 	 * ``deliveries`` - a matrix of delivery statuses by user for each delivery method
 
+
+Emails
+======
+
+**prepare, system:email**
+	Triggered by ``elgg_send_email()``.
+	Applies to all outgoing system and notification emails.
+	This hook allows you to alter an instance of ``\Elgg\Email`` before it is passed to the email transport.
+	This hook can be used to alter the sender, recipient, subject, body, and/or headers of the email.
+
+	``$params`` are empty. The ``$return`` value is an instance of ``\Elgg\Email``.
+
+**validate, system:email**
+	Triggered by ``elgg_send_email()``.
+	Applies to all outgoing system and notification emails.
+	This hook allows you to suppress or whitelist outgoing emails, e.g. when the site is in a development mode.
+	The handler must return ``false`` to supress the email delivery.
+
+	``$params`` contains:
+
+	 * ``email`` - An instance of ``\Elgg\Email``
+
+**transport, system:email**
+	Triggered by ``elgg_send_email()``.
+	Applies to all outgoing system and notification emails.
+	This hook allows you to implement a custom email transport, e.g. delivering emails via a third-party proxy service such as SendGrid or Mailgun.
+	The handler must return ``true`` to indicate that the email was transported.
+
+	``$params`` contains:
+
+	 * ``email`` - An instance of ``\Elgg\Email``
+
+**zend:message, system:email**
+	Triggered by the default email transport handler (Elgg uses ``zendframework/zend-mail``).
+	Applies to all outgoing system and notification emails that were not transported using the **transport, system:email** hook.
+	This hook allows you to alter an instance of ``\Zend\Mail\Message`` before it is passed to the Zend email transport.
+	
+	``$params`` contains:
+
+	 * ``email`` - An instance of ``\Elgg\Email``
 
 Routing
 =======
