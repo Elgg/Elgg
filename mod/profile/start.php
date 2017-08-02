@@ -197,7 +197,8 @@ function _profile_topbar_menu(\Elgg\Hook $hook) {
 	if (!$viewer) {
 		 return;
 	}
-
+	$return = $hook->getValue();
+	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'profile',
 		'href' => $viewer->getURL(),
