@@ -57,11 +57,6 @@ class AdminNotices {
 	/**
 	 * Remove an admin notice by ID.
 	 *
-	 * eg In actions/twitter_service/save_settings:
-	 * 	if (is_valid_twitter_api_key()) {
-	 * 		delete_admin_notice('twitter_services_no_api');
-	 * 	}
-	 *
 	 * @param string $id The unique ID assigned in add_admin_notice()
 	 *
 	 * @return bool

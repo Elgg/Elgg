@@ -974,13 +974,6 @@ Members
     This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
     for the members pages.
 
-Twitter API
------------
-
-**authorize, twitter_api**
-	Triggered when a user is authorizes Twitter for a login. ``$params['token']`` contains the Twitter
-	authorization token.
-
 Reported Content
 ----------------
 
