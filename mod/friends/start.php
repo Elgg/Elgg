@@ -67,7 +67,7 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
  * @access private
  */
 function _elgg_friends_page_handler($segments, $handler) {
-	elgg_set_context('friends');
+	elgg_set_context('friends'); // needed because pagehandler friendsof is also using this handler
 
 	if (isset($segments[0]) && $user = get_user_by_username($segments[0])) {
 		elgg_set_page_owner_guid($user->getGUID());

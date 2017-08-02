@@ -1,0 +1,11 @@
+.elgg-river-selector {
+	float: right;
+	
+	.elgg-field-label, .elgg-field-input {
+		display: inline-block;
+	}
+
+	.elgg-field-input {
+		margin-left: 10px;
+	}
+}

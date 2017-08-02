@@ -57,6 +57,9 @@ function _elgg_activity_owner_block_menu($hook, $type, $return, $params) {
 }
 
 function elgg_activity_init() {
+	
+	elgg_extend_view('css/elgg', 'river/filter.css');
+	
 	elgg_register_page_handler('activity', 'elgg_activity_page_handler');
 
 	elgg_register_menu_item('site', [

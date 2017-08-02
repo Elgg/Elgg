@@ -42,12 +42,6 @@ return [
 	'groups:widget:membership' => 'Group membership',
 	'groups:widgets:description' => 'Display the groups you are a member of on your profile',
 
-	'groups:widget:group_activity:title' => 'Group activity',
-	'groups:widget:group_activity:description' => 'View the activity in one of your groups',
-	'groups:widget:group_activity:edit:select' => 'Select a group',
-	'groups:widget:group_activity:content:noactivity' => 'There is no activity in this group',
-	'groups:widget:group_activity:content:noselect' => 'Edit this widget to select a group',
-
 	'groups:noaccess' => 'No access to group',
 	'groups:ingroup' => 'in the group',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
