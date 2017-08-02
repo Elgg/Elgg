@@ -20,9 +20,6 @@ use Elgg\Cache\MetadataCache as Cache;
 class MetadataTable {
 
 	use \Elgg\TimeUsing;
-
-	/** @var array */
-	protected $independents = [];
 	
 	/** @var Cache */
 	protected $cache;
@@ -735,40 +732,5 @@ class MetadataTable {
 		$extender = $this->get($id);
 
 		return $extender ? $extender->getURL() : false;
-	}
-	
-	/**
-	 * Mark entities with a particular type and subtype as having access permissions
-	 * that can be changed independently from their parent entity
-	 *
-	 * @param string $type    The type - object, user, etc
-	 * @param string $subtype The subtype; all subtypes by default
-	 *
-	 * @return void
-	 */
-	function registerMetadataAsIndependent($type, $subtype = '*') {
-		if (!isset($this->independents[$type])) {
-			$this->independents[$type] = [];
-		}
-		
-		$this->independents[$type][$subtype] = true;
-	}
-	
-	/**
-	 * Determines whether entities of a given type and subtype should not change
-	 * their metadata in line with their parent entity
-	 *
-	 * @param string $type    The type - object, user, etc
-	 * @param string $subtype The entity subtype
-	 *
-	 * @return bool
-	 */
-	function isMetadataIndependent($type, $subtype) {
-		if (empty($this->independents[$type])) {
-			return false;
-		}
-
-		return !empty($this->independents[$type][$subtype])
-			|| !empty($this->independents[$type]['*']);
 	}
 }

@@ -329,32 +329,6 @@ function get_metadata_url($id) {
 }
 
 /**
- * Mark entities with a particular type and subtype as having access permissions
- * that can be changed independently from their parent entity
- *
- * @param string $type    The type - object, user, etc
- * @param string $subtype The subtype; all subtypes by default
- *
- * @return void
- */
-function register_metadata_as_independent($type, $subtype = '*') {
-	_elgg_services()->metadataTable->registerMetadataAsIndependent($type, $subtype);
-}
-
-/**
- * Determines whether entities of a given type and subtype should not change
- * their metadata in line with their parent entity
- *
- * @param string $type    The type - object, user, etc
- * @param string $subtype The entity subtype
- *
- * @return bool
- */
-function is_metadata_independent($type, $subtype) {
-	return _elgg_services()->metadataTable->isMetadataIndependent($type, $subtype);
-}
-
-/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
