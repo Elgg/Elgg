@@ -9,7 +9,7 @@ $variables = elgg_get_config('pages');
 $input = [];
 foreach ($variables as $name => $type) {
 	if ($name == 'title') {
-		$input[$name] = htmlspecialchars(get_input($name, '', false), ENT_QUOTES, 'UTF-8');
+		$input[$name] = elgg_get_title_input();
 	} else {
 		$input[$name] = get_input($name);
 	}

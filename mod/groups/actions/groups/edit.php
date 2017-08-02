@@ -37,9 +37,9 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 }
 
 // only set if submitted
-$name = get_input('name', null, false);
+$name = elgg_get_title_input('name', null);
 if ($name !== null) {
-	$input['name'] = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+	$input['name'] = $name;
 }
 
 $user = elgg_get_logged_in_user_entity();

@@ -5,7 +5,7 @@
 * @package Bookmarks
 */
 
-$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
+$title = elgg_get_title_input();
 $description = get_input('description');
 $address = get_input('address');
 $access_id = get_input('access_id');

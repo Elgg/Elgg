@@ -7,7 +7,7 @@
 
 $guid = get_input('guid');
 $user = elgg_get_logged_in_user_entity();
-$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
+$title = elgg_get_title_input();
 $description = get_input('description');
 $excerpt = get_input('excerpt');
 
