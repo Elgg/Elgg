@@ -12,7 +12,7 @@
  *
  * @see get_config()
  * @see set_config()
- * 
+ *
  * @deprecated Use elgg_remove_config()
  */
 function unset_config($name) {
@@ -39,7 +39,7 @@ function unset_config($name) {
  * @see unset_config()
  * @see get_config()
  * @access private
- * 
+ *
  * @deprecated Use elgg_save_config()
  */
 function set_config($name, $value) {
@@ -61,7 +61,7 @@ function set_config($name, $value) {
  * @see set_config()
  * @see unset_config()
  * @access private
- * 
+ *
  * @deprecated Use elgg_get_config()
  */
 function get_config($name) {
@@ -88,7 +88,7 @@ function get_config($name) {
  *
  * @return bool
  * @since 1.8.0
- * 
+ *
  * @deprecated Use elgg_remove_config()
  */
 function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $priority = 100) {
@@ -119,4 +119,36 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 		'priority' => $priority,
 		'section' => $section
 	]);
+}
+
+/**
+ * Mark entities with a particular type and subtype as having access permissions
+ * that can be changed independently from their parent entity
+ *
+ * @param string $type    The type - object, user, etc
+ * @param string $subtype The subtype; all subtypes by default
+ *
+ * @return void
+ *
+ * @deprecated
+ */
+function register_metadata_as_independent($type, $subtype = '*') {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Metadata no longer is access bound.', '3.0');
+}
+
+/**
+ * Determines whether entities of a given type and subtype should not change
+ * their metadata in line with their parent entity
+ *
+ * @param string $type    The type - object, user, etc
+ * @param string $subtype The entity subtype
+ *
+ * @return bool
+ *
+ * @deprecated
+ */
+function is_metadata_independent($type, $subtype) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Metadata no longer is access bound.', '3.0');
+	
+	return false;
 }

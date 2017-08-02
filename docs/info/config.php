@@ -194,14 +194,6 @@ $CONFIG->pluginlistcache;
 $CONFIG->registered_entities;
 
 /**
- * A list of entity types and subtypes that have metadata whose access permission
- * can be changed independently of the main object.  {@link register_metadata_as_indepenent()}
- *
- * @global string $CONFIG->independents
- */
-$CONFIG->independents;
-
-/**
  * Holds items for all submenus.
  *
  * @global string $CONFIG->submenu_items

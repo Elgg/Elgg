@@ -8,10 +8,6 @@
 elgg_register_event_handler('init', 'system', 'profile_init', 1);
 elgg_register_event_handler('init', 'system', '_profile_fields_setup', 10000); // Ensure this runs after other plugins
 
-// Metadata on users needs to be independent
-// outside of init so it happens earlier in boot. See #3316
-register_metadata_as_independent('user');
-
 /**
  * Profile init function
  */
