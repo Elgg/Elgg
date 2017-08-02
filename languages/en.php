@@ -293,11 +293,7 @@ return array(
 	'river:subject:invalid_subject' => 'Invalid user',
 	'activity:owner' => 'Activity',
 
-	'river:widget:title' => "Activity",
-	'river:widget:description' => "Display latest activity",
-	'river:widget:type' => "Type of activity",
-	'river:widgets:friends' => 'Friends activity',
-	'river:widgets:all' => 'All site activity',
+	
 
 /**
  * Notifications

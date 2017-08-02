@@ -227,14 +227,6 @@
 .elgg-river-attachments .elgg-icon-arrow-right {
 	margin: 3px 8px 0;
 }
-.elgg-river-layout .elgg-river-selector {
-	float: right;
-	margin: 13px 0 18px;
-}
-.elgg-river-selector * {
-	margin-left: 5px;
-	vertical-align: middle;
-}
 
 .elgg-river-comments {
 	position: relative;

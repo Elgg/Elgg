@@ -61,9 +61,9 @@ switch ($page_type) {
 
 $activity = elgg_list_river($options);
 
-$content = elgg_view('core/river/filter', ['selector' => $selector]);
+$content = elgg_view('river/filter', ['selector' => $selector]);
 
-$sidebar = elgg_view('core/river/sidebar');
+$sidebar = elgg_view('river/sidebar');
 
 $body = elgg_view_layout('content', [
 	'title' => $title,

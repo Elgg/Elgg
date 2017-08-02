@@ -10,7 +10,7 @@ $guid = (int) $widget->group_guid;
 
 if (empty($guid)) {
 	// no group selected yet
-	echo '<p>' . elgg_echo('groups:widget:group_activity:content:noselect') . '</p>';
+	echo '<p>' . elgg_echo('activity:widgets:group_activity:content:noselect') . '</p>';
 	return;
 }
 
