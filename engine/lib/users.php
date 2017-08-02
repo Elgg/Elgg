@@ -609,6 +609,22 @@ function elgg_avatar_page_handler($page) {
 }
 
 /**
+ * user page handler
+ *
+ * /user/view/<userguid>
+ *
+ * @param array $page url elements
+ * @return bool
+ * @access private
+ */
+function _elgg_user_page_handler($page) {
+	echo elgg_view_resource('user/view', [
+		'guid' => (int) elgg_extract(1, $page),
+	]);
+	return true;
+}
+
+/**
  * Register menu items for the page menu
  *
  * @param string $hook
@@ -868,6 +884,7 @@ function users_init() {
 	elgg_register_page_handler('changepassword', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('login', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
+	elgg_register_page_handler('user', '_elgg_user_page_handler');
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');

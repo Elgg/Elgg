@@ -21,6 +21,9 @@ function profile_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'user', 'profile_set_url');
 
 	elgg_register_page_handler('profile', 'profile_page_handler');
+	
+	// unregister default core page handler for displaying users
+	elgg_unregister_page_handler('user');
 
 	elgg_extend_view('elgg.css', 'profile/css');
 	
