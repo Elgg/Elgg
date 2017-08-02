@@ -9,9 +9,8 @@ elgg_make_sticky_form('profile:edit');
 $guid = get_input('guid');
 $owner = get_entity($guid);
 
-if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
-	register_error(elgg_echo('profile:noaccess'));
-	forward(REFERER);
+if (!($owner instanceof ElggUser) || !$owner->canEdit()) {
+	return elgg_error_response(elgg_echo('profile:noaccess'));
 }
 
 // grab the defined profile field names and their load the values from POST.
@@ -53,10 +52,7 @@ foreach ($profile_fields as $shortname => $valuetype) {
 	}
 
 	if ($valuetype == 'email' && !empty($value) && !is_email_address($value)) {
-		register_error(elgg_echo('profile:invalid_email', [
-			elgg_echo("profile:{$shortname}")
-		]));
-		forward(REFERER);
+		return elgg_error_response(elgg_echo('profile:invalid_email', [elgg_echo("profile:{$shortname}")]));
 	}
 	
 	$input[$shortname] = $value;

@@ -50,20 +50,16 @@ foreach ($methods as $method) {
 }
 
 foreach ($collections as $collection_id => $collection_opts) {
-	?>
-	<div class="elgg-subscription-record">
-		<div class="elgg-subscription-description">
-			<?= $collection_opts['description'] ?>
-		</div>
-		<?php
-		echo elgg_view_input('checkboxes', [
-			'name' => "collections[$collection_id]",
-			'options' => $method_options,
-			'value' => $collection_opts['methods'],
-			'align' => 'horizontal',
-			'field_class' => 'elgg-subscription-methods',
-		]);
-		?>
-	</div>
-	<?php
+	
+	$record = elgg_format_element('div', ['class' => 'elgg-subscription-description'], $collection_opts['description']);
+	$record .= elgg_view_field([
+		'#type' => 'checkboxes',
+		'#class' => 'elgg-subscription-methods',
+		'name' => "collections[$collection_id]",
+		'options' => $method_options,
+		'value' => $collection_opts['methods'],
+		'align' => 'horizontal',
+	]);
+	
+	echo elgg_format_element('div', ['class' => 'elgg-subscription-record'], $record);
 }

@@ -30,6 +30,22 @@
 	margin: 0;
 }
 
+.elgg-listing-summary-subtitle {
+	.groups-membership, .groups-members {
+		margin-right: 10px;
+		
+		.elgg-icon {
+			margin-right: 5px;
+		}
+	}
+}
+
+.elgg-sidebar .elgg-listing-summary-subtitle {
+	.groups-membership, .groups-members {
+		display: block;
+	}
+}
+
 #groups-tools > li {
 	width: 48%;
 	min-height: 200px;

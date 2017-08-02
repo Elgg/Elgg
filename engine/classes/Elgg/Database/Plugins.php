@@ -121,17 +121,15 @@ class Plugins {
 		$old_ia = elgg_set_ignore_access(true);
 	
 		// show hidden entities so that we can enable them if appropriate
-		$old_access = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$old_access = access_show_hidden_entities(true);
 	
-		$options = [
+		$known_plugins = elgg_get_entities_from_relationship([
 			'type' => 'object',
 			'subtype' => 'plugin',
 			'selects' => ['plugin_oe.*'],
 			'joins' => ["JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"],
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-		];
-		$known_plugins = elgg_get_entities_from_relationship($options);
+		]);
 		/* @var \ElggPlugin[] $known_plugins */
 	
 		if (!$known_plugins) {
@@ -152,7 +150,6 @@ class Plugins {
 		}
 	
 		$physical_plugins = $this->getDirsInDir($mod_dir);
-	
 		if (!$physical_plugins) {
 			return false;
 		}
@@ -197,9 +194,6 @@ class Plugins {
 	
 		access_show_hidden_entities($old_access);
 		elgg_set_ignore_access($old_ia);
-
-		$this->reindexPriorities();
-
 	
 		return true;
 	}
@@ -479,8 +473,6 @@ class Plugins {
 			return false;
 		}
 	
-		$return = true;
-	
 		// reindex to get standard counting. no need to increment by 10.
 		// though we do start with 1
 		$order = array_values($order);
@@ -488,6 +480,7 @@ class Plugins {
 		$missing_plugins = [];
 		/* @var \ElggPlugin[] $missing_plugins */
 	
+		$priority = 0;
 		foreach ($plugins as $plugin) {
 			$plugin_id = $plugin->getID();
 	
@@ -499,26 +492,23 @@ class Plugins {
 			$priority = array_search($plugin_id, $order) + 1;
 	
 			if (!$plugin->setPrivateSetting($name, $priority)) {
-				$return = false;
-				break;
+				return false;
 			}
 		}
 	
 		// set the missing plugins' priorities
-		if ($return && $missing_plugins) {
-			if (!isset($priority)) {
-				$priority = 0;
-			}
-			foreach ($missing_plugins as $plugin) {
-				$priority++;
-				if (!$plugin->setPrivateSetting($name, $priority)) {
-					$return = false;
-					break;
-				}
+		if (empty($missing_plugins)) {
+			return true;
+		}
+		
+		foreach ($missing_plugins as $plugin) {
+			$priority++;
+			if (!$plugin->setPrivateSetting($name, $priority)) {
+				return false;
 			}
 		}
 	
-		return $return;
+		return true;
 	}
 	
 	/**

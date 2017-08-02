@@ -189,15 +189,7 @@ function _elgg_admin_init() {
 	
 	elgg_register_action('admin/security/settings', '', 'admin');
 
-	elgg_register_action('profile/fields/reset', '', 'admin');
-	elgg_register_action('profile/fields/add', '', 'admin');
-	elgg_register_action('profile/fields/edit', '', 'admin');
-	elgg_register_action('profile/fields/delete', '', 'admin');
-	elgg_register_action('profile/fields/reorder', '', 'admin');
-
 	elgg_register_simplecache_view('admin.css');
-
-	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
 
 	// widgets
 	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
@@ -227,6 +219,7 @@ function _elgg_admin_init() {
 	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
 	elgg_register_page_handler('robots.txt', '_elgg_robots_page_handler');
+	elgg_register_page_handler('phpinfo', '_elgg_phpinfo_page_handler');
 	elgg_register_page_handler('admin_plugins_refresh', '_elgg_ajax_plugins_update');
 }
 
@@ -486,13 +479,6 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 		'parent_name' => 'configure_utilities',
 	]);
 	$return[] = \ElggMenuItem::factory([
-		'name' => 'configure_utilities:profile_fields',
-		'text' => elgg_echo('admin:configure_utilities:profile_fields'),
-		'href' => 'admin/configure_utilities/profile_fields',
-		'section' => 'configure',
-		'parent_name' => 'configure_utilities',
-	]);
-	$return[] = \ElggMenuItem::factory([
 		'name' => 'configure_utilities:robots',
 		'text' => elgg_echo('admin:configure_utilities:robots'),
 		'href' => 'admin/configure_utilities/robots',
@@ -597,8 +583,6 @@ function _elgg_admin_page_handler($page) {
 	elgg_unregister_css('elgg');
 	elgg_require_js('elgg/admin');
 
-	elgg_load_js('jquery.jeditable');
-
 	// default to dashboard
 	if (!isset($page[0]) || empty($page[0])) {
 		$page = ['dashboard'];
@@ -675,6 +659,16 @@ function _elgg_admin_markdown_page_handler($pages) {
  */
 function _elgg_robots_page_handler() {
 	echo elgg_view_resource('robots.txt');
+	return true;
+}
+
+/**
+ * Handle request for phpinfo
+ *
+ * @access private
+ */
+function _elgg_phpinfo_page_handler() {
+	echo elgg_view_resource('phpinfo');
 	return true;
 }
 

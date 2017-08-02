@@ -26,11 +26,7 @@ return [
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',
 	'groups:members' => 'Group members',
-	'groups:my_status' => 'My status',
-	'groups:my_status:group_owner' => 'You own this group',
 	'groups:my_status:group_member' => 'You are in this group',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
 
 	'groups:members:title' => 'Members of %s',
 	'groups:members:more' => "View all members",

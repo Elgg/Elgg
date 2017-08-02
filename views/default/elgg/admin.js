@@ -29,23 +29,6 @@ define(function(require) {
 
 		initPluginReordering();
 
-		// in-line editing for custom profile fields.
-		// @note this requires jquery.jeditable plugin
-		$(".elgg-state-editable").editable(editProfileField, {
-			type:   'text',
-			onblur: 'submit',
-			width:  '300px',
-			height: 'none',
-			style:  'display:inline;'
-		});
-
-		// draggable profile field reordering.
-		$('#elgg-profile-fields').sortable({
-			items: 'li',
-			handle: 'span.elgg-state-draggable',
-			stop: moveProfileField
-		});
-
 		// disable checkboxes (readonly does not work for them)
 		$(document).on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {
 			return false;
@@ -78,7 +61,7 @@ define(function(require) {
 	function initPluginReordering() {
 		$('#elgg-plugin-list > ul').sortable({
 			items:                'li:has(> .elgg-state-draggable)',
-			handle:               '.elgg-head',
+			handle:               '.elgg-body',
 			forcePlaceholderSize: true,
 			placeholder:          'elgg-widget-placeholder',
 			opacity:              0.8,
@@ -216,42 +199,6 @@ define(function(require) {
 					pluginView.html(htmlData);
 				}
 			}
-		});
-	}
-
-	/**
-	 * In-line editing for custom profile fields
-	 *
-	 * @param {String} value    The new value
-	 * @param {Object} settings The settings used for editable
-	 * @return void
-	 */
-	function editProfileField (value, settings) {
-		var id = $(this).attr('id');
-		id = id.replace('elgg-profile-field-', '');
-
-		var data = {
-			id:    id,
-			label: value
-		};
-
-		elgg.action('profile/fields/edit', data);
-		return value;
-	}
-
-	/**
-	 * Save the plugin profile order after a move event.
-	 *
-	 * @param {Object} e  Event object.
-	 * @param {Object} ui jQueryUI object
-	 * @return void
-	 */
-	function moveProfileField (e, ui) {
-		var orderArr = $('#elgg-profile-fields').sortable('toArray');
-		var orderStr = orderArr.join(',');
-
-		elgg.action('profile/fields/reorder', {
-			fieldorder: orderStr
 		});
 	}
 

@@ -78,8 +78,11 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 elgg_clear_sticky_form('profile:edit');
 
 echo elgg_view('input/hidden', ['name' => 'guid', 'value' => $entity->guid]);
-echo elgg_view_field([
+
+$footer = elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('save'),
 	'#class' => 'elgg-foot',
 ]);
+elgg_set_form_footer($footer);
+

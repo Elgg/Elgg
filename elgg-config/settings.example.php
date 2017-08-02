@@ -319,3 +319,13 @@ $CONFIG->exception_include = '';
  * @global int $CONFIG->action_time_limit
  */
 $CONFIG->action_time_limit = 120;
+
+/**
+ * Allow access to PHPInfo
+ *
+ * This setting can be used to allow site administrators access to the PHPInfo page.
+ * By default this is not allowed.
+ *
+ * @global bool $CONFIG->allow_phpinfo
+ */
+$CONFIG->allow_phpinfo = false;

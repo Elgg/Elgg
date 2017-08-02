@@ -26,13 +26,14 @@ foreach ($methods as $method) {
 	</div>
 	<?php
 	$value = array_keys(array_filter($user->getNotificationSettings()));
-	echo elgg_view_input('checkboxes', [
+	echo elgg_view_field([
+		'#type' => 'checkboxes',
+		'#class' => 'elgg-subscription-methods',
 		'name' => 'personal',
 		'options' => $method_options,
 		'default' => false,
 		'value' => $value,
 		'align' => 'horizontal',
-		'field_class' => 'elgg-subscription-methods',
 	]);
 	?>
 </div>

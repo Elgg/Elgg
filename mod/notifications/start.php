@@ -14,6 +14,7 @@ function notifications_plugin_init() {
 	elgg_register_page_handler('notifications', 'notifications_page_handler');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_groups_subscription_page_menu');
 
 	// Unset the default notification settings
 	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
@@ -109,6 +110,63 @@ function _notifications_page_menu($hook, $type, $return, $params) {
 		]);
 	}
 		
+	return $return;
+}
+
+/**
+ * Register menu items for the page menu on group profiles
+ *
+ * @param \Elgg\Hook $hook hook
+ *
+ * @return array
+ *
+ * @access private
+ *
+ * @since 3.0
+ */
+function _notifications_groups_subscription_page_menu(\Elgg\Hook $hook) {
+	
+	if (!elgg_is_active_plugin('groups')) {
+		return;
+	}
+	
+	if (!elgg_in_context('group_profile') || !elgg_get_logged_in_user_guid()) {
+		return;
+	}
+
+	$user = elgg_get_logged_in_user_entity();
+	$group = elgg_get_page_owner_entity();
+	if (!($group instanceof \ElggGroup)) {
+		return;
+	}
+	
+	$subscribed = false;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
+	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+		$relationship = check_entity_relationship($user->guid, 'notify' . $method, $group->guid);
+
+		if ($relationship) {
+			$subscribed = true;
+			break;
+		}
+	}
+		
+	$return = $hook->getValue();
+	
+	if ($subscribed) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'subscription_status',
+			'text' => elgg_echo('notifications:groups:subscribed'),
+			'href' => "notifications/group/$user->username",
+		]);
+	} else {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'subscription_status',
+			'text' => elgg_echo('notifications:groups:unsubscribed'),
+			'href' => "notifications/group/$user->username"
+		]);
+	}
+			
 	return $return;
 }
 

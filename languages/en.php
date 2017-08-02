@@ -286,45 +286,6 @@ return array(
 	'avatar:remove:success' => 'Removing the avatar succeeded',
 	'avatar:remove:fail' => 'Avatar remove failed',
 
-	'profile:edit' => 'Edit profile',
-	'profile:aboutme' => "About me",
-	'profile:description' => "About me",
-	'profile:briefdescription' => "Brief description",
-	'profile:location' => "Location",
-	'profile:skills' => "Skills",
-	'profile:interests' => "Interests",
-	'profile:contactemail' => "Contact email",
-	'profile:phone' => "Telephone",
-	'profile:mobile' => "Mobile phone",
-	'profile:website' => "Website",
-	'profile:twitter' => "Twitter username",
-	'profile:saved' => "Your profile was successfully saved.",
-
-	'profile:field:text' => 'Short text',
-	'profile:field:longtext' => 'Large text area',
-	'profile:field:tags' => 'Tags',
-	'profile:field:url' => 'Web address',
-	'profile:field:email' => 'Email address',
-	'profile:field:location' => 'Location',
-	'profile:field:date' => 'Date',
-
-	'admin:configure_utilities:profile_fields' => 'Edit Profile Fields',
-	'profile:edit:default' => 'Edit profile fields',
-	'profile:label' => "Profile label",
-	'profile:type' => "Profile type",
-	'profile:editdefault:delete:fail' => 'Removing profile field failed',
-	'profile:editdefault:delete:success' => 'Profile field deleted',
-	'profile:defaultprofile:reset' => 'Profile fields reset to the system default',
-	'profile:resetdefault' => 'Reset profile fields to system defaults',
-	'profile:resetdefault:confirm' => 'Are you sure you want to delete your custom profile fields?',
-	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
-	'profile:editdefault:success' => 'New profile field added',
-	'profile:editdefault:fail' => 'Default profile could not be saved',
-	'profile:field_too_long' => 'Cannot save your profile information because the "%s" section is too long.',
-	'profile:noaccess' => "You do not have permission to edit this profile.",
-	'profile:invalid_email' => '%s must be a valid email address.',
-
-
 /**
  * Feeds
  */
@@ -343,7 +304,6 @@ return array(
 	'river' => "River",
 	'river:friend:user:default' => "%s is now a friend with %s",
 	'river:update:user:avatar' => '%s has a new avatar',
-	'river:update:user:profile' => '%s has updated their profile',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
@@ -792,6 +752,7 @@ To go to the site, click here:
 
 	'admin:server:label:elgg' => 'Elgg',
 	'admin:server:label:php' => 'PHP',
+	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'Web Server',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Log Location',

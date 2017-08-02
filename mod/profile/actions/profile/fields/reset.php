@@ -1,7 +1,6 @@
 <?php
 /**
  * Reset profile fields action
- *
  */
 
 $fieldlist = elgg_get_config('profile_custom_fields');
@@ -15,6 +14,4 @@ if ($fieldlist) {
 
 elgg_remove_config('profile_custom_fields');
 
-system_message(elgg_echo('profile:defaultprofile:reset'));
-
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('profile:defaultprofile:reset'));

@@ -1,16 +1,16 @@
 <?php
-
 /**
  * Saves subsription notification settings by group
  *
  * @uses $vars['user'] ElggUser
  */
 $user = elgg_extract('user', $vars);
-if (!elgg_instanceof($user, 'user')) {
+if (!$user instanceof ElggUser) {
 	return;
 }
 
-echo elgg_view_input('hidden', [
+echo elgg_view_field([
+	'#type' => 'hidden',
 	'name' => 'guid',
 	'value' => $user->guid,
 ]);
@@ -20,12 +20,10 @@ echo elgg_format_element('p', [
 ], elgg_echo('notifications:subscriptions:groups:description'));
 
 
-$records = elgg_view('notifications/subscriptions/groups', $vars);
-echo elgg_format_element('div', [
-	'class' => 'elgg-subscriptions',
-], $records);
+echo elgg_view('notifications/subscriptions/groups', $vars);
 
-$footer = elgg_view_input('submit', [
+$footer = elgg_view_field([
+	'#type' => 'submit',
 	'value' => elgg_echo('save'),
 ]);
 

@@ -385,7 +385,7 @@ class EntityIconService {
 		if ($url == null) {
 			if ($this->hasIcon($entity, $size, $type)) {
 				$icon = $this->getIcon($entity, $size, $type);
-				$url = elgg_get_inline_url($icon, true);
+				$url = $icon->getInlineURL(true);
 			} else {
 				$url = $this->getFallbackIconUrl($entity, $params);
 			}

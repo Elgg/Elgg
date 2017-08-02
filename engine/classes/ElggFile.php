@@ -266,7 +266,7 @@ class ElggFile extends ElggObject {
 	 */
 	public function delete($follow_symlinks = true) {
 		$result = $this->getFilestore()->delete($this, $follow_symlinks);
-		
+
 		if ($this->getGUID() && $result) {
 			$result = parent::delete();
 		}
@@ -420,7 +420,7 @@ class ElggFile extends ElggObject {
 		}
 
 		$this->upload_time = time();
-		$prefix = $this->filestore_prefix ? : 'file';
+		$prefix = $this->filestore_prefix ?: 'file';
 		$prefix = trim($prefix, '/');
 		$filename = elgg_strtolower("$prefix/{$this->upload_time}{$this->originalfilename}");
 		$this->setFilename($filename);
@@ -453,7 +453,7 @@ class ElggFile extends ElggObject {
 			_elgg_services()->events->triggerAfter('upload', 'file', $this);
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -467,6 +467,72 @@ class ElggFile extends ElggObject {
 			// a resource
 			'handle',
 		]);
+	}
+
+	/**
+	 * Checks the download permissions for the file
+	 *
+	 * @param int  $user_guid GUID of the user (defaults to logged in user)
+	 * @param bool $default   Default permission
+	 *
+	 * @return bool
+	 */
+	public function canDownload($user_guid = 0, $default = true) {
+		return _elgg_services()->userCapabilities->canDownload($this, $user_guid, $default);
+	}
+
+	/**
+	 * Returns file's download URL
+	 *
+	 * @note This does not work for files with custom filestores.
+	 *
+	 * @param bool   $use_cookie Limit URL validity to current session only
+	 * @param string $expires    URL expiration, as a string suitable for strtotime()
+	 *
+	 * @return string
+	 */
+	public function getDownloadURL($use_cookie = true, $expires = '+2 hours') {
+
+		$file_svc = new \Elgg\FileService\File();
+		$file_svc->setFile($this);
+		$file_svc->setExpires($expires);
+		$file_svc->setDisposition('attachment');
+		$file_svc->bindSession($use_cookie);
+		$url = $file_svc->getURL();
+
+		$params = [
+			'entity' => $this,
+		];
+
+		return _elgg_services()->hooks->trigger('download:url', 'file', $params, $url);
+	}
+
+	/**
+	 * Returns file's URL for inline display
+	 * Suitable for displaying cacheable resources, such as user avatars
+	 *
+	 * @note This does not work for files with custom filestores.
+	 *
+	 * @param bool   $use_cookie Limit URL validity to current session only
+	 * @param string $expires    URL expiration, as a string suitable for strtotime()
+	 *
+	 * @return string
+	 */
+	public function getInlineURL($use_cookie = false, $expires = '') {
+		$file_svc = new \Elgg\FileService\File();
+		$file_svc->setFile($this);
+		if ($expires) {
+			$file_svc->setExpires($expires);
+		}
+		$file_svc->setDisposition('inline');
+		$file_svc->bindSession($use_cookie);
+		$url = $file_svc->getURL();
+
+		$params = [
+			'entity' => $this,
+		];
+
+		return _elgg_services()->hooks->trigger('inline:url', 'file', $params, $url);
 	}
 
 }

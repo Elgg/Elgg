@@ -18,7 +18,8 @@ $mac = elgg_build_hmac($data)->getToken();
 
 $attrs = [
 	"rel" => $mac,
-	"class" => "elgg-menu elgg-menu-hover elgg-ajax-loader",
+	"class" => "elgg-menu elgg-menu-hover",
+	'data-menu-placeholder' => '1', // flag for the JS to know this menu isn't fully loaded yet
 ];
 
 if (empty($menus_present[$mac])) {

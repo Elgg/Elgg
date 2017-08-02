@@ -500,14 +500,6 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	
 	if ($user->canEdit()) {
 		$return[] = ElggMenuItem::factory([
-			'name' => 'profile:edit',
-			'text' => elgg_echo('profile:edit'),
-			'icon' => 'address-card',
-			'href' => "profile/$user->username/edit",
-			'section' => (elgg_get_logged_in_user_guid() == $user->guid)? 'action' : 'admin',
-		]);
-
-		$return[] = ElggMenuItem::factory([
 			'name' => 'avatar:edit',
 			'text' => elgg_echo('avatar:edit'),
 			'icon' => 'image',
@@ -596,109 +588,6 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Setup the menu shown with an entity
- *
- * @param string $hook
- * @param string $type
- * @param array $return
- * @param array $params
- * @return array
- *
- * @access private
- */
-function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-
-	$entity = $params['entity'];
-	if (!elgg_instanceof($entity, 'user')) {
-		return $return;
-	}
-	/* @var \ElggUser $entity */
-
-	if ($entity->isBanned()) {
-		$banned = elgg_echo('banned');
-		$options = [
-			'name' => 'banned',
-			'text' => "<span>$banned</span>",
-			'href' => false,
-			'priority' => 0,
-		];
-		$return = [\ElggMenuItem::factory($options)];
-	} else {
-		$return = [];
-		$location = $entity->location;
-		if (is_string($location) && $location !== '') {
-			$location = htmlspecialchars($location, ENT_QUOTES, 'UTF-8', false);
-			$options = [
-				'name' => 'location',
-				'text' => "<span>$location</span>",
-				'href' => false,
-				'priority' => 150,
-			];
-			$return[] = \ElggMenuItem::factory($options);
-		}
-	}
-
-	return $return;
-}
-
-/**
- * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
- * add and delete fields.
- *
- * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
- * other plugins have initialised.
- * @access private
- */
-function elgg_profile_fields_setup() {
-	global $CONFIG;
-
-	$profile_defaults =  [
-		'description' => 'longtext',
-		'briefdescription' => 'text',
-		'location' => 'location',
-		'interests' => 'tags',
-		'skills' => 'tags',
-		'contactemail' => 'email',
-		'phone' => 'text',
-		'mobile' => 'text',
-		'website' => 'url',
-		'twitter' => 'text',
-	];
-
-	$loaded_defaults = [];
-	$fieldlist = elgg_get_config('profile_custom_fields');
-	if ($fieldlist || $fieldlist === '0') {
-		$fieldlistarray = explode(',', $fieldlist);
-		foreach ($fieldlistarray as $listitem) {
-			if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
-				$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
-				$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
-				add_translation(get_current_language(), ["profile:admin_defined_profile_{$listitem}" => $translation]);
-			}
-		}
-	}
-
-	if (count($loaded_defaults)) {
-		$CONFIG->profile_using_custom = true;
-		$profile_defaults = $loaded_defaults;
-	}
-
-	$CONFIG->profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', null, $profile_defaults);
-
-	// register any tag metadata names
-	foreach ($CONFIG->profile_fields as $name => $type) {
-		if ($type == 'tags' || $type == 'location' || $type == 'tag') {
-			elgg_register_tag_metadata_name($name);
-			// register a tag name translation
-			add_translation(get_current_language(), ["tag_names:$name" => elgg_echo("profile:$name")]);
-		}
-	}
-}
-
-/**
  * Avatar page handler
  *
  * /avatar/edit/<username>
@@ -720,21 +609,19 @@ function elgg_avatar_page_handler($page) {
 }
 
 /**
- * Profile page handler
+ * user page handler
  *
- * @param array $page
+ * /user/view/<userguid>
+ *
+ * @param array $page url elements
  * @return bool
  * @access private
  */
-function elgg_profile_page_handler($page) {
-	$user = get_user_by_username($page[0]);
-	elgg_set_page_owner_guid($user->guid);
-
-	if ($page[1] == 'edit') {
-		echo elgg_view_resource("profile/edit");
-		return true;
-	}
-	return false;
+function _elgg_user_page_handler($page) {
+	echo elgg_view_resource('user/view', [
+		'guid' => (int) elgg_extract(1, $page),
+	]);
+	return true;
 }
 
 /**
@@ -762,14 +649,6 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 		'name' => 'edit_avatar',
 		'href' => "avatar/edit/{$owner->username}",
 		'text' => elgg_echo('avatar:edit'),
-		'section' => '1_profile',
-		'contexts' => ['settings'],
-	]);
-	
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'edit_profile',
-		'href' => "profile/{$owner->username}/edit",
-		'text' => elgg_echo('profile:edit'),
 		'section' => '1_profile',
 		'contexts' => ['settings'],
 	]);
@@ -1005,7 +884,7 @@ function users_init() {
 	elgg_register_page_handler('changepassword', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('login', 'elgg_user_account_page_handler');
 	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
-	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
+	elgg_register_page_handler('user', '_elgg_user_page_handler');
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
@@ -1018,7 +897,6 @@ function users_init() {
 	elgg_register_action('avatar/upload');
 	elgg_register_action('avatar/crop');
 	elgg_register_action('avatar/remove');
-	elgg_register_action('profile/edit');
 
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 
@@ -1027,8 +905,6 @@ function users_init() {
 
 	// Register the user type
 	elgg_register_entity_type('user', '');
-
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 	
@@ -1058,6 +934,5 @@ function users_test($hook, $type, $value, $params) {
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', 'users_init', 0);
-	$events->registerHandler('init', 'system', 'elgg_profile_fields_setup', 10000); // Ensure this runs after other plugins
 	$hooks->registerHandler('unit_test', 'system', 'users_test');
 };

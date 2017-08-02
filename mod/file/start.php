@@ -93,7 +93,6 @@ function file_init() {
  *  New file:        file/add/<guid>
  *  Edit file:       file/edit/<guid>
  *  Group files:     file/group/<guid>/all
- *  Download:        file/download/<guid>
  *
  * Title is ignored
  *
@@ -341,7 +340,7 @@ function file_set_icon_url($hook, $type, $url, $params) {
 	if (elgg_instanceof($file, 'object', 'file')) {
 		// thumbnails get first priority
 		$thumbnail = $file->getIcon($size);
-		$thumb_url = elgg_get_inline_url($thumbnail, true);
+		$thumb_url = $thumbnail->getInlineURL(true);
 		if ($thumb_url) {
 			return $thumb_url;
 		}

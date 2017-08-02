@@ -30,6 +30,7 @@ Removed views
  * ``page/layouts/widgets/add_panel``
  * ``page/elements/topbar_wrapper``: update your use of ``page/elements/topbar`` to include a check for a logged in user
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
+ * ``groups/my_status``
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
  * ``likes/count``: modifications can now be done to the ``likes_count`` menu item
  * ``likes/css``: likes now uses ``elgg/likes.css``
@@ -41,6 +42,7 @@ Removed views
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
  * ``river/item``: use elgg_view_river_item() to render river items
+ * ``river/user/default/profileupdate``
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
@@ -267,6 +269,7 @@ Removed JavaScript APIs
  * ``elgg/ckeditor.js``: replaced by ``elgg-ckeditor.js``
  * ``elgg/ckeditor/set-basepath.js``
  * ``elgg/ckeditor/insert.js``
+ * ``jquery.jeditable``
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``
  * ``elgg.autocomplete`` is no longer defined.
@@ -439,6 +442,11 @@ required to make the old interface work.
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
 
+Profile plugin
+--------------
+
+All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data. 
+
 Email delivery
 --------------
 
@@ -523,6 +531,10 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 ``extras`` menu:
 
 This menu has been removed from the page layout. Menu items that registered for this menu have been moved to other menus.
+
+``groups:my_status`` menu:
+
+This menu has been removed from the group profile page.
 
 Entity icons
 ------------

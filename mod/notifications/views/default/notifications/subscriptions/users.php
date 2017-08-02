@@ -17,7 +17,7 @@ $options = [
 	'types' => 'user',
 	'joins' => [
 		"JOIN {$dbprefix}users_entity ue ON ue.guid = e.guid",
-		"JOIN {$dbprefix}entity_relationships ers 
+		"JOIN {$dbprefix}entity_relationships ers
 			ON e.guid = ers.guid_two AND ers.guid_one = $user->guid",
 	],
 	'wheres' => [
@@ -30,6 +30,8 @@ $options = [
 	'user' => $user,
 	'no_results' => elgg_echo('notifications:subscriptions:no_results'),
 	'limit' => max(20, elgg_get_config('default_limit')),
+	'list_class' => 'elgg-subscriptions',
+	'item_class' => 'elgg-subscription-record',
 ];
 
 echo elgg_list_entities($options);
