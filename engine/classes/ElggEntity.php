@@ -45,11 +45,6 @@ abstract class ElggEntity extends \ElggData implements
 {
 	
 	/**
-	 * If set, overrides the value of getURL()
-	 */
-	protected $url_override;
-
-	/**
 	 * Holds metadata until entity is saved.  Once the entity is saved,
 	 * metadata are written immediately to the database.
 	 */
@@ -1277,7 +1272,7 @@ abstract class ElggEntity extends \ElggData implements
 			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid && !_elgg_services()->events->trigger('create', $this->type, $this)) {
+			if ($guid && !_elgg_services()->hooks->getEvents()->trigger('create', $this->type, $this)) {
 				// plugins that return false to event don't need to override the access system
 				$ia = elgg_set_ignore_access(true);
 				$this->delete();
@@ -1309,11 +1304,10 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	protected function create() {
 
-		$allowed_types = elgg_get_config('entity_types');
-		$type = $this->getDatabase()->sanitizeString($this->attributes['type']);
-		if (!in_array($type, $allowed_types)) {
+		$type = $this->attributes['type'];
+		if (!in_array($type, \Elgg\Config::getEntityTypes())) {
 			throw new \InvalidParameterException('Entity type must be one of the allowed types: '
-					. implode(', ', $allowed_types));
+					. implode(', ', \Elgg\Config::getEntityTypes()));
 		}
 		
 		$subtype = $this->attributes['subtype'];
@@ -1475,14 +1469,14 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	protected function update() {
 		
-		_elgg_services()->boot->invalidateCache($this->guid);
+		_elgg_services()->boot->invalidateCache();
 
 		if (!$this->canEdit()) {
 			return false;
 		}
 
 		// give old update event a chance to stop the update
-		if (!_elgg_services()->events->trigger('update', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('update', $this->type, $this)) {
 			return false;
 		}
 
@@ -1691,7 +1685,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!_elgg_services()->events->trigger('disable', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('disable', $this->type, $this)) {
 			return false;
 		}
 		
@@ -1772,7 +1766,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($disabled) {
 			$this->attributes['enabled'] = 'no';
-			_elgg_services()->events->trigger('disable:after', $this->type, $this);
+			_elgg_services()->hooks->getEvents()->trigger('disable:after', $this->type, $this);
 		}
 
 		return (bool) $disabled;
@@ -1794,7 +1788,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!_elgg_services()->events->trigger('enable', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('enable', $this->type, $this)) {
 			return false;
 		}
 		
@@ -1802,15 +1796,16 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		global $CONFIG;
-	
 		// Override access only visible entities
 		$old_access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-	
-		$result = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
+
+		$db = $this->getDatabase();
+		$result = $db->updateData("
+			UPDATE {$db->prefix}entities
 			SET enabled = 'yes'
-			WHERE guid = $guid");
+			WHERE guid = $guid
+		");
 
 		$this->deleteMetadata('disable_reason');
 		$this->enableMetadata();
@@ -1834,7 +1829,7 @@ abstract class ElggEntity extends \ElggData implements
 	
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
-			_elgg_services()->events->trigger('enable:after', $this->type, $this);
+			_elgg_services()->hooks->getEvents()->trigger('enable:after', $this->type, $this);
 		}
 
 		return $result;
@@ -1882,7 +1877,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		// now trigger an event to let others know this entity is about to be deleted
 		// so they can prevent it or take their own actions
-		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('delete', $this->type, $this)) {
 			return false;
 		}
 

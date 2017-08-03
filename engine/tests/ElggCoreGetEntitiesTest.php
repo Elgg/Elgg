@@ -676,7 +676,7 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggApiGettersEntityNoValueSubtypeSet() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		// create an entity we can later delete.
 		// order by time created and limit by 1 should == this entity.
 

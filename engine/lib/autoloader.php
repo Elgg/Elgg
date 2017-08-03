@@ -41,6 +41,10 @@ function _elgg_delete_autoload_cache() {
 	_elgg_services()->autoloadManager->deleteCache();
 }
 
+
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache', 600);
 };

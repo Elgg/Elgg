@@ -4,17 +4,41 @@ namespace Elgg;
 use Elgg\HooksRegistrationService\Hook;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Plugin Hooks (and Events)
  *
- * Use the elgg_* versions instead.
+ * @tip Use ->hooks from the service provider.
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Hooks
- * @since      1.9.0
  */
 class PluginHooksService extends HooksRegistrationService {
+
+	/**
+	 * @var EventsService
+	 */
+	private $events;
+
+	/**
+	 * Constructor
+	 *
+	 * @param EventsService $events Events
+	 */
+	public function __construct(EventsService $events = null) {
+		if ($events === null) {
+			// for unit tests
+			$events = new EventsService(new HandlersService());
+		}
+
+		$this->events = $events;
+	}
+
+	/**
+	 * Get the events API
+	 *
+	 * @return EventsService
+	 */
+	public function getEvents() {
+		return $this->events;
+	}
 
 	/**
 	 * Triggers a plugin hook
@@ -30,29 +54,29 @@ class PluginHooksService extends HooksRegistrationService {
 		$hook = 'hook';
 		/* @var Hook|string $hook */
 
-		$handlers_svc = _elgg_services()->handlers;
+		$handlers = $this->events->getHandlersService();
 
 		foreach ($this->getOrderedHandlers($name, $type) as $handler) {
 			$exit_warning = null;
 
 			if (in_array($name, ['forward', 'action', 'route'])) {
 				// assume the handler is going to exit the request...
-				$exit_warning = function () use ($name, $type, $handler, $handlers_svc) {
+				$exit_warning = function () use ($name, $type, $handler, $handlers) {
 					_elgg_services()->deprecation->sendNotice(
 						"'$name', '$type' plugin hook should not be used to serve a response. Instead return an "
 						. "appropriate ResponseBuilder instance from an action or page handler. Do not terminate "
-						. "code execution with exit() or die() in {$handlers_svc->describeCallable($handler)}",
+						. "code execution with exit() or die() in {$handlers->describeCallable($handler)}",
 						'2.3'
 					);
 				};
-				_elgg_services()->events->registerHandler('shutdown', 'system', $exit_warning);
+				$this->events->registerHandler('shutdown', 'system', $exit_warning);
 			}
 
-			list($success, $return, $hook) = $handlers_svc->call($handler, $hook, [$name, $type, $value, $params]);
+			list($success, $return, $hook) = $handlers->call($handler, $hook, [$name, $type, $value, $params]);
 
 			if ($exit_warning) {
 				// an exit did not occur, so no need for the warning...
-				_elgg_services()->events->unregisterHandler('shutdown', 'system', $exit_warning);
+				$this->events->unregisterHandler('shutdown', 'system', $exit_warning);
 			}
 
 			if (!$success) {

@@ -52,7 +52,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends \ElggCoreGetEntitiesBaseTest
 			),
 			'attribute_name_value_pairs_operator' => 'AND',
 		));
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$expected = array(
 			'joins' => array("JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"),
 			'wheres' => array("((type_table.title = 'foo'))"),
@@ -70,7 +70,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends \ElggCoreGetEntitiesBaseTest
 			),
 			'attribute_name_value_pairs_operator' => 'AND',
 		));
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$expected = array(
 			'joins' => array("JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"),
 			'wheres' => array("((type_table.title < 'foo'))"),
@@ -87,7 +87,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends \ElggCoreGetEntitiesBaseTest
 			),
 			'attribute_name_value_pairs_operator' => 'AND',
 		));
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$expected = array(
 			'joins' => array("JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"),
 			'wheres' => array("((type_table.title = 32))"),
@@ -104,7 +104,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends \ElggCoreGetEntitiesBaseTest
 			),
 			'attribute_name_value_pairs_operator' => 'AND',
 		));
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$expected = array(
 			'joins' => array("JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"),
 			'wheres' => array("((type_table.title IN (1, 2, 3)))"),
@@ -121,7 +121,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends \ElggCoreGetEntitiesBaseTest
 			),
 			'attribute_name_value_pairs_operator' => 'AND',
 		));
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$expected = array(
 			'joins' => array("JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"),
 			'wheres' => array("((type_table.title IN ('one', 'two')))"),
@@ -138,7 +138,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends \ElggCoreGetEntitiesBaseTest
 			),
 			'attribute_name_value_pairs_operator' => 'AND',
 		));
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$expected = array(
 			'joins' => array("JOIN {$CONFIG->dbprefix}users_entity type_table ON e.guid = type_table.guid"),
 			'wheres' => array("((type_table.username = 'user2') AND (type_table.email = 'test@example.org'))"),
@@ -156,7 +156,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends \ElggCoreGetEntitiesBaseTest
 			),
 			'attribute_name_value_pairs_operator' => 'AND',
 		));
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$expected = array(
 			'joins' => array("JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"),
 			'wheres' => array("((BINARY type_table.title = 'foo'))"),

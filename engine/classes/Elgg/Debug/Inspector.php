@@ -19,7 +19,7 @@ class Inspector {
 	 * @return array [event,type] => array(handlers)
 	 */
 	public function getEvents() {
-		return $this->buildHandlerTree(_elgg_services()->events->getAllHandlers());
+		return $this->buildHandlerTree(_elgg_services()->hooks->getEvents()->getAllHandlers());
 	}
 
 	/**

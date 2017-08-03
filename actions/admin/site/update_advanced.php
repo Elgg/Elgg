@@ -17,10 +17,12 @@ if (!($site instanceof ElggSite)) {
 	throw new InstallationException("Passing a non-ElggSite to an ElggSite constructor!");
 }
 
-if ('on' === get_input('simplecache_enabled')) {
-	elgg_enable_simplecache();
-} else {
-	elgg_disable_simplecache();
+if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
+	if ('on' === get_input('simplecache_enabled')) {
+		elgg_enable_simplecache();
+	} else {
+		elgg_disable_simplecache();
+	}
 }
 
 if ('on' === get_input('cache_symlink_enabled')) {
@@ -43,11 +45,13 @@ elgg_save_config('default_access', (int) get_input('default_access', ACCESS_PRIV
 $user_default_access = ('on' === get_input('allow_user_default_access'));
 elgg_save_config('allow_user_default_access', $user_default_access);
 
-$debug = get_input('debug');
-if ($debug) {
-	elgg_save_config('debug', $debug);
-} else {
-	elgg_remove_config('debug');
+if (!_elgg_config()->hasInitialValue('debug')) {
+	$debug = get_input('debug');
+	if ($debug) {
+		elgg_save_config('debug', $debug);
+	} else {
+		elgg_remove_config('debug');
+	}
 }
 
 $regenerate_site_secret = get_input('regenerate_site_secret', false);

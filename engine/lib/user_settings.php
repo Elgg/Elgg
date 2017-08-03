@@ -525,6 +525,9 @@ function _elgg_user_settings_init() {
 	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_user_settings_init');
 };

@@ -673,7 +673,7 @@ class ViewsService {
 						// absolute path
 					} else {
 						// relative path
-						$path = Directory\Local::root()->getPath($path);
+						$path = Directory\Local::projectRoot()->getPath($path);
 					}
 
 					if (substr($view, -1) === '/') {

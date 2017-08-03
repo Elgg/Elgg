@@ -53,7 +53,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 
 		$this->hooks = new \Elgg\PluginHooksService();
 		$this->request = \Elgg\Http\Request::create("/action/upload");
-		$this->logger = new \Elgg\Logger($this->hooks, $this->config(), new \Elgg\Context());
+		$this->logger = new \Elgg\Logger($this->hooks, new \Elgg\Context());
 
 		$this->setupMockServices(false);
 		$this->entities = _elgg_services()->entityTable;
@@ -65,13 +65,13 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 		]);
 
 		$dir = (new \Elgg\EntityDirLocator($this->entity->guid))->getPath();
-		$this->entity_dir_path = $this->config()->get('dataroot') . $dir;
+		$this->entity_dir_path = $this->config()->dataroot . $dir;
 		if (is_dir($this->entity_dir_path)) {
 			_elgg_rmdir($this->entity_dir_path);
 		}
 
 		$dir = (new \Elgg\EntityDirLocator($this->entity->owner_guid))->getPath();
-		$this->owner_dir_path = $this->config()->get('dataroot') . $dir;
+		$this->owner_dir_path = $this->config()->dataroot . $dir;
 		if (is_dir($this->owner_dir_path)) {
 			_elgg_rmdir($this->owner_dir_path);
 		}
@@ -82,12 +82,12 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 	}
 
 	public function tearDown() {
-		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/75x125.jpg'));
-		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/300x300.jpg'));
-		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/600x300.jpg'));
-		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/300x600.jpg'));
-		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/400x300.gif'));
-		$this->assertTrue(file_exists($this->config()->get('dataroot') . '1/1/400x300.png'));
+		$this->assertTrue(file_exists($this->config()->dataroot . '1/1/75x125.jpg'));
+		$this->assertTrue(file_exists($this->config()->dataroot . '1/1/300x300.jpg'));
+		$this->assertTrue(file_exists($this->config()->dataroot . '1/1/600x300.jpg'));
+		$this->assertTrue(file_exists($this->config()->dataroot . '1/1/300x600.jpg'));
+		$this->assertTrue(file_exists($this->config()->dataroot . '1/1/400x300.gif'));
+		$this->assertTrue(file_exists($this->config()->dataroot . '1/1/400x300.png'));
 		if (is_dir($this->entity_dir_path)) {
 			_elgg_rmdir($this->entity_dir_path);
 		}

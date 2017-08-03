@@ -2,15 +2,9 @@
 namespace Elgg;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * Use the elgg_* versions instead.
+ * Base class for events and hooks
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Hooks
- * @since      1.9.0
  */
 abstract class HooksRegistrationService {
 

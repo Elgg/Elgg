@@ -47,7 +47,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		}
 		
 		// make sure memcache is reset
-		_elgg_services()->events->registerHandler('cache:flush', 'system', [$this, 'clear']);
+		_elgg_services()->hooks->getEvents()->registerHandler('cache:flush', 'system', [$this, 'clear']);
 	}
 
 	/**
@@ -166,7 +166,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 * @return void
 	 */
 	public function setNamespace($namespace = "default") {
-		$config_prefix = _elgg_services()->config->getVolatile('memcache_namespace_prefix');
+		$config_prefix = _elgg_config()->memcache_namespace_prefix;
 		if ($config_prefix) {
 			$namespace = $config_prefix . $namespace;
 		}

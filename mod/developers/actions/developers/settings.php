@@ -5,10 +5,12 @@
 
 $site = elgg_get_site_entity();
 
-if (get_input('simple_cache')) {
-	elgg_enable_simplecache();
-} else {
-	elgg_disable_simplecache();
+if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
+	if (get_input('simple_cache')) {
+		elgg_enable_simplecache();
+	} else {
+		elgg_disable_simplecache();
+	}
 }
 
 if (get_input('system_cache')) {
@@ -17,11 +19,13 @@ if (get_input('system_cache')) {
 	elgg_disable_system_cache();
 }
 
-$debug = get_input('debug_level');
-if ($debug) {
-	elgg_save_config('debug', $debug);
-} else {
-	elgg_remove_config('debug');
+if (!_elgg_config()->hasInitialValue('debug')) {
+	$debug = get_input('debug_level');
+	if ($debug) {
+		elgg_save_config('debug', $debug);
+	} else {
+		elgg_remove_config('debug');
+	}
 }
 
 $simple_settings = [

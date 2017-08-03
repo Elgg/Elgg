@@ -34,13 +34,13 @@ class UploadServiceTest extends \Elgg\TestCase {
 		$this->owner_dir_path = _elgg_config()->dataroot . $dir;
 
 		_elgg_services()->hooks->backup();
-		_elgg_services()->events->backup();
+		_elgg_services()->hooks->getEvents()->backup();
 
 		_elgg_filestore_init(); // we will need simpletype hook to work
 
 		// Events service is trying to connect to the DB
-		_elgg_services()->events->unregisterHandler('all', 'all', 'system_log_listener');
-		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		_elgg_services()->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
+		_elgg_services()->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
 		$request = $this->prepareHttpRequest();
 		_elgg_services()->setValue('request', $request);
@@ -58,7 +58,7 @@ class UploadServiceTest extends \Elgg\TestCase {
 		}
 
 		_elgg_services()->hooks->restore();
-		_elgg_services()->events->restore();
+		_elgg_services()->hooks->getEvents()->restore();
 	}
 
 	public function testDefaultUploadEmpty() {
@@ -197,7 +197,7 @@ class UploadServiceTest extends \Elgg\TestCase {
 		$upload_event_calls = 0;
 		$upload_hook_calls = 0;
 
-		_elgg_services()->events->registerHandler('upload:after', 'file', function($event, $type, $object) use (&$upload_event_calls) {
+		_elgg_services()->hooks->getEvents()->registerHandler('upload:after', 'file', function($event, $type, $object) use (&$upload_event_calls) {
 			$this->assertEquals('upload:after', $event);
 			$this->assertEquals('file', $type);
 			$this->assertInstanceOf(\ElggFile::class, $object);

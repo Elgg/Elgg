@@ -2,6 +2,7 @@
 namespace Elgg\Database;
 
 use Elgg\Cache\Pool;
+use Elgg\Config;
 use Elgg\Profilable;
 use Exception;
 use Elgg\Cache\PluginSettingsCache;
@@ -349,7 +350,7 @@ class Plugins {
 			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_VIEWS;
 		}
 	
-		if (!empty($GLOBALS['_ELGG']->i18n_loaded_from_cache)) {
+		if (_elgg_services()->translator->wasLoadedFromCache()) {
 			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_LANGUAGES;
 		}
 	
@@ -396,7 +397,11 @@ class Plugins {
 	 * @return \ElggPlugin[]
 	 */
 	function find($status = 'active') {
-		$db_prefix = elgg_get_config('dbprefix');
+		if (!_elgg_services()->db) {
+			return [];
+		}
+
+		$db_prefix = _elgg_config()->dbprefix;
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 		$site_guid = 1;
 		
@@ -539,11 +544,6 @@ class Plugins {
 	 */
 	function namespacePrivateSetting($type, $name, $id = null) {
 		switch ($type) {
-			// commented out because it breaks $plugin->$name access to variables
-			//case 'setting':
-			//	$name = ELGG_PLUGIN_SETTING_PREFIX . $name;
-			//	break;
-	
 			case 'user_setting':
 				if (!$id) {
 					throw new \InvalidArgumentException("You must pass the plugin id for user settings");

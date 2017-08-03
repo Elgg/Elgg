@@ -40,7 +40,9 @@ class EntityTableTest extends \Elgg\TestCase {
 	 */
 	public function testThrowsWhenGettingUserForPermissionsCheckWithNonUserGuid() {
 		$object = $this->mocks()->getObject();
+		_elgg_services()->logger->disable();
 		_elgg_services()->entityTable->getUserForPermissionsCheck($object->guid);
+		_elgg_services()->logger->enable();
 	}
 
 	public function testCanUpdateLastAction() {

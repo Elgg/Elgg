@@ -9,7 +9,6 @@ class ElggTravisInstallTest extends \ElggCoreUnitTest {
 	}
 
 	public function testDbWasInstalled() {
-		_elgg_services()->db->assertInstalled();
+		$this->assertNotNull(_elgg_services()->configTable->get('installed'));
 	}
-	
 }

@@ -57,7 +57,7 @@ class Service {
 	 * @return UnpreparedMenu
 	 */
 	public function getUnpreparedMenu($name, array $params = []) {
-		$menus = $this->config->getVolatile('menus');
+		$menus = $this->config->menus;
 
 		$items = $this->prepareMenuItems(elgg_extract('items', $params, []));
 		unset($params['items']);

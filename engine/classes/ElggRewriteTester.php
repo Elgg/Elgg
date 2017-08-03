@@ -1,13 +1,13 @@
 <?php
 
 use Elgg\Filesystem\Directory;
+use Elgg\Application;
+use Elgg\Project\Paths;
+use Elgg\Http\Request;
 
 /**
  * Elgg RewriteTester.
  * Test if URL rewriting is working.
- *
- * @package    Elgg.Core
- * @subpackage Installer
  */
 class ElggRewriteTester {
 	protected $webserver;
@@ -92,7 +92,7 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function runRewriteTest($url) {
-		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === \Elgg\Application::REWRITE_TEST_OUTPUT);
+		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === Request::REWRITE_TEST_OUTPUT);
 		return $this->serverSupportsRemoteRead;
 	}
 	
@@ -102,7 +102,7 @@ class ElggRewriteTester {
 	 * @return boolean
 	 */
 	public function runLocalhostAccessTest() {
-		$url = _elgg_services()->config->wwwroot;
+		$url = _elgg_config()->wwwroot;
 		return (bool) $this->fetchUrl($url);
 	}
 
@@ -147,8 +147,9 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function createHtaccess($url) {
-		$root = Directory\Local::root();
+		$root = Directory\Local::projectRoot();
 		$file = $root->getFile(".htaccess");
+
 		if ($file->exists()) {
 			// check that this is the Elgg .htaccess
 			$data = $file->getContents();
@@ -157,17 +158,18 @@ class ElggRewriteTester {
 				$this->htaccessIssue = 'read_permission';
 				return false;
 			}
+
 			if (strpos($data, 'Elgg') === false) {
 				$this->htaccessIssue = 'non_elgg_htaccess';
 				return false;
-			} else {
-				// check if this is an old Elgg htaccess
-				if (strpos($data, 'RewriteRule ^rewrite.php$ install.php') == false) {
-					$this->htaccessIssue = 'old_elgg_htaccess';
-					return false;
-				}
-				return true;
 			}
+
+			// check if this is an old Elgg htaccess
+			if (strpos($data, 'RewriteRule ^rewrite.php$ install.php') == false) {
+				$this->htaccessIssue = 'old_elgg_htaccess';
+				return false;
+			}
+			return true;
 		}
 
 		if (!is_writable($root->getPath())) {
@@ -176,7 +178,7 @@ class ElggRewriteTester {
 		}
 
 		// create the .htaccess file
-		$result = copy(\Elgg\Application::elggDir()->getPath("install/config/htaccess.dist"), $file->getPath());
+		$result = copy(Paths::elgg() . "install/config/htaccess.dist", $file->getPath());
 		if (!$result) {
 			$this->htaccessIssue = 'cannot_copy';
 			return false;

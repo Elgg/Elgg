@@ -12,6 +12,13 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+``$CONFIG`` is removed!
+-----------------------
+
+Not exactly, however you **must** audit its usage and *should* replace it with ``elgg_get_config()`` and ``elgg_set_config()``, as recommended since Elgg 1.9.
+
+The global ``$CONFIG`` is now a proxy for Elgg's configuration container, and modifications **will fail** if you try to alter array properties directly. E.g. ``$CONFIG->cool_fruit[] = 'Pear';``. The silver lining is that failures will emit NOTICEs.
+
 Removed views
 -------------
 
@@ -380,6 +387,9 @@ Miscellaneous API changes
  * The script ``engine/start.php`` is removed.
  * The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``.
  * Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used.
+ * Config functions like ``elgg_get_config`` no longer trim keys.
+ * If you override the view ``navigation/menu/user_hover/placeholder``, you must change the config key ``lazy_hover:menus`` to ``elgg_lazy_hover_menus``.
+ * The config value ``entity_types`` is no longer present or used.
 
 JavaScript hook calling order may change
 ----------------------------------------

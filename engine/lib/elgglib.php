@@ -2,6 +2,7 @@
 
 use Elgg\Filesystem\Directory;
 use Elgg\Http\ResponseBuilder;
+use Elgg\Project\Paths;
 
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
@@ -524,11 +525,6 @@ function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * Internal note: Events are stored in $CONFIG->events as:
- * <code>
- * $CONFIG->events[$event][$type][$priority] = $callback;
- * </code>
- *
  * @param string $event       The event type
  * @param string $object_type The object type
  * @param string $callback    The handler callback
@@ -540,7 +536,7 @@ function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
  * @example documentation/events/all.php
  */
 function elgg_register_event_handler($event, $object_type, $callback, $priority = 500) {
-	return _elgg_services()->events->registerHandler($event, $object_type, $callback, $priority);
+	return _elgg_services()->hooks->getEvents()->registerHandler($event, $object_type, $callback, $priority);
 }
 
 /**
@@ -554,7 +550,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  * @since 1.7
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
-	return _elgg_services()->events->unregisterHandler($event, $object_type, $callback);
+	return _elgg_services()->hooks->getEvents()->unregisterHandler($event, $object_type, $callback);
 }
 
 /**
@@ -567,7 +563,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @since 2.3
  */
 function elgg_clear_event_handlers($event, $object_type) {
-	_elgg_services()->events->clearHandlers($event, $object_type);
+	_elgg_services()->hooks->getEvents()->clearHandlers($event, $object_type);
 }
 
 /**
@@ -604,7 +600,7 @@ function elgg_clear_event_handlers($event, $object_type) {
  * @example documentation/examples/events/trigger.php
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->trigger($event, $object_type, $object);
+	return _elgg_services()->hooks->getEvents()->trigger($event, $object_type, $object);
 }
 
 /**
@@ -625,7 +621,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @see elgg_trigger_after_event
  */
 function elgg_trigger_before_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->triggerBefore($event, $object_type, $object);
+	return _elgg_services()->hooks->getEvents()->triggerBefore($event, $object_type, $object);
 }
 
 /**
@@ -644,7 +640,7 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  * @see elgg_trigger_before_event
  */
 function elgg_trigger_after_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->triggerAfter($event, $object_type, $object);
+	return _elgg_services()->hooks->getEvents()->triggerAfter($event, $object_type, $object);
 }
 
 /**
@@ -661,7 +657,7 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  * @see elgg_trigger_event
  */
 function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message = null, $version = null) {
-	return _elgg_services()->events->triggerDeprecated($event, $object_type, $object, $message, $version);
+	return _elgg_services()->hooks->getEvents()->triggerDeprecated($event, $object_type, $object, $message, $version);
 }
 
 /**
@@ -689,11 +685,6 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
  *  value if no other handlers have been called.
  *  - mixed $params An optional array of parameters.  Used to provide additional
  *  information to plugins.
- *
- * @note Internal: Plugin hooks are stored in $CONFIG->hooks as:
- * <code>
- * $CONFIG->hooks[$hook][$type][$priority] = $callback;
- * </code>
  *
  * @tip Plugin hooks are similar to Elgg Events in that Elgg emits
  * a plugin hook when certain actions occur, but a plugin hook allows you to alter the
@@ -844,150 +835,8 @@ function elgg_get_ordered_hook_handlers($hook, $type) {
  * @since 2.0.0
  */
 function elgg_get_ordered_event_handlers($event, $type) {
-	return _elgg_services()->events->getOrderedHandlers($event, $type);
+	return _elgg_services()->hooks->getEvents()->getOrderedHandlers($event, $type);
 }
-
-/**
- * Intercepts, logs, and displays uncaught exceptions.
- *
- * To use a viewtype other than failsafe, create the views:
- *  <viewtype>/messages/exceptions/admin_exception
- *  <viewtype>/messages/exceptions/exception
- * See the json viewtype for an example.
- *
- * @warning This function should never be called directly.
- *
- * @see http://www.php.net/set-exception-handler
- *
- * @param Exception $exception The exception being handled
- *
- * @return void
- * @access private
- */
-function _elgg_php_exception_handler($exception) {
-	$timestamp = time();
-	error_log("Exception at time $timestamp: $exception");
-
-	// Wipe any existing output buffer
-	ob_end_clean();
-
-	// make sure the error isn't cached
-	header("Cache-Control: no-cache, must-revalidate", true);
-	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
-
-	$CONFIG = _elgg_services()->config->getStorageObject();
-
-	try {
-		// allow custom scripts to trigger on exception
-		// $CONFIG->exception_include can be set locally in settings.php
-		// value should be a system path to a file to include
-		if (!empty($CONFIG->exception_include) && is_file($CONFIG->exception_include)) {
-			ob_start();
-
-			// don't isolate, these scripts may use the local $exception var.
-			include $CONFIG->exception_include;
-
-			$exception_output = ob_get_clean();
-			
-			// if content is returned from the custom handler we will output
-			// that instead of our default failsafe view
-			if (!empty($exception_output)) {
-				echo $exception_output;
-				exit;
-			}
-		}
-
-		if (elgg_is_xhr()) {
-			elgg_set_viewtype('json');
-			$response = new \Symfony\Component\HttpFoundation\JsonResponse(null, 500);
-		} else {
-			elgg_set_viewtype('failsafe');
-			$response = new \Symfony\Component\HttpFoundation\Response('', 500);
-		}
-
-		if (elgg_is_admin_logged_in()) {
-			$body = elgg_view("messages/exceptions/admin_exception", [
-				'object' => $exception,
-				'ts' => $timestamp
-			]);
-		} else {
-			$body = elgg_view("messages/exceptions/exception", [
-				'object' => $exception,
-				'ts' => $timestamp
-			]);
-		}
-
-		$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
-		$response->send();
-	} catch (Exception $e) {
-		$timestamp = time();
-		$message = $e->getMessage();
-		http_response_code(500);
-		echo "Fatal error in exception handler. Check log for Exception at time $timestamp";
-		error_log("Exception at time $timestamp : fatal error in exception handler : $message");
-	}
-}
-
-/**
- * Intercepts catchable PHP errors.
- *
- * @warning This function should never be called directly.
- *
- * @internal
- * For catchable fatal errors, throws an Exception with the error.
- *
- * For non-fatal errors, depending upon the debug settings, either
- * log the error or ignore it.
- *
- * @see http://www.php.net/set-error-handler
- *
- * @param int    $errno    The level of the error raised
- * @param string $errmsg   The error message
- * @param string $filename The filename the error was raised in
- * @param int    $linenum  The line number the error was raised at
- * @param array  $vars     An array that points to the active symbol table where error occurred
- *
- * @return true
- * @throws Exception
- * @access private
- */
-function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
-
-	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
-
-	switch ($errno) {
-		case E_USER_ERROR:
-			if (!elgg_log("PHP: $error", 'ERROR')) {
-				error_log("PHP ERROR: $error");
-			}
-			register_error("ERROR: $error");
-
-			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
-			throw new \Exception($error);
-			break;
-
-		case E_WARNING :
-		case E_USER_WARNING :
-		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
-			
-			// check if the error wasn't suppressed by the error control operator (@)
-			if (error_reporting() && !elgg_log("PHP: $error", 'WARNING')) {
-				error_log("PHP WARNING: $error");
-			}
-			break;
-
-		default:
-			$CONFIG = _elgg_services()->config->getStorageObject();
-			if (isset($CONFIG->debug) && $CONFIG->debug === 'NOTICE') {
-				if (!elgg_log("PHP (errno $errno): $error", 'NOTICE')) {
-					error_log("PHP NOTICE: $error");
-				}
-			}
-	}
-
-	return true;
-}
-
 
 /**
  * Display or log a message.
@@ -1833,7 +1682,7 @@ function _elgg_walled_garden_index() {
  * @access private
  */
 function _elgg_walled_garden_init() {
-	if (!elgg_get_config('walled_garden')) {
+	if (!_elgg_config()->walled_garden) {
 		return;
 	}
 
@@ -1843,7 +1692,7 @@ function _elgg_walled_garden_init() {
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 
-	if (elgg_get_config('default_access') == ACCESS_PUBLIC) {
+	if (_elgg_config()->default_access == ACCESS_PUBLIC) {
 		elgg_set_config('default_access', ACCESS_LOGGED_IN);
 	}
 
@@ -1933,7 +1782,7 @@ function _elgg_init() {
 		return $result;
 	});
 
-	if (_elgg_services()->config->getVolatile('enable_profiling')) {
+	if (_elgg_config()->enable_profiling) {
 		/**
 		 * @see \Elgg\Profiler::handlePageOutput
 		 */
@@ -1954,135 +1803,16 @@ function _elgg_init() {
  * @access private
  */
 function _elgg_api_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggTravisInstallTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreHelpersTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRegressionBugsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggBatchTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggTravisInstallTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreHelpersTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreRegressionBugsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggBatchTest.php';
 	return $value;
 }
 
-/**#@+
- * Controls access levels on \ElggEntity entities, metadata, and annotations.
- *
- * @warning ACCESS_DEFAULT is a place holder for the input/access view. Do not
- * use it when saving an entity.
- *
- * @var int
- */
-define('ACCESS_DEFAULT', -1);
-define('ACCESS_PRIVATE', 0);
-define('ACCESS_LOGGED_IN', 1);
-define('ACCESS_PUBLIC', 2);
-define('ACCESS_FRIENDS', -2);
-/**#@-*/
-
 /**
- * Constant to request the value of a parameter be ignored in elgg_get_*() functions
- *
- * @see elgg_get_entities()
- * @var null
- * @since 1.7
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-define('ELGG_ENTITIES_ANY_VALUE', null);
-
-/**
- * Constant to request the value of a parameter be nothing in elgg_get_*() functions.
- *
- * @see elgg_get_entities()
- * @var int 0
- * @since 1.7
- */
-define('ELGG_ENTITIES_NO_VALUE', 0);
-
-/**
- * Used in calls to forward() to specify the browser should be redirected to the
- * referring page.
- *
- * @see forward
- * @var int -1
- */
-define('REFERRER', -1);
-
-/**
- * Alternate spelling for REFERRER.  Included because of some bad documentation
- * in the original HTTP spec.
- *
- * @see forward()
- * @link http://en.wikipedia.org/wiki/HTTP_referrer#Origin_of_the_term_referer
- * @var int -1
- */
-define('REFERER', -1);
-
-/**
- * HTTP Response codes
- */
-define('ELGG_HTTP_CONTINUE', 100);
-define('ELGG_HTTP_SWITCHING_PROTOCOLS', 101);
-define('ELGG_HTTP_PROCESSING', 102);// RFC2518
-define('ELGG_HTTP_OK', 200);
-define('ELGG_HTTP_CREATED', 201);
-define('ELGG_HTTP_ACCEPTED', 202);
-define('ELGG_HTTP_NON_AUTHORITATIVE_INFORMATION', 203);
-define('ELGG_HTTP_NO_CONTENT', 204);
-define('ELGG_HTTP_RESET_CONTENT', 205);
-define('ELGG_HTTP_PARTIAL_CONTENT', 206);
-define('ELGG_HTTP_MULTI_STATUS', 207); // RFC4918
-define('ELGG_HTTP_ALREADY_REPORTED', 208); // RFC5842
-define('ELGG_HTTP_IM_USED', 226); // RFC3229
-define('ELGG_HTTP_MULTIPLE_CHOICES', 300);
-define('ELGG_HTTP_MOVED_PERMANENTLY', 301);
-define('ELGG_HTTP_FOUND', 302);
-define('ELGG_HTTP_SEE_OTHER', 303);
-define('ELGG_HTTP_NOT_MODIFIED', 304);
-define('ELGG_HTTP_USE_PROXY', 305);
-define('ELGG_HTTP_RESERVED', 306);
-define('ELGG_HTTP_TEMPORARY_REDIRECT', 307);
-define('ELGG_HTTP_PERMANENTLY_REDIRECT', 308); // RFC7238
-define('ELGG_HTTP_BAD_REQUEST', 400);
-define('ELGG_HTTP_UNAUTHORIZED', 401);
-define('ELGG_HTTP_PAYMENT_REQUIRED', 402);
-define('ELGG_HTTP_FORBIDDEN', 403);
-define('ELGG_HTTP_NOT_FOUND', 404);
-define('ELGG_HTTP_METHOD_NOT_ALLOWED', 405);
-define('ELGG_HTTP_NOT_ACCEPTABLE', 406);
-define('ELGG_HTTP_PROXY_AUTHENTICATION_REQUIRED', 407);
-define('ELGG_HTTP_REQUEST_TIMEOUT', 408);
-define('ELGG_HTTP_CONFLICT', 409);
-define('ELGG_HTTP_GONE', 410);
-define('ELGG_HTTP_LENGTH_REQUIRED', 411);
-define('ELGG_HTTP_PRECONDITION_FAILED', 412);
-define('ELGG_HTTP_REQUEST_ENTITY_TOO_LARGE', 413);
-define('ELGG_HTTP_REQUEST_URI_TOO_LONG', 414);
-define('ELGG_HTTP_UNSUPPORTED_MEDIA_TYPE', 415);
-define('ELGG_HTTP_REQUESTED_RANGE_NOT_SATISFIABLE', 416);
-define('ELGG_HTTP_EXPECTATION_FAILED', 417);
-define('ELGG_HTTP_I_AM_A_TEAPOT', 418); // RFC2324
-define('ELGG_HTTP_UNPROCESSABLE_ENTITY', 422);// RFC4918
-define('ELGG_HTTP_LOCKED', 423); // RFC4918
-define('ELGG_HTTP_FAILED_DEPENDENCY', 424); // RFC4918
-define('ELGG_HTTP_RESERVED_FOR_WEBDAV_ADVANCED_COLLECTIONS_EXPIRED_PROPOSAL', 425); // RFC2817
-define('ELGG_HTTP_UPGRADE_REQUIRED', 426);// RFC2817
-define('ELGG_HTTP_PRECONDITION_REQUIRED', 428); // RFC6585
-define('ELGG_HTTP_TOO_MANY_REQUESTS', 429); // RFC6585
-define('ELGG_HTTP_REQUEST_HEADER_FIELDS_TOO_LARGE', 431); // RFC6585
-define('ELGG_HTTP_INTERNAL_SERVER_ERROR', 500);
-define('ELGG_HTTP_NOT_IMPLEMENTED', 501);
-define('ELGG_HTTP_BAD_GATEWAY', 502);
-define('ELGG_HTTP_SERVICE_UNAVAILABLE', 503);
-define('ELGG_HTTP_GATEWAY_TIMEOUT', 504);
-define('ELGG_HTTP_VERSION_NOT_SUPPORTED', 505);
-define('ELGG_HTTP_VARIANT_ALSO_NEGOTIATES_EXPERIMENTAL', 506);// RFC2295
-define('ELGG_HTTP_INSUFFICIENT_STORAGE', 507);// RFC4918
-define('ELGG_HTTP_LOOP_DETECTED', 508); // RFC5842
-define('ELGG_HTTP_NOT_EXTENDED', 510);// RFC2774
-define('ELGG_HTTP_NETWORK_AUTHENTICATION_REQUIRED', 511); // RFC6585
-
-/**
- * Default JSON encoding
- */
-define('ELGG_JSON_ENCODING', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
-
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('cache:flush', 'system', function () {
 		_elgg_services()->boot->invalidateCache();

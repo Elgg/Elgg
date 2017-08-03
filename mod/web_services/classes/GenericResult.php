@@ -90,7 +90,7 @@ abstract class GenericResult {
 	 * Override this to include any more specific information, however api results
 	 * should be attached to the class using setResult().
 	 *
-	 * if $CONFIG->debug is set then additional information about the runtime environment and
+	 * if ELGG_DEBUG is set then additional information about the runtime environment and
 	 * authentication will be returned.
 	 *
 	 * @return stdClass Object containing the serialised result.

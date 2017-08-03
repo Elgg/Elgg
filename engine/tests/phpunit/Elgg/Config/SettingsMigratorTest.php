@@ -117,7 +117,7 @@ class SettingsMigratorTest extends TestCase {
 	/**
 	 * Setup testing database config
 	 *
-	 * @return \Elgg\Database\Config
+	 * @return \Elgg\Database\DbConfig
 	 */
 	public function getTestingDatabaseConfig() {
 		$conf = new \stdClass();
@@ -133,7 +133,7 @@ class SettingsMigratorTest extends TestCase {
 
 		$conf->dbprefix = elgg_get_config('dbprefix');
 
-		return new \Elgg\Database\Config($conf);
+		return new \Elgg\Database\DbConfig($conf);
 	}
 
 }

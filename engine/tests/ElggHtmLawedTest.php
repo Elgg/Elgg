@@ -20,50 +20,6 @@ class ElggHtmLawedTest extends ElggCoreUnitTest {
 	);
 
 	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
-		// unregister all config hooks to test stock
-		// no way to do this through the API.
-		global $CONFIG;
-
-		if (isset($CONFIG->hooks['config']['htmlawed'])) {
-			$this->configHooks = $CONFIG->hooks['config']['htmlawed'];
-			$CONFIG->hooks['config']['htmlawed'] = array();
-		}
-
-		if (isset($CONFIG->hooks['allowed_styles']['htmlawed'])) {
-			$this->styleHooks = $CONFIG->hooks['allowed_styles']['htmlawed'];
-			$CONFIG->hooks['allowed_styles']['htmlawed'] = array();
-		}
-	}
-
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-		global $CONFIG;
-
-		$CONFIG->hooks['config']['htmlawed'] = $this->configHooks;
-		$CONFIG->hooks['allowed_styles']['htmlawed'] = $this->styleHooks;
-	}
-
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		// all __destruct() code should go above here
-		parent::__destruct();
-	}
-
-	/**
 	 * Test anchor tags as input
 	 */
 	public function testHtmlawedFilterTagsAnchorsInput() {

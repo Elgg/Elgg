@@ -7,8 +7,6 @@
  * @subpackage PageOwner
  */
 
-use Elgg\Http\Request;
-
 /**
  * Gets the guid of the entity that owns the current page.
  *
@@ -251,6 +249,19 @@ function elgg_set_context_stack(array $stack) {
 	_elgg_services()->context->fromArray($stack);
 }
 
+/**
+ * Set up default page owner default
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_pageowner_init() {
+	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
+}
+
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$hooks->registerHandler('page_owner', 'system', 'default_page_owner_handler');
+	$events->registerHandler('init', 'system', '_elgg_pageowner_init');
 };

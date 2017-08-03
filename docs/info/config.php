@@ -1,11 +1,10 @@
 <?php
 /**
- * Stub info for $CONFIG global options.
+ * Legacy documentation for the old $CONFIG object. In Elgg 3.0 this is a reference to
+ * the Config service.
  *
- * @tip Plugins should never use the $CONFIG array directly.
- *
- * @package    Elgg.Core
- * @subpackage Configuration
+ * @warning DO NOT USE $CONFIG except in a legacy settings.php file. Note that it will be unset
+ *          by the boot process after reading.
  */
 
 /**
@@ -278,55 +277,3 @@ $CONFIG->action_time_limit;
  * @global bool $CONFIG->allow_phpinfo
  */
 $CONFIG->allow_phpinfo = false;
-
-/**
- * Paths to scan for autoloading languages.
- *
- * Languages are automatically loaded for the site or
- * user's default language.  Plugins can extend or override strings.
- * language_paths is an array of paths to scan for PHP files matching
- * the default language.  The order of paths is determined by the plugin load order,
- * with later entries overriding earlier.  Language files within these paths are
- * named as the two-letter ISO 639-1 country codes for the language they represent.
- *
- * Language paths are stored as array keys in the format:
- * <code>
- * $_ELGG->language_paths[str $language_path] = true
- * </code>
- *
- * @link http://en.wikipedia.org/wiki/ISO_639-1
- * @see register_language()
- * @global array $_ELGG->language_paths
- * @access private
- */
-$_ELGG->language_paths;
-
-/**
- * String translations for the current language.
- *
- * Elgg uses a key-based system for string internationalization, which
- * is accessed with {@link elgg_echo()}.
- *
- * Translations are stored as an array in the following format:
- * <code>
- * $_ELGG->translations[str $language_code][str $string_key] = str 'Translated Language String';
- * </code>
- *
- * @see register_translation()
- * @see elgg_echo()
- * @global array $_ELGG->translations
- * @access private
- */
-$_ELGG->translations;
-
-/**
- * An array of metadata names to be used as tags.
- *
- * Because tags are simply names of meatdata, This is used
- * in search to prevent data exposure by searching on
- * arbitrary metadata.
- *
- * @global array $_ELGG->registered_tag_metadata_names
- * @access private
- */
-$_ELGG->registered_tag_metadata_names;

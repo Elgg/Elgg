@@ -86,8 +86,7 @@ class ServeFileHandler {
 			$path_from_dataroot = Base64Url::decode(substr($path_from_dataroot, 1));
 		}
 
-		$dataroot = $this->config->getDataPath();
-		$filenameonfilestore = "{$dataroot}{$path_from_dataroot}";
+		$filenameonfilestore = "{$this->config->dataroot}{$path_from_dataroot}";
 
 		if (!is_readable($filenameonfilestore)) {
 			return $response->setStatusCode(404)->setContent('File not found');
@@ -118,11 +117,11 @@ class ServeFileHandler {
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
 		
-		$sendfile_type = $this->config->getVolatile('X-Sendfile-Type');
+		$sendfile_type = $this->config->x_sendfile_type;
 		if ($sendfile_type) {
 			$request->headers->set('X-Sendfile-Type', $sendfile_type);
 
-			$mapping = (string) $this->config->getVolatile('X-Accel-Mapping');
+			$mapping = (string) $this->config->x_accel_mapping;
 			$request->headers->set('X-Accel-Mapping', $mapping);
 
 			$response->trustXSendfileTypeHeader();

@@ -38,7 +38,14 @@ class MetadataTable {
 	
 	/** @var string */
 	protected $table;
+
+	/**
+	 * @var string[]
+	 */
+	protected $tag_names = [];
+
 	const MYSQL_TEXT_BYTE_LIMIT = 65535;
+
 	/**
 	 * Constructor
 	 *
@@ -60,6 +67,30 @@ class MetadataTable {
 		$this->events = $events;
 		$this->session = $session;
 		$this->table = $this->db->prefix . "metadata";
+	}
+
+	/**
+	 * Registers a metadata name as containing tags for an entity.
+	 *
+	 * @param string $name Tag name
+	 *
+	 * @return bool
+	 */
+	function registerTagName($name) {
+		if (!in_array($name, $this->tag_names)) {
+			$this->tag_names[] = $name;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns an array of valid metadata names for tags.
+	 *
+	 * @return string[]
+	 */
+	function getTagNames() {
+		return $this->tag_names;
 	}
 
 	/**
@@ -203,8 +234,6 @@ class MetadataTable {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
-		$access_id = ACCESS_PUBLIC;
-
 		// Support boolean types (as integers)
 		if (is_bool($value)) {
 			$value = (int) $value;
@@ -225,8 +254,8 @@ class MetadataTable {
 			':name' => $name,
 			':value' => $value,
 			':value_type' => $value_type,
-			':access_id' => $access_id,
 			':owner_guid' => $owner_guid,
+			':access_id' => ACCESS_PUBLIC,
 			':id' => $id,
 		]);
 		
