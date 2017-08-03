@@ -43,7 +43,7 @@ $load_base_url = "blog/edit/{$blog->getGUID()}";
 
 // show the "published revision"
 $published_item = '';
-if ($blog->status == 'published') {
+if ($blog->status == ElggBlog::PUBLISHED) {
 	$load = elgg_view('output/url', [
 		'href' => $load_base_url,
 		'text' => elgg_echo('status:published'),
