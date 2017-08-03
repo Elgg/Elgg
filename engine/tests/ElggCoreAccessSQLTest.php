@@ -184,6 +184,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$test_user = $session->getLoggedInUser();
 
 		$object = new ElggObject();
+		$object->subtype = $this->getRandomValidSubtype();
 		$object->access_id = ACCESS_PRIVATE;
 		$object->save();
 

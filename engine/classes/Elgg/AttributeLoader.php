@@ -234,7 +234,7 @@ class AttributeLoader {
 
 		$row = $this->filterAddedColumns($row);
 
-		$row['subtype'] = (int) $row['subtype'];
+		$row['subtype'] = $row['subtype'];
 
 		// set to null when reading empty value, to match default empty value; See #5456
 		foreach (self::$null_attr_names as $key) {

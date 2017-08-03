@@ -876,7 +876,7 @@ class ElggInstaller {
 		
 		return true;
 	}
-	
+
 	/**
 	 * Check version of PHP, extensions, and variables
 	 *

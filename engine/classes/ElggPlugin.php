@@ -1113,11 +1113,7 @@ class ElggPlugin extends \ElggObject {
 		
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
-				if (get_subtype_id($entity['type'], $entity['subtype'])) {
-					update_subtype($entity['type'], $entity['subtype'], $entity['class']);
-				} else {
-					add_subtype($entity['type'], $entity['subtype'], $entity['class']);
-				}
+				elgg_set_entity_class($entity['type'], $entity['subtype'], $entity['class']);
 			}
 		}
 	}
@@ -1135,7 +1131,7 @@ class ElggPlugin extends \ElggObject {
 		
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
-				update_subtype($entity['type'], $entity['subtype']);
+				elgg_set_entity_class($entity['type'], $entity['subtype']);
 			}
 		}
 	}
