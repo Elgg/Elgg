@@ -146,6 +146,11 @@ class ElggObjectTest extends \Elgg\TestCase {
 		$clone = clone $object;
 
 		$this->assertEmpty($clone->guid);
+		
+		$this->assertNull($clone->time_created);
+		$this->assertNull($clone->time_updated);
+		$this->assertNull($clone->last_action);
+		
 		$this->assertEquals($object->title, $clone->title);
 		$this->assertEquals($object->description, $clone->description);
 		$this->assertEquals($object->foo1, $clone->foo1);

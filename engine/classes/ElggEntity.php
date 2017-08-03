@@ -152,7 +152,10 @@ abstract class ElggEntity extends \ElggData implements
 			'limit' => 0
 		]);
 
-		$this->attributes['guid'] = "";
+		$this->attributes['guid'] = null;
+		$this->attributes['time_created'] = null;
+		$this->attributes['time_updated'] = null;
+		$this->attributes['last_action'] = null;
 
 		$this->attributes['subtype'] = $orig_entity->getSubtype();
 
