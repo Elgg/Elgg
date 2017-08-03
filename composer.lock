@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fe54e2f52ef715bc6219586f30908ba",
+    "content-hash": "ddee77b5b14db5526a1b14298981a612",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -105,6 +105,43 @@
                     "package.json"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/jquery-treeview",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jzaefferer/jquery-treeview.git",
+                "reference": "ea4fd39fe7bf25db75cdb6edeb73e502d9804924"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jzaefferer/jquery-treeview/zipball/ea4fd39fe7bf25db75cdb6edeb73e502d9804924",
+                "reference": "ea4fd39fe7bf25db75cdb6edeb73e502d9804924",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "jquery.treeview.css",
+                    "jquery.treeview.js"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Lightweight and flexible transformation of an unordered list into an expandable and collapsable tree, great for unobtrusive navigation enhancements. Supports both location and cookie based persistence.",
+            "keywords": [
+                "jquery",
+                "treeview"
+            ]
         },
         {
             "name": "bower-asset/jquery-ui",

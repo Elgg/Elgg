@@ -1,37 +1,11 @@
 <?php
 /**
- * Parent picker
- *
- * @uses $vars['value']          The current value, if any
- * @uses $vars['options_values']
- * @uses $vars['name']           The name of the input field
- * @uses $vars['entity']         Optional. The child entity (uses container_guid)
+ * @depreated 3.0 Use input/pages/parent
  */
 
-elgg_load_library('elgg:pages');
+elgg_deprecated_notice('
+	"pages/input/parent" view has been deprecated and will be removed.
+	Use "input/pages/parent" view instead.
+', '3.0');
 
-if (empty($vars['entity'])) {
-	$container = elgg_get_page_owner_entity();
-} else {
-	$container = $vars['entity']->getContainerEntity();
-}
-
-$pages = pages_get_navigation_tree($container);
-$options = [];
-
-foreach ($pages as $page) {
-	$spacing = "";
-	for ($i = 0; $i < $page['depth']; $i++) {
-		$spacing .= "--";
-	}
-	$options[$page['guid']] = "$spacing " . $page['title'];
-}
-
-$defaults = [
-	'class' => 'elgg-pages-input-parent-picker',
-	'options_values' => $options,
-];
-
-$vars = array_merge($defaults, $vars);
-
-echo elgg_view('input/dropdown', $vars);
+echo elgg_view('input/pages/parent', $vars);

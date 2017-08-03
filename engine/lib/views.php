@@ -1911,6 +1911,13 @@ function elgg_views_boot() {
 	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
+	elgg_register_css('jquery.treeview', elgg_get_simplecache_url('jquery-treeview/jquery.treeview.css'));
+	elgg_define_js('jquery.treeview', [
+		'src' => elgg_get_simplecache_url('jquery-treeview/jquery.treeview.js'),
+		'exports' => 'jQuery.fn.treeview',
+		'deps' => ['jquery'],
+	]);
+
 	elgg_register_ajax_view('languages.js');
 
 	// pre-process CSS regardless of simplecache
