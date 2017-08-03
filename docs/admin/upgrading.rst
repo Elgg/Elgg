@@ -86,6 +86,11 @@ Miscellaneous changes
 
 The settings "Allow visitors to register" and "Restrict pages to logged-in users" now appear on the Basic Settings admin page.
 
+Twitter API plugin
+------------------
+
+The ``twitter_api`` plugin no longer comes bundled with Elgg.
+
 From 2.2 to 2.3
 ===============
 
