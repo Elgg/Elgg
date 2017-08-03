@@ -200,7 +200,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addSelectQuerySpecs(stdClass $row) {
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		// Access SQL for this row might differ based on:
 		//  - logged in user
@@ -354,7 +354,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addInsertQuerySpecs(stdClass $row) {
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		
 		$sql = "
 			INSERT INTO {$dbprefix}entities
@@ -410,7 +410,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addUpdateQuerySpecs(stdClass $row) {
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		$sql = "
 			UPDATE {$dbprefix}entities
@@ -549,7 +549,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addDeleteQuerySpecs(\stdClass $row) {
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 
 		$sql = "
 			DELETE FROM {$dbprefix}entities

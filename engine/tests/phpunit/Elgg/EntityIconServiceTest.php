@@ -143,7 +143,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 		$service = $this->createService();
 
 		// Should return config values, as we do not have any registered hook
-		$this->assertEquals($this->config()->get('icon_sizes'), $service->getSizes());
+		$this->assertEquals($this->config()->icon_sizes, $service->getSizes());
 
 		// If type is not 'icon', should return an empty array
 		$this->logger->disable();
@@ -349,7 +349,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 	 */
 	public function testThrowsExceptionIfLocalFileIsNotReadable() {
 		$service = $this->createService();
-		$local_file = $this->config()->get('dataroot') . '_______empty';
+		$local_file = $this->config()->dataroot . '_______empty';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 	}
 
@@ -360,7 +360,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->dataroot . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'master'));
@@ -385,7 +385,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 		$tmp->owner_guid = $this->user->guid;
 		$tmp->setFilename('tmp.gif');
 		$tmp->open('write');
-		$tmp->write(file_get_contents($this->config()->get('dataroot') . '1/1/400x300.gif'));
+		$tmp->write(file_get_contents($this->config()->dataroot . '1/1/400x300.gif'));
 		$tmp->close();
 
 		$uploaded_file = $tmp->getFilenameOnFilestore();
@@ -419,7 +419,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->dataroot . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
@@ -439,7 +439,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->dataroot . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
@@ -459,7 +459,7 @@ class EntityIconServiceTest extends \Elgg\TestCase {
 
 		$service = $this->createService();
 
-		$local_file = $this->config()->get('dataroot') . '1/1/400x300.png';
+		$local_file = $this->config()->dataroot . '1/1/400x300.png';
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));

@@ -470,7 +470,7 @@ class EntityIconService {
 			$type = 'icon';
 		}
 		if ($type == 'icon') {
-			$sizes = $this->config->get('icon_sizes');
+			$sizes = $this->config->icon_sizes;
 		}
 		$params = [
 			'type' => $type,

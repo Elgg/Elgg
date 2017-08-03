@@ -59,9 +59,9 @@ class ElggCoreConfigTest extends \ElggCoreUnitTest {
 	}
 
 	public function testGetConfigAlreadyLoadedForCurrentSite() {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		$CONFIG->foo_unit_test = 35;
-		$this->assertIdentical(35, elgg_get_config('foo_unit_test'));
+		$this->assertIdentical(35, _elgg_config()->foo_unit_test);
 		unset($CONFIG->foo_unit_test);
 	}
 

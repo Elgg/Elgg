@@ -74,14 +74,12 @@ function string_to_tag_array($string) {
  * @since 1.7.1
  */
 function elgg_get_tags(array $options = []) {
-	global $CONFIG;
-
 	_elgg_check_unsupported_site_guid($options);
 	
 	$defaults = [
 		'threshold' => 1,
 		'tag_names' => [],
-		'limit' => elgg_get_config('default_limit'),
+		'limit' => _elgg_config()->default_limit,
 
 		'types' => ELGG_ENTITIES_ANY_VALUE,
 		'subtypes' => ELGG_ENTITIES_ANY_VALUE,
@@ -150,7 +148,8 @@ function elgg_get_tags(array $options = []) {
 
 	$joins = $options['joins'];
 
-	$joins[] = "JOIN {$CONFIG->dbprefix}metadata md on md.entity_guid = e.guid";
+	$prefix = _elgg_config()->dbprefix;
+	$joins[] = "JOIN {$prefix}metadata md on md.entity_guid = e.guid";
 
 	// remove identical join clauses
 	$joins = array_unique($joins);
@@ -164,7 +163,7 @@ function elgg_get_tags(array $options = []) {
 	}
 
 	$query  = "SELECT md.value as tag, count(md.id) as total ";
-	$query .= "FROM {$CONFIG->dbprefix}entities e ";
+	$query .= "FROM {$prefix}entities e ";
 
 	// add joins
 	foreach ($joins as $j) {

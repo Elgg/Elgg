@@ -102,7 +102,7 @@ class ElggRewriteTester {
 	 * @return boolean
 	 */
 	public function runLocalhostAccessTest() {
-		$url = _elgg_services()->config->getSiteUrl();
+		$url = _elgg_services()->config->wwwroot;
 		return (bool) $this->fetchUrl($url);
 	}
 

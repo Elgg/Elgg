@@ -305,7 +305,7 @@ function delete_directory($directory) {
  */
 function _elgg_clear_entity_files($entity) {
 	$dir = new \Elgg\EntityDirLocator($entity->guid);
-	$file_path = elgg_get_config('dataroot') . $dir;
+	$file_path = _elgg_config()->dataroot . $dir;
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
 	}

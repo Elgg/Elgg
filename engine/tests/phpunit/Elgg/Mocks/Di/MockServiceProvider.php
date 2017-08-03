@@ -105,7 +105,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		$conf->db['write'][0]['dbpass'] = 'xxxx1';
 		$conf->db['write'][0]['dbname'] = 'elgg1';
 
-		$conf->dbprefix = elgg_get_config('dbprefix');
+		$conf->dbprefix = _elgg_config()->dbprefix;
 
 		return new \Elgg\Database\Config($conf);
 	}

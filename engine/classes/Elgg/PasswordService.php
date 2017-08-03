@@ -76,7 +76,7 @@ final class PasswordService {
 		$user->setPrivateSetting('passwd_conf_time', time());
 
 		// generate link
-		$link = _elgg_services()->config->getSiteUrl() . "changepassword?u=$user_guid&c=$code";
+		$link = _elgg_services()->config->wwwroot . "changepassword?u=$user_guid&c=$code";
 		$link = _elgg_services()->urlSigner->sign($link, '+1 day');
 		
 		// generate email

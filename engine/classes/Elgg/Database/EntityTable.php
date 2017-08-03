@@ -520,7 +520,7 @@ class EntityTable {
 			'reverse_order_by'      => false,
 			'order_by'              => 'e.time_created desc',
 			'group_by'              => ELGG_ENTITIES_ANY_VALUE,
-			'limit'                 => $this->config->get('default_limit'),
+			'limit'                 => $this->config->default_limit,
 			'offset'                => 0,
 			'count'                 => false,
 			'selects'               => [],

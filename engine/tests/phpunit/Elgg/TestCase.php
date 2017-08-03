@@ -156,13 +156,13 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		if ($config) {
 			_elgg_services()->setValue('config', $config);
 		}
-		return _elgg_services()->config;
+		return _elgg_config();
 	}
 
 	/**
 	 * Retuns mocking utility library
 	 *
-	 * @return \Elgg\TestCaseMocks
+	 * @return MockServiceProvider
 	 */
 	public static function mocks() {
 		if (!isset(self::$_mocks)) {
@@ -201,11 +201,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		_elgg_services()->annotations->setCurrentTime($dt);
 		_elgg_services()->usersTable->setCurrentTime($dt);
 
-		_elgg_services()->config->set('site', self::mocks()->getSite([
-			'url' => _elgg_services()->config->get('wwwroot'),
+		_elgg_config()->site = self::mocks()->getSite([
+			'url' => _elgg_config()->wwwroot,
 			'name' => 'Testing Site',
 			'description' => 'Testing Site',
-		]));
+		]);
 	}
 
 	/**
@@ -230,7 +230,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 		$request = Request::create($path, $method, $parameters);
 
-		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
+		$cookie_name = _elgg_config()->getCookieConfig()['session']['name'];
 		$session_id = _elgg_services()->session->getId();
 		$request->cookies->set($cookie_name, $session_id);
 

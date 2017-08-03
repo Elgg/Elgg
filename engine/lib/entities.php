@@ -397,7 +397,7 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities',
 
 	$defaults = [
 		'offset' => (int) max(get_input($offset_key, 0), 0),
-		'limit' => (int) max(get_input('limit', elgg_get_config('default_limit')), 0),
+		'limit' => (int) max(get_input('limit', _elgg_config()->default_limit), 0),
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => true,

@@ -33,14 +33,12 @@ function elgg() {
  * @since 1.8.0
  */
 function elgg_register_library($name, $location) {
-	$config = _elgg_services()->config;
-
-	$libraries = $config->get('libraries');
+	$libraries = _elgg_config()->libraries;
 	if ($libraries === null) {
 		$libraries = [];
 	}
 	$libraries[$name] = $location;
-	$config->set('libraries', $libraries);
+	_elgg_config()->libraries = $libraries;
 }
 
 /**
@@ -61,7 +59,7 @@ function elgg_load_library($name) {
 		return;
 	}
 
-	$libraries = _elgg_services()->config->get('libraries');
+	$libraries = _elgg_config()->libraries;
 
 	if (!isset($libraries[$name])) {
 		$error = "$name is not a registered library";

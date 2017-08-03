@@ -1711,7 +1711,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->disable_reason = $reason;
 		}
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		
 		$guid = (int) $this->guid;
 		
@@ -1950,7 +1950,7 @@ abstract class ElggEntity extends \ElggData implements
 		_elgg_invalidate_cache_for_entity($guid);
 		_elgg_invalidate_memcache_for_entity($guid);
 
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		
 		$sql = "
 			DELETE FROM {$dbprefix}entities

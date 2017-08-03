@@ -150,7 +150,7 @@ class MetadataTable extends DbMetadataTabe {
 		// Return this metadata object when _elgg_get_metastring_based_objects() is called
 		$e_access_sql = _elgg_get_access_where_sql(array('table_alias' => 'e'));
 		
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_config()->dbprefix;
 		$sql = "SELECT DISTINCT  n_table.*
 			FROM {$dbprefix}metadata n_table
 				JOIN {$dbprefix}entities e ON n_table.entity_guid = e.guid

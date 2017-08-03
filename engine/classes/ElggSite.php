@@ -113,7 +113,7 @@ class ElggSite extends \ElggEntity {
 	 * @return string The URL
 	 */
 	public function getURL() {
-		return _elgg_services()->config->getSiteUrl();
+		return _elgg_services()->config->wwwroot;
 	}
 
 	/**

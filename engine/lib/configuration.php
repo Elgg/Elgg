@@ -23,7 +23,7 @@ use Elgg\Filesystem\Directory;
  * @since 1.8.0
  */
 function elgg_get_site_url() {
-	return _elgg_services()->config->getSiteUrl();
+	return _elgg_services()->config->wwwroot;
 }
 
 /**
@@ -33,7 +33,7 @@ function elgg_get_site_url() {
  * @since 1.8.0
  */
 function elgg_get_plugins_path() {
-	return _elgg_services()->config->getPluginsPath();
+	return _elgg_services()->config->pluginspath;
 }
 
 /**
@@ -96,7 +96,7 @@ function elgg_get_config($name) {
 		elgg_deprecated_notice($msg, '2.2');
 	}
 
-	return _elgg_services()->config->get($name);
+	return _elgg_config()->$name;
 }
 
 /**
@@ -111,7 +111,7 @@ function elgg_get_config($name) {
  * @since 1.8.0
  */
 function elgg_set_config($name, $value) {
-	_elgg_services()->config->set($name, $value);
+	_elgg_config()->$name = $value;
 }
 
 /**
@@ -124,7 +124,7 @@ function elgg_set_config($name, $value) {
  * @since 1.8.0
  */
 function elgg_save_config($name, $value) {
-	return _elgg_services()->config->save($name, $value);
+	return _elgg_config()->save($name, $value);
 }
 
 /**
@@ -135,7 +135,7 @@ function elgg_save_config($name, $value) {
  * @return bool Success or failure
  */
 function elgg_remove_config($name) {
-	return _elgg_services()->config->remove($name);
+	return _elgg_config()->remove($name);
 }
 
 /**
