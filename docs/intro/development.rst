@@ -42,8 +42,8 @@ view.
 JavaScript
 ==========
 
-Elgg uses an AMD-compatible JavaScript system provided by require.js. Bundled with Elgg are jQuery
-1.11.0, jQuery UI 1.10.4, jQuery Form v20140304, and jQuery UI Autocomplete.
+Elgg uses an AMD-compatible JavaScript system provided by RequireJs. Bundled with Elgg are jQuery, jQuery UI, 
+jQuery Form, and jQuery UI Autocomplete.
 
 Plugins can load their own JS libs.
 
@@ -57,4 +57,14 @@ Caching
 
 Elgg uses two caches to improve performance: a system cache and SimpleCache.
 
+3rd party libraries
+===================
+
+The use of 3rd party libraries in Elgg is managed by using `Composer`_ dependencies. Examples of 3rd party libraries are
+jQuery, RequireJs or Zend mail.
+
+To get a list of all the Elgg dependencies check out the `Packagist`_ page for Elgg.
+
 .. _Transifex: https://www.transifex.com/projects/p/elgg-core/
+.. _Composer: https://getcomposer.org/
+.. _Packagist: https://packagist.org/packages/elgg/elgg
