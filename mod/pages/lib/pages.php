@@ -148,16 +148,18 @@ function pages_get_navigation_tree($container) {
 function pages_register_navigation_tree($container, $selected = null) {
 	$pages = pages_get_navigation_tree($container);
 
-	if ($pages) {
-		foreach ($pages as $page) {
-			elgg_register_menu_item('pages_nav', [
-				'name' => $page['guid'],
-				'text' => $page['title'],
-				'href' => $page['url'],
-				'parent_name' => elgg_extract('parent_guid', $page),
-				'selected' => pages_is_page($selected) && $selected->guid == $page['guid'],
-			]);
-		}
+	if (empty($pages)) {
+		return;
+	}
+
+	foreach ($pages as $page) {
+		elgg_register_menu_item('pages_nav', [
+			'name' => $page['guid'],
+			'text' => $page['title'],
+			'href' => $page['url'],
+			'parent_name' => elgg_extract('parent_guid', $page),
+			'selected' => pages_is_page($selected) && $selected->guid == $page['guid'],
+		]);
 	}
 }
 

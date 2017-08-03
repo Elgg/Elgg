@@ -29,10 +29,10 @@ foreach ($pages as $page) {
 	$options[$page['guid']] = "$spacing " . $page['title'];
 }
 
-$defaults = array(
+$defaults = [
 	'class' => 'elgg-pages-input-parent-picker',
 	'options_values' => $options,
-);
+];
 
 $vars = array_merge($defaults, $vars);
 

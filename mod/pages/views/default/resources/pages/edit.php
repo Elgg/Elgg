@@ -41,13 +41,13 @@ $title = elgg_echo("pages:edit");
 $vars = pages_prepare_form_vars($page, $page->parent_guid);
 $content = elgg_view_form('pages/edit', [], $vars);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar/navigation', [
 		'page' => $page,
 	]),
-		));
+]);
 
 echo elgg_view_page($title, $body);
