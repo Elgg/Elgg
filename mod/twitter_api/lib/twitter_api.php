@@ -198,7 +198,12 @@ function twitter_api_login() {
 function twitter_api_create_user($twitter) {
 	// check new registration allowed
 	if (!twitter_api_allow_new_users_with_twitter()) {
-		register_error(elgg_echo('registerdisabled'));
+		if (elgg_get_plugin_setting('new_users', 'twitter_api') === 'never') {
+			register_error(elgg_echo('twitter_api:login:creation_fail'));
+		} else {
+			register_error(elgg_echo('registerdisabled'));
+		}
+
 		forward();
 	}
 
@@ -374,6 +379,10 @@ function twitter_api_get_access_token($oauth_verifier = FALSE) {
 function twitter_api_allow_new_users_with_twitter() {
 	$site_reg = elgg_get_config('allow_registration');
 	$twitter_reg = elgg_get_plugin_setting('new_users', 'twitter_api');
+
+	if ($twitter_reg === 'never') {
+		return false;
+	}
 
 	if ($site_reg || (!$site_reg && $twitter_reg == 'yes')) {
 		return true;

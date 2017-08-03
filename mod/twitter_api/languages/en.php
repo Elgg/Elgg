@@ -24,9 +24,15 @@ return array(
 	'twitter_api:post_to_twitter' => "Send users' wire posts to Twitter?",
 
 	'twitter_api:login' => 'Allow users to sign in with Twitter?',
-	'twitter_api:new_users' => 'Allow new users to sign up using their Twitter account even if user registration is disabled?',
+
+	'twitter_api:new_users' => 'Create new user accounts from Twitter accounts?',
+	'twitter_api:new_users:no' => 'Use site registration setting. (currently: %s)',
+	'twitter_api:new_users:yes' => 'Always (ignores site setting)',
+	'twitter_api:new_users:never' => 'Never (ignores site setting)',
+
 	'twitter_api:login:success' => 'You have been logged in.',
 	'twitter_api:login:error' => 'Unable to login with Twitter.',
+	'twitter_api:login:creation_fail' => 'New registration via Twitter has been disabled by the system administrator',
 	'twitter_api:login:email' => "You must enter a valid email address for your new %s account.",
 
 	'twitter_api:invalid_page' => 'Invalid page',
