@@ -94,6 +94,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``elgg_get_metastring_map``
  * ``elgg_register_class``
  * ``elgg_register_classes``
+ * ``elgg_register_viewtype``
+ * ``elgg_is_registered_viewtype``
  * ``get_default_filestore``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
@@ -149,6 +151,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
 Removed global vars
 -------------------
 
+ * ``$CURRENT_SYSTEM_VIEWTYPE``
  * ``$DEFAULT_FILE_STORE``
  * ``$ENTITY_CACHE``
  * ``$SESSION``: Use the API provided by ``elgg_get_session()``

@@ -330,11 +330,3 @@ $_ELGG->translations;
  * @access private
  */
 $_ELGG->registered_tag_metadata_names;
-
-/**
- * A list of valid view types as discovered.
- *
- * @global array $_ELGG->view_types
- * @access private
- */
-$_ELGG->view_types;

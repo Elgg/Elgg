@@ -347,7 +347,7 @@ function elgg_unregister_external_file($type, $name) {
  * @since 1.8.0
  */
 function elgg_load_external_file($type, $name) {
-	return _elgg_services()->externalFiles->load($type, $name);
+	_elgg_services()->externalFiles->load($type, $name);
 }
 
 /**
