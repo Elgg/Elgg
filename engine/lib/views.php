@@ -2004,6 +2004,7 @@ function _elgg_get_js_page_data() {
 			'lastcache' => (int) elgg_get_config('lastcache'),
 			'viewtype' => elgg_get_viewtype(),
 			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
+			'current_language' => get_current_language(),
 		],
 		'security' => [
 			'token' => [
