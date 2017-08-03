@@ -67,7 +67,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	}
 
 	public function testHas() {
-		$cache = new MetadataCache(ElggSession::getMock());
+		$cache = new MetadataCache();
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);
@@ -77,7 +77,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	}
 
 	public function testLoad() {
-		$cache = new MetadataCache(ElggSession::getMock());
+		$cache = new MetadataCache();
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);
@@ -88,7 +88,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	}
 
 	public function testDirectInvalidation() {
-		$cache = new MetadataCache(ElggSession::getMock());
+		$cache = new MetadataCache();
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);

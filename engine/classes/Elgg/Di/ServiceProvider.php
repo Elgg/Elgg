@@ -271,7 +271,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('metadataCache', function (ServiceProvider $c) {
-			return new \Elgg\Cache\MetadataCache($c->session);
+			$cache = _elgg_get_memcache('metadata');
+			return new \Elgg\Cache\MetadataCache($cache);
 		});
 
 		$this->setFactory('memcacheStashPool', function(ServiceProvider $c) {
