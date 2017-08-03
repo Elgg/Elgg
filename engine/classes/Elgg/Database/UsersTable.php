@@ -545,6 +545,7 @@ class UsersTable {
 			':guid' => (int) $user->guid,
 		];
 
+		// these writes actually work, we just type hint read-only.
 		$user->prev_last_action = $user->last_action;
 		$user->last_action = $time;
 
@@ -589,6 +590,7 @@ class UsersTable {
 			':guid' => (int) $user->guid,
 		];
 
+		// these writes actually work, we just type hint read-only.
 		$user->prev_last_login = $user->last_login;
 		$user->last_login = $time;
 
