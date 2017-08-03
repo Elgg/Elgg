@@ -7,6 +7,7 @@ php:
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
+dist: precise
 
 # Do not limit history to latest commits. Merge commits will need older commits.
 # Limiting depth caused issues with /.scripts/travis/check_commit_msgs.sh
