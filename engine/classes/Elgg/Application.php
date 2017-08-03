@@ -174,7 +174,6 @@ class Application {
 			'widgets.php',
 
 			// backward compatibility
-			'deprecated-2.1.php',
 			'deprecated-3.0.php',
 		];
 

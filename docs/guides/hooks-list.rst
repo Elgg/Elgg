@@ -321,8 +321,6 @@ Permission hooks
 	Return boolean for if the user ``$params['user']`` can delete the river item ``$params['item']``. Defaults to
 	``true`` for admins and ``false`` for other users.
 
-	.. note:: This check is not performed when using the deprecated ``elgg_delete_river()``.
-
 **permissions_check:download, file**
 	Return boolean for if the user ``$params['user']`` can download the file in ``$params['entity']``.
 

@@ -571,6 +571,16 @@ context. They still clear floats and allow breaking words to wrap text.
 Core modules and layouts that relied on space-filling have been reworked for Flexbox and
 we encourage devs to do the same, rather than use the problematic ``overflow: hidden``.
 
+Delete river items
+------------------
+
+The function ``elgg_delete_river()`` which was deprecated in 2.3, has been reinstated. Notable changes between the internals of this function are;
+
+ * It accepts all ``$options`` from ``elgg_get_river()`` but requires at least one of the following params to be set id(s), annotation_id(s), subject_guid(s), object_guid(s), target_guid(s) or view(s)
+ * Since ``elgg_get_river`` by default has a limit on the number of river items it fetches, if you wish to remove all river items you need to set ``limit`` to ``false``
+ * A hook is fired for each river item which checks the delete permissions 
+ * Events are fired just before and after a river item has been deleted
+
 From 2.2 to 2.3
 ===============
 

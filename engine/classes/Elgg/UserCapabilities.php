@@ -136,8 +136,6 @@ class UserCapabilities {
 	 *
 	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" plugin hook.
 	 *
-	 * @note This is not called by elgg_delete_river().
-	 *
 	 * @param ElggRiverItem $item      River item
 	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
 	 *
