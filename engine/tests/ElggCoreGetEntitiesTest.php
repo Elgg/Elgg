@@ -223,7 +223,7 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 
 		$options = array(
 			'types' => $types,
-			'subtypes' => $subtypes
+			'subtypes' => $subtypes,
 		);
 
 		$es = elgg_get_entities($options);
@@ -625,6 +625,7 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 		// order by guid and limit by 1 should == this entity.
 
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomValidSubtype();
 		$e->save();
 
 		$options = array(
@@ -647,76 +648,7 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->delete();
 	}
 
-	public function testElggApiGettersEntityNoValueSubtypeNotSet() {
-		// create an entity we can later delete.
-		// order by time created and limit by 1 should == this entity.
-
-		$e = new \ElggObject();
-		$e->save();
-
-		$options = array(
-			'type' => 'object',
-			'subtype' => ELGG_ENTITIES_NO_VALUE,
-			'limit' => 1,
-			'order_by' => 'guid desc'
-		);
-
-		// grab ourself again to fill out attributes.
-		$e = get_entity($e->getGUID());
-
-		$entities = elgg_get_entities($options);
-
-		$this->assertEqual(count($entities), 1);
-
-		foreach ($entities as $entity) {
-			$this->assertIdentical($e->getGUID(), $entity->getGUID());
-		}
-
-		$e->delete();
-	}
-
-	public function testElggApiGettersEntityNoValueSubtypeSet() {
-		$CONFIG = _elgg_config();
-		// create an entity we can later delete.
-		// order by time created and limit by 1 should == this entity.
-
-		$subtype = 'subtype_' . rand();
-
-		$e_subtype = new \ElggObject();
-		$e_subtype->subtype = $subtype;
-		$e_subtype->save();
-
-		$e = new \ElggObject();
-		$e->save();
-
-		$options = array(
-			'type' => 'object',
-			'subtype' => ELGG_ENTITIES_NO_VALUE,
-			'limit' => 1,
-			'order_by' => 'guid desc'
-		);
-
-		// grab ourself again to fill out attributes.
-		$e = get_entity($e->getGUID());
-
-		$entities = elgg_get_entities($options);
-
-		$this->assertEqual(count($entities), 1);
-
-		// this entity should NOT be the entity we just created
-		// and should have no subtype
-		foreach ($entities as $entity) {
-			$this->assertEqual($entity->subtype_id, 0);
-		}
-
-		$e_subtype->delete();
-		$e->delete();
-
-		$q = "DELETE FROM {$CONFIG->dbprefix}entity_subtypes WHERE subtype = '$subtype'";
-		delete_data($q);
-	}
-
-	public function testElggGetEntitiesByGuidSingular() {
+		public function testElggGetEntitiesByGuidSingular() {
 		foreach ($this->entities as $e) {
 			$options = array(
 				'guid' => $e->guid

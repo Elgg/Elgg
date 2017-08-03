@@ -51,6 +51,49 @@ if (!TextReporter::inCli()) {
 	_elgg_config()->debug = 'NOTICE';
 }
 
+// Benchmark max entity guid before the test suite runs
+// and clean up whatever the suite lefts behind in database tables
+// after tests are complete
+$ia = elgg_set_ignore_access(true);
+
+$entities = elgg_get_entities([
+	'selects' => [
+		"MAX(e.guid) as max_guid"
+	],
+	'limit' => 1,
+]);
+
+$max_guid = $entities[0]->getVolatileData('select:max_guid');
+
+elgg_set_ignore_access($ia);
+
+$garbage_collector = function() use ($max_guid) {
+
+	$dbprefix = elgg_get_config('dbprefix');
+
+	delete_data("DELETE FROM {$dbprefix}entities WHERE guid > $max_guid");
+
+	$tables = [
+		'site' => 'sites_entity',
+		'object' => 'objects_entity',
+		'group' => 'groups_entity',
+		'user' => 'users_entity',
+	];
+
+	foreach ($tables as $type => $table) {
+		delete_data("
+			DELETE FROM {$dbprefix}{$table}
+			WHERE guid NOT IN (SELECT guid FROM {$dbprefix}entities)
+		");
+
+		delete_data("
+			DELETE FROM {$dbprefix}entities
+			WHERE type = '$type' AND guid NOT IN (SELECT guid FROM {$dbprefix}{$table})
+		");
+	}
+
+};
+
 // turn off system log
 elgg_unregister_event_handler('all', 'all', 'system_log_listener');
 elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
@@ -94,10 +137,13 @@ if (TextReporter::inCli()) {
 		$plugin = elgg_get_plugin_from_id($id);
 		$plugin->deactivate();
 	}
-	
+
+	$garbage_collector();
+
 	exit($result);
 }
 
 $old = elgg_set_ignore_access(true);
 $suite->Run(new HtmlReporter('utf-8'));
+$garbage_collector();
 elgg_set_ignore_access($old);

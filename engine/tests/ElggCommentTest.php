@@ -21,6 +21,7 @@ class ElggCoreCommentTest extends \ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		$this->container = new \ElggObject();
+		$this->container->subtype = $this->getRandomValidSubtype();
 		$this->container->access_id = ACCESS_PUBLIC;
 		$this->container->save();
 		

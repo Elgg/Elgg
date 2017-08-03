@@ -7,43 +7,33 @@
  */
 class ElggCoreUserTest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-
-		// all code should come after here
-	}
+	private $subtype;
+	private $username;
 
 	/**
 	 * Called before each test method.
 	 */
 	public function setUp() {
+		$this->subtype = $this->getRandomValidSubtype('user');
+		$this->username = $this->generateRandomUsername();
+
 		$this->user = new \ElggUserTest();
+		$this->user->username = $this->username;
+		$this->user->subtype = $this->subtype;
 	}
 
 	/**
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-
 		unset($this->user);
-	}
-
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		// all code should go above here
-		parent::__destruct();
 	}
 
 	public function testElggUserConstructor() {
 		$attributes = array();
 		$attributes['guid'] = null;
 		$attributes['type'] = 'user';
-		$attributes['subtype'] = null;
+		$attributes['subtype'] = $this->subtype;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['access_id'] = ACCESS_PRIVATE;
@@ -52,7 +42,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
  		$attributes['name'] = null;
-		$attributes['username'] = null;
+		$attributes['username'] = $this->username;
 		$attributes['password_hash'] = null;
 		$attributes['email'] = null;
 		$attributes['language'] = null;
@@ -72,6 +62,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	public function testElggUserLoad() {
 		// new object
 		$object = new \ElggObject();
+		$object->subtype = $this->getRandomValidSubtype();
 		$this->AssertEqual($object->getGUID(), 0);
 		$guid = $object->save();
 		$this->AssertNotEqual($guid, 0);

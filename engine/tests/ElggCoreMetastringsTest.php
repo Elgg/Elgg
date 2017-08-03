@@ -20,6 +20,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 		parent::__construct();
 
 		$this->object = new \ElggObject();
+		$this->object->subtype = $this->getRandomValidSubtype();
 		$this->object->save();
 	}
 

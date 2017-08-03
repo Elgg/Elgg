@@ -70,19 +70,9 @@ class EntityTable extends DbEntityTable {
 			}
 		}
 
-		if ($subtype) {
-			$subtype_id = get_subtype_id($type, $subtype);
-			if (!$subtype_id) {
-				$subtype_id = add_subtype($type, $subtype);
-			}
-		} else if (isset($attributes['subtype_id'])) {
-			$subtype_id = $attributes['subtype_id'];
-			$subtype = get_subtype_from_id($subtype_id);
-		}
-
 		$attributes['guid'] = $guid;
 		$attributes['type'] = $type;
-		$attributes['subtype'] = $subtype_id;
+		$attributes['subtype'] = $subtype;
 
 		$time = $this->getCurrentTime()->getTimestamp();
 
@@ -365,7 +355,7 @@ class EntityTable extends DbEntityTable {
 			(type, subtype, owner_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
 			VALUES
-			(:type, :subtype_id, :owner_guid, :container_guid,
+			(:type, :subtype, :owner_guid, :container_guid,
 				:access_id, :time_created, :time_updated, :last_action)
 		";
 
@@ -373,7 +363,7 @@ class EntityTable extends DbEntityTable {
 			'sql' => $sql,
 			'params' => [
 				':type' => 'object',
-				':subtype_id' => $row->subtype,
+				':subtype' => $row->subtype,
 				':owner_guid' => $row->owner_guid,
 				':container_guid' => $row->container_guid,
 				':access_id' => $row->access_id,

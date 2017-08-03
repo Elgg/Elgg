@@ -48,10 +48,12 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 		$this->cache = _elgg_services()->metadataCache;
 
 		$this->obj1 = new \ElggObject();
+		$this->obj1->subtype = $this->getRandomValidSubtype();
 		$this->obj1->save();
 		$this->guid1 = $this->obj1->guid;
 
 		$this->obj2 = new \ElggObject();
+		$this->obj2->subtype = $this->getRandomValidSubtype();
 		$this->obj2->save();
 		$this->guid2 = $this->obj2->guid;
 	}

@@ -80,27 +80,25 @@ Each has its own extended API. E.g. objects have a ``title`` and ``description``
 Subtypes
 --------
 
-Each entity also has a custom string **subtype**, which plugins use to further specialize the entity.
-Elgg makes it easy to query specific subtypes as well as assign them special behaviors and views.
+Each entity must define a **subtype**, which plugins use to further specialize the entity.
+Elgg makes it easy to query specific for entities of a given subtype(s), as well as assign them special behaviors and views.
 
-Subtypes are most commonly given to instances of ElggObject to denote the kind of content created.
+Subtypes are most commonly given to instances of ``ElggEntity`` to denote the kind of content created.
 E.g. the blog plugin creates objects with subtype ``"blog"``.
 
-For historic reasons, the subtype API is a bit complex, but boils down to: write to ``->subtype``
-before saving, otherwise always read ``getSubtype()``. Below are more details.
+By default, users, groups and sites have the the subtypes of ``user``, ``group`` and ``site`` respectively.
+
+Plugins can use custom entity classes that extend the base type class. To do so, they need to register their class at
+runtime (e.g. in the ``'init','system'`` handler), using ``elgg_set_entity_class()``.
+For example, the blog plugin could use ``elgg_set_entity_class('object', 'blog', \ElggBlog::class)``.
+
+Plugins can use ``elgg-plugin.php`` to define entity class via shortcut ``entities`` parameter.
 
 Subtype Gotchas
 ---------------
 
-- Before an entity's ``save()`` method is called, the subtype can be set by writing a string to the
-  ``subtype`` property.
+- Before an entity's ``save()`` method is called, the subtype must be set by writing a string to the ``subtype`` property.
 - *Subtype cannot be changed after saving.*
-- After saving, you must always use ``getSubtype()`` to read it.
-- If no subtype was set, ``""`` is returned, however some parts of the Elgg API (like Views) may map
-  this value to the string ``"default"``. E.g. a group with ``getSubtype() === ""`` will be rendered
-  using the view ``"group/default"``.
-- Read carefully the documentation for ``elgg_get_entities()`` before trying to match subtypes; this
-- API is a bit of a minefield. E.g. you cannot use ``""`` to fetch entities with the default subtype.
 
 GUIDs
 -----
@@ -179,9 +177,6 @@ profile page linking users to content within the group.
 
 You can alter the user experience via the traditional means of extending
 plugins or completely replace the Groups plugin with your own.
-
-Because ``ElggGroup`` can be subtyped like all other ElggEntities, you
-can have multiple types of groups running on the same site.
 
 Writing a group-aware plugin
 ----------------------------
@@ -787,7 +782,7 @@ It contains the following fields:
 -  **guid** An auto-incrementing counter producing a GUID that uniquely
    identifies this entity in the system.
 -  **type** The type of entity - object, user, group or site
--  **subtype** A reference to the `entity_subtypes` table, or ``0`` for the default subtype.
+-  **subtype** A subtype of entity
 -  **owner\_guid** The GUID of the owner's entity.
 -  **site\_guid** The site the entity belongs to.
 -  **container\_guid** The GUID this entity is contained by - either a user or
@@ -798,16 +793,6 @@ It contains the following fields:
 -  **enabled** If this is 'yes' an entity is accessible, if 'no' the entity
    has been disabled (Elgg treats it as if it were deleted without actually
    removing it from the database).
-
-Table: entity\_subtypes
-~~~~~~~~~~~~~~~~~~~~~~~
-
-This table contains entity subtype information:
-
--  **id** A counter.
--  **type** The type of entity - object, user, group or site.
--  **subtype** The subtype name as a string.
--  **class** Optional class name if this subtype is linked with a class
 
 Table: metadata
 ~~~~~~~~~~~~~~~

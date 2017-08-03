@@ -102,7 +102,8 @@ abstract class Seed {
 
 			$profile_fields = elgg_get_config('profile_fields');
 
-			$user = $this->populateMetadata($user, $profile_fields, $metadata);
+			$user = $this->populateMetadata($user, [], $metadata);
+			$user = $this->populateAnnotations($user, $profile_fields);
 
 			$user->save();
 
@@ -202,6 +203,7 @@ abstract class Seed {
 			}
 
 			$group = $this->populateMetadata($group, elgg_get_config('group'), $metadata);
+			/* @var $group ElggGroup */
 
 			$group->save();
 
@@ -210,7 +212,7 @@ abstract class Seed {
 				$group->save();
 			}
 
-			$group->join(get_entity($attributes['owner_guid']));
+			$group->join(get_user($attributes['owner_guid']));
 
 			$this->createIcon($group);
 
@@ -314,7 +316,7 @@ abstract class Seed {
 		$object = false;
 
 		try {
-			$class = get_subtype_class('object', $attributes['subtype']);
+			$class = elgg_get_entity_class('object', $attributes['subtype']);
 			if ($class && class_exists($class)) {
 				$object = new $class();
 			} else {
@@ -486,7 +488,7 @@ abstract class Seed {
 		$separator = '.';
 
 		if ($fill > 0) {
-			$suffix = (new ElggCrypto())->getRandomString($fill);
+			$suffix = (new \ElggCrypto())->getRandomString($fill);
 			$base_name = "$base_name$separator$suffix";
 		}
 
@@ -504,7 +506,7 @@ abstract class Seed {
 			} catch (\Exception $e) {
 				if ($iterator >= 10) {
 					// too many failed attempts
-					$base_name = (new ElggCrypto())->getRandomString(8);
+					$base_name = (new \ElggCrypto())->getRandomString(8);
 				}
 			}
 
@@ -517,6 +519,7 @@ abstract class Seed {
 		return strtolower($base_name);
 	}
 
+
 	/**
 	 * Set random metadata
 	 *
@@ -527,7 +530,6 @@ abstract class Seed {
 	 * @return ElggEntity
 	 */
 	public function populateMetadata(ElggEntity $entity, array $fields = [], array $metadata = []) {
-
 		foreach ($fields as $name => $type) {
 			if (isset($metadata[$name])) {
 				continue;
@@ -556,6 +558,7 @@ abstract class Seed {
 
 						case 'url' :
 							$metadata[$name] = $this->faker->url;
+							break;
 
 						case 'email' :
 							$metadata[$name] = $this->faker->email;
@@ -579,12 +582,6 @@ abstract class Seed {
 							$metadata['geo:long'] = $this->faker->longitude;
 							break;
 
-						case 'email' :
-							$metadata[$name] = $this->faker->address;
-							$metadata['geo:lat'] = $this->faker->latitude;
-							$metadata['geo:long'] = $this->faker->longitude;
-							break;
-
 						default :
 							$metadata[$name] = '';
 							break;
@@ -596,6 +593,73 @@ abstract class Seed {
 
 		foreach ($metadata as $key => $value) {
 			$entity->$key = $value;
+		}
+
+		return $entity;
+	}
+
+	/**
+	 * Set random annotations
+	 *
+	 * @param ElggEntity $entity Entity
+	 * @param array      $fields An array of profile fields in $name => $input_type format
+	 *
+	 * @return ElggEntity
+	 */
+	public function populateAnnotations(ElggEntity $entity, array $fields = []) {
+
+		$annotations = [];
+		foreach ($fields as $name => $type) {
+			switch ($name) {
+				case 'phone' :
+				case 'mobile' :
+					$annotations[$name] = $this->faker->phoneNumber;
+					break;
+
+				default :
+					switch ($type) {
+						case 'plaintext' :
+						case 'longtext' :
+							$annotations[$name] = $this->faker->text($this->faker->numberBetween(500, 1000));
+							break;
+
+						case 'text' :
+							$annotations[$name] = $this->faker->sentence;
+							break;
+
+						case 'url' :
+							$annotations[$name] = $this->faker->url;
+							break;
+
+						case 'email' :
+							$annotations[$name] = $this->faker->email;
+							break;
+
+						case 'number' :
+							$annotations[$name] = $this->faker->randomNumber();
+							break;
+
+						case 'date' :
+							$annotations[$name] = $this->faker->unixTime;
+							break;
+
+						case 'location' :
+							$annotations[$name] = $this->faker->address;
+							$annotations['geo:lat'] = $this->faker->latitude;
+							$annotations['geo:long'] = $this->faker->longitude;
+							break;
+
+						default :
+							$annotations[$name] = '';
+							break;
+					}
+
+					break;
+			}
+		}
+
+		foreach ($annotations as $key => $value) {
+			$entity->annotate($key, $value, ACCESS_PUBLIC);
 		}
 
 		return $entity;

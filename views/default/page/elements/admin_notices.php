@@ -5,6 +5,8 @@
  * @uses $vars['notices'] Array of ElggObject notices
  */
 
+return;
+
 if (!isset($vars['notices'])) {
 	// legacy usage
 	echo elgg_list_entities([

@@ -17,6 +17,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		$this->object = new \ElggObject();
+		$this->object->subtype = $this->getRandomValidSubtype();
 	}
 
 	/**
@@ -28,7 +29,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggGetEntitiesFromMetadata() {
-		
+
 		$this->object->title = 'Meta Unit Test';
 		$this->object->save();
 
@@ -75,6 +76,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 
 	public function testElggDeleteMetadata() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomValidSubtype();
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -125,6 +127,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$u2->save();
 
 		$obj = new \ElggObject();
+		$obj->subtype = $this->getRandomValidSubtype();
 		$obj->owner_guid = $u1->guid;
 		$obj->container_guid = $u1->guid;
 		$obj->access_id = ACCESS_PUBLIC;
@@ -189,6 +192,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$ia = elgg_set_ignore_access(true);
 
 		$obj = new ElggObject();
+		$obj->subtype = $this->getRandomValidSubtype();
 		$obj->owner_guid = elgg_get_site_entity()->guid;
 		$obj->container_guid = elgg_get_site_entity()->guid;
 		$obj->access_id = ACCESS_PUBLIC;
