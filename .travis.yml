@@ -38,7 +38,8 @@ matrix:
         - composer travis:install-with-mysql
         - git checkout -
         - composer install --prefer-dist
-#        - echo "\n\$CONFIG->dataroot = getenv('HOME') . '/elgg_data/';\n" >> elgg-config/settings.php
+        - echo "\$CONFIG->dataroot = getenv('HOME') . '/elgg_data/';" >> elgg-config/settings.php
+        - tail elgg-config/settings.php
         - php -f ./upgrade.php
       script:
         - ./vendor/bin/phpunit
