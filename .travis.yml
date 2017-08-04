@@ -125,8 +125,7 @@ matrix:
         - cd $TRAVIS_REPO_SLUG
         - git checkout 2.3
         - composer travis:install-with-mysql
-        - git fetch origin
-        - git checkout -qf $TRAVIS_COMMIT
+        - git checkout -qf FETCH_HEAD
         - php -f ./upgrade.php
       script:
         - ./vendor/bin/phpunit
