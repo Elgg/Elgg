@@ -81,4 +81,3 @@ elgg.thewire.viewPrevious = function(event) {
 };
 
 elgg.register_hook_handler('init', 'system', elgg.thewire.init);
-

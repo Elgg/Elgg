@@ -87,4 +87,3 @@ define(function (require) {
 	 */
 	elgg.thewire = TW;
 });
-
