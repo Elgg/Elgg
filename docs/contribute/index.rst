@@ -9,12 +9,7 @@ Here are some ways you can help:
 
 .. toctree::
    :maxdepth: 1
+   :glob:
    
-   i18n
-   issues
-   code
-   services
-   docs
-   money
-   releases
-   
+   *
+   core/index

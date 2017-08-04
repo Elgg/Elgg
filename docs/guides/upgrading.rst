@@ -466,6 +466,16 @@ Profile plugin
 
 All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data. 
 
+Twitter API plugin
+------------------
+
+The ``twitter_api`` plugin has been removed from the Elgg core. The plugin is still available as a `Composer package <https://packagist.org/packages/elgg/twitter_api>`_, in order to install it
+add the following to you ``composer.json`` ``require`` section:
+
+.. code:: json
+	
+	"elgg/twitter_api": "~1.9"
+
 Email delivery
 --------------
 
