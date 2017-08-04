@@ -316,13 +316,13 @@ class Config implements Services\Config {
 				WHERE name = '$name'
 			");
 
+			var_dump($row);
+
 			if ($row) {
-
 				$bytes = PHP_EOL . "\$CONFIG->{$name} = {$row->value}" . PHP_EOL;
+				echo $bytes;
 
-				$handle = fopen($path, 'w');
-				fwrite($bytes);
-				fclose($handle);
+				@file_put_contents($path, $bytes, FILE_APPEND | LOCK_EX);
 			}
 		}
 
