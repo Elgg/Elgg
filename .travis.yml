@@ -24,6 +24,24 @@ matrix:
   fast_finish: true
 
   include:
+    # Test upgrade path from 2.0
+    - php: 5.6
+      services:
+        - mysql
+      env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
+        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+      install:
+        - git fetch origin 2.3
+        - git checkout -qf FETCH_HEAD
+        - composer travis:install-with-mysql
+        - git checkout -
+        - php -f ./upgrade.php
+      script:
+        - ./vendor/bin/phpunit
+        - php -f ./engine/tests/suite.php
+
 #    # Lint checks for PHP code and composer.json
 #    - php: 5.6
 #      env: JOB_NAME=commit_and_composer_lint VARIA=true
@@ -111,24 +129,6 @@ matrix:
 #       - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
 #       - ./vendor/bin/phpunit
 #       - php -f ./engine/tests/suite.php
-
-    # Test upgrade path from 2.0
-    - php: 5.6
-      services:
-        - mysql
-      env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-        - git fetch origin 2.3
-        - git checkout origin/2.3
-        - composer travis:install-with-mysql
-        - git checkout -
-        - php -f ./upgrade.php
-      script:
-        - ./vendor/bin/phpunit
-        - php -f ./engine/tests/suite.php
 
 services:
   - mysql

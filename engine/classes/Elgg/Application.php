@@ -481,13 +481,23 @@ class Application {
 	public static function upgrade() {
 		// we want to know if an error occurs
 		ini_set('display_errors', 1);
+		$is_cli = (php_sapi_name() === 'cli');
+
+		$forward = function ($url) use ($is_cli) {
+			if ($is_cli) {
+				echo "Open $url in your browser to continue.";
+				exit;
+			}
+
+			forward($url);
+		};
 
 		define('UPGRADING', 'upgrading');
 
 		self::start();
 		
 		// check security settings
-		if (elgg_get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
+		if (!$is_cli && elgg_get_config('security_protect_upgrade') && !elgg_is_admin_logged_in()) {
 			// only admin's or users with a valid token can run upgrade.php
 			elgg_signed_request_gatekeeper();
 		}
@@ -503,13 +513,13 @@ class Application {
 			$forward_url = '/' . $forward_url;
 		}
 
-		if (get_input('upgrade') == 'upgrade') {
+		if ($is_cli || (get_input('upgrade') == 'upgrade')) {
 			$upgrader = _elgg_services()->upgrades;
 			$result = $upgrader->run();
 
 			if ($result['failure'] == true) {
 				register_error($result['reason']);
-				forward($forward_url);
+				$forward($forward_url);
 			}
 
 			// Find unprocessed batch upgrade classes and save them as ElggUpgrade objects
@@ -558,7 +568,7 @@ class Application {
 			exit;
 		}
 
-		forward($forward_url);
+		$forward($forward_url);
 	}
 
 	/**
