@@ -316,21 +316,11 @@ class Config implements Services\Config {
 
 			if ($row) {
 				$bytes = PHP_EOL . "
-				/*
-				 * Standard configuration
-				 *
-				 * You will use the same database connection for reads and writes.
-				 * This is the easiest configuration, and will suit 99.99% of setups. However, if you're
-				 * running a really popular site, you'll probably want to spread out your database connections
-				 * and implement database replication.  That's beyond the scope of this configuration file
-				 * to explain, but if you know you need it, skip past this section.
-				 */
-				
-				/**
-				 * The full file path for Elgg data storage. E.g. \"/path/to/elgg-data/\"
+				\/**
+				 * The full file path for Elgg data storage. E.g. \"\/path\/to\/elgg-data\/\"
 				 *
 				 * @global string \$CONFIG->dataroot
-				 */
+				 *\/
 				 
 				 \$CONFIG->{$name} = {$row->value};
  				" . PHP_EOL;
