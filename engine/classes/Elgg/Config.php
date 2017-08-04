@@ -252,7 +252,7 @@ class Config implements Services\Config {
 		}
 
 		if (!is_readable($path)) {
-			throw new RuntimeException("The Elgg settings file exists but the web server doesn't have read permission to it.");
+			throw new \RuntimeException("The Elgg settings file exists but the web server doesn't have read permission to it.");
 		}
 
 		// we assume settings is going to write to CONFIG, but we may need to copy its values
@@ -266,7 +266,7 @@ class Config implements Services\Config {
 			$this->migrateDbSettings($path);
 
 			if (empty($CONFIG->dataroot)) {
-				throw new RuntimeException('The Elgg settings file is missing $CONFIG->dataroot.');
+				throw new \RuntimeException('The Elgg settings file is missing $CONFIG->dataroot.');
 			}
 		}
 
