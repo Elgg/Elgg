@@ -3,6 +3,7 @@ namespace Elgg;
 
 use Elgg\Filesystem\Directory;
 use Elgg\Database\ConfigTable;
+use Stash\Exception\RuntimeException;
 
 /**
  * Access to configuration values
@@ -251,8 +252,7 @@ class Config implements Services\Config {
 		}
 
 		if (!is_readable($path)) {
-			echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
-			exit;
+			throw new RuntimeException("The Elgg settings file exists but the web server doesn't have read permission to it.");
 		}
 
 		// we assume settings is going to write to CONFIG, but we may need to copy its values
@@ -263,8 +263,13 @@ class Config implements Services\Config {
 		require_once $path;
 
 		if (empty($CONFIG->dataroot)) {
-			echo 'The Elgg settings file is missing $CONFIG->dataroot.';
-			exit;
+			$this->migrateDbSettings($path);
+
+			require_once $path;
+
+			if (empty($CONFIG->dataroot)) {
+				throw new RuntimeException('The Elgg settings file is missing $CONFIG->dataroot.');
+			}
 		}
 
 		// normalize commonly needed values
@@ -286,6 +291,41 @@ class Config implements Services\Config {
 		}
 
 		$this->settings_loaded = true;
+	}
+
+	/**
+	 *
+	 */
+	public function migrateDbSettings($path) {
+
+		global $CONFIG;
+
+		$conf = new \Elgg\Database\Config($CONFIG);
+		$db = new Database($conf);
+		$app_db = new \Elgg\Application\Database($db);
+
+		$names = [
+			'dataroot',
+		];
+
+		$dbprefix = $CONFIG->dbprefix;
+
+		foreach ($names as $name) {
+			$row = $app_db->getDataRow("
+				SELECT value FROM {$dbprefix}dataroot
+				WHERE name = '$name'
+			");
+
+			if ($row) {
+
+				$bytes = PHP_EOL . "\$CONFIG->{$name} = {$row->value}" . PHP_EOL;
+
+				$handle = fopen($path, 'w');
+				fwrite($bytes);
+				fclose($handle);
+			}
+		}
+
 	}
 
 	/**
