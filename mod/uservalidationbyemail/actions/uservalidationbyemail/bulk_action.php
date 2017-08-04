@@ -1,9 +1,6 @@
 <?php
 /**
  * Dispatches a bulk action to real action.
- *
- * @package Elgg.Core.Plugin
- * @subpackage UserValidationByEmail
  */
 
 $action_type = get_input('action_type');

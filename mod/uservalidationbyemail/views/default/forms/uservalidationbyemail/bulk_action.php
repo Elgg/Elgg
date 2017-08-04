@@ -11,8 +11,7 @@ $offset = get_input('offset', 0);
 
 // can't use elgg_list_entities() and friends because we don't use the default view for users.
 $ia = elgg_set_ignore_access(true);
-$hidden_entities = access_get_show_hidden_status();
-access_show_hidden_entities(true);
+$hidden_entities = access_show_hidden_entities(true);
 
 $options = [
 	'type' => 'user',

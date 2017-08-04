@@ -33,9 +33,9 @@ function uservalidationbyemail_request_validation($user_guid) {
 	$site = elgg_get_site_entity();
 
 	$user_guid = (int) $user_guid;
-	$user = get_entity($user_guid);
+	$user = get_user($user_guid);
 
-	if (($user) && ($user instanceof ElggUser)) {
+	if ($user) {
 		// Work out validate link
 		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid";
 		$link = elgg_http_get_signed_url($link);
@@ -65,9 +65,7 @@ function uservalidationbyemail_request_validation($user_guid) {
 		];
 		
 		// Send validation email
-		$result = notify_user($user->guid, $site->guid, $subject, $body, $params, 'email');
-
-		return $result;
+		return notify_user($user->guid, $site->guid, $subject, $body, $params, 'email');
 	}
 
 	return false;
