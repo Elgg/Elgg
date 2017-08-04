@@ -57,6 +57,24 @@ function elgg_get_ignore_access() {
 }
 
 /**
+ * blabla
+ */
+function not_ignored($var) {
+	return false;
+}
+
+function _not_ignored_with_underscore($var) {
+	return false;
+}
+
+/**
+ * @access private
+ */
+function not_ignored_with_access_private($var) {
+	return false;
+}
+
+/**
  * Return a string of access_ids for $user_guid appropriate for inserting into an SQL IN clause.
  *
  * @uses get_access_array
