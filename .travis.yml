@@ -43,6 +43,11 @@ matrix:
       script:
         - ./vendor/bin/phpunit
         - php -f ./engine/tests/suite.php
+        - php -S localhost:8888 index.php &
+        - sleep 3 # give Web server some time to bind to sockets, etc
+
+        # I suspect this fails because settings.php lacks ->dataroot
+        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
 
 services:
   - mysql
