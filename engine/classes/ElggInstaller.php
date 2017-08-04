@@ -1370,18 +1370,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function installDatabase() {
-		try {
-			_elgg_services()->db->runSqlScript(\Elgg\Application::elggDir()->getPath("/engine/schema/mysql.sql"));
-		} catch (Exception $e) {
-			$msg = $e->getMessage();
-			if (strpos($msg, 'already exists')) {
-				$msg = _elgg_services()->translator->translate('install:error:tables_exist');
-			}
-			register_error($msg);
-			return false;
-		}
-
-		return true;
+		return \Elgg\Application::migrate();
 	}
 
 	/**

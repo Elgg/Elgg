@@ -13,6 +13,7 @@ Here are some ways you can help:
    i18n
    issues
    code
+   database
    services
    docs
    money
