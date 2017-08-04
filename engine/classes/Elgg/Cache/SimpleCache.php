@@ -46,7 +46,7 @@ class SimpleCache {
 	 * @see elgg_get_simplecache_url()
 	 */
 	function registerView($view_name) {
-		$view_name = $this->views->canonicalizeViewName($view_name);
+		$view_name = Views::canonicalizeViewName($view_name);
 		elgg_register_external_view($view_name, true);
 	}
 
@@ -86,7 +86,7 @@ class SimpleCache {
 			$view = "$view/$subview";
 		}
 
-		$view = $this->views->canonicalizeViewName($view);
+		$view = Views::canonicalizeViewName($view);
 
 		// should be normalized to canonical form by now: `getUrl('blog/save_draft.js')`
 		$this->registerView($view);
