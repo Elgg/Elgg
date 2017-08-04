@@ -312,7 +312,7 @@ class Config implements Services\Config {
 
 		foreach ($names as $name) {
 			$row = $app_db->getDataRow("
-				SELECT value FROM {$dbprefix}dataroot
+				SELECT value FROM {$dbprefix}config
 				WHERE name = '$name'
 			");
 
