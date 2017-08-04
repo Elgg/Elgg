@@ -89,8 +89,11 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``datalist_set``
  * ``detect_extender_valuetype``
  * ``developers_setup_menu``
+ * ``elgg_get_class_loader``
  * ``elgg_get_metastring_id``
  * ``elgg_get_metastring_map``
+ * ``elgg_register_class``
+ * ``elgg_register_classes``
  * ``get_default_filestore``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
@@ -204,6 +207,18 @@ Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from
 settings.php, or computed by Symphony Request.
 
 ``ElggSite::save()`` will fail if it isn't the main site.
+
+Custom class loading
+--------------------
+
+Elgg no longer provides API functions to register custom classes. If you need custom classes you can
+use ``PSR-0`` classes in the ``/classes`` folder of your plugin or use composer for autoloading of additional classes.
+
+The following class registration related functions have been removed:
+
+ * ``elgg_get_class_loader`` 
+ * ``elgg_register_class``
+ * ``elgg_register_classes``
 
 Search changes
 --------------

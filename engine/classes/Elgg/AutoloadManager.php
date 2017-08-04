@@ -96,18 +96,6 @@ class AutoloadManager {
 	}
 
 	/**
-	 * Register the location of a class on the class map
-	 *
-	 * @param string $class Class name
-	 * @param string $path  Path of class file
-	 * @return \Elgg\AutoloadManager
-	 */
-	public function setClassPath($class, $path) {
-		$this->loader->getClassMap()->setPath($class, $path);
-		return $this;
-	}
-
-	/**
 	 * If necessary, save necessary state details
 	 *
 	 * @return \Elgg\AutoloadManager
@@ -203,4 +191,3 @@ class AutoloadManager {
 		$this->saveCache();
 	}
 }
-
