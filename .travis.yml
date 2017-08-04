@@ -122,7 +122,7 @@ matrix:
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
         - git fetch origin 2.3
-        - git checkout origin/2.3
+        - git checkout -qf FETCH_HEAD
         - composer travis:install-with-mysql
         - git checkout -
         - php -f ./upgrade.php
