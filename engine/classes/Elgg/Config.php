@@ -3,6 +3,7 @@ namespace Elgg;
 
 use Elgg\Filesystem\Directory;
 use Elgg\Database\ConfigTable;
+use Stash\Exception\RuntimeException;
 
 /**
  * Access to configuration values
@@ -251,8 +252,7 @@ class Config implements Services\Config {
 		}
 
 		if (!is_readable($path)) {
-			echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
-			exit;
+			throw new \RuntimeException("The Elgg settings file exists but the web server doesn't have read permission to it.");
 		}
 
 		// we assume settings is going to write to CONFIG, but we may need to copy its values
@@ -263,8 +263,11 @@ class Config implements Services\Config {
 		require_once $path;
 
 		if (empty($CONFIG->dataroot)) {
-			echo 'The Elgg settings file is missing $CONFIG->dataroot.';
-			exit;
+			$this->migrateDbSettings($path);
+
+			if (empty($CONFIG->dataroot)) {
+				throw new \RuntimeException('The Elgg settings file is missing $CONFIG->dataroot.');
+			}
 		}
 
 		// normalize commonly needed values
@@ -286,6 +289,77 @@ class Config implements Services\Config {
 		}
 
 		$this->settings_loaded = true;
+	}
+
+	/**
+	 * Pre 3.0 certain config values were store in the database
+	 * To allow for a smooth upgrade, we will attempt to copy these settings from the database
+	 * to settngs.php, where these values will be read from by 3.0 codebase
+	 *
+	 * @return void
+	 */
+	public function migrateDbSettings($path) {
+
+		global $CONFIG;
+
+		$conf = new \Elgg\Database\Config($CONFIG);
+		$db = new Database($conf);
+		$app_db = new \Elgg\Application\Database($db);
+
+		$dbprefix = $CONFIG->dbprefix;
+
+		try {
+			$row = $app_db->getDataRow("
+				SELECT value FROM {$dbprefix}datalists
+				WHERE name = 'dataroot'
+			");
+
+			if ($row) {
+				$bytes = PHP_EOL . "
+				/**
+				 * The full file path for Elgg data storage. E.g. \"/path/to/elgg-data/\"
+				 *
+				 * @global string \$CONFIG->dataroot
+				 */
+				 
+				 \$CONFIG->dataroot = '{$row->value}';
+ 				" . PHP_EOL;
+
+				file_put_contents($path, $bytes, FILE_APPEND | LOCK_EX);
+
+				$CONFIG->dataroot = $row->value;
+			}
+		} catch (\DatabaseException $ex) {
+			error_log($ex->getMessage());
+		}
+
+		try {
+			$row = $app_db->getDataRow("
+				SELECT url FROM {$dbprefix}sites_entity
+				WHERE guid = 1
+			");
+
+			if ($row) {
+				$bytes = PHP_EOL . "
+				/**
+				 * The installation root URL of the site. E.g. \"https://example.org/elgg/\"
+				 *
+				 * If not provided, this is sniffed from the Symfony Request object
+				 *
+				 * @global string \$CONFIG->wwwroot
+				 */
+				 
+				 \$CONFIG->wwwroot = '{$row->url}';
+ 				" . PHP_EOL;
+
+				file_put_contents($path, $bytes, FILE_APPEND | LOCK_EX);
+
+				$CONFIG->wwwroot = $row->url;
+			}
+		} catch (\DatabaseException $ex) {
+			error_log($ex->getMessage());
+		}
+
 	}
 
 	/**

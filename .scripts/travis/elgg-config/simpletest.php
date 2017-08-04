@@ -8,4 +8,3 @@ if (!isset($CONFIG)) {
 
 $CONFIG->debug = 'NOTICE';
 
-

@@ -51,6 +51,12 @@ $params = [
 // install and create the .htaccess file
 $installer->batchInstall($params, true);
 
+\Elgg\Application::start();
+
+$version = elgg_get_version(true);
+
 // at this point installation has completed (otherwise an exception halted execution).
-echo "Elgg CLI install successful. wwwroot: " . elgg_get_config('wwwroot') . "\n";
+echo "Elgg $version install successful" . PHP_EOL;
+echo "wwwroot: " . elgg_get_config('wwwroot') . PHP_EOL;
+
 
