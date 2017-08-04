@@ -292,7 +292,11 @@ class Config implements Services\Config {
 	}
 
 	/**
+	 * Pre 3.0 certain config values were store in the database
+	 * To allow for a smooth upgrade, we will attempt to copy these settings from the database
+	 * to settngs.php, where these values will be read from by 3.0 codebase
 	 *
+	 * @return void
 	 */
 	public function migrateDbSettings($path) {
 
@@ -302,16 +306,12 @@ class Config implements Services\Config {
 		$db = new Database($conf);
 		$app_db = new \Elgg\Application\Database($db);
 
-		$names = [
-			'dataroot',
-		];
-
 		$dbprefix = $CONFIG->dbprefix;
 
-		foreach ($names as $name) {
+		try {
 			$row = $app_db->getDataRow("
 				SELECT value FROM {$dbprefix}datalists
-				WHERE name = '$name'
+				WHERE name = 'dataroot'
 			");
 
 			if ($row) {
@@ -322,13 +322,42 @@ class Config implements Services\Config {
 				 * @global string \$CONFIG->dataroot
 				 */
 				 
-				 \$CONFIG->{$name} = '{$row->value}';
+				 \$CONFIG->dataroot = '{$row->value}';
  				" . PHP_EOL;
 
 				file_put_contents($path, $bytes, FILE_APPEND | LOCK_EX);
 
 				$CONFIG->dataroot = $row->value;
 			}
+		} catch (\DatabaseException $ex) {
+			error_log($ex->getMessage());
+		}
+
+		try {
+			$row = $app_db->getDataRow("
+				SELECT url FROM {$dbprefix}sites_entity
+				WHERE guid = 1
+			");
+
+			if ($row) {
+				$bytes = PHP_EOL . "
+				/**
+				 * The installation root URL of the site. E.g. \"https://example.org/elgg/\"
+				 *
+				 * If not provided, this is sniffed from the Symfony Request object
+				 *
+				 * @global string \$CONFIG->wwwroot
+				 */
+				 
+				 \$CONFIG->wwwroot = '{$row->url}';
+ 				" . PHP_EOL;
+
+				file_put_contents($path, $bytes, FILE_APPEND | LOCK_EX);
+
+				$CONFIG->wwwroot = $row->url;
+			}
+		} catch (\DatabaseException $ex) {
+			error_log($ex->getMessage());
 		}
 
 	}
