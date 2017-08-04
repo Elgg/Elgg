@@ -1,6 +1,9 @@
 <?php
 namespace Elgg;
 
+use Elgg\Config\DatarootSettingMigrator;
+use Elgg\Config\SettingsMigrator;
+use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Filesystem\Directory;
 use Elgg\Database\ConfigTable;
 
@@ -251,8 +254,7 @@ class Config implements Services\Config {
 		}
 
 		if (!is_readable($path)) {
-			echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
-			exit;
+			throw new \RuntimeException("The Elgg settings file exists but the web server doesn't have read permission to it.");
 		}
 
 		// we assume settings is going to write to CONFIG, but we may need to copy its values
@@ -262,13 +264,30 @@ class Config implements Services\Config {
 
 		require_once $path;
 
+		$get_db = function() use ($CONFIG) {
+			// try to migrate settings to the file
+			$db_conf = new \Elgg\Database\Config($CONFIG);
+			return new Database($db_conf);
+		};
+
 		if (empty($CONFIG->dataroot)) {
-			echo 'The Elgg settings file is missing $CONFIG->dataroot.';
-			exit;
+			$dataroot = (new DatarootSettingMigrator($get_db(), $path))->migrate();
+			if (isset($dataroot)) {
+				$CONFIG->dataroot = $dataroot;
+			} else {
+				throw new \RuntimeException('The Elgg settings file is missing $CONFIG->dataroot.');
+			}
 		}
 
 		// normalize commonly needed values
 		$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+		if (!isset($CONFIG->wwwroot)) {
+			$wwwroot = (new WwwrootSettingMigrator($get_db(), $path))->migrate();
+			if (isset($wwwroot)) {
+				$CONFIG->wwwroot = $wwwroot;
+			}
+		}
 
 		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
 
