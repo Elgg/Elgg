@@ -12,7 +12,7 @@
  *                            [
  *                               [
  *                                  'title' => 'Breadcrumb title',
- *                                  'link' => '/path/to/page',
+ *                                  'href' => '/path/to/page',
  *                               ],
  *                            ]
  *                            </code>
@@ -36,9 +36,9 @@ foreach ($breadcrumbs as $breadcrumb) {
 	// We have to escape text (without double-encoding). Titles in core plugins are HTML escaped
 	// on input, but we can't guarantee that other users of this view and of elgg_push_breadcrumb()
 	// will do so.
-	if (!empty($breadcrumb['link'])) {
+	if (!empty($breadcrumb['href'])) {
 		$crumb = elgg_view('output/url', [
-			'href' => $breadcrumb['link'],
+			'href' => $breadcrumb['href'],
 			'text' => $breadcrumb['title'],
 			'encode_text' => true,
 			'is_trusted' => true,

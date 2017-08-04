@@ -252,16 +252,20 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  * See elgg_get_breadcrumbs() and the navigation/breadcrumbs view.
  *
  * @param string $title The title to display. During rendering this is HTML encoded.
- * @param string $link  Optional. The link for the title. During rendering links are
+ * @param string $href  Optional. The href for the title. During rendering links are
  *                      normalized via elgg_normalize_url().
  *
  * @return void
  * @since 1.8.0
  * @see elgg_get_breadcrumbs()
  */
-function elgg_push_breadcrumb($title, $link = null) {
+function elgg_push_breadcrumb($title, $href = null) {
 	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
-	$breadcrumbs[] = ['title' => $title, 'link' => $link];
+	$breadcrumbs[] = [
+		'title' => $title,
+		'href' => $href,
+	];
+	
 	elgg_set_config('breadcrumbs', $breadcrumbs);
 }
 
@@ -290,7 +294,7 @@ function elgg_pop_breadcrumb() {
  * [
  *    [
  *       'title' => 'Breadcrumb title',
- *       'link' => '/path/to/page',
+ *       'href' => '/path/to/page',
  *    ]
  * ]
  * </code>
@@ -328,6 +332,18 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 		_elgg_services()->logger->error('"prepare, breadcrumbs" hook must return an array of breadcrumbs');
 		return [];
 	}
+	
+	foreach ($breadcrumbs as $key => $breadcrumb) {
+		if (!isset($breadcrumb['link'])) {
+			continue;
+		}
+		
+		elgg_deprecated_notice("Breadcrumb [{$breadcrumb['title']}] requires 'href' instead of 'link' set in the configuration", '3.0');
+		
+		$breadcrumb['href'] = $breadcrumb['link'];
+		unset($breadcrumb['link']);
+		$breadcrumbs[$key] = $breadcrumb;
+	}
 
 	return $breadcrumbs;
 }
@@ -347,7 +363,7 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
 	// remove last crumb if not a link
 	$last_crumb = end($breadcrumbs);
-	if (empty($last_crumb['link'])) {
+	if (empty($last_crumb['href'])) {
 		array_pop($breadcrumbs);
 	}
 
