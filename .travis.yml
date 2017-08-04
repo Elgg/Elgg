@@ -112,6 +112,25 @@ matrix:
        - ./vendor/bin/phpunit
        - php -f ./engine/tests/suite.php
 
+    # Test upgrade path from 2.0
+    - php: 5.6
+      services:
+        - mysql
+      env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
+        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+      install:
+        - git clone https://github.com/$TRAVIS_REPO_SLUG.git $TRAVIS_REPO_SLUG
+        - cd $TRAVIS_REPO_SLUG
+        - git checkout 2.3
+        - composer travis:install-with-mysql
+        - git checkout -qf $TRAVIS_COMMIT
+        - php -f ./upgrade.php
+      script:
+        - ./vendor/bin/phpunit
+        - php -f ./engine/tests/suite.php
+
 services:
   - mysql
 
