@@ -16,11 +16,7 @@ if (!$container) {
 	return;
 }
 
-if ($container->getType() == 'object') {
-	$title = $container->title;
-} else {
-	$title = $container->name;
-}
+$title = $container->getDisplayName();
 
 if (!$title) {
 	$title = elgg_echo('item:' . $container->getType() . ':' . $container->getSubtype());

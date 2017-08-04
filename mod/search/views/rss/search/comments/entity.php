@@ -14,18 +14,14 @@ $author_name = '';
 $comment_author_guid = $comment_data['owner_guid'];
 $author = get_user($comment_author_guid);
 if ($author) {
-	$author_name = $author->name;
+	$author_name = $author->getDisplayName();
 }
 
 // @todo Sometimes we find comments on entities we can't display...
 if ($entity->getVolatileData('search_unavailable_entity')) {
 	$title = elgg_echo('search:comment_on', [elgg_echo('search:unavailable_entity')]);
 } else {
-	if ($entity->getType() == 'object') {
-		$title = $entity->title;
-	} else {
-		$title = $entity->name;
-	}
+	$title = $entity->getDisplayName();
 
 	if (!$title) {
 		$title = elgg_echo('item:' . $entity->getType() . ':' . $entity->getSubtype());

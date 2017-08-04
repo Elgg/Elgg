@@ -46,7 +46,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$title = search_get_highlighted_relevant_substrings($entity->title, $params['query']);
+		$title = search_get_highlighted_relevant_substrings($entity->getDisplayName(), $params['query']);
 		$entity->setVolatileData('search_matched_title', $title);
 
 		$desc = search_get_highlighted_relevant_substrings($entity->description, $params['query']);
@@ -100,7 +100,7 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$name = search_get_highlighted_relevant_substrings($entity->name, $query);
+		$name = search_get_highlighted_relevant_substrings($entity->getDisplayName(), $query);
 		$entity->setVolatileData('search_matched_title', $name);
 
 		$description = search_get_highlighted_relevant_substrings($entity->description, $query);
@@ -185,7 +185,7 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		$title = search_get_highlighted_relevant_substrings($entity->name, $query);
+		$title = search_get_highlighted_relevant_substrings($entity->getDisplayName(), $query);
 
 		// include the username if it matches but the display name doesn't.
 		if (false !== strpos($entity->username, $query)) {
@@ -321,34 +321,9 @@ function search_tags_hook($hook, $type, $value, $params) {
 			}
 		}
 
-		// different entities have different titles
-		switch ($entity->type) {
-			case 'site':
-			case 'user':
-			case 'group':
-				$title_tmp = $entity->name;
-				break;
-
-			case 'object':
-				$title_tmp = $entity->title;
-				break;
-		}
-
-		// Nick told me my idea was dirty, so I'm hard coding the numbers.
-		$title_tmp = strip_tags($title_tmp);
-		if (elgg_strlen($title_tmp) > 297) {
-			$title_str = elgg_substr($title_tmp, 0, 297) . '...';
-		} else {
-			$title_str = $title_tmp;
-		}
-
-		$desc_tmp = strip_tags($entity->description);
-		if (elgg_strlen($desc_tmp) > 297) {
-			$desc_str = elgg_substr($desc_tmp, 0, 297) . '...';
-		} else {
-			$desc_str = $desc_tmp;
-		}
-
+		$title_str = elgg_get_excerpt($entity->getDisplayName(), 300);
+		$desc_str = elgg_get_excerpt($entity->description, 300);
+		
 		$tags_str = implode('. ', $matched_tags_strs);
 		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query'], 30, 300, true);
 
