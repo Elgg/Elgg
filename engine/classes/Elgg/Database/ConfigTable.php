@@ -105,15 +105,18 @@ class ConfigTable {
 		
 		if (!empty($version) && $version < 2016102500) {
 			// need to do this the old way as long as site_guid columns have not been dropped
-			$sql = "
-				INSERT INTO {$this->db->prefix}config
-				SET name = :name,
-					value = :value,
-					site_guid = :site_guid
-				ON DUPLICATE KEY UPDATE value = :value
-			";
-			
-			$params[':site_guid'] = 1;
+			// need to check if we are not updating version after removing the site_guid
+			if ($name !== 'version' || $value !== 2016102500) {
+				$sql = "
+					INSERT INTO {$this->db->prefix}config
+					SET name = :name,
+						value = :value,
+						site_guid = :site_guid
+					ON DUPLICATE KEY UPDATE value = :value
+				";
+				
+				$params[':site_guid'] = 1;
+			}
 		}
 				
 		$result = $this->db->insertData($sql, $params);
