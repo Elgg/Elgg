@@ -316,13 +316,13 @@ class Config implements Services\Config {
 
 			if ($row) {
 				$bytes = PHP_EOL . "
-				\/**
-				 * The full file path for Elgg data storage. E.g. \"\/path\/to\/elgg-data\/\"
+				/**
+				 * The full file path for Elgg data storage. E.g. \"/path/to/elgg-data/\"
 				 *
 				 * @global string \$CONFIG->dataroot
-				 *\/
+				 */
 				 
-				 \$CONFIG->{$name} = {$row->value};
+				 \$CONFIG->{$name} = '{$row->value}';
  				" . PHP_EOL;
 
 				file_put_contents($path, $bytes, FILE_APPEND | LOCK_EX);
