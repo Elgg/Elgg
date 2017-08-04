@@ -48,5 +48,4 @@ $cloud .= elgg_view('output/url', [
 ]);
 $cloud .= '</p>';
 
-
 echo elgg_view_module('aside', $title, $cloud);
