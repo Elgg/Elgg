@@ -1,7 +1,7 @@
 language: php
 php:
- - 5.6
- - 7.0
+ #- 5.6
+ #- 7.0
 
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
@@ -24,93 +24,31 @@ matrix:
   fast_finish: true
 
   include:
-    # Lint checks for PHP code and composer.json
-    - php: 5.6
-      env: JOB_NAME=commit_and_composer_lint VARIA=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-       - phpenv rehash
-       - composer travis:install
-      script: 
-       - bash .scripts/travis/check_commit_msgs.sh
-       - composer lint
-       
-    # Build and test javascript
-    - php: 5.6
-      env: JOB_NAME=js_tests VARIA=true
-      dist: trusty
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-        - npm install -g yarn && yarn
-      before_script:
-        - composer travis:install
-      script:
-        - yarn test
-      
-    # Build docs and check for errors
-    # Flags used here, not in `make html`:
-    #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
-    #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
-    - php: 5.6
-      env: JOB_NAME=docs_build VARIA=true
-      install: 
-       - pip install --user "Sphinx==1.3.1"
-       - pip install --user "sphinx-intl"
-       - export PATH=$PATH:$HOME/.local/bin
-      script:
-       - sphinx-build -b html -nW docs docs/_build/html
-       - sphinx-build -b latex -nW docs docs/_build/latex
-       - sphinx-intl build --locale-dir=docs/locale/
-       - sphinx-build -b html -D language=es -n docs docs/_build/html
-
-    # Memcached enabled
+    # Test upgrade path from 2.0
     - php: 5.6
       services:
-       - memcached
-       - mysql
-      env: JOB_NAME=memcache_php56 VARIA=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - phpenv config-add ./.scripts/travis/memcached.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-       - composer travis:install-with-mysql
-      script:
-       - php -f ./.scripts/is_memcached_enabled.php
-       - ./vendor/bin/phpunit --configuration ./.scripts/travis/phpunit-memcached.xml
-       - php ./engine/tests/suite.php --config ./.scripts/travis/elgg-config/simpletest_memcached.php
-
-    # HHVM build
-    - php: hhvm-3.15
-      env: JOB_NAME=hhvm E2E=true
-      dist: trusty
-      sudo: required
-      before_install:
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-       - composer travis:install-with-mysql
-      script:
-       - ./vendor/bin/phpunit
-       - php -f ./engine/tests/suite.php
-
-    # End to end tests
-    - php: 5.6
-      env: JOB_NAME=local_web_server E2E=true
+        - mysql
+      env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
       before_install:
         - phpenv config-rm xdebug.ini
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
-       - composer travis:install-with-mysql
-       - php -S localhost:8888 index.php &
-       - sleep 3 # give Web server some time to bind to sockets, etc
+        - git fetch origin 2.3
+        - git checkout FETCH_HEAD
+        - composer travis:install-with-mysql
+        - git checkout -
+        - composer install --prefer-dist
+        - echo "\$CONFIG->dataroot = getenv('HOME') . '/elgg_data/';" >> elgg-config/settings.php
+        - tail elgg-config/settings.php
+        - php -f ./upgrade.php
       script:
-       - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-       - ./vendor/bin/phpunit
-       - php -f ./engine/tests/suite.php
+        - ./vendor/bin/phpunit
+        - php -f ./engine/tests/suite.php
+        - php -S localhost:8888 index.php &
+        - sleep 3 # give Web server some time to bind to sockets, etc
+
+        # I suspect this fails because settings.php lacks ->dataroot
+        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
 
 services:
   - mysql
