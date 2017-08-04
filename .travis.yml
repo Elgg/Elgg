@@ -34,7 +34,7 @@ matrix:
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
         - git fetch origin 2.3
-        - git checkout -qf FETCH_HEAD
+        - git checkout FETCH_HEAD
         - composer travis:install-with-mysql
         - git checkout -
         - echo "\n\$CONFIG->dataroot = getenv('HOME') . '/elgg_data/';\n" >> elgg-config/settings.php
