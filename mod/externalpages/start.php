@@ -76,7 +76,7 @@ function expages_page_handler($page, $handler) {
 	$type = strtolower($handler);
 
 	$title = elgg_echo("expages:$type");
-	
+
 	$object = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => $type,

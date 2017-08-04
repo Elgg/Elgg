@@ -4,6 +4,7 @@ namespace Elgg;
 use Elgg\Application\CacheHandler;
 use Elgg\Cache\SystemCache;
 use Elgg\Filesystem\Directory;
+use Elgg\Http\Input;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -73,23 +74,113 @@ class ViewsService {
 	 * @var SystemCache|null This is set if the views are configured via cache
 	 */
 	private $cache;
-	
+
 	/**
-	 * @var string Absolute path of the views directory
+	 * @var Input
 	 */
-	public $view_path;
+	private $input;
+
+	/**
+	 * @var string
+	 */
+	private $viewtype;
 
 	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks  The hooks service
 	 * @param Logger             $logger Logger
+	 * @param Input              $input  Input service
 	 */
-	public function __construct(PluginHooksService $hooks, Logger $logger) {
+	public function __construct(PluginHooksService $hooks, Logger $logger, Input $input = null) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
+		$this->input = $input;
 	}
-	
+
+	/**
+	 * Set the viewtype
+	 *
+	 * @param string $viewtype Viewtype
+	 *
+	 * @return bool
+	 */
+	public function setViewtype($viewtype = '') {
+		if (!$viewtype) {
+			$this->viewtype = null;
+			return true;
+		}
+		if ($this->isValidViewtype($viewtype)) {
+			$this->viewtype = $viewtype;
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get the viewtype
+	 *
+	 * @return string
+	 */
+	public function getViewtype() {
+		if ($this->viewtype === null) {
+			$this->viewtype = $this->resolveViewtype();
+		}
+		return $this->viewtype;
+	}
+
+	/**
+	 * If the current viewtype has no views, reset it to "default"
+	 *
+	 * @return void
+	 */
+	public function clampViewtypeToPopulatedViews() {
+		$viewtype = $this->getViewtype();
+		if (empty($this->locations[$viewtype])) {
+			$this->viewtype = 'default';
+		}
+	}
+
+	/**
+	 * Resolve the initial viewtype
+	 *
+	 * @return string
+	 */
+	private function resolveViewtype() {
+		if ($this->input) {
+			$view = $this->input->get('view', '', false);
+			if ($this->isValidViewtype($view)) {
+				return $view;
+			}
+		}
+		$view = elgg_get_config('view');
+		if ($this->isValidViewtype($view)) {
+			return $view;
+		}
+
+		return 'default';
+	}
+
+	/**
+	 * Checks if $viewtype is a string suitable for use as a viewtype name
+	 *
+	 * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
+	 *
+	 * @return bool
+	 */
+	public function isValidViewtype($viewtype) {
+		if (!is_string($viewtype) || $viewtype === '') {
+			return false;
+		}
+
+		if (preg_match('/\W/', $viewtype)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Takes a view name and returns the canonical name for that view.
 	 *
@@ -97,7 +188,7 @@ class ViewsService {
 	 *
 	 * @return string The canonical view name.
 	 */
-	public function canonicalizeViewName($alias) {
+	public static function canonicalizeViewName($alias) {
 		if (!is_string($alias)) {
 			return false;
 		}
@@ -189,7 +280,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function setViewDir($view, $location, $viewtype = '') {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		if (empty($viewtype)) {
 			$viewtype = 'default';
@@ -232,7 +323,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		$rendered = $this->renderView($view, $vars, '', false);
 		if ($rendered) {
@@ -262,7 +353,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderView($view, array $vars = [], $viewtype = '', $issue_missing_notice = true) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
 			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
@@ -279,8 +370,8 @@ class ViewsService {
 		}
 
 		// Get the current viewtype
-		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
-			$viewtype = elgg_get_viewtype();
+		if ($viewtype === '' || !$this->isValidViewtype($viewtype)) {
+			$viewtype = $this->getViewtype();
 		}
 
 		// allow altering $vars
@@ -377,15 +468,15 @@ class ViewsService {
 	 * @access private
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 		
 		if (empty($view) || !is_string($view)) {
 			return false;
 		}
 		
 		// Detect view type
-		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
-			$viewtype = elgg_get_viewtype();
+		if ($viewtype === '' || !$this->isValidViewtype($viewtype)) {
+			$viewtype = $this->getViewtype();
 		}
 
 		
@@ -418,8 +509,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function extendView($view, $view_extension, $priority = 501) {
-		$view = $this->canonicalizeViewName($view);
-		$view_extension = $this->canonicalizeViewName($view_extension);
+		$view = self::canonicalizeViewName($view);
+		$view_extension = self::canonicalizeViewName($view_extension);
 
 		if (!isset($this->extensions[$view])) {
 			$this->extensions[$view][500] = (string) $view;
@@ -464,8 +555,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function unextendView($view, $view_extension) {
-		$view = $this->canonicalizeViewName($view);
-		$view_extension = $this->canonicalizeViewName($view_extension);
+		$view = self::canonicalizeViewName($view);
+		$view_extension = self::canonicalizeViewName($view_extension);
 
 		if (!isset($this->extensions[$view])) {
 			return false;
@@ -485,7 +576,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 
 		$this->simplecache_views[$view] = true;
 	}
@@ -494,13 +585,13 @@ class ViewsService {
 	 * @access private
 	 */
 	public function isCacheableView($view) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 		if (isset($this->simplecache_views[$view])) {
 			return true;
 		}
 
 		// build list of viewtypes to check
-		$current_viewtype = elgg_get_viewtype();
+		$current_viewtype = $this->getViewtype();
 		$viewtypes = [$current_viewtype];
 
 		if ($this->doesViewtypeFallback($current_viewtype) && $current_viewtype != 'default') {
@@ -550,9 +641,7 @@ class ViewsService {
 			$view_type_dir = $view_dir . $view_type;
 
 			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
-				if ($this->autoregisterViews('', $view_type_dir, $view_type)) {
-					elgg_register_viewtype($view_type);
-				} else {
+				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
 					$failed_dir = $view_type_dir;
 					return false;
 				}
@@ -689,7 +778,7 @@ class ViewsService {
 	 * @return void
 	 */
 	private function setViewLocation($view, $viewtype, $path) {
-		$view = $this->canonicalizeViewName($view);
+		$view = self::canonicalizeViewName($view);
 		$path = strtr($path, '\\', '/');
 
 		if (isset($this->locations[$viewtype][$view]) && $path !== $this->locations[$viewtype][$view]) {

@@ -292,14 +292,8 @@ class Application {
 			}
 		}
 
-
-		// @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
-		// and then move this code in there.
-		// This validates the view type - first opportunity to do it is after plugins load.
-		$viewtype = elgg_get_viewtype();
-		if (!elgg_is_registered_viewtype($viewtype)) {
-			elgg_set_viewtype('default');
-		}
+		// after plugins are started we know which viewtypes are populated
+		$this->services->views->clampViewtypeToPopulatedViews();
 
 		$this->allowPathRewrite();
 

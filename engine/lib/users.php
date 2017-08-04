@@ -813,10 +813,11 @@ function _elgg_user_ban_notification($event, $type, $user) {
 	}
 	
 	$site = elgg_get_site_entity();
+	$language = $user->getLanguage();
 	
 	$subject = elgg_echo('user:notification:ban:subject', [$site->name], $language);
 	$body = elgg_echo('user:notification:ban:body', [
-		$recipient->name,
+		$user->name,
 		$site->name,
 		$site->getURL(),
 	], $language);

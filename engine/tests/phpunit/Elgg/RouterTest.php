@@ -84,6 +84,7 @@ class RouterTest extends \Elgg\TestCase {
 		$this->createService();
 
 		_elgg_services()->logger->disable();
+		_elgg_services()->views->setViewtype('');
 	}
 
 	public function tearDown() {
