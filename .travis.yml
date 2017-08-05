@@ -112,6 +112,28 @@ matrix:
        - ./vendor/bin/phpunit
        - php -f ./engine/tests/suite.php
 
+    # Test upgrade path from 2.3
+    - php: 5.6
+      services:
+        - mysql
+      env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
+        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+      install:
+        - git fetch origin 2.3
+        - git checkout FETCH_HEAD
+        - composer travis:install-with-mysql
+        - git checkout -
+        - composer install --prefer-dist
+        - php -f ./upgrade.php
+      script:
+        #- ./vendor/bin/phpunit  # not necessary
+        - php -f ./engine/tests/suite.php
+        - php -S localhost:8888 index.php &
+        - sleep 3 # give Web server some time to bind to sockets, etc
+        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
+
 services:
   - mysql
 
