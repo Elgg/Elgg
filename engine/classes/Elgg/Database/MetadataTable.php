@@ -447,14 +447,14 @@ class MetadataTable {
 			'metadata_names'                     => ELGG_ENTITIES_ANY_VALUE,
 			'metadata_values'                    => ELGG_ENTITIES_ANY_VALUE,
 			'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
-	
+
 			'metadata_name_value_pairs_operator' => 'AND',
 			'metadata_case_sensitive'            => true,
 			'order_by_metadata'                  => [],
-	
+
 			'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,
 		];
-	
+
 		$options = array_merge($defaults, $options);
 	
 		$singulars = ['metadata_name', 'metadata_value',
