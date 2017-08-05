@@ -66,7 +66,7 @@ foreach ($events as $type => $subtypes) {
 }
 
 // disable emails
-elgg_set_email_transport('mailer', new Zend\Mail\Transport\InMemory());
+elgg_set_email_transport(new Zend\Mail\Transport\InMemory());
 
 // Disable maximum execution time.
 // Tests take a while...
