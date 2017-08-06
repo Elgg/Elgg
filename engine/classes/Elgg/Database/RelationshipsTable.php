@@ -1,13 +1,16 @@
 <?php
+
 namespace Elgg\Database;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Database;
 use Elgg\EventsService;
+use MongoDB\Driver\Query;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @access     private
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -16,7 +19,7 @@ use Elgg\EventsService;
 class RelationshipsTable {
 
 	use \Elgg\TimeUsing;
-	
+
 	/**
 	 * @var Database
 	 */
@@ -81,6 +84,7 @@ class RelationshipsTable {
 		$params = [
 			':id' => (int) $id,
 		];
+
 		return $this->db->getDataRow($sql, null, $params);
 	}
 
@@ -105,6 +109,7 @@ class RelationshipsTable {
 		$params = [
 			':id' => $id,
 		];
+
 		return $this->db->deleteData($sql, $params);
 	}
 
@@ -133,7 +138,7 @@ class RelationshipsTable {
 		if ($this->check($guid_one, $relationship, $guid_two)) {
 			return false;
 		}
-		
+
 		$sql = "
 			INSERT INTO {$this->db->prefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
@@ -157,6 +162,7 @@ class RelationshipsTable {
 		$result = $this->events->trigger('create', 'relationship', $obj);
 		if (!$result) {
 			$this->delete($id, false);
+
 			return false;
 		}
 
@@ -278,7 +284,10 @@ class RelationshipsTable {
 
 		$query = "SELECT * from {$this->db->prefix}entity_relationships WHERE {$where}";
 
-		return $this->db->getData($query, [$this, 'rowToElggRelationship'], $params);
+		return $this->db->getData($query, [
+			$this,
+			'rowToElggRelationship'
+		], $params);
 	}
 
 	/**
@@ -289,11 +298,11 @@ class RelationshipsTable {
 	 * To ask for entities that do not have a particular relationship to an entity,
 	 * use a custom where clause like the following:
 	 *
-	 * 	$options['wheres'][] = "NOT EXISTS (
-	 *			SELECT 1 FROM {$db_prefix}entity_relationships
-	 *				WHERE guid_one = e.guid
-	 *				AND relationship = '$relationship'
-	 *		)";
+	 *    $options['wheres'][] = "NOT EXISTS (
+	 *            SELECT 1 FROM {$db_prefix}entity_relationships
+	 *                WHERE guid_one = e.guid
+	 *                AND relationship = '$relationship'
+	 *        )";
 	 *
 	 * @see elgg_get_entities
 	 * @see elgg_get_entities_from_metadata
@@ -316,78 +325,20 @@ class RelationshipsTable {
 	 *                                   3. use 'container_guid' if you want the entities in the user's personal
 	 *                                      space (non-group)
 	 *
-	 * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
+	 *    relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
 	 *
-	 * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
+	 *    relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
 	 *
 	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
 	 */
 	public function getEntities($options) {
-		$defaults = [
-			'relationship' => null,
-			'relationship_guid' => null,
-			'inverse_relationship' => false,
-			'relationship_join_on' => 'guid',
-
-			'relationship_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
-			'relationship_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
-		];
-
-		$options = array_merge($defaults, $options);
-
-		$join_column = "e.{$options['relationship_join_on']}";
-
-		$clauses = $this->getEntityRelationshipWhereSql($join_column, $options['relationship'],
-			$options['relationship_guid'], $options['inverse_relationship']);
-
-		if ($clauses) {
-			// merge wheres to pass to get_entities()
-			if (isset($options['wheres']) && !is_array($options['wheres'])) {
-				$options['wheres'] = [$options['wheres']];
-			} elseif (!isset($options['wheres'])) {
-				$options['wheres'] = [];
-			}
-
-			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
-
-			// limit based on time created
-			$time_wheres = $this->entities->getEntityTimeWhereSql('r',
-					$options['relationship_created_time_upper'],
-					$options['relationship_created_time_lower']);
-			if ($time_wheres) {
-				$options['wheres'] = array_merge($options['wheres'], [$time_wheres]);
-			}
-			// merge joins to pass to get_entities()
-			if (isset($options['joins']) && !is_array($options['joins'])) {
-				$options['joins'] = [$options['joins']];
-			} elseif (!isset($options['joins'])) {
-				$options['joins'] = [];
-			}
-
-			$options['joins'] = array_merge($options['joins'], $clauses['joins']);
-
-			if (isset($options['selects']) && !is_array($options['selects'])) {
-				$options['selects'] = [$options['selects']];
-			} elseif (!isset($options['selects'])) {
-				$options['selects'] = [];
-			}
-
-			$select = ['r.id'];
-
-			$options['selects'] = array_merge($options['selects'], $select);
-
-			if (!isset($options['group_by'])) {
-				$options['group_by'] = $clauses['group_by'];
-			}
-		}
-
-		return $this->metadata->getEntities($options);
+		return _elgg_services()->entityTable->getEntities($options);
 	}
 
 	/**
 	 * Returns SQL appropriate for relationship joins and wheres
 	 *
-	 * @todo add support for multiple relationships and guids.
+	 * @todo   add support for multiple relationships and guids.
 	 *
 	 * @param string $column               Column name the GUID should be checked against.
 	 *                                     Provide in table.column format.
@@ -399,31 +350,49 @@ class RelationshipsTable {
 	 * @access private
 	 */
 	public function getEntityRelationshipWhereSql($column, $relationship = null,
-			$relationship_guid = null, $inverse_relationship = false) {
+												  $relationship_guid = null, $inverse_relationship = false) {
 
 		if ($relationship == null && $relationship_guid == null) {
 			return '';
 		}
 
-		$wheres = [];
+		$and_clauses = [];
 		$joins = [];
 		$group_by = '';
 
 		if ($inverse_relationship) {
-			$joins[] = "JOIN {$this->db->prefix}entity_relationships r on r.guid_one = $column";
+			$joins[] = function (QueryBuilder $qb) use ($column) {
+				return [
+					'table' => $this->db->prefix('entity_relationships'),
+					'alias' => 'r',
+					'condition' => $qb->expr()->eq('r.guid_one', $column),
+				];
+			};
 		} else {
-			$joins[] = "JOIN {$this->db->prefix}entity_relationships r on r.guid_two = $column";
+			$joins[] = function (QueryBuilder $qb) use ($column) {
+				return [
+					'table' => $this->db->prefix('entity_relationships'),
+					'alias' => 'r',
+					'condition' => $qb->expr()->eq('r.guid_two', $column),
+				];
+			};
 		}
 
 		if ($relationship) {
-			$wheres[] = "r.relationship = '" . $this->db->sanitizeString($relationship) . "'";
+			$and_clauses[] = function (QueryBuilder $qb) use ($relationship) {
+				return $qb->expr()->eq('r.relationship', $this->db->queryParam($qb, $relationship, 'string'));
+			};
 		}
 
 		if ($relationship_guid) {
 			if ($inverse_relationship) {
-				$wheres[] = "r.guid_two = '$relationship_guid'";
+				$and_clauses[] = function (QueryBuilder $qb) use ($relationship_guid) {
+					return $qb->expr()->eq('r.guid_two', $this->db->queryParam($qb, $relationship_guid, 'integer'));
+				};
 			} else {
-				$wheres[] = "r.guid_one = '$relationship_guid'";
+				$and_clauses[] = function (QueryBuilder $qb) use ($relationship_guid) {
+					return $qb->expr()->eq('r.guid_one', $this->db->queryParam($qb, $relationship_guid, 'integer'));
+				};
 			}
 		} else {
 			// See #5775. Queries that do not include a relationship_guid must be grouped by entity table alias,
@@ -431,8 +400,26 @@ class RelationshipsTable {
 			$group_by = $column;
 		}
 
-		if ($where_str = implode(' AND ', $wheres)) {
-			return ['wheres' => ["($where_str)"], 'joins' => $joins, 'group_by' => $group_by];
+		if ($and_clauses) {
+			$wheres = [];
+			$wheres[] = function (QueryBuilder $qb) use ($and_clauses) {
+				$expr = $qb->expr()->andX();
+
+				foreach ($and_clauses as $clause) {
+					if (is_callable($clause)) {
+						$clause = call_user_func($clause, $qb);
+					}
+					$expr->add($clause);
+				}
+
+				return $expr;
+			};
+
+			return [
+				'wheres' => $wheres,
+				'joins' => $joins,
+				'group_by' => $group_by,
+			];
 		}
 
 		return '';
@@ -451,6 +438,7 @@ class RelationshipsTable {
 		$options['selects'][] = "COUNT(e.guid) as total";
 		$options['group_by'] = 'r.guid_two';
 		$options['order_by'] = 'total desc';
+
 		return $this->getEntities($options);
 	}
 

@@ -5,6 +5,8 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Doctrine\DBAL\Query\QueryBuilder;
+use MongoDB\Driver\Query;
 
 /**
  * The Elgg database
@@ -78,6 +80,11 @@ class Database {
 	 * @var \Elgg\Logger $logger The logger
 	 */
 	private $logger;
+
+	/**
+	 * @var int
+	 */
+	private $param_index;
 
 	/**
 	 * Constructor
@@ -196,7 +203,7 @@ class Database {
 	 * argument to $callback.  If no callback function is defined, the
 	 * entire result set is returned as an array.
 	 *
-	 * @param string   $query    The query being passed.
+	 * @param QueryBuilder|string   $query    The query being passed.
 	 * @param callable $callback Optionally, the name of a function to call back to on each row
 	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
@@ -205,6 +212,11 @@ class Database {
 	 * @throws \DatabaseException
 	 */
 	public function getData($query, $callback = null, array $params = []) {
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
+
 		return $this->getResults($query, $callback, false, $params);
 	}
 
@@ -215,14 +227,19 @@ class Database {
 	 * matched.  If a callback function $callback is specified, the row will be passed
 	 * as the only argument to $callback.
 	 *
-	 * @param string   $query    The query to execute.
-	 * @param callable $callback A callback function to apply to the row
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query    The query to execute.
+	 * @param callable            $callback A callback function to apply to the row
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
 	 * @throws \DatabaseException
 	 */
 	public function getDataRow($query, $callback = null, array $params = []) {
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
+
 		return $this->getResults($query, $callback, true, $params);
 	}
 
@@ -239,6 +256,11 @@ class Database {
 	 * @throws \DatabaseException
 	 */
 	public function insertData($query, array $params = []) {
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
 
 		if ($this->logger) {
 			$this->logger->info("DB query $query");
@@ -268,6 +290,11 @@ class Database {
 	 */
 	public function updateData($query, $get_num_rows = false, array $params = []) {
 
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
+
 		if ($this->logger) {
 			$this->logger->info("DB query $query");
 		}
@@ -294,6 +321,11 @@ class Database {
 	 * @throws \DatabaseException
 	 */
 	public function deleteData($query, array $params = []) {
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
 
 		if ($this->logger) {
 			$this->logger->info("DB query $query");
@@ -341,7 +373,7 @@ class Database {
 	 * Handles queries that return results, running the results through a
 	 * an optional callback function. This is for R queries (from CRUD).
 	 *
-	 * @param string $query    The select query to execute
+	 * @param QueryBuilder|string $query    The select query to execute
 	 * @param string $callback An optional callback function to run on each row
 	 * @param bool   $single   Return only a single result?
 	 * @param array  $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
@@ -351,6 +383,11 @@ class Database {
 	 * @throws \DatabaseException
 	 */
 	protected function getResults($query, $callback = null, $single = false, array $params = []) {
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
 
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
@@ -415,7 +452,7 @@ class Database {
 	 * $query is executed via {@link Connection::query}. If there is an SQL error,
 	 * a {@link DatabaseException} is thrown.
 	 *
-	 * @param string     $query      The query
+	 * @param QueryBuilder|string     $query      The query
 	 * @param Connection $connection The DB connection
 	 * @param array      $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
@@ -425,6 +462,11 @@ class Database {
 	protected function executeQuery($query, Connection $connection, array $params = []) {
 		if ($query == null) {
 			throw new \DatabaseException("Query cannot be null");
+		}
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
 		}
 
 		$this->query_count++;
@@ -706,6 +748,40 @@ class Database {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Create a new query builder
+	 *
+	 * @return \Doctrine\DBAL\Query\QueryBuilder
+	 */
+	public function qb() {
+		return $this->getConnection('read')->createQueryBuilder();
+	}
+
+	/**
+	 * Get prefix table name
+	 *
+	 * @param string $table_name Table name
+	 * @return string
+	 */
+	public function prefix($table_name ='') {
+		return "{$this->prefix}{$table_name}";
+	}
+
+	/**
+	 * Next indexed parameter name
+	 * @return int
+	 */
+	public function nextQueryParamIndex() {
+		$this->param_index++;
+		return $this->param_index;
+	}
+
+	public function queryParam(QueryBuilder $qb, $value, $type = null) {
+		$param = ":qb_{$this->nextQueryParamIndex()}";
+		$qb->setParameter($param, $value, $type);
+		return $param;
 	}
 
 	/**
