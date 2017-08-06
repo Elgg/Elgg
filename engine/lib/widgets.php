@@ -242,10 +242,9 @@ function _elgg_widgets_init() {
  * @access private
  */
 function _elgg_default_widgets_init() {
-	global $CONFIG;
 	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
 
-	$CONFIG->default_widget_info = $default_widgets;
+	_elgg_config()->default_widget_info = $default_widgets;
 
 	if ($default_widgets) {
 		elgg_register_menu_item('page', [
@@ -293,7 +292,7 @@ function _elgg_default_widgets_init() {
  * @access private
  */
 function _elgg_create_default_widgets($event, $type, $entity) {
-	$default_widget_info = elgg_get_config('default_widget_info');
+	$default_widget_info = _elgg_config()->default_widget_info;
 
 	if (!$default_widget_info || !$entity) {
 		return;

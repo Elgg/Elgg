@@ -458,9 +458,9 @@ function _elgg_views_prepare_head($title) {
 	];
 
 	if (empty($title)) {
-		$params['title'] = elgg_get_config('sitename');
+		$params['title'] = _elgg_config()->sitename;
 	} else {
-		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
+		$params['title'] = $title . ' : ' . _elgg_config()->sitename;
 	}
 
 	$params['metas']['content-type'] = [
@@ -470,7 +470,7 @@ function _elgg_views_prepare_head($title) {
 
 	$params['metas']['description'] = [
 		'name' => 'description',
-		'content' => elgg_get_config('sitedescription')
+		'content' => _elgg_config()->sitedescription
 	];
 
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
@@ -1586,7 +1586,7 @@ function elgg_view_icon($name, $vars = []) {
  * @return void
  */
 function elgg_register_rss_link() {
-	_elgg_services()->config->set('_elgg_autofeed', true);
+	_elgg_config()->_elgg_autofeed = true;
 }
 
 /**
@@ -1595,7 +1595,7 @@ function elgg_register_rss_link() {
  * @return void
  */
 function elgg_unregister_rss_link() {
-	_elgg_services()->config->set('_elgg_autofeed', false);
+	_elgg_config()->_elgg_autofeed = false;
 }
 
 /**
@@ -1651,11 +1651,11 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 	}
 
 	if ($type == 'js') {
-		if (elgg_get_config('simplecache_minify_js')) {
+		if (_elgg_config()->simplecache_minify_js) {
 			return JSMin::minify($content);
 		}
 	} elseif ($type == 'css') {
-		if (elgg_get_config('simplecache_minify_css')) {
+		if (_elgg_config()->simplecache_minify_css) {
 			$cssmin = new CSSmin();
 			return $cssmin->run($content);
 		}
@@ -1872,7 +1872,7 @@ function elgg_views_boot() {
  * @access private
  */
 function _elgg_get_js_site_data() {
-	$language = elgg_get_config('language');
+	$language = _elgg_config()->language;
 	if (!$language) {
 		$language = 'en';
 	}
@@ -1904,7 +1904,7 @@ function _elgg_get_js_page_data() {
 
 	$elgg = [
 		'config' => [
-			'lastcache' => (int) elgg_get_config('lastcache'),
+			'lastcache' => (int) _elgg_config()->lastcache,
 			'viewtype' => elgg_get_viewtype(),
 			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
 			'current_language' => get_current_language(),
@@ -1922,7 +1922,7 @@ function _elgg_get_js_page_data() {
 		'_data' => (object) $data,
 	];
 
-	if (elgg_get_config('elgg_load_sync_code')) {
+	if (_elgg_config()->elgg_load_sync_code) {
 		$elgg['config']['load_sync_code'] = true;
 	}
 

@@ -101,7 +101,7 @@ class ConfigTable {
 			':value' => serialize($value),
 		];
 		
-		$version = (int) elgg_get_config('version');
+		$version = (int) _elgg_config()->version;
 		
 		if (!empty($version) && $version < 2016102500) {
 			// need to do this the old way as long as site_guid columns have not been dropped

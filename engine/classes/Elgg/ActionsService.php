@@ -104,7 +104,7 @@ class ActionsService {
 			}
 		}
 	
-		$forwarder = str_replace($this->config->getSiteUrl(), "", $forwarder);
+		$forwarder = str_replace($this->config->wwwroot, "", $forwarder);
 		$forwarder = str_replace("http://", "", $forwarder);
 		$forwarder = str_replace("@", "", $forwarder);
 		if (substr($forwarder, 0, 1) == "/") {
@@ -174,7 +174,7 @@ class ActionsService {
 		}
 
 		// set the maximum execution time for actions
-		$action_timeout = $this->config->get('action_time_limit');
+		$action_timeout = $this->config->action_time_limit;
 		if (isset($action_timeout)) {
 			set_time_limit($action_timeout);
 		}
@@ -262,7 +262,7 @@ class ActionsService {
 					if (elgg_is_xhr()) {
 						register_error(_elgg_services()->translator->translate(
 							'js:security:token_refresh_failed',
-							[$this->config->getSiteUrl()]
+							[$this->config->wwwroot]
 						));
 					} else {
 						register_error(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
@@ -271,7 +271,7 @@ class ActionsService {
 			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
-					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', [$this->config->getSiteUrl()]));
+					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', [$this->config->wwwroot]));
 				} else {
 					register_error(_elgg_services()->translator->translate('actiongatekeeper:tokeninvalid'));
 				}
@@ -317,7 +317,7 @@ class ActionsService {
 	 * @return int number of seconds that action token is valid
 	 */
 	public function getActionTokenTimeout() {
-		if (($timeout = $this->config->get('action_token_timeout')) === null) {
+		if (($timeout = $this->config->action_token_timeout) === null) {
 			// default to 2 hours
 			$timeout = 2;
 		}

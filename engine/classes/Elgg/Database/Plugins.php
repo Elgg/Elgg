@@ -115,7 +115,7 @@ class Plugins {
 	function generateEntities() {
 	
 		$mod_dir = elgg_get_plugins_path();
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 	
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
 		$old_ia = elgg_set_ignore_access(true);
@@ -218,7 +218,7 @@ class Plugins {
 	function get($plugin_id) {
 		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
 			$plugin_id = sanitize_string($plugin_id);
-			$db_prefix = elgg_get_config('dbprefix');
+			$db_prefix = _elgg_config()->dbprefix;
 
 			$options = [
 				'type' => 'object',
@@ -261,7 +261,7 @@ class Plugins {
 	 * @access private
 	 */
 	function getMaxPriority() {
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_config()->dbprefix;
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 		$plugin_subtype = get_subtype_id('object', 'plugin');
 	
@@ -342,8 +342,10 @@ class Plugins {
 			}
 			return false;
 		}
+
+		$config = _elgg_config();
 	
-		if (elgg_get_config('system_cache_loaded')) {
+		if ($config->system_cache_loaded) {
 			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_VIEWS;
 		}
 	
@@ -364,7 +366,7 @@ class Plugins {
 				$plugin->start($start_flags);
 				$this->active_guids[$id] = $plugin->guid;
 			} catch (Exception $e) {
-				$disable_plugins = elgg_get_config('auto_disable_plugins');
+				$disable_plugins = _elgg_config()->auto_disable_plugins;
 				if ($disable_plugins === null) {
 					$disable_plugins = true;
 				}

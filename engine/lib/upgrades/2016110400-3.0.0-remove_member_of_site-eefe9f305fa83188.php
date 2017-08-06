@@ -6,7 +6,7 @@
  * Removes all member_of_site relationships in the relationships table
  */
 
-$dbprefix = elgg_get_config('dbprefix');
+$dbprefix = _elgg_config()->dbprefix;
 
 delete_data("DELETE FROM {$dbprefix}entity_relationships
 	WHERE relationship = 'member_of_site'");

@@ -75,7 +75,7 @@ function elgg_is_admin_user($user_guid) {
 	}
 
 	// cannot use magic metadata here because of recursion
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 	$query = "SELECT 1 FROM {$dbprefix}users_entity as e
 		WHERE (
 			e.guid = {$user_guid}

@@ -40,7 +40,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		$this->stash_pool = $pool;
 
 		if ($ttl === null) {
-			$ttl = _elgg_services()->config->get('memcache_expires');
+			$ttl = _elgg_config()->memcache_expires;
 		}
 		if (isset($ttl)) {
 			$this->ttl = $ttl;

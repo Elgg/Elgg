@@ -6,7 +6,7 @@
  * Merges datalists table data into config
  */
 
-$dbprefix = elgg_get_config('dbprefix');
+$dbprefix = _elgg_config()->dbprefix;
 
 $exists = get_data_row("SHOW TABLES LIKE '{$dbprefix}datalists'");
 if (!$exists) {

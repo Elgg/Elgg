@@ -11,6 +11,88 @@ use Elgg\Database\ConfigTable;
  * Access to configuration values
  *
  * @since 1.10.0
+ *
+ * @property int           $action_time_limit
+ * @property int           $action_token_timeout
+ * @property bool          $allow_registration
+ * @property string        $allow_user_default_access
+ * @property bool          $auto_disable_plugins
+ * @property int           $batch_run_time_in_secs
+ * @property bool          $boot_complete
+ * @property int           $boot_cache_ttl
+ * @property array         $breadcrumbs
+ * @property string        $cacheroot         Path of cache storage with trailing "/"
+ * @property string        $dataroot          Path of data storage with trailing "/"
+ * @property bool          $data_dir_override
+ * @property array         $db
+ * @property string        $dbencoding
+ * @property string        $dbname
+ * @property string        $dbuser
+ * @property string        $dbhost
+ * @property string        $dbpass
+ * @property string        $dbprefix
+ * @property string        $debug
+ * @property int           $default_access
+ * @property int           $default_limit
+ * @property array         $default_widget_info
+ * @property bool          $elgg_config_locks The application will lock some settings (default true)
+ * @property string[]      $elgg_cron_periods
+ * @property bool          $elgg_load_sync_code
+ * @property bool          $elgg_maintenance_mode
+ * @property string        $elgg_settings_file
+ * @property bool          $enable_profiling
+ * @property mixed         $embed_tab
+ * @property string        $exception_include
+ * @property string[]      $group
+ * @property array         $group_tool_options
+ * @property bool          $i18n_loaded_from_cache
+ * @property array         $icon_sizes
+ * @property string        $installed
+ * @property bool          $installer_running
+ * @property string        $language     Site language code
+ * @property int           $lastcache
+ * @property \ElggLogCache $log_cache
+ * @property array         $libraries
+ * @property bool          $memcache
+ * @property array         $memcache_servers
+ * @property array         $menus
+ * @property int           $min_password_length
+ * @property string[]      $pages
+ * @property-read string   $path         Path of composer install with trailing "/"
+ * @property-read string   $pluginspath  Alias of plugins_path
+ * @property-read string   $plugins_path Path of project "mod/" directory
+ * @property array         $profile_custom_fields
+ * @property array         $profile_fields
+ * @property string        $profiling_minimum_percentage
+ * @property bool          $profiling_sql
+ * @property array         $processed_upgrades
+ * @property string[]      $registered_entities
+ * @property bool          $security_disable_password_autocomplete
+ * @property bool          $security_email_require_password
+ * @property bool          $security_notify_admins
+ * @property bool          $security_notify_user_admin
+ * @property bool          $security_notify_user_ban
+ * @property bool          $security_protect_cron
+ * @property bool          $security_protect_upgrade
+ * @property int           $simplecache_enabled
+ * @property int           $simplecache_lastupdate
+ * @property bool          $simplecache_minify_css
+ * @property bool          $simplecache_minify_js
+ * @property \ElggSite     $site
+ * @property string        $sitedescription
+ * @property string        $sitename
+ * @property string[]      $site_custom_menu_items
+ * @property string[]      $site_featured_menu_names
+ * @property-read int      $site_guid
+ * @property bool          $system_cache_enabled
+ * @property bool          $system_cache_loaded
+ * @property string        $url          Alias of "wwwroot"
+ * @property int           $version
+ * @property string        $view         Default viewtype (usually not set)
+ * @property bool          $walled_garden
+ * @property string        $wwwroot      Site URL
+ * @property bool          $_boot_cache_hit
+ * @property bool          $_elgg_autofeed
  */
 class Config implements Services\Config {
 	/**
@@ -161,6 +243,16 @@ class Config implements Services\Config {
 	}
 
 	/**
+	 * Use get() to read a property
+	 *
+	 * @param string $name Name
+	 * @return mixed
+	 */
+	public function __get($name) {
+		return $this->get($name);
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function getVolatile($name) {
@@ -173,6 +265,39 @@ class Config implements Services\Config {
 	public function set($name, $value) {
 		$name = trim($name);
 		$this->config->$name = $value;
+	}
+
+	/**
+	 * Set an Elgg configuration value
+	 *
+	 * @warning This does not persist the configuration setting. Use elgg_save_config()
+	 *
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 * @return void
+	 */
+	public function __set($name, $value) {
+		$this->set($name, $value);
+	}
+
+	/**
+	 * Handle isset()
+	 *
+	 * @param string $name Name
+	 * @return bool
+	 */
+	public function __isset($name) {
+		return $this->get($name) !== null;
+	}
+
+	/**
+	 * Handle unset()
+	 *
+	 * @param string $name Name
+	 * @return void
+	 */
+	public function __unset($name) {
+		unset($this->config->{$name});
 	}
 
 	/**

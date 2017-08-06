@@ -23,6 +23,16 @@ function _elgg_services(\Elgg\Di\ServiceProvider $services = null) {
 }
 
 /**
+ * Get the Elgg config service
+ *
+ * @return \Elgg\Config
+ * @access private
+ */
+function _elgg_config() {
+	return _elgg_services()->config;
+}
+
+/**
  * Delete the autoload system cache
  *
  * @access private

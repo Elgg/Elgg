@@ -29,15 +29,15 @@
  * @since 1.8.0
  */
 function elgg_get_admins(array $options = []) {
-	global $CONFIG;
+	$config = _elgg_config();
 
 	if (isset($options['joins'])) {
 		if (!is_array($options['joins'])) {
 			$options['joins'] = [$options['joins']];
 		}
-		$options['joins'][] = "join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid";
+		$options['joins'][] = "join {$config->dbprefix}users_entity u on e.guid=u.guid";
 	} else {
-		$options['joins'] = ["join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid"];
+		$options['joins'] = ["join {$config->dbprefix}users_entity u on e.guid=u.guid"];
 	}
 
 	if (isset($options['wheres'])) {
@@ -806,7 +806,7 @@ function _elgg_add_admin_widgets($event, $type, $user) {
  */
 function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_notify_admins')) {
+	if (!_elgg_config()->security_notify_admins) {
 		return;
 	}
 	
@@ -947,7 +947,7 @@ function _elgg_admin_prepare_admin_notification_remove_admin($hook, $type, $retu
  */
 function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_value, $params) {
 	
-	if (!elgg_get_config('security_notify_user_admin')) {
+	if (!_elgg_config()->security_notify_user_admin) {
 		return;
 	}
 	

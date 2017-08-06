@@ -100,7 +100,7 @@ class ElggPluginPackage {
 	 * @throws PluginException
 	 */
 	public function __construct($plugin, $validate = true) {
-		$plugin_path = _elgg_services()->config->getPluginsPath();
+		$plugin_path = _elgg_services()->config->pluginspath;
 		// @todo wanted to avoid another is_dir() call here.
 		// should do some profiling to see how much it affects
 		if (strpos($plugin, $plugin_path) === 0 || is_dir($plugin)) {

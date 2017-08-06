@@ -367,7 +367,7 @@ class ElggInstaller {
 			],
 			'wwwroot' => [
 				'type' => 'url',
-				'value' => _elgg_services()->config->getSiteUrl(),
+				'value' => _elgg_services()->config->wwwroot,
 				'required' => true,
 			],
 			'timezone' => [
@@ -620,7 +620,7 @@ class ElggInstaller {
 	 */
 	protected function getNextStepUrl($currentStep) {
 		$nextStep = $this->getNextStep($currentStep);
-		return _elgg_services()->config->getSiteUrl() . "install.php?step=$nextStep";
+		return _elgg_services()->config->wwwroot . "install.php?step=$nextStep";
 	}
 
 	/**
@@ -1153,7 +1153,7 @@ class ElggInstaller {
 	 */
 	protected function checkRewriteRules(&$report) {
 		$tester = new ElggRewriteTester();
-		$url = _elgg_services()->config->getSiteUrl() . "rewrite.php";
+		$url = _elgg_services()->config->wwwroot . "rewrite.php";
 		$report['rewrite'] = [$tester->run($url, Directory\Local::root()->getPath())];
 	}
 

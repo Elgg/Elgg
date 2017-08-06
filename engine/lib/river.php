@@ -112,7 +112,7 @@ function elgg_create_river_item(array $options = []) {
 		return true;
 	}
 
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 
 	foreach ($values as $name => $value) {
 		$sql_columns[] = $name;
@@ -195,8 +195,6 @@ function elgg_create_river_item(array $options = []) {
  * @since 1.8.0
  */
 function elgg_get_river(array $options = []) {
-	global $CONFIG;
-
 	$defaults = [
 		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
 
@@ -277,7 +275,7 @@ function elgg_get_river(array $options = []) {
 		$wheres[] = "rv.enabled = 'yes'";
 	}
 
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 
 	// joins
 	$joins = [];
@@ -313,16 +311,17 @@ function elgg_get_river(array $options = []) {
 
 	// remove identical where clauses
 	$wheres = array_unique($wheres);
+	$prefix = _elgg_config()->dbprefix;
 
 	if (!$options['count']) {
 		$distinct = $options['distinct'] ? "DISTINCT" : "";
 
-		$query = "SELECT $distinct rv.* FROM {$CONFIG->dbprefix}river rv ";
+		$query = "SELECT $distinct rv.* FROM {$prefix}river rv ";
 	} else {
 		// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than IDs
 		$count_expr = $options['distinct'] ? "DISTINCT rv.id" : "*";
 
-		$query = "SELECT COUNT($count_expr) as total FROM {$CONFIG->dbprefix}river rv ";
+		$query = "SELECT COUNT($count_expr) as total FROM {$prefix}river rv ";
 	}
 
 	// add joins
@@ -469,7 +468,7 @@ function elgg_list_river(array $options = []) {
 
 	$defaults = [
 		'offset'     => (int) max(get_input('offset', 0), 0),
-		'limit'      => (int) max(get_input('limit', max(20, elgg_get_config('default_limit'))), 0),
+		'limit'      => (int) max(get_input('limit', max(20, _elgg_config()->default_limit)), 0),
 		'pagination' => true,
 		'list_class' => 'elgg-list-river',
 		'no_results' => '',
@@ -666,7 +665,7 @@ function _elgg_river_get_view_where_sql($views) {
  */
 function update_river_access_by_object($object_guid, $access_id) {
 	
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 	$query = "
 		UPDATE {$dbprefix}river
 		SET access_id = :access_id
@@ -706,7 +705,7 @@ function _elgg_river_disable($event, $type, $entity) {
 		return true;
 	}
 
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 	$query = <<<QUERY
 	UPDATE {$dbprefix}river AS rv
 	SET rv.enabled = 'no'
@@ -733,7 +732,7 @@ function _elgg_river_enable($event, $type, $entity) {
 		return true;
 	}
 
-	$dbprefix = elgg_get_config('dbprefix');
+	$dbprefix = _elgg_config()->dbprefix;
 	$query = <<<QUERY
 	UPDATE {$dbprefix}river AS rv
 	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid

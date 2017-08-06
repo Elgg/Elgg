@@ -350,7 +350,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('redirects', function(ServiceProvider $c) {
 			$url = current_page_url();
 			$is_xhr = $c->request->isXmlHttpRequest();
-			return new \Elgg\RedirectService($c->session, $is_xhr, $c->config->getSiteUrl(), $url);
+			return new \Elgg\RedirectService($c->session, $is_xhr, $c->config->wwwroot, $url);
 		});
 
 		$this->setFactory('relationshipsTable', function(ServiceProvider $c) {

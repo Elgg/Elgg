@@ -96,7 +96,7 @@ class Profiler {
 	 */
 	public static function handlePageOutput($hook, $type, $html, $params) {
 		$profiler = new self();
-		$min_percentage = elgg_get_config('profiling_minimum_percentage');
+		$min_percentage = _elgg_config()->profiling_minimum_percentage;
 		if ($min_percentage !== null) {
 			$profiler->minimum_percentage = $min_percentage;
 		}
