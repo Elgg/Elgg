@@ -32,12 +32,6 @@ class ElggWire extends ElggObject {
 	 * @since 1.8.0
 	 */
 	public function canComment($user_guid = 0, $default = null) {
-		$result = parent::canComment($user_guid, $default);
-		if ($result == false) {
-			return $result;
-		}
-
 		return false;
 	}
-
 }

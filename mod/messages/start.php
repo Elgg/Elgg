@@ -2,17 +2,11 @@
 /**
 * Elgg internal messages plugin
 * This plugin lets users send messages to each other.
-*
-* @package ElggMessages
 */
-
 
 elgg_register_event_handler('init', 'system', 'messages_init');
 
 function messages_init() {
-
-	// register a library of helper functions
-	elgg_register_library('elgg:messages', __DIR__ . '/lib/messages.php');
 
 	// add page menu items
 	if (elgg_is_logged_in()) {
@@ -68,14 +62,7 @@ function messages_init() {
  */
 function messages_page_handler($page) {
 
-	$current_user = elgg_get_logged_in_user_entity();
-	if (!$current_user) {
-		register_error(elgg_echo('noaccess'));
-		elgg_get_session()->set('last_forward_from', current_page_url());
-		forward('');
-	}
-
-	elgg_load_library('elgg:messages');
+	elgg_gatekeeper();
 
 	elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $current_user->username);
 
@@ -165,14 +152,14 @@ function messages_can_edit_metadata($hook_name, $entity_type, $return_value, $pa
 
 	global $messagesendflag;
 
-	if ($messagesendflag == 1) {
-		$entity = $parameters['entity'];
-		if ($entity->getSubtype() == "messages") {
-			return true;
-		}
+	if ($messagesendflag !== 1) {
+		return;
 	}
-
-	return $return_value;
+	
+	$entity = elgg_extract('entity', $parameters);
+	if ($entity->getSubtype() == 'messages') {
+		return true;
+	}
 }
 
 /**
@@ -182,26 +169,28 @@ function messages_can_edit_metadata($hook_name, $entity_type, $return_value, $pa
 function messages_can_edit($hook_name, $entity_type, $return_value, $parameters) {
 
 	global $messagesendflag;
-
-	if ($messagesendflag == 1) {
-		$entity = $parameters['entity'];
-		if ($entity->getSubtype() == "messages") {
-			return true;
-		}
+	
+	if ($messagesendflag !== 1) {
+		return;
 	}
-
-	return $return_value;
+	
+	$entity = elgg_extract('entity', $parameters);
+	if ($entity->getSubtype() == 'messages') {
+		return true;
+	}
 }
 
 /**
  * Prevent messages from generating a notification
  */
 function messages_notification_msg($hook_name, $entity_type, $return_value, $params) {
-
-	if ($params['entity'] instanceof ElggEntity) {
-		if ($params['entity']->getSubtype() == 'messages') {
-			return false;
-		}
+	$entity = elgg_extract('entity', $params);
+	if (!$entity instanceof ElggEntity) {
+		return;
+	}
+		
+	if ($entity->getSubtype() == 'messages') {
+		return false;
 	}
 }
 
@@ -216,8 +205,6 @@ function messages_can_edit_container($hook_name, $entity_type, $return_value, $p
 	if ($messagesendflag == 1) {
 		return true;
 	}
-
-	return $return_value;
 }
 
 /**
@@ -362,22 +349,14 @@ function messages_set_url($hook, $type, $url, $params) {
  * @since 1.9
  */
 function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
-	if (!$user_guid) {
-		$user_guid = elgg_get_logged_in_user_guid();
-	}
-
-	if ($limit === null) {
-		$limit = elgg_get_config('default_limit');
-	}
-
 	return elgg_get_entities_from_metadata([
 		'metadata_name_value_pairs' => [
 			'toId' => $user_guid,
 			'readYet' => 0,
 			'msg' => 1,
 		],
-		'owner_guid' => $user_guid,
-		'limit' => $limit,
+		'owner_guid' => $user_guid ?: elgg_get_logged_in_user_guid(),
+		'limit' => $limit ?: elgg_get_config('default_limit'),
 		'offset' => $offset,
 		'count' => $count,
 		'distinct' => false,
@@ -393,6 +372,31 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
  */
 function messages_count_unread($user_guid = 0) {
 	return messages_get_unread($user_guid, 10, 0, true);
+}
+
+/**
+ * Prepare the compose form variables
+ *
+ * @return array
+ */
+function messages_prepare_form_vars($recipient_guid = 0) {
+
+	$recipients = [];
+	$recipient = get_user($recipient_guid);
+	if (!empty($recipient)) {
+		$recipients[] = $recipient->getGUID();
+	}
+
+	// input names => defaults
+	$values = [
+		'subject' => elgg_get_sticky_value('messages', 'subject', ''),
+		'body' => elgg_get_sticky_value('messages', 'body', ''),
+		'recipients' => elgg_get_sticky_value('messages', 'recipients', $recipients),
+	];
+
+	elgg_clear_sticky_form('messages');
+
+	return $values;
 }
 
 /**
@@ -434,8 +438,7 @@ function messages_purge($event, $type, $user) {
 	}
 
 	// make sure we delete them all
-	$entity_disable_override = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
+	$entity_disable_override = access_show_hidden_entities(true);
 	$ia = elgg_set_ignore_access(true);
 
 	$options = [

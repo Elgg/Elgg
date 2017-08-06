@@ -27,6 +27,7 @@
 	}
 	.elgg-page-navbar > .elgg-inner {
 		height: auto;
+		position: relative;
 	}
 	.elgg-page-footer > .elgg-inner {
 		padding: 5px 0;

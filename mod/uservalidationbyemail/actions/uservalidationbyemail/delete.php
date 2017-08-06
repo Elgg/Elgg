@@ -1,21 +1,16 @@
 <?php
 /**
  * Delete a user or users by guid
- *
- * @package Elgg.Core.Plugin
- * @subpackage UserValidationByEmail
  */
 
 $user_guids = get_input('user_guids');
 $error = false;
 
 if (!$user_guids) {
-	register_error(elgg_echo('uservalidationbyemail:errors:unknown_users'));
-	forward(REFERRER);
+	return elgg_error_response(elgg_echo('uservalidationbyemail:errors:unknown_users'));
 }
 
-$access = access_get_show_hidden_status();
-access_show_hidden_entities(true);
+$access = access_show_hidden_entities(true);
 
 foreach ($user_guids as $guid) {
 	$user = get_entity($guid);
@@ -43,9 +38,7 @@ if (count($user_guids) == 1) {
 }
 
 if ($error) {
-	register_error($error_txt);
-} else {
-	system_message($message_txt);
+	return elgg_error_response($error_txt);
 }
 
-forward(REFERRER);
+return elgg_ok_response('', $message_txt);

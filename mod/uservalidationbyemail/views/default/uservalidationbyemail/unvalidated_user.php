@@ -33,7 +33,7 @@ $delete = elgg_view('output/url', [
 	'href' => "action/uservalidationbyemail/delete/?user_guids[]=$user->guid",
 	'text' => elgg_echo('delete')
 ]);
-$menu = 'test';
+
 $block = <<<___END
 	<label>$user->username: "$user->name" &lt;$user->email&gt;</label>
 	<div class="uservalidationbyemail-unvalidated-user-details">

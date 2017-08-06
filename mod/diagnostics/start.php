@@ -37,18 +37,6 @@ function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 /**
- * Get some information about the plugins installed on the system.
- *
- * @return tring
- */
-function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params) {
-	// @todo this is a really bad idea because of the new plugin system
-	//$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(elgg_get_plugins(), true)));
-
-	return $returnvalue;
-}
-
-/**
  * Recursively list through a directory tree producing a hash of all installed files
  *
  * @param starting dir $dir
@@ -131,7 +119,6 @@ function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params) {
 }
 
 elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_basic_hook", 0); // show basics first
-elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_plugins_hook", 2); // Now the plugins
 elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_sigs_hook", 1); // Now the signatures
 
 elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_globals_hook"); // Global variables

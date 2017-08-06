@@ -31,7 +31,4 @@ echo elgg_view('river/elements/layout', [
 	'item' => $item,
 	'message' => $excerpt,
 	'summary' => $summary,
-
-	// truthy value to bypass responses rendering
-	'responses' => ' ',
 ]);

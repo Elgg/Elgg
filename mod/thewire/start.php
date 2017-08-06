@@ -26,8 +26,11 @@ function thewire_init() {
 	elgg_register_ajax_view('thewire/previous');
 
 	// add a site navigation item
-	$item = new ElggMenuItem('thewire', elgg_echo('thewire'), 'thewire/all');
-	elgg_register_menu_item('site', $item);
+	elgg_register_menu_item('site', [
+		'name' => 'thewire',
+		'text' => elgg_echo('thewire'),
+		'href' => 'thewire/all',
+	]);
 
 	// owner block menu
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'thewire_owner_block_menu');
@@ -135,7 +138,7 @@ function thewire_page_handler($page) {
  * @return string
  */
 function thewire_set_url($hook, $type, $url, $params) {
-	$entity = $params['entity'];
+	$entity = elgg_extract('entity', $params);
 	if (elgg_instanceof($entity, 'object', 'thewire')) {
 		return "thewire/view/" . $entity->guid;
 	}
@@ -223,9 +226,7 @@ function thewire_filter($text) {
 				'$1<a href="' . elgg_get_site_url() . 'thewire/tag/$2">#$2</a>',
 				$text);
 
-	$text = trim($text);
-
-	return $text;
+	return trim($text);
 }
 
 /**
@@ -387,6 +388,7 @@ function thewire_get_parent($post_guid) {
 	$parents = elgg_get_entities_from_relationship([
 		'relationship' => 'parent',
 		'relationship_guid' => $post_guid,
+		'limit' => 1,
 	]);
 	if ($parents) {
 		return $parents[0];
@@ -408,7 +410,7 @@ function thewire_get_parent($post_guid) {
 function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	$handler = elgg_extract('handler', $params, false);
 	if ($handler != 'thewire') {
-		return $value;
+		return;
 	}
 
 	foreach ($value as $index => $item) {
@@ -459,12 +461,17 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
  * @return array
  */
 function thewire_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "thewire/owner/{$params['entity']->username}";
-		$item = new ElggMenuItem('thewire', elgg_echo('item:object:thewire'), $url);
-		$return[] = $item;
+	$user = elgg_extract('entity', $params);
+	if (!$user instanceof \ElggUser) {
+		return;
 	}
 
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'thewire',
+		'text' => elgg_echo('item:object:thewire'),
+		'href' => "thewire/owner/{$params['entity']->username}",
+	]);
+	
 	return $return;
 }
 

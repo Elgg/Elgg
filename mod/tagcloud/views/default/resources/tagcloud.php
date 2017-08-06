@@ -1,13 +1,12 @@
 <?php
 
 $title = elgg_echo('tagcloud:site_cloud');
-$options = [
+
+$content = elgg_view_tagcloud([
 	'threshold' => 0,
 	'limit' => 100,
 	'tag_name' => 'tags',
-];
-
-$content = elgg_view_tagcloud($options);
+]);
 
 $body = elgg_view_layout('one_sidebar', [
 	'title' => $title,

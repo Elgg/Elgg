@@ -6,6 +6,8 @@
 $guid = (int) get_input('guid');
 
 $parent = thewire_get_parent($guid);
-if ($parent) {
-	echo elgg_view_entity($parent);
+if (!$parent) {
+	return;
 }
+
+echo elgg_view_entity($parent);

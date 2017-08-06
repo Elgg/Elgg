@@ -7,10 +7,9 @@
 
 $full = elgg_extract('full_view', $vars, false);
 $message = elgg_extract('entity', $vars, false);
-$bulk_actions = (bool) elgg_extract('bulk_actions', $vars, false);
 
 if (!$message) {
-	return true;
+	return;
 }
 
 if ($message->toId == elgg_get_page_owner_guid()) {
@@ -61,11 +60,11 @@ $subject_info = elgg_view('output/url', [
 ]);
 
 $delete_link = elgg_view("output/url", [
-						'href' => "action/messages/delete?guid=" . $message->getGUID() . "&full=$full",
-						'text' => elgg_view_icon('delete', 'float-alt'),
-						'confirm' => elgg_echo('deleteconfirm'),
-						'encode_text' => false,
-					]);
+	'href' => "action/messages/delete?guid=" . $message->getGUID() . "&full=$full",
+	'text' => elgg_view_icon('delete', 'float-alt'),
+	'confirm' => elgg_echo('deleteconfirm'),
+	'encode_text' => false,
+]);
 
 $body = <<<HTML
 <div class="messages-owner">$user_link</div>
@@ -77,20 +76,23 @@ HTML;
 if ($full) {
 	echo elgg_view_image_block($icon, $body, ['class' => $class]);
 	echo elgg_view('output/longtext', ['value' => $message->description]);
-} else {
-	$body .= elgg_view("output/longtext", ["value" => elgg_get_excerpt($message->description), "class" => "elgg-subtext clearfloat"]);
-	
-	if ($bulk_actions) {
-		$checkbox = elgg_view('input/checkbox', [
-			'name' => 'message_id[]',
-			'value' => $message->guid,
-			'default' => false
-		]);
-	
-		$entity_listing = elgg_view_image_block($icon, $body, ['class' => $class]);
-		
-		echo elgg_view_image_block($checkbox, $entity_listing);
-	} else {
-		echo elgg_view_image_block($icon, $body, ['class' => $class]);
-	}
+	return;
 }
+
+$body .= elgg_view("output/longtext", ["value" => elgg_get_excerpt($message->description), "class" => "elgg-subtext clearfloat"]);
+
+$bulk_actions = (bool) elgg_extract('bulk_actions', $vars, false);
+if (!$bulk_actions) {
+	echo elgg_view_image_block($icon, $body, ['class' => $class]);
+	return;
+}
+
+$checkbox = elgg_view('input/checkbox', [
+	'name' => 'message_id[]',
+	'value' => $message->guid,
+	'default' => false,
+]);
+
+$entity_listing = elgg_view_image_block($icon, $body, ['class' => $class]);
+
+echo elgg_view_image_block($checkbox, $entity_listing);

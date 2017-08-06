@@ -5,14 +5,12 @@
  * @uses $vars['entity']
  */
 
-elgg_require_js('elgg/thewire');
-
-$full = elgg_extract('full_view', $vars, false);
 $post = elgg_extract('entity', $vars, false);
-
 if (!$post) {
-	return true;
+	return;
 }
+
+elgg_require_js('elgg/thewire');
 
 // make compatible with posts created with original Curverider plugin
 $thread_id = $post->wire_thread;
