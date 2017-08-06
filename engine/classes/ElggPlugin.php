@@ -1007,31 +1007,45 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Registers the plugin's actions provided in the plugin config file
 	 *
-	 * @throws PluginException
 	 * @return void
 	 */
 	protected function registerActions() {
-		$actions = _elgg_services()->actions;
+		self::addActionsFromStaticConfig($this->getStaticConfig('actions', []), $this->getPath());
+	}
 
-		$spec = (array) $this->getStaticConfig('actions', []);
-		
+	/**
+	 * Register a plugin's actions provided in the config file
+	 *
+	 * @todo move to a static config service
+	 *
+	 * @param array  $spec      'actions' section of static config
+	 * @param string $root_path Plugin path
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public static function addActionsFromStaticConfig(array $spec, $root_path) {
+		$actions = _elgg_services()->actions;
+		$root_path = rtrim($root_path, '/\\');
+
 		foreach ($spec as $action => $action_spec) {
 			if (!is_array($action_spec)) {
 				continue;
 			}
-			
+
 			$options = [
 				'access' => 'logged_in',
 				'filename' => '', // assuming core action is registered
 			];
-			
+
 			$options = array_merge($options, $action_spec);
-			
-			$filename = "{$this->getPath()}actions/{$action}.php";
-			if (file_exists($filename)) {
+
+			$filename = "$root_path/actions/{$action}.php";
+			if (is_file($filename)) {
 				$options['filename'] = $filename;
 			}
-			
+
 			$actions->register($action, $options['filename'], $options['access']);
 		}
 	}

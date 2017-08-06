@@ -396,6 +396,10 @@ class Plugins {
 	 * @return \ElggPlugin[]
 	 */
 	function find($status = 'active') {
+		if (elgg_get_config('Database_none')) {
+			return [];
+		}
+
 		$db_prefix = elgg_get_config('dbprefix');
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 		$site_guid = 1;

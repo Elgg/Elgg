@@ -1831,6 +1831,7 @@ function elgg_views_boot() {
 	]);
 
 	elgg_register_ajax_view('languages.js');
+	elgg_register_simplecache_view('languages/en.js');
 
 	// pre-process CSS regardless of simplecache
 	elgg_register_plugin_hook_handler('cache:generate', 'css', '_elgg_views_preprocess_css');
