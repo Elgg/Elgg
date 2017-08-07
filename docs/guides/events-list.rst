@@ -67,6 +67,9 @@ System events
 **send:after, http_response**
     Triggered after an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` that was sent to the requester.
 
+**reload:after, translations**
+    Triggered after the translations are (re)loaded.
+
 User events
 ===========
 
