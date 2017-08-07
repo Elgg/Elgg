@@ -185,6 +185,10 @@ function _elgg_rmdir($dir, $empty = false) {
 		_elgg_services()->logger->warn(__FUNCTION__ . ' called with empty $dir');
 		return true;
 	}
+	if (!is_dir($dir)) {
+		return true;
+	}
+
 	$files = array_diff(scandir($dir), ['.', '..']);
 	
 	foreach ($files as $file) {

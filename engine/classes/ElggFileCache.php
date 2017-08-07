@@ -146,6 +146,9 @@ class ElggFileCache extends \ElggCache {
 	 */
 	public function clear() {
 		$dir = $this->getVariable("cache_path");
+		if (!is_dir($dir)) {
+			return;
+		}
 
 		$exclude = [".", ".."];
 
