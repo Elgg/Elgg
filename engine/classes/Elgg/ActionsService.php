@@ -170,6 +170,7 @@ class ActionsService {
 		$file = $this->actions[$action]['file'];
 
 		if (!is_file($file) || !is_readable($file)) {
+			ob_end_clean();
 			return $forward('actionnotfound', ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 

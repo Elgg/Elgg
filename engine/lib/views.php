@@ -49,6 +49,7 @@
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
 use Elgg\Includer;
+use Elgg\Project\Paths;
 
 /**
  * Manually set the viewtype.
@@ -1609,7 +1610,7 @@ function _elgg_has_rss_link() {
 		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
 		return $GLOBALS['autofeed'];
 	}
-	return (bool) _elgg_services()->config->getVolatile('_elgg_autofeed');
+	return (bool) _elgg_config()->_elgg_autofeed;
 }
 
 /**
@@ -1751,8 +1752,7 @@ function _elgg_view_may_be_altered($view, $path) {
 		$expected_path = $path;
 	} else {
 		// relative path
-		$root = dirname(dirname(__DIR__));
-		$expected_path = "$root/views/$viewtype/" . ltrim($path, '/\\');
+		$expected_path = Paths::elgg() . "views/$viewtype/" . ltrim($path, '/\\');
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);
@@ -1769,21 +1769,7 @@ function _elgg_view_may_be_altered($view, $path) {
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
-	if (!elgg_get_config('system_cache_loaded')) {
-		// Core view files in /views
-		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
-
-		// Core view definitions in /engine/views.php
-		$file = dirname(__DIR__) . '/views.php';
-		if (is_file($file)) {
-			$spec = Includer::includeFile($file);
-			if (is_array($spec)) {
-				_elgg_services()->views->mergeViewsSpec($spec);
-			}
-		}
-	}
-
-	// on every page
+	_elgg_services()->viewCacher->registerCoreViews();
 
 	// jQuery and UI must come before require. See #9024
 	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
@@ -1846,8 +1832,8 @@ function elgg_views_boot() {
 	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
 
-	// set default icon sizes - can be overridden in settings.php or with plugin
-	if (!_elgg_services()->config->getVolatile('icon_sizes')) {
+	// set default icon sizes - can be overridden with plugin
+	if (!_elgg_config()->icon_sizes) {
 		$icon_sizes = [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],

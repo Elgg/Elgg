@@ -6,6 +6,8 @@
  * @subpackage DataModel.Relationship
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Get a relationship by its ID
  *
@@ -262,8 +264,7 @@ function elgg_list_entities_from_relationship_count($options) {
  * @access private
  */
 function _elgg_relationships_test($hook, $type, $tests) {
-	global $CONFIG;
-	$tests[] = $CONFIG->path . 'engine/tests/ElggRelationshipTest.php';
+	$tests[] = Paths::elgg() . 'engine/tests/ElggRelationshipTest.php';
 	return $tests;
 }
 
@@ -276,6 +277,9 @@ function _elgg_relationship_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_relationships_test');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_relationship_init');
 };

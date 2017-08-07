@@ -7,6 +7,8 @@
  * @subpackage DataModel.MetaStrings
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
@@ -690,11 +692,13 @@ function _elgg_entities_get_metastrings_options($type, $options) {
  * @access private
  */
 function _elgg_metastrings_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetastringsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetastringsTest.php';
 	return $value;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$hooks->registerHandler('unit_test', 'system', '_elgg_metastrings_test');
 };

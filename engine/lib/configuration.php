@@ -15,50 +15,51 @@
  */
 
 use Elgg\Filesystem\Directory;
+use Elgg\Project\Paths;
 
 /**
- * Get the URL for the current (or specified) site
+ * Get the URL for the current (or specified) site, ending with "/".
  *
  * @return string
  * @since 1.8.0
  */
 function elgg_get_site_url() {
-	return _elgg_services()->config->wwwroot;
+	return _elgg_config()->wwwroot;
 }
 
 /**
- * Get the plugin path for this installation
+ * Get the plugin path for this installation, ending with slash.
  *
  * @return string
  * @since 1.8.0
  */
 function elgg_get_plugins_path() {
-	return _elgg_services()->config->pluginspath;
+	return _elgg_config()->plugins_path;
 }
 
 /**
- * Get the data directory path for this installation
+ * Get the data directory path for this installation, ending with slash.
  *
  * @return string
  * @since 1.8.0
  */
 function elgg_get_data_path() {
-	return _elgg_services()->config->getDataPath();
+	return _elgg_config()->dataroot;
 }
 
 /**
- * Get the cache directory path for this installation.
+ * Get the cache directory path for this installation, ending with slash.
  *
- * If not set in settings.php, the data path will be returned.
+ * If not set in settings, the data path will be returned.
  *
  * @return string
  */
 function elgg_get_cache_path() {
-	return _elgg_services()->config->getCachePath();
+	return _elgg_config()->cacheroot;
 }
 
 /**
- * Get the root directory path for this installation
+ * Get the project path (where composer is installed), ending with slash.
  *
  * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg
  * was always at the install root, but as of 2.0, Elgg can be installed as a
@@ -68,18 +69,16 @@ function elgg_get_cache_path() {
  * @since 1.8.0
  */
 function elgg_get_root_path() {
-	return _elgg_services()->config->get('path');
+	return Paths::project();
 }
 
 /**
- * /path/to/elgg/engine
- *
- * No trailing slash
+ * /path/to/elgg/engine with no trailing slash.
  *
  * @return string
  */
 function elgg_get_engine_path() {
-	return dirname(__DIR__);
+	return Paths::elgg() . 'engine';
 }
 
 /**
@@ -142,7 +141,7 @@ function elgg_remove_config($name) {
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {
-	$tests[] = \Elgg\Application::elggDir()->getPath("engine/tests/ElggCoreConfigTest.php");
+	$tests[] = Paths::elgg() . "engine/tests/ElggCoreConfigTest.php";
 	return $tests;
 }
 
@@ -158,6 +157,9 @@ function elgg_get_icon_sizes($entity_type = null, $entity_subtype = null, $type 
 	return _elgg_services()->iconService->getSizes($entity_type, $entity_subtype, $type);
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$hooks->registerHandler('unit_test', 'system', '_elgg_config_test');
 };

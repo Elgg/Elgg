@@ -3,7 +3,7 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
-use Elgg\Database\EntityTable\UserFetchFailureException;
+use Elgg\Project\Paths;
 
 /**
  * Return the id for a given subtype.
@@ -176,6 +176,49 @@ function get_entity_as_row($guid) {
 }
 
 /**
+ * Return the site specific details of a site by a row.
+ *
+ * @param int $guid The site GUID
+ *
+ * @return mixed
+ * @access private
+ */
+function get_site_entity_as_row($guid) {
+	$guid = (int) $guid;
+	$prefix = _elgg_config()->dbprefix;
+	return get_data_row("SELECT * FROM {$prefix}sites_entity WHERE guid = $guid");
+}
+
+/**
+ * Return the object specific details of a object by a row.
+ *
+ * @param int $guid The guid to retrieve
+ *
+ * @return bool
+ * @access private
+ */
+function get_object_entity_as_row($guid) {
+	$dbprefix = _elgg_config()->dbprefix;
+	$sql = "SELECT * FROM {$dbprefix}objects_entity WHERE guid = :guid";
+	$params = [
+		':guid' => (int) $guid,
+	];
+	return _elgg_services()->db->getDataRow($sql, null, $params);
+}
+
+/**
+ * Return the user specific details of a user by a row.
+ *
+ * @param int $guid The \ElggUser guid
+ *
+ * @return mixed
+ * @access private
+ */
+function get_user_entity_as_row($guid) {
+	return _elgg_services()->usersTable->getRow($guid);
+}
+
+/**
  * Create an Elgg* object from a given entity row.
  *
  * Handles loading all tables into the correct class.
@@ -202,6 +245,9 @@ function entity_row_to_elggstar($row) {
  * @return \ElggEntity The correct Elgg or custom object based upon entity type and subtype
  */
 function get_entity($guid) {
+	if ($guid == 1) {
+		return _elgg_config()->site;
+	}
 	return _elgg_services()->entityTable->get($guid);
 }
 
@@ -233,6 +279,16 @@ function elgg_entity_exists($guid) {
  */
 function elgg_enable_entity($guid, $recursive = true) {
 	return _elgg_services()->entityTable->enable($guid, $recursive);
+}
+
+/**
+ * Get the current site entity
+ *
+ * @return \ElggSite
+ * @since 1.8.0
+ */
+function elgg_get_site_entity() {
+	return _elgg_config()->site;
 }
 
 /**
@@ -511,24 +567,25 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignor
  * @see get_registered_entity_types()
  */
 function elgg_register_entity_type($type, $subtype = null) {
-	global $CONFIG;
-
 	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
+	if (!in_array($type, \Elgg\Config::getEntityTypes())) {
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities)) {
-		$CONFIG->registered_entities = [];
+	$entities = _elgg_config()->registered_entities;
+	if (!$entities) {
+		$entities = [];
 	}
 
-	if (!isset($CONFIG->registered_entities[$type])) {
-		$CONFIG->registered_entities[$type] = [];
+	if (!isset($entities[$type])) {
+		$entities[$type] = [];
 	}
 
 	if ($subtype) {
-		$CONFIG->registered_entities[$type][] = $subtype;
+		$entities[$type][] = $subtype;
 	}
+
+	_elgg_config()->registered_entities = $entities;
 
 	return true;
 }
@@ -546,32 +603,32 @@ function elgg_register_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function elgg_unregister_entity_type($type, $subtype = null) {
-	global $CONFIG;
-
 	$type = strtolower($type);
-	if (!in_array($type, $CONFIG->entity_types)) {
+	if (!in_array($type, \Elgg\Config::getEntityTypes())) {
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities)) {
+	$entities = _elgg_config()->registered_entities;
+	if (!$entities) {
 		return false;
 	}
 
-	if (!isset($CONFIG->registered_entities[$type])) {
+	if (!isset($entities[$type])) {
 		return false;
 	}
 
 	if ($subtype) {
-		if (in_array($subtype, $CONFIG->registered_entities[$type])) {
-			$key = array_search($subtype, $CONFIG->registered_entities[$type]);
-			unset($CONFIG->registered_entities[$type][$key]);
+		if (in_array($subtype, $entities[$type])) {
+			$key = array_search($subtype, $entities[$type]);
+			unset($entities[$type][$key]);
 		} else {
 			return false;
 		}
 	} else {
-		unset($CONFIG->registered_entities[$type]);
+		unset($entities[$type]);
 	}
 
+	_elgg_config()->registered_entities = $entities;
 	return true;
 }
 
@@ -584,23 +641,24 @@ function elgg_unregister_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function get_registered_entity_types($type = null) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->registered_entities)) {
+	$registered_entities = _elgg_config()->registered_entities;
+	if (!$registered_entities) {
 		return false;
 	}
+
 	if ($type) {
 		$type = strtolower($type);
 	}
-	if (!empty($type) && empty($CONFIG->registered_entities[$type])) {
+
+	if (!empty($type) && empty($registered_entities[$type])) {
 		return false;
 	}
 
 	if (empty($type)) {
-		return $CONFIG->registered_entities;
+		return $registered_entities;
 	}
 
-	return $CONFIG->registered_entities[$type];
+	return $registered_entities[$type];
 }
 
 /**
@@ -612,21 +670,20 @@ function get_registered_entity_types($type = null) {
  * @return bool Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype = null) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->registered_entities)) {
-		return false;
+	$registered_entities = _elgg_config()->registered_entities;
+	if (!$registered_entities) {
+		return true;
 	}
 
 	$type = strtolower($type);
 
 	// @todo registering a subtype implicitly registers the type.
 	// see #2684
-	if (!isset($CONFIG->registered_entities[$type])) {
+	if (!isset($registered_entities[$type])) {
 		return false;
 	}
 
-	if ($subtype && !in_array($subtype, $CONFIG->registered_entities[$type])) {
+	if ($subtype && !in_array($subtype, $registered_entities[$type])) {
 		return false;
 	}
 	return true;
@@ -793,16 +850,17 @@ function update_entity_last_action($guid, $posted = null) {
  * @access private
  */
 function _elgg_entities_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAttributeLoaderTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggEntityTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAttributeLoaderTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggSiteTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggObjectTest.php';
 	return $value;
 }
 
@@ -817,6 +875,9 @@ function _elgg_entities_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_entities_init');
 };

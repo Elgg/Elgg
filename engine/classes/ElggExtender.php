@@ -217,17 +217,16 @@ abstract class ElggExtender extends \ElggData {
 
 		// @todo remove when elgg_register_extender_url_handler() has been removed
 		if ($this->id) {
-			global $CONFIG;
-
 			$function = "";
-			if (isset($CONFIG->extender_url_handler[$type][$subtype])) {
-				$function = $CONFIG->extender_url_handler[$type][$subtype];
+			$handlers = _elgg_config()->extender_url_handler;
+			if (isset($handlers[$type][$subtype])) {
+				$function = $handlers[$type][$subtype];
 			}
-			if (isset($CONFIG->extender_url_handler[$type]['all'])) {
-				$function = $CONFIG->extender_url_handler[$type]['all'];
+			if (isset($handlers[$type]['all'])) {
+				$function = $handlers[$type]['all'];
 			}
-			if (isset($CONFIG->extender_url_handler['all']['all'])) {
-				$function = $CONFIG->extender_url_handler['all']['all'];
+			if (isset($handlers['all']['all'])) {
+				$function = $handlers['all']['all'];
 			}
 			if (is_callable($function)) {
 				$url = call_user_func($function, $this);

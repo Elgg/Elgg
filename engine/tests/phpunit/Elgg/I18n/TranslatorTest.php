@@ -14,7 +14,7 @@ class TranslatorTest extends \Elgg\TestCase {
 	public $translator;
 
 	public function setUp() {
-		$this->translator = new Translator(_elgg_services()->config);
+		$this->translator = new Translator(_elgg_config());
 		$this->translator->addTranslation('en', [$this->key => 'Dummy']);
 		$this->translator->addTranslation('es', [$this->key => 'Estúpido']);
 	}
@@ -29,7 +29,10 @@ class TranslatorTest extends \Elgg\TestCase {
 
 	public function testCheckLanguageKeyExists() {
 		$this->assertTrue($this->translator->languageKeyExists($this->key));
+
+		_elgg_services()->logger->disable();
 		$this->assertFalse($this->translator->languageKeyExists('__elgg_php_unit:test_key:missing'));
+		_elgg_services()->logger->enable();
 	}
 
 	public function testCanTranslate() {
@@ -48,28 +51,34 @@ class TranslatorTest extends \Elgg\TestCase {
 
 	public function testFallsBackToEnglish() {
 		$this->translator->addTranslation('en', ["{$this->key}a" => 'Dummy A']);
+		_elgg_services()->logger->disable();
 		$this->assertEquals('Dummy A', $this->translator->translate("{$this->key}a", [], 'es'));
+		_elgg_services()->logger->enable();
 	}
 
 	public function testIssuesNoticeOnMissingKey() {
 		// key is missing from all checked translations
-		_elgg_services()->logger->disable();
-		$this->assertEquals("{$this->key}b", $this->translator->translate("{$this->key}b"));
-		$logged = _elgg_services()->logger->enable();
+		$logger = _elgg_services()->logger;
+		$logger->disable();
 
-		$this->assertEquals([
-			[
-				'message' => "Missing English translation for \"{$this->key}b\" language key",
-				'level' => Logger::NOTICE,
-			]
-				], $logged);
+		$this->assertEquals("{$this->key}b", $this->translator->translate("{$this->key}b"));
+		$logged = $logger->enable();
+
+		$this->assertEquals(2, count($logged));
+
+		$this->assertEquals('Translations loaded from:', substr($logged[0]['message'], 0, 25));
+		$this->assertEquals(Logger::INFO, $logged[0]['level']);
+
+		$message = "Missing English translation for \"{$this->key}b\" language key";
+		$this->assertEquals($message, $logged[1]['message']);
+		$this->assertEquals(Logger::NOTICE, $logged[1]['level']);
 
 		// has fallback key
 		$this->translator->addTranslation('en', ["{$this->key}b" => 'Dummy']);
 
-		_elgg_services()->logger->disable();
+		$logger->disable();
 		$this->assertEquals('Dummy', $this->translator->translate("{$this->key}b", [], 'es'));
-		$logged = _elgg_services()->logger->enable();
+		$logged = $logger->enable();
 
 		$this->assertEquals([
 			[
@@ -80,7 +89,8 @@ class TranslatorTest extends \Elgg\TestCase {
 	}
 
 	public function testDoesNotProcessArgsOnKey() {
+		_elgg_services()->logger->disable();
 		$this->assertEquals('nonexistent:%s', $this->translator->translate('nonexistent:%s', [1]));
+		_elgg_services()->logger->enable();
 	}
-
 }

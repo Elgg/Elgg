@@ -8,6 +8,8 @@
  * @subpackage DataModel.Group
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Get the group entity.
  *
@@ -107,8 +109,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
  * @access private
  */
 function _elgg_groups_test($hook, $type, $value) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggGroupTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggGroupTest.php';
 	return $value;
 }
 
@@ -121,6 +122,9 @@ function _elgg_groups_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_groups_test');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_groups_init');
 };

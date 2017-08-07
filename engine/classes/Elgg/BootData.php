@@ -5,7 +5,7 @@ namespace Elgg;
 use Elgg\Database;
 use Elgg\Database\EntityTable;
 use Elgg\Database\Plugins;
-use Elgg\Cache\Pool\InMemory;
+use Elgg\Database\SiteSecret;
 
 /**
  * Serializable collection of data used to boot Elgg
@@ -16,14 +16,9 @@ use Elgg\Cache\Pool\InMemory;
 class BootData {
 
 	/**
-	 * @var \ElggSite
+	 * @var \ElggSite|false
 	 */
-	private $site;
-
-	/**
-	 * @var array
-	 */
-	private $config_values = [];
+	private $site = false;
 
 	/**
 	 * @var \stdClass[]
@@ -43,15 +38,16 @@ class BootData {
 	/**
 	 * Populate the boot data
 	 *
-	 * @param \stdClass      $config   Elgg CONFIG object
-	 * @param \Elgg\Database $db       Elgg database
-	 * @param EntityTable    $entities Entities service
-	 * @param Plugins        $plugins  Plugins service
+	 * @param Database    $db        Elgg database
+	 * @param EntityTable $entities  Entities service
+	 * @param Plugins     $plugins   Plugins service
+	 * @param bool        $installed Is the site installed?
 	 *
 	 * @return void
 	 * @throws \InstallationException
 	 */
-	public function populate(\stdClass $config, Database $db, EntityTable $entities, Plugins $plugins) {
+	public function populate(Database $db, EntityTable $entities, Plugins $plugins, $installed) {
+
 		// get subtypes
 		$rows = $db->getData("
 			SELECT *
@@ -61,46 +57,9 @@ class BootData {
 			$this->subtype_data[$row->id] = $row;
 		}
 
-		// get config
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}config
-		");
-		foreach ($rows as $row) {
-			$this->config_values[$row->name] = unserialize($row->value);
-		}
-		
-		if (!array_key_exists('installed', $this->config_values)) {
-			// try to fetch from old pre 3.0 datalists table
-			// need to do this to be able to perform an upgrade from 2.x to 3.0
-			try {
-				$rows = $db->getData("
-					SELECT *
-					FROM {$db->prefix}datalists
-				");
-				foreach ($rows as $row) {
-					$value = $row->value;
-					if ($row->name == 'processed_upgrades') {
-						// config table already serializes data so no need to double serialize
-						$value = unserialize($value);
-					}
-					$this->config_values[$row->name] = $value;
-				}
-			} catch (\Exception $e) {
-			}
-		}
-
-		// don't pull in old config values
-		/**
-		 * @see \Elgg\Config::__construct sets this
-		 */
-		unset($this->config_values['path']);
-		unset($this->config_values['dataroot']);
-		unset($this->config_values['default_site']);
-		
 		// get site entity
 		$this->site = $entities->get(1, 'site');
-		if (!$this->site) {
+		if (!$this->site && $installed) {
 			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
@@ -155,19 +114,10 @@ class BootData {
 	/**
 	 * Get the site entity
 	 *
-	 * @return \ElggSite
+	 * @return \ElggSite|false False if not installed
 	 */
 	public function getSite() {
 		return $this->site;
-	}
-
-	/**
-	 * Get config values to merge into $CONFIG
-	 *
-	 * @return array
-	 */
-	public function getConfigValues() {
-		return $this->config_values;
 	}
 
 	/**

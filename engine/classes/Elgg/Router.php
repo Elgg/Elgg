@@ -66,8 +66,6 @@ class Router {
 			return false;
 		}
 
-		// return false to stop processing the request (because you handled it)
-		// return a new $result array if you want to route the request differently
 		$old = [
 			'identifier' => $identifier,
 			'handler' => $identifier, // backward compatibility
@@ -79,8 +77,11 @@ class Router {
 		}
 
 		ob_start();
-
 		$result = $this->hooks->trigger('route', $identifier, $old, $old);
+
+		// false: request was handled, stop processing.
+		// array: compare to old params.
+
 		if ($result === false) {
 			$output = ob_get_clean();
 			$response = elgg_ok_response($output);
@@ -218,7 +219,7 @@ class Router {
 		$url = elgg_http_build_url($parts);
 		$url = rtrim($url, '/') . '/';
 
-		$site_url = _elgg_services()->config->wwwroot;
+		$site_url = _elgg_config()->wwwroot;
 
 		if ($url == $site_url) {
 			// always allow index page

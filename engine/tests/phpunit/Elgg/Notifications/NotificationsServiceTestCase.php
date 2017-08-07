@@ -73,11 +73,11 @@ abstract class NotificationsServiceTestCase extends TestCase {
 
 		$this->setupMockServices();
 
-		$this->events = _elgg_services()->events;
-		$this->events->backup();
-
 		$this->hooks = _elgg_services()->hooks;
 		$this->hooks->backup();
+
+		$this->events = $this->hooks->getEvents();
+		$this->events->backup();
 
 		$this->queue = new DatabaseQueueMock();
 
@@ -101,7 +101,7 @@ abstract class NotificationsServiceTestCase extends TestCase {
 	public function tearDown() {
 		$this->logger->enable();
 		$this->session->invalidate();
-		$this->events->restore();
+		$this->hooks->getEvents()->restore();
 		$this->hooks->restore();
 	}
 

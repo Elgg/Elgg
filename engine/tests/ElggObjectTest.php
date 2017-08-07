@@ -267,12 +267,12 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	}
 
 	protected function get_object_row($guid) {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}objects_entity WHERE guid='$guid'");
 	}
 
 	protected function get_entity_row($guid) {
-		global $CONFIG;
+		$CONFIG = _elgg_config();
 		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='$guid'");
 	}
 }

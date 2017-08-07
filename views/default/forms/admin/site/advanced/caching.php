@@ -14,10 +14,11 @@ $params = [
 	'switch' => true,
 ];
 
-$simple_cache_warning = '<p class="elgg-text-help">' . elgg_echo('installation:simplecache:description') . '</p>';
-if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
+$simple_cache_warning = elgg_echo('installation:simplecache:description');
+if (_elgg_config()->hasInitialValue('simplecache_enabled')) {
 	$params['class'] = 'elgg-state-disabled';
 	$params['label_class'] = 'elgg-state-disabled';
+	$params['disabled'] = true;
 	
 	$simple_cache_warning .= "<span class=\"elgg-text-help\">" . elgg_echo('admin:settings:in_settings_file') . "</span>";
 }
@@ -77,7 +78,7 @@ $system_cache_input = elgg_view_field([
 $body = <<<BODY
 	<div>
 		$simple_cache_input
-		$simple_cache_warning
+		<p class="elgg-text-help">$simple_cache_warning</p>
 	</div>
 	<div>
 		$symlink_input

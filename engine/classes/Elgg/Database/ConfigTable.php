@@ -47,8 +47,6 @@ class ConfigTable {
 	 * @return bool Success or failure
 	 */
 	function remove($name) {
-		$name = trim($name);
-	
 		$query = "
 			DELETE FROM {$this->db->prefix}config
 			WHERE name = :name
@@ -81,8 +79,6 @@ class ConfigTable {
 	 * @return bool
 	 */
 	function set($name, $value) {
-		$name = trim($name);
-	
 		// cannot store anything longer than 255 characters in db, so catch before we set
 		if (elgg_strlen($name) > 255) {
 			$this->logger->error("The name length for configuration variables cannot be greater than 255");
@@ -139,8 +135,6 @@ class ConfigTable {
 	 * @return mixed|null
 	 */
 	function get($name) {
-		$name = trim($name);
-	
 		$sql = "
 			SELECT value
 			FROM {$this->db->prefix}config
@@ -155,5 +149,55 @@ class ConfigTable {
 		}
 	
 		return null;
+	}
+
+	/**
+	 * Load all config values from the config table (and datalists if not yet
+	 * upgraded to 3.0)
+	 *
+	 * @todo move into BootData once we no longer have to support the 2.x schema
+	 *
+	 * @return array
+	 */
+	public function getAll() {
+		$values = [];
+
+		$sql = "
+			SELECT *
+			FROM {$this->db->prefix}config
+		";
+		foreach ($this->db->getData($sql) as $row) {
+			$values[$row->name] = unserialize($row->value);
+		}
+
+		if (!array_key_exists('installed', $values)) {
+			// try to fetch from old pre 3.0 datalists table
+			// need to do this to be able to perform an upgrade from 2.x to 3.0
+			try {
+				$sql = "
+					SELECT *
+					FROM {$this->db->prefix}datalists
+				";
+				foreach ($this->db->getData($sql) as $row) {
+					$value = $row->value;
+					if ($row->name == 'processed_upgrades') {
+						// config table already serializes data so no need to double serialize
+						$value = unserialize($value);
+					}
+					$values[$row->name] = $value;
+				}
+			} catch (\Exception $e) {
+			}
+		}
+
+		// don't pull in old config values
+		/**
+		 * @see \Elgg\Config::__construct sets this
+		 */
+		unset($values['path']);
+		unset($values['dataroot']);
+		unset($values['default_site']);
+
+		return $values;
 	}
 }

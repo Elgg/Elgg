@@ -1,10 +1,13 @@
 # ignore Elgg configuration
 /engine/settings.php
-/elgg-config/settings.php
+/elgg-config/*
 /.htaccess
 /mod/*
 /composer.phar
 /cache
+
+# don't ignore example settings
+!/elgg-config/settings.example.php
 
 # Don't check in third party code
 /node_modules

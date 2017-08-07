@@ -11,6 +11,8 @@
  * @subpackage Access
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Set if Elgg's access system should be ignored.
  *
@@ -117,13 +119,11 @@ function get_access_array($user_guid = 0, $ignored = 0, $flush = false) {
  * @return int default access id (see ACCESS defines in elgglib.php)
  */
 function get_default_access(ElggUser $user = null, array $input_params = []) {
-	global $CONFIG;
-
 	// site default access
-	$default_access = $CONFIG->default_access;
+	$default_access = _elgg_config()->default_access;
 
 	// user default access if enabled
-	if ($CONFIG->allow_user_default_access) {
+	if (_elgg_config()->allow_user_default_access) {
 		$user = $user ? $user : _elgg_services()->session->getLoggedInUser();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
@@ -525,26 +525,14 @@ function elgg_check_access_overrides($user_guid = 0) {
 }
 
 /**
- * A flag to set if Elgg's access initialization is finished.
- *
- * @global bool $init_finished
- * @access private
- * @todo This is required to tell the access system to start caching because
- * calls are made while in ignore access mode and before the user is logged in.
- */
-$init_finished = false;
-
-/**
  * A quick and dirty way to make sure the access permissions have been correctly set up
  *
  * @elgg_event_handler init system
- * @todo Invesigate
  *
  * @return void
  */
 function access_init() {
-	global $init_finished;
-	$init_finished = true;
+	_elgg_services()->accessCollections->markInitComplete();
 }
 
 /**
@@ -605,12 +593,14 @@ function elgg_override_permissions($hook, $type, $value, $params) {
  * @access private
  */
 function access_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessCollectionsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessSQLTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAccessCollectionsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAccessSQLTest.php';
 	return $value;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	// Tell the access functions the system has booted, plugins are loaded,
 	// and the user is logged in so it can start caching

@@ -7,6 +7,8 @@
  * @since 1.9
  */
 
+use Elgg\Project\Paths;
+
 /**
  * Comments initialization function
  *
@@ -441,11 +443,13 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
  * @access private
  */
 function _elgg_comments_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCommentTest.php";
+	$value[] = Paths::elgg() . "engine/tests/ElggCommentTest.php";
 	return $value;
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_comments_init');
 	$hooks->registerHandler('unit_test', 'system', '_elgg_comments_test');

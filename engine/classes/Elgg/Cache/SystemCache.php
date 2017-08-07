@@ -6,15 +6,13 @@ use Elgg\Config;
 use ElggFileCache;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * System Cache
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Cache
- * @since      1.10.0
+ * @since  1.10.0
  */
 class SystemCache {
+
 	use Profilable;
 
 	/**
@@ -85,7 +83,7 @@ class SystemCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool) $this->config->getVolatile('system_cache_enabled');
+		return (bool) $this->config->system_cache_enabled;
 	}
 	
 	/**
@@ -115,38 +113,6 @@ class SystemCache {
 	}
 	
 	/**
-	 * Loads the system cache during engine boot
-	 *
-	 * @see elgg_reset_system_cache()
-	 * @access private
-	 */
-	function loadAll() {
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
-
-		$this->config->set('system_cache_loaded', false);
-
-		if (!_elgg_services()->views->configureFromCache($this)) {
-			return;
-		}
-
-		$data = $this->load('view_types');
-		if (!is_string($data)) {
-			return;
-		}
-		$GLOBALS['_ELGG']->view_types = unserialize($data);
-
-		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
-
-		$this->config->set('system_cache_loaded', true);
-
-		if ($this->timer) {
-			$this->timer->end([__METHOD__]);
-		}
-	}
-	
-	/**
 	 * Initializes the simplecache lastcache variable and creates system cache files
 	 * when appropriate.
 	 *
@@ -158,16 +124,14 @@ class SystemCache {
 		}
 
 		// cache system data if enabled and not loaded
-		if (!$this->config->getVolatile('system_cache_loaded')) {
-			$this->save('view_types', serialize($GLOBALS['_ELGG']->view_types));
-
+		if (!$this->config->system_cache_loaded) {
 			_elgg_services()->views->cacheConfiguration($this);
 		}
 	
-		if (!$GLOBALS['_ELGG']->i18n_loaded_from_cache) {
+		if (!_elgg_services()->translator->wasLoadedFromCache()) {
 			_elgg_services()->translator->reloadAllTranslations();
 
-			foreach ($GLOBALS['_ELGG']->translations as $lang => $map) {
+			foreach (_elgg_services()->translator->getLoadedTranslations() as $lang => $map) {
 				$this->save("$lang.lang", serialize($map));
 			}
 		}

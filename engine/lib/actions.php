@@ -9,6 +9,7 @@
  */
 
 use Elgg\Http\ResponseBuilder;
+use Elgg\Database\SiteSecret;
 
 /**
  * Handle a request for an action
@@ -76,14 +77,6 @@ function action($action, $forwarder = "") {
  * @tip Put action files under the actions/<plugin_name> directory of your plugin.
  *
  * @tip You don't need to use Elgg\Application in your action files.
- *
- * @note Internal: Actions are saved in $CONFIG->actions as an array in the form:
- * <code>
- * array(
- * 	'file' => '/location/to/file.php',
- * 	'access' => 'public', 'logged_in', or 'admin'
- * )
- * </code>
  *
  * @param string $action   The name of the action (eg "register", "account/settings/save")
  * @param string $filename Optionally, the filename where this action is located. If not specified,
@@ -179,31 +172,15 @@ function generate_action_token($timestamp) {
 }
 
 /**
- * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
+ * Regenerate a new site key (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
- * Used during installation and saves in config table.
- *
- * Note: Old secrets were hex encoded.
- *
- * @return mixed The site secret hash or false
+ * @return mixed The site secret hash
  * @access private
- * @todo Move to better file.
  */
 function init_site_secret() {
-	return _elgg_services()->siteSecret->init();
-}
-
-/**
- * Returns the site secret.
- *
- * Used to generate difficult to guess hashes for sessions and action tokens.
- *
- * @return string Site secret.
- * @access private
- * @todo Move to better file.
- */
-function get_site_secret() {
-	return _elgg_services()->siteSecret->get();
+	$secret = SiteSecret::regenerate(_elgg_services()->crypto, _elgg_services()->configTable);
+	_elgg_services()->setValue('siteSecret', $secret);
+	return $secret->get();
 }
 
 /**
@@ -300,6 +277,9 @@ function actions_init() {
 	elgg_register_page_handler('refresh_token', '_elgg_csrf_token_refresh');
 }
 
+/**
+ * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', 'actions_init');
 };

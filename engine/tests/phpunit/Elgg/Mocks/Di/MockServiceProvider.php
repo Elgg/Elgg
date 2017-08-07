@@ -34,7 +34,9 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		
 		$this->setFactory('db', function(MockServiceProvider $m) use ($sp) {
 			$config = $this->getTestingDatabaseConfig();
-			return new \Elgg\Mocks\Database($config, $sp->logger);
+			$db = new \Elgg\Mocks\Database($config);
+			$db->setLogger($sp->logger);
+			return $db;
 		});
 
 		$this->setFactory('entityTable', function(MockServiceProvider $m) use ($sp) {
@@ -44,7 +46,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 				$sp->entityCache,
 				$sp->metadataCache,
 				$m->subtypeTable,
-				$sp->events,
+				$sp->hooks->getEvents(),
 				$sp->session,
 				$sp->translator,
 				$sp->logger
@@ -52,15 +54,15 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('metadataTable', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->events, $m->session);
+			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $m->db, $m->entityTable, $sp->hooks->getEvents(), $m->session);
 		});
 
 		$this->setFactory('annotations', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\Annotations($m->db, $m->session, $sp->events);
+			return new \Elgg\Mocks\Database\Annotations($m->db, $m->session, $sp->hooks->getEvents());
 		});
 
 		$this->setFactory('relationshipsTable', function(MockServiceProvider $m) use ($sp) {
-			return new \Elgg\Mocks\Database\RelationshipsTable($m->db, $m->entityTable, $m->metadataTable, $sp->events);
+			return new \Elgg\Mocks\Database\RelationshipsTable($m->db, $m->entityTable, $m->metadataTable, $sp->hooks->getEvents());
 		});
 
 		$this->setFactory('subtypeTable', function(MockServiceProvider $m) {
@@ -91,7 +93,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 	/**
 	 * Setup testing database config
 	 *
-	 * @return \Elgg\Database\Config
+	 * @return \Elgg\Database\DbConfig
 	 */
 	public function getTestingDatabaseConfig() {
 		$conf = new \stdClass();
@@ -107,7 +109,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 
 		$conf->dbprefix = _elgg_config()->dbprefix;
 
-		return new \Elgg\Database\Config($conf);
+		return new \Elgg\Database\DbConfig($conf);
 	}
 
 	/**
