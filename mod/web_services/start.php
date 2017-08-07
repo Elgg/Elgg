@@ -152,7 +152,7 @@ function elgg_ws_expose_function(
 
 	global $API_METHODS;
 
-	if (($method == "") || !$function) {
+	if (empty($method) || empty($function)) {
 		$msg = elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet');
 		throw new InvalidParameterException($msg);
 	}
