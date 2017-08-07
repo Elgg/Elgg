@@ -236,7 +236,7 @@ function elgg_format_element($tag_name, array $attributes = [], $text = '', arra
 
 	if (!empty($options['encode_text'])) {
 		$double_encode = empty($options['double_encode']) ? false : true;
-		$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', $double_encode);
+		$text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', $double_encode);
 	}
 
 	if ($attributes) {

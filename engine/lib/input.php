@@ -45,6 +45,20 @@ function set_input($variable, $value) {
 }
 
 /**
+ * Get an HTML-escaped title from input. E.g. "How to use &lt;b&gt; tags"
+ *
+ * @param string $variable The desired variable name
+ * @param string $default  The default if none given
+ *
+ * @return string
+ * @since 3.0
+ */
+function elgg_get_title_input($variable = 'title', $default = '') {
+	$raw_input = get_input($variable, $default, false);
+	return htmlspecialchars($raw_input, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+/**
  * Filter tags from a given string based on registered hooks.
  *
  * @param mixed $var Anything that does not include an object (strings, ints, arrays)

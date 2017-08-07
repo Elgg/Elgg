@@ -4,7 +4,7 @@
  */
 
 // Get variables
-$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
+$title = elgg_get_title_input();
 $desc = get_input("description");
 $status = get_input("status");
 $access_id = (int) get_input("access_id");

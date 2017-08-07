@@ -21,16 +21,22 @@ if (empty($vars['name'])) {
 	$vars['name'] = 'members';
 }
 $name = $vars['name'];
-$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 
 $guids = (array) elgg_extract('values', $vars, []);
 
 $handler = elgg_extract('handler', $vars, 'livesearch');
-$handler = htmlspecialchars($handler, ENT_QUOTES, 'UTF-8');
 
 $limit = (int) elgg_extract('limit', $vars, 0);
+
+$attrs = [
+	'class' => 'elgg-user-picker',
+	'data-limit' => $limit,
+	'data-name' => $name,
+	'data-handler' => $handler,
+];
+
 ?>
-<div class="elgg-user-picker" data-limit="<?php echo $limit ?>" data-name="<?php echo $name ?>" data-handler="<?php echo $handler ?>">
+<div <?= elgg_format_attributes($attrs) ?>>
 	<input type="text" class="elgg-input-user-picker" size="30"/>
 	<?php echo elgg_view('input/hidden', ['name' => $vars['name']]); ?>
 	<?php
@@ -57,6 +63,7 @@ $limit = (int) elgg_extract('limit', $vars, 0);
 </div>
 <script>
 	require(['elgg/UserPicker'], function (UserPicker) {
-		UserPicker.setup('.elgg-user-picker[data-name="<?php echo $name ?>"]');
+		var name = <?= json_encode($name) ?>;
+		UserPicker.setup('.elgg-user-picker[data-name="' + name + '"]');
 	});
 </script>

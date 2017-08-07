@@ -228,7 +228,7 @@ function validate_username($username) {
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
 			$msg = elgg_echo('registration:invalidchars', [$blacklist2[$n], $blacklist2]);
-			$msg = htmlspecialchars($msg, ENT_QUOTES, 'UTF-8');
+			$msg = htmlspecialchars($msg, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 			throw new \RegistrationException($msg);
 		}
 	}

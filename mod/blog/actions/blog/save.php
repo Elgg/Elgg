@@ -64,7 +64,7 @@ $required = ['title', 'description'];
 // load from POST and do sanity and access checking
 foreach ($values as $name => $default) {
 	if ($name === 'title') {
-		$value = htmlspecialchars(get_input('title', $default, false), ENT_QUOTES, 'UTF-8');
+		$value = elgg_get_title_input();
 	} else {
 		$value = get_input($name, $default);
 	}

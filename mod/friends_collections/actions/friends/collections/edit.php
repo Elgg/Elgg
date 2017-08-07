@@ -5,7 +5,7 @@
 
 elgg_make_sticky_form('friends/collections/edit');
 
-$collection_name = htmlspecialchars(get_input('collection_name', '', false), ENT_QUOTES, 'UTF-8');
+$collection_name = elgg_get_title_input('collection_name');
 $friend_guids = (array) get_input('collection_friends', []);
 $collection_id = get_input('collection_id');
 
