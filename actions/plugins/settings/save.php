@@ -7,18 +7,14 @@
  *
  * @uses array $_REQUEST['params']    A set of key/value pairs to save to the ElggPlugin entity
  * @uses int   $_REQUEST['plugin_id'] The ID of the plugin
- *
- * @package Elgg.Core
- * @subpackage Plugins.Settings
  */
 
 $params = get_input('params');
 $plugin_id = get_input('plugin_id');
 $plugin = elgg_get_plugin_from_id($plugin_id);
 
-if (!($plugin instanceof ElggPlugin)) {
-	register_error(elgg_echo('plugins:settings:save:fail', [$plugin_id]));
-	forward(REFERER);
+if (!$plugin) {
+	return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_id]));
 }
 
 $plugin_name = $plugin->getDisplayName();
@@ -33,12 +29,9 @@ if (elgg_action_exists("$plugin_id/settings/save")) {
 		
 		$result = $plugin->setSetting($k, $v);
 		if (!$result) {
-			register_error(elgg_echo('plugins:settings:save:fail', [$plugin_name]));
-			forward(REFERER);
-			exit;
+			return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_name]));
 		}
 	}
 }
 
-system_message(elgg_echo('plugins:settings:save:ok', [$plugin_name]));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('plugins:settings:save:ok', [$plugin_name]));

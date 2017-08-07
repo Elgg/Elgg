@@ -1,15 +1,18 @@
 <?php
 /**
  * Avatar crop action
- *
  */
 
 $guid = get_input('guid');
-$owner = get_entity($guid);
+$owner = get_user($guid);
 
-if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
-	register_error(elgg_echo('avatar:crop:fail'));
-	forward(REFERER);
+if (!$owner || !$owner->canEdit()) {
+	return elgg_error_response(elgg_echo('avatar:crop:fail'));
+}
+
+// ensuring the avatar image exists in the first place
+if (!$owner->hasIcon('master')) {
+	return elgg_error_response(elgg_echo('avatar:crop:fail'));
 }
 
 $coords = [
@@ -19,23 +22,19 @@ $coords = [
 	'y2' => (int) get_input('y2', 0),
 ];
 
-// ensuring the avatar image exists in the first place
-if (!$owner->hasIcon('master')) {
-	register_error(elgg_echo('avatar:crop:fail'));
-	forward(REFERER);
-}
-
 if (!$owner->saveIconFromElggFile($owner->getIcon('master'), 'icon', $coords)) {
-	register_error(elgg_echo('avatar:crop:fail'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('avatar:crop:fail'));
 }
-
-system_message(elgg_echo('avatar:crop:success'));
 
 // River
 $view = 'river/user/default/profileiconupdate';
+
 // remove old river items
-elgg_delete_river(['subject_guid' => $owner->guid, 'view' => $view, 'limit' => false]);
+elgg_delete_river([
+	'subject_guid' => $owner->guid,
+	'view' => $view,
+	'limit' => false,
+]);
 // create new river entry
 elgg_create_river_item([
 	'view' => $view,
@@ -44,4 +43,4 @@ elgg_create_river_item([
 	'object_guid' => $owner->guid,
 ]);
 
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('avatar:crop:success'));

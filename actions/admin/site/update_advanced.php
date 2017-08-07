@@ -68,10 +68,8 @@ if ($regenerate_site_secret) {
 	}
 }
 
-if ($site->save()) {
-	system_message(elgg_echo("admin:configuration:success"));
-} else {
-	register_error(elgg_echo("admin:configuration:fail"));
+if (!$site->save()) {
+	return elgg_error_response(elgg_echo('admin:configuration:fail'));
 }
 
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('admin:configuration:success'));

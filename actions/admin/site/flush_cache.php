@@ -6,5 +6,4 @@
 elgg_flush_caches();
 _elgg_services()->autoloadManager->deleteCache();
 
-system_message(elgg_echo('admin:cache:flushed'));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('admin:cache:flushed'));

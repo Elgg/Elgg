@@ -4,37 +4,31 @@
  *
  * The user will be deleted recursively, meaning all entities
  * owned or contained by the user will also be removed.
- *
- * @package Elgg.Core
- * @subpackage Administration.User
  */
 
 // Get the user
 $guid = get_input('guid');
-$user = get_entity($guid);
+$user = get_user($guid);
 
 if ($guid == elgg_get_logged_in_user_guid()) {
-	register_error(elgg_echo('admin:user:self:delete:no'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('admin:user:self:delete:no'));
 }
 
-$name = $user->name;
+if (!$user || !$user->canEdit()) {
+	return elgg_error_response(elgg_echo('admin:user:delete:no'));
+}
+
+$name = $user->getDisplayName();
 $username = $user->username;
 
-if (($user instanceof ElggUser) && ($user->canEdit())) {
-	if ($user->delete()) {
-		system_message(elgg_echo('admin:user:delete:yes', [$name]));
-	} else {
-		register_error(elgg_echo('admin:user:delete:no'));
-	}
-} else {
-	register_error(elgg_echo('admin:user:delete:no'));
+if (!$user->delete()) {
+	return elgg_error_response(elgg_echo('admin:user:delete:no'));
 }
 
 // forward to user administration if on a user's page as it no longer exists
 $forward = REFERER;
 if (strpos($_SERVER['HTTP_REFERER'], $username) != false) {
-	$forward = "admin/users/newest";
+	$forward = 'admin/users/newest';
 }
 
-forward($forward);
+return elgg_ok_response('', elgg_echo('admin:user:delete:yes'), $forward);

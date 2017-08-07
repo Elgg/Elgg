@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg widget delete action
- *
- * @package Elgg.Core
- * @subpackage Widgets.Management
  */
 
 $widget_guid = (int) get_input('widget_guid');

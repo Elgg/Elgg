@@ -4,38 +4,41 @@
  */
 
 $guid = get_input('guid');
-$owner = get_entity($guid);
+$owner = get_user($guid);
 
-if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
-	register_error(elgg_echo('avatar:upload:fail'));
-	forward(REFERER);
+if (!$owner || !$owner->canEdit()) {
+	return elgg_error_response(elgg_echo('avatar:upload:fail'));
 }
 
 $error = elgg_get_friendly_upload_error($_FILES['avatar']['error']);
 if ($error) {
-	register_error($error);
-	forward(REFERER);
+	return elgg_error_response($error);
 }
 
 if (!$owner->saveIconFromUploadedFile('avatar')) {
-	register_error(elgg_echo('avatar:resize:fail'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('avatar:resize:fail'));
 }
 
-if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
-	system_message(elgg_echo("avatar:upload:success"));
-	
-	// River
-	$view = 'river/user/default/profileiconupdate';
-	// remove old river items
-	elgg_delete_river(['subject_guid' => $owner->guid, 'view' => $view, 'limit' => false]);
-	// create new river entry
-	elgg_create_river_item([
-		'view' => $view,
-		'action_type' => 'update',
-		'subject_guid' => $owner->guid,
-		'object_guid' => $owner->guid,
-	]);
+if (!elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
+	return elgg_error_response();
 }
 
-forward(REFERER);
+// River
+$view = 'river/user/default/profileiconupdate';
+
+// remove old river items
+elgg_delete_river([
+	'subject_guid' => $owner->guid,
+	'view' => $view,
+	'limit' => false,
+]);
+
+// create new river entry
+elgg_create_river_item([
+	'view' => $view,
+	'action_type' => 'update',
+	'subject_guid' => $owner->guid,
+	'object_guid' => $owner->guid,
+]);
+
+return elgg_ok_response('', elgg_echo('avatar:upload:success'));

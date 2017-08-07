@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg login action
- *
- * @package Elgg.Core
- * @subpackage User.Authentication
  */
 
 $session = elgg_get_session();

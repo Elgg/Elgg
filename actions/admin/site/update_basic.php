@@ -35,13 +35,10 @@ elgg_save_config('language', get_input('language'));
 
 $default_limit = (int) get_input('default_limit');
 if ($default_limit < 1) {
-	register_error(elgg_echo('admin:configuration:default_limit'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('admin:configuration:default_limit'));
 }
 
 elgg_save_config('default_limit', $default_limit);
 
-system_message(elgg_echo('admin:configuration:success'));
-
-$after_save = elgg_normalize_site_url(get_input('after_save'));
-forward($after_save ? $after_save : REFERER);
+$forward = elgg_normalize_site_url(get_input('after_save')) ?: REFERER;
+return elgg_ok_response('', elgg_echo('admin:configuration:success'), $forward);
