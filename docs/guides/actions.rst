@@ -344,21 +344,21 @@ Use the input/file view in your form’s content view.
 .. code:: php
 
    // /mod/example/views/default/forms/example.php
-   echo elgg_view(‘input/file’, array(‘name’ => ‘icon’));
+   echo elgg_view('input/file', array('name' => 'icon'));
 
 Set the enctype of the form to multipart/form-data:
 
 .. code:: php
 
-   echo elgg_view_form(‘example’, array(
-     ‘enctype’ => ‘multipart/form-data’
+   echo elgg_view_form('example', array(
+     'enctype' => 'multipart/form-data'
    ));
 
 In your action file, use the ``$_FILES`` global to access the uploaded file:
 
 .. code:: php
 
-   $icon = $_FILES[‘icon’]
+   $icon = $_FILES['icon']
 
 Sticky forms
 ============
