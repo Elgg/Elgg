@@ -767,11 +767,7 @@ function that has announced it wants to be referenced. Returning
 Schema
 ======
 
-The database contains a number of primary tables and secondary tables.
-Its schema table is stored in ``/engine/schema/mysql.sql``.
-
-Each table is prefixed by "prefix\_", this is replaced by the Elgg
-framework during installation.
+The database contains a number of primary and secondary tables. You can follow schema changes in ``engine/schema/migrations/``
 
 Main tables
 -----------

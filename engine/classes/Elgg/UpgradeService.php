@@ -1,5 +1,8 @@
 <?php
 namespace Elgg;
+use Elgg\Filesystem\Directory\Local;
+use Phinx\Console\PhinxApplication;
+use Phinx\Wrapper\TextWrapper;
 
 /**
  * Upgrade service for Elgg
@@ -291,4 +294,5 @@ class UpgradeService {
 
 		return false;
 	}
+
 }

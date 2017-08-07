@@ -101,12 +101,16 @@ class DbConfig {
 	/**
 	 * Get the connection configuration
 	 *
+	 * @note You must check isDatabaseSplit before using READ or WRITE for $type
+	 *
 	 * The parameters are in an array like this:
 	 * array(
 	 *	'host' => 'xxx',
 	 *  'user' => 'xxx',
 	 *  'password' => 'xxx',
 	 *  'database' => 'xxx',
+	 *  'encoding' => 'xxx',
+	 *  'prefix' => 'xxx',
 	 * )
 	 *
 	 * @param string $type The connection type: READ, WRITE, READ_WRITE
@@ -124,6 +128,7 @@ class DbConfig {
 		}
 
 		$config['encoding'] = $this->dbencoding ? $this->dbencoding : 'utf8';
+		$config['prefix'] = $this->dbprefix;
 
 		return $config;
 	}
