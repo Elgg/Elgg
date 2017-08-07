@@ -433,6 +433,8 @@ class Translator {
 				$this->registerTranslations($path, true);
 			}
 		}
+		
+		_elgg_services()->hooks->getEvents()->triggerAfter('reload', 'translations');
 
 		$this->was_reloaded = true;
 	}
