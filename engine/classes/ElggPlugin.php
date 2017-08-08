@@ -904,7 +904,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		try {
-			$ret = include $filepath;
+			$ret = require_once $filepath;
 		} catch (Exception $e) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
 				[$filename, $this->getID(), $this->guid, $this->path]);

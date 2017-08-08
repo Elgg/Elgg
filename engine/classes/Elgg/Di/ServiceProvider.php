@@ -70,6 +70,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Http\ResponseFactory               $responseFactory
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
+ * @property-read \Elgg\Database\Seeder                    $seeder
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
@@ -400,6 +401,10 @@ class ServiceProvider extends DiContainer {
 				$router->setTimer($c->timer);
 			}
 			return $router;
+		});
+
+		$this->setFactory('seeder', function(ServiceProvider $c) {
+			return new \Elgg\Database\Seeder($c->hooks);
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
