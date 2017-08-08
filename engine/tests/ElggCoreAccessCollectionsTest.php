@@ -207,6 +207,9 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$group = new \ElggGroup();
 		$group->name = 'Test group';
 		$group->save();
+
+		$this->assertNotNull($group->group_acl);
+
 		$acl = get_access_collection($group->group_acl);
 
 		// ACLs are owned by groups

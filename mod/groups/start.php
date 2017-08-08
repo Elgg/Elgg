@@ -439,16 +439,20 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
  * Groups created so create an access list for it
  */
 function groups_create_event_listener($event, $object_type, $object) {
+
+	// ensure that user has sufficient permissions to update group metadata
+	// prior to joining the group
+	$ia = elgg_set_ignore_access(true);
+
 	$ac_name = elgg_echo('groups:group') . ": " . $object->name;
 	$ac_id = create_access_collection($ac_name, $object->guid);
 	if ($ac_id) {
 		$object->group_acl = $ac_id;
-	} else {
-		// delete group if access creation fails
-		return false;
 	}
 
-	return true;
+	elgg_set_ignore_access($ia);
+
+	return (bool) $ac_id; // delete the group if acl creation fails
 }
 
 /**
