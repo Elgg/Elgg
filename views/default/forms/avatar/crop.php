@@ -5,6 +5,11 @@
  * @uses $vars['entity']
  */
 
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
+
 elgg_load_js('jquery.imgareaselect');
 elgg_load_js('elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
@@ -27,16 +32,27 @@ $preview_img = elgg_view('output/img', [
 	<div id="user-avatar-preview-title"><label><?php echo elgg_echo('avatar:preview'); ?></label></div>
 	<div id="user-avatar-preview"><?php echo $preview_img; ?></div>
 </div>
-<div class="elgg-foot">
 <?php
+
 $coords = ['x1', 'x2', 'y1', 'y2'];
 foreach ($coords as $coord) {
-	echo elgg_view('input/hidden', ['name' => $coord, 'value' => $vars['entity']->$coord]);
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => $coord,
+		'value' => $entity->$coord,
+	]);
 }
 
-echo elgg_view('input/hidden', ['name' => 'guid', 'value' => $vars['entity']->guid]);
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'guid',
+	'value' => $entity->guid,
+]);
 
-echo elgg_view('input/submit', ['value' => elgg_echo('avatar:create')]);
 
-?>
-</div>
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('avatar:create'),
+]);
+
+elgg_set_form_footer($footer);
