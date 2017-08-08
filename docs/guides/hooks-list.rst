@@ -30,9 +30,6 @@ System hooks
 **validate, input**
 	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
 
-**geocode, location**
-	Deprecated as of 1.9.
-
 **diagnostics:report, system**
 	Filters the output for a diagnostic report.
 
