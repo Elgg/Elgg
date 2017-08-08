@@ -58,6 +58,10 @@ abstract class Seed {
 
 	/**
 	 * Create a new faker user
+	 *
+	 * @param array $attributes User entity attributes
+	 * @param array $metadata   User entity metadata
+	 *
 	 * @return ElggUser|false
 	 */
 	public function createUser(array $attributes = [], array $metadata = []) {
@@ -123,6 +127,10 @@ abstract class Seed {
 
 	/**
 	 * Create a new faker group
+	 *
+	 * @param array $attributes Group entity attributes
+	 * @param array $metadata   Group entity metadata
+	 *
 	 * @return ElggGroup|false
 	 */
 	public function createGroup(array $attributes = [], array $metadata = []) {
@@ -234,6 +242,10 @@ abstract class Seed {
 
 	/**
 	 * Create a new faker object
+	 *
+	 * @param array $attributes Object entity attributes
+	 * @param array $metadata   Object entity metadata
+	 *
 	 * @return ElggObject|false
 	 */
 	public function createObject(array $attributes = [], array $metadata = []) {
@@ -685,7 +697,9 @@ abstract class Seed {
 	/**
 	 * Log a message
 	 *
-	 * @param string $msg Message to log
+	 * @param string $msg   Message to log
+	 * @param string $level Message level
+	 *                      Note that 'ERROR' will terminate further code execution
 	 *
 	 * @return void
 	 */
