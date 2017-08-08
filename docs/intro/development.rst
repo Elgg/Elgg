@@ -68,3 +68,18 @@ To get a list of all the Elgg dependencies check out the `Packagist`_ page for E
 .. _Transifex: https://www.transifex.com/projects/p/elgg-core/
 .. _Composer: https://getcomposer.org/
 .. _Packagist: https://packagist.org/packages/elgg/elgg
+
+Database Seeding
+================
+
+Elgg provides some base database seeds to populate the database with entities for testing purposes.
+
+You can run the following commands to seed and unseed the database.
+
+..code::sh
+
+    # seed the database
+    composer database:seeder:seed
+
+    # unseed the database
+    composer database:seeder:unseed

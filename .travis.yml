@@ -78,10 +78,14 @@ matrix:
         - phpenv config-add ./.scripts/travis/memcached.ini
       install:
        - composer travis:install-with-mysql
+       - php -f ./.scripts/travis/enable_plugins.php
+       - composer database:seeder:seed
       script:
        - php -f ./.scripts/is_memcached_enabled.php
        - ./vendor/bin/phpunit --configuration ./.scripts/travis/phpunit-memcached.xml
        - php ./engine/tests/suite.php --config ./.scripts/travis/elgg-config/simpletest_memcached.php
+      after_script:
+       - composer database:seeder:unseed
 
     # End to end tests
     - php: 5.6
@@ -90,12 +94,16 @@ matrix:
         - phpenv config-rm xdebug.ini
       install:
        - composer travis:install-with-mysql
+       - php -f ./.scripts/travis/enable_plugins.php
+       - composer database:seeder:seed
        - php -S localhost:8888 index.php &
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
        - ./vendor/bin/phpunit
        - php -f ./engine/tests/suite.php
+      after_script:
+       - composer database:seeder:unseed
 
 services:
   - mysql

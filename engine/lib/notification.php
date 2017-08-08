@@ -554,7 +554,7 @@ function get_user_notification_settings($user_guid = 0) {
  * @deprecated 2.3
  */
 function set_user_notification_setting($user_guid, $method, $value) {
-	elgg_deprecated_notice(__FUNCTION__ . ' has been derepcated by ElggUser::setNotificationSetting()', '2.3');
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated by ElggUser::setNotificationSetting()', '2.3');
 
 	if (!$user_guid) {
 		$user_guid = elgg_get_logged_in_user_guid();
