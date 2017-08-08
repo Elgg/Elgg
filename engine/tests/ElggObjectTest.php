@@ -7,6 +7,8 @@
  */
 class ElggCoreObjectTest extends \ElggCoreUnitTest {
 
+	private $subtype;
+
 	/**
 	 * Called before each test object.
 	 */
@@ -18,7 +20,10 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
+		$this->subtype = $this->getRandomValidSubtype();
+
 		$this->entity = new \ElggObjectTest();
+		$this->entity->subtype = $this->subtype;
 	}
 
 	/**
@@ -39,7 +44,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$attributes = array();
 		$attributes['guid'] = null;
 		$attributes['type'] = 'object';
-		$attributes['subtype'] = null;
+		$attributes['subtype'] = $this->subtype;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['access_id'] = ACCESS_PRIVATE;
@@ -176,6 +181,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	// see https://github.com/elgg/elgg/issues/1196
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
 		$e1 = new \ElggObject();
+		$e1->subtype = $this->getRandomValidSubtype();
 		$e1->access_id = ACCESS_PUBLIC;
 		$e1->owner_guid = 0;
 		$e1->container_guid = 0;
@@ -183,6 +189,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$guid1 = $e1->getGUID();
 
 		$e2 = new \ElggObject();
+		$e2->subtype = $this->getRandomValidSubtype();
 		$e2->container_guid = $guid1;
 		$e2->access_id = ACCESS_PUBLIC;
 		$e2->owner_guid = 0;
@@ -218,18 +225,28 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggRecursiveDelete() {
-		$types = array('\ElggGroup', '\ElggObject', '\ElggUser');
+		$types = array(
+			'group' => '\ElggGroup',
+			'object' => '\ElggObject',
+			'user' => '\ElggUser'
+		);
 		$db_prefix = _elgg_config()->dbprefix;
 
-		foreach ($types as $type) {
-			$parent = new $type();
+		foreach ($types as $type => $class) {
+			$parent = new $class();
+			$parent->subtype = $this->getRandomValidSubtype($type);
+			if ($type == 'user') {
+				$parent->username = 'elgg_recursive_delete_' . rand();
+			}
 			$this->assertTrue($parent->save());
 			
 			$child = new \ElggObject();
+			$child->subtype = $this->getRandomValidSubtype();
 			$child->container_guid = $parent->guid;
 			$this->assertTrue($child->save());
 
 			$grandchild = new \ElggObject();
+			$grandchild->subtype = $this->getRandomValidSubtype();
 			$grandchild->container_guid = $child->guid;
 			$this->assertTrue($grandchild->save());
 
@@ -251,6 +268,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		// object that owns itself
 		// can't check container_guid because of infinite loops in can_edit_entity()
 		$obj = new \ElggObject();
+		$obj->subtype = $this->getRandomValidSubtype();
 		$obj->save();
 		$obj->owner_guid = $obj->guid;
 		$obj->save();

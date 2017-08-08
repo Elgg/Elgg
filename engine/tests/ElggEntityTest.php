@@ -39,7 +39,6 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 	public function __destruct() {
 		parent::__destruct();
-		remove_subtype('object', 'elgg_entity_test_subtype');
 	}
 
 	public function testSubtypePropertyReads() {
@@ -47,16 +46,16 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$guid = $this->entity->guid;
 
 		$subtype_prop = $this->entity->subtype;
-		$this->assertIsA($subtype_prop, 'int');
-		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+		$this->assertIsA($subtype_prop, 'string');
+		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
 
 		_elgg_services()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
 		$subtype_prop = $this->entity->subtype;
-		$this->assertIsA($subtype_prop, 'int');
-		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+		$this->assertIsA($subtype_prop, 'string');
+		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
 	}
 
 	public function testUnsavedEntitiesDontRecordAttributeSets() {
@@ -149,20 +148,6 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
 	}
 
-	public function testSubtypeAddRemove() {
-		$test_subtype = 'test_1389988642';
-		$object = new \ElggObject();
-		$object->subtype = $test_subtype;
-		$object->save();
-
-		$this->assertTrue(is_numeric(get_subtype_id('object', $test_subtype)));
-
-		$object->delete();
-		remove_subtype('object', $test_subtype);
-
-		$this->assertFalse(get_subtype_id('object', $test_subtype));
-	}
-
 	public function testElggEntityGetAndSetAnnotations() {
 		$this->assertIdentical($this->entity->getAnnotations(array('annotation_name' => 'non_existent')), array());
 
@@ -176,7 +161,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		// @todo belongs in Annotations API test class
 		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'annotation_name' => 'non_existent')));
 		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'annotation_name' => 'non_existent', 'type' => 'object')));
-		$this->assertIdentical(false, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'object', 'subtype' => 'fail')));
+		$this->assertIdentical([], elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'object', 'subtype' => 'fail')));
 
 		//  clear annotation
 		$this->assertTrue($this->entity->deleteAnnotations());
@@ -236,9 +221,11 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$CONFIG = _elgg_config();
 
 		$obj1 = new \ElggObject();
+		$obj1->subtype = $this->getRandomValidSubtype();
 		$obj1->container_guid = $this->entity->getGUID();
 		$obj1->save();
 		$obj2 = new \ElggObject();
+		$obj2->subtype = $this->getRandomValidSubtype();
 		$obj2->container_guid = $this->entity->getGUID();
 		$obj2->save();
 
@@ -355,6 +342,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		}, 99999);
 
 		$obj = new \ElggObject();
+		$obj->subtype = $this->getRandomValidSubtype();
 		$obj->save();
 
 		// Test default size
@@ -369,9 +357,11 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 	public function testCreateWithContainerGuidEqualsZero() {
 		$user = new \ElggUser();
+		$user->username = $this->generateRandomUsername();
 		$user->save();
 
 		$object = new \ElggObject();
+		$object->subtype = $this->getRandomValidSubtype();
 		$object->owner_guid = $user->guid;
 		$object->container_guid = 0;
 
@@ -396,6 +386,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getFalse']);
 
 		$user = new ElggUser();
+		$user->username = $this->generateRandomUsername();
 		$user->save();
 		$old_user = $this->replaceSession($user);
 
@@ -470,6 +461,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 	public function testNewUserLoadedFromCacheDuringSaveOperations() {
 
 		$user = new \ElggUser();
+		$user->username = $this->generateRandomUsername();
 
 		// Add temporary metadata, annotation and private settings
 		// to extend the scope of tests and catch issues with save operations

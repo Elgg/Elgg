@@ -271,9 +271,11 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 	
 	public function testElggRiverDisableEnable() {
 		$user = new \ElggUser();
+		$user->username = $this->generateRandomUsername();
 		$user->save();
 		
 		$entity = new \ElggObject();
+		$entity->subtype = $this->getRandomValidSubtype();
 		$entity->save();
 		
 		$params = array(

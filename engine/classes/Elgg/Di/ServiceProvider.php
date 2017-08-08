@@ -76,7 +76,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
- * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\SystemMessagesService              $systemMessages
  * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
@@ -236,7 +235,6 @@ class ServiceProvider extends DiContainer {
 				$c->db,
 				$c->entityCache,
 				$c->metadataCache,
-				$c->subtypeTable,
 				$c->hooks->getEvents(),
 				$c->session,
 				$c->translator,
@@ -431,10 +429,6 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
-
-		$this->setFactory('subtypeTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\SubtypeTable($c->db);
-		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
 			$cache = new \Elgg\Cache\SystemCache($c->fileCache, $c->config);

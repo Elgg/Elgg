@@ -12,6 +12,7 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		$this->object = new \ElggObject();
+		$this->object->subtype = $this->getRandomValidSubtype();
 	}
 
 	/**
@@ -43,6 +44,7 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 
 	public function testElggDeleteAnnotations() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomValidSubtype();
 		$e->save();
 
 		for ($i=0; $i<30; $i++) {
@@ -70,6 +72,7 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 
 	public function testElggDisableAnnotations() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomValidSubtype();
 		$e->save();
 
 		for ($i=0; $i<30; $i++) {
@@ -96,6 +99,7 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 
 	public function testElggEnableAnnotations() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomValidSubtype();
 		$e->save();
 
 		for ($i=0; $i<30; $i++) {
@@ -124,6 +128,7 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 
 	public function testElggAnnotationExists() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomValidSubtype();
 		$e->save();
 		$guid = $e->getGUID();
 

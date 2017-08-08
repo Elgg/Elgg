@@ -48,15 +48,6 @@ class BootData {
 	 */
 	public function populate(Database $db, EntityTable $entities, Plugins $plugins, $installed) {
 
-		// get subtypes
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}entity_subtypes
-		");
-		foreach ($rows as $row) {
-			$this->subtype_data[$row->id] = $row;
-		}
-
 		// get site entity
 		$this->site = $entities->get(1, 'site');
 		if (!$this->site && $installed) {
@@ -118,6 +109,15 @@ class BootData {
 	 */
 	public function getSite() {
 		return $this->site;
+	}
+
+	/**
+	 * Get config values to merge into $CONFIG
+	 *
+	 * @return array
+	 */
+	public function getConfigValues() {
+		return $this->config_values;
 	}
 
 	/**

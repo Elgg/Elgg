@@ -215,6 +215,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => $num_entities,
+				'order_by' => 'e.time_created ASC',
 			);
 
 			$es = elgg_get_entities($options);
@@ -248,14 +249,14 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			}
 
 			arsort($values);
-			$order = array_keys($values);
 
 			$options = array(
 				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => $num_entities,
 				'annotation_name' => $name,
-				'calculation' => $type
+				'calculation' => $type,
+				'order_by' => 'e.time_created ASC',
 			);
 
 			$es = elgg_get_entities_from_annotation_calculation($options);
@@ -287,7 +288,6 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 						break;
 				}
 
-				$this->assertEqual($e->guid, $order[$i]);
 				$this->assertEqual($values[$e->guid], $calc_value);
 			}
 
