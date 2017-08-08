@@ -5,25 +5,29 @@ use Phinx\Db\Adapter\MysqlAdapter;
 
 class CreateRiverTable extends AbstractMigration {
 	/**
-	 * Change Method.
-	 *
-	 * Write your reversible migrations using this method.
-	 *
-	 * More information on writing migrations is available here:
-	 * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-	 *
-	 * The following commands can be used in this method and Phinx will
-	 * automatically reverse them when rolling back:
-	 *
-	 *    createTable
-	 *    renameTable
-	 *    addColumn
-	 *    renameColumn
-	 *    addIndex
-	 *    addForeignKey
-	 *
-	 * Remember to call "create()" or "update()" and NOT "save()" when working
-	 * with the Table class.
+	 * CREATE TABLE `prefix_river` (
+	 * `id` int(11) NOT NULL AUTO_INCREMENT,
+	 * `type` varchar(8) NOT NULL,
+	 * `subtype` varchar(32) NOT NULL,
+	 * `action_type` varchar(32) NOT NULL,
+	 * `access_id` int(11) NOT NULL,
+	 * `view` text NOT NULL,
+	 * `subject_guid` bigint(20) unsigned NOT NULL,
+	 * `object_guid` bigint(20) unsigned NOT NULL,
+	 * `target_guid` bigint(20) unsigned NOT NULL,
+	 * `annotation_id` int(11) NOT NULL,
+	 * `posted` int(11) NOT NULL,
+	 * `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
+	 * PRIMARY KEY (`id`),
+	 * KEY `type` (`type`),
+	 * KEY `action_type` (`action_type`),
+	 * KEY `access_id` (`access_id`),
+	 * KEY `subject_guid` (`subject_guid`),
+	 * KEY `object_guid` (`object_guid`),
+	 * KEY `target_guid` (`target_guid`),
+	 * KEY `annotation_id` (`annotation_id`),
+	 * KEY `posted` (`posted`)
+	 * ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 	 */
 	public function change() {
 
@@ -55,12 +59,11 @@ class CreateRiverTable extends AbstractMigration {
 		$table->addColumn('access_id', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('view', 'text', [
 			'null' => false,
-			'limit' => 65535,
 		]);
 
 		$table->addColumn('subject_guid', 'integer', [
@@ -87,13 +90,13 @@ class CreateRiverTable extends AbstractMigration {
 		$table->addColumn('annotation_id', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('posted', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('enabled', 'enum', [
@@ -110,7 +113,7 @@ class CreateRiverTable extends AbstractMigration {
 			'name' => "type",
 			'unique' => false,
 		]);
-		
+
 		$table->addIndex(['action_type'], [
 			'name' => "action_type",
 			'unique' => false,

@@ -5,25 +5,26 @@ use Phinx\Db\Adapter\MysqlAdapter;
 
 class CreateEntitiesTable extends AbstractMigration {
 	/**
-	 * Change Method.
-	 *
-	 * Write your reversible migrations using this method.
-	 *
-	 * More information on writing migrations is available here:
-	 * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-	 *
-	 * The following commands can be used in this method and Phinx will
-	 * automatically reverse them when rolling back:
-	 *
-	 *    createTable
-	 *    renameTable
-	 *    addColumn
-	 *    renameColumn
-	 *    addIndex
-	 *    addForeignKey
-	 *
-	 * Remember to call "create()" or "update()" and NOT "save()" when working
-	 * with the Table class.
+	 * CREATE TABLE `prefix_entities` (
+	 * `guid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	 * `type` enum('object','user','group','site') NOT NULL,
+	 * `subtype` int(11) DEFAULT NULL,
+	 * `owner_guid` bigint(20) unsigned NOT NULL,
+	 * `container_guid` bigint(20) unsigned NOT NULL,
+	 * `access_id` int(11) NOT NULL,
+	 * `time_created` int(11) NOT NULL,
+	 * `time_updated` int(11) NOT NULL,
+	 * `last_action` int(11) NOT NULL DEFAULT '0',
+	 * `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
+	 * PRIMARY KEY (`guid`),
+	 * KEY `type` (`type`),
+	 * KEY `subtype` (`subtype`),
+	 * KEY `owner_guid` (`owner_guid`),
+	 * KEY `container_guid` (`container_guid`),
+	 * KEY `access_id` (`access_id`),
+	 * KEY `time_created` (`time_created`),
+	 * KEY `time_updated` (`time_updated`)
+	 * ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 	 */
 	public function change() {
 
@@ -61,7 +62,7 @@ class CreateEntitiesTable extends AbstractMigration {
 		$table->addColumn('subtype', 'integer', [
 			'null' => true,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 
 		]);
 
@@ -82,26 +83,26 @@ class CreateEntitiesTable extends AbstractMigration {
 		$table->addColumn('access_id', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('time_created', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('time_updated', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('last_action', 'integer', [
 			'null' => false,
 			'default' => '0',
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('enabled', 'enum', [

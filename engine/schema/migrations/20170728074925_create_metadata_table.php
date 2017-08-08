@@ -5,25 +5,23 @@ use Phinx\Db\Adapter\MysqlAdapter;
 
 class CreateMetadataTable extends AbstractMigration {
 	/**
-	 * Change Method.
-	 *
-	 * Write your reversible migrations using this method.
-	 *
-	 * More information on writing migrations is available here:
-	 * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-	 *
-	 * The following commands can be used in this method and Phinx will
-	 * automatically reverse them when rolling back:
-	 *
-	 *    createTable
-	 *    renameTable
-	 *    addColumn
-	 *    renameColumn
-	 *    addIndex
-	 *    addForeignKey
-	 *
-	 * Remember to call "create()" or "update()" and NOT "save()" when working
-	 * with the Table class.
+	 * CREATE TABLE `prefix_metadata` (
+	 * `id` int(11) NOT NULL AUTO_INCREMENT,
+	 * `entity_guid` bigint(20) unsigned NOT NULL,
+	 * `name` text NOT NULL,
+	 * `value` LONGTEXT NOT NULL,
+	 * `value_type` enum('integer','text') NOT NULL,
+	 * `owner_guid` bigint(20) unsigned NOT NULL,
+	 * `access_id` int(11) NOT NULL,
+	 * `time_created` int(11) NOT NULL,
+	 * `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
+	 * PRIMARY KEY (`id`),
+	 * KEY `entity_guid` (`entity_guid`),
+	 * KEY `name` (`name`(50)),
+	 * KEY `value` (`value`(50)),
+	 * KEY `owner_guid` (`owner_guid`),
+	 * KEY `access_id` (`access_id`)
+	 * ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 	 */
 	public function change() {
 
@@ -46,7 +44,6 @@ class CreateMetadataTable extends AbstractMigration {
 
 		$table->addColumn('name', 'text', [
 			'null' => false,
-			'limit' => 65535,
 		]);
 
 		$table->addColumn('value', 'text', [
@@ -73,13 +70,13 @@ class CreateMetadataTable extends AbstractMigration {
 		$table->addColumn('access_id', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('time_created', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('enabled', 'enum', [
@@ -91,18 +88,18 @@ class CreateMetadataTable extends AbstractMigration {
 				'no'
 			],
 		]);
-		
+
 		$table->addIndex(['entity_guid'], [
 			'name' => "entity_guid",
 			'unique' => false,
 		]);
-		
+
 		$table->addIndex(['name'], [
 			'name' => "name",
 			'unique' => false,
 			'limit' => 50,
 		]);
-		
+
 		$table->addIndex(['value'], [
 			'name' => "value",
 			'unique' => false,
@@ -113,7 +110,7 @@ class CreateMetadataTable extends AbstractMigration {
 			'name' => "owner_guid",
 			'unique' => false,
 		]);
-		
+
 		$table->addIndex(['access_id'], [
 			'name' => "access_id",
 			'unique' => false,

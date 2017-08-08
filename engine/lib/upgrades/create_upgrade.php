@@ -79,7 +79,11 @@ $upgrade_code = <<<___UPGRADE
  * Elgg $release upgrade $upgrade_version
  * $name
  *
- * Description
+ * Upgrade script will always run after ALL database migrations are complete.
+ * 
+ * Do not use upgrade scripts for database schema migrations, use phinx instead. See docs for instructions.
+ * 
+ * Do not use upgrade script for long-running scripts, use async upgrades instead. See docs for instructions. 
  */
 
 // upgrade code here.
