@@ -11,8 +11,7 @@ $comment_guid = (int) get_input('comment_guid', 0, false);
 $comment_text = get_input('generic_comment');
 
 if (empty($comment_text)) {
-	register_error(elgg_echo("generic_comment:blank"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('generic_comment:blank'));
 }
 
 if ($comment_guid) {
@@ -20,35 +19,34 @@ if ($comment_guid) {
 	$comment = get_entity($comment_guid);
 
 	if (!elgg_instanceof($comment, 'object', 'comment')) {
-		register_error(elgg_echo("generic_comment:notfound"));
-		forward(REFERER);
+		return elgg_error_response(elgg_echo('generic_comment:notfound'));
 	}
 	if (!$comment->canEdit()) {
-		register_error(elgg_echo("actionunauthorized"));
-		forward(REFERER);
+		return elgg_error_response(elgg_echo('actionunauthorized'));
 	}
 
 	$comment->description = $comment_text;
-	if ($comment->save()) {
-		system_message(elgg_echo('generic_comment:updated'));
-
-		if (elgg_is_xhr()) {
-			// @todo move to its own view object/comment/content in 1.x
-			echo elgg_view('output/longtext', [
-				'value' => $comment->description,
-				'class' => 'elgg-inner',
-				'data-role' => 'comment-text',
-			]);
-		}
-	} else {
-		register_error(elgg_echo('generic_comment:failure'));
+	if (!$comment->save()) {
+		return elgg_error_response(elgg_echo('generic_comment:failure'));
 	}
+	
+
+	if (elgg_is_xhr()) {
+		// @todo move to its own view object/comment/content in 1.x
+		echo elgg_view('output/longtext', [
+			'value' => $comment->description,
+			'class' => 'elgg-inner',
+			'data-role' => 'comment-text',
+		]);
+	}
+	
+	system_message(elgg_echo('generic_comment:updated'));
+	
 } else {
 	// Create a new comment on the target entity
 	$entity = get_entity($entity_guid);
 	if (!$entity) {
-		register_error(elgg_echo("generic_comment:notfound"));
-		forward(REFERER);
+		return elgg_error_response(elgg_echo('generic_comment:notfound'));
 	}
 
 	$user = elgg_get_logged_in_user_entity();
@@ -61,8 +59,7 @@ if ($comment_guid) {
 	$guid = $comment->save();
 
 	if (!$guid) {
-		register_error(elgg_echo("generic_comment:failure"));
-		forward(REFERER);
+		return elgg_error_response(elgg_echo('generic_comment:failure'));
 	}
 
 	// Add to river

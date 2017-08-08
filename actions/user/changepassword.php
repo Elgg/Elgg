@@ -1,9 +1,6 @@
 <?php
 /**
  * Action to reset a password, send success email, and log the user in.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $password = get_input('password1');
@@ -14,27 +11,21 @@ $code = get_input('c');
 try {
 	validate_password($password);
 } catch (RegistrationException $e) {
-	register_error($e->getMessage());
-	forward(REFERER);
+	return elgg_error_response($e->getMessage());
 }
 
 if ($password != $password_repeat) {
-	register_error(elgg_echo('RegistrationException:PasswordMismatch'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('RegistrationException:PasswordMismatch'));
 }
 
-if (execute_new_password_request($user_guid, $code, $password)) {
-	system_message(elgg_echo('user:password:success'));
-	
-	try {
-		login(get_entity($user_guid));
-	} catch (LoginException $e) {
-		register_error($e->getMessage());
-		forward(REFERER);
-	}
-} else {
-	register_error(elgg_echo('user:password:fail'));
+if (!execute_new_password_request($user_guid, $code, $password)) {
+	return elgg_error_response(elgg_echo('user:password:fail'));
 }
 
-forward();
+try {
+	login(get_entity($user_guid));
+} catch (LoginException $e) {
+	return elgg_error_response($e->getMessage());
+}
 
+return elgg_ok_response('', elgg_echo('user:password:success'));

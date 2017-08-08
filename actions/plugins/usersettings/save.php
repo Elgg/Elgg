@@ -8,34 +8,19 @@
  * @uses array $_REQUEST['params']    A set of key/value pairs to save to the ElggPlugin entity
  * @uses int   $_REQUEST['plugin_id'] The id of the plugin
  * @uses int   $_REQUEST['user_guid'] The GUID of the user to save settings for.
- *
- * @package Elgg.Core
- * @subpackage Plugins.Settings
  */
 
 $params = get_input('params');
 $plugin_id = get_input('plugin_id');
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $plugin = elgg_get_plugin_from_id($plugin_id);
-$user = get_entity($user_guid);
+$user = get_user($user_guid);
 
-if (!($plugin instanceof ElggPlugin)) {
-	register_error(elgg_echo('plugins:usersettings:save:fail', [$plugin_id]));
-	forward(REFERER);
-}
-
-if (!($user instanceof ElggUser)) {
-	register_error(elgg_echo('plugins:usersettings:save:fail', [$plugin_id]));
-	forward(REFERER);
+if (!$plugin || !$user || !$user->canEdit()) {
+	return elgg_error_response(elgg_echo('plugins:usersettings:save:fail', [$plugin_id]));
 }
 
 $plugin_name = $plugin->getDisplayName();
-
-// make sure we're admin or the user
-if (!$user->canEdit()) {
-	register_error(elgg_echo('plugins:usersettings:save:fail', [$plugin_name]));
-	forward(REFERER);
-}
 
 $result = false;
 
@@ -46,11 +31,9 @@ if (elgg_action_exists("$plugin_id/usersettings/save")) {
 		
 		$result = $plugin->setUserSetting($k, $v, $user->guid);
 		if (!$result) {
-			register_error(elgg_echo('plugins:usersettings:save:fail', [$plugin_name]));
-			forward(REFERER);
+			return elgg_error_response(elgg_echo('plugins:usersettings:save:fail', [$plugin_name]));
 		}
 	}
 }
 
-system_message(elgg_echo('plugins:usersettings:save:ok', [$plugin_name]));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('plugins:usersettings:save:ok', [$plugin_name]));

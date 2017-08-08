@@ -7,8 +7,8 @@ $content = get_input('text');
 
 $site = elgg_get_site_entity();
 
-if ($site->setPrivateSetting('robots.txt', $content)) {
-	system_message(elgg_echo('save:success'));
-} else {
-	register_error(elgg_echo('save:fail'));
+if (!$site->setPrivateSetting('robots.txt', $content)) {
+	return elgg_error_response(elgg_echo('save:fail'));
 }
+
+return elgg_ok_response('', elgg_echo('save:success'));

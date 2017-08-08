@@ -15,5 +15,4 @@ foreach ($settings as $setting) {
 	elgg_save_config($setting, (bool) get_input($setting));
 }
 
-system_message(elgg_echo('admin:configuration:success'));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('admin:configuration:success'));

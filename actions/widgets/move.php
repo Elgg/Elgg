@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg widget move action
- *
- * @package Elgg.Core
- * @subpackage Widgets.Management
  */
 
 $column = (int) get_input('column', 1);

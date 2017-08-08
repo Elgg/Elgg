@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg widget add action
- *
- * @package Elgg.Core
- * @subpackage Widgets.Management
  */
 
 $page_owner_guid = (int) get_input('page_owner_guid');

@@ -9,35 +9,30 @@
  * NOTE: This is different to the "reset password" link users
  * can use in that it does not first email the user asking if
  * they want to have their password reset.
- *
- * @package Elgg.Core
- * @subpackage Administration.User
  */
 
 $guid = get_input('guid');
-$user = get_entity($guid);
+$user = get_user($guid);
 
-if (($user instanceof ElggUser) && ($user->canEdit())) {
-	$password = generate_random_cleartext_password();
-
-	if (force_user_password_reset($user->guid, $password)) {
-		system_message(elgg_echo('admin:user:resetpassword:yes'));
-
-		notify_user($user->guid,
-			elgg_get_site_entity()->guid,
-			elgg_echo('email:resetpassword:subject', [], $user->language),
-			elgg_echo('email:resetpassword:body', [$user->username, $password], $user->language),
-			[
-				'object' => $user,
-				'action' => 'resetpassword',
-				'password' => $password,
-			],
-			'email');
-	} else {
-		register_error(elgg_echo('admin:user:resetpassword:no'));
-	}
-} else {
-	register_error(elgg_echo('admin:user:resetpassword:no'));
+if (!$user || !$user->canEdit()) {
+	return elgg_error_response(elgg_echo('admin:user:resetpassword:no'));
 }
 
-forward(REFERER);
+$password = generate_random_cleartext_password();
+
+if (!force_user_password_reset($user->guid, $password)) {
+	return elgg_error_response(elgg_echo('admin:user:resetpassword:no'));
+}
+
+notify_user($user->guid,
+	elgg_get_site_entity()->guid,
+	elgg_echo('email:resetpassword:subject', [], $user->language),
+	elgg_echo('email:resetpassword:body', [$user->username, $password], $user->language),
+	[
+		'object' => $user,
+		'action' => 'resetpassword',
+		'password' => $password,
+	],
+	'email');
+
+return elgg_ok_response('', elgg_echo('admin:user:resetpassword:yes'));

@@ -12,8 +12,8 @@ $result = elgg_save_config('elgg_maintenance_mode', $mode, null);
 
 $result = $result && $site->setPrivateSetting('elgg_maintenance_message', $message);
 
-if ($result) {
-	system_message(elgg_echo('admin:maintenance_mode:saved'));
-} else {
-	register_error(elgg_echo('save:fail'));
+if (!$result) {
+	return elgg_error_response(elgg_echo('save:fail'));
 }
+
+return elgg_ok_response('', elgg_echo('admin:maintenance_mode:saved'));
