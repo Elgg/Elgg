@@ -188,7 +188,6 @@ abstract class Seed {
 		$group = false;
 
 		try {
-
 			$group = new ElggGroup();
 			foreach ($attributes as $name => $value) {
 				$group->$name = $value;
@@ -643,7 +642,6 @@ abstract class Seed {
 		}
 
 		while ($success < $limit) {
-
 			$comment = new ElggObject();
 			$comment->subtype = $entity->getSubtype() == 'discussion' ? 'discussion_reply' : 'comment';
 			$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;

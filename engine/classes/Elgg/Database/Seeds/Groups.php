@@ -82,7 +82,6 @@ class Groups extends Seed {
 			$members_exclude = [];
 
 			while ($count_members($group) - 1 < $members_limit) {
-
 				$member = $this->getRandomUser($members_exclude);
 				if (!$member) {
 					$member = $this->createUser();
@@ -119,7 +118,6 @@ class Groups extends Seed {
 					}
 				}
 			}
-
 		}
 
 	}

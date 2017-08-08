@@ -30,7 +30,6 @@ class Objects extends Seed {
 		};
 
 		while ($count_blogs() < $this->limit) {
-
 			$metadata = [
 				'status' => $this->getRandomStatus(),
 				'comments_on' => $this->faker->boolean() ? 'On' : 'Off',

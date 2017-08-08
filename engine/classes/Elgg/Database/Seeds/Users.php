@@ -62,7 +62,6 @@ class Users extends Seed {
 
 			$friends_exclude = [$user->guid];
 			while ($count_friends($user) < $friends_limit) {
-
 				$friend = $this->getRandomUser($friends_exclude);
 				if (!$friend) {
 					$this->createUser();
@@ -80,7 +79,6 @@ class Users extends Seed {
 					}
 				}
 			}
-
 		}
 
 	}
