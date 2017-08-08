@@ -30,19 +30,21 @@ if (!$entity->delete()) {
 $forward_url = get_input('forward_url');
 if (!$forward_url) {
 	
-	// @todo rewrite this to be more readable
-	$forward_url = REFERRER;
-	$referrer_url = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	$forward_url = REFERER;
+	$referrer_url = $_SERVER['HTTP_REFERER'] ?: '';
 	$site_url = elgg_get_site_url();
+	
 	if ($referrer_url && 0 == strpos($referrer_url, $site_url)) {
+		// referer is on current site
+		
 		$referrer_path = substr($referrer_url, strlen($site_url));
 		$segments = explode('/', $referrer_path);
 		if (in_array($guid, $segments)) {
 			// referrer URL contains a reference to the entity that will be deleted
 			$forward_url = ($container) ? $container->getURL() : '';
 		}
-	} else if ($container) {
-		$forward_url = $container->getURL() ? : '';
+	} elseif ($container) {
+		$forward_url = $container->getURL();
 	}
 }
 

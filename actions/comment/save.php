@@ -14,6 +14,8 @@ if (empty($comment_text)) {
 	return elgg_error_response(elgg_echo('generic_comment:blank'));
 }
 
+$result = '';
+
 if ($comment_guid) {
 	// Edit an existing comment
 	$comment = get_entity($comment_guid);
@@ -33,14 +35,14 @@ if ($comment_guid) {
 
 	if (elgg_is_xhr()) {
 		// @todo move to its own view object/comment/content in 1.x
-		echo elgg_view('output/longtext', [
+		$result = elgg_view('output/longtext', [
 			'value' => $comment->description,
 			'class' => 'elgg-inner',
 			'data-role' => 'comment-text',
 		]);
 	}
 	
-	system_message(elgg_echo('generic_comment:updated'));
+	$success_message = elgg_echo('generic_comment:updated');
 	
 } else {
 	// Create a new comment on the target entity
@@ -71,16 +73,19 @@ if ($comment_guid) {
 		'target_guid' => $entity_guid,
 	]);
 
-	system_message(elgg_echo('generic_comment:posted'));
+	$success_message = elgg_echo('generic_comment:posted');
 }
 
+$forward = $comment->getURL();
+
 // return to activity page if posted from there
+// this can be removed once saving new comments is ajaxed
 if (!empty($_SERVER['HTTP_REFERER'])) {
 	// don't redirect to URLs from client without verifying within site
 	$site_url = preg_quote(elgg_get_site_url(), '~');
 	if (preg_match("~^{$site_url}activity(/|\\z)~", $_SERVER['HTTP_REFERER'], $m)) {
-		forward("{$m[0]}#elgg-object-{$comment->guid}");
+		$forward = "{$m[0]}#elgg-object-{$comment->guid}";
 	}
 }
 
-forward($comment->getURL());
+return elgg_ok_response($result, $success_message, $forward);

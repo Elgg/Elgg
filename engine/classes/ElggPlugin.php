@@ -814,22 +814,22 @@ class ElggPlugin extends \ElggObject {
 		];
 
 		$return = _elgg_services()->hooks->getEvents()->trigger('deactivate', 'plugin', $params);
-
-		// run any deactivate code
-		if ($return) {
-			if ($this->canReadFile('deactivate.php')) {
-				$return = $this->includeFile('deactivate.php');
-			}
-			
-			$this->deactivateEntities();
-		}
-
 		if ($return === false) {
 			return false;
-		} else {
-			_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
-			return $this->setStatus(false);
 		}
+		
+		// run any deactivate code
+		if ($this->canReadFile('deactivate.php')) {
+			// allows you to prevent disabling a plugin by returning false in a deactivate.php file
+			if ($this->includeFile('deactivate.php') === false) {
+				return false;
+			}
+		}
+		
+		$this->deactivateEntities();
+		
+		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+		return $this->setStatus(false);
 	}
 
 	/**
