@@ -183,7 +183,7 @@ class ElggPlugin extends \ElggObject {
 			}
 		}
 
-		if (array_key_exists($key, $this->static_config)) {
+		if (!empty($this->static_config[$key])) {
 			return $this->static_config[$key];
 		} else {
 			return $default;
@@ -861,7 +861,7 @@ class ElggPlugin extends \ElggObject {
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			if ($this->canReadFile('start.php')) {
-				$this->includeFile('start.php');
+				require_once "{$this->path}/start.php";
 			}
 			
 			$this->registerEntities();
@@ -904,7 +904,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		try {
-			$ret = require_once $filepath;
+			$ret = include $filepath;
 		} catch (Exception $e) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
 				[$filename, $this->getID(), $this->guid, $this->path]);
