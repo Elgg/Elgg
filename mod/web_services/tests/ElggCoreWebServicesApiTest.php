@@ -8,12 +8,25 @@
  */
 class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 
+	private $call_method;
+
+	public function setUp() {
+		$this->call_method = get_call_method();
+		if (!$this->call_method) {
+			// Emulate GET request, which is not set in cli mode
+			_elgg_services()->request->server->set('REQUEST_METHOD', 'GET');
+		}
+	}
+
 	/**
 	 * Called after each test method.
 	 */
 	public function tearDown() {
 		global $API_METHODS;
 		$API_METHODS = array();
+
+		// Restore original request method
+		_elgg_services()->request->server->set('REQUEST_METHOD', $this->call_method);
 	}
 
 // elgg_ws_expose_function
