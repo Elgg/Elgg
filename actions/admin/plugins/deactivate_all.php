@@ -4,9 +4,6 @@
  *
  * Specified plugins in the mod/ directory are disabled and the views cache and simplecache
  * are reset.
- *
- * @package Elgg.Core
- * @subpackage Administration.Plugins
  */
 
 $guids = get_input('guids');
@@ -23,7 +20,7 @@ if (empty($guids)) {
 }
 
 if (empty($plugins)) {
-	forward(REFERER);
+	return elgg_ok_response();
 }
 
 foreach ($plugins as $plugin) {
@@ -34,12 +31,9 @@ foreach ($plugins as $plugin) {
 	if (!$plugin->deactivate()) {
 		$msg = $plugin->getError();
 		$string = ($msg) ? 'admin:plugins:deactivate:no_with_msg' : 'admin:plugins:deactivate:no';
-		register_error(elgg_echo($string, [$plugin->getDisplayName(), $plugin->getError()]));
+		
+		return elgg_error_response(elgg_echo($string, [$plugin->getDisplayName(), $msg]));
 	}
 }
 
-// don't regenerate the simplecache because the plugin won't be
-// loaded until next run.  Just invalidate and let it regnerate as needed
-elgg_flush_caches();
-
-forward(REFERER);
+return elgg_ok_response();

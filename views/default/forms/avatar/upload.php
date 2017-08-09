@@ -5,12 +5,26 @@
  * @uses $vars['entity']
  */
 
-?>
-<div>
-	<label><?php echo elgg_echo("avatar:upload"); ?></label><br />
-	<?php echo elgg_view("input/file", ['name' => 'avatar']); ?>
-</div>
-<div class="elgg-foot">
-	<?php echo elgg_view('input/hidden', ['name' => 'guid', 'value' => $vars['entity']->guid]); ?>
-	<?php echo elgg_view('input/submit', ['value' => elgg_echo('upload')]); ?>
-</div>
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
+
+echo elgg_view_field([
+	'#type' => 'file',
+	'#label' => elgg_echo('avatar:upload'),
+	'name' => 'avatar',
+]);
+
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'guid',
+	'value' => $entity->guid,
+]);
+
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('upload'),
+]);
+
+elgg_set_form_footer($footer);

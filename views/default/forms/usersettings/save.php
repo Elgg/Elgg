@@ -7,16 +7,20 @@
 
 $user = elgg_get_page_owner_entity();
 
-$form_body = elgg_view('forms/account/settings', $vars);
-
-$submit = elgg_view('input/submit', ['value' => elgg_echo('save')]);
-$hidden = '';
+echo elgg_view('forms/account/settings', $vars);
 
 if ($user) {
 	// we need to include the user GUID so that admins can edit the settings of other users
-	$hidden = elgg_view('input/hidden', ['name' => 'guid', 'value' => $user->guid]);
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'guid',
+		'value' => $user->guid,
+	]);
 }
 
-$form_body .= elgg_format_element('div', ['class' => 'elgg-foot'], $submit . $hidden);
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
 
-echo $form_body;
+elgg_set_form_footer($footer);

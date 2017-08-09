@@ -58,7 +58,7 @@ try {
 
 	elgg_clear_sticky_form('register');
 
-	if ($new_user->enabled == 'yes') {
+	if ($new_user->isEnabled()) {
 		// if exception thrown, this probably means there is a validation
 		// plugin that has disabled the user
 		try {
