@@ -3,7 +3,7 @@
  * Lists pending upgrades
  */
 
-elgg_require_js('elgg/upgrader');
+elgg_require_js('core/js/upgrader');
 
 elgg_register_menu_item('title', [
 	'name' => 'run_upgrades',
