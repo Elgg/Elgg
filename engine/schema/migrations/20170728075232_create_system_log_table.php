@@ -5,25 +5,30 @@ use Phinx\Db\Adapter\MysqlAdapter;
 
 class CreateSystemLogTable extends AbstractMigration {
 	/**
-	 * Change Method.
-	 *
-	 * Write your reversible migrations using this method.
-	 *
-	 * More information on writing migrations is available here:
-	 * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-	 *
-	 * The following commands can be used in this method and Phinx will
-	 * automatically reverse them when rolling back:
-	 *
-	 *    createTable
-	 *    renameTable
-	 *    addColumn
-	 *    renameColumn
-	 *    addIndex
-	 *    addForeignKey
-	 *
-	 * Remember to call "create()" or "update()" and NOT "save()" when working
-	 * with the Table class.
+	 * CREATE TABLE `prefix_system_log` (
+	 * `id` int(11) NOT NULL AUTO_INCREMENT,
+	 * `object_id` int(11) NOT NULL,
+	 * `object_class` varchar(50) NOT NULL,
+	 * `object_type` varchar(50) NOT NULL,
+	 * `object_subtype` varchar(50) NOT NULL,
+	 * `event` varchar(50) NOT NULL,
+	 * `performed_by_guid` bigint(20) unsigned NOT NULL,
+	 * `owner_guid` bigint(20) unsigned NOT NULL,
+	 * `access_id` int(11) NOT NULL,
+	 * `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
+	 * `time_created` int(11) NOT NULL,
+	 * `ip_address` varchar(46) NOT NULL,
+	 * PRIMARY KEY (`id`),
+	 * KEY `object_id` (`object_id`),
+	 * KEY `object_class` (`object_class`),
+	 * KEY `object_type` (`object_type`),
+	 * KEY `object_subtype` (`object_subtype`),
+	 * KEY `event` (`event`),
+	 * KEY `performed_by_guid` (`performed_by_guid`),
+	 * KEY `access_id` (`access_id`),
+	 * KEY `time_created` (`time_created`),
+	 * KEY `river_key` (`object_type`,`object_subtype`,`event`)
+	 * ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 	 */
 	public function change() {
 
@@ -40,7 +45,7 @@ class CreateSystemLogTable extends AbstractMigration {
 		$table->addColumn('object_id', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('object_class', 'string', [
@@ -52,37 +57,37 @@ class CreateSystemLogTable extends AbstractMigration {
 			'null' => false,
 			'limit' => 50,
 		]);
-		
+
 		$table->addColumn('object_subtype', 'string', [
 			'null' => false,
 			'limit' => 50,
 		]);
-		
+
 		$table->addColumn('event', 'string', [
 			'null' => false,
 			'limit' => 50,
 		]);
-		
+
 		$table->addColumn('performed_by_guid', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_BIG,
 			'precision' => 20,
 			'signed' => false,
 		]);
-		
+
 		$table->addColumn('owner_guid', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_BIG,
 			'precision' => 20,
 			'signed' => false,
 		]);
-		
+
 		$table->addColumn('access_id', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
-		
+
 		$table->addColumn('enabled', 'enum', [
 			'null' => false,
 			'default' => 'yes',
@@ -92,13 +97,13 @@ class CreateSystemLogTable extends AbstractMigration {
 				'no'
 			],
 		]);
-		
+
 		$table->addColumn('time_created', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
-		
+
 		$table->addColumn('ip_address', 'string', [
 			'null' => false,
 			'limit' => 46,
@@ -152,8 +157,8 @@ class CreateSystemLogTable extends AbstractMigration {
 			'name' => "river_key",
 			'unique' => false
 		]);
-		
+
 		$table->save();
-		
+
 	}
 }

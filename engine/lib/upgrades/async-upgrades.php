@@ -7,5 +7,6 @@
  */
 
 return [
-	// \Elgg\Upgrades\ExampleUpgrade::class
+	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
+	\Elgg\Upgrades\SetSecurityConfigDefaults::class,
 ];

@@ -5,25 +5,16 @@ use Phinx\Db\Adapter\MysqlAdapter;
 
 class CreateQueueTable extends AbstractMigration {
 	/**
-	 * Change Method.
-	 *
-	 * Write your reversible migrations using this method.
-	 *
-	 * More information on writing migrations is available here:
-	 * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-	 *
-	 * The following commands can be used in this method and Phinx will
-	 * automatically reverse them when rolling back:
-	 *
-	 *    createTable
-	 *    renameTable
-	 *    addColumn
-	 *    renameColumn
-	 *    addIndex
-	 *    addForeignKey
-	 *
-	 * Remember to call "create()" or "update()" and NOT "save()" when working
-	 * with the Table class.
+	 * CREATE TABLE `prefix_queue` (
+	 * `id` int(11) NOT NULL AUTO_INCREMENT,
+	 * `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+	 * `data` mediumblob NOT NULL,
+	 * `timestamp` int(11) NOT NULL,
+	 * `worker` varchar(32) NULL,
+	 * PRIMARY KEY (`id`),
+	 * KEY `name` (`name`),
+	 * KEY `retrieve` (`timestamp`,`worker`)
+	 * ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 	 */
 	public function change() {
 
@@ -39,7 +30,7 @@ class CreateQueueTable extends AbstractMigration {
 
 		$table->addColumn('name', 'string', [
 			'null' => false,
-			'limit' => 252,
+			'limit' => MysqlAdapter::TEXT_SMALL,
 			'encoding' => "utf8",
 			'collation' => "utf8_general_ci",
 		]);
@@ -52,14 +43,14 @@ class CreateQueueTable extends AbstractMigration {
 		$table->addColumn('timestamp', 'integer', [
 			'null' => false,
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('worker', 'string', [
 			'null' => true,
 			'limit' => 32,
 		]);
-		
+
 		$table->addIndex(['name'], [
 			'name' => "name",
 			'unique' => false,

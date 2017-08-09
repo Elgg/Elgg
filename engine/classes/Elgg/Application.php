@@ -563,8 +563,8 @@ class Application {
 
 		$forward = function ($url) use ($is_cli) {
 			if ($is_cli) {
-				echo "Open $url in your browser to continue.";
-				exit;
+				fwrite(STDOUT, "Open $url in your browser to continue." . PHP_EOL);
+				return;
 			}
 
 			forward($url);
@@ -574,13 +574,13 @@ class Application {
 
 		self::migrate();
 		self::start();
-		
+
 		// check security settings
 		if (!$is_cli && _elgg_config()->security_protect_upgrade && !elgg_is_admin_logged_in()) {
 			// only admin's or users with a valid token can run upgrade.php
 			elgg_signed_request_gatekeeper();
 		}
-		
+
 		$site_url = _elgg_config()->url;
 		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 
@@ -657,23 +657,17 @@ class Application {
 	 * @return bool
 	 */
 	public static function migrate() {
-		try {
-			$conf = self::elggDir()->getPath('engine/schema/settings.php');
-			if (!$conf) {
-				throw new Exception('Settings file is required to run database migrations.');
-			}
-
-			$app = new \Phinx\Console\PhinxApplication();
-			$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
-				'configuration' => $conf,
-			]);
-			$log = $wrapper->getMigrate();
-			error_log($log);
-		} catch (Exception $e) {
-			error_log($e->getMessage());
-			error_log($e->getTraceAsString());
-			throw new InstallationException($e->getMessage(), $e->getCode());
+		$conf = self::elggDir()->getPath('engine/schema/settings.php');
+		if (!$conf) {
+			throw new Exception('Settings file is required to run database migrations.');
 		}
+
+		$app = new \Phinx\Console\PhinxApplication();
+		$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
+			'configuration' => $conf,
+		]);
+		$log = $wrapper->getMigrate();
+		error_log($log);
 
 		return true;
 	}
@@ -683,6 +677,7 @@ class Application {
 	 * @return array
 	 */
 	public static function getMigrationSettings() {
+
 		$config = Config::factory();
 		$db_config = DbConfig::fromElggConfig($config);
 		if ($db_config->isDatabaseSplit()) {

@@ -2,9 +2,7 @@
 namespace Elgg;
 
 use Elgg\Config\DatarootSettingMigrator;
-use Elgg\Config\SettingsMigrator;
 use Elgg\Config\WwwrootSettingMigrator;
-use Elgg\Filesystem\Directory;
 use Elgg\Database\ConfigTable;
 use ConfigurationException;
 use Elgg\Project\Paths;

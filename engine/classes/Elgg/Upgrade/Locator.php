@@ -51,17 +51,16 @@ class Locator {
 	 *
 	 * @param string[] $core_upgrades Class names of core upgrades
 	 *
-	 * @return boolean $pending_upgrades Are there pending upgrades
+	 * @return int[]|boolean $pending_upgrades Are there pending upgrades
 	 */
 	public function run(array $core_upgrades) {
-		$pending_upgrades = false;
+		$pending_upgrades = [];
 
 		// Check for core upgrades
 		foreach ($core_upgrades as $class) {
 			$upgrade = $this->getUpgrade($class, 'core');
-
 			if ($upgrade) {
-				$pending_upgrades = true;
+				$pending_upgrades[] = $upgrade->guid;
 			}
 		}
 
@@ -78,13 +77,14 @@ class Locator {
 			$plugin_id = $plugin->getID();
 
 			foreach ($batches as $class) {
-				if ($this->getUpgrade($class, $plugin_id)) {
-					$pending_upgrades = true;
+				$upgrade = $this->getUpgrade($class, $plugin_id);
+				if ($upgrade) {
+					$pending_upgrades[] = $upgrade->guid;
 				}
 			}
 		}
 
-		return $pending_upgrades;
+		return $pending_upgrades ? : false;
 	}
 
 	/**
@@ -147,7 +147,7 @@ class Locator {
 		// check version before shouldBeSkipped() so authors can get immediate feedback on an
 		// invalid batch.
 		$version = $batch->getVersion();
-
+		
 		// Version must be in format yyyymmddnn
 		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
 			$this->logger->error("Upgrade $class returned an invalid version: $version");

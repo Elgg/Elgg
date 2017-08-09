@@ -5,25 +5,27 @@ use Phinx\Db\Adapter\MysqlAdapter;
 
 class CreateUsersEntityTable extends AbstractMigration {
 	/**
-	 * Change Method.
-	 *
-	 * Write your reversible migrations using this method.
-	 *
-	 * More information on writing migrations is available here:
-	 * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-	 *
-	 * The following commands can be used in this method and Phinx will
-	 * automatically reverse them when rolling back:
-	 *
-	 *    createTable
-	 *    renameTable
-	 *    addColumn
-	 *    renameColumn
-	 *    addIndex
-	 *    addForeignKey
-	 *
-	 * Remember to call "create()" or "update()" and NOT "save()" when working
-	 * with the Table class.
+	 * CREATE TABLE `prefix_users_entity` (
+	 * `guid` bigint(20) unsigned NOT NULL,
+	 * `name` text NOT NULL,
+	 * `username` varchar(128) NOT NULL DEFAULT '',
+	 * -- 255 chars is recommended by PHP.net to hold future hash formats
+	 * `password_hash` varchar(255) NOT NULL DEFAULT '',
+	 * `email` text NOT NULL,
+	 * `language` varchar(6) NOT NULL DEFAULT '',
+	 * `banned` enum('yes','no') NOT NULL DEFAULT 'no',
+	 * `admin` enum('yes','no') NOT NULL DEFAULT 'no',
+	 * `last_action` int(11) NOT NULL DEFAULT '0',
+	 * `prev_last_action` int(11) NOT NULL DEFAULT '0',
+	 * `last_login` int(11) NOT NULL DEFAULT '0',
+	 * `prev_last_login` int(11) NOT NULL DEFAULT '0',
+	 * PRIMARY KEY (`guid`),
+	 * UNIQUE KEY `username` (`username`),
+	 * KEY `email` (`email`(50)),
+	 * KEY `last_action` (`last_action`),
+	 * KEY `last_login` (`last_login`),
+	 * KEY `admin` (`admin`)
+	 * ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 	 */
 	public function change() {
 
@@ -48,7 +50,6 @@ class CreateUsersEntityTable extends AbstractMigration {
 
 		$table->addColumn('name', 'text', [
 			'null' => false,
-			'limit' => 65535,
 		]);
 
 		$table->addColumn('username', 'string', [
@@ -65,7 +66,6 @@ class CreateUsersEntityTable extends AbstractMigration {
 
 		$table->addColumn('email', 'text', [
 			'null' => false,
-			'limit' => 65535,
 		]);
 
 		$table->addColumn('language', 'string', [
@@ -98,28 +98,28 @@ class CreateUsersEntityTable extends AbstractMigration {
 			'null' => false,
 			'default' => '0',
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('prev_last_action', 'integer', [
 			'null' => false,
 			'default' => '0',
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('last_login', 'integer', [
 			'null' => false,
 			'default' => '0',
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addColumn('prev_last_login', 'integer', [
 			'null' => false,
 			'default' => '0',
 			'limit' => MysqlAdapter::INT_REGULAR,
-			'precision' => 10,
+			'precision' => 11,
 		]);
 
 		$table->addIndex(['username'], [
