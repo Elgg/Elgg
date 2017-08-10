@@ -21,7 +21,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Ajax\Service                       $ajax
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
- * @property-read \Elgg\Application                        $app
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
@@ -137,12 +136,6 @@ class ServiceProvider extends DiContainer {
 			return $obj;
 		});
 
-		/**
-		 * "app" is set when the application is constructed
-		 *
-		 * @see \Elgg\Application::__construct "app"
-		 */
-
 		$this->setFactory('annotations', function(ServiceProvider $c) {
 			return new \Elgg\Database\Annotations($c->db, $c->session, $c->hooks->getEvents());
 		});
@@ -166,7 +159,7 @@ class ServiceProvider extends DiContainer {
 			if ($simplecache_enabled === null) {
 				$simplecache_enabled = $c->configTable->get('simplecache_enabled');
 			}
-			return new \Elgg\Application\CacheHandler($c->app, $c->config, $c->request, $simplecache_enabled);
+			return new \Elgg\Application\CacheHandler($c->config, $c->request, $simplecache_enabled);
 		});
 
 		$this->setFactory('classLoader', function(ServiceProvider $c) {

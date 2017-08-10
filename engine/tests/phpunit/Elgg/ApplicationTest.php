@@ -17,7 +17,7 @@ class ApplicationTest extends \Elgg\TestCase {
 		Application::factory([
 			'handle_shutdown' => false,
 			'handle_exceptions' => false,
-			'overwrite_global_config' => false,
+			'set_global_config' => false,
 			'config' => new Config(TestCase::getTestingConfigArray()),
 		]);
 		Application::$_instance = $app;
