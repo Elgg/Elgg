@@ -198,10 +198,6 @@ class Service {
 		$ttl = $api_response->getTtl();
 		if ($ttl > 0) {
 			// Required to remove headers set by PHP session
-			if (!isset($allow_removing_headers)) {
-				$allow_removing_headers = !elgg()->isTestingApplication();
-			}
-
 			if ($allow_removing_headers) {
 				header_remove('Expires');
 				header_remove('Pragma');

@@ -99,27 +99,11 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
 }
 
 /**
- * Runs unit tests for the group entities.
- *
- * @param string $hook  Hook name
- * @param string $type  Hook type
- * @param array  $value Array of unit test locations
- *
- * @return array
- * @access private
- */
-function _elgg_groups_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggGroupTest.php';
-	return $value;
-}
-
-/**
  * init the groups library
  * @access private
  */
 function _elgg_groups_init() {
 	elgg_register_plugin_hook_handler('container_permissions_check', 'all', '_elgg_groups_container_override');
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_groups_test');
 }
 
 /**

@@ -32,8 +32,8 @@ class Objects extends Seed {
 		while ($count_blogs() < $this->limit) {
 			$metadata = [
 				'status' => $this->getRandomStatus(),
-				'comments_on' => $this->faker->boolean() ? 'On' : 'Off',
-				'excerpt' => $this->faker->sentence(),
+				'comments_on' => $this->faker()->boolean() ? 'On' : 'Off',
+				'excerpt' => $this->faker()->sentence(),
 			];
 
 			$attributes = [
@@ -45,6 +45,9 @@ class Objects extends Seed {
 			if (!$blog) {
 				continue;
 			}
+
+			$this->createComments($blog);
+			$this->createLikes($blog);
 
 			if ($blog->status == 'unsaved_draft' || $blog->status == 'draft') {
 				$blog->future_access = $blog->access_id;
@@ -63,13 +66,13 @@ class Objects extends Seed {
 				elgg_trigger_event('publish', 'object', $blog);
 			}
 
-			if ($this->faker->boolean()) {
-				$blog->annotate('blog_auto_save', $this->faker->text(500), ACCESS_PRIVATE, $blog->owner_guid);
+			if ($this->faker()->boolean()) {
+				$blog->annotate('blog_auto_save', $this->faker()->text(500), ACCESS_PRIVATE, $blog->owner_guid);
 			}
 
-			if ($this->faker->boolean() && $blog->status != 'unsaved_draft') {
+			if ($this->faker()->boolean() && $blog->status != 'unsaved_draft') {
 				$blog->annotate('blog_revision', $blog->description, ACCESS_PRIVATE, $blog->owner_guid);
-				$blog->description = $this->faker->text(500);
+				$blog->description = $this->faker()->text(500);
 			}
 
 			$blog->save();

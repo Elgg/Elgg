@@ -154,6 +154,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``profile_pagesetup``
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
+ * ``elgg_override_permissions``: Permissions overrides are now checked in capabilities service before triggering ``permissions_check`` and ``container_permissions_check`` hooks
 
 Removed global vars
 -------------------
@@ -421,6 +422,13 @@ HtmLawed is no longer a plugin
 
  * Do not call ``elgg_load_library('htmlawed')``.
  * In the hook params for ``'config', 'htmlawed'``, the ``hook_tag`` function name changed.
+
+Entity Permissions
+------------------
+
+Edit and container permission overrides are now permformed with the capabilities service and not via a hook.
+
+Users can no longer annotate entities that they do not have access to (which can not be loaded).
 
 New approach to page layouts
 ----------------------------

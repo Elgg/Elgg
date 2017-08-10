@@ -378,11 +378,12 @@ class UsersTable {
 	 * @param string $email                 The user's email address
 	 * @param bool   $allow_multiple_emails Allow the same email address to be
 	 *                                      registered multiple times?
+	 * @param bool   $subtype               Subtype of the new user entity
 	 *
 	 * @return int|false The new user's GUID; false on failure
 	 * @throws RegistrationException
 	 */
-	public function register($username, $password, $name, $email, $allow_multiple_emails = false) {
+	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
 
 		// no need to trim password
 		$username = trim($username);
@@ -422,6 +423,9 @@ class UsersTable {
 
 		// Create user
 		$user = new ElggUser();
+		if ($subtype) {
+			$user->subtype = $subtype;
+		}
 		$user->username = $username;
 		$user->email = $email;
 		$user->name = $name;

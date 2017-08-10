@@ -89,6 +89,25 @@ Twitter API plugin
 
 The ``twitter_api`` plugin no longer comes bundled with Elgg.
 
+Unit Testing
+------------
+
+Elgg's PHPUnit bootstrap can now handle both unit and integration tests. Whenever a database connection is detected,
+integration tests will be run alongside unit tests. Please note that **you shouldn't run tests on a production site**,
+as it may damage data integrity.
+
+Plugins can now implement their own PHPUnit tests by extending ``\Elgg\UnitTestCase`` and ``\Elgg\IntegrationTestCase``
+classes. Note that plugin tests will not be automatically bootstrapped during PHPUnit initialization - you will need to
+update your ``phpunit.xml`` or run ``vendor/bin/phpunit`` with custom configuration flags.
+
+``\Elgg\IntegrationTestCase`` uses ``\Elgg\Seeding`` trait, which can be used to conveniently build new entities and
+write them to the database.
+
+``\Elgg\UnitTestCase`` does not use the database, but you can call ``\Elgg\UnitTestCase::setupMockServices()`` to
+build database mocks for static analysis.
+
+Plugins with simpletests will continue working as perviously.
+
 From 2.2 to 2.3
 ===============
 

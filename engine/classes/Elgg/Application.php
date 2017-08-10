@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Http\Request;
@@ -12,6 +13,7 @@ use ConfigurationException;
 use Elgg\Project\Paths;
 use Exception;
 use InstallationException;
+use Zend\Mail\Transport\InMemory;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -23,7 +25,7 @@ use InstallationException;
  *
  * @since 2.0.0
  *
- * @property-read \Elgg\Menu\Service $menus
+ * @property-read \Elgg\Menu\Service                    $menus
  * @property-read \Elgg\Views\TableColumn\ColumnFactory $table_columns
  */
 class Application {
@@ -37,11 +39,6 @@ class Application {
 	 * @internal DO NOT USE
 	 */
 	public $_services;
-
-	/**
-	 * @var bool
-	 */
-	private static $testing_app;
 
 	/**
 	 * Property names of the service provider to be exposed via __get()
@@ -61,7 +58,7 @@ class Application {
 	 * Reference to the loaded Application returned by elgg()
 	 *
 	 * @internal Do not use this. use elgg() to access the application
-	 * @access private
+	 * @access   private
 	 * @var Application
 	 */
 	public static $_instance;
@@ -72,6 +69,7 @@ class Application {
 	 * Upon construction, no actions are taken to load or boot Elgg.
 	 *
 	 * @param ServiceProvider $services Elgg services provider
+	 *
 	 * @throws ConfigurationException
 	 */
 	public function __construct(ServiceProvider $services) {
@@ -231,6 +229,7 @@ class Application {
 	public static function start() {
 		$app = self::factory();
 		$app->bootCore();
+
 		return $app;
 	}
 
@@ -248,9 +247,9 @@ class Application {
 	 *
 	 * This method loads the full Elgg engine, checks the installation
 	 * state, and triggers a series of events to finish booting Elgg:
-	 * 	- {@elgg_event boot system}
-	 * 	- {@elgg_event init system}
-	 * 	- {@elgg_event ready system}
+	 *    - {@elgg_event boot system}
+	 *    - {@elgg_event init system}
+	 *    - {@elgg_event ready system}
 	 *
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
@@ -258,10 +257,6 @@ class Application {
 	 */
 	public function bootCore() {
 		$config = $this->_services->config;
-
-		if ($this->isTestingApplication()) {
-			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
-		}
 
 		if ($config->boot_complete) {
 			return;
@@ -283,6 +278,7 @@ class Application {
 
 			$config->boot_complete = true;
 			$config->lock('boot_complete');
+
 			return;
 		}
 
@@ -374,6 +370,7 @@ class Application {
 	 * If the singleton is already set, it's returned.
 	 *
 	 * @param array $spec Specification for initial call.
+	 *
 	 * @return self
 	 * @throws ConfigurationException
 	 */
@@ -464,6 +461,7 @@ class Application {
 
 		if ($req->isRewriteCheck()) {
 			echo Request::REWRITE_TEST_OUTPUT;
+
 			return true;
 		}
 
@@ -566,6 +564,7 @@ class Application {
 		$forward = function ($url) use ($is_cli) {
 			if ($is_cli) {
 				fwrite(STDOUT, "Open $url in your browser to continue." . PHP_EOL);
+
 				return;
 			}
 
@@ -588,7 +587,10 @@ class Application {
 
 		// turn any full in-site URLs into absolute paths
 		$forward_url = get_input('forward', '/admin', false);
-		$forward_url = str_replace([$site_url, $site_host], '/', $forward_url);
+		$forward_url = str_replace([
+			$site_url,
+			$site_host
+		], '/', $forward_url);
 
 		if (strpos($forward_url, '/') !== 0) {
 			$forward_url = '/' . $forward_url;
@@ -622,8 +624,8 @@ class Application {
 					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
 					if ($msg === "installation:htaccess:localhost:connectionfailed") {
 						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
-								. "that curl is working and there are no IP restrictions preventing "
-								. "localhost connections.";
+							. "that curl is working and there are no IP restrictions preventing "
+							. "localhost connections.";
 					}
 					echo $msg;
 					exit;
@@ -724,22 +726,63 @@ class Application {
 		$this->_services->context->initialize($new);
 	}
 
-	/**
-	 * Flag this application as running for testing (PHPUnit)
-	 *
-	 * @param bool $testing Is testing application
-	 * @return void
-	 */
-	public static function setTestingApplication($testing = true) {
-		self::$testing_app = $testing;
-	}
+	public static function test($settings_file = null) {
 
-	/**
-	 * Checks if the application is running in PHPUnit
-	 * @return bool
-	 */
-	public static function isTestingApplication() {
-		return (bool) self::$testing_app;
+		date_default_timezone_set('America/Los_Angeles');
+
+		error_reporting(E_ALL | E_STRICT);
+
+		if (!$settings_file) {
+			$settings_file = self::elggDir()->getPath('/engine/tests/elgg-config/settings.php');
+		}
+
+		self::$_instance = null;
+
+		$config = Config::fromFile($settings_file);
+		$sp = new ServiceProvider($config);
+
+		$has_db_connection = function() use ($sp) {
+			// Check if we have a database connection
+			try {
+				$sp->db->connect();
+				return true;
+			} catch (\DatabaseException $e) {
+				return false;
+			}
+		};
+
+		$build_app = function() use ($config, $sp) {
+			$sp->setValue('session', \ElggSession::getMock());
+			$sp->setValue('mailer', new InMemory());
+
+			return self::factory([
+				'config' => $config,
+				'service_provider' => $sp,
+				'handle_exceptions' => false,
+				'handle_shutdown' => false,
+				'set_start_time' => false,
+			]);
+		};
+
+		if ($has_db_connection()) {
+			// We can run integration tests
+			$app = $build_app();
+			$app->bootCore();
+		} else {
+			// Database connection failed, so let's set up some mock services
+			$sp->setFactory('plugins', function (ServiceProvider $c) {
+				$pool = new \Elgg\Cache\Pool\InMemory();
+				return new TestingPlugins($pool, $c->pluginSettingsCache);
+			});
+
+			$sp->setValue('siteSecret', new SiteSecret('z1234567890123456789012345678901'));
+
+			// persistentLogin service needs this set to instantiate without calling DB
+			$sp->config->getCookieConfig();
+
+			$app = $build_app();
+			$app->loadCore();
+		}
 	}
 
 	/**
@@ -752,12 +795,12 @@ class Application {
 	 *
 	 * @warning This function should never be called directly.
 	 *
-	 * @see http://www.php.net/set-exception-handler
+	 * @see     http://www.php.net/set-exception-handler
 	 *
 	 * @param \Exception|\Error $exception The exception/error being handled
 	 *
 	 * @return void
-	 * @access private
+	 * @access  private
 	 */
 	public function handleExceptions($exception) {
 		$timestamp = time();
@@ -777,6 +820,7 @@ class Application {
 		if (!self::isCoreLoaded()) {
 			http_response_code(500);
 			echo "Exception loading Elgg core. Check log at time $timestamp";
+
 			return;
 		}
 
@@ -843,7 +887,7 @@ class Application {
 	 * For non-fatal errors, depending upon the debug settings, either
 	 * log the error or ignore it.
 	 *
-	 * @see http://www.php.net/set-error-handler
+	 * @see     http://www.php.net/set-error-handler
 	 *
 	 * @param int    $errno    The level of the error raised
 	 * @param string $errmsg   The error message
@@ -853,7 +897,7 @@ class Application {
 	 *
 	 * @return true
 	 * @throws \Exception
-	 * @access private
+	 * @access  private
 	 */
 	public function handleErrors($errno, $errmsg, $filename, $linenum, $vars) {
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";

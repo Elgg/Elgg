@@ -342,27 +342,3 @@ function get_metadata_url($id) {
 function _elgg_invalidate_metadata_cache($action, array $options) {
 	_elgg_services()->metadataCache->invalidateByOptions($options);
 }
-
-/**
- * Metadata unit test
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of other tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- */
-function _elgg_metadata_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetadataAPITest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetadataCacheTest.php';
-	return $value;
-}
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$hooks->registerHandler('unit_test', 'system', '_elgg_metadata_test');
-};

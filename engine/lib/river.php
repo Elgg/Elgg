@@ -683,15 +683,6 @@ function update_river_access_by_object($object_guid, $access_id) {
 }
 
 /**
- * Register river unit tests
- * @access private
- */
-function _elgg_river_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreRiverAPITest.php';
-	return $value;
-}
-
-/**
  * Disable river entries that reference a disabled entity as subject/object/target
  *
  * @param string $event The event 'disable'
@@ -757,8 +748,6 @@ QUERY;
  * @access private
  */
 function _elgg_river_init() {
-
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 
 	// For BC, we want required AMD modules to be loaded even if plugins
 	// overwrite these views

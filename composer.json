@@ -51,7 +51,7 @@
         "lint-fixer": [
             "phpcbf --standard=vendor/elgg/sniffs/elgg.xml *.php actions engine install mod views"
         ],
-        "test": "phpunit",
+        "test": "phpunit -c ./phpunit.xml",
         "travis:install": [
             "composer self-update",
             "composer global require \"fxp/composer-asset-plugin:~1.1.4\" --prefer-dist",
@@ -77,7 +77,10 @@
     },
     "autoload-dev": {
         "psr-0": {
-            "": "engine/tests/phpunit/"
+            "": [
+                "engine/tests/phpunit/unit/",
+                "engine/tests/phpunit/integration/"
+            ]
         }
     },
     "require-dev": {

@@ -133,9 +133,9 @@ class IdenticalEntityExpectation extends EqualExpectation {
 			return "Identical entity expectation [" . $dumper->describeValue($this->getValue()) . "]";
 		} else {
 			return "Identical entity expectation [" . $dumper->describeValue($this->getValue()) .
-					"] fails with [" .
-					$dumper->describeValue($compare) . "] " .
-					$dumper->describeDifference($value2, $compare2, TYPE_MATTERS);
+				"] fails with [" .
+				$dumper->describeValue($compare) . "] " .
+				$dumper->describeDifference($value2, $compare2, TYPE_MATTERS);
 		}
 	}
 

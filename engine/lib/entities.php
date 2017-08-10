@@ -840,31 +840,6 @@ function update_entity_last_action($guid, $posted = null) {
 }
 
 /**
- * Runs unit tests for the entity objects.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  Array of tests
- *
- * @return array
- * @access private
- */
-function _elgg_entities_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggEntityTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAttributeLoaderTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggSiteTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggObjectTest.php';
-	return $value;
-}
-
-/**
  * Entities init function; establishes the default entity page handler
  *
  * @return void
@@ -872,7 +847,7 @@ function _elgg_entities_test($hook, $type, $value) {
  * @access private
  */
 function _elgg_entities_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');
+
 }
 
 /**

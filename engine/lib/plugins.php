@@ -312,22 +312,6 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
 }
 
 /**
- * Runs unit tests for plugin API.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- */
-function _elgg_plugins_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCorePluginsAPITest.php';
-	return $value;
-}
-
-/**
  * Initialize the plugin system
  *
  * @return void
@@ -339,8 +323,6 @@ function _elgg_plugins_init() {
 		elgg_register_ajax_view('object/plugin/full');
 		elgg_register_ajax_view('object/plugin/details');
 	}
-
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_plugins_test');
 
 	/**
 	 * @see \Elgg\Database\Plugins::invalidateIsActiveCache

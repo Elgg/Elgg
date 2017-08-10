@@ -1791,26 +1791,6 @@ function _elgg_init() {
 }
 
 /**
- * Adds unit tests for the general API.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  array of test files
- * @param array  $params empty
- *
- * @elgg_plugin_hook unit_tests system
- * @return array
- * @access private
- */
-function _elgg_api_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggTravisInstallTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreHelpersTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreRegressionBugsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggBatchTest.php';
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
@@ -1820,6 +1800,4 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
-
-	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 };

@@ -291,12 +291,12 @@ function validate_email_address($address) {
  * @param string $email                 The user's email address
  * @param bool   $allow_multiple_emails Allow the same email address to be
  *                                      registered multiple times?
- *
+ * @param string $subtype               Subtype of the new user entity
  * @return int|false The new user's GUID; false on failure
  * @throws RegistrationException
  */
-function register_user($username, $password, $name, $email, $allow_multiple_emails = false) {
-	return _elgg_services()->usersTable->register($username, $password, $name, $email, $allow_multiple_emails);
+function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
+	return _elgg_services()->usersTable->register($username, $password, $name, $email, $allow_multiple_emails, $subtype);
 }
 
 /**
@@ -910,25 +910,8 @@ function users_init() {
 }
 
 /**
- * Runs unit tests for \ElggUser
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- */
-function users_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . "engine/tests/ElggUserTest.php";
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', 'users_init', 0);
-	$hooks->registerHandler('unit_test', 'system', 'users_test');
 };

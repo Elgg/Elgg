@@ -138,14 +138,6 @@ function elgg_remove_config($name) {
 }
 
 /**
- * @access private
- */
-function _elgg_config_test($hook, $type, $tests) {
-	$tests[] = Paths::elgg() . "engine/tests/ElggCoreConfigTest.php";
-	return $tests;
-}
-
-/**
  * Returns a configuration array of icon sizes
  *
  * @param string $entity_type    Entity type
@@ -161,5 +153,5 @@ function elgg_get_icon_sizes($entity_type = null, $entity_subtype = null, $type 
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$hooks->registerHandler('unit_test', 'system', '_elgg_config_test');
+
 };
