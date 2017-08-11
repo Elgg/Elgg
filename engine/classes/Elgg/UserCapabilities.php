@@ -227,7 +227,7 @@ class UserCapabilities {
 			return false;
 		}
 
-		$result = false;
+		$result = elgg_check_access_overrides($user->guid);
 
 		if ($user) {
 			// If the owner of annotation is the specified user, they can edit.
@@ -292,7 +292,7 @@ class UserCapabilities {
 			return false;
 		}
 		
-		$return = false;
+		$return = elgg_check_access_overrides($user_guid);
 		if ($entity) {
 			// If the user can edit the container, they can also write to it
 			if ($entity->canEdit($user_guid)) {

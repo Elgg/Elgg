@@ -432,25 +432,8 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
 }
 
 /**
- * Runs unit tests for \ElggComment
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- */
-function _elgg_comments_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . "engine/tests/ElggCommentTest.php";
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_comments_init');
-	$hooks->registerHandler('unit_test', 'system', '_elgg_comments_test');
 };

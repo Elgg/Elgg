@@ -326,26 +326,11 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
 }
 
 /**
- * Register annotation unit tests
- *
- * @param string $hook
- * @param string $type
- * @param array  $tests
- * @return array
- * @access private
- */
-function _elgg_annotations_test($hook, $type, $tests) {
-	$tests[] = Paths::project() . 'engine/tests/ElggCoreAnnotationAPITest.php';
-	return $tests;
-}
-
-/**
  * Initialize the annotation library
  * @access private
  */
 function _elgg_annotations_init() {
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', '_elgg_set_comment_url');
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_annotations_test');
 }
 
 /**

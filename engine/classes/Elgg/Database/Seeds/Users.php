@@ -44,6 +44,8 @@ class Users extends Seed {
 				}
 			}
 
+			$this->createIcon($user);
+
 			$exclude[] = $user->guid;
 
 			// Friend the user other members
@@ -58,7 +60,7 @@ class Users extends Seed {
 				$this->log("Created new friend collection for user $user->name [collection_id: $collection_id]");
 			}
 
-			$friends_limit = $this->faker->numberBetween(5, 10);
+			$friends_limit = $this->faker()->numberBetween(5, 10);
 
 			$friends_exclude = [$user->guid];
 			while ($count_friends($user) < $friends_limit) {
@@ -74,7 +76,7 @@ class Users extends Seed {
 
 				if ($user->addFriend($friend->guid, true)) {
 					$this->log("User $user->name [guid: $user->guid] friended user $friend->name [guid: $friend->guid]");
-					if ($this->faker->boolean() && $collection_id) {
+					if ($this->faker()->boolean() && $collection_id) {
 						add_user_to_access_collection($friend->guid, $collection_id);
 					}
 				}

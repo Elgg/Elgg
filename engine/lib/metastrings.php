@@ -682,23 +682,8 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 }
 
 /**
- * Metastring unit tests
- *
- * @param string $hook  unit_test
- * @param string $type  system
- * @param array  $value Array of other tests
- *
- * @return array
- * @access private
- */
-function _elgg_metastrings_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetastringsTest.php';
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$hooks->registerHandler('unit_test', 'system', '_elgg_metastrings_test');
+
 };

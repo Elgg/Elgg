@@ -256,6 +256,7 @@ class EntityTable {
 		}
 	
 		$class_name = $this->subtype_table->getClassFromId($row->subtype);
+
 		if ($class_name && !class_exists($class_name)) {
 			$this->logger->error("Class '$class_name' was not found, missing plugin?");
 			$class_name = '';

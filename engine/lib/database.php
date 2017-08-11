@@ -262,21 +262,6 @@ function _elgg_db_run_delayed_queries() {
 }
 
 /**
- * Runs unit tests for the database
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  Array of tests
- *
- * @return array
- * @access private
- */
-function _elgg_db_test($hook, $type, $value) {
-	$value[] = elgg_get_engine_path() . '/tests/ElggDataFunctionsTest.php';
-	return $value;
-}
-
-/**
  * Registers shutdown functions for database profiling and delayed queries.
  *
  * @access private
@@ -284,7 +269,6 @@ function _elgg_db_test($hook, $type, $value) {
 function _elgg_db_init() {
 	register_shutdown_function('_elgg_db_run_delayed_queries');
 	register_shutdown_function('_elgg_db_log_profiling_data');
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_db_test');
 }
 
 /**

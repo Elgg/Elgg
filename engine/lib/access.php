@@ -536,79 +536,10 @@ function access_init() {
 }
 
 /**
- * Overrides the access system if appropriate.
- *
- * Allows admin users and calls after {@link elgg_set_ignore_access} to
- * bypass the access system.
- *
- * Registered for the 'permissions_check', 'all' and the
- * 'container_permissions_check', 'all' plugin hooks.
- *
- * Returns true to override the access system or null if no change is needed.
- *
- * @internal comment upgrade depends on this
- *
- * @param string $hook
- * @param string $type
- * @param bool $value
- * @param array $params
- * @return true|null
- * @access private
- */
-function elgg_override_permissions($hook, $type, $value, $params) {
-	$user = elgg_extract('user', $params);
-	if ($user) {
-		$user_guid = $user->guid;
-	} else {
-		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
-	}
-
-	// don't do this so ignore access still works with no one logged in
-	//if (!$user instanceof \ElggUser) {
-	//	return false;
-	//}
-	// check for admin
-	if ($user_guid && elgg_is_admin_user($user_guid)) {
-		return true;
-	}
-
-	// check access overrides
-	if (elgg_check_access_overrides($user_guid)) {
-		return true;
-	}
-
-	// consult other hooks
-	return null;
-}
-
-/**
- * Runs unit tests for the access library
- *
- * @param string $hook
- * @param string $type
- * @param array $value
- * @param array $params
- * @return array
- *
- * @access private
- */
-function access_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAccessCollectionsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAccessSQLTest.php';
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	// Tell the access functions the system has booted, plugins are loaded,
 	// and the user is logged in so it can start caching
 	$events->registerHandler('ready', 'system', 'access_init');
-
-	// For overrided permissions
-	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions', 600);
-	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions', 600);
-
-	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };

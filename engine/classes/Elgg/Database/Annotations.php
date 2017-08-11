@@ -95,10 +95,11 @@ class Annotations {
 	
 		$access_id = (int) $access_id;
 		
-		// @todo we don't check that the entity is loaded which means the user may
-		// not have access to the entity
 		$entity = get_entity($entity_guid);
-	
+		if (!$entity) {
+			return false;
+		}
+
 		if ($this->events->trigger('annotate', $entity->type, $entity)) {
 			$sql = "INSERT INTO {$this->db->prefix}annotations
 				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)

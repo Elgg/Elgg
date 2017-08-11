@@ -83,7 +83,7 @@ matrix:
        - composer database:seeder:seed
       script:
        - php -f ./.scripts/is_memcached_enabled.php
-       - ./vendor/bin/phpunit --configuration ./.scripts/travis/phpunit-memcached.xml
+       - ./vendor/bin/phpunit
        - php ./engine/tests/suite.php --config ./.scripts/travis/elgg-config/simpletest_memcached.php
       after_script:
        - composer database:seeder:unseed
@@ -138,7 +138,7 @@ matrix:
         - composer install --prefer-dist
         - php -f ./.scripts/travis/upgrade.php
       script:
-        #- ./vendor/bin/phpunit  # not necessary
+        - ./vendor/bin/phpunit
         - php -f ./engine/tests/suite.php
         - php -S localhost:8888 index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
@@ -153,10 +153,15 @@ before_install:
   - phpenv config-rm xdebug.ini
   - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 
-install: composer travis:install-with-mysql
+install:
+  - composer travis:install-with-mysql
 
 script:
-  - ./vendor/bin/phpunit
+  - php -f ./.scripts/travis/enable_plugins.php
+  # first let's ensure that test suites pass in isolation
+  # e2e tests will run all suites at once
+  - ./vendor/bin/phpunit --testsuite unit
+  - ./vendor/bin/phpunit --testsuite integration
   - php -f ./engine/tests/suite.php
 
 notifications:
