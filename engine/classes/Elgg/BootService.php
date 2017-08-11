@@ -28,6 +28,13 @@ class BootService {
 	const DEFAULT_BOOT_CACHE_TTL = 0;
 
 	/**
+	 * Has the cache already been invalidated this request? Avoids thrashing
+	 *
+	 * @var bool
+	 */
+	private $was_cleared = false;
+
+	/**
 	 * Boots the engine
 	 *
 	 * @param ServiceProvider $services Services
@@ -147,11 +154,9 @@ class BootService {
 	 * @return void
 	 */
 	public function invalidateCache() {
-		// this gets called a lot on plugins page, avoid thrashing cache
-		static $cleared = false;
-		if (!$cleared) {
+		if (!$this->was_cleared) {
 			$this->getStashItem(_elgg_config())->clear();
-			$cleared = true;
+			$this->was_cleared = true;
 		}
 	}
 

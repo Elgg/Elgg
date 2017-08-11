@@ -47,9 +47,6 @@ class CacheHandler {
 		"text/xml",
 	];
 
-	/** @var Application */
-	private $application;
-
 	/** @var Config */
 	private $config;
 
@@ -59,13 +56,11 @@ class CacheHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param Application $app                 Elgg Application
-	 * @param Config      $config              Elgg configuration
-	 * @param Request     $request             HTTP request
-	 * @param bool        $simplecache_enabled Is the simplecache enabled?
+	 * @param Config  $config              Elgg configuration
+	 * @param Request $request             HTTP request
+	 * @param bool    $simplecache_enabled Is the simplecache enabled?
 	 */
-	public function __construct(Application $app, Config $config, Request $request, $simplecache_enabled) {
-		$this->application = $app;
+	public function __construct(Config $config, Request $request, $simplecache_enabled) {
 		$this->config = $config;
 		$this->request = $request;
 		$this->simplecache_enabled = $simplecache_enabled;
@@ -74,10 +69,11 @@ class CacheHandler {
 	/**
 	 * Handle a request for a cached view
 	 *
-	 * @param array $path URL path
+	 * @param Request     $request Elgg request
+	 * @param Application $app     Elgg application
 	 * @return Response (unprepared)
 	 */
-	public function handleRequest(Request $request) {
+	public function handleRequest(Request $request, Application $app) {
 		$config = $this->config;
 
 		$parsed = $this->parsePath($request->getElggPath());
@@ -102,7 +98,7 @@ class CacheHandler {
 		}
 
 		if (!$this->simplecache_enabled) {
-			$this->application->bootCore();
+			$app->bootCore();
 			header_remove('Cache-Control');
 			header_remove('Pragma');
 			header_remove('Expires');
@@ -138,7 +134,7 @@ class CacheHandler {
 		}
 
 		// the hard way
-		$this->application->bootCore();
+		$app->bootCore();
 		header_remove('Cache-Control');
 		header_remove('Pragma');
 		header_remove('Expires');

@@ -33,13 +33,10 @@ class Application {
 
 	/**
 	 * @var ServiceProvider
+	 *
+	 * @internal DO NOT USE
 	 */
-	private $services;
-
-	/**
-	 * @var bool
-	 */
-	private static $core_loaded = false;
+	public $_services;
 
 	/**
 	 * @var bool
@@ -78,8 +75,7 @@ class Application {
 	 * @throws ConfigurationException
 	 */
 	public function __construct(ServiceProvider $services) {
-		$this->services = $services;
-		$services->setValue('app', $this);
+		$this->_services = $services;
 
 		$this->initConfig();
 	}
@@ -91,7 +87,7 @@ class Application {
 	 * @throws ConfigurationException
 	 */
 	private function initConfig() {
-		$config = $this->services->config;
+		$config = $this->_services->config;
 
 		if ($config->elgg_config_locks === null) {
 			$config->elgg_config_locks = true;
@@ -108,7 +104,7 @@ class Application {
 			};
 		}
 
-		$this->services->timer->begin([]);
+		$this->_services->timer->begin([]);
 
 		// Until DB loads, let's log problems
 		if ($config->debug === null) {
@@ -134,7 +130,7 @@ class Application {
 		if ($config->wwwroot) {
 			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
 		} else {
-			$config->wwwroot = $this->services->request->sniffElggUrl();
+			$config->wwwroot = $this->_services->request->sniffElggUrl();
 		}
 		$lock('wwwroot');
 
@@ -161,13 +157,13 @@ class Application {
 		}
 
 		// move sensitive credentials into isolated services
-		$this->services->dbConfig;
+		$this->_services->dbConfig;
 
 		// If the site secret is in the settings file, let's move it to that component
 		// right away to keep this value out of config.
 		$secret = SiteSecret::fromConfig($config);
 		if ($secret) {
-			$this->services->setValue('siteSecret', $secret);
+			$this->_services->setValue('siteSecret', $secret);
 			$config->elgg_config_set_secret = true;
 		}
 
@@ -182,7 +178,7 @@ class Application {
 	 * @return \Elgg\Database\DbConfig
 	 */
 	public function getDbConfig() {
-		return $this->services->dbConfig;
+		return $this->_services->dbConfig;
 	}
 
 	/**
@@ -197,7 +193,7 @@ class Application {
 	 * @throws \InstallationException
 	 */
 	public function loadCore() {
-		if (self::$core_loaded) {
+		if (self::isCoreLoaded()) {
 			return;
 		}
 
@@ -218,21 +214,13 @@ class Application {
 		// store instance to be returned by elgg()
 		self::$_instance = $this;
 
-		// allow global services access. :(
-		_elgg_services($this->services);
-
-		// setup logger and inject into config
-		//$this->services->config->setLogger($this->services->logger);
-
-		$hooks = $this->services->hooks;
+		$hooks = $this->_services->hooks;
 		$events = $hooks->getEvents();
 
 		// run setups
 		foreach ($setups as $func) {
 			$func($events, $hooks);
 		}
-
-		self::$core_loaded = true;
 	}
 
 	/**
@@ -244,6 +232,15 @@ class Application {
 		$app = self::factory();
 		$app->bootCore();
 		return $app;
+	}
+
+	/**
+	 * Are Elgg's global functions loaded?
+	 *
+	 * @return bool
+	 */
+	public static function isCoreLoaded() {
+		return function_exists('elgg');
 	}
 
 	/**
@@ -260,7 +257,7 @@ class Application {
 	 * @return void
 	 */
 	public function bootCore() {
-		$config = $this->services->config;
+		$config = $this->_services->config;
 
 		if ($this->isTestingApplication()) {
 			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
@@ -273,11 +270,11 @@ class Application {
 		// in case not loaded already
 		$this->loadCore();
 
-		if (!$this->services->db) {
+		if (!$this->_services->db) {
 			// no database boot!
 			elgg_views_boot();
-			$this->services->session->start();
-			$this->services->translator->loadTranslations();
+			$this->_services->session->start();
+			$this->_services->translator->loadTranslations();
 
 			actions_init();
 			_elgg_init();
@@ -290,12 +287,12 @@ class Application {
 		}
 
 		// Connect to database, load language files, load configuration, init session
-		$this->services->boot->boot($this->services);
+		$this->_services->boot->boot($this->_services);
 
 		elgg_views_boot();
 
 		// Load the plugins that are active
-		$this->services->plugins->load();
+		$this->_services->plugins->load();
 
 		if (Paths::project() != Paths::elgg()) {
 			// Elgg is installed as a composer dep, so try to treat the root directory
@@ -306,16 +303,16 @@ class Application {
 				if (is_file($viewsFile)) {
 					$viewsSpec = Includer::includeFile($viewsFile);
 					if (is_array($viewsSpec)) {
-						$this->services->views->mergeViewsSpec($viewsSpec);
+						$this->_services->views->mergeViewsSpec($viewsSpec);
 					}
 				}
 
 				// find views for the custom plugin (not Elgg core)
-				$this->services->views->registerPluginViews(Paths::project());
+				$this->_services->views->registerPluginViews(Paths::project());
 			}
 
 			if (!$config->i18n_loaded_from_cache) {
-				$this->services->translator->registerPluginTranslations(Paths::project());
+				$this->_services->translator->registerPluginTranslations(Paths::project());
 			}
 
 			// This is root directory start.php
@@ -326,11 +323,11 @@ class Application {
 		}
 
 		// after plugins are started we know which viewtypes are populated
-		$this->services->views->clampViewtypeToPopulatedViews();
+		$this->_services->views->clampViewtypeToPopulatedViews();
 
 		$this->allowPathRewrite();
 
-		$events = $this->services->hooks->getEvents();
+		$events = $this->_services->hooks->getEvents();
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');
@@ -355,7 +352,7 @@ class Application {
 	 * @return \Elgg\Application\Database
 	 */
 	public function getDb() {
-		return $this->services->publicDb;
+		return $this->_services->publicDb;
 	}
 
 	/**
@@ -367,7 +364,7 @@ class Application {
 	 */
 	public function __get($name) {
 		if (isset(self::$public_services[$name])) {
-			return $this->services->{$name};
+			return $this->_services->{$name};
 		}
 		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
 	}
@@ -391,9 +388,10 @@ class Application {
 			'settings_path' => null,
 			'handle_exceptions' => true,
 			'handle_shutdown' => true,
-			'overwrite_global_config' => true,
+			'set_global_config' => true,
 			'set_start_time' => true,
 			'request' => null,
+			'set_global_instance' => true,
 		];
 		$spec = array_merge($defaults, $spec);
 
@@ -423,11 +421,11 @@ class Application {
 			}
 		}
 
-		self::$_instance = new self($spec['service_provider']);
+		$app = new self($spec['service_provider']);
 
 		if ($spec['handle_exceptions']) {
-			set_error_handler([self::$_instance, 'handleErrors']);
-			set_exception_handler([self::$_instance, 'handleExceptions']);
+			set_error_handler([$app, 'handleErrors']);
+			set_exception_handler([$app, 'handleExceptions']);
 		}
 
 		if ($spec['handle_shutdown']) {
@@ -441,14 +439,18 @@ class Application {
 			});
 		}
 
-		if ($spec['overwrite_global_config']) {
+		if ($spec['set_global_config']) {
 			global $CONFIG;
 
 			// this will be buggy be at least PHP will log failures
 			$CONFIG = $spec['service_provider']->config;
 		}
 
-		return self::$_instance;
+		if ($spec['set_global_instance']) {
+			self::$_instance = $app;
+		}
+
+		return $app;
 	}
 
 	/**
@@ -474,8 +476,8 @@ class Application {
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
 	public function run() {
-		$config = $this->services->config;
-		$request = $this->services->request;
+		$config = $this->_services->config;
+		$request = $this->_services->request;
 
 		if ($request->isCliServer()) {
 			if ($request->isCliServable(Paths::project())) {
@@ -489,12 +491,12 @@ class Application {
 		}
 
 		if (0 === strpos($request->getElggPath(), '/cache/')) {
-			$this->services->cacheHandler->handleRequest($request)->prepare($request)->send();
+			$this->_services->cacheHandler->handleRequest($request, $this)->prepare($request)->send();
 			return true;
 		}
 
 		if (0 === strpos($request->getElggPath(), '/serve-file/')) {
-			$this->services->serveFileHandler->getResponse($request)->send();
+			$this->_services->serveFileHandler->getResponse($request)->send();
 			return true;
 		}
 
@@ -505,9 +507,9 @@ class Application {
 		header("Content-Type: text/html;charset=utf-8", true);
 
 		// re-fetch new request from services in case it was replaced by route:rewrite
-		$request = $this->services->request;
+		$request = $this->_services->request;
 
-		if (!$this->services->router->route($request)) {
+		if (!$this->_services->router->route($request)) {
 			forward('', '404');
 		}
 	}
@@ -712,14 +714,14 @@ class Application {
 	 * @return void
 	 */
 	private function allowPathRewrite() {
-		$request = $this->services->request;
-		$new = $this->services->router->allowRewrite($request);
+		$request = $this->_services->request;
+		$new = $this->_services->router->allowRewrite($request);
 		if ($new === $request) {
 			return;
 		}
 
-		$this->services->setValue('request', $new);
-		$this->services->context->initialize($new);
+		$this->_services->setValue('request', $new);
+		$this->_services->context->initialize($new);
 	}
 
 	/**
@@ -772,7 +774,7 @@ class Application {
 			forward('/install.php');
 		}
 
-		if (!self::$core_loaded) {
+		if (!self::isCoreLoaded()) {
 			http_response_code(500);
 			echo "Exception loading Elgg core. Check log at time $timestamp";
 			return;
@@ -781,7 +783,7 @@ class Application {
 		try {
 			// allow custom scripts to trigger on exception
 			// value in settings.php should be a system path to a file to include
-			$exception_include = $this->services->config->exception_include;
+			$exception_include = $this->_services->config->exception_include;
 
 			if ($exception_include && is_file($exception_include)) {
 				ob_start();
@@ -857,7 +859,7 @@ class Application {
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 		$log = function ($message, $level) {
-			if (self::$core_loaded) {
+			if (self::isCoreLoaded()) {
 				return elgg_log($message, $level);
 			}
 
@@ -869,7 +871,7 @@ class Application {
 				if (!$log("PHP: $error", 'ERROR')) {
 					error_log("PHP ERROR: $error");
 				}
-				if (self::$core_loaded) {
+				if (self::isCoreLoaded()) {
 					register_error("ERROR: $error");
 				}
 

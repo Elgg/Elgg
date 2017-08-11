@@ -10,16 +10,11 @@
 /**
  * Get the global service provider
  *
- * @param \Elgg\Di\ServiceProvider $services Elgg service provider. This must be set by the application.
  * @return \Elgg\Di\ServiceProvider
  * @access private
  */
-function _elgg_services(\Elgg\Di\ServiceProvider $services = null) {
-	static $inst;
-	if ($services !== null) {
-		$inst = $services;
-	}
-	return $inst;
+function _elgg_services() {
+	return elgg()->_services;
 }
 
 /**

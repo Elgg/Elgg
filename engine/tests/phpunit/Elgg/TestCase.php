@@ -84,7 +84,6 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 		// loadCore bails on repeated calls, so we need to manually inject this to make
 		// sure it happens before each test.
 		$app->loadCore();
-		_elgg_services($sp);
 
 		// Invalidate memcache
 		_elgg_get_memcache('new_entity_cache')->clear();

@@ -129,7 +129,7 @@ class ElggInstaller {
 			// allows settings.php to be loaded, which might try to write to global $CONFIG
 			// which is only a problem due to the config values that deep-write to arrays,
 			// like cookies.
-			'overwrite_global_config' => false,
+			'set_global_config' => false,
 		]);
 		$app->loadCore();
 		$this->app = $app;
