@@ -18,7 +18,7 @@ class ElggCoreSiteTest extends \Elgg\LegacyIntegrationTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->site = new \ElggSiteUnitTest();
+		$this->site = new \ElggSiteWithExposableAttributes();
 	}
 
 	/**
@@ -59,7 +59,7 @@ class ElggCoreSiteTest extends \Elgg\LegacyIntegrationTestCase {
 	}
 }
 
-class ElggSiteTest extends \ElggSite {
+class ElggSiteWithExposableAttributes extends \ElggSite {
 	public function expose_attributes() {
 		return $this->attributes;
 	}
