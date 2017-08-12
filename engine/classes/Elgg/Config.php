@@ -204,7 +204,13 @@ class Config {
 
 		// legacy loading. If $CONFIG doesn't exist, remove it after the
 		// settings file is read.
-		$global_is_set = isset($GLOBALS['CONFIG']);
+		if (isset($GLOBALS['CONFIG'])) {
+			// don't overwrite it
+			$global = $GLOBALS['CONFIG'];
+			unset($GLOBALS['CONFIG']);
+		} else {
+			$global = null;
+		}
 
 		Includer::requireFile($path);
 
@@ -234,7 +240,10 @@ class Config {
 
 		$config = new self(get_object_vars($GLOBALS['CONFIG']));
 
-		if (!$global_is_set) {
+		if ($global !== null) {
+			// restore
+			$GLOBALS['CONFIG'] = $global;
+		} else {
 			unset($GLOBALS['CONFIG']);
 		}
 
