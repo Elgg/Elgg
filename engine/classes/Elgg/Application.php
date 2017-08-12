@@ -67,6 +67,29 @@ class Application {
 	public static $_instance;
 
 	/**
+	 * Get the global Application instance. If not set, it's auto-created and wired to $CONFIG.
+	 *
+	 * @return Application|null
+	 */
+	public static function getInstance() {
+		if (self::$_instance === null) {
+			self::$_instance = self::factory();
+			self::setGlobalConfig(self::$_instance);
+		}
+		return self::$_instance;
+	}
+
+	/**
+	 * Set the global Application instance
+	 *
+	 * @param Application $application Global application
+	 * @return void
+	 */
+	public static function setInstance(Application $application) {
+		self::$_instance = $application;
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * Upon construction, no actions are taken to load or boot Elgg.
@@ -211,9 +234,6 @@ class Application {
 			}
 		}
 
-		// store instance to be returned by elgg()
-		self::$_instance = $this;
-
 		$hooks = $this->_services->hooks;
 		$events = $hooks->getEvents();
 
@@ -229,7 +249,7 @@ class Application {
 	 * @return self
 	 */
 	public static function start() {
-		$app = self::factory();
+		$app = self::getInstance();
 		$app->bootCore();
 		return $app;
 	}
@@ -370,28 +390,37 @@ class Application {
 	}
 
 	/**
-	 * Creates a new, trivial instance of Elgg\Application and set it as the singleton instance.
-	 * If the singleton is already set, it's returned.
+	 * Make the global $CONFIG a reference to this application's config service
+	 *
+	 * @param Application $application The Application
+	 * @return void
+	 */
+	public static function setGlobalConfig(Application $application) {
+		global $CONFIG;
+		$CONFIG = $application->_services->config;
+	}
+
+	/**
+	 * Create a new application.
+	 *
+	 * @warning You generally want to use getInstance().
+	 *
+	 * For normal operation, you must use setInstance() and optionally setGlobalConfig() to wire the
+	 * application to Elgg's global API.
 	 *
 	 * @param array $spec Specification for initial call.
 	 * @return self
 	 * @throws ConfigurationException
 	 */
 	public static function factory(array $spec = []) {
-		if (self::$_instance !== null) {
-			return self::$_instance;
-		}
-
 		$defaults = [
-			'service_provider' => null,
 			'config' => null,
-			'settings_path' => null,
 			'handle_exceptions' => true,
 			'handle_shutdown' => true,
-			'set_global_config' => true,
-			'set_start_time' => true,
 			'request' => null,
-			'set_global_instance' => true,
+			'service_provider' => null,
+			'set_start_time' => true,
+			'settings_path' => null,
 		];
 		$spec = array_merge($defaults, $spec);
 
@@ -439,17 +468,6 @@ class Application {
 			});
 		}
 
-		if ($spec['set_global_config']) {
-			global $CONFIG;
-
-			// this will be buggy be at least PHP will log failures
-			$CONFIG = $spec['service_provider']->config;
-		}
-
-		if ($spec['set_global_instance']) {
-			self::$_instance = $app;
-		}
-
 		return $app;
 	}
 
@@ -467,7 +485,11 @@ class Application {
 			return true;
 		}
 
-		return self::factory(['request' => $req])->run();
+		$app = self::factory(['request' => $req]);
+		self::setGlobalConfig($app);
+		self::setInstance($app);
+
+		return $app->run();
 	}
 
 	/**
@@ -930,7 +952,6 @@ class Application {
 			'actions.php',
 			'admin.php',
 			'annotations.php',
-			'autoloader.php',
 			'cache.php',
 			'comments.php',
 			'configuration.php',

@@ -25,7 +25,7 @@ if (!defined('PHPUNIT_ELGG_TESTING_APPLICATION') || function_exists('_elgg_testi
  */
 function _elgg_testing_application(\Elgg\Application $app = null) {
 	if ($app) {
-		\Elgg\Application::$_instance = $app;
+		\Elgg\Application::setInstance($app);
 	}
 	return elgg();
 }

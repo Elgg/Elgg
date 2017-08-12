@@ -1346,6 +1346,18 @@ function is_not_null($string) {
 }
 
 /**
+ * Get the global service provider
+ *
+ * @return \Elgg\Di\ServiceProvider
+ * @access private
+ */
+function _elgg_services() {
+	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
+	// reduces false positives in xdebug's infinite recursion protection.
+	return Elgg\Application::$_instance->_services;
+}
+
+/**
  * Normalise the singular keys in an options array to plural keys.
  *
  * Used in elgg_get_entities*() functions to support shortcutting plural
@@ -1791,6 +1803,15 @@ function _elgg_init() {
 }
 
 /**
+ * Delete the autoload system cache
+ *
+ * @access private
+ */
+function _elgg_delete_autoload_cache() {
+	_elgg_services()->autoloadManager->deleteCache();
+}
+
+/**
  * Adds unit tests for the general API.
  *
  * @param string $hook   unit_test
@@ -1822,4 +1843,6 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
 
 	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
+
+	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache', 600);
 };

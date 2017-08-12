@@ -125,12 +125,14 @@ class ElggInstaller {
 			'service_provider' => $this->services,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
-
-			// allows settings.php to be loaded, which might try to write to global $CONFIG
-			// which is only a problem due to the config values that deep-write to arrays,
-			// like cookies.
-			'set_global_config' => false,
 		]);
+
+		// Don't set global $CONFIG, because loading the settings file may require it to write to
+		// it, and it can have array sets (e.g. cookie config) that fail when using a proxy for
+		// the config service.
+		//$app->setGlobalConfig();
+
+		Application::setInstance($app);
 		$app->loadCore();
 		$this->app = $app;
 

@@ -138,6 +138,16 @@ function elgg_remove_config($name) {
 }
 
 /**
+ * Get the Elgg config service
+ *
+ * @return \Elgg\Config
+ * @access private
+ */
+function _elgg_config() {
+	return \Elgg\Application::$_instance->_services->config;
+}
+
+/**
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {

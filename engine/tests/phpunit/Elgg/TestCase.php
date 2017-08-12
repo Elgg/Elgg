@@ -79,7 +79,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
 
 		$app = new Application($sp);
 		Application::setTestingApplication(true);
-		Application::$_instance = $app;
+		Application::setInstance($app);
 
 		// loadCore bails on repeated calls, so we need to manually inject this to make
 		// sure it happens before each test.
