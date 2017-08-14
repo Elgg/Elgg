@@ -9,12 +9,15 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	/** @var \ElggUser */
 	protected $user;
-	
+
+	protected $backup_logged_in_user;
+
 	/**
-	 * Called before each test object.
+	 * Called before each test method.
 	 */
-	public function __construct() {
-		parent::__construct();
+	public function setUp() {
+		// Replace current hook service with new instance for each test
+		_elgg_services()->hooks->backup();
 
 		$this->user = new \ElggUser();
 		$this->user->username = 'fake_user_' . rand();
@@ -25,14 +28,9 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$this->user->owner_guid = 0;
 		$this->user->container_guid = 0;
 		$this->user->save();
-	}
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
-		// Replace current hook service with new instance for each test
-		_elgg_services()->hooks->backup();
+		$this->backup_logged_in_user = _elgg_services()->session->getLoggedInUser();
+		_elgg_services()->session->setLoggedInUser($this->user);
 	}
 
 	/**
@@ -40,34 +38,31 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	 */
 	public function tearDown() {
 		_elgg_services()->hooks->restore();
-	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
+		_elgg_services()->session->setLoggedInUser($this->backup_logged_in_user);
+
 		$this->user->delete();
-
-		// all __destruct() code should go above here
-		parent::__destruct();
 	}
 
-	public function testAdminAccess() {
-		// we know an admin is logged in when running the tests
-		$sql = _elgg_get_access_where_sql();
+	public function testCanBuildAccessSqlClausesWithIgnoredAccess() {
+		$sql = _elgg_get_access_where_sql([
+			'ignore_access' => true,
+		]);
 		$ans = "((1 = 1) AND (e.enabled = 'yes'))";
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
-	public function testTurningEnabledOff() {
-		$sql = _elgg_get_access_where_sql(array('use_enabled_clause' => false));
+	public function testCanBuildAccessSqlClausesWithIgnoredAccessWithoutDisabledEntities() {
+		$sql = _elgg_get_access_where_sql([
+			'use_enabled_clause' => false,
+			'ignore_access' => true,
+		]);
 		$ans = "((1 = 1))";
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");		
 	}
 
-	public function testNonAdminUser() {
-		$sql = _elgg_get_access_where_sql(array('user_guid' => $this->user->guid));
-
+	public function testCanBuildAccessSqlForLoggedInUser() {
+		$sql = _elgg_get_access_where_sql();
 		$friends_clause = $this->getFriendsClause($this->user->guid, 'e');
 		$owner_clause = $this->getOwnerClause($this->user->guid, 'e');
 		$access_clause = $this->getLoggedInAccessListClause('e');
@@ -76,9 +71,8 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
-	public function testCustomTableAlias() {
+	public function testCanBuildAccessSqlWithCustomTableAlias() {
 		$sql = _elgg_get_access_where_sql(array(
-			'user_guid' => $this->user->guid,
 			'table_alias' => 'foo',
 		));
 
@@ -103,9 +97,8 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
-	public function testCustomOwnerGuidColumn() {
+	public function testCanBuildAccessSqlWithCustomGuidColumn() {
 		$sql = _elgg_get_access_where_sql(array(
-			'user_guid' => $this->user->guid,
 			'owner_guid_column' => 'unit_test',
 		));
 
@@ -117,14 +110,10 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
-	public function testLoggedOutUser() {
-		$sp = _elgg_services();
-		$original_session = $sp->session;
-		$original_access = $sp->accessCollections;
-		$sp->setValue('session', \ElggSession::getMock());
-		$sp->setValue('accessCollections', new \Elgg\Database\AccessCollections(
-			$sp->config, $sp->db, $sp->entityTable, $sp->accessCache, $sp->hooks, $sp->session, $sp->translator
-		));
+	public function testCanBuildAccessSqlForLoggedOutUser() {
+
+		$user = _elgg_services()->session->getLoggedInUser();
+		_elgg_services()->session->removeLoggedInUser();
 
 		$sql = _elgg_get_access_where_sql();
 		$access_clause = $this->getLoggedOutAccessListClause('e');
@@ -132,13 +121,14 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 
-		$sp->setValue('session', $original_session);
-		$sp->setValue('accessCollections', $original_access);
+		_elgg_services()->session->setLoggedInUser($user);
 	}
 
 	public function testAccessPluginHookRemoveEnabled() {
 		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'removeEnabledCallback'));
-		$sql = _elgg_get_access_where_sql();
+		$sql = _elgg_get_access_where_sql([
+			'ignore_access' => true,
+		]);
 		$ans = "((1 = 1))";
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
@@ -150,7 +140,9 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	public function testAccessPluginHookRemoveOrs() {
 		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'removeOrsCallback'));
-		$sql = _elgg_get_access_where_sql();
+		$sql = _elgg_get_access_where_sql([
+			'ignore_access' => true,
+		]);
 		$ans = "((e.enabled = 'yes'))";
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
@@ -162,7 +154,9 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	
 	public function testAccessPluginHookAddOr() {
 		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'addOrCallback'));
-		$sql = _elgg_get_access_where_sql();
+		$sql = _elgg_get_access_where_sql([
+			'ignore_access' => true,
+		]);
 		$ans = "((1 = 1 OR 57 > 32) AND (e.enabled = 'yes'))";
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
@@ -174,52 +168,82 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	public function testAccessPluginHookAddAnd() {
 		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'addAndCallback'));
-		$sql = _elgg_get_access_where_sql();
+		$sql = _elgg_get_access_where_sql([
+			'ignore_access' => true,
+		]);
 		$ans = "((1 = 1) AND (e.enabled = 'yes' AND 57 > 32))";
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
 	public function testHasAccessToEntity() {
+
 		$session = elgg_get_session();
-		$test_user = $session->getLoggedInUser();
+
+		$viewer = $session->getLoggedInUser();
+
+		$ia = elgg_set_ignore_access(true);
+
+		$owner = new ElggUser();
+		$owner->access_id = ACCESS_PUBLIC;
+		$owner->save();
 
 		$object = new ElggObject();
+		$object->owner_guid = $owner->guid;
 		$object->access_id = ACCESS_PRIVATE;
 		$object->save();
 
-		$session->removeLoggedInUser();
-		$this->assertFalse(has_access_to_entity($object));
-		$this->assertFalse(has_access_to_entity($object, $this->user));
-		$session->setLoggedInUser($test_user);
+		elgg_set_ignore_access($ia);
 
+		$session->removeLoggedInUser();
+
+		$this->assertFalse(has_access_to_entity($object));
+		$this->assertFalse(has_access_to_entity($object, $viewer));
+		$this->assertTrue(has_access_to_entity($object, $owner));
+
+		$ia = elgg_set_ignore_access(true);
 		$object->access_id = ACCESS_PUBLIC;
 		$object->save();
+		elgg_set_ignore_access($ia);
 
-		$session->removeLoggedInUser();
 		$this->assertTrue(has_access_to_entity($object));
-		$this->assertTrue(has_access_to_entity($object, $this->user));
-		$session->setLoggedInUser($test_user);
+		$this->assertTrue(has_access_to_entity($object, $viewer));
+		$this->assertTrue(has_access_to_entity($object, $owner));
 
+		$ia = elgg_set_ignore_access(true);
 		$object->access_id = ACCESS_LOGGED_IN;
 		$object->save();
+		elgg_set_ignore_access($ia);
 
-		$session->removeLoggedInUser();
 		$this->assertFalse(has_access_to_entity($object));
-		$this->assertTrue(has_access_to_entity($object, $this->user));
-		$session->setLoggedInUser($test_user);
+		// even though user is logged out, existing users are presumed to have access to an entity
+		$this->assertTrue(has_access_to_entity($object, $viewer));
+		$this->assertTrue(has_access_to_entity($object, $owner));
 
-		$test_user->addFriend($this->user->guid);
+		$session->setLoggedInUser($viewer);
+		$this->assertTrue(has_access_to_entity($object));
+		$this->assertTrue(has_access_to_entity($object, $viewer));
+		$this->assertTrue(has_access_to_entity($object, $owner));
+		$session->removeLoggedInUser();
 
+		$ia = elgg_set_ignore_access(true);
+		$owner->addFriend($viewer->guid);
 		$object->access_id = ACCESS_FRIENDS;
 		$object->save();
+		elgg_set_ignore_access($ia);
 
-		$session->removeLoggedInUser();
 		$this->assertFalse(has_access_to_entity($object));
-		$this->assertTrue(has_access_to_entity($object, $this->user));
-		$session->setLoggedInUser($test_user);
+		$this->assertTrue(has_access_to_entity($object, $viewer));
+		$this->assertTrue(has_access_to_entity($object, $owner));
 
-		$test_user->removeFriend($this->user->guid);
+		$session->setLoggedInUser($viewer);
+		$this->assertTrue(has_access_to_entity($object));
+		$this->assertTrue(has_access_to_entity($object, $viewer));
+		$this->assertTrue(has_access_to_entity($object, $owner));
+
+		$ia = elgg_set_ignore_access(true);
+		$owner->delete();
 		$object->delete();
+		elgg_set_ignore_access($ia);
 	}
 
 	public function addAndCallback($hook, $type, $clauses, $params) {

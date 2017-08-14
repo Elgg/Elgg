@@ -152,6 +152,7 @@ class Plugins {
 	
 		$physical_plugins = $this->getDirsInDir($mod_dir);
 		if (!$physical_plugins) {
+			elgg_set_ignore_access($old_ia);
 			return false;
 		}
 	

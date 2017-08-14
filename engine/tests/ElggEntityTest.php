@@ -390,14 +390,14 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 		$this->assertTrue($this->entity->save());
 
+		$user = new ElggUser();
+		$user->save();
+		$old_user = $this->replaceSession($user);
+
 		// even owner can't bypass permissions
 		elgg_register_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getFalse'], 999);
 		$this->assertFalse($this->entity->save());
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getFalse']);
-
-		$user = new ElggUser();
-		$user->save();
-		$old_user = $this->replaceSession($user);
 
 		$this->assertFalse($this->entity->save());
 

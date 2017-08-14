@@ -409,10 +409,12 @@ abstract class ElggEntity extends \ElggData implements
 				// need to remove access restrictions right now to delete
 				// because this is the expected behavior
 				$ia = elgg_set_ignore_access(true);
-				if (false === elgg_delete_metadata($options)) {
+				$delete_result = elgg_delete_metadata($options);
+				elgg_set_ignore_access($ia);
+
+				if (false === $delete_result) {
 					return false;
 				}
-				elgg_set_ignore_access($ia);
 			}
 
 			$owner_guid = $owner_guid ? (int) $owner_guid : $this->owner_guid;
@@ -1341,7 +1343,7 @@ abstract class ElggEntity extends \ElggData implements
 
 			// If different owner than logged in, verify can write to container.
 
-			if ($user_guid != $owner_guid && !$owner->canWriteToContainer(0, $type, $subtype)) {
+			if ($user_guid != $owner_guid && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
 				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype) with owner"
 					. " $owner_guid, but the user wasn't permitted to write to the owner's container.");
 				return false;
@@ -1357,7 +1359,7 @@ abstract class ElggEntity extends \ElggData implements
 				return false;
 			}
 
-			if (!$container->canWriteToContainer(0, $type, $subtype)) {
+			if (!$container->canWriteToContainer($user_guid, $type, $subtype)) {
 				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but was not"
 					. " permitted to write to container $container_guid.");
 				return false;

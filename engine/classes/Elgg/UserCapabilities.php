@@ -51,6 +51,35 @@ class UserCapabilities {
 	}
 
 	/**
+	 * Decides if the access system should be ignored for a user.
+	 *
+	 * Returns true (meaning ignore access) if either of these 2 conditions are true:
+	 *   1) an admin user guid is passed to this function.
+	 *   2) {@link elgg_get_ignore_access()} returns true.
+	 *
+	 * @see elgg_set_ignore_access()
+	 *
+	 * @param int $user_guid The user to check against.
+	 *
+	 * @return bool
+	 */
+	public function canBypassPermissionsCheck($user_guid = 0) {
+		if ($this->session->getIgnoreAccess()) {
+			// Checking ignored access first to avoid infinite loops,
+			// when trying to fetch a user by guid
+			return true;
+		}
+
+		try {
+			$user = $this->entities->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
+		}
+
+		return $user && $user->isAdmin();
+	}
+
+	/**
 	 * Can a user edit this entity?
 	 *
 	 * @tip Can be overridden by registering for the permissions_check plugin hook.
@@ -62,6 +91,10 @@ class UserCapabilities {
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit(ElggEntity $entity, $user_guid = 0) {
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -116,6 +149,10 @@ class UserCapabilities {
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canDelete(ElggEntity $entity, $user_guid = 0) {
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -144,19 +181,21 @@ class UserCapabilities {
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canDeleteRiverItem(ElggRiverItem $item, $user_guid = 0) {
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
 			return false;
 		}
 
-		$return = ($user && $user->isAdmin());
-
 		$params = [
 			'item' => $item,
 			'user' => $user,
 		];
-		return $this->hooks->trigger('permissions_check:delete', 'river', $params, $return);
+		return $this->hooks->trigger('permissions_check:delete', 'river', $params, false);
 	}
 
 	/**
@@ -179,6 +218,10 @@ class UserCapabilities {
 		if (!$entity->guid) {
 			// @todo cannot edit metadata on unsaved entity?
 			return false;
+		}
+
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
 		}
 
 		try {
@@ -221,6 +264,11 @@ class UserCapabilities {
 		if (!$annotation) {
 			return false;
 		}
+
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -291,7 +339,11 @@ class UserCapabilities {
 		if ($logic_check === false) {
 			return false;
 		}
-		
+
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		$return = false;
 		if ($entity) {
 			// If the user can edit the container, they can also write to it
@@ -318,6 +370,10 @@ class UserCapabilities {
 	 * @return bool
 	 */
 	public function canComment(ElggEntity $entity, $user_guid = 0, $default = null) {
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -356,6 +412,10 @@ class UserCapabilities {
 			throw new InvalidArgumentException(__METHOD__ . ' expects \$annotation_name to be a string');
 		}
 
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -389,6 +449,10 @@ class UserCapabilities {
 	 * @return bool
 	 */
 	public function canDownload(ElggFile $entity, $user_guid = 0, $default = true) {
+		if ($this->canBypassPermissionsCheck($user_guid)) {
+			return true;
+		}
+
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {

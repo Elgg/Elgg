@@ -1419,13 +1419,13 @@ class ElggInstaller {
 			return false;
 		}
 
-		elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_access(true);
 		if ($user->makeAdmin() == false) {
 			register_error(elgg_echo('install:error:adminaccess'));
 		} else {
 			$this->services->configTable->set('admin_registered', 1);
 		}
-		elgg_set_ignore_access(false);
+		elgg_set_ignore_access($ia);
 
 		// add validation data to satisfy user validation plugins
 		$user->validated = 1;

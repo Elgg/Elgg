@@ -23,10 +23,16 @@ class UserCapabilitiesTest extends TestCase {
 
 		$this->hooks = _elgg_services()->hooks;
 		$this->hooks->backup();
+
+		// make sure ignored access doesn't overflow from previous test
+		$this->assertFalse(elgg_get_ignore_access());
 	}
 
 	public function tearDown() {
 		$this->hooks->restore();
+
+		// make sure methods called during the test do not leave behind ignored access
+		$this->assertFalse(elgg_get_ignore_access());
 	}
 
 	/**
@@ -40,6 +46,15 @@ class UserCapabilitiesTest extends TestCase {
 		]);
 		$this->assertTrue($entity->canEdit($owner->guid));
 		$this->assertFalse($entity->canEdit($viewer->guid));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canEdit($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canEdit($viewer->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -66,6 +81,15 @@ class UserCapabilitiesTest extends TestCase {
 		$viewer = $this->mocks()->getUser();
 		$this->assertTrue($user->canEdit($user->guid));
 		$this->assertFalse($user->canEdit($viewer->guid));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($user->canEdit($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($user->canEdit($viewer->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -89,6 +113,16 @@ class UserCapabilitiesTest extends TestCase {
 			return false;
 		});
 		$this->assertFalse($entity->canEdit($user->guid));
+
+		// Permissions hooks should not be triggered for admin users and with ignored access
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canEdit($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canEdit($user->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -133,6 +167,15 @@ class UserCapabilitiesTest extends TestCase {
 		});
 
 		$this->assertFalse($entity->canDelete($owner->guid));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canEdit($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canEdit($owner->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -183,6 +226,15 @@ class UserCapabilitiesTest extends TestCase {
 
 		// Should still be able to write to container without particular entity type specified
 		$this->assertTrue($entity->canWriteToContainer($owner->guid));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -267,6 +319,15 @@ class UserCapabilitiesTest extends TestCase {
 		});
 
 		$this->assertFalse($entity->canEditMetadata($metadata, $owner->guid));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canEditMetadata($metadata, $admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -300,6 +361,16 @@ class UserCapabilitiesTest extends TestCase {
 
 		$viewer = $this->mocks()->getUser();
 		$this->assertFalse($annotation->canEdit($viewer->guid));
+
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($annotation->canEdit($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($annotation->canEdit($viewer->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -318,6 +389,16 @@ class UserCapabilitiesTest extends TestCase {
 
 		$viewer = $this->mocks()->getUser();
 		$this->assertFalse($annotation->canEdit($viewer->guid));
+
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($annotation->canEdit($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($annotation->canEdit($viewer->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -363,6 +444,16 @@ class UserCapabilitiesTest extends TestCase {
 		});
 
 		$this->assertFalse($annotation->canEdit($owner->guid));
+
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($annotation->canEdit($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($annotation->canEdit($owner->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -376,19 +467,21 @@ class UserCapabilitiesTest extends TestCase {
 		$group = $this->mocks()->getGroup([
 			'owner_guid', $owner->guid,
 		]);
+
 		$object = $this->mocks()->getObject([
 			'owner_guid', $owner->guid,
 		]);
 
 		$entity = $this->getMockBuilder(ElggEntity::class)
-		->setMethods(['__get', 'getDisplayName', 'setDisplayName']) // keep origin canComment method
-		->disableOriginalConstructor()
-		->getMock();
+			->setMethods(['__get', 'getDisplayName', 'setDisplayName']) // keep origin canComment method
+			->disableOriginalConstructor()
+			->getMock();
+
 		$entity->expects($this->any())
-		->method('__get')
-		->will($this->returnValueMap([
-			['owner_guid', $owner->guid]
-		]));
+			->method('__get')
+			->will($this->returnValueMap([
+				['owner_guid', $owner->guid]
+			]));
 
 		$this->assertFalse($owner->canComment($owner->guid));
 		$this->assertTrue($object->canComment($owner->guid));
@@ -403,6 +496,15 @@ class UserCapabilitiesTest extends TestCase {
 		// can pass default value
 		$this->assertTrue($object->canComment($viewer->guid, true));
 		$this->assertFalse($object->canComment($viewer->guid, false));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($object->canComment($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($object->canComment($viewer->guid));
+		elgg_set_ignore_access($ia);
 
 		// can't comment on comment
 		$comment = new \ElggComment();
@@ -433,6 +535,15 @@ class UserCapabilitiesTest extends TestCase {
 		});
 
 		$this->assertFalse($entity->canComment($owner->guid));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canComment($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canComment($owner->guid));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -536,6 +647,15 @@ class UserCapabilitiesTest extends TestCase {
 		});
 
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -560,6 +680,15 @@ class UserCapabilitiesTest extends TestCase {
 		});
 
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -628,8 +757,33 @@ class UserCapabilitiesTest extends TestCase {
 		$this->hooks->registerHandler('container_permissions_check', 'object', function() {
 			return true;
 		});
+	}
+
+	/**
+	 * @group UserCapabilities
+	 */
+	public function testContainerLogicOverridesAreRespectedWhenAccessIsIgnored() {
+
+		$owner = $this->mocks()->getUser();
+		$entity = $this->mocks()->getObject([
+			'owner_guid' => $owner->guid,
+		]);
+
+		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+
+		$this->hooks->registerHandler('container_logic_check', 'object', [Values::class, 'getFalse']);
 
 		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+
+		// Container logic checks should not be affected admin permissions or ignored access
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertFalse($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+		elgg_set_ignore_access($ia);
 	}
 
 	/**
@@ -672,5 +826,14 @@ class UserCapabilitiesTest extends TestCase {
 		$this->assertFalse($entity->canDownload());
 		$this->assertFalse($entity->canDownload($owner->guid));
 		$this->assertFalse($entity->canDownload($viewer->guid));
+
+		$admin_user = $this->mocks()->getUser([
+			'admin' => 'yes',
+		]);
+		$this->assertTrue($entity->canDownload($admin_user->guid));
+
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($entity->canDownload($admin_user->guid));
+		elgg_set_ignore_access($ia);
 	}
 }

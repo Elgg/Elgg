@@ -500,31 +500,6 @@ function get_readable_access_level($entity_access_id) {
 }
 
 /**
- * Decides if the access system should be ignored for a user.
- *
- * Returns true (meaning ignore access) if either of these 2 conditions are true:
- *   1) an admin user guid is passed to this function.
- *   2) {@link elgg_get_ignore_access()} returns true.
- *
- * @see elgg_set_ignore_access()
- *
- * @param int $user_guid The user to check against.
- *
- * @return bool
- * @since 1.7.0
- * @todo should this be a private function?
- */
-function elgg_check_access_overrides($user_guid = 0) {
-	if (!$user_guid || $user_guid <= 0) {
-		$is_admin = false;
-	} else {
-		$is_admin = elgg_is_admin_user($user_guid);
-	}
-
-	return ($is_admin || _elgg_services()->session->getIgnoreAccess());
-}
-
-/**
  * A quick and dirty way to make sure the access permissions have been correctly set up
  *
  * @elgg_event_handler init system
@@ -533,52 +508,6 @@ function elgg_check_access_overrides($user_guid = 0) {
  */
 function access_init() {
 	_elgg_services()->accessCollections->markInitComplete();
-}
-
-/**
- * Overrides the access system if appropriate.
- *
- * Allows admin users and calls after {@link elgg_set_ignore_access} to
- * bypass the access system.
- *
- * Registered for the 'permissions_check', 'all' and the
- * 'container_permissions_check', 'all' plugin hooks.
- *
- * Returns true to override the access system or null if no change is needed.
- *
- * @internal comment upgrade depends on this
- *
- * @param string $hook
- * @param string $type
- * @param bool $value
- * @param array $params
- * @return true|null
- * @access private
- */
-function elgg_override_permissions($hook, $type, $value, $params) {
-	$user = elgg_extract('user', $params);
-	if ($user) {
-		$user_guid = $user->guid;
-	} else {
-		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
-	}
-
-	// don't do this so ignore access still works with no one logged in
-	//if (!$user instanceof \ElggUser) {
-	//	return false;
-	//}
-	// check for admin
-	if ($user_guid && elgg_is_admin_user($user_guid)) {
-		return true;
-	}
-
-	// check access overrides
-	if (elgg_check_access_overrides($user_guid)) {
-		return true;
-	}
-
-	// consult other hooks
-	return null;
 }
 
 /**
@@ -605,10 +534,6 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	// Tell the access functions the system has booted, plugins are loaded,
 	// and the user is logged in so it can start caching
 	$events->registerHandler('ready', 'system', 'access_init');
-
-	// For overrided permissions
-	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions', 600);
-	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions', 600);
 
 	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };

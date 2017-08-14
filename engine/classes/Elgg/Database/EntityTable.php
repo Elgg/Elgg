@@ -1450,9 +1450,9 @@ class EntityTable {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller
 			// should cancel the check and return false
 			$message = $this->translator->translate('UserFetchFailureException', [$guid]);
-			$this->logger->warn($message);
+			// $this->logger->warn($message);
 
-			throw new UserFetchFailureException();
+			throw new UserFetchFailureException($message);
 		}
 
 		return $user;

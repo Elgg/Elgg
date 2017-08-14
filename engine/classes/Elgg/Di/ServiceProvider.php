@@ -117,7 +117,7 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('accessCollections', function(ServiceProvider $c) {
 			return new \Elgg\Database\AccessCollections(
-					$c->config, $c->db, $c->entityTable, $c->accessCache, $c->hooks, $c->session, $c->translator);
+					$c->config, $c->db, $c->entityTable, $c->userCapabilities, $c->accessCache, $c->hooks, $c->session, $c->translator);
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
