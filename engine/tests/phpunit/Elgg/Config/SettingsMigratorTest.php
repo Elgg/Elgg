@@ -7,9 +7,6 @@ use Elgg\TestCase;
 
 /**
  * @group  Config
- *
- * @covers DatarootSettingMigrator
- * @covers WwwrootSettingMigrator
  */
 class SettingsMigratorTest extends TestCase {
 
