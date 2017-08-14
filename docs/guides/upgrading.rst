@@ -155,6 +155,14 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
 
+All functions around entity subtypes table:
+ * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime
+ * ``update_subtype``: Use ``elgg_set_entity_class`` at runtime
+ * ``remove_subtype``
+ * ``get_subtype_id``
+ * ``get_subtype_from_id``
+ * ``get_subtype_class_from_id``
+
 Removed global vars
 -------------------
 
@@ -173,6 +181,7 @@ Removed classes/interfaces
  * ``Elgg_Notifications_Notification``
  * ``Elgg\Database\EntityTable\UserFetchResultException.php``
  * ``Elgg\Database\MetastringsTable``
+ * ``Elgg\Database\SubtypeTable``
  * ``Exportable`` and its methods ``export`` and ``getExportableValues``: Use ``toObject``
  * ``ExportException``
  * ``Importable`` and its method ``import``.
@@ -195,6 +204,9 @@ It is best practice not to rely on the table aliases used in core queries. If yo
 From the "users_entity" table, the ``password`` and ``hash`` columns have been removed.
 
 The ``geocode_cache`` table has been removed as it was no longer used.
+
+``subtype`` column in ``entities`` table no longer holds a subtype ID, but a subtype string
+``entity_subtypes`` table has been dropped.
 
 Metadata no longer are access-controlled
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,6 +231,22 @@ settings.php, or computed by Symphony Request.
 
 ``ElggSite::save()`` will fail if it isn't the main site.
 
+Subtypes no longer have an ID
+-----------------------------
+
+Entity subtypes have been denormalized.
+``entity_subtypes`` table has been removed and ``subtype`` column in entities table simply holds the string representation of the subtype.
+
+Consequently, all API around adding/updating entity subtypes and classes have been removed.
+
+Plugins can now use ``elgg_set_entity_class()`` and ``elgg_get_entity_class()`` to register a custom entity class at runtime (e.g. in system init handler).
+
+All entities now **MUST** have a subtype. By default, the following subtypes are added and reserved:
+
+ * ``user`` for users
+ * ``group`` for groups
+ * ``site`` for sites
+
 Custom class loading
 --------------------
 
@@ -227,7 +255,7 @@ use ``PSR-0`` classes in the ``/classes`` folder of your plugin or use composer 
 
 The following class registration related functions have been removed:
 
- * ``elgg_get_class_loader`` 
+ * ``elgg_get_class_loader``
  * ``elgg_register_class``
  * ``elgg_register_classes``
 
@@ -618,7 +646,7 @@ The function ``elgg_delete_river()`` which was deprecated in 2.3, has been reins
 
  * It accepts all ``$options`` from ``elgg_get_river()`` but requires at least one of the following params to be set id(s), annotation_id(s), subject_guid(s), object_guid(s), target_guid(s) or view(s)
  * Since ``elgg_get_river`` by default has a limit on the number of river items it fetches, if you wish to remove all river items you need to set ``limit`` to ``false``
- * A hook is fired for each river item which checks the delete permissions 
+ * A hook is fired for each river item which checks the delete permissions
  * Events are fired just before and after a river item has been deleted
 
 From 2.2 to 2.3

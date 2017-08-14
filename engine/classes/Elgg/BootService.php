@@ -109,8 +109,6 @@ class BootService {
 		$config->sitename = $site->name;
 		$config->sitedescription = $site->description;
 
-		$services->subtypeTable->setCachedValues($data->getSubtypeData());
-
 		$services->plugins->setBootPlugins($data->getActivePlugins());
 
 		$services->pluginSettingsCache->setCachedValues($data->getPluginSettings());

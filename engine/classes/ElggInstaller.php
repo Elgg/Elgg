@@ -391,7 +391,7 @@ class ElggInstaller {
 			],
 			'wwwroot' => [
 				'type' => 'url',
-				'value' => _elgg_services()->config->wwwroot,
+				'value' => _elgg_config()->wwwroot,
 				'required' => true,
 			],
 			'timezone' => [
@@ -878,7 +878,7 @@ class ElggInstaller {
 		
 		return true;
 	}
-	
+
 	/**
 	 * Check version of PHP, extensions, and variables
 	 *

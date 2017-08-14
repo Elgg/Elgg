@@ -51,7 +51,6 @@ class ElggObjectTest extends \Elgg\TestCase {
 	public function testCanSaveNewObject() {
 
 		$subtype = 'test_subtype';
-		$subtype_id = add_subtype('object', $subtype);
 
 		$user = $this->mocks()->getUser();
 		_elgg_services()->session->setLoggedInUser($user);
@@ -74,10 +73,7 @@ class ElggObjectTest extends \Elgg\TestCase {
 		$object = get_entity($guid);
 
 		$this->assertEquals('object', $object->type);
-
-		_elgg_services()->logger->disable();
-		$this->assertEquals($subtype_id, $object->subtype);
-		_elgg_services()->logger->enable();
+		$this->assertEquals($subtype, $object->subtype);
 
 		$this->assertEquals('Foo', $object->title);
 		$this->assertEquals('Foo', $object->getDisplayName());
