@@ -128,6 +128,10 @@ System hooks
    Allows plugins to register their own commands executable via ``elgg-cli`` binary.
    Handlers must return an array of command class names. Commands must extend ``\Elgg\Cli\Command`` to be executable.
 
+**seeds, database**
+   Allows plugins to register their own database seeds. Seeds populate the database with fake entities for testing purposes.
+   Seeds must extend ``\Elgg\Database\Seeds\Seed`` class to be executable via ``elgg-cli seed``.
+
 
 User hooks
 ==========
