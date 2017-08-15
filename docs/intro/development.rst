@@ -83,3 +83,7 @@ You can run the following commands to seed and unseed the database.
 
     # unseed the database
     php ./elgg-cli unseed
+
+
+Plugins can register their own seeds via ``'seeds', 'database'`` hook. The handler must return the class name of the seed,
+which must extend ``\Elgg\Database\Seeder\Seed`` class.

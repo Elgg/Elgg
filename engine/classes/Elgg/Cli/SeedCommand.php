@@ -20,12 +20,11 @@ class SeedCommand extends Command {
 	 */
 	protected function command() {
 
-
 		if (!class_exists('\Faker\Generator')) {
 			elgg_log('This is a developer tool currently intended for testing purposes only. Please refrain from using it.', 'ERROR');
 			return 1;
 		}
-		
+
 		set_time_limit(0);
 
 		if (elgg_is_logged_in()) {
@@ -35,7 +34,12 @@ class SeedCommand extends Command {
 
 		_elgg_services()->setValue('mailer', new \Zend\Mail\Transport\InMemory());
 
-		_elgg_services()->seeder->seed();
+		try {
+			_elgg_services()->seeder->seed();
+		} catch (\Exception $e) {
+			elgg_log($e->getMessage(), 'ERROR');
+			return $e->getCode() ? : 3;
+		}
 	}
 
 }

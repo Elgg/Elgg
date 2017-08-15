@@ -9,11 +9,6 @@ namespace Elgg\Database\Seeds;
  */
 class Groups extends Seed {
 
-	/**
-	 * @var \ElggUser[]
-	 */
-	private $users;
-
 	private $visibility = [
 		ACCESS_PUBLIC,
 		ACCESS_LOGGED_IN,
@@ -70,6 +65,8 @@ class Groups extends Seed {
 				}
 			}
 
+			$this->createIcon($group);
+
 			$exclude[] = $group->guid;
 
 			if ($count_members($group) > 1) {
@@ -77,7 +74,7 @@ class Groups extends Seed {
 				continue;
 			}
 
-			$members_limit = $this->faker->numberBetween(5, 10);
+			$members_limit = $this->faker()->numberBetween(5, 10);
 
 			$members_exclude = [];
 
@@ -98,6 +95,9 @@ class Groups extends Seed {
 
 				if (!$group->isPublicMembership()) {
 					$invitee = $this->getRandomUser($members_exclude);
+					if (!$invitee) {
+						$invitee = $this->createUser();
+					}
 					if ($invitee) {
 						$members_exclude[] = $invitee->guid;
 						if (!check_entity_relationship($invitee->guid, 'member', $group->guid)) {
@@ -107,6 +107,9 @@ class Groups extends Seed {
 					}
 
 					$requestor = $this->getRandomUser($members_exclude);
+					if (!$requestor) {
+						$requestor = $this->createUser();
+					}
 					if ($requestor) {
 						$members_exclude[] = $requestor->guid;
 						if (!check_entity_relationship($group->guid, 'invited', $requestor->guid)

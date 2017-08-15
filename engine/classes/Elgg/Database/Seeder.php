@@ -2,10 +2,7 @@
 
 namespace Elgg\Database;
 
-use Elgg\Database\Seeds\Objects;
-use Elgg\Database\Seeds\Groups;
 use Elgg\Database\Seeds\Seed;
-use Elgg\Database\Seeds\Users;
 use Elgg\PluginHooksService;
 
 /**
@@ -16,12 +13,6 @@ use Elgg\PluginHooksService;
  * @access private
  */
 class Seeder {
-
-	private $seeds = [
-		Users::class,
-		Groups::class,
-		Objects::class,
-	];
 
 	/**
 	 * @var PluginHooksService
@@ -47,21 +38,25 @@ class Seeder {
 
 		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-		
-		foreach ($this->seeds as $seed) {
-			if (!class_exists($seed)) {
-				continue;
-			}
-			$seed = new $seed();
-			if (!is_subclass_of($seed, Seed::class)) {
-				continue;
-			}
 
-			$seed->seed();
+		$seeds = $this->hooks->trigger('seeds', 'database', null, []);
+
+		foreach ($seeds as $seed) {
+			if (!class_exists($seed)) {
+				elgg_log("Seeding class $seed not found", 'ERROR');
+				continue;
+			}
+			if (!is_subclass_of($seed, Seed::class)) {
+				elgg_log("Seeding class $seed does not extend " . Seed::class, 'ERROR');
+				continue;
+			}
+			$seeder = new $seed();
+			elgg_log('Starting seeding with ' . get_class($seeder));
+			$seeder->seed();
+			elgg_log('Finished seeding with ' . get_class($seeder));
 		}
 
 		access_show_hidden_entities($ha);
-
 		elgg_set_ignore_access($ia);
 	}
 
@@ -76,20 +71,24 @@ class Seeder {
 		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 
-		foreach ($this->seeds as $seed) {
-			if (!class_exists($seed)) {
-				continue;
-			}
-			$seed = new $seed();
-			if (!is_subclass_of($seed, Seed::class)) {
-				continue;
-			}
+		$seeds = $this->hooks->trigger('seeds', 'database', null, []);
 
-			$seed->unseed();
+		foreach ($seeds as $seed) {
+			if (!class_exists($seed)) {
+				elgg_log("Seeding class $seed not found", 'ERROR');
+				continue;
+			}
+			if (!is_subclass_of($seed, Seed::class)) {
+				elgg_log("Seeding class $seed does not extend " . Seed::class, 'ERROR');
+				continue;
+			}
+			$seeder = new $seed();
+			elgg_log('Starting unseeding with ' . get_class($seeder));
+			$seeder->unseed();
+			elgg_log('Finished unseeding with ' . get_class($seeder));
 		}
 
 		access_show_hidden_entities($ha);
-
 		elgg_set_ignore_access($ia);
 	}
 }

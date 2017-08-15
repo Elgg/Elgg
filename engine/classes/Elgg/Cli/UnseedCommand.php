@@ -29,7 +29,12 @@ class UnseedCommand extends Command {
 
 		_elgg_services()->setValue('mailer', new \Zend\Mail\Transport\InMemory());
 
-		_elgg_services()->seeder->unseed();
+		try {
+			_elgg_services()->seeder->unseed();
+		} catch (\Exception $e) {
+			elgg_log($e->getMessage(), 'ERROR');
+			return $e->getCode() ? : 3;
+		}
 	}
 
 }

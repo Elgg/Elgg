@@ -277,6 +277,24 @@ function _elgg_db_test($hook, $type, $value) {
 }
 
 /**
+ * Register database seeds
+ *
+ * @elgg_plugin_hook seeds database
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function _elgg_db_register_seeds(\Elgg\Hook $hook) {
+
+	$seeds = $hook->getValue();
+
+	$seeds[] = \Elgg\Database\Seeds\Users::class;
+	$seeds[] = \Elgg\Database\Seeds\Groups::class;
+
+	return $seeds;
+}
+
+/**
  * Registers shutdown functions for database profiling and delayed queries.
  *
  * @access private
@@ -285,6 +303,7 @@ function _elgg_db_init() {
 	register_shutdown_function('_elgg_db_run_delayed_queries');
 	register_shutdown_function('_elgg_db_log_profiling_data');
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_db_test');
+	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds');
 }
 
 /**
