@@ -1800,6 +1800,25 @@ function _elgg_init() {
 		 */
 		elgg_register_plugin_hook_handler('output', 'page', [\Elgg\Profiler::class, 'handlePageOutput'], 999);
 	}
+
+	elgg_register_plugin_hook_handler('commands', 'cli', '_elgg_init_cli_commands');
+}
+
+/**
+ * Initialize Cli commands
+ *
+ * @elgg_plugin_hook commands cli
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return \Elgg\Cli\Command[]
+ * @access private
+ */
+function _elgg_init_cli_commands(\Elgg\Hook $hook) {
+	$defaults = [
+
+	];
+	return array_merge($defaults, (array) $hook->getValue());
 }
 
 /**

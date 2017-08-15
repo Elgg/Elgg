@@ -1170,7 +1170,7 @@ class ElggInstaller {
 		}
 
 		$result = file_put_contents(Paths::settingsFile(), $template);
-		if (!$result) {
+		if ($result === false) {
 			register_error(elgg_echo('install:error:writesettingphp'));
 			return false;
 		}

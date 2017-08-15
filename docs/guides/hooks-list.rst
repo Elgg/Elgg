@@ -124,6 +124,11 @@ System hooks
    ``$params`` array contains an array of query elements added to the login URL by the invoking script.
    The hook must return an absolute URL of the login page.
 
+**commands, cli**
+   Allows plugins to register their own commands executable via ``elgg-cli`` binary.
+   Handlers must return an array of command class names. Commands must extend ``\Elgg\Cli\Command`` to be executable.
+
+
 User hooks
 ==========
 
