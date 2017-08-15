@@ -180,6 +180,10 @@ function _elgg_send_friend_notification($event, $type, $object) {
 	$user_two = get_entity($object->guid_two);
 	/* @var ElggUser $user_two */
 
+	if (!$user_one instanceof ElggUser || !$user_two instanceof ElggUser) {
+		return;
+	}
+
 	// Notification subject
 	$subject = elgg_echo('friend:newfriend:subject', [
 		$user_one->name

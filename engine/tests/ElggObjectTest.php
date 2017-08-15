@@ -155,24 +155,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$this->assertIdentical($keys, $object_keys);
 	}
 
-	public function xtestElggObjectAccessOverrides() {
-		// set entity to private access with no owner.
-		$entity = $this->entity;
-		$entity->access_id = ACCESS_PRIVATE;
-		$entity->owner_guid = 0;
-		$this->assertTrue($entity->save());
-		$guid = $entity->getGUID();
-
-		var_dump($guid);
-		// try to grab entity
-		$entity = false;
-		$entity = get_entity($guid);
-		var_dump($entity);
-		$this->assertFalse($entity);
-
-		$old = elgg_set_ignore_access(true);
-	}
-
 	// see https://github.com/elgg/elgg/issues/1196
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
 		$e1 = new \ElggObject();

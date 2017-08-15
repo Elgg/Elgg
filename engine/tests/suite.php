@@ -98,6 +98,4 @@ if (TextReporter::inCli()) {
 	exit($result);
 }
 
-$old = elgg_set_ignore_access(true);
 $suite->Run(new HtmlReporter('utf-8'));
-elgg_set_ignore_access($old);

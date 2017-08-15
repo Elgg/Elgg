@@ -271,10 +271,10 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 			_elgg_services()->accessCache->clear();
 
 			// admin users run tests, so disable access
-			elgg_set_ignore_access(true);
+			$ia = elgg_set_ignore_access(true);
 			$access = $func($user->getGUID());
 
-			elgg_set_ignore_access(false);
+			elgg_set_ignore_access($ia);
 			$access2 = $func($user->getGUID());
 			$this->assertNotEqual($access, $access2, "Access test for $func");
 		}

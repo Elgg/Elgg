@@ -114,6 +114,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``notifications_plugin_pagesetup``
  * ``elgg_format_url``: Use elgg_format_element() or the "output/text" view for HTML escaping.
  * ``get_site_by_url``
+ * ``elgg_override_permissions``: No longer used as handler for ``permissions_check`` and ``container_permissions_check`` hooks
+ * ``elgg_check_access_overrides``
  * ``ElggEntity::addToSite``
  * ``ElggEntity::getSites``
  * ``ElggEntity::removeFromSite``
@@ -197,11 +199,23 @@ From the "users_entity" table, the ``password`` and ``hash`` columns have been r
 The ``geocode_cache`` table has been removed as it was no longer used.
 
 Metadata no longer are access-controlled
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 Metadata is available in all contexts. If your plugin created metadata with restricted access, those restrictions will not be honored. You should use annotations or entities instead, which do provide access control.
 
 Do not read or write to the ``access_id`` property on ElggMetadata objects.
+
+Permissions and Access
+----------------------
+
+User capabilities service will no longer trigger permission check hooks when:
+
+ - permissions are checked for an admin user
+ - permissions are checked when access is ignored with ``elgg_set_ignore_access()``
+
+This means that plugins can no longer alter permissions in aforementioned cases.
+
+``elgg_check_access_overrides()`` has been removed, as plugins will no longer need to validate access overrides.
 
 Multi Site Changes
 ------------------
@@ -214,7 +228,7 @@ You need to separate the different sites into separate databases/tables.
 Related to the removal of the Multi Site concept in Elgg, there is no longer a need for entities having a 'member_of_site' relationship with the Site Entity.
 All functions related to adding/removing this relationship has been removed. All existing relationships will be removed as part of this upgrade.
 
-Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the `$CONFIG->wwwroot` set in
+Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from the ``$CONFIG->wwwroot`` set in
 settings.php, or computed by Symphony Request.
 
 ``ElggSite::save()`` will fail if it isn't the main site.

@@ -14,11 +14,14 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	/** @var array */
 	protected $subtypes;
 
+	protected $ignore_access;
+
 	/**
 	 * Called before each test object.
 	 */
 	public function __construct() {
-		elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_access(true);
+
 		$this->entities = array();
 		$this->subtypes = array(
 			'object' => array(),
@@ -65,6 +68,8 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 			$this->subtypes['group'][] = $subtype;
 		}
 
+		elgg_set_ignore_access($ia);
+
 		parent::__construct();
 	}
 
@@ -72,6 +77,8 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	 * Called after each test object.
 	 */
 	public function __destruct() {
+		$ia = elgg_set_ignore_access();
+
 		foreach ($this->entities as $e) {
 			$e->delete();
 		}
@@ -85,9 +92,18 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 			}
 		}
 
+		elgg_set_ignore_access($ia);
+
 		parent::__destruct();
 	}
 
+	public function setUp() {
+		$this->assertFalse(elgg_get_ignore_access());
+	}
+
+	public function tearDown() {
+		$this->assertFalse(elgg_get_ignore_access());
+	}
 
 	/*************************************************
 	 * Helpers for getting random types and subtypes *

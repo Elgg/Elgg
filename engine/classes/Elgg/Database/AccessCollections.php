@@ -7,6 +7,7 @@ use Elgg\Database;
 use Elgg\Database\EntityTable\UserFetchFailureException;
 use Elgg\I18n\Translator;
 use Elgg\PluginHooksService;
+use Elgg\UserCapabilities;
 use ElggEntity;
 use ElggSession;
 use ElggStaticVariableCache;
@@ -54,6 +55,11 @@ class AccessCollections {
 	protected $entities;
 
 	/**
+	 * @var UserCapabilities
+	 */
+	protected $capabilities;
+
+	/**
 	 * @var Translator
 	 */
 	protected $translator;
@@ -76,18 +82,20 @@ class AccessCollections {
 	/**
 	 * Constructor
 	 *
-	 * @param Conf                    $config     Config
-	 * @param Database                $db         Database
-	 * @param EntityTable             $entities   Entity table
-	 * @param ElggStaticVariableCache $cache      Access cache
-	 * @param PluginHooksService      $hooks      Hooks
-	 * @param ElggSession             $session    Session
-	 * @param Translator              $translator Translator
+	 * @param Conf                    $config       Config
+	 * @param Database                $db           Database
+	 * @param EntityTable             $entities     Entity table
+	 * @param UserCapabilities        $capabilities User capabilities
+	 * @param ElggStaticVariableCache $cache        Access cache
+	 * @param PluginHooksService      $hooks        Hooks
+	 * @param ElggSession             $session      Session
+	 * @param Translator              $translator   Translator
 	 */
 	public function __construct(
 			Conf $config,
 			Database $db,
 			EntityTable $entities,
+			UserCapabilities $capabilities,
 			ElggStaticVariableCache $cache,
 			PluginHooksService $hooks,
 			ElggSession $session,
@@ -95,6 +103,7 @@ class AccessCollections {
 		$this->config = $config;
 		$this->db = $db;
 		$this->entities = $entities;
+		$this->capabilities = $capabilities;
 		$this->access_cache = $cache;
 		$this->hooks = $hooks;
 		$this->session = $session;
@@ -207,7 +216,7 @@ class AccessCollections {
 					}
 				}
 
-				$ignore_access = elgg_check_access_overrides($user_guid);
+				$ignore_access = $this->capabilities->canBypassPermissionsCheck($user_guid);
 
 				if ($ignore_access == true) {
 					$access_array[] = ACCESS_PRIVATE;
@@ -299,7 +308,7 @@ class AccessCollections {
 		$table_alias = $options['table_alias'] ? $options['table_alias'] . '.' : '';
 
 		if (!isset($options['ignore_access'])) {
-			$options['ignore_access'] = elgg_check_access_overrides($options['user_guid']);
+			$options['ignore_access'] = $this->capabilities->canBypassPermissionsCheck($options['user_guid']);
 		}
 
 		$clauses = [
@@ -347,6 +356,10 @@ class AccessCollections {
 			$clauses_str .= '(' . implode(' AND ', $clauses['ands']) . ')';
 		}
 
+		if (empty($clauses_str)) {
+			$clauses_str = '1 = 1';
+		}
+		
 		return "($clauses_str)";
 	}
 
@@ -393,7 +406,7 @@ class AccessCollections {
 
 		// See #7159. Must not allow ignore access to affect query
 		$ia = elgg_set_ignore_access(false);
-		
+
 		$row = $this->entities->getRow($entity->guid, $user_guid);
 
 		elgg_set_ignore_access($ia);
@@ -497,7 +510,7 @@ class AccessCollections {
 			return false;
 		}
 
-		if (elgg_check_access_overrides($user->guid)) {
+		if ($this->capabilities->canBypassPermissionsCheck($user->guid)) {
 			return true;
 		}
 

@@ -140,7 +140,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		// good times without mocking.
 		$original_user = $this->replaceSession($u1);
 		
-		elgg_set_ignore_access(false);
+		$ia = elgg_set_ignore_access(false);
 
 		// add metadata as one user
 		$obj->test = $md_values;
@@ -177,6 +177,8 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 			$this->assertTrue(in_array($md->value, $md_values2));
 			$this->assertEqual('test', $md->name);
 		}
+
+		elgg_set_ignore_access($ia);
 
 		$this->replaceSession($original_user);
 

@@ -18,6 +18,7 @@ use ElggSite;
  * @property-read \Elgg\Mocks\Database\SubtypeTable         $subtypeTable       Subtype table mock
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections  ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings    Private settings table mock
+ * @property-read \Elgg\Mocks\Database\UserCapabilities     $userCapabilities   User capabilities
  *
  * @since 2.3
  */
@@ -74,6 +75,7 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 				$sp->config,
 				$m->db,
 				$m->entityTable,
+				$m->userCapabilities,
 				$sp->accessCache,
 				$sp->hooks,
 				$sp->session,
@@ -87,6 +89,10 @@ class MockServiceProvider extends \Elgg\Di\DiContainer {
 				$m->entityTable,
 				$sp->pluginSettingsCache
 			);
+		});
+
+		$this->setFactory('userCapabilities', function(MockServiceProvider $m) use ($sp) {
+			return new \Elgg\UserCapabilities($sp->hooks, $m->entityTable, $m->session);
 		});
 	}
 
