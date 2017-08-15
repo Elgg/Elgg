@@ -704,12 +704,6 @@ abstract class Seed {
 	 * @return void
 	 */
 	public function log($msg, $level = 'NOTICE') {
-
-		if (php_sapi_name() === 'cli') {
-			$handle = $level === 'ERROR' ? STDERR : STDOUT;
-			fwrite($handle, $msg . PHP_EOL);
-		} else {
-			elgg_log($msg, $level);
-		}
+		elgg_log($msg, $level);
 	}
 }

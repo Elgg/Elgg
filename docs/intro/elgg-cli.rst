@@ -33,6 +33,12 @@ Available commands
     # Run Simpletest test suite
     elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS]
 
+    # Seed the database with fake entities
+    elgg-cli seed
+
+    # Remove seeded faked entities
+    elgg-cli unseed
+
 
 Adding custom commands
 ======================
@@ -48,4 +54,6 @@ Command class must extend ``\Elgg\CLI\Command``.
         $return[] = MyCommand::class;
         return $return;
     });
+
+
 

@@ -1817,6 +1817,8 @@ function _elgg_init() {
 function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 	$defaults = [
 		\Elgg\Cli\SimpletestCommand::class,
+		\Elgg\Cli\SeedCommand::class,
+		\Elgg\Cli\UnseedCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());

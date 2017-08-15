@@ -80,13 +80,13 @@ matrix:
       install:
        - composer travis:install-with-mysql
        - php -f ./.scripts/travis/enable_plugins.php
-       - composer database:seeder:seed
+       - php ./elgg-cli seed
       script:
        - php -f ./.scripts/is_memcached_enabled.php
        - ./vendor/bin/phpunit --configuration ./.scripts/travis/phpunit-memcached.xml
        - php ./elgg-cli simpletest -p all -c ./.scripts/travis/elgg-config/simpletest_memcached.php
       after_script:
-       - composer database:seeder:unseed
+       - php ./elgg-cli unseed
 
     # HHVM build
     - php: hhvm-3.15
@@ -110,7 +110,7 @@ matrix:
       install:
        - composer travis:install-with-mysql
        - php -f ./.scripts/travis/enable_plugins.php
-       - composer database:seeder:seed
+       - php ./elgg-cli seed
        - php -S localhost:8888 index.php &
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
@@ -118,7 +118,7 @@ matrix:
        - ./vendor/bin/phpunit
        - php ./elgg-cli simpletest -p all
       after_script:
-       - composer database:seeder:unseed
+       - php ./elgg-cli unseed
 
     # Test upgrade path from 2.3
     - php: 5.6
@@ -133,7 +133,7 @@ matrix:
         - git checkout FETCH_HEAD
         - composer travis:install-with-mysql
         - php -f ./.scripts/travis/enable_plugins.php
-        - composer database:seeder:seed
+        - php ./elgg-cli seed
         - git checkout -
         - composer install --prefer-dist
         - php -f ./.scripts/travis/upgrade.php
@@ -144,7 +144,7 @@ matrix:
         - sleep 3 # give Web server some time to bind to sockets, etc
         - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
       after_script:
-        - composer database:seeder:unseed
+        - php ./elgg-cli unseed
 
 services:
   - mysql
