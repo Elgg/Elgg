@@ -522,8 +522,8 @@ function access_init() {
  * @access private
  */
 function access_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAccessCollectionsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAccessSQLTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreAccessCollectionsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreAccessSQLTest.php';
 	return $value;
 }
 

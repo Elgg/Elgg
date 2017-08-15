@@ -27,6 +27,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\Application\CacheHandler           $cacheHandler
  * @property-read \Elgg\ClassLoader                        $classLoader
+ * @property-read \Elgg\Cli                                $cli
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
@@ -166,6 +167,12 @@ class ServiceProvider extends DiContainer {
 			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
 			$loader->register();
 			return $loader;
+		});
+
+		$this->setFactory('cli', function(ServiceProvider $c) {
+			$version = elgg_get_version(true);
+			$console = new \Symfony\Component\Console\Application('Elgg', $version);
+			return new \Elgg\Cli($console, $c->hooks);
 		});
 
 		$this->setValue('config', $config);
@@ -379,7 +386,7 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
-			if (PHP_SAPI === 'cli') {
+			if (php_sapi_name() === 'cli') {
 				$transport = new \Elgg\Http\OutputBufferTransport();
 			} else {
 				$transport = new \Elgg\Http\HttpProtocolTransport();

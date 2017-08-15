@@ -667,7 +667,7 @@ function _elgg_save_notification_user_settings() {
  * @access private
  */
 function _elgg_notifications_test($hook, $type, $tests) {
-	$tests[] = Paths::elgg() . "engine/tests/ElggCoreDatabaseQueueTest.php";
+	$tests[] = Paths::elgg() . "engine/tests/simpletest/ElggCoreDatabaseQueueTest.php";
 	return $tests;
 }
 

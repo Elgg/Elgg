@@ -11,3 +11,5 @@ Discover if Elgg is right for your community.
    license
    install
    development
+   elgg-cli
+

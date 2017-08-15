@@ -264,7 +264,7 @@ function elgg_list_entities_from_relationship_count($options) {
  * @access private
  */
 function _elgg_relationships_test($hook, $type, $tests) {
-	$tests[] = Paths::elgg() . 'engine/tests/ElggRelationshipTest.php';
+	$tests[] = Paths::elgg() . 'engine/tests/simpletest/ElggRelationshipTest.php';
 	return $tests;
 }
 

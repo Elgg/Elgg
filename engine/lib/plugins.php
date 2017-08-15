@@ -323,7 +323,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
  * @access private
  */
 function _elgg_plugins_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCorePluginsAPITest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCorePluginsAPITest.php';
 	return $value;
 }
 

@@ -692,7 +692,7 @@ function _elgg_entities_get_metastrings_options($type, $options) {
  * @access private
  */
 function _elgg_metastrings_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreMetastringsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreMetastringsTest.php';
 	return $value;
 }
 

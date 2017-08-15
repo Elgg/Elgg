@@ -155,6 +155,11 @@ class ResponseFactory {
 				return false;
 			}
 
+			$request = $this->request;
+			$method = $request->getRealMethod() ? : 'GET';
+			$path = $request->getElggPath();
+
+			_elgg_services()->logger->notice("Responding to {$method} {$path}");
 			if (!$this->transport->send($response)) {
 				return false;
 			}
@@ -555,4 +560,13 @@ class ResponseFactory {
 		return json_encode($content, ELGG_JSON_ENCODING);
 	}
 
+	/**
+	 * Replaces response transport
+	 *
+	 * @param ResponseTransport $transport Transport interface
+	 * @return void
+	 */
+	public function setTransport(ResponseTransport $transport) {
+		$this->transport = $transport;
+	}
 }

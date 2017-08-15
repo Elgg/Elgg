@@ -79,7 +79,7 @@ You can run the following commands to seed and unseed the database.
 ..code::sh
 
     # seed the database
-    composer database:seeder:seed
+    php ./elgg-cli seed
 
     # unseed the database
-    composer database:seeder:unseed
+    php ./elgg-cli unseed

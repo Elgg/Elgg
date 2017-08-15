@@ -850,17 +850,17 @@ function update_entity_last_action($guid, $posted = null) {
  * @access private
  */
 function _elgg_entities_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggEntityTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreAttributeLoaderTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAnnotationsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggSiteTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggObjectTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggEntityTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreAttributeLoaderTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreGetEntitiesTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreGetEntitiesFromAnnotationsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreGetEntitiesFromMetadataTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreGetEntitiesFromRelationshipTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreGetEntitiesFromAttributesTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggEntityPreloaderIntegrationTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggSiteTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggObjectTest.php';
 	return $value;
 }
 

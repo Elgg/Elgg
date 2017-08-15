@@ -389,7 +389,6 @@ class Config {
 		if ($this->wasWarnedLocked($name)) {
 			return;
 		}
-
 		$this->values[$name] = $value;
 	}
 

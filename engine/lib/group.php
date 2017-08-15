@@ -109,7 +109,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
  * @access private
  */
 function _elgg_groups_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggGroupTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggGroupTest.php';
 	return $value;
 }
 

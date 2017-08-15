@@ -1800,6 +1800,28 @@ function _elgg_init() {
 		 */
 		elgg_register_plugin_hook_handler('output', 'page', [\Elgg\Profiler::class, 'handlePageOutput'], 999);
 	}
+
+	elgg_register_plugin_hook_handler('commands', 'cli', '_elgg_init_cli_commands');
+}
+
+/**
+ * Initialize Cli commands
+ *
+ * @elgg_plugin_hook commands cli
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return \Elgg\Cli\Command[]
+ * @access private
+ */
+function _elgg_init_cli_commands(\Elgg\Hook $hook) {
+	$defaults = [
+		\Elgg\Cli\SimpletestCommand::class,
+		\Elgg\Cli\SeedCommand::class,
+		\Elgg\Cli\UnseedCommand::class,
+	];
+
+	return array_merge($defaults, (array) $hook->getValue());
 }
 
 /**
@@ -1824,10 +1846,10 @@ function _elgg_delete_autoload_cache() {
  * @access private
  */
 function _elgg_api_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggTravisInstallTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreHelpersTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreRegressionBugsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/ElggBatchTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggTravisInstallTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreHelpersTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreRegressionBugsTest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggBatchTest.php';
 	return $value;
 }
 

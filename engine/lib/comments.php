@@ -443,7 +443,7 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
  * @access private
  */
 function _elgg_comments_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . "engine/tests/ElggCommentTest.php";
+	$value[] = Paths::elgg() . "engine/tests/simpletest/ElggCommentTest.php";
 	return $value;
 }
 
