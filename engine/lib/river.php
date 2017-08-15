@@ -687,7 +687,7 @@ function update_river_access_by_object($object_guid, $access_id) {
  * @access private
  */
 function _elgg_river_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/ElggCoreRiverAPITest.php';
+	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreRiverAPITest.php';
 	return $value;
 }
 

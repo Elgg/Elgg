@@ -151,7 +151,7 @@ function _elgg_config() {
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {
-	$tests[] = Paths::elgg() . "engine/tests/ElggCoreConfigTest.php";
+	$tests[] = Paths::elgg() . "engine/tests/simpletest/ElggCoreConfigTest.php";
 	return $tests;
 }
 

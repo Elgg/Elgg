@@ -420,7 +420,7 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
  * @access private
  */
 function _elgg_filestore_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . "engine/tests/ElggCoreFilestoreTest.php";
+	$value[] = Paths::elgg() . "engine/tests/simpletest/ElggCoreFilestoreTest.php";
 	return $value;
 }
 

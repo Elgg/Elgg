@@ -1,11 +1,7 @@
 <?php
 
+include \Elgg\Application::elggDir()->getPath('elgg-config/settings.php');
+
 global $CONFIG;
 
-if (!isset($CONFIG)) {
-	$CONFIG = new \stdClass;
-}
-
 $CONFIG->debug = 'NOTICE';
-
-

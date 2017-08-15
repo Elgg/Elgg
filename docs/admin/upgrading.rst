@@ -93,7 +93,7 @@ Testing
 -------
 
 Simpletests can no longer be executed from the admin interface of the developers plugin.
-Use cli command: ``php -f engine/tests/suite.php``
+Use Elgg cli command: ``elgg-cli simpletest``
 
 
 From 2.2 to 2.3

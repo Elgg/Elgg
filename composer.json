@@ -64,7 +64,7 @@
             "mysql -e 'create database elgg;'",
             "echo \"USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;\" | mysql -u root",
             "mkdir \"${HOME}/elgg_data/\"",
-            "php ./elgg-cli install --config=./install/cli/travis.php"
+            "php ./elgg-cli install --config ./install/cli/travis.php"
         ],
         "database:seeder:seed": "php -f ./.scripts/seeder/seed.php",
         "database:seeder:unseed": "php -f ./.scripts/seeder/unseed.php"
@@ -79,7 +79,10 @@
     },
     "autoload-dev": {
         "psr-0": {
-            "": "engine/tests/phpunit/"
+            "": [
+                "engine/tests/phpunit/",
+                "engine/tests/simpletest/"
+            ]
         }
     },
     "require-dev": {

@@ -335,7 +335,7 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
  * @access private
  */
 function _elgg_annotations_test($hook, $type, $tests) {
-	$tests[] = Paths::project() . 'engine/tests/ElggCoreAnnotationAPITest.php';
+	$tests[] = Paths::project() . 'engine/tests/simpletest/ElggCoreAnnotationAPITest.php';
 	return $tests;
 }
 

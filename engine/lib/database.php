@@ -272,7 +272,7 @@ function _elgg_db_run_delayed_queries() {
  * @access private
  */
 function _elgg_db_test($hook, $type, $value) {
-	$value[] = elgg_get_engine_path() . '/tests/ElggDataFunctionsTest.php';
+	$value[] = elgg_get_engine_path() . '/tests/simpletest/ElggDataFunctionsTest.php';
 	return $value;
 }
 

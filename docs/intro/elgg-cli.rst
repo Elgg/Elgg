@@ -30,6 +30,9 @@ Available commands
     # Install Elgg
     elgg-cli install [-c|--config CONFIG]
 
+    # Run Simpletest test suite
+    elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS]
+
 
 Adding custom commands
 ======================
