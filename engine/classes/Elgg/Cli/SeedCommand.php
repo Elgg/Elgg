@@ -20,13 +20,12 @@ class SeedCommand extends Command {
 	 */
 	protected function command() {
 
+
 		if (!class_exists('\Faker\Generator')) {
 			elgg_log('This is a developer tool currently intended for testing purposes only. Please refrain from using it.', 'ERROR');
 			return 1;
 		}
-
-		elgg_set_config('debug', 'NOTICE');
-
+		
 		set_time_limit(0);
 
 		if (elgg_is_logged_in()) {

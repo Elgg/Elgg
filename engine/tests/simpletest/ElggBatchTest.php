@@ -11,12 +11,15 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {
 		// normal increment
-		$options = array(
+		$options = [
 			'offset' => 0,
 			'limit' => 11
-		);
-		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
-				null, 5);
+		];
+		$batch = new \ElggBatch([
+			\ElggBatchTest::class,
+			'elgg_batch_callback_test'
+		], $options,
+			null, 5);
 		$j = 0;
 		foreach ($batch as $e) {
 			$offset = floor($j / 5) * 5;
@@ -28,13 +31,16 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 
 		// no increment, 0 start
-		\ElggBatchTest::elgg_batch_callback_test(array(), true);
-		$options = array(
+		\ElggBatchTest::elgg_batch_callback_test([], true);
+		$options = [
 			'offset' => 0,
 			'limit' => 11
-		);
-		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
-				null, 5);
+		];
+		$batch = new \ElggBatch([
+			\ElggBatchTest::class,
+			'elgg_batch_callback_test'
+		], $options,
+			null, 5);
 		$batch->setIncrementOffset(false);
 
 		$j = 0;
@@ -47,13 +53,16 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 
 		// no increment, 3 start
-		\ElggBatchTest::elgg_batch_callback_test(array(), true);
-		$options = array(
+		\ElggBatchTest::elgg_batch_callback_test([], true);
+		$options = [
 			'offset' => 3,
 			'limit' => 11
-		);
-		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
-				null, 5);
+		];
+		$batch = new \ElggBatch([
+			\ElggBatchTest::class,
+			'elgg_batch_callback_test'
+		], $options,
+			null, 5);
 		$batch->setIncrementOffset(false);
 
 		$j = 0;
@@ -69,7 +78,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 
 	public function testElggBatchReadHandlesBrokenEntities() {
 		$num_test_entities = 8;
-		$guids = array();
+		$guids = [];
 		for ($i = $num_test_entities; $i > 0; $i--) {
 			$entity = new \ElggObject();
 			$entity->type = 'object';
@@ -88,13 +97,13 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
 		");
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => 'test_5357_subtype',
 			'order_by' => 'e.guid',
-		);
+		];
 
-		$entities_visited = array();
+		$entities_visited = [];
 		$batch = new \ElggBatch('elgg_get_entities', $options, null, 2);
 		/* @var \ElggEntity[] $batch */
 		foreach ($batch as $entity) {
@@ -102,14 +111,18 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		}
 
 		// The broken entities should not have been visited
-		$this->assertEqual($entities_visited, array($guids[0], $guids[6], $guids[7]));
+		$this->assertEqual($entities_visited, [
+			$guids[0],
+			$guids[6],
+			$guids[7]
+		]);
 
 		// cleanup (including leftovers from previous tests)
-		$entity_rows = elgg_get_entities(array_merge($options, array(
+		$entity_rows = elgg_get_entities(array_merge($options, [
 			'callback' => '',
 			'limit' => false,
-		)));
-		$guids = array();
+		]));
+		$guids = [];
 		foreach ($entity_rows as $row) {
 			$guids[] = $row->guid;
 		}
@@ -120,7 +133,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 
 	public function testElggBatchDeleteHandlesBrokenEntities() {
 		$num_test_entities = 8;
-		$guids = array();
+		$guids = [];
 		for ($i = $num_test_entities; $i > 0; $i--) {
 			$entity = new \ElggObject();
 			$entity->type = 'object';
@@ -139,13 +152,13 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
 		");
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => 'test_5357_subtype',
 			'order_by' => 'e.guid',
-		);
+		];
 
-		$entities_visited = array();
+		$entities_visited = [];
 		$batch = new \ElggBatch('elgg_get_entities', $options, null, 2, false);
 		/* @var \ElggEntity[] $batch */
 		foreach ($batch as $entity) {
@@ -154,14 +167,18 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		}
 
 		// The broken entities should not have been visited
-		$this->assertEqual($entities_visited, array($guids[0], $guids[6], $guids[7]));
+		$this->assertEqual($entities_visited, [
+			$guids[0],
+			$guids[6],
+			$guids[7]
+		]);
 
 		// cleanup (including leftovers from previous tests)
-		$entity_rows = elgg_get_entities(array_merge($options, array(
+		$entity_rows = elgg_get_entities(array_merge($options, [
 			'callback' => '',
 			'limit' => false,
-		)));
-		$guids = array();
+		]));
+		$guids = [];
 		foreach ($entity_rows as $row) {
 			$guids[] = $row->guid;
 		}
@@ -174,6 +191,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			if ($options['count']) {
 				return 20;
 			}
+
 			return false;
 		};
 		$options = [
@@ -215,6 +233,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 
 		if ($reset) {
 			$count = 1;
+
 			return true;
 		}
 
@@ -223,12 +242,12 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		}
 
 		for ($j = 0; ($options['limit'] < 5) ? $j < $options['limit'] : $j < 5; $j++) {
-			$return[] = array(
+			$return[] = [
 				'offset' => $options['offset'],
 				'limit' => $options['limit'],
 				'count' => $count++,
 				'index' => 1 + $options['offset'] + $j
-			);
+			];
 		}
 
 		return $return;

@@ -54,6 +54,11 @@ class Logger {
 	private $disabled_stack;
 
 	/**
+	 * @var callable
+	 */
+	private $printer;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   Hooks service
@@ -118,6 +123,18 @@ class Logger {
 	 */
 	public function setDisplay($display) {
 		$this->display = $display;
+	}
+
+	/**
+	 * Set custom printer
+	 *
+	 * @param callable $printer Printer
+	 * @return void
+	 */
+	public function setPrinter(callable $printer) {
+		if (is_callable($printer)) {
+			$this->printer = $printer;
+		}
 	}
 
 	/**
@@ -246,9 +263,13 @@ class Logger {
 		}
 
 		if ($display == true) {
-			echo '<pre class="elgg-logger-data">';
-			echo htmlspecialchars(print_r($data, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-			echo '</pre>';
+			if ($this->printer) {
+				call_user_func($this->printer, $data, $level);
+			} else {
+				echo '<pre class="elgg-logger-data">';
+				echo htmlspecialchars(print_r($data, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+				echo '</pre>';
+			}
 		}
 		
 		error_log(print_r($data, true));

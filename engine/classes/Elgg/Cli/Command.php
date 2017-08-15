@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Http\OutputBufferTransport;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,25 +22,30 @@ abstract class Command extends SymfonyCommand {
 		$this->input = $input;
 		$this->output = $output;
 
-		_elgg_services()->hooks->registerHandler('forward', 'all', [
-			$this,
-			'dumpRegisters'
-		]);
-		_elgg_services()->hooks->registerHandler('send:before', 'http_response', [
-			$this,
-			'dumpData'
-		]);
+		elgg_set_config('debug', 'NOTICE');
 
-		$this->login();
+		_elgg_services()->logger->setPrinter(function ($data, $level) {
+			$tag = $level == 'ERROR' ? 'error' : 'info';
+			$this->write(elgg_format_element($tag, [], $data));
+		});
 
-		$result = $this->command();
-		if (is_callable($result)) {
-			$result = call_user_func($result, $this);
+		_elgg_services()->responseFactory->setTransport(new ResponseTransport($this));
+
+		try {
+			$this->login();
+
+			$result = $this->command();
+			if (is_callable($result)) {
+				$result = call_user_func($result, $this);
+			}
+
+			$this->dumpRegisters();
+
+			$this->logout();
+		} catch (\Exception $ex) {
+			elgg_log($ex->getMessage(), 'ERROR');
+			$result = $ex->getCode() ? : 1;
 		}
-
-		$this->dumpRegisters();
-
-		$this->logout();
 
 		return (int) $result;
 	}
@@ -54,23 +60,6 @@ abstract class Command extends SymfonyCommand {
 	 * @see Command::execute()
 	 */
 	abstract protected function command();
-
-	/**
-	 * Dump response data
-	 *
-	 * @param string $event
-	 * @param string $type
-	 * @param \Symfony\Component\HttpFoundation\Response $response
-	 *
-	 * @return boolean
-	 */
-	protected function dumpData($event, $type, $response) {
-		$content = $response->getContent();
-		$json = @json_decode($content);
-		$json ? dump($json) : dump($content);
-
-		return false;
-	}
 
 	/**
 	 * Login a user defined by --as option
@@ -93,7 +82,7 @@ abstract class Command extends SymfonyCommand {
 		if (!login($user)) {
 			throw new RuntimeException("Unable to login as $username");
 		}
-		system_message("Logged in as $username [guid: $user->guid]");
+		elgg_log("Logged in as $username [guid: $user->guid]");
 	}
 
 	/**

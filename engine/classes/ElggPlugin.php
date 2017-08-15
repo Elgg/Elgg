@@ -741,7 +741,8 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
-		
+
+		_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
 		return $return;
 	}
 
@@ -829,6 +830,9 @@ class ElggPlugin extends \ElggObject {
 		$this->deactivateEntities();
 		
 		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+
+		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
+
 		return $this->setStatus(false);
 	}
 

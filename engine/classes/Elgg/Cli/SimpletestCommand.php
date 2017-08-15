@@ -59,15 +59,6 @@ class SimpletestCommand extends Command {
 				Application::setInstance($app);
 			}
 
-			_elgg_services()->hooks->registerHandler('forward', 'all', [
-				$this,
-				'dumpRegisters'
-			]);
-			_elgg_services()->hooks->registerHandler('send:before', 'http_response', [
-				$this,
-				'dumpData'
-			]);
-
 			// turn off system log
 			_elgg_services()->hooks->unregisterHandler('all', 'all', 'system_log_listener');
 			_elgg_services()->hooks->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
@@ -96,6 +87,8 @@ class SimpletestCommand extends Command {
 				];
 			}
 
+			$activated_plugins = [];
+
 			// activate plugins that are not activated on install
 			foreach ($plugins as $key => $id) {
 				$plugin = elgg_get_plugin_from_id($id);
@@ -103,7 +96,9 @@ class SimpletestCommand extends Command {
 					unset($plugins[$key]);
 					continue;
 				}
-				$plugin->activate();
+				if ($plugin->activate()) {
+					$activated_plugins[] = $id;
+				}
 			}
 
 			$suite = new TestSuite('Elgg Core Unit Tests');
@@ -123,7 +118,7 @@ class SimpletestCommand extends Command {
 			$result = $suite->Run($reporter);
 
 			// deactivate plugins that were activated for test suite
-			foreach ($plugins as $key => $id) {
+			foreach ($activated_plugins as $key => $id) {
 				$plugin = elgg_get_plugin_from_id($id);
 				$plugin->deactivate();
 			}
@@ -137,13 +132,11 @@ class SimpletestCommand extends Command {
 				throw new RuntimeException('One or more tests have failed');
 			}
 		} catch (Exception $e) {
-			$error = 1;
+			$error = $e->getCode() ? : 1;
 			elgg_log("Test suite has failed with " . get_class($e) . ': ' . $e->getMessage(), 'ERROR');
 		}
 
-		forward();
-
-		$this->write(STDOUT, ob_get_clean());
+		$this->write(ob_get_clean());
 
 		return $error;
 	}

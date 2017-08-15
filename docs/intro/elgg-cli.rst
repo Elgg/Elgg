@@ -1,6 +1,11 @@
 Elgg CLI
 ########
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+
 elgg-cli command line tools
 ===========================
 
@@ -20,13 +25,13 @@ Available commands
 ..code::sh
 
     cd /path/to/elgg/
-    
+
     # Get help
     elgg-cli --help
-    
+
     # List all commands
     elgg-cli list
-    
+
     # Install Elgg
     elgg-cli install [-c|--config CONFIG]
 
@@ -48,12 +53,14 @@ Command class must extend ``\Elgg\CLI\Command``.
 
 ..code::php
 
-    class MyCommand extends \Elgg\Сli\Command {}
+    class MyCommand extends \Elgg\Сli\Command {
+
+    }
 
     elgg_register_plugin_hook_handler('commands', 'cli', function($hook, $type, $return) {
+
         $return[] = MyCommand::class;
+
         return $return;
+
     });
-
-
-

@@ -62,7 +62,7 @@ class BootService {
 		}
 
 		// we were using NOTICE temporarily so we can't just check for null
-		if (!$config->hasInitialValue('debug')) {
+		if (!$config->hasInitialValue('debug') && !$config->debug) {
 			$config->debug = '';
 		}
 

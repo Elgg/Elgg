@@ -133,7 +133,7 @@ matrix:
         - git checkout FETCH_HEAD
         - composer travis:install-with-mysql
         - php -f ./.scripts/travis/enable_plugins.php
-        - php ./elgg-cli seed
+        - php -f ./.scripts/seeder/seed.php # can't use elgg-cli because it's a 2.3 install
         - git checkout -
         - composer install --prefer-dist
         - php -f ./.scripts/travis/upgrade.php

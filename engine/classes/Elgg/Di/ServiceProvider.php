@@ -386,7 +386,7 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
-			if (PHP_SAPI === 'cli') {
+			if (php_sapi_name() === 'cli') {
 				$transport = new \Elgg\Http\OutputBufferTransport();
 			} else {
 				$transport = new \Elgg\Http\HttpProtocolTransport();
