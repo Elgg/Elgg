@@ -89,6 +89,13 @@ Twitter API plugin
 
 The ``twitter_api`` plugin no longer comes bundled with Elgg.
 
+Testing
+-------
+
+Simpletests can no longer be executed from the admin interface of the developers plugin.
+Use cli command: ``php -f engine/tests/suite.php``
+
+
 From 2.2 to 2.3
 ===============
 
