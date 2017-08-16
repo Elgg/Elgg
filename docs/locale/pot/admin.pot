@@ -1765,7 +1765,7 @@ msgid "Tests"
 msgstr ""
 
 #: ../../admin/upgrading.rst:57
-msgid "PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\\Elgg\\TestCase``."
+msgid "PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\\Elgg\\UnitTestCase``."
 msgstr ""
 
 #: ../../admin/upgrading.rst:58

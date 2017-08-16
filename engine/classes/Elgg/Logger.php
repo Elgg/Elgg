@@ -1,5 +1,6 @@
 <?php
 namespace Elgg;
+use Elgg\Printer\HtmlPrinter;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -29,6 +30,11 @@ class Logger {
 	];
 
 	/**
+	 * @var int
+	 */
+	public static $verbosity;
+
+	/**
 	 * @var int The logging level
 	 */
 	protected $level = self::ERROR;
@@ -54,7 +60,7 @@ class Logger {
 	private $disabled_stack;
 
 	/**
-	 * @var callable
+	 * @var Printer
 	 */
 	private $printer;
 
@@ -63,10 +69,15 @@ class Logger {
 	 *
 	 * @param PluginHooksService $hooks   Hooks service
 	 * @param Context            $context Context service
+	 * @param Printer            $printer Printer
 	 */
-	public function __construct(PluginHooksService $hooks, Context $context) {
+	public function __construct(PluginHooksService $hooks, Context $context, Printer $printer = null) {
 		$this->hooks = $hooks;
 		$this->context = $context;
+		if (!isset($printer)) {
+			$printer = new HtmlPrinter();
+		}
+		$this->printer = $printer;
 	}
 
 	/**
@@ -128,13 +139,11 @@ class Logger {
 	/**
 	 * Set custom printer
 	 *
-	 * @param callable $printer Printer
+	 * @param Printer $printer Printer
 	 * @return void
 	 */
-	public function setPrinter(callable $printer) {
-		if (is_callable($printer)) {
-			$this->printer = $printer;
-		}
+	public function setPrinter(Printer $printer) {
+		$this->printer = $printer;
 	}
 
 	/**
@@ -262,17 +271,7 @@ class Logger {
 			$display = false;
 		}
 
-		if ($display == true) {
-			if ($this->printer) {
-				call_user_func($this->printer, $data, $level);
-			} else {
-				echo '<pre class="elgg-logger-data">';
-				echo htmlspecialchars(print_r($data, true), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-				echo '</pre>';
-			}
-		}
-		
-		error_log(print_r($data, true));
+		$this->printer->write($data, $display, $level);
 	}
 
 	/**

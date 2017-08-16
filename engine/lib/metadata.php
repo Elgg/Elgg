@@ -355,8 +355,8 @@ function _elgg_invalidate_metadata_cache($action, array $options) {
  * @access private
  */
 function _elgg_metadata_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreMetadataAPITest.php';
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreMetadataCacheTest.php';
+	$value[] = ElggCoreMetadataAPITest::class;
+	$value[] = ElggCoreMetadataCacheTest::class;
 	return $value;
 }
 

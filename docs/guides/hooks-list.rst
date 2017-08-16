@@ -130,7 +130,7 @@ System hooks
 
 **seeds, database**
    Allows plugins to register their own database seeds. Seeds populate the database with fake entities for testing purposes.
-   Seeds must extend ``\Elgg\Database\Seeds\Seed`` class to be executable via ``elgg-cli seed``.
+   Seeds must extend ``\Elgg\Database\Seeds\Seed`` class to be executable via ``elgg-cli database:seed``.
 
 
 User hooks

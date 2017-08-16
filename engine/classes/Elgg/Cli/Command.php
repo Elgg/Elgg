@@ -3,6 +3,7 @@
 namespace Elgg\Cli;
 
 use Elgg\Http\OutputBufferTransport;
+use Elgg\Logger;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,15 +20,13 @@ abstract class Command extends SymfonyCommand {
 	 * {@inheritdoc}
 	 */
 	final public function execute(InputInterface $input, OutputInterface $output) {
+
+		Logger::$verbosity = $output->getVerbosity();
+
 		$this->input = $input;
 		$this->output = $output;
 
-		elgg_set_config('debug', 'NOTICE');
-
-		_elgg_services()->logger->setPrinter(function ($data, $level) {
-			$tag = $level == 'ERROR' ? 'error' : 'info';
-			$this->write(elgg_format_element($tag, [], $data));
-		});
+		elgg_set_config('debug', 'INFO');
 
 		_elgg_services()->responseFactory->setTransport(new ResponseTransport($this));
 

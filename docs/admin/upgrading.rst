@@ -89,12 +89,32 @@ Twitter API plugin
 
 The ``twitter_api`` plugin no longer comes bundled with Elgg.
 
-Testing
--------
+Unit and Integration Testing
+----------------------------
+
+Elgg's PHPUnit bootstrap can now handle both unit and integration tests. Whenever a database connection is detected,
+integration tests will be run alongside unit tests. Please note that **you shouldn't run tests on a production site**,
+as it may damage data integrity.
+
+Plugins can now implement their own PHPUnit tests by extending ``\Elgg\UnitTestCase`` and ``\Elgg\IntegrationTestCase`` classes.
+``plugins`` test suite will automatically autoload PHPUnit tests from ``mod/<plugin_id>/tests/phpunit/unit`` and
+``mod/<plugin_id>/tests/phpunit/integration``.
+
+Integration tests will always run with ALL plugins enabled.
+
+``\Elgg\IntegrationTestCase`` uses ``\Elgg\Seeding`` trait, which can be used to conveniently build new entities and
+write them to the database.
+
+``\Elgg\UnitTestCase`` does not use the database, but provides a database mocking interface, which allows tests to
+define query specs with predefined returns.
+
+By default, both unit and integration tests will be run whenever ``phpunit`` is called. You can use filter or group flags
+to only run a specific suite: ``phpunit --testsuite unit`` or ``phpunit --testsuite integration`` or ``phpunit --testsuite plugins``.
+
+Plugins with simpletests will continue working as perviously.
 
 Simpletests can no longer be executed from the admin interface of the developers plugin.
 Use Elgg cli command: ``elgg-cli simpletest``
-
 
 From 2.2 to 2.3
 ===============
@@ -112,7 +132,6 @@ Tests
 -----
 
  * PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\Elgg\TestCase``.
- * Some core files now sniff if	``PHPUNIT_ELGG_TESTING_APPLICATION`` constant is set to determine whether Elgg is being bootstrapped for PHPUnit tests. ``phpunit.xml`` configuration needs to updated to include this constant definition.
  * PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_config()`` instead.
  * Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``
 

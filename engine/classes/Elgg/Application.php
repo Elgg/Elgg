@@ -2,16 +2,22 @@
 
 namespace Elgg;
 
+use Doctrine\DBAL\Connection;
+use Elgg\Cache\Pool\InMemory as InMemoryCachePool;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Http\Request;
 use Elgg\Filesystem\Directory\Local;
 use ConfigurationException;
+use Elgg\Mocks\Di\MockServiceProvider;
 use Elgg\Project\Paths;
 use Exception;
 use InstallationException;
+use RuntimeException;
+use Zend\Mail\Transport\InMemory as InMemoryMailTransport;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -39,9 +45,9 @@ class Application {
 	public $_services;
 
 	/**
-	 * @var bool
+	 * @var array
 	 */
-	private static $testing_app;
+	private static $_setups;
 
 	/**
 	 * Property names of the service provider to be exposed via __get()
@@ -85,7 +91,7 @@ class Application {
 	 * @param Application $application Global application
 	 * @return void
 	 */
-	public static function setInstance(Application $application) {
+	public static function setInstance(Application $application = null) {
 		self::$_instance = $application;
 	}
 
@@ -194,17 +200,6 @@ class Application {
 	}
 
 	/**
-	 * Get the DB credentials.
-	 *
-	 * We no longer leave DB credentials in the config in case it gets accidentally dumped.
-	 *
-	 * @return \Elgg\Database\DbConfig
-	 */
-	public function getDbConfig() {
-		return $this->_services->dbConfig;
-	}
-
-	/**
 	 * Define all Elgg global functions and constants, wire up boot events, but don't boot
 	 *
 	 * This includes all the .php files in engine/lib (not upgrades). If a script returns a function,
@@ -220,25 +215,13 @@ class Application {
 			return;
 		}
 
-		$setups = [];
-		$path = Paths::elgg() . 'engine/lib';
-
-		// include library files, capturing setup functions
-		foreach (self::getEngineLibs() as $file) {
-			$return = Includer::includeFile("$path/$file");
-			if (!$return) {
-				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
-			}
-			if ($return instanceof \Closure) {
-				$setups[$file] = $return;
-			}
-		}
+		self::autoload();
 
 		$hooks = $this->_services->hooks;
 		$events = $hooks->getEvents();
 
 		// run setups
-		foreach ($setups as $func) {
+		foreach (self::$_setups as $func) {
 			$func($events, $hooks);
 		}
 	}
@@ -278,10 +261,6 @@ class Application {
 	 */
 	public function bootCore() {
 		$config = $this->_services->config;
-
-		if ($this->isTestingApplication()) {
-			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
-		}
 
 		if ($config->boot_complete) {
 			return;
@@ -363,6 +342,17 @@ class Application {
 	}
 
 	/**
+	 * Get the DB credentials.
+	 *
+	 * We no longer leave DB credentials in the config in case it gets accidentally dumped.
+	 *
+	 * @return \Elgg\Database\DbConfig
+	 */
+	public function getDbConfig() {
+		return $this->_services->dbConfig;
+	}
+
+	/**
 	 * Get a Database wrapper for performing queries without booting Elgg
 	 *
 	 * If settings has not been loaded, it will be loaded to configure the DB connection.
@@ -373,6 +363,22 @@ class Application {
 	 */
 	public function getDb() {
 		return $this->_services->publicDb;
+	}
+
+	/**
+	 * Get database connection
+	 *
+	 * @param string $type Connection type
+	 * @return Connection|false
+	 *
+	 * @access private
+	 */
+	public function getDbConnection($type = 'readwrite') {
+		try {
+			return $this->getDb()->getConnection($type);
+		} catch (\DatabaseException $e) {
+			return false;
+		}
 	}
 
 	/**
@@ -681,7 +687,7 @@ class Application {
 	 * @return bool
 	 */
 	public static function migrate() {
-		$conf = self::elggDir()->getPath('engine/schema/settings.php');
+		$conf = self::elggDir()->getPath('engine/conf/migrations.php');
 		if (!$conf) {
 			throw new Exception('Settings file is required to run database migrations.');
 		}
@@ -731,6 +737,28 @@ class Application {
 	}
 
 	/**
+	 * Bootstraps a testing application with a clean global state
+	 *
+	 * @return Application
+	 */
+	public static function test() {
+
+		if (!class_exists(UnitTestCase::class)) {
+			throw new RuntimeException(__METHOD__ . ' can only be executed if Elgg is installed using composer install --dev');
+		}
+
+		if (!date_default_timezone_get()) {
+			date_default_timezone_set('America/Los_Angeles');
+		}
+
+		error_reporting(E_ALL | E_STRICT);
+
+		self::autoload();
+
+		return UnitTestCase::createApplication();
+	}
+
+	/**
 	 * Allow plugins to rewrite the path.
 	 *
 	 * @return void
@@ -744,24 +772,6 @@ class Application {
 
 		$this->_services->setValue('request', $new);
 		$this->_services->context->initialize($new);
-	}
-
-	/**
-	 * Flag this application as running for testing (PHPUnit)
-	 *
-	 * @param bool $testing Is testing application
-	 * @return void
-	 */
-	public static function setTestingApplication($testing = true) {
-		self::$testing_app = $testing;
-	}
-
-	/**
-	 * Checks if the application is running in PHPUnit
-	 * @return bool
-	 */
-	public static function isTestingApplication() {
-		return (bool) self::$testing_app;
 	}
 
 	/**
@@ -940,6 +950,38 @@ class Application {
 	}
 
 	/**
+	 * Preload core library files
+	 *
+	 * This is added to speed up tests. An application maybe bootstrapped more than one during
+	 * the test suite. We don't need to include all files for each suite, so we include them once,
+	 * and store the callables in the static variable executing them during loadCore
+	 *
+	 * @return void
+	 *
+	 * @throws \InstallationException
+	 */
+	private static function autoload() {
+		if (isset(self::$_setups)) {
+			return;
+		}
+
+		self::$_setups = [];
+
+		$path = Paths::elgg() . 'engine/lib';
+
+		// include library files, capturing setup functions
+		foreach (self::getEngineLibs() as $file) {
+			$return = Includer::includeFile("$path/$file");
+			if (!$return) {
+				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
+			}
+			if ($return instanceof \Closure) {
+				self::$_setups[$file] = $return;
+			}
+		}
+	}
+
+	/**
 	 * Get all engine/lib library filenames
 	 *
 	 * @note We can't just pull in all directory files because some users leave old files in place.
@@ -948,6 +990,7 @@ class Application {
 	 */
 	private static function getEngineLibs() {
 		return [
+			'elgglib.php',
 			'access.php',
 			'actions.php',
 			'admin.php',
@@ -959,7 +1002,6 @@ class Application {
 			'cron.php',
 			'database.php',
 			'deprecated-3.0.php',
-			'elgglib.php',
 			'entities.php',
 			'filestore.php',
 			'group.php',

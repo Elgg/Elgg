@@ -352,8 +352,8 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		$elLast = libxml_disable_entity_loader(false);
 
 		// build payload that should trigger loading of external entity
-		$payload = file_get_contents(dirname(__FILE__) . '/test_files/xxe/request.xml');
-		$path = realpath(dirname(__FILE__) . '/test_files/xxe/external_entity.txt');
+		$payload = file_get_contents($this->normalizeTestFilePath('xxe/request.xml'));
+		$path = realpath($this->normalizeTestFilePath('xxe/external_entity.txt'));
 		$path = str_replace('\\', '/', $path);
 		if ($path[0] != '/') {
 			$path = '/' . $path;

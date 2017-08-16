@@ -549,7 +549,7 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
  * @return array
  */
 function _elgg_htmlawed_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggHtmLawedTest.php';
+	$value[] = ElggHtmLawedTest::class;
 	return $value;
 }
 

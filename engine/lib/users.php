@@ -921,7 +921,7 @@ function users_init() {
  * @access private
  */
 function users_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . "engine/tests/simpletest/ElggUserTest.php";
+	$value[] = ElggCoreUserTest::class;
 	return $value;
 }
 

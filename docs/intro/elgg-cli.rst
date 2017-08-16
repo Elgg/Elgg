@@ -39,10 +39,10 @@ Available commands
     elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS]
 
     # Seed the database with fake entities
-    elgg-cli seed
+    elgg-cli database:seed
 
     # Remove seeded faked entities
-    elgg-cli unseed
+    elgg-cli database:unseed
 
 
 Adding custom commands

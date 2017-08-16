@@ -1,4 +1,7 @@
 <?php
+use Elgg\Database\Seeds\Seedable;
+use Elgg\Database\Seeds\Seeding;
+use Elgg\Testing;
 
 /**
  * Elgg Core Unit Tester
@@ -6,7 +9,10 @@
  * This class is to be extended by all Elgg unit tests. As such, any method here
  * will be available to the tests.
  */
-abstract class ElggCoreUnitTest extends UnitTestCase {
+abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\Testable {
+
+	use Seeding;
+	use Testing;
 
 	/**
 	 * Class constructor.
@@ -26,6 +32,23 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 
 	}
 
+	public function setUp() {
+		parent::setUp();
+
+//		$this->assertTrue(elgg_is_admin_logged_in());
+//		$this->assertFalse(elgg_get_ignore_access());
+//		$this->assertFalse(access_get_show_hidden_status());
+
+	}
+
+	public function tearDown() {
+//		$this->assertTrue(elgg_is_admin_logged_in());
+//		$this->assertFalse(elgg_get_ignore_access());
+//		$this->assertFalse(access_get_show_hidden_status());
+
+		parent::tearDown();
+	}
+
 	/**
 	 * Will trigger a pass if the two entity parameters have
 	 * the same "value" and same type. Otherwise a fail.
@@ -33,6 +56,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 	 * @param mixed  $first   Entity to compare.
 	 * @param mixed  $second  Entity to compare.
 	 * @param string $message Message to display.
+	 *
 	 * @return boolean
 	 */
 	public function assertIdenticalEntities(\ElggEntity $first, \ElggEntity $second, $message = '%s') {
@@ -45,6 +69,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 		if (!($res = $this->assertEqual(get_class($first), get_class($second)))) {
 			return $res;
 		}
+
 		return $this->assert(new IdenticalEntityExpectation($first), $second, $message);
 	}
 
@@ -52,6 +77,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 	 * Replace the current user session
 	 *
 	 * @param ElggUser $user New user to login as (null to log out)
+	 *
 	 * @return ElggUser|null Removed session user (or null)
 	 */
 	public function replaceSession(ElggUser $user = null) {
@@ -62,6 +88,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 		} else {
 			$session->removeLoggedInUser();
 		}
+
 		return $old;
 	}
 
@@ -69,7 +96,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 
 /**
  * Test for identity.
- * @package SimpleTest
+ * @package    SimpleTest
  * @subpackage UnitTester
  */
 class IdenticalEntityExpectation extends EqualExpectation {
@@ -88,6 +115,7 @@ class IdenticalEntityExpectation extends EqualExpectation {
 	 * Tests the expectation. True if it exactly matches the held value.
 	 *
 	 * @param mixed $compare Comparison value.
+	 *
 	 * @return boolean
 	 */
 	public function test($compare) {
@@ -101,11 +129,12 @@ class IdenticalEntityExpectation extends EqualExpectation {
 	 * Converts entity to array and filters not important attributes
 	 *
 	 * @param \ElggEntity $entity An entity to convert
+	 *
 	 * @return array
 	 */
 	protected function entityToFilteredArray($entity) {
-		$skippedKeys = array('last_action');
-		$array = (array)$entity;
+		$skippedKeys = ['last_action'];
+		$array = (array) $entity;
 		unset($array["\0*\0volatile"]);
 		unset($array["\0*\0orig_attributes"]);
 		foreach ($skippedKeys as $key) {
@@ -121,6 +150,7 @@ class IdenticalEntityExpectation extends EqualExpectation {
 	 * Returns a human readable test message.
 	 *
 	 * @param mixed $compare Comparison value.
+	 *
 	 * @return string
 	 */
 	public function testMessage($compare) {
@@ -133,9 +163,9 @@ class IdenticalEntityExpectation extends EqualExpectation {
 			return "Identical entity expectation [" . $dumper->describeValue($this->getValue()) . "]";
 		} else {
 			return "Identical entity expectation [" . $dumper->describeValue($this->getValue()) .
-					"] fails with [" .
-					$dumper->describeValue($compare) . "] " .
-					$dumper->describeDifference($value2, $compare2, TYPE_MATTERS);
+				"] fails with [" .
+				$dumper->describeValue($compare) . "] " .
+				$dumper->describeDifference($value2, $compare2, TYPE_MATTERS);
 		}
 	}
 

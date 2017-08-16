@@ -1637,7 +1637,7 @@ msgid "Document your service in ``docs/guides/services.rst`` (this file)."
 msgstr ""
 
 #: ../../contribute/services.rst:53
-msgid "Open the PHPUnit test ``Elgg\\ApplicationTest`` and add your service key to the ``$names`` array in ``testServices()``."
+msgid "Open the PHPUnit test ``Elgg\\ApplicationUnitTest`` and add your service key to the ``$names`` array in ``testServices()``."
 msgstr ""
 
 #: ../../contribute/services.rst:55

@@ -1,6 +1,17 @@
 <?php
 
-class ElggExtenderTest extends \Elgg\TestCase {
+/**
+ * @group UnitTests
+ */
+class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
+
+	public function up() {
+
+	}
+
+	public function down() {
+
+	}
 
 	public function testSettingAndGettingAttribute() {
 		$obj = $this->getMockForAbstractClass('\ElggExtender');

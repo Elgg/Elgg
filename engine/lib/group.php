@@ -88,6 +88,7 @@ function remove_group_tool_option($name) {
 function _elgg_groups_container_override($hook, $type, $result, $params) {
 	$container = $params['container'];
 	$user = $params['user'];
+
 	if (elgg_instanceof($container, 'group') && $user) {
 		/* @var \ElggGroup $container */
 		if ($container->isMember($user)) {
@@ -109,7 +110,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
  * @access private
  */
 function _elgg_groups_test($hook, $type, $value) {
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggGroupTest.php';
+	$value[] = ElggCoreGroupTest::class;
 	return $value;
 }
 

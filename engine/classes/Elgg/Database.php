@@ -99,8 +99,9 @@ class Database {
 	 *
 	 * @return Connection
 	 * @throws \DatabaseException
+	 * @access private
 	 */
-	protected function getConnection($type) {
+	public function getConnection($type) {
 		if (isset($this->connections[$type])) {
 			return $this->connections[$type];
 		} else if (isset($this->connections['readwrite'])) {

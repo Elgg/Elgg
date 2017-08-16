@@ -92,9 +92,19 @@ class DiContainer {
 		if (substr($name, -1) === '_') {
 			throw new \InvalidArgumentException('$name cannot end with "_"');
 		}
-		$this->remove($name);
 		$this->{$name} = $value;
 		return $this;
+	}
+
+	/**
+	 * Remove previously built service, so that it's rebuld from factory on next call
+	 *
+	 * @param string $name Name
+	 * @return void
+	 */
+	public function reset($name) {
+		$this->{$name} = null;
+		unset($this->{$name});
 	}
 
 	/**
