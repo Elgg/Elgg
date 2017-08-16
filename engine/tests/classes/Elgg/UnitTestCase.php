@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use DateTime;
-use Elgg\Di\ServiceProvider;
 use Elgg\Mocks\Di\MockServiceProvider;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -40,7 +38,6 @@ abstract class UnitTestCase extends BaseTestCase {
 			'crypto',
 			'context',
 			'db',
-			'dbConfig',
 			'emails',
 			'entityCache',
 			'entityPreloader',
@@ -93,27 +90,15 @@ abstract class UnitTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function bootstrap($force = false) {
-		$app = Application::$_instance;
-		if ($force || $app->_services->config->elgg_settings_file != self::getSettingsPath()) {
-			// When settings differ, bootstrap a new app
-			return parent::bootstrap();
-		} else {
-			// Otherwise just reset it
-			self::reset();
-			return $app;
-		}
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public static function createApplication() {
-
 		$settings_path = self::getSettingsPath();
 		$config = Config::fromFile($settings_path);
 
 		$sp = new MockServiceProvider($config);
+
+		// persistentLogin service needs this set to instantiate without calling DB
+		$sp->config->getCookieConfig();
+		$sp->config->boot_complete = false;
 
 		$app = Application::factory([
 			'config' => $config,
@@ -123,13 +108,10 @@ abstract class UnitTestCase extends BaseTestCase {
 			'set_start_time' => false,
 		]);
 
-		// persistentLogin service needs this set to instantiate without calling DB
-		$app->_services->config->getCookieConfig();
-
 		Application::setInstance($app);
 
 		if (in_array('--verbose', $_SERVER['argv'])) {
-			Logger::$verbosity = ConsoleOutput::VERBOSITY_VERBOSE;
+			Logger::$verbosity = ConsoleOutput::VERBOSITY_VERY_VERBOSE;
 		} else {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
 		}
@@ -150,12 +132,16 @@ abstract class UnitTestCase extends BaseTestCase {
 			'name' => 'Testing Site',
 			'description' => 'Testing Site',
 		]);
+
+		$this->up();
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	final protected function tearDown() {
+		$this->down();
+
 		parent::tearDown();
 	}
 

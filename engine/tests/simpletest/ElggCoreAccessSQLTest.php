@@ -11,31 +11,16 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	/** @var \ElggUser */
 	protected $user;
 
-	protected $backup_logged_in_user;
-
 	public function up() {
-		_elgg_services()->hooks->backup();
-
-		$this->user = new \ElggUser();
-		$this->user->username = 'fake_user_' . rand();
-		$this->user->email = 'fake_email@fake.com' . rand();
-		$this->user->name = 'fake user ' . rand();
-		$this->user->access_id = ACCESS_PUBLIC;
-		$this->user->setPassword((string) rand());
-		$this->user->owner_guid = 0;
-		$this->user->container_guid = 0;
-		$this->user->save();
-
-		$this->backup_logged_in_user = _elgg_services()->session->getLoggedInUser();
+		$this->user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($this->user);
+		_elgg_services()->hooks->backup();
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
-
-		_elgg_services()->session->setLoggedInUser($this->backup_logged_in_user);
-
+		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 		$this->user->delete();
+		_elgg_services()->hooks->restore();
 	}
 
 	public function testCanBuildAccessSqlClausesWithIgnoredAccess() {
@@ -192,14 +177,12 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 		$ia = elgg_set_ignore_access(true);
 
-		$owner = new ElggUser();
-		$owner->access_id = ACCESS_PUBLIC;
-		$owner->save();
+		$owner = $this->createUser();
 
-		$object = new ElggObject();
-		$object->owner_guid = $owner->guid;
-		$object->access_id = ACCESS_PRIVATE;
-		$object->save();
+		$object = $this->createObject([
+			'owner_guid' => $owner->guid,
+			'access_id' => ACCESS_PRIVATE,
+		]);
 
 		elgg_set_ignore_access($ia);
 

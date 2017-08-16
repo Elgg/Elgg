@@ -94,12 +94,17 @@ class Annotations {
 		}
 	
 		$access_id = (int) $access_id;
-		
-		// @todo we don't check that the entity is loaded which means the user may
-		// not have access to the entity
+
 		$entity = get_entity($entity_guid);
-	
-		if ($this->events->trigger('annotate', $entity->type, $entity)) {
+
+		if (!$entity) {
+			_elgg_services()->logger->error("Unable to load en entity with $entity_guid to annotate it");
+			$entity_type = null;
+		} else {
+			$entity_type = $entity->type;
+		}
+
+		if ($this->events->trigger('annotate', $entity_type, $entity)) {
 			$sql = "INSERT INTO {$this->db->prefix}annotations
 				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
 				VALUES
@@ -352,7 +357,7 @@ class Annotations {
 		if ($time_wheres) {
 			$options['wheres'][] = $time_wheres;
 		}
-	
+
 		return elgg_get_entities_from_metadata($options);
 	}
 	
@@ -389,15 +394,14 @@ class Annotations {
 	 * @see elgg_get_entities_from_annotations()
 	 */
 	function getEntitiesFromCalculation($options) {
-		
-		if (isset($options['count']) && $options['count']) {
+
+		if (!empty($options['count'])) {
 			return elgg_get_entities_from_annotations($options);
 		}
-		
-		$db_prefix = $this->db->prefix;
+
 		$defaults = [
 			'calculation' => 'sum',
-			'order_by' => 'annotation_calculation desc'
+			'order_by' => 'annotation_calculation desc, e.guid desc'
 		];
 	
 		$options = array_merge($defaults, $options);
@@ -406,10 +410,10 @@ class Annotations {
 	
 		// you must cast this as an int or it sorts wrong.
 		$options['selects'][] = 'e.*';
-		$options['selects'][] = "$function(CAST(n_table.value AS signed)) AS annotation_calculation";
+		$options['selects'][] = "$function(CAST(n_table.value AS DECIMAL(10, 2))) AS annotation_calculation";
 	
 		// don't need access control because it's taken care of by elgg_get_annotations.
-		$options['group_by'] = 'n_table.entity_guid';
+		$options['group_by'] = 'e.guid';
 
 		// do not default to a callback function used in elgg_get_annotation()
 		if (!isset($options['callback'])) {

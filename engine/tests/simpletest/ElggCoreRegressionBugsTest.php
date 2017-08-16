@@ -10,11 +10,11 @@
 class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 	public function up() {
-		$this->ia = elgg_set_ignore_access(true);
+
 	}
 
 	public function down() {
-		elgg_set_ignore_access($this->ia);
+
 	}
 
 	/**
@@ -58,8 +58,10 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'y2' => 150
 		];
 
+		_elgg_services()->logger->disable();
 		// should get back the same x/y offset == x1, y1 and an image of 50x50
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
+		_elgg_services()->logger->enable();
 
 		$this->assertEqual($params['newwidth'], $options['maxwidth']);
 		$this->assertEqual($params['newheight'], $options['maxheight']);
@@ -79,8 +81,10 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'y2' => 150
 		];
 
+		_elgg_services()->logger->disable();
 		// should get back the same x/y offset == x1, y1 and an image of 25x25 because no upscale
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
+		_elgg_services()->logger->enable();
 
 		$this->assertEqual($params['newwidth'], 25);
 		$this->assertEqual($params['newheight'], 25);
@@ -90,50 +94,43 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 	// #3722 Check canEdit() works for contains regardless of groups
 	function test_can_write_to_container() {
-		$user = new \ElggUser();
-		$user->username = 'test_user_' . rand();
-		$user->name = 'test_user_name_' . rand();
-		$user->email = 'test@user.net';
-		$user->container_guid = 0;
-		$user->owner_guid = 0;
-		$user->save();
+		$user = $this->createUser();
 
-		$object = new \ElggObject();
-		$object->save();
+		$owner = $this->createUser();
+		$object = $this->createObject([
+			'owner_guid' => $owner->guid,
+		]);
 
-		$group = new \ElggGroup();
-		$group->save();
+		$group_owner = $this->createUser();
+		$group = $this->createGroup([
+			'owner_guid' => $group_owner->guid,
+		]);
 
-		// disable access overrides because we're admin.
-		$ia = elgg_set_ignore_access(false);
+		_elgg_services()->logger->disable();
 
 		$this->assertFalse(can_write_to_container($user->guid, $object->guid));
 
-		global $elgg_test_user;
-		$elgg_test_user = $user;
-
 		// register hook to allow access
-		function can_write_to_container_test_hook($hook, $type, $value, $params) {
-			global $elgg_test_user;
-
-			if ($params['user']->getGUID() == $elgg_test_user->getGUID()) {
+		$callback = function ($hook, $type, $value, $params) use ($user) {
+			if ($params['user']->guid == $user->guid) {
 				return true;
 			}
-		}
+		};
 
-		elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook', 600);
+		elgg_register_plugin_hook_handler('container_permissions_check', 'all', $callback, 600);
 		$this->assertTrue(can_write_to_container($user->guid, $object->guid));
-		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
-
+		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', $callback);
 		$this->assertFalse(can_write_to_container($user->guid, $group->guid));
+
 		$group->join($user);
 		$this->assertTrue(can_write_to_container($user->guid, $group->guid));
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->logger->enable();
 
 		$user->delete();
-		$object->delete();
-		$group->delete();
+		$owner->delete();
+		$group_owner->delete();
+
 	}
 
 	/**
@@ -272,26 +269,29 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	 * https://github.com/Elgg/Elgg/issues/5538
 	 */
 	public function test_extra_columns_dont_appear_in_attributes() {
-		// may not have groups in DB - let's create one
-		$group = new \ElggGroup();
-		$group->name = 'test_group';
-		$group->access_id = ACCESS_PUBLIC;
-		$this->assertTrue($group->save() !== false);
 
-		// entity cache interferes with our test
-		_elgg_services()->entityCache->clear();
+		$entities = [];
 
-		foreach ([
-					 'site',
-					 'user',
-					 'group',
-					 'object'
-				 ] as $type) {
+		$types = \Elgg\Config::getEntityTypes();
+
+		foreach ($types as $type) {
+			switch ($type) {
+				case 'user' :
+					$entities[] = $this->createUser();
+					break;
+				case 'group' :
+					$entities[] = $this->createGroup();
+					break;
+				case 'object' :
+					$entities[] = $this->createObject();
+			}
+
 			$entities = elgg_get_entities([
 				'type' => $type,
 				'selects' => ['1 as _nonexistent_test_column'],
 				'limit' => 1,
 			]);
+
 			if (!$this->assertTrue($entities, "Query for '$type' did not return an entity.")) {
 				continue;
 			}
@@ -299,7 +299,9 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			$this->assertNull($entity->_nonexistent_test_column, "Additional select columns are leaking to attributes for '$type'");
 		}
 
-		$group->delete();
+		foreach ($entities as $entity) {
+			$entity->delete();
+		}
 	}
 
 	/**
@@ -446,21 +448,21 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	 */
 	function test_owned_get_entity_statistics() {
 
-		$user = new \ElggUser();
-		$user->save();
+		$user = $this->createUser();
 
 		$subtype = 'issue7845' . rand(0, 100);
 
-		$object = new \ElggObject();
-		$object->subtype = $subtype;
-		$object->owner_guid = $user->guid;
-		$object->save();
+		$object = $this->createObject([
+			'subtype' => $subtype,
+			'owner_guid' => $user->guid,
+		]);
 
 		$stats = get_entity_statistics($user->guid);
 
 		$this->assertEqual($stats['object'][$subtype], 1);
 
 		$user->delete();
+		$object->delete();
 	}
 
 }

@@ -7,12 +7,19 @@ namespace Elgg;
 
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
+use ElggUser;
+use RuntimeException;
 
 /**
  * Testing trait that provides utility methods agnostic to testing framework
  * This trait can be shared e.g. between PHPUnit and Simpletest test cases
  */
 trait Testing {
+
+	/**
+	 * @var ElggUser
+	 */
+	protected $_testing_admin;
 
 	/**
 	 * Resolve test file name in /test_files
@@ -63,5 +70,33 @@ trait Testing {
 		}
 
 		return $request;
+	}
+
+	/**
+	 * Returns an admin user
+	 * @return ElggUser
+	 * @throws RuntimeException
+	 */
+	public function getAdmin() {
+
+		$admin = $this->_testing_admin;
+		if (!$admin) {
+			$admins = elgg_get_admins([
+				'limit' => 1,
+				'order_by' => 'e.time_created ASC',
+			]);
+
+			$admin = false;
+			if ($admins) {
+				$admin = array_shift($admins);
+			}
+			$this->_testing_admin = $admin;
+		}
+
+		if (!$admin instanceof ElggUser || !$admin->isAdmin()) {
+			throw new RuntimeException("Unable to load an administrator user entity to perform tests.");
+		}
+
+		return $admin;
 	}
 }

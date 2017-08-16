@@ -83,8 +83,8 @@ matrix:
        - php ./elgg-cli database:seed -vv
       script:
        - php -f ./.scripts/is_memcached_enabled.php
-       - ./vendor/bin/phpunit
        - php ./elgg-cli simpletest -p all
+       - ./vendor/bin/phpunit
       after_script:
        - php ./elgg-cli database:unseed -vv
 
@@ -98,8 +98,8 @@ matrix:
       install:
        - composer travis:install-with-mysql
       script:
-       - ./vendor/bin/phpunit
        - php ./elgg-cli simpletest -p all
+       - ./vendor/bin/phpunit
 
     # End to end tests
     - php: 5.6
@@ -115,8 +115,8 @@ matrix:
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-       - ./vendor/bin/phpunit
        - php ./elgg-cli simpletest -p all
+       - ./vendor/bin/phpunit
       after_script:
        - php ./elgg-cli database:unseed -vv
 
@@ -137,12 +137,12 @@ matrix:
         - git checkout -
         - composer install --prefer-dist
         - php -f ./.scripts/travis/upgrade.php
-      script:
-        #- ./vendor/bin/phpunit  # not necessary
-        - php ./elgg-cli simpletest -p all
         - php -S localhost:8888 index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
+      script:
         - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
+        - php ./elgg-cli simpletest -p all
+        - ./vendor/bin/phpunit
       after_script:
         - php ./elgg-cli database:unseed -vv
 
@@ -156,12 +156,12 @@ before_install:
 install: composer travis:install-with-mysql
 
 script:
+  - php ./elgg-cli simpletest -p all -v
   # in this build, we want to make sure the test suites can bootstrap on their own
   # combined test runner is executed in e2e builds
   - ./vendor/bin/phpunit --testsuite unit
   - ./vendor/bin/phpunit --testsuite integration
   - ./vendor/bin/phpunit --testsuite plugins
-  - php ./elgg-cli simpletest -p all -v
 
 notifications:
   email:

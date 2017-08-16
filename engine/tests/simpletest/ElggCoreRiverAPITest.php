@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Values;
+
 /**
  * Elgg Test river api
  *
@@ -13,52 +15,51 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 	 */
 	protected $entity;
 
+	/**
+	 * @var ElggUser
+	 */
 	protected $user;
 
-	protected $backup_logged_in_user;
-
 	public function up() {
-		_elgg_services()->hooks->backup();
+		$user = $this->createUser();
 
-		$user = new ElggUser();
-		$user->username = "core_river_api_test_user_" . rand();
-		$user->access_id = ACCESS_PUBLIC;
-		$user->save();
-
-		$entity = new ElggObject();
-		$entity->owner_guid = $user->guid;
-		$entity->save();
+		$entity = $this->createObject([
+			'owner_guid' => $user->guid,
+		]);
 
 		$this->user = $user;
 		$this->entity = $entity;
 
-		$this->backup_logged_in_user = _elgg_services()->session->getLoggedInUser();
 		_elgg_services()->session->setLoggedInUser($user);
-
-		$this->assertFalse(elgg_get_ignore_access());
 
 		// By default, only admins are allowed to delete river items
 		// For the sake of this test case, we will allow the user to delete items
-		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', function ($hook, $type, $return, $params) use ($user) {
-			$hook_user = elgg_extract('user', $params);
-			if (!$hook_user) {
-				return;
-			}
-
-			if ($user->guid === $hook_user->guid) {
-				return true;
-			}
-		});
+		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', [
+			$this,
+			'allowDelete'
+		]);
 	}
 
 	public function down() {
-		_elgg_services()->hooks->restore();
-
-		$this->assertFalse(elgg_get_ignore_access());
-
-		_elgg_services()->session->setLoggedInUser($this->backup_logged_in_user);
+		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 
 		$this->user->delete();
+
+		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', [
+			$this,
+			'allowDelete'
+		]);
+	}
+
+	public function allowDelete($hook, $type, $return, $params) {
+		$hook_user = elgg_extract('user', $params);
+		if (!$hook_user) {
+			return;
+		}
+
+		if ($this->user->guid === $hook_user->guid) {
+			return true;
+		}
 	}
 
 	public function testCanCreateRiverItem() {
@@ -134,12 +135,12 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		];
 
 		elgg_register_plugin_hook_handler('creating', 'river', [
-			Elgg\Values::class,
+			Values::class,
 			'getFalse'
 		]);
 		$id = elgg_create_river_item($params);
 		elgg_unregister_plugin_hook_handler('creating', 'river', [
-			Elgg\Values::class,
+			Values::class,
 			'getFalse'
 		]);
 
@@ -157,12 +158,12 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		$item = elgg_create_river_item($params);
 
 		elgg_register_event_handler('delete:before', 'river', [
-			Elgg\Values::class,
+			Values::class,
 			'getFalse'
 		]);
 		$this->assertFalse($item->delete());
 		elgg_unregister_event_handler('delete:before', 'river', [
-			Elgg\Values::class,
+			Values::class,
 			'getFalse'
 		]);
 
@@ -337,11 +338,11 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggRiverDisableEnable() {
-		$user = new \ElggUser();
-		$user->save();
 
-		$this->entity = new \ElggObject();
-		$this->entity->save();
+		$this->assertTrue(_elgg_services()->hooks->getEvents()->hasHandler('disable:after', 'all', '_elgg_river_disable'));
+
+		$user = $this->createUser();
+		$this->entity = $this->createObject();
 
 		$params = [
 			'view' => 'river/relationship/friend/create',
@@ -356,7 +357,9 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 		$this->assertIdentical($river[0]->enabled, 'yes');
 
-		$user->disable();
+		$ia = elgg_set_ignore_access(true);
+		$this->assertTrue($user->disable());
+		elgg_set_ignore_access($ia);
 
 		// should no longer be able to get the river
 		$river = elgg_get_river(['ids' => [$id]]);
@@ -364,9 +367,12 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		$this->assertIdentical($river, []);
 
 		// renabling the user should re-enable the river
+		$ia = elgg_set_ignore_access(true);
+		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 		$user->enable();
-		access_show_hidden_entities(false);
+		access_show_hidden_entities($ha);
+		elgg_set_ignore_access($ia);
 
 		$river = elgg_get_river(['ids' => [$id]]);
 
@@ -375,5 +381,4 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		$user->delete();
 		$this->entity->delete();
 	}
-
 }

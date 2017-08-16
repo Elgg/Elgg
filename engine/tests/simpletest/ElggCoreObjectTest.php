@@ -39,9 +39,9 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 
 	public function testElggObjectSave() {
 		// new object
-		$this->AssertEqual($this->entity->getGUID(), 0);
+		$this->assertEqual($this->entity->getGUID(), 0);
 		$guid = $this->entity->save();
-		$this->AssertNotEqual($guid, 0);
+		$this->assertNotEqual($guid, 0);
 
 		$entity_row = $this->get_entity_row($guid);
 		$this->assertIsA($entity_row, '\stdClass');
@@ -180,20 +180,31 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggRecursiveDelete() {
-		$types = array('\ElggGroup', '\ElggObject', '\ElggUser');
+		$types = array('group', 'object', 'user');
 		$db_prefix = _elgg_config()->dbprefix;
 
 		foreach ($types as $type) {
-			$parent = new $type();
-			$this->assertTrue($parent->save());
-			
-			$child = new \ElggObject();
-			$child->container_guid = $parent->guid;
-			$this->assertTrue($child->save());
+			switch ($type) {
+				case 'group' :
+					$parent = $this->createGroup();
+					break;
 
-			$grandchild = new \ElggObject();
-			$grandchild->container_guid = $child->guid;
-			$this->assertTrue($grandchild->save());
+				case 'user' :
+					$parent = $this->createUser();
+					break;
+
+				case 'object' :
+					$parent = $this->createObject();
+					break;
+			}
+			
+			$child = $this->createObject([
+				'container_guid' => $parent->guid,
+			]);
+
+			$grandchild = $this->createObject([
+				'container_guid' => $child->guid,
+			]);
 
 			$this->assertTrue($parent->delete(true));
 

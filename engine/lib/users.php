@@ -291,12 +291,13 @@ function validate_email_address($address) {
  * @param string $email                 The user's email address
  * @param bool   $allow_multiple_emails Allow the same email address to be
  *                                      registered multiple times?
+ * @param string $subtype               Subtype of the user entity
  *
  * @return int|false The new user's GUID; false on failure
  * @throws RegistrationException
  */
-function register_user($username, $password, $name, $email, $allow_multiple_emails = false) {
-	return _elgg_services()->usersTable->register($username, $password, $name, $email, $allow_multiple_emails);
+function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
+	return _elgg_services()->usersTable->register($username, $password, $name, $email, $allow_multiple_emails, $subtype);
 }
 
 /**

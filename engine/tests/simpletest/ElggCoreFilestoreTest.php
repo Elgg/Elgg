@@ -19,7 +19,7 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 		$CONFIG = _elgg_config();
 		
 		// create a user to own the file
-		$user = $this->createTestUser();
+		$user = $this->createUser();
 		$dir = new \Elgg\EntityDirLocator($user->guid);
 		
 		// setup a test file
@@ -45,10 +45,10 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 	function testElggFileDelete() {
 		$CONFIG = _elgg_config();
 		
-		$user = $this->createTestUser();
+		$user = $this->createUser();
 		$filestore = $this->filestore;
 		$dir = new \Elgg\EntityDirLocator($user->guid);
-		
+
 		$file = new \ElggFile();
 		$file->owner_guid = $user->guid;
 		$file->setFilename('testing/ElggFileDelete');
@@ -65,20 +65,5 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 		$this->assertTrue($file->delete());
 		$this->assertFalse(file_exists($filepath));
 		$user->delete();
-	}
-
-	protected function createTestUser($username = 'fileTest') {
-		// in case a test failure left the user
-		$user = get_user_by_username($username);
-		if ($user) {
-			return $user;
-		}
-
-		$user = new \ElggUser();
-		$user->username = $username;
-		$guid = $user->save();
-		
-		// load user to have access to creation time
-		return get_entity($guid);
 	}
 }

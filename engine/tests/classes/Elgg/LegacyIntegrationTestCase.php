@@ -1,13 +1,19 @@
 <?php
-/**
- *
- */
 
 namespace Elgg;
 
 use ElggUser;
 
-class LegacyIntegrationTestCase extends IntegrationTestCase {
+/**
+ * Proxies simpletest assertions and old simpletest unit case methods
+ * so that we can easily port existing simpletests to PHPUnit
+ *
+ * DO NOT EXTEND THIS CLASS IF YOU ARE WRITING NEW TESTS
+ *
+ * @deprecated
+ * @access private
+ */
+abstract class LegacyIntegrationTestCase extends IntegrationTestCase {
 
 	/**
 	 * Replace the current user session
@@ -56,48 +62,74 @@ class LegacyIntegrationTestCase extends IntegrationTestCase {
 		return $this->assert(new IdenticalEntityExpectation($first), $second, $message);
 	}
 
-	public function assertEqual($expected, $actual) {
-		return $this->assertEquals($expected, $actual);
+	public static function assertTrue($condition, $message = '') {
+		// PHPUnit expects an actual boolean
+		return \PHPUnit_Framework_TestCase::assertTrue((bool) $condition, $message);
 	}
 
-	public function assertNotEqual($expected, $actual) {
-		return $this->assertNotEquals($expected, $actual);
+	public static function assertFalse($condition, $message = '') {
+		// PHPUnit expects an actual boolean
+		return \PHPUnit_Framework_TestCase::assertFalse((bool) $condition, $message);
 	}
 
-	public function assertWithinMargin($expected, $actual, $margin) {
-		return $this->assertEquals($expected, $actual, '', $margin);
+	public function assertEqual($expected, $actual, $message = '') {
+		return $this->assertEquals($expected, $actual, $message);
 	}
 
-	public function assertIdentical($expected, $actual) {
-		return $this->assertSame($expected, $actual);
+	public function assertNotEqual($expected, $actual, $message = '') {
+		return $this->assertNotEquals($expected, $actual, $message);
 	}
 
-	public function assertNotIdentical($expected, $actual) {
-		return $this->assertNotSame($expected, $actual);
+	public function assertWithinMargin($expected, $actual, $margin, $message = '') {
+		return $this->assertEquals($expected, $actual, $message, $margin);
 	}
 
-	public function assertIsA($actual, $classname) {
+	public function assertIdentical($expected, $actual, $message = '') {
+		return $this->assertSame($expected, $actual, $message);
+	}
+
+	public function assertNotIdentical($expected, $actual, $message = '') {
+		return $this->assertNotSame($expected, $actual, $message);
+	}
+
+	public function assertIsA($actual, $classname, $message = '') {
 		switch ($classname) {
 			case 'array' :
-				return $this->assertEquals('array', gettype($actual));
+				return $this->assertEquals('array', gettype($actual), $message);
 			case 'int' :
-				return $this->assertInternalType('integer', $actual);
+				return $this->assertInternalType('integer', $actual, $message);
 			case 'string' :
-				return $this->assertInternalType('string', $actual);
+				return $this->assertInternalType('string', $actual, $message);
 		}
 
-		return $this->assertInstanceOf($classname, $actual);
+		return $this->assertInstanceOf($classname, $actual, $message);
 	}
 
-	public function assertPattern($pattern, $string) {
-		return $this->assertRegExp($pattern, $string);
+	public function assertPattern($pattern, $string, $message ='') {
+		return $this->assertRegExp($pattern, $string, $message);
 	}
 
-	public function assertNoPattern($pattern, $string) {
-		return $this->assertNotRegExp($pattern, $string);
+	public function assertNoPattern($pattern, $string, $message = '') {
+		return $this->assertNotRegExp($pattern, $string, $message);
 	}
 
-	public function expectError() {
-		return $this->setExpectedException('PHPUnit_Framework_Error');
+	public function expectError($message) {
+		return $this->setExpectedException(PHPUnit_Framework_Error::class, $message);
+	}
+
+	public function expectException($exception) {
+		return $this->setExpectedException(get_class($exception), $exception->getMessage());
+	}
+
+	public function skipUnless($condition, $message) {
+		if (!$condition) {
+			$this->markTestSkipped($message);
+		}
+	}
+
+	public function skipIf($condition, $message) {
+		if ($condition) {
+			$this->markTestSkipped($message);
+		}
 	}
 }
