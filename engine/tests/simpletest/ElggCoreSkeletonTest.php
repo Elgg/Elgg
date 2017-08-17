@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg Test Skeleton
  *
@@ -12,43 +13,20 @@
  *   return $value;
  * }
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Test
  */
 class ElggCoreSkeletonTest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-		
-		// all __construct() code should come after here
-	}
-
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
+	public function down() {
 
 	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		// all __destruct() code should go above here
-		parent::__destruct();
-	}
-
-	public function testFailure() {
-		$this->assertTrue(false);
+	public function testPass() {
+		$this->asserTrue(true);
 	}
 }

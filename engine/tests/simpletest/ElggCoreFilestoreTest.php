@@ -7,17 +7,11 @@
  */
 class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->filestore = new \ElggDiskFilestore();
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
+	public function down() {
 		unset($this->filestore);
 	}
 	

@@ -1,30 +1,20 @@
 <?php
+
 /**
  * Elgg Regression Tests -- GitHub Bugfixes
  * Any bugfixes from GitHub that require testing belong here.
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Test
  */
 class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
+	public function up() {
 		$this->ia = elgg_set_ignore_access(true);
-		parent::__construct();
-
-		// all __construct() code should come after here
 	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
+	public function down() {
 		elgg_set_ignore_access($this->ia);
-		// all __destruct() code should go above here
-		parent::__destruct();
 	}
 
 	/**
@@ -48,15 +38,15 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	}
 
 	/**
-	 * #2063 - get_resized_image_from_existing_file() fails asked for image larger than selection and not scaling an image up
-	 * Test get_image_resize_parameters().
+	 * #2063 - get_resized_image_from_existing_file() fails asked for image larger than selection and not scaling an
+	 * image up Test get_image_resize_parameters().
 	 */
 	public function testElggResizeImage() {
 		$orig_width = 100;
 		$orig_height = 150;
 
 		// test against selection > max
-		$options = array(
+		$options = [
 			'maxwidth' => 50,
 			'maxheight' => 50,
 			'square' => true,
@@ -66,7 +56,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'y1' => 75,
 			'x2' => 100,
 			'y2' => 150
-		);
+		];
 
 		// should get back the same x/y offset == x1, y1 and an image of 50x50
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
@@ -77,7 +67,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		$this->assertEqual($params['yoffset'], $options['y1']);
 
 		// test against selection < max
-		$options = array(
+		$options = [
 			'maxwidth' => 50,
 			'maxheight' => 50,
 			'square' => true,
@@ -87,7 +77,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'y1' => 125,
 			'x2' => 100,
 			'y2' => 150
-		);
+		];
 
 		// should get back the same x/y offset == x1, y1 and an image of 25x25 because no upscale
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
@@ -151,7 +141,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	 * https://github.com/elgg/elgg/issues/2276 - improve char encoding
 	 */
 	public function test_friendly_title() {
-		$cases = array(
+		$cases = [
 			// acid test
 			"B&N > Amazon, OK? <bold> 'hey!' $34"
 			=> "bn-amazon-ok-bold-hey-34",
@@ -167,9 +157,9 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 			// accents removed, lower case, other multibyte chars are URL encoded
 			"I\xC3\xB1t\xC3\xABrn\xC3\xA2ti\xC3\xB4n\xC3\xA0liz\xC3\xA6ti\xC3\xB8n, AND \xE6\x97\xA5\xE6\x9C\xAC\xE8\xAA\x9E"
-				// Iñtërnâtiônàlizætiøn, AND 日本語
+			// Iñtërnâtiônàlizætiøn, AND 日本語
 			=> 'internationalizaetion-and-%E6%97%A5%E6%9C%AC%E8%AA%9E',
-		);
+		];
 
 		// where available, string is converted to NFC before transliteration
 		if (\Elgg\Translit::hasNormalizerSupport()) {
@@ -189,7 +179,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	 */
 	public function test_parse_urls() {
 
-		$cases = array(
+		$cases = [
 			'no.link.here' =>
 				'no.link.here',
 			'simple link http://example.org test' =>
@@ -240,18 +230,18 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 			'parens in uri http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx' =>
 				'parens in uri <a href="http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx" rel="nofollow">http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx</a>'
-		);
+		];
 		foreach ($cases as $input => $output) {
 			$this->assertEqual($output, parse_urls($input));
 		}
 	}
-	
+
 	/**
 	 * Test #10398 -- elgg_parse_emails()
 	 * https://github.com/Elgg/Elgg/pull/10398
 	 */
 	public function test_elgg_parse_emails() {
-		$cases = array(
+		$cases = [
 			'no.email.here' =>
 				'no.email.here',
 			'simple email mail@test.com test' =>
@@ -270,7 +260,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 				'no double parsing 2 <a href="#">mail@test.com</a> test',
 			'no double parsing 3 <a href="#">with a lot of text - mail@test.com - around it</a> test' =>
 				'no double parsing 3 <a href="#">with a lot of text - mail@test.com - around it</a> test',
-		);
+		];
 		foreach ($cases as $input => $output) {
 			$this->assertEqual($output, elgg_parse_emails($input));
 		}
@@ -291,12 +281,17 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		// entity cache interferes with our test
 		_elgg_services()->entityCache->clear();
 
-		foreach (array('site', 'user', 'group', 'object') as $type) {
-			$entities = elgg_get_entities(array(
+		foreach ([
+					 'site',
+					 'user',
+					 'group',
+					 'object'
+				 ] as $type) {
+			$entities = elgg_get_entities([
 				'type' => $type,
-				'selects' => array('1 as _nonexistent_test_column'),
+				'selects' => ['1 as _nonexistent_test_column'],
 				'limit' => 1,
-			));
+			]);
 			if (!$this->assertTrue($entities, "Query for '$type' did not return an entity.")) {
 				continue;
 			}
@@ -308,7 +303,8 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	}
 
 	/**
-	 * Ensure that \ElggBatch doesn't go into infinite loop when disabling annotations recursively when show hidden is enabled.
+	 * Ensure that \ElggBatch doesn't go into infinite loop when disabling annotations recursively when show hidden is
+	 * enabled.
 	 *
 	 * https://github.com/Elgg/Elgg/issues/5952
 	 */
@@ -329,17 +325,18 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		//disable them
 		$show_hidden = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-		$options = array(
+		$options = [
 			'guid' => $group->guid,
-			'limit' => $total, //using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
-		);
+			'limit' => $total,
+			//using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
+		];
 		elgg_disable_annotations($options);
 		access_show_hidden_entities($show_hidden);
 
 		//confirm all being disabled
-		$annotations = $group->getAnnotations(array(
+		$annotations = $group->getAnnotations([
 			'limit' => $total,
-		));
+		]);
 		foreach ($annotations as $annotation) {
 			$this->assertTrue($annotation->enabled == 'no');
 		}
@@ -363,7 +360,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 		// make sure we can actually this in this environment
 		$element = new SimpleXMLElement($payload);
-		$can_load_entity = preg_match('/secret/', (string)$element->methodName);
+		$can_load_entity = preg_match('/secret/', (string) $element->methodName);
 
 		$this->skipUnless($can_load_entity, "XXE vulnerability cannot be tested on this system");
 
@@ -385,11 +382,17 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		$object->save();
 		$guid = $object->guid;
 
-		elgg_register_event_handler('update', 'object', array('\ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
+		elgg_register_event_handler('update', 'object', [
+			'\ElggCoreRegressionBugsTest',
+			'handleUpdateForIssue6225test'
+		]);
 
 		$object->save();
 
-		elgg_unregister_event_handler('update', 'object', array('\ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
+		elgg_unregister_event_handler('update', 'object', [
+			'\ElggCoreRegressionBugsTest',
+			'handleUpdateForIssue6225test'
+		]);
 
 		_elgg_services()->entityCache->remove($guid);
 		$object = get_entity($guid);
@@ -412,7 +415,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		elgg_push_context('admin');
 
 		elgg_register_plugin_hook_handler('prepare', 'menu:page', 'elgg_admin_sort_page_menu');
-		$result = elgg_trigger_plugin_hook('prepare', 'menu:page', array(), array());
+		$result = elgg_trigger_plugin_hook('prepare', 'menu:page', [], []);
 		$this->assertTrue(is_array($result), "Admin page menu fails to prepare for viewing");
 
 		elgg_pop_context();
@@ -424,7 +427,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	 */
 	function test_global_get_entity_statistics() {
 
-		$subtype = 'issue7845' . rand(0,100);
+		$subtype = 'issue7845' . rand(0, 100);
 
 		$object = new \ElggObject();
 		$object->subtype = $subtype;
@@ -446,7 +449,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		$user = new \ElggUser();
 		$user->save();
 
-		$subtype = 'issue7845' . rand(0,100);
+		$subtype = 'issue7845' . rand(0, 100);
 
 		$object = new \ElggObject();
 		$object->subtype = $subtype;

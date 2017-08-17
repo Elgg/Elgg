@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Access SQL tests
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Test
  */
 class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
@@ -12,11 +13,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	protected $backup_logged_in_user;
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
-		// Replace current hook service with new instance for each test
+	public function up() {
 		_elgg_services()->hooks->backup();
 
 		$this->user = new \ElggUser();
@@ -24,7 +21,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$this->user->email = 'fake_email@fake.com' . rand();
 		$this->user->name = 'fake user ' . rand();
 		$this->user->access_id = ACCESS_PUBLIC;
-		$this->user->setPassword((string)rand());
+		$this->user->setPassword((string) rand());
 		$this->user->owner_guid = 0;
 		$this->user->container_guid = 0;
 		$this->user->save();
@@ -33,10 +30,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		_elgg_services()->session->setLoggedInUser($this->user);
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
+	public function down() {
 		_elgg_services()->hooks->restore();
 
 		_elgg_services()->session->setLoggedInUser($this->backup_logged_in_user);
@@ -58,7 +52,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 			'ignore_access' => true,
 		]);
 		$ans = "((1 = 1))";
-		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");		
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
 	public function testCanBuildAccessSqlForLoggedInUser() {
@@ -72,9 +66,9 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	}
 
 	public function testCanBuildAccessSqlWithCustomTableAlias() {
-		$sql = _elgg_get_access_where_sql(array(
+		$sql = _elgg_get_access_where_sql([
 			'table_alias' => 'foo',
-		));
+		]);
 
 		$friends_clause = $this->getFriendsClause($this->user->guid, 'foo');
 		$owner_clause = $this->getOwnerClause($this->user->guid, 'foo');
@@ -84,10 +78,10 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 
 		// test with no alias
-		$sql = _elgg_get_access_where_sql(array(
+		$sql = _elgg_get_access_where_sql([
 			'user_guid' => $this->user->guid,
 			'table_alias' => '',
-		));
+		]);
 
 		$friends_clause = $this->getFriendsClause($this->user->guid, '');
 		$owner_clause = $this->getOwnerClause($this->user->guid, '');
@@ -98,9 +92,9 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	}
 
 	public function testCanBuildAccessSqlWithCustomGuidColumn() {
-		$sql = _elgg_get_access_where_sql(array(
+		$sql = _elgg_get_access_where_sql([
 			'owner_guid_column' => 'unit_test',
-		));
+		]);
 
 		$friends_clause = $this->getFriendsClause($this->user->guid, 'e', 'unit_test');
 		$owner_clause = $this->getOwnerClause($this->user->guid, 'e', 'unit_test');
@@ -125,7 +119,10 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	}
 
 	public function testAccessPluginHookRemoveEnabled() {
-		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'removeEnabledCallback'));
+		elgg_register_plugin_hook_handler('get_sql', 'access', [
+			$this,
+			'removeEnabledCallback'
+		]);
 		$sql = _elgg_get_access_where_sql([
 			'ignore_access' => true,
 		]);
@@ -134,12 +131,16 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	}
 
 	public function removeEnabledCallback($hook, $type, $clauses, $params) {
-		$clauses['ands'] = array();
+		$clauses['ands'] = [];
+
 		return $clauses;
 	}
 
 	public function testAccessPluginHookRemoveOrs() {
-		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'removeOrsCallback'));
+		elgg_register_plugin_hook_handler('get_sql', 'access', [
+			$this,
+			'removeOrsCallback'
+		]);
 		$sql = _elgg_get_access_where_sql([
 			'ignore_access' => true,
 		]);
@@ -148,12 +149,16 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	}
 
 	public function removeOrsCallback($hook, $type, $clauses, $params) {
-		$clauses['ors'] = array();
+		$clauses['ors'] = [];
+
 		return $clauses;
 	}
-	
+
 	public function testAccessPluginHookAddOr() {
-		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'addOrCallback'));
+		elgg_register_plugin_hook_handler('get_sql', 'access', [
+			$this,
+			'addOrCallback'
+		]);
 		$sql = _elgg_get_access_where_sql([
 			'ignore_access' => true,
 		]);
@@ -163,11 +168,15 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	public function addOrCallback($hook, $type, $clauses, $params) {
 		$clauses['ors'][] = '57 > 32';
+
 		return $clauses;
 	}
 
 	public function testAccessPluginHookAddAnd() {
-		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'addAndCallback'));
+		elgg_register_plugin_hook_handler('get_sql', 'access', [
+			$this,
+			'addAndCallback'
+		]);
 		$sql = _elgg_get_access_where_sql([
 			'ignore_access' => true,
 		]);
@@ -244,23 +253,27 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$owner->delete();
 		$object->delete();
 		elgg_set_ignore_access($ia);
+
+		$session->setLoggedInUser($viewer);
 	}
 
 	public function addAndCallback($hook, $type, $clauses, $params) {
 		$clauses['ands'][] = '57 > 32';
+
 		return $clauses;
 	}
 
 	protected function assertSqlEqual($sql1, $sql2) {
 		$sql1 = preg_replace('/\s+/', '', $sql1);
 		$sql2 = preg_replace('/\s+/', '', $sql2);
+
 		return $sql1 === $sql2;
 	}
 
 	protected function getFriendsClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {
 		$CONFIG = _elgg_config();
 		$table_alias = $table_alias ? $table_alias . '.' : '';
-	
+
 		return "{$table_alias}access_id = " . ACCESS_FRIENDS . "
 			AND {$table_alias}{$owner_guid} IN (
 				SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships
@@ -270,16 +283,19 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	protected function getOwnerClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {
 		$table_alias = $table_alias ? $table_alias . '.' : '';
+
 		return "{$table_alias}{$owner_guid} = $user_guid";
 	}
 
 	protected function getLoggedInAccessListClause($table_alias) {
 		$table_alias = $table_alias ? $table_alias . '.' : '';
+
 		return "{$table_alias}access_id IN (2,1)";
 	}
 
 	protected function getLoggedOutAccessListClause($table_alias) {
 		$table_alias = $table_alias ? $table_alias . '.' : '';
+
 		return "{$table_alias}access_id IN (2)";
 	}
 }

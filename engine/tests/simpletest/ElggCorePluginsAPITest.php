@@ -5,7 +5,7 @@ use Elgg\Project\Paths;
 /**
  * Elgg Plugins Test
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Plugins.Test
  */
 class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
@@ -14,13 +14,14 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 
 	// 1.8 package at test_files/plugin_18/
 	var $package18;
-	
-	public function __construct() {
-		parent::__construct();
 
+	public function up() {
 		$this->manifest18 = new \ElggPluginManifest($this->normalizeTestFilePath('plugin_18/manifest.xml'), 'plugin_test_18');
-		
 		$this->package18 = new \ElggPluginPackage($this->normalizeTestFilePath('plugin_18'));
+	}
+
+	public function down() {
+
 	}
 
 	// generic tests
@@ -49,7 +50,7 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 	// exact manifest values
 	// 1.8 interface
 	public function testElggPluginManifest18() {
-		$manifest_array = array(
+		$manifest_array = [
 			'name' => 'Test Manifest',
 			'author' => 'Anyone',
 			'version' => '1.0',
@@ -62,48 +63,115 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 			'copyright' => '(C) Elgg Foundation 2011',
 			'license' => 'GNU General Public License version 2',
 
-			'requires' => array(
-				array('type' => 'elgg_release', 'version' => '1.8-svn'),
-				array('type' => 'php_extension', 'name' => 'gd'),
-				array('type' => 'php_ini', 'name' => 'short_open_tag', 'value' => 'off'),
-				array('type' => 'php_version', 'version' => '5.6'),
-				array('type' => 'php_extension', 'name' => 'made_up', 'version' => '1.0'),
-				array('type' => 'plugin', 'name' => 'fake_plugin', 'version' => '1.0'),
-				array('type' => 'plugin', 'name' => 'profile', 'version' => '1.0'),
-				array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3', 'comparison' => 'lt'),
-				array('type' => 'priority', 'priority' => 'after', 'plugin' => 'profile'),
-			),
+			'requires' => [
+				[
+					'type' => 'elgg_release',
+					'version' => '1.8-svn'
+				],
+				[
+					'type' => 'php_extension',
+					'name' => 'gd'
+				],
+				[
+					'type' => 'php_ini',
+					'name' => 'short_open_tag',
+					'value' => 'off'
+				],
+				[
+					'type' => 'php_version',
+					'version' => '5.6'
+				],
+				[
+					'type' => 'php_extension',
+					'name' => 'made_up',
+					'version' => '1.0'
+				],
+				[
+					'type' => 'plugin',
+					'name' => 'fake_plugin',
+					'version' => '1.0'
+				],
+				[
+					'type' => 'plugin',
+					'name' => 'profile',
+					'version' => '1.0'
+				],
+				[
+					'type' => 'plugin',
+					'name' => 'profile_api',
+					'version' => '1.3',
+					'comparison' => 'lt'
+				],
+				[
+					'type' => 'priority',
+					'priority' => 'after',
+					'plugin' => 'profile'
+				],
+			],
 
-			'screenshot' => array(
-				array('description' => 'Fun things to do 1', 'path' => 'graphics/plugin_ss1.png'),
-				array('description' => 'Fun things to do 2', 'path' => 'graphics/plugin_ss2.png'),
-			),
-			
-			'contributor' => array(
-				array('name' => 'Evan Winslow', 'email' => 'evan@elgg.org', 'website' => 'http://evanwinslow.com/', 'username' => 'ewinslow', 'description' => "Description of Evan's role in the project"),
-				array('name' => 'Cash Costello', 'email' => 'cash@elgg.org', 'description' => "Description of Cash's role in the project"),
-			),
+			'screenshot' => [
+				[
+					'description' => 'Fun things to do 1',
+					'path' => 'graphics/plugin_ss1.png'
+				],
+				[
+					'description' => 'Fun things to do 2',
+					'path' => 'graphics/plugin_ss2.png'
+				],
+			],
 
-			'category' => array(
-				'Admin', 'ServiceAPI'
-			),
+			'contributor' => [
+				[
+					'name' => 'Evan Winslow',
+					'email' => 'evan@elgg.org',
+					'website' => 'http://evanwinslow.com/',
+					'username' => 'ewinslow',
+					'description' => "Description of Evan's role in the project"
+				],
+				[
+					'name' => 'Cash Costello',
+					'email' => 'cash@elgg.org',
+					'description' => "Description of Cash's role in the project"
+				],
+			],
 
-			'conflicts' => array(
-				array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.0')
-			),
+			'category' => [
+				'Admin',
+				'ServiceAPI'
+			],
 
-			'provides' => array(
-				array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3'),
-				array('type' => 'php_extension', 'name' => 'big_math', 'version' => '1.0')
-			),
+			'conflicts' => [
+				[
+					'type' => 'plugin',
+					'name' => 'profile_api',
+					'version' => '1.0'
+				]
+			],
 
-			'suggests' => array(
-				array('type' => 'plugin', 'name' => 'facebook_connect', 'version' => '1.0'),
-			),
+			'provides' => [
+				[
+					'type' => 'plugin',
+					'name' => 'profile_api',
+					'version' => '1.3'
+				],
+				[
+					'type' => 'php_extension',
+					'name' => 'big_math',
+					'version' => '1.0'
+				]
+			],
+
+			'suggests' => [
+				[
+					'type' => 'plugin',
+					'name' => 'facebook_connect',
+					'version' => '1.0'
+				],
+			],
 
 			// string because we are reading from a file
 			'activate_on_install' => 'true',
-		);
+		];
 
 		$this->assertIdentical($this->manifest18->getManifest(), $manifest_array);
 	}
@@ -136,16 +204,16 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 	public function testElggPluginManifestGetWebsite() {
 		$this->assertEqual($this->manifest18->getWebsite(), 'http://www.elgg.org/');
 	}
-	
+
 	public function testElggPluginManifestGetRepository() {
 		$this->assertEqual($this->manifest18->getRepositoryURL(), 'https://github.com/Elgg/Elgg');
 	}
-	
-		public function testElggPluginManifestGetBugtracker() {
+
+	public function testElggPluginManifestGetBugtracker() {
 		$this->assertEqual($this->manifest18->getBugTrackerURL(), 'https://github.com/elgg/elgg/issues');
 	}
-	
-		public function testElggPluginManifestGetDonationsPage() {
+
+	public function testElggPluginManifestGetDonationsPage() {
 		$this->assertEqual($this->manifest18->getDonationsPageURL(), 'http://elgg.org/supporter.php');
 	}
 
@@ -159,25 +227,72 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 
 
 	public function testElggPluginManifestGetRequires() {
-		$requires = array(
-			array('type' => 'elgg_release', 'version' => '1.8-svn', 'comparison' => 'ge'),
-			array('type' => 'php_extension', 'name' => 'gd', 'version' => '', 'comparison' => '='),
-			array('type' => 'php_ini', 'name' => 'short_open_tag', 'value' => 0, 'comparison' => '='),
-			array('type' => 'php_version', 'version' => '5.6', 'comparison' => 'ge'),
-			array('type' => 'php_extension', 'name' => 'made_up', 'version' => '1.0', 'comparison' => '='),
-			array('type' => 'plugin', 'name' => 'fake_plugin', 'version' => '1.0', 'comparison' => 'ge'),
-			array('type' => 'plugin', 'name' => 'profile', 'version' => '1.0', 'comparison' => 'ge'),
-			array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3', 'comparison' => 'lt'),
-			array('type' => 'priority', 'priority' => 'after', 'plugin' => 'profile'),
-		);
+		$requires = [
+			[
+				'type' => 'elgg_release',
+				'version' => '1.8-svn',
+				'comparison' => 'ge'
+			],
+			[
+				'type' => 'php_extension',
+				'name' => 'gd',
+				'version' => '',
+				'comparison' => '='
+			],
+			[
+				'type' => 'php_ini',
+				'name' => 'short_open_tag',
+				'value' => 0,
+				'comparison' => '='
+			],
+			[
+				'type' => 'php_version',
+				'version' => '5.6',
+				'comparison' => 'ge'
+			],
+			[
+				'type' => 'php_extension',
+				'name' => 'made_up',
+				'version' => '1.0',
+				'comparison' => '='
+			],
+			[
+				'type' => 'plugin',
+				'name' => 'fake_plugin',
+				'version' => '1.0',
+				'comparison' => 'ge'
+			],
+			[
+				'type' => 'plugin',
+				'name' => 'profile',
+				'version' => '1.0',
+				'comparison' => 'ge'
+			],
+			[
+				'type' => 'plugin',
+				'name' => 'profile_api',
+				'version' => '1.3',
+				'comparison' => 'lt'
+			],
+			[
+				'type' => 'priority',
+				'priority' => 'after',
+				'plugin' => 'profile'
+			],
+		];
 
 		$this->assertIdentical($this->package18->getManifest()->getRequires(), $requires);
 	}
 
 	public function testElggPluginManifestGetSuggests() {
-		$suggests = array(
-			array('type' => 'plugin', 'name' => 'facebook_connect', 'version' => '1.0', 'comparison' => 'ge'),
-		);
+		$suggests = [
+			[
+				'type' => 'plugin',
+				'name' => 'facebook_connect',
+				'version' => '1.0',
+				'comparison' => 'ge'
+			],
+		];
 
 		$this->assertIdentical($this->package18->getManifest()->getSuggests(), $suggests);
 	}
@@ -187,50 +302,81 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggPluginManifestGetCategories() {
-		$categories = array(
-			'Admin', 'ServiceAPI'
-		);
+		$categories = [
+			'Admin',
+			'ServiceAPI'
+		];
 
 		$this->assertIdentical($this->package18->getManifest()->getCategories(), $categories);
 	}
 
 	public function testElggPluginManifestGetScreenshots() {
-		$screenshots = array(
-			array('description' => 'Fun things to do 1', 'path' => 'graphics/plugin_ss1.png'),
-			array('description' => 'Fun things to do 2', 'path' => 'graphics/plugin_ss2.png'),
-		);
+		$screenshots = [
+			[
+				'description' => 'Fun things to do 1',
+				'path' => 'graphics/plugin_ss1.png'
+			],
+			[
+				'description' => 'Fun things to do 2',
+				'path' => 'graphics/plugin_ss2.png'
+			],
+		];
 
 		$this->assertIdentical($this->package18->getManifest()->getScreenshots(), $screenshots);
 	}
-	
+
 	public function testElggPluginManifestGetContributors() {
-		$contributors = array(
-			array('name' => 'Evan Winslow', 'email' => 'evan@elgg.org', 'website' => 'http://evanwinslow.com/', 'username' => 'ewinslow', 'description' => "Description of Evan's role in the project"),
-			array('name' => 'Cash Costello', 'email' => 'cash@elgg.org', 'website' => '', 'username' => '', 'description' => "Description of Cash's role in the project"),
-		);
+		$contributors = [
+			[
+				'name' => 'Evan Winslow',
+				'email' => 'evan@elgg.org',
+				'website' => 'http://evanwinslow.com/',
+				'username' => 'ewinslow',
+				'description' => "Description of Evan's role in the project"
+			],
+			[
+				'name' => 'Cash Costello',
+				'email' => 'cash@elgg.org',
+				'website' => '',
+				'username' => '',
+				'description' => "Description of Cash's role in the project"
+			],
+		];
 
 		$this->assertIdentical($this->package18->getManifest()->getContributors(), $contributors);
 	}
 
 	public function testElggPluginManifestGetProvides() {
-		$provides = array(
-			array('type' => 'plugin', 'name' => 'profile_api', 'version' => '1.3'),
-			array('type' => 'php_extension', 'name' => 'big_math', 'version' => '1.0'),
-			array('type' => 'plugin', 'name' => 'plugin_18', 'version' => '1.0')
-		);
+		$provides = [
+			[
+				'type' => 'plugin',
+				'name' => 'profile_api',
+				'version' => '1.3'
+			],
+			[
+				'type' => 'php_extension',
+				'name' => 'big_math',
+				'version' => '1.0'
+			],
+			[
+				'type' => 'plugin',
+				'name' => 'plugin_18',
+				'version' => '1.0'
+			]
+		];
 
 		$this->assertIdentical($this->package18->getManifest()->getProvides(), $provides);
 	}
 
 	public function testElggPluginManifestGetConflicts() {
-		$conflicts = array(
-			array(
+		$conflicts = [
+			[
 				'type' => 'plugin',
 				'name' => 'profile_api',
 				'version' => '1.0',
 				'comparison' => '='
-			)
-		);
+			]
+		];
 
 		$this->assertIdentical($this->manifest18->getConflicts(), $conflicts);
 	}
@@ -248,19 +394,19 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 		$package = new \ElggPluginPackage('profile');
 		$this->assertEqual($package->getID(), 'profile');
 	}
-	
+
 	// \ElggPlugin
 	public function testElggPluginIsValid() {
-		
+
 		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
-		
+
 		$this->assertIdentical(true, $test_plugin->isValid());
 	}
-	
+
 	public function testElggPluginGetID() {
-		
+
 		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
-		
+
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}
 

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Elgg Test \ElggSite
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Test
  */
 class ElggCoreSiteTest extends \ElggCoreUnitTest {
@@ -12,36 +13,16 @@ class ElggCoreSiteTest extends \ElggCoreUnitTest {
 	 */
 	public $site;
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->site = new \ElggSiteWithExposableAttributes();
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
+	public function down() {
 		unset($this->site);
 	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		parent::__destruct();
-	}
-
 	public function testElggSiteConstructor() {
-		$attributes = array();
+		$attributes = [];
 		$attributes['guid'] = null;
 		$attributes['type'] = 'site';
 		$attributes['subtype'] = null;
@@ -64,7 +45,11 @@ class ElggCoreSiteTest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggSiteGetUrl() {
-		$this->site->url = 'http://example.com/';
+		$this->skip('This test is now obsolete');
+
+		return;
+
+		//$this->site->url = 'http://example.com/';
 		$this->assertIdentical($this->site->getURL(), elgg_get_site_url());
 	}
 }

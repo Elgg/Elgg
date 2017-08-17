@@ -17,8 +17,7 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 	protected $backup_logged_in_user;
 
-	public function setUp() {
-
+	public function up() {
 		_elgg_services()->hooks->backup();
 
 		$user = new ElggUser();
@@ -40,7 +39,7 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 		// By default, only admins are allowed to delete river items
 		// For the sake of this test case, we will allow the user to delete items
-		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', function($hook, $type, $return, $params) use ($user) {
+		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', function ($hook, $type, $return, $params) use ($user) {
 			$hook_user = elgg_extract('user', $params);
 			if (!$hook_user) {
 				return;
@@ -50,15 +49,13 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 				return true;
 			}
 		});
-
 	}
 
-	public function tearDown() {
-
+	public function down() {
 		_elgg_services()->hooks->restore();
 
 		$this->assertFalse(elgg_get_ignore_access());
-		
+
 		_elgg_services()->session->setLoggedInUser($this->backup_logged_in_user);
 
 		$this->user->delete();
@@ -215,9 +212,10 @@ class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 		$captured = null;
 		$handler = function () use (&$captured) {
 			$captured = func_get_args();
+
 			return false;
 		};
-		
+
 		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', $handler);
 
 		$this->assertFalse($item->canDelete());

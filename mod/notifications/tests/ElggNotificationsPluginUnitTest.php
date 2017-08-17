@@ -20,7 +20,7 @@ class ElggNotificationsPluginUnitTest extends ElggCoreUnitTest {
 	 */
 	private $group;
 
-	public function setUp() {
+	public function up() {
 
 		elgg_register_notification_method('test');
 
@@ -36,7 +36,7 @@ class ElggNotificationsPluginUnitTest extends ElggCoreUnitTest {
 		$this->group->save();
 	}
 
-	public function tearDown() {
+	public function down() {
 
 		elgg_unregister_notification_method('test');
 

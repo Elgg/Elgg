@@ -12,20 +12,14 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	 */
 	protected $object;
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->object = new \ElggObject();
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-
+	public function down() {
 		unset($this->object);
 	}
+
 
 	public function testElggGetEntitiesFromMetadata() {
 		

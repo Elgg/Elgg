@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test write access arrays
  */
@@ -14,10 +15,7 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 	 */
 	protected $user;
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->group = new ElggGroup();
 		$this->group->membership = ACCESS_PUBLIC;
 		$this->group->access_id = ACCESS_PUBLIC;
@@ -25,6 +23,11 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 		$this->user = new ElggUser();
 		$this->user->username = 'test_user_' . rand();
 		$this->user->save();
+	}
+
+	public function down() {
+		$this->group->delete();
+		$this->user->delete();
 	}
 
 	/**
@@ -70,14 +73,6 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 		$original_page_owner_guid = (elgg_instanceof($original_page_owner)) ? $original_page_owner->guid : 0;
 		elgg_set_page_owner_guid($original_page_owner_guid);
 
-	}
-
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-		$this->group->delete();
-		$this->user->delete();
 	}
 
 }

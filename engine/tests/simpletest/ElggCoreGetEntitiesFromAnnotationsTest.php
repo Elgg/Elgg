@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test elgg_get_entities_from_annotations() and
  * elgg_get_entities_from_annotation_calculation()
@@ -9,11 +10,11 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	 * Creates random annotations on $entity
 	 *
 	 * @param \ElggEntity $entity
-	 * @param int        $max
+	 * @param int         $max
 	 */
 	protected function createRandomAnnotations($entity, $max = 1) {
-		$annotations = array();
-		for ($i=0; $i<$max; $i++) {
+		$annotations = [];
+		for ($i = 0; $i < $max; $i++) {
 			$name = 'test_annotation_name_' . rand();
 			$value = rand();
 			$id = create_annotation($entity->getGUID(), $name, $value, 'integer', $entity->getGUID());
@@ -25,10 +26,13 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 
 	public function testCanGetEntitiesByAnnotationCreationTime() {
 		$prefix = _elgg_config()->dbprefix;
-		$users = elgg_get_entities(array('type' => 'user', 'limit' => 1));
+		$users = elgg_get_entities([
+			'type' => 'user',
+			'limit' => 1
+		]);
 
 		// create some test annotations
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$annotation_name = 'test_annotation_name_' . rand();
 
@@ -51,22 +55,22 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 		$valid2->save();
 		$valid2->annotate($annotation_name, 1, ACCESS_PUBLIC, $users[0]->guid);
 
-		$options = array(
+		$options = [
 			'annotation_owner_guid' => $users[0]->guid,
 			'annotation_created_time_lower' => (time() - 3600),
 			'annotation_name' => $annotation_name,
-		);
+		];
 
 		$entities = elgg_get_entities_from_annotations($options);
 
 		$this->assertEqual(1, count($entities));
 		$this->assertEqual($valid2->guid, $entities[0]->guid);
 
-		$options = array(
+		$options = [
 			'annotation_owner_guid' => $users[0]->guid,
 			'annotation_created_time_upper' => (time() - 3600),
 			'annotation_name' => $annotation_name,
-		);
+		];
 
 		$entities = elgg_get_entities_from_annotations($options);
 
@@ -81,16 +85,19 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 
 		// grab a few different users to annotation
 		// there will always be at least 2 here because of the construct.
-		$users = elgg_get_entities(array('type' => 'user', 'limit' => 2));
+		$users = elgg_get_entities([
+			'type' => 'user',
+			'limit' => 2
+		]);
 
 		// create some test annotations
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$annotation_name = 'test_annotation_name_' . rand();
 		$annotation_value = rand(1000, 9999);
 		$annotation_name2 = 'test_annotation_name_' . rand();
 		$annotation_value2 = rand(1000, 9999);
-		$guids = array();
+		$guids = [];
 
 		// our targets
 		$valid = new \ElggObject();
@@ -105,16 +112,16 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 		$guids[] = $valid2->getGUID();
 		create_annotation($valid2->getGUID(), $annotation_name2, $annotation_value2, 'integer', $users[1]->getGUID());
 
-		$options = array(
+		$options = [
 			'annotation_owner_guid' => $users[0]->getGUID(),
 			'annotation_name' => $annotation_name
-		);
+		];
 
 		$entities = elgg_get_entities_from_annotations($options);
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->getGUID(), $guids));
-			$annotations = $entity->getAnnotations(array('annotation_name' => $annotation_name));
+			$annotations = $entity->getAnnotations(['annotation_name' => $annotation_name]);
 			$this->assertEqual(count($annotations), 1);
 
 			$this->assertEqual($annotations[0]->name, $annotation_name);
@@ -128,25 +135,28 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			}
 		}
 	}
-	
+
 	/**
 	 * This function tests the deprecated behaviour of egef_annotations
 	 * discussed in https://github.com/Elgg/Elgg/issues/6638
 	 */
 	public function testElggApiGettersEntitiesFromAnnotationOrderByMaxtime() {
-		
+
 		// grab a few different users to annotation
 		// there will always be at least 2 here because of the construct.
-		$users = elgg_get_entities(array('type' => 'user', 'limit' => 2));
+		$users = elgg_get_entities([
+			'type' => 'user',
+			'limit' => 2
+		]);
 
 		// create some test annotations
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$annotation_name = 'test_annotation_name_' . rand();
 		$annotation_value = rand(1000, 9999);
 		$annotation_name2 = 'test_annotation_name_' . rand();
 		$annotation_value2 = rand(1000, 9999);
-		$guids = array();
+		$guids = [];
 
 		// our targets
 		$valid = new \ElggObject();
@@ -161,19 +171,19 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 		$guids[] = $valid2->getGUID();
 		create_annotation($valid2->getGUID(), $annotation_name2, $annotation_value2, 'integer', $users[1]->getGUID());
 
-		$options = array(
+		$options = [
 			'annotation_owner_guid' => $users[0]->getGUID(),
 			'annotation_name' => $annotation_name,
-			'selects' => array('MAX(n_table.time_created) AS maxtime'),
+			'selects' => ['MAX(n_table.time_created) AS maxtime'],
 			'group_by' => 'n_table.entity_guid',
 			'order_by' => 'maxtime'
-		);
+		];
 
 		$entities = elgg_get_entities_from_annotations($options);
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->getGUID(), $guids));
-			$annotations = $entity->getAnnotations(array('annotation_name' => $annotation_name));
+			$annotations = $entity->getAnnotations(['annotation_name' => $annotation_name]);
 			$this->assertEqual(count($annotations), 1);
 
 			$this->assertEqual($annotations[0]->name, $annotation_name);
@@ -187,7 +197,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			}
 		}
 	}
-	
+
 
 	/**
 	 * Get entities ordered by various MySQL calculations on their annotations
@@ -195,27 +205,47 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	 * @covers elgg_get_entities_from_annotation_calculation()
 	 */
 	public function testElggGetEntitiesFromAnnotationsCalculateX() {
-		$types = array('sum', 'avg', 'min', 'max');
+		$types = [
+			'sum',
+			'avg',
+			'min',
+			'max'
+		];
 		$num_entities = 5;
 		// these are chosen to avoid the sums, means, mins, maxs being the same
 		// note that the calculation is cast to an int in SQL
-		$numbers = array(
-			array(0, 5),
-			array(2, 13),
-			array(-3, 11),
-			array(7, 9),
-			array(1.2, 22),
-		);
+		$numbers = [
+			[
+				0,
+				5
+			],
+			[
+				2,
+				13
+			],
+			[
+				-3,
+				11
+			],
+			[
+				7,
+				9
+			],
+			[
+				1.2,
+				22
+			],
+		];
 
 		foreach ($types as $type) {
-			$subtypes = $this->getRandomValidSubtypes(array('object'), $num_entities);
+			$subtypes = $this->getRandomValidSubtypes(['object'], $num_entities);
 			$name = "test_annotation_tegefacx_$type";
-			$values = array();
-			$options = array(
+			$values = [];
+			$options = [
 				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => $num_entities,
-			);
+			];
 
 			$es = elgg_get_entities($options);
 
@@ -236,11 +266,17 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 						break;
 
 					case 'min':
-						$calc_value = min(array($value, $value2));
+						$calc_value = min([
+							$value,
+							$value2
+						]);
 						break;
 
 					case 'max':
-						$calc_value = max(array($value, $value2));
+						$calc_value = max([
+							$value,
+							$value2
+						]);
 						break;
 				}
 
@@ -250,19 +286,19 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			arsort($values);
 			$order = array_keys($values);
 
-			$options = array(
+			$options = [
 				'type' => 'object',
 				'subtypes' => $subtypes,
 				'limit' => $num_entities,
 				'annotation_name' => $name,
 				'calculation' => $type
-			);
+			];
 
 			$es = elgg_get_entities_from_annotation_calculation($options);
 
 			foreach ($es as $i => $e) {
 				$value = 0;
-				$as = $e->getAnnotations(array('annotation_name' => $name));
+				$as = $e->getAnnotations(['annotation_name' => $name]);
 				// should only ever be 2
 				$this->assertEqual(2, count($as));
 
@@ -279,11 +315,17 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 						break;
 
 					case 'min':
-						$calc_value = min(array($value, $value2));
+						$calc_value = min([
+							$value,
+							$value2
+						]);
 						break;
 
 					case 'max':
-						$calc_value = max(array($value, $value2));
+						$calc_value = max([
+							$value,
+							$value2
+						]);
 						break;
 				}
 
@@ -306,21 +348,38 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 
 		$num_entities = 3;
 
-		$subtypes = $this->getRandomValidSubtypes(array('object'), $num_entities);
+		$subtypes = $this->getRandomValidSubtypes(['object'], $num_entities);
 		$name = "test_annotation_tegefacxwhere_" . rand(0, 9999);
 
-		$values = array(
-			array(-3, 0, 5, 8, 'foo'),
-			array(-8, -5, -2, 0, 1),
-			array(-4, -2, -1, 'bar')
-		);
+		$values = [
+			[
+				-3,
+				0,
+				5,
+				8,
+				'foo'
+			],
+			[
+				-8,
+				-5,
+				-2,
+				0,
+				1
+			],
+			[
+				-4,
+				-2,
+				-1,
+				'bar'
+			]
+		];
 		$assert_count = 2;
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'limit' => $num_entities,
-		);
+		];
 
 		$entities = elgg_get_entities($options);
 
@@ -330,32 +389,32 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			}
 		}
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'limit' => $num_entities,
 			'annotation_name' => $name,
 			'annotation_values' => array_unique(call_user_func_array('array_merge', $values)),
 			'calculation' => 'sum',
-			'wheres' => array(
+			'wheres' => [
 				"CAST(n_table.value as SIGNED) > 0"
-			)
-		);
+			]
+		];
 
 		$es = elgg_get_entities_from_annotation_calculation($options);
 
 		foreach ($es as $i => $e) {
 
-			$assertion_values = array();
+			$assertion_values = [];
 			foreach ($values[$i] as $value) {
 				if (is_numeric($value) && $value > 0) {
 					$assertion_values[] = $value;
 				}
 			}
-			$annotations = $e->getAnnotations(array(
+			$annotations = $e->getAnnotations([
 				'annotation_name' => $name,
-				'where' => array("CAST(n_table.value AS SIGNED) > 0")
-			));
+				'where' => ["CAST(n_table.value AS SIGNED) > 0"]
+			]);
 			if (count($assertion_values)) {
 				$this->assertIsA($annotations, 'array');
 				$this->assertEqual(count($assertion_values), count($annotations));
@@ -363,7 +422,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 				$this->assertFalse($annotations);
 			}
 
-			$annotation_values = array();
+			$annotation_values = [];
 			foreach ($annotations as $ann) {
 				$annotation_values[] = $ann->value;
 			}
@@ -387,14 +446,14 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 		// add two annotations with a unique name to a set of entities
 		// then count the number of entities using egefac()
 
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 3);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 3);
 		$name = 'test_annotation_' . rand(0, 9999);
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'limit' => 3
-		);
+		];
 
 		$entities = elgg_get_entities($options);
 
@@ -405,14 +464,19 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			$entity->annotate($name, $value);
 		}
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'annotation_name' => $name,
 			'count' => true,
-		);
+		];
 
-		$calculations = array('sum', 'avg', 'min', 'max');
+		$calculations = [
+			'sum',
+			'avg',
+			'min',
+			'max'
+		];
 		foreach ($calculations as $calculation) {
 			$options['calculation'] = $calculation;
 			$count = elgg_get_entities_from_annotation_calculation($options);
@@ -428,14 +492,14 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	 */
 	public function testElggGetEntitiesFromAnnotationCalculationCountFromAnnotationValues() {
 
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 3);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 3);
 		$value = rand(0, 9999);
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'limit' => 3
-		);
+		];
 
 		$es = elgg_get_entities($options);
 
@@ -444,13 +508,18 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			$e->annotate($name, $value);
 		}
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'annotation_value' => $value,
 			'count' => true,
-		);
-		$calculations = array('sum', 'avg', 'min', 'max');
+		];
+		$calculations = [
+			'sum',
+			'avg',
+			'min',
+			'max'
+		];
 		foreach ($calculations as $calculation) {
 			$options['calculation'] = $calculation;
 			$count = elgg_get_entities_from_annotation_calculation($options);
@@ -466,15 +535,15 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	 */
 	public function testElggGetEntitiesFromAnnotationCalculationCountFromAnnotationNameValuesPairs() {
 
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 3);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 3);
 		$value = rand(0, 9999);
 		$name = 'test_annotation_egefacnv';
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'limit' => 3
-		);
+		];
 
 		$es = elgg_get_entities($options);
 
@@ -482,15 +551,20 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 			$e->annotate($name, $value);
 		}
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'annotation_name' => $name,
 			'annotation_value' => $value,
 			'count' => true,
-		);
+		];
 
-		$calculations = array('sum', 'avg', 'min', 'max');
+		$calculations = [
+			'sum',
+			'avg',
+			'min',
+			'max'
+		];
 		foreach ($calculations as $calculation) {
 			$options['calculation'] = $calculation;
 			$count = elgg_get_entities_from_annotation_calculation($options);
@@ -499,17 +573,17 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	}
 
 	public function testElggGetAnnotationsAnnotationNames() {
-		$options = array('annotation_names' => array());
-		$a_e_map = array();
+		$options = ['annotation_names' => []];
+		$a_e_map = [];
 
 		// create test annotations on a few entities.
-		for ($i=0; $i<3; $i++) {
+		for ($i = 0; $i < 3; $i++) {
 			do {
 				$e = $this->entities[array_rand($this->entities)];
-			} while(in_array($e->guid, $a_e_map));
+			} while (in_array($e->guid, $a_e_map));
 			$annotations = $this->createRandomAnnotations($e);
 
-			foreach($annotations as $a) {
+			foreach ($annotations as $a) {
 				$options['annotation_names'][] = $a->name;
 				$a_e_map[$a->id] = $e->guid;
 			}
@@ -525,17 +599,17 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	}
 
 	public function testElggGetAnnotationsAnnotationValues() {
-		$options = array('annotation_values' => array());
-		$a_e_map = array();
+		$options = ['annotation_values' => []];
+		$a_e_map = [];
 
 		// create test annotations on a few entities.
-		for ($i=0; $i<3; $i++) {
+		for ($i = 0; $i < 3; $i++) {
 			do {
 				$e = $this->entities[array_rand($this->entities)];
-			} while(in_array($e->guid, $a_e_map));
+			} while (in_array($e->guid, $a_e_map));
 			$annotations = $this->createRandomAnnotations($e);
 
-			foreach($annotations as $a) {
+			foreach ($annotations as $a) {
 				$options['annotation_values'][] = $a->value;
 				$a_e_map[$a->id] = $e->guid;
 			}
@@ -551,20 +625,20 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTes
 	}
 
 	public function testElggGetAnnotationsAnnotationOwnerGuids() {
-		$options = array('annotation_owner_guids' => array());
-		$a_e_map = array();
+		$options = ['annotation_owner_guids' => []];
+		$a_e_map = [];
 
 		// create test annotations on a single entity
-		for ($i=0; $i<3; $i++) {
+		for ($i = 0; $i < 3; $i++) {
 			do {
 				$e = $this->entities[array_rand($this->entities)];
-			} while(in_array($e->guid, $a_e_map));
+			} while (in_array($e->guid, $a_e_map));
 
 			// remove annotations left over from previous tests.
-			elgg_delete_annotations(array('annotation_owner_guid' => $e->guid));
+			elgg_delete_annotations(['annotation_owner_guid' => $e->guid]);
 			$annotations = $this->createRandomAnnotations($e);
 
-			foreach($annotations as $a) {
+			foreach ($annotations as $a) {
 				$options['annotation_owner_guids'][] = $e->guid;
 				$a_e_map[$a->id] = $e->guid;
 			}

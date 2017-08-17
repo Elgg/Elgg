@@ -3,19 +3,14 @@
 /**
  * Access Collections tests
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Test
- * 
+ *
  * TODO(ewinslow): Move this to Elgg\Database\AccessCollectionsTest
  */
 class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-
+	public function up() {
 		$this->dbPrefix = elgg_get_config("dbprefix");
 
 		$user = new \ElggUser();
@@ -23,7 +18,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->setPassword((string)rand());
+		$user->setPassword((string) rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
@@ -31,13 +26,8 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$this->user = $user;
 	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		// all __destruct() code should go above here
+	public function down() {
 		$this->user->delete();
-		parent::__destruct();
 	}
 
 	public function testCreateGetDeleteACL() {
@@ -60,7 +50,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 			$q = "SELECT * FROM {$this->dbPrefix}access_collections WHERE id = $acl_id";
 			$data = get_data($q);
-			$this->assertIdentical(array(), $data);
+			$this->assertIdentical([], $data);
 		}
 	}
 
@@ -85,30 +75,30 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->setPassword((string)rand());
+		$user->setPassword((string) rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
 
 		$acl_id = create_access_collection('test acl');
 
-		$member_lists = array(
+		$member_lists = [
 			// adding
-			array(
+			[
 				$this->user->guid,
 				$user->guid
-			),
+			],
 			// removing one, keeping one.
-			array(
+			[
 				$user->guid
-			),
+			],
 			// removing one, adding one
-			array(
+			[
 				$this->user->guid,
-			),
+			],
 			// removing all.
-			array()
-		);
+			[]
+		];
 
 		foreach ($member_lists as $members) {
 			$result = update_access_collection($acl_id, $members);
@@ -168,10 +158,10 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		$acl_id = create_access_collection('test acl');
 
-		$acl_test_info = array(
+		$acl_test_info = [
 			'acl_id' => $acl_id,
 			'user' => $this->user
-		);
+		];
 
 		function test_acl_access_hook($hook, $type, $value, $params) {
 			global $acl_test_info;
@@ -267,7 +257,10 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->username = 'access_test_user';
 		$user->save();
 
-		foreach (array('get_access_list', 'get_access_array') as $func) {
+		foreach ([
+					 'get_access_list',
+					 'get_access_array'
+				 ] as $func) {
 			_elgg_services()->accessCache->clear();
 
 			// admin users run tests, so disable access
@@ -320,7 +313,10 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$ia = elgg_set_ignore_access(false);
 
 		// Default access array
-		$expected = [ACCESS_PUBLIC, ACCESS_LOGGED_IN];
+		$expected = [
+			ACCESS_PUBLIC,
+			ACCESS_LOGGED_IN
+		];
 		$actual = get_access_array($this->user->guid);
 
 		sort($expected);
@@ -352,7 +348,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		delete_access_collection($owned_collection_id);
 		delete_access_collection($joined_collection_id);
-		
+
 		elgg_set_ignore_access($ia);
 	}
 
@@ -373,7 +369,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		unset($actual[ACCESS_FRIENDS]);
 
 		$actual = array_keys($actual);
-		
+
 		sort($expected);
 		sort($actual);
 		$this->assertEqual($expected, $actual);
@@ -405,7 +401,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 			'owner_guid' => $this->user->guid,
 			'name' => 'test_collection',
 		]);
-		
+
 		$loaded_acl = get_access_collection($id);
 
 		$this->assertEqual($loaded_acl->id, $id);
@@ -438,7 +434,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		$id = create_access_collection('test_collection', $this->user->guid);
 		$acl = get_access_collection($id);
-		
+
 		$acl->addMember($member1->guid);
 		$acl->addMember($member2->guid);
 
@@ -450,7 +446,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$acl->removeMember($member2->guid);
 
 		$members = get_members_of_access_collection($id);
-		
+
 		$this->assertEqual([$member1], $members);
 
 		$this->assertTrue($acl->hasMember($member1->guid));

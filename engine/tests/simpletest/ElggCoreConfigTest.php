@@ -5,6 +5,14 @@
  */
 class ElggCoreConfigTest extends \ElggCoreUnitTest {
 
+	public function up() {
+
+	}
+
+	public function down() {
+
+	}
+	
 	public function testSetConfigWithTooLongName() {
 		_elgg_services()->logger->disable();
 

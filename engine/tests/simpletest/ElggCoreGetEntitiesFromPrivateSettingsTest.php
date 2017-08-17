@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test elgg_get_entities_from_private_settings()
  */
@@ -12,9 +13,9 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBas
 		$setting_name2 = 'test_setting_name_' . rand();
 		$setting_value2 = rand(1000, 9999);
 
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
-		$guids = array();
+		$guids = [];
 
 		// our targets
 		$valid = new \ElggObject();
@@ -32,9 +33,9 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBas
 		set_private_setting($valid2->getGUID(), $setting_name2, $setting_value2);
 
 		// simple test with name
-		$options = array(
+		$options = [
 			'private_setting_name' => $setting_name
-		);
+		];
 
 		$entities = elgg_get_entities_from_private_settings($options);
 
@@ -45,9 +46,9 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBas
 		}
 
 		// simple test with value
-		$options = array(
+		$options = [
 			'private_setting_value' => $setting_value
-		);
+		];
 
 		$entities = elgg_get_entities_from_private_settings($options);
 
@@ -58,20 +59,20 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBas
 		}
 
 		// test pairs
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'private_setting_name_value_pairs' => array(
-				array(
+			'private_setting_name_value_pairs' => [
+				[
 					'name' => $setting_name,
 					'value' => $setting_value
-				),
-				array(
+				],
+				[
 					'name' => $setting_name2,
 					'value' => $setting_value2
-				)
-			)
-		);
+				]
+			]
+		];
 
 		$entities = elgg_get_entities_from_private_settings($options);
 		$this->assertEqual(2, count($entities));

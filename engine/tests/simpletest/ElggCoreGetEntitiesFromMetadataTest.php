@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test elgg_get_entities_from_metadata()
  */
@@ -8,7 +9,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	function testElggApiGettersEntityMetadataNameValidSingle() {
 		// create a new entity with a subtype we know
 		// use an existing type so it will clean up automatically
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -18,11 +19,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->$md_name = $md_value;
 		$e->save();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -38,14 +39,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNameValidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
-		$md_names = array();
+		$md_names = [];
 
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$md_names[] = $md_name;
-		$e_guids = array();
+		$e_guids = [];
 
 		$e = new \ElggObject();
 		$e->subtype = $subtype;
@@ -63,11 +64,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->getGUID();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_names' => $md_names
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -81,7 +82,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNameInvalidSingle() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -93,21 +94,21 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 		$md_invalid_name = 'test_metadata_name_' . rand();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_invalid_name
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIdentical(array(), $entities);
+		$this->assertIdentical([], $entities);
 
 		$e->delete();
 	}
 
 	function testElggApiGettersEntityMetadataNameInvalidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -117,33 +118,33 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->$md_name = $md_value;
 		$e->save();
 
-		$md_invalid_names = array();
+		$md_invalid_names = [];
 		$md_invalid_names[] = 'test_metadata_name_' . rand();
 		$md_invalid_names[] = 'test_metadata_name_' . rand();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_names' => $md_invalid_names
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIdentical(array(), $entities);
+		$this->assertIdentical([], $entities);
 
 		$e->delete();
 	}
 
 
 	function testElggApiGettersEntityMetadataNameMixedMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
-		$md_names = array();
+		$md_names = [];
 
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$md_names[] = $md_name;
-		$e_guids = array();
+		$e_guids = [];
 
 		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
@@ -163,11 +164,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->getGUID();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_names' => $md_names
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -190,7 +191,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	function testElggApiGettersEntityMetadataValueValidSingle() {
 		// create a new entity with a subtype we know
 		// use an existing type so it will clean up automatically
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -200,11 +201,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->$md_name = $md_value;
 		$e->save();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_value' => $md_value
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -220,14 +221,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataValueValidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
-		$md_values = array();
+		$md_values = [];
 
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$md_values[] = $md_value;
-		$e_guids = array();
+		$e_guids = [];
 
 		$e = new \ElggObject();
 		$e->subtype = $subtype;
@@ -245,11 +246,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->getGUID();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_values' => $md_values
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -263,7 +264,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataValueInvalidSingle() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -275,21 +276,21 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 		$md_invalid_value = 'test_metadata_value_' . rand();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_value' => $md_invalid_value
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIdentical(array(), $entities);
+		$this->assertIdentical([], $entities);
 
 		$e->delete();
 	}
 
 	function testElggApiGettersEntityMetadataValueInvalidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -299,33 +300,33 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->$md_name = $md_value;
 		$e->save();
 
-		$md_invalid_values = array();
+		$md_invalid_values = [];
 		$md_invalid_values[] = 'test_metadata_value_' . rand();
 		$md_invalid_values[] = 'test_metadata_value_' . rand();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_values' => $md_invalid_values
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIdentical(array(), $entities);
+		$this->assertIdentical([], $entities);
 
 		$e->delete();
 	}
 
 
 	function testElggApiGettersEntityMetadataValueMixedMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
-		$md_values = array();
+		$md_values = [];
 
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$md_values[] = $md_value;
-		$e_guids = array();
+		$e_guids = [];
 
 		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
@@ -345,11 +346,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->getGUID();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_values' => $md_values
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -372,11 +373,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVEquals() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
-		$guids = array();
+		$guids = [];
 
 		// our target
 		$valid = new \ElggObject();
@@ -400,16 +401,18 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->getGUID();
 
-		$md_invalid_names = array();
+		$md_invalid_names = [];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(array(
-				'name' => $md_name,
-				'value' => $md_value
-			))
-		);
+			'metadata_name_value_pairs' => [
+				[
+					'name' => $md_name,
+					'value' => $md_value
+				]
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -430,7 +433,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsTriple() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -441,7 +444,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$md_name3 = 'test_metadata_name_' . rand();
 		$md_value3 = 'test_metadata_value_' . rand();
 
-		$guids = array();
+		$guids = [];
 
 		// our target
 		$valid = new \ElggObject();
@@ -473,26 +476,26 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->getGUID();
 
-		$md_invalid_names = array();
+		$md_invalid_names = [];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
-				array(
+			'metadata_name_value_pairs' => [
+				[
 					'name' => $md_name,
 					'value' => $md_value
-				),
-				array(
+				],
+				[
 					'name' => $md_name2,
 					'value' => $md_value2
-				),
-				array(
+				],
+				[
 					'name' => $md_name3,
 					'value' => $md_value3
-				)
-			)
-		);
+				]
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -513,7 +516,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsDouble() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -521,7 +524,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$md_name2 = 'test_metadata_name_' . rand();
 		$md_value2 = 'test_metadata_value_' . rand();
 
-		$guids = array();
+		$guids = [];
 
 		// our target
 		$valid = new \ElggObject();
@@ -549,22 +552,22 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->getGUID();
 
-		$md_invalid_names = array();
+		$md_invalid_names = [];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
-				array(
+			'metadata_name_value_pairs' => [
+				[
 					'name' => $md_name,
 					'value' => $md_value
-				),
-				array(
+				],
+				[
 					'name' => $md_name2,
 					'value' => $md_value2
-				)
-			)
-		);
+				]
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -586,7 +589,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 	// this keeps locking up my database...
 	function xtestElggApiGettersEntityMetadataNVPValidNValidVEqualsStupid() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
@@ -606,7 +609,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$md_name5 = 'test_metadata_name_' . rand();
 		$md_value5 = 'test_metadata_value_' . rand();
 
-		$guids = array();
+		$guids = [];
 
 		// our target
 		$valid = new \ElggObject();
@@ -642,34 +645,34 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->getGUID();
 
-		$md_invalid_names = array();
+		$md_invalid_names = [];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
-				array(
+			'metadata_name_value_pairs' => [
+				[
 					'name' => $md_name,
 					'value' => $md_value
-				),
-				array(
+				],
+				[
 					'name' => $md_name2,
 					'value' => $md_value2
-				),
-				array(
+				],
+				[
 					'name' => $md_name3,
 					'value' => $md_value3
-				),
-				array(
+				],
+				[
 					'name' => $md_name4,
 					'value' => $md_value4
-				),
-				array(
+				],
+				[
 					'name' => $md_name5,
 					'value' => $md_value5
-				),
-			)
-		);
+				],
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -693,11 +696,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	 * Name value pair with valid name and invalid value
 	 */
 	function testElggApiGettersEntityMetadataNVPValidNInvalidV() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
-		$guids = array();
+		$guids = [];
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
@@ -714,20 +717,22 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->getGUID();
 
-		$md_invalid_names = array();
+		$md_invalid_names = [];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(array(
-				'name' => $md_name,
-				'value' => 'test_metadata_value_' . rand()
-			))
-		);
+			'metadata_name_value_pairs' => [
+				[
+					'name' => $md_name,
+					'value' => 'test_metadata_value_' . rand()
+				]
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIdentical(array(), $entities);
+		$this->assertIdentical([], $entities);
 
 		foreach ($guids as $guid) {
 			if ($e = get_entity($guid)) {
@@ -740,11 +745,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	 * Name value pair with invalid name and valid value
 	 */
 	function testElggApiGettersEntityMetadataNVPInvalidNValidV() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
-		$guids = array();
+		$guids = [];
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
@@ -761,20 +766,22 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->getGUID();
 
-		$md_invalid_names = array();
+		$md_invalid_names = [];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(array(
-				'name' => 'test_metadata_name_' . rand(),
-				'value' => $md_value
-			))
-		);
+			'metadata_name_value_pairs' => [
+				[
+					'name' => 'test_metadata_name_' . rand(),
+					'value' => $md_value
+				]
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIdentical(array(), $entities);
+		$this->assertIdentical([], $entities);
 
 		foreach ($guids as $guid) {
 			if ($e = get_entity($guid)) {
@@ -785,12 +792,12 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVOperandIn() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new \ElggObject();
@@ -827,23 +834,23 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 		$md_valid_values = "'$md_value', '$md_value2'";
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
-				array(
+			'metadata_name_value_pairs' => [
+				[
 					'name' => $md_name,
 					'value' => $md_valid_values,
 					'operand' => 'IN'
-				),
-				array(
+				],
+				[
 					'name' => $md_name2,
 					'value' => $md_valid_values,
 					'operand' => 'IN'
-				),
-			),
+				],
+			],
 			'metadata_name_value_pairs_operator' => 'OR'
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -863,12 +870,12 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVPlural() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new \ElggObject();
@@ -903,25 +910,28 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->getGUID();
 
-		$md_valid_values = array($md_value, $md_value2);
+		$md_valid_values = [
+			$md_value,
+			$md_value2
+		];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
-				array(
+			'metadata_name_value_pairs' => [
+				[
 					'name' => $md_name,
 					'value' => $md_valid_values,
 					'operand' => 'IN'
-				),
-				array(
+				],
+				[
 					'name' => $md_name2,
 					'value' => $md_valid_values,
 					'operand' => 'IN'
-				),
-			),
+				],
+			],
 			'metadata_name_value_pairs_operator' => 'OR'
-		);
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -941,11 +951,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPOrderByMDText() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new \ElggObject();
@@ -969,14 +979,21 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
 
-		$md_valid_values = array(1, 2, 3);
+		$md_valid_values = [
+			1,
+			2,
+			3
+		];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			//'metadata_name' => $md_name,
-			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
-		);
+			'order_by_metadata' => [
+				'name' => $md_name,
+				'as' => 'integer'
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -999,11 +1016,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPOrderByMDString() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new \ElggObject();
@@ -1027,21 +1044,32 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
 
-		$md_valid_values = array('a', 'b', 'c');
+		$md_valid_values = [
+			'a',
+			'b',
+			'c'
+		];
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
-			'order_by_metadata' => array('name' => $md_name, 'as' => 'text')
-		);
+			'order_by_metadata' => [
+				'name' => $md_name,
+				'as' => 'text'
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
 		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 3);
 
-		$alpha = array('a', 'b', 'c');
+		$alpha = [
+			'a',
+			'b',
+			'c'
+		];
 
 		$i = 0;
 		foreach ($entities as $entity) {
@@ -1060,11 +1088,11 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 	// test getting by name sorting by value as integer
 	function testElggApiGettersEntityMetadataNOrderByMDInt() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new ElggObject();
@@ -1088,19 +1116,26 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
-			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
-		);
+			'order_by_metadata' => [
+				'name' => $md_name,
+				'as' => 'integer'
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
 		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 3);
 
-		$num = array(1, 5, 15);
+		$num = [
+			1,
+			5,
+			15
+		];
 
 		$i = 0;
 		foreach ($entities as $entity) {
@@ -1116,14 +1151,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting by name sorting by value as integer with defined values
 	function testElggApiGettersEntityMetadataNOrderByMDIntDefinedVals() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new ElggObject();
@@ -1146,16 +1181,23 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$valid3->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
-		
-		$num = array(1, 5, 15);
 
-		$options = array(
+		$num = [
+			1,
+			5,
+			15
+		];
+
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
 			'metadata_values' => $num,
-			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
-		);
+			'order_by_metadata' => [
+				'name' => $md_name,
+				'as' => 'integer'
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -1176,15 +1218,15 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting by name_value_pairs sorting by value as integer
 	// because string comparison '5' > '15'
 	function testElggApiGettersEntityMetadataNVPOrderByMDInt() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new ElggObject();
@@ -1207,18 +1249,25 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$valid3->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
-		
-		$num = array(1, 5, 15);
 
-		$options = array(
+		$num = [
+			1,
+			5,
+			15
+		];
+
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
+			'metadata_name_value_pairs' => [
 				'name' => $md_name,
 				'value' => $num
-			),
-			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
-		);
+			],
+			'order_by_metadata' => [
+				'name' => $md_name,
+				'as' => 'integer'
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
@@ -1239,14 +1288,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting by name sorting by value as integer with defined values
 	function testElggApiGettersEntityMetadataNVPGreaterThanInt() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
-		$guids = array();
-		$valid_guids = array();
+		$guids = [];
+		$valid_guids = [];
 
 		// our targets
 		$valid = new ElggObject();
@@ -1270,23 +1319,29 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
+			'metadata_name_value_pairs' => [
 				'name' => $md_name,
 				'value' => 4,
 				'operand' => '>'
-			),
-			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
-		);
+			],
+			'order_by_metadata' => [
+				'name' => $md_name,
+				'as' => 'integer'
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
 		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 2);
-		
-		$num = array(5, 15);
+
+		$num = [
+			5,
+			15
+		];
 
 		$i = 0;
 		foreach ($entities as $entity) {
@@ -1302,16 +1357,16 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting from string value interpreted as numeric
 	// see https://github.com/Elgg/Elgg/issues/7009
 	function testElggApiGettersEntityMetadataNVPInvalidDouble() {
-		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
 		$subtype = $subtypes[0];
 		$md_name = 'test_metadata_name_' . rand();
-		$guids = array();
-		$valid_guids = array();
-		
+		$guids = [];
+		$valid_guids = [];
+
 		$value = '052e866869';
 
 		// our targets
@@ -1322,14 +1377,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid->getGUID();
 
-		$options = array(
+		$options = [
 			'type' => 'object',
 			'subtype' => $subtype,
-			'metadata_name_value_pairs' => array(
+			'metadata_name_value_pairs' => [
 				'name' => $md_name,
 				'value' => $value
-			)
-		);
+			]
+		];
 
 		$entities = elgg_get_entities_from_metadata($options);
 
