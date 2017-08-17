@@ -62,8 +62,9 @@ class ElggObject extends \ElggEntity {
 		}
 
 		// must be member of group
-		if (elgg_instanceof($this->getContainerEntity(), 'group')) {
-			if (!$this->getContainerEntity()->canWriteToContainer($user_guid)) {
+		$container = $this->getContainerEntity();
+		if ($container instanceof \ElggGroup) {
+			if (!$container->canWriteToContainer($user_guid)) {
 				return false;
 			}
 		}

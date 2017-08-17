@@ -23,6 +23,8 @@ class WwwrootSettingMigrator extends SettingsMigrator {
 			");
 
 			if ($row) {
+				$value = $row->url;
+				$value = rtrim($value, '/') . '/';
 				$lines = [
 					"",
 					"/**",
@@ -32,14 +34,14 @@ class WwwrootSettingMigrator extends SettingsMigrator {
 					" *",
 					" * @global string \$CONFIG->wwwroot",
 					" */",
-					"\$CONFIG->wwwroot = '{$row->url}';",
+					"\$CONFIG->wwwroot = \"{$value}\";",
 					""
 				];
 				$bytes = implode(PHP_EOL, $lines);
 
 				$this->append($bytes);
 
-				return $row->url;
+				return $value;
 			} else {
 				error_log("The DB table {$this->db->prefix}sites_entity did not have 'url'.");
 			}

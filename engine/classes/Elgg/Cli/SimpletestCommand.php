@@ -4,6 +4,7 @@ namespace Elgg\Cli;
 
 use Elgg\Application;
 use Elgg\Config;
+use Elgg\Project\Paths;
 use Exception;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputOption;
@@ -50,20 +51,26 @@ class SimpletestCommand extends Command {
 
 		try {
 			$settings_path = $this->option('config');
-			if ($settings_path) {
-				$sp = _elgg_services();
-				$app = Application::factory([
-					'settings_path' => $settings_path,
-					'service_provider' => $sp,
-				]);
-				Application::setInstance($app);
+			if (!$settings_path) {
+				$settings_path = Paths::elgg() . 'engine/tests/elgg-config/simpletest.php';
 			}
+
+			$sp = _elgg_services();
+			$app = Application::factory([
+				'settings_path' => $settings_path,
+				'service_provider' => $sp,
+			]);
+			Application::setInstance($app);
 
 			// turn off system log
 			_elgg_services()->hooks->unregisterHandler('all', 'all', 'system_log_listener');
 			_elgg_services()->hooks->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
-			$admin = array_shift(elgg_get_admins(['limit' => 1]));
+			$admin = array_shift(elgg_get_admins([
+				'limit' => 1,
+				'order_by' => 'e.time_created ASC',
+			]));
+
 			if (!login($admin)) {
 				throw new RuntimeException("Failed to login as administrator.");
 			}
@@ -108,7 +115,11 @@ class SimpletestCommand extends Command {
 				if (substr($file, -4, 4) === '.php') {
 					$suite->addFile($file);
 				} else if (class_exists($file)) {
-					$suite->add($file);
+					if (is_subclass_of($file, \UnitTestCase::class)) {
+						$suite->add($file);
+					} else {
+						elgg_log($file . ' is not a valid simpletest class');
+					}
 				}
 			}
 

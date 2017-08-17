@@ -8,7 +8,7 @@ namespace Elgg\Database\Seeds;
  * Plugins should extend this class to create their own seeders,
  * add use 'seeds','database' plugin hook to add their seed to the sequence.
  */
-abstract class Seed {
+abstract class Seed implements Seedable {
 
 	use Seeding;
 

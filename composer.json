@@ -39,7 +39,8 @@
         "bower-asset/jquery-treeview": "^1.4",
         "robmorgan/phinx": "^0.8.1",
         "symfony/console": "~3.3",
-        "symfony/var-dumper": "~3.3"
+        "symfony/var-dumper": "~3.3",
+        "fzaninotto/faker": "^1.6"
     },
     "config": {
         "process-timeout": 0
@@ -78,7 +79,9 @@
     "autoload-dev": {
         "psr-0": {
             "": [
-                "engine/tests/phpunit/",
+                "engine/tests/classes/",
+                "engine/tests/phpunit/unit/",
+                "engine/tests/phpunit/integration/",
                 "engine/tests/simpletest/"
             ]
         }
@@ -88,8 +91,7 @@
         "elgg/sniffs": "3.x-dev",
         "squizlabs/php_codesniffer": "^2.8.1",
         "simpletest/simpletest": "~1.1",
-        "phpdocumentor/reflection-docblock": "~2.0",
-        "fzaninotto/faker": "^1.6"
+        "phpdocumentor/reflection-docblock": "~2.0"
     },
     "bin": [
         "elgg-cli"

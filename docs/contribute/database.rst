@@ -22,7 +22,7 @@ To create a new migration run the following in your console:
 
 ..code::
 
-    phinx create -c engine/schema/settings.php MigrationClassName
+    phinx create -c engine/conf/migrations.php MigrationClassName
 
 
 This will generate a timestamped skeleton migration in ``engine/schema/migrations/``. Follow Phinx documentation to call
@@ -37,7 +37,7 @@ do so via the command line:
 
 ..code::
 
-    phinx migrate -c engine/schema/settings.php
+    phinx migrate -c engine/conf/migrations.php
 
 Check Phinx documentation for additional flags that allow you to run a single migration or a set of migrations within a
 time range.

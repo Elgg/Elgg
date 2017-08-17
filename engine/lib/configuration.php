@@ -14,7 +14,6 @@
  * Upon system boot, all values in dbprefix_config are read into $CONFIG.
  */
 
-use Elgg\Filesystem\Directory;
 use Elgg\Project\Paths;
 
 /**
@@ -95,6 +94,11 @@ function elgg_get_config($name) {
 		elgg_deprecated_notice($msg, '2.2');
 	}
 
+	if (!_elgg_config()->hasValue($name)) {
+		elgg_log("Config value for '$name' is not set'");
+		return;
+	}
+
 	return _elgg_config()->$name;
 }
 
@@ -144,14 +148,19 @@ function elgg_remove_config($name) {
  * @access private
  */
 function _elgg_config() {
-	return \Elgg\Application::$_instance->_services->config;
+	$config = elgg()->_services->config;
+	if (!$config) {
+		throw new \RuntimeException(__FUNCTION__ . ' can not be called before an instance of ' . \Elgg\Application::class . ' is bootstrapped');
+	}
+
+	return $config;
 }
 
 /**
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {
-	$tests[] = Paths::elgg() . "engine/tests/simpletest/ElggCoreConfigTest.php";
+	$tests[] = ElggCoreConfigTest::class;
 	return $tests;
 }
 

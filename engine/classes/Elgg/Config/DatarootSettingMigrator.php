@@ -24,6 +24,7 @@ class DatarootSettingMigrator extends SettingsMigrator {
 			");
 
 			if ($row) {
+				$value = $row->value;
 				$lines = [
 					"",
 					"/**",
@@ -31,14 +32,14 @@ class DatarootSettingMigrator extends SettingsMigrator {
 					" *",
 					" * @global string \$CONFIG->dataroot",
 					" */",
-					"\$CONFIG->dataroot = '{$row->value}';",
+					"\$CONFIG->dataroot = \"{$value}\";",
 					""
 				];
 				$bytes = implode(PHP_EOL, $lines);
 
 				$this->append($bytes);
 
-				return $row->value;
+				return $value;
 			} else {
 				error_log("The DB table {$this->db->prefix}datalists did not have 'dataroot'.");
 			}

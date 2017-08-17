@@ -13,14 +13,10 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 		'annotation' => 'annotations',
 	);
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
+	public function setUp() {
+		parent::setUp();
 
-		$this->object = new \ElggObject();
-		$this->object->save();
+		$this->object = $this->createObject();
 	}
 
 	public function createAnnotations($max = 1) {
@@ -99,10 +95,19 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 	}
 
 	public function testGetMetastringObjectFromIDWithDisabledAnnotation() {
+
 		$name = 'test_annotation_name' . rand();
 		$value = 'test_annotation_value' . rand();
+
 		$id = create_annotation($this->object->guid, $name, $value);
+
+		$this->assertTrue((bool) $id);
+
+		elgg_set_ignore_access(true);
 		$annotation = elgg_get_annotation_from_id($id);
+
+		$this->assertIsA($annotation, ElggAnnotation::class);
+
 		$this->assertTrue($annotation->disable());
 
 		$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
@@ -118,6 +123,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 		$name = 'test_annotation_name' . rand();
 		$value = 'test_annotation_value' . rand();
 		$id = create_annotation($this->object->guid, $name, $value);
+
 		$annotation = elgg_get_annotation_from_id($id);
 		$this->assertTrue($annotation->disable());
 

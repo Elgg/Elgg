@@ -19,6 +19,10 @@ use Elgg\Project\Paths;
  * @since 2.0.0
  */
 function elgg() {
+	if (!isset(Elgg\Application::$_instance)) {
+		throw new \RuntimeException(__FUNCTION__ . ' should not be called before an instanceof ' . \Elgg\Application::class . ' is bootstrapped');
+	}
+
 	return Elgg\Application::$_instance;
 }
 
@@ -1817,8 +1821,8 @@ function _elgg_init() {
 function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 	$defaults = [
 		\Elgg\Cli\SimpletestCommand::class,
-		\Elgg\Cli\SeedCommand::class,
-		\Elgg\Cli\UnseedCommand::class,
+		\Elgg\Cli\DatabaseSeedCommand::class,
+		\Elgg\Cli\DatabaseUnseedCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());
@@ -1846,10 +1850,10 @@ function _elgg_delete_autoload_cache() {
  * @access private
  */
 function _elgg_api_test($hook, $type, $value, $params) {
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggTravisInstallTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreHelpersTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggCoreRegressionBugsTest.php';
-	$value[] = Paths::elgg() . 'engine/tests/simpletest/ElggBatchTest.php';
+	$value[] = ElggTravisInstallTest::class;
+	$value[] = ElggCoreHelpersTest::class;
+	$value[] = ElggCoreRegressionBugsTest::class;
+	$value[] = ElggBatchTest::class;
 	return $value;
 }
 

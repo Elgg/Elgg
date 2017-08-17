@@ -73,7 +73,7 @@ trait Seeding {
 	}
 
 	/**
-	 * Create a new faker user
+	 * Create a new fake user
 	 *
 	 * @param array $attributes User entity attributes
 	 * @param array $metadata   User entity metadata
@@ -168,7 +168,7 @@ trait Seeding {
 	}
 
 	/**
-	 * Create a new faker group
+	 * Create a new fake group
 	 *
 	 * @param array $attributes Group entity attributes
 	 * @param array $metadata   Group entity metadata
@@ -279,7 +279,7 @@ trait Seeding {
 	}
 
 	/**
-	 * Create a new faker object
+	 * Create a new fake object
 	 *
 	 * @param array $attributes Object entity attributes
 	 * @param array $metadata   Object entity metadata
@@ -389,6 +389,19 @@ trait Seeding {
 
 		return $object;
 
+	}
+
+	/**
+	 * Create a new fake site
+	 *
+	 * @param array $attributes Object entity attributes
+	 * @param array $metadata   Object entity metadata
+	 *
+	 * @return ElggObject
+	 */
+	public function createSite(array $attributes = [], array $metadata = []) {
+		// We don't want to create more than one site
+		return elgg_get_site_entity();
 	}
 
 	/**

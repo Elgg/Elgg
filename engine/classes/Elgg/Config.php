@@ -335,6 +335,17 @@ class Config {
 	}
 
 	/**
+	 * Test if we have a set value
+	 *
+	 * @param string $name Name
+	 *
+	 * @return bool
+	 */
+	public function hasValue($name) {
+		return isset($this->values[$name]);
+	}
+
+	/**
 	 * Get a value set at construction time
 	 *
 	 * @param string $name Name

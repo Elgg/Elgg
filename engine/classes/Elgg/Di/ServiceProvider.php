@@ -3,6 +3,8 @@ namespace Elgg\Di;
 
 use Elgg\Config;
 use Elgg\Cache\Pool;
+use Elgg\Printer\CliPrinter;
+use Elgg\Printer\HtmlPrinter;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
 use Zend\Mail\Transport\TransportInterface as Mailer;
@@ -62,6 +64,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
  * @property-read \Elgg\Cache\PluginSettingsCache          $pluginSettingsCache
+ * @property-read \Elgg\Printer                            $printer
  * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
  * @property-read \Elgg\Application\Database               $publicDb
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
@@ -284,7 +287,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
-			$logger = new \Elgg\Logger($c->hooks, $c->context);
+			$logger = new \Elgg\Logger($c->hooks, $c->context, $c->printer);
 			$logger->setLevel($c->config->debug);
 			return $logger;
 		});
@@ -360,6 +363,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setClassName('pluginSettingsCache', \Elgg\Cache\PluginSettingsCache::class);
+
+		$this->setFactory('printer', function(ServiceProvider $c) {
+			if (php_sapi_name() === 'cli') {
+				return new CliPrinter();
+			} else {
+				return new HtmlPrinter();
+			}
+		});
 
 		$this->setFactory('privateSettings', function(ServiceProvider $c) {
 			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->pluginSettingsCache);
@@ -502,4 +513,5 @@ class ServiceProvider extends DiContainer {
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
 	}
+
 }
