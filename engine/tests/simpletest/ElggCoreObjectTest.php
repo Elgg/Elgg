@@ -7,32 +7,12 @@
  */
 class ElggCoreObjectTest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->entity = new \ElggObjectWithExposableAttributes();
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
+	public function down() {
 		unset($this->entity);
-	}
-
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		parent::__destruct();
 	}
 
 	public function testElggObjectConstructor() {

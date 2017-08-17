@@ -111,7 +111,10 @@ define query specs with predefined returns.
 By default, both unit and integration tests will be run whenever ``phpunit`` is called. You can use filter or group flags
 to only run a specific suite: ``phpunit --testsuite unit`` or ``phpunit --testsuite integration`` or ``phpunit --testsuite plugins``.
 
-Plugins with simpletests will continue working as perviously.
+Plugins with simpletests will continue working as perviously. However, method signatures in the ``ElggCoreUnitTest`` abstract class
+have changed and you will need to update your tests accordingly. Namely, it's discouraged to use ``__construct`` and
+``__desctruct`` methods. ``setUp`` and ``tearDown`` have been marked as private and are used for consistent test
+boostrapping and asserting pre and post conditions, your test case should use ``up`` and ``down`` methods instead.
 
 Simpletests can no longer be executed from the admin interface of the developers plugin.
 Use Elgg cli command: ``elgg-cli simpletest``

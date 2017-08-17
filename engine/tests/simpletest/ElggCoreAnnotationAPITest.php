@@ -1,24 +1,19 @@
 <?php
+
 /**
  * Elgg Test annotation api
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Test
  */
 class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+
+	public function up() {
 		$this->object = new \ElggObject();
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-
+	public function down() {
 		unset($this->object);
 	}
 
@@ -30,11 +25,11 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 		create_annotation($guid, 'tested', 'tested1', 'text', 0, ACCESS_PUBLIC);
 		create_annotation($guid, 'tested', 'tested2', 'text', 0, ACCESS_PUBLIC);
 
-		$count = (int)elgg_get_annotations(array(
-			'annotation_names' => array('tested'),
+		$count = (int) elgg_get_annotations([
+			'annotation_names' => ['tested'],
 			'guid' => $guid,
 			'count' => true,
-		));
+		]);
 
 		$this->assertIdentical($count, 2);
 
@@ -45,14 +40,14 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 		$e = new \ElggObject();
 		$e->save();
 
-		for ($i=0; $i<30; $i++) {
-			$e->annotate('test_annotation', rand(0,10000));
+		for ($i = 0; $i < 30; $i++) {
+			$e->annotate('test_annotation', rand(0, 10000));
 		}
 
-		$options = array(
+		$options = [
 			'guid' => $e->getGUID(),
 			'limit' => 0
-		);
+		];
 
 		$annotations = elgg_get_annotations($options);
 		$this->assertIdentical(30, count($annotations));
@@ -72,14 +67,14 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 		$e = new \ElggObject();
 		$e->save();
 
-		for ($i=0; $i<30; $i++) {
-			$e->annotate('test_annotation', rand(0,10000));
+		for ($i = 0; $i < 30; $i++) {
+			$e->annotate('test_annotation', rand(0, 10000));
 		}
 
-		$options = array(
+		$options = [
 			'guid' => $e->getGUID(),
 			'limit' => 0
-		);
+		];
 
 		$this->assertTrue(elgg_disable_annotations($options));
 
@@ -98,14 +93,14 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 		$e = new \ElggObject();
 		$e->save();
 
-		for ($i=0; $i<30; $i++) {
-			$e->annotate('test_annotation', rand(0,10000));
+		for ($i = 0; $i < 30; $i++) {
+			$e->annotate('test_annotation', rand(0, 10000));
 		}
 
-		$options = array(
+		$options = [
 			'guid' => $e->getGUID(),
 			'limit' => 0
-		);
+		];
 
 		$this->assertTrue(elgg_disable_annotations($options));
 
@@ -134,10 +129,10 @@ class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 		// this metastring should always exist but an annotation of this name should not
 		$this->assertFalse(elgg_annotation_exists($guid, 'email'));
 
-		$options = array(
+		$options = [
 			'guid' => $guid,
 			'limit' => 0
-		);
+		];
 		$this->assertTrue(elgg_disable_annotations($options));
 		$this->assertTrue(elgg_annotation_exists($guid, 'test_annotation'));
 

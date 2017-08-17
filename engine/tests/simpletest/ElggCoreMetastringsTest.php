@@ -1,27 +1,39 @@
 <?php
+
 /**
  * Elgg Metastrings test
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Metastrings.Test
  */
 class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 
-	public $metastringTypes = array('metadata', 'annotation');
-	public $metastringTables = array(
+	public $metastringTypes = [
+		'metadata',
+		'annotation'
+	];
+	public $metastringTables = [
 		'metadata' => 'metadata',
 		'annotation' => 'annotations',
-	);
+	];
 
-	public function setUp() {
-		parent::setUp();
-
+	public function up() {
 		$this->object = $this->createObject();
 	}
 
+	public function down() {
+		$this->object->delete();
+
+		access_show_hidden_entities(true);
+		elgg_delete_annotations([
+			'guid' => $this->object->guid,
+		]);
+		access_show_hidden_entities(false);
+	}
+
 	public function createAnnotations($max = 1) {
-		$annotations = array();
-		for ($i=0; $i<$max; $i++) {
+		$annotations = [];
+		for ($i = 0; $i < $max; $i++) {
 			$name = 'test_annotation_name' . rand();
 			$value = 'test_annotation_value' . rand();
 			$id = create_annotation($this->object->guid, $name, $value);
@@ -32,8 +44,8 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 	}
 
 	public function createMetadata($max = 1) {
-		$metadata = array();
-		for ($i=0; $i<$max; $i++) {
+		$metadata = [];
+		for ($i = 0; $i < $max; $i++) {
 			$name = 'test_metadata_name' . rand();
 			$value = 'test_metadata_value' . rand();
 			$id = create_metadata($this->object->guid, $name, $value);
@@ -41,26 +53,6 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 		}
 
 		return $metadata;
-	}
-
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-		access_show_hidden_entities(true);
-		elgg_delete_annotations(array(
-			'guid' => $this->object->guid,
-		));
-		access_show_hidden_entities(false);
-	}
-
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		$this->object->delete();
-
-		parent::__destruct();
 	}
 
 	public function testDeleteByID() {
@@ -76,7 +68,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 
 			$this->assertEqual($test[0]->id, $id);
 			$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
-			$this->assertIdentical(array(), get_data($q));
+			$this->assertIdentical([], get_data($q));
 		}
 	}
 
@@ -103,7 +95,8 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 
 		$this->assertTrue((bool) $id);
 
-		elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_access(true);
+
 		$annotation = elgg_get_annotation_from_id($id);
 
 		$this->assertIsA($annotation, ElggAnnotation::class);
@@ -117,6 +110,8 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 		access_show_hidden_entities(true);
 		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, 'annotation'));
 		access_show_hidden_entities($prev);
+
+		elgg_set_ignore_access($ia);
 	}
 
 	public function testGetMetastringBasedObjectWithDisabledAnnotation() {
@@ -127,11 +122,11 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 		$annotation = elgg_get_annotation_from_id($id);
 		$this->assertTrue($annotation->disable());
 
-		$test = _elgg_get_metastring_based_objects(array(
+		$test = _elgg_get_metastring_based_objects([
 			'metastring_type' => 'annotations',
 			'guid' => $this->object->guid,
-		));
-		$this->assertEqual(array(), $test);
+		]);
+		$this->assertEqual([], $test);
 
 		$prev = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
@@ -172,41 +167,48 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 
 	public function testKeepMeFromDeletingEverything() {
 		foreach ($this->metastringTypes as $type) {
-			$required = array(
-				'guid', 'guids'
-			);
+			$required = [
+				'guid',
+				'guids'
+			];
 
 			switch ($type) {
 				case 'metadata':
-					$metadata_required = array(
-						'metadata_owner_guid', 'metadata_owner_guids',
-						'metadata_name', 'metadata_names',
-						'metadata_value', 'metadata_values'
-					);
+					$metadata_required = [
+						'metadata_owner_guid',
+						'metadata_owner_guids',
+						'metadata_name',
+						'metadata_names',
+						'metadata_value',
+						'metadata_values'
+					];
 
 					$required = array_merge($required, $metadata_required);
 					break;
 
 				case 'annotation':
-					$annotations_required = array(
-						'annotation_owner_guid', 'annotation_owner_guids',
-						'annotation_name', 'annotation_names',
-						'annotation_value', 'annotation_values'
-					);
+					$annotations_required = [
+						'annotation_owner_guid',
+						'annotation_owner_guids',
+						'annotation_name',
+						'annotation_names',
+						'annotation_value',
+						'annotation_values'
+					];
 
 					$required = array_merge($required, $annotations_required);
 					break;
 			}
 
-			$options = array();
+			$options = [];
 			$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type));
 
 			// limit alone isn't valid:
-			$options = array('limit' => 10);
+			$options = ['limit' => 10];
 			$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type));
 
 			foreach ($required as $key) {
-				$options = array();
+				$options = [];
 
 				$options[$key] = ELGG_ENTITIES_ANY_VALUE;
 				$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_ANY_VALUE");
@@ -223,7 +225,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 				$options[$key] = 'test';
 				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = 'test'");
 
-				$options[$key] = array('test');
+				$options[$key] = ['test'];
 				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = array('test')");
 			}
 		}

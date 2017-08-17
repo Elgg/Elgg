@@ -7,37 +7,14 @@
  */
 class ElggCoreUserTest extends \ElggCoreUnitTest {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-
-		// all code should come after here
-	}
-
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->user = new \ElggUserWithExposableAttributes();
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-
+	public function down() {
 		unset($this->user);
 	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		// all code should go above here
-		parent::__destruct();
-	}
 
 	public function testElggUserConstructor() {
 		$attributes = array();

@@ -16,10 +16,7 @@ class ElggCoreGroupTest extends \ElggCoreUnitTest {
 	 */
 	protected $user;
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->group = new \ElggGroup();
 		$this->group->membership = ACCESS_PUBLIC;
 		$this->group->access_id = ACCESS_PUBLIC;
@@ -27,6 +24,11 @@ class ElggCoreGroupTest extends \ElggCoreUnitTest {
 		$this->user = new \ElggUser();
 		$this->user->username = 'test_user_' . rand();
 		$this->user->save();
+	}
+
+	public function down() {
+		$this->group->delete();
+		$this->user->delete();
 	}
 
 	public function testContentAccessMode() {
@@ -79,13 +81,5 @@ class ElggCoreGroupTest extends \ElggCoreUnitTest {
 		$vis = \Elgg\GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertFalse($vis->shouldHideItems);
-	}
-
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-		$this->group->delete();
-		$this->user->delete();
 	}
 }

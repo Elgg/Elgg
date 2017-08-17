@@ -39,10 +39,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	protected $value = 'test';
 	protected $ignoreAccess;
 
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
+	public function up() {
 		$this->ignoreAccess = elgg_set_ignore_access(false);
 
 		$this->cache = _elgg_services()->metadataCache;
@@ -56,10 +53,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 		$this->guid2 = $this->obj2->guid;
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
+	public function down() {
 		$this->obj1->delete();
 		$this->obj2->delete();
 

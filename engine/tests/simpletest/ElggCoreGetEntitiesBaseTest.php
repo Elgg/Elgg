@@ -16,26 +16,38 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 
 	protected $ignore_access;
 
+	public function up() {
+
+	}
+
+	public function down() {
+
+	}
+
 	/**
 	 * Called before each test object.
 	 */
 	public function __construct() {
 		$ia = elgg_set_ignore_access(true);
 
-		$this->entities = array();
-		$this->subtypes = array(
-			'object' => array(),
-			'user' => array(),
-			'group' => array(),
+		$this->entities = [];
+		$this->subtypes = [
+			'object' => [],
+			'user' => [],
+			'group' => [],
 			//'site'	=> array()
-		);
+		];
 
 		// sites are a bit wonky.  Don't use them just now.
-		$this->types = array('object', 'user', 'group');
+		$this->types = [
+			'object',
+			'user',
+			'group'
+		];
 
 		// create some fun objects to play with.
 		// 5 with random subtypes
-		for ($i=0; $i<5; $i++) {
+		for ($i = 0; $i < 5; $i++) {
 			$subtype = 'test_object_subtype_' . rand();
 			$e = new \ElggObject();
 			$e->subtype = $subtype;
@@ -46,7 +58,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		}
 
 		// and users
-		for ($i=0; $i<5; $i++) {
+		for ($i = 0; $i < 5; $i++) {
 			$subtype = "test_user_subtype_" . rand();
 			$e = new \ElggUser();
 			$e->username = "test_user_" . rand();
@@ -58,7 +70,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		}
 
 		// and groups
-		for ($i=0; $i<5; $i++) {
+		for ($i = 0; $i < 5; $i++) {
 			$subtype = "test_group_subtype_" . rand();
 			$e = new \ElggGroup();
 			$e->subtype = $subtype;
@@ -85,7 +97,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 
 		// manually remove subtype entries since there is no way
 		// to using the API.
-		$subtype_arr = array();
+		$subtype_arr = [];
 		foreach ($this->subtypes as $type => $subtypes) {
 			foreach ($subtypes as $subtype) {
 				remove_subtype($type, $subtype);
@@ -93,16 +105,6 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		}
 
 		elgg_set_ignore_access($ia);
-
-		parent::__destruct();
-	}
-
-	public function setUp() {
-		$this->assertFalse(elgg_get_ignore_access());
-	}
-
-	public function tearDown() {
-		$this->assertFalse(elgg_get_ignore_access());
 	}
 
 	/*************************************************
@@ -113,12 +115,13 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	 * Get a random valid subtype
 	 *
 	 * @param int $num
+	 *
 	 * @return array
 	 */
 	protected function getRandomValidTypes($num = 1) {
-		$r = array();
+		$r = [];
 
-		for ($i=1; $i<=$num; $i++) {
+		for ($i = 1; $i <= $num; $i++) {
 			do {
 				$t = $this->types[array_rand($this->types)];
 			} while (in_array($t, $r) && count($r) < count($this->types));
@@ -127,6 +130,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		}
 
 		shuffle($r);
+
 		return $r;
 	}
 
@@ -134,18 +138,18 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	 * Get a random valid subtype (that we just created)
 	 *
 	 * @param array $type Type of objects to return valid subtypes for.
-	 * @param int $num of subtypes.
+	 * @param int   $num  of subtypes.
 	 *
 	 * @return array
 	 */
 	protected function getRandomValidSubtypes(array $types, $num = 1) {
-		$r = array();
+		$r = [];
 
-		for ($i=1; $i<=$num; $i++) {
+		for ($i = 1; $i <= $num; $i++) {
 			do {
 				// make sure at least one subtype of each type is returned.
-				if ($i-1 < count($types)) {
-					$type = $types[$i-1];
+				if ($i - 1 < count($types)) {
+					$type = $types[$i - 1];
 				} else {
 					$type = $types[array_rand($types)];
 				}
@@ -158,6 +162,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		}
 
 		shuffle($r);
+
 		return $r;
 	}
 
@@ -165,12 +170,13 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	 * Return an array of invalid strings for type or subtypes.
 	 *
 	 * @param int $num
+	 *
 	 * @return string[]
 	 */
 	protected function getRandomInvalids($num = 1) {
-		$r = array();
+		$r = [];
 
-		for ($i=1; $i<=$num; $i++) {
+		for ($i = 1; $i <= $num; $i++) {
 			$r[] = 'random_invalid_' . rand();
 		}
 
@@ -181,18 +187,20 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	 * Get a mix of valid and invalid types
 	 *
 	 * @param int $num
+	 *
 	 * @return array
 	 */
 	protected function getRandomMixedTypes($num = 2) {
 		$have_valid = $have_invalid = false;
-		$r = array();
+		$r = [];
 
 		// need at least one of each type.
-		$valid_n = rand(1, $num-1);
+		$valid_n = rand(1, $num - 1);
 		$r = array_merge($r, $this->getRandomValidTypes($valid_n));
 		$r = array_merge($r, $this->getRandomInvalids($num - $valid_n));
 
 		shuffle($r);
+
 		return $r;
 	}
 
@@ -201,20 +209,21 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 	 *
 	 * @param array $types
 	 * @param int   $num
+	 *
 	 * @return array
 	 */
 	protected function getRandomMixedSubtypes(array $types, $num = 2) {
 		$types_c = count($types);
-		$r = array();
+		$r = [];
 
 		// this can be more efficient but I'm very sleepy...
 
 		// want at least one of valid and invalid of each type sent.
-		for ($i=0; $i < $types_c && $num > 0; $i++) {
+		for ($i = 0; $i < $types_c && $num > 0; $i++) {
 			// make sure we have a valid and invalid for each type
 			if (true) {
 				$type = $types[$i];
-				$r = array_merge($r, $this->getRandomValidSubtypes(array($type), 1));
+				$r = array_merge($r, $this->getRandomValidSubtypes([$type], 1));
 				$r = array_merge($r, $this->getRandomInvalids(1));
 
 				$num -= 2;

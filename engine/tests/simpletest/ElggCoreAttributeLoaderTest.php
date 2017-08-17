@@ -5,6 +5,14 @@
  */
 class ElggCoreAttributeLoaderTest extends \ElggCoreUnitTest {
 
+	public function up() {
+
+	}
+
+	public function down() {
+
+	}
+
 	/**
 	 * Checks if additional select columns are readable as volatile data
 	 *
@@ -21,12 +29,17 @@ class ElggCoreAttributeLoaderTest extends \ElggCoreUnitTest {
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
 
-		foreach (array('site', 'user', 'group', 'object') as $type) {
-			$entities = elgg_get_entities(array(
+		foreach ([
+					 'site',
+					 'user',
+					 'group',
+					 'object'
+				 ] as $type) {
+			$entities = elgg_get_entities([
 				'type' => $type,
-				'selects' => array('42 as added_col2'),
+				'selects' => ['42 as added_col2'],
 				'limit' => 1,
-			));
+			]);
 			$this->assertFalse(empty($entities));
 			if ($entities) {
 				$entity = array_shift($entities);
@@ -57,12 +70,17 @@ class ElggCoreAttributeLoaderTest extends \ElggCoreUnitTest {
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
 
-		foreach (array('site', 'user', 'group', 'object') as $type) {
-			$entities = elgg_get_entities(array(
+		foreach ([
+					 'site',
+					 'user',
+					 'group',
+					 'object'
+				 ] as $type) {
+			$entities = elgg_get_entities([
 				'type' => $type,
-				'selects' => array('42 as added_col3'),
+				'selects' => ['42 as added_col3'],
 				'limit' => 1,
-			));
+			]);
 			$this->assertFalse(empty($entities));
 			if ($entities) {
 				$entity = array_shift($entities);
@@ -76,12 +94,17 @@ class ElggCoreAttributeLoaderTest extends \ElggCoreUnitTest {
 		}
 
 		// run these again but with different value to make sure cache does not interfere
-		foreach (array('site', 'user', 'group', 'object') as $type) {
-			$entities = elgg_get_entities(array(
+		foreach ([
+					 'site',
+					 'user',
+					 'group',
+					 'object'
+				 ] as $type) {
+			$entities = elgg_get_entities([
 				'type' => $type,
-				'selects' => array('64 as added_col3'),
+				'selects' => ['64 as added_col3'],
 				'limit' => 1,
-			));
+			]);
 			$this->assertFalse(empty($entities));
 			if ($entities) {
 				$entity = array_shift($entities);

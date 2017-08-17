@@ -2,10 +2,14 @@
 
 class ElggTravisInstallTest extends \ElggCoreUnitTest {
 
-	public function setUp() {
+	public function up() {
 		if (!getenv('TRAVIS')) {
 			$this->skipIf(true, "Not Travis VM");
 		}
+	}
+
+	public function down() {
+
 	}
 
 	public function testDbWasInstalled() {

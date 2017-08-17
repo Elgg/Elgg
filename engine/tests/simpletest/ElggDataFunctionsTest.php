@@ -9,7 +9,7 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 	 */
 	private $user;
 
-	public function setUp() {
+	public function up() {
 		$this->prefix = _elgg_services()->db->prefix;
 
 		$users = elgg_get_entities([
@@ -18,6 +18,10 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 			'order_by' => 'e.guid ASC',
 		]);
 		$this->user = $users[0];
+	}
+
+	public function down() {
+
 	}
 
 	public function testCanGetData() {

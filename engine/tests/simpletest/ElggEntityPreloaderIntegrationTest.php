@@ -9,23 +9,23 @@ class ElggEntityPreloaderIntegrationTest extends ElggCoreUnitTest {
 	 */
 	protected $mockPreloader;
 
-	public function setUp() {
+	public function up() {
 		$this->realPreloader = _elgg_services()->entityPreloader;
 
 		$this->mockPreloader = new MockEntityPreloader20140623(
 			_elgg_services()->entityCache, _elgg_services()->entityTable);
-		
+
 		_elgg_services()->setValue('entityPreloader', $this->mockPreloader);
 	}
 
-	public function tearDown() {
+	public function down() {
 		_elgg_services()->setValue('entityPreloader', $this->realPreloader);
 	}
 
 	public function testEGECanUsePreloader() {
-		$options = array(
+		$options = [
 			'limit' => 3,
-		);
+		];
 
 		elgg_get_entities($options);
 		$this->assertNull($this->mockPreloader->preloaded);
@@ -36,9 +36,9 @@ class ElggEntityPreloaderIntegrationTest extends ElggCoreUnitTest {
 	}
 
 	public function testEGMCanUsePreloader() {
-		$options = array(
+		$options = [
 			'limit' => 3,
-		);
+		];
 
 		elgg_get_metadata($options);
 		$this->assertNull($this->mockPreloader->preloaded);

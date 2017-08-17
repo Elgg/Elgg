@@ -8,6 +8,14 @@ use Elgg\BatchResult;
  */
 class ElggBatchTest extends \ElggCoreUnitTest {
 
+	public function up() {
+
+	}
+
+	public function down() {
+
+	}
+
 	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {
 		// normal increment

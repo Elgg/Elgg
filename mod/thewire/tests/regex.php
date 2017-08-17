@@ -4,36 +4,15 @@
  */
 class TheWireRegexTest extends ElggCoreUnitTest {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
+	public function up() {
 		$this->ia = elgg_set_ignore_access(TRUE);
-		parent::__construct();
-
-		// all __construct() code should come after here
-	}
-
-	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
-
 	}
 
 	/**
 	 * Called after each test method.
 	 */
-	public function tearDown() {
-	}
-
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
+	public function down() {
 		elgg_set_ignore_access($this->ia);
-		// all __destruct() code should go above here
-		parent::__destruct();
 	}
 
 	/**

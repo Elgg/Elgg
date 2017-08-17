@@ -7,6 +7,14 @@
  */
 class ElggCoreDatabaseQueueTest extends \ElggCoreUnitTest {
 
+	public function up() {
+
+	}
+
+	public function down() {
+
+	}
+
 	public function testEnqueueAndDequeue() {
 		$queue = new \Elgg\Queue\DatabaseQueue('unit:test', _elgg_services()->db);
 		$first = array(1, 2, 3);
