@@ -17,13 +17,8 @@ class ElggCoreGroupTest extends \ElggCoreUnitTest {
 	protected $user;
 
 	public function up() {
-		$this->group = new \ElggGroup();
-		$this->group->membership = ACCESS_PUBLIC;
-		$this->group->access_id = ACCESS_PUBLIC;
-		$this->group->save();
-		$this->user = new \ElggUser();
-		$this->user->username = 'test_user_' . rand();
-		$this->user->save();
+		$this->group = $this->createGroup([], ['membership' => ACCESS_PUBLIC]);
+		$this->user = $this->createUser();
 	}
 
 	public function down() {

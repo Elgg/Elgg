@@ -407,8 +407,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 	}
 
 	public function testCreateWithContainerGuidEqualsZero() {
-		$user = new \ElggUser();
-		$user->save();
+		$user = $this->createUser();
 
 		$object = new \ElggObject();
 		$object->owner_guid = $user->guid;
@@ -429,8 +428,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 		$this->assertTrue($this->entity->save());
 
-		$user = new ElggUser();
-		$user->save();
+		$user = $this->createUser();
 		$old_user = $this->replaceSession($user);
 
 		// even owner can't bypass permissions
@@ -521,6 +519,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 	public function testNewUserLoadedFromCacheDuringSaveOperations() {
 
 		$user = new \ElggUser();
+		$user->username = $this->getRandomUsername();
 
 		// Add temporary metadata, annotation and private settings
 		// to extend the scope of tests and catch issues with save operations

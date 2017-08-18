@@ -49,29 +49,51 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 	/**
 	 * Boostrap a new instance of a testing application
 	 *
-	 * @param bool $backup Backup test case values
-	 *
 	 * @return Application
 	 */
 	public static function bootstrap() {
 
-		$backup_values = [];
+		$app = Application::$_instance;
 
-		$keys = [
-			'testCase',
-		];
+		if (!self::isSamePath($app->_services->config->elgg_settings_file, static::getSettingsPath())) {
+			$backup_values = [];
 
-		foreach ($keys as $key) {
-			$backup_values[$key] = _elgg_services()->$key;
+			$keys = [
+				'testCase',
+			];
+
+			foreach ($keys as $key) {
+				$backup_values[$key] = _elgg_services()->$key;
+			}
+
+			$app = static::createApplication();
+
+			foreach ($backup_values as $key => $value) {
+				_elgg_services()->setValue($key, $value);
+			}
+
+			return $app;
+		} else {
+			// Otherwise just reset it
+			self::reset();
+			return $app;
 		}
+	}
 
-		$app = static::createApplication();
+	/**
+	 * Compare if two paths are equal
+	 *
+	 * @param string $path1 Path
+	 * @param string $path2 Path
+	 *
+	 * @return bool
+	 */
+	private static function isSamePath($path1, $path2) {
+		$normalize = function($path) {
+			return str_replace('\\', '/', $path);
+		};
 
-		foreach ($backup_values as $key => $value) {
-			_elgg_services()->setValue($key, $value);
-		}
-
-		return $app;
+		return $normalize($path1) == $normalize($path2);
 	}
 
 	/**
@@ -88,6 +110,9 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 	 * {@inheritdoc}
 	 */
 	protected function setUp() {
+
+		_elgg_services()->logger->notice('Test started: ' . $this->getName());
+
 		self::reset();
 
 		$dt = new \DateTime();
@@ -106,33 +131,29 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 		// Invalidate memcache
 		_elgg_get_memcache('new_entity_cache')->clear();
 
-
-		// We do not want overflowing ignored access
-		$this->assertFalse((bool) elgg_get_ignore_access());
-
-		// We do not want overflowing show hidden status
-		$this->assertFalse((bool) access_get_show_hidden_status());
+		_elgg_services()->session->removeLoggedInUser();
+		_elgg_services()->session->setIgnoreAccess(false);
+		access_show_hidden_entities(false);
 
 		// Make sure the application has been bootstrapped correctly
 		$this->assertInstanceOf(Application::class, elgg());
 		$this->assertInstanceOf(ServiceProvider::class, _elgg_services());
 		$this->assertInstanceOf(Config::class, _elgg_services()->config);
-
-
-		$this->up();
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	protected function tearDown() {
-		$this->down();
 
 		// We do not want overflowing ignored access
 		$this->assertFalse((bool) elgg_get_ignore_access());
 
 		// We do not want overflowing show hidden status
 		$this->assertFalse((bool) access_get_show_hidden_status());
+
+		// Tests should run without a logged in user
+		$this->assertFalse((bool) elgg_is_logged_in());
 
 		// free up some memory
 		$refl = new \ReflectionObject($this);
@@ -142,6 +163,8 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 				$prop->setValue($this, null);
 			}
 		}
+
+		_elgg_services()->logger->notice('Test ended: ' . $this->getName());
 	}
 
 	/**

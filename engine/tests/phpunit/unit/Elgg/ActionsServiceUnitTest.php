@@ -1134,7 +1134,9 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		]);
 		set_input('session_token', $session_token);
 
+		_elgg_services()->logger->disable();
 		$this->route();
+		_elgg_services()->logger->enable();
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);

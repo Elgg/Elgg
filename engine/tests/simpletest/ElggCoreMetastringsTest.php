@@ -22,13 +22,13 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 	}
 
 	public function down() {
-		$this->object->delete();
-
+		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 		elgg_delete_annotations([
 			'guid' => $this->object->guid,
 		]);
-		access_show_hidden_entities(false);
+		$this->object->delete();
+		access_show_hidden_entities($ha);
 	}
 
 	public function createAnnotations($max = 1) {

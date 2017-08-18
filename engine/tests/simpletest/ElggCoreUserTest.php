@@ -9,6 +9,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 
 	public function up() {
 		$this->user = new \ElggUserWithExposableAttributes();
+		$this->user->username = $this->getRandomUsername();
 	}
 
 	public function down() {
@@ -40,7 +41,8 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$attributes['prev_last_login'] = null;
 		ksort($attributes);
 
-		$entity_attributes = $this->user->expose_attributes();
+		$user = new \ElggUserWithExposableAttributes();
+		$entity_attributes = $user->expose_attributes();
 		ksort($entity_attributes);
 
 		$this->assertIdentical($entity_attributes, $attributes);
@@ -49,9 +51,9 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	public function testElggUserLoad() {
 		// new object
 		$object = new \ElggObject();
-		$this->AssertEqual($object->getGUID(), 0);
+		$this->assertEqual($object->getGUID(), 0);
 		$guid = $object->save();
-		$this->AssertNotEqual($guid, 0);
+		$this->assertNotEqual($guid, 0);
 
 		// fail on wrong type
 		$this->assertFalse(get_user($guid));
@@ -62,9 +64,9 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 
 	public function testElggUserSave() {
 		// new object
-		$this->AssertEqual($this->user->getGUID(), 0);
+		$this->assertEqual($this->user->getGUID(), 0);
 		$guid = $this->user->save();
-		$this->AssertNotEqual($guid, 0);
+		$this->assertNotEqual($guid, 0);
 
 		// clean up
 		$this->user->delete();

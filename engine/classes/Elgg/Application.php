@@ -216,14 +216,6 @@ class Application {
 		}
 
 		self::autoload();
-
-		$hooks = $this->_services->hooks;
-		$events = $hooks->getEvents();
-
-		// run setups
-		foreach (self::$_setups as $func) {
-			$func($events, $hooks);
-		}
 	}
 
 	/**
@@ -326,7 +318,13 @@ class Application {
 
 		$this->allowPathRewrite();
 
-		$events = $this->_services->hooks->getEvents();
+		$hooks = $this->_services->hooks;
+		$events = $hooks->getEvents();
+
+		// run setups
+		foreach (self::$_setups as $func) {
+			$func($events, $hooks);
+		}
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');
@@ -746,12 +744,6 @@ class Application {
 		if (!class_exists(UnitTestCase::class)) {
 			throw new RuntimeException(__METHOD__ . ' can only be executed if Elgg is installed using composer install --dev');
 		}
-
-		if (!date_default_timezone_get()) {
-			date_default_timezone_set('America/Los_Angeles');
-		}
-
-		error_reporting(E_ALL | E_STRICT);
 
 		self::autoload();
 

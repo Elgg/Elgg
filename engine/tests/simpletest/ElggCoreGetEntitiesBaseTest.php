@@ -49,9 +49,9 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		// 5 with random subtypes
 		for ($i = 0; $i < 5; $i++) {
 			$subtype = 'test_object_subtype_' . rand();
-			$e = new \ElggObject();
-			$e->subtype = $subtype;
-			$e->save();
+			$e = $this->createObject([
+				'subtype' => $subtype,
+			]);
 
 			$this->entities[] = $e;
 			$this->subtypes['object'][] = $subtype;
@@ -60,10 +60,9 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		// and users
 		for ($i = 0; $i < 5; $i++) {
 			$subtype = "test_user_subtype_" . rand();
-			$e = new \ElggUser();
-			$e->username = "test_user_" . rand();
-			$e->subtype = $subtype;
-			$e->save();
+			$e = $this->createUser([
+				'subtype' => $subtype,
+			]);
 
 			$this->entities[] = $e;
 			$this->subtypes['user'][] = $subtype;
@@ -72,9 +71,9 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 		// and groups
 		for ($i = 0; $i < 5; $i++) {
 			$subtype = "test_group_subtype_" . rand();
-			$e = new \ElggGroup();
-			$e->subtype = $subtype;
-			$e->save();
+			$e = $this->createGroup([
+				'subtype' => $subtype,
+			]);
 
 			$this->entities[] = $e;
 			$this->subtypes['group'][] = $subtype;

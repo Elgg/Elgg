@@ -110,19 +110,19 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	// by another user
 	// https://github.com/elgg/elgg/issues/2776
 	public function test_elgg_metadata_multiple_values() {
-		$u1 = new \ElggUser();
-		$u1->username = rand();
-		$u1->save();
+		$u1 = $this->createUser();
 
-		$u2 = new \ElggUser();
-		$u2->username = rand();
-		$u2->save();
+		$u2 = $this->createUser();
 
-		$obj = new \ElggObject();
-		$obj->owner_guid = $u1->guid;
-		$obj->container_guid = $u1->guid;
-		$obj->access_id = ACCESS_PUBLIC;
-		$obj->save();
+		$obj = $this->createObject([
+			'owner_guid' => $u1->guid,
+			'container_guid' => $u1->guid,
+		]);
+
+		elgg_delete_metadata([
+			'limit' => 0,
+			'guids' => $obj->guid,
+		]);
 
 		$md_values = array(
 			'one',

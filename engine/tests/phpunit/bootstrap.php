@@ -1,5 +1,11 @@
 <?php
 
+if (!date_default_timezone_get()) {
+	date_default_timezone_set('America/Los_Angeles');
+}
+
+error_reporting(E_ALL | E_STRICT);
+
 ini_set('memory_limit', '2G');
 
 // Bootstrap test application

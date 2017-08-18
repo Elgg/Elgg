@@ -955,7 +955,7 @@ class EntityTable {
 								$subtype_ids[] = $subtype_id;
 							} else {
 								$valid_subtypes_count--;
-								$this->logger->warn("Type-subtype '$type:$subtype' does not exist!");
+								$this->logger->notice("Type-subtype '$type:$subtype' does not exist!");
 								continue;
 							}
 						}
@@ -1008,7 +1008,7 @@ class EntityTable {
 									ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 						} else {
 							$valid_pairs_subtypes_count--;
-							$this->logger->warn("Type-subtype '$paired_type:$paired_subtype' does not exist!");
+							$this->logger->notice("Type-subtype '$paired_type:$paired_subtype' does not exist!");
 							// return false if we're all invalid subtypes in the only valid type
 							continue;
 						}

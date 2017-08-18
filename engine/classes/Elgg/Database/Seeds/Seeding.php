@@ -89,7 +89,7 @@ trait Seeding {
 				$attributes['password'] = generate_random_cleartext_password();
 			}
 
-			if (empty($attributes['username'])) {
+			if (empty($attributes['name'])) {
 				$attributes['name'] = $this->faker()->name;
 			}
 
@@ -101,10 +101,14 @@ trait Seeding {
 				$attributes['email'] = "{$attributes['username']}@{$this->getEmailDomain()}";
 			}
 
+			if (empty($attributes['subtype'])) {
+				$attributes['subtype'] = null;
+			}
+
 			$user = false;
 
 			try {
-				$guid = register_user($attributes['username'], $attributes['password'], $attributes['name'], $attributes['email']);
+				$guid = register_user($attributes['username'], $attributes['password'], $attributes['name'], $attributes['email'], false, $attributes['subtype']);
 				$user = get_entity($guid);
 				/* @var $user ElggUser */
 
@@ -299,6 +303,14 @@ trait Seeding {
 				$attributes['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
 			}
 
+			if (empty($attributes['subtype'])) {
+				$attributes['subtype'] = strtolower($this->faker()->word);
+			}
+
+			if (empty($metadata['tags'])) {
+				$metadata['tags'] = $this->faker()->words(10);
+			}
+
 			if (empty($attributes['container_guid'])) {
 				if ($this->faker()->boolean()) {
 					$container = $this->getRandomGroup();
@@ -315,12 +327,9 @@ trait Seeding {
 				$attributes['container_guid'] = $container->guid;
 			}
 
-			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = strtolower($this->faker()->word);
-			}
-
-			if (empty($metadata['tags'])) {
-				$metadata['tags'] = $this->faker()->words(10);
+			$container = get_entity($attributes['container_guid']);
+			if (!$container) {
+				return false;
 			}
 
 			if (empty($attributes['owner_guid'])) {
@@ -347,13 +356,7 @@ trait Seeding {
 				return false;
 			}
 
-			$container = get_entity($attributes['container_guid']);
-			if (!$container) {
-				return false;
-			}
-
-			if (empty($attributes['access_id'])) {
-				//$attributes['access_id'] = $this->getRandomAccessId($owner, $container);
+			if (!isset($attributes['access_id'])) {
 				$attributes['access_id'] = ACCESS_PUBLIC;
 			}
 
