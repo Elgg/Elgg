@@ -1,24 +1,57 @@
 <phpunit bootstrap="./engine/tests/phpunit/bootstrap.php">
-	<testsuites>
-		<testsuite name="unit">
-			<directory>./engine/tests/phpunit/unit/</directory>
-		</testsuite>
-		<testsuite name="integration">
-			<directory>./engine/tests/phpunit/integration/</directory>
-		</testsuite>
-		<testsuite name="plugins">
-			<directory>./mod/*/tests/phpunit/unit/</directory>
-			<directory>./mod/*/tests/phpunit/integration/</directory>
-		</testsuite>
-	</testsuites>
-	<filter>
-		<blacklist>
-			<directory suffix=".php">/engine/tests</directory>
-			<directory suffix=".php">/engine/lib/upgrades</directory>
-			<file>/engine/settings.example.php</file>
-			<directory suffix=".php">/vendor</directory>
-			<directory suffix=".php">/vendors</directory>
-			<directory suffix=".php">/docs</directory>
-		</blacklist>
-	</filter>
+
+    <testsuites>
+        <testsuite name="unit">
+            <directory>./engine/tests/phpunit/unit/</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>./engine/tests/phpunit/integration/</directory>
+        </testsuite>
+        <testsuite name="plugins">
+            <directory>./mod/*/tests/phpunit/unit/</directory>
+            <directory>./mod/*/tests/phpunit/integration/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <blacklist>
+            <directory suffix=".php">./elgg-config</directory>
+            <directory suffix=".php">./install</directory>
+            <directory suffix=".php">*/vendor/*</directory>
+            <directory suffix=".php">*/vendors/*</directory>
+            <directory suffix=".php">*/tests/*</directory>
+            <directory suffix=".php">*/bower_components/*</directory>
+            <directory suffix=".php">*/node_modules/*</directory>
+            <directory suffix=".php">*/docs/*</directory>
+            <directory suffix=".php">*/grunt/*</directory>
+        </blacklist>
+
+        <!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./actions</directory>
+            <directory suffix=".php">./engine/classes</directory>
+            <directory suffix=".php">./engine/lib</directory>
+            <directory suffix=".php">./languages</directory>
+            <directory suffix=".php">./views</directory>
+            <directory suffix=".php">./mod/*/actions</directory>
+            <directory suffix=".php">./mod/*/languages</directory>
+            <directory suffix=".php">./mod/*/lib</directory>
+            <directory suffix=".php">./mod/*/classes</directory>
+            <directory suffix=".php">./mod/*/views</directory>
+            <directory>./mod/*.php</directory>
+
+            <exclude>
+                <directory suffix=".php">./elgg-config</directory>
+                <directory suffix=".php">./install</directory>
+                <directory suffix=".php">*/vendor/*</directory>
+                <directory suffix=".php">*/vendors/*</directory>
+                <directory suffix=".php">*/tests/*</directory>
+                <directory suffix=".php">*/bower_components/*</directory>
+                <directory suffix=".php">*/node_modules/*</directory>
+                <directory suffix=".php">*/docs/*</directory>
+                <directory suffix=".php">*/grunt/*</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
 </phpunit>
