@@ -6,6 +6,8 @@
  */
 elgg_group_gatekeeper();
 
+elgg_load_library('elgg:bookmarks');
+
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
 	forward('', '404');

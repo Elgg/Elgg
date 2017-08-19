@@ -5,6 +5,8 @@
  * @package ElggBookmarks
  */
 
+elgg_load_library('elgg:bookmarks');
+
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('bookmarks'));
 

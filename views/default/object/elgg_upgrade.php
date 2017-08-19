@@ -7,6 +7,9 @@ use Elgg\Upgrade\Batch;
 
 $entity = elgg_extract('entity', $vars);
 /* @var $entity \ElggUpgrade */
+if (!$entity instanceof \ElggUpgrade) {
+	return;
+}
 
 $batch = $entity->getBatch();
 if (!$batch) {

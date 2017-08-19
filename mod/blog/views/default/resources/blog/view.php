@@ -1,5 +1,7 @@
 <?php
 
+elgg_load_library('elgg:blog');
+
 $page_type = elgg_extract('page_type', $vars);
 $guid = elgg_extract('guid', $vars);
 

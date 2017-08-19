@@ -5,8 +5,6 @@
  * @package ElggLogBrowser
  */
 
-elgg_register_event_handler('init', 'system', 'logbrowser_init');
-
 /**
  * Initialize the log browser plugin.
  */
@@ -40,3 +38,7 @@ function logbrowser_user_hover_menu($hook, $type, $return, $params) {
 	
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'logbrowser_init');
+};

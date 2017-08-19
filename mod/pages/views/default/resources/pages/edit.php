@@ -7,6 +7,8 @@
  */
 elgg_gatekeeper();
 
+elgg_load_library('elgg:pages');
+
 $page_guid = (int)elgg_extract('guid', $vars);
 $page = get_entity($page_guid);
 

@@ -3,8 +3,6 @@
  * Discussion plugin
  */
 
-elgg_register_event_handler('init', 'system', 'discussion_init');
-
 /**
  * Initialize the discussion component
  */
@@ -681,3 +679,7 @@ function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'discussion_init');
+};

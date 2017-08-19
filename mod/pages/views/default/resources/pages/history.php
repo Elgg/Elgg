@@ -5,6 +5,8 @@
  * @package ElggPages
  */
 
+elgg_load_library('elgg:pages');
+
 $page_guid = elgg_extract('guid', $vars);
 
 $page = get_entity($page_guid);

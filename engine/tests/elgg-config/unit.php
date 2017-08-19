@@ -21,3 +21,8 @@ $CONFIG->db['write'][0]['dbhost'] = 1;
 $CONFIG->db['write'][0]['dbuser'] = 'user1';
 $CONFIG->db['write'][0]['dbpass'] = 'xxxx1';
 $CONFIG->db['write'][0]['dbname'] = 'elgg1';
+
+// Disable all caches
+$CONFIG->simplecache_enabled = false;
+$CONFIG->system_cache_enabled = false;
+$CONFIG->boot_cache_ttl = 0;

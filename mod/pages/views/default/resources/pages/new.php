@@ -7,6 +7,8 @@
  */
 elgg_gatekeeper();
 
+elgg_load_library('elgg:pages');
+
 $container = false;
 
 $parent_guid = (int) elgg_extract('guid', $vars);

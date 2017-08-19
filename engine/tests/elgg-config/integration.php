@@ -17,3 +17,8 @@ foreach ($defaults as $key => $value) {
 		$CONFIG->$key = $value;
 	}
 }
+
+// Disable all caches
+$CONFIG->simplecache_enabled = false;
+$CONFIG->system_cache_enabled = false;
+$CONFIG->boot_cache_ttl = 0;

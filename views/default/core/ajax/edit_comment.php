@@ -9,12 +9,12 @@
 $guid = get_input('guid');
 
 $comment = get_entity($guid);
+if (!$comment instanceof ElggComment || !$comment->canEdit()) {
+	return;
+}
+
 $entity = $comment->getContainerEntity();
 elgg_set_page_owner_guid($entity->getContainerGUID());
-
-if (!elgg_instanceof($comment, 'object', 'comment') || !$comment->canEdit()) {
-	return false;
-}
 
 $form_vars = [
 	'class' => 'hidden mvl',

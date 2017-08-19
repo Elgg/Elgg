@@ -5,9 +5,6 @@
  * @package ElggProfile
  */
 
-elgg_register_event_handler('init', 'system', 'profile_init', 1);
-elgg_register_event_handler('init', 'system', '_profile_fields_setup', 10000); // Ensure this runs after other plugins
-
 /**
  * Profile init function
  */
@@ -345,3 +342,8 @@ function _profile_title_menu($hook, $type, $return, $params) {
 	
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'profile_init', 1);
+	elgg_register_event_handler('init', 'system', '_profile_fields_setup', 10000); // Ensure this runs after other plugins
+};

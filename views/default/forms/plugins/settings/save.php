@@ -7,6 +7,10 @@
  */
 
 $plugin = elgg_extract('entity', $vars);
+if (!$plugin instanceof ElggPlugin) {
+	return;
+}
+
 $plugin_id = $plugin->getID();
 $user_guid = elgg_extract('user_guid', $vars, elgg_get_logged_in_user_guid());
 

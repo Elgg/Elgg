@@ -5,8 +5,6 @@
  * @package ElggBookmarks
  */
 
-elgg_register_event_handler('init', 'system', 'bookmarks_init');
-
 /**
  * Bookmark init
  */
@@ -245,3 +243,7 @@ function bookmarks_ecml_views_hook($hook, $type, $return, $params) {
 	$return['object/bookmarks'] = elgg_echo('item:object:bookmarks');
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'bookmarks_init');
+};

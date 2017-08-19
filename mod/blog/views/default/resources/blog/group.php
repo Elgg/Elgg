@@ -1,5 +1,7 @@
 <?php
 
+elgg_load_library('elgg:blog');
+
 $subpage = elgg_extract('subpage', $vars);
 $page_type = elgg_extract('page_type', $vars);
 $group_guid = elgg_extract('group_guid', $vars);

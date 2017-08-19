@@ -113,7 +113,13 @@ class FormsService {
 			$form_vars['body'] = $body;
 		}
 
-		return elgg_view('input/form', $form_vars);
+		$viewtype = '';
+		if (isset($vars['viewtype'])) {
+			$viewtype = $vars['viewtype'];
+			unset($vars['viewtype']);
+		}
+
+		return elgg_view('input/form', $form_vars, $viewtype);
 	}
 
 	/**

@@ -5,18 +5,17 @@
 
 $url = current_page_url();
 
-elgg_register_plugin_hook_handler('view', 'widgets/friends/content', 'css_widget_content');
-elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_content');
-elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override', 600);
-
-function css_widget_content() {
+$css_widget_content = function() {
 	return $ipsum = elgg_view('developers/ipsum');
-}
+};
 
-function css_permissions_override() {
+$css_permissions_override = function () {
 	return true;
-}
+};
 
+elgg_register_plugin_hook_handler('view', 'widgets/friends/content', $css_widget_content);
+elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', $css_widget_content);
+elgg_register_plugin_hook_handler('permissions_check', 'all', $css_permissions_override, 600);
 
 ?>
 <div class="elgg-body mal">
@@ -68,3 +67,9 @@ require(['elgg', 'jquery'], function (elgg, $) {
 	});
 });
 </script>
+
+<?php
+
+elgg_unregister_plugin_hook_handler('view', 'widgets/friends/content', $css_widget_content);
+elgg_unregister_plugin_hook_handler('view', 'widgets/friends/edit', $css_widget_content);
+elgg_unregister_plugin_hook_handler('permissions_check', 'all', $css_permissions_override, 600);

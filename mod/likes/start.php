@@ -14,8 +14,6 @@ use Elgg\Services\AjaxResponse;
 use Elgg\Likes\AjaxResponseHandler;
 use Elgg\Likes\JsConfigHandler;
 
-elgg_register_event_handler('init', 'system', 'likes_init');
-
 function likes_init() {
 	elgg_extend_view('elgg.css', 'elgg/likes.css');
 
@@ -224,3 +222,7 @@ function likes_count(ElggEntity $entity) {
 		return $entity->countAnnotations('likes');
 	}
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'likes_init');
+};

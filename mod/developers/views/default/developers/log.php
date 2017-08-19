@@ -4,6 +4,10 @@
  */
 
 $cache = elgg_get_config('log_cache');
+if (!$cache) {
+	return;
+}
+
 $items = $cache->get();
 
 // stop collecting messages

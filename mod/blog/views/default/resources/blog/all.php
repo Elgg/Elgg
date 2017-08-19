@@ -1,5 +1,7 @@
 <?php
 
+elgg_load_library('elgg:blog');
+
 $page_type = elgg_extract('page_type', $vars);
 
 $params = blog_get_page_content_list();
