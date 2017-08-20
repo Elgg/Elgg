@@ -20,11 +20,6 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	protected $_testing_events;
 
 	/**
-	 * @var array
-	 */
-	static $activated_plugins;
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public static function getSettingsPath() {
@@ -85,30 +80,12 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	 */
 	public static function setUpBeforeClass() {
 		parent::setUpBeforeClass();
-
-		self::$activated_plugins = [];
-
-		if (Application::$_instance->getDbConnection()) {
-			$plugins = elgg_get_plugins('inactive');
-			foreach ($plugins as $plugin) {
-				if ($plugin->activate()) {
-					self::$activated_plugins[] = $plugin->getID();
-				}
-			}
-		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tearDownAfterClass() {
-		foreach (self::$activated_plugins as $id) {
-			$plugin = elgg_get_plugin_from_id($id);
-			if ($plugin) {
-				$plugin->deactivate();
-			}
-		}
-
 		parent::tearDownAfterClass();
 	}
 

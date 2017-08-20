@@ -100,7 +100,7 @@ Plugins can now implement their own PHPUnit tests by extending ``\Elgg\UnitTestC
 ``plugins`` test suite will automatically autoload PHPUnit tests from ``mod/<plugin_id>/tests/phpunit/unit`` and
 ``mod/<plugin_id>/tests/phpunit/integration``.
 
-Integration tests will always run with ALL plugins enabled.
+Prior to running integration tests, you need to enable the plugins that you wish to test alongside core API.
 
 ``\Elgg\IntegrationTestCase`` uses ``\Elgg\Seeding`` trait, which can be used to conveniently build new entities and
 write them to the database.
