@@ -851,7 +851,7 @@ class ElggPlugin extends \ElggObject {
 			
 			$autoload_file = 'vendor/autoload.php';
 			if ($this->canReadFile($autoload_file)) {
-				require_once "{$this->path}/{$autoload_file}";
+				Includer::requireFileOnce("{$this->path}/{$autoload_file}");
 			}
 		}
 
@@ -865,7 +865,7 @@ class ElggPlugin extends \ElggObject {
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			if ($this->canReadFile('start.php')) {
-				require_once "{$this->path}/start.php";
+				Includer::requireFileOnce("{$this->path}/start.php");
 			}
 			
 			$this->registerEntities();

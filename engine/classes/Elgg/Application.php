@@ -45,11 +45,6 @@ class Application {
 	public $_services;
 
 	/**
-	 * @var array
-	 */
-	private static $_setups;
-
-	/**
 	 * Property names of the service provider to be exposed via __get()
 	 *
 	 * E.g. the presence of `'foo' => true` in the list would allow _elgg_services()->foo to
@@ -210,12 +205,21 @@ class Application {
 	 * @internal
 	 * @throws \InstallationException
 	 */
-	public function loadCore() {
+	public static function loadCore() {
 		if (self::isCoreLoaded()) {
 			return;
 		}
 
-		self::autoload();
+		$path = Paths::elgg() . 'engine/lib';
+
+		// include library files, capturing setup functions
+		foreach (self::getEngineLibs() as $file) {
+			try {
+				Includer::requireFileOnce("$path/$file");
+			} catch (\Error $e) {
+				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
+			}
+		}
 	}
 
 	/**
@@ -260,6 +264,13 @@ class Application {
 
 		// in case not loaded already
 		$this->loadCore();
+
+		$hooks = $this->_services->hooks;
+		$events = $hooks->getEvents();
+
+		foreach (Includer::$_setups as $setup) {
+			$setup($events, $hooks);
+		}
 
 		if (!$this->_services->db) {
 			// no database boot!
@@ -317,14 +328,6 @@ class Application {
 		$this->_services->views->clampViewtypeToPopulatedViews();
 
 		$this->allowPathRewrite();
-
-		$hooks = $this->_services->hooks;
-		$events = $hooks->getEvents();
-
-		// run setups
-		foreach (self::$_setups as $func) {
-			$func($events, $hooks);
-		}
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');
@@ -745,7 +748,7 @@ class Application {
 			throw new RuntimeException(__METHOD__ . ' can only be executed if Elgg is installed using composer install --dev');
 		}
 
-		self::autoload();
+		self::loadCore();
 
 		return UnitTestCase::createApplication();
 	}
@@ -939,38 +942,6 @@ class Application {
 	 */
 	public function loadSettings() {
 		trigger_error(__METHOD__ . ' is no longer needed and will be removed.');
-	}
-
-	/**
-	 * Preload core library files
-	 *
-	 * This is added to speed up tests. An application maybe bootstrapped more than one during
-	 * the test suite. We don't need to include all files for each suite, so we include them once,
-	 * and store the callables in the static variable executing them during loadCore
-	 *
-	 * @return void
-	 *
-	 * @throws \InstallationException
-	 */
-	private static function autoload() {
-		if (isset(self::$_setups)) {
-			return;
-		}
-
-		self::$_setups = [];
-
-		$path = Paths::elgg() . 'engine/lib';
-
-		// include library files, capturing setup functions
-		foreach (self::getEngineLibs() as $file) {
-			$return = Includer::includeFile("$path/$file");
-			if (!$return) {
-				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
-			}
-			if ($return instanceof \Closure) {
-				self::$_setups[$file] = $return;
-			}
-		}
 	}
 
 	/**
