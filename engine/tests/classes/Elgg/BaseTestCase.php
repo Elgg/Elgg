@@ -58,12 +58,15 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 		if (!self::isSamePath($app->_services->config->elgg_settings_file, static::getSettingsPath())) {
 			$backup_values = [];
 
+
 			$keys = [
 				'testCase',
 			];
 
 			foreach ($keys as $key) {
-				$backup_values[$key] = _elgg_services()->$key;
+				if (in_array($key, _elgg_services()->getNames())) {
+					$backup_values[$key] = _elgg_services()->$key;
+				}
 			}
 
 			$app = static::createApplication();

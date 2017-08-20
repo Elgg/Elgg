@@ -124,7 +124,6 @@ abstract class IntegrationTestCase extends BaseTestCase {
 			_elgg_services()->session->removeLoggedInUser();
 		}
 
-
 		$this->assertEquals($this->_testing_hooks, _elgg_services()->hooks->getAllHandlers(), "
 			The test has failed to clean up hook registrations after itself.
 		");
