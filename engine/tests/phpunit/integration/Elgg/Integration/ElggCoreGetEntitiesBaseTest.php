@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Application;
 use Elgg\Database\Seeder;
 use Elgg\LegacyIntegrationTestCase;
 use Elgg\TestSeeder;
@@ -65,6 +66,11 @@ abstract class ElggCoreGetEntitiesBaseTest extends LegacyIntegrationTestCase {
 	public static function setUpBeforeClass() {
 		parent::setUpBeforeClass();
 
+		$app = Application::$_instance;
+		if (!$app || !$app->getDbConnection()) {
+			return;
+		}
+
 		$seeder = new TestSeeder();
 
 		$ia = elgg_set_ignore_access();
@@ -123,21 +129,25 @@ abstract class ElggCoreGetEntitiesBaseTest extends LegacyIntegrationTestCase {
 
 	public static function tearDownAfterClass() {
 
-		$ia = elgg_set_ignore_access();
+		$app = Application::$_instance;
+		if ($app && $app->getDbConnection()) {
 
-		foreach (self::$_entities as $e) {
-			$e->delete();
-		}
+			$ia = elgg_set_ignore_access();
 
-		// manually remove subtype entries since there is no way
-		// to using the API.
-		foreach (self::$_subtypes as $type => $subtypes) {
-			foreach ($subtypes as $subtype) {
-				remove_subtype($type, $subtype);
+			foreach (self::$_entities as $e) {
+				$e->delete();
 			}
-		}
 
-		elgg_set_ignore_access($ia);
+			// manually remove subtype entries since there is no way
+			// to using the API.
+			foreach (self::$_subtypes as $type => $subtypes) {
+				foreach ($subtypes as $subtype) {
+					remove_subtype($type, $subtype);
+				}
+			}
+
+			elgg_set_ignore_access($ia);
+		}
 
 		parent::tearDownAfterClass();
 	}

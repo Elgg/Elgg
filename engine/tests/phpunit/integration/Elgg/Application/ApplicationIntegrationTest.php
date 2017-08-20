@@ -25,9 +25,10 @@ class ApplicationIntegrationTest extends IntegrationTestCase {
 	 * that plugins can start multiple times
 	 */
 	public function testCanCreateMultipleApplications() {
-		self::createApplication();
+		$app1 = self::createApplication();
 		$app2 = self::createApplication();
 
+		$this->assertNotSame($app1, $app2);
 		$this->assertSame(Application::$_instance, $app2);
 	}
 }

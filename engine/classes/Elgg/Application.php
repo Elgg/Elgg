@@ -750,7 +750,12 @@ class Application {
 
 		self::loadCore();
 
-		return UnitTestCase::createApplication();
+		$app = IntegrationTestCase::createApplication();
+		if (!$app) {
+			$app = UnitTestCase::createApplication();
+		}
+
+		return $app;
 	}
 
 	/**

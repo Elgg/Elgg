@@ -13,7 +13,6 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database\SubtypeTable         $subtypeTable       Subtype table mock
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections  ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings    Private settings table mock
- * @property-read \Elgg\BaseTestCase                        $testCase           Ongoing test case
  *
  * @since 2.3
  */
@@ -105,6 +104,5 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 			return new \Elgg\Database\SiteSecret('z1234567890123456789012345678901');
 		});
 
-		$this->setValue('testCase', null);
 	}
 }

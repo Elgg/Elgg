@@ -22,75 +22,8 @@ abstract class UnitTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function getResettableServices() {
-		return [
-			'accessCollections',
-			'accessCache',
-			'actions',
-			'adminNotices',
-			'ajax',
-			'amdConfig',
-			'annotations',
-			'autoP',
-			'autoloadManager',
-			'batchUpgrader',
-			'cacheHandler',
-			'crypto',
-			'context',
-			'db',
-			'emails',
-			'entityCache',
-			'entityPreloader',
-			'entityTable',
-			'forms',
-			'handlers',
-			'hooks',
-			'iconService',
-			'input',
-			'imageService',
-			'logger',
-			'mailer',
-			'metadataCache',
-			'memcacheStashPool',
-			'metadataTable',
-			'mutex',
-			'notifications',
-			'nullCache',
-			'persistentLogin',
-			'plugins',
-			'pluginSettingsCache',
-			'privateSettings',
-			'publicDb',
-			'queryCounter',
-			'redirects',
-			'request',
-			'responseFactory',
-			'relationshipsTable',
-			'router',
-			'serveFileHandler',
-			'session',
-			'siteSecret',
-			'stickyForms',
-			'subtypeTable',
-			'systemCache',
-			'systemMessages',
-			'table_columns',
-			'translator',
-			'upgrades',
-			'upgradeLocator',
-			'uploads',
-			'userCapabilities',
-			'usersTable',
-			'views',
-			'viewCacher',
-			'widgets',
-		];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public static function createApplication() {
+
 		$settings_path = self::getSettingsPath();
 		$config = Config::fromFile($settings_path);
 
@@ -116,7 +49,11 @@ abstract class UnitTestCase extends BaseTestCase {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
 		}
 
-		_elgg_services()->logger->notice('Bootstrapped a new Application instance from settings in ' . $settings_path);
+		// turn off system log
+		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
+		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+
+		elgg_flush_caches();
 
 		return $app;
 	}
