@@ -865,7 +865,10 @@ class ElggPlugin extends \ElggObject {
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			if ($this->canReadFile('start.php')) {
-				Includer::requireFileOnce("{$this->path}/start.php");
+				$result = Includer::requireFileOnce("{$this->path}/start.php");
+				if ($result instanceof \Closure) {
+					$result(_elgg_services()->hooks->getEvents(), _elgg_services()->hooks);
+				}
 			}
 			
 			$this->registerEntities();
@@ -908,7 +911,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		try {
-			$ret = include $filepath;
+			$ret = Includer::includeFile($filepath);
 		} catch (Exception $e) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
 				[$filename, $this->getID(), $this->guid, $this->path]);

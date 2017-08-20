@@ -45,5 +45,6 @@ final class Includer {
 		if ($result instanceof \Closure) {
 			self::$_setups[] = $result;
 		}
+		return $result;
 	}
 }

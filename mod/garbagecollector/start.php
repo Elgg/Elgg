@@ -5,8 +5,6 @@
  * @package ElggGarbageCollector
  */
 
-elgg_register_event_handler('init', 'system', 'garbagecollector_init');
-
 function garbagecollector_init() {
 	$period = elgg_get_plugin_setting('period', 'garbagecollector');
 	switch ($period) {
@@ -116,3 +114,7 @@ function garbagecollector_entities() {
 		WHERE type = '$type' AND guid NOT IN (SELECT guid FROM {$dbprefix}{$table})");
 	}
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'garbagecollector_init');
+};

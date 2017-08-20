@@ -4,8 +4,6 @@
 * This plugin lets users send messages to each other.
 */
 
-elgg_register_event_handler('init', 'system', 'messages_init');
-
 function messages_init() {
 
 	// add page menu items
@@ -472,3 +470,7 @@ function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 
 	return $return_value;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'messages_init');
+};
