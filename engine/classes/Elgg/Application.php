@@ -45,6 +45,11 @@ class Application {
 	public $_services;
 
 	/**
+	 * @var \Closure[]
+	 */
+	private static $_setups = [];
+
+	/**
 	 * Property names of the service provider to be exposed via __get()
 	 *
 	 * E.g. the presence of `'foo' => true` in the list would allow _elgg_services()->foo to
@@ -215,11 +220,27 @@ class Application {
 		// include library files, capturing setup functions
 		foreach (self::getEngineLibs() as $file) {
 			try {
-				Includer::requireFileOnce("$path/$file");
+				self::requireSetupFileOnce("$path/$file");
 			} catch (\Error $e) {
 				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
 			}
 		}
+	}
+
+	/**
+	 * Require a library/plugin file once and capture returned anonymous functions
+	 *
+	 * @param string $file File to require
+	 * @return mixed
+	 * @internal
+	 * @access private
+	 */
+	public static function requireSetupFileOnce($file) {
+		$return = Includer::requireFileOnce($file);
+		if ($return instanceof \Closure) {
+			self::$_setups[] = $return;
+		}
+		return $return;
 	}
 
 	/**
@@ -268,7 +289,7 @@ class Application {
 		$hooks = $this->_services->hooks;
 		$events = $hooks->getEvents();
 
-		foreach (Includer::$_setups as $setup) {
+		foreach (self::$_setups as $setup) {
 			$setup($events, $hooks);
 		}
 

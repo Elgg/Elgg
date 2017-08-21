@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Includer;
+use Elgg\Application;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -851,7 +852,7 @@ class ElggPlugin extends \ElggObject {
 			
 			$autoload_file = 'vendor/autoload.php';
 			if ($this->canReadFile($autoload_file)) {
-				Includer::requireFileOnce("{$this->path}/{$autoload_file}");
+				Application::requireSetupFileOnce("{$this->path}/{$autoload_file}");
 			}
 		}
 
@@ -865,9 +866,9 @@ class ElggPlugin extends \ElggObject {
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			if ($this->canReadFile('start.php')) {
-				$result = Includer::requireFileOnce("{$this->path}/start.php");
+				$result = Application::requireSetupFileOnce("{$this->path}/start.php");
 				if ($result instanceof \Closure) {
-					$result(_elgg_services()->hooks->getEvents(), _elgg_services()->hooks);
+					$result();
 				}
 			}
 			

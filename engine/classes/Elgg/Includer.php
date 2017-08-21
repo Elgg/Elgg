@@ -9,12 +9,6 @@ namespace Elgg;
 final class Includer {
 
 	/**
-	 * @var array
-	 * @internal
-	 */
-	static $_setups;
-
-	/**
 	 * Include a file with as little context as possible
 	 *
 	 * @param string $file File to include
@@ -41,10 +35,6 @@ final class Includer {
 	 * @return mixed
 	 */
 	static public function requireFileOnce($file) {
-		$result = require_once $file;
-		if ($result instanceof \Closure) {
-			self::$_setups[] = $result;
-		}
-		return $result;
+		return require_once $file;
 	}
 }
