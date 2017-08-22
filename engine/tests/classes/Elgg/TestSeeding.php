@@ -51,15 +51,6 @@ trait TestSeeding {
 			// 5 with random subtypes
 			for ($i = 0; $i < 5; $i++) {
 				$subtype = "test_object_subtype_tsp_$i";
-				$entities = elgg_get_entities([
-					'types' => 'object',
-					'subtypes' => $subtype,
-					'limit' => 0,
-					'batch' => true,
-				]);
-				foreach ($entities as $entity) {
-					$entity->delete();
-				}
 				$e = $this->createObject([
 					'subtype' => $subtype,
 				]);
@@ -71,15 +62,6 @@ trait TestSeeding {
 			// and users
 			for ($i = 0; $i < 5; $i++) {
 				$subtype = "test_user_subtype_tsp_$i";
-				$entities = elgg_get_entities([
-					'types' => 'user',
-					'subtypes' => $subtype,
-					'limit' => 0,
-					'batch' => true,
-				]);
-				foreach ($entities as $entity) {
-					$entity->delete();
-				}
 				$e = $this->createUser([
 					'subtype' => $subtype,
 				]);
@@ -91,15 +73,6 @@ trait TestSeeding {
 			// and groups
 			for ($i = 0; $i < 5; $i++) {
 				$subtype = "test_group_subtype_tsp_$i";
-				$entities = elgg_get_entities([
-					'types' => 'group',
-					'subtypes' => $subtype,
-					'limit' => 0,
-					'batch' => true,
-				]);
-				foreach ($entities as $entity) {
-					$entity->delete();
-				}
 				$e = $this->createGroup([
 					'subtype' => $subtype,
 				]);

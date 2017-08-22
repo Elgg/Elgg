@@ -10,13 +10,19 @@ namespace Elgg\Integration;
  */
 class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest {
 
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage The entity type must be defined for elgg_get_entities_from_attributes()
+	 */
 	public function testWithoutType() {
-		$this->expectException(new \InvalidArgumentException('The entity type must be defined for elgg_get_entities_from_attributes()'));
 		elgg_get_entities_from_attributes();
 	}
 
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage Only one type can be passed to elgg_get_entities_from_attributes()
+	 */
 	public function testWithMoreThanOneType() {
-		$this->expectException(new \InvalidArgumentException('Only one type can be passed to elgg_get_entities_from_attributes()'));
 		elgg_get_entities_from_attributes([
 			'types' => [
 				'one',
@@ -25,13 +31,19 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 		]);
 	}
 
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage Invalid type 'test' passed to elgg_get_entities_from_attributes()
+	 */
 	public function testWithInvalidType() {
-		$this->expectException(new \InvalidArgumentException("Invalid type 'test' passed to elgg_get_entities_from_attributes()"));
 		elgg_get_entities_from_attributes(['type' => 'test']);
 	}
 
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage attribute_name_value_pairs must be an array for elgg_get_entities_from_attributes()
+	 */
 	public function testWithInvalidPair() {
-		$this->expectException(new \InvalidArgumentException("attribute_name_value_pairs must be an array for elgg_get_entities_from_attributes()"));
 		elgg_get_entities_from_attributes([
 			'types' => 'object',
 			'attribute_name_value_pairs' => 'invalid',
