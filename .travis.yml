@@ -82,13 +82,12 @@ matrix:
       install:
        - composer travis:install-with-mysql
        - php -f ./.scripts/travis/enable_plugins.php
-       - php ./elgg-cli database:seed -vv
       script:
        - php -f ./.scripts/is_memcached_enabled.php
        - php ./elgg-cli simpletest -p all
        - ./vendor/bin/phpunit
       after_script:
-       - php ./elgg-cli database:unseed -vv
+       - phpenv config-rm ./.scripts/travis/memcached.ini
 
     # HHVM build
     - php: hhvm-3.15
