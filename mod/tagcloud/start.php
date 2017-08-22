@@ -3,8 +3,6 @@
  * Tagcloud plugin
  */
 
-elgg_register_event_handler('init', 'system', 'tagcloud_init');
-
 function tagcloud_init() {
 	elgg_extend_view('theme_sandbox/components', 'tagcloud/theme_sandbox/component');
 	elgg_extend_view('elgg.css', 'elgg/tagcloud.css');
@@ -23,3 +21,7 @@ function tagcloud_tags_page_handler($page) {
 	echo elgg_view_resource('tagcloud');
 	return true;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'tagcloud_init');
+};

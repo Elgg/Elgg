@@ -12,8 +12,6 @@
  * - River entry for posts saved as drafts and later published
  */
 
-elgg_register_event_handler('init', 'system', 'blog_init');
-
 /**
  * Init blog plugin.
  */
@@ -327,3 +325,7 @@ function blog_register_db_seeds(\Elgg\Hook $hook) {
 
 	return $seeds;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'blog_init');
+};

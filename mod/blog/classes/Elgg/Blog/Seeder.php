@@ -99,7 +99,7 @@ class Seeder extends Seed {
 		$blogs->setIncrementOffset(false);
 
 		foreach ($blogs as $blog) {
-			if ($blog->delete()) {
+			if ($this->delete($blog)) {
 				$this->log("Deleted blog $blog->guid");
 			} else {
 				$this->log("Failed to delete blog $blog->guid");

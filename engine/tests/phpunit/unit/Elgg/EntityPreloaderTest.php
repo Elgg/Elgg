@@ -23,7 +23,7 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 		$this->obj->_callable_cache_checker = array($dependency, 'isCached');
 		$this->obj->_callable_entity_loader = array($dependency, 'load');
 
-		$this->mock = $this->getMock('Elgg\\PreloaderMock_20140623');
+		$this->mock = $this->createMock('Elgg\\PreloaderMock_20140623');
 	}
 
 	public function down() {

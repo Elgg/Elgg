@@ -44,7 +44,7 @@ class ElggCoreFilestoreTest extends LegacyIntegrationTestCase {
 		
 		// ensure file removed on user delete
 		// deleting the user calls _elgg_clear_entity_files()
-		$user->delete();
+		$this->delete($user);
 		$this->assertFalse(file_exists($filepath));
 	}
 
@@ -69,6 +69,6 @@ class ElggCoreFilestoreTest extends LegacyIntegrationTestCase {
 
 		$this->assertTrue($file->delete());
 		$this->assertFalse(file_exists($filepath));
-		$user->delete();
+		$this->delete($user);
 	}
 }

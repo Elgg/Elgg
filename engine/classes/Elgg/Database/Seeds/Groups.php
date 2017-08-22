@@ -142,7 +142,7 @@ class Groups extends Seed {
 		$groups->setIncrementOffset(false);
 
 		foreach ($groups as $group) {
-			if ($group->delete()) {
+			if ($this->delete($group)) {
 				$this->log("Deleted group $group->guid");
 			} else {
 				$this->log("Failed to delete group $group->guid");

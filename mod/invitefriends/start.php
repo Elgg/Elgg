@@ -5,8 +5,6 @@
  * @package ElggInviteFriends
  */
 
-elgg_register_event_handler('init', 'system', 'invitefriends_init');
-
 function invitefriends_init() {
 	elgg_register_page_handler('invite', 'invitefriends_page_handler');
 
@@ -89,3 +87,7 @@ function invitefriends_add_friends($hook, $type, $result, $params) {
 	$user->addFriend($friend_guid, true);
 	$friend_user->addFriend($user->guid, true);
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'invitefriends_init');
+};

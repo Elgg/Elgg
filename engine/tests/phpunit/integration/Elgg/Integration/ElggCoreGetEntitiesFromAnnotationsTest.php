@@ -5,6 +5,9 @@ namespace Elgg\Integration;
 /**
  * Test elgg_get_entities_from_annotations() and
  * elgg_get_entities_from_annotation_calculation()
+ *
+ * @group IntegrationTests
+ * @group Entities
  */
 class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest {
 

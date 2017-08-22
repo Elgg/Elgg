@@ -96,7 +96,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 	public function down() {
 		$this->session->invalidate();
-		$this->hooks->getEvents()->restore();
+		$this->events->restore();
 		$this->hooks->restore();
 	}
 
@@ -245,7 +245,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 	public function testStoppingEnqueueEvent() {
 
-		$mock = $this->getMock(PluginHooksService::class, ['trigger']);
+		$mock = $this->createMock(PluginHooksService::class, ['trigger']);
 		$mock->expects($this->once())
 			->method('trigger')
 			->will($this->returnValue(false));
@@ -273,7 +273,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 	public function testProcessQueueThreeEvents() {
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(3))
 			->method('getSubscriptions')
 			->will($this->returnValue([]));
@@ -303,7 +303,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 	public function testProcessQueueTimesout() {
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getSubscriptions')
 			->will($this->returnValue([]));
@@ -341,7 +341,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 			'language' => 'en',
 		]);
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getSubscriptions')
 			->will($this->returnValue([
@@ -393,7 +393,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 				'bad_method'
 			],
 		];
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getSubscriptions')
 			->will($this->returnValue($subscribers));
@@ -445,7 +445,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$recipient = $this->createUser();
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getSubscriptions')
 			->will($this->returnValue([
@@ -520,7 +520,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 			'language' => 'en',
 		]);
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getSubscriptions')
 			->will($this->returnValue([
@@ -596,7 +596,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 			'language' => 'en',
 		]);
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getSubscriptions')
 			->will($this->returnValue([
@@ -659,7 +659,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$object = $this->getTestObject();
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getSubscriptions')
 			->will($this->returnValue([]));
@@ -689,7 +689,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$object = $this->getTestObject();
 
-		$mock = $this->getMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
+		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(0))
 			->method('getSubscriptions')
 			->will($this->returnValue([]));

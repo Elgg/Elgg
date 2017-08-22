@@ -102,12 +102,9 @@ class Translator {
 			);
 			return '';
 		}
-		
-		if ($this->current_language === null) {
-			$this->current_language = $this->getCurrentLanguage();
-		}
+
 		if (!$language) {
-			$language = $this->current_language;
+			$language = $this->getCurrentLanguage();
 		}
 
 		$this->ensureTranslationsLoaded($language);
@@ -184,13 +181,25 @@ class Translator {
 	 * @return string The language code for the site/user or "en" if not set
 	 */
 	public function getCurrentLanguage() {
-		$language = $this->detectLanguage();
-
-		if (!$language) {
-			$language = 'en';
+		if (!isset($this->current_language)) {
+			$this->current_language = $this->detectLanguage();
 		}
 
-		return $language;
+		if (!$this->current_language) {
+			$this->current_language = 'en';
+		}
+
+		return $this->current_language;
+	}
+
+	/**
+	 * Sets current system language
+	 *
+	 * @param string $language Language code
+	 * @return void
+	 */
+	public function setCurrentLanguage($language = null) {
+		$this->current_language = $language;
 	}
 
 	/**

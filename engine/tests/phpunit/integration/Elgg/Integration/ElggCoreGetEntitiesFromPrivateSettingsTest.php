@@ -4,6 +4,9 @@ namespace Elgg\Integration;
 
 /**
  * Test elgg_get_entities_from_private_settings()
+ *
+ * @group IntegrationTests
+ * @group Entities
  */
 class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBaseTest {
 

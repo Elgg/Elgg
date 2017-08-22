@@ -51,7 +51,7 @@ class SimpletestCommand extends Command {
 
 		$settings_path = $this->option('config');
 		if (!$settings_path) {
-			$settings_path = Paths::elgg() . 'engine/tests/elgg-config/simpletest.php';
+			$settings_path = Paths::elgg() . 'engine/tests/elgg-config/settings.php';
 		}
 
 		$sp = _elgg_services();

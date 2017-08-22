@@ -4,8 +4,6 @@
  * linked to them
  */
 
-elgg_register_event_handler('init', 'system', 'legacy_urls_init');
-
 /**
  * Initialize the plugin
  * @return void
@@ -390,3 +388,7 @@ function legacy_urls_messageboard_forward($hook, $type, $result) {
 		return false;
 	}
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'legacy_urls_init');
+};

@@ -91,7 +91,7 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	protected function getLoggerInstance() {
-		$mock = $this->getMock('\Elgg\PluginHooksService', array('trigger'));
+		$mock = $this->createMock('\Elgg\PluginHooksService', array('trigger'));
 		$mock->expects($this->never())->method('trigger');
 		$sp = _elgg_services();
 		return new \Elgg\Logger($mock, $sp->context);

@@ -1,4 +1,17 @@
-<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php">
+<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+>
+
+    <php>
+        <!-- You can specify your own settings.php path -->
+        <!-- <env name="ELGG_SETTINGS_FILE" value="./engine/tests/elgg-config/settings.php"/> -->
+    </php>
 
     <testsuites>
         <testsuite name="unit">

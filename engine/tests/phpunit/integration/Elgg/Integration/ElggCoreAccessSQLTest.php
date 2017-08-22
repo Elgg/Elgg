@@ -22,7 +22,7 @@ class ElggCoreAccessSQLTest extends LegacyIntegrationTestCase {
 
 	public function down() {
 		_elgg_services()->session->removeLoggedInUser();
-		$this->user->delete();
+		$this->delete($this->user);
 		_elgg_services()->hooks->restore();
 	}
 

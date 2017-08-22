@@ -5,11 +5,6 @@
  * @package ElggGroups
  */
 
-elgg_register_event_handler('init', 'system', 'groups_init');
-
-// Ensure this runs after other plugins
-elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
-
 /**
  * Initialize the groups plugin.
  */
@@ -1066,3 +1061,10 @@ function groups_set_icon_sizes(\Elgg\Hook $hook) {
 
 	return $sizes;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'groups_init');
+
+	// Ensure this runs after other plugins
+	elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
+};

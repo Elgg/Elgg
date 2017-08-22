@@ -10,10 +10,17 @@ if (is_file($settings)) {
 	include $settings;
 }
 
-$defaults = include __DIR__ . '/_defaults.php';
+$defaults = include __DIR__ . '/_overrides.php';
 
 foreach ($defaults as $key => $value) {
-	if (!isset($CONFIG->$key)) {
-		$CONFIG->$key = $value;
-	}
+	$CONFIG->$key = $value;
 }
+
+$CONFIG->memcache = true;
+$CONFIG->memcache_servers = [
+	[
+		'127.0.0.1',
+		11211
+	],
+];
+$CONFIG->memcache_namespace_prefix = 'elgg_';

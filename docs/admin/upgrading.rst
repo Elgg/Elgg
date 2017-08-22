@@ -100,7 +100,7 @@ Plugins can now implement their own PHPUnit tests by extending ``\Elgg\UnitTestC
 ``plugins`` test suite will automatically autoload PHPUnit tests from ``mod/<plugin_id>/tests/phpunit/unit`` and
 ``mod/<plugin_id>/tests/phpunit/integration``.
 
-Integration tests will always run with ALL plugins enabled.
+Prior to running integration tests, you need to enable the plugins that you wish to test alongside core API.
 
 ``\Elgg\IntegrationTestCase`` uses ``\Elgg\Seeding`` trait, which can be used to conveniently build new entities and
 write them to the database.
@@ -108,8 +108,11 @@ write them to the database.
 ``\Elgg\UnitTestCase`` does not use the database, but provides a database mocking interface, which allows tests to
 define query specs with predefined returns.
 
-By default, both unit and integration tests will be run whenever ``phpunit`` is called. You can use filter or group flags
-to only run a specific suite: ``phpunit --testsuite unit`` or ``phpunit --testsuite integration`` or ``phpunit --testsuite plugins``.
+By default, both unit and integration tests will be run whenever ``phpunit`` is called. You can use ``--filter``, ``--group``
+or ``--testsuite`` flags to only run a specific suite: ``phpunit --testsuite unit`` or ``phpunit --testsuite integration`` or ``phpunit --testsuite plugins``.
+
+For integration testing to run properly, plugins are advised to not put any logic into the root of ``start.php``, and instead
+return a Closure. This allows the testsuite to build a new Application instance without loosing plugin initialization logic.
 
 Plugins with simpletests will continue working as perviously. However, method signatures in the ``ElggCoreUnitTest`` abstract class
 have changed and you will need to update your tests accordingly. Namely, it's discouraged to use ``__construct`` and
@@ -118,6 +121,7 @@ boostrapping and asserting pre and post conditions, your test case should use ``
 
 Simpletests can no longer be executed from the admin interface of the developers plugin.
 Use Elgg cli command: ``elgg-cli simpletest``
+
 
 From 2.2 to 2.3
 ===============
