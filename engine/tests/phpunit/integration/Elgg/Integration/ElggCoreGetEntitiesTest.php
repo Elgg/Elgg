@@ -170,13 +170,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$options = [
 			'types' => $types,
-			'subtype' => $subtype
+			'subtype' => $subtype,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -190,13 +189,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$options = [
 			'types' => $types,
-			'subtypes' => $subtype
+			'subtypes' => $subtype,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -209,13 +207,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$options = [
 			'types' => $types,
-			'subtypes' => $subtypes
+			'subtypes' => $subtypes,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -229,13 +226,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$options = [
 			'types' => $types,
-			'subtypes' => $subtypes
+			'subtypes' => $subtypes,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		$this->assertIdentical(count($es), $subtype_num);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -261,15 +257,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$options = [
 			'types' => $types,
-			'subtypes' => $subtypes
+			'subtypes' => $subtypes,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		// this will unset all invalid subtypes for each type that that only
-		// one entity exists of each.
-		$this->assertIdentical(count($es), $subtype_num);
 		foreach ($es as $e) {
 			// entities must at least be in the type.
 			$this->assertTrue(in_array($e->getType(), $types));
@@ -305,15 +298,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$options = [
 			'types' => $types,
-			'subtypes' => $subtypes
+			'subtypes' => $subtypes,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		// this will unset all invalid subtypes for each type that that only
-		// one entity exists of each.
-		$this->assertIdentical(count($es), $type_num);
 		foreach ($es as $e) {
 			// entities must at least be in the type.
 			$this->assertTrue(in_array($e->getType(), $types));
@@ -340,13 +330,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$pair = [$types[0] => $subtypes[0]];
 
 		$options = [
-			'type_subtype_pairs' => $pair
+			'type_subtype_pairs' => $pair,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		$this->assertIdentical(count($es), $type_num);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -365,13 +354,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$pair = [$types[0] => $subtypes];
 
 		$options = [
-			'type_subtype_pairs' => $pair
+			'type_subtype_pairs' => $pair,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		$this->assertIdentical(count($es), $subtype_num);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -394,13 +382,12 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$pair = [$types[0] => $subtypes];
 
 		$options = [
-			'type_subtype_pairs' => $pair
+			'type_subtype_pairs' => $pair,
 		];
 
 		$es = elgg_get_entities($options);
 		$this->assertIsA($es, 'array');
 
-		$this->assertIdentical(count($es), $valid_subtype_num);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $valid));
