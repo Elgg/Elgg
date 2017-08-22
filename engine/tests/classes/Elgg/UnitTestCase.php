@@ -15,17 +15,10 @@ abstract class UnitTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function getSettingsPath() {
-		return Application::elggDir()->getPath('/engine/tests/elgg-config/unit.php');
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public static function createApplication() {
 
-		$settings_path = self::getSettingsPath();
-		$config = Config::fromFile($settings_path);
+		$settings_path = Application::elggDir()->getPath('engine/tests/elgg-config/settings.php');
+		$config = Config::factory($settings_path, true);
 
 		$sp = new MockServiceProvider($config);
 
@@ -52,8 +45,6 @@ abstract class UnitTestCase extends BaseTestCase {
 		// turn off system log
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
-
-		elgg_flush_caches();
 
 		return $app;
 	}

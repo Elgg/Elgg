@@ -788,6 +788,9 @@ class Application {
 			$app = UnitTestCase::createApplication();
 		}
 
+		// Flushing all caches once before running the suite
+		elgg_flush_caches();
+
 		return $app;
 	}
 

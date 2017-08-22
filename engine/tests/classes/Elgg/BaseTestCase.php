@@ -29,16 +29,12 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 	}
 
 	/**
-	 * Returns path to settings file to be used to boostrap the Application
-	 * @return mixed
-	 */
-	abstract public static function getSettingsPath();
-
-	/**
 	 * Build a new testing application
 	 * @return Application|false
 	 */
-	abstract public static function createApplication();
+	public static function createApplication() {
+		return false;
+	}
 
 	/**
 	 * {@inheritdoc}

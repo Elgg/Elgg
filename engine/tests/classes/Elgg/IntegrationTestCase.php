@@ -19,17 +19,10 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function getSettingsPath() {
-		return Application::elggDir()->getPath('engine/tests/elgg-config/integration.php');
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public static function createApplication() {
 
-		$settings_path = self::getSettingsPath();
-		$config = Config::fromFile($settings_path);
+		$settings_path = Application::elggDir()->getPath('engine/tests/elgg-config/settings.php');
+		$config = Config::factory($settings_path, true);
 
 		$sp = new ServiceProvider($config);
 
@@ -76,7 +69,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		$app->bootCore();
 
-		elgg_flush_caches();
+		//elgg_flush_caches();
 
 		return $app;
 	}

@@ -73,7 +73,9 @@ matrix:
       services:
        - memcached
        - mysql
-      env: JOB_NAME=memcache_php56 VARIA=true
+      env:
+        - JOB_NAME=memcache_php56 VARIA=true
+        - ELGG_SETTINGS_FILE=./engine/tests/elgg-config/memcached.php
       before_install:
         - phpenv rehash
         - phpenv config-rm xdebug.ini

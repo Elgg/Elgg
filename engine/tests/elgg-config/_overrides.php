@@ -4,18 +4,9 @@
  */
 
 $defaults = [
-	'dbprefix' => 'elgg_t_i_',
-	'boot_complete' => false,
-	'wwwroot' => 'http://localhost/',
 	'dataroot' => \Elgg\Project\Paths::elgg() . 'engine/tests/test_files/dataroot/',
 	'cacheroot' => \Elgg\Project\Paths::elgg() . '/engine/tests/test_files/cacheroot/',
-	'plugins_path' => \Elgg\Project\Paths::elgg() . '/mod/',
 	'site_guid' => 1,
-	'AutoloaderManager_skip_storage' => true,
-	'simplecache_enabled' => false,
-	'system_cache_enabled' => false,
-	'boot_cache_ttl' => 0,
-	'Elgg\Application_phpunit' => true,
 	'icon_sizes' => [
 		'topbar' => [
 			'w' => 16,
@@ -56,19 +47,5 @@ $defaults = [
 	],
 	'debug' => 'NOTICE',
 ];
-
-if (class_exists('Memcache')) {
-	$memcached = new Memcache;
-	if ($memcached->connect('127.0.0.1', 11211) && $memcached->close()) {
-		$defaults['memcache'] = true;
-		$defaults['memcache_servers'] = [
-			[
-				'127.0.0.1',
-				11211
-			],
-		];
-		$defaults['memcache_namespace_prefix'] = 'elgg_';
-	}
-}
 
 return $defaults;

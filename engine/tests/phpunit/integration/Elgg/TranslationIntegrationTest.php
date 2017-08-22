@@ -16,6 +16,7 @@ class TranslationIntegrationTest extends IntegrationTestCase {
 	private $translations;
 
 	public function up() {
+		elgg_set_config('system_cache_enabled', false);
 		$this->translations = _elgg_services()->translator->getLoadedTranslations();
 	}
 
