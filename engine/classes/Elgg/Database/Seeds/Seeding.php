@@ -23,7 +23,7 @@ trait Seeding {
 	/**
 	 * @var int Max number of items to be created by the seed
 	 */
-	protected $limit = 20;
+	protected $limit = 5;
 
 	/**
 	 * @var \Faker\Generator
