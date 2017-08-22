@@ -467,7 +467,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$this->assertEqual($stats['object'][$subtype], 1);
 
-		$user->delete();
+		$this->delete($user);
 	}
 
 }

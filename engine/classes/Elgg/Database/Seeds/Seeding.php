@@ -137,7 +137,11 @@ trait Seeding {
 				$user->setNotificationSetting('email', false);
 				$user->setNotificationSetting('site', true);
 
-				$profile_fields = (array) elgg_get_config('profile_fields');
+				if (elgg_get_config('quick_seeding')) {
+					$profile_fields = [];
+				} else {
+					$profile_fields = (array) elgg_get_config('profile_fields');
+				}
 
 				$user = $this->populateMetadata($user, $profile_fields, $metadata);
 
@@ -158,6 +162,11 @@ trait Seeding {
 			}
 		};
 
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->backup();
+			_elgg_services()->hooks->getEvents()->backup();
+		}
+
 		$ia = elgg_set_ignore_access(true);
 
 		$user = false;
@@ -166,6 +175,11 @@ trait Seeding {
 		}
 
 		elgg_set_ignore_access($ia);
+
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->restore();
+			_elgg_services()->hooks->getEvents()->restore();
+		}
 
 		return $user;
 
@@ -245,7 +259,12 @@ trait Seeding {
 				$group->$name = $value;
 			}
 
-			$profile_fields = (array) elgg_get_config('group');
+			if (elgg_get_config('quick_seeding')) {
+				$profile_fields = [];
+			} else {
+				$profile_fields = (array) elgg_get_config('group');
+			}
+
 			$group = $this->populateMetadata($group, $profile_fields, $metadata);
 
 			$group->save();
@@ -270,6 +289,11 @@ trait Seeding {
 			return $group;
 		};
 
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->backup();
+			_elgg_services()->hooks->getEvents()->backup();
+		}
+
 		$ia = elgg_set_ignore_access(true);
 
 		$group = false;
@@ -278,6 +302,11 @@ trait Seeding {
 		}
 
 		elgg_set_ignore_access($ia);
+
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->restore();
+			_elgg_services()->hooks->getEvents()->restore();
+		}
 
 		return $group;
 	}
@@ -381,6 +410,11 @@ trait Seeding {
 			return $object;
 		};
 
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->backup();
+			_elgg_services()->hooks->getEvents()->backup();
+		}
+
 		$ia = elgg_set_ignore_access(true);
 
 		$object = false;
@@ -389,6 +423,11 @@ trait Seeding {
 		}
 
 		elgg_set_ignore_access($ia);
+
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->restore();
+			_elgg_services()->hooks->getEvents()->restore();
+		}
 
 		return $object;
 
@@ -536,7 +575,7 @@ trait Seeding {
 		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 
-		$minlength = elgg_get_config('minusername') ? : 4;
+		$minlength = elgg_get_config('minusername') ? : 8;
 		if ($base_name) {
 			$fill = $minlength - strlen($base_name);
 		} else {
@@ -546,7 +585,7 @@ trait Seeding {
 		$separator = '';
 
 		if ($fill > 0) {
-			$suffix = (new ElggCrypto())->getRandomString($fill);
+			$suffix = (new \ElggCrypto())->getRandomString($fill);
 			$base_name = "$base_name$separator$suffix";
 		}
 
@@ -564,7 +603,7 @@ trait Seeding {
 			} catch (\Exception $e) {
 				if ($iterator >= 10) {
 					// too many failed attempts
-					$base_name = (new ElggCrypto())->getRandomString(8);
+					$base_name = (new \ElggCrypto())->getRandomString(8);
 				}
 			}
 
@@ -762,6 +801,31 @@ trait Seeding {
 		elgg_set_ignore_access($ia);
 
 		return $success;
+	}
+
+	/**
+	 * Queitly delete a seeded entity
+	 *
+	 * @param ElggEntity $entity Entity
+	 * @return bool
+	 */
+	public function delete(\ElggEntity $entity) {
+
+		if (!$entity->__faker) {
+			return;
+		}
+
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->backup();
+			_elgg_services()->hooks->getEvents()->backup();
+		}
+
+		$entity->delete();
+
+		if (elgg_get_config('quick_seeding')) {
+			_elgg_services()->hooks->restore();
+			_elgg_services()->hooks->getEvents()->restore();
+		}
 	}
 
 	/**

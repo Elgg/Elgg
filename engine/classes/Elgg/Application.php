@@ -772,7 +772,19 @@ class Application {
 		self::loadCore();
 
 		$app = IntegrationTestCase::createApplication();
-		if (!$app) {
+		if ($app) {
+			// To speed up database testing, we assign __testing metadata to all created entities
+			// We delete them at shutdown
+			register_shutdown_function(function() {
+				$entities = elgg_get_entities_from_metadata([
+					'metadata_names' => '__testing',
+					'limit' => 0,
+				]);
+				foreach ($entities as $entity) {
+					$entity->delete();
+				}
+			});
+		} else {
 			$app = UnitTestCase::createApplication();
 		}
 

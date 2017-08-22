@@ -659,7 +659,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		return check_entity_relationship($this->guid, 'active_plugin', $site->guid);
+		return check_entity_relationship($this->guid, 'active_plugin', $site->guid) instanceof ElggRelationship;
 	}
 
 	/**
@@ -845,6 +845,14 @@ class ElggPlugin extends \ElggObject {
 	 * @throws PluginException
 	 */
 	public function start($flags) {
+
+		// Detect plugins errors early and throw so that plugins service can disable the plugin
+		if (!$this->getManifest()) {
+			throw new Exception($this->getError());
+		}
+
+		// Preload static config file
+		$this->getStaticConfig('');
 
 		// include classes
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {

@@ -8,18 +8,17 @@ use ElggObject;
 /**
  * Elgg Test helper functions
  *
- *
- * @package    Elgg
- * @subpackage Test
+ * @group IntegrationTests
+ * @group Helpers
  */
 class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 
 	public function up() {
-
+		_elgg_services()->externalFiles->reset();
 	}
 
 	public function down() {
-		_elgg_services()->externalFiles->reset();
+
 	}
 
 	/**

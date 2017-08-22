@@ -42,6 +42,7 @@ matrix:
       env: JOB_NAME=js_tests VARIA=true
       dist: trusty
       before_install:
+        - phpenv rehash
         - phpenv config-rm xdebug.ini
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
@@ -74,6 +75,7 @@ matrix:
        - mysql
       env: JOB_NAME=memcache_php56 VARIA=true
       before_install:
+        - phpenv rehash
         - phpenv config-rm xdebug.ini
         - phpenv config-add ./.scripts/travis/memcached.ini
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
@@ -93,7 +95,10 @@ matrix:
       env: JOB_NAME=hhvm E2E=true
       dist: trusty
       sudo: required
+      services:
+        - mysql
       before_install:
+        - phpenv rehash
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
        - composer travis:install-with-mysql
@@ -105,6 +110,7 @@ matrix:
     - php: 5.6
       env: JOB_NAME=local_web_server E2E=true
       before_install:
+        - phpenv rehash
         - phpenv config-rm xdebug.ini
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
@@ -126,6 +132,7 @@ matrix:
         - mysql
       env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
       before_install:
+        - phpenv rehash
         - phpenv config-rm xdebug.ini
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
@@ -150,6 +157,7 @@ services:
   - mysql
 
 before_install:
+  - phpenv rehash
   - phpenv config-rm xdebug.ini
   - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 

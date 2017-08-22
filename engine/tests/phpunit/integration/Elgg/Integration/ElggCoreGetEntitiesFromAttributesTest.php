@@ -4,6 +4,9 @@ namespace Elgg\Integration;
 
 /**
  * Test elgg_get_entities_from_attributes()
+ *
+ * @group IntegrationTests
+ * @group Entities
  */
 class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest {
 

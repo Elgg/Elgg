@@ -14,10 +14,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  */
 abstract class IntegrationTestCase extends BaseTestCase {
 
-	use Seeding;
-
-	protected $_testing_hooks;
-	protected $_testing_events;
+	use TestSeeding;
 
 	/**
 	 * {@inheritdoc}
@@ -38,6 +35,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
+		$sp->config->quick_seeding = true;
 
 		$sp->setFactory('session', function () {
 			return \ElggSession::getMock();
@@ -67,6 +65,15 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
+		// To speed up integration tests a little we will add __testing metadata and wipe entities on shutdown rather within test cases
+		$app->_services->hooks->getEvents()->registerHandler('create', 'all', function(\Elgg\Event $event) {
+			$entity = $event->getObject();
+			if (!$entity instanceof \ElggEntity) {
+				return;
+			}
+			$entity->__testing = true;
+		});
+
 		$app->bootCore();
 
 		elgg_flush_caches();
@@ -95,18 +102,12 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		parent::setUp();
 
-		$this->_testing_plugins = _elgg_services()->plugins->find('active');
+		$this->seedTestEntities();
 
-		// Backup events and hooks so we can assert that the has clean up after iteself
-		$this->_testing_hooks = _elgg_services()->hooks->getAllHandlers();
-		$this->_testing_events = _elgg_services()->hooks->getEvents()->getAllHandlers();
-
-		// @todo: backup context stack
-		// @todo: backup page handlers
-		// @todo: count entities before the test
+		$app = Application::getInstance();
 
 		if ($this instanceof LegacyIntegrationTestCase) {
-			_elgg_services()->session->setLoggedInUser($this->getAdmin());
+			$app->_services->session->setLoggedInUser($this->getAdmin());
 		}
 
 		$this->up();
@@ -118,31 +119,13 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	final protected function tearDown() {
 		$this->down();
 
-		$app = Application::getInstance();
+		//$this->unseedTestEntities();
 
-		foreach ($this->_testing_hooks as $type => $hooks) {
-			foreach ($hooks as $hook => $handlers) {
-				foreach ($handlers as $handler) {
-					$this->assertTrue($app->_services->hooks->hasHandler($type, $hook, $handler));
-				}
-			}
-		}
-		foreach ($this->_testing_events as $type => $hooks) {
-			foreach ($hooks as $hook => $handlers) {
-				foreach ($handlers as $handler) {
-					$this->assertTrue($app->_services->hooks->getEvents()->hasHandler($type, $hook, $handler));
-				}
-			}
-		}
+		$app = Application::getInstance();
 
 		if ($this instanceof LegacyIntegrationTestCase) {
 			$app->_services->session->removeLoggedInUser();
 		}
-
-		// @todo: assert that context stack hasn't been messed with
-		// @todo: assert that page handlers have been unregistered after tests
-		// @todo: make an assertion that entity count after the test is as before
-		// Test should really clean up after themselves!
 
 		parent::tearDown();
 	}

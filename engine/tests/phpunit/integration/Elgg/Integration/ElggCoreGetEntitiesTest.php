@@ -4,6 +4,10 @@ namespace Elgg\Integration;
 
 /**
  * Test elgg_get_entities()
+ *
+ * @group IntegrationTests
+ * @group Entities
+ * @group EntityTypeSubtypePairs
  */
 class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
