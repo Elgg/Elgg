@@ -2,8 +2,11 @@
 
 namespace Elgg;
 
+use Elgg\Debug\Inspector;
+
 /**
  * @group IntegrationTests
+ * @group TestingSuite
  */
 class IntegrationTestCaseIntegrationTest extends IntegrationTestCase {
 
@@ -24,7 +27,7 @@ class IntegrationTestCaseIntegrationTest extends IntegrationTestCase {
 		elgg_set_ignore_access($ia);
 	}
 
-	public function testCanLoadSeededEntity() {
+	public function testCanLoadEntityFromTestingApplicationDatabase() {
 		$count = elgg_get_entities([
 			'guids' => $this->entity->guid,
 			'count' => true,

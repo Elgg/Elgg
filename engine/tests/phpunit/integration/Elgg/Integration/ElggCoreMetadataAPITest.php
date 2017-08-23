@@ -11,6 +11,7 @@ use ElggMetadata;
  * Elgg Test metadata API
  *
  * @group IntegrationTests
+ * @group Metadata
  */
 class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 
@@ -86,6 +87,9 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$options = array(
 			'guid' => $e->getGUID(),
 			'limit' => 0,
+			'wheres' => [
+				"n_table.name LIKE 'test_metadata%'",
+			],
 		);
 
 		$md = elgg_get_metadata($options);
@@ -144,7 +148,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 
 		// check only these md exists
 		$db_prefix = _elgg_config()->dbprefix;
-		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid";
+		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid AND name='test'";
 		$data = get_data($q);
 
 		$this->assertEqual(count($md_values), count($data));
@@ -164,8 +168,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		);
 
 		$obj->test = $md_values2;
-
-		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid";
+		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid AND name='test'";
 		$data = get_data($q);
 
 		$this->assertEqual(count($md_values2), count($data));

@@ -353,6 +353,9 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		$group->delete();
 	}
 
+	/**
+	 * @group XML
+	 */
 	public function test_ElggXMLElement_does_not_load_external_entities() {
 		$elLast = libxml_disable_entity_loader(false);
 
@@ -366,21 +369,13 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		$path = 'file://' . $path;
 		$payload = sprintf($payload, $path);
 
-		// make sure we can actually this in this environment
-		$element = new SimpleXMLElement($payload);
-		$can_load_entity = preg_match('/secret/', (string) $element->methodName);
-
-		$this->skipUnless($can_load_entity, "XXE vulnerability cannot be tested on this system");
-
-		if ($can_load_entity) {
-			$this->expectError("SimpleXMLElement::__construct(): I/O warning : failed to load external entity &quot;" . $path . "&quot;");
-			$el = new ElggXMLElement($payload);
-			$chidren = $el->getChildren();
-			$content = $chidren[0]->getContent();
-			$this->assertNoPattern('/secret/', $content);
-		}
+		$el = new ElggXMLElement($payload);
+		$chidren = $el->getChildren();
+		$content = $chidren[0]->getContent();
+		$this->assertNoPattern('/secret/', $content);
 
 		libxml_disable_entity_loader($elLast);
+
 	}
 
 	public function test_update_handlers_can_change_attributes() {
