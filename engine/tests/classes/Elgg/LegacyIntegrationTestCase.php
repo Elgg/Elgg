@@ -113,14 +113,6 @@ abstract class LegacyIntegrationTestCase extends IntegrationTestCase {
 		return $this->assertNotRegExp($pattern, $string, $message);
 	}
 
-	public function expectError($message) {
-		return $this->setExpectedException(PHPUnit_Framework_Error::class, $message);
-	}
-
-	public function expectException($exception) {
-		return $this->setExpectedException(get_class($exception), $exception->getMessage());
-	}
-
 	public function skipUnless($condition, $message) {
 		if (!$condition) {
 			$this->markTestSkipped($message);

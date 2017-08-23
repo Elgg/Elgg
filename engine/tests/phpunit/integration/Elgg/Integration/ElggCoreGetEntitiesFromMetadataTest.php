@@ -6,6 +6,9 @@ use ElggObject;
 
 /**
  * Test elgg_get_entities_from_metadata()
+ *
+ * @group IntegrationTests
+ * @group Entities
  */
 class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 

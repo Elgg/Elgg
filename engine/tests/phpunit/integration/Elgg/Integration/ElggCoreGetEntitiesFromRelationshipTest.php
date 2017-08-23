@@ -9,6 +9,7 @@ use ElggObject;
  * elgg_get_entities_from_relationship_count()
  *
  * @group IntegrationTests
+ * @group Entities
  */
 class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTest {
 
