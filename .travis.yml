@@ -88,19 +88,6 @@ matrix:
       after_script:
        - php ./elgg-cli database:unseed -vv
 
-    # HHVM build
-    - php: hhvm-3.15
-      env: JOB_NAME=hhvm E2E=true
-      dist: trusty
-      sudo: required
-      before_install:
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-       - composer travis:install-with-mysql
-      script:
-       - php ./elgg-cli simpletest -p all
-       - ./vendor/bin/phpunit
-
     # End to end tests
     - php: 5.6
       env: JOB_NAME=local_web_server E2E=true
@@ -145,6 +132,8 @@ matrix:
         - ./vendor/bin/phpunit
       after_script:
         - php ./elgg-cli database:unseed -vv
+
+    # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
   - mysql
