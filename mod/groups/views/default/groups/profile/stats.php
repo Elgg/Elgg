@@ -30,6 +30,7 @@ if (!($owner instanceof ElggEntity)) {
 <?php
 
 // membership status
-if ($group->isMember($user)) {
+$user = elgg_get_logged_in_user_entity();
+if ($user && $group->isMember($user)) {
 	echo '<p>' . elgg_echo('groups:my_status:group_member') . '</p>';
 }
