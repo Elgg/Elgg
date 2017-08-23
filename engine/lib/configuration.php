@@ -95,7 +95,7 @@ function elgg_get_config($name) {
 	}
 
 	if (!_elgg_config()->hasValue($name)) {
-		elgg_log("Config value for '$name' is not set'");
+		elgg_log("Config value for '$name' is not set'", 'INFO');
 		return;
 	}
 

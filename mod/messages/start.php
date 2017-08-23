@@ -63,6 +63,7 @@ function messages_init() {
 function messages_page_handler($page) {
 
 	elgg_gatekeeper();
+	$current_user = elgg_get_logged_in_user_entity();
 
 	elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $current_user->username);
 
