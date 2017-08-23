@@ -11,6 +11,9 @@
  */
 /* @var ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
+if (!($plugin instanceof \ElggPlugin)) {
+	return;
+}
 
 $plugin_id = $plugin->getID();
 

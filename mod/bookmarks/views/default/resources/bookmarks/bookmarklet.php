@@ -7,8 +7,14 @@
 
 elgg_gatekeeper();
 
+elgg_load_library('elgg:bookmarks');
+
 $container_guid = elgg_extract('container_guid', $vars);
 $container = get_entity($container_guid);
+if (!$container) {
+	return;
+}
+
 $page_owner = $container;
 
 if (elgg_instanceof($container, 'object')) {

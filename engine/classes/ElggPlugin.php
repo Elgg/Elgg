@@ -865,7 +865,11 @@ class ElggPlugin extends \ElggObject {
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			if ($this->canReadFile('start.php')) {
-				require_once "{$this->path}/start.php";
+				$setup = require_once "{$this->path}/start.php";
+				if ($setup instanceof Closure) {
+					\Elgg\Application::$_setups[] = $setup;
+					call_user_func($setup);
+				}
 			}
 			
 			$this->registerEntities();

@@ -5,9 +5,6 @@
  * @package ElggEmbed
  */
 
-
-elgg_register_event_handler('init', 'system', 'embed_init');
-
 /**
  * Init function
  */
@@ -201,3 +198,7 @@ function embed_set_thumbnail_url($hook, $type, $return, $params) {
 
 	return elgg_get_embed_url($entity, $size);
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'embed_init');
+};

@@ -5,8 +5,6 @@
  * @package ElggReportedContent
  */
 
-elgg_register_event_handler('init', 'system', 'reportedcontent_init');
-
 /**
  * Initialize the plugin
  */
@@ -100,3 +98,7 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'reportedcontent_init');
+};

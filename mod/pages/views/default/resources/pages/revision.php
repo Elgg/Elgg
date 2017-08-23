@@ -5,6 +5,8 @@
  * @package ElggPages
  */
 
+elgg_load_library('elgg:pages');
+
 $id = elgg_extract('id', $vars);
 $annotation = elgg_get_annotation_from_id($id);
 if (!$annotation) {

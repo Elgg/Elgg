@@ -75,6 +75,9 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		$app->bootCore();
 
+		elgg_flush_caches();
+		_elgg_services()->autoloadManager->deleteCache();
+
 		_elgg_services()->logger->notice('Bootstrapped a new Application instance from settings in ' . $settings_path);
 
 		return $app;

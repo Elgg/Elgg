@@ -5,6 +5,8 @@
  * @uses $vars['page'] Page object if manually setting selected item
  */
 
+elgg_load_library('elgg:pages');
+
 // add the jquery treeview files for navigation
 elgg_load_css('jquery.treeview');
 elgg_require_js('pages/sidebar/navigation');

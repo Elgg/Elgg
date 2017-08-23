@@ -9,6 +9,10 @@
  */
 
 $plugin = elgg_extract('plugin', $vars, false);
+if (!($plugin instanceof \ElggPlugin)) {
+	return;
+}
+
 $deps = $plugin->getPackage()->checkDependencies(true);
 
 $columns = ['type', 'name', 'expected_value', 'local_value', 'comment'];

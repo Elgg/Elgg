@@ -785,5 +785,9 @@ class ViewsService {
 			$this->overrides[$viewtype][$view][] = $this->locations[$viewtype][$view];
 		}
 		$this->locations[$viewtype][$view] = $path;
+
+		// Make sure the simplecache_views are populated with view data,
+		// if you is not registered as cacheable explicitly
+		$this->isCacheableView($view);
 	}
 }

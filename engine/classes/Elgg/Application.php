@@ -46,8 +46,10 @@ class Application {
 
 	/**
 	 * @var array
+	 *
+	 * @internal DO NOT USE
 	 */
-	private static $_setups;
+	public static $_setups;
 
 	/**
 	 * Property names of the service provider to be exposed via __get()
@@ -261,6 +263,14 @@ class Application {
 		// in case not loaded already
 		$this->loadCore();
 
+		$hooks = $this->_services->hooks;
+		$events = $hooks->getEvents();
+
+		// run setups
+		foreach (self::$_setups as $func) {
+			$func($events, $hooks);
+		}
+
 		if (!$this->_services->db) {
 			// no database boot!
 			elgg_views_boot();
@@ -317,14 +327,6 @@ class Application {
 		$this->_services->views->clampViewtypeToPopulatedViews();
 
 		$this->allowPathRewrite();
-
-		$hooks = $this->_services->hooks;
-		$events = $hooks->getEvents();
-
-		// run setups
-		foreach (self::$_setups as $func) {
-			$func($events, $hooks);
-		}
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');

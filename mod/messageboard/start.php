@@ -140,4 +140,6 @@ function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
-elgg_register_event_handler('init', 'system', 'messageboard_init');
+return function() {
+	elgg_register_event_handler('init', 'system', 'messageboard_init');
+};

@@ -5,8 +5,6 @@
  * @package ElggNotifications
  */
 
-elgg_register_event_handler('init', 'system', 'notifications_plugin_init');
-
 function notifications_plugin_init() {
 
 	elgg_extend_view('elgg.css', 'notifications.css');
@@ -292,3 +290,7 @@ function notifications_register_tests($hook, $type, $tests) {
 	$tests[] = __DIR__ . '/tests/ElggNotificationsPluginUnitTest.php';
 	return $tests;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'notifications_plugin_init');
+};

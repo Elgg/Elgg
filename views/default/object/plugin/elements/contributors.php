@@ -7,6 +7,10 @@
  */
 
 $plugin = elgg_extract('plugin', $vars, false);
+if (!($plugin instanceof \ElggPlugin)) {
+	return;
+}
+
 $contributors = $plugin->getManifest()->getContributors();
 
 if (empty($contributors)) {

@@ -10,6 +10,8 @@ if (!$page_owner) {
 	forward('', '404');
 }
 
+elgg_load_library('elgg:bookmarks');
+
 elgg_push_breadcrumb($page_owner->name, "bookmarks/owner/$page_owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 

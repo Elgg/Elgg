@@ -5,8 +5,6 @@
  * @package ElggLogRotate
  */
 
-elgg_register_event_handler('init', 'system', 'logrotate_init');
-
 function logrotate_init() {
 	// Register cron hook for archival of logs
 	elgg_register_plugin_hook_handler('cron', 'all', 'logrotate_archive_cron');
@@ -110,3 +108,7 @@ function log_browser_delete_log($time_of_delete) {
 
 	return $deleted_tables;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'logrotate_init');
+};

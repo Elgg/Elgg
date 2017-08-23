@@ -3,8 +3,6 @@
  * Plugin for creating web pages for your site
  */
 
-elgg_register_event_handler('init', 'system', 'expages_init');
-
 function expages_init() {
 
 	// Register a page handler, so we can have nice URLs
@@ -137,3 +135,7 @@ function expages_menu_register_hook($hook, $type, $return, $params) {
 	}
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'expages_init');
+};

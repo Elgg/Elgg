@@ -218,6 +218,10 @@ class Plugins {
 	 * @return \ElggPlugin|null
 	 */
 	function get($plugin_id) {
+		if (!is_string($plugin_id)) {
+			return;
+		}
+
 		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
 			$plugin_id = sanitize_string($plugin_id);
 			$db_prefix = _elgg_config()->dbprefix;
