@@ -7,6 +7,7 @@ namespace Elgg\Integration;
  *
  * @group IntegrationTests
  * @group Entities
+ * @group EntityAttributes
  */
 class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest {
 
@@ -207,12 +208,8 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 	}
 
 	public function testGetUserByUsername() {
-		// grab a user
-		foreach ($this->entities as $e) {
-			if (elgg_instanceof($e, 'user')) {
-				break;
-			}
-		}
+
+		$e = $this->createOne('user');
 
 		$result = elgg_get_entities_from_attributes([
 			'type' => 'user',

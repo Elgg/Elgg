@@ -12,8 +12,6 @@
  * Nathan Koterba
  */
 
-elgg_register_event_handler('init', 'system', 'thewire_init');
-
 /**
  * The Wire initialization
  */
@@ -484,3 +482,7 @@ function thewire_test($hook, $type, $value, $params) {
 	$value[] = elgg_get_plugins_path() . 'thewire/tests/regex.php';
 	return $value;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'thewire_init');
+};

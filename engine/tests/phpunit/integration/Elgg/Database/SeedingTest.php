@@ -6,6 +6,7 @@ use Elgg\LegacyIntegrationTestCase;
 
 /**
  * @group IntegrationTests
+ * @group Seeding
  */
 class SeedingTest extends LegacyIntegrationTestCase {
 
@@ -65,14 +66,14 @@ class SeedingTest extends LegacyIntegrationTestCase {
 
 	public function testCanCreateGroup() {
 
-		$group = $this->createGroup();
+		$group = $this->createOne('group');
 
 		$this->assertNotEmpty($group->name);
 		$this->assertNotEmpty($group->description);
 		$this->assertTrue($group->owner_guid > 0);
 		$this->assertTrue($group->container_guid > 0);
 		$this->assertEquals(ACCESS_PUBLIC, $group->access_id);
-		$this->assertEmpty($group->getSubtype());
+		$this->assertNotEmpty($group->getSubtype());
 
 		$this->assertEquals(\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED, $group->getContentAccessMode());
 		$this->assertTrue($group->isPublicMembership());

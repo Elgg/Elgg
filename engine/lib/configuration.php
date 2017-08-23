@@ -33,7 +33,11 @@ function elgg_get_site_url() {
  * @since 1.8.0
  */
 function elgg_get_plugins_path() {
-	return _elgg_config()->plugins_path;
+	$path = _elgg_config()->plugins_path;
+	if (!$path) {
+		$path = Paths::project() . 'mod/';
+	}
+	return $path;
 }
 
 /**

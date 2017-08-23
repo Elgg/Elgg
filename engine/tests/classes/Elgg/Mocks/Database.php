@@ -3,10 +3,10 @@
 namespace Elgg\Mocks;
 
 use Doctrine\DBAL\Connection;
+use Elgg\BaseTestCase;
 use Elgg\Database as DbDatabase;
 use Elgg\Database\DbConfig;
 use Elgg\Logger;
-use Elgg\UnitTestCase;
 
 class Database extends DbDatabase {
 
@@ -52,7 +52,7 @@ class Database extends DbDatabase {
 	 * {@inheritdoc}
 	 */
 	public function getConnection($type) {
-		$connection = _elgg_services()->testCase->getMockBuilder(Connection::class)
+		$connection = BaseTestCase::$_instance->getMockBuilder(Connection::class)
 				->setMethods([
 					'query',
 					'executeQuery',
@@ -61,17 +61,17 @@ class Database extends DbDatabase {
 				->disableOriginalConstructor()
 				->getMock();
 
-		$connection->expects(_elgg_services()->testCase->any())
+		$connection->expects(BaseTestCase::$_instance->any())
 				->method('query')
-				->will(_elgg_services()->testCase->returnCallback([$this, 'executeDatabaseQuery']));
+				->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
 
-		$connection->expects(_elgg_services()->testCase->any())
+		$connection->expects(BaseTestCase::$_instance->any())
 				->method('executeQuery')
-				->will(_elgg_services()->testCase->returnCallback([$this, 'executeDatabaseQuery']));
+				->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
 
-		$connection->expects(_elgg_services()->testCase->any())
+		$connection->expects(BaseTestCase::$_instance->any())
 				->method('lastInsertId')
-				->will(_elgg_services()->testCase->returnCallback(function() {
+				->will(BaseTestCase::$_instance->returnCallback(function() {
 							return $this->last_insert_id;
 						}));
 
@@ -184,7 +184,7 @@ class Database extends DbDatabase {
 			throw new \DatabaseException("No testing query spec was found");
 		}
 		
-		$statement = _elgg_services()->testCase->getMockBuilder(\Doctrine\DBAL\PDOStatement::class)
+		$statement = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\PDOStatement::class)
 				->setMethods([
 					'fetch',
 					'rowCount',
@@ -192,15 +192,15 @@ class Database extends DbDatabase {
 				->disableOriginalConstructor()
 				->getMock();
 
-		$statement->expects(_elgg_services()->testCase->any())
+		$statement->expects(BaseTestCase::$_instance->any())
 				->method('fetch')
-				->will(_elgg_services()->testCase->returnCallback(function() use (&$results) {
+				->will(BaseTestCase::$_instance->returnCallback(function() use (&$results) {
 							return array_shift($results);
 						}));
 
-		$statement->expects(_elgg_services()->testCase->any())
+		$statement->expects(BaseTestCase::$_instance->any())
 				->method('rowCount')
-				->will(_elgg_services()->testCase->returnValue($row_count));
+				->will(BaseTestCase::$_instance->returnValue($row_count));
 
 		return $statement;
 	}

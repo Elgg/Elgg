@@ -15,7 +15,7 @@ class ElggCoreAccessSQLTest extends LegacyIntegrationTestCase {
 	protected $user;
 
 	public function up() {
-		$this->user = $this->createUser();
+		$this->user = $this->createOne('user');
 		_elgg_services()->session->setLoggedInUser($this->user);
 		_elgg_services()->hooks->backup();
 	}
@@ -185,9 +185,9 @@ class ElggCoreAccessSQLTest extends LegacyIntegrationTestCase {
 
 		$ia = elgg_set_ignore_access(true);
 
-		$owner = $this->createUser();
+		$owner = $this->createOne('user');
 
-		$object = $this->createObject([
+		$object = $this->createOne('object', [
 			'owner_guid' => $owner->guid,
 			'access_id' => ACCESS_PRIVATE,
 		]);

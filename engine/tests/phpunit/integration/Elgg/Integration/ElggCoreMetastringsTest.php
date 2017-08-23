@@ -21,7 +21,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 	];
 
 	public function up() {
-		$this->object = $this->createObject();
+		$this->object = $this->createOne('object');
 	}
 
 	public function down() {

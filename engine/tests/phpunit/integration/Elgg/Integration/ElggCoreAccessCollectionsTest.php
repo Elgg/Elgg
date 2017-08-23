@@ -18,7 +18,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 	public function up() {
 		$this->dbprefix = elgg_get_config("dbprefix");
 
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
 		$this->user = $user;
 	}
@@ -67,7 +67,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 	public function testUpdateACL() {
 		// another fake user to test with
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
 		$acl_id = create_access_collection('test acl');
 
@@ -242,7 +242,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 	public function testAccessCaching() {
 		// create a new user to check against
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
 		foreach ([
 					 'get_access_list',
@@ -264,7 +264,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 	public function testAddMemberToACLRemoveMember() {
 		// create a new user to check against
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
 		$acl_id = create_access_collection('test acl');
 
@@ -409,8 +409,8 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 	public function testCanUpdateAccessCollectionMembership() {
 
-		$member1 = $this->createUser();
-		$member2 = $this->createUser();
+		$member1 = $this->createOne('user');
+		$member2 = $this->createOne('user');
 
 		$id = create_access_collection('test_collection', $this->user->guid);
 		$acl = get_access_collection($id);
@@ -441,7 +441,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 	public function testCanEditAccessCollection() {
 
-		$member = $this->createUser();
+		$member = $this->createOne('user');
 
 		$ia = elgg_set_ignore_access(false);
 

@@ -6,10 +6,7 @@ if (!date_default_timezone_get()) {
 
 error_reporting(E_ALL | E_STRICT);
 
-ini_set('memory_limit', '2G');
-
-// Bootstrap test application
-\Elgg\Application::test();
+\Elgg\IntegrationTestCase::createApplication();
 
 /**
  * Get/set an Application for testing purposes

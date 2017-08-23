@@ -1,4 +1,37 @@
-<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php">
+<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+>
+
+    <php>
+        <!-- You can specify your own settings.php path -->
+        <!-- <env name="ELGG_SETTINGS_FILE" value="./path/to/settings.php"/> -->
+
+        <!-- or configure individual settings via env-->
+        <!--
+        <env name="ELGG_DB_HOST" value="localhost"/>
+        <env name="ELGG_DB_NAME" value=""/>
+        <env name="ELGG_DB_USER" value=""/>
+        <env name="ELGG_DB_PASS" value=""/>
+        <env name="ELGG_DB_PREFIX" value=""/>
+        <env name="ELGG_DB_ENCODING" value="utf8mb4"/>
+
+        <env name="ELGG_MEMCACHE" value="1"/>
+        <env name="ELGG_MEMCACHE_SERVER1_HOST" value="127.0.0.1"/>
+        <env name="ELGG_MEMCACHE_SERVER1_PORT" value="11211"/>
+        <env name="ELGG_MEMCACHE_SERVER2_HOST" value=""/>
+        <env name="ELGG_MEMCACHE_SERVER2_PORT" value=""/>
+        <env name="ELGG_MEMCACHE_NAMESPACE_PREFIX" value="elgg_"/>
+
+        <env name="ELGG_WWWROOT" value="http://localhost/"/>
+        -->
+
+        <ini name="memory_limit" value="-1"/>
+        <ini name="max_execution_time" value="0"/>
+        <ini name="max_input_time" value="0"/>
+    </php>
 
     <testsuites>
         <testsuite name="unit">

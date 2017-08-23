@@ -33,7 +33,11 @@ class Seeder {
 	 *
 	 * @return void
 	 */
-	public function seed() {
+	public function seed($limit = null) {
+		if (!$limit) {
+			$limit = max(elgg_get_config('default_limit'), 20);
+		}
+
 		$ia = elgg_set_ignore_access(true);
 
 		$ha = access_get_show_hidden_status();
@@ -50,7 +54,7 @@ class Seeder {
 				elgg_log("Seeding class $seed does not extend " . Seed::class, 'ERROR');
 				continue;
 			}
-			$seeder = new $seed();
+			$seeder = new $seed($limit);
 			elgg_log('Starting seeding with ' . get_class($seeder));
 			$seeder->seed();
 			elgg_log('Finished seeding with ' . get_class($seeder));

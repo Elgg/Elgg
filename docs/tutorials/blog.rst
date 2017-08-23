@@ -211,18 +211,20 @@ override the URL generation.
 
     <?php
 
-    // register an initializer
-    elgg_register_event_handler('init', 'system', 'my_blog_init');
-
     function my_blog_init() {
         // register the save action
-	elgg_register_action("my_blog/save", __DIR__ . "/actions/my_blog/save.php");
+	    elgg_register_action("my_blog/save", __DIR__ . "/actions/my_blog/save.php");
 
         // register the page handler
         elgg_register_page_handler('my_blog', 'my_blog_page_handler');
 
         // register a hook handler to override urls
         elgg_register_plugin_hook_handler('entity:url', 'object', 'my_blog_set_url');
+    }
+
+    return function() {
+        // register an initializer
+        elgg_register_event_handler('init', 'system', 'my_blog_init');
     }
 
 Registering the save action will make it available as ``/action/my_blog/save``.

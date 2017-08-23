@@ -3,8 +3,6 @@
  * A user dashboard
  */
 
-elgg_register_event_handler('init', 'system', 'dashboard_init');
-
 function dashboard_init() {
 	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
 
@@ -52,3 +50,7 @@ function dashboard_default_widgets($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'dashboard_init');
+};

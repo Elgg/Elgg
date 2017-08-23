@@ -16,8 +16,6 @@ function elgg_friends_plugin_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_friends_plugin_init');
-
 /**
  * Adds friending to user hover menu
  *
@@ -296,3 +294,7 @@ function _elgg_friends_widget_urls($hook, $type, $result, $params) {
 			
 	return "friends/{$owner->username}";
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'elgg_friends_plugin_init');
+};

@@ -38,7 +38,9 @@ class Users extends Seed {
 		while ($count_users() < $this->limit) {
 			$user = $this->getRandomUser($exclude);
 			if (!$user) {
-				$user = $this->createUser();
+				$user = $this->createUser([], [], [
+					'profile_fields' => (array) elgg_get_config('profile_fields'),
+				]);
 				if (!$user) {
 					continue;
 				}

@@ -7,8 +7,6 @@
  * To alter the navigation tabs, use the hook (members:config, tabs) which receives the array used to build them.
  */
 
-elgg_register_event_handler('init', 'system', 'members_init');
-
 /**
  * Initialize page handler and site menu item
  */
@@ -190,3 +188,7 @@ function members_page_handler($page) {
 	}
 	return true;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'members_init');
+};

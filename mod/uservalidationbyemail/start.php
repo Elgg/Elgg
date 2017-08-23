@@ -7,8 +7,6 @@
  * @subpackage UserValidationByEmail
  */
 
-elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
-
 function uservalidationbyemail_init() {
 
 	require_once dirname(__FILE__) . '/lib/functions.php';
@@ -252,3 +250,7 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 
 	access_show_hidden_entities($access_status);
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
+};

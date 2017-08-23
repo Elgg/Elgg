@@ -22,10 +22,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	 * objects.  Maybe best to limit to 4 and group by type.
 	 */
 	public function testElggAPIGettersValidTypeUsingType() {
-		$type_arr = $this->getRandomValidTypes();
-		$type = $type_arr[0];
+		$this->createOne();
+
 		$options = [
-			'type' => $type,
+			'type' => 'object',
 			'group_by' => 'e.type'
 		];
 
@@ -35,13 +35,15 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
-			$this->assertTrue(in_array($e->getType(), $type_arr));
+			$this->assertTrue(in_array($e->getType(), ['object']));
 		}
 	}
 
 	public function testElggAPIGettersValidTypeUsingTypesAsString() {
-		$type_arr = $this->getRandomValidTypes();
-		$type = $type_arr[0];
+		$this->createOne();
+
+		$type = 'object';
+
 		$options = [
 			'types' => $type,
 			'group_by' => 'e.type'
@@ -53,14 +55,15 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
-			$this->assertTrue(in_array($e->getType(), $type_arr));
+			$this->assertTrue(in_array($e->getType(), ['object']));
 		}
 	}
 
 	public function testElggAPIGettersValidTypeUsingTypesAsArray() {
-		$type_arr = $this->getRandomValidTypes();
+		$valid_types = ['object'];
+		$this->createMany($valid_types, 1);
 		$options = [
-			'types' => $type_arr,
+			'types' => $valid_types,
 			'group_by' => 'e.type'
 		];
 
@@ -70,15 +73,15 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
-			$this->assertTrue(in_array($e->getType(), $type_arr));
+			$this->assertTrue(in_array($e->getType(), $valid_types));
 		}
 	}
 
 	public function testElggAPIGettersValidTypeUsingTypesAsArrayPlural() {
-		$num = 2;
-		$types = $this->getRandomValidTypes($num);
+		$valid_types = ['object', 'user'];
+		$this->createMany($valid_types, 1);
 		$options = [
-			'types' => $types,
+			'types' => $valid_types,
 			'group_by' => 'e.type'
 		];
 
@@ -86,10 +89,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$this->assertIsA($es, 'array');
 
 		// one of object and one of group
-		$this->assertIdentical(count($es), $num);
+		$this->assertIdentical(count($es), count($valid_types));
 
 		foreach ($es as $e) {
-			$this->assertTrue(in_array($e->getType(), $types));
+			$this->assertTrue(in_array($e->getType(), $valid_types));
 		}
 	}
 
@@ -100,12 +103,11 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 
 	public function testElggAPIGettersValidAndInvalidTypes() {
-		//@todo replace this with $this->getRandomMixedTypes().
-		$t = $this->getRandomValidTypes();
-		$valid = $t[0];
 
-		$t = $this->getRandomInvalids();
-		$invalid = $t[0];
+		$this->createOne();
+		$valid = 'object';
+
+		$invalid = 'invalid_object';
 		$options = [
 			'types' => [
 				$invalid,
@@ -123,10 +125,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggAPIGettersValidAndInvalidTypesPlural() {
-		$valid_num = 2;
-		$invalid_num = 3;
-		$valid = $this->getRandomValidTypes($valid_num);
-		$invalid = $this->getRandomInvalids($invalid_num);
+
+		$valid = ['object', 'user'];
+		$invalid = ['invalid_object', 'invalid_user', 'invalid_group'];
 
 		$types = [];
 		foreach ($valid as $t) {
@@ -147,7 +148,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$this->assertIsA($es, 'array');
 
 		// should only ever return one object because of group by
-		$this->assertIdentical(count($es), $valid_num);
+		$this->assertIdentical(count($es), count($valid));
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $valid));
 		}
@@ -164,13 +165,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	 */
 
 	public function testElggAPIGettersValidSubtypeUsingSubtypeSingularType() {
-		$types = $this->getRandomValidTypes();
-		$subtypes = $this->getRandomValidSubtypes($types);
-		$subtype = $subtypes[0];
-
+		$entity = $this->createOne();
 		$options = [
-			'types' => $types,
-			'subtype' => $subtype
+			'types' => $entity->type,
+			'subtype' => $entity->getSubtype(),
 		];
 
 		$es = elgg_get_entities($options);
@@ -178,19 +176,16 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
-			$this->assertTrue(in_array($e->getType(), $types));
-			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
+			$this->assertTrue(in_array($e->getType(), [$entity->type]));
+			$this->assertTrue(in_array($e->getSubtype(), [$entity->getSubtype()]));
 		}
 	}
 
 	public function testElggAPIGettersValidSubtypeUsingSubtypesAsStringSingularType() {
-		$types = $this->getRandomValidTypes();
-		$subtypes = $this->getRandomValidSubtypes($types);
-		$subtype = $subtypes[0];
-
+		$entity = $this->createOne();
 		$options = [
-			'types' => $types,
-			'subtypes' => $subtype
+			'types' => $entity->type,
+			'subtype' => $entity->getSubtype(),
 		];
 
 		$es = elgg_get_entities($options);
@@ -198,18 +193,16 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
-			$this->assertTrue(in_array($e->getType(), $types));
-			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
+			$this->assertTrue(in_array($e->getType(), [$entity->type]));
+			$this->assertTrue(in_array($e->getSubtype(), [$entity->getSubtype()]));
 		}
 	}
 
 	public function testElggAPIGettersValidSubtypeUsingSubtypesAsArraySingularType() {
-		$types = $this->getRandomValidTypes();
-		$subtypes = $this->getRandomValidSubtypes($types);
-
+		$entity = $this->createOne();
 		$options = [
-			'types' => $types,
-			'subtypes' => $subtypes
+			'types' => $entity->type,
+			'subtype' => [$entity->getSubtype()],
 		];
 
 		$es = elgg_get_entities($options);
@@ -217,15 +210,19 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
-			$this->assertTrue(in_array($e->getType(), $types));
-			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
+			$this->assertTrue(in_array($e->getType(), [$entity->type]));
+			$this->assertTrue(in_array($e->getSubtype(), [$entity->getSubtype()]));
 		}
 	}
 
 	public function testElggAPIGettersValidSubtypeUsingPluralSubtypesSingularType() {
 		$subtype_num = 2;
-		$types = $this->getRandomValidTypes();
-		$subtypes = $this->getRandomValidSubtypes($types, $subtype_num);
+		$types = ['object'];
+		$type_num = count($types);
+		$entities = $this->createMany($types, $subtype_num);
+		$subtypes = array_map(function($e) {
+			return $e->getSubtype();
+		}, $entities);
 
 		$options = [
 			'types' => $types,
@@ -254,14 +251,17 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	FOR THE LOVE OF ALL GOOD PLEASE JUST USE TYPE_SUBTYPE_PAIRS!
 	 */
 	public function testElggAPIGettersValidSubtypeUsingPluralSubtypesPluralTypes() {
-		$type_num = 2;
 		$subtype_num = 2;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomValidSubtypes($types, $subtype_num);
+		$types = ['object', 'group'];
+		$type_num = count($types);
+		$entities = $this->createMany($types, $subtype_num);
+		$subtypes = array_map(function($e) {
+			return $e->getSubtype();
+		}, $entities);
 
 		$options = [
 			'types' => $types,
-			'subtypes' => $subtypes
+			'subtypes' => $subtypes,
 		];
 
 		$es = elgg_get_entities($options);
@@ -269,13 +269,13 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		// this will unset all invalid subtypes for each type that that only
 		// one entity exists of each.
-		$this->assertIdentical(count($es), $subtype_num);
+		$this->assertIdentical(count($es), $subtype_num * $type_num);
 		foreach ($es as $e) {
 			// entities must at least be in the type.
 			$this->assertTrue(in_array($e->getType(), $types));
 
 			// test that this is a valid subtype for the entity type.
-			$this->assertTrue(in_array($e->getSubtype(), $this->subtypes[$e->getType()]));
+			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
 		}
 	}
 
@@ -283,25 +283,14 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	 * This combination will remove all invalid subtypes for this type.
 	 */
 	public function testElggAPIGettersValidSubtypeUsingPluralMixedSubtypesSingleType() {
-		$type_num = 1;
-		$subtype_num = 2;
-		$types = $this->getRandomValidTypes($type_num);
-
-
-		//@todo replace this with $this->getRandomMixedSubtypes()
-		// we want this to return an invalid subtype for the returned type.
-		$subtype_types = $types;
-		$i = 1;
-		while ($i <= $subtype_num) {
-			$type = $this->types[$i - 1];
-
-			if (!in_array($type, $subtype_types)) {
-				$subtype_types[] = $type;
-			}
-			$i++;
-		}
-
-		$subtypes = $this->getRandomValidSubtypes($subtype_types, $type_num);
+		$types = ['object'];
+		$type_num = count($types);
+		$entities = $this->createMany($types, 1);
+		$valid_subtypes = array_map(function($e) {
+			return $e->getSubtype();
+		}, $entities);
+		$subtypes = $valid_subtypes;
+		$subtypes[] = $this->getRandomSubtype();
 
 		$options = [
 			'types' => $types,
@@ -319,7 +308,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			$this->assertTrue(in_array($e->getType(), $types));
 
 			// test that this is a valid subtype for the entity type.
-			$this->assertTrue(in_array($e->getSubtype(), $this->subtypes[$e->getType()]));
+			$this->assertTrue(in_array($e->getSubtype(), $valid_subtypes));
 		}
 	}
 
@@ -332,10 +321,13 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	 * Valid type, valid subtype pairs
 	 */
 	public function testElggAPIGettersTSPValidTypeValidSubtype() {
-		$type_num = 1;
 		$subtype_num = 1;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomValidSubtypes($types, $subtype_num);
+		$types = ['object'];
+		$type_num = count($types);
+		$entities = $this->createMany($types, $subtype_num);
+		$subtypes = array_map(function($e) {
+			return $e->getSubtype();
+		}, $entities);
 
 		$pair = [$types[0] => $subtypes[0]];
 
@@ -357,10 +349,13 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	 * Valid type, multiple valid subtypes
 	 */
 	public function testElggAPIGettersTSPValidTypeValidPluralSubtype() {
-		$type_num = 1;
 		$subtype_num = 3;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomValidSubtypes($types, $subtype_num);
+		$types = ['object'];
+		$type_num = count($types);
+		$entities = $this->createMany($types, $subtype_num);
+		$subtypes = array_map(function($e) {
+			return $e->getSubtype();
+		}, $entities);
 
 		$pair = [$types[0] => $subtypes];
 
@@ -382,11 +377,14 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	 * Valid type, both valid and invalid subtypes
 	 */
 	public function testElggAPIGettersTSPValidTypeMixedPluralSubtype() {
-		$type_num = 1;
 		$valid_subtype_num = 2;
-		$types = $this->getRandomValidTypes($type_num);
-		$valid = $this->getRandomValidSubtypes($types, $valid_subtype_num);
-		$invalid = $this->getRandomInvalids();
+		$types = ['object'];
+		$type_num = count($types);
+		$entities = $this->createMany($types, $valid_subtype_num);
+		$valid = array_map(function($e) {
+			return $e->getSubtype();
+		}, $entities);
+		$invalid = [$this->getRandomSubtype()];
 
 		$subtypes = array_merge($valid, $invalid);
 		shuffle($subtypes);
@@ -428,11 +426,8 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidTypeUsingType() {
 		_elgg_services()->logger->disable();
 
-		$type_arr = $this->getRandomInvalids();
-		$type = $type_arr[0];
-
 		$options = [
-			'type' => $type
+			'type' => 'some_invalid_type',
 		];
 
 		$es = elgg_get_entities($options);
@@ -447,11 +442,8 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidTypeUsingTypesAsString() {
 		_elgg_services()->logger->disable();
 
-		$type_arr = $this->getRandomInvalids();
-		$type = $type_arr[0];
-
 		$options = [
-			'types' => $type
+			'types' => 'some_invalid_type',
 		];
 
 		$es = elgg_get_entities($options);
@@ -466,10 +458,8 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidTypeUsingTypesAsArray() {
 		_elgg_services()->logger->disable();
 
-		$type_arr = $this->getRandomInvalids(1);
-
 		$options = [
-			'types' => $type_arr
+			'types' => ['some_invalid_type'],
 		];
 
 		$es = elgg_get_entities($options);
@@ -484,10 +474,8 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidTypes() {
 		_elgg_services()->logger->disable();
 
-		$type_arr = $this->getRandomInvalids(2);
-
 		$options = [
-			'types' => $type_arr
+			'types' => ['invalid_type1', 'invalid_type2'],
 		];
 
 		$es = elgg_get_entities($options);
@@ -499,14 +487,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidSubtypeValidType() {
 		_elgg_services()->logger->disable();
 
-		$type_num = 1;
-		$subtype_num = 1;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomInvalids($subtype_num);
-
 		$options = [
-			'types' => $types,
-			'subtypes' => $subtypes
+			'types' => ['invalid_type1'],
+			'subtypes' => [$this->getRandomSubtype()],
 		];
 
 		$es = elgg_get_entities($options);
@@ -518,14 +501,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidSubtypeValidTypes() {
 		_elgg_services()->logger->disable();
 
-		$type_num = 2;
-		$subtype_num = 1;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomInvalids($subtype_num);
-
 		$options = [
-			'types' => $types,
-			'subtypes' => $subtypes
+			'types' => ['invalid_type1', 'invalid_type2'],
+			'subtypes' => [$this->getRandomSubtype()],
 		];
 
 		$es = elgg_get_entities($options);
@@ -537,14 +515,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidSubtypesValidType() {
 		_elgg_services()->logger->disable();
 
-		$type_num = 1;
-		$subtype_num = 2;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomInvalids($subtype_num);
-
 		$options = [
-			'types' => $types,
-			'subtypes' => $subtypes
+			'types' => ['invalid_type1'],
+			'subtypes' => [$this->getRandomSubtype(), $this->getRandomSubtype()],
 		];
 
 		$es = elgg_get_entities($options);
@@ -556,14 +529,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersInvalidSubtypesValidTypes() {
 		_elgg_services()->logger->disable();
 
-		$type_num = 2;
-		$subtype_num = 2;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomInvalids($subtype_num);
-
 		$options = [
-			'types' => $types,
-			'subtypes' => $subtypes
+			'types' => ['invalid_type1', 'invalid_type2'],
+			'subtypes' => [$this->getRandomSubtype(), $this->getRandomSubtype()],
 		];
 
 		$es = elgg_get_entities($options);
@@ -574,7 +542,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 	public function testElggApiGettersTSPInvalidType() {
 		$type_num = 1;
-		$types = $this->getRandomInvalids($type_num);
+		$types = ['invalid_type1'];
 
 		$pair = [];
 
@@ -592,7 +560,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 	public function testElggApiGettersTSPInvalidTypes() {
 		$type_num = 2;
-		$types = $this->getRandomInvalids($type_num);
+		$types = ['invalid_type1', 'invalid_type2'];
 
 		$pair = [];
 		foreach ($types as $type) {
@@ -610,8 +578,8 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersTSPValidTypeInvalidSubtype() {
 		$type_num = 1;
 		$subtype_num = 1;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomInvalids($subtype_num);
+		$types = ['invlaid_type1'];
+		$subtypes = [$this->getRandomSubtype()];
 
 		$pair = [$types[0] => $subtypes[0]];
 
@@ -626,13 +594,13 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersTSPValidTypeInvalidSubtypes() {
 		$type_num = 1;
 		$subtype_num = 2;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomInvalids($subtype_num);
+		$types = ['invlaid_type1'];
+		$subtypes = [$this->getRandomSubtype(), $this->getRandomSubtype()];
 
 		$pair = [
 			$types[0] => [
 				$subtypes[0],
-				$subtypes[0]
+				$subtypes[1]
 			]
 		];
 
@@ -647,8 +615,8 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggApiGettersTSPValidTypesInvalidSubtypes() {
 		$type_num = 2;
 		$subtype_num = 2;
-		$types = $this->getRandomValidTypes($type_num);
-		$subtypes = $this->getRandomInvalids($subtype_num);
+		$types = ['invlaid_type1', 'invalid_type2'];
+		$subtypes = [$this->getRandomSubtype(), $this->getRandomSubtype()];
 
 		$pair = [];
 		foreach ($types as $type) {
@@ -760,7 +728,8 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggGetEntitiesByGuidSingular() {
-		foreach ($this->entities as $e) {
+		$entities = $this->createMany(['object', 'group', 'user'], 1);
+		foreach ($entities as $e) {
 			$options = [
 				'guid' => $e->guid
 			];
@@ -774,7 +743,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggGetEntitiesByGuidPlural() {
 		$guids = [];
 
-		foreach ($this->entities as $e) {
+		$entities = $this->createMany(['object', 'group', 'user'], 1);
+
+		foreach ($entities as $e) {
 			$guids[] = $e->guid;
 		}
 
@@ -785,7 +756,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$es = elgg_get_entities($options);
 
-		$this->assertEqual(count($es), count($this->entities));
+		$this->assertEqual(count($es), count($entities));
 
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->guid, $guids));

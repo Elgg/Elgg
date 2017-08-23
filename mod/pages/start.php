@@ -5,8 +5,6 @@
  * @package ElggPages
  */
 
-elgg_register_event_handler('init', 'system', 'pages_init');
-
 /**
  * Initialize the pages plugin.
  *
@@ -496,3 +494,7 @@ function pages_search_pages($hook, $type, $value, $params) {
 	// trigger the 'normal' object search as it can handle the added options
 	return elgg_trigger_plugin_hook('search', 'object', $params, []);
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'pages_init');
+};

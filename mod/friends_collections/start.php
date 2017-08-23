@@ -12,8 +12,6 @@ use Elgg\Friends\Collections\PageMenuHandler;
 use Elgg\Friends\Collections\Router;
 use Elgg\Friends\Collections\UrlHandler;
 
-elgg_register_event_handler('init', 'system', 'friends_collections_init');
-
 function friends_collections_init() {
 
 	// Setup /collections controller and collection URLs
@@ -37,3 +35,7 @@ function friends_collections_init() {
 	elgg_extend_view('elgg.css', 'collections/collections.css');
 
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'friends_collections_init');
+};

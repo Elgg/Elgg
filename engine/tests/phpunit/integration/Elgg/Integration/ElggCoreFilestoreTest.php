@@ -25,7 +25,7 @@ class ElggCoreFilestoreTest extends LegacyIntegrationTestCase {
 		$CONFIG = _elgg_config();
 		
 		// create a user to own the file
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 		$dir = new EntityDirLocator($user->guid);
 		
 		// setup a test file
@@ -51,7 +51,7 @@ class ElggCoreFilestoreTest extends LegacyIntegrationTestCase {
 	function testElggFileDelete() {
 		$CONFIG = _elgg_config();
 		
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 		$dir = new EntityDirLocator($user->guid);
 		
 		$file = new ElggFile();

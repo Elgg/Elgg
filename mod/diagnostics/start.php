@@ -5,8 +5,6 @@
  * @package ElggDiagnostics
  */
 
-elgg_register_event_handler('init', 'system', 'diagnostics_init');
-
 /**
  * Initialise the diagnostics tool
  */
@@ -118,8 +116,12 @@ function diagnostics_globals_hook($hook, $entity_type, $returnvalue, $params) {
 	return $returnvalue;
 }
 
-elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_basic_hook", 0); // show basics first
-elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_sigs_hook", 1); // Now the signatures
+return function() {
+	elgg_register_event_handler('init', 'system', 'diagnostics_init');
 
-elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_globals_hook"); // Global variables
-elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_phpinfo_hook"); // PHP info
+	elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_basic_hook", 0); // show basics first
+	elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_sigs_hook", 1); // Now the signatures
+
+	elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_globals_hook"); // Global variables
+	elgg_register_plugin_hook_handler("diagnostics:report", "system", "diagnostics_phpinfo_hook"); // PHP info
+};

@@ -328,7 +328,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	public function executeForwardUrlDataProvider() {
 		return [
 			['/home', 'home'],
-			['http://localhost/home/', 'home/'],
+			[elgg_get_config('wwwroot') . 'home/', 'home/'],
 			['http://example.com/home/', 'example.com/home/'],
 			['@me/home/', 'me/home/'],
 		];

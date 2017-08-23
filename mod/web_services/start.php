@@ -3,8 +3,6 @@
  * Elgg web services API plugin
  */
 
-elgg_register_event_handler('init', 'system', 'ws_init');
-
 function ws_init() {
 	$lib_dir = __DIR__ . "/lib";
 	elgg_register_library('elgg:ws', "$lib_dir/web_services.php");
@@ -384,3 +382,7 @@ function ws_system_api_list_hook($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'ws_init');
+};

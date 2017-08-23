@@ -36,10 +36,10 @@ Available commands
     elgg-cli install [-c|--config CONFIG]
 
     # Run Simpletest test suite
-    elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS]
+    elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS] [-f|--filter FILTER]
 
     # Seed the database with fake entities
-    elgg-cli database:seed
+    elgg-cli database:seed [-l|--limit LIMIT]
 
     # Remove seeded faked entities
     elgg-cli database:unseed

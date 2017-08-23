@@ -4,8 +4,6 @@
  *
  */
 
-elgg_register_event_handler('init', 'system', 'search_init');
-
 /**
  * Initialize search plugin
  */
@@ -492,3 +490,7 @@ function search_output_tag(\Elgg\Hook $hook) {
 	
 	return $vars;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'search_init');
+};

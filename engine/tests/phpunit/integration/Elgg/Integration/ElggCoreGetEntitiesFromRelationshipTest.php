@@ -10,6 +10,7 @@ use ElggObject;
  *
  * @group IntegrationTests
  * @group Entities
+ * @group EntityRelationships
  */
 class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTest {
 
@@ -149,7 +150,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 	}
 
 	public function testElggGetEntitiesFromRelationshipCount() {
-		$entities = $this->entities;
+		$entities = $this->createMany(['user', 'object', 'group'], 2);
 		$relationships = [];
 		$count = count($entities);
 		$max = $count - 1;

@@ -449,7 +449,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 	 */
 	function test_owned_get_entity_statistics() {
 
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
 		$subtype = 'issue7845' . rand(0, 100);
 

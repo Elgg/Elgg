@@ -63,7 +63,6 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 
 	public function testListProvider() {
 		$sp = _elgg_services();
-		$sp->remove('testCase');
 
 		$list = [];
 		foreach (self::servicesListProvider() as $item) {

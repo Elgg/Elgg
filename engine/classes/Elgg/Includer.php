@@ -15,7 +15,7 @@ final class Includer {
 	 * @return mixed
 	 */
 	static public function includeFile($file) {
-		return (include $file);
+		return include $file;
 	}
 
 	/**
@@ -25,6 +25,16 @@ final class Includer {
 	 * @return mixed
 	 */
 	static public function requireFile($file) {
-		return (require $file);
+		return require $file;
+	}
+
+	/**
+	 * Require a file once with as little context as possible
+	 *
+	 * @param string $file File to require
+	 * @return mixed
+	 */
+	static public function requireFileOnce($file) {
+		return require_once $file;
 	}
 }

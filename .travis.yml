@@ -24,19 +24,6 @@ matrix:
   fast_finish: true
 
   include:
-    # Lint checks for PHP code and composer.json
-    - php: 5.6
-      env: JOB_NAME=commit_and_composer_lint VARIA=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-       - phpenv rehash
-       - composer travis:install
-      script:
-       - bash .scripts/travis/check_commit_msgs.sh
-       - composer lint
-
     # Build and test javascript
     - php: 5.6
       env: JOB_NAME=js_tests VARIA=true
@@ -72,7 +59,12 @@ matrix:
       services:
        - memcached
        - mysql
-      env: JOB_NAME=memcache_php56 VARIA=true
+      env:
+        - JOB_NAME=memcache_php56 VARIA=true
+        - ELGG_MEMCACHE=1
+        - ELGG_MEMCACHE_SERVER1_HOST=127.0.0.1
+        - ELGG_MEMCACHE_SERVER1_PORT=11211
+        - ELGG_MEMCACHE_NAMESPACE_PREFIX=elgg_
       before_install:
         - phpenv config-rm xdebug.ini
         - phpenv config-add ./.scripts/travis/memcached.ini
@@ -80,28 +72,9 @@ matrix:
       install:
        - composer travis:install-with-mysql
        - php -f ./.scripts/travis/enable_plugins.php
-       - php ./elgg-cli database:seed -vv
+       - php ./elgg-cli database:seed --limit=5 -vv
       script:
        - php -f ./.scripts/is_memcached_enabled.php
-       - php ./elgg-cli simpletest -p all
-       - ./vendor/bin/phpunit
-      after_script:
-       - php ./elgg-cli database:unseed -vv
-
-    # End to end tests
-    - php: 5.6
-      env: JOB_NAME=local_web_server E2E=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-       - composer travis:install-with-mysql
-       - php -f ./.scripts/travis/enable_plugins.php
-       - php ./elgg-cli database:seed -vv
-       - php -S localhost:8888 index.php &
-       - sleep 3 # give Web server some time to bind to sockets, etc
-      script:
-       - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
        - php ./elgg-cli simpletest -p all
        - ./vendor/bin/phpunit
       after_script:
@@ -142,15 +115,26 @@ before_install:
   - phpenv config-rm xdebug.ini
   - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 
-install: composer travis:install-with-mysql
+install:
+  - bash .scripts/travis/check_commit_msgs.sh
+  - composer travis:install-with-mysql
+  - composer lint
+  - php -f ./.scripts/travis/enable_plugins.php
+  - php ./elgg-cli database:seed --limit=5 -vv
+  - php -S localhost:8888 index.php &
+  - sleep 3 # give Web server some time to bind to sockets, etc
 
 script:
+  - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
   - php ./elgg-cli simpletest -p all -v
   # in this build, we want to make sure the test suites can bootstrap on their own
   # combined test runner is executed in e2e builds
   - ./vendor/bin/phpunit --testsuite unit
   - ./vendor/bin/phpunit --testsuite integration
   - ./vendor/bin/phpunit --testsuite plugins
+
+after_script:
+  - php ./elgg-cli database:unseed -vv
 
 notifications:
   email:
@@ -166,7 +150,13 @@ notifications:
 
 env:
   global:
-     secure: "fdpCjdC0Qp/ZJqtrCHE4I/tHXWF1sORftm6khd6geqK7d4qWzIh6HzNN2BlF+2m4nyuyxo2wzPm/oGoqogVpBgrzpQ7SZl7h2/wzgs2C/k39sFGyDisLesTM5DhBDJWcomyqtcnQmKn340Z9KOxiHAt4FOj2FZVN5+tIO5j3Cks="
+    - ELGG_DB_PREFIX=t_i_elgg_
+    - ELGG_DB_HOST=localhost
+    - ELGG_DB_NAME=elgg
+    - ELGG_DB_USER=root
+    - ELGG_DB_PASS=password
+    - ELGG_WWWROOT=http://localhost:8888/
+  secure: "fdpCjdC0Qp/ZJqtrCHE4I/tHXWF1sORftm6khd6geqK7d4qWzIh6HzNN2BlF+2m4nyuyxo2wzPm/oGoqogVpBgrzpQ7SZl7h2/wzgs2C/k39sFGyDisLesTM5DhBDJWcomyqtcnQmKn340Z9KOxiHAt4FOj2FZVN5+tIO5j3Cks="
 
 ## Cache dependencies
 cache:
