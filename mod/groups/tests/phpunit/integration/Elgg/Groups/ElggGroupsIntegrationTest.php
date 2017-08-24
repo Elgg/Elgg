@@ -1,5 +1,7 @@
 <?php
 
+namespace ElggGroups;
+
 /**
  * @group IntegrationTests
  */
