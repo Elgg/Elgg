@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\I18n;
 
 use Elgg\Config;
@@ -102,12 +103,9 @@ class Translator {
 			);
 			return '';
 		}
-		
-		if ($this->current_language === null) {
-			$this->current_language = $this->getCurrentLanguage();
-		}
+
 		if (!$language) {
-			$language = $this->current_language;
+			$language = $this->getCurrentLanguage();
 		}
 
 		$this->ensureTranslationsLoaded($language);
@@ -184,13 +182,26 @@ class Translator {
 	 * @return string The language code for the site/user or "en" if not set
 	 */
 	public function getCurrentLanguage() {
-		$language = $this->detectLanguage();
-
-		if (!$language) {
-			$language = 'en';
+		if (!isset($this->current_language)) {
+			$this->current_language = $this->detectLanguage();
 		}
 
-		return $language;
+		if (!$this->current_language) {
+			$this->current_language = 'en';
+		}
+
+		return $this->current_language;
+	}
+
+	/**
+	 * Sets current system language
+	 *
+	 * @param string $language Language code
+	 *
+	 * @return void
+	 */
+	public function setCurrentLanguage($language = null) {
+		$this->current_language = $language;
 	}
 
 	/**
@@ -480,10 +491,13 @@ class Translator {
 	 *
 	 * @param string $language Language
 	 *
-	 * @return int
+	 * @return float
 	 */
 	public function getLanguageCompleteness($language) {
 
+		if ($language == 'en') {
+			return (float) 100;
+		}
 
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();

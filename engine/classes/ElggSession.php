@@ -191,6 +191,7 @@ class ElggSession {
 			$this->set('guid', $user->guid);
 			$this->logged_in_user = $user;
 			_elgg_services()->entityCache->clear();
+			_elgg_services()->translator->setCurrentLanguage($user->language);
 		}
 	}
 
