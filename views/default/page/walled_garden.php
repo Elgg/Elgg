@@ -43,7 +43,7 @@ __BODY;
 
 $body .= elgg_view('page/elements/foot');
 
-$head = elgg_view('page/elements/head', elgg_extract('head', $vars));
+$head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
 
 $params = [
 	'head' => $head,

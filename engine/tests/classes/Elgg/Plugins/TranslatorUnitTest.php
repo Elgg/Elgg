@@ -6,6 +6,8 @@ use Elgg\I18n\Translator;
 
 abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
+	use PluginTesting;
+
 	/**
 	 * @var Translator
 	 */
@@ -14,33 +16,13 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	public function up() {
 		$this->translator = new Translator(_elgg_config());
 		$this->translator->loadTranslations('en');
-		$this->translator->registerTranslations($this->getPath(), false, 'en');
+		$this->translator->registerTranslations($this->getPath(). 'languages/', false, 'en');
 
 		_elgg_services()->setValue('translator', $this->translator);
 	}
 
 	public function down() {
 
-	}
-
-	/**
-	 * Returns path to language directory
-	 * @return string
-	 */
-	public function getPath() {
-		$reflector = new \ReflectionObject($this);
-		$fn = $reflector->getFileName();
-
-		$path = sanitise_filepath(dirname($fn));
-		$plugins_path = sanitise_filepath(elgg_get_plugins_path());
-
-		if (strpos($path, $plugins_path) === 0) {
-			$relative_path = substr($path, strlen($plugins_path));
-			list($plugin_id, $filepath) = explode('/', $relative_path, 2);
-			return $plugins_path . $plugin_id . '/languages/';
-		}
-
-		return '';
 	}
 
 	/**
@@ -52,8 +34,13 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$codes = Translator::getAllLanguageCodes();
 
+		$path = $this->getPath();
+		if (!$path) {
+			return $provides;
+		}
+
 		foreach ($codes as $code) {
-			if (file_exists(rtrim($this->getPath(), '/') . "/$code.php")) {
+			if (file_exists($path . "/languages/$code.php")) {
 				$provides[] = [$code];
 			}
 		}
@@ -67,7 +54,7 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	public function testCanLoadTranslations($language) {
 		$this->translator->setCurrentLanguage($language);
 
-		$this->translator->registerTranslations($this->getPath(), false, $language);
+		$this->translator->registerTranslations($this->getPath() . 'languages/', false, $language);
 
 		$this->assertArrayHasKey($language, $this->translator->getInstalledTranslations());
 
@@ -91,7 +78,7 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	public function testCanCalculateLanguageCompleteness($language) {
 		$this->translator->setCurrentLanguage($language);
 
-		$this->translator->registerTranslations($this->getPath(), false, $language);
+		$this->translator->registerTranslations($this->getPath() . 'languages/', false, $language);
 
 		$completeness = get_language_completeness($language);
 
