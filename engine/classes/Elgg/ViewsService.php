@@ -816,5 +816,9 @@ class ViewsService {
 			$this->overrides[$viewtype][$view][] = $this->locations[$viewtype][$view];
 		}
 		$this->locations[$viewtype][$view] = $path;
+
+		// Test if view is cacheable and push it to the cacheable views stack,
+		// if it's not registered as cacheable explicitly
+		$this->isCacheableView($view);
 	}
 }

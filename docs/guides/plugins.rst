@@ -1,15 +1,19 @@
 Plugins
 #######
 
-Plugins must provide a manifest.xml file in the plugin root
+Plugins must provide a ``manifest.xml`` file in the plugin root
 in order to be recognized by Elgg.
+
+.. contents:: Contents
+   :local:
+   :depth: 1
 
 start.php
 =========
 
-The start.php file bootstraps plugin by registering event listeners and plugin hooks.
+The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks.
 
-It is advised that plugins return an instance of Closure from the start.php instead of placing registrations in the root of the file.
+It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file.
 This allows for consistency in Application bootstrapping, especially for testing purposes.
 
 .. code-block:: php
@@ -53,8 +57,6 @@ Here's a trivial example configuring view locations via the ``views`` key:
 
 .. code-block:: php
 
-	<?php
-
 	return [
 		'views' => [
 			'default' => [
@@ -66,7 +68,7 @@ Here's a trivial example configuring view locations via the ``views`` key:
 activate.php, deactivate.php
 ============================
 
-The activate.php and deactivate.php files contain procedural code that will run
+The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run
 upon plugin activation and deactivation. Use these files to perform one-time
 events such as registering a persistent admin notice, registering subtypes, or performing
 garbage collection when deactivated.
@@ -76,7 +78,8 @@ manifest.xml
 
 Elgg plugins are required to have a ``manifest.xml`` file in the root of a plugin.
 
-The ``manifest.xml`` file includes information about the plugin itself, requirements to run the plugin, and optional information including where to display the plugin in the admin area and what APIs the plugin provides.
+The ``manifest.xml`` file includes information about the plugin itself, requirements to run the plugin, and optional information including 
+where to display the plugin in the admin area and what APIs the plugin provides.
 
 Syntax
 ------
@@ -121,13 +124,15 @@ Available Elements
 In addition to the require elements above, the follow elements are available to use:
 
 * blurb - A short description of the plugin.
-* category - The category of the plugin. It is recommended to follow the [[Plugin_Guidelines|plugin guidelines]] and use one of the defined categories. There can be multiple entries.
+* category - The category of the plugin. It is recommended to follow the :doc:`guidelines` and use one of the defined categories. There can be 
+  multiple entries.
 * conflicts - Specifies that the plugin conflicts with a certain system configuration.
 * copyright - The plugin's copyright information.
 * license - The plugin's license information.
 * provides - Specifies that this plugin provides the same functionality as another Elgg plugin or a PHP extension.
 * screenshot - Screenshots of the plugin. There can be multiple entries. See the advanced example for syntax.
-* suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build on the plugin.
+* suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build 
+  on the plugin.
 * website - A link to the website for the plugin.
 
 .. seealso::
@@ -197,6 +202,35 @@ This example uses all of the available elements:
 			<version>1.0</version>
 		</suggests>
 	</plugin_manifest>
+
+Tests
+=====
+
+It's encouraged to create PHPUnit test for your plugin. All tests should be located in ``tests/phpunit/unit`` for unit tests and 
+``tests/phpunit/integration`` for integration tests.
+
+An easy example of adding test is the ``ViewStackTest``, this will test that the views in your plugin are registered correctly and have no 
+syntax errors. To add this test create a file ``ViewStackTest.php`` in the folder ``tests/phpunit/unit/<YourNameSpace>/<YourPluginName>/``
+with the content:
+
+.. code-block:: php
+	
+	namespace <YourNameSpace>\<YourPluginName>;
+	
+	/**
+	 * @group ViewsService
+	 */
+	class ViewStackTest extends \Elgg\Plugins\ViewStackTest {
+	
+	}
+
+.. note::
+	
+	If you wish to see a better example, look in any of the Elgg core plugins.
+
+.. seealso::
+	
+	:doc:`/contribute/tests`
 
 Related
 =======
