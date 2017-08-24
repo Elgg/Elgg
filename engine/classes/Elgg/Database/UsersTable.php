@@ -563,12 +563,15 @@ class UsersTable {
 
 		$this->entity_cache->set($user);
 
+		// Presume that the delayed query will succeed
+		// Otherwise we encounter discrepancies. See #11199
+		$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'), $time);
+
 		// If we save the user to memcache during this request, then we'll end up with the
 		// old (incorrect) attributes cached (notice the above query is delayed). So it's
 		// simplest to just resave the user after all plugin code runs.
 		register_shutdown_function(function () use ($user, $time) {
 			$this->entities->updateLastAction($user, $time); // keep entity table in sync
-			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'), $time);
 		});
 	}
 
@@ -604,15 +607,12 @@ class UsersTable {
 		$user->prev_last_login = $user->last_login;
 		$user->last_login = $time;
 
-		execute_delayed_write_query($query, null, $params);
-
 		$this->entity_cache->set($user);
 
-		// If we save the user to memcache during this request, then we'll end up with the
-		// old (incorrect) attributes cached. Hence we want to invalidate as late as possible.
-		// the user object gets saved
-		register_shutdown_function(function () use ($user) {
-			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
-		});
+		// Presume that the delayed query will succeed
+		// Otherwise we encounter discrepancies. See #11199
+		$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+
+		execute_delayed_write_query($query, null, $params);
 	}
 }

@@ -89,7 +89,7 @@ class EntityCache {
 	public function set(ElggEntity $entity) {
 		$guid = $entity->guid;
 
-		if (!$guid || isset($this->entities[$guid]) || isset($this->disabled_guids[$guid])) {
+		if (!$guid || isset($this->disabled_guids[$guid])) {
 			// have it or not saved
 			return;
 		}

@@ -100,7 +100,11 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function ban($reason = "") {
-		return ban_user($this->guid, $reason);
+		$result = ban_user($this->guid, $reason);
+		if ($result) {
+			$this->banned = 'yes';
+		}
+		return $result;
 	}
 
 	/**
@@ -109,7 +113,11 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function unban() {
-		return unban_user($this->guid);
+		$result = unban_user($this->guid);
+		if ($result) {
+			$this->banned = 'no';
+		}
+		return $result;
 	}
 
 	/**
