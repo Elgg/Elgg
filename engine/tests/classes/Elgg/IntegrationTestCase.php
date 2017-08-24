@@ -3,7 +3,9 @@
 namespace Elgg;
 
 use Elgg\Di\ServiceProvider;
+use ElggSession;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Zend\Mail\Transport\InMemory;
 
 /**
  * Integration test abstraction
@@ -29,7 +31,11 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$sp->config->getCookieConfig();
 
 		$sp->setFactory('session', function () {
-			return \ElggSession::getMock();
+			return ElggSession::getMock();
+		});
+
+		$sp->setFactory('mailer', function () {
+			return new InMemory();
 		});
 
 		$app = Application::factory([
