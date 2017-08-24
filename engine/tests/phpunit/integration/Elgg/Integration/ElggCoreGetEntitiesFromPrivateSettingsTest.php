@@ -7,6 +7,7 @@ namespace Elgg\Integration;
  *
  * @group IntegrationTests
  * @group Entities
+ * @group EntityPrivateSettings
  */
 class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBaseTest {
 
@@ -18,8 +19,8 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$setting_name2 = 'test_setting_name_' . rand();
 		$setting_value2 = rand(1000, 9999);
 
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$guids = [];
 
 		// our targets

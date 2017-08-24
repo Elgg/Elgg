@@ -5,8 +5,6 @@
  * @package ElggFile
  */
 
-elgg_register_event_handler('init', 'system', 'file_init');
-
 /**
  * File plugin initialization functions.
  */
@@ -504,3 +502,7 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 	}
 	return $icon;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'file_init');
+};

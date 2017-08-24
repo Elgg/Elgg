@@ -25,9 +25,9 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 	protected $user;
 
 	public function up() {
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
-		$entity = $this->createObject([
+		$entity = $this->createOne('object', [
 			'owner_guid' => $user->guid,
 		]);
 
@@ -345,8 +345,8 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 
 		$this->assertTrue(_elgg_services()->hooks->getEvents()->hasHandler('disable:after', 'all', '_elgg_river_disable'));
 
-		$user = $this->createUser();
-		$this->entity = $this->createObject();
+		$user = $this->createOne('user');
+		$this->entity = $this->createOne('object');
 
 		$params = [
 			'view' => 'river/relationship/friend/create',

@@ -416,7 +416,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function testCreateWithContainerGuidEqualsZero() {
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
 		$object = new ElggObject();
 		$object->owner_guid = $user->guid;
@@ -437,7 +437,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$this->assertTrue($this->entity->save());
 
-		$user = $this->createUser();
+		$user = $this->createOne('user');
 
 		$old_user = $this->replaceSession($user);
 

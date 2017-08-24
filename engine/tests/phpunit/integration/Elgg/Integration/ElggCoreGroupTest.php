@@ -29,7 +29,7 @@ class ElggCoreGroupTest extends LegacyIntegrationTestCase {
 		$this->group->access_id = ACCESS_PUBLIC;
 		$this->group->save();
 
-		$this->user = $this->createUser();
+		$this->user = $this->createOne('user');
 	}
 
 	public function down() {

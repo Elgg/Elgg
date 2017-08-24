@@ -1,4 +1,5 @@
 <?php
+use Elgg\Project\Paths;
 
 /**
  * @group Config
@@ -16,28 +17,24 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanReadValuesFromConfig() {
 
-		$path = $this->getSettingsPath();
-		$config = \Elgg\Config::fromFile($path);
+		$config = self::getTestingConfig();
 
 		$this->assertEquals(elgg_get_site_url(), $config->wwwroot);
 		$this->assertEquals(realpath(elgg_get_data_path()), realpath($config->dataroot));
 		$this->assertEquals(realpath(elgg_get_cache_path()), realpath($config->cacheroot));
+		$this->assertEquals(realpath(elgg_get_site_url()), realpath($config->wwwroot));
+		$this->assertEquals(realpath(elgg_get_plugins_path()), realpath(Paths::project() . 'mod/'));
+
+		$engine_path = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+		$this->assertEquals(realpath(elgg_get_engine_path()), $engine_path);
+
+		$vendor_path = dirname($engine_path) . '/vendor/';
+		if (is_dir($vendor_path)) {
+			$project_path = dirname($engine_path);
+		} else {
+			$project_path = dirname(dirname(dirname($engine_path)));
+		}
+		$this->assertEquals(realpath(elgg_get_root_path()), $project_path);
 	}
 
-	/**
-	 * Tests that default memcache config is correctly populated on Travis builds
-	 */
-	public function testReadsMemcacheConfig() {
-
-		if (!getenv('TRAVIS')) {
-			$this->markTestSkipped('Test only runs on Travis builds');
-		}
-
-		if (class_exists('Memcache')) {
-			$memcached = new Memcache();
-			if ($memcached->connect('127.0.0.1', 11211) && $memcached->close()) {
-				$this->assertTrue(_elgg_config()->memcache);
-			}
-		}
-	}
 }

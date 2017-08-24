@@ -59,6 +59,9 @@ class Groups extends Seed {
 				], [
 					'content_access_mode' => $this->getRandomContentAccessMode(),
 					'membership' => $this->getRandomMembership(),
+				], [
+					'profile_fields' => (array) elgg_get_config('group'),
+					'group_tool_options' => (array) elgg_get_config('group_tool_options'),
 				]);
 				if (!$group) {
 					continue;
@@ -74,7 +77,7 @@ class Groups extends Seed {
 				continue;
 			}
 
-			$members_limit = $this->faker()->numberBetween(5, 10);
+			$members_limit = $this->faker()->numberBetween(1, 5);
 
 			$members_exclude = [];
 

@@ -395,11 +395,15 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 		$this->assertEqual($package->getID(), 'profile');
 	}
 
+	public function testElggPluginEntityClassIsRegistered() {
+		$class = get_subtype_class('object', 'plugin');
+		$this->assertIdentical(ElggPlugin::class, $class);
+	}
+
 	// \ElggPlugin
 	public function testElggPluginIsValid() {
 
 		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
-
 		$this->assertIdentical(true, $test_plugin->isValid());
 	}
 
@@ -407,6 +411,7 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 
 		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
 
+		$this->assertIdentical($test_plugin, elgg_get_plugin_from_id('profile'));
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}
 

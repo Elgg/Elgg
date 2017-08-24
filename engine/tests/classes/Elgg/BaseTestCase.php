@@ -7,6 +7,7 @@ namespace Elgg;
 
 use Elgg\Database\Seeds\Seedable;
 use Elgg\Di\ServiceProvider;
+use Elgg\Project\Paths;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -16,94 +17,109 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 
 	use Testing;
 
-	/**
-	 * Returns path to settings file to be used to boostrap the Application
-	 * @return mixed
-	 */
-	abstract public static function getSettingsPath();
+	static $_instance;
+	static $_settings;
 
-	/**
-	 * Returns names of services that should be reset when BaseTestCase::reset() is called
-	 * @return mixed
-	 */
-	abstract public static function getResettableServices();
+	public function __construct($name = null, array $data = [], $dataName = '') {
+		parent::__construct($name, $data, $dataName);
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function setUpBeforeClass() {
-		parent::setUpBeforeClass();
-		try {
-			static::bootstrap();
-		} catch (\Throwable $t) {
-			throw new \Exception($t->getMessage(), $t->getCode(), $t);
-		}
+		self::$_instance = $this;
+	}
+
+	public function __destruct() {
+		self::$_instance = null;
 	}
 
 	/**
 	 * Build a new testing application
-	 * @return Application
+	 * @return Application|false
 	 */
-	abstract public static function createApplication();
-
-	/**
-	 * Boostrap a new instance of a testing application
-	 *
-	 * @return Application
-	 */
-	public static function bootstrap() {
-
-		$app = Application::$_instance;
-
-		if (!self::isSamePath($app->_services->config->elgg_settings_file, static::getSettingsPath())) {
-			$backup_values = [];
-
-			$keys = [
-				'testCase',
-			];
-
-			foreach ($keys as $key) {
-				$backup_values[$key] = _elgg_services()->$key;
-			}
-
-			$app = static::createApplication();
-
-			foreach ($backup_values as $key => $value) {
-				_elgg_services()->setValue($key, $value);
-			}
-
-			return $app;
-		} else {
-			// Otherwise just reset it
-			self::reset();
-			return $app;
-		}
+	public static function createApplication() {
+		return false;
 	}
 
 	/**
-	 * Compare if two paths are equal
-	 *
-	 * @param string $path1 Path
-	 * @param string $path2 Path
-	 *
-	 * @return bool
+	 * Returns testing config
+	 * @return Config
 	 */
-	private static function isSamePath($path1, $path2) {
-		$normalize = function($path) {
-			return str_replace('\\', '/', $path);
-		};
-
-		return $normalize($path1) == $normalize($path2);
-	}
-
-	/**
-	 * Reset the application to original state without bootstrapping it all over again
-	 * @return void
-	 */
-	public static function reset() {
-		foreach (static::getResettableServices() as $service) {
-			_elgg_services()->reset($service);
+	public static function getTestingConfig() {
+		if (!empty($_ENV['ELGG_SETTINGS_FILE'])) {
+			$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
+			return Config::factory($settings_path);
 		}
+
+		return new Config([
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ? : '',
+			'dbuser' => getenv('ELGG_DB_USER') ? : '',
+			'dbpass' => getenv('ELGG_DB_PASS') ? : '',
+			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+
+			'memcache' => (bool) getenv('ELGG_MEMCACHE'),
+			'memcache_servers' => [
+				[getenv('ELGG_MEMCACHE_SERVER1_HOST'), getenv('ELGG_MEMCACHE_SERVER1_PORT')],
+				[getenv('ELGG_MEMCACHE_SERVER2_HOST'), getenv('ELGG_MEMCACHE_SERVER2_PORT')],
+			],
+			'memcache_namespace_prefix' => getenv('ELGG_MEMCACHE_NAMESPACE_PREFIX') ? : 'elgg_mc_prefix_',
+
+			// These are fixed, because tests rely on specific location of the dataroot for source files
+			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',
+			'cacheroot' => Paths::elgg() . 'engine/tests/test_files/cacheroot/',
+
+			'system_cache_enabled' => false,
+			'simplecache_enabled' => false,
+			'boot_cache_ttl' => 0,
+
+			'profile_files' => [],
+			'group' => [],
+			'group_tool_options' => [],
+
+			'minusername' => 10,
+			'profile_custom_fields' => [],
+			'elgg_maintenance_mode' => false,
+
+			'icon_sizes' => [
+				'topbar' => [
+					'w' => 16,
+					'h' => 16,
+					'square' => true,
+					'upscale' => true
+				],
+				'tiny' => [
+					'w' => 25,
+					'h' => 25,
+					'square' => true,
+					'upscale' => true
+				],
+				'small' => [
+					'w' => 40,
+					'h' => 40,
+					'square' => true,
+					'upscale' => true
+				],
+				'medium' => [
+					'w' => 100,
+					'h' => 100,
+					'square' => true,
+					'upscale' => true
+				],
+				'large' => [
+					'w' => 200,
+					'h' => 200,
+					'square' => false,
+					'upscale' => false
+				],
+				'master' => [
+					'w' => 550,
+					'h' => 550,
+					'square' => false,
+					'upscale' => false
+				],
+			],
+			'debug' => 'NOTICE',
+		]);
 	}
 
 	/**
@@ -111,34 +127,32 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 	 */
 	protected function setUp() {
 
-		_elgg_services()->logger->notice('Test started: ' . $this->getName());
+		Application::setInstance(null);
 
-		self::reset();
+		$app = static::createApplication();
+		if (!$app) {
+			$this->markTestSkipped();
+		}
 
 		$dt = new \DateTime();
-		_elgg_services()->entityTable->setCurrentTime($dt);
-		_elgg_services()->metadataTable->setCurrentTime($dt);
-		_elgg_services()->relationshipsTable->setCurrentTime($dt);
-		_elgg_services()->annotations->setCurrentTime($dt);
-		_elgg_services()->usersTable->setCurrentTime($dt);
 
-		// turn off system log
-		_elgg_services()->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
-		_elgg_services()->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
-
-		_elgg_services()->setValue('testCase', $this);
+		$app->_services->entityTable->setCurrentTime($dt);
+		$app->_services->metadataTable->setCurrentTime($dt);
+		$app->_services->relationshipsTable->setCurrentTime($dt);
+		$app->_services->annotations->setCurrentTime($dt);
+		$app->_services->usersTable->setCurrentTime($dt);
 
 		// Invalidate memcache
 		_elgg_get_memcache('new_entity_cache')->clear();
 
-		_elgg_services()->session->removeLoggedInUser();
-		_elgg_services()->session->setIgnoreAccess(false);
+		$app->_services->session->removeLoggedInUser();
+		$app->_services->session->setIgnoreAccess(false);
 		access_show_hidden_entities(false);
 
 		// Make sure the application has been bootstrapped correctly
 		$this->assertInstanceOf(Application::class, elgg());
-		$this->assertInstanceOf(ServiceProvider::class, _elgg_services());
-		$this->assertInstanceOf(Config::class, _elgg_services()->config);
+		$this->assertInstanceOf(ServiceProvider::class, $app->_services);
+		$this->assertInstanceOf(Config::class, $app->_services->config);
 	}
 
 	/**
@@ -163,8 +177,6 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 				$prop->setValue($this, null);
 			}
 		}
-
-		_elgg_services()->logger->notice('Test ended: ' . $this->getName());
 	}
 
 	/**

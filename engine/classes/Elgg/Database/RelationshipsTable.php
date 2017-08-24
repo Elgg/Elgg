@@ -105,7 +105,7 @@ class RelationshipsTable {
 		$params = [
 			':id' => $id,
 		];
-		return $this->db->deleteData($sql, $params);
+		return (bool) $this->db->deleteData($sql, $params);
 	}
 
 	/**

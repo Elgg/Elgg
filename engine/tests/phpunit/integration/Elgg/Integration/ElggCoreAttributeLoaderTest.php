@@ -12,33 +12,12 @@ use Elgg\LegacyIntegrationTestCase;
  */
 class ElggCoreAttributeLoaderTest extends LegacyIntegrationTestCase {
 
-	private $entities = [];
-	
 	public function up() {
-		$types = Config::getEntityTypes();
-		
-		foreach ($types as $type) {
-			switch ($type) {
-				case 'group' :
-					$this->entities[] = $this->createGroup();
-					break;
-
-				case 'user' :
-					$this->entities[] = $this->createUser();
-					break;
-
-				case 'object' :
-					$this->entities[] = $this->createObject();
-					break;
-			}
-		}
-
+		$this->createMany(Config::getEntityTypes(), 1);
 	}
 
 	public function down() {
-		foreach ($this->entities as $entity) {
-			$entity->delete();
-		}
+
 	}
 
 	/**

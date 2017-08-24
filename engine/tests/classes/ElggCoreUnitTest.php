@@ -21,32 +21,10 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 	use Seeding;
 	use Testing;
 
-	protected $_testing_hooks;
-	protected $_testing_events;
-
-	/**
-	 * Returns names of services that should be reset when BaseTestCase::reset() is called
-	 * @return mixed
-	 */
-	public static function getResettableServices() {
-		return [];
-	}
-
-	/**
-	 * Reset the application to original state without bootstrapping it all over again
-	 * @return void
-	 */
-	public static function reset() {
-		foreach (static::getResettableServices() as $service) {
-			_elgg_services()->reset($service);
-		}
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
 	final public function setUp() {
-		static::reset();
 
 		// Make sure the application has been bootstrapped correctly
 		$this->assertIsA(elgg(), Application::class);
@@ -56,10 +34,6 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 		_elgg_services()->session->setIgnoreAccess(false);
 		access_show_hidden_entities(false);
-
-		// Backup events and hooks so we can assert that the has clean up after iteself
-		$this->_testing_hooks = _elgg_services()->hooks->getAllHandlers();
-		$this->_testing_events = _elgg_services()->hooks->getEvents()->getAllHandlers();
 
 		$this->up();
 	}
@@ -78,14 +52,6 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 
 		// Simpletest suite runs with an admin user logged in
 		$this->assertTrue(elgg_is_admin_logged_in());
-
-		$this->assertEqual($this->_testing_hooks, _elgg_services()->hooks->getAllHandlers(), "
-			The test has failed to clean up hook registrations after itself.
-		");
-
-		$this->assertEqual($this->_testing_events, _elgg_services()->hooks->getEvents()->getAllHandlers(), "
-			The test has failed to clean up event registrations after itself.
-		");
 
 		_elgg_services()->session->removeLoggedInUser();
 

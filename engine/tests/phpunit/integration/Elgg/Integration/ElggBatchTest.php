@@ -221,7 +221,7 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 
 		$subtype ='testCanGetBatchFromAnEntityGetter';
 		for ($i = 1; $i <=5; $i++) {
-			$this->createObject([
+			$this->createOne('object', [
 				'subtype' => $subtype,
 			]);
 		}

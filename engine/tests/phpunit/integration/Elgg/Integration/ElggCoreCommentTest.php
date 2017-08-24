@@ -24,14 +24,14 @@ class ElggCoreCommentTest extends LegacyIntegrationTestCase {
 
 	public function up() {
 
-		$this->commenter = $this->createUser();
+		$this->commenter = $this->createOne('user');
 
-		$this->container_owner = $this->createUser();
-		$this->container = $this->createObject([
+		$this->container_owner = $this->createOne('user');
+		$this->container = $this->createOne('object', [
 			'owner_guid' => $this->container_owner->guid,
 		]);
 
-		$this->comment = $this->createObject([
+		$this->comment = $this->createOne('object', [
 			'subtype' => 'comment',
 			'container_guid' => $this->container->guid,
 			'owner_guid' => $this->commenter->guid,

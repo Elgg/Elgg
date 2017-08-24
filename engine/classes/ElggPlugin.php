@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Includer;
+use Elgg\Application;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -658,7 +659,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		return check_entity_relationship($this->guid, 'active_plugin', $site->guid);
+		return check_entity_relationship($this->guid, 'active_plugin', $site->guid) instanceof ElggRelationship;
 	}
 
 	/**
@@ -845,13 +846,21 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function start($flags) {
 
+		// Detect plugins errors early and throw so that plugins service can disable the plugin
+		if (!$this->getManifest()) {
+			throw new Exception($this->getError());
+		}
+
+		// Preload static config file
+		$this->getStaticConfig('');
+
 		// include classes
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
 			$this->registerClasses();
 			
 			$autoload_file = 'vendor/autoload.php';
 			if ($this->canReadFile($autoload_file)) {
-				require_once "{$this->path}/{$autoload_file}";
+				Application::requireSetupFileOnce("{$this->path}/{$autoload_file}");
 			}
 		}
 
@@ -865,7 +874,10 @@ class ElggPlugin extends \ElggObject {
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			if ($this->canReadFile('start.php')) {
-				require_once "{$this->path}/start.php";
+				$result = Application::requireSetupFileOnce("{$this->path}/start.php");
+				if ($result instanceof \Closure) {
+					$result();
+				}
 			}
 			
 			$this->registerEntities();
@@ -908,7 +920,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		try {
-			$ret = include $filepath;
+			$ret = Includer::includeFile($filepath);
 		} catch (Exception $e) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
 				[$filename, $this->getID(), $this->guid, $this->path]);

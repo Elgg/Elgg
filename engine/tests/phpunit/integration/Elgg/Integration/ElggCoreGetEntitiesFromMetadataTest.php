@@ -9,6 +9,7 @@ use ElggObject;
  *
  * @group IntegrationTests
  * @group Entities
+ * @group EntityMetadata
  */
 class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
@@ -16,8 +17,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	function testElggApiGettersEntityMetadataNameValidSingle() {
 		// create a new entity with a subtype we know
 		// use an existing type so it will clean up automatically
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -46,8 +47,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNameValidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_names = [];
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -89,8 +90,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNameInvalidSingle() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -115,8 +116,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNameInvalidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -144,8 +145,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 
 	function testElggApiGettersEntityMetadataNameMixedMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_names = [];
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -198,8 +199,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	function testElggApiGettersEntityMetadataValueValidSingle() {
 		// create a new entity with a subtype we know
 		// use an existing type so it will clean up automatically
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -228,8 +229,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataValueValidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_values = [];
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -271,8 +272,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataValueInvalidSingle() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -297,8 +298,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataValueInvalidMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -326,8 +327,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 
 	function testElggApiGettersEntityMetadataValueMixedMultiple() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_values = [];
 
 		$md_name = 'test_metadata_name_' . rand();
@@ -380,8 +381,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVEquals() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$guids = [];
@@ -438,8 +439,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsTriple() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -519,8 +520,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVEqualsDouble() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -590,8 +591,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 	// this keeps locking up my database...
 	function xtestElggApiGettersEntityMetadataNVPValidNValidVEqualsStupid() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
@@ -692,8 +693,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	 * Name value pair with valid name and invalid value
 	 */
 	function testElggApiGettersEntityMetadataNVPValidNInvalidV() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$guids = [];
@@ -739,8 +740,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	 * Name value pair with invalid name and valid value
 	 */
 	function testElggApiGettersEntityMetadataNVPInvalidNValidV() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$guids = [];
@@ -784,8 +785,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVOperandIn() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$guids = [];
@@ -862,8 +863,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPValidNValidVPlural() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 		$guids = [];
@@ -943,8 +944,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPOrderByMDText() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = [];
 		$valid_guids = [];
@@ -1002,8 +1003,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	function testElggApiGettersEntityMetadataNVPOrderByMDString() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = [];
 		$valid_guids = [];
@@ -1068,8 +1069,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 	// test getting by name sorting by value as integer
 	function testElggApiGettersEntityMetadataNOrderByMDInt() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = [];
 		$valid_guids = [];
@@ -1134,8 +1135,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 	// test getting by name sorting by value as integer with defined values
 	function testElggApiGettersEntityMetadataNOrderByMDIntDefinedVals() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = [];
 		$valid_guids = [];
@@ -1202,8 +1203,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	// test getting by name_value_pairs sorting by value as integer
 	// because string comparison '5' > '15'
 	function testElggApiGettersEntityMetadataNVPOrderByMDInt() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = [];
 		$valid_guids = [];
@@ -1271,8 +1272,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 	// test getting by name sorting by value as integer with defined values
 	function testElggApiGettersEntityMetadataNVPGreaterThanInt() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = [];
 		$valid_guids = [];
@@ -1341,8 +1342,8 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	// test getting from string value interpreted as numeric
 	// see https://github.com/Elgg/Elgg/issues/7009
 	function testElggApiGettersEntityMetadataNVPInvalidDouble() {
-		$subtypes = $this->getRandomValidSubtypes(['object'], 1);
-		$subtype = $subtypes[0];
+		$subtype = $this->getRandomSubtype();
+
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = [];
 		$valid_guids = [];

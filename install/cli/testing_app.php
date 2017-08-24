@@ -4,20 +4,19 @@
  * Configuration array for Elgg installation on Travis
  */
 return [
-	// database parameters
-	'dbuser' => 'root',
-	'dbpassword' => 'password',
-	'dbname' => 'elgg',
 
-	// We use a wonky dbprefix to catch any cases where folks hardcode "elgg_"
-	// instead of using config->dbprefix
-	'dbprefix' => 't_i_elgg_',
+	// database settings
+	'dbuser' => getenv('ELGG_DB_USER'),
+	'dbpassword' => getenv('ELGG_DB_PASS'),
+	'dbname' => getenv('ELGG_DB_NAME'),
+	'dbprefix' => getenv('ELGG_DB_PREFIX'),
+	'dbencoding' => getenv('ELGG_DB_ENCODING'),
 
 	// site settings
 	'sitename' => 'Elgg Travis Site',
 	'siteemail' => 'no_reply@travis.elgg.org',
-	'wwwroot' => 'http://localhost:8888/',
-	'dataroot' => getenv('HOME') . '/elgg_data/',
+	'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+	'dataroot' => getenv('HOME') . '/engine/tests/test_files/dataroot/',
 
 	// admin account
 	'displayname' => 'Administrator',

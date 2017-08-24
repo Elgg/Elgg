@@ -193,23 +193,23 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		foreach ($types as $type) {
 			switch ($type) {
 				case 'group' :
-					$parent = $this->createGroup();
+					$parent = $this->createOne('group');
 					break;
 
 				case 'user' :
-					$parent = $this->createUser();
+					$parent = $this->createOne('user');
 					break;
 
 				case 'object' :
-					$parent = $this->createObject();
+					$parent = $this->createOne('object');
 					break;
 			}
 
-			$child = $this->createObject([
+			$child = $this->createOne('object', [
 				'container_guid' => $parent->guid,
 			]);
 
-			$grandchild = $this->createObject([
+			$grandchild = $this->createOne('object', [
 				'container_guid' => $child->guid,
 			]);
 

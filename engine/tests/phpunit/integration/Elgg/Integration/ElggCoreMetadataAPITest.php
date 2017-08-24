@@ -121,9 +121,9 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 	// by another user
 	// https://github.com/elgg/elgg/issues/2776
 	public function test_elgg_metadata_multiple_values() {
-		$u1 = $this->createUser();
+		$u1 = $this->createOne('user');
 
-		$u2 = $this->createUser();
+		$u2 = $this->createOne('user');
 
 		$obj = new ElggObject();
 		$obj->owner_guid = $u1->guid;

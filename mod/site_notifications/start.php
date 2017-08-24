@@ -6,8 +6,6 @@
  * @todo add a remove visible and all notifications button
  */
 
-elgg_register_event_handler('init', 'system', 'site_notifications_init');
-
 function site_notifications_init() {
 	// register as a notification type
 	elgg_register_notification_method('site');
@@ -102,3 +100,7 @@ function site_notifications_send($hook, $type, $result, $params) {
 		return true;
 	}
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'site_notifications_init');
+};

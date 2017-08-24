@@ -54,8 +54,10 @@ Edit ``/start.php``. In it add these lines:
             'description' => 'The "Hello, world!" widget',
         ]);
     }
-        
-    elgg_register_event_handler('init', 'system', 'hello_init');       
+
+    return function() {
+        elgg_register_event_handler('init', 'system', 'hello_init');
+    }
 
 Now go to your profile page using a web browser and add the “hello, world” widget.
 It should display “Hello, world!”.

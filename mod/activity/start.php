@@ -71,4 +71,6 @@ function elgg_activity_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '_elgg_activity_owner_block_menu');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_activity_init');
+return function() {
+	elgg_register_event_handler('init', 'system', 'elgg_activity_init');
+};

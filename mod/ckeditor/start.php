@@ -5,8 +5,6 @@
  * @package ElggCKEditor
  */
 
-elgg_register_event_handler('init', 'system', 'ckeditor_init');
-
 function ckeditor_init() {
 	elgg_extend_view('elgg.css', 'ckeditor.css');
 	elgg_extend_view('admin.css', 'ckeditor.css');
@@ -58,3 +56,7 @@ function ckeditor_longtext_id($hook, $type, $items, $vars) {
 
 	return $items;
 }
+
+return function() {
+	elgg_register_event_handler('init', 'system', 'ckeditor_init');
+};

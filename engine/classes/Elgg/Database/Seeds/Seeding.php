@@ -73,16 +73,25 @@ trait Seeding {
 	}
 
 	/**
+	 * Returns random unique subtype
+	 * @return bool|string
+	 */
+	public function getRandomSubtype() {
+		return substr(sha1(microtime() . rand()), 0, 25);
+	}
+
+	/**
 	 * Create a new fake user
 	 *
 	 * @param array $attributes User entity attributes
 	 * @param array $metadata   User entity metadata
+	 * @param array $options    Seeding options
 	 *
 	 * @return ElggUser
 	 */
-	public function createUser(array $attributes = [], array $metadata = []) {
+	public function createUser(array $attributes = [], array $metadata = [], array $options = []) {
 
-		$create = function () use ($attributes, $metadata) {
+		$create = function () use ($attributes, $metadata, $options) {
 			$metadata['__faker'] = true;
 
 			if (empty($attributes['password'])) {
@@ -137,7 +146,7 @@ trait Seeding {
 				$user->setNotificationSetting('email', false);
 				$user->setNotificationSetting('site', true);
 
-				$profile_fields = (array) elgg_get_config('profile_fields');
+				$profile_fields = elgg_extract('profile_fields', $options, []);
 
 				$user = $this->populateMetadata($user, $profile_fields, $metadata);
 
@@ -176,12 +185,13 @@ trait Seeding {
 	 *
 	 * @param array $attributes Group entity attributes
 	 * @param array $metadata   Group entity metadata
+	 * @param array $options    Additional options
 	 *
 	 * @return ElggGroup
 	 */
-	public function createGroup(array $attributes = [], array $metadata = []) {
+	public function createGroup(array $attributes = [], array $metadata = [], array $options = []) {
 
-		$create = function () use ($attributes, $metadata) {
+		$create = function () use ($attributes, $metadata, $options) {
 			$metadata['__faker'] = true;
 
 			if (empty($attributes['access_id'])) {
@@ -205,7 +215,10 @@ trait Seeding {
 			}
 
 			if (empty($attributes['owner_guid'])) {
-				$user = $this->getRandomUser();
+				$user = elgg_get_logged_in_user_entity();
+				if (!$user) {
+					$user = $this->getRandomUser();
+				}
 				if (!$user) {
 					$user = $this->createUser();
 				}
@@ -227,7 +240,7 @@ trait Seeding {
 				return false;
 			}
 
-			$tool_options = elgg_get_config('group_tool_options');
+			$tool_options = elgg_extract('group_tools_options', $options, []);
 			if ($tool_options) {
 				foreach ($tool_options as $group_option) {
 					$option_toggle_name = $group_option->name . "_enable";
@@ -245,7 +258,7 @@ trait Seeding {
 				$group->$name = $value;
 			}
 
-			$profile_fields = (array) elgg_get_config('group');
+			$profile_fields = $profile_fields = elgg_extract('profile_fields', $options, []);
 			$group = $this->populateMetadata($group, $profile_fields, $metadata);
 
 			$group->save();
@@ -287,12 +300,13 @@ trait Seeding {
 	 *
 	 * @param array $attributes Object entity attributes
 	 * @param array $metadata   Object entity metadata
+	 * @param array $options    Additional options
 	 *
 	 * @return ElggObject
 	 */
-	public function createObject(array $attributes = [], array $metadata = []) {
+	public function createObject(array $attributes = [], array $metadata = [], array $options = []) {
 
-		$create = function () use ($attributes, $metadata) {
+		$create = function () use ($attributes, $metadata, $options) {
 			$metadata['__faker'] = true;
 
 			if (empty($attributes['title'])) {
@@ -304,7 +318,7 @@ trait Seeding {
 			}
 
 			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = strtolower($this->faker()->word);
+				$attributes['subtype'] = $this->getRandomSubtype();
 			}
 
 			if (empty($metadata['tags'])) {
@@ -312,16 +326,12 @@ trait Seeding {
 			}
 
 			if (empty($attributes['container_guid'])) {
-				if ($this->faker()->boolean()) {
-					$container = $this->getRandomGroup();
-					if (!$container) {
-						$container = $this->createGroup();
-					}
-				} else {
+				$container = elgg_get_logged_in_user_entity();
+				if (!$container) {
 					$container = $this->getRandomUser();
-					if (!$container) {
-						$container = $this->createUser();
-					}
+				}
+				if (!$container) {
+					$container = $this->createUser();
 				}
 
 				$attributes['container_guid'] = $container->guid;
@@ -333,21 +343,7 @@ trait Seeding {
 			}
 
 			if (empty($attributes['owner_guid'])) {
-				if ($container instanceof ElggGroup) {
-					$members = elgg_get_entities_from_relationship([
-						'types' => 'user',
-						'relationship' => 'member',
-						'relationship_guid' => $container->guid,
-						'inverse_relationship' => true,
-						'limit' => 1,
-						'metadata_names' => '__faker',
-						'order_by' => 'RAND()',
-					]);
-					$owner = array_shift($members);
-				} else {
-					$owner = $container;
-				}
-
+				$owner = $container;
 				$attributes['owner_guid'] = $owner->guid;
 			}
 
@@ -370,7 +366,8 @@ trait Seeding {
 				$object->$name = $value;
 			}
 
-			$object = $this->populateMetadata($object, [], $metadata);
+			$profile_fields = elgg_extract('profile_fields', $options, []);
+			$object = $this->populateMetadata($object, $profile_fields, $metadata);
 
 			$object->save();
 
@@ -536,7 +533,7 @@ trait Seeding {
 		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 
-		$minlength = elgg_get_config('minusername') ? : 4;
+		$minlength = elgg_get_config('minusername') ? : 8;
 		if ($base_name) {
 			$fill = $minlength - strlen($base_name);
 		} else {
@@ -546,7 +543,7 @@ trait Seeding {
 		$separator = '';
 
 		if ($fill > 0) {
-			$suffix = (new ElggCrypto())->getRandomString($fill);
+			$suffix = (new \ElggCrypto())->getRandomString($fill);
 			$base_name = "$base_name$separator$suffix";
 		}
 
@@ -564,7 +561,7 @@ trait Seeding {
 			} catch (\Exception $e) {
 				if ($iterator >= 10) {
 					// too many failed attempts
-					$base_name = (new ElggCrypto())->getRandomString(8);
+					$base_name = (new \ElggCrypto())->getRandomString(8);
 				}
 			}
 

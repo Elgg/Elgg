@@ -25,6 +25,9 @@ class SimpletestCommand extends Command {
 			)
 			->addOption('plugins', 'p', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
 				'A list of plugins to enable for testing or "all" to enable all plugins'
+			)
+			->addOption('filter', 'f', InputOption::VALUE_OPTIONAL,
+				'Only run tests that match filter pattern'
 			);
 	}
 
@@ -64,6 +67,8 @@ class SimpletestCommand extends Command {
 
 		Application::setInstance($app);
 
+		$app->bootCore();
+
 		// turn off system log
 		_elgg_services()->hooks->unregisterHandler('all', 'all', 'system_log_listener');
 		_elgg_services()->hooks->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
@@ -98,6 +103,11 @@ class SimpletestCommand extends Command {
 
 		$test_cases = _elgg_services()->hooks->trigger('unit_test', 'system', null, []);
 		foreach ($test_cases as $file) {
+			$filter = $this->option('filter');
+			if ($filter && !preg_match("/$filter/i", $file)) {
+				continue;
+			}
+
 			if (substr($file, -4, 4) === '.php') {
 				$suite->addFile($file);
 			} else if (class_exists($file)) {

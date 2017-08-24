@@ -5,11 +5,6 @@
 
 use Elgg\DevelopersPlugin\Hooks;
 
-// we want to run this as soon as possible - other plugins should not need to do this
-developers_process_settings();
-
-elgg_register_event_handler('init', 'system', 'developers_init');
-
 function developers_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_developers_page_menu');
@@ -314,3 +309,10 @@ function developers_get_inspect_options() {
 	
 	return $options;
 }
+
+return function() {
+	// we want to run this as soon as possible - other plugins should not need to do this
+	developers_process_settings();
+
+	elgg_register_event_handler('init', 'system', 'developers_init');
+};
