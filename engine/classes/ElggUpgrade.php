@@ -49,6 +49,8 @@ class ElggUpgrade extends ElggObject {
 		$this->attributes['container_guid'] = 0;
 		$this->attributes['owner_guid'] = 0;
 
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
+
 		$this->is_completed = 0;
 	}
 

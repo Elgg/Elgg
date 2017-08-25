@@ -298,7 +298,7 @@ function _elgg_symlink_cache() {
  * @access private
  */
 function _elgg_invalidate_cache_for_entity($entity_guid) {
-	_elgg_services()->entityCache->remove($entity_guid);
+	elgg_get_session()->entityCache->remove($entity_guid);
 }
 
 /**

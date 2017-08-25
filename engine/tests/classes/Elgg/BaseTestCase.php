@@ -142,9 +142,6 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 		$app->_services->annotations->setCurrentTime($dt);
 		$app->_services->usersTable->setCurrentTime($dt);
 
-		// Invalidate memcache
-		_elgg_get_memcache('new_entity_cache')->clear();
-
 		$app->_services->session->removeLoggedInUser();
 		$app->_services->session->setIgnoreAccess(false);
 		access_show_hidden_entities(false);

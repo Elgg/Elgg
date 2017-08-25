@@ -42,15 +42,15 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	public function up() {
 		$this->actionsDir = $this->normalizeTestFilePath('actions');
 
-		$session = _elgg_services()->session;
-		_elgg_services()->session->start();
+		$session = elgg_get_session();
+		elgg_get_session()->start();
 
 		$config = _elgg_config();
 
 		$this->input = new Input();
 		_elgg_services()->setValue('input', $this->input);
 
-		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto);
+		$this->actions = new ActionsService($config, _elgg_services()->crypto);
 		_elgg_services()->setValue('actions', $this->actions);
 
 		$this->request = $this->prepareHttpRequest();
@@ -260,8 +260,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$timeout = $this->actions->getActionTokenTimeout();
 		$timestamp = $dt->getTimestamp();
 		$token = $this->actions->generateActionToken($timestamp);
-		_elgg_services()->session->invalidate();
-		_elgg_services()->session->start();
+		elgg_get_session()->invalidate();
+		elgg_get_session()->start();
 		$this->assertFalse($this->actions->validateActionToken(false, $token, $timestamp));
 	}
 

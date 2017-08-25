@@ -95,7 +95,7 @@ class ElggMetadata extends \ElggExtender {
 	public function delete() {
 		$success = _elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
 		if ($success) {
-			_elgg_services()->metadataCache->clear($this->entity_guid);
+			elgg_get_session()->metadataCache->clear($this->entity_guid);
 		}
 		return $success;
 	}
@@ -110,7 +110,7 @@ class ElggMetadata extends \ElggExtender {
 		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
 		if ($success) {
 			$this->enabled = 'no';
-			_elgg_services()->metadataCache->clear($this->entity_guid);
+			elgg_get_session()->metadataCache->clear($this->entity_guid);
 		}
 		return $success;
 	}
@@ -125,7 +125,7 @@ class ElggMetadata extends \ElggExtender {
 		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
 		if ($success) {
 			$this->enabled = 'yes';
-			_elgg_services()->metadataCache->clear($this->entity_guid);
+			elgg_get_session()->metadataCache->clear($this->entity_guid);
 		}
 		return $success;
 	}

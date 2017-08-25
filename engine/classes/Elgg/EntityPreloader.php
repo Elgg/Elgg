@@ -26,16 +26,13 @@ class EntityPreloader {
 
 	/**
 	 * Constructor
-	 *
-	 * @param EntityCache $entity_cache Entity cache
-	 * @param EntityTable $entity_table Entity service
 	 */
-	public function __construct(EntityCache $entity_cache, EntityTable $entity_table) {
-		$this->_callable_cache_checker = function ($guid) use ($entity_cache) {
-			return $entity_cache->get($guid);
+	public function __construct() {
+		$this->_callable_cache_checker = function ($guid) {
+			return elgg_get_session()->entityCache->get($guid);
 		};
-		$this->_callable_entity_loader = function ($options) use ($entity_table) {
-			return $entity_table->getEntities($options);
+		$this->_callable_entity_loader = function ($options) {
+			return Application::getInstance()->_services->entityTable->getEntities($options);
 		};
 	}
 

@@ -210,11 +210,11 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals('en', $this->translator->getCurrentLanguage());
 
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 
 		$this->assertEquals($language, $this->translator->getCurrentLanguage());
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$user->delete();
 	}

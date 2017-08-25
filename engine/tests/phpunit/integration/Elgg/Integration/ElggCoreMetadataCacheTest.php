@@ -3,6 +3,7 @@
 namespace Elgg\Integration;
 
 use Elgg\Cache\MetadataCache;
+use Elgg\Cache\NullCache;
 use Elgg\LegacyIntegrationTestCase;
 
 /**
@@ -44,7 +45,7 @@ class ElggCoreMetadataCacheTest extends LegacyIntegrationTestCase {
 	public function up() {
 		$this->ignoreAccess = elgg_set_ignore_access(false);
 
-		$this->cache = _elgg_services()->metadataCache;
+		$this->cache = elgg_get_session()->metadataCache;
 
 		$this->obj1 = new \ElggObject();
 		$this->obj1->save();
@@ -63,7 +64,7 @@ class ElggCoreMetadataCacheTest extends LegacyIntegrationTestCase {
 	}
 
 	public function testHas() {
-		$cache = new MetadataCache();
+		$cache = new MetadataCache(new NullCache());
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);
@@ -73,7 +74,7 @@ class ElggCoreMetadataCacheTest extends LegacyIntegrationTestCase {
 	}
 
 	public function testLoad() {
-		$cache = new MetadataCache();
+		$cache = new MetadataCache(new NullCache());
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);
@@ -84,7 +85,7 @@ class ElggCoreMetadataCacheTest extends LegacyIntegrationTestCase {
 	}
 
 	public function testDirectInvalidation() {
-		$cache = new MetadataCache();
+		$cache = new MetadataCache(new NullCache());
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);

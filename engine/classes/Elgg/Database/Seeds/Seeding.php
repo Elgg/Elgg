@@ -26,50 +26,11 @@ trait Seeding {
 	protected $limit = 20;
 
 	/**
-	 * @var \Faker\Generator
-	 */
-	protected $faker;
-
-	/**
 	 * Returns an instance of faker
-	 *
-	 * @param string $locale Locale
-	 *
 	 * @return \Faker\Generator
 	 */
-	public function faker($locale = 'en_US') {
-		if (!isset($this->faker)) {
-			$this->faker = Factory::create($locale);
-		}
-
-		return $this->faker;
-	}
-
-	/**
-	 * Get site domain
-	 * @return string
-	 */
-	public function getDomain() {
-		return elgg_get_site_entity()->getDomain();
-	}
-
-	/**
-	 * Get valid domain for emails
-	 * @return string
-	 */
-	public function getEmailDomain() {
-		$email = elgg_get_site_entity()->email;
-		if (!$email) {
-			$email = "noreply@{$this->getDomain()}";
-		}
-
-		list(, $domain) = explode('@', $email);
-
-		if (sizeof(explode('.', $domain)) <= 1) {
-			$domain = 'example.net';
-		}
-
-		return $domain;
+	public function faker() {
+		return _elgg_services()->faker;
 	}
 
 	/**
@@ -92,65 +53,60 @@ trait Seeding {
 	public function createUser(array $attributes = [], array $metadata = [], array $options = []) {
 
 		$create = function () use ($attributes, $metadata, $options) {
-			$metadata['__faker'] = true;
+			$defaults = [
+				'password' => $this->faker()->password(10),
+				'name' => $name = $this->faker()->name,
+				'username' => $username = $this->generateUsername($name),
+				'email' => $this->generateEmail($username),
+				'validated' => true,
+				'validation_method' => 'seeder',
+				'notification:method:email' => true,
+				'notification:method:site' => true,
+				'subtype' => null,
+				'access_id' => ACCESS_PUBLIC,
+				'owner_guid' => 0,
+				'container_guid' => 0,
+			];
 
-			if (empty($attributes['password'])) {
-				$attributes['password'] = generate_random_cleartext_password();
-			}
+			$fields = $this->fillProfileFields(elgg_extract('profile_fields', $options, []));
 
-			if (empty($attributes['name'])) {
-				$attributes['name'] = $this->faker()->name;
-			}
+			$data = array_merge($defaults, $fields, $metadata, $attributes);
+			$data['__faker'] = true;
 
-			if (empty($attributes['username'])) {
-				$attributes['username'] = $this->getRandomUsername($attributes['name']);
-			}
-
-			if (empty($attributes['email'])) {
-				$attributes['email'] = "{$attributes['username']}@{$this->getEmailDomain()}";
-			}
-
-			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = null;
-			}
+			$admin = elgg_extract('admin', $data);
+			$banned = elgg_extract('banned', $data);
+			unset($data['admin']);
+			unset($data['banned']);
 
 			$user = false;
 
 			try {
-				$guid = register_user($attributes['username'], $attributes['password'], $attributes['name'], $attributes['email'], false, $attributes['subtype']);
-				$user = get_entity($guid);
-				/* @var $user ElggUser */
-
-				if (!$user) {
-					throw new Exception("Unable to create new user with attributes: " . print_r($attributes, true));
+				$class = get_subtype_class('user', $data['subtype']);
+				if ($class && class_exists($class)) {
+					$user = new $class();
+				} else {
+					$user = new ElggUser();
 				}
 
-				if (isset($attributes['admin'])) {
-					if ($attributes['admin']) {
-						$user->makeAdmin();
+				foreach ($data as $key => $value) {
+					if (is_callable($value)) {
+						$user->$key = call_user_func($value, $user);
 					} else {
-						$user->removeAdmin();
+						$user->$key = $value;
 					}
 				}
 
-				if (isset($attributes['banned'])) {
-					if ($attributes['banned']) {
-						$user->ban('Banned by seeder');
-					} else {
-						$user->unban('Unbanned by seeder');
-					}
+				if (!$user->save()) {
+					throw new \RegistrationException("Can not save user");
 				}
 
-				elgg_set_user_validation_status($guid, $this->faker()->boolean(), 'seeder');
+				if ($admin == 'yes') {
+					$user->makeAdmin();
+				}
 
-				$user->setNotificationSetting('email', false);
-				$user->setNotificationSetting('site', true);
-
-				$profile_fields = elgg_extract('profile_fields', $options, []);
-
-				$user = $this->populateMetadata($user, $profile_fields, $metadata);
-
-				$user->save();
+				if ($banned == 'yes') {
+					$user->ban();
+				}
 
 				$this->log("Created new user $user->name [guid: $user->guid]");
 
@@ -160,8 +116,8 @@ trait Seeding {
 					$user->delete();
 				}
 
-				$attr_log = print_r($attributes, true);
-				$this->log("User creation failed with message {$e->getMessage()} [attributes: $attr_log]");
+				$attr_log = print_r($data, true);
+				$this->log("User creation failed with message {$e->getMessage()} [data: $attr_log]");
 
 				return false;
 			}
@@ -192,53 +148,20 @@ trait Seeding {
 	public function createGroup(array $attributes = [], array $metadata = [], array $options = []) {
 
 		$create = function () use ($attributes, $metadata, $options) {
-			$metadata['__faker'] = true;
 
-			if (empty($attributes['access_id'])) {
-				$attributes['access_id'] = ACCESS_PUBLIC;
-			}
+			$defaults = [
+				'access_id' => ACCESS_PUBLIC,
+				'content_access_mode' => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+				'membership' => ACCESS_PUBLIC,
+				'name' => trim($this->faker()->sentence(), '.'),
+				'description' => $this->faker()->text($this->faker()->numberBetween(500, 1000)),
+				'owner_guid' => $owner_guid = $this->getValidOwnerGuid(),
+				'container_guid' => $owner_guid,
+				'featured_group' => $this->faker()->boolean(20) ? 'yes' : 'no',
+				'subtype' => null,
+			];
 
-			if (empty($metadata['content_access_mode'])) {
-				$metadata['content_access_mode'] = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
-			}
-
-			if (empty($metadata['membership'])) {
-				$metadata['membership'] = ACCESS_PUBLIC;
-			}
-
-			if (empty($attributes['name'])) {
-				$attributes['name'] = $this->faker()->sentence();
-			}
-
-			if (empty($attributes['description'])) {
-				$attributes['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
-			}
-
-			if (empty($attributes['owner_guid'])) {
-				$user = elgg_get_logged_in_user_entity();
-				if (!$user) {
-					$user = $this->getRandomUser();
-				}
-				if (!$user) {
-					$user = $this->createUser();
-				}
-
-				$attributes['owner_guid'] = $user->guid;
-			}
-
-			if (empty($attributes['container_guid'])) {
-				$attributes['container_guid'] = $attributes['owner_guid'];
-			}
-
-			$owner = get_entity($attributes['owner_guid']);
-			if (!$owner) {
-				return false;
-			}
-
-			$container = get_entity($attributes['container_guid']);
-			if (!$container) {
-				return false;
-			}
+			$fields = $this->fillProfileFields(elgg_extract('profile_fields', $options, []));
 
 			$tool_options = elgg_extract('group_tools_options', $options, []);
 			if ($tool_options) {
@@ -249,34 +172,37 @@ trait Seeding {
 				}
 			}
 
-			if ($this->faker()->boolean(20)) {
-				$metadata['featured_group'] = 'yes';
+			$data = array_merge($defaults, $fields, $metadata, $attributes);
+			$data['__faker'] = true;
+
+			$class = get_subtype_class('group', $data['subtype']);
+			if ($class && class_exists($class)) {
+				$group = new $class();
+			} else {
+				$group = new ElggGroup();
 			}
 
-			$group = new ElggGroup();
-			foreach ($attributes as $name => $value) {
-				$group->$name = $value;
+			foreach ($data as $key => $value) {
+				if (is_callable($value)) {
+					$group->$key = call_user_func($value, $group);
+				} else {
+					$group->$key = $value;
+				}
 			}
 
-			$profile_fields = $profile_fields = elgg_extract('profile_fields', $options, []);
-			$group = $this->populateMetadata($group, $profile_fields, $metadata);
-
-			$group->save();
+			if (!$group->save()) {
+				return false;
+			}
 
 			if ($group->access_id == ACCESS_PRIVATE) {
 				$group->access_id = $group->group_acl;
 				$group->save();
 			}
 
-			$group->join(get_entity($attributes['owner_guid']));
-
-			elgg_create_river_item([
-				'view' => 'river/group/create',
-				'action_type' => 'create',
-				'subject_guid' => $owner->guid,
-				'object_guid' => $group->guid,
-				'target_guid' => $container->guid,
-			]);
+			$owner = $group->getOwnerEntity();
+			if ($owner) {
+				$group->join($owner);
+			}
 
 			$this->log("Created new group $group->name [guid: $group->guid]");
 
@@ -307,72 +233,42 @@ trait Seeding {
 	public function createObject(array $attributes = [], array $metadata = [], array $options = []) {
 
 		$create = function () use ($attributes, $metadata, $options) {
-			$metadata['__faker'] = true;
 
-			if (empty($attributes['title'])) {
-				$attributes['title'] = $this->faker()->sentence();
-			}
+			$defaults = [
+				'access_id' => ACCESS_PUBLIC,
+				'subtype' => $this->getRandomSubtype(),
+				'title' => trim($this->faker()->sentence(), '.'),
+				'description' => $this->faker()->text($this->faker()->numberBetween(500, 1000)),
+				'owner_guid' => $owner_guid = $this->getValidOwnerGuid(),
+				'container_guid' => $owner_guid,
+				'tags' => $this->faker()->words(10),
+			];
 
-			if (empty($attributes['description'])) {
-				$attributes['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
-			}
+			$fields = $this->fillProfileFields(elgg_extract('profile_fields', $options, []));
 
-			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = $this->getRandomSubtype();
-			}
+			$data = array_merge($defaults, $fields, $metadata, $attributes);
+			$data['__faker'] = true;
 
-			if (empty($metadata['tags'])) {
-				$metadata['tags'] = $this->faker()->words(10);
-			}
-
-			if (empty($attributes['container_guid'])) {
-				$container = elgg_get_logged_in_user_entity();
-				if (!$container) {
-					$container = $this->getRandomUser();
-				}
-				if (!$container) {
-					$container = $this->createUser();
-				}
-
-				$attributes['container_guid'] = $container->guid;
-			}
-
-			$container = get_entity($attributes['container_guid']);
-			if (!$container) {
-				return false;
-			}
-
-			if (empty($attributes['owner_guid'])) {
-				$owner = $container;
-				$attributes['owner_guid'] = $owner->guid;
-			}
-
-			$owner = get_entity($attributes['owner_guid']);
-			if (!$owner) {
-				return false;
-			}
-
-			if (!isset($attributes['access_id'])) {
-				$attributes['access_id'] = ACCESS_PUBLIC;
-			}
-
-			$class = get_subtype_class('object', $attributes['subtype']);
+			$class = get_subtype_class('object', $data['subtype']);
 			if ($class && class_exists($class)) {
 				$object = new $class();
 			} else {
 				$object = new ElggObject();
 			}
-			foreach ($attributes as $name => $value) {
-				$object->$name = $value;
+
+			foreach ($data as $key => $value) {
+				if (is_callable($value)) {
+					$object->$key = call_user_func($value, $object);
+				} else {
+					$object->$key = $value;
+				}
 			}
 
-			$profile_fields = elgg_extract('profile_fields', $options, []);
-			$object = $this->populateMetadata($object, $profile_fields, $metadata);
-
-			$object->save();
+			if (!$object->save()) {
+				return false;
+			}
 
 			$type_str = elgg_echo("item:object:{$object->getSubtype()}");
-
 			$this->log("Created new item in $type_str $object->title [guid: $object->guid]");
 
 			return $object;
@@ -405,21 +301,40 @@ trait Seeding {
 	}
 
 	/**
-	 * Returns random fake user
-	 *
-	 * @param int[] $exclude GUIDs to exclude
-	 *
-	 * @return ElggUser|false
+	 * Returns random GUID for owner
+	 * @return int
 	 */
-	public function getRandomUser(array $exclude = []) {
+	public function getValidOwnerGuid() {
+		if (elgg_is_logged_in()) {
+			return elgg_get_logged_in_user_guid();
+		}
 
+		$random = $this->getRandomUser();
+		if ($random) {
+			return $random->guid;
+		}
+
+		$new = $this->createUser();
+
+		return $new->guid;
+	}
+
+	/**
+	 * Returns random fake entity
+	 *
+	 * @param mixed $type    Entity types
+	 * @param array $exclude Entities to exclude
+	 *
+	 * @return bool|ElggEntity
+	 */
+	public function getRandomEntity($type = null, array $exclude = []) {
 		$exclude[] = 0;
 		$exclude_in = implode(',', array_map(function ($e) {
 			return (int) $e;
 		}, $exclude));
 
-		$users = elgg_get_entities_from_metadata([
-			'types' => 'user',
+		$entities = elgg_get_entities_from_metadata([
+			'types' => $type,
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
 			'wheres' => [
@@ -428,7 +343,19 @@ trait Seeding {
 			'order_by' => 'RAND()',
 		]);
 
-		return $users ? $users[0] : false;
+		return $entities ? $entities[0] : false;
+	}
+
+	/**
+	 * Returns random fake user
+	 *
+	 * @param int[] $exclude GUIDs to exclude
+	 *
+	 * @return ElggUser|false
+	 */
+	public function getRandomUser(array $exclude = []) {
+		return $this->getRandomEntity('user', $exclude);
+
 	}
 
 	/**
@@ -439,23 +366,7 @@ trait Seeding {
 	 * @return ElggGroup|false
 	 */
 	public function getRandomGroup(array $exclude = []) {
-
-		$exclude[] = 0;
-		$exclude_in = implode(',', array_map(function ($e) {
-			return (int) $e;
-		}, $exclude));
-
-		$groups = elgg_get_entities_from_metadata([
-			'types' => 'group',
-			'metadata_names' => ['__faker'],
-			'limit' => 1,
-			'wheres' => [
-				"e.guid NOT IN ($exclude_in)",
-			],
-			'order_by' => 'RAND()',
-		]);
-
-		return $groups ? $groups[0] : false;
+		return $this->getRandomEntity('group', $exclude);
 	}
 
 	/**
@@ -486,7 +397,7 @@ trait Seeding {
 	 *
 	 * @return string
 	 */
-	public function getRandomUsername($base_name = 'user') {
+	public function generateUsername($base_name = 'user') {
 
 		$available = false;
 
@@ -526,32 +437,16 @@ trait Seeding {
 
 		$base_name = preg_replace($blacklist, '', $base_name);
 		$base_name = str_replace($blacklist2, '', $base_name);
-		$base_name = str_replace('.', '_', $base_name);
+		$base_name = str_replace('.', '', $base_name);
 
 		$ia = elgg_set_ignore_access(true);
 
 		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 
-		$minlength = elgg_get_config('minusername') ? : 8;
-		if ($base_name) {
-			$fill = $minlength - strlen($base_name);
-		} else {
-			$fill = 8;
-		}
-
-		$separator = '';
-
-		if ($fill > 0) {
-			$suffix = (new \ElggCrypto())->getRandomString($fill);
-			$base_name = "$base_name$separator$suffix";
-		}
-
-		$iterator = 0;
 		while (!$available) {
-			if ($iterator > 0) {
-				$base_name = "$base_name$separator$iterator";
-			}
+			$suffix = (new \ElggCrypto())->getRandomString(4);
+			$base_name .= $suffix;
 			$user = get_user_by_username($base_name);
 			$available = !$user;
 			try {
@@ -559,13 +454,8 @@ trait Seeding {
 					validate_username($base_name);
 				}
 			} catch (\Exception $e) {
-				if ($iterator >= 10) {
-					// too many failed attempts
-					$base_name = (new \ElggCrypto())->getRandomString(8);
-				}
+				// Do nothing
 			}
-
-			$iterator++;
 		}
 
 		access_show_hidden_entities($ha);
@@ -575,87 +465,91 @@ trait Seeding {
 	}
 
 	/**
-	 * Set random metadata
+	 * Generate an email from username
 	 *
-	 * @param ElggEntity $entity   Entity
-	 * @param array      $fields   An array of profile fields in $name => $input_type format
-	 * @param array      $metadata Other metadata $name => $value pairs to set
+	 * @param string $username Username
 	 *
-	 * @return ElggEntity
+	 * @return string
 	 */
-	public function populateMetadata(ElggEntity $entity, array $fields = [], array $metadata = []) {
+	public function generateEmail($username) {
+		return "{$username}@{$this->faker()->domainName}";
+	}
+
+	/**
+	 * Populate fields with random data
+	 *
+	 * @param array $fields An array of profile fields in $name => $input_type format
+	 *
+	 * @return array
+	 */
+	public function fillProfileFields($fields = []) {
+
+		$data = [];
+
+		if (empty($fields)) {
+			return $data;
+		}
 
 		foreach ($fields as $name => $type) {
-			if (isset($metadata[$name])) {
-				continue;
-			}
+			if (in_array($name, [
+				'phone',
+				'mobile'
+			])) {
+				$data[$name] = $this->faker()->phoneNumber;
+			} else {
+				switch ($type) {
+					case 'plaintext' :
+					case 'longtext' :
+						$data[$name] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
+						break;
 
-			switch ($name) {
-				case 'phone' :
-				case 'mobile' :
-					$metadata[$name] = $this->faker()->phoneNumber;
-					break;
+					case 'text' :
+						$data[$name] = $this->faker()->sentence;
+						break;
 
-				default :
-					switch ($type) {
-						case 'plaintext' :
-						case 'longtext' :
-							$metadata[$name] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
-							break;
+					case 'tags' :
+						$data[$name] = $this->faker()->words(10);
+						break;
 
-						case 'text' :
-							$metadata[$name] = $this->faker()->sentence;
-							break;
+					case 'url' :
+						$data[$name] = $this->faker()->url;
 
-						case 'tags' :
-							$metadata[$name] = $this->faker()->words(10);
-							break;
+					case 'email' :
+						$data[$name] = $this->faker()->email;
+						break;
 
-						case 'url' :
-							$metadata[$name] = $this->faker()->url;
+					case 'number' :
+						$data[$name] = $this->faker()->randomNumber();
+						break;
 
-						case 'email' :
-							$metadata[$name] = $this->faker()->email;
-							break;
+					case 'date' :
+						$data[$name] = $this->faker()->unixTime;
+						break;
 
-						case 'number' :
-							$metadata[$name] = $this->faker()->randomNumber();
-							break;
+					case 'password' :
+						$data[$name] = generate_random_cleartext_password();
+						break;
 
-						case 'date' :
-							$metadata[$name] = $this->faker()->unixTime;
-							break;
+					case 'location' :
+						$data[$name] = $this->faker()->address;
+						$data['geo:lat'] = $this->faker()->latitude;
+						$data['geo:long'] = $this->faker()->longitude;
+						break;
 
-						case 'password' :
-							$metadata[$name] = generate_random_cleartext_password();
-							break;
+					case 'email' :
+						$data[$name] = $this->faker()->address;
+						$data['geo:lat'] = $this->faker()->latitude;
+						$data['geo:long'] = $this->faker()->longitude;
+						break;
 
-						case 'location' :
-							$metadata[$name] = $this->faker()->address;
-							$metadata['geo:lat'] = $this->faker()->latitude;
-							$metadata['geo:long'] = $this->faker()->longitude;
-							break;
-
-						case 'email' :
-							$metadata[$name] = $this->faker()->address;
-							$metadata['geo:lat'] = $this->faker()->latitude;
-							$metadata['geo:long'] = $this->faker()->longitude;
-							break;
-
-						default :
-							$metadata[$name] = '';
-							break;
-					}
-
-					break;
+					default :
+						$data[$name] = '';
+						break;
+				}
 			}
 		}
 
-		foreach ($metadata as $key => $value) {
-			$entity->$key = $value;
-		}
-
-		return $entity;
+		return $data;
 	}
 
 	/**

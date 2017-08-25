@@ -340,7 +340,7 @@ function get_metadata_url($id) {
  * @todo not used
  */
 function _elgg_invalidate_metadata_cache($action, array $options) {
-	_elgg_services()->metadataCache->invalidateByOptions($options);
+	elgg_get_session()->metadataCache->invalidateByOptions($options);
 }
 
 /**

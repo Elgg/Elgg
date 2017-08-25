@@ -45,7 +45,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertIsA($subtype_prop, 'int');
 		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
 
-		_elgg_services()->entityCache->remove($guid);
+		elgg_get_session()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
@@ -137,7 +137,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
 
-		_elgg_services()->entityCache->remove($guid);
+		elgg_get_session()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
@@ -529,7 +529,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 	public function testNewUserLoadedFromCacheDuringSaveOperations() {
 
 		$user = new ElggUser();
-		$user->username = $this->getRandomUsername();
+		$user->username = $this->generateUsername();
 
 		// Add temporary metadata, annotation and private settings
 		// to extend the scope of tests and catch issues with save operations

@@ -156,6 +156,12 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``profile_pagesetup``
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
+ * ``ban_user``: Use ``ElggUser::ban()``
+ * ``unban_user``: Use ``ElggUser::unban()``
+ * ``make_user_admin``: Use ``ElggUser::makeAdmin()``
+ * ``remove_user_admin``: Use ``ElggUser::removeAdmin()``
+ * ``set_last_login``: Use ``ElggUser::setLastLogin()``
+ * ``set_last_action``: Use ``ElggUser::updateLastAction()``
 
 Removed global vars
 -------------------

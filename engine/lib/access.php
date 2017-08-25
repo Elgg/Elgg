@@ -44,7 +44,7 @@ use Elgg\Project\Paths;
  * @see elgg_get_ignore_access()
  */
 function elgg_set_ignore_access($ignore = true) {
-	return _elgg_services()->session->setIgnoreAccess($ignore);
+	return elgg_get_session()->setIgnoreAccess($ignore);
 }
 
 /**
@@ -55,7 +55,7 @@ function elgg_set_ignore_access($ignore = true) {
  * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
-	return _elgg_services()->session->getIgnoreAccess();
+	return elgg_get_session()->getIgnoreAccess();
 }
 
 /**
@@ -124,7 +124,7 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
 
 	// user default access if enabled
 	if (_elgg_config()->allow_user_default_access) {
-		$user = $user ? $user : _elgg_services()->session->getLoggedInUser();
+		$user = $user ? $user : elgg_get_session()->getLoggedInUser();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
 			if ($user_access !== null) {

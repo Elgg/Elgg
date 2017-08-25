@@ -69,15 +69,13 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	private $response_factory;
 
 	public function up() {
-		$this->session = ElggSession::getMock();
-		$this->session->start();
-
+		$this->session = elgg_get_session();
 		$this->config = _elgg_config();
 		$this->hooks = new PluginHooksService();
 		$this->input = new Input();
 		$this->request = $this->createRequest('', 'GET');
 		$this->amd_config = new Config($this->hooks);
-		$this->system_messages = new SystemMessagesService($this->session);
+		$this->system_messages = new SystemMessagesService();
 		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
 
 		_elgg_services()->logger->disable();

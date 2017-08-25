@@ -36,9 +36,6 @@ class NotificationsService {
 	/** @var PluginHooksService */
 	protected $hooks;
 
-	/** @var ElggSession */
-	protected $session;
-
 	/** @var Translator */
 	protected $translator;
 
@@ -74,7 +71,6 @@ class NotificationsService {
 	public function __construct(
 			SubscriptionsService $subscriptions,
 			Queue $queue, PluginHooksService $hooks,
-			ElggSession $session,
 			Translator $translator,
 			EntityTable $entities,
 			Logger $logger) {
@@ -82,7 +78,6 @@ class NotificationsService {
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
-		$this->session = $session;
 		$this->translator = $translator;
 		$this->entities = $entities;
 		$this->logger = $logger;
@@ -210,7 +205,7 @@ class NotificationsService {
 
 		// @todo grab mutex
 
-		$ia = $this->session->setIgnoreAccess(true);
+		$ia = elgg_get_session()->setIgnoreAccess(true);
 
 		while (time() < $stopTime) {
 			// dequeue notification event
@@ -248,7 +243,7 @@ class NotificationsService {
 
 		// release mutex
 
-		$this->session->setIgnoreAccess($ia);
+		elgg_get_session()->setIgnoreAccess($ia);
 
 		return $matrix ? $delivery_matrix : $count;
 	}

@@ -19,25 +19,17 @@ class MetadataCache {
 	protected $values = [];
 
 	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
 	 * @var ElggSharedMemoryCache
 	 */
-	protected $cache;
+	protected $persisted_cache;
 
 	/**
 	 * Constructor
 	 *
 	 * @param ElggSharedMemoryCache $cache Cache
 	 */
-	public function __construct(ElggSharedMemoryCache $cache = null) {
-		if (!$cache) {
-			$cache = new NullCache();
-		}
-		$this->cache = $cache;
+	public function __construct(ElggSharedMemoryCache $cache) {
+		$this->persisted_cache = $cache;
 	}
 
 	/**
@@ -85,7 +77,7 @@ class MetadataCache {
 	 */
 	public function clear($entity_guid) {
 		unset($this->values[$entity_guid]);
-		$this->cache->delete($entity_guid);
+		$this->persisted_cache->delete($entity_guid);
 	}
 
 	/**
@@ -105,7 +97,7 @@ class MetadataCache {
 	 */
 	public function clearAll() {
 		foreach (array_keys($this->values) as $guid) {
-			$this->cache->delete($guid);
+			$this->persisted_cache->delete($guid);
 		}
 		$this->values = [];
 	}
@@ -148,7 +140,7 @@ class MetadataCache {
 		$guids = array_unique($guids);
 
 		foreach ($guids as $i => $guid) {
-			$value = $this->cache->load($guid);
+			$value = $this->persisted_cache->load($guid);
 			if ($value !== false) {
 				$this->values[$guid] = unserialize($value);
 				unset($guids[$i]);
@@ -202,7 +194,7 @@ class MetadataCache {
 		}
 
 		foreach ($guids as $guid) {
-			$this->cache->save($guid, serialize($this->values[$guid]));
+			$this->persisted_cache->save($guid, serialize($this->values[$guid]));
 		}
 	}
 

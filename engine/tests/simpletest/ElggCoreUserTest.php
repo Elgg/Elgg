@@ -9,7 +9,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 
 	public function up() {
 		$this->user = new \ElggUserWithExposableAttributes();
-		$this->user->username = $this->getRandomUsername();
+		$this->user->username = $this->generateUsername();
 	}
 
 	public function down() {

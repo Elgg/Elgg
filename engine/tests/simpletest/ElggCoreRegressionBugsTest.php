@@ -114,9 +114,9 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'owner_guid' => $group_owner->guid,
 		]);
 
-		$logged_in = _elgg_services()->session->getLoggedInUser();
+		$logged_in = elgg_get_session()->getLoggedInUser();
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		_elgg_services()->logger->disable();
 
@@ -139,7 +139,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 		_elgg_services()->logger->enable();
 
-		_elgg_services()->session->setLoggedInUser($logged_in);
+		elgg_get_session()->setLoggedInUser($logged_in);
 
 		$user->delete();
 		$owner->delete();
@@ -410,7 +410,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			'handleUpdateForIssue6225test'
 		]);
 
-		_elgg_services()->entityCache->remove($guid);
+		elgg_get_session()->entityCache->remove($guid);
 		$object = get_entity($guid);
 		$this->assertEqual($object->access_id, ACCESS_PRIVATE);
 

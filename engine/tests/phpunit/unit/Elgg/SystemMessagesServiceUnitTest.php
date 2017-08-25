@@ -18,8 +18,7 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 	protected $session;
 
 	public function up() {
-		$this->session = \ElggSession::getMock();
-		$this->svc = new SystemMessagesService($this->session);
+		$this->svc = new SystemMessagesService();
 	}
 
 	public function down() {
@@ -44,7 +43,7 @@ class SystemMessagesServiceUnitTest extends \Elgg\UnitTestCase {
 	function testMessagesStoredInSession() {
 		$this->svc->addSuccessMessage('s1');
 
-		$this->assertEquals(['success' => ['s1']], $this->session->get(SystemMessagesService::SESSION_KEY));
+		$this->assertEquals(['success' => ['s1']], elgg_get_session()->get(SystemMessagesService::SESSION_KEY));
 	}
 
 	function testCanDumpOneRegister() {

@@ -16,12 +16,12 @@ class ElggCoreAccessSQLTest extends LegacyIntegrationTestCase {
 
 	public function up() {
 		$this->user = $this->createOne('user');
-		_elgg_services()->session->setLoggedInUser($this->user);
+		elgg_get_session()->setLoggedInUser($this->user);
 		_elgg_services()->hooks->backup();
 	}
 
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 		$this->user->delete();
 		_elgg_services()->hooks->restore();
 	}
@@ -99,8 +99,8 @@ class ElggCoreAccessSQLTest extends LegacyIntegrationTestCase {
 
 	public function testCanBuildAccessSqlForLoggedOutUser() {
 
-		$user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->removeLoggedInUser();
+		$user = elgg_get_session()->getLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$sql = _elgg_get_access_where_sql();
 		$access_clause = $this->getLoggedOutAccessListClause('e');
@@ -108,7 +108,7 @@ class ElggCoreAccessSQLTest extends LegacyIntegrationTestCase {
 
 		$this->assertSqlEqual($ans, $sql, "$sql does not match $ans");
 
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 	}
 
 	public function testAccessPluginHookRemoveEnabled() {

@@ -9,8 +9,6 @@ use Elgg\I18n\Translator;
 use Elgg\PluginHooksService;
 use Elgg\UserCapabilities;
 use ElggEntity;
-use ElggSession;
-use ElggStaticVariableCache;
 use ElggUser;
 
 /**
@@ -23,7 +21,7 @@ use ElggUser;
  * @since      1.10.0
  */
 class AccessCollections {
-
+	
 	/**
 	 * @var Conf
 	 */
@@ -33,21 +31,11 @@ class AccessCollections {
 	 * @var Database
 	 */
 	protected $db;
-
-	/**
-	 * @vars \ElggStateVariableCache
-	 */
-	protected $access_cache;
-
+	
 	/**
 	 * @var PluginHooksService
 	 */
 	protected $hooks;
-
-	/**
-	 * @var ElggSession
-	 */
-	protected $session;
 
 	/**
 	 * @var EntityTable
@@ -86,9 +74,7 @@ class AccessCollections {
 	 * @param Database                $db           Database
 	 * @param EntityTable             $entities     Entity table
 	 * @param UserCapabilities        $capabilities User capabilities
-	 * @param ElggStaticVariableCache $cache        Access cache
 	 * @param PluginHooksService      $hooks        Hooks
-	 * @param ElggSession             $session      Session
 	 * @param Translator              $translator   Translator
 	 */
 	public function __construct(
@@ -96,17 +82,13 @@ class AccessCollections {
 			Database $db,
 			EntityTable $entities,
 			UserCapabilities $capabilities,
-			ElggStaticVariableCache $cache,
 			PluginHooksService $hooks,
-			ElggSession $session,
 			Translator $translator) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->entities = $entities;
 		$this->capabilities = $capabilities;
-		$this->access_cache = $cache;
 		$this->hooks = $hooks;
-		$this->session = $session;
 		$this->translator = $translator;
 
 		$this->table = "{$this->db->prefix}access_collections";
@@ -141,7 +123,7 @@ class AccessCollections {
 
 		// for BC, populate the cache
 		$hash = $user_guid . 'get_access_list';
-		$this->access_cache->add($hash, $list);
+		elgg_get_session()->accessCache->add($hash, $list);
 
 		return $list;
 	}
@@ -171,14 +153,14 @@ class AccessCollections {
 	 * @return array An array of access collections ids
 	 */
 	public function getAccessArray($user_guid = 0, $flush = false) {
-		$cache = $this->access_cache;
+		$cache = elgg_get_session()->accessCache;
 
 		if ($flush) {
 			$cache->clear();
 		}
 
 		if ($user_guid == 0) {
-			$user_guid = $this->session->getLoggedInUserGuid();
+			$user_guid = elgg_get_session()->getLoggedInUserGuid();
 		}
 
 		$user_guid = (int) $user_guid;
@@ -280,7 +262,7 @@ class AccessCollections {
 
 		$defaults = [
 			'table_alias' => 'e',
-			'user_guid' => $this->session->getLoggedInUserGuid(),
+			'user_guid' => elgg_get_session()->getLoggedInUserGuid(),
 			'use_enabled_clause' => !access_get_show_hidden_status(),
 			'access_column' => 'access_id',
 			'owner_guid_column' => 'owner_guid',
@@ -405,11 +387,7 @@ class AccessCollections {
 		}
 
 		// See #7159. Must not allow ignore access to affect query
-		$ia = elgg_set_ignore_access(false);
-
-		$row = $this->entities->getRow($entity->guid, $user_guid);
-
-		elgg_set_ignore_access($ia);
+		$row = $this->entities->getRow($entity->guid, $user_guid, false);
 
 		return !empty($row);
 	}
@@ -440,14 +418,14 @@ class AccessCollections {
 	 * @return array List of access permissions
 	 */
 	public function getWriteAccessArray($user_guid = 0, $flush = false, array $input_params = []) {
-		$cache = $this->access_cache;
+		$cache = elgg_get_session()->accessCache;
 
 		if ($flush) {
 			$cache->clear();
 		}
 
 		if ($user_guid == 0) {
-			$user_guid = $this->session->getLoggedInUserGuid();
+			$user_guid = elgg_get_session()->getLoggedInUserGuid();
 		}
 
 		$user_guid = (int) $user_guid;
@@ -541,7 +519,7 @@ class AccessCollections {
 		}
 
 		if ($owner_guid == 0) {
-			$owner_guid = $this->session->getLoggedInUserGuid();
+			$owner_guid = elgg_get_session()->getLoggedInUserGuid();
 		}
 
 		$query = "
@@ -560,7 +538,7 @@ class AccessCollections {
 			return false;
 		}
 
-		$this->access_cache->clear();
+		elgg_get_session()->accessCache->clear();
 
 		$hook_params = [
 			'collection_id' => $id,
@@ -597,7 +575,7 @@ class AccessCollections {
 		];
 
 		if ($this->db->insertData($query, $params)) {
-			$this->access_cache->clear();
+			elgg_get_session()->accessCache->clear();
 			return (int) $collection_id;
 		}
 
@@ -661,7 +639,7 @@ class AccessCollections {
 			$result = $result && $this->removeUser($guid, $collection_id);
 		}
 
-		$this->access_cache->clear();
+		elgg_get_session()->accessCache->clear();
 
 		return $result;
 	}
@@ -700,7 +678,7 @@ class AccessCollections {
 			':id' => $collection_id,
 		]);
 
-		$this->access_cache->clear();
+		elgg_get_session()->accessCache->clear();
 		
 		return (bool) $result;
 	}
@@ -799,7 +777,7 @@ class AccessCollections {
 			':user_guid' => (int) $user_guid,
 		]);
 
-		$this->access_cache->clear();
+		elgg_get_session()->accessCache->clear();
 		
 		return $result !== false;
 	}
@@ -830,7 +808,7 @@ class AccessCollections {
 				AND user_guid = :user_guid
 		";
 
-		$this->access_cache->clear();
+		elgg_get_session()->accessCache->clear();
 
 		return (bool) $this->db->deleteData($query, [
 			':access_collection_id' => (int) $collection_id,
@@ -941,7 +919,7 @@ class AccessCollections {
 		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
-		$user_guid = $this->session->getLoggedInUserGuid();
+		$user_guid = elgg_get_session()->getLoggedInUserGuid();
 		
 		if (!$collection || !$user_guid) {
 			// return 'Limited' if there is no logged in user or collection can not be loaded

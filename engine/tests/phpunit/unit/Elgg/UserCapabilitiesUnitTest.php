@@ -2,12 +2,10 @@
 
 namespace Elgg;
 
-use Elgg\Database\EntityTable;
 use ElggAnnotation;
 use ElggEntity;
 use ElggMetadata;
 use ElggObject;
-use ElggSession;
 use ElggUser;
 use InvalidArgumentException;
 

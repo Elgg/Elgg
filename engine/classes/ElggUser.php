@@ -6,8 +6,8 @@
  * @property      string $username         The short, reference name for the user in the network
  * @property      string $email            The email address to which Elgg will send email notifications
  * @property      string $language         The language preference of the user (ISO 639-1 formatted)
- * @property      string $banned           'yes' if the user is banned from the network, 'no' otherwise
- * @property      string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property-read string $banned           'yes' if the user is banned from the network, 'no' otherwise
+ * @property-read string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
  * @property-read string $password         The legacy (salted MD5) password hash of the user
  * @property-read string $salt             The salt used to create the legacy password hash
  * @property-read string $password_hash    The hashed password of the user
@@ -56,11 +56,14 @@ class ElggUser extends \ElggEntity
 			case 'prev_last_action':
 			case 'last_login':
 			case 'prev_last_login':
-				if ($value !== null) {
-					$this->attributes[$name] = (int) $value;
-				} else {
-					$this->attributes[$name] = null;
-				}
+			case 'admin' :
+			case 'banned' :
+				// These secondary attributes will not be written to the database when set via a magic method,
+				// because they are not allowed secondary table columns
+				// They can be updated only via corresponding class methods
+				// Populating these entities via __set will lead to discrepancies between a database rows
+				// and loaded entity attributes
+				_elgg_services()->logger->error("User attribute '$name' can not be set on a user entity via __set. Use a corresponding class method instead.");
 				break;
 
 			case 'salt':
@@ -83,7 +86,6 @@ class ElggUser extends \ElggEntity
 	 * {@inheritdoc}
 	 */
 	public function getURL() {
-		
 		$result = parent::getURL();
 		if ($result !== '') {
 			return $result;
@@ -100,7 +102,17 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function ban($reason = "") {
-		return ban_user($this->guid, $reason);
+		if (!$this->guid || !$this->canEdit()) {
+			return false;
+		}
+
+		$result = _elgg_services()->usersTable->ban($this, $reason);
+		if ($result) {
+			$this->attributes['banned'] = 'yes';
+			elgg_get_session()->entityCache->set($this);
+		}
+
+		return $result;
 	}
 
 	/**
@@ -109,16 +121,25 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function unban() {
-		return unban_user($this->guid);
-	}
+		if (!$this->guid || !$this->canEdit()) {
+			return false;
+		}
 
+		$result = _elgg_services()->usersTable->unban($this);
+		if ($result) {
+			$this->attributes['banned'] = 'no';
+			elgg_get_session()->entityCache->set($this);
+		}
+
+		return $result;
+	}
 	/**
 	 * Is this user banned or not?
 	 *
 	 * @return bool
 	 */
 	public function isBanned() {
-		return $this->banned == 'yes';
+		return $this->attributes['banned'] == 'yes';
 	}
 
 	/**
@@ -141,20 +162,21 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function makeAdmin() {
-		
 		if ($this->isAdmin()) {
 			return true;
 		}
 
-		// If already saved, use the standard function.
-		if ($this->guid && !make_user_admin($this->guid)) {
+		if (!$this->guid || !$this->canEdit()) {
 			return false;
 		}
 
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'yes';
+		$result = _elgg_services()->usersTable->makeAdmin($this);
+		if ($result) {
+			$this->attributes['admin'] = 'yes';
+			elgg_get_session()->entityCache->set($this);
+		}
 
-		return true;
+		return $result;
 	}
 
 	/**
@@ -163,20 +185,21 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function removeAdmin() {
-
 		if (!$this->isAdmin()) {
 			return true;
 		}
 
-		// If already saved, use the standard function.
-		if ($this->guid && !remove_user_admin($this->guid)) {
+		if (!$this->guid || !$this->canEdit()) {
 			return false;
 		}
 
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'no';
+		$result = _elgg_services()->usersTable->removeAdmin($this);
+		if ($result) {
+			$this->attributes['admin'] = 'no';
+			elgg_get_session()->entityCache->set($this);
+		}
 
-		return true;
+		return $result;
 	}
 
 	/**
@@ -224,7 +247,7 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isFriend() {
-		return $this->isFriendOf(_elgg_services()->session->getLoggedInUserGuid());
+		return $this->isFriendOf(elgg_get_session()->getLoggedInUserGuid());
 	}
 
 	/**
@@ -401,5 +424,63 @@ class ElggUser extends \ElggEntity
 
 		return $settings;
 	
+	}
+
+	/**
+	 * Sets the last login time
+	 *
+	 * @param null $timestamp Last login time
+	 *                        Defaults to current time
+	 *
+	 * @return int
+	 */
+	public function setLastLogin($timestamp = null) {
+		if ($timestamp) {
+			$time = new DateTime();
+			$time->setTimestamp((int) $timestamp);
+		} else {
+			$time = $this->getCurrentTime();
+		}
+
+		$timestamp = _elgg_services()->usersTable->setLastLogin($this, $time);
+
+		$this->attributes['prev_last_login'] = $this->last_login;
+		$this->attributes['last_login'] = $timestamp;
+		elgg_get_session()->entityCache->set($this);
+
+		return $timestamp;
+	}
+
+	/**
+	 * Update last action time
+	 *
+	 * @warning last_action differs from time_updated
+	 *          While time_updated is set automatically on each update,
+	 *          last_action is only updated on demand
+	 *
+	 * @param null $timestamp Last action timestamp
+	 *                        Defaults to current time
+	 *
+	 * @return int|void
+	 */
+	public function updateLastAction($timestamp = null) {
+		if ($timestamp) {
+			$time = new DateTime();
+			$time->setTimestamp((int) $timestamp);
+		} else {
+			$time = $this->getCurrentTime();
+		}
+
+		if ($this->last_action == $time->getTimestamp()) {
+			return $this->last_action;
+		}
+
+		$timestamp = _elgg_services()->usersTable->setLastAction($this, $time);
+
+		$this->attributes['prev_last_action'] = $this->last_action;
+		$this->attributes['last_action'] = $timestamp;
+		elgg_get_session()->entityCache->set($this);
+
+		return $timestamp;
 	}
 }

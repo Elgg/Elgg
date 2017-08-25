@@ -10,7 +10,6 @@ use Elgg\UnitTestCase;
 use Elgg\Values;
 use ElggEntity;
 use ElggObject;
-use ElggSession;
 use Exception;
 
 abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
@@ -83,8 +82,6 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->subscriptions = new SubscriptionsService(_elgg_services()->db);
 
-		$this->session = _elgg_services()->session;
-
 		$this->logger = _elgg_services()->logger;
 
 		$this->translator = _elgg_services()->translator;
@@ -95,7 +92,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 	}
 
 	public function down() {
-		$this->session->invalidate();
+		elgg_get_session()->invalidate();
 		$this->events->restore();
 		$this->hooks->restore();
 	}
@@ -105,7 +102,6 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 			$this->subscriptions,
 			$this->queue,
 			$this->hooks,
-			$this->session,
 			$this->translator,
 			$this->entities,
 			$this->logger
@@ -142,6 +138,8 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$user = $this->actor;
 
+		elgg_get_session()->setLoggedInUser($this->actor);
+
 		$metadata_id = create_metadata($object->guid, 'test_metadata_name', 'test_metadata_value', 'text', $this->actor->guid);
 		$metadata = elgg_get_metadata_from_id($metadata_id);
 
@@ -150,6 +148,8 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		add_entity_relationship($object->guid, 'test_relationship', $user->guid);
 		$relationship = check_entity_relationship($object->guid, 'test_relationship', $user->guid);
+
+		elgg_get_session()->removeLoggedInUser();
 
 		return [
 			$object,
@@ -222,7 +222,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
@@ -240,7 +240,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$this->notifications->enqueueEvent('create', $object->getType(), new ElggObject());
 		$this->assertNull($this->queue->dequeue());
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testStoppingEnqueueEvent() {
@@ -256,14 +256,14 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype());
 
 		$this->notifications->enqueueEvent('create', $object->getType(), $object);
 		$this->assertNull($this->queue->dequeue());
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testProcessQueueNoEvents() {
@@ -284,7 +284,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), [
 			'event1',
@@ -296,7 +296,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
 		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$this->assertEquals(3, $this->notifications->processQueue($this->time + 10));
 	}
@@ -314,7 +314,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$object = $this->getTestObject();
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), [
 			'event1',
@@ -326,7 +326,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$this->notifications->enqueueEvent('event2', $object->getType(), $object);
 		$this->notifications->enqueueEvent('event3', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time));
 	}
@@ -365,7 +365,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 
@@ -374,7 +374,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$this->assertEquals(1, $call_count);
 		$this->assertEquals(0, $this->queue->size());
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
 	}
@@ -400,7 +400,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -429,7 +429,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 		$this->assertEquals(1, $this->queue->size());
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$this->assertEquals(1, $this->notifications->processQueue($this->time + 10));
 
@@ -457,7 +457,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -503,7 +503,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 			]
 		];
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$result = $this->notifications->processQueue($this->time + 10, true);
 		$this->assertEquals(1, $call_count);
@@ -532,7 +532,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -581,7 +581,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$this->notifications->processQueue($this->time + 10);
 
@@ -609,7 +609,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->subscriptions = $mock;
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$event = new SubscriptionNotificationEvent($object, 'test_event');
 
@@ -647,7 +647,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$this->assertEquals(1, $this->notifications->processQueue($this->time + 10));
 	}
@@ -670,14 +670,14 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
 		$object->delete();
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));
 	}
@@ -700,12 +700,12 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$this->notifications->registerMethod('test_method');
 
-		$this->session->setLoggedInUser($this->actor);
+		elgg_get_session()->setLoggedInUser($this->actor);
 
 		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['test_event']);
 		$this->notifications->enqueueEvent('test_event', $object->getType(), $object);
 
-		$this->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 		$actor->delete();
 
 		$this->assertEquals(0, $this->notifications->processQueue($this->time + 10));

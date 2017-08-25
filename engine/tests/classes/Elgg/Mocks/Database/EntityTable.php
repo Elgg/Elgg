@@ -147,7 +147,14 @@ class EntityTable extends DbEntityTable {
 
 			if (!isset($entity->$name) || $entity->$name != $value) {
 				// not an attribute, so needs to be set again
-				if ($name !== 'password_hash') {
+				if (!in_array($name, [
+					'password_hash',
+					'last_login',
+					'prev_last_login',
+					'prev_last_action',
+					'admin',
+					'banned',
+				])) {
 					$entity->$name = $value;
 				}
 			}
@@ -163,6 +170,18 @@ class EntityTable extends DbEntityTable {
 	public function iterate() {
 		$this->iterator++;
 		return $this->iterator;
+	}
+
+	/**
+	 * Clear specs and caches
+	 * @return void
+	 */
+	public function clearMocks() {
+		foreach ($this->rows as $row) {
+			// Make sure entity is removed from persisted cache
+			elgg_get_session()->entityCache->remove($row->guid);
+			$this->clearQuerySpecs($row->guid);
+		}
 	}
 
 	/**
@@ -223,7 +242,7 @@ class EntityTable extends DbEntityTable {
 			(int) $row->container_guid,
 			(int) elgg_get_logged_in_user_guid(),
 		]);
-		
+
 		$access_combinations = [];
 
 		foreach ($access_user_guids as $access_user_guid) {
@@ -258,7 +277,7 @@ class EntityTable extends DbEntityTable {
 		$access_queries = array_unique($access_queries);
 
 		foreach ($access_queries as $access) {
-			
+
 			$sql = "SELECT * FROM {$dbprefix}entities
 			WHERE guid = :guid AND $access";
 

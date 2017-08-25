@@ -13,7 +13,6 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 	protected $obj;
 
 	public function up() {
-		_elgg_services()->setValue('session', \ElggSession::getMock());
 		$this->obj = $this->getMockForAbstractClass('\ElggObject');
 		$reflection = new ReflectionClass('\ElggObject');
 		$method = $reflection->getMethod('initializeAttributes');

@@ -3,21 +3,16 @@
 namespace Elgg;
 
 use Doctrine\DBAL\Connection;
-use Elgg\Cache\Pool\InMemory as InMemoryCachePool;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
-use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Http\Request;
 use Elgg\Filesystem\Directory\Local;
 use ConfigurationException;
-use Elgg\Mocks\Di\MockServiceProvider;
 use Elgg\Project\Paths;
 use Exception;
 use InstallationException;
-use RuntimeException;
-use Zend\Mail\Transport\InMemory as InMemoryMailTransport;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -463,6 +458,11 @@ class Application {
 			}
 		}
 
+		if ($spec['handle_exceptions']) {
+			set_error_handler([Application::class, 'handleErrors']);
+			set_exception_handler([Application::class, 'handleExceptions']);
+		}
+
 		if (!$spec['service_provider']) {
 			if (!$spec['config']) {
 				$spec['config'] = Config::factory($spec['settings_path']);
@@ -479,11 +479,6 @@ class Application {
 		}
 
 		$app = new self($spec['service_provider']);
-
-		if ($spec['handle_exceptions']) {
-			set_error_handler([$app, 'handleErrors']);
-			set_exception_handler([$app, 'handleExceptions']);
-		}
 
 		if ($spec['handle_shutdown']) {
 			// we need to register for shutdown before Symfony registers the
@@ -792,31 +787,35 @@ class Application {
 	 * @return void
 	 * @access private
 	 */
-	public function handleExceptions($exception) {
+	public static function handleExceptions($exception) {
+		self::loadCore();
+
 		$timestamp = time();
 		error_log("Exception at time $timestamp: $exception");
 
 		// Wipe any existing output buffer
 		ob_end_clean();
 
+		if ($exception instanceof \InstallationException) {
+			self::install();
+			return;
+		}
+
 		// make sure the error isn't cached
 		header("Cache-Control: no-cache, must-revalidate", true);
 		header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
 
-		if ($exception instanceof \InstallationException) {
-			forward('/install.php');
-		}
-
 		if (!self::isCoreLoaded()) {
 			http_response_code(500);
 			echo "Exception loading Elgg core. Check log at time $timestamp";
+
 			return;
 		}
 
 		try {
 			// allow custom scripts to trigger on exception
 			// value in settings.php should be a system path to a file to include
-			$exception_include = $this->_services->config->exception_include;
+			$exception_include = Application::getInstance()->_services->config->exception_include;
 
 			if ($exception_include && is_file($exception_include)) {
 				ob_start();
@@ -888,7 +887,9 @@ class Application {
 	 * @throws \Exception
 	 * @access private
 	 */
-	public function handleErrors($errno, $errmsg, $filename, $linenum, $vars) {
+	public static function handleErrors($errno, $errmsg, $filename, $linenum, $vars) {
+		self::loadCore();
+
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 		$log = function ($message, $level) {
@@ -959,6 +960,7 @@ class Application {
 	 */
 	private static function getEngineLibs() {
 		return [
+			'constants.php',
 			'elgglib.php',
 			'access.php',
 			'actions.php',
@@ -967,7 +969,6 @@ class Application {
 			'cache.php',
 			'comments.php',
 			'configuration.php',
-			'constants.php',
 			'cron.php',
 			'database.php',
 			'deprecated-3.0.php',

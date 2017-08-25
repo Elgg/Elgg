@@ -2,18 +2,18 @@
 
 namespace Elgg\Database;
 
-use Elgg\Cache\EntityCache;
+use DateTime;
 use Elgg\Config as Conf;
 use Elgg\Database;
-use Elgg\Database\EntityTable;
-use Elgg\EventsService;
+use Elgg\PluginHooksService;
+use Elgg\TimeUsing;
 use ElggUser;
 use RegistrationException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @access     private
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -21,7 +21,7 @@ use RegistrationException;
  */
 class UsersTable {
 
-	use \Elgg\TimeUsing;
+	use TimeUsing;
 
 	/**
 	 * @var Conf
@@ -39,14 +39,9 @@ class UsersTable {
 	protected $entities;
 
 	/**
-	 * @var EntityCache
+	 * @var PluginHooksService
 	 */
-	protected $entity_cache;
-
-	/**
-	 * @var EventsService
-	 */
-	protected $events;
+	protected $hooks;
 
 	/**
 	 * @var string
@@ -59,18 +54,19 @@ class UsersTable {
 	 * @param Conf          $config   Config
 	 * @param Database      $db       Database
 	 * @param EntityTable   $entities Entity table
-	 * @param EntityCache   $cache    Entity cache
-	 * @param EventsService $events   Event service
+	 * @param PluginHooksService $hooks   Hooks service
 	 */
 	public function __construct(
-	Conf $config, Database $db, EntityTable $entities, EntityCache $cache, EventsService $events
+		Conf $config,
+		Database $db,
+		EntityTable $entities,
+		PluginHooksService $hooks
 	) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->table = $this->db->prefix . "users_entity";
 		$this->entities = $entities;
-		$this->entity_cache = $cache;
-		$this->events = $events;
+		$this->hooks = $hooks;
 	}
 
 	/**
@@ -89,6 +85,7 @@ class UsersTable {
 		$params = [
 			':guid' => $guid,
 		];
+
 		return $this->db->getDataRow($sql, null, $params);
 	}
 
@@ -96,6 +93,7 @@ class UsersTable {
 	 * Disables all of a user's entities
 	 *
 	 * @param int $owner_guid The owner GUID
+	 *
 	 * @return bool Depending on success
 	 * @deprecated 2.3
 	 */
@@ -106,28 +104,19 @@ class UsersTable {
 	/**
 	 * Ban a user (calls events, stores the reason)
 	 *
-	 * @param int    $user_guid The user guid
-	 * @param string $reason    A reason
+	 * @param ElggUser $user_guid User
+	 * @param string   $reason    A reason
+	 *
 	 * @return bool
 	 */
-	public function ban($user_guid, $reason = "") {
-
-		$user = get_entity($user_guid);
-
-		if (!$user instanceof ElggUser || !$user->canEdit()) {
-			return false;
-		}
-
-		if (!$this->events->trigger('ban', 'user', $user)) {
+	public function ban(ElggUser $user, $reason = "") {
+		if (!$this->hooks->getEvents()->trigger('ban', 'user', $user)) {
 			return false;
 		}
 
 		$user->ban_reason = $reason;
 
-		_elgg_invalidate_cache_for_entity($user_guid);
-		_elgg_invalidate_memcache_for_entity($user_guid);
-
-		if ($this->markBanned($user_guid, true)) {
+		if ($this->markBanned($user, true)) {
 			return true;
 		}
 
@@ -139,11 +128,12 @@ class UsersTable {
 	 *
 	 * @note Use ban() or unban()
 	 *
-	 * @param int  $guid   User GUID
-	 * @param bool $banned Mark the user banned?
+	 * @param ElggUser $user   User
+	 * @param bool     $banned Mark the user banned?
+	 *
 	 * @return int Num rows affected
 	 */
-	public function markBanned($guid, $banned) {
+	public function markBanned(ElggUser $user, $banned) {
 
 		$query = "
 			UPDATE {$this->table}
@@ -153,52 +143,38 @@ class UsersTable {
 
 		$params = [
 			':banned' => $banned ? 'yes' : 'no',
-			':guid' => (int) $guid,
+			':guid' => (int) $user->guid,
 		];
 
-		return $this->db->updateData($query, true, $params);
+		return $this->db->updateData($query, null, $params);
 	}
 
 	/**
 	 * Unban a user (calls events, removes the reason)
 	 *
-	 * @param int $user_guid Unban a user
+	 * @param ElggUser $user User
+	 *
 	 * @return bool
 	 */
-	public function unban($user_guid) {
-
-		$user = get_entity($user_guid);
-
-		if (!$user instanceof ElggUser || !$user->canEdit()) {
-			return false;
-		}
-
-		if (!$this->events->trigger('unban', 'user', $user)) {
+	public function unban(ElggUser $user) {
+		if (!$this->hooks->getEvents()->trigger('unban', 'user', $user)) {
 			return false;
 		}
 
 		$user->deleteMetadata('ban_reason');
 
-		_elgg_invalidate_cache_for_entity($user_guid);
-		_elgg_invalidate_memcache_for_entity($user_guid);
-
-		return $this->markBanned($user_guid, false);
+		return $this->markBanned($user, false);
 	}
 
 	/**
 	 * Makes user $guid an admin.
 	 *
-	 * @param int $user_guid User guid
+	 * @param ElggUser $user User
+	 *
 	 * @return bool
 	 */
-	public function makeAdmin($user_guid) {
-		$user = get_entity($user_guid);
-
-		if (!$user instanceof ElggUser || !$user->canEdit()) {
-			return false;
-		}
-
-		if (!$this->events->trigger('make_admin', 'user', $user)) {
+	public function makeAdmin(ElggUser $user) {
+		if (!$this->hooks->getEvents()->trigger('make_admin', 'user', $user)) {
 			return false;
 		}
 
@@ -209,13 +185,10 @@ class UsersTable {
 		";
 
 		$params = [
-			':guid' => (int) $user_guid,
+			':guid' => (int) $user->guid,
 		];
 
-		_elgg_invalidate_cache_for_entity($user_guid);
-		_elgg_invalidate_memcache_for_entity($user_guid);
-
-		if ($this->db->updateData($query, true, $params)) {
+		if ($this->db->updateData($query, null, $params)) {
 			return true;
 		}
 
@@ -225,18 +198,12 @@ class UsersTable {
 	/**
 	 * Removes user $guid's admin flag.
 	 *
-	 * @param int $user_guid User GUID
+	 * @param ElggUser $user User
+	 *
 	 * @return bool
 	 */
-	public function removeAdmin($user_guid) {
-
-		$user = get_entity($user_guid);
-
-		if (!$user instanceof ElggUser || !$user->canEdit()) {
-			return false;
-		}
-
-		if (!$this->events->trigger('remove_admin', 'user', $user)) {
+	public function removeAdmin(ElggUser $user) {
+		if (!$this->hooks->getEvents()->trigger('remove_admin', 'user', $user)) {
 			return false;
 		}
 
@@ -247,13 +214,10 @@ class UsersTable {
 		";
 
 		$params = [
-			':guid' => (int) $user_guid,
+			':guid' => (int) $user->guid,
 		];
 
-		_elgg_invalidate_cache_for_entity($user_guid);
-		_elgg_invalidate_memcache_for_entity($user_guid);
-
-		if ($this->db->updateData($query, true, $params)) {
+		if ($this->db->updateData($query, null, $params)) {
 			return true;
 		}
 
@@ -278,7 +242,7 @@ class UsersTable {
 			return false;
 		}
 
-		$entity = $this->entity_cache->getByUsername($username);
+		$entity = elgg_get_session()->entityCache->getByUsername($username);
 		if ($entity) {
 			return $entity;
 		}
@@ -291,6 +255,7 @@ class UsersTable {
 			],
 			'limit' => 1,
 		]);
+
 		return $users ? $users[0] : false;
 	}
 
@@ -298,6 +263,7 @@ class UsersTable {
 	 * Get an array of users from an email address
 	 *
 	 * @param string $email Email address
+	 *
 	 * @return array
 	 */
 	public function getByEmail($email) {
@@ -330,14 +296,18 @@ class UsersTable {
 	 * @return \ElggUser[]|int
 	 */
 	public function findActive(array $options = []) {
-	
+
 		$options = array_merge([
 			'seconds' => 600,
 			'limit' => $this->config->default_limit,
 		], $options);
 
 		// cast options we're sending to hook
-		foreach (['seconds', 'limit', 'offset'] as $key) {
+		foreach ([
+					 'seconds',
+					 'limit',
+					 'offset'
+				 ] as $key) {
 			$options[$key] = (int) $options[$key];
 		}
 		$options['count'] = (bool) $options['count'];
@@ -358,6 +328,7 @@ class UsersTable {
 
 		$dbprefix = $this->config->dbprefix;
 		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
+
 		return elgg_get_entities([
 			'type' => 'user',
 			'limit' => $options['limit'],
@@ -446,7 +417,7 @@ class UsersTable {
 
 		// Turn on email notifications by default
 		$user->setNotificationSetting('email', true);
-	
+
 		return $user->getGUID();
 	}
 
@@ -460,7 +431,11 @@ class UsersTable {
 	 */
 	public function generateInviteCode($username) {
 		$time = $this->getCurrentTime()->getTimestamp();
-		return "$time." . _elgg_services()->hmac->getHmac([(int) $time, $username])->getToken();
+
+		return "$time." . _elgg_services()->hmac->getHmac([
+				(int) $time,
+				$username
+			])->getToken();
 	}
 
 	/**
@@ -480,7 +455,10 @@ class UsersTable {
 		$time = $m[1];
 		$mac = $m[2];
 
-		return _elgg_services()->hmac->getHmac([(int) $time, $username])->matchesToken($mac);
+		return _elgg_services()->hmac->getHmac([
+			(int) $time,
+			$username
+		])->matchesToken($mac);
 	}
 
 	/**
@@ -489,6 +467,7 @@ class UsersTable {
 	 * @param int    $user_guid The user's GUID
 	 * @param bool   $status    Validated (true) or unvalidated (false)
 	 * @param string $method    Optional method to say how a user was validated
+	 *
 	 * @return bool
 	 */
 	public function setValidationStatus($user_guid, $status, $method = '') {
@@ -505,6 +484,7 @@ class UsersTable {
 			} else {
 				elgg_trigger_after_event('invalidate', 'user', $user);
 			}
+
 			return true;
 		} else {
 			return false;
@@ -515,6 +495,7 @@ class UsersTable {
 	 * Gets the validation status of a user.
 	 *
 	 * @param int $user_guid The user's GUID
+	 *
 	 * @return bool|null Null means status was not set for this user.
 	 */
 	public function getValidationStatus($user_guid) {
@@ -522,6 +503,7 @@ class UsersTable {
 		if (!$user || !isset($user->validated)) {
 			return null;
 		}
+
 		return (bool) $user->validated;
 	}
 
@@ -531,60 +513,57 @@ class UsersTable {
 	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
 	 *
 	 * @param ElggUser $user User entity
-	 * @return void
+	 * @param DateTime $time Last action time
+	 *
+	 * @return int
 	 */
-	public function setLastAction(ElggUser $user) {
+	public function setLastAction(ElggUser $user, DateTime $time = null) {
 
-		$time = $this->getCurrentTime()->getTimestamp();
-
-		if ($user->last_action == $time) {
-			// no change required
-			return;
+		if (!$time) {
+			$time = $this->getCurrentTime();
 		}
-
-		$query = "
-			UPDATE {$this->table}
-			SET
-				prev_last_action = last_action,
-				last_action = :last_action
-			WHERE guid = :guid
-		";
-
-		$params = [
-			':last_action' => $time,
-			':guid' => (int) $user->guid,
-		];
-
-		// these writes actually work, we just type hint read-only.
-		$user->prev_last_action = $user->last_action;
-		$user->last_action = $time;
-
-		execute_delayed_write_query($query, null, $params);
-
-		$this->entity_cache->set($user);
 
 		// If we save the user to memcache during this request, then we'll end up with the
 		// old (incorrect) attributes cached (notice the above query is delayed). So it's
 		// simplest to just resave the user after all plugin code runs.
 		register_shutdown_function(function () use ($user, $time) {
-			$this->entities->updateLastAction($user, $time); // keep entity table in sync
-			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'), $time);
+
+			$timestamp = $this->entities->updateLastAction($user, $time);
+			if (!$timestamp) {
+				return;
+			}
+
+			$query = "
+				UPDATE {$this->table}
+				SET
+					prev_last_action = last_action,
+					last_action = :last_action
+				WHERE guid = :guid
+			";
+
+			$params = [
+				':last_action' => $timestamp,
+				':guid' => (int) $user->guid,
+			];
+
+			$this->db->updateData($query, null, $params);
 		});
+
+		return $time->getTimestamp();
 	}
 
 	/**
-	 * Sets the last logon time of the given user to right now.
+	 * Sets the last login time
 	 *
-	 * @param ElggUser $user User entity
-	 * @return void
+	 * @param ElggUser  $user     User entity
+	 * @param DateTime $time     Last login timestamp
+	 *                            Defaults to current time
+	 *
+	 * @return int Timestamp of the last login
 	 */
-	public function setLastLogin(ElggUser $user) {
-
-		$time = $this->getCurrentTime()->getTimestamp();
-
-		if ($user->last_login == $time) {
-			// no change required
-			return;
+	public function setLastLogin(ElggUser $user, DateTime $time = null) {
+		if (!$time) {
+			$time = $this->getCurrentTime();
 		}
 
 		$query = "
@@ -596,23 +575,12 @@ class UsersTable {
 		";
 
 		$params = [
-			':last_login' => $time,
+			':last_login' => $time->getTimestamp(),
 			':guid' => (int) $user->guid,
 		];
 
-		// these writes actually work, we just type hint read-only.
-		$user->prev_last_login = $user->last_login;
-		$user->last_login = $time;
-
 		execute_delayed_write_query($query, null, $params);
 
-		$this->entity_cache->set($user);
-
-		// If we save the user to memcache during this request, then we'll end up with the
-		// old (incorrect) attributes cached. Hence we want to invalidate as late as possible.
-		// the user object gets saved
-		register_shutdown_function(function () use ($user) {
-			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
-		});
+		return $time->getTimestamp();
 	}
 }

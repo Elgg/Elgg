@@ -123,8 +123,8 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$this->assertTrue($result);
 		elgg_set_ignore_access($ia);
 
-		$logged_in_user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->removeLoggedInUser();
+		$logged_in_user = elgg_get_session()->getLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$ia = elgg_set_ignore_access(false);
 		$result = can_edit_access_collection($acl_id, $this->user->guid);
@@ -133,7 +133,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$this->assertFalse($result_no_user);
 		elgg_set_ignore_access($ia);
 
-		_elgg_services()->session->setLoggedInUser($logged_in_user);
+		elgg_get_session()->setLoggedInUser($logged_in_user);
 
 		delete_access_collection($acl_id);
 	}
@@ -245,7 +245,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 					 'get_access_list',
 					 'get_access_array'
 				 ] as $func) {
-			_elgg_services()->accessCache->clear();
+			elgg_get_session()->accessCache->clear();
 
 			// admin users run tests, so disable access
 			$ia = elgg_set_ignore_access(true);
@@ -280,14 +280,14 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 	}
 
 	public function testCanGetGuestReadAcccessArray() {
-		$logged_in_user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->removeLoggedInUser();
+		$logged_in_user = elgg_get_session()->getLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 		$expected = [ACCESS_PUBLIC];
 		$actual = get_access_array();
 		$this->assertEqual($expected, $actual);
 
-		_elgg_services()->session->setLoggedInUser($logged_in_user);
+		elgg_get_session()->setLoggedInUser($logged_in_user);
 	}
 
 	public function testCanGetReadAccessArray() {

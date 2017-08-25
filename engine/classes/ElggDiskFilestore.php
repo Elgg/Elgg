@@ -209,7 +209,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	public function getFilenameOnFilestore(\ElggFile $file) {
 		$owner_guid = $file->getOwnerGuid();
 		if (!$owner_guid) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = elgg_get_session()->getLoggedInUserGuid();
 		}
 
 		if (!$owner_guid) {
