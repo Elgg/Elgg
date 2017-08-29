@@ -217,6 +217,8 @@ This means that plugins can no longer alter permissions in aforementioned cases.
 
 ``elgg_check_access_overrides()`` has been removed, as plugins will no longer need to validate access overrides.
 
+The translations for the default Elgg access levels have new translation language keys.
+
 Multi Site Changes
 ------------------
 

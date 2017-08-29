@@ -71,7 +71,7 @@ class Elgg_Access_AclUnitTest extends \Elgg\UnitTestCase {
 		/**
 		 * How to test:
 		 *  1. Use getReadableAccessLevel with access_id ACCESS_PRIVATE
-		 *  2. Assert that the output is elgg_echo('PRIVATE')
+		 *  2. Assert that the output is elgg_echo('access:label:private')
 		 */
 		$this->markTestIncomplete();
 	}

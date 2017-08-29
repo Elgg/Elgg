@@ -36,7 +36,7 @@ $fields = [
 		'#label' => elgg_echo('groups:whocancreate'),
 		'name' => 'params[limited_groups]',
 		'options_values' => [
-			'no' => elgg_echo('LOGGED_IN'),
+			'no' => elgg_echo('access:label:logged_in'),
 			'yes' => elgg_echo('admin')
 		],
 		'value' => $plugin->limited_groups,

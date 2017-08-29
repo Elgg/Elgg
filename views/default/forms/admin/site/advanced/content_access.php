@@ -6,10 +6,10 @@
 $field = [
 	'#type' => 'access',
 	'options_values' => [
-		ACCESS_PRIVATE => elgg_echo('PRIVATE'),
-		ACCESS_FRIENDS => elgg_echo('access:friends:label'),
-		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
-		ACCESS_PUBLIC => elgg_echo('PUBLIC'),
+		ACCESS_PRIVATE => elgg_echo('access:label:private'),
+		ACCESS_FRIENDS => elgg_echo('access:label:friends'),
+		ACCESS_LOGGED_IN => elgg_echo('access:label:logged_in'),
+		ACCESS_PUBLIC => elgg_echo('access:label:public'),
 	],
 	'name' => 'default_access',
 	'#label' => elgg_echo('installation:sitepermissions'),
