@@ -733,12 +733,12 @@ function groups_join_group($group, $user) {
 function group_access_options($group) {
 
 	$access_array = [
-		ACCESS_PRIVATE => elgg_echo('PRIVATE'),
-		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
+		ACCESS_PRIVATE => elgg_echo('access:label:private'),
+		ACCESS_LOGGED_IN => elgg_echo('access:label:logged_in'),
 	];
 
 	if (!elgg_get_config('walled_garden')) {
-		$access_array[ACCESS_PUBLIC] = elgg_echo('PUBLIC');
+		$access_array[ACCESS_PUBLIC] = elgg_echo('access:label:public');
 	}
 
 	$collection = get_access_collection($group->group_acl);

@@ -184,11 +184,11 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Private",
-	'LOGGED_IN' => "Logged in users",
-	'PUBLIC' => "Public",
-	'LOGGED_OUT' => "Logged out users",
-	'access:friends:label' => "Friends",
+	'access:label:private' => "Private",
+	'access:label:logged_in' => "Logged in users",
+	'access:label:public' => "Public",
+	'access:label:logged_out' => "Logged out users",
+	'access:label:friends' => "Friends",
 	'access' => "Access",
 	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",
