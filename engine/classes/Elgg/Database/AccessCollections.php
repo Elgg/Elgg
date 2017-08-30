@@ -926,10 +926,10 @@ class AccessCollections {
 
 		// Check if entity access id is a defined global constant
 		$access_array = [
-			ACCESS_PRIVATE => $translator->translate("PRIVATE"),
-			ACCESS_FRIENDS => $translator->translate("access:friends:label"),
-			ACCESS_LOGGED_IN => $translator->translate("LOGGED_IN"),
-			ACCESS_PUBLIC => $translator->translate("PUBLIC"),
+			ACCESS_PRIVATE => $translator->translate('access:label:private'),
+			ACCESS_FRIENDS => $translator->translate('access:label:friends'),
+			ACCESS_LOGGED_IN => $translator->translate('access:label:logged_in'),
+			ACCESS_PUBLIC => $translator->translate('access:label:public'),
 		];
 
 		if (array_key_exists($access, $access_array)) {

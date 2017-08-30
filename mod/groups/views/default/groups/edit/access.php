@@ -30,8 +30,8 @@ echo elgg_view_field([
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$visibility_options = [
 		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
-		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
-		ACCESS_PUBLIC => elgg_echo('PUBLIC'),
+		ACCESS_LOGGED_IN => elgg_echo('access:label:logged_in'),
+		ACCESS_PUBLIC => elgg_echo('access:label:public'),
 	];
 	if (elgg_get_config('walled_garden')) {
 		unset($visibility_options[ACCESS_PUBLIC]);
