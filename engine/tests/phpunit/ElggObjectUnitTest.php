@@ -22,7 +22,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$user = $this->createUser();
 		$user2 = $this->createUser();
 
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 
 		$group = $this->createGroup([
 			'owner_guid' => $user2->guid,
@@ -39,7 +39,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue($object->canComment());
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCanConstructWithoutArguments() {
@@ -80,7 +80,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$subtype_id = add_subtype('object', $subtype);
 
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 		
 		$object = new \ElggObject();
 		$object->subtype = $subtype;
@@ -115,13 +115,13 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($user, $object->getContainerEntity());
 		$this->assertEquals(ACCESS_LOGGED_IN, $object->access_id);
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCanUpdateObject() {
 
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 
 		$object = $this->createObject([
 			'owner_guid' => $user->guid,
@@ -157,7 +157,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$object = get_entity($object->guid);
 		$this->assertEquals(ACCESS_PUBLIC, $object->access_id);
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCanCloneObject() {
@@ -219,12 +219,12 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 	public function testCanCommentWhenLoggedIn() {
 
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 
 		$object = $this->createObject();
 		$this->assertTrue($object->canComment());
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCanAddRelationship() {

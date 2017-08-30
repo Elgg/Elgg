@@ -34,7 +34,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$this->user = $user;
 		$this->entity = $entity;
 
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 
 		// By default, only admins are allowed to delete river items
 		// For the sake of this test case, we will allow the user to delete items
@@ -45,7 +45,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function down() {
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+		elgg_get_session()->setLoggedInUser($this->getAdmin());
 
 		$this->user->delete();
 
@@ -245,8 +245,8 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$id = elgg_create_river_item($params);
 
 		$owner = $this->entity->getOwnerEntity();
-		$old_user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		$old_user = elgg_get_session()->getLoggedInUser();
+		elgg_get_session()->setLoggedInUser($owner);
 
 		$events_fired = 0;
 		$handler = function () use (&$events_fired) {
@@ -265,7 +265,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 
 		$this->assertEqual($events_fired, 3);
 
-		_elgg_services()->session->setLoggedInUser($old_user);
+		elgg_get_session()->setLoggedInUser($old_user);
 	}
 
 	public function testElggCreateRiverItemMissingRequiredParam() {

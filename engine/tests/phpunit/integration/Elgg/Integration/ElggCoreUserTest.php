@@ -16,7 +16,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 
 	public function up() {
 		$this->user = new ElggUserWithExposableAttributes();
-		$this->user->username = $this->getRandomUsername();
+		$this->user->username = $this->generateUsername();
 	}
 
 	public function down() {
@@ -109,7 +109,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 
 	public function testGetUserByUsernameAcceptsUrlEncoded() {
 
-		$username = $this->getRandomUsername();
+		$username = $this->generateUsername();
 		$this->user->username = $username;
 		$guid = $this->user->save();
 

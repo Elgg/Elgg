@@ -63,6 +63,15 @@ class Groups extends Seed {
 					'profile_fields' => (array) elgg_get_config('group'),
 					'group_tool_options' => (array) elgg_get_config('group_tool_options'),
 				]);
+
+				elgg_create_river_item([
+					'view' => 'river/group/create',
+					'action_type' => 'create',
+					'subject_guid' => $group->owner_guid,
+					'object_guid' => $group->guid,
+					'target_guid' => $group->container_guid,
+				]);
+
 				if (!$group) {
 					continue;
 				}

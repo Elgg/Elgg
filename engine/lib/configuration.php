@@ -58,7 +58,11 @@ function elgg_get_data_path() {
  * @return string
  */
 function elgg_get_cache_path() {
-	return _elgg_config()->cacheroot;
+	$path = _elgg_config()->cacheroot;
+	if (!$path) {
+		$path = elgg_get_data_path();
+	}
+	return $path;
 }
 
 /**

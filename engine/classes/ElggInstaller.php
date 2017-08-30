@@ -776,7 +776,7 @@ class ElggInstaller {
 		$use_elgg_session = ($index_step == $index_admin && $this->is_action) || ($index_step == $index_complete);
 		if (!$use_elgg_session) {
 			$session = ElggSession::fromFiles($app->_services->config);
-			$session->setName('Elgg_install');
+			//$session->setName('Elgg_install');
 			$app->_services->setValue('session', $session);
 		}
 

@@ -60,8 +60,8 @@ class ElggCoreGroupTest extends LegacyIntegrationTestCase {
 	}
 
 	public function testGroupItemVisibility() {
-		$original_user = _elgg_services()->session->getLoggedInUser();
-		_elgg_services()->session->setLoggedInUser($this->user);
+		$original_user = elgg_get_session()->getLoggedInUser();
+		elgg_get_session()->setLoggedInUser($this->user);
 		$group_guid = $this->group->guid;
 
 		// unrestricted: pass non-members
@@ -83,7 +83,7 @@ class ElggCoreGroupTest extends LegacyIntegrationTestCase {
 		$this->assertFalse($vis->shouldHideItems);
 
 		// non-member admins succeed - assumes admin logged in
-		_elgg_services()->session->setLoggedInUser($original_user);
+		elgg_get_session()->setLoggedInUser($original_user);
 		$vis = GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertFalse($vis->shouldHideItems);

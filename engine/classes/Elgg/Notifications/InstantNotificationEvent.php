@@ -40,7 +40,7 @@ class InstantNotificationEvent implements NotificationEvent {
 
 		$this->actor = $actor;
 		if (!isset($actor)) {
-			$this->actor = _elgg_services()->session->getLoggedInUser();
+			$this->actor = elgg_get_session()->getLoggedInUser();
 		}
 
 		$this->action = $action ? : self::DEFAULT_ACTION_NAME;

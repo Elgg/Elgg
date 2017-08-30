@@ -1903,7 +1903,7 @@ function _elgg_get_js_page_data() {
 		],
 		'session' => [
 			'user' => null,
-			'token' => _elgg_services()->session->get('__elgg_session'),
+			'token' => elgg_get_session()->get('__elgg_session'),
 		],
 		'_data' => (object) $data,
 	];

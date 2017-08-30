@@ -1,8 +1,10 @@
 <?php
+
 namespace Elgg\Cache;
 
 use ElggEntity;
-use ElggSession;
+use ElggSharedMemoryCache;
+use ElggUser;
 
 /**
  * Volatile cache for entities
@@ -17,37 +19,30 @@ class EntityCache {
 	/**
 	 * @var ElggEntity[] GUID keys
 	 */
-	private $entities = [];
+	protected $entities = [];
 
 	/**
 	 * @var bool[] GUID keys
 	 */
-	private $disabled_guids = [];
-
-	/**
-	 * @var ElggSession
-	 */
-	private $session;
-
-	/**
-	 * @var MetadataCache
-	 */
-	private $metadata_cache;
+	protected $disabled_guids = [];
 
 	/**
 	 * @var array
 	 */
-	private $username_cache = [];
-	
+	protected $username_cache = [];
+
+	/**
+	 * @var ElggSharedMemoryCache
+	 */
+	protected $persisted_cache;
+
 	/**
 	 * Constructor
 	 *
-	 * @param ElggSession   $session        Session
-	 * @param MetadataCache $metadata_cache MD cache
+	 * @param ElggSharedMemoryCache $cache Cache
 	 */
-	public function __construct(ElggSession $session, MetadataCache $metadata_cache) {
-		$this->session = $session;
-		$this->metadata_cache = $metadata_cache;
+	public function __construct(ElggSharedMemoryCache $cache) {
+		$this->persisted_cache = $cache;
 	}
 
 	/**
@@ -60,8 +55,25 @@ class EntityCache {
 	public function get($guid) {
 		$guid = (int) $guid;
 
+		if (isset($this->disabled_guids[$guid])) {
+			return false;
+		}
+
 		if (isset($this->entities[$guid])) {
-			return $this->entities[$guid];
+			$entity = $this->entities[$guid];
+		} else {
+			$entity = $this->persisted_cache->load($guid);
+			if ($entity instanceof ElggEntity) {
+				$this->set($entity);
+			}
+		}
+
+		if ($entity instanceof \ElggEntity) {
+			if (!elgg_get_ignore_access() && !has_access_to_entity($entity)) {
+				return false;
+			}
+			
+			return $entity;
 		}
 
 		return false;
@@ -71,34 +83,40 @@ class EntityCache {
 	 * Returns cached user entity by username
 	 *
 	 * @param string $username Username
-	 * @return \ElggUser|false
+	 *
+	 * @return ElggUser|false
 	 */
 	public function getByUsername($username) {
 		if (isset($this->username_cache[$username])) {
 			return $this->get($this->username_cache[$username]);
 		}
+
 		return false;
 	}
 
 	/**
-	 * Cache an entity.
+	 * Cache an entity
+	 *
+	 * Session state changes always flush this cache,
+	 * e.g. if entity is loaded during ignored access, this cache
+	 * will persist it as long as the ignored access is enabled
 	 *
 	 * @param ElggEntity $entity Entity to cache
+	 *
 	 * @return void
 	 */
 	public function set(ElggEntity $entity) {
 		$guid = $entity->guid;
 
-		if (!$guid || isset($this->entities[$guid]) || isset($this->disabled_guids[$guid])) {
-			// have it or not saved
+		if (!$guid) {
 			return;
 		}
 
-		// Don't cache non-plugin entities while access control is off, otherwise they could be
-		// exposed to users who shouldn't see them when control is re-enabled.
-		if (!($entity instanceof \ElggPlugin) && $this->session->getIgnoreAccess()) {
+		if (isset($this->disabled_guids[$guid])) {
 			return;
 		}
+
+		$this->storeInPersistedCache($entity);
 
 		// Don't store too many or we'll have memory problems
 		if (count($this->entities) > self::MAX_SIZE) {
@@ -107,20 +125,35 @@ class EntityCache {
 
 		$this->entities[$guid] = $entity;
 
-		if ($entity instanceof \ElggUser) {
+		if ($entity instanceof ElggUser) {
 			$this->username_cache[$entity->username] = $entity->guid;
 		}
+	}
+
+	/**
+	 * Cache the entity in a persisted cache
+	 *
+	 * @param ElggEntity $entity      Entity
+	 * @param int        $last_action Last action time
+	 *
+	 * @return void
+	 */
+	public function storeInPersistedCache(\ElggEntity $entity, $last_action = 0) {
+		$this->persisted_cache->save($entity->guid, $entity->prepareForPersistedCache($last_action));
 	}
 
 	/**
 	 * Invalidate this class's entry in the cache.
 	 *
 	 * @param int $guid The entity guid
+	 *
 	 * @return void
 	 */
 	public function remove($guid) {
 		$guid = (int) $guid;
-		
+
+		$this->persisted_cache->delete($guid);
+
 		if (!isset($this->entities[$guid])) {
 			return;
 		}
@@ -136,7 +169,7 @@ class EntityCache {
 		// have caused a bunch of unnecessary purges at every shutdown. Doing it this way we have no way
 		// to know that the expunged entity will be GCed (might be another reference living), but that's
 		// OK; the metadata will reload if necessary.
-		$this->metadata_cache->clear($guid);
+		elgg_get_session()->metadataCache->clear($guid);
 	}
 
 	/**
@@ -155,6 +188,7 @@ class EntityCache {
 	 * @todo this is a workaround until #5604 can be implemented
 	 *
 	 * @param int $guid The entity guid
+	 *
 	 * @return void
 	 */
 	public function disableCachingForEntity($guid) {
@@ -166,6 +200,7 @@ class EntityCache {
 	 * Allow this entity to be stored in the entity cache
 	 *
 	 * @param int $guid The entity guid
+	 *
 	 * @return void
 	 */
 	public function enableCachingForEntity($guid) {

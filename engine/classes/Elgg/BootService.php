@@ -137,7 +137,7 @@ class BootService {
 		// we always need site->email and user->icontime, so load them together
 		$user_guid = $services->session->getLoggedInUserGuid();
 		if ($user_guid) {
-			$services->metadataCache->populateFromEntities([$user_guid]);
+			$services->session->metadataCache->populateFromEntities([$user_guid]);
 		}
 
 		// invalidate on some actions just in case other invalidation triggers miss something

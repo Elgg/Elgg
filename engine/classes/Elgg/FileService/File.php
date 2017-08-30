@@ -122,7 +122,7 @@ class File {
 		];
 
 		if ($this->use_cookie) {
-			$data['cookie'] = _elgg_services()->session->getId();
+			$data['cookie'] = elgg_get_session()->getId();
 			if (empty($data['cookie'])) {
 				return false;
 			}

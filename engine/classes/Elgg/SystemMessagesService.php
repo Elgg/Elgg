@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\SystemMessages\RegisterSet;
@@ -8,7 +9,7 @@ use Elgg\SystemMessages\RegisterSet;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
+ * @access     private
  *
  * @package    Elgg.Core
  * @subpackage UX
@@ -19,20 +20,6 @@ class SystemMessagesService {
 	const SUCCESS = 'success';
 	const ERROR = 'error';
 	const SESSION_KEY = '_elgg_msgs';
-
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
-	 * Constructor
-	 *
-	 * @param \ElggSession $session The Elgg session
-	 */
-	public function __construct(\ElggSession $session) {
-		$this->session = $session;
-	}
 
 	/**
 	 * Empty and return the given register or all registers. In each case, the return value is
@@ -62,6 +49,7 @@ class SystemMessagesService {
 		}
 
 		$this->saveRegisters($set);
+
 		return $return;
 	}
 
@@ -121,11 +109,12 @@ class SystemMessagesService {
 	 * @return RegisterSet
 	 */
 	public function loadRegisters() {
-		$registers = $this->session->get(self::SESSION_KEY, []);
+		$registers = elgg_get_session()->get(self::SESSION_KEY, []);
 		$set = new RegisterSet();
 		foreach ($registers as $key => $register) {
 			$set->{$key} = $register;
 		}
+
 		return $set;
 	}
 
@@ -140,6 +129,7 @@ class SystemMessagesService {
 	 * Messages are stored as strings in the Elgg session as ['msg'][$register] array.
 	 *
 	 * @param RegisterSet $set The set of registers
+	 *
 	 * @return void
 	 */
 	public function saveRegisters(RegisterSet $set) {
@@ -158,6 +148,6 @@ class SystemMessagesService {
 			}
 		}
 
-		$this->session->set(self::SESSION_KEY, $data);
+		elgg_get_session()->set(self::SESSION_KEY, $data);
 	}
 }

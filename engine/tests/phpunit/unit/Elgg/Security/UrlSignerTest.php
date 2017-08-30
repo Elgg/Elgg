@@ -16,8 +16,6 @@ class SignedUrlTest extends \Elgg\UnitTestCase {
 	public function up() {
 		$this->service = new UrlSigner();
 		$this->url = '/foo?a=b&c[]=1&c[]=2&c[]=0,5&_d=@username&e=%20';
-
-		_elgg_services()->setValue('session', \ElggSession::getMock());
 	}
 
 	public function down() {
@@ -57,8 +55,8 @@ class SignedUrlTest extends \Elgg\UnitTestCase {
 		$signed_url = $this->service->sign($this->url, '+1 day');
 		$this->assertTrue($this->service->isValid($signed_url));
 
-		_elgg_services()->session->invalidate();
-		_elgg_services()->session->start();
+		elgg_get_session()->invalidate();
+		elgg_get_session()->start();
 		
 		$this->assertTrue($this->service->isValid($signed_url));
 	}

@@ -468,7 +468,7 @@ class ElggPlugin extends \ElggObject {
 		if ($user_guid) {
 			$user = get_entity($user_guid);
 		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
+			$user = elgg_get_session()->getLoggedInUser();
 		}
 
 		if (!($user instanceof \ElggUser)) {
@@ -518,7 +518,7 @@ class ElggPlugin extends \ElggObject {
 		if ($user_guid) {
 			$user = get_entity($user_guid);
 		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
+			$user = elgg_get_session()->getLoggedInUser();
 		}
 
 		if (!($user instanceof \ElggUser)) {
@@ -559,7 +559,7 @@ class ElggPlugin extends \ElggObject {
 		if ($user_guid) {
 			$user = get_entity($user_guid);
 		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
+			$user = elgg_get_session()->getLoggedInUser();
 		}
 
 		if (!($user instanceof \ElggUser)) {

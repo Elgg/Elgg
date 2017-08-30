@@ -272,7 +272,7 @@ class SubtypeTable {
 	protected function invalidateCache() {
 		$this->cache = null;
 		_elgg_services()->boot->invalidateCache();
-		_elgg_services()->entityCache->clear();
+		elgg_get_session()->entityCache->clear();
 	}
 
 	/**

@@ -61,7 +61,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$session = ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
-		_elgg_services()->session->start();
+		elgg_get_session()->start();
 
 		$config = _elgg_config();
 		_elgg_services()->setValue('config', $config);
@@ -1599,7 +1599,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 
 		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
+		elgg_get_session()->setLoggedInUser($user);
 
 		$this->request = $this->prepareHttpRequest('bar/foo');
 		$this->createService();
@@ -1620,6 +1620,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->hooks->restore();
 
-		_elgg_services()->session->removeLoggedInUser($user);
+		elgg_get_session()->removeLoggedInUser($user);
 	}
 }

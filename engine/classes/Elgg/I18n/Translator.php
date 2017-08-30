@@ -215,7 +215,7 @@ class Translator {
 			return $url_lang;
 		}
 
-		$user = _elgg_services()->session->getLoggedInUser();
+		$user = elgg_get_session()->getLoggedInUser();
 		$language = false;
 
 		if (($user) && ($user->language)) {
@@ -462,7 +462,7 @@ class Translator {
 
 		$installed = [];
 
-		$admin_logged_in = _elgg_services()->session->isAdminLoggedIn();
+		$admin_logged_in = elgg_get_session()->isAdminLoggedIn();
 
 		foreach ($this->translations as $k => $v) {
 			if ($this->languageKeyExists($k, $k)) {

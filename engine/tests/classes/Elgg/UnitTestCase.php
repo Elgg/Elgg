@@ -26,6 +26,8 @@ abstract class UnitTestCase extends BaseTestCase {
 		$sp->config->getCookieConfig();
 		$sp->config->boot_complete = false;
 
+		$sp->db->disableQueryCache();
+
 		$app = Application::factory([
 			'config' => $config,
 			'service_provider' => $sp,
@@ -69,6 +71,8 @@ abstract class UnitTestCase extends BaseTestCase {
 	 */
 	final protected function tearDown() {
 		$this->down();
+
+		_elgg_services()->entityTable->clearMocks();
 
 		parent::tearDown();
 	}

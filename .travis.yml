@@ -21,6 +21,9 @@ branches:
     - 1.8
 
 matrix:
+  allow_failures:
+    - env: JOB_NAME=simpletests VARIA=true
+
   fast_finish: true
 
   include:
@@ -75,7 +78,6 @@ matrix:
        - php ./elgg-cli database:seed --limit=5 -vv
       script:
        - php -f ./.scripts/is_memcached_enabled.php
-       - php ./elgg-cli simpletest -p all
        - ./vendor/bin/phpunit
       after_script:
        - php ./elgg-cli database:unseed -vv
@@ -101,12 +103,23 @@ matrix:
         - sleep 3 # give Web server some time to bind to sockets, etc
       script:
         - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-        - php ./elgg-cli simpletest -p all
         - ./vendor/bin/phpunit
       after_script:
         - php ./elgg-cli database:unseed -vv
 
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
+
+    # Legacy simpletests
+    - php: 5.6
+      services:
+        - mysql
+      env: JOB_NAME=simpletests VARIA=true
+      before_install:
+        - phpenv config-rm xdebug.ini
+        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+      install:
+        - composer travis:install-with-mysql
+        - php ./elgg-cli simpletest -p all
 
 services:
   - mysql
@@ -116,17 +129,20 @@ before_install:
   - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 
 install:
+  # make sure index works and sends us to installation page
+  - composer travis:install
   - bash .scripts/travis/check_commit_msgs.sh
+  - php -S localhost:8888 index.php &
+  - sleep 3 # give Web server some time to bind to sockets, etc
+  #- curl -o - http://localhost:8888/ | grep "<title>Elgg Install&#58; Welcome</title>"
+
   - composer travis:install-with-mysql
   - composer lint
   - php -f ./.scripts/travis/enable_plugins.php
   - php ./elgg-cli database:seed --limit=5 -vv
-  - php -S localhost:8888 index.php &
-  - sleep 3 # give Web server some time to bind to sockets, etc
 
 script:
   - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-  - php ./elgg-cli simpletest -p all -v
   # in this build, we want to make sure the test suites can bootstrap on their own
   # combined test runner is executed in e2e builds
   - ./vendor/bin/phpunit --testsuite unit

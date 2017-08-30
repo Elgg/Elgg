@@ -54,12 +54,12 @@ class Router {
 		}
 
 		$is_walled_garden = _elgg_config()->walled_garden;
-		$is_logged_in = _elgg_services()->session->isLoggedIn();
+		$is_logged_in = elgg_get_session()->isLoggedIn();
 		$url = elgg_normalize_url($identifier . '/' . implode('/', $segments));
 		
 		if ($is_walled_garden && !$is_logged_in && !$this->isPublicPage($url)) {
 			if (!elgg_is_xhr()) {
-				_elgg_services()->session->set('last_forward_from', current_page_url());
+				elgg_get_session()->set('last_forward_from', current_page_url());
 			}
 			register_error(_elgg_services()->translator->translate('loggedinrequired'));
 			_elgg_services()->responseFactory->redirect('', 'walled_garden');

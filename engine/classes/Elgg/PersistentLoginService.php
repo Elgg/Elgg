@@ -1,5 +1,10 @@
 <?php
+
 namespace Elgg;
+
+use DateTime;
+use ElggCrypto;
+
 /**
  * \Elgg\PersistentLoginService
  *
@@ -12,7 +17,7 @@ namespace Elgg;
  * In Elgg 1.9, the token hashes are stored as "code" in the users_remember_me_cookies
  * table, allowing multiple browsers to maintain persistent logins.
  *
- * @todo Rename the "code" DB column to "hash"
+ * @todo    Rename the "code" DB column to "hash"
  *
  * Legacy notes: This feature used to be called "remember me"; confusingly, both the tokens and the
  * hashes were called "codes"; old tokens were hexadecimal and lower entropy; new tokens are
@@ -21,36 +26,85 @@ namespace Elgg;
  *
  * @package Elgg.Core
  *
- * @access private
+ * @access  private
  */
 class PersistentLoginService {
+
+	use TimeUsing;
+
+	/**
+	 * @var Database
+	 */
+	protected $db;
+
+	/**
+	 * @var ElggCrypto
+	 */
+	protected $crypto;
+
+	/**
+	 * @var array
+	 */
+	protected $cookie_config;
+
+	/**
+	 * @var string
+	 */
+	protected $cookie_token;
+
+	/**
+	 * @var string
+	 */
+	protected $table;
+
+	/**
+	 * DO NOT USE. For unit test mocking
+	 * @access private
+	 */
+	public $_callable_get_user = 'get_user';
+
+	/**
+	 * DO NOT USE. For unit test mocking
+	 * @access private
+	 */
+	public $_callable_elgg_set_cookie = 'elgg_set_cookie';
+
+	/**
+	 * DO NOT USE. For unit test mocking
+	 * @access private
+	 */
+	public $_callable_sleep = 'sleep';
 
 	/**
 	 * Constructor
 	 *
-	 * @param Database     $db            The DB service
-	 * @param \ElggSession $session       The Elgg session
-	 * @param \ElggCrypto  $crypto        The cryptography service
-	 * @param array        $cookie_config The persistent login cookie settings
-	 * @param string       $cookie_token  The token from the request cookie
-	 * @param int          $time          The current time
+	 * @param Database   $db            The DB service
+	 * @param ElggCrypto $crypto        The cryptography service
+	 * @param array      $cookie_config The persistent login cookie settings
+	 * @param string     $cookie_token  The token from the request cookie
+	 * @param int        $time          The current time
 	 */
 	public function __construct(
-			Database $db,
-			\ElggSession $session,
-			\ElggCrypto $crypto,
-			array $cookie_config,
-			$cookie_token,
-			$time = null) {
+		Database $db,
+		ElggCrypto $crypto,
+		array $cookie_config,
+		$cookie_token,
+		$time = null
+	) {
 		$this->db = $db;
-		$this->session = $session;
 		$this->crypto = $crypto;
 		$this->cookie_config = $cookie_config;
 		$this->cookie_token = $cookie_token;
 
 		$prefix = $this->db->prefix;
 		$this->table = "{$prefix}users_remember_me_cookies";
-		$this->time = is_numeric($time) ? (int) $time : time();
+
+		$dt = new DateTime();
+		$time = (int) $time;
+		if ($time) {
+			$dt->setTimestamp($time);
+		}
+		$this->time = $this->setCurrentTime($dt);
 	}
 
 	/**
@@ -170,6 +224,7 @@ class PersistentLoginService {
 		}
 
 		$user = call_user_func($this->_callable_get_user, $user_row->guid);
+
 		return $user ? $user : null;
 	}
 
@@ -204,6 +259,7 @@ class PersistentLoginService {
 	 * Remove a hash from the DB
 	 *
 	 * @param string $hash The hashed token to remove (unused before 1.9)
+	 *
 	 * @return void
 	 */
 	protected function removeHash($hash) {
@@ -274,12 +330,18 @@ class PersistentLoginService {
 	 */
 	protected function setCookie($token) {
 		$cookie = new \ElggCookie($this->cookie_config['name']);
-		foreach (['expire', 'path', 'domain', 'secure', 'httponly'] as $key) {
+		foreach ([
+					 'expire',
+					 'path',
+					 'domain',
+					 'secure',
+					 'httponly'
+				 ] as $key) {
 			$cookie->$key = $this->cookie_config[$key];
 		}
 		$cookie->value = $token;
 		if (!$token) {
-			$cookie->expire = $this->time - (86400 * 30);
+			$cookie->expire = $this->getCurrentTime()->getTimestamp() - (86400 * 30);
 		}
 		call_user_func($this->_callable_elgg_set_cookie, $cookie);
 	}
@@ -293,9 +355,9 @@ class PersistentLoginService {
 	 */
 	protected function setSession($token) {
 		if ($token) {
-			$this->session->set('code', $token);
+			elgg_get_session()->set('code', $token);
 		} else {
-			$this->session->remove('code');
+			elgg_get_session()->remove('code');
 		}
 	}
 
@@ -321,58 +383,5 @@ class PersistentLoginService {
 	protected function isLegacyToken($token) {
 		return (isset($token[0]) && $token[0] !== 'z');
 	}
-
-	/**
-	 * @var Database
-	 */
-	protected $db;
-
-	/**
-	 * @var string
-	 */
-	protected $table;
-
-	/**
-	 * @var array
-	 */
-	protected $cookie_config;
-
-	/**
-	 * @var string
-	 */
-	protected $cookie_token;
-
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
-	 * @var \ElggCrypto
-	 */
-	protected $crypto;
-
-	/**
-	 * @var int
-	 */
-	protected $time;
-
-	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
-	 */
-	public $_callable_get_user = 'get_user';
-
-	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
-	 */
-	public $_callable_elgg_set_cookie = 'elgg_set_cookie';
-
-	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
-	 */
-	public $_callable_sleep = 'sleep';
 }
 

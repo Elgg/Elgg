@@ -4,6 +4,7 @@ namespace Elgg;
 
 /**
  * @group UnitTests
+ * @group PersistentLoginService
  */
 class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 
@@ -66,8 +67,6 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 
 		$this->user123 = $this->getMockElggUser(123);
 
-		$this->session = \ElggSession::getMock();
-
 		// mock DB
 		$this->dbMock = $this->getMockBuilder('\Elgg\Database')
 			->disableOriginalConstructor()
@@ -98,7 +97,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->makeLoginPersistent($this->user123);
 
 		$this->assertSame($this->mockToken, $this->lastCookieSet->value);
-		$this->assertSame($this->mockToken, $this->session->get('code'));
+		$this->assertSame($this->mockToken, elgg_get_session()->get('code'));
 	}
 
 	function testRemoveDeletesHashAndDeletesTokenFromCookieAndSession() {
@@ -112,7 +111,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertSame('', $this->lastCookieSet->value);
 		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
-		$this->assertNull($this->session->get('code'));
+		$this->assertNull(elgg_get_session()->get('code'));
 	}
 
 	function testRemoveWithoutCookieCantDeleteHash() {
@@ -123,7 +122,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertSame('', $this->lastCookieSet->value);
 		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
-		$this->assertNull($this->session->get('code'));
+		$this->assertNull(elgg_get_session()->get('code'));
 	}
 
 	function testGettingUserFromKnownHashReturnsUser() {
@@ -175,7 +174,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->handlePasswordChange($subject, $modifier);
 
 		$this->assertSame($this->mockToken, $this->lastCookieSet->value);
-		$this->assertSame($this->mockToken, $this->session->get('code'));
+		$this->assertSame($this->mockToken, elgg_get_session()->get('code'));
 	}
 
 	function testChangingOwnPasswordWithNoCookieDoesntMakePersistent() {
@@ -191,7 +190,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->handlePasswordChange($subject, $modifier);
 
 		$this->assertNull($this->lastCookieSet);
-		$this->assertNull($this->session->get('code'));
+		$this->assertNull(elgg_get_session()->get('code'));
 	}
 
 	function testChangingSomeoneElsesPasswordDoesntMakePersistent() {
@@ -207,7 +206,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->handlePasswordChange($subject, $modifier);
 
 		$this->assertNull($this->lastCookieSet);
-		$this->assertNull($this->session->get('code'));
+		$this->assertNull(elgg_get_session()->get('code'));
 	}
 
 	function testGettingUserFromValidClientReturnsUser() {
@@ -261,7 +260,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->replaceLegacyToken($this->user123);
 
 		$this->assertNull($this->lastCookieSet);
-		$this->assertNull($this->session->get('code'));
+		$this->assertNull(elgg_get_session()->get('code'));
 	}
 
 	function testModernTokenCookiesAreNotReplaced() {
@@ -271,7 +270,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->replaceLegacyToken($this->user123);
 
 		$this->assertNull($this->lastCookieSet);
-		$this->assertNull($this->session->get('code'));
+		$this->assertNull(elgg_get_session()->get('code'));
 	}
 
 	function testLegacyCookiesAreReplacedInDbCookieAndSession() {
@@ -285,7 +284,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->svc->replaceLegacyToken($this->user123);
 
 		$this->assertSame($this->mockToken, $this->lastCookieSet->value);
-		$this->assertSame($this->mockToken, $this->session->get('code'));
+		$this->assertSame($this->mockToken, elgg_get_session()->get('code'));
 	}
 
 	// mock \ElggUser which will return the GUID on ->guid reads
@@ -335,8 +334,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 			'expire' => time() + (30 * 86400),
 		);
 		$time = $this->thirtyDaysAgo + (30 * 86400);
-		$svc = new \Elgg\PersistentLoginService(
-				$this->dbMock, $this->session, $this->cryptoMock, $cookie_config, $cookie_token, $time);
+		$svc = new \Elgg\PersistentLoginService($this->dbMock, $this->cryptoMock, $cookie_config, $cookie_token, $time);
 
 		$svc->_callable_get_user = array($this, 'mock_get_user');
 		$svc->_callable_generateToken = array($this, 'mock_generateToken');

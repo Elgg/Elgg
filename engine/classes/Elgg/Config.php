@@ -6,6 +6,7 @@ use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Database\ConfigTable;
 use ConfigurationException;
 use Elgg\Project\Paths;
+use InstallationException;
 
 /**
  * Access to configuration values
@@ -169,11 +170,15 @@ class Config {
 			$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
 		}
 
-		if ($settings_path) {
-			$config = self::fromFile($settings_path, $reason1);
-		} else {
-			$config = self::fromFile(Paths::settingsFile(Paths::SETTINGS_PHP), $reason1);
+		if (!$settings_path) {
+			$settings_path = Paths::settingsFile(Paths::SETTINGS_PHP);
 		}
+
+		if (!is_file($settings_path)) {
+			throw new InstallationException();
+		}
+
+		$config = self::fromFile($settings_path, $reason1);
 
 		if (!$config) {
 			$msg = __METHOD__ . ": Reading configs failed: $reason1 $reason2";

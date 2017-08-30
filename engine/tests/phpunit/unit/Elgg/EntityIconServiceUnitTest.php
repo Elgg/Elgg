@@ -77,7 +77,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		// Needed to test elgg_get_inline_url()
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
-		_elgg_services()->session->start();
+		elgg_get_session()->start();
 	}
 
 	public function down() {

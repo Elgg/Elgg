@@ -227,12 +227,12 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 
 		// ignore access bypasses the MD cache, so we try it both ways
 		elgg_set_ignore_access(false);
-		_elgg_services()->metadataCache->clear($obj->guid);
+		elgg_get_session()->metadataCache->clear($obj->guid);
 		$md_values = $obj->test_md;
 		$this->assertEqual($md_values, [1, 2, 3]);
 
 		elgg_set_ignore_access(true);
-		_elgg_services()->metadataCache->clear($obj->guid);
+		elgg_get_session()->metadataCache->clear($obj->guid);
 		$md_values = $obj->test_md;
 		$this->assertEqual($md_values, [1, 2, 3]);
 

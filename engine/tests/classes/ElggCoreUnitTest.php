@@ -31,8 +31,8 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 		$this->assertIsA(_elgg_services(), ServiceProvider::class);
 		$this->assertIsA(_elgg_services()->config, Config::class);
 
-		_elgg_services()->session->setLoggedInUser($this->getAdmin());
-		_elgg_services()->session->setIgnoreAccess(false);
+		elgg_get_session()->setLoggedInUser($this->getAdmin());
+		elgg_get_session()->setIgnoreAccess(false);
 		access_show_hidden_entities(false);
 
 		$this->up();
@@ -53,7 +53,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 		// Simpletest suite runs with an admin user logged in
 		$this->assertTrue(elgg_is_admin_logged_in());
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 
 	}
 

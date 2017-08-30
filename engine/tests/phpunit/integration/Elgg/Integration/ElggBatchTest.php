@@ -9,11 +9,20 @@ use ElggObject;
 
 /**
  * @group IntegrationTests
+ * @group ElggBatch
  */
 class ElggBatchTest extends LegacyIntegrationTestCase {
 
-	public function up() {
+	/**
+	 * @var array
+	 */
+	private $guids;
 
+	public function up() {
+		$entities = $this->createMany(['object'], 8);
+		$this->guids = array_map(function($e) {
+			return $e->guid;
+		}, $entities);
 	}
 
 	public function down() {
@@ -24,6 +33,7 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 	public function testElggBatchIncOffset() {
 		// normal increment
 		$options = [
+			'guids' => $this->guids,
 			'offset' => 0,
 			'limit' => 11
 		];
@@ -45,6 +55,7 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		// no increment, 0 start
 		ElggBatchTest::elgg_batch_callback_test([], true);
 		$options = [
+			'guids' => $this->guids,
 			'offset' => 0,
 			'limit' => 11
 		];
@@ -67,6 +78,7 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		// no increment, 3 start
 		ElggBatchTest::elgg_batch_callback_test([], true);
 		$options = [
+			'guids' => $this->guids,
 			'offset' => 3,
 			'limit' => 11
 		];
@@ -89,17 +101,9 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 	}
 
 	public function testElggBatchReadHandlesBrokenEntities() {
-		$num_test_entities = 8;
-		$guids = [];
-		for ($i = $num_test_entities; $i > 0; $i--) {
-			$entity = new ElggObject();
-			$entity->type = 'object';
-			$entity->subtype = 'test_5357_subtype';
-			$entity->access_id = ACCESS_PUBLIC;
-			$entity->save();
-			$guids[] = $entity->guid;
-			_elgg_services()->entityCache->remove($entity->guid);
-		}
+		elgg_get_session()->entityCache->clear();
+
+		$guids = $this->guids;
 
 		// break entities such that the first fetch has one incomplete
 		// and the second and third fetches have only incompletes!
@@ -110,8 +114,8 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		");
 
 		$options = [
+			'guids' => $this->guids,
 			'type' => 'object',
-			'subtype' => 'test_5357_subtype',
 			'order_by' => 'e.guid',
 		];
 
@@ -123,14 +127,15 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		}
 
 		// The broken entities should not have been visited
-		$this->assertEqual($entities_visited, [
+		$this->assertEqual([
 			$guids[0],
 			$guids[6],
 			$guids[7]
-		]);
+		], $entities_visited);
 
 		// cleanup (including leftovers from previous tests)
 		$entity_rows = elgg_get_entities(array_merge($options, [
+			'guids' => $this->guids,
 			'callback' => '',
 			'limit' => false,
 		]));
@@ -140,21 +145,13 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		}
 		delete_data("DELETE FROM {$db_prefix}entities WHERE guid IN (" . implode(',', $guids) . ")");
 		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
-		remove_subtype('object', 'test_5357_subtype');
 	}
 
 	public function testElggBatchDeleteHandlesBrokenEntities() {
-		$num_test_entities = 8;
-		$guids = [];
-		for ($i = $num_test_entities; $i > 0; $i--) {
-			$entity = new ElggObject();
-			$entity->type = 'object';
-			$entity->subtype = 'test_5357_subtype';
-			$entity->access_id = ACCESS_PUBLIC;
-			$entity->save();
-			$guids[] = $entity->guid;
-			_elgg_services()->entityCache->remove($entity->guid);
-		}
+
+		elgg_get_session()->entityCache->clear();
+
+		$guids = $this->guids;
 
 		// break entities such that the first fetch has one incomplete
 		// and the second and third fetches have only incompletes!
@@ -165,8 +162,8 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		");
 
 		$options = [
+			'guids' => $this->guids,
 			'type' => 'object',
-			'subtype' => 'test_5357_subtype',
 			'order_by' => 'e.guid',
 		];
 
@@ -179,14 +176,15 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		}
 
 		// The broken entities should not have been visited
-		$this->assertEqual($entities_visited, [
+		$this->assertEqual([
 			$guids[0],
 			$guids[6],
 			$guids[7]
-		]);
+		], $entities_visited);
 
 		// cleanup (including leftovers from previous tests)
 		$entity_rows = elgg_get_entities(array_merge($options, [
+			'guids' => $this->guids,
 			'callback' => '',
 			'limit' => false,
 		]));
@@ -219,16 +217,9 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 
 	public function testCanGetBatchFromAnEntityGetter() {
 
-		$subtype ='testCanGetBatchFromAnEntityGetter';
-		for ($i = 1; $i <=5; $i++) {
-			$this->createOne('object', [
-				'subtype' => $subtype,
-			]);
-		}
-
 		$options = [
+			'guids' => $this->guids,
 			'type' => 'object',
-			'subtype' => 'testCanGetBatchFromAnEntityGetter',
 			'limit' => 5,
 			'callback' => function ($row) {
 				return $row->guid;

@@ -128,7 +128,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function isMember(\ElggUser $user = null) {
 		if ($user == null) {
-			$user = _elgg_services()->session->getLoggedInUser();
+			$user = elgg_get_session()->getLoggedInUser();
 		}
 		if (!$user) {
 			return false;

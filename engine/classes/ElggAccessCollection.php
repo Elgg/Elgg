@@ -93,7 +93,7 @@ class ElggAccessCollection extends ElggData {
 			return _elgg_services()->hooks->trigger('access_collection:name', $this->getType(), $params, $name);
 		};
 
-		$user = _elgg_services()->session->getLoggedInUser();
+		$user = elgg_get_session()->getLoggedInUser();
 		$owner = $this->getOwnerEntity();
 		if (!$user || !$owner) {
 			// User is not logged in or does not access to the owner entity:

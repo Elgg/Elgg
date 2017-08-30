@@ -18,22 +18,17 @@ use ElggSession;
  */
 class ActionsService {
 
-	use \Elgg\TimeUsing;
-	
+	use TimeUsing;
+
 	/**
 	 * @var Config
 	 */
-	private $config;
-
-	/**
-	 * @var ElggSession
-	 */
-	private $session;
+	protected $config;
 
 	/**
 	 * @var ElggCrypto
 	 */
-	private $crypto;
+	protected $crypto;
 
 	/**
 	 * Registered actions storage
@@ -44,13 +39,13 @@ class ActionsService {
 	 *
 	 * @var array
 	 */
-	private $actions = [];
+	protected $actions = [];
 
 	/**
 	 * The current action being processed
 	 * @var string
 	 */
-	private $currentAction = null;
+	protected $currentAction = null;
 
 	/**
 	 * @var string[]
@@ -61,12 +56,10 @@ class ActionsService {
 	 * Constructor
 	 *
 	 * @param Config      $config  Config
-	 * @param ElggSession $session Session
 	 * @param ElggCrypto  $crypto  Crypto service
 	 */
-	public function __construct(Config $config, ElggSession $session, ElggCrypto $crypto) {
+	public function __construct(Config $config, ElggCrypto $crypto) {
 		$this->config = $config;
-		$this->session = $session;
 		$this->crypto = $crypto;
 	}
 
@@ -142,7 +135,7 @@ class ActionsService {
 			return $forward('actionundefined', ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
-		$user = $this->session->getLoggedInUser();
+		$user = elgg_get_session()->getLoggedInUser();
 
 		// access checks
 		switch ($this->actions[$action]['access']) {
@@ -241,7 +234,7 @@ class ActionsService {
 			$ts = get_input('__elgg_ts');
 		}
 
-		$session_id = $this->session->getId();
+		$session_id = elgg_get_session()->getId();
 
 		if (($token) && ($ts) && ($session_id)) {
 			if ($this->validateTokenOwnership($token, $ts)) {
@@ -486,11 +479,11 @@ class ActionsService {
 			'token' => [
 				'__elgg_ts' => $ts,
 				'__elgg_token' => $token,
-				'logged_in' => $this->session->isLoggedIn(),
+				'logged_in' => elgg_get_session()->isLoggedIn(),
 			],
 			'valid_tokens' => $valid_tokens,
-			'session_token' => $this->session->get('__elgg_session'),
-			'user_guid' => $this->session->getLoggedInUserGuid(),
+			'session_token' => elgg_get_session()->get('__elgg_session'),
+			'user_guid' => elgg_get_session()->getLoggedInUserGuid(),
 		];
 
 		elgg_set_http_header("Content-Type: application/json;charset=utf-8");

@@ -102,7 +102,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 	public function testCanSaveMetadata() {
 
 		$owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		elgg_get_session()->setLoggedInUser($owner);
 
 		$object = $this->createObject([
 			'owner_guid' => $owner->guid,
@@ -138,13 +138,13 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertEquals($id, $metadata->save());
 		
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCanDeleteMetadata() {
 
 		$owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		elgg_get_session()->setLoggedInUser($owner);
 
 		$object = $this->createObject([
 			'owner_guid' => $owner->guid,
@@ -167,13 +167,13 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertTrue($metadata->delete());
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	public function testCanDisableMetadata() {
 
 		$owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($owner);
+		elgg_get_session()->setLoggedInUser($owner);
 
 		$object = $this->createObject([
 			'owner_guid' => $owner->guid,
@@ -192,7 +192,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertEquals('yes', $metadata->enabled);
 
-		_elgg_services()->session->removeLoggedInUser();
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 }

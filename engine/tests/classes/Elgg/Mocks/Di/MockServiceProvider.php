@@ -43,26 +43,23 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 			return new \Elgg\Mocks\Database\EntityTable(
 				$sp->config,
 				$sp->db,
-				$sp->entityCache,
-				$sp->metadataCache,
 				$sp->subtypeTable,
-				$sp->hooks->getEvents(),
-				$sp->session,
+				$sp->hooks,
 				$sp->translator,
 				$sp->logger
 			);
 		});
 
 		$this->setFactory('metadataTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $sp->db, $sp->entityTable, $sp->hooks->getEvents(), $sp->session);
+			return new \Elgg\Mocks\Database\MetadataTable($sp->db, $sp->entityTable, $sp->hooks);
 		});
 
 		$this->setFactory('annotations', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\Annotations($sp->db, $sp->session, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\Annotations($sp->db, $sp->hooks);
 		});
 
 		$this->setFactory('relationshipsTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\RelationshipsTable($sp->db, $sp->entityTable, $sp->metadataTable, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\RelationshipsTable($sp->db, $sp->entityTable, $sp->metadataTable, $sp->hooks);
 		});
 
 		$this->setFactory('subtypeTable', function (MockServiceProvider $sp) {
@@ -75,9 +72,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$sp->db,
 				$sp->entityTable,
 				$sp->userCapabilities,
-				$sp->accessCache,
 				$sp->hooks,
-				$sp->session,
 				$sp->translator
 			);
 		});
