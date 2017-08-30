@@ -3,7 +3,7 @@
  * Lists pending upgrades
  */
 
-elgg_require_js('elgg/upgrader');
+elgg_require_js('core/js/upgrader');
 
 $upgrades = elgg_get_entities_from_private_settings([
 	'type' => 'object',

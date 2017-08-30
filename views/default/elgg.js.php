@@ -1,56 +1,45 @@
 <?php
 /**
  * Core Elgg JavaScript file
- *
- * Includes all code in /engine/js/.
  */
-
-// this warning is due to the change in JS boot order in Elgg 1.9
-echo <<<JS
-if (typeof elgg != 'object') {
-	throw new Error('elgg configuration object is not defined! You must include the js/initialize_elgg view in html head before JS library files!');
-}
-JS;
 
 // We use named AMD modules and inline them here in order to save HTTP requests,
 // as these modules will be required on each page
 echo elgg_view('elgg/popup.js');
 
-$elggDir = \Elgg\Application::elggDir()->chroot('engine/js/');
-$files = [
+$core_js_views = [
 	// these must come first
-	$elggDir->getPath("elgglib.js"),
-
+	'elgglib.js',
+	
 	// class definitions
-	$elggDir->getPath("ElggEntity.js"),
-	$elggDir->getPath("ElggUser.js"),
-	$elggDir->getPath("ElggPriorityList.js"),
-
+	'ElggEntity.js',
+	'ElggUser.js',
+	'ElggPriorityList.js',
+	
 	//libraries
-	$elggDir->getPath("prototypes.js"),
-	$elggDir->getPath("hooks.js"),
-	$elggDir->getPath("security.js"),
-	$elggDir->getPath("languages.js"),
-	$elggDir->getPath("ajax.js"),
-	$elggDir->getPath("session.js"),
-	$elggDir->getPath("pageowner.js"),
-	$elggDir->getPath("configuration.js"),
-	$elggDir->getPath("comments.js"),
-
+	'prototypes.js',
+	'hooks.js',
+	'security.js',
+	'translations.js',
+	'ajax.js',
+	'session.js',
+	'pageowner.js',
+	'configuration.js',
+	'comments.js',
+	
 	//ui
-	$elggDir->getPath("ui.js"),
+	'ui.js',
 ];
 
-
-foreach ($files as $file) {
-	readfile($file);
+foreach ($core_js_views as $view) {
+	echo elgg_view("core/js/{$view}");
 	// putting a new line between the files to address https://github.com/elgg/elgg/issues/3081
-	echo "\n";
+	echo PHP_EOL;
 }
 
 foreach (_elgg_get_js_site_data() as $expression => $value) {
 	$value = json_encode($value);
-	echo "{$expression} = {$value};\n";
+	echo "{$expression} = {$value};" . PHP_EOL;
 }
 ?>
 //<script>

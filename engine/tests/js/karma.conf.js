@@ -17,10 +17,24 @@ module.exports = function(config) {
 
 			'vendor/bower-asset/jquery/dist/jquery.js',
 			
-			'engine/js/elgglib.js',
-			'engine/js/hooks.js',
-			'engine/js/*.js',
+			// these libs get loaded directly
+			'views/default/core/js/elgglib.js',
+			'views/default/core/js/hooks.js',
 
+			'views/default/core/js/ajax.js',
+			'views/default/core/js/comments.js',
+			'views/default/core/js/configuration.js',
+			'views/default/core/js/ElggEntity.js',
+			'views/default/core/js/ElggPriorityList.js',
+			'views/default/core/js/ElggUser.js',
+			'views/default/core/js/languages.js',
+			'views/default/core/js/pageowner.js',
+			'views/default/core/js/prototypes.js',
+			'views/default/core/js/security.js',
+			'views/default/core/js/session.js',
+			'views/default/core/js/ui.js',
+			
+			// these js files can all be loaded via requirejs
 			{pattern:'engine/tests/js/*Test.js',included:false},
 			{pattern:'views/default/**/*.js',included:false},
 			{pattern:'vendor/bower-asset/**/*.js',included:false},
