@@ -11,7 +11,7 @@ $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmess
 $content = elgg_view('page/elements/body', $vars);
 $title_link = elgg_view('output/url', array(
 	'text' => 'Theme Sandbox',
-	'href' => 'theme_preview/intro',
+	'href' => 'theme_sandbox/intro',
 	'is_trusted' => true,
 ));
 
