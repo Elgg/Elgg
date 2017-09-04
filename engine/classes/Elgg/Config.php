@@ -49,6 +49,7 @@ use Elgg\Project\Paths;
  * @property array         $group_tool_options
  * @property bool          $i18n_loaded_from_cache
  * @property array         $icon_sizes
+ * @property string        $image_processor
  * @property string        $installed
  * @property bool          $installer_running
  * @property string        $language     Site language code

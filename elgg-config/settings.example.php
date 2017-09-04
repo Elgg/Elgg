@@ -329,3 +329,14 @@ $CONFIG->action_time_limit = 120;
  * @global bool $CONFIG->allow_phpinfo
  */
 $CONFIG->allow_phpinfo = false;
+
+/**
+ * Configure image processor
+ *
+ * This setting can be used to select a different image processor. By default the GD library is used.
+ * Currently only 'imagick' is supported as a different configuration.
+ * For Imagick the 'imagick' extension is required.
+ *
+ * @global string $CONFIG->image_processor
+ */
+//$CONFIG->image_processor = 'imagick';
