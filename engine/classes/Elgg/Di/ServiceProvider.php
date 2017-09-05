@@ -282,7 +282,18 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('input', \Elgg\Http\Input::class);
 
 		$this->setFactory('imageService', function(ServiceProvider $c) {
-			$imagine = new \Imagine\Gd\Imagine();
+			switch ($c->config->image_processor) {
+				case 'imagick':
+					if (extension_loaded('imagick')) {
+						$imagine = new \Imagine\Imagick\Imagine();
+						break;
+					}
+				default:
+					// default use GD
+					$imagine = new \Imagine\Gd\Imagine();
+					break;
+			}
+			
 			return new \Elgg\ImageService($imagine, $c->config);
 		});
 
