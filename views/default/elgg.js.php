@@ -20,7 +20,7 @@ $core_js_views = [
 	'prototypes.js',
 	'hooks.js',
 	'security.js',
-	'translations.js',
+	'languages.js',
 	'ajax.js',
 	'session.js',
 	'pageowner.js',
