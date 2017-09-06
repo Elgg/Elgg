@@ -104,4 +104,59 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 		return $sets;
 	}
 
+	public function testServiceInjectionIsDoneByReference() {
+
+		_elgg_services()->setClassName('testMutableService', MutableServiceMock::class);
+
+		_elgg_services()->setFactory('testDependantService', function(ServiceProvider $sp) {
+			return new DependantServiceMock($sp->testMutableService);
+		});
+
+		$dependant = _elgg_services()->testDependantService;
+		$mutable = _elgg_services()->testMutableService;
+
+		$mutable->foo = 'baz';
+
+		$this->assertEquals($mutable, $dependant->getDependency());
+	}
+
+	public function testSettingServiceValuePropagatesToDependantServices() {
+
+		_elgg_services()->setClassName('testMutableService', MutableServiceMock::class);
+
+		_elgg_services()->setFactory('testDependantService', function(ServiceProvider $sp) {
+			return new DependantServiceMock($sp->testMutableService);
+		});
+
+		$dependant = _elgg_services()->testDependantService;
+
+		$mutable = new MutableServiceMock();
+		$mutable->foo = 'bam';
+
+		_elgg_services()->setValue('testMutableService', $mutable);
+
+		$this->assertEquals($mutable, $dependant->getDependency());
+	}
 }
+
+
+class MutableServiceMock {
+
+	public $foo;
+
+}
+
+class DependantServiceMock {
+
+	private $dependency;
+
+	public function __construct(MutableServiceMock $mutable) {
+		$this->dependency = $mutable;
+	}
+
+	public function getDependency() {
+		return $this->dependency;
+	}
+
+}
+
