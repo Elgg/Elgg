@@ -232,13 +232,13 @@ function likes_count(ElggEntity $entity) {
  * @param string     $event  'update:after'
  * @param string     $type   'all'
  * @param ElggEntity $entity The updated entity
- * @return bool
+ * @return void
  *
  * @access private
  */
 function likes_access_sync($event, $type, $entity) {
 	if (!($entity instanceof \ElggEntity)) {
-		return true;
+		return;
 	}
 	
 	// need to override access in case likes ended up with ACCESS_PRIVATE
@@ -261,5 +261,5 @@ function likes_access_sync($event, $type, $entity) {
 		
 	elgg_set_ignore_access($ia);
 	
-	return true;
+	return;
 }
