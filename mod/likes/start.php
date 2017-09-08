@@ -248,7 +248,7 @@ function likes_access_sync($event, $type, $entity) {
 		'entity_guid' => $entity->getGUID(),
                 'annotation_name' => 'likes',
 		'wheres' => array(
-			"e.access_id != {$entity->access_id}"
+			"n_table.access_id != {$entity->access_id}"
 		),
 		'limit' => 0,
 	);
