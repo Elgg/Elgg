@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "04959c60f1f049b727012a2496972406",
+    "content-hash": "96e11da65258ad806f52cc0573c25a9f",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -2846,7 +2846,7 @@
                 "source": "https://github.com/Elgg/elgg-coding-standards/tree/3.x",
                 "issues": "https://github.com/Elgg/elgg-coding-standards/issues"
             },
-            "time": "2017-03-21 13:20:20"
+            "time": "2017-03-21T13:20:20+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4072,5 +4072,8 @@
         "ext-json": "*",
         "ext-xml": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.6"
+    }
 }
