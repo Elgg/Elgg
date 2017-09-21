@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c727a3f76569fe60e7e652001cd461e",
+    "content-hash": "0063037cf5783052714bb4f359c94e87",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -2094,7 +2094,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Elgg coding standards",
-            "time": "2017-03-17 15:30:58"
+            "time": "2017-03-17T15:30:58+00:00"
         },
         {
             "name": "fzaninotto/faker",
