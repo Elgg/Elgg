@@ -20,6 +20,7 @@ class ViewsService {
 	const VIEW_HOOK = 'view';
 	const VIEW_VARS_HOOK = 'view_vars';
 	const OUTPUT_KEY = '__view_output';
+	const BASE_VIEW_PRIORITY = 500;
 
 	/**
 	 * @see fileExists
@@ -345,14 +346,24 @@ class ViewsService {
 		if (isset($this->extensions[$view])) {
 			return $this->extensions[$view];
 		} else {
-			return [500 => $view];
+			return [self::BASE_VIEW_PRIORITY => $view];
 		}
 	}
 
 	/**
-	 * @access private
+	 * Renders a view
+	 *
+	 * @see elgg_view
+	 *
+	 * @param string $view                 Name of the view
+	 * @param array  $vars                 Variables to pass to the view
+	 * @param string $viewtype             Viewtype to use
+	 * @param bool   $issue_missing_notice Should a missing notice be issued
+	 * @param array  $extensions_tree      Array of views that are before the current view in the extension path
+	 *
+	 * @return string
 	 */
-	public function renderView($view, array $vars = [], $viewtype = '', $issue_missing_notice = true) {
+	public function renderView($view, array $vars = [], $viewtype = '', $issue_missing_notice = true, array $extensions_tree = []) {
 		$view = self::canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
@@ -363,6 +374,13 @@ class ViewsService {
 		if (strpos($view, '..') !== false) {
 			return '';
 		}
+		
+		// check for extension deadloops
+		if (in_array($view, $extensions_tree)) {
+			$this->logger->log("View $view is detected as an extension of itself. This is not allowed", 'ERROR');
+			return '';
+		}
+		$extensions_tree[] = $view;
 
 		if (!is_array($vars)) {
 			$this->logger->log("Vars in views must be an array: $view", 'ERROR');
@@ -387,13 +405,18 @@ class ViewsService {
 			return (string) $vars[self::OUTPUT_KEY];
 		}
 
-		$view_orig = $view;
-
 		$viewlist = $this->getViewList($view);
 
 		$content = '';
-		foreach ($viewlist as $view) {
-			$rendering = $this->renderViewFile($view, $vars, $viewtype, $issue_missing_notice);
+		foreach ($viewlist as $priority => $view_name) {
+			if ($priority !== self::BASE_VIEW_PRIORITY) {
+				// the others are extensions
+				$content .= $this->renderView($view_name, $vars, $viewtype, $issue_missing_notice, $extensions_tree);
+				continue;
+			}
+			
+			// actual rendering of a single view
+			$rendering = $this->renderViewFile($view_name, $vars, $viewtype, $issue_missing_notice);
 			if ($rendering !== false) {
 				$content .= $rendering;
 				continue;
@@ -401,7 +424,7 @@ class ViewsService {
 
 			// attempt to load default view
 			if ($viewtype !== 'default' && $this->doesViewtypeFallback($viewtype)) {
-				$rendering = $this->renderViewFile($view, $vars, 'default', $issue_missing_notice);
+				$rendering = $this->renderViewFile($view_name, $vars, 'default', $issue_missing_notice);
 				if ($rendering !== false) {
 					$content .= $rendering;
 				}
@@ -410,11 +433,11 @@ class ViewsService {
 
 		// Plugin hook
 		$params = [
-			'view' => $view_orig,
+			'view' => $view,
 			'vars' => $vars,
 			'viewtype' => $viewtype,
 		];
-		$content = $this->hooks->trigger(self::VIEW_HOOK, $view_orig, $params, $content);
+		$content = $this->hooks->trigger(self::VIEW_HOOK, $view, $params, $content);
 
 		return $content;
 	}
@@ -511,9 +534,14 @@ class ViewsService {
 	public function extendView($view, $view_extension, $priority = 501) {
 		$view = self::canonicalizeViewName($view);
 		$view_extension = self::canonicalizeViewName($view_extension);
+		
+		if ($view === $view_extension) {
+			// do not allow direct extension on self with self
+			return;
+		}
 
 		if (!isset($this->extensions[$view])) {
-			$this->extensions[$view][500] = (string) $view;
+			$this->extensions[$view][self::BASE_VIEW_PRIORITY] = (string) $view;
 		}
 
 		// raise priority until it doesn't match one already registered
@@ -561,8 +589,11 @@ class ViewsService {
 		if (!isset($this->extensions[$view])) {
 			return false;
 		}
+		
+		$extensions = $this->extensions[$view];
+		unset($extensions[self::BASE_VIEW_PRIORITY]); // we do not want the base view to be removed from the list
 
-		$priority = array_search($view_extension, $this->extensions[$view]);
+		$priority = array_search($view_extension, $extensions);
 		if ($priority === false) {
 			return false;
 		}
