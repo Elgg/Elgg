@@ -1375,6 +1375,19 @@ change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
+<a name="1.12.17"></a>
+### 1.12.17  (2017-09-21)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Brett Profitt (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **likes:** listing limit no longer breaks likes counts ([abbe2715](https://github.com/Elgg/Elgg/commit/abbe27151654a5cbc22b246d8b26e7a2087a4067), closes [#11160](https://github.com/Elgg/Elgg/issues/11160))
+
 <a name="1.12.16"></a>
 ### 1.12.16  (2017-05-10)
 
