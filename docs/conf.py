@@ -107,7 +107,7 @@ primary_domain = 'php'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'elgg_rtd_theme'
+html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -120,9 +120,8 @@ html_theme_path = ["_themes"]
 # on_rtd is whether we are on readthedocs.org
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-if on_rtd:  # only import and set the theme if we're building docs locally
-    def setup(app):
-        app.add_stylesheet('css/theme.css')
+if not on_rtd:  # only import and set the theme if we're building docs locally
+    html_theme = 'elgg_rtd_theme'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".

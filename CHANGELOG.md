@@ -1,3 +1,38 @@
+<a name="2.3.4"></a>
+### 2.3.4  (2017-09-21)
+
+#### Contributors
+
+* Jerôme Bakker (17)
+* Ismayil Khayredinov (5)
+* Steve Clay (2)
+* jdalsem (2)
+
+#### Documentation
+
+* **composer:** explain how dependencies are managed in Elgg ([f6b30d45](https://github.com/Elgg/Elgg/commit/f6b30d45468607c5a5e82677397d2aa012528fad))
+* **icon:** use correct functions for saving entity icon ([2e1b6a47](https://github.com/Elgg/Elgg/commit/2e1b6a473750637931abab2c41f14e1b92338756))
+* **install:** bootstrapping Elgg in Laravel Homestead ([84399394](https://github.com/Elgg/Elgg/commit/84399394b7c5da657df10e642d775b11f8cc81c9))
+
+
+#### Bug Fixes
+
+* **composer:** no longer use deprecated class ([d5e8acbf](https://github.com/Elgg/Elgg/commit/d5e8acbfe7401e961c39025184731df44ad0fc1a))
+* **core:** correctly manipulate ini setting to return readable bytes ([bc61a3b9](https://github.com/Elgg/Elgg/commit/bc61a3b942b0afd848496b6bba6bbff95d1033a6))
+* **developers:** incorrect header title link in theme sandbox ([583badbe](https://github.com/Elgg/Elgg/commit/583badbe22ac85cd5bed7cf9a07dc2bdbb3f2272))
+* **email:** improved formatting of email headers ([cc590e6a](https://github.com/Elgg/Elgg/commit/cc590e6af59fa2bc1b40b0a6d4de62b671258d2f))
+* **entities:** batch count now works when $options already count set to false ([62ecabed](https://github.com/Elgg/Elgg/commit/62ecabedff179b3f1f2bc2e261dfbfa77d1c9122), closes [#10992](https://github.com/Elgg/Elgg/issues/10992))
+* **groups:**
+  * group delete button no longer misaligned ([4bdf92d9](https://github.com/Elgg/Elgg/commit/4bdf92d9dd3f9f43620cf1a4aada28b4cbdfd46e))
+  * check for existence of custom icon before generating url ([e6270945](https://github.com/Elgg/Elgg/commit/e6270945263c4eae27295f06b641a3c6282eb52a))
+* **plugins:**
+  * only include plugin files once ([49d4ce50](https://github.com/Elgg/Elgg/commit/49d4ce50139e595505a6b6b9f872d76438646000))
+  * issue error about saving array values at correct location ([ef753ebf](https://github.com/Elgg/Elgg/commit/ef753ebf5ecbe3c94f0a969ed89a14e2268a8751))
+* **profile:** now able to remove the first custom profile field ([3d7258ec](https://github.com/Elgg/Elgg/commit/3d7258ec3315b48608f85f10160a8e4a22fdb114))
+* **river:** comments no longer show full text in river ([e0669219](https://github.com/Elgg/Elgg/commit/e0669219e6cead6b587de695d15f0fdde0d81790))
+* **simplecache:** expires and symlinking cache works on nginx ([fe220126](https://github.com/Elgg/Elgg/commit/fe220126435021e9a53dbe6b46a59d3f6907c786), closes [#9054](https://github.com/Elgg/Elgg/issues/9054))
+
+
 <a name="2.3.3"></a>
 ### 2.3.3  (2017-05-16)
 
@@ -1401,6 +1436,19 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+<a name="1.12.17"></a>
+### 1.12.17  (2017-09-21)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Brett Profitt (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **likes:** listing limit no longer breaks likes counts ([abbe2715](https://github.com/Elgg/Elgg/commit/abbe27151654a5cbc22b246d8b26e7a2087a4067), closes [#11160](https://github.com/Elgg/Elgg/issues/11160))
 
 <a name="1.12.16"></a>
 ### 1.12.16  (2017-05-10)
