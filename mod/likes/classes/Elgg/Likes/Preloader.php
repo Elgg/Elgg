@@ -40,6 +40,7 @@ class Preloader {
 			'guids' => $guids,
 			'selects' => ['e.guid', 'COUNT(*) AS cnt'],
 			'group_by' => 'e.guid',
+			'limit' => false,
 			'callback' => false,
 		]);
 		foreach ($guids as $guid) {
@@ -86,6 +87,7 @@ class Preloader {
 			'annotation_names' => 'likes',
 			'annotation_owner_guids' => $owner_guid,
 			'guids' => $guids,
+			'limit' => false,
 			'callback' => false,
 		]);
 
@@ -161,6 +163,7 @@ class Preloader {
 		if ($fetch_guids) {
 			$fetched = elgg_get_entities([
 				'guids' => $fetch_guids,
+				'limit' => false,
 			]);
 			array_splice($entities, count($entities), 0, $fetched);
 		}
