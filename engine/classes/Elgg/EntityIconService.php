@@ -2,16 +2,15 @@
 
 namespace Elgg;
 
-use DateTime;
 use Elgg\Database\EntityTable;
 use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Http\Request;
+use Elgg\UploadService;
 use ElggEntity;
 use ElggFile;
 use ElggIcon;
 use InvalidParameterException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -51,6 +50,11 @@ class EntityIconService {
 	private $entities;
 
 	/**
+	 * @var UploadService
+	 */
+	private $uploads;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Config             $config   Config
@@ -58,13 +62,15 @@ class EntityIconService {
 	 * @param Request            $request  Http request
 	 * @param Logger             $logger   Logger
 	 * @param EntityTable        $entities Entity table
+	 * @param UploadService      $uploads  Upload service
 	 */
-	public function __construct(Config $config, PluginHooksService $hooks, Request $request, Logger $logger, EntityTable $entities) {
+	public function __construct(Config $config, PluginHooksService $hooks, Request $request, Logger $logger, EntityTable $entities, UploadService $uploads) {
 		$this->config = $config;
 		$this->hooks = $hooks;
 		$this->request = $request;
 		$this->logger = $logger;
 		$this->entities = $entities;
+		$this->uploads = $uploads;
 	}
 
 	/**
@@ -77,13 +83,8 @@ class EntityIconService {
 	 * @return bool
 	 */
 	public function saveIconFromUploadedFile(ElggEntity $entity, $input_name, $type = 'icon', array $coords = []) {
-		$files = $this->request->files;
-		if (!$files->has($input_name)) {
-			return false;
-		}
-
-		$input = $files->get($input_name);
-		if (!$input instanceof UploadedFile || !$input->isValid()) {
+		$input = $this->uploads->getFile($input_name);
+		if (empty($input)) {
 			return false;
 		}
 

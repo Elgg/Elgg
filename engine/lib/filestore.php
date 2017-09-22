@@ -103,17 +103,8 @@ function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight
 
 	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Use elgg_save_resized_image()', '2.3');
 
-	$files = _elgg_services()->request->files;
-	if (!$files->has($input_name)) {
-		return false;
-	}
-
-	$file = $files->get($input_name);
+	$file = _elgg_services()->request->getFile($input_name);
 	if (empty($file)) {
-		// a file input was provided but no file uploaded
-		return false;
-	}
-	if ($file->getError() !== 0) {
 		return false;
 	}
 
@@ -581,7 +572,19 @@ function _elgg_filestore_move_icons($event, $type, $entity) {
  * @return UploadedFile[]|false
  */
 function elgg_get_uploaded_files($input_name) {
-	return _elgg_services()->uploads->getUploadedFiles($input_name);
+	return _elgg_services()->uploads->getFiles($input_name);
+}
+
+/**
+ * Returns a single valid uploaded file object
+ *
+ * @param string $input_name Form input name
+ * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
+ *
+ * @return UploadedFile|false
+ */
+function elgg_get_uploaded_file($input_name, $check_for_validity = true) {
+	return _elgg_services()->uploads->getFile($input_name, $check_for_validity);
 }
 
 /**

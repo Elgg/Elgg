@@ -173,4 +173,40 @@ class Request extends SymfonyRequest {
 		$ext = preg_quote($ext, '~');
 		return (bool) preg_match("~\\.{$ext}[,$]~", $extensions);
 	}
+	
+	/**
+	 * Returns an array of uploaded file objects regardless of upload status/errors
+	 *
+	 * @param string $input_name Form input name
+	 * @return UploadedFile[]
+	 */
+	public function getFiles($input_name) {
+		$files = $this->files->get($input_name, []);
+		if (!is_array($files)) {
+			$files = [$files];
+		}
+		return $files;
+	}
+	
+	/**
+	 * Returns the first file found based on the input name
+	 *
+	 * @param string $input_name         Form input name
+	 * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
+	 *
+	 * @return UploadedFile|false
+	 */
+	public function getFile($input_name, $check_for_validity = true) {
+		$files = $this->getFiles($input_name);
+		if (empty($files)) {
+			return;
+		}
+		
+		$file = $files[0];
+		if ($check_for_validity && !$file->isValid()) {
+			return false;
+		}
+		
+		return $file;
+	}
 }

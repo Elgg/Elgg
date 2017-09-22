@@ -407,6 +407,7 @@ Miscellaneous API changes
  * Config functions like ``elgg_get_config`` no longer trim keys.
  * If you override the view ``navigation/menu/user_hover/placeholder``, you must change the config key ``lazy_hover:menus`` to ``elgg_lazy_hover_menus``.
  * The config value ``entity_types`` is no longer present or used.
+ * Uploaded images are autorotated based on their orientation metadata.
 
 View extension behaviour changed
 --------------------------------
