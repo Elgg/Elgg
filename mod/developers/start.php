@@ -184,6 +184,10 @@ function developers_wrap_views($hook, $type, $result, $params) {
 	if (elgg_get_viewtype() != "default") {
 		return;
 	}
+	
+	if (stristr(current_page_url(), elgg_normalize_url('cache/'))) {
+		return;
+	}
 
 	$excluded_bases = ['resources', 'input', 'output', 'embed', 'icon', 'json', 'xml'];
 

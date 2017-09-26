@@ -45,6 +45,34 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($this->views->unextendView('foo', 'bar'));
 	}
 
+	public function testCanExtendExtensionsViews() {
+		$this->views->extendView('output/1', 'output/2');
+		$this->views->extendView('output/2', 'output/3');
+		$this->views->extendView('output/3', 'output/4');
+
+		$this->assertEquals('1234', $this->views->renderView('output/1'));
+	}
+
+	public function testPreventViewExtensionsRecursion() {
+		
+		$this->views->extendView('output/1', 'output/2');
+		$this->views->extendView('output/2', 'output/3');
+		$this->views->extendView('output/3', 'output/4');
+		$this->views->extendView('output/4', 'output/1'); // should be prevented
+		
+		$this->assertEquals('1234', $this->views->renderView('output/1'));
+	}
+
+	public function testExtensionsBranches() {
+		
+		$this->views->extendView('output/1', 'output/4', 100);
+		$this->views->extendView('output/1', 'output/2');
+		$this->views->extendView('output/2', 'output/3');
+		$this->views->extendView('output/3', 'output/4');
+		
+		$this->assertEquals('41234', $this->views->renderView('output/1'));
+	}
+
 	public function testViewCanOnlyExistIfString() {
 		$this->assertFalse($this->views->viewExists(1));
 		$this->assertFalse($this->views->viewExists(new \stdClass));
@@ -188,6 +216,28 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 			500 => 'foo',
 			501 => 'bar',
 				], $list);
+	}
+	
+	public function testPreventExtensionOnSelf() {
+		
+		$this->views->extendView('output/1', 'output/1');
+
+		$list = $this->views->getViewList('output/1');
+		$this->assertEquals([
+			500 => 'output/1',
+		], $list);
+	}
+	
+	public function testPreventUnExtendOfSelf() {
+		
+		$this->views->extendView('output/1', 'output/2'); // force existence of extension list
+		$this->views->unextendView('output/1', 'output/1');
+
+		$list = $this->views->getViewList('output/1');
+		$this->assertEquals([
+			500 => 'output/1',
+			501 => 'output/2',
+		], $list);
 	}
 
 	public function getExampleNormalizedViews() {

@@ -408,6 +408,13 @@ Miscellaneous API changes
  * If you override the view ``navigation/menu/user_hover/placeholder``, you must change the config key ``lazy_hover:menus`` to ``elgg_lazy_hover_menus``.
  * The config value ``entity_types`` is no longer present or used.
 
+View extension behaviour changed
+--------------------------------
+
+An extended view now will receive all the regular hooks (like the `view_vars` hook).
+It now is also possible to extend view extensions. With this change in behaviour all view rendering will behave the same.
+It no longer matters if it was used as an extension or not.
+
 JavaScript hook calling order may change
 ----------------------------------------
 
