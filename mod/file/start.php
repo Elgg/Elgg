@@ -185,16 +185,16 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 	$method = $params['method'];
 
 	$descr = $entity->description;
-	$title = $entity->title;
+	$title = $entity->getDisplayName();
 
-	$notification->subject = elgg_echo('file:notify:subject', [$entity->title], $language);
+	$notification->subject = elgg_echo('file:notify:subject', [$title], $language);
 	$notification->body = elgg_echo('file:notify:body', [
-		$owner->name,
+		$owner->getDisplayName(),
 		$title,
 		$descr,
 		$entity->getURL()
 	], $language);
-	$notification->summary = elgg_echo('file:notify:summary', [$entity->title], $language);
+	$notification->summary = elgg_echo('file:notify:summary', [$title], $language);
 	$notification->url = $entity->getURL();
 	return $notification;
 }
@@ -316,7 +316,7 @@ function file_type_cloud_get_url($type, $friends) {
 function file_set_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
 	if (elgg_instanceof($entity, 'object', 'file')) {
-		$title = elgg_get_friendly_title($entity->title);
+		$title = elgg_get_friendly_title($entity->getDisplayName());
 		return "file/view/" . $entity->getGUID() . "/" . $title;
 	}
 }
@@ -337,10 +337,8 @@ function file_set_icon_url($hook, $type, $url, $params) {
 	$size = elgg_extract('size', $params, 'large');
 	if (elgg_instanceof($file, 'object', 'file')) {
 		// thumbnails get first priority
-		$thumbnail = $file->getIcon($size);
-		$thumb_url = $thumbnail->getInlineURL(true);
-		if ($thumb_url) {
-			return $thumb_url;
+		if ($file->hasIcon($size)) {
+			return $file->getIcon($size)->getInlineURL(true);
 		}
 
 		$mapping = [

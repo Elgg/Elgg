@@ -5,11 +5,11 @@
  * @uses $vars['entity']
  */
 
-if (empty($vars['full_view'])) {
+if (!elgg_extract('full_view', $vars, false)) {
 	return;
 }
 
-$file = $vars['entity'];
+$file = elgg_extract('entity', $vars);
 
 $img = elgg_format_element('img', [
 	'class' => 'elgg-photo',
@@ -22,4 +22,4 @@ $a = elgg_format_element([
 	'class' => 'elgg-lightbox-photo',
 ]);
 
-?><div class="file-photo"><?= $a ?></div>
+echo elgg_format_element('div', ['class' => 'file-photo'], $a);

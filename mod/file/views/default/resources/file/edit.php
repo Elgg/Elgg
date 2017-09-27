@@ -24,8 +24,7 @@ if (!$file->canEdit()) {
 $title = elgg_echo('file:edit');
 
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
-elgg_push_breadcrumb($file->title, $file->getURL());
-elgg_push_breadcrumb($title);
+elgg_push_breadcrumb($file->getDisplayName(), $file->getURL());
 
 elgg_set_page_owner_guid($file->getContainerGUID());
 

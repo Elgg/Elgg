@@ -14,11 +14,10 @@ if (!$owner) {
 }
 
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
-elgg_push_breadcrumb($owner->name);
 
 elgg_register_title_button('file', 'add', 'object', 'file');
 
-$params = [];
+$params = ['filter' => ''];
 
 if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// user looking at own files
@@ -27,12 +26,9 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// someone else's files
 	// do not show select a tab when viewing someone else's posts
 	$params['filter_context'] = 'none';
-} else {
-	// group files
-	$params['filter'] = '';
 }
 
-$title = elgg_echo("file:user", [$owner->name]);
+$title = elgg_echo("file:user", [$owner->getDisplayName()]);
 
 // List files
 $options = [

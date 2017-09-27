@@ -14,7 +14,7 @@ $page_owner = elgg_get_page_owner_entity();
 if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo('groups:yours');
 } else {
-	$title = elgg_echo('groups:user', [$page_owner->name]);
+	$title = elgg_echo('groups:user', [$page_owner->getDisplayName()]);
 }
 elgg_push_breadcrumb($title);
 

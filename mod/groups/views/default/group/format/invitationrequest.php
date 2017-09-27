@@ -12,7 +12,7 @@ if (!$user instanceof \ElggUser || !$user->canEdit()) {
 
 $group = elgg_extract('entity', $vars);
 if (!$group instanceof \ElggGroup) {
-	return true;
+	return;
 }
 
 $icon = elgg_view_entity_icon($group, 'small');

@@ -16,7 +16,7 @@ if (isset($vars['invitations'])) {
 	$invitations = groups_get_invited_groups($user->guid, false, [
 		'limit' => $limit,
 		'offset' => $offset
-			]);
+	]);
 }
 
 $vars['items'] = $invitations;

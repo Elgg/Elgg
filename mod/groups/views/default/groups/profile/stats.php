@@ -17,7 +17,7 @@ if (!($owner instanceof ElggEntity)) {
 	<b><?= elgg_echo("groups:owner"); ?>: </b>
 	<?php
 		echo elgg_view('output/url', [
-			'text' => $owner->name,
+			'text' => $owner->getDisplayName(),
 			'value' => $owner->getURL(),
 			'is_trusted' => true,
 		]);

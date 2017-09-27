@@ -5,20 +5,20 @@
  * @package ElggGroups
  */
 
-$user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
-$group_guid = get_input('group_guid');
+$user_guid = (int) get_input('user_guid', elgg_get_logged_in_user_guid());
+$group_guid = (int) get_input('group_guid');
 
 $user = get_user($user_guid);
 $group = get_entity($group_guid);
 
-if (!$user && !elgg_instanceof($group, 'group')) {
-	forward(REFERER);
+if (!$user && !($group instanceof \ElggGroup)) {
+	return elgg_error_response();
 }
 
 // If join request made
-if (check_entity_relationship($user->guid, 'membership_request', $group->guid)) {
-	remove_entity_relationship($user->guid, 'membership_request', $group->guid);
-	system_message(elgg_echo("groups:joinrequestkilled"));
+$message = '';
+if (remove_entity_relationship($user->guid, 'membership_request', $group->guid)) {
+	$message = elgg_echo('groups:joinrequestkilled');
 }
 
-forward(REFERER);
+return elgg_ok_response('', $message);

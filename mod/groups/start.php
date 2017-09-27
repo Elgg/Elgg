@@ -50,10 +50,6 @@ function groups_init() {
 
 	//extend some views
 	elgg_extend_view('elgg.css', 'groups/css');
-	if (_elgg_view_may_be_altered('groups/js', __DIR__ . '/views/default/groups/js.php')) {
-		elgg_deprecated_notice('groups/js view has been deprecated. Use AMD modules instead', '2.2');
-		elgg_extend_view('elgg.js', 'groups/js');
-	}
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
@@ -280,8 +276,10 @@ function groups_page_handler($page) {
 
 	$vars = [];
 	switch ($page[0]) {
-		case 'add':
 		case 'all':
+			// all groups doesn't get link to self
+			elgg_pop_breadcrumb();
+		case 'add':
 		case 'owner':
 		case 'search':
 			echo elgg_view_resource("groups/{$page[0]}");
@@ -327,7 +325,7 @@ function groups_page_handler($page) {
  */
 function groups_set_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
-	$title = elgg_get_friendly_title($entity->name);
+	$title = elgg_get_friendly_title($entity->getDisplayName());
 	return "groups/profile/{$entity->guid}/$title";
 }
 

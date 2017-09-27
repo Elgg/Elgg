@@ -5,27 +5,23 @@
  * @package ElggGroups
  */
 
-$user_guid = get_input('user_guid');
-$group_guid = get_input('group_guid');
+$user_guid = (int) get_input('user_guid');
+$group_guid = (int) get_input('group_guid');
 
 $user = get_user($user_guid);
 $group = get_entity($group_guid);
 
-elgg_set_page_owner_guid($group->guid);
-
-if ($user && ($group instanceof ElggGroup) && $group->canEdit()) {
-	// Don't allow removing group owner
-	if ($group->getOwnerGUID() != $user->getGUID()) {
-		if ($group->leave($user)) {
-			system_message(elgg_echo("groups:removed", [$user->name]));
-		} else {
-			register_error(elgg_echo("groups:cantremove"));
-		}
-	} else {
-		register_error(elgg_echo("groups:cantremove"));
-	}
-} else {
-	register_error(elgg_echo("groups:cantremove"));
+if (!$user || !($group instanceof \ElggGroup) || !$group->canEdit()) {
+	return elgg_error_response(elgg_echo('groups:cantremove'));
 }
 
-forward(REFERER);
+if ($group->getOwnerGUID() === $user->guid) {
+	// owner can't be removed
+	return elgg_error_response(elgg_echo('groups:cantremove'));
+}
+
+if (!$group->leave($user)) {
+	return elgg_error_response(elgg_echo('groups:cantremove'));
+}
+
+return elgg_ok_response('', elgg_echo('groups:removed', [$user->getDisplayName()]));

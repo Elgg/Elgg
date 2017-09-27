@@ -5,23 +5,22 @@
  * @package ElggGroups
  */
 
-$group_guid = get_input('group_guid');
+$group_guid = (int) get_input('group_guid');
 $action = get_input('action_type');
 
 $group = get_entity($group_guid);
 
-if (!elgg_instanceof($group, 'group')) {
-	register_error(elgg_echo('groups:featured_error'));
-	forward(REFERER);
+if (!($group instanceof \ElggGroup)) {
+	return elgg_error_response(elgg_echo('groups:featured_error'));
 }
 
 //get the action, is it to feature or unfeature
-if ($action == "feature") {
-	$group->featured_group = "yes";
-	system_message(elgg_echo('groups:featuredon', [$group->name]));
+if ($action == 'feature') {
+	$group->featured_group = 'yes';
+	$message = elgg_echo('groups:featuredon', [$group->getDisplayName()]);
 } else {
 	$group->deleteMetadata('featured_group');
-	system_message(elgg_echo('groups:unfeatured', [$group->name]));
+	$message = elgg_echo('groups:unfeatured', [$group->getDisplayName()]);
 }
 
-forward(REFERER);
+return elgg_ok_response('', $message);

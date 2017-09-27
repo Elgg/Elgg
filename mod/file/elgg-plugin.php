@@ -12,11 +12,6 @@ return [
 		'file/upload' => [],
 		'file/delete' => [],
 	],
-	'views' => [
-		'default' => [
-			'file/icons/' => __DIR__ . '/graphics/icons',
-		],
-	],
 	'widgets' => [
 		'filerepo' => [
 			'name' => elgg_echo('file'),

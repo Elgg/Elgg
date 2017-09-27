@@ -30,9 +30,9 @@ $friends = (bool) get_input('friends', false);
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
 if ($owner) {
 	if (elgg_instanceof($owner, 'user')) {
-		elgg_push_breadcrumb($owner->name, "file/owner/$owner->username");
+		elgg_push_breadcrumb($owner->getDisplayName(), "file/owner/$owner->username");
 	} else {
-		elgg_push_breadcrumb($owner->name, "file/group/$owner->guid/all");
+		elgg_push_breadcrumb($owner->getDisplayName(), "file/group/$owner->guid/all");
 	}
 }
 if ($friends && $owner) {
@@ -40,8 +40,6 @@ if ($friends && $owner) {
 }
 if ($file_type) {
 	elgg_push_breadcrumb(elgg_echo("file:type:$file_type"));
-} else {
-	elgg_push_breadcrumb(elgg_echo('all'));
 }
 
 // title
@@ -51,9 +49,8 @@ if (!$owner) {
 } else {
 	$friend_string = $friends ? elgg_echo('file:title:friends') : '';
 	$type_string = elgg_echo("file:type:$file_type");
-	$title = elgg_echo('file:list:title', [$owner->name, $friend_string, $type_string]);
+	$title = elgg_echo('file:list:title', [$owner->getDisplayName(), $friend_string, $type_string]);
 }
-
 
 $sidebar = file_get_type_cloud($page_owner_guid, $friends);
 

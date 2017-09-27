@@ -7,15 +7,13 @@
 
 // Get variables
 $title = elgg_get_title_input();
-$desc = get_input("description");
-$access_id = (int) get_input("access_id");
+$desc = get_input('description');
+$access_id = (int) get_input('access_id');
 $container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('file_guid');
-$tags = get_input("tags");
+$tags = get_input('tags');
 
-if ($container_guid == 0) {
-	$container_guid = elgg_get_logged_in_user_guid();
-}
+$container_guid = $container_guid ?: elgg_get_logged_in_user_guid();
 
 elgg_make_sticky_form('file');
 
@@ -27,27 +25,21 @@ if ($uploaded_file && !$uploaded_file->isValid()) {
 }
 
 // check whether this is a new file or an edit
-$new_file = true;
-if ($guid > 0) {
-	$new_file = false;
-}
+$new_file = empty($guid);
 
 if ($new_file) {
 	$file = new ElggFile();
-	$file->subtype = "file";
 } else {
 	// load original file object
 	$file = get_entity($guid);
 	if (!$file instanceof ElggFile) {
-		register_error(elgg_echo('file:cannotload'));
-		forward(REFERER);
+		return elgg_error_response(elgg_echo('file:cannotload'));
 	}
 	/* @var ElggFile $file */
 
 	// user must be able to edit file
 	if (!$file->canEdit()) {
-		register_error(elgg_echo('file:noaccess'));
-		forward(REFERER);
+		return elgg_error_response(elgg_echo('file:noaccess'));
 	}
 }
 
@@ -95,36 +87,28 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 // file saved so clear sticky form
 elgg_clear_sticky_form('file');
 
+if (empty($guid)) {
+	return elgg_error_response(elgg_echo('file:uploadfailed'));
+}
+
+$forward = $file->getURL();
 
 // handle results differently for new files and file updates
 if ($new_file) {
-	if ($guid) {
-		$message = elgg_echo("file:saved");
-		system_message($message);
-		elgg_create_river_item([
-			'view' => 'river/object/file/create',
-			'action_type' => 'create',
-			'subject_guid' => elgg_get_logged_in_user_guid(),
-			'object_guid' => $file->guid,
-		]);
-	} else {
-		// failed to save file object - nothing we can do about this
-		$error = elgg_echo("file:uploadfailed");
-		register_error($error);
-	}
-
+	
 	$container = get_entity($container_guid);
 	if (elgg_instanceof($container, 'group')) {
-		forward("file/group/$container->guid/all");
+		$forward = "file/group/{$container->guid}/all";
 	} else {
-		forward("file/owner/$container->username");
+		$forward = "file/owner/{$container->username}";
 	}
-} else {
-	if ($guid) {
-		system_message(elgg_echo("file:saved"));
-	} else {
-		register_error(elgg_echo("file:uploadfailed"));
-	}
-
-	forward($file->getURL());
+	
+	elgg_create_river_item([
+		'view' => 'river/object/file/create',
+		'action_type' => 'create',
+		'subject_guid' => elgg_get_logged_in_user_guid(),
+		'object_guid' => $file->guid,
+	]);
 }
+
+return elgg_ok_response('', elgg_echo('file:saved'), $forward);
