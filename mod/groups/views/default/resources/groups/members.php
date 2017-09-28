@@ -10,8 +10,7 @@ elgg_set_page_owner_guid($guid);
 
 elgg_group_gatekeeper();
 
-elgg_push_breadcrumb($group->name, $group->getURL());
-elgg_push_breadcrumb(elgg_echo('groups:members'));
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $options = [
 	'relationship' => 'member',
@@ -34,7 +33,7 @@ switch ($sort) {
 		break;
 }
 
-$title = elgg_echo('groups:members:title', [$group->name]);
+$title = elgg_echo('groups:members:title', [$group->getDisplayName()]);
 
 $tabs = elgg_view_menu('groups_members', [
 	'entity' => $group,

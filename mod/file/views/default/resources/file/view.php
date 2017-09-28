@@ -17,16 +17,14 @@ elgg_group_gatekeeper();
 
 elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
-$crumbs_title = $owner->name;
+$crumbs_title = $owner->getDisplayName();
 if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($crumbs_title, "file/group/$owner->guid/all");
 } else {
 	elgg_push_breadcrumb($crumbs_title, "file/owner/$owner->username");
 }
 
-$title = $file->title;
-
-elgg_push_breadcrumb($title);
+$title = $file->getDisplayName();
 
 $content = elgg_view_entity($file, [
 	'full_view' => true,

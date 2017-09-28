@@ -27,11 +27,11 @@ if (sizeof($user_guid)) {
 		
 		if (!$group->isMember($user)) {
 			if (groups_join_group($group, $user)) {
-				$subject = elgg_echo('groups:welcome:subject', [$group->name], $user->language);
+				$subject = elgg_echo('groups:welcome:subject', [$group->getDisplayName()], $user->language);
 
 				$body = elgg_echo('groups:welcome:body', [
-					$user->name,
-					$group->name,
+					$user->getDisplayName(),
+					$group->getDisplayName(),
 					$group->getURL(),
 				], $user->language);
 				
@@ -46,10 +46,10 @@ if (sizeof($user_guid)) {
 
 				system_message(elgg_echo('groups:addedtogroup'));
 			} else {
-				$errors[] = elgg_echo('groups:error:addedtogroup', [$user->name]);
+				$errors[] = elgg_echo('groups:error:addedtogroup', [$user->getDisplayName()]);
 			}
 		} else {
-			$errors[] = elgg_echo('groups:add:alreadymember', [$user->name]);
+			$errors[] = elgg_echo('groups:add:alreadymember', [$user->getDisplayName()]);
 
 			// if an invitation is still pending clear it up, we don't need it
 			remove_entity_relationship($group->guid, 'invited', $user->guid);

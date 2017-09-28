@@ -4,5 +4,5 @@
  */
 
 echo elgg_view('river/elements/layout', [
-	'item' => $vars['item'],
+	'item' => elgg_extract('item', $vars),
 ]);

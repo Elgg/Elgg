@@ -5,32 +5,23 @@
  * @package ElggGroups
  */
 
-$user_guid = get_input('user_guid');
-$group_guid = get_input('group_guid');
+$user_guid = (int) get_input('user_guid', elgg_get_logged_in_user_guid());
+$group_guid = (int) get_input('group_guid');
 
-$user = null;
-if (!$user_guid) {
-	$user = elgg_get_logged_in_user_entity();
-} else {
-	$user = get_user($user_guid);
-}
-
+$user = get_user($user_guid);
 $group = get_entity($group_guid);
 
-elgg_set_page_owner_guid($group->guid);
-
-if ($user && ($group instanceof ElggGroup)) {
-	if ($group->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
-		if ($group->leave($user)) {
-			system_message(elgg_echo("groups:left"));
-		} else {
-			register_error(elgg_echo("groups:cantleave"));
-		}
-	} else {
-		register_error(elgg_echo("groups:cantleave"));
-	}
-} else {
-	register_error(elgg_echo("groups:cantleave"));
+if (!$user || !($group instanceof \ElggGroup)) {
+	return elgg_error_response(elgg_echo('groups:cantleave'));
 }
 
-forward(REFERER);
+if ($group->getOwnerGUID() === $user->guid) {
+	// owner can't be removed
+	return elgg_error_response(elgg_echo('groups:cantleave'));
+}
+
+if (!$group->leave($user)) {
+	return elgg_error_response(elgg_echo('groups:cantleave'));
+}
+
+return elgg_ok_response('', elgg_echo('groups:left'));

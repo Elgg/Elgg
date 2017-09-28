@@ -20,8 +20,7 @@ $content = elgg_view_form('groups/invite', [
 	'entity' => $group,
 ]);
 
-elgg_push_breadcrumb($group->name, $group->getURL());
-elgg_push_breadcrumb(elgg_echo('groups:invite'));
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $params = [
 	'content' => $content,

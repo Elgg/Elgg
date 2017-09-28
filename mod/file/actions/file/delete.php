@@ -9,26 +9,19 @@ $guid = (int) get_input('guid');
 
 $file = get_entity($guid);
 if (!$file instanceof ElggFile) {
-	register_error(elgg_echo("file:deletefailed"));
-	forward('file/all');
-}
-/* @var ElggFile $file */
-
-if (!$file->canEdit()) {
-	register_error(elgg_echo("file:deletefailed"));
-	forward($file->getURL());
+	return elgg_error_response(elgg_echo('file:deletefailed'), 'file/all');
 }
 
 $container = $file->getContainerEntity();
 
 if (!$file->delete()) {
-	register_error(elgg_echo("file:deletefailed"));
-} else {
-	system_message(elgg_echo("file:deleted"));
+	return elgg_error_response(elgg_echo('file:deletefailed'));
 }
 
 if (elgg_instanceof($container, 'group')) {
-	forward("file/group/$container->guid/all");
+	$forward = "file/group/{$container->guid}/all";
 } else {
-	forward("file/owner/$container->username");
+	$forward = "file/owner/{$container->username}";
 }
+
+return elgg_ok_response('', elgg_echo('file:deleted'), $forward);

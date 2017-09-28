@@ -16,8 +16,7 @@ if (elgg_get_plugin_setting('allow_activity', 'groups') === 'no'
 
 $title = elgg_echo('groups:activity');
 
-elgg_push_breadcrumb($group->name, $group->getURL());
-elgg_push_breadcrumb($title);
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $db_prefix = elgg_get_config('dbprefix');
 

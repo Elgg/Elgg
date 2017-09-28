@@ -8,8 +8,8 @@
 $full = elgg_extract('full_view', $vars, false);
 $file = elgg_extract('entity', $vars, false);
 
-if (!$file) {
-	return true;
+if (!($file instanceof \ElggFile)) {
+	return;
 }
 
 $owner = $file->getOwnerEntity();
@@ -17,17 +17,15 @@ $categories = elgg_view('output/categories', $vars);
 
 $by_line = elgg_view('object/elements/imprint', $vars);
 
+$comments_link = '';
 $comments_count = $file->countComments();
 //only display if there are commments
 if ($comments_count != 0) {
-	$text = elgg_echo("comments") . " ($comments_count)";
 	$comments_link = elgg_view('output/url', [
 		'href' => $file->getURL() . '#comments',
-		'text' => $text,
+		'text' => elgg_echo('comments') . " ($comments_count)",
 		'is_trusted' => true,
 	]);
-} else {
-	$comments_link = '';
 }
 
 $subtitle = "$by_line $comments_link $categories";
@@ -65,8 +63,6 @@ if ($full && !elgg_in_context('gallery')) {
 
 	$body = elgg_view('output/longtext', ['value' => $file->description]);
 
-	$owner_icon = elgg_view_entity_icon($owner, 'small');
-
 	$responses = '';
 	if (elgg_extract('show_responses', $vars, false)) {
 		$responses = elgg_view_comments($file);
@@ -74,7 +70,7 @@ if ($full && !elgg_in_context('gallery')) {
 
 	echo elgg_view('object/elements/full', [
 		'entity' => $file,
-		'icon' => $owner_icon,
+		'icon' => elgg_view_entity_icon($owner, 'small'),
 		'summary' => $summary,
 		'body' => $body,
 		'attachments' => $extra,
@@ -83,22 +79,18 @@ if ($full && !elgg_in_context('gallery')) {
 	]);
 } elseif (elgg_in_context('gallery')) {
 	echo '<div class="file-gallery-item">';
-	echo "<h3>" . $file->title . "</h3>";
+	echo "<h3>" . $file->getDisplayName() . "</h3>";
 	echo elgg_view_entity_icon($file, 'medium');
 	echo "<p class='subtitle'>$owner_link $date</p>";
 	echo '</div>';
 } else {
 	// brief view
-	$excerpt = elgg_get_excerpt($file->description);
-
-	$file_icon = elgg_view_entity_icon($file, 'small');
-
 	$params = [
 		'entity' => $file,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-		'content' => $excerpt,
-		'icon' => $file_icon,
+		'content' => elgg_get_excerpt($file->description),
+		'icon' => elgg_view_entity_icon($file, 'small'),
 	];
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);

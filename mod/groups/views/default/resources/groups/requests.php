@@ -13,7 +13,7 @@ if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
 
 $title = elgg_echo('groups:membershiprequests');
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb($title);
 
 $requests = elgg_get_entities_from_relationship([

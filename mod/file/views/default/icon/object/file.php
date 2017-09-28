@@ -28,11 +28,7 @@ if (!in_array($size, $sizes)) {
 	}
 }
 
-if (isset($vars['href'])) {
-	$url = $vars['href'];
-} else {
-	$url = $entity->getURL();
-}
+$url = elgg_extract('href', $vars, $entity->getURL());
 
 $class = [];
 if (isset($vars['img_class'])) {
@@ -47,17 +43,15 @@ $img = elgg_view('output/img', [
 	'class' => $class,
 	'alt' => $entity->getDisplayName(),
 	'src' => $entity->getIconURL($size),
-		]);
-if ($url) {
-	$params = [
-		'href' => $url,
-		'text' => $img,
-		'is_trusted' => true,
-	];
-	if (isset($vars['link_class'])) {
-		$params['class'] = $vars['link_class'];
-	}
-	echo elgg_view('output/url', $params);
-} else {
+]);
+if (!$url) {
 	echo $img;
+	return;
 }
+
+echo elgg_view('output/url', [
+	'href' => $url,
+	'text' => $img,
+	'is_trusted' => true,
+	'class' => elgg_extract('link_class', $vars),
+]);

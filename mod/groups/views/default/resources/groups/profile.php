@@ -27,7 +27,7 @@ if (elgg_group_gatekeeper(false)) {
 $params = [
 	'content' => $content,
 	'sidebar' => $sidebar,
-	'title' => $group->name,
+	'title' => $group->getDisplayName(),
 ];
 $body = elgg_view_layout('one_sidebar', $params);
 
