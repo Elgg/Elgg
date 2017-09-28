@@ -14,6 +14,12 @@ if (!$item instanceof ElggMenuItem) {
 	return;
 }
 
-foreach ($item->getDeps() as $module) {
+$deps = $item->getDeps();
+
+if (elgg_extract('data-toggle', $item->getValues())) {
+	$deps[] = 'navigation/menu/elements/item_toggle';
+}
+
+foreach ($deps as $module) {
 	elgg_require_js($module);
 }

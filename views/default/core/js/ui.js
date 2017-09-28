@@ -34,8 +34,6 @@ elgg.ui.init = function () {
 	// Allow element to be highlighted using CSS if its id is found from the URL
 	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
 	$(elementId).addClass('elgg-state-highlight');
-
-	elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
 };
 
 /**
@@ -193,68 +191,18 @@ elgg.ui.requiresConfirmation = function(e) {
 /**
  * This function registers two menu items that are actions that are the opposite
  * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
- *
- * Note the menu item names must be given in their normalized form. So if the
- * name is remove_friend, you should call this function with "remove-friend" instead.
+ * 
+ * You can also add the data parameter 'data-toggle' to menu items to have them automatically 
+ * registered as toggleable without the need to call this function.
  */
 elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
+	require(['navigation/menu/elements/item_toggle'], function() {
+		menuItemNameA = menuItemNameA.replace('_', '-');
+		menuItemNameB = menuItemNameB.replace('_', '-');
 
-	// Handles clicking the first button.
-	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a')
-			.on('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a', function() {
-		var $menu = $(this).closest('.elgg-menu');
-
-		// Be optimistic about success
-		elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-
-		// Send the ajax request
-		elgg.action($(this).attr('href'), {
-			success: function(json) {
-				if (json.system_messages.error.length) {
-					// Something went wrong, so undo the optimistic changes
-					elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-				}
-			},
-			error: function() {
-				// Something went wrong, so undo the optimistic changes
-				elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-			}
-		});
-
-		// Don't want to actually click the link
-		return false;
+		$('.elgg-menu-item-' + menuItemNameA + ' a').not('[data-toggle]').attr('data-toggle', menuItemNameB);
+		$('.elgg-menu-item-' + menuItemNameB + ' a').not('[data-toggle]').attr('data-toggle', menuItemNameA);
 	});
-
-	// Handles clicking the second button
-	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a')
-			.on('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a', function() {
-		var $menu = $(this).closest('.elgg-menu');
-
-		// Be optimistic about success
-		elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-
-		// Send the ajax request
-		elgg.action($(this).attr('href'), {
-			success: function(json) {
-				if (json.system_messages.error.length) {
-					// Something went wrong, so undo the optimistic changes
-					elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-				}
-			},
-			error: function() {
-				// Something went wrong, so undo the optimistic changes
-				elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-			}
-		});
-
-		// Don't want to actually click the link
-		return false;
-	});
-};
-
-elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
-    $menu.find('.elgg-menu-item-' + nameOfItemToShow).removeClass('hidden').find('a').focus();
-    $menu.find('.elgg-menu-item-' + nameOfItemToHide).addClass('hidden');
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);

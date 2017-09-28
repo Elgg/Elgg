@@ -319,6 +319,7 @@ Removed JavaScript APIs
  * ``elgg.messageboard`` is no longer defined.
  * ``jQuery.fn.friendsPicker``
  * ``elgg.ui.toggleMenu`` is no longer defined
+ * ``elgg.ui.toggleMenuItems``: Use ``data-toggle`` attribute when registering toggleable menu items
 
 Removed hooks/events
 --------------------
