@@ -29,6 +29,11 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	private $entities;
 
 	/**
+	 * @var \Elgg\UploadService
+	 */
+	private $uploads;
+
+	/**
 	 * @var \ElggObject
 	 */
 	private $entity;
@@ -56,6 +61,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->logger = new \Elgg\Logger($this->hooks, new \Elgg\Context());
 
 		$this->entities = _elgg_services()->entityTable;
+		$this->uploads = new \Elgg\UploadService($this->request, _elgg_services()->imageService);
 
 		$this->user = $this->createUser();
 		$this->entity = $this->createObject([
@@ -97,7 +103,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	protected function createService() {
-		return new \Elgg\EntityIconService(_elgg_config(), $this->hooks, $this->request, $this->logger, $this->entities);
+		return new \Elgg\EntityIconService(_elgg_config(), $this->hooks, $this->request, $this->logger, $this->entities, $this->uploads);
 	}
 
 	public static function getCoverSizes() {
@@ -379,6 +385,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testCanSaveIconFromUploadedFile() {
 
+		$service = $this->createService();
+		
 		// Make a copy of the file so we can move it
 		$tmp = new \ElggFile();
 		$tmp->owner_guid = $this->user->guid;
@@ -391,8 +399,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$upload = new \Symfony\Component\HttpFoundation\File\UploadedFile($uploaded_file, 'tmp.gif', 'image/gif', filesize($uploaded_file), UPLOAD_ERR_OK, true);
 		$this->request->files->set('icon', $upload);
-
-		$service = $this->createService();
 
 		$service->saveIconFromUploadedFile($this->entity, 'icon');
 

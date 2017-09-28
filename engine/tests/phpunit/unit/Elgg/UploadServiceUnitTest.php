@@ -44,7 +44,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$request = $this->prepareHttpRequest();
 		_elgg_services()->setValue('request', $request);
-		_elgg_services()->setValue('uploads', new UploadService($request));
+		_elgg_services()->setValue('uploads', new UploadService($request, _elgg_services()->imageService));
 
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
@@ -61,7 +61,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testDefaultUploadEmpty() {
-		$uploaded_file = _elgg_services()->uploads->getUploadedFiles('upload');
+		$uploaded_file = _elgg_services()->uploads->getFiles('upload');
 		$this->assertEmpty($uploaded_file);
 	}
 
@@ -80,7 +80,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->request->files->set('upload', $upload);
 
-		$uploaded_files = _elgg_services()->uploads->getUploadedFiles('upload');
+		$uploaded_files = _elgg_services()->uploads->getFiles('upload');
 		$uploaded_file = array_shift($uploaded_files);
 		
 		$this->assertInstanceOf(UploadedFile::class, $uploaded_file);
@@ -118,7 +118,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->request->files->set('upload', $upload);
 
-		$uploaded_files = _elgg_services()->uploads->getUploadedFiles('upload');
+		$uploaded_files = _elgg_services()->uploads->getFiles('upload');
 		$uploaded_file = $uploaded_files['gif'];
 		$this->assertInstanceOf(UploadedFile::class, $uploaded_file);
 		$this->assertEquals(pathinfo($tmp_gif, PATHINFO_BASENAME), $uploaded_file->getClientOriginalName());
@@ -157,7 +157,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$file = new ElggFile();
 		$file->owner_guid = $this->owner_guid;
 
-		$uploaded_files = _elgg_services()->uploads->getUploadedFiles('upload');
+		$uploaded_files = _elgg_services()->uploads->getFiles('upload');
 		$uploaded_file = array_shift($uploaded_files);
 
 		$this->assertTrue($file->acceptUploadedFile($uploaded_file));
@@ -190,7 +190,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$file = new ElggFile();
 		$file->owner_guid = $this->owner_guid;
 
-		$uploaded_files = _elgg_services()->uploads->getUploadedFiles('upload');
+		$uploaded_files = _elgg_services()->uploads->getFiles('upload');
 		$uploaded_file = array_shift($uploaded_files);
 
 		$upload_event_calls = 0;
