@@ -377,7 +377,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=feature"),
 			'priority' => 300,
 			'item_class' => $isFeatured ? 'hidden' : '',
-			'deps' => 'groups/navigation',
+			'data-toggle' => 'unfeature',
 		]);
 
 		$return[] = ElggMenuItem::factory([
@@ -386,7 +386,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=unfeature"),
 			'priority' => 300,
 			'item_class' => $isFeatured ? '' : 'hidden',
-			'deps' => 'groups/navigation',
+			'data-toggle' => 'feature',
 		]);
 	}
 

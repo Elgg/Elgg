@@ -38,6 +38,7 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 				'icon' => 'user-times',
 				'section' => 'action',
 				'item_class' => $isFriend ? '' : 'hidden',
+				'data-toggle' => 'add_friend',
 			]);
 
 			$return[] = \ElggMenuItem::factory([
@@ -48,6 +49,7 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 				'icon' => 'user-plus',
 				'section' => 'action',
 				'item_class' => $isFriend ? 'hidden' : '',
+				'data-toggle' => 'remove_friend',
 			]);
 		}
 	}
