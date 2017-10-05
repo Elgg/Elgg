@@ -196,7 +196,7 @@ class EntityIconService {
 		$file = $this->hooks->trigger("entity:$type:prepare", $entity_type, [
 			'entity' => $entity,
 			'file' => $file,
-				], $file);
+		], $file);
 
 		if (!$file instanceof ElggFile || !$file->exists() || $file->getSimpleType() !== 'image') {
 			$this->logger->error('Source file passed to ' . __METHOD__ . ' can not be resolved to a valid image');
@@ -240,7 +240,7 @@ class EntityIconService {
 			'y1' => $y1,
 			'x2' => $x2,
 			'y2' => $y2,
-				], false);
+		], false);
 
 		if ($created === true) {
 			return $success();
@@ -338,7 +338,7 @@ class EntityIconService {
 	public function deleteIcon(ElggEntity $entity, $type = 'icon') {
 		$delete = $this->hooks->trigger("entity:$type:delete", $entity->getType(), [
 			'entity' => $entity,
-				], true);
+		], true);
 
 		if ($delete === false) {
 			return;
