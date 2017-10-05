@@ -190,7 +190,7 @@ objects. These methods save all sizes of icons defined in the system.
 	$object->save();
 
 The following sizes exist by default: 
- * ``master`` - 550px at longer edge (not upscaled)
+ * ``master`` - 2048px at longer edge (not upscaled)
  * ``large`` - 200px at longer edge (not upscaled)
  * ``medium`` - 100px square
  * ``small`` - 40px square
@@ -202,7 +202,7 @@ The function triggers the ``entity:icon:sizes`` :ref:`hook <guides/hooks-list#ot
 
 To check if an icon is set, use ``$object->hasIcon($size)``.
 
-You can retrieve the URL of the generated icon with``ElggEntity::getIconURL($params)`` method.
+You can retrieve the URL of the generated icon with ``ElggEntity::getIconURL($params)`` method.
 This method accepts a ``$params`` argument as an array that specifies the size, type, and provide 
 additional context for the hook to determine the icon to serve. 
 The method triggers the ``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.

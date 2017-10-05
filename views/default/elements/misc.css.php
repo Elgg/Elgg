@@ -21,13 +21,3 @@
 #avatar-croppingtool {
 	border-top: 1px solid #DCDCDC;
 }
-#user-avatar-cropper {
-	float: left;
-}
-#user-avatar-preview {
-	float: left;
-	position: relative;
-	overflow: hidden;
-	width: 100px;
-	height: 100px;
-}

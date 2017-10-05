@@ -245,7 +245,6 @@ return array(
 	'avatar:noaccess' => "You're not allowed to edit this user's avatar",
 	'avatar:create' => 'Create your avatar',
 	'avatar:edit' => 'Edit avatar',
-	'avatar:preview' => 'Preview',
 	'avatar:upload' => 'Upload a new avatar',
 	'avatar:current' => 'Current avatar',
 	'avatar:remove' => 'Remove your avatar and set the default icon',
