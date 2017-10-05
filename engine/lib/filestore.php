@@ -214,6 +214,15 @@ function get_image_resize_parameters($width, $height, array $params = []) {
  * @return bool
  */
 function delete_directory($directory) {
+	
+	if (!file_exists($directory)) {
+		return true;
+	}
+	
+	if (!is_dir($directory)) {
+		return false;
+	}
+	
 	// sanity check: must be a directory
 	if (!$handle = opendir($directory)) {
 		return false;
@@ -260,9 +269,7 @@ function delete_directory($directory) {
 function _elgg_clear_entity_files($entity) {
 	$dir = new \Elgg\EntityDirLocator($entity->guid);
 	$file_path = _elgg_config()->dataroot . $dir;
-	if (file_exists($file_path)) {
-		delete_directory($file_path);
-	}
+	delete_directory($file_path);
 }
 
 /**
