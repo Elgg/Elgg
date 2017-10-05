@@ -167,7 +167,7 @@ Entity Icons
 ~~~~~~~~~~~~
 
 Entity icons can be saved from uploaded files, existing local files, or existing ElggFile 
-objects. These methods save all sizes of icons defined in the system.
+objects. These methods save the `master` size of the icon defined in the system. The other defined sizes will be generated when requested.
 
 .. code:: php
 
@@ -256,8 +256,11 @@ might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as
 		'type' => 'cover_photo'
 	]);
 
-Note that custom icon types (e.g. cover photos) do not have preset sizes and coordinates.
-Use ``entity:<icon_type>:url`` :ref:`hook <guides/hooks-list#other>` to configure them.
+
+.. note::
+	
+	Custom icon types (e.g. cover photos) only have a preset for `master` size, to add custom sizes
+	use ``entity:<icon_type>:url`` :ref:`hook <guides/hooks-list#other>` to configure them.
 
 By default icons will be stored in ``/icons/<icon_type>/<size>.jpg`` relative to entity's directory on filestore.
 To provide an alternative location, use the ``entity:<icon_type>:file`` :ref:`hook <guides/hooks-list#other>`.

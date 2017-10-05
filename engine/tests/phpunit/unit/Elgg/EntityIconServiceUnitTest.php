@@ -105,9 +105,20 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	protected function createService() {
 		return new \Elgg\EntityIconService(_elgg_config(), $this->hooks, $this->request, $this->logger, $this->entities, $this->uploads);
 	}
+	
+	public static function getDefaultIconSizes() {
+		return [
+			'master' => [
+				'w' => 2048,
+				'h' => 2048,
+				'square' => false,
+				'upscale' => false,
+			],
+		];
+	}
 
 	public static function getCoverSizes() {
-		return [
+		$cover_sizes = [
 			'medium' => [
 				'w' => 1280,
 				'h' => 720,
@@ -116,6 +127,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			// Empty config means that image should not be altered
 			'original' => [],
 		];
+		
+		return array_merge($cover_sizes, self::getDefaultIconSizes());
 	}
 
 	public static function getIconSizesForSubtype($hook, $type, $sizes, $params) {
@@ -127,7 +140,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public static function getTestSizes() {
-		return [
+		$test_sizes = [
 			'square' => [
 				'w' => 120,
 				'h' => 120,
@@ -139,6 +152,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 				'square' => false,
 			]
 		];
+		
+		return array_merge($test_sizes, self::getDefaultIconSizes());
 	}
 
 	/**
@@ -150,9 +165,9 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		// Should return config values, as we do not have any registered hook
 		$this->assertEquals(_elgg_config()->icon_sizes, $service->getSizes());
 
-		// If type is not 'icon', should return an empty array
+		// If type is not 'icon', should return an default array with only 'master' size present
 		$this->logger->disable();
-		$this->assertEmpty($service->getSizes(null, null, 'foo'));
+		$this->assertEquals(self::getDefaultIconSizes(), $service->getSizes(null, null, 'foo'));
 		$this->logger->enable();
 	}
 
@@ -162,12 +177,12 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	public function testCanSetSizesForCustomIconType() {
 		$service = $this->createService();
 		$this->logger->disable();
-		$this->assertEmpty($service->getSizes('object', 'foo', 'cover'));
+		$this->assertEquals(self::getDefaultIconSizes(), $service->getSizes('object', 'foo', 'cover'));
 		$this->logger->enable();
 
 		$this->hooks->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
 		$service = $this->createService();
-		$this->assertNotEmpty($service->getSizes('object', 'foo', 'cover'));
+		$this->assertEquals(self::getCoverSizes(), $service->getSizes('object', 'foo', 'cover'));
 	}
 
 	/**
@@ -298,47 +313,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 
 		$service->deleteIcon($this->entity);
-
-		$this->assertFalse($service->hasIcon($this->entity, 'master'));
-		$this->assertFalse($service->hasIcon($this->entity, 'large'));
-		$this->assertFalse($service->hasIcon($this->entity, 'medium'));
-		$this->assertFalse($service->hasIcon($this->entity, 'small'));
-		$this->assertFalse($service->hasIcon($this->entity, 'tiny'));
-		$this->assertFalse($service->hasIcon($this->entity, 'topbar'));
-	}
-
-	/**
-	 * @group IconService
-	 */
-	public function testCanCleanUpOnFailure() {
-
-		$service = $this->createService();
-
-		$file = new \ElggFile();
-		$file->owner_guid = 1;
-		$file->setFilename('400x300.gif');
-		$file->mimetype = 'image/gif';
-
-		$service->saveIconFromElggFile($this->entity, $file);
-
-		$this->assertTrue($service->hasIcon($this->entity, 'master'));
-		$this->assertTrue($service->hasIcon($this->entity, 'large'));
-		$this->assertTrue($service->hasIcon($this->entity, 'medium'));
-		$this->assertTrue($service->hasIcon($this->entity, 'small'));
-		$this->assertTrue($service->hasIcon($this->entity, 'tiny'));
-		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
-
-		$this->logger->disable();
-
-		// This will fail for square icons because cropping coordinates are not square
-		$service->saveIconFromElggFile($this->entity, $file, 'icon', [
-			'x1' => 0,
-			'y1' => 0,
-			'x2' => 10,
-			'y2' => 20,
-		]);
-
-		$this->logger->enable();
 
 		$this->assertFalse($service->hasIcon($this->entity, 'master'));
 		$this->assertFalse($service->hasIcon($this->entity, 'large'));
@@ -498,11 +472,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 
 		$master = $service->getIcon($this->entity, 'master');
-		$master_bytes = file_get_contents($master->getFilenameOnFilestore());
-
-		$medium = $service->getIcon($this->entity, 'medium');
-		$medium_bytes = file_get_contents($medium->getFilenameOnFilestore());
-
+		
 		// recrop from master with coordinates
 		$service->saveIconFromElggFile($this->entity, $master, 'icon', [
 			'x1' => 10,
@@ -511,21 +481,12 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			'y2' => 110,
 		]);
 
-		// original file should stay where it is
-		$this->assertTrue($file->exists());
-
 		$this->assertTrue($service->hasIcon($this->entity, 'master'));
 		$this->assertTrue($service->hasIcon($this->entity, 'large'));
 		$this->assertTrue($service->hasIcon($this->entity, 'medium'));
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
 		$this->assertTrue($service->hasIcon($this->entity, 'tiny'));
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
-
-		// master should remain the same
-		$this->assertEquals($master_bytes, file_get_contents($service->getIcon($this->entity, 'master')->getFilenameOnFilestore()));
-
-		// medium should have been cropped
-		$this->assertNotEquals($medium_bytes, file_get_contents($service->getIcon($this->entity, 'medium')->getFilenameOnFilestore()));
 	}
 
 	/**
@@ -548,12 +509,14 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue($service->hasIcon($this->entity, 'medium', 'cover'));
 		$this->assertTrue($service->hasIcon($this->entity, 'original', 'cover'));
+		$this->assertTrue($service->hasIcon($this->entity, 'master', 'cover'));
 
-		$medium = $service->getIcon($this->entity, 'original', 'cover');
-		$medium_bytes = file_get_contents($medium->getFilenameOnFilestore());
-
-		$source_bytes = file_get_contents($file->getFilenameOnFilestore());
-
+		$original_bytes = $service->getIcon($this->entity, 'original', 'cover')->grabFile();
+		$source_bytes = $service->getIcon($this->entity, 'master', 'cover')->grabFile();
+		
+		// original should remain the same
+		$this->assertEquals($source_bytes, $original_bytes);
+		
 		// crop with coordinates
 		$service->saveIconFromElggFile($this->entity, $file, 'cover', [
 			'x1' => 10,
@@ -567,12 +530,13 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue($service->hasIcon($this->entity, 'medium', 'cover'));
 		$this->assertTrue($service->hasIcon($this->entity, 'original', 'cover'));
+		$this->assertTrue($service->hasIcon($this->entity, 'master', 'cover'));
 
+		$original_bytes = $service->getIcon($this->entity, 'original', 'cover')->grabFile();
+		$source_bytes = $service->getIcon($this->entity, 'master', 'cover')->grabFile();
+		
 		// original should remain the same
-		$this->assertEquals($source_bytes, file_get_contents($service->getIcon($this->entity, 'original', 'cover')->getFilenameOnFilestore()));
-
-		// medium should have been cropped
-		$this->assertNotEquals($medium_bytes, file_get_contents($service->getIcon($this->entity, 'medium', 'cover')->getFilenameOnFilestore()));
+		$this->assertEquals($source_bytes, $original_bytes);
 	}
 
 	/**
@@ -958,6 +922,34 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($service->getCurrentTime('+1 day'), $response->getExpires());
 
 		$this->assertEquals('max-age=86400, private', $response->headers->get('cache-control'));
+	}
+	
+	/**
+	 * @group IconService
+	 */
+	public function testDelayedCreationOfIcon() {
+		
+		$service = $this->createService();
+
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('400x300.gif');
+		$file->mimetype = 'image/gif';
+
+		$service->saveIconFromElggFile($this->entity, $file);
+		
+		$master = $service->getIcon($this->entity, 'master');
+		$this->assertTrue($master->exists());
+		
+		// fetch 'medium' icon without auto generating it
+		$medium = $service->getIcon($this->entity, 'medium', 'icon', false);
+		
+		$this->assertFalse($medium->exists());
+		
+		// now generate 'medium' icon
+		$medium = $service->getIcon($this->entity, 'medium');
+		
+		$this->assertTrue($medium->exists());
 	}
 
 }
