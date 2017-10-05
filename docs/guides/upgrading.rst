@@ -103,6 +103,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``elgg_register_classes``
  * ``elgg_register_viewtype``
  * ``elgg_is_registered_viewtype``
+ * ``file_delete``: Use ``ElggFile->deleteIcon()``
  * ``get_default_filestore``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``

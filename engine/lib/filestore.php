@@ -207,44 +207,6 @@ function get_image_resize_parameters($width, $height, array $params = []) {
 }
 
 /**
- * Delete an \ElggFile file
- *
- * @param int $guid \ElggFile GUID
- *
- * @return bool
- */
-function file_delete($guid) {
-	$file = get_entity($guid);
-	if (!$file || !$file->canEdit()) {
-		return false;
-	}
-
-	$thumbnail = $file->thumbnail;
-	$smallthumb = $file->smallthumb;
-	$largethumb = $file->largethumb;
-	if ($thumbnail) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($thumbnail);
-		$delfile->delete();
-	}
-	if ($smallthumb) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($smallthumb);
-		$delfile->delete();
-	}
-	if ($largethumb) {
-		$delfile = new \ElggFile();
-		$delfile->owner_guid = $file->owner_guid;
-		$delfile->setFilename($largethumb);
-		$delfile->delete();
-	}
-
-	return $file->delete();
-}
-
-/**
  * Delete a directory and all its contents
  *
  * @param string $directory Directory to delete
