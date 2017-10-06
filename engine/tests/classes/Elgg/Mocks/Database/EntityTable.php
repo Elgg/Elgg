@@ -119,12 +119,6 @@ class EntityTable extends DbEntityTable {
 					'prev_last_login' => null,
 				];
 				break;
-			case 'group' :
-				$external_attributes = [
-					'name' => null,
-					'description' => null,
-				];
-				break;
 		}
 
 		$map = array_merge($primary_attributes, $external_attributes, $attributes);

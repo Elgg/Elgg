@@ -102,7 +102,6 @@ function garbagecollector_entities() {
 
 	$tables = [
 		'object' => 'objects_entity',
-		'group' => 'groups_entity',
 		'user' => 'users_entity',
 	];
 

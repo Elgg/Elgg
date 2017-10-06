@@ -8,23 +8,6 @@
  * @subpackage DataModel.Group
  */
 
-use Elgg\Project\Paths;
-
-/**
- * Get the group entity.
- *
- * @param int $guid GUID for a group
- *
- * @return array|false
- * @access private
- */
-function get_group_entity_as_row($guid) {
-	$guid = (int) $guid;
-
-	$prefix = _elgg_config()->dbprefix;
-	return get_data_row("SELECT * from {$prefix}groups_entity where guid=$guid");
-}
-
 /**
  * Adds a group tool option
  *

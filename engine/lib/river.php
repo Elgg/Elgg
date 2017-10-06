@@ -444,8 +444,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 			'limit' => 0,
 			'distinct' => false,
 
-			// Why specify? user containers are likely already loaded via the owners, and
-			// specifying groups allows ege() to auto-join the groups_entity table
+			// Why specify? user containers are likely already loaded via the owners
 			'type' => 'group',
 		]);
 	}

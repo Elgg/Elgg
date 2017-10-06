@@ -747,7 +747,6 @@ class EntityTable {
 			// Each class must have a static getExternalAttributes() : array
 			'object' => 'ElggObject',
 			'user' => 'ElggUser',
-			'group' => 'ElggGroup',
 		];
 
 		// We use reset() because $options['types'] may not have a numeric key
@@ -757,6 +756,9 @@ class EntityTable {
 		// clause may reference "guid", which MySQL will complain about being ambiguous
 		try {
 			$attributes = \ElggEntity::getExtraAttributeDefaults($type);
+			if (empty($attributes)) {
+				return $options;
+			}
 		} catch (\Exception $e) {
 			$this->logger->error("Unrecognized type: $type");
 			return $options;
@@ -791,7 +793,6 @@ class EntityTable {
 		$types_to_optimize = [
 			'object' => 'title',
 			'user' => 'password_hash',
-			'group' => 'name',
 		];
 
 		$rows = $this->db->getData($sql);
@@ -1216,7 +1217,7 @@ class EntityTable {
 		}
 
 		// @todo the types should be defined somewhere (as constant on \ElggEntity?)
-		if (!in_array($type, ['group', 'object', 'user'])) {
+		if (!in_array($type, ['object', 'user'])) {
 			throw new InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
 		}
 
