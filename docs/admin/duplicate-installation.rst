@@ -138,6 +138,8 @@ We need to change these lines to match our new installation:
    // If you're sharing a database with other applications, you will want to use this
    // to differentiate Elgg's tables.
    $CONFIG->dbprefix = 'elgg';
+   
+   $CONFIG->wwwroot = 'http://your.website.com/'
 
 .. note::
 
@@ -168,13 +170,6 @@ Change the data directory
 .. code:: sql
 
    UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/") WHERE `name` = "dataroot";
-
-Change the site URL
--------------------
-
-.. code:: sql
-
-   UPDATE `elgg_sites_entity` SET `url` = "http://test.myelgg.org/";
 
 Change the filestore data directory
 -----------------------------------
@@ -230,11 +225,7 @@ It is a good idea to keep a test server around to experiment with installing new
       WHERE name = 'dataroot'";
    mysql_query($sql);
    print mysql_error();
-   
-   $sql = "UPDATE {$CONFIG->dbprefix}sites_entity
-      SET url = 'http://test.myelgg.org/'";
-   mysql_query($sql);
-   
+      
    $sql = "UPDATE {$CONFIG->dbprefix}metadata
      SET value = '/var/data/elgg_test/' 
      WHERE name = 'filestore::dir_root';

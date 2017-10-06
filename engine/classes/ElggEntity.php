@@ -1395,39 +1395,40 @@ abstract class ElggEntity extends \ElggData implements
 
 		// Create secondary table row
 		$attrs = $this->getSecondaryTableColumns();
-
-		$column_names = implode(', ', $attrs);
-		$values = implode(', ', array_map(function ($attr) {
-			return ":$attr";
-		}, $attrs));
-
-		$params = [
-			':guid' => $guid,
-		];
-		foreach ($attrs as $attr) {
-			$params[":$attr"] = ($attr === 'url') ? '' : (string) $this->attributes[$attr];
-		}
-
-		$db = $this->getDatabase();
-		$query = "
-			INSERT INTO {$db->prefix}{$this->type}s_entity
-			(guid, $column_names) VALUES (:guid, $values)
-		";
-
-		if ($db->insertData($query, $params) === false) {
-			// Uh oh, couldn't save secondary
-			$query = "
-				DELETE FROM {$db->prefix}entities
-				WHERE guid = :guid
-			";
+		if (!empty($attrs)) {
+			$column_names = implode(', ', $attrs);
+			$values = implode(', ', array_map(function ($attr) {
+				return ":$attr";
+			}, $attrs));
+	
 			$params = [
 				':guid' => $guid,
 			];
-			$db->deleteData($query, $params);
-
-			_elgg_services()->entityCache->remove($guid);
-
-			throw new \IOException("Unable to save new object's secondary entity information!");
+			foreach ($attrs as $attr) {
+				$params[":$attr"] = (string) $this->attributes[$attr];
+			}
+	
+			$db = $this->getDatabase();
+			$query = "
+				INSERT INTO {$db->prefix}{$this->type}s_entity
+				(guid, $column_names) VALUES (:guid, $values)
+			";
+	
+			if ($db->insertData($query, $params) === false) {
+				// Uh oh, couldn't save secondary
+				$query = "
+					DELETE FROM {$db->prefix}entities
+					WHERE guid = :guid
+				";
+				$params = [
+					':guid' => $guid,
+				];
+				$db->deleteData($query, $params);
+	
+				_elgg_services()->entityCache->remove($guid);
+	
+				throw new \IOException("Unable to save new object's secondary entity information!");
+			}
 		}
 
 		// Save any unsaved metadata
@@ -1509,28 +1510,28 @@ abstract class ElggEntity extends \ElggData implements
 
 		// Update secondary table
 		$attrs = $this->getSecondaryTableColumns();
-
-		$sets = array_map(function ($attr) {
-			return "$attr = :$attr";
-		}, $attrs);
-		$sets = implode(', ', $sets);
-
-		foreach ($attrs as $attr) {
-			$params[":$attr"] = ($attr === 'url') ? '' : (string) $this->attributes[$attr];
+		if (!empty($attrs)) {
+			$sets = array_map(function ($attr) {
+				return "$attr = :$attr";
+			}, $attrs);
+			$sets = implode(', ', $sets);
+	
+			foreach ($attrs as $attr) {
+				$params[":$attr"] = (string) $this->attributes[$attr];
+			}
+			$params[':guid'] = $this->guid;
+	
+			$db = $this->getDatabase();
+			$query = "
+				UPDATE {$db->prefix}{$this->type}s_entity
+				SET $sets
+				WHERE guid = :guid
+			";
+	
+			if ($db->updateData($query, false, $params) === false) {
+				return false;
+			}
 		}
-		$params[':guid'] = $this->guid;
-
-		$db = $this->getDatabase();
-		$query = "
-			UPDATE {$db->prefix}{$this->type}s_entity
-			SET $sets
-			WHERE guid = :guid
-		";
-
-		if ($db->updateData($query, false, $params) === false) {
-			return false;
-		}
-
 		elgg_trigger_after_event('update', $this->type, $this);
 
 		// TODO(evan): Move this to \ElggObject?
@@ -1594,7 +1595,7 @@ abstract class ElggEntity extends \ElggData implements
 			return ['name', 'description'];
 		}
 		if ($this instanceof ElggSite) {
-			return ['name', 'description', 'url'];
+			return [];
 		}
 		throw new \InvalidArgumentException("Not a recognized type: " . get_class($this));
 	}
@@ -1633,11 +1634,7 @@ abstract class ElggEntity extends \ElggData implements
 					'description' => null,
 				];
 			case 'site':
-				return [
-					'name' => null,
-					'description' => null,
-					'url' => null,
-				];
+				return [];
 		}
 		throw new \InvalidArgumentException("Not a recognized type: $type");
 	}
@@ -1957,7 +1954,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$deleted = $this->getDatabase()->deleteData($sql, $params);
 
-		if ($deleted && in_array($this->type, ['object', 'user', 'group', 'site'])) {
+		if ($deleted && in_array($this->type, ['object', 'user', 'group'])) {
 			// delete from type-specific subtable
 			$sql = "
 				DELETE FROM {$dbprefix}{$this->type}s_entity

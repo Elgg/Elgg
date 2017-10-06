@@ -96,6 +96,8 @@ class EntityTable extends DbEntityTable {
 			'enabled' => 'yes',
 		);
 
+		$external_attributes = [];
+		
 		switch ($type) {
 			case 'object' :
 				$external_attributes = [
@@ -121,13 +123,6 @@ class EntityTable extends DbEntityTable {
 				$external_attributes = [
 					'name' => null,
 					'description' => null,
-				];
-				break;
-			case 'site' :
-				$external_attributes = [
-					'name' => null,
-					'description' => null,
-					'url' => null,
 				];
 				break;
 		}

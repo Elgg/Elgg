@@ -106,6 +106,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``elgg_is_registered_viewtype``
  * ``file_delete``: Use ``ElggFile->deleteIcon()``
  * ``get_default_filestore``
+ * ``get_site_entity_as_row``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``
@@ -236,6 +237,12 @@ Setting ``ElggSite::$url`` has no effect. Reading the site URL always pulls from
 settings.php, or computed by Symphony Request.
 
 ``ElggSite::save()`` will fail if it isn't the main site.
+
+Entity Subtable Changes
+-----------------------
+
+The subtable ``sites_entity`` for ``ElggSite`` no longer exists. All attributes have been moved to metadata. 
+If you have custom queries referencing this table you need to update them.
 
 Custom class loading
 --------------------
