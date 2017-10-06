@@ -277,8 +277,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return string The title or name of this entity.
 	 */
 	public function getDisplayName() {
-		$attr = $this->getSecondaryTableColumns()[0];
-		return $this->$attr;
+		return $this->name;
 	}
 
 	/**
@@ -288,8 +287,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return void
 	 */
 	public function setDisplayName($display_name) {
-		$attr = $this->getSecondaryTableColumns()[0];
-		$this->$attr = $display_name;
+		$this->name = $display_name;
 	}
 
 	/**

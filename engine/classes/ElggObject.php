@@ -35,6 +35,20 @@ class ElggObject extends \ElggEntity {
 		$object->tags = $this->tags ? $this->tags : [];
 		return $object;
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDisplayName() {
+		return $this->title;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setDisplayName($display_name) {
+		$this->title = $display_name;
+	}
 
 	/**
 	 * Can a user comment on this object?
