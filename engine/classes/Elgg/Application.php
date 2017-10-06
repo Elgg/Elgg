@@ -970,7 +970,6 @@ class Application {
 			'constants.php',
 			'cron.php',
 			'database.php',
-			'deprecated-2.2.php',
 			'deprecated-2.3.php',
 			'deprecated-3.0.php',
 			'entities.php',

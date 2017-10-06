@@ -195,9 +195,7 @@ Adding content
 By passing along the group as ``container_guid`` via a hidden input field,
 you can use a single form and action to add both user and group content.
 
-Use
-`can_write_to_container <http://reference.elgg.org/entities_8php.html#16a972909c7cb75f646cb707be001a6f>`_
-to determine whether or not the current user has the right to
+Use ``ElggEntity->canWriteToContainer()`` to determine whether or not the current user has the right to
 add content to a group.
 
 Be aware that you will then need to pass the container GUID
@@ -211,8 +209,11 @@ your new element (defaulting to the current user's container):
 
     $user = elgg_get_logged_in_user_entity();
     $container_guid = (int)get_input('container_guid');
+    
     if ($container_guid) {
-        if (!can_write_to_container($user->guid, $container_guid)) {
+    	$container = get_entity($container_guid);
+    	
+        if (!$container->canWriteToContainer($user->guid)) {
             // register error and forward
         }
     } else {
