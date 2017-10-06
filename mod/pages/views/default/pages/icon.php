@@ -10,16 +10,25 @@
  * @uses $vars['annotation']
  */
 
-$annotation = $vars['annotation'];
-$entity = get_entity($annotation->entity_guid);
+/* @var $annotation ElggAnnotation */
+$annotation = elgg_extract('annotation', $vars);
+$entity = $annotation->getEntity();
 
 // Get size
-if (!in_array($vars['size'], ['small', 'medium', 'large', 'tiny', 'master', 'topbar'])) {
-	$vars['size'] = "medium";
+$size = elgg_extract('size', $vars);
+$allowed_sizes = elgg_get_icon_sizes($entity->getType(), $entity->getSubtype());
+if (!in_array($size, $allowed_sizes)) {
+	$size = "medium";
 }
 
-?>
+$img = elgg_view('output/img', [
+	'alt' => $entity->getDisplayName(),
+	'scr' => $entity->getIconURL([
+		'size' => $size,
+	]),
+]);
 
-<a href="<?php echo $annotation->getURL(); ?>">
-	<img alt="<?php echo $entity->title; ?>" src="<?php echo $entity->getIconURL($vars['size']); ?>" />
-</a>
+echo elgg_view('output/url', [
+	'text' => $img,
+	'href' => $annotation->getURL(),
+]);
