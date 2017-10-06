@@ -45,4 +45,16 @@ class Values {
 	public static function getArray() {
 		return [];
 	}
+
+	/**
+	 * Return array with __view_output set to prevent view output during view_vars hook
+	 *
+	 * @see ViewsService->renderView()
+	 *
+	 * @return array
+	 * @since 3.0
+	 */
+	public static function preventViewOutput() {
+		return ['__view_output' => ''];
+	}
 }

@@ -428,6 +428,10 @@ string. View extensions will not be used and the ``view`` hook will not be trigg
             return ['__view_output' => ""];
         }
     }
+    
+.. note::
+
+	For ease of use you can also use a already existing default hook callback to prevent output ``\Elgg\Values::preventViewOutput``
 
 Displaying entities
 ===================
