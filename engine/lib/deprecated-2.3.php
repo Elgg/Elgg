@@ -1,6 +1,49 @@
 <?php
 
 /**
+ * Catch calls to forward() in ajax request and force an exit.
+ *
+ * Forces response is json of the following form:
+ * <pre>
+ * {
+ *     "current_url": "the.url.we/were/coming/from",
+ *     "forward_url": "the.url.we/were/going/to",
+ *     "system_messages": {
+ *         "messages": ["msg1", "msg2", ...],
+ *         "errors": ["err1", "err2", ...]
+ *     },
+ *     "status": -1 //or 0 for success if there are no error messages present
+ * }
+ * </pre>
+ * where "system_messages" is all message registers at the point of forwarding
+ *
+ * @internal registered for the 'forward', 'all' plugin hook
+ *
+ * @param string $hook
+ * @param string $type
+ * @param string $reason
+ * @param array  $params
+ * @return void
+ * @access private
+ * @deprecated 2.3
+ */
+function ajax_forward_hook($hook, $type, $reason, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.3');
+	_elgg_services()->actions->ajaxForwardHook($hook, $type, $reason, $params);
+}
+
+/**
+ * Buffer all output echo'd directly in the action for inclusion in the returned JSON.
+ * @return void
+ * @access private
+ * @deprecated 2.3
+ */
+function ajax_action_hook() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.3');
+	_elgg_services()->actions->ajaxActionHook();
+}
+
+/**
  * Get the contents of an uploaded file.
  * (Returns false if there was an issue.)
  *
@@ -140,4 +183,220 @@ function get_image_resize_parameters($width, $height, array $params = []) {
 		elgg_log($ex->getMessage(), 'ERROR');
 		return false;
 	}
+}
+
+/**
+ * Update the last_action column in the entities table for $guid.
+ *
+ * @warning This is different to time_updated.  Time_updated is automatically set,
+ * while last_action is only set when explicitly called.
+ *
+ * @param int $guid   Entity annotation|relationship action carried out on
+ * @param int $posted Timestamp of last action
+ *
+ * @return int|false Timestamp or false on failure
+ * @access private
+ * @deprecated 2.3
+ */
+function update_entity_last_action($guid, $posted = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Refrain from updating last action timestamp manually', '2.3');
+
+	$result = false;
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($guid);
+	if ($entity) {
+		$result = $entity->updateLastAction($posted);
+	}
+	elgg_set_ignore_access($ia);
+	return $result;
+}
+
+/**
+ * Get the notification settings for a given user.
+ *
+ * @param int $user_guid The user id
+ *
+ * @return \stdClass|false
+ * @deprecated 2.3
+ */
+function get_user_notification_settings($user_guid = 0) {
+
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated by ElggUser::getNotificationSettings()', '2.3');
+
+	if ((int) $user_guid == 0) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+
+	$user = get_entity($user_guid);
+	if (!$user instanceof \ElggUser) {
+		return false;
+	}
+
+	return (object) $user->getNotificationSettings();
+}
+
+/**
+ * Set a user notification pref.
+ *
+ * @param int    $user_guid The user id.
+ * @param string $method    The delivery method (eg. email)
+ * @param bool   $value     On(true) or off(false).
+ *
+ * @return bool
+ * @deprecated 2.3
+ */
+function set_user_notification_setting($user_guid, $method, $value) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated by ElggUser::setNotificationSetting()', '2.3');
+
+	if (!$user_guid) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	$user = get_entity($user_guid);
+	if (!$user instanceof \ElggUser) {
+		return false;
+	}
+
+	if (is_string($value)) {
+		$value = strtolower($value);
+	}
+	if ($value == 'yes' || $value == 'on' || $value == 'enabled') {
+		$value = true;
+	} else if ($value == 'no' || $value == 'off' || $value == 'disabled') {
+		$value = false;
+	}
+
+	return $user->setNotificationSetting($method, (bool) $value);
+}
+
+/**
+ * Serve an error page
+ *
+ * This is registered by Elgg for the 'forward', '404' plugin hook. It can
+ * registered for other hooks by plugins or called directly to display an
+ * error page.
+ *
+ * @param string $hook   The name of the hook
+ * @param string $type   Http error code
+ * @param bool   $result The current value of the hook
+ * @param array  $params Parameters related to the hook
+ * @return void
+ * @deprecated 2.3
+ */
+function elgg_error_page_handler($hook, $type, $result, $params) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Error pages are drawn by resource views without "forward" hook.', '2.3');
+	
+	// This draws an error page, and sometimes there's another 40* forward() call made during that process.
+	// We want to allow the 2nd call to pass through, but draw the appropriate page for the first call.
+	
+	static $vars;
+	if ($vars === null) {
+		// keep first vars for error page
+		$vars = [
+			'type' => $type,
+			'params' => $params,
+		];
+	}
+
+	static $calls = 0;
+	$calls++;
+	if ($calls < 3) {
+		echo elgg_view_resource('error', $vars);
+		exit;
+	}
+
+	// uh oh, may be infinite loop
+	register_error(elgg_echo('error:404:content'));
+	header('Location: ' . elgg_get_site_url());
+	exit;
+}
+
+/**
+ * Renders a form field
+ *
+ * @param string $input_type Input type, used to generate an input view ("input/$input_type")
+ * @param array  $vars       Fields and input vars.
+ *                           Field vars contain both field and input params. 'label', 'help',
+ *                           and 'field_class' params will not be passed on to the input view.
+ *                           Others, including 'required' and 'id', will be available to the
+ *                           input view. Both 'label' and 'help' params accept HTML, and
+ *                           will be printed unescaped within their wrapper element.
+ * @return string
+ *
+ * @since 2.1
+ * @deprecated 2.3 Use elgg_view_field()
+ */
+function elgg_view_input($input_type, array $vars = []) {
+
+	elgg_deprecated_notice(__FUNCTION__ . '() is deprecated. Use elgg_view_field()', '2.3');
+
+	$vars['#type'] = $input_type;
+
+	if (isset($vars['label']) && $input_type !== 'checkbox') {
+		$vars['#label'] = $vars['label'];
+		unset($vars['label']);
+	}
+	if (isset($vars['help'])) {
+		$vars['#help'] = $vars['help'];
+		unset($vars['help']);
+	}
+	if (isset($vars['field_class'])) {
+		$vars['#class'] = $vars['field_class'];
+		unset($vars['field_class']);
+	}
+
+	return elgg_view_field($vars);
+}
+
+/**
+ * Sanitizes a string for use in a query
+ *
+ * @see Elgg\Database::sanitizeString
+ *
+ * @param string $string The string to sanitize
+ * @return string
+ * @deprecated Use query parameters where possible
+ */
+function sanitize_string($string) {
+	return _elgg_services()->db->sanitizeString($string);
+}
+
+/**
+ * Alias of sanitize_string
+ *
+ * @see Elgg\Database::sanitizeString
+ *
+ * @param string $string The string to sanitize
+ * @return string
+ * @deprecated Use query parameters where possible
+ */
+function sanitise_string($string) {
+	return _elgg_services()->db->sanitizeString($string);
+}
+
+/**
+ * Sanitizes an integer for database use.
+ *
+ * @see Elgg\Database::sanitizeInt
+ *
+ * @param int  $int    Value to be sanitized
+ * @param bool $signed Whether negative values should be allowed (true)
+ * @return int
+ * @deprecated Use query parameters where possible
+ */
+function sanitize_int($int, $signed = true) {
+	return _elgg_services()->db->sanitizeInt($int, $signed);
+}
+
+/**
+ * Alias of sanitize_int
+ *
+ * @see sanitize_int
+ *
+ * @param int  $int    Value to be sanitized
+ * @param bool $signed Whether negative values should be allowed (true)
+ * @return int
+ * @deprecated Use query parameters where possible
+ */
+function sanitise_int($int, $signed = true) {
+	return sanitize_int($int, $signed);
 }

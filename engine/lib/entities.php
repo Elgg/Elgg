@@ -128,36 +128,6 @@ function update_subtype($type, $subtype, $class = '') {
 }
 
 /**
- * Determine if a given user can write to an entity container.
- *
- * An entity can be a container for any other entity by setting the
- * container_guid.  container_guid can differ from owner_guid.
- *
- * A plugin hook container_permissions_check:$entity_type is emitted to allow granular
- * access controls in plugins.
- *
- * @param int    $user_guid      The user guid, or 0 for logged in user.
- * @param int    $container_guid The container, or 0 for the current page owner.
- * @param string $type           The type of entity we want to create (default: 'all')
- * @param string $subtype        The subtype of the entity we want to create (default: 'all')
- *
- * @return bool
- * @deprecated 2.2
- */
-function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggEntity::canWriteToContainer()', '2.2');
-	if (!$container_guid) {
-		$container_guid = elgg_get_page_owner_guid();
-	}
-	$container = get_entity($container_guid);
-	if (!$container) {
-		return false;
-	}
-
-	return $container->canWriteToContainer($user_guid, $type, $subtype);
-}
-
-/**
  * Returns a database row from the entities table.
  *
  * @tip Use get_entity() to return the fully loaded entity.
@@ -811,32 +781,6 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
 	}
 
 	_elgg_services()->logger->warn($warning);
-}
-
-/**
- * Update the last_action column in the entities table for $guid.
- *
- * @warning This is different to time_updated.  Time_updated is automatically set,
- * while last_action is only set when explicitly called.
- *
- * @param int $guid   Entity annotation|relationship action carried out on
- * @param int $posted Timestamp of last action
- *
- * @return int|false Timestamp or false on failure
- * @access private
- * @deprecated 2.3
- */
-function update_entity_last_action($guid, $posted = null) {
-	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Refrain from updating last action timestamp manually', '2.3');
-
-	$result = false;
-	$ia = elgg_set_ignore_access(true);
-	$entity = get_entity($guid);
-	if ($entity) {
-		$result = $entity->updateLastAction($posted);
-	}
-	elgg_set_ignore_access($ia);
-	return $result;
 }
 
 /**

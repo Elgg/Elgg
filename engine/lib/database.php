@@ -142,60 +142,6 @@ function run_sql_script($scriptlocation) {
 }
 
 /**
- * Sanitizes a string for use in a query
- *
- * @see Elgg\Database::sanitizeString
- *
- * @param string $string The string to sanitize
- * @return string
- * @deprecated Use query parameters where possible
- */
-function sanitize_string($string) {
-	return _elgg_services()->db->sanitizeString($string);
-}
-
-/**
- * Alias of sanitize_string
- *
- * @see Elgg\Database::sanitizeString
- *
- * @param string $string The string to sanitize
- * @return string
- * @deprecated Use query parameters where possible
- */
-function sanitise_string($string) {
-	return _elgg_services()->db->sanitizeString($string);
-}
-
-/**
- * Sanitizes an integer for database use.
- *
- * @see Elgg\Database::sanitizeInt
- *
- * @param int  $int    Value to be sanitized
- * @param bool $signed Whether negative values should be allowed (true)
- * @return int
- * @deprecated Use query parameters where possible
- */
-function sanitize_int($int, $signed = true) {
-	return _elgg_services()->db->sanitizeInt($int, $signed);
-}
-
-/**
- * Alias of sanitize_int
- *
- * @see sanitize_int
- *
- * @param int  $int    Value to be sanitized
- * @param bool $signed Whether negative values should be allowed (true)
- * @return int
- * @deprecated Use query parameters where possible
- */
-function sanitise_int($int, $signed = true) {
-	return sanitize_int($int, $signed);
-}
-
-/**
  * Enable the MySQL query cache
  *
  * @return void

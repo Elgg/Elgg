@@ -251,48 +251,6 @@ function elgg_front_page_handler() {
 }
 
 /**
- * Serve an error page
- *
- * This is registered by Elgg for the 'forward', '404' plugin hook. It can
- * registered for other hooks by plugins or called directly to display an
- * error page.
- *
- * @param string $hook   The name of the hook
- * @param string $type   Http error code
- * @param bool   $result The current value of the hook
- * @param array  $params Parameters related to the hook
- * @return void
- * @deprecated 2.3
- */
-function elgg_error_page_handler($hook, $type, $result, $params) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Error pages are drawn by resource views without "forward" hook.', '2.3');
-	
-	// This draws an error page, and sometimes there's another 40* forward() call made during that process.
-	// We want to allow the 2nd call to pass through, but draw the appropriate page for the first call.
-	
-	static $vars;
-	if ($vars === null) {
-		// keep first vars for error page
-		$vars = [
-			'type' => $type,
-			'params' => $params,
-		];
-	}
-
-	static $calls = 0;
-	$calls++;
-	if ($calls < 3) {
-		echo elgg_view_resource('error', $vars);
-		exit;
-	}
-
-	// uh oh, may be infinite loop
-	register_error(elgg_echo('error:404:content'));
-	header('Location: ' . elgg_get_site_url());
-	exit;
-}
-
-/**
  * Prepares a successful response to be returned by a page or an action handler
  *
  * @param mixed  $content     Response content
