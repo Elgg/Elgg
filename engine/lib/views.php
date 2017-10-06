@@ -1336,43 +1336,6 @@ function elgg_get_form_footer() {
 }
 
 /**
- * Renders a form field
- *
- * @param string $input_type Input type, used to generate an input view ("input/$input_type")
- * @param array  $vars       Fields and input vars.
- *                           Field vars contain both field and input params. 'label', 'help',
- *                           and 'field_class' params will not be passed on to the input view.
- *                           Others, including 'required' and 'id', will be available to the
- *                           input view. Both 'label' and 'help' params accept HTML, and
- *                           will be printed unescaped within their wrapper element.
- * @return string
- *
- * @since 2.1
- * @deprecated 2.3 Use elgg_view_field()
- */
-function elgg_view_input($input_type, array $vars = []) {
-
-	elgg_deprecated_notice(__FUNCTION__ . '() is deprecated. Use elgg_view_field()', '2.3');
-
-	$vars['#type'] = $input_type;
-
-	if (isset($vars['label']) && $input_type !== 'checkbox') {
-		$vars['#label'] = $vars['label'];
-		unset($vars['label']);
-	}
-	if (isset($vars['help'])) {
-		$vars['#help'] = $vars['help'];
-		unset($vars['help']);
-	}
-	if (isset($vars['field_class'])) {
-		$vars['#class'] = $vars['field_class'];
-		unset($vars['field_class']);
-	}
-
-	return elgg_view_field($vars);
-}
-
-/**
  * Renders a form field, usually with a wrapper element, a label, help text, etc.
  *
  * @param array $params Field parameters and variables for the input view.

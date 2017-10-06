@@ -530,63 +530,6 @@ function notify_user($to, $from = 0, $subject = '', $message = '', array $params
 }
 
 /**
- * Get the notification settings for a given user.
- *
- * @param int $user_guid The user id
- *
- * @return \stdClass|false
- * @deprecated 2.3
- */
-function get_user_notification_settings($user_guid = 0) {
-
-	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated by ElggUser::getNotificationSettings()', '2.3');
-
-	if ((int) $user_guid == 0) {
-		$user_guid = elgg_get_logged_in_user_guid();
-	}
-
-	$user = get_entity($user_guid);
-	if (!$user instanceof \ElggUser) {
-		return false;
-	}
-
-	return (object) $user->getNotificationSettings();
-}
-
-/**
- * Set a user notification pref.
- *
- * @param int    $user_guid The user id.
- * @param string $method    The delivery method (eg. email)
- * @param bool   $value     On(true) or off(false).
- *
- * @return bool
- * @deprecated 2.3
- */
-function set_user_notification_setting($user_guid, $method, $value) {
-	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated by ElggUser::setNotificationSetting()', '2.3');
-
-	if (!$user_guid) {
-		$user_guid = elgg_get_logged_in_user_guid();
-	}
-	$user = get_entity($user_guid);
-	if (!$user instanceof \ElggUser) {
-		return false;
-	}
-
-	if (is_string($value)) {
-		$value = strtolower($value);
-	}
-	if ($value == 'yes' || $value == 'on' || $value == 'enabled') {
-		$value = true;
-	} else if ($value == 'no' || $value == 'off' || $value == 'disabled') {
-		$value = false;
-	}
-
-	return $user->setNotificationSetting($method, (bool) $value);
-}
-
-/**
  * Send an email to any email address
  *
  * @param \Elgg\Email $email Email

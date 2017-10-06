@@ -336,7 +336,7 @@ function pages_write_permission_check($hook, $entity_type, $returnvalue, $params
 }
 
 /**
- * Extend container permissions checking to extend can_write_to_container for write users.
+ * Extend container permissions checking to extend container write access for write users.
  *
  * @param string $hook
  * @param string $entity_type

@@ -216,49 +216,6 @@ function elgg_is_xhr() {
 }
 
 /**
- * Catch calls to forward() in ajax request and force an exit.
- *
- * Forces response is json of the following form:
- * <pre>
- * {
- *     "current_url": "the.url.we/were/coming/from",
- *     "forward_url": "the.url.we/were/going/to",
- *     "system_messages": {
- *         "messages": ["msg1", "msg2", ...],
- *         "errors": ["err1", "err2", ...]
- *     },
- *     "status": -1 //or 0 for success if there are no error messages present
- * }
- * </pre>
- * where "system_messages" is all message registers at the point of forwarding
- *
- * @internal registered for the 'forward', 'all' plugin hook
- *
- * @param string $hook
- * @param string $type
- * @param string $reason
- * @param array  $params
- * @return void
- * @access private
- * @deprecated 2.3
- */
-function ajax_forward_hook($hook, $type, $reason, $params) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.3');
-	_elgg_services()->actions->ajaxForwardHook($hook, $type, $reason, $params);
-}
-
-/**
- * Buffer all output echo'd directly in the action for inclusion in the returned JSON.
- * @return void
- * @access private
- * @deprecated 2.3
- */
-function ajax_action_hook() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.3');
-	_elgg_services()->actions->ajaxActionHook();
-}
-
-/**
  * Send an updated CSRF token, provided the page's current tokens were not fake.
  *
  * @return ResponseBuilder

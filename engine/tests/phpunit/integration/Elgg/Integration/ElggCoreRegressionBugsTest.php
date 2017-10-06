@@ -113,7 +113,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		// disable access overrides because we're admin.
 		$ia = elgg_set_ignore_access(false);
 
-		$this->assertFalse(can_write_to_container($user->guid, $object->guid));
+		$this->assertFalse($object->canWriteToContainer($user->guid));
 
 		global $elgg_test_user;
 		$elgg_test_user = $user;
@@ -129,12 +129,12 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 			};
 
 		elgg_register_plugin_hook_handler('container_permissions_check', 'all', $handler, 600);
-		$this->assertTrue(can_write_to_container($user->guid, $object->guid));
+		$this->assertTrue($object->canWriteToContainer($user->guid));
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', $handler);
 
-		$this->assertFalse(can_write_to_container($user->guid, $group->guid));
+		$this->assertFalse($group->canWriteToContainer($user->guid));
 		$group->join($user);
-		$this->assertTrue(can_write_to_container($user->guid, $group->guid));
+		$this->assertTrue($group->canWriteToContainer($user->guid));
 
 		elgg_set_ignore_access($ia);
 

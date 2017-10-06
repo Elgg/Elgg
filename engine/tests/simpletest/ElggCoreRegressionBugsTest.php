@@ -120,7 +120,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 		_elgg_services()->logger->disable();
 
-		$this->assertFalse(can_write_to_container($user->guid, $object->guid));
+		$this->assertFalse($object->canWriteToContainer($user->guid));
 
 		// register hook to allow access
 		$callback = function ($hook, $type, $value, $params) use ($user) {
@@ -130,12 +130,12 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 		};
 
 		elgg_register_plugin_hook_handler('container_permissions_check', 'all', $callback, 600);
-		$this->assertTrue(can_write_to_container($user->guid, $object->guid));
+		$this->assertTrue($object->canWriteToContainer($user->guid));
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', $callback);
-		$this->assertFalse(can_write_to_container($user->guid, $group->guid));
+		$this->assertFalse($group->canWriteToContainer($user->guid));
 
 		$group->join($user);
-		$this->assertTrue(can_write_to_container($user->guid, $group->guid));
+		$this->assertTrue($group->canWriteToContainer($user->guid));
 
 		_elgg_services()->logger->enable();
 
