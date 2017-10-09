@@ -161,7 +161,7 @@ function search_users_hook($hook, $type, $value, $params) {
 		]);
 
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-		$md_where = "(({$clauses['wheres'][0]}) AND md.value LIKE '%$query%')";
+		$md_where = "(({$clauses['wheres'][0]}) AND an.value LIKE '%$query%')";
 		
 		$params['wheres'][] = "(($where) OR ($md_where))";
 	} else {
