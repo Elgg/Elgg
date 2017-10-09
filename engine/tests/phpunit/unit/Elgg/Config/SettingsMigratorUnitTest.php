@@ -88,12 +88,20 @@ class SettingsMigratorUnitTest extends UnitTestCase {
 
 		$this->db->addQuerySpec([
 			'sql' => "
-				SELECT url FROM {$this->db->prefix}sites_entity
-				WHERE guid = 1
+				SHOW TABLES LIKE '{$this->db->prefix}sites_entity'
+			",
+			'results' => [],
+		]);
+
+		$this->db->addQuerySpec([
+			'sql' => "
+				SELECT value FROM {$this->db->prefix}metadata
+				WHERE name = 'url' AND
+				entity_guid = 1
 			",
 			'results' => [
 				(object) [
-					'url' => $config['wwwroot'],
+					'value' => $config['wwwroot'],
 				],
 			],
 		]);

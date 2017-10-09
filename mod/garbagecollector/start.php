@@ -101,7 +101,6 @@ function garbagecollector_entities() {
 	$dbprefix = elgg_get_config('dbprefix');
 
 	$tables = [
-		'site' => 'sites_entity',
 		'object' => 'objects_entity',
 		'group' => 'groups_entity',
 		'user' => 'users_entity',

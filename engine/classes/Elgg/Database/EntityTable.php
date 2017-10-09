@@ -748,7 +748,6 @@ class EntityTable {
 			'object' => 'ElggObject',
 			'user' => 'ElggUser',
 			'group' => 'ElggGroup',
-			'site' => 'ElggSite',
 		];
 
 		// We use reset() because $options['types'] may not have a numeric key
@@ -793,7 +792,6 @@ class EntityTable {
 			'object' => 'title',
 			'user' => 'password_hash',
 			'group' => 'name',
-			'site' => 'url',
 		];
 
 		$rows = $this->db->getData($sql);
@@ -1218,7 +1216,7 @@ class EntityTable {
 		}
 
 		// @todo the types should be defined somewhere (as constant on \ElggEntity?)
-		if (!in_array($type, ['group', 'object', 'site', 'user'])) {
+		if (!in_array($type, ['group', 'object', 'user'])) {
 			throw new InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
 		}
 

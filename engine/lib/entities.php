@@ -146,20 +146,6 @@ function get_entity_as_row($guid) {
 }
 
 /**
- * Return the site specific details of a site by a row.
- *
- * @param int $guid The site GUID
- *
- * @return mixed
- * @access private
- */
-function get_site_entity_as_row($guid) {
-	$guid = (int) $guid;
-	$prefix = _elgg_config()->dbprefix;
-	return get_data_row("SELECT * FROM {$prefix}sites_entity WHERE guid = $guid");
-}
-
-/**
  * Return the object specific details of a object by a row.
  *
  * @param int $guid The guid to retrieve
@@ -803,7 +789,6 @@ function _elgg_entities_test($hook, $type, $value) {
 	$value[] = ElggCoreGetEntitiesFromRelationshipTest::class;
 	$value[] = ElggCoreGetEntitiesFromAttributesTest::class;
 	$value[] = ElggEntityPreloaderIntegrationTest::class;
-	$value[] = ElggCoreSiteTest::class;
 	$value[] = ElggCoreObjectTest::class;
 	return $value;
 }

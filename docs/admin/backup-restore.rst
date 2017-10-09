@@ -222,6 +222,8 @@ Edit ``/public_html/elgg-config/settings.php`` on the new hosting provider to re
    // Database server
    // (For most configurations, you can leave this as 'localhost')
    $CONFIG->dbhost = 'localhost';
+   
+   $CONFIG->wwwroot = 'http://your.website.com/'
 
 Upload the ``settings.php`` file back to the new host - overwriting the existing file.
 
@@ -238,12 +240,6 @@ Change the data directory
 .. code:: sql
 
    UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/home/userx/elggdata/", "/home/usery/elggdata/") WHERE `name` = "dataroot";
-
-Change the site URL (if this has changed)
-
-.. code:: sql
-
-   UPDATE `elgg_sites_entity` SET `url` = "http://mynewdomain.com";
 
 Change the filestore data directory
 
