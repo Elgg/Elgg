@@ -206,12 +206,12 @@ trait Seeding {
 				$metadata['membership'] = ACCESS_PUBLIC;
 			}
 
-			if (empty($attributes['name'])) {
-				$attributes['name'] = $this->faker()->sentence();
+			if (empty($metadata['name'])) {
+				$metadata['name'] = $this->faker()->sentence();
 			}
 
-			if (empty($attributes['description'])) {
-				$attributes['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
+			if (empty($metadata['description'])) {
+				$metadata['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
 			}
 
 			if (empty($attributes['owner_guid'])) {

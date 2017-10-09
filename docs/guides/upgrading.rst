@@ -107,6 +107,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``file_delete``: Use ``ElggFile->deleteIcon()``
  * ``get_default_filestore``
  * ``get_site_entity_as_row``
+ * ``get_group_entity_as_row``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``
@@ -241,7 +242,8 @@ settings.php, or computed by Symphony Request.
 Entity Subtable Changes
 -----------------------
 
-The subtable ``sites_entity`` for ``ElggSite`` no longer exists. All attributes have been moved to metadata. 
+The subtable ``sites_entity`` for ``ElggSite`` no longer exists. All attributes have been moved to metadata.
+The subtable ``groups_entity`` for ``ElggGroup`` no longer exists. All attributes have been moved to metadata.
 If you have custom queries referencing this table you need to update them.
 
 Custom class loading

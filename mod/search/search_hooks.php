@@ -73,18 +73,39 @@ function search_groups_hook($hook, $type, $value, $params) {
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 	
-	$db_prefix = elgg_get_config('dbprefix');
-
 	$query = sanitise_string($params['query']);
 
-	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
-	array_unshift($params['joins'], $join);
+	$query_parts = explode(' ', $query);
+	$db_prefix = elgg_get_config('dbprefix');
+
+	$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
 	
 	$fields = ['name', 'description'];
-	$where = search_get_where_sql('ge', $fields, $params);
-	$params['wheres'][] = $where;
-
+	$wheres = [];
+	foreach ($fields as $field) {
+		$sublikes = [];
+		foreach ($query_parts as $query_part) {
+			$query_part = sanitise_string($query_part);
+			if (strlen($query_part) == 0) {
+				continue;
+			}
+			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
+		}
+		
+		if (empty($sublikes)) {
+			continue;
+		}
+		
+		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
+	}
+	
+	if (!empty($wheres)) {
+		$params['wheres'][] = implode(' OR ', $wheres);
+	}
+	
+	
 	$params['count'] = true;
+	
 	$count = elgg_get_entities($params);
 	
 	// no need to continue if nothing here.
@@ -94,7 +115,7 @@ function search_groups_hook($hook, $type, $value, $params) {
 	
 	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
-		$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
+		$params['order_by'] = search_get_order_by_sql('e', '', $params['sort'], $params['order']);
 	}
 	$entities = elgg_get_entities($params);
 
@@ -161,7 +182,7 @@ function search_users_hook($hook, $type, $value, $params) {
 		]);
 
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-		$md_where = "(({$clauses['wheres'][0]}) AND md.value LIKE '%$query%')";
+		$md_where = "(({$clauses['wheres'][0]}) AND an.value LIKE '%$query%')";
 		
 		$params['wheres'][] = "(($where) OR ($md_where))";
 	} else {

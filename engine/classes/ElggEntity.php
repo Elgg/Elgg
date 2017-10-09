@@ -1592,7 +1592,7 @@ abstract class ElggEntity extends \ElggData implements
 			return ['name', 'username', 'password_hash', 'email', 'language'];
 		}
 		if ($this instanceof ElggGroup) {
-			return ['name', 'description'];
+			return [];
 		}
 		if ($this instanceof ElggSite) {
 			return [];
@@ -1629,10 +1629,7 @@ abstract class ElggEntity extends \ElggData implements
 					'prev_last_login' => null,
 				];
 			case 'group':
-				return [
-					'name' => null,
-					'description' => null,
-				];
+				return [];
 			case 'site':
 				return [];
 		}
@@ -1954,7 +1951,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$deleted = $this->getDatabase()->deleteData($sql, $params);
 
-		if ($deleted && in_array($this->type, ['object', 'user', 'group'])) {
+		if ($deleted && in_array($this->type, ['object', 'user'])) {
 			// delete from type-specific subtable
 			$sql = "
 				DELETE FROM {$dbprefix}{$this->type}s_entity
