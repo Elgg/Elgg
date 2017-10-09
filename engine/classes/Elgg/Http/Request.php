@@ -199,10 +199,14 @@ class Request extends SymfonyRequest {
 	public function getFile($input_name, $check_for_validity = true) {
 		$files = $this->getFiles($input_name);
 		if (empty($files)) {
-			return;
+			return false;
 		}
 		
 		$file = $files[0];
+		if (empty($file)) {
+			return false;
+		}
+		
 		if ($check_for_validity && !$file->isValid()) {
 			return false;
 		}
