@@ -167,7 +167,7 @@ Entity Icons
 ~~~~~~~~~~~~
 
 Entity icons can be saved from uploaded files, existing local files, or existing ElggFile 
-objects. These methods save all sizes of icons defined in the system.
+objects. These methods save the `master` size of the icon defined in the system. The other defined sizes will be generated when requested.
 
 .. code:: php
 
@@ -190,7 +190,7 @@ objects. These methods save all sizes of icons defined in the system.
 	$object->save();
 
 The following sizes exist by default: 
- * ``master`` - 550px at longer edge (not upscaled)
+ * ``master`` - 2048px at longer edge (not upscaled)
  * ``large`` - 200px at longer edge (not upscaled)
  * ``medium`` - 100px square
  * ``small`` - 40px square
@@ -202,7 +202,7 @@ The function triggers the ``entity:icon:sizes`` :ref:`hook <guides/hooks-list#ot
 
 To check if an icon is set, use ``$object->hasIcon($size)``.
 
-You can retrieve the URL of the generated icon with``ElggEntity::getIconURL($params)`` method.
+You can retrieve the URL of the generated icon with ``ElggEntity::getIconURL($params)`` method.
 This method accepts a ``$params`` argument as an array that specifies the size, type, and provide 
 additional context for the hook to determine the icon to serve. 
 The method triggers the ``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
@@ -256,8 +256,11 @@ might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as
 		'type' => 'cover_photo'
 	]);
 
-Note that custom icon types (e.g. cover photos) do not have preset sizes and coordinates.
-Use ``entity:<icon_type>:url`` :ref:`hook <guides/hooks-list#other>` to configure them.
+
+.. note::
+	
+	Custom icon types (e.g. cover photos) only have a preset for `master` size, to add custom sizes
+	use ``entity:<icon_type>:url`` :ref:`hook <guides/hooks-list#other>` to configure them.
 
 By default icons will be stored in ``/icons/<icon_type>/<size>.jpg`` relative to entity's directory on filestore.
 To provide an alternative location, use the ``entity:<icon_type>:file`` :ref:`hook <guides/hooks-list#other>`.

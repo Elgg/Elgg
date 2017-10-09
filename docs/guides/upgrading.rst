@@ -406,6 +406,9 @@ Miscellaneous API changes
  * ``Application::getDb()`` no longer returns an instance of ``Elgg\Database``, but rather a ``Elgg\Application\Database``
  * ``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files.
  * ``elgg_get_config('siteemail')`` is no longer available. Use ``elgg_get_site_entity()->email``.
+ * ``ElggEntity::saveIconFromUploadedFile`` only saves `master` size, the other sizes are created when requested by ``ElggEntity::getIcon()`` based on the `master` size
+ * ``ElggEntity::saveIconFromLocalFile`` only saves `master` size, the other sizes are created when requested by ``ElggEntity::getIcon()`` based on the `master` size
+ * ``ElggEntity::saveIconFromElggFile`` only saves `master` size, the other sizes are created when requested by ``ElggEntity::getIcon()`` based on the `master` size
  * Group entities do no longer have the magic ``username`` attribute.
  * Pagehandling will no longer detect ``group:<guid>`` in the URL
  * The CRON interval ``reboot`` is removed.
@@ -620,6 +623,10 @@ Default icon image files have been moved and re-mapped as follows:
  * Group icons: ``views/default/icon/group/default/$size.gif`` in the groups plugin
 
 Groups icon files have been moved from ``groups/<guid><size>.jpg`` relative to group owner's directory on filestore to a location prescribed by the entity icon service. Plugins should stop accessing files on the filestore directly and use the entity icon API. Upgrade script is available via admin interface.
+
+The generation of entity icons has ben changed. No longer will all the configured sizes be generated when calling one of the entity icon functions 
+(``ElggEntity::saveIconFromUploadedFile``, ``ElggEntity::saveIconFromLocalFile`` or ``ElggEntity::saveIconFromElggFile``), but only the `master` size.
+The other configured sizes will be generated when requesting that size based of the `master` icon.
 
 Autocomplete (user and friends pickers)
 ---------------------------------------

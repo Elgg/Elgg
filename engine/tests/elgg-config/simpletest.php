@@ -68,8 +68,8 @@ $settings = [
 			'upscale' => false
 		],
 		'master' => [
-			'w' => 550,
-			'h' => 550,
+			'w' => 2048,
+			'h' => 2048,
 			'square' => false,
 			'upscale' => false
 		],

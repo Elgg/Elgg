@@ -1803,7 +1803,7 @@ function elgg_views_boot() {
 			'small' => ['w' => 40, 'h' => 40, 'square' => true, 'upscale' => true],
 			'medium' => ['w' => 100, 'h' => 100, 'square' => true, 'upscale' => true],
 			'large' => ['w' => 200, 'h' => 200, 'square' => false, 'upscale' => false],
-			'master' => ['w' => 550, 'h' => 550, 'square' => false, 'upscale' => false],
+			'master' => ['w' => 2048, 'h' => 2048, 'square' => false, 'upscale' => false],
 		];
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}
