@@ -108,6 +108,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``get_default_filestore``
  * ``get_site_entity_as_row``
  * ``get_group_entity_as_row``
+ * ``get_object_entity_as_row``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``

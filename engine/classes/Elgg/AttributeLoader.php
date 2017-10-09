@@ -173,7 +173,7 @@ class AttributeLoader {
 	 * if can't be loaded (Check $failure_reason).
 	 *
 	 * This function splits loading between "primary" attributes (those in {prefix}entities table) and
-	 * "secondary" attributes (e.g. those in {prefix}objects_entity), but can load all at once if a
+	 * "secondary" attributes (e.g. those in {prefix}users_entity), but can load all at once if a
 	 * combined loader is available.
 	 *
 	 * @param mixed $row a row loaded from DB (array or \stdClass)

@@ -56,7 +56,7 @@ class ElggPlugin extends \ElggObject {
 		if (!$path) {
 			throw new \PluginException("ElggPlugin cannot be null instantiated. You must pass a full path.");
 		}
-
+		
 		if (is_object($path)) {
 			// database object
 			parent::__construct($path);
@@ -198,7 +198,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function setID($id) {
-		return $this->attributes['title'] = $id;
+		return $this->title = $id;
 	}
 
 	/**
@@ -1157,7 +1157,7 @@ class ElggPlugin extends \ElggObject {
 	}
 
 	/**
-	 * Get an attribute or private setting value
+	 * Get an attribute, metadata or private setting value
 	 *
 	 * @param string $name Name of the attribute or private setting
 	 * @return mixed
@@ -1167,19 +1167,25 @@ class ElggPlugin extends \ElggObject {
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
+		
+		// object title and description are stored as metadata
+		if (in_array($name, ['title', 'description'])) {
+			return parent::__get($name);
+		}
 
 		$result = $this->getPrivateSetting($name);
 		if ($result !== null) {
 			return $result;
 		}
+		
 		$defaults = $this->getStaticConfig('settings', []);
 		return elgg_extract($name, $defaults, $result);
 	}
 
 	/**
-	 * Set a value as private setting or attribute.
+	 * Set a value as attribute, metadata or private setting.
 	 *
-	 * Attributes include title and description.
+	 * Metadata applies to title and description.
 	 *
 	 * @param string $name  Name of the attribute or private_setting
 	 * @param mixed  $value Value to be set
@@ -1193,10 +1199,17 @@ class ElggPlugin extends \ElggObject {
 			}
 
 			$this->attributes[$name] = $value;
-		} else {
-			// to make sure we trigger the correct hooks
-			$this->setSetting($name, $value);
+			return;
 		}
+			
+		// object title and description are stored as metadata
+		if (in_array($name, ['title', 'description'])) {
+			parent::__set($name, $value);
+			return;
+		}
+		
+		// to make sure we trigger the correct hooks
+		$this->setSetting($name, $value);
 	}
 
 	/**

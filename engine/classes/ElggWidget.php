@@ -27,7 +27,7 @@ class ElggWidget extends \ElggObject {
 	}
 
 	/**
-	 * Get a value from attributes or private settings
+	 * Get a value from attributes, metadata or private settings
 	 *
 	 * @param string $name The name of the value
 	 * @return mixed
@@ -37,20 +37,18 @@ class ElggWidget extends \ElggObject {
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
-
-		// @todo clean up now that private settings return null
-		// No, so see if its in the private data store.
-		$meta = $this->getPrivateSetting($name);
-		if ($meta) {
-			return $meta;
+		
+	
+		// object title and description are stored as metadata
+		if (in_array($name, ['title', 'description'])) {
+			return parent::__get($name);
 		}
 
-		// Can't find it, so return null
-		return null;
+		return $this->getPrivateSetting($name);
 	}
 
 	/**
-	 * Set an attribute or private setting value
+	 * Set an attribute, metadata or private setting value
 	 *
 	 * @param string $name  The name of the value to set
 	 * @param mixed  $value The value to set
@@ -64,9 +62,16 @@ class ElggWidget extends \ElggObject {
 			}
 
 			$this->attributes[$name] = $value;
-		} else {
-			$this->setPrivateSetting($name, $value);
+			return;
 		}
+		
+		// object title and description are stored as metadata
+		if (in_array($name, ['title', 'description'])) {
+			parent::__set($name, $value);
+			return;
+		}
+		
+		$this->setPrivateSetting($name, $value);
 	}
 
 	/**
@@ -82,13 +87,19 @@ class ElggWidget extends \ElggObject {
 	public function __unset($name) {
 		if (array_key_exists($name, $this->attributes)) {
 			parent::__unset($name);
-		} else {
-			$this->removePrivateSetting($name);
 		}
+		
+		// object title and description are stored as metadata
+		if (in_array($name, ['title', 'description'])) {
+			parent::__unset($name);
+			return;
+		}
+		
+		$this->removePrivateSetting($name);
 	}
 	
 	/**
-	 * Test if property is set either as an attribute or private setting
+	 * Test if property is set either as an attribute, metadata or private setting
 	 *
 	 * @tip Use isset($entity->property)
 	 *
@@ -102,10 +113,15 @@ class ElggWidget extends \ElggObject {
 	public function __isset($name) {
 		if (array_key_exists($name, $this->attributes)) {
 			return parent::__isset($name);
-		} else {
-			$private_setting = $this->getPrivateSetting($name);
-			return !is_null($private_setting);
 		}
+		
+		// object title and description are stored as metadata
+		if (in_array($name, ['title', 'description'])) {
+			return parent::__isset($name);
+		}
+		
+		$private_setting = $this->getPrivateSetting($name);
+		return !is_null($private_setting);
 	}
 
 	/**

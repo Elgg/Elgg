@@ -291,8 +291,8 @@ I want to remove users. Can't I just delete them from the elgg_users_entity tabl
 
 No, it will corrupt your database. Delete them through the site.
 
-I want to remove spam. Can't I just search and delete it from the elgg_objects_entity table?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+I want to remove spam. Can't I just search and delete it from the elgg_entities table?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 No, it will corrupt your database. Delete it through the site.
 

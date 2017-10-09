@@ -745,7 +745,6 @@ class EntityTable {
 
 		$join_types = [
 			// Each class must have a static getExternalAttributes() : array
-			'object' => 'ElggObject',
 			'user' => 'ElggUser',
 		];
 
@@ -791,7 +790,6 @@ class EntityTable {
 		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
 		// will fetch any missing attributes.
 		$types_to_optimize = [
-			'object' => 'title',
 			'user' => 'password_hash',
 		];
 
@@ -1217,7 +1215,7 @@ class EntityTable {
 		}
 
 		// @todo the types should be defined somewhere (as constant on \ElggEntity?)
-		if (!in_array($type, ['object', 'user'])) {
+		if (!in_array($type, ['user'])) {
 			throw new InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
 		}
 

@@ -1586,7 +1586,7 @@ abstract class ElggEntity extends \ElggData implements
 	private function getSecondaryTableColumns() {
 		// Note: the title or name column must come first. See getDisplayName().
 		if ($this instanceof ElggObject) {
-			return ['title', 'description'];
+			return [];
 		}
 		if ($this instanceof ElggUser) {
 			return ['name', 'username', 'password_hash', 'email', 'language'];
@@ -1611,10 +1611,7 @@ abstract class ElggEntity extends \ElggData implements
 	public static function getExtraAttributeDefaults($type) {
 		switch ($type) {
 			case 'object':
-				return [
-					'title' => null,
-					'description' => null,
-				];
+				return [];
 			case 'user':
 				return [
 					'name' => null,
@@ -1951,7 +1948,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$deleted = $this->getDatabase()->deleteData($sql, $params);
 
-		if ($deleted && in_array($this->type, ['object', 'user'])) {
+		if ($deleted && in_array($this->type, ['user'])) {
 			// delete from type-specific subtable
 			$sql = "
 				DELETE FROM {$dbprefix}{$this->type}s_entity

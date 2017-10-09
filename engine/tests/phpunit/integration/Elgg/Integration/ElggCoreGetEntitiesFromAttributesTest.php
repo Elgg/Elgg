@@ -46,14 +46,14 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 	 */
 	public function testWithInvalidPair() {
 		elgg_get_entities_from_attributes([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => 'invalid',
 		]);
 	}
 
 	public function testGetSqlWithNoAttributePairs() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => ELGG_ENTITIES_ANY_VALUE,
 		]);
 		$this->assertIdentical([
@@ -64,7 +64,7 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 
 	public function testGetSqlWithEmptyPairs() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => [],
 		]);
 		$this->assertIdentical([
@@ -75,26 +75,26 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 
 	public function testGetSqlWithSinglePairAndStringValue() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => [
-				'name' => 'title',
+				'name' => 'name',
 				'value' => 'foo',
 			],
 			'attribute_name_value_pairs_operator' => 'AND',
 		]);
 		$CONFIG = _elgg_config();
 		$expected = [
-			'joins' => ["JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"],
-			'wheres' => ["((type_table.title = 'foo'))"],
+			'joins' => ["JOIN {$CONFIG->dbprefix}users_entity type_table ON e.guid = type_table.guid"],
+			'wheres' => ["((type_table.name = 'foo'))"],
 		];
 		$this->assertIdentical($expected, $result);
 	}
 
 	public function testGetSqlWithSinglePairAndOperand() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => [
-				'name' => 'title',
+				'name' => 'name',
 				'value' => 'foo',
 				'operand' => '<',
 			],
@@ -102,34 +102,34 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 		]);
 		$CONFIG = _elgg_config();
 		$expected = [
-			'joins' => ["JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"],
-			'wheres' => ["((type_table.title < 'foo'))"],
+			'joins' => ["JOIN {$CONFIG->dbprefix}users_entity type_table ON e.guid = type_table.guid"],
+			'wheres' => ["((type_table.name < 'foo'))"],
 		];
 		$this->assertIdentical($expected, $result);
 	}
 
 	public function testGetSqlWithSinglePairAndNumericValue() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => [
-				'name' => 'title',
+				'name' => 'name',
 				'value' => '32',
 			],
 			'attribute_name_value_pairs_operator' => 'AND',
 		]);
 		$CONFIG = _elgg_config();
 		$expected = [
-			'joins' => ["JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"],
-			'wheres' => ["((type_table.title = 32))"],
+			'joins' => ["JOIN {$CONFIG->dbprefix}users_entity type_table ON e.guid = type_table.guid"],
+			'wheres' => ["((type_table.name = 32))"],
 		];
 		$this->assertIdentical($expected, $result);
 	}
 
 	public function testGetSqlWithSinglePairAndNumericArrayValue() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => [
-				'name' => 'title',
+				'name' => 'name',
 				'value' => [
 					1,
 					2,
@@ -140,17 +140,17 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 		]);
 		$CONFIG = _elgg_config();
 		$expected = [
-			'joins' => ["JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"],
-			'wheres' => ["((type_table.title IN (1, 2, 3)))"],
+			'joins' => ["JOIN {$CONFIG->dbprefix}users_entity type_table ON e.guid = type_table.guid"],
+			'wheres' => ["((type_table.name IN (1, 2, 3)))"],
 		];
 		$this->assertIdentical($expected, $result);
 	}
 
 	public function testGetSqlWithSinglePairAndStringArrayValue() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => [
-				'name' => 'title',
+				'name' => 'name',
 				'value' => [
 					'one',
 					'two'
@@ -160,8 +160,8 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 		]);
 		$CONFIG = _elgg_config();
 		$expected = [
-			'joins' => ["JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"],
-			'wheres' => ["((type_table.title IN ('one', 'two')))"],
+			'joins' => ["JOIN {$CONFIG->dbprefix}users_entity type_table ON e.guid = type_table.guid"],
+			'wheres' => ["((type_table.name IN ('one', 'two')))"],
 		];
 		$this->assertIdentical($expected, $result);
 	}
@@ -191,9 +191,9 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 
 	public function testGetSqlWithSinglePairAndCaseInsensitiveStringValue() {
 		$result = _elgg_get_entity_attribute_where_sql([
-			'types' => 'object',
+			'types' => 'user',
 			'attribute_name_value_pairs' => [
-				'name' => 'title',
+				'name' => 'name',
 				'value' => 'foo',
 				'case_sensitive' => true,
 			],
@@ -201,8 +201,8 @@ class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest 
 		]);
 		$CONFIG = _elgg_config();
 		$expected = [
-			'joins' => ["JOIN {$CONFIG->dbprefix}objects_entity type_table ON e.guid = type_table.guid"],
-			'wheres' => ["((BINARY type_table.title = 'foo'))"],
+			'joins' => ["JOIN {$CONFIG->dbprefix}users_entity type_table ON e.guid = type_table.guid"],
+			'wheres' => ["((BINARY type_table.name = 'foo'))"],
 		];
 		$this->assertIdentical($expected, $result);
 	}

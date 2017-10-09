@@ -65,28 +65,20 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function testAlreadyPersistedAttributeSetsAreRecorded() {
-		$this->entity->title = 'Foo';
-		$this->entity->description = 'Bar';
 		$this->entity->container_guid = elgg_get_site_entity()->guid;
 
 		$this->assertEqual($this->entity->getOriginalAttributes(), [
-			'title' => null,
-			'description' => null,
 			'container_guid' => elgg_get_logged_in_user_guid(),
 		]);
 	}
 
 	public function testModifiedAttributesAreAvailableDuringUpdateNotAfter() {
-		$this->entity->title = 'Foo';
-		$this->entity->description = 'Bar';
 		$this->entity->container_guid = elgg_get_site_entity()->guid;
 
 		$calls = 0;
 		$handler = function ($event, $type, ElggObject $object) use (&$calls) {
 			$calls++;
 			$this->assertEqual($object->getOriginalAttributes(), [
-				'title' => null,
-				'description' => null,
 				'container_guid' => elgg_get_logged_in_user_guid(),
 			]);
 		};
@@ -103,18 +95,6 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertEqual($this->entity->getOriginalAttributes(), []);
 	}
 
-	public function testModifedAttributesSettingEmptyString() {
-		$this->entity->title = '';
-		$this->entity->description = '';
-
-		$this->assertEqual($this->entity->getOriginalAttributes(), []);
-
-		$this->entity->title = '';
-		$this->entity->description = '';
-
-		$this->assertEqual($this->entity->getOriginalAttributes(), []);
-	}
-
 	public function testModifedAttributesSettingIntsAsStrings() {
 		$this->entity->container_guid = elgg_get_logged_in_user_guid();
 		$this->entity->save();
@@ -124,11 +104,11 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function testMultipleAttributeSetsDontOverwriteOriginals() {
-		$this->entity->title = 'Foo';
-		$this->entity->title = 'Bar';
+		$this->entity->container_guid = 1;
+		$this->entity->container_guid = 2;
 
 		$this->assertEqual($this->entity->getOriginalAttributes(), [
-			'title' => null,
+			'container_guid' => elgg_get_logged_in_user_guid(),
 		]);
 	}
 

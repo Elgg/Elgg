@@ -27,8 +27,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$attributes['time_updated'] = null;
 		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
-		$attributes['title'] = null;
-		$attributes['description'] = null;
 		ksort($attributes);
 
 		$entity_attributes = $this->entity->expose_attributes();
@@ -50,11 +48,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$this->entity->title = 'testing';
 		$this->entity->description = '\ElggObject';
 		$this->assertEqual($this->entity->save(), $guid);
-
-		$object_row = $this->get_object_row($guid);
-		$this->assertIsA($object_row, '\stdClass');
-		$this->assertIdentical($object_row->title, 'testing');
-		$this->assertIdentical($object_row->description, '\ElggObject');
 
 		// clean up
 		$this->entity->delete();
@@ -237,11 +230,6 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
 		$r = get_data_row($q);
 		$this->assertFalse($r);
-	}
-
-	protected function get_object_row($guid) {
-		$CONFIG = _elgg_config();
-		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}objects_entity WHERE guid='$guid'");
 	}
 
 	protected function get_entity_row($guid) {

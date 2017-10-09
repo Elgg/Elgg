@@ -88,10 +88,10 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		$num_test_entities = 8;
 		$guids = [];
 		for ($i = $num_test_entities; $i > 0; $i--) {
-			$entity = new \ElggObject();
-			$entity->type = 'object';
+			$entity = new \ElggUser();
 			$entity->subtype = 'test_5357_subtype';
 			$entity->access_id = ACCESS_PUBLIC;
+			$entity->username = 'test_5357_username_' . $i;
 			$entity->save();
 			$guids[] = $entity->guid;
 			_elgg_services()->entityCache->remove($entity->guid);
@@ -101,12 +101,12 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		// and the second and third fetches have only incompletes!
 		$db_prefix = _elgg_config()->dbprefix;
 		delete_data("
-			DELETE FROM {$db_prefix}objects_entity
+			DELETE FROM {$db_prefix}users_entity
 			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
 		");
 
 		$options = [
-			'type' => 'object',
+			'type' => 'user',
 			'subtype' => 'test_5357_subtype',
 			'order_by' => 'e.guid',
 		];
@@ -135,18 +135,18 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			$guids[] = $row->guid;
 		}
 		delete_data("DELETE FROM {$db_prefix}entities WHERE guid IN (" . implode(',', $guids) . ")");
-		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
-		remove_subtype('object', 'test_5357_subtype');
+		delete_data("DELETE FROM {$db_prefix}users_entity WHERE guid IN (" . implode(',', $guids) . ")");
+		remove_subtype('user', 'test_5357_subtype');
 	}
 
 	public function testElggBatchDeleteHandlesBrokenEntities() {
 		$num_test_entities = 8;
 		$guids = [];
 		for ($i = $num_test_entities; $i > 0; $i--) {
-			$entity = new \ElggObject();
-			$entity->type = 'object';
+			$entity = new \ElggUser();
 			$entity->subtype = 'test_5357_subtype';
 			$entity->access_id = ACCESS_PUBLIC;
+			$entity->username = 'test_5357_username_' . $i;
 			$entity->save();
 			$guids[] = $entity->guid;
 			_elgg_services()->entityCache->remove($entity->guid);
@@ -156,12 +156,12 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		// and the second and third fetches have only incompletes!
 		$db_prefix = _elgg_config()->dbprefix;
 		delete_data("
-			DELETE FROM {$db_prefix}objects_entity
+			DELETE FROM {$db_prefix}users_entity
 			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
 		");
 
 		$options = [
-			'type' => 'object',
+			'type' => 'user',
 			'subtype' => 'test_5357_subtype',
 			'order_by' => 'e.guid',
 		];
@@ -191,7 +191,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			$guids[] = $row->guid;
 		}
 		delete_data("DELETE FROM {$db_prefix}entities WHERE guid IN (" . implode(',', $guids) . ")");
-		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
+		delete_data("DELETE FROM {$db_prefix}users_entity WHERE guid IN (" . implode(',', $guids) . ")");
 	}
 
 	public function testBatchCanCount() {
