@@ -851,9 +851,6 @@ class ElggPlugin extends \ElggObject {
 			throw new Exception($this->getError());
 		}
 
-		// Preload static config file
-		$this->getStaticConfig('');
-
 		// include classes
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
 			$this->registerClasses();
@@ -870,6 +867,9 @@ class ElggPlugin extends \ElggObject {
 			// so translations can be used... for example in registering widgets
 			$this->registerLanguages();
 		}
+		
+		// Preload static config file
+		$this->getStaticConfig('');
 		
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
