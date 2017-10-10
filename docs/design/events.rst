@@ -13,7 +13,7 @@ functionality.
 
 Plugins influence the system by creating handlers (`callables <http://php.net/manual/en/language.types.callable.php>`_
 such as functions and methods) and registering them to handle
-two types of events: `Elgg Events`_ and `Plugin Hooks`_.
+two types of events: :ref:`design/events#events` and :ref:`design/events#plugin-hooks`.
 
 When an event is triggered, a set of handlers is executed in order
 of priority. Each handler is passed arguments
@@ -23,7 +23,7 @@ function returns a value based on the behavior of the handlers.
 Elgg Events vs. Plugin Hooks
 ----------------------------
 
-The main differences between `Elgg Events`_ and `Plugin Hooks`_ are:
+The main differences between :ref:`design/events#events` and :ref:`design/events#plugin-hooks` are:
 
 #. Most Elgg events can be cancelled; unless the event is an "after" event,
    a handler that returns `false` can cancel the event, and no more handlers
@@ -32,6 +32,7 @@ The main differences between `Elgg Events`_ and `Plugin Hooks`_ are:
 #. Plugin hooks pass an arbitrary value through the handlers, giving each
    a chance to alter along the way.
 
+.. _design/events#events:
 
 Elgg Events
 ===========
@@ -40,13 +41,15 @@ Elgg Events are triggered when an Elgg object is created, updated, or
 deleted; and at important milestones while the Elgg framework is
 loading. Examples: a blog post being created or a user logging in.
 
-Unlike `Plugin Hooks`_, *most Elgg events can be cancelled*, halting the
+Unlike :ref:`design/events#plugin-hooks`, *most Elgg events can be cancelled*, halting the
 execution of the handlers, and possibly cancelling an some
 action in the Elgg core.
 
 Each Elgg event has a name and an object type (system, user, object,
 relationship name, annotation, group) describing the type of object
 passed to the handlers.
+
+.. _before-after:
 
 Before and After Events
 -----------------------
@@ -178,7 +181,7 @@ You can trigger a custom Elgg event using ``elgg_trigger_event``:
         // Event was cancelled. Roll back any progress made before the event.
     }
 
-For events with ambiguous states, like logging in a user, you should use `Before and After Events`_
+For events with ambiguous states, like logging in a user, you should use :ref:`before-after`
 by calling ``elgg_trigger_before_event`` or ``elgg_trigger_after_event``.
 This makes it clear for the event handler what state to expect and which events can be cancelled.
 
