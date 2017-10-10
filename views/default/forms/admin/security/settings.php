@@ -3,7 +3,7 @@
 // hardening
 $hardening = '';
 // protect upgrade.php
-$protect_upgrade = (bool) get_config('security_protect_upgrade');
+$protect_upgrade = (bool) elgg_get_config('security_protect_upgrade');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
 	'label' => elgg_echo('admin:security:settings:protect_upgrade'),
@@ -24,7 +24,7 @@ if ($protect_upgrade) {
 }
 
 // protect /cron
-$protect_cron = (bool) get_config('security_protect_cron');
+$protect_cron = (bool) elgg_get_config('security_protect_cron');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
 	'label' => elgg_echo('admin:security:settings:protect_cron'),
@@ -84,7 +84,7 @@ $hardening .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_disable_password_autocomplete'),
+	'checked' => (bool) elgg_get_config('security_disable_password_autocomplete'),
 ]);
 
 // require password the changing email address
@@ -96,7 +96,7 @@ $hardening .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_email_require_password'),
+	'checked' => (bool) elgg_get_config('security_email_require_password'),
 ]);
 
 // allow others to extend this section
@@ -115,7 +115,7 @@ $notifications .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_notify_admins'),
+	'checked' => (bool) elgg_get_config('security_notify_admins'),
 ]);
 
 // notify user about add/remove admin of his/her account
@@ -127,7 +127,7 @@ $notifications .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_notify_user_admin'),
+	'checked' => (bool) elgg_get_config('security_notify_user_admin'),
 ]);
 
 // notify user about (un)ban of his/her account
@@ -139,13 +139,42 @@ $notifications .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_notify_user_ban'),
+	'checked' => (bool) elgg_get_config('security_notify_user_ban'),
 ]);
 
 // allow others to extend this section
 $notifications .= elgg_view('admin/security/settings/extend/notification');
 
 echo elgg_view_module('inline', elgg_echo('admin:security:settings:label:notifications'), $notifications);
+
+// site secret
+$strength = _elgg_get_site_secret_strength();
+$current_strength = elgg_echo('site_secret:current_strength');
+$strength_text = elgg_echo("site_secret:strength:$strength");
+$strength_msg = elgg_echo("site_secret:strength_msg:$strength");
+
+$site_secret = elgg_view('output/longtext', [
+	'value' => elgg_echo('admin:security:settings:site_secret:intro'),
+]);
+$site_secret .= elgg_view_module('main', "$current_strength: $strength_text", $strength_msg, [
+	'class' => ($strength != 'strong') ? 'elgg-message elgg-state-error' : 'elgg-message elgg-state-success',
+]);
+
+$site_secret_link = elgg_view('output/url', [
+	'text' => elgg_echo('admin:security:settings:site_secret:regenerate'),
+	'href' => 'action/admin/security/regenerate_site_secret',
+	'confirm' => true,
+	'class' => 'elgg-button elgg-button-action',
+]);
+
+$site_secret_link .= elgg_view('output/longtext', [
+	'value' => elgg_echo('admin:security:settings:site_secret:regenerate:help'),
+	'class' => 'elgg-subtext',
+]);
+
+$site_secret .= elgg_format_element('div', ['class' => 'mtm'], $site_secret_link);
+
+echo elgg_view_module('inline', elgg_echo('admin:security:settings:label:site_secret'), $site_secret);
 
 // footer
 $footer = elgg_view_field([

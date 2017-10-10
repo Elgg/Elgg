@@ -175,7 +175,6 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
 
 	elgg_register_action('admin/upgrades/upgrade_database_guid_columns', '', 'admin');
-	elgg_register_action('admin/site/regenerate_secret', '', 'admin');
 	elgg_register_action('admin/upgrade', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
@@ -183,7 +182,8 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/delete_admin_notice', '', 'admin');
 	
 	elgg_register_action('admin/security/settings', '', 'admin');
-
+	elgg_register_action('admin/security/regenerate_site_secret', '', 'admin');
+	
 	elgg_register_simplecache_view('admin.css');
 
 	// widgets

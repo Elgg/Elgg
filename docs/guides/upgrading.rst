@@ -84,6 +84,7 @@ Removed views
  * ``lightbox/elgg-colorbox-theme/colorbox-images/*```
  * ``navigation/menu/page``: now uses ``navigation/menu/default`` and a prepare hook
  * ``page/elements/by_line``: Use ``object/elements/imprint``
+ * ``forms/admin/site/advanced/security``: the site secret information has been moved to ``forms/admin/security/settings``
 
 Removed functions/methods
 -------------------------

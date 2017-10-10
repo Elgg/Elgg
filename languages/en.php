@@ -465,11 +465,6 @@ return array(
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:settings:in_settings_file' => 'This setting is configured in settings.php',
 
-	'admin:legend:security' => 'Security',
-	'admin:site:secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
-	'admin:site:secret_regenerated' => "Your site secret has been regenerated.",
-	'admin:site:secret:regenerate' => "Regenerate site secret",
-	'admin:site:secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
 	'site_secret:current_strength' => 'Key Strength',
 	'site_secret:strength:weak' => "Weak",
 	'site_secret:strength_msg:weak' => "We strongly recommend that you regenerate your site secret.",
@@ -554,6 +549,7 @@ three sections:
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
 	'admin:security:settings:label:hardening' => 'Hardening',
 	'admin:security:settings:label:notifications' => 'Notifications',
+	'admin:security:settings:label:site_secret' => 'Site secret',
 	
 	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
 	'admin:security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
@@ -578,6 +574,13 @@ three sections:
 	
 	'admin:security:settings:email_require_password' => 'Require password to change email address',
 	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+	
+	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
+	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
+	'admin:security:settings:site_secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
+	
+	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
+	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
 	
 	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
 	'admin:notification:make_admin:admin:body' => 'Hi %s,
