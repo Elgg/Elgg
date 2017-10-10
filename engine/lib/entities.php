@@ -146,23 +146,6 @@ function get_entity_as_row($guid) {
 }
 
 /**
- * Return the object specific details of a object by a row.
- *
- * @param int $guid The guid to retrieve
- *
- * @return bool
- * @access private
- */
-function get_object_entity_as_row($guid) {
-	$dbprefix = _elgg_config()->dbprefix;
-	$sql = "SELECT * FROM {$dbprefix}objects_entity WHERE guid = :guid";
-	$params = [
-		':guid' => (int) $guid,
-	];
-	return _elgg_services()->db->getDataRow($sql, null, $params);
-}
-
-/**
  * Return the user specific details of a user by a row.
  *
  * @param int $guid The \ElggUser guid

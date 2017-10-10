@@ -127,8 +127,6 @@ class Plugins {
 		$known_plugins = elgg_get_entities_from_relationship([
 			'type' => 'object',
 			'subtype' => 'plugin',
-			'selects' => ['plugin_oe.*'],
-			'joins' => ["JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"],
 			'limit' => ELGG_ENTITIES_NO_VALUE,
 		]);
 		/* @var \ElggPlugin[] $known_plugins */
@@ -219,20 +217,16 @@ class Plugins {
 	 */
 	function get($plugin_id) {
 		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
-			$plugin_id = sanitize_string($plugin_id);
-			$db_prefix = _elgg_config()->dbprefix;
-
-			$options = [
+			$plugins = elgg_get_entities_from_metadata([
 				'type' => 'object',
 				'subtype' => 'plugin',
-				'joins' => ["JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"],
-				'selects' => ["oe.title", "oe.description"],
-				'wheres' => ["oe.title = '$plugin_id'"],
+				'metadata_name_value_pairs' => [
+					'name' => 'title',
+					'value' => $plugin_id,
+				],
 				'limit' => 1,
 				'distinct' => false,
-			];
-
-			$plugins = elgg_get_entities($options);
+			]);
 
 			if ($plugins) {
 				return $plugins[0];
@@ -411,15 +405,13 @@ class Plugins {
 			'type' => 'object',
 			'subtype' => 'plugin',
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-			'selects' => ['plugin_oe.*', 'ps.value'],
+			'selects' => ['ps.value'],
 			'joins' => [
 				"JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid",
-				"JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"
-				],
+			],
 			'wheres' => ["ps.name = '$priority'"],
 			// ORDER BY CAST(ps.value) is super slow. We usort() below.
 			'order_by' => false,
-			'distinct' => false,
 		];
 	
 		switch ($status) {

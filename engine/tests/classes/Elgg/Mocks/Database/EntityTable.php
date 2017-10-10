@@ -99,12 +99,6 @@ class EntityTable extends DbEntityTable {
 		$external_attributes = [];
 		
 		switch ($type) {
-			case 'object' :
-				$external_attributes = [
-					'title' => null,
-					'description' => null,
-				];
-				break;
 			case 'user' :
 				$external_attributes = [
 					'name' => "John Doe $guid",
@@ -272,23 +266,6 @@ class EntityTable extends DbEntityTable {
 				}
 			]);
 		}
-
-		// Objects table
-		// @todo: this will need to be moved to the objects table mock once it's in
-		if ($row->type == 'object') {
-			$sql = "SELECT * FROM {$dbprefix}objects_entity
-				WHERE guid = :guid";
-
-			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
-				'params' => [
-					':guid' => (int) $row->guid,
-				],
-				'results' => function() use ($row) {
-					return [$row];
-				},
-			]);
-		}
 	}
 
 	/**
@@ -372,27 +349,6 @@ class EntityTable extends DbEntityTable {
 			],
 			'insert_id' => $row->guid,
 		]);
-
-		// Populate objects table
-		// @todo: move to objects table mock
-		if ($row->type == 'object') {
-			$sql = "
-				INSERT INTO {$dbprefix}objects_entity
-				(guid, title, description)
-				VALUES
-				(:guid, :title, :description)
-			";
-
-			$this->query_specs[$row->guid][] = _elgg_services()->db->addQuerySpec([
-				'sql' => $sql,
-				'params' => [
-					':guid' => $row->guid,
-					':title' => $row->title,
-					':description' => $row->description,
-				],
-				'insert_id' => $row->guid,
-			]);
-		}
 	}
 
 	/**
@@ -505,33 +461,6 @@ class EntityTable extends DbEntityTable {
 				return [];
 			},
 		]);
-
-		// Object table
-		// @todo: this will need to be moved to the objects table mock once it's in
-		if ($row->type == 'object') {
-			$sql = "
-				UPDATE {$dbprefix}objects_entity
-				SET title = :title,
-					description = :description
-				WHERE guid = :guid
-			";
-
-			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
-				'params' => [
-					':guid' => $row->guid,
-					':title' => $row->title,
-					':description' => $row->description,
-				],
-				'results' => function() use ($row) {
-					if (isset($this->rows[$row->guid])) {
-						$this->rows[$row->guid] = $row;
-						return [$row->guid];
-					}
-					return [];
-				},
-			]);
-		}
 	}
 
 	/**
@@ -602,30 +531,6 @@ class EntityTable extends DbEntityTable {
 				'times' => 1,
 			]);
 		}
-
-		// Objects table clean up
-		// @todo: move this into an object table mock once it's in
-		$sql = "
-			DELETE FROM {$dbprefix}objects_entity
-			WHERE guid = :guid
-		";
-		
-		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':guid' => $row->guid,
-			],
-			'results' => function() use ($row) {
-				if (isset($this->rows[$row->guid])) {
-					unset($this->rows[$row->guid]);
-					unset($this->mocks[$row->guid]);
-					$this->clearQuerySpecs($row->guid);
-					return [$row->guid];
-				}
-				return [];
-			},
-			'times' => 1,
-		]);
 	}
 
 }
