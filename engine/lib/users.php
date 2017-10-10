@@ -21,51 +21,6 @@ function disable_user_entities($owner_guid) {
 }
 
 /**
- * Ban a user
- *
- * @param int    $user_guid The user guid
- * @param string $reason    A reason
- *
- * @return bool
- */
-function ban_user($user_guid, $reason = "") {
-	return _elgg_services()->usersTable->ban($user_guid, $reason);
-}
-
-/**
- * Unban a user.
- *
- * @param int $user_guid Unban a user.
- *
- * @return bool
- */
-function unban_user($user_guid) {
-	return _elgg_services()->usersTable->unban($user_guid);
-}
-
-/**
- * Makes user $guid an admin.
- *
- * @param int $user_guid User guid
- *
- * @return bool
- */
-function make_user_admin($user_guid) {
-	return _elgg_services()->usersTable->makeAdmin($user_guid);
-}
-
-/**
- * Removes user $guid's admin flag.
- *
- * @param int $user_guid User GUID
- *
- * @return bool
- */
-function remove_user_admin($user_guid) {
-	return _elgg_services()->usersTable->removeAdmin($user_guid);
-}
-
-/**
  * Get a user object from a GUID.
  *
  * This function returns an \ElggUser from a given GUID.

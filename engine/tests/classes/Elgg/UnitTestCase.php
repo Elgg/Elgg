@@ -77,10 +77,20 @@ abstract class UnitTestCase extends BaseTestCase {
 	 * {@inheritdoc}
 	 */
 	public function createUser(array $attributes = [], array $metadata = []) {
-		$attributes = array_merge($metadata, $attributes);
+		$unique_id = uniqid('user');
+		
+		$defaults = [
+			'name' => "John Doe {$unique_id}",
+ 			'username' => "john_doe_{$unique_id}",
+			'email' => "john_doe_{$unique_id}@example.com",
+			'banned' => 'no',
+			'admin' => 'no',
+		];
+				
+		$attributes = array_merge($defaults, $metadata, $attributes);
 
 		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_user';
-
+		
 		return _elgg_services()->entityTable->setup(null, 'user', $subtype, $attributes);
 	}
 

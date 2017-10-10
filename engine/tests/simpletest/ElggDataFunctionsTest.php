@@ -27,40 +27,40 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 	public function testCanGetData() {
 		$row1 = get_data("
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = '" . sanitize_string($this->user->username) . "'
+			FROM {$this->prefix}entities
+			WHERE guid = " . $this->user->guid . "
 		");
 		$row1 = $row1[0];
 
 		$row2 = get_data("
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = ?
-		", null, [$this->user->username]);
+			FROM {$this->prefix}entities
+			WHERE guid = ?
+		", null, [$this->user->guid]);
 		$row2 = $row2[0];
 
 		$row3 = get_data("
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = :username
+			FROM {$this->prefix}entities
+			WHERE guid = :guid
 		", null, [
-			':username' => $this->user->username,
+			':guid' => $this->user->guid,
 		]);
 		$row3 = $row3[0];
 
 		$row4 = get_data("
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = :username
+			FROM {$this->prefix}entities
+			WHERE guid = :guid
 		", function ($row) {
 			return (array)$row;
 		}, [
-			':username' => $this->user->username,
+			':guid' => $this->user->guid,
 		]);
 		$row4 = $row4[0];
 
 		$this->assertIsA($row1, 'stdClass');
-		$this->assertSame($row1->username, $this->user->username);
+		$this->assertSame($row1->type, $this->user->type);
 		$this->assertEqual($row1, $row2);
 		$this->assertEqual($row1, $row3);
 		$this->assertIsA($row4, 'array');
@@ -70,26 +70,26 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 	public function testCanGetDataRow() {
 		$row1 = get_data_row("
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = '" . sanitize_string($this->user->username) . "'
+			FROM {$this->prefix}entities
+			WHERE guid = " . $this->user->guid . "
 		");
 
 		$row2 = get_data_row("
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = ?
-		", null, [$this->user->username]);
+			FROM {$this->prefix}entities
+			WHERE guid = ?
+		", null, [$this->user->guid]);
 
 		$row3 = get_data_row("
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = :username
+			FROM {$this->prefix}entities
+			WHERE guid = :guid
 		", null, [
-			':username' => $this->user->username,
+			':guid' => $this->user->guid,
 		]);
 
 		$this->assertIsA($row1, 'stdClass');
-		$this->assertEqual($row1->username, $this->user->username);
+		$this->assertEqual($row1->guid, $this->user->guid);
 		$this->assertEqual($row1, $row2);
 		$this->assertEqual($row1, $row3);
 	}
@@ -224,11 +224,11 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 	public function testCanDelayQuery() {
 		$sql = "
 			SELECT *
-			FROM {$this->prefix}users_entity
-			WHERE username = :username
+			FROM {$this->prefix}entities
+			WHERE guid = :guid
 		";
 		$params = [
-			':username' => $this->user->username,
+			':guid' => $this->user->guid,
 		];
 
 		// capture what's passed to callback
@@ -246,6 +246,6 @@ class ElggDataFunctionsTest extends \ElggCoreUnitTest {
 		$this->assertIsA($captured, \Doctrine\DBAL\Driver\Statement::class);
 
 		$rows = $captured->fetchAll(\PDO::FETCH_OBJ);
-		$this->assertEqual($rows[0]->username, $this->user->username);
+		$this->assertEqual($rows[0]->guid, $this->user->guid);
 	}
 }

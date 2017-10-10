@@ -2,12 +2,10 @@
 
 namespace Elgg;
 
-use Elgg\Database\EntityTable;
 use ElggAnnotation;
 use ElggEntity;
 use ElggMetadata;
 use ElggObject;
-use ElggSession;
 use ElggUser;
 use InvalidArgumentException;
 
@@ -48,7 +46,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($entity->canEdit($owner->guid));
 		$this->assertFalse($entity->canEdit($viewer->guid));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
@@ -83,7 +81,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($user->canEdit($user->guid));
 		$this->assertFalse($user->canEdit($viewer->guid));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($user->canEdit($admin_user->guid));
@@ -116,7 +114,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse($entity->canEdit($user->guid));
 
 		// Permissions hooks should not be triggered for admin users and with ignored access
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
@@ -169,7 +167,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertFalse($entity->canDelete($owner->guid));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
@@ -228,7 +226,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		// Should still be able to write to container without particular entity type specified
 		$this->assertTrue($entity->canWriteToContainer($owner->guid));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
@@ -321,7 +319,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertFalse($entity->canEditMetadata($metadata, $owner->guid));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canEditMetadata($metadata, $admin_user->guid));
@@ -364,7 +362,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse($annotation->canEdit($viewer->guid));
 
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
@@ -392,7 +390,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse($annotation->canEdit($viewer->guid));
 
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
@@ -447,7 +445,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse($annotation->canEdit($owner->guid));
 
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
@@ -498,7 +496,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($object->canComment($viewer->guid, true));
 		$this->assertFalse($object->canComment($viewer->guid, false));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($object->canComment($admin_user->guid));
@@ -537,7 +535,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertFalse($entity->canComment($owner->guid));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canComment($admin_user->guid));
@@ -649,7 +647,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
@@ -682,7 +680,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
@@ -777,7 +775,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
 		// Container logic checks should not be affected admin permissions or ignored access
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertFalse($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
@@ -828,7 +826,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse($entity->canDownload($owner->guid));
 		$this->assertFalse($entity->canDownload($viewer->guid));
 
-		$admin_user = $this->createUser([
+		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canDownload($admin_user->guid));

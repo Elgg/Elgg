@@ -119,7 +119,6 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['enabled'] = "yes";
 
 		$this->attributes['type'] = $this->getType();
-		$this->attributes += self::getExtraAttributeDefaults($this->getType());
 	}
 
 	/**
@@ -267,7 +266,7 @@ abstract class ElggEntity extends \ElggData implements
 			}
 			return $this->attributes[$name];
 		}
-
+		
 		return $this->getMetadata($name);
 	}
 
@@ -391,7 +390,7 @@ abstract class ElggEntity extends \ElggData implements
 		} else {
 			$value = [$value];
 		}
-
+		
 		// saved entity. persist md to db.
 		if ($this->guid) {
 			// if overwriting, delete first.
@@ -416,7 +415,7 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			$owner_guid = $owner_guid ? (int) $owner_guid : $this->owner_guid;
-
+			
 			// add new md
 			foreach ($value as $value_tmp) {
 				// at this point $value is appended because it was cleared above if needed.
@@ -430,7 +429,6 @@ abstract class ElggEntity extends \ElggData implements
 			return true;
 		} else {
 			// unsaved entity. store in temp array
-
 			// returning single entries instead of an array of 1 element is decided in
 			// getMetaData(), just like pulling from the db.
 
@@ -440,7 +438,12 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			// if overwrite, delete first
-			if (!$multiple || !isset($this->temp_metadata[$name])) {
+			if (!$multiple) {
+				$this->temp_metadata[$name] = $value;
+				return true;
+			}
+			
+			if (!isset($this->temp_metadata[$name])) {
 				$this->temp_metadata[$name] = [];
 			}
 
@@ -581,7 +584,7 @@ abstract class ElggEntity extends \ElggData implements
 		// don't store volatile data
 		$this->volatile = [];
 		if ($last_action) {
-			$this->attributes['last_action'] = (int) $last_action;
+			$this->last_action = (int) $last_action;
 		}
 		$cache->save($this->guid, $this);
 
@@ -1393,48 +1396,15 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['last_action'] = (int) $now;
 		$this->attributes['container_guid'] = (int) $container_guid;
 
-		// Create secondary table row
-		$attrs = $this->getSecondaryTableColumns();
-		if (!empty($attrs)) {
-			$column_names = implode(', ', $attrs);
-			$values = implode(', ', array_map(function ($attr) {
-				return ":$attr";
-			}, $attrs));
-	
-			$params = [
-				':guid' => $guid,
-			];
-			foreach ($attrs as $attr) {
-				$params[":$attr"] = (string) $this->attributes[$attr];
-			}
-	
-			$db = $this->getDatabase();
-			$query = "
-				INSERT INTO {$db->prefix}{$this->type}s_entity
-				(guid, $column_names) VALUES (:guid, $values)
-			";
-	
-			if ($db->insertData($query, $params) === false) {
-				// Uh oh, couldn't save secondary
-				$query = "
-					DELETE FROM {$db->prefix}entities
-					WHERE guid = :guid
-				";
-				$params = [
-					':guid' => $guid,
-				];
-				$db->deleteData($query, $params);
-	
-				_elgg_services()->entityCache->remove($guid);
-	
-				throw new \IOException("Unable to save new object's secondary entity information!");
-			}
-		}
-
 		// Save any unsaved metadata
 		if (sizeof($this->temp_metadata) > 0) {
 			foreach ($this->temp_metadata as $name => $value) {
-				$this->$name = $value;
+				if (count($value) == 1) {
+					// temp metadata is always an array, but if there is only one value return just the value
+					$this->$name = $value[0];
+				} else {
+					$this->$name = $value;
+				}
 			}
 
 			$this->temp_metadata = [];
@@ -1508,30 +1478,6 @@ abstract class ElggEntity extends \ElggData implements
 
 		$this->attributes['time_updated'] = $time;
 
-		// Update secondary table
-		$attrs = $this->getSecondaryTableColumns();
-		if (!empty($attrs)) {
-			$sets = array_map(function ($attr) {
-				return "$attr = :$attr";
-			}, $attrs);
-			$sets = implode(', ', $sets);
-	
-			foreach ($attrs as $attr) {
-				$params[":$attr"] = (string) $this->attributes[$attr];
-			}
-			$params[':guid'] = $this->guid;
-	
-			$db = $this->getDatabase();
-			$query = "
-				UPDATE {$db->prefix}{$this->type}s_entity
-				SET $sets
-				WHERE guid = :guid
-			";
-	
-			if ($db->updateData($query, false, $params) === false) {
-				return false;
-			}
-		}
 		elgg_trigger_after_event('update', $this->type, $this);
 
 		// TODO(evan): Move this to \ElggObject?
@@ -1559,7 +1505,6 @@ abstract class ElggEntity extends \ElggData implements
 		if ($type === 'user' || $this instanceof ElggPlugin) {
 			$attr_loader->requires_access_control = false;
 		}
-		$attr_loader->secondary_loader = "get_{$type}_entity_as_row";
 
 		$attrs = $attr_loader->getRequiredAttributes($row);
 		if (!$attrs) {
@@ -1575,62 +1520,6 @@ abstract class ElggEntity extends \ElggData implements
 		_elgg_services()->entityCache->set($this);
 
 		return true;
-	}
-
-	/**
-	 * Get the added columns (besides GUID) stored in the secondary table
-	 *
-	 * @return string[]
-	 * @throws \InvalidArgumentException
-	 */
-	private function getSecondaryTableColumns() {
-		// Note: the title or name column must come first. See getDisplayName().
-		if ($this instanceof ElggObject) {
-			return [];
-		}
-		if ($this instanceof ElggUser) {
-			return ['name', 'username', 'password_hash', 'email', 'language'];
-		}
-		if ($this instanceof ElggGroup) {
-			return [];
-		}
-		if ($this instanceof ElggSite) {
-			return [];
-		}
-		throw new \InvalidArgumentException("Not a recognized type: " . get_class($this));
-	}
-
-	/**
-	 * Get default values for the attributes not defined in \ElggEntity::initializeAttributes
-	 *
-	 * @param string $type Entity type
-	 *
-	 * @return array
-	 * @access private
-	 */
-	public static function getExtraAttributeDefaults($type) {
-		switch ($type) {
-			case 'object':
-				return [];
-			case 'user':
-				return [
-					'name' => null,
-					'username' => null,
-					'password_hash' => null,
-					'email' => null,
-					'language' => null,
-					'banned' => "no",
-					'admin' => 'no',
-					'prev_last_action' => null,
-					'last_login' => null,
-					'prev_last_login' => null,
-				];
-			case 'group':
-				return [];
-			case 'site':
-				return [];
-		}
-		throw new \InvalidArgumentException("Not a recognized type: $type");
 	}
 	
 	/**
@@ -1684,9 +1573,9 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		if ($this instanceof ElggUser && $this->banned === 'no') {
+		if ($this instanceof ElggUser && !$this->isBanned()) {
 			// temporarily ban to prevent using the site during disable
-			_elgg_services()->usersTable->markBanned($this->guid, true);
+			$this->ban();
 			$unban_after = true;
 		} else {
 			$unban_after = false;
@@ -1752,7 +1641,7 @@ abstract class ElggEntity extends \ElggData implements
 		$disabled = $this->getDatabase()->updateData($sql, false, $params);
 
 		if ($unban_after) {
-			_elgg_services()->usersTable->markBanned($this->guid, false);
+			$this->unban();
 		}
 
 		if ($disabled) {
@@ -1874,7 +1763,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($this instanceof ElggUser) {
 			// ban to prevent using the site during delete
-			_elgg_services()->usersTable->markBanned($this->guid, true);
+			$this->ban();
 		}
 
 		// Delete contained owned and otherwise releated objects (depth first)
@@ -1948,15 +1837,6 @@ abstract class ElggEntity extends \ElggData implements
 
 		$deleted = $this->getDatabase()->deleteData($sql, $params);
 
-		if ($deleted && in_array($this->type, ['user'])) {
-			// delete from type-specific subtable
-			$sql = "
-				DELETE FROM {$dbprefix}{$this->type}s_entity
-				WHERE guid = :guid
-			";
-			$this->getDatabase()->deleteData($sql, $params);
-		}
-		
 		_elgg_clear_entity_files($this);
 
 		return (bool) $deleted;

@@ -16,8 +16,12 @@ $options = [
 	'relationship_guid' => $owner->getGUID(),
 	'inverse_relationship' => true,
 	'type' => 'user',
-	'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
-	'order_by' => 'ue.name ASC',
+	'order_by_metadata' => [
+		[
+			'name' => 'name',
+			'direction' => 'ASC',
+		],
+	],
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
 ];

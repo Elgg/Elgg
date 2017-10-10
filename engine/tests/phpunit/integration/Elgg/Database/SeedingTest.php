@@ -55,8 +55,8 @@ class SeedingTest extends LegacyIntegrationTestCase {
 
 	public function testCanCreateAdminUser() {
 
-		$user = $this->createUser([
-			'admin' => true,
+		$user = $this->createUser([], [
+			'admin' => 'yes',
 		]);
 
 		$this->assertTrue($user->isAdmin());
