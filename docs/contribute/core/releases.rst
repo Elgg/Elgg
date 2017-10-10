@@ -23,13 +23,6 @@ Requirements
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
 
-Update composer dependencies
-============================
-Since Elgg 2.3, ``composer.lock`` is committed to the repository. Therefore,
-if any of the composer dependencies require an update, run ``composer update``
-on the corresponding branch and make a pull request with an updated ``composer.lock`` file.
-This will run the test suite and ensure that new dependencies do not break the build.
-
 Merge commits up from lower branches
 ====================================
 
