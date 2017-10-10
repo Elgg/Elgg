@@ -3,7 +3,7 @@
 // hardening
 $hardening = '';
 // protect upgrade.php
-$protect_upgrade = (bool) get_config('security_protect_upgrade');
+$protect_upgrade = (bool) elgg_get_config('security_protect_upgrade');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
 	'label' => elgg_echo('admin:security:settings:protect_upgrade'),
@@ -24,7 +24,7 @@ if ($protect_upgrade) {
 }
 
 // protect /cron
-$protect_cron = (bool) get_config('security_protect_cron');
+$protect_cron = (bool) elgg_get_config('security_protect_cron');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
 	'label' => elgg_echo('admin:security:settings:protect_cron'),
@@ -84,7 +84,7 @@ $hardening .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_disable_password_autocomplete'),
+	'checked' => (bool) elgg_get_config('security_disable_password_autocomplete'),
 ]);
 
 // require password the changing email address
@@ -96,7 +96,7 @@ $hardening .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_email_require_password'),
+	'checked' => (bool) elgg_get_config('security_email_require_password'),
 ]);
 
 // allow others to extend this section
@@ -115,7 +115,7 @@ $notifications .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_notify_admins'),
+	'checked' => (bool) elgg_get_config('security_notify_admins'),
 ]);
 
 // notify user about add/remove admin of his/her account
@@ -127,7 +127,7 @@ $notifications .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_notify_user_admin'),
+	'checked' => (bool) elgg_get_config('security_notify_user_admin'),
 ]);
 
 // notify user about (un)ban of his/her account
@@ -139,7 +139,7 @@ $notifications .= elgg_view_field([
 	'default' => 0,
 	'value' => 1,
 	'switch' => true,
-	'checked' => (bool) get_config('security_notify_user_ban'),
+	'checked' => (bool) elgg_get_config('security_notify_user_ban'),
 ]);
 
 // allow others to extend this section
