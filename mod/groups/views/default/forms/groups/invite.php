@@ -10,23 +10,11 @@ if (!($group instanceof \ElggGroup)) {
 	return;
 }
 
-if (!elgg_is_logged_in()) {
-	return;
-}
-
-$friends = elgg_get_logged_in_user_entity()->getFriends(['limit' => 0]);
-
-if (empty($friends)) {
+$friends_count = elgg_get_logged_in_user_entity()->getFriends(['count' => true]);
+if (empty($friends_count)) {
 	echo elgg_echo('groups:nofriendsatall');
 	return;
 }
-
-echo elgg_view_field([
-	'#type' => 'friendspicker',
-	'entities' => $friends,
-	'name' => 'user_guid',
-	'highlight' => 'all',
-]);
 
 echo elgg_view_field([
 	'#type' => 'hidden',
@@ -38,6 +26,20 @@ echo elgg_view_field([
 	'#type' => 'hidden',
 	'name' => 'group_guid',
 	'value' => $group->guid,
+]);
+
+echo elgg_view_field([
+	'#type' => 'friendspicker',
+	'#help' => elgg_echo('groups:invite:friends:help'),
+	'name' => 'user_guid',
+]);
+
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('groups:invite:resend'),
+	'name' => 'resend',
+	'value' => 1,
+	'switch' => true,
 ]);
 
 $footer = elgg_view_field([
