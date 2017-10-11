@@ -141,3 +141,47 @@ function is_metadata_independent($type, $subtype) {
 	
 	return false;
 }
+
+/**
+ * Gets entities based upon attributes in secondary tables.
+ * Also accepts all options available to elgg_get_entities(),
+ * elgg_get_entities_from_metadata(), and elgg_get_entities_from_relationship().
+ *
+ * @warning requires that the entity type be specified and there can only be one
+ * type.
+ *
+ * @see elgg_get_entities
+ * @see elgg_get_entities_from_metadata
+ * @see elgg_get_entities_from_relationship
+ *
+ * @param array $options Array in format:
+ *
+ * 	attribute_name_value_pairs => ARR (
+ *                                   'name' => 'name',
+ *                                   'value' => 'value',
+ *                                   'operand' => '=', (optional)
+ *                                   'case_sensitive' => false (optional)
+ *                                  )
+ * 	                             If multiple values are sent via
+ *                               an array ('value' => array('value1', 'value2')
+ *                               the pair's operand will be forced to "IN".
+ *
+ * 	attribute_name_value_pairs_operator => null|STR The operator to use for combining
+ *                                        (name = value) OPERATOR (name = value); default is AND
+ *
+ * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ * @since 1.9.0
+ * @throws InvalidArgumentException
+ * @deprecated Use elgg_get_entities_from_metadata
+ */
+function elgg_get_entities_from_attributes(array $options = []) {
+    elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_entities_from_metadata.', '3.0');
+    
+    $options['metadata_name_value_pairs'] = elgg_extract('attribute_name_value_pairs', $options, []);
+    $options['metadata_name_value_pairs_operator'] = elgg_extract('attribute_name_value_pairs_operator', $options, []);
+    
+    unset($options['attribute_name_value_pairs']);
+    unset($options['attribute_name_value_pairs_operator']);
+    
+    return elgg_get_entities_from_relationship($options);
+}
