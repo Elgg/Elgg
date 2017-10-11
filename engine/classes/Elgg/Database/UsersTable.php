@@ -282,15 +282,19 @@ class UsersTable {
 		if ($entity) {
 			return $entity;
 		}
-
-		$users = $this->entities->getEntitiesFromAttributes([
+		
+		$username = $this->db->sanitizeString($username);
+		$dbprefix = $this->db->prefix;
+		
+		$users = $this->entities->getEntities([
 			'types' => 'user',
-			'attribute_name_value_pairs' => [
-				'name' => 'username',
-				'value' => $username,
+			'joins' => ["JOIN {$dbprefix}users_entity ue ON ue.guid = e.guid"],
+			'wheres' => [
+				"ue.username = '{$username}'"
 			],
 			'limit' => 1,
 		]);
+		
 		return $users ? $users[0] : false;
 	}
 
@@ -304,12 +308,15 @@ class UsersTable {
 		if (!$email) {
 			return [];
 		}
+		
+		$email = $this->db->sanitizeString($email);
+		$dbprefix = $this->db->prefix;
 
-		$users = $this->entities->getEntitiesFromAttributes([
+		$users = $this->entities->getEntities([
 			'types' => 'user',
-			'attribute_name_value_pairs' => [
-				'name' => 'email',
-				'value' => $email,
+			'joins' => ["JOIN {$dbprefix}users_entity ue ON ue.guid = e.guid"],
+			'wheres' => [
+				"ue.email = '{$email}'"
 			],
 			'limit' => 1,
 		]);
