@@ -76,6 +76,16 @@ function developers_process_settings() {
 		$handler = [Hooks::class, 'alterMenu'];
 		elgg_register_plugin_hook_handler('view', 'navigation/menu/default', $handler);
 	}
+	
+	if (!empty($settings['block_email'])) {
+		$handler = [Hooks::class, 'blockOutgoingEmails'];
+		elgg_register_plugin_hook_handler('transport', 'system:email', $handler);
+		
+		if (!empty($settings['forward_email'])) {
+			$handler = [Hooks::class, 'setForwardEmailAddress'];
+			elgg_register_plugin_hook_handler('prepare', 'system:email', $handler);
+		}
+	}
 }
 
 /**
