@@ -266,3 +266,86 @@ function remove_user_admin($user_guid) {
 	
 	return $user->removeAdmin();
 }
+
+/**
+ * Gets the validation status of a user.
+ *
+ * @param int $user_guid The user's GUID
+ * @return bool|null Null means status was not set for this user.
+ * @since 1.8.0
+ *
+ * @deprecated Use \ElggUser->isValidated()
+ */
+function elgg_get_user_validation_status($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::isValidated()', '3.0');
+	
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->isValidated();
+}
+
+/**
+ * Set the validation status for a user.
+ *
+ * @param int    $user_guid The user's GUID
+ * @param bool   $status    Validated (true) or unvalidated (false)
+ * @param string $method    Optional method to say how a user was validated
+ * @return bool
+ * @since 1.8.0
+ *
+ * @deprecated Use \ElggUser->setValidationStatus()
+ */
+function elgg_set_user_validation_status($user_guid, $status, $method = '') {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setValidationStatus()', '3.0');
+	
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	$user->setValidationStatus($status, $method);
+	return true;
+}
+
+/**
+ * Sets the last action time of the given user to right now.
+ *
+ * @param ElggUser|int $user The user or GUID
+ * @return void
+ *
+ * @deprecated Use \ElggUser->setLastAction()
+ */
+function set_last_action($user) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setLastAction()', '3.0');
+	
+	if (!$user instanceof ElggUser) {
+		$user = get_user($user);
+	}
+	if (!$user) {
+		return;
+	}
+	
+	$user->setLastAction();
+}
+
+/**
+ * Sets the last logon time of the given user to right now.
+ *
+ * @param int $user_guid The user GUID
+ * @return void
+ *
+ * @deprecated Use \ElggUser->setLastLogin()
+ */
+function set_last_login($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setLastLogin()', '3.0');
+	
+	$user = get_user($user_guid);
+	if (!$user) {
+		return;
+	}
+	
+	$user->setLastLogin();
+}

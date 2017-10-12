@@ -501,8 +501,7 @@ class ServiceProvider extends DiContainer {
 				$c->config,
 				$c->db,
 				$c->metadataTable,
-				$c->entityCache,
-				$c->hooks->getEvents()
+				$c->entityCache
 			);
 		});
 

@@ -7,8 +7,6 @@
  * @subpackage DataModel.User
  */
 
-use Elgg\Project\Paths;
-
 /**
  * Disables all of a user's entities
  *
@@ -282,30 +280,6 @@ function elgg_validate_invite_code($username, $code) {
 }
 
 /**
- * Set the validation status for a user.
- *
- * @param int    $user_guid The user's GUID
- * @param bool   $status    Validated (true) or unvalidated (false)
- * @param string $method    Optional method to say how a user was validated
- * @return bool
- * @since 1.8.0
- */
-function elgg_set_user_validation_status($user_guid, $status, $method = '') {
-	return _elgg_services()->usersTable->setValidationStatus($user_guid, $status, $method);
-}
-
-/**
- * Gets the validation status of a user.
- *
- * @param int $user_guid The user's GUID
- * @return bool|null Null means status was not set for this user.
- * @since 1.8.0
- */
-function elgg_get_user_validation_status($user_guid) {
-	return _elgg_services()->usersTable->getValidationStatus($user_guid);
-}
-
-/**
  * Page handler for account related pages
  *
  * @param array  $page_elements Page elements
@@ -365,39 +339,6 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 	$url = elgg_normalize_url('login');
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
-}
-
-/**
- * Sets the last action time of the given user to right now.
- *
- * @param ElggUser|int $user The user or GUID
- * @return void
- */
-function set_last_action($user) {
-	if (!$user) {
-		return;
-	}
-	if (!$user instanceof ElggUser) {
-		$user = get_user($user);
-	}
-	if (!$user) {
-		return;
-	}
-	_elgg_services()->usersTable->setLastAction($user);
-}
-
-/**
- * Sets the last logon time of the given user to right now.
- *
- * @param int $user_guid The user GUID
- * @return void
- */
-function set_last_login($user_guid) {
-	$user = get_user($user_guid);
-	if (!$user) {
-		return;
-	}
-	_elgg_services()->usersTable->setLastLogin($user);
 }
 
 /**

@@ -149,8 +149,8 @@ trait Seeding {
 				unset($metadata['banned']);
 				unset($metadata['admin']);
 
-				elgg_set_user_validation_status($guid, $this->faker()->boolean(), 'seeder');
-
+				$user->setValidationStatus($this->faker()->boolean(), 'seeder');
+				
 				$user->setNotificationSetting('email', false);
 				$user->setNotificationSetting('site', true);
 

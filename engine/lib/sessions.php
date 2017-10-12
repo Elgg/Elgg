@@ -290,7 +290,7 @@ function login(\ElggUser $user, $persistent = false) {
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
 
-	set_last_login($user->guid);
+	$user->setLastLogin();
 	reset_login_failure_count($user->guid);
 
 	elgg_trigger_after_event('login', 'user', $user);
@@ -357,7 +357,7 @@ function _elgg_session_boot(ServiceProvider $services) {
 
 	if ($user) {
 		$session->setLoggedInUser($user);
-		set_last_action($user);
+		$user->setLastAction();
 
 		// logout a user with open session who has been banned
 		if ($user->isBanned()) {

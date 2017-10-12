@@ -20,8 +20,7 @@ foreach ($user_guids as $guid) {
 	}
 
 	// don't resend emails to validated users
-	$is_validated = elgg_get_user_validation_status($guid);
-	if ($is_validated !== false || !uservalidationbyemail_request_validation($guid)) {
+	if ($user->isValidated() !== false || !uservalidationbyemail_request_validation($guid)) {
 		$error = true;
 		continue;
 	}

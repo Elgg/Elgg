@@ -20,8 +20,7 @@ foreach ($user_guids as $guid) {
 	}
 
 	// don't delete validated users
-	$is_validated = elgg_get_user_validation_status($guid);
-	if ($is_validated !== false || !$user->delete()) {
+	if ($user->isValidated() !== false || !$user->delete()) {
 		$error = true;
 		continue;
 	}

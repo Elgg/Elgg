@@ -8,13 +8,11 @@ $user_guid = get_input('u', false);
 $access_status = access_show_hidden_entities(true);
 
 $user = get_user($user_guid);
-
-if (!$user || !elgg_set_user_validation_status($user_guid, true, 'email')) {
-	register_error(elgg_echo('email:confirm:fail'));
-	forward();
+if (!$user) {
+	return elgg_error_response(elgg_echo('email:confirm:fail'));
 }
 
-system_message(elgg_echo('email:confirm:success'));
+$user->setValidationStatus(true, 'email');
 
 elgg_push_context('uservalidationbyemail_validate_user');
 $user->enable();
@@ -23,9 +21,9 @@ elgg_pop_context();
 try {
 	login($user);
 } catch (LoginException $e) {
-	register_error($e->getMessage());
+	return elgg_error_response($e->getMessage());
 }
 
 access_show_hidden_entities($access_status);
 
-forward();
+return elgg_ok_response('', elgg_echo('email:confirm:success'));
