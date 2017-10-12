@@ -253,10 +253,12 @@ function input_livesearch_page_handler($page) {
 				$options = [
 					'type' => 'user',
 					'limit' => $limit,
-					'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+					'metadata_name_value_pairs' => [
+						['banned' => 'no'],
+					],
+					'joins' => ["JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid"],
 					'wheres' => [
-						"ue.banned = 'no'",
-						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
+						"((md.name = 'name' AND md.value LIKE '$q%') OR (md.name = 'name' AND md.value LIKE '% $q%') OR (md.name = 'username' AND md.value LIKE '$q%'))"
 					]
 				];
 				
@@ -309,10 +311,10 @@ function input_livesearch_page_handler($page) {
 					'type' => 'group',
 					'limit' => $limit,
 					'owner_guid' => $owner_guid,
-					'joins' => ["JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"],
+					'joins' => ["JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid"],
 					'wheres' => [
-						"(ge.name LIKE '$q%' OR ge.name LIKE '% $q%' OR ge.description LIKE '% $q%')"
-					]
+						"((md.name = 'name' AND md.value LIKE '$q%') OR (md.name = 'name' AND md.value LIKE '% $q%') OR (md.name = 'description' AND md.value LIKE '% $q%'))"
+					],
 				];
 				
 				$entities = elgg_get_entities($options);
@@ -352,11 +354,10 @@ function input_livesearch_page_handler($page) {
 					'limit' => $limit,
 					'relationship' => 'friend',
 					'relationship_guid' => $user->getGUID(),
-					'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+					'joins' => ["JOIN {$dbprefix}metadata md ON e.guid = md.entity_guid"],
 					'wheres' => [
-						"ue.banned = 'no'",
-						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
-					]
+						"((md.name = 'name' AND md.value LIKE '$q%') OR (md.name = 'name' AND md.value LIKE '% $q%') OR (md.name = 'username' AND md.value LIKE '$q%'))"
+					],
 				];
 				
 				$entities = elgg_get_entities_from_relationship($options);

@@ -24,38 +24,6 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 		unset($this->user);
 	}
 
-
-	public function testElggUserConstructor() {
-		$attributes = array();
-		$attributes['guid'] = null;
-		$attributes['type'] = 'user';
-		$attributes['subtype'] = null;
-		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
-		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
-		$attributes['access_id'] = ACCESS_PRIVATE;
-		$attributes['time_created'] = null;
-		$attributes['time_updated'] = null;
-		$attributes['last_action'] = null;
-		$attributes['enabled'] = 'yes';
- 		$attributes['name'] = null;
-		$attributes['username'] = null;
-		$attributes['password_hash'] = null;
-		$attributes['email'] = null;
-		$attributes['language'] = null;
-		$attributes['banned'] = 'no';
-		$attributes['admin'] = 'no';
-		$attributes['prev_last_action'] = null;
-		$attributes['last_login'] = null;
-		$attributes['prev_last_login'] = null;
-		ksort($attributes);
-
-		$user = new ElggUserWithExposableAttributes();
-		$entity_attributes = $user->expose_attributes();
-		ksort($entity_attributes);
-
-		$this->assertIdentical($entity_attributes, $attributes);
-	}
-
 	public function testElggUserLoad() {
 		// new object
 		$object = new \ElggObject();
@@ -133,10 +101,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$this->assertTrue($this->user->makeAdmin());
 
-		$row = _elgg_services()->db->getDataRow("
-			SELECT admin FROM {$CONFIG->dbprefix}users_entity WHERE guid = $guid
-		");
-		$this->assertEqual($row->admin, 'yes');
+		$this->assertTrue($this->user->isAdmin());
 
 		$this->user->delete();
 	}
@@ -151,10 +116,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 		
 		$this->assertTrue($this->user->removeAdmin());
 
-		$row = _elgg_services()->db->getDataRow("
-			SELECT admin FROM {$CONFIG->dbprefix}users_entity WHERE guid = $guid
-		");
-		$this->assertEqual($row->admin, 'no');
+		$this->assertFalse($this->user->isAdmin());
 
 		$this->user->delete();
 	}
@@ -205,7 +167,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 	protected function fetchUser($guid) {
 		$CONFIG = _elgg_config();
 
-		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}users_entity WHERE guid = '$guid'");
+		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '$guid'");
 	}
 }
 

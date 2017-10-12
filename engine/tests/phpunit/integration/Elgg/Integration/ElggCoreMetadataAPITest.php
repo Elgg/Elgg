@@ -50,7 +50,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$case_false = elgg_get_entities_from_metadata($options);
 		$this->assertIsA($case_false, 'array');
 
-		$this->assertIdentical($case_true, $case_false);
+		$this->assertEqual($case_true, $case_false);
 
 		// clean up
 		$this->object->delete();

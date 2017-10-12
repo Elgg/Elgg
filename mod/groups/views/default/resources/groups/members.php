@@ -26,10 +26,12 @@ switch ($sort) {
 		$options['order_by'] = 'r.time_created DESC';
 		break;
 	default:
-		$db_prefix = elgg_get_config('dbprefix');
-		
-		$options['joins'] = ["JOIN {$db_prefix}users_entity u ON e.guid=u.guid"];
-		$options['order_by'] = 'u.name ASC';
+		$options['order_by_metadata'] = [
+			[
+				'name' => 'name',
+				'direction' => 'ASC',
+			],
+		];
 		break;
 }
 
