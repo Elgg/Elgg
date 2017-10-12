@@ -82,7 +82,15 @@ function uservalidationbyemail_request_validation($user_guid) {
 function uservalidationbyemail_validate_email($user_guid, $code = null) {
 	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Validation now relies on signed URL API', '2.3');
 	elgg_signed_request_gatekeeper();
-	return elgg_set_user_validation_status($user_guid, true, 'email');
+	
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	$user->setValidationStatus(true, 'email');
+	
+	return $user->isValidated();
 }
 
 /**

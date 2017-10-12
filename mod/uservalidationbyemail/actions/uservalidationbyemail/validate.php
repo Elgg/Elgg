@@ -20,10 +20,9 @@ foreach ($user_guids as $guid) {
 	}
 
 	// only validate if not validated
-	$is_validated = elgg_get_user_validation_status($guid);
-	$validate_success = elgg_set_user_validation_status($guid, true, 'manual');
-
-	if ($is_validated !== false || !($validate_success && $user->enable())) {
+	$user->setValidationStatus(true, 'manual');
+	
+	if ($user->isValidated() !== false || !($user->enable())) {
 		$error = true;
 		continue;
 	}

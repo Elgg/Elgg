@@ -202,6 +202,77 @@ class ElggUser extends \ElggEntity
 		
 		return true;
 	}
+	
+	/**
+	 * Sets the last logon time of the user to right now.
+	 *
+	 * @return void
+	 */
+	public function setLastLogin() {
+		
+		$time = $this->getCurrentTime()->getTimestamp();
+		
+		if ($this->last_login == $time) {
+			// no change required
+			return;
+		}
+		
+		// these writes actually work, we just type hint read-only.
+		$this->prev_last_login = $user->last_login;
+		$this->last_login = $time;
+	}
+	
+	/**
+	 * Sets the last action time of the given user to right now.
+	 *
+	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
+	 *
+	 * @return void
+	 */
+	public function setLastAction() {
+		
+		$time = $this->getCurrentTime()->getTimestamp();
+		
+		if ($this->last_action == $time) {
+			// no change required
+			return;
+		}
+		
+		// these writes actually work, we just type hint read-only.
+		$this->prev_last_action = $this->last_action;
+		$this->last_action = $time;
+	}
+	
+	/**
+	 * Gets the validation status of a user.
+	 *
+	 * @return bool|null Null means status was not set for this user.
+	 */
+	public function isValidated() {
+		if (!isset($this->validated)) {
+			return null;
+		}
+		return (bool) $this->validated;
+	}
+	
+	/**
+	 * Set the validation status for a user.
+	 *
+	 * @param bool   $status    Validated (true) or unvalidated (false)
+	 * @param string $method    Optional method to say how a user was validated
+	 * @return void
+	 */
+	public function setValidationStatus($status, $method = '') {
+		
+		$this->validated = $status;
+		$this->validated_method = $method;
+		
+		if ((bool) $status) {
+			elgg_trigger_after_event('validate', 'user', $this);
+		} else {
+			elgg_trigger_after_event('invalidate', 'user', $this);
+		}
+	}
 
 	/**
 	 * Adds a user as a friend

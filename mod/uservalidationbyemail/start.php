@@ -77,7 +77,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	}
 
 	// has the user already been validated?
-	if (elgg_get_user_validation_status($user->guid)) {
+	if ($user->isValidated()) {
 		return;
 	}
 
@@ -93,7 +93,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	$user->disable('uservalidationbyemail_new_user', false);
 
 	// set user as unvalidated and send out validation email
-	elgg_set_user_validation_status($user->guid, false);
+	$user->setValidationStatus(false);
 	uservalidationbyemail_request_validation($user->guid);
 
 	elgg_pop_context();
@@ -210,8 +210,8 @@ function uservalidationbyemail_page_handler($page) {
  * @param ElggUser $user
  */
 function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
-	if ($user instanceof ElggUser && !$user->validated) {
-		elgg_set_user_validation_status($user->guid, true, 'admin_user');
+	if ($user instanceof ElggUser && !$user->isValidated()) {
+		$user->setValidationStatus(true, 'admin_user');
 	}
 }
 

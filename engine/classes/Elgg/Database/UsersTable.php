@@ -5,8 +5,6 @@ namespace Elgg\Database;
 use Elgg\Cache\EntityCache;
 use Elgg\Config as Conf;
 use Elgg\Database;
-use Elgg\Database\MetadataTable;
-use Elgg\EventsService;
 use ElggUser;
 use RegistrationException;
 
@@ -44,11 +42,6 @@ class UsersTable {
 	protected $entity_cache;
 
 	/**
-	 * @var EventsService
-	 */
-	protected $events;
-
-	/**
 	 * @var string
 	 */
 	protected $table;
@@ -60,16 +53,12 @@ class UsersTable {
 	 * @param Database      $db       Database
 	 * @param MetadataTable $metadata Metadata table
 	 * @param EntityCache   $cache    Entity cache
-	 * @param EventsService $events   Event service
 	 */
-	public function __construct(
-	Conf $config, Database $db, MetadataTable $metadata, EntityCache $cache, EventsService $events
-	) {
+	public function __construct(Conf $config, Database $db, MetadataTable $metadata, EntityCache $cache) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->metadata = $metadata;
 		$this->entity_cache = $cache;
-		$this->events = $events;
 	}
 
 	/**
@@ -299,94 +288,5 @@ class UsersTable {
 		$mac = $m[2];
 
 		return _elgg_services()->hmac->getHmac([(int) $time, $username])->matchesToken($mac);
-	}
-
-	/**
-	 * Set the validation status for a user.
-	 *
-	 * @param int    $user_guid The user's GUID
-	 * @param bool   $status    Validated (true) or unvalidated (false)
-	 * @param string $method    Optional method to say how a user was validated
-	 * @return bool
-	 */
-	public function setValidationStatus($user_guid, $status, $method = '') {
-		$user = get_user($user_guid);
-		if (!$user) {
-			return false;
-		}
-
-		$result1 = create_metadata($user->guid, 'validated', (int) $status);
-		$result2 = create_metadata($user->guid, 'validated_method', $method);
-		if ($result1 && $result2) {
-			if ((bool) $status) {
-				elgg_trigger_after_event('validate', 'user', $user);
-			} else {
-				elgg_trigger_after_event('invalidate', 'user', $user);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Gets the validation status of a user.
-	 *
-	 * @param int $user_guid The user's GUID
-	 * @return bool|null Null means status was not set for this user.
-	 */
-	public function getValidationStatus($user_guid) {
-		$user = get_entity($user_guid);
-		if (!$user || !isset($user->validated)) {
-			return null;
-		}
-		return (bool) $user->validated;
-	}
-
-	/**
-	 * Sets the last action time of the given user to right now.
-	 *
-	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
-	 *
-	 * @param ElggUser $user User entity
-	 * @return void
-	 */
-	public function setLastAction(ElggUser $user) {
-
-		$time = $this->getCurrentTime()->getTimestamp();
-
-		if ($user->last_action == $time) {
-			// no change required
-			return;
-		}
-
-		// these writes actually work, we just type hint read-only.
-		$user->prev_last_action = $user->last_action;
-		$user->last_action = $time;
-		
-		register_shutdown_function(function () use ($user, $time) {
-			$user->updateLastAction($user, $time); // keep entity table in sync
-			$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'), $time);
-		});
-	}
-
-	/**
-	 * Sets the last logon time of the given user to right now.
-	 *
-	 * @param ElggUser $user User entity
-	 * @return void
-	 */
-	public function setLastLogin(ElggUser $user) {
-
-		$time = $this->getCurrentTime()->getTimestamp();
-
-		if ($user->last_login == $time) {
-			// no change required
-			return;
-		}
-
-		// these writes actually work, we just type hint read-only.
-		$user->prev_last_login = $user->last_login;
-		$user->last_login = $time;
 	}
 }
