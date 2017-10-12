@@ -20,4 +20,4 @@ if (!$user->unban()) {
 
 access_show_hidden_entities($access_status);
 
-return elgg_ok_response('', elgg_echo('admin:user:unban:no'));
+return elgg_ok_response('', elgg_echo('admin:user:unban:yes'));

@@ -15,7 +15,7 @@ if (!$user) {
 	return elgg_error_response(elgg_echo('user:username:notfound', [$username]));
 }
 
-if (send_new_password_request($user->guid)) {
+if (!send_new_password_request($user->guid)) {
 	return elgg_error_response(elgg_echo('user:password:changereq:fail'));
 }
 
