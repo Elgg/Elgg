@@ -99,6 +99,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``detect_extender_valuetype``
  * ``developers_setup_menu``
  * ``elgg_get_class_loader``
+ * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities_from_metadata``
  * ``elgg_get_metastring_id``
  * ``elgg_get_metastring_map``
  * ``elgg_register_class``

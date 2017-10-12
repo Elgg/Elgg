@@ -107,17 +107,16 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function deleteAll(array $options = array()) {
-		$guids = elgg_extract('guids', $options);
-		$deleted = false;
-		foreach ($this->rows as $id => $row) {
-			if (empty($guids) || in_array($row->entity_guid, $guids)) {
-				$this->clearQuerySpecs($this->rows[$id]);
-				$deleted = true;
-				unset($this->rows[$id]);
-			}
+	public function delete($id) {
+		if (!isset($this->rows[$id])) {
+			return false;
 		}
-		return $deleted;
+		$row = $this->rows[$id];
+		$this->clearQuerySpecs($row);
+		
+		unset($this->rows[$id]);
+		
+		return true;
 	}
 
 	/**
