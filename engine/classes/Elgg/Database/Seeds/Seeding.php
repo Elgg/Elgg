@@ -141,6 +141,20 @@ trait Seeding {
 					}
 				}
 
+				foreach ([
+					'language',
+					'time_updated',
+					'last_action',
+					'prev_last_action',
+					'last_login',
+					'prev_last_login',
+						 ] as $attr) {
+					if (isset($attributes[$attr])) {
+						$user->$attr = $attributes[$attr];
+						$user->save();
+					}
+				}
+
 				elgg_set_user_validation_status($guid, $this->faker()->boolean(), 'seeder');
 
 				$user->setNotificationSetting('email', false);

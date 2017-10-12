@@ -2,13 +2,13 @@
 
 namespace Elgg\Database;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 
 /**
  * @group IntegrationTests
  * @group Seeding
  */
-class SeedingTest extends LegacyIntegrationTestCase {
+class SeedingTest extends IntegrationTestCase {
 
 	public function up() {
 
@@ -60,8 +60,57 @@ class SeedingTest extends LegacyIntegrationTestCase {
 		]);
 
 		$this->assertTrue($user->isAdmin());
+		$this->assertTrue(get_entity($user->guid)->isAdmin());
+
+		_elgg_invalidate_cache_for_entity($user->guid);
+		_elgg_invalidate_memcache_for_entity($user->guid);
+
+		$this->assertTrue(get_entity($user->guid)->isAdmin());
 
 		$user->delete();
+	}
+
+	public function testCanCreateBannedUser() {
+
+		$user = $this->createUser([
+			'banned' => true,
+		]);
+
+		$this->assertTrue($user->isBanned());
+		$this->assertTrue(get_entity($user->guid)->isBanned());
+
+		_elgg_invalidate_cache_for_entity($user->guid);
+		_elgg_invalidate_memcache_for_entity($user->guid);
+
+		$this->assertTrue(get_entity($user->guid)->isBanned());
+
+		$user->delete();
+	}
+
+	public function testCanSetUserLanguage() {
+
+		$user = $this->createUser([
+			'language' => 'de',
+		]);
+
+		$this->assertEquals('de', $user->language);
+		$this->assertEquals('de', $user->getLanguage());
+		$this->assertEquals('de', get_entity($user->guid)->getLanguage());
+
+		$ia = elgg_set_ignore_access(true);
+		$user->language = 'af';
+		$this->assertTrue($user->save());
+		elgg_set_ignore_access($ia);
+
+		$this->assertEquals('af', $user->language);
+		$this->assertEquals('af', $user->getLanguage());
+		$this->assertEquals('af', get_entity($user->guid)->getLanguage());
+
+		_elgg_invalidate_cache_for_entity($user->guid);
+		_elgg_invalidate_memcache_for_entity($user->guid);
+
+		$this->assertEquals('af', get_entity($user->guid)->getLanguage());
+
 	}
 
 	public function testCanCreateGroup() {
