@@ -140,32 +140,31 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 	public function testEnableDisableByID() {
 		$db_prefix = _elgg_config()->dbprefix;
 		$annotation = $this->createAnnotations(1);
-		$metadata = $this->createMetadata(1);
 
-		foreach ($this->metastringTypes as $type) {
-			$id = ${$type}[0];
-			$table = $db_prefix . $this->metastringTables[$type];
-			$q = "SELECT * FROM $table WHERE id = $id";
-			$test = get_data($q);
+		$type = 'annotation';
 
-			// disable
-			$this->assertEqual($test[0]->enabled, 'yes');
-			$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'no', $type));
+		$id = ${$type}[0];
+		$table = $db_prefix . $this->metastringTables[$type];
+		$q = "SELECT * FROM $table WHERE id = $id";
+		$test = get_data($q);
 
-			$test = get_data($q);
-			$this->assertEqual($test[0]->enabled, 'no');
+		// disable
+		$this->assertEqual($test[0]->enabled, 'yes');
+		$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'no', $type));
 
-			// enable
-			$ashe = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
-			$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
+		$test = get_data($q);
+		$this->assertEqual($test[0]->enabled, 'no');
 
-			$test = get_data($q);
-			$this->assertEqual($test[0]->enabled, 'yes');
+		// enable
+		$ashe = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
 
-			access_show_hidden_entities($ashe);
-			$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
-		}
+		$test = get_data($q);
+		$this->assertEqual($test[0]->enabled, 'yes');
+
+		access_show_hidden_entities($ashe);
+		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
 	}
 
 	public function testKeepMeFromDeletingEverything() {
@@ -178,8 +177,6 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 			switch ($type) {
 				case 'metadata':
 					$metadata_required = [
-						'metadata_owner_guid',
-						'metadata_owner_guids',
 						'metadata_name',
 						'metadata_names',
 						'metadata_value',

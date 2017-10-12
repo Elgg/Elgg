@@ -137,17 +137,6 @@ class ElggCoreMetadataCacheTest extends LegacyIntegrationTestCase {
 		$this->cache->inject($this->guid1, ['foo' => 'bar']);
 		create_metadata($this->guid1, 'foo', 'bar', 'text');
 		$this->assertFalse($this->cache->isLoaded($this->guid1));
-
-		// disableMetadata
-		$this->obj1->setMetadata($this->name, $this->value);
-		$this->cache->inject($this->guid1, ['foo' => 'bar']);
-		$this->obj1->disableMetadata($this->name);
-		$this->assertFalse($this->cache->isLoaded($this->guid1));
-
-		// enableMetadata
-		$this->cache->inject($this->guid1, ['foo' => 'bar']);
-		$this->obj1->enableMetadata($this->name);
-		$this->assertFalse($this->cache->isLoaded($this->guid1));
 	}
 
 	public function testPopulateFromEntities() {

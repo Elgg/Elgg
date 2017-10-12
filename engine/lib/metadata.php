@@ -7,8 +7,6 @@
  * @subpackage DataModel.Metadata
  */
 
-use Elgg\Project\Paths;
-
 /**
  * Convert a database row to a new \ElggMetadata
  *
@@ -58,16 +56,16 @@ function elgg_delete_metadata_by_id($id) {
  * @param string $name           Name of the metadata
  * @param string $value          Value of the metadata
  * @param string $value_type     'text', 'integer', or '' for automatic detection
- * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
- * @param null   $ignored        This argument is not used
+ * @param int    $ignored1       This argument is not used
+ * @param null   $ignored2       This argument is not used
  * @param bool   $allow_multiple Allow multiple values for one key. Default is false
  *
  * @return int|false id of metadata or false if failure
  */
-function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
-		$ignored = null, $allow_multiple = false) {
+function create_metadata($entity_guid, $name, $value, $value_type = '', $ignored1 = null,
+		$ignored2 = null, $allow_multiple = false) {
 	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,
-		$value_type, $owner_guid, null, $allow_multiple);
+		$value_type, $allow_multiple);
 }
 
 /**
@@ -77,13 +75,11 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  * @param string $name       Metadata name
  * @param string $value      Metadata value
  * @param string $value_type Value type
- * @param int    $owner_guid Owner guid
  *
  * @return bool
  */
-function update_metadata($id, $name, $value, $value_type, $owner_guid) {
-	return _elgg_services()->metadataTable->update($id, $name, $value,
-		$value_type, $owner_guid);
+function update_metadata($id, $name, $value, $value_type) {
+	return _elgg_services()->metadataTable->update($id, $name, $value, $value_type);
 }
 
 /**
@@ -96,17 +92,17 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid) {
  * @param int    $entity_guid     The entity to attach the metadata to
  * @param array  $name_and_values Associative array - a value can be a string, number, bool
  * @param string $value_type      'text', 'integer', or '' for automatic detection
- * @param int    $owner_guid      GUID of entity that owns the metadata
- * @param null   $ignored         This argument is not used
+ * @param int    $ignored1        GUID of entity that owns the metadata
+ * @param null   $ignored2        This argument is not used
  * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
  *
  * @return bool
  */
-function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid,
-		$ignored = null, $allow_multiple = false) {
+function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $ignored1 = null,
+		$ignored2 = null, $allow_multiple = false) {
 
 	return _elgg_services()->metadataTable->createFromArray($entity_guid, $name_and_values,
-		$value_type, $owner_guid, null, $allow_multiple);
+		$value_type, $allow_multiple);
 }
 
 /**
@@ -127,7 +123,6 @@ function create_metadata_from_array($entity_guid, array $name_and_values, $value
  * metadata_values              => null|ARR metadata values
  * metadata_ids                 => null|ARR metadata ids
  * metadata_case_sensitive      => BOOL Overall Case sensitive
- * metadata_owner_guids         => null|ARR guids for metadata owners
  * metadata_created_time_lower  => INT Lower limit for created time.
  * metadata_created_time_upper  => INT Upper limit for created time.
  * metadata_calculation         => STR Perform the MySQL function on the metadata values returned.
@@ -147,7 +142,7 @@ function elgg_get_metadata(array $options = []) {
  * Deletes metadata based on $options.
  *
  * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
- *          This requires at least one constraint: metadata_owner_guid(s),
+ *          This requires at least one constraint:
  *          metadata_name(s), metadata_value(s), or guid(s) must be set.
  *
  * @param array $options An options array. {@link elgg_get_metadata()}
@@ -156,35 +151,6 @@ function elgg_get_metadata(array $options = []) {
  */
 function elgg_delete_metadata(array $options) {
 	return _elgg_services()->metadataTable->deleteAll($options);
-}
-
-/**
- * Disables metadata based on $options.
- *
- * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
- *
- * @param array $options An options array. {@link elgg_get_metadata()}
- * @return bool|null true on success, false on failure, null if no metadata disabled.
- * @since 1.8.0
- */
-function elgg_disable_metadata(array $options) {
-	return _elgg_services()->metadataTable->disableAll($options);
-}
-
-/**
- * Enables metadata based on $options.
- *
- * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
- *
- * @warning In order to enable metadata, you must first use
- * {@link access_show_hidden_entities()}.
- *
- * @param array $options An options array. {@link elgg_get_metadata()}
- * @return bool|null true on success, false on failure, null if no metadata enabled.
- * @since 1.8.0
- */
-function elgg_enable_metadata(array $options) {
-	return _elgg_services()->metadataTable->enableAll($options);
 }
 
 /**
@@ -244,8 +210,6 @@ function elgg_enable_metadata(array $options) {
  *                                     )
  *                                Also supports array('name' => 'metadata_text1')
  *
- *  metadata_owner_guids => null|ARR guids for metadata owners
- *
  * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
@@ -284,17 +248,16 @@ function elgg_list_entities_from_metadata($options) {
  * @param string     $pair_operator     ("AND" or "OR") Operator to use to join the where clauses for pairs
  * @param bool       $case_sensitive    Case sensitive metadata names?
  * @param array|null $order_by_metadata Array of names / direction
- * @param array|null $owner_guids       Array of owner GUIDs
  *
  * @return false|array False on fail, array('joins', 'wheres')
  * @since 1.7.0
  * @access private
  */
 function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = null, $values = null,
-		$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null,
-		$owner_guids = null) {
+		$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null
+		) {
 	return _elgg_services()->metadataTable->getEntityMetadataWhereSql($e_table, $n_table, $names,
-		$values, $pairs, $pair_operator, $case_sensitive, $order_by_metadata, $owner_guids);
+		$values, $pairs, $pair_operator, $case_sensitive, $order_by_metadata);
 }
 
 /**

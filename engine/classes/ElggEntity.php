@@ -481,71 +481,6 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Deletes all metadata owned by this object (metadata.owner_guid = $this->guid).
-	 * If you pass a name, only metadata matching that name will be deleted.
-	 *
-	 * @param null|string $name The name of metadata to delete.
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function deleteOwnedMetadata($name = null) {
-		// access is turned off for this because they might
-		// no longer have access to an entity they created metadata on.
-		$ia = elgg_set_ignore_access(true);
-		$options = [
-			'metadata_owner_guid' => $this->guid,
-			'limit' => 0
-		];
-		if ($name) {
-			$options['metadata_name'] = $name;
-		}
-
-		$r = elgg_delete_metadata($options);
-		elgg_set_ignore_access($ia);
-		return $r;
-	}
-
-	/**
-	 * Disables metadata for this entity, optionally based on name.
-	 *
-	 * @param string $name An options name of metadata to disable.
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function disableMetadata($name = '') {
-		$options = [
-			'guid' => $this->guid,
-			'limit' => 0
-		];
-		if ($name) {
-			$options['metadata_name'] = $name;
-		}
-
-		return elgg_disable_metadata($options);
-	}
-
-	/**
-	 * Enables metadata for this entity, optionally based on name.
-	 *
-	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
-	 *
-	 * @param string $name An options name of metadata to enable.
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function enableMetadata($name = '') {
-		$options = [
-			'guid' => $this->guid,
-			'limit' => 0
-		];
-		if ($name) {
-			$options['metadata_name'] = $name;
-		}
-
-		return elgg_enable_metadata($options);
-	}
-
-	/**
 	 * Get a piece of volatile (non-persisted) data on this entity.
 	 *
 	 * @param string $name The name of the volatile data
@@ -1624,7 +1559,6 @@ abstract class ElggEntity extends \ElggData implements
 			elgg_set_ignore_access($ia);
 		}
 
-		$this->disableMetadata();
 		$this->disableAnnotations();
 
 		_elgg_services()->entityCache->remove($guid);
@@ -1688,7 +1622,6 @@ abstract class ElggEntity extends \ElggData implements
 		");
 
 		$this->deleteMetadata('disable_reason');
-		$this->enableMetadata();
 		$this->enableAnnotations();
 
 		if ($recursive) {
@@ -1806,7 +1739,6 @@ abstract class ElggEntity extends \ElggData implements
 
 		// Now delete the entity itself
 		$this->deleteMetadata();
-		$this->deleteOwnedMetadata();
 		$this->deleteAnnotations();
 		$this->deleteOwnedAnnotations();
 		$this->deleteRelationships();

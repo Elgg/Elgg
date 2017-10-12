@@ -97,6 +97,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``datalist_set``
  * ``detect_extender_valuetype``
  * ``developers_setup_menu``
+ * ``elgg_disable_metadata``
+ * ``elgg_enable_metadata``
  * ``elgg_get_class_loader``
  * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities_from_metadata``
  * ``elgg_get_metastring_id``
@@ -124,6 +126,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``elgg_override_permissions``: No longer used as handler for ``permissions_check`` and ``container_permissions_check`` hooks
  * ``elgg_check_access_overrides``
  * ``ElggEntity::addToSite``
+ * ``ElggEntity::disableMetadata``
+ * ``ElggEntity::enableMetadata``
  * ``ElggEntity::getSites``
  * ``ElggEntity::removeFromSite``
  * ``ElggEntity::isFullyLoaded``
@@ -215,12 +219,16 @@ From the "users_entity" table, the ``password`` and ``hash`` columns have been r
 
 The ``geocode_cache`` table has been removed as it was no longer used.
 
-Metadata no longer are access-controlled
-----------------------------------------
+Metadata Changes
+----------------
 
-Metadata is available in all contexts. If your plugin created metadata with restricted access, those restrictions will not be honored. You should use annotations or entities instead, which do provide access control.
+Metadata is no longer access controlled. If your plugin created metadata with restricted access, those restrictions will not be honored. You should use annotations or entities instead, which do provide access control.
 
 Do not read or write to the ``access_id`` property on ElggMetadata objects.
+
+Metadata is no longer enabled or disabled. You can no longer perform the ``enable`` and ``disable`` API calls on metadata.
+
+Metadata no longer has an ``owner_guid``. It is no longer possible to query metadata based on ``owner_guids``.
 
 Permissions and Access
 ----------------------

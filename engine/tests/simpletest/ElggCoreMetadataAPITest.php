@@ -195,21 +195,22 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$time = time();
 		$prefix = _elgg_services()->db->prefix;
 
-		// reverse the times
+		// all times the same
 		$mds = elgg_get_metadata([
-			'metadata_owner_guids' => $obj->guid,
+			'guid' => $obj->guid,
 			'metadata_names' => 'test_md',
 			'order_by' => 'n_table.id ASC',
 		]);
-		foreach ($mds as $i => $md) {
+		
+		foreach ($mds as $md) {
 			update_data("
 				UPDATE {$prefix}metadata
-				SET time_created = " . ($time - $i) . "
+				SET time_created = " . ($time) . "
 				WHERE id = {$md->id}
 			");
 		}
 
-		// verify ID order
+		// with the same time_created expecting row order by ID
 		$mds = elgg_get_metadata([
 			'guid' => $obj->guid,
 			'metadata_names' => 'test_md',

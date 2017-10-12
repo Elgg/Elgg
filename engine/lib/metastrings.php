@@ -493,10 +493,6 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 			$type = 'annotation';
 			$table = "{$db_prefix}annotations";
 			break;
-
-		case 'metadata':
-			$table = "{$db_prefix}metadata";
-			break;
 	}
 
 	if ($enabled === 'yes' || $enabled === 1 || $enabled === true) {
@@ -643,7 +639,11 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 	$singulars = ["{$type}_name", "{$type}_value",
 		"{$type}_name_value_pair", "{$type}_owner_guid"];
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
-
+	
+	if ($type == 'metadata') {
+		$options['metadata_owner_guids'] = null;
+	}
+	
 	$clauses = _elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
 		$options["{$type}_values"], $options["{$type}_name_value_pairs"],
 		$options["{$type}_name_value_pairs_operator"], $options["{$type}_case_sensitive"],

@@ -30,7 +30,7 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $ignore = null, $allow_multiple = false) {
+	public function create($entity_guid, $name, $value, $value_type = '', $ignore = null, $allow_multiple = false) {
 		$entity = get_entity((int) $entity_guid);
 		if (!$entity) {
 			return false;
@@ -40,11 +40,6 @@ class MetadataTable extends DbMetadataTabe {
 			return false;
 		}
 
-		$owner_guid = (int) $owner_guid;
-		if ($owner_guid == 0) {
-			$owner_guid = $this->session->getLoggedInUserGuid();
-		}
-
 		$this->iterator++;
 		$id = $this->iterator;
 
@@ -52,11 +47,9 @@ class MetadataTable extends DbMetadataTabe {
 			'type' => 'metadata',
 			'id' => $id,
 			'entity_guid' => $entity->guid,
-			'owner_guid' => $owner_guid,
 			'name' => $name,
 			'value' => $value,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
-			'access_id' => ACCESS_PUBLIC,
 			'value_type' => \ElggExtender::detectValueType($value, trim($value_type)),
 		];
 
@@ -64,13 +57,13 @@ class MetadataTable extends DbMetadataTabe {
 
 		$this->addQuerySpecs($row);
 
-		return parent::create($entity_guid, $name, $value, $value_type, $owner_guid, null, $allow_multiple);
+		return parent::create($entity_guid, $name, $value, $value_type, null, $allow_multiple);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function update($id, $name, $value, $value_type, $owner_guid) {
+	public function update($id, $name, $value, $value_type) {
 		if (!isset($this->rows[$id])) {
 			return false;
 		}
@@ -78,14 +71,12 @@ class MetadataTable extends DbMetadataTabe {
 		$row->name = $name;
 		$row->value = $value;
 		$row->value_type = \ElggExtender::detectValueType($value, trim($value_type));
-		$row->owner_guid = $owner_guid;
-		$row->access_id = ACCESS_PUBLIC;
 
 		$this->rows[$id] = $row;
 
 		$this->addQuerySpecs($row);
 
-		return parent::update($id, $name, $value, $value_type, $owner_guid);
+		return parent::update($id, $name, $value, $value_type);
 	}
 
 	/**
@@ -165,8 +156,8 @@ class MetadataTable extends DbMetadataTabe {
 		]);
 
 		$sql = "INSERT INTO {$dbprefix}metadata
-				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
-				VALUES (:entity_guid, :name, :value, :value_type, :owner_guid, :time_created, :access_id)";
+				(entity_guid, name, value, value_type, time_created)
+				VALUES (:entity_guid, :name, :value, :value_type, :time_created)";
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $sql,
@@ -175,9 +166,7 @@ class MetadataTable extends DbMetadataTabe {
 				':name' => $row->name,
 				':value' => $row->value,
 				':value_type' => $row->value_type,
-				':owner_guid' => (int) $row->owner_guid,
 				':time_created' => (int) $row->time_created,
-				':access_id' => ACCESS_PUBLIC,
 			],
 			'insert_id' => $row->id,
 		]);
@@ -185,9 +174,7 @@ class MetadataTable extends DbMetadataTabe {
 		$sql = "UPDATE {$dbprefix}metadata
 			SET name = :name,
 			    value = :value,
-				value_type = :value_type,
-				access_id = :access_id,
-			    owner_guid = :owner_guid
+				value_type = :value_type
 			WHERE id = :id";
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
@@ -196,8 +183,6 @@ class MetadataTable extends DbMetadataTabe {
 				':name' => $row->name,
 				':value' => $row->value,
 				':value_type' => $row->value_type,
-				':owner_guid' => $row->owner_guid,
-				':access_id' => ACCESS_PUBLIC,
 				':id' => $row->id,
 			],
 			'results' => function() use ($row) {
@@ -206,39 +191,6 @@ class MetadataTable extends DbMetadataTabe {
 				}
 				return [];
 			},
-		]);
-
-		// Enable/disable metadata
-		$sql = "UPDATE {$dbprefix}metadata SET enabled = :enabled where id = :id";
-
-		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':id' => $row->id,
-				':enabled' => 'yes',
-			],
-			'results' => function() use ($row) {
-				if (isset($this->rows[$row->id])) {
-					$this->rows[$row->id]->enabled = 'yes';
-					return [$row->id];
-				}
-				return [];
-			}
-		]);
-
-		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':id' => $row->id,
-				':enabled' => 'no',
-			],
-			'results' => function() use ($row) {
-				if (isset($this->rows[$row->id])) {
-					$this->rows[$row->id]->enabled = 'no';
-					return [$row->id];
-				}
-				return [];
-			}
 		]);
 
 		// Delete
