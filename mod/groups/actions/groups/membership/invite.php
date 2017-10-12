@@ -22,23 +22,32 @@ if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
 	return elgg_error_response();
 }
 
+$resend_invitation = (bool) get_input('resend');
+
 foreach ($user_guids as $guid) {
 	$user = get_user($guid);
 	if (!$user) {
 		continue;
 	}
 
+	$invite = true;
 	if (check_entity_relationship($group->guid, 'invited', $user->guid)) {
-		register_error(elgg_echo('groups:useralreadyinvited'));
-		continue;
+		// user already invited, do we need to resend the invitation
+		if (!$resend_invitation) {
+			register_error(elgg_echo('groups:useralreadyinvited'));
+			continue;
+		}
+		$invite = false;
 	}
 
 	if (check_entity_relationship($user->guid, 'member', $group->guid)) {
 		continue;
 	}
 
-	// Create relationship
-	add_entity_relationship($group->guid, 'invited', $user->guid);
+	if ($invite) {
+		// Create relationship
+		add_entity_relationship($group->guid, 'invited', $user->guid);
+	}
 
 	$url = elgg_normalize_url("groups/invitations/{$user->username}");
 
@@ -64,9 +73,9 @@ foreach ($user_guids as $guid) {
 	$result = notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
 
 	if ($result) {
-		system_message(elgg_echo("groups:userinvited"));
+		system_message(elgg_echo('groups:userinvited'));
 	} else {
-		register_error(elgg_echo("groups:usernotinvited"));
+		register_error(elgg_echo('groups:usernotinvited'));
 	}
 }
 

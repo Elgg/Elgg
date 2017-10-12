@@ -3,15 +3,17 @@
 elgg_gatekeeper();
 
 $guid = elgg_extract('guid', $vars);
-elgg_set_page_owner_guid($guid);
-
-$title = elgg_echo('groups:invite:title');
-
 $group = get_entity($guid);
-if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
+if (!($group instanceof ElggGroup) || !$group->canEdit()) {
 	register_error(elgg_echo('groups:noaccess'));
 	forward(REFERER);
 }
+
+elgg_set_page_owner_guid($guid);
+
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
+
+$title = elgg_echo('groups:invite:title');
 
 $content = elgg_view_form('groups/invite', [
 	'id' => 'invite_to_group',
@@ -20,13 +22,10 @@ $content = elgg_view_form('groups/invite', [
 	'entity' => $group,
 ]);
 
-elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
-
-$params = [
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-];
-$body = elgg_view_layout('content', $params);
+]);
 
 echo elgg_view_page($title, $body);
