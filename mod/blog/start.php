@@ -3,13 +3,6 @@
  * Blogs
  *
  * @package Blog
- *
- * @todo
- * - Either drop support for "publish date" or duplicate more entity getter
- * functions to work with a non-standard time_created.
- * - Pingbacks
- * - Notifications
- * - River entry for posts saved as drafts and later published
  */
 
 /**

@@ -118,14 +118,14 @@ class AutoloadManager {
 	 * @return bool was the cache loaded?
 	 */
 	public function loadCache() {
-		$spec = $this->getSpec();
-		if ($spec) {
+		$cache = $this->getCacheFileContents();
+		if ($cache) {
 			// the cached class map will have the full scanned core classes, so
 			// don't consider the earlier mappings as "altering" the map
 			$this->loader->getClassMap()
-				->setMap($spec[self::KEY_CLASSES])
+				->setMap($cache[self::KEY_CLASSES])
 				->setAltered(false);
-			$this->scannedDirs = $spec[self::KEY_SCANNED_DIRS];
+			$this->scannedDirs = $cache[self::KEY_SCANNED_DIRS];
 			return true;
 		}
 		$this->altered = true;
@@ -133,21 +133,25 @@ class AutoloadManager {
 	}
 
 	/**
-	 * Some method that does something
+	 * Tries to read the contents of the cache file and if valid returns the content
 	 *
-	 * @todo what is a spec?
-	 * @return bool|array
+	 * @return false|array
 	 */
-	protected function getSpec() {
-		if ($this->storage) {
-			$serialization = $this->storage->load(self::FILENAME);
-			if ($serialization) {
-				$spec = unserialize($serialization);
-				if (isset($spec[self::KEY_CLASSES])) {
-					return $spec;
-				}
-			}
+	protected function getCacheFileContents() {
+		if (!$this->storage) {
+			return false;
 		}
+		
+		$serialization = $this->storage->load(self::FILENAME);
+		if (!$serialization) {
+			return false;
+		}
+		
+		$spec = unserialize($serialization);
+		if (isset($spec[self::KEY_CLASSES])) {
+			return $spec;
+		}
+		
 		return false;
 	}
 

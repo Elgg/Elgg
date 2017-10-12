@@ -456,7 +456,6 @@ function groups_create_event_listener($event, $object_type, $object) {
  * This operation is performed in an event listener to ensure that icons
  * are moved when ownership changes outside of the groups/edit action flow.
  *
- * @todo #4683 proposes that icons are owned by groups and not group owners
  * @see _elgg_filestore_move_icons()
  *
  * @param string    $event "update:after"

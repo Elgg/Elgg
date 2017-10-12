@@ -211,34 +211,8 @@ abstract class ElggExtender extends \ElggData {
 	 */
 	public function getURL() {
 
-		$url = "";
-		$type = $this->getType();
-		$subtype = $this->getSubtype();
-
-		// @todo remove when elgg_register_extender_url_handler() has been removed
-		if ($this->id) {
-			$function = "";
-			$handlers = _elgg_config()->extender_url_handler;
-			if (isset($handlers[$type][$subtype])) {
-				$function = $handlers[$type][$subtype];
-			}
-			if (isset($handlers[$type]['all'])) {
-				$function = $handlers[$type]['all'];
-			}
-			if (isset($handlers['all']['all'])) {
-				$function = $handlers['all']['all'];
-			}
-			if (is_callable($function)) {
-				$url = call_user_func($function, $this);
-			}
-
-			if ($url) {
-				$url = elgg_normalize_url($url);
-			}
-		}
-
 		$params = ['extender' => $this];
-		$url = _elgg_services()->hooks->trigger('extender:url', $type, $params, $url);
+		$url = _elgg_services()->hooks->trigger('extender:url', $this->getType(), $params, '');
 
 		return elgg_normalize_url($url);
 	}

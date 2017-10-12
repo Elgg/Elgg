@@ -78,22 +78,16 @@ class ActionsService {
 	 * @param string $action    Action name
 	 * @param string $forwarder URL to forward to after completion
 	 * @return ResponseBuilder|null
-	 * @see action
+	 * @see action()
 	 * @access private
 	 */
 	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
 		$this->currentAction = $action;
 		
-		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
-		// Allow users to disable plugins without a token in order to
-		// remove plugins that are incompatible.
-		// Login and logout are for convenience.
-		// file/download (see #2010)
+		// Logout is for convenience.
 		$exceptions = [
-			'admin/plugins/disable',
 			'logout',
-			'file/download',
 		];
 	
 		if (!in_array($action, $exceptions)) {
@@ -190,7 +184,7 @@ class ActionsService {
 	}
 	
 	/**
-	 * @see elgg_register_action
+	 * @see elgg_register_action()
 	 * @access private
 	 */
 	public function register($action, $filename = "", $access = 'logged_in') {
@@ -216,7 +210,7 @@ class ActionsService {
 	}
 	
 	/**
-	 * @see elgg_unregister_action
+	 * @see elgg_unregister_action()
 	 * @access private
 	 */
 	public function unregister($action) {
@@ -229,7 +223,7 @@ class ActionsService {
 	}
 
 	/**
-	 * @see validate_action_token
+	 * @see validate_action_token()
 	 * @access private
 	 */
 	public function validateActionToken($visible_errors = true, $token = null, $ts = null) {
@@ -328,7 +322,7 @@ class ActionsService {
 
 	/**
 	 * @return bool
-	 * @see action_gatekeeper
+	 * @see action_gatekeeper()
 	 * @access private
 	 */
 	public function gatekeeper($action) {
@@ -375,7 +369,7 @@ class ActionsService {
 	/**
 	 * Generate a token from a session token (specifying the user), the timestamp, and the site key.
 	 *
-	 * @see generate_action_token
+	 * @see generate_action_token()
 	 *
 	 * @param int    $timestamp     Unix timestamp
 	 * @param string $session_token Session-specific token
@@ -396,58 +390,13 @@ class ActionsService {
 	}
 	
 	/**
-	 * @see elgg_action_exists
+	 * @see elgg_action_exists()
 	 * @access private
 	 */
 	public function exists($action) {
 		return (isset($this->actions[$action]) && file_exists($this->actions[$action]['file']));
 	}
 	
-	/**
-	 * @see ajax_forward_hook
-	 * @access private
-	 * @deprecated 2.3
-	 */
-	public function ajaxForwardHook($hook, $reason, $forward_url, $params) {
-		if (!elgg_is_xhr()) {
-			return;
-		}
-
-		// grab any data echo'd in the action
-		$output = ob_get_clean();
-
-		if ($reason == 'walled_garden' || $reason == 'csrf') {
-			$reason = '403';
-		}
-
-		$status_code = (int) $reason;
-		if ($status_code < 100 || ($status_code > 299 && $status_code < 400) || $status_code > 599) {
-			// We only want to preserve OK and error codes
-			// Redirect responses should be converted to OK responses as this is an XHR request
-			$status_code = ELGG_HTTP_OK;
-		}
-
-		$response = elgg_ok_response($output, '', $forward_url, $status_code);
-
-		$headers = $response->getHeaders();
-		$headers['Content-Type'] = 'application/json; charset=UTF-8';
-		$response->setHeaders($headers);
-
-		_elgg_services()->responseFactory->respond($response);
-		exit;
-	}
-	
-	/**
-	 * @see ajax_action_hook
-	 * @access private
-	 * @deprecated 2.3
-	 */
-	public function ajaxActionHook() {
-		if (elgg_is_xhr()) {
-			ob_start();
-		}
-	}
-
 	/**
 	 * Get all actions
 	 *

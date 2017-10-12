@@ -291,9 +291,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanExecute() {
 
-		// @todo: this test is incorrect
 		// It is a redirect response without the forward hook, so the output is null
-		$this->markTestSkipped();
+		$this->markTestIncomplete();
 
 		$this->request = $this->prepareHttpRequest('action/output3', 'POST', [], false, true);
 		$this->assertTrue($this->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
@@ -314,7 +313,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * The logic is a bit odd. See #9792
-	 * 
+	 *
 	 * @dataProvider executeForwardUrlDataProvider
 	 */
 	public function testCanResolveForwardUrl($url, $expected) {
@@ -533,7 +532,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		// Ajax API doesn't set charset	
+		// Ajax API doesn't set charset
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([

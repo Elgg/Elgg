@@ -1,8 +1,6 @@
 <?php
 
-use Elgg\Filesystem\Directory;
 use Elgg\Http\ResponseBuilder;
-use Elgg\Project\Paths;
 
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
@@ -29,7 +27,7 @@ function elgg() {
 /**
  * Register a PHP file as a library.
  *
- * @see elgg_load_library
+ * @see elgg_load_library()
  *
  * @param string $name     The name of the library
  * @param string $location The location of the file
@@ -49,7 +47,7 @@ function elgg_register_library($name, $location) {
 /**
  * Load a PHP library.
  *
- * @see elgg_register_library
+ * @see elgg_register_library()
  *
  * @param string $name The name of the library
  *
@@ -106,7 +104,7 @@ function forward($location = "", $reason = 'system') {
 /**
  * Set a response HTTP header
  *
- * @see header
+ * @see header()
  *
  * @param string $header  Header
  * @param bool   $replace Replace existing header
@@ -621,8 +619,8 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  *
  * @return bool False if any handler returned false, otherwise true
  *
- * @see elgg_trigger_event
- * @see elgg_trigger_after_event
+ * @see elgg_trigger_event()
+ * @see elgg_trigger_after_event()
  */
 function elgg_trigger_before_event($event, $object_type, $object = null) {
 	return _elgg_services()->hooks->getEvents()->triggerBefore($event, $object_type, $object);
@@ -641,7 +639,7 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  *
  * @return true
  *
- * @see elgg_trigger_before_event
+ * @see elgg_trigger_before_event()
  */
 function elgg_trigger_after_event($event, $object_type, $object = null) {
 	return _elgg_services()->hooks->getEvents()->triggerAfter($event, $object_type, $object);
@@ -658,7 +656,7 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  *
  * @return bool
  *
- * @see elgg_trigger_event
+ * @see elgg_trigger_event()
  */
 function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message = null, $version = null) {
 	return _elgg_services()->hooks->getEvents()->triggerDeprecated($event, $object_type, $object, $message, $version);
@@ -1081,8 +1079,6 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'limit']) {
 	$url1 = elgg_normalize_url($url1);
 	$url2 = elgg_normalize_url($url2);
-
-	// @todo - should probably do something with relative URLs
 
 	if ($url1 == $url2) {
 		return true;

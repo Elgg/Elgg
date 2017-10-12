@@ -28,7 +28,7 @@ class WidgetsService {
 	private $widgetCache = [];
 
 	/**
-	 * @see elgg_get_widgets
+	 * @see elgg_get_widgets()
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -70,7 +70,7 @@ class WidgetsService {
 	}
 
 	/**
-	 * @see elgg_create_widget
+	 * @see elgg_create_widget()
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -89,13 +89,9 @@ class WidgetsService {
 
 		$widget = new \ElggWidget;
 		$widget->owner_guid = $owner_guid;
-		$widget->container_guid = $owner_guid; // @todo - will this work for group widgets?
-		if (isset($access_id)) {
-			$widget->access_id = $access_id;
-		} else {
-			$widget->access_id = get_default_access();
-		}
-
+		$widget->container_guid = $owner_guid;
+		$widget->access_id = isset($access_id) ? $access_id : get_default_access();
+		
 		if (!$widget->save()) {
 			return false;
 		}
@@ -108,7 +104,7 @@ class WidgetsService {
 	}
 
 	/**
-	 * @see elgg_can_edit_widget_layout
+	 * @see elgg_can_edit_widget_layout()
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -138,7 +134,7 @@ class WidgetsService {
 	 *
 	 * @return bool
 	 *
-	 * @see elgg_register_widget_type
+	 * @see elgg_register_widget_type()
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -160,7 +156,7 @@ class WidgetsService {
 	/**
 	 * @param string $id
 	 * @return bool
-	 * @see elgg_unregister_widget_type
+	 * @see elgg_unregister_widget_type()
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -179,7 +175,7 @@ class WidgetsService {
 	 * @param string $context        Optional context to check
 	 * @param \ElggEntity $container Optional limit widget definitions to a container
 	 *
-	 * @see elgg_is_widget_type
+	 * @see elgg_is_widget_type()
 	 * @access private
 	 * @since 1.9.0
 	 */
@@ -230,7 +226,7 @@ class WidgetsService {
 	}
 
 	/**
-	 * @param $params Associative array of params used to determine what to return
+	 * @param array $params Associative array of params used to determine what to return
 	 *
 	 * array (
 	 *     'context' => string (defaults to elgg_get_context()),
