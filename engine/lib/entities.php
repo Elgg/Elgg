@@ -146,18 +146,6 @@ function get_entity_as_row($guid) {
 }
 
 /**
- * Return the user specific details of a user by a row.
- *
- * @param int $guid The \ElggUser guid
- *
- * @return mixed
- * @access private
- */
-function get_user_entity_as_row($guid) {
-	return _elgg_services()->usersTable->getRow($guid);
-}
-
-/**
  * Create an Elgg* object from a given entity row.
  *
  * Handles loading all tables into the correct class.

@@ -12,18 +12,23 @@ if (!$user instanceof ElggUser) {
 
 // Returns a list of all friends, as well as anyone else who the user is subscribed to
 $dbprefix = elgg_get_config('dbprefix');
-$options = [
+
+echo elgg_list_entities_from_metadata([
 	'selects' => ['GROUP_CONCAT(ers.relationship) as relationships'],
 	'types' => 'user',
 	'joins' => [
-		"JOIN {$dbprefix}users_entity ue ON ue.guid = e.guid",
 		"JOIN {$dbprefix}entity_relationships ers
 			ON e.guid = ers.guid_two AND ers.guid_one = $user->guid",
 	],
 	'wheres' => [
 		"ers.relationship = 'friend' OR ers.relationship LIKE 'notify%'"
 	],
-	'order_by' => 'ue.name',
+	'order_by_metadata' => [
+		[
+			'name' => 'name',
+			'direction' => 'ASC',
+		],
+	],
 	'group_by' => 'e.guid',
 	'offset_key' => 'subscriptions_users',
 	'item_view' => 'notifications/subscriptions/record',
@@ -32,6 +37,4 @@ $options = [
 	'limit' => max(20, elgg_get_config('default_limit')),
 	'list_class' => 'elgg-subscriptions',
 	'item_class' => 'elgg-subscription-record',
-];
-
-echo elgg_list_entities($options);
+]);

@@ -8,8 +8,6 @@
  * @property      string $language         The language preference of the user (ISO 639-1 formatted)
  * @property      string $banned           'yes' if the user is banned from the network, 'no' otherwise
  * @property      string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
- * @property-read string $password         The legacy (salted MD5) password hash of the user
- * @property-read string $salt             The salt used to create the legacy password hash
  * @property-read string $password_hash    The hashed password of the user
  * @property-read int    $prev_last_action A UNIX timestamp of the previous last action
  * @property-read int    $last_login       A UNIX timestamp of the last login
@@ -24,7 +22,7 @@ class ElggUser extends \ElggEntity
 	public function getType() {
 		return 'user';
 	}
-
+	
 	/**
 	 * Get user language or default to site language
 	 *
@@ -47,36 +45,31 @@ class ElggUser extends \ElggEntity
 	 * {@inheritdoc}
 	 */
 	public function __set($name, $value) {
-		if (!array_key_exists($name, $this->attributes)) {
-			parent::__set($name, $value);
-			return;
-		}
-
 		switch ($name) {
-			case 'prev_last_action':
-			case 'last_login':
-			case 'prev_last_login':
-				if ($value !== null) {
-					$this->attributes[$name] = (int) $value;
-				} else {
-					$this->attributes[$name] = null;
-				}
-				break;
-
 			case 'salt':
 			case 'password':
-				_elgg_services()->logger->error("User entities no longer contain salt/password");
-				break;
-
-			// setting this not supported
+				_elgg_services()->logger->error("User entities no longer contain {$name}");
+				return;
 			case 'password_hash':
 				_elgg_services()->logger->error("password_hash is a readonly attribute.");
+				return;
+			case 'email':
+				if (!validate_email_address($value)) {
+					throw new \InvalidParameterException("Email is not a valid email address");
+				}
 				break;
-
-			default:
-				parent::__set($name, $value);
+			case 'username':
+				if (!validate_username($value)) {
+					throw new \InvalidParameterException("Username is not a valid username");
+				}
+				$existing_user = get_user_by_username($value);
+				if ($existing_user && ($existing_user->guid !== $this->guid)) {
+					throw new \InvalidParameterException("{$name} is supposed to be unique for ElggUser");
+				}
 				break;
 		}
+		
+		parent::__set($name, $value);
 	}
 	
 	/**
@@ -99,8 +92,23 @@ class ElggUser extends \ElggEntity
 	 *
 	 * @return bool
 	 */
-	public function ban($reason = "") {
-		return ban_user($this->guid, $reason);
+	public function ban($reason = '') {
+
+		if (!$this->canEdit()) {
+			return false;
+		}
+		
+		if (!elgg_trigger_event('ban', 'user', $this)) {
+			return false;
+		}
+
+		$this->ban_reason = $reason;
+		$this->banned = 'yes';
+				
+		_elgg_invalidate_cache_for_entity($this->guid);
+		_elgg_invalidate_memcache_for_entity($this->guid);
+
+		return true;
 	}
 
 	/**
@@ -109,7 +117,22 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function unban() {
-		return unban_user($this->guid);
+		
+		if (!$this->canEdit()) {
+			return false;
+		}
+
+		if (!elgg_trigger_event('unban', 'user', $this)) {
+			return false;
+		}
+
+		unset($this->ban_reason);
+		$this->banned = 'yes';
+				
+		_elgg_invalidate_cache_for_entity($this->guid);
+		_elgg_invalidate_memcache_for_entity($this->guid);
+
+		return true;
 	}
 
 	/**
@@ -127,12 +150,11 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isAdmin() {
-
-		// for backward compatibility we need to pull this directly
-		// from the attributes instead of using the magic methods.
-		// this can be removed in 1.9
-		// return $this->admin == 'yes';
-		return $this->attributes['admin'] == 'yes';
+		$ia = elgg_set_ignore_access(true);
+		$is_admin = ($this->admin == 'yes');
+		elgg_set_ignore_access($ia);
+		
+		return $is_admin;
 	}
 
 	/**
@@ -146,14 +168,15 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		// If already saved, use the standard function.
-		if ($this->guid && !make_user_admin($this->guid)) {
+		if (!elgg_trigger_event('make_admin', 'user', $this)) {
 			return false;
 		}
 
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'yes';
+		$this->admin = 'yes';
 
+		_elgg_invalidate_cache_for_entity($this->guid);
+		_elgg_invalidate_memcache_for_entity($this->guid);
+		
 		return true;
 	}
 
@@ -168,14 +191,15 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		// If already saved, use the standard function.
-		if ($this->guid && !remove_user_admin($this->guid)) {
+		if (!elgg_trigger_event('remove_admin', 'user', $this)) {
 			return false;
 		}
 
-		// need to manually set attributes since they've already been loaded.
-		$this->attributes['admin'] = 'no';
+		$this->admin = 'no';
 
+		_elgg_invalidate_cache_for_entity($this->guid);
+		_elgg_invalidate_memcache_for_entity($this->guid);
+		
 		return true;
 	}
 
@@ -355,16 +379,14 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * Set the necessary attribute to store a hash of the user's password.
-	 *
-	 * @tip You must save() to persist the attribute
+	 * Set the necessary metadata to store a hash of the user's password.
 	 *
 	 * @param string $password The password to be hashed
 	 * @return void
 	 * @since 1.10.0
 	 */
 	public function setPassword($password) {
-		$this->attributes['password_hash'] = _elgg_services()->passwords->generateHash($password);
+		$this->setMetadata('password_hash', _elgg_services()->passwords->generateHash($password));
 	}
 
 	/**

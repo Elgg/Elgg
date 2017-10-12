@@ -172,7 +172,7 @@ function is_metadata_independent($type, $subtype) {
  * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.9.0
  * @throws InvalidArgumentException
- * @deprecated Use elgg_get_entities_from_metadata
+ * @deprecated Use elgg_get_entities_from_metadata()
  */
 function elgg_get_entities_from_attributes(array $options = []) {
     elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_entities_from_metadata.', '3.0');
@@ -184,4 +184,85 @@ function elgg_get_entities_from_attributes(array $options = []) {
     unset($options['attribute_name_value_pairs_operator']);
     
     return elgg_get_entities_from_relationship($options);
+}
+
+/**
+ * Ban a user
+ *
+ * @param int    $user_guid The user guid
+ * @param string $reason    A reason
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->ban()
+ */
+function ban_user($user_guid, $reason = "") {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::ban()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->ban($reason);
+}
+
+/**
+ * Unban a user.
+ *
+ * @param int $user_guid Unban a user.
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->unban()
+ */
+function unban_user($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::unban()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->unban();
+}
+
+/**
+ * Makes user $guid an admin.
+ *
+ * @param int $user_guid User guid
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->makeAdmin()
+ */
+function make_user_admin($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::makeAdmin()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->makeAdmin();
+}
+
+/**
+ * Removes user $guid's admin flag.
+ *
+ * @param int $user_guid User GUID
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->removeAdmin()
+ */
+function remove_user_admin($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::removeAdmin()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->removeAdmin();
 }
