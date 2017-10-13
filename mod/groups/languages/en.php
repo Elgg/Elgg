@@ -60,6 +60,8 @@ return [
 	'groups:leave' => 'Leave group',
 	'groups:invite' => 'Invite friends',
 	'groups:invite:title' => 'Invite friends to this group',
+	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
+	'groups:invite:resend' => 'Resend the invitations to already invited users',
 	'groups:inviteto' => "Invite friends to '%s'",
 	'groups:nofriends' => "You have no friends left who have not been invited to this group.",
 	'groups:nofriendsatall' => 'You have no friends to invite!',

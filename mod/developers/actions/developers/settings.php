@@ -36,6 +36,8 @@ $simple_settings = [
 	'log_events',
 	'show_gear',
 	'show_modules',
+	'block_email',
+	'forward_email',
 ];
 foreach ($simple_settings as $setting) {
 	elgg_set_plugin_setting($setting, get_input($setting), 'developers');
@@ -43,6 +45,4 @@ foreach ($simple_settings as $setting) {
 
 elgg_flush_caches();
 
-system_message(elgg_echo('developers:settings:success'));
-
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('developers:settings:success'));

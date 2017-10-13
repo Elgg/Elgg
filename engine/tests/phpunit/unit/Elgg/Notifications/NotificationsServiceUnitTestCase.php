@@ -337,7 +337,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$call_count = 0;
 
-		$recipient = $this->createUser([
+		$recipient = $this->createUser([], [
 			'language' => 'en',
 		]);
 
@@ -516,10 +516,10 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$call_count = 0;
 
-		$recipient = $this->createUser([
+		$recipient = $this->createUser([], [
 			'language' => 'en',
 		]);
-
+		
 		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getSubscriptions')
@@ -592,7 +592,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$object = $this->getTestObject();
 
-		$recipient = $this->createUser([
+		$recipient = $this->createUser([], [
 			'language' => 'en',
 		]);
 

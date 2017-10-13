@@ -90,10 +90,14 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 		'inverse_relationship' => true,
 		'limit' => false,
 		'callback' => false,
-		'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
-		'selects' => ['ue.*'],
-		'order_by' => 'ue.name ASC',
+		'order_by_metadata' => [
+			[
+				'name' => 'name',
+				'direction' => 'ASC',
+			],
+		],
 	]);
+	
 	foreach ($batch as $member) {
 		$option_text = "$member->name (@$member->username)";
 		$members[$member->guid] = htmlspecialchars($option_text, ENT_QUOTES, "UTF-8", false);

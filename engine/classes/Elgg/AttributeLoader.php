@@ -40,26 +40,7 @@ class AttributeLoader {
 		'time_created',
 		'time_updated',
 		'last_action',
-		// \ElggUser
-		'prev_last_action',
-		'last_login',
-		'prev_last_login'
 	];
-
-	/**
-	 * @var array names of attributes in all entities that should be stored as null if empty
-	 */
-	protected static $null_attr_names = [
-		'name',
-		'title',
-		'description',
-		'url',
-	];
-
-	/**
-	 * @var array names of secondary attributes required for the entity
-	 */
-	protected $secondary_attr_names = [];
 
 	/**
 	 * @var string entity type (not class) required for fetched primaries
@@ -85,11 +66,6 @@ class AttributeLoader {
 	 * @var callable function used to load attributes from {prefix}entities table
 	 */
 	public $primary_loader = 'get_entity_as_row';
-
-	/**
-	 * @var callable function used to load attributes from secondary table
-	 */
-	public $secondary_loader = '';
 
 	/**
 	 * @var callable function used to load all necessary attributes
@@ -121,8 +97,6 @@ class AttributeLoader {
 		$this->required_type = $required_type;
 
 		$this->initialized_attributes = $initialized_attrs;
-		$all_attr_names = array_keys($initialized_attrs);
-		$this->secondary_attr_names = array_diff($all_attr_names, self::$primary_attr_names);
 	}
 
 	/**
@@ -133,16 +107,6 @@ class AttributeLoader {
 	 */
 	protected function isMissingPrimaries($row) {
 		return array_diff(self::$primary_attr_names, array_keys($row)) !== [];
-	}
-
-	/**
-	 * Get secondary attributes that are missing
-	 *
-	 * @param \stdClass $row Database row
-	 * @return array
-	 */
-	protected function isMissingSecondaries($row) {
-		return array_diff($this->secondary_attr_names, array_keys($row)) !== [];
 	}
 
 	/**
@@ -172,9 +136,8 @@ class AttributeLoader {
 	 * Get all required attributes for the entity, validating any that are passed in. Returns empty array
 	 * if can't be loaded (Check $failure_reason).
 	 *
-	 * This function splits loading between "primary" attributes (those in {prefix}entities table) and
-	 * "secondary" attributes (e.g. those in {prefix}users_entity), but can load all at once if a
-	 * combined loader is available.
+	 * This function splits loads "primary" attributes (those in {prefix}entities table),
+	 * but can load all at once if a combined loader is available.
 	 *
 	 * @param mixed $row a row loaded from DB (array or \stdClass)
 	 * @return array will be empty if failed to load all attributes (access control or entity doesn't exist)
@@ -188,10 +151,9 @@ class AttributeLoader {
 		}
 
 		$was_missing_primaries = $this->isMissingPrimaries($row);
-		$was_missing_secondaries = $this->isMissingSecondaries($row);
 
 		// some types have a function to load all attributes at once, it should be faster
-		if (($was_missing_primaries || $was_missing_secondaries) && is_callable($this->full_loader)) {
+		if (($was_missing_primaries) && is_callable($this->full_loader)) {
 			$fetched = (array) call_user_func($this->full_loader, $row['guid']);
 			if (!$fetched) {
 				return [];
@@ -215,36 +177,11 @@ class AttributeLoader {
 				}
 				$row = array_merge($row, $fetched);
 			}
-
-			// We must test type before trying to load the secondaries so that InvalidClassException
-			// gets thrown. Otherwise the secondary loader will fail and return false.
-			$this->checkType($row);
-
-			if ($was_missing_secondaries) {
-				if (!is_callable($this->secondary_loader)) {
-					throw new \LogicException('Secondary attribute loader must be callable');
-				}
-				$fetched = (array) call_user_func($this->secondary_loader, $row['guid']);
-				if (!$fetched) {
-					throw new \IncompleteEntityException("Secondary loader failed to return row for {$row['guid']}");
-				}
-				$row = array_merge($row, $fetched);
-			}
 		}
 
 		$row = $this->filterAddedColumns($row);
 
 		$row['subtype'] = (int) $row['subtype'];
-
-		// set to null when reading empty value, to match default empty value; See #5456
-		foreach (self::$null_attr_names as $key) {
-			if (isset($row[$key]) && !$row[$key]) {
-				$row[$key] = null;
-			}
-		}
-
-		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
-		// this pass so the upgrades can run.
 
 		// guid needs to be an int  https://github.com/elgg/elgg/issues/4111
 		foreach (self::$integer_attr_names as $key) {
@@ -264,7 +201,6 @@ class AttributeLoader {
 	protected function filterAddedColumns($row) {
 		// make an array with keys as acceptable attribute names
 		$acceptable_attrs = self::$primary_attr_names;
-		array_splice($acceptable_attrs, count($acceptable_attrs), 0, $this->secondary_attr_names);
 		$acceptable_attrs = array_combine($acceptable_attrs, $acceptable_attrs);
 
 		foreach ($row as $key => $val) {
@@ -276,4 +212,3 @@ class AttributeLoader {
 		return $row;
 	}
 }
-

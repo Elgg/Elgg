@@ -94,20 +94,20 @@ trait Seeding {
 		$create = function () use ($attributes, $metadata, $options) {
 			$metadata['__faker'] = true;
 
-			if (empty($attributes['password'])) {
-				$attributes['password'] = generate_random_cleartext_password();
+			if (empty($metadata['password'])) {
+				$metadata['password'] = generate_random_cleartext_password();
 			}
 
-			if (empty($attributes['name'])) {
-				$attributes['name'] = $this->faker()->name;
+			if (empty($metadata['name'])) {
+				$metadata['name'] = $this->faker()->name;
 			}
 
-			if (empty($attributes['username'])) {
-				$attributes['username'] = $this->getRandomUsername($attributes['name']);
+			if (empty($metadata['username'])) {
+				$metadata['username'] = $this->getRandomUsername($metadata['name']);
 			}
 
-			if (empty($attributes['email'])) {
-				$attributes['email'] = "{$attributes['username']}@{$this->getEmailDomain()}";
+			if (empty($metadata['email'])) {
+				$metadata['email'] = "{$metadata['username']}@{$this->getEmailDomain()}";
 			}
 
 			if (empty($attributes['subtype'])) {
@@ -117,7 +117,8 @@ trait Seeding {
 			$user = false;
 
 			try {
-				$guid = register_user($attributes['username'], $attributes['password'], $attributes['name'], $attributes['email'], false, $attributes['subtype']);
+				$guid = register_user($metadata['username'], $metadata['password'], $metadata['name'], $metadata['email'], false, $attributes['subtype']);
+				
 				$user = get_entity($guid);
 				/* @var $user ElggUser */
 
@@ -125,24 +126,31 @@ trait Seeding {
 					throw new Exception("Unable to create new user with attributes: " . print_r($attributes, true));
 				}
 
-				if (isset($attributes['admin'])) {
-					if ($attributes['admin']) {
+				if (isset($metadata['admin'])) {
+					if ($metadata['admin']) {
 						$user->makeAdmin();
 					} else {
 						$user->removeAdmin();
 					}
 				}
 
-				if (isset($attributes['banned'])) {
-					if ($attributes['banned']) {
+				if (isset($metadata['banned'])) {
+					if ($metadata['banned']) {
 						$user->ban('Banned by seeder');
 					} else {
 						$user->unban('Unbanned by seeder');
 					}
 				}
+								
+				unset($metadata['username']);
+				unset($metadata['password']);
+				unset($metadata['name']);
+				unset($metadata['email']);
+				unset($metadata['banned']);
+				unset($metadata['admin']);
 
-				elgg_set_user_validation_status($guid, $this->faker()->boolean(), 'seeder');
-
+				$user->setValidationStatus($this->faker()->boolean(), 'seeder');
+				
 				$user->setNotificationSetting('email', false);
 				$user->setNotificationSetting('site', true);
 
@@ -309,12 +317,12 @@ trait Seeding {
 		$create = function () use ($attributes, $metadata, $options) {
 			$metadata['__faker'] = true;
 
-			if (empty($attributes['title'])) {
-				$attributes['title'] = $this->faker()->sentence();
+			if (empty($metadata['title'])) {
+				$metadata['title'] = $this->faker()->sentence();
 			}
 
-			if (empty($attributes['description'])) {
-				$attributes['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
+			if (empty($metadata['description'])) {
+				$metadata['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
 			}
 
 			if (empty($attributes['subtype'])) {

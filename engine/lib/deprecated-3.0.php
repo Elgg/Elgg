@@ -141,3 +141,211 @@ function is_metadata_independent($type, $subtype) {
 	
 	return false;
 }
+
+/**
+ * Gets entities based upon attributes in secondary tables.
+ * Also accepts all options available to elgg_get_entities(),
+ * elgg_get_entities_from_metadata(), and elgg_get_entities_from_relationship().
+ *
+ * @warning requires that the entity type be specified and there can only be one
+ * type.
+ *
+ * @see elgg_get_entities
+ * @see elgg_get_entities_from_metadata
+ * @see elgg_get_entities_from_relationship
+ *
+ * @param array $options Array in format:
+ *
+ * 	attribute_name_value_pairs => ARR (
+ *                                   'name' => 'name',
+ *                                   'value' => 'value',
+ *                                   'operand' => '=', (optional)
+ *                                   'case_sensitive' => false (optional)
+ *                                  )
+ * 	                             If multiple values are sent via
+ *                               an array ('value' => array('value1', 'value2')
+ *                               the pair's operand will be forced to "IN".
+ *
+ * 	attribute_name_value_pairs_operator => null|STR The operator to use for combining
+ *                                        (name = value) OPERATOR (name = value); default is AND
+ *
+ * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ * @since 1.9.0
+ * @throws InvalidArgumentException
+ * @deprecated Use elgg_get_entities_from_metadata()
+ */
+function elgg_get_entities_from_attributes(array $options = []) {
+    elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_entities_from_metadata.', '3.0');
+    
+    $options['metadata_name_value_pairs'] = elgg_extract('attribute_name_value_pairs', $options, []);
+    $options['metadata_name_value_pairs_operator'] = elgg_extract('attribute_name_value_pairs_operator', $options, []);
+    
+    unset($options['attribute_name_value_pairs']);
+    unset($options['attribute_name_value_pairs_operator']);
+    
+    return elgg_get_entities_from_relationship($options);
+}
+
+/**
+ * Ban a user
+ *
+ * @param int    $user_guid The user guid
+ * @param string $reason    A reason
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->ban()
+ */
+function ban_user($user_guid, $reason = "") {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::ban()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->ban($reason);
+}
+
+/**
+ * Unban a user.
+ *
+ * @param int $user_guid Unban a user.
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->unban()
+ */
+function unban_user($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::unban()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->unban();
+}
+
+/**
+ * Makes user $guid an admin.
+ *
+ * @param int $user_guid User guid
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->makeAdmin()
+ */
+function make_user_admin($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::makeAdmin()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->makeAdmin();
+}
+
+/**
+ * Removes user $guid's admin flag.
+ *
+ * @param int $user_guid User GUID
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggUser->removeAdmin()
+ */
+function remove_user_admin($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::removeAdmin()', '3.0');
+    
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->removeAdmin();
+}
+
+/**
+ * Gets the validation status of a user.
+ *
+ * @param int $user_guid The user's GUID
+ * @return bool|null Null means status was not set for this user.
+ * @since 1.8.0
+ *
+ * @deprecated Use \ElggUser->isValidated()
+ */
+function elgg_get_user_validation_status($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::isValidated()', '3.0');
+	
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	return $user->isValidated();
+}
+
+/**
+ * Set the validation status for a user.
+ *
+ * @param int    $user_guid The user's GUID
+ * @param bool   $status    Validated (true) or unvalidated (false)
+ * @param string $method    Optional method to say how a user was validated
+ * @return bool
+ * @since 1.8.0
+ *
+ * @deprecated Use \ElggUser->setValidationStatus()
+ */
+function elgg_set_user_validation_status($user_guid, $status, $method = '') {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setValidationStatus()', '3.0');
+	
+	$user = get_user($user_guid);
+	if (!$user) {
+		return false;
+	}
+	
+	$user->setValidationStatus($status, $method);
+	return true;
+}
+
+/**
+ * Sets the last action time of the given user to right now.
+ *
+ * @param ElggUser|int $user The user or GUID
+ * @return void
+ *
+ * @deprecated Use \ElggUser->setLastAction()
+ */
+function set_last_action($user) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setLastAction()', '3.0');
+	
+	if (!$user instanceof ElggUser) {
+		$user = get_user($user);
+	}
+	if (!$user) {
+		return;
+	}
+	
+	$user->setLastAction();
+}
+
+/**
+ * Sets the last logon time of the given user to right now.
+ *
+ * @param int $user_guid The user GUID
+ * @return void
+ *
+ * @deprecated Use \ElggUser->setLastLogin()
+ */
+function set_last_login($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setLastLogin()', '3.0');
+	
+	$user = get_user($user_guid);
+	if (!$user) {
+		return;
+	}
+	
+	$user->setLastLogin();
+}

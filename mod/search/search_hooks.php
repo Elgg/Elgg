@@ -20,14 +20,35 @@ function search_objects_hook($hook, $type, $value, $params) {
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 	
+	$query = sanitise_string($params['query']);
+	$query_parts = explode(' ', $query);
+
 	$db_prefix = elgg_get_config('dbprefix');
-
-	$join = "JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid";
-	array_unshift($params['joins'], $join);
-
+	
+	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
+	
 	$fields = ['title', 'description'];
-	$where = search_get_where_sql('oe', $fields, $params);
-	$params['wheres'][] = $where;
+	$wheres = [];
+	foreach ($fields as $field) {
+		$sublikes = [];
+		foreach ($query_parts as $query_part) {
+			$query_part = sanitise_string($query_part);
+			if (strlen($query_part) == 0) {
+				continue;
+			}
+			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
+		}
+		
+		if (empty($sublikes)) {
+			continue;
+		}
+		
+		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
+	}
+	
+	if (!empty($wheres)) {
+		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
+	}
 	
 	$params['count'] = true;
 	$count = elgg_get_entities($params);
@@ -74,11 +95,11 @@ function search_groups_hook($hook, $type, $value, $params) {
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 	
 	$query = sanitise_string($params['query']);
-
 	$query_parts = explode(' ', $query);
+
 	$db_prefix = elgg_get_config('dbprefix');
 
-	$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
+	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
 	
 	$fields = ['name', 'description'];
 	$wheres = [];
@@ -100,10 +121,9 @@ function search_groups_hook($hook, $type, $value, $params) {
 	}
 	
 	if (!empty($wheres)) {
-		$params['wheres'][] = implode(' OR ', $wheres);
+		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
 	}
-	
-	
+		
 	$params['count'] = true;
 	
 	$count = elgg_get_entities($params);
@@ -150,22 +170,36 @@ function search_users_hook($hook, $type, $value, $params) {
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 	
-	$db_prefix = elgg_get_config('dbprefix');
-
 	$query = sanitise_string($params['query']);
+	$query_parts = explode(' ', $query);
 
-	$join = "JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid";
-	array_unshift($params['joins'], $join);
-		
-	// username and display name
+	$db_prefix = elgg_get_config('dbprefix');
+	
+	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
+	
 	$fields = ['username', 'name'];
-	$where = search_get_where_sql('ue', $fields, $params);
-
+	$wheres = [];
+	foreach ($fields as $field) {
+		$sublikes = [];
+		foreach ($query_parts as $query_part) {
+			$query_part = sanitise_string($query_part);
+			if (strlen($query_part) == 0) {
+				continue;
+			}
+			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
+		}
+		
+		if (empty($sublikes)) {
+			continue;
+		}
+		
+		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
+	}
+	
 	// profile fields
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
-	
 	if (!empty($profile_fields)) {
-		$params['joins'][] = "JOIN {$db_prefix}annotations an on e.guid = an.entity_guid";
+		$params['joins'][] = "JOIN {$db_prefix}annotations an ON e.guid = an.entity_guid";
 		
 		// get the where clauses for the annotation names
 		// can't use egef_annotations() because the n_table join comes too late.
@@ -182,11 +216,11 @@ function search_users_hook($hook, $type, $value, $params) {
 		]);
 
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-		$md_where = "(({$clauses['wheres'][0]}) AND an.value LIKE '%$query%')";
-		
-		$params['wheres'][] = "(($where) OR ($md_where))";
-	} else {
-		$params['wheres'][] = "$where";
+		$wheres[] = "(({$clauses['wheres'][0]}) AND an.value LIKE '%$query%')";
+	}
+
+	if (!empty($wheres)) {
+		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
 	}
 
 	$params['count'] = true;

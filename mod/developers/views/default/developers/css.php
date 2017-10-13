@@ -38,7 +38,7 @@
 	vertical-align: top;
 }
 .developers-gear-popup > section.developers-form {
-	width: 20em;
+	width: 24em;
 }
 .developers-gear-popup h2 {
 	margin-bottom: 10px;

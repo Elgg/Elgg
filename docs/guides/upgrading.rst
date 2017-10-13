@@ -99,6 +99,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``detect_extender_valuetype``
  * ``developers_setup_menu``
  * ``elgg_get_class_loader``
+ * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities_from_metadata``
  * ``elgg_get_metastring_id``
  * ``elgg_get_metastring_map``
  * ``elgg_register_class``
@@ -110,6 +111,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``get_site_entity_as_row``
  * ``get_group_entity_as_row``
  * ``get_object_entity_as_row``
+ * ``get_user_entity_as_row``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_setup_sidebar_menus``
  * ``set_default_filestore``
@@ -162,6 +164,16 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``profile_pagesetup``
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
+ 
+Deprecated APIs
+---------------
+
+ * ``ban_user``: Use ``ElggUser->ban()``
+ * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities_from_metadata()``
+ * ``elgg_get_user_validation_status``: Use ``ElggUser->isValidated()``
+ * ``make_user_admin``: Use ``ElggUser->makeAdmin()``
+ * ``remove_user_admin``: Use ``ElggUser->removeAdmin()``
+ * ``unban_user``: Use ``ElggUser->unban()``
 
 Removed global vars
 -------------------
@@ -246,7 +258,12 @@ Entity Subtable Changes
 
 The subtable ``sites_entity`` for ``ElggSite`` no longer exists. All attributes have been moved to metadata.
 The subtable ``groups_entity`` for ``ElggGroup`` no longer exists. All attributes have been moved to metadata.
+The subtable ``objects_entity`` for ``ElggObject`` no longer exists. All attributes have been moved to metadata.
+The subtable ``users_entity`` for ``ElggUser`` no longer exists. All attributes have been moved to metadata.
+
 If you have custom queries referencing this table you need to update them.
+If you have function that rely on ``Entity->getOriginalAttributes()`` be advised that this will only return the base attributes of an ``ElggEntity`` and
+no longer contain the secondary attributes.
 
 Custom class loading
 --------------------

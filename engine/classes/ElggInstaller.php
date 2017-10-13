@@ -692,7 +692,7 @@ class ElggInstaller {
 		}
 
 		// check that the users entity table has an entry
-		$query = "SELECT COUNT(*) AS total FROM {$db->prefix}users_entity";
+		$query = "SELECT COUNT(*) AS total FROM {$db->prefix}entities WHERE type = 'user'";
 		$result = $db->getData($query);
 		if ($result && $result[0]->total > 0) {
 			$this->has_completed['admin'] = true;

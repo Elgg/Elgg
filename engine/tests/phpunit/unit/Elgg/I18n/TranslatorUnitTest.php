@@ -202,7 +202,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$language = 'ab';
 
 		$ia = elgg_set_ignore_access(true);
-		$user = $this->createUser([
+		$user = $this->createUser([], [
 			'language' => $language,
 		]);
 

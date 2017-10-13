@@ -1,9 +1,6 @@
 <?php
 /**
  * Bans a user.
- *
- * User entities are banned by setting the 'banned' column
- * to 'yes' in the users_entity table.
  */
 
 $guid = get_input('guid');

@@ -500,9 +500,8 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Database\UsersTable(
 				$c->config,
 				$c->db,
-				$c->entityTable,
-				$c->entityCache,
-				$c->hooks->getEvents()
+				$c->metadataTable,
+				$c->entityCache
 			);
 		});
 

@@ -80,13 +80,17 @@ class EntityTable extends DbEntityTable {
 			$subtype = $this->subtype_table->getSubtype($subtype_id);
 		}
 
+		// don't let these to be overriden by attributes
 		$attributes['guid'] = $guid;
 		$attributes['type'] = $type;
 		$attributes['subtype'] = $subtype_id;
 
 		$time = $this->getCurrentTime()->getTimestamp();
-
-		$primary_attributes = array(
+		
+		$primary_attributes = [
+			'guid' => $guid,
+			'type' => $type,
+			'subtype' => $subtype_id,
 			'owner_guid' => 0,
 			'container_guid' => 0,
 			'access_id' => ACCESS_PUBLIC,
@@ -94,48 +98,35 @@ class EntityTable extends DbEntityTable {
 			'time_updated' => $time,
 			'last_action' => $time,
 			'enabled' => 'yes',
-		);
+		];
+				
+		$map = array_merge($primary_attributes, $attributes);
+				
+		// get filled in primary attributes
+		$primary_attributes = (object) array_intersect_key($map, $primary_attributes);
+				
+		$this->rows[$guid] = $primary_attributes;
+		$this->addQuerySpecs($primary_attributes);
 
-		$external_attributes = [];
-		
-		switch ($type) {
-			case 'user' :
-				$external_attributes = [
-					'name' => "John Doe $guid",
-					'username' => "john_doe_$guid",
-					'password_hash' => null,
-					'email' => "john_doe_$guid@example.com",
-					'language' => 'en',
-					'banned' => "no",
-					'admin' => 'no',
-					'prev_last_action' => null,
-					'last_login' => null,
-					'prev_last_login' => null,
-				];
-				break;
+		$entity = $this->rowToElggStar($primary_attributes);
+		if (!($entity instanceof \ElggEntity)) {
+			_elgg_services()->logger->error("Failed creating a mock entity with attributes " . var_export($primary_attributes, true));
 		}
-
-		$map = array_merge($primary_attributes, $external_attributes, $attributes);
-
+		
 		$attrs = (object) $map;
-		$this->rows[$guid] = $attrs;
-		$this->addQuerySpecs($attrs);
-
-		$entity = $this->rowToElggStar($this->rows[$guid]);
-
 		foreach ($attrs as $name => $value) {
-			if ($name === 'subtype' || $name === 'subtype_id') {
+			if ($name === 'subtype' || $name === 'subtype_id' || $name === 'password_hash') {
 				continue;
 			}
 
-			if (!isset($entity->$name) || $entity->$name != $value) {
-				// not an attribute, so needs to be set again
-				if ($name !== 'password_hash') {
-					$entity->$name = $value;
-				}
+			if (isset($entity->$name) && $entity->$name == $value) {
+				continue;
 			}
+			
+			// not an attribute, so needs to be set again
+			$entity->$name = $value;
 		}
-
+		
 		return $entity;
 	}
 

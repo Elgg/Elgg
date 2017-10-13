@@ -146,18 +146,6 @@ function get_entity_as_row($guid) {
 }
 
 /**
- * Return the user specific details of a user by a row.
- *
- * @param int $guid The \ElggUser guid
- *
- * @return mixed
- * @access private
- */
-function get_user_entity_as_row($guid) {
-	return _elgg_services()->usersTable->getRow($guid);
-}
-
-/**
  * Create an Elgg* object from a given entity row.
  *
  * Handles loading all tables into the correct class.
@@ -420,54 +408,6 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities',
 	}
 	
 	return call_user_func($viewer, $entities, $options);
-}
-
-/**
- * Gets entities based upon attributes in secondary tables.
- * Also accepts all options available to elgg_get_entities(),
- * elgg_get_entities_from_metadata(), and elgg_get_entities_from_relationship().
- *
- * @warning requires that the entity type be specified and there can only be one
- * type.
- *
- * @see elgg_get_entities
- * @see elgg_get_entities_from_metadata
- * @see elgg_get_entities_from_relationship
- *
- * @param array $options Array in format:
- *
- * 	attribute_name_value_pairs => ARR (
- *                                   'name' => 'name',
- *                                   'value' => 'value',
- *                                   'operand' => '=', (optional)
- *                                   'case_sensitive' => false (optional)
- *                                  )
- * 	                             If multiple values are sent via
- *                               an array ('value' => array('value1', 'value2')
- *                               the pair's operand will be forced to "IN".
- *
- * 	attribute_name_value_pairs_operator => null|STR The operator to use for combining
- *                                        (name = value) OPERATOR (name = value); default is AND
- *
- * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
- * @since 1.9.0
- * @throws InvalidArgumentException
- * @todo Does not support ordering by attributes or using an attribute pair shortcut like this ('title' => 'foo')
- */
-function elgg_get_entities_from_attributes(array $options = []) {
-	return _elgg_services()->entityTable->getEntitiesFromAttributes($options);
-}
-
-/**
- * Get the join and where clauses for working with entity attributes
- *
- * @return false|array False on fail, array('joins', 'wheres')
- * @since 1.9.0
- * @access private
- * @throws InvalidArgumentException
- */
-function _elgg_get_entity_attribute_where_sql(array $options = []) {
-	return _elgg_services()->entityTable->getEntityAttributeWhereSql($options);
 }
 
 /**
@@ -770,7 +710,6 @@ function _elgg_entities_test($hook, $type, $value) {
 	$value[] = ElggCoreGetEntitiesFromMetadataTest::class;
 	$value[] = ElggCoreGetEntitiesFromPrivateSettingsTest::class;
 	$value[] = ElggCoreGetEntitiesFromRelationshipTest::class;
-	$value[] = ElggCoreGetEntitiesFromAttributesTest::class;
 	$value[] = ElggEntityPreloaderIntegrationTest::class;
 	$value[] = ElggCoreObjectTest::class;
 	return $value;
