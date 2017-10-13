@@ -162,9 +162,8 @@ class Database {
 			$sub_query = "SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', '')";
 			$this->connections[$type]->exec("SET SESSION sql_mode=($sub_query);");
 		} catch (\Exception $e) {
-			// @todo just allow PDO exceptions
 			// http://dev.mysql.com/doc/refman/5.1/en/error-messages-server.html
-			if ($e instanceof \PDOException && ($e->getCode() == 1102 || $e->getCode() == 1049)) {
+			if ($e->getCode() == 1102 || $e->getCode() == 1049) {
 				$msg = "Elgg couldn't select the database '{$conf['database']}'. "
 					. "Please check that the database is created and you have access to it.";
 			} else {
@@ -305,9 +304,8 @@ class Database {
 	 * @return string A string that is unique for each callable passed in
 	 * @since 1.9.4
 	 * @access private
-	 * @todo Make this protected once we can setAccessible(true) via reflection
 	 */
-	public function fingerprintCallback($callback) {
+	protected function fingerprintCallback($callback) {
 		if (is_string($callback)) {
 			return $callback;
 		}
@@ -340,7 +338,7 @@ class Database {
 	protected function getResults($query, $callback = null, $single = false, array $params = []) {
 
 		// Since we want to cache results of running the callback, we need to
-		// need to namespace the query with the callback and single result request.
+		// namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
 		$query_id = (int) $single . $query . '|';
 		if ($params) {
@@ -361,8 +359,7 @@ class Database {
 		if ($this->query_cache) {
 			if (isset($this->query_cache[$hash])) {
 				if ($this->logger) {
-					// TODO add params in $query here
-					$this->logger->info("DB query $query results returned from cache (hash: $hash)");
+					$this->logger->info("DB query $query results returned from cache (hash: $hash) (params: " . print_r($params, true) . ")");
 				}
 				return $this->query_cache[$hash];
 			}
@@ -388,8 +385,7 @@ class Database {
 		if ($this->query_cache) {
 			$this->query_cache[$hash] = $return;
 			if ($this->logger) {
-				// TODO add params in $query here
-				$this->logger->info("DB query $query results cached (hash: $hash)");
+				$this->logger->info("DB query $query results cached (hash: $hash) (params: " . print_r($params, true) . ")");
 			}
 		}
 

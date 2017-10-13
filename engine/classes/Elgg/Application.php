@@ -552,10 +552,6 @@ class Application {
 
 		$this->bootCore();
 
-		// TODO use formal Response object instead
-		// This is to set the charset to UTF-8.
-		header("Content-Type: text/html;charset=utf-8", true);
-
 		// re-fetch new request from services in case it was replaced by route:rewrite
 		$request = $this->_services->request;
 

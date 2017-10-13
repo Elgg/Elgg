@@ -21,15 +21,41 @@
  *
  * @param string $hook
  * @param string $type
- * @param string $reason
+ * @param string $forward_url
  * @param array  $params
  * @return void
  * @access private
  * @deprecated 2.3
  */
-function ajax_forward_hook($hook, $type, $reason, $params) {
+function ajax_forward_hook($hook, $type, $forward_url, $params) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.3');
-	_elgg_services()->actions->ajaxForwardHook($hook, $type, $reason, $params);
+	
+	if (!elgg_is_xhr()) {
+		return;
+	}
+
+	// grab any data echo'd in the action
+	$output = ob_get_clean();
+
+	if ($type == 'walled_garden' || $type == 'csrf') {
+		$type = '403';
+	}
+
+	$status_code = (int) $type;
+	if ($status_code < 100 || ($status_code > 299 && $status_code < 400) || $status_code > 599) {
+		// We only want to preserve OK and error codes
+		// Redirect responses should be converted to OK responses as this is an XHR request
+		$status_code = ELGG_HTTP_OK;
+	}
+
+	$response = elgg_ok_response($output, '', $forward_url, $status_code);
+
+	$headers = $response->getHeaders();
+	$headers['Content-Type'] = 'application/json; charset=UTF-8';
+	$response->setHeaders($headers);
+
+	_elgg_services()->responseFactory->respond($response);
+	exit;
 }
 
 /**
@@ -40,7 +66,10 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
  */
 function ajax_action_hook() {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and is no longer used as a plugin hook handler', '2.3');
-	_elgg_services()->actions->ajaxActionHook();
+	
+	if (elgg_is_xhr()) {
+		ob_start();
+	}
 }
 
 /**

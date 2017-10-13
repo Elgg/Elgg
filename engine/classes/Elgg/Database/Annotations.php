@@ -197,7 +197,7 @@ class Annotations {
 	 * Returns annotations.  Accepts all elgg_get_entities() options for entity
 	 * restraints.
 	 *
-	 * @see elgg_get_entities
+	 * @see elgg_get_entities()
 	 *
 	 * @param array $options Array in format:
 	 *
@@ -297,8 +297,8 @@ class Annotations {
 	 * Returns entities based upon annotations.  Also accepts all options available
 	 * to elgg_get_entities() and elgg_get_entities_from_metadata().
 	 *
-	 * @see elgg_get_entities
-	 * @see elgg_get_entities_from_metadata
+	 * @see elgg_get_entities()
+	 * @see elgg_get_entities_from_metadata()
 	 *
 	 * @param array $options Array in format:
 	 *

@@ -457,7 +457,6 @@ class AccessCollections {
 		if ($cache[$hash]) {
 			$access_array = $cache[$hash];
 		} else {
-			// @todo is there such a thing as public write access?
 			$access_array = [
 				ACCESS_PRIVATE => $this->getReadableAccessLevel(ACCESS_PRIVATE),
 				ACCESS_LOGGED_IN => $this->getReadableAccessLevel(ACCESS_LOGGED_IN),
@@ -842,7 +841,7 @@ class AccessCollections {
 	 * Returns access collections owned by the user
 	 *
 	 * @param int $owner_guid GUID of the owner
-	 * @return ElggAccessCollection[]|false
+	 * @return \ElggAccessCollection[]|false
 	 */
 	public function getEntityCollections($owner_guid) {
 
@@ -883,7 +882,7 @@ class AccessCollections {
 	 *
 	 * @param int $member_guid GUID of th member
 	 *
-	 * @return ElggAccessCollection[]|false
+	 * @return \ElggAccessCollection[]|false
 	 */
 	public function getCollectionsByMember($member_guid) {
 

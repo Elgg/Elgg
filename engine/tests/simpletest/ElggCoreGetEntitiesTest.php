@@ -95,17 +95,10 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 
 
 	public function testElggAPIGettersValidAndInvalidTypes() {
-		//@todo replace this with $this->getRandomMixedTypes().
-		$t = $this->getRandomValidTypes();
-		$valid = $t[0];
-
-		$t = $this->getRandomInvalids();
-		$invalid = $t[0];
+		$types = $this->getRandomMixedTypes(2);
+		
 		$options = [
-			'types' => [
-				$invalid,
-				$valid
-			],
+			'types' => $types,
 			'group_by' => 'e.type'
 		];
 

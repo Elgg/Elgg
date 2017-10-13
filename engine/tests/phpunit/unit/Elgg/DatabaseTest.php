@@ -60,29 +60,33 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 
 	public function testFingerprintingOfCallbacks() {
 		$db = $this->getDbMock();
+		
+		$reflection_method = new ReflectionMethod($db, 'fingerprintCallback');
+		$reflection_method->setAccessible(true);
+		
 		$prints = [];
 		$uniques = 0;
 
-		$prints[$db->fingerprintCallback('foo')] = true;
+		$prints[$reflection_method->invoke($db, 'foo')] = true;
 		$uniques++;
 
-		$prints[$db->fingerprintCallback('foo::bar')] = true;
-		$prints[$db->fingerprintCallback([
+		$prints[$reflection_method->invoke($db, 'foo::bar')] = true;
+		$prints[$reflection_method->invoke($db, [
 			'foo',
 			'bar'
 		])] = true;
 		$uniques++;
 
 		$obj1 = new Elgg_DatabaseTestObj();
-		$prints[$db->fingerprintCallback([
+		$prints[$reflection_method->invoke($db, [
 			$obj1,
 			'__invoke'
 		])] = true;
-		$prints[$db->fingerprintCallback($obj1)] = true;
+		$prints[$reflection_method->invoke($db, $obj1)] = true;
 		$uniques++;
 
 		$obj2 = new Elgg_DatabaseTestObj();
-		$prints[$db->fingerprintCallback([
+		$prints[$reflection_method->invoke($db, [
 			$obj2,
 			'__invoke'
 		])] = true;

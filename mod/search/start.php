@@ -256,11 +256,8 @@ function search_highlight_words($words, $string) {
 		
 		$search = "/($word)/i";
 
-		// @todo
-		// must replace with placeholders in case one of the search terms is
-		// in the html string.
-		// later, will replace the placeholders with the actual html.
-		// Yeah this is hacky.  I'm tired.
+		// Must replace with placeholders in case one of the search terms is in the html string.
+		// Later will replace the placeholders with the actual html.
 		$strong = $replace_html['strong'];
 		$class = $replace_html['class'];
 		$highlight = $replace_html['search-highlight'];
@@ -283,8 +280,8 @@ function search_highlight_words($words, $string) {
  * (Unless the entire query is < ft_min_word_chars, in which case
  * it's taken literally.)
  *
- * @param array $query
- * @param str   $format Return as an array or a string
+ * @param string $query  the query string to parse
+ * @param string $format Return as an array or a string
  * @return mixed
  */
 function search_remove_ignored_words($query, $format = 'array') {
@@ -355,10 +352,10 @@ function search_get_search_view($params, $view_type) {
 /**
  * Returns a where clause for a search query.
  *
- * @param str   $table  Prefix for table to search on
- * @param array $fields Fields to match against
- * @param array $params Original search params
- * @return str
+ * @param string $table  Prefix for table to search on
+ * @param array  $fields Fields to match against
+ * @param array  $params Original search params
+ * @return string
  */
 function search_get_where_sql($table, $fields, $params) {
 	$query = $params['query'];
@@ -392,11 +389,11 @@ function search_get_where_sql($table, $fields, $params) {
 /**
  * Returns ORDER BY sql for insertion into elgg_get_entities().
  *
- * @param str $entities_table Prefix for entities table.
- * @param str $type_table     Prefix for the type table.
- * @param str $sort           ORDER BY part
- * @param str $order          ASC or DESC
- * @return str
+ * @param string $entities_table Prefix for entities table.
+ * @param string $type_table     Prefix for the type table.
+ * @param string $sort           ORDER BY part
+ * @param string $order          ASC or DESC
+ * @return string
  */
 function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 

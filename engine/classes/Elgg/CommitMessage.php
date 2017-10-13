@@ -96,24 +96,6 @@ class CommitMessage {
 	];
 
 	/**
-	 * Valid components
-	 *
-	 * @todo Not checked yet.
-	 *
-	 * @var array
-	 */
-	private $validComponents = [
-		'i18n',
-		'seo',
-		'a11y',
-		'cache',
-		'db',
-		'views',
-		'session',
-		'router'
-	];
-
-	/**
 	 * Ignore messages that match this regex
 	 *
 	 * @var string

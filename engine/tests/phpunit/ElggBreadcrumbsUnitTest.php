@@ -59,8 +59,6 @@ class ElggBreadcrumbsUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCrumbsAreExcerpted() {
-		$this->markTestIncomplete('Needs DB');
-
 		elgg_push_breadcrumb(str_repeat('abcd ', 100));
 
 		$this->assertEquals(array(
@@ -72,13 +70,8 @@ class ElggBreadcrumbsUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCrumbTitlesAreEscaped() {
-		$this->markTestIncomplete('Needs DB');
-
-		// TODO make this unnecessary
-		elgg_set_view_location('output/url', __DIR__ . '/../../../views/');
-		elgg_set_view_location('navigation/breadcrumbs', __DIR__ . '/../../../views/');
-
 		elgg_push_breadcrumb('Me < &amp; you');
+		
 		$escaped = 'Me &lt; &amp; you';
 		$html = elgg_view('navigation/breadcrumbs');
 		$this->assertNotFalse(strpos($html, $escaped));
@@ -92,26 +85,16 @@ class ElggBreadcrumbsUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCrumbLinksAreNormalized() {
-		$this->markTestIncomplete('Needs DB');
-
-		// TODO make this unnecessary
-		elgg_set_view_location('output/url', __DIR__ . '/../../../views/');
-		elgg_set_view_location('navigation/breadcrumbs', __DIR__ . '/../../../views/');
-
 		elgg_push_breadcrumb('test', 'link');
+		
 		$html = elgg_view('navigation/breadcrumbs');
 		$this->assertNotFalse(strpos($html, '"http://localhost/link"'));
 	}
 
 	public function testTrailingNonLinkIsRemoved() {
-		$this->markTestIncomplete('Needs DB');
-
-		// TODO make this unnecessary
-		elgg_set_view_location('output/url', __DIR__ . '/../../../views/');
-		elgg_set_view_location('navigation/breadcrumbs', __DIR__ . '/../../../views/');
-
 		elgg_push_breadcrumb('Foo', 'foo');
 		elgg_push_breadcrumb('Bar');
+		
 		$html = elgg_view('navigation/breadcrumbs');
 		$this->assertFalse(strpos($html, 'Bar'));
 	}

@@ -45,7 +45,6 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 *
 	 * @throws InvalidParameterException
 	 * @return resource File pointer resource
-	 * @todo This really shouldn't try to create directories if not writing.
 	 */
 	public function open(\ElggFile $file, $mode) {
 		$fullname = $this->getFilenameOnFilestore($file);

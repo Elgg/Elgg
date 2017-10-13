@@ -554,6 +554,9 @@ class ElggPluginManifest {
 	 * @return array The normalized deps array.
 	 */
 	private function normalizeDep($dep) {
+		
+		$struct = [];
+		
 		switch ($dep['type']) {
 			case 'elgg_release':
 				$struct = $this->depsStructElgg;
@@ -602,8 +605,7 @@ class ElggPluginManifest {
 				// unrecognized so we just return the raw dependency
 				return $dep;
 		}
-
-		// @todo $struct may not have been defined...
+		
 		$normalized_dep = $this->buildStruct($struct, $dep);
 
 		// normalize comparison operators
