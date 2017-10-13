@@ -72,15 +72,15 @@ function elgg_save_resized_image($source, $destination = null, array $params = [
  * @return bool
  */
 function delete_directory($directory) {
-	
+
 	if (!file_exists($directory)) {
 		return true;
 	}
-	
+
 	if (!is_dir($directory)) {
 		return false;
 	}
-	
+
 	// sanity check: must be a directory
 	if (!$handle = opendir($directory)) {
 		return false;
@@ -107,27 +107,6 @@ function delete_directory($directory) {
 	// remove empty directory
 	closedir($handle);
 	return rmdir($directory);
-}
-
-/**
- * Removes all entity files
- *
- * @warning This only deletes the physical files and not their entities.
- * This will result in FileExceptions being thrown.  Don't use this function.
- *
- * @warning This must be kept in sync with \ElggDiskFilestore.
- *
- * @todo Remove this when all files are entities.
- *
- * @param \ElggEntity $entity An \ElggEntity
- *
- * @return void
- * @access private
- */
-function _elgg_clear_entity_files($entity) {
-	$dir = new \Elgg\EntityDirLocator($entity->guid);
-	$file_path = _elgg_config()->dataroot . $dir;
-	delete_directory($file_path);
 }
 
 /**

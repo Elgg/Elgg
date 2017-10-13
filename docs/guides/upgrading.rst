@@ -92,7 +92,6 @@ Removed functions/methods
 All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.9.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.10.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
- * ``_elgg_manage_pagesetup``
  * ``can_write_to_container``: Use ``ElggEntity->canWriteToContainer()``
  * ``datalist_get``
  * ``datalist_set``
