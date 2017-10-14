@@ -31,6 +31,11 @@ class Translator {
 	/**
 	 * @var string
 	 */
+	private $defaultPath = null;
+
+	/**
+	 * @var string
+	 */
 	private $current_language = null;
 
 	/**

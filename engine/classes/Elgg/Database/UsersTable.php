@@ -162,7 +162,6 @@ class UsersTable {
 			return $data;
 		}
 
-		$dbprefix = $this->config->dbprefix;
 		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
 		return elgg_get_entities([
 			'type' => 'user',
@@ -216,7 +215,7 @@ class UsersTable {
 			throw new RegistrationException(_elgg_services()->translator->translate('registration:usernamenotvalid'));
 		}
 
-		if ($user = get_user_by_username($username)) {
+		if (get_user_by_username($username)) {
 			throw new RegistrationException(_elgg_services()->translator->translate('registration:userexists'));
 		}
 

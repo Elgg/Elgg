@@ -118,6 +118,11 @@ class Config {
 	private $cookies_configured = false;
 
 	/**
+	 * @var array
+	 */
+	private $cookies;
+
+	/**
 	 * @var ConfigTable Do not use directly. Use getConfigTable().
 	 */
 	private $config_table;

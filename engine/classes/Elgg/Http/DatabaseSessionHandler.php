@@ -41,7 +41,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		if ($result) {
 			return (string) $result->data;
 		} else {
-			return false;
+			return '';
 		}
 	}
 
