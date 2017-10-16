@@ -27,7 +27,7 @@ class EmailServiceUnitTest extends \Elgg\UnitTestCase {
 
 	function testElggSendEmailPassesAllFieldsAsMessageToMailer() {
 		$body = str_repeat("<p>You &amp; me &lt; she.</p>\n", 10);
-		$body_expected = wordwrap(str_repeat("You & me < she.\n", 10));
+		$body_expected = trim(wordwrap(str_repeat("You & me < she.\n", 10)));
 
 		$subject = "<p>You &amp;\r\nme &lt;\rshe.</p>\n\n";
 		$subject_expected = "You & me < she.";

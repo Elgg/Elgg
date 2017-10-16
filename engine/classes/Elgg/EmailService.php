@@ -3,8 +3,11 @@
 namespace Elgg;
 
 use RuntimeException;
-use Zend\Mail\Message;
+use Zend\Mail\Message as MailMessage;
 use Zend\Mail\Transport\TransportInterface;
+use Zend\Mime\Mime;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -96,23 +99,13 @@ class EmailService {
 			return true;
 		}
 
-		$subject = elgg_strip_tags($email->getSubject());
-		$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-		// Sanitise subject by stripping line endings
-		$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
-		$subject = trim($subject);
-
-		$body = elgg_strip_tags($email->getBody());
-		$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
-		$body = wordwrap($body);
-
-		$message = new Message();
+		// create the e-mail message
+		$message = new MailMessage();
 		$message->setEncoding('UTF-8');
 		$message->addFrom($email->getFrom());
 		$message->addTo($email->getTo());
-		$message->setSubject($subject);
-		$message->setBody($body);
-
+		
+		// set headers
 		$headers = [
 			"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
 			"MIME-Version" => "1.0",
@@ -127,6 +120,32 @@ class EmailService {
 			// which influences the output of the header in the message
 			$message->getHeaders()->addHeaderLine("{$name}: {$value}");
 		}
+		
+		// set Subject
+		$subject = elgg_strip_tags($email->getSubject());
+		$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+		// Sanitise subject by stripping line endings
+		$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
+		$subject = trim($subject);
+		
+		$message->setSubject($subject);
+		
+		// create body
+		$body = new MimeMessage();
+		
+		// add plain text part
+		$plain_text = elgg_strip_tags($email->getBody());
+		$plain_text = html_entity_decode($plain_text, ENT_QUOTES, 'UTF-8');
+		$plain_text = wordwrap($plain_text);
+		
+		$plain_text_part = new Part($plain_text);
+		$plain_text_part->setId('plaintext');
+		$plain_text_part->setType(Mime::TYPE_TEXT);
+		
+		$body->addPart($plain_text_part);
+		
+		// add the body to the message
+		$message->setBody($body);
 
 		// allow others to modify the $message content
 		// eg. add html body, add attachments
