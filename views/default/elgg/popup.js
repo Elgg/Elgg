@@ -119,7 +119,7 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 				popup.close($target);
 				return;
 			}
-			
+
 			popup.close(); // close any open popup modules
 
 			$target.data('trigger', $trigger); // used to remove elgg-state-active class when popup is closed
@@ -128,10 +128,10 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 			if (!$trigger.is('.elgg-popup-inline')) {
 				$target.appendTo('body');
 			}
-			
+
 			$target.fadeIn()
-				   .addClass('elgg-state-active elgg-state-popped')
-				   .position(position);
+					.addClass('elgg-state-active elgg-state-popped')
+					.position(position);
 
 			$trigger.addClass('elgg-state-active');
 
