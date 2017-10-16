@@ -39,7 +39,7 @@ return array(
 	'actionnotfound' => "A arquivo de ação <i>(action file)</i> para %s não foi encontrado.",
 	'actionloggedout' => "Desculpe, você não pode executar esta ação enquando desconectado.",
 	'actionunauthorized' => 'Você não está autorizado a executar esta ação',
-	
+
 	'ajax:error' => 'Erro inesperado durante a execução de um procedimento AJAX. Talvez a conexão com o servidor foi perdida.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
@@ -84,7 +84,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Antes %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s não está instalado',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Perdido',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Existem outros plugins que listam %s como dependencia. Você deve desabilitar os seguintes plugins antes de desabilitar o atual: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
@@ -627,7 +627,7 @@ return array(
 
 	'admin:plugins:warning:elgg_version_unknown' => 'Este plugin usa um arquivo de manifesto antigo e não define uma versão compatível do Elgg.  Ele provavelmente não funcionará!
 ',
-	'admin:plugins:warning:unmet_dependencies' => 'Este plugin usa dependências desencontradas e não foi possível ativaá-lo.  Verifique as dependências lendo sobre mais informações. 
+	'admin:plugins:warning:unmet_dependencies' => 'Este plugin usa dependências desencontradas e não foi possível ativaá-lo.  Verifique as dependências lendo sobre mais informações.
 ',
 	'admin:plugins:warning:invalid' => ' Este plugin não é válido: %s.',
 	'admin:plugins:warning:invalid:check_docs' => 'Verifiqye  <a href="http://docs.elgg.org/Invalid_Plugin">a documentacao do Elgg</a> para dicas de solu��o de problemas.',
@@ -733,7 +733,7 @@ return array(
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "O Painel de configurações do usuário permite a você controlar suas informações pessoais, desde configurar o usuário até como os plugins se comportam. Escolha uma opção abaixo para iniciar.",
 
 	'usersettings:statistics' => "Suas estatísticas.",
@@ -760,7 +760,7 @@ return array(
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Toda atividade do site',
 	'river:mine' => 'Minhas atividades',
 	'river:owner' => 'Atividade de %s',
@@ -787,7 +787,7 @@ return array(
 	'icon:size:medium' => "Medio",
 	'icon:size:large' => "Grande",
 	'icon:size:master' => "Extra Grande",
-		
+
 /**
  * Generic action words
  */
@@ -872,11 +872,11 @@ return array(
 
 	'active' => 'Ativo',
 	'total' => 'Total ',
-	
+
 	'ok' => 'OK',
 	'any' => 'Qualquer',
 	'error' => 'Erro',
-	
+
 	'other' => 'Outro',
 	'options' => 'Opcoes',
 	'advanced' => 'Avancado',
@@ -889,7 +889,7 @@ return array(
 	'content:latest:blurb' => 'Alternativamente, clique aqui para exibir os últimos conteúdos do site.',
 
 	'link:text' => 'ver link',
-	
+
 /**
  * Generic questions
  */
@@ -917,7 +917,7 @@ return array(
 	'sort:popular' => 'Popular',
 	'sort:alpha' => 'Alfabetica',
 	'sort:priority' => 'Prioridade',
-		
+
 /**
  * Generic data words
  */
@@ -942,7 +942,7 @@ return array(
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Editar',
 	'delete:this' => 'Apagar',
 	'comment:this' => 'Comentar',
@@ -985,7 +985,7 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Importação de dados realizada com sucesso",
 	'importfail' => "OpenDD falhou ao importar dados.",
 
@@ -1001,7 +1001,7 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 	'friendlytime:days' => "%s dias atrás",
 	'friendlytime:days:singular' => "ontem",
 	'friendlytime:date_format' => 'j F Y  @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "em %s minutos",
 	'friendlytime:future:minutes:singular' => "em um minute",
 	'friendlytime:future:hours' => "em %s horas",
@@ -1029,7 +1029,7 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 	'date:weekday:4' => 'Quinta',
 	'date:weekday:5' => 'Sexta',
 	'date:weekday:6' => 'Sabado',
-	
+
 	'interval:minute' => 'A cada minuto',
 	'interval:fiveminute' => 'A cada 5 minutos',
 	'interval:fifteenmin' => 'A cada 15 minutos',
@@ -1087,7 +1087,7 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 
 	'installation:htaccess:needs_upgrade' => "Voce deve atualizar seu arquivo .htaccess para que o caminho seja injetado no parametro GET __elgg_uri (voce pode usar o arquivo htaccess_dist como guia).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg nao pode se conectar para o autoteste das regras de escrita. Verifique se o curl esta funcionando e se nao existe nenhuma restricao de acesso local ao seu IP.",
-	
+
 	'installation:systemcache:description' => "O sistema de armazenamento (cache) diminui o tempo de carregamento do Elgg por guardar na memória os arquivos.",
 	'installation:systemcache:label' => "Utilizar o sistema de armazenamento (cache) - RECOMENDÁVEL",
 
@@ -1153,12 +1153,12 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 /**
  * Emails
  */
-		
+
 	'email:from' => 'De',
 	'email:to' => 'Para',
 	'email:subject' => 'Assunto',
 	'email:body' => 'Corpo',
-	
+
 	'email:settings' => "Configurações de Email",
 	'email:address:label' => "Endereco de email",
 
@@ -1192,7 +1192,7 @@ Alguém (do endereço de IP %s) solicitou uma nova senha para esta conta.
 Se você fez esta solicitação, clique no link abaixo, caso contrário por favor ignore este email.
 
 %s
- 
+
 ",
 
 /**
@@ -1251,14 +1251,14 @@ Não responda a este email.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'Por %s',
 	'entity:default:strapline' => 'Criado %s por %s',
 	'entity:default:missingsupport:popup' => 'Esta entidade não pôde ser exibida corretamente. Isto deve ter ocorrido pois requer o suporte de um plugin que não está mais instalado.',
 
 	'entity:delete:success' => 'Entidade %s foi apagada',
 	'entity:delete:fail' => 'Entidade %s não pode ser apagada',
-	
+
 	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
 
 /**

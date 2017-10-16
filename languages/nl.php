@@ -39,7 +39,7 @@ return array(
 	'actionnotfound' => "Het actiebestand voor %s kon niet worden gevonden.",
 	'actionloggedout' => "Sorry, je kunt deze actie niet uitvoeren als je bent afgemeld.",
 	'actionunauthorized' => 'Je bent niet geautoriseerd om deze actie uit te voeren',
-	
+
 	'ajax:error' => 'Onverwacht probleem opgetreden tijdens de uitvoer van een AJAX call. Mogelijk is de verbinding met de server verloren.',
 	'ajax:not_is_xhr' => 'Je kan AJAX views niet rechtstreeks aanroepen',
 
@@ -85,7 +85,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'ElggPlugin:Dependencies:Priority:Before' => 'Voor %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is niet geïnstalleerd',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Ontbreekt',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Er zijn plugins die afhankelijk zijn van %s. Je moet eerst de volgende plugins uitschakelen voordat je deze kunt uitschakelen: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items gevonden zonder bovenliggende menu items om ze aan te linken',
@@ -409,7 +409,7 @@ Je kunt op elk moment terugkeren naar het standaardprofiel, maar dan gaat alle i
 	'registration:usernametoolong' => 'Je gebruikersnaam is te lang. Je kunt maximaal %u karakters gebruiken.',
 	'registration:passwordtooshort' => 'Het wachtwoord moet minimaal %u karakters lang zijn.',
 	'registration:dupeemail' => 'Dit e-mailadres is al geregistreerd.',
-	'registration:invalidchars' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s 
+	'registration:invalidchars' => 'Sorry, je gebruikersnaam bevat het volgende ongeldige karakter: %s
 De volgende karakters zijn niet toegestaan: %s',
 	'registration:emailnotvalid' => 'Sorry, het opgegeven e-mailadres is ongeldig op dit systeem',
 	'registration:passwordnotvalid' => 'Sorry, het opgegeven wachtwoord is ongeldig op dit systeem',
@@ -724,7 +724,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:robots.txt:physical' => "De robots.txt tool zal niet werken omdat er een fysiek robots.txt bestand aanwezig is.",
 
 	'admin:maintenance_mode:default_message' => 'De site is offline in verband met onderhoud.',
-	'admin:maintenance_mode:instructions' => 'Je kunt de onderhoudsmodus het beste alléén gebruiken als er sprake is van een upgrade, of als je grote veranderingen aan de site wilt aanbrengen. 
+	'admin:maintenance_mode:instructions' => 'Je kunt de onderhoudsmodus het beste alléén gebruiken als er sprake is van een upgrade, of als je grote veranderingen aan de site wilt aanbrengen.
 Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en de site bekijken!',
 	'admin:maintenance_mode:mode_label' => 'Onderhoudsmodus',
 	'admin:maintenance_mode:message_label' => 'Bericht dat gebruikers zien als de site in onderhoudsmodus is',
@@ -735,7 +735,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "Het paneel voor gebruikersinstellingen geeft je controle over al je persoonlijke instellingen: van gebruikersmanagement tot hoe plugins zijn geconfigureerd. Kies een optie om te beginnen.",
 
 	'usersettings:statistics' => "Jouw statistieken",
@@ -762,7 +762,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Alle site-activiteit',
 	'river:mine' => 'Mijn activiteit',
 	'river:owner' => 'Activiteit van %s',
@@ -789,7 +789,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'icon:size:medium' => "Normaal",
 	'icon:size:large' => "Groot",
 	'icon:size:master' => "Extra groot",
-		
+
 /**
  * Generic action words
  */
@@ -874,11 +874,11 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 
 	'active' => 'Actief',
 	'total' => 'Totaal',
-	
+
 	'ok' => 'OK',
 	'any' => 'Welke dan ook',
 	'error' => 'Fout',
-	
+
 	'other' => 'Andere',
 	'options' => 'Opties',
 	'advanced' => 'Geavanceerd',
@@ -891,7 +891,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'content:latest:blurb' => 'Of klik hier om de laatste inhoud van de hele site te bekijken',
 
 	'link:text' => 'bekijk link',
-	
+
 /**
  * Generic questions
  */
@@ -919,7 +919,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'sort:popular' => 'Populair',
 	'sort:alpha' => 'Alfabetisch',
 	'sort:priority' => 'Prioriteit',
-		
+
 /**
  * Generic data words
  */
@@ -944,7 +944,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Bewerk dit',
 	'delete:this' => 'Verwijder dit',
 	'comment:this' => 'Reageer hierop',
@@ -985,7 +985,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Importeren van data was succesvol",
 	'importfail' => "OpenDD data importeren is mislukt.",
 
@@ -1001,7 +1001,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'friendlytime:days' => "%s dagen geleden",
 	'friendlytime:days:singular' => "gisteren",
 	'friendlytime:date_format' => 'j F Y @ G:i',
-	
+
 	'friendlytime:future:minutes' => "over %s minuten",
 	'friendlytime:future:minutes:singular' => "zometeen",
 	'friendlytime:future:hours' => "over %s uur",
@@ -1029,7 +1029,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'date:weekday:4' => 'donderdag',
 	'date:weekday:5' => 'vrijdag',
 	'date:weekday:6' => 'zaterdag',
-	
+
 	'interval:minute' => 'Elke minuut',
 	'interval:fiveminute' => 'Elke vijf minuten',
 	'interval:fifteenmin' => 'Elke vijftien minuten',
@@ -1087,7 +1087,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 
 	'installation:htaccess:needs_upgrade' => "Je moet het bestand .htaccess zodanig wijzigen dat het pad geïnjecteerd wordt in de GET-parameter __elgg_uri (je kunt install/config/htaccess.dist als voorbeeld gebruiken).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg kan niet zelf de rewrite-rules testen. Controleer dat curl werkt en dat er geen IP-restricties zijn die localhost connecties blokkeren.",
-	
+
 	'installation:systemcache:description' => "De systeemcache verlaagt de laadtijd van de Elgg-engine door data te cachen naar bestanden.",
 	'installation:systemcache:label' => "Gebruik systeemcache (aanbevolen)",
 
@@ -1153,12 +1153,12 @@ Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.
 /**
  * Emails
  */
-		
+
 	'email:from' => 'Van',
 	'email:to' => 'Aan',
 	'email:subject' => 'Titel',
 	'email:body' => 'Bericht',
-	
+
 	'email:settings' => "E-mailinstellingen",
 	'email:address:label' => "Jouw e-mailadres",
 
@@ -1254,14 +1254,14 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'Door %s',
 	'entity:default:strapline' => 'Aangemaakt op %s door %s',
 	'entity:default:missingsupport:popup' => 'Deze entity kan niet correct worden weergegeven. Dit kan komen doordat er ondersteuning nodig is van een plugin die niet meer is geïnstalleerd.',
 
 	'entity:delete:success' => 'Entity %s is verwijderd',
 	'entity:delete:fail' => 'Entity %s kon niet worden verwijderd',
-	
+
 	'entity:can_delete:invaliduser' => 'Kan canDelete voor user_guid [%s] niet nakijken omdat de gebruiker niet bestaat.',
 
 /**
