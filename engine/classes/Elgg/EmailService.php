@@ -130,21 +130,8 @@ class EmailService {
 		
 		$message->setSubject($subject);
 		
-		// create body
-		$body = new MimeMessage();
-		
-		// add plain text part
-		$plain_text = elgg_strip_tags($email->getBody());
-		$plain_text = html_entity_decode($plain_text, ENT_QUOTES, 'UTF-8');
-		$plain_text = wordwrap($plain_text);
-		
-		$plain_text_part = new Part($plain_text);
-		$plain_text_part->setId('plaintext');
-		$plain_text_part->setType(Mime::TYPE_TEXT);
-		
-		$body->addPart($plain_text_part);
-		
 		// add the body to the message
+		$body = $this->buildMessageBody($email);
 		$message->setBody($body);
 
 		// allow others to modify the $message content
@@ -160,6 +147,38 @@ class EmailService {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Build the body part of the e-mail message
+	 *
+	 * @param Email $email Email
+	 *
+	 * @return \Zend\Mime\Message
+	 */
+	protected function buildMessageBody(Email $email) {
+		// create body
+		$body = new MimeMessage();
+		
+		// add plain text part
+		$plain_text = elgg_strip_tags($email->getBody());
+		$plain_text = html_entity_decode($plain_text, ENT_QUOTES, 'UTF-8');
+		$plain_text = wordwrap($plain_text);
+		
+		$plain_text_part = new Part($plain_text);
+		$plain_text_part->setId('plaintext');
+		$plain_text_part->setType(Mime::TYPE_TEXT);
+		$plain_text_part->setCharset('UTF-8');
+		
+		$body->addPart($plain_text_part);
+		
+		// process attachements
+		$attachements = $email->getAttachments();
+		foreach ($attachements as $attachement) {
+			$body->addPart($attachement);
+		}
+		
+		return $body;
 	}
 
 }

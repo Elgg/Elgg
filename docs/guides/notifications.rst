@@ -295,3 +295,41 @@ Example:
 
 		return ($subscriptions + $group_subscribers);
 	}
+
+E-mail attachments
+==================
+
+``notify_user()`` or enqueued notifications support attachments for e-mail notifications if provided in ``$params``. To add one or more attachments
+add a key ``attachments`` in ``$params`` which is an array of the attachments. An attachment should be in one of the following formats:
+
+- An ``ElggFile`` which points to an existing file
+- An array with the file contents
+- An array with a filepath
+
+.. code-block:: php
+
+	// this example is for notify_user()
+	$params['attachments'] = [];
+	
+	// Example of an ElggFile attachment
+	$file = new \ElggFile();
+	$file->owner_guid = <some owner_guid>;
+	$file->setFilename('<some filename>');
+	
+	$params['attachments'][] = $file;
+	
+	// Example of array with content  
+	$params['attachments'][] = [
+		'content' => 'The file content',
+		'filename' => 'test_file.txt',
+		'type' => 'text/plain',
+	];
+  	
+  	// Example of array with filepath
+  	// 'filename' can be provided, if not basename() of filepath will be used
+  	// 'type' can be provided, if not will try a best guess
+	$params['attachments'][] = [
+		'filepath' => '<path to a valid file>',
+  	];
+  	
+  	notify_user($to_guid, $from_guid, $subject, $body, $params);

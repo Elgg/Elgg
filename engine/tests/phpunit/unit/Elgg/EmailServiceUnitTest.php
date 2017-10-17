@@ -79,5 +79,4 @@ class EmailServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertNull(_elgg_services()->mailer->getLastMessage());
 	}
-
 }
