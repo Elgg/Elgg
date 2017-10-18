@@ -216,17 +216,16 @@ class MetadataCache {
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
-		$db_prefix = _elgg_config()->dbprefix;
-
-		$options = [
+		
+		$data = _elgg_services()->metadataTable->getAll([
 			'guids' => $guids,
 			'limit' => 0,
 			'callback' => false,
 			'selects' => ['SUM(LENGTH(n_table.value)) AS bytes'],
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
 			'group_by' => 'n_table.entity_guid',
-		];
-		$data = _elgg_services()->metadataTable->getAll($options);
+		]);
+		
 		// don't cache if metadata for entity is over 10MB (or rolled INT)
 		foreach ($data as $row) {
 			if ($row->bytes > $limit || $row->bytes < 0) {

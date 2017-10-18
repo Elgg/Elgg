@@ -551,6 +551,7 @@ class MetadataTable {
 				$num_safe_operands = ['>', '<', '>=', '<='];
 				$num_test_operand = trim(strtoupper($operand));
 
+				$value = '';
 				if (is_numeric($pair['value']) && in_array($num_test_operand, $num_safe_operands)) {
 					$value = $this->db->sanitizeString($pair['value']);
 				} else if (is_bool($pair['value'])) {

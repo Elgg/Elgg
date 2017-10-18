@@ -218,7 +218,7 @@ class ElggUser extends \ElggEntity
 		}
 		
 		// these writes actually work, we just type hint read-only.
-		$this->prev_last_login = $user->last_login;
+		$this->prev_last_login = $this->last_login;
 		$this->last_login = $time;
 	}
 	

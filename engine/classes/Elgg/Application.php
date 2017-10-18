@@ -906,7 +906,6 @@ class Application {
 
 				// Since this is a fatal error, we want to stop any further execution but do so gracefully.
 				throw new \Exception($error);
-				break;
 
 			case E_WARNING :
 			case E_USER_WARNING :
