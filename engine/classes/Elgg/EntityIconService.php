@@ -192,7 +192,6 @@ class EntityIconService {
 		}
 		
 		$entity_type = $entity->getType();
-		$entity_subtype = $entity->getSubtype();
 		
 		$file = $this->hooks->trigger("entity:$type:prepare", $entity_type, [
 			'entity' => $entity,
@@ -290,7 +289,7 @@ class EntityIconService {
 		$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
 		
 		if (!empty($icon_size) && !isset($sizes[$icon_size])) {
-			$this->logger->warning("The provided icon size '{$icon_size}' doesn't exist for icon type '{$type}'");
+			$this->logger->warn("The provided icon size '{$icon_size}' doesn't exist for icon type '{$type}'");
 			return false;
 		}
 		

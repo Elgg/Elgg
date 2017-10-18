@@ -116,7 +116,6 @@ class Plugins {
 	function generateEntities() {
 	
 		$mod_dir = elgg_get_plugins_path();
-		$db_prefix = _elgg_config()->dbprefix;
 	
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
 		$old_ia = elgg_set_ignore_access(true);
@@ -568,7 +567,7 @@ class Plugins {
 	 * @param string $type The type of provides to return
 	 * @param string $name A specific provided name to return. Requires $provide_type.
 	 *
-	 * @return array
+	 * @return array|false
 	 * @access private
 	 */
 	function getProvides($type = null, $name = null) {

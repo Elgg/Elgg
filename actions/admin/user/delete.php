@@ -27,7 +27,7 @@ if (!$user->delete()) {
 
 // forward to user administration if on a user's page as it no longer exists
 $forward = REFERER;
-if (strpos($_SERVER['HTTP_REFERER'], $username) != false) {
+if (strpos($_SERVER['HTTP_REFERER'], $username) !== false) {
 	$forward = 'admin/users/newest';
 }
 

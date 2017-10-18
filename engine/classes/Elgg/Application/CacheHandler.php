@@ -52,6 +52,9 @@ class CacheHandler {
 
 	/** @var Request */
 	private $request;
+	
+	/** @var bool */
+	protected $simplecache_enabled;
 
 	/**
 	 * Constructor

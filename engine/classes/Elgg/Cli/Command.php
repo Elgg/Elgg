@@ -119,7 +119,6 @@ abstract class Command extends SymfonyCommand {
 		switch ($errno) {
 			case E_USER_ERROR:
 				throw new Exception($error);
-				break;
 
 			default:
 				$formatter = new FormatterHelper();

@@ -253,7 +253,7 @@ class RelationshipsTable {
 		$guid_col = $inverse_relationship ? "guid_two" : "guid_one";
 
 		$this->db->deleteData("
-			DELETE er FROM {$this->db->prefix}entity_relationships AS er 
+			DELETE er FROM {$this->db->prefix}entity_relationships AS er
 			$join
 			WHERE $guid_col = $guid
 			$where
@@ -401,7 +401,7 @@ class RelationshipsTable {
 	public function getEntityRelationshipWhereSql($column, $relationship = null,
 			$relationship_guid = null, $inverse_relationship = false) {
 
-		if ($relationship == null && $relationship_guid == null) {
+		if ($relationship === null && $relationship_guid === null) {
 			return '';
 		}
 

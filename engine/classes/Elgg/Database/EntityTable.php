@@ -288,7 +288,7 @@ class EntityTable {
 	 *
 	 * @param int $guid GUID
 	 *
-	 * @return \ElggEntity
+	 * @return \ElggEntity|false
 	 */
 	protected function getFromCache($guid) {
 		$entity = $this->entity_cache->get($guid);
