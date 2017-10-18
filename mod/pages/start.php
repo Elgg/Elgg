@@ -46,7 +46,6 @@ function pages_init() {
 		'title' => 'text',
 		'description' => 'longtext',
 		'tags' => 'tags',
-		'categories' => 'categories',
 		'parent_guid' => 'pages/parent',
 		'access_id' => 'access',
 		'write_access_id' => 'access',
@@ -192,16 +191,7 @@ function pages_set_revision_url($hook, $type, $url, $params) {
 function pages_icon_url_override($hook, $type, $returnvalue, $params) {
 	$entity = $params['entity'];
 	if (pages_is_page($entity)) {
-		switch ($params['size']) {
-			case 'topbar':
-			case 'tiny':
-			case 'small':
-				return elgg_get_simplecache_url('pages/pages.gif');
-				break;
-			default:
-				return elgg_get_simplecache_url('pages/pages_lrg.gif');
-				break;
-		}
+		return elgg_get_simplecache_url('pages/images/pages.gif');
 	}
 }
 
@@ -228,35 +218,22 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
  * Add links/info to entity menu particular to pages plugin
  */
 function pages_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
 
-	elgg_load_library('elgg:pages');
 	$entity = $params['entity'];
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler != 'pages') {
-		return $return;
+	if (!pages_is_page($entity)) {
+		return;
 	}
-
-	// remove delete if not owner or admin
-	if (!elgg_is_admin_logged_in()
-		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()
-		&& ! pages_can_delete_page($entity)) {
-		foreach ($return as $index => $item) {
-			if ($item->getName() == 'delete') {
-				unset($return[$index]);
-			}
-		}
+	
+	if (!$entity->canEdit()) {
+		return;
 	}
-
-	$options = [
+	
+	$return[] = \ElggMenuItem::factory([
 		'name' => 'history',
+		'icon' => 'history',
 		'text' => elgg_echo('pages:history'),
-		'href' => "pages/history/$entity->guid",
-		'priority' => 150,
-	];
-	$return[] = ElggMenuItem::factory($options);
+		'href' => "pages/history/{$entity->guid}",
+	]);
 
 	return $return;
 }

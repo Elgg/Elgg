@@ -22,10 +22,9 @@ elgg_set_page_owner_guid($user->guid);
 $title = elgg_echo('friends:collections:edit');
 
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
-elgg_push_breadcrumb(elgg_echo('friends'), 'friends');
-elgg_push_breadcrumb(elgg_echo('friends:collections'), 'collections');
+elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends:collections'), "collections/owner/{$user->username}");
 elgg_push_breadcrumb($collection->name, $collection->getURL());
-elgg_push_breadcrumb($title);
 
 $form_name = 'friends/collections/edit';
 $form_vars = [

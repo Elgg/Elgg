@@ -442,10 +442,6 @@ class ElggUser extends \ElggEntity
 	 * @since 1.8.0
 	 */
 	public function canComment($user_guid = 0, $default = null) {
-		$result = parent::canComment($user_guid, $default);
-		if ($result !== null) {
-			return $result;
-		}
 		return false;
 	}
 

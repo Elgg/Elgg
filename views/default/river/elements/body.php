@@ -9,14 +9,34 @@
  * @uses $vars['responses']   Alternate respones (comments, replies, etc.)
  */
 
-$item = $vars['item'];
-/* @var ElggRiverItem $item */
+$item = elgg_extract('item', $vars);
+if (!($item instanceof \ElggRiverItem)) {
+	return;
+}
 
-$menu = elgg_view_menu('river', [
-	'item' => $item,
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-]);
+$metadata = elgg_extract('metadata', $vars);
+if (!isset($metadata)) {
+	$metadata = elgg_view_menu('river', [
+		'item' => $item,
+		'sort_by' => 'priority',
+	]);
+	
+	$object = $item->getObjectEntity();
+	if ($object) {
+		$metadata .= elgg_view_menu('social', [
+			'entity' => $object,
+			'item' => $item,
+			'sort_by' => 'priority',
+			'class' => 'elgg-menu-hz',
+		]);
+	}
+}
+
+if ($metadata) {
+	$metadata = elgg_format_element('div', [
+		'class' => 'elgg-river-metadata',
+	], $metadata);
+}
 
 // river item header
 $timestamp = elgg_view_friendly_time($item->getTimePosted());
@@ -55,7 +75,7 @@ if ($responses) {
 }
 
 echo <<<RIVER
-$menu
+$metadata
 <div class="elgg-river-summary">$summary <span class="elgg-river-timestamp">$timestamp</span></div>
 $message
 $attachments

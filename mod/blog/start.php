@@ -19,7 +19,7 @@ function blog_init() {
 		'href' => 'blog/all',
 	]);
 
-	elgg_extend_view('object/elements/imprint_contents', 'blog/status');
+	elgg_extend_view('object/elements/imprint/contents', 'blog/imprint/status');
 
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');

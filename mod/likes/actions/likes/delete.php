@@ -21,7 +21,7 @@ if (!$like) {
 	$like = $likes[0];
 }
 
-if (!$like || !$like->canDelete() || !$like->delete()) {
+if (!$like || !$like->delete()) {
 	return elgg_error_response(elgg_echo('likes:notdeleted'));
 }
 

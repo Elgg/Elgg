@@ -23,7 +23,7 @@ if (!in_array($size, $allowed_sizes)) {
 
 $img = elgg_view('output/img', [
 	'alt' => $entity->getDisplayName(),
-	'scr' => $entity->getIconURL([
+	'src' => $entity->getIconURL([
 		'size' => $size,
 	]),
 ]);

@@ -17,11 +17,6 @@ return [
 		'pages/delete' => [],
 		'annotations/page/delete' => [],
 	],
-	'views' => [
-		'default' => [
-			'pages/' => __DIR__ . '/images',
-		],
-	],
 	'widgets' => [
 		'pages' => [
 			'description' => elgg_echo('pages:widget:description'),

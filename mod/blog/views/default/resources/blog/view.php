@@ -27,10 +27,7 @@ if (elgg_instanceof($container, 'group')) {
 
 elgg_push_breadcrumb($blog->title);
 
-$params['content'] = elgg_view_entity($blog, [
-	'full_view' => true,
-	'show_responses' => true,
-]);
+$params['content'] = elgg_view_entity($blog);
 
 $params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
 

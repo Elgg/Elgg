@@ -41,20 +41,12 @@ switch ($access) {
 		break;
 }
 
-$icon_name = elgg_extract('access_icon', $vars, $icon_name);
+$content = elgg_view('output/access', [
+	'value' => $access,
+]);
 
-if ($icon_name === false) {
-	$icon = '';
-} else {
-	$icon = elgg_view_icon($icon_name, [
-		'title' => get_readable_access_level($access),
-	]);
-}
-
-$access_str = $icon . elgg_view('output/access', [
-			'value' => $access,
-		]);
-
-echo elgg_format_element('span', [
+echo elgg_view('object/elements/imprint/element', [
+	'icon_name' => elgg_extract('access_icon', $vars, $icon_name),
+	'content' => $content,
 	'class' => 'elgg-listing-access',
-		], $access_str);
+]);

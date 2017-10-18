@@ -10,7 +10,7 @@ if (!$collection instanceof ElggAccessCollection) {
 	return;
 }
 
-$offset_key = "col_{$collection_id}";
+$offset_key = "col_{$collection->id}";
 $offset = get_input($offset_key, 0);
 $limit = max(20, elgg_get_config('default_limit'));
 
@@ -39,4 +39,3 @@ echo elgg_view_entity_list($members, [
 	'collection' => $collection,
 	'no_results' => elgg_echo('friends:collection:members:no_results'),
 ]);
-

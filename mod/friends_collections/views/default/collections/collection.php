@@ -15,9 +15,9 @@ $full_view = elgg_extract('full_view', $vars);
 
 $menu = elgg_view_menu('friends:collection', [
 	'collection' => $collection,
-	'class' => 'elgg-menu-hz elgg-menu-entity',
+	'class' => 'elgg-menu-hz',
 	'sort_by' => 'priority',
-		]);
+]);
 
 $count = $collection->getMembers(['count' => true]);
 $subtitle = elgg_echo('friends:collection:member_count', [$count]);

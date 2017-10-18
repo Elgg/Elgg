@@ -8,6 +8,7 @@
  */
 
 use Elgg\Project\Paths;
+use Elgg\Hook;
 
 /**
  * Adds an item to the river.
@@ -752,6 +753,44 @@ QUERY;
 }
 
 /**
+ * Add the delete to river actions menu
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return array
+ *
+ * @access private
+ */
+function _elgg_river_menu_setup(\Elgg\Hook $hook) {
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+	
+	$item = $hook->getParam('item');
+	if (!($item instanceof ElggRiverItem)) {
+		return;
+	}
+	
+	if (!$item->canDelete()) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'delete',
+		'href' => "action/river/delete?id={$item->id}",
+		'is_action' => true,
+		'icon' => 'delete',
+		'text' => elgg_echo('river:delete'),
+		'confirm' => elgg_echo('deleteconfirm'),
+		'priority' => 999,
+	]);
+
+	return $return;
+}
+
+/**
  * Initialize river library
  * @access private
  */
@@ -759,6 +798,8 @@ function _elgg_river_init() {
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 
+	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
+	
 	// For BC, we want required AMD modules to be loaded even if plugins
 	// overwrite these views
 	elgg_extend_view('forms/comment/save', 'forms/comment/save_deps');

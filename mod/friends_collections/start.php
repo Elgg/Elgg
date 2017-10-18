@@ -24,9 +24,7 @@ function friends_collections_init() {
 	// Setup access collection menu
 	elgg_register_plugin_hook_handler('register', 'menu:friends:collection', CollectionMenuHandler::class);
 
-	// We are registering this hook with a high priority, because core entity menu setup for users
-	// resets the menu array and is registered with a high priority
-	elgg_register_plugin_hook_handler('register', 'menu:entity', EntityMenuHandler::class, 1000);
+	elgg_register_plugin_hook_handler('register', 'menu:entity', EntityMenuHandler::class);
 
 	// Remove users from access collections when friendship is revoked
 	elgg_register_event_handler('delete', 'relationship', DeleteRelationshipHandler::class);

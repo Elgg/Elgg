@@ -9,5 +9,9 @@ $title = elgg_extract('title', $vars);
 if (!$title) {
 	return;
 }
-?>
-<h3 class="elgg-listing-summary-title"><?= $title ?></h3>
+
+echo elgg_format_element('h3', [
+	'class' => [
+		'elgg-listing-summary-title',
+	]
+], $title);

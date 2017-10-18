@@ -26,6 +26,6 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-echo elgg_view('object/elements/byline', $vars);
-echo elgg_view('object/elements/time', $vars);
-echo elgg_view('object/elements/access', $vars);
+echo elgg_view('object/elements/imprint/byline', $vars);
+echo elgg_view('object/elements/imprint/time', $vars);
+echo elgg_view('object/elements/imprint/access', $vars);

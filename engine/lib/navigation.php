@@ -530,89 +530,86 @@ function _elgg_page_menu_setup(\Elgg\Hook $hook) {
 }
 
 /**
- * Add the comment and like links to river actions menu
+ * Entity menu is list of links and info on any entity
  * @access private
  */
-function _elgg_river_menu_setup($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
-		$item = $params['item'];
-		/* @var \ElggRiverItem $item */
-		$object = $item->getObjectEntity();
-		// add comment link but annotations cannot be commented on
-		if ($item->annotation_id == 0) {
-			if ($object->canComment()) {
-				$options = [
-					'name' => 'comment',
-					'href' => "#comments-add-{$object->guid}-{$item->id}",
-					'text' => elgg_view_icon('speech-bubble'),
-					'title' => elgg_echo('comment:this'),
-					'rel' => 'toggle',
-					'priority' => 50,
-				];
-				$return[] = \ElggMenuItem::factory($options);
-			}
+function _elgg_entity_menu_setup($hook, $type, $return, $params) {
+	$entity = elgg_extract('entity', $params);
+	if (!($entity instanceof \ElggEntity)) {
+		return;
+	}
+
+	$handler = elgg_extract('handler', $params, false);
+	if (!$handler) {
+		return;
+	}
+	
+	if ($entity->canEdit()) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'edit',
+			'icon' => 'edit',
+			'text' => elgg_echo('edit'),
+			'title' => elgg_echo('edit:this'),
+			'href' => "$handler/edit/{$entity->getGUID()}",
+			'priority' => 900,
+		]);
+	}
+
+	if ($entity->canDelete()) {
+		if (elgg_action_exists("$handler/delete")) {
+			$action = "action/$handler/delete";
+		} else {
+			$action = "action/entity/delete";
 		}
 		
-		if ($item->canDelete()) {
-			$options = [
-				'name' => 'delete',
-				'href' => elgg_add_action_tokens_to_url("action/river/delete?id={$item->id}"),
-				'text' => elgg_view_icon('delete'),
-				'title' => elgg_echo('river:delete'),
-				'confirm' => elgg_echo('deleteconfirm'),
-				'priority' => 200,
-			];
-			$return[] = \ElggMenuItem::factory($options);
-		}
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'delete',
+			'icon' => 'delete',
+			'text' => elgg_echo('delete'),
+			'title' => elgg_echo('delete:this'),
+			'href' => "$action?guid={$entity->getGUID()}",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'priority' => 950,
+		]);
 	}
 
 	return $return;
 }
 
 /**
- * Entity menu is list of links and info on any entity
+ * Moves default menu items into a dropdown
+ *
+ * @param \Elgg\Hook $hook Hook
  * @access private
  */
-function _elgg_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
+function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
+	$result = $hook->getValue();
 	
-	$entity = $params['entity'];
-	/* @var \ElggEntity $entity */
-	$handler = elgg_extract('handler', $params, false);
+	$items = elgg_extract('default', $result);
+	if (empty($items)) {
+		return;
+	}
+		
+	$result['default'] = [
+		\ElggMenuItem::factory([
+			'name' => 'entity-menu-toggle',
+			'icon' => 'ellipsis-v',
+			'href' => false,
+			'text' => '',
+			'child_menu' => [
+				'display' => 'dropdown',
+				'data-position' => json_encode([
+					'at' => 'right bottom',
+					'my' => 'right top',
+					'collision' => 'fit fit',
+				]),
+				'class' => "elgg-{$hook->getParam('name')}-dropdown-menu",
+			],
+			'children' => $items,
+		]),
+	];
 	
-	if ($entity->canEdit() && $handler) {
-		// edit link
-		$options = [
-			'name' => 'edit',
-			'text' => elgg_echo('edit'),
-			'title' => elgg_echo('edit:this'),
-			'href' => "$handler/edit/{$entity->getGUID()}",
-			'priority' => 200,
-		];
-		$return[] = \ElggMenuItem::factory($options);
-	}
-
-	if ($entity->canDelete() && $handler) {
-		// delete link
-		if (elgg_action_exists("$handler/delete")) {
-			$action = "action/$handler/delete";
-		} else {
-			$action = "action/entity/delete";
-		}
-		$options = [
-			'name' => 'delete',
-			'text' => elgg_view_icon('delete'),
-			'title' => elgg_echo('delete:this'),
-			'href' => "$action?guid={$entity->getGUID()}",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 300,
-		];
-		$return[] = \ElggMenuItem::factory($options);
-	}
-
-	return $return;
+	return $result;
 }
 
 /**
@@ -775,7 +772,8 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
 	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_page_menu_setup', 999);
 
-	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
+	elgg_register_plugin_hook_handler('prepare', 'menu:entity', '_elgg_menu_transform_to_dropdown');
+	elgg_register_plugin_hook_handler('prepare', 'menu:river', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');

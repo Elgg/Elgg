@@ -10,7 +10,7 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$imprint = elgg_view('object/elements/imprint_contents', $vars);
+$imprint = elgg_view('object/elements/imprint/contents', $vars);
 
 echo elgg_format_element('div', [
 	'class' => 'elgg-listing-imprint',

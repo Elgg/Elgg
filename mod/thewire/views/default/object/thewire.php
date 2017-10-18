@@ -5,8 +5,8 @@
  * @uses $vars['entity']
  */
 
-$post = elgg_extract('entity', $vars, false);
-if (!$post) {
+$post = elgg_extract('entity', $vars);
+if (!$post instanceof \ElggWire) {
 	return;
 }
 
@@ -18,24 +18,10 @@ if (!$thread_id) {
 	$post->wire_thread = $post->guid;
 }
 
-$subtitle = elgg_view('object/elements/imprint', $vars);
-
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $post,
-		'handler' => 'thewire',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	]);
-}
-
 $params = [
 	'entity' => $post,
 	'title' => false,
-	'metadata' => $metadata,
-	'subtitle' => $subtitle,
+	'handler' => 'thewire',
 	'content' => thewire_filter($post->description),
 	'tags' => false,
 	'icon' => elgg_view_entity_icon($post->getOwnerEntity(), 'tiny'),

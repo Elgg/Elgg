@@ -23,9 +23,8 @@ elgg_set_page_owner_guid($user->guid);
 $title = $collection->name;
 
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
-elgg_push_breadcrumb(elgg_echo('friends'), 'friends');
-elgg_push_breadcrumb(elgg_echo('friends:collections'), 'collections');
-elgg_push_breadcrumb($title);
+elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends:collections'), "collections/owner/{$user->username}");
 
 $content = elgg_view('collections/collection', [
 	'full_view' => true,

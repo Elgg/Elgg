@@ -52,13 +52,15 @@ define(function (require) {
 			var $link = $(this);
 			var postGuid = $link.attr("href").split("/").pop();
 			var $previousDiv = $("#thewire-previous-" + postGuid);
-
-			if ($link.html() == elgg.echo('hide')) {
-				$link.html(elgg.echo('previous'));
+			
+			var $anchorText = $link.find('.elgg-anchor-label');
+			
+			if ($anchorText.html() == elgg.echo('hide')) {
+				$anchorText.html(elgg.echo('previous'));
 				$link.attr("title", elgg.echo('thewire:previous:help'));
 				$previousDiv.slideUp(400);
 			} else {
-				$link.html(elgg.echo('hide'));
+				$anchorText.html(elgg.echo('hide'));
 				$link.attr("title", elgg.echo('thewire:hide:help'));
 
 				elgg.get({

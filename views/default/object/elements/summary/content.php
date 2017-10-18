@@ -9,5 +9,10 @@ $content = elgg_extract('content', $vars);
 if (!$content) {
 	return;
 }
-?>
-<div class="elgg-listing-summary-content elgg-content"><?= $content ?></div>
+
+echo elgg_format_element('div', [
+	'class' => [
+		'elgg-listing-summary-content',
+		'elgg-content',
+	]
+], $content);

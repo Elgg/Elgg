@@ -17,10 +17,6 @@
  */
 function thewire_init() {
 
-	// register the wire's JavaScript
-	$thewire_js = elgg_get_simplecache_url('thewire.js');
-	elgg_register_js('elgg.thewire', $thewire_js, 'footer');
-
 	elgg_register_ajax_view('thewire/previous');
 
 	// add a site navigation item
@@ -406,49 +402,43 @@ function thewire_get_parent($post_guid) {
  * @return array
  */
 function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler != 'thewire') {
+	$entity = elgg_extract('entity', $params);
+	if (!($entity instanceof \ElggWire)){
 		return;
 	}
-
+	
 	foreach ($value as $index => $item) {
-		$name = $item->getName();
-		if ($name == 'edit') {
+		if ($item->getName() == 'edit') {
 			unset($value[$index]);
 		}
 	}
 
-	$entity = $params['entity'];
-
 	if (elgg_is_logged_in()) {
-		$options = [
+		$value[] = ElggMenuItem::factory([
 			'name' => 'reply',
+			'icon' => 'reply',
 			'text' => elgg_echo('reply'),
-			'href' => "thewire/reply/$entity->guid",
-			'priority' => 150,
-		];
-		$value[] = ElggMenuItem::factory($options);
+			'href' => "thewire/reply/{$entity->guid}",
+		]);
 	}
 
 	if ($entity->reply) {
-		$options = [
+		$value[] = ElggMenuItem::factory([
 			'name' => 'previous',
+			'icon' => 'arrow-left',
 			'text' => elgg_echo('previous'),
-			'href' => "thewire/previous/$entity->guid",
-			'priority' => 160,
+			'href' => "thewire/previous/{$entity->guid}",
 			'link_class' => 'thewire-previous',
 			'title' => elgg_echo('thewire:previous:help'),
-		];
-		$value[] = ElggMenuItem::factory($options);
+		]);
 	}
 
-	$options = [
+	$value[] = ElggMenuItem::factory([
 		'name' => 'thread',
+		'icon' => 'comments-o',
 		'text' => elgg_echo('thewire:thread'),
-		'href' => "thewire/thread/$entity->wire_thread",
-		'priority' => 170,
-	];
-	$value[] = ElggMenuItem::factory($options);
+		'href' => "thewire/thread/{$entity->wire_thread}",
+	]);
 
 	return $value;
 }

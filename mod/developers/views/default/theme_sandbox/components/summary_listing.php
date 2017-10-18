@@ -13,11 +13,7 @@ echo elgg_view('object/elements/summary', [
 	'entity' => $object,
 	'subtitle' => 'Listing subtitle',
 	'class' => 'theme-sandbox-summary-listing',
-	'metadata' => elgg_view_menu('entity', [
-		'entity' => $object,
-		'handler' => 'theme-sandbox',
-		'class' => 'elgg-menu-hz',
-	]),
+	'handler' => 'theme-sandbox',
 	'content' => elgg_get_excerpt($object->description),
 	'icon' => $icon,
 ]);

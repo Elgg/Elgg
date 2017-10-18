@@ -65,25 +65,13 @@ if ($num_replies != 0) {
 	]);
 }
 
-// do not show the metadata and controls in widget view
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $vars['entity'],
-		'handler' => 'discussion',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	]);
-}
-
 if ($full) {
 	$subtitle = "$by_line $replies_link";
 
 	$params = [
 		'entity' => $topic,
 		'title' => false,
-		'metadata' => $metadata,
+		'handler' => 'discussion',
 		'subtitle' => $subtitle,
 	];
 
@@ -121,7 +109,7 @@ if ($full) {
 
 	$params = [
 		'entity' => $topic,
-		'metadata' => $metadata,
+		'handler' => 'discussion',
 		'subtitle' => $subtitle,
 		'content' => $excerpt,
 		'icon' => $poster_icon,
