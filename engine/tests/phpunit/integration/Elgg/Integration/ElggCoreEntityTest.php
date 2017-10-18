@@ -190,8 +190,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		// add annotations and metadata to check if they're disabled.
 		$annotation_id = create_annotation($this->entity->guid, 'test_annotation_' . rand(), 'test_value_' . rand());
-		$metadata_id = create_metadata($this->entity->guid, 'test_metadata_' . rand(), 'test_value_' . rand());
-
+		
 		$this->assertTrue($this->entity->disable());
 
 		// ensure disabled by comparing directly with database
@@ -200,9 +199,6 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
 		$this->assertIdentical($annotation->enabled, 'no');
-
-		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
-		$this->assertIdentical($metadata->enabled, 'no');
 
 		// re-enable for deletion to work
 		$this->assertTrue($this->entity->enable());
@@ -214,9 +210,6 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
 		$this->assertIdentical($annotation->enabled, 'yes');
-
-		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
-		$this->assertIdentical($metadata->enabled, 'yes');
 
 		$this->assertTrue($this->entity->delete());
 		$this->entity = null;

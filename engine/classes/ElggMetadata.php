@@ -74,11 +74,11 @@ class ElggMetadata extends \ElggExtender {
 	public function save() {
 		if ($this->id > 0) {
 			return update_metadata($this->id, $this->name, $this->value,
-				$this->value_type, $this->owner_guid);
+				$this->value_type);
 		} else {
 			// using create_metadata() for deprecation notices in 2.x
 			$this->id = create_metadata($this->entity_guid, $this->name, $this->value,
-				$this->value_type, $this->owner_guid);
+				$this->value_type);
 
 			if (!$this->id) {
 				throw new \IOException("Unable to save new " . get_class());
@@ -95,36 +95,6 @@ class ElggMetadata extends \ElggExtender {
 	public function delete() {
 		$success = _elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
 		if ($success) {
-			_elgg_services()->metadataCache->clear($this->entity_guid);
-		}
-		return $success;
-	}
-
-	/**
-	 * Disable the metadata
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function disable() {
-		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
-		if ($success) {
-			$this->enabled = 'no';
-			_elgg_services()->metadataCache->clear($this->entity_guid);
-		}
-		return $success;
-	}
-
-	/**
-	 * Enable the metadata
-	 *
-	 * @return bool
-	 * @since 1.8
-	 */
-	public function enable() {
-		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
-		if ($success) {
-			$this->enabled = 'yes';
 			_elgg_services()->metadataCache->clear($this->entity_guid);
 		}
 		return $success;

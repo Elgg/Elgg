@@ -1625,7 +1625,6 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
 	switch ($type) {
 		case 'metadata':
 			$metadata_required = [
-				'metadata_owner_guid', 'metadata_owner_guids',
 				'metadata_name', 'metadata_names',
 				'metadata_value', 'metadata_values'
 			];

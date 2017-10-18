@@ -8,7 +8,7 @@ use Elgg\UnitTestCase;
  * For elgg_get_metadata_from_id() to work with the mocks, the SQL query must be
  * an exact match, so any new commas, brackets and clauses need to be reflected in the
  * mock class.
- * 
+ *
  * @group ElggMetadata
  * @group UnitTests
  */
@@ -29,7 +29,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
+		$id = create_metadata($object->guid, 'foo', 'bar', '');
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
@@ -38,8 +38,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$this->assertEquals('foo', $metadata->getSubtype());
 		$this->assertInstanceOf(stdClass::class, $metadata->toObject());
 		$this->assertEquals($object, $metadata->getEntity());
-		$this->assertEquals($owner, $metadata->getOwnerEntity());
-		$this->assertEquals($owner->guid, $metadata->getOwnerGUID());
 		$this->assertEquals($metadata->id, $metadata->getSystemLogID());
 
 		$metadata->setValue(25);
@@ -59,7 +57,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
+		$id = create_metadata($object->guid, 'foo', 'bar', '');
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
@@ -87,15 +85,12 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
+		$id = create_metadata($object->guid, 'foo', 'bar', '');
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
 		// Default access level is private
-		$this->assertEquals(ACCESS_PUBLIC, $metadata->access_id);
-		
-		$this->assertTrue($metadata->canEdit($owner->guid));
 		$this->assertFalse($metadata->canEdit($other->guid));
 	}
 
@@ -119,8 +114,8 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		// Insert
 		$dbprefix = _elgg_config()->dbprefix;
 		$sql = "INSERT INTO {$dbprefix}metadata
-				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
-				VALUES (:entity_guid, :name, :value, :value_type, :owner_guid, :time_created, :access_id)";
+				(entity_guid, name, value, value_type, time_created)
+				VALUES (:entity_guid, :name, :value, :value_type, :time_created)";
 
 		_elgg_services()->db->addQuerySpec([
 			'sql' => $sql,
@@ -129,9 +124,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 				':name' => 'foo',
 				':value' => 'bar',
 				':value_type' => 'text',
-				':owner_guid' => $metadata->owner_guid,
 				':time_created' => $metadata->time_created,
-				':access_id' => $metadata->access_id,
 			],
 			'insert_id' => $id,
 		]);
@@ -150,7 +143,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
+		$id = create_metadata($object->guid, 'foo', 'bar', '');
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
@@ -169,30 +162,4 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 	}
-
-	public function testCanDisableMetadata() {
-
-		$owner = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($owner);
-
-		$object = $this->createObject([
-			'owner_guid' => $owner->guid,
-		]);
-
-		$id = create_metadata($object->guid, 'foo', 'bar', '', $owner->guid);
-		$metadata = elgg_get_metadata_from_id($id);
-
-		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
-		
-		$this->assertTrue($metadata->disable());
-
-		$this->assertEquals('no', $metadata->enabled);
-
-		$this->assertTrue($metadata->enable());
-
-		$this->assertEquals('yes', $metadata->enabled);
-
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 }
