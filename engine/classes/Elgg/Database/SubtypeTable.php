@@ -59,7 +59,7 @@ class SubtypeTable {
 	 * @param string $type    Type
 	 * @param string $subtype Subtype
 	 *
-	 * @return int Subtype ID
+	 * @return int|false Subtype ID
 	 * @see get_subtype_from_id()
 	 * @access private
 	 */

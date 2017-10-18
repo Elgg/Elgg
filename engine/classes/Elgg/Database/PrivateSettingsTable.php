@@ -248,6 +248,7 @@ class PrivateSettingsTable {
 
 				// if the value is an int, don't quote it because str '15' < str '5'
 				// if the operand is IN don't quote it because quoting should be done already.
+				$value = '';
 				if (is_numeric($pair['value'])) {
 					$value = $this->db->sanitizeString($pair['value']);
 				} else if (is_array($pair['value'])) {

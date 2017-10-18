@@ -596,7 +596,7 @@ function elgg_clear_event_handlers($event, $object_type) {
  *
  * @param string $event       The event type
  * @param string $object_type The object type
- * @param string $object      The object involved in the event
+ * @param mixed  $object      The object involved in the event
  *
  * @return bool False if any handler returned false, otherwise true.
  * @example documentation/examples/events/trigger.php
@@ -615,7 +615,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  *
  * @param string $event       The event type. The fired event type will be appended with ":before".
  * @param string $object_type The object type
- * @param string $object      The object involved in the event
+ * @param mixed  $object      The object involved in the event
  *
  * @return bool False if any handler returned false, otherwise true
  *

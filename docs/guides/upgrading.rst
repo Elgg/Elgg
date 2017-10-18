@@ -93,6 +93,7 @@ All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https:/
 All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.10.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
  * ``can_write_to_container``: Use ``ElggEntity->canWriteToContainer()``
+ * ``create_metadata_from_array``
  * ``datalist_get``
  * ``datalist_set``
  * ``detect_extender_valuetype``
