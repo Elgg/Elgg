@@ -243,7 +243,7 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		'to' => $recipient,
 		'subject' => $message->subject,
 		'body' => $message->body,
-		'params' => $params,
+		'params' => $message->params,
 	]);
 
 	return _elgg_services()->emails->send($email);
