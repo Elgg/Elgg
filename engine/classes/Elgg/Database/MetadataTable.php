@@ -251,31 +251,6 @@ class MetadataTable {
 	}
 
 	/**
-	 * This function creates metadata from an associative array of "key => value" pairs.
-	 *
-	 * To achieve an array for a single key, pass in the same key multiple times with
-	 * allow_multiple set to true. This creates an indexed array. It does not support
-	 * associative arrays and there is no guarantee on the ordering in the array.
-	 *
-	 * @param int    $entity_guid     The entity to attach the metadata to
-	 * @param array  $name_and_values Associative array - a value can be a string, number, bool
-	 * @param string $value_type      'text', 'integer', or '' for automatic detection
-	 * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
-	 *
-	 * @return bool
-	 */
-	function createFromArray($entity_guid, array $name_and_values, $value_type, $allow_multiple = false) {
-
-		foreach ($name_and_values as $k => $v) {
-			$result = $this->create($entity_guid, $k, $v, $value_type, $allow_multiple);
-			if (!$result) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Returns metadata.  Accepts all elgg_get_entities() options for entity
 	 * restraints.
 	 *

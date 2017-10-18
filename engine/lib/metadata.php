@@ -83,29 +83,6 @@ function update_metadata($id, $name, $value, $value_type) {
 }
 
 /**
- * This function creates metadata from an associative array of "key => value" pairs.
- *
- * To achieve an array for a single key, pass in the same key multiple times with
- * allow_multiple set to true. This creates an indexed array. It does not support
- * associative arrays and there is no guarantee on the ordering in the array.
- *
- * @param int    $entity_guid     The entity to attach the metadata to
- * @param array  $name_and_values Associative array - a value can be a string, number, bool
- * @param string $value_type      'text', 'integer', or '' for automatic detection
- * @param int    $ignored1        GUID of entity that owns the metadata
- * @param null   $ignored2        This argument is not used
- * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
- *
- * @return bool
- */
-function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $ignored1 = null,
-		$ignored2 = null, $allow_multiple = false) {
-
-	return _elgg_services()->metadataTable->createFromArray($entity_guid, $name_and_values,
-		$value_type, $allow_multiple);
-}
-
-/**
  * Returns metadata.  Accepts all elgg_get_entities() options for entity
  * restraints.
  *
