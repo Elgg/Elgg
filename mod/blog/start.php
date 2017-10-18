@@ -19,8 +19,7 @@ function blog_init() {
 		'href' => 'blog/all',
 	]);
 
-	// add to the main css
-	elgg_extend_view('elgg.css', 'blog/css');
+	elgg_extend_view('object/elements/imprint_contents', 'blog/status');
 
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');
@@ -38,9 +37,6 @@ function blog_init() {
 	// Add group option
 	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
 	elgg_extend_view('groups/tool_latest', 'blog/group_module');
-
-	// entity menu
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'blog_entity_menu_setup');
 
 	// archive menu
 	elgg_register_plugin_hook_handler('register', 'menu:blog_archive', 'blog_archive_menu_setup');
@@ -179,34 +175,6 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 		}
 	}
 
-	return $return;
-}
-
-/**
- * Add particular blog links/info to entity menu
- */
-function blog_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return;
-	}
-
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler !== 'blog') {
-		return;
-	}
-
-	$entity = elgg_extract('entity', $params);
-	if ($entity->status == 'published') {
-		return;
-	}
-
-	$status_text = elgg_echo("status:{$entity->status}");
-	$return[] = ElggMenuItem::factory([
-		'name' => 'published_status',
-		'text' => "<span>$status_text</span>",
-		'href' => false,
-		'priority' => 150,
-	]);
 	return $return;
 }
 
