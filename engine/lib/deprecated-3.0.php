@@ -367,3 +367,28 @@ function update_metadata($id, $name, $value, $value_type) {
 	
 	return _elgg_services()->metadataTable->update($id, $name, $value, $value_type);
 }
+
+/**
+ * Create a new metadata object, or update an existing one.
+ *
+ * Metadata can be an array by setting allow_multiple to true, but it is an
+ * indexed array with no control over the indexing.
+ *
+ * @param int    $entity_guid    The entity to attach the metadata to
+ * @param string $name           Name of the metadata
+ * @param string $value          Value of the metadata
+ * @param string $value_type     'text', 'integer', or '' for automatic detection
+ * @param int    $ignored1       This argument is not used
+ * @param null   $ignored2       This argument is not used
+ * @param bool   $allow_multiple Allow multiple values for one key. Default is false
+ *
+ * @return int|false id of metadata or false if failure
+ *
+ * @deprecated Use \ElggEntity setter or \Entity->setMetadata()
+ */
+function create_metadata($entity_guid, $name, $value, $value_type = '', $ignored1 = null,
+		$ignored2 = null, $allow_multiple = false) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggEntity setter or \Entity->setMetadata()', '3.0');
+	
+	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,	$value_type, $allow_multiple);
+}
