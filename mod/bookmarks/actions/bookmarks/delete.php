@@ -5,20 +5,23 @@
  * @package Bookmarks
  */
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $bookmark = get_entity($guid);
 
-if (elgg_instanceof($bookmark, 'object', 'bookmarks') && $bookmark->canEdit()) {
-	$container = $bookmark->getContainerEntity();
-	if ($bookmark->delete()) {
-		system_message(elgg_echo("bookmarks:delete:success"));
-		if (elgg_instanceof($container, 'group')) {
-			forward("bookmarks/group/$container->guid/all");
-		} else {
-			forward("bookmarks/owner/$container->username");
-		}
-	}
+if (!elgg_instanceof($bookmark, 'object', 'bookmarks') || !$bookmark->canDelete()) {
+	return elgg_error_response(elgg_echo('bookmarks:delete:failed'));
 }
 
-register_error(elgg_echo("bookmarks:delete:failed"));
-forward(REFERER);
+$container = $bookmark->getContainerEntity();
+if (!$bookmark->delete()) {
+	return elgg_error_response(elgg_echo('bookmarks:delete:failed'));
+}
+
+if ($container instanceof \ElggGroup) {
+	$forward_url = "bookmarks/group/{$container->guid}/all";
+} else {
+	$forward_url = "bookmarks/owner/{$container->username}";
+}
+
+return elgg_ok_response('', elgg_echo('bookmarks:delete:success'), $forward_url);
+

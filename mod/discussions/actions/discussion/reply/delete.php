@@ -8,19 +8,15 @@ $guid = (int) get_input('guid');
 $reply = get_entity($guid);
 
 if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
-	register_error(elgg_echo('discussion:reply:error:notdeleted'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('discussion:reply:error:notdeleted'));
 }
 
-if (!$reply->canEdit()) {
-	register_error(elgg_echo('discussion:error:permissions'));
-	forward(REFERER);
+if (!$reply->canDelete()) {
+	return elgg_error_response(elgg_echo('discussion:error:permissions'));
 }
 
-if ($reply->delete()) {
-	system_message(elgg_echo('discussion:reply:deleted'));
-} else {
-	register_error(elgg_echo('discussion:reply:error:notdeleted'));
+if (!$reply->delete()) {
+	return elgg_error_response(elgg_echo('discussion:reply:error:notdeleted'));
 }
 
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('discussion:reply:deleted'));

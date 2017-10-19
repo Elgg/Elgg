@@ -38,7 +38,7 @@ switch ($page_type) {
 		$subject = get_user_by_username($subject_username);
 		if (!$subject) {
 			register_error(elgg_echo('river:subject:invalid_subject'));
-			forward('');
+			forward();
 		}
 		elgg_set_page_owner_guid($subject->guid);
 		$title = elgg_echo('river:owner', [htmlspecialchars($subject->name, ENT_QUOTES, 'UTF-8', false)]);

@@ -62,60 +62,58 @@ foreach ($profile_fields as $shortname => $valuetype) {
 $name = strip_tags(get_input('name'));
 if ($name) {
 	if (elgg_strlen($name) > 50) {
-		register_error(elgg_echo('user:name:fail'));
-	} elseif ($owner->name != $name) {
+		return elgg_error_response(elgg_echo('user:name:fail'));
+	} elseif ($owner->name !== $name) {
 		$owner->name = $name;
-		$owner->save();
 	}
+}
+
+if (empty($input)) {
+	return elgg_ok_response('', '', $owner->getUrl());
 }
 
 // go through custom fields
-if (sizeof($input) > 0) {
-	// fetch default access level for the user for use in fallback cases
-	$user_default_access = get_default_access($owner);
+// fetch default access level for the user for use in fallback cases
+$user_default_access = get_default_access($owner);
+
+foreach ($input as $shortname => $value) {
+	$owner->deleteAnnotations("profile:$shortname");
+
+	// for BC, keep storing fields in MD, but we'll read annotations only
+	elgg_delete_metadata([
+		'guid' => $owner->guid,
+		'metadata_name' => $shortname,
+		'limit' => false
+	]);
 	
-	foreach ($input as $shortname => $value) {
-		$owner->deleteAnnotations("profile:$shortname");
+	if (!is_null($value) && ($value !== '')) {
+		// only create metadata for non empty values (0 is allowed) to prevent metadata records
+		// with empty string values #4858
+		
+		if (isset($accesslevel[$shortname])) {
+			$access_id = (int) $accesslevel[$shortname];
+		} else {
+			// this should never be executed since the access level should always be set
+			$access_id = $user_default_access;
+		}
+
+		if (!is_array($value)) {
+			$value = [$value];
+		}
+		foreach ($value as $interval) {
+			create_annotation($owner->guid, "profile:$shortname", $interval, 'text', $owner->guid, $access_id);
+		}
 
 		// for BC, keep storing fields in MD, but we'll read annotations only
-		$options = [
-			'guid' => $owner->guid,
-			'metadata_name' => $shortname,
-			'limit' => false
-		];
-		elgg_delete_metadata($options);
-		
-		if (!is_null($value) && ($value !== '')) {
-			// only create metadata for non empty values (0 is allowed) to prevent metadata records
-			// with empty string values #4858
-			
-			if (isset($accesslevel[$shortname])) {
-				$access_id = (int) $accesslevel[$shortname];
-			} else {
-				// this should never be executed since the access level should always be set
-				$access_id = $user_default_access;
-			}
-
-			if (!is_array($value)) {
-				$value = [$value];
-			}
-			foreach ($value as $interval) {
-				create_annotation($owner->guid, "profile:$shortname", $interval, 'text', $owner->guid, $access_id);
-			}
-
-			// for BC, keep storing fields in MD, but we'll read annotations only
-			$owner->$shortname = $value;
-			}
-		}
+		$owner->$shortname = $value;
 	}
-
-	$owner->save();
-
-	// Notify of profile update
-	elgg_trigger_event('profileupdate', $owner->type, $owner);
-
-	elgg_clear_sticky_form('profile:edit');
-	system_message(elgg_echo("profile:saved"));
 }
 
-forward($owner->getUrl());
+$owner->save();
+
+// Notify of profile update
+elgg_trigger_event('profileupdate', $owner->type, $owner);
+
+elgg_clear_sticky_form('profile:edit');
+
+return elgg_ok_response('', elgg_echo("profile:saved"), $owner->getUrl());

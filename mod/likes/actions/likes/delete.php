@@ -21,12 +21,8 @@ if (!$like) {
 	$like = $likes[0];
 }
 
-if ($like && $like->canEdit()) {
-	$entity = $like->getEntity();
-	$like->delete();
-	system_message(elgg_echo("likes:deleted"));
-	forward(REFERER);
+if (!$like || !$like->canDelete() || !$like->delete()) {
+	return elgg_error_response(elgg_echo('likes:notdeleted'));
 }
 
-register_error(elgg_echo("likes:notdeleted"));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('likes:deleted'));

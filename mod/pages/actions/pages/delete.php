@@ -3,25 +3,22 @@
  * Remove a page
  *
  * Subpages are not deleted but are moved up a level in the tree
- *
- * @package ElggPages
  */
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $page = get_entity($guid);
 /* @var ElggObject $page */
 
 elgg_load_library('elgg:pages');
 
 if (!pages_is_page($page) || !pages_can_delete_page($page)) {
-	register_error(elgg_echo('pages:delete:failure'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('pages:delete:failure'));
 }
 
 $container = $page->getContainerEntity();
 
 // Bring all child elements forward
-$parent = $page->parent_guid;
+$parent_guid = $page->parent_guid;
 
 $children = new ElggBatch('elgg_get_entities_from_metadata', [
 	'metadata_name' => 'parent_guid',
@@ -33,8 +30,8 @@ $db_prefix = elgg_get_config('dbprefix');
 $subtype_id = (int) get_subtype_id('object', 'page_top');
 
 foreach ($children as $child) {
-	if ($parent) {
-		$child->parent_guid = $parent;
+	if ($parent_guid) {
+		$child->parent_guid = $parent_guid;
 		continue;
 	}
 
@@ -57,20 +54,20 @@ foreach ($children as $child) {
 }
 
 if (!$page->delete()) {
-	register_error(elgg_echo('pages:delete:failure'));
-	forward(REFERER);
-}
-
-system_message(elgg_echo('pages:delete:success'));
-if ($parent) {
-	$parent = get_entity($parent);
-	if ($parent) {
-		forward($parent->getURL());
-	}
+	return elgg_error_response(elgg_echo('pages:delete:failure'));
 }
 
 if (elgg_instanceof($container, 'group')) {
-	forward("pages/group/$container->guid/all");
+	$forward_url = "pages/group/{$container->guid}/all";
 } else {
-	forward("pages/owner/$container->username");
+	$forward_url = "pages/owner/{$container->username}";
 }
+
+if ($parent_guid) {
+	$parent = get_entity($parent_guid);
+	if ($parent) {
+		$forward_url = $parent->getURL();
+	}
+}
+
+return elgg_ok_response('', elgg_echo('pages:delete:success'), $forward_url);

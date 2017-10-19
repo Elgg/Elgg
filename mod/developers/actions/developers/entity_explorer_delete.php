@@ -35,4 +35,5 @@ switch ($type) {
 }
 
 access_show_hidden_entities($show_hidden);
-forward(REFERER);
+
+return elgg_ok_response();
