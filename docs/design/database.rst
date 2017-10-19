@@ -466,53 +466,8 @@ To always get an array back, simply cast to an array;
 
     $tags = (array)$object->tags;
 
-Finer control
--------------
-
-Adding metadata
-~~~~~~~~~~~~~~~
-
-If you need more control, for example to assign an access ID other than
-the default, you can use the ``create_metadata`` function, which is
-defined as follows:
-
-.. code:: php
-
-        function create_metadata(
-            $entity_guid,           // The GUID of the parent entity
-            $name,                  // The name of the metadata (eg 'tags')
-            $value,                 // The metadata value
-            $value_type,            // Currently either 'text' or 'integer'
-            $owner_guid,            // The owner of the metadata
-            $ignored = null,        // Provide null here
-            $allow_multiple = false // Do we have more than one value?
-            )
-
-For single values, you can therefore write metadata as follows (taking
-the example of a date of birth attached to a user):
-
-.. code:: php
-
-    create_metadata($user_guid, 'dob', $dob_timestamp, 'integer', $_SESSION['guid']);
-
-For multiple values, you will need to iterate through and call
-``create_metadata`` on each one. The following piece of code comes from
-the profile save action:
-
-.. code:: php
-
-    $i = 0;
-    foreach ($value as $interval) {
-        $i++;
-        $multiple = ($i != 1);
-        create_metadata($user->guid, $shortname, $interval, 'text', $user->guid, null, $multiple);
-    }
-
-Note that the *allow multiple* setting is set to *false* in the first
-iteration and *true* thereafter.
-
-Reading metadata
-~~~~~~~~~~~~~~~~
+Reading metadata as objects
+---------------------------
 
 ``elgg_get_metadata`` is the best function for retrieving metadata as ElggMetadata
 objects:

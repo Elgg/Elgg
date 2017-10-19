@@ -49,7 +49,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 			$name = 'test_metadata_name' . rand();
 			$value = 'test_metadata_value' . rand();
 
-			$metadata[] = create_metadata($this->object->guid, $name, $value);
+			$metadata[] = _elgg_services()->metadataTable->create($this->object->guid, $name, $value);
 		}
 
 		return $metadata;

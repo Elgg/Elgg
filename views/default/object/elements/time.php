@@ -36,5 +36,4 @@ $time_str = $icon . elgg_view_friendly_time($time);
 
 echo elgg_format_element('span', [
 	'class' => 'elgg-listing-time',
-		], $time_str);
-
+], $time_str);

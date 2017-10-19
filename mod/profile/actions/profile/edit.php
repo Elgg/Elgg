@@ -104,9 +104,7 @@ if (sizeof($input) > 0) {
 			}
 
 			// for BC, keep storing fields in MD, but we'll read annotations only
-			foreach (array_values($value) as $i => $interval) {
-				$multiple = ($i > 0);
-				create_metadata($owner->guid, $shortname, $interval, 'text', $owner->guid, null, $multiple);
+			$owner->$shortname = $value;
 			}
 		}
 	}
