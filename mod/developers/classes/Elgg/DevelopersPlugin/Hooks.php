@@ -104,11 +104,9 @@ class Hooks {
 		}
 		
 		$to = $email->getTo();
+		$to->setEmail($forward_address);
 		
-		$new_string = \Elgg\Email::getFormattedEmailAddress($forward_address, $to->getName());
-		$new_to = \Elgg\Email::fromString($new_string);
-		
-		$email->setTo($new_to);
+		$email->setTo($to);
 		
 		return $email;
 	}

@@ -5,8 +5,8 @@ namespace Elgg;
 use ElggEntity;
 use ElggUser;
 use InvalidParameterException;
+use Elgg\Email\Address;
 use Elgg\Email\Attachment;
-use Zend\Mail\Address;
 use Zend\Mime\Part;
 
 /**
@@ -15,12 +15,12 @@ use Zend\Mime\Part;
 final class Email {
 
 	/**
-	 * @var Address
+	 * @var \Elgg\Email\Address
 	 */
 	protected $from;
 
 	/**
-	 * @var Address
+	 * @var \Elgg\Email\Address
 	 */
 	protected $to;
 
@@ -53,8 +53,8 @@ final class Email {
 	 * Create an email instance form an array of options
 	 *
 	 * @param array $options Options
-	 *                       'from' - ElggEntity, or email string, or Zend Address
-	 *                       'to' - ElggEntity, or email string, or Zend Address
+	 *                       'from' - ElggEntity, or email string, or \Elgg\Email\Address
+	 *                       'to' - ElggEntity, or email string, or \Elgg\Email\Address
 	 *                       'subject' - subject string
 	 *                       'body' - body string
 	 *                       'params' - additional parameters
@@ -89,7 +89,7 @@ final class Email {
 	/**
 	 * Sets sender address
 	 *
-	 * @param Address $from Sender address
+	 * @param \Elgg\Email\Address $from Sender address
 	 * @return self
 	 */
 	public function setFrom(Address $from) {
@@ -99,7 +99,7 @@ final class Email {
 
 	/**
 	 * Returns sender address
-	 * @return Address
+	 * @return \Elgg\Email\Address
 	 */
 	public function getFrom() {
 		return $this->from;
@@ -108,7 +108,7 @@ final class Email {
 	/**
 	 * Sets recipient address
 	 *
-	 * @param Address $to Recipient address
+	 * @param \Elgg\Email\Address $to Recipient address
 	 * @return self
 	 */
 	public function setTo(Address $to) {
@@ -118,7 +118,7 @@ final class Email {
 
 	/**
 	 * Returns recipient address
-	 * @return Address
+	 * @return \Elgg\Email\Address
 	 */
 	public function getTo() {
 		return $this->to;
@@ -267,8 +267,8 @@ final class Email {
 				$site = elgg_get_site_entity();
 				$from = new Address($site->getEmailAddress(), $site->getDisplayName());
 			}
-		} else if (is_string($from)) {
-			$from = self::fromString($from);
+		} elseif (is_string($from)) {
+			$from = Address::fromString($from);
 		}
 		
 		if (!$from instanceof Address) {
@@ -288,8 +288,8 @@ final class Email {
 	protected static function prepareTo($to) {
 		if ($to instanceof ElggEntity) {
 			$to = new Address($to->email, $to->getDisplayName());
-		} else if (is_string($to)) {
-			$to = self::fromString($to);
+		} elseif (is_string($to)) {
+			$to = Address::fromString($to);
 		}
 
 		if (!$to instanceof Address) {
@@ -297,39 +297,5 @@ final class Email {
 		}
 
 		return $to;
-	}
-
-	/**
-	 * Parses strings like "Evan <evan@elgg.org>" into name/email objects.
-	 *
-	 * This is not very sophisticated and only used to provide a light BC effort.
-	 *
-	 * @param string $contact e.g. "Evan <evan@elgg.org>"
-	 *
-	 * @return Address
-	 */
-	public static function fromString($contact) {
-		$containsName = preg_match('/<(.*)>/', $contact, $matches) == 1;
-		if ($containsName) {
-			$name = trim(substr($contact, 0, strpos($contact, '<')));
-			return new Address($matches[1], $name);
-		} else {
-			return new Address(trim($contact));
-		}
-	}
-
-	/**
-	 * Format an email address and name into a formatted email address
-	 *
-	 * eg "Some name <someone@example.com>"
-	 *
-	 * @param string $email the email address
-	 * @param string $name  the name
-	 *
-	 * @return string
-	 */
-	public static function getFormattedEmailAddress($email, $name = null) {
-		$mail = new Address($email, $name);
-		return $mail->toString();
 	}
 }
