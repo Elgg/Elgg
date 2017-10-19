@@ -173,6 +173,7 @@ Deprecated APIs
 ---------------
 
  * ``ban_user``: Use ``ElggUser->ban()``
+ * ``update_metadata``: Use ``ElggMetadata->save()``
  * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities_from_metadata()``
  * ``elgg_get_user_validation_status``: Use ``ElggUser->isValidated()``
  * ``make_user_admin``: Use ``ElggUser->makeAdmin()``

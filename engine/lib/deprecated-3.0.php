@@ -349,3 +349,21 @@ function set_last_login($user_guid) {
 	
 	$user->setLastLogin();
 }
+
+/**
+ * Update a specific piece of metadata.
+ *
+ * @param int    $id         ID of the metadata to update
+ * @param string $name       Metadata name
+ * @param string $value      Metadata value
+ * @param string $value_type Value type
+ *
+ * @return bool
+ *
+ * @deprecated Use \ElggMetadata->save()
+ */
+function update_metadata($id, $name, $value, $value_type) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggMetadata->save()', '3.0');
+	
+	return _elgg_services()->metadataTable->update($id, $name, $value, $value_type);
+}

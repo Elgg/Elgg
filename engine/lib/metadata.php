@@ -69,20 +69,6 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $ignored
 }
 
 /**
- * Update a specific piece of metadata.
- *
- * @param int    $id         ID of the metadata to update
- * @param string $name       Metadata name
- * @param string $value      Metadata value
- * @param string $value_type Value type
- *
- * @return bool
- */
-function update_metadata($id, $name, $value, $value_type) {
-	return _elgg_services()->metadataTable->update($id, $name, $value, $value_type);
-}
-
-/**
  * Returns metadata.  Accepts all elgg_get_entities() options for entity
  * restraints.
  *
