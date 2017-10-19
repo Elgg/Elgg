@@ -722,7 +722,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$to1 = $this->createUser();
 
 		$to2 = $this->createUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
+		$to2->setNotificationSetting('test_method', true);
 
 		$to3 = $this->createUser();
 
@@ -810,7 +810,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$to1 = $this->createUser();
 
 		$to2 = $this->createUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
+		$to2->setNotificationSetting('test_method', true);
 
 		$to3 = $this->createUser();
 
@@ -894,7 +894,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$to1 = $this->createUser();
 
 		$to2 = $this->createUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
+		$to2->setNotificationSetting('test_method', true);
 
 		$subject = 'Test message';
 		$body = 'Lorem ipsum';
@@ -951,10 +951,10 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 
 		$from = $this->createUser();
 		$to1 = $this->createUser();
-		create_metadata($to1->guid, 'notification:method:test_method', true, '', $to1->guid);
+		$to1->setNotificationSetting('test_method', true);
 
 		$to2 = $this->createUser();
-		create_metadata($to2->guid, 'notification:method:test_method', true, '', $to2->guid);
+		$to2->setNotificationSetting('test_method', true);
 
 		$subject = 'Test message';
 		$body = 'Lorem ipsum';
