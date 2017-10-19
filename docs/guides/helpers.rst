@@ -1,6 +1,10 @@
 Helper functions
 ================
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Input and output
 ----------------
 
@@ -49,3 +53,30 @@ Interface and annotations
 .. code:: php
 
    elgg_view_entity_icon($user, 'small', array('use_hover' => false));
+
+E-mail address formatting
+-------------------------
+
+Elgg has a helper class to aid in getting formatted e-mail addresses: ``\Elgg\Email\Address``.
+
+.. code:: php
+
+	// the constructor takes two variables
+	// first is the email address, this is REQUIRED
+	// second is the name, this is optional
+	$address = new \Elgg\Email\Address('example@elgg.org', 'Example');
+	
+	// this will result in 'Example <example@elgg.org>'
+	echo $address->toString();
+	
+	// to change the name use:
+	$address->setName('New Example');
+	
+	// to change the e-mail address use:
+	$address->setEmail('example2@elgg.org');
+
+There are some helper functions available
+
+- ``\Elgg\Email\Address::fromString($string)`` Will return an ``\Elgg\Email\Address`` class with e-mail and name set,
+  provided a formatted string (eg. ``Example <example@elgg.org>``)
+- ``\Elgg\Email\Address::getFormattedEmailAddress($email, $name)`` Will return a formatted string provided an e-mail address and optionaly a name

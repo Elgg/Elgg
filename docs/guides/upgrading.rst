@@ -204,7 +204,7 @@ Removed classes/interfaces
  * ``ODD`` and all classes beginning with ``ODD*``.
  * ``XmlElement``
  * ``Elgg_Notifications_Event``: Use ``\Elgg\Notifications\Event``
- * ``Elgg\Mail\Address``: use ``Elgg\Email``
+ * ``Elgg\Mail\Address``: use ``Elgg\Email\Address``
 
 Schema changes
 --------------

@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Email\Address;
+
 /**
  * @group EmailService
  * @group UnitTests
@@ -37,40 +39,40 @@ class EmailUnitTest extends UnitTestCase {
 
 		// We never send email from users
 		$site = elgg_get_site_entity();
-		$this->assertEquals(new \Zend\Mail\Address($site->getEmailAddress(), $site->getDisplayName()), $email->getFrom());
-		$this->assertEquals(new \Zend\Mail\Address($to->email, $to->getDisplayName()), $email->getTo());
+		$this->assertEquals(new Address($site->getEmailAddress(), $site->getDisplayName()), $email->getFrom());
+		$this->assertEquals(new Address($to->email, $to->getDisplayName()), $email->getTo());
 	}
 
 	public function testFactoryFromEmailString() {
 
 		$email = Email::factory([
-			'from' => "from@elgg.org",
-			'to' => "to@elgg.org",
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
 			'subject' => '',
 			'body' => '',
 		]);
 
-		$this->assertEquals(Email::fromString("from@elgg.org"), $email->getFrom());
-		$this->assertEquals(Email::fromString("to@elgg.org"), $email->getTo());
+		$this->assertEquals(Address::fromString('from@elgg.org'), $email->getFrom());
+		$this->assertEquals(Address::fromString('to@elgg.org'), $email->getTo());
 	}
 
 	public function testFactoryFromContactString() {
 
 		$email = Email::factory([
-			'from' => "From <from@elgg.org>",
-			'to' => "To <to@elgg.org>",
+			'from' => 'From <from@elgg.org>',
+			'to' => 'To <to@elgg.org>',
 			'subject' => '',
 			'body' => '',
 		]);
 
-		$this->assertEquals(new \Zend\Mail\Address("from@elgg.org", "From"), $email->getFrom());
-		$this->assertEquals(new \Zend\Mail\Address("to@elgg.org", "To"), $email->getTo());
+		$this->assertEquals(new Address('from@elgg.org', 'From'), $email->getFrom());
+		$this->assertEquals(new Address('to@elgg.org', 'To'), $email->getTo());
 	}
 
 	public function testFactory() {
 
-		$from =  new \Zend\Mail\Address('from@elgg.org', 'From');
-		$to = new \Zend\Mail\Address('to@elgg.org', 'to');
+		$from = new Address('from@elgg.org', 'From');
+		$to = new Address('to@elgg.org', 'to');
 
 		$email = Email::factory([
 			'from' => $from,
