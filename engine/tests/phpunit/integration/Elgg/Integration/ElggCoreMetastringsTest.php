@@ -51,7 +51,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 		for ($i = 0; $i < $max; $i++) {
 			$name = 'test_metadata_name' . rand();
 			$value = 'test_metadata_value' . rand();
-			$id = create_metadata($this->object->guid, $name, $value);
+			$id = _elgg_services()->metadataTable->create($this->object->guid, $name, $value);
 			$metadata[] = $id;
 		}
 

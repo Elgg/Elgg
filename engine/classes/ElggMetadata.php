@@ -76,10 +76,8 @@ class ElggMetadata extends \ElggExtender {
 			return _elgg_services()->metadataTable->update($this->id, $this->name, $this->value, $this->value_type);
 		}
 		
-		// using create_metadata() for deprecation notices in 2.x
-		$this->id = create_metadata($this->entity_guid, $this->name, $this->value,
-			$this->value_type);
-
+		$this->id = _elgg_services()->metadataTable->create($this->entity_guid, $this->name, $this->value, $this->value_type);
+		
 		if (!$this->id) {
 			throw new \IOException("Unable to save new " . get_class());
 		}
