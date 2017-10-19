@@ -20,15 +20,11 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 		'config',
 		'entities',
 		'entity_relationships',
-		'groups_entity',
 		'metadata',
-		'objects_entity',
 		'private_settings',
 		'queue',
 		'river',
-		'sites_entity',
 		'system_log',
-		'users_entity',
 		'users_remember_me_cookies',
 		'users_sessions',
 		// MEMORY
@@ -69,13 +65,6 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 				'name' => 'hmac',
 				'unique' => false,
 			],
-		],
-		'sites_entity' => [
-			'url' => [
-				'primary' => false,
-				'name' => "url",
-				'unique' => true,
-			]
 		],
 	];
 
