@@ -96,4 +96,181 @@ class EmailUnitTest extends UnitTestCase {
 		$this->assertEquals(['Baz' => 1], $email->getParams());
 	}
 
+	function testFactoryAddAttachmentFromParams() {
+		
+		$email = Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => '',
+			'body' => '',
+			'params' => [
+				'attachments' => [
+					[
+						'content' => 'Test file content',
+						'filename' => 'test.txt',
+						'type' => 'text/plain',
+					],
+				]
+			]
+		]);
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(1, $email->getAttachments());
+	}
+	
+	function testFactoryAddAttachmentsFromParams() {
+		
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('foobar.txt');
+		
+		$this->assertTrue($file->exists());
+		
+		$email = Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => '',
+			'body' => '',
+			'params' => [
+				'attachments' => [
+					[
+						'content' => 'Test file content',
+						'filename' => 'test.txt',
+						'type' => 'text/plain',
+					],
+					$file,
+				]
+			]
+		]);
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(2, $email->getAttachments());
+	}
+	
+	function testFactoryAddAttachments() {
+		
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('foobar.txt');
+		
+		$this->assertTrue($file->exists());
+		
+		$email = Email::factory([
+			'from' => 'from@elgg.org',
+			'to' => 'to@elgg.org',
+			'subject' => '',
+			'body' => '',
+			'params' => [
+				'attachments' => [
+					[
+						'content' => 'Test file content',
+						'filename' => 'test.txt',
+						'type' => 'text/plain',
+					],
+					$file,
+				]
+			]
+		]);
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(2, $email->getAttachments());
+		
+		$new_attachment = [
+			'content' => 'Test file content 2',
+			'filename' => 'test2.txt',
+			'type' => 'text/plain',
+		];
+		
+		$email->addAttachment($new_attachment);
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(3, $email->getAttachments());
+	}
+	
+	function testAddAttachmentFromPart() {
+		
+		$email = new Email();
+		
+		$part = new \Zend\Mime\Part('Test file content');
+		$part->type = 'text/plain';
+		$part->disposition = 'attachment';
+		
+		$email->addAttachment($part);
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(1, $email->getAttachments());
+		
+		$email_parts = $email->getAttachments();
+		$email_part = $email_parts[0];
+		
+		$this->assertEquals($part, $email_part);
+		$this->assertEquals($part->getContent(), $email_part->getContent());
+		$this->assertEquals($part->getType(), $email_part->getType());
+		$this->assertEquals($part->getDisposition(), $email_part->getDisposition());
+	}
+	
+	function testAddAttachmentFromElggFile() {
+		
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		$file->setFilename('foobar.txt');
+		
+		$this->assertTrue($file->exists());
+		
+		$email = new Email();
+		
+		$email->addAttachment($file);
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(1, $email->getAttachments());
+		
+		$email_parts = $email->getAttachments();
+		$email_part = $email_parts[0];
+		
+		$this->assertEquals($file->grabFile(), $email_part->getContent());
+		$this->assertEquals($file->getMimeType(), $email_part->getType());
+		$this->assertEquals($file->getFilename(), $email_part->getFileName());
+	}
+	
+	function testAddAttachmentFromArray() {
+		
+		$attachment = [
+			'content' => 'Test file content',
+			'filename' => 'test.txt',
+			'type' => 'text/plain',
+		];
+		
+		$email = new Email();
+		
+		$email->addAttachment($attachment);
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(1, $email->getAttachments());
+		
+		$email_parts = $email->getAttachments();
+		$email_part = $email_parts[0];
+		
+		$this->assertEquals($attachment['content'], $email_part->getContent());
+		$this->assertEquals($attachment['type'], $email_part->getType());
+		$this->assertEquals($attachment['filename'], $email_part->getFileName());
+	}
+	
+	function testAddInvalidAttachmentFromArray() {
+		
+		$attachment = [
+			'filename' => 'test.txt',
+			'type' => 'text/plain',
+		];
+		
+		$email = new Email();
+		
+		_elgg_services()->logger->disable();
+		
+		$email->addAttachment($attachment);
+		
+		_elgg_services()->logger->enable();
+		
+		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertCount(0, $email->getAttachments());
+	}
 }

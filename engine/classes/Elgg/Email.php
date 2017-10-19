@@ -5,7 +5,9 @@ namespace Elgg;
 use ElggEntity;
 use ElggUser;
 use InvalidParameterException;
+use Elgg\Email\Attachment;
 use Zend\Mail\Address;
+use Zend\Mime\Part;
 
 /**
  * Email message
@@ -41,6 +43,11 @@ final class Email {
 	 * @var array
 	 */
 	protected $headers = [];
+	
+	/**
+	 * @var Part[]
+	 */
+	protected $attachments = [];
 
 	/**
 	 * Create an email instance form an array of options
@@ -52,7 +59,7 @@ final class Email {
 	 *                       'body' - body string
 	 *                       'params' - additional parameters
 	 *                       'headers' - HTTP/IMF headers
-	 * @return \self
+	 * @return \Elgg\Email
 	 */
 	public static function factory(array $options = []) {
 		$from = elgg_extract('from', $options);
@@ -69,7 +76,13 @@ final class Email {
 		$email->setBody($body);
 		$email->setParams($params);
 		$email->setHeaders($headers);
-
+		
+		if (isset($params['attachments']) && is_array($params['attachments'])) {
+			foreach ($params['attachments'] as $attachment) {
+				$email->addAttachment($attachment);
+			}
+		}
+		
 		return $email;
 	}
 
@@ -197,6 +210,44 @@ final class Email {
 	 */
 	public function getHeaders() {
 		return $this->headers;
+	}
+	
+	/**
+	 * Add an attachment
+	 *
+	 * @param mixed $attachment \Zend\Mime\Part or \Elgg\Email\Attachment or \ElggFile or an array
+	 *
+	 * @see \Elgg\Email\Attachment::factory()
+	 *
+	 * @return self
+	 */
+	public function addAttachment($attachment) {
+		
+		if ($attachment instanceof Part) {
+			$this->attachments[] = $attachment;
+			return $this;
+		}
+		
+		if ($attachment instanceof \ElggFile) {
+			$this->attachments[] = Attachment::fromElggFile($attachment);
+			return $this;
+		}
+		
+		$attachment = Attachment::factory($attachment);
+		if (!empty($attachment)) {
+			$this->attachments[] = $attachment;
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Get all attachments
+	 *
+	 * @return \Zend\Mime\Part[]
+	 */
+	public function getAttachments() {
+		return $this->attachments;
 	}
 
 	/**
