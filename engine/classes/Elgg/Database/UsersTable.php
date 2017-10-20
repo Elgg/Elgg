@@ -163,13 +163,21 @@ class UsersTable {
 		}
 
 		$time = $this->getCurrentTime()->getTimestamp() - $options['seconds'];
-		return elgg_get_entities([
+		return elgg_get_entities_from_metadata([
 			'type' => 'user',
 			'limit' => $options['limit'],
 			'offset' => $options['offset'],
 			'count' => $options['count'],
-			'wheres' => ["e.last_action >= {$time}"],
-			'order_by' => "e.last_action desc",
+			'metadata_name_value_pairs' => [
+				'name' => 'last_action',
+				'values' => $time,
+				'operand' => '>=',
+			],
+			'order_by_metadata' => [
+				'name' => 'last_action',
+				'direction' => 'DESC',
+				'as' => 'integer',
+			],
 		]);
 	}
 
