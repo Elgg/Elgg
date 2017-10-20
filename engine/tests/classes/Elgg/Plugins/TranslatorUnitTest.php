@@ -6,6 +6,8 @@ use Elgg\I18n\Translator;
 
 abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
+	use PluginTesting;
+
 	/**
 	 * @var Translator
 	 */
@@ -24,26 +26,6 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * Returns path to language directory
-	 * @return string
-	 */
-	public function getPath() {
-		$reflector = new \ReflectionObject($this);
-		$fn = $reflector->getFileName();
-
-		$path = sanitise_filepath(dirname($fn));
-		$plugins_path = sanitise_filepath(elgg_get_plugins_path());
-
-		if (strpos($path, $plugins_path) === 0) {
-			$relative_path = substr($path, strlen($plugins_path));
-			list($plugin_id, $filepath) = explode('/', $relative_path, 2);
-			return $plugins_path . $plugin_id . '/languages/';
-		}
-
-		return '';
-	}
-
-	/**
 	 * Provides registered languages
 	 * @return array
 	 */
@@ -52,8 +34,13 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$codes = Translator::getAllLanguageCodes();
 
+		$path = $this->getPath();
+		if (!$path) {
+			return $provides;
+		}
+
 		foreach ($codes as $code) {
-			if (file_exists(rtrim($this->getPath(), '/') . "/$code.php")) {
+			if (file_exists($path . "/languages/$code.php")) {
 				$provides[] = [$code];
 			}
 		}
