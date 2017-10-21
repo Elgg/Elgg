@@ -19,6 +19,14 @@ class ElggUser extends \ElggEntity
 	/**
 	 * {@inheritdoc}
 	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		$this->attributes['subtype'] = 'user';
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getType() {
 		return 'user';
 	}

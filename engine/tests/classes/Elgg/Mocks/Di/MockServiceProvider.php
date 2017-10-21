@@ -10,7 +10,6 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database\MetadataTable        $metadataTable      Metadata mocks
  * @property-read \Elgg\Mocks\Database\Annotations          $annotations        Annotation mocks
  * @property-read \Elgg\Mocks\Database\RelationshipsTable   $relationshipsTable Annotation mocks
- * @property-read \Elgg\Mocks\Database\SubtypeTable         $subtypeTable       Subtype table mock
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections  ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings    Private settings table mock
  *
@@ -45,7 +44,6 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$sp->db,
 				$sp->entityCache,
 				$sp->metadataCache,
-				$sp->subtypeTable,
 				$sp->hooks->getEvents(),
 				$sp->session,
 				$sp->translator,
@@ -63,10 +61,6 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 
 		$this->setFactory('relationshipsTable', function (MockServiceProvider $sp) {
 			return new \Elgg\Mocks\Database\RelationshipsTable($sp->db, $sp->entityTable, $sp->metadataTable, $sp->hooks->getEvents());
-		});
-
-		$this->setFactory('subtypeTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\SubtypeTable($sp->db);
 		});
 
 		$this->setFactory('accessCollections', function (MockServiceProvider $sp) {

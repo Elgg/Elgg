@@ -228,14 +228,16 @@ class UsersTable {
 		// Create user
 		$constructor = ElggUser::class;
 		if ($subtype) {
-			$class = get_subtype_class('user', $subtype);
+			$class = elgg_get_entity_class('user', $subtype);
 			if ($class && class_exists($class) && is_subclass_of($class, ElggUser::class)) {
 				$constructor = $class;
 			}
 		}
 
 		$user = new $constructor();
-		$user->subtype = $subtype;
+		if ($subtype) {
+			$user->subtype = $subtype;
+		}
 		$user->username = $username;
 		$user->email = $email;
 		$user->name = $name;

@@ -35,7 +35,7 @@ class SeedingTest extends LegacyIntegrationTestCase {
 		$this->assertEquals(0, $user->owner_guid);
 		$this->assertEquals(0, $user->container_guid);
 		$this->assertEquals(ACCESS_PUBLIC, $user->access_id);
-		$this->assertEmpty($user->getSubtype());
+		$this->assertEquals('user', $user->getSubtype());
 		$this->assertFalse($user->isAdmin());
 		$this->assertFalse($user->isBanned());
 

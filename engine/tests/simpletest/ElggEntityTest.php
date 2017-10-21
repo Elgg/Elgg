@@ -29,8 +29,6 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		if ($this->entity) {
 			$this->entity->delete();
 		}
-
-		remove_subtype('object', 'elgg_entity_test_subtype');
 	}
 
 	public function testSubtypePropertyReads() {
@@ -38,8 +36,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$guid = $this->entity->guid;
 
 		$subtype_prop = $this->entity->subtype;
-		$this->assertIsA($subtype_prop, 'int');
-		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
 
 		_elgg_services()->entityCache->remove($guid);
 		$this->entity = null;
@@ -47,7 +44,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 		$subtype_prop = $this->entity->subtype;
 		$this->assertIsA($subtype_prop, 'int');
-		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
 	}
 
 	public function testUnsavedEntitiesDontRecordAttributeSets() {
@@ -118,20 +115,6 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->entity = get_entity($guid);
 
 		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
-	}
-
-	public function testSubtypeAddRemove() {
-		$test_subtype = 'test_1389988642';
-		$object = new \ElggObject();
-		$object->subtype = $test_subtype;
-		$object->save();
-
-		$this->assertTrue(is_numeric(get_subtype_id('object', $test_subtype)));
-
-		$object->delete();
-		remove_subtype('object', $test_subtype);
-
-		$this->assertFalse(get_subtype_id('object', $test_subtype));
 	}
 
 	public function testElggEntityGetAndSetAnnotations() {

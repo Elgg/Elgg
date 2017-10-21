@@ -49,7 +49,6 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 		if ($this->entity3) {
 			$this->entity3->delete();
 		}
-		remove_subtype('object', 'elgg_relationship_test');
 
 		_elgg_services()->hooks->getEvents()->restore();
 	}

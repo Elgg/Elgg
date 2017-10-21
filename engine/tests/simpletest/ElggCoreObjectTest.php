@@ -7,8 +7,12 @@
  */
 class ElggCoreObjectTest extends \ElggCoreUnitTest {
 
+	protected $subtype;
+
 	public function up() {
+		$this->subtype = $this->getRandomSubtype();
 		$this->entity = new \ElggObjectWithExposableAttributes();
+		$this->entity->subtype = $this->subtype;
 	}
 
 	public function down() {
@@ -19,7 +23,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$attributes = array();
 		$attributes['guid'] = null;
 		$attributes['type'] = 'object';
-		$attributes['subtype'] = null;
+		$attributes['subtype'] = $this->subtype;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['access_id'] = ACCESS_PRIVATE;
@@ -131,6 +135,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 	// see https://github.com/elgg/elgg/issues/1196
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
 		$e1 = new \ElggObject();
+		$e1->subtype = $this->getRandomSubtype();
 		$e1->access_id = ACCESS_PUBLIC;
 		$e1->owner_guid = 0;
 		$e1->container_guid = 0;
@@ -138,6 +143,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		$guid1 = $e1->getGUID();
 
 		$e2 = new \ElggObject();
+		$e2->subtype = $this->getRandomSubtype();
 		$e2->container_guid = $guid1;
 		$e2->access_id = ACCESS_PUBLIC;
 		$e2->owner_guid = 0;
@@ -217,6 +223,7 @@ class ElggCoreObjectTest extends \ElggCoreUnitTest {
 		// object that owns itself
 		// can't check container_guid because of infinite loops in can_edit_entity()
 		$obj = new \ElggObject();
+		$obj->subtype = $this->getRandomSubtype();
 		$obj->save();
 		$obj->owner_guid = $obj->guid;
 		$obj->save();
