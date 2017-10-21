@@ -396,7 +396,7 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggPluginEntityClassIsRegistered() {
-		$class = get_subtype_class('object', 'plugin');
+		$class = elgg_get_entity_class('object', 'plugin');
 		$this->assertIdentical(ElggPlugin::class, $class);
 	}
 

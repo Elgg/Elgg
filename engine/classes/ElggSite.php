@@ -4,8 +4,8 @@
  *
  * \ElggSite represents a single site entity.
  *
- * An \ElggSite object is an \ElggEntity child class with the subtype
- * of "site."  It is created upon installation and holds information about a site:
+ * An \ElggSite object is an \ElggEntity child class with the subtype of "site."
+ * It is created upon installation and holds information about a site:
  *  - name
  *  - description
  *  - url
@@ -21,6 +21,14 @@
  * @property-read string $url         The root web address for the site, including trailing slash
  */
 class ElggSite extends \ElggEntity {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		$this->attributes['subtype'] = 'site';
+	}
 
 	/**
 	 * {@inheritdoc}

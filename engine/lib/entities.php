@@ -6,126 +6,42 @@
 use Elgg\Project\Paths;
 
 /**
- * Return the id for a given subtype.
+ * Return the class name registered as a constructor for an entity of a given type and subtype
  *
- * \ElggEntity objects have a type and a subtype.  Subtypes
- * are defined upon creation and cannot be changed.
- *
- * Plugin authors generally don't need to use this function
- * unless writing their own SQL queries.  Use {@link \ElggEntity::getSubtype()}
- * to return the string subtype.
- *
- * Subtypes are stored in the entity_subtypes table.  There is a foreign
- * key in the entities table.
- *
- * @param string $type    Type
- * @param string $subtype Subtype
- *
- * @return int Subtype ID
- * @see get_subtype_from_id()
- */
-function get_subtype_id($type, $subtype) {
-	return _elgg_services()->subtypeTable->getId($type, $subtype);
-}
-
-/**
- * Gets the denormalized string for a given subtype ID.
- *
- * @param int $subtype_id Subtype ID from database
- * @return string|false Subtype name, false if subtype not found
- * @see get_subtype_id()
- * @access private
- */
-function get_subtype_from_id($subtype_id) {
-	return _elgg_services()->subtypeTable->getSubtype($subtype_id);
-}
-
-/**
- * Return the class name for a registered type and subtype.
- *
- * Entities can be registered to always be loaded as a certain class
- * with add_subtype() or update_subtype(). This function returns the class
- * name if found and null if not.
+ * @see elgg_set_entity_type()
  *
  * @param string $type    The type
  * @param string $subtype The subtype
  *
- * @return string|null a class name or null
- * @see get_subtype_from_id()
- * @see get_subtype_class_from_id()
+ * @return string
  */
-function get_subtype_class($type, $subtype) {
-	return _elgg_services()->subtypeTable->getClass($type, $subtype);
+function elgg_get_entity_class($type, $subtype) {
+	return _elgg_services()->entityTable->getEntityClass($type, $subtype);
 }
 
 /**
- * Returns the class name for a subtype id.
+ * Sets class constructor name for entities with given type and subtype
  *
- * @param int $subtype_id The subtype id
+ * By default entities are loaded as one of the 4 parent objects:
+ *  - site: ElggSite
+ *  - user: ElggUser
+ *  - object: ElggObject
+ *  - group: ElggGroup
  *
- * @return string|null
- * @see get_subtype_class()
- * @see get_subtype_from_id()
- * @access private
+ * Entity classes for subtypes should extend the base class for entity type,
+ * e.g. ElggBlog must extend ElggObject
+ *
+ * @param string $type    Entity type
+ * @param string $subtype Entity subtype
+ * @param string $class   Class name for the object
+ *                        Can be empty to reset previously declared class name
+ *
+ * @return void
  */
-function get_subtype_class_from_id($subtype_id) {
-	return _elgg_services()->subtypeTable->getClassFromId($subtype_id);
+function elgg_set_entity_class($type, $subtype, $class = "") {
+	_elgg_services()->entityTable->setEntityClass($type, $subtype, $class);
 }
 
-/**
- * Register \ElggEntities with a certain type and subtype to be loaded as a specific class.
- *
- * By default entities are loaded as one of the 4 parent objects: site, user, object, or group.
- * If you subclass any of these you can register the classname with add_subtype() so
- * it will be loaded as that class automatically when retrieved from the database with
- * {@link get_entity()}.
- *
- * @warning This function cannot be used to change the class for a type-subtype pair.
- * Use update_subtype() for that.
- *
- * @param string $type    The type you're subtyping (site, user, object, or group)
- * @param string $subtype The subtype
- * @param string $class   Optional class name for the object
- *
- * @return int
- * @see update_subtype()
- * @see remove_subtype()
- * @see get_entity()
- */
-function add_subtype($type, $subtype, $class = "") {
-	return _elgg_services()->subtypeTable->add($type, $subtype, $class);
-}
-
-/**
- * Removes a registered \ElggEntity type, subtype, and classname.
- *
- * @warning You do not want to use this function. If you want to unregister
- * a class for a subtype, use update_subtype(). Using this function will
- * permanently orphan all the objects created with the specified subtype.
- *
- * @param string $type    Type
- * @param string $subtype Subtype
- *
- * @return bool
- * @see add_subtype()
- * @see update_subtype()
- */
-function remove_subtype($type, $subtype) {
-	return _elgg_services()->subtypeTable->remove($type, $subtype);
-}
-
-/**
- * Update a registered \ElggEntity type, subtype, and class name
- *
- * @param string $type    Type
- * @param string $subtype Subtype
- * @param string $class   Class name to use when loading this entity
- *
- * @return bool
- */
-function update_subtype($type, $subtype, $class = '') {
-	return _elgg_services()->subtypeTable->update($type, $subtype, $class);
-}
 
 /**
  * Returns a database row from the entities table.
@@ -154,7 +70,6 @@ function get_entity_as_row($guid) {
  *
  * @return \ElggEntity|false
  * @see get_entity_as_row()
- * @see add_subtype()
  * @see get_entity()
  * @access private
  *
@@ -238,14 +153,19 @@ function elgg_get_site_entity() {
  *           Joined with subtypes by AND. See below)
  *
  * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
- *              Use ELGG_ENTITIES_NO_VALUE to match the default subtype.
  *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
+ *              Note that all falsey values will be treated as ELGG_ENTITIES_ANY_VALUE,
+ *              all other values will be cast to string and searched for literally.
+ *              All values within a non-empty subtypes array will be cast to string and searched for literally
  *
  * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
  *                        array(
  *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
  *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
  *                        );
+ *                        Note that all falsey subtype values will be treated as ELGG_ENTITIES_ANY_VALUE,
+ *                        all other values will be cast to string and search for literally
+ *                        All values within a non-empty subtypes array will be cast to string and searched for literally
  *
  *	guids => null|ARR Array of entity guids
  *

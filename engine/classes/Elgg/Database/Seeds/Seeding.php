@@ -111,7 +111,7 @@ trait Seeding {
 			}
 
 			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = null;
+				$attributes['subtype'] = 'user';
 			}
 
 			$user = false;
@@ -119,9 +119,7 @@ trait Seeding {
 			try {
 				$guid = register_user($metadata['username'], $metadata['password'], $metadata['name'], $metadata['email'], false, $attributes['subtype']);
 				
-				$user = get_entity($guid);
-				/* @var $user ElggUser */
-
+				$user = get_user($guid);
 				if (!$user) {
 					throw new Exception("Unable to create new user with attributes: " . print_r($attributes, true));
 				}
@@ -155,7 +153,6 @@ trait Seeding {
 				$user->setNotificationSetting('site', true);
 
 				$profile_fields = elgg_extract('profile_fields', $options, []);
-
 				$user = $this->populateMetadata($user, $profile_fields, $metadata);
 
 				$user->save();
@@ -237,6 +234,10 @@ trait Seeding {
 			if (empty($attributes['container_guid'])) {
 				$attributes['container_guid'] = $attributes['owner_guid'];
 			}
+			
+			if (empty($attributes['subtype'])) {
+				$attributes['subtype'] = 'group';
+			}
 
 			$owner = get_entity($attributes['owner_guid']);
 			if (!$owner) {
@@ -266,7 +267,7 @@ trait Seeding {
 				$group->$name = $value;
 			}
 
-			$profile_fields = $profile_fields = elgg_extract('profile_fields', $options, []);
+			$profile_fields = elgg_extract('profile_fields', $options, []);
 			$group = $this->populateMetadata($group, $profile_fields, $metadata);
 
 			$group->save();
@@ -364,7 +365,7 @@ trait Seeding {
 				$attributes['access_id'] = ACCESS_PUBLIC;
 			}
 
-			$class = get_subtype_class('object', $attributes['subtype']);
+			$class = elgg_get_entity_class('object', $attributes['subtype']);
 			if ($class && class_exists($class)) {
 				$object = new $class();
 			} else {

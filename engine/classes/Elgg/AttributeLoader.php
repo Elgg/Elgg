@@ -181,8 +181,6 @@ class AttributeLoader {
 
 		$row = $this->filterAddedColumns($row);
 
-		$row['subtype'] = (int) $row['subtype'];
-
 		// guid needs to be an int  https://github.com/elgg/elgg/issues/4111
 		foreach (self::$integer_attr_names as $key) {
 			if (isset($row[$key])) {

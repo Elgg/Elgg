@@ -33,8 +33,6 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		if ($this->entity) {
 			$this->entity->delete();
 		}
-
-		remove_subtype('object', 'elgg_entity_test_subtype');
 	}
 
 	public function testSubtypePropertyReads() {
@@ -42,16 +40,14 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$guid = $this->entity->guid;
 
 		$subtype_prop = $this->entity->subtype;
-		$this->assertIsA($subtype_prop, 'int');
-		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
 
 		_elgg_services()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
 		$subtype_prop = $this->entity->subtype;
-		$this->assertIsA($subtype_prop, 'int');
-		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
 	}
 
 	public function testUnsavedEntitiesDontRecordAttributeSets() {
@@ -124,20 +120,6 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
 	}
 
-	public function testSubtypeAddRemove() {
-		$test_subtype = 'test_1389988642';
-		$object = new ElggObject();
-		$object->subtype = $test_subtype;
-		$object->save();
-
-		$this->assertTrue(is_numeric(get_subtype_id('object', $test_subtype)));
-
-		$object->delete();
-		remove_subtype('object', $test_subtype);
-
-		$this->assertFalse(get_subtype_id('object', $test_subtype));
-	}
-
 	public function testElggEntityGetAndSetAnnotations() {
 
 		$this->assertIdentical($this->entity->getAnnotations(['annotation_name' => 'non_existent']), []);
@@ -159,7 +141,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 			'annotation_name' => 'non_existent',
 			'type' => 'object'
 		]));
-		$this->assertEqual(false, elgg_get_annotations([
+		$this->assertEqual([], elgg_get_annotations([
 			'guid' => $this->entity->getGUID(),
 			'type' => 'object',
 			'subtype' => 'fail'
@@ -219,9 +201,11 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$CONFIG = _elgg_config();
 
 		$obj1 = new ElggObject();
+		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->container_guid = $this->entity->getGUID();
 		$obj1->save();
 		$obj2 = new ElggObject();
+		$obj2->subtype = $this->getRandomSubtype();
 		$obj2->container_guid = $this->entity->getGUID();
 		$obj2->save();
 
@@ -257,6 +241,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		elgg_register_plugin_hook_handler('entity:icon:url', 'object', $handler, 99999);
 
 		$obj = new ElggObject();
+		$obj->subtype = $this->getRandomSubtype();
 		$obj->save();
 
 		// Test default size
@@ -275,6 +260,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$user = $this->createOne('user');
 
 		$object = new ElggObject();
+		$object->subtype = $this->getRandomSubtype();
 		$object->owner_guid = $user->guid;
 		$object->container_guid = 0;
 

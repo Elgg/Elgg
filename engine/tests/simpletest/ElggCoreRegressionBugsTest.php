@@ -22,6 +22,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 	 */
 	public function testElggObjectDeleteAnnotations() {
 		$this->entity = new \ElggObject();
+		$this->entity->subtype = $this->getRandomSubtype();
 		$guid = $this->entity->save();
 
 		$this->entity->annotate('test', 'hello', ACCESS_PUBLIC);
@@ -328,6 +329,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 		//let's have some entity
 		$group = new \ElggGroup();
+		$group->subtype = $this->getRandomSubtype();
 		$group->name = 'test_group';
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);

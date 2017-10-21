@@ -6,6 +6,7 @@ namespace Elgg\Integration;
  * Elgg Test \ElggObject
  *
  * @group IntegrationTests
+ * @group ElggObject
  */
 class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 
@@ -14,8 +15,12 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 	 */
 	protected $entity;
 
+	protected $subtype;
+
 	public function up() {
+		$this->subtype = $this->getRandomSubtype();
 		$this->entity = new ElggObjectWithExposableAttributes();
+		$this->entity->subtype = $this->subtype;
 	}
 
 	public function down() {
@@ -23,10 +28,10 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function testElggObjectConstructor() {
-		$attributes = array();
+		$attributes = [];
 		$attributes['guid'] = null;
 		$attributes['type'] = 'object';
-		$attributes['subtype'] = null;
+		$attributes['subtype'] = $this->subtype;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['access_id'] = ACCESS_PRIVATE;
@@ -75,7 +80,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 
 		// a cloned \ElggEntity has the guid reset
 		$object = clone $this->entity;
-		$this->assertIdentical(0, (int)$object->guid);
+		$this->assertIdentical(0, (int) $object->guid);
 
 		// make sure attributes were copied over
 		$this->assertIdentical($object->title, 'testing');
@@ -113,7 +118,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function testElggObjectToObject() {
-		$keys = array(
+		$keys = [
 			'guid',
 			'type',
 			'subtype',
@@ -126,7 +131,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 			'title',
 			'description',
 			'tags',
-		);
+		];
 
 		$object = $this->entity->toObject();
 		$object_keys = array_keys(get_object_vars($object));
@@ -138,6 +143,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 	// see https://github.com/elgg/elgg/issues/1196
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
 		$e1 = new \ElggObject();
+		$e1->subtype = $this->getRandomSubtype();
 		$e1->access_id = ACCESS_PUBLIC;
 		$e1->owner_guid = 0;
 		$e1->container_guid = 0;
@@ -145,6 +151,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		$guid1 = $e1->getGUID();
 
 		$e2 = new \ElggObject();
+		$e2->subtype = $this->getRandomSubtype();
 		$e2->container_guid = $guid1;
 		$e2->access_id = ACCESS_PUBLIC;
 		$e2->owner_guid = 0;
@@ -180,7 +187,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function testElggRecursiveDelete() {
-		$types = array('group', 'object', 'user');
+		$types = ['group', 'object', 'user'];
 		$db_prefix = _elgg_config()->dbprefix;
 
 		foreach ($types as $type) {
@@ -224,6 +231,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		// object that owns itself
 		// can't check container_guid because of infinite loops in can_edit_entity()
 		$obj = new \ElggObject();
+		$obj->subtype = $this->getRandomSubtype();
 		$obj->save();
 		$obj->owner_guid = $obj->guid;
 		$obj->save();
@@ -241,6 +249,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 
 	protected function get_entity_row($guid) {
 		$CONFIG = _elgg_config();
+
 		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='$guid'");
 	}
 }
