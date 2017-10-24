@@ -323,65 +323,7 @@ class RelationshipsTable {
 	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
 	 */
 	public function getEntities($options) {
-		$defaults = [
-			'relationship' => null,
-			'relationship_guid' => null,
-			'inverse_relationship' => false,
-			'relationship_join_on' => 'guid',
-
-			'relationship_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
-			'relationship_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
-		];
-
-		$options = array_merge($defaults, $options);
-
-		$join_column = "e.{$options['relationship_join_on']}";
-
-		$clauses = $this->getEntityRelationshipWhereSql($join_column, $options['relationship'],
-			$options['relationship_guid'], $options['inverse_relationship']);
-
-		if ($clauses) {
-			// merge wheres to pass to get_entities()
-			if (isset($options['wheres']) && !is_array($options['wheres'])) {
-				$options['wheres'] = [$options['wheres']];
-			} elseif (!isset($options['wheres'])) {
-				$options['wheres'] = [];
-			}
-
-			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
-
-			// limit based on time created
-			$time_wheres = $this->entities->getEntityTimeWhereSql('r',
-					$options['relationship_created_time_upper'],
-					$options['relationship_created_time_lower']);
-			if ($time_wheres) {
-				$options['wheres'] = array_merge($options['wheres'], [$time_wheres]);
-			}
-			// merge joins to pass to get_entities()
-			if (isset($options['joins']) && !is_array($options['joins'])) {
-				$options['joins'] = [$options['joins']];
-			} elseif (!isset($options['joins'])) {
-				$options['joins'] = [];
-			}
-
-			$options['joins'] = array_merge($options['joins'], $clauses['joins']);
-
-			if (isset($options['selects']) && !is_array($options['selects'])) {
-				$options['selects'] = [$options['selects']];
-			} elseif (!isset($options['selects'])) {
-				$options['selects'] = [];
-			}
-
-			$select = ['r.id'];
-
-			$options['selects'] = array_merge($options['selects'], $select);
-
-			if (!isset($options['group_by'])) {
-				$options['group_by'] = $clauses['group_by'];
-			}
-		}
-
-		return $this->metadata->getEntities($options);
+		return $this->entities->getEntities($options);
 	}
 
 	/**

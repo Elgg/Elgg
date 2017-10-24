@@ -29,7 +29,7 @@ use stdClass;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @access     private
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -38,7 +38,7 @@ use stdClass;
 class EntityTable {
 
 	use \Elgg\TimeUsing;
-	
+
 	/**
 	 * @var Conf
 	 */
@@ -133,9 +133,9 @@ class EntityTable {
 	/**
 	 * Returns a database row from the entities table.
 	 *
-	 * @see entity_row_to_elggstar()
+	 * @see     entity_row_to_elggstar()
 	 *
-	 * @tip Use get_entity() to return the fully loaded entity.
+	 * @tip     Use get_entity() to return the fully loaded entity.
 	 *
 	 * @warning This will only return results if a) it exists, b) you have access to it.
 	 * see {@link _elgg_get_access_where_sql()}.
@@ -144,8 +144,9 @@ class EntityTable {
 	 * @param int $user_guid GUID of the user accessing the row
 	 *                       Defaults to logged in user if null
 	 *                       Builds an access query for a logged out user if 0
+	 *
 	 * @return stdClass|false
-	 * @access private
+	 * @access  private
 	 */
 	public function getRow($guid, $user_guid = null) {
 
@@ -176,6 +177,7 @@ class EntityTable {
 	 *                             Used by database mock services to allow mocking
 	 *                             entities that were instantiated using new keyword
 	 *                             and calling ElggEntity::save()
+	 *
 	 * @return int|false
 	 */
 	public function insertRow(stdClass $row, array $attributes = []) {
@@ -204,6 +206,7 @@ class EntityTable {
 	 *
 	 * @param int      $guid Entity guid
 	 * @param stdClass $row  Updated data
+	 *
 	 * @return int|false
 	 */
 	public function updateRow($guid, stdClass $row) {
@@ -234,13 +237,14 @@ class EntityTable {
 	 *
 	 * Handles loading all tables into the correct class.
 	 *
-	 * @see get_entity_as_row()
-	 * @see add_subtype()
-	 * @see get_entity()
+	 * @see    get_entity_as_row()
+	 * @see    add_subtype()
+	 * @see    get_entity()
 	 *
 	 * @access private
 	 *
 	 * @param stdClass $row The row of the entry in the entities table.
+	 *
 	 * @return ElggEntity|false
 	 * @throws ClassException
 	 * @throws InstallationException
@@ -253,7 +257,7 @@ class EntityTable {
 		if (!isset($row->guid) || !isset($row->subtype)) {
 			return $row;
 		}
-	
+
 		$class_name = $this->subtype_table->getClassFromId($row->subtype);
 		if ($class_name && !class_exists($class_name)) {
 			$this->logger->error("Class '$class_name' was not found, missing plugin?");
@@ -308,6 +312,7 @@ class EntityTable {
 		}
 
 		$this->entity_cache->set($entity);
+
 		return $entity;
 	}
 
@@ -364,6 +369,7 @@ class EntityTable {
 	 * has changed.
 	 *
 	 * @param int $guid The GUID of the entity
+	 *
 	 * @return bool
 	 */
 	public function exists($guid) {
@@ -385,6 +391,7 @@ class EntityTable {
 	 *
 	 * @param int  $guid      GUID of entity to enable
 	 * @param bool $recursive Recursively enable all entities disabled with the entity?
+	 *
 	 * @return bool
 	 */
 	public function enable($guid, $recursive = true) {
@@ -400,6 +407,7 @@ class EntityTable {
 		}
 
 		access_show_hidden_entities($old_access_status);
+
 		return $result;
 	}
 
@@ -425,62 +433,62 @@ class EntityTable {
 	 *
 	 * @param array $options Array in format:
 	 *
-	 * 	types => null|STR entity type (type IN ('type1', 'type2')
+	 *    types => null|STR entity type (type IN ('type1', 'type2')
 	 *           Joined with subtypes by AND. See below)
 	 *
-	 * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
+	 *    subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
 	 *              Use ELGG_ENTITIES_NO_VALUE to match the default subtype.
 	 *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
 	 *
-	 * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
+	 *    type_subtype_pairs => null|ARR (array('type' => 'subtype'))
 	 *                        array(
 	 *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
 	 *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
 	 *                        );
 	 *
-	 * 	guids => null|ARR Array of entity guids
+	 *    guids => null|ARR Array of entity guids
 	 *
-	 * 	owner_guids => null|ARR Array of owner guids
+	 *    owner_guids => null|ARR Array of owner guids
 	 *
-	 * 	container_guids => null|ARR Array of container_guids
+	 *    container_guids => null|ARR Array of container_guids
 	 *
-	 * 	order_by => null (time_created desc)|STR SQL order by clause
+	 *    order_by => null (time_created desc)|STR SQL order by clause
 	 *
 	 *  reverse_order_by => BOOL Reverse the default order by clause
 	 *
-	 * 	limit => null (10)|INT SQL limit clause (0 means no limit)
+	 *    limit => null (10)|INT SQL limit clause (0 means no limit)
 	 *
-	 * 	offset => null (0)|INT SQL offset clause
+	 *    offset => null (0)|INT SQL offset clause
 	 *
-	 * 	created_time_lower => null|INT Created time lower boundary in epoch time
+	 *    created_time_lower => null|INT Created time lower boundary in epoch time
 	 *
-	 * 	created_time_upper => null|INT Created time upper boundary in epoch time
+	 *    created_time_upper => null|INT Created time upper boundary in epoch time
 	 *
-	 * 	modified_time_lower => null|INT Modified time lower boundary in epoch time
+	 *    modified_time_lower => null|INT Modified time lower boundary in epoch time
 	 *
-	 * 	modified_time_upper => null|INT Modified time upper boundary in epoch time
+	 *    modified_time_upper => null|INT Modified time upper boundary in epoch time
 	 *
-	 * 	count => true|false return a count instead of entities
+	 *    count => true|false return a count instead of entities
 	 *
-	 * 	wheres => array() Additional where clauses to AND together
+	 *    wheres => array() Additional where clauses to AND together
 	 *
-	 * 	joins => array() Additional joins
+	 *    joins => array() Additional joins
 	 *
-	 * 	preload_owners => bool (false) If set to true, this function will preload
-	 * 					  all the owners of the returned entities resulting in better
-	 * 					  performance if those owners need to be displayed
+	 *    preload_owners => bool (false) If set to true, this function will preload
+	 *                      all the owners of the returned entities resulting in better
+	 *                      performance if those owners need to be displayed
 	 *
 	 *  preload_containers => bool (false) If set to true, this function will preload
-	 * 					      all the containers of the returned entities resulting in better
-	 * 					      performance if those containers need to be displayed
+	 *                          all the containers of the returned entities resulting in better
+	 *                          performance if those containers need to be displayed
 	 *
 	 *
-	 * 	callback => string A callback function to pass each row through
+	 *    callback => string A callback function to pass each row through
 	 *
-	 * 	distinct => bool (true) If set to false, Elgg will drop the DISTINCT clause from
-	 * 				the MySQL query, which will improve performance in some situations.
-	 * 				Avoid setting this option without a full understanding of the underlying
-	 * 				SQL query Elgg creates.
+	 *    distinct => bool (true) If set to false, Elgg will drop the DISTINCT clause from
+	 *                the MySQL query, which will improve performance in some situations.
+	 *                Avoid setting this option without a full understanding of the underlying
+	 *                SQL query Elgg creates.
 	 *
 	 *  batch => bool (false) If set to true, an Elgg\BatchResult object will be returned instead of an array.
 	 *           Since 2.3
@@ -500,175 +508,18 @@ class EntityTable {
 	 * @see elgg_list_entities()
 	 */
 	public function getEntities(array $options = []) {
-		_elgg_check_unsupported_site_guid($options);
+		return EntityQuery::getEntities($options);
+	}
 
-		$defaults = [
-			'types'                 => ELGG_ENTITIES_ANY_VALUE,
-			'subtypes'              => ELGG_ENTITIES_ANY_VALUE,
-			'type_subtype_pairs'    => ELGG_ENTITIES_ANY_VALUE,
-
-			'guids'                 => ELGG_ENTITIES_ANY_VALUE,
-			'owner_guids'           => ELGG_ENTITIES_ANY_VALUE,
-			'container_guids'       => ELGG_ENTITIES_ANY_VALUE,
-
-			'modified_time_lower'   => ELGG_ENTITIES_ANY_VALUE,
-			'modified_time_upper'   => ELGG_ENTITIES_ANY_VALUE,
-			'created_time_lower'    => ELGG_ENTITIES_ANY_VALUE,
-			'created_time_upper'    => ELGG_ENTITIES_ANY_VALUE,
-
-			'reverse_order_by'      => false,
-			'order_by'              => 'e.time_created desc',
-			'group_by'              => ELGG_ENTITIES_ANY_VALUE,
-			'limit'                 => $this->config->default_limit,
-			'offset'                => 0,
-			'count'                 => false,
-			'selects'               => [],
-			'wheres'                => [],
-			'joins'                 => [],
-
-			'preload_owners'        => false,
-			'preload_containers'    => false,
-			'callback'              => 'entity_row_to_elggstar',
-			'distinct'              => true,
-
-			'batch'                 => false,
-			'batch_inc_offset'      => true,
-			'batch_size'            => 25,
-
-			// private API
-			'__ElggBatch'           => null,
-		];
-
-		$options = array_merge($defaults, $options);
-
-		if ($options['batch'] && !$options['count']) {
-			$batch_size = $options['batch_size'];
-			$batch_inc_offset = $options['batch_inc_offset'];
-
-			// clean batch keys from $options.
-			unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
-
-			return new \ElggBatch([$this, 'getEntities'], $options, null, $batch_size, $batch_inc_offset);
-		}
-	
-		// can't use helper function with type_subtype_pair because
-		// it's already an array...just need to merge it
-		if (isset($options['type_subtype_pair'])) {
-			if (isset($options['type_subtype_pairs'])) {
-				$options['type_subtype_pairs'] = array_merge($options['type_subtype_pairs'],
-					$options['type_subtype_pair']);
-			} else {
-				$options['type_subtype_pairs'] = $options['type_subtype_pair'];
-			}
-		}
-
-		$singulars = ['type', 'subtype', 'guid', 'owner_guid', 'container_guid'];
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
-
-		// evaluate where clauses
-		if (!is_array($options['wheres'])) {
-			$options['wheres'] = [$options['wheres']];
-		}
-
-		$wheres = $options['wheres'];
-
-		$wheres[] = $this->getEntityTypeSubtypeWhereSql('e', $options['types'],
-			$options['subtypes'], $options['type_subtype_pairs']);
-
-		$wheres[] = $this->getGuidBasedWhereSql('e.guid', $options['guids']);
-		$wheres[] = $this->getGuidBasedWhereSql('e.owner_guid', $options['owner_guids']);
-		$wheres[] = $this->getGuidBasedWhereSql('e.container_guid', $options['container_guids']);
-
-		$wheres[] = $this->getEntityTimeWhereSql('e', $options['created_time_upper'],
-			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
-
-		// see if any functions failed
-		// remove empty strings on successful functions
-		foreach ($wheres as $i => $where) {
-			if ($where === false) {
-				return false;
-			} elseif (empty($where)) {
-				unset($wheres[$i]);
-			}
-		}
-
-		// remove identical where clauses
-		$wheres = array_unique($wheres);
-
-		// evaluate join clauses
-		if (!is_array($options['joins'])) {
-			$options['joins'] = [$options['joins']];
-		}
-
-		// remove identical join clauses
-		$joins = array_unique($options['joins']);
-
-		foreach ($joins as $i => $join) {
-			if ($join === false) {
-				return false;
-			} elseif (empty($join)) {
-				unset($joins[$i]);
-			}
-		}
-
-		// evalutate selects
-		if ($options['selects']) {
-			$selects = '';
-			foreach ($options['selects'] as $select) {
-				$selects .= ", $select";
-			}
-		} else {
-			$selects = '';
-		}
-
-		if (!$options['count']) {
-			$distinct = $options['distinct'] ? "DISTINCT" : "";
-			$query = "SELECT $distinct e.*{$selects} FROM {$this->db->prefix}entities e ";
-		} else {
-			// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than GUIDs
-			$count_expr = $options['distinct'] ? "DISTINCT e.guid" : "*";
-			$query = "SELECT COUNT($count_expr) as total FROM {$this->db->prefix}entities e ";
-		}
-
-		// add joins
-		foreach ($joins as $j) {
-			$query .= " $j ";
-		}
-
-		// add wheres
-		$query .= ' WHERE ';
-
-		foreach ($wheres as $w) {
-			$query .= " $w AND ";
-		}
-
-		// Add access controls
-		$query .= _elgg_get_access_where_sql();
-
-		// reverse order by
-		if ($options['reverse_order_by']) {
-			$options['order_by'] = _elgg_sql_reverse_order_by_clause($options['order_by']);
-		}
-
-		if ($options['count']) {
-			$total = $this->db->getDataRow($query);
-			return (int) $total->total;
-		}
-
-		if ($options['group_by']) {
-			$query .= " GROUP BY {$options['group_by']}";
-		}
-
-		if ($options['order_by']) {
-			$query .= " ORDER BY {$options['order_by']}";
-		}
-
-		if ($options['limit']) {
-			$limit = sanitise_int($options['limit'], false);
-			$offset = sanitise_int($options['offset'], false);
-			$query .= " LIMIT $offset, $limit";
-		}
-
+	/**
+	 * Fetch entities from the database and apply callback
+	 *
+	 * @param QueryBuilder       $query   Query
+	 * @param EntityQueryOptions $options Options
+	 *
+	 * @return array|ElggEntity[]
+	 */
+	public function fetch(QueryBuilder $query, EntityQueryOptions $options) {
 		if ($options['callback'] === 'entity_row_to_elggstar') {
 			$results = $this->fetchFromSql($query, $options['__ElggBatch']);
 		} else {
@@ -724,15 +575,16 @@ class EntityTable {
 	 *
 	 * @access private
 	 *
-	 * @param string    $sql
-	 * @param ElggBatch $batch
+	 * @param QueryBuilder|string $sql
+	 * @param ElggBatch           $batch
+	 *
 	 * @return ElggEntity[]
 	 * @throws LogicException
 	 */
 	public function fetchFromSql($sql, \ElggBatch $batch = null) {
-		
+
 		$rows = $this->db->getData($sql);
-		
+
 		// Second pass to finish conversion
 		foreach ($rows as $i => $row) {
 			if ($row instanceof ElggEntity) {
@@ -751,6 +603,7 @@ class EntityTable {
 				}
 			}
 		}
+
 		return $rows;
 	}
 
@@ -769,6 +622,7 @@ class EntityTable {
 		// subtype depends upon type.
 		if ($subtypes && !$types) {
 			$this->logger->warn("Cannot set subtypes without type.");
+
 			return false;
 		}
 
@@ -823,7 +677,7 @@ class EntityTable {
 						if (!$subtype && ELGG_ENTITIES_NO_VALUE === $subtype) {
 							// subtype value is 0
 							$subtype_ids[] = ELGG_ENTITIES_NO_VALUE;
-						} elseif (!$subtype) {
+						} else if (!$subtype) {
 							// subtype is ignored.
 							// this handles ELGG_ENTITIES_ANY_VALUE, '', and anything falsy that isn't 0
 							continue;
@@ -884,7 +738,7 @@ class EntityTable {
 					foreach ($paired_subtypes as $paired_subtype) {
 						if (ELGG_ENTITIES_NO_VALUE === $paired_subtype || ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
 							$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ?
-									ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
+								ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 						} else {
 							$valid_pairs_subtypes_count--;
 							$this->logger->notice("Type-subtype '$paired_type:$paired_subtype' does not exist!");
@@ -901,7 +755,7 @@ class EntityTable {
 
 					if ($paired_subtype_ids_str = implode(',', $paired_subtype_ids)) {
 						$wheres[] = "({$table}.type = '$paired_type'"
-								. " AND {$table}.subtype IN ($paired_subtype_ids_str))";
+							. " AND {$table}.subtype IN ($paired_subtype_ids_str))";
 					}
 				} else {
 					$wheres[] = "({$table}.type = '$paired_type')";
@@ -912,6 +766,7 @@ class EntityTable {
 		// pairs override the above.  return false if they don't exist.
 		if (is_array($wheres) && count($wheres)) {
 			$where = implode(' OR ', $wheres);
+
 			return "($where)";
 		}
 
@@ -977,7 +832,7 @@ class EntityTable {
 	 * @access private
 	 */
 	public function getEntityTimeWhereSql($table, $time_created_upper = null,
-	$time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
+										  $time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
 
 		$wheres = [];
 
@@ -1000,6 +855,7 @@ class EntityTable {
 
 		if (is_array($wheres) && count($wheres) > 0) {
 			$where_str = implode(' AND ', $wheres);
+
 			return "($where_str)";
 		}
 
@@ -1009,9 +865,9 @@ class EntityTable {
 	/**
 	 * Returns a list of months in which entities were updated or created.
 	 *
-	 * @tip Use this to generate a list of archives by month for when entities were added or updated.
+	 * @tip     Use this to generate a list of archives by month for when entities were added or updated.
 	 *
-	 * @todo document how to pass in array for $subtype
+	 * @todo    document how to pass in array for $subtype
 	 *
 	 * @warning Months are returned in the form YYYYMM.
 	 *
@@ -1091,8 +947,10 @@ class EntityTable {
 			foreach ($result as $res) {
 				$endresult[] = $res->yearmonth;
 			}
+
 			return $endresult;
 		}
+
 		return false;
 	}
 
@@ -1104,15 +962,16 @@ class EntityTable {
 	 *
 	 * @param ElggEntity $entity Entity annotation|relationship action carried out on
 	 * @param int        $posted Timestamp of last action
+	 *
 	 * @return int
-	 * @access private
+	 * @access  private
 	 */
 	public function updateLastAction(ElggEntity $entity, $posted = null) {
 
 		if (!$posted) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
-		
+
 		$query = "
 			UPDATE {$this->db->prefix}entities
 			SET last_action = :last_action
@@ -1123,7 +982,7 @@ class EntityTable {
 			':last_action' => (int) $posted,
 			':guid' => (int) $entity->guid,
 		];
-		
+
 		$this->db->updateData($query, true, $params);
 
 		return (int) $posted;
@@ -1146,7 +1005,7 @@ class EntityTable {
 		// need to ignore access and show hidden entities for potential hidden/disabled users
 		$ia = $this->session->setIgnoreAccess(true);
 		$show_hidden = access_show_hidden_entities(true);
-	
+
 		$user = $this->get($guid, 'user');
 
 		$this->session->setIgnoreAccess($ia);
@@ -1168,6 +1027,7 @@ class EntityTable {
 	 * Disables all entities owned and contained by a user (or another entity)
 	 *
 	 * @param int $owner_guid The owner GUID
+	 *
 	 * @return bool
 	 */
 	public function disableEntities($owner_guid) {
@@ -1192,7 +1052,7 @@ class EntityTable {
 
 		_elgg_invalidate_cache_for_entity($entity->guid);
 		_elgg_invalidate_memcache_for_entity($entity->guid);
-		
+
 		if ($this->db->updateData($query, true, $params)) {
 			return true;
 		}
