@@ -7,9 +7,7 @@ $action_type = get_input('action_type');
 $valid_actions = ['delete', 'resend_validation', 'validate'];
 
 if (!in_array($action_type, $valid_actions)) {
-	forward(REFERRER);
+	return elgg_error_response();
 }
 
-$action_name = "uservalidationbyemail/$action_type";
-
-action($action_name);
+action("uservalidationbyemail/{$action_type}");
