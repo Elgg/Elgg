@@ -61,16 +61,10 @@
 
         <!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./actions</directory>
             <directory suffix=".php">./engine/classes</directory>
             <directory suffix=".php">./engine/lib</directory>
-            <directory suffix=".php">./languages</directory>
-            <directory suffix=".php">./views</directory>
-            <directory suffix=".php">./mod/*/actions</directory>
-            <directory suffix=".php">./mod/*/languages</directory>
             <directory suffix=".php">./mod/*/lib</directory>
             <directory suffix=".php">./mod/*/classes</directory>
-            <directory suffix=".php">./mod/*/views</directory>
             <directory>./mod/*.php</directory>
 
             <exclude>
