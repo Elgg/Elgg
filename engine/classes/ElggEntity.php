@@ -439,7 +439,11 @@ abstract class ElggEntity extends \ElggData implements
 
 			// if overwrite, delete first
 			if (!$multiple) {
-				$this->temp_metadata[$name] = $value;
+				unset($this->temp_metadata[$name]);
+				if (count($value)) {
+					// only save if value array contains data
+					$this->temp_metadata[$name] = $value;
+				}
 				return true;
 			}
 
