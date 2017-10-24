@@ -1,14 +1,9 @@
 <?php
-/**
- *
- */
-
 $note = get_entity(get_input('guid'));
 if (!$note || !$note->canEdit()) {
-	register_error(elgg_echo(''));
-	forward(REFERER);
+	return elgg_error_response();
 }
 
 $note->delete();
 
-forward(REFERER);
+return elgg_ok_response();

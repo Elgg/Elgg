@@ -4,25 +4,20 @@
  */
 
 $topic_guid = (int) get_input('guid');
-
 $topic = get_entity($topic_guid);
+
 if (!elgg_instanceof($topic, 'object', 'discussion')) {
-	register_error(elgg_echo('discussion:error:notdeleted'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('discussion:error:notdeleted'));
 }
 
-if (!$topic->canEdit()) {
-	register_error(elgg_echo('discussion:error:permissions'));
-	forward(REFERER);
+if (!$topic->canDelete()) {
+	return elgg_error_response(elgg_echo('discussion:error:permissions'));
 }
 
 $container = $topic->getContainerEntity();
 
-$result = $topic->delete();
-if ($result) {
-	system_message(elgg_echo('discussion:topic:deleted'));
-} else {
-	register_error(elgg_echo('discussion:error:notdeleted'));
+if (!$topic->delete()) {
+	return elgg_error_response(elgg_echo('discussion:error:notdeleted'));
 }
 
-forward("discussion/owner/$container->guid");
+return elgg_ok_response('', elgg_echo('discussion:topic:deleted'), "discussion/owner/{$container->guid}");

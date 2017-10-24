@@ -79,4 +79,4 @@ foreach ($user_guids as $guid) {
 	}
 }
 
-forward(REFERER);
+return elgg_ok_response();

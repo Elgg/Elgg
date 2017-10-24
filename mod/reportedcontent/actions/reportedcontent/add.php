@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg report action
- *
- * @package ElggReportContent
  */
 $title = get_input('title');
 $description = get_input('description');
@@ -10,8 +8,7 @@ $address = get_input('address');
 $access = ACCESS_PRIVATE; //this is private and only admins can see it
 
 $fail = function () use ($address) {
-	register_error(elgg_echo('reportedcontent:failed'));
-	forward($address);
+	return elgg_error_response(elgg_echo('reportedcontent:failed'), $address);
 };
 
 if (!$title || !$address) {
@@ -19,7 +16,7 @@ if (!$title || !$address) {
 }
 
 $report = new ElggObject;
-$report->subtype = "reported_content";
+$report->subtype = 'reported_content';
 $report->owner_guid = elgg_get_logged_in_user_guid();
 $report->title = $title;
 $report->address = $address;
@@ -35,6 +32,6 @@ if (!elgg_trigger_plugin_hook('reportedcontent:add', 'system', ['report' => $rep
 	$fail();
 }
 
-system_message(elgg_echo('reportedcontent:success'));
-$report->state = "active";
-forward($address);
+$report->state = 'active';
+
+return elgg_ok_response('', elgg_echo('reportedcontent:success'), $address);
