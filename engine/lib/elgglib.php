@@ -1452,6 +1452,10 @@ function _elgg_ajax_page_handler($segments) {
 
 	if ($segments[0] === 'view' || $segments[0] === 'form') {
 		if ($segments[0] === 'view') {
+			if ($segments[1] === 'admin') {
+				// protect admin views similar to all admin pages that are protected automatically in the admin_page_handler
+				elgg_admin_gatekeeper();
+			}
 			// ignore 'view/'
 			$view = implode('/', array_slice($segments, 1));
 		} else {
