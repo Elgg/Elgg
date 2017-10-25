@@ -6,6 +6,9 @@
  */
 
 $user = elgg_get_page_owner_entity();
+if (!$user) {
+	return;
+}
 
 echo elgg_view('forms/account/settings', $vars);
 

@@ -6,8 +6,13 @@
  * @subpackage Core
  */
 
+$page_owner = elgg_get_page_owner_entity();
+if (!$page_owner) {
+	return;
+}
+
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-$notification_settings = elgg_get_page_owner_entity()->getNotificationSettings();
+$notification_settings = $page_owner->getNotificationSettings();
 
 $title = elgg_echo('notifications:usersettings');
 

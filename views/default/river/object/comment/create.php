@@ -10,6 +10,14 @@ $comment = $item->getObjectEntity();
 $subject = $item->getSubjectEntity();
 $target = $item->getTargetEntity();
 
+if (!$comment instanceof ElggComment) {
+	return;
+}
+
+if (!$subject || !$target) {
+	return;
+}
+
 $subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
 	'text' => $subject->name,
