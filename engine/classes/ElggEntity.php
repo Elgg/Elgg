@@ -439,7 +439,11 @@ abstract class ElggEntity extends \ElggData implements
 
 			// if overwrite, delete first
 			if (!$multiple) {
-				$this->temp_metadata[$name] = $value;
+				unset($this->temp_metadata[$name]);
+				if (count($value)) {
+					// only save if value array contains data
+					$this->temp_metadata[$name] = $value;
+				}
 				return true;
 			}
 
@@ -460,13 +464,24 @@ abstract class ElggEntity extends \ElggData implements
 	 * @warning Calling this with no $name will clear all metadata on the entity.
 	 *
 	 * @param null|string $name The name of the metadata to remove.
-	 * @return bool
+	 * @return bool|null
 	 * @since 1.8
 	 */
 	public function deleteMetadata($name = null) {
 
 		if (!$this->guid) {
-			return false;
+			// remove from temp_metadata
+			if ($name) {
+				if (!isset($this->temp_metadata[$name])) {
+					return null;
+				} else {
+					unset($this->temp_metadata[$name]);
+					return true;
+				}
+			} else {
+				$this->temp_metadata = [];
+				return true;
+			}
 		}
 
 		$options = [
