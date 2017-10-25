@@ -83,6 +83,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\SystemMessagesService              $systemMessages
  * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
+ * @property-read \ElggTempDiskFilestore                   $temp_filestore
  * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\Security\UrlSigner                 $urlSigner
@@ -471,7 +472,9 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setClassName('table_columns', \Elgg\Views\TableColumn\ColumnFactory::class);
-
+		
+		$this->setClassName('temp_filestore',  \ElggTempDiskFilestore::class);
+		
 		$this->setClassName('timer', \Elgg\Timer::class);
 
 		$this->setFactory('translator', function(ServiceProvider $c) {

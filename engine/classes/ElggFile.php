@@ -216,7 +216,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @param string $data The data
 	 *
-	 * @return bool
+	 * @return false|int
 	 */
 	public function write($data) {
 		return $this->getFilestore()->write($this->handle, $data);
