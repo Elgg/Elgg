@@ -3,7 +3,7 @@
  * Removes an admin notice.
  */
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $notice = get_entity($guid);
 
 if (!(elgg_instanceof($notice, 'object', 'admin_notice') && $notice->delete())) {

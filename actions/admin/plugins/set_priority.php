@@ -10,7 +10,7 @@
  * have HIGHER priority and will override views, etc from plugins above them.
  */
 
-$plugin_guid = get_input('plugin_guid');
+$plugin_guid = (int) get_input('plugin_guid');
 $priority = get_input('priority');
 
 $plugin = get_entity($plugin_guid);

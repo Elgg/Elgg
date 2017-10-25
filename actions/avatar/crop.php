@@ -3,7 +3,7 @@
  * Avatar crop action
  */
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $owner = get_user($guid);
 
 if (!$owner || !$owner->canEdit()) {

@@ -3,7 +3,7 @@
  * Grants admin privileges to a user.
  */
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $user = get_user($guid);
 
 if (!$user || !$user->canEdit()) {
