@@ -42,7 +42,7 @@ try {
 		return elgg_error_response(elgg_echo('adduser:bad'));
 	}
 
-	$new_user = get_entity($guid);
+	$new_user = get_user($guid);
 	if ($new_user && $admin && elgg_is_admin_logged_in()) {
 		$new_user->makeAdmin();
 	}

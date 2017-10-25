@@ -14,7 +14,7 @@
  */
 
 $guid = (int) get_input('guid');
-$params = get_input('params');
+$params = (array) get_input('params');
 $default_widgets = (int) get_input('default_widgets', 0);
 $context = get_input('context');
 

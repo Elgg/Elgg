@@ -3,7 +3,7 @@
  * Delete comment entity
  */
 
-$comment_guid = get_input('guid');
+$comment_guid = (int) get_input('guid');
 $comment = get_entity($comment_guid);
 
 if (!elgg_instanceof($comment, 'object', 'comment') || !$comment->canEdit()) {

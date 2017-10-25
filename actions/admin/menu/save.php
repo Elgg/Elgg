@@ -4,7 +4,7 @@
  */
 
 // featured menu items
-$featured_names = get_input('featured_menu_names', []);
+$featured_names = (array) get_input('featured_menu_names', []);
 $featured_names = array_unique($featured_names);
 if (in_array(' ', $featured_names)) {
 	unset($featured_names[array_search(' ', $featured_names)]);

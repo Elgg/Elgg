@@ -5,7 +5,7 @@
 
 $access_status = access_show_hidden_entities(true);
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $user = get_user($guid);
 
 if (!$user || !$user->canEdit()) {

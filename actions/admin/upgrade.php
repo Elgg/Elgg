@@ -3,7 +3,7 @@
  * Runs batch upgrades
  */
 
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 
 $upgrade = get_entity($guid);
 

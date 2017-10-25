@@ -7,7 +7,7 @@
  */
 
 // Get the user
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $user = get_user($guid);
 
 if ($guid == elgg_get_logged_in_user_guid()) {

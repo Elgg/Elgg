@@ -3,7 +3,7 @@
  * Avatar remove action
  */
 
-$user_guid = get_input('guid');
+$user_guid = (int) get_input('guid');
 $user = get_user($user_guid);
 
 if (!$user || !$user->canEdit()) {

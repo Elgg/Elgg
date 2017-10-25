@@ -5,7 +5,7 @@
 
 $password = get_input('password1');
 $password_repeat = get_input('password2');
-$user_guid = get_input('u');
+$user_guid = (int) get_input('u');
 $code = get_input('c');
 
 try {
@@ -23,7 +23,7 @@ if (!execute_new_password_request($user_guid, $code, $password)) {
 }
 
 try {
-	login(get_entity($user_guid));
+	login(get_user($user_guid));
 } catch (LoginException $e) {
 	return elgg_error_response($e->getMessage());
 }

@@ -2,7 +2,7 @@
 /**
  * Default entity delete action
  */
-$guid = get_input('guid');
+$guid = (int) get_input('guid');
 $entity = get_entity($guid);
 
 if (!$entity instanceof ElggEntity) {

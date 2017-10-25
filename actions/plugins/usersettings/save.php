@@ -12,7 +12,7 @@
 
 $params = get_input('params');
 $plugin_id = get_input('plugin_id');
-$user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
+$user_guid = (int) get_input('user_guid', elgg_get_logged_in_user_guid());
 $plugin = elgg_get_plugin_from_id($plugin_id);
 $user = get_user($user_guid);
 
