@@ -373,26 +373,6 @@ class MetadataTable {
 	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
 	 */
 	function getEntities(array $options = []) {
-		$defaults = [
-			'metadata_names'                     => ELGG_ENTITIES_ANY_VALUE,
-			'metadata_values'                    => ELGG_ENTITIES_ANY_VALUE,
-			'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
-
-			'metadata_name_value_pairs_operator' => 'AND',
-			'metadata_case_sensitive'            => true,
-			'order_by_metadata'                  => [],
-		];
-
-		$options = array_merge($defaults, $options);
-
-		$singulars = ['metadata_name', 'metadata_value', 'metadata_name_value_pair'];
-
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
-
-		if (!$options = _elgg_entities_get_metastrings_options('metadata', $options)) {
-			return false;
-		}
-
 		return $this->entityTable->getEntities($options);
 	}
 
