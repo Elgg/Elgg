@@ -46,23 +46,18 @@ if ($container_guid) {
 // posted on objects that belong to any of those subtypes
 if ($subtypes) {
 	if (is_array($subtypes)) {
-		$subtype_ids = [];
-		foreach ($subtypes as $subtype) {
-			$id = (int) get_subtype_id('object', $subtype);
-			if ($id) {
-				$subtype_ids[] = $id;
-			}
+		foreach ($subtypes as &$subtype) {
+			$subtype = "'$subtype'";
 		}
-		if ($subtype_ids) {
-			$subtype_string = implode(',', $subtype_ids);
+		if ($subtypes) {
+			$subtype_string = implode(',', $subtypes);
 			$options['wheres'][] = "ce.subtype IN ($subtype_string)";
 		} else {
 			// subtype ids do not exist so cannot display comments
 			$options['wheres'][] = "1 = -1";
 		}
 	} else {
-		$subtype_id = (int) get_subtype_id('object', $subtypes);
-		$options['wheres'][] = "ce.subtype = $subtype_id";
+		$options['wheres'][] = "ce.subtype = '$subtypes'";
 	}
 }
 

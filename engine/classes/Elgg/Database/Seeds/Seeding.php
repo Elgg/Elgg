@@ -364,7 +364,7 @@ trait Seeding {
 				$attributes['access_id'] = ACCESS_PUBLIC;
 			}
 
-			$class = get_subtype_class('object', $attributes['subtype']);
+			$class = elgg_get_entity_class('object', $attributes['subtype']);
 			if ($class && class_exists($class)) {
 				$object = new $class();
 			} else {

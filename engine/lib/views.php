@@ -855,9 +855,6 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 
 	$entity_type = $entity->getType();
 	$entity_subtype = $entity->getSubtype();
-	if (empty($entity_subtype)) {
-		$entity_subtype = 'default';
-	}
 
 	$entity_views = [
 		elgg_extract('item_view', $vars, ''),
@@ -912,9 +909,6 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
 	$entity_type = $entity->getType();
 
 	$subtype = $entity->getSubtype();
-	if (empty($subtype)) {
-		$subtype = 'default';
-	}
 
 	$contents = '';
 	if (elgg_view_exists("icon/$entity_type/$subtype")) {

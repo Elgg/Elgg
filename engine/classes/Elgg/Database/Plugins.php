@@ -258,13 +258,15 @@ class Plugins {
 	function getMaxPriority() {
 		$db_prefix = _elgg_config()->dbprefix;
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
-		$plugin_subtype = get_subtype_id('object', 'plugin');
 	
-		$q = "SELECT MAX(CAST(ps.value AS unsigned)) as max
+		$q = "
+			SELECT MAX(CAST(ps.value AS unsigned)) as max
 			FROM {$db_prefix}entities e, {$db_prefix}private_settings ps
 			WHERE ps.name = '$priority'
 			AND ps.entity_guid = e.guid
-			AND e.type = 'object' and e.subtype = $plugin_subtype";
+			AND e.type = 'object' 
+			AND e.subtype = 'plugin'
+		";
 	
 		$data = get_data($q);
 		if ($data) {
