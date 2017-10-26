@@ -1790,6 +1790,8 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
 	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
+	
+	elgg_register_plugin_hook_handler('view_vars', 'elements/forms/help', '_elgg_views_file_help_upload_limit');
 
 	// registered with high priority for BC
 	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
@@ -1940,5 +1942,42 @@ function _elgg_set_lightbox_config($hook, $type, $return, $params) {
 		'initialHeight' => '300px',
 	];
 
+	return $return;
+}
+
+/**
+ * Add a help text to input/file about upload limit
+ *
+ * In order to not show the help text supply 'show_upload_limit' => false to elgg_view_field()
+ *
+ * @param \Elgg\Hook $hook
+ *
+ * @return void|array
+ * @access private
+ */
+function _elgg_views_file_help_upload_limit(\Elgg\Hook $hook) {
+	
+	$return = $hook->getValue();
+	if (elgg_extract('input_type', $return) !== 'file') {
+		return;
+	}
+	
+	if (!elgg_extract('show_upload_limit', $return, true)) {
+		return;
+	}
+	
+	$help = elgg_extract('help', $return, '');
+	
+	// Get post_max_size and upload_max_filesize
+	$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
+	$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
+	
+	// Determine the correct value
+	$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
+	
+	$help .= ' ' . elgg_echo('input:file:upload_limit', [elgg_format_bytes($max_upload)]);
+	
+	$return['help'] = trim($help);
+	
 	return $return;
 }
