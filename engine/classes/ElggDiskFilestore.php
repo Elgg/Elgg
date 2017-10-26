@@ -12,7 +12,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	/**
 	 * Directory root.
 	 */
-	private $dir_root;
+	protected $dir_root;
 
 	/**
 	 * Number of entries per matrix dir.
@@ -96,7 +96,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @param resource $f    File pointer resource
 	 * @param mixed    $data The data to write.
 	 *
-	 * @return bool
+	 * @return false|int
 	 */
 	public function write($f, $data) {
 		return fwrite($f, $data);
