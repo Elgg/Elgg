@@ -212,6 +212,10 @@ Testing
 
 Elgg has automated tests for both PHP and JavaScript functionality. All new contributions are required to come with appropriate tests.
 
+.. seealso::
+
+	:doc:`tests`
+
 General guidelines
 ------------------
 
