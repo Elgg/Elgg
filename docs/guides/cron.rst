@@ -6,7 +6,7 @@ special hooks will be triggered so you can register for these hooks from your ow
 
 The example below registers a function for the daily cron.
 
-.. code:: php
+.. code-block:: php
 	
 	function my_plugin_init() {
 	    elgg_register_plugin_hook_handler('cron', 'daily', 'my_plugin_cron_handler');
@@ -19,7 +19,7 @@ start (a lot) later then you may have expected. However the parameters provided
 in the hook contain the original starting time of the cron, so you can always use that
 information.
 
-.. code:: php
+.. code-block:: php
 	
 	function my_plugin_cron_handler($hook, $period, $return, $params) {
 	    $start_time = elgg_extract('time', $params);	

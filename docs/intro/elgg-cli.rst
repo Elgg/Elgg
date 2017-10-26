@@ -11,7 +11,7 @@ elgg-cli command line tools
 
 Depending on how you installed Elgg and your server configuration you can access``elgg-cli`` binaries as one of the following from the root of your Elgg installation:
 
-..code::sh
+.. code-block:: sh
 
     php ./elgg-cli list
     ./elgg-cli list
@@ -22,7 +22,7 @@ Depending on how you installed Elgg and your server configuration you can access
 Available commands
 ==================
 
-..code::sh
+.. code-block:: sh
 
     cd /path/to/elgg/
 
@@ -51,7 +51,7 @@ Adding custom commands
 Plugins can add their commands to the CLI application, by adding command class name via ``'commands','cli'`` hook.
 Command class must extend ``\Elgg\CLI\Command``.
 
-..code::php
+.. code-block:: php
 
     class MyCommand extends \Elgg\Сli\Command {
 

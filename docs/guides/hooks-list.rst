@@ -402,7 +402,7 @@ Note that not all hooks apply to instant notifications.
 
 	Handlers must return an array in the form:
 
-.. code:: php
+.. code-block:: php
 
 	array(
 		<user guid> => array('sms'),
@@ -579,7 +579,7 @@ Views
     Each meta and link element contains a set of key/value pairs that are formatted
     into html tag attributes, e.g.
 
-.. code:: php
+.. code-block:: php
 
     return [
        'title' => 'Current page title',
@@ -706,7 +706,7 @@ Other
 
 	Example:
 
-.. code:: php
+.. code-block:: php
 
 	return [
 		'small' => [
@@ -738,7 +738,7 @@ Other
 	Example on how one could default to a Gravatar icon for users that
 	have not yet uploaded an avatar:
 
-.. code:: php
+.. code-block:: php
 
 	// Priority 600 so that handler is triggered after avatar handler
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'gravatar_icon_handler', 600);
@@ -863,7 +863,7 @@ Other
 	Filter an array of profile fields. The result should be returned as an array in the format
 	``name => input view name``. For example:
 
-.. code:: php
+.. code-block:: php
 
 	array(
 		'about' => 'longtext'
@@ -874,7 +874,7 @@ Other
 	Filter an array of profile fields. The result should be returned as an array in the format
 	``name => input view name``. For example:
 
-.. code:: php
+.. code-block:: php
 
 	array(
 		'about' => 'longtext'
@@ -892,7 +892,7 @@ Other
 	Filters a list of default widgets to add for newly registered users. The list is an array
 	of arrays in the format:
 
-.. code:: php
+.. code-block:: php
 
 	array(
 		'event' => $event,

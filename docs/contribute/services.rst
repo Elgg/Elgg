@@ -23,7 +23,7 @@ instance in your factory method.
 
 Here's an example of a ``foo`` service factory, injecting the ``config`` and ``db`` services into the constructor:
 
-.. code:: php
+.. code-block:: php
 
     // in Elgg\Di\ServiceProvider::__construct()
 
@@ -59,7 +59,7 @@ If your service is meant for use by plugin developers:
 
 Now your service will be available via property access on the ``Elgg\Application`` instance:
 
-.. code:: php
+.. code-block:: php
 
     // using the public foo service
     $three = elgg()->foo->add(1, 2);
@@ -80,7 +80,7 @@ If you need developers to be able to construct objects that are pre-wired to Elg
 need to add a public factory method to ``Elgg\Application``. Here's an example that returns a new
 instance using internal Elgg services:
 
-.. code:: php
+.. code-block:: php
 
     public function createFoo($bar) {
         $logger = $this->services->logger;

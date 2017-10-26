@@ -13,7 +13,7 @@ include in your plugins for the items to appear.
 
 Here we add a river item telling that a user has created a new blog post:
 
-.. code:: php
+.. code-block:: php
 
 	<?php
 
@@ -58,7 +58,7 @@ Timestamps etc will be generated for you.
 
 For example, the blog plugin uses the following code for its river view:
 
-.. code:: php
+.. code-block:: php
 
 	<?php
 

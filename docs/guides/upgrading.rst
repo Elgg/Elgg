@@ -551,7 +551,7 @@ Twitter API plugin
 The ``twitter_api`` plugin has been removed from the Elgg core. The plugin is still available as a `Composer package <https://packagist.org/packages/elgg/twitter_api>`_, in order to install it
 add the following to you ``composer.json`` ``require`` section:
 
-.. code:: json
+.. code-block:: json
 	
 	"elgg/twitter_api": "~1.9"
 
@@ -953,7 +953,7 @@ Elgg can be now installed as a composer dependency instead of at document root
 
 That means an Elgg site can look something like this:
 
-.. code::
+.. code-block:: text
 
     settings.php
     vendor/
@@ -977,14 +977,14 @@ rely on its location on the filesystem.
 
 In particular, don't try load ``engine/start.php``.
 
-.. code:: php
+.. code-block:: php
 
     // Don't do this!
     dirname(__DIR__) . "/engine/start.php";
     
 To boot Elgg manually, you can use the class ``Elgg\Application``.
 
-.. code:: php
+.. code-block:: php
 
     // boot Elgg in mod/myplugin/foo.php
     require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
@@ -995,13 +995,13 @@ as that keeps your public URLs and your filesystem layout decoupled.
 
 Also, don't try to access the ``_graphics`` files directly.
 
-.. code:: php
+.. code-block:: php
 
     readfile(elgg_get_root_path() . "_graphics/elgg_sprites.png");
     
 Use :doc:`views` instead:
 
-.. code:: php
+.. code-block:: php
 
     echo elgg_view('elgg_sprites.png');
     
@@ -1033,7 +1033,7 @@ See http://jquery.com/upgrade-guide/1.9/ for how to move off jquery-migrate.
 
 If you'd prefer to just add it back, you can use this code in your plugin's init:
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_js('jquery-migrate', elgg_get_simplecache_url('jquery-migrate.js'), 'head');
     elgg_load_js('jquery-migrate');
@@ -1071,7 +1071,7 @@ Practically speaking, this carries a few gotchas:
 The ``view_vars, $view_name`` and ``view, $view_name`` hooks will operate on the
 *canonical* view name:
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_plugin_hook_handler('view', 'css/elgg', function($hook, $view_name) {
       assert($view_name == 'elgg.css') // not "css/elgg"
@@ -1079,7 +1079,7 @@ The ``view_vars, $view_name`` and ``view, $view_name`` hooks will operate on the
     
 Using the ``view, all`` hook and checking for individual views may not work as intended:
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_plugin_hook_handler('view', 'all', function($hook, $view_name) {
       // Won't work because "css/elgg" was aliased to "elgg.css"
@@ -1103,14 +1103,14 @@ We use ``fxp/composer-asset-plugin`` to manage our browser assets (js, css, html
 with Composer, but it must be installed globally *before installing Elgg* in order
 for the ``bower-asset/*`` packages to be recognized. To install it, run:
 
-.. code:: shell
+.. code-block:: sh
 
     composer global require fxp/composer-asset-plugin
 
 If you don't do this before running ``composer install`` or ``composer create-project``,
 you will get an error message:
 
-.. code:: shell
+.. code-block:: sh
 
     [InvalidArgumentException]
     Package fxp/composer-asset-plugin not found
@@ -1181,7 +1181,7 @@ scripts to use ``require()``.
 
 Inline code which will fail because the stack is not yet loaded:
 
-.. code:: html
+.. code-block:: html
 
     <script>
     $(function () {
@@ -1191,7 +1191,7 @@ Inline code which will fail because the stack is not yet loaded:
 
 This should work in Elgg 2.0:
 
-.. code:: html
+.. code-block:: html
 
     <script>
     require(['elgg', 'jquery'], function (elgg, $) {
@@ -1213,7 +1213,7 @@ Breadcrumbs
 Breadcrumb display now removes the last item if it does not contain a link. To restore the previous behavior,
 replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
 
-.. code:: php
+.. code-block:: php
 
     elgg_unregister_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
     elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'myplugin_prepare_breadcrumbs');
@@ -1356,7 +1356,7 @@ Plugin Likes
 Objects are no longer likable by default. To support liking, you can register a handler to permit the annotation,
 or more simply register for the hook ``["likes:is_likable", "<type>:<subtype>"]`` and return true. E.g.
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_plugin_hook_handler('likes:is_likable', 'object:mysubtype', 'Elgg\Values::getTrue');
 
@@ -1567,7 +1567,7 @@ Comment highlighting
 
 If your theme is using the file ``views/default/css/elements/components.php``, you must add the following style definitions in it to enable highlighting for comments and discussion replies:
 
-.. code:: css
+.. code-block:: css
 
 	.elgg-comments .elgg-state-highlight {
 		-webkit-animation: comment-highlight 5s;
@@ -1615,7 +1615,7 @@ If you make changes that break BC, you must update the plugin version and the re
 
 Example of (shortened) old version:
 
-.. code:: xml
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
@@ -1631,7 +1631,7 @@ Example of (shortened) old version:
 
 Example of (shortened) new version:
 
-.. code:: xml
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
@@ -1653,7 +1653,7 @@ Both the global ``$CONFIG`` variable and the ``$vars['config']`` parameter have 
 
 Example of old code:
 
-.. code:: php
+.. code-block:: php
 
     // Using the global $CONFIG variable:
     global $CONFIG;
@@ -1664,7 +1664,7 @@ Example of old code:
 
 Example of new code:
 
-.. code:: php
+.. code-block:: php
 
     $plugins_path = elgg_get_config('plugins_path');
 
@@ -1684,7 +1684,7 @@ previously passed to the function as a parameter. Elgg core will use the file na
 
 Example of the old way in ``languages/en.php``:
 
-.. code:: php
+.. code-block:: php
 
     $english = array(
         'photos:all' => 'All photos',
@@ -1693,7 +1693,7 @@ Example of the old way in ``languages/en.php``:
 
 Example of new way:
 
-.. code:: php
+.. code-block:: php
 
     return array(
         'photos:all' => 'All photos',
@@ -1710,7 +1710,7 @@ One of the biggest changes in Elgg 1.9 is the notifications system. The new syst
 
 Example of the old way:
 
-.. code:: php
+.. code-block:: php
 
     function photos_init() {
         // Tell core that we want to send notifications about new photos
@@ -1749,7 +1749,7 @@ Example of the old way:
 
 Example of the new way:
 
-.. code:: php
+.. code-block:: php
 
     function photos_init() {
         elgg_register_notification_event('object', 'photo', array('create'));
@@ -1811,7 +1811,7 @@ Parameters:
 
 Example of the old way:
 
-.. code:: php
+.. code-block:: php
 
 	// Notify $owner that $user has added a $rating to an $entity created by him
 
@@ -1831,7 +1831,7 @@ Example of the old way:
 
 Example of the new way:
 
-.. code:: php
+.. code-block:: php
 
 	// Notify $owner that $user has added a $rating to an $entity created by him
 
@@ -1864,11 +1864,11 @@ Example of the new way:
 Adding items to the Activity listing
 ------------------------------------
 
-.. code:: php
+.. code-block:: php
 
     add_to_river('river/object/photo/create', 'create', $user_guid, $photo_guid);
 
-.. code:: php
+.. code-block:: php
 
     elgg_create_river_item(array(
         'view' => 'river/object/photo/create',
@@ -1881,7 +1881,7 @@ You can also add the optional ``target_guid`` parameter which tells the target o
 
 If the photo would had been added for example into a photo album, we could add it by passing in also:
 
-.. code:: php
+.. code-block:: php
 
     'target_guid' => $album_guid,
 
@@ -1896,7 +1896,7 @@ The ``elgg_register_entity_url_handler()`` function has been deprecated. In 1.9 
 
 Example of the old way:
 
-.. code:: php
+.. code-block:: php
 
     /**
      * Initialize the photo plugin
@@ -1917,7 +1917,7 @@ Example of the old way:
 
 Example of the new way:
 
-.. code:: php
+.. code-block:: php
 
     /**
      * Initialize the photo plugin
@@ -2019,7 +2019,7 @@ Use standardized page handlers and scripts
 * Store page handler scripts in ``mod/:plugin/pages/:page_handler/:page_name.php``
 * Use the content page layout in page handler scripts:
 
-  .. code:: php
+  .. code-block:: php
 
      $content = elgg_view_layout('content', $options);
 

@@ -76,7 +76,7 @@ Elgg provides some base database seeds to populate the database with entities fo
 
 You can run the following commands to seed and unseed the database.
 
-..code::sh
+.. code-block:: sh
 
     # seed the database
     php ./elgg-cli database:seed

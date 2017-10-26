@@ -27,7 +27,7 @@ Currently our tests are split in two pieces:
 
 Since we have a ``phpunit.xml`` configuration at the root of Elgg, testing should be as easy as:
 
-.. code::
+.. code-block:: sh
 
 	git clone http://github.com/Elgg/Elgg
 	cd Elgg
@@ -39,7 +39,7 @@ Plugin tests
 Ideally plugins are configured in such a way that they can be unit-tested much like Elgg core. Plugin developers are free to implement their 
 own methods for unit testing, but we encourage everyone to make it as easy as Elgg core:
 
-.. code::
+.. code-block:: sh
 
 	git clone http://github.com/developer/elgg-plugin plugin
 	cd plugin

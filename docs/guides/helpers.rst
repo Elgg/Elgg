@@ -54,7 +54,7 @@ E-mail address formatting
 
 Elgg has a helper class to aid in getting formatted e-mail addresses: ``\Elgg\Email\Address``.
 
-.. code:: php
+.. code-block:: php
 
 	// the constructor takes two variables
 	// first is the email address, this is REQUIRED

@@ -77,7 +77,7 @@ Copy Elgg Code to the Test Server
 The very first step is to duplicate the production Elgg code. In our example, this is as simple as copying ``/var/www/elgg/`` to 
 ``/var/www/elgg_test/``.
 
-.. code::
+.. code-block:: sh
    
    cp -a /var/www/elgg/ /var/www/elgg_test/
 
@@ -86,7 +86,7 @@ Copy Data to the Test Server
 
 In this example, this is as simple as copying ``/var/data/elgg/`` to ``/var/data/elgg_test/``.
 
-.. code::
+.. code-block:: sh
    
    cp -a /var/data/elgg/ /var/data/elgg_test/
 
@@ -103,7 +103,7 @@ Edit settings.php
 The ``elgg-config/settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. 
 In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` and find the lines that look like this:
 
-.. code:: php
+.. code-block:: php
    
    // Database username
    $CONFIG->dbuser = 'db_user';
@@ -125,7 +125,7 @@ In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` an
    
 We need to change these lines to match our new installation:
 
-.. code:: php
+.. code-block:: php
    
    // Database username
    $CONFIG->dbuser = 'db_user';
@@ -171,14 +171,14 @@ We must now change 4 entries in the database. This is easily accomplished with 4
 Change the installation path
 ----------------------------
 
-.. code:: sql
+.. code-block:: sql
 
    UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/") WHERE `name` = "path";
 
 Change the data directory
 -------------------------
 
-.. code:: sql
+.. code-block:: sql
 
    UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/") WHERE `name` = "dataroot";
 
@@ -207,7 +207,7 @@ It is a good idea to keep a test server around to experiment with installing new
 the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/elgg-config/settings.php`` 
 file will allow seamless re-writing of the MySQL database entries.
 
-.. code:: php
+.. code-block:: php
 
    $con = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass);
    mysql_select_db($CONFIG->dbname, $con);

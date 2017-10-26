@@ -20,7 +20,7 @@ Registering actions
 
 Actions must be registered before use. Use ``elgg_register_action`` for this:
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_action("example", __DIR__ . "/actions/example.php");
 
@@ -34,7 +34,7 @@ You can also register actions via the :doc:`elgg-plugin</guides/plugins>` config
 To do this you need to provide an action section in the config file. 
 The location of the action files are assumed to be in the plugin folder  ``/actions``.
 
-.. code:: php
+.. code-block:: php
 
 	<?php
 
@@ -54,13 +54,13 @@ By default, actions are only available to logged in users.
 
 To make an action available to logged out users, pass ``"public"`` as the third parameter:
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_action("example", $filepath, "public");
 
 To restrict an action to only administrators, pass ``"admin"`` for the last parameter:
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_action("example", $filepath, "admin");
 
@@ -70,7 +70,7 @@ Writing action files
 
 Use the ``get_input`` function to get access to request parameters:
 
-.. code:: php
+.. code-block:: php
 
    $field = get_input('input_field_name', 'default_value');
 
@@ -79,7 +79,7 @@ You can then use the :doc:`database` api to load entities and perform actions on
 To indicate a successful action, use ``elgg_ok_response()``. This function accepts data that you want to make available
 to the client for XHR calls (this data will be ignored for non-XHR calls)
 
-.. code:: php
+.. code-block:: php
 
    $user = get_entity($guid);
    // do something
@@ -96,7 +96,7 @@ to the client for XHR calls (this data will be ignored for non-XHR calls)
 
 To indicate an error, use ``elgg_error_response()``
 
-.. code:: php
+.. code-block:: php
 
    $user = elgg_get_logged_in_user_entity();
    if (!$user) {
@@ -117,7 +117,7 @@ Customizing actions
 
 Before executing any action, Elgg triggers a hook:
 
-.. code:: php
+.. code-block:: php
 
    $result = elgg_trigger_plugin_hook('action', $action, null, true);
 
@@ -130,7 +130,7 @@ The captcha module uses this to intercept the ``register`` and ``user/requestnew
 
 This is done as follows:
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_plugin_hook_handler("action", "register", "captcha_verify_action_hook");
    elgg_register_plugin_hook_handler("action", "user/requestnewpassword", "captcha_verify_action_hook");
@@ -190,13 +190,13 @@ Forms
 
 To output a form, use the elgg_view_form function like so:
 
-.. code:: php
+.. code-block:: php
    
    echo elgg_view_form('example');
 
 Doing this generates something like the following markup:
 
-.. code:: html
+.. code-block:: html
 
    <form action="http://localhost/elgg/action/example">
      <fieldset>
@@ -213,7 +213,7 @@ Elgg does some things automatically for you when you generate forms this way:
 
 Put the content of your form in your plugin’s ``forms/example`` view:
 
-.. code:: php
+.. code-block:: php
 
    // /mod/example/views/default/forms/example.php
    echo elgg_view('input/text', array('name' => 'example'));
@@ -224,7 +224,7 @@ Put the content of your form in your plugin’s ``forms/example`` view:
 
 Now when you call ``elgg_view_form('example')``, Elgg will produce:
 
-.. code:: html
+.. code-block:: html
 
    <form action="http://localhost/elgg/action/example">
      <fieldset>
@@ -245,7 +245,7 @@ Inputs
 To render a form input, use one of the bundled input views, which cover all standard
 HTML input elements. See individual view files for a list of accepted parameters.
 
-.. code:: php
+.. code-block:: php
 
    echo elgg_view('input/select', array(
       'required' => true,
@@ -261,7 +261,7 @@ HTML input elements. See individual view files for a list of accepted parameters
 
 The above example will render a dropdown select input:
 
-.. code:: html
+.. code-block:: html
 
    <select required="required" name="status" data-rel="blog" class="elgg-input-dropdown">
       <option value="draft">Draft</option>
@@ -272,7 +272,7 @@ To ensure consistency in field markup, use ``elgg_view_field()``, which accepts
 all the parameters of the input being rendered, as well as ``#label`` and ``#help``
 parameters (both of which are optional and accept HTML or text).
 
-.. code:: php
+.. code-block:: php
 
    echo elgg_view_field(array(
       '#type' => 'select',
@@ -289,7 +289,7 @@ parameters (both of which are optional and accept HTML or text).
 
 The above will generate the following markup:
 
-.. code:: html
+.. code-block:: html
 
    <div class="elgg-field elgg-field-required">
       <label for="elgg-field-1" class="elgg-field-label">Blog status<span title="Required" class="elgg-required-indicator">*</span></label>
@@ -341,14 +341,14 @@ Files and images
 
 Use the input/file view in your form’s content view.
 
-.. code:: php
+.. code-block:: php
 
    // /mod/example/views/default/forms/example.php
    echo elgg_view('input/file', array('name' => 'icon'));
 
 Set the enctype of the form to multipart/form-data:
 
-.. code:: php
+.. code-block:: php
 
    echo elgg_view_form('example', array(
      'enctype' => 'multipart/form-data'
@@ -356,7 +356,7 @@ Set the enctype of the form to multipart/form-data:
 
 In your action file, use the ``$_FILES`` global to access the uploaded file:
 
-.. code:: php
+.. code-block:: php
 
    $icon = $_FILES['icon']
 
@@ -397,7 +397,7 @@ Simple sticky forms require little logic to determine the input values for the f
 
 The registration form view first sets default values for inputs, then checks if there are sticky values. If so, it loads the sticky values before clearing the sticky form:
 
-.. code:: php
+.. code-block:: php
 
    // views/default/forms/register.php
    $password = $password2 = '';
@@ -412,7 +412,7 @@ The registration form view first sets default values for inputs, then checks if 
 
 The registration action sets creates the sticky form and clears it once the action is completed:
 
-.. code:: php
+.. code-block:: php
 
    // actions/register.php
    elgg_make_sticky_form('register');
@@ -433,7 +433,7 @@ The bundled plugin Bookmarks' save form and action is an example of a complex st
 
 The form view for the save bookmark action uses ``elgg_extract()`` to pull values from the ``$vars`` array:
 
-.. code:: php
+.. code-block:: php
 
    // mod/bookmarks/views/default/forms/bookmarks/save.php
    $title = elgg_extract('title', $vars, '');
@@ -447,7 +447,7 @@ The form view for the save bookmark action uses ``elgg_extract()`` to pull value
 
 The page handler scripts prepares the form variables and calls ``elgg_view_form()`` passing the correct values:
 
-.. code:: php
+.. code-block:: php
 
    // mod/bookmarks/pages/add.php
    $vars = bookmarks_prepare_form_vars();
@@ -455,7 +455,7 @@ The page handler scripts prepares the form variables and calls ``elgg_view_form(
    
 Similarly, ``mod/bookmarks/pages/edit.php`` uses the same function, but passes the entity that is being edited as an argument:
 
-.. code:: php
+.. code-block:: php
 
    $bookmark_guid = get_input('guid');
    $bookmark = get_entity($bookmark_guid);
@@ -473,7 +473,7 @@ The library file defines ``bookmarks_prepare_form_vars()``. This function accept
 
 TODO: Include directly from lib/bookmarks.php
 
-.. code:: php
+.. code-block:: php
 
    // mod/bookmarks/lib/bookmarks.php
    function bookmarks_prepare_form_vars($bookmark = null) {
@@ -512,7 +512,7 @@ TODO: Include directly from lib/bookmarks.php
 
 The save action checks the input, then clears the sticky form upon success:
 
-.. code:: php
+.. code-block:: php
 
    // mod/bookmarks/actions/bookmarks/save.php
    elgg_make_sticky_form('bookmarks');
@@ -534,7 +534,7 @@ For enhanced security, all actions require an CSRF token. Calls to action URLs t
 
 A few views and functions automatically generate security tokens:
 
-.. code:: php
+.. code-block:: php
 
    elgg_view('output/url', array('is_action' => TRUE));
    elgg_view('input/securitytoken');
@@ -542,14 +542,14 @@ A few views and functions automatically generate security tokens:
 
 In rare cases, you may need to generate tokens manually:
 
-.. code:: php
+.. code-block:: php
 
    $__elgg_ts = time();
    $__elgg_token = generate_action_token($__elgg_ts);
 
 You can also access the tokens from javascript:
 
-.. code:: js
+.. code-block:: js
 
    elgg.security.token.__elgg_ts;
    elgg.security.token.__elgg_token;
@@ -567,7 +567,7 @@ strong hash functions like SHA-2 should *not* be used without HMAC for these tas
 Elgg provides ``elgg_build_hmac()`` to generate and validate HMAC message authentication codes that are unguessable
 without the site's private key.
 
-.. code:: php
+.. code-block:: php
 
     // generate a querystring such that $a and $b can't be altered
     $a = 1234;
@@ -591,7 +591,7 @@ without the site's private key.
 
 Note: If you use a non-string as HMAC data, you must use types consistently. Consider the following:
 
-.. code:: php
+.. code-block:: php
 
     $mac = elgg_build_hmac([123, 456])->getToken();
 
@@ -609,7 +609,7 @@ Signed URLs offer a limited level of security for situations where action tokens
 
 URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ for more details.
 
-.. code:: php
+.. code-block:: php
 
     $url = elgg_http_add_url_query_element(elgg_normalize_url('confirm'), [
        'user_guid' => $user_guid,

@@ -20,7 +20,7 @@ Create a migration
 
 To create a new migration run the following in your console:
 
-..code::
+.. code-block:: sh
 
     phinx create -c engine/conf/migrations.php MigrationClassName
 
@@ -35,7 +35,7 @@ Executing a migration
 Migrations are executed every time your run ``upgrade.php``. If you would like to execute migrations manually, you can
 do so via the command line:
 
-..code::
+.. code-block:: sh
 
     phinx migrate -c engine/conf/migrations.php
 

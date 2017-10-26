@@ -20,7 +20,7 @@ Now you need to upload TinyMCE into a directory in your plugin.
 We strongly encourage you to use ``composer`` to manage third-party dependencies,
 since it is so much easier to upgrade and maintain that way::
 
-.. code:: shell
+.. code-block:: sh
 
     composer require bower-asset/tinymce
 
@@ -38,7 +38,7 @@ It is time to tell Elgg how to apply TinyMCE to longtext fields.
 We're going to do that by extending the input/longtext view and including some javascript.
 Create a view tinymce/longtext and add the following code:
 
-.. code:: php
+.. code-block:: php
 
     <?php
 
@@ -73,7 +73,7 @@ Create a view tinymce/longtext and add the following code:
 
 Then, in your plugin's init function, extend the input/longtext view
 
-.. code:: php
+.. code-block:: php
 
     function tinymce_init() {
         elgg_extend_view('input/longtext', 'tinymce/longtext');

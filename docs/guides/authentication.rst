@@ -18,7 +18,7 @@ Working with the logged in user
 
 Check whether the current user is logged in with ``elgg_is_logged_in()``:
 
-.. code:: php
+.. code-block:: php
 
     if (elgg_is_logged_in()) {
       // do something just for logged-in users
@@ -26,7 +26,7 @@ Check whether the current user is logged in with ``elgg_is_logged_in()``:
 
 Check if the current user is an admin with ``elgg_is_admin_logged_in()``:
 
-.. code:: php
+.. code-block:: php
 
     if (elgg_is_admin_logged_in()) {
       // do something just for admins
@@ -34,7 +34,7 @@ Check if the current user is an admin with ``elgg_is_admin_logged_in()``:
     
 Get the currently logged in user with ``elgg_get_logged_in_user_entity()``:
 
-.. code:: php
+.. code-block:: php
 
     $user = elgg_get_logged_in_user_entity();
 
@@ -49,7 +49,7 @@ Gatekeeper functions allow you to manage how code gets executed by applying acce
 
 Forward a user to the front page if they are not logged in with ``elgg_gatekeeper()``:
 
-.. code:: php
+.. code-block:: php
 
     elgg_gatekeeper();
     
@@ -61,7 +61,7 @@ Forward a user to the front page if they are not logged in with ``elgg_gatekeepe
 
 Forward a user to the front page unless they are an admin with ``elgg_admin_gatekeeper()``:
 
-.. code:: php
+.. code-block:: php
 
     elgg_admin_gatekeeper();
     
@@ -74,7 +74,7 @@ Forward a user to the front page unless they are an admin with ``elgg_admin_gate
 
 Prevent CSRF attacks with ``action_gatekeeper()``.
 
-.. code:: php
+.. code-block:: php
 
     action_gatekeeper();
     
@@ -99,7 +99,7 @@ The preferred approach is to create a separate Elgg plugin which will have one s
 
 The authentication handler is a function and takes a single parameter. Registering the handler is being done by ``register_pam_handler()`` which takes the name of the authentication handler, the importance and the policy as parameters. It is advised to register the handler in the plugin's init function, for example:
 
-.. code:: php
+.. code-block:: php
 
    function your_plugin_init() {
       // Register the authentication handler

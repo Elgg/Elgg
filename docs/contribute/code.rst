@@ -35,7 +35,7 @@ and help everyone understand the status of open PRs.
 
 Bugfix PRs:
 
-.. code::
+.. code-block:: text
 
  - [ ] Commit messages are in the standard format
  - [ ] Includes regression test
@@ -45,7 +45,7 @@ Bugfix PRs:
 
 Feature PRs:
 
-.. code::
+.. code-block:: text
 
  - [ ] Commit messages are in the standard format
  - [ ] Includes tests
@@ -130,7 +130,7 @@ follow these steps:
 
 When done, your commit message will have the format:
 
-.. code::
+.. code-block:: text
 
 	type(component): summary
 
@@ -143,7 +143,7 @@ When done, your commit message will have the format:
 
 Here is an example of a good commit message:
 
-.. code::
+.. code-block:: text
 
     perf(upgrade): speeds up migrating remember me codes
 
@@ -156,7 +156,7 @@ Here is an example of a good commit message:
 To validate commit messages locally, make sure ``.scripts/validate_commit_msg.php`` is executable, and make a copy
 or symlink to it in the directory ``.git/hooks/commit-msg``.
 
-.. code::
+.. code-block:: sh
 
     chmod u+x .scripts/validate_commit_msg.php
     ln -s .scripts/validate_commit_msg.php .git/hooks/commit-msg/validate_commit_msg.php
@@ -191,14 +191,14 @@ Elgg uses set of standards that are based partially on PEAR and PSR2 standards. 
 
 To check your code for standard violations (provided you have installed Elgg with dev dependencies), run:
 
-.. code::
+.. code-block:: sh
 
     phpcs --standard=vendor/elgg/sniffs/elgg.xml -s path/to/dir/to/check
 
 
 To automatically fix fixable violations, run:
 
-.. code::
+.. code-block:: sh
 
     phpcbf --standard=vendor/elgg/sniffs/elgg.xml path/to/dir/to/fix
 
@@ -268,7 +268,7 @@ on new ``*Test.js`` files and run those tests.
 Test boilerplate
 ----------------
 
-.. code:: js
+.. code-block:: js
 
 	define(function(require) {
 		var elgg = require('elgg');
@@ -291,19 +291,19 @@ You will need to have nodejs and yarn installed.
 
 First install all the development dependencies:
 
-.. code::
+.. code-block:: sh
 
    yarn
 
 Run through the tests just once and then quit:
 
-.. code::
+.. code-block:: sh
 
    yarn test
 
 You can also run tests continuously during development so they run on each save:
 
-.. code::
+.. code-block:: sh
 
    karma start js/tests/karma.conf.js
 
@@ -312,7 +312,7 @@ Debugging JS tests
 
 You can run the test suite inside Chrome dev tools:
 
-.. code::
+.. code-block:: sh
 
    yarn run chrome
 
@@ -417,7 +417,7 @@ Good comments describe the "why."  Good code describes the "how." E.g.:
 
 Bad:
 
-.. code:: php
+.. code-block:: php
 
 	// increment $i only when the entity is marked as active.
 	foreach ($entities as $entity) {
@@ -428,7 +428,7 @@ Bad:
 
 Good:
 
-.. code:: php
+.. code-block:: php
 
 	// find the next index for inserting a new active entity.
 	foreach ($entities as $entity) {
@@ -440,7 +440,7 @@ Good:
 Always include a comment if it's not obvious that something must be done in a certain way. Other
 developers looking at the code should be discouraged from refactoring in a way that would break the code.
 
-.. code:: php
+.. code-block:: php
 
     // Can't use empty()/boolean: "0" is a valid value
     if ($str === '') {
@@ -534,13 +534,13 @@ When creating strings with variables:
 
 Bad (hard to read, misuse of quotes and {}s):
 
-.. code:: php
+.. code-block:: php
 
 	echo 'Hello, '.$name."!  How is your {$time_of_day}?";
 
 Good:
 
-.. code:: php
+.. code-block:: php
 
 	echo "Hello, $name!  How is your $time_of_day?";
 
@@ -555,7 +555,7 @@ Use shorthand where possible
 
 Bad:
 
-.. code:: css
+.. code-block:: css
 
 	background-color: #333333;
 	background-image:  url(...);
@@ -565,7 +565,7 @@ Bad:
 
 Good:
 
-.. code:: css
+.. code-block:: css
 
 	background: #333 url(...) repeat-x left 10px;
 	padding: 2px 9px;
@@ -575,13 +575,13 @@ Use hyphens, not underscores
 
 Bad:
 
-.. code:: css
+.. code-block:: css
 
     .example_class {}
 
 Good:
 
-.. code:: css
+.. code-block:: css
 
     .example-class {}
 
@@ -590,13 +590,13 @@ One property per line
 
 Bad:
 
-.. code:: css
+.. code-block:: css
 
 	color: white;font-size: smaller;
 
 Good:
 
-.. code:: css
+.. code-block:: css
 
 	color: white;
 	font-size: smaller;
@@ -608,7 +608,7 @@ These should be spaced like so: ``property: value;``
 
 Bad:
 
-.. code:: css
+.. code-block:: css
 
 	color:value;
 	color :value;
@@ -616,7 +616,7 @@ Bad:
 
 Good:
 
-.. code:: css
+.. code-block:: css
 
 	color: value;
 
@@ -630,7 +630,7 @@ Vendor prefixes
 
 Bad:
 
-.. code:: css
+.. code-block:: css
 
 	-moz-border-radius: 5px;
 	border: 1px solid #999999;
@@ -639,7 +639,7 @@ Bad:
 
 Good:
 
-.. code:: css
+.. code-block:: css
 
 	border: 1px solid #999999;
 
@@ -654,7 +654,7 @@ Group subproperties
 
 Bad:
 
-.. code:: css
+.. code-block:: css
 
 	background-color: white;
 	color: #0054A7;
@@ -662,7 +662,7 @@ Bad:
 
 Good:
 
-.. code:: css
+.. code-block:: css
 
 	background-color: white;
 	background-position: 2px -257px;
@@ -677,7 +677,7 @@ All functions should be in the ``elgg`` namespace.
 
 Function expressions should end with a semi-colon.
 
-.. code:: js
+.. code-block:: js
 
 	elgg.ui.toggles = function(event) {
 		event.preventDefault();

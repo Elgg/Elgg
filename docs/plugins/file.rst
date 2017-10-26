@@ -34,8 +34,8 @@ Note for developers
 To add a special content type player, create a plugin with views of the form ``file/specialcontent/mime/type``. For example, to create a special viewer for Word documents, you would create a view called ``file/specialcontent/application/msword``, because ``application/msword`` is the MIME-type for Word documents.
 Within this view, the ``ElggEntity`` version of the file will be referenced as ``$vars['entity']``. Therefore, the URL of the downloadable file is:
 
-.. code:: php
-
-   <?php echo $vars['url']; ?>action/file/download?file_guid=<?php echo $vars['entity']->getGUID(); ?>
+.. code-block:: php
+	
+	echo $vars['entity']->getDownloadURL();
 
 Using this, it should be possible to develop most types of embeddable viewers.

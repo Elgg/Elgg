@@ -33,7 +33,7 @@ make this unique, so that other plugins don't accidentally try and use
 the same subtype. For the purposes of this document, let's assume we're
 building a simple forum. Therefore, the subtype will be *forum*:
 
-.. code:: php
+.. code-block:: php
 
     $object = new ElggObject();
     $object->subtype = "forum";
@@ -56,7 +56,7 @@ call ``$object->save()`` again, and it will update the database for you.
 You can set metadata on an object just like a standard property. Let's
 say we want to set the SKU of a product:
 
-.. code:: php
+.. code-block:: php
 
     $object->SKU = 62784;
 
@@ -73,7 +73,7 @@ Loading an object
 By GUID
 ~~~~~~~
 
-.. code:: php
+.. code-block:: php
 
     $entity = get_entity($guid);
     if (!$entity) {
@@ -89,7 +89,7 @@ If you know the user ID you want to get objects for, or the subtype, or
 the site, you have several options. The easiest is probably to call the
 procedural function ``elgg_get_entities``:
 
-.. code:: php
+.. code-block:: php
 
     $entities = elgg_get_entities(array(
         'type' => $entity_type,
@@ -108,7 +108,7 @@ If you already have an ``ElggUser`` – e.g. ``elgg_get_logged_in_user_entity``,
 which always has the current user's object when you're logged in – you can
 simply use:
 
-.. code:: php
+.. code-block:: php
 
     $objects = $user->getObjects($subtype, $limit, $offset)
 
@@ -133,7 +133,7 @@ with metadata in a variety of ways.
    Pre Elgg 1.10 the sorting of the entities was based on the latest addition of an annotation (in $options your could add `$options['order_by'] = 'maxtime ASC'` or `$options['order_by'] = 'maxtime DESC'`. As of Elgg 1.10 this was changed to the creation time of the entity, just like the rest of the `elgg_get_entities*` functions.
    To get the old behaviour back add the following to your `$options`:
    
-   .. code:: php
+   .. code-block:: php
    
       $options['selects'] = array('MAX(n_table.time_created) AS maxtime');
       $options['group_by'] = 'n_table.entity_guid';
@@ -169,7 +169,7 @@ Entity Icons
 Entity icons can be saved from uploaded files, existing local files, or existing ElggFile 
 objects. These methods save the `master` size of the icon defined in the system. The other defined sizes will be generated when requested.
 
-.. code:: php
+.. code-block:: php
 
 	$object = new ElggObject();
 	$object->title = 'Example entity';
@@ -247,7 +247,7 @@ $size
 Icon methods support passing an icon type if an entity has more than one icon. For example, a user
 might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as the icon type:
 
-.. code:: php
+.. code-block:: php
 
 	$object->saveIconFromUploadedFile('uploaded_photo', 'cover_photo');
 
@@ -272,7 +272,7 @@ Annotations could be used, for example, to track ratings. To annotate an
 entity you can use the object's ``annotate()`` method. For example, to
 give a blog post a rating of 5, you could use:
 
-.. code:: php
+.. code-block:: php
 
     $blog_post->annotate('rating', 5);
 
@@ -297,7 +297,7 @@ get\_entity() et al. will return the appropriate PHP class. For example,
 if I customize ElggGroup in a class called "Committee", I need to make
 Elgg aware of the new mapping. Following is an example class extension:
 
-.. code:: php
+.. code-block:: php
 
     // Class source
     class Committee extends ElggGroup {
@@ -312,7 +312,7 @@ Elgg aware of the new mapping. Following is an example class extension:
 
 In your plugins ``elgg-plugin.php`` file add the ``entities`` section.
 
-.. code:: php
+.. code-block:: php
 
     <?php // mod/example/elgg-plugin.php
     return [
@@ -395,7 +395,7 @@ This example shows how you can populate your database on plugin activation.
 
 my_plugin/activate.php:
 
-.. code:: php
+.. code-block:: php
 
     if (!elgg_get_plugin_setting('database_version', 'my_plugin') {
         run_sql_script(__DIR__ . '/sql/activate.sql');
@@ -405,7 +405,7 @@ my_plugin/activate.php:
 
 my_plugin/sql/activate.sql:
 
-.. code:: sql
+.. code-block:: sql
 
     -- Create some table
     CREATE TABLE prefix_custom_table(
@@ -452,13 +452,13 @@ There are some reasons why you might want to create your own system log. For exa
 
 To do this, you can create a function that listens to all events for all types of object:
 
-.. code:: php
+.. code-block:: php
 
    register_elgg_event_handler('all','all','your_function_name');
 
 Your function can then be defined as:
 
-.. code:: php
+.. code-block:: php
 
    function your_function_name($object, $event) {
       if ($object instanceof Loggable) {

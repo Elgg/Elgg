@@ -3,7 +3,7 @@ FTP backup script
 
 Here is an automated script for backing up an Elgg installation.
 
-.. code:: perl
+.. code-block:: perl
 
    #!/usr/bin/perl -w
    

@@ -21,7 +21,7 @@ name of an upgrade class that implements the ``Elgg\Upgrade\Batch`` interface.
 
 Example from ``mod/blog/elgg-plugin.php`` file:
 
-.. code:: php
+.. code-block:: php
 
 	return [
 		'upgrades' => [
@@ -46,7 +46,7 @@ processed item was upgraded successfully or not.
 
 The basic structure of the class is the following:
 
-.. code:: php
+.. code-block:: php
 
 	<?php
 	
@@ -180,7 +180,7 @@ If ``countItems()`` returned ``Batch::UNKNOWN_COUNT``, then at some point ``run(
 In most cases your ``run()`` method will want to pass the ``$offset`` parameter to one of the
 ``elgg_get_entities*()`` functions:
 
-.. code:: php
+.. code-block:: php
 
 	/**
 	 * Process blog posts

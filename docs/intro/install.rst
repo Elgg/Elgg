@@ -71,7 +71,7 @@ Upload Elgg
 
 With Composer (recommended if comfortable with CLI):
 
-.. code:: shell
+.. code-block:: sh
 
     cd /path/to/wwwroot/
     composer self-update

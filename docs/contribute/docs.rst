@@ -13,7 +13,7 @@ Elgg has a `grunt`_ script that automatically builds the docs, opens them in a b
 window, and automatically reloads as you make changes (the reload takes just a few
 seconds). You need `yarn`_ and `sphinx`_ installed to be able to use these scripts.
 
-.. code:: sh
+.. code-block:: sh
 
    cd path/to/elgg/
    yarn
@@ -140,7 +140,7 @@ Internationalizing documentation
 When you change documentation, remember to update the documentation translation
 templates before you commit:
 
-.. code:: sh
+.. code-block:: sh
 
    cd docs/
    make gettext
