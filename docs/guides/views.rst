@@ -3,7 +3,7 @@ Views
 
 .. contents:: Contents
    :local:
-   :depth: 1
+   :depth: 2
 
 Introduction
 ============
@@ -458,7 +458,7 @@ For example, the view to display a blog post might be ``object/blog``.
 The view to display a user is ``user/default``.
 
 Full and partial entity views
-=============================
+-----------------------------
 
 ``elgg_view_entity`` actually has a number of parameters,
 although only the very first one is required. The first three are:
@@ -466,7 +466,7 @@ although only the very first one is required. The first three are:
 * ``$entity`` - The entity to display
 * ``$viewtype`` - The viewtype to display in (defaults to the one we're currently in,
   but it can be forced - eg to display a snippet of RSS within an HTML page)
-* ``$full_view`` - Whether to display a *full* version of the entity. (Defaults to false.)
+* ``$full_view`` - Whether to display a *full* version of the entity. (Defaults to ``true``.)
 
 This last parameter is passed to the view as ``$vars['full_view']``.
 It's up to you what you do with it; the usual behaviour is to only display comments
@@ -596,6 +596,58 @@ See the ``Elgg\Views\TableColumn\ColumnFactory`` class for more details on how c
 rendered. You can add or override methods of ``elgg()->table_columns`` in a variety of ways, based on views,
 properties/methods on the items, or given functions.
 
+Icons
+=====
+
+Elgg has support for two kind of icons: generic icons to help with styling (eg. show delete icon) and Entity icons (eg. user avatar).
+
+Generic icons
+-------------
+
+As of Elgg 2.0 the generic icons are based on the FontAwesome_ library. You can get any of the supported icons by calling 
+``elgg_view_icon($icon_name, $vars);`` where:
+
+* ``$icon_name`` is the FontAwesome name (without ``fa-``) for example ``user``
+* ``$vars`` is optional, for example you can set an additional class
+
+``elgg_view_icon()`` calls the view ``output/icon`` with the given icon name and outputs all the correct classes to render the FontAwesome icon.
+If you wish to replace an icon with another icon you can write a ``view_vars``, ``output/icon`` hook to replace the icon name with your replacement.
+
+For backwards compatibility some older Elgg icon names are translated to a corresponding FontAwesome icon.
+
+Entity icons
+------------
+
+To view an icon belowing to an Entity call ``elgg_view_entity_icon($entity, $size, $vars);`` where:
+
+* ``$entity`` is the ``ElggEntity`` you wish to show the icon for
+* ``$size`` is the requestes size. Default Elgg supports ``large``, ``medium``, ``small``, ``tiny`` and ``topbar`` (``master`` is also 
+  available, but don't use it)
+* ``$vars`` in order to pass additional information to the icon view
+
+``elgg_view_entity_icon()`` calls a view in the order:
+
+* ``icon/<type>/<subtype>``
+* ``icon/<type>/default``
+* ``icon/default``
+
+So if you wish to customize the layout of the icon you can overrule the corresponding view.
+
+An example of displaying a user avatar is
+
+.. code-block:: php
+	
+	// get the user
+	$user = elgg_get_logged_in_user_entity();
+	
+	// show the small icon
+	echo elgg_view_entity_icon($user, 'small');
+	
+	// don't add the user_hover menu to the icon
+	echo elgg_view_entity_icon($user, 'small', [
+		'use_hover' => false,
+	]);
+
 Related
 =======
 
@@ -606,3 +658,4 @@ Related
    views/simplecache
    views/foot-vs-footer
 	
+.. _FontAwesome: http://fontawesome.io/icons/
