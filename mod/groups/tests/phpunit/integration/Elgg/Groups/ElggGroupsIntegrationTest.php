@@ -13,6 +13,10 @@ class ElggGroupsIntegrationTest extends \Elgg\IntegrationTestCase {
 	private $group;
 
 	public function up() {
+		if (!elgg_is_active_plugin('groups')) {
+			$this->markTestSkipped();
+		}
+
 		$this->group = $this->createGroup();
 	}
 
