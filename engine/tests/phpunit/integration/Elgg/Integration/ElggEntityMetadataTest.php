@@ -167,8 +167,7 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 		}
 	}
 		
-	public function testSetMetadataCreatesNewMetadataRows() {
-		// @todo try to change this core behaviour so it uses updates
+	public function testSetMetadataUpdateCreatesNoNewMetadataRows() {
 		$this->entity->foo = 'bar';
 		$md = elgg_get_metadata([
 			'guid' => $this->entity->guid,
@@ -185,7 +184,55 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 		$this->assertCount(1, $md);
 		$update_id = $md[0]->id;
 		
-		$this->assertNotEquals($new_id, $update_id);
+		$this->assertEquals($new_id, $update_id);
+	}
+		
+	public function testSetMetadataToArrayCreatesNewMetadataRows() {
+		$this->entity->foo = 'bar';
+		$md = elgg_get_metadata([
+			'guid' => $this->entity->guid,
+			'metadata_name' => 'foo',
+		]);
+		$this->assertCount(1, $md);
+		$original_id = $md[0]->id;
+		
+		$this->entity->foo = ['bar1', 'bar2'];
+		$md = elgg_get_metadata([
+			'guid' => $this->entity->guid,
+			'metadata_name' => 'foo',
+		]);
+		$this->assertCount(2, $md);
+		
+		foreach ($md as $row) {
+			// check if all metadata is a new row
+			$this->assertNotEquals($original_id, $row->id);
+		}
+	}
+		
+	public function testSetMetadataFromArrayCreatesNewMetadataRows() {
+		$this->entity->foo = ['bar1', 'bar2'];
+		$md = elgg_get_metadata([
+			'guid' => $this->entity->guid,
+			'metadata_name' => 'foo',
+		]);
+		$this->assertCount(2, $md);
+		
+		$original_ids = [];
+		foreach ($md as $row) {
+			$original_ids[] = $row->id;
+		}
+		
+		$this->entity->foo = 'bar';
+		$md = elgg_get_metadata([
+			'guid' => $this->entity->guid,
+			'metadata_name' => 'foo',
+		]);
+		$this->assertCount(1, $md);
+		
+		foreach ($original_ids as $original_id) {
+			// check if all metadata is a new row
+			$this->assertNotEquals($original_id, $md[0]->id);
+		}
 	}
 		
 	public function testDeleteMetadataNonExistingMetadata() {

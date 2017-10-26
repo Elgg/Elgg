@@ -375,13 +375,11 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param string $value_type 'text', 'integer', or '' for automatic detection
 	 * @param bool   $multiple   Allow multiple values for a single name.
 	 *                           Does not support associative arrays.
-	 * @param int    $owner_guid GUID of entity that owns the metadata.
-	 *                           Default is owner of entity.
 	 *
 	 * @return bool
 	 * @throws InvalidArgumentException
 	 */
-	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0) {
+	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
@@ -390,72 +388,86 @@ abstract class ElggEntity extends \ElggData implements
 		} else {
 			$value = [$value];
 		}
+		
+		// strip null values from array
+		$value = array_filter($value, function($var) {
+			return !is_null($var);
+		});
+
+		if (empty($this->guid)) {
+			// unsaved entity. store in temp array
+			return $this->setTempMetadata($name, $value, $multiple);
+		}
 
 		// saved entity. persist md to db.
-		if ($this->guid) {
-			// if overwriting, delete first.
-			if (!$multiple) {
-				$options = [
-					'guid' => $this->getGUID(),
-					'metadata_name' => $name,
-					'limit' => 0
-				];
-				// @todo in 1.9 make this return false if can't add metadata
-				// https://github.com/elgg/elgg/issues/4520
-				//
+		if (!$multiple) {
+			$current_metadata = $this->getMetadata($name);
+			
+			if ((is_array($current_metadata) || count($value) > 1 || $value === []) && isset($current_metadata)) {
+				// remove current metadata if needed
 				// need to remove access restrictions right now to delete
 				// because this is the expected behavior
 				$ia = elgg_set_ignore_access(true);
-				$delete_result = elgg_delete_metadata($options);
+				$delete_result = elgg_delete_metadata([
+					'guid' => $this->guid,
+					'metadata_name' => $name,
+					'limit' => false,
+				]);
 				elgg_set_ignore_access($ia);
 
 				if (false === $delete_result) {
 					return false;
 				}
 			}
-
-			$owner_guid = $owner_guid ? (int) $owner_guid : $this->owner_guid;
-
-			// add new md
-			foreach ($value as $value_tmp) {
-				// at this point $value is appended because it was cleared above if needed.
-				$md_id = _elgg_services()->metadataTable->create($this->guid, $name, $value_tmp, $value_type,
-						$owner_guid, null, true);
-				if (!$md_id) {
-					return false;
-				}
+			
+			if (count($value) > 1) {
+				// new value is a multiple valued metadata
+				$multiple = true;
 			}
+		}
 
-			return true;
-		} else {
-			// unsaved entity. store in temp array
-			// returning single entries instead of an array of 1 element is decided in
-			// getMetaData(), just like pulling from the db.
-
-			if ($owner_guid != 0) {
-				$msg = "owner guid cannot be used in ElggEntity::setMetadata() until entity is saved.";
-				throw new \InvalidArgumentException($msg);
+		// create new metadata
+		foreach ($value as $value_tmp) {
+			$md_id = _elgg_services()->metadataTable->create($this->guid, $name, $value_tmp, $value_type, $multiple);
+			if (!$md_id) {
+				return false;
 			}
+		}
 
-			// if overwrite, delete first
-			if (!$multiple) {
-				unset($this->temp_metadata[$name]);
-				if (count($value)) {
-					// only save if value array contains data
-					$this->temp_metadata[$name] = $value;
-				}
-				return true;
+		return true;
+	}
+	
+	/**
+	 * Set temp metadata on this entity.
+	 *
+	 * @param string $name     Name of the metadata
+	 * @param mixed  $value    Value of the metadata (doesn't support assoc arrays)
+	 * @param bool   $multiple Allow multiple values for a single name.
+	 *                         Does not support associative arrays.
+	 *
+	 * @return bool
+	 */
+	protected function setTempMetadata($name, $value, $multiple = false) {
+		// if overwrite, delete first
+		if (!$multiple) {
+			unset($this->temp_metadata[$name]);
+			if (count($value)) {
+				// only save if value array contains data
+				$this->temp_metadata[$name] = $value;
 			}
-
-			if (!isset($this->temp_metadata[$name])) {
-				$this->temp_metadata[$name] = [];
-			}
-
-			// add new md
-			$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], $value);
 			return true;
 		}
+
+		if (!isset($this->temp_metadata[$name])) {
+			$this->temp_metadata[$name] = [];
+		}
+
+		$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], $value);
+		
+		return true;
 	}
+	
+	
 
 	/**
 	 * Deletes all metadata on this object (metadata.entity_guid = $this->guid).
