@@ -394,6 +394,16 @@ function elgg_get_uploaded_file($input_name, $check_for_validity = true) {
 }
 
 /**
+ * Returns a ElggTempFile which can handle writing/reading of data to a temporary file location
+ *
+ * @return ElggTempFile
+ * @since 3.0
+ */
+function elgg_get_temp_file() {
+	return new ElggTempFile();
+}
+
+/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
