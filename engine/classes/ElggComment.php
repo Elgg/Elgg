@@ -30,11 +30,8 @@ class ElggComment extends \ElggObject {
 	 * @return bool
 	 * @since 1.9.0
 	 */
-	public function canComment($user_guid = 0, $default = null) {
-		if (!isset($default)) {
-			$default = false;
-		}
-		return parent::canComment($user_guid, $default);
+	public function canComment($user_guid = 0, $default = false) {
+		return false;
 	}
 
 	/**

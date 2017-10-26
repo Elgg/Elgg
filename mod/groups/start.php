@@ -15,7 +15,10 @@ function groups_init() {
 	
 	// register group entities for search
 	elgg_register_entity_type('group', '');
-
+	
+	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/member_count');
+	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/membership_type');
+	
 	// Set up the menu
 	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/all');
 	elgg_register_menu_item('site', $item);
@@ -348,47 +351,36 @@ function groups_activity_owner_block_menu($hook, $type, $return, $params) {
  * Add links/info to entity menu particular to group entities
  */
 function groups_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
+	$entity = elgg_extract('entity', $params);
+	if (!($entity instanceof \ElggGroup)) {
+		return;
 	}
-
-	/* @var ElggGroup $entity */
-	$entity = $params['entity'];
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler != 'groups') {
-		return $return;
+	
+	if (!elgg_is_admin_logged_in()) {
+		return;
 	}
+	
+	$isFeatured = $entity->featured_group === "yes";
 
-	/* @var ElggMenuItem $item */
-	foreach ($return as $index => $item) {
-		if (in_array($item->getName(), ['likes', 'unlike', 'edit', 'delete'])) {
-			unset($return[$index]);
-		}
-	}
+	$return[] = ElggMenuItem::factory([
+		'name' => 'feature',
+		'icon' => 'arrow-up',
+		'text' => elgg_echo('groups:makefeatured'),
+		'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=feature",
+		'is_action' => true,
+		'item_class' => $isFeatured ? 'hidden' : '',
+		'data-toggle' => 'unfeature',
+	]);
 
-
-	// feature link
-	if (elgg_is_admin_logged_in()) {
-		$isFeatured = $entity->featured_group == "yes";
-
-		$return[] = ElggMenuItem::factory([
-			'name' => 'feature',
-			'text' => elgg_echo("groups:makefeatured"),
-			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=feature"),
-			'priority' => 300,
-			'item_class' => $isFeatured ? 'hidden' : '',
-			'data-toggle' => 'unfeature',
-		]);
-
-		$return[] = ElggMenuItem::factory([
-			'name' => 'unfeature',
-			'text' => elgg_echo("groups:makeunfeatured"),
-			'href' => elgg_add_action_tokens_to_url("action/groups/featured?group_guid={$entity->guid}&action_type=unfeature"),
-			'priority' => 300,
-			'item_class' => $isFeatured ? '' : 'hidden',
-			'data-toggle' => 'feature',
-		]);
-	}
+	$return[] = ElggMenuItem::factory([
+		'name' => 'unfeature',
+		'icon' => 'arrow-down',
+		'text' => elgg_echo('groups:makeunfeatured'),
+		'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=unfeature",
+		'is_action' => true,
+		'item_class' => $isFeatured ? '' : 'hidden',
+		'data-toggle' => 'feature',
+	]);
 
 	return $return;
 }
@@ -397,33 +389,32 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
  * Add a remove user link to user hover menu when the page owner is a group
  */
 function groups_user_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_is_logged_in()) {
-		$group = elgg_get_page_owner_entity();
+	$group = elgg_get_page_owner_entity();
 
-		// Check for valid group
-		if (!elgg_instanceof($group, 'group')) {
-			return $return;
-		}
-
-		$entity = $params['entity'];
-
-		// Make sure we have a user and that user is a member of the group
-		if (!elgg_instanceof($entity, 'user') || !$group->isMember($entity)) {
-			return $return;
-		}
-
-		// Add remove link if we can edit the group, and if we're not trying to remove the group owner
-		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
-			$return[] = ElggMenuItem::factory([
-				'name' => 'removeuser',
-				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
-				'text' => elgg_echo('groups:removeuser'),
-				'icon' => 'user-times',
-				'confirm' => true,
-				'priority' => 999,
-			]);
-		}
+	if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
+		return;
 	}
+
+	$entity = elgg_extract('entity', $params);
+
+	// Make sure we have a user and that user is a member of the group
+	if (!($entity instanceof \ElggUser) || !$group->isMember($entity)) {
+		return;
+	}
+
+	// Check if we are looking at the group owner
+	if ($group->owner_guid === $entity->guid) {
+		return;
+	}
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'removeuser',
+		'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
+		'text' => elgg_echo('groups:removeuser'),
+		'icon' => 'user-times',
+		'confirm' => true,
+		'priority' => 999,
+	]);
 
 	return $return;
 }

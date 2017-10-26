@@ -34,6 +34,7 @@ $user_info = elgg_view_entity($user, [
 	'full_view' => false,
 	'use_hover' => false,
 	'size' => 'medium',
+	'metadata' => false,
 ]);
 
 $card = elgg_format_element('div', ['class' => 'elgg-menu-hover-card'], $user_info);

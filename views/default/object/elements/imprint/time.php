@@ -25,15 +25,8 @@ if (!$time) {
 	return;
 }
 
-$icon_name = elgg_extract('time_icon', $vars, 'history');
-if ($icon_name === false) {
-	$icon = '';
-} else {
-	$icon = elgg_view_icon($icon_name);
-}
-
-$time_str = $icon . elgg_view_friendly_time($time);
-
-echo elgg_format_element('span', [
+echo elgg_view('object/elements/imprint/element', [
+	'icon_name' => elgg_extract('time_icon', $vars, 'history'),
+	'content' => elgg_view_friendly_time($time),
 	'class' => 'elgg-listing-time',
-], $time_str);
+]);

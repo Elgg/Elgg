@@ -107,8 +107,6 @@ class Preloader {
 		$guids = [];
 
 		foreach ($items as $item) {
-			// TODO remove duplication of @link likes_river_menu_setup()
-
 			if ($item instanceof \ElggRiverItem) {
 				// only like group creation #3958
 				if ($item->type == "group" && $item->view != "river/group/create") {

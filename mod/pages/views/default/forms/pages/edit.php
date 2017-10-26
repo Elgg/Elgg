@@ -67,11 +67,13 @@ foreach ($fields as $name => $type) {
 	echo elgg_view_field($field);
 }
 
-echo elgg_view_field([
-	'#type' => 'hidden',
-	'name' => 'page_guid',
-	'value' => $entity->guid,
-]);
+if ($entity) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'page_guid',
+		'value' => $entity->guid,
+	]);
+}
 
 echo elgg_view_field([
 	'#type' => 'hidden',

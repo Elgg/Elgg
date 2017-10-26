@@ -305,6 +305,11 @@ Form and field related changes
  * ``output/url`` now supports a ``badge`` parameter, which can be used where a counter, a badge, or similar is required as a postfix (mainly in menu items that have counters).
  * ``output/tags`` no longer uses ``<ul>`` tags with floats and instead it relies on inherently inline elements such as ``<span>`` and ``<a>``
 
+Entity and River Menu Changes
+-----------------------------
+
+The Entity and River menu now shows all the items in a dropdown. Social actions like liking or commenting are moved to an alternate menu called the social menu, which is meant for social actions.
+
 Removed libraries
 -----------------
 

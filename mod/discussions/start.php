@@ -538,34 +538,25 @@ function discussion_update_reply_access_ids($event, $type, $object) {
  * @return ElggMenuItem[] $return
  */
 function discussion_reply_menu_setup($hook, $type, $return, $params) {
-	/** @var $reply ElggEntity */
 	$reply = elgg_extract('entity', $params);
-
-	if (empty($reply) || !elgg_instanceof($reply, 'object', 'discussion_reply')) {
-		return $return;
+	if (!($reply instanceof \ElggDiscussionReply)) {
+		return;
 	}
 
 	if (!elgg_is_logged_in()) {
-		return $return;
+		return;
 	}
 
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-
-	$remove = [];
-
-	$user = elgg_get_logged_in_user_entity();
-
-	// Allow discussion topic owner, group owner and admins to edit and delete
-	if ($reply->canEdit() && !elgg_in_context('activity')) {
+	if ($reply->canEdit()) {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
 			'href' => "discussion/reply/edit/{$reply->guid}",
 			'priority' => 150,
 		]);
-
+	}
+	
+	if ($reply->canDelete()) {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete'),
@@ -574,17 +565,6 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 			'is_action' => true,
 			'confirm' => elgg_echo('deleteconfirm'),
 		]);
-	} else {
-		// Edit and delete links can be removed from all other users
-		$remove[] = 'edit';
-		$remove[] = 'delete';
-	}
-
-	// Remove unneeded menu items
-	foreach ($return as $key => $item) {
-		if (in_array($item->getName(), $remove)) {
-			unset($return[$key]);
-		}
 	}
 
 	return $return;

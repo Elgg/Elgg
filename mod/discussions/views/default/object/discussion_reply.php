@@ -3,22 +3,9 @@
  * Forum reply entity view
 */
 
-$reply = elgg_extract('entity', $vars, false);
-/* @var ElggDiscussionReply $reply */
-
-if (!$reply) {
-	return true;
-}
-
-$metadata = '';
-if (!elgg_in_context('widgets')) {
-	// only show entity menu outside of widgets
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $vars['entity'],
-		'handler' => 'discussion_reply',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	]);
+$reply = elgg_extract('entity', $vars);
+if (!($reply instanceof \ElggDiscussionReply)) {
+	return;
 }
 
 if (elgg_in_context('activity')) {
@@ -35,13 +22,10 @@ if (elgg_in_context('activity')) {
 	]);
 }
 
-$subtitle = elgg_view('object/elements/imprint', ['entity' => $reply]);
-
 $params = [
 	'entity' => $reply,
-	'metadata' => $metadata,
-	'subtitle' => $subtitle,
 	'content' => $content,
+	'handler' => 'discussion_reply',
 	'icon' => elgg_view_entity_icon($reply->getOwnerEntity(), 'tiny'),
 ];
 $params = $params + $vars;

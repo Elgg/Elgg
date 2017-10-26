@@ -1766,7 +1766,7 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
 /**
  * Elgg's main init.
  *
- * Handles core actions for comments, the JS pagehandler, and the shutdown function.
+ * Handles core actions, the JS pagehandler, and the shutdown function.
  *
  * @elgg_event_handler init system
  * @return void
@@ -1774,8 +1774,6 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
  */
 function _elgg_init() {
 	elgg_register_action('entity/delete');
-	elgg_register_action('comment/save');
-	elgg_register_action('comment/delete');
 
 	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
 	elgg_register_page_handler('favicon.ico', '_elgg_favicon_page_handler');

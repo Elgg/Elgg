@@ -22,20 +22,9 @@ if (elgg_get_context() == 'gallery') {
 	
 $title = elgg_extract('title', $vars);
 if (!$title) {
-	$link_params = [
+	$title = elgg_view('output/url', [
 		'href' => $entity->getUrl(),
-		'text' => $entity->name,
-	];
-
-	$title = elgg_view('output/url', $link_params);
-}
-
-$metadata = '';
-if (!elgg_in_context('owner_block') && !elgg_in_context('widgets') && !elgg_in_context('user_hover')) {
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $entity,
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
+		'text' => $entity->getDisplayName(),
 	]);
 }
 
@@ -43,7 +32,6 @@ if ($entity->isBanned()) {
 	$params = [
 		'entity' => $entity,
 		'title' => $title,
-		'metadata' => $metadata,
 		'subtitle' => elgg_echo('banned'),
 	];
 } else {
@@ -60,11 +48,12 @@ if ($entity->isBanned()) {
 	$params = [
 		'entity' => $entity,
 		'title' => $title,
-		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'content' => elgg_view('user/status', ['entity' => $entity]),
 	];
 }
+
+$params = $params + $vars;
 
 $list_body = elgg_view('user/elements/summary', $params);
 

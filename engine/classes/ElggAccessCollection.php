@@ -184,7 +184,7 @@ class ElggAccessCollection extends ElggData {
 		$params = [
 			'access_collection' => $this,
 		];
-		$url = _elgg_services()->hooks->trigger('access_collection:url', $type, $params, $url);
+		$url = _elgg_services()->hooks->trigger('access_collection:url', $type, $params);
 		return elgg_normalize_url($url);
 	}
 

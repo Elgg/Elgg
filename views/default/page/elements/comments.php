@@ -12,6 +12,11 @@
  * in this view
  */
 
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
+
 $show_add_form = elgg_extract('show_add_form', $vars, true);
 $full_view = elgg_extract('full_view', $vars, true);
 $limit = elgg_extract('limit', $vars, get_input('limit', 0));
@@ -30,7 +35,7 @@ unset($vars['internalid']);
 $content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'comment',
-	'container_guid' => $vars['entity']->guid,
+	'container_guid' => $entity->guid,
 	'reverse_order_by' => true,
 	'full_view' => true,
 	'limit' => $limit,
@@ -39,7 +44,7 @@ $content = elgg_list_entities([
 	'url_fragment' => $attr['id'],
 ]);
 
-if ($show_add_form) {
+if ($show_add_form && $entity->canComment()) {
 	$content .= elgg_view_form('comment/save', [], $vars);
 }
 

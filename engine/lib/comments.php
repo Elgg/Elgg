@@ -7,8 +7,6 @@
  * @since 1.9
  */
 
-use Elgg\Project\Paths;
-
 /**
  * Comments initialization function
  *
@@ -17,10 +15,16 @@ use Elgg\Project\Paths;
  */
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
+	
+	elgg_register_action('comment/save');
+	elgg_register_action('comment/delete');
+	
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
+	
+	elgg_register_plugin_hook_handler('register', 'menu:social', '_elgg_comments_social_menu_setup');
 	
 	elgg_register_event_handler('update:after', 'all', '_elgg_comments_access_sync', 600);
 
@@ -429,6 +433,48 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
 	$returnvalue->url = $comment->getURL();
 	
 	return $returnvalue;
+}
+
+/**
+ * Adds comment menu items to entity menu
+ *
+ * @param \Elgg\Hook $hook Hook information
+ *
+ * @access private
+ * @since 3.0
+ */
+function _elgg_comments_social_menu_setup(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+	if (!$entity) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	
+	$comment_count = $entity->countComments();
+	$can_comment = $entity->canComment();
+	if ($can_comment || $comment_count) {
+		$text = $can_comment ? elgg_echo('comment:this') : elgg_echo('comments');
+		
+		$options = [
+			'name' => 'comment',
+			'icon' => 'speech-bubble',
+			'badge' => $comment_count ?: null,
+			'text' => $text,
+			'title' => $text,
+			'href' => $entity->getURL() . '#comments',
+		];
+				
+		$item = $hook->getParam('item');
+		if ($item && $can_comment) {
+			$options['href'] = "#comments-add-{$entity->guid}-{$item->id}";
+			$options['rel'] = 'toggle';
+		}
+		
+		$return[] = \ElggMenuItem::factory($options);
+	}
+	
+	return $return;
 }
 
 /**

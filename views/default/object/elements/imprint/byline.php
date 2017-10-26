@@ -57,6 +57,7 @@ if (!isset($byline_str)) {
 	$byline_str = implode(' ', $parts);
 }
 
-echo elgg_format_element('span', [
+echo elgg_view('object/elements/imprint/element', [
+	'content' => $byline_str,
 	'class' => 'elgg-listing-byline',
-		], $byline_str);
+]);

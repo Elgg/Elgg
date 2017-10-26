@@ -14,45 +14,15 @@ if (!$bookmark) {
 
 $owner = $bookmark->getOwnerEntity();
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
-$categories = elgg_view('output/categories', $vars);
 
 $link = elgg_view('output/url', ['href' => $bookmark->address]);
-$description = elgg_view('output/longtext', ['value' => $bookmark->description, 'class' => 'pbl']);
-
-$by_line = elgg_view('object/elements/imprint', $vars);
-
-$comments_count = $bookmark->countComments();
-//only display if there are commments
-if ($comments_count != 0) {
-	$text = elgg_echo("comments") . " ($comments_count)";
-	$comments_link = elgg_view('output/url', [
-		'href' => $bookmark->getURL() . '#comments',
-		'text' => $text,
-		'is_trusted' => true,
-	]);
-} else {
-	$comments_link = '';
-}
-
-$subtitle = "$by_line $comments_link $categories";
-
-$metadata = '';
-if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
-	// only show entity menu outside of widgets and gallery view
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $vars['entity'],
-		'handler' => 'bookmarks',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	]);
-}
 
 if ($full && !elgg_in_context('gallery')) {
+	$description = elgg_view('output/longtext', ['value' => $bookmark->description, 'class' => 'pbl']);
+
 	$params = [
-		'entity' => $bookmark,
 		'title' => false,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
+		'handler' => 'bookmarks',
 	];
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
@@ -65,16 +35,12 @@ if ($full && !elgg_in_context('gallery')) {
 </div>
 HTML;
 
-	$responses = '';
-	if (elgg_extract('show_responses', $vars, false)) {
-		$responses = elgg_view_comments($bookmark);
-	}
 	echo elgg_view('object/elements/full', [
 		'entity' => $bookmark,
 		'icon' => $owner_icon,
 		'summary' => $summary,
 		'body' => $body,
-		'responses' => $responses,
+		'show_responses' => elgg_extract('show_responses', $vars, false),
 		'show_navigation' => true,
 	]);
 } elseif (elgg_in_context('gallery')) {
@@ -110,11 +76,9 @@ HTML;
 	$content = elgg_view_icon('push-pin-alt') . "$link{$excerpt}";
 
 	$params = [
-		'entity' => $bookmark,
-		'metadata' => $metadata,
-		'subtitle' => $subtitle,
 		'content' => $content,
 		'icon' => $owner_icon,
+		'handler' => 'bookmarks',
 	];
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);

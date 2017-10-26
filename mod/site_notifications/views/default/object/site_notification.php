@@ -35,7 +35,7 @@ elgg_register_menu_item('site_notifications', [
 	'id' => 'site-notifications-delete-' . $entity->guid,
 ]);
 $menu = elgg_view_menu('site_notifications', [
-	'class' => 'elgg-menu-hz elgg-menu-entity',
+	'class' => 'elgg-menu-hz',
 ]);
 
 $checkbox = elgg_view('input/checkbox', [

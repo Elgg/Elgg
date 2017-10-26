@@ -5,6 +5,7 @@
  * @uses $vars['name']                 Name of the menu
  * @uses $vars['menu']                 Array of menu items
  * @uses $vars['class']                Additional CSS class for the menu
+ * @uses $vars['id']                   Menu id
  * @uses $vars['item_class']           Additional CSS class for each menu item
  * @uses $vars['show_section_headers'] Do we show headers for each section?
  */
@@ -33,16 +34,19 @@ foreach ($vars['menu'] as $section => $menu_items) {
 		'name' => $name,
 		'show_section_headers' => $show_section_headers,
 		'item_class' => $item_class,
+		'id' => elgg_extract('id', $vars),
 	]);
 }
 
-if ($menu_view) {
-	echo elgg_format_element('nav', [
-		'class' => [
-			'elgg-menu-container',
-			"elgg-menu-{$name_class_selector}-container",
-			'clearfix',
-		],
-		'data-menu-name' => $name,
-	], $menu_view);
+if (!$menu_view) {
+	return;
 }
+
+echo elgg_format_element('nav', [
+	'class' => [
+		'elgg-menu-container',
+		"elgg-menu-{$name_class_selector}-container",
+		'clearfix',
+	],
+	'data-menu-name' => $name,
+], $menu_view);

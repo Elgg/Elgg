@@ -35,7 +35,7 @@ class ElggBlog extends ElggObject {
 			return $result;
 		}
 
-		if ($this->comments_on == 'Off') {
+		if ($this->comments_on === 'Off' || $this->status !== 'published') {
 			return false;
 		}
 		

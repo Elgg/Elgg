@@ -875,15 +875,15 @@ abstract class ElggEntity extends \ElggData implements
 
 		if (is_int($num)) {
 			return $num;
-		} else {
-			return elgg_get_entities([
-				'type' => 'object',
-				'subtype' => 'comment',
-				'container_guid' => $this->getGUID(),
-				'count' => true,
-				'distinct' => false,
-			]);
 		}
+		
+		return elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'comment',
+			'container_guid' => $this->getGUID(),
+			'count' => true,
+			'distinct' => false,
+		]);
 	}
 
 	/**

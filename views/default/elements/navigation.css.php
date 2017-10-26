@@ -566,39 +566,60 @@
 }
 
 /* ***************************************
-	ENTITY AND ANNOTATION
+	ENTITY, SOCIAL, RIVER AND ANNOTATION
 *************************************** */
-.elgg-menu-entity-container,
-.elgg-menu-annotation-container,
-.elgg-menu-river-container {
+.elgg-listing-summary-metadata > .elgg-menu-container,
+.elgg-river-metadata > .elgg-menu-container,
+.elgg-menu-annotation-container {
 	float: right;
 	margin-left: 15px;
+	display: inline-block;
 }
+
+.elgg-menu-river,
 .elgg-menu-entity,
-.elgg-menu-annotation,
-.elgg-menu-river {
+.elgg-menu-social,
+.elgg-menu-annotation {
 	font-size: 90%;
 	color: #aaaaaa;
-	line-height: normal;
 	height: auto;
 	vertical-align: middle;
+	
+	> li:not(:first-child) {
+		margin-left: 15px;
+	}
+	
+	> li {
+		> a:not(.elgg-state-active) {
+			color: inherit;
+		}
+		
+		> a:hover {
+			color: #5097cf;
+			text-decoration: none;
+		}
+	}
 }
-.elgg-menu-entity > li:not(:first-child),
-.elgg-menu-annotation > li:not(:first-child),
-.elgg-menu-river > li:not(:first-child) {
-	margin-left: 15px;
+
+.elgg-menu-entity-default,
+.elgg-menu-river-default {
+	font-size: 100%;
 }
-.elgg-menu-entity > li > a,
-.elgg-menu-annotation > li > a,
-.elgg-menu-river > li > a {
-	color: inherit;
+
+.elgg-entity-dropdown-menu,
+.elgg-river-dropdown-menu {
+
+	> li {
+		> a {
+			padding: 10px;
+		}
+	}
 }
-.elgg-menu-entity > li > a:hover,
-.elgg-menu-annotation > li > a:hover,
-.elgg-menu-river > li > a:hover {
-	color: #5097cf;
-	text-decoration: none;
+
+.elgg-menu-social .elgg-anchor > span:not(:first-child).elgg-anchor-label {
+	display: none;
 }
+
 /* ***************************************
 	OWNER BLOCK
 *************************************** */
