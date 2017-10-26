@@ -90,6 +90,13 @@ trait Testing {
 			if ($admins) {
 				$admin = array_shift($admins);
 			}
+
+			if (!$admin) {
+				$admin = $this->createUser([
+					'admin' => 'yes',
+				]);
+			}
+
 			$this->_testing_admin = $admin;
 		}
 

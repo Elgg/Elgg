@@ -3,12 +3,22 @@
  * Post comment river view
  */
 
-$item = $vars['item'];
-/* @var ElggRiverItem $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
 
 $comment = $item->getObjectEntity();
 $subject = $item->getSubjectEntity();
 $target = $item->getTargetEntity();
+
+if (!$comment instanceof ElggComment) {
+	return;
+}
+
+if (!$subject || !$target) {
+	return;
+}
 
 $subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
