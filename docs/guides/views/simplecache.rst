@@ -34,7 +34,7 @@ Using the Simplecache in your plugins
 
 You can register a view with the Simplecache with the following function at init-time:
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_simplecache_view($viewname);
 
@@ -44,7 +44,7 @@ If you registered a JavaScript or CSS file with Simplecache and put in the view 
 ``your_view.js`` or ``your_view.css`` you can very easily get the url to this cached view by calling
 ``elgg_get_simplecache_url($view)``. For example:
 
-.. code:: php
+.. code-block:: php
 
    $js = elgg_get_simplecache_url('your_view.js');
    $css = elgg_get_simplecache_url('your_view.css');

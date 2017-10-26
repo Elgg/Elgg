@@ -45,7 +45,7 @@ The function to use to expose a method is ``elgg_ws_expose_function()``. As an
 example, let's assume you want to expose a function that echos text back
 to the calling application. The function could look like this
 
-.. code:: php
+.. code-block:: php
 
     function my_echo($string) {
         return $string;
@@ -56,7 +56,7 @@ API clients, we will require neither API authentication nor user
 authentication. This call registers the function with the web services
 API framework:
 
-.. code:: php
+.. code-block:: php
 
 	elgg_ws_expose_function(
 		"test.echo",
@@ -79,7 +79,7 @@ test the exposed method from a web browser, you could hit the url:
 http://yoursite.com/services/api/rest/json/?method=test.echo&string=testing
 and you should see JSON data like this:
 
-.. code:: json
+.. code-block:: json
 
     {"status":0,"result":"testing"}
 
@@ -113,7 +113,7 @@ Unrecognized types will throw an API exception.
 
 You can use additional fields to describe your parameter, e.g. ``description``.
 
-.. code:: php
+.. code-block:: php
 
 	elgg_ws_expose_function(
 		'test.greet',
@@ -150,7 +150,7 @@ to invoke the callback function with a single argument that contains an associat
 array of parameter => input pairs (instead of each parameter being a separate argument).
 To do that, set ``$assoc`` to ``true`` in ``elgg_ws_expose_function()``.
 
-.. code:: php
+.. code-block:: php
 
 	function greet_me($values) {
 		$name = elgg_extract('name', $values);
@@ -207,7 +207,7 @@ Key-based authentication
 As an example, let's write a function that returns the number of users
 that have viewed the site in the last x minutes.
 
-.. code:: php
+.. code-block:: php
 
     function count_active_users($minutes=10) {
         $seconds = 60 * $minutes;
@@ -218,7 +218,7 @@ that have viewed the site in the last x minutes.
 Now, let's expose it and make the number of minutes an optional
 parameter:
 
-.. code:: php
+.. code-block:: php
 
 	elgg_ws_expose_function(
 		"users.active",
@@ -285,7 +285,7 @@ extend the current capability to use an approach like OAuth.
 
 Let's write our wire posting function:
 
-.. code:: php
+.. code-block:: php
 
     function my_post_to_wire($text) {
         
@@ -301,7 +301,7 @@ Exposing this function is the same as the previous except we require
 user authentication and we're going to make this use POST rather than
 GET HTTP requests.
 
-.. code:: php
+.. code-block:: php
 
 	elgg_ws_expose_function(
 		"thewire.post",
@@ -351,24 +351,24 @@ authentication PAM but would prefer using OAuth? You can do this.
 The first step is registering a callback function for the *rest, init*
 plugin hook:
 
-.. code:: php
+.. code-block:: php
 
     register_plugin_hook('rest', 'init', 'rest_plugin_setup_pams');
 
 Then in the callback function, you register the PAMs that you want to
 use:
 
-.. code:: php
+.. code-block:: php
 
     function rest_plugin_setup_pams() {
         // user token can also be used for user authentication
         register_pam_handler('pam_auth_usertoken');
 
-        // simple API key check 
+        // simple API key check
         register_pam_handler('api_auth_key', "sufficient", "api");
-            
+        
         // override the default pams
-        return true;    
+        return true;
     }
 
 When testing, you may find it useful to register the

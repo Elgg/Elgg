@@ -31,7 +31,7 @@ Once you have created your edit and view pages, you need to initialize the plugi
 
 The easiest way to do this is to add the ``widgets`` section to your ``elgg-plugin.php`` config file.
 
-.. code:: php
+.. code-block:: php
 
 	return [
 		'widgets' => [
@@ -43,7 +43,7 @@ The easiest way to do this is to add the ``widgets`` section to your ``elgg-plug
 	
 Alternatively you can also use an function to add a widget. This is done within the plugins ``init()`` function.
 
-.. code:: php
+.. code-block:: php
 
     // Add generic new file widget
     elgg_register_widget_type([
@@ -62,7 +62,7 @@ Multiple widgets
 
 It is possible to add multiple widgets for a plugin. You just initialize as many widget directories as you need.
 
-.. code:: php
+.. code-block:: php
 
     // Add generic new file widget
     elgg_register_widget_type([
@@ -91,7 +91,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
 Make sure you have the corresponding directories within your plugin
 views structure:
 
-.. code::
+.. code-block:: text
 
     'Plugin'
         /views
@@ -111,7 +111,7 @@ Magic widget name and description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 When registering a widget you can omit providing a name and a description. If a translation in the following format is provided, they will be used. For the name: ``widgets:<widget_id>:name`` and for the description ``widgets:<widget_id>:description``. If you make sure these translation are available in a translation file, you have very little work registering the widget.
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_widget_type(['id' => 'filerepo']);
 
@@ -119,7 +119,7 @@ How to restrict where widgets can be used
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The widget can specify the context that it can be used in (just profile, just dashboard, etc.).
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_widget_type([
         'id' => 'filerepo',
@@ -130,7 +130,7 @@ Allow multiple widgets on the same page
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 By default you can only add one widget of the same type on the page. If you want more of the same widget on the page, you can specify this when registering the widget:
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_widget_type([
         'id' => 'filerepo',
@@ -142,7 +142,7 @@ Register widgets in a hook
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 If, for example, you wish to conditionally register widgets you can also use a hook to register widgets.
 
-.. code:: php
+.. code-block:: php
 
     function my_plugin_init() {
         elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_conditional_widgets_hook');
@@ -164,7 +164,7 @@ Modify widget properties of existing widget registration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 If, for example, you wish to change the allowed contexts of an already registered widget you can do so by re-registering the widget with ``elgg_register_widget_type`` as it will override an already existing widget definition. If you want even more control you can also use the ``handlers, widgets`` hook to change the widget definition.
 
-.. code:: php
+.. code-block:: php
 
     function my_plugin_init() {
         elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_change_widget_definition_hook');
@@ -187,7 +187,7 @@ If your plugin uses the widget canvas, you can register default widget support w
 
 To announce default widget support in your plugin, register for the ``get_list, default_widgets`` plugin hook:
 
-.. code:: php
+.. code-block:: php
 
     elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'my_plugin_default_widgets_hook');
 
@@ -202,7 +202,7 @@ In the plugin hook handler, push an array into the return value defining your de
 
 When an object triggers an event that matches the event, entity\_type, and entity\_subtype parameters passed, Elgg core will look for default widgets that match the widget\_context and will copy them to that object's owner\_guid and container\_guid. All widget settings will also be copied.
 
-.. code:: php
+.. code-block:: php
 
     function my_plugin_default_widgets_hook($hook, $type, $return, $params) {
         $return[] = array(

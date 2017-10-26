@@ -36,7 +36,7 @@ Examples
 		'href' => '/item/url',
 	));
 
-.. code:: php
+.. code-block:: php
 
 	// Remove the "Elgg" logo from the topbar menu
 	elgg_unregister_menu_item('topbar', 'elgg_logo');

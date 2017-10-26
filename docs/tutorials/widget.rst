@@ -26,7 +26,7 @@ Create a file at ``/views/default/widgets/helloworld/content.php``.
 “helloworld” will be the name of your widget within the hello plugin.
 In this file add the code:
 
-.. code:: php
+.. code-block:: php
 
     <?php
 
@@ -43,7 +43,7 @@ so that it will scan the widget views directory.
 This is done by calling the elgg\_register\_widget\_type() function.
 Edit ``/start.php``. In it add these lines:
 
-.. code:: php
+.. code-block:: php
 
     <?php
     
@@ -78,7 +78,7 @@ Just as Elgg automatically loads ``content.php`` when viewing a widget,
 it loads ``edit.php`` when a user attempts to edit a widget.
 Put the following code into ``/views/default/widgets/helloworld/edit.php``:
 
-.. code:: php
+.. code-block:: php
 
     <div>
         <label>Message:</label> 
@@ -110,7 +110,7 @@ value of his message text.
 Now to display the user's message we need to modify content.php to use this *message* variable.
 Edit ``/views/default/widgets/helloworld/content.php`` and change it to:
 
-.. code:: php
+.. code-block:: php
 
     <?php 
     

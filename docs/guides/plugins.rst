@@ -12,7 +12,7 @@ The start.php file bootstraps plugin by registering event listeners and plugin h
 It is advised that plugins return an instance of Closure from the start.php instead of placing registrations in the root of the file.
 This allows for consistency in Application bootstrapping, especially for testing purposes.
 
-.. code:: php
+.. code-block:: php
 
     function my_plugin_does_something_else() {
         // Some procedural code that you want to run before any events are fired
@@ -51,7 +51,7 @@ Syntax
 
 Here's a trivial example configuring view locations via the ``views`` key:
 
-.. code:: php
+.. code-block:: php
 
 	<?php
 
@@ -83,20 +83,20 @@ Syntax
 
 The manifest file is a standard XML file in UTF-8. Everything is a child of the ``<plugin_manifest>`` element.
 
-.. code:: xml
+.. code-block:: xml
 
 	<?xml version="1.0" encoding="UTF-8" ?>
 	<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 
 The manifest syntax is as follows:
 
-.. code:: xml
+.. code-block:: xml
 
 	<name>value</name>
 
 Many elements can contain children attributes:
 
-.. code:: xml
+.. code-block:: xml
 
 	<parent_name>
 		<child_name>value</child_name>
@@ -139,7 +139,7 @@ Simple Example
 
 This manifest file is the bare minimum a plugin must have.
 
-.. code:: xml
+.. code-block:: xml
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
@@ -159,7 +159,7 @@ Advanced example
 
 This example uses all of the available elements:
 
-.. code:: xml
+.. code-block:: xml
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">

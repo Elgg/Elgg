@@ -205,7 +205,7 @@ field, for easy passing to your actions. Within a "create" action,
 you'll need to take in this input field and save it as a property of
 your new element (defaulting to the current user's container):
 
-.. code:: php
+.. code-block:: php
 
     $user = elgg_get_logged_in_user_entity();
     $container_guid = (int)get_input('container_guid');
@@ -252,7 +252,7 @@ file/menu - which will extend the group's menu. File/menu consists of a
 link within paragraph tags that points to the file repository of the
 page\_owner():
 
-.. code:: php
+.. code-block:: php
 
     <p>
       <a href="<?php echo $vars['url']; ?>pg/file/<?php echo page_owner_entity()->username; ?>">
@@ -263,7 +263,7 @@ page\_owner():
 You can then extend the group's menu view with this one, within your
 plugin's input function (in this case file\_init):
 
-.. code:: php
+.. code-block:: php
 
     extend_view('groups/menu/links', 'file/menu');
 
@@ -319,7 +319,7 @@ Adding an annotation
 The easiest way to annotate is to use the ``annotate`` method on an
 entity, which is defined as:
 
-.. code:: php
+.. code-block:: php
 
     public function annotate(
         $name,           // The name of the annotation type (eg 'comment')
@@ -331,7 +331,7 @@ entity, which is defined as:
 
 For example, to leave a rating on an entity, you might call:
 
-.. code:: php
+.. code-block:: php
 
     $entity->annotate('rating', $rating_value, $entity->access_id);
     
@@ -340,7 +340,7 @@ Reading annotations
 
 To retrieve annotations on an object, you can call the following method:
 
-.. code:: php
+.. code-block:: php
 
     $annotations = $entity->getAnnotations(
         $name,    // The type of annotation
@@ -352,7 +352,7 @@ To retrieve annotations on an object, you can call the following method:
 If your annotation type largely deals with integer values, a couple of
 useful mathematical functions are provided:
 
-.. code:: php
+.. code-block:: php
 
     $averagevalue = $entity->getAnnotationsAvg($name);  // Get the average value
     $total = $entity->getAnnotationsSum($name);         // Get the total value
@@ -368,7 +368,7 @@ Comments
 If you want to provide comment functionality on your plugin objects, the
 following function will provide the full listing, form and actions:
 
-.. code:: php
+.. code-block:: php
 
     function elgg_view_comments(ElggEntity $entity)
 
@@ -404,19 +404,19 @@ Adding metadata
 
 To add a piece of metadata to an entity, just call:
 
-.. code:: php
+.. code-block:: php
 
     $entity->metadata_name = $metadata_value;
 
 For example, to add a date of birth to a user:
 
-.. code:: php
+.. code-block:: php
 
     $user->dob = $dob_timestamp;
 
 Or to add a couple of tags to an object:
 
-.. code:: php
+.. code-block:: php
 
     $object->tags = array('tag one', 'tag two', 'tag three');
 
@@ -440,7 +440,7 @@ Reading metadata
 
 To retrieve metadata, treat it as a property of the entity:
 
-.. code:: php
+.. code-block:: php
 
     $tags_value = $object->tags;
 
@@ -454,7 +454,7 @@ If you stored only one value, you will get a string or integer back.
 Storing an array with only one value will return a string back to you.
 E.g.
 
-.. code:: php
+.. code-block:: php
 
     $object->tags = array('tag');
     $tags = $object->tags;
@@ -462,7 +462,7 @@ E.g.
 
 To always get an array back, simply cast to an array;
 
-.. code:: php
+.. code-block:: php
 
     $tags = (array)$object->tags;
 
@@ -474,7 +474,7 @@ objects:
 
 E.g., to retrieve a user's DOB
 
-.. code:: php
+.. code-block:: php
 
     elgg_get_metadata(array(
         'metadata_name' => 'dob',
@@ -483,7 +483,7 @@ E.g., to retrieve a user's DOB
 
 Or to get all metadata objects:
 
-.. code:: php
+.. code-block:: php
 
     elgg_get_metadata(array(
         'metadata_owner_guid' => $user_guid,
@@ -502,7 +502,7 @@ Note that you cannot "append" values to metadata arrays as if they were
 normal php arrays. For example, the following will not do what it looks
 like it should do.
 
-.. code:: php
+.. code-block:: php
 
     $object->tags[] = "tag four";
 
@@ -513,14 +513,14 @@ Elgg does not support storing ordered maps (name/value pairs) in
 metadata. For example, the following does not work as you might first
 expect it to:
 
-.. code:: php
+.. code-block:: php
 
     // Won't work!! Only the array values are stored
     $object->tags = array('one' => 'a', 'two' => 'b', 'three' => 'c');
 
 You can instead store the information like so:
 
-.. code:: php
+.. code-block:: php
 
     $object->one = 'a';
     $object->two = 'b';
@@ -579,7 +579,7 @@ Creating a relationship
 E.g. to establish that "**$user** is a **fan** of **$artist**"
 (user is the subject, artist is the target):
 
-.. code:: php
+.. code-block:: php
 
     // option 1
     $success = add_entity_relationship($user->guid, 'fan', $artist->guid);
@@ -597,7 +597,7 @@ Verifying a relationship
 
 E.g. to verify that "**$user** is a **fan** of **$artist**":
 
-.. code:: php
+.. code-block:: php
 
     if (check_entity_relationship($user->guid, 'fan', $artist->guid)) {
         // relationship exists
@@ -606,7 +606,7 @@ E.g. to verify that "**$user** is a **fan** of **$artist**":
 Note that, if the relationship exists, ``check_entity_relationship()``
 returns an ``ElggRelationship`` object:
 
-.. code:: php
+.. code-block:: php
 
     $relationship = check_entity_relationship($user->guid, 'fan', $artist->guid);
     if ($relationship) {
@@ -618,7 +618,7 @@ Deleting a relationship
 
 E.g. to be able to assert that "**$user** is no longer a **fan** of **$artist**":
 
-.. code:: php
+.. code-block:: php
 
     $was_removed = remove_entity_relationship($user->guid, 'fan', $artist->guid);
 
@@ -645,7 +645,7 @@ and/or related entities. A few are listed below:
 
 E.g. retrieving users who joined your group in January 2014.
 
-.. code:: php
+.. code-block:: php
 
     $entities = elgg_get_entities_from_relationship(array(
         'relationship' => 'member',

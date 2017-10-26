@@ -16,7 +16,7 @@ Install one of the preferred virtual machine providers, Vagrant and Homestead fo
 
 If you have the virtual machine and Vagrant installed, you can use the following commands
 
-.. code:: sh
+.. code-block:: sh
 
     vagrant box add laravel/homestead
 
@@ -38,7 +38,7 @@ Edit Homestead.yaml to include the details of your new Elgg project(s).
 In the following example, we will set up two Elgg apps - one from git source and one using the starter project.
 Note that when configuring sites, you can use the "elgg" site type, which will automatically bootstrap nginx vhosts, using the `shell config script`_
 
-.. code:: yaml
+.. code-block:: yaml
 
     ---
     ip: "192.168.10.10"
@@ -87,7 +87,7 @@ Note that when configuring sites, you can use the "elgg" site type, which will a
 Update your hosts file to point domains configured in Homestead to the Vagrant box IP address.
 This will allow yout to access your sites by domain name from the browser
 
-.. code
+.. code-block:: text
 
     192.168.10.10 elgg-starter.app
     192.168.10.10 elgg-git.app
@@ -96,7 +96,7 @@ This will allow yout to access your sites by domain name from the browser
 4.a Install Elgg using starter-project
 ======================================
 
-.. code::sh
+.. code-block:: sh
 
     # create the directory to hold the project on your local machine
     cd ~/apps
@@ -180,7 +180,7 @@ This will allow yout to access your sites by domain name from the browser
 
 Now we can install our second git project, which we can use to contribute code back to core.
 
-.. code::sh
+.. code-block:: sh
 
     # create the directory to hold the project on your local machine
     cd ~/apps
@@ -244,7 +244,7 @@ Now we can install our second git project, which we can use to contribute code b
 5. Other
 ========
 
-.. code::sh
+.. code-block:: sh
 
     cd ~/Homestead
     vagrant ssh

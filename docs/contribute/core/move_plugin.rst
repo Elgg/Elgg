@@ -35,13 +35,13 @@ difference in how the repository was first created (as discussed in this `GitHub
 
 The initial repositories where created with
 
-.. code:: sh
+.. code-block:: sh
 
 	git subtree split
 
 and the guide calls for
 
-.. code:: sh
+.. code-block:: sh
 
 	git filter-branch --prune-empty --subdirectory-filter
 
@@ -57,7 +57,7 @@ Packagist
 
 Make sure the ``composer.json`` of the plugin contains all the relevant information. Here is an example:
 
-.. code:: json
+.. code-block:: json
 	
 	{
 		"name": "elgg/<name of the repository>",

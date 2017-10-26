@@ -59,13 +59,13 @@ Update ``.htaccess``
 
 Find the line:
 
-.. code::
+.. code-block:: apache
 
 	RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
 
 And replace it with:
 
-.. code::
+.. code-block:: apache
 
 	RewriteRule ^(.*)$ index.php [QSA,L]
 

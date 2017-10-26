@@ -87,7 +87,7 @@ For best performance, you can also create a symlink from ``/cache/`` in your www
 root dir to the ``/views_simplecache/`` directory in the data directory you
 configured when you installed Elgg:
 
-.. code:: shell
+.. code-block:: sh
 
     cd /path/to/wwwroot/
     ln -s /path/to/dataroot/views_simplecache/ cache
@@ -100,7 +100,7 @@ by default only if the owner of the symlink source and target match. If the cach
 fails to work on your server, you can change the owner of the cache symlink itself (and
 not the ``/views_simplecache/`` directory) with
 
-.. code:: shell
+.. code-block:: sh
 
     cd /path/to/wwwroot/
     chown -h wwwrun:www cache
@@ -185,7 +185,7 @@ Configuration:
 
 Uncomment and populate the following sections in ``settings.php``
 
-.. code:: php
+.. code-block:: php
 
     $CONFIG->memcache = true;
     
@@ -197,7 +197,7 @@ Uncomment and populate the following sections in ``settings.php``
 Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want 
 to add a namespace prefix. In order to do this, uncomment the following line
 
-.. code:: php
+.. code-block:: php
 
 	$CONFIG->memcache_namespace_prefix = '';
 

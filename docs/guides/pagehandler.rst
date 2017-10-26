@@ -3,7 +3,7 @@ Page handler
 
 Elgg offers a facility to manage your plugin pages via a page handler, enabling custom urls like ``http://yoursite/your_plugin/section``. To add a page handler to a plugin, a handler function needs to be registered in the plugin's ``start.php`` file with ``elgg_register_page_handler()``:
 
-.. code:: php
+.. code-block:: php
    
    elgg_register_page_handler('your_plugin', 'your_plugin_page_handler');
    

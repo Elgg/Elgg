@@ -59,7 +59,7 @@ view function from within your start.php’s initialization function.
 For example, the following start.php will add mytheme/css to Elgg's core
 css file:
 
-.. code:: php
+.. code-block:: php
 
     <?php
 
@@ -124,7 +124,7 @@ Here's a quick overview:
 
 -  In the start.php you will need something like the following:
 
-.. code:: php
+.. code-block:: php
 
     <?php
 

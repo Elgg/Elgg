@@ -21,7 +21,7 @@ Installing Elgg on Cloud9 IDE
 
 Run the following in cloud9's terminal:
 
-.. code:: sh
+.. code-block:: sh
 
     rm -rf * # Clear out the c9 hello-world stuff
     composer create-project elgg/elgg:~1.11 . # the hotness
@@ -32,7 +32,7 @@ Run the following in cloud9's terminal:
 
 Configure ``settings.php`` to be like so:
 
-.. code:: php
+.. code-block:: php
 
     // Must set timezone explicitly!
     date_default_timezone_set('America/Los_Angeles');

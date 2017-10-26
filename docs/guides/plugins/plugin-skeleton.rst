@@ -10,7 +10,7 @@ The following is an example of a plugin with standard structure. For further exp
 
 The following files for plugin ``example`` would go in ``/mod/example/``
 
-.. code::
+.. code-block:: text
 
     actions/
         example/
@@ -72,7 +72,7 @@ Plugins **must** provide a ``manifest.xml`` file in the plugin root in order to 
 
 Therefore the following is the minimally compliant structure:
 
-.. code::
+.. code-block:: text
 
     mod/example/
         manifest.xml

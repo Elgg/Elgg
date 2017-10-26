@@ -24,7 +24,7 @@ Translations are stored in PHP files in the ``/languages`` directory of your plu
 To override an existing translation, include it in your plugin's language file, and make sure your plugin is
 ordered later on the Admin > Plugins page:
 
-.. code:: php
+.. code-block:: php
 
 	<?php // mod/better_example/languages/en.php
 
@@ -45,13 +45,13 @@ Output the translation of the key in the current language.
 
 Example:
 
-.. code:: php
+.. code-block:: php
 
 	echo elgg_echo('example:text');
 
 It also supports variable replacement using sprintf syntax:
 
-.. code:: php
+.. code-block:: php
 
 	// 'welcome' => 'Welcome to %s, %s!'
 	echo elgg_echo('welcome', [
@@ -61,13 +61,13 @@ It also supports variable replacement using sprintf syntax:
 
 To force which language should be used for translation, set the third parameter:
 
-.. code:: php
+.. code-block:: php
 
     echo elgg_echo('welcome', [], $user->language);
 
 To first test whether ``elgg_echo()`` can find a translation:
 
-.. code:: php
+.. code-block:: php
 
 	$key = 'key:that:might:not:exist';
 	if (!elgg_language_key_exists($key)) {

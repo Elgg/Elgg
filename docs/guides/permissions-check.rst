@@ -12,7 +12,7 @@ Hooking permissions_check
 
 In your plugin, you must register the plugin hook for ``permissions_check``.
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_plugin_hook_handler('permissions_check', 'all', 'myplugin_permissions_check');
 
@@ -22,7 +22,7 @@ The override function
 Now create the function that will be called by the permissions check hook. In this function we determine if the entity (in parameters) has write access. Since it is important to keep Elgg secure, write access should be given only after checking a variety of situations including page context, logged in user, etc.
 Note that this function can return 3 values: true if the entity has write access, false if the entity does not, and null if this plugin doesn't care and the security system should consult other plugins.
 
-.. code:: php
+.. code-block:: php
 
    function myplugin_permissions_check($hook_name, $entity_type, $return_value, $parameters) {
       $has_access = determine_access_somehow();
@@ -41,7 +41,7 @@ Full Example
 
 This is a full example using the context to determine if the entity has write access.
 
-.. code:: php
+.. code-block:: php
 
    <?php
    

@@ -30,7 +30,7 @@ passed in as the first argument.
 The following code registers a page handler for "blog" URLs and shows how one might route
 the request to a resource view.
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_page_handler('blog', 'blog_page_handler');
 
@@ -76,7 +76,7 @@ variety of URLs.
 The following code results in ``/blog/all`` requests being completely handled by the plugin hook handler.
 For these requests the ``blog`` page handler is never called.
 
-.. code:: php
+.. code-block:: php
 
     function myplugin_blog_all_handler($hook, $type, $returnvalue, $params) {
         $segments = elgg_extract('segments', $returnvalue, array());
@@ -106,7 +106,7 @@ and allows modifying the request URL path (relative to the Elgg site).
 
 Here we rewrite requests for ``news/*`` to ``blog/*``:
 
-.. code:: php
+.. code-block:: php
 
     function myplugin_rewrite_handler($hook, $type, $value, $params) {
         $value['identifier'] = 'blog';

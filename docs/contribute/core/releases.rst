@@ -35,7 +35,7 @@ For each branch
 Check out the branch, make sure it's up to date, and make a new work branch with the merge. E.g. here we're
 merging 1.12 commits into 2.0:
 
-.. code:: sh
+.. code-block:: sh
 
     git checkout 2.0
     git pull
@@ -48,7 +48,7 @@ If there are conflicts, resolve them, ``git add .``, and ``git merge``.
 
 Make a PR for the branch and wait for automated tests and approval by other dev(s).
 
-.. code:: sh
+.. code-block:: sh
 
     git push -u my_fork merge112
 
@@ -70,7 +70,7 @@ Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR i
 
 Install the prerequisites:
 
-.. code:: sh
+.. code-block:: sh
 
     yarn install elgg-conventional-changelog
     easy_install sphinx
@@ -81,7 +81,7 @@ Install the prerequisites:
 
 Run the ``release.php`` script. For example, to release 1.12.5:
 
-.. code:: sh
+.. code-block:: sh
 
     git checkout 1.12
     php .scripts/release.php 1.12.5
@@ -90,7 +90,7 @@ This creates a ``release-1.12.5`` branch in your local repo.
 
 Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:
 
-.. code:: sh
+.. code-block:: sh
 
     # only necessary if you fixed a language file
     git add .
@@ -98,7 +98,7 @@ Next, manually browse to the ``/admin/settings/basic`` page and verify it loads.
 
 Next, submit a PR via GitHub for automated testing and approval by another developer:
 
-.. code:: sh
+.. code-block:: sh
 
     git push your-remote-fork release-1.12.5
 
@@ -107,7 +107,7 @@ Tag the release
 
 Once approved and merged, tag the release:
 
-.. code:: sh
+.. code-block:: sh
 
     git checkout release-${version}
     git tag -a ${version} -m'Elgg ${version}'
@@ -143,16 +143,16 @@ Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Ru
 	If this is your first time on the server building a release run ``composer global require "fxp/composer-asset-plugin:^1.2.0"``.
 	This will make sure you can download bower-assets during the build process.
 
-.. code:: sh
-
+.. code-block:: sh
+	
 	# login as user deploy
 	sudo -su deploy
 	
-    # regular release
-    ./elgg-starter-project.sh master 2.0.4 /var/www/www.elgg.org/download/
+	# regular release
+	./elgg-starter-project.sh master 2.0.4 /var/www/www.elgg.org/download/
 	
-    # MIT release
-    ./elgg-starter-project.sh master 2.0.4-mit /var/www/www.elgg.org/download/
+	# MIT release
+	./elgg-starter-project.sh master 2.0.4-mit /var/www/www.elgg.org/download/
 
 
 * Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version.
@@ -164,7 +164,7 @@ Building 1.x zip packages
 
 Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage.
 
-.. code:: sh
+.. code-block:: sh
 
     # regular release
     ./build.sh 1.12.5 1.12.5 /var/www/www.elgg.org/download/
@@ -180,7 +180,7 @@ Update elgg.org download page
 * Commit and push the changes
 * Update the plugin on www.elgg.org
 
-.. code:: sh
+.. code-block:: sh
 
 	composer update elgg/community
 
@@ -191,20 +191,20 @@ Update elgg.org
 * Change the required Elgg version in ``composer.json``
 * Update vendors
 
-.. code:: sh
+.. code-block:: sh
 
     composer update
 
 * Commit and push the changes
 * Pull to live site
 
-.. code:: sh
+.. code-block:: sh
 
     cd /var/www/www.elgg.org && sudo su deploy && git pull
       
 * Update dependencies
 
-.. code:: sh
+.. code-block:: sh
 
     composer install --no-dev --prefer-dist --optimize-autoloader
 

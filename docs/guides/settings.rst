@@ -9,7 +9,7 @@ You need to perform some extra steps if your plugin needs settings to be saved a
 
 An example ``settings.php`` would look like:
 
-.. code:: php
+.. code-block:: php
 
    <p>
       <?php echo elgg_echo('myplugin:settings:limit'); ?>
@@ -44,13 +44,13 @@ Retrieving settings in your code
 
 To retrieve settings from your code use:
 
-.. code:: php
+.. code-block:: php
 
    $setting = elgg_get_plugin_setting($name, $plugin_id);
    
 or for user settings
 
-.. code:: php
+.. code-block:: php
 
    $user_setting = elgg_get_plugin_user_setting($name, $user_guid, $plugin_id);
    
@@ -65,13 +65,13 @@ Setting values while in code
 
 Values may also be set from within your plugin code, to do this use one of the following functions:
 
-.. code:: php
+.. code-block:: php
 
    elgg_set_plugin_setting($name, $value, $plugin_id);
 
 or 
 
-.. code:: php
+.. code-block:: php
 
    elgg_set_plugin_user_setting($name, $value, $user_guid, $plugin_id);
    
@@ -85,7 +85,7 @@ Default plugin (user) settings
 If a plugin or a user not have a setting stored in the database, you sometimes have the need for a certain default value.
 You can pass this when using the getter functions.
 
-.. code:: php
+.. code-block:: php
 
    $user_setting = elgg_get_plugin_user_setting($name, $user_guid, $plugin_id, $default);
    
@@ -93,7 +93,7 @@ You can pass this when using the getter functions.
    
 Alternatively you can also provide default plugin and user settings in the ``elgg-plugin.php`` file.
 
-.. code:: php
+.. code-block:: php
 
 	<?php
 

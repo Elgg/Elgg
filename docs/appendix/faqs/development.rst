@@ -46,7 +46,7 @@ To find the string use ``grep`` or a text editor that provides searching through
 
 You should locate the string "Add friend" in ``/languages/en.php``. You should see something like this in the file:
 
-.. code:: php
+.. code-block:: php
    
    'friend:add' => "Add friend",
 
@@ -61,7 +61,7 @@ To override this definition, we will add a languages file to the plugin that we 
 2. Create a file in that directory called ``en.php``
 3. Add these lines to that file
 
-.. code:: php
+.. code-block:: php
    
    <?php
    
@@ -112,7 +112,7 @@ What goes into the log in debug mode?
 What does the data look like?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code::
+.. code-block:: text
 
    [07-Mar-2009 14:27:20] Query cache invalidated
    [07-Mar-2009 14:27:20] ** GUID:1 loaded from DB

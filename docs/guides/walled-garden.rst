@@ -21,7 +21,7 @@ The returned value is an array of regexp expressions for public pages.
 
 The following code shows how to expose http://example.org/my_plugin/public_page through a Walled Garden. This assumes the plugin has registered a :doc:`pagehandler` for ``my_plugin``.
 
-.. code:: php
+.. code-block:: php
 
    elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'my_plugin_walled_garden_public_pages');
    

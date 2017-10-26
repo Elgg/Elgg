@@ -48,18 +48,13 @@ Interface and annotations
 - ``elgg_view_image_block($icon, $info)`` Return the result in a formatted list
 - ``elgg_view_comments($entity)`` Returns any comments associated with the given entity
 - ``elgg_get_friendly_time($unix_timestamp)`` Returns a date formatted in a friendlier way - "18 minutes ago", "2 days ago", etc.
-- You can pass ``'use_hover' => false`` to the user icon view if you don't want the avatar drop down menu to appear e.g.
-
-.. code:: php
-
-   elgg_view_entity_icon($user, 'small', array('use_hover' => false));
 
 E-mail address formatting
 -------------------------
 
 Elgg has a helper class to aid in getting formatted e-mail addresses: ``\Elgg\Email\Address``.
 
-.. code:: php
+.. code-block:: php
 
 	// the constructor takes two variables
 	// first is the email address, this is REQUIRED

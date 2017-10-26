@@ -95,7 +95,7 @@ If no one gets email at all, it is quite likely your server is not configured pr
 
 To quickly check if PHP and an MTA are correctly configured, create a file on your server with the following content:
 
-.. code:: php
+.. code-block:: php
 
 	<?php
 	$address = "your_email@your_host.com";
@@ -380,7 +380,7 @@ Different timezone
 
 If you migrated servers or upgraded PHP, check that PHP's timezone settings are the same between the old and the new. If you cannot or don't want to change the system-wide ``php.ini`` file, you can put the following at the top of ``settings.php``:
 
-.. code:: php
+.. code-block:: php
 
    date_default_timezone_set('MY_TIME_ZONE');
    
@@ -398,7 +398,7 @@ Deprecation warnings
 
 If you are seeing many deprecation warnings that say things like
 
-.. code::
+.. code-block:: text
 
    Deprecated in 1.7: extend_view() was deprecated by elgg_extend_view()!
 

@@ -19,7 +19,7 @@ The dependencies system is controlled through a plugin's ``manifest.xml`` file. 
 
 The dependency system uses the four verbs above (``requires``, ``suggests``, ``conflicts``, and ``provides``) as parent elements to indicate what type of dependency is described by its children. All dependencies have a similar format with similar options:
 
-.. code:: xml
+.. code-block:: xml
 
    <verb>
       <type>type</type>
@@ -48,7 +48,7 @@ Every plugin must have at least one requires: the version of Elgg the plugin is 
 
 Using elgg_release:
 
-.. code:: xml
+.. code-block:: xml
 
    <requires>
       <type>elgg_release</type>
@@ -62,7 +62,7 @@ Suggests
 
 Suggest another plugin:
 
-.. code:: xml
+.. code-block:: xml
 
    <suggests>
       <type>plugin</type>
@@ -72,7 +72,7 @@ Suggest another plugin:
 
 Suggest a certain PHP setting:
 
-.. code:: xml
+.. code-block:: xml
 
    <suggests>
       <type>php_ini</type>
@@ -88,7 +88,7 @@ Conflicts
 
 Conflict with any version of the profile plugin:
 
-.. code:: xml
+.. code-block:: xml
    
    <conflicts>
       <type>plugin</type>
@@ -97,7 +97,7 @@ Conflict with any version of the profile plugin:
 
 Conflict with a specific release of Elgg:
 
-.. code:: xml
+.. code-block:: xml
 
    <conflicts>
       <type>elgg_release</type>
@@ -112,7 +112,7 @@ Provides
 
 The purpose of this is to provide interchangeable APIs implemented by different plugins. For example, the twitter_services plugin provides an API for other plugins to Tweet on behalf of the user via curl and Oauth. A plugin author could write a compatible plugin for servers without curl support that uses sockets streams and specify that it provides twitter_services. Any plugins that suggest or require twitter_services would then know they can work.
 
-.. code:: xml
+.. code-block:: xml
 
    <provides>
       <type>plugin</type>
@@ -142,7 +142,7 @@ Every dependency verb has a mandatory ``<type>`` element that must be one of the
 
 Every type is defined with a dependency verb as the parent element. Additional option elements are at the same level as the type element:
 
-.. code:: xml
+.. code-block:: xml
 
    <verb>
       <type>type</type>
@@ -252,7 +252,7 @@ Quick Examples
 Requires Elgg 1.8.2 or higher
 -----------------------------
 
-.. code:: xml
+.. code-block:: xml
 
    <requires>
       <type>elgg_release</type>
@@ -262,7 +262,7 @@ Requires Elgg 1.8.2 or higher
 Requires the Groups plugin is active
 ------------------------------------
 
-.. code:: xml
+.. code-block:: xml
 
    <requires>
       <type>plugin</type>
@@ -272,7 +272,7 @@ Requires the Groups plugin is active
 Requires to be after the Profile plugin if Profile is active
 ------------------------------------------------------------
 
-.. code:: xml
+.. code-block:: xml
 
    <requires>
       <type>priority</type>
@@ -283,7 +283,7 @@ Requires to be after the Profile plugin if Profile is active
 Conflicts with The Wire plugin
 ------------------------------
 
-.. code:: xml
+.. code-block:: xml
 
    <conflicts>
       <type>plugin</type>
@@ -293,7 +293,7 @@ Conflicts with The Wire plugin
 Requires at least 256 MB memory in PHP
 --------------------------------------
 
-.. code:: xml
+.. code-block:: xml
 
    <requires>
       <type>php_ini</type>
@@ -306,7 +306,7 @@ Requires at least 256 MB memory in PHP
 Requires at least PHP version 5.3
 ---------------------------------
 
-.. code:: xml
+.. code-block:: xml
 
    <requires>
       <type>php_version</type>
@@ -316,7 +316,7 @@ Requires at least PHP version 5.3
 Suggest the TidyPics plugin is loaded
 -------------------------------------
 
-.. code:: xml
+.. code-block:: xml
 
    <suggests>
       <type>plugin</type>
