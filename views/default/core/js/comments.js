@@ -84,10 +84,10 @@ elgg.comments.Comment.prototype = {
 				if (json.status === 0) {
 					// Update list item content
 					if (json.output) {
-						that.$item.find('[data-role="comment-text"]').replaceWith(json.output);
+						that.$item.find('.elgg-listing-summary-content .elgg-output').replaceWith(json.output);
 					} else {
 						// action has been overridden and doesn't return comment content
-						that.$item.find('[data-role="comment-text"]').html(nl2br(value));
+						that.$item.find('.elgg-listing-summary-content .elgg-output').html(nl2br(value));
 					}
 				}
 				that.hideForm(function () {
@@ -120,13 +120,18 @@ elgg.comments.Comment.prototype = {
  * @return void
  */
 elgg.comments.init = function() {
-	$(document).on('click', '.elgg-item-object-comment .elgg-menu-item-edit > a', function () {
+	$(document).on('click', ' .elgg-menu-item-edit > a', function () {
+		var $trigger = $(this).closest('.elgg-menu-hover').data('trigger');
+		if (!$trigger.is('.elgg-item-object-comment a')) {
+			return;
+		}
+
 		// store object as data in the edit link
 		var dc = $(this).data('Comment'),
 			guid;
 		if (!dc) {
 			guid = this.href.split('/').pop();
-			dc = new elgg.comments.Comment(guid, $(this).closest('.elgg-item-object-comment'));
+			dc = new elgg.comments.Comment(guid, $trigger.closest('.elgg-item-object-comment'));
 			$(this).data('Comment', dc);
 		}
 		dc.toggleEdit();
