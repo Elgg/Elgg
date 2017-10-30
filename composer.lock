@@ -2825,12 +2825,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/elgg-coding-standards.git",
-                "reference": "462f40f55a3c169f6befe8034776147f31d60a0f"
+                "reference": "62ff3d2a0e999fb6502730bbfd57a391922aaabd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/462f40f55a3c169f6befe8034776147f31d60a0f",
-                "reference": "462f40f55a3c169f6befe8034776147f31d60a0f",
+                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/62ff3d2a0e999fb6502730bbfd57a391922aaabd",
+                "reference": "62ff3d2a0e999fb6502730bbfd57a391922aaabd",
                 "shasum": ""
             },
             "require": {
@@ -2842,12 +2842,9 @@
                     "Elgg_Sniffs_": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "description": "Elgg coding standards",
-            "support": {
-                "source": "https://github.com/Elgg/elgg-coding-standards/tree/3.x",
-                "issues": "https://github.com/Elgg/elgg-coding-standards/issues"
-            },
-            "time": "2017-03-21 13:20:20"
+            "time": "2017-10-27T08:36:11+00:00"
         },
         {
             "name": "myclabs/deep-copy",
