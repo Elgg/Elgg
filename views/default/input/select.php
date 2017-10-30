@@ -85,6 +85,10 @@ $render_option = function($opt_value, $option) use ($value) {
 		$text = $option;
 	}
 	
+	if (!isset($option_attrs['title'])) {
+		$option_attrs['title'] = $text;
+	}
+	
 	return elgg_format_element('option', $option_attrs, $text);
 };
 
