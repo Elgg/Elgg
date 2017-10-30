@@ -11,8 +11,12 @@ if (!$plugin instanceof ElggPlugin) {
 	return;
 }
 
-$active = $plugin->isActive();
-$can_activate = $plugin->canActivate();
+$show_dependencies = false;
+$package = $plugin->getPackage();
+if ($package && !$package->checkDependencies()) {
+	$show_dependencies = true;
+	
+}
 
 $screenshots_menu = '';
 $screenshots_body = '';
@@ -165,7 +169,7 @@ $tabs = [];
 $tabs[] = [
 	'text' => elgg_echo("admin:plugins:label:info"),
 	'rel' => 'elgg-plugin-details-info',
-	'selected' => ($can_activate) ? true : false
+	'selected' => !$show_dependencies,
 ];
 
 if ($resources_html) {
@@ -192,7 +196,7 @@ if ($screenshots) {
 $tabs[] = [
 	'text' => elgg_echo("admin:plugins:label:dependencies"),
 	'rel' => 'elgg-plugin-details-dependencies',
-	'selected' => (!$can_activate) ? true : false
+	'selected' => $show_dependencies,
 ];
 
 $body .= elgg_view('navigation/tabs', [
@@ -203,7 +207,7 @@ $body .= elgg_view('navigation/tabs', [
 $body .= "<div>";
 
 // info
-if ($can_activate) {
+if (!$show_dependencies) {
 	$body .= "<div class='elgg-plugin-details-info'>";
 } else {
 	$body .= "<div class='elgg-plugin-details-info hidden'>";
@@ -234,7 +238,7 @@ if ($screenshots) {
 }
 
 // dependencies
-if ($can_activate) {
+if (!$show_dependencies) {
 	$body .= "<div class='elgg-plugin-details-dependencies hidden'>";
 } else {
 	$body .= "<div class='elgg-plugin-details-dependencies'>";
