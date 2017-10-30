@@ -10,7 +10,7 @@
  * 								 the value displayed on the button. Replaces $vars['options'] when defined.
  */
 
-$class = "elgg-input-dropdown";
+$class = "elgg-input-select";
 
 ?>
 <select name="<?php echo $vars['name']; ?>" class="<?php echo $class; ?>">
