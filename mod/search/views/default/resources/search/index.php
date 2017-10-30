@@ -199,7 +199,7 @@ if ($search_type == 'all' || $search_type == 'entities') {
 
 		// pull in default type entities with no subtypes
 		$current_params['type'] = $type;
-		$current_params['subtype'] = ELGG_ENTITIES_NO_VALUE;
+		$current_params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 
 		$results = elgg_trigger_plugin_hook('search', $type, $current_params, []);
 		if ($results === false) {

@@ -14,6 +14,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 
 	public function up() {
 		$this->object = new \ElggObject();
+		$this->object->subtype = $this->getRandomSubtype();
 	}
 
 	public function down() {
@@ -41,6 +42,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 
 	public function testElggDeleteAnnotations() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomSubtype();
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -68,6 +70,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 
 	public function testElggDisableAnnotations() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomSubtype();
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -94,6 +97,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 
 	public function testElggEnableAnnotations() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomSubtype();
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -122,6 +126,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 
 	public function testElggAnnotationExists() {
 		$e = new \ElggObject();
+		$e->subtype = $this->getRandomSubtype();
 		$e->save();
 		$guid = $e->getGUID();
 

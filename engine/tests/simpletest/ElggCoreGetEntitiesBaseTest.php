@@ -94,15 +94,6 @@ abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 			$e->delete();
 		}
 
-		// manually remove subtype entries since there is no way
-		// to using the API.
-		$subtype_arr = [];
-		foreach ($this->subtypes as $type => $subtypes) {
-			foreach ($subtypes as $subtype) {
-				remove_subtype($type, $subtype);
-			}
-		}
-
 		elgg_set_ignore_access($ia);
 	}
 

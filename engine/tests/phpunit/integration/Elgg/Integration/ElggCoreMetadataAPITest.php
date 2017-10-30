@@ -22,6 +22,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 
 	public function up() {
 		$this->object = new ElggObject();
+		$this->object->subtype = $this->getRandomSubtype();
 	}
 
 	public function down() {
@@ -76,6 +77,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 
 	public function testElggDeleteMetadata() {
 		$e = new ElggObject();
+		$e->subtype = $this->getRandomSubtype();
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -125,6 +127,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$u2 = $this->createOne('user');
 
 		$obj = new ElggObject();
+		$obj->subtype = $this->getRandomSubtype();
 		$obj->owner_guid = $u1->guid;
 		$obj->container_guid = $u1->guid;
 		$obj->access_id = ACCESS_PUBLIC;
@@ -190,6 +193,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$ia = elgg_set_ignore_access(true);
 
 		$obj = new ElggObject();
+		$obj->subtype = $this->getRandomSubtype();
 		$obj->owner_guid = elgg_get_site_entity()->guid;
 		$obj->container_guid = elgg_get_site_entity()->guid;
 		$obj->access_id = ACCESS_PUBLIC;

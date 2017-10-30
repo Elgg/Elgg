@@ -332,9 +332,6 @@ The entities will be registered upon activation of the plugin.
 Now if you invoke ``get_entity()`` with the GUID of a committee object,
 you'll get back an object of type Committee.
 
-.. note::
-	If you ever change the name of the class, use ``update_subtype()`` to change it as part of an upgrade
-
 Advanced features
 -----------------
 

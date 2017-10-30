@@ -70,27 +70,16 @@ class EntityTable extends DbEntityTable {
 			}
 		}
 
-		if ($subtype) {
-			$subtype_id = $this->subtype_table->getId($type, $subtype);
-			if (!$subtype_id) {
-				$subtype_id = $this->subtype_table->add($type, $subtype);
-			}
-		} else if (isset($attributes['subtype_id'])) {
-			$subtype_id = $attributes['subtype_id'];
-			$subtype = $this->subtype_table->getSubtype($subtype_id);
-		}
-
-		// don't let these to be overriden by attributes
 		$attributes['guid'] = $guid;
 		$attributes['type'] = $type;
-		$attributes['subtype'] = $subtype_id;
+		$attributes['subtype'] = $subtype;
 
 		$time = $this->getCurrentTime()->getTimestamp();
-		
+
 		$primary_attributes = [
 			'guid' => $guid,
 			'type' => $type,
-			'subtype' => $subtype_id,
+			'subtype' => $subtype,
 			'owner_guid' => 0,
 			'container_guid' => 0,
 			'access_id' => ACCESS_PUBLIC,
@@ -99,12 +88,12 @@ class EntityTable extends DbEntityTable {
 			'last_action' => $time,
 			'enabled' => 'yes',
 		];
-				
+
 		$map = array_merge($primary_attributes, $attributes);
-				
+
 		// get filled in primary attributes
 		$primary_attributes = (object) array_intersect_key($map, $primary_attributes);
-				
+
 		$this->rows[$guid] = $primary_attributes;
 		$this->addQuerySpecs($primary_attributes);
 
@@ -112,17 +101,17 @@ class EntityTable extends DbEntityTable {
 		if (!($entity instanceof \ElggEntity)) {
 			_elgg_services()->logger->error("Failed creating a mock entity with attributes " . var_export($primary_attributes, true));
 		}
-		
+
 		$attrs = (object) $map;
 		foreach ($attrs as $name => $value) {
-			if ($name === 'subtype' || $name === 'subtype_id' || $name === 'password_hash') {
+			if ($name === 'subtype' || $name === 'password_hash') {
 				continue;
 			}
 
 			if (isset($entity->$name) && $entity->$name == $value) {
 				continue;
 			}
-			
+
 			// not an attribute, so needs to be set again
 			$entity->$name = $value;
 		}
@@ -322,7 +311,7 @@ class EntityTable extends DbEntityTable {
 			(type, subtype, owner_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
 			VALUES
-			(:type, :subtype_id, :owner_guid, :container_guid,
+			(:type, :subtype, :owner_guid, :container_guid,
 				:access_id, :time_created, :time_updated, :last_action)
 		";
 
@@ -330,7 +319,7 @@ class EntityTable extends DbEntityTable {
 			'sql' => $sql,
 			'params' => [
 				':type' => 'object',
-				':subtype_id' => $row->subtype,
+				':subtype' => $row->subtype,
 				':owner_guid' => $row->owner_guid,
 				':container_guid' => $row->container_guid,
 				':access_id' => $row->access_id,

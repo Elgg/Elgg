@@ -11,11 +11,13 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$guids = [];
 
 		$obj1 = new \ElggObject();
+		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->test_md = 'test';
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
 		$obj2 = new \ElggObject();
+		$obj2->subtype = $this->getRandomSubtype();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;
@@ -45,10 +47,12 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$guids = [];
 
 		$obj1 = new \ElggObject();
+		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
 		$obj2 = new \ElggObject();
+		$obj2->subtype = $this->getRandomSubtype();
 		$obj2->save();
 		$guids[] = $obj2->guid;
 
@@ -77,11 +81,13 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$guids = [];
 
 		$obj1 = new \ElggObject();
+		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->test_md = 'test';
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
 		$obj2 = new \ElggObject();
+		$obj2->subtype = $this->getRandomSubtype();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;
@@ -113,11 +119,13 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$guids = [];
 
 		$obj1 = new \ElggObject();
+		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->test_md = 'test';
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
 		$obj2 = new \ElggObject();
+		$obj2->subtype = $this->getRandomSubtype();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;
@@ -201,12 +209,15 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 	public function testElggApiGettersEntityRelationshipDistinctResult() {
 
 		$obj1 = new ElggObject();
+		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->save();
 
 		$obj2 = new ElggObject();
+		$obj2->subtype = $this->getRandomSubtype();
 		$obj2->save();
 
 		$obj3 = new ElggObject();
+		$obj3->subtype = $this->getRandomSubtype();
 		$obj3->save();
 
 		add_entity_relationship($obj2->guid, 'test_5775', $obj1->guid);
@@ -239,12 +250,15 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 
 
 		$obj1 = new ElggObject();
+		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->save();
 
 		$obj2 = new ElggObject();
+		$obj2->subtype = $this->getRandomSubtype();
 		$obj2->save();
 
 		$obj3 = new ElggObject();
+		$obj3->subtype = $this->getRandomSubtype();
 		$obj3->save();
 
 		add_entity_relationship($obj2->guid, 'test_5775_inverse', $obj1->guid);

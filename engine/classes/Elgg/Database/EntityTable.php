@@ -6,9 +6,9 @@ use ClassException;
 use Elgg\Cache\EntityCache;
 use Elgg\Cache\MetadataCache;
 use Elgg\Config as Conf;
+use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\EntityTable\UserFetchFailureException;
-use Elgg\Database\SubtypeTable;
 use Elgg\EntityPreloader;
 use Elgg\EventsService;
 use Elgg\I18n\Translator;
@@ -23,6 +23,7 @@ use ElggSite;
 use ElggUser;
 use IncompleteEntityException;
 use InstallationException;
+use InvalidArgumentException;
 use LogicException;
 use stdClass;
 
@@ -38,7 +39,7 @@ use stdClass;
 class EntityTable {
 
 	use \Elgg\TimeUsing;
-	
+
 	/**
 	 * @var Conf
 	 */
@@ -55,9 +56,9 @@ class EntityTable {
 	protected $table;
 
 	/**
-	 * @var SubtypeTable
+	 * @var array
 	 */
-	protected $subtype_table;
+	protected $entity_classes;
 
 	/**
 	 * @var EntityCache
@@ -101,7 +102,6 @@ class EntityTable {
 	 * @param Database      $db             Database
 	 * @param EntityCache   $entity_cache   Entity cache
 	 * @param MetadataCache $metadata_cache Metadata cache
-	 * @param SubtypeTable  $subtype_table  Subtype table
 	 * @param EventsService $events         Events service
 	 * @param ElggSession   $session        Session
 	 * @param Translator    $translator     Translator
@@ -112,7 +112,6 @@ class EntityTable {
 		Database $db,
 		EntityCache $entity_cache,
 		MetadataCache $metadata_cache,
-		SubtypeTable $subtype_table,
 		EventsService $events,
 		ElggSession $session,
 		Translator $translator,
@@ -123,11 +122,44 @@ class EntityTable {
 		$this->table = $this->db->prefix . 'entities';
 		$this->entity_cache = $entity_cache;
 		$this->metadata_cache = $metadata_cache;
-		$this->subtype_table = $subtype_table;
 		$this->events = $events;
 		$this->session = $session;
 		$this->translator = $translator;
 		$this->logger = $logger;
+	}
+
+	/**
+	 * Sets class constructor name for entities with given type and subtype
+	 *
+	 * @param string $type    Entity type
+	 * @param string $subtype Entity subtype
+	 * @param string $class   Entity class
+	 *
+	 * @return void
+	 * @throws \InvalidParameterException
+	 */
+	public function setEntityClass($type, $subtype, $class = '') {
+		if (!in_array($type, Config::getEntityTypes())) {
+			throw new \InvalidParameterException("$type is not a valid entity type");
+		}
+
+		$this->entity_classes[$type][$subtype] = $class;
+	}
+
+	/**
+	 * Returns class name registered as a constructor for a given type and subtype
+	 *
+	 * @param string $type    Entity type
+	 * @param string $subtype Entity subtype
+	 *
+	 * @return string
+	 */
+	public function getEntityClass($type, $subtype) {
+		if (isset($this->entity_classes[$type][$subtype])) {
+			return $this->entity_classes[$type][$subtype];
+		}
+
+		return '';
 	}
 
 	/**
@@ -180,16 +212,16 @@ class EntityTable {
 	 */
 	public function insertRow(stdClass $row, array $attributes = []) {
 
-		$sql = "INSERT INTO {$this->db->prefix}entities
-			(type, subtype, owner_guid, container_guid,
-				access_id, time_created, time_updated, last_action)
+		$sql = "
+			INSERT INTO {$this->db->prefix}entities
+			(type, subtype, owner_guid, container_guid, access_id, time_created, time_updated, last_action)
 			VALUES
-			(:type, :subtype_id, :owner_guid, :container_guid,
-				:access_id, :time_created, :time_updated, :last_action)";
+			(:type, :subtype, :owner_guid, :container_guid, :access_id, :time_created, :time_updated, :last_action)
+		";
 
 		return $this->db->insertData($sql, [
 			':type' => $row->type,
-			':subtype_id' => $row->subtype_id,
+			':subtype' => $row->subtype,
 			':owner_guid' => $row->owner_guid,
 			':container_guid' => $row->container_guid,
 			':access_id' => $row->access_id,
@@ -235,7 +267,6 @@ class EntityTable {
 	 * Handles loading all tables into the correct class.
 	 *
 	 * @see get_entity_as_row()
-	 * @see add_subtype()
 	 * @see get_entity()
 	 *
 	 * @access private
@@ -253,8 +284,8 @@ class EntityTable {
 		if (!isset($row->guid) || !isset($row->subtype)) {
 			return $row;
 		}
-	
-		$class_name = $this->subtype_table->getClassFromId($row->subtype);
+
+		$class_name = $this->getEntityClass($row->type, $row->subtype);
 		if ($class_name && !class_exists($class_name)) {
 			$this->logger->error("Class '$class_name' was not found, missing plugin?");
 			$class_name = '';
@@ -429,14 +460,19 @@ class EntityTable {
 	 *           Joined with subtypes by AND. See below)
 	 *
 	 * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
-	 *              Use ELGG_ENTITIES_NO_VALUE to match the default subtype.
 	 *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
+	 *              Note that all falsey values will be treated as ELGG_ENTITIES_ANY_VALUE,
+	 *              all other values will be cast to string and searched for literally.
+	 *              All values within a non-empty subtypes array will be cast to string and searched for literally
 	 *
 	 * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
 	 *                        array(
 	 *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
 	 *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
 	 *                        );
+	 *                       Note that all falsey subtype values will be treated as ELGG_ENTITIES_ANY_VALUE,
+	 *                       all other values will be cast to string and searched for literally.
+	 *                       All values within a non-empty subtypes array will be cast to string and searched for literally
 	 *
 	 * 	guids => null|ARR Array of entity guids
 	 *
@@ -550,7 +586,7 @@ class EntityTable {
 
 			return new \ElggBatch([$this, 'getEntities'], $options, null, $batch_size, $batch_inc_offset);
 		}
-	
+
 		// can't use helper function with type_subtype_pair because
 		// it's already an array...just need to merge it
 		if (isset($options['type_subtype_pair'])) {
@@ -730,9 +766,9 @@ class EntityTable {
 	 * @throws LogicException
 	 */
 	public function fetchFromSql($sql, \ElggBatch $batch = null) {
-		
+
 		$rows = $this->db->getData($sql);
-		
+
 		// Second pass to finish conversion
 		foreach ($rows as $i => $row) {
 			if ($row instanceof ElggEntity) {
@@ -766,156 +802,62 @@ class EntityTable {
 	 * @access private
 	 */
 	public function getEntityTypeSubtypeWhereSql($table, $types, $subtypes, $pairs) {
-		// subtype depends upon type.
-		if ($subtypes && !$types) {
-			$this->logger->warn("Cannot set subtypes without type.");
-			return false;
-		}
-
 		// short circuit if nothing is requested
 		if (!$types && !$subtypes && !$pairs) {
 			return '';
 		}
 
-		// pairs override
-		$wheres = [];
-		if (!is_array($pairs)) {
-			if (!is_array($types)) {
-				$types = [$types];
-			}
+		$or_clauses = [];
 
-			if ($subtypes && !is_array($subtypes)) {
-				$subtypes = [$subtypes];
-			}
+		if (is_array($pairs)) {
+			foreach ($pairs as $paired_type => $paired_subtypes) {
+				if (!empty($paired_subtypes)) {
+					$paired_subtypes = (array) $paired_subtypes;
+					$paired_subtypes = array_map(function ($el) {
+						$el = trim((string) $el, "\"\'");
 
-			// decrementer for valid types.  Return false if no valid types
-			$valid_types_count = count($types);
-			$valid_subtypes_count = 0;
-			// remove invalid types to get an accurate count of
-			// valid types for the invalid subtype detection to use
-			// below.
-			// also grab the count of ALL subtypes on valid types to decrement later on
-			// and check against.
-			//
-			// yes this is duplicating a foreach on $types.
-			foreach ($types as $type) {
-				if (!in_array($type, \Elgg\Config::getEntityTypes())) {
-					$valid_types_count--;
-					unset($types[array_search($type, $types)]);
+						return "'$el'";
+					}, $paired_subtypes);
+
+					$paired_subtypes_in = implode(',', $paired_subtypes);
+
+					$or_clauses[] = "(
+						{$table}.type = '{$paired_type}'
+						AND {$table}.subtype IN ({$paired_subtypes_in})
+					)";
 				} else {
-					// do the checking (and decrementing) in the subtype section.
-					$valid_subtypes_count += count($subtypes);
-				}
-			}
-
-			// return false if nothing is valid.
-			if (!$valid_types_count) {
-				return false;
-			}
-
-			// subtypes are based upon types, so we need to look at each
-			// type individually to get the right subtype id.
-			foreach ($types as $type) {
-				$subtype_ids = [];
-				if ($subtypes) {
-					foreach ($subtypes as $subtype) {
-						// check that the subtype is valid
-						if (!$subtype && ELGG_ENTITIES_NO_VALUE === $subtype) {
-							// subtype value is 0
-							$subtype_ids[] = ELGG_ENTITIES_NO_VALUE;
-						} elseif (!$subtype) {
-							// subtype is ignored.
-							// this handles ELGG_ENTITIES_ANY_VALUE, '', and anything falsy that isn't 0
-							continue;
-						} else {
-							$subtype_id = get_subtype_id($type, $subtype);
-
-							if ($subtype_id) {
-								$subtype_ids[] = $subtype_id;
-							} else {
-								$valid_subtypes_count--;
-								$this->logger->notice("Type-subtype '$type:$subtype' does not exist!");
-								continue;
-							}
-						}
-					}
-
-					// return false if we're all invalid subtypes in the only valid type
-					if ($valid_subtypes_count <= 0) {
-						return false;
-					}
-				}
-
-				if (is_array($subtype_ids) && count($subtype_ids)) {
-					$subtype_ids_str = implode(',', $subtype_ids);
-					$wheres[] = "({$table}.type = '$type' AND {$table}.subtype IN ($subtype_ids_str))";
-				} else {
-					$wheres[] = "({$table}.type = '$type')";
+					$or_clauses[] = "({$table}.type = '{$paired_type}')";
 				}
 			}
 		} else {
-			// using type/subtype pairs
-			$valid_pairs_count = count($pairs);
-			$valid_pairs_subtypes_count = 0;
+			$types = (array) $types;
 
-			// same deal as above--we need to know how many valid types
-			// and subtypes we have before hitting the subtype section.
-			// also normalize the subtypes into arrays here.
-			foreach ($pairs as $paired_type => $paired_subtypes) {
-				if (!in_array($paired_type, \Elgg\Config::getEntityTypes())) {
-					$valid_pairs_count--;
-					unset($pairs[array_search($paired_type, $pairs)]);
+			foreach ($types as $type) {
+				if (!empty($subtypes)) {
+					$subtypes = (array) $subtypes;
+					$subtypes = array_map(function ($el) {
+						$el = trim((string) $el, "\"\'");
+
+						return "'$el'";
+					}, $subtypes);
+
+					$subtypes_in = implode(',', $subtypes);
+
+					$or_clauses[] = "(
+						{$table}.type = '{$type}'
+						AND {$table}.subtype IN ({$subtypes_in})
+					)";
 				} else {
-					if ($paired_subtypes && !is_array($paired_subtypes)) {
-						$pairs[$paired_type] = [$paired_subtypes];
-					}
-					$valid_pairs_subtypes_count += count($paired_subtypes);
-				}
-			}
-
-			if ($valid_pairs_count <= 0) {
-				return false;
-			}
-			foreach ($pairs as $paired_type => $paired_subtypes) {
-				// this will always be an array because of line 2027, right?
-				// no...some overly clever person can say pair => array('object' => null)
-				if (is_array($paired_subtypes)) {
-					$paired_subtype_ids = [];
-					foreach ($paired_subtypes as $paired_subtype) {
-						if (ELGG_ENTITIES_NO_VALUE === $paired_subtype || ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
-							$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ?
-									ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
-						} else {
-							$valid_pairs_subtypes_count--;
-							$this->logger->notice("Type-subtype '$paired_type:$paired_subtype' does not exist!");
-							// return false if we're all invalid subtypes in the only valid type
-							continue;
-						}
-					}
-
-					// return false if there are no valid subtypes.
-					if ($valid_pairs_subtypes_count <= 0) {
-						return false;
-					}
-
-
-					if ($paired_subtype_ids_str = implode(',', $paired_subtype_ids)) {
-						$wheres[] = "({$table}.type = '$paired_type'"
-								. " AND {$table}.subtype IN ($paired_subtype_ids_str))";
-					}
-				} else {
-					$wheres[] = "({$table}.type = '$paired_type')";
+					$or_clauses[] = "({$table}.type = '{$type}')";
 				}
 			}
 		}
 
-		// pairs override the above.  return false if they don't exist.
-		if (is_array($wheres) && count($wheres)) {
-			$where = implode(' OR ', $wheres);
-			return "($where)";
+		if (empty($or_clauses)) {
+			return '';
 		}
 
-		return '';
+		return '(' . implode(' OR ', $or_clauses) . ')';
 	}
 
 	/**
@@ -1026,41 +968,28 @@ class EntityTable {
 
 		$where = [];
 
-		if ($type != "") {
+		if ($type) {
 			$type = sanitise_string($type);
 			$where[] = "type='$type'";
 		}
 
 		if (is_array($subtype)) {
-			$tempwhere = "";
+			$or_clauses = [];
 			if (sizeof($subtype)) {
 				foreach ($subtype as $typekey => $subtypearray) {
 					foreach ($subtypearray as $subtypeval) {
-						$typekey = sanitise_string($typekey);
-						if (!empty($subtypeval)) {
-							if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval)) {
-								return false;
-							}
-						} else {
-							$subtypeval = 0;
-						}
-						if (!empty($tempwhere)) {
-							$tempwhere .= " or ";
-						}
-						$tempwhere .= "(type = '{$typekey}' and subtype = {$subtypeval})";
+						$subtype_str = sanitize_string($subtypeval);
+						$type_str = sanitize_string($typekey);
+						$or_clauses = "(type = '{$type_str}' and subtype = '{$subtype_str}')";
 					}
 				}
 			}
-			if (!empty($tempwhere)) {
-				$where[] = "({$tempwhere})";
+			if (!empty($or_clauses)) {
+				$where[] = '(' . implode(' OR ', $or_clauses) . ')';
 			}
 		} else {
 			if ($subtype) {
-				if (!$subtype_id = get_subtype_id($type, $subtype)) {
-					return false;
-				} else {
-					$where[] = "subtype=$subtype_id";
-				}
+				$where[] = "subtype='$subtype'";
 			}
 		}
 
@@ -1112,7 +1041,7 @@ class EntityTable {
 		if (!$posted) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
-		
+
 		$query = "
 			UPDATE {$this->db->prefix}entities
 			SET last_action = :last_action
@@ -1123,7 +1052,7 @@ class EntityTable {
 			':last_action' => (int) $posted,
 			':guid' => (int) $entity->guid,
 		];
-		
+
 		$this->db->updateData($query, true, $params);
 
 		return (int) $posted;
@@ -1146,7 +1075,7 @@ class EntityTable {
 		// need to ignore access and show hidden entities for potential hidden/disabled users
 		$ia = $this->session->setIgnoreAccess(true);
 		$show_hidden = access_show_hidden_entities(true);
-	
+
 		$user = $this->get($guid, 'user');
 
 		$this->session->setIgnoreAccess($ia);
@@ -1192,7 +1121,7 @@ class EntityTable {
 
 		_elgg_invalidate_cache_for_entity($entity->guid);
 		_elgg_invalidate_memcache_for_entity($entity->guid);
-		
+
 		if ($this->db->updateData($query, true, $params)) {
 			return true;
 		}

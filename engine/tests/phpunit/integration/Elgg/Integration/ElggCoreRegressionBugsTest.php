@@ -28,6 +28,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 	 */
 	public function testElggObjectDeleteAnnotations() {
 		$this->entity = new ElggObject();
+		$this->entity->subtype = $this->getRandomSubtype();
 		$guid = $this->entity->save();
 
 		$this->entity->annotate('test', 'hello', ACCESS_PUBLIC);
@@ -105,6 +106,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		$user->save();
 
 		$object = new ElggObject();
+		$object->subtype = $this->getRandomSubtype();
 		$object->save();
 
 		$group = new \ElggGroup();
