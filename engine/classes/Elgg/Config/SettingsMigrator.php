@@ -23,8 +23,8 @@ abstract class SettingsMigrator {
 	/**
 	 * Constructor
 	 *
-	 * @param Database  $db            Database
-	 * @param string    $settings_path settings.php file path
+	 * @param Database $db            Database
+	 * @param string   $settings_path settings.php file path
 	 *
 	 * @return void
 	 */

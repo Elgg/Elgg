@@ -184,6 +184,16 @@ class ActionsService {
 	}
 	
 	/**
+	 * Registers an action
+	 *
+	 * @param string $action   The name of the action (eg "register", "account/settings/save")
+	 * @param string $filename Optionally, the filename where this action is located. If not specified,
+	 *                         will assume the action is in elgg/actions/<action>.php
+	 * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
+	 *                         (default: logged_in)
+	 *
+	 * @return bool
+	 *
 	 * @see elgg_register_action()
 	 * @access private
 	 */
@@ -210,6 +220,12 @@ class ActionsService {
 	}
 	
 	/**
+	 * Unregisters an action
+	 *
+	 * @param string $action Action name
+	 *
+	 * @return bool
+	 *
 	 * @see elgg_unregister_action()
 	 * @access private
 	 */
@@ -223,6 +239,19 @@ class ActionsService {
 	}
 
 	/**
+	 * Validate an action token.
+	 *
+	 * Calls to actions will automatically validate tokens. If tokens are not
+	 * present or invalid, the action will be denied and the user will be redirected.
+	 *
+	 * Plugin authors should never have to manually validate action tokens.
+	 *
+	 * @param bool  $visible_errors Emit {@link register_error()} errors on failure?
+	 * @param mixed $token          The token to test against. Default: $_REQUEST['__elgg_token']
+	 * @param mixed $ts             The time stamp to test against. Default: $_REQUEST['__elgg_ts']
+	 *
+	 * @return bool
+	 *
 	 * @see validate_action_token()
 	 * @access private
 	 */
@@ -306,10 +335,13 @@ class ActionsService {
 	}
 
 	/**
+	 * Returns the action token timeout in seconds
+	 *
+	 * @return int number of seconds that action token is valid
+	 *
 	 * @see ActionsService::validateActionToken
 	 * @access private
 	 * @since 1.9.0
-	 * @return int number of seconds that action token is valid
 	 */
 	public function getActionTokenTimeout() {
 		if (($timeout = $this->config->action_token_timeout) === null) {
@@ -321,7 +353,18 @@ class ActionsService {
 	}
 
 	/**
+	 * Validates the presence of action tokens.
+	 *
+	 * This function is called for all actions.  If action tokens are missing,
+	 * the user will be forwarded to the site front page and an error emitted.
+	 *
+	 * This function verifies form input for security features (like a generated token),
+	 * and forwards if they are invalid.
+	 *
+	 * @param string $action The action being performed
+	 *
 	 * @return bool
+	 *
 	 * @see action_gatekeeper()
 	 * @access private
 	 */
@@ -390,6 +433,12 @@ class ActionsService {
 	}
 	
 	/**
+	 * Check if an action is registered and its script exists.
+	 *
+	 * @param string $action Action name
+	 *
+	 * @return bool
+	 *
 	 * @see elgg_action_exists()
 	 * @access private
 	 */

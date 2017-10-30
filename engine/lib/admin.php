@@ -96,23 +96,28 @@ function elgg_admin_notice_exists($id) {
 /**
  * Add an admin notice when a new \ElggUpgrade object is created.
  *
- * @param string     $event
- * @param string     $type
- * @param \ElggObject $object
+ * @param string      $event  'create'
+ * @param string      $type   'object'
+ * @param \ElggObject $object the created object
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
-	if ($object instanceof \ElggUpgrade) {
-		// Link to the Upgrades section
-		$link = elgg_view('output/url', [
-			'href' => 'admin/upgrades',
-			'text' => elgg_echo('admin:view_upgrades'),
-		]);
-
-		$message = elgg_echo('admin:pending_upgrades');
-
-		elgg_add_admin_notice('pending_upgrades', "$message $link");
+	if (!$object instanceof \ElggUpgrade) {
+		return;
 	}
+	
+	// Link to the Upgrades section
+	$link = elgg_view('output/url', [
+		'href' => 'admin/upgrades',
+		'text' => elgg_echo('admin:view_upgrades'),
+	]);
+
+	$message = elgg_echo('admin:pending_upgrades');
+
+	elgg_add_admin_notice('pending_upgrades', "$message $link");
 }
 
 /**
@@ -222,14 +227,14 @@ function _elgg_ajax_plugins_update() {
 /**
  * Register menu items for the admin_header menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string          $hook   'register'
+ * @param string          $type   'menu:admin_header'
+ * @param \ElggMenuItem[] $return current return value
+ * @param array           $params supplied params
+ *
+ * @return void|\ElggMenuItem
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_admin_header_menu($hook, $type, $return, $params) {
@@ -284,14 +289,14 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 /**
  * Register menu items for the admin_footer menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string          $hook   'register'
+ * @param string          $type   'menu:admin_footer'
+ * @param \ElggMenuItem[] $return current return value
+ * @param array           $params supplied params
+ *
+ * @return void|\ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_admin_footer_menu($hook, $type, $return, $params) {
@@ -329,13 +334,11 @@ function _elgg_admin_footer_menu($hook, $type, $return, $params) {
 /**
  * Register menu items for the page menu
  *
- * @param \Elgg\Hook $hook
+ * @param \Elgg\Hook $hook 'register' 'menu:page'
  * @return array
  *
  * @access private
- *
- * @see _elgg_default_widgets_init for default widgets menu items setup
- *
+ * @see _elgg_default_widgets_init() for default widgets menu items setup
  * @since 3.0
  */
 function _elgg_admin_page_menu(\Elgg\Hook $hook) {
@@ -488,11 +491,10 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
  *
  * @note Plugin settings are alphabetically sorted in the submenu
  *
- * @param \Elgg\Hook $hook
+ * @param \Elgg\Hook $hook 'register' 'menu:page'
  * @return array
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
@@ -618,7 +620,7 @@ function _elgg_admin_page_handler($page) {
  *	* COPYRIGHT.txt
  *	* LICENSE.txt
  *
- * @param array $pages
+ * @param array $pages URL segments
  * @return bool
  * @access private
  */
@@ -635,6 +637,8 @@ function _elgg_admin_markdown_page_handler($pages) {
 /**
  * Handle request for robots.txt
  *
+ * @return true
+ *
  * @access private
  */
 function _elgg_robots_page_handler() {
@@ -644,6 +648,8 @@ function _elgg_robots_page_handler() {
 
 /**
  * Handle request for phpinfo
+ *
+ * @return true
  *
  * @access private
  */
@@ -679,6 +685,12 @@ function _elgg_admin_maintenance_allow_url($current_url) {
 
 /**
  * Handle requests when in maintenance mode
+ *
+ * @param string $hook 'route'
+ * @param string $type 'all'
+ * @param array  $info current return value
+ *
+ * @return void|false
  *
  * @access private
  */
@@ -745,19 +757,20 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 /**
  * Adds default admin widgets to the admin dashboard.
  *
- * @param string $event
- * @param string $type
- * @param \ElggUser $user
+ * @param string    $event 'make_admin'
+ * @param string    $type  'user'
+ * @param \ElggUser $user  affected user
  *
- * @return null|true
+ * @return void
  * @access private
  */
 function _elgg_add_admin_widgets($event, $type, $user) {
-	elgg_set_ignore_access(true);
+	$ia = elgg_set_ignore_access(true);
 
 	// check if the user already has widgets
 	if (elgg_get_widgets($user->getGUID(), 'admin')) {
-		return true;
+		elgg_set_ignore_access($ia);
+		return;
 	}
 
 	// In the form column => array of handlers in order, top to bottom
@@ -776,7 +789,8 @@ function _elgg_add_admin_widgets($event, $type, $user) {
 			}
 		}
 	}
-	elgg_set_ignore_access(false);
+	
+	elgg_set_ignore_access($ia);
 }
 
 /**
@@ -785,7 +799,7 @@ function _elgg_add_admin_widgets($event, $type, $user) {
  * @param string $hook         'get'
  * @param string $type         'subscribers'
  * @param array  $return_value current subscribers
- * @param arary  $params       supplied params
+ * @param array  $params       supplied params
  *
  * @return void|array
  */
@@ -926,7 +940,7 @@ function _elgg_admin_prepare_admin_notification_remove_admin($hook, $type, $retu
  * @param string $hook         'get'
  * @param string $type         'subscribers'
  * @param array  $return_value current subscribers
- * @param arary  $params       supplied params
+ * @param array  $params       supplied params
  *
  * @return void|array
  */

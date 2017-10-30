@@ -85,7 +85,9 @@ class File {
 		return $this->directory->includeFile($this->path);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function __toString() {
 		return $this->path;
 	}

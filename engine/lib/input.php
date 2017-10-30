@@ -7,8 +7,6 @@
  * @subpackage Input
  */
 
-use Elgg\Project\Paths;
-
 /**
  * Get some input from variables passed submitted through GET or POST.
  *
@@ -204,7 +202,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  *     limit       int    default is 10
  *     name        string default "members"
  *
- * @param array $page
+ * @param array $page URL segments
  * @return string JSON string is returned and then exit
  * @access private
  */

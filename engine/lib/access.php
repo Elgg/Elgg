@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Functions for Elgg's access system for entities, metadata, and annotations.
  *
@@ -10,8 +9,6 @@
  * @package Elgg.Core
  * @subpackage Access
  */
-
-use Elgg\Project\Paths;
 
 /**
  * Set if Elgg's access system should be ignored.
@@ -513,10 +510,11 @@ function access_init() {
 /**
  * Runs unit tests for the access library
  *
- * @param string $hook
- * @param string $type
- * @param array $value
- * @param array $params
+ * @param string $hook   'unit_test'
+ * @param string $type   'system'
+ * @param array  $value  current return value
+ * @param array  $params supplied params
+ *
  * @return array
  *
  * @access private

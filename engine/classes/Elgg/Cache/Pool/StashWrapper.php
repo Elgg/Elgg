@@ -28,7 +28,9 @@ final class StashWrapper implements Pool {
 		$this->stash = $stash;
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function get($key, callable $callback = null, $default = null) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new InvalidArgumentException('key must be string or integer');
@@ -53,7 +55,9 @@ final class StashWrapper implements Pool {
 		return $result;
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function invalidate($key) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new InvalidArgumentException('key must be string or integer');
@@ -62,7 +66,9 @@ final class StashWrapper implements Pool {
 		$this->stash->getItem((string) $key)->clear();
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function put($key, $value) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new InvalidArgumentException('key must be string or integer');

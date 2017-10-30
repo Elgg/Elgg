@@ -3,8 +3,6 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
-use Elgg\Project\Paths;
-
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
  *
@@ -283,16 +281,15 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  *                   pagination => BOOL Display pagination links
  *                   no_results => STR|Closure Message to display when there are no entities
  *
- * @param callback $getter  The entity getter function to use to fetch the entities.
- * @param callback $viewer  The function to use to view the entity list.
+ * @param callable $getter  The entity getter function to use to fetch the entities.
+ * @param callable $viewer  The function to use to view the entity list.
  *
  * @return string
  * @since 1.7
  * @see elgg_get_entities()
  * @see elgg_view_entity_list()
  */
-function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities',
-	$viewer = 'elgg_view_entity_list') {
+function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', $viewer = 'elgg_view_entity_list') {
 
 	elgg_register_rss_link();
 
@@ -491,7 +488,7 @@ function is_registered_entity_type($type, $subtype = null) {
 /**
  * Returns a viewable list of entities based on the registered types.
  *
- * @see elgg_view_entity_list
+ * @see elgg_view_entity_list()
  *
  * @param array $options Any elgg_get_entity() options plus:
  *
@@ -615,9 +612,9 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
 /**
  * Runs unit tests for the entity objects.
  *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  Array of tests
+ * @param string $hook  'unit_test'
+ * @param string $type  'system'
+ * @param array  $value Array of tests
  *
  * @return array
  * @access private

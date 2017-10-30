@@ -39,7 +39,9 @@ final class Fly implements Directory {
 		$this->chroot = $this->normalize($chroot);
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function chroot($path) {
 		return new self($this->fs, $this->local_path, $path);
 	}
@@ -56,18 +58,24 @@ final class Fly implements Directory {
 		return $this->fs->has($path) && $this->fs->get($path)->isDir();
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function isFile($path) {
 		$path = $this->getInternalPath($path);
 		return $this->fs->has($path) && $this->fs->get($path)->isFile();
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getContents($path) {
 		return (string) $this->fs->read($this->getInternalPath($path));
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getFile($path) {
 		if ($this->isDirectory($path)) {
 			throw new \RuntimeException("There is already a directory at that location: $path");
@@ -76,12 +84,16 @@ final class Fly implements Directory {
 		return new File($this, $path);
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getFiles($path = '', $recursive = true) {
 		return $this->getEntries($path, $recursive, ['file']);
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getDirectories($path = '', $recursive = true) {
 		return $this->getEntries($path, $recursive, ['dir']);
 	}
@@ -116,7 +128,9 @@ final class Fly implements Directory {
 		}, $contents));
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function getPath($path = '') {
 		$path = $this->normalize($this->getInternalPath($path));
 		return "{$this->local_path}/$path";
@@ -136,12 +150,16 @@ final class Fly implements Directory {
 		return $this->normalize("{$this->chroot}/$path");
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function includeFile($path) {
 		return include $this->getPath($path);
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function putContents($path, $content) {
 		$this->fs->put($this->getInternalPath($path), $content);
 	}

@@ -50,6 +50,8 @@ function _elgg_cron_init() {
  * This will only execute cron periods at specified intervals to force execution
  * of a specific period you will need to use http://YOUR.SITE/cron/<period>/
  *
+ * @return void
+ *
  * @access private
  */
 function _elgg_cron_run() {

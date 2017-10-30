@@ -15,7 +15,10 @@ use Elgg\Cache\Pool;
  * @access private
  */
 final class Noop implements Pool {
-	/** @inheritDoc */
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public function get($key, callable $callback = null, $default = null) {
 		if (!$callback) {
 			return $default;
@@ -23,12 +26,16 @@ final class Noop implements Pool {
 		return call_user_func($callback);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function invalidate($key) {
 		// values are always expired, so nothing to do
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function put($key, $value) {
 		// values are always expired, so nothing to do
 	}

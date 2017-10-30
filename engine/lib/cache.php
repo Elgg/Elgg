@@ -7,8 +7,6 @@
  * @subpackage Cache
  */
 
-/* Filepath Cache */
-
 /**
  * Returns an \ElggCache object suitable for caching system information
  *
@@ -304,6 +302,8 @@ function _elgg_invalidate_cache_for_entity($entity_guid) {
 /**
  * Initializes the simplecache lastcache variable and creates system cache files
  * when appropriate.
+ *
+ * @return void
  *
  * @access private
  */

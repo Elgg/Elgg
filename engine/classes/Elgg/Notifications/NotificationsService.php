@@ -89,6 +89,16 @@ class NotificationsService {
 	}
 
 	/**
+	 * Register a notification event
+	 *
+	 * @param string $type    'object', 'user', 'group', 'site'
+	 * @param string $subtype The subtype or name of the entity
+	 * @param array  $actions Array of actions or empty array for the action event.
+	 *                        An event is usually described by the first string passed
+	 *                        to elgg_trigger_event(). Examples include
+	 *                        'create', 'update', and 'publish'. The default is 'create'.
+	 * @return void
+	 *
 	 * @see elgg_register_notification_event()
 	 * @access private
 	 */
@@ -110,6 +120,13 @@ class NotificationsService {
 	}
 
 	/**
+	 * Unregister a notification event
+	 *
+	 * @param string $type    'object', 'user', 'group', 'site'
+	 * @param string $subtype The type of the entity
+	 *
+	 * @return bool
+	 *
 	 * @see elgg_unregister_notification_event()
 	 * @access private
 	 */
@@ -125,6 +142,10 @@ class NotificationsService {
 	}
 
 	/**
+	 * Return the notification events
+	 *
+	 * @return array
+	 *
 	 * @access private
 	 */
 	public function getEvents() {
@@ -132,6 +153,11 @@ class NotificationsService {
 	}
 
 	/**
+	 * Register a delivery method for notifications
+	 *
+	 * @param string $name The notification method name
+	 * @return void
+	 *
 	 * @see elgg_register_notification_method()
 	 * @access private
 	 */
@@ -140,6 +166,11 @@ class NotificationsService {
 	}
 
 	/**
+	 * Unregister a delivery method for notifications
+	 *
+	 * @param string $name The notification method name
+	 * @return bool
+	 *
 	 * @see elgg_unregister_notification_method()
 	 * @access private
 	 */
@@ -152,6 +183,11 @@ class NotificationsService {
 	}
 
 	/**
+	 * Returns registered delivery methods for notifications
+	 *
+	 * @return string[]
+	 *
+	 * @see elgg_get_notification_methods()
 	 * @access private
 	 */
 	public function getMethods() {
@@ -307,9 +343,9 @@ class NotificationsService {
 	 * ]
 	 * </code>
 	 *
-	 * @param ElggEntity  $sender     Sender of the notification
-	 * @param ElggUser[]  $recipients An array of entities to notify
-	 * @param array       $params     Notification parameters
+	 * @param ElggEntity $sender     Sender of the notification
+	 * @param ElggUser[] $recipients An array of entities to notify
+	 * @param array      $params     Notification parameters
 	 *
 	 * @uses $params['subject']          string
 	 *                                   Default message subject

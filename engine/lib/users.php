@@ -259,7 +259,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
  * @param string $username The username of the user sending the invitation
  *
  * @return string Invite code
- * @see elgg_validate_invite_code
+ * @see elgg_validate_invite_code()
  */
 function generate_invite_code($username) {
 	return _elgg_services()->usersTable->generateInviteCode($username);
@@ -272,7 +272,7 @@ function generate_invite_code($username) {
  * @param string $code     The invite code
  *
  * @return bool
- * @see generate_invite_code
+ * @see generate_invite_code()
  * @since 1.10
  */
 function elgg_validate_invite_code($username, $code) {
@@ -283,7 +283,7 @@ function elgg_validate_invite_code($username, $code) {
  * Page handler for account related pages
  *
  * @param array  $page_elements Page elements
- * @param string $handler The handler string
+ * @param string $handler       The handler string
  *
  * @return bool
  * @access private
@@ -374,6 +374,14 @@ function user_avatar_hook($hook, $type, $return, $params) {
 
 /**
  * Setup the default user hover menu
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:user_hover'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
+ *
  * @access private
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
@@ -482,7 +490,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
  *
  * /avatar/edit/<username>
  *
- * @param array $page
+ * @param array $page URL segments
  * @return bool
  * @access private
  */
@@ -517,15 +525,14 @@ function _elgg_user_page_handler($page) {
 /**
  * Register menu items for the page menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
  *
- * @return array
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_user_page_menu($hook, $type, $return, $params) {
@@ -549,15 +556,14 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 /**
  * Register menu items for the topbar menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:topbar'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
  *
- * @return array
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_user_topbar_menu($hook, $type, $return, $params) {
@@ -652,7 +658,7 @@ function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
  * @param string $hook         'get'
  * @param string $type         'subscribers'
  * @param array  $return_value current subscribers
- * @param arary  $params       supplied params
+ * @param array  $params       supplied params
  *
  * @return void|array
  */

@@ -31,6 +31,8 @@ class Seeder {
 	/**
 	 * Load seed scripts
 	 *
+	 * @param int $limit the max number of entities to seed
+	 *
 	 * @return void
 	 */
 	public function seed($limit = null) {

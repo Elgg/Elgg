@@ -330,8 +330,9 @@ class CommitMessage {
 		return $lengthy_lines;
 	}
 
-
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function __toString() {
 		return $this->getMsg();
 	}

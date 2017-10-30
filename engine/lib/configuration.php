@@ -161,6 +161,14 @@ function _elgg_config() {
 }
 
 /**
+ * Register unit tests
+ *
+ * @param string $hook  'unit_test'
+ * @param string $type  'system'
+ * @param array  $tests current return value
+ *
+ * @return array
+ *
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {

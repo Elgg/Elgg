@@ -2,7 +2,6 @@
 namespace Elgg\Cache\Pool;
 
 use Elgg\Cache\Pool;
-use Stash;
 use InvalidArgumentException;
 
 /**
@@ -22,7 +21,9 @@ final class InMemory implements Pool {
 	 */
 	private $values = [];
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function get($key, callable $callback = null, $default = null) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new InvalidArgumentException('key must be string or integer');
@@ -37,7 +38,9 @@ final class InMemory implements Pool {
 		return $this->values[$key];
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function invalidate($key) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new InvalidArgumentException('key must be string or integer');
@@ -46,7 +49,9 @@ final class InMemory implements Pool {
 		unset($this->values[$key]);
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function put($key, $value) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new InvalidArgumentException('key must be string or integer');

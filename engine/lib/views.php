@@ -48,7 +48,6 @@
 
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
-use Elgg\Includer;
 use Elgg\Project\Paths;
 
 /**
@@ -237,9 +236,9 @@ function elgg_list_views($viewtype = 'default') {
  * The output of views can be intercepted by registering for the
  * view, $view_name plugin hook.
  *
- * @param string  $view     The name and location of the view to use
- * @param array   $vars     Variables to pass to the view.
- * @param string  $viewtype If set, forces the viewtype for the elgg_view call to be
+ * @param string $view     The name and location of the view to use
+ * @param array  $vars     Variables to pass to the view.
+ * @param string $viewtype If set, forces the viewtype for the elgg_view call to be
  *                          this value (default: standard detection)
  *
  * @return string The parsed view
@@ -255,14 +254,14 @@ function elgg_view($view, $vars = [], $viewtype = '') {
 /**
  * Display a view with a deprecation notice. No missing view NOTICE is logged
  *
- * @see elgg_view()
- *
- * @param string  $view       The name and location of the view to use
- * @param array   $vars       Variables to pass to the view
- * @param string  $suggestion Suggestion with the deprecation message
- * @param string  $version    Human-readable *release* version: 1.7, 1.8, ...
+ * @param string $view       The name and location of the view to use
+ * @param array  $vars       Variables to pass to the view
+ * @param string $suggestion Suggestion with the deprecation message
+ * @param string $version    Human-readable *release* version: 1.7, 1.8, ...
  *
  * @return string The parsed view
+ *
+ * @see elgg_view()
  * @access private
  */
 function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
@@ -1440,7 +1439,6 @@ function elgg_view_field(array $params = []) {
 /**
  * Create a tagcloud for viewing
  *
- * @see elgg_get_tags
  *
  * @param array $options Any elgg_get_tags() options except:
  *
@@ -1449,6 +1447,8 @@ function elgg_view_field(array $params = []) {
  * 	subtype => must be single entity subtype
  *
  * @return string
+ *
+ * @see elgg_get_tags()
  * @since 1.7.1
  */
 function elgg_view_tagcloud(array $options = []) {
@@ -1661,6 +1661,8 @@ function _elgg_views_amd($hook, $type, $content, $params) {
 /**
  * Sends X-Frame-Options header on page requests
  *
+ * @return void
+ *
  * @access private
  */
 function _elgg_views_send_header_x_frame_options() {
@@ -1688,8 +1690,8 @@ function _elgg_views_send_header_x_frame_options() {
  * }
  * </code>
  *
- * @param string $view     View name. E.g. "elgg/init.js"
- * @param string $path     Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
+ * @param string $view View name. E.g. "elgg/init.js"
+ * @param string $path Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
  *
  * @return bool
  * @access private
@@ -1890,9 +1892,9 @@ function _elgg_get_js_page_data() {
  * Render a view while the global viewtype is temporarily changed. This makes sure that
  * nested views use the same viewtype.
  *
- * @param string  $view     View name
- * @param array   $vars     View vars
- * @param string  $viewtype Temporary viewtype ('' to leave current)
+ * @param string $view     View name
+ * @param array  $vars     View vars
+ * @param string $viewtype Temporary viewtype ('' to leave current)
  *
  * @return mixed
  * @access private
@@ -1944,7 +1946,7 @@ function _elgg_set_lightbox_config($hook, $type, $return, $params) {
  *
  * In order to not show the help text supply 'show_upload_limit' => false to elgg_view_field()
  *
- * @param \Elgg\Hook $hook
+ * @param \Elgg\Hook $hook 'view_vars' 'elements/forms/help'
  *
  * @return void|array
  * @access private

@@ -41,7 +41,7 @@ class Profiler {
 	/**
 	 * Turn the tree of times into a sorted list
 	 *
-	 * @param array  &$list  Output list of times to populate
+	 * @param array  $list   Output list of times to populate
 	 * @param array  $tree   Result of buildTree()
 	 * @param string $prefix Prefix of period string. Leave empty.
 	 * @return void

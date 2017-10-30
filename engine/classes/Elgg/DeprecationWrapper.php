@@ -83,7 +83,7 @@ class DeprecationWrapper implements \ArrayAccess {
 	/**
 	 * Is a property set?
 	 *
-	 * @param string $name  Property name
+	 * @param string $name Property name
 	 * @return bool
 	 */
 	public function __isset($name) {

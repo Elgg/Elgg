@@ -344,14 +344,14 @@ function _elgg_set_user_default_access() {
 /**
  * Register menu items for the user settings page menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_user_settings_menu_register($hook, $type, $return, $params) {

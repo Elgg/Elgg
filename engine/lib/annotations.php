@@ -7,8 +7,6 @@
  * @subpackage Core
  */
 
-use Elgg\Project\Paths;
-
 /**
  * Convert a database row to a new \ElggAnnotation
  *
@@ -84,10 +82,8 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 }
 
 /**
- * Returns annotations.  Accepts all elgg_get_entities() options for entity
+ * Returns annotations. Accepts all elgg_get_entities() options for entity
  * restraints.
- *
- * @see elgg_get_entities
  *
  * @param array $options Array in format:
  *
@@ -110,6 +106,8 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  *
  * @return \ElggAnnotation[]|mixed
+ *
+ * @see elgg_get_entities()
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = []) {
@@ -188,9 +186,6 @@ function elgg_enable_annotations(array $options) {
  * Entity creation time is selected as maxtime. To sort based upon
  * this, pass 'order_by' => 'maxtime asc' || 'maxtime desc'
  *
- * @see elgg_get_entities
- * @see elgg_get_entities_from_metadata
- *
  * @param array $options Array in format:
  *
  * 	annotation_names => null|ARR annotations names
@@ -215,6 +210,9 @@ function elgg_enable_annotations(array $options) {
  *  annotation_owner_guids => null|ARR guids for annotaiton owners
  *
  * @return mixed If count, int. If not count, array. false on errors.
+ *
+ * @see elgg_get_entities()
+ * @see elgg_get_entities_from_metadata()
  * @since 1.7.0
  */
 function elgg_get_entities_from_annotations(array $options = []) {
@@ -328,10 +326,12 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
 /**
  * Register annotation unit tests
  *
- * @param string $hook
- * @param string $type
- * @param array  $tests
+ * @param string $hook  'unit_test'
+ * @param string $type  'system'
+ * @param array  $tests current return value
+ *
  * @return array
+ *
  * @access private
  */
 function _elgg_annotations_test($hook, $type, $tests) {
@@ -341,6 +341,9 @@ function _elgg_annotations_test($hook, $type, $tests) {
 
 /**
  * Initialize the annotation library
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_annotations_init() {

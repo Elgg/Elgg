@@ -257,7 +257,7 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  *
  * @return void
  * @since 1.8.0
- * @see elgg_get_breadcrumbs
+ * @see elgg_get_breadcrumbs()
  */
 function elgg_push_breadcrumb($title, $link = null) {
 	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
@@ -302,7 +302,7 @@ function elgg_pop_breadcrumb() {
  *                           If set, will override breadcrumbs in the stack
  * @return array
  * @since 1.8.0
- * @see elgg_prepare_breadcrumbs
+ * @see elgg_prepare_breadcrumbs()
  */
 function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	if (!isset($breadcrumbs)) {
@@ -411,6 +411,13 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
  *
  * Handles default, featured, and custom menu items
  *
+ * @param string         $hook   'prepare'
+ * @param string         $type   'menu:site'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_site_menu_setup($hook, $type, $return, $params) {
@@ -499,7 +506,10 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
  * Sets the display child menu option to "toggle" if not set
  * Recursively marks parents of the selected item as selected (expanded)
  *
- * @param \Elgg\Hook $hook
+ * @param \Elgg\Hook $hook 'prepare', 'menu:page'
+ *
+ * @return ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_page_menu_setup(\Elgg\Hook $hook) {
@@ -531,6 +541,14 @@ function _elgg_page_menu_setup(\Elgg\Hook $hook) {
 
 /**
  * Entity menu is list of links and info on any entity
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:entity'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_entity_menu_setup($hook, $type, $return, $params) {
@@ -579,7 +597,10 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 /**
  * Moves default menu items into a dropdown
  *
- * @param \Elgg\Hook $hook Hook
+ * @param \Elgg\Hook $hook 'prepare', 'menu:entity'|'menu:river'
+ *
+ * @return void|ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
@@ -615,7 +636,9 @@ function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 /**
  * Entity navigation menu is previous/next link for an entity
  *
- * @param \Elgg\Hook hook
+ * @param \Elgg\Hook $hook 'register' 'menu:entity_navigation'
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
  */
@@ -670,6 +693,14 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 
 /**
  * Widget menu is a set of widget controls
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:widget'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_widget_menu_setup($hook, $type, $return, $params) {
@@ -711,6 +742,14 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Add the register and forgot password links to login menu
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:login'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_login_menu_setup($hook, $type, $return, $params) {
@@ -736,6 +775,14 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Add the RSS link to the menu
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:footer'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_rss_menu_setup($hook, $type, $return, $params) {
@@ -764,6 +811,9 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Navigation initialization
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_nav_init() {

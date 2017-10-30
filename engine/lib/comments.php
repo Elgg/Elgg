@@ -43,8 +43,10 @@ function _elgg_comments_init() {
 /**
  * Page handler for generic comments manipulation.
  *
- * @param array $segments
+ * @param array $segments URL segments
+ *
  * @return bool
+ *
  * @access private
  */
 function _elgg_comments_page_handler($segments) {
@@ -439,6 +441,8 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
  * Adds comment menu items to entity menu
  *
  * @param \Elgg\Hook $hook Hook information
+ *
+ * @return void|\ElggMenuItem[]
  *
  * @access private
  * @since 3.0
