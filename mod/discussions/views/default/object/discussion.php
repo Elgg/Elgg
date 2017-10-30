@@ -59,7 +59,7 @@ if ($num_replies != 0) {
 	]);
 
 	$replies_link = elgg_view('output/url', [
-		'href' => $topic->getURL() . '#group-replies',
+		'href' => $topic->getURL() . '#comments',
 		'text' => elgg_echo('discussion:replies') . " ($num_replies)",
 		'is_trusted' => true,
 	]);

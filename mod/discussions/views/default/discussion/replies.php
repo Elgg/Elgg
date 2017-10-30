@@ -23,7 +23,6 @@ $replies = elgg_list_entities([
 	'container_guid' => $topic->guid,
 	'reverse_order_by' => true,
 	'distinct' => false,
-	'url_fragment' => 'group-replies',
 ]);
 
 if ($show_add_form) {
@@ -32,6 +31,6 @@ if ($show_add_form) {
 }
 ?>
 
-<div id="group-replies" class="elgg-comments">
+<div id="comments" class="elgg-comments">
 	<?= $replies ?>
 </div>
