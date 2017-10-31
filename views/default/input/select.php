@@ -25,7 +25,10 @@
  * @uses $vars['class']          Additional CSS class
  */
 
-$vars['class'] = elgg_extract_class($vars, 'elgg-input-dropdown');
+$vars['class'] = elgg_extract_class($vars, [
+	'elgg-input-dropdown', // legacy class
+	'elgg-input-select',
+]);
 
 $defaults = [
 	'disabled' => false,
@@ -80,6 +83,10 @@ $render_option = function($opt_value, $option) use ($value) {
 		$option_attrs = array_merge($option_attrs, $option);
 	} else {
 		$text = $option;
+	}
+	
+	if (!isset($option_attrs['title'])) {
+		$option_attrs['title'] = $text;
 	}
 	
 	return elgg_format_element('option', $option_attrs, $text);

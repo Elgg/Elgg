@@ -263,7 +263,7 @@ The above example will render a dropdown select input:
 
 .. code-block:: html
 
-   <select required="required" name="status" data-rel="blog" class="elgg-input-dropdown">
+   <select required="required" name="status" data-rel="blog" class="elgg-input-select">
       <option value="draft">Draft</option>
       <option value="published">Published</option>
    </select>
@@ -294,7 +294,7 @@ The above will generate the following markup:
    <div class="elgg-field elgg-field-required">
       <label for="elgg-field-1" class="elgg-field-label">Blog status<span title="Required" class="elgg-required-indicator">*</span></label>
       <div class="elgg-field-input">
-      	 <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-dropdown">
+      	 <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-select">
             <option value="draft">Draft</option>
             <option value="published">Published</option>
          </select>

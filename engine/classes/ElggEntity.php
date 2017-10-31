@@ -26,7 +26,7 @@
  * @subpackage DataModel.Entities
  *
  * @property       string $type           object, user, group, or site (read-only after save)
- * @property-write string $subtype        Further clarifies the nature of the entity (this should not be read)
+ * @property       string $subtype        Further clarifies the nature of the entity (this should not be read)
  * @property-read  int    $guid           The unique identifier for this entity (read only)
  * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property       int    $container_guid The GUID of the entity containing this entity
@@ -261,9 +261,6 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function __get($name) {
 		if (array_key_exists($name, $this->attributes)) {
-			if ($name === 'subtype' && $this->attributes['guid']) {
-				_elgg_services()->logger->warn('Reading ->subtype on a persisted entity is unreliable.');
-			}
 			return $this->attributes[$name];
 		}
 
@@ -1046,10 +1043,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return string The entity subtype
 	 */
 	public function getSubtype() {
-		// If this object hasn't been saved, then return the subtype string.
-		if ($this->attributes['guid']) {
-			return get_subtype_from_id($this->attributes['subtype']);
-		}
 		return $this->attributes['subtype'];
 	}
 
@@ -1276,7 +1269,10 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		$subtype = $this->attributes['subtype'];
-		$subtype_id = add_subtype($type, $subtype);
+		if (!$subtype) {
+			throw new \InvalidParameterException("All entities must have a subtype");
+		}
+
 		$owner_guid = (int) $this->attributes['owner_guid'];
 		$access_id = (int) $this->attributes['access_id'];
 		$now = $this->getCurrentTime()->getTimestamp();
@@ -1332,7 +1328,7 @@ abstract class ElggEntity extends \ElggData implements
 		// Create primary table row
 		$guid = _elgg_services()->entityTable->insertRow((object) [
 			'type' => $type,
-			'subtype_id' => $subtype_id,
+			'subtype' => $subtype,
 			'owner_guid' => $owner_guid,
 			'container_guid' => $container_guid,
 			'access_id' => $access_id,
@@ -1351,7 +1347,7 @@ abstract class ElggEntity extends \ElggData implements
 		_elgg_services()->entityCache->set($this);
 
 		// for BC with 1.8, ->subtype always returns ID, ->getSubtype() the string
-		$this->attributes['subtype'] = (int) $subtype_id;
+		$this->attributes['subtype'] = $subtype;
 		$this->attributes['guid'] = (int) $guid;
 		$this->attributes['time_created'] = (int) $time_created;
 		$this->attributes['time_updated'] = (int) $now;

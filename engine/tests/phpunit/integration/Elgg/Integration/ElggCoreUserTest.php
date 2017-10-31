@@ -17,6 +17,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 	public function up() {
 		$this->user = new ElggUserWithExposableAttributes();
 		$this->user->username = $this->getRandomUsername();
+		$this->user->subtype = $this->getRandomSubtype();
 	}
 
 	public function down() {
@@ -27,6 +28,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 	public function testElggUserLoad() {
 		// new object
 		$object = new \ElggObject();
+		$object->subtype = $this->getRandomSubtype();
 		$this->AssertEqual($object->getGUID(), 0);
 		$guid = $object->save();
 		$this->AssertNotEqual($guid, 0);

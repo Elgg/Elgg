@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Elgg Test \ElggUser
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Test
  */
 class ElggCoreUserTest extends \ElggCoreUnitTest {
@@ -10,6 +11,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	public function up() {
 		$this->user = new \ElggUserWithExposableAttributes();
 		$this->user->username = $this->getRandomUsername();
+		$this->user->subtype = $this->getRandomSubtype();
 	}
 
 	public function down() {
@@ -19,6 +21,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 	public function testElggUserLoad() {
 		// new object
 		$object = new \ElggObject();
+		$object->subtype = $this->getRandomSubtype();
 		$this->assertEqual($object->getGUID(), 0);
 		$guid = $object->save();
 		$this->assertNotEqual($guid, 0);
@@ -104,7 +107,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$guid = $this->user->save();
 
 		$this->assertTrue($this->user->makeAdmin());
-		
+
 		$this->assertTrue($this->user->removeAdmin());
 
 		$this->assertFalse($this->user->isAdmin());

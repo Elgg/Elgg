@@ -27,7 +27,6 @@ $children = new ElggBatch('elgg_get_entities_from_metadata', [
 ]);
 
 $db_prefix = elgg_get_config('dbprefix');
-$subtype_id = (int) get_subtype_id('object', 'page_top');
 
 foreach ($children as $child) {
 	if ($parent_guid) {
@@ -40,7 +39,7 @@ foreach ($children as $child) {
 
 	update_data("
 		UPDATE {$db_prefix}entities
-		SET subtype = $subtype_id
+		SET subtype = 'page_top'
 		WHERE guid = $child_guid
 	");
 

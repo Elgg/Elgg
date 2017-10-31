@@ -791,7 +791,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 	 */
 	public function testCanDownloadFileByDefault() {
 
-		add_subtype('object', 'file', \ElggFile::class);
+		elgg_set_entity_class('object', 'file', \ElggFile::class);
 
 		$owner = $this->createUser();
 		$viewer = $this->createUser();
@@ -811,7 +811,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 	 */
 	public function testCanAlterDownloadPermissions() {
 
-		add_subtype('object', 'file', \ElggFile::class);
+		elgg_set_entity_class('object', 'file', \ElggFile::class);
 
 		$owner = $this->createUser();
 		$viewer = $this->createUser();

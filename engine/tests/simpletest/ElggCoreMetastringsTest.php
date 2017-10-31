@@ -19,6 +19,7 @@ class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 
 	public function up() {
 		$this->object = $this->createObject();
+		$this->object->subtype = $this->getRandomSubtype();
 	}
 
 	public function down() {

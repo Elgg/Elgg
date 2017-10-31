@@ -21,11 +21,6 @@ class BootData {
 	private $site = false;
 
 	/**
-	 * @var \stdClass[]
-	 */
-	private $subtype_data = [];
-
-	/**
 	 * @var \ElggPlugin[]
 	 */
 	private $active_plugins = [];
@@ -47,15 +42,6 @@ class BootData {
 	 * @throws \InstallationException
 	 */
 	public function populate(Database $db, EntityTable $entities, Plugins $plugins, $installed) {
-
-		// get subtypes
-		$rows = $db->getData("
-			SELECT *
-			FROM {$db->prefix}entity_subtypes
-		");
-		foreach ($rows as $row) {
-			$this->subtype_data[$row->id] = $row;
-		}
 
 		// get site entity
 		$this->site = $entities->get(1, 'site');
@@ -118,15 +104,6 @@ class BootData {
 	 */
 	public function getSite() {
 		return $this->site;
-	}
-
-	/**
-	 * Get the subtype data
-	 *
-	 * @return \stdClass[]
-	 */
-	public function getSubtypeData() {
-		return $this->subtype_data;
 	}
 
 	/**
