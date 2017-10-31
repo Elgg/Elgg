@@ -124,7 +124,7 @@ $ipsum = elgg_view('developers/ipsum');
 				],
 			],
 			'value' => 'option 2',
-			'#label' => 'Select input (dropdown) (.elgg-input-dropdown) with a disabled option:',
+			'#label' => 'Select input (dropdown) (.elgg-input-select) with a disabled option:',
 		]);
 
 		echo elgg_view_field([
@@ -150,7 +150,7 @@ $ipsum = elgg_view('developers/ipsum');
 					'disabled' => true,
 				],
 			],
-			'#label' => 'Select input (dropdown) (.elgg-input-dropdown) with an optgroup:',
+			'#label' => 'Select input (dropdown) (.elgg-input-select) with an optgroup:',
 		]);
 
 		echo elgg_view_field([
@@ -166,7 +166,7 @@ $ipsum = elgg_view('developers/ipsum');
 				'value 4' => 'option 4',
 			],
 			'multiple' => true,
-			'#label' => 'Select input (multiselect) (.elgg-input-dropdown):',
+			'#label' => 'Select input (multiselect) (.elgg-input-select):',
 		]);
 
 		echo elgg_view_field([
@@ -183,7 +183,7 @@ $ipsum = elgg_view('developers/ipsum');
 			],
 			'multiple' => true,
 			'value' => ['value 1', 'value 3'],
-			'#label' => 'Select input (multiselect) (.elgg-input-dropdown) with options_values and multiple values selected:',
+			'#label' => 'Select input (multiselect) (.elgg-input-select) with options_values and multiple values selected:',
 		]);
 
 		echo elgg_view_field([
@@ -198,7 +198,7 @@ $ipsum = elgg_view('developers/ipsum');
 			],
 			'multiple' => true,
 			'value' => ['option 1', 'option 3'],
-			'#label' => 'Select input (multiselect) (.elgg-input-dropdown) with options and multiple values selected:',
+			'#label' => 'Select input (multiselect) (.elgg-input-select) with options and multiple values selected:',
 		]);
 
 		echo elgg_view_field([
@@ -225,7 +225,7 @@ $ipsum = elgg_view('developers/ipsum');
 				'value 4' => 'option 4',
 			],
 			'multiple' => true,
-			'#label' => 'Select input (multiselect) with optgroup (.elgg-input-dropdown):',
+			'#label' => 'Select input (multiselect) with optgroup (.elgg-input-select):',
 		]);
 
 		echo elgg_view_field([
