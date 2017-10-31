@@ -1248,12 +1248,10 @@ function elgg_extract_class(array $array, $existing = []) {
  * Do this: elgg_sort_3d_array_by_value($my_array);
  * Not this: $my_array = elgg_sort_3d_array_by_value($my_array);
  *
- * @param array  &$array     Array to sort
+ * @param array  $array      Array to sort
  * @param string $element    Element to sort by
- * @param int    $sort_order PHP sort order
- *                           {@link http://us2.php.net/array_multisort}
- * @param int    $sort_type  PHP sort type
- *                           {@link http://us2.php.net/sort}
+ * @param int    $sort_order PHP sort order {@link http://us2.php.net/array_multisort}
+ * @param int    $sort_type  PHP sort type {@link http://us2.php.net/sort}
  *
  * @return bool
  */
@@ -1750,10 +1748,12 @@ function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
 /**
  * Remove public access for walled gardens
  *
- * @param string $hook
- * @param string $type
- * @param array $accesses
+ * @param string $hook     'access:collections:write'
+ * @param string $type     'all'
+ * @param array  $accesses current return value
+ *
  * @return array
+ *
  * @access private
  */
 function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
@@ -1827,6 +1827,8 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 
 /**
  * Delete the autoload system cache
+ *
+ * @return void
  *
  * @access private
  */

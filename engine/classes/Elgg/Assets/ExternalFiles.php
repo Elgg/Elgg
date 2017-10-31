@@ -104,8 +104,8 @@ class ExternalFiles {
 	/**
 	 * Get metadata for a registered file
 	 *
-	 * @param string $type
-	 * @param string $name
+	 * @param string $type Type of file: js or css
+	 * @param string $name The identifier of the file
 	 *
 	 * @return \stdClass|null
 	 */

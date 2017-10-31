@@ -93,9 +93,9 @@ class Database {
 	 *
 	 * @note WARNING! update_data() has the 2nd and 3rd arguments reversed.
 	 *
-	 * @param string $query        The query to run.
-	 * @param bool   $get_num_rows Return the number of rows affected (default: false).
-	 * @param array  $params       Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param string $query      The query to run.
+	 * @param bool   $getNumRows Return the number of rows affected (default: false).
+	 * @param array  $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return bool|int
 	 * @throws \DatabaseException

@@ -67,9 +67,11 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 /**
  * Unlocks upgrade.
  *
- * @access private
- *
  * @todo the hack in the 2011010101 upgrade requires this
+ *
+ * @return void
+ *
+ * @access private
  */
 function _elgg_upgrade_unlock() {
 	$prefix = _elgg_config()->dbprefix;

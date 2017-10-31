@@ -1,5 +1,6 @@
 <?php
 namespace Elgg;
+
 use Elgg\Printer\HtmlPrinter;
 
 /**
@@ -283,7 +284,7 @@ class Logger {
 	 * @note This behaves like a stack. You must call enable() for each disable() call.
 	 *
 	 * @return void
-	 * @see enable
+	 * @see enable()
 	 * @access private
 	 * @internal
 	 */
@@ -295,7 +296,7 @@ class Logger {
 	 * Restore logging and get record of log calls (after tests)
 	 *
 	 * @return array
-	 * @see disable
+	 * @see disable()
 	 * @access private
 	 * @internal
 	 */
@@ -306,6 +307,8 @@ class Logger {
 	/**
 	 * Reset the hooks service for this instance (testing)
 	 *
+	 * @param PluginHooksService $hooks the plugin hooks service
+	 *
 	 * @return void
 	 * @access private
 	 * @internal
@@ -314,4 +317,3 @@ class Logger {
 		$this->hooks = $hooks;
 	}
 }
-

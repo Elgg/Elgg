@@ -24,7 +24,9 @@ final class Locale {
 		$this->locale = $locale;
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function __toString() {
 		return $this->locale;
 	}

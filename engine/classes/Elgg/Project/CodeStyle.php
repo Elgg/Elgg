@@ -139,8 +139,8 @@ class CodeStyle {
 	/**
 	 * Find files within a directory (recurse for subdirectories)
 	 *
-	 * @param string $dir    Directory to search
-	 * @param array  &$files Reference to found files
+	 * @param string $dir   Directory to search
+	 * @param array  $files Reference to found files
 	 *
 	 * @return void
 	 */

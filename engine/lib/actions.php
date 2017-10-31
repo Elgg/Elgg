@@ -227,6 +227,9 @@ function _elgg_csrf_token_refresh() {
 
 /**
  * Initialize some ajaxy actions features
+ *
+ * @return void
+ *
  * @access private
  */
 function actions_init() {

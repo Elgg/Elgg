@@ -15,7 +15,10 @@ namespace Elgg\I18n;
  * @access private
  */
 final class NullTranslator extends Translator {
-	/** @inheritDoc */
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public function translate($key, $args = [], $lang = '') {
 		return $key;
 	}

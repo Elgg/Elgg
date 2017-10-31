@@ -23,22 +23,30 @@ final class InMemory implements Collection {
 		$this->items = $items;
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function contains($item) {
 		return in_array($item, $this->items, true);
 	}
 
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function count() {
 		return count($this->items);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function current() {
 		return current($this->items);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function filter(callable $filter) {
 		$results = [];
 		
@@ -51,12 +59,16 @@ final class InMemory implements Collection {
 		return new self($results);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function key() {
 		return key($this->items);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function map(callable $mapper) {
 		$results = [];
 		foreach ($this->items as $item) {
@@ -65,17 +77,23 @@ final class InMemory implements Collection {
 		return self::fromArray($results);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function next() {
 		return next($this->items);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function rewind() {
 		reset($this->items);
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function valid() {
 		return key($this->items) !== null;
 	}

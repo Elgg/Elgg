@@ -4,9 +4,6 @@
  * Contains functions for managing plugins
  */
 
-use Elgg\Filesystem\Directory;
-use Elgg\Project\Paths;
-
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities
@@ -24,7 +21,9 @@ function _elgg_generate_plugin_entities() {
 /**
  * Cache a reference to this plugin by its ID
  *
- * @param \ElggPlugin $plugin
+ * @param \ElggPlugin $plugin the plugin to cache
+ *
+ * @return void
  *
  * @access private
  */

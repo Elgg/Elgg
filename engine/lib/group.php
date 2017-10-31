@@ -99,6 +99,9 @@ function _elgg_groups_test($hook, $type, $value) {
 
 /**
  * init the groups library
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_groups_init() {

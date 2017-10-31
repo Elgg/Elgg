@@ -248,6 +248,9 @@ class Translator {
 	 * loaded by default for the current request.
 	 *
 	 * @param string $language Language code
+	 *
+	 * @return void
+	 *
 	 * @access private
 	 */
 	public function loadTranslations($language = null) {

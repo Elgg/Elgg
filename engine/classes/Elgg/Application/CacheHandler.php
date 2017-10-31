@@ -218,9 +218,11 @@ class CacheHandler {
 	}
 
 	/**
-	 * Send cache headers
+	 * Sets cache headers
 	 *
-	 * @param string $etag ETag value
+	 * @param string   $etag     ETag value
+	 * @param Response $response the response to set the headers on
+	 *
 	 * @return void
 	 */
 	protected function sendCacheHeaders($etag, Response $response) {
@@ -230,9 +232,11 @@ class CacheHandler {
 	}
 
 	/**
-	 * Send revalidate cache headers
+	 * Set revalidate cache headers
 	 *
-	 * @param string $etag ETag value
+	 * @param string   $etag     ETag value
+	 * @param Response $response the response to set the headers on
+	 *
 	 * @return void
 	 */
 	protected function setRevalidateHeaders($etag, Response $response) {

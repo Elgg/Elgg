@@ -7,9 +7,6 @@
  * @subpackage River
  */
 
-use Elgg\Project\Paths;
-use Elgg\Hook;
-
 /**
  * Adds an item to the river.
  *
@@ -402,7 +399,10 @@ function elgg_delete_river(array $options = []) {
 /**
  * Prefetch entities that will be displayed in the river.
  *
- * @param \ElggRiverItem[] $river_items
+ * @param \ElggRiverItem[] $river_items the river items to prefetch for
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_prefetch_river_entities(array $river_items) {
@@ -684,7 +684,12 @@ function update_river_access_by_object($object_guid, $access_id) {
 
 /**
  * Register river unit tests
- * @access private
+ *
+ * @param string $hook  'unit_test'
+ * @param string $type  'system'
+ * @param array  $value current return value
+ *
+ * @return array
  */
 function _elgg_river_test($hook, $type, $value) {
 	$value[] = ElggCoreRiverAPITest::class;
@@ -694,16 +699,18 @@ function _elgg_river_test($hook, $type, $value) {
 /**
  * Disable river entries that reference a disabled entity as subject/object/target
  *
- * @param string $event The event 'disable'
- * @param string $type Type of entity being disabled 'all'
- * @param mixed $entity The entity being disabled
- * @return boolean
+ * @param string     $event  'disable'
+ * @param string     $type   'all'
+ * @param ElggEntity $entity The entity being disabled
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_river_disable($event, $type, $entity) {
 
 	if (!elgg_instanceof($entity)) {
-		return true;
+		return;
 	}
 
 	$dbprefix = _elgg_config()->dbprefix;
@@ -714,23 +721,25 @@ function _elgg_river_disable($event, $type, $entity) {
 QUERY;
 
 	update_data($query);
-	return true;
+	return;
 }
 
 
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
  *
- * @param string $event The event 'enable'
- * @param string $type Type of entity being enabled 'all'
- * @param mixed $entity The entity being enabled
- * @return boolean
+ * @param string     $event  'enable'
+ * @param string     $type   'all'
+ * @param ElggEntity $entity The entity being enabled
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_river_enable($event, $type, $entity) {
 
 	if (!elgg_instanceof($entity)) {
-		return true;
+		return;
 	}
 
 	$dbprefix = _elgg_config()->dbprefix;
@@ -749,15 +758,15 @@ function _elgg_river_enable($event, $type, $entity) {
 QUERY;
 
 	update_data($query);
-	return true;
+	return;
 }
 
 /**
  * Add the delete to river actions menu
  *
- * @param \Elgg\Hook $hook Hook
+ * @param \Elgg\Hook $hook 'register' 'menu:river'
  *
- * @return array
+ * @return void|ElggMenuItem[]
  *
  * @access private
  */
@@ -792,6 +801,9 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
 
 /**
  * Initialize river library
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_river_init() {

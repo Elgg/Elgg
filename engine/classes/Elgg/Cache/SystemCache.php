@@ -116,6 +116,8 @@ class SystemCache {
 	 * Initializes the simplecache lastcache variable and creates system cache files
 	 * when appropriate.
 	 *
+	 * @return void
+	 *
 	 * @access private
 	 */
 	function init() {

@@ -10,8 +10,11 @@ namespace Elgg\I18n;
  *
  * @access private
  */
-final class NullMessage extends Message {
-	/** @inheritDoc */
+final class NullMessage extends MessageTemplate {
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public function format(array $args) {
 		return "$this";
 	}

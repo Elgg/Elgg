@@ -60,7 +60,7 @@ class Database {
 	/**
 	 * Queries are saved as an array with the DELAYED_* constants as keys.
 	 *
-	 * @see registerDelayedQuery
+	 * @see registerDelayedQuery()
 	 *
 	 * @var array $delayed_queries Queries to be run during shutdown
 	 */
@@ -84,6 +84,8 @@ class Database {
 	 * Reset the connections with new credentials
 	 *
 	 * @param DbConfig $config DB config
+	 *
+	 * @return void
 	 */
 	public function resetConnections(DbConfig $config) {
 		$this->connections = [];

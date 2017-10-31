@@ -1,9 +1,4 @@
 <?php
-
-use Elgg\Mail\Address;
-use Zend\Mail\Message;
-use Elgg\Project\Paths;
-
 /**
  * Adding a New Notification Event
  * ===============================
@@ -184,8 +179,8 @@ function elgg_get_subscriptions_for_container($container_guid) {
  *
  * This function triggers the 'enqueue', 'notification' hook.
  *
- * @param string   $action The name of the action
- * @param string   $type   The type of the object
+ * @param string    $action The name of the action
+ * @param string    $type   The type of the object
  * @param \ElggData $object The object of the event
  * @return void
  * @access private
@@ -196,6 +191,10 @@ function _elgg_enqueue_notification_event($action, $type, $object) {
 }
 
 /**
+ * Process notification queue
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_notifications_cron() {
@@ -337,6 +336,10 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {
 }
 
 /**
+ * Notification init
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_notifications_init() {
@@ -607,6 +610,14 @@ function _elgg_save_notification_user_settings() {
 }
 
 /**
+ * Register unit tests
+ *
+ * @param string $hook  'unit_test'
+ * @param string $type  'system'
+ * @param array  $tests current return value
+ *
+ * @return array
+ *
  * @access private
  */
 function _elgg_notifications_test($hook, $type, $tests) {

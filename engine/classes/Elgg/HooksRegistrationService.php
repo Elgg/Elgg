@@ -28,11 +28,18 @@ abstract class HooksRegistrationService {
 	private $backups = [];
 
 	/**
-	 * Registers a handler.
+	 * Register a callback as a plugin hook handler.
+	 *
+	 * @param string   $name     The name of the hook
+	 * @param string   $type     The type of the hook
+	 * @param callable $callback The name of a valid function or an array with object and method
+	 * @param int      $priority The priority - 500 is default, lower numbers called first
+	 *
+	 * @return bool
 	 *
 	 * @warning This doesn't check if a callback is valid to be called, only if it is in the
 	 *          correct format as a callable.
-	 *
+	 * @see elgg_register_plugin_hook_handler()
 	 * @access private
 	 */
 	public function registerHandler($name, $type, $callback, $priority = 500) {
@@ -51,13 +58,16 @@ abstract class HooksRegistrationService {
 	}
 	
 	/**
-	 * Unregister a handler
+	 * Unregister a callback as a plugin hook.
 	 *
-	 * @param string   $name
-	 * @param string   $type
-	 * @param callable $callback
+	 * @param string   $name     The name of the hook
+	 * @param string   $type     The name of the type of entity (eg "user", "object" etc)
+	 * @param callable $callback The PHP callback to be removed. Since 1.11, static method
+	 *                           callbacks will match dynamic methods
 	 *
 	 * @return bool
+	 *
+	 * @see elgg_unregister_plugin_hook_handler()
 	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {
@@ -90,12 +100,14 @@ abstract class HooksRegistrationService {
 	}
 	
 	/**
-	 * Clears all handlers for a specific hook
+	 * Clears all callback registrations for a plugin hook.
 	 *
-	 * @param string   $name
-	 * @param string   $type
+	 * @param string $name The name of the hook
+	 * @param string $type The type of the hook
 	 *
 	 * @return void
+	 *
+	 * @see elgg_clear_plugin_hook_handlers()
 	 * @access private
 	 */
 	public function clearHandlers($name, $type) {

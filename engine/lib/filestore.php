@@ -8,7 +8,6 @@
  */
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Elgg\Project\Paths;
 
 /**
  * Get the size of the specified directory.
@@ -209,9 +208,9 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
 /**
  * Unit tests for files
  *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
+ * @param string $hook  'unit_test'
+ * @param string $type  'system'
+ * @param mixed  $value Array of tests
  *
  * @return array
  * @access private
@@ -384,7 +383,7 @@ function elgg_get_uploaded_files($input_name) {
 /**
  * Returns a single valid uploaded file object
  *
- * @param string $input_name Form input name
+ * @param string $input_name         Form input name
  * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
  *
  * @return UploadedFile|false

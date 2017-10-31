@@ -501,7 +501,7 @@ class Config {
 	 *
 	 * This is a necessary evil until we refactor so that the service provider has no dependencies.
 	 *
-	 * @param ConfigTable $table
+	 * @param ConfigTable $table the config table service
 	 * @return void
 	 *
 	 * @access private

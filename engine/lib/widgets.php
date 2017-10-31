@@ -1,5 +1,4 @@
 <?php
-use Elgg\WidgetDefinition;
 /**
  * Elgg widgets library.
  * Contains code for handling widgets.
@@ -285,8 +284,8 @@ function _elgg_default_widgets_init() {
  * default widgets have been registered. See elgg_default_widgets_init() for
  * information on registering new default widget contexts.
  *
- * @param string $event  The event
- * @param string $type   The type of object
+ * @param string      $event  The event
+ * @param string      $type   The type of object
  * @param \ElggEntity $entity The entity being created
  * @return void
  * @access private

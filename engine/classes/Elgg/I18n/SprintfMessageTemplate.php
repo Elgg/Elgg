@@ -11,7 +11,10 @@ namespace Elgg\I18n;
  * @access private
  */
 final class SprintfMessageTemplate extends MessageTemplate {
-	/** @inheritDoc */
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public function format(array $args) {
 		return \vsprintf($this->template, $args);
 	}

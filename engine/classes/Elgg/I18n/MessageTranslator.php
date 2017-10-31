@@ -28,7 +28,9 @@ class MessageTranslator implements TranslatorInterface {
 		$this->messages = $messages;
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function translate($key, array $args = [], Locale $locale = null) {
 		$locales = [
 			$locale,

@@ -215,6 +215,15 @@ class ViewsService {
 	}
 
 	/**
+	 * Auto-registers views from a location.
+	 *
+	 * @param string $view_base Optional The base of the view name without the view type.
+	 * @param string $folder    Required The folder to begin looking in
+	 * @param string $viewtype  The type of view we're looking at (default, rss, etc)
+	 *
+	 * @return bool returns false if folder can't be read
+	 *
+	 * @see autoregister_views()
 	 * @access private
 	 */
 	public function autoregisterViews($view_base, $folder, $viewtype) {
@@ -274,10 +283,15 @@ class ViewsService {
 	}
 
 	/**
+	 * Set an alternative base location for a view
+	 *
 	 * @param string $view     Name of the view
 	 * @param string $location Full path to the view file
 	 * @param string $viewtype The viewtype to register this under
 	 *
+	 * @return void
+	 *
+	 * @see elgg_set_view_location()
 	 * @access private
 	 */
 	public function setViewDir($view, $location, $viewtype = '') {
@@ -297,6 +311,14 @@ class ViewsService {
 	}
 
 	/**
+	 * Register a viewtype to fall back to a default view if a view isn't
+	 * found for that viewtype.
+	 *
+	 * @param string $viewtype The viewtype to register
+	 *
+	 * @return void
+	 *
+	 * @see elgg_register_viewtype_fallback()
 	 * @access private
 	 */
 	public function registerViewtypeFallback($viewtype) {
@@ -304,6 +326,13 @@ class ViewsService {
 	}
 
 	/**
+	 * Checks if a viewtype falls back to default.
+	 *
+	 * @param string $viewtype Viewtype
+	 *
+	 * @return bool
+	 *
+	 * @see elgg_does_viewtype_fallback()
 	 * @access private
 	 */
 	public function doesViewtypeFallback($viewtype) {
@@ -313,15 +342,15 @@ class ViewsService {
 	/**
 	 * Display a view with a deprecation notice. No missing view NOTICE is logged
 	 *
-	 * @see elgg_view()
-	 *
-	 * @param string  $view       The name and location of the view to use
-	 * @param array   $vars       Variables to pass to the view
-	 * @param string  $suggestion Suggestion with the deprecation message
-	 * @param string  $version    Human-readable *release* version: 1.7, 1.8, ...
+	 * @param string $view       The name and location of the view to use
+	 * @param array  $vars       Variables to pass to the view
+	 * @param string $suggestion Suggestion with the deprecation message
+	 * @param string $version    Human-readable *release* version: 1.7, 1.8, ...
 	 *
 	 * @return string The parsed view
+	 *
 	 * @access private
+	 * @see elgg_view()
 	 */
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
 		$view = self::canonicalizeViewName($view);
@@ -353,8 +382,6 @@ class ViewsService {
 	/**
 	 * Renders a view
 	 *
-	 * @see elgg_view
-	 *
 	 * @param string $view                 Name of the view
 	 * @param array  $vars                 Variables to pass to the view
 	 * @param string $viewtype             Viewtype to use
@@ -362,6 +389,8 @@ class ViewsService {
 	 * @param array  $extensions_tree      Array of views that are before the current view in the extension path
 	 *
 	 * @return string
+	 *
+	 * @see elgg_view()
 	 */
 	public function renderView($view, array $vars = [], $viewtype = '', $issue_missing_notice = true, array $extensions_tree = []) {
 		$view = self::canonicalizeViewName($view);
@@ -488,6 +517,15 @@ class ViewsService {
 	}
 
 	/**
+	 * Returns whether the specified view exists
+	 *
+	 * @param string $view     The view name
+	 * @param string $viewtype If set, forces the viewtype
+	 * @param bool   $recurse  If false, do not check extensions
+	 *
+	 * @return bool
+	 *
+	 * @see elgg_view_exists()
 	 * @access private
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
@@ -529,6 +567,15 @@ class ViewsService {
 	}
 
 	/**
+	 * Extends a view with another view
+	 *
+	 * @param string $view           The view to extend.
+	 * @param string $view_extension This view is added to $view
+	 * @param int    $priority       The priority, from 0 to 1000, to add at (lowest numbers displayed first)
+	 *
+	 * @return void
+	 *
+	 * @see elgg_extend_view()
 	 * @access private
 	 */
 	public function extendView($view, $view_extension, $priority = 501) {
@@ -580,6 +627,14 @@ class ViewsService {
 	}
 
 	/**
+	 * Unextends a view.
+	 *
+	 * @param string $view           The view that was extended.
+	 * @param string $view_extension This view that was added to $view
+	 *
+	 * @return bool
+	 *
+	 * @see elgg_unextend_view()
 	 * @access private
 	 */
 	public function unextendView($view, $view_extension) {
@@ -604,6 +659,12 @@ class ViewsService {
 	}
 
 	/**
+	 * Register a view a cacheable
+	 *
+	 * @param string $view the view name
+	 *
+	 * @return void
+	 *
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
@@ -613,6 +674,12 @@ class ViewsService {
 	}
 
 	/**
+	 * Is the view cacheable
+	 *
+	 * @param string $view the view name
+	 *
+	 * @return bool
+	 *
 	 * @access private
 	 */
 	public function isCacheableView($view) {
@@ -689,6 +756,8 @@ class ViewsService {
 	 *    viewtype => [
 	 *        view_name => path or array of paths
 	 *    ]
+	 *
+	 * @return void
 	 *
 	 * @access private
 	 */

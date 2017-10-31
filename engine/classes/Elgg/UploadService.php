@@ -30,7 +30,8 @@ class UploadService {
 	/**
 	 * Constructor
 	 *
-	 * @param Request $request Http request
+	 * @param Request      $request Http request
+	 * @param ImageService $images  The image service
 	 */
 	public function __construct(Request $request, ImageService $images) {
 		$this->request = $request;
@@ -55,7 +56,7 @@ class UploadService {
 	/**
 	 * Returns an single valid uploaded file object
 	 *
-	 * @param string $input_name Form input name
+	 * @param string $input_name         Form input name
 	 * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
 	 *
 	 * @return UploadedFile[]|false

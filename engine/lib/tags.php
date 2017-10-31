@@ -219,6 +219,10 @@ function elgg_get_registered_tag_metadata_names() {
 }
 
 /**
+ * Tags init
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_tags_init() {

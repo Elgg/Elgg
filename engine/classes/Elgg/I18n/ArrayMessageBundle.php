@@ -27,7 +27,9 @@ final class ArrayMessageBundle implements MessageBundle {
 		$this->messages = $messages;
 	}
 	
-	/** @inheritDoc */
+	/**
+	 * {@inheritDoc}
+	 */
 	public function get($key, Locale $locale) {
 		assert(is_string($key), '$key must be a string');
 		

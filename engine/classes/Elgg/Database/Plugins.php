@@ -2,7 +2,6 @@
 namespace Elgg\Database;
 
 use Elgg\Cache\Pool;
-use Elgg\Config;
 use Elgg\Profilable;
 use Exception;
 use Elgg\Cache\PluginSettingsCache;
@@ -200,7 +199,9 @@ class Plugins {
 	/**
 	 * Cache a reference to this plugin by its ID
 	 *
-	 * @param \ElggPlugin $plugin
+	 * @param \ElggPlugin $plugin the plugin to cache
+	 *
+	 * @return void
 	 *
 	 * @access private
 	 */
@@ -264,7 +265,7 @@ class Plugins {
 			FROM {$db_prefix}entities e, {$db_prefix}private_settings ps
 			WHERE ps.name = '$priority'
 			AND ps.entity_guid = e.guid
-			AND e.type = 'object' 
+			AND e.type = 'object'
 			AND e.subtype = 'plugin'
 		";
 	

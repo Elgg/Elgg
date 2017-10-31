@@ -100,8 +100,6 @@ function elgg_format_bytes($size, $precision = 2) {
  * Converts an associative array into a string of well-formed HTML/XML attributes
  * Returns a concatenated string of HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
  *
- * @see elgg_format_element
- *
  * @param array $attrs Attributes
  *                     An array of attribute => value pairs
  *                     Attribute value can be a scalar value, an array of scalar values, or true
@@ -118,6 +116,8 @@ function elgg_format_bytes($size, $precision = 2) {
  *                     </code>
  *
  * @return string
+ *
+ * @see elgg_format_element()
  */
 function elgg_format_attributes(array $attrs = []) {
 	if (!is_array($attrs) || empty($attrs)) {
@@ -521,7 +521,7 @@ function elgg_html_decode($string) {
 /**
  * Prepares query string for output to prevent CSRF attacks.
  *
- * @param string $string
+ * @param string $string string to prepare
  * @return string
  *
  * @access private

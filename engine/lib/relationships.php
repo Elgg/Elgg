@@ -6,8 +6,6 @@
  * @subpackage DataModel.Relationship
  */
 
-use Elgg\Project\Paths;
-
 /**
  * Get a relationship by its ID
  *
@@ -159,9 +157,6 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *				AND relationship = '$relationship'
  *		)";
  *
- * @see elgg_get_entities
- * @see elgg_get_entities_from_metadata
- *
  * @param array $options Array in format:
  *
  *  relationship => null|STR Type of the relationship. E.g. "member"
@@ -185,6 +180,9 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
  *
  * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ *
+ * @see elgg_get_entities()
+ * @see elgg_get_entities_from_metadata()
  * @since 1.7.0
  */
 function elgg_get_entities_from_relationship($options) {
@@ -257,10 +255,12 @@ function elgg_list_entities_from_relationship_count($options) {
 /**
  * Register relationship unit tests
  *
- * @param string $hook
- * @param string $type
- * @param array  $tests
+ * @param string $hook  'unit_test'
+ * @param string $type  'system'
+ * @param array  $tests current return value
+ *
  * @return array
+ *
  * @access private
  */
 function _elgg_relationships_test($hook, $type, $tests) {
@@ -271,6 +271,9 @@ function _elgg_relationships_test($hook, $type, $tests) {
 
 /**
  * Initialize the relationship library
+ *
+ * @return void
+ *
  * @access private
  */
 function _elgg_relationship_init() {
