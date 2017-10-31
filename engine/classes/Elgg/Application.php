@@ -623,6 +623,9 @@ class Application {
 		self::migrate();
 		self::start();
 
+		// clear autoload cache so plugin classes can be reregistered and used during upgrade
+		_elgg_services()->autoloadManager->deleteCache();
+		
 		// check security settings
 		if (!$is_cli && _elgg_config()->security_protect_upgrade && !elgg_is_admin_logged_in()) {
 			// only admin's or users with a valid token can run upgrade.php
