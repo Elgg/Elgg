@@ -5,7 +5,6 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'file',
-			'class' => '\ElggFile',
 			'searchable' => true,
 		],
 	],
