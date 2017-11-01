@@ -19,7 +19,7 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');
 
 	// forward to uservalidationbyemail/emailsent page after register
-	elgg_register_plugin_hook_handler('forward', 'system', 'uservalidationbyemail_after_registration_url');
+	elgg_register_plugin_hook_handler('response', 'action:register', 'uservalidationbyemail_after_registration_url');
 
 	// canEdit override to allow not logged in code to disable a user
 	elgg_register_plugin_hook_handler('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
@@ -103,20 +103,18 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 /**
  * Override the URL to be forwarded after registration
  *
- * @param string $hook
- * @param string $type
- * @param bool   $value
- * @param array  $params
+ * @param string                     $hook   'response'
+ * @param string                     $type   'action:register'
+ * @param \Elgg\Http\ResponseBuilder $value  Current response
+ * @param array                      $params Additional params
  * @return string
  */
 function uservalidationbyemail_after_registration_url($hook, $type, $value, $params) {
-	$url = elgg_extract('current_url', $params);
-	if ($url == elgg_get_site_url() . 'action/register') {
-		$session = elgg_get_session();
-		$email = $session->get('emailsent', '');
-		if ($email) {
-			return elgg_get_site_url() . 'uservalidationbyemail/emailsent';
-		}
+	$session = elgg_get_session();
+	$email = $session->get('emailsent', '');
+	if ($email) {
+		$value->setForwardURL(elgg_normalize_url('uservalidationbyemail/emailsent'));
+		return $value;
 	}
 }
 
