@@ -5,22 +5,22 @@
  * @package ElggPages
  */
 
-$annotation = $vars['annotation'];
-$page = get_entity($annotation->entity_guid);
+$annotation = elgg_extract('annotation', $vars);
+if(!($annotation instanceof \ElggAnnotation)) {
+	return;
+}
+
+$page = $annotation->getEntity();
 if (!pages_is_page($page)) {
 	return;
 }
 
-$icon = elgg_view("pages/icon", [
-	'annotation' => $annotation,
-	'size' => 'small',
-]);
-
-$owner_guid = $annotation->owner_guid;
-$owner = get_entity($owner_guid);
+$owner = $annotation->getOwnerEntity();
 if (!$owner) {
 	return;
 }
+$icon = elgg_view_entity_icon($owner, 'tiny');
+
 $owner_link = elgg_view('output/url', [
 	'href' => $owner->getURL(),
 	'text' => $owner->name,

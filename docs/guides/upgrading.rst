@@ -36,6 +36,7 @@ Removed views
  * ``page/layouts/two_column_left_sidebar``
  * ``page/layouts/widgets/add_panel``
  * ``page/elements/topbar_wrapper``: update your use of ``page/elements/topbar`` to include a check for a logged in user
+ * ``pages/icon``
  * ``groups/group_sort_menu``: use ``register, filter:menu:groups/all`` plugin hook
  * ``groups/my_status``
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead

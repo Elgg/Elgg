@@ -40,7 +40,8 @@ if ($revision) {
 	}
 }
 
-$page_icon = elgg_view('pages/icon', ['annotation' => $annotation, 'size' => 'small']);
+$owner = $annotation->getOwnerEntity();
+$owner_icon = elgg_view_entity_icon($owner, 'tiny');
 
 $metadata = null;
 // If we're looking at a revision, display annotation menu
@@ -66,7 +67,7 @@ if ($full) {
 
 	echo elgg_view('object/elements/full', [
 		'entity' => $page,
-		'icon' => $page_icon,
+		'icon' => $owner_icon,
 		'summary' => $summary,
 		'body' => $body,
 		'show_responses' => elgg_extract('show_responses', $vars, false),
@@ -77,7 +78,7 @@ if ($full) {
 		'entity' => $page,
 		'metadata' => $metadata,
 		'content' => elgg_get_excerpt($page->description),
-		'icon' => $page_icon,
+		'icon' => $owner_icon,
 	];
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);
