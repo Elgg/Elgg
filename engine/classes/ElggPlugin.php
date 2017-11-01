@@ -873,6 +873,8 @@ class ElggPlugin extends \ElggObject {
 		
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
+			$this->activateEntities();
+			
 			if ($this->canReadFile('start.php')) {
 				$result = Application::requireSetupFileOnce("{$this->path}/start.php");
 				if ($result instanceof \Closure) {
