@@ -36,7 +36,11 @@ $default = $vars['default'];
 unset($vars['default']);
 
 if (isset($vars['name']) && $default !== false) {
-	echo elgg_view('input/hidden', ['name' => $vars['name'], 'value' => $default]);
+	echo elgg_view('input/hidden', [
+		'name' => $vars['name'],
+		'value' => $default,
+		'disabled' => $vars['disabled'],
+	]);
 }
 
 $label = elgg_extract('label', $vars, false);

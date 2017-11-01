@@ -87,7 +87,11 @@ if (is_array($vars['value'])) {
 
 // include a default value so if nothing is checked 0 will be passed.
 if ($vars['name'] && $vars['default'] !== false) {
-	echo elgg_view('input/hidden', ['name' => $vars['name'], 'value' => $vars['default']]);
+	echo elgg_view('input/hidden', [
+		'name' => $vars['name'],
+		'value' => $vars['default'],
+		'disabled' => $vars['disabled'],
+	]);
 }
 
 // prepare checkbox vars
