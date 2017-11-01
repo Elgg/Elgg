@@ -44,11 +44,6 @@ System events
 	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 
 	are not cleared.
 
-**upgrade, upgrade**
-	A single upgrade script finished executing. Handlers are passed a ``stdClass`` object with the properties
-		* from - The version of Elgg upgrading from.
-		* to - The version just upgraded to.
-
 **activate, plugin**
     Return false to prevent activation of the plugin.
 

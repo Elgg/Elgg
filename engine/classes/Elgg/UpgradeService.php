@@ -281,14 +281,7 @@ class UpgradeService {
 
 		if ($this->upgradeCode($dbversion)) {
 			system_message($this->translator->translate('upgrade:core'));
-
-			// Now we trigger an event to give the option for plugins to do something
-			$upgrade_details = new \stdClass;
-			$upgrade_details->from = $dbversion;
-			$upgrade_details->to = elgg_get_version();
-
-			$this->hooks->getEvents()->trigger('upgrade', 'upgrade', $upgrade_details);
-
+			
 			return true;
 		}
 
