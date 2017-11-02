@@ -43,7 +43,7 @@ $options_values = [];
 foreach ($options as $option) {
 	$key = $option;
 	if (is_array($option)) {
-		$key = elgg_extract('text', $option, '');
+		$key = elgg_extract('text', $option, $key);
 	}
 	$options_values[$key] = $option;
 }
