@@ -19,7 +19,7 @@
  *
  * 	action_type => STR An arbitrary string to define the action (eg 'comment', 'create')
  *
- *  subject_guid => INT The GUID of the entity doing the action
+ *  subject_guid => INT The GUID of the entity doing the action (default: current logged in user guid)
  *
  *  object_guid => INT The GUID of the entity being acted upon
  *
@@ -49,7 +49,7 @@ function elgg_create_river_item(array $options = []) {
 		return false;
 	}
 
-	$subject_guid = elgg_extract('subject_guid', $options, 0);
+	$subject_guid = elgg_extract('subject_guid', $options, elgg_get_logged_in_user_guid());
 	if (!($subject = get_entity($subject_guid))) {
 		return false;
 	}

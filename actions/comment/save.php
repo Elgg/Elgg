@@ -67,7 +67,6 @@ if ($comment_guid) {
 	elgg_create_river_item([
 		'view' => 'river/object/comment/create',
 		'action_type' => 'comment',
-		'subject_guid' => $user->guid,
 		'object_guid' => $guid,
 		'target_guid' => $entity_guid,
 	]);
