@@ -429,25 +429,25 @@ function file_set_custom_icon_sizes($hook, $type, $return, $params) {
 		return;
 	}
 
-	return [
-		'small' => [
-			'w' => 60,
-			'h' => 60,
-			'square' => true,
-			'upscale' => true,
-		],
-		'medium' => [
-			'w' => 153,
-			'h' => 153,
-			'square' => true,
-			'upscale' => true,
-		],
-		'large' => [
-			'w' => 600,
-			'h' => 600,
-			'upscale' => false,
-		],
+	$return['small'] = [
+		'w' => 60,
+		'h' => 60,
+		'square' => true,
+		'upscale' => true,
 	];
+	$return['medium'] = [
+		'w' => 153,
+		'h' => 153,
+		'square' => true,
+		'upscale' => true,
+	];
+	$return['large'] = [
+		'w' => 600,
+		'h' => 600,
+		'upscale' => false,
+	];
+	
+	return $return;
 }
 
 /**
@@ -464,7 +464,7 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 	$entity = elgg_extract('entity', $params);
 	$size = elgg_extract('size', $params, 'large');
 
-	if (!elgg_instanceof($entity, 'object', 'file')) {
+	if (!($entity instanceof \ElggFile)) {
 		return;
 	}
 	
@@ -477,11 +477,6 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 		case 'medium' :
 			$filename_prefix = 'smallthumb';
 			$metadata_name = 'smallthumb';
-			break;
-
-		case 'large' :
-			$filename_prefix = 'largethumb';
-			$metadata_name = 'largethumb';
 			break;
 
 		default :
@@ -498,6 +493,7 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 		$filename = "file/{$filename_prefix}{$filename}.jpg";
 		$icon->setFilename($filename);
 	}
+	
 	return $icon;
 }
 
