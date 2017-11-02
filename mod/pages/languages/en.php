@@ -45,12 +45,12 @@ View and comment on the page:
 	* River
 	**/
 
-	'river:create:object:page' => '%s created a page %s',
-	'river:create:object:page_top' => '%s created a page %s',
-	'river:update:object:page' => '%s updated a page %s',
-	'river:update:object:page_top' => '%s updated a page %s',
-	'river:comment:object:page' => '%s commented on a page titled %s',
-	'river:comment:object:page_top' => '%s commented on a page titled %s',
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page_top:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page_top:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	'river:object:page_top:comment' => '%s commented on a page titled %s',
 
 	/**
 	 * Form fields

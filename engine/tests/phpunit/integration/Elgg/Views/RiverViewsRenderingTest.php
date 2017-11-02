@@ -18,6 +18,7 @@ class RiverViewsRenderingTest extends ViewRenderingTestCase {
 			'river/elements/responses',
 			'river/elements/summary',
 			'river/object/comment/create',
+			'river/object/create',
 			'river/relationship/friend/create',
 			'river/user/default/profileiconupdate',
 		];

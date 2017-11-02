@@ -86,7 +86,6 @@ if ($new_file) {
 	}
 	
 	elgg_create_river_item([
-		'view' => 'river/object/file/create',
 		'action_type' => 'create',
 		'subject_guid' => elgg_get_logged_in_user_guid(),
 		'object_guid' => $file->guid,

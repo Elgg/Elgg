@@ -3,12 +3,13 @@
  * File river view.
  */
 
-$item = $vars['item'];
-/* @var ElggRiverItem $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
 
 $object = $item->getObjectEntity();
-$excerpt = strip_tags($object->description);
-$excerpt = thewire_filter($excerpt);
+$vars['message'] = thewire_filter($object->description);
 
 $subject = $item->getSubjectEntity();
 $subject_link = elgg_view('output/url', [
@@ -25,10 +26,6 @@ $object_link = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 
-$summary = elgg_echo("river:create:object:thewire", [$subject_link, $object_link]);
+$vars['summary'] = elgg_echo('river:object:thewire:create', [$subject_link, $object_link]);
 
-echo elgg_view('river/elements/layout', [
-	'item' => $item,
-	'message' => $excerpt,
-	'summary' => $summary,
-]);
+echo elgg_view('river/elements/layout', $vars);

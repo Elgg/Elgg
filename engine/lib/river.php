@@ -15,7 +15,7 @@
  *
  * @param array $options Array in format:
  *
- * 	view => STR The view that will handle the river item (must exist)
+ * 	view => STR The view that will handle the river item
  *
  * 	action_type => STR An arbitrary string to define the action (eg 'comment', 'create')
  *
@@ -37,9 +37,10 @@
  * @since 1.9
  */
 function elgg_create_river_item(array $options = []) {
-	$view = elgg_extract('view', $options);
+	
+	$view = elgg_extract('view', $options, '');
 	// use default viewtype for when called from web services api
-	if (empty($view) || !(elgg_view_exists($view, 'default'))) {
+	if (!empty($view) && !elgg_view_exists($view, 'default')) {
 		return false;
 	}
 

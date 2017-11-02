@@ -1223,39 +1223,37 @@ function elgg_view_module($type, $title, $body, array $vars = []) {
  * @return string returns empty string if could not be rendered
  */
 function elgg_view_river_item($item, array $vars = []) {
+	
 	if (!($item instanceof \ElggRiverItem)) {
 		return '';
 	}
+	
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
 	$view = $item->getView();
-	if (!$view || !elgg_view_exists($view, 'default')) {
-		return '';
-	}
-
+	
 	$subject = $item->getSubjectEntity();
 	$object = $item->getObjectEntity();
 	if (!$subject || !$object) {
 		// subject is disabled or subject/object deleted
 		return '';
 	}
-
-	// @todo this needs to be cleaned up
-	// Don't hide objects in closed groups that a user can see.
-	// see https://github.com/elgg/elgg/issues/4789
-	//	else {
-	//		// hide based on object's container
-	//		$visibility = \Elgg\GroupItemVisibility::factory($object->container_guid);
-	//		if ($visibility->shouldHideItems) {
-	//			return '';
-	//		}
-	//	}
-
+	
 	$vars['item'] = $item;
 
+	// create river view logic
+	$type = $object->getType();
+	$subtype = $object->getSubtype();
+	$action = $item->action_type;
+	
 	$river_views = [
 		elgg_extract('item_view', $vars, ''),
-		"river/item", // important for other viewtypes, e.g. "rss"
+		'river/item', // important for other viewtypes, e.g. "rss"
 		$view,
+		"river/{$type}/{$subtype}/{$action}",
+		"river/{$type}/{$subtype}/default",
+		"river/{$type}/{$action}",
+		"river/{$type}/default",
+		'river/elements/layout',
 	];
 
 	$contents = '';

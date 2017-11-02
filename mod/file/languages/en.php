@@ -61,8 +61,8 @@ return [
 
 	'file:display:number' => "Number of files to display",
 
-	'river:create:object:file' => '%s uploaded the file %s',
-	'river:comment:object:file' => '%s commented on the file %s',
+	'river:object:file:create' => '%s uploaded the file %s',
+	'river:object:file:comment' => '%s commented on the file %s',
 
 	'item:object:file' => 'Files',
 

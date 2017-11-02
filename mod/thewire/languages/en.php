@@ -21,7 +21,7 @@ return [
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s posted to %s",
+	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'the wire',
 
 	/**

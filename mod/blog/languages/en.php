@@ -42,8 +42,8 @@ return [
 	'blog:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river
-	'river:create:object:blog' => '%s published a blog post %s',
-	'river:comment:object:blog' => '%s commented on the blog %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'New blog post called %s',

@@ -4,9 +4,10 @@
  */
 
 $item = elgg_extract('item', $vars);
-/* @var ElggRiverItem $item */
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
 
-echo elgg_view('river/elements/layout', [
-	'item' => $item,
-	'message' => elgg_get_excerpt($item->getObjectEntity()->description),
-]);
+$vars['message'] = elgg_get_excerpt($item->getObjectEntity()->description);
+
+echo elgg_view('river/elements/layout', $vars);
