@@ -129,7 +129,9 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 				$target.appendTo('body');
 			}
 			
-			$target.fadeIn()
+			// need to do a double position because of positioning issues during fadeIn() in Opera 
+			// https://github.com/Elgg/Elgg/issues/6452
+			$target.position(position).fadeIn()
 				   .addClass('elgg-state-active elgg-state-popped')
 				   .position(position);
 
