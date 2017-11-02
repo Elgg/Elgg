@@ -25,7 +25,6 @@ $links = '';
 $classes = ['elgg-plugin'];
 
 if ($reordering) {
-	
 	$max_priority = _elgg_get_max_plugin_priority();
 	
 	if ($active) {

@@ -5,6 +5,11 @@
  * @package ElggGarbageCollector
  */
 
+/**
+ * Garbage collection init
+ *
+ * @return void
+ */
 function garbagecollector_init() {
 	$period = elgg_get_plugin_setting('period', 'garbagecollector');
 	switch ($period) {
@@ -22,8 +27,15 @@ function garbagecollector_init() {
 
 /**
  * Cron job
+ *
+ * @param string $hook        'cron'
+ * @param string $type        interval
+ * @param mixed  $returnvalue current return value
+ * @param array  $params      supplied params
+ *
+ * @return void
  */
-function garbagecollector_cron($hook, $entity_type, $returnvalue, $params) {
+function garbagecollector_cron($hook, $type, $returnvalue, $params) {
 
 	echo elgg_echo('garbagecollector') . "\n";
 

@@ -25,7 +25,6 @@ $sticky_values = elgg_get_sticky_values('profile:edit');
 $profile_fields = elgg_get_config('profile_fields');
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
-
 		$annotations = $entity->getAnnotations([
 			'annotation_names' => "profile:$shortname",
 			'limit' => false,
@@ -85,4 +84,3 @@ $footer = elgg_view_field([
 	'#class' => 'elgg-foot',
 ]);
 elgg_set_form_footer($footer);
-

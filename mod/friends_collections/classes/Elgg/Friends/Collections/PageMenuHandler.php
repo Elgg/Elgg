@@ -6,15 +6,17 @@ use Elgg\Hook;
 use ElggMenuItem;
 use ElggUser;
 
+/**
+ * Register page menu item
+ */
 class PageMenuHandler {
 
 	/**
 	 * Adds collection sidebar menu items
 	 *
-	 * @elgg_plugin_hook register menu:page
+	 * @param \Elgg\Hook $hook 'register' 'menu:page'
 	 *
-	 * @param Hook $hook Hook
-	 * @return ElggMenuItem[]
+	 * @return void|\ElggMenuItem[]
 	 */
 	public function __invoke(Hook $hook) {
 

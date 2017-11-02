@@ -8,7 +8,7 @@
  *
  * @warning It's important this module is not renamed so that it ends with "/ckeditor". This can confuse
  *          the CKeditor library when it sniffs its resource directory.
- * 
+ *
  * @module elgg-ckeditor
  */
 define(function (require) {

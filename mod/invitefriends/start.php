@@ -5,6 +5,11 @@
  * @package ElggInviteFriends
  */
 
+/**
+ * Invite friend init
+ *
+ * @return void
+ */
 function invitefriends_init() {
 	elgg_register_page_handler('invite', 'invitefriends_page_handler');
 
@@ -27,11 +32,12 @@ function invitefriends_page_handler($page) {
 /**
  * Adds menu items to the page menu
  *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param array  $result Current items
- * @param array  $params Hook params
- * @return null|array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $result Current items
+ * @param array          $params Hook params
+ *
+ * @return void|ElggMenuItem[]
  */
 function invitefriends_register_page_menu($hook, $type, $result, $params) {
 	if (!elgg_is_logged_in()) {
@@ -55,10 +61,11 @@ function invitefriends_register_page_menu($hook, $type, $result, $params) {
 /**
  * Add friends if invite code was set
  *
- * @param string $hook   Hook name
- * @param string $type   Hook type
+ * @param string $hook   'register'
+ * @param string $type   'user'
  * @param bool   $result Whether to allow registration
  * @param array  $params Hook params
+ *
  * @return void
  */
 function invitefriends_add_friends($hook, $type, $result, $params) {

@@ -6,6 +6,11 @@
  * @todo add a remove visible and all notifications button
  */
 
+/**
+ * Site notifications init
+ *
+ * @return void
+ */
 function site_notifications_init() {
 	// register as a notification type
 	elgg_register_notification_method('site');
@@ -27,7 +32,8 @@ function site_notifications_init() {
  * /site_notifications/view/<username>
  *
  * @param array $segments URL segments
- * @return boolean
+ *
+ * @return bool
  */
 function site_notifications_page_handler($segments) {
 	elgg_gatekeeper();
@@ -50,19 +56,24 @@ function site_notifications_page_handler($segments) {
 
 /**
  * Sets the topbar notify icon and text
+ *
+ * @return void
  */
 function site_notifications_set_topbar() {
-	if (elgg_is_logged_in()) {
-		elgg_register_menu_item('topbar', [
-			'name' => 'site_notifications',
-			'parent_name' => 'account',
-			'href' => 'site_notifications/view/' . elgg_get_logged_in_user_entity()->username,
-			'text' => elgg_echo('site_notifications:topbar'),
-			'icon' => 'bell',
-			'priority' => 100,
-			'section' => 'alt',
-		]);
+	
+	if (!elgg_is_logged_in()) {
+		return;
 	}
+	
+	elgg_register_menu_item('topbar', [
+		'name' => 'site_notifications',
+		'parent_name' => 'account',
+		'href' => 'site_notifications/view/' . elgg_get_logged_in_user_entity()->username,
+		'text' => elgg_echo('site_notifications:topbar'),
+		'icon' => 'bell',
+		'priority' => 100,
+		'section' => 'alt',
+	]);
 }
 
 /**
@@ -72,10 +83,12 @@ function site_notifications_set_topbar() {
  * @param string $type   Hook type
  * @param bool   $result Has the notification been sent
  * @param array  $params Hook parameters
+ *
+ * @return void|true
  */
 function site_notifications_send($hook, $type, $result, $params) {
 	/* @var Elgg\Notifications\Notification */
-	$notification = $params['notification'];
+	$notification = elgg_extract('notification', $params);
 	if ($notification->summary) {
 		$message = $notification->summary;
 	} else {

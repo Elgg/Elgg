@@ -6,7 +6,9 @@
  */
 
 /**
- * Initialize the groups plugin.
+ * Initialize the groups plugin
+ *
+ * @return void
  */
 function groups_init() {
 
@@ -59,9 +61,6 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
 	elgg_register_plugin_hook_handler('access_collection:name', 'access_collection', 'groups_set_access_collection_name');
 
-	// Register profile menu hook
-	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
-
 	// allow ecml in profiles
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'groupprofile_ecml_views_hook');
 
@@ -71,8 +70,6 @@ function groups_init() {
 
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
-
-	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
 	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
 
@@ -103,6 +100,8 @@ function groups_init() {
  * Note: This is a system:init event triggered function and is run at a super
  * low priority to guarantee that it is called after all other plugins have
  * initialized.
+ *
+ * @return void
  */
 function groups_fields_setup() {
 
@@ -131,14 +130,14 @@ function groups_fields_setup() {
 /**
  * Register menu items for the page menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _groups_page_menu_group_profile($hook, $type, $return, $params) {
@@ -185,14 +184,14 @@ function _groups_page_menu_group_profile($hook, $type, $return, $params) {
 /**
  * Register menu items for the page menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _groups_page_menu($hook, $type, $return, $params) {
@@ -320,35 +319,61 @@ function groups_page_handler($page) {
 /**
  * Populates the ->getUrl() method for group objects
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string
+ * @param string $hook   'entity:url'
+ * @param string $type   'group'
+ * @param string $url    current return value
+ * @param array  $params supplied params
+ *
+ * @return void|string
  */
 function groups_set_url($hook, $type, $url, $params) {
-	$entity = $params['entity'];
+	
+	$entity = elgg_extract('entity', $params);
+	if (!$entity instanceof ElggGroup) {
+		return;
+	}
+	
 	$title = elgg_get_friendly_title($entity->getDisplayName());
 	return "groups/profile/{$entity->guid}/$title";
 }
 
 /**
  * Add owner block link
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:owner_block'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function groups_activity_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'group')) {
-		if ($params['entity']->activity_enable != "no") {
-			$url = "groups/activity/{$params['entity']->guid}";
-			$item = new ElggMenuItem('activity', elgg_echo('groups:activity'), $url);
-			$return[] = $item;
-		}
+	
+	$entity = elgg_extract('entity', $params);
+	if (!$entity instanceof ElggGroup) {
+		return;
 	}
-
+	
+	if ($entity->activity_enable === "no") {
+		return;
+	}
+	
+	$url = "groups/activity/{$entity->guid}";
+	$item = new ElggMenuItem('activity', elgg_echo('groups:activity'), $url);
+	$return[] = $item;
+	
 	return $return;
 }
 
 /**
  * Add links/info to entity menu particular to group entities
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:entity'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function groups_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
@@ -387,6 +412,13 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Add a remove user link to user hover menu when the page owner is a group
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:user_hover'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 	$group = elgg_get_page_owner_entity();
@@ -421,8 +453,14 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Groups created so create an access list for it
+ *
+ * @param string    $event  'create'
+ * @param string    $type   'group'
+ * @param ElggGroup $object the new group
+ *
+ * @return bool
  */
-function groups_create_event_listener($event, $object_type, $object) {
+function groups_create_event_listener($event, $type, $object) {
 
 	// ensure that user has sufficient permissions to update group metadata
 	// prior to joining the group
@@ -493,10 +531,8 @@ function groups_update_event_listener($event, $type, $group) {
 /**
  * Return the write access for the current group if the user has write access to it
  *
- * @elgg_plugin_hook access:collection:write all
- *
- * @param \Elgg\Hook $hook Hook
- * @return array
+ * @param \Elgg\Hook $hook 'access:collection:write' 'all'
+ * @return void|array
  */
 function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 
@@ -547,10 +583,8 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 /**
  * Return the write access for the current group if the user has write access to it
  *
- * @elgg_plugin_hook access_collection:display_name access_collection
- *
- * @param \Elgg\Hook $hook Hook
- * @return array
+ * @param \Elgg\Hook $hook 'access_collection:display_name' 'access_collection'
+ * @return void|string
  */
 function groups_set_access_collection_name(\Elgg\Hook $hook) {
 
@@ -578,42 +612,51 @@ function groups_set_access_collection_name(\Elgg\Hook $hook) {
 /**
  * Listens to a group join event and adds a user to the group's access control
  *
+ * @param string $event       'join'
+ * @param string $object_type 'group'
+ * @param array  $object      supplied params
+ *
+ * @return void
  */
 function groups_user_join_event_listener($event, $object_type, $object) {
 
-	$group = $object['group'];
-	$user = $object['user'];
+	$group = elgg_extract('group', $object);
+	$user = elgg_extract('user', $object);
+	if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
+		return;
+	}
+	
 	$acl = $group->group_acl;
+	if (empty($acl)) {
+		return;
+	}
 
 	add_user_to_access_collection($user->guid, $acl);
-
-	return true;
-}
-
-/**
- * Make sure users are added to the access collection
- */
-function groups_access_collection_override($hook, $entity_type, $returnvalue, $params) {
-	if (isset($params['collection'])) {
-		if (elgg_instanceof(get_entity($params['collection']->owner_guid), 'group')) {
-			return true;
-		}
-	}
 }
 
 /**
  * Listens to a group leave event and removes a user from the group's access control
  *
+ * @param string $event       'leave'
+ * @param string $object_type 'group'
+ * @param array  $object      supplied params
+ *
+ * @return void
  */
 function groups_user_leave_event_listener($event, $object_type, $object) {
 
-	$group = $object['group'];
-	$user = $object['user'];
+	$group = elgg_extract('group', $object);
+	$user = elgg_extract('user', $object);
+	if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
+		return;
+	}
+	
 	$acl = $group->group_acl;
+	if (empty($acl)) {
+		return;
+	}
 
 	remove_user_from_access_collection($user->guid, $acl);
-
-	return true;
 }
 
 /**
@@ -679,8 +722,9 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 /**
  * Join a user to a group, add river event, clean-up invitations
  *
- * @param ElggGroup $group
- * @param ElggUser  $user
+ * @param ElggGroup $group the group to join
+ * @param ElggUser  $user  the user to join
+ *
  * @return bool
  */
 function groups_join_group($group, $user) {
@@ -690,31 +734,33 @@ function groups_join_group($group, $user) {
 	$result = $group->join($user);
 	elgg_set_ignore_access($ia);
 
-	if ($result) {
-		// flush user's access info so the collection is added
-		get_access_list($user->guid, 0, true);
-
-		// Remove any invite or join request flags
-		remove_entity_relationship($group->guid, 'invited', $user->guid);
-		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
-
-		elgg_create_river_item([
-			'view' => 'river/relationship/member/create',
-			'action_type' => 'join',
-			'subject_guid' => $user->guid,
-			'object_guid' => $group->guid,
-		]);
-
-		return true;
+	if (!$result) {
+		return false;
 	}
+	
+	// flush user's access info so the collection is added
+	get_access_list($user->guid, 0, true);
 
-	return false;
+	// Remove any invite or join request flags
+	remove_entity_relationship($group->guid, 'invited', $user->guid);
+	remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+
+	elgg_create_river_item([
+		'view' => 'river/relationship/member/create',
+		'action_type' => 'join',
+		'subject_guid' => $user->guid,
+		'object_guid' => $group->guid,
+	]);
+
+	return true;
 }
 
 /**
  * Function to use on groups for access. It will house private, loggedin, public,
  * and the group itself. This is when you don't want other groups or access lists
  * in the access options available.
+ *
+ * @param ElggGroup $group the group
  *
  * @return array
  */
@@ -729,6 +775,10 @@ function group_access_options($group) {
 		$access_array[ACCESS_PUBLIC] = elgg_echo('access:label:public');
 	}
 
+	if (!$group instanceof ElggGroup) {
+		return $access_array;
+	}
+	
 	$collection = get_access_collection($group->group_acl);
 	if ($collection) {
 		$access_array[$collection->id] = $collection->getDisplayName();
@@ -737,24 +787,17 @@ function group_access_options($group) {
 	return $access_array;
 }
 
-function activity_profile_menu($hook, $entity_type, $return_value, $params) {
-
-	if (!$params['owner'] instanceof ElggGroup
-			|| elgg_get_plugin_setting('allow_activity', 'groups') === 'no') {
-		return;
-	}
-
-	$return_value[] = [
-		'text' => elgg_echo('groups:activity'),
-		'href' => "groups/activity/{$params['owner']->guid}"
-	];
-	return $return_value;
-}
-
 /**
  * Parse ECML on group profiles
+ *
+ * @param string $hook         'get_views'
+ * @param string $type         'ecml'
+ * @param array  $return_value current return value
+ * @param mixed  $params       supplied params
+ *
+ * @return array
  */
-function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+function groupprofile_ecml_views_hook($hook, $type, $return_value, $params) {
 	$return_value['groups/groupprofile'] = elgg_echo('groups:ecml:groupprofile');
 
 	return $return_value;
@@ -762,6 +805,8 @@ function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $param
 
 /**
  * Process upgrades for the groups plugin
+ *
+ * @return void
  */
 function groups_run_upgrades() {
 	$path = __DIR__ . '/upgrades/';
@@ -773,6 +818,11 @@ function groups_run_upgrades() {
 
 /**
  * Runs unit tests for groups
+ *
+ * @param string $hook   'unit_test'
+ * @param string $type   'system'
+ * @param array  $value  current return value
+ * @param mixed  $params supplied params
  *
  * @return array
  */

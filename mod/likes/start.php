@@ -13,8 +13,12 @@ use Elgg\Likes\DataService;
 use Elgg\Services\AjaxResponse;
 use Elgg\Likes\AjaxResponseHandler;
 use Elgg\Likes\JsConfigHandler;
-use Elgg\Hook;
 
+/**
+ * Likes init
+ *
+ * @return void
+ */
 function likes_init() {
 	elgg_extend_view('elgg.css', 'elgg/likes.css');
 
@@ -39,10 +43,10 @@ function likes_init() {
  *
  * @param string $hook   "permissions_check"
  * @param string $type   "annotation"
- * @param array  $return Current value
+ * @param bool   $return Current value
  * @param array  $params Hook parameters
  *
- * @return bool
+ * @return void|bool
  */
 function likes_permissions_check($hook, $type, $return, $params) {
 	$annotation = elgg_extract('annotation', $params);
@@ -63,10 +67,10 @@ function likes_permissions_check($hook, $type, $return, $params) {
  *
  * @param string $hook   "permissions_check:annotate"
  * @param string $type   "object"|"user"|"group"|"site"
- * @param array  $return Current value
+ * @param bool   $return Current value
  * @param array  $params Hook parameters
  *
- * @return bool
+ * @return void|bool
  */
 function likes_permissions_check_annotate($hook, $type, $return, $params) {
 	if (elgg_extract('annotation_name', $params) !== 'likes') {
@@ -89,9 +93,9 @@ function likes_permissions_check_annotate($hook, $type, $return, $params) {
 /**
  * Add likes to social menu
  *
- * @param \Elgg\Hook $hook Hook
+ * @param \Elgg\Hook $hook 'register' 'menu:social'
  *
- * @return []
+ * @return void|ElggMenuItem[]
  *
  * @since 3.0
  */
@@ -183,22 +187,22 @@ function _likes_count_menu_item(ElggEntity $entity, $priority = 500) {
 }
 
 /**
- * Count how many people have liked an entity.
+ * Get the count of how many people have liked an entity
  *
- * @param ElggEntity $entity
+ * @param ElggEntity $entity entity to get likes count for
  *
- * @return int Number of likes
+ * @return int
  */
 function likes_count(ElggEntity $entity) {
 	$type = $entity->getType();
 	$params = ['entity' => $entity];
 	$number = elgg_trigger_plugin_hook('likes:count', $type, $params, false);
 
-	if ($number) {
-		return $number;
-	} else {
-		return $entity->countAnnotations('likes');
+	if ($number !== false) {
+		return (int) $number;
 	}
+	
+	return $entity->countAnnotations('likes');
 }
 
 return function() {

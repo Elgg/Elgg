@@ -6,7 +6,9 @@
  */
 
 /**
- * Init blog plugin.
+ * Init blog plugin
+ *
+ * @return void
  */
 function blog_init() {
 
@@ -68,7 +70,7 @@ function blog_init() {
  *
  * @todo no archives for all blogs or friends
  *
- * @param array $page
+ * @param array $page URL segments
  * @return bool
  */
 function blog_page_handler($page) {
@@ -138,15 +140,16 @@ function blog_page_handler($page) {
 /**
  * Format and return the URL for blogs.
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string URL of blog.
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $url    current value
+ * @param array  $params supplied params
+ *
+ * @return string URL of blog
  */
 function blog_set_url($hook, $type, $url, $params) {
 	$entity = elgg_extract('entity', $params);
-	if (!elgg_instanceof($entity, 'object', 'blog')) {
+	if (!$entity instanceof ElggBlog) {
 		return;
 	}
 
@@ -156,6 +159,13 @@ function blog_set_url($hook, $type, $url, $params) {
 
 /**
  * Add a menu item to an ownerblock
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:owner_block'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return ElggMenuItem[]
  */
 function blog_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
@@ -180,6 +190,13 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Add menu items to the archive menu
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:blog_archive'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function blog_archive_menu_setup($hook, $type, $return, $params) {
 
@@ -262,9 +279,16 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
 }
 
 /**
- * Register blogs with ECML.
+ * Register blogs with ECML
+ *
+ * @param string $hook         'get_views'
+ * @param string $type         'ecml'
+ * @param array  $return_value current return value
+ * @param array  $params       supplied params
+ *
+ * @return array
  */
-function blog_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+function blog_ecml_views_hook($hook, $type, $return_value, $params) {
 	$return_value['object/blog'] = elgg_echo('blog:blogs');
 
 	return $return_value;

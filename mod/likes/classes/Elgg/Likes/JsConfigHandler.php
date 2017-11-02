@@ -4,12 +4,16 @@ namespace Elgg\Likes;
 
 use Elgg\Hook;
 
+/**
+ * Javascript confif handler
+ */
 class JsConfigHandler {
 
 	/**
 	 * Send config data to the likes module
 	 *
-	 * @param Hook $hook Hook info
+	 * @param \Elgg\Hook $hook Hook info
+	 *
 	 * @return array
 	 */
 	public function __invoke(Hook $hook) {

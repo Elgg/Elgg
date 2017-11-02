@@ -7,6 +7,8 @@
 
 /**
  * Bookmark init
+ *
+ * @return void
  */
 function bookmarks_init() {
 
@@ -61,7 +63,7 @@ function bookmarks_init() {
  *
  * Title is ignored
  *
- * @param array $page
+ * @param array $page URL segments
  * @return bool
  */
 function bookmarks_page_handler($page) {
@@ -124,36 +126,44 @@ function bookmarks_page_handler($page) {
 /**
  * Populates the ->getUrl() method for bookmarked objects
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string bookmarked item URL
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $url    current return value
+ * @param array  $params supplied params
+ *
+ * @return void|string bookmarked item URL
  */
 function bookmark_set_url($hook, $type, $url, $params) {
-	$entity = $params['entity'];
-	if (elgg_instanceof($entity, 'object', 'bookmarks')) {
-		$title = elgg_get_friendly_title($entity->title);
-		return "bookmarks/view/" . $entity->getGUID() . "/" . $title;
+	$entity = elgg_extract('entity', $params);
+	if (!elgg_instanceof($entity, 'object', 'bookmarks')) {
+		return;
 	}
+	
+	$title = elgg_get_friendly_title($entity->title);
+	return "bookmarks/view/{$entity->getGUID()}/{$title}";
 }
 
 /**
  * Add a menu item to an ownerblock
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:owner_block'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return ElggMenuItem[]
  */
 function bookmarks_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "bookmarks/owner/{$params['entity']->username}";
+	
+	$entity = elgg_extract('entity', $params);
+	
+	if ($entity instanceof ElggUser) {
+		$url = "bookmarks/owner/{$entity->username}";
 		$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), $url);
 		$return[] = $item;
-	} else {
-		if ($params['entity']->bookmarks_enable != 'no') {
-			$url = "bookmarks/group/{$params['entity']->guid}/all";
+	} elseif ($entity instanceof ElggGroup) {
+		if ($entity->bookmarks_enable != 'no') {
+			$url = "bookmarks/group/{$entity->guid}/all";
 			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
 			$return[] = $item;
 		}
@@ -195,12 +205,14 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 }
 
 /**
- * Add a page menu menu.
+ * Add a page menu menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function bookmarks_page_menu($hook, $type, $return, $params) {
 	if (!elgg_is_logged_in()) {
@@ -234,10 +246,12 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 /**
  * Return bookmarks views to parse for ecml
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
+ * @param string $hook   'get_views'
+ * @param string $type   'ecml'
+ * @param array  $return current return value
+ * @param array  $params supplied params
+ *
+ * @return array
  */
 function bookmarks_ecml_views_hook($hook, $type, $return, $params) {
 	$return['object/bookmarks'] = elgg_echo('item:object:bookmarks');

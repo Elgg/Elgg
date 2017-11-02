@@ -61,7 +61,6 @@ class AnnotationMigration implements Batch {
 				':new_name' => "profile:$name",
 			]);
 			$result->addSuccesses(1);
-
 		} catch (\DatabaseException $e) {
 			$result->addError("Profile field '$name' could not be migrated: " . $e->getMessage());
 		}

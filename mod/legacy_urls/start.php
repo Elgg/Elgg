@@ -6,6 +6,7 @@
 
 /**
  * Initialize the plugin
+ *
  * @return void
  */
 function legacy_urls_init() {
@@ -28,7 +29,8 @@ function legacy_urls_init() {
  * c) Silently forwards to the new URL
  *
  * @param string $url Relative or absolute URL
- * @return mixed
+ *
+ * @return void|true
  */
 function legacy_urls_redirect($url) {
 	$method = elgg_get_plugin_setting('redirect_method', 'legacy_urls');
@@ -64,6 +66,7 @@ function legacy_urls_redirect($url) {
  *
  * @param string $url        The URL
  * @param array  $query_vars Additional query parameters in associate array
+ *
  * @return string
  */
 function legacy_urls_prepare_url($url, array $query_vars = []) {
@@ -76,16 +79,17 @@ function legacy_urls_prepare_url($url, array $query_vars = []) {
 	$params = array_merge($params, $query_vars);
 	if ($params) {
 		return elgg_http_add_url_query_elements($url, $params);
-	} else {
-		return $url;
 	}
+	
+	return $url;
 }
 
 /**
  * Handle requests for /tag/<tag string>
  *
  * @param array $segments URL segments
- * @return mixed
+ *
+ * @return void|true
  */
 function legacy_urls_tag_handler($segments) {
 	$tag = $segments[0];
@@ -97,7 +101,8 @@ function legacy_urls_tag_handler($segments) {
  * Handle requests for URLs that start with /pg/
  *
  * @param array $segments URL segments
- * @return mixed
+ *
+ * @return void|true
  */
 function legacy_urls_pg_handler($segments) {
 	$url = implode('/', $segments);
@@ -114,10 +119,11 @@ function legacy_urls_pg_handler($segments) {
  * Group blogs page: /blog/owner/group:<container_guid>/
  * Group blog view:  /blog/read/<guid>
  *
- * @param $hook   string "route"
- * @param $type   string "blog"
- * @param $result mixed  Old identifier and segments
- * @return mixed
+ * @param string $hook   "route"
+ * @param string $type   "blog"
+ * @param array  $result Old identifier and segments
+ *
+ * @return void|false
  */
 function legacy_urls_blog_forward($hook, $type, $result) {
 
@@ -193,10 +199,11 @@ function legacy_urls_blog_forward($hook, $type, $result) {
  * /bookmarks/read/<guid>
  * /bookmarks/<username>[/(items|read|inbox|friends|add|bookmarklet)/<guid>]
  *
- * @param $hook   string "route"
- * @param $type   string "bookmarks"
- * @param $result mixed  Old identifier and segments
- * @return mixed
+ * @param string $hook   "route"
+ * @param string $type   "bookmarks"
+ * @param array  $result Old identifier and segments
+ *
+ * @return void|false
  */
 function legacy_urls_bookmarks_forward($hook, $type, $result) {
 
@@ -267,10 +274,11 @@ function legacy_urls_bookmarks_forward($hook, $type, $result) {
  * File forwarder
  * /file/read/<guid>
  *
- * @param $hook   string "route"
- * @param $type   string "file"
- * @param $result mixed  Old identifier and segments
- * @return mixed
+ * @param string $hook   "route"
+ * @param string $type   "file"
+ * @param array  $result Old identifier and segments
+ *
+ * @return void|false
  */
 function legacy_urls_file_forward($hook, $type, $result) {
 
@@ -291,10 +299,11 @@ function legacy_urls_file_forward($hook, $type, $result) {
  * /groups/<guid>
  * /groups/forum/<guid>
  *
- * @param $hook   string "route"
- * @param $type   string "groups"
- * @param $result mixed  Old identifier and segments
- * @return mixed
+ * @param string $hook   "route"
+ * @param string $type   "groups"
+ * @param array  $result Old identifier and segments
+ *
+ * @return void|false
  */
 function legacy_urls_groups_forward($hook, $type, $result) {
 
@@ -322,10 +331,11 @@ function legacy_urls_groups_forward($hook, $type, $result) {
  * User settings forwarder
  * /settings/plugins/
  *
- * @param $hook   string "route"
- * @param $type   string "settings"
- * @param $result mixed  Old identifier and segments
- * @return mixed
+ * @param string $hook   "route"
+ * @param string $type   "settings"
+ * @param array  $result Old identifier and segments
+ *
+ * @return void|false
  */
 function legacy_urls_settings_forward($hook, $type, $result) {
 
@@ -351,7 +361,8 @@ function legacy_urls_settings_forward($hook, $type, $result) {
  * /forum/.*
  *
  * @param array $page URL segments
- * @return mixed
+ *
+ * @return bool
  */
 function legacy_urls_forum_handler($page) {
 	switch ($page[0]) {
@@ -368,10 +379,11 @@ function legacy_urls_forum_handler($page) {
  * Messageboard forwarder
  * /messageboard/!(owner|add|group)
  *
- * @param $hook   string "route"
- * @param $type   string "messageboard"
- * @param $result mixed  Old identifier and segments
- * @return mixed
+ * @param string $hook   "route"
+ * @param string $type   "messageboard"
+ * @param array  $result Old identifier and segments
+ *
+ * @return void|false
  */
 function legacy_urls_messageboard_forward($hook, $type, $result) {
 

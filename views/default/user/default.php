@@ -35,7 +35,6 @@ if ($entity->isBanned()) {
 		'subtitle' => elgg_echo('banned'),
 	];
 } else {
-	
 	$subtitle = '';
 	$location = $entity->location;
 	if (is_string($location) && $location !== '') {

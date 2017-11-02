@@ -7,7 +7,7 @@
 class ElggDiscussionReply extends ElggComment {
 
 	/**
-	 * Set subtype
+	 * {@inheritDoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();

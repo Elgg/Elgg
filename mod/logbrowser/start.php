@@ -6,7 +6,9 @@
  */
 
 /**
- * Initialize the log browser plugin.
+ * Initialize the log browser plugin
+ *
+ * @return void
  */
 function logbrowser_init() {
 	
@@ -24,9 +26,20 @@ function logbrowser_init() {
 
 /**
  * Add to the user hover menu
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:user_hover'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function logbrowser_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['entity'];
+	
+	$user = elgg_extract('entity', $params);
+	if (!$user instanceof ElggUser) {
+		return;
+	}
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'logbrowser',

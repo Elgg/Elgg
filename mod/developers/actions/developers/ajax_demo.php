@@ -1,7 +1,15 @@
 <?php
 
-// example of altering response object via hook. This might be done in a plugin
-
+/**
+ * Example of altering response object via hook. This might be done in a plugin
+ *
+ * @param string                     $hook 'ajax_response'
+ * @param string                     $type 'action:developers/ajax_demo'
+ * @param Elgg\Services\AjaxResponse $v    current return value
+ * @param mixed                      $p    supploed params
+ *
+ * @return void
+ */
 function developers_ajax_demo_alter($hook, $type, Elgg\Services\AjaxResponse $v, $p) {
 	// check data added by client hook
 	if (get_input('client_request_altered') == '1') {

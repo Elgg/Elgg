@@ -7,6 +7,8 @@
 
 /**
  * Init function
+ *
+ * @return void
  */
 function embed_init() {
 	elgg_extend_view('elgg.css', 'embed/css');
@@ -26,16 +28,17 @@ function embed_init() {
 /**
  * Add the embed menu item to the long text menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $items
- * @param array  $vars
- * @return array
+ * @param string         $hook  'register'
+ * @param string         $type  'menu:longtext'
+ * @param ElggMenuItem[] $items current return value
+ * @param array          $vars  supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function embed_longtext_menu($hook, $type, $items, $vars) {
 
 	if (elgg_get_context() == 'embed') {
-		return $items;
+		return;
 	}
 	
 	$id = elgg_extract('id', $vars);
@@ -76,10 +79,12 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 /**
  * Select the correct embed tab for display
  *
- * @param string $hook
- * @param string $type
- * @param array  $items
- * @param array  $vars
+ * @param string         $hook  'register'
+ * @param string         $type  'menu:embed'
+ * @param ElggMenuItem[] $items current return value
+ * @param array          $vars  supplied params
+ *
+ * @return ElggMenuItem[]
  */
 function embed_select_tab($hook, $type, $items, $vars) {
 
@@ -97,12 +102,16 @@ function embed_select_tab($hook, $type, $items, $vars) {
 		$items[0]->setSelected();
 		elgg_set_config('embed_tab', $items[0]);
 	}
+	
+	return $items;
 }
 
 /**
  * Serves the content for the embed lightbox
  *
  * @param array $page URL segments
+ *
+ * @return true
  */
 function embed_page_handler($page) {
 
@@ -148,7 +157,8 @@ function embed_list_items($entities, $vars = []) {
 /**
  * Set the options for the list of embedable content
  *
- * @param array $options
+ * @param array $options additional options
+ *
  * @return array
  */
 function embed_get_list_options($options = []) {

@@ -7,15 +7,17 @@ use ElggAccessCollection;
 use ElggMenuItem;
 use ElggUser;
 
+/**
+ * Register entity menu item
+ */
 class EntityMenuHandler {
 
 	/**
 	 * Setup entity menu
 	 *
-	 * @elgg_plugin_hook register menu:entity
+	 * @param \Elgg\Hook $hook 'register' 'menu:entity'
 	 *
-	 * @param Hook $hook Hook
-	 * @return ElggMenuItem[]
+	 * @return void|\ElggMenuItem[]
 	 */
 	public function __invoke(Hook $hook) {
 

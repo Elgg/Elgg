@@ -7,6 +7,8 @@
 
 /**
  * Initialize the plugin
+ *
+ * @return void
  */
 function reportedcontent_init() {
 
@@ -68,14 +70,24 @@ function reportedcontent_page_handler($page) {
 
 /**
  * Add report user link to hover menu
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:user_hover'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
+	
 	if (!elgg_is_logged_in()) {
 		return;
 	}
 	
 	$user = elgg_extract('entity', $params);
-	/* @var ElggUser $user */
+	if (!$user instanceof ElggUser) {
+		return;
+	}
 	
 	if (elgg_get_logged_in_user_guid() == $user->guid) {
 		return;

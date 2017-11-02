@@ -9,6 +9,8 @@
 
 /**
  * Initialize page handler and site menu item
+ *
+ * @return void
  */
 function members_init() {
 	elgg_register_page_handler('members', 'members_page_handler');

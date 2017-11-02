@@ -17,7 +17,6 @@ if (pages_is_page($entity)) {
 }
 
 foreach ($fields as $name => $type) {
-
 	$field = [
 		'name' => $name,
 		'value' => $vars[$name],
@@ -26,7 +25,6 @@ foreach ($fields as $name => $type) {
 	];
 
 	switch ($name) {
-
 		case 'title' :
 			$field['required'] = true;
 			break;

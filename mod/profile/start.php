@@ -7,6 +7,8 @@
 
 /**
  * Profile init function
+ *
+ * @return void
  */
 function profile_init() {
 
@@ -77,26 +79,33 @@ function profile_page_handler($page) {
 /**
  * Profile URL generator for $user->getUrl();
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string
+ * @param string $hook   'entity:url'
+ * @param string $type   'user'
+ * @param string $url    current return value
+ * @param array  $params supplied params
+ *
+ * @return void|string
  */
 function profile_set_url($hook, $type, $url, $params) {
-	$user = $params['entity'];
-	return "profile/" . $user->username;
+	
+	$user = elgg_extract('entity', $params);
+	if (!$user instanceof ElggUser) {
+		return;
+	}
+	
+	return "profile/{$user->username}";
 }
 
 /**
  * Parse ECML on parts of the profile
  *
- * @param string $hook
- * @param string $entity_type
- * @param array  $return_value
+ * @param string $hook         'get_views'
+ * @param string $type         'ecml'
+ * @param array  $return_value current return value
+ *
  * @return array
  */
-function profile_ecml_views_hook($hook, $entity_type, $return_value) {
+function profile_ecml_views_hook($hook, $type, $return_value) {
 	$return_value['profile/profile_content'] = elgg_echo('profile');
 
 	return $return_value;
@@ -105,9 +114,10 @@ function profile_ecml_views_hook($hook, $entity_type, $return_value) {
 /**
  * Register profile widgets with default widgets
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
+ * @param string $hook   'get_list'
+ * @param string $type   'default_widgets'
+ * @param array  $return current return value
+ *
  * @return array
  */
 function profile_default_widgets_hook($hook, $type, $return) {
@@ -130,6 +140,9 @@ function profile_default_widgets_hook($hook, $type, $return) {
  *
  * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
  * other plugins have initialised.
+ *
+ * @return void
+ *
  * @access private
  */
 function _profile_fields_setup() {
@@ -180,12 +193,11 @@ function _profile_fields_setup() {
 /**
  * Register menu items for the topbar menu
  *
- * @param \Elgg\Hook $hook hook
+ * @param \Elgg\Hook $hook 'register' 'menu:topbar'
  *
- * @return array
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _profile_topbar_menu(\Elgg\Hook $hook) {
@@ -215,12 +227,11 @@ function _profile_topbar_menu(\Elgg\Hook $hook) {
 /**
  * Register menu items for the user hover menu
  *
- * @param \Elgg\Hook $hook hook
+ * @param \Elgg\Hook $hook 'register' 'menu:user_hover'
  *
- * @return array
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _profile_user_hover_menu(\Elgg\Hook $hook) {
@@ -249,12 +260,11 @@ function _profile_user_hover_menu(\Elgg\Hook $hook) {
 /**
  * Register menu items for the admin page menu
  *
- * @param \Elgg\Hook $hook hook
+ * @param \Elgg\Hook $hook 'register' 'menu:page'
  *
- * @return array
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _profile_admin_page_menu(\Elgg\Hook $hook) {
@@ -279,12 +289,11 @@ function _profile_admin_page_menu(\Elgg\Hook $hook) {
 /**
  * Register menu items for the page menu
  *
- * @param \Elgg\Hook $hook hook
+ * @param \Elgg\Hook $hook 'register' 'menu:page'
  *
- * @return array
+ * @return void|ElggMenuItem
  *
  * @access private
- *
  * @since 3.0
  */
 function _profile_user_page_menu(\Elgg\Hook $hook) {
@@ -310,14 +319,14 @@ function _profile_user_page_menu(\Elgg\Hook $hook) {
 /**
  * Register menu items for the title menu
  *
- * @param string $hook   Hook
- * @param string $type   Type
+ * @param string $hook   'register'
+ * @param string $type   'menu:title'
  * @param array  $return Current return value
  * @param array  $params Hook parameters
- * @return array
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _profile_title_menu($hook, $type, $return, $params) {

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Friends init
+ *
+ * @return void
+ */
 function elgg_friends_plugin_init() {
 	elgg_register_plugin_hook_handler('access:collections:write', 'user', '_elgg_friends_write_access', 1);
 	elgg_register_plugin_hook_handler('filter_tabs', 'all', '_elgg_friends_filter_tabs', 1);
@@ -19,40 +24,50 @@ function elgg_friends_plugin_init() {
 /**
  * Adds friending to user hover menu
  *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:user_hover'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
+ *
  * @access private
  */
 function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['entity'];
-	/* @var \ElggUser $user */
-
-	if (elgg_is_logged_in()) {
-		if (elgg_get_logged_in_user_guid() != $user->guid) {
-			$isFriend = $user->isFriend();
-
-			// Always emit both to make it super easy to toggle with ajax
-			$return[] = \ElggMenuItem::factory([
-				'name' => 'remove_friend',
-				'href' => "action/friends/remove?friend={$user->guid}",
-				'is_action' => true,
-				'text' => elgg_echo('friend:remove'),
-				'icon' => 'user-times',
-				'section' => 'action',
-				'item_class' => $isFriend ? '' : 'hidden',
-				'data-toggle' => 'add_friend',
-			]);
-
-			$return[] = \ElggMenuItem::factory([
-				'name' => 'add_friend',
-				'href' => "action/friends/add?friend={$user->guid}",
-				'is_action' => true,
-				'text' => elgg_echo('friend:add'),
-				'icon' => 'user-plus',
-				'section' => 'action',
-				'item_class' => $isFriend ? 'hidden' : '',
-				'data-toggle' => 'remove_friend',
-			]);
-		}
+	
+	$user = elgg_extract('entity', $params);
+	if (!$user instanceof ElggUser || !elgg_is_logged_in()) {
+		return;
 	}
+
+	if (elgg_get_logged_in_user_guid() === $user->guid) {
+		return;
+	}
+	
+	$isFriend = $user->isFriend();
+
+	// Always emit both to make it super easy to toggle with ajax
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'remove_friend',
+		'href' => "action/friends/remove?friend={$user->guid}",
+		'is_action' => true,
+		'text' => elgg_echo('friend:remove'),
+		'icon' => 'user-times',
+		'section' => 'action',
+		'item_class' => $isFriend ? '' : 'hidden',
+		'data-toggle' => 'add_friend',
+	]);
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'add_friend',
+		'href' => "action/friends/add?friend={$user->guid}",
+		'is_action' => true,
+		'text' => elgg_echo('friend:add'),
+		'icon' => 'user-plus',
+		'section' => 'action',
+		'item_class' => $isFriend ? 'hidden' : '',
+		'data-toggle' => 'remove_friend',
+	]);
 
 	return $return;
 }
@@ -93,14 +108,14 @@ function _elgg_friends_page_handler($segments, $handler) {
 /**
  * Register menu items for the topbar menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:topbar'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
@@ -125,14 +140,14 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
 /**
  * Register menu items for the friends page menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _elgg_friends_page_menu($hook, $type, $return, $params) {
@@ -162,8 +177,8 @@ function _elgg_friends_page_menu($hook, $type, $return, $params) {
 /**
  * Notify user that someone has friended them
  *
- * @param string           $event  Event name
- * @param string           $type   Object type
+ * @param string            $event  'create'
+ * @param string            $type   'relationship'
  * @param \ElggRelationship $object Object
  *
  * @return bool

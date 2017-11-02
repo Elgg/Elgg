@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Friend collections
  * Provides an interface for users to manage their friend collections
@@ -12,6 +11,11 @@ use Elgg\Friends\Collections\PageMenuHandler;
 use Elgg\Friends\Collections\Router;
 use Elgg\Friends\Collections\UrlHandler;
 
+/**
+ * Friend collection init
+ *
+ * @return void
+ */
 function friends_collections_init() {
 
 	// Setup /collections controller and collection URLs

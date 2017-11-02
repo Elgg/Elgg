@@ -9,6 +9,8 @@
 
 /**
  * MessageBoard initialisation
+ *
+ * @return void
  */
 function messageboard_init() {
 	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
@@ -28,6 +30,7 @@ function messageboard_init() {
  *  Group messageboard:                messageboard/group/<guid>/all (not implemented)
  *
  * @param array $page Array of page elements
+ *
  * @return bool
  */
 function messageboard_page_handler($page) {
@@ -68,12 +71,19 @@ function messageboard_page_handler($page) {
  * @param ElggUser $poster    User posting the message
  * @param ElggUser $owner     User who owns the message board
  * @param string   $message   The posted message
- * @param int      $access_id Access level (see defines in elgglib.php)
- * @return bool
+ * @param int      $access_id Access level (see defines in constants.php)
+ *
+ * @return false|int
  */
 function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
+	
+	if (!$poster instanceof ElggUser || !$owner instanceof ElggUser || empty($message)) {
+		return false;
+	}
+	
+	$access_id = (int) $access_id;
+	
 	$result_id = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
-
 	if (!$result_id) {
 		return false;
 	}
@@ -90,14 +100,14 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	// Send notification only if poster isn't the owner
 	if ($poster->guid != $owner->guid) {
 		$subject = elgg_echo('messageboard:email:subject', [], $owner->language);
-		$url = elgg_get_site_url() . "messageboard/owner/" . $owner->username;
+		$url = elgg_normalize_url("messageboard/owner/{$owner->username}");
 
 		$body = elgg_echo('messageboard:email:body', [
 			$poster->name,
 			$message,
 			$url,
 			$poster->name,
-			$poster->getURL()
+			$poster->getURL(),
 		], $owner->language);
 
 		$params = [
@@ -111,12 +121,22 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	return $result_id;
 }
 
-
 /**
  * Add edit and delete links for forum replies
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:annotation'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
 	$annotation = elgg_extract('annotation', $params);
+	if (!$annotation instanceof ElggAnnotation) {
+		return;
+	}
+	
 	if ($annotation->name !== 'messageboard') {
 		return;
 	}

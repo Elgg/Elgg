@@ -5,6 +5,11 @@
 
 use Elgg\DevelopersPlugin\Hooks;
 
+/**
+ * Developers init
+ *
+ * @return void
+ */
 function developers_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_developers_page_menu');
@@ -24,6 +29,11 @@ function developers_init() {
 	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax');
 }
 
+/**
+ * Process plugin settings before plugins are started
+ *
+ * @return void
+ */
 function developers_process_settings() {
 	$settings = elgg_get_plugin_from_id('developers')->getAllSettings();
 
@@ -91,14 +101,14 @@ function developers_process_settings() {
 /**
  * Register menu items for the page menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _developers_page_menu($hook, $type, $return, $params) {
@@ -151,7 +161,9 @@ function _developers_page_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Adds debug info to all translatable strings.
+ * Adds debug info to all translatable strings
+ *
+ * @return void
  */
 function developers_decorate_all_translations() {
 	$language = get_current_language();
@@ -165,6 +177,8 @@ function developers_decorate_all_translations() {
  * This function checks if the suffix has already been added so it is idempotent
  *
  * @param string $language Language code like "en"
+ *
+ * @return void
  */
 function _developers_decorate_translations($language) {
 	$translations = _elgg_services()->translator->getLoadedTranslations();
@@ -189,6 +203,13 @@ function _developers_decorate_translations($language) {
  *
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
+ *
+ * @param string $hook   'view'
+ * @param string $type   'all'
+ * @param string $result current return value
+ * @param mixed  $params supplied params
+ *
+ * @return void|string
  */
 function developers_wrap_views($hook, $type, $result, $params) {
 	if (elgg_get_viewtype() != "default") {
@@ -231,6 +252,11 @@ function developers_wrap_views($hook, $type, $result, $params) {
 
 /**
  * Log the events and plugin hooks
+ *
+ * @param string $name the name of the event/hook
+ * @param string $type the type of the event/hook
+ *
+ * @return void
  */
 function developers_log_events($name, $type) {
 
@@ -280,7 +306,8 @@ function developers_log_events($name, $type) {
 /**
  * Serve the theme sandbox pages
  *
- * @param array $page
+ * @param array $page URL segments
+ *
  * @return bool
  */
 function developers_theme_sandbox_controller($page) {
@@ -294,6 +321,11 @@ function developers_theme_sandbox_controller($page) {
 	return true;
 }
 
+/**
+ * Page handler for /developers_ajax_demo
+ *
+ * @return true
+ */
 function developers_ajax_demo_controller() {
 	echo elgg_view_resource('developers/ajax_demo');
 	return true;

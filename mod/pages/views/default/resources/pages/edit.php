@@ -1,13 +1,13 @@
 <?php
-
 /**
  * Edit a page
  *
  * @package ElggPages
  */
+
 elgg_gatekeeper();
 
-$page_guid = (int)elgg_extract('guid', $vars);
+$page_guid = (int) elgg_extract('guid', $vars);
 $page = get_entity($page_guid);
 
 if (!pages_is_page($page) || !$page->canEdit()) {

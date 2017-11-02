@@ -48,6 +48,6 @@ $key = "river:$action:$type:$subtype";
 if (!elgg_language_key_exists($key)) {
 	$key = "river:$action:$type:default";
 }
-$summary = elgg_echo($key, array($subject_link, $object_link));
+$summary = elgg_echo($key, [$subject_link, $object_link]);
 
 echo trim("$summary $group_string");

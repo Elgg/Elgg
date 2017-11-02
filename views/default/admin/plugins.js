@@ -6,7 +6,7 @@ define(function(require) {
 
 	var ajax = new Ajax();
 
-	function init () {	
+	function init () {
 
 		initPluginReordering();
 	
@@ -22,14 +22,14 @@ define(function(require) {
 
 		// plugin screenshots
 		$(document).on('mouseenter', '.elgg-plugin-details-screenshots .elgg-plugin-screenshot', showPluginScreenshot);
-	}
+	};
 
 	function freezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'block');
-	}
+	};
 	function unfreezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'none');
-	}
+	};
 
 	function initPluginReordering() {
 		$('#elgg-plugin-list > ul').sortable({
@@ -41,7 +41,7 @@ define(function(require) {
 			revert:               500,
 			stop:                 movePlugin
 		});
-	}
+	};
 
 	function toggleSinglePlugin(e) {
 		freezePlugins();
@@ -70,7 +70,7 @@ define(function(require) {
 						unfreezePlugins();
 					});
 			});
-	}
+	};
 
 	/**
 	 * Active or deactivate all the visible plugins
@@ -114,7 +114,7 @@ define(function(require) {
 		$form.prop('action', elgg.security.addToken(this.href));
 		$form.append('<input type="hidden" name="guids" value="' + guids.join(',') + '" />');
 		$form.appendTo("body").submit();
-	}
+	};
 
 	/**
 	 * Save the plugin order after a move event.
@@ -147,7 +147,7 @@ define(function(require) {
 				unfreezePlugins();
 			}
 		});
-	}
+	};
 
 	/**
 	 * Update the plugin view.
@@ -174,7 +174,7 @@ define(function(require) {
 				}
 			}
 		});
-	}
+	};
 	
 	/**
 	 * Filters the plugin list based on a selected category
@@ -191,7 +191,7 @@ define(function(require) {
 		$(".elgg-plugin").hide();
 		$(".elgg-plugin-category-" + $(this).attr("rel")).show();
 		$(this).closest('li').addClass("elgg-state-selected");
-	}
+	};
 	
 	/**
 	 * Shows the details of the selected plugin
@@ -207,7 +207,7 @@ define(function(require) {
 		$(".elgg-plugin-details-container ." + $(this).attr("rel")).show();
 		
 		$(this).parent().addClass("elgg-state-selected");
-	}
+	};
 	
 	/**
 	 * Handles mouseenters to show plugin screenshots
@@ -221,7 +221,7 @@ define(function(require) {
 		// must use .hide/show() to work with elgg-tabs
 		$(".elgg-plugin-details-screenshots > div > img").hide();
 		$(".elgg-plugin-details-screenshots > div > img[rel='" + $(this).attr("rel") + "']").show();
-	}
+	};
 
 	init();
 });

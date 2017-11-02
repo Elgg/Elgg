@@ -7,6 +7,9 @@
 class ElggLogCache {
 	protected $cache;
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		$this->cache = [];
 	}
@@ -15,6 +18,8 @@ class ElggLogCache {
 	 * Insert into cache
 	 *
 	 * @param mixed $data The log data to cache
+	 *
+	 * @return void
 	 */
 	public function insert($data) {
 		$this->cache[] = $data;
@@ -23,10 +28,12 @@ class ElggLogCache {
 	/**
 	 * Insert into cache from plugin hook
 	 *
-	 * @param string $hook
-	 * @param string $type
-	 * @param bool   $result
+	 * @param string $hook   'debug'
+	 * @param string $type   'log'
+	 * @param bool   $result current return value
 	 * @param array  $params Must have the data at $params['msg']
+	 *
+	 * @return false
 	 */
 	public function insertDump($hook, $type, $result, $params) {
 		$this->insert($params['msg']);

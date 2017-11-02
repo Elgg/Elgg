@@ -15,7 +15,6 @@ $show_dependencies = false;
 $package = $plugin->getPackage();
 if ($package && !$package->checkDependencies()) {
 	$show_dependencies = true;
-	
 }
 
 $screenshots_menu = '';

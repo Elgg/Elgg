@@ -2,6 +2,9 @@
 
 namespace Elgg\Friends\Collections;
 
+/**
+ * Page handler for friends collections
+ */
 class Router {
 
 	/**

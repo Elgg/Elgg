@@ -4,6 +4,11 @@
 * This plugin lets users send messages to each other.
 */
 
+/**
+ * Messages init
+ *
+ * @return void
+ */
 function messages_init() {
 
 	// add page menu items
@@ -56,6 +61,7 @@ function messages_init() {
  * Messages page handler
  *
  * @param array $page Array of URL components for routing
+ *
  * @return bool
  */
 function messages_page_handler($page) {
@@ -109,11 +115,12 @@ function messages_page_handler($page) {
 /**
  * Add inbox link to topbar
  *
- * @param string $hook   "register"
- * @param string $type   "menu:topbar"
- * @param array  $items  Menu items
- * @param array  $params Hook params
- * @return array
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:topbar"
+ * @param ElggMenuItem[] $items  Menu items
+ * @param array          $params Hook params
+ *
+ * @return void|ElggMenuItem[]
  */
 function messages_register_topbar($hook, $type, $items, $params) {
 	if (!elgg_is_logged_in()) {
@@ -146,8 +153,14 @@ function messages_register_topbar($hook, $type, $items, $params) {
 /**
  * Override the canEditMetadata function to return true for messages
  *
+ * @param string $hook         'permissions_check:metadata'
+ * @param string $type         'object'
+ * @param bool   $return_value current return value
+ * @param array  $parameters   supplied params
+ *
+ * @return void|true
  */
-function messages_can_edit_metadata($hook_name, $entity_type, $return_value, $parameters) {
+function messages_can_edit_metadata($hook, $type, $return_value, $parameters) {
 
 	global $messagesendflag;
 
@@ -156,16 +169,22 @@ function messages_can_edit_metadata($hook_name, $entity_type, $return_value, $pa
 	}
 	
 	$entity = elgg_extract('entity', $parameters);
-	if ($entity->getSubtype() == 'messages') {
+	if ($entity instanceof ElggObject && $entity->getSubtype() == 'messages') {
 		return true;
 	}
 }
 
 /**
- * Override the canEdit function to return true for messages within a particular context.
+ * Override the canEdit function to return true for messages within a particular context
  *
+ * @param string $hook         'permissions_check'
+ * @param string $type         'object'
+ * @param bool   $return_value current return value
+ * @param array  $parameters   supplied params
+ *
+ * @return void|true
  */
-function messages_can_edit($hook_name, $entity_type, $return_value, $parameters) {
+function messages_can_edit($hook, $type, $return_value, $parameters) {
 
 	global $messagesendflag;
 	
@@ -174,30 +193,22 @@ function messages_can_edit($hook_name, $entity_type, $return_value, $parameters)
 	}
 	
 	$entity = elgg_extract('entity', $parameters);
-	if ($entity->getSubtype() == 'messages') {
+	if ($entity instanceof ElggObject && $entity->getSubtype() == 'messages') {
 		return true;
 	}
 }
 
 /**
- * Prevent messages from generating a notification
- */
-function messages_notification_msg($hook_name, $entity_type, $return_value, $params) {
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggEntity) {
-		return;
-	}
-		
-	if ($entity->getSubtype() == 'messages') {
-		return false;
-	}
-}
-
-/**
- * Override the canEdit function to return true for messages within a particular context.
+ * Override the canEdit function to return true for messages within a particular context
  *
+ * @param string $hook         'container_permissions_check'
+ * @param string $type         'object'
+ * @param bool   $return_value current return value
+ * @param array  $parameters   supplied params
+ *
+ * @return void|true
  */
-function messages_can_edit_container($hook_name, $entity_type, $return_value, $parameters) {
+function messages_can_edit_container($hook, $type, $return_value, $parameters) {
 
 	global $messagesendflag;
 
@@ -216,7 +227,8 @@ function messages_can_edit_container($hook_name, $entity_type, $return_value, $p
  * @param int    $original_msg_guid The GUID of the message to reply from (default: none)
  * @param bool   $notify            Send a notification (default: true)
  * @param bool   $add_to_sent       If true (default), will add a message to the sender's 'sent' tray
- * @return bool
+ *
+ * @return false|int
  */
 function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $original_msg_guid = 0, $notify = true, $add_to_sent = true) {
 
@@ -323,17 +335,21 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 /**
  * Message URL override
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $url    current return value
+ * @param array  $params supplied params
+ *
+ * @return void|string
  */
 function messages_set_url($hook, $type, $url, $params) {
-	$entity = $params['entity'];
-	if (elgg_instanceof($entity, 'object', 'messages')) {
-		return 'messages/read/' . $entity->getGUID();
+	
+	$entity = elgg_extract('entity', $params);
+	if (!$entity instanceof ElggObject || $entity->getSubtype() !== 'messages') {
+		return;
 	}
+	
+	return "messages/read/{$entity->getGUID()}";
 }
 
 /**
@@ -344,11 +360,13 @@ function messages_set_url($hook, $type, $url, $params) {
  * @param int  $offset    Start at a defined offset (for listings)
  * @param bool $count     Switch between entities array or count mode
  *
- * @return array, int (if $count = true)
+ * @return ElggObject[]|int
  * @since 1.9
  */
 function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
 	return elgg_get_entities_from_metadata([
+		'type' => 'object',
+		'subtype' => 'messages',
 		'metadata_name_value_pairs' => [
 			'toId' => $user_guid,
 			'readYet' => 0,
@@ -376,6 +394,8 @@ function messages_count_unread($user_guid = 0) {
 /**
  * Prepare the compose form variables
  *
+ * @param int $recipient_guid new message recipient
+ *
  * @return array
  */
 function messages_prepare_form_vars($recipient_guid = 0) {
@@ -400,15 +420,22 @@ function messages_prepare_form_vars($recipient_guid = 0) {
 
 /**
  * Add to the user hover menu
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:user_hover'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function messages_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['entity'];
-
-	if (!elgg_is_logged_in()) {
+	
+	$user = elgg_extract('entity', $params);
+	if (!elgg_is_logged_in() || !$user instanceof ElggUser) {
 		return;
 	}
 	
-	if (elgg_get_logged_in_user_guid() == $user->guid) {
+	if (elgg_get_logged_in_user_guid() === $user->guid) {
 		return;
 	}
 	
@@ -429,6 +456,8 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
  * @param string   $event Event name
  * @param string   $type  Event type
  * @param ElggUser $user  User being deleted
+ *
+ * @return void
  */
 function messages_purge($event, $type, $user) {
 
@@ -443,11 +472,13 @@ function messages_purge($event, $type, $user) {
 	$options = [
 		'type' => 'object',
 		'subtype' => 'messages',
-		'metadata_name' => 'fromId',
-		'metadata_value' => $user->getGUID(),
-		'limit' => 0,
+		'metadata_name_value_pairs' => [
+			'fromId' => $user->guid,
+		],
+		'limit' => false,
 	];
 	$batch = new ElggBatch('elgg_get_entities_from_metadata', $options);
+	$batch->setIncrementOffset(false);
 	foreach ($batch as $e) {
 		$e->delete();
 	}
@@ -459,14 +490,14 @@ function messages_purge($event, $type, $user) {
 /**
  * Register messages with ECML.
  *
- * @param string $hook
- * @param string $entity_type
- * @param string $return_value
- * @param array  $params
+ * @param string $hook         'get_views'
+ * @param string $type         'ecml'
+ * @param string $return_value current return value
+ * @param array  $params       supplied params
  *
  * @return array
  */
-function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
+function messages_ecml_views_hook($hook, $type, $return_value, $params) {
 	$return_value['messages/messages'] = elgg_echo('messages');
 
 	return $return_value;

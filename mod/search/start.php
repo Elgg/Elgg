@@ -6,6 +6,8 @@
 
 /**
  * Initialize search plugin
+ *
+ * @return void
  */
 function search_init() {
 	require_once 'search_hooks.php';
@@ -38,6 +40,7 @@ function search_init() {
  * Page handler for search
  *
  * @param array $page Page elements from core page handler
+ *
  * @return bool
  */
 function search_page_handler($page) {
@@ -59,11 +62,12 @@ function search_page_handler($page) {
  * Return a string with highlighted matched queries and relevant context
  * Determines context based upon occurance and distance of words with each other.
  *
- * @param string $haystack
- * @param string $query
- * @param int    $min_match_context = 30
- * @param int    $max_length        = 300
- * @param bool   $tag_match         Search is for tags. Don't ignore words.
+ * @param string $haystack          result string
+ * @param string $query             search query
+ * @param int    $min_match_context minimal match context (default: 30)
+ * @param int    $max_length        max length (default: 300)
+ * @param bool   $tag_match         Search is for tags. Don't ignore words
+ *
  * @return string
  */
 function search_get_highlighted_relevant_substrings($haystack, $query, $min_match_context = 30, $max_length = 300, $tag_match = false) {
@@ -188,8 +192,9 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
  * Offsets and lengths are specified in separate arrays because of possible
  * index collisions with the offsets.
  *
- * @param array $offsets
- * @param array $lengths
+ * @param array $offsets offsets
+ * @param array $lengths lengths
+ *
  * @return array
  */
 function search_consolidate_substrings($offsets, $lengths) {
@@ -234,8 +239,9 @@ function search_consolidate_substrings($offsets, $lengths) {
 /**
  * Safely highlights the words in $words found in $string avoiding recursion
  *
- * @param array  $words
- * @param string $string
+ * @param array  $words  words to highlight
+ * @param string $string string to highlight
+ *
  * @return string
  */
 function search_highlight_words($words, $string) {
@@ -282,7 +288,8 @@ function search_highlight_words($words, $string) {
  *
  * @param string $query  the query string to parse
  * @param string $format Return as an array or a string
- * @return mixed
+ *
+ * @return array|string
  */
 function search_remove_ignored_words($query, $format = 'array') {
 
@@ -301,13 +308,12 @@ function search_remove_ignored_words($query, $format = 'array') {
 }
 
 /**
- * Passes results, and original params to the view functions for
- * search type.
+ * Passes results, and original params to the view functions for search type
  *
- * @param array  $results
- * @param array  $params
- * @param string $view_type = list, entity or layout
- * @return string
+ * @param array $params    search params
+ * @param array $view_type view type
+ *
+ * @return false|string
  */
 function search_get_search_view($params, $view_type) {
 	switch ($view_type) {
@@ -350,11 +356,12 @@ function search_get_search_view($params, $view_type) {
 }
 
 /**
- * Returns a where clause for a search query.
+ * Returns a where clause for a search query
  *
  * @param string $table  Prefix for table to search on
  * @param array  $fields Fields to match against
  * @param array  $params Original search params
+ *
  * @return string
  */
 function search_get_where_sql($table, $fields, $params) {
@@ -387,12 +394,13 @@ function search_get_where_sql($table, $fields, $params) {
 
 
 /**
- * Returns ORDER BY sql for insertion into elgg_get_entities().
+ * Returns ORDER BY sql for insertion into elgg_get_entities()
  *
- * @param string $entities_table Prefix for entities table.
- * @param string $type_table     Prefix for the type table.
+ * @param string $entities_table Prefix for entities table
+ * @param string $type_table     Prefix for the type table
  * @param string $sort           ORDER BY part
  * @param string $order          ASC or DESC
+ *
  * @return string
  */
 function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
@@ -442,9 +450,10 @@ function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
  * This is good for performance since search is slow and there are many pages all
  * with the same content.
  *
- * @param string $hook Hook name
- * @param string $type Hook type
+ * @param string $hook 'robots.txt'
+ * @param string $type 'site'
  * @param string $text robots.txt content for plugins
+ *
  * @return string
  */
 function search_exclude_robots($hook, $type, $text) {
@@ -460,8 +469,9 @@ TEXT;
 /**
  * Adds search 'href' to output/tag view vars
  *
- * @param \Elgg\Hook $hook Hook
- * @return array
+ * @param \Elgg\Hook $hook 'view_vars' 'output/tag'
+ *
+ * @return void|array
  */
 function search_output_tag(\Elgg\Hook $hook) {
 	$vars = $hook->getValue();

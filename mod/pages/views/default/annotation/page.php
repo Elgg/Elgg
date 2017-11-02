@@ -6,7 +6,7 @@
  */
 
 $annotation = elgg_extract('annotation', $vars);
-if(!($annotation instanceof \ElggAnnotation)) {
+if (!($annotation instanceof \ElggAnnotation)) {
 	return;
 }
 

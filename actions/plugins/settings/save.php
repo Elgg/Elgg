@@ -26,7 +26,6 @@ if (elgg_action_exists("$plugin_id/settings/save")) {
 	action("$plugin_id/settings/save");
 } else {
 	foreach ($params as $k => $v) {
-		
 		$result = $plugin->setSetting($k, $v);
 		if (!$result) {
 			return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_name]));
