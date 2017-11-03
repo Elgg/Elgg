@@ -35,7 +35,6 @@ if ($new_file) {
 	if (!$file instanceof ElggFile) {
 		return elgg_error_response(elgg_echo('file:cannotload'));
 	}
-	/* @var ElggFile $file */
 
 	// user must be able to edit file
 	if (!$file->canEdit()) {
@@ -51,45 +50,29 @@ $file->access_id = $access_id;
 $file->container_guid = $container_guid;
 $file->tags = string_to_tag_array($tags);
 
+$file->save();
+
 if ($uploaded_file && $uploaded_file->isValid()) {
-	if ($file->acceptUploadedFile($uploaded_file)) {
-		$guid = $file->save();
+	// save master file
+	if (!$file->acceptUploadedFile($uploaded_file)) {
+		return elgg_error_response(elgg_echo('file:uploadfailed'));
 	}
 	
-	if ($guid && $file->saveIconFromElggFile($file)) {
-		$file->thumbnail = $file->getIcon('small')->getFilename();
-		$file->smallthumb = $file->getIcon('medium')->getFilename();
-		$file->largethumb = $file->getIcon('large')->getFilename();
-	} else {
-		$file->deleteIcon();
-		unset($file->thumbnail);
-		unset($file->smallthumb);
-		unset($file->largethumb);
+	if (!$file->save()) {
+		return elgg_error_response(elgg_echo('file:uploadfailed'));
 	}
-} else if ($file->exists()) {
-	$file->save();
-
-	if (isset($reset_icon_urls)) {
-		// we touch the thumbs because we want new URLs from \Elgg\FileService\File::getURL
-		$thumbnails = [$file->thumbnail, $file->smallthumb, $file->largethumb];
-		foreach ($thumbnails as $thumbnail) {
-			$thumbfile = new ElggFile();
-			$thumbfile->owner_guid = $file->owner_guid;
-			$thumbfile->setFilename($thumbnail);
-			if ($thumbfile->exists()) {
-				$thumb_filename = $thumbfile->getFilenameOnFilestore();
-				touch($thumb_filename);
-			}
-		}
-	}
+	
+	// update icons
+	$file->saveIconFromElggFile($file);
+	
+	// remove legacy metadata
+	unset($file->thumbnail);
+	unset($file->smallthumb);
+	unset($file->largethumb);
 }
 
 // file saved so clear sticky form
 elgg_clear_sticky_form('file');
-
-if (empty($guid)) {
-	return elgg_error_response(elgg_echo('file:uploadfailed'));
-}
 
 $forward = $file->getURL();
 

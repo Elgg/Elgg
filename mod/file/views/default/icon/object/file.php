@@ -10,23 +10,10 @@
  */
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggFile) {
-	elgg_log('icon/object/file view expects an instance of ElggFile', 'ERROR');
 	return;
 }
 
-$sizes = array_keys(elgg_get_icon_sizes($entity->getType(), $entity->getSubtype()));
 $size = elgg_extract('size', $vars, 'medium');
-if (!in_array($size, $sizes)) {
-	// File plugin only capable of handling 3 sizes
-	// Anything that is an unknown size defaults to large
-	if ($size == 'topbar' || $size == 'tiny') {
-		$size = 'small';
-	} else if ($size == 'master') {
-		$size = 'large';
-	} else {
-		$size = "medium";
-	}
-}
 
 $url = elgg_extract('href', $vars, $entity->getURL());
 
