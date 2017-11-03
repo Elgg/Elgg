@@ -54,12 +54,11 @@ foreach ($fields as $name => $type) {
 			break;
 
 		case 'parent_guid' :
-			if ($entity) {
-				// Add a hidden parent guid input
-				$field['#type'] = 'hidden';
-			} else {
-				// Display a parent picker
+			if ($parent_guid) {
 				$field['entity'] = $entity;
+			} else {
+				// skip field if there is no parent_guid
+				continue(2);
 			}
 			break;
 	}
