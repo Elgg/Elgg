@@ -89,14 +89,12 @@ class ElggGroup extends \ElggEntity {
 	public function getContentAccessMode() {
 		$mode = $this->content_access_mode;
 
-		if (!is_string($mode)) {
-			// fallback to 1.8 default behavior
+		if (!isset($mode)) {
 			if ($this->isPublicMembership()) {
 				$mode = self::CONTENT_ACCESS_MODE_UNRESTRICTED;
 			} else {
 				$mode = self::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
 			}
-			$this->content_access_mode = $mode;
 		}
 
 		// only support two modes for now
