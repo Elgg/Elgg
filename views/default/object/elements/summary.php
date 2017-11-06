@@ -17,7 +17,7 @@
  */
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
-	elgg_log("object/elements/summary expects an ElggEntity in \$vars['entity']", 'ERROR');
+	return;
 }
 
 $title = elgg_extract('title', $vars, '');
