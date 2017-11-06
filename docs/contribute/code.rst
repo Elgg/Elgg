@@ -517,7 +517,7 @@ Naming
 
 * All other function names must begin with ``_elgg_``.
 
-* Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``).
+* Name globals and constants in ``ALL_CAPS`` (``ACCESS_PUBLIC``, ``$CONFIG``).
 
 Miscellaneous
 ^^^^^^^^^^^^^

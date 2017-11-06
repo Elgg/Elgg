@@ -653,7 +653,6 @@ Pre-defined access controls
 -  ``ACCESS_PRIVATE`` (value: 0) Private.
 -  ``ACCESS_LOGGED_IN`` (value: 1) Logged in users.
 -  ``ACCESS_PUBLIC`` (value: 2) Public data.
--  ``ACCESS_FRIENDS`` (value: -2) Owner and his/her friends.
 
 User defined access controls
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
