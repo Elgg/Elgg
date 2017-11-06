@@ -62,10 +62,11 @@ $access_mode_params = [
 	],
 ];
 
-if ($entity) {
+if ($entity instanceof \ElggGroup) {
 	// Disable content_access_mode field for hidden groups because the setting
 	// will be forced to members_only regardless of the entered value
-	if ($entity->access_id === $entity->group_acl) {
+	$acl = _groups_get_group_acl($entity);
+	if ($acl && ($entity->access_id === $acl->id)) {
 		$access_mode_params['disabled'] = 'disabled';
 	}
 	

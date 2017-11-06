@@ -273,8 +273,11 @@ trait Seeding {
 			$group->save();
 
 			if ($group->access_id == ACCESS_PRIVATE) {
-				$group->access_id = $group->group_acl;
-				$group->save();
+				$acls = $group->getOwnedAccessCollections(['subtype' => 'group_acl']);
+				if ($acls) {
+					$group->access_id = $acls[0]->id;
+					$group->save();
+				}
 			}
 
 			$group->join(get_entity($attributes['owner_guid']));

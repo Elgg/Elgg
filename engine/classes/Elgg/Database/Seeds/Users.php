@@ -57,7 +57,7 @@ class Users extends Seed {
 				continue;
 			}
 
-			$collection_id = create_access_collection('Best Fake Friends Collection', $user->guid);
+			$collection_id = create_access_collection('Best Fake Friends Collection', $user->guid, 'friends_collection');
 			if ($collection_id) {
 				$this->log("Created new friend collection for user $user->name [collection_id: $collection_id]");
 			}

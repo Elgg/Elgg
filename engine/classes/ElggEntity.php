@@ -882,6 +882,21 @@ abstract class ElggEntity extends \ElggData implements
 			'distinct' => false,
 		]);
 	}
+	
+	/**
+	 * Returns the ACLs owned by the entity
+	 *
+	 * @param array $options additional options to get the access collections with
+	 *
+	 * @return \ElggAccessCollection[]
+	 *
+	 * @see elgg_get_access_collections()
+	 * @since 3.0
+	 */
+	public function getOwnedAccessCollections($options = []) {
+		$options['owner_guid'] = $this->guid;
+		return _elgg_services()->accessCollections->getEntityCollections($options);
+	}
 
 	/**
 	 * Gets an array of entities with a relationship to this entity.
@@ -2001,16 +2016,14 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		$ac = _elgg_services()->accessCollections;
-
-		$collections = $ac->getEntityCollections($this->guid);
+		$collections = $this->getOwnedAccessCollections();
 		if (empty($collections)) {
 			return true;
 		}
 
 		$result = true;
 		foreach ($collections as $collection) {
-			$result = $result & $ac->delete($collection->id);
+			$result = $result & $collection->delete();
 		}
 
 		return $result;

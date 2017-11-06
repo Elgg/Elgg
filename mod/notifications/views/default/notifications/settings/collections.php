@@ -27,7 +27,7 @@ $collections = [
 	],
 ];
 
-$user_collections = get_user_access_collections($user->guid);
+$user_collections = $user->getOwnedAccessCollections(['subtype' => 'friends_collection']);
 if (!empty($user_collections)) {
 	foreach ($user_collections as $user_collection) {
 		$collection_id = $user_collection->id;

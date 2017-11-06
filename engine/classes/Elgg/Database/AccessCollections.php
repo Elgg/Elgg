@@ -463,10 +463,10 @@ class AccessCollections {
 				ACCESS_PUBLIC => $this->getReadableAccessLevel(ACCESS_PUBLIC)
 			];
 
-			$collections = $this->getEntityCollections($user_guid);
+			$collections = $this->getEntityCollections(['owner_guid' => $user_guid]);
 			if ($collections) {
 				foreach ($collections as $collection) {
-					$access_array[$collection->id] = $collection->name;
+					$access_array[$collection->id] = $collection->getDisplayName();
 				}
 			}
 
@@ -530,13 +530,22 @@ class AccessCollections {
 	 *
 	 * @param string $name       The name of the collection.
 	 * @param int    $owner_guid The GUID of the owner (default: currently logged in user).
+	 * @param string $subtype    The subtype indicates the usage of the acl
 	 *
 	 * @return int|false The collection ID if successful and false on failure.
 	 */
-	public function create($name, $owner_guid = 0) {
+	public function create($name, $owner_guid = 0, $subtype = null) {
 		$name = trim($name);
 		if (empty($name)) {
 			return false;
+		}
+		
+		if (isset($subtype)) {
+			$subtype = trim($subtype);
+			if (strlen($subtype) > 255) {
+				_elgg_services()->logger->error("The subtype length for access collections cannot be greater than 255");
+				return false;
+			}
 		}
 
 		if ($owner_guid == 0) {
@@ -546,11 +555,13 @@ class AccessCollections {
 		$query = "
 			INSERT INTO {$this->table}
 			SET name = :name,
+				subtype = :subtype,
 				owner_guid = :owner_guid
 		";
 
 		$params = [
 			':name' => $name,
+			':subtype' => $subtype,
 			':owner_guid' => (int) $owner_guid,
 		];
 
@@ -564,6 +575,7 @@ class AccessCollections {
 		$hook_params = [
 			'collection_id' => $id,
 			'name' => $name,
+			'subtype' => $subtype,
 			'owner_guid' => $owner_guid,
 		];
 
@@ -734,9 +746,15 @@ class AccessCollections {
 			WHERE id = :id
 		";
 
-		return $this->db->getDataRow($query, $callback, [
+		$result = $this->db->getDataRow($query, $callback, [
 			':id' => (int) $collection_id,
 		]);
+		
+		if (empty($result)) {
+			return false;
+		}
+		
+		return $result;
 	}
 
 	/**
@@ -838,24 +856,34 @@ class AccessCollections {
 	}
 
 	/**
-	 * Returns access collections owned by the user
+	 * Returns access collections
 	 *
-	 * @param int $owner_guid GUID of the owner
-	 * @return \ElggAccessCollection[]|false
+	 * @param array $options Options to get access collections by
+	 *                       Supported are 'owner_guid', 'subtype'
+	 * @return \ElggAccessCollection[]
 	 */
-	public function getEntityCollections($owner_guid) {
+	public function getEntityCollections($options = []) {
 
 		$callback = [$this, 'rowToElggAccessCollection'];
 
-		$query = "
-			SELECT * FROM {$this->table}
-				WHERE owner_guid = :owner_guid
-				ORDER BY name ASC
-		";
-
-		$params = [
-			':owner_guid' => (int) $owner_guid,
-		];
+		$supported_options = ['owner_guid', 'subtype'];
+		
+		$wheres = [];
+		$params = [];
+		foreach ($supported_options as $option) {
+			$option_value = elgg_extract($option, $options);
+			if (!isset($option_value)) {
+				continue;
+			}
+			$wheres[] = "{$option} = :{$option}";
+			$params[":{$option}"] = $option_value;
+		}
+		
+		$query = "SELECT * FROM {$this->table}";
+		if (!empty($wheres)) {
+			$query .= ' WHERE ' . implode(' AND ', $wheres);
+		}
+		$query .= ' ORDER BY name ASC';
 
 		return $this->db->getData($query, $callback, $params);
 	}

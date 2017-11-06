@@ -53,7 +53,11 @@ switch ($access_id) {
 				$class[] = 'elgg-access-group-closed';
 			}
 		} else {
-			$class[] = 'elgg-access-limited';
+			if ($collection && !empty($collection->getSubtype())) {
+				$class[] = 'elgg-access-' . elgg_get_friendly_title($collection->getSubtype());
+			} else {
+				$class[] = 'elgg-access-limited';
+			}
 		}
 		break;
 }

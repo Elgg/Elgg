@@ -27,13 +27,17 @@ class DeleteRelationshipHandler {
 			return;
 		}
 
-
-		$collections = get_user_access_collections($relationship->guid_one);
-		if (!empty($collections)) {
-			foreach ($collections as $collection) {
-				remove_user_from_access_collection($relationship->guid_two, $collection->id);
-			}
+		$collections = elgg_get_access_collections([
+			'owner_guid' => $relationship->guid_one,
+			'subtype' => 'friends_collection',
+		]);
+		
+		if (empty($collections)) {
+			return;
 		}
-
+		
+		foreach ($collections as $collection) {
+			remove_user_from_access_collection($relationship->guid_two, $collection->id);
+		}
 	}
 }

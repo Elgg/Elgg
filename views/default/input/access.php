@@ -93,20 +93,4 @@ if (!isset($vars['options_values'][$vars['value']])) {
 	$vars['options_values'][$vars['value']] = $display;
 }
 
-// should we tell users that public/logged-in access levels will be ignored?
-if (($container instanceof ElggGroup)
-	&& $container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY
-	&& !elgg_in_context('group-edit')
-	&& !($entity instanceof ElggGroup)) {
-	$show_override_notice = true;
-} else {
-	$show_override_notice = false;
-}
-
-if ($show_override_notice) {
-	$vars['data-group-acl'] = $container->group_acl;
-}
 echo elgg_view('input/select', $vars);
-if ($show_override_notice) {
-	echo elgg_format_element('p', ['class' => 'elgg-text-help'], elgg_echo('access:overridenotice'));
-}

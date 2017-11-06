@@ -297,13 +297,14 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
  *
  * @param string $name       The name of the collection.
  * @param int    $owner_guid The GUID of the owner (default: currently logged in user).
+ * @param string $subtype    The subtype indicates the usage of the acl
  *
  * @return int|false The collection ID if successful and false on failure.
  * @see update_access_collection()
  * @see delete_access_collection()
  */
-function create_access_collection($name, $owner_guid = 0) {
-	return _elgg_services()->accessCollections->create($name, $owner_guid);
+function create_access_collection($name, $owner_guid = 0, $subtype = null) {
+	return _elgg_services()->accessCollections->create($name, $owner_guid, $subtype);
 }
 
 /**
@@ -388,16 +389,13 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
 }
 
 /**
- * Returns access collections owned by the entity
+ * Returns access collections
  *
- * @see add_access_collection()
- * @see get_members_of_access_collection()
- *
- * @param int $owner_guid GUID of the owner
- * @return \ElggAccessCollection[]|false
+ * @param array $options array of options to get access collections by
+ * @return \ElggAccessCollection[]
  */
-function get_user_access_collections($owner_guid) {
-	return _elgg_services()->accessCollections->getEntityCollections($owner_guid);
+function elgg_get_access_collections($options = []) {
+	return _elgg_services()->accessCollections->getEntityCollections($options);
 }
 
 /**

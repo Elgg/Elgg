@@ -7,11 +7,11 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity) {
+if (!($entity instanceof \ElggEntity)) {
 	return;
 }
 
-$collections = get_user_access_collections($entity->guid);
+$collections = $entity->getOwnedAccessCollections(['subtype' => 'friends_collection']);
 
 echo elgg_view('page/components/list', [
 	'items' => $collections,
