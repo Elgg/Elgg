@@ -44,11 +44,7 @@ class ElggCoreGroupTest extends LegacyIntegrationTestCase {
 		// if mode not set, open groups are unrestricted
 		$this->assertEqual($this->group->getContentAccessMode(), $unrestricted);
 
-		// after first check, metadata is set
-		$this->assertEqual($this->group->content_access_mode, $unrestricted);
-
 		// if mode not set, closed groups are membersonly
-		$this->group->deleteMetadata('content_access_mode');
 		$this->group->membership = ACCESS_PRIVATE;
 		$this->assertEqual($this->group->getContentAccessMode(), $membersonly);
 

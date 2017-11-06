@@ -10,12 +10,12 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value']    The current value, if any
- * @uses $vars['name']     The name of the input field
- * @uses $vars['options']  An array of strings representing the options for the
- *                         radio field as "label" => option
- * @uses $vars['class']    Additional class of the list. Optional.
- * @uses $vars['align']    'horizontal' or 'vertical' Default: 'vertical'
+ * @uses $vars['value']          The current value, if any
+ * @uses $vars['name']           The name of the input field
+ * @uses $vars['options']        An array of strings representing the options for the
+ * @uses $vars['options_values'] An associative array of 'value' => ['text' => 'option']
+ * @uses $vars['class']          Additional class of the list. Optional.
+ * @uses $vars['align']          'horizontal' or 'vertical' Default: 'vertical'
  */
 
 $defaults = [
@@ -24,15 +24,38 @@ $defaults = [
 	'disabled' => false,
 	'options' => [],
 	'name' => '',
-	'type' => 'radio'
+	'type' => 'radio',
 ];
 
 $vars = array_merge($defaults, $vars);
 
+$options_values = elgg_extract('options_values', $vars, []);
+unset($vars['options_values']);
+
+$input_options = [];
+
+foreach ($options_values as $key => $value) {
+	if (is_array($value)) {
+		$key = elgg_extract('text', $value, $key);
+	} else {
+		$value = [
+			'text' => $value,
+			'value' => $key,
+		];
+	}
+	$input_options[$key] = $value;
+}
+
+// turn options into options_values
 $options = elgg_extract('options', $vars);
 unset($vars['options']);
+if (!empty($options) && empty($input_options)) {
+	foreach ($options as $label => $value) {
+		$input_options[$label] = ['value' => $value];
+	}
+}
 
-if (empty($options)) {
+if (empty($input_options)) {
 	return;
 }
 
@@ -47,21 +70,25 @@ unset($vars['align']);
 $vars['class'] = 'elgg-input-radio';
 
 if (is_array($vars['value'])) {
-	$vars['value'] = array_map('elgg_strtolower', $vars['value']);
+	$selected_value = array_map('elgg_strtolower', $vars['value']);
 } else {
-	$vars['value'] = [elgg_strtolower($vars['value'])];
+	$selected_value = [elgg_strtolower($vars['value'])];
 }
-
-$value = $vars['value'];
 unset($vars['value']);
 
 $radios = '';
-foreach ($options as $label => $option) {
-	$vars['checked'] = in_array(elgg_strtolower($option), $value);
-	$vars['value'] = $option;
+foreach ($input_options as $label => $option) {
+	$radio_input_options = array_merge($vars, $option);
+	$radio_input_options['checked'] = in_array(elgg_strtolower(elgg_extract('value', $option)), $selected_value);
 
-	$radio = elgg_format_element('input', $vars);
+	$label = elgg_extract('text', $radio_input_options, $label);
+	unset($radio_input_options['text']);
+	
+	$radio = elgg_format_element('input', $radio_input_options);
 	$radios .= "<li><label>{$radio}{$label}</label></li>";
 }
 
-echo elgg_format_element('ul', ['class' => $list_class, 'id' => $id], $radios);
+echo elgg_format_element('ul', [
+	'class' => $list_class,
+	'id' => $id,
+], $radios);

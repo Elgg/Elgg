@@ -30,7 +30,25 @@ $ipsum = elgg_view('developers/ipsum');
 				'a (.elgg-input-radio)' => 1,
 				'b (.elgg-input-radio)' => 2
 			],
+			'value' => 2,
 			'#label' => 'Radio input (.elgg-input-radios):',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'radio',
+			'name' => 'f3a',
+			'id' => 'f3a',
+			'options_values' => [
+				'a' => 'a (.elgg-input-radio)',
+				'b' => 'b (.elgg-input-radio)',
+				[
+					'text' => 'c (.elgg-input-radio) from array',
+					'value' => 'c',
+					'title' => 'c (.elgg-input-radio) from array',
+				],
+			],
+			'value' => 'c',
+			'#label' => 'Radio input (.elgg-input-radios) with options_values:',
 		]);
 
 		echo elgg_view_field([
@@ -96,6 +114,7 @@ $ipsum = elgg_view('developers/ipsum');
 				'a (.elgg-input-checkbox)' => 1,
 				'b (.elgg-input-checkbox)' => 2
 			],
+			'value' => 2,
 			'#label' => 'Checkboxes input (.elgg-input-checkboxes):',
 		]);
 
@@ -109,6 +128,23 @@ $ipsum = elgg_view('developers/ipsum');
 				'b (.elgg-input-checkbox)' => 2
 			],
 			'#label' => 'Checkboxes input (.elgg-input-checkboxes) with switch style:',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'checkboxes',
+			'name' => 'f4b',
+			'id' => 'f4b',
+			'options_values' => [
+				'a' => 'a (.elgg-input-checkbox)',
+				'b' => 'b (.elgg-input-checkbox)',
+				[
+					'text' => 'c (.elgg-input-checkbox) from array',
+					'value' => 'c',
+					'title' => 'c (.elgg-input-checkbox) from array',
+				],
+			],
+			'value' => ['a', 'c'],
+			'#label' => 'Checkboxes input (.elgg-input-checkboxes) with options_values:',
 		]);
 
 		echo elgg_view_field([

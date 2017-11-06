@@ -333,8 +333,12 @@ class ElggPlugin extends \ElggObject {
 	 * @return array An array of key/value pairs.
 	 */
 	public function getAllSettings() {
+		$defaults = [];
+		if ($this->isActive()) {
+			// only load settings from static config for active plugins to prevent issues with internal plugin references ie. classes and language keys
+			$defaults = $this->getStaticConfig('settings', []);
+		}
 		
-		$defaults = $this->getStaticConfig('settings', []);
 		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
 		
 		if ($values !== null) {
@@ -867,9 +871,6 @@ class ElggPlugin extends \ElggObject {
 			// so translations can be used... for example in registering widgets
 			$this->registerLanguages();
 		}
-		
-		// Preload static config file
-		$this->getStaticConfig('');
 		
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {

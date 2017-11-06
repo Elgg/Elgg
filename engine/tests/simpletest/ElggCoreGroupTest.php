@@ -26,28 +26,6 @@ class ElggCoreGroupTest extends \ElggCoreUnitTest {
 		$this->user->delete();
 	}
 
-	public function testContentAccessMode() {
-		$unrestricted = \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
-		$membersonly = \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
-
-		// if mode not set, open groups are unrestricted
-		$this->assertEqual($this->group->getContentAccessMode(), $unrestricted);
-
-		// after first check, metadata is set
-		$this->assertEqual($this->group->content_access_mode, $unrestricted);
-
-		// if mode not set, closed groups are membersonly
-		$this->group->deleteMetadata('content_access_mode');
-		$this->group->membership = ACCESS_PRIVATE;
-		$this->assertEqual($this->group->getContentAccessMode(), $membersonly);
-
-		// test set
-		$this->group->setContentAccessMode($unrestricted);
-		$this->assertEqual($this->group->getContentAccessMode(), $unrestricted);
-		$this->group->setContentAccessMode($membersonly);
-		$this->assertEqual($this->group->getContentAccessMode(), $membersonly);
-	}
-
 	public function testGroupItemVisibility() {
 		$original_user = _elgg_services()->session->getLoggedInUser();
 		_elgg_services()->session->setLoggedInUser($this->user);

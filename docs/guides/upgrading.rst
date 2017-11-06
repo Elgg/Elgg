@@ -519,6 +519,13 @@ are no widgets in the layout, you can now pass a special ``no_widgets`` paramete
 When registering widgets you can no longer omit passing a context as the ``all`` context is no longer supported. You need
 to explicitely pass the contexts for which the widget is intended. 
 
+Action responses
+----------------
+
+All core and core plugin actions now all use the new Http Response functions like `elgg_ok_response` and `elgg_error_response` instead of `forward()`.
+The effect of this change is that is most cases the `'forward', 'system'` hook is no longer triggered. If you like to influence the responses you now can use the
+`'response', 'action:<name/of/action>'` hook. This gives you more control over the response and allows to target a specific action very easily.
+
 
 HtmLawed is no longer a plugin
 ------------------------------
