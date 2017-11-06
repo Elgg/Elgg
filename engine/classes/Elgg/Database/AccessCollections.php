@@ -159,8 +159,7 @@ class AccessCollections {
 	 * the private access level.
 	 *
 	 * @internal this is only used in core for creating the SQL where clause when
-	 * retrieving content from the database. The friends access level is handled by
-	 * _elgg_get_access_where_sql().
+	 * retrieving content from the database.
 	 *
 	 * @see get_write_access_array() for the access levels that a user can write to.
 	 *
@@ -176,7 +175,7 @@ class AccessCollections {
 		if ($flush) {
 			$cache->clear();
 		}
-
+		
 		if ($user_guid == 0) {
 			$user_guid = $this->session->getLoggedInUserGuid();
 		}
@@ -294,7 +293,6 @@ class AccessCollections {
 	 * Example return value in English:
 	 * array(
 	 *     0 => 'Private',
-	 *    -2 => 'Friends',
 	 *     1 => 'Logged in users',
 	 *     2 => 'Public',
 	 *    34 => 'My favorite friends',
@@ -352,7 +350,21 @@ class AccessCollections {
 			'user_id' => $user_guid,
 			'input_params' => $input_params,
 		];
-		return $this->hooks->trigger('access:collections:write', 'user', $options, $access_array);
+		
+		$access_array = $this->hooks->trigger('access:collections:write', 'user', $options, $access_array);
+
+		// move logged in and public to the end of the array
+		foreach ([ACCESS_LOGGED_IN, ACCESS_PUBLIC] as $access) {
+			if (!isset($access_array[$access])) {
+				continue;
+			}
+			
+			$temp = $access_array[$access];
+			unset($access_array[$access]);
+			$access_array[$access] = $temp;
+		}
+
+		return $access_array;
 	}
 
 	/**
@@ -842,9 +854,9 @@ class AccessCollections {
 
 		$user_guid = $this->session->getLoggedInUserGuid();
 		
-		if (!$collection || !$user_guid) {
-			// return 'Limited' if there is no logged in user or collection can not be loaded
-			return $translator->translate('access:limited:label');
+		if (!$collection || !$collection->canEdit()) {
+			// return 'Limited' if there is collection can not be loaded or it can not be edited
+			return $translator->translate('access:label:limited');
 		}
 
 		return $collection->getDisplayName();
