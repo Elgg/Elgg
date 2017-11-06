@@ -6,7 +6,7 @@
 /**
  * Registers the buttons for title area of the group profile page
  *
- * @param ElggGroup $group
+ * @param ElggGroup $group group to register for
  * @return void
  */
 function groups_register_profile_buttons($group) {

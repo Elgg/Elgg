@@ -5,6 +5,11 @@
  * @package ElggNotifications
  */
 
+/**
+ * Notifications init
+ *
+ * @return void
+ */
 function notifications_plugin_init() {
 
 	elgg_extend_view('elgg.css', 'notifications.css');
@@ -71,14 +76,14 @@ function notifications_page_handler($page) {
 /**
  * Register menu items for the page menu
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:page'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _notifications_page_menu($hook, $type, $return, $params) {
@@ -114,12 +119,11 @@ function _notifications_page_menu($hook, $type, $return, $params) {
 /**
  * Register menu items for the page menu on group profiles
  *
- * @param \Elgg\Hook $hook hook
+ * @param \Elgg\Hook $hook 'register' 'menu:page'
  *
- * @return array
+ * @return void|ElggMenuItem[]
  *
  * @access private
- *
  * @since 3.0
  */
 function _notifications_groups_subscription_page_menu(\Elgg\Hook $hook) {
@@ -174,9 +178,14 @@ function _notifications_groups_subscription_page_menu(\Elgg\Hook $hook) {
  * @param string            $event        "delete"
  * @param string            $object_type  "relationship"
  * @param \ElggRelationship $relationship Relationship obj
+ *
  * @return void
  */
 function notifications_relationship_remove($event, $object_type, $relationship) {
+	
+	if (!$relationship instanceof ElggRelationship) {
+		return;
+	}
 	
 	if (!in_array($relationship->relationship, ['member', 'friend'])) {
 		return;
@@ -191,15 +200,22 @@ function notifications_relationship_remove($event, $object_type, $relationship) 
 /**
  * Turn on notifications for new friends if all friend notifications is on
  *
- * @param string $event
- * @param string $object_type
- * @param object $relationship
+ * @param string           $event        'create'
+ * @param string           $type         'relationship'
+ * @param ElggRelationship $relationship new relationship
+ *
+ * @return void
  */
-function notifications_update_friend_notify($event, $object_type, $relationship) {
+function notifications_update_friend_notify($event, $type, $relationship) {
+	
+	if (!$relationship instanceof ElggRelationship) {
+		return;
+	}
+	
 	// The handler gets triggered regardless of which relationship was
 	// created, so proceed only if dealing with a 'friend' relationship.
 	if ($relationship->relationship != 'friend') {
-		return true;
+		return;
 	}
 
 	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
@@ -232,23 +248,31 @@ function notifications_update_friend_notify($event, $object_type, $relationship)
  *
  * This function assumes that only friends can belong to access collections.
  *
- * @param string $event
- * @param string $object_type
- * @param bool $returnvalue
- * @param array $params
+ * @param string $event       'access:collections:add_user'
+ * @param string $type        'collection'
+ * @param bool   $returnvalue current return value
+ * @param array  $params      supplied params
+ *
+ * @return void
  */
-function notifications_update_collection_notify($event, $object_type, $returnvalue, $params) {
+function notifications_update_collection_notify($event, $type, $returnvalue, $params) {
 	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	// only update notifications for user owned collections
-	$collection_id = $params['collection_id'];
+	$collection_id = elgg_extract('collection_id', $params);
 	$collection = get_access_collection($collection_id);
+	if (!$collection instanceof ElggAccessCollection) {
+		return;
+	}
 	$user = get_entity($collection->owner_guid);
 	if (!($user instanceof ElggUser)) {
-		return $returnvalue;
+		return;
 	}
 
-	$member_guid = $params['user_guid'];
+	$member_guid = (int) elgg_extract('user_guid', $params);
+	if (empty($member_guid)) {
+		return;
+	}
 
 	// loop through all notification types
 	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
@@ -284,6 +308,7 @@ function notifications_update_collection_notify($event, $object_type, $returnval
  * @param string   $hook  "unit_test"
  * @param string   $type  "system"
  * @param string[] $tests Tests
+ *
  * @return string[]
  */
 function notifications_register_tests($hook, $type, $tests) {

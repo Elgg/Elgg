@@ -5,6 +5,8 @@
 
 /**
  * Initialize the discussion component
+ *
+ * @return void
  */
 function discussion_init() {
 
@@ -200,15 +202,16 @@ function discussion_redirect_to_reply($reply_guid, $fallback_guid) {
  * Discussion replies do not have their own page so their url is
  * the same as the topic url.
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $url    current value
+ * @param array  $params supplied params
+ *
+ * @return void|string
  */
 function discussion_set_topic_url($hook, $type, $url, $params) {
-	$entity = $params['entity'];
-
+	
+	$entity = elgg_extract('entity', $params);
 	if (!$entity instanceof ElggObject) {
 		return;
 	}
@@ -227,11 +230,12 @@ function discussion_set_topic_url($hook, $type, $url, $params) {
 /**
  * We don't want people commenting on topics in the river
  *
- * @param string $hook
- * @param string $type
- * @param string $return
- * @param array  $params
- * @return bool
+ * @param string $hook   'permissions_check:comment'
+ * @param string $type   'object'
+ * @param bool   $return current return value
+ * @param array  $params supplied params
+ *
+ * @return void|false
  */
 function discussion_comment_override($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'object', 'discussion')) {
@@ -244,19 +248,26 @@ function discussion_comment_override($hook, $type, $return, $params) {
  *
  * @param string         $hook   'register'
  * @param string         $type   'menu:owner_block'
- * @param ElggMenuItem[] $return
- * @param array          $params
- * @return ElggMenuItem[] $return
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function discussion_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'group')) {
-		if ($params['entity']->forum_enable != "no") {
-			$url = "discussion/group/{$params['entity']->guid}";
-			$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
-			$return[] = $item;
-		}
+	
+	$entity = elgg_extract('entity', $params);
+	if (!$entity instanceof ElggGroup) {
+		return;
 	}
-
+	
+	if ($entity->forum_enable === 'no') {
+		return;
+	}
+	
+	$url = "discussion/group/{$entity->guid}";
+	$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
+	$return[] = $item;
+	
 	return $return;
 }
 
@@ -268,13 +279,14 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
  *
  * @param string         $hook   'register'
  * @param string         $type   'menu:river'
- * @param ElggMenuItem[] $return
- * @param array          $params
- * @return ElggMenuItem[] $return
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function discussion_add_to_river_menu($hook, $type, $return, $params) {
 	if (!elgg_is_logged_in() || elgg_in_context('widgets')) {
-		return $return;
+		return;
 	}
 
 	$item = $params['item'];
@@ -315,6 +327,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
+ *
  * @return Elgg\Notifications\Notification
  */
 function discussion_prepare_notification($hook, $type, $notification, $params) {
@@ -334,6 +347,7 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
 	], $language);
 	$notification->summary = elgg_echo('discussion:topic:notify:summary', [$entity->title], $language);
 	$notification->url = $entity->getURL();
+	
 	return $notification;
 }
 
@@ -344,6 +358,7 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
+ *
  * @return Elgg\Notifications\Notification
  */
 function discussion_prepare_reply_notification($hook, $type, $notification, $params) {
@@ -373,6 +388,7 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
  * @param array  $subscriptions Array containing subscriptions in the form
  *                              <user guid> => array('email', 'site', etc.)
  * @param array  $params        Hook parameters
+ *
  * @return array
  */
 function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
@@ -390,6 +406,13 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 
 /**
  * Parse ECML on discussion views
+ *
+ * @param string $hook         'get_views'
+ * @param string $type         'ecml'
+ * @param array  $return_value current return value
+ * @param mixed  $params       supplied params
+ *
+ * @return array
  */
 function discussion_ecml_views_hook($hook, $type, $return_value, $params) {
 	$return_value['forum/viewposts'] = elgg_echo('discussion:ecml:discussion');
@@ -403,30 +426,31 @@ function discussion_ecml_views_hook($hook, $type, $return_value, $params) {
  *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
- * @param boolean $return
- * @param array   $params Array('entity' => ElggEntity, 'user' => ElggUser)
- * @return boolean True if user is discussion or group owner
+ * @param boolean $return current return value
+ * @param array   $params supplied params
+ *
+ * @return void|bool
  */
 function discussion_can_edit_reply($hook, $type, $return, $params) {
-	/** @var $reply ElggEntity */
-	$reply = $params['entity'];
-	$user = $params['user'];
-
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
-		return $return;
+	
+	$reply = elgg_extract('entity', $params);
+	$user = elgg_extract('user', $params);
+	
+	if (!$reply instanceof ElggDiscussionReply || !$user instanceof ElggUser) {
+		return;
 	}
 
-	if ($reply->owner_guid == $user->guid) {
+	if ($reply->owner_guid === $user->guid) {
 	    return true;
 	}
 
 	$discussion = $reply->getContainerEntity();
-	if ($discussion->owner_guid == $user->guid) {
+	if ($discussion->owner_guid === $user->guid) {
 		return true;
 	}
 
 	$container = $discussion->getContainerEntity();
-	if (elgg_instanceof($container, 'group') && $container->owner_guid == $user->guid) {
+	if ($container instanceof ElggGroup && $container->owner_guid === $user->guid) {
 		return true;
 	}
 
@@ -441,7 +465,8 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
  * @param string $type   'object'
  * @param array  $return Allowed or not
  * @param array  $params Hook params
- * @return bool
+ *
+ * @return void|false
  */
 function discussion_reply_container_logic_override($hook, $type, $return, $params) {
 
@@ -468,22 +493,26 @@ function discussion_reply_container_logic_override($hook, $type, $return, $param
  *
  * @param string $hook   'container_permissions_check'
  * @param string $type   'object'
- * @param array  $return
+ * @param bool   $return current return value
  * @param array  $params Array with container, user and subtype
- * @return boolean $return
+ *
+ * @return void|bool
  */
 function discussion_reply_container_permissions_override($hook, $type, $return, $params) {
-	if ($params['subtype'] !== 'discussion_reply') {
-		return $return;
+	
+	if (elgg_extract('subtype', $params) !== 'discussion_reply') {
+		return;
 	}
 
-	/** @var $discussion ElggEntity */
-	$discussion = $params['container'];
-	$user = $params['user'];
+	/* @var $discussion ElggEntity */
+	$discussion = elgg_extract('container', $params);
+	$user = elgg_extract('user', $params);
+	if (!elgg_instanceof($discussion, 'object', 'discussion') || !$user instanceof ElggUser) {
+		return;
+	}
 	
 	$container = $discussion->getContainerEntity();
-
-	if (elgg_instanceof($container, 'group')) {
+	if ($container instanceof ElggGroup) {
 		// Only group members are allowed to reply
 		// to a discussion within a group
 		if (!$container->canWriteToContainer($user->guid)) {
@@ -500,6 +529,8 @@ function discussion_reply_container_permissions_override($hook, $type, $return, 
  * @param string     $event  'update'
  * @param string     $type   'object'
  * @param ElggObject $object ElggObject
+ *
+ * @return void
  */
 function discussion_update_reply_access_ids($event, $type, $object) {
 	if (!elgg_instanceof($object, 'object', 'discussion')) {
@@ -531,11 +562,12 @@ function discussion_update_reply_access_ids($event, $type, $object) {
 /**
  * Set up discussion reply entity menu
  *
- * @param string          $hook   'register'
- * @param string          $type   'menu:entity'
- * @param ElggMenuItem[]  $return
- * @param array           $params
- * @return ElggMenuItem[] $return
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:entity'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	$reply = elgg_extract('entity', $params);
@@ -577,16 +609,18 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
  * @param string $type   the type of the hook
  * @param mixed  $value  the current return value
  * @param array  $params supplied params
+ *
+ * @return void|array
  */
 function discussion_search_discussion($hook, $type, $value, $params) {
 
 	if (empty($params) || !is_array($params)) {
-		return $value;
+		return;
 	}
 
 	$subtype = elgg_extract("subtype", $params);
 	if (empty($subtype) || ($subtype !== "discussion")) {
-		return $value;
+		return;
 	}
 
 	unset($params["subtype"]);

@@ -78,7 +78,6 @@ $forward = $file->getURL();
 
 // handle results differently for new files and file updates
 if ($new_file) {
-	
 	$container = get_entity($container_guid);
 	if (elgg_instanceof($container, 'group')) {
 		$forward = "file/group/{$container->guid}/all";

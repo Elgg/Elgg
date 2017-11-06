@@ -3,6 +3,11 @@
  * A user dashboard
  */
 
+/**
+ * Dashboard init
+ *
+ * @return void
+ */
 function dashboard_init() {
 	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
 
@@ -21,6 +26,7 @@ function dashboard_init() {
 
 /**
  * Dashboard page handler
+ *
  * @return bool
  */
 function dashboard_page_handler() {
@@ -31,10 +37,11 @@ function dashboard_page_handler() {
 /**
  * Register user dashboard with default widgets
  *
- * @param unknown_type $hook
- * @param unknown_type $type
- * @param unknown_type $return
- * @param unknown_type $params
+ * @param string $hook   'get_list',
+ * @param string $type   'default_widgets'
+ * @param array  $return current return value
+ * @param mixed  $params supplied params
+ *
  * @return array
  */
 function dashboard_default_widgets($hook, $type, $return, $params) {

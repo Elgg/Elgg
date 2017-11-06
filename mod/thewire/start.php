@@ -14,6 +14,8 @@
 
 /**
  * The Wire initialization
+ *
+ * @return void
  */
 function thewire_init() {
 
@@ -65,6 +67,7 @@ function thewire_init() {
  * thewire/tag/<tag>            View wire posts tagged with <tag>
  *
  * @param array $page From the page_handler function
+ *
  * @return bool
  */
 function thewire_page_handler($page) {
@@ -125,17 +128,21 @@ function thewire_page_handler($page) {
 /**
  * Override the url for a wire post to return the thread
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $url    current return value
+ * @param array  $params supplied params
+ *
+ * @return void|string
  */
 function thewire_set_url($hook, $type, $url, $params) {
+	
 	$entity = elgg_extract('entity', $params);
-	if (elgg_instanceof($entity, 'object', 'thewire')) {
-		return "thewire/view/" . $entity->guid;
+	if (!$entity instanceof ElggWire) {
+		return;
 	}
+	
+	return "thewire/view/{$entity->guid}";
 }
 
 /**
@@ -145,6 +152,7 @@ function thewire_set_url($hook, $type, $url, $params) {
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
+ *
  * @return Elgg\Notifications\Notification
  */
 function thewire_prepare_notification($hook, $type, $notification, $params) {
@@ -173,6 +181,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 	$notification->body = $body;
 	$notification->summary = elgg_echo('thewire:notify:summary', [$descr], $language);
 	$notification->url = $entity->getURL();
+	
 	return $notification;
 }
 
@@ -180,6 +189,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
  * Get an array of hashtags from a text string
  *
  * @param string $text The text of a post
+ *
  * @return array
  */
 function thewire_get_hashtags($text) {
@@ -187,6 +197,7 @@ function thewire_get_hashtags($text) {
 	// hashtag must begin with # and contain at least one character not digit, space, or punctuation
 	$matches = [];
 	preg_match_all('/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/', $text, $matches);
+	
 	return $matches[2];
 }
 
@@ -194,6 +205,7 @@ function thewire_get_hashtags($text) {
  * Replace urls, hash tags, and @'s by links
  *
  * @param string $text The text of a post
+ *
  * @return string
  */
 function thewire_filter($text) {
@@ -231,12 +243,12 @@ function thewire_filter($text) {
  * @param int    $access_id   Public/private etc
  * @param int    $parent_guid Parent post guid (if any)
  * @param string $method      The method (default: 'site')
- * @return guid or false if failure
+ *
+ * @return false|int
  */
 function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method = "site") {
-	$post = new ElggObject();
-
-	$post->subtype = "thewire";
+	
+	$post = new ElggWire();
 	$post->owner_guid = $userid;
 	$post->access_id = $access_id;
 
@@ -262,6 +274,9 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	}
 
 	$guid = $post->save();
+	if ($guid === false) {
+		return false;
+	}
 
 	// set thread guid
 	if ($parent_guid) {
@@ -275,24 +290,22 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		$post->wire_thread = $guid;
 	}
 
-	if ($guid) {
-		elgg_create_river_item([
-			'view' => 'river/object/thewire/create',
-			'action_type' => 'create',
-			'subject_guid' => $post->owner_guid,
-			'object_guid' => $post->guid,
-		]);
+	elgg_create_river_item([
+		'view' => 'river/object/thewire/create',
+		'action_type' => 'create',
+		'subject_guid' => $post->owner_guid,
+		'object_guid' => $post->guid,
+	]);
 
-		// let other plugins know we are setting a user status
-		$params = [
-			'entity' => $post,
-			'user' => $post->getOwnerEntity(),
-			'message' => $post->description,
-			'url' => $post->getURL(),
-			'origin' => 'thewire',
-		];
-		elgg_trigger_plugin_hook('status', 'user', $params);
-	}
+	// let other plugins know we are setting a user status
+	$params = [
+		'entity' => $post,
+		'user' => $post->getOwnerEntity(),
+		'message' => $post->description,
+		'url' => $post->getURL(),
+		'origin' => 'thewire',
+	];
+	elgg_trigger_plugin_hook('status', 'user', $params);
 	
 	return $guid;
 }
@@ -321,7 +334,7 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 		'relationship' => 'parent',
 	]);
 	if (empty($parents)) {
-		return ;
+		return;
 	}
 	
 	/* @var $parent ElggWire */
@@ -357,7 +370,7 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 /**
  * Get the latest wire guid - used for ajax update
  *
- * @return guid
+ * @return int
  */
 function thewire_latest_guid() {
 	$post = elgg_get_entities([
@@ -367,16 +380,17 @@ function thewire_latest_guid() {
 	]);
 	if ($post) {
 		return $post[0]->guid;
-	} else {
-		return 0;
 	}
+	
+	return 0;
 }
 
 /**
  * Get the parent of a wire post
  *
  * @param int $post_guid The guid of the reply
- * @return ElggObject or null
+ *
+ * @return void|ElggObject
  */
 function thewire_get_parent($post_guid) {
 	$parents = elgg_get_entities_from_relationship([
@@ -387,7 +401,6 @@ function thewire_get_parent($post_guid) {
 	if ($parents) {
 		return $parents[0];
 	}
-	return null;
 }
 
 /**
@@ -395,13 +408,15 @@ function thewire_get_parent($post_guid) {
  *
  * Adds reply, thread, and view previous links. Removes edit and access.
  *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param array  $value  Array of menu items
- * @param array  $params Array with the entity
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:entity'
+ * @param ElggMenuItem[] $value  Array of menu items
+ * @param array          $params Array with the entity
+ *
+ * @return void|ElggMenuItem[]
  */
 function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
+	
 	$entity = elgg_extract('entity', $params);
 	if (!($entity instanceof \ElggWire)){
 		return;
@@ -446,9 +461,15 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 /**
  * Add a menu item to an ownerblock
  *
- * @return array
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:owner_block'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
  */
 function thewire_owner_block_menu($hook, $type, $return, $params) {
+	
 	$user = elgg_extract('entity', $params);
 	if (!$user instanceof \ElggUser) {
 		return;
@@ -465,6 +486,11 @@ function thewire_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Runs unit tests for the wire
+ *
+ * @param string $hook   'unit_test'
+ * @param string $type   'system'
+ * @param array  $value  current return value
+ * @param array  $params supplied params
  *
  * @return array
  */

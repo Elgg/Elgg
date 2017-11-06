@@ -9,7 +9,7 @@
 class ElggBlog extends ElggObject {
 
 	/**
-	 * Set subtype to blog.
+	 * {@inheritDoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();

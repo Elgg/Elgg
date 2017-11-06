@@ -6,9 +6,10 @@
 /**
  * Prepare the add/edit form variables
  *
- * @param ElggObject     $page
- * @param int            $parent_guid
- * @param ElggAnnotation $revision
+ * @param ElggObject     $page        the page to edit
+ * @param int            $parent_guid parrent page guid
+ * @param ElggAnnotation $revision    revision
+ *
  * @return array
  */
 function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = null) {
@@ -26,7 +27,7 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 		'parent_guid' => $parent_guid,
 	];
 
-	if ($page) {
+	if ($page instanceof ElggObject) {
 		foreach (array_keys($values) as $field) {
 			if (isset($page->$field)) {
 				$values[$field] = $page->$field;
@@ -44,7 +45,7 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 	elgg_clear_sticky_form('page');
 
 	// load the revision annotation if requested
-	if ($revision instanceof ElggAnnotation && $revision->entity_guid == $page->guid) {
+	if ($revision instanceof ElggAnnotation && $page instanceof ElggObject && $revision->entity_guid == $page->guid) {
 		$values['description'] = $revision->value;
 	}
 
@@ -55,6 +56,8 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
  * Recurses the page tree and adds the breadcrumbs for all ancestors
  *
  * @param ElggObject $page Page entity
+ *
+ * @return void
  */
 function pages_prepare_parent_breadcrumbs($page) {
 	$crumbs = [];

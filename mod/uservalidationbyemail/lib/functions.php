@@ -74,9 +74,11 @@ function uservalidationbyemail_request_validation($user_guid) {
 /**
  * Validate a user
  *
- * @param int    $user_guid
- * @param string $code
+ * @param int    $user_guid the guid of the user to validate
+ * @param string $code      validation code
+ *
  * @return bool
+ *
  * @deprecated 2.3
  */
 function uservalidationbyemail_validate_email($user_guid, $code = null) {

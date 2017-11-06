@@ -6,7 +6,9 @@
  */
 
 /**
- * File plugin initialization functions.
+ * File plugin initialization functions
+ *
+ * @return void
  */
 function file_init() {
 
@@ -94,7 +96,8 @@ function file_init() {
  *
  * Title is ignored
  *
- * @param array $page
+ * @param array $page URL segments
+ *
  * @return bool
  */
 function file_page_handler($page) {
@@ -146,6 +149,8 @@ function file_page_handler($page) {
 
 /**
  * Adds a toggle to filter menu for switching between list and gallery views
+ *
+ * @return void
  */
 function file_register_toggle() {
 
@@ -201,15 +206,24 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 
 /**
  * Add a menu item to the user ownerblock
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:owner_block'
+ * @param ElggMenuItem[] $return current return value
+ * @param array          $params supplied params
+ *
+ * @return ElggMenuItem[]
  */
 function file_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "file/owner/{$params['entity']->username}";
+	
+	$entity = elgg_extract('entity', $params);
+	if ($entity instanceof ElggUser) {
+		$url = "file/owner/{$entity->username}";
 		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
 		$return[] = $item;
-	} else {
-		if ($params['entity']->file_enable != "no") {
-			$url = "file/group/{$params['entity']->guid}/all";
+	} elseif ($entity instanceof ElggGroup) {
+		if ($entity->file_enable != "no") {
+			$url = "file/group/{$entity->guid}/all";
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
 			$return[] = $item;
 		}
@@ -226,7 +240,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  *
  * @return string The typecloud
  */
-function file_get_type_cloud($container_guid = "", $friends = false) {
+function file_get_type_cloud($container_guid = 0, $friends = false) {
 
 	$container_guids = $container_guid;
 	$container = get_entity($container_guid);
@@ -245,15 +259,14 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 	}
 
 	elgg_register_tag_metadata_name('simpletype');
-	$options = [
+	$types = elgg_get_tags([
 		'type' => 'object',
 		'subtype' => 'file',
 		'container_guids' => $container_guids,
 		'threshold' => 0,
 		'limit' => 10,
-		'tag_names' => ['simpletype']
-	];
-	$types = elgg_get_tags($options);
+		'tag_names' => ['simpletype'],
+	]);
 
 	if ($types) {
 		$all = new stdClass;
@@ -282,43 +295,60 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 	return elgg_view('file/typecloud', $params);
 }
 
+/**
+ * Get an URL for the filetype cloud
+ *
+ * @param stdClass $type    a database row
+ * @param bool     $friends limit to friends
+ *
+ * @return string
+ */
 function file_type_cloud_get_url($type, $friends) {
-	$url = elgg_get_site_url() . 'file/search?subtype=file';
+	
+	$url = elgg_normalize_url('file/search');
+	$params = [
+		'subtype' => 'file',
+	];
 
 	if ($type->tag != "all") {
-		$url .= "&md_type=simpletype&tag=" . urlencode($type->tag);
+		$params['md_type'] = 'simpletype';
+		$params['tag'] = $type->tag;
 	}
 
 	if ($friends) {
-		$url .= "&friends=$friends";
+		$params['friends'] = $friends;
 	}
 
 	if ($type->tag == "image") {
-		$url .= "&list_type=gallery";
+		$params['list_type'] = 'gallery';
 	}
 
 	if (elgg_get_page_owner_guid()) {
-		$url .= "&page_owner=" . elgg_get_page_owner_guid();
+		$params['page_owner'] = elgg_get_page_owner_guid();
 	}
 
-	return $url;
+	return elgg_http_add_url_query_elements($url, $params);
 }
 
 /**
  * Populates the ->getUrl() method for file objects
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string File URL
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $url    current return value
+ * @param array  $params supplied params
+ *
+ * @return void|string
  */
 function file_set_url($hook, $type, $url, $params) {
-	$entity = $params['entity'];
-	if (elgg_instanceof($entity, 'object', 'file')) {
-		$title = elgg_get_friendly_title($entity->getDisplayName());
-		return "file/view/" . $entity->getGUID() . "/" . $title;
+	
+	$entity = elgg_extract('entity', $params);
+	if (!elgg_instanceof($entity, 'object', 'file')) {
+		return;
 	}
+	
+	$title = elgg_get_friendly_title($entity->getDisplayName());
+	return "file/view/{$entity->getGUID()}/{$title}";
 }
 
 /**
@@ -326,71 +356,77 @@ function file_set_url($hook, $type, $url, $params) {
  *
  * Plugins can override or extend the icons using the plugin hook: 'file:icon:url', 'override'
  *
- * @param string $hook
- * @param string $type
- * @param string $url
- * @param array  $params
- * @return string Relative URL
+ * @param string $hook   'entity:icon:url'
+ * @param string $type   'object'
+ * @param string $url    current return value
+ * @param array  $params supplied params
+ *
+ * @return void|string
  */
 function file_set_icon_url($hook, $type, $url, $params) {
-	$file = $params['entity'];
-	$size = elgg_extract('size', $params, 'large');
-	if (elgg_instanceof($file, 'object', 'file')) {
-		// thumbnails get first priority
-		if ($file->hasIcon($size)) {
-			return $file->getIcon($size)->getInlineURL(true);
-		}
-
-		$mapping = [
-			'application/excel' => 'excel',
-			'application/msword' => 'word',
-			'application/ogg' => 'music',
-			'application/pdf' => 'pdf',
-			'application/powerpoint' => 'ppt',
-			'application/vnd.ms-excel' => 'excel',
-			'application/vnd.ms-powerpoint' => 'ppt',
-			'application/vnd.oasis.opendocument.text' => 'openoffice',
-			'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'word',
-			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'excel',
-			'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'ppt',
-			'application/x-gzip' => 'archive',
-			'application/x-rar-compressed' => 'archive',
-			'application/x-stuffit' => 'archive',
-			'application/zip' => 'archive',
-			'text/directory' => 'vcard',
-			'text/v-card' => 'vcard',
-			'application' => 'application',
-			'audio' => 'music',
-			'text' => 'text',
-			'video' => 'video',
-		];
-
-		$mime = $file->getMimeType();
-		if ($mime) {
-			$base_type = substr($mime, 0, strpos($mime, '/'));
-		} else {
-			$mime = 'none';
-			$base_type = 'none';
-		}
-
-		if (isset($mapping[$mime])) {
-			$type = $mapping[$mime];
-		} elseif (isset($mapping[$base_type])) {
-			$type = $mapping[$base_type];
-		} else {
-			$type = 'general';
-		}
-
-		if ($size == 'large') {
-			$ext = '_lrg';
-		} else {
-			$ext = '';
-		}
-
-		$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
-		$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
-		return $url;
+	
+	$file = elgg_extract('entity', $params);
+	if (!elgg_instanceof($file, 'object', 'file')) {
+		return;
 	}
+	
+	$size = elgg_extract('size', $params, 'large');
+	
+	// thumbnails get first priority
+	if ($file->hasIcon($size)) {
+		return $file->getIcon($size)->getInlineURL(true);
+	}
+
+	$mapping = [
+		'application/excel' => 'excel',
+		'application/msword' => 'word',
+		'application/ogg' => 'music',
+		'application/pdf' => 'pdf',
+		'application/powerpoint' => 'ppt',
+		'application/vnd.ms-excel' => 'excel',
+		'application/vnd.ms-powerpoint' => 'ppt',
+		'application/vnd.oasis.opendocument.text' => 'openoffice',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'word',
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'excel',
+		'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'ppt',
+		'application/x-gzip' => 'archive',
+		'application/x-rar-compressed' => 'archive',
+		'application/x-stuffit' => 'archive',
+		'application/zip' => 'archive',
+		'text/directory' => 'vcard',
+		'text/v-card' => 'vcard',
+		'application' => 'application',
+		'audio' => 'music',
+		'text' => 'text',
+		'video' => 'video',
+	];
+
+	$mime = $file->getMimeType();
+	if ($mime) {
+		$base_type = substr($mime, 0, strpos($mime, '/'));
+	} else {
+		$mime = 'none';
+		$base_type = 'none';
+	}
+
+	if (isset($mapping[$mime])) {
+		$type = $mapping[$mime];
+	} elseif (isset($mapping[$base_type])) {
+		$type = $mapping[$base_type];
+	} else {
+		$type = 'general';
+	}
+
+	if ($size == 'large') {
+		$ext = '_lrg';
+	} else {
+		$ext = '';
+	}
+
+	$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
+	$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
+	
+	return $url;
 }
 
 /**

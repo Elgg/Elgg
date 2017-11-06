@@ -7,6 +7,11 @@
  * @subpackage UserValidationByEmail
  */
 
+/**
+ * User validation by email init
+ *
+ * @return void
+ */
 function uservalidationbyemail_init() {
 
 	require_once dirname(__FILE__) . '/lib/functions.php';
@@ -54,17 +59,18 @@ function uservalidationbyemail_init() {
 }
 
 /**
- * Disables a user upon registration.
+ * Disables a user upon registration
  *
- * @param string $hook
- * @param string $type
- * @param bool   $value
- * @param array  $params
+ * @param string $hook   'register'
+ * @param string $type   'user'
+ * @param bool   $value  current return value
+ * @param array  $params supplied params
+ *
  * @return void
  */
 function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
+	
 	$user = elgg_extract('user', $params);
-
 	// no clue what's going on, so don't react.
 	if (!$user instanceof ElggUser) {
 		return;
@@ -107,7 +113,8 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
  * @param string                     $type   'action:register'
  * @param \Elgg\Http\ResponseBuilder $value  Current response
  * @param array                      $params Additional params
- * @return string
+ *
+ * @return void|\Elgg\Http\ResponseBuilder
  */
 function uservalidationbyemail_after_registration_url($hook, $type, $value, $params) {
 	$session = elgg_get_session();
@@ -121,17 +128,18 @@ function uservalidationbyemail_after_registration_url($hook, $type, $value, $par
 /**
  * Override the canEdit() call for if we're in the context of registering a new user.
  *
- * @param string $hook
- * @param string $type
- * @param bool   $value
- * @param array  $params
- * @return bool|null
+ * @param string $hook   'permissions_check'
+ * @param string $type   'user'
+ * @param bool   $value  current return value
+ * @param array  $params supplied params
+ *
+ * @return void|true
  */
 function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $params) {
+	
 	// $params['user'] is the user to check permissions for.
 	// we want the entity to check, which is a user.
 	$user = elgg_extract('entity', $params);
-
 	if (!($user instanceof ElggUser)) {
 		return;
 	}
@@ -140,15 +148,14 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 	if ($context == 'uservalidationbyemail_new_user' || $context == 'uservalidationbyemail_validate_user') {
 		return true;
 	}
-
-	return;
 }
 
 /**
  * Checks if an account is validated
  *
  * @params array $credentials The username and password
- * @return bool
+ *
+ * @return void
  */
 function uservalidationbyemail_check_auth_attempt($credentials) {
 
@@ -183,10 +190,12 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 /**
  * Checks sent passed validation code and user guids and validates the user.
  *
- * @param array $page
+ * @param array $page URL segments
+ *
  * @return bool
  */
 function uservalidationbyemail_page_handler($page) {
+	
 	switch ($page[0]) {
 		case 'confirm':
 			echo elgg_view_resource("uservalidationbyemail/confirm");
@@ -203,9 +212,11 @@ function uservalidationbyemail_page_handler($page) {
 /**
  * Make sure any admin users are automatically validated
  *
- * @param string   $event
- * @param string   $type
- * @param ElggUser $user
+ * @param string   $event 'make_admin'
+ * @param string   $type  'user'
+ * @param ElggUser $user  the user
+ *
+ * @return void
  */
 function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 	if ($user instanceof ElggUser && !$user->isValidated()) {
@@ -214,7 +225,14 @@ function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 }
 
 /**
- * Registers public pages to allow in the case walled garden has been enabled.
+ * Registers public pages to allow in the case walled garden has been enabled
+ *
+ * @param string $hook         'public_pages'
+ * @param string $type         'walled_garden'
+ * @param array  $return_value current return value
+ * @param mixed  $params       supplied params
+ *
+ * @return array
  */
 function uservalidationbyemail_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'uservalidationbyemail/confirm';
@@ -223,16 +241,18 @@ function uservalidationbyemail_public_pages($hook, $type, $return_value, $params
 }
 
 /**
- * Prevent a manual code login with login().
+ * Prevent a manual code login with login()
  *
- * @param string   $event
- * @param string   $type
- * @param ElggUser $user
- * @return bool
+ * @param string   $event 'login:before'
+ * @param string   $type  'user'
+ * @param ElggUser $user  the user
+ *
+ * @return void
  *
  * @throws LoginException
  */
 function uservalidationbyemail_check_manual_login($event, $type, $user) {
+	
 	$access_status = access_show_hidden_entities(true);
 	
 	if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {

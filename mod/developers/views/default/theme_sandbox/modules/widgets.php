@@ -9,14 +9,23 @@ elgg_register_plugin_hook_handler('view', 'widgets/friends/content', 'css_widget
 elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_content');
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override', 600);
 
+/**
+ * Create dummy content
+ *
+ * @return string
+ */
 function css_widget_content() {
-	return $ipsum = elgg_view('developers/ipsum');
+	return elgg_view('developers/ipsum');
 }
 
+/**
+ * Give permissions
+ *
+ * @return true
+ */
 function css_permissions_override() {
 	return true;
 }
-
 
 ?>
 <div class="elgg-body mal">

@@ -29,7 +29,7 @@ elgg.ui.init = function () {
 		popup.bind($('[rel="popup"]'));
 	});
 
-    $(document).on('click', '*[data-confirm]', elgg.ui.requiresConfirmation);
+	$(document).on('click', '*[data-confirm]', elgg.ui.requiresConfirmation);
 
 	// Allow element to be highlighted using CSS if its id is found from the URL
 	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
@@ -121,11 +121,11 @@ elgg.ui.initHoverMenu = function(parent) {
 				}
 			});
 		});
-	}
+	};
 	
 	/**
 	 * Show the hover menu in a popup module
-	 * 
+	 *
 	 * @params {jQuery} $icon the user icon which was clicked
 	 */
 	function showPopup($icon) {
@@ -150,7 +150,7 @@ elgg.ui.initHoverMenu = function(parent) {
 				});
 			}
 		});
-	}
+	};
 
 	if (!parent) {
 		parent = document;
@@ -191,8 +191,8 @@ elgg.ui.requiresConfirmation = function(e) {
 /**
  * This function registers two menu items that are actions that are the opposite
  * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
- * 
- * You can also add the data parameter 'data-toggle' to menu items to have them automatically 
+ *
+ * You can also add the data parameter 'data-toggle' to menu items to have them automatically
  * registered as toggleable without the need to call this function.
  */
 elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {

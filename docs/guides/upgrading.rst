@@ -93,6 +93,7 @@ Removed functions/methods
 All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.9.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.10.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
+ * ``activity_profile_menu``
  * ``can_write_to_container``: Use ``ElggEntity->canWriteToContainer()``
  * ``create_metadata_from_array``
  * ``datalist_get``
@@ -116,7 +117,11 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``get_object_entity_as_row``
  * ``get_user_entity_as_row``
  * ``garbagecollector_orphaned_metastrings``
+ * ``groups_access_collection_override``
  * ``groups_setup_sidebar_menus``
+ * ``groups_set_icon_url``
+ * ``groups_setup_sidebar_menus``
+ * ``messages_notification_msg``
  * ``set_default_filestore``
  * ``generate_user_password``: Use ``ElggUser::setPassword``
  * ``row_to_elggrelationship``
@@ -167,8 +172,6 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggSession::get_ignore_access``: Use ``getIgnoreAccess``
  * ``ElggSession::set_ignore_access``: Use ``setIgnoreAccess``
  * ``profile_pagesetup``
- * ``groups_setup_sidebar_menus``
- * ``groups_set_icon_url``
 
 All functions around entity subtypes table:
  * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime

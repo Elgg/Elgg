@@ -16,11 +16,11 @@ $title = elgg_echo('pages:navigation');
 pages_register_navigation_tree(elgg_get_page_owner_entity(), $selected_page);
 
 $content = elgg_view_menu('pages_nav', [
-    'class' => 'pages-nav',
+	'class' => 'pages-nav',
 ]);
 
 if (!$content) {
-	$content = '<p>' . elgg_echo('pages:none') . '</p>';
+	$content = elgg_format_element('p', [], elgg_echo('pages:none'));
 }
 
 echo elgg_view_module('aside', $title, $content);

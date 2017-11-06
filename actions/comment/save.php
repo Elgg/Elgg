@@ -43,7 +43,6 @@ if ($comment_guid) {
 	}
 	
 	$success_message = elgg_echo('generic_comment:updated');
-	
 } else {
 	// Create a new comment on the target entity
 	$entity = get_entity($entity_guid);

@@ -28,7 +28,6 @@ $commenter_link = elgg_view('output/url', [
 ]);
 
 if ($full_view) {
-	
 	$imprint = elgg_view('object/elements/imprint/byline', $vars);
 	
 	$imprint .= elgg_view('object/elements/imprint/element', [

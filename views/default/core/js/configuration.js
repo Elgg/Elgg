@@ -11,7 +11,7 @@ elgg.get_site_url = function() {
 
 /**
  * Get the URL for the cached file
- * 
+ *
  * @param {String} view    The full view name
  * @param {String} subview If the first arg is "css" or "js", the rest of the view name
  * @return {String} The site URL.

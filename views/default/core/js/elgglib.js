@@ -275,7 +275,7 @@ elgg.normalize_url = function(url) {
 
 	function validate(url) {
 		url = elgg.parse_url(url);
-		if (url.scheme){
+		if (url.scheme) {
 			url.scheme = url.scheme.toLowerCase();
 		}
 		if (url.scheme == 'http' || url.scheme == 'https') {
@@ -295,39 +295,24 @@ elgg.normalize_url = function(url) {
 	};
 
 	// ignore anything with a recognized scheme
-	if (url.indexOf('http:') === 0 ||
-		url.indexOf('https:') === 0 ||
-		url.indexOf('javascript:') === 0 ||
-		url.indexOf('mailto:') === 0 ) {
+	if (url.indexOf('http:') === 0 || url.indexOf('https:') === 0 || url.indexOf('javascript:') === 0 || url.indexOf('mailto:') === 0 ) {
 		return url;
-	}
-
-	// all normal URLs including mailto:
-	else if (validate(url)) {
+	} else if (validate(url)) {
+		// all normal URLs including mailto:
 		return url;
-	}
-
-	// '//example.com' (Shortcut for protocol.)
-	// '?query=test', #target
-	else if ((new RegExp("^(\\#|\\?|//)", "i")).test(url)) {
+	} else if ((new RegExp("^(\\#|\\?|//)", "i")).test(url)) {
+		// '//example.com' (Shortcut for protocol.)
+		// '?query=test', #target
 		return url;
-	}
-
-
-	// watch those double escapes in JS.
-
-	// 'install.php', 'install.php?step=step'
-	else if ((new RegExp("^[^\/]*\\.php(\\?.*)?$", "i")).test(url)) {
+	} else if ((new RegExp("^[^\/]*\\.php(\\?.*)?$", "i")).test(url)) {
+		// watch those double escapes in JS.
+		// 'install.php', 'install.php?step=step'
 		return elgg.config.wwwroot + url.ltrim('/');
-	}
-
-	// 'example.com', 'example.com/subpage'
-	else if ((new RegExp("^[^/]*\\.", "i")).test(url)) {
+	} else if ((new RegExp("^[^/]*\\.", "i")).test(url)) {
+		// 'example.com', 'example.com/subpage'
 		return 'http://' + url;
-	}
-
-	// 'page/handler', 'mod/plugin/file.php'
-	else {
+	} else {
+		// 'page/handler', 'mod/plugin/file.php'
 		// trim off any leading / because the site URL is stored
 		// with a trailing /
 		return elgg.config.wwwroot + url.ltrim('/');
@@ -455,29 +440,29 @@ elgg.parse_url = function(url, component, expand) {
 	component = component || false;
 	
 	var re_str =
-			// scheme (and user@ testing)
-			'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
-			// possibly a user[:password]@
-			+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
-			// host and port
-			+ '([^:/?#]*)(?::(\\d*))?)'
-			// path
-			+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
-			// query string
-			+ '(?:\\?([^#]*))?'
-			// fragment
-			+ '(?:#(.*))?)',
-		keys = {
-			1: "scheme",
-			4: "user",
-			5: "pass",
-			6: "host",
-			7: "port",
-			9: "path",
-			12: "query",
-			13: "fragment"
-		},
-		results = {};
+		// scheme (and user@ testing)
+		'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
+		// possibly a user[:password]@
+		+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
+		// host and port
+		+ '([^:/?#]*)(?::(\\d*))?)'
+		// path
+		+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
+		// query string
+		+ '(?:\\?([^#]*))?'
+		// fragment
+		+ '(?:#(.*))?)';
+	var keys = {
+		1: "scheme",
+		4: "user",
+		5: "pass",
+		6: "host",
+		7: "port",
+		9: "path",
+		12: "query",
+		13: "fragment"
+	};
+	var results = {};
 
 	if (url.indexOf('mailto:') === 0) {
 		results['scheme'] = 'mailto';
@@ -566,10 +551,8 @@ elgg.getSelectorFromUrlFragment = function(url) {
 		// this is a .class or a tag.class
 		if (fragment.indexOf('.') > -1) {
 			return fragment;
-		}
-
-		// this is an id
-		else {
+		} else {
+			// this is an id
 			return '#' + fragment;
 		}
 	}

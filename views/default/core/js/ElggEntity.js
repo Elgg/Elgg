@@ -1,6 +1,6 @@
 /**
  * Create a new ElggEntity
- * 
+ *
  * @class Represents an ElggEntity
  * @property {number} guid
  * @property {string} type
@@ -10,7 +10,7 @@
  * @property {number} time_created
  * @property {number} time_updated
  * @property {string} url
- * 
+ *
  */
 elgg.ElggEntity = function(o) {
 	$.extend(this, o);

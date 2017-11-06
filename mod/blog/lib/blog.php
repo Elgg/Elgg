@@ -203,8 +203,8 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = null) {
 /**
  * Pull together blog variables for the save form
  *
- * @param ElggBlog       $post
- * @param ElggAnnotation $revision
+ * @param ElggBlog       $post     blog post being edited
+ * @param ElggAnnotation $revision a revision from which to edit
  * @return array
  */
 function blog_prepare_form_vars($post = null, $revision = null) {

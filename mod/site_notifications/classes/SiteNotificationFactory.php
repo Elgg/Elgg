@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Site notification factory
+ */
 abstract class SiteNotificationFactory {
 
 	/**
@@ -10,7 +13,8 @@ abstract class SiteNotificationFactory {
 	 * @param ElggUser $actor     User who caused the notification event
 	 * @param ElggData $object    Optional object involved in the notification event
 	 * @param string   $url       Target URL
-	 * @return SiteNotification|null
+	 *
+	 * @return void|SiteNotification
 	 */
 	public static function create($recipient, $message, $actor, $object = null, $url = null) {
 		$note = new SiteNotification();
@@ -41,8 +45,6 @@ abstract class SiteNotificationFactory {
 		if ($note->save()) {
 			$note->setActor($actor);
 			return $note;
-		} else {
-			return null;
 		}
 	}
 }

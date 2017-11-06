@@ -14,7 +14,6 @@ if (!elgg_is_xhr()) {
 }
 
 foreach ($vars['data'] as $name => $info) {
-	
 	$info['name'] = $name;
 	
 	$echo_vars = ($name === 'show_gear') ? [elgg_view_icon('settings-alt')] : [];

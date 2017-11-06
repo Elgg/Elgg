@@ -2,19 +2,30 @@
 
 namespace Elgg\Likes;
 
+/**
+ * Likes preloader
+ */
 class Preloader {
 
 	/**
-	 * @var DataService
+	 * @var \Elgg\Likes\DataService
 	 */
 	protected $data;
 
+	/**
+	 * Create a preloader
+	 *
+	 * @param \Elgg\Likes\DataService $data a dataservice
+	 */
 	public function __construct(DataService $data) {
 		$this->data = $data;
 	}
 
 	/**
-	 * @param \ElggRiverItem[]|\ElggEntity[] $items
+	 * Preload likes for a set of items
+	 *
+	 * @param \ElggRiverItem[]|\ElggEntity[] $items the items to preload for
+	 *
 	 * @return void
 	 */
 	public function preloadForList(array $items) {
@@ -32,7 +43,11 @@ class Preloader {
 	}
 
 	/**
-	 * @param int[] $guids
+	 * Preload likes count based on guids
+	 *
+	 * @param int[] $guids the guids to preload
+	 *
+	 * @return void
 	 */
 	protected function preloadCountsFromQuery(array $guids) {
 		$count_rows = elgg_get_annotations([
@@ -52,7 +67,10 @@ class Preloader {
 	}
 
 	/**
-	 * @param \ElggEntity[] $entities
+	 * Preload based of entities
+	 *
+	 * @param \ElggEntity[] $entities given entities
+	 *
 	 * @return int[]
 	 */
 	protected function preloadCountsFromHook(array $entities) {
@@ -75,7 +93,11 @@ class Preloader {
 	}
 
 	/**
-	 * @param int[] $guids
+	 * Preload likes for given guids for current user
+	 *
+	 * @param int[] $guids preload guids
+	 *
+	 * @return void
 	 */
 	protected function preloadCurrentUserLikes(array $guids) {
 		$owner_guid = elgg_get_logged_in_user_guid();
@@ -100,7 +122,10 @@ class Preloader {
 	}
 
 	/**
-	 * @param \ElggRiverItem[]|\ElggEntity[] $items
+	 * Convert river items and/or entities to guids
+	 *
+	 * @param \ElggRiverItem[]|\ElggEntity[] $items the items to process
+	 *
 	 * @return int[]
 	 */
 	protected function getGuidsToPreload(array $items) {
@@ -142,7 +167,8 @@ class Preloader {
 	/**
 	 * Get entities in any order checking cache first
 	 *
-	 * @param int[] $guids
+	 * @param int[] $guids guids of entities to return
+	 *
 	 * @return \ElggEntity[]
 	 */
 	protected function getEntities(array $guids) {

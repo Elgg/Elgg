@@ -3,6 +3,8 @@
 namespace Elgg\Likes;
 
 /**
+ * Likes dataservice
+ *
  * @access private
  */
 class DataService {
@@ -18,23 +20,34 @@ class DataService {
 	protected $num_likes = [];
 
 	/**
-	 * @param int $guid
-	 * @param int $num
+	 * Set number of likes
+	 *
+	 * @param int $guid for guid
+	 * @param int $num  number of likes
+	 *
+	 * @return void
 	 */
 	public function setNumLikes($guid, $num) {
 		$this->num_likes[$guid] = (int) $num;
 	}
 
 	/**
-	 * @param int  $guid
-	 * @param bool $is_liked
+	 * Set liked status for an entity for the current logged in user
+	 *
+	 * @param int  $guid     the entity guid
+	 * @param bool $is_liked liked or not
+	 *
+	 * @return void
 	 */
 	public function setLikedByCurrentUser($guid, $is_liked) {
 		$this->current_user_likes[$guid] = (bool) $is_liked;
 	}
 
 	/**
-	 * @param int $entity_guid
+	 * Did the current logged in user like the entity
+	 *
+	 * @param int $entity_guid entity guid to check
+	 *
 	 * @return bool
 	 */
 	public function currentUserLikesEntity($entity_guid) {
@@ -45,7 +58,10 @@ class DataService {
 	}
 
 	/**
-	 * @param \ElggEntity $entity
+	 * Get the number of likes for an entity
+	 *
+	 * @param \ElggEntity $entity the entity to fetch for
+	 *
 	 * @return int
 	 */
 	public function getNumLikes(\ElggEntity $entity) {
@@ -57,7 +73,9 @@ class DataService {
 	}
 
 	/**
-	 * @return DataService
+	 * Get a DataService instance
+	 *
+	 * @return \Elgg\Likes\DataService
 	 */
 	public static function instance() {
 		static $inst;

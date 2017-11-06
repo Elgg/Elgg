@@ -3,6 +3,11 @@
  * Plugin for creating web pages for your site
  */
 
+/**
+ * External pages init
+ *
+ * @return void
+ */
 function expages_init() {
 
 	// Register a page handler, so we can have nice URLs
@@ -33,6 +38,12 @@ function expages_init() {
 /**
  * Extend the public pages range
  *
+ * @param string $hook    'public_pages'
+ * @param string $handler 'walled_garden'
+ * @param array  $return  current return value
+ * @param mixed  $params  supplied params
+ *
+ * @return array
  */
 function expages_public($hook, $handler, $return, $params) {
 	$pages = ['about', 'terms', 'privacy'];
@@ -41,6 +52,8 @@ function expages_public($hook, $handler, $return, $params) {
 
 /**
  * Setup the links to site pages
+ *
+ * @return void
  */
 function expages_setup_footer_menu() {
 	$pages = ['about', 'terms', 'privacy'];

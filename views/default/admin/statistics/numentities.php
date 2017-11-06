@@ -9,7 +9,6 @@ $other = [];
 
 foreach ($entity_stats as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $value) {
-		
 		$is_registered = false;
 		if ($subtype == '__base__') {
 			$is_registered = array_key_exists($type, $registered_entity_types);

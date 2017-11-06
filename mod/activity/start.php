@@ -56,6 +56,11 @@ function _elgg_activity_owner_block_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Called during system init
+ *
+ * @return void
+ */
 function elgg_activity_init() {
 	
 	elgg_extend_view('css/elgg', 'river/filter.css');

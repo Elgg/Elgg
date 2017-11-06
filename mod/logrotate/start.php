@@ -5,6 +5,11 @@
  * @package ElggLogRotate
  */
 
+/**
+ * Logrotate init
+ *
+ * @return void
+ */
 function logrotate_init() {
 	// Register cron hook for archival of logs
 	elgg_register_plugin_hook_handler('cron', 'all', 'logrotate_archive_cron');
@@ -14,7 +19,14 @@ function logrotate_init() {
 }
 
 /**
- * Trigger the log rotation.
+ * Trigger the log rotation
+ *
+ * @param string $hook        'cron'
+ * @param string $type        interval
+ * @param string $returnvalue current return value
+ * @param array  $params      supplied params
+ *
+ * @return void|string
  */
 function logrotate_archive_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logrotated");
@@ -33,7 +45,14 @@ function logrotate_archive_cron($hook, $type, $returnvalue, $params) {
 }
 
 /**
- * Trigger the log deletion.
+ * Trigger the log deletion
+ *
+ * @param string $hook        'cron'
+ * @param string $type        interval
+ * @param string $returnvalue current return value
+ * @param array  $params      supplied params
+ *
+ * @return void|string
  */
 function logrotate_delete_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logdeleted");
@@ -57,7 +76,10 @@ function logrotate_delete_cron($hook, $type, $returnvalue, $params) {
 }
 
 /**
- * @param $period
+ * Convert an interval to seconds
+ *
+ * @param string $period interval
+ *
  * @return int
  */
 function logrotate_get_seconds_in_period($period) {
@@ -78,10 +100,11 @@ function logrotate_get_seconds_in_period($period) {
 }
 
 /**
- * This function deletes archived copies of the system logs that are older than specified.
+ * This function deletes archived copies of the system logs that are older than specified
  *
  * @param int $time_of_delete An offset in seconds from now to delete log tables
- * @return bool Were any log tables deleted
+ *
+ * @return bool
  */
 function log_browser_delete_log($time_of_delete) {
 	$dbprefix = elgg_get_config('dbprefix');

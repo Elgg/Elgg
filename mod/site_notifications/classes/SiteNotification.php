@@ -8,7 +8,7 @@ class SiteNotification extends ElggObject {
 	const HAS_ACTOR = "hasActor";
 
 	/**
-	 * Initialize an instance
+	 * {@inheritDoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
@@ -33,15 +33,15 @@ class SiteNotification extends ElggObject {
 	 * Set the actor involved in the notification
 	 *
 	 * @param ElggEntity $entity Actor
+	 *
+	 * @return void
 	 */
 	public function setActor($entity) {
 		$this->addRelationship($entity->guid, self::HAS_ACTOR);
 	}
 
 	/**
-	 * Get the url for this notification
-	 *
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	public function getURL() {
 		return (string) $this->url;
@@ -51,6 +51,8 @@ class SiteNotification extends ElggObject {
 	 * Set the url for the notification
 	 *
 	 * @param string $url The URL for the notification link
+	 *
+	 * @return void
 	 */
 	public function setURL($url) {
 		if ($url) {
@@ -62,6 +64,8 @@ class SiteNotification extends ElggObject {
 	 * Set the read status
 	 *
 	 * @param bool $read Has the notification been read
+	 *
+	 * @return void
 	 */
 	public function setRead($read) {
 		$this->read = $read;

@@ -3,6 +3,11 @@
  * Elgg web services API plugin
  */
 
+/**
+ * Web services init
+ *
+ * @return void
+ */
 function ws_init() {
 	$lib_dir = __DIR__ . "/lib";
 	elgg_register_library('elgg:ws', "$lib_dir/web_services.php");
@@ -57,6 +62,7 @@ function ws_init() {
  * If a service handler isn't found, a 404 header is sent.
  *
  * @param array $segments URL segments
+ *
  * @return bool
  */
 function ws_page_handler($segments) {

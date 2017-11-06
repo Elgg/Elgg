@@ -3,17 +3,17 @@
 namespace Elgg\Friends\Collections;
 
 use Elgg\Event;
-use Elgg\Notifications\Event as Event2;
 use ElggRelationship;
 
+/**
+ * Delete friend relationship handler
+ */
 class DeleteRelationshipHandler {
 
 	/**
 	 * Remove user from friend collections, when 'friend' relationships is deleted
 	 *
-	 * @elgg_event delete relationship
-	 *
-	 * @param Event2 $event Event
+	 * @param \Elgg\Event $event 'delete' 'relationship'
 	 * @return void
 	 */
 	public function __invoke(Event $event) {

@@ -43,7 +43,7 @@ elgg.security.setToken = function(token_object, valid_tokens) {
  *
  * We don't want to update invalid tokens, so we collect all tokens in the page and send them to
  * the server to be validated. Those that were valid are replaced in setToken().
- * 
+ *
  * @private
  */
 elgg.security.refreshToken = function() {
