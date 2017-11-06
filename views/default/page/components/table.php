@@ -34,7 +34,6 @@ $columns = elgg_extract('columns', $vars);
 /* @var TableColumn[] $columns */
 
 if (empty($columns) || !is_array($columns)) {
-	elgg_log('$vars["columns"] must be an array of ' . TableColumn::class, 'ERROR');
 	return;
 }
 
@@ -53,7 +52,7 @@ if (!is_array($items) || count($items) == 0) {
 $headings = '';
 foreach ($columns as $column) {
 	if (!$column instanceof TableColumn) {
-		elgg_log('$vars["columns"] must be an array of ' . TableColumn::class, 'ERROR');
+		elgg_log('$vars["columns"] must be an array of ' . TableColumn::class, 'NOTICE');
 		return;
 	}
 

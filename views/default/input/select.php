@@ -77,7 +77,7 @@ $render_option = function($opt_value, $option) use ($value) {
 		unset($option['text']);
 		
 		if (!is_string($text) && !is_numeric($text)) {
-			elgg_log('No text defined for input/select option with value "' . $opt_value . '"', 'ERROR');
+			elgg_log('No text defined for input/select option with value "' . $opt_value . '"', 'NOTICE');
 		}
 
 		$option_attrs = array_merge($option_attrs, $option);

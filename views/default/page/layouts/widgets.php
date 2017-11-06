@@ -22,7 +22,6 @@ if ($owner_guid) {
 }
 
 if (!$owner) {
-	elgg_log('Can not resolve owner entity for widget layout', 'ERROR');
 	return;
 }
 

@@ -47,8 +47,7 @@ if (empty($tabs)) {
 $content = '';
 foreach ($tabs as $index => $tab) {
 	if (!isset($tab['href']) && !isset($tab['content'])) {
-		elgg_log('Tab configuration in "page/components/tabs"
-			requires either a "href" or "content" parameter', 'ERROR');
+		elgg_log('Tab configuration in "page/components/tabs" requires either a "href" or "content" parameter', 'NOTICE');
 		continue;
 	}
 
