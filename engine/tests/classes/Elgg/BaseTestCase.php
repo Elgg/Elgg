@@ -150,9 +150,9 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 		access_show_hidden_entities(false);
 
 		// Make sure the application has been bootstrapped correctly
-		$this->assertInstanceOf(Application::class, elgg());
-		$this->assertInstanceOf(ServiceProvider::class, $app->_services);
-		$this->assertInstanceOf(Config::class, $app->_services->config);
+		$this->assertInstanceOf(Application::class, elgg(), __METHOD__ . ': Elgg not bootstrapped');
+		$this->assertInstanceOf(ServiceProvider::class, $app->_services, __METHOD__ . ': ServiceProvider not bootstrapped');
+		$this->assertInstanceOf(Config::class, $app->_services->config, __METHOD__ . ': Config not bootstrapped');
 	}
 
 	/**
@@ -161,13 +161,13 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 	protected function tearDown() {
 
 		// We do not want overflowing ignored access
-		$this->assertFalse((bool) elgg_get_ignore_access());
+		$this->assertFalse((bool) elgg_get_ignore_access(), __METHOD__ . ': ignore acces not reset');
 
 		// We do not want overflowing show hidden status
-		$this->assertFalse((bool) access_get_show_hidden_status());
+		$this->assertFalse((bool) access_get_show_hidden_status(), __METHOD__ . ': hidden entities not reset');
 
 		// Tests should run without a logged in user
-		$this->assertFalse((bool) elgg_is_logged_in());
+		$this->assertFalse((bool) elgg_is_logged_in(), __METHOD__ . ': there should be no logged in user');
 
 		// free up some memory
 		$refl = new \ReflectionObject($this);
