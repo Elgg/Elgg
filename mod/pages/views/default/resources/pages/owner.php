@@ -1,8 +1,6 @@
 <?php
 /**
  * List a user's or group's pages
- *
- * @package ElggPages
  */
 
 $owner = elgg_get_page_owner_entity();
@@ -13,16 +11,19 @@ if (!$owner) {
 // access check for closed groups
 elgg_group_gatekeeper();
 
-$title = elgg_echo('pages:owner', [$owner->name]);
+$title = elgg_echo('pages:owner', [$owner->getDisplayName()]);
 
-elgg_push_breadcrumb($owner->name);
+elgg_push_breadcrumb($owner->getDisplayName());
 
-elgg_register_title_button('pages', 'add', 'object', 'page_top');
+elgg_register_title_button('pages', 'add', 'object', 'page');
 
 $content = elgg_list_entities([
 	'type' => 'object',
-	'subtype' => 'page_top',
-	'container_guid' => elgg_get_page_owner_guid(),
+	'subtype' => 'page',
+	'metadata_name_value_pairs' => [
+		'parent_guid' => 0,
+	],
+	'container_guid' => $owner->guid,
 	'full_view' => false,
 	'no_results' => elgg_echo('pages:none'),
 	'preload_owners' => true,
@@ -43,7 +44,7 @@ $params = [
 	'sidebar' => $sidebar,
 ];
 
-if (elgg_instanceof($owner, 'group')) {
+if ($owner instanceof ElggGroup) {
 	$params['filter'] = '';
 }
 

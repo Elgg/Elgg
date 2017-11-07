@@ -8,10 +8,8 @@
  * @uses $vars['entity']         Optional. The child entity (uses container_guid)
  */
 
-elgg_load_library('elgg:pages');
-
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof ElggEntity) {
+if ($entity instanceof ElggPage) {
 	$container = $entity->getContainerEntity();
 } else {
 	$container = elgg_get_page_owner_entity();
@@ -20,12 +18,10 @@ if ($entity instanceof ElggEntity) {
 $pages = pages_get_navigation_tree($container);
 
 $options = [];
-
 foreach ($pages as $page) {
-	$spacing = "";
-	for ($i = 0; $i < $page['depth']; $i++) {
-		$spacing .= "--";
-	}
+	$spacing = '';
+	$spacing .= str_repeat('--', $page['depth']);
+	
 	$options[$page['guid']] = "$spacing " . $page['title'];
 }
 

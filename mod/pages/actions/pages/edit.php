@@ -29,17 +29,13 @@ if (!$input['title']) {
 
 if ($page_guid) {
 	$page = get_entity($page_guid);
-	if (!pages_is_page($page) || !$page->canEdit()) {
+	if (!$page instanceof ElggPage || !$page->canEdit()) {
 		return elgg_error_response(elgg_echo('pages:cantedit'));
 	}
 	$new_page = false;
 } else {
-	$page = new ElggObject();
-	if ($parent_guid) {
-		$page->subtype = 'page';
-	} else {
-		$page->subtype = 'page_top';
-	}
+	$page = new ElggPage();
+	$page->container_guid = $container_guid;
 	$new_page = true;
 }
 
@@ -64,32 +60,36 @@ if (sizeof($input) > 0) {
 	}
 }
 
-// need to add check to make sure user can write to container
-$page->container_guid = $container_guid;
-
-if ($parent_guid && $parent_guid != $page_guid) {
+if (!$new_page && $parent_guid && $parent_guid !== $page_guid) {
 	// Check if parent isn't below the page in the tree
-	if ($page_guid) {
-		$tree_page = get_entity($parent_guid);
-		while ($tree_page->parent_guid > 0 && $page_guid != $tree_page->guid) {
-			$tree_page = get_entity($tree_page->parent_guid);
-		}
-		// If is below, bring all child elements forward
-		if ($page_guid == $tree_page->guid) {
-			$previous_parent = $page->parent_guid;
+	$tree_page = get_entity($parent_guid);
+	while ($tree_page instanceof ElggPage && $page_guid !== $tree_page->guid) {
+		$tree_page = $tree_page->getParentEntity();
+	}
+	// If is below, bring all child elements forward
+	if ($page_guid === $tree_page->guid) {
+		$previous_parent = $page->getParentGUID();
 
-			$children = new ElggBatch('elgg_get_entities_from_metadata', [
-				'metadata_name' => 'parent_guid',
-				'metadata_value' => $page->guid,
-				'limit' => 0,
-			]);
-			foreach ($children as $child) {
-				$child->parent_guid = $previous_parent;
-			}
+		$children = elgg_get_entities_from_metadata([
+			'type' => 'object',
+			'subtype' => 'page',
+			'metadata_name_value_pairs' => [
+				'parent_guid' => $page->guid,
+			],
+			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
+		]);
+		
+		/* @var $child ElggPage */
+		foreach ($children as $child) {
+			$child->setParentByGUID($previous_parent);
 		}
 	}
-	$page->parent_guid = $parent_guid;
 }
+
+// set parent
+$page->setParentByGUID($parent_guid);
 
 if (!$page->save()) {
 	return elgg_error_response(elgg_echo('pages:notsaved'));

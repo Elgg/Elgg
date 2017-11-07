@@ -90,6 +90,7 @@ Removed views
  * ``river/object/page/create``: check :doc:`river`
  * ``river/object/page_top/create``: check :doc:`river`
  * ``river/relationship/member``: check :doc:`river`
+ * ``object/page_top``: use ``object/page``
 
 Removed functions/methods
 -------------------------
@@ -176,6 +177,9 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggSession::get_ignore_access``: Use ``getIgnoreAccess``
  * ``ElggSession::set_ignore_access``: Use ``setIgnoreAccess``
  * ``profile_pagesetup``
+ * ``pages_can_delete_page``: Use ``$entity->canDelete()``
+ * ``pages_search_pages``
+ * ``pages_is_page``: use ``$entity instanceof ElggPage``
 
 All functions around entity subtypes table:
  * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime
@@ -359,6 +363,7 @@ Removed libraries
 -----------------
 
  * ``elgg:discussion``
+ * ``elgg:pages``
 
 Removed pagehandling
 --------------------
@@ -597,6 +602,14 @@ required to make the old interface work.
 
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
+
+Pages plugin
+------------
+
+The suptype ``page_top`` has been migrated into the subtype ``page``. The subtype ``page`` has it's own class namely ``ElggPage``. In order to check
+if an ``ElggPage`` is a top page the class function ``ElggPage->isTopPage()`` was added.
+
+All pages have a metadata value for ``parent_guid``, for top pages this contains ``0``.
 
 Profile plugin
 --------------

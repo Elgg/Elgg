@@ -11,7 +11,7 @@ if (!$annotation) {
 }
 
 $entity = $annotation->getEntity();
-if (!pages_is_page($entity) || !$entity->canEdit() || !$annotation->canEdit()) {
+if (!$entity instanceof ElggPage || !$entity->canEdit() || !$annotation->canEdit()) {
 	return elgg_error_response(elgg_echo('pages:revision:delete:failure'));
 }
 
@@ -19,4 +19,4 @@ if (!$annotation->delete()) {
 	return elgg_error_response(elgg_echo('pages:revision:delete:failure'));
 }
 
-return elgg_ok_response('', elgg_echo('pages:revision:delete:success'), "pages/history/{$annotation->entity_guid}");
+return elgg_ok_response('', elgg_echo('pages:revision:delete:success'), "pages/history/{$entity->guid}");

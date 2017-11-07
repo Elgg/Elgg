@@ -1,15 +1,15 @@
 <?php
 /**
  * Elgg RSS view for a page revision
- *
- * @package Elgg
- * @subpackage Core
  */
 
-$revision = $vars['annotation'];
+$revision = elgg_extract('annotation', $vars);
+if (!$revision instanceof ElggAnnotation) {
+	return;
+}
 
 $poster = $revision->getOwnerEntity();
-$poster_name = htmlspecialchars($poster->name, ENT_NOQUOTES, 'UTF-8');
+$poster_name = htmlspecialchars($poster->getDisplayName(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $revision->getTimeCreated());
 $permalink = $revision->getURL();
 

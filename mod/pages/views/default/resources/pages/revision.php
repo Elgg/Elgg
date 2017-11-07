@@ -1,18 +1,16 @@
 <?php
 /**
  * View a revision of page
- *
- * @package ElggPages
  */
 
 $id = elgg_extract('id', $vars);
 $annotation = elgg_get_annotation_from_id($id);
-if (!$annotation) {
+if (!$annotation instanceof ElggAnnotation) {
 	forward();
 }
 
 $page = get_entity($annotation->entity_guid);
-if (!pages_is_page($page)) {
+if (!$page instanceof ElggPage) {
 	forward(REFERER);
 }
 
@@ -25,24 +23,25 @@ if (!$container) {
 	forward(REFERER);
 }
 
-$title = $page->title . ": " . elgg_echo('pages:revision');
+$title = "{$page->getDisplayName()}: " . elgg_echo('pages:revision');
 
-if (elgg_instanceof($container, 'group')) {
-	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/all");
-} else {
-	elgg_push_breadcrumb($container->name, "pages/owner/$container->username");
+if ($container instanceof ElggUser) {
+	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");
+} else if ($container instanceof ElggGroup) {
+	elgg_push_breadcrumb($container->getDisplayName(), "pages/group/{$container->guid}");
 }
+
 pages_prepare_parent_breadcrumbs($page);
-elgg_push_breadcrumb($page->title, $page->getURL());
+elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 elgg_push_breadcrumb(elgg_echo('pages:revision'));
 
-$content = elgg_view('object/page_top', [
-	'entity' => $page,
+$content = elgg_view_entity($page, [
 	'revision' => $annotation,
-	'full_view' => true,
 ]);
 
-$sidebar = elgg_view('pages/sidebar/history', ['page' => $page]);
+$sidebar = elgg_view('pages/sidebar/history', [
+	'page' => $page,
+]);
 
 $body = elgg_view_layout('content', [
 	'filter' => '',

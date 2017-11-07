@@ -6,10 +6,7 @@ return [
 			'type' => 'object',
 			'subtype' => 'page',
 			'searchable' => true,
-		],
-		[
-			'type' => 'object',
-			'subtype' => 'page_top',
+			'class' => '\ElggPage',
 		],
 	],
 	'actions' => [
@@ -22,5 +19,9 @@ return [
 			'description' => elgg_echo('pages:widget:description'),
 			'context' => ['profile', 'dashboard'],
 		],
+	],
+	'upgrades' => [
+		'\Elgg\Pages\Upgrades\MigratePageTop',
+		'\Elgg\Pages\Upgrades\MigratePageTopRiver',
 	],
 ];
