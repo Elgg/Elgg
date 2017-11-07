@@ -7,18 +7,21 @@
  */
 
 // allow river views to override the response content
-$responses = elgg_extract('responses', $vars, false);
-if ($responses) {
+$responses = elgg_extract('responses', $vars);
+if (isset($responses)) {
 	echo $responses;
 	return;
 }
 
-$item = $vars['item'];
-/* @var ElggRiverItem $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
+
 $object = $item->getObjectEntity();
 
 // annotations and comments do not have responses
-if ($item->annotation_id != 0 || !$object || $object instanceof ElggComment) {
+if (!empty($item->annotation_id) || !$object instanceof ElggEntity || $object instanceof ElggComment) {
 	return;
 }
 
@@ -48,14 +51,11 @@ if ($comment_count) {
 	elgg_pop_context();
 	
 	if ($comment_count > count($comments)) {
-		$url = $object->getURL();
-		$params = [
-			'href' => $url,
+		echo elgg_format_element('div', ['class' => 'elgg-river-more'], elgg_view('output/url', [
+			'href' => $object->getURL(),
 			'text' => elgg_echo('river:comments:all', [$comment_count]),
 			'is_trusted' => true,
-		];
-		$link = elgg_view('output/url', $params);
-		echo "<div class=\"elgg-river-more\">$link</div>";
+		]));
 	}
 }
 

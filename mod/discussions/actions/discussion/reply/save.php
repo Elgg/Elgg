@@ -60,14 +60,12 @@ if ($reply_guid) {
 	return elgg_ok_response('', elgg_echo('discussion:reply:edited'), $forward_url);
 }
 	
-$user = elgg_get_logged_in_user_entity();
-
 // add the reply to the forum topic
 $reply = new ElggDiscussionReply();
 $reply->description = $text;
 $reply->access_id = $topic->access_id;
 $reply->container_guid = $topic->getGUID();
-$reply->owner_guid = $user->getGUID();
+$reply->owner_guid = elgg_get_logged_in_user_guid();
 
 $reply_guid = $reply->save();
 
@@ -78,7 +76,6 @@ if ($reply_guid == false) {
 elgg_create_river_item([
 	'view' => 'river/object/discussion_reply/create',
 	'action_type' => 'reply',
-	'subject_guid' => $user->guid,
 	'object_guid' => $reply->guid,
 	'target_guid' => $topic->guid,
 ]);

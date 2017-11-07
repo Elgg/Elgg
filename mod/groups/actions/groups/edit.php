@@ -186,7 +186,6 @@ if ($is_new_group) {
 	elgg_create_river_item([
 		'view' => 'river/group/create',
 		'action_type' => 'create',
-		'subject_guid' => $user->guid,
 		'object_guid' => $group->guid,
 	]);
 }

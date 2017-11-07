@@ -35,8 +35,8 @@ View and comment on the bookmark:
 
 	'bookmarks:numbertodisplay' => 'Number of bookmarks to display',
 
-	'river:create:object:bookmarks' => '%s bookmarked %s',
-	'river:comment:object:bookmarks' => '%s commented on a bookmark %s',
+	'river:object:bookmarks:create' => '%s bookmarked %s',
+	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 	'bookmarks:river:annotate' => 'a comment on this bookmark',
 	'bookmarks:river:item' => 'an item',
 

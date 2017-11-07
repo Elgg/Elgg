@@ -3,39 +3,37 @@
 namespace Elgg\Integration;
 
 use Elgg\Values;
-use ElggEntity;
 use ElggRiveritem;
-use ElggUser;
 
 /**
  * Elgg Test river api
  *
  * @group IntegrationTests
  */
-class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
+class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	/**
-	 * @var ElggEntity
+	 * @var \ElggObject
 	 */
 	protected $entity;
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $user;
 
 	public function up() {
 		$user = $this->createOne('user');
-
+		
 		$entity = $this->createOne('object', [
 			'owner_guid' => $user->guid,
 		]);
-
+		
 		$this->user = $user;
 		$this->entity = $entity;
 
 		_elgg_services()->session->setLoggedInUser($user);
-
+		
 		// By default, only admins are allowed to delete river items
 		// For the sake of this test case, we will allow the user to delete items
 		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', [
@@ -45,22 +43,32 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 	}
 
 	public function down() {
+		
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
-
-		$this->user->delete();
+		
+		if (isset($this->user)) {
+			$this->user->delete();
+		}
+		
+		if (isset($this->entity)) {
+			$this->entity->delete();
+		}
 
 		elgg_unregister_plugin_hook_handler('permissions_check:delete', 'river', [
 			$this,
 			'allowDelete'
 		]);
+		
+		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function allowDelete($hook, $type, $return, $params) {
+		
 		$hook_user = elgg_extract('user', $params);
 		if (!$hook_user) {
 			return;
 		}
-
+		
 		if ($this->user->guid === $hook_user->guid) {
 			return true;
 		}
@@ -69,20 +77,18 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 	public function testCanCreateRiverItem() {
 
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
 			'object_guid' => $this->entity->guid,
 		];
 
 		$id = elgg_create_river_item($params);
 		$this->assertTrue(is_int($id));
 		$this->assertTrue(elgg_delete_river(['id' => $id]));
-
+		
 		$params['return_item'] = true;
 		$item = elgg_create_river_item($params);
 
-		$this->assertIsA($item, ElggRiveritem::class);
+		$this->assertInstanceOf(ElggRiverItem::class, $item);
 		$this->assertTrue(elgg_delete_river(['id' => $item->id]));
 	}
 
@@ -90,7 +96,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 			'posted' => time(),
 			'return_item' => true,
@@ -123,7 +129,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 			'posted' => $params['posted'],
 		];
 		foreach ($expected_values as $key => $value) {
-			$this->assertEqual($captured['hook_value'][$key], $value);
+			$this->assertEquals($captured['hook_value'][$key], $value);
 		}
 		$this->assertSame($item, $captured['event_object']);
 
@@ -134,7 +140,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 		];
 
@@ -148,14 +154,14 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 			'getFalse'
 		]);
 
-		$this->assertTrue($id === true); // prevented
+		$this->assertTrue($id); // prevented
 	}
 
 	public function testCanCancelRiverDeleteByEvent() {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 			'return_item' => true,
 		];
@@ -172,7 +178,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		]);
 
 		$items = elgg_get_river(['id' => $item->id]);
-		$this->assertEqual(count($items), 1);
+		$this->assertEquals(count($items), 1);
 
 		$this->assertTrue($item->delete());
 	}
@@ -183,7 +189,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 			'return_item' => true,
 		];
@@ -205,7 +211,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 			'return_item' => true,
 		];
@@ -239,7 +245,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 		];
 		$id = elgg_create_river_item($params);
@@ -263,7 +269,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		elgg_unregister_event_handler('delete:before', 'river', $handler);
 		elgg_unregister_event_handler('delete:after', 'river', $handler);
 
-		$this->assertEqual($events_fired, 3);
+		$this->assertEquals($events_fired, 3);
 
 		_elgg_services()->session->setLoggedInUser($old_user);
 	}
@@ -272,32 +278,46 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 		];
-
-		$no_view = $params;
-		unset($no_view['view']);
-		$this->assertFalse(elgg_create_river_item($no_view));
 
 		$no_action = $params;
 		unset($no_action['action_type']);
 		$this->assertFalse(elgg_create_river_item($no_action));
 
-		$no_subject = $params;
-		unset($no_subject['subject_guid']);
-		$this->assertFalse(elgg_create_river_item($no_subject));
-
 		$no_object = $params;
 		unset($no_object['object_guid']);
 		$this->assertFalse(elgg_create_river_item($no_object));
+	}
+	
+	public function testElggCreateRiverItemSubjectGuid() {
+		$params = [
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $this->user->guid,
+			'object_guid' => $this->entity->guid,
+		];
+		
+		$no_subject = $params;
+		unset($no_subject['subject_guid']);
+		
+		// subject_guid is filled by logged in user
+		$this->assertNotFalse(elgg_create_river_item($no_subject));
+		
+		// missing subject_guid
+		_elgg_services()->session->removeLoggedInUser();
+		$this->assertFalse(elgg_create_river_item($no_subject));
+		
+		// still logged out, but now supplied subject_guid
+		$this->assertNotFalse(elgg_create_river_item($params));
 	}
 
 	public function testElggCreateRiverItemViewNotExist() {
 		$params = [
 			'view' => 'river/relationship/foo/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 		];
 
@@ -308,7 +328,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$params = [
 			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
-			'subject_guid' => $this->entity->guid,
+			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
 			'target_guid' => $this->entity->guid,
 		];
@@ -330,7 +350,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$types = ['object'];
 		$subtypes = ['blog'];
 		$result = _elgg_get_river_type_subtype_where_sql('rv', $types, $subtypes, null);
-		$this->assertIdentical($result, "((rv.type = 'object') AND ((rv.subtype = 'blog')))");
+		$this->assertSame($result, "((rv.type = 'object') AND ((rv.subtype = 'blog')))");
 
 		$types = ['object'];
 		$subtypes = [
@@ -338,7 +358,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 			'file'
 		];
 		$result = _elgg_get_river_type_subtype_where_sql('rv', $types, $subtypes, null);
-		$this->assertIdentical($result, "((rv.type = 'object') AND ((rv.subtype = 'blog') OR (rv.subtype = 'file')))");
+		$this->assertSame($result, "((rv.type = 'object') AND ((rv.subtype = 'blog') OR (rv.subtype = 'file')))");
 	}
 
 	public function testElggRiverDisableEnable() {
@@ -359,7 +379,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 
 		$river = elgg_get_river(['ids' => [$id]]);
 
-		$this->assertIdentical($river[0]->enabled, 'yes');
+		$this->assertSame($river[0]->enabled, 'yes');
 
 		$ia = elgg_set_ignore_access(true);
 		$this->assertTrue($user->disable());
@@ -368,7 +388,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 		// should no longer be able to get the river
 		$river = elgg_get_river(['ids' => [$id]]);
 
-		$this->assertIdentical($river, []);
+		$this->assertSame($river, []);
 
 		// renabling the user should re-enable the river
 		$ia = elgg_set_ignore_access(true);
@@ -380,7 +400,7 @@ class ElggCoreRiverAPITest extends \Elgg\LegacyIntegrationTestCase {
 
 		$river = elgg_get_river(['ids' => [$id]]);
 
-		$this->assertIdentical($river[0]->enabled, 'yes');
+		$this->assertSame($river[0]->enabled, 'yes');
 
 		$user->delete();
 		$this->entity->delete();

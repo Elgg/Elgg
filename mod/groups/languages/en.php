@@ -166,8 +166,8 @@ or click below to view the group's join requests:
 	 * Forum river items
 	 */
 
-	'river:create:group:default' => '%s created the group %s',
-	'river:join:group:default' => '%s joined the group %s',
+	'river:group:create' => '%s created the group %s',
+	'river:group:join' => '%s joined the group %s',
 
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 

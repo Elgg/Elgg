@@ -3,8 +3,10 @@
  * River view for discussion replies
  */
 
-$item = $vars['item'];
-/* @var ElggRiverItem $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
 
 $reply = $item->getObjectEntity();
 $subject = $item->getSubjectEntity();
@@ -31,10 +33,8 @@ $reply_link = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 
-$summary = elgg_echo('river:reply:object:discussion', [$subject_link, $target_link]);
+$vars['summary'] = elgg_echo('river:object:discussion_reply:reply', [$subject_link, $target_link]);
 
-echo elgg_view('river/elements/layout', [
-	'item' => $item,
-	'message' => elgg_get_excerpt($reply->description). ' ' .$reply_link,
-	'summary' => $summary,
-]);
+$vars['message'] = elgg_get_excerpt($reply->description) . ' ' . $reply_link;
+
+echo elgg_view('river/elements/layout', $vars);

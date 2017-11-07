@@ -1,8 +1,9 @@
 <?php
 /**
- * New bookmarks river entry
+ * Default river view for ElggObject creation
+ * Will show an excerpt of the description of the ElggObject
  *
- * @package Bookmarks
+ * @uses $vars['item'] the river item
  */
 
 $item = elgg_extract('item', $vars);
@@ -11,7 +12,10 @@ if (!$item instanceof ElggRiverItem) {
 }
 
 $object = $item->getObjectEntity();
+if (!$object instanceof ElggObject) {
+	return;
+}
+
 $vars['message'] = elgg_get_excerpt($object->description);
-$vars['attachments'] = elgg_view('output/url', ['href' => $object->address]);
 
 echo elgg_view('river/elements/layout', $vars);

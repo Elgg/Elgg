@@ -7,8 +7,10 @@
  * @uses $vars['item']
  */
 
-$item = $vars['item'];
-/* @var ElggRiverItem $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
 
 $subject = $item->getSubjectEntity();
 

@@ -58,7 +58,6 @@ if ($new) {
 	elgg_create_river_item([
 		'view' => 'river/object/bookmarks/create',
 		'action_type' => 'create',
-		'subject_guid' => elgg_get_logged_in_user_guid(),
 		'object_guid' => $bookmark->getGUID(),
 	]);
 }

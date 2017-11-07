@@ -39,8 +39,8 @@ return [
 	/**
 	 * River
 	 */
-	'river:create:object:discussion' => '%s added a new discussion topic %s',
-	'river:reply:object:discussion' => '%s replied on the discussion topic %s',
+	'river:object:discussion:create' => '%s added a new discussion topic %s',
+	'river:object:discussion_reply:reply' => '%s replied on the discussion topic %s',
 	'river:reply:view' => 'view reply',
 
 	/**

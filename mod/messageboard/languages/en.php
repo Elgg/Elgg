@@ -26,7 +26,7 @@ return [
 	/**
 	 * Message board widget river
 	 */
-	'river:messageboard:user:default' => "%s posted on %s's message board",
+	'river:user:messageboard' => "%s posted on %s's message board",
 
 	/**
 	 * Status messages

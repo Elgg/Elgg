@@ -275,7 +275,7 @@ return array(
  * River
  */
 	'river' => "River",
-	'river:friend:user:default' => "%s is now a friend with %s",
+	'river:user:friend' => "%s is now a friend with %s",
 	'river:update:user:avatar' => '%s has a new avatar',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
@@ -1292,7 +1292,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'comments:count' => "%s comments",
 	'item:object:comment' => 'Comments',
 
-	'river:comment:object:default' => '%s commented on %s',
+	'river:object:default:comment' => '%s commented on %s',
 
 	'generic_comments:add' => "Leave a comment",
 	'generic_comments:edit' => "Edit comment",

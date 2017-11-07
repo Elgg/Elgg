@@ -86,6 +86,10 @@ Removed views
  * ``navigation/menu/page``: now uses ``navigation/menu/default`` and a prepare hook
  * ``page/elements/by_line``: Use ``object/elements/imprint``
  * ``forms/admin/site/advanced/security``: the site secret information has been moved to ``forms/admin/security/settings``
+ * ``river/object/file/create``: check :doc:`river`
+ * ``river/object/page/create``: check :doc:`river`
+ * ``river/object/page_top/create``: check :doc:`river`
+ * ``river/relationship/member``: check :doc:`river`
 
 Removed functions/methods
 -------------------------
