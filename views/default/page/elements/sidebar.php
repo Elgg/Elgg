@@ -4,6 +4,7 @@
  *
  * @uses $vars['sidebar'] Optional content that is displayed at the bottom of sidebar
  */
+echo elgg_view('search/header', $vars);
 
 echo elgg_view('page/elements/owner_block', $vars);
 
