@@ -66,19 +66,38 @@ class Logger {
 	private $printer;
 
 	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   Hooks service
 	 * @param Context            $context Context service
+	 * @param Config             $config  Config
 	 * @param Printer            $printer Printer
 	 */
-	public function __construct(PluginHooksService $hooks, Context $context, Printer $printer = null) {
+	public function __construct(PluginHooksService $hooks, Context $context, Config $config, Printer $printer = null) {
 		$this->hooks = $hooks;
 		$this->context = $context;
 		if (!isset($printer)) {
 			$printer = new HtmlPrinter();
 		}
 		$this->printer = $printer;
+		$this->config = $config;
+		
+		$php_error_level = error_reporting();
+		
+		if (($php_error_level & E_ALL) == E_ALL) {
+			$this->level = self::INFO;
+		} elseif (($php_error_level & E_NOTICE) == E_NOTICE) {
+			$this->level = self::NOTICE;
+		} elseif (($php_error_level & E_WARNING) == E_WARNING) {
+			$this->level = self::WARNING;
+		} elseif (($php_error_level & E_ERROR) == E_ERROR) {
+			$this->level = self::ERROR;
+		}
 	}
 
 	/**
@@ -267,9 +286,11 @@ class Logger {
 		}
 
 		// don't display in simplecache requests
-		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
-		if (preg_match('~^(cache|action|serve-file)/~', $path)) {
-			$display = false;
+		if ($this->config->bootcomplete) {
+			$path = substr(current_page_url(), strlen(elgg_get_site_url()));
+			if (preg_match('~^(cache|action|serve-file)/~', $path)) {
+				$display = false;
+			}
 		}
 
 		$this->printer->write($data, $display, $level);
