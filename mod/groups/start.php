@@ -604,50 +604,66 @@ function groups_set_access_collection_name(\Elgg\Hook $hook) {
 }
 
 /**
- * Listens to a group join event and adds a user to the group's access control
+ * Perform actions when a user joins a group
  *
  * @param string $event       'join'
  * @param string $object_type 'group'
- * @param array  $object      supplied params
+ * @param array  $params      supplied params
  *
  * @return void
  */
-function groups_user_join_event_listener($event, $object_type, $object) {
-	$group = elgg_extract('group', $object);
-	$user = elgg_extract('user', $object);
+function groups_user_join_event_listener($event, $object_type, $params) {
+	$group = elgg_extract('group', $params);
+	$user = elgg_extract('user', $params);
 	if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
 		return;
 	}
 	
-	$collection = _groups_get_group_acl($group);
-	if (empty($collection)) {
-		return;
+	// Remove any invite or join request flags
+	remove_entity_relationship($group->guid, 'invited', $user->guid);
+	remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+
+	if (elgg_extract('create_river_item', $params)) {
+		elgg_create_river_item([
+			'view' => 'river/relationship/member/create',
+			'action_type' => 'join',
+			'subject_guid' => $user->guid,
+			'object_guid' => $group->guid,
+		]);
 	}
 	
-	$collection->addMember($user->guid);
+	// add a user to the group's access control
+	$collection = _groups_get_group_acl($group);
+	if (!empty($collection)) {
+		$collection->addMember($user->guid);
+	}
 }
 
 /**
- * Listens to a group leave event and removes a user from the group's access control
+ * Perform actions when a user leaves a group
  *
  * @param string $event       'leave'
  * @param string $object_type 'group'
- * @param array  $object      supplied params
+ * @param array  $params      supplied params
  *
  * @return void
  */
-function groups_user_leave_event_listener($event, $object_type, $object) {
-	$group = elgg_extract('group', $object);
-	$user = elgg_extract('user', $object);
+function groups_user_leave_event_listener($event, $object_type, $params) {
+	$group = elgg_extract('group', $params);
+	$user = elgg_extract('user', $params);
 	if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
 		return;
 	}
 	
+	// Remove any invite or join request flags (for some edge cases)
+	remove_entity_relationship($group->guid, 'invited', $user->guid);
+	remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+	
+	// Removes a user from the group's access control
 	$collection = _groups_get_group_acl($group);
-	if (empty($collection)) {
-		return;
+	if (!empty($collection)) {
+		$collection->removeMember($user->guid);
 	}
-	$collection->removeMember($user->guid);
 }
 
 /**
@@ -715,42 +731,6 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 	}
 
 	return $groups;
-}
-
-/**
- * Join a user to a group, add river event, clean-up invitations
- *
- * @param ElggGroup $group the group to join
- * @param ElggUser  $user  the user to join
- *
- * @return bool
- */
-function groups_join_group($group, $user) {
-
-	// access ignore so user can be added to access collection of invisible group
-	$ia = elgg_set_ignore_access(true);
-	$result = $group->join($user);
-	elgg_set_ignore_access($ia);
-
-	if (!$result) {
-		return false;
-	}
-	
-	// flush user's access info so the collection is added
-	get_access_list($user->guid, 0, true);
-
-	// Remove any invite or join request flags
-	remove_entity_relationship($group->guid, 'invited', $user->guid);
-	remove_entity_relationship($user->guid, 'membership_request', $group->guid);
-
-	elgg_create_river_item([
-		'view' => 'river/relationship/member/create',
-		'action_type' => 'join',
-		'subject_guid' => $user->guid,
-		'object_guid' => $group->guid,
-	]);
-
-	return true;
 }
 
 /**
