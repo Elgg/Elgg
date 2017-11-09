@@ -135,11 +135,6 @@ class Application {
 
 		$this->_services->timer->begin([]);
 
-		// Until DB loads, let's log problems
-		if ($config->debug === null) {
-			$config->debug = 'NOTICE';
-		}
-
 		if ($config->dataroot) {
 			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
 		} else {

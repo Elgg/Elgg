@@ -145,7 +145,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$metadata_id = _elgg_services()->metadataTable->create($object->guid, 'test_metadata_name', 'test_metadata_value', 'text');
 		$metadata = elgg_get_metadata_from_id($metadata_id);
 
-		$annotation_id = $object->annotate('test_annotation_name', 'test_annotation_value', 'text', $this->actor->guid, ACCESS_PUBLIC);
+		$annotation_id = $object->annotate('test_annotation_name', 'test_annotation_value', ACCESS_PUBLIC, $this->actor->guid, 'text');
 		$annotation = elgg_get_annotation_from_id($annotation_id);
 
 		add_entity_relationship($object->guid, 'test_relationship', $user->guid);
