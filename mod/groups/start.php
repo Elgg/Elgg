@@ -625,7 +625,6 @@ function groups_user_join_event_listener($event, $object_type, $params) {
 
 	if (elgg_extract('create_river_item', $params)) {
 		elgg_create_river_item([
-			'view' => 'river/relationship/member/create',
 			'action_type' => 'join',
 			'subject_guid' => $user->guid,
 			'object_guid' => $group->guid,
