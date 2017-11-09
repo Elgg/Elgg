@@ -25,7 +25,7 @@ abstract class Command extends SymfonyCommand {
 
 		set_error_handler([
 			$this,
-			'handleError'
+			'handleErrors'
 		]);
 		set_exception_handler([
 			$this,
