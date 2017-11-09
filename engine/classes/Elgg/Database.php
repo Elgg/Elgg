@@ -229,7 +229,7 @@ class Database {
 	public function insertData($query, array $params = []) {
 
 		if ($this->logger) {
-			$this->logger->info("DB query $query");
+			$this->logger->info("DB insert query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$connection = $this->getConnection('write');
@@ -257,7 +257,7 @@ class Database {
 	public function updateData($query, $get_num_rows = false, array $params = []) {
 
 		if ($this->logger) {
-			$this->logger->info("DB query $query");
+			$this->logger->info("DB update query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$this->invalidateQueryCache();
@@ -284,7 +284,7 @@ class Database {
 	public function deleteData($query, array $params = []) {
 
 		if ($this->logger) {
-			$this->logger->info("DB query $query");
+			$this->logger->info("DB delete query $query (params: " . print_r($params, true) . ")");
 		}
 
 		$connection = $this->getConnection('write');
@@ -354,6 +354,11 @@ class Database {
 			}
 			$query_id .= $this->fingerprintCallback($callback);
 		}
+		
+		if ($this->logger) {
+			$this->logger->info("DB select query $query (params: " . print_r($params, true) . ")");
+		}
+		
 		// MD5 yields smaller mem usage for cache and cleaner logs
 		$hash = md5($query_id);
 
@@ -361,7 +366,7 @@ class Database {
 		if ($this->query_cache) {
 			if (isset($this->query_cache[$hash])) {
 				if ($this->logger) {
-					$this->logger->info("DB query $query results returned from cache (hash: $hash) (params: " . print_r($params, true) . ")");
+					$this->logger->info("DB query results returned from cache (hash: $hash)");
 				}
 				return $this->query_cache[$hash];
 			}
@@ -387,7 +392,7 @@ class Database {
 		if ($this->query_cache) {
 			$this->query_cache[$hash] = $return;
 			if ($this->logger) {
-				$this->logger->info("DB query $query results cached (hash: $hash) (params: " . print_r($params, true) . ")");
+				$this->logger->info("DB query results cached (hash: $hash)");
 			}
 		}
 
