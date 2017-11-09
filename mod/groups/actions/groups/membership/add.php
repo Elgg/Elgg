@@ -41,7 +41,7 @@ foreach ($user_guid as $u_guid) {
 		continue;
 	}
 	
-	if (!groups_join_group($group, $user)) {
+	if (!$group->join($user, ['create_river_item' => true])) {
 		$errors[] = elgg_echo('groups:error:addedtogroup', [$user->getDisplayName()]);
 		
 		continue;

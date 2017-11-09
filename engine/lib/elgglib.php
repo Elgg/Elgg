@@ -1445,7 +1445,7 @@ function _elgg_ajax_page_handler($segments) {
 	elgg_ajax_gatekeeper();
 
 	if (count($segments) < 2) {
-		return false;
+		return elgg_error_response("Ajax pagehandler called with invalid segments", REFERRER, ELGG_HTTP_BAD_REQUEST);
 	}
 
 	if ($segments[0] === 'view' || $segments[0] === 'form') {
@@ -1467,6 +1467,10 @@ function _elgg_ajax_page_handler($segments) {
 		// cacheable views are always allowed
 		if (!in_array($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
 			return elgg_error_response("Ajax view '$view' was not registered", REFERRER, ELGG_HTTP_FORBIDDEN);
+		}
+		
+		if (!elgg_view_exists($view)) {
+			return elgg_error_response("Ajax view '$view' was not found", REFERRER, ELGG_HTTP_NOT_FOUND);
 		}
 
 		// pull out GET parameters through filter

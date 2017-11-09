@@ -123,6 +123,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``get_user_entity_as_row``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_access_collection_override``
+ * ``groups_join_group``: Use ``ElggGroup::join``
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
  * ``groups_setup_sidebar_menus``

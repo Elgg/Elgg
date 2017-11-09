@@ -152,19 +152,30 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * Join a user to this group.
 	 *
-	 * @param \ElggUser $user User joining the group.
+	 * @param \ElggUser $user   User joining the group.
+	 * @param array     $params Additional params to pass to the 'join', 'group' event
 	 *
 	 * @return bool Whether joining was successful.
 	 */
-	public function join(\ElggUser $user) {
+	public function join(\ElggUser $user, $params = []) {
 		$result = add_entity_relationship($user->guid, 'member', $this->guid);
 	
-		if ($result) {
-			$params = ['group' => $this, 'user' => $user];
-			_elgg_services()->hooks->getEvents()->trigger('join', 'group', $params);
+		if (!$result) {
+			return false;
 		}
+		
+		$event_params = [
+			'group' => $this,
+			'user' => $user,
+		];
+		
+		if (is_array($params)) {
+			$event_params = array_merge($params, $event_params);
+		}
+		
+		_elgg_services()->hooks->getEvents()->trigger('join', 'group', $event_params);
 	
-		return $result;
+		return true;
 	}
 
 	/**
