@@ -73,9 +73,6 @@ function groups_init() {
 
 	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
 
-	// Add tests
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'groups_test');
-
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'group:', 'Elgg\Values::getTrue');
 
@@ -467,11 +464,8 @@ function groups_create_event_listener($event, $type, $object) {
 	$ia = elgg_set_ignore_access(true);
 
 	$ac_name = elgg_echo('groups:group') . ": " . $object->name;
-	$ac_id = create_access_collection($ac_name, $object->guid);
-	if ($ac_id) {
-		$object->group_acl = $ac_id;
-	}
-
+	$ac_id = create_access_collection($ac_name, $object->guid, 'group_acl');
+	
 	elgg_set_ignore_access($ia);
 
 	return (bool) $ac_id; // delete the group if acl creation fails
@@ -520,7 +514,7 @@ function groups_update_event_listener($event, $type, $group) {
 		// update access collection name if group name changes
 		$group_name = html_entity_decode($group->name, ENT_QUOTES, 'UTF-8');
 		$ac_name = elgg_echo('groups:group') . ": " . $group_name;
-		$acl = get_access_collection($group->group_acl);
+		$acl = _groups_get_group_acl($group);
 		if ($acl) {
 			$acl->name = $ac_name;
 			$acl->save();
@@ -551,10 +545,11 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 		return;
 	}
 
-	$allowed_access = [
-		ACCESS_PRIVATE,
-		$page_owner->group_acl,
-	];
+	$allowed_access = [ACCESS_PRIVATE];
+	$acl = _groups_get_group_acl($page_owner);
+	if ($acl) {
+		$allowed_access[] = $acl->id;
+	}
 
 	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 		$allowed_access[] = ACCESS_LOGGED_IN;
@@ -566,9 +561,8 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 	$write_acls = $hook->getValue();
 
 	// add write access to the group
-	$collection = get_access_collection($page_owner->group_acl);
-	if ($collection) {
-		$write_acls[$page_owner->group_acl] = $collection->getDisplayName();
+	if ($acl) {
+		$write_acls[$acl->id] = $acl->getDisplayName();
 	}
 
 	foreach (array_keys($write_acls) as $access_id) {
@@ -619,19 +613,18 @@ function groups_set_access_collection_name(\Elgg\Hook $hook) {
  * @return void
  */
 function groups_user_join_event_listener($event, $object_type, $object) {
-
 	$group = elgg_extract('group', $object);
 	$user = elgg_extract('user', $object);
 	if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
 		return;
 	}
 	
-	$acl = $group->group_acl;
-	if (empty($acl)) {
+	$collection = _groups_get_group_acl($group);
+	if (empty($collection)) {
 		return;
 	}
-
-	add_user_to_access_collection($user->guid, $acl);
+	
+	$collection->addMember($user->guid);
 }
 
 /**
@@ -644,19 +637,17 @@ function groups_user_join_event_listener($event, $object_type, $object) {
  * @return void
  */
 function groups_user_leave_event_listener($event, $object_type, $object) {
-
 	$group = elgg_extract('group', $object);
 	$user = elgg_extract('user', $object);
 	if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
 		return;
 	}
 	
-	$acl = $group->group_acl;
-	if (empty($acl)) {
+	$collection = _groups_get_group_acl($group);
+	if (empty($collection)) {
 		return;
 	}
-
-	remove_user_from_access_collection($user->guid, $acl);
+	$collection->removeMember($user->guid);
 }
 
 /**
@@ -667,18 +658,25 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param int    $access Current default access
- * @return int
+ *
+ * @return int|void
  */
 function groups_access_default_override($hook, $type, $access) {
 	$page_owner = elgg_get_page_owner_entity();
-
-	if ($page_owner instanceof ElggGroup) {
-		if ($page_owner->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
-			$access = $page_owner->group_acl;
-		}
+	if (!($page_owner instanceof ElggGroup)) {
+		return;
 	}
-
-	return $access;
+			
+	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+		return;
+	}
+	
+	$acl = _groups_get_group_acl($page_owner);
+	if (empty($acl)) {
+		return;
+	}
+	
+	return $acl->id;
 }
 
 /**
@@ -779,7 +777,7 @@ function group_access_options($group) {
 		return $access_array;
 	}
 	
-	$collection = get_access_collection($group->group_acl);
+	$collection = _groups_get_group_acl($group);
 	if ($collection) {
 		$access_array[$collection->id] = $collection->getDisplayName();
 	}
@@ -814,21 +812,6 @@ function groups_run_upgrades() {
 	foreach ($files as $file) {
 		include "$path{$file}";
 	}
-}
-
-/**
- * Runs unit tests for groups
- *
- * @param string $hook   'unit_test'
- * @param string $type   'system'
- * @param array  $value  current return value
- * @param mixed  $params supplied params
- *
- * @return array
- */
-function groups_test($hook, $type, $value, $params) {
-	$value[] = elgg_get_plugins_path() . 'groups/tests/write_access.php';
-	return $value;
 }
 
 /**
@@ -1098,6 +1081,24 @@ function groups_set_icon_sizes(\Elgg\Hook $hook) {
 	$sizes['original'] = [];
 
 	return $sizes;
+}
+
+/**
+ * Get the access collection for a given group
+ *
+ * @param \ElggGroup $group the group
+ *
+ * @return \ElggAccessCollection|false
+ *
+ * @internal
+ * @since 3.0
+ */
+function _groups_get_group_acl(\ElggGroup $group) {
+	if (!$group instanceof \ElggGroup) {
+		return false;
+	}
+	
+	return elgg_extract(0, $group->getOwnedAccessCollections(['subtype' => 'group_acl']), false);
 }
 
 return function() {

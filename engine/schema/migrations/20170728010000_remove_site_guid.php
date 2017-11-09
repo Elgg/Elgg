@@ -1,5 +1,6 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 /**
@@ -31,7 +32,7 @@ class RemoveSiteGuid extends AbstractMigration {
 
 			$prefix = $this->getAdapter()->getOption('table_prefix');
 			$row = $this->fetchRow("
-				SELECT count(DISTINCT site_guid) as count 
+				SELECT count(DISTINCT site_guid) as count
 				FROM {$prefix}{$table}
 			");
 

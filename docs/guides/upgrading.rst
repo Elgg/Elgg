@@ -296,6 +296,14 @@ If you have custom queries referencing this table you need to update them.
 If you have function that rely on ``Entity->getOriginalAttributes()`` be advised that this will only return the base attributes of an ``ElggEntity`` and
 no longer contain the secondary attributes.
 
+Friends and Group Access Collection
+-----------------------------------
+
+The access collections table now has a subtype column. This extra data helps identifying the purpose of the ACL.
+The user owned access collections are assumed to be used as Friends Collections and now have the 'friends_collection' subtype.
+The groups access collection information was previously stored in the group_acl metadata. With the introduction of the ACL subtype
+this information has been moved to the ACL subtype attribute.
+
 Subtypes no longer have an ID
 -----------------------------
 

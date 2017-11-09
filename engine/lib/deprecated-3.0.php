@@ -392,3 +392,21 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $ignored
 	
 	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,	$value_type, $allow_multiple);
 }
+
+/**
+ * Returns access collections owned by the entity
+ *
+ * @see add_access_collection()
+ * @see get_members_of_access_collection()
+ *
+ * @param int $owner_guid GUID of the owner
+ * @return \ElggAccessCollection[]|false
+ *
+ * @deprecated Use \Entity->getOwnedAccessCollections() or elgg_get_access_collections()
+ */
+function get_user_access_collections($owner_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggEntity->getOwnedAccessCollections() or elgg_get_access_collections()', '3.0');
+	
+	return _elgg_services()->accessCollections->getEntityCollections(['owner_guid' => $owner_guid]);
+}
+

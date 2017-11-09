@@ -1,6 +1,6 @@
 <?php
 
-namespace ElggGroups;
+namespace Elgg\Groups;
 
 /**
  * @group IntegrationTests

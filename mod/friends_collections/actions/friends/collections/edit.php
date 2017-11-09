@@ -14,7 +14,7 @@ if (!$collection_name) {
 }
 
 if (!$collection_id) {
-	$collection_id = create_access_collection($collection_name);
+	$collection_id = create_access_collection($collection_name, elgg_get_logged_in_user_guid(), 'friends_collection');
 }
 
 $collection = get_access_collection($collection_id);
