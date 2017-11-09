@@ -802,14 +802,14 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		return [
 			// resize 600x300 source image
 			[600, 300, 'master', 600, 300, false],
-			[600, 300, 'large', 200, 100, false],
+			[600, 300, 'large', 200, 200, false],
 			[600, 300, 'medium', 100, 100, false],
 			[600, 300, 'small', 40, 40, false],
 			[600, 300, 'tiny', 25, 25, false],
 			[600, 300, 'topbar', 16, 16, false],
 			// resize 300x600 source image
 			[300, 600, 'master', 300, 600, false],
-			[300, 600, 'large', 100, 200, false],
+			[300, 600, 'large', 200, 200, false],
 			[300, 600, 'medium', 100, 100, false],
 			[300, 600, 'small', 40, 40, false],
 			[300, 600, 'tiny', 25, 25, false],
@@ -823,7 +823,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			[300, 300, 'topbar', 16, 16, false],
 			// resize 75x125 source image
 			[75, 125, 'master', 75, 125, false],
-			[75, 125, 'large', 75, 125, false],
+			[75, 125, 'large', 200, 200, false],
 			[75, 125, 'medium', 100, 100, false],
 			[75, 125, 'small', 40, 40, false],
 			[75, 125, 'tiny', 25, 25, false],
@@ -834,11 +834,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			[75, 125, 'small', 40, 40, true],
 			[75, 125, 'tiny', 25, 25, true],
 			[75, 125, 'topbar', 16, 16, true],
-				// there is a problem in get_resized_image_from_existing_file()
-				// we expect the large icon to fill the container when in cropping mode
-				// however since the icon is set to not upscale, we end up with a 20x20 image
-				// See #9663
-				//[75, 125, 'large', 75, 125, true, 200, 200],
+			[75, 125, 'large', 200, 200, true, 200, 200],
 		];
 	}
 
