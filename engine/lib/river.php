@@ -362,31 +362,6 @@ function elgg_list_river(array $options = []) {
 }
 
 /**
- * Sets the access ID on river items for a particular object
- *
- * @param int $object_guid The GUID of the entity
- * @param int $access_id   The access ID
- *
- * @return bool Depending on success
- */
-function update_river_access_by_object($object_guid, $access_id) {
-
-	$dbprefix = _elgg_config()->dbprefix;
-	$query = "
-		UPDATE {$dbprefix}river
-		SET access_id = :access_id
-		WHERE object_guid = :object_guid
-	";
-
-	$params = [
-		':access_id' => (int) $access_id,
-		':object_guid' => (int) $object_guid,
-	];
-
-	return update_data($query, $params);
-}
-
-/**
  * Register river unit tests
  *
  * @param string $hook  'unit_test'

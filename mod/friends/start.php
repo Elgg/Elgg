@@ -222,7 +222,7 @@ function _elgg_send_friend_notification($event, $type, $object) {
 }
 
 /**
- * Add ACCESS_FRIENDS to the available access levels
+ * Add Friends ACL to the available access levels
  *
  * @param string $hook         "access:collections:write"
  * @param string $type         "user"
@@ -243,7 +243,13 @@ function _elgg_friends_write_access($hook, $type, $access_array, $params) {
 	}
 
 	// friends
-	$ret[ACCESS_FRIENDS] = get_readable_access_level(ACCESS_FRIENDS);
+	$user = elgg_get_logged_in_user_entity();
+	if ($user) {
+		$friends_acl = $user->getOwnedAccessCollection('friends');
+		if ($friends_acl) {
+			$ret[$friends_acl->id] = $friends_acl->getDisplayName();
+		}
+	}
 
 	// rest
 	foreach ($access_array as $key => $value) {

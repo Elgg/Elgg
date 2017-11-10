@@ -179,6 +179,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``pages_can_delete_page``: Use ``$entity->canDelete()``
  * ``pages_search_pages``
  * ``pages_is_page``: use ``$entity instanceof ElggPage``
+ * ``update_river_access_by_object``: Logic moved into ``ElggEntity`` and should not be accessed directly
 
 All functions around entity subtypes table:
  * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime
