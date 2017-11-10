@@ -108,8 +108,8 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 				'large' => [
 					'w' => 200,
 					'h' => 200,
-					'square' => false,
-					'upscale' => false
+					'square' => true,
+					'upscale' => true
 				],
 				'master' => [
 					'w' => 2048,
