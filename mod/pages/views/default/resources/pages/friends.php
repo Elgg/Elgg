@@ -1,25 +1,26 @@
 <?php
 /**
  * List a user's friends' pages
- *
- * @package ElggPages
  */
 
 $owner = elgg_get_page_owner_entity();
-if (!$owner) {
+if (!$owner instanceof ElggUser) {
 	forward('', '404');
 }
 
-elgg_push_breadcrumb($owner->name, "pages/owner/$owner->username");
+elgg_push_breadcrumb($owner->getDisplayName(), "pages/owner/{$owner->username}");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
-elgg_register_title_button('pages', 'add', 'object', 'page_top');
+elgg_register_title_button('pages', 'add', 'object', 'page');
 
 $title = elgg_echo('pages:friends');
 
 $content = elgg_list_entities_from_relationship([
 	'type' => 'object',
-	'subtype' => 'page_top',
+	'subtype' => 'page',
+	'metadata_name_value_pairs' => [
+		'parent_guid' => 0,
+	],
 	'full_view' => false,
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
@@ -29,12 +30,10 @@ $content = elgg_list_entities_from_relationship([
 	'preload_containers' => true,
 ]);
 
-$params = [
+$body = elgg_view_layout('content', [
 	'filter_context' => 'friends',
 	'content' => $content,
 	'title' => $title,
-];
-
-$body = elgg_view_layout('content', $params);
+]);
 
 echo elgg_view_page($title, $body);

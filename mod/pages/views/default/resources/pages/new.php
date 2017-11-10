@@ -1,10 +1,8 @@
 <?php
-
 /**
  * Create a new page
- *
- * @package ElggPages
  */
+
 elgg_gatekeeper();
 
 $container = false;
@@ -15,17 +13,14 @@ if (!$parent_guid) {
 	if (!$container) {
 		$container = elgg_get_logged_in_user_entity();
 	}
-	$subtype = 'page_top';
 } else {
 	$parent = get_entity($parent_guid);
-	if (pages_is_page($parent)) {
+	if ($parent instanceof ElggPage) {
 		$container = $parent->getContainerEntity();
-		$subtype = 'page';
 	} else if (elgg_instanceof($parent)) {
 		$container = $parent;
 		$parent = null;
 		$parent_guid = 0;
-		$subtype = 'page_top';
 	}
 }
 
@@ -34,7 +29,7 @@ if ($parent && !$parent->canEdit()) {
 	forward('', '403');
 }
 
-if (!$container || !$container->canWriteToContainer(0, 'object', $subtype)) {
+if (!$container || !$container->canWriteToContainer(0, 'object', 'page')) {
 	register_error(elgg_echo('noaccess'));
 	forward('', '403');
 }
@@ -42,21 +37,17 @@ if (!$container || !$container->canWriteToContainer(0, 'object', $subtype)) {
 elgg_set_page_owner_guid($container->guid);
 
 if ($container instanceof ElggUser) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/$container->username");
+	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");
 } else if ($container instanceof ElggGroup) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/group/$container->guid");
+	elgg_push_breadcrumb($container->getDisplayName(), "pages/group/{$container->guid}");
 }
 
-if ($parent) {
+if ($parent instanceof ElggPage) {
 	pages_prepare_parent_breadcrumbs($parent);
 	elgg_push_breadcrumb($parent->getDisplayName(), $parent->getURL());
 }
 
-if ($subtype == 'page_top') {
-	$title = elgg_echo('pages:add');
-} else {
-	$title = elgg_echo('pages:newchild');
-}
+$title = elgg_echo('pages:add');
 elgg_push_breadcrumb($title);
 
 $vars = pages_prepare_form_vars(null, $parent_guid);
@@ -69,6 +60,6 @@ $body = elgg_view_layout('content', [
 	'sidebar' => elgg_view('pages/sidebar/navigation', [
 		'page' => $parent,
 	]),
-		]);
+]);
 
 echo elgg_view_page($title, $body);

@@ -1,9 +1,9 @@
 <?php
 /**
  * Elgg Pages
- *
- * @package ElggPages
  */
+
+require_once(dirname(__FILE__) . '/lib/pages.php');
 
 /**
  * Initialize the pages plugin
@@ -28,13 +28,9 @@ function pages_init() {
 	// Extend the main css view
 	elgg_extend_view('elgg.css', 'pages/css');
 
-	elgg_register_plugin_hook_handler('search', 'object:page', 'pages_search_pages');
-
 	// Register for notifications
 	elgg_register_notification_event('object', 'page');
-	elgg_register_notification_event('object', 'page_top');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page', 'pages_prepare_notification');
-	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page_top', 'pages_prepare_notification');
 
 	// add to groups
 	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
@@ -70,7 +66,6 @@ function pages_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:page', 'Elgg\Values::getTrue');
-	elgg_register_plugin_hook_handler('likes:is_likable', 'object:page_top', 'Elgg\Values::getTrue');
 	
 	// prevent public write access
 	elgg_register_plugin_hook_handler('view_vars', 'input/access', 'pages_write_access_vars');
@@ -97,16 +92,9 @@ function pages_init() {
  */
 function pages_page_handler($page) {
 
-	elgg_load_library('elgg:pages');
-	
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
-
 	elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
-	$page_type = $page[0];
-	switch ($page_type) {
+	switch (elgg_extract(0, $page, 'all')) {
 		case 'owner':
 			echo elgg_view_resource('pages/owner');
 			break;
@@ -115,17 +103,17 @@ function pages_page_handler($page) {
 			break;
 		case 'view':
 			echo elgg_view_resource('pages/view', [
-				'guid' => $page[1],
+				'guid' => (int) elgg_extract(1, $page),
 			]);
 			break;
 		case 'add':
 			echo elgg_view_resource('pages/new', [
-				'guid' => $page[1],
+				'guid' => (int) elgg_extract(1, $page),
 			]);
 			break;
 		case 'edit':
 			echo elgg_view_resource('pages/edit', [
-				'guid' => $page[1],
+				'guid' => (int) elgg_extract(1, $page),
 			]);
 			break;
 		case 'group':
@@ -133,21 +121,21 @@ function pages_page_handler($page) {
 			break;
 		case 'history':
 			echo elgg_view_resource('pages/history', [
-				'guid' => $page[1],
+				'guid' => (int) elgg_extract(1, $page),
 			]);
 			break;
 		case 'revision':
 			echo elgg_view_resource('pages/revision', [
-				'id' => $page[1],
+				'id' => (int) elgg_extract(1, $page),
 			]);
 			break;
 		case 'all':
-			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
 			echo elgg_view_resource('pages/all');
 			break;
 		default:
 			return false;
 	}
+	
 	return true;
 }
 
@@ -163,7 +151,7 @@ function pages_page_handler($page) {
  */
 function pages_set_url($hook, $type, $url, $params) {
 	$entity = elgg_extract('entity', $params);
-	if (!pages_is_page($entity)) {
+	if (!$entity instanceof ElggPage) {
 		return;
 	}
 	
@@ -202,7 +190,7 @@ function pages_set_revision_url($hook, $type, $url, $params) {
 function pages_icon_url_override($hook, $type, $returnvalue, $params) {
 	
 	$entity = elgg_extract('entity', $params);
-	if (pages_is_page($entity)) {
+	if ($entity instanceof ElggPage) {
 		return elgg_get_simplecache_url('pages/images/pages.gif');
 	}
 }
@@ -248,7 +236,7 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 function pages_entity_menu_setup($hook, $type, $return, $params) {
 
 	$entity = elgg_extract('entity', $params);
-	if (!pages_is_page($entity)) {
+	if (!$entity instanceof ElggPage) {
 		return;
 	}
 	
@@ -281,7 +269,7 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	$event = elgg_extract('event', $params);
 	
 	$entity = $event->getObject();
-	if (!pages_is_page($entity)) {
+	if (!$entity instanceof ElggPage) {
 		return;
 	}
 	
@@ -319,7 +307,7 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 function pages_write_permission_check($hook, $type, $returnvalue, $params) {
 	
 	$entity = elgg_extract('entity', $params);
-	if (!pages_is_page($entity)) {
+	if (!$entity instanceof ElggPage) {
 		return;
 	}
 	
@@ -365,7 +353,7 @@ function pages_container_permission_check($hook, $type, $returnvalue, $params) {
 	
 	$subtype = elgg_extract('subtype', $params);
 	// check type/subtype
-	if ($type !== 'object' || !in_array($subtype, ['page', 'page_top'])) {
+	if ($type !== 'object' || $subtype !== 'page') {
 		return;
 	}
 	
@@ -387,7 +375,7 @@ function pages_container_permission_check($hook, $type, $returnvalue, $params) {
 	} elseif ($parent_guid = get_input('parent_guid', 0)) {
 		$page = get_entity($parent_guid);
 	}
-	if (!pages_is_page($page)) {
+	if (!$page instanceof ElggPage) {
 		return;
 	}
 
@@ -415,7 +403,6 @@ function pages_container_permission_check($hook, $type, $returnvalue, $params) {
  */
 function pages_ecml_views_hook($hook, $type, $return_value, $params) {
 	$return_value['object/page'] = elgg_echo('item:object:page');
-	$return_value['object/page_top'] = elgg_echo('item:object:page_top');
 
 	return $return_value;
 }
@@ -449,14 +436,22 @@ function pages_is_page($value) {
  */
 function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 	
-	if (empty($params['input_params']['entity_subtype']) || !in_array($params['input_params']['entity_subtype'], ['page', 'page_top'])) {
+	$input_params = elgg_extract('input_params', $params);
+	if (empty($input_params) || !isset($return_value[ACCESS_PUBLIC])) {
+		return;
+	}
+	
+	if (elgg_extract('entity_subtype', $input_params) !== 'page') {
 		return;
 	}
 
-	if ($params['input_params']['purpose'] === 'write') {
-		unset($return_value[ACCESS_PUBLIC]);
-		return $return_value;
+	if (elgg_extract('purpose', $input_params) !== 'write') {
+		return;
 	}
+	
+	unset($return_value[ACCESS_PUBLIC]);
+	
+	return $return_value;
 }
 
 /**
@@ -472,51 +467,24 @@ function pages_write_access_options_hook($hook, $type, $return_value, $params) {
  */
 function pages_write_access_vars($hook, $type, $return, $params) {
 	
-	if ($return['name'] != 'write_access_id') {
+	if (elgg_extract('name', $return) !== 'write_access_id' || elgg_extract('purpose', $return) !== 'write') {
 		return;
 	}
 	
-	if ($return['purpose'] != 'write') {
-		return;
-	}
-	
-	if ($return['value'] != ACCESS_PUBLIC && $return['value'] != ACCESS_DEFAULT) {
+	$value = (int) elgg_extract('value', $return);
+	if ($value !== ACCESS_PUBLIC && $value !== ACCESS_DEFAULT) {
 		return;
 	}
 	
 	$default_access = get_default_access();
 	
-	if ($return['value'] == ACCESS_PUBLIC || $default_access == ACCESS_PUBLIC) {
+	if ($value === ACCESS_PUBLIC || $default_access === ACCESS_PUBLIC) {
 		// is the value public, or default which resolves to public?
 		// if so we'll set it to logged in, the next most permissible write access level
 		$return['value'] = ACCESS_LOGGED_IN;
 	}
 	
 	return $return;
-}
-
-/**
- * Search in both top pages and sub pages
- *
- * @param string $hook   the name of the hook
- * @param string $type   the type of the hook
- * @param mixed  $value  the current return value
- * @param array  $params supplied params
- *
- * @return void|array
- */
-function pages_search_pages($hook, $type, $value, $params) {
-
-	$subtype = elgg_extract('subtype', $params);
-	if (empty($subtype) || ($subtype !== 'page')) {
-		return;
-	}
-
-	unset($params['subtype']);
-	$params['subtypes'] = ['page_top', 'page'];
-
-	// trigger the 'normal' object search as it can handle the added options
-	return elgg_trigger_plugin_hook('search', 'object', $params, []);
 }
 
 return function() {

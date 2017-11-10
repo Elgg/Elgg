@@ -11,19 +11,19 @@ if (!($annotation instanceof \ElggAnnotation)) {
 }
 
 $page = $annotation->getEntity();
-if (!pages_is_page($page)) {
+if (!$page instanceof ElggPage) {
 	return;
 }
 
 $owner = $annotation->getOwnerEntity();
-if (!$owner) {
+if (!$owner instanceof ElggEntity) {
 	return;
 }
 $icon = elgg_view_entity_icon($owner, 'tiny');
 
 $owner_link = elgg_view('output/url', [
 	'href' => $owner->getURL(),
-	'text' => $owner->name,
+	'text' => $owner->getDisplayName(),
 	'is_trusted' => true,
 ]);
 
@@ -31,16 +31,11 @@ $date = elgg_view_friendly_time($annotation->time_created);
 
 $title_link = elgg_view('output/url', [
 	'href' => $annotation->getURL(),
-	'text' => $page->title,
+	'text' => $page->getDisplayName(),
 	'is_trusted' => true,
 ]);
 
 $subtitle = elgg_echo('pages:revision:subtitle', [$date, $owner_link]);
-
-$body = <<< HTML
-<h3>$title_link</h3>
-<p class="elgg-subtext">$subtitle</p>
-HTML;
 
 $menu = '';
 if (!elgg_in_context('widgets')) {

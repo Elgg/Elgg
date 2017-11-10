@@ -10,11 +10,14 @@ $title = elgg_echo('pages:all');
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('pages'));
 
-elgg_register_title_button('pages', 'add', 'object', 'page_top');
+elgg_register_title_button('pages', 'add', 'object', 'page');
 
-$content = elgg_list_entities([
+$content = elgg_list_entities_from_metadata([
 	'type' => 'object',
-	'subtype' => 'page_top',
+	'subtype' => 'page',
+	'metadata_name_value_pairs' => [
+		'parent_guid' => 0,
+	],
 	'full_view' => false,
 	'no_results' => elgg_echo('pages:none'),
 	'preload_owners' => true,

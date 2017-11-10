@@ -35,7 +35,6 @@ return [
 View and comment on the page:
 %s
 ',
-	'item:object:page_top' => 'Top-level pages',
 	'item:object:page' => 'Pages',
 	'pages:nogroup' => 'This group does not have any pages yet',
 	'pages:more' => 'More pages',
@@ -46,12 +45,9 @@ View and comment on the page:
 	**/
 
 	'river:object:page:create' => '%s created a page %s',
-	'river:object:page_top:create' => '%s created a page %s',
 	'river:object:page:update' => '%s updated a page %s',
-	'river:object:page_top:update' => '%s updated a page %s',
 	'river:object:page:comment' => '%s commented on a page titled %s',
-	'river:object:page_top:comment' => '%s commented on a page titled %s',
-
+	
 	/**
 	 * Form fields
 	 */
@@ -110,4 +106,13 @@ View and comment on the page:
 
 	'pages:newchild' => "Create a sub-page",
 	'pages:backtoparent' => "Back to '%s'",
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
 ];

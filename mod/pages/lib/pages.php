@@ -6,7 +6,7 @@
 /**
  * Prepare the add/edit form variables
  *
- * @param ElggObject     $page        the page to edit
+ * @param ElggPage       $page        the page to edit
  * @param int            $parent_guid parrent page guid
  * @param ElggAnnotation $revision    revision
  *
@@ -23,16 +23,18 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 		'tags' => '',
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
-		'entity' => $page,
+		'entity' => null,
 		'parent_guid' => $parent_guid,
 	];
 
-	if ($page instanceof ElggObject) {
+	if ($page instanceof ElggPage) {
 		foreach (array_keys($values) as $field) {
 			if (isset($page->$field)) {
 				$values[$field] = $page->$field;
 			}
 		}
+		
+		$values['entity'] = $page;
 	}
 
 	if (elgg_is_sticky_form('page')) {
@@ -40,12 +42,12 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 		foreach ($sticky_values as $key => $value) {
 			$values[$key] = $value;
 		}
+		
+		elgg_clear_sticky_form('page');
 	}
 
-	elgg_clear_sticky_form('page');
-
 	// load the revision annotation if requested
-	if ($revision instanceof ElggAnnotation && $page instanceof ElggObject && $revision->entity_guid == $page->guid) {
+	if ($revision instanceof ElggAnnotation && $page instanceof ElggPage && $revision->entity_guid === $page->guid) {
 		$values['description'] = $revision->value;
 	}
 
@@ -55,19 +57,19 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 /**
  * Recurses the page tree and adds the breadcrumbs for all ancestors
  *
- * @param ElggObject $page Page entity
+ * @param ElggPage $page Page entity
  *
  * @return void
  */
 function pages_prepare_parent_breadcrumbs($page) {
 	$crumbs = [];
 
-	while (pages_is_page($page)) {
+	while ($page instanceof ElggPage) {
 		$crumbs[] = [
 			'text' => $page->getDisplayName(),
 			'href' => $page->getURL(),
 		];
-		$page = get_entity($page->parent_guid);
+		$page = $page->getParentEntity();
 	}
 
 	array_shift($crumbs);
@@ -90,21 +92,25 @@ function pages_get_navigation_tree($container) {
 		return;
 	}
 
-	$top_pages = elgg_get_entities([
+	$top_pages = elgg_get_entities_from_metadata([
 		'type' => 'object',
-		'subtype' => 'page_top',
+		'subtype' => 'page',
 		'container_guid' => $container->guid,
 		'limit' => false,
 		'batch' => true,
+		'metadata_name_value_pairs' => [
+			'parent_guid' => 0,
+		],
 	]);
 
 	$tree = [];
 	$depths = [];
 
+	/* @var $page ElggPage */
 	foreach ($top_pages as $page) {
 		$tree[] = [
 			'guid' => $page->guid,
-			'title' => $page->title,
+			'title' => $page->getDisplayName(),
 			'url' => $page->getURL(),
 			'depth' => 0,
 		];
@@ -117,16 +123,18 @@ function pages_get_navigation_tree($container) {
 			$children = elgg_get_entities_from_metadata([
 				'type' => 'object',
 				'subtype' => 'page',
-				'metadata_name' => 'parent_guid',
-				'metadata_value' => $parent->guid,
 				'limit' => false,
 				'batch' => true,
+				'metadata_name_value_pairs' => [
+					'parent_guid' => $parent->guid,
+				],
 			]);
 
+			/* @var $child ElggPage */
 			foreach ($children as $child) {
 				$tree[] = [
 					'guid' => $child->guid,
-					'title' => $child->title,
+					'title' => $child->getDisplayName(),
 					'url' => $child->getURL(),
 					'parent_guid' => $parent->guid,
 					'depth' => $depths[$parent->guid] + 1,
@@ -144,13 +152,13 @@ function pages_get_navigation_tree($container) {
  * Register the navigation menu
  *
  * @param ElggEntity $container Container entity for the pages
- * @param ElggEntity $selected  Selected page
+ * @param ElggPage   $selected  Selected page
  *
  * @return void
  */
 function pages_register_navigation_tree($container, $selected = null) {
+	
 	$pages = pages_get_navigation_tree($container);
-
 	if (empty($pages)) {
 		return;
 	}
@@ -161,31 +169,7 @@ function pages_register_navigation_tree($container, $selected = null) {
 			'text' => $page['title'],
 			'href' => $page['url'],
 			'parent_name' => elgg_extract('parent_guid', $page),
-			'selected' => pages_is_page($selected) && $selected->guid == $page['guid'],
+			'selected' => $selected instanceof ElggPage && $selected->guid === $page['guid'],
 		]);
 	}
-}
-
-/**
- * Can the user delete the page?
- *
- * @param ElggObject $page Page/page-top object
- *
- * @return bool
- */
-function pages_can_delete_page($page) {
-	if (!pages_is_page($page)) {
-		return false;
-	}
-	/* @var ElggObject $page */
-
-	$user = elgg_get_logged_in_user_entity();
-	if ($user) {
-		if ($user->guid == $page->owner_guid || $user->isAdmin()) {
-			return true;
-		}
-	}
-
-	$container = $page->getContainerEntity();
-	return $container ? $container->canEdit() : false;
 }
