@@ -3,8 +3,8 @@
 /**
  * Controls access levels on \ElggEntity entities, metadata, and annotations.
  *
- * @warning ACCESS_DEFAULT is a place holder for the input/access view. Do not
- * use it when saving an entity.
+ * @warning ACCESS_DEFAULT and ACCESS_FRIENDS are placeholders for the input/access view.
+ * Do not use them when saving or updating an entity.
  *
  * @var int
  */

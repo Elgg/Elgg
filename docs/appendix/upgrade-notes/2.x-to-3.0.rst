@@ -232,6 +232,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``members_nav_newest``
  * ``members_nav_online``
  * ``members_nav_alpha``
+ * ``update_river_access_by_object``: Logic moved into ``ElggEntity`` and should not be accessed directly
 
 All functions around entity subtypes table:
  * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime

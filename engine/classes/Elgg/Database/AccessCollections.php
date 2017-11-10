@@ -853,7 +853,7 @@ class AccessCollections {
 		$collection = $this->get($access);
 
 		$user_guid = $this->session->getLoggedInUserGuid();
-		
+
 		if (!$collection || !$collection->canEdit()) {
 			// return 'Limited' if there is collection can not be loaded or it can not be edited
 			return $translator->translate('access:label:limited');

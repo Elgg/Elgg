@@ -184,19 +184,22 @@ return array(
  * Access
  */
 
+	'access' => "Who can see this",
+	
 	'access:label:private' => "Private",
 	'access:label:logged_in' => "Logged in users",
 	'access:label:public' => "Public",
 	'access:label:logged_out' => "Logged out users",
 	'access:label:friends' => "Friends",
-	'access' => "Who can see this",
+	
+	'access:label:limited' => "Limited",
+	'access:label:admin_only' => "Administrators only",
+	'access:label:missing_name' => "Missing access level name",
+	
 	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
-	'access:limited:label' => "Limited",
 	'access:help' => "The access level",
 	'access:read' => "Read access",
 	'access:write' => "Write access",
-	'access:admin_only' => "Administrators only",
-	'access:missing_name' => "Missing access level name",
 	'access:comments:change' => "This discussion is currently visible to a limited audience. Be thoughtful about who you share it with.",
 
 /**
