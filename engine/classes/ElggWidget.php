@@ -142,7 +142,7 @@ class ElggWidget extends \ElggObject {
 	 * @since 1.8.0
 	 */
 	public function getContext() {
-		return $this->getPrivateSetting('context');
+		return (string) $this->getPrivateSetting('context');
 	}
 
 	/**
@@ -280,7 +280,7 @@ class ElggWidget extends \ElggObject {
 			'widget' => $this,
 			'params' => $params
 		];
-		if (_elgg_services()->hooks->trigger('widget_settings', $this->handler, $hook_params, false) == true) {
+		if (_elgg_services()->hooks->trigger('widget_settings', $this->handler, $hook_params, false) === true) {
 			return true;
 		}
 
