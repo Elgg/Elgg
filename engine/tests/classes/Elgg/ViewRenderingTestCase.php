@@ -110,6 +110,12 @@ abstract class ViewRenderingTestCase extends IntegrationTestCase {
 				elgg_set_viewtype($prev_viewtype);
 				return $output;
 
+			case 'resource' :
+				$prev_viewtype = elgg_set_viewtype($viewtype);
+				$output = elgg_view_resource($subview, $component_vars, $vars);
+				elgg_set_viewtype($prev_viewtype);
+				return $output;
+
 			default:
 				return elgg_view($view, $vars, $viewtype);
 		}
