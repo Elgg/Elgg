@@ -446,7 +446,7 @@ function get_registered_entity_types($type = null) {
 		$type = strtolower($type);
 	}
 
-	if (!empty($type) && empty($registered_entities[$type])) {
+	if (!empty($type) && !isset($registered_entities[$type])) {
 		return false;
 	}
 
