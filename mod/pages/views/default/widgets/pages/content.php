@@ -5,7 +5,7 @@
 
 $widget = elgg_extract('entity', $vars);
 
-$num_display = (int) $widget->pages_num ?: 5;
+$num_display = (int) $widget->pages_num ?: 4;
 
 $content = elgg_list_entities_from_metadata([
 	'type' => 'object',

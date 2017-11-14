@@ -10,11 +10,7 @@ if (!($owner instanceof \ElggUser)) {
 	return;
 }
 
-$num_display = sanitize_int($widget->num_display, false);
-// set default value for display number
-if (!$num_display) {
-	$num_display = 12;
-}
+$num_display = (int) $widget->num_display ?: 12;
 
 echo elgg_list_entities_from_relationship([
 	'type' => 'user',

@@ -509,6 +509,7 @@ Miscellaneous API changes
  * If you override the view ``navigation/menu/user_hover/placeholder``, you must change the config key ``lazy_hover:menus`` to ``elgg_lazy_hover_menus``.
  * The config value ``entity_types`` is no longer present or used.
  * Uploaded images are autorotated based on their orientation metadata.
+ * The view ``object/widget/edit/num_display`` now uses an ``input/number`` field instead of ``input/select``; you might need to update your widget edit views accordingly.
 
 View extension behaviour changed
 --------------------------------
