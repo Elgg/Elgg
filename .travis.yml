@@ -28,9 +28,6 @@ matrix:
     - php: 5.6
       env: JOB_NAME=js_tests VARIA=true
       dist: trusty
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
         - npm install -g yarn && yarn
       before_script:
@@ -45,20 +42,17 @@ matrix:
     - php: 5.6
       env: JOB_NAME=docs_build VARIA=true
       install:
-       - pip install --user "Sphinx==1.3.1"
-       - pip install --user "sphinx-intl"
-       - export PATH=$PATH:$HOME/.local/bin
+        - pip install --user "Sphinx==1.3.1"
+        - pip install --user "sphinx-intl"
+        - export PATH=$PATH:$HOME/.local/bin
       script:
-       - sphinx-build -b html -nW docs docs/_build/html
-       - sphinx-build -b latex -nW docs docs/_build/latex
-       - sphinx-intl build --locale-dir=docs/locale/
-       - sphinx-build -b html -D language=es -n docs docs/_build/html
+        - sphinx-build -b html -nW docs docs/_build/html
+        - sphinx-build -b latex -nW docs docs/_build/latex
+        - sphinx-intl build --locale-dir=docs/locale/
+        - sphinx-build -b html -D language=es -n docs docs/_build/html
 
     # Memcached enabled
     - php: 5.6
-      services:
-       - memcached
-       - mysql
       env:
         - JOB_NAME=memcache_php56 VARIA=true
         - ELGG_MEMCACHE=1
@@ -70,24 +64,17 @@ matrix:
         - phpenv config-add ./.scripts/travis/memcached.ini
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
-       - composer travis:install-with-mysql
-       - php -f ./.scripts/travis/enable_plugins.php
-       - php ./elgg-cli database:seed --limit=5 -vv
-      script:
-       - php -f ./.scripts/is_memcached_enabled.php
-       - php ./elgg-cli simpletest -p all
-       - ./vendor/bin/phpunit
-      after_script:
-       - php ./elgg-cli database:unseed -vv
+        - composer travis:install-with-mysql
+        - php -f ./.scripts/travis/enable_plugins.php
+        - php ./elgg-cli database:seed --limit=5 -vv
+        - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
+        - sleep 3 # give Web server some time to bind to sockets, etc
+      before_script:
+        - php -f ./.scripts/is_memcached_enabled.php
 
     # Test upgrade path from 2.3
     - php: 5.6
-      services:
-        - mysql
       env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       install:
         - git fetch origin 2.3
         - git checkout FETCH_HEAD
@@ -97,18 +84,13 @@ matrix:
         - git checkout -
         - composer install --prefer-dist
         - php -f ./.scripts/travis/upgrade.php
-        - php -S localhost:8888 index.php &
+        - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
-      script:
-        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-        - php ./elgg-cli simpletest -p all
-        - ./vendor/bin/phpunit
-      after_script:
-        - php ./elgg-cli database:unseed -vv
 
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
+  - memcached
   - mysql
 
 before_install:
@@ -121,11 +103,11 @@ install:
   - composer lint
   - php -f ./.scripts/travis/enable_plugins.php
   - php ./elgg-cli database:seed --limit=5 -vv
-  - php -S localhost:8888 index.php &
+  - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
   - sleep 3 # give Web server some time to bind to sockets, etc
 
 script:
-  - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
+  - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
   - php ./elgg-cli simpletest -p all -v
   # in this build, we want to make sure the test suites can bootstrap on their own
   # combined test runner is executed in e2e builds
