@@ -679,21 +679,13 @@ trait Seeding {
 	 */
 	public function createIcon(ElggEntity $entity) {
 
-		$icon_url = $this->faker()->imageURL();
+		$icon_location = $this->faker()->image();
+		if (empty($icon_location)) {
+			return false;
+		}
 
-		$file_contents = file_get_contents($icon_url);
-
-		$tmp = new \ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/icon_src.jpg");
-		$tmp->open('write');
-		$tmp->write($file_contents);
-		$tmp->close();
-
-		$result = $entity->saveIconFromElggFile($tmp);
-
-		$tmp->delete();
-
+		$result = $entity->saveIconFromLocalFile($icon_location);
+		
 		if ($result && $entity instanceof ElggUser) {
 			elgg_create_river_item([
 				'view' => 'river/user/default/profileiconupdate',
@@ -702,7 +694,7 @@ trait Seeding {
 				'object_guid' => $entity->guid,
 			]);
 		}
-
+		
 		return $result;
 	}
 
