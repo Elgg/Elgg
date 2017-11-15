@@ -28,6 +28,11 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
+		
+		if (!elgg_is_active_plugin('pages')) {
+			$this->markTestSkipped();
+		}
+		
 		$this->user = $this->createUser();
 		
 		$session = elgg_get_session();
