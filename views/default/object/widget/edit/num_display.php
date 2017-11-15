@@ -4,7 +4,11 @@
  *
  * @uses $vars['entity']  ElggWidget
  * @uses $vars['name']    (optional) The name of the attribute, defaults to 'num_display'
- * @uses $vars['default'] (optional) The default value if no value is set, defaults to first option
+ * @uses $vars['default'] (optional) The default value if no value is set, defaults to 4
+ * @uses $vars['step']    (optional) The stepsize used in the number input, defaults to 1
+ * @uses $vars['min']     (optional) The smallest value allowed, defaults to 1
+ * @uses $vars['max']     (optional) The largest value allowed, defaults first to 'default_limit'
+ *                        and as last straw to max(min, 20)
  */
 
 $widget = elgg_extract('entity', $vars);
@@ -22,15 +26,26 @@ if (!isset($vars['label'])) {
 $vars['#label'] = $vars['label'];
 unset($vars['label']);
 
-if (!isset($vars['options'])) {
-	$vars['options'] = [5, 8, 10, 12, 15, 20];
-}
-
 $value = sanitize_int($widget->$name, false);
 if (!$value) {
-	$value = elgg_extract('default', $vars, $vars['options'][0]);
+	$value = (int) elgg_extract('default', $vars, 4);
 }
 $vars['value'] = $value;
-$vars['#type'] = 'select';
+
+$vars['step'] = (int) elgg_extract('step', $vars, 1);
+
+$min = (int) elgg_extract('min', $vars, 1);
+$vars['min'] = max($min, 1);
+
+$max = (int) elgg_extract('max', $vars, false);
+if (!$max) {
+	$max = (int) elgg_get_config('default_limit');
+}
+if (!$max) {
+	$max = max($min, 20);
+}
+$vars['max'] = max($max, $vars['min']);
+
+$vars['#type'] = 'number';
 
 echo elgg_view_field($vars);
