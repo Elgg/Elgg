@@ -79,13 +79,13 @@ matrix:
       install:
        - composer travis:install-with-mysql
        - php -f ./.scripts/travis/enable_plugins.php
-       - composer database:seeder:seed
+       - php -f ./.scripts/seeder/seed.php
       script:
        - php -f ./.scripts/is_memcached_enabled.php
        - ./vendor/bin/phpunit --configuration ./.scripts/travis/phpunit-memcached.xml
        - php ./engine/tests/suite.php --config ./.scripts/travis/elgg-config/simpletest_memcached.php
       after_script:
-       - composer database:seeder:unseed
+       - php -f ./.scripts/seeder/unseed.php
 
     # End to end tests
     - php: 5.6
@@ -95,7 +95,7 @@ matrix:
       install:
        - composer travis:install-with-mysql
        - php -f ./.scripts/travis/enable_plugins.php
-       - composer database:seeder:seed
+       - php -f ./.scripts/seeder/seed.php
        - php -S localhost:8888 index.php &
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
@@ -103,7 +103,7 @@ matrix:
        - ./vendor/bin/phpunit
        - php -f ./engine/tests/suite.php
       after_script:
-       - composer database:seeder:unseed
+       - php -f ./.scripts/seeder/unseed.php
 
 services:
   - mysql
