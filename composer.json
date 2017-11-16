@@ -51,9 +51,7 @@
             "echo \"USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;\" | mysql -u root",
             "mkdir \"${HOME}/elgg_data/\"",
             "php -f ./install/cli/travis_installer.php"
-        ],
-        "database:seeder:seed": "php -f ./.scripts/seeder/seed.php",
-        "database:seeder:unseed": "php -f ./.scripts/seeder/unseed.php"
+        ]
     },
     "suggest": {
         "ext-mbstring": "*"
