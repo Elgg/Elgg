@@ -978,10 +978,6 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  * called by wrapper functions.
  *
  * @see elgg_list_entities()
- * @see list_user_friends_objects()
- * @see elgg_list_entities_from_metadata()
- * @see elgg_list_entities_from_relationships()
- * @see elgg_list_entities_from_annotations()
  *
  * @param array $entities Array of entities
  * @param array $vars     Display variables

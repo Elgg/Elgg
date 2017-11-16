@@ -108,7 +108,6 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``elgg_disable_metadata``
  * ``elgg_enable_metadata``
  * ``elgg_get_class_loader``
- * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities_from_metadata``
  * ``elgg_get_metastring_id``
  * ``elgg_get_metastring_map``
  * ``elgg_register_class``
@@ -161,11 +160,11 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggSite::addEntity``
  * ``ElggSite::addObject``
  * ``ElggSite::addUser``
- * ``ElggSite::getEntities``: Use ``elgg_get_entities_from_relationship()``
+ * ``ElggSite::getEntities``: Use ``elgg_get_entities()``
  * ``ElggSite::getExportableValues``: Use ``toObject``
- * ``ElggSite::getMembers``: Use ``elgg_get_entities_from_relationship()``
- * ``ElggSite::getObjects``: Use ``elgg_get_entities_from_relationship()``
- * ``ElggSite::listMembers``: Use ``elgg_list_entities_from_relationship()``
+ * ``ElggSite::getMembers``: Use ``elgg_get_entities()``
+ * ``ElggSite::getObjects``: Use ``elgg_get_entities()``
+ * ``ElggSite::listMembers``: Use ``elgg_list_entities()``
  * ``ElggSite::removeEntity``
  * ``ElggSite::removeObject``
  * ``ElggSite::removeUser``
@@ -197,11 +196,15 @@ Deprecated APIs
  * ``ban_user``: Use ``ElggUser->ban()``
  * ``create_metadata``: Use ``ElggEntity`` setter or ``ElggEntity->setMetadata()``
  * ``update_metadata``: Use ``ElggMetadata->save()``
- * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities_from_metadata()``
  * ``elgg_get_user_validation_status``: Use ``ElggUser->isValidated()``
  * ``make_user_admin``: Use ``ElggUser->makeAdmin()``
  * ``remove_user_admin``: Use ``ElggUser->removeAdmin()``
  * ``unban_user``: Use ``ElggUser->unban()``
+ * ``elgg_get_entities_from_attributes``: Use ``elgg_get_entities()``
+ * ``elgg_get_entities_from_metadata``: Use ``elgg_get_entities()``
+ * ``elgg_get_entities_from_relationship``: Use ``elgg_get_entities()``
+ * ``elgg_get_entities_from_private_settings``: Use ``elgg_get_entities()``
+ * ``elgg_get_entities_from_access_id``: Use ``elgg_get_entities()``
 
 Removed global vars
 -------------------
@@ -247,6 +250,38 @@ The ``geocode_cache`` table has been removed as it was no longer used.
 
 ``subtype`` column in ``entities`` table no longer holds a subtype ID, but a subtype string
 ``entity_subtypes`` table has been dropped.
+
+Changes in ``elgg_get_entities`` getter functions
+-------------------------------------------------
+
+``elgg_get_entities`` now accepts all options that were previously distributed between ``elgg_get_entities_from_metadata``,
+``elgg_get_entities_from_annotations``, ``elgg_get_entities_from_relationship``, ``elgg_get_entities_from_private_settings``
+and ``elgg_get_entities_from_access_id``. The latter have been been deprecated.
+
+Passing raw MySQL statements to options is deprecated. Plugins are advised to use closures that receive an instance of
+``\Elgg\Database\QueryBuilder`` and prepare the statement using database abstraction layer. On one hand this will ensure
+that all statements are properly sanitized using the database driver, on the other hand it will allow us to transition
+to testable object-oriented query building.
+
+``wheres`` statements should not use raw SQL strings, instead pass an instance of ``\Elgg\Database\Clauses\WhereClause``
+or a closure that returns an instance of ``\Doctrine\DBAL\Query\Expression\CompositeExpression``:
+
+.. code-block:: php
+
+    elgg_get_entities([
+       'wheres' => [
+            function(\Elgg\Database\QueryBuilder $qb, $alias) {
+               $joined_alias = $qb->joinMetadataTable($alias, 'guid', 'status');
+               return $qb->compare("$joined_alias.name", 'in', ['draft', 'unsaved_draft'], ELGG_VALUE_STRING);
+            }
+       ]
+    ]);
+
+``joins``, ``order_by``, ``group_by``, ``selects`` clauses should not use raw SQL strings. Use closures that receive
+an instance of ``\Elgg\Database\QueryBuilder`` and return a prepared statement.
+
+Plugins should not rely on joined and selected table aliases. Closures passed to the options array will receive a second argument
+that corresponds to the selected table alias. Plugins must perform their own joins and use joined aliases accordingly.
 
 Metadata Changes
 ----------------

@@ -85,9 +85,8 @@ But what if you don't know the GUID? There are several options.
 By user, subtype or site
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you know the user ID you want to get objects for, or the subtype, or
-the site, you have several options. The easiest is probably to call the
-procedural function ``elgg_get_entities``:
+If you know the user ID you want to get objects for, or the subtype, you have several options.
+The easiest is probably to call the procedural function ``elgg_get_entities``:
 
 .. code-block:: php
 
@@ -114,35 +113,12 @@ simply use:
 
 But what about getting objects with a particular piece of metadata?
 
-By metadata
-~~~~~~~~~~~
-
-The function ``elgg_get_entities_from_metadata`` allows fetching entities
-with metadata in a variety of ways.
-
-By annotation
+By properties
 ~~~~~~~~~~~~~
 
-The function ``elgg_get_entities_from_annotations`` allows fetching entities
-with metadata in a variety of ways.
+You can fetch entities by their properties using ``elgg_get_entities``. Using specific parameters passed to ``$options``
+array, you can retrieve entities by their attributes, metadata, annotations, private settings and relationships.
 
-.. note::
-
-   As of Elgg 1.10 the default behaviour of `elgg_get_entities_from_annotations` was brought inline with the rest of the `elgg_get_entities*` functions.
-   
-   Pre Elgg 1.10 the sorting of the entities was based on the latest addition of an annotation (in $options your could add `$options['order_by'] = 'maxtime ASC'` or `$options['order_by'] = 'maxtime DESC'`. As of Elgg 1.10 this was changed to the creation time of the entity, just like the rest of the `elgg_get_entities*` functions.
-   To get the old behaviour back add the following to your `$options`:
-   
-   .. code-block:: php
-   
-      $options['selects'] = array('MAX(n_table.time_created) AS maxtime');
-      $options['group_by'] = 'n_table.entity_guid';
-      $options['order_by'] = 'maxtime ASC'
-      
-      or
-      
-      $options['order_by'] = 'maxtime DESC'
-      
 
 Displaying entities
 -------------------

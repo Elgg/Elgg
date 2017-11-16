@@ -364,7 +364,7 @@ function messages_set_url($hook, $type, $url, $params) {
  * @since 1.9
  */
 function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
-	return elgg_get_entities_from_metadata([
+	return elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'messages',
 		'metadata_name_value_pairs' => [

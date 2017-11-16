@@ -16,7 +16,7 @@ class AttributeLoader {
 	 *
 	 * @todo require this to be injected and get it from \ElggEntity
 	 */
-	protected static $primary_attr_names = [
+	public static $primary_attr_names = [
 		'guid',
 		'type',
 		'subtype',

@@ -132,98 +132,406 @@ function elgg_get_site_entity() {
 }
 
 /**
- * Returns an array of entities with optional filtering.
+ * Fetches/counts entities or performs a calculation on their properties
  *
- * Entities are the basic unit of storage in Elgg.  This function
- * provides the simplest way to get an array of entities.  There
- * are many options available that can be passed to filter
- * what sorts of entities are returned.
+ * Note that you can use singulars for most options, e.g. $options['type'] will be normalized to $options['types']
  *
- * @tip To output formatted strings of entities, use {@link elgg_list_entities()} and
- * its cousins.
+ * ------------------------
+ * TYPE SUBTYPE CONSTRAINTS
+ * ------------------------
  *
- * @tip Plural arguments can be written as singular if only specifying a
- * single element.  ('type' => 'object' vs 'types' => array('object')).
+ * Filter entities by their type and subtype
  *
- * @param array $options Array in format:
+ * @option string[] $types
+ * @option string[] $subtypes
+ * @option string[] $type_subtype_pairs
  *
- * 	types => null|STR entity type (type IN ('type1', 'type2')
- *           Joined with subtypes by AND. See below)
+ * <code>
+ * $options['types'] = ['object'];
+ * $options['subtypes'] = ['blog', 'file'];
+ * $options['type_subtype_pairs'] = [
+ *     'object' => ['blog', 'file'],
+ *     'group' => [], // all group subtypes
+ *     'user' => null, // all user subtypes
+ * ];
+ * </code>
  *
- * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
- *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
- *              Note that all falsey values will be treated as ELGG_ENTITIES_ANY_VALUE,
- *              all other values will be cast to string and searched for literally.
- *              All values within a non-empty subtypes array will be cast to string and searched for literally
+ * ----------------
+ * GUID CONSTRAINTS
+ * ----------------
  *
- * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
- *                        array(
- *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
- *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
- *                        );
- *                        Note that all falsey subtype values will be treated as ELGG_ENTITIES_ANY_VALUE,
- *                        all other values will be cast to string and search for literally
- *                        All values within a non-empty subtypes array will be cast to string and searched for literally
+ * Filter entities by their guid, owner or container
  *
- *	guids => null|ARR Array of entity guids
+ * @option int[]|ElggEntity[] $guids
+ * @option int[]|ElggEntity[] $owner_guids
+ * @option int[]|ElggEntity[] $container_guids
  *
- * 	owner_guids => null|ARR Array of owner guids
+ * ----------------
+ * TIME CONSTRAINTS
+ * ----------------
  *
- * 	container_guids => null|ARR Array of container_guids
+ * Filter entities that were created, updated or last acted on within certain bounds
  *
- * 	order_by => null (time_created desc)|STR SQL order by clause
+ * @option DateTime|string|int $created_after
+ * @option DateTime|string|int $created_before
+ * @option DateTime|string|int $updated_after
+ * @option DateTime|string|int $updated_before
+ * @option DateTime|string|int $last_action_after
+ * @option DateTime|string|int $last_action_before
  *
- *  reverse_order_by => BOOL Reverse the default order by clause
+ * <code>
+ * $options['created_after'] = '-1 year';
+ * $options['created_before'] = 'now';
+ * </code>
  *
- * 	limit => null (from settings)|INT SQL limit clause (0 means no limit)
+ * ------------------
+ * ACCESS CONSTRAINTS
+ * ------------------
  *
- * 	offset => null (0)|INT SQL offset clause
+ * Filter entities by their access_id attribute. Note that this filter apply to entities that the user has access to.
+ * You can ignore access system using {@link elgg_set_ignore_access()}
  *
- * 	created_time_lower => null|INT Created time lower boundary in epoch time
+ * @option int[] $access_id
  *
- * 	created_time_upper => null|INT Created time upper boundary in epoch time
+ * ----------------
+ * LIMIT AND OFFSET
+ * ----------------
  *
- * 	modified_time_lower => null|INT Modified time lower boundary in epoch time
+ * This options are used for paginating lists of entities
  *
- * 	modified_time_upper => null|INT Modified time upper boundary in epoch time
+ * @option int $limit
+ * @option int $offset
  *
- * 	count => true|false return a count instead of entities
+ * --------------------
+ * METADATA CONSTRAINTS
+ * --------------------
  *
- * 	wheres => array() Additional where clauses to AND together
+ * Filter entities by their metadata and attributes
  *
- * 	joins => array() Additional joins
+ * The following options will be merged and applied as a metadata pair to @options['metadata_name_value_pairs']
+ * Note metadata names can contain attributes names and will be resolved automatically during query building.
+ * @option int[]                $metadata_ids
+ * @option string[]             $metadata_names
+ * @option mixed                $metadata_values
+ * @option DateTime|string|int  $metadata_created_after
+ * @option DateTime|string|int  $metadata_created_before
+ * @option bool                 $metadata_case_sensitive
  *
- * 	preload_owners => bool (false) If set to true, this function will preload
- * 					  all the owners of the returned entities resulting in better
- * 					  performance when displaying entities owned by several users
+ * Metadata name value pairs will be joined by the boolean specified in $metadata_name_value_pairs_operator
+ * @option array                $metadata_name_value_pairs
+ * @option string               $metadata_name_value_pairs_operator
  *
- * 	callback => string A callback function to pass each row through
+ * In addition to metadata name value pairs, you can specify search pair, which will be merged using OR boolean
+ * and will filter entities regardless of metadata name value pairs and their operator
  *
- * 	distinct => bool (true) If set to false, Elgg will drop the DISTINCT clause from
- *				the MySQL query, which will improve performance in some situations.
- *				Avoid setting this option without a full understanding of the underlying
- *				SQL query Elgg creates.
+ * @option array                $search_name_value_pairs
  *
- *  batch => bool (false) If set to true, an Elgg\BatchResult object will be returned instead of an array.
- *           Since 2.3
+ * <code>
+ * // Search for entities with:
+ * // status of draft or unsaved_draft
+ * // AND index greater than 5
+ * // AND (title/description containing the word hello OR tags containing the word world)
+ * $options['metadata_name_value_pairs'] = [
+ *    [
+ *       'name' => 'status',
+ *       'value' => ['draft', 'unsaved_draft'],
+ *       'operand' => 'IN',
+ *       'created_after' => '-1 day',
+ *    ],
+ *    [
+ *        'name' => 'index',
+ *        'value' => 5,
+ *        'operand' => '>=',
+ *        'type' => ELGG_VALUE_INTEGER,
+ *    ]
+ * ];
+ * $options['search_name_value_pairs'] = [
+ *    [
+ *       'name' => ['title', 'description'],
+ *       'value' => '%hello%',
+ *       'operand' => 'LIKE',
+ *       'case_sensitive' => false,
+ *    ],
+ *    [
+ *       'name' => 'tags',
+ *       'value' => '%world%',
+ *       'operand' => 'LIKE',
+ *       'case_sensitive' => false,
+ *    ],
+ * ];
+ * </code>
  *
- *  batch_inc_offset => bool (true) If "batch" is used, this tells the batch to increment the offset
- *                      on each fetch. This must be set to false if you delete the batched results.
+ * ----------------------
+ * ANNOTATION CONSTRAINTS
+ * ----------------------
  *
- *  batch_size => int (25) If "batch" is used, this is the number of entities/rows to pull in before
- *                requesting more.
+ * Filter entities by their annotations
+ *
+ * The following options will be merged and applied as an annotation pair to @options['annotation_name_value_pairs']
+ * @option int[]                $annotation_ids
+ * @option string[]             $annotation_names
+ * @option mixed                $annotation_values
+ * @option bool                 $annotation_case_sensitive
+ * @option DateTime|string|int  $annotation_created_after
+ * @option DateTime|string|int  $annotation_created_before
+ * @option int[]|ElggEntity[]   $annotation_owner_guids
+ * @option int[]|ElggEntity[]   $annotation_access_ids
+ *
+ * Annotation name value pairs will be joined by the boolean specified in $annotation_name_value_pairs_operator
+ * @option array                $annotation_name_value_pairs
+ * @option string               $annotation_name_value_pairs_operator
+ **
+ * <code>
+ * $options['annotation_name_value_pairs'] = [
+ *    [
+ *       'name' => 'likes',
+ *       'created_after' => '-1 day',
+ *    ],
+ *    [
+ *        'name' => 'rating',
+ *        'value' => 5,
+ *        'operand' => '>=',
+ *        'type' => ELGG_VALUE_INTEGER,
+ *    ],
+ *    [
+ *        'name' => 'review',
+ *        'value' => '%awesome%',
+ *        'operand' => 'LIKE',
+ *        'type' => ELGG_VALUE_STRING,
+ *    ]
+ * ];
+ * </code>
+ *
+ * ------------------------
+ * RELATIONSHIP CONSTRAINTS
+ * ------------------------
+ *
+ * Filter entities by their relationships
+ *
+ * The following options will be merged and applied as a relationship pair to $options['relationship_name_value_pairs']
+ * @option int[]                $relationship_ids
+ * @option string[]             $relationship
+ * @option int[]|ElggEntity[]   $relationship_guid
+ * @option bool                 $inverse_relationship
+ * @option DateTime|string|int  $relationship_created_after
+ * @option DateTime|string|int  $relationship_created_before
+ * @option string               $relationship_join_on Column name in the name main table
+ *
+ * @option array                $relationship_pairs
+ *
+ * <code>
+ * // Get all entities that user with guid 25 has friended or been friended by
+ * $options['relationship_pairs'] = [
+ *    [
+ *       'relationship' => 'friend',
+ *       'relationship_guid' => 25,
+ *       'inverse_relationship' => true,
+ *    ],
+ *    [
+ *       'relationship' => 'friend',
+ *       'relationship_guid' => 25,
+ *       'inverse_relationship' => false,
+ *    ],
+ * ];
+ * </code>
+ *
+ * ----------------------------
+ * PRIVATE SETTINGS CONSTRAINTS
+ * ----------------------------
+ *
+ * Filter entities by their private settings
+ *
+ * The following options will be merged and applied as a private_setting pair to
+ * $options['private_setting_name_value_pairs']
+ * @option int[]                $private_setting_ids
+ * @option string[]             $private_setting_names
+ * @option mixed                $private_setting_values
+ * @option bool                 $private_setting_case_sensitive
+ *
+ * Private name value pairs will be joined by the boolean specified in $private_setting_name_value_pairs_operator
+ * @option array                $private_setting_name_value_pairs
+ * @option string               $private_setting_name_value_pairs_operator
+ *
+ * Setting names in all pairs can be namespaced using the prefix
+ * @option string               $private_setting_name_prefix
+ *
+ * <code>
+ * $options['private_setting_name_value_pairs'] = [
+ *    [
+ *       'name' => 'handler',
+ *       'value' => ['admin', 'dashboard'],
+ *       'operand' => 'IN',
+ *    ],
+ * ];
+ * </code>
+ *
+ * -------
+ * SORTING
+ * -------
+ *
+ * You can specify sorting options using ONE of the following options
+ *
+ * Order by a calculation performed on annotation name value pairs
+ * @see    elgg_get_entities_from_annotation_calculation()
+ * $option array annotation_sort_by_calculation e.g. avg, max, min, sum
+ *
+ * Order by value of a specific annotation
+ * @option array $order_by_annotation
+ *
+ * Order by value of a speicifc metadata/attribute
+ * @option array $order_by_metadata
+ *
+ * Order by arbitrary clauses, if $reverse_order_by is true, then all asc|desc statements in order by clauses will be
+ * replaced with their opposites
+ * @option array $order_by
+ * @option bool $reverse_order by
+ *
+ * <code>
+ * $options['order_by_metadata'] = [
+ *     'name' => 'priority',
+ *     'direction' => 'DESC',
+ *     'as' => 'integer',
+ * ];
+ * $options['order_by_annotation'] = [
+ *     'name' => 'priority',
+ *     'direction' => 'DESC',
+ *     'as' => 'integer',
+ * ];
+ *
+ * $sort_by = new \Elgg\Database\Clauses\EntitySortByClause();
+ * $sort_by->property = 'private';
+ * $sort_by->property_type = 'private_setting';
+ * $sort_by->join_type = 'left';
+ *
+ * $fallback = new \Elgg\Database\Clauses\OrderByClause('e.time_created', 'desc');
+ *
+ * $options['order_by'] = [
+ *     $sort_by,
+ *     $fallback,
+ * ];
+ * </code>
+ *
+ * -----------------
+ * COUNT/CALCULATION
+ * -----------------
+ *
+ * Performs a calculation on a set of entities that match all of the criteria
+ * If any of these are specific, the return of this function will be int or float
+ *
+ * Return total number of entities
+ * @option bool $count
+ *
+ * Perform a calculation on a set of entity's annotations using a numeric sql function
+ * If specified, the number of annotation name value pairs can not be more than 1, or they must be merged using OR
+ * operator
+ * @option string $annotation_calculation e.g. avg, max, min, sum
+ *
+ * Perform a calculation on a set of entity's metadat using a numeric sql function
+ * If specified, the number of metadata name value pairs can not be more than 1, or they must be merged using OR
+ * operator
+ * @option string $metadata_calculation e.g. avg, max, min, sum
+ *
+ * ----------
+ * SQL SELECT
+ * ----------
+ *
+ * @option array $selects
+ * <code>
+ * $options['selects'] = [
+ *    'e.last_action AS last_action',
+ *    function(QueryBulder $qb, $main_alias) {
+ *        $joined_alias = $qb->joinMetadataTable($main_alias, 'guid', 'status');
+ *        return "$joined_alias.value AS status";
+ *    }
+ * ];
+ * </code>
+ *
+ * --------
+ * SQL JOIN
+ * --------
+ *
+ * @option array $joins
+ * <code>
+ * $on = function(QueryBuilder $qb, $joined_alias, $main_alias) {
+ *     return $qb->compare("$joined_alias.user_guid", '=', "$main_alias.guid");
+ * };
+ * $options['joins'] = [
+ *     new JoinClause('access_collections_membership', 'acm', $on);
+ * ];
+ * </code>
+ *
+ * ----------
+ * SQL GROUPS
+ * ----------
+ *
+ * @option array $group_by
+ * @option array $having
+ *
+ * <code>
+ * $options['group_by'] = [
+ *      function(QueryBuilder $qb, $main_alias) {
+ *          return "$main_alias.guid";
+ *      }
+ * ];
+ * $options['having'] = [
+ *      function(QueryBuilder $qb, $main_alias) {
+ *          return $qb->compare("$main_alias.guid", '>=', 50, ELGG_VALUE_INTEGER);
+ *      }
+ * ];
+ * </code>
+ *
+ * ---------
+ * SQL WHERE
+ * ---------
+ *
+ * @option array $where
+ * <code>
+ * $options['wheres'] = [
+ *      function(QueryBuilder $qb, $main_alias) {
+ *          return $qb->merge([
+ *              $qb->compare("$main_alias.guid", '>=', 50, ELGG_VALUE_INTEGER),
+ *              $qb->compare("$main_alias.guid", '<=', 250, ELGG_VALUE_INTEGER),
+ *          ], 'OR');
+ *      }
+ * ];
+ * </code>
+ *
+ * --------------
+ * RESULT OPTIONS
+ * --------------
+ *
+ * @option bool $distinct           If set to false, Elgg will drop the DISTINCT clause from
+ *                                  the MySQL query, which will improve performance in some situations.
+ *                                  Avoid setting this option without a full understanding of the underlying
+ *                                  SQL query Elgg creates.
+ *                                  Default: true
+ * @option callable|false $callback A callback function to pass each row through
+ *                                  Default: entity_row_to_elggstar
+ * @option bool $preload_owners     If set to true, this function will preload
+ *                                  all the owners of the returned entities resulting in better
+ *                                  performance when displaying entities owned by several users
+ *                                  Default: false
+ * @option bool $batch              If set to true, an Elgg\BatchResult object will be returned instead of an array.
+ *                                  Default: false
+ * @option bool $batch_inc_offset   If "batch" is used, this tells the batch to increment the offset
+ *                                  on each fetch. This must be set to false if you delete the batched results.
+ *                                  Default: true
+ * @option int  $batch_size         If "batch" is used, this is the number of entities/rows to pull in before
+ *                                  requesting more.
+ *                                  Default: 25
+ *
+ *
+ * @see    elgg_list_entities()
+ * @see    \Elgg\Database\LegacyQueryOptionsAdapter
+ *
+ * @param array $options Options
  *
  * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an Elgg\BatchResult. false on errors.
  *
  * @since 1.7.0
- * @see elgg_get_entities_from_metadata()
- * @see elgg_get_entities_from_relationship()
- * @see elgg_get_entities_from_access_id()
- * @see elgg_get_entities_from_annotations()
- * @see elgg_list_entities()
  */
 function elgg_get_entities(array $options = []) {
-	return _elgg_services()->entityTable->getEntities($options);
+	return \Elgg\Database\Entities::find($options);
 }
 
 /**

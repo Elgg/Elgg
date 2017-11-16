@@ -178,7 +178,7 @@ class ElggWidget extends \ElggObject {
 				['name' => 'column', 'value' => $column]
 			]
 		];
-		$widgets = elgg_get_entities_from_private_settings($options);
+		$widgets = elgg_get_entities($options);
 		if (!$widgets) {
 			$this->column = (int) $column;
 			$this->order = 0;

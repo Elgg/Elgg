@@ -68,7 +68,7 @@ class AdminNotices {
 		
 		$result = true;
 		
-		$notices = elgg_get_entities_from_metadata([
+		$notices = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name' => 'admin_notice_id',
@@ -98,7 +98,7 @@ class AdminNotices {
 			'subtype' => 'admin_notice',
 		]);
 
-		return _elgg_services()->metadataTable->getEntities($options);
+		return Entities::find($options);
 	}
 	
 	/**
@@ -111,7 +111,7 @@ class AdminNotices {
 	 */
 	function exists($id) {
 		$old_ia = elgg_set_ignore_access(true);
-		$notice = elgg_get_entities_from_metadata([
+		$notice = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name_value_pair' => ['name' => 'admin_notice_id', 'value' => $id],

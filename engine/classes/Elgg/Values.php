@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 /**
@@ -47,9 +48,105 @@ class Values {
 	}
 
 	/**
+	 * Returns timestamp value of the time representation
+	 *
+	 * @param DateTime|string|int $time Time
+	 *
+	 * @return int
+	 * @throws \DataFormatException
+	 */
+	public static function normalizeTimestamp($time) {
+		try {
+			if ($time instanceof \DateTime) {
+				return $time->getTimestamp();
+			} else if (is_string($time)) {
+				$dt = new \DateTime($time);
+
+				return $dt->getTimestamp();
+			}
+		} catch (\Exception $e) {
+			throw new \DataFormatException($e->getMessage());
+		}
+
+		return (int) $time;
+	}
+
+	/**
+	 * Prepare IDs
+	 *
+	 * @param array ...$args IDs
+	 *
+	 * @return int[]
+	 * @throws \DataFormatException
+	 */
+	public static function normalizeIds(...$args) {
+		if (empty($args)) {
+			return ELGG_ENTITIES_ANY_VALUE;
+		}
+
+		$ids = [];
+		foreach ($args as $arg) {
+			if (!isset($arg)) {
+				continue;
+			}
+			if (is_object($arg) && isset($arg->id)) {
+				$ids[] = (int) $arg->id;
+			} else if (is_array($arg)) {
+				foreach ($arg as $a) {
+					$el_ids = self::normalizeIds($a);
+					$ids = array_merge($ids, $el_ids);
+				}
+			} else if (is_numeric($arg)) {
+				$ids[] = (int) $arg;
+			} else {
+				$arg = print_r($arg, true);
+				throw new \DataFormatException("Parameter '$arg' can not be resolved to a valid ID'");
+			}
+		}
+
+		return array_unique($ids);
+	}
+
+	/**
+	 * Flatten an array of data into an array of GUIDs
+	 *
+	 * @param mixed ...$args Elements to normalize
+	 *
+	 * @return int[]|null
+	 * @throws \DataFormatException
+	 */
+	public static function normalizeGuids(...$args) {
+		if (empty($args)) {
+			return ELGG_ENTITIES_ANY_VALUE;
+		}
+
+		$guids = [];
+		foreach ($args as $arg) {
+			if (!isset($arg)) {
+				continue;
+			}
+			if (is_object($arg) && isset($arg->guid)) {
+				$guids[] = (int) $arg->guid;
+			} else if (is_array($arg)) {
+				foreach ($arg as $a) {
+					$el_guids = self::normalizeGuids($a);
+					$guids = array_merge($guids, $el_guids);
+				}
+			} else if (is_numeric($arg)) {
+				$guids[] = (int) $arg;
+			} else {
+				$arg = print_r($arg, true);
+				throw new \DataFormatException("Parameter '$arg' can not be resolved to a valid GUID'");
+			}
+		}
+
+		return array_unique($guids);
+	}
+
+	/**
 	 * Return array with __view_output set to prevent view output during view_vars hook
 	 *
-	 * @see ViewsService->renderView()
+	 * @see   ViewsService->renderView()
 	 *
 	 * @return array
 	 * @since 3.0

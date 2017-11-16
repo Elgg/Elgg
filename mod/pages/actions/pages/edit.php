@@ -70,7 +70,7 @@ if (!$new_page && $parent_guid && $parent_guid !== $page_guid) {
 	if ($page_guid === $tree_page->guid) {
 		$previous_parent = $page->getParentGUID();
 
-		$children = elgg_get_entities_from_metadata([
+		$children = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'page',
 			'metadata_name_value_pairs' => [

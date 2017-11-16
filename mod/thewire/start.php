@@ -393,7 +393,7 @@ function thewire_latest_guid() {
  * @return void|ElggObject
  */
 function thewire_get_parent($post_guid) {
-	$parents = elgg_get_entities_from_relationship([
+	$parents = elgg_get_entities([
 		'relationship' => 'parent',
 		'relationship_guid' => $post_guid,
 		'limit' => 1,

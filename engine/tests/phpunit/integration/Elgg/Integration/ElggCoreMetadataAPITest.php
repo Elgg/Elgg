@@ -29,9 +29,8 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		unset($this->object);
 	}
 
-
 	public function testElggGetEntitiesFromMetadata() {
-		
+
 		$this->object->title = 'Meta Unit Test';
 		$this->object->save();
 
@@ -39,15 +38,30 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$this->assertNotEqual(false, _elgg_services()->metadataTable->create($this->object->guid, 'metaUnitTest', 'tested'));
 
 		// check value with improper case
-		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'Tested', 'limit' => 10, 'metadata_case_sensitive' => true);
-		$this->assertIdentical(array(), elgg_get_entities_from_metadata($options));
+		$options = [
+			'metadata_names' => 'metaUnitTest',
+			'metadata_values' => 'Tested',
+			'limit' => 10,
+			'metadata_case_sensitive' => true
+		];
+		$this->assertIdentical([], elgg_get_entities_from_metadata($options));
 
 		// compare forced case with ignored case
-		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'tested', 'limit' => 10, 'metadata_case_sensitive' => true);
+		$options = [
+			'metadata_names' => 'metaUnitTest',
+			'metadata_values' => 'tested',
+			'limit' => 10,
+			'metadata_case_sensitive' => true
+		];
 		$case_true = elgg_get_entities_from_metadata($options);
 		$this->assertIsA($case_true, 'array');
 
-		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'Tested', 'limit' => 10, 'metadata_case_sensitive' => false);
+		$options = [
+			'metadata_names' => 'metaUnitTest',
+			'metadata_values' => 'Tested',
+			'limit' => 10,
+			'metadata_case_sensitive' => false
+		];
 		$case_false = elgg_get_entities_from_metadata($options);
 		$this->assertIsA($case_false, 'array');
 
@@ -57,6 +71,86 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$this->object->delete();
 	}
 
+	/**
+	 * @dataProvider caseSensitivePairsProvider
+	 */
+	public function testElggGetEntitiesFromMetadataCaseSensitive($comparison, $value, $case_sensitive, $count) {
+
+		$this->object->subtype = $this->getRandomSubtype();
+		$this->object->metadata = 'CaseSensitive';
+		$this->object->save();
+
+		$options = [
+			'type' => 'object',
+			'subtype' => $this->object->subtype,
+			'metadata_name_value_pairs' => [
+				'name' => 'metadata',
+				'value' => $value,
+				'operand' => $comparison,
+				'case_sensitive' => $case_sensitive,
+			],
+			'count' => true,
+		];
+
+		$result = elgg_get_entities($options);
+
+		$this->assertEquals($count, $result);
+
+		$this->object->delete();
+	}
+
+	public function caseSensitivePairsProvider() {
+		return [
+			['=', 'CaseSensitive', true, 1],
+			['=', 'CaseSensitive', false, 1],
+			['=', 'casesensitive', true, 0],
+			['=', 'casesensitive', false, 1],
+
+			['in', ['CaseSensitive', 123], true, 1],
+			['in', ['CaseSensitive', 123], false, 1],
+			['in', ['casesensitive', 123], true, 0],
+			['in', ['casesensitive', 123], false, 1],
+
+			['!=', 'CaseSensitive', true, 0],
+			['!=', 'CaseSensitive', false, 0],
+			['!=', 'casesensitive', true, 1],
+			['!=', 'casesensitive', false, 0],
+
+			['not in', ['CaseSensitive', 123], true, 0],
+			['not in', ['CaseSensitive', 123], false, 0],
+			['not in', ['casesensitive', 123], true, 1],
+			['not in', ['casesensitive', 123], false, 0],
+
+			['like', 'Case%', true, 1],
+			['like', 'Case%', false, 1],
+			['like', 'case%', true, 0],
+			['like', 'case%', false, 1],
+			['like', ['Case%', 123], true, 1],
+			['like', ['Case%', 123], false, 1],
+			['like', ['case%', 123], true, 0],
+			['like', ['case%', 123], false, 1],
+
+			['not like', 'Case%', true, 0],
+			['not like', 'Case%', false, 0],
+			['not like', 'case%', true, 1],
+			['not like', 'case%', false, 0],
+			['not like', ['Case%', 123], true, 0],
+			['not like', ['Case%', 123], false, 0],
+			['not like', ['case%', 123], true, 1],
+			['not like', ['case%', 123], false, 0],
+
+			['>', 'CaseSensitiv', true, 1],
+			['>', 'CaseSensitiv', false, 1],
+			['>', 'casesensitiv', true, 0],
+			['>', 'casesensitiv', false, 1],
+
+			['<', 'CaseSensitive1', true, 1],
+			['<', 'CaseSensitive1', false, 1],
+			['<', 'casesensitive1', true, 1],
+			['<', 'casesensitive1', false, 1],
+		];
+	}
+
 	public function testElggGetMetadataCount() {
 		$this->object->title = 'Meta Unit Test';
 		$this->object->save();
@@ -64,11 +158,11 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$guid = $this->object->getGUID();
 		$this->object->tested = ['tested1', 'tested2'];
 
-		$count = (int)elgg_get_metadata(array(
-			'metadata_names' => array('tested'),
+		$count = (int) elgg_get_metadata([
+			'metadata_names' => ['tested'],
 			'guid' => $guid,
 			'count' => true,
-		));
+		]);
 
 		$this->assertIdentical($count, 2);
 
@@ -85,13 +179,13 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 			$e->$name = rand(0, 10000);
 		}
 
-		$options = array(
+		$options = [
 			'guid' => $e->getGUID(),
 			'limit' => 0,
 			'wheres' => [
 				"n_table.name LIKE 'test_metadata%'",
 			],
-		);
+		];
 
 		$md = elgg_get_metadata($options);
 		$this->assertIdentical(30, count($md));
@@ -108,13 +202,13 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 	 * https://github.com/Elgg/Elgg/issues/4867
 	 */
 	public function testElggGetEntityMetadataWhereSqlWithFalseValue() {
-		$pair = array('name' => 'test' , 'value' => false);
+		$pair = ['name' => 'test', 'value' => false];
 		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', null, null, $pair);
-		$where = preg_replace( '/\s+/', ' ', $result['wheres'][0]);
+		$where = preg_replace('/\s+/', ' ', $result['wheres'][0]);
 		$this->assertTrue(strpos($where, "n_table1.name = 'test' AND BINARY n_table1.value = 0") > 0);
 
-		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', array('test'), array(false));
-		$where = preg_replace( '/\s+/', ' ', $result['wheres'][0]);
+		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', ['test'], [false]);
+		$where = preg_replace('/\s+/', ' ', $result['wheres'][0]);
 		$this->assertTrue(strpos($where, "n_table.name IN ('test')) AND ( BINARY n_table.value IN ('0')"));
 	}
 
@@ -133,16 +227,16 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$obj->access_id = ACCESS_PUBLIC;
 		$obj->save();
 
-		$md_values = array(
+		$md_values = [
 			'one',
 			'two',
 			'three'
-		);
+		];
 
 		// need to fake different logins.
 		// good times without mocking.
 		$original_user = $this->replaceSession($u1);
-		
+
 		$ia = elgg_set_ignore_access(false);
 
 		// add metadata as one user
@@ -162,12 +256,12 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 
 		// add md w/ same name as a different user
 		$this->replaceSession($u2);
-		$md_values2 = array(
+		$md_values2 = [
 			'four',
 			'five',
 			'six',
 			'seven'
-		);
+		];
 
 		$obj->test = $md_values2;
 		$q = "SELECT * FROM {$db_prefix}metadata WHERE entity_guid = $obj->guid AND name='test'";
@@ -210,7 +304,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 			'metadata_names' => 'test_md',
 			'order_by' => 'n_table.id ASC',
 		]);
-		
+
 		foreach ($mds as $md) {
 			update_data("
 				UPDATE {$prefix}metadata
@@ -224,9 +318,9 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 			'guid' => $obj->guid,
 			'metadata_names' => 'test_md',
 		]);
-		
+
 		$md_values = array_map(function (ElggMetadata $md) {
-			return (int)$md->value;
+			return (int) $md->value;
 		}, $mds);
 		$this->assertEqual($md_values, [1, 2, 3]);
 

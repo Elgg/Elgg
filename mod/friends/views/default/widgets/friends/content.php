@@ -12,7 +12,7 @@ if (!($owner instanceof \ElggUser)) {
 
 $num_display = (int) $widget->num_display ?: 12;
 
-echo elgg_list_entities_from_relationship([
+echo elgg_list_entities([
 	'type' => 'user',
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,

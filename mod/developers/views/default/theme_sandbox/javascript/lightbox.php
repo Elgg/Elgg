@@ -31,7 +31,7 @@ elgg_require_js('theme_sandbox/javascript/lightbox');
 	</div>
 </div>
 <?php
-$files = elgg_get_entities_from_metadata([
+$files = elgg_get_entities([
 	'types' => 'object',
 	'subtypes' => 'file',
 	'metadata_name_value_paris' => [

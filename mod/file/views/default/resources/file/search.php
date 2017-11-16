@@ -84,7 +84,7 @@ if ($file_type) {
 	$params['metadata_value'] = $file_type;
 }
 
-$content = elgg_list_entities_from_relationship($params);
+$content = elgg_list_entities($params);
 
 $body = elgg_view_layout('content', [
 	'filter' => '',

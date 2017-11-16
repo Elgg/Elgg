@@ -358,7 +358,7 @@ function input_livesearch_page_handler($page) {
 					],
 				];
 				
-				$entities = elgg_get_entities_from_relationship($options);
+				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
 						$output = elgg_view_list_item($entity, [

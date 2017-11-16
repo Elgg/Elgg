@@ -8,42 +8,6 @@
  * @subpackage PrivateSettings
  */
 
-/**
- * Returns entities based upon private settings.  Also accepts all
- * options available to elgg_get_entities().  Supports
- * the singular option shortcut.
- *
- * @see elgg_get_entities
- *
- * @param array $options Array in format:
- *
- * 	private_setting_names => null|ARR private setting names
- *
- * 	private_setting_values => null|ARR metadata values
- *
- * 	private_setting_name_value_pairs => null|ARR (
- *                                         name => 'name',
- *                                         value => 'value',
- *                                         'operand' => '=',
- *                                        )
- * 	                             Currently if multiple values are sent via
- *                               an array (value => array('value1', 'value2')
- *                               the pair's operand will be forced to "IN".
- *
- * 	private_setting_name_value_pairs_operator => null|STR The operator to use for combining
- *                                        (name = value) OPERATOR (name = value); default AND
- *
- *  private_setting_name_prefix => STR A prefix to apply to all private settings. Used to
- *                                     namespace plugin user settings or by plugins to namespace
- *                                     their own settings.
- *
- *
- * @return mixed int If count, int. If not count, array. false on errors.
- * @since 1.8.0
- */
-function elgg_get_entities_from_private_settings(array $options = []) {
-	return _elgg_services()->privateSettings->getEntities($options);
-}
 
 /**
  * Gets a private setting for an entity.

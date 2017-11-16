@@ -17,7 +17,7 @@ elgg_register_title_button('file', 'add', 'object', 'file');
 
 $title = elgg_echo("file:friends");
 
-$content = elgg_list_entities_from_relationship([
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'file',
 	'full_view' => false,

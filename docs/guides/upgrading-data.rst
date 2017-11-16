@@ -138,7 +138,7 @@ needsIncrementOffset()
 
 If ``true``, your ``run()`` method will receive as ``$offset`` the number of items
 aready processed. This is useful if you are only modifying data, and need to use the
-``$offset`` in a function like ``elgg_get_entities*()`` to know how many you've already
+``$offset`` in a function like ``elgg_get_entities()`` to know how many you've already
 handled.
 
 If ``false``, your ``run()`` method will receive as ``$offset`` the total number of
@@ -178,7 +178,7 @@ If ``countItems()`` returned ``Batch::UNKNOWN_COUNT``, then at some point ``run(
 ``$result->markComplete()`` to finish the upgrade.
 
 In most cases your ``run()`` method will want to pass the ``$offset`` parameter to one of the
-``elgg_get_entities*()`` functions:
+``elgg_get_entities()`` functions:
 
 .. code-block:: php
 

@@ -5,7 +5,7 @@
 
 elgg_require_js('core/js/upgrader');
 
-$upgrades = elgg_get_entities_from_private_settings([
+$upgrades = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => 'elgg_upgrade',
 	'limit' => false,

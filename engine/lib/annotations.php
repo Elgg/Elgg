@@ -7,6 +7,8 @@
  * @subpackage Core
  */
 
+use Elgg\Database\Entities;
+
 /**
  * Convert a database row to a new \ElggAnnotation
  *
@@ -180,60 +182,6 @@ function elgg_enable_annotations(array $options) {
 }
 
 /**
- * Returns entities based upon annotations.  Also accepts all options available
- * to elgg_get_entities() and elgg_get_entities_from_metadata().
- *
- * Entity creation time is selected as maxtime. To sort based upon
- * this, pass 'order_by' => 'maxtime asc' || 'maxtime desc'
- *
- * @param array $options Array in format:
- *
- * 	annotation_names => null|ARR annotations names
- *
- * 	annotation_values => null|ARR annotations values
- *
- * 	annotation_name_value_pairs => null|ARR (name = 'name', value => 'value',
- * 	'operator' => '=', 'case_sensitive' => true) entries.
- * 	Currently if multiple values are sent via an array (value => array('value1', 'value2')
- * 	the pair's operator will be forced to "IN".
- *
- * 	annotation_name_value_pairs_operator => null|STR The operator to use for combining
- *  (name = value) OPERATOR (name = value); default AND
- *
- * 	annotation_case_sensitive => BOOL Overall Case sensitive
- *
- *  order_by_annotation => null|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC,
- *  'as' => text|integer),
- *
- *  Also supports array('name' => 'annotation_text1')
- *
- *  annotation_owner_guids => null|ARR guids for annotaiton owners
- *
- * @return mixed If count, int. If not count, array. false on errors.
- *
- * @see elgg_get_entities()
- * @see elgg_get_entities_from_metadata()
- * @since 1.7.0
- */
-function elgg_get_entities_from_annotations(array $options = []) {
-	return _elgg_services()->annotations->getEntities($options);
-}
-
-/**
- * Returns a viewable list of entities from annotations.
- *
- * @param array $options Options array
- *
- * @see elgg_get_entities_from_annotations()
- * @see elgg_list_entities()
- *
- * @return string
- */
-function elgg_list_entities_from_annotations($options = []) {
-	return elgg_list_entities($options, 'elgg_get_entities_from_annotations');
-}
-
-/**
  * Get entities ordered by a mathematical calculation on annotation values
  *
  * @tip Note that this function uses { @link elgg_get_annotations() } to return a list of entities ordered by a mathematical
@@ -266,7 +214,10 @@ function elgg_list_entities_from_annotations($options = []) {
  * @see elgg_get_entities_from_annotations()
  */
 function elgg_get_entities_from_annotation_calculation($options) {
-	return _elgg_services()->annotations->getEntitiesFromCalculation($options);
+	if (empty($options['count'])) {
+		$options['annotation_sort_by_calculation'] = elgg_extract('calculation', $options, 'sum', false);
+	}
+	return Entities::find($options);
 }
 
 /**
@@ -281,7 +232,6 @@ function elgg_get_entities_from_annotation_calculation($options) {
 function elgg_list_entities_from_annotation_calculation($options) {
 	$defaults = [
 		'calculation' => 'sum',
-		'order_by' => 'annotation_calculation desc'
 	];
 	$options = array_merge($defaults, $options);
 

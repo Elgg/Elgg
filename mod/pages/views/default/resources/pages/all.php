@@ -12,7 +12,7 @@ elgg_push_breadcrumb(elgg_echo('pages'));
 
 elgg_register_title_button('pages', 'add', 'object', 'page');
 
-$content = elgg_list_entities_from_metadata([
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'page',
 	'metadata_name_value_pairs' => [

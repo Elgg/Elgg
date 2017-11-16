@@ -8,6 +8,8 @@ namespace Elgg;
 abstract class ViewRenderingTestCase extends IntegrationTestCase {
 
 	public function up() {
+		_elgg_services()->logger->disable();
+
 		$user = $this->getRandomUser();
 		_elgg_services()->session->setLoggedInUser($user);
 		elgg_set_page_owner_guid($user->guid);
@@ -16,6 +18,8 @@ abstract class ViewRenderingTestCase extends IntegrationTestCase {
 	public function down() {
 		_elgg_services()->session->removeLoggedInUser();
 		elgg_set_page_owner_guid(null);
+
+		_elgg_services()->logger->enable();
 	}
 
 	/**

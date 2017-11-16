@@ -84,7 +84,7 @@ class UsersTable {
 			return $entity;
 		}
 
-		$users = $this->metadata->getEntities([
+		$users = elgg_get_entities([
 			'types' => 'user',
 			'metadata_name_value_pairs' => [
 				[
@@ -109,7 +109,7 @@ class UsersTable {
 			return [];
 		}
 		
-		$users = $this->metadata->getEntities([
+		$users = elgg_get_entities([
 			'types' => 'user',
 			'metadata_name_value_pairs' => [
 				[

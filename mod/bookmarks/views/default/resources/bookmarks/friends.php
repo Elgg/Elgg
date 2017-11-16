@@ -17,7 +17,7 @@ elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
 $title = elgg_echo('bookmarks:friends');
 
-$content = elgg_list_entities_from_relationship([
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'bookmarks',
 	'full_view' => false,

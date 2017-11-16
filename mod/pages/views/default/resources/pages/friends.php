@@ -15,7 +15,7 @@ elgg_register_title_button('pages', 'add', 'object', 'page');
 
 $title = elgg_echo('pages:friends');
 
-$content = elgg_list_entities_from_relationship([
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'page',
 	'metadata_name_value_pairs' => [

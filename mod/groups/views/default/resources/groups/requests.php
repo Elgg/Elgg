@@ -16,7 +16,7 @@ $title = elgg_echo('groups:membershiprequests');
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb($title);
 
-$requests = elgg_get_entities_from_relationship([
+$requests = elgg_get_entities([
 	'type' => 'user',
 	'relationship' => 'membership_request',
 	'relationship_guid' => $guid,

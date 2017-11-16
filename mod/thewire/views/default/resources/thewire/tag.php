@@ -17,7 +17,7 @@ $tag = trim($tag, '# ');
 $title = elgg_echo('thewire:tags', [$tag]);
 
 
-$content = elgg_list_entities_from_metadata([
+$content = elgg_list_entities([
 	'metadata_name' => 'tags',
 	'metadata_value' => $tag,
 	'metadata_case_sensitive' => false,

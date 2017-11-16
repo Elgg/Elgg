@@ -31,7 +31,7 @@ elgg_register_title_button('messages', 'add', 'object', 'messages');
 
 $title = elgg_echo('messages:sentmessages', [$page_owner->name]);
 
-$list = elgg_list_entities_from_metadata([
+$list = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'messages',
 	'metadata_name' => 'fromId',

@@ -430,7 +430,7 @@ trait Seeding {
 			return (int) $e;
 		}, $exclude));
 
-		$users = elgg_get_entities_from_metadata([
+		$users = elgg_get_entities([
 			'types' => 'user',
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
@@ -457,7 +457,7 @@ trait Seeding {
 			return (int) $e;
 		}, $exclude));
 
-		$groups = elgg_get_entities_from_metadata([
+		$groups = elgg_get_entities([
 			'types' => 'group',
 			'metadata_names' => ['__faker'],
 			'limit' => 1,

@@ -17,7 +17,7 @@ $container = $page->getContainerEntity();
 // Bring all child elements forward
 $parent_guid = $page->getParentGUID();
 
-$children = elgg_get_entities_from_metadata([
+$children = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => 'page',
 	'metadata_name_value_pairs' => [

@@ -14,26 +14,38 @@ In Elgg, everything runs on a unified data model based on atomic
 units of data called entities.
 
 Plugins are discouraged from interacting directly with the database,
-which creates a more stable system and a better user experience becase
+which creates a more stable system and a better user experience because
 content created by different plugins can be mixed together in
 consistent ways. With this approach, plugins are faster to develop,
 and are at the same time much more powerful.
 
 Every entity in the system inherits the ``ElggEntity`` class. This class
-controls access permissions, ownership
+controls access permissions, ownership, containment and provides consistent API
+for accessing and updating entity properties.
 
 .. _thumb\|The Elgg data model diagramIn: image:Elgg_data_model.png
 
 You can extend entities with extra information in two ways:
 
-``Metadata``: This is information describing the entity, usually
-   added by the author of the entity when the entity is created.
-   For example, tags, an ISBN number, a file location, or
-   source language is metadata.
-``Annotations``: This is information about the entity, usually
-   added by a third party after the entity is created. 
-   For example, ratings, likes, and votes are annotations.
-   (Comments were before 1.9.)
+``Metadata``: This information describes the entity, it is usually
+   added by the author of the entity when the entity is created or updated.
+   Examples of metadata include tags, ISBN number or a third-party ID, location,
+   geocoordinates etc. Think of metadata as a simple key-value storage.
+
+``Annotations``: This information extends the entity with properties usually
+   added by a third party. Such properties include ratings, likes, and votes.
+
+The main differences between metadata and annotations:
+
+- metadata does not have owners, while annotations do
+- metadata is not access controlled, while annotations are
+- metadata is preloaded when entity is constructed, while annotations are only loaded on demand
+
+These differences might have implications for performance and your business logic, so consider carefully,
+how you would like to attach data to your entities.
+
+In certain cases, it may be benefitial to avoid using metadata and annotations and create new
+entities instead and attaching them via ``container_guid`` or a relationship.
 
 Datamodel
 =========
@@ -70,12 +82,12 @@ Type     PHP class       Represents
 =======  ==============  ===================================================================
 object   ``ElggObject``  Most user-created content, like blog posts, uploads, and bookmarks.
 group    ``ElggGroup``   An organized group of users with its own profile page
-user     ``ElggUser``    A system user
+user     ``ElggUser``    A user of the system
 site     ``ElggSite``    The site served by the Elgg installation
 =======  ==============  ===================================================================
 
-Each has its own extended API. E.g. objects have a ``title`` and ``description``, users have a
-``username`` and a way to set their password, and so on.
+Each type has its own extended API. E.g. users can be friends with other users, group can have members,
+while objects can be liked and commented on.
 
 Subtypes
 --------
@@ -145,8 +157,7 @@ Beyond the standard ElggEntity properties, ElggUsers also support:
 ElggSite
 ========
 
-The ``ElggSite`` entity type represents sites within your Elgg install.
-Most installs will have only one.
+The ``ElggSite`` entity type represents your Elgg installation (via your site URL).
 
 Beyond the standard ElggEntity properties, ElggSites also support:
 
@@ -232,35 +243,6 @@ most of the methods of
 icon, name etc using the same calls, and if you ask for a group's
 friends, you'll get its members. This has been designed specifically for
 you to alternate between groups and users in your code easily.
-
-Menu options
-~~~~~~~~~~~~
-
-***This section is deprecated as of Elgg 1.8***
-
-The final piece of the puzzle, for default groups, is to add a link to
-your functionality from the group's profile. Here we'll use the file
-plugin as an example.
-
-This involves creating a view within your plugin - in this case
-file/menu - which will extend the group's menu. File/menu consists of a
-link within paragraph tags that points to the file repository of the
-page\_owner():
-
-.. code-block:: php
-
-    <p>
-      <a href="<?php echo $vars['url']; ?>pg/file/<?php echo page_owner_entity()->username; ?>">
-        <?php echo elgg_echo("file"); ?>
-      </a>
-    </p>
-
-You can then extend the group's menu view with this one, within your
-plugin's input function (in this case file\_init):
-
-.. code-block:: php
-
-    extend_view('groups/menu/links', 'file/menu');
 
 Ownership
 =========
@@ -630,19 +612,17 @@ Other useful functions:
 Finding relationships and related entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Below are a few functions to fetch relationship objects
-and/or related entities. A few are listed below:
+Below are a few functions to fetch relationship objects and/or related entities. A few are listed below:
 
 - ``get_entity_relationships()`` : fetch relationships by subject or target entity
 - ``get_relationship()`` : get a relationship object by ID
-- ``elgg_get_entities_from_relationship()`` : fetch entities in relationships in a
-  variety of ways
+- ``elgg_get_entities()`` : fetch entities in relationships in a variety of ways
 
 E.g. retrieving users who joined your group in January 2014.
 
 .. code-block:: php
 
-    $entities = elgg_get_entities_from_relationship(array(
+    $entities = elgg_get_entities(array(
         'relationship' => 'member',
         'relationship_guid' => $group->guid,
         'inverse_relationship' => true,
@@ -761,9 +741,6 @@ This table contains `Metadata`_, extra information attached to an entity.
    table.
 -  **value** The value string.
 -  **value\_type** The value class, either text or an integer.
--  **owner\_guid** The owner GUID of the owner who set this item of
-   metadata.
--  **access\_id** An Access controls on this item of metadata.
 -  **time\_created** Unix timestamp of when the metadata is created.
 -  **enabled** If this is 'yes' an item is accessible, if 'no' the item
    has been deleted.
@@ -793,31 +770,3 @@ This table defines `Relationships`_, these link one entity with another.
 -  **guid\_one** The GUID of the subject entity.
 -  **relationship** The type of the relationship.
 -  **guid\_two** The GUID of the target entity.
-
-Table: objects\_entity
-~~~~~~~~~~~~~~~~~~~~~~
-
-Extra information specifically relating to objects. These are split in
-order to reduce load on the metadata table and make an obvious
-difference between attributes and metadata.
-
-Table: sites\_entity
-~~~~~~~~~~~~~~~~~~~~
-
-Extra information specifically relating to sites. These are split in
-order to reduce load on the metadata table and make an obvious
-difference between attributes and metadata.
-
-Table: users\_entity
-~~~~~~~~~~~~~~~~~~~~
-
-Extra information specifically relating to users. These are split in
-order to reduce load on the metadata table and make an obvious
-difference between attributes and metadata.
-
-Table: groups\_entity
-~~~~~~~~~~~~~~~~~~~~~
-
-Extra information specifically relating to groups. These are split in
-order to reduce load on the metadata table and make an obvious
-difference between attributes and metadata.

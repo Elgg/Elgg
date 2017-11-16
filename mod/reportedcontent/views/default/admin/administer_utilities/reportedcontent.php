@@ -7,7 +7,7 @@
 
 elgg_require_js('elgg/reportedcontent');
 
-echo elgg_list_entities_from_metadata([
+echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'reported_content',
 	'order_by_metadata' => [

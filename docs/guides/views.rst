@@ -540,7 +540,7 @@ Consider these two examples:
 
 .. code-block:: php
 
-	echo elgg_list_entities_from_relationship([
+	echo elgg_list_entities([
 	    'type' => 'group',
 	    'relationship' => 'member',
 	    'relationship_guid' => elgg_get_logged_in_user_guid(),
@@ -550,7 +550,7 @@ Consider these two examples:
 
 .. code-block:: php
 
-	echo elgg_list_entities_from_relationship([
+	echo elgg_list_entities([
 	    'type' => 'group',
 	    'relationship' => 'invited',
 	    'relationship_guid' => (int) $user_guid,

@@ -20,7 +20,7 @@ if (elgg_get_logged_in_user_guid() == $owner->guid) {
 	$content .= elgg_view('input/urlshortener');
 }
 
-$content .= elgg_list_entities_from_relationship([
+$content .= elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'full_view' => false,

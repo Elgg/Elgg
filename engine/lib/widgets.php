@@ -248,7 +248,7 @@ function _elgg_default_widgets_init() {
 	if (empty($default_widgets)) {
 		return;
 	}
-	
+
 	elgg_register_menu_item('page', [
 		'name' => 'default_widgets',
 		'text' => elgg_echo('admin:configure_utilities:default_widgets'),
@@ -257,7 +257,7 @@ function _elgg_default_widgets_init() {
 		'parent_name' => 'configure_utilities',
 		'context' => 'admin',
 	]);
-	
+
 	// override permissions for creating widget on logged out / just created entities
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_default_widgets_permissions_override');
 
@@ -308,25 +308,26 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 		if (elgg_extract('entity_type', $info) !== $type) {
 			continue;
 		}
-		
+
 		$entity_subtype = elgg_extract('entity_subtype', $info);
 		if ($entity_subtype !== ELGG_ENTITIES_ANY_VALUE && $entity_subtype !== $subtype) {
 			continue;
 		}
-		
+
 		// need to be able to access everything
 		$old_ia = elgg_set_ignore_access(true);
 		elgg_push_context('create_default_widgets');
 
 		// pull in by widget context with widget owners as the site
 		// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
-		$widgets = elgg_get_entities_from_private_settings([
+		$widgets = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => elgg_get_site_entity()->guid,
 			'private_setting_name' => 'context',
 			'private_setting_value' => elgg_extract('widget_context', $info),
-			'limit' => 0
+			'limit' => 0,
+			'batch' => true,
 		]);
 		/* @var \ElggWidget[] $widgets */
 

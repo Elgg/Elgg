@@ -92,7 +92,7 @@ function pages_get_navigation_tree($container) {
 		return;
 	}
 
-	$top_pages = elgg_get_entities_from_metadata([
+	$top_pages = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'page',
 		'container_guid' => $container->guid,
@@ -120,7 +120,7 @@ function pages_get_navigation_tree($container) {
 		array_push($stack, $page);
 		while (count($stack) > 0) {
 			$parent = array_pop($stack);
-			$children = elgg_get_entities_from_metadata([
+			$children = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'page',
 				'limit' => false,

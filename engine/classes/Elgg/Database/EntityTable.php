@@ -5,7 +5,6 @@ namespace Elgg\Database;
 use ClassException;
 use Elgg\Cache\EntityCache;
 use Elgg\Cache\MetadataCache;
-use Elgg\Config as Conf;
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\EntityTable\UserFetchFailureException;
@@ -40,7 +39,7 @@ class EntityTable {
 	use \Elgg\TimeUsing;
 
 	/**
-	 * @var Conf
+	 * @var Config
 	 */
 	protected $config;
 
@@ -97,7 +96,7 @@ class EntityTable {
 	/**
 	 * Constructor
 	 *
-	 * @param Conf          $config         Config
+	 * @param Config        $config         Config
 	 * @param Database      $db             Database
 	 * @param EntityCache   $entity_cache   Entity cache
 	 * @param MetadataCache $metadata_cache Metadata cache
@@ -107,7 +106,7 @@ class EntityTable {
 	 * @param Logger        $logger         Logger
 	 */
 	public function __construct(
-		Conf $config,
+		Config $config,
 		Database $db,
 		EntityCache $entity_cache,
 		MetadataCache $metadata_cache,
@@ -441,269 +440,11 @@ class EntityTable {
 	 * are many options available that can be passed to filter
 	 * what sorts of entities are returned.
 	 *
-	 * @tip To output formatted strings of entities, use {@link elgg_list_entities()} and
-	 * its cousins.
-	 *
-	 * @tip Plural arguments can be written as singular if only specifying a
-	 * single element.  ('type' => 'object' vs 'types' => array('object')).
-	 *
-	 * @see elgg_get_entities_from_metadata()
-	 * @see elgg_get_entities_from_relationship()
-	 * @see elgg_get_entities_from_access_id()
-	 * @see elgg_get_entities_from_annotations()
-	 * @see elgg_list_entities()
-	 *
-	 * @param array $options Array in format:
-	 *
-	 * 	types => null|STR entity type (type IN ('type1', 'type2')
-	 *           Joined with subtypes by AND. See below)
-	 *
-	 * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
-	 *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
-	 *              Note that all falsey values will be treated as ELGG_ENTITIES_ANY_VALUE,
-	 *              all other values will be cast to string and searched for literally.
-	 *              All values within a non-empty subtypes array will be cast to string and searched for literally
-	 *
-	 * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
-	 *                        array(
-	 *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
-	 *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
-	 *                        );
-	 *                       Note that all falsey subtype values will be treated as ELGG_ENTITIES_ANY_VALUE,
-	 *                       all other values will be cast to string and searched for literally.
-	 *                       All values within a non-empty subtypes array will be cast to string and searched for literally
-	 *
-	 * 	guids => null|ARR Array of entity guids
-	 *
-	 * 	owner_guids => null|ARR Array of owner guids
-	 *
-	 * 	container_guids => null|ARR Array of container_guids
-	 *
-	 * 	order_by => null (time_created desc)|STR SQL order by clause
-	 *
-	 *  reverse_order_by => BOOL Reverse the default order by clause
-	 *
-	 * 	limit => null (10)|INT SQL limit clause (0 means no limit)
-	 *
-	 * 	offset => null (0)|INT SQL offset clause
-	 *
-	 * 	created_time_lower => null|INT Created time lower boundary in epoch time
-	 *
-	 * 	created_time_upper => null|INT Created time upper boundary in epoch time
-	 *
-	 * 	modified_time_lower => null|INT Modified time lower boundary in epoch time
-	 *
-	 * 	modified_time_upper => null|INT Modified time upper boundary in epoch time
-	 *
-	 * 	count => true|false return a count instead of entities
-	 *
-	 * 	wheres => array() Additional where clauses to AND together
-	 *
-	 * 	joins => array() Additional joins
-	 *
-	 * 	preload_owners => bool (false) If set to true, this function will preload
-	 * 					  all the owners of the returned entities resulting in better
-	 * 					  performance if those owners need to be displayed
-	 *
-	 *  preload_containers => bool (false) If set to true, this function will preload
-	 * 					      all the containers of the returned entities resulting in better
-	 * 					      performance if those containers need to be displayed
-	 *
-	 *
-	 * 	callback => string A callback function to pass each row through
-	 *
-	 * 	distinct => bool (true) If set to false, Elgg will drop the DISTINCT clause from
-	 * 				the MySQL query, which will improve performance in some situations.
-	 * 				Avoid setting this option without a full understanding of the underlying
-	 * 				SQL query Elgg creates.
-	 *
-	 *  batch => bool (false) If set to true, an Elgg\BatchResult object will be returned instead of an array.
-	 *           Since 2.3
-	 *
-	 *  batch_inc_offset => bool (true) If "batch" is used, this tells the batch to increment the offset
-	 *                      on each fetch. This must be set to false if you delete the batched results.
-	 *
-	 *  batch_size => int (25) If "batch" is used, this is the number of entities/rows to pull in before
-	 *                requesting more.
-	 *
-	 * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an Elgg\BatchResult. false on errors.
-	 *
-	 * @see elgg_get_entities_from_metadata()
-	 * @see elgg_get_entities_from_relationship()
-	 * @see elgg_get_entities_from_access_id()
-	 * @see elgg_get_entities_from_annotations()
-	 * @see elgg_list_entities()
+	 * @param QueryBuilder $query   Query
+	 * @param array        $options Options
+	 * @return array|ElggEntity[]
 	 */
-	public function getEntities(array $options = []) {
-		_elgg_check_unsupported_site_guid($options);
-
-		$defaults = [
-			'types'                 => ELGG_ENTITIES_ANY_VALUE,
-			'subtypes'              => ELGG_ENTITIES_ANY_VALUE,
-			'type_subtype_pairs'    => ELGG_ENTITIES_ANY_VALUE,
-
-			'guids'                 => ELGG_ENTITIES_ANY_VALUE,
-			'owner_guids'           => ELGG_ENTITIES_ANY_VALUE,
-			'container_guids'       => ELGG_ENTITIES_ANY_VALUE,
-
-			'modified_time_lower'   => ELGG_ENTITIES_ANY_VALUE,
-			'modified_time_upper'   => ELGG_ENTITIES_ANY_VALUE,
-			'created_time_lower'    => ELGG_ENTITIES_ANY_VALUE,
-			'created_time_upper'    => ELGG_ENTITIES_ANY_VALUE,
-
-			'reverse_order_by'      => false,
-			'order_by'              => 'e.time_created desc',
-			'group_by'              => ELGG_ENTITIES_ANY_VALUE,
-			'limit'                 => $this->config->default_limit,
-			'offset'                => 0,
-			'count'                 => false,
-			'selects'               => [],
-			'wheres'                => [],
-			'joins'                 => [],
-
-			'preload_owners'        => false,
-			'preload_containers'    => false,
-			'callback'              => 'entity_row_to_elggstar',
-			'distinct'              => true,
-
-			'batch'                 => false,
-			'batch_inc_offset'      => true,
-			'batch_size'            => 25,
-
-			// private API
-			'__ElggBatch'           => null,
-		];
-
-		$options = array_merge($defaults, $options);
-
-		if ($options['batch'] && !$options['count']) {
-			$batch_size = $options['batch_size'];
-			$batch_inc_offset = $options['batch_inc_offset'];
-
-			// clean batch keys from $options.
-			unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
-
-			return new \ElggBatch([$this, 'getEntities'], $options, null, $batch_size, $batch_inc_offset);
-		}
-
-		// can't use helper function with type_subtype_pair because
-		// it's already an array...just need to merge it
-		if (isset($options['type_subtype_pair'])) {
-			if (isset($options['type_subtype_pairs'])) {
-				$options['type_subtype_pairs'] = array_merge($options['type_subtype_pairs'],
-					$options['type_subtype_pair']);
-			} else {
-				$options['type_subtype_pairs'] = $options['type_subtype_pair'];
-			}
-		}
-
-		$singulars = ['type', 'subtype', 'guid', 'owner_guid', 'container_guid'];
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
-
-		// evaluate where clauses
-		if (!is_array($options['wheres'])) {
-			$options['wheres'] = [$options['wheres']];
-		}
-
-		$wheres = $options['wheres'];
-
-		$wheres[] = $this->getEntityTypeSubtypeWhereSql('e', $options['types'],
-			$options['subtypes'], $options['type_subtype_pairs']);
-
-		$wheres[] = $this->getGuidBasedWhereSql('e.guid', $options['guids']);
-		$wheres[] = $this->getGuidBasedWhereSql('e.owner_guid', $options['owner_guids']);
-		$wheres[] = $this->getGuidBasedWhereSql('e.container_guid', $options['container_guids']);
-
-		$wheres[] = $this->getEntityTimeWhereSql('e', $options['created_time_upper'],
-			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
-
-		// see if any functions failed
-		// remove empty strings on successful functions
-		foreach ($wheres as $i => $where) {
-			if ($where === false) {
-				return false;
-			} elseif (empty($where)) {
-				unset($wheres[$i]);
-			}
-		}
-
-		// remove identical where clauses
-		$wheres = array_unique($wheres);
-
-		// evaluate join clauses
-		if (!is_array($options['joins'])) {
-			$options['joins'] = [$options['joins']];
-		}
-
-		// remove identical join clauses
-		$joins = array_unique($options['joins']);
-
-		foreach ($joins as $i => $join) {
-			if ($join === false) {
-				return false;
-			} elseif (empty($join)) {
-				unset($joins[$i]);
-			}
-		}
-
-		// evalutate selects
-		if ($options['selects']) {
-			$selects = '';
-			foreach ($options['selects'] as $select) {
-				$selects .= ", $select";
-			}
-		} else {
-			$selects = '';
-		}
-
-		if (!$options['count']) {
-			$distinct = $options['distinct'] ? "DISTINCT" : "";
-			$query = "SELECT $distinct e.*{$selects} FROM {$this->db->prefix}entities e ";
-		} else {
-			// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than GUIDs
-			$count_expr = $options['distinct'] ? "DISTINCT e.guid" : "*";
-			$query = "SELECT COUNT($count_expr) as total FROM {$this->db->prefix}entities e ";
-		}
-
-		// add joins
-		foreach ($joins as $j) {
-			$query .= " $j ";
-		}
-
-		// add wheres
-		$query .= ' WHERE ';
-
-		foreach ($wheres as $w) {
-			$query .= " $w AND ";
-		}
-
-		// Add access controls
-		$query .= _elgg_get_access_where_sql();
-
-		// reverse order by
-		if ($options['reverse_order_by']) {
-			$options['order_by'] = _elgg_sql_reverse_order_by_clause($options['order_by']);
-		}
-
-		if ($options['count']) {
-			$total = $this->db->getDataRow($query);
-			return (int) $total->total;
-		}
-
-		if ($options['group_by']) {
-			$query .= " GROUP BY {$options['group_by']}";
-		}
-
-		if ($options['order_by']) {
-			$query .= " ORDER BY {$options['order_by']}";
-		}
-
-		if ($options['limit']) {
-			$limit = sanitise_int($options['limit'], false);
-			$offset = sanitise_int($options['offset'], false);
-			$query .= " LIMIT $offset, $limit";
-		}
-
+	public function fetch(QueryBuilder $query, array $options = []) {
 		if ($options['callback'] === 'entity_row_to_elggstar') {
 			$results = $this->fetchFromSql($query, $options['__ElggBatch']);
 		} else {

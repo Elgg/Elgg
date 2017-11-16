@@ -7,7 +7,7 @@ $widget = elgg_extract('entity', $vars);
 
 $num_display = (int) $widget->num_display ?: 4;
 
-$list = elgg_list_entities_from_metadata([
+$list = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'reported_content',
 	'limit' => $num_display,

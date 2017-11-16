@@ -2,6 +2,9 @@
 namespace Elgg\Database;
 
 use Elgg\Database;
+use Elgg\Database\Clauses\GroupByClause;
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\Clauses\SelectClause;
 use Elgg\EventsService;
 
 /**
@@ -282,109 +285,6 @@ class RelationshipsTable {
 	}
 
 	/**
-	 * Return entities matching a given query joining against a relationship.
-	 * Also accepts all options available to elgg_get_entities() and
-	 * elgg_get_entities_from_metadata().
-	 *
-	 * To ask for entities that do not have a particular relationship to an entity,
-	 * use a custom where clause like the following:
-	 *
-	 * 	$options['wheres'][] = "NOT EXISTS (
-	 *			SELECT 1 FROM {$db_prefix}entity_relationships
-	 *				WHERE guid_one = e.guid
-	 *				AND relationship = '$relationship'
-	 *		)";
-	 *
-	 * @see elgg_get_entities
-	 * @see elgg_get_entities_from_metadata
-	 *
-	 * @param array $options Array in format:
-	 *
-	 *  relationship => null|STR Type of the relationship. E.g. "member"
-	 *
-	 *  relationship_guid => null|INT GUID of the subject of the relationship, unless "inverse_relationship" is set
-	 *                                to true, in which case this will specify the target.
-	 *
-	 *  inverse_relationship => false|BOOL Are we searching for relationship subjects? By default, the query finds
-	 *                                     targets of relationships.
-	 *
-	 *  relationship_join_on => null|STR How the entities relate: guid (default), container_guid, or owner_guid
-	 *                                   Examples using the relationship 'friend':
-	 *                                   1. use 'guid' if you want the user's friends
-	 *                                   2. use 'owner_guid' if you want the entities the user's friends own
-	 *                                      (including in groups)
-	 *                                   3. use 'container_guid' if you want the entities in the user's personal
-	 *                                      space (non-group)
-	 *
-	 * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
-	 *
-	 * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
-	 *
-	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
-	 */
-	public function getEntities($options) {
-		$defaults = [
-			'relationship' => null,
-			'relationship_guid' => null,
-			'inverse_relationship' => false,
-			'relationship_join_on' => 'guid',
-
-			'relationship_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
-			'relationship_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
-		];
-
-		$options = array_merge($defaults, $options);
-
-		$join_column = "e.{$options['relationship_join_on']}";
-
-		$clauses = $this->getEntityRelationshipWhereSql($join_column, $options['relationship'],
-			$options['relationship_guid'], $options['inverse_relationship']);
-
-		if ($clauses) {
-			// merge wheres to pass to get_entities()
-			if (isset($options['wheres']) && !is_array($options['wheres'])) {
-				$options['wheres'] = [$options['wheres']];
-			} elseif (!isset($options['wheres'])) {
-				$options['wheres'] = [];
-			}
-
-			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
-
-			// limit based on time created
-			$time_wheres = $this->entities->getEntityTimeWhereSql('r',
-					$options['relationship_created_time_upper'],
-					$options['relationship_created_time_lower']);
-			if ($time_wheres) {
-				$options['wheres'] = array_merge($options['wheres'], [$time_wheres]);
-			}
-			// merge joins to pass to get_entities()
-			if (isset($options['joins']) && !is_array($options['joins'])) {
-				$options['joins'] = [$options['joins']];
-			} elseif (!isset($options['joins'])) {
-				$options['joins'] = [];
-			}
-
-			$options['joins'] = array_merge($options['joins'], $clauses['joins']);
-
-			if (isset($options['selects']) && !is_array($options['selects'])) {
-				$options['selects'] = [$options['selects']];
-			} elseif (!isset($options['selects'])) {
-				$options['selects'] = [];
-			}
-
-			$select = ['r.id'];
-
-			$options['selects'] = array_merge($options['selects'], $select);
-
-			if (!isset($options['group_by'])) {
-				$options['group_by'] = $clauses['group_by'];
-			}
-		}
-
-		return $this->metadata->getEntities($options);
-	}
-
-	/**
 	 * Returns SQL appropriate for relationship joins and wheres
 	 *
 	 * @todo add support for multiple relationships and guids.
@@ -443,15 +343,16 @@ class RelationshipsTable {
 	 * This is a good way to get out the users with the most friends, or the groups with the
 	 * most members.
 	 *
-	 * @param array $options An options array compatible with elgg_get_entities_from_relationship()
+	 * @param array $options An options array compatible with elgg_get_entities()
 	 *
 	 * @return \ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
 	 */
 	public function getEntitiesFromCount(array $options = []) {
-		$options['selects'][] = "COUNT(e.guid) as total";
-		$options['group_by'] = 'r.guid_two';
-		$options['order_by'] = 'total desc';
-		return $this->getEntities($options);
+		$options['selects'][] = new SelectClause("COUNT(e.guid) AS total");
+		$options['group_by'][] = new GroupByClause('r.guid_two');
+		$options['order_by'][] = new OrderByClause('total', 'desc');
+
+		return Entities::find($options);
 	}
 
 	/**

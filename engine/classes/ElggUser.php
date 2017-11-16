@@ -360,7 +360,7 @@ class ElggUser extends \ElggEntity
 		$options['relationship_guid'] = $this->getGUID();
 		$options['type'] = 'user';
 
-		return elgg_get_entities_from_relationship($options);
+		return elgg_get_entities($options);
 	}
 
 	/**
@@ -372,7 +372,7 @@ class ElggUser extends \ElggEntity
 		$options['inverse_relationship'] = true;
 		$options['type'] = 'user';
 
-		return elgg_get_entities_from_relationship($options);
+		return elgg_get_entities($options);
 	}
 
 	/**
@@ -387,7 +387,7 @@ class ElggUser extends \ElggEntity
 		$options['relationship'] = 'member';
 		$options['relationship_guid'] = $this->guid;
 
-		return elgg_get_entities_from_relationship($options);
+		return elgg_get_entities($options);
 	}
 
 	/**
@@ -409,7 +409,7 @@ class ElggUser extends \ElggEntity
 		$options['relationship_guid'] = $this->getGUID();
 		$options['relationship_join_on'] = 'container_guid';
 
-		return elgg_get_entities_from_relationship($options);
+		return elgg_get_entities($options);
 	}
 
 	/**

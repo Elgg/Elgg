@@ -161,3 +161,12 @@ define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
  * @todo This could be resolved by promoting \ElggPlugin to a 5th type.
  */
 define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
+
+/**
+ * Value types
+ */
+define('ELGG_VALUE_INTEGER', 'integer');
+define('ELGG_VALUE_STRING', 'string');
+define('ELGG_VALUE_GUID', 'guid');
+define('ELGG_VALUE_ID', 'id');
+define('ELGG_VALUE_TIMESTAMP', 'timestamp');

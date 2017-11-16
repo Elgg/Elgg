@@ -7,6 +7,7 @@ use ElggUser;
 
 /**
  * @group IntegrationTests
+ * @group Entities
  */
 class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
