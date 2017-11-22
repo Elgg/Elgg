@@ -98,8 +98,8 @@ before_install:
   - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 
 install:
-  - bash .scripts/travis/check_commit_msgs.sh
   - composer travis:install-with-mysql
+  - bash .scripts/travis/check_commit_msgs.sh
   - composer lint
   - php -f ./.scripts/travis/enable_plugins.php
   - php ./elgg-cli database:seed --limit=5 -vv
