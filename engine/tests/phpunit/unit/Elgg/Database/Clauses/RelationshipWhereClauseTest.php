@@ -21,7 +21,7 @@ class RelationshipWhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -34,7 +34,7 @@ class RelationshipWhereClauseTest extends UnitTestCase {
 
 		$query = new RelationshipWhereClause();
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -51,7 +51,7 @@ class RelationshipWhereClauseTest extends UnitTestCase {
 		$query = new RelationshipWhereClause();
 		$query->ids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -68,7 +68,7 @@ class RelationshipWhereClauseTest extends UnitTestCase {
 		$query = new RelationshipWhereClause();
 		$query->names = 'friend';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -85,7 +85,7 @@ class RelationshipWhereClauseTest extends UnitTestCase {
 		$query = new RelationshipWhereClause();
 		$query->names = ['friend', 'member'];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -105,7 +105,7 @@ class RelationshipWhereClauseTest extends UnitTestCase {
 		$query->subject_guids = [2, 3, 4];
 		$query->object_guids = [5, 6, 7];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -132,7 +132,7 @@ class RelationshipWhereClauseTest extends UnitTestCase {
 		$query->created_after = $after;
 		$query->created_before = $before;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

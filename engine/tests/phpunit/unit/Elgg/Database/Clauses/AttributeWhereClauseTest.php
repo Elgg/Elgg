@@ -19,7 +19,7 @@ class AttributeWhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -33,7 +33,7 @@ class AttributeWhereClauseTest extends UnitTestCase {
 
 		$query = new AttributeWhereClause();
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -52,7 +52,7 @@ class AttributeWhereClauseTest extends UnitTestCase {
 		$query->names = 'attribute';
 		$query->values = ['value'];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -73,7 +73,7 @@ class AttributeWhereClauseTest extends UnitTestCase {
 		$query->names = ['attribute1', 'attribute2'];
 		$query->values = ['value'];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

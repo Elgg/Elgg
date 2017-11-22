@@ -25,7 +25,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 
 		$this->user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($this->user);
@@ -47,7 +47,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -62,7 +62,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -87,7 +87,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -111,7 +111,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 
-		$qb = Select::create('entities', '');
+		$qb = Select::fromTable('entities', '');
 		$actual = $query->prepare($qb, '');
 
 		$this->assertEquals($expected, $actual);
@@ -135,7 +135,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->owner_guid_column = 'unit_test';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -160,7 +160,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 
 		$query = new AccessWhereClause();
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -186,7 +186,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -212,7 +212,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -247,7 +247,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -280,7 +280,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$query = new AccessWhereClause();
 		$query->ignore_access = true;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

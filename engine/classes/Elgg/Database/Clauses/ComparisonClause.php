@@ -126,6 +126,7 @@ class ComparisonClause implements Clause {
 				return $match_expr;
 
 			case '!=' :
+			case '<>' :
 			case 'neq' :
 			case 'not in' :
 				if ($this->case_sensitive && $this->type == ELGG_VALUE_STRING) {
@@ -149,7 +150,7 @@ class ComparisonClause implements Clause {
 			case 'not like' :
 				return $compare_with('notLike', 'AND');
 
-			case '>';
+			case '>':
 			case 'gt' :
 				return $compare_with('gt');
 

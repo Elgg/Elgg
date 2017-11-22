@@ -9,6 +9,8 @@ use Elgg\LegacyIntegrationTestCase;
  * Elgg Test metadata cache
  *
  * @group IntegrationTests
+ * @group Metadata
+ * @group MetadataCache
  */
 class ElggCoreMetadataCacheTest extends LegacyIntegrationTestCase {
 

@@ -354,7 +354,7 @@ class ElggPlugin extends \ElggObject {
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
 		// Get private settings for user
-		$qb = \Elgg\Database\Select::create('private_settings', 'ps');
+		$qb = \Elgg\Database\Select::fromTable('private_settings', 'ps');
 		$qb->select('*');
 		$qb->where($qb->merge([
 			$qb->compare('ps.entity_guid', '=', $this->guid, ELGG_VALUE_GUID),

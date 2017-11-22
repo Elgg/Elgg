@@ -198,19 +198,6 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$e->delete();
 	}
 
-	/**
-	 * https://github.com/Elgg/Elgg/issues/4867
-	 */
-	public function testElggGetEntityMetadataWhereSqlWithFalseValue() {
-		$pair = ['name' => 'test', 'value' => false];
-		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', null, null, $pair);
-		$where = preg_replace('/\s+/', ' ', $result['wheres'][0]);
-		$this->assertTrue(strpos($where, "n_table1.name = 'test' AND BINARY n_table1.value = 0") > 0);
-
-		$result = _elgg_get_entity_metadata_where_sql('e', 'metadata', ['test'], [false]);
-		$where = preg_replace('/\s+/', ' ', $result['wheres'][0]);
-		$this->assertTrue(strpos($where, "n_table.name IN ('test')) AND ( BINARY n_table.value IN ('0')"));
-	}
 
 	// Make sure metadata with multiple values is correctly deleted when re-written
 	// by another user

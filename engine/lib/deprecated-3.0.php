@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Database\Entities;
+
 /**
  * Removes a config setting.
  *
@@ -741,13 +743,196 @@ function elgg_get_entities_from_access_id(array $options = []) {
 
 	elgg_deprecated_notice(
 		__FUNCTION__ . ' has been deprecated.
-		Use elgg_entities()->where()
+		Use elgg_get_entities() with "access_ids" option.
 	', '3.0');
 
 	// restrict the resultset to access collection provided
-	if (!isset($options['access_id'])) {
+	if (!isset($options['access_id']) && !isset($options['access_ids'])) {
 		return false;
 	}
 
 	return elgg_get_entities($options);
+}
+
+/**
+ * Get entities ordered by a mathematical calculation on annotation values
+ *
+ * @tip Note that this function uses { @link elgg_get_annotations() } to return a list of entities ordered by a mathematical
+ * calculation on annotation values, and { @link elgg_get_entities_from_annotations() } to return a count of entities
+ * if $options['count'] is set to a truthy value
+ *
+ * @param array $options An options array:
+ * 	'calculation'            => The calculation to use. Must be a valid MySQL function.
+ *                              Defaults to sum.  Result selected as 'annotation_calculation'.
+ *                              Don't confuse this "calculation" option with the
+ *                              "annotation_calculation" option to elgg_get_annotations().
+ *                              This "calculation" option is applied to each entity's set of
+ *                              annotations and is selected as annotation_calculation for that row.
+ *                              See the docs for elgg_get_annotations() for proper use of the
+ *                              "annotation_calculation" option.
+ *	'order_by'               => The order for the sorting. Defaults to 'annotation_calculation desc'.
+ *	'annotation_names'       => The names of annotations on the entity.
+ *	'annotation_values'	     => The values of annotations on the entity.
+ *
+ *	'metadata_names'         => The name of metadata on the entity.
+ *	'metadata_values'        => The value of metadata on the entitiy.
+ *	'callback'               => Callback function to pass each row through.
+ *                              @tip This function is different from other ege* functions,
+ *                              as it uses a metastring-based getter function { @link elgg_get_annotations() },
+ *                              therefore the callback function should be a derivative of { @link entity_row_to_elggstar() }
+ *                              and not of { @link row_to_annotation() }
+ *
+ * @return \ElggEntity[]|int An array or a count of entities
+ * @see elgg_get_annotations()
+ * @see elgg_get_entities_from_annotations()
+ *
+ * @deprecated
+ */
+function elgg_get_entities_from_annotation_calculation($options) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use elgg_get_entities() with "annotation_sort_by_calculation" option.
+		To sort in an ascending order, pass "order_by" => new OrderByClause("annotation_calculation", "asc")
+	', '3.0');
+
+	if (empty($options['count'])) {
+		$options['annotation_sort_by_calculation'] = elgg_extract('calculation', $options, 'sum', false);
+	}
+	return Entities::find($options);
+}
+
+/**
+ * List entities from an annotation calculation.
+ *
+ * @see elgg_get_entities_from_annotation_calculation()
+ *
+ * @param array $options An options array.
+ *
+ * @return string
+ *
+ * @deprecated
+ */
+function elgg_list_entities_from_annotation_calculation($options) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use elgg_get_entities() with "annotation_sort_by_calculation" option.
+		To sort in an ascending order, pass "order_by" => new OrderByClause("annotation_calculation", "asc")
+	', '3.0');
+
+	if (empty($options['count'])) {
+		$options['annotation_sort_by_calculation'] = elgg_extract('calculation', $options, 'sum', false);
+	}
+
+	return elgg_list_entities($options, 'elgg_get_entities');
+}
+
+
+/**
+ * Enables or disables a metastrings-based object by its id.
+ *
+ * @warning To enable disabled metastrings you must first use
+ * {@link access_show_hidden_entities()}.
+ *
+ * @param int    $id      The object's ID
+ * @param string $enabled Value to set to: yes or no
+ * @param string $type    Metastring type: metadata or annotation
+ *
+ * @return bool
+ * @throws InvalidParameterException
+ * @access private
+ *
+ * @deprecated
+ */
+function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
+
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggAnnotation::enable()
+	', '3.0');
+
+	if (!in_array($type, ['annotation', 'annotations'])) {
+		return false;
+	}
+
+	$annotation = elgg_get_annotation_from_id($id);
+	if (!$annotation) {
+		return false;
+	}
+
+	if ($enabled === 'no' || $enabled === 0 || $enabled === false) {
+		return $annotation->disable();
+	} else if ($enabled === 'yes' || $enabled === 1 || $enabled === true) {
+		return $annotation->enable();
+	}
+
+	return false;
+}
+
+/**
+ * Returns a singular metastring-based object by its ID.
+ *
+ * @param int    $id   The metastring-based object's ID
+ * @param string $type The type: annotation or metadata
+ * @return \ElggExtender
+ * @access private
+ *
+ * @deprecated
+ */
+function _elgg_get_metastring_based_object_from_id($id, $type) {
+
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use elgg_get_metadata_from_id() and elgg_get_annotation_from_id()
+	', '3.0');
+
+	$id = (int) $id;
+	if (!$id) {
+		return false;
+	}
+
+	if ($type == 'metadata') {
+		$object = elgg_get_metadata_from_id($id);
+	} else {
+		$object = elgg_get_annotation_from_id($id);
+	}
+
+	return $object;
+}
+
+/**
+ * Deletes a metastring-based object by its id
+ *
+ * @param int    $id   The object's ID
+ * @param string $type The object's metastring type: annotation or metadata
+ * @return bool
+ * @access private
+ *
+ * @deprected
+ */
+function _elgg_delete_metastring_based_object_by_id($id, $type) {
+
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggMetadata::delete() and ElggAnnotation::delete()
+	', '3.0');
+
+	switch ($type) {
+		case 'annotations':
+		case 'annotation':
+			$object = elgg_get_annotation_from_id($id);
+			break;
+
+		case 'metadata':
+			$object = elgg_get_metadata_from_id($id);
+			break;
+
+		default:
+			return false;
+	}
+
+	if ($object) {
+		return $object->delete();
+	}
+
+	return false;
 }

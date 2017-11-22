@@ -65,7 +65,6 @@ class ChangeTableEngine extends AbstractMigration {
 		$prefix = $this->getAdapter()->getOption('table_prefix');
 
 		foreach ($this->innodb_tables as $table) {
-
 			if (!$this->hasTable($table)) {
 				continue;
 			}
@@ -103,7 +102,6 @@ class ChangeTableEngine extends AbstractMigration {
 		$prefix = $this->getAdapter()->getOption('table_prefix');
 
 		foreach ($this->innodb_tables as $table) {
-
 			if (!$this->hasTable($table)) {
 				continue;
 			}

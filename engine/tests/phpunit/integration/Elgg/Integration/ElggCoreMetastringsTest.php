@@ -8,6 +8,8 @@ use ElggAnnotation;
  * Elgg Metastrings test
  *
  * @group IntegrationTests
+ * @group Metadata
+ * @group Annotations
  */
 class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 
@@ -125,8 +127,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 		$annotation = elgg_get_annotation_from_id($id);
 		$this->assertTrue($annotation->disable());
 
-		$test = _elgg_get_metastring_based_objects([
-			'metastring_type' => 'annotations',
+		$test = elgg_get_annotations([
 			'guid' => $this->object->guid,
 		]);
 		$this->assertEqual([], $test);

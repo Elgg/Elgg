@@ -8,7 +8,7 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database                      $db                 Database
  * @property-read \Elgg\Mocks\Database\EntityTable          $entityTable        Entity mocks
  * @property-read \Elgg\Mocks\Database\MetadataTable        $metadataTable      Metadata mocks
- * @property-read \Elgg\Mocks\Database\Annotations          $annotations        Annotation mocks
+ * @property-read \Elgg\Mocks\Database\AnnotationsTable     $annotations        Annotation mocks
  * @property-read \Elgg\Mocks\Database\RelationshipsTable   $relationshipsTable Annotation mocks
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections  ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings    Private settings table mock
@@ -56,7 +56,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('annotations', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\Annotations($sp->db, $sp->session, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\AnnotationsTable($sp->db, $sp->session, $sp->hooks->getEvents());
 		});
 
 		$this->setFactory('relationshipsTable', function (MockServiceProvider $sp) {

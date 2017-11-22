@@ -366,6 +366,14 @@ class ElggBatch implements BatchResult {
 	}
 
 	/**
+	 * Set chunk size
+	 * @param int $size Size
+	 * @return void
+	 */
+	public function setChunkSize($size = 25) {
+		$this->chunkSize = $size;
+	}
+	/**
 	 * Implements Iterator
 	 */
 

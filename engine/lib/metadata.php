@@ -8,22 +8,6 @@
  */
 
 /**
- * Convert a database row to a new \ElggMetadata
- *
- * @param \stdClass $row An object from the database
- *
- * @return \stdClass|\ElggMetadata
- * @access private
- */
-function row_to_elggmetadata($row) {
-	if (!($row instanceof \stdClass)) {
-		return $row;
-	}
-
-	return new \ElggMetadata($row);
-}
-
-/**
  * Get a specific metadata object by its id.
  * If you want multiple metadata objects, use
  * {@link elgg_get_metadata()}.
@@ -47,30 +31,13 @@ function elgg_delete_metadata_by_id($id) {
 }
 
 /**
- * Returns metadata.  Accepts all elgg_get_entities() options for entity
- * restraints.
+ * Fetch metadata or perform a calculation on them
  *
- * @see elgg_get_entities
+ * Accepts all options supported by {@link elgg_get_entities()}
  *
- * @warning 1.7's find_metadata() didn't support limits and returned all metadata.
- *          This function defaults to a limit of 25. There is probably not a reason
- *          for you to return all metadata unless you're exporting an entity,
- *          have other restraints in place, or are doing something horribly
- *          wrong in your code.
+ * @see   elgg_get_entities()
  *
- * @param array $options Array in format:
- *
- * metadata_names               => null|ARR metadata names
- * metadata_values              => null|ARR metadata values
- * metadata_ids                 => null|ARR metadata ids
- * metadata_case_sensitive      => BOOL Overall Case sensitive
- * metadata_created_time_lower  => INT Lower limit for created time.
- * metadata_created_time_upper  => INT Upper limit for created time.
- * metadata_calculation         => STR Perform the MySQL function on the metadata values returned.
- *                                   The "metadata_calculation" option causes this function to
- *                                   return the result of performing a mathematical calculation on
- *                                   all metadata that match the query instead of returning
- *                                   \ElggMetadata objects.
+ * @param array $options Options
  *
  * @return \ElggMetadata[]|mixed
  * @since 1.8.0
@@ -97,35 +64,6 @@ function elgg_delete_metadata(array $options) {
 /**
  * \ElggEntities interfaces
  */
-
-/**
- * Returns metadata name and value SQL where for entities.
- * NB: $names and $values are not paired. Use $pairs for this.
- * Pairs default to '=' operand.
- *
- * This function is reused for annotations because the tables are
- * exactly the same.
- *
- * @param string     $e_table           Entities table name
- * @param string     $n_table           Normalized metastrings table name (Where entities,
- *                                    values, and names are joined. annotations / metadata)
- * @param array|null $names             Array of names
- * @param array|null $values            Array of values
- * @param array|null $pairs             Array of names / values / operands
- * @param string     $pair_operator     ("AND" or "OR") Operator to use to join the where clauses for pairs
- * @param bool       $case_sensitive    Case sensitive metadata names?
- * @param array|null $order_by_metadata Array of names / direction
- *
- * @return false|array False on fail, array('joins', 'wheres')
- * @since 1.7.0
- * @access private
- */
-function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = null, $values = null,
-		$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null
-		) {
-	return _elgg_services()->metadataTable->getEntityMetadataWhereSql($e_table, $n_table, $names,
-		$values, $pairs, $pair_operator, $case_sensitive, $order_by_metadata);
-}
 
 /**
  * Takes a metadata array (which has all kinds of properties)

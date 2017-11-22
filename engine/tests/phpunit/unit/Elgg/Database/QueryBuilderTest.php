@@ -15,7 +15,7 @@ class QueryBuilderTest extends UnitTestCase {
 	private $qb;
 
 	public function up() {
-		$this->qb = Select::create('foo', 'f');
+		$this->qb = Select::fromTable('foo', 'f');
 	}
 
 	public function down() {
@@ -67,7 +67,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('e', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$expected->join('f', $this->qb->prefix('entities'), 'e', 'e.guid = f.entity_guid')
 			->where($this->qb->expr()->eq('e.guid', $expected->param(1, ELGG_VALUE_GUID)));
 
@@ -87,7 +87,7 @@ class QueryBuilderTest extends UnitTestCase {
 		$this->assertEquals($alias1, $alias4);
 		$this->assertNotEquals($alias1, $alias3);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$expected->join('f', $this->qb->prefix('entities'), $alias1, "$alias1.guid = f.entity_guid")
 			->leftJoin('f', $this->qb->prefix('entities'), $alias3, "$alias3.guid = f.entity_guid")
 			->where($this->qb->expr()->eq("$alias3.guid", $expected->param(1, ELGG_VALUE_GUID)));
@@ -102,7 +102,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('n_table', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("n_table.entity_guid", '=', 'f.guid'),
 			$expected->compare("n_table.name", '=', 'metadata_name', ELGG_VALUE_STRING),
@@ -119,7 +119,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('n_table', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("n_table.entity_guid", '=', 'f.guid'),
 		]);
@@ -140,7 +140,7 @@ class QueryBuilderTest extends UnitTestCase {
 		$this->assertEquals($alias1, $alias4);
 		$this->assertNotEquals($alias1, $alias3);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("$alias1.entity_guid", '=', 'f.guid'),
 			$expected->compare("$alias1.name", '=', 'metadata_name', ELGG_VALUE_STRING),
@@ -163,7 +163,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('n_table', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("n_table.entity_guid", '=', 'f.guid'),
 			$expected->compare("n_table.name", '=', 'annotation_name', ELGG_VALUE_STRING),
@@ -180,7 +180,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('n_table', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("n_table.entity_guid", '=', 'f.guid'),
 		]);
@@ -201,7 +201,7 @@ class QueryBuilderTest extends UnitTestCase {
 		$this->assertEquals($alias1, $alias4);
 		$this->assertNotEquals($alias1, $alias3);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("$alias1.entity_guid", '=', 'f.guid'),
 			$expected->compare("$alias1.name", '=', 'annotation_name', ELGG_VALUE_STRING),
@@ -224,7 +224,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('ps', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("ps.entity_guid", '=', 'f.guid'),
 			$expected->compare("ps.name", '=', 'private_setting_name', ELGG_VALUE_STRING),
@@ -241,7 +241,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('ps', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("ps.entity_guid", '=', 'f.guid'),
 		]);
@@ -262,7 +262,7 @@ class QueryBuilderTest extends UnitTestCase {
 		$this->assertEquals($alias1, $alias4);
 		$this->assertNotEquals($alias1, $alias3);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("$alias1.entity_guid", '=', 'f.guid'),
 			$expected->compare("$alias1.name", '=', 'private_setting_name', ELGG_VALUE_STRING),
@@ -285,7 +285,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('r', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("r.guid_two", '=', 'f.guid'),
 			$expected->compare("r.relationship", '=', 'relationship_name', ELGG_VALUE_STRING),
@@ -302,7 +302,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('r', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("r.guid_two", '=', 'f.guid'),
 		]);
@@ -318,7 +318,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('r', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("r.guid_one", '=', 'f.guid'),
 			$expected->compare("r.relationship", '=', 'relationship_name', ELGG_VALUE_STRING),
@@ -335,7 +335,7 @@ class QueryBuilderTest extends UnitTestCase {
 
 		$this->assertEquals('r', $alias);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("r.guid_one", '=', 'f.guid'),
 		]);
@@ -358,7 +358,7 @@ class QueryBuilderTest extends UnitTestCase {
 		$this->assertNotEquals($alias1, $alias3);
 		$this->assertNotEquals($alias1, $alias5);
 
-		$expected = Select::create('foo', 'f');
+		$expected = Select::fromTable('foo', 'f');
 		$on = $expected->merge([
 			$expected->compare("$alias1.guid_two", '=', 'f.guid'),
 			$expected->compare("$alias1.relationship", '=', 'relationship_name', ELGG_VALUE_STRING),
@@ -382,7 +382,7 @@ class QueryBuilderTest extends UnitTestCase {
 	}
 
 	public function testCanCreateSelect() {
-		$qb = Select::create('table', 'alias');
+		$qb = Select::fromTable('table', 'alias');
 
 		$this->assertInstanceOf(QueryBuilder::class, $qb);
 		$this->assertEquals('table', $qb->getTableName());
@@ -390,14 +390,14 @@ class QueryBuilderTest extends UnitTestCase {
 	}
 
 	public function testCanCreateInsert() {
-		$qb = Insert::create('table', 'alias');
+		$qb = Insert::intoTable('table', 'alias');
 
 		$this->assertInstanceOf(QueryBuilder::class, $qb);
 		$this->assertEquals('table', $qb->getTableName());
 	}
 
 	public function testCanCreateUpdate() {
-		$qb = Update::create('table', 'alias');
+		$qb = Update::table('table', 'alias');
 
 		$this->assertInstanceOf(QueryBuilder::class, $qb);
 		$this->assertEquals('table', $qb->getTableName());
@@ -405,7 +405,7 @@ class QueryBuilderTest extends UnitTestCase {
 	}
 
 	public function testCanCreateDelete() {
-		$qb = Delete::create('table', 'alias');
+		$qb = Delete::fromTable('table', 'alias');
 
 		$this->assertInstanceOf(QueryBuilder::class, $qb);
 		$this->assertEquals('table', $qb->getTableName());

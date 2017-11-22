@@ -372,7 +372,6 @@ function elgg_get_site_entity() {
  * You can specify sorting options using ONE of the following options
  *
  * Order by a calculation performed on annotation name value pairs
- * @see    elgg_get_entities_from_annotation_calculation()
  * $option array annotation_sort_by_calculation e.g. avg, max, min, sum
  *
  * Order by value of a specific annotation

@@ -18,7 +18,7 @@ class JoinClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -30,7 +30,7 @@ class JoinClauseTest extends UnitTestCase {
 		$this->qb->join('alias', 'joined_table', 'joined_alias', true);
 
 		$join = new JoinClause('joined_table', 'joined_alias');
-		$expected = Select::create('entities', 'alias');
+		$expected = Select::fromTable('entities', 'alias');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -42,7 +42,7 @@ class JoinClauseTest extends UnitTestCase {
 		$this->qb->join('alias', 'joined_table', 'joined_alias', 'joined_alias.x = alias.x');
 
 		$join = new JoinClause('joined_table', 'joined_alias', 'joined_alias.x = alias.x');
-		$expected = Select::create('entities', 'alias');
+		$expected = Select::fromTable('entities', 'alias');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -58,7 +58,7 @@ class JoinClauseTest extends UnitTestCase {
 			return $qb->compare("$joined_alias.x", '=', "$main_alias.x");
 		};
 		$join = new JoinClause('joined_table', 'joined_alias', $condition);
-		$expected = Select::create('entities', 'alias');
+		$expected = Select::fromTable('entities', 'alias');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -69,7 +69,7 @@ class JoinClauseTest extends UnitTestCase {
 
 		$this->qb->join('alias', 'joined_table', 'joined_alias', 'joined_alias.x = alias.x');
 
-		$expected = Select::create('entities', 'alias');
+		$expected = Select::fromTable('entities', 'alias');
 		$condition = $expected->compare("joined_alias.x", '=', "alias.x");
 		$join = new JoinClause('joined_table', 'joined_alias', $condition);
 		$expected->addClause($join);
@@ -83,7 +83,7 @@ class JoinClauseTest extends UnitTestCase {
 		$this->qb->innerJoin('alias', 'joined_table', 'joined_alias', true);
 
 		$join = new JoinClause('joined_table', 'joined_alias', null, 'INNER');
-		$expected = Select::create('entities', 'alias');
+		$expected = Select::fromTable('entities', 'alias');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -95,7 +95,7 @@ class JoinClauseTest extends UnitTestCase {
 		$this->qb->leftJoin('alias', 'joined_table', 'joined_alias', true);
 
 		$join = new JoinClause('joined_table', 'joined_alias', null, 'left');
-		$expected = Select::create('entities', 'alias');
+		$expected = Select::fromTable('entities', 'alias');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -107,7 +107,7 @@ class JoinClauseTest extends UnitTestCase {
 		$this->qb->rightJoin('alias', 'joined_table', 'joined_alias', true);
 
 		$join = new JoinClause('joined_table', 'joined_alias', null, 'right');
-		$expected = Select::create('entities', 'alias');
+		$expected = Select::fromTable('entities', 'alias');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());

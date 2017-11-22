@@ -20,7 +20,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -35,7 +35,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -54,7 +54,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->guids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -76,7 +76,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->owner_guids = [2, 3];
 		$query->container_guids = [4, 5, 6];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -105,7 +105,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->created_after = $after;
 		$query->created_before = $before;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -135,7 +135,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->updated_after = $after;
 		$query->updated_before = $before;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -165,7 +165,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->last_action_after = $after;
 		$query->last_action_before = $before;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -185,7 +185,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->enabled = 'no';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -204,7 +204,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->access_ids = ACCESS_PUBLIC;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -246,7 +246,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		];
 		$query->guids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -270,7 +270,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$query->viewer_guid = 5;
 		$query->guids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

@@ -199,6 +199,10 @@ Deprecated APIs
  * ``elgg_get_entities_from_relationship``: Use ``elgg_get_entities()``
  * ``elgg_get_entities_from_private_settings``: Use ``elgg_get_entities()``
  * ``elgg_get_entities_from_access_id``: Use ``elgg_get_entities()``
+ * ``elgg_list_entities_from_metadata``: Use ``elgg_list_entities()``
+ * ``elgg_list_entities_from_relationship``: Use ``elgg_list_entities()``
+ * ``elgg_list_entities_from_private_settings``: Use ``elgg_list_entities()``
+ * ``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``
 
 Removed global vars
 -------------------
@@ -245,8 +249,8 @@ The ``geocode_cache`` table has been removed as it was no longer used.
 ``subtype`` column in ``entities`` table no longer holds a subtype ID, but a subtype string
 ``entity_subtypes`` table has been dropped.
 
-Changes in ``elgg_get_entities`` getter functions
--------------------------------------------------
+Changes in ``elgg_get_entities``, ``elgg_get_metadata`` and ``elgg_get_annotations`` getter functions
+-----------------------------------------------------------------------------------------------------
 
 ``elgg_get_entities`` now accepts all options that were previously distributed between ``elgg_get_entities_from_metadata``,
 ``elgg_get_entities_from_annotations``, ``elgg_get_entities_from_relationship``, ``elgg_get_entities_from_private_settings``

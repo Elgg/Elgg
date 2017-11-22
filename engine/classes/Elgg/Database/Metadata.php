@@ -11,34 +11,29 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
-use ElggEntity;
+use ElggBatch;
+use ElggData;
+use ElggMetadata;
 use InvalidArgumentException;
 use InvalidParameterException;
+use LogicException;
 
 /**
- * Entities repository contains methods for fetching entities from database or performing
+ * Metadata repository contains methods for fetching metadata from database or performing
  * calculations on entity properties.
  *
- * API IN FLUX Do not access the methods directly, use elgg_get_entities() instead
- *
- * @todo   At a later stage, this class will contain additional shortcut methods to filter entities
- *         by relationship, metdataion, annotation, private settings etc. Until then, such filtering
- *         can be done via standard ege* options
- *
- * @todo   Resolve table alias collissions when querying for both annotationa and metadata name value pairs
- *         Currently, n_table is expected across core and plugins, we need to refactor that code
- *         and remove n_table joins here
+ * API IN FLUX Do not access the methods directly, use elgg_get_metadata() instead
  *
  * @access private
  */
-class Entities extends Repository {
+class Metadata extends Repository {
 
 	/**
 	 * Build and execute a new query from an array of legacy options
 	 *
 	 * @param array $options Options
 	 *
-	 * @return ElggEntity[]|int|mixed
+	 * @return ElggMetadata[]|int|mixed
 	 */
 	public static function find(array $options = []) {
 		try {
@@ -52,20 +47,24 @@ class Entities extends Repository {
 	 * {@inheritdoc}
 	 */
 	public function count() {
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable('metadata', 'n_table');
 
-		$count_expr = $this->options->distinct ? "DISTINCT e.guid" : "*";
+		$count_expr = $this->options->distinct ? "DISTINCT n_table.id" : "*";
 		$qb->select("COUNT({$count_expr}) AS total");
 
 		$qb = $this->buildQuery($qb);
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
+		if (!$result) {
+			return 0;
+		}
+
 		return (int) $result->total;
 	}
 
 	/**
-	 * Performs a mathematical calculation on a set of entity properties
+	 * Performs a mathematical calculation on metadata or metadata entity's properties
 	 *
 	 * @param string $function      Valid numeric function
 	 * @param string $property      Property name
@@ -81,14 +80,10 @@ class Entities extends Repository {
 		}
 
 		if (!isset($property_type)) {
-			if (in_array($property, AttributeLoader::$primary_attr_names)) {
-				$property_type = 'attribute';
-			} else {
-				$property_type = 'metadata';
-			}
+			$property_type = 'metadata';
 		}
 
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable('metadata', 'n_table');
 
 		switch ($property_type) {
 			case 'attribute':
@@ -96,21 +91,28 @@ class Entities extends Repository {
 					throw new InvalidParameterException("'$property' is not a valid attribute");
 				}
 
-				$qb->addSelect("{$function}(e.{$property}) AS calculation");
+				/**
+				 * @todo When no entity constraints are present, do we need to ensure that entity access clause is added?
+				 */
+				$alias = $qb->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
+				$qb->addSelect("{$function}({$alias}.{$property}) AS calculation");
 				break;
 
 			case 'metadata' :
-				$alias = $qb->joinMetadataTable('e', 'guid', $property, 'inner', 'n_table');
-				$qb->addSelect("{$function}({$alias}.value) AS calculation");
+				$alias = 'n_table';
+				if (!empty($this->options->metadata_name_value_pairs) && $this->options->metadata_name_value_pairs[0]->names != $property) {
+					$alias = $qb->joinMetadataTable('n_table', 'entity_guid', $property);
+				}
+				$qb->addSelect("{$function}($alias.value) AS calculation");
 				break;
 
 			case 'annotation' :
-				$alias = $qb->joinAnnotationTable('e', 'guid', $property, 'inner', 'n_table');
+				$alias = $qb->joinAnnotationTable('n_table', 'entity_guid', $property);
 				$qb->addSelect("{$function}({$alias}.value) AS calculation");
 				break;
 
 			case 'private_setting' :
-				$alias = $qb->joinPrivateSettingsTable('e', 'guid', $property, 'inner', 'ps');
+				$alias = $qb->joinPrivateSettingsTable('n_table', 'entity_guid', $property);
 				$qb->addSelect("{$function}({$alias}.value) AS calculation");
 				break;
 		}
@@ -119,40 +121,44 @@ class Entities extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
+		if (!$result) {
+			return 0;
+		}
+
 		return (int) $result->calculation;
 	}
 
 	/**
-	 * Fetch entities
+	 * Fetch metadata
 	 *
 	 * @param int      $limit    Limit
 	 * @param int      $offset   Offset
 	 * @param callable $callback Custom callback
 	 *
-	 * @return ElggEntity[]
+	 * @return ElggMetadata[]
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
 
-		$qb = Select::fromTable('entities', 'e');
+		$qb = Select::fromTable('metadata', 'n_table');
 
 		$distinct = $this->options->distinct ? "DISTINCT" : "";
-		$qb->select("$distinct e.*");
+		$qb->select("$distinct n_table.*");
 
 		foreach ($this->options->selects as $select_clause) {
-			$select_clause->prepare($qb, 'e');
+			$select_clause->prepare($qb, 'n_table');
 		}
 
 		foreach ($this->options->group_by as $group_by_clause) {
-			$group_by_clause->prepare($qb, 'e');
+			$group_by_clause->prepare($qb, 'n_table');
 		}
 
 		foreach ($this->options->having as $having_clause) {
-			$having_clause->prepare($qb, 'e');
+			$having_clause->prepare($qb, 'n_table');
 		}
 
 		if (!empty($this->options->order_by)) {
 			foreach ($this->options->order_by as $order_by_clause) {
-				$order_by_clause->prepare($qb, 'e');
+				$order_by_clause->prepare($qb, 'n_table');
 			}
 		}
 
@@ -161,7 +167,8 @@ class Entities extends Repository {
 		// Keeping things backwards compatible
 		$original_order = elgg_extract('order_by', $this->options->__original_options);
 		if (empty($original_order) && $original_order !== false) {
-			$qb->addOrderBy('e.time_created', 'desc');
+			$qb->addOrderBy('n_table.time_created', 'asc');
+			$qb->addOrderBy('n_table.id', 'asc');
 		}
 
 		if ($limit) {
@@ -169,18 +176,14 @@ class Entities extends Repository {
 			$qb->setFirstResult((int) $offset);
 		}
 
-		$options = $this->options->getArrayCopy();
-
-		$options['limit'] = (int) $limit;
-		$options['offset'] = (int) $offset;
-		$options['callback'] = $callback ? : $this->options->callback;
-		if (!isset($options['callback'])) {
-			$options['callback'] = 'entity_row_to_elggstar';
+		$callback = $callback ? : $this->options->callback;
+		if (!isset($callback)) {
+			$callback = function ($row) {
+				return new ElggMetadata($row);
+			};
 		}
 
-		unset($options['count']);
-
-		return _elgg_services()->entityTable->fetch($qb, $options);
+		return _elgg_services()->db->getData($qb, $callback);
 	}
 
 	/**
@@ -202,21 +205,21 @@ class Entities extends Repository {
 		$batch_size = $this->options->batch_size;
 		$batch_inc_offset = $this->options->batch_inc_offset;
 
-		return new \ElggBatch([static::class, 'find'], $options, null, $batch_size, $batch_inc_offset);
+		return new ElggBatch([static::class, 'find'], $options, null, $batch_size, $batch_inc_offset);
 	}
 
 	/**
 	 * Execute the query resolving calculation, count and/or batch options
 	 *
-	 * @return array|\ElggData[]|ElggEntity[]|false|int
-	 * @throws \LogicException
+	 * @return array|ElggData[]|ElggMetadata[]|false|int
+	 * @throws LogicException
 	 */
 	public function execute() {
 
 		if ($this->options->annotation_calculation) {
 			$clauses = $this->options->annotation_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->annotation_name_value_pairs_operator !== 'OR') {
-				throw new \LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
+				throw new LogicException("Annotation calculation can not be performed on multiple annotation name value pairs merged with AND");
 			}
 
 			$clause = array_shift($clauses);
@@ -225,7 +228,7 @@ class Entities extends Repository {
 		} else if ($this->options->metadata_calculation) {
 			$clauses = $this->options->metadata_name_value_pairs;
 			if (count($clauses) > 1 && $this->options->metadata_name_value_pairs_operator !== 'OR') {
-				throw new \LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
+				throw new LogicException("Metadata calculation can not be performed on multiple metadata name value pairs merged with AND");
 			}
 
 			$clause = array_shift($clauses);
@@ -252,15 +255,15 @@ class Entities extends Repository {
 		$ands = [];
 
 		foreach ($this->options->joins as $join) {
-			$join->prepare($qb, 'e');
+			$join->prepare($qb, 'n_table');
 		}
 
 		foreach ($this->options->wheres as $where) {
-			$ands[] = $where->prepare($qb, 'e');
+			$ands[] = $where->prepare($qb, 'n_table');
 		}
 
-		$ands[] = $this->buildEntityClause($qb);
 		$ands[] = $this->buildPairedMetadataClause($qb, $this->options->metadata_name_value_pairs, $this->options->metadata_name_value_pairs_operator);
+		$ands[] = $this->buildEntityWhereClause($qb);
 		$ands[] = $this->buildPairedMetadataClause($qb, $this->options->search_name_value_pairs, 'OR');
 		$ands[] = $this->buildPairedAnnotationClause($qb, $this->options->annotation_name_value_pairs, $this->options->annotation_name_value_pairs_operator);
 		$ands[] = $this->buildPairedPrivateSettingsClause($qb, $this->options->private_setting_name_value_pairs, $this->options->private_setting_name_value_pairs_operator);
@@ -277,13 +280,16 @@ class Entities extends Repository {
 
 	/**
 	 * Process entity attribute wheres
-	 * Applies entity attribute constrains on the selected entities table
+	 * Joins entities table on entity guid in metadata table and applies where clauses
 	 *
 	 * @param QueryBuilder $qb Query builder
 	 *
 	 * @return Closure|CompositeExpression|mixed|null|string
 	 */
-	protected function buildEntityClause(QueryBuilder $qb) {
+	protected function buildEntityWhereClause(QueryBuilder $qb) {
+
+		// Even if all of these properties are empty, we want to add this clause regardless,
+		// to ensure that entity access clauses are appended to the query
 		$where = new EntityWhereClause();
 		$where->guids = $this->options->guids;
 		$where->owner_guids = $this->options->owner_guids;
@@ -297,12 +303,14 @@ class Entities extends Repository {
 		$where->last_action_before = $this->options->last_action_before;
 		$where->access_ids = $this->options->access_ids;
 
-		return $where->prepare($qb, 'e');
+		$joined_alias = $qb->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
+
+		return $where->prepare($qb, $joined_alias);
 	}
 
 	/**
 	 * Process metadata name value pairs
-	 * Joins the metadata table on entity guid in the entities table and applies metadata where clauses
+	 * Applies where clauses to the selected metadata table
 	 *
 	 * @param QueryBuilder          $qb      Query builder
 	 * @param MetadataWhereClause[] $clauses Where clauses
@@ -315,15 +323,7 @@ class Entities extends Repository {
 
 
 		foreach ($clauses as $clause) {
-			if ($clause instanceof MetadataWhereClause) {
-				if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-					$joined_alias = $qb->joinMetadataTable('e', 'guid', null, 'inner', 'n_table');
-				} else {
-					$joined_alias = $qb->joinMetadataTable('e', 'guid', $clause->names);
-				}
-			}
-
-			$parts[] = $clause->prepare($qb, $joined_alias);
+			$parts[] = $clause->prepare($qb, 'n_table');
 		}
 
 		return $qb->merge($parts, $boolean);
@@ -331,7 +331,7 @@ class Entities extends Repository {
 
 	/**
 	 * Process annotation name value pairs
-	 * Joins the annotation table on entity guid in the entities table and applies annotation where clauses
+	 * Joins annotation table on entity_guid in the metadata table and applies where clauses
 	 *
 	 * @param QueryBuilder            $qb      Query builder
 	 * @param AnnotationWhereClause[] $clauses Where clauses
@@ -343,10 +343,10 @@ class Entities extends Repository {
 		$parts = [];
 
 		foreach ($clauses as $clause) {
-			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinAnnotationTable('e', 'guid', null, 'inner', 'n_table');
+			if (strtoupper($boolean) === 'OR' || count($clauses) > 1) {
+				$joined_alias = $qb->joinAnnotationTable('n_table', 'entity_guid');
 			} else {
-				$joined_alias = $qb->joinAnnotationTable('e', 'guid', $clause->names);
+				$joined_alias = $qb->joinAnnotationTable('n_table', 'entity_guid', $clause->names);
 			}
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
@@ -355,8 +355,8 @@ class Entities extends Repository {
 	}
 
 	/**
-	 * Process private setting name value pairs
-	 * Joins the private settings table on entity guid in the entities table and applies private setting where clauses
+	 * Process private settings name value pairs
+	 * Joins private settings table on entity_guid in the metadata table and applies where clauses
 	 *
 	 * @param QueryBuilder                $qb      Query builder
 	 * @param PrivateSettingWhereClause[] $clauses Where clauses
@@ -368,10 +368,10 @@ class Entities extends Repository {
 		$parts = [];
 
 		foreach ($clauses as $clause) {
-			if (strtoupper($boolean) === 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinPrivateSettingsTable('e', 'guid', null, 'inner', 'ps');
+			if (strtoupper($boolean) === 'OR' || count($clauses) > 1) {
+				$joined_alias = $qb->joinPrivateSettingsTable('n_table', 'entity_guid');
 			} else {
-				$joined_alias = $qb->joinPrivateSettingsTable('e', 'guid', $clause->names);
+				$joined_alias = $qb->joinPrivateSettingsTable('n_table', 'entity_guid', $clause->names);
 			}
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
@@ -380,7 +380,10 @@ class Entities extends Repository {
 	}
 
 	/**
-	 * Process relationship pairs
+	 * Process relationship name value pairs
+	 * Joins relationship table on entity_guid in the metadata table and applies where clauses
+	 *
+	 * @note Note that $relationship_join_on does not apply here, as there is only one guid column in the metadata table
 	 *
 	 * @param QueryBuilder              $qb      Query builder
 	 * @param RelationshipWhereClause[] $clauses Where clauses
@@ -392,10 +395,10 @@ class Entities extends Repository {
 		$parts = [];
 
 		foreach ($clauses as $clause) {
-			if (strtoupper($boolean) == 'OR' || count($clauses) === 1) {
-				$joined_alias = $qb->joinRelationshipTable('e', $clause->join_on, null, $clause->inverse, 'inner', 'r');
+			if (strtoupper($boolean) == 'OR' || count($clauses) > 1) {
+				$joined_alias = $qb->joinRelationshipTable('n_table', 'entity_guid', null, $clause->inverse);
 			} else {
-				$joined_alias = $qb->joinRelationshipTable('e', $clause->join_on, $clause->names, $clause->inverse);
+				$joined_alias = $qb->joinRelationshipTable('n_table', 'entity_guid', $clause->names, $clause->inverse);
 			}
 			$parts[] = $clause->prepare($qb, $joined_alias);
 		}

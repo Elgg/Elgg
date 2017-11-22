@@ -1271,10 +1271,6 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	// test getting by name sorting by value as integer with defined values
-
-	/**
-	 * @group Failing
-	 */
 	function testElggApiGettersEntityMetadataNVPGreaterThanInt() {
 		$subtype = $this->getRandomSubtype();
 

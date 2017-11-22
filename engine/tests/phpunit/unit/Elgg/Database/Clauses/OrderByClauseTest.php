@@ -18,7 +18,7 @@ class OrderByClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -30,7 +30,7 @@ class OrderByClauseTest extends UnitTestCase {
 		$this->qb->orderBy('alias.guid', 'desc');
 
 		$query = new OrderByClause('alias.guid', 'desc');
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -45,7 +45,7 @@ class OrderByClauseTest extends UnitTestCase {
 			return 'alias.guid';
 		}, 'asc');
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

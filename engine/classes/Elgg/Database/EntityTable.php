@@ -442,7 +442,7 @@ class EntityTable {
 	 *
 	 * @param QueryBuilder $query   Query
 	 * @param array        $options Options
-	 * @return array|ElggEntity[]
+	 * @return \stdClass[]|ElggEntity[]
 	 */
 	public function fetch(QueryBuilder $query, array $options = []) {
 		if ($options['callback'] === 'entity_row_to_elggstar') {
@@ -453,7 +453,7 @@ class EntityTable {
 
 		if (!$results) {
 			// no results, no preloading
-			return $results;
+			return [];
 		}
 
 		// populate entity and metadata caches, and prepare $entities for preloader

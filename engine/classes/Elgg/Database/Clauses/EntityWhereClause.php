@@ -7,7 +7,7 @@ use Elgg\Database\QueryBuilder;
 /**
  * Builds queries for filtering entities by their properties in the entities table
  */
-class EntityWhereClause extends AccessWhereClause {
+class EntityWhereClause extends WhereClause {
 
 	/**
 	 * @var int|int[]
@@ -70,24 +70,19 @@ class EntityWhereClause extends AccessWhereClause {
 	public $enabled;
 
 	/**
-	 * @var string
+	 * @var bool
 	 */
-	public $access_column = 'access_id';
+	public $ignore_access;
 
 	/**
-	 * @var string
+	 * @var bool
 	 */
-	public $owner_guid_column = 'owner_guid';
+	public $use_enabled_clause;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
-	public $guid_column = 'guid';
-
-	/**
-	 * @var string
-	 */
-	public $enabled_column = 'enabled';
+	public $viewer_guid;
 
 	/**
 	 * {@inheritdoc}
@@ -100,6 +95,12 @@ class EntityWhereClause extends AccessWhereClause {
 
 		$wheres = [];
 		$wheres[] = parent::prepare($qb, $table_alias);
+
+		$access = new AccessWhereClause();
+		$access->use_enabled_clause = $this->use_enabled_clause;
+		$access->ignore_access = $this->ignore_access;
+		$access->viewer_guid = $this->viewer_guid;
+		$wheres[] = $access->prepare($qb, $table_alias);
 
 		$type = new TypeSubtypeWhereClause();
 		$type->type_subtype_pairs = $this->type_subtype_pairs;

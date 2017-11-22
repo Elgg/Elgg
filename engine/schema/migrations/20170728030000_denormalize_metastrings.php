@@ -23,7 +23,6 @@ class DenormalizeMetastrings extends AbstractMigration {
 		];
 
 		foreach ($tables as $table) {
-
 			if (!$this->hasTable($table)) {
 				continue;
 			}
@@ -86,7 +85,6 @@ class DenormalizeMetastrings extends AbstractMigration {
 
 				$table->removeColumn('name_id');
 				$table->removeColumn('value_id');
-
 			}
 
 			$table->save();
@@ -202,7 +200,6 @@ class DenormalizeMetastrings extends AbstractMigration {
 			if ($table->hasColumn('value')) {
 				$table->removeColumn('value');
 			}
-
 		}
 	}
 

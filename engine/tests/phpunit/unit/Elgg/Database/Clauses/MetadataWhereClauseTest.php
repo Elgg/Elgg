@@ -19,7 +19,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -32,7 +32,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 
 		$query = new MetadataWhereClause();
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -49,7 +49,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 		$query = new MetadataWhereClause();
 		$query->ids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -66,7 +66,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 		$query = new MetadataWhereClause();
 		$query->names = ['foo1', 'foo2'];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -85,7 +85,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->case_sensitive = false;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -107,7 +107,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->comparison = 'like';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -124,7 +124,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 		$query = new MetadataWhereClause();
 		$query->entity_guids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -151,7 +151,7 @@ class MetadataWhereClauseTest extends UnitTestCase {
 		$query->created_after = $after;
 		$query->created_before = $before;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

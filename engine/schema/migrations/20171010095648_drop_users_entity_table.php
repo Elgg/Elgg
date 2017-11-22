@@ -3,10 +3,10 @@
 use Phinx\Migration\AbstractMigration;
 
 class DropUsersEntityTable extends AbstractMigration {
-    /**
-     * Move users_entity attributes to metadata
-     */
-    public function up() {
+	/**
+	 * Move users_entity attributes to metadata
+	 */
+	public function up() {
 
 		if (!$this->hasTable('users_entity') || !$this->hasTable('metadata')) {
 			return;
@@ -31,7 +31,6 @@ class DropUsersEntityTable extends AbstractMigration {
 		while ($rows = $this->fetchAll($users_query)) {
 			foreach ($rows as $row) {
 				foreach ($cols as $col => $type) {
-					
 					if ($col == 'last_action') {
 						// special column last_action goes to last_action in entities table
 						$this->execute("
@@ -70,5 +69,5 @@ class DropUsersEntityTable extends AbstractMigration {
 		
 		// all data migrated, so drop the table
 		$this->dropTable('users_entity');
-    }
+	}
 }

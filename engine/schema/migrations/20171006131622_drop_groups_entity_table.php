@@ -4,10 +4,10 @@ use Phinx\Migration\AbstractMigration;
 
 class DropGroupsEntityTable extends AbstractMigration
 {
-    /**
-     * Move groups_entity attributes to metadata
-     */
-    public function up() {
+	/**
+	 * Move groups_entity attributes to metadata
+	 */
+	public function up() {
 
 		if (!$this->hasTable('groups_entity') || !$this->hasTable('metadata')) {
 			return;
@@ -20,7 +20,6 @@ class DropGroupsEntityTable extends AbstractMigration
 		while ($rows = $this->fetchAll($groups_query)) {
 			foreach ($rows as $row) {
 				foreach ($cols as $col) {
-					
 					// remove existing metadata... attributes are more important
 					$this->execute("
 						DELETE FROM {$prefix}metadata
@@ -50,5 +49,5 @@ class DropGroupsEntityTable extends AbstractMigration
 		
 		// all data migrated, so drop the table
 		$this->dropTable('groups_entity');
-    }
+	}
 }

@@ -18,7 +18,7 @@ class GroupByClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -30,7 +30,7 @@ class GroupByClauseTest extends UnitTestCase {
 		$this->qb->groupBy('alias.guid');
 
 		$query = new GroupByClause('alias.guid');
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -45,7 +45,7 @@ class GroupByClauseTest extends UnitTestCase {
 			return 'alias.guid';
 		});
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

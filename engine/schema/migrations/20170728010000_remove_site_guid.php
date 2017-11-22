@@ -50,7 +50,6 @@ class RemoveSiteGuid extends AbstractMigration {
 		$this->validate();
 
 		if ($this->hasTable('access_collections')) {
-
 			$table = $this->table('access_collections');
 
 			if ($table->hasIndex('site_guid')) {
@@ -65,7 +64,6 @@ class RemoveSiteGuid extends AbstractMigration {
 		}
 
 		if ($this->hasTable('api_users')) {
-
 			$table = $this->table('api_users');
 
 			if ($table->hasColumn('site_guid')) {
@@ -76,7 +74,6 @@ class RemoveSiteGuid extends AbstractMigration {
 		}
 
 		if ($this->hasTable('config')) {
-
 			$table = $this->table('config', [
 				'primary_key' => ["name"],
 			]);
@@ -93,7 +90,6 @@ class RemoveSiteGuid extends AbstractMigration {
 		}
 
 		if ($this->hasTable('entities')) {
-
 			$table = $this->table('entities');
 
 			if ($table->hasIndex('site_guid')) {
@@ -108,7 +104,6 @@ class RemoveSiteGuid extends AbstractMigration {
 		}
 
 		if ($this->hasTable('users_apisessions')) {
-
 			$table = $this->table('users_apisessions');
 
 			if ($table->hasIndex('site_guid')) {
@@ -148,7 +143,6 @@ class RemoveSiteGuid extends AbstractMigration {
 	public function down() {
 
 		if ($this->hasTable('access_collections')) {
-
 			$table = $this->table('access_collections');
 
 			if (!$table->hasColumn('site_guid')) {
@@ -175,11 +169,9 @@ class RemoveSiteGuid extends AbstractMigration {
 				SET site_guid = 1
 				WHERE site_guid != 1
 			");
-
 		}
 
 		if ($this->hasTable('api_users')) {
-
 			$table = $this->table('api_users');
 
 			if (!$table->hasColumn('site_guid')) {
@@ -199,11 +191,9 @@ class RemoveSiteGuid extends AbstractMigration {
 				SET site_guid = 1
 				WHERE site_guid != 1
 			");
-
 		}
 
 		if ($this->hasTable('config')) {
-
 			$table = $this->table('config', [
 				'primary_key' => [
 					"name",
@@ -235,11 +225,9 @@ class RemoveSiteGuid extends AbstractMigration {
 				SET site_guid = 1
 				WHERE site_guid != 1
 			");
-
 		}
 
 		if ($this->hasTable('entities')) {
-
 			// remove site guid from entities
 			$table = $this->table('entities');
 
@@ -286,7 +274,6 @@ class RemoveSiteGuid extends AbstractMigration {
 		}
 
 		if ($this->hasTable('users_apisessions')) {
-
 			// remove site guid from users_apisessions
 			$table = $this->table('users_apisessions');
 
@@ -323,7 +310,6 @@ class RemoveSiteGuid extends AbstractMigration {
 				SET site_guid = 1
 				WHERE site_guid != 1
 			");
-
 		}
 
 	}

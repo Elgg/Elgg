@@ -95,7 +95,7 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($object, _elgg_services()->entityCache->get($object->guid));
 
 		$this->assertTrue($object->delete());
-		
+
 		$this->assertFalse(_elgg_services()->entityCache->get($object->guid));
 
 		_elgg_services()->session->removeLoggedInUser();

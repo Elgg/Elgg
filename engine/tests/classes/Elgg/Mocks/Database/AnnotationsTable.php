@@ -2,10 +2,10 @@
 
 namespace Elgg\Mocks\Database;
 
-use Elgg\Database\Annotations as DbAnnotations;
+use Elgg\Database\AnnotationsTable as DbAnnotations;
 use ElggMetadata;
 
-class Annotations extends DbAnnotations {
+class AnnotationsTable extends DbAnnotations {
 
 	/**
 	 * @var ElggMetadata

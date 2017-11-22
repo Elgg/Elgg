@@ -20,7 +20,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -35,7 +35,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->ignore_access = true;
 		$query->use_enabled_clause = false;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -54,7 +54,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->ids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -73,7 +73,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->names = ['foo1', 'foo2'];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -94,7 +94,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->case_sensitive = false;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -118,7 +118,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->value_type = ELGG_VALUE_STRING;
 		$query->comparison = 'like';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -137,7 +137,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->entity_guids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -156,7 +156,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->owner_guids = [2, 3];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -185,7 +185,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->created_after = $after;
 		$query->created_before = $before;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -205,7 +205,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->enabled = 'no';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -224,7 +224,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->use_enabled_clause = false;
 		$query->access_ids = ACCESS_PUBLIC;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -248,7 +248,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->viewer_guid = 5;
 		$query->entity_guids = 1;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -277,7 +277,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->sort_by_calculation = 'avg';
 		$query->sort_by_direction = 'desc';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -295,7 +295,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->sort_by_calculation = 'invalid';
 		$query->sort_by_direction = 'desc';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 	}
 
@@ -318,7 +318,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->entity_guids = 1;
 		$query->sort_by_direction = 'desc';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -345,7 +345,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->sort_by_direction = 'desc';
 		$query->value_type = ELGG_VALUE_INTEGER;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

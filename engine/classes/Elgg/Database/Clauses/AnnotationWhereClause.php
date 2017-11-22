@@ -8,7 +8,7 @@ use Elgg\Database\QueryBuilder;
 /**
  * Builds queries for matching annotations against their properties
  */
-class AnnotationWhereClause extends AccessWhereClause {
+class AnnotationWhereClause extends WhereClause {
 
 	/**
 	 * @var int[]
@@ -80,24 +80,19 @@ class AnnotationWhereClause extends AccessWhereClause {
 	public $sort_by_calculation;
 
 	/**
-	 * @var string
+	 * @var bool
 	 */
-	public $access_column = 'access_id';
+	public $ignore_access;
 
 	/**
-	 * @var string
+	 * @var bool
 	 */
-	public $owner_guid_column = 'owner_guid';
+	public $use_enabled_clause;
 
 	/**
-	 * @var string
+	 * @var int
 	 */
-	public $guid_column = 'entity_guid';
-
-	/**
-	 * @var string
-	 */
-	public $enabled_column = 'enabled';
+	public $viewer_guid;
 
 	/**
 	 * {@inheritdoc}
@@ -109,6 +104,13 @@ class AnnotationWhereClause extends AccessWhereClause {
 
 		$wheres = [];
 		$wheres[] = parent::prepare($qb, $table_alias);
+
+		$access = new AccessWhereClause();
+		$access->use_enabled_clause = $this->use_enabled_clause;
+		$access->ignore_access = $this->ignore_access;
+		$access->viewer_guid = $this->viewer_guid;
+		$access->guid_column = 'entity_guid';
+		$wheres[] = $access->prepare($qb, $table_alias);
 
 		$wheres[] = $qb->compare($alias('id'), '=', $this->ids, ELGG_VALUE_ID);
 		$wheres[] = $qb->compare($alias('name'), '=', $this->names, ELGG_VALUE_STRING);
