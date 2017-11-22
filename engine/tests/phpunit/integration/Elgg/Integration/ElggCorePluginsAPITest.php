@@ -9,6 +9,8 @@ use ElggPluginPackage;
  * Elgg Plugins Test
  *
  * @group IntegrationTests
+ * @group Plugins
+ * @group PluginManifest
  */
 class ElggCorePluginsAPITest extends \Elgg\LegacyIntegrationTestCase {
 
@@ -36,14 +38,14 @@ class ElggCorePluginsAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$manifest_file = file_get_contents($this->normalizeTestFilePath('plugin_18/manifest.xml'));
 		$manifest = new ElggPluginManifest($manifest_file);
 
-		$this->assertIsA($manifest, ElggPluginManifest::class);
+		$this->assertInstanceOf(ElggPluginManifest::class, $manifest);
 	}
 
 	public function testElggPluginManifestFromFile() {
 		$file = $this->normalizeTestFilePath('plugin_18/manifest.xml');
 		$manifest = new ElggPluginManifest($file);
 
-		$this->assertIsA($manifest, ElggPluginManifest::class);
+		$this->assertInstanceOf(ElggPluginManifest::class, $manifest);
 	}
 
 	public function testElggPluginManifestFromXMLEntity() {
@@ -51,7 +53,7 @@ class ElggCorePluginsAPITest extends \Elgg\LegacyIntegrationTestCase {
 		$xml = new \ElggXMLElement($manifest_file);
 		$manifest = new ElggPluginManifest($xml);
 
-		$this->assertIsA($manifest, ElggPluginManifest::class);
+		$this->assertInstanceOf(ElggPluginManifest::class, $manifest);
 	}
 
 	// exact manifest values

@@ -35,7 +35,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -80,7 +80,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -180,7 +180,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -217,7 +217,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -262,7 +262,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -362,7 +362,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -422,7 +422,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -503,7 +503,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -573,7 +573,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -673,7 +673,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -847,7 +847,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -928,7 +928,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -984,7 +984,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 3);
 
 		$i = 1;
@@ -1043,7 +1043,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 3);
 
 		$alpha = [
@@ -1109,7 +1109,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 3);
 
 		$num = [
@@ -1182,7 +1182,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 3);
 
 		$i = 0;
@@ -1252,7 +1252,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 3);
 
 		$i = 0;
@@ -1316,7 +1316,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 2);
 
 		$num = [
@@ -1369,7 +1369,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsA($entities, 'array');
+		$this->assertInternalType('array', $entities);
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {

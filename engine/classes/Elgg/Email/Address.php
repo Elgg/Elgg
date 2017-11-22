@@ -25,7 +25,7 @@ class Address extends ZendAddress {
 	 */
 	public function setEmail($email) {
 		
-	 	if (!is_string($email) || empty($email)) {
+		if (!is_string($email) || empty($email)) {
 			throw new InvalidArgumentException('Email must be a valid email address');
 		}
 		

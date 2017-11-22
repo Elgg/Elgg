@@ -888,7 +888,7 @@ class ElggInstaller {
 	protected function checkPHP(&$report) {
 		$phpReport = [];
 
-		$min_php_version = '5.6.0';
+		$min_php_version = '7.0.0';
 		if (version_compare(PHP_VERSION, $min_php_version, '<')) {
 			$phpReport[] = [
 				'severity' => 'failure',

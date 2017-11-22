@@ -129,7 +129,7 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 
 		$batch = elgg_get_entities(array_merge($options, ['batch' => true]));
 
-		$this->assertIsA($batch, BatchResult::class);
+		$this->assertInstanceOf(BatchResult::class, $batch);
 		/* @var ElggBatch $batch */
 
 		$guids2 = [];

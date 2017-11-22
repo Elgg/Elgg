@@ -54,7 +54,7 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->AssertNotEqual($guid, 0);
 
 		$entity_row = $this->get_entity_row($guid);
-		$this->assertIsA($entity_row, '\stdClass');
+		$this->assertInstanceOf(\stdClass::class, $entity_row);
 
 		// update existing object
 		$this->entity->title = 'testing';

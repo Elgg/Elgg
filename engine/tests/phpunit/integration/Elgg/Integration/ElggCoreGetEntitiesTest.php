@@ -30,7 +30,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), 1);
@@ -50,7 +50,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), 1);
@@ -68,7 +68,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), 1);
@@ -86,7 +86,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// one of object and one of group
 		$this->assertIdentical(count($es), count($valid_types));
@@ -117,7 +117,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), 1);
@@ -145,7 +145,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// should only ever return one object because of group by
 		$this->assertIdentical(count($es), count($valid));
@@ -172,7 +172,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
@@ -189,7 +189,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
@@ -206,7 +206,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		$this->assertIdentical(count($es), 1);
 		foreach ($es as $e) {
@@ -230,7 +230,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		$this->assertIdentical(count($es), $subtype_num);
 		foreach ($es as $e) {
@@ -265,7 +265,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// this will unset all invalid subtypes for each type that that only
 		// one entity exists of each.
@@ -298,7 +298,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		// this will unset all invalid subtypes for each type that that only
 		// one entity exists of each.
@@ -336,7 +336,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		$this->assertIdentical(count($es), $type_num);
 		foreach ($es as $e) {
@@ -364,7 +364,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		$this->assertIdentical(count($es), $subtype_num);
 		foreach ($es as $e) {
@@ -396,7 +396,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertIsA($es, 'array');
+		$this->assertInternalType('array', $es);
 
 		$this->assertIdentical(count($es), $valid_subtype_num);
 		foreach ($es as $e) {

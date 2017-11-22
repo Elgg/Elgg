@@ -400,8 +400,8 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 			]);
 
 			if (count($assertion_values)) {
-				$this->assertIsA($annotations, 'array');
-				$this->assertEqual(count($assertion_values), count($annotations));
+				$this->assertInternalType('array', $annotations);
+				$this->assertEquals(count($assertion_values), count($annotations));
 			} else {
 				$this->assertFalse($annotations);
 			}

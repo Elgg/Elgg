@@ -128,7 +128,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		// save entity and check for annotation
 		$this->entity->annotate('non_existent', 'foo');
 		$annotations = $this->entity->getAnnotations(['annotation_name' => 'non_existent']);
-		$this->assertIsA($annotations[0], '\ElggAnnotation');
+		$this->assertInstanceOf(\ElggAnnotation::class, $annotations[0]);
 		$this->assertIdentical($annotations[0]->name, 'non_existent');
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
 

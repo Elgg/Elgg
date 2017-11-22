@@ -61,6 +61,8 @@ abstract class UnitTestCase extends BaseTestCase {
 			'description' => 'Testing Site',
 		]);
 
+		self::$_instance = $this;
+
 		$this->up();
 	}
 

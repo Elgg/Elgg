@@ -303,7 +303,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 		$acl = get_access_collection($owned_collection_id);
 
-		$this->assertIsA($acl, ElggAccessCollection::class);
+		$this->assertInstanceOf(ElggAccessCollection::class, $acl);
 		$this->assertEqual($acl->id, $owned_collection_id);
 		$this->assertEqual($acl->owner_guid, $this->user->guid);
 		$this->assertEqual($acl->name, 'test');
@@ -351,7 +351,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 		$id = create_access_collection('test_collection', $this->user->guid);
 		$acl = get_access_collection($id);
 
-		$this->assertIsA($acl, ElggAccessCollection::class);
+		$this->assertInstanceOf(ElggAccessCollection::class, $acl);
 
 		$this->assertTrue($acl->addMember($member1->guid));
 		$this->assertTrue($acl->addMember($member2->guid));
