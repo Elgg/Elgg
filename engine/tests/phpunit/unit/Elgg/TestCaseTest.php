@@ -2,11 +2,13 @@
 
 namespace Elgg;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @group Testing
  * @group UnitTests
  */
-class TestCaseTest extends \PHPUnit_Framework_TestCase {
+class TestCaseTest extends TestCase {
 
 	/**
 	 * Test that legacy bootstrap has been autoloaded and

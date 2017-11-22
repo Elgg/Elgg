@@ -142,7 +142,7 @@ class Database extends DbDatabase {
 	 *
 	 * @param string $sql    Query
 	 * @param array  $params Query params
-	 * @return PHPUnit_Framework_MockObject_MockObject (statement)
+	 * @return MockObject (statement)
 	 */
 	public function executeDatabaseQuery($sql, $params = []) {
 

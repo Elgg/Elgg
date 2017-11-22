@@ -4,12 +4,12 @@ if (php_sapi_name() !== "cli") {
 	die('CLI only');
 }
 
-if (!class_exists('Memcache')) {
+if (!class_exists('Memcached')) {
 	fwrite(STDOUT, 'PHP memcache module not installed');
 	exit(1);
 }
 
-$memcached = new Memcache;
+$memcached = new \Memcached;
 if (!$memcached->connect('127.0.0.1', 11211)) {
 	fwrite(STDOUT, 'Failed to connect to memcache server');
 	exit(2);

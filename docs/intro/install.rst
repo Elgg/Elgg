@@ -11,7 +11,7 @@ Requirements
 ============
 
 - MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)
-- PHP 5.6+ with the following extensions:
+- PHP 7.0+ with the following extensions:
 
    -  GD (for graphics processing)
    -  `Multibyte String support`_ (for i18n)

@@ -8,7 +8,7 @@ if (!elgg_get_config('memcache') || empty($servers) || !is_memcache_available())
 	return;
 }
 
-$memcache = new Memcache;
+$memcache = new Memcached();
 
 foreach ($servers as $server) {
 	$title = "{$server[0]}:{$server[1]}";
