@@ -1,7 +1,7 @@
 language: php
 php:
- - 5.6
  - 7.0
+ - 7.1
 
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
@@ -25,7 +25,7 @@ matrix:
 
   include:
     # Build and test javascript
-    - php: 5.6
+    - php: 7.0
       env: JOB_NAME=js_tests VARIA=true
       dist: trusty
       install:
@@ -39,7 +39,7 @@ matrix:
     # Flags used here, not in `make html`:
     #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
     #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
-    - php: 5.6
+    - php: 7.0
       env: JOB_NAME=docs_build VARIA=true
       install:
         - pip install --user "Sphinx==1.3.1"
@@ -52,7 +52,7 @@ matrix:
         - sphinx-build -b html -D language=es -n docs docs/_build/html
 
     # Memcached enabled
-    - php: 5.6
+    - php: 7.0
       env:
         - JOB_NAME=memcache_php56 VARIA=true
         - ELGG_MEMCACHE=1
@@ -73,7 +73,7 @@ matrix:
         - php -f ./.scripts/is_memcached_enabled.php
 
     # Test upgrade path from 2.3
-    - php: 5.6
+    - php: 7.0
       env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
       install:
         - git fetch origin 2.3

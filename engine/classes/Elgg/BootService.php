@@ -202,12 +202,12 @@ class BootService {
 	 * @return \Stash\Interfaces\ItemInterface
 	 */
 	private function getStashItem(Config $config) {
-		if ($config->memcache && class_exists('Memcache')) {
+		if ($config->memcache && class_exists('Memcached')) {
 			$options = [];
 			if ($config->memcache_servers) {
 				$options['servers'] = $config->memcache_servers;
 			}
-			$driver = new Memcache($options);
+			$driver = new \Memcached($options);
 		} else {
 			if (!$config->dataroot) {
 				// we're in the installer

@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "type": "project",
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "ext-pdo": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -40,13 +40,12 @@
         "robmorgan/phinx": "^0.8.1",
         "symfony/console": "~3.3",
         "symfony/var-dumper": "~3.3",
-        "fzaninotto/faker": "^1.6",
-        "paragonie/random_compat": "^2.0"
+        "fzaninotto/faker": "^1.6"
     },
     "config": {
         "process-timeout": 0,
         "platform": {
-        	"php": "5.6"
+        	"php": "7.0"
         }
     },
     "scripts": {
@@ -94,8 +93,7 @@
         "squizlabs/php_codesniffer": "^2.8.1",
         "simpletest/simpletest": "~1.1",
         "phpdocumentor/reflection-docblock": "~2.0",
-        "phpunit/phpunit": "~5.7",
-        "phpunit/php-token-stream": "~1.4.2"
+        "phpunit/phpunit": "~6.4"
     },
     "bin": [
         "elgg-cli"
