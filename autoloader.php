@@ -31,4 +31,4 @@ foreach ($paths as $path) {
 echo "You must set up the project dependencies. Run the following commands:\n" .
 	"curl -s http://getcomposer.org/installer | php\n" .
 	"php composer.phar install";
-exit;
+exit(1); // report a generic error

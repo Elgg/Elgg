@@ -16,9 +16,9 @@
  *
  */
  
- $rootDir = dirname(__DIR__);
+$rootDir = dirname(__DIR__);
  
- require_once "$rootDir/autoloader.php";
+require_once "$rootDir/autoloader.php";
 
 $is_file = false;
 
