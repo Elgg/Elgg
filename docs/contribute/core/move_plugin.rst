@@ -118,7 +118,7 @@ If the plugin still comes bundled with the release of a new Elgg version, make s
 Documentation
 -------------
 
-Add a mention in the :doc:`/guides/upgrading` documentation that the plugin was removed from Elgg core.
+Add a mention in the :doc:`/appendix/upgrade-notes` documentation that the plugin was removed from Elgg core.
 
 .. _Splitting a subfolder out into a new repository: https://help.github.com/articles/splitting-a-subfolder-out-into-a-new-repository/
 .. _GitHub issue: https://github.com/Elgg/Elgg/issues/9419#issuecomment-237864270

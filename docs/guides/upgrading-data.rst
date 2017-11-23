@@ -1,5 +1,5 @@
-Upgrading plugin data
-#####################
+Writing a plugin upgrade
+########################
 
 Every now and then there comes a time when a plugin needs to change the contents
 or the structure of the data it has stored either in the database or the dataroot.

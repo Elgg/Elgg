@@ -1,0 +1,146 @@
+From 2.2 to 2.3
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+PHP Version
+-----------
+
+PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are secure, we now require PHP 5.6 for new installations.
+
+Existing installations can continue using PHP 5.5 until Elgg 3.0.
+
+In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may need to use ``--ignore-platform-reqs`` flag.
+
+Deprecated APIs
+---------------
+
+ * Registering for ``to:object`` hook by the extender name: Use ``to:object, annotation`` and ``to:object, metadata`` hooks instead.
+ * ``ajax_forward_hook()``: No longer used as handler for `'forward','all'` hook. Ajax response is now wrapped by the ``ResponseFactory``
+ * ``ajax_action_hook()``: No longer used as handler for `'action','all'` hook. Output buffering now starts before the hook is triggered in ``ActionsService``
+ * ``elgg_error_page_handler()``: No longer used as a handler for `'forward',<error_code>` hooks
+ * ``get_uploaded_file()``: Use new file uploads API instead
+ * ``get_user_notification_settings()``: Use ``ElggUser::getNotificationSettings()``
+ * ``set_user_notification_setting()``: Use ``ElggUser::setNotificationSetting()``
+ * ``pagesetup, system`` event: Use the menu or page shell hooks instead.
+ * ``elgg.walled_garden`` JavaScript is deprecated: Use ``elgg/walled_garden`` AMD module instead.
+ * ``elgg()->getDb()->getTableprefix()``: Use ``elgg_get_config('dbprefix')``.
+ * Private ``update_entity_last_action()``: Refrain from manually updating last action timestamp.
+ * Setting non-public ``access_id`` on metadata is deprecated. See below.
+ * ``get_resized_image_from_existing_file()``: Use ``elgg_save_resized_image()``.
+ * ``get_resized_image_from_uploaded_file()``: Use ``elgg_save_resized_image()`` in combination with upload API.
+ * ``get_image_resize_parameters()`` will be removed.
+ * ``elgg_view_input()``: Use ``elgg_view_field()``. Apologies for the API churn.
+
+Deprecated Views
+----------------
+
+ * ``resources/file/world``: Use the ``resources/file/all`` view instead.
+ * ``resources/pages/world``: Use the ``resources/pages/all`` view instead.
+ * ``walled_garden.js``: Use the ``elgg/walled_garden`` module instead.
+
+New API for page and action handling
+------------------------------------
+
+Page handlers and action script files should now return an instance of ``\Elgg\Http\ResponseBuilder``.
+Plugins should use the following convenience functions to build responses:
+
+ * ``elgg_ok_response()`` sends a 2xx response with HTML (page handler) or JSON data (actions)
+ * ``elgg_error_response()`` sends a 4xx or 5xx response without content/data
+ * ``elgg_redirect_response()`` silently redirects the request
+
+New API for working with file uploads
+-------------------------------------
+
+ * ``elgg_get_uploaded_files()`` - returns an array of Symfony uploaded file objects
+ * ``ElggFile::acceptUploadedFile()`` - moves an uploaded file to Elgg's filestore
+
+New API for manipulating images
+-------------------------------
+
+New image manipulation service implements a more efficient approach to cropping and resizing images.
+
+ * ``elgg_save_resized_image()`` - crops and resizes an image to preferred dimensions
+
+New API for events
+------------------
+
+ * ``elgg_clear_event_handlers()`` - similar to ``elgg_clear_plugin_hook_handlers`` this functions removes all registered event handlers
+
+New API for signing URLs
+------------------------
+
+URLs can now be signed with a SHA-256 HMAC key and validated at any time before URL expiry. This feature can be used to tokenize action URLs in email notifications, as well as other uses outside of the Elgg installation.
+
+ * ``elgg_http_get_signed_url()`` - signs the URL with HMAC key
+ * ``elgg_http_validate_signed_url()`` - validates the signed URL
+ * ``elgg_signed_request_gatekeeper()`` - gatekeeper that validates the signature of the current request
+
+Extendable form views
+---------------------
+
+Form footer rendering can now be deferred until the form view and its extensions have finished rendering. This allows plugins to collaborate on form views without breaking the markup logic.
+
+ * ``elgg_set_form_footer()`` - sets form footer for deferred rendering
+ * ``elgg_get_form_footer()`` - returns currently set form footer
+
+Metadata ``access_id``
+----------------------
+
+It's now deprecated to create metadata with an explicit ``access_id`` value other than ``ACCESS_PUBLIC``.
+
+In Elgg 3.0, metadata will not be access controlled, and will be available in all contexts. If your plugin relies on access control of metadata, it would be wise to migrate storage to annotations or entities instead.
+
+New API for extracting class names from arrays
+----------------------------------------------
+
+Similar to ``elgg_extract()``, ``elgg_extract_class()`` extracts the "class" key (if present), merges into existing class names, and always returns an array.
+
+Notifications
+-------------
+
+ * A high level ``'prepare','notification'`` hook is now triggered for instant and subscription notifications and can be used to alter notification objects irrespective of their type.
+ * ``'format','notification:<method>'`` hook is now triggered for instant and subscription notifications and can be used to format the notification (e.g. strip HTML tags, wrap the notification body in a template etc).
+ * Instant notifications are now handled by the notifications service, hence almost all hooks applicable to subscription notifications also apply to instant notifications.
+ * ``elgg_get_notification_methods()`` can be used to obtain registered notification methods
+ * Added ``ElggUser::getNotificationSettings()`` and ``ElggUser::setNotificationSetting()``
+
+Entity list functions can output tables
+---------------------------------------
+
+In functions like ``elgg_list_entities($options)``, table output is possible by setting
+``$options['list_type'] = 'table'`` and providing an array of table columns as ``$options['columns']``.
+Each column is an ``Elgg\Views\TableColumn`` object, usually created via methods on the service
+``elgg()->table_columns``.
+
+Plugins can provide or alter these factory methods (see ``Elgg\Views\TableColumn\ColumnFactory``).
+See the view ``admin/users/newest`` for a usage example.
+
+Inline tabs components
+----------------------
+
+Inline tabs component can now be rendered with ``page/components/tabs`` view. The components allows to switch between pre-poluated and ajax-loaded.
+See ``page/components/tabs`` in core views and ``theme_sandbox/components/tabs`` in developers plugin for usage instructions and examples.
+
+API to alter registration and login URL
+---------------------------------------
+
+ * ``elgg_get_registration_url()`` should be used to obtain site's registration URL
+ * ``elgg_get_login_url()`` should be used to obtain site's login URL
+ * ``registration_url, site`` hook can be used to alter the default registration URL
+ * ``login_url, site`` hook can be used to alter the default login URL
+
+Support for fieldsets in forms
+------------------------------
+
+ * ``elgg_view_field()`` replaces ``elgg_view_input()``. It has a similar API, but accepts a single array.
+ * ``elgg_view_field()`` supports ``#type``, ``#label``, ``#help`` and ``#class``, allowing unprefixed versions to be sent to the input view ``$vars``.
+ * The new view ``input/fieldset`` can be used to render a set of fields, each rendered with ``elgg_view_field()``.
+
+Lightbox
+--------
+
+ * Lightbox css is no longer loaded as an external CSS file. Lightbox theme now extends ``elgg.css`` and ``admin.css``
+ * Default lightbox config is now defined via ``'elgg.data','site'`` server-side hook
