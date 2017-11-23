@@ -10,12 +10,12 @@ use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Seedable;
 use Elgg\Di\ServiceProvider;
 use Elgg\Project\Paths;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Base test case abstraction
  */
-abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedable, Testable {
+abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	use Testing;
 
@@ -172,13 +172,13 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase implements Seedab
 		$this->assertFalse((bool) elgg_is_logged_in(), __METHOD__ . ': there should be no logged in user');
 
 		// free up some memory
-		$refl = new \ReflectionObject($this);
-		foreach ($refl->getProperties() as $prop) {
-			if (!$prop->isStatic() && 0 !== strpos($prop->getDeclaringClass()->getName(), 'PHPUnit_')) {
-				$prop->setAccessible(true);
-				$prop->setValue($this, null);
-			}
-		}
+//		$refl = new \ReflectionObject($this);
+//		foreach ($refl->getProperties() as $prop) {
+//			if (!$prop->isStatic() && 0 !== strpos($prop->getDeclaringClass()->getName(), 'PHPUnit_')) {
+//				$prop->setAccessible(true);
+//				$prop->setValue($this, null);
+//			}
+//		}
 	}
 
 	/**

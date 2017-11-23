@@ -12,6 +12,11 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+PHP 7.0 is now required
+-----------------------
+
+5.6 is reaching it's end of life. PHP 7.0 is now required to install and run Elgg.
+
 ``$CONFIG`` is removed!
 -----------------------
 
