@@ -117,11 +117,6 @@ elgg.is_admin_logged_in = function() {
 	return (user instanceof elgg.ElggUser) && user.isAdmin();
 };
 
-/**
- * @deprecated Use elgg.session.cookie instead
- */
-jQuery.cookie = elgg.session.cookie;
-
 // This just has to happen after ElggUser is defined, however it's probably
 // better to have this procedural code here than in ElggUser.js
 if (elgg.session.user) {

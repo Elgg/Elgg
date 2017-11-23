@@ -6,6 +6,8 @@
  * @subpackage UserValidationByEmail.Administration
  */
 
+elgg_require_js('elgg/uservalidationbyemail');
+
 $limit = get_input('limit', elgg_get_config('default_limit'));
 $offset = get_input('offset', 0);
 
