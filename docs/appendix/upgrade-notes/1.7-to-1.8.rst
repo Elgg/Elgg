@@ -1,0 +1,149 @@
+From 1.7 to 1.8
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0.
+As such, there is more work to update core and plugins than with previous upgrades.
+There were a small number of API changes and following our standard practice,
+the methods we deprecated have been updated to work with the new API.
+The biggest changes are in the standardization of plugins and in the views system.
+
+
+Updating core
+-------------
+Delete the following core directories (same level as _graphics and engine):
+
+* _css
+* account
+* admin
+* dashboard
+* entities
+* friends
+* search
+* settings
+* simplecache
+* views
+
+.. warning::
+
+   If you do not delete these directories before an upgrade, you will have problems!
+
+
+Updating plugins
+----------------
+
+Use standardized routing with page handlers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* All: /page_handler/all
+* User’s content: /page_handler/owner/:username
+* User’s friends' content: /page_handler/friends/:username
+* Single entity: /page_handler/view/:guid/:title
+* Added: /page_handler/add/:container_guid
+* Editing: /page_handler/edit/:guid
+* Group list: /page_handler/group/:guid/all
+
+
+Include page handler scripts from the page handler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Almost every page handler should have a page handler script.
+(Example: ``bookmarks/all => mod/bookmarks/pages/bookmarks/all.php``)
+
+* Call ``set_input()`` for entity guids in the page handler and use ``get_input()`` in the page handler scripts.
+* Call ``gatekeeper()`` and ``admin_gatekeeper()`` in the page handler function if required.
+* The group URL should use the ``pages/:handler/owner.php`` script.
+* Page handlers should not contain HTML.
+* Update the URLs throughout the plugin. (Don't forget to remove ``/pg/``!)
+
+
+Use standardized page handlers and scripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Store page handler scripts in ``mod/:plugin/pages/:page_handler/:page_name.php``
+* Use the content page layout in page handler scripts:
+
+  .. code-block:: php
+
+     $content = elgg_view_layout('content', $options);
+
+* Page handler scripts should not contain HTML.
+* Call ``elgg_push_breadcrumb()`` in the page handler scripts.
+* No need to set page owner if the URLs are in the standardized format.
+* For group content, check the container_guid by using elgg_get_page_owner_entity().
+
+
+The ``object/:subtype`` view
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Make sure there are views for ``$vars['full_view'] == true`` and ``$vars['full_view'] == false``. ``$vars['full_view']`` replaced ``$vars['full]``.
+* Check for the object in ``$vars['entity']``. Use ``elgg_instance_of()`` to make sure it's the type of entity you want.
+* Return ``true`` to short circuit the view if the entity is missing or wrong.
+* Use ``elgg_view('object/elements/summary', array('entity' => $entity));`` and ``elgg_view_menu('entity', array('entity' => $entity));`` to help format. You should use very little markup in these views.
+
+
+Update action structure
+~~~~~~~~~~~~~~~~~~~~~~~
+* Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)
+* Use the following action URLs:
+
+  * Add: ``action/:plugin/save``
+  * Edit: ``action/:plugin/save``
+  * Delete: ``action/:plugin/delete``
+
+* Make the delete action accept ``action/:handler/delete?guid=:guid`` so the metadata entity menu has the correct URL by default.
+
+
+Update deprecated functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Functions deprecated in 1.7 will produce visible errors in 1.8.
+* You can also update functions deprecated in 1.8.
+
+  * Many registration functions simply added an ``elgg_`` prefix for consistency, and should be easy to update.
+  * See ``/engine/lib/deprecated-1.8.php`` for the full list.
+  * You can set the debug level to “warning” to get visual reminders of deprecated functions.
+
+
+Update the widget views
+~~~~~~~~~~~~~~~~~~~~~~~
+See the blog or file widgets for examples.
+
+
+Update the group profile module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use the blog or file plugins for examples. This will help with making your plugin themeable by the new CSS framework.
+
+
+Update forms
+~~~~~~~~~~~~
+* Move form bodies to the ``forms/:action`` view to use Evan's new ``elgg_view_form``.
+* Use input views in form bodies rather than html. This helps with theming and future-proofing.
+* Add a function that prepares the form (see ``mod/file/lib/file.php`` for an example)
+* Make your forms sticky (see the file plugin's upload action and form prepare function).
+
+The forms API is discussed in more detail in :doc:`/guides/actions`.
+
+
+Clean up CSS/HTML
+~~~~~~~~~~~~~~~~~
+We have added many CSS patterns to the base CSS file (modules, image block, spacing primitives). We encourage you to use these patterns and classes wherever possible. Doing so should:
+
+1. Reduce maintenance costs, since you can delete most custom CSS.
+2. Make your plugin more compatible with community themes.
+
+Look for patterns that can be moved into core if you need significant CSS.
+
+We use hyphens rather than underscores in classes/ids and encourage you do the same for consistency.
+
+If you do need your own CSS, you should use your own namespace, rather than ``elgg-``.
+
+
+Update manifest.xml
+~~~~~~~~~~~~~~~~~~~
+* Use http://el.gg/manifest17to18 to automate this.
+* Don't use the "bundled" category with your plugins. That is only for plugins distributed with Elgg.
+
+
+Update settings and user settings views
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* The view for settings is now ``plugins/:plugin/settings`` (previously ``settings/:plugin/edit``).
+* The view for user settings is now ``plugins/:plugin/usersettings`` (previously ``usersettings/:plugin/edit``).

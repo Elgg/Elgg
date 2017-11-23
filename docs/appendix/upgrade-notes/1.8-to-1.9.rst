@@ -1,0 +1,367 @@
+From 1.8 to 1.9
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+In the examples we are upgrading an imaginary "Photos" plugin.
+
+Only the key changes are included. For example some of the deprecated functions are not mentioned here separately.
+
+Each section will include information whether the change is backwards compatible with Elgg 1.8.
+
+The manifest file
+-----------------
+
+No changes are needed if your plugin is compatible with 1.8.
+
+It's however recommended to add the ``<id>`` tag. It's value should be the name of the directory where the plugin is located inside the ``mod/`` directory.
+
+If you make changes that break BC, you must update the plugin version and the required Elgg release.
+
+Example of (shortened) old version:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+        <name>Photos</name>
+        <author>John Doe</author>
+        <version>1.0</version>
+        <description>Adds possibility to upload photos and arrange them into albums.</description>
+        <requires>
+            <type>elgg_release</type>
+            <version>1.8</version>
+        </requires>
+    </plugin_manifest>
+
+Example of (shortened) new version:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+        <name>Photos</name>
+        <id>photos</id>
+        <author>John Doe</author>
+        <version>2.0</version>
+        <description>Adds possibility to upload photos and arrange them into albums.</description>
+        <requires>
+            <type>elgg_release</type>
+            <version>1.9</version>
+        </requires>
+    </plugin_manifest>
+
+$CONFIG and $vars['config']
+---------------------------
+
+Both the global ``$CONFIG`` variable and the ``$vars['config']`` parameter have been deprecated. They should be replaced with the ``elgg_get_config()`` function.
+
+Example of old code:
+
+.. code-block:: php
+
+    // Using the global $CONFIG variable:
+    global $CONFIG;
+    $plugins_path = $CONFIG->plugins_path
+
+    // Using the $vars view parameter:
+    $plugins_path = $vars['plugins_path'];
+
+Example of new code:
+
+.. code-block:: php
+
+    $plugins_path = elgg_get_config('plugins_path');
+
+.. note::
+
+    Compatible with 1.8
+
+.. note::
+
+    See how the community_plugins plugin was updated: https://github.com/Elgg/community_plugins/commit/f233999bbd1478a200ee783679c2e2897c9a0483
+
+Language files
+--------------
+
+In Elgg 1.8 the language files needed to use the ``add_translation()`` function. In 1.9 it is enough to just return the array that was
+previously passed to the function as a parameter. Elgg core will use the file name (e.g. en.php) to tell which language the file contains.
+
+Example of the old way in ``languages/en.php``:
+
+.. code-block:: php
+
+    $english = array(
+        'photos:all' => 'All photos',
+    );
+    add_translation('en', $english);
+
+Example of new way:
+
+.. code-block:: php
+
+    return array(
+        'photos:all' => 'All photos',
+    );
+
+.. warning::
+
+    Not compatible with 1.8
+
+Notifications
+-------------
+
+One of the biggest changes in Elgg 1.9 is the notifications system. The new system allows more flexible and scalable way of sending notifications.
+
+Example of the old way:
+
+.. code-block:: php
+
+    function photos_init() {
+        // Tell core that we want to send notifications about new photos
+        register_notification_object('object', 'photo', elgg_echo('photo:new'));
+
+        // Register a handler that creates the notification message
+        elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'photos_notify_message');
+    }
+
+    /**
+     * Set the notification message body
+     *
+     * @param string $hook    Hook name
+     * @param string $type    Hook type
+     * @param string $message The current message body
+     * @param array  $params  Parameters about the photo
+     * @return string
+     */
+    function photos_notify_message($hook, $type, $message, $params) {
+        $entity = $params['entity'];
+        $to_entity = $params['to_entity'];
+        $method = $params['method'];
+        if (elgg_instanceof($entity, 'object', 'photo')) {
+            $descr = $entity->excerpt;
+            $title = $entity->title;
+            $owner = $entity->getOwnerEntity();
+            return elgg_echo('photos:notification', array(
+                $owner->name,
+                $title,
+                $descr,
+                $entity->getURL()
+            ));
+        }
+        return null;
+    }
+
+Example of the new way:
+
+.. code-block:: php
+
+    function photos_init() {
+        elgg_register_notification_event('object', 'photo', array('create'));
+        elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:photo', 'photos_prepare_notification');
+    }
+
+    /**
+     * Prepare a notification message about a new photo
+     *
+     * @param string                          $hook         Hook name
+     * @param string                          $type         Hook type
+     * @param Elgg_Notifications_Notification $notification The notification to prepare
+     * @param array                           $params       Hook parameters
+     * @return Elgg_Notifications_Notification
+     */
+    function photos_prepare_notification($hook, $type, $notification, $params) {
+        $entity = $params['event']->getObject();
+        $owner = $params['event']->getActor();
+        $recipient = $params['recipient'];
+        $language = $params['language'];
+        $method = $params['method'];
+
+        // Title for the notification
+        $notification->subject = elgg_echo('photos:notify:subject', array($entity->title), $language);
+
+        // Message body for the notification
+        $notification->body = elgg_echo('photos:notify:body', array(
+            $owner->name,
+            $entity->title,
+            $entity->getExcerpt(),
+            $entity->getURL()
+        ), $language);
+
+        // The summary text is used e.g. by the site_notifications plugin
+        $notification->summary = elgg_echo('photos:notify:summary', array($entity->title), $language);
+
+        return $notification;
+    }
+
+.. warning::
+
+    Not compatible with 1.8
+
+.. note::
+
+    See how the community_plugins plugin was updated to use the new system: https://github.com/Elgg/community_plugins/commit/bfa356cfe8fb99ebbca4109a1b8a1383b70ff123
+
+Notifications can also be sent with the ``notify_user()`` function.
+
+It has however been updated to support three new optional parameters passed inside an array as the fifth parameter.
+
+The parameters give notification plugins more control over the notifications, so they should be included whenever possible. For example the bundled site_notifications plugin won't work properly if the parameters are missing.
+
+Parameters:
+
+-  **object** The object that we are notifying about (e.g. ElggEntity or ElggAnnotation). This is needed so that notification plugins can provide a link to the object.
+-  **action** String that describes the action that triggered the notification (e.g. "create", "update", etc).
+-  **summary** String that contains a summary of the notification. (It should be more informative than the notification subject but less informative than the notification body.)
+
+Example of the old way:
+
+.. code-block:: php
+
+	// Notify $owner that $user has added a $rating to an $entity created by him
+
+	$subject = elgg_echo('rating:notify:subject');
+	$body = elgg_echo('rating:notify:body', array(
+		$owner->name,
+		$user->name,
+		$entity->title,
+		$entity->getURL(),
+	));
+
+	notify_user($owner->guid,
+				$user->guid,
+				$subject,
+				$body
+			);
+
+Example of the new way:
+
+.. code-block:: php
+
+	// Notify $owner that $user has added a $rating to an $entity created by him
+
+	$subject = elgg_echo('rating:notify:subject');
+	$summary = elgg_echo('rating:notify:summary', array($entity->title));
+	$body = elgg_echo('rating:notify:body', array(
+		$owner->name,
+		$user->name,
+		$entity->title,
+		$entity->getURL(),
+	));
+
+	$params = array(
+		'object' => $rating,
+		'action' => 'create',
+		'summary' => $summary,
+	);
+
+	notify_user($owner->guid,
+				$user->guid,
+				$subject,
+				$body,
+				$params
+			);
+
+.. note::
+
+    Compatible with 1.8
+
+Adding items to the Activity listing
+------------------------------------
+
+.. code-block:: php
+
+    add_to_river('river/object/photo/create', 'create', $user_guid, $photo_guid);
+
+.. code-block:: php
+
+    elgg_create_river_item(array(
+        'view' => 'river/object/photo/create',
+        'action_type' => 'create',
+        'subject_guid' => $user_guid,
+        'object_guid' => $photo_guid,
+    ));
+
+You can also add the optional ``target_guid`` parameter which tells the target of the create action.
+
+If the photo would had been added for example into a photo album, we could add it by passing in also:
+
+.. code-block:: php
+
+    'target_guid' => $album_guid,
+
+.. warning::
+
+    Not compatible with 1.8
+
+Entity URL handlers
+-------------------
+
+The ``elgg_register_entity_url_handler()`` function has been deprecated. In 1.9 you should use the ``'entity:url', 'object'`` plugin hook instead.
+
+Example of the old way:
+
+.. code-block:: php
+
+    /**
+     * Initialize the photo plugin
+     */
+    my_plugin_init() {
+        elgg_register_entity_url_handler('object', 'photo', 'photo_url_handler');
+    }
+
+    /**
+     * Returns the URL from a photo entity
+     *
+     * @param ElggEntity $entity
+     * @return string
+     */
+    function photo_url_handler($entity) {
+    	return "photo/view/{$entity->guid}";
+    }
+
+Example of the new way:
+
+.. code-block:: php
+
+    /**
+     * Initialize the photo plugin
+     */
+    my_plugin_init() {
+        elgg_register_plugin_hook_handler('entity:url', 'object', 'photo_url_handler');
+    }
+
+    /**
+     * Returns the URL from a photo entity
+     *
+     * @param string $hook   'entity:url'
+     * @param string $type   'object'
+     * @param string $url    The current URL
+     * @param array  $params Hook parameters
+     * @return string
+     */
+    function photo_url_handler($hook, $type, $url, $params) {
+        $entity = $params['entity'];
+
+        // Check that the entity is a photo object
+        if ($entity->getSubtype() !== 'photo') {
+            // This is not a photo object, so there's no need to go further
+            return;
+        }
+
+        return "photo/view/{$entity->guid}";
+    }
+
+.. warning::
+
+    Not compatible with 1.8
+
+Web services
+------------
+
+In Elgg 1.8 the web services API was included in core and methods were exposed
+using ``expose_function()``. To enable the same functionality for Elgg 1.9,
+enable the "Web services 1.9" plugin and replace all calls to
+``expose_function()`` with  ``elgg_ws_expose_function()``.

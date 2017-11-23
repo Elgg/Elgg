@@ -4,7 +4,7 @@ Upgrading Elgg
 Switch a live site to a new version of Elgg.
 
 If you've written custom plugins, you should also read the developer guides for
-:doc:`information on upgrading plugin code </guides/upgrading>` for the latest version of Elgg.
+:doc:`information on upgrading plugin code </appendix/upgrade-notes>` for the latest version of Elgg.
 
 Advice
 ======
