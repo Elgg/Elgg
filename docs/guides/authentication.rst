@@ -42,6 +42,8 @@ The returned object is an ``ElggUser`` so you can use all the methods and proper
 of that class to access information about the user. If the user is not logged in,
 this will return ``null``, so be sure to check for that first.
 
+.. _authentication-gatekeepers:
+
 Gatekeepers
 -----------
 

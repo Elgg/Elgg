@@ -17,6 +17,7 @@ Customize Elgg's behavior with plugins.
    database
    file-system
    actions
+   group-tools
    helpers
    i18n
    javascript
