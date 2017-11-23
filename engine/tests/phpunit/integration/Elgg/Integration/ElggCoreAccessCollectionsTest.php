@@ -9,6 +9,7 @@ use ElggAccessCollection;
  * Access Collections tests
  *
  * @group IntegrationTests
+ * @group AccessCollections
  */
 class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 

@@ -2,7 +2,7 @@
 
 namespace Elgg\Mocks;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Elgg\BaseTestCase;
 use Elgg\Database as DbDatabase;
 use Elgg\Database\DbConfig;
@@ -52,14 +52,7 @@ class Database extends DbDatabase {
 	 * {@inheritdoc}
 	 */
 	public function getConnection($type) {
-		$connection = BaseTestCase::$_instance->getMockBuilder(Connection::class)
-				->setMethods([
-					'query',
-					'executeQuery',
-					'lastInsertId',
-				])
-				->disableOriginalConstructor()
-				->getMock();
+		$connection = BaseTestCase::$_instance->getConnectionMock();
 
 		$connection->expects(BaseTestCase::$_instance->any())
 				->method('query')
@@ -74,6 +67,19 @@ class Database extends DbDatabase {
 				->will(BaseTestCase::$_instance->returnCallback(function() {
 							return $this->last_insert_id;
 						}));
+
+		$expression_builder = new ExpressionBuilder($connection);
+
+		$connection->expects(BaseTestCase::$_instance->any())
+			->method('getExpressionBuilder')
+			->willReturn($expression_builder);
+
+		$connection->expects(BaseTestCase::$_instance->any())
+			->method('quote')
+			->will(BaseTestCase::$_instance->returnCallback(function($input, $type = null) {
+				return "'" . $input . "''";
+			}));
+
 
 		return $connection;
 	}

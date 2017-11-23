@@ -13,7 +13,7 @@ if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admi
 	elgg_register_title_button('groups', 'add', 'group');
 }
 
-$content = elgg_list_entities_from_metadata([
+$content = elgg_list_entities([
 	'type' => 'group',
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'order_by_metadata' => [

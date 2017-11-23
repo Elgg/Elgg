@@ -56,7 +56,7 @@ class ElggPlugin extends \ElggObject {
 		if (!$path) {
 			throw new \PluginException("ElggPlugin cannot be null instantiated. You must pass a full path.");
 		}
-		
+
 		if (is_object($path)) {
 			// database object
 			parent::__construct($path);
@@ -101,7 +101,7 @@ class ElggPlugin extends \ElggObject {
 		$site = elgg_get_site_entity();
 		$this->attributes['owner_guid'] = $site->guid;
 		$this->attributes['container_guid'] = $site->guid;
-		
+
 		if (parent::save()) {
 			// make sure we have a priority
 			$priority = $this->getPriority();
@@ -149,7 +149,7 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function getFriendlyName() {
 		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use getDisplayName().', '3.0');
-	
+
 		return $this->getDisplayName();
 	}
 
@@ -338,9 +338,9 @@ class ElggPlugin extends \ElggObject {
 			// only load settings from static config for active plugins to prevent issues with internal plugin references ie. classes and language keys
 			$defaults = $this->getStaticConfig('settings', []);
 		}
-		
+
 		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
-		
+
 		if ($values !== null) {
 			return array_merge($defaults, $values);
 		}
@@ -354,11 +354,14 @@ class ElggPlugin extends \ElggObject {
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
 		// Get private settings for user
-		$q = "SELECT * FROM {$db_prefix}private_settings
-			WHERE entity_guid = $this->guid
-			AND name NOT LIKE '$us_prefix%'";
+		$qb = \Elgg\Database\Select::create('private_settings', 'ps');
+		$qb->select('*');
+		$qb->where($qb->merge([
+			$qb->compare('ps.entity_guid', '=', $this->guid, ELGG_VALUE_GUID),
+			$qb->compare('name', 'not like', "$us_prefix%", ELGG_VALUE_STRING)
+		]));
 
-		$private_settings = $this->getDatabase()->getData($q);
+		$private_settings = $this->getDatabase()->getData($qb);
 
 		$return = [];
 
@@ -385,7 +388,7 @@ class ElggPlugin extends \ElggObject {
 		if (!$this->guid) {
 			return false;
 		}
-		
+
 		// Hook to validate setting
 		$value = elgg_trigger_plugin_hook('setting', 'plugin', [
 			'plugin_id' => $this->getID(),
@@ -393,12 +396,12 @@ class ElggPlugin extends \ElggObject {
 			'name' => $name,
 			'value' => $value,
 		], $value);
-		
+
 		if (is_array($value)) {
 			elgg_log('Plugin settings cannot store arrays.', 'ERROR');
 			return false;
 		}
-		
+
 		return $this->setPrivateSetting($name, $value);
 	}
 
@@ -454,7 +457,7 @@ class ElggPlugin extends \ElggObject {
 		if ($values === false) {
 			return false;
 		}
-		
+
 		return elgg_extract($name, $values, $default);
 	}
 
@@ -480,7 +483,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		$defaults = $this->getStaticConfig('user_settings', []);
-		
+
 		$db_prefix = _elgg_config()->dbprefix;
 		// send an empty name so we just get the first part of the namespace
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
@@ -538,12 +541,12 @@ class ElggPlugin extends \ElggObject {
 			'name' => $name,
 			'value' => $value
 		], $value);
-		
+
 		if (is_array($value)) {
 			elgg_log('Plugin user settings cannot store arrays.', 'ERROR');
 			return false;
 		}
-		
+
 		// set the namespaced name.
 		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 
@@ -730,7 +733,7 @@ class ElggPlugin extends \ElggObject {
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
 			$this->activateEntities();
-			
+
 			if ($this->canReadFile('activate.php')) {
 				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
 						ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_WIDGETS | ELGG_PLUGIN_REGISTER_ACTIONS;
@@ -812,7 +815,7 @@ class ElggPlugin extends \ElggObject {
 		if (!$this->canDeactivate()) {
 			return false;
 		}
-		
+
 		// emit an event. returning false will cause this to not be deactivated.
 		$params = [
 			'plugin_id' => $this->getID(),
@@ -823,7 +826,7 @@ class ElggPlugin extends \ElggObject {
 		if ($return === false) {
 			return false;
 		}
-		
+
 		// run any deactivate code
 		if ($this->canReadFile('deactivate.php')) {
 			// allows you to prevent disabling a plugin by returning false in a deactivate.php file
@@ -831,9 +834,9 @@ class ElggPlugin extends \ElggObject {
 				return false;
 			}
 		}
-		
+
 		$this->deactivateEntities();
-		
+
 		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
 
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
@@ -858,7 +861,7 @@ class ElggPlugin extends \ElggObject {
 		// include classes
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
 			$this->registerClasses();
-			
+
 			$autoload_file = 'vendor/autoload.php';
 			if ($this->canReadFile($autoload_file)) {
 				Application::requireSetupFileOnce("{$this->path}/{$autoload_file}");
@@ -871,21 +874,21 @@ class ElggPlugin extends \ElggObject {
 			// so translations can be used... for example in registering widgets
 			$this->registerLanguages();
 		}
-		
+
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->activateEntities();
-			
+
 			if ($this->canReadFile('start.php')) {
 				$result = Application::requireSetupFileOnce("{$this->path}/start.php");
 				if ($result instanceof \Closure) {
 					$result();
 				}
 			}
-			
+
 			$this->registerEntities();
 		}
-		
+
 		// include views
 		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
 			$this->registerViews();
@@ -1015,7 +1018,7 @@ class ElggPlugin extends \ElggObject {
 		if (empty($spec)) {
 			return;
 		}
-		
+
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['searchable']) && $entity['searchable']) {
 				elgg_register_entity_type($entity['type'], $entity['subtype']);
@@ -1077,7 +1080,7 @@ class ElggPlugin extends \ElggObject {
 	 */
 	protected function registerWidgets() {
 		$widgets = _elgg_services()->widgets;
-		
+
 		$spec = (array) $this->getStaticConfig('widgets', []);
 		foreach ($spec as $widget_id => $widget_definition) {
 			if (!is_array($widget_definition)) {
@@ -1086,9 +1089,9 @@ class ElggPlugin extends \ElggObject {
 			if (!isset($widget_definition['id'])) {
 				$widget_definition['id'] = $widget_id;
 			}
-			
+
 			$definition = \Elgg\WidgetDefinition::factory($widget_definition);
-			
+
 			$widgets->registerType($definition);
 		}
 	}
@@ -1129,7 +1132,7 @@ class ElggPlugin extends \ElggObject {
 		if (empty($spec)) {
 			return;
 		}
-		
+
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
 				elgg_set_entity_class($entity['type'], $entity['subtype'], $entity['class']);
@@ -1147,7 +1150,7 @@ class ElggPlugin extends \ElggObject {
 		if (empty($spec)) {
 			return;
 		}
-		
+
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
 				elgg_set_entity_class($entity['type'], $entity['subtype']);
@@ -1166,7 +1169,7 @@ class ElggPlugin extends \ElggObject {
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
-		
+
 		// object title and description are stored as metadata
 		if (in_array($name, ['title', 'description'])) {
 			return parent::__get($name);
@@ -1176,7 +1179,7 @@ class ElggPlugin extends \ElggObject {
 		if ($result !== null) {
 			return $result;
 		}
-		
+
 		$defaults = $this->getStaticConfig('settings', []);
 		return elgg_extract($name, $defaults, $result);
 	}
@@ -1200,13 +1203,13 @@ class ElggPlugin extends \ElggObject {
 			$this->attributes[$name] = $value;
 			return;
 		}
-			
+
 		// object title and description are stored as metadata
 		if (in_array($name, ['title', 'description'])) {
 			parent::__set($name, $value);
 			return;
 		}
-		
+
 		// to make sure we trigger the correct hooks
 		$this->setSetting($name, $value);
 	}

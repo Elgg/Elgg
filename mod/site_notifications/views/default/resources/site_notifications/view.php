@@ -17,7 +17,7 @@ elgg_push_breadcrumb($page_owner->name);
 
 $title = elgg_echo('site_notifications');
 
-$list = elgg_list_entities_from_metadata([
+$list = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'site_notification',
 	'owner_guid' => $page_owner->guid,

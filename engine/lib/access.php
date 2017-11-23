@@ -425,55 +425,6 @@ function get_members_of_access_collection($collection_id, $guids_only = false, a
 	}
 	return $guids;
 }
-
-/**
- * Return entities based upon access id.
- *
- * TODO(ewinslow): Move this logic into elgg_get_entities
- *
- * @param array $options Any options accepted by {@link elgg_get_entities()} and
- * 	access_id => int The access ID of the entity.
- *
- * @see elgg_get_entities()
- * @return mixed If count, int. If not count, array. false on errors.
- * @since 1.7.0
- */
-function elgg_get_entities_from_access_id(array $options = []) {
-	// restrict the resultset to access collection provided
-	if (!isset($options['access_id'])) {
-		return false;
-	}
-
-	// @todo add support for an array of collection_ids
-	$where = "e.access_id = '{$options['access_id']}'";
-	if (isset($options['wheres'])) {
-		if (is_array($options['wheres'])) {
-			$options['wheres'][] = $where;
-		} else {
-			$options['wheres'] = [$options['wheres'], $where];
-		}
-	} else {
-		$options['wheres'] = [$where];
-	}
-
-	// return entities with the desired options
-	return _elgg_services()->entityTable->getEntities($options);
-}
-
-/**
- * Lists entities from an access collection
- *
- * @param array $options See elgg_list_entities() and elgg_get_entities_from_access_id()
- *
- * @see elgg_list_entities()
- * @see elgg_get_entities_from_access_id()
- *
- * @return string
- */
-function elgg_list_entities_from_access_id(array $options = []) {
-	return elgg_list_entities($options, 'elgg_get_entities_from_access_id');
-}
-
 /**
  * Return the name of an ACCESS_* constant or an access collection,
  * but only if the logged in user has write access to it.

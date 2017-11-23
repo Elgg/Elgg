@@ -278,9 +278,9 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $entity->getGUID(),
-		'wheres' => [
-			"e.access_id != {$entity->access_id}"
-		],
+		'wheres' => [function(\Elgg\Database\QueryBuilder $qb) use ($entity) {
+			return $qb->compare('e.access_id', '!=', $entity->access_id, 'integer');
+		}],
 		'limit' => 0,
 	];
 

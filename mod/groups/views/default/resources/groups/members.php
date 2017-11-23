@@ -43,7 +43,7 @@ $tabs = elgg_view_menu('groups_members', [
 	'class' => 'elgg-tabs'
 ]);
 
-$content = elgg_list_entities_from_relationship($options);
+$content = elgg_list_entities($options);
 
 $params = [
 	'content' => $content,

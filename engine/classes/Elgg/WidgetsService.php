@@ -58,7 +58,7 @@ class WidgetsService {
 			'private_setting_value' => $context,
 			'limit' => 0,
 		];
-		$widgets = elgg_get_entities_from_private_settings($options);
+		$widgets = elgg_get_entities($options);
 		if (!$widgets) {
 			return [];
 		}

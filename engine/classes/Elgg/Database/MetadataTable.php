@@ -3,7 +3,6 @@ namespace Elgg\Database;
 
 
 use Elgg\Database;
-use Elgg\Database\EntityTable;
 use Elgg\EventsService as Events;
 use ElggSession as Session;
 use Elgg\Cache\MetadataCache as Cache;
@@ -313,87 +312,6 @@ class MetadataTable {
 		$this->cache->invalidateByOptions($options);
 
 		return $result;
-	}
-
-	/**
-	 * Returns entities based upon metadata.  Also accepts all
-	 * options available to elgg_get_entities().  Supports
-	 * the singular option shortcut.
-	 *
-	 * @note Using metadata_names and metadata_values results in a
-	 * "names IN (...) AND values IN (...)" clause.  This is subtly
-	 * differently than default multiple metadata_name_value_pairs, which use
-	 * "(name = value) AND (name = value)" clauses.
-	 *
-	 * When in doubt, use name_value_pairs.
-	 *
-	 * To ask for entities that do not have a metadata value, use a custom
-	 * where clause like this:
-	 *
-	 * 	$options['wheres'][] = "NOT EXISTS (
-	 *			SELECT 1 FROM {$dbprefix}metadata md
-	 *			WHERE md.entity_guid = e.guid
-	 *				AND md.name = $name
-	 *				AND md.value = $value)";
-	 *
-	 * Note the metadata name and value has been denormalized in the above example.
-	 *
-	 * @see elgg_get_entities
-	 *
-	 * @param array $options Array in format:
-	 *
-	 * 	metadata_names => null|ARR metadata names
-	 *
-	 * 	metadata_values => null|ARR metadata values
-	 *
-	 * 	metadata_name_value_pairs => null|ARR (
-	 *                                         name => 'name',
-	 *                                         value => 'value',
-	 *                                         'operand' => '=',
-	 *                                         'case_sensitive' => true
-	 *                                        )
-	 *                               Currently if multiple values are sent via
-	 *                               an array (value => array('value1', 'value2')
-	 *                               the pair's operand will be forced to "IN".
-	 *                               If passing "IN" as the operand and a string as the value,
-	 *                               the value must be a properly quoted and escaped string.
-	 *
-	 * 	metadata_name_value_pairs_operator => null|STR The operator to use for combining
-	 *                                        (name = value) OPERATOR (name = value); default AND
-	 *
-	 * 	metadata_case_sensitive => BOOL Overall Case sensitive
-	 *
-	 *  order_by_metadata => null|ARR array(
-	 *                                      'name' => 'metadata_text1',
-	 *                                      'direction' => ASC|DESC,
-	 *                                      'as' => text|integer
-	 *                                     )
-	 *                                Also supports array('name' => 'metadata_text1')
-	 *
-	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
-	 */
-	function getEntities(array $options = []) {
-		$defaults = [
-			'metadata_names'                     => ELGG_ENTITIES_ANY_VALUE,
-			'metadata_values'                    => ELGG_ENTITIES_ANY_VALUE,
-			'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
-
-			'metadata_name_value_pairs_operator' => 'AND',
-			'metadata_case_sensitive'            => true,
-			'order_by_metadata'                  => [],
-		];
-
-		$options = array_merge($defaults, $options);
-
-		$singulars = ['metadata_name', 'metadata_value', 'metadata_name_value_pair'];
-
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
-
-		if (!$options = _elgg_entities_get_metastrings_options('metadata', $options)) {
-			return false;
-		}
-
-		return $this->entityTable->getEntities($options);
 	}
 
 	/**

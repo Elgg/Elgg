@@ -13,7 +13,7 @@ if (!$user instanceof ElggUser) {
 // the user is subscribed to
 $dbprefix = elgg_get_config('dbprefix');
 
-echo elgg_list_entities_from_metadata([
+echo elgg_list_entities([
 	'selects' => ['GROUP_CONCAT(ers.relationship) as relationships'],
 	'types' => 'group',
 	'joins' => [

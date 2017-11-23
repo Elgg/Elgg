@@ -3,7 +3,7 @@
 /**
  * Renders a list of featured groups
  */
-echo elgg_list_entities_from_metadata([
+echo elgg_list_entities([
 	'type' => 'group',
 	'metadata_name' => 'featured_group',
 	'metadata_value' => 'yes',

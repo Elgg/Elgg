@@ -16,7 +16,7 @@ $all_link = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 
-$body = elgg_list_entities_from_relationship([
+$body = elgg_list_entities([
 	'relationship' => 'member',
 	'relationship_guid' => $vars['entity']->guid,
 	'inverse_relationship' => true,

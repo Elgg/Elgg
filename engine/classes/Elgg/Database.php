@@ -5,6 +5,7 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Database\DbConfig as DbConfig;
 
 /**
@@ -184,9 +185,9 @@ class Database {
 	 * argument to $callback.  If no callback function is defined, the
 	 * entire result set is returned as an array.
 	 *
-	 * @param string   $query    The query being passed.
-	 * @param callable $callback Optionally, the name of a function to call back to on each row
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query    The query being passed.
+	 * @param callable            $callback Optionally, the name of a function to call back to on each row
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
@@ -203,9 +204,9 @@ class Database {
 	 * matched.  If a callback function $callback is specified, the row will be passed
 	 * as the only argument to $callback.
 	 *
-	 * @param string   $query    The query to execute.
-	 * @param callable $callback A callback function to apply to the row
-	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query    The query to execute.
+	 * @param callable            $callback A callback function to apply to the row
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
 	 * @throws \DatabaseException
@@ -219,14 +220,19 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @param string $query  The query to execute.
-	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query  The query to execute.
+	 * @param array               $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
 	 * @throws \DatabaseException
 	 */
 	public function insertData($query, array $params = []) {
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
 
 		if ($this->logger) {
 			$this->logger->info("DB insert query $query (params: " . print_r($params, true) . ")");
@@ -247,14 +253,19 @@ class Database {
 	 *
 	 * @note WARNING! update_data() has the 2nd and 3rd arguments reversed.
 	 *
-	 * @param string $query        The query to run.
-	 * @param bool   $get_num_rows Return the number of rows affected (default: false).
-	 * @param array  $params       Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query        The query to run.
+	 * @param bool                $get_num_rows Return the number of rows affected (default: false).
+	 * @param array               $params       Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return bool|int
 	 * @throws \DatabaseException
 	 */
 	public function updateData($query, $get_num_rows = false, array $params = []) {
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
 
 		if ($this->logger) {
 			$this->logger->info("DB update query $query (params: " . print_r($params, true) . ")");
@@ -275,13 +286,18 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in query cache.
 	 *
-	 * @param string $query  The SQL query to run
-	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query  The SQL query to run
+	 * @param array               $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return int The number of affected rows
 	 * @throws \DatabaseException
 	 */
 	public function deleteData($query, array $params = []) {
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
+		}
 
 		if ($this->logger) {
 			$this->logger->info("DB delete query $query (params: " . print_r($params, true) . ")");
@@ -328,10 +344,10 @@ class Database {
 	 * Handles queries that return results, running the results through a
 	 * an optional callback function. This is for R queries (from CRUD).
 	 *
-	 * @param string $query    The select query to execute
-	 * @param string $callback An optional callback function to run on each row
-	 * @param bool   $single   Return only a single result?
-	 * @param array  $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query    The select query to execute
+	 * @param string              $callback An optional callback function to run on each row
+	 * @param bool                $single   Return only a single result?
+	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
@@ -339,10 +355,17 @@ class Database {
 	 */
 	protected function getResults($query, $callback = null, $single = false, array $params = []) {
 
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$sql = $query->getSQL();
+		} else {
+			$sql = $query;
+		}
+
 		// Since we want to cache results of running the callback, we need to
 		// namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
-		$query_id = (int) $single . $query . '|';
+		$query_id = (int) $single . $sql . '|';
 		if ($params) {
 			$query_id .= serialize($params) . '|';
 		}
@@ -354,11 +377,11 @@ class Database {
 			}
 			$query_id .= $this->fingerprintCallback($callback);
 		}
-		
+
 		if ($this->logger) {
-			$this->logger->info("DB select query $query (params: " . print_r($params, true) . ")");
+			$this->logger->info("DB select query $sql (params: " . print_r($params, true) . ")");
 		}
-		
+
 		// MD5 yields smaller mem usage for cache and cleaner logs
 		$hash = md5($query_id);
 
@@ -374,7 +397,12 @@ class Database {
 
 		$return = [];
 
-		$stmt = $this->executeQuery($query, $this->getConnection('read'), $params);
+		if ($query instanceof QueryBuilder) {
+			$stmt = $query->execute();
+		} else {
+			$stmt = $this->executeQuery($sql, $this->getConnection('read'), $params);
+		}
+
 		while ($row = $stmt->fetch()) {
 			if ($callback) {
 				$row = call_user_func($callback, $row);
@@ -405,9 +433,9 @@ class Database {
 	 * $query is executed via {@link Connection::query}. If there is an SQL error,
 	 * a {@link DatabaseException} is thrown.
 	 *
-	 * @param string     $query      The query
-	 * @param Connection $connection The DB connection
-	 * @param array      $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 * @param QueryBuilder|string $query      The query
+	 * @param Connection          $connection The DB connection
+	 * @param array               $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return Statement The result of the query
 	 * @throws \DatabaseException
@@ -415,6 +443,11 @@ class Database {
 	protected function executeQuery($query, Connection $connection, array $params = []) {
 		if ($query == null) {
 			throw new \DatabaseException("Query cannot be null");
+		}
+
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$query = $query->getSQL();
 		}
 
 		$this->query_count++;

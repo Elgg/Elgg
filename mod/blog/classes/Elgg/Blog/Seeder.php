@@ -23,7 +23,7 @@ class Seeder extends Seed {
 	public function seed() {
 
 		$count_blogs = function () {
-			return elgg_get_entities_from_metadata([
+			return elgg_get_entities([
 				'types' => 'object',
 				'subtypes' => 'blog',
 				'metadata_names' => '__faker',
@@ -86,7 +86,7 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
-		$blogs = elgg_get_entities_from_metadata([
+		$blogs = elgg_get_entities([
 			'types' => 'object',
 			'subtypes' => 'blog',
 			'metadata_names' => '__faker',

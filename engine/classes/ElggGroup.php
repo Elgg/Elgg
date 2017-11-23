@@ -67,7 +67,7 @@ class ElggGroup extends \ElggEntity {
 		$options['inverse_relationship'] = true;
 		$options['type'] = 'user';
 
-		return elgg_get_entities_from_relationship($options);
+		return elgg_get_entities($options);
 	}
 
 	/**

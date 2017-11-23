@@ -153,7 +153,7 @@ function _groups_page_menu_group_profile($hook, $type, $return, $params) {
 		return;
 	}
 	
-	$count = elgg_get_entities_from_relationship([
+	$count = elgg_get_entities([
 		'type' => 'user',
 		'relationship' => 'membership_request',
 		'relationship_guid' => $page_owner->guid,
@@ -716,7 +716,7 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 	];
 
 	$options = array_merge($defaults, $options);
-	$groups = elgg_get_entities_from_relationship($options);
+	$groups = elgg_get_entities($options);
 
 	elgg_set_ignore_access($ia);
 

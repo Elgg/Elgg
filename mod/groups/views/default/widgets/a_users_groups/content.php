@@ -7,7 +7,7 @@ $widget = elgg_extract('entity', $vars);
 
 $num_display = (int) $widget->num_display ?: 4;
 
-echo elgg_list_entities_from_relationship([
+echo elgg_list_entities([
 	'type' => 'group',
 	'relationship' => 'member',
 	'relationship_guid' => $widget->owner_guid,

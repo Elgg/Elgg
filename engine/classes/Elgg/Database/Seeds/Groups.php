@@ -31,7 +31,7 @@ class Groups extends Seed {
 	public function seed() {
 
 		$count_groups = function () {
-			return elgg_get_entities_from_metadata([
+			return elgg_get_entities([
 				'types' => 'group',
 				'metadata_names' => '__faker',
 				'count' => true,
@@ -39,7 +39,7 @@ class Groups extends Seed {
 		};
 
 		$count_members = function ($group) {
-			return elgg_get_entities_from_relationship([
+			return elgg_get_entities([
 				'types' => 'user',
 				'relationship' => 'member',
 				'relationship_guid' => $group->getGUID(),
@@ -133,7 +133,7 @@ class Groups extends Seed {
 	 */
 	public function unseed() {
 
-		$groups = elgg_get_entities_from_metadata([
+		$groups = elgg_get_entities([
 			'types' => 'group',
 			'metadata_names' => '__faker',
 			'limit' => 0,

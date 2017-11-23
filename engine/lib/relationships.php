@@ -105,91 +105,6 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
 }
 
 /**
- * Return entities matching a given query joining against a relationship.
- *
- * By default the function finds relationship targets. E.g.:
- *
- *   // find groups with a particular member:
- *   $options = [
- *       'relationship' => 'member',
- *       'relationship_guid' => $member->guid,
- *   ];
- *
- *   // find people the user has friended
- *   $options = [
- *       'relationship' => 'friend',
- *       'relationship_guid' => $user->guid,
- *   ];
- *
- *   // find stuff created by friends (not in groups)
- *   $options = [
- *       'relationship' => 'friend',
- *       'relationship_guid' => $user->guid,
- *       'relationship_join_on' => 'container_guid',
- *   ];
- *
- * To find relationship subjects, set "inverse_relationship" to true. E.g.:
- *
- *   // find members of a particular group
- *   $options = [
- *       'relationship' => 'member',
- *       'relationship_guid' => $group->guid,
- *       'inverse_relationship' => true,
- *   ];
- *
- *   // find users who have friended the current user
- *   $options = [
- *       'relationship' => 'friend',
- *       'relationship_guid' => $user->guid,
- *       'inverse_relationship' => true,
- *   ];
- *
- * @note You may want to specify "type" because relationship types might be used for other entities.
- *
- * This also accepts all options available to elgg_get_entities() and elgg_get_entities_from_metadata().
- *
- * To ask for entities that do not have a particular relationship to an entity,
- * use a custom where clause like the following:
- *
- * 	$options['wheres'][] = "NOT EXISTS (
- *			SELECT 1 FROM {$db_prefix}entity_relationships
- *				WHERE guid_one = e.guid
- *				AND relationship = '$relationship'
- *		)";
- *
- * @param array $options Array in format:
- *
- *  relationship => null|STR Type of the relationship. E.g. "member"
- *
- *  relationship_guid => null|INT GUID of the subject of the relationship, unless "inverse_relationship" is set
- *                                to true, in which case this will specify the target.
- *
- *  inverse_relationship => false|BOOL Are we searching for relationship subjects? By default, the query finds
- *                                     targets of relationships.
- *
- *  relationship_join_on => null|STR How the entities relate: guid (default), container_guid, or owner_guid
- *                                   Examples using the relationship 'friend':
- *                                   1. use 'guid' if you want the user's friends
- *                                   2. use 'owner_guid' if you want the entities the user's friends own
- *                                      (including in groups)
- *                                   3. use 'container_guid' if you want the entities in the user's personal
- *                                      space (non-group)
- *
- * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
- *
- * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
- *
- * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
- *
- * @see elgg_get_entities()
- * @see elgg_get_entities_from_metadata()
- * @since 1.7.0
- */
-function elgg_get_entities_from_relationship($options) {
-	return _elgg_services()->relationshipsTable->getEntities($options);
-}
-
-/**
  * Returns SQL appropriate for relationship joins and wheres
  *
  * @todo add support for multiple relationships and guids.
@@ -208,20 +123,6 @@ function elgg_get_entity_relationship_where_sql($column, $relationship = null,
 		$relationship_guid = null, $inverse_relationship = false) {
 	return _elgg_services()->relationshipsTable->getEntityRelationshipWhereSql(
 		$column, $relationship, $relationship_guid, $inverse_relationship);
-}
-
-/**
- * Returns a viewable list of entities by relationship
- *
- * @param array $options Options array for retrieval of entities
- *
- * @see elgg_list_entities()
- * @see elgg_get_entities_from_relationship()
- *
- * @return string The viewable list of entities
- */
-function elgg_list_entities_from_relationship(array $options = []) {
-	return elgg_list_entities($options, 'elgg_get_entities_from_relationship');
 }
 
 /**

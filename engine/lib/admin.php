@@ -34,7 +34,7 @@ function elgg_get_admins(array $options = []) {
 	
 	$options['metadata_name_value_pairs'][] = ['admin' => 'yes'];
 
-	return elgg_get_entities_from_metadata($options);
+	return elgg_get_entities($options);
 }
 
 /**

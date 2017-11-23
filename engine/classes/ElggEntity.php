@@ -910,7 +910,7 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function getEntitiesFromRelationship(array $options = []) {
 		$options['relationship_guid'] = $this->guid;
-		return elgg_get_entities_from_relationship($options);
+		return elgg_get_entities($options);
 	}
 
 	/**
@@ -922,7 +922,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return int|false The number of entities or false on failure
 	 */
 	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
-		return elgg_get_entities_from_relationship([
+		return elgg_get_entities([
 			'relationship' => $relationship,
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => $inverse_relationship,
@@ -1663,7 +1663,7 @@ abstract class ElggEntity extends \ElggData implements
 		$this->enableAnnotations();
 
 		if ($recursive) {
-			$disabled_with_it = elgg_get_entities_from_relationship([
+			$disabled_with_it = elgg_get_entities([
 				'relationship' => 'disabled_with',
 				'relationship_guid' => $guid,
 				'inverse_relationship' => true,

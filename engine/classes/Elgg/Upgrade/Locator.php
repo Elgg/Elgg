@@ -168,7 +168,7 @@ class Locator {
 	 * @return boolean
 	 */
 	public function upgradeExists($upgrade_id) {
-		$upgrade = $this->privateSettings->getEntities([
+		$upgrade = \Elgg\Database\Entities::find([
 			'type' => 'object',
 			'subtype' => 'elgg_upgrade',
 			'private_setting_name_value_pairs' => [

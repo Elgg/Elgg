@@ -31,7 +31,7 @@ $options = [
 	'preload_containers' => true,
 ];
 
-$params['content'] = elgg_list_entities_from_relationship($options);
+$params['content'] = elgg_list_entities($options);
 
 $params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
 

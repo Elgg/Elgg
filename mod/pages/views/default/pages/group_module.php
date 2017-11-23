@@ -16,7 +16,7 @@ $all_link = elgg_view('output/url', [
 
 elgg_push_context('widgets');
 
-$content = elgg_list_entities_from_metadata([
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'page',
 	'container_guid' => $group->guid,

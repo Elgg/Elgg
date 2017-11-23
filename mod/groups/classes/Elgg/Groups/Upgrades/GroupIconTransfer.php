@@ -25,7 +25,7 @@ class GroupIconTransfer implements Batch {
 	 * {@inheritdoc}
 	 */
 	public function shouldBeSkipped() {
-		$groups = elgg_get_entities_from_metadata([
+		$groups = elgg_get_entities([
 			'types' => 'group',
 			'metadata_names' => 'icontime',
 		]);

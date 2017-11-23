@@ -99,7 +99,7 @@ function members_list_alpha($hook, $type, $returnvalue, $params) {
 		'direction' => 'ASC',
 	];
 	
-	return elgg_list_entities_from_metadata($options);
+	return elgg_list_entities($options);
 }
 
 /**

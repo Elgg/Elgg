@@ -2,7 +2,7 @@
 /**
  * Renders a list of groups ordered alphabetically
  */
-echo elgg_list_entities_from_metadata([
+echo elgg_list_entities([
 	'type' => 'group',
 	'order_by_metadata' => [
 		'name' => 'name',

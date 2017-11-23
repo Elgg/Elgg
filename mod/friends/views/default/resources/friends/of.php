@@ -25,7 +25,7 @@ $options = [
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
 ];
-$content = elgg_list_entities_from_relationship($options);
+$content = elgg_list_entities($options);
 if (!$content) {
 	$content = elgg_echo('friends:none');
 }

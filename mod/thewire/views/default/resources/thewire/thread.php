@@ -10,7 +10,7 @@ $title = elgg_echo('thewire:thread');
 elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
 elgg_push_breadcrumb($title);
 
-$content = elgg_list_entities_from_metadata([
+$content = elgg_list_entities([
 	"metadata_name" => "wire_thread",
 	"metadata_value" => $thread_id,
 	"type" => "object",

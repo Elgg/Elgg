@@ -2,7 +2,7 @@
 
 namespace Elgg\Database;
 
-use Elgg\Config as Conf;
+use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\EntityTable\UserFetchFailureException;
 use Elgg\I18n\Translator;
@@ -25,7 +25,7 @@ use ElggUser;
 class AccessCollections {
 
 	/**
-	 * @var Conf
+	 * @var Config
 	 */
 	protected $config;
 
@@ -82,7 +82,7 @@ class AccessCollections {
 	/**
 	 * Constructor
 	 *
-	 * @param Conf                    $config       Config
+	 * @param Config                  $config       Config
 	 * @param Database                $db           Database
 	 * @param EntityTable             $entities     Entity table
 	 * @param UserCapabilities        $capabilities User capabilities
@@ -92,14 +92,14 @@ class AccessCollections {
 	 * @param Translator              $translator   Translator
 	 */
 	public function __construct(
-			Conf $config,
-			Database $db,
-			EntityTable $entities,
-			UserCapabilities $capabilities,
-			ElggStaticVariableCache $cache,
-			PluginHooksService $hooks,
-			ElggSession $session,
-			Translator $translator) {
+		Config $config,
+		Database $db,
+		EntityTable $entities,
+		UserCapabilities $capabilities,
+		ElggStaticVariableCache $cache,
+		PluginHooksService $hooks,
+		ElggSession $session,
+		Translator $translator) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->entities = $entities;
@@ -896,13 +896,12 @@ class AccessCollections {
 	 * @return ElggEntity[]|false
 	 */
 	public function getMembers($collection_id, array $options = []) {
+		$options['wheres'][] = function(QueryBuilder $qb, $table_alias) use ($collection_id) {
+			$qb->join($table_alias, 'access_collection_membership', 'acm', $qb->compare('acm.user_guid', '=', "$table_alias.guid"));
+			return $qb->compare('acm.access_collection_id', '=', $collection_id, 'integer');
+		};
 
-		$options['joins'][] = "JOIN {$this->membership_table} acm";
-
-		$collection_id = (int) $collection_id;
-		$options['wheres'][] = "e.guid = acm.user_guid AND acm.access_collection_id = {$collection_id}";
-
-		return $this->entities->getEntities($options);
+		return Entities::find($options);
 	}
 
 	/**
