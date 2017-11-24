@@ -74,3 +74,17 @@ An ``-rc.X`` pre-release means that there are no known regressions or critical
 bugs left to be fixed. This version could become the final stable version of
 Elgg if no new blockers are reported.
 
+Backwards compatibility
+-----------------------
+
+Some parts of the system need some additional clarification if we are talking about being backwards compatible.
+Everything that is considered public API needs to adhere to the backwards compatibility rules that are part of `semantic versioning`_.
+
+Views
+=====
+
+ - View names are API.
+ - View arguments ($vars array) are API.
+ - Removing views or renaming views follows API deprecation policies.
+ - Adding new views requires a minor version change.
+ - View output is not API and can be changed between patch releases.
