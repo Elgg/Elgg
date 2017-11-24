@@ -40,9 +40,6 @@ function discussion_init() {
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
 
-	// TODO remove in 3.0
-	elgg_register_js('elgg.discussion', elgg_get_simplecache_url('discussion/discussion.js'));
-
 	elgg_register_ajax_view('ajax/discussion/reply/edit');
 
 	// notifications

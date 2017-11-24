@@ -433,10 +433,12 @@ Removed JavaScript APIs
  * ``elgg.ui.initDatePicker``: Use the ``input/date`` module
  * ``elgg.ui.likesPopupHandler``
  * ``elgg.embed``: Use the ``elgg/embed`` module
+ * ``elgg.discussion``: Use the ``elgg/discussion`` module
  * ``embed/custom_insert_js``: Use the ``embed, editor`` JS hook
  * ``elgg/ckeditor.js``: replaced by ``elgg-ckeditor.js``
  * ``elgg/ckeditor/set-basepath.js``
  * ``elgg/ckeditor/insert.js``
+ * ``jQuery.cookie``: Use ``elgg.session.cookie``
  * ``jquery.jeditable``
  * ``likes.js``: The ``elgg/likes`` module is loaded automatically
  * ``messageboard.js``
@@ -445,6 +447,7 @@ Removed JavaScript APIs
  * ``jQuery.fn.friendsPicker``
  * ``elgg.ui.toggleMenu`` is no longer defined
  * ``elgg.ui.toggleMenuItems``: Use ``data-toggle`` attribute when registering toggleable menu items
+ * ``uservalidationbyemail/js.php``: Use the ``elgg/uservalidationbyemail`` module
 
 Removed hooks/events
 --------------------

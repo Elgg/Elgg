@@ -52,10 +52,6 @@ function uservalidationbyemail_init() {
 	]);
 	
 	elgg_extend_view('admin.css', 'uservalidationbyemail/css');
-
-	// inline module
-	elgg_extend_view('elgg.js', 'elgg/uservalidationbyemail.js');
-	elgg_require_js('elgg/uservalidationbyemail');
 }
 
 /**
