@@ -20,6 +20,11 @@ of priority. Each handler is passed arguments
 and has a chance to influence the process. After execution, the "trigger"
 function returns a value based on the behavior of the handlers.
 
+.. seealso::
+
+	- :doc:`/guides/events-list`
+	- :doc:`/guides/hooks-list`
+
 Elgg Events vs. Plugin Hooks
 ----------------------------
 

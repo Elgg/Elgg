@@ -1,6 +1,8 @@
 List of events in core
 ######################
 
+For more information on how events work visit :doc:`/design/events`.
+
 .. contents:: Contents
    :local:
    :depth: 1
