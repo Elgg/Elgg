@@ -19,7 +19,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -34,7 +34,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->property = 'guid';
 		$query->direction = 'asc';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -50,7 +50,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->direction = 'asc';
 		$query->signed = true;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -66,7 +66,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->property = 'foo';
 		$query->direction = 'asc';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -83,7 +83,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->direction = 'asc';
 		$query->signed = true;
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -100,7 +100,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->direction = 'asc';
 		$query->property_type = 'annotation';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -118,7 +118,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->signed = true;
 		$query->property_type = 'annotation';
 		
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -135,7 +135,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->direction = 'asc';
 		$query->property_type = 'private_setting';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -153,7 +153,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->signed = true;
 		$query->property_type = 'private_setting';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -170,7 +170,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->direction = 'asc';
 		$query->property_type = 'attribute';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 	}
 
@@ -184,7 +184,7 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->direction = 'asc';
 		$query->property_type = 'invalid';
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 	}
 }

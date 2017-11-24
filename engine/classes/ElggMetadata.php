@@ -61,6 +61,7 @@ class ElggMetadata extends \ElggExtender {
 		if ($entity = get_entity($this->entity_guid)) {
 			return $entity->canEditMetadata($this, $user_guid);
 		}
+
 		return false;
 	}
 
@@ -75,12 +76,13 @@ class ElggMetadata extends \ElggExtender {
 		if ($this->id > 0) {
 			return _elgg_services()->metadataTable->update($this->id, $this->name, $this->value, $this->value_type);
 		}
-		
+
 		$this->id = _elgg_services()->metadataTable->create($this->entity_guid, $this->name, $this->value, $this->value_type);
-		
+
 		if (!$this->id) {
 			throw new \IOException("Unable to save new " . get_class());
 		}
+
 		return $this->id;
 	}
 
@@ -90,11 +92,24 @@ class ElggMetadata extends \ElggExtender {
 	 * @return bool
 	 */
 	public function delete() {
-		$success = _elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
-		if ($success) {
+		if (!$this->canEdit()) {
+			return false;
+		}
+
+		if (!elgg_trigger_event('delete', $this->getType(), $this)) {
+			return false;
+		}
+
+		$qb = \Elgg\Database\Delete::fromTable('metadata');
+		$qb->where($qb->compare('id', '=', $this->id, ELGG_VALUE_INTEGER));
+
+		$deleted = _elgg_services()->db->deleteData($qb);
+
+		if ($deleted) {
 			_elgg_services()->metadataCache->clear($this->entity_guid);
 		}
-		return $success;
+
+		return $deleted;
 	}
 
 	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////

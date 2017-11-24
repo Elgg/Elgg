@@ -19,7 +19,7 @@ class SelectClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -31,7 +31,7 @@ class SelectClauseTest extends UnitTestCase {
 		$this->qb->select('alias.guid AS g');
 
 		$query = new SelectClause('alias.guid AS g');
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -46,7 +46,7 @@ class SelectClauseTest extends UnitTestCase {
 			return 'alias.guid AS g';
 		});
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

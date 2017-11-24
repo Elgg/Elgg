@@ -2,29 +2,7 @@
 /**
  * Elgg annotations
  * Functions to manage object annotations.
- *
- * @package Elgg
- * @subpackage Core
  */
-
-use Elgg\Database\Entities;
-
-/**
- * Convert a database row to a new \ElggAnnotation
- *
- * @param \stdClass $row Db row result object
- *
- * @return \ElggAnnotation
- * @access private
- */
-function row_to_elggannotation($row) {
-	if (!($row instanceof \stdClass)) {
-		// @todo should throw in this case?
-		return $row;
-	}
-
-	return new \ElggAnnotation($row);
-}
 
 /**
  * Get a specific annotation by its id.
@@ -84,32 +62,17 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 }
 
 /**
- * Returns annotations. Accepts all elgg_get_entities() options for entity
- * restraints.
+ * Fetch annotations or perform a calculation on them
  *
- * @param array $options Array in format:
+ * Accepts all options supported by {@link elgg_get_entities()}
  *
- * annotation_names              => null|ARR Annotation names
- * annotation_values             => null|ARR Annotation values
- * annotation_ids                => null|ARR annotation ids
- * annotation_case_sensitive     => BOOL Overall Case sensitive
- * annotation_owner_guids        => null|ARR guids for annotation owners
- * annotation_created_time_lower => INT Lower limit for created time.
- * annotation_created_time_upper => INT Upper limit for created time.
- * annotation_calculation        => STR Perform the MySQL function on the annotation values returned.
- *                                   Do not confuse this "annotation_calculation" option with the
- *                                   "calculation" option to elgg_get_entities_from_annotation_calculation().
- *                                   The "annotation_calculation" option causes this function to
- *                                   return the result of performing a mathematical calculation on
- *                                   all annotations that match the query instead of \ElggAnnotation
- *                                   objects.
- *                                   See the docs for elgg_get_entities_from_annotation_calculation()
- *                                   for the proper use of the "calculation" option.
+ * @see   elgg_get_entities()
  *
+ * @param array $options Options
  *
  * @return \ElggAnnotation[]|mixed
  *
- * @see elgg_get_entities()
+ * @see   elgg_get_entities()
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = []) {
@@ -179,63 +142,6 @@ function elgg_disable_annotations(array $options) {
  */
 function elgg_enable_annotations(array $options) {
 	return _elgg_services()->annotations->enableAll($options);
-}
-
-/**
- * Get entities ordered by a mathematical calculation on annotation values
- *
- * @tip Note that this function uses { @link elgg_get_annotations() } to return a list of entities ordered by a mathematical
- * calculation on annotation values, and { @link elgg_get_entities_from_annotations() } to return a count of entities
- * if $options['count'] is set to a truthy value
- *
- * @param array $options An options array:
- * 	'calculation'            => The calculation to use. Must be a valid MySQL function.
- *                              Defaults to sum.  Result selected as 'annotation_calculation'.
- *                              Don't confuse this "calculation" option with the
- *                              "annotation_calculation" option to elgg_get_annotations().
- *                              This "calculation" option is applied to each entity's set of
- *                              annotations and is selected as annotation_calculation for that row.
- *                              See the docs for elgg_get_annotations() for proper use of the
- *                              "annotation_calculation" option.
- *	'order_by'               => The order for the sorting. Defaults to 'annotation_calculation desc'.
- *	'annotation_names'       => The names of annotations on the entity.
- *	'annotation_values'	     => The values of annotations on the entity.
- *
- *	'metadata_names'         => The name of metadata on the entity.
- *	'metadata_values'        => The value of metadata on the entitiy.
- *	'callback'               => Callback function to pass each row through.
- *                              @tip This function is different from other ege* functions,
- *                              as it uses a metastring-based getter function { @link elgg_get_annotations() },
- *                              therefore the callback function should be a derivative of { @link entity_row_to_elggstar() }
- *                              and not of { @link row_to_annotation() }
- *
- * @return \ElggEntity[]|int An array or a count of entities
- * @see elgg_get_annotations()
- * @see elgg_get_entities_from_annotations()
- */
-function elgg_get_entities_from_annotation_calculation($options) {
-	if (empty($options['count'])) {
-		$options['annotation_sort_by_calculation'] = elgg_extract('calculation', $options, 'sum', false);
-	}
-	return Entities::find($options);
-}
-
-/**
- * List entities from an annotation calculation.
- *
- * @see elgg_get_entities_from_annotation_calculation()
- *
- * @param array $options An options array.
- *
- * @return string
- */
-function elgg_list_entities_from_annotation_calculation($options) {
-	$defaults = [
-		'calculation' => 'sum',
-	];
-	$options = array_merge($defaults, $options);
-
-	return elgg_list_entities($options, 'elgg_get_entities_from_annotation_calculation');
 }
 
 /**

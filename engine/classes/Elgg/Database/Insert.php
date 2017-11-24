@@ -10,7 +10,7 @@ class Insert extends QueryBuilder {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function create($table, $alias = null) {
+	public static function intoTable($table) {
 		$connection = _elgg_services()->db->getConnection('write');
 		$qb = new static($connection);
 		$qb->insert($table);

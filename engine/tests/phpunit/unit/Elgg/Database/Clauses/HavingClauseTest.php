@@ -18,7 +18,7 @@ class HavingClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -30,7 +30,7 @@ class HavingClauseTest extends UnitTestCase {
 		$this->qb->having('alias.guid = 25');
 
 		$query = new HavingClause('alias.guid = 25');
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -46,7 +46,7 @@ class HavingClauseTest extends UnitTestCase {
 			return $qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER);
 		});
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -58,7 +58,7 @@ class HavingClauseTest extends UnitTestCase {
 		$expr = $this->qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER);
 		$this->qb->having($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$query = new HavingClause($qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER));
 		$qb->addClause($query);
 

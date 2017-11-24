@@ -9,8 +9,6 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
  * essentially the same as metadata, but with additional helper functions for
  * performing calculations.
  *
- * @note Internal: Annotations are stored in the annotations table.
- *
  * @package    Elgg.Core
  * @subpackage DataModel.Annotations
  */
@@ -65,6 +63,7 @@ class ElggAnnotation extends \ElggExtender {
 			if (!$this->id) {
 				throw new \IOException("Unable to save new " . get_class());
 			}
+
 			return $this->id;
 		}
 	}
@@ -75,12 +74,23 @@ class ElggAnnotation extends \ElggExtender {
 	 * @return bool
 	 */
 	public function delete() {
-		$result = _elgg_delete_metastring_based_object_by_id($this->id, 'annotation');
-		if ($result) {
+		if (!$this->canEdit()) {
+			return false;
+		}
+
+		if (!elgg_trigger_event('delete', $this->getType(), $this)) {
+			return false;
+		}
+
+		$qb = \Elgg\Database\Delete::fromTable('annotations');
+		$qb->where($qb->compare('id', '=', $this->id, ELGG_VALUE_INTEGER));
+		$deleted = _elgg_services()->db->deleteData($qb);
+
+		if ($deleted) {
 			elgg_delete_river(['annotation_id' => $this->id, 'limit' => false]);
 		}
 
-		return $result;
+		return $deleted;
 	}
 
 	/**
@@ -90,7 +100,29 @@ class ElggAnnotation extends \ElggExtender {
 	 * @since 1.8
 	 */
 	public function disable() {
-		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'annotations');
+		if ($this->enabled == 'no') {
+			return true;
+		}
+
+		if (!$this->canEdit()) {
+			return false;
+		}
+
+		if (!elgg_trigger_event('disable', $this->getType(), $this)) {
+			return false;
+		}
+
+		$qb = \Elgg\Database\Update::table('annotations');
+		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
+			->where($qb->compare('id', '=', $this->id, ELGG_VALUE_INTEGER));
+
+		if ($this->getDatabase()->updateData($qb, true)) {
+			$this->enabled = 'no';
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -100,7 +132,29 @@ class ElggAnnotation extends \ElggExtender {
 	 * @since 1.8
 	 */
 	public function enable() {
-		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'annotations');
+		if ($this->enabled == 'yes') {
+			return true;
+		}
+
+		if (!$this->canEdit()) {
+			return false;
+		}
+
+		if (!elgg_trigger_event('enable', $this->getType(), $this)) {
+			return false;
+		}
+
+		$qb = \Elgg\Database\Update::table('annotations');
+		$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
+			->where($qb->compare('id', '=', $this->id, ELGG_VALUE_INTEGER));
+
+		if ($this->getDatabase()->updateData($qb, true)) {
+			$this->enabled = 'yes';
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -113,6 +167,7 @@ class ElggAnnotation extends \ElggExtender {
 	 */
 	public function canEdit($user_guid = 0) {
 		$entity = $this->getEntity();
+
 		return _elgg_services()->userCapabilities->canEditAnnotation($entity, $user_guid, $this);
 	}
 

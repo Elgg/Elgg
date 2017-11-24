@@ -18,7 +18,7 @@ use Elgg\UnitTestCase;
  * @group QueryBuilder
  * @group Repository
  */
-class EntitiesTest extends UnitTestCase {
+class EntitiesRepositoryTest extends UnitTestCase {
 
 	public function up() {
 
@@ -29,7 +29,7 @@ class EntitiesTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteCount() {
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('COUNT(DISTINCT e.guid) AS total');
 
 		$select->addClause(new AccessWhereClause());
@@ -68,7 +68,7 @@ class EntitiesTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteGet() {
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -104,7 +104,7 @@ class EntitiesTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteGetWithClauses() {
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 		$select->addSelect('max(e.time_created) AS newest');
 		$select->groupBy('e.time_created');
@@ -177,7 +177,7 @@ class EntitiesTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteBatchGet() {
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$access = new AccessWhereClause();
@@ -227,7 +227,7 @@ class EntitiesTest extends UnitTestCase {
 
 		$metadata_names = ['foo'];
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->joinMetadataTable('e', 'guid', $metadata_names, 'inner', 'n_table');
 		$select->select("min(n_table.value) AS calculation");
 
@@ -265,7 +265,7 @@ class EntitiesTest extends UnitTestCase {
 
 		$metadata_name = 'foo';
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->joinMetadataTable('e', 'guid', $metadata_name, 'inner', 'n_table');
 		$select->select("min(n_table.value) AS calculation");
 
@@ -292,7 +292,7 @@ class EntitiesTest extends UnitTestCase {
 
 		$annotation_names = ['foo'];
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->joinAnnotationTable('e', 'guid', $annotation_names, 'inner', 'n_table');
 		$select->select("avg(n_table.value) AS calculation");
 
@@ -335,7 +335,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteAttributeCalculation() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select("max(e.guid) AS calculation");
 
 		$select->addClause(new AccessWhereClause());
@@ -359,7 +359,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteAttributeCalculationWithoutPropertyType() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select("max(e.guid) AS calculation");
 
 		$select->addClause(new AccessWhereClause());
@@ -392,7 +392,7 @@ class EntitiesTest extends UnitTestCase {
 
 		$private_setting_names = ['foo'];
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->joinPrivateSettingsTable('e', 'guid', $private_setting_names, 'inner', 'ps');
 		$select->select("sum(ps.value) AS calculation");
 
@@ -469,7 +469,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteQueryWithMetadataNameValuePairs() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -520,7 +520,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteQueryWithMetadataNameValuePairsJoinedByOr() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -572,7 +572,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteQueryWithAnnotationNameValuePairs() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -623,7 +623,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteQueryWithAnnotationNameValuePairsJoinedByOr() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -675,7 +675,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteQueryWithPrivateSettingsNameValuePairs() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -726,7 +726,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteQueryWithPrivateSettingsNameValuePairsJoinedByOr() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -781,7 +781,7 @@ class EntitiesTest extends UnitTestCase {
 	 */
 	public function testCanExecuteQueryWithRelationshipPairs() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());
@@ -839,7 +839,7 @@ class EntitiesTest extends UnitTestCase {
 
 	public function testCanExecuteQueryWithRelationship() {
 
-		$select = Select::create('entities', 'e');
+		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
 		$select->addClause(new AccessWhereClause());

@@ -27,29 +27,44 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\LegacyIntegrationTestCase
 		_elgg_services()->setValue('entityPreloader', $this->realPreloader);
 	}
 
-	public function testEGECanUsePreloader() {
+	public function testCanPreloadEntityOwners() {
+		$seeded = $this->createMany('object', 3);
 		$options = [
+			'types' => 'object',
 			'limit' => 3,
 		];
 
-		elgg_get_entities($options);
+		$objects = elgg_get_entities($options);
+		$this->assertEquals(3, count($objects));
 		$this->assertNull($this->mockPreloader->preloaded);
 
 		$options['preload_owners'] = true;
 		elgg_get_entities($options);
 		$this->assertEqual(3, count($this->mockPreloader->preloaded));
+
+		foreach ($seeded as $object) {
+			$object->delete();
+		}
 	}
 
-	public function testEGMCanUsePreloader() {
+	public function testCanPreloadAnnotationOwners() {
+		$object = $this->createOne('object');
+		$object->annotate('test', 1);
+		$object->annotate('test', 2);
+		$object->annotate('test', 3);
+
 		$options = [
+			'types' => 'object',
 			'limit' => 3,
 		];
 
-		elgg_get_metadata($options);
+		$annotations = elgg_get_annotations($options);
+		$this->assertEquals(3, count($annotations));
+
 		$this->assertNull($this->mockPreloader->preloaded);
 
 		$options['preload_owners'] = true;
-		elgg_get_metadata($options);
+		elgg_get_annotations($options);
 		$this->assertEqual(3, count($this->mockPreloader->preloaded));
 	}
 }

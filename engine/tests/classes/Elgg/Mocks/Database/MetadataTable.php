@@ -2,7 +2,9 @@
 
 namespace Elgg\Mocks\Database;
 
+use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\MetadataTable as DbMetadataTabe;
+use Elgg\Database\Select;
 use ElggMetadata;
 use stdClass;
 
@@ -135,18 +137,16 @@ class MetadataTable extends DbMetadataTabe {
 
 		$this->clearQuerySpecs($row);
 
-		// Return this metadata object when _elgg_get_metastring_based_objects() is called
-		$e_access_sql = _elgg_get_access_where_sql(array('table_alias' => 'e'));
-		
-		$dbprefix = _elgg_config()->dbprefix;
-		$sql = "SELECT DISTINCT  n_table.*
-			FROM {$dbprefix}metadata n_table
-				JOIN {$dbprefix}entities e ON n_table.entity_guid = e.guid
-				WHERE  (n_table.id IN ({$row->id})) AND $e_access_sql
-				ORDER BY n_table.time_created ASC, n_table.id ASC, n_table.id LIMIT 0, 10";
-		
+		$qb = Select::fromTable('metadata');
+		$qb->select('*');
+
+		$where = new MetadataWhereClause();
+		$where->ids = $row->id;
+		$qb->addClause($where);
+
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return [$this->rows[$row->id]];
@@ -155,6 +155,7 @@ class MetadataTable extends DbMetadataTabe {
 			},
 		]);
 
+		$dbprefix = elgg_get_config('dbprefix');
 		$sql = "INSERT INTO {$dbprefix}metadata
 				(entity_guid, name, value, value_type, time_created)
 				VALUES (:entity_guid, :name, :value, :value_type, :time_created)";

@@ -2,7 +2,7 @@
 /**
  * Elgg core search.
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Search
  */
 
@@ -13,20 +13,21 @@
  * @param string $type   Hook type
  * @param array  $value  Empty array
  * @param array  $params Search parameters
+ *
  * @return array
  */
 function search_objects_hook($hook, $type, $value, $params) {
 
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
-	
+
 	$query = sanitise_string($params['query']);
 	$query_parts = explode(' ', $query);
 
 	$db_prefix = elgg_get_config('dbprefix');
-	
+
 	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
-	
+
 	$fields = ['title', 'description'];
 	$wheres = [];
 	foreach ($fields as $field) {
@@ -38,26 +39,26 @@ function search_objects_hook($hook, $type, $value, $params) {
 			}
 			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
 		}
-		
+
 		if (empty($sublikes)) {
 			continue;
 		}
-		
+
 		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
 	}
-	
+
 	if (!empty($wheres)) {
 		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
 	}
-	
+
 	$params['count'] = true;
 	$count = elgg_get_entities($params);
-	
+
 	// no need to continue if nothing here.
 	if (!$count) {
 		return ['entities' => [], 'count' => $count];
 	}
-	
+
 	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
@@ -87,20 +88,21 @@ function search_objects_hook($hook, $type, $value, $params) {
  * @param string $type   Hook type
  * @param array  $value  Empty array
  * @param array  $params Search parameters
+ *
  * @return array
  */
 function search_groups_hook($hook, $type, $value, $params) {
 
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
-	
+
 	$query = sanitise_string($params['query']);
 	$query_parts = explode(' ', $query);
 
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
-	
+
 	$fields = ['name', 'description'];
 	$wheres = [];
 	foreach ($fields as $field) {
@@ -112,27 +114,27 @@ function search_groups_hook($hook, $type, $value, $params) {
 			}
 			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
 		}
-		
+
 		if (empty($sublikes)) {
 			continue;
 		}
-		
+
 		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
 	}
-	
+
 	if (!empty($wheres)) {
 		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
 	}
-		
+
 	$params['count'] = true;
-	
+
 	$count = elgg_get_entities($params);
-	
+
 	// no need to continue if nothing here.
 	if (!$count) {
 		return ['entities' => [], 'count' => $count];
 	}
-	
+
 	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', '', $params['sort'], $params['order']);
@@ -163,65 +165,55 @@ function search_groups_hook($hook, $type, $value, $params) {
  * @param string $type   Hook type
  * @param array  $value  Empty array
  * @param array  $params Search parameters
+ *
  * @return array
  */
 function search_users_hook($hook, $type, $value, $params) {
 
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
-	
-	$query = sanitise_string($params['query']);
-	$query_parts = explode(' ', $query);
 
-	$db_prefix = elgg_get_config('dbprefix');
-	
-	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
-	
-	$fields = ['username', 'name'];
-	$wheres = [];
-	foreach ($fields as $field) {
-		$sublikes = [];
-		foreach ($query_parts as $query_part) {
-			$query_part = sanitise_string($query_part);
-			if (strlen($query_part) == 0) {
-				continue;
-			}
-			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
-		}
-		
-		if (empty($sublikes)) {
-			continue;
-		}
-		
-		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
-	}
-	
-	// profile fields
+	$query = $params['query'];
+	$query_parts = array_filter(explode(' ', $query));
+
+	$metadata_fields = ['username', 'name'];
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
-	if (!empty($profile_fields)) {
-		$params['joins'][] = "JOIN {$db_prefix}annotations an ON e.guid = an.entity_guid";
-		
-		// get the where clauses for the annotation names
-		// can't use egef_annotations() because the n_table join comes too late.
-		$clauses = _elgg_entities_get_metastrings_options('annotation', [
-			'annotation_names' => $profile_fields,
 
-			// avoid notices
-			'annotation_values' => null,
-			'annotation_name_value_pairs' => null,
-			'annotation_name_value_pairs_operator' => null,
-			'annotation_case_sensitive' => null,
-			'order_by_annotation' => null,
-			'annotation_owner_guids' => null,
-		]);
+	$params['wheres'][] = function (\Elgg\Database\QueryBuilder $qb, $alias) use ($query_parts, $profile_fields, $metadata_fields) {
+		$wheres = [];
 
-		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-		$wheres[] = "(({$clauses['wheres'][0]}) AND an.value LIKE '%$query%')";
-	}
+		$subclauses = [];
+		$md_alias = $qb->joinMetadataTable($alias, 'guid', $metadata_fields, 'left');
+		foreach ($query_parts as $part) {
+			$where = new \Elgg\Database\Clauses\MetadataWhereClause();
+			$where->values = "%{$part}%";
+			$where->comparison = 'LIKE';
+			$where->value_type = ELGG_VALUE_STRING;
+			$where->case_sensitive = false;
 
-	if (!empty($wheres)) {
-		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
-	}
+			$subclauses[] = $where->prepare($qb, $md_alias);
+		}
+
+		$wheres[] = $qb->merge($subclauses, 'AND');
+
+		if (!empty($profile_fields)) {
+			$subclauses = [];
+			$an_alias = $qb->joinAnnotationTable($alias, 'guid', $profile_fields, 'left');
+			foreach ($query_parts as $part) {
+				$where = new \Elgg\Database\Clauses\AnnotationWhereClause();
+				$where->values = "%{$part}%";
+				$where->comparison = 'LIKE';
+				$where->value_type = ELGG_VALUE_STRING;
+				$where->case_sensitive = false;
+
+				$subclauses[] = $where->prepare($qb, $an_alias);
+			}
+
+			$wheres[] = $qb->merge($subclauses, 'AND');
+		}
+
+		return $qb->merge($wheres, 'OR');
+	};
 
 	$params['count'] = true;
 	$count = elgg_get_entities($params);
@@ -230,7 +222,7 @@ function search_users_hook($hook, $type, $value, $params) {
 	if (!$count) {
 		return ['entities' => [], 'count' => $count];
 	}
-	
+
 	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
@@ -263,11 +255,11 @@ function search_users_hook($hook, $type, $value, $params) {
 				foreach ($values as $text) {
 					if (stristr($text, $query)) {
 						$matched .= elgg_echo("profile:{$shortname}") . ': '
-								. search_get_highlighted_relevant_substrings($text, $query);
+							. search_get_highlighted_relevant_substrings($text, $query);
 					}
 				}
 			}
-	
+
 			$entity->setVolatileData('search_matched_description', $matched);
 		}
 	}
@@ -285,6 +277,7 @@ function search_users_hook($hook, $type, $value, $params) {
  * @param string $type   Hook type
  * @param array  $value  Empty array
  * @param array  $params Search parameters
+ *
  * @return array
  */
 function search_tags_hook($hook, $type, $value, $params) {
@@ -350,7 +343,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 	if (!$count) {
 		return ['entities' => [], 'count' => $count];
 	}
-	
+
 	$params['count'] = false;
 	if (isset($params['sort']) || !isset($params['order_by'])) {
 		$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
@@ -378,7 +371,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 
 		$title_str = elgg_get_excerpt($entity->getDisplayName(), 300);
 		$desc_str = elgg_get_excerpt($entity->description, 300);
-		
+
 		$tags_str = implode('. ', $matched_tags_strs);
 		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query'], 30, 300, true);
 
@@ -400,9 +393,11 @@ function search_tags_hook($hook, $type, $value, $params) {
  * @param string $type   Hook type
  * @param array  $value  Array of custom search types
  * @param array  $params Search parameters
+ *
  * @return array
  */
 function search_custom_types_tags_hook($hook, $type, $value, $params) {
 	$value[] = 'tags';
+
 	return $value;
 }

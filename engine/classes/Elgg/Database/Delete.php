@@ -10,7 +10,7 @@ class Delete extends QueryBuilder {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function create($table, $alias = null) {
+	public static function fromTable($table, $alias = null) {
 		$connection = _elgg_services()->db->getConnection('write');
 		$qb = new static($connection);
 		$qb->delete($table, $alias);

@@ -215,6 +215,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 	 */
 	public function testElggApiGettersEntityRelationshipDistinctResult() {
 
+		$relationship = 'test_5775_' . rand();
 		$obj1 = new ElggObject();
 		$obj1->subtype = $this->getRandomSubtype();
 		$obj1->save();
@@ -227,11 +228,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$obj3->subtype = $this->getRandomSubtype();
 		$obj3->save();
 
-		add_entity_relationship($obj2->guid, 'test_5775', $obj1->guid);
-		add_entity_relationship($obj3->guid, 'test_5775', $obj1->guid);
+		add_entity_relationship($obj2->guid, $relationship, $obj1->guid);
+		add_entity_relationship($obj3->guid, $relationship, $obj1->guid);
 
 		$options = [
-			'relationship' => 'test_5775',
+			'relationship' => $relationship,
 			'inverse_relationship' => false,
 			'count' => true,
 		];

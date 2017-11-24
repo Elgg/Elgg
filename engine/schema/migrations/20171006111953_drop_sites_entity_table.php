@@ -4,10 +4,10 @@ use Phinx\Migration\AbstractMigration;
 
 class DropSitesEntityTable extends AbstractMigration
 {
-    /**
-     * Move sites_entity attributes to metadata
-     */
-    public function up() {
+	/**
+	 * Move sites_entity attributes to metadata
+	 */
+	public function up() {
 
 		if (!$this->hasTable('sites_entity') || !$this->hasTable('metadata')) {
 			return;
@@ -22,7 +22,6 @@ class DropSitesEntityTable extends AbstractMigration
 
 		foreach ($rows as $row) {
 			foreach ($cols as $col) {
-				
 				// remove existing metadata... attributes are more important
 				$this->execute("
 					DELETE FROM {$prefix}metadata
@@ -45,5 +44,5 @@ class DropSitesEntityTable extends AbstractMigration
 
 		// all data migrated, so drop the table
 		$this->dropTable('sites_entity');
-    }
+	}
 }

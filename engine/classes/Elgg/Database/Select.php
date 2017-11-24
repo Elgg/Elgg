@@ -10,7 +10,7 @@ class Select extends QueryBuilder {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function create($table, $alias = null) {
+	public static function fromTable($table, $alias = null) {
 		$connection = _elgg_services()->db->getConnection('read');
 
 		$qb = new static($connection);

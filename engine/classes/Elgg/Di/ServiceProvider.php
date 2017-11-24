@@ -16,20 +16,20 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
  *
- * @property-read \Elgg\Database\AccessCollections         $accessCollections
- * @property-read \ElggStaticVariableCache                 $accessCache
- * @property-read \Elgg\ActionsService                     $actions
- * @property-read \Elgg\Database\AdminNotices              $adminNotices
- * @property-read \Elgg\Ajax\Service                       $ajax
- * @property-read \Elgg\Amd\Config                         $amdConfig
- * @property-read \Elgg\Database\Annotations               $annotations
- * @property-read \ElggAutoP                               $autoP
- * @property-read \Elgg\AutoloadManager                    $autoloadManager
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
- * @property-read \Elgg\BootService                        $boot
- * @property-read \Elgg\Application\CacheHandler           $cacheHandler
- * @property-read \Elgg\ClassLoader                        $classLoader
- * @property-read \Elgg\Cli                                $cli
+ * @property-read \Elgg\Database\AccessCollections $accessCollections
+ * @property-read \ElggStaticVariableCache         $accessCache
+ * @property-read \Elgg\ActionsService             $actions
+ * @property-read \Elgg\Database\AdminNotices      $adminNotices
+ * @property-read \Elgg\Ajax\Service               $ajax
+ * @property-read \Elgg\Amd\Config                 $amdConfig
+ * @property-read \Elgg\Database\AnnotationsTable  $annotations
+ * @property-read \ElggAutoP                       $autoP
+ * @property-read \Elgg\AutoloadManager            $autoloadManager
+ * @property-read \Elgg\BatchUpgrader              $batchUpgrader
+ * @property-read \Elgg\BootService                $boot
+ * @property-read \Elgg\Application\CacheHandler   $cacheHandler
+ * @property-read \Elgg\ClassLoader                $classLoader
+ * @property-read \Elgg\Cli                        $cli
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
@@ -141,7 +141,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('annotations', function(ServiceProvider $c) {
-			return new \Elgg\Database\Annotations($c->db, $c->session, $c->hooks->getEvents());
+			return new \Elgg\Database\AnnotationsTable($c->db, $c->session, $c->hooks->getEvents());
 		});
 
 		$this->setClassName('autoP', \ElggAutoP::class);

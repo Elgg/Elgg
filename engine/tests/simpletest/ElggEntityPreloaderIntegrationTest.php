@@ -35,18 +35,6 @@ class ElggEntityPreloaderIntegrationTest extends ElggCoreUnitTest {
 		$this->assertEqual(3, count($this->mockPreloader->preloaded));
 	}
 
-	public function testEGMCanUsePreloader() {
-		$options = [
-			'limit' => 3,
-		];
-
-		elgg_get_metadata($options);
-		$this->assertNull($this->mockPreloader->preloaded);
-
-		$options['preload_owners'] = true;
-		elgg_get_metadata($options);
-		$this->assertEqual(3, count($this->mockPreloader->preloaded));
-	}
 }
 
 class MockEntityPreloader20140623 extends Elgg\EntityPreloader {

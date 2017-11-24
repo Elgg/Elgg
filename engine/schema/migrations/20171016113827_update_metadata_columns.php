@@ -3,14 +3,13 @@
 use Phinx\Migration\AbstractMigration;
 
 class UpdateMetadataColumns extends AbstractMigration {
-    /**
+	/**
 	 * Changes metadata owner_guid, access_id and enabled column usage to allow null values
 	 * Also removes owner_guid and access_id index as they are no longer used
 	 */
 	public function up() {
 
 		if ($this->hasTable('metadata')) {
-
 			$table = $this->table('metadata');
 
 			if ($table->hasIndex('owner_guid')) {

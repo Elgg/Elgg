@@ -270,6 +270,14 @@ trait LegacyQueryOptionsAdapter {
 			'metadata_created_before',
 		];
 
+		foreach ($props as $prop) {
+			if (isset($options[$prop]) && empty($options['metadata_name_value_pairs'])) {
+				$options['metadata_name_value_pairs'][] = [
+					$prop => $options[$prop]
+				];
+			}
+		}
+
 		foreach ($options['metadata_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof Clause) {
 				continue;
@@ -381,6 +389,14 @@ trait LegacyQueryOptionsAdapter {
 			'annotation_created_before',
 			'annotation_sort_by_calculation',
 		];
+
+		foreach ($props as $prop) {
+			if (isset($options[$prop]) && empty($options['annotation_name_value_pairs'])) {
+				$options['annotation_name_value_pairs'][] = [
+					$prop => $options[$prop]
+				];
+			}
+		}
 
 		foreach ($options['annotation_name_value_pairs'] as $key => $pair) {
 			if ($pair instanceof WhereClause) {
@@ -795,6 +811,9 @@ trait LegacyQueryOptionsAdapter {
 	 * @return array
 	 */
 	protected function normalizeSelectClauses(array $options = []) {
+
+		$options = _elgg_normalize_plural_options_array($options, ['select']);
+
 		foreach ($options['selects'] as $key => $clause) {
 			if (empty($clause)) {
 				unset($options['selects'][$key]);
@@ -819,6 +838,9 @@ trait LegacyQueryOptionsAdapter {
 	 * @return array
 	 */
 	protected function normalizeWhereClauses(array $options = []) {
+
+		$options = _elgg_normalize_plural_options_array($options, ['where']);
+
 		foreach ($options['wheres'] as $key => $clause) {
 			if (empty($clause)) {
 				unset($options['wheres'][$key]);
@@ -854,6 +876,9 @@ trait LegacyQueryOptionsAdapter {
 	 * @throws \InvalidParameterException
 	 */
 	protected function normalizeJoinClauses(array $options = []) {
+
+		$options = _elgg_normalize_plural_options_array($options, ['join']);
+
 		foreach ($options['joins'] as $key => $join) {
 			if (empty($join)) {
 				unset($options['joins'][$key]);

@@ -19,7 +19,7 @@ class WhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -32,7 +32,7 @@ class WhereClauseTest extends UnitTestCase {
 
 		$query = new WhereClause('alias.guid = 25');
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -49,7 +49,7 @@ class WhereClauseTest extends UnitTestCase {
 
 		$query = new WhereClause($closure);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -64,7 +64,7 @@ class WhereClauseTest extends UnitTestCase {
 
 		$query = new WhereClause($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

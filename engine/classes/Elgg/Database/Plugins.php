@@ -259,7 +259,7 @@ class Plugins {
 	function getMaxPriority() {
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 
-		$qb = Select::create('entities', 'e');
+		$qb = Select::fromTable('entities', 'e');
 		$qb->select('MAX(CAST(ps.value AS unsigned)) as max')
 			->join('e', 'private_settings', 'ps', 'e.guid = ps.entity_guid')
 			->where($qb->compare('ps.name', '=', $priority, ELGG_VALUE_STRING))

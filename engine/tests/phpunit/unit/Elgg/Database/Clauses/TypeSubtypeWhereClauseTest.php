@@ -19,7 +19,7 @@ class TypeSubtypeWhereClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -40,7 +40,7 @@ class TypeSubtypeWhereClauseTest extends UnitTestCase {
 		$query = new TypeSubtypeWhereClause();
 		$query->type_subtype_pairs = ['object' => []];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -66,7 +66,7 @@ class TypeSubtypeWhereClauseTest extends UnitTestCase {
 			'group' => null,
 		];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -92,7 +92,7 @@ class TypeSubtypeWhereClauseTest extends UnitTestCase {
 		$query = new TypeSubtypeWhereClause();
 		$query->type_subtype_pairs = ['object' => ['blog', 'file']];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -123,7 +123,7 @@ class TypeSubtypeWhereClauseTest extends UnitTestCase {
 			'group' => [],
 		];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);
@@ -158,7 +158,7 @@ class TypeSubtypeWhereClauseTest extends UnitTestCase {
 			'group' => ['community'],
 		];
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
 
 		$this->assertEquals($expected, $actual);

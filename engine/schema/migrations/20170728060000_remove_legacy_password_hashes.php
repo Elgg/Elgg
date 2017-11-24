@@ -4,13 +4,13 @@ use Phinx\Migration\AbstractMigration;
 
 class RemoveLegacyPasswordHashes extends AbstractMigration
 {
-    /**
-     * Remove legacy password hashes
-     */
-    public function up() {
+	/**
+	 * Remove legacy password hashes
+	 */
+	public function up() {
 
-    	if (!$this->hasTable('users_entity')) {
-    		return;
+		if (!$this->hasTable('users_entity')) {
+			return;
 		}
 
 		// remove legacy 2.x password and salt columns
@@ -30,9 +30,9 @@ class RemoveLegacyPasswordHashes extends AbstractMigration
 		
 		$table->save();
 
-    }
+	}
 
-    public function down() {
+	public function down() {
 
 		if (!$this->hasTable('users_entity')) {
 			return;

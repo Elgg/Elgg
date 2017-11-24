@@ -19,7 +19,7 @@ class ComparisonClauseTest extends UnitTestCase {
 	protected $qb;
 
 	public function up() {
-		$this->qb = Select::create('entities', 'alias');
+		$this->qb = Select::fromTable('entities', 'alias');
 	}
 
 	public function down() {
@@ -56,7 +56,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$expr = $this->qb->expr()->eq('x', 'y');
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', 'y'));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -71,7 +71,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($dt->getTimestamp(), ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $dt, ELGG_VALUE_TIMESTAMP));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -86,7 +86,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param((new \DateTime($date))->getTimestamp(), ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $date, ELGG_VALUE_TIMESTAMP));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -101,7 +101,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($date, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $date, ELGG_VALUE_TIMESTAMP));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -128,7 +128,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($guids, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_GUID));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -153,7 +153,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($ids, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_ID));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -167,7 +167,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_STRING);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_STRING, false));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -182,7 +182,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($int, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_INTEGER, false));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -199,7 +199,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_STRING);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_STRING, false));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -221,7 +221,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($ints, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_INTEGER, false));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -243,7 +243,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($ints, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_INTEGER, false));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -257,7 +257,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'in', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -271,7 +271,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'eq', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -285,7 +285,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '=', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -299,7 +299,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'in', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -313,7 +313,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'eq', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -327,7 +327,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'eq', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -341,7 +341,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'not in', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -355,7 +355,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'neq', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -369,7 +369,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', '!=', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -383,7 +383,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'not in', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -397,7 +397,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'neq', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -411,7 +411,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->qb->param($input, ELGG_VALUE_INTEGER);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'neq', $input, ELGG_VALUE_INTEGER));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -436,7 +436,7 @@ class ComparisonClauseTest extends UnitTestCase {
 		$expr = $this->qb->merge($parts, $boolean);
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', $operator, $input, $type));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -480,10 +480,10 @@ class ComparisonClauseTest extends UnitTestCase {
 		$expr = $this->qb->expr()->isNull('x');
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'IS NULL'));
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'is null', 'y'));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -494,10 +494,10 @@ class ComparisonClauseTest extends UnitTestCase {
 		$expr = $this->qb->expr()->isNotNull('x');
 		$this->qb->where($expr);
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'IS NOT NULL'));
 
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'is not null', 'y'));
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -508,7 +508,7 @@ class ComparisonClauseTest extends UnitTestCase {
 	 * @expectedException \InvalidParameterException
 	 */
 	public function testThrowsOnInvalidComparison() {
-		$qb = Select::create('entities', 'alias');
+		$qb = Select::fromTable('entities', 'alias');
 		$qb->where($qb->compare('x', 'INVALID'));
 	}
 
