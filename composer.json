@@ -52,7 +52,7 @@
     "scripts": {
         "pre-install-cmd": "php .scripts/check_global_requirements.php",
         "lint": [
-            "phpcs --standard=vendor/elgg/sniffs/elgg.xml -sp --ignore=*/mod/login_as/*,*/mod,data_views/* engine/classes engine/lib actions mod views",
+            "phpcs --standard=vendor/elgg/sniffs/elgg.xml -sp --ignore=*/mod/login_as/*,*/mod/data_views/* engine/classes engine/lib actions mod views",
             "composer validate"
         ],
         "lint-fixer": [
