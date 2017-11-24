@@ -231,6 +231,7 @@ return array(
 
 	'group' => "Group",
 	'item:group' => "Groups",
+	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
  * Users

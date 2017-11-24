@@ -92,19 +92,20 @@ if (!$group->name) {
 
 // Set group tool options (only pass along saved entities)
 $tool_entity = !$is_new_group ? $group : null;
-$tool_options = groups_get_group_tool_options($tool_entity);
+$tool_options = elgg_get_group_tool_options($tool_entity);
 if ($tool_options) {
 	foreach ($tool_options as $group_option) {
 		$option_toggle_name = $group_option->name . "_enable";
-		$option_default = $group_option->default_on ? 'yes' : 'no';
 		$value = get_input($option_toggle_name);
-
-		// if already has option set, don't change if no submission
-		if ($group->$option_toggle_name && $value === null) {
+		if ($value === null) {
 			continue;
 		}
-
-		$group->$option_toggle_name = $value ? $value : $option_default;
+		
+		if ($value === 'yes') {
+			$group->enableTool($group_option->name);
+		} else {
+			$group->disableTool($group_option->name);
+		}
 	}
 }
 

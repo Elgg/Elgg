@@ -176,7 +176,7 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 			'href' => "blog/owner/{$entity->username}",
 		]);
 	} elseif ($entity instanceof ElggGroup) {
-		if ($entity->blog_enable != 'no') {
+		if ($entity->isToolEnabled('blog')) {
 			$return[] = ElggMenuItem::factory([
 				'name' => 'blog',
 				'text' => elgg_echo('blog:group'),

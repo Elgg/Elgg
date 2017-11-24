@@ -213,7 +213,7 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
-		if ($entity->pages_enable != "no") {
+		if ($entity->isToolEnabled('pages')) {
 			$url = "pages/group/{$entity->guid}/all";
 			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
 			$return[] = $item;

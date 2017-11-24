@@ -5,11 +5,14 @@
  * @uses $vars['entity']
  */
 
-if ($vars['entity']->forum_enable == 'no') {
-	return true;
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
 }
 
-$group = $vars['entity'];
+if (!$group->isToolEnabled('forum')) {
+	return;
+}
 
 $all_link = elgg_view('output/url', [
 	'href' => "discussion/owner/$group->guid",

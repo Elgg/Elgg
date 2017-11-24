@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A group entity, used as a container for other entities.
  *
@@ -215,6 +214,92 @@ class ElggGroup extends \ElggEntity {
 	 * @since 1.8.0
 	 */
 	public function canComment($user_guid = 0, $default = null) {
+		return false;
+	}
+	
+	/**
+	 * Checks if a tool option is enabled
+	 *
+	 * @param string $option The option to check
+	 * @return bool
+	 * @since 3.0.0
+	 */
+	public function isToolEnabled($option) {
+		if (empty($option)) {
+			return false;
+		}
+		
+		$setting = $this->{"{$option}_enable"};
+		if ($setting === 'no') {
+			return false;
+		}
+		
+		$tool_config = $this->getToolConfig($option);
+		if (!$tool_config) {
+			return false;
+		}
+		
+		if ($setting !== null) {
+			return (bool) ($setting == 'yes');
+		}
+		
+		// check default setting
+		return (bool) $tool_config->default_on;
+	}
+	
+	/**
+	 * Enables a tool option
+	 *
+	 * @param string $option The option to enable
+	 * @return bool
+	 * @since 3.0.0
+	 */
+	public function enableTool($option) {
+		if (!$this->getToolConfig($option)) {
+			return false;
+		}
+		
+		$this->{"{$option}_enable"} = 'yes';
+		return true;
+	}
+	
+	/**
+	 * Disables a tool option
+	 *
+	 * @param string $option The option to disable
+	 * @return bool
+	 * @since 3.0.0
+	 */
+	public function disableTool($option) {
+		if (!$this->getToolConfig($option)) {
+			return false;
+		}
+		
+		$this->{"{$option}_enable"} = 'no';
+		return true;
+	}
+	
+	/**
+	 * Returns the registered tool configuration
+	 *
+	 * @param string $option The tool option to get the config for
+	 * @return stdClass|false Returns the config object or false if it does not exists
+	 */
+	protected function getToolConfig($option) {
+		if (empty($option)) {
+			return false;
+		}
+		
+		$group_tool_options = (array) elgg_get_group_tool_options($this);
+		
+		foreach ($group_tool_options as $config) {
+			if ($config->name !== $option) {
+				continue;
+			}
+			
+			return $config;
+		}
+		
 		return false;
 	}
 }

@@ -9,10 +9,11 @@ elgg_group_gatekeeper();
 
 $group = get_entity($guid);
 
-if (elgg_get_plugin_setting('allow_activity', 'groups') === 'no'
-		|| $group->activity_enable !== 'yes') {
+if (elgg_get_plugin_setting('allow_activity', 'groups') === 'no') {
 	forward($group->getURL(), '404');
 }
+
+elgg_group_tool_gatekeeper('activity');
 
 $title = elgg_echo('groups:activity');
 
