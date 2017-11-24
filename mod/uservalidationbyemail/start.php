@@ -149,7 +149,7 @@ function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $pa
 /**
  * Checks if an account is validated
  *
- * @params array $credentials The username and password
+ * @param array $credentials The username and password
  *
  * @return void
  */

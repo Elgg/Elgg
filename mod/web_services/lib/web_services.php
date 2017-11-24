@@ -221,7 +221,7 @@ function verify_parameters($method, $parameters) {
 /**
  * Get the names of a method's parameters
  *
- * @param string $method
+ * @param string $method the api method to get the params for
  * @return string[]
  * @access private
  */
@@ -334,9 +334,7 @@ function serialise_parameters($method, $parameters) {
 /**
  * PAM: Confirm that the call includes a valid API key
  *
- * @return true if good API key - otherwise throws exception
- *
- * @return mixed
+ * @return bool true if good API key - otherwise throws exception
  * @throws APIException
  * @since 1.7.0
  * @access private

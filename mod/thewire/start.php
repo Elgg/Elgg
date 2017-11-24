@@ -418,7 +418,7 @@ function thewire_get_parent($post_guid) {
 function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	
 	$entity = elgg_extract('entity', $params);
-	if (!($entity instanceof \ElggWire)){
+	if (!($entity instanceof \ElggWire)) {
 		return;
 	}
 	
