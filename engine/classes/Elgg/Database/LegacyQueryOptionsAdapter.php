@@ -300,7 +300,6 @@ trait LegacyQueryOptionsAdapter {
 			'comparison' => '=',
 			'type' => ELGG_VALUE_STRING,
 			'case_sensitive' => true,
-			'entity_guids' => null,
 			'ids' => null,
 			'created_after' => null,
 			'created_before' => null,
@@ -851,16 +850,6 @@ trait LegacyQueryOptionsAdapter {
 				continue;
 			}
 
-			if (is_string($clause)) {
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'wheres' options parameter is deprecated.
-					Instead use a closure that receives an instanceof of QueryBuilder
-					and returns a composite DBAL expression
-					
-					{{ $clause }}
-				", '3.0');
-			}
-
 			$options['wheres'][$key] = new WhereClause($clause);
 		}
 
@@ -902,14 +891,6 @@ trait LegacyQueryOptionsAdapter {
 					$table = substr($table, strlen($dbprefix));
 				}
 
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'joins' options parameter is deprecated.
-					Instead use a closure that receives an instanceof of QueryBuilder and returns an instanceof of JoinClause,
-					also consider using one of the built-in methods in QueryBuilder.
-					
-					{{ $join }}
-				", '3.0');
-
 				$clause = new JoinClause($table, $alias, $condition, $type);
 				$options['joins'][$key] = $clause;
 			}
@@ -935,13 +916,6 @@ trait LegacyQueryOptionsAdapter {
 
 		if (!empty($order_by)) {
 			if (is_string($order_by)) {
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'order_by' options parameter is deprecated.
-					Instead use an OrderByClause or array of them.
-					
-					{{ $order_by }}
-				", '3.0');
-
 				$orders = explode(',', $order_by);
 			} else if (is_array($order_by)) {
 				$orders = $order_by;
@@ -1020,18 +994,10 @@ trait LegacyQueryOptionsAdapter {
 		}
 
 		if (is_string($options['group_by'])) {
-			$clause = $options['group_by'];
-
 			$options['group_by'] = explode(',', $options['group_by']);
 
 			if (count($options['group_by']) > 1) {
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'group_by' options parameter is deprecated.
-					Instead use a closure that receives an instanceof of QueryBuilder
-					and returns a prepared clause.
-					
-					{{ $clause }}
-				", '3.0');
+				// TODO why only deprecate if more than 1?
 			}
 		}
 
