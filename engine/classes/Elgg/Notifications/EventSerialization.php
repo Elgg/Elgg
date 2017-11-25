@@ -6,6 +6,9 @@ use ElggData;
 use ElggEntity;
 use stdClass;
 
+/**
+ * Allow events to be (un)serialized
+ */
 trait EventSerialization {
 	
 	/**
