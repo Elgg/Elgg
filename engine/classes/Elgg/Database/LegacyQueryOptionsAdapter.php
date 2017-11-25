@@ -937,8 +937,7 @@ trait LegacyQueryOptionsAdapter {
 			if (is_string($order_by)) {
 				elgg_deprecated_notice("
 					Using literal MySQL statements in 'order_by' options parameter is deprecated.
-					Instead use a closure that receives an instanceof of QueryBuilder
-					and returns a prepared clause.
+					Instead use an OrderByClause or array of them.
 					
 					{{ $order_by }}
 				", '3.0');
