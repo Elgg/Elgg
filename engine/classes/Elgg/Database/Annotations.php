@@ -26,21 +26,6 @@ use InvalidParameterException;
 class Annotations extends Repository {
 
 	/**
-	 * Build and execute a new query from an array of legacy options
-	 *
-	 * @param array $options Options
-	 *
-	 * @return ElggAnnotation[]|int|mixed
-	 */
-	public static function find(array $options = []) {
-		try {
-			return static::with($options)->execute();
-		} catch (DataFormatException $e) {
-			return elgg_extract('count', $options) ? 0 : false;
-		}
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function count() {
@@ -138,23 +123,7 @@ class Annotations extends Repository {
 		$distinct = $this->options->distinct ? "DISTINCT" : "";
 		$qb->select("$distinct n_table.*");
 
-		foreach ($this->options->selects as $select_clause) {
-			$select_clause->prepare($qb, 'n_table');
-		}
-
-		foreach ($this->options->group_by as $group_by_clause) {
-			$group_by_clause->prepare($qb, 'n_table');
-		}
-
-		foreach ($this->options->having as $having_clause) {
-			$having_clause->prepare($qb, 'n_table');
-		}
-
-		if (!empty($this->options->order_by)) {
-			foreach ($this->options->order_by as $order_by_clause) {
-				$order_by_clause->prepare($qb, 'n_table');
-			}
-		}
+		$this->expandInto($qb, 'n_table');
 
 		$qb = $this->buildQuery($qb);
 
@@ -183,28 +152,6 @@ class Annotations extends Repository {
 		}
 
 		return $results;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function batch($limit = null, $offset = null, $callback = null) {
-
-		$options = $this->options->getArrayCopy();
-
-		$options['limit'] = (int) $limit;
-		$options['offset'] = (int) $offset;
-		$options['callback'] = $callback;
-		unset($options['count'],
-			$options['batch'],
-			$options['batch_size'],
-			$options['batch_inc_offset']
-		);
-
-		$batch_size = $this->options->batch_size;
-		$batch_inc_offset = $this->options->batch_inc_offset;
-
-		return new \ElggBatch([static::class, 'find'], $options, null, $batch_size, $batch_inc_offset);
 	}
 
 	/**
@@ -286,22 +233,8 @@ class Annotations extends Repository {
 	 * @return Closure|CompositeExpression|mixed|null|string
 	 */
 	protected function buildEntityWhereClause(QueryBuilder $qb) {
-		$where = new EntityWhereClause();
-		$where->guids = $this->options->guids;
-		$where->owner_guids = $this->options->owner_guids;
-		$where->container_guids = $this->options->container_guids;
-		$where->type_subtype_pairs = $this->options->type_subtype_pairs;
-		$where->created_after = $this->options->created_after;
-		$where->created_before = $this->options->created_before;
-		$where->updated_after = $this->options->updated_after;
-		$where->updated_before = $this->options->updated_before;
-		$where->last_action_after = $this->options->last_action_after;
-		$where->last_action_before = $this->options->last_action_before;
-		$where->access_ids = $this->options->access_ids;
-
 		$joined_alias = $qb->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
-
-		return $where->prepare($qb, $joined_alias);
+		return EntityWhereClause::factory($this->options)->prepare($qb, $joined_alias);
 	}
 
 	/**

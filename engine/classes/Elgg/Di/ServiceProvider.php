@@ -22,7 +22,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\AdminNotices      $adminNotices
  * @property-read \Elgg\Ajax\Service               $ajax
  * @property-read \Elgg\Amd\Config                 $amdConfig
- * @property-read \Elgg\Database\AnnotationsTable  $annotations
+ * @property-read \Elgg\Database\AnnotationsTable  $annotationsTable
  * @property-read \ElggAutoP                       $autoP
  * @property-read \Elgg\AutoloadManager            $autoloadManager
  * @property-read \Elgg\BatchUpgrader              $batchUpgrader
@@ -140,8 +140,8 @@ class ServiceProvider extends DiContainer {
 			return $obj;
 		});
 
-		$this->setFactory('annotations', function(ServiceProvider $c) {
-			return new \Elgg\Database\AnnotationsTable($c->db, $c->session, $c->hooks->getEvents());
+		$this->setFactory('annotationsTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\AnnotationsTable($c->db, $c->hooks->getEvents());
 		});
 
 		$this->setClassName('autoP', \ElggAutoP::class);
@@ -292,7 +292,7 @@ class ServiceProvider extends DiContainer {
 					$imagine = new \Imagine\Gd\Imagine();
 					break;
 			}
-			
+
 			return new \Elgg\ImageService($imagine, $c->config);
 		});
 
@@ -330,8 +330,7 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
-			return new \Elgg\Database\MetadataTable(
-				$c->metadataCache, $c->db, $c->entityTable, $c->hooks->getEvents(), $c->session);
+			return new \Elgg\Database\MetadataTable($c->metadataCache, $c->db, $c->hooks->getEvents());
 		});
 
 		$this->setFactory('mutex', function(ServiceProvider $c) {
@@ -465,9 +464,9 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setClassName('table_columns', \Elgg\Views\TableColumn\ColumnFactory::class);
-		
+
 		$this->setClassName('temp_filestore',  \ElggTempDiskFilestore::class);
-		
+
 		$this->setClassName('timer', \Elgg\Timer::class);
 
 		$this->setFactory('translator', function(ServiceProvider $c) {

@@ -132,7 +132,9 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 
 		$this->assertFalse(elgg_annotation_exists($guid, 'test_annotation'));
 
-		$e->annotate('test_annotation', rand(0, 10000));
+		$id = $e->annotate('test_annotation', rand(0, 10000));
+		$this->assertNotFalse($id);
+
 		$this->assertTrue(elgg_annotation_exists($guid, 'test_annotation'));
 		// this metastring should always exist but an annotation of this name should not
 		$this->assertFalse(elgg_annotation_exists($guid, 'email'));

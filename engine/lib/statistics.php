@@ -55,23 +55,27 @@ function get_entity_statistics($owner_guid = 0) {
  * @return int
  */
 function get_number_users($show_deactivated = false) {
-	$access = "";
 
-	if (!$show_deactivated) {
-		$access = "and " . _elgg_get_access_where_sql(['table_alias' => '']);
+	$where = new \Elgg\Database\Clauses\EntityWhereClause();
+	$where->type_subtype_pairs = [
+		'user' => null,
+	];
+
+	if ($show_deactivated) {
+		$where->use_enabled_clause = false;
 	}
 
-	$prefix = _elgg_config()->dbprefix;
-	$query = "SELECT count(*) as count
-		from {$prefix}entities where type='user' $access";
+	$select = \Elgg\Database\Select::fromTable('entities', 'e');
+	$select->select('COUNT(DISTINCT e.guid) AS count');
+	$select->addClause($where, 'e');
 
-	$result = get_data_row($query);
+	$result = _elgg_services()->db->getDataRow($select);
 
 	if ($result) {
 		return $result->count;
 	}
 
-	return false;
+	return 0;
 }
 
 /**

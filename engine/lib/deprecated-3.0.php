@@ -140,7 +140,7 @@ function register_metadata_as_independent($type, $subtype = '*') {
  */
 function is_metadata_independent($type, $subtype) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Metadata no longer is access bound.', '3.0');
-	
+
 	return false;
 }
 
@@ -174,13 +174,13 @@ function is_metadata_independent($type, $subtype) {
  */
 function elgg_get_entities_from_attributes(array $options = []) {
     elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_entities.', '3.0');
-    
+
     $options['metadata_name_value_pairs'] = elgg_extract('attribute_name_value_pairs', $options, []);
     $options['metadata_name_value_pairs_operator'] = elgg_extract('attribute_name_value_pairs_operator', $options, []);
-    
+
     unset($options['attribute_name_value_pairs']);
     unset($options['attribute_name_value_pairs_operator']);
-    
+
     return elgg_get_entities($options);
 }
 
@@ -196,12 +196,12 @@ function elgg_get_entities_from_attributes(array $options = []) {
  */
 function ban_user($user_guid, $reason = "") {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::ban()', '3.0');
-    
+
 	$user = get_user($user_guid);
 	if (!$user) {
 		return false;
 	}
-	
+
 	return $user->ban($reason);
 }
 
@@ -216,12 +216,12 @@ function ban_user($user_guid, $reason = "") {
  */
 function unban_user($user_guid) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::unban()', '3.0');
-    
+
 	$user = get_user($user_guid);
 	if (!$user) {
 		return false;
 	}
-	
+
 	return $user->unban();
 }
 
@@ -236,12 +236,12 @@ function unban_user($user_guid) {
  */
 function make_user_admin($user_guid) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::makeAdmin()', '3.0');
-    
+
 	$user = get_user($user_guid);
 	if (!$user) {
 		return false;
 	}
-	
+
 	return $user->makeAdmin();
 }
 
@@ -256,12 +256,12 @@ function make_user_admin($user_guid) {
  */
 function remove_user_admin($user_guid) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::removeAdmin()', '3.0');
-    
+
 	$user = get_user($user_guid);
 	if (!$user) {
 		return false;
 	}
-	
+
 	return $user->removeAdmin();
 }
 
@@ -276,12 +276,12 @@ function remove_user_admin($user_guid) {
  */
 function elgg_get_user_validation_status($user_guid) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::isValidated()', '3.0');
-	
+
 	$user = get_user($user_guid);
 	if (!$user) {
 		return false;
 	}
-	
+
 	return $user->isValidated();
 }
 
@@ -298,12 +298,12 @@ function elgg_get_user_validation_status($user_guid) {
  */
 function elgg_set_user_validation_status($user_guid, $status, $method = '') {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setValidationStatus()', '3.0');
-	
+
 	$user = get_user($user_guid);
 	if (!$user) {
 		return false;
 	}
-	
+
 	$user->setValidationStatus($status, $method);
 	return true;
 }
@@ -318,14 +318,14 @@ function elgg_set_user_validation_status($user_guid, $status, $method = '') {
  */
 function set_last_action($user) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setLastAction()', '3.0');
-	
+
 	if (!$user instanceof ElggUser) {
 		$user = get_user($user);
 	}
 	if (!$user) {
 		return;
 	}
-	
+
 	$user->setLastAction();
 }
 
@@ -339,12 +339,12 @@ function set_last_action($user) {
  */
 function set_last_login($user_guid) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::setLastLogin()', '3.0');
-	
+
 	$user = get_user($user_guid);
 	if (!$user) {
 		return;
 	}
-	
+
 	$user->setLastLogin();
 }
 
@@ -361,9 +361,18 @@ function set_last_login($user_guid) {
  * @deprecated Use \ElggMetadata->save()
  */
 function update_metadata($id, $name, $value, $value_type) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggMetadata->save()', '3.0');
-	
-	return _elgg_services()->metadataTable->update($id, $name, $value, $value_type);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggEntity setter or ElggEntity::setMetadata()', '3.0');
+
+	$metadata = elgg_get_metadata_from_id($id);
+	if (!$metadata) {
+		return false;
+	}
+
+	$metadata->name = $name;
+	$metadata->value_type = $value_type;
+	$metadata->value = $value;
+
+	return $metadata->save();
 }
 
 /**
@@ -385,10 +394,27 @@ function update_metadata($id, $name, $value, $value_type) {
  * @deprecated Use \ElggEntity setter or \Entity->setMetadata()
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $ignored1 = null,
-		$ignored2 = null, $allow_multiple = false) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggEntity setter or \Entity->setMetadata()', '3.0');
-	
-	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,	$value_type, $allow_multiple);
+						 $ignored2 = null, $allow_multiple = false) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' is deprecated. 
+		Use ElggEntity setter or ElggEntity::setMetadata()',
+		'3.0');
+
+	$entity = get_entity($entity_guid);
+	if (!$entity) {
+		return false;
+	}
+
+	if ($allow_multiple) {
+		return $entity->setMetadata($name, $value, $value_type, $allow_multiple);
+	}
+
+	$metadata = new ElggMetadata();
+	$metadata->entity_guid = $entity_guid;
+	$metadata->name = $name;
+	$metadata->value_type = $value_type;
+	$metadata->value = $value;
+	return $metadata->save();
 }
 
 /**
@@ -935,4 +961,107 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	}
 
 	return false;
+}
+
+/**
+ * Get the URL for this metadata
+ *
+ * By default this links to the export handler in the current view.
+ *
+ * @param int $id Metadata ID
+ *
+ * @return mixed
+ * @deprecated 3.0
+ */
+function get_metadata_url($id) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated and will be removed', '3.0');
+	$metadata = elgg_get_metadata_from_id($id);
+	if (!$metadata instanceof ElggMetadata) {
+		return;
+	}
+
+	return $metadata->getURL();
+}
+
+
+/**
+ * Create a new annotation.
+ *
+ * @param int    $entity_guid GUID of entity to be annotated
+ * @param string $name        Name of annotation
+ * @param string $value       Value of annotation
+ * @param string $value_type  Type of value (default is auto detection)
+ * @param int    $owner_guid  Owner of annotation (default is logged in user)
+ * @param int    $access_id   Access level of annotation
+ *
+ * @return int|bool id on success or false on failure
+ * @deprecated 3.0
+ */
+function create_annotation($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggAnnotation::save() or ElggEntity::annotate()
+		', '3.0'
+	);
+
+	$annotation = new ElggAnnotation();
+	$annotation->entity_guid = $entity_guid;
+	$annotation->name = $name;
+	$annotation->value_type = $value_type;
+	$annotation->value = $value;
+	$annotation->owner_guid = $owner_guid;
+	$annotation->access_id = $access_id;
+
+	return $annotation->save();
+}
+
+/**
+ * Update an annotation.
+ *
+ * @param int    $annotation_id Annotation ID
+ * @param string $name          Name of annotation
+ * @param string $value         Value of annotation
+ * @param string $value_type    Type of value
+ * @param int    $owner_guid    Owner of annotation
+ * @param int    $access_id     Access level of annotation
+ *
+ * @return bool
+ */
+function update_annotation($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggAnnotation::save() or ElggEntity::annotate()
+		', '3.0'
+	);
+
+	$annotation = elgg_get_annotation_from_id($annotation_id);
+	if (!$annotation) {
+		return false;
+	}
+
+	$annotation->name = $name;
+	$annotation->value_type = $value_type;
+	$annotation->value = $value;
+	$annotation->owner_guid = $owner_guid;
+	$annotation->access_id = $access_id;
+
+	return $annotation->save();
+}
+
+/**
+ * Delete objects with a delete() method.
+ *
+ * Used as a callback for \ElggBatch.
+ *
+ * @param object $object The object to disable
+ * @return bool
+ * @access private
+ *
+ * @deprecated 3.0
+ */
+function elgg_batch_delete_callback($object) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated.', '3.0');
+
+	// our db functions return the number of rows affected...
+	return $object->delete() ? true : false;
 }

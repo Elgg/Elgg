@@ -135,7 +135,11 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 
 		// create_metadata
 		$this->cache->inject($this->guid1, ['foo' => 'bar']);
-		_elgg_services()->metadataTable->create($this->guid1, 'foo', 'bar', 'text');
+		$metadata = new \ElggMetadata();
+		$metadata->entity_guid = $this->guid1;
+		$metadata->name = 'foo';
+		$metadata->value = 'bar';
+		$metadata->save();
 		$this->assertFalse($this->cache->isLoaded($this->guid1));
 	}
 

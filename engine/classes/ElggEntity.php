@@ -399,7 +399,7 @@ abstract class ElggEntity extends \ElggData implements
 		// saved entity. persist md to db.
 		if (!$multiple) {
 			$current_metadata = $this->getMetadata($name);
-			
+
 			if ((is_array($current_metadata) || count($value) > 1 || $value === []) && isset($current_metadata)) {
 				// remove current metadata if needed
 				// need to remove access restrictions right now to delete
@@ -425,7 +425,12 @@ abstract class ElggEntity extends \ElggData implements
 
 		// create new metadata
 		foreach ($value as $value_tmp) {
-			$md_id = _elgg_services()->metadataTable->create($this->guid, $name, $value_tmp, $value_type, $multiple);
+			$metadata = new ElggMetadata();
+			$metadata->entity_guid = $this->guid;
+			$metadata->name = $name;
+			$metadata->value_type = $value_type;
+			$metadata->value = $value_tmp;
+			$md_id = _elgg_services()->metadataTable->create($metadata, $multiple);
 			if (!$md_id) {
 				return false;
 			}
@@ -433,7 +438,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		return true;
 	}
-	
+
 	/**
 	 * Set temp metadata on this entity.
 	 *
@@ -460,11 +465,11 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		$this->temp_metadata[$name] = array_merge($this->temp_metadata[$name], $value);
-		
+
 		return true;
 	}
-	
-	
+
+
 
 	/**
 	 * Deletes all metadata on this object (metadata.entity_guid = $this->guid).
@@ -761,17 +766,30 @@ abstract class ElggEntity extends \ElggData implements
 	 * @warning Annotating an unsaved entity more than once with the same name
 	 *          will only save the last annotation.
 	 *
+	 * @todo Update temp_annotations to store an instance of ElggAnnotation and simply call ElggAnnotation::save(),
+	 *       after entity is saved
+	 *
 	 * @param string $name       Annotation name
 	 * @param mixed  $value      Annotation value
 	 * @param int    $access_id  Access ID
 	 * @param int    $owner_guid GUID of the annotation owner
-	 * @param string $vartype    The type of annotation value
+	 * @param string $value_type The type of annotation value
 	 *
 	 * @return bool|int Returns int if an annotation is saved
 	 */
-	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $vartype = "") {
-		if ((int) $this->guid > 0) {
-			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_guid, $access_id);
+	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $value_type = "") {
+		if ($this->guid) {
+			if (!$owner_guid) {
+				$owner_guid = elgg_get_logged_in_user_guid();
+			}
+			$annotation = new ElggAnnotation();
+			$annotation->entity_guid = $this->guid;
+			$annotation->name = $name;
+			$annotation->value_type = $value_type;
+			$annotation->value = $value;
+			$annotation->owner_guid = $owner_guid;
+			$annotation->access_id = $access_id;
+			return $annotation->save();
 		} else {
 			$this->temp_annotations[$name] = $value;
 		}
@@ -873,7 +891,7 @@ abstract class ElggEntity extends \ElggData implements
 		if (is_int($num)) {
 			return $num;
 		}
-		
+
 		return elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'comment',
@@ -882,7 +900,7 @@ abstract class ElggEntity extends \ElggData implements
 			'distinct' => false,
 		]);
 	}
-	
+
 	/**
 	 * Returns the ACLs owned by the entity
 	 *

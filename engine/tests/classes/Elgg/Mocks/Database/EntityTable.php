@@ -2,7 +2,9 @@
 
 namespace Elgg\Mocks\Database;
 
+use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\EntityTable as DbEntityTable;
+use Elgg\Database\Select;
 use ElggEntity;
 use stdClass;
 
@@ -35,9 +37,44 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * {@inheritdoc}
 	 */
+	public function getRow($guid, $user_guid = null) {
+		if (empty($this->rows[$guid])) {
+			return false;
+		}
+
+		$entity = $this->rowToElggStar($this->rows[$guid]);
+
+		if ($entity->access_id == ACCESS_PUBLIC) {
+			// Public entities are always accessible
+			return $entity;
+		}
+
+		$user_guid = isset($user_guid) ? (int) $user_guid : elgg_get_logged_in_user_guid();
+
+		if (_elgg_services()->userCapabilities->canBypassPermissionsCheck($user_guid)) {
+			return $entity;
+		}
+
+		if ($user_guid && $user_guid == $entity->owner_guid) {
+			// Owners have access to their own content
+			return $entity;
+		}
+
+		if ($user_guid && $entity->access_id == ACCESS_LOGGED_IN) {
+			// Existing users have access to entities with logged in access
+			return $entity;
+		}
+
+		return parent::getRow($guid, $user_guid);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function insertRow(stdClass $row, array $attributes = []) {
 		$subtype = isset($row->subtype) ? $row->subtype : null;
 		$this->setup(null, $row->type, $subtype, array_merge($attributes, (array) $row));
+
 		return parent::insertRow($row);
 	}
 
@@ -60,6 +97,7 @@ class EntityTable extends DbEntityTable {
 	 * @param string $type       Type of the mock entity
 	 * @param string $subtype    Subtype of the mock entity
 	 * @param array  $attributes Attributes of the mock entity
+	 *
 	 * @return ElggEntity
 	 */
 	public function setup($guid, $type, $subtype, array $attributes = []) {
@@ -115,7 +153,7 @@ class EntityTable extends DbEntityTable {
 			// not an attribute, so needs to be set again
 			$entity->$name = $value;
 		}
-		
+
 		return $entity;
 	}
 
@@ -125,6 +163,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function iterate() {
 		$this->iterator++;
+
 		return $this->iterator;
 	}
 
@@ -132,6 +171,7 @@ class EntityTable extends DbEntityTable {
 	 * Clear query specs
 	 *
 	 * @param int $guid GUID
+	 *
 	 * @return void
 	 */
 	public function clearQuerySpecs($guid) {
@@ -146,14 +186,19 @@ class EntityTable extends DbEntityTable {
 	 * Add query specs
 	 *
 	 * @param stdClass $row Entity table row
+	 *
 	 * @return void
 	 */
 	public function addQuerySpecs(stdClass $row) {
 
 		// Clear previous added specs, if any
 		$this->clearQuerySpecs($row->guid);
-		
-		$this->addSelectQuerySpecs($row);
+
+		// We may have been too paranoid about access
+		// If there is a need for more robust access controls in unit tests
+		// uncomment the following line and remove getRow method
+		//$this->addSelectQuerySpecs($row);
+
 		$this->addInsertQuerySpecs($row);
 		$this->addUpdateQuerySpecs($row);
 		$this->addDeleteQuerySpecs($row);
@@ -163,11 +208,10 @@ class EntityTable extends DbEntityTable {
 	 * Add query specs for SELECT queries
 	 *
 	 * @param stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	public function addSelectQuerySpecs(stdClass $row) {
-
-		$dbprefix = _elgg_config()->dbprefix;
 
 		// Access SQL for this row might differ based on:
 		//  - logged in user
@@ -186,7 +230,7 @@ class EntityTable extends DbEntityTable {
 			(int) $row->container_guid,
 			(int) elgg_get_logged_in_user_guid(),
 		]);
-		
+
 		$access_combinations = [];
 
 		foreach ($access_user_guids as $access_user_guid) {
@@ -212,36 +256,34 @@ class EntityTable extends DbEntityTable {
 			];
 		}
 
-		$access_queries = [];
 		foreach ($access_combinations as $access_combination) {
-			$access_combination['table_alias'] = '';
-			$access_queries[] = _elgg_get_access_where_sql($access_combination);
-		}
 
-		$access_queries = array_unique($access_queries);
+			$where = new EntityWhereClause();
+			$where->ignore_access = $access_combination['ignore_access'];
+			$where->use_enabled_clause = $access_combination['use_enabled_clause'];
+			$where->viewer_guid = $access_combination['user_guid'];
+			$where->guids = $row->guid;
 
-		foreach ($access_queries as $access) {
-			
-			$sql = "SELECT * FROM {$dbprefix}entities
-			WHERE guid = :guid AND $access";
+			$select = Select::fromTable('entities');
+			$select->select('*');
+			$select->addClause($where);
 
 			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
-				'params' => [
-					':guid' => (int) $row->guid,
-				],
-				'results' => function() use ($row, $access_combination) {
+				'sql' => $select->getSQL(),
+				'params' => $select->getParameters(),
+				'results' => function () use ($row, $access_combination) {
 					if (!isset($this->rows[$row->guid])) {
 						return [];
 					}
 					$row = $this->rows[$row->guid];
 
-					if ($access_combination['use_enabled_clause'] && !$row->enabled != 'yes') {
+					if ($access_combination['use_enabled_clause'] && $row->enabled != 'yes') {
 						// The SELECT query would contain ('enabled' = 'yes')
 						return [];
 					}
 
 					$has_access = $this->validateRowAccess($row);
+
 					return $has_access ? [$row] : [];
 				}
 			]);
@@ -253,6 +295,7 @@ class EntityTable extends DbEntityTable {
 	 * This is a reverse engineered approach to an SQL query generated by AccessCollections::getWhereSql()
 	 *
 	 * @param \stdClass $row Data row
+	 *
 	 * @return bool
 	 */
 	public function validateRowAccess($row) {
@@ -300,12 +343,13 @@ class EntityTable extends DbEntityTable {
 	 * Query specs for INSERT operations
 	 *
 	 * @param stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	public function addInsertQuerySpecs(stdClass $row) {
 
 		$dbprefix = _elgg_config()->dbprefix;
-		
+
 		$sql = "
 			INSERT INTO {$dbprefix}entities
 			(type, subtype, owner_guid, container_guid,
@@ -335,6 +379,7 @@ class EntityTable extends DbEntityTable {
 	 * Query specs for UPDATE operations
 	 *
 	 * @param stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	public function addUpdateQuerySpecs(stdClass $row) {
@@ -361,11 +406,13 @@ class EntityTable extends DbEntityTable {
 				':time_updated' => $row->time_updated,
 				':guid' => $row->guid,
 			],
-			'results' => function() use ($row) {
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
 					$this->rows[$row->guid] = $row;
+
 					return [$row->guid];
 				}
+
 				return [];
 			},
 		]);
@@ -381,13 +428,15 @@ class EntityTable extends DbEntityTable {
 			'params' => [
 				':guid' => $row->guid,
 			],
-			'results' => function() use ($row) {
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
 					$row->enabled = 'no';
 					$this->rows[$row->guid] = $row;
 					$this->addQuerySpecs($row);
+
 					return [$row->guid];
 				}
+
 				return [];
 			},
 			'times' => 1,
@@ -404,13 +453,15 @@ class EntityTable extends DbEntityTable {
 			'params' => [
 				':guid' => $row->guid,
 			],
-			'results' => function() use ($row) {
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
 					$row->enabled = 'yes';
 					$this->rows[$row->guid] = $row;
 					$this->addQuerySpecs($row);
+
 					return [$row->guid];
 				}
+
 				return [];
 			},
 			'times' => 1,
@@ -431,13 +482,15 @@ class EntityTable extends DbEntityTable {
 				':last_action' => $time,
 				':guid' => $row->guid,
 			],
-			'results' => function() use ($row, $time) {
+			'results' => function () use ($row, $time) {
 				if (isset($this->rows[$row->guid])) {
 					$row->last_action = $time;
 					$this->rows[$row->guid] = $row;
 					$this->addQuerySpecs($row);
+
 					return [$row->guid];
 				}
+
 				return [];
 			},
 		]);
@@ -447,6 +500,7 @@ class EntityTable extends DbEntityTable {
 	 * Query specs for DELETE operations
 	 *
 	 * @param stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	public function addDeleteQuerySpecs(\stdClass $row) {
@@ -465,12 +519,14 @@ class EntityTable extends DbEntityTable {
 			],
 			// We are using results instead of 'row_count' to give an accurate
 			// count of deleted rows
-			'results' => function() use ($row) {
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
 					// Query spec will be cleared after row is deleted from objects table
 					unset($this->rows[$row->guid]);
+
 					return [$row->guid];
 				}
+
 				return [];
 			},
 			'times' => 1,

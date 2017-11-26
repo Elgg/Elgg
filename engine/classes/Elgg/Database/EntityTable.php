@@ -7,6 +7,8 @@ use Elgg\Cache\EntityCache;
 use Elgg\Cache\MetadataCache;
 use Elgg\Config;
 use Elgg\Database;
+use Elgg\Database\Clauses\EntityWhereClause;
+use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\EntityTable\UserFetchFailureException;
 use Elgg\EntityPreloader;
 use Elgg\EventsService;
@@ -183,19 +185,15 @@ class EntityTable {
 			return false;
 		}
 
-		$access = _elgg_get_access_where_sql([
-			'table_alias' => '',
-			'user_guid' => $user_guid,
-		]);
+		$where = new EntityWhereClause();
+		$where->guids = $guid;
+		$where->viewer_guid = $user_guid;
 
-		$sql = "SELECT * FROM {$this->db->prefix}entities
-			WHERE guid = :guid AND $access";
+		$select = Select::fromTable('entities');
+		$select->select('*');
+		$select->addClause($where);
 
-		$params = [
-			':guid' => (int) $guid,
-		];
-
-		return $this->db->getDataRow($sql, null, $params);
+		return $this->db->getDataRow($select);
 	}
 
 	/**
@@ -532,169 +530,9 @@ class EntityTable {
 	}
 
 	/**
-	 * Returns SQL where clause for type and subtype on main entity table
-	 *
-	 * @param string     $table    Entity table prefix as defined in SELECT...FROM entities $table
-	 * @param null|array $types    Array of types or null if none.
-	 * @param null|array $subtypes Array of subtypes or null if none
-	 * @param null|array $pairs    Array of pairs of types and subtypes
-	 *
-	 * @return false|string
-	 * @access private
-	 */
-	public function getEntityTypeSubtypeWhereSql($table, $types, $subtypes, $pairs) {
-		// short circuit if nothing is requested
-		if (!$types && !$subtypes && !$pairs) {
-			return '';
-		}
-
-		$or_clauses = [];
-
-		if (is_array($pairs)) {
-			foreach ($pairs as $paired_type => $paired_subtypes) {
-				if (!empty($paired_subtypes)) {
-					$paired_subtypes = (array) $paired_subtypes;
-					$paired_subtypes = array_map(function ($el) {
-						$el = trim((string) $el, "\"\'");
-
-						return "'$el'";
-					}, $paired_subtypes);
-
-					$paired_subtypes_in = implode(',', $paired_subtypes);
-
-					$or_clauses[] = "(
-						{$table}.type = '{$paired_type}'
-						AND {$table}.subtype IN ({$paired_subtypes_in})
-					)";
-				} else {
-					$or_clauses[] = "({$table}.type = '{$paired_type}')";
-				}
-			}
-		} else {
-			$types = (array) $types;
-
-			foreach ($types as $type) {
-				if (!empty($subtypes)) {
-					$subtypes = (array) $subtypes;
-					$subtypes = array_map(function ($el) {
-						$el = trim((string) $el, "\"\'");
-
-						return "'$el'";
-					}, $subtypes);
-
-					$subtypes_in = implode(',', $subtypes);
-
-					$or_clauses[] = "(
-						{$table}.type = '{$type}'
-						AND {$table}.subtype IN ({$subtypes_in})
-					)";
-				} else {
-					$or_clauses[] = "({$table}.type = '{$type}')";
-				}
-			}
-		}
-
-		if (empty($or_clauses)) {
-			return '';
-		}
-
-		return '(' . implode(' OR ', $or_clauses) . ')';
-	}
-
-	/**
-	 * Returns SQL where clause for owner and containers.
-	 *
-	 * @param string     $column Column name the guids should be checked against. Usually
-	 *                           best to provide in table.column format.
-	 * @param null|array $guids  Array of GUIDs.
-	 *
-	 * @return false|string
-	 * @access private
-	 */
-	public function getGuidBasedWhereSql($column, $guids) {
-		// short circuit if nothing requested
-		// 0 is a valid guid
-		if (!$guids && $guids !== 0) {
-			return '';
-		}
-
-		// normalize and sanitise owners
-		if (!is_array($guids)) {
-			$guids = [$guids];
-		}
-
-		$guids_sanitized = [];
-		foreach ($guids as $guid) {
-			if ($guid !== ELGG_ENTITIES_NO_VALUE) {
-				$guid = sanitise_int($guid);
-
-				if (!$guid) {
-					return false;
-				}
-			}
-			$guids_sanitized[] = $guid;
-		}
-
-		$where = '';
-		$guid_str = implode(',', $guids_sanitized);
-
-		// implode(',', 0) returns 0.
-		if ($guid_str !== false && $guid_str !== '') {
-			$where = "($column IN ($guid_str))";
-		}
-
-		return $where;
-	}
-
-	/**
-	 * Returns SQL where clause for entity time limits.
-	 *
-	 * @param string   $table              Entity table prefix as defined in
-	 *                                     SELECT...FROM entities $table
-	 * @param null|int $time_created_upper Time created upper limit
-	 * @param null|int $time_created_lower Time created lower limit
-	 * @param null|int $time_updated_upper Time updated upper limit
-	 * @param null|int $time_updated_lower Time updated lower limit
-	 *
-	 * @return false|string false on fail, string on success.
-	 * @access private
-	 */
-	public function getEntityTimeWhereSql($table, $time_created_upper = null,
-	$time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
-
-		$wheres = [];
-
-		// exploit PHP's loose typing (quack) to check that they are INTs and not str cast to 0
-		if ($time_created_upper && $time_created_upper == sanitise_int($time_created_upper)) {
-			$wheres[] = "{$table}.time_created <= $time_created_upper";
-		}
-
-		if ($time_created_lower && $time_created_lower == sanitise_int($time_created_lower)) {
-			$wheres[] = "{$table}.time_created >= $time_created_lower";
-		}
-
-		if ($time_updated_upper && $time_updated_upper == sanitise_int($time_updated_upper)) {
-			$wheres[] = "{$table}.time_updated <= $time_updated_upper";
-		}
-
-		if ($time_updated_lower && $time_updated_lower == sanitise_int($time_updated_lower)) {
-			$wheres[] = "{$table}.time_updated >= $time_updated_lower";
-		}
-
-		if (is_array($wheres) && count($wheres) > 0) {
-			$where_str = implode(' AND ', $wheres);
-			return "($where_str)";
-		}
-
-		return '';
-	}
-
-	/**
 	 * Returns a list of months in which entities were updated or created.
 	 *
 	 * @tip Use this to generate a list of archives by month for when entities were added or updated.
-	 *
-	 * @todo document how to pass in array for $subtype
 	 *
 	 * @warning Months are returned in the form YYYYMM.
 	 *
@@ -707,63 +545,30 @@ class EntityTable {
 	 */
 	public function getDates($type = '', $subtype = '', $container_guid = 0, $order_by = 'time_created') {
 
-		$where = [];
+		$options = [
+			'types' => $type,
+			'subtypes' => $subtype,
+			'container_guids' => $container_guid,
+			'callback' => false,
+			'order_by' => [
+				new OrderByClause($order_by),
+			],
+		];
 
-		if ($type) {
-			$type = sanitise_string($type);
-			$where[] = "type='$type'";
+		$options = new QueryOptions($options);
+
+		$qb = Select::fromTable('entities');
+		$qb->select("DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth");
+		$qb->addClause(EntityWhereClause::factory($options));
+
+		$results  = _elgg_services()->db->getData($qb);
+		if (empty($results)) {
+			return false;
 		}
 
-		if (is_array($subtype)) {
-			$or_clauses = [];
-			if (sizeof($subtype)) {
-				foreach ($subtype as $typekey => $subtypearray) {
-					foreach ($subtypearray as $subtypeval) {
-						$subtype_str = sanitize_string($subtypeval);
-						$type_str = sanitize_string($typekey);
-						$or_clauses = "(type = '{$type_str}' and subtype = '{$subtype_str}')";
-					}
-				}
-			}
-			if (!empty($or_clauses)) {
-				$where[] = '(' . implode(' OR ', $or_clauses) . ')';
-			}
-		} else {
-			if ($subtype) {
-				$where[] = "subtype='$subtype'";
-			}
-		}
-
-		if ($container_guid !== 0) {
-			if (is_array($container_guid)) {
-				foreach ($container_guid as $key => $val) {
-					$container_guid[$key] = (int) $val;
-				}
-				$where[] = "container_guid in (" . implode(",", $container_guid) . ")";
-			} else {
-				$container_guid = (int) $container_guid;
-				$where[] = "container_guid = {$container_guid}";
-			}
-		}
-
-		$where[] = _elgg_get_access_where_sql(['table_alias' => '']);
-
-		$sql = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth
-			FROM {$this->db->prefix}entities where ";
-
-		foreach ($where as $w) {
-			$sql .= " $w and ";
-		}
-
-		$sql .= "1=1 ORDER BY $order_by";
-		if ($result = $this->db->getData($sql)) {
-			$endresult = [];
-			foreach ($result as $res) {
-				$endresult[] = $res->yearmonth;
-			}
-			return $endresult;
-		}
-		return false;
+		return array_map(function($e) {
+			return $e->yearmonth;
+		}, $results);
 	}
 
 	/**

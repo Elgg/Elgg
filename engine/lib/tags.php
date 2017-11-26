@@ -31,163 +31,57 @@ function string_to_tag_array($string) {
 /**
  * Get popular tags and their frequencies
  *
- * Supports similar arguments as elgg_get_entities()
+ * Accepts all options supported by {@link elgg_get_entities()}
  *
- * @param array $options Array in format:
+ * Returns an array of objects that include "tag" and "total" properties
  *
- * 	threshold => INT minimum tag count
+ * @todo When updating this function for 3.0, I have noticed that docs explicitly mention
+ *       that tags must be registered, but it was not really checked anywhere in code
+ *       So, either update the docs or decide what the behavior should be
  *
- * 	tag_names => array() metadata tag names - must be registered tags
+ * @param array $options Options
  *
- * 	limit => INT number of tags to return (default from settings)
+ * @option int      $threshold Minimum number of tag occurrences
+ * @option string[] $tag_names Names of registered tag names to include in search
  *
- *  types => null|STR entity type (SQL: type = '$type')
- *
- * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
- *              Use ELGG_ENTITIES_NO_VALUE to match the default subtype.
- *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
- *
- * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
- *                        array(
- *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
- *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
- *                        );
- *
- * 	owner_guids => null|INT entity guid
- *
- * 	container_guids => null|INT container_guid
- *
- * 	created_time_lower => null|INT Created time lower boundary in epoch time
- *
- * 	created_time_upper => null|INT Created time upper boundary in epoch time
- *
- * 	modified_time_lower => null|INT Modified time lower boundary in epoch time
- *
- * 	modified_time_upper => null|INT Modified time upper boundary in epoch time
- *
- * 	wheres => array() Additional where clauses to AND together
- *
- * 	joins => array() Additional joins
- *
- * @return 	object[]|false If no tags or error, false
- * 						   otherwise, array of objects with ->tag and ->total values
+ * @return 	object[]|false
  * @since 1.7.1
  */
 function elgg_get_tags(array $options = []) {
-	_elgg_check_unsupported_site_guid($options);
-	
 	$defaults = [
 		'threshold' => 1,
 		'tag_names' => [],
-		'limit' => _elgg_config()->default_limit,
-
-		'types' => ELGG_ENTITIES_ANY_VALUE,
-		'subtypes' => ELGG_ENTITIES_ANY_VALUE,
-		'type_subtype_pairs' => ELGG_ENTITIES_ANY_VALUE,
-
-		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
-		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
-
-		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
-		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
-		'created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
-		'created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
-
-		'joins' => [],
-		'wheres' => [],
 	];
-
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = ['type', 'subtype', 'owner_guid', 'container_guid', 'tag_name'];
+	$singulars = ['tag_name'];
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
-	$registered_tags = elgg_get_registered_tag_metadata_names();
-
-	if (!is_array($options['tag_names'])) {
-		return false;
+	$tag_names = elgg_extract('tag_names', $options);
+	if (empty($tag_names)) {
+		$tag_names = elgg_get_registered_tag_metadata_names();
 	}
 
-	// empty array so use all registered tag names
-	if (count($options['tag_names']) == 0) {
-		$options['tag_names'] = $registered_tags;
-	}
+	$threshold = elgg_extract('threshold', $options, 1, false);
 
-	$wheres = $options['wheres'];
+	unset($options['tag_names']);
+	unset($options['threshold']);
 
-	// catch for tags that were spaces
-	$wheres[] = "md.value != ''";
+	$qb = \Elgg\Database\Select::fromTable('metadata', 'md');
+	$qb->select('md.value AS tag')
+		->addSelect('COUNT(md.id) AS total')
+		->where($qb->compare('md.name', 'IN', $tag_names, ELGG_VALUE_STRING))
+		->andWhere($qb->compare('md.value', '!=', '', ELGG_VALUE_STRING))
+		->groupBy('md.value')
+		->having($qb->compare('total', '>=', $threshold, ELGG_VALUE_INTEGER))
+		->orderBy('total', 'desc');
 
-	$sanitised_tags = [];
-	foreach ($options['tag_names'] as $tag) {
-		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
-	}
-	$tags_in = implode(',', $sanitised_tags);
-	$wheres[] = "(md.name IN ($tags_in))";
+	$options = new \Elgg\Database\QueryOptions($options);
+	$alias = $qb->joinEntitiesTable('md', 'entity_guid', 'inner', 'e');
+	$qb->addClause(\Elgg\Database\Clauses\EntityWhereClause::factory($options), $alias);
 
-	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
-		$options['subtypes'], $options['type_subtype_pairs']);
-	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
-	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
-		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
-
-	// see if any functions failed
-	// remove empty strings on successful functions
-	foreach ($wheres as $i => $where) {
-		if ($where === false) {
-			return false;
-		} elseif (empty($where)) {
-			unset($wheres[$i]);
-		}
-	}
-
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
-	$joins = $options['joins'];
-
-	$prefix = _elgg_config()->dbprefix;
-	$joins[] = "JOIN {$prefix}metadata md on md.entity_guid = e.guid";
-
-	// remove identical join clauses
-	$joins = array_unique($joins);
-
-	foreach ($joins as $i => $join) {
-		if ($join === false) {
-			return false;
-		} elseif (empty($join)) {
-			unset($joins[$i]);
-		}
-	}
-
-	$query  = "SELECT md.value as tag, count(md.id) as total ";
-	$query .= "FROM {$prefix}entities e ";
-
-	// add joins
-	foreach ($joins as $j) {
-		$query .= " $j ";
-	}
-
-	// add wheres
-	$query .= ' WHERE ';
-
-	foreach ($wheres as $w) {
-		$query .= " $w AND ";
-	}
-
-	// Add access controls
-	$query .= _elgg_get_access_where_sql();
-
-	$threshold = sanitise_int($options['threshold']);
-	$query .= " GROUP BY md.value HAVING total >= {$threshold} ";
-	$query .= " ORDER BY total DESC ";
-
-	$limit = sanitise_int($options['limit']);
-	$query .= " LIMIT {$limit} ";
-
-	return get_data($query);
+	return _elgg_services()->db->getData($qb);
 }
 
 /**
@@ -206,6 +100,18 @@ function elgg_get_tags(array $options = []) {
  */
 function elgg_register_tag_metadata_name($name) {
 	return _elgg_services()->metadataTable->registerTagName($name);
+}
+
+/**
+ * Unregister metadata tag name
+ *
+ * @param string $name Tag name
+ *
+ * @return bool
+ * @since 3.0
+ */
+function elgg_unregister_tag_metadata_name($name) {
+	return _elgg_services()->metadataTable->unregisterTagName($name);
 }
 
 /**

@@ -3,6 +3,7 @@
 namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\QueryOptions;
 
 /**
  * Builds queries for filtering entities by their properties in the entities table
@@ -116,5 +117,28 @@ class EntityWhereClause extends WhereClause {
 		$wheres[] = $qb->compare($alias('access_id'), '=', $this->access_ids, ELGG_VALUE_ID);
 
 		return $qb->merge($wheres);
+	}
+
+	/**
+	 * Build new clause from options
+	 *
+	 * @param QueryOptions $options Options
+	 * @return static
+	 */
+	public static function factory(QueryOptions $options) {
+		$where = new static();
+		$where->guids = $options->guids;
+		$where->owner_guids = $options->owner_guids;
+		$where->container_guids = $options->container_guids;
+		$where->type_subtype_pairs = $options->type_subtype_pairs;
+		$where->created_after = $options->created_after;
+		$where->created_before = $options->created_before;
+		$where->updated_after = $options->updated_after;
+		$where->updated_before = $options->updated_before;
+		$where->last_action_after = $options->last_action_after;
+		$where->last_action_before = $options->last_action_before;
+		$where->access_ids = $options->access_ids;
+
+		return $where;
 	}
 }

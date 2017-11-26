@@ -53,6 +53,9 @@ class IntegrationTestCaseIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($dbConfig, $app2->getDbConfig());
 	}
 
+	/**
+	 * @group Current
+	 */
 	public function testCanResetTestingApplicationAfterPluginStackChanges() {
 
 		$map = function(\ElggPlugin $plugin) {

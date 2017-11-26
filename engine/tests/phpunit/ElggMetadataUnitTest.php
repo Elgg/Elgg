@@ -29,7 +29,12 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = _elgg_services()->metadataTable->create($object->guid, 'foo', 'bar', '');
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'test_metadata_' . rand();
+		$metadata->value = 'test_value_' . rand();
+		$id = $metadata->save();
+
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
@@ -57,7 +62,12 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = _elgg_services()->metadataTable->create($object->guid, 'foo', 'bar', '');
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'test_metadata_' . rand();
+		$metadata->value = 'test_value_' . rand();
+		$id = $metadata->save();
+
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
@@ -85,7 +95,12 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = _elgg_services()->metadataTable->create($object->guid, 'foo', 'bar', '');
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'test_metadata_' . rand();
+		$metadata->value = 'test_value_' . rand();
+		$id = $metadata->save();
+
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
@@ -143,7 +158,12 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$id = _elgg_services()->metadataTable->create($object->guid, 'foo', 'bar', '');
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'test_metadata_' . rand();
+		$metadata->value = 'test_value_' . rand();
+		$id = $metadata->save();
+
 		$metadata = elgg_get_metadata_from_id($id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);

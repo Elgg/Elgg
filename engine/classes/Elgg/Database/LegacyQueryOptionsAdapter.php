@@ -750,6 +750,7 @@ trait LegacyQueryOptionsAdapter {
 			'annotation_created',
 			'relationship_created',
 			'last_action',
+			'posted',
 		];
 
 		$bounds = ['time_lower', 'time_upper', 'after', 'before'];
@@ -762,6 +763,7 @@ trait LegacyQueryOptionsAdapter {
 
 				$new_prop_name = $prop_name;
 				$new_prop_name = str_replace('modified', 'updated', $new_prop_name);
+				$new_prop_name = str_replace('posted', 'created', $new_prop_name);
 				$new_prop_name = str_replace('time_lower', 'after', $new_prop_name);
 				$new_prop_name = str_replace('time_upper', 'before', $new_prop_name);
 

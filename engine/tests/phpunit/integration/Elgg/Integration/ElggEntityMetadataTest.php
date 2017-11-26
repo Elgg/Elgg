@@ -1,6 +1,8 @@
 <?php
 /**
  * @group IntegrationTests
+ * @group Metadata
+ * @group EntityMetadata
  */
 class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 
@@ -90,6 +92,9 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 		}
 	}
 
+	/**
+	 * @group Current
+	 */
 	public function testEntitySetSingleValueOverwrite() {
 		foreach ($this->entities as $entity) {
 			$entity->foo = 'bar';

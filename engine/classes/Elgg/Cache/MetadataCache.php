@@ -19,9 +19,9 @@ class MetadataCache {
 	protected $values = [];
 
 	/**
-	 * @var \ElggSession
+	 * @var array
 	 */
-	protected $session;
+	protected $ids = [];
 
 	/**
 	 * @var ElggSharedMemoryCache
@@ -47,12 +47,14 @@ class MetadataCache {
 	 *
 	 * @param int   $entity_guid The GUID of the entity
 	 * @param array $values      The metadata values to cache
+	 * @param array $ids         The metadata ids
 	 * @return void
 	 *
 	 * @access private For testing only
 	 */
-	public function inject($entity_guid, array $values) {
+	public function inject($entity_guid, array $values, array $ids = []) {
 		$this->values[$entity_guid] = $values;
+		$this->ids[$entity_guid] = $ids;
 	}
 
 	/**
@@ -78,6 +80,28 @@ class MetadataCache {
 	}
 
 	/**
+	 * Get the metadata id for a particular name
+	 *
+	 * Warning: You should always call isLoaded() beforehand to verify that this
+	 * function's return value can be trusted.
+	 *
+	 * @see isLoaded
+	 *
+	 * @param int    $entity_guid The GUID of the entity
+	 * @param string $name        The metadata name
+	 *
+	 * @return int[]|int|null
+	 */
+	public function getSingleId($entity_guid, $name) {
+		if (isset($this->ids[$entity_guid])
+			&& array_key_exists($name, $this->ids[$entity_guid])) {
+			return $this->ids[$entity_guid][$name];
+		} else {
+			return null;
+		}
+	}
+
+	/**
 	 * Forget about all metadata for an entity.
 	 *
 	 * @param int $entity_guid The GUID of the entity
@@ -85,6 +109,7 @@ class MetadataCache {
 	 */
 	public function clear($entity_guid) {
 		unset($this->values[$entity_guid]);
+		unset($this->ids[$entity_guid]);
 		$this->cache->delete($entity_guid);
 	}
 
@@ -95,7 +120,7 @@ class MetadataCache {
 	 * @return bool
 	 */
 	public function isLoaded($entity_guid) {
-		return array_key_exists($entity_guid, $this->values);
+		return array_key_exists($entity_guid, $this->values) && array_key_exists($entity_guid, $this->ids);
 	}
 
 	/**
@@ -108,6 +133,7 @@ class MetadataCache {
 			$this->cache->delete($guid);
 		}
 		$this->values = [];
+		$this->ids = [];
 	}
 
 	/**
@@ -120,8 +146,10 @@ class MetadataCache {
 	public function invalidateByOptions(array $options) {
 		if (empty($options['guid'])) {
 			$this->clearAll();
+			_elgg_services()->entityCache->clear();
 		} else {
 			$this->clear($options['guid']);
+			_elgg_services()->entityCache->remove($options['guid']);
 		}
 	}
 
@@ -135,17 +163,14 @@ class MetadataCache {
 		if (empty($guids)) {
 			return;
 		}
-		
+
 		$version = (int) _elgg_config()->version;
 		if (!empty($version) && ($version < 2016110900)) {
 			// can't use this during upgrade from 2.x to 3.0
 			return;
 		}
 
-		if (!is_array($guids)) {
-			$guids = [$guids];
-		}
-		$guids = array_unique($guids);
+		$guids = array_unique((array) $guids);
 
 		foreach ($guids as $i => $guid) {
 			$value = $this->cache->load($guid);
@@ -167,42 +192,43 @@ class MetadataCache {
 			'callback' => false,
 			'distinct' => false,
 			'order_by' => [
-				new OrderByClause('n_table.entity_guid'),
-				new OrderByClause('n_table.time_created'),
-				new OrderByClause('n_table.id'),
+				new OrderByClause('n_table.entity_guid', 'asc'),
+				new OrderByClause('n_table.time_created', 'asc'),
+				new OrderByClause('n_table.id', 'asc')
 			],
 		];
+
+		// We already have a loaded entity, so we can ignore entity access clauses
+		$ia = elgg_set_ignore_access(true);
 		$data = _elgg_services()->metadataTable->getAll($options);
+		elgg_set_ignore_access($ia);
 
 		// make sure we show all entities as loaded
 		foreach ($guids as $guid) {
 			$this->values[$guid] = null;
+			$this->ids[$guid] = null;
 		}
 
 		// build up metadata for each entity, save when GUID changes (or data ends)
-		$last_guid = null;
-		$metadata = [];
-		$last_row_idx = count($data) - 1;
 		foreach ($data as $i => $row) {
+			$id = $row->id;
 			$name = $row->name;
 			$value = ($row->value_type === 'text') ? $row->value : (int) $row->value;
 			$guid = $row->entity_guid;
-			if ($guid !== $last_guid) {
-				if ($last_guid) {
-					$this->values[$last_guid] = $metadata;
-				}
-				$metadata = [];
-			}
-			if (isset($metadata[$name])) {
-				$metadata[$name] = (array) $metadata[$name];
-				$metadata[$name][] = $value;
+
+			if (isset($this->values[$guid][$name])) {
+				$this->values[$guid][$name] = (array) $this->values[$guid][$name];
+				$this->values[$guid][$name][] = $value;
 			} else {
-				$metadata[$name] = $value;
+				$this->values[$guid][$name] = $value;
 			}
-			if (($i == $last_row_idx)) {
-				$this->values[$guid] = $metadata;
+
+			if (isset($this->ids[$guid][$name])) {
+				$this->ids[$guid][$name] = (array) $this->ids[$guid][$name];
+				$this->ids[$guid][$name][] = $id;
+			} else {
+				$this->ids[$guid][$name] = $id;
 			}
-			$last_guid = $guid;
 		}
 
 		foreach ($guids as $guid) {
@@ -220,7 +246,7 @@ class MetadataCache {
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
-		
+
 		$data = _elgg_services()->metadataTable->getAll([
 			'guids' => $guids,
 			'limit' => 0,
@@ -229,7 +255,7 @@ class MetadataCache {
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
 			'group_by' => 'n_table.entity_guid',
 		]);
-		
+
 		// don't cache if metadata for entity is over 10MB (or rolled INT)
 		foreach ($data as $row) {
 			if ($row->bytes > $limit || $row->bytes < 0) {
