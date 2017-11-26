@@ -2,8 +2,6 @@
 
 namespace Elgg\Views;
 
-use Elgg\ViewRenderingTestCase;
-
 /**
  * @group ViewRendering
  * @group ViewsService
@@ -19,7 +17,7 @@ class CommentViewsRenderingTest extends ViewRenderingTestCase {
 	}
 
 	public function getDefaultViewVars() {
-		$comment = $this->createOne('object', [
+		$comment = $this->createObject([
 			'subtype' => 'comment',
 		]);
 		return [
