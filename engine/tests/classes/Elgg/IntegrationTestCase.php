@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Di\ServiceProvider;
+use Elgg\Plugins\PluginTesting;
 use ElggSession;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Zend\Mail\Transport\InMemory;
@@ -16,7 +17,8 @@ use Zend\Mail\Transport\InMemory;
 abstract class IntegrationTestCase extends BaseTestCase {
 
 	use TestSeeding;
-
+	use PluginTesting;
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -89,7 +91,16 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		parent::setUp();
 
 		$app = Application::getInstance();
+		
+		// check if test is in a plugin
+		$plugin_id = $this->getPluginID();
+		if (!empty($plugin_id)) {
+			if (!$app->_services->plugins->isActive($plugin_id)) {
+				$this->markTestSkipped("Plugin '{$plugin_id}' isn't active, skipped test");
+			}
+		}
 
+		// legacy support, need logged in user
 		if ($this instanceof LegacyIntegrationTestCase) {
 			$app->_services->session->setLoggedInUser($this->getAdmin());
 		}
