@@ -9,8 +9,15 @@ if (!$item instanceof ElggRiverItem) {
 }
 
 $reply = $item->getObjectEntity();
+if (!$reply instanceof ElggDiscussionReply) {
+	return;
+}
+
 $subject = $item->getSubjectEntity();
 $target = $item->getTargetEntity();
+if (!$subject instanceof ElggEntity || !$target instanceof ElggEntity) {
+	return;
+}
 
 $subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
@@ -20,21 +27,14 @@ $subject_link = elgg_view('output/url', [
 ]);
 
 $target_link = elgg_view('output/url', [
-	'href' => $target->getURL(),
-	'text' => $target->getDisplayName(),
-	'class' => 'elgg-river-target',
-	'is_trusted' => true,
-]);
-
-$reply_link = elgg_view('output/url', [
 	'href' => $reply->getURL(),
-	'text' => elgg_echo('river:reply:view'),
+	'text' => $target->getDisplayName(),
 	'class' => 'elgg-river-target',
 	'is_trusted' => true,
 ]);
 
 $vars['summary'] = elgg_echo('river:object:discussion_reply:reply', [$subject_link, $target_link]);
 
-$vars['message'] = elgg_get_excerpt($reply->description) . ' ' . $reply_link;
+$vars['message'] = elgg_get_excerpt($reply->description);
 
 echo elgg_view('river/elements/layout', $vars);
