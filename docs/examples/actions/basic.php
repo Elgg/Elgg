@@ -12,11 +12,9 @@ $guid = get_input('guid');
 
 $entity = get_entity($guid);
 if (!$entity) {
-	register_error(elgg_echo('rating:failure'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('rating:failure'));
 }
 
 $entity->annotate('rating', $rating);
 
-system_message(elgg_echo('rating:success'));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('rating:success'));

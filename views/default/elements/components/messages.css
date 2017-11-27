@@ -1,0 +1,61 @@
+/* ***************************************
+	Messages
+*************************************** */
+
+.elgg-message {
+	border: 1px solid #CCC;
+	border-radius: 3px;
+	
+	margin-bottom: 10px;
+	
+	&.elgg-message-success {
+		color: #397F2E;
+		background-color: #EAF8E8;
+		border-color: #AADEA2;
+	}
+	&.elgg-message-error {
+		color: #B94A48;
+		background-color: #F8E8E8;
+		border-color: #E5B7B5;
+	}
+	&.elgg-message-help,
+	&.elgg-message-notice {
+		color: #3B8BC9;
+		background-color: #E7F1F9;
+		border-color: #B1D1E9;
+	}
+	&.elgg-message-warning {
+		color: #6B420F;
+		background-color: #FCF8E4;
+		border-color: #EDDC7D;
+	}
+	
+	> .elgg-inner {
+		border-color: inherit;
+	
+		> .elgg-head {
+			background-color: rgba(255,255,255,0.7);
+			font-weight: bold;
+			padding: 5px 10px;
+			border-bottom-width: 1px;
+			border-bottom-style: solid;
+			border-bottom-color: inherit;
+			
+			.elgg-message-icon {
+				padding-right: 10px;
+			}
+		}
+		
+		> div:last-child {
+			border-bottom: 0px;
+		}
+	}
+	.elgg-body {
+		padding: 10px;
+		
+		p {
+			margin: 0;
+		}
+	}
+	
+}

@@ -7,20 +7,6 @@ define(function(require) {
 	var $ = require('jquery');
 
 	function init () {
-		// system messages do not fade in admin area, instead slide up when clicked
-		$('.elgg-system-messages li').stop(true);
-		$(document).off('click', '.elgg-system-messages li');
-		$(document).on('click', '.elgg-system-messages li', function(e) {
-			if (!$(e.target).is('a')) {
-				var $this = $(this);
-
-				// slideUp allows dismissals without notices shifting around unpredictably
-				$this.clearQueue().slideUp(100, function () {
-					$this.remove();
-				});
-			}
-		});
-
 		// disable checkboxes (readonly does not work for them)
 		$(document).on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {
 			return false;

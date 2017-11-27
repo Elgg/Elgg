@@ -1211,6 +1211,26 @@ function elgg_view_module($type, $title, $body, array $vars = []) {
 }
 
 /**
+ * Wrapper function for the message display pattern.
+ *
+ * Box with header, body
+ *
+ * This is a shortcut for {@elgg_view page/components/message}.
+ *
+ * @param string $type The type of message (error, success, warning, help, notice)
+ * @param string $body Content of the message
+ * @param array  $vars Additional parameters for the message
+ *
+ * @return string
+ * @since 3.0.0
+ */
+function elgg_view_message($type, $body, array $vars = []) {
+	$vars['type'] = $type;
+	$vars['body'] = $body;
+	return elgg_view('page/components/message', $vars);
+}
+
+/**
  * Renders a human-readable representation of a river item
  *
  * @param \ElggRiverItem $item A river item object

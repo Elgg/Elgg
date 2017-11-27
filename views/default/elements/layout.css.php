@@ -55,11 +55,16 @@
 	max-width: 500px;
 	z-index: 2000;
 }
+
+.elgg-admin-notices li,
 .elgg-system-messages li {
 	margin-top: 10px;
+	border: none;
 }
 
-<?= elgg_view('elements/components/admin_notices.css') ?>
+.elgg-system-messages .elgg-message {
+	cursor: pointer;
+}
 
 /***** PAGE HEADER ******/
 .elgg-page-header {

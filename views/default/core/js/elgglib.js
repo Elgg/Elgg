@@ -335,7 +335,7 @@ elgg.system_messages = function(msgs, delay, type) {
 	var classes = ['elgg-message'],
 		messages_html = [],
 		appendMessage = function(msg) {
-			messages_html.push('<li class="' + classes.join(' ') + '"><p>' + msg + '</p></li>');
+			messages_html.push('<li><div class="' + classes.join(' ') + '"><div class="elgg-body">' + msg + '</div></div></li>');
 		},
 		systemMessages = $('ul.elgg-system-messages'),
 		i;
@@ -352,9 +352,9 @@ elgg.system_messages = function(msgs, delay, type) {
 	}
 
 	if (type === 'error') {
-		classes.push('elgg-state-error');
+		classes.push('elgg-message-error');
 	} else {
-		classes.push('elgg-state-success');
+		classes.push('elgg-message-success');
 	}
 
 	msgs.forEach(appendMessage);

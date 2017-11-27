@@ -4,16 +4,10 @@
  *
  * @uses $vars['notices'] Array of ElggObject notices
  */
-
-if (!isset($vars['notices'])) {
-	// legacy usage
-	echo elgg_list_entities([
-		'limit' => false,
-		'list_class' => 'elgg-admin-notices',
-	], 'elgg_get_admin_notices');
+if (!isset($vars['admin_notices'])) {
 	return;
 }
 
-echo elgg_view_entity_list($vars['notices'], [
+echo elgg_view_entity_list($vars['admin_notices'], [
 	'list_class' => 'elgg-admin-notices',
 ]);

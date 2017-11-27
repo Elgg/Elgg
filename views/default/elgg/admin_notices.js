@@ -7,7 +7,7 @@ define(function(require) {
 
 	var ajax = new Ajax();
 
-	$(document).on('click', 'a.elgg-admin-notice', function (e) {
+	$(document).on('click', '.elgg-admin-notice-dismiss', function (e) {
 		e.preventDefault();
 		var $li = $(this).closest('.elgg-item-object-admin_notice');
 

@@ -131,65 +131,7 @@
 	margin-bottom: 20px;
 }
 
-/* ***************************************
-	Messages
-*************************************** */
-.elgg-message {
-	color: #FFF;
-	display: block;
-	padding: 10px 20px;
-	cursor: pointer;
-	opacity: 0.9;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-	border-radius: 3px;
-}
-.elgg-state-success {
-	background-color: #090;
-}
-.elgg-state-error {
-	background-color: #F00;
-}
-.elgg-state-notice {
-	background-color: #5097CF;
-}
-.elgg-message a {
-	color: inherit;
-	text-decoration: underline;
-}
-.elgg-box-error {
-	margin-top: 10px;
-	padding: 20px;
-	color: #B94A48;
-	background-color: #F8E8E8;
-	border: 1px solid #E5B7B5;
-	border-radius: 5px;
-}
-.elgg-box {
-	margin: 10px 0;
-	padding: 20px;
-	border-radius: 5px;
-	box-sizing: border-box;
-}
-.elgg-box.elgg-state-error {
-	color: #B94A48;
-	background-color: #F8E8E8;
-	border: 1px solid #E5B7B5;
-}
-.elgg-box.elgg-state-notice {
-	color: #3B8BC9;
-	background-color: #E7F1F9;
-	border: 1px solid #B1D1E9;
-}
-.elgg-box.elgg-state-success {
-	color: #397F2E;
-	background-color: #EAF8E8;
-	border: 1px solid #AADEA2;
-}
-.elgg-box.elgg-state-warning {
-	color: #6B420F;
-	background-color: #FCF8E4;
-	border: 1px solid #EDDC7D;
-}
+<?= elgg_view('elements/components/messages.css') ?>
 
 /* ***************************************
 	River

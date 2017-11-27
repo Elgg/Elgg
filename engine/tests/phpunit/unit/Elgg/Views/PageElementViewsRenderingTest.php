@@ -55,6 +55,7 @@ class PageElementViewsRenderingTest extends ViewRenderingTestCase {
 			'page/layouts/maintenance',
 			'page/layouts/widgets',
 			'page/components/image_block',
+			'page/components/message',
 			'page/components/module',
 			'page/components/no_results',
 			'page/components/tabs',
