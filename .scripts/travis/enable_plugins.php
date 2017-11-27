@@ -9,17 +9,15 @@ require_once "$root/autoloader.php";
 
 \Elgg\Application::start();
 
-$managed_plugins = [
+$ordered_plugins = [
 	'activity',
 	'blog',
 	'bookmarks',
 	'ckeditor',
-	'custom_index',
 	'dashboard',
 	'developers',
 	'diagnostics',
 	'discussions',
-	'embed',
 	'externalpages',
 	'file',
 	'friends',
@@ -44,13 +42,27 @@ $managed_plugins = [
 	'thewire',
 	'uservalidationbyemail',
 	'web_services',
+	
+	// these plugins need to be activated after a previous activated plugin
+	'custom_index',
+	'embed',
 ];
 
-$plugins = _elgg_services()->plugins->find('all');
-foreach ($plugins as $plugin) {
-	if (!in_array($plugin->getID(), $managed_plugins)) {
-		$plugin->deactivate();
-	} else {
-		$plugin->activate();
+foreach ($ordered_plugins as $priority => $plugin_id) {
+	$plugin = elgg_get_plugin_from_id($plugin_id);
+	if (empty($plugin)) {
+		echo "Could not find plugin {$plugin_id} to activate";
+		exit(1);
+	}
+	
+	// set correct position
+	if (!$plugin->setPriority($priority + 1)) {
+		echo "Could not set priority for plugin {$plugin_id}";
+		exit(1);
+	}
+	
+	if (!$plugin->activate()) {
+		echo "Unable to activate plugin {$plugin_id}";
+		exit(1);
 	}
 }
