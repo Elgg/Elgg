@@ -58,9 +58,9 @@ Visualizza e rispondi qui:
 %s
 ',
 
-	'discussion:reply:notify:summary' => 'Nuova risposta alla discussione: %s',
-	'discussion:reply:notify:subject' => 'Nuova risposta alla discussione: %s',
-	'discussion:reply:notify:body' =>
+	'discussion:comment:notify:summary' => 'Nuova risposta alla discussione: %s',
+	'discussion:comment:notify:subject' => 'Nuova risposta alla discussione: %s',
+	'discussion:comment:notify:body' =>
 '%s ha inviato una risposta nella discussione "%s":
 
 %s

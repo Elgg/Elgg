@@ -57,9 +57,9 @@ return [
 %s
 ',
 
-	'discussion:reply:notify:summary' => '新着返答:  議題 %s',
-	'discussion:reply:notify:subject' => '新着返答:  議題 %s',
-	'discussion:reply:notify:body' =>
+	'discussion:comment:notify:summary' => '新着返答:  議題 %s',
+	'discussion:comment:notify:subject' => '新着返答:  議題 %s',
+	'discussion:comment:notify:body' =>
 '%sさんが議題「%s」に返答しました:
 
 %s

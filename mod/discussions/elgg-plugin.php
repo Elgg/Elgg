@@ -7,16 +7,13 @@ return [
 			'subtype' => 'discussion',
 			'searchable' => true,
 		],
-		[
-			'type' => 'object',
-			'subtype' => 'discussion_reply',
-			'class' => 'ElggDiscussionReply',
-		],
 	],
 	'actions' => [
 		'discussion/save' => [],
 		'discussion/delete' => [],
-		'discussion/reply/save' => [],
-		'discussion/reply/delete' => [],
+	],
+	'upgrades' => [
+		'\Elgg\Discussions\Upgrades\MigrateDiscussionReply',
+		'\Elgg\Discussions\Upgrades\MigrateDiscussionReplyRiver',
 	],
 ];

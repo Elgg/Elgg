@@ -89,6 +89,16 @@ Removed views
  * ``river/object/page_top/create``: check :doc:`/guides/river`
  * ``river/relationship/member``: check :doc:`/guides/river`
  * ``object/page_top``: use ``object/page``
+ * ``ajax/discussion/reply/edit``: See :ref:`upgrade-discussion-replies`
+ * ``discussion/replies``: See :ref:`upgrade-discussion-replies`
+ * ``object/discussion_reply``: See :ref:`upgrade-discussion-replies`
+ * ``resources/discussion/reply/edit``: See :ref:`upgrade-discussion-replies`
+ * ``resources/elements/discussion_replies``: See :ref:`upgrade-discussion-replies`
+ * ``river/elements/discussion_replies``: See :ref:`upgrade-discussion-replies`
+ * ``river/object/discussion/create``
+ * ``river/object/discussion_reply/create``: See :ref:`upgrade-discussion-replies`
+ * ``search/object/discussion_reply/entity``: See :ref:`upgrade-discussion-replies`
+ * ``rss/discussion/replies``: See :ref:`upgrade-discussion-replies`
 
 Removed functions/methods
 -------------------------
@@ -179,6 +189,17 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``pages_can_delete_page``: Use ``$entity->canDelete()``
  * ``pages_search_pages``
  * ``pages_is_page``: use ``$entity instanceof ElggPage``
+ * ``discussion_comment_override``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_can_edit_reply``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_reply_menu_setup``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_reply_container_logic_override``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_reply_container_permissions_override``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_update_reply_access_ids``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_search_discussion``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_add_to_river_menu``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_prepare_reply_notification``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_redirect_to_reply``: See :ref:`upgrade-discussion-replies`
+ * ``discussion_ecml_views_hook``: See :ref:`upgrade-discussion-replies`
 
 All functions around entity subtypes table:
  * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime
@@ -240,6 +261,7 @@ Removed classes/interfaces
  * ``XmlElement``
  * ``Elgg_Notifications_Event``: Use ``\Elgg\Notifications\Event``
  * ``Elgg\Mail\Address``: use ``Elgg\Email\Address``
+ * ``ElggDiscussionReply``: user ``ElggComment`` see :ref:`upgrade-discussion-replies`
 
 Schema changes
 --------------
@@ -420,12 +442,15 @@ Removed pagehandling
  * ``groupicon``
  * ``twitterservice``
  * ``collections/pickercallback``
+ * ``discussion/reply``: See :ref:`upgrade-discussion-replies`
 
 Removed actions
 ---------------
 
  * ``file/download``: Use ``elgg_get_inline_url`` or ``elgg_get_download_url``
  * ``import/opendd``
+ * ``discussion/reply/save``: See :ref:`upgrade-discussion-replies`
+ * ``discussion/reply/delete``: See :ref:`upgrade-discussion-replies`
  
 Inheritance changes
 -------------------
@@ -466,6 +491,7 @@ Removed JavaScript APIs
  * ``elgg.ui.toggleMenu`` is no longer defined
  * ``elgg.ui.toggleMenuItems``: Use ``data-toggle`` attribute when registering toggleable menu items
  * ``uservalidationbyemail/js.php``: Use the ``elgg/uservalidationbyemail`` module
+ * ``discussion.js``: See :ref:`upgrade-discussion-replies`
 
 Removed hooks/events
 --------------------
@@ -486,6 +512,7 @@ Removed forms/actions
 
  * ``notificationsettings/save`` form and action
  * ``notificationsettings/groupsave`` form and action
+ * ``discussion/reply/save`` form and action
 
 APIs that now accept only an ``$options`` array
 -----------------------------------------------
@@ -820,3 +847,16 @@ The function ``elgg_delete_river()`` which was deprecated in 2.3, has been reins
  * Since ``elgg_get_river`` by default has a limit on the number of river items it fetches, if you wish to remove all river items you need to set ``limit`` to ``false``
  * A hook is fired for each river item which checks the delete permissions
  * Events are fired just before and after a river item has been deleted
+
+.. _upgrade-discussion-replies:
+
+Discussion replies moved to comments
+------------------------------------
+
+Since discussion replies where mostly a carbon copy of comments, all discussion replies have been migrated to comments. All related action, hooks, 
+event, language keys etc. have been removed.
+
+.. note::
+
+    Discussion comments will now show up in the Comments section of Search, no longer under the Discussion section.
+

@@ -57,9 +57,9 @@ Schau Dir die neue Diskussion an und antworte darauf:
 %s
 ',
 
-	'discussion:reply:notify:summary' => 'Neue Antwort in Diskussion %s',
-	'discussion:reply:notify:subject' => 'Neue Antwort in Diskussion: %s',
-	'discussion:reply:notify:body' =>
+	'discussion:comment:notify:summary' => 'Neue Antwort in Diskussion %s',
+	'discussion:comment:notify:subject' => 'Neue Antwort in Diskussion: %s',
+	'discussion:comment:notify:body' =>
 '%s hat in der Diskussion "%s" geantwortet:
 
 %s

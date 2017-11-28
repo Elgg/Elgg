@@ -57,9 +57,9 @@ Osallistu keskusteluun:
 %s
 ',
 
-	'discussion:reply:notify:summary' => 'Uusi vastaus keskustelussa: %s',
-	'discussion:reply:notify:subject' => 'Uusi vastaus keskustelussa: %s',
-	'discussion:reply:notify:body' =>
+	'discussion:comment:notify:summary' => 'Uusi vastaus keskustelussa: %s',
+	'discussion:comment:notify:subject' => 'Uusi vastaus keskustelussa: %s',
+	'discussion:comment:notify:body' =>
 '%s vastasi keskusteluun "%s":
 
 %s

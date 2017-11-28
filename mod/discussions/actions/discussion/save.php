@@ -58,7 +58,6 @@ if (!$new_topic) {
 }
 
 elgg_create_river_item([
-	'view' => 'river/object/discussion/create',
 	'action_type' => 'create',
 	'object_guid' => $topic->guid,
 	'target_guid' => $container_guid,

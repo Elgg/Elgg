@@ -4,9 +4,10 @@
  */
 
 $full = elgg_extract('full_view', $vars, false);
-$topic = elgg_extract('entity', $vars, false);
 
-if (!$topic) {
+/* @var $topic ElggObject */
+$topic = elgg_extract('entity', $vars, false);
+if (!elgg_instanceof($topic, 'object', 'discussion')) {
 	return;
 }
 
@@ -19,60 +20,37 @@ if (!$poster) {
 	return;
 }
 
-$excerpt = elgg_get_excerpt($topic->description);
-
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 
-$by_line = elgg_view('object/elements/imprint', $vars);
-
-$replies_link = '';
-$reply_text = '';
-
-$num_replies = elgg_get_entities([
-	'type' => 'object',
-	'subtype' => 'discussion_reply',
-	'container_guid' => $topic->getGUID(),
-	'count' => true,
-	'distinct' => false,
-]);
-
-if ($num_replies != 0) {
-	$last_reply = elgg_get_entities([
+$comment_text = '';
+$num_comments = $topic->countComments();
+if ($num_comments != 0) {
+	$comments = elgg_get_entities([
 		'type' => 'object',
-		'subtype' => 'discussion_reply',
+		'subtype' => 'comment',
 		'container_guid' => $topic->getGUID(),
 		'limit' => 1,
 		'distinct' => false,
 	]);
-	if (isset($last_reply[0])) {
-		$last_reply = $last_reply[0];
-	}
-	/* @var ElggDiscussionReply $last_reply */
+	
+	/* @var ElggComment $last_comment */
+	$last_comment = $comments[0];
+	
+	$poster = $last_comment->getOwnerEntity();
+	$comment_time = elgg_view_friendly_time($last_comment->time_created);
 
-	$poster = $last_reply->getOwnerEntity();
-	$reply_time = elgg_view_friendly_time($last_reply->time_created);
-
-	$reply_text = elgg_view('output/url', [
-		'text' => elgg_echo('discussion:updated', [$poster->name, $reply_time]),
-		'href' => $last_reply->getURL(),
-		'is_trusted' => true,
-	]);
-
-	$replies_link = elgg_view('output/url', [
-		'href' => $topic->getURL() . '#comments',
-		'text' => elgg_echo('discussion:replies') . " ($num_replies)",
+	$comment_text = elgg_view('output/url', [
+		'text' => elgg_echo('discussion:updated', [$poster->getDisplayName(), $comment_time]),
+		'href' => $last_comment->getURL(),
 		'is_trusted' => true,
 	]);
 }
 
 if ($full) {
-	$subtitle = "$by_line $replies_link";
-
 	$params = [
 		'entity' => $topic,
 		'title' => false,
 		'handler' => 'discussion',
-		'subtitle' => $subtitle,
 	];
 
 	$params = $params + $vars;
@@ -83,16 +61,12 @@ if ($full) {
 		'class' => 'clearfix',
 	]);
 
-	$responses = '';
-	if (elgg_extract('show_responses', $vars)) {
-		$params = [
-			'topic' => $topic,
-			'show_add_form' => $topic->canWriteToContainer(0, 'object', 'discussion_reply'),
-		];
-		$responses = elgg_view('discussion/replies', $params);
-		if ($topic->status == 'closed') {
-			$responses .= elgg_view('discussion/closed');
-		}
+	$responses = null;
+	if ($topic->status == 'closed') {
+		$body .= elgg_view('discussion/closed');
+		
+		// need to provide the comments as we can't disable the add form
+		$responses = elgg_view_comments($topic, false);
 	}
 
 	echo elgg_view('object/elements/full', [
@@ -105,13 +79,15 @@ if ($full) {
 	]);
 } else {
 	// brief view
-	$subtitle = "$by_line $replies_link <span class=\"float-alt\">$reply_text</span>";
+	$by_line = elgg_view('object/elements/imprint', $vars);
+	
+	$subtitle = "$by_line <span class=\"float-alt\">$comment_text</span>";
 
 	$params = [
 		'entity' => $topic,
 		'handler' => 'discussion',
 		'subtitle' => $subtitle,
-		'content' => $excerpt,
+		'content' => elgg_get_excerpt($topic->description),
 		'icon' => $poster_icon,
 	];
 	$params = $params + $vars;
