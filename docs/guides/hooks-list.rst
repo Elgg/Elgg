@@ -1,6 +1,8 @@
 List of plugin hooks in core
 ############################
 
+For more information on how hooks work visit :doc:`/design/events`.
+
 .. contents:: Contents
    :local:
    :depth: 1

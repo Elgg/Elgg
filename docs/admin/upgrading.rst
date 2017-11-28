@@ -11,7 +11,9 @@ Advice
 
 * **Back up your database** and code
 * Mind any version-specific comments below
-* Upgrade only one minor version at a time (1.6 => 1.7, then 1.7 => 1.8)
+* Version below 2.0 are advised to only upgrade one minor version at a time
+* You can upgrade from any minor version to any higher minor version in the same major (2.0 -> 2.1 or 2.0 -> 2.3)
+* You can only upgrade the latest minor version in the previous major version to any minor version in the next version (2.3 -> 3.0 or 2.3 -> 3.2, but not 2.2 -> 3.x or 2.3 -> 4.x).
 * Try out the new version on a test site before doing an upgrade
 * Report any problems in plugins to the plugin authors
 * If you are a plugin author you can `report any backwards-compatibility issues to GitHub <issues_>`_
