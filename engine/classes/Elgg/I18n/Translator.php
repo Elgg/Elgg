@@ -110,18 +110,31 @@ class Translator {
 		}
 
 		if (!$language) {
+			// no language provided, get current language
+			// based on detection, user setting or site
 			$language = $this->getCurrentLanguage();
 		}
 
 		$this->ensureTranslationsLoaded($language);
 
-		$notice = '';
-		$string = $message_key;
-
+		// build language array for different trys
 		// avoid dupes without overhead of array_unique
 		$langs[$language] = true;
+
+		// load site language
+		$site_language = $this->config->language;
+		if (!empty($site_language)) {
+			$this->ensureTranslationsLoaded($site_language);
+
+			$langs[$site_language] = true;
+		}
+
+		// ultimate language fallback
 		$langs['en'] = true;
 
+		// try to translate
+		$notice = '';
+		$string = $message_key;
 		foreach (array_keys($langs) as $try_lang) {
 			if (isset($this->translations[$try_lang][$message_key])) {
 				$string = $this->translations[$try_lang][$message_key];
@@ -212,29 +225,28 @@ class Translator {
 	/**
 	 * Detect the current system/user language or false.
 	 *
-	 * @return string The language code (eg "en") or false if not set
+	 * @return false|string The language code (eg "en") or false if not set
 	 */
 	public function detectLanguage() {
+		// detect from URL
 		$url_lang = _elgg_services()->input->get('hl');
-		if ($url_lang) {
+		if (!empty($url_lang)) {
 			return $url_lang;
 		}
 
+		// check logged in user
 		$user = _elgg_services()->session->getLoggedInUser();
-		$language = false;
-
-		if (($user) && ($user->language)) {
-			$language = $user->language;
+		if (!empty($user) && !empty($user->language)) {
+			return $user->language;
 		}
 
-		if (!$language) {
-			$site_language = $this->config->language;
-			if ($site_language) {
-				$language = $site_language;
-			}
+		// get site setting
+		$site_language = $this->config->language;
+		if (!empty($site_language)) {
+			return $site_language;
 		}
 
-		return $language ? $language : false;
+		return false;
 	}
 
 	/**

@@ -1,21 +1,45 @@
 <?php
 /**
- * @uses $vars['language']
+ * Build a JSON array of the combined language keys to be used in
+ * javascript elgg.echo()
+ *
+ * @uses $vars['language'] the requested language
  */
 
 $language = elgg_extract('language', $vars, 'en');
 
-$all_translations = _elgg_services()->translator->getLoadedTranslations();
-$translations = $all_translations['en'];
+// requested language
+$combine_languages[$language] = true;
 
-if ($language != 'en' && !isset($all_translations[$language])) {
-	// try to reload missing translations
-	reload_all_translations();
-	$all_translations = _elgg_services()->translator->getLoadedTranslations();
+// add site language
+$site_language = elgg_get_config('language');
+if (!empty($site_language)) {
+	$combine_languages[$site_language] = true;
 }
 
-if ($language != 'en' && isset($all_translations[$language])) {
-	$translations = array_merge($translations, $all_translations[$language]);
+// add English fallback
+$combine_languages['en'] = true;
+
+// fetch all translations
+$all_translations = _elgg_services()->translator->getLoadedTranslations();
+
+// make sure all requested languages are loaded
+foreach (array_keys($combine_languages) as $language) {
+	if (!isset($all_translations[$language])) {
+		_elgg_services()->translator->reloadAllTranslations();
+		
+		$all_translations = _elgg_services()->translator->getLoadedTranslations();
+		break;
+	}
+}
+
+// combine all languages in one result
+$translations = [];
+foreach (array_keys($combine_languages) as $language) {
+	if (!isset($all_translations[$language])) {
+		continue;
+	}
+	$translations = array_merge($all_translations[$language], $translations);
 }
 
 ?>
