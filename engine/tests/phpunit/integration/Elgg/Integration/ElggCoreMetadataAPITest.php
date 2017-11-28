@@ -151,6 +151,48 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		];
 	}
 
+	/**
+	 * @group Current
+	 * @dataProvider booleanPairsProvider
+	 */
+	public function testElggGetEntitiesFromBooleanMetadata($value, $query, $type) {
+
+		$this->object->subtype = $this->getRandomSubtype();
+		$this->object->metadata = $value;
+		$this->object->save();
+
+		$options = [
+			'type' => 'object',
+			'subtype' => $this->object->subtype,
+			'metadata_name_value_pairs' => [
+				'name' => 'metadata',
+				'value' => $query,
+				'operand' => '=',
+				'type' => $type,
+			],
+			'count' => true,
+		];
+
+		$result = elgg_get_entities($options);
+
+		$this->assertEquals(1, $result);
+
+		$this->object->delete();
+	}
+
+	public function booleanPairsProvider() {
+		return [
+			[true, true, null],
+			[true, 1, null],
+			[true, '1', ELGG_VALUE_INTEGER],
+			[false, false, null],
+			[false, 0, null],
+			[false, '0', ELGG_VALUE_INTEGER],
+			[1, true, null],
+			[0, false, null],
+		];
+	}
+
 	public function testElggGetMetadataCount() {
 		$this->object->title = 'Meta Unit Test';
 		$this->object->save();

@@ -92,7 +92,6 @@ abstract class ViewRenderingTestCase extends UnitTestCase {
 	 */
 	public function testCanRenderViewWithEmptyVars($view, $viewtype) {
 		if (!elgg_view_exists($view, $viewtype)) {
-			dump($view);
 			$this->markTestSkipped("View '$view' does not exist");
 		}
 		try {
