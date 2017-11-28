@@ -54,6 +54,12 @@ if (!_elgg_config()->hasInitialValue('debug')) {
 	}
 }
 
+$remove_branding = ('on' === get_input('remove_branding', false));
+elgg_save_config('remove_branding', $remove_branding);
+
+$disable_rss = ('on' === get_input('disable_rss', false));
+elgg_save_config('disable_rss', $disable_rss);
+
 if (!$site->save()) {
 	return elgg_error_response(elgg_echo('admin:configuration:fail'));
 }

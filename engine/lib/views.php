@@ -1557,6 +1557,10 @@ function elgg_unregister_rss_link() {
  * @access private
  */
 function _elgg_has_rss_link() {
+	if (!_elgg_config()->disable_rss) {
+		return false;
+	}
+
 	if (isset($GLOBALS['autofeed']) && is_bool($GLOBALS['autofeed'])) {
 		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
 		return $GLOBALS['autofeed'];
