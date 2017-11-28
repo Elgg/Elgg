@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 
 namespace Elgg\Plugins;
 
@@ -12,6 +9,7 @@ trait PluginTesting {
 
 	/**
 	 * Returns plugin's root path or false if not called from a plugin directory
+	 *
 	 * @return string|false
 	 */
 	public function getPath() {
@@ -28,5 +26,23 @@ trait PluginTesting {
 		}
 
 		return false;
+	}
+	
+	/**
+	 * Returns the plugin id if called from a plugin, or false otherwise
+	 *
+	 * @return string|false
+	 */
+	public function getPluginID() {
+		
+		$path = $this->getPath();
+		if (empty($path)) {
+			return false;
+		}
+		
+		$parts = explode('/', $path);
+		$parts = array_filter($parts);
+		
+		return array_pop($parts);
 	}
 }
