@@ -179,16 +179,18 @@ class ElggSite extends \ElggEntity {
 	 *
 	 * @note You cannot delete the current site.
 	 *
+	 * @param bool $recursive If true (default) then all entities which are owned or contained by $this will also be deleted.
+	 *
 	 * @return bool
 	 * @throws SecurityException
 	 */
-	public function delete() {
+	public function delete($recursive = true) {
 		global $CONFIG;
 		if ($CONFIG->site->getGUID() == $this->guid) {
 			throw new \SecurityException('You cannot delete the current site');
 		}
 
-		return parent::delete();
+		return parent::delete($recursive);
 	}
 
 	/**
