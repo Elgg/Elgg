@@ -15,6 +15,8 @@ function site_notifications_init() {
 	// register as a notification type
 	elgg_register_notification_method('site');
 	elgg_register_plugin_hook_handler('send', 'notification:site', 'site_notifications_send');
+	
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'site_notifications_register_entity_menu');
 
 	elgg_register_page_handler('site_notifications', 'site_notifications_page_handler');
 
@@ -112,6 +114,35 @@ function site_notifications_send($hook, $type, $result, $params) {
 	if ($note) {
 		return true;
 	}
+}
+
+/**
+ * Fixes unwanted menu items on the entity menu
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return void|\ElggMenuItem[]
+ */
+function site_notifications_register_entity_menu(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+	if (!($entity instanceof SiteNotification)) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	foreach ($return as $index => $menu_item) {
+		if ($menu_item->getName() === 'edit') {
+			unset($return[$index]);
+			continue;
+		}
+		
+		if ($menu_item->getName() === 'delete') {
+			$menu_item->setLinkClass('site-notifications-delete');
+			$menu_item->{"data-entity-ref"} = 'elgg-object-' . $entity->guid;
+		}
+	}
+	
+	return $return;
 }
 
 return function() {

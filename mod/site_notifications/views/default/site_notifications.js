@@ -18,8 +18,13 @@ elgg.site_notifications.init = function() {
  */
 elgg.site_notifications.delete = function(event) {
 	
-	var $item = $(this).closest('.elgg-item');
+	var $item = $("#" + $(this).data().entityRef);
 	$item.slideToggle('medium');
+	var $menu = $(this).parents('.elgg-state-popped').eq(0);
+	
+	require(['elgg/popup'], function(popup) {
+		popup.close($menu);
+	});
 
 	elgg.action($(this).attr('href'), {
 		success: function(json) {
