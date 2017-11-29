@@ -7,7 +7,7 @@ namespace Elgg;
  */
 class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 
-	public $guids = array(
+	public $guids = [
 		1,
 		4999,
 		5000,
@@ -16,7 +16,7 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 		10000,
 		13532,
 		17234
-	);
+	];
 
 	public function up() {
 
@@ -32,20 +32,25 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 			$dir = new \Elgg\EntityDirLocator($guid);
 			$this->assertInstanceOf('\Elgg\EntityDirLocator', $dir);
 		}
+	}
 
-		// bad guids
-		$bad_guids = array(
-			"abc",
-			null,
-			false,
-			0,
-			-123
-		);
+	/**
+	 * @dataProvider badGuidsProvider
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage GUIDs must be integers > 0.
+	 */
+	public function testConstructorThrowsWithBadGuid($guid) {
+		$dir = new \Elgg\EntityDirLocator($guid);
+	}
 
-		foreach ($bad_guids as $guid) {
-			$this->setExpectedException('InvalidArgumentException', "GUIDs must be integers > 0.");
-			$dir = new \Elgg\EntityDirLocator($guid);
-		}
+	public function badGuidsProvider() {
+		return [
+			["abc"],
+			[null],
+			[false],
+			[0],
+			[-123]
+		];
 	}
 
 	public function testGetPath() {
@@ -57,11 +62,11 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 			// we start at 1 since there are no guids of 0
 			if ($guid < 5000) {
 				$path = "1/$guid/";
-			} elseif ($guid < 10000) {
+			} else if ($guid < 10000) {
 				$path = "5000/$guid/";
-			} elseif ($guid < 15000) {
+			} else if ($guid < 15000) {
 				$path = "10000/$guid/";
-			} elseif ($guid < 20000) {
+			} else if ($guid < 20000) {
 				$path = "15000/$guid/";
 			}
 

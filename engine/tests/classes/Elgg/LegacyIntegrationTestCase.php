@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Cache\Pool\TestCase;
 use ElggUser;
 
 /**
@@ -64,12 +65,12 @@ abstract class LegacyIntegrationTestCase extends IntegrationTestCase {
 
 	public static function assertTrue($condition, $message = '') {
 		// PHPUnit expects an actual boolean
-		return \PHPUnit_Framework_TestCase::assertTrue((bool) $condition, $message);
+		return TestCase::assertTrue((bool) $condition, $message);
 	}
 
 	public static function assertFalse($condition, $message = '') {
 		// PHPUnit expects an actual boolean
-		return \PHPUnit_Framework_TestCase::assertFalse((bool) $condition, $message);
+		return TestCase::assertFalse((bool) $condition, $message);
 	}
 
 	public function assertEqual($expected, $actual, $message = '') {
