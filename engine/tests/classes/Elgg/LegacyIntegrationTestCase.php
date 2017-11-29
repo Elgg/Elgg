@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use ElggUser;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Proxies simpletest assertions and old simpletest unit case methods
@@ -59,58 +60,63 @@ abstract class LegacyIntegrationTestCase extends IntegrationTestCase {
 			return $res;
 		}
 
-		return $this->assert(new IdenticalEntityExpectation($first), $second, $message);
+		TestCase::assertThat(new IdenticalEntityExpectation($first), $second, $message);
 	}
 
 	public static function assertTrue($condition, $message = '') {
 		// PHPUnit expects an actual boolean
-		return \PHPUnit_Framework_TestCase::assertTrue((bool) $condition, $message);
+		TestCase::assertTrue((bool) $condition, $message);
 	}
 
 	public static function assertFalse($condition, $message = '') {
 		// PHPUnit expects an actual boolean
-		return \PHPUnit_Framework_TestCase::assertFalse((bool) $condition, $message);
+		TestCase::assertFalse((bool) $condition, $message);
 	}
 
 	public function assertEqual($expected, $actual, $message = '') {
-		return $this->assertEquals($expected, $actual, $message);
+		$this->assertEquals($expected, $actual, $message);
 	}
 
 	public function assertNotEqual($expected, $actual, $message = '') {
-		return $this->assertNotEquals($expected, $actual, $message);
+		$this->assertNotEquals($expected, $actual, $message);
 	}
 
 	public function assertWithinMargin($expected, $actual, $margin, $message = '') {
-		return $this->assertEquals($expected, $actual, $message, $margin);
+		$this->assertEquals($expected, $actual, $message, $margin);
 	}
 
 	public function assertIdentical($expected, $actual, $message = '') {
-		return $this->assertSame($expected, $actual, $message);
+		$this->assertSame($expected, $actual, $message);
 	}
 
 	public function assertNotIdentical($expected, $actual, $message = '') {
-		return $this->assertNotSame($expected, $actual, $message);
+		$this->assertNotSame($expected, $actual, $message);
 	}
 
 	public function assertIsA($actual, $classname, $message = '') {
 		switch ($classname) {
 			case 'array' :
-				return $this->assertEquals('array', gettype($actual), $message);
+				$this->assertEquals('array', gettype($actual), $message);
+				break;
+
 			case 'int' :
-				return $this->assertInternalType('integer', $actual, $message);
+				$this->assertInternalType('integer', $actual, $message);
+				break;
+
 			case 'string' :
-				return $this->assertInternalType('string', $actual, $message);
+				$this->assertInternalType('string', $actual, $message);
+				break;
 		}
 
-		return $this->assertInstanceOf($classname, $actual, $message);
+		$this->assertInstanceOf($classname, $actual, $message);
 	}
 
 	public function assertPattern($pattern, $string, $message ='') {
-		return $this->assertRegExp($pattern, $string, $message);
+		$this->assertRegExp($pattern, $string, $message);
 	}
 
 	public function assertNoPattern($pattern, $string, $message = '') {
-		return $this->assertNotRegExp($pattern, $string, $message);
+		$this->assertNotRegExp($pattern, $string, $message);
 	}
 
 	public function skipUnless($condition, $message) {

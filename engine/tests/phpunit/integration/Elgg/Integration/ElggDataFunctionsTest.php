@@ -66,11 +66,11 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		]);
 		$row4 = $row4[0];
 
-		$this->assertIsA($row1, 'stdClass');
+		$this->assertInstanceOf(\stdClass::class, $row1);
 		$this->assertSame($row1->type, $this->user->type);
 		$this->assertEqual($row1, $row2);
 		$this->assertEqual($row1, $row3);
-		$this->assertIsA($row4, 'array');
+		$this->assertInternalType('array', $row4);
 		$this->assertEqual((array)$row1, $row4);
 	}
 
@@ -95,7 +95,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 			':guid' => $this->user->guid,
 		]);
 
-		$this->assertIsA($row1, 'stdClass');
+		$this->assertInstanceOf(\stdClass::class, $row1);
 		$this->assertEqual($row1->guid, $this->user->guid);
 		$this->assertEqual($row1, $row2);
 		$this->assertEqual($row1, $row3);
@@ -131,8 +131,8 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 			ORDER BY id ASC
 		", null, [$this->user->guid, $this->user->guid, $time]);
 
-		$this->assertIsA($id1, 'int');
-		$this->assertIsA($id2, 'int');
+		$this->assertInternalType('integer', $id1);
+		$this->assertInternalType('integer', $id2);
 		$this->assertEqual($rows[0]->id, $id1);
 		$this->assertEqual($rows[1]->id, $id2);
 
@@ -248,7 +248,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 
 		/* @var \Doctrine\DBAL\Driver\Statement $captured */
 
-		$this->assertIsA($captured, \Doctrine\DBAL\Driver\Statement::class);
+		$this->assertInstanceOf(\Doctrine\DBAL\Driver\Statement::class, $captured);
 
 		$rows = $captured->fetchAll(\PDO::FETCH_OBJ);
 		$this->assertEqual($rows[0]->guid, $this->user->guid);

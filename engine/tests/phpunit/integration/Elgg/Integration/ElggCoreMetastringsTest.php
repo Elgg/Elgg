@@ -107,7 +107,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$annotation = elgg_get_annotation_from_id($id);
 
-		$this->assertIsA($annotation, ElggAnnotation::class);
+		$this->assertInstanceOf(ElggAnnotation::class, $annotation);
 
 		$this->assertTrue($annotation->disable());
 

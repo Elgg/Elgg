@@ -42,8 +42,6 @@ function ws_init() {
 		false
 	);
 
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'ws_unit_test');
-
 	elgg_register_plugin_hook_handler('rest:output', 'system.api.list', 'ws_system_api_list_hook');
 }
 
@@ -349,24 +347,6 @@ function ws_rest_handler() {
 
 	// Output the result
 	echo elgg_view_page($method, elgg_view("api/output", ["result" => $result]));
-}
-
-/**
- * Unit tests for web services
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- */
-function ws_unit_test($hook, $type, $value, $params) {
-	elgg_load_library('elgg:ws');
-	elgg_load_library('elgg:ws:client');
-	$value[] = dirname(__FILE__) . '/tests/ElggCoreWebServicesApiTest.php';
-	return $value;
 }
 
 /**

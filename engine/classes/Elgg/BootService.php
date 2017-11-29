@@ -3,12 +3,12 @@
 namespace Elgg;
 
 use Elgg\Database\SiteSecret;
+use Elgg\Di\ServiceProvider;
 use Stash\Driver\BlackHole;
 use Stash\Driver\FileSystem;
 use Stash\Driver\Memcache;
 use Stash\Invalidation;
 use Stash\Pool;
-use Elgg\Di\ServiceProvider;
 
 /**
  * Boots Elgg and manages a cache of data needed during boot
@@ -202,7 +202,9 @@ class BootService {
 	 * @return \Stash\Interfaces\ItemInterface
 	 */
 	private function getStashItem(Config $config) {
-		if ($config->memcache && class_exists('Memcache')) {
+		$has_class = class_exists('Memcache') || class_exists('Memcached');
+
+		if ($config->memcache && $has_class) {
 			$options = [];
 			if ($config->memcache_servers) {
 				$options['servers'] = $config->memcache_servers;

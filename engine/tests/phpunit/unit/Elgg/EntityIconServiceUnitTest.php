@@ -852,7 +852,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(400, $response->getStatusCode());
 
-		$this->assertEquals($service->getCurrentTime('-1 day'), $response->getExpires());
+		// We can't compare two DateTime objects here, because Symfony parses the date from string, where as our TimeUsing trait
+		// uses DateTime constructor, which in 7.1 adds microseconds
+		// http://php.net/manual/en/migration71.incompatible.php#migration71.incompatible.datetime-microseconds
+		$this->assertEquals($service->getCurrentTime('-1 day')->format('U'), $response->getExpires()->format('U'));
 	}
 
 	/**
@@ -869,7 +872,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(404, $response->getStatusCode());
 
-		$this->assertEquals($service->getCurrentTime('-1 day'), $response->getExpires());
+		// We can't compare two DateTime objects here, because Symfony parses the date from string, where as our TimeUsing trait
+		// uses DateTime constructor, which in 7.1 adds microseconds
+		// http://php.net/manual/en/migration71.incompatible.php#migration71.incompatible.datetime-microseconds
+		$this->assertEquals($service->getCurrentTime('-1 day')->format('U'), $response->getExpires()->format('U'));
 	}
 
 	/**
@@ -904,7 +910,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals('"' . $icon->getModifiedTime() . '"', $response->headers->get('Etag'));
 
-		$this->assertEquals($service->getCurrentTime('+1 day'), $response->getExpires());
+		// We can't compare two DateTime objects he	re, because Symfony parses the date from string, where as our TimeUsing trait
+		// uses DateTime constructor, which in 7.1 adds microseconds
+		// http://php.net/manual/en/migration71.incompatible.php#migration71.incompatible.datetime-microseconds
+		$this->assertEquals($service->getCurrentTime('+1 day')->format('U'), $response->getExpires()->format('U'));
 
 		$this->assertEquals('max-age=86400, private', $response->headers->get('cache-control'));
 
@@ -915,7 +924,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(304, $response->getStatusCode());
 
-		$this->assertEquals($service->getCurrentTime('+1 day'), $response->getExpires());
+		$this->assertEquals($service->getCurrentTime('+1 day')->format('U'), $response->getExpires()->format('U'));
 
 		$this->assertEquals('max-age=86400, private', $response->headers->get('cache-control'));
 	}

@@ -15,10 +15,11 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
 	public function testTriggerCallsRegisteredHandlers() {
 		$hooks = new PluginHooksService();
-
-		$this->setExpectedException(\InvalidArgumentException::class);
 
 		$hooks->registerHandler('foo', 'bar', [
 			PluginHooksServiceUnitTest::class,
