@@ -27,7 +27,11 @@ function elgg_get_metadata_from_id($id) {
  * @return bool
  */
 function elgg_delete_metadata_by_id($id) {
-	return _elgg_services()->metadataTable->delete($id);
+	$metadata = elgg_get_metadata_from_id($id);
+	if (!$metadata) {
+		return;
+	}
+	return $metadata->delete();
 }
 
 /**
@@ -83,19 +87,6 @@ function metadata_array_to_values($array) {
 	}
 
 	return $valuearray;
-}
-
-/**
- * Get the URL for this metadata
- *
- * By default this links to the export handler in the current view.
- *
- * @param int $id Metadata ID
- *
- * @return mixed
- */
-function get_metadata_url($id) {
-	return _elgg_services()->metadataTable->getUrl($id);
 }
 
 /**

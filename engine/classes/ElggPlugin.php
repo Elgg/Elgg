@@ -750,7 +750,10 @@ class ElggPlugin extends \ElggObject {
 
 		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
 
+		_elgg_services()->plugins->setBootPlugins(null);
+
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
+
 		return $return;
 	}
 
@@ -840,6 +843,8 @@ class ElggPlugin extends \ElggObject {
 		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
 
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
+
+		_elgg_services()->plugins->setBootPlugins(null);
 
 		return $this->setStatus(false);
 	}

@@ -23,7 +23,7 @@ class BootData {
 	/**
 	 * @var \ElggPlugin[]
 	 */
-	private $active_plugins = [];
+	private $active_plugins;
 
 	/**
 	 * @var array

@@ -34,21 +34,6 @@ use InvalidParameterException;
 class Entities extends Repository {
 
 	/**
-	 * Build and execute a new query from an array of legacy options
-	 *
-	 * @param array $options Options
-	 *
-	 * @return ElggEntity[]|int|mixed
-	 */
-	public static function find(array $options = []) {
-		try {
-			return static::with($options)->execute();
-		} catch (DataFormatException $e) {
-			return elgg_extract('count', $options) ? 0 : false;
-		}
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function count() {
@@ -138,23 +123,7 @@ class Entities extends Repository {
 		$distinct = $this->options->distinct ? "DISTINCT" : "";
 		$qb->select("$distinct e.*");
 
-		foreach ($this->options->selects as $select_clause) {
-			$select_clause->prepare($qb, 'e');
-		}
-
-		foreach ($this->options->group_by as $group_by_clause) {
-			$group_by_clause->prepare($qb, 'e');
-		}
-
-		foreach ($this->options->having as $having_clause) {
-			$having_clause->prepare($qb, 'e');
-		}
-
-		if (!empty($this->options->order_by)) {
-			foreach ($this->options->order_by as $order_by_clause) {
-				$order_by_clause->prepare($qb, 'e');
-			}
-		}
+		$this->expandInto($qb, 'e');
 
 		$qb = $this->buildQuery($qb);
 
@@ -181,28 +150,6 @@ class Entities extends Repository {
 		unset($options['count']);
 
 		return _elgg_services()->entityTable->fetch($qb, $options);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function batch($limit = null, $offset = null, $callback = null) {
-
-		$options = $this->options->getArrayCopy();
-
-		$options['limit'] = (int) $limit;
-		$options['offset'] = (int) $offset;
-		$options['callback'] = $callback;
-		unset($options['count'],
-			$options['batch'],
-			$options['batch_size'],
-			$options['batch_inc_offset']
-		);
-
-		$batch_size = $this->options->batch_size;
-		$batch_inc_offset = $this->options->batch_inc_offset;
-
-		return new \ElggBatch([static::class, 'find'], $options, null, $batch_size, $batch_inc_offset);
 	}
 
 	/**
@@ -284,20 +231,7 @@ class Entities extends Repository {
 	 * @return Closure|CompositeExpression|mixed|null|string
 	 */
 	protected function buildEntityClause(QueryBuilder $qb) {
-		$where = new EntityWhereClause();
-		$where->guids = $this->options->guids;
-		$where->owner_guids = $this->options->owner_guids;
-		$where->container_guids = $this->options->container_guids;
-		$where->type_subtype_pairs = $this->options->type_subtype_pairs;
-		$where->created_after = $this->options->created_after;
-		$where->created_before = $this->options->created_before;
-		$where->updated_after = $this->options->updated_after;
-		$where->updated_before = $this->options->updated_before;
-		$where->last_action_after = $this->options->last_action_after;
-		$where->last_action_before = $this->options->last_action_before;
-		$where->access_ids = $this->options->access_ids;
-
-		return $where->prepare($qb, 'e');
+		return EntityWhereClause::factory($this->options)->prepare($qb, 'e');
 	}
 
 	/**
@@ -321,9 +255,8 @@ class Entities extends Repository {
 				} else {
 					$joined_alias = $qb->joinMetadataTable('e', 'guid', $clause->names);
 				}
+				$parts[] = $clause->prepare($qb, $joined_alias);
 			}
-
-			$parts[] = $clause->prepare($qb, $joined_alias);
 		}
 
 		return $qb->merge($parts, $boolean);

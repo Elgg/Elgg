@@ -1,25 +1,15 @@
 <?php
 
-use Elgg\Database\EntityTable\UserFetchFailureException;
-
 /**
- * Elgg Annotations
+ * Entity Annotation
  *
- * Annotations allow you to attach bits of information to entities. They are
- * essentially the same as metadata, but with additional helper functions for
- * performing calculations.
- *
- * @package    Elgg.Core
- * @subpackage DataModel.Annotations
+ * Annotations allow you to attach bits of information to entities.
+ * Unlike entity metadata, annotation is access controlled and has owners.
  */
 class ElggAnnotation extends \ElggExtender {
 
 	/**
-	 * (non-PHPdoc)
-	 *
-	 * @see \ElggData::initializeAttributes()
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
@@ -28,44 +18,48 @@ class ElggAnnotation extends \ElggExtender {
 	}
 
 	/**
-	 * Construct a new annotation object
+	 * Constructor
 	 *
-	 * Plugin developers will probably never use the constructor.
-	 * See \ElggEntity for its API for adding annotations.
-	 *
-	 * @param \stdClass $row Database row as \stdClass object
+	 * @param stdClass $row Database row
 	 */
-	public function __construct(\stdClass $row = null) {
+	public function __construct(stdClass $row = null) {
 		$this->initializeAttributes();
 
 		if ($row) {
 			foreach ((array) $row as $key => $value) {
-				$this->attributes[$key] = $value;
+				$this->$key = $value;
 			}
 		}
 	}
 
 	/**
-	 * Save this instance
+	 * Save this instance and returns an annotation ID
 	 *
-	 * @return int an object id
-	 *
-	 * @throws IOException
+	 * @return int|false
 	 */
 	public function save() {
-		if ($this->id > 0) {
-			return update_annotation($this->id, $this->name, $this->value, $this->value_type,
-				$this->owner_guid, $this->access_id);
-		} else {
-			$this->id = create_annotation($this->entity_guid, $this->name, $this->value,
-				$this->value_type, $this->owner_guid, $this->access_id);
+		if (!isset($this->access_id)) {
+			$this->access_id = ACCESS_PRIVATE;
+		}
 
-			if (!$this->id) {
-				throw new \IOException("Unable to save new " . get_class());
-			}
+		if (!isset($this->owner_guid)) {
+			$this->owner_guid = elgg_get_logged_in_user_guid();
+		}
 
+		if ($this->id) {
+			return _elgg_services()->annotationsTable->update($this);
+		}
+
+		$entity = get_entity($this->entity_guid);
+		if (!$entity) {
+			return false;
+		}
+
+		if (_elgg_services()->annotationsTable->create($this, $entity)) {
 			return $this->id;
 		}
+
+		return false;
 	}
 
 	/**
@@ -74,23 +68,7 @@ class ElggAnnotation extends \ElggExtender {
 	 * @return bool
 	 */
 	public function delete() {
-		if (!$this->canEdit()) {
-			return false;
-		}
-
-		if (!elgg_trigger_event('delete', $this->getType(), $this)) {
-			return false;
-		}
-
-		$qb = \Elgg\Database\Delete::fromTable('annotations');
-		$qb->where($qb->compare('id', '=', $this->id, ELGG_VALUE_INTEGER));
-		$deleted = _elgg_services()->db->deleteData($qb);
-
-		if ($deleted) {
-			elgg_delete_river(['annotation_id' => $this->id, 'limit' => false]);
-		}
-
-		return $deleted;
+		return _elgg_services()->annotationsTable->delete($this);
 	}
 
 	/**
@@ -100,29 +78,7 @@ class ElggAnnotation extends \ElggExtender {
 	 * @since 1.8
 	 */
 	public function disable() {
-		if ($this->enabled == 'no') {
-			return true;
-		}
-
-		if (!$this->canEdit()) {
-			return false;
-		}
-
-		if (!elgg_trigger_event('disable', $this->getType(), $this)) {
-			return false;
-		}
-
-		$qb = \Elgg\Database\Update::table('annotations');
-		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
-			->where($qb->compare('id', '=', $this->id, ELGG_VALUE_INTEGER));
-
-		if ($this->getDatabase()->updateData($qb, true)) {
-			$this->enabled = 'no';
-
-			return true;
-		}
-
-		return false;
+		return _elgg_services()->annotationsTable->disable($this);
 	}
 
 	/**
@@ -132,29 +88,7 @@ class ElggAnnotation extends \ElggExtender {
 	 * @since 1.8
 	 */
 	public function enable() {
-		if ($this->enabled == 'yes') {
-			return true;
-		}
-
-		if (!$this->canEdit()) {
-			return false;
-		}
-
-		if (!elgg_trigger_event('enable', $this->getType(), $this)) {
-			return false;
-		}
-
-		$qb = \Elgg\Database\Update::table('annotations');
-		$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
-			->where($qb->compare('id', '=', $this->id, ELGG_VALUE_INTEGER));
-
-		if ($this->getDatabase()->updateData($qb, true)) {
-			$this->enabled = 'yes';
-
-			return true;
-		}
-
-		return false;
+		return _elgg_services()->annotationsTable->enable($this);
 	}
 
 	/**
@@ -171,16 +105,8 @@ class ElggAnnotation extends \ElggExtender {
 		return _elgg_services()->userCapabilities->canEditAnnotation($entity, $user_guid, $this);
 	}
 
-	// SYSTEM LOG INTERFACE
-
 	/**
-	 * For a given ID, return the object associated with it.
-	 * This is used by the river functionality primarily.
-	 * This is useful for checking access permissions etc on objects.
-	 *
-	 * @param int $id An annotation ID.
-	 *
-	 * @return \ElggAnnotation
+	 * {@inheritdoc}
 	 */
 	public function getObjectFromID($id) {
 		return elgg_get_annotation_from_id($id);

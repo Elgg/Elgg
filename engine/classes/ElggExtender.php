@@ -25,12 +25,16 @@
  */
 abstract class ElggExtender extends \ElggData {
 
+	protected $int_columns = [
+		'id',
+		'entity_guid',
+		'owner_guid',
+		'time_created',
+		'access_id',
+	];
+
 	/**
-	 * (non-PHPdoc)
-	 *
-	 * @see \ElggData::initializeAttributes()
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
@@ -54,8 +58,14 @@ abstract class ElggExtender extends \ElggData {
 		if ($name === 'access_id' && $this instanceof ElggMetadata) {
 			$value = ACCESS_PUBLIC;
 		}
+		if (isset($value) && in_array($name, $this->int_columns)) {
+			$value = (int) $value;
+		}
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
+			if (is_bool($value)) {
+				$value = (int) $value;
+			}
 			$this->attributes['value_type'] = self::detectValueType($value);
 		}
 	}

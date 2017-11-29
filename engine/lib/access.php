@@ -88,7 +88,7 @@ function get_access_list($user_guid = 0, $ignored = 0, $flush = false) {
  *
  * @note Internal: this is only used in core for creating the SQL where clause when
  * retrieving content from the database. The friends access level is handled by
- * _elgg_get_access_where_sql().
+ * {@link \Elgg\Database\Clauses\AccessWhereClause}
  *
  * @see get_write_access_array() for the access levels that a user can write to.
  *
@@ -168,49 +168,6 @@ function access_show_hidden_entities($show_hidden) {
 function access_get_show_hidden_status() {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	return $ENTITY_SHOW_HIDDEN_OVERRIDE;
-}
-
-/**
- * Returns the SQL where clause for enforcing read access to data.
- *
- * Note that if this code is executed in privileged mode it will return (1=1).
- *
- * Otherwise it returns a where clause to retrieve the data that a user has
- * permission to read.
- *
- * Plugin authors can hook into the 'get_sql', 'access' plugin hook to modify,
- * remove, or add to the where clauses. The plugin hook will pass an array with the current
- * ors and ands to the function in the form:
- *  array(
- *      'ors' => array(),
- *      'ands' => array()
- *  )
- *
- * The results will be combined into an SQL where clause in the form:
- *  ((or1 OR or2 OR orN) AND (and1 AND and2 AND andN))
- *
- * @param array $options Array in format:
- *
- * 	table_alias => STR Optional table alias. This is based on the select and join clauses.
- *                     Default is 'e'.
- *
- *  user_guid => INT Optional GUID for the user that we are retrieving data for.
- *                   Defaults to the logged in user.
- *
- *  use_enabled_clause => BOOL Optional. Should we append the enabled clause? The default
- *                             is set by access_show_hidden_entities().
- *
- *  access_column => STR Optional access column name. Default is 'access_id'.
- *
- *  owner_guid_column => STR Optional owner_guid column. Default is 'owner_guid'.
- *
- *  guid_column => STR Optional guid_column. Default is 'guid'.
- *
- * @return string
- * @access private
- */
-function _elgg_get_access_where_sql(array $options = []) {
-	return _elgg_services()->accessCollections->getWhereSql($options);
 }
 
 /**
@@ -470,7 +427,6 @@ function access_init() {
  */
 function access_test($hook, $type, $value, $params) {
 	$value[] = ElggCoreAccessCollectionsTest::class;
-	$value[] = ElggCoreAccessSQLTest::class;
 	return $value;
 }
 

@@ -43,7 +43,7 @@ interface Loggable {
 	 *
 	 * @param int $id GUID of an entity
 	 *
-	 * @return \ElggEntity
+	 * @return static|false
 	 */
 	public function getObjectFromID($id);
 }

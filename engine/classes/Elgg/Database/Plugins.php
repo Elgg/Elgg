@@ -21,7 +21,7 @@ class Plugins {
 	/**
 	 * @var \ElggPlugin[]
 	 */
-	private $boot_plugins = [];
+	private $boot_plugins;
 
 	/**
 	 * @var array|null
@@ -62,13 +62,15 @@ class Plugins {
 	/**
 	 * Set the list of active plugins according to the boot data cache
 	 *
-	 * @param \ElggPlugin[] $plugins Set of active plugins
+	 * @param \ElggPlugin[]|null $plugins Set of active plugins
 	 * @return void
 	 */
-	public function setBootPlugins(array $plugins) {
+	public function setBootPlugins($plugins) {
 		$this->boot_plugins = $plugins;
-		foreach ($plugins as $plugin) {
-			$this->plugins_by_id->put($plugin->getID(), $plugin);
+		if (is_array($plugins)) {
+			foreach ($plugins as $plugin) {
+				$this->plugins_by_id->put($plugin->getID(), $plugin);
+			}
 		}
 	}
 
@@ -390,9 +392,13 @@ class Plugins {
 	 * @param string $status The status of the plugins. active, inactive, or all.
 	 * @return \ElggPlugin[]
 	 */
-	function find($status = 'active') {
+	public function find($status = 'active') {
 		if (!_elgg_services()->db) {
 			return [];
+		}
+
+		if ($status === 'active' && isset($this->boot_plugins)) {
+			return $this->boot_plugins;
 		}
 
 		$priority = $this->namespacePrivateSetting('internal', 'priority');

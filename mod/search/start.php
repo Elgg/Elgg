@@ -29,7 +29,7 @@ function search_init() {
 	elgg_extend_view('elgg.css', 'search/css');
 
 	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
-	
+
 	elgg_register_plugin_hook_handler('view_vars', 'output/tag', 'search_output_tag');
 }
 
@@ -253,10 +253,10 @@ function search_highlight_words($words, $string) {
 	foreach ($words as $word) {
 		// remove any boolean mode operators
 		$word = preg_replace("/([\-\+~])([\w]+)/i", '$2', $word);
-		
+
 		// escape the delimiter and any other regexp special chars
 		$word = preg_quote($word, '/');
-		
+
 		$search = "/($word)/i";
 
 		// Must replace with placeholders in case one of the search terms is in the html string.
@@ -294,7 +294,7 @@ function search_remove_ignored_words($query, $format = 'array') {
 	//$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
 	$query = stripslashes(strip_tags($query));
 	$query = trim($query);
-	
+
 	$words = preg_split('/\s+/', $query);
 
 	if ($format == 'string') {
@@ -433,7 +433,7 @@ function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 	}
 
 	if ($on) {
-		$order_by = "$on $order";
+		$order_by = new \Elgg\Database\Clauses\OrderByClause($on, $order);
 	} else {
 		$order_by = '';
 	}
@@ -476,22 +476,22 @@ function search_output_tag(\Elgg\Hook $hook) {
 		// leave unaltered
 		return;
 	}
-	
+
 	$query_params = [
 		'q' => elgg_extract('value', $vars),
 		'search_type' => 'tags',
 		'type' => elgg_extract('type', $vars, null, false),
 		'subtype' => elgg_extract('subtype', $vars, null, false),
 	];
-		
+
 	$url = elgg_extract('base_url', $vars, 'search');
-	
+
 	unset($vars['base_url']);
 	unset($vars['type']);
 	unset($vars['subtype']);
-	
+
 	$vars['href'] = elgg_http_add_url_query_elements($url, $query_params);
-	
+
 	return $vars;
 }
 

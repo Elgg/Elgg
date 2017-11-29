@@ -6,6 +6,9 @@
  * @subpackage Search
  */
 
+use Elgg\Database\Clauses\MetadataWhereClause;
+use Elgg\Database\QueryBuilder;
+
 /**
  * Get objects that match the search parameters.
  *
@@ -21,35 +24,26 @@ function search_objects_hook($hook, $type, $value, $params) {
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 
-	$query = sanitise_string($params['query']);
+	$query = elgg_extract('query', $params);
 	$query_parts = explode(' ', $query);
 
-	$db_prefix = elgg_get_config('dbprefix');
+	$metadata_fields = ['title', 'description'];
 
-	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
+	$params['wheres'][] = function (QueryBuilder $qb, $alias) use ($query_parts, $metadata_fields) {
+		$subclauses = [];
+		$md_alias = $qb->joinMetadataTable($alias, 'guid', $metadata_fields);
+		foreach ($query_parts as $part) {
+			$where = new MetadataWhereClause();
+			$where->values = "%{$part}%";
+			$where->comparison = 'LIKE';
+			$where->value_type = ELGG_VALUE_STRING;
+			$where->case_sensitive = false;
 
-	$fields = ['title', 'description'];
-	$wheres = [];
-	foreach ($fields as $field) {
-		$sublikes = [];
-		foreach ($query_parts as $query_part) {
-			$query_part = sanitise_string($query_part);
-			if (strlen($query_part) == 0) {
-				continue;
-			}
-			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
+			$subclauses[] = $where->prepare($qb, $md_alias);
 		}
 
-		if (empty($sublikes)) {
-			continue;
-		}
-
-		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
-	}
-
-	if (!empty($wheres)) {
-		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
-	}
+		return $qb->merge($subclauses, 'AND');
+	};
 
 	$params['count'] = true;
 	$count = elgg_get_entities($params);
@@ -96,35 +90,26 @@ function search_groups_hook($hook, $type, $value, $params) {
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 
-	$query = sanitise_string($params['query']);
+	$query = elgg_extract('query', $params);
 	$query_parts = explode(' ', $query);
 
-	$db_prefix = elgg_get_config('dbprefix');
+	$metadata_fields = ['name', 'description'];
 
-	$params['joins'][] = "JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid";
+	$params['wheres'][] = function (QueryBuilder $qb, $alias) use ($query_parts, $metadata_fields) {
+		$subclauses = [];
+		$md_alias = $qb->joinMetadataTable($alias, 'guid', $metadata_fields);
+		foreach ($query_parts as $part) {
+			$where = new MetadataWhereClause();
+			$where->values = "%{$part}%";
+			$where->comparison = 'LIKE';
+			$where->value_type = ELGG_VALUE_STRING;
+			$where->case_sensitive = false;
 
-	$fields = ['name', 'description'];
-	$wheres = [];
-	foreach ($fields as $field) {
-		$sublikes = [];
-		foreach ($query_parts as $query_part) {
-			$query_part = sanitise_string($query_part);
-			if (strlen($query_part) == 0) {
-				continue;
-			}
-			$sublikes[] = "(md.value LIKE '%{$query_part}%')";
+			$subclauses[] = $where->prepare($qb, $md_alias);
 		}
 
-		if (empty($sublikes)) {
-			continue;
-		}
-
-		$wheres[] = "(md.name = '{$field}' AND (" . implode(' AND ', $sublikes) . "))";
-	}
-
-	if (!empty($wheres)) {
-		$params['wheres'][] = '(' . implode(' OR ', $wheres) . ')';
-	}
+		return $qb->merge($subclauses, 'AND');
+	};
 
 	$params['count'] = true;
 
@@ -179,13 +164,13 @@ function search_users_hook($hook, $type, $value, $params) {
 	$metadata_fields = ['username', 'name'];
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
 
-	$params['wheres'][] = function (\Elgg\Database\QueryBuilder $qb, $alias) use ($query_parts, $profile_fields, $metadata_fields) {
+	$params['wheres'][] = function (QueryBuilder $qb, $alias) use ($query_parts, $profile_fields, $metadata_fields) {
 		$wheres = [];
 
 		$subclauses = [];
 		$md_alias = $qb->joinMetadataTable($alias, 'guid', $metadata_fields, 'left');
 		foreach ($query_parts as $part) {
-			$where = new \Elgg\Database\Clauses\MetadataWhereClause();
+			$where = new MetadataWhereClause();
 			$where->values = "%{$part}%";
 			$where->comparison = 'LIKE';
 			$where->value_type = ELGG_VALUE_STRING;
@@ -285,56 +270,29 @@ function search_tags_hook($hook, $type, $value, $params) {
 	$params['joins'] = (array) elgg_extract('joins', $params, []);
 	$params['wheres'] = (array) elgg_extract('wheres', $params, []);
 
-	$db_prefix = elgg_get_config('dbprefix');
-
 	$valid_tag_names = elgg_get_registered_tag_metadata_names();
-
-	// @todo will need to split this up to support searching multiple tags at once.
-	$query = sanitise_string($params['query']);
 
 	// if passed a tag metadata name, only search on that tag name.
 	// tag_name isn't included in the params because it's specific to
 	// tag searches.
 	if ($tag_names = get_input('tag_names')) {
-		if (is_array($tag_names)) {
-			$search_tag_names = $tag_names;
-		} else {
-			$search_tag_names = [$tag_names];
-		}
-
-		// check these are valid to avoid arbitrary metadata searches.
-		foreach ($search_tag_names as $i => $tag_name) {
-			if (!in_array($tag_name, $valid_tag_names)) {
-				unset($search_tag_names[$i]);
-			}
-		}
+		$tag_names = (array) $tag_names;
+		$search_tag_names = array_intersect($tag_names, $valid_tag_names);
 	} else {
 		$search_tag_names = $valid_tag_names;
 	}
 
-	if (!$search_tag_names) {
-		return ['entities' => [], 'count' => $count];
+	if (empty($search_tag_names)) {
+		return ['entities' => [], 'count' => 0];
 	}
 
-	// don't use elgg_get_entities_from_metadata() here because of
-	// performance issues.  since we don't care what matches at this point
-	// use an IN clause to grab everything that matches at once and sort
-	// out the matches later.
-	$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
+	$query = elgg_extract('query', $params);
 
-	$access = _elgg_get_access_where_sql([
-		'table_alias' => 'md',
-		'guid_column' => 'entity_guid',
-	]);
-	$sanitised_tags = [];
-
-	foreach ($search_tag_names as $tag) {
-		$sanitised_tags[] = '"' . sanitise_string($tag) . '"';
-	}
-
-	$tags_in = implode(',', $sanitised_tags);
-
-	$params['wheres'][] = "(md.name IN ($tags_in) AND md.value = '$query' AND $access)";
+	$params['metadata_name_value_pairs'][] = [
+		'name' => $search_tag_names,
+		'value' => $query,
+		'case_sensitive' => false,
+	];
 
 	$params['count'] = true;
 	$count = elgg_get_entities($params);

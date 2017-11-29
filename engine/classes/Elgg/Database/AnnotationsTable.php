@@ -1,59 +1,53 @@
 <?php
+
 namespace Elgg\Database;
+
+use Elgg\Database;
 use Elgg\Database\Clauses\AnnotationWhereClause;
+use Elgg\EventsService;
 use ElggAnnotation;
+use ElggEntity;
 
 /**
+ * Interfaces with the database to perform CRUD operations on annotations
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
  */
 class AnnotationsTable {
 
 	use \Elgg\TimeUsing;
-	
+
 	/**
-	 * @var \Elgg\Database
+	 * @var Database
 	 */
 	protected $db;
 
 	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
-	 * @var \Elgg\EventsService
+	 * @var EventsService
 	 */
 	protected $events;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database      $db      Database
-	 * @param \ElggSession        $session Session
-	 * @param \Elgg\EventsService $events  Events
+	 * @param Database      $db     Database
+	 * @param EventsService $events Events
 	 */
-	public function __construct(\Elgg\Database $db, \ElggSession $session, \Elgg\EventsService $events) {
+	public function __construct(Database $db, EventsService $events) {
 		$this->db = $db;
-		$this->session = $session;
 		$this->events = $events;
 	}
 
 	/**
-	 * Get a specific annotation by its id.
-	 * If you want multiple annotation objects, use
-	 * {@link elgg_get_annotations()}.
+	 * Get a specific annotation by its id
 	 *
-	 * @param int $id The id of the annotation object being retrieved.
+	 * @param int $id The id of the annotation object
 	 *
 	 * @return ElggAnnotation|false
 	 */
-	function get($id) {
+	public function get($id) {
 		$qb = Select::fromTable('annotations');
 		$qb->select('*');
 
@@ -68,179 +62,227 @@ class AnnotationsTable {
 
 		return false;
 	}
-	
+
 	/**
-	 * Deletes an annotation using its ID.
+	 * Deletes an annotation using its ID
 	 *
-	 * @param int $id The annotation ID to delete.
-	 * @return bool
-	 */
-	function delete($id) {
-		$annotation = $this->get($id);
-		if (!$annotation) {
-			return false;
-		}
-		return $annotation->delete();
-	}
-	
-	/**
-	 * Create a new annotation.
-	 *
-	 * @param int    $entity_guid GUID of entity to be annotated
-	 * @param string $name        Name of annotation
-	 * @param string $value       Value of annotation
-	 * @param string $value_type  Type of value (default is auto detection)
-	 * @param int    $owner_guid  Owner of annotation (default is logged in user)
-	 * @param int    $access_id   Access level of annotation
-	 *
-	 * @return int|bool id on success or false on failure
-	 */
-	function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
-		
-		$result = false;
-	
-		$entity_guid = (int) $entity_guid;
-		$value_type = \ElggExtender::detectValueType($value, $value_type);
-
-		$owner_guid = (int) $owner_guid;
-		if ($owner_guid == 0) {
-			$owner_guid = $this->session->getLoggedInUserGuid();
-		}
-	
-		$access_id = (int) $access_id;
-
-		$entity = get_entity($entity_guid);
-
-		if (!$entity) {
-			_elgg_services()->logger->error("Unable to load en entity with $entity_guid to annotate it");
-			$entity_type = null;
-		} else {
-			$entity_type = $entity->type;
-		}
-
-		if ($this->events->trigger('annotate', $entity_type, $entity)) {
-			$sql = "INSERT INTO {$this->db->prefix}annotations
-				(entity_guid, name, value, value_type, owner_guid, time_created, access_id)
-				VALUES
-				(:entity_guid, :name, :value, :value_type, :owner_guid, :time_created, :access_id)";
-	
-			$result = $this->db->insertData($sql, [
-				':entity_guid' => $entity_guid,
-				':name' => $name,
-				':value' => $value,
-				':value_type' => $value_type,
-				':owner_guid' => $owner_guid,
-				':time_created' => $this->getCurrentTime()->getTimestamp(),
-				':access_id' => $access_id,
-			]);
-				
-			if ($result !== false) {
-				$obj = elgg_get_annotation_from_id($result);
-				if ($this->events->trigger('create', 'annotation', $obj)) {
-					return $result;
-				} else {
-					// plugin returned false to reject annotation
-					elgg_delete_annotation_by_id($result);
-					return false;
-				}
-			}
-		}
-	
-		return $result;
-	}
-	
-	/**
-	 * Update an annotation.
-	 *
-	 * @param int    $annotation_id Annotation ID
-	 * @param string $name          Name of annotation
-	 * @param string $value         Value of annotation
-	 * @param string $value_type    Type of value
-	 * @param int    $owner_guid    Owner of annotation
-	 * @param int    $access_id     Access level of annotation
+	 * @param ElggAnnotation $annotation Annotation
 	 *
 	 * @return bool
 	 */
-	function update($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
-
-		$annotation_id = (int) $annotation_id;
-	
-		$annotation = $this->get($annotation_id);
-		if (!$annotation) {
-			return false;
-		}
+	public function delete(ElggAnnotation $annotation) {
 		if (!$annotation->canEdit()) {
 			return false;
 		}
-	
-		$name = trim($name);
-		$value_type = \ElggExtender::detectValueType($value, $value_type);
-	
-		$owner_guid = (int) $owner_guid;
-		if ($owner_guid == 0) {
-			$owner_guid = $this->session->getLoggedInUserGuid();
-		}
-	
-		$access_id = (int) $access_id;
-				
-		$sql = "UPDATE {$this->db->prefix}annotations
-			(name, value, value_type, access_id, owner_guid)
-			VALUES
-			(:name, :value, :value_type, :access_id, :owner_guid)
-			WHERE id = :annotation_id";
 
-		$result = $this->db->updateData($sql, false, [
-			':name' => $name,
-			':value' => $value,
-			':value_type' => $value_type,
-			':access_id' => $access_id,
-			':owner_guid' => $owner_guid,
-			':annotation_id' => $annotation_id,
-		]);
-			
-		if ($result !== false) {
-			// @todo add plugin hook that sends old and new annotation information before db access
-			$obj = $this->get($annotation_id);
-			$this->events->trigger('update', 'annotation', $obj);
+		if (!$this->events->trigger('delete', 'annotation', $annotation)) {
+			return false;
 		}
-	
+
+		$qb = Delete::fromTable('annotations');
+		$qb->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
+		$deleted = $this->db->deleteData($qb);
+
+		if ($deleted) {
+			elgg_delete_river([
+				'annotation_id' => $annotation->id,
+				'limit' => false,
+			]);
+		}
+
+		return $deleted;
+	}
+
+	/**
+	 * Create a new annotation and return its ID
+	 *
+	 * @param ElggAnnotation $annotation Annotation
+	 * @param ElggEntity     $entity     Entity being annotated
+	 *
+	 * @return int|bool
+	 */
+	public function create(ElggAnnotation $annotation, ElggEntity $entity) {
+		if ($annotation->id) {
+			return $this->update($annotation);
+		}
+
+		$annotation->entity_guid = $entity->guid;
+
+		// @todo It looks like annotations permissions are not being checked anywhere...
+		// Uncomment once tests have been updated
+		// See #11418
+		//if (!$entity->canAnnotate(0, $annotation->name)) {
+		//	return false;
+		//}
+
+		if (!$this->events->trigger('annotate', $entity->getType(), $entity)) {
+			return false;
+		}
+
+		if (!$this->events->triggerBefore('create', 'annotation', $annotation)) {
+			return false;
+		}
+
+		$time_created = $this->getCurrentTime()->getTimestamp();
+
+		$qb = Insert::intoTable('annotations');
+		$qb->values([
+			'entity_guid' => $qb->param($annotation->entity_guid, ELGG_VALUE_INTEGER),
+			'name' => $qb->param($annotation->name, ELGG_VALUE_STRING),
+			'value' => $qb->param($annotation->value, $annotation->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING),
+			'value_type' => $qb->param($annotation->value_type, ELGG_VALUE_STRING),
+			'owner_guid' => $qb->param($annotation->owner_guid, ELGG_VALUE_INTEGER),
+			'time_created' => $qb->param($time_created, ELGG_VALUE_INTEGER),
+			'access_id' => $qb->param($annotation->access_id, ELGG_VALUE_INTEGER),
+		]);
+
+		$result = $this->db->insertData($qb);
+		if ($result === false) {
+			return false;
+		}
+
+		$annotation->id = $result;
+		$annotation->time_created = $time_created;
+
+		if (!$this->events->trigger('create', 'annotation', $annotation)) {
+			elgg_delete_annotation_by_id($result);
+
+			return false;
+		}
+
+		$entity->updateLastAction($annotation->time_created);
+
+		$this->events->triggerAfter('create', 'annotation', $annotation);
+
 		return $result;
 	}
-	
+
 	/**
-	 * Returns annotations.  Accepts all elgg_get_entities() options for entity
-	 * restraints.
+	 * Store updated annotation in the database
+	 *
+	 * @todo Add canAnnotate check if entity guid changes
+	 *
+	 * @param ElggAnnotation $annotation Annotation to store
+	 *
+	 * @return bool
+	 */
+	public function update(ElggAnnotation $annotation) {
+		if (!$annotation->canEdit()) {
+			return false;
+		}
+
+		if (!$this->events->triggerBefore('update', 'annotation', $annotation)) {
+			return false;
+		}
+
+		$qb = Update::table('annotations');
+		$qb->set('name', $qb->param($annotation->name, ELGG_VALUE_STRING))
+			->set('value', $qb->param($annotation->value, $annotation->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
+			->set('value_type', $qb->param($annotation->value_type, ELGG_VALUE_STRING))
+			->set('access_id', $qb->param($annotation->access_id, ELGG_VALUE_INTEGER))
+			->set('owner_guid', $qb->param($annotation->owner_guid, ELGG_VALUE_INTEGER))
+			->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
+
+		$result = $this->db->updateData($qb);
+
+		if ($result === false) {
+			return false;
+		}
+
+		$this->events->trigger('update', 'annotation', $annotation);
+		$this->events->triggerAfter('update', 'annotation', $annotation);
+
+		return $result;
+	}
+
+	/**
+	 * Disable the annotation.
+	 *
+	 * @param ElggAnnotation $annotation Annotation
+	 *
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function disable(ElggAnnotation $annotation) {
+		if ($annotation->enabled == 'no') {
+			return true;
+		}
+
+		if (!$annotation->canEdit()) {
+			return false;
+		}
+
+		if (!elgg_trigger_event('disable', $annotation->getType(), $annotation)) {
+			return false;
+		}
+
+		if ($annotation->id) {
+			$qb = Update::table('annotations');
+			$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
+				->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
+
+			if (!$this->db->updateData($qb)) {
+				return false;
+			}
+		}
+
+		$annotation->enabled = 'no';
+
+		return true;
+	}
+
+	/**
+	 * Enable the annotation
+	 *
+	 * @param ElggAnnotation $annotation Annotation
+	 *
+	 * @return bool
+	 * @since 1.8
+	 */
+	public function enable(ElggAnnotation $annotation) {
+		if ($annotation->enabled == 'yes') {
+			return true;
+		}
+
+		if (!$annotation->canEdit()) {
+			return false;
+		}
+
+		if (!$this->events->trigger('enable', $annotation->getType(), $annotation)) {
+			return false;
+		}
+
+		if ($annotation->id) {
+			$qb = Update::table('annotations');
+			$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
+				->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
+
+			if (!$this->db->updateData($qb)) {
+				return false;
+			}
+		}
+
+		$annotation->enabled = 'yes';
+
+		return true;
+	}
+
+	/**
+	 * Returns annotations.  Accepts all {@link elgg_get_entities()} options
 	 *
 	 * @see elgg_get_entities()
 	 *
-	 * @param array $options Array in format:
-	 *
-	 * annotation_names              => null|ARR Annotation names
-	 * annotation_values             => null|ARR Annotation values
-	 * annotation_ids                => null|ARR annotation ids
-	 * annotation_case_sensitive     => BOOL Overall Case sensitive
-	 * annotation_owner_guids        => null|ARR guids for annotation owners
-	 * annotation_created_time_lower => INT Lower limit for created time.
-	 * annotation_created_time_upper => INT Upper limit for created time.
-	 * annotation_calculation        => STR Perform the MySQL function on the annotation values returned.
-	 *                                   Do not confuse this "annotation_calculation" option with the
-	 *                                   "calculation" option to elgg_get_entities_from_annotation_calculation().
-	 *                                   The "annotation_calculation" option causes this function to
-	 *                                   return the result of performing a mathematical calculation on
-	 *                                   all annotations that match the query instead of \ElggAnnotation
-	 *                                   objects.
-	 *                                   See the docs for elgg_get_entities_from_annotation_calculation()
-	 *                                   for the proper use of the "calculation" option.
-	 *
+	 * @param array $options Options
 	 *
 	 * @return ElggAnnotation[]|mixed
 	 */
-	function find(array $options = []) {
+	public function find(array $options = []) {
 		$options['metastring_type'] = 'annotations';
 		$options = _elgg_normalize_metastrings_options($options);
+
 		return Annotations::find($options);
 	}
-	
+
 	/**
 	 * Deletes annotations based on $options.
 	 *
@@ -248,10 +290,14 @@ class AnnotationsTable {
 	 *          This requires at least one constraint: annotation_owner_guid(s),
 	 *          annotation_name(s), annotation_value(s), or guid(s) must be set.
 	 *
-	 * @param array $options An options array. {@link elgg_get_annotations()}
+	 * @see     elgg_get_annotations()
+	 * @see     elgg_get_entities()
+	 *
+	 * @param array $options Options
+	 *
 	 * @return bool|null true on success, false on failure, null if no annotations to delete.
 	 */
-	function deleteAll(array $options) {
+	public function deleteAll(array $options) {
 		if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
 			return false;
 		}
@@ -276,7 +322,7 @@ class AnnotationsTable {
 
 		return $success == $count;
 	}
-	
+
 	/**
 	 * Disables annotations based on $options.
 	 *
@@ -285,11 +331,11 @@ class AnnotationsTable {
 	 * @param array $options An options array. {@link elgg_get_annotations()}
 	 * @return bool|null true on success, false on failure, null if no annotations disabled.
 	 */
-	function disableAll(array $options) {
+	public function disableAll(array $options) {
 		if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
 			return false;
 		}
-		
+
 		// if we can see hidden (disabled) we need to use the offset
 		// otherwise we risk an infinite loop if there are more than 50
 		$inc_offset = access_get_show_hidden_status();
@@ -314,7 +360,7 @@ class AnnotationsTable {
 
 		return $success == $count;
 	}
-	
+
 	/**
 	 * Enables annotations based on $options.
 	 *
@@ -326,7 +372,7 @@ class AnnotationsTable {
 	 * @param array $options An options array. {@link elgg_get_annotations()}
 	 * @return bool|null true on success, false on failure, null if no metadata enabled.
 	 */
-	function enableAll(array $options) {
+	public function enableAll(array $options) {
 		if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
 			return false;
 		}
@@ -350,33 +396,29 @@ class AnnotationsTable {
 
 		return $success == $count;
 	}
-	
+
 	/**
 	 * Check to see if a user has already created an annotation on an object
 	 *
-	 * @param int    $entity_guid     Entity guid
-	 * @param string $annotation_type Type of annotation
-	 * @param int    $owner_guid      Defaults to logged in user.
+	 * @param int    $entity_guid Entity guid
+	 * @param string $name        Annotation name
+	 * @param int    $owner_guid  Owner guid
 	 *
 	 * @return bool
 	 */
-	function exists($entity_guid, $annotation_type, $owner_guid = null) {
-	
-		if (!$owner_guid && !($owner_guid = $this->session->getLoggedInUserGuid())) {
+	public function exists($entity_guid, $name, $owner_guid) {
+		if (!$owner_guid) {
 			return false;
 		}
 
-		$sql = "SELECT id FROM {$this->db->prefix}annotations
-				WHERE owner_guid = :owner_guid
-				AND entity_guid = :entity_guid
-				AND name = :annotation_type";
+		$qb = Select::fromTable('annotations');
+		$qb->select('id');
+		$qb->where($qb->compare('owner_guid', '=', $owner_guid, ELGG_VALUE_INTEGER))
+			->andWhere($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER))
+			->andWhere($qb->compare('name', '=', $name, ELGG_VALUE_STRING));
 
-		$result = $this->db->getDataRow($sql, null, [
-			':owner_guid' => (int) $owner_guid,
-			':entity_guid' => (int) $entity_guid,
-			':annotation_type' => $annotation_type,
-		]);
-	
-		return (bool) $result;
+		$result = $this->db->getDataRow($qb);
+
+		return $result && $result->id;
 	}
 }

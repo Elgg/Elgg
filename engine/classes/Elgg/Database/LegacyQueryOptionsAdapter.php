@@ -607,6 +607,9 @@ trait LegacyQueryOptionsAdapter {
 				$options["{$type}_name_value_pairs"][$key]['case_sensitive'] = elgg_extract("{$type}_case_sensitive", $options, true);
 			}
 			if (!isset($value['type'])) {
+				if (is_bool($value['value'])) {
+					$value['value'] = (int) $value['value'];
+				}
 				if (is_int($value['value'])) {
 					$options["{$type}_name_value_pairs"][$key]['type'] = ELGG_VALUE_INTEGER;
 				} else {
@@ -750,6 +753,7 @@ trait LegacyQueryOptionsAdapter {
 			'annotation_created',
 			'relationship_created',
 			'last_action',
+			'posted',
 		];
 
 		$bounds = ['time_lower', 'time_upper', 'after', 'before'];
@@ -762,6 +766,7 @@ trait LegacyQueryOptionsAdapter {
 
 				$new_prop_name = $prop_name;
 				$new_prop_name = str_replace('modified', 'updated', $new_prop_name);
+				$new_prop_name = str_replace('posted', 'created', $new_prop_name);
 				$new_prop_name = str_replace('time_lower', 'after', $new_prop_name);
 				$new_prop_name = str_replace('time_upper', 'before', $new_prop_name);
 

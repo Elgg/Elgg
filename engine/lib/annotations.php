@@ -14,51 +14,23 @@
  * @return \ElggAnnotation|false
  */
 function elgg_get_annotation_from_id($id) {
-	return _elgg_services()->annotations->get($id);
+	return _elgg_services()->annotationsTable->get($id);
 }
 
 /**
  * Deletes an annotation using its ID.
  *
  * @param int $id The annotation ID to delete.
+ *
  * @return bool
  */
 function elgg_delete_annotation_by_id($id) {
-	return _elgg_services()->annotations->delete($id);
-}
+	$annotation = elgg_get_annotation_from_id($id);
+	if (!$annotation) {
+		return false;
+	}
 
-/**
- * Create a new annotation.
- *
- * @param int    $entity_guid GUID of entity to be annotated
- * @param string $name        Name of annotation
- * @param string $value       Value of annotation
- * @param string $value_type  Type of value (default is auto detection)
- * @param int    $owner_guid  Owner of annotation (default is logged in user)
- * @param int    $access_id   Access level of annotation
- *
- * @return int|bool id on success or false on failure
- */
-function create_annotation($entity_guid, $name, $value, $value_type = '',
-		$owner_guid = 0, $access_id = ACCESS_PRIVATE) {
-	return _elgg_services()->annotations->create(
-		$entity_guid, $name, $value, $value_type, $owner_guid, $access_id);
-}
-
-/**
- * Update an annotation.
- *
- * @param int    $annotation_id Annotation ID
- * @param string $name          Name of annotation
- * @param string $value         Value of annotation
- * @param string $value_type    Type of value
- * @param int    $owner_guid    Owner of annotation
- * @param int    $access_id     Access level of annotation
- *
- * @return bool
- */
-function update_annotation($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
-	return _elgg_services()->annotations->update($annotation_id, $name, $value, $value_type, $owner_guid, $access_id);
+	return $annotation->delete();
 }
 
 /**
@@ -76,14 +48,14 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = []) {
-	return _elgg_services()->annotations->find($options);
+	return _elgg_services()->annotationsTable->find($options);
 }
 
 /**
  * Returns a rendered list of annotations with pagination.
  *
  * @param array $options Annotation getter and display options.
- * {@link elgg_get_annotations()} and {@link elgg_list_entities()}.
+ *                       {@link elgg_get_annotations()} and {@link elgg_list_entities()}.
  *
  * @return string The list of entities
  * @since 1.8.0
@@ -112,7 +84,7 @@ function elgg_list_annotations($options) {
  * @since 1.8.0
  */
 function elgg_delete_annotations(array $options) {
-	return _elgg_services()->annotations->deleteAll($options);
+	return _elgg_services()->annotationsTable->deleteAll($options);
 }
 
 /**
@@ -125,7 +97,7 @@ function elgg_delete_annotations(array $options) {
  * @since 1.8.0
  */
 function elgg_disable_annotations(array $options) {
-	return _elgg_services()->annotations->disableAll($options);
+	return _elgg_services()->annotationsTable->disableAll($options);
 }
 
 /**
@@ -141,21 +113,25 @@ function elgg_disable_annotations(array $options) {
  * @since 1.8.0
  */
 function elgg_enable_annotations(array $options) {
-	return _elgg_services()->annotations->enableAll($options);
+	return _elgg_services()->annotationsTable->enableAll($options);
 }
 
 /**
  * Check to see if a user has already created an annotation on an object
  *
- * @param int    $entity_guid     Entity guid
- * @param string $annotation_type Type of annotation
- * @param int    $owner_guid      Defaults to logged in user.
+ * @param int    $entity_guid Entity guid
+ * @param string $name        Annotation name
+ * @param int    $owner_guid  Defaults to logged in user.
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = null) {
-	return _elgg_services()->annotations->exists($entity_guid, $annotation_type, $owner_guid);
+function elgg_annotation_exists($entity_guid, $name, $owner_guid = null) {
+	if (!$owner_guid) {
+		$owner_guid = elgg_get_logged_in_user_guid();
+	}
+
+	return _elgg_services()->annotationsTable->exists($entity_guid, $name, $owner_guid);
 }
 
 /**

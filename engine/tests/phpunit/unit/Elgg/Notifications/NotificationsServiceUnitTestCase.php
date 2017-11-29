@@ -114,51 +114,59 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 	}
 
 	public function getTestObject() {
-		$objects = $this->prepareTestObjects();
-		foreach ($objects as $object) {
-			if ($object instanceof $this->test_object_class) {
-				return $object;
-			}
-		}
-		throw new Exception("Test object not found for $this->test_object_class class");
-	}
-
-	public function prepareTestObjects() {
-
 		$this->setupServices();
 
-		$object = $this->createObject([
-			'owner_guid' => $this->actor->guid,
-			'container_guid' => $this->actor->guid,
-			'access_id' => ACCESS_LOGGED_IN,
-			'subtype' => 'test_subtype',
-		]);
+		switch ($this->test_object_class) {
+			case ElggObject::class :
+				return $this->createObject([
+					'owner_guid' => $this->actor->guid,
+					'container_guid' => $this->actor->guid,
+					'access_id' => ACCESS_LOGGED_IN,
+					'subtype' => 'test_subtype',
+				]);
 
-		$group = $this->createGroup([
-			'owner_guid' => $this->actor->guid,
-			'container_guid' => $this->actor->guid,
-			'access_id' => ACCESS_LOGGED_IN,
-		]);
+			case \ElggGroup::class :
+				return $this->createGroup([
+					'owner_guid' => $this->actor->guid,
+					'container_guid' => $this->actor->guid,
+					'access_id' => ACCESS_LOGGED_IN,
+				]);
 
-		$user = $this->actor;
+			case \ElggUser::class :
+				return $this->actor;
 
-		$metadata_id = _elgg_services()->metadataTable->create($object->guid, 'test_metadata_name', 'test_metadata_value', 'text');
-		$metadata = elgg_get_metadata_from_id($metadata_id);
+			case \ElggMetadata::class :
+				$object = $this->createObject();
+				$metadata = new \ElggMetadata();
+				$metadata->entity_guid = $object->guid;
+				$metadata->name = 'test_metadata_name';
+				$metadata->value = 'test_metadata_value';
+				$metadata->save();
 
-		$annotation_id = $object->annotate('test_annotation_name', 'test_annotation_value', ACCESS_PUBLIC, $this->actor->guid, 'text');
-		$annotation = elgg_get_annotation_from_id($annotation_id);
+				return $metadata;
 
-		add_entity_relationship($object->guid, 'test_relationship', $user->guid);
-		$relationship = check_entity_relationship($object->guid, 'test_relationship', $user->guid);
+			case \ElggAnnotation::class :
+				$object = $this->createObject();
 
-		return [
-			$object,
-			$group,
-			$user,
-			$metadata,
-			$annotation,
-			$relationship,
-		];
+				$annotation = new \ElggAnnotation();
+				$annotation->entity_guid = $object->guid;
+				$annotation->name = 'test_annotation_name';
+				$annotation->value = 'test_annotation_value';
+				$annotation->owner_guid = $this->actor->guid;
+				$annotation->access_id = ACCESS_PUBLIC;
+				$annotation->save();
+
+				return $annotation;
+
+			case \ElggRelationship::class :
+				$object = $this->createObject();
+				$user = $this->actor;
+				add_entity_relationship($object->guid, 'test_relationship', $user->guid);
+
+				return check_entity_relationship($object->guid, 'test_relationship', $user->guid);
+		}
+
+		throw new Exception("Test object not found for $this->test_object_class class");
 	}
 
 	public function testRegisterEvent() {
@@ -519,7 +527,7 @@ abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
 		$recipient = $this->createUser([], [
 			'language' => 'en',
 		]);
-		
+
 		$mock = $this->createMock(SubscriptionsService::class, ['getSubscriptions'], [], '', false);
 		$mock->expects($this->exactly(1))
 			->method('getSubscriptions')

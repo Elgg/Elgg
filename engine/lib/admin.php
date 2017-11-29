@@ -32,7 +32,7 @@ function elgg_get_admins(array $options = []) {
 	$options['type'] = 'user';
 	$options['metadata_name_value_pairs'] = elgg_extract('metadata_name_value_pairs', $options, []);
 	
-	$options['metadata_name_value_pairs'][] = ['admin' => 'yes'];
+	$options['metadata_name_value_pairs']['admin'] = 'yes';
 
 	return elgg_get_entities($options);
 }

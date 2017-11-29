@@ -534,41 +534,6 @@ function elgg_get_entities(array $options = []) {
 }
 
 /**
- * Returns SQL where clause for owner and containers.
- *
- * @param string     $column Column name the guids should be checked against. Usually
- *                           best to provide in table.column format.
- * @param null|array $guids  Array of GUIDs.
- *
- * @return false|string
- * @since 1.8.0
- * @access private
- */
-function _elgg_get_guid_based_where_sql($column, $guids) {
-	return _elgg_services()->entityTable->getGuidBasedWhereSql($column, $guids);
-}
-
-/**
- * Returns SQL where clause for entity time limits.
- *
- * @param string   $table              Entity table prefix as defined in
- *                                     SELECT...FROM entities $table
- * @param null|int $time_created_upper Time created upper limit
- * @param null|int $time_created_lower Time created lower limit
- * @param null|int $time_updated_upper Time updated upper limit
- * @param null|int $time_updated_lower Time updated lower limit
- *
- * @return false|string false on fail, string on success.
- * @since 1.7.0
- * @access private
- */
-function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
-		$time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
-	return _elgg_services()->entityTable->getEntityTimeWhereSql($table,
-		$time_created_upper, $time_created_lower, $time_updated_upper, $time_updated_lower);
-}
-
-/**
  * Returns a string of rendered entities.
  *
  * Displays list of entities with formatting specified by the entity view.

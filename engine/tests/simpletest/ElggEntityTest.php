@@ -168,7 +168,12 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 		// add annotations and metadata to check if they're disabled.
 		$annotation_id = create_annotation($this->entity->guid, 'test_annotation_' . rand(), 'test_value_' . rand());
-		$metadata_id = _elgg_services()->metadataTable->create($this->entity->guid, 'test_metadata_' . rand(), 'test_value_' . rand());
+
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $this->entity->guid;
+		$metadata->name = 'test_metadata_' . rand();
+		$metadata->value = 'test_value_' . rand();
+		$metadata_id = $metadata->save();
 
 		$this->assertTrue($this->entity->disable());
 

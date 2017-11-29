@@ -35,7 +35,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$this->object->save();
 
 		// create_metadata returns id of metadata on success
-		$this->assertNotEqual(false, _elgg_services()->metadataTable->create($this->object->guid, 'metaUnitTest', 'tested'));
+		$this->object->setMetadata('metaUnitTest', 'tested');
 
 		// check value with improper case
 		$options = [
@@ -148,6 +148,48 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 			['<', 'CaseSensitive1', false, 1],
 			['<', 'casesensitive1', true, 1],
 			['<', 'casesensitive1', false, 1],
+		];
+	}
+
+	/**
+	 * @group Current
+	 * @dataProvider booleanPairsProvider
+	 */
+	public function testElggGetEntitiesFromBooleanMetadata($value, $query, $type) {
+
+		$this->object->subtype = $this->getRandomSubtype();
+		$this->object->metadata = $value;
+		$this->object->save();
+
+		$options = [
+			'type' => 'object',
+			'subtype' => $this->object->subtype,
+			'metadata_name_value_pairs' => [
+				'name' => 'metadata',
+				'value' => $query,
+				'operand' => '=',
+				'type' => $type,
+			],
+			'count' => true,
+		];
+
+		$result = elgg_get_entities($options);
+
+		$this->assertEquals(1, $result);
+
+		$this->object->delete();
+	}
+
+	public function booleanPairsProvider() {
+		return [
+			[true, true, null],
+			[true, 1, null],
+			[true, '1', ELGG_VALUE_INTEGER],
+			[false, false, null],
+			[false, 0, null],
+			[false, '0', ELGG_VALUE_INTEGER],
+			[1, true, null],
+			[0, false, null],
 		];
 	}
 

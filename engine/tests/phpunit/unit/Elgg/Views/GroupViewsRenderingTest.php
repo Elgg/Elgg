@@ -2,8 +2,6 @@
 
 namespace Elgg\Views;
 
-use Elgg\ViewRenderingTestCase;
-
 /**
  * @group ViewRendering
  * @group ViewsService

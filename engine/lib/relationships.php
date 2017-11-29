@@ -105,27 +105,6 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
 }
 
 /**
- * Returns SQL appropriate for relationship joins and wheres
- *
- * @todo add support for multiple relationships and guids.
- *
- * @param string $column               Column name the GUID should be checked against.
- *                                     Provide in table.column format.
- * @param string $relationship         Type of the relationship
- * @param int    $relationship_guid    Entity GUID to check
- * @param bool   $inverse_relationship Is $relationship_guid the target of the relationship?
- *
- * @return mixed
- * @since 1.7.0
- * @access private
- */
-function elgg_get_entity_relationship_where_sql($column, $relationship = null,
-		$relationship_guid = null, $inverse_relationship = false) {
-	return _elgg_services()->relationshipsTable->getEntityRelationshipWhereSql(
-		$column, $relationship, $relationship_guid, $inverse_relationship);
-}
-
-/**
  * Gets the number of entities by a the number of entities related to them in a particular way.
  * This is a good way to get out the users with the most friends, or the groups with the
  * most members.

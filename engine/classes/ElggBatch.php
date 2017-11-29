@@ -191,7 +191,7 @@ class ElggBatch implements BatchResult {
 	 * Instead of returning all objects in memory, it goes through $chunk_size
 	 * objects, then requests more from the server.  This avoids OOM errors.
 	 *
-	 * @param string $getter     The function used to get objects.  Usually
+	 * @param callable $getter     The function used to get objects.  Usually
 	 *                           an elgg_get_*() function, but can be any valid PHP callback.
 	 * @param array  $options    The options array to pass to the getter function. If limit is
 	 *                           not set, 10 is used as the default. In most cases that is not
@@ -206,7 +206,7 @@ class ElggBatch implements BatchResult {
 	 *                           callbacks that delete rows. You can set this after the
 	 *                           object is created with {@link \ElggBatch::setIncrementOffset()}.
 	 */
-	public function __construct($getter, $options, $callback = null, $chunk_size = 25,
+	public function __construct(callable $getter, $options, $callback = null, $chunk_size = 25,
 			$inc_offset = true) {
 		
 		$this->getter = $getter;

@@ -7,6 +7,7 @@ namespace Elgg\Integration;
  *
  * @group IntegrationTests
  * @group ElggObject
+ * @group Tags
  */
 class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 
@@ -245,6 +246,63 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
 		$r = get_data_row($q);
 		$this->assertFalse($r);
+	}
+
+	public function testCanGetTags() {
+
+		$subtype = $this->getRandomSubtype();
+		$objects = $this->createMany('object', 3, [
+			'subtype' => $subtype,
+		]);
+
+		elgg_register_tag_metadata_name('foo1');
+		elgg_register_tag_metadata_name('foo2');
+		elgg_register_tag_metadata_name('foo3');
+
+		$objects[0]->foo1 = 'one';
+		$objects[0]->foo2 = 'two';
+		$objects[0]->foo4 = 'four';
+
+		$objects[1]->foo1 = 'one';
+		$objects[1]->foo2 = 'two';
+		$objects[1]->foo3 = 'three';
+		$objects[1]->foo4 = 'four';
+
+		$objects[2]->foo1 = 'one';
+		$objects[2]->foo2 = '';
+		$objects[2]->foo3 = '';
+		$objects[2]->foo4 = 'four';
+
+		$expected = [
+			(object) [
+				'tag' => 'one',
+				'total' => 3,
+			],
+			(object) [
+				'tag' => 'two',
+				'total' => 2,
+			],
+			(object) [
+				'tag' => 'three',
+				'total' => 1,
+			],
+		];
+
+		$actual = elgg_get_tags([
+			'types' => 'object',
+			'subtypes' => $subtype,
+			'tag_names' => ['foo1', 'foo2', 'foo3'],
+		]);
+
+		$this->assertEquals($expected, $actual);
+
+		elgg_unregister_tag_metadata_name('foo1');
+		elgg_unregister_tag_metadata_name('foo2');
+		elgg_unregister_tag_metadata_name('foo3');
+
+		foreach ($objects as $object) {
+			$object->delete();
+		}
 	}
 
 	protected function get_entity_row($guid) {
