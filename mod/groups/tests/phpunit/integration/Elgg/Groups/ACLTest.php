@@ -13,7 +13,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	protected $group;
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $user;
 	
@@ -29,8 +29,12 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function down() {
-		$this->group->delete();
-		$this->user->delete();
+		if ($this->group) {
+			$this->group->delete();
+		}
+		if ($this->user) {
+			$this->user->delete();
+		}
 		_elgg_services()->session->removeLoggedInUser();
 	}
 

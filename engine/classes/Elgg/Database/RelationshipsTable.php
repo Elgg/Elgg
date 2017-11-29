@@ -285,60 +285,6 @@ class RelationshipsTable {
 	}
 
 	/**
-	 * Returns SQL appropriate for relationship joins and wheres
-	 *
-	 * @todo add support for multiple relationships and guids.
-	 *
-	 * @param string $column               Column name the GUID should be checked against.
-	 *                                     Provide in table.column format.
-	 * @param string $relationship         Type of the relationship
-	 * @param int    $relationship_guid    Entity GUID to check
-	 * @param bool   $inverse_relationship Is $relationship_guid the target of the relationship?
-	 *
-	 * @return mixed
-	 * @access private
-	 */
-	public function getEntityRelationshipWhereSql($column, $relationship = null,
-			$relationship_guid = null, $inverse_relationship = false) {
-
-		if ($relationship === null && $relationship_guid === null) {
-			return '';
-		}
-
-		$wheres = [];
-		$joins = [];
-		$group_by = '';
-
-		if ($inverse_relationship) {
-			$joins[] = "JOIN {$this->db->prefix}entity_relationships r on r.guid_one = $column";
-		} else {
-			$joins[] = "JOIN {$this->db->prefix}entity_relationships r on r.guid_two = $column";
-		}
-
-		if ($relationship) {
-			$wheres[] = "r.relationship = '" . $this->db->sanitizeString($relationship) . "'";
-		}
-
-		if ($relationship_guid) {
-			if ($inverse_relationship) {
-				$wheres[] = "r.guid_two = '$relationship_guid'";
-			} else {
-				$wheres[] = "r.guid_one = '$relationship_guid'";
-			}
-		} else {
-			// See #5775. Queries that do not include a relationship_guid must be grouped by entity table alias,
-			// otherwise the result set is not unique
-			$group_by = $column;
-		}
-
-		if ($where_str = implode(' AND ', $wheres)) {
-			return ['wheres' => ["($where_str)"], 'joins' => $joins, 'group_by' => $group_by];
-		}
-
-		return '';
-	}
-
-	/**
 	 * Gets the number of entities by a the number of entities related to them in a particular way.
 	 * This is a good way to get out the users with the most friends, or the groups with the
 	 * most members.

@@ -3,10 +3,13 @@
 namespace Elgg\Mocks\Database;
 
 use Elgg\Database\Clauses\MetadataWhereClause;
+use Elgg\Database\Delete;
+use Elgg\Database\Insert;
 use Elgg\Database\MetadataTable as DbMetadataTabe;
 use Elgg\Database\Select;
+use Elgg\Database\Update;
+use ElggEntity;
 use ElggMetadata;
-use stdClass;
 
 /**
  * @group ElggMetadata
@@ -14,7 +17,7 @@ use stdClass;
 class MetadataTable extends DbMetadataTabe {
 
 	/**
-	 * @var stdClass[]
+	 * @var \stdClass[]
 	 */
 	public $rows = [];
 
@@ -32,53 +35,46 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function create($entity_guid, $name, $value, $value_type = '', $ignore = null, $allow_multiple = false) {
-		$entity = get_entity((int) $entity_guid);
-		if (!$entity) {
-			return false;
-		}
-
-		if (!isset($value)) {
-			return false;
-		}
-
+	public function create(ElggMetadata $metadata, $allow_multiple = false) {
 		$this->iterator++;
 		$id = $this->iterator;
 
 		$row = (object) [
 			'type' => 'metadata',
 			'id' => $id,
-			'entity_guid' => $entity->guid,
-			'name' => $name,
-			'value' => $value,
+			'entity_guid' => $metadata->entity_guid,
+			'name' => $metadata->name,
+			'value' => $metadata->value,
+			'value_type' => $metadata->value_type,
 			'time_created' => $this->getCurrentTime()->getTimestamp(),
-			'value_type' => \ElggExtender::detectValueType($value, trim($value_type)),
 		];
 
 		$this->rows[$id] = $row;
 
 		$this->addQuerySpecs($row);
 
-		return parent::create($entity_guid, $name, $value, $value_type, null, $allow_multiple);
+		return parent::create($metadata, $allow_multiple);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function update($id, $name, $value, $value_type) {
+	public function update(ElggMetadata $metadata) {
+		$id = $metadata->id;
 		if (!isset($this->rows[$id])) {
 			return false;
 		}
+
 		$row = $this->rows[$id];
-		$row->name = $name;
-		$row->value = $value;
-		$row->value_type = \ElggExtender::detectValueType($value, trim($value_type));
+		$row->name = $metadata->name;
+		$row->value = $metadata->value;
+		$row->value_type = $metadata->value_type;
 
 		$this->rows[$id] = $row;
 
 		$this->addQuerySpecs($row);
 
-		return parent::update($id, $name, $value, $value_type);
+		return parent::update($metadata);
 	}
 
 	/**
@@ -100,14 +96,16 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete($id) {
-		if (!isset($this->rows[$id])) {
+	public function delete(ElggMetadata $metadata) {
+		parent::delete($metadata);
+
+		if (!isset($this->rows[$metadata->id])) {
 			return false;
 		}
-		$row = $this->rows[$id];
+		$row = $this->rows[$metadata->id];
 		$this->clearQuerySpecs($row);
 		
-		unset($this->rows[$id]);
+		unset($this->rows[$metadata->id]);
 		
 		return true;
 	}
@@ -115,10 +113,10 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * Clear query specs
 	 *
-	 * @param stdClass $row Data row
+	 * @param \stdClass $row Data row
 	 * @return void
 	 */
-	public function clearQuerySpecs(stdClass $row) {
+	public function clearQuerySpecs(\stdClass $row) {
 		if (!isset($this->query_specs[$row->id])) {
 			return;
 		}
@@ -130,10 +128,11 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * Add query query_specs for a metadata object
 	 *
-	 * @param stdClass $row Data row
+	 * @param \stdClass $row Data row
+	 *
 	 * @return void
 	 */
-	public function addQuerySpecs(stdClass $row) {
+	public function addQuerySpecs(\stdClass $row) {
 
 		$this->clearQuerySpecs($row);
 
@@ -155,37 +154,30 @@ class MetadataTable extends DbMetadataTabe {
 			},
 		]);
 
-		$dbprefix = elgg_get_config('dbprefix');
-		$sql = "INSERT INTO {$dbprefix}metadata
-				(entity_guid, name, value, value_type, time_created)
-				VALUES (:entity_guid, :name, :value, :value_type, :time_created)";
+		$qb = Insert::intoTable('metadata');
+		$qb->values([
+			'name' => $qb->param($row->name, ELGG_VALUE_STRING),
+			'entity_guid' => $qb->param($row->entity_guid, ELGG_VALUE_INTEGER),
+			'value' => $qb->param($row->value, $row->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING),
+			'value_type' => $qb->param($row->value_type, ELGG_VALUE_STRING),
+			'time_created' => $qb->param($row->time_created, ELGG_VALUE_INTEGER),
+		]);
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':entity_guid' => $row->entity_guid,
-				':name' => $row->name,
-				':value' => $row->value,
-				':value_type' => $row->value_type,
-				':time_created' => (int) $row->time_created,
-			],
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'insert_id' => $row->id,
 		]);
 
-		$sql = "UPDATE {$dbprefix}metadata
-			SET name = :name,
-			    value = :value,
-				value_type = :value_type
-			WHERE id = :id";
+		$qb = Update::table('metadata');
+		$qb->set('name', $qb->param($row->name, ELGG_VALUE_STRING))
+			->set('value', $qb->param($row->value, $row->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
+			->set('value_type', $qb->param($row->value_type, ELGG_VALUE_STRING))
+			->where($qb->compare('id', '=', $row->id, ELGG_VALUE_INTEGER));
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':name' => $row->name,
-				':value' => $row->value,
-				':value_type' => $row->value_type,
-				':id' => $row->id,
-			],
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return [$row->id];
@@ -194,14 +186,12 @@ class MetadataTable extends DbMetadataTabe {
 			},
 		]);
 
-		// Delete
-		$sql = "DELETE FROM {$dbprefix}metadata WHERE id = :id";
+		$qb = Delete::fromTable('metadata');
+		$qb->where($qb->compare('id', '=', $row->id, ELGG_VALUE_INTEGER));
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':id' => $row->id,
-			],
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					unset($this->rows[$row->id]);

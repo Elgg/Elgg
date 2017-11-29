@@ -1,6 +1,8 @@
 <?php
 /**
  * @group IntegrationTests
+ * @group Metadata
+ * @group EntityMetadata
  */
 class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 

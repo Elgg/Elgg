@@ -1,18 +1,25 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\Views;
+
+use Elgg\Plugins\PluginTesting;
+use Elgg\UnitTestCase;
 
 /**
  * Abstract class for testing view output
  */
-abstract class ViewRenderingTestCase extends IntegrationTestCase {
+abstract class ViewRenderingTestCase extends UnitTestCase {
+
+	use PluginTesting;
 
 	public function up() {
 		_elgg_services()->logger->disable();
 
-		$user = $this->getRandomUser();
+		$user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($user);
 		elgg_set_page_owner_guid($user->guid);
+
+		$this->registerViews();
 	}
 
 	public function down() {
@@ -34,12 +41,23 @@ abstract class ViewRenderingTestCase extends IntegrationTestCase {
 	 */
 	abstract public function getDefaultViewVars();
 
+	public function registerViews() {
+		elgg_views_boot();
+
+		$path = $this->getPath();
+		if ($path) {
+			_elgg_services()->views->registerPluginViews($path);
+		}
+	}
+
 	/**
 	 * An array of views to test
 	 * @return array
 	 */
 	public function viewListProvider() {
 		$provides = [];
+
+		$this->registerViews();
 
 		$data = _elgg_services()->views->getInspectorData();
 

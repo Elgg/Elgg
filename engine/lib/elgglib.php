@@ -1595,20 +1595,6 @@ function elgg_batch_disable_callback($object) {
 }
 
 /**
- * Delete objects with a delete() method.
- *
- * Used as a callback for \ElggBatch.
- *
- * @param object $object The object to disable
- * @return bool
- * @access private
- */
-function elgg_batch_delete_callback($object) {
-	// our db functions return the number of rows affected...
-	return $object->delete() ? true : false;
-}
-
-/**
  * Checks if there are some constraints on the options array for
  * potentially dangerous operations.
  *

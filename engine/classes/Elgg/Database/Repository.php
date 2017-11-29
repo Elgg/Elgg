@@ -76,6 +76,43 @@ abstract class Repository implements QueryExecuting {
 	}
 
 	/**
+	 * Build and execute a new query from an array of legacy options
+	 *
+	 * @param array $options Options
+	 *
+	 * @return ElggData[]|int|mixed
+	 */
+	public static function find(array $options = []) {
+		try {
+			return static::with($options)->execute();
+		} catch (\DataFormatException $e) {
+			return elgg_extract('count', $options) ? 0 : false;
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function batch($limit = null, $offset = null, $callback = null) {
+
+		$options = $this->options->getArrayCopy();
+
+		$options['limit'] = (int) $limit;
+		$options['offset'] = (int) $offset;
+		$options['callback'] = $callback;
+		unset($options['count'],
+			$options['batch'],
+			$options['batch_size'],
+			$options['batch_inc_offset']
+		);
+
+		$batch_size = $this->options->batch_size;
+		$batch_inc_offset = $this->options->batch_inc_offset;
+
+		return new \ElggBatch([static::class, 'find'], $options, null, $batch_size, $batch_inc_offset);
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function filter(\Closure $closure) {
@@ -130,5 +167,33 @@ abstract class Repository implements QueryExecuting {
 		$this->options->orderBy(new OrderByClause($expression, $direction));
 
 		return $this;
+	}
+
+	/**
+	 * Extend query builder with select, group_by, having and order_by clauses from $options
+	 *
+	 * @param QueryBuilder $qb          Query builder
+	 * @param              $table_alias Table alias
+	 *
+	 * @return void
+	 */
+	public function expandInto(QueryBuilder $qb, $table_alias = nul) {
+		foreach ($this->options->selects as $select_clause) {
+			$select_clause->prepare($qb, $table_alias);
+		}
+
+		foreach ($this->options->group_by as $group_by_clause) {
+			$group_by_clause->prepare($qb, $table_alias);
+		}
+
+		foreach ($this->options->having as $having_clause) {
+			$having_clause->prepare($qb, $table_alias);
+		}
+
+		if (!empty($this->options->order_by)) {
+			foreach ($this->options->order_by as $order_by_clause) {
+				$order_by_clause->prepare($qb, $table_alias);
+			}
+		}
 	}
 }

@@ -9,6 +9,7 @@ use ElggRiveritem;
  * Elgg Test river api
  *
  * @group IntegrationTests
+ * @group River
  */
 class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
@@ -113,6 +114,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		elgg_register_plugin_hook_handler('creating', 'river', $hook_handler);
 		elgg_register_event_handler('created', 'river', $event_handler);
 		$item = elgg_create_river_item($params);
+		$this->assertInstanceOf(ElggRiverItem::class, $item);
 		elgg_unregister_plugin_hook_handler('creating', 'river', $hook_handler);
 		elgg_unregister_event_handler('created', 'river', $event_handler);
 
@@ -344,21 +346,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$bad_target = $params;
 		$bad_target['target_guid'] = -1;
 		$this->assertFalse(elgg_create_river_item($bad_target));
-	}
-
-	public function testElggTypeSubtypeWhereSQL() {
-		$types = ['object'];
-		$subtypes = ['blog'];
-		$result = _elgg_get_river_type_subtype_where_sql('rv', $types, $subtypes, null);
-		$this->assertSame($result, "((rv.type = 'object') AND ((rv.subtype = 'blog')))");
-
-		$types = ['object'];
-		$subtypes = [
-			'blog',
-			'file'
-		];
-		$result = _elgg_get_river_type_subtype_where_sql('rv', $types, $subtypes, null);
-		$this->assertSame($result, "((rv.type = 'object') AND ((rv.subtype = 'blog') OR (rv.subtype = 'file')))");
 	}
 
 	public function testElggRiverDisableEnable() {

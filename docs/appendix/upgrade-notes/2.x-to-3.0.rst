@@ -190,6 +190,9 @@ Deprecated APIs
  * ``ban_user``: Use ``ElggUser->ban()``
  * ``create_metadata``: Use ``ElggEntity`` setter or ``ElggEntity->setMetadata()``
  * ``update_metadata``: Use ``ElggMetadata->save()``
+ * ``get_metadata_url``
+ * ``create_annotation``: Use ``ElggEntity->annotate()``
+ * ``update_metadata``: Use ``ElggAnnotation->save()``
  * ``elgg_get_user_validation_status``: Use ``ElggUser->isValidated()``
  * ``make_user_admin``: Use ``ElggUser->makeAdmin()``
  * ``remove_user_admin``: Use ``ElggUser->removeAdmin()``
@@ -203,6 +206,7 @@ Deprecated APIs
  * ``elgg_list_entities_from_relationship``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_private_settings``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``
+ * ``elgg_batch_delete_callback``
 
 Removed global vars
 -------------------
@@ -280,6 +284,11 @@ an instance of ``\Elgg\Database\QueryBuilder`` and return a prepared statement.
 
 Plugins should not rely on joined and selected table aliases. Closures passed to the options array will receive a second argument
 that corresponds to the selected table alias. Plugins must perform their own joins and use joined aliases accordingly.
+
+Note that all of the private API around building raw SQL strings has also been removed. If you were relying on them in your plugins,
+be advised that anything marked as ``@access private`` and ``@internal`` in core can be modified and removed at any time, and we do not guarantee
+any backward compatibility for those functions. DO NOT USE THEM. If you find yourself needing to use them, open an issue
+on Github and we will consider adding a public equivalent.
 
 Metadata Changes
 ----------------
@@ -546,6 +555,7 @@ Miscellaneous API changes
  * The config value ``entity_types`` is no longer present or used.
  * Uploaded images are autorotated based on their orientation metadata.
  * The view ``object/widget/edit/num_display`` now uses an ``input/number`` field instead of ``input/select``; you might need to update your widget edit views accordingly.
+ * Annotation names are no longer trimmed during save
 
 View extension behaviour changed
 --------------------------------

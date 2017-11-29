@@ -38,6 +38,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	protected $joins = [];
 
 	/**
+	 * @var int
+	 */
+	protected $join_index = 0;
+
+	/**
 	 * @var string
 	 */
 	protected $table_name;
@@ -305,9 +310,9 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @return string
 	 */
 	public function getNextJoinAlias() {
-		$index = count($this->joins) + 1;
+		$this->join_index++;
 
-		return "qbt{$index}";
+		return "qbt{$this->join_index}";
 	}
 
 	/**
