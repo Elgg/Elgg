@@ -794,13 +794,16 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 	if (!_elgg_has_rss_link()) {
 		return;
 	}
+	
+	if (_elgg_config()->disable_rss) {
+		return;
+	}
 
-	$url = current_page_url();
 	$return[] = ElggMenuItem::factory([
 		'name' => 'rss',
 		'text' => elgg_echo('feed:rss'),
 		'icon' => 'rss',
-		'href' => elgg_http_add_url_query_elements($url, [
+		'href' => elgg_http_add_url_query_elements(current_page_url(), [
 			'view' => 'rss',
 		]),
 		'title' => elgg_echo('feed:rss:title'),
@@ -832,15 +835,17 @@ function _elgg_nav_init() {
 
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
 
-	elgg_register_menu_item('footer', \ElggMenuItem::factory([
-		'name' => 'powered',
-		'text' => elgg_echo("elgg:powered"),
-		'href' => 'http://elgg.org',
-		'title' => 'Elgg ' . elgg_get_version(true),
-		'section' => 'meta',
-		'priority' => 600,
-	]));
-
+	if (!_elgg_config()->remove_branding) {
+		elgg_register_menu_item('footer', \ElggMenuItem::factory([
+			'name' => 'powered',
+			'text' => elgg_echo("elgg:powered"),
+			'href' => 'http://elgg.org',
+			'title' => 'Elgg ' . elgg_get_version(true),
+			'section' => 'meta',
+			'priority' => 600,
+		]));
+	}
+	
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');
 
 	// Using a view extension to ensure that themes that have replaced the item view

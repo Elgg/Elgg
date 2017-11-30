@@ -35,6 +35,7 @@ use Elgg\Project\Paths;
  * @property int           $default_access
  * @property int           $default_limit
  * @property array         $default_widget_info
+ * @property bool          $disable_rss Is RSS disabled
  * @property bool          $elgg_config_locks The application will lock some settings (default true)
  * @property string[]      $elgg_cron_periods
  * @property array         $elgg_lazy_hover_menus
@@ -70,6 +71,7 @@ use Elgg\Project\Paths;
  * @property bool          $profiling_sql
  * @property array         $processed_upgrades
  * @property string[]      $registered_entities
+ * @property bool          $remove_branding Is Elgg branding disabled
  * @property bool          $security_disable_password_autocomplete
  * @property bool          $security_email_require_password
  * @property bool          $security_notify_admins

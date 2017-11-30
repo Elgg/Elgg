@@ -1192,7 +1192,12 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:legend:content_access' => 'Content Access',
 	'admin:legend:site_access' => 'Site Access',
 	'admin:legend:debug' => 'Debugging and Logging',
-
+	
+	'config:remove_branding:label' => "Remove Elgg branding",
+	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/supporter.php.",
+	'config:disable_rss:label' => "Disable RSS feeds",
+	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
+	
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
 	'upgrade:unlock' => 'Unlock upgrade',
