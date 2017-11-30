@@ -768,6 +768,10 @@ This menu has been removed from the page layout. Menu items that registered for 
 
 This menu has been removed from the group profile page.
 
+``site_notifications`` menu:
+
+This menu has been removed. Site Notification objects now use the entity menu for actions.
+
 Entity icons
 ------------
 
