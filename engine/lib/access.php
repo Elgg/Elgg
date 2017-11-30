@@ -499,6 +499,10 @@ function access_friends_acl_remove_friend(\Elgg\Event $event) {
  * @param \Elgg\Hook $hook hook
  *
  * @return string|void
+ *
+ * @since 3.0.0
+ *
+ * @internal
  */
 function access_friends_acl_get_name(\Elgg\Hook $hook) {
 	$access_collection = $hook->getParam('access_collection');
