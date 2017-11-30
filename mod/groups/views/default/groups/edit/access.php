@@ -84,23 +84,23 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 
 	$dbprefix = elgg_get_config('dbprefix');
 
-	$batch = new ElggBatch('elgg_get_entities_from_relationship', [
+	$members_entities = elgg_get_entities([
 		'type' => 'user',
 		'relationship' => 'member',
 		'relationship_guid' => $entity->getGUID(),
 		'inverse_relationship' => true,
 		'limit' => false,
-		'callback' => false,
 		'order_by_metadata' => [
 			[
 				'name' => 'name',
 				'direction' => 'ASC',
 			],
 		],
+		'batch' => true,
 	]);
 	
-	foreach ($batch as $member) {
-		$option_text = "$member->name (@$member->username)";
+	foreach ($members_entities as $member) {
+		$option_text = "{$member->getDisplayName()} (@{$member->username})";
 		$members[$member->guid] = htmlspecialchars($option_text, ENT_QUOTES, "UTF-8", false);
 	}
 	
