@@ -1,10 +1,11 @@
 <?php
 
-echo elgg_view_input('text', [
+echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('developers:entity_explorer:guid:label'),
 	'name' => 'guid',
 	'value' => get_input('guid'),
 	'required' => true,
-	'label' => elgg_echo('developers:entity_explorer:guid:label'),
 ]);
 
 $footer = elgg_view('input/submit', [
