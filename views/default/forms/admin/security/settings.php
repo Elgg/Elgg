@@ -156,8 +156,9 @@ $strength_msg = elgg_echo("site_secret:strength_msg:$strength");
 $site_secret = elgg_view('output/longtext', [
 	'value' => elgg_echo('admin:security:settings:site_secret:intro'),
 ]);
-$site_secret .= elgg_view_module('main', "$current_strength: $strength_text", $strength_msg, [
-	'class' => ($strength != 'strong') ? 'elgg-message elgg-state-error' : 'elgg-message elgg-state-success',
+$message_type = ($strength != 'strong') ? 'error' : 'success';
+$site_secret .= elgg_view_message($message_type, $strength_msg, [
+	'title' => "$current_strength: $strength_text",
 ]);
 
 $site_secret_link = elgg_view('output/url', [

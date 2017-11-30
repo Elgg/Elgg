@@ -238,34 +238,20 @@ a.elgg-maintenance-mode-warning {
 	vertical-align: sub;
 }
 
-/* ***************************************
-	MESSAGES
-*************************************** */
-.elgg-system-messages p {
-	margin: 0;
-}
-.elgg-message {
-	padding: 20px;
+<?= elgg_view('elements/components/messages.css') ?>
+
+.elgg-system-messages {
 	margin-top: 10px;
-	border: 1px solid #ddd;
-	cursor: pointer;
-}
-.elgg-message.elgg-state-error {
-	color: #B94A48;
-	background-color: #F8E8E8;
-	border: 1px solid #E5B7B5;
-}
-.elgg-message.elgg-state-success {
-	color: #397F2E;
-	background-color: #EAF8E8;
-	border: 1px solid #AADEA2;
-}
-.elgg-message a {
-	color: inherit;
-	text-decoration: underline;
 }
 
-<?= elgg_view('elements/components/admin_notices.css') ?>
+.elgg-admin-notices li {
+	margin: 10px 0 0;
+	border: none;
+}
+
+.elgg-system-messages .elgg-message {
+	cursor: pointer;
+}
 
 /* ***************************************
 	BODY

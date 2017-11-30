@@ -49,6 +49,13 @@ Interface and annotations
 - ``elgg_view_comments($entity)`` Returns any comments associated with the given entity
 - ``elgg_get_friendly_time($unix_timestamp)`` Returns a date formatted in a friendlier way - "18 minutes ago", "2 days ago", etc.
 
+Messages
+--------
+
+- ``system_message($message)`` Registers a success message
+- ``register_error($message)`` Registers an error message
+- ``elgg_view_message($type, $message)`` Outputs a message
+
 E-mail address formatting
 -------------------------
 

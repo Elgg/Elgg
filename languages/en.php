@@ -1046,6 +1046,15 @@ Once you have logged in, we highly recommend that you change your password.
 
 
 /**
+ * Messages
+ */
+	'messages:title:success' => 'Success',
+	'messages:title:error' => 'Error',
+	'messages:title:warning' => 'Warning',
+	'messages:title:help' => 'Help',
+	'messages:title:notice' => 'Notice',
+
+/**
  * Import / export
  */
 

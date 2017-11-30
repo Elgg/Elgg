@@ -70,12 +70,6 @@ a {
 	max-width: 500px;
 	z-index: 2000;
 }
-.elgg-system-messages li {
-	margin-top: 10px;
-}
-.elgg-system-messages li p {
-	margin: 0;
-}
 
 .elgg-output {
 	font-size: 14px;
@@ -204,27 +198,7 @@ input[type="number"] {
 	border-color: #222;
 }
 
-/* ***************************************
-	Messages
-*************************************** */
-.elgg-message {
-	color: #FFF;
-	display: block;
-	padding: 10px 20px;
-	cursor: pointer;
-	opacity: 0.9;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-	border-radius: 3px;
-}
-.elgg-state-success {
-	background-color: #090;
-}
-.elgg-state-error {
-	background-color: #F00;
-}
-.elgg-state-notice {
-	background-color: #5097CF;
-}
+<?= elgg_view('elements/components/messages.css') ?>
 
 /* ***************************************
 	RESPONSIVE

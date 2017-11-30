@@ -9,7 +9,7 @@ elgg.ui.init = function () {
 	elgg.ui.initHoverMenu();
 
 	// if the user clicks a system message (not a link inside one), make it disappear
-	$(document).on('click', '.elgg-system-messages li', function(e) {
+	$(document).on('click', '.elgg-system-messages .elgg-message', function(e) {
 		if (!$(e.target).is('a')) {
 			var $this = $(this);
 
@@ -20,8 +20,8 @@ elgg.ui.init = function () {
 		}
 	});
 
-	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
-	$('.elgg-system-messages li.elgg-state-success').fadeOut('slow');
+	$('.elgg-page-default .elgg-system-messages .elgg-message').parent().animate({opacity: 0.9}, 6000);
+	$('.elgg-page-default .elgg-system-messages .elgg-message-success').parent().fadeOut('slow');
 
 	$(document).on('click', '[rel=toggle]', elgg.ui.toggles);
 
