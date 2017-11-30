@@ -105,6 +105,8 @@ class FormsService {
 				$body .= $this->views->renderView('elements/forms/footer', [
 					'footer' => $this->getFooter(),
 					'action_name' => $action,
+					'body_vars' => $body_vars,
+					'form_vars' => $form_vars,
 				]);
 			}
 			
