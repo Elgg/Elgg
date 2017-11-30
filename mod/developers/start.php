@@ -157,6 +157,14 @@ function _developers_page_menu($hook, $type, $return, $params) {
 		'section' => 'develop',
 	]);
 	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'develop_tools:entity_explorer',
+		'href' => 'admin/develop_tools/entity_explorer',
+		'text' => elgg_echo('admin:develop_tools:entity_explorer'),
+		'parent_name' => 'develop_tools',
+		'section' => 'develop',
+	]);
+	
 	return $return;
 }
 
