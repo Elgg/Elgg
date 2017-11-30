@@ -926,7 +926,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @since 3.0
 	 */
 	public function getOwnedAccessCollection($subtype) {
-		if (!is_string($subtype)) {
+		if (!is_string($subtype) || $subtype === '') {
 			return false;
 		}
 		
@@ -1341,11 +1341,11 @@ abstract class ElggEntity extends \ElggData implements
 		$container_guid = (int) $container_guid;
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
+			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
 	
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in elgglib.php');
+			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		$user_guid = elgg_get_logged_in_user_guid();
@@ -1477,11 +1477,11 @@ abstract class ElggEntity extends \ElggData implements
 		$time = $this->getCurrentTime()->getTimestamp();
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
+			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
 
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in elgglib.php');
+			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		// Update primary table
