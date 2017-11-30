@@ -68,6 +68,40 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Dummy A', $this->translator->translate("{$this->key}a", [], 'es'));
 		_elgg_services()->logger->enable();
 	}
+	
+	public function testFallsBackToSiteLanguage() {
+		// set site language
+		_elgg_services()->config->language = 'nl';
+		
+		$this->translator->addTranslation('en', ["{$this->key}a" => 'Dummy EN']);
+		$this->translator->addTranslation('nl', ["{$this->key}a" => 'Dummy NL']);
+		
+		_elgg_services()->logger->disable();
+		$this->assertEquals('Dummy NL', $this->translator->translate("{$this->key}a", [], 'es'));
+		_elgg_services()->logger->enable();
+	}
+	
+	public function testFallsBackToSiteLanguageLoggedIn() {
+		// set site language
+		_elgg_services()->config->language = 'nl';
+		
+		$this->translator->addTranslation('en', ["{$this->key}a" => 'Dummy EN']);
+		$this->translator->addTranslation('nl', ["{$this->key}a" => 'Dummy NL']);
+		
+		$user = $this->createUser([
+			'language' => 'de',
+		]);
+		
+		_elgg_services()->session->setLoggedInUser($user);
+		
+		$this->assertEquals('de', $this->translator->detectLanguage());
+		
+		_elgg_services()->logger->disable();
+		$this->assertEquals('Dummy NL', $this->translator->translate("{$this->key}a"));
+		_elgg_services()->logger->enable();
+		
+		_elgg_services()->session->removeLoggedInUser();
+	}
 
 	public function testIssuesNoticeOnMissingKey() {
 		// key is missing from all checked translations
