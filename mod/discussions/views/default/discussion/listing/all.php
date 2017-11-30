@@ -1,10 +1,10 @@
 <?php
-
 /**
  * Renders a list of discussions, optionally filtered by container type
  *
  * @uses $vars['container_type'] Container type filter to apply
  */
+
 $options = [
 	'type' => 'object',
 	'subtype' => 'discussion',

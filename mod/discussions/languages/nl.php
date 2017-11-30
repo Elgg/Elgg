@@ -59,9 +59,9 @@ Je kunt de discussie hier lezen en er op reageren:
 %s
 ',
 
-	'discussion:reply:notify:summary' => 'Nieuwe reactie in discussie \'%s\'',
-	'discussion:reply:notify:subject' => 'Nieuwe reactie in discussie \'%s\'',
-	'discussion:reply:notify:body' =>
+	'discussion:comment:notify:summary' => 'Nieuwe reactie in discussie \'%s\'',
+	'discussion:comment:notify:subject' => 'Nieuwe reactie in discussie \'%s\'',
+	'discussion:comment:notify:body' =>
 'Hallo!
 
 %s reageerde op de discussie "%s": 

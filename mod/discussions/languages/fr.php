@@ -57,9 +57,9 @@ Voir la discussion et répondre :
 %s
 ',
 
-	'discussion:reply:notify:summary' => 'Nouvelle réponse dans la discussion : %s',
-	'discussion:reply:notify:subject' => 'Nouvelle réponse dans la discussion : %s',
-	'discussion:reply:notify:body' =>
+	'discussion:comment:notify:summary' => 'Nouvelle réponse dans la discussion : %s',
+	'discussion:comment:notify:subject' => 'Nouvelle réponse dans la discussion : %s',
+	'discussion:comment:notify:body' =>
 '%s a répondu au sujet de discussion "%s" :
 
 %s

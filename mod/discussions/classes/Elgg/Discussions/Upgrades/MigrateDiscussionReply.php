@@ -1,0 +1,70 @@
+<?php
+
+namespace Elgg\Discussions\Upgrades;
+
+use \Elgg\Upgrade\Batch;
+use \Elgg\Upgrade\Result;
+use \Elgg\Database\Update;
+
+/**
+ * Migrate 'object', 'discussion_reply' to 'object', 'comment'
+ *
+ * @since 3.0
+ */
+class MigrateDiscussionReply implements Batch {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getVersion() {
+		return 2017112800;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function shouldBeSkipped() {
+		return empty($this->countItems());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function countItems() {
+		
+		$hidden = access_show_hidden_entities(true);
+		
+		$count = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'discussion_reply',
+			'count' => true,
+		]);
+		
+		access_show_hidden_entities($hidden);
+		
+		return $count;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function needsIncrementOffset() {
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function run(Result $result, $offset) {
+		
+		$qb = Update::table('entities', 'e')
+			->set('e.subtype', '"comment"')
+			->where('e.subtype = "discussion_reply"');
+		
+		$count = $qb->execute();
+		
+		$result->addSuccesses($count);
+		
+		return $result;
+	}
+}

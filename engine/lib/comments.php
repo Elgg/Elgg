@@ -311,13 +311,12 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $returnvalue, $params) {
 	
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\Event)) {
+	if (!($event instanceof \Elgg\Notifications\NotificationEvent)) {
 		return;
 	}
 	
 	$object = $event->getObject();
-	if (!elgg_instanceof($object, 'object', 'comment')) {
-		// can't use instanceof ElggComment as discussion replies inherit
+	if (!$object instanceof ElggComment) {
 		return;
 	}
 	
