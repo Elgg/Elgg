@@ -419,6 +419,10 @@ function access_init() {
  * @param \Elgg\Event $event event
  *
  * @return void
+ *
+ * @since 3.0.0
+ *
+ * @internal
  */
 function access_friends_acl_create(\Elgg\Event $event) {
 	$user = $event->getObject();
@@ -435,6 +439,10 @@ function access_friends_acl_create(\Elgg\Event $event) {
  * @param \Elgg\Event $event event
  *
  * @return void
+ *
+ * @since 3.0.0
+ *
+ * @internal
  */
 function access_friends_acl_add_friend(\Elgg\Event $event) {
 	$relationship_object = $event->getObject();
@@ -467,6 +475,10 @@ function access_friends_acl_add_friend(\Elgg\Event $event) {
  * @param \Elgg\Event $event event
  *
  * @return void
+ *
+ * @since 3.0.0
+ *
+ * @internal
  */
 function access_friends_acl_remove_friend(\Elgg\Event $event) {
 	$relationship_object = $event->getObject();
