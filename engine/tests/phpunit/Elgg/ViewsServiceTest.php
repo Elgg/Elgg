@@ -24,7 +24,7 @@ class ViewsServiceTest extends \Elgg\TestCase {
 		$this->views = new ViewsService($this->hooks, $logger);
 		$this->views->autoregisterViews('', "$this->viewsDir/default", 'default');
 
-		// supports deprecation wrapper for $vars['user'] 
+		// supports deprecation wrapper for $vars['user']
 		_elgg_services()->setValue('session', \ElggSession::getMock());
 	}
 
@@ -63,10 +63,17 @@ class ViewsServiceTest extends \Elgg\TestCase {
 	}
 
 	public function testCanSetViewPathsViaSpec() {
+		
+		$relative_prefix = '';
+		if (Application::elggDir()->getPath() !== Filesystem\Directory\Local::root()->getPath()) {
+			// Elgg installed as composer dependency
+			$relative_prefix = 'vendor/elgg/elgg/';
+		}
+		
 		$this->views->mergeViewsSpec([
 			'default' => [
 				'hello.js' => __DIR__ . '/../test_files/views/default/js/static.js',
-				'hello/world.js' => ['engine/tests/phpunit/test_files/views/default/js/interpreted.js.php'],
+				'hello/world.js' => [$relative_prefix . 'engine/tests/phpunit/test_files/views/default/js/interpreted.js.php'],
 			],
 		]);
 

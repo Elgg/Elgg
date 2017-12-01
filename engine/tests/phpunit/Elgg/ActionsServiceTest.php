@@ -188,9 +188,9 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		$actions = $this->actions->getAllActions();
 		$this->assertArrayHasKey('login', $actions);
 		$this->assertEquals([
-			'file' => realpath(Filesystem\Directory\Local::root()->getPath() . 'actions/login.php'),
+			'file' => realpath(Application::elggDir()->getPath() . 'actions/login.php'),
 			'access' => 'logged_in',
-				], $actions['login']);
+		], $actions['login']);
 	}
 
 	/**
@@ -311,7 +311,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 
 	/**
 	 * The logic is a bit odd. See #9792
-	 * 
+	 *
 	 * @dataProvider executeForwardUrlDataProvider
 	 */
 	public function testCanResolveForwardUrl($url, $expected) {
@@ -530,7 +530,7 @@ class ActionsServiceTest extends \Elgg\TestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		// Ajax API doesn't set charset	
+		// Ajax API doesn't set charset
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([
