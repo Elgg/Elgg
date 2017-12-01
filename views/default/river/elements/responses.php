@@ -41,14 +41,11 @@ if ($comment_count) {
 	// comments by sorting desc and limiting by 3, but we want to display
 	// these comments with the latest at the bottom.
 	$comments = array_reverse($comments);
-
-	// make sure the comments know that this is viewed from the activity/river
-	elgg_push_context('activity');
 	
-	echo elgg_view_entity_list($comments, ['list_class' => 'elgg-river-comments']);
-
-	// restore context
-	elgg_pop_context();
+	echo elgg_view_entity_list($comments, [
+		'list_class' => 'elgg-river-comments',
+		'show_excerpt' => true,
+	]);
 	
 	if ($comment_count > count($comments)) {
 		echo elgg_format_element('div', ['class' => 'elgg-river-more'], elgg_view('output/url', [

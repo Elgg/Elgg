@@ -2,8 +2,9 @@
 /**
  * Elgg comment view
  *
- * @uses $vars['entity']    ElggComment
- * @uses $vars['full_view'] Display full view or brief view
+ * @uses $vars['entity']       ElggComment
+ * @uses $vars['full_view']    Display full view or brief view
+ * @uses $vars['show_excerpt'] Should the body text be an excerpt
  */
 
 $full_view = elgg_extract('full_view', $vars, true);
@@ -16,35 +17,17 @@ if (!($comment instanceof \ElggComment)) {
 $entity = get_entity($comment->container_guid);
 $commenter = get_user($comment->owner_guid);
 if (!$entity || !$commenter) {
-	return true;
+	return;
 }
 
-$friendlytime = elgg_view_friendly_time($comment->time_created);
+if ($comment->canEdit()) {
+	elgg_require_js('elgg/comments');
+}
 
 $commenter_icon = elgg_view_entity_icon($commenter, 'tiny');
-$commenter_link = elgg_view('output/url', [
-	'href' => $commenter->getURL(),
-	'text' => $commenter->getDisplayName(),
-]);
 
 if ($full_view) {
-	$imprint = elgg_view('object/elements/imprint/byline', $vars);
-	
-	$imprint .= elgg_view('object/elements/imprint/element', [
-		'icon_name' => 'history',
-		'content' => elgg_view('output/url', [
-			'href' => $comment->getURL(),
-			'text' => $friendlytime,
-			'is_trusted' => true,
-		]),
-		'class' => 'elgg-listing-time',
-	]);
-	
-	$subtitle = elgg_format_element('div', [
-		'class' => 'elgg-listing-imprint',
-	], $imprint);
-	
-	if (elgg_in_context('activity')) {
+	if (elgg_extract('show_excerpt', $vars)) {
 		$body = elgg_view('output/longtext', [
 			'value' => elgg_get_excerpt($comment->description),
 		]);
@@ -55,8 +38,9 @@ if ($full_view) {
 	}
 
 	$params = [
-		'subtitle' => $subtitle,
 		'icon' => $commenter_icon,
+		'time_href' => $comment->getURL(),
+		'access' => false,
 		'title' => false,
 		'handler' => 'comment',
 		'content' => $body,
@@ -65,6 +49,12 @@ if ($full_view) {
 	echo elgg_view('object/elements/summary', $params);
 } else {
 	// brief view
+	$friendlytime = elgg_view_friendly_time($comment->time_created);
+
+	$commenter_link = elgg_view('output/url', [
+		'href' => $commenter->getURL(),
+		'text' => $commenter->getDisplayName(),
+	]);
 	
 	$entity_link = elgg_view('output/url', [
 		'href' => $entity->getURL(),
@@ -74,11 +64,9 @@ if ($full_view) {
 	$excerpt = elgg_get_excerpt($comment->description, 80);
 	$posted = elgg_echo('generic_comment:on', [$commenter_link, $entity_link]);
 
-	$body = <<<HTML
-<span class="elgg-subtext">
-	$posted ($friendlytime): $excerpt
-</span>
-HTML;
+	$body = elgg_format_element('span', [
+		'class' => 'elgg-subtext',
+	], "$posted ($friendlytime): $excerpt");
 
 	echo elgg_view_image_block($commenter_icon, $body);
 }

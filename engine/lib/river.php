@@ -515,11 +515,6 @@ function _elgg_river_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
-
-	// For BC, we want required AMD modules to be loaded even if plugins
-	// overwrite these views
-	elgg_extend_view('forms/comment/save', 'forms/comment/save_deps');
-
 }
 
 /**
