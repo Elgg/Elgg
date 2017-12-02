@@ -156,9 +156,10 @@ class EntityIconService {
 		}
 
 		$tmp_filename = time() . pathinfo($file->getFilenameOnFilestore(), PATHINFO_BASENAME);
+		$tmp_file_owner = elgg_get_site_entity();
 		$tmp = new ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/$tmp_filename");
+		$tmp->owner_guid = $tmp_file_owner->guid;
+		$tmp->setFilename("tmp/{$entity->guid}_$tmp_filename");
 		$tmp->open('write');
 		$tmp->close();
 		copy($file->getFilenameOnFilestore(), $tmp->getFilenameOnFilestore());
