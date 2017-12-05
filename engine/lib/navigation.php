@@ -251,17 +251,22 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  *
  * See elgg_get_breadcrumbs() and the navigation/breadcrumbs view.
  *
- * @param string $title The title to display. During rendering this is HTML encoded.
- * @param string $link  Optional. The link for the title. During rendering links are
- *                      normalized via elgg_normalize_url().
+ * @param string $text The title to display. During rendering this is HTML encoded.
+ * @param string $href Optional. The href for the title. During rendering links are
+ *                     normalized via elgg_normalize_url().
  *
  * @return void
  * @since 1.8.0
  * @see elgg_get_breadcrumbs()
  */
-function elgg_push_breadcrumb($title, $link = null) {
+function elgg_push_breadcrumb($text, $href = null) {
 	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
-	$breadcrumbs[] = ['title' => $title, 'link' => $link];
+	
+	$breadcrumbs[] = [
+		'text' => $text,
+		'href' => $href,
+	];
+	
 	elgg_set_config('breadcrumbs', $breadcrumbs);
 }
 
@@ -289,8 +294,8 @@ function elgg_pop_breadcrumb() {
  * <code>
  * [
  *    [
- *       'title' => 'Breadcrumb title',
- *       'link' => '/path/to/page',
+ *       'text' => 'Breadcrumb title',
+ *       'href' => '/path/to/page',
  *    ]
  * ]
  * </code>
@@ -328,6 +333,27 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 		_elgg_services()->logger->error('"prepare, breadcrumbs" hook must return an array of breadcrumbs');
 		return [];
 	}
+	
+	foreach ($breadcrumbs as $key => $breadcrumb) {
+		$text = elgg_extract('text', $breadcrumb, elgg_extract('title', $breadcrumb));
+		if (isset($breadcrumb['link'])) {
+			elgg_deprecated_notice("Breadcrumb [{$text}] requires 'href' instead of 'link' set in the configuration", '3.0');
+			
+			$breadcrumbs[$key]['href'] = $breadcrumb['link'];
+			unset($breadcrumbs[$key]['link']);
+		}
+		if (isset($breadcrumb['title'])) {
+			elgg_deprecated_notice("Breadcrumb [{$text}] requires 'text' instead of 'title' set in the configuration", '3.0');
+			
+			$breadcrumbs[$key]['text'] = $breadcrumb['title'];
+			unset($breadcrumbs[$key]['title']);
+		}
+		
+		// adds name for usage in menu items
+		if (!isset($breadcrumb['name'])) {
+			$breadcrumbs[$key]['name'] = $key;
+		}
+	}
 
 	return $breadcrumbs;
 }
@@ -347,13 +373,13 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
 	// remove last crumb if not a link
 	$last_crumb = end($breadcrumbs);
-	if (empty($last_crumb['link'])) {
+	if (empty($last_crumb['href'])) {
 		array_pop($breadcrumbs);
 	}
 
-	// apply excerpt to titles
+	// apply excerpt to text
 	foreach (array_keys($breadcrumbs) as $i) {
-		$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+		$breadcrumbs[$i]['text'] = elgg_get_excerpt($breadcrumbs[$i]['text'], 100);
 	}
 	return $breadcrumbs;
 }
