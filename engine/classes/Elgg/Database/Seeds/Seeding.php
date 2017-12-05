@@ -678,7 +678,7 @@ trait Seeding {
 	 * @return bool
 	 */
 	public function createIcon(ElggEntity $entity) {
-
+		return false;
 		$icon_location = $this->faker()->image();
 		if (empty($icon_location)) {
 			return false;
