@@ -12,6 +12,7 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
+        "ckeditor/ckeditor": "dev-full/4.7.x",
         "doctrine/dbal": "~2.5",
         "symfony/http-foundation": "~2.6",
         "mrclay/minify": "~2.0",
