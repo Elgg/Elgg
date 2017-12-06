@@ -1,3 +1,19 @@
+<a name="2.3.5"></a>
+### 2.3.5  (2017-12-06)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+
+#### Bug Fixes
+
+* **tests:**
+  * correct validation of action path ([232a87b8](https://github.com/Elgg/Elgg/commit/232a87b84f2e40a6e0f5bda3cb52b63fbb81877d))
+  * correct registration of view path ([950da0dc](https://github.com/Elgg/Elgg/commit/950da0dce83eb39e859da6dbc67c0b77c8445038))
+  * incorrect filename for test registration ([9af357be](https://github.com/Elgg/Elgg/commit/9af357be3ffe5e43045c0cf417585080d7f58fdb))
+  * moved incorrect registered test to correct location ([ba7c894d](https://github.com/Elgg/Elgg/commit/ba7c894d6ce0c86b7c8296d8a255da26fdf71766))
+
+
 <a name="2.3.4"></a>
 ### 2.3.4  (2017-09-21)
 
