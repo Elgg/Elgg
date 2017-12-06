@@ -9,6 +9,7 @@ use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Elgg\Http\ResponseFactory;
 use Elgg\I18n\Translator;
+use Elgg\Project\Paths;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -186,7 +187,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$actions = $this->actions->getAllActions();
 		$this->assertArrayHasKey('login', $actions);
 		$this->assertEquals([
-			'file' => realpath(Filesystem\Directory\Local::projectRoot()->getPath() . 'actions/login.php'),
+			'file' => realpath(Paths::elgg() . 'actions/login.php'),
 			'access' => 'logged_in',
 				], $actions['login']);
 	}

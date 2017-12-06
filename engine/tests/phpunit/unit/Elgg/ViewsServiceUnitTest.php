@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Project\Paths;
+
 /**
  * @group UnitTests
  */
@@ -98,10 +100,17 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanSetViewPathsViaSpec() {
+		
+		$relative_prefix = '';
+		if (Paths::elgg() !== Paths::project()) {
+			// Elgg installed as composer dependency
+			$relative_prefix = 'vendor/elgg/elgg/';
+		}
+		
 		$this->views->mergeViewsSpec([
 			'default' => [
 				'hello.js' => $this->normalizeTestFilePath('views/default/js/static.js'),
-				'hello/world.js' => ['engine/tests/test_files/views/default/js/interpreted.js.php'],
+				'hello/world.js' => [$relative_prefix . 'engine/tests/test_files/views/default/js/interpreted.js.php'],
 			],
 		]);
 
