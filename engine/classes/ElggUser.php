@@ -240,15 +240,16 @@ class ElggUser extends \ElggEntity
 	public function setLastAction() {
 		
 		$time = $this->getCurrentTime()->getTimestamp();
-		
-		if ($this->last_action == $time) {
+
+		$prev_last_action = $this->getMetadata('last_action');
+		if ($prev_last_action == $time) {
 			// no change required
 			return;
 		}
 		
 		// these writes actually work, we just type hint read-only.
-		$this->prev_last_action = $this->last_action;
-		$this->last_action = $time;
+		$this->prev_last_action = $prev_last_action;
+		$this->setMetadata('last_action', $time);
 	}
 	
 	/**
