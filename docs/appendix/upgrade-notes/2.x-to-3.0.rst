@@ -40,6 +40,7 @@ Removed views
  * ``subscriptions/form/additions``: extend ``notifications/settings/other`` instead
  * ``likes/count``: modifications can now be done to the ``likes_count`` menu item
  * ``likes/css``: likes now uses ``elgg/likes.css``
+ * ``resources/members/index``
  * ``messageboard/css``
  * ``notifications/subscriptions/personal``
  * ``notifications/subscriptions/collections``
@@ -200,6 +201,14 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``discussion_prepare_reply_notification``: See :ref:`upgrade-discussion-replies`
  * ``discussion_redirect_to_reply``: See :ref:`upgrade-discussion-replies`
  * ``discussion_ecml_views_hook``: See :ref:`upgrade-discussion-replies`
+ * ``members_list_popular``
+ * ``members_list_newest``
+ * ``members_list_online``
+ * ``members_list_alpha``
+ * ``members_nav_popular``
+ * ``members_nav_newest``
+ * ``members_nav_online``
+ * ``members_nav_alpha``
 
 All functions around entity subtypes table:
  * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime
@@ -506,6 +515,8 @@ Removed hooks/events
  * Hook **output:after, layout**: Use **view, page/layout/<layout_name>**
  * Hook **email, system**: Use more granular **<hook>, system:email** hooks
  * Hook **email:message, system**: Use **zend:message, system:email** hook
+ * Hook **members:list, <page>**: Use your own pagehandler or route hook
+ * Hook **members:config, <page>**: Use **register, menu:filter:members**
 
 Removed forms/actions
 ---------------------

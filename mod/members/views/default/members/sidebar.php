@@ -3,7 +3,6 @@
  * Members sidebar
  */
 
-// Tag search
 $params = [
 	'method' => 'get',
 	'action' => 'members/search',
