@@ -151,24 +151,30 @@ function _elgg_cron_page_handler($page) {
 }
 
 /**
- * Record cron running
+ * Record cron completion time
  *
- * @param string $hook   Hook name
+ * @param string $hook   'cron'
  * @param string $period Cron period
  * @param string $output Output content
  * @param array  $params Hook parameters
+ *
  * @return void
+ *
  * @access private
  */
 function _elgg_cron_monitor($hook, $period, $output, $params) {
-	$time = $params['time'];
+	
 	$periods = _elgg_config()->elgg_cron_periods;
-
-	if (in_array($period, $periods)) {
-		$key = "cron_latest:$period:ts";
-		elgg_get_site_entity()->setPrivateSetting($key, $time);
-		echo elgg_echo('admin:cron:complete', [$period, date('r', $time)]);
+	if (!in_array($period, $periods)) {
+		return;
 	}
+	
+	$completed_time = time();
+	
+	$key = "cron_latest:$period:ts";
+	elgg_get_site_entity()->setPrivateSetting($key, $completed_time);
+	
+	echo elgg_echo('admin:cron:complete', [$period, date('r', $completed_time)]);
 }
 
 /**
