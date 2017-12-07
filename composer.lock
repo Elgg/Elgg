@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6988e3c6fad84fea9d46d0511316562",
+    "content-hash": "d22db872f74e8816c8067c4f08f2825e",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -300,7 +300,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2017-09-13 13:08:14"
+            "time": "2017-09-13T13:08:14+00:00"
         },
         {
             "name": "composer/installers",
@@ -1517,6 +1517,105 @@
             "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
             "homepage": "http://code.google.com/p/minify/",
             "time": "2017-11-03T21:04:01+00:00"
+        },
+        {
+            "name": "mtdowling/cron-expression",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtdowling/cron-expression.git",
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/9504fa9ea681b586028adaaa0877db4aecf32bad",
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "time": "2017-01-23T04:29:33+00:00"
+        },
+        {
+            "name": "peppeocchi/php-cron-scheduler",
+            "version": "v2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/peppeocchi/php-cron-scheduler.git",
+                "reference": "fe644edbf79cd8c77e0d7a0d4e9c36aed56845a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/peppeocchi/php-cron-scheduler/zipball/fe644edbf79cd8c77e0d7a0d4e9c36aed56845a7",
+                "reference": "fe644edbf79cd8c77e0d7a0d4e9c36aed56845a7",
+                "shasum": ""
+            },
+            "require": {
+                "mtdowling/cron-expression": "~1.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.7",
+                "satooshi/php-coveralls": "^1.0",
+                "swiftmailer/swiftmailer": "~5.4 || ^6.0"
+            },
+            "suggest": {
+                "swiftmailer/swiftmailer": "Required to send the output of a job to email address/es (~5.4 || ^6.0)."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GO\\": "src/GO/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Giuseppe Occhipinti",
+                    "email": "peppeocchi@gmail.com"
+                },
+                {
+                    "name": "Carsten Windler",
+                    "email": "carsten@carstenwindler.de",
+                    "homepage": "http://carstenwindler.de",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "PHP Cron Job Scheduler",
+            "keywords": [
+                "cron job",
+                "scheduler"
+            ],
+            "time": "2017-10-13T14:24:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -2908,7 +3007,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Elgg coding standards",
-            "time": "2017-11-02 13:08:36"
+            "time": "2017-11-02T13:08:36+00:00"
         },
         {
             "name": "myclabs/deep-copy",
