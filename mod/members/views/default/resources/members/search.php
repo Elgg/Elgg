@@ -43,6 +43,7 @@ $params = [
 	'title' => $title,
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
+	'filter_id' => 'members',
 ];
 
 $body = elgg_view_layout('one_sidebar', $params);
