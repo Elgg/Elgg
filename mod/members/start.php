@@ -23,34 +23,36 @@ function members_init() {
 /**
  * Registers members filter menu items
  *
- * @param \Elgg\Hook $hook 'register', 'menu:filter'
+ * @elgg_plugin_hook 'register', 'menu:filter:members'
+ *
+ * @param \Elgg\Hook $hook hook
  *
  * @return \ElggMenuItem[]
  */
 function members_register_filter_menu(\Elgg\Hook $hook) {
-	$result = [
-		'newest' => \ElggMenuItem::factory([
-			'name' => 'newest',
-			'text' => elgg_echo('sort:newest'),
-			'href' => 'members/newest',
-			'selected' => $hook->getParam('filter_value') == 'newest',
-		]),
-		'alpha' => \ElggMenuItem::factory([
-			'name' => 'alpha',
-			'text' => elgg_echo('sort:alpha'),
-			'href' => 'members/alpha',
-		]),
-		'popular' => \ElggMenuItem::factory([
-			'name' => 'popular',
-			'text' => elgg_echo('sort:popular'),
-			'href' => 'members/popular',
-		]),
-		'online' => \ElggMenuItem::factory([
-			'name' => 'online',
-			'text' => elgg_echo('members:label:online'),
-			'href' => 'members/online',
-		]),
-	];
+	$result = (array) $hook->getValue();
+	
+	$result['newest'] = \ElggMenuItem::factory([
+		'name' => 'newest',
+		'text' => elgg_echo('sort:newest'),
+		'href' => 'members/newest',
+		'selected' => $hook->getParam('filter_value') == 'newest',
+	]);
+	$result['alpha'] =\ElggMenuItem::factory([
+		'name' => 'alpha',
+		'text' => elgg_echo('sort:alpha'),
+		'href' => 'members/alpha',
+	]);
+	$result['popular'] = \ElggMenuItem::factory([
+		'name' => 'popular',
+		'text' => elgg_echo('sort:popular'),
+		'href' => 'members/popular',
+	]);
+	$result['online'] = \ElggMenuItem::factory([
+		'name' => 'online',
+		'text' => elgg_echo('members:label:online'),
+		'href' => 'members/online',
+	]);
 	
 	return $result;
 }
