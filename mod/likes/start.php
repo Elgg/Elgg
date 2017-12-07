@@ -33,6 +33,9 @@ function likes_init() {
 	elgg_register_action('likes/delete', "$actions_base/delete.php");
 	
 	elgg_register_ajax_view('likes/popup');
+	
+	// Update access_id
+        elgg_register_event_handler('update:after', 'all', 'likes_access_sync', 600);
 }
 
 /**
@@ -221,4 +224,42 @@ function likes_count(ElggEntity $entity) {
 	} else {
 		return $entity->countAnnotations('likes');
 	}
+}
+
+/**
+ * Update annotation access to match that of the entity
+ *
+ * @param string     $event  'update:after'
+ * @param string     $type   'all'
+ * @param ElggEntity $entity The updated entity
+ * @return void
+ *
+ * @access private
+ */
+function likes_access_sync($event, $type, $entity) {
+	if (!($entity instanceof \ElggEntity)) {
+		return;
+	}
+	
+	// need to override access in case likes ended up with ACCESS_PRIVATE
+	// and to ensure write permissions
+	$ia = elgg_set_ignore_access(true);
+	$options = array(
+		'entity_guid' => $entity->getGUID(),
+                'annotation_name' => 'likes',
+		'wheres' => array(
+			"n_table.access_id != {$entity->access_id}"
+		),
+		'limit' => 0,
+	);
+	$batch = new \ElggBatch('elgg_get_annotations', $options, null, 25, false);
+	foreach ($batch as $annotation) {
+		// Update annotation access_id
+		$annotation->access_id = $entity->access_id;
+		$annotation->save();
+	}
+		
+	elgg_set_ignore_access($ia);
+	
+	return;
 }
