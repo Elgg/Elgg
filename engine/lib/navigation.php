@@ -234,10 +234,22 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 		// noone owns the page so this is probably an all site list page
 		$owner = elgg_get_logged_in_user_entity();
 	}
+	
+	if (($name === 'add') && ($owner instanceof ElggUser)) {
+		// make sure the add link goes to the current logged in user, not the page owner
+		$logged_in_user = elgg_get_logged_in_user_entity();
+		if (!empty($logged_in_user) && ($logged_in_user->guid !== $owner->guid)) {
+			// change the 'owner' for the link to the current logged in user
+			$owner = $logged_in_user;
+		}
+	}
+	
+	// do we have an owner and is the current user allowed to create content here
 	if (!$owner || !$owner->canWriteToContainer(0, $entity_type, $entity_subtype)) {
 		return;
 	}
 
+	// register the title menu item
 	elgg_register_menu_item('title', [
 		'name' => $name,
 		'href' => "$handler/$name/$owner->guid",
