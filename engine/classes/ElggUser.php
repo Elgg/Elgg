@@ -248,7 +248,8 @@ class ElggUser extends \ElggEntity
 		
 		// these writes actually work, we just type hint read-only.
 		$this->prev_last_action = $this->last_action;
-		$this->last_action = $time;
+		
+		$this->updateLastAction($time);
 	}
 	
 	/**

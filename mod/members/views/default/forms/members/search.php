@@ -3,7 +3,6 @@
 echo elgg_view_field([
 	'#type' => 'text',
 	'name' => 'member_query',
-	'class' => 'mbm',
 	'required' => true,
 ]);
 
