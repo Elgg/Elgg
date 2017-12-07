@@ -9,6 +9,8 @@
  * @uses $vars['limit'] Limit number of users (default 0 = no limit)
  * @uses $vars['name'] Name of the returned data array (default "members")
  * @uses $vars['handler'] Name of page handler used to power search (default "livesearch")
+ * @uses $vars['options'] Additional options to pass to the handler with the URL query
+ *                        If using custom options, make sure to impose a signed request gatekeeper in the resource view
  * @uses $vars['only_friends'] If enabled, will turn the input into a friends picker
  *
  * Defaults to lazy load user lists in alphabetical order. User needs
@@ -24,7 +26,24 @@ $name = $vars['name'];
 
 $guids = (array) elgg_extract('values', $vars, []);
 
-$handler = elgg_extract('handler', $vars, 'livesearch');
+$params = elgg_extract('options', $vars, []);
+
+if (!empty($params)) {
+	ksort($params);
+
+// We sign custom parameters, so that plugins can validate
+// that the request is unaltered, if needed
+	$mac = elgg_build_hmac($params);
+	$params['mac'] = $mac->getToken();
+}
+
+if ($friends_only) {
+	$params['friends_only'] = true;
+}
+
+$handler = elgg_extract('handler', $vars, "livesearch");
+$params['view'] = 'json'; // force json viewtype
+$handler = elgg_http_add_url_query_elements($handler, $params);
 
 $limit = (int) elgg_extract('limit', $vars, 0);
 

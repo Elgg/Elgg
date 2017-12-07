@@ -100,6 +100,13 @@ Removed views
  * ``river/object/discussion_reply/create``: See :ref:`upgrade-discussion-replies`
  * ``search/object/discussion_reply/entity``: See :ref:`upgrade-discussion-replies`
  * ``rss/discussion/replies``: See :ref:`upgrade-discussion-replies`
+ * ``search/header``
+ * ``search/layout`` in both ``default`` and ``rss`` viewtypes
+ * ``search/no_results``
+ * ``search/object/comment/entity``
+ * ``search/css``: Moved to ``search/search.css``
+ * ``search/startblurb``
+
 
 Removed functions/methods
 -------------------------
@@ -201,6 +208,19 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``discussion_prepare_reply_notification``: See :ref:`upgrade-discussion-replies`
  * ``discussion_redirect_to_reply``: See :ref:`upgrade-discussion-replies`
  * ``discussion_ecml_views_hook``: See :ref:`upgrade-discussion-replies`
+ * ``search_get_where_sql``
+ * ``search_get_ft_min_max``
+ * ``search_get_order_by_sql``
+ * ``search_consolidate_substrings``
+ * ``search_remove_ignored_words``
+ * ``search_get_highlighted_relevant_substrings``
+ * ``search_highlight_words``
+ * ``search_get_search_view``
+ * ``search_custom_types_tags_hook``
+ * ``search_tags_hook``
+ * ``search_users_hook``
+ * ``search_groups_hook``
+ * ``search_objects_hook``
  * ``members_list_popular``
  * ``members_list_newest``
  * ``members_list_online``
@@ -418,11 +438,12 @@ The following class registration related functions have been removed:
 Search changes
 --------------
 
+We have added a search service into core, consequently the ``search`` plugin now only provides a user interface for displaying forms and listing search results.
+Many of the views in the search plugin have been affected by this change.
+
 The FULLTEXT indices have been removed on various tables. The search plugin will now always use a like query when performing a search.
 
- * ``search_get_where_sql`` no longer supports the argument ``use_fulltext``
- * ``search_get_ft_min_max`` function is removed
- * ``$CONFIG->search_info`` is no longer provided
+See :doc:`Search Service </guides/search>` and :ref:`Search hooks <guides/hooks-list#search>` documentation for detailed information about new search capabilities.
 
 Form and field related changes
 ------------------------------

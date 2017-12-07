@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default view for an entity returned in a search
  *
@@ -12,46 +13,64 @@
  *
  * @uses $vars['entity'] Entity returned in a search
  */
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
+}
 
-$entity = $vars['entity'];
+$params = elgg_extract('params', $vars, []);
 
-$icon = $entity->getVolatileData('search_icon');
-if (!$icon) {
-	// display the entity's owner by default if available.
-	// @todo allow an option to switch to displaying the entity's icon instead.
-	$type = $entity->getType();
-	if ($type == 'user' || $type == 'group') {
-		$icon = elgg_view_entity_icon($entity, 'tiny');
-	} elseif ($owner = $entity->getOwnerEntity()) {
-		$icon = elgg_view_entity_icon($owner, 'tiny');
-	} else {
-		// display a generic icon if no owner, though there will probably be
-		// other problems if the owner can't be found.
-		$icon = elgg_view_entity_icon($entity, 'tiny');
-	}
+$service = new \Elgg\Search\Search($params);
+
+$service->prepareEntity($entity);
+
+$view = $service->getSearchView();
+
+if ($view && $view != 'search/entity' && elgg_view_exists($view)) {
+	$vars['entity'] = $entity;
+	echo elgg_view($view, $vars);
+
+	return;
 }
 
 $title = $entity->getVolatileData('search_matched_title');
 $description = $entity->getVolatileData('search_matched_description');
 $extra_info = $entity->getVolatileData('search_matched_extra');
+$icon = $entity->getVolatileData('search_icon');
 $url = $entity->getVolatileData('search_url');
 
-if (!$url) {
-	$url = $entity->getURL();
+$title = elgg_view('output/url', [
+	'text' => $title,
+	'href' => $url,
+	'class' => 'search-matched-title',
+]);
+
+$subtitle = '';
+
+$type = $entity->getType();
+if ($type == 'object') {
+	$subtitle = elgg_view('page/elements/by_line', [
+		'entity' => $entity,
+		'time' => $entity->getVolatileData('search_time'),
+	]);
 }
 
-$title = "<a href=\"$url\">$title</a>";
-$time = $entity->getVolatileData('search_time');
-if (!$time) {
-	$tc = $entity->time_created;
-	$tu = $entity->time_updated;
-	$time = elgg_view_friendly_time(($tu > $tc) ? $tu : $tc);
+$content = '';
+if ($description) {
+	$content .= elgg_format_element('div', [
+		'class' => 'search-matched-description',
+	], $description);
 }
-
-$body = "<p class=\"mbn\">$title</p>$description";
 if ($extra_info) {
-	$body .= "<p class=\"elgg-subtext\">$extra_info</p>";
+	$content .= elgg_format_element('div', [
+		'class' => 'search-matched-extra',
+	], $extra_info);
 }
-$body .= "<p class=\"elgg-subtext\">$time</p>";
-
-echo elgg_view_image_block($icon, $body);
+echo elgg_view("$type/elements/summary", [
+	'entity' => $entity,
+	'tags' => false,
+	'title' => $title,
+	'subtitle' => $subtitle,
+	'content' => $content,
+	'icon' => $icon,
+]);

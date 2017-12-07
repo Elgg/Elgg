@@ -76,6 +76,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\Seeder                    $seeder
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
+ * @property-read \Elgg\Search\SearchService               $search
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
@@ -420,6 +421,10 @@ class ServiceProvider extends DiContainer {
 				$router->setTimer($c->timer);
 			}
 			return $router;
+		});
+
+		$this->setFactory('search', function(ServiceProvider $c) {
+			return new \Elgg\Search\SearchService($c->config, $c->hooks, $c->db);
 		});
 
 		$this->setFactory('seeder', function(ServiceProvider $c) {

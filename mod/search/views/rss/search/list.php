@@ -8,15 +8,18 @@
 
 $entities = $vars['results']['entities'];
 
-if (!is_array($entities) || !count($entities)) {
-	return false;
+if (empty($entities)) {
+	return;
 }
 
+$params = elgg_extract('params', $vars);
+$service = new \Elgg\Search\Search($params);
+
 foreach ($entities as $entity) {
-	if ($view = search_get_search_view($vars['params'], 'entity')) {
+	if ($view = $service->getSearchView()) {
 		$body .= elgg_view($view, [
 			'entity' => $entity,
-			'params' => $vars['params'],
+			'params' => $service->getParams(),
 			'results' => $vars['results']
 		]);
 	}

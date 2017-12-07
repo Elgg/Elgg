@@ -26,6 +26,7 @@ Customize Elgg's behavior with plugins.
    pagehandler
    routing
    services
+   search
    page-owner
    permissions-check
    settings
