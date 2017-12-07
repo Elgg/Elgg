@@ -9,7 +9,7 @@ define(function(require) {
 		allowedContent: true,
 		baseHref: elgg.get_site_url(),
 		removePlugins: 'liststyle,contextmenu,tabletools,elementspath',
-		extraPlugins: 'blockimagepaste,autogrow',
+		extraPlugins: 'blockimagepaste',
 		defaultLanguage: 'en',
 		language: elgg.get_language(),
 		skin: 'moono',
@@ -17,7 +17,6 @@ define(function(require) {
 		disableNativeSpellChecker: false,
 		disableNativeTableHandles: false,
 		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target',
-		autoGrow_maxHeight: $(window).height() - 100,
 		customConfig: false, //no additional config.js
 		stylesSet: false, //no additional styles.js
 	});

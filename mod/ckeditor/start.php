@@ -43,7 +43,7 @@ function ckeditor_init() {
  */
 function ckeditor_longtext_menu($hook, $type, $items, $vars) {
 
-	$id = elgg_extract('id', $vars);
+	$id = elgg_extract('textarea_id', $vars);
 	if ($id === null) {
 		return;
 	}

@@ -115,6 +115,11 @@ Bundled
 
 If the plugin still comes bundled with the release of a new Elgg version, make sure to add the plugin to the ``composer.json``.
 
+Composer
+--------
+
+Check the core composer dependencies if requirements that were specific for the removed plugin can also be removed in the core dependencies.
+
 Documentation
 -------------
 

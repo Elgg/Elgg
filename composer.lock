@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "463b269934f7d205cfa035dccfaf82e8",
+    "content-hash": "a6988e3c6fad84fea9d46d0511316562",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -260,6 +260,47 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "ckeditor/ckeditor",
+            "version": "dev-full/4.7.x",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ckeditor/ckeditor-releases.git",
+                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/5f1564a3d64cd06d8a4f3f21150f57e892a40939",
+                "reference": "5f1564a3d64cd06d8a4f3f21150f57e892a40939",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+",
+                "LGPL-2.1+",
+                "MPL-1.1+"
+            ],
+            "authors": [
+                {
+                    "name": "CKSource",
+                    "homepage": "http://cksource.com"
+                }
+            ],
+            "description": "JavaScript WYSIWYG web text editor.",
+            "homepage": "http://ckeditor.com",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "fckeditor",
+                "html",
+                "javascript",
+                "richtext",
+                "text",
+                "wysiwyg"
+            ],
+            "time": "2017-09-13 13:08:14"
         },
         {
             "name": "composer/installers",
@@ -2867,7 +2908,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Elgg coding standards",
-            "time": "2017-11-02T13:08:36+00:00"
+            "time": "2017-11-02 13:08:36"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4275,6 +4316,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "ckeditor/ckeditor": 20,
         "roave/security-advisories": 20,
         "elgg/sniffs": 20
     },
