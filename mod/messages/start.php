@@ -364,16 +364,19 @@ function messages_set_url($hook, $type, $url, $params) {
  * @since 1.9
  */
 function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
+	if (!$user_guid) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+
 	return elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'messages',
 		'metadata_name_value_pairs' => [
-			'toId' => $user_guid,
+			'toId' => (int) $user_guid,
 			'readYet' => 0,
-			'msg' => 1,
 		],
-		'owner_guid' => $user_guid ?: elgg_get_logged_in_user_guid(),
-		'limit' => $limit ?: elgg_get_config('default_limit'),
+		'owner_guid' => (int) $user_guid,
+		'limit' => $limit ? : elgg_get_config('default_limit'),
 		'offset' => $offset,
 		'count' => $count,
 		'distinct' => false,
