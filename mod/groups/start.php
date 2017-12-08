@@ -71,8 +71,6 @@ function groups_init() {
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
 
-	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
-
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'group:', 'Elgg\Values::getTrue');
 
@@ -778,19 +776,6 @@ function groupprofile_ecml_views_hook($hook, $type, $return_value, $params) {
 	$return_value['groups/groupprofile'] = elgg_echo('groups:ecml:groupprofile');
 
 	return $return_value;
-}
-
-/**
- * Process upgrades for the groups plugin
- *
- * @return void
- */
-function groups_run_upgrades() {
-	$path = __DIR__ . '/upgrades/';
-	$files = elgg_get_upgrade_files($path);
-	foreach ($files as $file) {
-		include "$path{$file}";
-	}
 }
 
 /**
