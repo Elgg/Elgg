@@ -32,35 +32,35 @@ the request to a resource view.
 
 .. code-block:: php
 
-   elgg_register_page_handler('blog', 'blog_page_handler');
+	elgg_register_page_handler('blog', 'blog_page_handler');
 
-   function blog_page_handler(array $segments) {
-        // if the URL is http://example.com/elgg/blog/view/123/my-blog-post
-        // $segments contains: ['view', '123', 'my-blog-post']
+	function blog_page_handler(array $segments) {
+		// if the URL is http://example.com/elgg/blog/view/123/my-blog-post
+		// $segments contains: ['view', '123', 'my-blog-post']
 
-        $subpage = elgg_extract(0, $segments);
-        if ($subpage === 'view') {
+		$subpage = elgg_extract(0, $segments);
+		if ($subpage === 'view') {
 
-            // use a view for the page logic to allow other plugins to easily change it
-            $resource = elgg_view_resource('blog/view', [
-                'guid' => (int)elgg_extract(1, $segments);
-            ]);
+			// use a view for the page logic to allow other plugins to easily change it
+			$resource = elgg_view_resource('blog/view', [
+				'guid' => (int)elgg_extract(1, $segments);
+			]);
 
-            return elgg_ok_response($resource);
-        }
+			return elgg_ok_response($resource);
+		}
 
-        // redirect to a different location
-        if ($subpage === '') {
-            return elgg_redirect_response('blog/all');
-        }
+		// redirect to a different location
+		if ($subpage === '') {
+			return elgg_redirect_response('blog/all');
+		}
 
-        // send an error page
-        if ($subpage === 'owner' && !elgg_entity_exists($segments[1])) {
-            return elgg_error_response('User not found', 'blog/all', ELGG_HTTP_NOT_FOUND);
-        }
-        
-        // ... handle other subpages
-   }
+		// send an error page
+		if ($subpage === 'owner' && !elgg_entity_exists($segments[1])) {
+			return elgg_error_response('User not found', 'blog/all', ELGG_HTTP_NOT_FOUND);
+		}
+
+		// ... handle other subpages
+	}
 
 
 The ``route`` Plugin Hook
@@ -78,23 +78,23 @@ For these requests the ``blog`` page handler is never called.
 
 .. code-block:: php
 
-    function myplugin_blog_all_handler($hook, $type, $returnvalue, $params) {
-        $segments = elgg_extract('segments', $returnvalue, array());
+	function myplugin_blog_all_handler($hook, $type, $returnvalue, $params) {
+		$segments = elgg_extract('segments', $returnvalue, array());
 
-        if (isset($segments[0]) && $segments[0] === 'all') {
-            $title = "We're taking over!";
-            $content = elgg_view_layout('one_column', array(
-                'title' => $title,
-                'content' => "We can take over page rendering completely"
-            ));
-            echo elgg_view_page($title, $content);
+		if (isset($segments[0]) && $segments[0] === 'all') {
+			$title = "We're taking over!";
+			$content = elgg_view_layout('one_column', array(
+				'title' => $title,
+				'content' => "We can take over page rendering completely"
+			));
+			echo elgg_view_page($title, $content);
 
-            // in the route hook, return false says, "stop rendering, we've handled this request"
-            return false;
-        }
-    }
+			// in the route hook, return false says, "stop rendering, we've handled this request"
+			return false;
+		}
+	}
 
-    elgg_register_plugin_hook_handler('route', 'blog', 'myplugin_blog_all_handler');
+	elgg_register_plugin_hook_handler('route', 'blog', 'myplugin_blog_all_handler');
 
 .. note:: As of 2.1, route modification should be done in the ``route:rewrite`` hook.
 
@@ -108,12 +108,12 @@ Here we rewrite requests for ``news/*`` to ``blog/*``:
 
 .. code-block:: php
 
-    function myplugin_rewrite_handler($hook, $type, $value, $params) {
-        $value['identifier'] = 'blog';
-        return $value;
-    }
+	function myplugin_rewrite_handler($hook, $type, $value, $params) {
+		$value['identifier'] = 'blog';
+		return $value;
+	}
 
-    elgg_register_plugin_hook_handler('route:rewrite', 'news', 'myplugin_rewrite_handler');
+	elgg_register_plugin_hook_handler('route:rewrite', 'news', 'myplugin_rewrite_handler');
 
 .. warning::
 
@@ -131,11 +131,11 @@ For regular pages, Elgg's program flow is something like this:
 #. Elgg triggers the plugin hook ``route:rewrite, news`` (see above).
 #. Elgg triggers the plugin hook ``route, blog`` (was rewritten in the rewrite hook).
 #. Elgg finds a registered page handler (see above) for ``blog``, and calls the function, passing in
-   the segments.
+	the segments.
 #. The page handler function determines it needs to render a single user's blog. It calls
-   ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username.
+	``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username.
 #. The ``resources/blog/owner`` view gets the username via ``$vars['username']``, and uses many other views and
-   formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page.
+	formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page.
 #. The page handler echos the view HTML and returns ``true`` to indicate it handled the request.
 #. PHP invokes Elgg's shutdown sequence.
 #. The user receives a fully rendered page.

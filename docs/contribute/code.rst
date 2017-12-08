@@ -4,8 +4,8 @@ Writing Code
 Understand Elgg's standards and processes to get your changes accepted as quickly as possible.
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 License agreement
 =================
@@ -60,15 +60,15 @@ Choosing a branch to submit to
 The following table assumes the latest stable release is 2.1.
 
 ============================== ============================================
-Type of change                 Branch to submit against
+Type of change				 Branch to submit against
 ============================== ============================================
-Security fix                   Don't! Email security@elgg.org for guidance.
-Bug fix                        1.12 (or 2.1 if the 1.12 fix is too complex)
-Performance                    2.x
-Deprecation                    2.x
-Minor feature                  2.x
-Major feature                  master
-Has any breaking change        master
+Security fix					Don't! Email security@elgg.org for guidance.
+Bug fix						1.12 (or 2.1 if the 1.12 fix is too complex)
+Performance					2.x
+Deprecation					2.x
+Minor feature				  2.x
+Major feature				  master
+Has any breaking change		master
 ============================== ============================================
 
 If you're not sure which branch to submit against, just ask!
@@ -83,50 +83,50 @@ follow these steps:
 
 1. Start with the ``type`` by selecting the *last category which applies* from this list:
 
-   * **docs** - *only* docs are being updated
-   * **chore** - this include refactoring, code style changes, adding missing tests, Travis stuff, etc.
-   * **perf** - the primary purpose is to improve performance
-   * **fix** - this fixes a bug
-   * **deprecate** - the change deprecates any part of the API
-   * **feature** - this adds a new user-facing or developer feature
-   * **security** - the change affects a security issue in any way. *Please do not push this commit to any public repo.* Instead contact security@elgg.org.
+	* **docs** - *only* docs are being updated
+	* **chore** - this include refactoring, code style changes, adding missing tests, Travis stuff, etc.
+	* **perf** - the primary purpose is to improve performance
+	* **fix** - this fixes a bug
+	* **deprecate** - the change deprecates any part of the API
+	* **feature** - this adds a new user-facing or developer feature
+	* **security** - the change affects a security issue in any way. *Please do not push this commit to any public repo.* Instead contact security@elgg.org.
 
-   E.g. if your commit refactors to fix a bug, it's still a "fix". If that bug is security-related, however, the type
-   must be "security" and you should email security@elgg.org before proceeding. When in doubt, make your best guess
-   and a reviewer will provide guidance.
+	E.g. if your commit refactors to fix a bug, it's still a "fix". If that bug is security-related, however, the type
+	must be "security" and you should email security@elgg.org before proceeding. When in doubt, make your best guess
+	and a reviewer will provide guidance.
 
 2. In parenthesis, add the ``component``, a short string which describes the subsystem being changed.
 
-   Some examples: ``views``, ``i18n``, ``seo``, ``a11y``, ``cache``, ``db``, ``session``, ``router``, ``<plugin_name>``.
+	Some examples: ``views``, ``i18n``, ``seo``, ``a11y``, ``cache``, ``db``, ``session``, ``router``, ``<plugin_name>``.
 
 3. Add a colon, a space, and a brief ``summary`` of the changes, which will appear in the changelog.
 
-   No line may exceed 100 characters in length, so keep your summary concise.
+	No line may exceed 100 characters in length, so keep your summary concise.
 
-   ================================================ ======================================================================================================
-   Good summary                                     Bad summary (problem)
-   ================================================ ======================================================================================================
-   page owners see their own owner blocks on pages  bug fix (vague)
-   bar view no longer dies if 'foo' not set         updates views/default/bar.php so bar view no longer... (redundant info)
-   narrows river layout to fit iPhone               alters the river layout (vague)
-   elgg_foo() handles arrays for $bar               in elgg_foo() you can now pass an array for $bar and the function will... (move detail to description)
-   removes link color from comments header in river fixes db so that... (redundant info)
-   requires non-empty title when saving pages       can save pages with no title (confusingly summarizes old behavior)
-   ================================================ ======================================================================================================
+	================================================ ======================================================================================================
+	Good summary									 Bad summary (problem)
+	================================================ ======================================================================================================
+	page owners see their own owner blocks on pages  bug fix (vague)
+	bar view no longer dies if 'foo' not set		 updates views/default/bar.php so bar view no longer... (redundant info)
+	narrows river layout to fit iPhone				alters the river layout (vague)
+	elgg_foo() handles arrays for $bar				in elgg_foo() you can now pass an array for $bar and the function will... (move detail to description)
+	removes link color from comments header in river fixes db so that... (redundant info)
+	requires non-empty title when saving pages		can save pages with no title (confusingly summarizes old behavior)
+	================================================ ======================================================================================================
 
 4. (recommended) Skip a line and add a ``description`` of the changes. Include the motivation for making them, any info
-   about back or forward compatibility, and any rationale of why the change had to be done a certain way. Example:
+	about back or forward compatibility, and any rationale of why the change had to be done a certain way. Example:
 
-       We speed up the Remember Me table migration by using a single INSERT INTO ... SELECT query instead of row-by-row.
-       This migration takes place during the upgrade to 1.9.
+		We speed up the Remember Me table migration by using a single INSERT INTO ... SELECT query instead of row-by-row.
+		This migration takes place during the upgrade to 1.9.
 
-   Unless your change is trivial/obvious, a description is required.
+	Unless your change is trivial/obvious, a description is required.
 
 5. If the commit resolves a GitHub issue, skip a line and add ``Fixes #`` followed by the issue number. E.g.
-   ``Fixes #1234``. You can include multiple issues by separating with commas.
+	``Fixes #1234``. You can include multiple issues by separating with commas.
 
-   GitHub will auto-close the issue when the commit is merged. If you just want to reference an issue, use
-   ``Refs #`` instead.
+	GitHub will auto-close the issue when the commit is merged. If you just want to reference an issue, use
+	``Refs #`` instead.
 
 When done, your commit message will have the format:
 
@@ -145,12 +145,12 @@ Here is an example of a good commit message:
 
 .. code-block:: text
 
-    perf(upgrade): speeds up migrating remember me codes
+	perf(upgrade): speeds up migrating remember me codes
 
-    We speed up the Remember Me table migration by using a single INSERT INTO ... SELECT query instead of row-by-row.
-    This migration takes place during the upgrade to 1.9.
+	We speed up the Remember Me table migration by using a single INSERT INTO ... SELECT query instead of row-by-row.
+	This migration takes place during the upgrade to 1.9.
 
-    Fixes #6204
+	Fixes #6204
 
 
 To validate commit messages locally, make sure ``.scripts/validate_commit_msg.php`` is executable, and make a copy
@@ -158,8 +158,8 @@ or symlink to it in the directory ``.git/hooks/commit-msg``.
 
 .. code-block:: sh
 
-    chmod u+x .scripts/validate_commit_msg.php
-    ln -s .scripts/validate_commit_msg.php .git/hooks/commit-msg/validate_commit_msg.php
+	chmod u+x .scripts/validate_commit_msg.php
+	ln -s .scripts/validate_commit_msg.php .git/hooks/commit-msg/validate_commit_msg.php
 
 Rewriting commit messages
 -------------------------
@@ -175,7 +175,7 @@ To edit just the last commit:
 Otherwise you may need to perform an interactive rebase:
 
 1. Rebase the last N commits: ``git rebase -i HEAD~N`` where N is a number.
-   (Git will open the ``git-rebase-todo`` file for editing)
+	(Git will open the ``git-rebase-todo`` file for editing)
 2. For the commits that need to change, change ``pick`` to ``r`` (for reword) and save/exit the editor.
 3. Change the commit message(s), save/exit the editor (git will present a file for each commit that needs rewording).
 4. ``git push -f your_remote your_branch`` to force push the branch (updating your PR).
@@ -193,14 +193,14 @@ To check your code for standard violations (provided you have installed Elgg wit
 
 .. code-block:: sh
 
-    phpcs --standard=vendor/elgg/sniffs/elgg.xml -s path/to/dir/to/check
+	phpcs --standard=vendor/elgg/sniffs/elgg.xml -s path/to/dir/to/check
 
 
 To automatically fix fixable violations, run:
 
 .. code-block:: sh
 
-    phpcbf --standard=vendor/elgg/sniffs/elgg.xml path/to/dir/to/fix
+	phpcbf --standard=vendor/elgg/sniffs/elgg.xml path/to/dir/to/fix
 
 To check core directories, you can use shortcut ``composer lint`` and ``composer lint-fixer``.
 
@@ -293,19 +293,19 @@ First install all the development dependencies:
 
 .. code-block:: sh
 
-   yarn
+	yarn
 
 Run through the tests just once and then quit:
 
 .. code-block:: sh
 
-   yarn test
+	yarn test
 
 You can also run tests continuously during development so they run on each save:
 
 .. code-block:: sh
 
-   karma start js/tests/karma.conf.js
+	karma start js/tests/karma.conf.js
 
 Debugging JS tests
 ^^^^^^^^^^^^^^^^^^
@@ -314,7 +314,7 @@ You can run the test suite inside Chrome dev tools:
 
 .. code-block:: sh
 
-   yarn run chrome
+	yarn run chrome
 
 This will output a URL like ``http://localhost:9876/``.
 
@@ -442,11 +442,11 @@ developers looking at the code should be discouraged from refactoring in a way t
 
 .. code-block:: php
 
-    // Can't use empty()/boolean: "0" is a valid value
-    if ($str === '') {
-        register_error(elgg_echo('foo:string_cannot_be_empty'));
-        forward(REFERER);
-    }
+	// Can't use empty()/boolean: "0" is a valid value
+	if ($str === '') {
+		register_error(elgg_echo('foo:string_cannot_be_empty'));
+		forward(REFERER);
+	}
 
 Commit effectively
 ^^^^^^^^^^^^^^^^^^
@@ -577,13 +577,13 @@ Bad:
 
 .. code-block:: css
 
-    .example_class {}
+	.example_class {}
 
 Good:
 
 .. code-block:: css
 
-    .example-class {}
+	.example-class {}
 
 One property per line
 ^^^^^^^^^^^^^^^^^^^^^

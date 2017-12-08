@@ -20,8 +20,8 @@ Additionally, you may want to control what types of authentication are
 available on your site. This will also be covered.
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Security
 --------
@@ -47,9 +47,9 @@ to the calling application. The function could look like this
 
 .. code-block:: php
 
-    function my_echo($string) {
-        return $string;
-    }
+	function my_echo($string) {
+		return $string;
+	}
 
 Since we are providing this function to allow developers to test their
 API clients, we will require neither API authentication nor user
@@ -81,7 +81,7 @@ and you should see JSON data like this:
 
 .. code-block:: json
 
-    {"status":0,"result":"testing"}
+	{"status":0,"result":"testing"}
 
 Plugins can filter the output of individual API methods by registering a handler
 for ``'rest:output',$method`` plugin hook.
@@ -209,11 +209,11 @@ that have viewed the site in the last x minutes.
 
 .. code-block:: php
 
-    function count_active_users($minutes=10) {
-        $seconds = 60 * $minutes;
-        $count = count(find_active_users($seconds, 9999));
-        return $count;
-    }
+	function count_active_users($minutes=10) {
+		$seconds = 60 * $minutes;
+		$count = count(find_active_users($seconds, 9999));
+		return $count;
+	}
 
 Now, let's expose it and make the number of minutes an optional
 parameter:
@@ -287,15 +287,15 @@ Let's write our wire posting function:
 
 .. code-block:: php
 
-    function my_post_to_wire($text) {
-        
-        $text = substr($text, 0, 140);
+	function my_post_to_wire($text) {
 
-        $access = ACCESS_PUBLIC;
-       
-        // returns guid of wire post
-        return thewire_save_post($text, $access, "api");        
-    }
+		$text = substr($text, 0, 140);
+
+		$access = ACCESS_PUBLIC;
+
+		// returns guid of wire post
+		return thewire_save_post($text, $access, "api");
+	}
 
 Exposing this function is the same as the previous except we require
 user authentication and we're going to make this use POST rather than
@@ -353,23 +353,23 @@ plugin hook:
 
 .. code-block:: php
 
-    register_plugin_hook('rest', 'init', 'rest_plugin_setup_pams');
+	register_plugin_hook('rest', 'init', 'rest_plugin_setup_pams');
 
 Then in the callback function, you register the PAMs that you want to
 use:
 
 .. code-block:: php
 
-    function rest_plugin_setup_pams() {
-        // user token can also be used for user authentication
-        register_pam_handler('pam_auth_usertoken');
+	function rest_plugin_setup_pams() {
+		// user token can also be used for user authentication
+		register_pam_handler('pam_auth_usertoken');
 
-        // simple API key check
-        register_pam_handler('api_auth_key', "sufficient", "api");
-        
-        // override the default pams
-        return true;
-    }
+		// simple API key check
+		register_pam_handler('api_auth_key', "sufficient", "api");
+
+		// override the default pams
+		return true;
+	}
 
 When testing, you may find it useful to register the
 ``pam_auth_session`` PAM so that you can easily test your methods from
@@ -388,6 +388,6 @@ Related
 -------
 
 .. toctree::
-   :maxdepth: 1
-   
-   web-services/hmac
+	:maxdepth: 1
+
+	web-services/hmac

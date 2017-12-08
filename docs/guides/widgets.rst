@@ -4,8 +4,8 @@ Widgets
 Widgets are content areas that users can drag around their page to customize the layout. They can typically be customized by their owner to show more/less content and determine who sees the widget. By default Elgg provides plugins for customizing the profile page and dashboard via widgets.
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Structure
 ---------
@@ -18,11 +18,11 @@ To create a widget, create two views:
 ``content.php`` is responsible for all the content that will output within the widget. The ``edit.php`` file contains any extra edit functions you wish to present to the user. You do not need to add access level as this comes as part of the widget framework.
 
 .. note::
-   
-   Using HTML checkboxes to set widget flags is problematic because if unchecked,
-   the checkbox input is omitted from form submission.
-   The effect is that you can only set and not clear flags.
-   The "input/checkboxes" view will not work properly in a widget's edit panel.
+
+	Using HTML checkboxes to set widget flags is problematic because if unchecked,
+	the checkbox input is omitted from form submission.
+	The effect is that you can only set and not clear flags.
+	The "input/checkboxes" view will not work properly in a widget's edit panel.
 
 Register the widget
 -------------------
@@ -45,17 +45,17 @@ Alternatively you can also use an function to add a widget. This is done within 
 
 .. code-block:: php
 
-    // Add generic new file widget
-    elgg_register_widget_type([
-        'id' => 'filerepo', 
-        'name' => elgg_echo('widgets:filerepo:name'), 
-        'description' => elgg_echo('widgets:filerepo:description'),
-        'context' => ['profile'],
-    ]);
+	// Add generic new file widget
+	elgg_register_widget_type([
+		'id' => 'filerepo',
+		'name' => elgg_echo('widgets:filerepo:name'),
+		'description' => elgg_echo('widgets:filerepo:description'),
+		'context' => ['profile'],
+	]);
 
 .. note::
 
-    The only required attribute is the ``id``.
+	The only required attribute is the ``id``.
 
 Multiple widgets
 ^^^^^^^^^^^^^^^^
@@ -64,48 +64,48 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
 
 .. code-block:: php
 
-    // Add generic new file widget
-    elgg_register_widget_type([
-        'id' => 'filerepo', 
-        'name' => elgg_echo('widgets:filerepo:name'), 
-        'description' => elgg_echo('widgets:filerepo:description'),
-        'context' => ['profile'],
-    ]);
+	// Add generic new file widget
+	elgg_register_widget_type([
+		'id' => 'filerepo',
+		'name' => elgg_echo('widgets:filerepo:name'),
+		'description' => elgg_echo('widgets:filerepo:description'),
+		'context' => ['profile'],
+	]);
 
-    // Add a second file widget
-   elgg_register_widget_type([
-        'id' => 'filerepo2', 
-        'name' => elgg_echo('widgets:filerepo2:name'), 
-        'description' => elgg_echo('widgets:filerepo2:description'),
-        'context' => ['dashboard'],
-    ]);
+	// Add a second file widget
+	elgg_register_widget_type([
+		'id' => 'filerepo2',
+		'name' => elgg_echo('widgets:filerepo2:name'),
+		'description' => elgg_echo('widgets:filerepo2:description'),
+		'context' => ['dashboard'],
+	]);
 
-    // Add a third file widget
-   elgg_register_widget_type([
-        'id' => 'filerepo3', 
-        'name' => elgg_echo('widgets:filerepo3:name'), 
-        'description' => elgg_echo('widgets:filerepo3:description'),
-        'context' => ['profile', 'dashboard'],
-    ]);
+	// Add a third file widget
+	elgg_register_widget_type([
+		'id' => 'filerepo3',
+		'name' => elgg_echo('widgets:filerepo3:name'),
+		'description' => elgg_echo('widgets:filerepo3:description'),
+		'context' => ['profile', 'dashboard'],
+	]);
 
 Make sure you have the corresponding directories within your plugin
 views structure:
 
 .. code-block:: text
 
-    'Plugin'
-        /views
-            /default
-                /widgets
-                   /filerepo
-                      /edit.php
-                      /content.php
-                   /filerepo2
-                      /edit.php
-                      /content.php
-                   /filerepo3
-                      /edit.php
-                      /content.php
+	'Plugin'
+		/views
+			/default
+				/widgets
+					/filerepo
+					  /edit.php
+					  /content.php
+					/filerepo2
+					  /edit.php
+					  /content.php
+					/filerepo3
+					  /edit.php
+					  /content.php
 
 Magic widget name and description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -113,7 +113,7 @@ When registering a widget you can omit providing a name and a description. If a 
 
 .. code-block:: php
 
-    elgg_register_widget_type(['id' => 'filerepo']);
+	elgg_register_widget_type(['id' => 'filerepo']);
 
 How to restrict where widgets can be used
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -121,10 +121,10 @@ The widget can specify the context that it can be used in (just profile, just da
 
 .. code-block:: php
 
-    elgg_register_widget_type([
-        'id' => 'filerepo',
-        'context' => ['profile', 'dashboard', 'other_context'],
-    ]);
+	elgg_register_widget_type([
+		'id' => 'filerepo',
+		'context' => ['profile', 'dashboard', 'other_context'],
+	]);
 
 Allow multiple widgets on the same page
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -132,10 +132,10 @@ By default you can only add one widget of the same type on the page. If you want
 
 .. code-block:: php
 
-    elgg_register_widget_type([
-        'id' => 'filerepo',
-        'multiple' => true,
-    ]);
+	elgg_register_widget_type([
+		'id' => 'filerepo',
+		'multiple' => true,
+	]);
 
 
 Register widgets in a hook
@@ -144,21 +144,21 @@ If, for example, you wish to conditionally register widgets you can also use a h
 
 .. code-block:: php
 
-    function my_plugin_init() {
-        elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_conditional_widgets_hook');
-    }
+	function my_plugin_init() {
+		elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_conditional_widgets_hook');
+	}
 
-    function my_plugin_conditional_widgets_hook($hook, $type, $return, $params) {
-        if (!elgg_is_active_plugin('file')) {
-            return;
-        }
+	function my_plugin_conditional_widgets_hook($hook, $type, $return, $params) {
+		if (!elgg_is_active_plugin('file')) {
+			return;
+		}
 
-        $return[] = \Elgg\WidgetDefinition::factory([
-            'id' => 'filerepo',
-        ]);
+		$return[] = \Elgg\WidgetDefinition::factory([
+			'id' => 'filerepo',
+		]);
 
-        return $return;
-    }
+		return $return;
+	}
 
 Modify widget properties of existing widget registration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -166,19 +166,19 @@ If, for example, you wish to change the allowed contexts of an already registere
 
 .. code-block:: php
 
-    function my_plugin_init() {
-        elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_change_widget_definition_hook');
-    }
+	function my_plugin_init() {
+		elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_change_widget_definition_hook');
+	}
 
-    function my_plugin_change_widget_definition_hook($hook, $type, $return, $params) {
-        foreach ($return as $key => $widget) {
-            if ($widget->id === 'filerepo') {
-                $return[$key]->multiple = false;
-            }
-        }
+	function my_plugin_change_widget_definition_hook($hook, $type, $return, $params) {
+		foreach ($return as $key => $widget) {
+			if ($widget->id === 'filerepo') {
+				$return[$key]->multiple = false;
+			}
+		}
 
-        return $return;
-    }
+		return $return;
+	}
 
 Default widgets
 ---------------
@@ -189,7 +189,7 @@ To announce default widget support in your plugin, register for the ``get_list, 
 
 .. code-block:: php
 
-    elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'my_plugin_default_widgets_hook');
+	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'my_plugin_default_widgets_hook');
 
 In the plugin hook handler, push an array into the return value defining your default widget support and when to create default widgets. Arrays require the following keys to be defined:
 
@@ -204,16 +204,16 @@ When an object triggers an event that matches the event, entity\_type, and entit
 
 .. code-block:: php
 
-    function my_plugin_default_widgets_hook($hook, $type, $return, $params) {
-        $return[] = array(
-            'name' => elgg_echo('my_plugin'),
-            'widget_context' => 'my_plugin',
-            'widget_columns' => 3,
+	function my_plugin_default_widgets_hook($hook, $type, $return, $params) {
+		$return[] = array(
+			'name' => elgg_echo('my_plugin'),
+			'widget_context' => 'my_plugin',
+			'widget_columns' => 3,
 
-            'event' => 'create',
-            'entity_type' => 'user',
-            'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
-        );
+			'event' => 'create',
+			'entity_type' => 'user',
+			'entity_subtype' => ELGG_ENTITIES_ANY_VALUE,
+		);
 
-        return $return;
-    }
+		return $return;
+	}

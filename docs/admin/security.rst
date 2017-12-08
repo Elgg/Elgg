@@ -4,8 +4,8 @@ Security
 As of Elgg 3.0 several hardening settings have been added to Elgg. You can enable/disable these settings as you like.
 
 .. contents:: Contents
-   :depth: 2
-   :local:
+	:depth: 2
+	:local:
 
 Upgrade protection
 ==================

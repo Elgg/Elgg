@@ -7,22 +7,22 @@ These intructions are provided in case you want to test your Elgg
 installation on your local computer running Windows.
 
 -  Download and install XAMPP to your computer from 
-   http://www.apachefriends.org/en/xampp.html
+	http://www.apachefriends.org/en/xampp.html
 -  Once the installation is completed, it will prompt you to start the
-   XAMPP controller panel. Leave it for now.
+	XAMPP controller panel. Leave it for now.
 -  Open ``C:\xampp\apache\conf\httpd.conf`` file with notepad and uncomment
-   these lines::
+	these lines::
 
-     #LoadModule rewrite_module modules/mod_rewrite.so
-     #LoadModule filter_module modules/mod_filter.so
+	 #LoadModule rewrite_module modules/mod_rewrite.so
+	 #LoadModule filter_module modules/mod_filter.so
 
 -  Edit the php.ini file and change
-   ``arg_separator.output = &amp;amp;`` to ``arg_separator.output = &``
+	``arg_separator.output = &amp;amp;`` to ``arg_separator.output = &``
 -  Go to ``C:\xampp`` and double click on the xampp_start application
 -  Go to http://localhost/
 -  Change your server's password in the security option
 -  Go to http://localhost/phpmyadmin and login with the username and the
-   password of your server
+	password of your server
 -  Create a database called "elgg" in your phpmyadmin panel
 -  Now download Elgg. Unzip it and extract to ``C:\xampp\htdocs\sites\elgg``
 -  Create the Elgg data folder as ``C:\xampp\htdocs\sites\data``
@@ -41,9 +41,9 @@ working, follow these steps:
 -  Download the DLL from http://eac.qme.nl/eAccelerator_v1_0_svn427_for_v5_3_5-VC6.zip
 -  Copy eAccelerator_ts.dll to ``C:\xampp\php\ext\php_eaccelerator.dll``
 -  Uncomment this line in ``C:\xampp\php\php.ini``::
-   
-     ;zend_extension = "C:\xampp\php\ext\php_eaccelerator.dll"
-   
+
+	 ;zend_extension = "C:\xampp\php\ext\php_eaccelerator.dll"
+
 -  Restart apache
 
 To verify that it is on:

@@ -38,8 +38,8 @@ ordered later on the Admin > Plugins page:
 
 .. note::
 
-    Unless you are overriding core's or another plugin's language strings, it is good practice for the language keys to start with your plugin name. 
-    For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys.
+	Unless you are overriding core's or another plugin's language strings, it is good practice for the language keys to start with your plugin name.
+	For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys.
 
 Server-side API
 ===============
@@ -68,7 +68,7 @@ To force which language should be used for translation, set the third parameter:
 
 .. code-block:: php
 
-    echo elgg_echo('welcome', [], $user->language);
+	echo elgg_echo('welcome', [], $user->language);
 
 To first test whether ``elgg_echo()`` can find a translation:
 
@@ -83,8 +83,8 @@ To first test whether ``elgg_echo()`` can find a translation:
 
 .. note:: 
 
-    Some APIs allow creating translations for new keys. Translators should always include an English translation as a fallback. 
-    This makes ``elgg_language_key_exists($key)`` a reliable way to predict whether ``elgg_echo($key)`` will succeed.
+	Some APIs allow creating translations for new keys. Translators should always include an English translation as a fallback.
+	This makes ``elgg_language_key_exists($key)`` a reliable way to predict whether ``elgg_echo($key)`` will succeed.
 
 Javascript API
 ==============

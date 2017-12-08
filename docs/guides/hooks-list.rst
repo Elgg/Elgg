@@ -4,8 +4,8 @@ List of plugin hooks in core
 For more information on how hooks work visit :doc:`/design/events`.
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 System hooks
 ============
@@ -58,12 +58,12 @@ System hooks
 	and an optional set of allowed tags is passed as ``$params['allowed_tags']``.
 
 **output:before, page**
-    In ``elgg_view_page()``, this filters ``$vars`` before it's passed to the page shell
-    view (``page/<page_shell>``). To stop sending the X-Frame-Options header, unregister the
-    handler ``_elgg_views_send_header_x_frame_options()`` from this hook.
+	In ``elgg_view_page()``, this filters ``$vars`` before it's passed to the page shell
+	view (``page/<page_shell>``). To stop sending the X-Frame-Options header, unregister the
+	handler ``_elgg_views_send_header_x_frame_options()`` from this hook.
 
 **output, page**
-    In ``elgg_view_page()``, this filters the output return value.
+	In ``elgg_view_page()``, this filters the output return value.
 
 **parameters, menu:<menu_name>**
 	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before rendering.
@@ -100,39 +100,39 @@ System hooks
 	for every ``/cache`` request--no Expires headers are used when simplecache is disabled.
 
 **prepare, breadcrumbs**
-    In ``elgg_get_breadcrumbs()``, this filters the registered breadcrumbs before
-    returning them, allowing a plugin to alter breadcrumb strategy site-wide.
-    ``$params`` array includes:
+	In ``elgg_get_breadcrumbs()``, this filters the registered breadcrumbs before
+	returning them, allowing a plugin to alter breadcrumb strategy site-wide.
+	``$params`` array includes:
 
-      * ``breadcrumbs`` - an array of bredcrumbs, each with ``title`` and ``link`` keys
-      * ``identifier`` - route identifier of the current page
-      * ``segments`` - route segments of the current page
+	  * ``breadcrumbs`` - an array of bredcrumbs, each with ``title`` and ``link`` keys
+	  * ``identifier`` - route identifier of the current page
+	  * ``segments`` - route segments of the current page
 
 **add, river**
 
 **elgg.data, site**
-   Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
+	Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
 
 **elgg.data, page**
-   Filters uncached, page-specific configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
+	Filters uncached, page-specific configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
 
 **registration_url, site**
-   Filters site's registration URL. Can be used by plugins to attach invitation codes, referrer codes etc. to the registration URL.
-   ``$params`` array contains an array of query elements added to the registration URL by the invoking script.
-   The hook must return an absolute URL to the registration page.
+	Filters site's registration URL. Can be used by plugins to attach invitation codes, referrer codes etc. to the registration URL.
+	``$params`` array contains an array of query elements added to the registration URL by the invoking script.
+	The hook must return an absolute URL to the registration page.
 
 **login_url, site**
-   Filters site's login URL.
-   ``$params`` array contains an array of query elements added to the login URL by the invoking script.
-   The hook must return an absolute URL of the login page.
+	Filters site's login URL.
+	``$params`` array contains an array of query elements added to the login URL by the invoking script.
+	The hook must return an absolute URL of the login page.
 
 **commands, cli**
-   Allows plugins to register their own commands executable via ``elgg-cli`` binary.
-   Handlers must return an array of command class names. Commands must extend ``\Elgg\Cli\Command`` to be executable.
+	Allows plugins to register their own commands executable via ``elgg-cli`` binary.
+	Handlers must return an array of command class names. Commands must extend ``\Elgg\Cli\Command`` to be executable.
 
 **seeds, database**
-   Allows plugins to register their own database seeds. Seeds populate the database with fake entities for testing purposes.
-   Seeds must extend ``\Elgg\Database\Seeds\Seed`` class to be executable via ``elgg-cli database:seed``.
+	Allows plugins to register their own database seeds. Seeds populate the database with fake entities for testing purposes.
+	Seeds must extend ``\Elgg\Database\Seeds\Seed`` class to be executable via ``elgg-cli database:seed``.
 
 
 User hooks
@@ -160,7 +160,7 @@ User hooks
 	Note the function ``register_user`` does *not* trigger this hook.
 
 **login:forward, user**
-    Filters the URL to which the user will be forwarded after login.
+	Filters the URL to which the user will be forwarded after login.
 
 **find_active_users, system**
 	Return the number of active users.
@@ -234,7 +234,7 @@ Access hooks
 	Return false to prevent removal.
 
 **get_sql, access**
-    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
+	Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
 
 Action hooks
@@ -254,10 +254,10 @@ Action hooks
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 
 **response, action:<action>**
-    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
-    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
-    Note that the ``<action>`` value is parsed from the request URL, therefore you may not be able to filter
-    the responses of `action()` calls if they are nested within the another action script file.
+	Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+	This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+	Note that the ``<action>`` value is parsed from the request URL, therefore you may not be able to filter
+	the responses of `action()` calls if they are nested within the another action script file.
 
 .. _guides/hooks-list#ajax:
 
@@ -272,10 +272,10 @@ Ajax
 	================  ====================
 	elgg/Ajax method  plugin hook type
 	================  ====================
-	action()          action:<action_name>
-	path()            path:<url_path>
-	view()            view:<view_name>
-	form()            form:<action_name>
+	action()		  action:<action_name>
+	path()			path:<url_path>
+	view()			view:<view_name>
+	form()			form:<action_name>
 	================  ====================
 
 **output, ajax**
@@ -372,7 +372,7 @@ Permission hooks
 	Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated.
 
 **gatekeeper, <entity_type>:<entity_subtype>**
-    Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.
+	Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.
 
 
 Notifications
@@ -530,25 +530,25 @@ Routing
 =======
 
 **route, <identifier>**
-    Allows applying logic or returning a response before the page handler is called. See :doc:`routing`
-    for details.
-    Note that plugins using this hook to rewrite paths, will not be able to filter the response object by
-    its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for
-    the original path.
+	Allows applying logic or returning a response before the page handler is called. See :doc:`routing`
+	for details.
+	Note that plugins using this hook to rewrite paths, will not be able to filter the response object by
+	its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for
+	the original path.
 
 **route:rewrite, <identifier>**
 	Allows altering the site-relative URL path. See :doc:`routing` for details.
 
 **response, path:<path>**
-    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
-    This hook type will only be used if the path did not start with "action/" or "ajax/".
-    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
-    Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` hook should
-    use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` hook.
+	Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+	This hook type will only be used if the path did not start with "action/" or "ajax/".
+	This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+	Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` hook should
+	use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` hook.
 
 **ajax_response, path:<path>**
-    Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will
-    only be used if the path did not start with "action/" or "ajax/".
+	Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will
+	only be used if the path did not start with "action/" or "ajax/".
 
 
 .. _guides/hooks-list#views:
@@ -560,117 +560,117 @@ Views
 	Filters the ``$vars`` array passed to the view
 
 **view, <view_name>**
-    Filters the returned content of the view
+	Filters the returned content of the view
 
 **layout, page**
-    In ``elgg_view_layout()``, filters the layout name.
-    ``$params`` array includes:
+	In ``elgg_view_layout()``, filters the layout name.
+	``$params`` array includes:
 
-     * ``identifier`` - ID of the page being rendered
-     * ``segments`` - URL segments of the page being rendered
-     * other ``$vars`` received by ``elgg_view_layout()``
+	 * ``identifier`` - ID of the page being rendered
+	 * ``segments`` - URL segments of the page being rendered
+	 * other ``$vars`` received by ``elgg_view_layout()``
 
 **shell, page**
-    In ``elgg_view_page()``, filters the page shell name
+	In ``elgg_view_page()``, filters the page shell name
 
 **head, page**
-    In ``elgg_view_page()``, filters ``$vars['head']``
-    Return value contains an array with ``title``, ``metas`` and ``links`` keys,
-    where ``metas`` is an array of elements to be formatted as ``<meta>`` head tags,
-    and ``links`` is an array of elements to be formatted as ``<link>`` head tags.
-    Each meta and link element contains a set of key/value pairs that are formatted
-    into html tag attributes, e.g.
+	In ``elgg_view_page()``, filters ``$vars['head']``
+	Return value contains an array with ``title``, ``metas`` and ``links`` keys,
+	where ``metas`` is an array of elements to be formatted as ``<meta>`` head tags,
+	and ``links`` is an array of elements to be formatted as ``<link>`` head tags.
+	Each meta and link element contains a set of key/value pairs that are formatted
+	into html tag attributes, e.g.
 
 .. code-block:: php
 
-    return [
-       'title' => 'Current page title',
-       'metas' => [
-          'viewport' => [
-             'name' => 'viewport',
-             'content' => 'width=device-width',
-	      ]
-       ],
-       'links' => [
-          'rss' => [
-             'rel' => 'alternative',
-             'type' => 'application/rss+xml',
-             'title' => 'RSS',
-             'href' => elgg_format_url($url),
-          ],
-          'icon-16' => [
-             'rel' => 'icon',
-             'sizes' => '16x16',
-             'type' => 'image/png',
-		     'href' => elgg_get_simplecache_url('graphics/favicon-16.png'),
-          ],
-       ],
-    ];
+	return [
+		'title' => 'Current page title',
+		'metas' => [
+		  'viewport' => [
+			 'name' => 'viewport',
+			 'content' => 'width=device-width',
+		  ]
+		],
+		'links' => [
+		  'rss' => [
+			 'rel' => 'alternative',
+			 'type' => 'application/rss+xml',
+			 'title' => 'RSS',
+			 'href' => elgg_format_url($url),
+		  ],
+		  'icon-16' => [
+			 'rel' => 'icon',
+			 'sizes' => '16x16',
+			 'type' => 'image/png',
+			 'href' => elgg_get_simplecache_url('graphics/favicon-16.png'),
+		  ],
+		],
+	];
 
 
 **ajax_response, view:<view>**
-    Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.
+	Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module.
 
 **ajax_response, form:<action>**
-    Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
+	Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module.
 
 **response, view:<view_name>**
-    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
-    Applies to request to ``/ajax/view/<view_name>``.
-    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+	Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+	Applies to request to ``/ajax/view/<view_name>``.
+	This hook can be used to modify response content, status code, forward URL, or set additional response headers.
 
 **response, form:<form_name>**
-    Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
-    Applies to request to ``/ajax/form/<form_name>``.
-    This hook can be used to modify response content, status code, forward URL, or set additional response headers.
+	Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
+	Applies to request to ``/ajax/form/<form_name>``.
+	This hook can be used to modify response content, status code, forward URL, or set additional response headers.
 
 **table_columns:call, <name>**
-    When the method ``elgg()->table_columns->$name()`` is called, this hook is called to allow
-    plugins to override or provide an implementation. Handlers receive the method arguments via
-    ``$params['arguments']`` and should return an instance of ``Elgg\Views\TableColumn`` if they
-    wish to specify the column directly.
+	When the method ``elgg()->table_columns->$name()`` is called, this hook is called to allow
+	plugins to override or provide an implementation. Handlers receive the method arguments via
+	``$params['arguments']`` and should return an instance of ``Elgg\Views\TableColumn`` if they
+	wish to specify the column directly.
 
 Files
 =====
 
 **download:url, file**
-    Allows plugins to filter the download URL of the file.
+	Allows plugins to filter the download URL of the file.
 	By default, the download URL is generated by the file service.
 
-    ``$params`` array includes:
+	``$params`` array includes:
 
-     * ``entity`` - instance of ``ElggFile``
+	 * ``entity`` - instance of ``ElggFile``
 
 **inline:url, file**
-    Allows plugins to filter the inline URL of the image file.
+	Allows plugins to filter the inline URL of the image file.
 	By default, the inline URL is generated by the file service.
 
-    ``$params`` array includes:
+	``$params`` array includes:
 
-     * ``entity`` - instance of ``ElggFile``
+	 * ``entity`` - instance of ``ElggFile``
 
 **mime_type, file**
 	Return the mimetype for the filename ``$params['filename']`` with original filename ``$params['original_filename']``
 	and with the default detected mimetype of ``$params['default']``.
 
 **simple_type, file**
-    In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']``
-    (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like
-    ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
-    ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
-    ``ege*`` filters and menus.
+	In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']``
+	(e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like
+	``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
+	``simpletype`` metadata on file entities and make use of it when serving icons and constructing
+	``ege*`` filters and menus.
 
 **upload, file**
-    Allows plugins to implement custom logic for moving an uploaded file into an instance of ``ElggFile``.
-    The handler must return ``true`` to indicate that the uploaded file was moved.
-    The handler must return ``false`` to indicate that the uploaded file could not be moved.
-    Other returns will indicate that ``ElggFile::acceptUploadedFile`` should proceed with the
-    default upload logic.
+	Allows plugins to implement custom logic for moving an uploaded file into an instance of ``ElggFile``.
+	The handler must return ``true`` to indicate that the uploaded file was moved.
+	The handler must return ``false`` to indicate that the uploaded file could not be moved.
+	Other returns will indicate that ``ElggFile::acceptUploadedFile`` should proceed with the
+	default upload logic.
 
-    ``$params`` array includes:
+	``$params`` array includes:
 
-     * ``file`` - instance of ``ElggFile`` to write to
-     * ``upload`` - instance of Symfony's ``UploadedFile``
+	 * ``file`` - instance of ``ElggFile`` to write to
+	 * ``upload`` - instance of Symfony's ``UploadedFile``
 
 .. _guides/hooks-list#other:
 
@@ -701,7 +701,7 @@ Other
 	 * ``h`` - Height of the image in pixels
 	 * ``square`` - Should the aspect ratio be a square (true/false)
 	 * ``upscale`` - Should the image be upscaled in case it is smaller than the given
-           width and height (true/false)
+			width and height (true/false)
 
 	If the configuration array for an image size is empty, the image will be
 	saved as an exact copy of the source without resizing or cropping.
@@ -919,7 +919,7 @@ Other
 	It's preferred to use the ``to:object, <type>`` hook.
 
 **maintenance:allow, url**
-    Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``
+	Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``
 	is allowed during maintenance mode.
 
 **robots.txt, site**
@@ -965,20 +965,20 @@ Likes
 -----
 
 **likes:is_likable, <type>:<subtype>**
-    This is called to set the default permissions for whether to display/allow likes on an entity of type
-    ``<type>`` and subtype ``<subtype>``.
+	This is called to set the default permissions for whether to display/allow likes on an entity of type
+	``<type>`` and subtype ``<subtype>``.
 
-    .. note:: The callback ``'Elgg\Values::getTrue'`` is a useful handler for this hook.
+	.. note:: The callback ``'Elgg\Values::getTrue'`` is a useful handler for this hook.
 
 Members
 -------
 
 **members:list, <page_segment>**
-    To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list.
+	To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list.
 
 **members:config, tabs**
-    This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
-    for the members pages.
+	This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
+	for the members pages.
 
 Reported Content
 ----------------
@@ -1010,8 +1010,8 @@ Search
 	directly to entities.
 
 **search_types, get_queries**
-    Before a search this filters the types queried. This can be used to reorder
-    the display of search results.
+	Before a search this filters the types queried. This can be used to reorder
+	the display of search results.
 
 Web Services
 ------------

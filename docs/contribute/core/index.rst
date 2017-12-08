@@ -5,7 +5,7 @@ Certain tasks surrounding Elgg are reserved for the core developer as they requi
 The guides below show the workflow for these actions.
 
 .. toctree::
-   :maxdepth: 1
-   :glob:
-   
-   *
+	:maxdepth: 1
+	:glob:
+
+	*

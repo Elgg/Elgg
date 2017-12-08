@@ -2,8 +2,8 @@ Elgg CLI
 ########
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 
 elgg-cli command line tools
@@ -13,10 +13,10 @@ Depending on how you installed Elgg and your server configuration you can access
 
 .. code-block:: sh
 
-    php ./elgg-cli list
-    ./elgg-cli list
-    php ./vendor/bin/elgg-cli list
-    ./vendor/bin/elgg-cli list
+	php ./elgg-cli list
+	./elgg-cli list
+	php ./vendor/bin/elgg-cli list
+	./vendor/bin/elgg-cli list
 
 
 Available commands
@@ -24,25 +24,25 @@ Available commands
 
 .. code-block:: sh
 
-    cd /path/to/elgg/
+	cd /path/to/elgg/
 
-    # Get help
-    elgg-cli --help
+	# Get help
+	elgg-cli --help
 
-    # List all commands
-    elgg-cli list
+	# List all commands
+	elgg-cli list
 
-    # Install Elgg
-    elgg-cli install [-c|--config CONFIG]
+	# Install Elgg
+	elgg-cli install [-c|--config CONFIG]
 
-    # Run Simpletest test suite
-    elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS] [-f|--filter FILTER]
+	# Run Simpletest test suite
+	elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS] [-f|--filter FILTER]
 
-    # Seed the database with fake entities
-    elgg-cli database:seed [-l|--limit LIMIT]
+	# Seed the database with fake entities
+	elgg-cli database:seed [-l|--limit LIMIT]
 
-    # Remove seeded faked entities
-    elgg-cli database:unseed
+	# Remove seeded faked entities
+	elgg-cli database:unseed
 
 
 Adding custom commands
@@ -53,14 +53,14 @@ Command class must extend ``\Elgg\CLI\Command``.
 
 .. code-block:: php
 
-    class MyCommand extends \Elgg\Сli\Command {
+	class MyCommand extends \Elgg\Сli\Command {
 
-    }
+	}
 
-    elgg_register_plugin_hook_handler('commands', 'cli', function($hook, $type, $return) {
+	elgg_register_plugin_hook_handler('commands', 'cli', function($hook, $type, $return) {
 
-        $return[] = MyCommand::class;
+		$return[] = MyCommand::class;
 
-        return $return;
+		return $return;
 
-    });
+	});

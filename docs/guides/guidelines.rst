@@ -7,38 +7,38 @@ these guidelines in their own plugins.
 
 .. seealso::
 
-   Be sure to follow the :doc:`plugins/plugin-skeleton` for your plugin's layout.
+	Be sure to follow the :doc:`plugins/plugin-skeleton` for your plugin's layout.
 
 .. warning::
 
   :doc:`dont-modify-core`
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Use standardized routing with page handlers
 -------------------------------------------
 
 - Example: Bookmarks plugin
 - Page handlers should accept the following standard URLs:
-   +---------------+-----------------------------------+
-   | Purpose       | URL                               |
-   +===============+===================================+
-   | All           | page_handler/all                  |
-   +---------------+-----------------------------------+
-   | User          | page_handler/owner/<username>     |
-   +---------------+-----------------------------------+
-   | User friends’ | page_handler/friends/<username>   |
-   +---------------+-----------------------------------+
-   | Single entity | page_handler/view/<guid>/<title>  |
-   +---------------+-----------------------------------+
-   | Add           | page_handler/add/<container_guid> |
-   +---------------+-----------------------------------+
-   | Edit          | page_handler/edit/<guid>          |
-   +---------------+-----------------------------------+
-   | Group list    | page_handler/group/<guid>/owner   |
-   +---------------+-----------------------------------+
+	+---------------+-----------------------------------+
+	| Purpose       | URL                               |
+	+===============+===================================+
+	| All           | page_handler/all                  |
+	+---------------+-----------------------------------+
+	| User          | page_handler/owner/<username>     |
+	+---------------+-----------------------------------+
+	| User friends’ | page_handler/friends/<username>   |
+	+---------------+-----------------------------------+
+	| Single entity | page_handler/view/<guid>/<title>  |
+	+---------------+-----------------------------------+
+	| Add           | page_handler/add/<container_guid> |
+	+---------------+-----------------------------------+
+	| Edit          | page_handler/edit/<guid>          |
+	+---------------+-----------------------------------+
+	| Group list    | page_handler/group/<guid>/owner   |
+	+---------------+-----------------------------------+
 - Include page handler scripts from the page handler. Almost every page handler should have a page handler script. (Example: ``bookmarks/all`` => ``mod/bookmarks/views/default/resources/bookmarks/all.php``)
 - Pass arguments like entity guids to the resource view via ``$vars`` in ``elgg_view_resource()``.
 - Call ``elgg_gatekeeper()`` and ``elgg_admin_gatekeeper()`` in the page handler function if required.
@@ -68,15 +68,15 @@ The object/<subtype> view
 - Update action structure - Example: Bookmarks plugin.
 - Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)
 - Use the following action URLs:
-   +---------+----------------------+
-   | Purpose | URL                  |
-   +=========+======================+
-   | Add     | action/plugin/save   |
-   +---------+----------------------+
-   | Edit    | action/plugin/save   |
-   +---------+----------------------+
-   | Delete  | action/plugin/delete |
-   +---------+----------------------+
+	+---------+----------------------+
+	| Purpose | URL                  |
+	+=========+======================+
+	| Add     | action/plugin/save   |
+	+---------+----------------------+
+	| Edit    | action/plugin/save   |
+	+---------+----------------------+
+	| Delete  | action/plugin/delete |
+	+---------+----------------------+
 - Make the delete action accept ``action/<handler>/delete?guid=<guid>`` so the metadata entity menu has the correct URL by default
 - If updating a 1.7 plugin, replace calls to functions deprecated in 1.7 because these will produce visible errors on every load in 1.8
 
@@ -109,16 +109,16 @@ These points are good ideas, but are not yet in the official guidelines. Followi
 - Update the widget views (see the blog or file widgets)
 - Update the group profile “widget” using blog or file plugins as example
 - Update the forms
-   - Move form bodies to ``/forms/<handler>/<action>`` to use Evan’s new ``elgg_view_form()``
-   - Use input views in form bodies rather than html
-   - Add a function that prepares the form (see ``mod/file/lib/file.php`` for example)
-   - Integrate sticky forms (see the file plugin’s upload action and form prepare function)
+	- Move form bodies to ``/forms/<handler>/<action>`` to use Evan’s new ``elgg_view_form()``
+	- Use input views in form bodies rather than html
+	- Add a function that prepares the form (see ``mod/file/lib/file.php`` for example)
+	- Integrate sticky forms (see the file plugin’s upload action and form prepare function)
 - Clean up CSS/HTML
-   - Should be able to remove almost all CSS (look for patterns that can be moved into core if you need CSS)
+	- Should be able to remove almost all CSS (look for patterns that can be moved into core if you need CSS)
 - Use hyphens rather than underscores in classes/ids
 - Update the ``manifest.xml`` file to the 1.8 format. Use http://el.gg/manifest17to18 to automate this
 - Do not use the ``bundled`` category with your plugins. That is for plugins distributed with Elgg
 - Update functions deprecated in 1.8.
-   - Many registration functions simply added an ``elgg_`` prefix for consistency
-   - See ``/engine/lib/deprecated-1.8.php`` for the full list. You can also set the debug level to warning to get visual reminders of deprecated functions
+	- Many registration functions simply added an ``elgg_`` prefix for consistency
+	- See ``/engine/lib/deprecated-1.8.php`` for the full list. You can also set the debug level to warning to get visual reminders of deprecated functions
 - Don't use ``register_shutdown_function`` as you may not have access to certain Elgg parts anymore (eg database). Instead use the ``shutdown`` ``system`` event

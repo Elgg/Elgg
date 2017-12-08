@@ -4,8 +4,8 @@ Performance
 Make your site run as smoothly and responsively as possible.
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Can Elgg scale to X million users?
 ==================================
@@ -54,7 +54,7 @@ Here are some configuration tips that might help:
 
  * Make sure that MySQL is configured to use an appropriate my.cnf for the size of your website.
  * Increase the amount of memory available to PHP and MySQL
-   (you will have to increase the amount of memory available to the php process in any case)
+	(you will have to increase the amount of memory available to the php process in any case)
 
 Enable caching
 ==============
@@ -89,8 +89,8 @@ configured when you installed Elgg:
 
 .. code-block:: sh
 
-    cd /path/to/wwwroot/
-    ln -s /path/to/dataroot/views_simplecache/ cache
+	cd /path/to/wwwroot/
+	ln -s /path/to/dataroot/views_simplecache/ cache
 
 If your webserver supports following symlinks, this will serve files straight off
 disk without booting up PHP each time.
@@ -102,8 +102,8 @@ not the ``/views_simplecache/`` directory) with
 
 .. code-block:: sh
 
-    cd /path/to/wwwroot/
-    chown -h wwwrun:www cache
+	cd /path/to/wwwroot/
+	chown -h wwwrun:www cache
 
 In this example it's assumed that the ``/views_simplecache/`` directory in the data directory is owned by the
 wwwrun account that belongs to the www group. If this is not the case on your server, you have to modify the
@@ -187,12 +187,12 @@ Uncomment and populate the following sections in ``settings.php``
 
 .. code-block:: php
 
-    $CONFIG->memcache = true;
-    
-    $CONFIG->memcache_servers = array (
-        array('server1', 11211),
-        array('server2', 11211)
-    );
+	$CONFIG->memcache = true;
+
+	$CONFIG->memcache_servers = array (
+		array('server1', 11211),
+		array('server2', 11211)
+	);
 
 Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want 
 to add a namespace prefix. In order to do this, uncomment the following line

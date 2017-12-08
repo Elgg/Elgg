@@ -2,8 +2,8 @@ Moving a plugin to its own repository
 #####################################
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Plugin extraction steps
 =======================

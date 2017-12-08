@@ -4,8 +4,8 @@ Plugins
 Plugins can modify the behavior of and add new features to Elgg.
 
 .. contents:: Contents
-   :depth: 2
-   :local:
+	:depth: 2
+	:local:
 
 Where to get plugins
 ====================
@@ -90,17 +90,17 @@ All plugins reside in the ``mod`` directory of your Elgg installation.
 To install a new plugin:
  * extract (unzip) contents of the plugin distribution package
  * copy/FTP the extracted folder into the ``mod`` directory of your Elgg
-   installation, making sure that ``manifest.xml`` is
-   directly under the plugin directory (e.g. if you were to install a plugin called
-   ``my_elgg_plugin``, plugin's manifest would need to be found at
-   ``mod/my_elgg_plugin/manifest.xml``)
+	installation, making sure that ``manifest.xml`` is
+	directly under the plugin directory (e.g. if you were to install a plugin called
+	``my_elgg_plugin``, plugin's manifest would need to be found at
+	``mod/my_elgg_plugin/manifest.xml``)
  * activate the plugin from your admin panel
 
 To activate a plugin:
  * Log in to your Elgg site with your administrator account
  * Go to Administration -> Configure -> Plugins
  * Find your plugin in the list of installed plugins and click on the
-   'enable' button.
+	'enable' button.
 
 .. _admin/plugins#plugin-order:
 

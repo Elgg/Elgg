@@ -9,7 +9,7 @@ The example below registers a function for the daily cron.
 .. code-block:: php
 	
 	function my_plugin_init() {
-	    elgg_register_plugin_hook_handler('cron', 'daily', 'my_plugin_cron_handler');
+		elgg_register_plugin_hook_handler('cron', 'daily', 'my_plugin_cron_handler');
 	}
 	
 
@@ -22,9 +22,9 @@ information.
 .. code-block:: php
 	
 	function my_plugin_cron_handler($hook, $period, $return, $params) {
-	    $start_time = elgg_extract('time', $params);	
+		$start_time = elgg_extract('time', $params);
 	}
 
 .. seealso::
 
-   :doc:`/design/events` has more information about hooks
+	:doc:`/design/events` has more information about hooks

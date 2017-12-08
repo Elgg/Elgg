@@ -18,7 +18,7 @@ Elgg supporters are listed there unless they request not to be.
 Supporters are able to put this official logo on their site if they wish:
 
 .. image:: elgg-supporters.png
-   :alt: Proud supporter of Elgg
+	:alt: Proud supporter of Elgg
 
 
 Disclaimer
@@ -46,10 +46,10 @@ If you would like to become an Elgg supporter:
  * on the supporters page, `subscribe via PayPal`__
  * send an email to info@elgg.org with:
  
-   * the date you subscribed
-   * your name (and organization name, if applicable)
-   * your website
-   * your Elgg community profile
+	* the date you subscribed
+	* your name (and organization name, if applicable)
+	* your website
+	* your Elgg community profile
  
 
 __ http://elgg.org/supporter.php

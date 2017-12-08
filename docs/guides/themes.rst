@@ -10,8 +10,8 @@ This guide assumes you are familiar with:
  * :doc:`views`
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Create your plugin
 ==================
@@ -61,14 +61,14 @@ css file:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-        function mytheme_init() {
-            elgg_extend_view('elgg.css', 'mytheme/css');
-        }
+		function mytheme_init() {
+			elgg_extend_view('elgg.css', 'mytheme/css');
+		}
 
-        elgg_register_event_handler('init', 'system', 'mytheme_init');
-    ?>
+		elgg_register_event_handler('init', 'system', 'mytheme_init');
+	?>
 
 View overloading
 ----------------
@@ -126,26 +126,26 @@ Here's a quick overview:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-    function pluginname_init() {
-        // Replace the default index page
-        elgg_register_plugin_hook_handler('index', 'system', 'new_index');
-    }
+	function pluginname_init() {
+		// Replace the default index page
+		elgg_register_plugin_hook_handler('index', 'system', 'new_index');
+	}
 
-    function new_index() {
-        if (!include_once(dirname(dirname(__FILE__)) . "/pluginname/pages/index.php"))
-            return false;
-        
-        return true;
-    }
+	function new_index() {
+		if (!include_once(dirname(dirname(__FILE__)) . "/pluginname/pages/index.php"))
+			return false;
 
-    // register for the init, system event when our plugin start.php is loaded
-    elgg_register_event_handler('init', 'system', 'pluginname_init');
-    ?>
+		return true;
+	}
+
+	// register for the init, system event when our plugin start.php is loaded
+	elgg_register_event_handler('init', 'system', 'pluginname_init');
+	?>
 
 -  Then, create an index page (/pluginname/pages/index.php) and use that
-   to put the content you would like on the front page of your Elgg
-   site.
+	to put the content you would like on the front page of your Elgg
+	site.
 
 

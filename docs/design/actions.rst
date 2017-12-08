@@ -4,7 +4,7 @@ Actions
 Actions are the primary way users interact with an Elgg site.
 
 .. toctree::
-   :maxdepth: 2
+	:maxdepth: 2
 
 Overview
 ========

@@ -2,8 +2,8 @@ From 1.7 to 1.8
 ===============
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0.
 As such, there is more work to update core and plugins than with previous upgrades.
@@ -29,7 +29,7 @@ Delete the following core directories (same level as _graphics and engine):
 
 .. warning::
 
-   If you do not delete these directories before an upgrade, you will have problems!
+	If you do not delete these directories before an upgrade, you will have problems!
 
 
 Updating plugins
@@ -65,7 +65,7 @@ Use standardized page handlers and scripts
 
   .. code-block:: php
 
-     $content = elgg_view_layout('content', $options);
+	 $content = elgg_view_layout('content', $options);
 
 * Page handler scripts should not contain HTML.
 * Call ``elgg_push_breadcrumb()`` in the page handler scripts.

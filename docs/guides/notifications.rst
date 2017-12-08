@@ -6,8 +6,8 @@ There are two ways to send notifications in Elgg:
  - Event-based notifications send using a notifications queue
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Instant notifications
 =====================
@@ -79,20 +79,20 @@ subscribed users.
 This is the workflow of the notifications system:
 
  #. Someone does an action that triggers an event within Elgg
-     - The action can be ``create``, ``update`` or ``delete``
-     - The target of the action can be any instance of the ``ElggEntity`` class (e.g. a Blog post)
+	 - The action can be ``create``, ``update`` or ``delete``
+	 - The target of the action can be any instance of the ``ElggEntity`` class (e.g. a Blog post)
  #. The notifications system saves this event into a notifications queue in the database
  #. When the pluging hook handler for the one-minute interval gets triggered, the event is taken from the queue and it gets processed
  #. Subscriptions are fetched for the user who triggered the event
-     - By default this includes all the users who have enabled any notification method
-       for the user at ``www.site.com/notifications/personal/<username>``
+	 - By default this includes all the users who have enabled any notification method
+		for the user at ``www.site.com/notifications/personal/<username>``
  #. Plugins are allowed to alter the subscriptions using the ``[get, subscriptions]`` hook
  #. Plugins are allowed to terminate notifications queue processing with the ``[send:before, notifications]`` hook
  #. Plugins are allowed to alter the notification parameters with the ``[prepare, notification]`` hook
  #. Plugins are allowed to alter the notification subject/message/summary with the ``[prepare, notification:<action>:<type>:<subtype>]`` hook
  #. Plugins are allowed to format notification subject/message/summary for individual delivery methods with ``[format, notification:<method>]`` hook
  #. Notifications are sent to each subscriber using the methods they have chosen
-     - Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` hook
+	 - Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` hook
  #. The ``[send:after, notifications]`` hook is triggered for the event after all notifications have been sent
 
 __ http://reference.elgg.org/notification_8php.html#af7a43dcb0cf13ba55567d9d7874a3b20
@@ -131,41 +131,41 @@ the contents of the notification when a new objects of subtype 'photo' is create
 	 * Initialize the photos plugin
 	 */
 	function photos_init() {
-	    elgg_register_notification_event('object', 'photo', array('create'));
-	    elgg_register_plugin_hook_handler('prepare', 'notification:create:object:photo', 'photos_prepare_notification');
+		elgg_register_notification_event('object', 'photo', array('create'));
+		elgg_register_plugin_hook_handler('prepare', 'notification:create:object:photo', 'photos_prepare_notification');
 	}
 
 	/**
 	 * Prepare a notification message about a new photo
 	 *
-	 * @param string                          $hook         Hook name
-	 * @param string                          $type         Hook type
+	 * @param string						  $hook		 Hook name
+	 * @param string						  $type		 Hook type
 	 * @param Elgg_Notifications_Notification $notification The notification to prepare
-	 * @param array                           $params       Hook parameters
+	 * @param array							$params		Hook parameters
 	 * @return Elgg_Notifications_Notification
 	 */
 	function photos_prepare_notification($hook, $type, $notification, $params) {
-	    $entity = $params['event']->getObject();
-	    $owner = $params['event']->getActor();
-	    $recipient = $params['recipient'];
-	    $language = $params['language'];
-	    $method = $params['method'];
+		$entity = $params['event']->getObject();
+		$owner = $params['event']->getActor();
+		$recipient = $params['recipient'];
+		$language = $params['language'];
+		$method = $params['method'];
 
-	    // Title for the notification
-	    $notification->subject = elgg_echo('photos:notify:subject', array($entity->title), $language);
+		// Title for the notification
+		$notification->subject = elgg_echo('photos:notify:subject', array($entity->title), $language);
 
-	    // Message body for the notification
-	    $notification->body = elgg_echo('photos:notify:body', array(
-	        $owner->name,
-	        $entity->title,
-	        $entity->getExcerpt(),
-	        $entity->getURL()
-	    ), $language);
+		// Message body for the notification
+		$notification->body = elgg_echo('photos:notify:body', array(
+			$owner->name,
+			$entity->title,
+			$entity->getExcerpt(),
+			$entity->getURL()
+		), $language);
 
-	    // Short summary about the notification
-	    $notification->summary = elgg_echo('photos:notify:summary', array($entity->title), $language);
+		// Short summary about the notification
+		$notification->summary = elgg_echo('photos:notify:summary', array($entity->title), $language);
 
-	    return $notification;
+		return $notification;
 	}
 
 .. note::
@@ -222,9 +222,9 @@ Example:
 	/**
 	 * Send an SMS notification
 	 * 
-	 * @param string $hook   Hook name
-	 * @param string $type   Hook type
-	 * @param bool   $result Has anyone sent a message yet?
+	 * @param string $hook	Hook name
+	 * @param string $type	Hook type
+	 * @param bool	$result Has anyone sent a message yet?
 	 * @param array  $params Hook parameters
 	 * @return bool
 	 * @access private
@@ -276,11 +276,11 @@ Example:
 	/**
 	 * Get subscriptions for group notifications
 	 *
-	 * @param string $hook          'get'
-	 * @param string $type          'subscriptions'
+	 * @param string $hook		  'get'
+	 * @param string $type		  'subscriptions'
 	 * @param array  $subscriptions Array containing subscriptions in the form
-	 *                       <user guid> => array('email', 'site', etc.)
-	 * @param array  $params        Hook parameters
+	 *						<user guid> => array('email', 'site', etc.)
+	 * @param array  $params		Hook parameters
 	 * @return array
 	 */
 	function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {

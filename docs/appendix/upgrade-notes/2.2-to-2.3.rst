@@ -2,8 +2,8 @@ From 2.2 to 2.3
 ===============
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 PHP Version
 -----------

@@ -4,8 +4,8 @@ Writing Documentation
 New documentation should fit well with the rest of Elgg's docs.
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Testing docs locally
 --------------------
@@ -15,9 +15,9 @@ seconds). You need `yarn`_ and `sphinx`_ installed to be able to use these scrip
 
 .. code-block:: sh
 
-   cd path/to/elgg/
-   yarn
-   grunt
+	cd path/to/elgg/
+	yarn
+	grunt
 
 It's that easy! Grunt will continue running, watching the docs for changes and
 automatically rebuilding.
@@ -83,22 +83,22 @@ Refer to the reader as “you.” Do not include yourself in the normal narrativ
 
 Before:
 
-    When we’re done installing Elgg, we’ll look for some plugins!
+	When we’re done installing Elgg, we’ll look for some plugins!
 
 After:
 
-    When you’re done installing Elgg, look for some plugins!
+	When you’re done installing Elgg, look for some plugins!
 
 To refer to yourself (avoid this if possible), use your name and write in the third person.
 This clarifies to future readers/editors whose opinions are being expressed.
 
 Before:
 
-    I think the best way to do X is to use Y.
+	I think the best way to do X is to use Y.
 
 After:
 
-    Evan thinks the best way to do X is to use Y.
+	Evan thinks the best way to do X is to use Y.
 
 
 Eliminate fluff
@@ -106,11 +106,11 @@ Eliminate fluff
 
 Before:
 
-    If you want to use a third-party javascript library within the Elgg framework, you should take care to call the ``elgg_register_js`` function to register it.
+	If you want to use a third-party javascript library within the Elgg framework, you should take care to call the ``elgg_register_js`` function to register it.
 
 After:
 
-    To use a third-party javascript library, call ``elgg_register_js`` to register it.
+	To use a third-party javascript library, call ``elgg_register_js`` to register it.
 
 
 Prefer absolute dates over relative ones
@@ -120,12 +120,12 @@ Absolute dates also give the reader a good indication of whether a project has b
 
 Before:
 
-    Recently the foo was barred. Soon, the baz will be barred too.
+	Recently the foo was barred. Soon, the baz will be barred too.
 
 After:
 
-    Recently (as of September 2013), the foo was barred.
-    The baz is expected to be barred by October 2013.
+	Recently (as of September 2013), the foo was barred.
+	The baz is expected to be barred by October 2013.
 
 Do not remind the reader to contribute
 --------------------------------------
@@ -142,8 +142,8 @@ templates before you commit:
 
 .. code-block:: sh
 
-   cd docs/
-   make gettext
+	cd docs/
+	make gettext
 
 For more information, see
 http://sphinx-doc.org/latest/intl.html#translating-with-sphinx-intl

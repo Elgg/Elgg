@@ -5,7 +5,7 @@ This page aims to list and document accessibility rules and best practices, to h
 
 .. note::
 
-   This is an ongoing work, please contribute on `Github <https://github.com/Elgg/Elgg>`_ if you have some skills in this field!
+	This is an ongoing work, please contribute on `Github <https://github.com/Elgg/Elgg>`_ if you have some skills in this field!
 
 Resources + references
 ----------------------
