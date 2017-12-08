@@ -1,0 +1,57 @@
+/* **************************************
+    Comments
+************************************** */
+.elgg-comments .elgg-list,
+.elgg-river-comments {
+	position: relative;
+	border-top: 1px solid #e6e6ea;
+	margin-top: 2rem;
+}
+
+.elgg-comments .elgg-list > li,
+.elgg-river-comments > li {
+	border-color: #e6e6ea;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	padding: 1rem;
+}
+
+.elgg-comments > form {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+/* Comment highlighting that automatically fades away */
+.elgg-comments .elgg-state-highlight,
+.elgg-river-comments .elgg-state-highlight {
+	animation: comment-highlight 5s;
+}
+
+/* Standard syntax */
+@keyframes comment-highlight {
+	from {
+		background: #dff2ff;
+	}
+	to {
+		background: white;
+	}
+}
+
+/* **************************************
+	Comments triangle
+************************************** */
+.elgg-comments .elgg-list:before,
+.elgg-river-comments:before {
+	content: "\25b2";
+	color: #ffffff;
+	position: absolute;
+	text-shadow: 0 -2px 0 #e6e6ea;
+	font-size: 1rem;
+	top: -1rem;
+	z-index: 2;
+	left: 2rem;
+	margin-right: 1.5rem;
+	line-height: 1rem;
+	padding-top: 3px;
+	pointer-events: none;
+}

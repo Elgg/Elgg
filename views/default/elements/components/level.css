@@ -1,0 +1,12 @@
+/* ***************************************
+	 Level
+*************************************** */
+.elgg-level {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.elgg-level > *:first-child {
+	margin-right: auto;
+}

@@ -13,7 +13,7 @@ if (!($blog instanceof \ElggBlog)) {
 }
 
 $owner = $blog->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'tiny');
+$owner_icon = elgg_view_entity_icon($owner, 'small');
 
 if ($full) {
 	$body = elgg_view('output/longtext', [

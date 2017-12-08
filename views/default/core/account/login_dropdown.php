@@ -14,7 +14,6 @@ $body = elgg_view_form('login', [], ['returntoreferer' => true]);
 		echo elgg_view('output/url', [
 			'href' => elgg_get_login_url([], '#login-dropdown-box'),
 			'rel' => 'popup',
-			'class' => 'elgg-button elgg-button-dropdown',
 			'text' => elgg_echo('login'),
 			'data-position' => json_encode([
 				'my' => 'right top',

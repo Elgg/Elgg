@@ -18,6 +18,6 @@
 	}
 	
 	.elgg-subscription-record:nth-child(even) {
-		background-color: #F0F0F0;
+		background-color: #e6e6ea;
 	}
 }

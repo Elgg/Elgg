@@ -45,4 +45,5 @@ foreach ($fields as $field) {
 	$fieldset .= elgg_view_field($field);
 }
 
-echo elgg_format_element('fieldset', $vars, $fieldset);
+$fieldset = elgg_format_element('div', $vars, $fieldset);
+echo elgg_format_element('fieldset', [], $fieldset);

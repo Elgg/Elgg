@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Search form
  *
@@ -7,26 +8,20 @@
 $value = elgg_extract('value', $vars, get_input('q', get_input('tag')));
 
 echo elgg_view_field([
-	'#type' => 'fieldset',
-	'align' => 'horizontal',
-	'fields' => [
-		[
-			'#type' => 'text',
-			'class' => 'search-input',
-			'size' => '21',
-			'name' => 'q',
-			'autocapitalize' => 'off',
-			'autocorrect' => 'off',
-			'required' => true,
-			'value' => _elgg_get_display_query($value),
-			'placeholder' => elgg_echo('search'),
-		],
-		[
-			'#type' => 'submit',
-			'#class' => 'hidden',
-			'value' => elgg_echo('search:go'),
-		],
-	],
+	'#type' => 'text',
+	'class' => 'search-input',
+	'size' => '21',
+	'name' => 'q',
+	'autocapitalize' => 'off',
+	'autocorrect' => 'off',
+	'required' => true,
+	'value' => _elgg_get_display_query($value),
+	'placeholder' => elgg_echo('search'),
+]);
+
+echo elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_view_icon('search'),
 ]);
 
 $values = [
@@ -47,3 +42,4 @@ foreach ($values as $name => $value) {
 		'value' => $value,
 	]);
 }
+

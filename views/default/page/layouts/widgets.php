@@ -77,6 +77,7 @@ foreach ($widgets as $index => $column_widgets) {
 	unset($widgets[$index]);
 }
 
+$grid = '';
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	$column_widgets = (array) elgg_extract($column_index, $widgets, []);
 	
@@ -89,7 +90,7 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 		$widgets_content .= elgg_view_entity($widget, ['show_access' => $show_access]);
 	}
 
-	$result .= elgg_format_element('div', [
+	$grid .= elgg_format_element('div', [
 		'id' => "elgg-widget-col-{$column_index}",
 		'class' => [
 			"elgg-col-1of{$num_columns}",
@@ -98,6 +99,10 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 		
 	], $widgets_content);
 }
+
+$result .= elgg_format_element('div', [
+	'class' => 'elgg-widgets-grid',
+], $grid);
 
 elgg_pop_context();
 

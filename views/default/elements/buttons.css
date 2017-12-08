@@ -1,103 +1,130 @@
-/* <style> /**/
-	
 /* **************************
 	BUTTONS
 ************************** */
-.elgg-button {
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	color: #FFF;
+.elgg-button,
+button {
+	display: inline-block;
+	color: #2d3047;
 	width: auto;
-	padding: 6px 12px;
+	height: 2.5rem;
+	line-height: 1.75rem;
+	padding: 0.325rem 1rem;
 	cursor: pointer;
 	border-radius: 3px;
-	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
-	box-sizing: border-box;
+	transition: background-color 0.5s, color 0.5s;
+	border: none;
+	white-space: nowrap;
 }
-.elgg-button + .elgg-button {
-	margin-left: 5px;
-}
+
 .elgg-button:hover,
-.elgg-button:focus {
+.elgg-button:focus,
+button:hover,
+button:focus {
+	background-color: #e6e6ea;
 	text-decoration: none;
 }
-.elgg-button-submit {
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	background: #4787B8;
+
+.elgg-button + .elgg-button {
+	margin-left: 0.5rem;
 }
+
+.elgg-button-submit {
+	background: #2d3047;
+	color: #ffffff;
+}
+
 .elgg-button-submit:hover,
 .elgg-button-submit:focus {
-	background: #60B6F7;
+	background: #424242;
+	color: #ffffff;
 }
+
 .elgg-button-cancel {
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	background: #FAA51A;
+	background: #e6e6ea;
 }
+
 .elgg-button-cancel:hover,
 .elgg-button-cancel:focus {
-	background: #E38F07;
+	background: #e6e6ea;
 }
+
 .elgg-button-action {
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	background: #F0F0F0;
-	color: #333;
+	background: #0078ac;
+	color: #ffffff;
 }
+
 .elgg-button-action:hover,
 .elgg-button-action:focus {
-	background: #DEDEDE;
-	color: #333;
+	background: #009ade;
+	color: #ffffff;
 }
+
 .elgg-button-delete {
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	background: #FF3300;
+	background: #e6e6ea;
 }
+
 .elgg-button-delete:hover,
 .elgg-button-delete:focus {
-	background: #D63006;
+	background: #d33f49;
+	color: #ffffff;
 }
+
+.elgg-button-outline {
+	border: 1px solid #e6e6ea;
+}
+
 .elgg-button-dropdown {
 	background: none;
 	text-decoration: none;
 	display: block;
 	position: relative;
 	margin-left: 0;
-	color: #FFF;
+	color: #ffffff;
 	border: none;
 	box-shadow: none;
 	border-radius: 0;
 }
+
 .elgg-button-dropdown:hover,
 .elgg-button-dropdown:focus,
 .elgg-button-dropdown.elgg-state-active {
-	color: #FFF;
+	color: #ffffff;
 	background: #60B8F7;
 	text-decoration: none;
 }
+
 .elgg-button-special {
-	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #42C5B8;
 }
+
 .elgg-button-special:hover,
 .elgg-button-special:focus {
 	background: #5ED9CD;
 }
+
 .elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
 	background: #DEDEDE;
 	cursor: default;
 	color: white;
 }
+
 /* Use .elgg-size-small or .elgg-size-large for additional sizes */
 .elgg-button.elgg-size-small {
-	font-size: 12px;
-	padding: 4px 8px;
+	font-size: 0.75rem;
+	padding: 0.25rem 0.5rem;
+	line-height: 1.5rem;
+	height: 2rem;
 }
+
 .elgg-button.elgg-size-large {
-	font-size: 20px;
-	padding: 14px 20px;
-	margin: 15px 0;
-	border-radius: 5px;
+	font-size: 1.5rem;
+	line-height: 2.5rem;
+	padding: 1rem 2rem;
+	height: 4.5rem;
+	border-radius: 3px;
 }
 
 .elgg-button-icon + .elgg-button-label {
-	margin-left: 10px;
+	margin-left: 0.5rem;
 }

@@ -1,0 +1,5 @@
+.elgg-page-default .elgg-page-section > .elgg-inner {
+	max-width: 80rem;
+	margin: 0 auto;
+	position: relative;
+}

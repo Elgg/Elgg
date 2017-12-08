@@ -1,0 +1,57 @@
+/* ***************************************
+	List
+*************************************** */
+.elgg-list > li {
+	border-bottom: 1px solid #e6e6ea;
+	padding: 1rem;
+}
+
+.elgg-item h3 a {
+	padding-bottom: 0.25rem;
+}
+
+.elgg-item > .elgg-subtext {
+	margin-bottom: 0.25rem;
+}
+
+.elgg-item .elgg-content {
+	margin: 0.5rem 0;
+}
+
+.elgg-content {
+	clear: both;
+}
+
+.elgg-module > .elgg-body > .elgg-list, /* margin for group modules */
+.elgg-module .elgg-widget-content > .elgg-list { /* margin for profile and dashboard widgets */
+	margin-top: 0;
+}
+
+.elgg-no-results {
+	padding: 0.5rem 1rem;
+}
+
+/* ***************************************
+	List Item
+*************************************** */
+.elgg-listing-summary-title {
+	line-height: 1.5rem;
+	margin-bottom: 0.25rem;
+}
+
+.elgg-listing-full-header {
+	margin-bottom: 2rem;
+}
+
+.elgg-listing-imprint {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.elgg-listing-imprint > span {
+	margin-right: 1rem;
+}
+
+.elgg-listing-imprint .elgg-icon {
+	margin-right: 0.5rem;
+}

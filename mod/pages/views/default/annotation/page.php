@@ -19,7 +19,7 @@ $owner = $annotation->getOwnerEntity();
 if (!$owner instanceof ElggEntity) {
 	return;
 }
-$icon = elgg_view_entity_icon($owner, 'tiny');
+$icon = elgg_view_entity_icon($owner, 'small');
 
 $owner_link = elgg_view('output/url', [
 	'href' => $owner->getURL(),

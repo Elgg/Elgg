@@ -17,7 +17,7 @@ $messages .= elgg_view('page/elements/admin_notices', $vars);
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
 $sections = [
-	'header' => elgg_view('admin/header', $vars),
+	'topbar' => elgg_view('admin/header', $vars),
 	'messages' => $messages,
 	'body' => elgg_extract('body', $vars),
 	'footer' => elgg_view('admin/footer', $vars),

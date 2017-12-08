@@ -1,0 +1,129 @@
+/* ***************************************
+	DATE PICKER
+**************************************** */
+.ui-datepicker {
+	display: none;
+	margin: 0;
+	padding: 0;
+	border-radius: 2px;
+	overflow: hidden;
+	min-width: 300px;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+	border-top: 1px solid #e6e6ea;
+	background: #fff;
+	z-index: 5;
+}
+
+.ui-datepicker-inline {
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.ui-datepicker-header {
+	position: relative;
+	background: transparent;
+	padding: 0.25em;
+	border: 0;
+}
+
+.ui-datepicker-header a {
+	padding: 0 0.5em;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+	position: absolute;
+	top: 0.5em;
+	cursor: pointer;
+}
+
+.ui-datepicker-prev.ui-state-hover, .ui-datepicker-next.ui-state-hover {
+	border: none;
+	background: transparent;
+	font-weight: bold;
+}
+
+.ui-datepicker-prev {
+	left: 0.5rem;
+}
+
+.ui-datepicker-prev.ui-state-disabled {
+	display: none;
+}
+
+.ui-datepicker-next {
+	right: 0.5rem;
+}
+
+.ui-datepicker-next.ui-state-disabled {
+	display: none;
+}
+
+.ui-datepicker-title {
+	line-height: 2rem;
+	margin: 0 2rem;
+	text-align: center;
+	font-weight: normal;
+}
+
+.ui-datepicker-title select {
+	max-width: 6.25rem;
+	display: inline-block;
+	margin: 2px;
+	border: 1px solid #b5b5b5;
+	padding: 4px;
+	border-radius: 3px;
+}
+
+.ui-datepicker-calendar {
+	width: 90%;
+	margin: 4% auto;
+	font-size: 0.85rem;
+}
+
+.ui-datepicker th {
+	color: #212121;
+	border: none;
+	font-weight: bold;
+	padding: 0.5rem 0.25rem;
+	text-align: center;
+}
+
+.ui-datepicker td {
+	padding: 1px;
+	min-width: 2.5rem;
+}
+
+.ui-datepicker td span, .ui-datepicker td a {
+	display: block;
+	padding: 0.25rem;
+	text-align: center;
+	text-decoration: none;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+	border: 1px solid #b5b5b5;
+	color: #2d3047;
+	background: #ffffff;
+	border-radius: 2px;
+}
+
+.ui-datepicker-calendar .ui-state-hover,
+.ui-datepicker-calendar .ui-state-active,
+.ui-datepicker-calendar .ui-state-active.ui-state-hover {
+	border: 1px solid #0398e2;
+	-moz-box-shadow: 0 0 0 0px #ccc inset;
+	-webkit-box-shadow: 0 0 0 0px #ccc inset;
+	box-shadow: 0 0 0 0px #ccc inset;
+	font-weight: normal;
+	color: #0398e2;
+	background: whitesmoke;
+}
+
+.ui-datepicker-calendar .ui-state-disabled .ui-state-default {
+	border: none;
+	color: #b5b5b5;
+	cursor: not-allowed;
+	background: none;
+}
+

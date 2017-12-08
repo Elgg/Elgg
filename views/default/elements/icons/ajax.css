@@ -1,0 +1,12 @@
+/* ***************************************
+	AJAX LOADER
+*************************************** */
+.elgg-ajax-loader {
+	background-image: url('graphics/ajax_loader_bw.gif');
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-color: #fff;
+	background-size: 31px;
+	min-height: 3rem;
+	min-width: 3rem;
+}

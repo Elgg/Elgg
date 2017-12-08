@@ -46,7 +46,6 @@ echo elgg_format_element('nav', [
 	'class' => [
 		'elgg-menu-container',
 		"elgg-menu-{$name_class_selector}-container",
-		'clearfix',
 	],
 	'data-menu-name' => $name,
 ], $menu_view);

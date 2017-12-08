@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d22db872f74e8816c8067c4f08f2825e",
+    "content-hash": "bdbb613ebd0adfb277fcf906899862b6",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -183,6 +183,37 @@
                 "shasum": ""
             },
             "type": "bower-asset-library"
+        },
+        {
+            "name": "bower-asset/normalize-css",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/necolas/normalize.css.git",
+                "reference": "73b6b0c7e8690ab5005bca9d7e13d3fb319c98ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/necolas/normalize.css/zipball/73b6b0c7e8690ab5005bca9d7e13d3fb319c98ac",
+                "reference": "73b6b0c7e8690ab5005bca9d7e13d3fb319c98ac",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "normalize.css",
+                "bower-asset-ignore": [
+                    "CHANGELOG.md",
+                    "CONTRIBUTING.md",
+                    "package.json",
+                    "README.md",
+                    "test.html"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A modern alternative to CSS resets",
+            "time": "2017-05-02T18:14:41+00:00"
         },
         {
             "name": "bower-asset/requirejs",
@@ -4417,6 +4448,7 @@
     "stability-flags": {
         "ckeditor/ckeditor": 20,
         "roave/security-advisories": 20,
+        "bower-asset/normalize-css": 20,
         "elgg/sniffs": 20
     },
     "prefer-stable": true,

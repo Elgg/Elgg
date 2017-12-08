@@ -15,8 +15,8 @@ if (!$subject instanceof ElggUser || !$object instanceof ElggUser) {
 	return;
 }
 
-$subject_icon = elgg_view_entity_icon($subject, 'tiny');
-$object_icon = elgg_view_entity_icon($object, 'tiny');
+$subject_icon = elgg_view_entity_icon($subject, 'small');
+$object_icon = elgg_view_entity_icon($object, 'small');
 
 $vars['attachments'] = $subject_icon . elgg_view_icon('arrow-right') . $object_icon;
 $vars['responses'] = false;

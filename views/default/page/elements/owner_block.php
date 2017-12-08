@@ -18,9 +18,7 @@ if (!($owner instanceof ElggGroup || $owner instanceof ElggUser)) {
 elgg_push_context('owner_block');
 
 $header = elgg_view_entity($owner, [
-	'full_view' => false,
-	'metadata' => false,
-	'subtitle' => false,
+	'item_view' => 'object/elements/chip',
 ]);
 
 $body = '';
@@ -30,9 +28,8 @@ if (elgg_extract('show_owner_block_menu', $vars, true)) {
 
 $body .= elgg_view('page/elements/owner_block/extend', $vars);
 
-echo elgg_view('page/components/module', [
+echo elgg_view_module('info', '', $body, [
 	'header' => $header,
-	'body' => $body,
 	'class' => 'elgg-owner-block',
 ]);
 

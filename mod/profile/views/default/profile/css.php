@@ -10,52 +10,43 @@
 	Profile
 *************************************** */
 .profile {
-	margin-bottom: 15px;
+	margin-bottom: 1rem;
 }
 .profile > .elgg-inner {
 	border: 1px solid #ebebeb;
 	border-radius: 3px;
-	margin: 0 5px;
 	display: flex;
-	align-items: flex-start;
+	align-items: stretch;
 }
 #profile-details {
-	padding: 15px;
+	padding: 1rem;
 	flex: 1;
 }
 
 /*** ownerblock ***/
 #profile-owner-block {
-	width: 200px;
+	width: 13rem;
 	border-right: 1px solid #ebebeb;
-	padding: 15px;
+	padding: 1rem;
 }
-#profile-owner-block .large {
-	margin-bottom: 10px;
+#profile-owner-block .elgg-avatar-large {
+	margin-bottom: 1rem;
 }
 
-.profile-admin-menu-wrapper a {
+.profile-admin-menu-wrapper > li > a,
+.profile-admin-menu > li > a {
+	color: #d33f49;
 	display: block;
-	margin: 3px 0 5px 0;
-	padding: 2px 4px 2px 16px;
 }
-.profile-admin-menu-wrapper:before {
-	content: "\00BB";
-	float: left;
-	padding-top: 1px;
-}
-.profile-admin-menu-wrapper li a {
-	color: #FF0000;
-	margin-bottom: 0;
-}
-.profile-admin-menu-wrapper a:hover {
-	color: #000;
-}
+
 /*** profile details ***/
 .profile-field {
 	border-bottom: 1px solid #ebebeb;
 	margin: 0;
-	padding: 10px 0;
+	padding: 0.5rem;
+}
+.profile-field:last-child {
+	border-bottom: none;
 }
 
 /* fix for about me field */
@@ -64,7 +55,6 @@
 }
 
 @media (max-width: 600px) {
-
 	#profile-owner-block {
 		border-right: none;
 		width: auto;

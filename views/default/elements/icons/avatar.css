@@ -1,0 +1,58 @@
+/* ***************************************
+	AVATAR ICONS
+*************************************** */
+.elgg-avatar {
+	position: relative;
+	display: inline-block;
+}
+
+.elgg-avatar-tiny img,
+.elgg-avatar-small img,
+.elgg-avatar-medium img {
+	border-radius: 50%;
+}
+
+.elgg-avatar > a {
+	display: inline-block;
+}
+
+.elgg-avatar > a > img {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%;
+	height: auto;
+}
+
+.elgg-avatar-tiny > a > img {
+	max-width: 25px;
+	max-height: 25px;
+}
+
+.elgg-avatar-small > a > img {
+	max-width: 40px;
+	max-height: 40px;
+}
+
+.elgg-avatar-medium > a > img {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.elgg-state-banned {
+	opacity: 0.5;
+}
+
+.elgg-state-banned:hover {
+	opacity: 1;
+}
+
+/* ***************************************
+	AVATAR UPLOADING & CROPPING
+*************************************** */
+#current-user-avatar {
+	border-right: 1px solid #e6e6ea;
+}
+#avatar-croppingtool {
+	border-top: 1px solid #e6e6ea;
+}
+

@@ -1,0 +1,59 @@
+/* ***************************************
+	HEADER
+*************************************** */
+.elgg-layout-header {
+	margin-bottom: 1rem;
+	border-bottom: 1px solid #e6e6ea;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.elgg-layout-header > h1,
+.elgg-layout-header > h2,
+.elgg-layout-header > h3 {
+	order: 1;
+	padding: 1rem;
+	text-align: center;
+	font-size: 2rem;
+}
+
+.elgg-layout-header > .elgg-menu-container {
+	order: 2;
+	padding: 1rem;
+}
+
+@media screen and (min-width: 1280px) {
+	.elgg-layout-header {
+		padding: 1rem;
+		flex-direction: row;
+		justify-content: flex-end;
+	}
+
+	.elgg-layout-header > h1,
+	.elgg-layout-header > h2,
+	.elgg-layout-header > h3 {
+		padding: 0;
+		text-align: left;
+		margin-right: auto; /* force flexblox to justify to the right */
+	}
+
+	.elgg-layout-header > .elgg-menu-container {
+		padding: 0;
+	}
+}
+
+/* ***************************************
+	TITLE MENU
+*************************************** */
+.elgg-menu-title {
+	padding: 2.5px;
+}
+
+.elgg-menu-title > li {
+	display: inline-block;
+	padding: 2.5px;
+}
+

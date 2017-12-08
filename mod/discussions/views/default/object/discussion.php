@@ -20,7 +20,7 @@ if (!$poster) {
 	return;
 }
 
-$poster_icon = elgg_view_entity_icon($poster, 'tiny');
+$poster_icon = elgg_view_entity_icon($poster, 'small');
 
 $comment_text = '';
 $num_comments = $topic->countComments();

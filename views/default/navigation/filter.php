@@ -34,6 +34,6 @@ $menu_name = $filter_id ? "filter:$filter_id" : 'filter';
 $menu_params = $vars;
 $menu_params['items'] = $filter_tabs;
 $menu_params['sort_by'] = 'priority';
-$menu_params['class'] = 'elgg-menu-filter elgg-menu-hz';
+$menu_params['class'] = 'elgg-menu-filter';
 
 echo elgg_view_menu($menu_name, $menu_params);

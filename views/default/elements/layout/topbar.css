@@ -1,0 +1,343 @@
+.elgg-page-topbar {
+	background: #0078ac;
+}
+
+.elgg-page-topbar a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.elgg-page-topbar > .elgg-inner {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.elgg-nav-logo {
+	left: 0;
+	flex-grow: 1;
+	order: 1;
+}
+
+.elgg-nav-logo h1 {
+	font-size: 1.3rem;
+	line-height: 3rem;
+	font-weight: 700;
+}
+
+.elgg-nav-logo a {
+	padding: 0.5rem 1rem;
+	display: inline-block;
+}
+
+.elgg-nav-logo img {
+	max-height: 2rem;
+	vertical-align: middle;
+	line-height: 2rem;
+}
+
+#login-dropdown {
+	order: 2;
+	position: static;
+	top: auto;
+	right: auto;
+}
+
+#login-dropdown a {
+	padding: 0.5rem 1rem;
+	line-height: 3rem;
+	display: inline-block;
+}
+
+#login-dropdown a:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+#login-dropdown-box {
+	border-top: 0;
+	border-radius: 0;
+	width: auto;
+	max-width: 300px;
+	z-index: 2;
+}
+
+#login-dropdown-box:before {
+	content: "\25b2";
+	color: #ffffff;
+	position: absolute;
+	font-size: 1rem;
+	top: -1rem;
+	z-index: 3;
+	right: 0;
+	margin-right: 1.5rem;
+}
+
+@media only screen and (min-width: 80rem) {
+	.elgg-nav-logo {
+		flex-grow: 0;
+	}
+
+	#login-dropdown {
+		order: 5;
+	}
+}
+
+.elgg-nav-collapse {
+	height: auto;
+	width: 100%;
+	flex-grow: 4;
+	order: 4;
+	display: none;
+}
+
+.elgg-nav-collapsed .elgg-nav-collapse {
+	display: flex;
+	flex-direction: column;
+}
+
+@media only screen and (min-width: 80rem) {
+	.elgg-nav-collapse {
+		position: relative;
+		top: auto;
+		bottom: auto;
+		width: auto;
+		display: flex;
+		flex-direction: row;
+	}
+}
+
+.elgg-nav-button {
+	width: 20px;
+	height: 15px;
+	position: relative;
+	margin: 10px 20px;
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+	-moz-transition: ease-in-out 0.5s;
+	-o-transition: ease-in-out 0.5s;
+	-webkit-transition: ease-in-out 0.5s;
+	transition: ease-in-out 0.5s;
+	cursor: pointer;
+	display: block;
+	order: 3;
+	flex-grow: 0;
+}
+
+@media only screen and (min-width: 80rem) {
+	.elgg-nav-button {
+		display: none;
+	}
+}
+
+.elgg-nav-button span {
+	display: block;
+	position: absolute;
+	height: 3px;
+	width: 100%;
+	background: #ffffff;
+	border-radius: 2px;
+	opacity: 1;
+	left: 0;
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+	-moz-transition: ease-in-out 0.25s;
+	-o-transition: ease-in-out 0.25s;
+	-webkit-transition: ease-in-out 0.25s;
+	transition: ease-in-out 0.25s;
+}
+
+.elgg-nav-button span:nth-child(1) {
+	top: 0px;
+}
+
+.elgg-nav-button span:nth-child(2) {
+	top: 6px;
+}
+
+.elgg-nav-button span:nth-child(3) {
+	top: 12px;
+}
+
+.elgg-nav-collapsed .elgg-nav-button span:nth-child(1) {
+	top: 6px;
+	-moz-transform: rotate(135deg);
+	-ms-transform: rotate(135deg);
+	-webkit-transform: rotate(135deg);
+	transform: rotate(135deg);
+}
+
+.elgg-nav-collapsed .elgg-nav-button span:nth-child(2) {
+	opacity: 0;
+	left: -60px;
+}
+
+.elgg-nav-collapsed .elgg-nav-button span:nth-child(3) {
+	top: 6px;
+	-moz-transform: rotate(-135deg);
+	-ms-transform: rotate(-135deg);
+	-webkit-transform: rotate(-135deg);
+	transform: rotate(-135deg);
+}
+
+.elgg-page-topbar .elgg-menu-container {
+	flex-direction: column;
+}
+
+.elgg-page-topbar .elgg-menu {
+	width: 100%;
+}
+
+.elgg-page-topbar .elgg-menu li {
+	display: block;
+	width: 100%;
+}
+
+.elgg-page-topbar .elgg-menu li > a {
+	padding: 0.5rem 1rem;
+	transition: background-color 0.5s, color 0.5s;
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.elgg-page-topbar .elgg-menu li > a:hover,
+.elgg-page-topbar .elgg-menu li.elgg-state-selected > a {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.elgg-page-topbar .elgg-menu-topbar-container {
+	order: 2;
+}
+
+.elgg-page-topbar .elgg-menu-site-container {
+	order: 3;
+}
+
+.elgg-page-topbar .elgg-menu-site .elgg-menu-parent,
+.elgg-page-topbar .elgg-menu-topbar .elgg-menu-parent {
+	display: none;
+}
+
+.elgg-page-topbar .elgg-menu > li > a .elgg-icon {
+	width: 1.5rem;
+	display: inline-block;
+	text-align: center;
+	margin: 0;
+}
+
+.elgg-page-topbar .elgg-menu-item-account img {
+	border-radius: 50%;
+	max-height: 2rem;
+}
+
+.elgg-menu-topbar .elgg-badge {
+	background-color: #faa51a;
+}
+
+@media only screen and (min-width: 80rem) {
+	.elgg-nav-collapse {
+		align-items: center;
+	}
+
+	.elgg-page-topbar .elgg-nav-search {
+		order: 2;
+	}
+
+	.elgg-page-topbar .elgg-menu-container {
+		flex-direction: row;
+		align-items: center;
+		order: 1;
+		margin-right: auto;
+	}
+
+	.elgg-page-topbar .elgg-menu-topbar-container {
+		order: 3;
+	}
+
+	.elgg-page-topbar .elgg-menu {
+		width: auto;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.elgg-page-topbar .elgg-menu li {
+		display: inline-block;
+		width: auto;
+	}
+
+	.elgg-page-topbar .elgg-menu li > a {
+		border: none;
+	}
+
+	.elgg-page-topbar .elgg-menu-site .elgg-menu-parent,
+	.elgg-page-topbar .elgg-menu-topbar .elgg-menu-parent {
+		display: inline-block;
+	}
+
+	.elgg-page-topbar .elgg-menu li .elgg-child-menu {
+		display: none;
+		flex-direction: column;
+		position: absolute;
+		top: 4rem;
+		right: 0;
+		width: 12rem;
+		background: #0078ac;
+		align-items: flex-start;
+		z-index: 1;
+		box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	.elgg-page-topbar .elgg-menu li:hover .elgg-child-menu {
+		display: flex;
+	}
+
+	.elgg-page-topbar .elgg-menu li:hover .elgg-child-menu:before {
+		content: "\25b2";
+		color: #0078ac;
+		position: absolute;
+		text-shadow: 0px -2px 0px rgba(0, 0, 0, 0.05);
+		font-size: 1rem;
+		top: -1rem;
+		z-index: 2;
+		right: 0;
+		margin-right: 1.5rem;
+		line-height: 1rem;
+		padding-top: 3px;
+	}
+
+	.elgg-page-topbar .elgg-menu.elgg-child-menu > li > a {
+		border-top: 1px solid rgba(0, 0, 0, 0.05);
+	}
+
+	.elgg-page-topbar .elgg-menu.elgg-child-menu > li {
+		display: block;
+		width: 100%;
+	}
+
+	.elgg-page-topbar .elgg-menu.elgg-child-menu > li > a:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.elgg-page-topbar .elgg-menu-topbar > li > a .elgg-icon + .elgg-anchor-label {
+		display: none;
+	}
+
+	.elgg-page-topbar .elgg-menu-topbar-alt {
+		order: 2;
+	}
+
+	.elgg-page-topbar .elgg-menu:not(.elgg-child-menu) > li > a {
+		padding: 0.5rem 1rem;
+		line-height: 3rem;
+		vertical-align: middle;
+	}
+
+	.elgg-menu-topbar .elgg-badge {
+		position: absolute;
+		top: 1rem;
+		right: 0;
+	}
+}

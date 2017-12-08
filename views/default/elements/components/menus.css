@@ -1,0 +1,315 @@
+/* ***************************************
+	MENUS
+*************************************** */
+.elgg-menu-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.elgg-menu {
+	display: flex;
+	flex-direction: column;
+}
+
+.elgg-menu > li {
+	position: relative;
+}
+
+.elgg-menu > li:last-child::after {
+	display: none;
+}
+
+.elgg-menu > li > a {
+	display: block
+}
+
+.elgg-menu.elgg-menu-hz {
+	flex-direction: row;
+	align-items: center;
+}
+
+.elgg-menu-item-has-dropdown .elgg-child-menu {
+	display: none;
+}
+
+.elgg-menu-item-has-toggle > .elgg-child-menu {
+	display: none;
+	margin-left: 1rem;
+}
+
+.elgg-menu-item-has-toggle.elgg-state-selected > .elgg-child-menu {
+	display: block;
+}
+
+.elgg-menu > li > a .elgg-icon.elgg-state-opened,
+.elgg-menu > li > a .elgg-icon.elgg-state-closed {
+	font-size: 9px;
+	color: inherit;
+	line-height: inherit;
+	margin: 0 0.5rem;
+}
+
+.elgg-menu > li > .elgg-menu-opened .elgg-icon.elgg-state-opened {
+	display: inline-block;
+}
+
+.elgg-menu > li > .elgg-menu-opened .elgg-icon.elgg-state-closed {
+	display: none;
+}
+
+.elgg-menu > li > .elgg-menu-closed .elgg-icon.elgg-state-closed {
+	display: inline-block;
+}
+
+.elgg-menu > li > .elgg-menu-closed .elgg-icon.elgg-state-opened {
+	display: none;
+}
+
+.elgg-menu .elgg-anchor-icon {
+	color: inherit;
+	font-size: inherit;
+}
+
+.elgg-menu .elgg-anchor-icon + .elgg-anchor-label {
+	margin-left: 0.5rem;
+}
+
+.elgg-menu a:hover .elgg-icon {
+	color: inherit;
+}
+
+/* ***************************************
+	ENTITY NAVIGATION
+*************************************** */
+
+.elgg-menu-entity-navigation-container {
+	margin-top: 1rem;
+}
+
+.elgg-menu-entity-navigation {
+	justify-content: flex-end;
+}
+
+.elgg-menu-entity-navigation .elgg-menu-item-previous {
+	margin-right: auto;
+}
+
+/* ***************************************
+	PAGE MENU
+*************************************** */
+.elgg-menu-page-container .elgg-menu-section-header {
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+	padding: 0.5rem;
+	border-bottom: 1px solid #e6e6ea;
+}
+
+.elgg-menu-page-container > ul + ul {
+	margin-top: 1rem;
+}
+
+.elgg-menu-owner-block li > a,
+.elgg-menu-page li > a {
+	padding: 0.5rem 1rem;
+	color: #2d3047;
+}
+
+.elgg-menu-owner-block li > a:hover,
+.elgg-menu-page li > a:hover {
+	background: #fafafa;
+	text-decoration: none;
+	color: #333;
+}
+
+.elgg-menu-owner-block li.elgg-state-selected > a,
+.elgg-menu-page li.elgg-state-selected > a {
+	color: #333;
+	background: #e6e6ea;
+}
+
+.elgg-menu-page .elgg-menu-closed:before,
+.elgg-menu-page .elgg-menu-opened:before {
+	display: inline-block;
+	padding-right: 4px;
+}
+
+.elgg-menu-page .elgg-menu-closed:before {
+	content: "\25B8";
+}
+
+.elgg-menu-page .elgg-menu-opened:before {
+	content: "\25BE";
+}
+
+.elgg-menu-page .elgg-badge {
+	float: right;
+}
+
+/* ***************************************
+	HOVER MENU
+*************************************** */
+.elgg-menu-hover {
+	display: none;
+	position: absolute;
+	z-index: 4;
+	overflow: hidden;
+	border-top: 1px solid #e6e6ea;
+	background-color: #ffffff;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+	min-width: 10rem;
+}
+
+.elgg-menu-hover-card-container {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 30rem;
+}
+
+.elgg-menu-hover-card {
+	padding: 1rem;
+	min-width: 20rem;
+	flex: 2;
+}
+
+.elgg-menu-hover > li,
+.elgg-menu-hover-actions > li,
+.elgg-menu-hover-admin > li {
+	border-bottom: 1px solid #e6e6ea;
+}
+
+.elgg-menu-hover > li > a,
+.elgg-menu-hover-actions > li > a,
+.elgg-menu-hover-admin > li > a {
+	color: #2d3047;
+	font-size: 0.9rem;
+	transition: background-color 0.5s;
+	text-decoration: none;
+	padding: 0.5rem 1rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.elgg-menu-hover > li > a:hover,
+.elgg-menu-hover-actions > li > a:hover,
+.elgg-menu-hover-admin > li > a:hover {
+	background: #fafafa;
+	color: #333;
+}
+
+.elgg-menu-hover .elgg-anchor-icon {
+	width: 1.5rem;
+	text-align: center;
+	display: inline-block;
+}
+
+.elgg-menu-hover-actions,
+.elgg-menu-hover-default {
+	border-left: 1px solid #e6e6ea;
+	flex: 1;
+	min-width: 10rem;
+}
+
+.elgg-menu-hover-admin {
+	border-top: 1px solid #e6e6ea;
+}
+
+.elgg-menu-hover .elgg-menu-hover-admin a {
+	color: #d33f49;
+}
+
+/* ***************************************
+	GENERAL MENU
+*************************************** */
+.elgg-menu-general > li,
+.elgg-menu-general > li > a {
+	display: inline-block;
+	color: #969696;
+}
+
+.elgg-menu-general > li:after {
+	content: "\007C";
+	padding: 0 6px;
+}
+
+/* ***************************************
+	ENTITY, SOCIAL, RIVER AND ANNOTATION
+*************************************** */
+.elgg-listing-summary-metadata > .elgg-menu-container,
+.elgg-river-metadata > .elgg-menu-container,
+.elgg-menu-annotation-container {
+	float: right;
+	margin-left: 1rem;
+	display: inline-block;
+}
+
+.elgg-menu-river,
+.elgg-menu-entity,
+.elgg-menu-social,
+.elgg-menu-annotation,
+.elgg-menu-widget {
+	font-size: 0.9rem;
+	color: #7d7d7d;
+	height: auto;
+	vertical-align: middle;
+
+	> li:not(:first-child) {
+		margin-left: 0.75rem;
+	}
+
+	> li {
+		> a:not(.elgg-state-active) {
+			color: inherit;
+		}
+
+		> a:hover {
+			color: #0078ac;
+			text-decoration: none;
+		}
+	}
+}
+
+.elgg-menu-entity-default,
+.elgg-menu-river-default {
+	font-size: 100%;
+}
+
+.elgg-menu-social .elgg-anchor > span:not(:first-child).elgg-anchor-label {
+	display: none;
+}
+
+/* ***************************************
+	LONGTEXT
+*************************************** */
+.elgg-menu-longtext-container {
+	float: right;
+}
+
+.elgg-field-input > .elgg-menu-longtext-container {
+	margin-top: -1.5rem;
+}
+
+/* ***************************************
+	LOGIN MENU
+*************************************** */
+.elgg-menu-login-container {
+	margin-top: 1rem;
+	border-top: 1px solid #e6e6ea;
+}
+
+.elgg-menu-login > li {
+	width: 100%;
+}
+
+.elgg-menu-login > li > a {
+	padding: 0.5rem 1rem;
+	font-size: 0.9rem;
+	color: #646464;
+	display: block;
+}
+
+.elgg-menu-login > li > a:hover {
+	background: #fafafa;
+	text-decoration: none;
+}
+

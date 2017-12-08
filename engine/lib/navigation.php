@@ -445,6 +445,44 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 }
 
 /**
+ * Init site menu
+ *
+ * Registers custom menu items
+ *
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:site'
+ * @param ElggMenuItem[] $return Menu
+ * @param array          $params Hook params
+ *
+ * @return ElggMenuItem[]
+ *
+ * @access private
+ */
+function _elgg_site_menu_init($hook, $type, $return, $params) {
+	$custom_menu_items = elgg_get_config('site_custom_menu_items');
+
+	if ($custom_menu_items) {
+		// add custom menu items
+		$n = 1;
+		foreach ($custom_menu_items as $title => $url) {
+			$item = new ElggMenuItem("custom$n", $title, $url);
+			$return[] = $item;
+			$n++;
+		}
+	}
+
+	if (elgg_is_logged_in() && elgg_is_active_plugin('dashboard')) {
+		$return[] = ElggMenuItem::factory([
+			'name' => 'dashboard',
+			'text' => elgg_echo('dashboard'),
+			'href' => 'dashboard',
+		]);
+	}
+
+	return $return;
+}
+
+/**
  * Set up the site menu
  *
  * Handles default, featured, and custom menu items
@@ -460,81 +498,78 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
  */
 function _elgg_site_menu_setup($hook, $type, $return, $params) {
 
-	$featured_menu_names = _elgg_config()->site_featured_menu_names;
-	$custom_menu_items = _elgg_config()->site_custom_menu_items;
-	if ($featured_menu_names || $custom_menu_items) {
-		// we have featured or custom menu items
+	$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));
 
-		$registered = isset($return['default']) ? $return['default'] : [];
-		/* @var \ElggMenuItem[] $registered */
+	$registered = $return['default'];
+	/* @var ElggMenuItem[] $registered */
 
-		// set up featured menu items
-		$featured = [];
-		foreach ($featured_menu_names as $name) {
-			foreach ($registered as $index => $item) {
-				if ($item->getName() == $name) {
-					$featured[] = $item;
-					unset($registered[$index]);
+	$has_selected = false;
+	$priority = 500;
+	foreach ($registered as &$item) {
+		if (in_array($item->getName(), $featured_menu_names)) {
+			$featured_index = array_search($item->getName(), $featured_menu_names);
+			$item->setPriority($featured_index);
+		} else {
+			$item->setPriority($priority);
+			$priority++;
+		}
+		if ($item->getSelected()) {
+			$has_selected = true;
+		}
+	}
+
+	if (!$has_selected) {
+		$is_selected = function ($item) {
+			$current_url = current_page_url();
+			if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
+				if ($item->getName() == elgg_get_context()) {
+					return true;
+				}
+				if ($item->getHref() == $current_url) {
+					return true;
 				}
 			}
-		}
 
-		// add custom menu items
-		$n = 1;
-		foreach ($custom_menu_items as $title => $url) {
-			$item = new \ElggMenuItem("custom$n", $title, $url);
-			$featured[] = $item;
-			$n++;
-		}
-
-		$return['default'] = $featured;
-		if (count($registered) > 0) {
-			$return['more'] = $registered;
-		}
-	} else {
-		// no featured menu items set
-		$max_display_items = 5;
-
-		// the first n are shown, rest added to more list
-		// if only one item on more menu, stick it with the rest
-		$num_menu_items = count($return['default']);
-		if ($num_menu_items > ($max_display_items + 1)) {
-			$return['more'] = array_splice($return['default'], $max_display_items);
-		}
-	}
-	
-	// check if we have anything selected
-	$selected = false;
-	foreach ($return as $section) {
-		/* @var \ElggMenuItem[] $section */
-
-		foreach ($section as $item) {
-			if ($item->getSelected()) {
-				$selected = true;
-				break 2;
+			return false;
+		};
+		foreach ($registered as &$item) {
+			if ($is_selected($item)) {
+				$item->setSelected(true);
+				break;
 			}
 		}
 	}
-	
-	if (!$selected) {
-		// nothing selected, match name to context or match url
-		$current_url = current_page_url();
-		foreach ($return as $section_name => $section) {
-			foreach ($section as $key => $item) {
-				// only highlight internal links
-				if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
-					if ($item->getName() == elgg_get_context()) {
-						$return[$section_name][$key]->setSelected(true);
-						break 2;
-					}
-					if ($item->getHref() == $current_url) {
-						$return[$section_name][$key]->setSelected(true);
-						break 2;
-					}
-				}
-			}
-		}
+
+	usort($registered, [\ElggMenuBuilder::class, 'compareByPriority']);
+
+	$max_display_items = 5;
+
+	$num_menu_items = count($registered);
+
+	$more = [];
+	if ($max_display_items && $num_menu_items > ($max_display_items + 1)) {
+		$more = array_splice($registered, $max_display_items);
 	}
+
+	if (!empty($more)) {
+		$dropdown = ElggMenuItem::factory([
+			'name' => 'more',
+			'href' => 'javascript:void(0);',
+			'text' => elgg_echo('more'),
+			'icon_alt' => 'angle-down',
+			'priority' => 999,
+		]);
+
+		foreach ($more as &$item) {
+			$item->setParentName('more');
+		}
+
+		$dropdown->setChildren($more);
+
+		$registered[] = $dropdown;
+	}
+
+	$return['default'] = $registered;
 
 	return $return;
 }
@@ -695,11 +730,11 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		'wheres' => ["e.guid != {$entity->guid}"],
 		'limit' => 1,
 	];
-	
+
 	$previous_options = $options;
 	$previous_options['created_time_upper'] = $entity->time_created;
 	$previous_options['order_by'] = 'e.time_created DESC, e.guid DESC';
-	
+
 	$previous = elgg_get_entities($previous_options);
 	if ($previous) {
 		$previous = $previous[0];
@@ -708,6 +743,9 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 			'text' => elgg_echo('previous'),
 			'href' => $previous->getUrl(),
 			'title' => $previous->getDisplayName(),
+			'icon' => 'angle-double-left',
+			'link_class' => 'elgg-button elgg-button-outline',
+			'priority' => 100,
 		]);
 	}
 	
@@ -723,6 +761,9 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 			'text' => elgg_echo('next'),
 			'href' => $next->getUrl(),
 			'title' => $next->getDisplayName(),
+			'icon_alt' => 'angle-double-right',
+			'link_class' => 'elgg-button elgg-button-outline',
+			'priority' => 800,
 		]);
 	}
 	
@@ -860,7 +901,9 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
 
-	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
+	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup', 999);
+	elgg_register_plugin_hook_handler('register', 'menu:site', '_elgg_site_menu_init');
+
 	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_page_menu_setup', 999);
 
 	elgg_register_plugin_hook_handler('prepare', 'menu:entity', '_elgg_menu_transform_to_dropdown');

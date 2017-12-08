@@ -4,7 +4,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 9001;
+	z-index: 3;
 	overflow: hidden;
 	max-width: 100%;
 	max-height: 100%;
@@ -144,7 +144,7 @@
 	position: absolute;
 	bottom: 0;
 	right: 42px;
-	color: #444;
+	color: #2d3047;
 }
 
 #cboxClose, #cboxPrevious, #cboxNext {

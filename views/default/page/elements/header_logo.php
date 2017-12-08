@@ -8,8 +8,10 @@ $site_name = $site->name;
 $site_url = elgg_get_site_url();
 ?>
 
-<h1>
-	<a class="elgg-heading-site" href="<?php echo $site_url; ?>">
-		<?php echo $site_name; ?>
-	</a>
+<h1 class="elgg-heading-site">
+	<?=
+	elgg_format_element('a', [
+		'href' => $site_url,
+	], $site_name);
+	?>
 </h1>

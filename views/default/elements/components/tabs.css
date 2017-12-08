@@ -1,0 +1,65 @@
+/* ***************************************
+	FILTER MENU AND TABS
+*************************************** */
+.elgg-menu-filter,
+.elgg-tabs {
+	margin-bottom: 0.5rem;
+	border-bottom: 1px solid #e6e6ea;
+	width: 100%;
+}
+
+.elgg-menu-filter > li,
+.elgg-tabs > li {
+	float: left;
+	border: 1px solid #e6e6ea;
+	border-bottom: 0;
+	background: #fafafa;
+}
+
+.elgg-menu-filter > li.elgg-state-selected a:hover,
+.elgg-tabs > li.elgg-state-selected a:hover {
+	background: #ffffff;
+}
+
+.elgg-menu-filter > li > a,
+.elgg-tabs > li > a {
+	text-decoration: none;
+	display: block;
+	padding: 0.5rem 1rem;
+	text-align: center;
+	height: auto;
+	color: #646464;
+}
+
+.elgg-menu-filter > li > a:hover,
+.elgg-tabs > li > a:hover {
+	background: #e6e6ea;
+	color: #333;
+}
+
+.elgg-menu-filter > .elgg-state-selected,
+.elgg-tabs > .elgg-state-selected {
+	border-color: #e6e6ea;
+	background: #ffffff;
+}
+
+.elgg-menu-filter > .elgg-state-selected > a,
+.elgg-tabs > .elgg-state-selected > a {
+	position: relative;
+	top: 1px;
+	background: #ffffff;
+}
+
+@media screen and (min-width: 80rem) {
+	.elgg-menu-filter,
+	.elgg-tabs {
+		display: table;
+	}
+
+	.elgg-menu-filter > li,
+	.elgg-tabs > li {
+		margin: 0 0 0 0.5rem;
+		border-radius: 3px 3px 0 0;
+	}
+
+}

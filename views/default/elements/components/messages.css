@@ -6,7 +6,7 @@
 	border: 1px solid #CCC;
 	border-radius: 3px;
 	
-	margin-bottom: 10px;
+	margin-bottom: 1rem;
 	
 	&.elgg-message-success {
 		color: #397F2E;
@@ -36,13 +36,13 @@
 		> .elgg-head {
 			background-color: rgba(255,255,255,0.7);
 			font-weight: bold;
-			padding: 5px 10px;
+			padding: 0.5rem 1rem;
 			border-bottom-width: 1px;
 			border-bottom-style: solid;
 			border-bottom-color: inherit;
 			
 			.elgg-message-icon {
-				padding-right: 10px;
+				padding-right: 1rem;
 			}
 		}
 		
@@ -51,7 +51,7 @@
 		}
 	}
 	.elgg-body {
-		padding: 10px;
+		padding: 1rem;
 		
 		p {
 			margin: 0;

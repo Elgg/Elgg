@@ -12,6 +12,7 @@ $content = elgg_list_entities([
 	'metadata_value' => 'yes',
 	'type' => 'group',
 	'pagination' => false,
+	'item_view' => 'object/elements/chip',
 ]);
 
 elgg_pop_context();

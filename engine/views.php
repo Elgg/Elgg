@@ -36,5 +36,8 @@ return [
 		 */
 
 		"jquery.ui.autocomplete.html.js" => dirname(__DIR__) . "/bower_components/jquery-ui-extensions/src/autocomplete/jquery.ui.autocomplete.html.js",
+
+		// CSS Reset
+		"normalize.css" => "vendor/bower-asset/normalize-css/normalize.css",
 	],
 ];
