@@ -4,8 +4,8 @@ Database
 Persist user-generated content and settings with Elgg's generic storage API.
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Entities
 ========
@@ -20,9 +20,9 @@ variables or properties. The built-in properties are:
 -  **``guid``** The entity's GUID; set automatically
 -  **``owner_guid``** The owning user's GUID
 -  **``subtype``** A single-word arbitrary string that defines what kind
-   of object it is, for example ``blog``
+	of object it is, for example ``blog``
 -  **``access_id``** An integer representing the access level of the
-   object
+	object
 -  **``title``** The title of the object
 -  **``description``** The description of the object
 
@@ -35,11 +35,11 @@ building a simple forum. Therefore, the subtype will be *forum*:
 
 .. code-block:: php
 
-    $object = new ElggObject();
-    $object->subtype = "forum";
-    $object->access_id = 2;
-    $object->save();
-    
+	$object = new ElggObject();
+	$object->subtype = "forum";
+	$object->access_id = 2;
+	$object->save();
+
 ``access_id`` is another important property. If you don't set this, your
 object will be private, and only the creator user will be able to see
 it. Elgg defines constants for the special values of ``access_id``:
@@ -58,7 +58,7 @@ say we want to set the SKU of a product:
 
 .. code-block:: php
 
-    $object->SKU = 62784;
+	$object->SKU = 62784;
 
 If you assign an array, all the values will be set for that metadata.
 This is how, for example, you set tags.
@@ -75,10 +75,10 @@ By GUID
 
 .. code-block:: php
 
-    $entity = get_entity($guid);
-    if (!$entity) {
-        // The entity does not exist or you're not allowed to access it.
-    }
+	$entity = get_entity($guid);
+	if (!$entity) {
+		// The entity does not exist or you're not allowed to access it.
+	}
 
 But what if you don't know the GUID? There are several options.
 
@@ -90,11 +90,11 @@ The easiest is probably to call the procedural function ``elgg_get_entities``:
 
 .. code-block:: php
 
-    $entities = elgg_get_entities(array(
-        'type' => $entity_type,
-        'subtype' => $subtype,
-        'owner_guid' => $owner_guid,
-    ));
+	$entities = elgg_get_entities(array(
+		'type' => $entity_type,
+		'subtype' => $subtype,
+		'owner_guid' => $owner_guid,
+	));
 
 This will return an array of ``ElggEntity`` objects that you can iterate
 through. ``elgg_get_entities`` paginates by default, with a limit of 10;
@@ -109,7 +109,7 @@ simply use:
 
 .. code-block:: php
 
-    $objects = $user->getObjects($subtype, $limit, $offset)
+	$objects = $user->getObjects($subtype, $limit, $offset)
 
 But what about getting objects with a particular piece of metadata?
 
@@ -218,7 +218,7 @@ $entity_type
 $entity_subtype
 	Entity subtype, e.g. ``'blog'`` or ``'page'`` (or ``'default'`` if entity has not subtype).
 $size
-    Icon size (note that we do not use the size with svg icons)
+	Icon size (note that we do not use the size with svg icons)
 
 Icon methods support passing an icon type if an entity has more than one icon. For example, a user
 might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as the icon type:
@@ -250,7 +250,7 @@ give a blog post a rating of 5, you could use:
 
 .. code-block:: php
 
-    $blog_post->annotate('rating', 5);
+	$blog_post->annotate('rating', 5);
 
 .. _view: Views
 
@@ -275,25 +275,25 @@ Elgg aware of the new mapping. Following is an example class extension:
 
 .. code-block:: php
 
-    // Class source
-    class Committee extends ElggGroup {
+	// Class source
+	class Committee extends ElggGroup {
 
-        protected function initializeAttributes() {
-            parent::initializeAttributes();
-            $this->attributes['subtype'] = 'committee';
-        }
+		protected function initializeAttributes() {
+			parent::initializeAttributes();
+			$this->attributes['subtype'] = 'committee';
+		}
 
-        // more customizations here
-    }
+		// more customizations here
+	}
 
 In your plugins ``elgg-plugin.php`` file add the ``entities`` section.
 
 .. code-block:: php
 
-    <?php // mod/example/elgg-plugin.php
-    return [
-        // entities registration
-        'entities' => [
+	<?php // mod/example/elgg-plugin.php
+	return [
+		// entities registration
+		'entities' => [
 			[
 				'type' => 'group',
 				'subtype' => 'committee',
@@ -301,10 +301,10 @@ In your plugins ``elgg-plugin.php`` file add the ``entities`` section.
 				'searchable' => true, 
 			],
 		],
-    ];
-    
+	];
+
 The entities will be registered upon activation of the plugin.
-    
+
 Now if you invoke ``get_entity()`` with the GUID of a committee object,
 you'll get back an object of type Committee.
 
@@ -370,27 +370,27 @@ my_plugin/activate.php:
 
 .. code-block:: php
 
-    if (!elgg_get_plugin_setting('database_version', 'my_plugin') {
-        run_sql_script(__DIR__ . '/sql/activate.sql');
-        elgg_set_plugin_setting('database_version', 1, 'my_plugin');
-    }
+	if (!elgg_get_plugin_setting('database_version', 'my_plugin') {
+		run_sql_script(__DIR__ . '/sql/activate.sql');
+		elgg_set_plugin_setting('database_version', 1, 'my_plugin');
+	}
 
 
 my_plugin/sql/activate.sql:
 
 .. code-block:: sql
 
-    -- Create some table
-    CREATE TABLE prefix_custom_table(
-        id INTEGER AUTO_INCREMENT,
-        name VARCHAR(32),
-        description VARCHAR(32),
-        PRIMARY KEY (id)
-    );
+	-- Create some table
+	CREATE TABLE prefix_custom_table(
+		id INTEGER AUTO_INCREMENT,
+		name VARCHAR(32),
+		description VARCHAR(32),
+		PRIMARY KEY (id)
+	);
 
-    -- Insert initial values for table
-    INSERT INTO prefix_custom_table (name, description)
-    VALUES ('Peter', 'Some guy'), ('Lisa', 'Some girl');
+	-- Insert initial values for table
+	INSERT INTO prefix_custom_table (name, description)
+	VALUES ('Peter', 'Some guy'), ('Lisa', 'Some girl');
 
 Note that Elgg execute statements through PHPs built-in functions and have
 limited support for comments. I.e. only single line comments are supported
@@ -402,7 +402,7 @@ Systemlog
 
 .. note::
 
-   This section need some attention and will contain outdated information
+	This section need some attention and will contain outdated information
 
 The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and searchable directly from the administration panel.
 
@@ -427,16 +427,16 @@ To do this, you can create a function that listens to all events for all types o
 
 .. code-block:: php
 
-   register_elgg_event_handler('all','all','your_function_name');
+	register_elgg_event_handler('all','all','your_function_name');
 
 Your function can then be defined as:
 
 .. code-block:: php
 
-   function your_function_name($object, $event) {
-      if ($object instanceof Loggable) {
-         ...
-      }
-   }
+	function your_function_name($object, $event) {
+	  if ($object instanceof Loggable) {
+		 ...
+	  }
+	}
 
 You can then use the extra methods defined by :doc:`/design/loggable` to extract the information you need.

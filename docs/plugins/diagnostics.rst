@@ -17,11 +17,11 @@ System diagnostics dump file contents:
 - PHP settings
 - Apache settings
 - Elgg CONFIG values
-   - language strings
-   - site settings
-   - database settings
-   - plugin hooks
-   - actions
-   - views
-   - page handlers
-   - much more
+	- language strings
+	- site settings
+	- database settings
+	- plugin hooks
+	- actions
+	- views
+	- page handlers
+	- much more

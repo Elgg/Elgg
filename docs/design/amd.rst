@@ -2,7 +2,7 @@ AMD
 ###
 
 .. toctree::
-   :maxdepth: 2
+	:maxdepth: 2
 
 Overview
 ========

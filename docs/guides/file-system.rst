@@ -2,8 +2,8 @@ File System
 ###########
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Filestore
 =========
@@ -181,7 +181,7 @@ If your file input supports multiple files, you can iterate through them in your
 
 .. note::
 
-   If images are uploaded their is an automatic attempt to fix the orientation of the image.
+	If images are uploaded their is an automatic attempt to fix the orientation of the image.
 
 Temporary files
 ===============

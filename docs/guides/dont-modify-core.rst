@@ -3,8 +3,8 @@ Don't Modify Core
 
 .. warning:: 
 
-    In general, you shouldn't modify non-config files that come with third-party software like Elgg.
-   
+	In general, you shouldn't modify non-config files that come with third-party software like Elgg.
+
 The best way to customize the behavior of Elgg is to :doc:`install Elgg as a composer dependency</intro/install>`
 and use the root directory to store modifications specific to your application,
 and alter behavior through the rich Elgg plugin API.
@@ -51,10 +51,10 @@ Summary
 -------
 
 - Resist the temptation
-   Editing existing files is quick and easy, but doing so heavily risks the
-   maintainability, security, and stability of your site.
+	Editing existing files is quick and easy, but doing so heavily risks the
+	maintainability, security, and stability of your site.
 - When receiving advice, consider if the person telling you to modify core will
   be around to rescue you if you run into trouble later!
 - Apply these principle to software in general. 
-   If you can avoid it, don't modify third party plugins either, for the same reasons:
-   Plugin authors release new versions, too, and you will want those updates.
+	If you can avoid it, don't modify third party plugins either, for the same reasons:
+	Plugin authors release new versions, too, and you will want those updates.

@@ -28,18 +28,18 @@ Basic instructions
 #. **Back up your database, data directory, and code**
 #. Download the new version of Elgg from http://elgg.org
 #. Update the files
-    * If doing a patch upgrade (1.9.x), overwrite your existing files with the new version of Elgg
-    * If doing a minor upgrade (1.x), replace the existing core files completely
+	* If doing a patch upgrade (1.9.x), overwrite your existing files with the new version of Elgg
+	* If doing a minor upgrade (1.x), replace the existing core files completely
 #. Merge any new changes to the rewrite rules
-    * For Apache from ``install/config/htaccess.dist`` into ``.htaccess``
-    * For Nginx from ``install/config/nginx.dist`` into your server configuration (usually inside ``/etc/nginx/sites-enabled``)
+	* For Apache from ``install/config/htaccess.dist`` into ``.htaccess``
+	* For Nginx from ``install/config/nginx.dist`` into your server configuration (usually inside ``/etc/nginx/sites-enabled``)
 #. Merge any new changes from ``settings.example.php`` into ``settings.php``
 #. Visit http://your-elgg-site.com/upgrade.php
 
 .. note::
 
-   Any modifications should have been written within plugins, so that they are not lost on overwriting.
-   If this is not the case, take care to maintain your modifications. 
+	Any modifications should have been written within plugins, so that they are not lost on overwriting.
+	If this is not the case, take care to maintain your modifications.
 
 From 2.3 to 3.0
 ===============
@@ -272,4 +272,4 @@ Delete the following core directories (same level as _graphics and engine):
 
 .. warning::
 
-   If you do not delete these directories before an upgrade, you will have problems!
+	If you do not delete these directories before an upgrade, you will have problems!

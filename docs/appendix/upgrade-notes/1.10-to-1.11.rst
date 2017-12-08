@@ -2,8 +2,8 @@ From 1.10 to 1.11
 =================
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Comment highlighting
 --------------------

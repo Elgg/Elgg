@@ -8,9 +8,9 @@ DISCLAIMERS
 -----------
 
 -  **SECURITY ISSUES SHOULD BE REPORTED TO security @ elgg . org!**
-   Please do not post any security issues on github!!
+	Please do not post any security issues on github!!
 -  Support requests belong on the `community site`_.
-   Tickets with support requests will be closed.
+	Tickets with support requests will be closed.
 -  We cannot make any guarantees as to when your ticket will be resolved.
 
 Bug reports
@@ -19,11 +19,11 @@ Bug reports
 Before submitting a bug report:
 
 -  Search for an existing ticket on the issue you’re having. Add any
-   extra info there.
+	extra info there.
 -  Verify the problem is reproducible
-   
-   -  On the latest version of Elgg
-   -  With all third-party plugins disabled
+
+	-  On the latest version of Elgg
+	-  With all third-party plugins disabled
 
 Good bug report checklist:
 
@@ -38,11 +38,11 @@ Feature requests
 Before submitting a feature request:
 
 -  Check the `community site`_ for a plugin that has the features you
-   need.
+	need.
 -  Consider if you can :doc:`develop a plugin </tutorials/index>` that does what you need.
 -  Search through the closed tickets to see if someone else suggested
-   the same feature, but got turned down. You’ll need to be able to
-   explain why your suggestion should be considered this time.
+	the same feature, but got turned down. You’ll need to be able to
+	explain why your suggestion should be considered this time.
 
 Good feature request checklist:
 

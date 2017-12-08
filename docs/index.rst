@@ -20,12 +20,12 @@ This is the canonical documentation for the Elgg_ project.
 .. _Elgg: http://elgg.org
 
 .. toctree::
-   :maxdepth: 2
+	:maxdepth: 2
 
-   intro/index
-   admin/index
-   guides/index
-   tutorials/index
-   design/index
-   contribute/index
-   appendix/index
+	intro/index
+	admin/index
+	guides/index
+	tutorials/index
+	design/index
+	contribute/index
+	appendix/index

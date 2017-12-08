@@ -8,8 +8,8 @@ We have published this information in the spirit of openness,
 and to streamline onboarding of new team members.
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Requirements
 ============
@@ -37,10 +37,10 @@ merging 1.12 commits into 2.0:
 
 .. code-block:: sh
 
-    git checkout 2.0
-    git pull
-    git checkout -b merge112
-    git merge 1.12
+	git checkout 2.0
+	git pull
+	git checkout -b merge112
+	git merge 1.12
 
 .. note:: If already up-to-date (no commits to merge), we can stop here for this branch.
 
@@ -50,7 +50,7 @@ Make a PR for the branch and wait for automated tests and approval by other dev(
 
 .. code-block:: sh
 
-    git push -u my_fork merge112
+	git push -u my_fork merge112
 
 Once merged, we would repeat the process to merge 2.0 commits into 2.1.
 
@@ -72,10 +72,10 @@ Install the prerequisites:
 
 .. code-block:: sh
 
-    yarn install elgg-conventional-changelog
-    easy_install sphinx
-    easy_install sphinx-intl
-    easy_install transifex-client
+	yarn install elgg-conventional-changelog
+	easy_install sphinx
+	easy_install sphinx-intl
+	easy_install transifex-client
 
 .. note:: On Windows you need to run these command in a console with admin privileges
 
@@ -83,8 +83,8 @@ Run the ``release.php`` script. For example, to release 1.12.5:
 
 .. code-block:: sh
 
-    git checkout 1.12
-    php .scripts/release.php 1.12.5
+	git checkout 1.12
+	php .scripts/release.php 1.12.5
 
 This creates a ``release-1.12.5`` branch in your local repo.
 
@@ -92,15 +92,15 @@ Next, manually browse to the ``/admin/settings/basic`` page and verify it loads.
 
 .. code-block:: sh
 
-    # only necessary if you fixed a language file
-    git add .
-    git commit --amend
+	# only necessary if you fixed a language file
+	git add .
+	git commit --amend
 
 Next, submit a PR via GitHub for automated testing and approval by another developer:
 
 .. code-block:: sh
 
-    git push your-remote-fork release-1.12.5
+	git push your-remote-fork release-1.12.5
 
 Tag the release
 ===============
@@ -109,9 +109,9 @@ Once approved and merged, tag the release:
 
 .. code-block:: sh
 
-    git checkout release-${version}
-    git tag -a ${version} -m'Elgg ${version}'
-    git push --tags origin release-${version}
+	git checkout release-${version}
+	git tag -a ${version} -m'Elgg ${version}'
+	git push --tags origin release-${version}
 
 Or create a release on GitHub
 
@@ -166,11 +166,11 @@ Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without argum
 
 .. code-block:: sh
 
-    # regular release
-    ./build.sh 1.12.5 1.12.5 /var/www/www.elgg.org/download/
+	# regular release
+	./build.sh 1.12.5 1.12.5 /var/www/www.elgg.org/download/
 
-    # MIT release
-    ./build.sh 1.12.5 1.12.5-mit /var/www/www.elgg.org/download/
+	# MIT release
+	./build.sh 1.12.5 1.12.5-mit /var/www/www.elgg.org/download/
 
 Update elgg.org download page
 -----------------------------
@@ -193,24 +193,24 @@ Update elgg.org
 
 .. code-block:: sh
 
-    composer update
+	composer update
 
 * Commit and push the changes
 * Pull to live site
 
 .. code-block:: sh
 
-    cd /var/www/www.elgg.org && sudo su deploy && git pull
-      
+	cd /var/www/www.elgg.org && sudo su deploy && git pull
+
 * Update dependencies
 
 .. code-block:: sh
 
-    composer install --no-dev --prefer-dist --optimize-autoloader
+	composer install --no-dev --prefer-dist --optimize-autoloader
 
 * Go to community admin panel
-    * Flush APC cache
-    * Run upgrade
+	* Flush APC cache
+	* Run upgrade
 
 Make the announcement
 =====================

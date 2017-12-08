@@ -2,12 +2,12 @@ File repository
 ===============
 
 .. figure:: images/file.jpg
-   :height: 125
-   :width: 180
-   :align: right
-   :alt: A file in an Elgg file repository
-   
-   A file in an Elgg file repository
+	:height: 125
+	:width: 180
+	:align: right
+	:alt: A file in an Elgg file repository
+
+	A file in an Elgg file repository
 
 The file repository allows users to upload any kind of file. As with everything in an Elgg system, you can filter uploaded files by tag and restrict access so that they're only visible by the people you want them to be. Each file may also have comments attached to it.
 

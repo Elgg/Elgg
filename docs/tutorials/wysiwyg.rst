@@ -22,7 +22,7 @@ since it is so much easier to upgrade and maintain that way::
 
 .. code-block:: sh
 
-    composer require bower-asset/tinymce
+	composer require bower-asset/tinymce
 
 Tell Elgg when and how to load TinyMCE
 --------------------------------------
@@ -40,44 +40,44 @@ Create a view tinymce/longtext and add the following code:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-        /**
-         * Elgg long text input with the tinymce text editor intacts
-         * Displays a long text input field
-         * 
-         * @package ElggTinyMCE
-         * 
-         * 
-         */
+		/**
+		 * Elgg long text input with the tinymce text editor intacts
+		 * Displays a long text input field
+		 *
+		 * @package ElggTinyMCE
+		 *
+		 *
+		 */
 
-    ?>
-    <!-- include tinymce -->
-    <script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>mod/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-    <!-- intialise tinymce, you can find other configurations here http://wiki.moxiecode.com/examples/tinymce/installation_example_01.php -->
-    <script language="javascript" type="text/javascript">
-       tinyMCE.init({
-        mode : "textareas",
-        theme : "advanced",
-        theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink,image,blockquote,code",
-        theme_advanced_buttons2 : "",
-        theme_advanced_buttons3 : "",
-        theme_advanced_toolbar_location : "top",
-        theme_advanced_toolbar_align : "left",
-        theme_advanced_statusbar_location : "bottom",
-        theme_advanced_resizing : true,
-        extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],
-    hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
-    });
-    </script>
+	?>
+	<!-- include tinymce -->
+	<script language="javascript" type="text/javascript" src="<?php echo $vars['url']; ?>mod/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+	<!-- intialise tinymce, you can find other configurations here http://wiki.moxiecode.com/examples/tinymce/installation_example_01.php -->
+	<script language="javascript" type="text/javascript">
+		tinyMCE.init({
+		mode : "textareas",
+		theme : "advanced",
+		theme_advanced_buttons1 : "bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink,image,blockquote,code",
+		theme_advanced_buttons2 : "",
+		theme_advanced_buttons3 : "",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_resizing : true,
+		extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],
+	hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]"
+	});
+	</script>
 
 Then, in your plugin's init function, extend the input/longtext view
 
 .. code-block:: php
 
-    function tinymce_init() {
-        elgg_extend_view('input/longtext', 'tinymce/longtext');
-    }
+	function tinymce_init() {
+		elgg_extend_view('input/longtext', 'tinymce/longtext');
+	}
 
 That's it! Now every time someone uses input/longtext,
 TinyMCE will be loaded and applied to that textarea.

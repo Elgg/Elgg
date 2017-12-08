@@ -3,9 +3,9 @@ Simplecache
 
 .. seealso::
 
-   - :doc:`/admin/performance`
-   - :doc:`/guides/views`
-   
+	- :doc:`/admin/performance`
+	- :doc:`/guides/views`
+
 The Simplecache is a mechanism designed to alleviate the need for certain views to be regenerated dynamically.
 Instead, they are generated once, saved as a static file, and served in a way that entirely bypasses the Elgg engine.
 
@@ -36,7 +36,7 @@ You can register a view with the Simplecache with the following function at init
 
 .. code-block:: php
 
-   elgg_register_simplecache_view($viewname);
+	elgg_register_simplecache_view($viewname);
 
 **Accessing the cached view**
 
@@ -46,5 +46,5 @@ If you registered a JavaScript or CSS file with Simplecache and put in the view 
 
 .. code-block:: php
 
-   $js = elgg_get_simplecache_url('your_view.js');
-   $css = elgg_get_simplecache_url('your_view.css');
+	$js = elgg_get_simplecache_url('your_view.js');
+	$css = elgg_get_simplecache_url('your_view.css');

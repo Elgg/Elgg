@@ -8,8 +8,8 @@ required in order to allow easy overriding and manipulation, as well as to
 provide hooks for theming.
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Basic usage
 ===========
@@ -305,12 +305,12 @@ requirement during the registration.
 
 .. code-block:: js
 
-    // in navigation/menu/item/hide_on_click.js
-    define(function(require) {
-        var $ = require('jquery');
+	// in navigation/menu/item/hide_on_click.js
+	define(function(require) {
+		var $ = require('jquery');
 
-        $(document).on('click', '.hide-on-click', function(e) {
-            e.preventDefault();
-            $(this).hide();
-        });
-    });
+		$(document).on('click', '.hide-on-click', function(e) {
+			e.preventDefault();
+			$(this).hide();
+		});
+	});

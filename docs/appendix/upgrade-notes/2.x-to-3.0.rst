@@ -2,8 +2,8 @@ From 2.x to 3.0
 ===============
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 PHP 7.0 is now required
 -----------------------
@@ -306,14 +306,14 @@ or a closure that returns an instance of ``\Doctrine\DBAL\Query\Expression\Compo
 
 .. code-block:: php
 
-    elgg_get_entities([
-       'wheres' => [
-            function(\Elgg\Database\QueryBuilder $qb, $alias) {
-               $joined_alias = $qb->joinMetadataTable($alias, 'guid', 'status');
-               return $qb->compare("$joined_alias.name", 'in', ['draft', 'unsaved_draft'], ELGG_VALUE_STRING);
-            }
-       ]
-    ]);
+	elgg_get_entities([
+		'wheres' => [
+			function(\Elgg\Database\QueryBuilder $qb, $alias) {
+				$joined_alias = $qb->joinMetadataTable($alias, 'guid', 'status');
+				return $qb->compare("$joined_alias.name", 'in', ['draft', 'unsaved_draft'], ELGG_VALUE_STRING);
+			}
+		]
+	]);
 
 ``joins``, ``order_by``, ``group_by``, ``selects`` clauses should not use raw SQL strings. Use closures that receive
 an instance of ``\Elgg\Database\QueryBuilder`` and return a prepared statement.
@@ -873,5 +873,5 @@ event, language keys etc. have been removed.
 
 .. note::
 
-    Discussion comments will now show up in the Comments section of Search, no longer under the Discussion section.
+	Discussion comments will now show up in the Comments section of Search, no longer under the Discussion section.
 

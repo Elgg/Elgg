@@ -11,24 +11,24 @@ An example ``settings.php`` would look like:
 
 .. code-block:: php
 
-   <p>
-      <?php echo elgg_echo('myplugin:settings:limit'); ?>
+	<p>
+	  <?php echo elgg_echo('myplugin:settings:limit'); ?>
  
-      <select name="params[limit]">
-         <option value="5" <?php if ($vars['entity']->limit == 5) echo " selected=\"yes\" "; ?>>5</option>
-         <option value="8" <?php if ((!$vars['entity']->limit) || ($vars['entity']->limit == 8)) echo " selected=\"yes\" "; ?>>8</option>
-         <option value="12" <?php if ($vars['entity']->limit == 12) echo " selected=\"yes\" "; ?>>12</option>
-         <option value="15" <?php if ($vars['entity']->limit == 15) echo " selected=\"yes\" "; ?>>15</option>
-      </select>
-   </p>
+	  <select name="params[limit]">
+		 <option value="5" <?php if ($vars['entity']->limit == 5) echo " selected=\"yes\" "; ?>>5</option>
+		 <option value="8" <?php if ((!$vars['entity']->limit) || ($vars['entity']->limit == 8)) echo " selected=\"yes\" "; ?>>8</option>
+		 <option value="12" <?php if ($vars['entity']->limit == 12) echo " selected=\"yes\" "; ?>>12</option>
+		 <option value="15" <?php if ($vars['entity']->limit == 15) echo " selected=\"yes\" "; ?>>15</option>
+	  </select>
+	</p>
 
 .. note::
 
-   You don’t need to add a save button or the form, this will be handled by the framework.
+	You don’t need to add a save button or the form, this will be handled by the framework.
 
 .. note::
 
-   You cannot use form components that send no value when "off." These include radio inputs and check boxes.
+	You cannot use form components that send no value when "off." These include radio inputs and check boxes.
 
 User settings
 -------------
@@ -37,7 +37,7 @@ Your plugin might need to store per user settings too, and you would like to hav
 
 .. note::
 
-   The title of the usersettings form will default to the plugin name. If you want to change this, add a translation for ``plugin_id:usersettings:title``.
+	The title of the usersettings form will default to the plugin name. If you want to change this, add a translation for ``plugin_id:usersettings:title``.
 
 Retrieving settings in your code
 --------------------------------
@@ -46,14 +46,14 @@ To retrieve settings from your code use:
 
 .. code-block:: php
 
-   $setting = elgg_get_plugin_setting($name, $plugin_id);
-   
+	$setting = elgg_get_plugin_setting($name, $plugin_id);
+
 or for user settings
 
 .. code-block:: php
 
-   $user_setting = elgg_get_plugin_user_setting($name, $user_guid, $plugin_id);
-   
+	$user_setting = elgg_get_plugin_user_setting($name, $user_guid, $plugin_id);
+
 where:
 
 - ``$name`` Is the value you want to retrieve
@@ -67,18 +67,18 @@ Values may also be set from within your plugin code, to do this use one of the f
 
 .. code-block:: php
 
-   elgg_set_plugin_setting($name, $value, $plugin_id);
+	elgg_set_plugin_setting($name, $value, $plugin_id);
 
 or 
 
 .. code-block:: php
 
-   elgg_set_plugin_user_setting($name, $value, $user_guid, $plugin_id);
-   
+	elgg_set_plugin_user_setting($name, $value, $user_guid, $plugin_id);
+
 .. warning::
 
-   The ``$plugin_id`` needs to be provided when setting plugin (user)settings.
-   
+	The ``$plugin_id`` needs to be provided when setting plugin (user)settings.
+
 Default plugin (user) settings
 ------------------------------
 
@@ -87,10 +87,10 @@ You can pass this when using the getter functions.
 
 .. code-block:: php
 
-   $user_setting = elgg_get_plugin_user_setting($name, $user_guid, $plugin_id, $default);
-   
-   $plugin_setting = elgg_get_plugin_setting($name, $plugin_id, $default);
-   
+	$user_setting = elgg_get_plugin_user_setting($name, $user_guid, $plugin_id, $default);
+
+	$plugin_setting = elgg_get_plugin_setting($name, $plugin_id, $default);
+
 Alternatively you can also provide default plugin and user settings in the ``elgg-plugin.php`` file.
 
 .. code-block:: php
@@ -99,9 +99,9 @@ Alternatively you can also provide default plugin and user settings in the ``elg
 
 	return [
 		'settings' => [
-		    'key' => 'value',
+			'key' => 'value',
 		],
 		'user_settings' => [
-		    'key' => 'value',
+			'key' => 'value',
 		],
 	];

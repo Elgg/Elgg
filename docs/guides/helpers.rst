@@ -2,8 +2,8 @@ Helper functions
 ================
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Input and output
 ----------------

@@ -23,9 +23,9 @@ The following code shows how to expose http://example.org/my_plugin/public_page 
 
 .. code-block:: php
 
-   elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'my_plugin_walled_garden_public_pages');
-   
-   function my_plugin_walled_garden_public_pages($hook, $type, $pages) {
-      $pages[] = 'my_plugin/public_page';
-      return $pages;
-   }
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'my_plugin_walled_garden_public_pages');
+
+	function my_plugin_walled_garden_public_pages($hook, $type, $pages) {
+	  $pages[] = 'my_plugin/public_page';
+	  return $pages;
+	}

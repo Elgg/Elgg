@@ -4,8 +4,8 @@ Database
 A thorough discussion of Elgg's data model design and motivation.
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Overview
 ========
@@ -28,12 +28,12 @@ for accessing and updating entity properties.
 You can extend entities with extra information in two ways:
 
 ``Metadata``: This information describes the entity, it is usually
-   added by the author of the entity when the entity is created or updated.
-   Examples of metadata include tags, ISBN number or a third-party ID, location,
-   geocoordinates etc. Think of metadata as a simple key-value storage.
+	added by the author of the entity when the entity is created or updated.
+	Examples of metadata include tags, ISBN number or a third-party ID, location,
+	geocoordinates etc. Think of metadata as a simple key-value storage.
 
 ``Annotations``: This information extends the entity with properties usually
-   added by a third party. Such properties include ratings, likes, and votes.
+	added by a third party. Such properties include ratings, likes, and votes.
 
 The main differences between metadata and annotations:
 
@@ -51,11 +51,11 @@ Datamodel
 =========
 
 .. figure:: images/data_model.png
-   :figwidth: 650
-   :align: center
-   :alt: The Elgg data model diagram
-   
-   The Elgg data model diagram
+	:figwidth: 650
+	:align: center
+	:alt: The Elgg data model diagram
+
+	The Elgg data model diagram
 
 Entities
 ========
@@ -65,7 +65,7 @@ and methods.
 
 -  A numeric Globally Unique IDentifier (See `GUIDs`_).
 -  Access permissions. (When a plugin requests data, it never gets to
-   touch data that the current user doesn't have permission to see.)
+	touch data that the current user doesn't have permission to see.)
 -  An arbitrary subtype (more below).
 -  An owner.
 -  The site that the entity belongs to.
@@ -78,12 +78,12 @@ Types
 property and their own additional properties and methods.
 
 =======  ==============  ===================================================================
-Type     PHP class       Represents
+Type	 PHP class		 Represents
 =======  ==============  ===================================================================
-object   ``ElggObject``  Most user-created content, like blog posts, uploads, and bookmarks.
-group    ``ElggGroup``   An organized group of users with its own profile page
-user     ``ElggUser``    A user of the system
-site     ``ElggSite``    The site served by the Elgg installation
+object	 ``ElggObject``  Most user-created content, like blog posts, uploads, and bookmarks.
+group	 ``ElggGroup``     An organized group of users with its own profile page
+user	 ``ElggUser``     A user of the system
+site	 ``ElggSite``     The site served by the Elgg installation
 =======  ==============  ===================================================================
 
 Each type has its own extended API. E.g. users can be friends with other users, group can have members,
@@ -213,26 +213,26 @@ your new element (defaulting to the current user's container):
 
 .. code-block:: php
 
-    $user = elgg_get_logged_in_user_entity();
-    $container_guid = (int)get_input('container_guid');
-    
-    if ($container_guid) {
-    	$container = get_entity($container_guid);
-    	
-        if (!$container->canWriteToContainer($user->guid)) {
-            // register error and forward
-        }
-    } else {
-        $container_guid = elgg_get_logged_in_user_guid();
-    }
+	$user = elgg_get_logged_in_user_entity();
+	$container_guid = (int)get_input('container_guid');
 
-    $object = new ElggObject;
-    $object->container_guid = $container_guid;
+	if ($container_guid) {
+		$container = get_entity($container_guid);
 
-    ...
+		if (!$container->canWriteToContainer($user->guid)) {
+			// register error and forward
+		}
+	} else {
+		$container_guid = elgg_get_logged_in_user_guid();
+	}
 
-    $container = get_entity($container_guid);
-    forward($container->getURL());
+	$object = new ElggObject;
+	$object->container_guid = $container_guid;
+
+	...
+
+	$container = get_entity($container_guid);
+	forward($container->getURL());
 
 Juggling users and groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -298,20 +298,20 @@ entity, which is defined as:
 
 .. code-block:: php
 
-    public function annotate(
-        $name,           // The name of the annotation type (eg 'comment')
-        $value,          // The value of the annotation
-        $access_id = 0,  // The access level of the annotation
-        $owner_id = 0,   // The annotation owner, defaults to current user
-        $vartype = ""    // 'text' or 'integer'
-    )
+	public function annotate(
+		$name,			// The name of the annotation type (eg 'comment')
+		$value,		  // The value of the annotation
+		$access_id = 0,  // The access level of the annotation
+		$owner_id = 0,	// The annotation owner, defaults to current user
+		$vartype = ""	// 'text' or 'integer'
+	)
 
 For example, to leave a rating on an entity, you might call:
 
 .. code-block:: php
 
-    $entity->annotate('rating', $rating_value, $entity->access_id);
-    
+	$entity->annotate('rating', $rating_value, $entity->access_id);
+
 Reading annotations
 -------------------
 
@@ -319,23 +319,23 @@ To retrieve annotations on an object, you can call the following method:
 
 .. code-block:: php
 
-    $annotations = $entity->getAnnotations(
-        $name,    // The type of annotation
-        $limit,   // The number to return
-        $offset,  // Any indexing offset
-        $order,   // 'asc' or 'desc' (default 'asc')
-    );
+	$annotations = $entity->getAnnotations(
+		$name,	// The type of annotation
+		$limit,	// The number to return
+		$offset,  // Any indexing offset
+		$order,	// 'asc' or 'desc' (default 'asc')
+	);
 
 If your annotation type largely deals with integer values, a couple of
 useful mathematical functions are provided:
 
 .. code-block:: php
 
-    $averagevalue = $entity->getAnnotationsAvg($name);  // Get the average value
-    $total = $entity->getAnnotationsSum($name);         // Get the total value
-    $minvalue = $entity->getAnnotationsMin($name);      // Get the minimum value
-    $maxvalue = $entity->getAnnotationsMax($name);      // Get the maximum value
-    
+	$averagevalue = $entity->getAnnotationsAvg($name);  // Get the average value
+	$total = $entity->getAnnotationsSum($name);		 // Get the total value
+	$minvalue = $entity->getAnnotationsMin($name);	  // Get the minimum value
+	$maxvalue = $entity->getAnnotationsMax($name);	  // Get the maximum value
+
 Useful helper functions
 -----------------------
 
@@ -347,7 +347,7 @@ following function will provide the full listing, form and actions:
 
 .. code-block:: php
 
-    function elgg_view_comments(ElggEntity $entity)
+	function elgg_view_comments(ElggEntity $entity)
 
 
 Metadata
@@ -365,11 +365,11 @@ practice (although if you're interested, see the ``ElggMetadata`` class
 reference). What you need to know is:
 
 -  Metadata has an owner, which may be different to the owner of the entity
-   it's attached to
+	it's attached to
 -  You can potentially have multiple items of each type of metadata
-   attached to a single entity
+	attached to a single entity
 -  Like annotations, values are stored as strings unless the value given is a PHP integer (``is_int($value)`` is true),
-   or unless the ``$value_type`` is manually specified as ``integer`` (see below).
+	or unless the ``$value_type`` is manually specified as ``integer`` (see below).
 
 .. note:: As of Elgg 3.0, metadata no longer have ``access_id``.
 
@@ -383,19 +383,19 @@ To add a piece of metadata to an entity, just call:
 
 .. code-block:: php
 
-    $entity->metadata_name = $metadata_value;
+	$entity->metadata_name = $metadata_value;
 
 For example, to add a date of birth to a user:
 
 .. code-block:: php
 
-    $user->dob = $dob_timestamp;
+	$user->dob = $dob_timestamp;
 
 Or to add a couple of tags to an object:
 
 .. code-block:: php
 
-    $object->tags = array('tag one', 'tag two', 'tag three');
+	$object->tags = array('tag one', 'tag two', 'tag three');
 
 When adding metadata like this:
 
@@ -419,7 +419,7 @@ To retrieve metadata, treat it as a property of the entity:
 
 .. code-block:: php
 
-    $tags_value = $object->tags;
+	$tags_value = $object->tags;
 
 Note that this will return the absolute value of the metadata. To get
 metadata as an ElggMetadata object, you will need to use the methods
@@ -433,15 +433,15 @@ E.g.
 
 .. code-block:: php
 
-    $object->tags = array('tag');
-    $tags = $object->tags;
-    // $tags will be the string "tag", NOT array('tag')
+	$object->tags = array('tag');
+	$tags = $object->tags;
+	// $tags will be the string "tag", NOT array('tag')
 
 To always get an array back, simply cast to an array;
 
 .. code-block:: php
 
-    $tags = (array)$object->tags;
+	$tags = (array)$object->tags;
 
 Reading metadata as objects
 ---------------------------
@@ -453,19 +453,19 @@ E.g., to retrieve a user's DOB
 
 .. code-block:: php
 
-    elgg_get_metadata(array(
-        'metadata_name' => 'dob',
-        'metadata_owner_guid' => $user_guid,
-    ));
+	elgg_get_metadata(array(
+		'metadata_name' => 'dob',
+		'metadata_owner_guid' => $user_guid,
+	));
 
 Or to get all metadata objects:
 
 .. code-block:: php
 
-    elgg_get_metadata(array(
-        'metadata_owner_guid' => $user_guid,
-        'limit' => 0,
-    ));
+	elgg_get_metadata(array(
+		'metadata_owner_guid' => $user_guid,
+		'limit' => 0,
+	));
 
 .. complete list of metadata functions: http://reference.elgg.org/engine_2lib_2metadata_8php.html
 
@@ -481,7 +481,7 @@ like it should do.
 
 .. code-block:: php
 
-    $object->tags[] = "tag four";
+	$object->tags[] = "tag four";
 
 Trying to store hashmaps
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -492,17 +492,17 @@ expect it to:
 
 .. code-block:: php
 
-    // Won't work!! Only the array values are stored
-    $object->tags = array('one' => 'a', 'two' => 'b', 'three' => 'c');
+	// Won't work!! Only the array values are stored
+	$object->tags = array('one' => 'a', 'two' => 'b', 'three' => 'c');
 
 You can instead store the information like so:
 
 .. code-block:: php
 
-    $object->one = 'a';
-    $object->two = 'b';
-    $object->three = 'c';
-    
+	$object->one = 'a';
+	$object->two = 'b';
+	$object->three = 'c';
+
 Storing GUIDs in metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -519,21 +519,21 @@ artist has fans, a user is a member of an organization, etc.
 The class ``ElggRelationship`` models a directed relationship between
 two entities, making the statement:
 
-    "**{subject}** is a **{noun}** of **{target}**."
+	"**{subject}** is a **{noun}** of **{target}**."
 
-================  ===========     =========================================
-API name          Models          Represents
-================  ===========     =========================================
-``guid_one``      The subject     Which entity is being bound
-``relationship``  The noun        The type of relationship
-``guid_two``      The target      The entity to which the subject is bound
-================  ===========     =========================================
+================    ===========	    =========================================
+API name            Models		    Represents
+================    ===========	    =========================================
+``guid_one``        The subject	    Which entity is being bound
+``relationship``    The noun        The type of relationship
+``guid_two``        The target	    The entity to which the subject is bound
+================    ===========	    =========================================
 
 The type of relationship may alternately be a verb, making the statement:
 
-    "**{subject}** **{verb}** **{target}**."
+	"**{subject}** **{verb}** **{target}**."
 
-    E.g. User A "likes" blog post B
+	E.g. User A "likes" blog post B
 
 **Each relationship has direction.** Imagine an archer shoots
 an arrow at a target; The arrow moves in one direction, binding
@@ -558,11 +558,11 @@ E.g. to establish that "**$user** is a **fan** of **$artist**"
 
 .. code-block:: php
 
-    // option 1
-    $success = add_entity_relationship($user->guid, 'fan', $artist->guid);
+	// option 1
+	$success = add_entity_relationship($user->guid, 'fan', $artist->guid);
 
-    // option 2
-    $success = $user->addRelationship($artist->guid, 'fan');
+	// option 2
+	$success = $user->addRelationship($artist->guid, 'fan');
 
 This triggers the event [create, relationship], passing in
 the created ``ElggRelationship`` object. If a handler returns
@@ -576,19 +576,19 @@ E.g. to verify that "**$user** is a **fan** of **$artist**":
 
 .. code-block:: php
 
-    if (check_entity_relationship($user->guid, 'fan', $artist->guid)) {
-        // relationship exists
-    }
+	if (check_entity_relationship($user->guid, 'fan', $artist->guid)) {
+		// relationship exists
+	}
 
 Note that, if the relationship exists, ``check_entity_relationship()``
 returns an ``ElggRelationship`` object:
 
 .. code-block:: php
 
-    $relationship = check_entity_relationship($user->guid, 'fan', $artist->guid);
-    if ($relationship) {
-        // use $relationship->id or $relationship->time_created
-    }
+	$relationship = check_entity_relationship($user->guid, 'fan', $artist->guid);
+	if ($relationship) {
+		// use $relationship->id or $relationship->time_created
+	}
 
 Deleting a relationship
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -597,7 +597,7 @@ E.g. to be able to assert that "**$user** is no longer a **fan** of **$artist**"
 
 .. code-block:: php
 
-    $was_removed = remove_entity_relationship($user->guid, 'fan', $artist->guid);
+	$was_removed = remove_entity_relationship($user->guid, 'fan', $artist->guid);
 
 This triggers the event [delete, relationship], passing in
 the associated ``ElggRelationship`` object. If a handler returns
@@ -622,14 +622,14 @@ E.g. retrieving users who joined your group in January 2014.
 
 .. code-block:: php
 
-    $entities = elgg_get_entities(array(
-        'relationship' => 'member',
-        'relationship_guid' => $group->guid,
-        'inverse_relationship' => true,
+	$entities = elgg_get_entities(array(
+		'relationship' => 'member',
+		'relationship_guid' => $group->guid,
+		'inverse_relationship' => true,
 
-        'relationship_created_time_lower' => 1388534400, // January 1st 2014
-        'relationship_created_time_upper' => 1391212800, // February 1st 2014
-    ));
+		'relationship_created_time_lower' => 1388534400, // January 1st 2014
+		'relationship_created_time_upper' => 1391212800, // February 1st 2014
+	));
 
 Access Control
 ==============
@@ -680,7 +680,7 @@ The following rules govern write access:
 
 -  The owner of an entity can always edit it
 -  The owner of a container can edit anything therein (note that this
-   does not mean that the owner of a group can edit anything therein)
+	does not mean that the owner of a group can edit anything therein)
 -  Admins can edit anything
 
 You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called
@@ -691,7 +691,7 @@ function that has announced it wants to be referenced. Returning
 
 .. seealso::
 
-   `Access library reference`_
+	`Access library reference`_
 
 .. _Access library reference: http://reference.elgg.org/engine_2lib_2access_8php.html
 
@@ -716,19 +716,19 @@ populated with your first site.
 It contains the following fields:
 
 -  **guid** An auto-incrementing counter producing a GUID that uniquely
-   identifies this entity in the system.
+	identifies this entity in the system.
 -  **type** The type of entity - object, user, group or site
 -  **subtype** A subtype of entity
 -  **owner\_guid** The GUID of the owner's entity.
 -  **site\_guid** The site the entity belongs to.
 -  **container\_guid** The GUID this entity is contained by - either a user or
-   a group.
+	a group.
 -  **access\_id** Access controls on this entity.
 -  **time\_created** Unix timestamp of when the entity is created.
 -  **time\_updated** Unix timestamp of when the entity was updated.
 -  **enabled** If this is 'yes' an entity is accessible, if 'no' the entity
-   has been disabled (Elgg treats it as if it were deleted without actually
-   removing it from the database).
+	has been disabled (Elgg treats it as if it were deleted without actually
+	removing it from the database).
 
 Table: metadata
 ~~~~~~~~~~~~~~~
@@ -738,12 +738,12 @@ This table contains `Metadata`_, extra information attached to an entity.
 -  **id** A counter.
 -  **entity\_guid** The entity this is attached to.
 -  **name** The name string
-   table.
+	table.
 -  **value** The value string.
 -  **value\_type** The value class, either text or an integer.
 -  **time\_created** Unix timestamp of when the metadata is created.
 -  **enabled** If this is 'yes' an item is accessible, if 'no' the item
-   has been deleted.
+	has been deleted.
 
 Table: annotations
 ~~~~~~~~~~~~~~~~~~
@@ -756,11 +756,11 @@ This table contains `Annotations`_, this is distinct from `Metadata`_.
 -  **value** The value string
 -  **value\_type** The value class, either text or an integer.
 -  **owner\_guid** The owner GUID of the owner who set this item of
-   metadata.
+	metadata.
 -  **access\_id** An Access controls on this item of metadata.
 -  **time\_created** Unix timestamp of when the metadata is created.
 -  **enabled** If this is 'yes' an item is accessible, if 'no' the item
-   has been deleted.
+	has been deleted.
 
 Table: relationships
 ~~~~~~~~~~~~~~~~~~~~

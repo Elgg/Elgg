@@ -16,18 +16,18 @@ Elgg requires that your plugin has a manifest file that contains information abo
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
-        <name>Hello world</name>
-        <id>hello</id>
-        <author>Your Name Here</author>
-        <version>0.1</version>
-        <description>Hello world, testing.</description>
-        <requires>
-            <type>elgg_release</type>
-            <version>2.0</version>
-        </requires>
-    </plugin_manifest>
+	<?xml version="1.0" encoding="UTF-8"?>
+	<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+		<name>Hello world</name>
+		<id>hello</id>
+		<author>Your Name Here</author>
+		<version>0.1</version>
+		<description>Hello world, testing.</description>
+		<requires>
+			<type>elgg_release</type>
+			<version>2.0</version>
+		</requires>
+	</plugin_manifest>
 
 This is the minimum amount of information in a manifest file:
 
@@ -43,13 +43,13 @@ Next, create ``start.php`` in the ``mod/hello/`` directory and copy this code in
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-    elgg_register_event_handler('init', 'system', 'hello_world_init');
-    
-    function hello_world_init() {
-    
-    }
+	elgg_register_event_handler('init', 'system', 'hello_world_init');
+
+	function hello_world_init() {
+
+	}
 
 The above code tells Elgg that it should call the function
 ``hello_world_init()`` once the Elgg core system is initiated.
@@ -64,17 +64,17 @@ Update ``start.php`` to look like this:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-    elgg_register_event_handler('init', 'system', 'hello_world_init');
-    
-    function hello_world_init() {
-        elgg_register_page_handler('hello', 'hello_world_page_handler');
-    }
-    
-    function hello_world_page_handler() {
-    	echo elgg_view_resource('hello');
-    }
+	elgg_register_event_handler('init', 'system', 'hello_world_init');
+
+	function hello_world_init() {
+		elgg_register_page_handler('hello', 'hello_world_page_handler');
+	}
+
+	function hello_world_page_handler() {
+		echo elgg_view_resource('hello');
+	}
 
 The call to ``elgg_register_page_handler()`` tells Elgg that it should
 call the function ``hello_world_page_handler()`` when a user navigates to 
@@ -89,17 +89,17 @@ Create ``mod/hello/views/default/resources/hello.php`` with this content:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-    $params = array(
-        'title' => 'Hello world!',
-        'content' => 'My first page!',
-        'filter' => '',
-    );
+	$params = array(
+		'title' => 'Hello world!',
+		'content' => 'My first page!',
+		'filter' => '',
+	);
 
-    $body = elgg_view_layout('content', $params);
+	$body = elgg_view_layout('content', $params);
 
-    echo elgg_view_page('Hello', $body);
+	echo elgg_view_page('Hello', $body);
 
 
 The code creates an array of parameters to be given to the ``elgg_view_layout()`` function, including:

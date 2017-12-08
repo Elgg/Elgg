@@ -2,8 +2,8 @@ From 2.1 to 2.2
 ===============
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Deprecated APIs
 ---------------
@@ -70,10 +70,10 @@ File entity thumbs and downloads are now served via ``serve-file`` handler. Plug
  * ``mod/file/thumbnail.php`` file has been deprecated
  * Several views have been updated to use new download URLs, including:
 
-   - ``mod/file/views/default/file/specialcontent/audio/default.php``
-   - ``mod/file/views/default/file/specialcontent/image/default.php``
-   - ``mod/file/views/default/resources/file/view.php``
-   - ``mod/file/views/rss/file/enclosure.php``
+	- ``mod/file/views/default/file/specialcontent/audio/default.php``
+	- ``mod/file/views/default/file/specialcontent/image/default.php``
+	- ``mod/file/views/default/resources/file/view.php``
+	- ``mod/file/views/rss/file/enclosure.php``
 
 Removed APIs
 ------------

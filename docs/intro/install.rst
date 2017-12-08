@@ -4,8 +4,8 @@ Installation
 Get your own instance of Elgg running in no time.
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Requirements
 ============
@@ -13,27 +13,27 @@ Requirements
 - MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)
 - PHP 7.0+ with the following extensions:
 
-   -  GD (for graphics processing)
-   -  `Multibyte String support`_ (for i18n)
-   -  Proper configuration and ability to send email through an MTA
+	-  GD (for graphics processing)
+	-  `Multibyte String support`_ (for i18n)
+	-  Proper configuration and ability to send email through an MTA
 
 - Web server with support for URL rewriting
 
 Official support is provided for the following configurations:
 
 - Apache server
-   -  Apache with the `rewrite module`_ enabled
-   -  PHP running as an Apache module
+	-  Apache with the `rewrite module`_ enabled
+	-  PHP running as an Apache module
 
 - Nginx server
-   - Nginx with PHP-FPM using FastCGI
+	- Nginx with PHP-FPM using FastCGI
 
 By "official support", we mean that:
 
 -  Most development and testing is performed with these configurations
 -  Much of the installation documentation is written assuming Apache or Nginx is used
 -  Priority on bug reports is given to Apache and Nginx users if the bug is web server specific
-   (but those are rare).
+	(but those are rare).
 
 .. _Multibyte String support: http://www.php.net/mbstring
 .. _rewrite module: http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html
@@ -73,13 +73,13 @@ With Composer (recommended if comfortable with CLI):
 
 .. code-block:: sh
 
-    cd /path/to/wwwroot/
-    composer self-update
-    composer global require "fxp/composer-asset-plugin:~1.3"
-    composer create-project elgg/starter-project:dev-master .
-    composer install
-    composer install # 2nd call is currently required
-    vendor/bin/elgg-cli install # follow the questions to provide installation details
+	cd /path/to/wwwroot/
+	composer self-update
+	composer global require "fxp/composer-asset-plugin:~1.3"
+	composer create-project elgg/starter-project:dev-master .
+	composer install
+	composer install # 2nd call is currently required
+	vendor/bin/elgg-cli install # follow the questions to provide installation details
 
 
 From pre-packaged zip (recommended if not comfortable with CLI):
@@ -98,10 +98,10 @@ Elgg needs a special folder to store uploaded files including profile
 icons and photos. You will need to create this directory.
 
 .. warning::
-   
-   For security reasons, this folder MUST be stored outside of your
-   document root. If you created it under /www/ or /public_html/, you're
-   doing it wrong.
+
+	For security reasons, this folder MUST be stored outside of your
+	document root. If you created it under /www/ or /public_html/, you're
+	doing it wrong.
 
 Once this folder has been created, you'll need to make sure the web
 server Elgg is running on has permission to write to and create
@@ -117,14 +117,14 @@ selecting 'properties' or 'Get Info'.
 
 .. note::
 
-   Directories must be executable to be read and written to. The 
-   suggested permissions depend upon the exact server and user
-   configuration. If the data directory is owned by the web server
-   user, the recommended permissions are 770.
+	Directories must be executable to be read and written to. The
+	suggested permissions depend upon the exact server and user
+	configuration. If the data directory is owned by the web server
+	user, the recommended permissions are 770.
 
-   Setting your data directory to 777 will work, but it is insecure
-   and is not recommended. If you are unsure how to correctly set
-   permissions, contact your host for more information.
+	Setting your data directory to 777 will work, but it is insecure
+	and is not recommended. If you are unsure how to correctly set
+	permissions, contact your host for more information.
 
 Create a MySQL database
 -----------------------
@@ -172,7 +172,7 @@ permissions back to their original settings. If, for some reason, this
 won't work, you will need to:
 
 -  In ``elgg-config/``, copy ``settings.example.php`` to ``settings.php``, open it up
-   in a text editor and fill in your database details
+	in a text editor and fill in your database details
 -  On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``
 -  On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents
 
@@ -272,8 +272,8 @@ need to give mod\_rewrite a pointer to where your Elgg installation is.
 -  Open up .htaccess in a text editor
 
 -  Where prompted, add a line like
-   ``RewriteBase /path/to/your/elgg/installation/`` (Don't forget the
-   trailing slash)
+	``RewriteBase /path/to/your/elgg/installation/`` (Don't forget the
+	trailing slash)
 -  Save the file and refresh your browser.
 
 Please note that the path you are using is the **web** path, minus the
@@ -296,35 +296,35 @@ install routine is unable to create one and unable to tell you that. If
 you are on this point and tried everything that is written above:
 
 -  check if it is really the elgg-created .htaccess (not only a dummy
-   provided from the server provider)
+	provided from the server provider)
 
 -  if it is not the elgg provided htaccess file, use the htaccess\_dist
-   (rename it to .htaccess)
+	(rename it to .htaccess)
 
 I get an error message that the rewrite test failed after the requirements check page
 -------------------------------------------------------------------------------------
 
 I get the following messages after the requirements check step (step 2) of the install:
 
-    We think your server is running the Apache web server.
+	We think your server is running the Apache web server.
 
-    The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents
-    Apache from processing the .htaccess file which contains the rewrite rules.
+	The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents
+	Apache from processing the .htaccess file which contains the rewrite rules.
 
-    A less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in
-    your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.
-    
+	A less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in
+	your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.
+
 After this error, everinteraction with the web interface results in a error 500 (Internal Server Error)
 
 This is likely caused by not loading the "filter module by un-commenting the
 
-     #LoadModule filter_module modules/mod_filter.so
-     
+	 #LoadModule filter_module modules/mod_filter.so
+
 line in the "httpd.conf" file.
 
 the Apache "error.log" file will contain an entry similar to:
 
-     ... .htaccess: Invalid command 'AddOutputFilterByType', perhaps misspelled or defined by a module not included in the server configuration
+	 ... .htaccess: Invalid command 'AddOutputFilterByType', perhaps misspelled or defined by a module not included in the server configuration
 
 
 There is a white page after I submit my database settings

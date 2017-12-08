@@ -2,8 +2,8 @@ Views
 #####
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Introduction
 ============
@@ -22,13 +22,13 @@ At their most basic level, the default views are just PHP files with snippets of
 
 .. code-block:: html
 
-    <h1>Hello, World!</h1>
+	<h1>Hello, World!</h1>
 
 Assuming this view is located at ``/views/default/hello.php``, we could output it like so:
 
 .. code-block:: php
 
-    echo elgg_view('hello');
+	echo elgg_view('hello');
 
 For your convenience, Elgg comes with quite a lot of views by default.
 In order to keep things manageable, they are organized into subdirectories.
@@ -37,7 +37,7 @@ Elgg handles this situation quite nicely. For example, our simple view might liv
 
 .. code-block:: php
 
-    echo elgg_view('hello/world');
+	echo elgg_view('hello/world');
 
 The name of the view simply reflects the location of the view in the views directory.
 
@@ -49,25 +49,25 @@ Our ``hello/world`` view might be modified to accept a variable like so:
 
 .. code-block:: html+php
 
-    <h1>Hello, <?= $vars['name']; ?>!</h1>
+	<h1>Hello, <?= $vars['name']; ?>!</h1>
 
 In this case, we can pass an arbitrary name parameter to the view like so:
 
 .. code-block:: php
-    
-    echo elgg_view('hello/world', ['name' => 'World']);
+
+	echo elgg_view('hello/world', ['name' => 'World']);
 
 which would produce the following output:
 
 .. code-block:: html
 
-    <h1>Hello, World!</h1>
+	<h1>Hello, World!</h1>
 
 .. warning::
 
-    Views don't do any kind of automatic output sanitization by default.
-    You are responsible for doing the correct sanitization yourself
-    to prevent XSS attacks and the like.
+	Views don't do any kind of automatic output sanitization by default.
+	You are responsible for doing the correct sanitization yourself
+	to prevent XSS attacks and the like.
 
 Views as cacheable assets
 =========================
@@ -79,62 +79,62 @@ Asset views must meet certain requirements:
  * They *must not* take any ``$vars`` parameters
  * They *must not* change their output based on global state like
 
-   * who is logged in
-   * the time of day
+	* who is logged in
+	* the time of day
 
  * They *must* contain a valid file extension
  
-   * Bad: ``my/cool/template``
-   * Good: ``my/cool/template.html``
+	* Bad: ``my/cool/template``
+	* Good: ``my/cool/template.html``
 
 For example, suppose you wanted to load some CSS on a page.
 You could define a view ``mystyles.css``, which would look like so:
 
 .. code-block:: css
 
-    /* /views/default/mystyles.css */
-    .mystyles-foo {
-      background: red;
-    }
+	/* /views/default/mystyles.css */
+	.mystyles-foo {
+	  background: red;
+	}
 
 .. note::
 
-    Leave off the trailing ".php" from the filename and Elgg will automatically
-    recognize the view as cacheable.
+	Leave off the trailing ".php" from the filename and Elgg will automatically
+	recognize the view as cacheable.
 
 To get a URL to this file, you would use ``elgg_get_simplecache_url``:
 
 .. code-block:: php
 
-    // Returns "https://mysite.com/.../289124335/default/mystyles.css
-    elgg_get_simplecache_url('mystyles.css'); 
+	// Returns "https://mysite.com/.../289124335/default/mystyles.css
+	elgg_get_simplecache_url('mystyles.css');
 
 Elgg automatically adds the magic numbers you see there for cache-busting and
 sets long-term expires headers on the returned file.
 
 .. warning::
 
-    Elgg may decide to change the location or structure of the returned URL in a
-    future release for whatever reason, and the cache-busting numbers change
-    every time you flush Elgg's caches, so the exact URL is not stable by design.
-    
-    With that in mind, here's a couple anti-patterns to avoid:
-    
-     * Don't rely on the exact structure/location of this URL
-     * Don't try to generate the URLs yourself
-     * Don't store the returned URLs in a database
+	Elgg may decide to change the location or structure of the returned URL in a
+	future release for whatever reason, and the cache-busting numbers change
+	every time you flush Elgg's caches, so the exact URL is not stable by design.
+
+	With that in mind, here's a couple anti-patterns to avoid:
+
+	 * Don't rely on the exact structure/location of this URL
+	 * Don't try to generate the URLs yourself
+	 * Don't store the returned URLs in a database
 
 In your plugin's init function, register the css file:
 
 .. code-block:: php
 
-    elgg_register_css('mystyles', elgg_get_simplecache_url('mystyles.css'));
+	elgg_register_css('mystyles', elgg_get_simplecache_url('mystyles.css'));
 
 Then on the page you want to load the css, call:
 
 .. code-block:: php
 
-    elgg_load_css('mystyles');
+	elgg_load_css('mystyles');
 
 .. _guides/views#viewtypes:
 
@@ -153,40 +153,40 @@ If you check your assets into source control, point to them like this:
 
 .. code-block:: php
 
-    <?php // mod/example/elgg-plugin.php
-    return [
-        // view mappings
-        'views' => [
-            // viewtype
-            'default' => [
-                // view => /path/from/filesystem/root
-                'js/jquery-ui.js' => __DIR__ . '/bower_components/jquery-ui/jquery-ui.min.js',
-            ],
-        ],
-    ];
+	<?php // mod/example/elgg-plugin.php
+	return [
+		// view mappings
+		'views' => [
+			// viewtype
+			'default' => [
+				// view => /path/from/filesystem/root
+				'js/jquery-ui.js' => __DIR__ . '/bower_components/jquery-ui/jquery-ui.min.js',
+			],
+		],
+	];
 
 To point to assets installed with ``fxp/composer-asset-plugin``, use install-root-relative
 paths by leaving off the leading slash:
 
 .. code-block:: php
 
-    <?php // mod/example/elgg-plugin.php
-    return [
-        'views' => [
-            'default' => [
-                // view => path/from/install/root
-                'js/jquery-ui.js' => 'vendor/bower-asset/jquery-ui/jquery-ui.min.js',
-            ],
-        ],
-    ];
-    
+	<?php // mod/example/elgg-plugin.php
+	return [
+		'views' => [
+			'default' => [
+				// view => path/from/install/root
+				'js/jquery-ui.js' => 'vendor/bower-asset/jquery-ui/jquery-ui.min.js',
+			],
+		],
+	];
+
 Elgg core uses this feature extensively, though the value is returned directly from ``/engine/views.php``.
 
 .. note::
 
-    You don't have to use Bower, Composer Asset Plugin, or any other script for
-    managing your plugin's assets, but we highly recommend using a package manager
-    of some kind because it makes upgrading so much easier.
+	You don't have to use Bower, Composer Asset Plugin, or any other script for
+	managing your plugin's assets, but we highly recommend using a package manager
+	of some kind because it makes upgrading so much easier.
 
 Specifying additional views directories
 ---------------------------------------
@@ -196,37 +196,37 @@ a view name prefix ending with ``/`` and a directory path (like above).
 
 .. code-block:: php
 
-    <?php // mod/file/elgg-plugin.php
-    return [
-        'views' => [
-            'default' => [
-                'file/icon/' => __DIR__ . '/graphics/icons',
-            ],
-        ],
-    ];
+	<?php // mod/file/elgg-plugin.php
+	return [
+		'views' => [
+			'default' => [
+				'file/icon/' => __DIR__ . '/graphics/icons',
+			],
+		],
+	];
 
 With the above, files found within the ``icons`` folder will be interpreted as views. E.g. the view
 ``file/icon/general.gif`` will be created and mapped to ``mod/file/graphics/icons/general.gif``.
 
 .. note::
 
-    This is a fully recursive scan. All files found will be brought into the views system.
+	This is a fully recursive scan. All files found will be brought into the views system.
 
 Multiple paths can share the same prefix, just give an array of paths:
 
 .. code-block:: php
 
-    <?php // mod/file/elgg-plugin.php
-    return [
-        'views' => [
-            'default' => [
-                'file/icon/' => [
-                    __DIR__ . '/graphics/icons',
-                    __DIR__ . '/more_icons', // processed 2nd (may override)
-                ],
-            ],
-        ],
-    ];
+	<?php // mod/file/elgg-plugin.php
+	return [
+		'views' => [
+			'default' => [
+				'file/icon/' => [
+					__DIR__ . '/graphics/icons',
+					__DIR__ . '/more_icons', // processed 2nd (may override)
+				],
+			],
+		],
+	];
 
 Viewtypes
 =========
@@ -365,9 +365,9 @@ Here we'll alter the default pagination limit for the comments view:
 	elgg_register_plugin_hook_handler('view_vars', 'page/elements/comments', 'myplugin_alter_comments_limit');
 
 	function myplugin_alter_comments_limit($hook, $type, $vars, $params) {
-	    // only 10 comments per page
-	    $vars['limit'] = elgg_extract('limit', $vars, 10);
-	    return $vars;
+		// only 10 comments per page
+		$vars['limit'] = elgg_extract('limit', $vars, 10);
+		return $vars;
 	}
 
 .. _guides/views#altering-view-output:
@@ -400,17 +400,17 @@ Here we'll eliminate breadcrumbs that don't have at least one link.
 	elgg_register_plugin_hook_handler('view', 'navigation/breadcrumbs', 'myplugin_alter_breadcrumb');
 
 	function myplugin_alter_breadcrumb($hook, $type, $returnvalue, $params) {
-	    // we only want to alter when viewtype is "default"
-	    if ($params['viewtype'] !== 'default') {
-	        return $returnvalue;
-	    }
-	    
-	    // output nothing if the content doesn't have a single link
-	    if (false === strpos($returnvalue, '<a ')) {
-	        return '';
-	    }
-	    
-	    // returning nothing means "don't alter the returnvalue"
+		// we only want to alter when viewtype is "default"
+		if ($params['viewtype'] !== 'default') {
+			return $returnvalue;
+		}
+
+		// output nothing if the content doesn't have a single link
+		if (false === strpos($returnvalue, '<a ')) {
+			return '';
+		}
+
+		// returning nothing means "don't alter the returnvalue"
 	}
 
 Replacing view output completely
@@ -421,14 +421,14 @@ string. View extensions will not be used and the ``view`` hook will not be trigg
 
 .. code-block:: php
 
-    elgg_register_plugin_hook_handler('view_vars', 'navigation/breadcrumbs', 'myplugin_no_page_breadcrumbs');
+	elgg_register_plugin_hook_handler('view_vars', 'navigation/breadcrumbs', 'myplugin_no_page_breadcrumbs');
 
-    function myplugin_no_page_breadcrumbs($hook, $type, $vars, $params) {
-        if (elgg_in_context('pages')) {
-            return ['__view_output' => ""];
-        }
-    }
-    
+	function myplugin_no_page_breadcrumbs($hook, $type, $vars, $params) {
+		if (elgg_in_context('pages')) {
+			return ['__view_output' => ""];
+		}
+	}
+
 .. note::
 
 	For ease of use you can also use a already existing default hook callback to prevent output ``\Elgg\Values::preventViewOutput``
@@ -483,8 +483,8 @@ To automatically display a list of blog posts (:doc:`see the full tutorial </tut
 .. code-block:: php
 
 	echo elgg_list_entities([
-	    'type' => 'object',
-	    'subtype' => 'blog',
+		'type' => 'object',
+		'subtype' => 'blog',
 	]);
 
 This function checks to see if there are any entities; if there are, it first
@@ -506,11 +506,11 @@ you can improve performance a bit by preloading all owner entities:
 .. code-block:: php
 
 	echo elgg_list_entities([
-	    'type' => 'object',
-	    'subtype' => 'blog',
+		'type' => 'object',
+		'subtype' => 'blog',
 
-	    // enable owner preloading
-	    'preload_owners' => true,
+		// enable owner preloading
+		'preload_owners' => true,
 	]);
 
 See also :doc:`this background information on Elgg's database </design/database>`.
@@ -522,10 +522,10 @@ can also pass a Closure (an anonymous function).
 .. code-block:: php
 
 	echo elgg_list_entities([
-	    'type' => 'object',
-	    'subtype' => 'blog',
+		'type' => 'object',
+		'subtype' => 'blog',
 
-	    'no_results' => elgg_echo('notfound'),
+		'no_results' => elgg_echo('notfound'),
 	]);
 
 Rendering a list with an alternate view
@@ -541,21 +541,21 @@ Consider these two examples:
 .. code-block:: php
 
 	echo elgg_list_entities([
-	    'type' => 'group',
-	    'relationship' => 'member',
-	    'relationship_guid' => elgg_get_logged_in_user_guid(),
-	    'inverse_relationship' => false,
-	    'full_view' => false,
+		'type' => 'group',
+		'relationship' => 'member',
+		'relationship_guid' => elgg_get_logged_in_user_guid(),
+		'inverse_relationship' => false,
+		'full_view' => false,
 	]);
 
 .. code-block:: php
 
 	echo elgg_list_entities([
-	    'type' => 'group',
-	    'relationship' => 'invited',
-	    'relationship_guid' => (int) $user_guid,
-	    'inverse_relationship' => true,
-	    'item_view' => 'group/format/invitationrequest',
+		'type' => 'group',
+		'relationship' => 'invited',
+		'relationship_guid' => (int) $user_guid,
+		'inverse_relationship' => true,
+		'item_view' => 'group/format/invitationrequest',
 	]);
 
 In the first example, we are displaying a list of groups a user is a member of using the default group view.
@@ -578,19 +578,19 @@ name, and a friendly format of the time.
 
 .. code-block:: php
 
-    echo elgg_list_entities([
-        'type' => 'object',
-        'subtype' => 'my_plugin',
+	echo elgg_list_entities([
+		'type' => 'object',
+		'subtype' => 'my_plugin',
 
-        'list_type' => 'table',
-        'columns' => [
-            elgg()->table_columns->icon(),
-            elgg()->table_columns->getDisplayName(),
-            elgg()->table_columns->time_created(null, [
-                'format' => 'friendly',
-            ]),
-        ],
-    ]);
+		'list_type' => 'table',
+		'columns' => [
+			elgg()->table_columns->icon(),
+			elgg()->table_columns->getDisplayName(),
+			elgg()->table_columns->time_created(null, [
+				'format' => 'friendly',
+			]),
+		],
+	]);
 
 See the ``Elgg\Views\TableColumn\ColumnFactory`` class for more details on how columns are specified and
 rendered. You can add or override methods of ``elgg()->table_columns`` in a variety of ways, based on views,
@@ -652,10 +652,10 @@ Related
 =======
 
 .. toctree::
-   :maxdepth: 1
-   
-   views/page-structure
-   views/simplecache
-   views/foot-vs-footer
+	:maxdepth: 1
+
+	views/page-structure
+	views/simplecache
+	views/foot-vs-footer
 	
 .. _FontAwesome: http://fontawesome.io/icons/

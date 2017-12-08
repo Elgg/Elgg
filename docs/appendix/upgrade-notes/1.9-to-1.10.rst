@@ -2,8 +2,8 @@ From 1.9 to 1.10
 ================
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 File uploads
 ------------

@@ -20,7 +20,7 @@ significant refactoring. If a fix risks stability of the LTS branch, it will not
 
 .. seealso::
 
-   :doc:`releases`
+	:doc:`releases`
 
 Below is a table outlining the specifics for each release (future dates are tentative):
 

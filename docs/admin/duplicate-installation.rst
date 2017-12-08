@@ -2,8 +2,8 @@ Duplicate Installation
 ######################
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Introduction
 ============
@@ -44,7 +44,7 @@ Before you start, make sure the Elgg installation you want to duplicate is fully
 - A backup of the live Elgg database
 - A place to copy the live database
 - A server suitable for installing duplicate Elgg site  
-   (This can be the same server as your production Elgg installation.)
+	(This can be the same server as your production Elgg installation.)
 
 Backups of the database can be obtained various ways, including phpMyAdmin, the MySQL official GUI, and the command line. Talk to your host for 
 information on how to backup and restore databases or use Google to find information on this.
@@ -78,8 +78,8 @@ The very first step is to duplicate the production Elgg code. In our example, th
 ``/var/www/elgg_test/``.
 
 .. code-block:: sh
-   
-   cp -a /var/www/elgg/ /var/www/elgg_test/
+
+	cp -a /var/www/elgg/ /var/www/elgg_test/
 
 Copy Data to the Test Server
 ============================
@@ -87,15 +87,15 @@ Copy Data to the Test Server
 In this example, this is as simple as copying ``/var/data/elgg/`` to ``/var/data/elgg_test/``.
 
 .. code-block:: sh
-   
-   cp -a /var/data/elgg/ /var/data/elgg_test/
+
+	cp -a /var/data/elgg/ /var/data/elgg_test/
 
 If you don't have shell access to your server and have to ftp the data, you may need to change ownership and permissions on the files.
 
 .. note::
-   
-   You also need to delete the views cache on the test server after the copy process. This is a directory called ``views_simplecache`` in your 
-   data directory and the directory called ``system_cache`` .
+
+	You also need to delete the views cache on the test server after the copy process. This is a directory called ``views_simplecache`` in your
+	data directory and the directory called ``system_cache`` .
 
 Edit settings.php
 =================
@@ -104,52 +104,52 @@ The ``elgg-config/settings.php`` file contains the database configuration detail
 In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` and find the lines that look like this:
 
 .. code-block:: php
-   
-   // Database username
-   $CONFIG->dbuser = 'db_user';
-   
-   // Database password
-   $CONFIG->dbpass = 'db_password';
-   
-   // Database name
-   $CONFIG->dbname = 'elgg_production';
+
+	// Database username
+	$CONFIG->dbuser = 'db_user';
+
+	// Database password
+	$CONFIG->dbpass = 'db_password';
+
+	// Database name
+	$CONFIG->dbname = 'elgg_production';
  
-   // Database server
-   // (For most configurations, you can leave this as 'localhost')
-   $CONFIG->dbhost = 'localhost';
-   
-   // Database table prefix
-   // If you're sharing a database with other applications, you will want to use this
-   // to differentiate Elgg's tables.
-   $CONFIG->dbprefix = 'elgg';
-   
+	// Database server
+	// (For most configurations, you can leave this as 'localhost')
+	$CONFIG->dbhost = 'localhost';
+
+	// Database table prefix
+	// If you're sharing a database with other applications, you will want to use this
+	// to differentiate Elgg's tables.
+	$CONFIG->dbprefix = 'elgg';
+
 We need to change these lines to match our new installation:
 
 .. code-block:: php
-   
-   // Database username
-   $CONFIG->dbuser = 'db_user';
-   
-   // Database password
-   $CONFIG->dbpass = 'db_password';
-   
-   // Database name
-   $CONFIG->dbname = 'elgg_test';
-   
-   // Database server
-   // (For most configurations, you can leave this as 'localhost')
-   $CONFIG->dbhost = 'localhost';
-   
-   // Database table prefix
-   // If you're sharing a database with other applications, you will want to use this
-   // to differentiate Elgg's tables.
-   $CONFIG->dbprefix = 'elgg';
-   
-   $CONFIG->wwwroot = 'http://your.website.com/'
+
+	// Database username
+	$CONFIG->dbuser = 'db_user';
+
+	// Database password
+	$CONFIG->dbpass = 'db_password';
+
+	// Database name
+	$CONFIG->dbname = 'elgg_test';
+
+	// Database server
+	// (For most configurations, you can leave this as 'localhost')
+	$CONFIG->dbhost = 'localhost';
+
+	// Database table prefix
+	// If you're sharing a database with other applications, you will want to use this
+	// to differentiate Elgg's tables.
+	$CONFIG->dbprefix = 'elgg';
+
+	$CONFIG->wwwroot = 'http://your.website.com/'
 
 .. note::
 
-   Notice the ``$CONFIG->dbname`` has changed to reflect our new database.
+	Notice the ``$CONFIG->dbname`` has changed to reflect our new database.
 
 Copy Elgg Database
 ==================
@@ -173,14 +173,14 @@ Change the installation path
 
 .. code-block:: sql
 
-   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/") WHERE `name` = "path";
+	UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/") WHERE `name` = "path";
 
 Change the data directory
 -------------------------
 
 .. code-block:: sql
 
-   UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/") WHERE `name` = "dataroot";
+	UPDATE `elgg_config` SET `value` = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/") WHERE `name` = "dataroot";
 
 Check .htaccess
 ===============
@@ -209,24 +209,24 @@ file will allow seamless re-writing of the MySQL database entries.
 
 .. code-block:: php
 
-   $con = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass);
-   mysql_select_db($CONFIG->dbname, $con);
-   
-   $sql = "UPDATE {$CONFIG->dbprefix}config
-      SET value = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/")
-      WHERE name = 'path'";
-   mysql_query($sql);
-   print mysql_error();
-   
-   $sql = "UPDATE {$CONFIG->dbprefix}config 
-      SET value = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/")
-      WHERE name = 'dataroot'";
-   mysql_query($sql);
-   print mysql_error();
+	$con = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass);
+	mysql_select_db($CONFIG->dbname, $con);
+
+	$sql = "UPDATE {$CONFIG->dbprefix}config
+	  SET value = REPLACE(`value`, "/var/www/elgg_production/", "/var/www/elgg_test/")
+	  WHERE name = 'path'";
+	mysql_query($sql);
+	print mysql_error();
+
+	$sql = "UPDATE {$CONFIG->dbprefix}config
+	  SET value = REPLACE(`value`, "/var/data/elgg_production/", "/var/data/elgg_test/")
+	  WHERE name = 'dataroot'";
+	mysql_query($sql);
+	print mysql_error();
 
 Related
 =======
 
 .. seealso::
 
-   :doc:`backup-restore`
+	:doc:`backup-restore`

@@ -6,7 +6,7 @@ class will offer a set of service objects for plugins to use.
 
 .. note::
 
-    If you have a useful idea, you can :doc:`add a new service </contribute/services>`!
+	If you have a useful idea, you can :doc:`add a new service </contribute/services>`!
 
 Menus
 -----

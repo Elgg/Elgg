@@ -12,58 +12,58 @@ The following files for plugin ``example`` would go in ``/mod/example/``
 
 .. code-block:: text
 
-    actions/
-        example/
-            action.php
-            other_action.php
-    classes/
-        VendorNamespace/
-            ExampleClass.php
-    languages/
-        en.php
-    vendors/
-        example_3rd_party_lib/
-    views/
-        default/
-            example/
-              component.css
-              component.js
-              component.png
-            forms/
-                example/
-                    action.php
-                    other_action.php
-            object/
-                example.php
-                example/
-                    context1.php
-                    context2.php
-            plugins/
-                example/
-                    settings.php
-                    usersettings.php
-            resources/
-                example/
-                    all.css
-                    all.js
-                    all.php
-                    owner.css
-                    owner.js
-                    owner.php
-            widgets/
-                example_widget/
-                    content.php
-                    edit.php
-    activate.php
-    deactivate.php
-    elgg-plugin.php
-    CHANGES.txt
-    COPYRIGHT.txt
-    INSTALL.txt
-    LICENSE.txt
-    manifest.xml
-    README.txt
-    start.php
+	actions/
+		example/
+			action.php
+			other_action.php
+	classes/
+		VendorNamespace/
+			ExampleClass.php
+	languages/
+		en.php
+	vendors/
+		example_3rd_party_lib/
+	views/
+		default/
+			example/
+			  component.css
+			  component.js
+			  component.png
+			forms/
+				example/
+					action.php
+					other_action.php
+			object/
+				example.php
+				example/
+					context1.php
+					context2.php
+			plugins/
+				example/
+					settings.php
+					usersettings.php
+			resources/
+				example/
+					all.css
+					all.js
+					all.php
+					owner.css
+					owner.js
+					owner.php
+			widgets/
+				example_widget/
+					content.php
+					edit.php
+	activate.php
+	deactivate.php
+	elgg-plugin.php
+	CHANGES.txt
+	COPYRIGHT.txt
+	INSTALL.txt
+	LICENSE.txt
+	manifest.xml
+	README.txt
+	start.php
 
 Required Files
 --------------
@@ -74,8 +74,8 @@ Therefore the following is the minimally compliant structure:
 
 .. code-block:: text
 
-    mod/example/
-        manifest.xml
+	mod/example/
+		manifest.xml
 
 Actions
 -------
@@ -92,19 +92,19 @@ Text Files
 Plugins *may* provide various \*.txt as additional documentation for the plugin. These files **must** be in Markdown syntax and will generate links on the plugin management sections.
 
 README.txt 
-    *should* provide additional information about the plugin of an unspecified nature 
+	*should* provide additional information about the plugin of an unspecified nature
 
 COPYRIGHT.txt 
-    If included, **must** provide an explanation of the plugin's copyright, besides what is included in ``manifest.xml`` 
+	If included, **must** provide an explanation of the plugin's copyright, besides what is included in ``manifest.xml``
 
 LICENSE.txt 
-    If included, **must** provide the text of the license that the plugin is released under. 
+	If included, **must** provide the text of the license that the plugin is released under.
 
 INSTALL.txt 
-    If included, **must** provide additional instructions for installing the plugin if the process is sufficiently complicated (e.g. if it requires installing third party libraries on the host machine, or requires acquiring an API key from a third party). 
+	If included, **must** provide additional instructions for installing the plugin if the process is sufficiently complicated (e.g. if it requires installing third party libraries on the host machine, or requires acquiring an API key from a third party).
 
 CHANGES.txt 
-    If included, **must** provide a list of changes for their plugin, grouped by version number, with the most recent version at the top. 
+	If included, **must** provide a list of changes for their plugin, grouped by version number, with the most recent version at the top.
 
 Plugins *may* include additional \*.txt files besides these, but no interface is given for reading them.
 
@@ -116,10 +116,10 @@ to easily replace functionality via the view system.
 
 .. note::
 
-    The reason we encourage this structure is
-    
-    - To form a logical relationship between urls and scripts, so that people examining the code can have an idea of what it does just by examining the structure.
-    - To clean up the root plugin directory, which historically has quickly gotten cluttered with the page handling scripts.
+	The reason we encourage this structure is
+
+	- To form a logical relationship between urls and scripts, so that people examining the code can have an idea of what it does just by examining the structure.
+	- To clean up the root plugin directory, which historically has quickly gotten cluttered with the page handling scripts.
 
 Classes
 -------

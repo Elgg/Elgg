@@ -8,8 +8,8 @@ It relies on the support of volunteers to succeed.
 Here are some ways you can help:
 
 .. toctree::
-   :maxdepth: 1
-   :glob:
-   
-   *
-   core/index
+	:maxdepth: 1
+	:glob:
+
+	*
+	core/index

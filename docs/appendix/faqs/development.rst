@@ -10,7 +10,7 @@ Text Editor
 ^^^^^^^^^^^
 
 If you are new to software development or do not have much experience with IDEs, using a text editor will get you up and running the quickest. At a minimum, you will want one that does syntax highlighting to make the code easier to read. If you think you might submit patches to the bug tracker, you will want to make sure that your text editor does not change line endings. If you are using Windows, `Notepad++`_ is a good choice. If you are on a Mac, TextWrangler_ is a popular choice. You could also give TextMate_ a try.
-   
+
 Integrated Development Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -47,8 +47,8 @@ To find the string use ``grep`` or a text editor that provides searching through
 You should locate the string "Add friend" in ``/languages/en.php``. You should see something like this in the file:
 
 .. code-block:: php
-   
-   'friend:add' => "Add friend",
+
+	'friend:add' => "Add friend",
 
 This means every time Elgg sees ``friend:add`` it replaces it with "Add friend". We want to change the definition of ``friend:add``.
 
@@ -62,12 +62,12 @@ To override this definition, we will add a languages file to the plugin that we 
 3. Add these lines to that file
 
 .. code-block:: php
-   
-   <?php
-   
-   return array(   
-      'friend:add' => 'Make a new friend',   
-   );
+
+	<?php
+
+	return array(
+	  'friend:add' => 'Make a new friend',
+	);
 
 Make sure that you do not have any spaces or newlines before the ``<?php``.
 
@@ -97,7 +97,7 @@ During the installation process you might have noticed a checkbox that controlle
 
 .. warning::
 
-   Because of the amount of data being logged, don't enable this on a production server as it can fill up the log files really quick.
+	Because of the amount of data being logged, don't enable this on a production server as it can fill up the log files really quick.
 
 What goes into the log in debug mode?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -114,31 +114,31 @@ What does the data look like?
 
 .. code-block:: text
 
-   [07-Mar-2009 14:27:20] Query cache invalidated
-   [07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
-   [07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results cached
-   [07-Mar-2009 14:27:20] SELECT guid from elggsites_entity where guid = 1 results cached
-   [07-Mar-2009 14:27:20] Query cache invalidated
-   [07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
-   [07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results cached
-   [07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
-   [07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results returned from cache
-   [07-Mar-2009 14:27:20] ** Sub part of GUID:1 loaded from DB
-   [07-Mar-2009 14:27:20] SELECT * from elggsites_entity where guid=1 results cached
-   [07-Mar-2009 14:27:20] Query cache invalidated
-   [07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  user" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
-   [07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  pass" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
-   [07-Mar-2009 14:27:20] ***************** DB PROFILING ********************
-   [07-Mar-2009 14:27:20] 1 times: 'SELECT * from elggentities where guid=1 and (  (access_id in (2) or (owner_guid = -1) or (access_id = 0 and owner_guid = -1)) and enabled='yes')' 
-   ...
-   [07-Mar-2009 14:27:20] 2 times: 'update elggmetadata set access_id = 2 where entity_guid = 1' 
-   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggentities set owner_guid='0', access_id='2', container_guid='0', time_updated='1236461868' WHERE guid=1' 
-   [07-Mar-2009 14:27:20] 1 times: 'SELECT guid from elggsites_entity where guid = 1' 
-   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggsites_entity set name='3124/944', description='', url='http://example.org/' where guid=1' 
-   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggusers_entity set prev_last_action = last_action, last_action = 1236461868 where guid = 2' 
-   [07-Mar-2009 14:27:20] DB Queries for this page: 56
-   [07-Mar-2009 14:27:20] ***************************************************
-   [07-Mar-2009 14:27:20] Page /action/admin/site/update_basic generated in 0.36997294426 seconds
+	[07-Mar-2009 14:27:20] Query cache invalidated
+	[07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
+	[07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results cached
+	[07-Mar-2009 14:27:20] SELECT guid from elggsites_entity where guid = 1 results cached
+	[07-Mar-2009 14:27:20] Query cache invalidated
+	[07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
+	[07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results cached
+	[07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
+	[07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results returned from cache
+	[07-Mar-2009 14:27:20] ** Sub part of GUID:1 loaded from DB
+	[07-Mar-2009 14:27:20] SELECT * from elggsites_entity where guid=1 results cached
+	[07-Mar-2009 14:27:20] Query cache invalidated
+	[07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  user" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
+	[07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  pass" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
+	[07-Mar-2009 14:27:20] ***************** DB PROFILING ********************
+	[07-Mar-2009 14:27:20] 1 times: 'SELECT * from elggentities where guid=1 and (  (access_id in (2) or (owner_guid = -1) or (access_id = 0 and owner_guid = -1)) and enabled='yes')'
+	...
+	[07-Mar-2009 14:27:20] 2 times: 'update elggmetadata set access_id = 2 where entity_guid = 1'
+	[07-Mar-2009 14:27:20] 1 times: 'UPDATE elggentities set owner_guid='0', access_id='2', container_guid='0', time_updated='1236461868' WHERE guid=1'
+	[07-Mar-2009 14:27:20] 1 times: 'SELECT guid from elggsites_entity where guid = 1'
+	[07-Mar-2009 14:27:20] 1 times: 'UPDATE elggsites_entity set name='3124/944', description='', url='http://example.org/' where guid=1'
+	[07-Mar-2009 14:27:20] 1 times: 'UPDATE elggusers_entity set prev_last_action = last_action, last_action = 1236461868 where guid = 2'
+	[07-Mar-2009 14:27:20] DB Queries for this page: 56
+	[07-Mar-2009 14:27:20] ***************************************************
+	[07-Mar-2009 14:27:20] Page /action/admin/site/update_basic generated in 0.36997294426 seconds
 
 What events are triggered on every page load?
 ---------------------------------------------
@@ -169,4 +169,4 @@ There are many questions asked about how to copy a plugin. Let's say you want to
 
 .. note::
 
-   If you are trying to clone the ``groups`` plugin, you will have the additional difficulty that the group plugin does not set a subtype.
+	If you are trying to clone the ``groups`` plugin, you will have the additional difficulty that the group plugin does not set a subtype.

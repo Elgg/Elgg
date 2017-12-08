@@ -5,8 +5,8 @@ Plugins must provide a ``manifest.xml`` file in the plugin root
 in order to be recognized by Elgg.
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 start.php
 =========
@@ -18,23 +18,23 @@ This allows for consistency in Application bootstrapping, especially for testing
 
 .. code-block:: php
 
-    function my_plugin_does_something_else() {
-        // Some procedural code that you want to run before any events are fired
-    }
+	function my_plugin_does_something_else() {
+		// Some procedural code that you want to run before any events are fired
+	}
 
-    function my_plugin_init() {
-        // Your plugin's initialization logic
-    }
+	function my_plugin_init() {
+		// Your plugin's initialization logic
+	}
 
-    function my_plugin_rewrite_hook() {
-        // Path rewrite hook
-    }
+	function my_plugin_rewrite_hook() {
+		// Path rewrite hook
+	}
 
-    return function() {
-        my_plugin_do_something_else();
-        elgg_register_event_handler('init', 'system', 'my_plugin_init');
-        elgg_register_plugin_hook_handler('route:rewrite', 'proifle', 'my_plugin_rewrite_hook');
-    }
+	return function() {
+		my_plugin_do_something_else();
+		elgg_register_event_handler('init', 'system', 'my_plugin_init');
+		elgg_register_plugin_hook_handler('route:rewrite', 'proifle', 'my_plugin_rewrite_hook');
+	}
 
 
 elgg-plugin.php

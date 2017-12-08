@@ -100,7 +100,7 @@ The basic structure of the class is the following:
 		 * Runs upgrade on a single batch of items
 		 *
 		 * @param Result $result Result of the batch (this must be returned)
-		 * @param int    $offset Number to skip when processing
+		 * @param int	$offset Number to skip when processing
 		 *
 		 * @return Result Instance of \Elgg\Upgrade\Result
 		 */
@@ -120,11 +120,10 @@ getVersion()
 This must return an integer representing the date the upgrade was added. It consists
 of eight digits and is in format ``yyyymmddnn`` where:
 
-   - ``yyyy`` is the year
-   - ``mm`` is the month (with leading zero)
-   - ``dd`` is the day (with leading zero)
-   - ``nn`` is an incrementing number (starting from ``00``) that is used in case
-     two separate upgrades have been added during the same day
+	- ``yyyy`` is the year
+	- ``mm`` is the month (with leading zero)
+	- ``dd`` is the day (with leading zero)
+	- ``nn`` is an incrementing number (starting from ``00``) that is used in case two separate upgrades have been added during the same day
 
 shouldBeSkipped()
 ^^^^^^^^^^^^^^^^^
@@ -186,7 +185,7 @@ In most cases your ``run()`` method will want to pass the ``$offset`` parameter 
 	 * Process blog posts
 	 *
 	 * @param Result $result The batch result (will be modified and returned)
-	 * @param int    $offset Starting point of the batch
+	 * @param int	$offset Starting point of the batch
 	 * @return Result Instance of \Elgg\Upgrade\Result;
 	 */
 	public function run(Result $result, $offset) {

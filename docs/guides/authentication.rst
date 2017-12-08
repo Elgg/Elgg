@@ -20,23 +20,23 @@ Check whether the current user is logged in with ``elgg_is_logged_in()``:
 
 .. code-block:: php
 
-    if (elgg_is_logged_in()) {
-      // do something just for logged-in users
-    }
+	if (elgg_is_logged_in()) {
+	  // do something just for logged-in users
+	}
 
 Check if the current user is an admin with ``elgg_is_admin_logged_in()``:
 
 .. code-block:: php
 
-    if (elgg_is_admin_logged_in()) {
-      // do something just for admins
-    }
-    
+	if (elgg_is_admin_logged_in()) {
+	  // do something just for admins
+	}
+
 Get the currently logged in user with ``elgg_get_logged_in_user_entity()``:
 
 .. code-block:: php
 
-    $user = elgg_get_logged_in_user_entity();
+	$user = elgg_get_logged_in_user_entity();
 
 The returned object is an ``ElggUser`` so you can use all the methods and properties
 of that class to access information about the user. If the user is not logged in,
@@ -53,42 +53,42 @@ Forward a user to the front page if they are not logged in with ``elgg_gatekeepe
 
 .. code-block:: php
 
-    elgg_gatekeeper();
-    
-    echo "Information for logged-in users only";
+	elgg_gatekeeper();
+
+	echo "Information for logged-in users only";
 
 .. note::
 
-   In Elgg 1.8 and below this function was called ``gatekeeper()``
+	In Elgg 1.8 and below this function was called ``gatekeeper()``
 
 Forward a user to the front page unless they are an admin with ``elgg_admin_gatekeeper()``:
 
 .. code-block:: php
 
-    elgg_admin_gatekeeper();
-    
-    echo "Information for admins only";
+	elgg_admin_gatekeeper();
+
+	echo "Information for admins only";
 
 .. note::
 
-   In Elgg 1.8 and below this function was called ``admin_gatekeeper()``
+	In Elgg 1.8 and below this function was called ``admin_gatekeeper()``
 
 
 Prevent CSRF attacks with ``action_gatekeeper()``.
 
 .. code-block:: php
 
-    action_gatekeeper();
-    
-    // Mutate some state in the database on behalf of the logged in user...
+	action_gatekeeper();
+
+	// Mutate some state in the database on behalf of the logged in user...
 
 This function should be used in :doc:`actions` prior to Elgg 1.8.
 
 .. note::
 
-   As of Elgg version 1.8 this function is called for all registered actions.
-   There is no longer a need to call this function in your own actions.
-   If you wish to protect other pages with action tokens then you can call this function.
+	As of Elgg version 1.8 this function is called for all registered actions.
+	There is no longer a need to call this function in your own actions.
+	If you wish to protect other pages with action tokens then you can call this function.
 
 
 
@@ -103,17 +103,17 @@ The authentication handler is a function and takes a single parameter. Registeri
 
 .. code-block:: php
 
-   function your_plugin_init() {
-      // Register the authentication handler
-      register_pam_handler('your_plugin_auth_handler');
-   }
-   
-   function your_plugin_auth_handler($credentials) {
-      // do things ...
-   }
-   
-   // Add the plugin's init function to the system's init event
-   elgg_register_elgg_event_handler('init', 'system', 'your_plugin_init');
+	function your_plugin_init() {
+	  // Register the authentication handler
+	  register_pam_handler('your_plugin_auth_handler');
+	}
+
+	function your_plugin_auth_handler($credentials) {
+	  // do things ...
+	}
+
+	// Add the plugin's init function to the system's init event
+	elgg_register_elgg_event_handler('init', 'system', 'your_plugin_init');
 
 Importance
 ----------

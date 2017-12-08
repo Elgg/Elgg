@@ -3,7 +3,7 @@ General
 
 .. seealso::
 
-   :doc:`/admin/getting-help`
+	:doc:`/admin/getting-help`
 
 "Plugin cannot start and has been deactivated" or "This plugin is invalid"
 --------------------------------------------------------------------------
@@ -32,13 +32,13 @@ To find where the error is occurring, change the .htaccess file to display error
 
 .. note:: 
 
-   If you are using the Developer's Tools plugin, go to its settings page and make sure you have "Display fatal PHP errors" enabled.
+	If you are using the Developer's Tools plugin, go to its settings page and make sure you have "Display fatal PHP errors" enabled.
 
 If the white screen is due to a bad plugin, remove the latest plugins that you have installed by deleting their directories and then reload the page.
 
 .. note:: 
 
-   You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel.
+	You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel.
 
 If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (``?>``) and remove them.
 
@@ -153,7 +153,7 @@ You can remove this requirement by deactivating the User Validation by Email plu
 
 .. note:: 
 
-   Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers.
+	Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers.
 
 Manually add user
 -----------------
@@ -162,7 +162,7 @@ To manually add a user, under the Administer controls go to Users. There you wil
 
 .. note::
 
-   Elgg does not force the user to change the password.
+	Elgg does not force the user to change the password.
 
 I'm making or just installed a new theme, but graphics or other elements aren't working
 ---------------------------------------------------------------------------------------
@@ -199,10 +199,10 @@ Create the plugin skeleton
   :doc:`/guides/plugins/plugin-skeleton`
 
 Changing registration display
-   Override the ``account/forms/register`` view
+	Override the ``account/forms/register`` view
 
 Changing the registration action handler
-   You can write your own action to create the user's account
+	You can write your own action to create the user's account
 
 How do I change PHP settings using .htaccess?
 ---------------------------------------------
@@ -233,16 +233,16 @@ A **500 - Internal Server Error** means the web server experienced a problem ser
 
 .. seealso::
 
-   `The Wikipedia page on HTTP status codes <https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error>`_
+	`The Wikipedia page on HTTP status codes <https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error>`_
 
 Possible causes
 ^^^^^^^^^^^^^^^
 
 Web server configuration
-   The most common cause for this is an incorrectly configured server. If you edited the ``.htaccess`` file and added something incorrect, Apache will send a 500 error.
+	The most common cause for this is an incorrectly configured server. If you edited the ``.htaccess`` file and added something incorrect, Apache will send a 500 error.
 
 Permissions on files
-   It could also be a permissions problem on a file. Apache needs to be able to read Elgg's files. Using permissions 755 on directories and 644 on files will allow Apache to read the files.
+	It could also be a permissions problem on a file. Apache needs to be able to read Elgg's files. Using permissions 755 on directories and 644 on files will allow Apache to read the files.
 
 When I upload a photo or change my profile picture I get a white screen
 -----------------------------------------------------------------------
@@ -272,8 +272,8 @@ Should I edit the database manually?
 
 .. warning::
 
-   No, you should never manually edit the database!
-   
+	No, you should never manually edit the database!
+
 Will editing the database manually break my site?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -345,7 +345,7 @@ The second cause would be an entity where the owner no longer exists. This could
 
 .. warning::
 
-   Reed the section "Should I edit the database manually?". Be very carefull when editing the database directly. It can break your site. **Always** make a backup before doing this.
+	Reed the section "Should I edit the database manually?". Be very carefull when editing the database directly. It can break your site. **Always** make a backup before doing this.
 
 Fixes
 ^^^^^
@@ -376,14 +376,14 @@ Different timezone
 
 .. note::
 
-   This only applies to Elgg versions before 1.9
+	This only applies to Elgg versions before 1.9
 
 If you migrated servers or upgraded PHP, check that PHP's timezone settings are the same between the old and the new. If you cannot or don't want to change the system-wide ``php.ini`` file, you can put the following at the top of ``settings.php``:
 
 .. code-block:: php
 
-   date_default_timezone_set('MY_TIME_ZONE');
-   
+	date_default_timezone_set('MY_TIME_ZONE');
+
 Where ``MY_TIME_ZONE`` is a valid `PHP timezone`_.
 
 .. _PHP timezone: http://php.net/manual/en/timezones.php
@@ -400,7 +400,7 @@ If you are seeing many deprecation warnings that say things like
 
 .. code-block:: text
 
-   Deprecated in 1.7: extend_view() was deprecated by elgg_extend_view()!
+	Deprecated in 1.7: extend_view() was deprecated by elgg_extend_view()!
 
 then you are using a plugin that was written for an older version of Elgg. This means the plugin is using functions that are scheduled to be removed in a future version of Elgg. You can ask the plugin developer if the plugin will be updated or you can update the plugin yourself. If neither of those are likely to happen, you should not use that plugin.
 

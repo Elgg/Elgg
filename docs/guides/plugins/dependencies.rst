@@ -4,8 +4,8 @@ Plugin Dependencies
 In Elgg 1.8 a plugin dependencies system was introduced to prevent plugins from being used on incompatible systems.
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
 
 Overview
 ========
@@ -21,15 +21,15 @@ The dependency system uses the four verbs above (``requires``, ``suggests``, ``c
 
 .. code-block:: xml
 
-   <verb>
-      <type>type</type>
-      <noun>value</noun>
-      <noun2>value2</noun2>
-   </verb>
-   
+	<verb>
+	  <type>type</type>
+	  <noun>value</noun>
+	  <noun2>value2</noun2>
+	</verb>
+
 .. note::
 
-   ``type`` is always required
+	``type`` is always required
 
 Verbs
 =====
@@ -50,10 +50,10 @@ Using elgg_release:
 
 .. code-block:: xml
 
-   <requires>
-      <type>elgg_release</type>
-      <version>1.8</version>
-   </requires>
+	<requires>
+	  <type>elgg_release</type>
+	  <version>1.8</version>
+	</requires>
 
 Suggests
 --------
@@ -64,22 +64,22 @@ Suggest another plugin:
 
 .. code-block:: xml
 
-   <suggests>
-      <type>plugin</type>
-      <name>profile</name>
-      <version>1.0</version>
-   </suggests>
+	<suggests>
+	  <type>plugin</type>
+	  <name>profile</name>
+	  <version>1.0</version>
+	</suggests>
 
 Suggest a certain PHP setting:
 
 .. code-block:: xml
 
-   <suggests>
-      <type>php_ini</type>
-      <name>memory_limit</name>
-      <value>64M</value>
-      <comparison>ge</comparison>
-   </suggests>
+	<suggests>
+	  <type>php_ini</type>
+	  <name>memory_limit</name>
+	  <value>64M</value>
+	  <comparison>ge</comparison>
+	</suggests>
 
 Conflicts
 ---------
@@ -89,21 +89,21 @@ Conflicts
 Conflict with any version of the profile plugin:
 
 .. code-block:: xml
-   
-   <conflicts>
-      <type>plugin</type>
-      <name>profile</name>
-   </conflicts>
+
+	<conflicts>
+	  <type>plugin</type>
+	  <name>profile</name>
+	</conflicts>
 
 Conflict with a specific release of Elgg:
 
 .. code-block:: xml
 
-   <conflicts>
-      <type>elgg_release</type>
-      <version>1.8</version>
-      <comparison>==</comparison>
-   </conflicts>
+	<conflicts>
+	  <type>elgg_release</type>
+	  <version>1.8</version>
+	  <comparison>==</comparison>
+	</conflicts>
 
 Provides
 --------
@@ -114,15 +114,15 @@ The purpose of this is to provide interchangeable APIs implemented by different 
 
 .. code-block:: xml
 
-   <provides>
-      <type>plugin</type>
-      <name>twitter_services</name>
-      <version>1.8</version>
-   </provides>
+	<provides>
+	  <type>plugin</type>
+	  <name>twitter_services</name>
+	  <version>1.8</version>
+	</provides>
 
 .. note::
 
-   All plugins provide themselves as their plugin id (directory name) at the version defined in the their manifest.
+	All plugins provide themselves as their plugin id (directory name) at the version defined in the their manifest.
 
 Types
 =====
@@ -138,17 +138,17 @@ Every dependency verb has a mandatory ``<type>`` element that must be one of the
 
 .. note::
 
-   ``provides`` only supports ``plugin`` and ``php_extension`` types.
+	``provides`` only supports ``plugin`` and ``php_extension`` types.
 
 Every type is defined with a dependency verb as the parent element. Additional option elements are at the same level as the type element:
 
 .. code-block:: xml
 
-   <verb>
-      <type>type</type>
-      <option_1>value_1</option_1>
-      <option_2>value_2</option_2>
-   </verb>
+	<verb>
+	  <type>type</type>
+	  <option_1>value_1</option_1>
+	  <option_2>value_2</option_2>
+	</verb>
 
 elgg_release
 ------------
@@ -195,7 +195,7 @@ The following option elements are supported, but not required:
 
 .. note::
 
-   The format of extension versions varies greatly among PHP extensions and is sometimes not even set. This is generally worthless to check.
+	The format of extension versions varies greatly among PHP extensions and is sometimes not even set. This is generally worthless to check.
 
 php_ini
 -------
@@ -244,7 +244,7 @@ If ``<comparison>`` is not passed, the follow are used as defaults, depending up
 
 .. note::
 
-   You must escape < and > to ``&gt;`` and ``&lt;``. For comparisons that use these values, it is recommended you use the string equivalents instead!
+	You must escape < and > to ``&gt;`` and ``&lt;``. For comparisons that use these values, it is recommended you use the string equivalents instead!
 
 Quick Examples
 ==============
@@ -254,53 +254,53 @@ Requires Elgg 1.8.2 or higher
 
 .. code-block:: xml
 
-   <requires>
-      <type>elgg_release</type>
-      <version>1.8.2</version>
-   </requires>
+	<requires>
+	  <type>elgg_release</type>
+	  <version>1.8.2</version>
+	</requires>
 
 Requires the Groups plugin is active
 ------------------------------------
 
 .. code-block:: xml
 
-   <requires>
-      <type>plugin</type>
-      <name>groups</name>
-   </requires>
+	<requires>
+	  <type>plugin</type>
+	  <name>groups</name>
+	</requires>
 
 Requires to be after the Profile plugin if Profile is active
 ------------------------------------------------------------
 
 .. code-block:: xml
 
-   <requires>
-      <type>priority</type>
-      <priority>after</priority>
-      <plugin>profile</plugin>
-   </requires>
+	<requires>
+	  <type>priority</type>
+	  <priority>after</priority>
+	  <plugin>profile</plugin>
+	</requires>
 
 Conflicts with The Wire plugin
 ------------------------------
 
 .. code-block:: xml
 
-   <conflicts>
-      <type>plugin</type>
-      <name>thewire</name>
-   </conflicts>
+	<conflicts>
+	  <type>plugin</type>
+	  <name>thewire</name>
+	</conflicts>
 
 Requires at least 256 MB memory in PHP
 --------------------------------------
 
 .. code-block:: xml
 
-   <requires>
-      <type>php_ini</type>
-      <name>memory_limit</name>
-      <value>256M</value>
-      <comparison>ge</comparison>
-   </requires>
+	<requires>
+	  <type>php_ini</type>
+	  <name>memory_limit</name>
+	  <value>256M</value>
+	  <comparison>ge</comparison>
+	</requires>
 
 
 Requires at least PHP version 5.3
@@ -308,17 +308,17 @@ Requires at least PHP version 5.3
 
 .. code-block:: xml
 
-   <requires>
-      <type>php_version</type>
-      <version>5.3</version>
-   </requires>
+	<requires>
+	  <type>php_version</type>
+	  <version>5.3</version>
+	</requires>
 
 Suggest the TidyPics plugin is loaded
 -------------------------------------
 
 .. code-block:: xml
 
-   <suggests>
-      <type>plugin</type>
-      <name>tidypics</name>
-   </suggests>
+	<suggests>
+	  <type>plugin</type>
+	  <name>tidypics</name>
+	</suggests>

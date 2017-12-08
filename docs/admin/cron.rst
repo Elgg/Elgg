@@ -60,8 +60,8 @@ a web-based configuration tool. This will vary depending on hosting provider.
 If you choose the ``wget`` utility, you might want to consider these flags:
 
  * ``--output-document`` or ``-O`` to specify the location of the concatenated output file.
-   For example, under Debian: ``/usr/bin/wget --output-document=/dev/null``. If you don't do
-   that, a new file will be created for each cron page load in the home directory of the cron user.
+	For example, under Debian: ``/usr/bin/wget --output-document=/dev/null``. If you don't do
+	that, a new file will be created for each cron page load in the home directory of the cron user.
  * ``--spider`` to prevent the cron page from being downloaded.
 
 On Windows servers, there is a number of cron emulators available.
@@ -69,7 +69,7 @@ On Windows servers, there is a number of cron emulators available.
 .. seealso::
 
     For information on setting up cron jobs using cPanel see `cPanel Docs`_.
-    
+
     In the ``command`` field, enter the appropriate link of the cron page.
     For example, for a ``weekly`` cron job, enter the command as http://www.example.com/cron/weekly/.
 
@@ -79,7 +79,7 @@ Easier installation
 -------------------
 
 Configuring all the different intervals can be some work. An alternative is to configure *only one* endpoint namely
-http://example.com/cron/run. This endpoint needs to be called *every* minute, the system will then take care of calling all 
+http://example.com/cron/run. This endpoint needs to be called *every* minute, the system will then take care of calling all
 the internal intervals at the correct time.
 
 .. _Cron: http://en.wikipedia.org/wiki/Cron

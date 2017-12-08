@@ -2,8 +2,8 @@ From 1.x to 2.0
 ===============
 
 .. contents:: Contents
-   :local:
-   :depth: 1
+	:local:
+	:depth: 1
 
 Elgg can be now installed as a composer dependency instead of at document root
 ------------------------------------------------------------------------------
@@ -12,18 +12,18 @@ That means an Elgg site can look something like this:
 
 .. code-block:: text
 
-    settings.php
-    vendor/
-      elgg/
-        elgg/
-          engine/
-            start.php
-          _graphics/
-            elgg_sprites.png
-    mod/
-      blog
-      bookmarks
-      ...
+	settings.php
+	vendor/
+	  elgg/
+		elgg/
+		  engine/
+			start.php
+		  _graphics/
+			elgg_sprites.png
+	mod/
+	  blog
+	  bookmarks
+	  ...
 
 ``elgg_get_root_path`` and ``$CONFIG->path`` will return the path to the application
 root directory, which is not necessarily the same as Elgg core's root directory (which
@@ -36,16 +36,16 @@ In particular, don't try load ``engine/start.php``.
 
 .. code-block:: php
 
-    // Don't do this!
-    dirname(__DIR__) . "/engine/start.php";
-    
+	// Don't do this!
+	dirname(__DIR__) . "/engine/start.php";
+
 To boot Elgg manually, you can use the class ``Elgg\Application``.
 
 .. code-block:: php
 
-    // boot Elgg in mod/myplugin/foo.php
-    require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
-    \Elgg\Application::start();
+	// boot Elgg in mod/myplugin/foo.php
+	require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+	\Elgg\Application::start();
 
 However, use this approach sparingly. Prefer :doc:`/guides/routing` instead whenever possible
 as that keeps your public URLs and your filesystem layout decoupled.
@@ -54,14 +54,14 @@ Also, don't try to access the ``_graphics`` files directly.
 
 .. code-block:: php
 
-    readfile(elgg_get_root_path() . "_graphics/elgg_sprites.png");
-    
+	readfile(elgg_get_root_path() . "_graphics/elgg_sprites.png");
+
 Use :doc:`/guides/views` instead:
 
 .. code-block:: php
 
-    echo elgg_view('elgg_sprites.png');
-    
+	echo elgg_view('elgg_sprites.png');
+
 
 Cacheable views must have a file extension in their names
 ---------------------------------------------------------
@@ -92,8 +92,8 @@ If you'd prefer to just add it back, you can use this code in your plugin's init
 
 .. code-block:: php
 
-    elgg_register_js('jquery-migrate', elgg_get_simplecache_url('jquery-migrate.js'), 'head');
-    elgg_load_js('jquery-migrate');
+	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('jquery-migrate.js'), 'head');
+	elgg_load_js('jquery-migrate');
 
 
 Also, define a ``jquery-migrate.js`` view containing the contents of the script.
@@ -105,13 +105,13 @@ They also have been given .js and .css extensions respectively if they didn't
 already have them:
 
 ================= =============
-Old view          New view
+Old view		  New view
 ================= =============
-``js/view``       ``view.js``
-``js/other.js``   ``other.js``
-``css/view``      ``view.css``
+``js/view``		  ``view.js``
+``js/other.js``	  ``other.js``
+``css/view``	  ``view.css``
 ``css/other.css`` ``other.css``
-``js/img.png``    ``img.png``
+``js/img.png``	  ``img.png``
 ================= =============
 
 The main benefit this brings is being able to co-locate related assets.
@@ -130,25 +130,25 @@ The ``view_vars, $view_name`` and ``view, $view_name`` hooks will operate on the
 
 .. code-block:: php
 
-    elgg_register_plugin_hook_handler('view', 'css/elgg', function($hook, $view_name) {
-      assert($view_name == 'elgg.css') // not "css/elgg"
-    });
-    
+	elgg_register_plugin_hook_handler('view', 'css/elgg', function($hook, $view_name) {
+	  assert($view_name == 'elgg.css') // not "css/elgg"
+	});
+
 Using the ``view, all`` hook and checking for individual views may not work as intended:
 
 .. code-block:: php
 
-    elgg_register_plugin_hook_handler('view', 'all', function($hook, $view_name) {
-      // Won't work because "css/elgg" was aliased to "elgg.css"
-      if ($view_name == 'css/elgg') {
-        // Never executed...
-      }
-      
-      // Won't work because no canonical views start with css/* anymore
-      if (strpos($view_name, 'css/') === 0) {
-        // Never executed...
-      }
-    });
+	elgg_register_plugin_hook_handler('view', 'all', function($hook, $view_name) {
+	  // Won't work because "css/elgg" was aliased to "elgg.css"
+	  if ($view_name == 'css/elgg') {
+		// Never executed...
+	  }
+
+	  // Won't work because no canonical views start with css/* anymore
+	  if (strpos($view_name, 'css/') === 0) {
+		// Never executed...
+	  }
+	});
 
 Please let us know about any other BC issues this change causes.
 We'd like to fix as many as possible to make the transition smooth.
@@ -162,15 +162,15 @@ for the ``bower-asset/*`` packages to be recognized. To install it, run:
 
 .. code-block:: sh
 
-    composer global require fxp/composer-asset-plugin
+	composer global require fxp/composer-asset-plugin
 
 If you don't do this before running ``composer install`` or ``composer create-project``,
 you will get an error message:
 
 .. code-block:: sh
 
-    [InvalidArgumentException]
-    Package fxp/composer-asset-plugin not found
+	[InvalidArgumentException]
+	Package fxp/composer-asset-plugin not found
 
 
 List of deprecated views and view arguments that have been removed
@@ -219,7 +219,7 @@ We also dropped the following arguments to views:
  * "area2" and "area3" in page/elements/sidebar (Use "sidebar" or view extension instead)
  * "js" in icon views (e.g. icon/user/default)
  * "options" to input/radio and input/checkboxes which aren't key-value pairs
-   will no longer be acceptable.
+	will no longer be acceptable.
 
 
 All scripts moved to bottom of page
@@ -240,23 +240,23 @@ Inline code which will fail because the stack is not yet loaded:
 
 .. code-block:: html
 
-    <script>
-    $(function () {
-        // code using $ and elgg
-    });
-    </script>
+	<script>
+	$(function () {
+		// code using $ and elgg
+	});
+	</script>
 
 This should work in Elgg 2.0:
 
 .. code-block:: html
 
-    <script>
-    require(['elgg', 'jquery'], function (elgg, $) {
-        $(function () {
-            // code using $ and elgg
-        });
-    });
-    </script>
+	<script>
+	require(['elgg', 'jquery'], function (elgg, $) {
+		$(function () {
+			// code using $ and elgg
+		});
+	});
+	</script>
 
 Attribute formatter removes keys with underscores
 -------------------------------------------------
@@ -272,16 +272,16 @@ replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
 
 .. code-block:: php
 
-    elgg_unregister_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
-    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'myplugin_prepare_breadcrumbs');
+	elgg_unregister_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
+	elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'myplugin_prepare_breadcrumbs');
 
-    function myplugin_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
-        // just apply excerpt to titles
-        foreach (array_keys($breadcrumbs) as $i) {
-            $breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
-        }
-        return $breadcrumbs;
-    }
+	function myplugin_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+		// just apply excerpt to titles
+		foreach (array_keys($breadcrumbs) as $i) {
+			$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+		}
+		return $breadcrumbs;
+	}
 
 Callbacks in Queries
 --------------------
@@ -415,7 +415,7 @@ or more simply register for the hook ``["likes:is_likable", "<type>:<subtype>"]`
 
 .. code-block:: php
 
-    elgg_register_plugin_hook_handler('likes:is_likable', 'object:mysubtype', 'Elgg\Values::getTrue');
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:mysubtype', 'Elgg\Values::getTrue');
 
 Just as before, the ``permissions_check:annotate`` hook is still called and may be used to override default behavior.
 
@@ -551,13 +551,13 @@ Removed methods
 The following arguments have also been dropped:
 
  - ``ElggSite::getMembers()``
-   - 2: ``$offset``
+	- 2: ``$offset``
  - ``elgg_view_entity_list()``
-   - 3: ``$offset``
-   - 4: ``$limit``
-   - 5: ``$full_view``
-   - 6: ``$list_type_toggle``
-   - 7: ``$pagination``
+	- 3: ``$offset``
+	- 4: ``$limit``
+	- 5: ``$full_view``
+	- 6: ``$list_type_toggle``
+	- 7: ``$pagination``
 
 Removed Plugin Hooks
 --------------------
