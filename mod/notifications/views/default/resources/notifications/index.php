@@ -23,8 +23,7 @@ elgg_set_page_owner_guid($user->guid);
 
 $title = elgg_echo('notifications:subscriptions:changesettings');
 
-elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
-elgg_push_breadcrumb($title);
+elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/{$user->username}");
 
 $content = elgg_view('notifications/personal', [
 	'user' => $user,

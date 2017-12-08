@@ -18,11 +18,6 @@ Elgg Release %s, version %s
 PHP info:
 %s
 ------------------------------------------------------------------------',
-	'diagnostics:report:plugins' => '
-Installed plugins and details:
-
-%s
-------------------------------------------------------------------------',
 	'diagnostics:report:md5' => '
 Installed files and checksums:
 

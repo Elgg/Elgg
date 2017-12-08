@@ -46,7 +46,6 @@ To edit a field label - click on the edit icon.
 At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'New profile field added',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
-	'profile:field_too_long' => 'Cannot save your profile information because the "%s" section is too long.',
 	'profile:noaccess' => "You do not have permission to edit this profile.",
 	'profile:invalid_email' => '%s must be a valid email address.',
 ];

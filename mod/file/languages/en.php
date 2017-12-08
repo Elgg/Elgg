@@ -12,10 +12,7 @@ return [
 	'file:more' => "More files",
 	'file:list' => "list view",
 	'file:group' => "Group files",
-	'file:gallery' => "gallery view",
-	'file:gallery_list' => "Gallery or list view",
 	'file:num_files' => "Number of files to display",
-	'file:user:gallery'=>'View %s gallery',
 	'file:upload' => "Upload a file",
 	'file:replace' => 'Replace file content (leave blank to not change file)',
 	'file:list:title' => "%s's %s %s",
@@ -55,12 +52,6 @@ return [
 
 	'groups:enablefiles' => 'Enable group files',
 
-	'file:delete:confirm' => "Are you sure you want to delete this file?",
-
-	'file:tagcloud' => "Tag cloud",
-
-	'file:display:number' => "Number of files to display",
-
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',
 
@@ -90,9 +81,7 @@ View and comment on the file:
 
 	'file:none' => "No files.",
 	'file:uploadfailed' => "Sorry; we could not save your file.",
-	'file:downloadfailed' => "Sorry; this file is not available at this time.",
 	'file:deletefailed' => "Your file could not be deleted at this time.",
 	'file:noaccess' => "You do not have permissions to change this file",
 	'file:cannotload' => "There was an error uploading the file",
-	'file:nofile' => "You must select a file",
 ];

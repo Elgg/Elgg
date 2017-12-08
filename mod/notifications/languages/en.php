@@ -2,8 +2,6 @@
 
 return [
 
-	'friends:all' => 'All friends',
-
 	'notifications:subscriptions:personal:description' => 'Settings to use by default for notifications about actions performed on your content and other updates from the site',
 	'notifications:subscriptions:personal:title' => 'Personal notifications',
 
@@ -13,7 +11,6 @@ return [
 	'notifications:subscriptions:changesettings' => 'Notifications',
 	'notifications:subscriptions:changesettings:groups' => 'Group notifications',
 
-	'notifications:subscriptions:all' => 'All subscriptions',
 	'notifications:subscriptions:title' => 'Notifications per user',
 	'notifications:subscriptions:description' => 'To receive notifications from your friends (on an individual basis) when they create new content, find them below and select the notification method you would like to use.',
 

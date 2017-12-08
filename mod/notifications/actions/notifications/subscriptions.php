@@ -7,7 +7,7 @@ $guid = (int) get_input('guid');
 $user = get_user($guid);
 
 if (!$user || !$user->canEdit()) {
-	return elgg_error_response(elgg_echo('actionnotauthorized'), '', 403);
+	return elgg_error_response(elgg_echo('actionunauthorized'), '', 403);
 }
 
 $methods = elgg_get_notification_methods();

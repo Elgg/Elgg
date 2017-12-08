@@ -20,7 +20,6 @@ return [
 
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Group name',
-	'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
 	'groups:description' => 'Description',
 	'groups:briefdescription' => 'Brief description',
 	'groups:interests' => 'Tags',
@@ -43,7 +42,6 @@ return [
 	'groups:widgets:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'No access to group',
-	'groups:ingroup' => 'in the group',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'You can not edit this group',
 	'groups:saved' => 'Group saved',
@@ -62,10 +60,8 @@ return [
 	'groups:invite:title' => 'Invite friends to this group',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
-	'groups:inviteto' => "Invite friends to '%s'",
-	'groups:nofriends' => "You have no friends left who have not been invited to this group.",
+
 	'groups:nofriendsatall' => 'You have no friends to invite!',
-	'groups:viagroups' => "via groups",
 	'groups:group' => "Group",
 	'groups:search:tags' => "tag",
 	'groups:search:title' => "Search for groups tagged with '%s'",
@@ -79,13 +75,11 @@ return [
 	'groups:activity:none' => "There is no group activity yet",
 
 	'groups:notfound' => "Group not found",
-	'groups:notfound:details' => "The requested group either does not exist or you do not have access to it",
-
+	
 	'groups:requests:none' => 'There are no current membership requests.',
 
 	'groups:invitations:none' => 'There are no current invitations.',
 
-	'groups:count' => "groups created",
 	'groups:open' => "open group",
 	'groups:closed' => "closed group",
 	'groups:member' => "members",
@@ -110,12 +104,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Last updated %s by %s',
-	'groups:lastcomment' => 'Last comment %s by %s',
 
 	'admin:groups' => 'Groups',
 
-	'groups:privategroup' => 'This group is closed. Requesting membership.',
 	'groups:notitle' => 'Groups must have a title',
 	'groups:cantjoin' => 'Can not join group',
 	'groups:cantleave' => 'Could not leave group',
@@ -128,14 +119,10 @@ return [
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Successfully joined group!',
 	'groups:left' => 'Successfully left group',
-	'groups:notowner' => 'Sorry, you are not the owner of this group.',
-	'groups:notmember' => 'Sorry, you are not a member of this group.',
-	'groups:alreadymember' => 'You are already a member of this group!',
 	'groups:userinvited' => 'User has been invited.',
 	'groups:usernotinvited' => 'User could not be invited.',
 	'groups:useralreadyinvited' => 'User has already been invited',
 	'groups:invite:subject' => "%s you have been invited to join %s!",
-	'groups:started' => "Started by %s",
 	'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
 	'groups:invite:remove:check' => 'Are you sure you want to remove this invitation?',
 	'groups:invite:body' => "Hi %s,
@@ -162,25 +149,8 @@ or click below to view the group's join requests:
 
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
 	'river:group:create' => '%s created the group %s',
 	'river:group:join' => '%s joined the group %s',
-
-	'groups:nowidgets' => 'No widgets have been defined for this group.',
-
-
-	'groups:widgets:members:title' => 'Group members',
-	'groups:widgets:members:description' => 'List the members of a group.',
-	'groups:widgets:members:label:displaynum' => 'List the members of a group.',
-	'groups:widgets:members:label:pleaseedit' => 'Please configure this widget.',
-
-	'groups:widgets:entities:title' => "Objects in group",
-	'groups:widgets:entities:description' => "List the objects saved in this group",
-	'groups:widgets:entities:label:displaynum' => 'List the objects of a group.',
-	'groups:widgets:entities:label:pleaseedit' => 'Please configure this widget.',
 
 	'groups:allowhiddengroups' => 'Allow private (invisible) groups?',
 	'groups:whocancreate' => 'Who can create new groups?',
@@ -189,10 +159,8 @@ or click below to view the group's join requests:
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Group and group contents deleted',
-	'group:notdeleted' => 'Group could not be deleted',
-
-	'group:notfound' => 'Could not find the group',
+	'groups:deleted' => 'Group and group contents deleted',
+	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Are you sure you want to delete this group? There is no undo!",
 
 	'groups:invitekilled' => 'The invite has been deleted.',

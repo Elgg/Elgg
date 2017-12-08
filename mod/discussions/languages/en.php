@@ -6,7 +6,6 @@ return [
 	'discussion:latest' => 'Latest discussions',
 	'discussion:group' => 'Group discussions',
 	'discussion:none' => 'No discussions',
-	'discussion:new' => "Add discussion post",
 	'discussion:updated' => "Last comment by %s %s",
 
 	'discussion:topic:created' => 'The discussion topic was created.',

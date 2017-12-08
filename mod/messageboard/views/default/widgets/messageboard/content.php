@@ -28,7 +28,7 @@ if ($owner instanceof ElggGroup) {
 
 $more_link = elgg_view('output/url', [
 	'href' => $url,
-	'text' => elgg_echo('messageboard:viewall'),
+	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
 

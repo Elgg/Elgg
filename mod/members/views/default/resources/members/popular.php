@@ -7,6 +7,7 @@ $content = elgg_list_entities_from_relationship_count([
 	'type' => 'user',
 	'relationship' => 'friend',
 	'inverse_relationship' => false,
+	'no_results' => elgg_echo('members:list:popular:none'),
 ]);
 
 $title = elgg_echo('members:title:popular');
