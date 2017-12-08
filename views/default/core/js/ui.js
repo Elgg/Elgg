@@ -5,8 +5,8 @@ elgg.ui.init = function () {
 	// iOS Hover Event Class Fix
 	$('.elgg-page').attr("onclick", "return true");
 
-	// add user hover menus
-	elgg.ui.initHoverMenu();
+	// allow click/hover menus
+	elgg.ui.initPopupContent();
 
 	// if the user clicks a system message (not a link inside one), make it disappear
 	$(document).on('click', '.elgg-system-messages .elgg-message', function(e) {
@@ -84,95 +84,72 @@ elgg.ui.toggles = function(event) {
  * @param {Object} parent
  * @return void
  */
-elgg.ui.initHoverMenu = function(parent) {
+elgg.ui.initPopupContent = function(parent) {
+	require(['elgg/popup', 'elgg/Ajax'], function (popup, Ajax) {
+		var ajax = new Ajax();
 
-	/**
-	 * For a menu clicked, load the menu into all matching placeholders
-	 *
-	 * @param {String}   mac      Machine authorization code for the menu clicked
-	 * @param {Function} callback a callback function to call when the loading of het menu was succesfull
-	 */
-	function loadMenu(mac, callback) {
-		var $all_placeholders = $(".elgg-menu-hover[rel='" + mac + "']");
-		
-		// find the <ul> that contains data for this menu
-		var $ul = $all_placeholders.filter('[data-elgg-menu-data]');
+		function load_popup($trigger) {
+			var data = $trigger.data('ajaxPopup');
+			var id = ['popup', data.m].join('-');
+			var $popup = $('#' + id);
+			if (!$popup.length) {
+				$popup = $('<div />').attr({
+					id: id,
+					'class': ['elgg-ajax-loader', 'elgg-menu-hover', 'elgg-ajax-popup-' + data.t].join(' '),
+					style: 'display:none'
+				});
+				$popup.appendTo('body');
 
-		if (!$ul.length) {
-			return;
-		}
-		
-		require(['elgg/Ajax'], function(Ajax) {
-			var ajax = new Ajax(false);
-			ajax.view('navigation/menu/user_hover/contents', {
-				data: $ul.data('elggMenuData'),
-				success: function(data) {
-					if (data) {
-						// replace all existing placeholders with new menu
-						$all_placeholders.html($(data));
+				ajax.view('elgg/ajax_popup', {
+					data: data,
+					success: function(output) {
+						if (output) {
+							$popup.removeClass('elgg-ajax-loader').html(output);
+						}
 					}
-					
-					if (typeof callback === 'function') {
-						callback();
-					}
-				},
-				complete: function() {
-					$all_placeholders.removeAttr('data-menu-placeholder');
-				}
-			});
-		});
-	};
-	
-	/**
-	 * Show the hover menu in a popup module
-	 *
-	 * @params {jQuery} $icon the user icon which was clicked
-	 */
-	function showPopup($icon) {
-		// check if we've attached the menu to this element already
-		var $hovermenu = $icon.data('hovermenu') || null;
+				});
+			}
 
-		if (!$hovermenu) {
-			$hovermenu = $icon.parent().find(".elgg-menu-hover");
-			$icon.data('hovermenu', $hovermenu);
-		}
-
-		require(['elgg/popup'], function(popup) {
-			if ($hovermenu.is(':visible')) {
+			if ($popup.is(':visible')) {
 				// close hovermenu if arrow is clicked & menu already open
-				popup.close($hovermenu);
+				popup.close($popup);
 			} else {
-				popup.open($icon, $hovermenu, {
+				popup.open($trigger, $popup, {
 					'my': 'left top',
 					'at': 'left top',
-					'of': $icon.closest(".elgg-avatar"),
+					'of': $trigger,
 					'collision': 'fit fit'
 				});
 			}
-		});
-	};
-
-	if (!parent) {
-		parent = document;
-	}
-
-	// avatar contextual menu
-	$(document).on('click', ".elgg-avatar > a", function(e) {
-		e.preventDefault();
-
-		var $icon = $(this);
-
-		var $placeholder = $icon.parent().find(".elgg-menu-hover[data-menu-placeholder]");
-
-		if ($placeholder.length) {
-			loadMenu($placeholder.attr("rel"), function() {
-				showPopup($icon);
-			});
-		} else {
-			showPopup($icon);
 		}
-	});
 
+		// click popups
+		$(document).on('click', "[data-ajax-popup-style='click']", function(e) {
+			e.preventDefault();
+			load_popup($(this));
+		});
+
+		// hover popups
+		var DEFAULT_DELAY = 500;
+		var events = {
+			mouseenter: function () {
+				var $trigger = $(this);
+				var data = $trigger.data();
+				var delay = data.hoverDelay || DEFAULT_DELAY;
+				data.hoverTimeout = setTimeout(function () {
+					load_popup($trigger);
+				}, delay);
+			},
+			mouseleave: function () {
+				var $trigger = $(this);
+				var hoverTimeout = $trigger.data('hoverTimeout');
+				if (hoverTimeout) {
+					clearTimeout(hoverTimeout);
+				}
+			}
+		};
+		$(document).on(events, "[data-ajax-popup-style='hover']");
+	});
 };
 
 /**
