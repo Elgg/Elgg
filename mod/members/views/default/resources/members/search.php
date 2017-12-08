@@ -1,50 +1,39 @@
 <?php
 /**
  * Members search page
- *
  */
 
-$query = get_input("member_query");
+$query = get_input('member_query');
 
 if (empty($query)) {
-	forward("members");
+	forward('members');
 }
-
-$limit = get_input('limit', elgg_get_config('default_limit'));
-$offset = (int) get_input('offset', 0);
 
 $display_query = _elgg_get_display_query($query);
 $title = elgg_echo('members:title:search', [$display_query]);
 
-$options = [];
-$options['query'] = $query;
-$options['type'] = "user";
-$options['offset'] = $offset;
-$options['limit'] = $limit;
+$results = elgg_search([
+	'query' => $query,
+	'type' => 'user',
+]);
 
-$results = elgg_trigger_plugin_hook('search', 'user', $options, []);
-$count = $results['count'];
-$users = $results['entities'];
+$count = elgg_extract('count', $results);
+$users = elgg_extract('entities', $results);
 
-if (!empty($users)) {
-	$content = elgg_view_entity_list($users, [
-		'count' => $count,
-		'offset' => $offset,
-		'limit' => $limit,
-		'full_view' => false,
-		'list_type_toggle' => false,
-		'pagination' => true,
-	]);
-} else {
-	$content = elgg_echo("notfound");
-}
+$content = elgg_view_entity_list($users, [
+	'count' => $count,
+	'full_view' => false,
+	'list_type_toggle' => false,
+	'pagination' => true,
+	'no_results' => elgg_echo('notfound'),
+]);
 
-$params = [
+$body = elgg_view_layout('one_sidebar', [
 	'title' => $title,
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
 	'filter_id' => 'members',
-];
+]);
 
 $body = elgg_view_layout('one_sidebar', $params);
 

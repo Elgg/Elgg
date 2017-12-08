@@ -152,7 +152,6 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 	}
 
 	/**
-	 * @group Current
 	 * @dataProvider booleanPairsProvider
 	 */
 	public function testElggGetEntitiesFromBooleanMetadata($value, $query, $type) {

@@ -4,7 +4,7 @@ List of plugin hooks in core
 For more information on how hooks work visit :doc:`/design/events`.
 
 .. contents:: Contents
-   :local:
+    :local:
    :depth: 1
 
 System hooks
@@ -23,8 +23,6 @@ System hooks
 
 **diagnostics:report, system**
 	Filter the output for the diagnostics report download.
-
-**search_types, get_types**
 
 **cron, <period>**
 	Triggered by cron for each period.
@@ -521,7 +519,7 @@ Emails
 	Triggered by the default email transport handler (Elgg uses ``zendframework/zend-mail``).
 	Applies to all outgoing system and notification emails that were not transported using the **transport, system:email** hook.
 	This hook allows you to alter an instance of ``\Zend\Mail\Message`` before it is passed to the Zend email transport.
-	
+
 	``$params`` contains:
 
 	 * ``email`` - An instance of ``\Elgg\Email``
@@ -672,6 +670,64 @@ Files
      * ``file`` - instance of ``ElggFile`` to write to
      * ``upload`` - instance of Symfony's ``UploadedFile``
 
+
+.. _guides/hooks-list#search:
+
+Search
+======
+
+**search:results, <search_type>**
+    Triggered by ``elgg_search()``. Receives normalized options suitable for ``elgg_get_entities()`` call and must return an array of entities matching search options.
+    This hook is designed for use by plugins integrating third-party indexing services, such as Solr and Elasticsearch.
+
+**search:params, <search_type>**
+    Triggered by ``elgg_search()``. Filters search parameters (query, sorting, search fields etc) before search clauses are prepared for a given search type.
+    Elgg core only provides support for ``entities`` search type.
+
+**search:fields, <entity_type>**
+    Triggered by ``elgg_search()``. Filters search fields before search clauses are prepared.
+    ``$return`` value contains an array of names for each entity property type, which should be matched against the search query.
+    ``$params`` array contains an array of search params passed to and filtered by ``elgg_search()``.
+
+.. code-block:: php
+
+    return [
+        'attributes' => [],
+        'metadata' => ['title', 'description'],
+        'annotations' => ['revision'],
+        'private_settings' => ['internal_notes'],
+    ];
+
+**search:fields, <entity_type>:<entity_subtype>**
+   See **search:fields, <entity_type>**
+
+**search:fields, <search_type>**
+    See **search:fields, <entity_type>**
+
+**search:options, <entity_type>**
+    Triggered by ``elgg_search()``. Prepares search clauses (options) to be passed to ``elgg_get_entities()``.
+
+**search:options, <entity_type>:<entity_subtype>**
+    See **search:options, <entity_type>**
+
+**search:options, <search_type>**
+    See **search:options, <entity_type>**
+
+**search:config, search_types**
+    Implemented in the **search** plugin.
+    Filters an array of custom search types. This allows plugins to add custom search types (e.g. tag or location search).
+    Adding a custom search type will extend the search plugin user interface with appropriate links and lists.
+
+**search:config, type_subtype_pairs**
+    Implemented in the **search** plugin.
+    Filters entity type/subtype pairs before entity search is performed.
+    Allows plugins to remove certain entity types/subtypes from search results, group multiple subtypes together, or to reorder search sections.
+
+**search:format, entity**
+    Implemented in the **search** plugin.
+    Allows plugins to populate entity's volatile data before it's passed to search view.
+    This is used for highlighting search hit, extracting relevant substrings in long text fields etc.
+
 .. _guides/hooks-list#other:
 
 Other
@@ -697,11 +753,10 @@ Other
 	The hook must return an associative array where keys are the names of the icon sizes
 	(e.g. "large"), and the values are arrays with the following keys:
 
-	 * ``w`` - Width of the image in pixels
-	 * ``h`` - Height of the image in pixels
-	 * ``square`` - Should the aspect ratio be a square (true/false)
-	 * ``upscale`` - Should the image be upscaled in case it is smaller than the given
-           width and height (true/false)
+     * ``w`` - Width of the image in pixels
+     * ``h`` - Height of the image in pixels
+     * ``square`` - Should the aspect ratio be a square (true/false)
+     * ``upscale`` - Should the image be upscaled in case it is smaller than the given width and height (true/false)
 
 	If the configuration array for an image size is empty, the image will be
 	saved as an exact copy of the source without resizing or cropping.
@@ -753,10 +808,10 @@ Other
 		if ($params['entity']->icontime) {
 			return $url;
 		}
-		
+
 		// Generate gravatar hash for user email
 		$hash = md5(strtolower(trim($params['entity']->email)));
-		
+
 		// Default icon size
 		$size = '150x150';
 
@@ -766,7 +821,7 @@ Other
 		if (isset($config[$key])) {
 			$size = $config[$key]['w'] . 'x' . $config[$key]['h'];
 		}
-		
+
 		// Produce URL used to retrieve icon
 		return "http://www.gravatar.com/avatar/$hash?s=$size";
 	}
@@ -992,26 +1047,6 @@ Reported Content
 **reportedcontent:delete, system**
 	Triggered before deleting the reported content object ``$params['report']``. Return false to prevent deleting.
 
-Search
-------
-
-**search, <type>:<subtype>**
-	Filter more granular search results than searching by type alone. Must return an array with ``count`` as the
-	total count of results and  ``entities`` an array of ElggUser entities.
-
-**search, tags**
-
-**search, <type>**
-	Filter the search for entities for type ``$type``. Must return an array with ``count`` as the
-	total count of results and  ``entities`` an array of ElggUser entities.
-
-**search_types, get_types**
-	Filter an array of search types. This allows plugins to add custom types that don't correspond
-	directly to entities.
-
-**search_types, get_queries**
-    Before a search this filters the types queried. This can be used to reorder
-    the display of search results.
 
 Web Services
 ------------
