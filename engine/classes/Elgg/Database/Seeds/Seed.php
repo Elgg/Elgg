@@ -20,7 +20,7 @@ abstract class Seed {
 	/**
 	 * @var int Max number of items to be created by the seed
 	 */
-	protected $limit = 20;
+	protected $limit = 3;
 
 	/**
 	 * @var \Faker\Generator
@@ -545,6 +545,7 @@ abstract class Seed {
 
 						case 'url' :
 							$metadata[$name] = $this->faker->url;
+							break;
 
 						case 'email' :
 							$metadata[$name] = $this->faker->email;
@@ -563,12 +564,6 @@ abstract class Seed {
 							break;
 
 						case 'location' :
-							$metadata[$name] = $this->faker->address;
-							$metadata['geo:lat'] = $this->faker->latitude;
-							$metadata['geo:long'] = $this->faker->longitude;
-							break;
-
-						case 'email' :
 							$metadata[$name] = $this->faker->address;
 							$metadata['geo:lat'] = $this->faker->latitude;
 							$metadata['geo:long'] = $this->faker->longitude;
