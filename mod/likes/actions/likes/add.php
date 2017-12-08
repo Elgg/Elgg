@@ -23,7 +23,8 @@ if (!$entity->canAnnotate(0, 'likes')) {
 }
 
 $user = elgg_get_logged_in_user_entity();
-$annotation_id = create_annotation($entity->guid, 'likes', 'likes', '', $user->guid, $entity->access_id);
+
+$annotation_id = $entity->annotate('likes', 'likes', ACCESS_PUBLIC);
 
 // tell user annotation didn't work if that is the case
 if (!$annotation_id) {
