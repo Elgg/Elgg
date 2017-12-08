@@ -1043,7 +1043,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertEquals(file_get_contents($this->viewsDir . '/default/cacheable.xml'), $response->getContent());
-		$this->assertContains('application/xml', $response->headers->get('Content-Type'));
+		$this->assertContains('/xml', $response->headers->get('Content-Type'));
 	}
 
 	public function testCanRespondToAjaxViewRequestForCSS() {

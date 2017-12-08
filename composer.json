@@ -62,7 +62,7 @@
         "test": "phpunit",
         "travis:install": [
             "composer self-update",
-            "composer global require \"fxp/composer-asset-plugin:~1.1.4\" --prefer-dist",
+            "composer global require \"fxp/composer-asset-plugin:~1.4.2\" --prefer-dist",
             "composer install --prefer-dist"
         ],
         "travis:install-with-mysql": [
