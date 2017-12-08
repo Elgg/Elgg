@@ -1,15 +1,10 @@
 <?php
-
 /**
  * Search form
  *
  * @uses $vars['value'] Current search query
  */
 $value = elgg_extract('value', $vars, get_input('q', get_input('tag')));
-
-$search_attrs = elgg_format_attributes([
-	'type' => 'text',
-]);
 
 echo elgg_view_field([
 	'#type' => 'fieldset',
@@ -28,6 +23,7 @@ echo elgg_view_field([
 		],
 		[
 			'#type' => 'submit',
+			'#class' => 'hidden',
 			'value' => elgg_echo('search:go'),
 		],
 	],
@@ -51,4 +47,3 @@ foreach ($values as $name => $value) {
 		'value' => $value,
 	]);
 }
-
