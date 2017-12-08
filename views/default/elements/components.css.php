@@ -227,6 +227,7 @@
 }
 .elgg-comments > form {
 	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 /* Comment highlighting that automatically fades away */

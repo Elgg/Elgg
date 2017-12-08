@@ -31,6 +31,8 @@ function _elgg_comments_init() {
 	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 
 	elgg_register_ajax_view('core/ajax/edit_comment');
+	elgg_register_ajax_view('page/elements/comments');
+	elgg_register_ajax_view('river/elements/responses');
 
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:comment', 'Elgg\Values::getTrue');
 	

@@ -25,7 +25,6 @@ $core_js_views = [
 	'session.js',
 	'pageowner.js',
 	'configuration.js',
-	'comments.js',
 	
 	//ui
 	'ui.js',

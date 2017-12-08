@@ -747,8 +747,12 @@ Notable changes in plugins:
 
 Also note, CSS views served via ``/cache`` URLs are pre-processed using `CSS Crush <http://the-echoplex.net/csscrush/>`_. If you make references to CSS variables or other elements, the definition must be located within the same view output. E.g. A variable defined in ``elgg.css`` cannot be referenced in a separate CSS file like ``colorbox.css``.
 
-Comment notifications
----------------------
+Comments
+--------
+
+Submitting comments is now AJAXed. After a succesful submission the comment list will be updated automatically.
+
+The following changes have been made to the comment notifications.
 
  * The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys
  * The action for creating a comment (``action/comment/save``) was changed. If your plugin overruled this action you should have a look at it in order to prevent double notifications 

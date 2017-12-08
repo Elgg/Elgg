@@ -1483,6 +1483,10 @@ function _elgg_ajax_page_handler($segments) {
 			$vars['entity'] = get_entity($vars['guid']);
 		}
 
+		if (isset($vars['river_id'])) {
+			$vars['item'] = elgg_get_river_item_from_id($vars['river_id']);
+		}
+
 		$content_type = '';
 		if ($segments[0] === 'view') {
 			$output = elgg_view($view, $vars);

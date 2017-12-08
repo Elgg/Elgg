@@ -14,8 +14,6 @@ if (empty($comment_text)) {
 	return elgg_error_response(elgg_echo('generic_comment:blank'));
 }
 
-$result = '';
-
 if ($comment_guid) {
 	// Edit an existing comment
 	$comment = get_entity($comment_guid);
@@ -30,16 +28,6 @@ if ($comment_guid) {
 	$comment->description = $comment_text;
 	if (!$comment->save()) {
 		return elgg_error_response(elgg_echo('generic_comment:failure'));
-	}
-	
-
-	if (elgg_is_xhr()) {
-		// @todo move to its own view object/comment/content in 1.x
-		$result = elgg_view('output/longtext', [
-			'value' => $comment->description,
-			'class' => 'elgg-inner',
-			'data-role' => 'comment-text',
-		]);
 	}
 	
 	$success_message = elgg_echo('generic_comment:updated');
@@ -85,5 +73,10 @@ if (!empty($_SERVER['HTTP_REFERER'])) {
 		$forward = "{$m[0]}#elgg-object-{$comment->guid}";
 	}
 }
+
+$result = [
+	'guid' => $comment->guid,
+	'output' => elgg_view_entity($comment),
+];
 
 return elgg_ok_response($result, $success_message, $forward);
