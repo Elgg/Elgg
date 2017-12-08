@@ -3,13 +3,24 @@
  * Friendly time
  * Translates an epoch time into a human-readable time.
  *
- * @uses string $vars['time'] Unix-style epoch timestamp
+ * @uses string $vars['time']           Unix-style epoch timestamp
+ * @uses int    $vars['number_of_days'] (optional) number of days before friendly time switches to a date format
  */
 
-$friendly_time = elgg_get_friendly_time($vars['time']);
-$attributes = [];
-$attributes['title'] = date(elgg_echo('friendlytime:date_format'), $vars['time']);
-$attributes['datetime'] = date('c', $vars['time']);
-$attrs = elgg_format_attributes($attributes);
+$timestamp = elgg_extract('time', $vars);
+		
+$default_friendly_time_number_of_days = elgg_get_config('friendly_time_number_of_days', 30);
+$friendly_time_number_of_days = (int) elgg_extract('number_of_days', $vars, $default_friendly_time_number_of_days);
 
-echo "<time $attrs>$friendly_time</time>";
+if (strtotime("-{$friendly_time_number_of_days}days") < $timestamp) {
+	$output = elgg_get_friendly_time($timestamp);
+} else {
+	$output = date(elgg_echo('friendlytime:date_format:short'), $timestamp);
+}
+
+$attributes = [
+	'title' => date(elgg_echo('friendlytime:date_format'), $timestamp),
+	'datetime' => date('c', $timestamp),
+];
+
+echo elgg_format_element('time', $attributes, $output);
