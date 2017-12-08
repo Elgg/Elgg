@@ -4,27 +4,6 @@
  */
 
 /**
- * Registers the buttons for title area of the group profile page
- *
- * @param ElggGroup $group group to register for
- * @return void
- */
-function groups_register_profile_buttons($group) {
-
-	$params = [
-		'entity' => $group,
-	];
-
-	$items = elgg_trigger_plugin_hook('profile_buttons', 'group', $params, []);
-	
-	if (!empty($items)) {
-		foreach ($items as $item) {
-			elgg_register_menu_item('title', $item);
-		}
-	}
-}
-
-/**
  * Prepares variables for the group edit form view.
  *
  * @param mixed $group ElggGroup or null. If a group, uses values from the group.
