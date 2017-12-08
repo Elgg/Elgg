@@ -42,8 +42,7 @@ function _elgg_cron_init() {
  * Cron run
  *
  * This function was designed to be called every one minute from a cron job to
- * executes each Elgg cron period at the desired interval.  Will also exeute
- * any Elgg cron period that have not fired by the expected deadline.
+ * executes each Elgg cron period at the desired interval.
  *
  * Can be called manually by: http://YOUR.SITE/cron/run/
  *
@@ -55,120 +54,145 @@ function _elgg_cron_init() {
  * @access private
  */
 function _elgg_cron_run() {
-	$now = time();
-	$params = [];
-	$params['time'] = $now;
-
-	$all_std_out = "";
+	
+	$starttime = time();
+	
+	$all_std_out = '';
 
 	$periods = [
-		'minute' => 60,
-		'fiveminute' => 300,
-		'fifteenmin' => 900,
-		'halfhour' => 1800,
-		'hourly' => 3600,
-		'daily' => 86400,
-		'weekly' => 604800,
-		'monthly' => 2628000,
-		'yearly' => 31536000,
+		'minute' => '* * * * *',
+		'fiveminute' => '*/5 * * * *',
+		'fifteenmin' => '*/15 * * * *',
+		'halfhour' => '*/30 * * * *',
+		'hourly' => '0 * * * *',
+		'daily' => '0 0 * * *',
+		'weekly' => '0 0 * * 0',
+		'monthly' => '0 0 1 * *',
+		'yearly' => '0 0 1 1 *',
 	];
-
-	foreach ($periods as $period => $interval) {
-		$key = "cron_latest:$period:ts";
-		$ts = elgg_get_site_entity()->getPrivateSetting($key);
-		$deadline = $ts + $interval;
-
-		if ($now > $deadline) {
-			$msg_key = "cron_latest:$period:msg";
-			$msg = elgg_echo('admin:cron:started', [$period, date('r', time())]);
-			elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
-
-			ob_start();
-			
-			$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, '');
-			$std_out = ob_get_clean();
-
-			$period_std_out = $std_out .  $old_stdout;
-			$all_std_out .= $period_std_out;
-
-			elgg_get_site_entity()->setPrivateSetting($msg_key, $period_std_out);
-		}
+	
+	// prepare scheduler with all cron intervals
+	$scheduler = new GO\Scheduler();
+	
+	foreach ($periods as $period => $expression) {
+		$scheduler->call('_elgg_cron_execute_period', [$period, $starttime])->at($expression)->then(function($output) use (&$all_std_out) {
+			$all_std_out .= $output . PHP_EOL;
+		});
 	}
-
+	
+	try {
+		$scheduler->run();
+	} catch (\CronException $cron_exception) {
+		$all_std_out .= "Exception {$cron_exception->getMessage()}" . PHP_EOL;
+	}
+	
 	echo $all_std_out;
 }
 
 /**
- * Cron handler
+ * /cron handler
  *
- * @param array $page Pages
+ * @param array $page URL segments
  *
  * @return bool
- * @throws CronException
  * @access private
  */
 function _elgg_cron_page_handler($page) {
-	if (!isset($page[0])) {
-		forward();
-	}
-
+	
 	if (PHP_SAPI !== 'cli' && _elgg_config()->security_protect_cron) {
 		elgg_signed_request_gatekeeper();
 	}
 	
-	$period = strtolower($page[0]);
-
-	$allowed_periods = _elgg_config()->elgg_cron_periods;
-
-	if (($period != 'run') && !in_array($period, $allowed_periods)) {
-		throw new \CronException("$period is not a recognized cron period.");
+	$period = strtolower(elgg_extract(0, $page));
+	switch ($period) {
+		case 'run':
+			_elgg_cron_run();
+			break;
+		default:
+			echo _elgg_cron_execute_period($period);
+			break;
 	}
-
-	if ($period == 'run') {
-		_elgg_cron_run();
-	} else {
-		// Get a list of parameters
-		$params = [];
-		$params['time'] = time();
-
-		// Data to return to
-		$old_stdout = "";
-		ob_start();
-
-		$msg_key = "cron_latest:$period:msg";
-		$msg = elgg_echo('admin:cron:started', [$period, date('r', time())]);
-		elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
-		
-		$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, $old_stdout);
-		$std_out = ob_get_clean();
-
-		$msg = $std_out . $old_stdout;
-		echo $msg;
-
-		elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
-	}
+	
 	return true;
 }
 
 /**
- * Record cron running
+ * Execute a cron interval
  *
- * @param string $hook   Hook name
+ * @param string $period    the cron interval to execute
+ * @param int    $starttime when was the cron started (default: time())
+ *
+ * @throws \CronException
+ * @return string
+ *
+ * @since 3.0
+ * @internal
+ */
+function _elgg_cron_execute_period($period, $starttime = null) {
+	
+	$allowed_periods = _elgg_config()->elgg_cron_periods;
+	if (!in_array($period, $allowed_periods)) {
+		throw new \CronException("$period is not a recognized cron period.");
+	}
+	
+	if (!isset($starttime)) {
+		$starttime = time();
+	}
+	
+	// give every period at least 'max_execution_time' (PHP ini setting)
+	set_time_limit((int) ini_get('max_execution_time'));
+	
+	// Prepare params for hook
+	$params = [];
+	$params['time'] = $starttime;
+
+	// Data to return to
+	ob_start();
+
+	$msg_key = "cron_latest:$period:msg";
+	$msg = elgg_echo('admin:cron:started', [$period, date('r', $starttime)]) . PHP_EOL;
+	
+	// make sure we log the start of the cron
+	elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
+	
+	// trigger hook to allow others to execute tasks
+	$old_stdout = elgg_trigger_plugin_hook('cron', $period, $params, '');
+	
+	$std_out = ob_get_clean();
+
+	$msg .= $std_out . $old_stdout;
+	
+	// log the message to the site
+	elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
+	
+	return $msg;
+}
+
+/**
+ * Record cron completion time
+ *
+ * @param string $hook   'cron'
  * @param string $period Cron period
  * @param string $output Output content
  * @param array  $params Hook parameters
+ *
  * @return void
+ *
  * @access private
  */
 function _elgg_cron_monitor($hook, $period, $output, $params) {
-	$time = $params['time'];
+	
 	$periods = _elgg_config()->elgg_cron_periods;
-
-	if (in_array($period, $periods)) {
-		$key = "cron_latest:$period:ts";
-		elgg_get_site_entity()->setPrivateSetting($key, $time);
-		echo elgg_echo('admin:cron:complete', [$period, date('r', $time)]);
+	if (!in_array($period, $periods)) {
+		return;
 	}
+	
+	$completed_time = time();
+	
+	$key = "cron_latest:$period:ts";
+	elgg_get_site_entity()->setPrivateSetting($key, $completed_time);
+	
+	echo elgg_echo('admin:cron:complete', [$period, date('r', $completed_time)]) . PHP_EOL;
 }
 
 /**

@@ -1,10 +1,15 @@
 Cron
 ####
 
-`Cron`__ is a program available on Unix-based operating systems that enables
-users to run commands and scripts at set intervals or at specific times.
+.. contents:: Contents
+   :depth: 2
+   :local:
 
-__ http://en.wikipedia.org/wiki/Cron
+What does it do?
+================
+
+`Cron`_ is a program available on Unix-based operating systems that enables
+users to run commands and scripts at set intervals or at specific times.
 
 Elgg's cron handler allows administrators and plugin developers to setup jobs
 that need to be executed at set intervals.
@@ -13,8 +18,7 @@ Most common examples of cron jobs in Elgg include:
 
  * sending out queued notifications
  * rotating the system log in the database
- * collecting garbage in the database (compacting the database by removing
-   entries that are no longer required)
+ * collecting garbage in the database (compacting the database by removing entries that are no longer required)
 
 Currently, Elgg supports the following hooks:
 
@@ -36,7 +40,6 @@ As an example, loading http://example.com/cron/hourly/ in a web browser
 activates the hourly hook. To automate this, cron jobs are setup to hit those
 pages at certain times. This is done by setting up a ``crontab`` which is a
 configuration file that determines what cron jobs do and at what interval.
-
 
 Installation
 ============
@@ -61,17 +64,23 @@ If you choose the ``wget`` utility, you might want to consider these flags:
    that, a new file will be created for each cron page load in the home directory of the cron user.
  * ``--spider`` to prevent the cron page from being downloaded.
 
-
 On Windows servers, there is a number of cron emulators available.
 
-For information on setting up cron jobs using cPanel see `cPanel Docs`__.
+.. seealso::
 
-In the ``command`` field, enter the appropriate link of the cron page.
-For example, for a weekly cron job, enter the command as http://www.example.com/cron/weekly/.
+    For information on setting up cron jobs using cPanel see `cPanel Docs`_.
+    
+    In the ``command`` field, enter the appropriate link of the cron page.
+    For example, for a ``weekly`` cron job, enter the command as http://www.example.com/cron/weekly/.
 
-To see if your cron jobs are running, visit Statistics > Cron in your Elgg admin
-panel.
+To see if your cron jobs are running, visit Statistics > Cron in your Elgg admin panel.
 
-__ https://docs.cpanel.net/display/ALD/Cron+Jobs
+Easier installation
+-------------------
 
+Configuring all the different intervals can be some work. An alternative is to configure *only one* endpoint namely
+http://example.com/cron/run. This endpoint needs to be called *every* minute, the system will then take care of calling all 
+the internal intervals at the correct time.
 
+.. _Cron: http://en.wikipedia.org/wiki/Cron
+.. _cPanel Docs: https://docs.cpanel.net/display/ALD/Cron+Jobs

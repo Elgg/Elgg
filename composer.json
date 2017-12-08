@@ -41,7 +41,8 @@
         "robmorgan/phinx": "^0.8.1",
         "symfony/console": "~3.3",
         "symfony/var-dumper": "~3.3",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "peppeocchi/php-cron-scheduler": "2.*"
     },
     "config": {
         "process-timeout": 0,
