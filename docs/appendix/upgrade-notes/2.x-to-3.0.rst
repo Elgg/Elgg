@@ -241,6 +241,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``members_nav_newest``
  * ``members_nav_online``
  * ``members_nav_alpha``
+ * ``uservalidationbyemail_generate_code``
 
 All functions around entity subtypes table:
  * ``add_subtype``: Use ``elgg_set_entity_class`` at runtime
@@ -526,6 +527,9 @@ Removed actions
  * ``import/opendd``
  * ``discussion/reply/save``: See :ref:`upgrade-discussion-replies`
  * ``discussion/reply/delete``: See :ref:`upgrade-discussion-replies`
+ * ``uservalidationbyemail/bulk_action``: use ``admin/user/bulk/validate`` or ``admin/user/bulk/delete``
+ * ``uservalidationbyemail/delete``: use ``admin/user/bulk/delete``
+ * ``uservalidationbyemail/validate``: use ``admin/user/bulk/validate``
  
 Inheritance changes
 -------------------
@@ -790,6 +794,12 @@ add the following to you ``composer.json`` ``require`` section:
 .. code-block:: json
 	
 	"elgg/twitter_api": "~1.9"
+
+User validation by email plugin
+-------------------------------
+
+The listing view of unvalidated users has been moved from the plugin to Elgg core. Some generic action (eg. validate and delete) have also been moved
+to Elgg core.
 
 Email delivery
 --------------

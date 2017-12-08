@@ -15,3 +15,4 @@ Best practices for effectively managing an Elgg-based site.
 	duplicate-installation
 	getting-help
 	security
+	uservalidation

@@ -128,13 +128,19 @@ function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
 function _elgg_admin_init() {
 
 	elgg_register_css('elgg.admin', elgg_get_simplecache_url('admin.css'));
+	elgg_register_css('admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
 
+	elgg_define_js('admin/users/unvalidated', [
+		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
+	]);
+	
 	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
 		
 	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu_plugin_settings');
+	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated:bulk', '_elgg_admin_user_unvalidated_bulk_menu');
 
 	// maintenance mode
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
@@ -157,6 +163,9 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/user/resetpassword', '', 'admin');
 	elgg_register_action('admin/user/makeadmin', '', 'admin');
 	elgg_register_action('admin/user/removeadmin', '', 'admin');
+	elgg_register_action('admin/user/validate', '', 'admin');
+	elgg_register_action('admin/user/bulk/delete', '', 'admin');
+	elgg_register_action('admin/user/bulk/validate', '', 'admin');
 
 	elgg_register_action('admin/site/update_basic', '', 'admin');
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
@@ -177,7 +186,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/security/regenerate_site_secret', '', 'admin');
 	
 	elgg_register_simplecache_view('admin.css');
-
+	
 	// widgets
 	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
 	foreach ($widgets as $widget) {
@@ -401,6 +410,15 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 		'section' => 'administer',
 		'parent_name' => 'users',
 	]);
+	
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'users:unvalidated',
+		'text' => elgg_echo('admin:users:unvalidated'),
+		'href' => 'admin/users/unvalidated',
+		'priority' => 50,
+		'section' => 'administer',
+		'parent_name' => 'users',
+	]);
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'upgrades',
 		'href' => 'admin/upgrades',
@@ -544,6 +562,63 @@ function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
 		$plugin_item['priority'] = $priority;
 		$return[] = \ElggMenuItem::factory($plugin_item);
 	}
+	
+	return $return;
+}
+
+/**
+ * Register menu items to the bulk actions for unvalidated users
+ *
+ * @elgg_plugin_hook register menu:user:unvalidated:bulk
+ *
+ * @param \Elgg\Hook $hook 'register' 'menu:user:unvalidated:bulk'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @since 3.0
+ * @internal
+ */
+function _elgg_admin_user_unvalidated_bulk_menu(\Elgg\Hook $hook) {
+	
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'select_all',
+		'text' => elgg_view('input/checkbox', [
+			'name' => 'select_all',
+			'label' => elgg_echo('all'),
+			'id' => 'admin-users-unvalidated-bulk-select',
+		]),
+		'href' => false,
+		'priority' => 100,
+		'deps' => 'admin/users/unvalidated',
+	]);
+	
+	$return[] = ElggMenuItem::factory([
+		'id' => 'admin-users-unvalidated-bulk-validate',
+		'name' => 'bulk_validate',
+		'text' => elgg_echo('validate'),
+		'href' => 'action/admin/user/bulk/validate',
+		'confirm' => true,
+		'priority' => 400,
+		'section' => 'right',
+		'deps' => 'admin/users/unvalidated',
+	]);
+	
+	$return[] = ElggMenuItem::factory([
+		'id' => 'admin-users-unvalidated-bulk-delete',
+		'name' => 'bulk_delete',
+		'text' => elgg_echo('delete'),
+		'href' => 'action/admin/user/bulk/delete',
+		'confirm' => elgg_echo('deleteconfirm:plural'),
+		'priority' => 500,
+		'section' => 'right',
+		'deps' => 'admin/users/unvalidated',
+	]);
 	
 	return $return;
 }

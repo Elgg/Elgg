@@ -266,6 +266,10 @@ return array(
 	'avatar:crop:fail' => 'Avatar cropping failed',
 	'avatar:remove:success' => 'Removing the avatar succeeded',
 	'avatar:remove:fail' => 'Avatar remove failed',
+	
+	'action:user:validate:already' => "%s was already validated",
+	'action:user:validate:success' => "%s has been validated",
+	'action:user:validate:error' => "An error occurred while validating %s",
 
 /**
  * Feeds
@@ -459,7 +463,10 @@ return array(
 	'admin:users:opt:linktext' => "Configure users...",
 	'admin:users:opt:description' => "Configure users and account information. ",
 	'admin:users:find' => 'Find',
-
+	'admin:users:unvalidated' => 'Unvalidated',
+	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
+	'admin:users:unvalidated:registered' => 'Registered: %s',
+	
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
 	'admin:upgrades:run' => 'Run upgrades now',
@@ -913,6 +920,7 @@ These changes will only affect new users on the site.',
 	'create' => 'Create',
 	'remove' => 'Remove',
 	'revert' => 'Revert',
+	'validate' => 'Validate',
 
 	'site' => 'Site',
 	'activity' => 'Activity',

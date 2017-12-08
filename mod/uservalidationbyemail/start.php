@@ -28,6 +28,10 @@ function uservalidationbyemail_init() {
 
 	// canEdit override to allow not logged in code to disable a user
 	elgg_register_plugin_hook_handler('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
+	
+	// admin user validation page
+	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_uservalidationbyemail_user_unvalidated_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated:bulk', '_uservalidationbyemail_user_unvalidated_bulk_menu');
 
 	// prevent users from logging in if they aren't validated
 	register_pam_handler('uservalidationbyemail_check_auth_attempt', "required");
@@ -40,18 +44,6 @@ function uservalidationbyemail_init() {
 
 	// register Walled Garden public pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
-
-	// admin interface to manually validate users
-	elgg_register_menu_item('page', [
-		'name' => 'users:unvalidated',
-		'text' => elgg_echo('admin:users:unvalidated'),
-		'href' => 'admin/users/unvalidated',
-		'section' => 'administer',
-		'parent_name' => 'users',
-		'context' => 'admin',
-	]);
-	
-	elgg_extend_view('admin.css', 'uservalidationbyemail/css');
 }
 
 /**
@@ -263,6 +255,78 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	}
 
 	access_show_hidden_entities($access_status);
+}
+
+/**
+ * Add a menu item to an unvalidated user
+ *
+ * @elgg_plugin_hook register menu:user:unvalidated
+ *
+ * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @since 3.0
+ * @internal
+ */
+function _uservalidationbyemail_user_unvalidated_menu(\Elgg\Hook $hook) {
+	
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof ElggUser) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'uservalidationbyemail:resend',
+		'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
+		'href' => elgg_http_add_url_query_elements('action/uservalidationbyemail/resend_validation', [
+			'user_guids[]' => $entity->guid,
+		]),
+		'confirm' => elgg_echo('uservalidationbyemail:confirm_resend_validation', [$entity->getDisplayName()]),
+		'priority' => 100,
+	]);
+	
+	return $return;
+}
+
+/**
+ * Add a menu item to the buld actions for unvalidated users
+ *
+ * @elgg_plugin_hook register menu:user:unvalidated:bulk
+ *
+ * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated:bulk'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @since 3.0
+ * @internal
+ */
+function _uservalidationbyemail_user_unvalidated_bulk_menu(\Elgg\Hook $hook) {
+	
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	
+	$return[] = ElggMenuItem::factory([
+		'id' => 'uservalidationbyemail-bulk-resend',
+		'name' => 'uservalidationbyemail:resend:bulk',
+		'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
+		'href' => 'action/uservalidationbyemail/resend_validation',
+		'confirm' => elgg_echo('uservalidationbyemail:confirm_resend_validation_checked'),
+		'priority' => 100,
+		'section' => 'right',
+		'deps' => 'elgg/uservalidationbyemail',
+	]);
+	
+	return $return;
 }
 
 return function() {

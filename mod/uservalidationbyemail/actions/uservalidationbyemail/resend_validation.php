@@ -3,19 +3,17 @@
  * Resends validation emails to a user or users by guid
  */
 
-$user_guids = get_input('user_guids');
-$error = false;
-
+$user_guids = (array) get_input('user_guids');
 if (!$user_guids) {
 	return elgg_error_response(elgg_echo('uservalidationbyemail:errors:unknown_users'));
 }
 
+$error = false;
 $access = access_show_hidden_entities(true);
 
 foreach ($user_guids as $guid) {
-	$user = get_entity($guid);
-	if (!$user instanceof ElggUser) {
-		$error = true;
+	$user = get_user($guid);
+	if (empty($user)) {
 		continue;
 	}
 

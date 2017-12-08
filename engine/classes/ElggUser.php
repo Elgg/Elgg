@@ -273,6 +273,12 @@ class ElggUser extends \ElggEntity
 		$this->validated_method = $method;
 		
 		if ((bool) $status) {
+			// make sure the user is enabled
+			if (!$this->isEnabled()) {
+				$this->enable();
+			}
+			
+			// let the system know the user is validated
 			elgg_trigger_after_event('validate', 'user', $this);
 		} else {
 			elgg_trigger_after_event('invalidate', 'user', $this);

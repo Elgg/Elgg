@@ -16,6 +16,7 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    pages
    profile
    thewire
+   uservalidationbyemail
 
 The following plugins are also bundled with Elgg, but are not (yet) documented
 
@@ -40,5 +41,4 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - site_notifications
 - system_log
 - tagcloud
-- uservalidationbyemail
 - web_services
