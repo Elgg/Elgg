@@ -40,4 +40,6 @@ if (!$result) {
 elgg_clear_sticky_form('messages');
 
 $forward = 'messages/inbox/' . elgg_get_logged_in_user_entity()->username;
-return elgg_ok_response('', elgg_echo('messages:posted'), $forward);
+return elgg_ok_response([
+	'sent_guid' => $result,
+], elgg_echo('messages:posted'), $forward);
