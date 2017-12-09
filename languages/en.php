@@ -1073,6 +1073,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'friendlytime:days' => "%s days ago",
 	'friendlytime:days:singular' => "yesterday",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
+	'friendlytime:date_format:short' => 'j M Y',
 
 	'friendlytime:future:minutes' => "in %s minutes",
 	'friendlytime:future:minutes:singular' => "in a minute",
@@ -1197,6 +1198,8 @@ Once you have logged in, we highly recommend that you change your password.
 	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/supporter.php.",
 	'config:disable_rss:label' => "Disable RSS feeds",
 	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
+	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
+	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
 	
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',

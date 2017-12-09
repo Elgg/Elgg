@@ -60,6 +60,12 @@ elgg_save_config('remove_branding', $remove_branding);
 $disable_rss = ('on' === get_input('disable_rss', false));
 elgg_save_config('disable_rss', $disable_rss);
 
+$friendly_time_number_of_days = get_input('friendly_time_number_of_days', 30);
+if ($friendly_time_number_of_days === '') {
+	$friendly_time_number_of_days = 30;
+}
+elgg_save_config('friendly_time_number_of_days', (int) $friendly_time_number_of_days);
+
 if (!$site->save()) {
 	return elgg_error_response(elgg_echo('admin:configuration:fail'));
 }
