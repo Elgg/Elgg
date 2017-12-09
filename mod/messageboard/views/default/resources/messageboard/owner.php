@@ -18,7 +18,7 @@ elgg_push_breadcrumb($page_owner->name, $page_owner->getURL());
 $options = [
 	'annotations_name' => 'messageboard',
 	'guid' => $page_owner_guid,
-	'reverse_order_by' => true,
+	'order_by' => 'n_table.time_created desc, n_table.id desc',
 	'preload_owners' => true,
 ];
 
@@ -52,7 +52,6 @@ $vars = [
 	'filter' => false,
 	'content' => $content,
 	'title' => $title,
-	'reverse_order_by' => true
 ];
 
 $body = elgg_view_layout('content', $vars);

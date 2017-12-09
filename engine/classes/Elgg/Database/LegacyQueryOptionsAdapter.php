@@ -96,7 +96,6 @@ trait LegacyQueryOptionsAdapter {
 			'last_action_before' => null,
 
 			'sort_by' => [],
-			'reverse_order_by' => null,
 			'order_by' => null,
 			'count' => false,
 			'limit' => elgg_get_config('default_limit'),
@@ -260,7 +259,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			$options['order_by'] = null;
-			$options['reverse_order_by'] = null;
 			$options['order_by_metadata'] = null;
 		}
 
@@ -378,7 +376,6 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			$options['order_by'] = null;
-			$options['reverse_order_by'] = null;
 			$options['order_by_annotation'] = null;
 		}
 
@@ -933,10 +930,7 @@ trait LegacyQueryOptionsAdapter {
 	protected function normalizeOrderByClauses(array $options = []) {
 
 		$order_by = $options['order_by'];
-		$reverse_order_by = $options['reverse_order_by'];
-
 		$options['order_by'] = [];
-		unset($options['reverse_order_by']);
 
 		if (!empty($order_by)) {
 			if (is_string($order_by)) {
@@ -973,9 +967,6 @@ trait LegacyQueryOptionsAdapter {
 					'ASC',
 					'DESC'
 				]) ? strtoupper($direction) : 'ASC';
-				if ($reverse_order_by) {
-					$direction = $direction == 'ASC' ? 'DESC' : 'ASC';
-				}
 
 				$options['order_by'][] = new OrderByClause($column, $direction);
 			}

@@ -1543,32 +1543,6 @@ function _elgg_favicon_page_handler($segments) {
 }
 
 /**
- * Reverses the ordering in an ORDER BY clause.  This is achived by replacing
- * asc with desc, or appending desc to the end of the clause.
- *
- * This is used mostly for elgg_get_entities() and other similar functions.
- *
- * @param string $order_by An order by clause
- * @access private
- * @return string
- * @access private
- */
-function _elgg_sql_reverse_order_by_clause($order_by) {
-	$order_by = strtolower($order_by);
-
-	if (strpos($order_by, ' asc') !== false) {
-		$return = str_replace(' asc', ' desc', $order_by);
-	} elseif (strpos($order_by, ' desc') !== false) {
-		$return = str_replace(' desc', ' asc', $order_by);
-	} else {
-		// no order specified, so default to desc since mysql defaults to asc
-		$return = $order_by . ' desc';
-	}
-
-	return $return;
-}
-
-/**
  * Enable objects with an enable() method.
  *
  * Used as a callback for \ElggBatch.

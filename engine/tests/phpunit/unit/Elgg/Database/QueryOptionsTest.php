@@ -1038,7 +1038,6 @@ class QueryOptionsTest extends UnitTestCase {
 
 		$options = $this->options->normalizeOptions([
 			'order_by' => 'foo.bar, foo.baz ASC,  sum(x) desc',
-			'reverse_order_by' => true,
 		]);
 
 		$this->assertEquals(3, count($options['order_by']));
@@ -1048,19 +1047,19 @@ class QueryOptionsTest extends UnitTestCase {
 
 		$this->assertInstanceOf(OrderByClause::class, $clause);
 		$this->assertEquals('foo.bar', $clause->expr);
-		$this->assertEquals('DESC', $clause->direction);
+		$this->assertEquals('ASC', $clause->direction);
 
 		$clause = array_shift($options['order_by']);
 
 		$this->assertInstanceOf(OrderByClause::class, $clause);
 		$this->assertEquals('foo.baz', $clause->expr);
-		$this->assertEquals('DESC', $clause->direction);
+		$this->assertEquals('ASC', $clause->direction);
 
 		$clause = array_shift($options['order_by']);
 
 		$this->assertInstanceOf(OrderByClause::class, $clause);
 		$this->assertEquals('sum(x)', $clause->expr);
-		$this->assertEquals('ASC', $clause->direction);
+		$this->assertEquals('DESC', $clause->direction);
 
 	}
 

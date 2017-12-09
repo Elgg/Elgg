@@ -380,10 +380,8 @@ function elgg_get_site_entity() {
  * Order by value of a speicifc metadata/attribute
  * @option array $order_by_metadata
  *
- * Order by arbitrary clauses, if $reverse_order_by is true, then all asc|desc statements in order by clauses will be
- * replaced with their opposites
+ * Order by arbitrary clauses
  * @option array $order_by
- * @option bool $reverse_order by
  *
  * <code>
  * $options['order_by_metadata'] = [
