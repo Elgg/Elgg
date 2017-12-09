@@ -64,22 +64,15 @@ foreach ($columns as $column) {
 }
 $headings = "<thead><tr>$headings</tr></thead>";
 
-$table_classes = ['elgg-list', 'elgg-table'];
-if (isset($vars['list_class'])) {
-	$table_classes[] = $vars['list_class'];
-}
+$table_classes = elgg_extract_class($vars, ['elgg-list', 'elgg-table'], 'list_class');
 
 $nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
 
 $rows = '';
 foreach ($items as $item) {
 	$row_attrs = [
-		'class' => ['elgg-item']
+		'class' => elgg_extract_class($vars, 'elgg-item', 'item_class'),
 	];
-
-	if (!empty($vars['item_class'])) {
-		$row_attrs['class'][] = $vars['item_class'];
-	}
 
 	$type = '';
 	$entity = null;

@@ -1219,18 +1219,19 @@ function elgg_extract($key, $array, $default = null, $strict = true) {
 }
 
 /**
- * Extract class names from an array with key "class", optionally merging into a preexisting set.
+ * Extract class names from an array, optionally merging into a preexisting set.
  *
- * @param array           $array    Source array
- * @param string|string[] $existing Existing name(s)
+ * @param array           $array       Source array
+ * @param string|string[] $existing    Existing name(s)
+ * @param string          $extract_key Key to extract new classes from
  * @return string[]
  *
  * @since 2.3.0
  */
-function elgg_extract_class(array $array, $existing = []) {
+function elgg_extract_class(array $array, $existing = [], $extract_key = 'class') {
 	$existing = empty($existing) ? [] : (array) $existing;
 
-	$merge = (array) elgg_extract('class', $array, []);
+	$merge = (array) elgg_extract($extract_key, $array, []);
 
 	array_splice($existing, count($existing), 0, $merge);
 

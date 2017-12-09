@@ -51,12 +51,9 @@ if (!empty($children)) {
 
 $item_vars['data-menu-item'] = $item->getName();
 
-$item_vars['class'][] = $item->getItemClass();
+$item_vars['class'] = elgg_extract_class($vars, $item->getItemClass(), 'item_class');
 if ($item->getSelected()) {
 	$item_vars['class'][] = "elgg-state-selected";
-}
-if (!empty($vars['item_class'])) {
-	$item_vars['class'][] = $vars['item_class'];
 }
 
 $item_view = elgg_view_menu_item($item) . $child_menu_view;

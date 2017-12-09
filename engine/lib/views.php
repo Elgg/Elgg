@@ -1539,15 +1539,7 @@ function elgg_view_icon($name, $vars = []) {
 		throw new \InvalidArgumentException('$vars needs to be a string or an array');
 	}
 
-	if (!array_key_exists('class', $vars)) {
-		$vars['class'] = [];
-	}
-
-	if (!is_array($vars['class'])) {
-		$vars['class'] = [$vars['class']];
-	}
-
-	$vars['class'][] = "elgg-icon-$name";
+	$vars['class'] = elgg_extract_class($vars, "elgg-icon-$name");
 
 	return elgg_view("output/icon", $vars);
 }
