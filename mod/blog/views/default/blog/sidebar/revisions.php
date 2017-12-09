@@ -29,7 +29,7 @@ if ($auto_save_annotations) {
 
 $saved_revisions = $blog->getAnnotations([
 	'annotation_name' => 'blog_revision',
-	'reverse_order_by' => true,
+	'order_by' => 'n_table.time_created desc, n_table.id desc',
 	'limit' => false
 ]);
 

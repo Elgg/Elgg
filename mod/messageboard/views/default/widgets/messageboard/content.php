@@ -17,7 +17,7 @@ echo elgg_list_annotations([
 	'guid' => $owner->guid,
 	'limit' => $num_display,
 	'pagination' => false,
-	'reverse_order_by' => true,
+	'order_by' => 'n_table.time_created desc, n_table.id desc',
 ]);
 
 if ($owner instanceof ElggGroup) {

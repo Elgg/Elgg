@@ -338,6 +338,8 @@ or a closure that returns an instance of ``\Doctrine\DBAL\Query\Expression\Compo
 ``joins``, ``order_by``, ``group_by``, ``selects`` clauses should not use raw SQL strings. Use closures that receive
 an instance of ``\Elgg\Database\QueryBuilder`` and return a prepared statement.
 
+The ``reverse_order_by`` option has been removed.
+
 Plugins should not rely on joined and selected table aliases. Closures passed to the options array will receive a second argument
 that corresponds to the selected table alias. Plugins must perform their own joins and use joined aliases accordingly.
 
