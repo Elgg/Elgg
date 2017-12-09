@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Search box
  *
@@ -18,6 +17,5 @@ echo elgg_view_form('search', [
 	'action' => elgg_normalize_url('search'),
 	'method' => 'get',
 	'disable_security' => true,
+	'class' => $class,
 ], $vars);
-
-
