@@ -320,6 +320,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_plugins_test($hook, $type, $value, $params) {
 	$value[] = ElggCorePluginsAPITest::class;
