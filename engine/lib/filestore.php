@@ -214,6 +214,7 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_filestore_test($hook, $type, $value) {
 	$value[] = ElggCoreFilestoreTest::class;

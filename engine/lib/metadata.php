@@ -112,6 +112,7 @@ function _elgg_invalidate_metadata_cache($action, array $options) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_metadata_test($hook, $type, $value, $params) {
 	$value[] = ElggCoreMetadataAPITest::class;

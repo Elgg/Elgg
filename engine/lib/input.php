@@ -361,6 +361,7 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
  * @param array    $params Hook params
  *
  * @return array
+ * @codeCoverageIgnore
  */
 function _elgg_htmlawed_test($hook, $type, $value, $params) {
 	$value[] = ElggHtmLawedTest::class;

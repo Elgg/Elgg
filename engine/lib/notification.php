@@ -619,6 +619,7 @@ function _elgg_save_notification_user_settings() {
  * @return array
  *
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_notifications_test($hook, $type, $tests) {
 	$tests[] = ElggCoreDatabaseQueueTest::class;

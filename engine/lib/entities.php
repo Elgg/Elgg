@@ -888,6 +888,7 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_entities_test($hook, $type, $value) {
 	$value[] = ElggEntityUnitTest::class;
