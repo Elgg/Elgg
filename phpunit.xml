@@ -57,6 +57,7 @@
             <directory suffix=".php">*/node_modules/*</directory>
             <directory suffix=".php">*/docs/*</directory>
             <directory suffix=".php">*/grunt/*</directory>
+            <directory suffix=".php">*/engine/schema/*</directory>
         </blacklist>
 
         <!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
@@ -83,6 +84,7 @@
                 <directory suffix=".php">*/node_modules/*</directory>
                 <directory suffix=".php">*/docs/*</directory>
                 <directory suffix=".php">*/grunt/*</directory>
+                <directory suffix=".php">*/engine/schema/*</directory>
             </exclude>
         </whitelist>
     </filter>
