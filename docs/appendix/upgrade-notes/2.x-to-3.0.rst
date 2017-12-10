@@ -163,6 +163,9 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggEntity::getSites``
  * ``ElggEntity::removeFromSite``
  * ``ElggEntity::isFullyLoaded``
+ * ``ElggPlugin::getFriendlyName``: Use ``ElggPlugin::getDisplayName()``
+ * ``ElggPlugin::setID``
+ * ``ElggPlugin::unsetAllUsersSettings``
  * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
  * ``ElggFile::size``: Use ``getSize``
  * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
@@ -265,6 +268,7 @@ Deprecated APIs
  * ``elgg_list_entities_from_private_settings``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``
  * ``elgg_batch_delete_callback``
+ * ``sanitise_filepath``: Use ``\Elgg\Project\Paths::sanitize()``
 
 Removed global vars
 -------------------
@@ -592,6 +596,7 @@ Class constructors that now accept only a ``stdClass`` object or ``null``
  * ``ElggRelationship``: No longer accepts a relationship ID or ``null``
  * ``ElggSite``: No longer accepts a GUID or URL
  * ``ElggUser``: No longer accepts a GUID or username
+ * ``ElggPlugin``: No longer accepts a GUID or path. Use ``ElggPlugin::fromId`` to construct a plugin from its path
 
 Miscellaneous API changes
 -------------------------

@@ -38,6 +38,21 @@ class EntityTable extends DbEntityTable {
 	 * {@inheritdoc}
 	 */
 	public function getRow($guid, $user_guid = null) {
+		if ($guid === 1) {
+			return (object) [
+				'guid' => 1,
+				'type' => 'site',
+				'subtype' => 'site',
+				'owner_guid' => 0,
+				'container_guid' => 0,
+				'access_id' => ACCESS_PUBLIC,
+				'time_created' => time(),
+				'time_updated' => time(),
+				'last_action' => time(),
+				'enabled' => 'yes',
+			];
+		}
+
 		if (empty($this->rows[$guid])) {
 			return false;
 		}
@@ -102,9 +117,13 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function setup($guid, $type, $subtype, array $attributes = []) {
 		while (!isset($guid)) {
-			$this->iterator++;
-			if (!isset($this->row[$this->iterator])) {
-				$guid = $this->iterator;
+			if ($type === 'site') {
+				$guid = 1;
+			} else {
+				$this->iterator++;
+				if (!isset($this->row[$this->iterator])) {
+					$guid = $this->iterator;
+				}
 			}
 		}
 
@@ -152,6 +171,10 @@ class EntityTable extends DbEntityTable {
 
 			// not an attribute, so needs to be set again
 			$entity->$name = $value;
+		}
+
+		if ($entity instanceof \ElggPlugin && $entity->getID()) {
+			_elgg_services()->plugins->cache($entity);
 		}
 
 		return $entity;
@@ -358,7 +381,7 @@ class EntityTable extends DbEntityTable {
 		$this->query_specs[$row->guid][] = _elgg_services()->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':type' => 'object',
+				':type' => $row->type ? : 'object',
 				':subtype' => $row->subtype,
 				':owner_guid' => $row->owner_guid,
 				':container_guid' => $row->container_guid,

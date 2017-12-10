@@ -6,7 +6,7 @@ if (!date_default_timezone_get()) {
 
 error_reporting(E_ALL | E_STRICT);
 
-\Elgg\IntegrationTestCase::createApplication();
+$app = \Elgg\IntegrationTestCase::createApplication();
 
 /**
  * Get/set an Application for testing purposes

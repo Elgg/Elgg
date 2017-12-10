@@ -23,7 +23,7 @@ foreach ($columns as $column) {
 echo '</tr>';
 
 foreach ($deps as $dep) {
-	$fields = _elgg_get_plugin_dependency_strings($dep);
+	$fields = _elgg_services()->plugins->getDependencyStrings($dep);
 	$type = $dep['type'];
 
 	if ($dep['status']) {

@@ -28,7 +28,8 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
-		
+		$this->startPlugin();
+
 		$this->user = $this->createUser();
 		
 		$session = elgg_get_session();

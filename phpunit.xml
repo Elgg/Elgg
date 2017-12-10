@@ -58,6 +58,8 @@
             <directory suffix=".php">*/docs/*</directory>
             <directory suffix=".php">*/grunt/*</directory>
             <directory suffix=".php">*/engine/schema/*</directory>
+            <file>*/engine/lib/deprecated-2.3.php</file>
+            <file>*/engine/lib/deprecated-3.0.php</file>
         </blacklist>
 
         <!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
@@ -85,6 +87,8 @@
                 <directory suffix=".php">*/docs/*</directory>
                 <directory suffix=".php">*/grunt/*</directory>
                 <directory suffix=".php">*/engine/schema/*</directory>
+                <file>*/engine/lib/deprecated-2.3.php</file>
+                <file>*/engine/lib/deprecated-3.0.php</file>
             </exclude>
         </whitelist>
     </filter>

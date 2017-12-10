@@ -83,11 +83,11 @@ abstract class ElggEntity extends \ElggData implements
 	 * If a database result is passed as a \stdClass instance, it instantiates
 	 * that entity.
 	 *
-	 * @param \stdClass $row Database row result. Default is null to create a new object.
+	 * @param stdClass $row Database row result. Default is null to create a new object.
 	 *
 	 * @throws IOException If cannot load remaining data from db
 	 */
-	public function __construct(\stdClass $row = null) {
+	public function __construct(stdClass $row = null) {
 		$this->initializeAttributes();
 
 		if ($row && !$this->load($row)) {
@@ -1275,8 +1275,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Save an entity.
 	 *
 	 * @return bool|int
-	 * @throws InvalidParameterException
-	 * @throws IOException
 	 */
 	public function save() {
 		$guid = $this->guid;
@@ -1501,7 +1499,7 @@ abstract class ElggEntity extends \ElggData implements
 		elgg_trigger_after_event('update', $this->type, $this);
 
 		// TODO(evan): Move this to \ElggObject?
-		if ($this instanceof \ElggObject) {
+		if ($this instanceof \ElggObject && isset($this->orig_attributes['access_id'])) {
 			update_river_access_by_object($guid, $access_id);
 		}
 
@@ -1514,11 +1512,11 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Loads attributes from the entities table into the object.
 	 *
-	 * @param \stdClass $row Object of properties from database row(s)
+	 * @param stdClass $row Object of properties from database row(s)
 	 *
 	 * @return bool
 	 */
-	protected function load(\stdClass $row) {
+	protected function load(stdClass $row) {
 		$type = $this->type;
 
 		$attr_loader = new \Elgg\AttributeLoader(get_class($this), $type, $this->attributes);
@@ -1537,6 +1535,8 @@ abstract class ElggEntity extends \ElggData implements
 			$this->setVolatileData("select:$name", $value);
 		}
 
+		_elgg_services()->metadataCache->populateFromEntities($this);
+
 		_elgg_services()->entityCache->set($this);
 
 		return true;
@@ -1550,12 +1550,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * request in case different select clauses were used to load different data
 	 * into volatile data.
 	 *
-	 * @param \stdClass $row DB row with new entity data
+	 * @param stdClass $row DB row with new entity data
 	 * @return bool
 	 * @access private
 	 */
-	public function refresh(\stdClass $row) {
-		if ($row instanceof \stdClass) {
+	public function refresh(stdClass $row) {
+		if ($row instanceof stdClass) {
 			return $this->load($row);
 		}
 		return false;
@@ -1876,7 +1876,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * {@inheritdoc}
 	 */
 	public function toObject() {
-		$object = $this->prepareObject(new \stdClass());
+		$object = $this->prepareObject(new stdClass());
 		$params = ['entity' => $this];
 		$object = _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
 		return $object;
@@ -1885,8 +1885,8 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Prepare an object copy for toObject()
 	 *
-	 * @param \stdClass $object Object representation of the entity
-	 * @return \stdClass
+	 * @param stdClass $object Object representation of the entity
+	 * @return stdClass
 	 */
 	protected function prepareObject($object) {
 		$object->guid = $this->guid;

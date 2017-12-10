@@ -189,6 +189,7 @@ class MetadataTable {
 
 		if (!$allow_multiple) {
 			$id = $this->getIdsByName($metadata->entity_guid, $metadata->name);
+
 			if (is_array($id)) {
 				throw new \LogicException("Multiple '{$metadata->name}' metadata values exist for entity [guid: {$metadata->entity_guid}]. Use ElggEntity::setMetadata()");
 			}
