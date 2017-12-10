@@ -812,6 +812,7 @@ function users_init() {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function users_test($hook, $type, $value, $params) {
 	$value[] = ElggCoreUserTest::class;

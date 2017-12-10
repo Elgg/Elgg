@@ -171,6 +171,7 @@ function _elgg_config() {
  * @return array
  *
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_config_test($hook, $type, $tests) {
 	$tests[] = ElggCoreConfigTest::class;

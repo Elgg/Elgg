@@ -1816,6 +1816,7 @@ function _elgg_delete_autoload_cache() {
  * @elgg_plugin_hook unit_tests system
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_api_test($hook, $type, $value, $params) {
 	$value[] = ElggTravisInstallTest::class;

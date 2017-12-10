@@ -547,6 +547,7 @@ function access_friends_acl_get_name(\Elgg\Hook $hook) {
  * @return array
  *
  * @access private
+ * @codeCoverageIgnore
  */
 function access_test($hook, $type, $value, $params) {
 	$value[] = ElggCoreAccessCollectionsTest::class;

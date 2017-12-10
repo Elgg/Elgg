@@ -139,6 +139,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_groups_test($hook, $type, $value) {
 	$value[] = ElggCoreGroupTest::class;

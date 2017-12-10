@@ -55,6 +55,7 @@ function _elgg_normalize_metastrings_options(array $options = []) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_metastrings_test($hook, $type, $value) {
 	$value[] = ElggCoreMetastringsTest::class;
