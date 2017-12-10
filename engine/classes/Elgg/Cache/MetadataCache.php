@@ -2,6 +2,7 @@
 namespace Elgg\Cache;
 
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Values;
 use ElggSharedMemoryCache;
 
 /**
@@ -137,6 +138,27 @@ class MetadataCache {
 	}
 
 	/**
+	 * Returns loaded entity metadata
+	 *
+	 * @param int $entity_guid Entity guid
+	 * @return array|null
+	 */
+	public function getEntityMetadata($entity_guid) {
+		if (!$this->isLoaded($entity_guid)) {
+			$this->populateFromEntities($entity_guid);
+		}
+
+		if ($this->isLoaded($entity_guid)) {
+			return [
+				'values' => $this->values[$entity_guid],
+				'ids' => $this->ids[$entity_guid],
+			];
+		}
+
+		return null;
+	}
+
+	/**
 	 * Invalidate based on options passed to the global *_metadata functions
 	 *
 	 * @param array $options Options passed to elgg_(delete|disable|enable)_metadata
@@ -156,10 +178,11 @@ class MetadataCache {
 	/**
 	 * Populate the cache from a set of entities
 	 *
-	 * @param int|array $guids Array of or single GUIDs
+	 * @param int[] ...$guids Array of or single GUIDs
 	 * @return void
 	 */
-	public function populateFromEntities($guids) {
+	public function populateFromEntities(...$guids) {
+		$guids = Values::normalizeGuids($guids);
 		if (empty($guids)) {
 			return;
 		}
@@ -169,8 +192,6 @@ class MetadataCache {
 			// can't use this during upgrade from 2.x to 3.0
 			return;
 		}
-
-		$guids = array_unique((array) $guids);
 
 		foreach ($guids as $i => $guid) {
 			$value = $this->cache->load($guid);

@@ -221,7 +221,7 @@ class UpgradeService {
 		if (!$upgrade_path) {
 			$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 		}
-		$upgrade_path = sanitise_filepath($upgrade_path);
+		$upgrade_path = \Elgg\Project\Paths::sanitize($upgrade_path);
 		$handle = opendir($upgrade_path);
 
 		if (!$handle) {

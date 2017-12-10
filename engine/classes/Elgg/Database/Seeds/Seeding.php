@@ -320,25 +320,28 @@ trait Seeding {
 	public function createObject(array $attributes = [], array $metadata = [], array $options = []) {
 
 		$create = function () use ($attributes, $metadata, $options) {
-			$metadata['__faker'] = true;
 
-			if (empty($metadata['title'])) {
-				$metadata['title'] = $this->faker()->sentence();
+			$properties = array_merge($metadata, $attributes);
+
+			$properties['__faker'] = true;
+
+			if (empty($properties['title'])) {
+				$properties['title'] = $this->faker()->sentence();
 			}
 
-			if (empty($metadata['description'])) {
-				$metadata['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
+			if (empty($properties['description'])) {
+				$properties['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
 			}
 
-			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = $this->getRandomSubtype();
+			if (empty($properties['subtype'])) {
+				$properties['subtype'] = $this->getRandomSubtype();
 			}
 
-			if (empty($metadata['tags'])) {
-				$metadata['tags'] = $this->faker()->words(10);
+			if (empty($properties['tags'])) {
+				$properties['tags'] = $this->faker()->words(10);
 			}
 
-			if (empty($attributes['container_guid'])) {
+			if (empty($properties['container_guid'])) {
 				$container = elgg_get_logged_in_user_entity();
 				if (!$container) {
 					$container = $this->getRandomUser();
@@ -347,40 +350,41 @@ trait Seeding {
 					$container = $this->createUser();
 				}
 
-				$attributes['container_guid'] = $container->guid;
+				$properties['container_guid'] = $container->guid;
 			}
 
-			$container = get_entity($attributes['container_guid']);
+			$container = get_entity($properties['container_guid']);
 			if (!$container) {
 				return false;
 			}
 
-			if (empty($attributes['owner_guid'])) {
+			if (empty($properties['owner_guid'])) {
 				$owner = $container;
-				$attributes['owner_guid'] = $owner->guid;
+				$properties['owner_guid'] = $owner->guid;
 			}
 
-			$owner = get_entity($attributes['owner_guid']);
+			$owner = get_entity($properties['owner_guid']);
 			if (!$owner) {
 				return false;
 			}
 
-			if (!isset($attributes['access_id'])) {
-				$attributes['access_id'] = ACCESS_PUBLIC;
+			if (!isset($properties['access_id'])) {
+				$properties['access_id'] = ACCESS_PUBLIC;
 			}
 
-			$class = elgg_get_entity_class('object', $attributes['subtype']);
+			$class = elgg_get_entity_class('object', $properties['subtype']);
 			if ($class && class_exists($class)) {
 				$object = new $class();
 			} else {
 				$object = new ElggObject();
 			}
-			foreach ($attributes as $name => $value) {
+
+			foreach ($properties as $name => $value) {
 				$object->$name = $value;
 			}
 
 			$profile_fields = elgg_extract('profile_fields', $options, []);
-			$object = $this->populateMetadata($object, $profile_fields, $metadata);
+			$object = $this->populateMetadata($object, $profile_fields, $properties);
 
 			if (elgg_extract('save', $options, true)) {
 				$object->save();
@@ -628,6 +632,7 @@ trait Seeding {
 
 						case 'url' :
 							$metadata[$name] = $this->faker()->url;
+							break;
 
 						case 'email' :
 							$metadata[$name] = $this->faker()->email;
@@ -646,12 +651,6 @@ trait Seeding {
 							break;
 
 						case 'location' :
-							$metadata[$name] = $this->faker()->address;
-							$metadata['geo:lat'] = $this->faker()->latitude;
-							$metadata['geo:long'] = $this->faker()->longitude;
-							break;
-
-						case 'email' :
 							$metadata[$name] = $this->faker()->address;
 							$metadata['geo:lat'] = $this->faker()->latitude;
 							$metadata['geo:long'] = $this->faker()->longitude;

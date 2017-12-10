@@ -2,22 +2,17 @@
 
 namespace Elgg;
 
+use ConfigurationException;
 use Doctrine\DBAL\Connection;
-use Elgg\Cache\Pool\InMemory as InMemoryCachePool;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
-use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
-use Elgg\Http\Request;
 use Elgg\Filesystem\Directory\Local;
-use ConfigurationException;
-use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Http\Request;
 use Elgg\Project\Paths;
 use Exception;
 use InstallationException;
-use RuntimeException;
-use Zend\Mail\Transport\InMemory as InMemoryMailTransport;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -105,93 +100,6 @@ class Application {
 	 */
 	public function __construct(ServiceProvider $services) {
 		$this->_services = $services;
-
-		$this->initConfig();
-	}
-
-	/**
-	 * Validate, normalize, fill in missing values, and lock some
-	 *
-	 * @return void
-	 * @throws ConfigurationException
-	 */
-	private function initConfig() {
-		$config = $this->_services->config;
-
-		if ($config->elgg_config_locks === null) {
-			$config->elgg_config_locks = true;
-		}
-
-		if ($config->elgg_config_locks) {
-			$lock = function ($name) use ($config) {
-				$config->lock($name);
-			};
-		} else {
-			// the installer needs to build an application with defaults then update
-			// them after they're validated, so we don't want to lock them.
-			$lock = function () {
-			};
-		}
-
-		$this->_services->timer->begin([]);
-
-		if ($config->dataroot) {
-			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
-		} else {
-			if (!$config->installer_running) {
-				throw new ConfigurationException('Config value "dataroot" is required.');
-			}
-		}
-		$lock('dataroot');
-
-		if ($config->cacheroot) {
-			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
-		} else {
-			$config->cacheroot = $config->dataroot;
-		}
-		$lock('cacheroot');
-
-		if ($config->wwwroot) {
-			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
-		} else {
-			$config->wwwroot = $this->_services->request->sniffElggUrl();
-		}
-		$lock('wwwroot');
-
-		if (!$config->language) {
-			$config->language = self::DEFAULT_LANG;
-		}
-
-		if ($config->default_limit) {
-			$lock('default_limit');
-		} else {
-			$config->default_limit = self::DEFAULT_LIMIT;
-		}
-
-		$locked_props = [
-			'site_guid' => 1,
-			'path' => Paths::project(),
-			'plugins_path' => Paths::project() . "mod/",
-			'pluginspath' => Paths::project() . "mod/",
-			'url' => $config->wwwroot,
-		];
-		foreach ($locked_props as $name => $value) {
-			$config->$name = $value;
-			$lock($name);
-		}
-
-		// move sensitive credentials into isolated services
-		$this->_services->dbConfig;
-
-		// If the site secret is in the settings file, let's move it to that component
-		// right away to keep this value out of config.
-		$secret = SiteSecret::fromConfig($config);
-		if ($secret) {
-			$this->_services->setValue('siteSecret', $secret);
-			$config->elgg_config_set_secret = true;
-		}
-
-		$config->boot_complete = false;
 	}
 
 	/**

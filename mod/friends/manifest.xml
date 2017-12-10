@@ -7,6 +7,7 @@
 	<category>content</category>
 	<description>Adds UI for friends</description>
 	<website>http://www.elgg.org/</website>
+	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
 		<version>3.0</version>

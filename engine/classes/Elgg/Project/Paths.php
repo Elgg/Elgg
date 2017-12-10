@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Project;
 
 /**
@@ -31,6 +32,7 @@ class Paths {
 				$path = dirname(dirname(dirname($path))) . DIRECTORY_SEPARATOR;
 			}
 		}
+
 		return $path;
 	}
 
@@ -56,9 +58,37 @@ class Paths {
 	 * Get path of the Elgg settings file
 	 *
 	 * @param string $file File basename
+	 *
 	 * @return string
 	 */
 	public static function settingsFile($file = self::SETTINGS_PHP) {
 		return self::projectConfig() . $file;
+	}
+
+	/**
+	 * Sanitise file paths ensuring that they begin and end with slashes etc.
+	 *
+	 * @param string $path         The path
+	 * @param bool   $append_slash Add tailing slash
+	 *
+	 * @return string
+	 */
+	public static function sanitize($path, $append_slash = true) {
+		// Convert to correct UNIX paths
+		$path = str_replace('\\', '/', $path);
+		$path = str_replace('../', '/', $path);
+		// replace // with / except when preceeded by :
+		$path = preg_replace("/([^:])\/\//", "$1/", $path);
+
+		// Sort trailing slash
+		$path = trim($path);
+		// rtrim defaults plus /
+		$path = rtrim($path, " \n\t\0\x0B/");
+
+		if ($append_slash) {
+			$path = $path . '/';
+		}
+
+		return $path;
 	}
 }

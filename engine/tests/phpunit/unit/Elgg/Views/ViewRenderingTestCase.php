@@ -15,16 +15,17 @@ abstract class ViewRenderingTestCase extends UnitTestCase {
 	public function up() {
 		_elgg_services()->logger->disable();
 
-		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
-		elgg_set_page_owner_guid($user->guid);
+		// This makes things slow, better to fix the views to not rely on global state
+		// $user = $this->createUser();
+		// _elgg_services()->session->setLoggedInUser($user);
+		// elgg_set_page_owner_guid($user->guid);
 
 		$this->registerViews();
 	}
 
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-		elgg_set_page_owner_guid(null);
+		//_elgg_services()->session->removeLoggedInUser();
+		//elgg_set_page_owner_guid(null);
 
 		_elgg_services()->logger->enable();
 	}
