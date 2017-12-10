@@ -1,8 +1,7 @@
 Plugins
 #######
 
-Plugins must provide a ``manifest.xml`` file in the plugin root
-in order to be recognized by Elgg.
+Plugins must provide a ``manifest.xml`` file in the plugin root in order to be recognized by Elgg.
 
 .. contents:: Contents
    :local:

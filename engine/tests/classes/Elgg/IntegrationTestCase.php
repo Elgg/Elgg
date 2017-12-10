@@ -17,8 +17,7 @@ use Zend\Mail\Transport\InMemory;
 abstract class IntegrationTestCase extends BaseTestCase {
 
 	use TestSeeding;
-	use PluginTesting;
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -28,8 +27,9 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		$config = self::getTestingConfig();
 		$sp = new ServiceProvider($config);
+		$config->system_cache_enabled = true;
 		$config->boot_cache_ttl = 10;
-		
+
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
 
@@ -92,11 +92,12 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		parent::setUp();
 
 		$app = Application::getInstance();
-		
-		// check if test is in a plugin
+
 		$plugin_id = $this->getPluginID();
 		if (!empty($plugin_id)) {
-			if (!$app->_services->plugins->isActive($plugin_id)) {
+			$plugin = elgg_get_plugin_from_id($plugin_id);
+
+			if (!$plugin || !$plugin->isActive()) {
 				$this->markTestSkipped("Plugin '{$plugin_id}' isn't active, skipped test");
 			}
 		}
@@ -122,7 +123,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		if ($this instanceof LegacyIntegrationTestCase) {
 			$app->_services->session->removeLoggedInUser();
 		}
-
+		
 		parent::tearDown();
 	}
 }

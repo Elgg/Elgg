@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use ElggPlugin;
 use ElggPluginManifest;
 use ElggPluginPackage;
 
@@ -407,14 +408,14 @@ class ElggCorePluginsAPITest extends \Elgg\LegacyIntegrationTestCase {
 	// \ElggPlugin
 	public function testElggPluginIsValid() {
 
-		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
+		$test_plugin = ElggPlugin::fromId('profile');
 
 		$this->assertIdentical(true, $test_plugin->isValid());
 	}
 
 	public function testElggPluginGetID() {
 
-		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
+		$test_plugin = ElggPlugin::fromId('profile');
 
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}

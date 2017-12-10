@@ -15,8 +15,11 @@ class SearchRouterTest extends UnitTestCase {
 	use PluginTesting;
 
 	public function up() {
+		$this->startPlugin();
+
 		elgg_register_entity_type('object', 'custom');
 		_elgg_services()->views->registerPluginViews($this->getPath());
+
 		search_init();
 	}
 
@@ -24,9 +27,6 @@ class SearchRouterTest extends UnitTestCase {
 
 	}
 
-	/**
-	 * @group Current
-	 */
 	public function testPageHanlder() {
 		$params = [
 			'q' => 'lorem ipsum',

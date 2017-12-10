@@ -379,7 +379,7 @@ class Translator {
 	 * @return bool success
 	 */
 	public function registerTranslations($path, $load_all = false, $language = null) {
-		$path = sanitise_filepath($path);
+		$path = \Elgg\Project\Paths::sanitize($path);
 
 		// Make a note of this path just in case we need to register this language later
 		$this->language_paths[$path] = true;

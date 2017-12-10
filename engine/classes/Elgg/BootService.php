@@ -112,6 +112,12 @@ class BootService {
 		$services->plugins->setBootPlugins($data->getActivePlugins());
 
 		$services->pluginSettingsCache->setCachedValues($data->getPluginSettings());
+		foreach ($data->getPluginMetadata() as $guid => $metadata) {
+			if (!$metadata) {
+				continue;
+			}
+			$services->metadataCache->inject($guid, $metadata['values'], $metadata['ids']);
+		}
 
 		$services->logger->setLevel($config->debug);
 		if ($config->debug) {
@@ -131,12 +137,6 @@ class BootService {
 
 		// we don't store langs in boot data because it varies by user
 		$services->translator->loadTranslations();
-
-		// we always need site->email and user->icontime, so load them together
-		$user_guid = $services->session->getLoggedInUserGuid();
-		if ($user_guid) {
-			$services->metadataCache->populateFromEntities([$user_guid]);
-		}
 
 		// invalidate on some actions just in case other invalidation triggers miss something
 		$services->hooks->registerHandler('action', 'all', function ($action) {

@@ -1239,7 +1239,7 @@ class ElggInstaller {
 			return true;
 		}
 
-		$dir = sanitise_filepath($submissionVars['path']) . 'data';
+		$dir = \Elgg\Project\Paths::sanitize($submissionVars['path']) . 'data';
 		if (file_exists($dir) || mkdir($dir, 0700)) {
 			$submissionVars['dataroot'] = $dir;
 			if (!file_exists("$dir/.htaccess")) {

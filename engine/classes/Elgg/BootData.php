@@ -31,6 +31,11 @@ class BootData {
 	private $plugin_settings = [];
 
 	/**
+	 * @var array
+	 */
+	private $plugin_metadata = [];
+
+	/**
 	 * Populate the boot data
 	 *
 	 * @param Database    $db        Elgg database
@@ -61,6 +66,12 @@ class BootData {
 		$guids = array_map(function (\ElggPlugin $plugin) {
 			return $plugin->guid;
 		}, $this->active_plugins);
+
+		_elgg_services()->metadataCache->populateFromEntities($guids);
+
+		foreach ($guids as $guid) {
+			$this->plugin_metadata[$guid] = _elgg_services()->metadataCache->getEntityMetadata($guid);
+		}
 
 		// find plugin GUIDs with not too many settings
 		$limit = 40;
@@ -122,5 +133,14 @@ class BootData {
 	 */
 	public function getPluginSettings() {
 		return $this->plugin_settings;
+	}
+
+	/**
+	 * Get plugin metadata
+	 *
+	 * @return array
+	 */
+	public function getPluginMetadata() {
+		return $this->plugin_metadata;
 	}
 }

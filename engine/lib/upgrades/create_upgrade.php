@@ -178,7 +178,7 @@ ___MSG;
 function elgg_get_file_list($directory, $exceptions = array(), $list = array(),
 $extensions = NULL) {
 
-	$directory = sanitise_filepath($directory);
+	$directory = \Elgg\Project\Paths::sanitize($directory);
 	if ($handle = opendir($directory)) {
 		while (($file = readdir($handle)) !== FALSE) {
 			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
@@ -207,7 +207,7 @@ $extensions = NULL) {
  *
  * @return string
  */
-function sanitise_filepath($path, $append_slash = TRUE) {
+function \Elgg\Project\Paths::sanitize($path, $append_slash = TRUE) {
 	// Convert to correct UNIX paths
 	$path = str_replace('\\', '/', $path);
 	$path = str_replace('../', '/', $path);
