@@ -6,7 +6,6 @@ use DatabaseException;
 use Elgg\Cache\PluginSettingsCache;
 use Elgg\Cache\Pool;
 use Elgg\Database;
-use Elgg\Database\Select;
 use Elgg\Profilable;
 use ElggPlugin;
 use ElggUser;
@@ -142,12 +141,8 @@ class Plugins {
 		// show hidden entities so that we can enable them if appropriate
 		$old_access = access_show_hidden_entities(true);
 
-		$known_plugins = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'plugin',
-			'limit' => ELGG_ENTITIES_NO_VALUE,
-		]);
-		/* @var ElggPlugin[] $known_plugins */
+		$known_plugins = $this->find('all');
+		/* @var \ElggPlugin[] $known_plugins */
 
 		if (!$known_plugins) {
 			$known_plugins = [];

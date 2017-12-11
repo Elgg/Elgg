@@ -61,16 +61,14 @@ class Plugins extends DbPlugins {
 			return $plugin;
 		}
 
-		if (in_array($plugin_id, self::$managed_plugins)) {
-			$plugin = BaseTestCase::$_instance->createObject([
-				'owner_guid' => 1,
-				'container_guid' => 1,
-				'subtype' => 'plugin',
-				'title' => $plugin_id,
-			]);
-			return $plugin;
-		}
-		return false;
+		$plugin = BaseTestCase::$_instance->createObject([
+			'owner_guid' => 1,
+			'container_guid' => 1,
+			'subtype' => 'plugin',
+			'title' => $plugin_id,
+		]);
+
+		return $plugin;
 	}
 
 	public function find($status = 'active') {

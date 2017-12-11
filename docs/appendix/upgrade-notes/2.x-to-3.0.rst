@@ -158,6 +158,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``elgg_override_permissions``: No longer used as handler for ``permissions_check`` and ``container_permissions_check`` hooks
  * ``elgg_check_access_overrides``
  * ``AttributeLoader`` became obsolete and was removed
+ * ``Application::loadSettings``
  * ``ElggEntity::addToSite``
  * ``ElggEntity::disableMetadata``
  * ``ElggEntity::enableMetadata``
@@ -269,7 +270,7 @@ Deprecated APIs
  * ``elgg_list_entities_from_private_settings``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``
  * ``elgg_batch_delete_callback``
- * ``sanitise_filepath``: Use ``\Elgg\Project\Paths::sanitize()``
+ * ``\Elgg\Project\Paths::sanitize``: Use ``\Elgg\Project\Paths::sanitize()``
 
 Removed global vars
 -------------------

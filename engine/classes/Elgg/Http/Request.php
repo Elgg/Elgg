@@ -119,6 +119,8 @@ class Request extends SymfonyRequest {
 			$base_url = dirname($base_url);
 		}
 
+		$base_url = str_replace('\\', '/', $base_url);
+
 		return rtrim($this->getSchemeAndHttpHost() . $base_url, '/') . '/';
 	}
 
