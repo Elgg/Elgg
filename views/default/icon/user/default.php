@@ -68,30 +68,20 @@ $icon = elgg_view('output/img', [
 
 $show_menu = $use_hover && (elgg_is_admin_logged_in() || !$user->isBanned());
 
-?>
-<div class="<?php echo $class; ?>">
-<?php
-
+$link_attrs = [];
 if ($show_menu) {
-	$params = [
-		'entity' => $user,
-		'username' => $username,
-		'name' => $name,
-	];
-	echo elgg_view('navigation/menu/user_hover/placeholder', ['entity' => $user]);
+	$link_attrs = elgg_add_ajax_popup_attributes('user_icon_click', ['guid' => $user->guid], $link_attrs);
 }
 
 if ($use_link) {
-	$class = elgg_extract('link_class', $vars, '');
-	$url = elgg_extract('href', $vars, $user->getURL());
-	echo elgg_view('output/url', [
-		'href' => $url,
-		'text' => $icon,
-		'is_trusted' => true,
-		'class' => $class,
-	]);
+	$link_attrs['class'] = elgg_extract('link_class', $vars, '');
+	$link_attrs['href'] = elgg_extract('href', $vars, $user->getURL());
+	$link_attrs['text'] = $icon;
+	$link_attrs['is_trusted'] = true;
+
+	$content = elgg_view('output/url', $link_attrs);
 } else {
-	echo "<a>$icon</a>";
+	$content = elgg_format_element('a', $link_attrs, $icon);
 }
-?>
-</div>
+
+echo elgg_format_element('div', ['class' => $class], $content);

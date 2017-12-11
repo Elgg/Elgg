@@ -485,6 +485,9 @@
 	border-radius: 0 3px 3px 3px;
 	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
 }
+.elgg-menu-hover.elgg-ajax-loader {
+	padding: 10px;
+}
 
 .elgg-menu-hover-card-container {
 	display: flex;

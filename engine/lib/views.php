@@ -1602,6 +1602,45 @@ function autoregister_views($view_base, $folder, $ignored, $viewtype) {
 }
 
 /**
+ * Add element data-* attributes to implement an ajax-loaded popup with the current context, page_owner,
+ * and input preserved when the view is rendered.
+ *
+ * This adds the attribute data-ajax-popup and makes sure data-ajax-popup-style is set to "click" if not
+ * set. Otherwise "hover" can be used, with data-hover-delay given in milliseconds.
+ *
+ * @param string $type      Type of popup. Determines the view loaded "elgg/ajax_popup/$type" as well as the
+ *                          class added to the popup container "elgg-ajax-popup-$type".
+ * @param array  $ajax_data Data passed to the view as $vars["ajax_data"]. Must be JSON-serializable.
+ * @param array  $attrs     Existing element attributes.
+ *
+ * @return array
+ */
+function elgg_add_ajax_popup_attributes($type, array $ajax_data = [], array $attrs = []) {
+	$page_owner_guid = (int) elgg_get_page_owner_guid();
+	$contexts = elgg_get_context_stack();
+	$input = (array) elgg_get_config("input");
+
+	// generate MAC so we don't have to trust the client's choice of contexts
+	$serialized = serialize([$type, $ajax_data, $page_owner_guid, $contexts, $input]);
+	$mac = elgg_build_hmac($serialized)->getToken();
+
+	if (empty($attrs['data-ajax-popup-style'])) {
+		$attrs['data-ajax-popup-style'] = 'click';
+	}
+
+	$attrs['data-ajax-popup'] = json_encode([
+		"t" => $type,
+		"d" => json_encode($ajax_data),
+		"p" => $page_owner_guid,
+		"c" => $contexts,
+		"m" => $mac,
+		"i" => $input,
+	]);
+
+	return $attrs;
+}
+
+/**
  * Minifies simplecache CSS and JS views by handling the "simplecache:generate" hook
  *
  * @param string $hook    The name of the hook
@@ -1786,6 +1825,7 @@ function elgg_views_boot() {
 	]);
 
 	elgg_register_ajax_view('languages.js');
+	elgg_register_ajax_view('elgg/ajax_popup');
 
 	// pre-process CSS regardless of simplecache
 	elgg_register_plugin_hook_handler('cache:generate', 'css', '_elgg_views_preprocess_css');
