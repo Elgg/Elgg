@@ -3,9 +3,7 @@
 namespace Elgg\Database;
 
 use Closure;
-use DataFormatException;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
-use Elgg\AttributeLoader;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
@@ -66,7 +64,7 @@ class Entities extends Repository {
 		}
 
 		if (!isset($property_type)) {
-			if (in_array($property, AttributeLoader::$primary_attr_names)) {
+			if (in_array($property, ElggEntity::$primary_attr_names)) {
 				$property_type = 'attribute';
 			} else {
 				$property_type = 'metadata';
@@ -77,7 +75,7 @@ class Entities extends Repository {
 
 		switch ($property_type) {
 			case 'attribute':
-				if (!in_array($property, AttributeLoader::$primary_attr_names)) {
+				if (!in_array($property, ElggEntity::$primary_attr_names)) {
 					throw new InvalidParameterException("'$property' is not a valid attribute");
 				}
 

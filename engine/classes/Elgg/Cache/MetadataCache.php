@@ -196,10 +196,13 @@ class MetadataCache {
 		foreach ($guids as $i => $guid) {
 			$value = $this->cache->load($guid);
 			if ($value !== false) {
-				$this->values[$guid] = unserialize($value);
+				$data = unserialize($value);
+				$this->values[$guid] = $data['values'];
+				$this->ids[$guid] = $data['ids'];
 				unset($guids[$i]);
 			}
 		}
+
 		if (empty($guids)) {
 			return;
 		}
@@ -253,7 +256,10 @@ class MetadataCache {
 		}
 
 		foreach ($guids as $guid) {
-			$this->cache->save($guid, serialize($this->values[$guid]));
+			$this->cache->save($guid, serialize([
+				'values' => $this->values[$guid],
+				'ids' => $this->ids[$guid],
+			]));
 		}
 	}
 
