@@ -29,13 +29,10 @@ $content = elgg_list_entities([
 	'preload_containers' => true,
 ]);
 
-$sidebar = file_get_type_cloud($owner->guid, true);
-
 $body = elgg_view_layout('content', [
 	'filter_context' => 'friends',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => $sidebar,
 ]);
 
 echo elgg_view_page($title, $body);

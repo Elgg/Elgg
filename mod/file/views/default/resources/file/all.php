@@ -19,8 +19,7 @@ $content = elgg_list_entities([
 	'distinct' => false,
 ]);
 
-$sidebar = file_get_type_cloud();
-$sidebar .= elgg_view('file/sidebar');
+$sidebar = elgg_view('file/sidebar');
 
 $body = elgg_view_layout('content', [
 	'filter_context' => 'all',

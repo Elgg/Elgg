@@ -129,10 +129,6 @@ function file_page_handler($page) {
 				'guid' => $page[1],
 			]);
 			break;
-		case 'search':
-			file_register_toggle();
-			echo elgg_view_resource('file/search');
-			break;
 		case 'group':
 			file_register_toggle();
 			echo elgg_view_resource('file/owner');
@@ -230,104 +226,6 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 	}
 	
 	return $return;
-}
-
-/**
- * Registers page menu items for file type filtering and returns a view
- *
- * @param int  $container_guid The GUID of the container of the files
- * @param bool $friends        Whether we're looking at the container or the container's friends
- *
- * @return string The typecloud
- */
-function file_get_type_cloud($container_guid = 0, $friends = false) {
-
-	$container_guids = $container_guid;
-	$container = get_entity($container_guid);
-
-	if ($friends && $container) {
-		// tags interface does not support pulling tags on friends' content so
-		// we need to grab all friends
-		$friend_entities = $container->getFriends(['limit' => 0]);
-		if ($friend_entities) {
-			$friend_guids = [];
-			foreach ($friend_entities as $friend) {
-				$friend_guids[] = $friend->getGUID();
-			}
-		}
-		$container_guids = $friend_guids;
-	}
-
-	elgg_register_tag_metadata_name('simpletype');
-	$types = elgg_get_tags([
-		'type' => 'object',
-		'subtype' => 'file',
-		'container_guids' => $container_guids,
-		'threshold' => 0,
-		'limit' => 10,
-		'tag_names' => ['simpletype'],
-	]);
-
-	if ($types) {
-		$all = new stdClass;
-		$all->tag = 'all';
-		elgg_register_menu_item('page', [
-			'name' => 'file:all',
-			'text' => elgg_echo('all'),
-			'href' =>  file_type_cloud_get_url($all, $friends),
-		]);
-		
-		foreach ($types as $type) {
-			elgg_register_menu_item('page', [
-				'name' => "file:$type->tag",
-				'text' => elgg_echo("file:type:$type->tag"),
-				'href' =>  file_type_cloud_get_url($type, $friends),
-			]);
-		}
-	}
-	
-	// returning the view is needed for BC
-	$params = [
-		'friends' => $friends,
-		'types' => $types,
-	];
-
-	return elgg_view('file/typecloud', $params);
-}
-
-/**
- * Get an URL for the filetype cloud
- *
- * @param stdClass $type    a database row
- * @param bool     $friends limit to friends
- *
- * @return string
- */
-function file_type_cloud_get_url($type, $friends) {
-	
-	$url = elgg_normalize_url('file/search');
-	$params = [
-		'subtype' => 'file',
-	];
-
-	if ($type->tag != "all") {
-		$params['md_type'] = 'simpletype';
-		$params['tag'] = $type->tag;
-	}
-
-	if ($friends) {
-		$params['friends'] = $friends;
-	}
-
-	if ($type->tag == "image") {
-		$params['list_type'] = 'gallery';
-	}
-
-	if (elgg_get_page_owner_guid()) {
-		$params['page_owner'] = elgg_get_page_owner_guid();
-	}
-
-	return elgg_http_add_url_query_elements($url, $params);
 }
 
 /**
