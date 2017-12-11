@@ -97,7 +97,7 @@ abstract class GenericResult {
 	 */
 	public function export() {
 		global $ERRORS, $_PAM_HANDLERS_MSG;
-
+		
 		$result = new stdClass;
 
 		$result->status = $this->getStatusCode();
@@ -111,11 +111,11 @@ abstract class GenericResult {
 		}
 
 		if (elgg_get_config('debug')) {
-			if (count($ERRORS)) {
+			if (!empty($ERRORS)) {
 				$result->runtime_errors = $ERRORS;
 			}
 
-			if (count($_PAM_HANDLERS_MSG)) {
+			if (!empty($_PAM_HANDLERS_MSG)) {
 				$result->pam = $_PAM_HANDLERS_MSG;
 			}
 		}
