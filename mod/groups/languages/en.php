@@ -64,7 +64,7 @@ return [
 	'groups:nofriendsatall' => 'You have no friends to invite!',
 	'groups:group' => "Group",
 	'groups:search:tags' => "tag",
-	'groups:search:title' => "Search for groups tagged with '%s'",
+	'groups:search:title' => "Search for groups with '%s'",
 	'groups:search:none' => "No matching groups were found",
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
@@ -83,7 +83,7 @@ return [
 	'groups:open' => "open group",
 	'groups:closed' => "closed group",
 	'groups:member' => "members",
-	'groups:searchtag' => "Search for groups by tag",
+	'groups:search' => "Search for groups",
 
 	'groups:more' => 'More groups',
 	'groups:none' => 'No groups',

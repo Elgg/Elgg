@@ -3,6 +3,13 @@
 $membership = __DIR__ . '/actions/groups/membership/';
 
 return [
+	'entities' => [
+		[
+			'type' => 'group',
+			'subtype' => 'group',
+			'searchable' => true,
+		],
+	],
 	'upgrades' => [
 		\Elgg\Groups\Upgrades\GroupIconTransfer::class,
 	],

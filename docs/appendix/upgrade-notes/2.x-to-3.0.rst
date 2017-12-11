@@ -132,6 +132,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``elgg_register_viewtype``
  * ``elgg_is_registered_viewtype``
  * ``file_delete``: Use ``ElggFile->deleteIcon()``
+ * ``file_get_type_cloud``
+ * ``file_type_cloud_get_url``
  * ``get_default_filestore``
  * ``get_site_entity_as_row``
  * ``get_group_entity_as_row``
@@ -472,6 +474,7 @@ Removed pagehandling
 --------------------
 
  * ``file/download``
+ * ``file/search``
  * ``groupicon``
  * ``twitterservice``
  * ``collections/pickercallback``

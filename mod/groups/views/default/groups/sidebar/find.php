@@ -11,4 +11,4 @@ $body = elgg_view_form('groups/find', [
 	'disable_security' => true,
 ]);
 
-echo elgg_view_module('aside', elgg_echo('groups:searchtag'), $body);
+echo elgg_view_module('aside', elgg_echo('groups:search'), $body);

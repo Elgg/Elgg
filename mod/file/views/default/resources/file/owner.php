@@ -48,8 +48,7 @@ if ($owner instanceof ElggGroup) {
 
 $content = elgg_list_entities($options);
 
-$sidebar = file_get_type_cloud(elgg_get_page_owner_guid());
-$sidebar .= elgg_view('file/sidebar');
+$sidebar = elgg_view('file/sidebar');
 
 $params['content'] = $content;
 $params['title'] = $title;
