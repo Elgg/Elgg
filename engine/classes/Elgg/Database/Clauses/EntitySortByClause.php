@@ -2,8 +2,8 @@
 
 namespace Elgg\Database\Clauses;
 
-use Elgg\AttributeLoader;
 use Elgg\Database\QueryBuilder;
+use ElggEntity;
 
 /**
  * Extends QueryBuilder with clauses necesary to sort entity lists by entity properties
@@ -41,7 +41,7 @@ class EntitySortByClause extends OrderByClause {
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 
 		if (!isset($this->property_type)) {
-			if (in_array($this->property, AttributeLoader::$primary_attr_names)) {
+			if (in_array($this->property, ElggEntity::$primary_attr_names)) {
 				$this->property_type = 'attribute';
 			} else {
 				$this->property_type = 'metadata';
@@ -55,7 +55,7 @@ class EntitySortByClause extends OrderByClause {
 				break;
 
 			case 'attribute' :
-				if (!in_array($this->property, AttributeLoader::$primary_attr_names)) {
+				if (!in_array($this->property, ElggEntity::$primary_attr_names)) {
 					throw new \InvalidParameterException("'$this->property' is not a valid entity attribute");
 				}
 				$column = "$table_alias.$this->property";

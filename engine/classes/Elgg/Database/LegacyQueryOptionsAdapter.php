@@ -3,7 +3,6 @@
 namespace Elgg\Database;
 
 use DataFormatException;
-use Elgg\AttributeLoader;
 use Elgg\Config;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\AttributeWhereClause;
@@ -18,6 +17,7 @@ use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
+use ElggEntity;
 
 /**
  * This trait serves as an adapter between legacy ege* options and new OO query builder
@@ -320,7 +320,7 @@ trait LegacyQueryOptionsAdapter {
 				}, explode(',', $pair['value']));
 			}
 
-			if (in_array($pair['name'], AttributeLoader::$primary_attr_names)) {
+			if (in_array($pair['name'], ElggEntity::$primary_attr_names)) {
 				$clause = new AttributeWhereClause();
 			} else {
 				$clause = new MetadataWhereClause();
