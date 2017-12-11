@@ -22,6 +22,7 @@ $vars['breadcrumbs'] = false;
 
 $vars['sidebar'] = elgg_view('admin/sidebar', $vars);
 
+$header = elgg_view('page/layouts/elements/header', $vars);
 $sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
 
@@ -32,4 +33,4 @@ $layout .= elgg_format_element('div', [
 
 echo elgg_format_element('div', [
 	'class' => $class,
-], $layout);
+], $header . $layout);
