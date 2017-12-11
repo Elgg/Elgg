@@ -14,8 +14,8 @@ if (isset($vars['invitations'])) {
 	$vars['offset'] = get_input('offset', 0);
 	$vars['count'] = groups_get_invited_groups($user->guid, false, ['count' => true]);
 	$invitations = groups_get_invited_groups($user->guid, false, [
-		'limit' => $limit,
-		'offset' => $offset
+		'limit' => $vars['limit'],
+		'offset' => $vars['offset'],
 	]);
 }
 
