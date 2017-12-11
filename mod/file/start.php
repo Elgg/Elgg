@@ -20,7 +20,7 @@ function file_init() {
 	elgg_register_menu_item('site', $item);
 
 	// Extend CSS
-	elgg_extend_view('elgg.css', 'file/css');
+	elgg_extend_view('elgg.css', 'file/file.css');
 
 	// add enclosure to rss item
 	elgg_extend_view('extensions/item', 'file/enclosure');
@@ -81,6 +81,8 @@ function file_init() {
 
 	elgg_register_plugin_hook_handler('entity:icon:sizes', 'object', 'file_set_custom_icon_sizes');
 	elgg_register_plugin_hook_handler('entity:icon:file', 'object', 'file_set_icon_file');
+
+	elgg_register_plugin_hook_handler('seeds', 'database', 'file_register_db_seeds');
 }
 
 /**
@@ -429,6 +431,23 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 	}
 	
 	return $icon;
+}
+
+/**
+ * Register database seed
+ *
+ * @elgg_plugin_hook seeds database
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function file_register_db_seeds(\Elgg\Hook $hook) {
+
+	$seeds = $hook->getValue();
+
+	$seeds[] = \Elgg\File\Seeder::class;
+
+	return $seeds;
 }
 
 return function() {

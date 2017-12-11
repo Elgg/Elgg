@@ -10,6 +10,6 @@ if (!isset($footer) || empty($footer)) {
 	return;
 }
 ?>
-<div class="elgg-foot elgg-layout-footer clearfix">
+<div class="elgg-foot elgg-layout-footer">
 	<?= $footer ?>
 </div>

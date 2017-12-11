@@ -83,6 +83,7 @@ Removed views
  * ``core/friends/talbelistcountupdate``
  * ``lightbox/elgg-colorbox-theme/colorbox-images/*```
  * ``navigation/menu/page``: now uses ``navigation/menu/default`` and a prepare hook
+ * ``navigation/menu/site``: now uses default view
  * ``page/elements/by_line``: Use ``object/elements/imprint``
  * ``forms/admin/site/advanced/security``: the site secret information has been moved to ``forms/admin/security/settings``
  * ``river/object/file/create``: check :doc:`/guides/river`
@@ -759,19 +760,30 @@ as datalist or site config values, so they are loaded from boot cache.
 Theme and styling changes
 -------------------------
 
-Aalborg theme is no longer bundled with Elgg, instead all styles have been either moved to core views or to an appropriate core plugin.
-
-This change may affect themes and plugins that were developed without Aalborg stylesheets loaded or were relying on a certain priority of views with Aalborg stylesheets loaded.
+Aalborg theme is no longer bundled with Elgg.
+Default core theme is now based on Aalboard, but it has undergone major changes.
 
 Notable changes in plugins:
 
- * search plugin no longer extends ``page/elements/header`` and instead extends ``page/elements/sidebar``
+ * Topbar, navbar and header have been combined into a single responsive topbar component
+ * Default inner width is now 1280px (80rem * 16px/1rem)
+ * Preferred unit of measurement is now `rem` and not `px`
+ * The theme uses `8-point grid system <https://builttoadapt.io/intro-to-the-8-point-grid-system-d2573cde8632>`
+ * Menus, layout elements and other components now use flexbox
+ * Reset is done using `8-point grid system <https://necolas.github.io/normalize.css/>`
+ * Media queries have been rewritten for mobile-first experience
+ * Form elements (text inputs, buttons and selects) now have an equal height of 2.5rem
+ * Layout header is now positioned outside of the layout columns, which have been wrapped into ``elgg-layout-columns``
+ * z-index properties have been reviewed and stacked with simple iteration instead of `9999999 <https://hackernoon.com/my-approach-to-using-z-index-eca67feb079c>`.
+ * Color scheme has been changed to highlight actionable elements and reduce abundance of gray shades
+ * search plugin no longer extends ``page/elements/header`` and instead ``page/elements/topbar`` renders ``search/search_box`` view
  * ``.elgg-icon`` no longer has a global ``font-size``, ``line-height`` or ``color``: these values will be inherited from parent items
  * Support for ``.elgg-icon-hover`` has been dropped
- * Admin theme now reuses icon classes from ``elements/icons.css``
- * User "hover" icons are no longer covered with a "caret" icon.
+ * User "hover" icons are no longer covered with a "caret" icon
 
-Also note, CSS views served via ``/cache`` URLs are pre-processed using `CSS Crush <http://the-echoplex.net/csscrush/>`_. If you make references to CSS variables or other elements, the definition must be located within the same view output. E.g. A variable defined in ``elgg.css`` cannot be referenced in a separate CSS file like ``colorbox.css``.
+Read more about :doc:`Theming Principles </guides/themes>`
+
+Also note, CSS views served via ``/cache`` URLs are pre-processed using `CSS Crush <http://the-echoplex.net/csscrush/>`. If you make references to CSS variables or other elements, the definition must be located within the same view output. E.g. A variable defined in ``elgg.css`` cannot be referenced in a separate CSS file like ``colorbox.css``.
 
 Comments
 --------
@@ -804,16 +816,14 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 ``topbar`` menu:
 
  * ``account`` menu item with priority ``800`` added to ``alt`` section
- * ``account`` parent menu item uses dropdown menu API to display the submenu
  * ``site_notifications`` menu item is now a child of ``account`` with priority ``100``
  * ``usersettings`` menu item is now a child of ``account`` with priority ``300``
  * ``administration`` menu item is now a child of ``account`` with priority ``800``
  * ``logout`` menu item is now a child of ``account`` with priority ``900``
- * ``dashboard`` menu item now has priority of ``100``
+ * ``dashboard`` menu item now is now a child of ``acount`` has priority of ``100``
  * In ``default`` section (``profile``, ``friends``, ``messages``), core menu items now use ``icon`` parameter and use CSS to hide the label. Plugins that register items to this section and expect a visible label need to update their CSS.
- * ``profile`` menu item now uses ``icon`` parameter
- * ``friends`` menu item now uses ``icon`` parameter
- * ``messages`` menu item now uses ``icon`` and ``badge`` parameters
+ * ``profile`` menu item is now a child of ``account``
+ * ``friends`` menu item is now a child of ``account``
 
 ``entity`` menu:
 
@@ -839,6 +849,11 @@ This menu has been removed from the group profile page.
 ``site_notifications`` menu:
 
 This menu has been removed. Site Notification objects now use the entity menu for actions.
+
+``site`` menu:
+
+Registration of custom menu item defined in admin interface has been moved to ``register, menu:site`` hook.
+``navigation/menu/site`` view has been removed. Site menu now adds a ``more` menu item directly to the ``default`` section.
 
 Entity icons
 ------------

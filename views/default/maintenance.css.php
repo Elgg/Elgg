@@ -16,7 +16,7 @@ body {
 	font-family: "Helvetica Neue", Helvetica, "Lucida Grande", Arial, sans-serif;
 }
 h1, h2, h3, h4, h5, h6 {
-	color: #444;
+	color: #2d3047;
 	font-weight: bold;
 }
 h1 {
@@ -152,7 +152,7 @@ input[type=number]:focus,
 input[type=url]:focus,
 textarea:focus {
 	border: solid 1px #C2C2C2;
-	background: #F0F0F0;
+	background: #e6e6ea;
 	/* We remove outlines from specific input types so we can leave the browser
 	   defaults (like glows) for everything else */
 	outline: 0 none;

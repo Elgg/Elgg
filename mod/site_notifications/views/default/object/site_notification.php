@@ -12,7 +12,7 @@ $icon = '';
 $text = $entity->description;
 $actor = $entity->getActor();
 if ($actor) {
-	$icon = elgg_view_entity_icon($actor, 'tiny');
+	$icon = elgg_view_entity_icon($actor, 'small');
 }
 $url = $entity->getURL();
 if ($url) {

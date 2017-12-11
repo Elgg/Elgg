@@ -67,8 +67,16 @@ if ($sidebar && $sidebar_alt) {
 	$class[] = 'elgg-layout-one-column';
 }
 
+$breadcrumbs = elgg_view('page/layouts/elements/breadcrumbs', $vars);
+$header = elgg_view('page/layouts/elements/header', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
+
+$layout .= $breadcrumbs;
+$layout .= $header;
+$layout .= elgg_format_element('div', [
+	'class' => 'elgg-layout-columns',
+], $sidebar_alt . $body . $sidebar);
 
 echo elgg_format_element('div', [
 	'class' => $class,
-], $sidebar_alt . $body . $sidebar);
+], $layout);

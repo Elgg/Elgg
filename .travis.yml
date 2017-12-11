@@ -49,10 +49,7 @@ matrix:
         - pip install --user "sphinx-intl"
         - export PATH=$PATH:$HOME/.local/bin
       script:
-        - sphinx-build -b html -nW docs docs/_build/html
-        - sphinx-build -b latex -nW docs docs/_build/latex
-        - sphinx-intl build --locale-dir=docs/locale/
-        - sphinx-build -b html -D language=es -n docs docs/_build/html
+        - composer docs:build
 
     # Memcached enabled
     - php: 7.0

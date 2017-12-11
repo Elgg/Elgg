@@ -1,0 +1,16 @@
+/* ***************************************
+	Gallery
+*************************************** */
+.elgg-gallery {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.elgg-gallery > li {
+	padding: 0.25em;
+}
+
+.elgg-gallery.elgg-gallery-users > li {
+	padding: 0.25rem;
+}

@@ -1,0 +1,109 @@
+/* ***************************************
+	Typography
+*************************************** */
+body {
+	font-family: BlinkMacSystremFont, -apple-systrem, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+a {
+	color: #0078ac;
+}
+
+a:hover,
+a.selected { /* @todo rremove .selected */
+	color: #2d3047;
+	text-decoration: underline;
+}
+
+pre, code {
+	font-family: Monaco, "Courier New", Courier, monospace;
+	font-size: 0.75rem;
+
+	background: #EBF5FF;
+	color: #000;
+	overflow: auto;
+
+	overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
+
+	white-space: pre-wrap;
+	word-wrap: break-word; /* IE 5.5-7 */
+
+}
+
+pre {
+	padding: 0.25rem 1rem;
+	margin: 0 0 1rem 0;
+	line-height: 1.3rem;
+}
+
+code {
+	padding: 0.25rem;
+}
+
+.elgg-monospace {
+	font-family: Monaco, "Courier New", Courier, monospace;
+}
+
+blockquote {
+	padding: 0.5rem 1rem;
+	margin: 0 0 1rem 0;
+	background: #E2F2FE;
+	border: 1px solid #A1CBEA;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 500;
+}
+
+h1 {
+	font-size: 1.8rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.2rem;
+}
+
+h4 {
+	font-size: 1.0rem;
+}
+
+h5 {
+	font-size: 0.9rem;
+}
+
+h6 {
+	font-size: 0.8rem;
+}
+
+.elgg-subtext {
+	color: #7d7d7d;
+	font-size: 0.75rem;
+}
+
+time,
+.elgg-river-timestamp,
+.elgg-text-help,
+.elgg-quiet,
+.elgg-tags {
+	display: inline-block;
+	color: #969696;
+	font-size: 0.75rem;
+	line-height: normal;
+	margin-top: 0.25rem;
+}
+
+.elgg-loud {
+	font-weight: 500;
+}
+
+.elgg-more,
+.elgg-widget-more {
+	padding: 0.5rem;
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+

@@ -42,7 +42,8 @@
         "symfony/console": "~3.3",
         "symfony/var-dumper": "~3.3",
         "fzaninotto/faker": "^1.6",
-        "peppeocchi/php-cron-scheduler": "2.*"
+        "peppeocchi/php-cron-scheduler": "2.*",
+        "bower-asset/normalize-css": "dev-master"
     },
     "config": {
         "process-timeout": 0,
@@ -70,6 +71,12 @@
             "mysql -e 'create database elgg;'",
             "echo \"USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;\" | mysql -u root",
             "php ./elgg-cli install --config ./install/cli/testing_app.php"
+        ],
+        "docs:build" : [
+            "sphinx-build -b html -nW docs docs/_build/html",
+            "sphinx-build -b latex -nW docs docs/_build/latex",
+            "sphinx-intl build --locale-dir=docs/locale/",
+            "sphinx-build -b html -D language=es -n docs docs/_build/html"
         ]
     },
     "suggest": {

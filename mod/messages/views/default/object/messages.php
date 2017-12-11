@@ -16,7 +16,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 	// received
 	$user = get_user($message->fromId);
 	if ($user) {
-		$icon = elgg_view_entity_icon($user, 'tiny');
+		$icon = elgg_view_entity_icon($user, 'small');
 		$user_link = elgg_view('output/url', [
 			'href' => "messages/compose?send_to=$user->guid",
 			'text' => $user->name,
@@ -37,7 +37,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 	$user = get_user($message->toId);
 
 	if ($user) {
-		$icon = elgg_view_entity_icon($user, 'tiny');
+		$icon = elgg_view_entity_icon($user, 'small');
 		$user_link = elgg_view('output/url', [
 			'href' => "messages/compose?send_to=$user->guid",
 			'text' => elgg_echo('messages:to_user', [$user->name]),

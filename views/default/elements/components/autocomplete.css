@@ -1,0 +1,49 @@
+/* ***************************************
+	AUTOCOMPLETE
+*************************************** */
+.ui-autocomplete {
+	position: absolute;
+	cursor: default;
+	z-index: 5;
+}
+
+.elgg-autocomplete-item .elgg-body {
+	max-width: 600px;
+}
+
+.ui-autocomplete {
+	background-color: #ffffff;
+	border: 1px solid #e6e6ea;
+	overflow: hidden;
+	border-radius: 3px;
+}
+
+.ui-autocomplete .ui-menu-item {
+	padding: 0 4px;
+	border-radius: 3px;
+}
+
+.ui-autocomplete .ui-menu-item:hover {
+	background-color: #fafafa;
+}
+
+.ui-autocomplete a:hover {
+	text-decoration: none;
+	color: #0078ac;
+}
+
+.ui-autocomplete a.ui-state-hover {
+	background-color: #fafafa;
+	display: block;
+}
+
+.ui-helper-hidden-accessible {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}

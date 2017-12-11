@@ -15,7 +15,7 @@ if (empty($requests) || !is_array($requests)) {
 
 echo '<ul class="elgg-list">';
 foreach ($requests as $user) {
-	$icon = elgg_view_entity_icon($user, 'tiny', ['use_hover' => 'true']);
+	$icon = elgg_view_entity_icon($user, 'small', ['use_hover' => 'true']);
 
 	$user_title = elgg_view('output/url', [
 		'href' => $user->getURL(),

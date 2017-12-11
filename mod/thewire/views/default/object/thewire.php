@@ -24,7 +24,7 @@ $params = [
 	'handler' => 'thewire',
 	'content' => thewire_filter($post->description),
 	'tags' => false,
-	'icon' => elgg_view_entity_icon($post->getOwnerEntity(), 'tiny'),
+	'icon' => elgg_view_entity_icon($post->getOwnerEntity(), 'small'),
 	'class' => 'thewire-post',
 ];
 $params = $params + $vars;

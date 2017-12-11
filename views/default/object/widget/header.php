@@ -26,4 +26,4 @@ $controls = elgg_view('object/widget/elements/controls', [
 	'show_edit' => elgg_extract('show_edit', $vars, $widget->canEdit()),
 ]);
 
-echo "<div class='elgg-widget-handle clearfix'>{$title}{$controls}</div>";
+echo "<div class='elgg-widget-handle'>{$title}</div>{$controls}";

@@ -211,13 +211,10 @@ function _profile_topbar_menu(\Elgg\Hook $hook) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'profile',
 		'href' => $viewer->getURL(),
-		'text' => $viewer->name,
-		'title' => elgg_echo('profile'),
-		'icon' => elgg_view('output/img', [
-			'src' => $viewer->getIconURL('topbar'),
-			'alt' => $viewer->name,
-			'class' => 'elgg-border-plain elgg-transition',
-		]),
+		'text' => elgg_echo('profile'),
+		'icon' => 'user',
+		'parent_name' => 'account',
+		'section' => 'alt',
 		'priority' => 100,
 	]);
 	

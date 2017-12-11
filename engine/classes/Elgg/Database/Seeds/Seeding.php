@@ -5,6 +5,7 @@
 
 namespace Elgg\Database\Seeds;
 
+use Elgg\Project\Paths;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
@@ -118,7 +119,7 @@ trait Seeding {
 
 			try {
 				$guid = register_user($metadata['username'], $metadata['password'], $metadata['name'], $metadata['email'], false, $attributes['subtype']);
-				
+
 				$user = get_user($guid);
 				if (!$user) {
 					throw new Exception("Unable to create new user with attributes: " . print_r($attributes, true));
@@ -139,7 +140,7 @@ trait Seeding {
 						$user->unban('Unbanned by seeder');
 					}
 				}
-								
+
 				unset($metadata['username']);
 				unset($metadata['password']);
 				unset($metadata['name']);
@@ -148,7 +149,7 @@ trait Seeding {
 				unset($metadata['admin']);
 
 				$user->setValidationStatus($this->faker()->boolean(), 'seeder');
-				
+
 				$user->setNotificationSetting('email', false);
 				$user->setNotificationSetting('site', true);
 
@@ -234,7 +235,7 @@ trait Seeding {
 			if (empty($attributes['container_guid'])) {
 				$attributes['container_guid'] = $attributes['owner_guid'];
 			}
-			
+
 			if (empty($attributes['subtype'])) {
 				$attributes['subtype'] = 'group';
 			}
@@ -381,7 +382,9 @@ trait Seeding {
 			$profile_fields = elgg_extract('profile_fields', $options, []);
 			$object = $this->populateMetadata($object, $profile_fields, $metadata);
 
-			$object->save();
+			if (elgg_extract('save', $options, true)) {
+				$object->save();
+			}
 
 			$type_str = elgg_echo("item:object:{$object->getSubtype()}");
 
@@ -481,7 +484,7 @@ trait Seeding {
 	public function getRandomAccessId(\ElggUser $user = null, ElggEntity $container = null) {
 
 		$params = [
-			'container_guid' => $container->guid,
+			'container_guid' => $container ? $container->guid : null,
 		];
 
 		$access_array = get_write_access_array($user->guid, null, null, $params);
@@ -664,7 +667,15 @@ trait Seeding {
 		}
 
 		foreach ($metadata as $key => $value) {
-			$entity->$key = $value;
+			if (array_key_exists($key, $fields) && $entity instanceof ElggUser) {
+				$entity->deleteAnnotations("profile:$key");
+				$value = (array) $value;
+				foreach ($value as $val) {
+					$entity->annotate("profile:$key", $val, $this->getRandomAccessId($entity), $entity->guid);
+				}
+			} else {
+				$entity->$key = $value;
+			}
 		}
 
 		return $entity;
@@ -685,7 +696,7 @@ trait Seeding {
 		}
 
 		$result = $entity->saveIconFromLocalFile($icon_location);
-		
+
 		if ($result && $entity instanceof ElggUser) {
 			elgg_create_river_item([
 				'view' => 'river/user/default/profileiconupdate',
@@ -694,7 +705,7 @@ trait Seeding {
 				'object_guid' => $entity->guid,
 			]);
 		}
-		
+
 		return $result;
 	}
 

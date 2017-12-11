@@ -10,6 +10,10 @@ if (!($entity instanceof \ElggEntity)) {
 	return;
 }
 
+$params = $vars;
+$params['class'] = elgg_extract_class($params, 'elgg-menu-hz');
+$params['sort_by'] = 'priority';
+
 echo elgg_format_element('div', [
 	'class' => 'elgg-listing-full-navigation',
-], elgg_view_menu('entity_navigation', $vars));
+], elgg_view_menu('entity_navigation', $params));

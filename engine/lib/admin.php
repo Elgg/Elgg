@@ -146,6 +146,7 @@ function _elgg_admin_init() {
 			'name' => 'maintenance_mode',
 			'href' => 'admin/configure_utilities/maintenance',
 			'text' => elgg_echo('admin:maintenance_mode:indicator_menu_item'),
+			'icon' => 'wrench',
 			'priority' => 900,
 		]);
 	}
@@ -244,16 +245,14 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 
 	$admin = elgg_get_logged_in_user_entity();
 
-	$admin_icon = elgg_view_entity_icon($admin, 'tiny');
-	$admin_link = elgg_view('output/url', [
-		'href' => $admin->getURL(),
-		'text' => $admin->name,
-	]);
-
 	$return[] = \ElggMenuItem::factory([
-		'name' => 'admin_profile',
-		'href' => false,
-		'text' => "$admin_link $admin_icon",
+		'name' => 'account',
+		'text' => $admin->getDisplayName(),
+		'href' => $admin->getURL(),
+		'icon' => elgg_view('output/img', [
+			'src' => $admin->getIconURL('small'),
+			'alt' => $admin->getDisplayName(),
+		]),
 		'priority' => 1000,
 	]);
 
@@ -261,7 +260,6 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 		'name' => 'admin_logout',
 		'href' => 'action/logout',
 		'text' => elgg_echo('logout'),
-		'is_trusted' => true,
 		'priority' => 900,
 	]);
 
@@ -269,7 +267,6 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 		'name' => 'view_site',
 		'href' => elgg_get_site_url(),
 		'text' => elgg_echo('admin:view_site'),
-		'is_trusted' => true,
 		'priority' => 800,
 	]);
 

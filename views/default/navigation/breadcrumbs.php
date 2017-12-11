@@ -25,5 +25,5 @@ $breadcrumbs = elgg_get_breadcrumbs($breadcrumbs);
 echo elgg_view_menu('breadcrumbs', [
 	'items' => $breadcrumbs,
 	'sort_by' => 'register',
-	'class' => elgg_extract_class($vars, ['elgg-breadcrumbs']),
+	'class' => elgg_extract_class($vars, ['elgg-breadcrumbs', 'elgg-menu-hz']),
 ]);

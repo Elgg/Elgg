@@ -10,8 +10,200 @@ This guide assumes you are familiar with:
  * :doc:`views`
 
 .. contents:: Contents
-   :local:
-   :depth: 2
+	:local:
+	:depth: 2
+
+Theming Principles and Best Practices
+=====================================
+
+**No third-party CSS frameworks**
+	Elgg does not use a CSS framework, because such frameworks lock users into a specific HTML markup, which in the end makes it much harder for plugins to collaborate on the appearance.
+	What's `is-primary` in one theme, might be something else in the other. Having no framework allows plugins to alter appearance using pure css, without having to overwrite views and
+	append framework-specific selectors to HTML markup elements.
+
+.. code::html
+
+	/* BAD */
+	<div class="box has-shadow is-inline">
+		This is bad, because if the plugin wants to change the styling, it will have to either write really specific css
+		clearing all the attached styles, or replace the view entirely just to modify the markup
+	</div>
+
+	/* GOOD */
+	<div class="box-role">
+		This is good, because a plugin can just simply add .box-role rule
+	</div>
+	<style>
+		.box-role {
+		 padding: 1rem;
+		 display: inline-block;
+		 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		}
+	</style>
+
+
+**8-point grid system**
+	Elgg uses an `8-point grid system <https://builttoadapt.io/intro-to-the-8-point-grid-system-d2573cde8632>`, so sizing of elements, their padding, margins etc is done in increments and fractions of `8px`.
+	Because our default font-size is ``16px``, we use fractions of `rem`, so ``0.5rem = 8px``.
+	8-point grid system makes it a lot easier for developers to collaborate on styling elements: we no longer have to think if the padding should be ``5px`` or ``6px``.
+
+.. code::css
+
+	/* BAD */
+	.menu > li {
+		margin: 2px 2px 2px 0;
+	}
+
+	.menu > li > a {
+		padding: 3px 5px;
+	}
+
+	/* GOOD */
+	.menu > li > a {
+		padding: 0.25rem 0.5rem;
+	}
+
+
+**Mobile first**
+	We write mobile-first CSS.
+	We use one breakpoint, which is ``1280px`` = ``80rem * 16px/rem``
+
+.. code::css
+
+	/* BAD */
+	.menu > li {
+		display: inline-block;
+	}
+
+	@media screen and (max-width: 820px) {
+		.menu > li {
+		 display: block;
+		 width: 100%;
+		}
+	}
+
+	/* GOOD */
+	.menu {
+		display: flex;
+		flex-direction: column;
+	}
+
+	@media screen and (min-width: 80rem) {
+		.menu {
+		 flex-direction: row;
+		}
+	}
+
+
+**Flexbox driven**
+	Flexbox provides simplicity in stacking elements into grids. Flexbox is used for everything from menus to layout elements.
+	We avoid ``float`` and ``clearfix`` as they are hard to collaborate on and create lots of room for failure and distortion.
+
+.. code::css
+
+	/* BAD */
+	.heading:after {
+		visibility: hidden;
+		height: 0;
+		clear: both;
+		content: " ";
+	}
+	.heading > h2 {
+		float: left;
+	}
+	.heading > .controls {
+		float: right;
+	}
+
+	/* GOOD */
+	.heading {
+		display: flex;
+		justify-content: flex-end;
+	}
+	.heading > h2 {
+		order: 1;
+		margin-right: auto;
+	}
+	.heading > .controls {
+		order: 2;
+	}
+
+**Symmetry**
+	We maintain symmetry.
+
+.. code::css
+
+	/* BAD */
+	.row .column:first-child {
+		margin-right: 10px;
+	}
+
+	/* GOOD */
+	.row {
+		margin: 0 -0.5rem;
+	}
+	.row .column {
+		margin: 0.5rem;
+	}
+
+**Increase the click area**
+	When working with nested anchors, we increase the click area of the anchor, rather than the parent
+
+.. code::css
+
+	/* BAD */
+	.menu > li {
+		margin: 5px;
+		padding: 5px 10px;
+	}
+
+	/* GOOD */
+	.menu > li {
+		margin: 0.5rem;
+	}
+	.menu > li > a {
+		padding: 0.5rem 1rem;
+	}
+
+**No z-index 999999**
+	z-indexes are incremented with a step of 1.
+
+**Wrap HTML siblings**
+	We make sure that there are no orphaned strings within a parent and that siblings are wrapped in a way that they can be targeted by CSS.
+
+.. code::html
+
+	/* BAD */
+	<label>
+		Orphan
+		<span>Sibling</span>
+	</label>
+
+	/* GOOD */
+	<label>
+		<span>Sibling</span>
+		<span>Sibling</span>
+	</label>
+
+
+.. code::html
+
+	/* BAD */
+	<div>
+		<h3>Title</h3>
+		<p>Subtitle</p>
+		<div class="right">This goes to the right</div>
+	</div>
+
+	/* GOOD */
+	<div>
+		<div class="left">
+		 <h3>Title</h3>
+		 <p>Subtitle</p>
+		</div>
+		<div class="right">This goes to the right</div>
+	</div>
+
 
 Create your plugin
 ==================
@@ -61,14 +253,14 @@ css file:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-        function mytheme_init() {
-            elgg_extend_view('elgg.css', 'mytheme/css');
-        }
+		function mytheme_init() {
+			elgg_extend_view('elgg.css', 'mytheme/css');
+		}
 
-        elgg_register_event_handler('init', 'system', 'mytheme_init');
-    ?>
+		elgg_register_event_handler('init', 'system', 'mytheme_init');
+	?>
 
 View overloading
 ----------------
@@ -126,26 +318,26 @@ Here's a quick overview:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
-    function pluginname_init() {
-        // Replace the default index page
-        elgg_register_plugin_hook_handler('index', 'system', 'new_index');
-    }
+	function pluginname_init() {
+		// Replace the default index page
+		elgg_register_plugin_hook_handler('index', 'system', 'new_index');
+	}
 
-    function new_index() {
-        if (!include_once(dirname(dirname(__FILE__)) . "/pluginname/pages/index.php"))
-            return false;
-        
-        return true;
-    }
+	function new_index() {
+		if (!include_once(dirname(dirname(__FILE__)) . "/pluginname/pages/index.php"))
+			return false;
+		
+		return true;
+	}
 
-    // register for the init, system event when our plugin start.php is loaded
-    elgg_register_event_handler('init', 'system', 'pluginname_init');
-    ?>
+	// register for the init, system event when our plugin start.php is loaded
+	elgg_register_event_handler('init', 'system', 'pluginname_init');
+	?>
 
 -  Then, create an index page (/pluginname/pages/index.php) and use that
-   to put the content you would like on the front page of your Elgg
-   site.
+	to put the content you would like on the front page of your Elgg
+	site.
 
 

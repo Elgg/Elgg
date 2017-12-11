@@ -1,0 +1,38 @@
+/* ***************************************
+	ANCHORS & BADGES
+*************************************** */
+
+.elgg-anchor * {
+	display: inline;
+}
+
+.elgg-anchor .elgg-icon {
+	color: inherit;
+	font-size: inherit;
+}
+
+.elgg-anchor img {
+	vertical-align: middle;
+}
+
+.elgg-anchor * + .elgg-anchor-label {
+	margin-left: 0.5rem;
+}
+
+.elgg-anchor .elgg-anchor-label + * {
+	margin-left: 0.5rem;
+}
+
+.elgg-badge {
+	display: inline-block;
+	color: #2d3047;
+	background-color: #fafafa;
+	padding: 3px 5px;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	border-radius: 10px;
+	font-size: 0.7rem;
+	line-height: 1rem;
+	font-weight: bold;
+}

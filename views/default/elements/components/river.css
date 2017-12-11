@@ -1,0 +1,47 @@
+/* ***************************************
+	River
+*************************************** */
+.elgg-module .elgg-list-river {
+	border-top: none;
+}
+
+.elgg-river-layout .elgg-list-river {
+	border-top: 1px solid #e6e6ea;
+}
+
+.elgg-list-river > li {
+	border-bottom: 1px solid #e6e6ea;
+}
+
+.elgg-river-attachments,
+.elgg-river-message,
+.elgg-river-content {
+	border-left: 1px solid #e6e6ea;
+	margin: 0.5rem 0;
+	padding-left: 1rem;
+}
+
+.elgg-river-attachments .elgg-avatar,
+.elgg-river-attachments .elgg-icon {
+	display: inline-block;
+}
+
+.elgg-river-attachments .elgg-icon-arrow-right {
+	margin: 0.5rem;
+}
+
+.elgg-river-more {
+	border-color: #e6e6ea;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	padding: 0.5rem 1rem;
+	font-size: 85%;
+}
+
+.elgg-river-item form {
+	border-color: #e6e6ea;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	padding: 0.5rem;
+	height: auto;
+}

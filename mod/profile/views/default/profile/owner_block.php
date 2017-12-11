@@ -31,9 +31,9 @@ $admin_links = '';
 if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
 	$text = elgg_echo('admin:options');
 
-	$admin_links = '<ul class="profile-admin-menu-wrapper">';
+	$admin_links = '<ul class="profile-admin-menu-wrapper elgg-menu-owner-block">';
 	$admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\">$text&hellip;</a>";
-	$admin_links .= '<ul class="elgg-menu profile-admin-menu hidden" id="profile-menu-admin">';
+	$admin_links .= '<ul class="elgg-menu elgg-menu-owner-block profile-admin-menu hidden" id="profile-menu-admin">';
 	foreach ($admin as $menu_item) {
 		$admin_links .= elgg_view('navigation/menu/elements/item', ['item' => $menu_item]);
 	}

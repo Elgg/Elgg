@@ -27,7 +27,10 @@ if (!isset($header)) {
 	$header = $title . $buttons;
 }
 
+if (!$header) {
+	return;
+}
 ?>
-<div class="elgg-head elgg-layout-header clearfix">
+<div class="elgg-head elgg-layout-header">
 	<?= $header ?>
 </div>

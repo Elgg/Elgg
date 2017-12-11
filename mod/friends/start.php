@@ -132,6 +132,8 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
 		'icon' => 'users',
 		'title' => elgg_echo('friends'),
 		'priority' => 300,
+		'section' => 'alt',
+		'parent_name' => 'account',
 	]);
 	
 	return $return;

@@ -24,7 +24,7 @@ if ($comment->canEdit()) {
 	elgg_require_js('elgg/comments');
 }
 
-$commenter_icon = elgg_view_entity_icon($commenter, 'tiny');
+$commenter_icon = elgg_view_entity_icon($commenter, 'small');
 
 if ($full_view) {
 	if (elgg_extract('show_excerpt', $vars)) {
@@ -55,7 +55,7 @@ if ($full_view) {
 		'href' => $commenter->getURL(),
 		'text' => $commenter->getDisplayName(),
 	]);
-	
+
 	$entity_link = elgg_view('output/url', [
 		'href' => $entity->getURL(),
 		'text' => $entity->getDisplayName() ?: elgg_echo('untitled'),

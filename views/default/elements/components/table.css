@@ -1,0 +1,45 @@
+/* ***************************************
+	TABLES
+*************************************** */
+.elgg-table,
+.elgg-table-alt {
+	background-color: white;
+	margin-bottom: 1rem;
+	width: 100%;
+
+	td,
+	th {
+		border-style: solid;
+		border-width: 0 0 1px;
+		border-color: #e6e6ea;
+		padding: 0.5em 0.75em;
+		vertical-align: top;
+		background-color: white;
+		word-break: break-all;
+	}
+
+	tr.elgg-state-selected td,
+	tr.elgg-state-selected th,
+	tr:hover td,
+	tr:hover th {
+		background-color: #f5f5f6;
+	}
+
+	thead th {
+		font-weight: bold;
+		text-align: left;
+		border-width: 0 0 2px;
+	}
+
+	tfoot td,
+	tfoot th {
+		border-width: 2px 0 0;
+		font-weight: bold;
+	}
+
+}
+
+.elgg-table-alt th:first-child,
+.elgg-table-alt td:first-child {
+	width: 15rem;
+}

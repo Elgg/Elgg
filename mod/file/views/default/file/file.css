@@ -1,0 +1,24 @@
+/* **************************
+		File Plugin
+************************** */
+
+.file-photo {
+	text-align: center;
+	margin: 1rem auto;
+}
+
+.file-gallery-item {
+	text-align: center;
+	width: 10rem;
+}
+
+.file-gallery-item h3 {
+	font-size: 90%;
+}
+
+.elgg-menu-filter .elgg-menu-item-file-list {
+	float: right;
+	margin-right: 0.5rem;
+	background: none;
+	border: none;
+}

@@ -573,27 +573,17 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		return;
 	}
 
-	$toggle = elgg_view_icon('chevron-down', ['class' => 'elgg-state-closed']);
-	$toggle .= elgg_view_icon('chevron-up', ['class' => 'elgg-state-opened']);
-
-	// If JS fails here, allow easy access to place where they can upgrade/flush caches
-	$href = elgg_is_admin_logged_in() ? 'admin' : '#';
-
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'account',
-		'text' => elgg_echo('account') . $toggle,
-		'href' => $href,
+		'text' => elgg_echo('account'),
+		'href' => $viewer->getURL(),
+		'icon' => elgg_view('output/img', [
+			'src' => $viewer->getIconURL('small'),
+			'alt' => $viewer->getDisplayName(),
+		]),
+		'icon_alt' => 'angle-down',
 		'priority' => 800,
 		'section' => 'alt',
-		'child_menu' => [
-			'display' => 'dropdown',
-			'class' => 'elgg-topbar-child-menu',
-			'data-position' => json_encode([
-				'at' => 'right+10px bottom',
-				'my' => 'right top',
-				'collision' => 'fit fit',
-			]),
-		],
 	]);
 	
 	$return[] = \ElggMenuItem::factory([
@@ -601,7 +591,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'parent_name' => 'account',
 		'href' => "settings/user/{$viewer->username}",
 		'text' => elgg_echo('settings'),
-		'icon' => 'cogs',
+		'icon' => 'sliders',
 		'priority' => 300,
 		'section' => 'alt',
 	]);
@@ -612,7 +602,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 			'parent_name' => 'account',
 			'href' => 'admin',
 			'text' => elgg_echo('admin'),
-			'icon' => 'tasks',
+			'icon' => 'cogs',
 			'priority' => 800,
 			'section' => 'alt',
 		]);

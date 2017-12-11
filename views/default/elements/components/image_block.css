@@ -1,0 +1,40 @@
+/* ***************************************
+	Image Block
+*************************************** */
+.elgg-image-block {
+	display: flex;
+	align-items: flex-start;
+}
+
+.elgg-image-block:after {
+	display: none;
+}
+
+.elgg-image-block .elgg-image {
+	margin-right: 1rem;
+}
+
+.elgg-image-block .elgg-image-alt {
+	margin-left: 1rem;
+	order: 1;
+}
+
+.elgg-image-block > .elgg-body {
+	flex: 1;
+}
+
+.elgg-image-block.elgg-chip {
+	align-items: center;
+}
+
+/* ***************************************
+	Image-related
+*************************************** */
+.elgg-photo {
+	border: 1px solid #e6e6ea;
+	padding: 2px;
+	background-color: #ffffff;
+	max-width: 100%;
+	height: auto;
+}
+

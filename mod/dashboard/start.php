@@ -16,8 +16,10 @@ function dashboard_init() {
 			'name' => 'dashboard',
 			'href' => 'dashboard',
 			'text' => elgg_echo('dashboard'),
+			'icon' => 'th-large',
 			'priority' => 100,
 			'section' => 'alt',
+			'parent_name' => 'account',
 		]);
 	}
 	

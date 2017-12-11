@@ -5,16 +5,16 @@
 .elgg-spinner {
 	/* general spinner styles */
 	background: #fff;
-	padding: 10px;
-	border: 1px solid #CCC;
+	padding: 0.5rem;
+	border: 1px solid #e6e6ea;
 	border-top: 0;
-	border-radius: 0 0 15px 15px;
+	border-radius: 0 0 1rem 1rem;
 	/* negative half the width for proper centering */
-	margin-left: -25.5px;
+	margin-left: -2rem;
 
 	position: fixed;
 	top: 0;
-	z-index: 10000;
+	z-index: 10;
 
 	/* transitioned values */
 	left: -10000px;

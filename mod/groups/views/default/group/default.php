@@ -15,7 +15,7 @@ if (elgg_extract('full_view', $vars, false)) {
 	return;
 }
 
-$icon = elgg_view_entity_icon($entity, 'tiny', $vars);
+$icon = elgg_view_entity_icon($entity, 'small', $vars);
 
 $vars['content'] = $entity->briefdescription;
 $vars['handler'] = 'groups';

@@ -17,6 +17,7 @@
  *                                   Note that if 'confirm' is set to true or a dialog text,
  *                                   'is_action' parameter will default to true
  * @uses string $vars['icon']        Name of the Elgg icon, or icon HTML, appended before the text label
+ * @uses string $vars['icon_alt']        Name of the Elgg icon, or icon HTML, appended after the text label
  * @uses string $vars['badge']       HTML content of the badge appended after the text label
  * @uses int    $vars['excerpt_length'] Length of the URL excerpt if text is not given.
  */
@@ -97,9 +98,11 @@ unset($vars['confirm']);
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-anchor');
 
-$text = elgg_format_element('span', [
-	'class' => 'elgg-anchor-label',
-], $text);
+if ($text) {
+	$text = elgg_format_element('span', [
+		'class' => 'elgg-anchor-label',
+	], $text);
+}
 
 $icon = elgg_extract('icon', $vars, '');
 unset($vars['icon']);
@@ -107,6 +110,15 @@ unset($vars['icon']);
 if ($icon && !preg_match('/^</', $icon)) {
 	$icon = elgg_view_icon($icon, [
 		'class' => 'elgg-anchor-icon',
+	]);
+}
+
+$icon_alt = elgg_extract('icon_alt', $vars, '');
+unset($vars['icon_alt']);
+
+if ($icon_alt && !preg_match('/^</', $icon_alt)) {
+	$icon_alt = elgg_view_icon($icon_alt, [
+		'class' => 'elgg-anchor-icon-alt',
 	]);
 }
 
@@ -121,4 +133,4 @@ if (!is_null($badge)) {
 	]);
 }
 
-echo elgg_format_element('a', $vars, $icon . $text . $badge);
+echo elgg_format_element('a', $vars, $icon . $text . $icon_alt . $badge);

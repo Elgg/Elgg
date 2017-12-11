@@ -14,8 +14,4 @@ if (!$item instanceof ElggRiverItem) {
 
 $subject = $item->getSubjectEntity();
 
-if (elgg_in_context('widgets')) {
-	echo elgg_view_entity_icon($subject, 'tiny');
-} else {
-	echo elgg_view_entity_icon($subject, 'small');
-}
+echo elgg_view_entity_icon($subject, 'small');

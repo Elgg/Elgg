@@ -49,13 +49,16 @@ if ($comment && $comment->canEdit()) {
 $footer = $entity_guid_input . $comment_guid_input . $submit_input;
 
 if ($inline) {
-	echo elgg_view('input/text', [
+	$form = elgg_view('input/text', [
 		'name' => 'generic_comment',
 		'value' => $comment_text,
 		'required' => true,
 	]);
 	
-	echo $footer;
+	$form .= $footer;
+	echo elgg_format_element('div', [
+		'class' => 'elgg-level',
+	], $form);
 } else {
 	echo elgg_view_field([
 		'#type' => 'longtext',

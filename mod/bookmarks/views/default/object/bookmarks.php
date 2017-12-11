@@ -13,7 +13,7 @@ if (!$bookmark) {
 }
 
 $owner = $bookmark->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'tiny');
+$owner_icon = elgg_view_entity_icon($owner, 'small');
 
 $link = elgg_view('output/url', ['href' => $bookmark->address]);
 
