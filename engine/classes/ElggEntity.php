@@ -215,20 +215,20 @@ abstract class ElggEntity extends \ElggData implements
 			return;
 		}
 
+		// Due to https://github.com/Elgg/Elgg/pull/5456#issuecomment-17785173, certain attributes
+		// will store empty strings as null in the DB. In the somewhat common case that we're re-setting
+		// the value to empty string, don't consider this a change.
+		if (in_array($name, ['title', 'name', 'description'])
+			&& $this->$name === null
+			&& $value === "") {
+			return;
+		}
+
 		if (array_key_exists($name, $this->attributes)) {
 			// if an attribute is 1 (integer) and it's set to "1" (string), don't consider that a change.
 			if (is_int($this->attributes[$name])
 					&& is_string($value)
 					&& ((string) $this->attributes[$name] === $value)) {
-				return;
-			}
-
-			// Due to https://github.com/Elgg/Elgg/pull/5456#issuecomment-17785173, certain attributes
-			// will store empty strings as null in the DB. In the somewhat common case that we're re-setting
-			// the value to empty string, don't consider this a change.
-			if (in_array($name, ['title', 'name', 'description'])
-					&& $this->attributes[$name] === null
-					&& $value === "") {
 				return;
 			}
 
