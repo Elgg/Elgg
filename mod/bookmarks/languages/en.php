@@ -14,7 +14,6 @@ return [
 	'bookmarks:this:group' => "Bookmark in %s",
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
-	'bookmarks:inbox' => "Bookmarks inbox",
 	'bookmarks:address' => "Address of the bookmark",
 	'bookmarks:none' => 'No bookmarks',
 
@@ -31,20 +30,15 @@ View and comment on the bookmark:
 %s
 ',
 
-	'bookmarks:delete:confirm' => "Are you sure you want to delete this resource?",
-
 	'bookmarks:numbertodisplay' => 'Number of bookmarks to display',
 
 	'river:object:bookmarks:create' => '%s bookmarked %s',
 	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
-	'bookmarks:river:annotate' => 'a comment on this bookmark',
-	'bookmarks:river:item' => 'an item',
 
 	'item:object:bookmarks' => 'Bookmarks',
 
 	'bookmarks:group' => 'Group bookmarks',
 	'bookmarks:enablebookmarks' => 'Enable group bookmarks',
-	'bookmarks:nogroup' => 'This group does not have any bookmarks yet',
 	
 	/**
 	 * Widget and bookmarklet
@@ -72,7 +66,6 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:failed' => "Your bookmark could not be saved. Make sure you've entered a title and address and then try again.",
-	'bookmarks:save:invalid' => "The address of the bookmark is invalid and could not be saved.",
 	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
 	'bookmarks:unknown_bookmark' => 'Cannot find specified bookmark',
 ];

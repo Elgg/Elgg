@@ -143,7 +143,7 @@ elgg_register_menu_item('page', [
 if (empty($results)) {
 	$results = elgg_format_element('p', [
 		'class' => 'elgg-no-results',
-	], elgg_echo('search:no_results'));
+	], elgg_echo('notfound'));
 }
 
 $layout = elgg_view_layout('content', [

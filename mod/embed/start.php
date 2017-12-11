@@ -41,12 +41,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		return;
 	}
 	
-	$id = elgg_extract('id', $vars);
-	if ($id === null) {
-		return;
-	}
-
-	$id = elgg_extract('id', $vars);
+	$id = elgg_extract('textarea_id', $vars);
 	if ($id === null) {
 		return;
 	}
@@ -175,6 +170,7 @@ function embed_get_list_options($options = []) {
 		'limit' => 6,
 		'container_guids' => $container_guids,
 		'item_class' => 'embed-item',
+		'no_results' => elgg_echo('notfound'),
 	];
 
 	$options = array_merge($defaults, $options);

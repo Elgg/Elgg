@@ -2,7 +2,6 @@
 return [
 	'admin:administer_utilities:logbrowser' => 'Log browser',
 	'logbrowser' => 'Log browser',
-	'logbrowser:browse' => 'Browse system log',
 	'logbrowser:search' => 'Refine results',
 	'logbrowser:user' => 'Username to search by',
 	'logbrowser:starttime' => 'Beginning time (for example "last monday", "1 hour ago")',

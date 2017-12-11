@@ -898,3 +898,8 @@ event, language keys etc. have been removed.
 
     Discussion comments will now show up in the Comments section of Search, no longer under the Discussion section.
 
+Translations cleanup
+--------------------
+
+All plugins have been scanned for unused translation keys. The unused keys have been removed.
+If there was a generic translation available for the custom translation key, these have also been updated.

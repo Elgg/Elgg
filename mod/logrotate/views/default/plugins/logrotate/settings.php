@@ -27,7 +27,7 @@ echo elgg_view_field([
 		'weekly' => elgg_echo('logrotate:week'),
 		'monthly' => elgg_echo('logrotate:month'),
 		'yearly' => elgg_echo('logrotate:year'),
-		'never' => elgg_echo('logrotate:never'),
+		'never' => elgg_echo('never'),
 	],
 	'value' => $plugin->delete,
 ]);

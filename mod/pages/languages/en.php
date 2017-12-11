@@ -20,8 +20,6 @@ return [
 	'pages:history' => "History",
 	'pages:view' => "View page",
 	'pages:revision' => "Revision",
-	'pages:current_revision' => "Current Revision",
-	'pages:revert' => "Revert",
 
 	'pages:navigation' => "Navigation",
 
@@ -36,7 +34,6 @@ View and comment on the page:
 %s
 ',
 	'item:object:page' => 'Pages',
-	'pages:nogroup' => 'This group does not have any pages yet',
 	'pages:more' => 'More pages',
 	'pages:none' => 'No pages created yet',
 
@@ -62,7 +59,6 @@ View and comment on the page:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'No access to page',
 	'pages:cantedit' => 'You cannot edit this page',
 	'pages:saved' => 'Page saved',
 	'pages:notsaved' => 'Page could not be saved',
@@ -71,12 +67,6 @@ View and comment on the page:
 	'pages:delete:failure' => 'The page could not be deleted.',
 	'pages:revision:delete:success' => 'The page revision was successfully deleted.',
 	'pages:revision:delete:failure' => 'The page revision could not be deleted.',
-	'pages:revision:not_found' => 'Cannot find this revision.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Last updated %s by %s',
 
 	/**
 	 * History
@@ -97,15 +87,7 @@ View and comment on the page:
 	'pages:label:edit' => "Edit page",
 	'pages:label:history' => "Page history",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "This page",
-	'pages:sidebar:children' => "Sub-pages",
-	'pages:sidebar:parent' => "Parent",
-
 	'pages:newchild' => "Create a sub-page",
-	'pages:backtoparent' => "Back to '%s'",
 	
 	/**
 	 * Upgrades

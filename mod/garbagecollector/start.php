@@ -50,9 +50,9 @@ function garbagecollector_cron($hook, $type, $returnvalue, $params) {
 		echo elgg_echo('garbagecollector:optimize', [$table]);
 
 		if (garbagecollector_optimize_table($table) !== false) {
-			echo elgg_echo('garbagecollector:ok');
+			echo elgg_echo('ok');
 		} else {
-			echo elgg_echo('garbagecollector:error');
+			echo elgg_echo('error');
 		}
 
 		echo "\n";

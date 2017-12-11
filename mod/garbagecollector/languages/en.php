@@ -9,7 +9,4 @@ return [
 	'garbagecollector' => "GARBAGE COLLECTOR\n",
 	'garbagecollector:done' => "DONE\n",
 	'garbagecollector:optimize' => "Optimizing %s ",
-
-	'garbagecollector:error' => "ERROR",
-	'garbagecollector:ok' => "OK",
 ];

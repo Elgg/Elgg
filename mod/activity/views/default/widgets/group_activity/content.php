@@ -20,5 +20,5 @@ echo elgg_list_river([
 	'pagination' => false,
 	'joins' => ["JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid"],
 	'wheres' => ["(e1.container_guid = $guid)"],
-	'no_results' => elgg_echo('groups:widget:group_activity:content:noactivity'),
+	'no_results' => elgg_echo('activity:widgets:group_activity:content:noactivity'),
 ]);
