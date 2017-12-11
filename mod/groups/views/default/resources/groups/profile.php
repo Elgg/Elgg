@@ -18,9 +18,7 @@ $content = elgg_view('groups/profile/layout', ['entity' => $group]);
 
 $sidebar = '';
 if (elgg_group_gatekeeper(false)) {
-	if (elgg_is_active_plugin('search')) {
-		$sidebar .= elgg_view('groups/sidebar/search', ['entity' => $group]);
-	}
+	$sidebar .= elgg_view('groups/sidebar/search', ['entity' => $group]);
 	$sidebar .= elgg_view('groups/sidebar/members', ['entity' => $group]);
 }
 

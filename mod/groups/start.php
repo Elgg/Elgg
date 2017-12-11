@@ -15,9 +15,6 @@ function groups_init() {
 	elgg_register_library('elgg:groups', __DIR__ . '/lib/groups.php');
 	elgg_load_library('elgg:groups');
 	
-	// register group entities for search
-	elgg_register_entity_type('group', '');
-	
 	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/member_count');
 	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/membership_type');
 	
