@@ -508,6 +508,10 @@ function elgg_get_site_entity() {
  *                                  all the owners of the returned entities resulting in better
  *                                  performance when displaying entities owned by several users
  *                                  Default: false
+ * @option bool $preload_containers If set to true, this function will preload
+ *                                  all the containers of the returned entities resulting in better
+ *                                  performance when displaying entities contained by several users/groups
+ *                                  Default: false
  * @option bool $batch              If set to true, an Elgg\BatchResult object will be returned instead of an array.
  *                                  Default: false
  * @option bool $batch_inc_offset   If "batch" is used, this tells the batch to increment the offset
@@ -892,8 +896,6 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
  */
 function _elgg_entities_test($hook, $type, $value) {
 	$value[] = ElggEntityUnitTest::class;
-	$value[] = ElggCoreAttributeLoaderTest::class;
-	//$value[] = ElggCoreGetEntitiesBaseTest::class;
 	$value[] = ElggCoreGetEntitiesFromAnnotationsTest::class;
 	$value[] = ElggCoreGetEntitiesFromMetadataTest::class;
 	$value[] = ElggCoreGetEntitiesFromPrivateSettingsTest::class;

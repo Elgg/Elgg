@@ -208,7 +208,7 @@ class ElggBatch implements BatchResult {
 	 */
 	public function __construct(callable $getter, $options, $callback = null, $chunk_size = 25,
 			$inc_offset = true) {
-		
+
 		$this->getter = $getter;
 		$this->options = $options;
 		$this->callback = $callback;
@@ -250,17 +250,6 @@ class ElggBatch implements BatchResult {
 
 			$this->callbackResult = $all_results;
 		}
-	}
-
-	/**
-	 * Tell the process that an entity was incomplete during a fetch
-	 *
-	 * @param \stdClass $row
-	 *
-	 * @access private
-	 */
-	public function reportIncompleteEntity(\stdClass $row) {
-		$this->incompleteEntities[] = $row;
 	}
 
 	/**

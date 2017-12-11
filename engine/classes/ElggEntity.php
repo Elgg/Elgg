@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\EntityIcon;
+
 /**
  * The parent class for all Elgg Entities.
  *
@@ -41,8 +43,31 @@
  */
 abstract class ElggEntity extends \ElggData implements
 	Locatable, // Geocoding interface
-	\Elgg\EntityIcon // Icon interface
+	EntityIcon // Icon interface
 {
+
+	public static $primary_attr_names = [
+		'guid',
+		'type',
+		'subtype',
+		'owner_guid',
+		'container_guid',
+		'access_id',
+		'time_created',
+		'time_updated',
+		'last_action',
+		'enabled',
+	];
+
+	protected static $integer_attr_names = [
+		'guid',
+		'owner_guid',
+		'container_guid',
+		'access_id',
+		'time_created',
+		'time_updated',
+		'last_action',
+	];
 
 	/**
 	 * Holds metadata until entity is saved.  Once the entity is saved,
@@ -1488,25 +1513,26 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	protected function load(stdClass $row) {
-		$type = $this->type;
+		$attributes = array_merge($this->attributes, (array) $row);
 
-		$attr_loader = new \Elgg\AttributeLoader(get_class($this), $type, $this->attributes);
-		if ($type === 'user' || $this instanceof ElggPlugin) {
-			$attr_loader->requires_access_control = false;
-		}
-
-		$attrs = $attr_loader->getRequiredAttributes($row);
-		if (!$attrs) {
+		if (array_diff(self::$primary_attr_names, array_keys($attributes)) !== []) {
+			// Some primary attributes are missing
 			return false;
 		}
 
-		$this->attributes = $attrs;
+		foreach ($attributes as $name => $value) {
+			if (!in_array($name, self::$primary_attr_names)) {
+				$this->setVolatileData("select:$name", $value);
+				unset($attributes[$name]);
+				continue;
+			}
 
-		foreach ($attr_loader->getAdditionalSelectValues() as $name => $value) {
-			$this->setVolatileData("select:$name", $value);
+			if (in_array($name, self::$integer_attr_names)) {
+				$attributes[$name] = (int) $value;
+			}
 		}
 
-		_elgg_services()->metadataCache->populateFromEntities($this);
+		$this->attributes = $attributes;
 
 		_elgg_services()->entityCache->set($this);
 
