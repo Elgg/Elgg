@@ -1676,7 +1676,7 @@ function _elgg_views_amd($hook, $type, $content, $params) {
  * @access private
  */
 function _elgg_views_send_header_x_frame_options() {
-	header('X-Frame-Options: SAMEORIGIN');
+	elgg_set_http_header('X-Frame-Options: SAMEORIGIN');
 }
 
 /**

@@ -623,6 +623,9 @@ class EntityTable {
 		$show_hidden = access_show_hidden_entities(true);
 
 		$user = $this->get($guid, 'user');
+		if ($user) {
+			_elgg_services()->metadataCache->populateFromEntities([$user->guid]);
+		}
 
 		$this->session->setIgnoreAccess($ia);
 		access_show_hidden_entities($show_hidden);

@@ -53,6 +53,10 @@ class ElggRewriteTester {
 	 * @return string
 	 */
 	public static function guessWebServer() {
+		if (empty($_SERVER['SERVER_SOFTWARE'])) {
+			return 'unknown';
+		}
+
 		$serverString = strtolower($_SERVER['SERVER_SOFTWARE']);
 		$possibleServers = ['apache', 'nginx', 'lighttpd', 'iis'];
 		foreach ($possibleServers as $server) {
