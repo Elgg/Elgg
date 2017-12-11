@@ -143,6 +143,8 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``groups_access_collection_override``
  * ``groups_get_group_tool_options``: Use ``elgg_get_group_tool_options``
  * ``groups_join_group``: Use ``ElggGroup::join``
+ * ``groups_prepare_profile_buttons``: Use ``register, menu:title`` hook
+ * ``groups_register_profile_buttons``: Use ``register, menu:title`` hook
  * ``groups_setup_sidebar_menus``
  * ``groups_set_icon_url``
  * ``groups_setup_sidebar_menus``
@@ -544,6 +546,7 @@ Removed hooks/events
  * Hook **email:message, system**: Use **zend:message, system:email** hook
  * Hook **members:list, <page>**: Use your own pagehandler or route hook
  * Hook **members:config, <page>**: Use **register, menu:filter:members**
+ * Hook **profile_buttons, group**: Use **register, menu:title**
 
 Removed forms/actions
 ---------------------

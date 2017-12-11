@@ -12,8 +12,6 @@ elgg_push_context('group_profile');
 
 elgg_push_breadcrumb($group->getDisplayName());
 
-groups_register_profile_buttons($group);
-
 $content = elgg_view('groups/profile/layout', ['entity' => $group]);
 
 $sidebar = '';
@@ -24,6 +22,7 @@ if (elgg_group_gatekeeper(false)) {
 
 $params = [
 	'content' => $content,
+	'entity' => $group,
 	'sidebar' => $sidebar,
 	'title' => $group->getDisplayName(),
 ];
