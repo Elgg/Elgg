@@ -16,16 +16,11 @@ if (isset($vars['id'])) {
 	$attributes['id'] = $vars['id'];
 }
 
-$class = 'elgg-ajax-loader';
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
+$attributes['class'] = elgg_extract_class($vars, 'elgg-ajax-loader');
 
 if (elgg_extract('hidden', $vars, true)) {
-	$class = "$class hidden";
+	$attributes['class'][] = "hidden";
 }
-
-$attributes['class'] = $class;
 
 $attrs = elgg_format_attributes($attributes);
 

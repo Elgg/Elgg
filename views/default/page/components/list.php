@@ -34,15 +34,9 @@ if (!is_array($items) || count($items) == 0) {
 	return;
 }
 
-$list_classes = ['elgg-list'];
-if (isset($vars['list_class'])) {
-	$list_classes[] = $vars['list_class'];
-}
+$list_classes = elgg_extract_class($vars, 'elgg-list', 'list_class');
 
-$item_classes = ['elgg-item'];
-if (isset($vars['item_class'])) {
-	$item_classes[] = $vars['item_class'];
-}
+$item_classes = elgg_extract_class($vars, 'elgg-item', 'item_class');
 
 $nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
 

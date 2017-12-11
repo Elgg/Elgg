@@ -35,28 +35,22 @@ if (!is_array($tags)) {
 	$tags = [$tags];
 }
 
-$list_class = "elgg-tags";
-if (isset($vars['list_class'])) {
-	$list_class = "$list_class {$vars['list_class']}";
-	unset($vars['list_class']);
-}
+$list_class = elgg_extract_class($vars, 'elgg-tags', 'list_class');
+unset($vars['list_class']);
 
-$item_class = "elgg-tag";
-if (isset($vars['item_class'])) {
-	$item_class = "$item_class {$vars['item_class']}";
-	unset($vars['item_class']);
-}
+$item_class = elgg_extract_class($vars, 'elgg-tag', 'item_class');
+unset($vars['item_class']);
 
 $icon_name = elgg_extract('icon', $vars, 'tag');
 unset($vars['icon']);
 
-$icon_class = elgg_extract('icon_class', $vars);
+$icon_class = elgg_extract_class($vars, [], 'icon_class');
 unset($vars['icon_class']);
 
 if ($icon_name === false) {
 	$icon = '';
 } else {
-	$icon = elgg_view_icon($icon_name, $icon_class);
+	$icon = elgg_view_icon($icon_name, ['class' => $icon_class]);
 }
 
 $separator = elgg_extract('separator', $vars, ', ');
