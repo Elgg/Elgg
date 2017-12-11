@@ -5,14 +5,13 @@ namespace Elgg;
 use ConfigurationException;
 use Doctrine\DBAL\Connection;
 use Elgg\Database\DbConfig;
-use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
-use Exception;
 use InstallationException;
+use InvalidArgumentException;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -178,6 +177,7 @@ class Application {
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
 	 * @return void
+	 * @throws InstallationException
 	 */
 	public function bootCore() {
 		$config = $this->_services->config;
@@ -342,6 +342,7 @@ class Application {
 	 * @param array $spec Specification for initial call.
 	 * @return self
 	 * @throws ConfigurationException
+	 * @throws InvalidArgumentException
 	 */
 	public static function factory(array $spec = []) {
 		$defaults = [
@@ -377,7 +378,7 @@ class Application {
 			if ($spec['request'] instanceof Request) {
 				$spec['service_provider']->setValue('request', $spec['request']);
 			} else {
-				throw new \InvalidArgumentException("Given request is not a " . Request::class);
+				throw new InvalidArgumentException("Given request is not a " . Request::class);
 			}
 		}
 
@@ -406,6 +407,7 @@ class Application {
 	 * Elgg's front controller. Handles basically all incoming URL requests.
 	 *
 	 * @return bool True if Elgg will handle the request, false if the server should (PHP-CLI server)
+	 * @throws ConfigurationException
 	 */
 	public static function index() {
 		$req = Request::createFromGlobals();
@@ -416,7 +418,14 @@ class Application {
 			return true;
 		}
 
-		$app = self::factory(['request' => $req]);
+		try {
+			$app = self::factory([
+				'request' => $req,
+			]);
+		} catch (ConfigurationException $ex) {
+			return self::install();
+		}
+
 		self::setGlobalConfig($app);
 		self::setInstance($app);
 
@@ -485,12 +494,28 @@ class Application {
 	/**
 	 * Renders a web UI for installing Elgg.
 	 *
-	 * @return void
+	 * @return bool
+	 * @throws InstallationException
 	 */
 	public static function install() {
 		ini_set('display_errors', 1);
+
 		$installer = new \ElggInstaller();
-		$installer->run();
+		$response = $installer->run();
+		try {
+			// we won't trust server configuration but specify utf-8
+			elgg_set_http_header('Content-type: text/html; charset=utf-8');
+
+			// turn off browser caching
+			elgg_set_http_header('Pragma: public', true);
+			elgg_set_http_header("Cache-Control: no-cache, must-revalidate", true);
+			elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+
+			_elgg_services()->responseFactory->respond($response);
+			return headers_sent();
+		} catch (\InvalidParameterException $ex) {
+			throw new InstallationException($ex->getMessage());
+		}
 	}
 
 	/**
@@ -506,6 +531,7 @@ class Application {
 	 * to a relative URL.
 	 *
 	 * @return void
+	 * @throws InstallationException
 	 */
 	public static function upgrade() {
 		// we want to know if an error occurs
@@ -613,7 +639,7 @@ class Application {
 	public static function migrate() {
 		$conf = self::elggDir()->getPath('engine/conf/migrations.php');
 		if (!$conf) {
-			throw new Exception('Settings file is required to run database migrations.');
+			throw new InstallationException('Settings file is required to run database migrations.');
 		}
 
 		$app = new \Phinx\Console\PhinxApplication();
@@ -621,7 +647,10 @@ class Application {
 			'configuration' => $conf,
 		]);
 		$log = $wrapper->getMigrate();
-		error_log($log);
+
+		if (in_array('--verbose', $_SERVER['argv'])) {
+			error_log($log);
+		}
 
 		return true;
 	}
@@ -839,16 +868,6 @@ class Application {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Does nothing.
-	 *
-	 * @return void
-	 * @deprecated
-	 */
-	public function loadSettings() {
-		trigger_error(__METHOD__ . ' is no longer needed and will be removed.');
 	}
 
 	/**

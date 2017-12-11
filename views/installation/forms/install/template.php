@@ -6,16 +6,17 @@
  * @uses $vars['type'] Type of form: admin, database, settings
  */
 
-$variables = $vars['variables'];
-$type = $vars['type'];
+$variables = elgg_extract('variables', $vars, []);
+$type = elgg_extract('type', $vars);
 $form_body = '';
 
 foreach ($variables as $name => $params) {
 	$label = elgg_echo("install:$type:label:$name");
 	$help = elgg_echo("install:$type:help:$name");
 	$params['name'] = $name;
-	
-	$input = elgg_view("input/{$params['type']}", $params);
+
+	$input_type = elgg_extract('type', $params);
+	$input = elgg_view("input/{$input_type}", $params);
 
 	$field = <<<FIELD
 <label class="elgg-form-field">
