@@ -34,8 +34,8 @@ class EntityPreloader {
 		$this->_callable_cache_checker = function ($guid) use ($entity_cache) {
 			return $entity_cache->get($guid);
 		};
-		$this->_callable_entity_loader = function ($options) {
-			return \Elgg\Database\Entities::find($options);
+		$this->_callable_entity_loader = function ($options) use ($entity_table) {
+			return $entity_table->get($options);
 		};
 	}
 

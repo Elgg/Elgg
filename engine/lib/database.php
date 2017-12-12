@@ -224,6 +224,7 @@ function _elgg_db_run_delayed_queries() {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_db_test($hook, $type, $value) {
 	$value[] = ElggDataFunctionsTest::class;

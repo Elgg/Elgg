@@ -142,6 +142,7 @@ function elgg_list_entities_from_relationship_count($options) {
  * @return array
  *
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_relationships_test($hook, $type, $tests) {
 	$tests[] = ElggRelationshipUnitTest::class;

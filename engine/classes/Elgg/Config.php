@@ -135,6 +135,11 @@ class Config {
 	private $locked = [];
 
 	/**
+	 * @var string
+	 */
+	private $settings_path;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $values Initial config values from Env/settings file
@@ -173,20 +178,16 @@ class Config {
 		$reason1 = '';
 		$reason2 = '';
 
-		if ($try_env && !empty($_ENV['ELGG_SETTINGS_FILE'])) {
-			$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
-		}
+		$settings_path = self::resolvePath($settings_path, $try_env);
 
-		if ($settings_path) {
-			$config = self::fromFile($settings_path, $reason1);
-		} else {
-			$config = self::fromFile(Paths::settingsFile(Paths::SETTINGS_PHP), $reason1);
-		}
+		$config = self::fromFile($settings_path, $reason1);
 
 		if (!$config) {
 			$msg = __METHOD__ . ": Reading configs failed: $reason1 $reason2";
 			throw new ConfigurationException($msg);
 		}
+
+		$config->settings_path = $settings_path;
 
 		return $config;
 	}
@@ -268,6 +269,25 @@ class Config {
 		$config->lock('elgg_settings_file');
 
 		return $config;
+	}
+
+	/**
+	 * Resolve settings path
+	 *
+	 * @param string $settings_path Path of settings file
+	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
+	 * @return Config
+	 */
+	public static function resolvePath($settings_path = '', $try_env = true) {
+		if (!$settings_path) {
+			if ($try_env && !empty($_ENV['ELGG_SETTINGS_FILE'])) {
+				$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
+			} else if (!$settings_path) {
+				$settings_path = Paths::settingsFile(Paths::SETTINGS_PHP);
+			}
+		}
+
+		return \Elgg\Project\Paths::sanitize($settings_path, false);
 	}
 
 	/**

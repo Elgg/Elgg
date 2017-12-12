@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Cache;
 
 use Elgg\Database;
@@ -7,7 +8,7 @@ use Elgg\Database;
  * In memory cache of (non-user-specific, non-internal) plugin settings
  *
  * @access private
- * @since 2.1
+ * @since  2.1
  */
 class PluginSettingsCache {
 
@@ -22,10 +23,23 @@ class PluginSettingsCache {
 	 * Set the settings cache for known plugins
 	 *
 	 * @param array $cache The settings from the boot data
+	 *
 	 * @return void
 	 */
 	public function setCachedValues(array $cache) {
 		$this->values = $cache;
+	}
+
+	/**
+	 * Cache settings for an entity
+	 *
+	 * @param int   $entity_guid Entity
+	 * @param array $values      Values
+	 *
+	 * @return void
+	 */
+	public function set($entity_guid, array $values) {
+		$this->values[$entity_guid] = $values;
 	}
 
 	/**
@@ -43,6 +57,7 @@ class PluginSettingsCache {
 	 * Clear cache for an entity
 	 *
 	 * @param int $entity_guid The GUID of the entity
+	 *
 	 * @return void
 	 */
 	public function clear($entity_guid) {

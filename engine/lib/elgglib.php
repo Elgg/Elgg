@@ -378,7 +378,7 @@ function elgg_get_loaded_external_files($type, $location) {
  */
 function elgg_get_file_list($directory, $exceptions = [], $list = [], $extensions = null) {
 
-	$directory = sanitise_filepath($directory);
+	$directory = \Elgg\Project\Paths::sanitize($directory);
 	if ($handle = opendir($directory)) {
 		while (($file = readdir($handle)) !== false) {
 			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
@@ -397,33 +397,6 @@ function elgg_get_file_list($directory, $exceptions = [], $list = [], $extension
 	}
 
 	return $list;
-}
-
-/**
- * Sanitise file paths ensuring that they begin and end with slashes etc.
- *
- * @param string $path         The path
- * @param bool   $append_slash Add tailing slash
- *
- * @return string
- */
-function sanitise_filepath($path, $append_slash = true) {
-	// Convert to correct UNIX paths
-	$path = str_replace('\\', '/', $path);
-	$path = str_replace('../', '/', $path);
-	// replace // with / except when preceeded by :
-	$path = preg_replace("/([^:])\/\//", "$1/", $path);
-
-	// Sort trailing slash
-	$path = trim($path);
-	// rtrim defaults plus /
-	$path = rtrim($path, " \n\t\0\x0B/");
-
-	if ($append_slash) {
-		$path = $path . '/';
-	}
-
-	return $path;
 }
 
 /**
@@ -1816,6 +1789,7 @@ function _elgg_delete_autoload_cache() {
  * @elgg_plugin_hook unit_tests system
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_api_test($hook, $type, $value, $params) {
 	$value[] = ElggTravisInstallTest::class;

@@ -13,6 +13,11 @@ use Zend\Mail\Message;
  */
 class SendActionTest extends ActionResponseTestCase {
 
+	public function up() {
+		$this->startPlugin();
+		parent::up();
+	}
+
 	public function testSendFailsWithoutRecipient() {
 
 		$user = $this->createUser([], [

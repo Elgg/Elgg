@@ -1,18 +1,24 @@
 <?php
 /**
+ * Elgg global system message list
  * Lists all system messages
+ *
+ * @package Elgg
+ * @subpackage Core
  *
  * @uses $vars['object'] The array of message registers
  */
 
-if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object']) > 0) {
-	echo '<ul class="elgg-system-messages">';
+$messages = (array) elgg_extract('object', $vars, []);
 
-	foreach ($vars['object'] as $type => $list) {
-		foreach ($list as $message) {
-			echo elgg_format_element('li', [], elgg_view_message($type, $message, ['title' => false]));
-		}
+$list_items = '';
+
+foreach ($messages as $type => $list) {
+	foreach ($list as $message) {
+		$list_items .= elgg_format_element('li', [
+			'class' => "elgg-state-$type",
+		], $message);
 	}
-
-	echo '</ul>';
 }
+
+echo elgg_format_element('ul', ['class' => 'elgg-system-messages'], $list_items);

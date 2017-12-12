@@ -11,7 +11,7 @@ use Elgg\UnitTestCase;
 class SearchPluginTest extends UnitTestCase {
 
 	public function up() {
-
+		$this->startPlugin(ELGG_PLUGIN_IGNORE_MANIFEST | ELGG_PLUGIN_REGISTER_CLASSES);
 	}
 
 	public function down() {

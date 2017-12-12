@@ -146,9 +146,14 @@ define('ELGG_PLUGIN_REGISTER_CLASSES', 8);
 define('ELGG_PLUGIN_REGISTER_ACTIONS', 16);
 
 /**
- * Tells \ElggPlugin::start() to automatically register the plugin's actions.
+ * Tells \ElggPlugin::start() to automatically register the plugin's widgets.
  */
 define('ELGG_PLUGIN_REGISTER_WIDGETS', 32);
+
+/**
+ * Tells \ElggPlugin::start() to ignore manifest when starting.
+ */
+define('ELGG_PLUGIN_IGNORE_MANIFEST', 64);
 
 /**
  * Prefix for plugin user setting names

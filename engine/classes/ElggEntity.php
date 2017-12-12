@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\EntityIcon;
+
 /**
  * The parent class for all Elgg Entities.
  *
@@ -41,8 +43,31 @@
  */
 abstract class ElggEntity extends \ElggData implements
 	Locatable, // Geocoding interface
-	\Elgg\EntityIcon // Icon interface
+	EntityIcon // Icon interface
 {
+
+	public static $primary_attr_names = [
+		'guid',
+		'type',
+		'subtype',
+		'owner_guid',
+		'container_guid',
+		'access_id',
+		'time_created',
+		'time_updated',
+		'last_action',
+		'enabled',
+	];
+
+	protected static $integer_attr_names = [
+		'guid',
+		'owner_guid',
+		'container_guid',
+		'access_id',
+		'time_created',
+		'time_updated',
+		'last_action',
+	];
 
 	/**
 	 * Holds metadata until entity is saved.  Once the entity is saved,
@@ -83,11 +108,11 @@ abstract class ElggEntity extends \ElggData implements
 	 * If a database result is passed as a \stdClass instance, it instantiates
 	 * that entity.
 	 *
-	 * @param \stdClass $row Database row result. Default is null to create a new object.
+	 * @param stdClass $row Database row result. Default is null to create a new object.
 	 *
 	 * @throws IOException If cannot load remaining data from db
 	 */
-	public function __construct(\stdClass $row = null) {
+	public function __construct(stdClass $row = null) {
 		$this->initializeAttributes();
 
 		if ($row && !$this->load($row)) {
@@ -190,20 +215,20 @@ abstract class ElggEntity extends \ElggData implements
 			return;
 		}
 
+		// Due to https://github.com/Elgg/Elgg/pull/5456#issuecomment-17785173, certain attributes
+		// will store empty strings as null in the DB. In the somewhat common case that we're re-setting
+		// the value to empty string, don't consider this a change.
+		if (in_array($name, ['title', 'name', 'description'])
+			&& $this->$name === null
+			&& $value === "") {
+			return;
+		}
+
 		if (array_key_exists($name, $this->attributes)) {
 			// if an attribute is 1 (integer) and it's set to "1" (string), don't consider that a change.
 			if (is_int($this->attributes[$name])
 					&& is_string($value)
 					&& ((string) $this->attributes[$name] === $value)) {
-				return;
-			}
-
-			// Due to https://github.com/Elgg/Elgg/pull/5456#issuecomment-17785173, certain attributes
-			// will store empty strings as null in the DB. In the somewhat common case that we're re-setting
-			// the value to empty string, don't consider this a change.
-			if (in_array($name, ['title', 'name', 'description'])
-					&& $this->attributes[$name] === null
-					&& $value === "") {
 				return;
 			}
 
@@ -1254,8 +1279,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Save an entity.
 	 *
 	 * @return bool|int
-	 * @throws InvalidParameterException
-	 * @throws IOException
 	 */
 	public function save() {
 		$guid = $this->guid;
@@ -1472,7 +1495,7 @@ abstract class ElggEntity extends \ElggData implements
 		elgg_trigger_after_event('update', $this->type, $this);
 
 		// TODO(evan): Move this to \ElggObject?
-		if ($this instanceof \ElggObject) {
+		if ($this instanceof \ElggObject && isset($this->orig_attributes['access_id'])) {
 			update_river_access_by_object($guid, $access_id);
 		}
 
@@ -1485,28 +1508,31 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Loads attributes from the entities table into the object.
 	 *
-	 * @param \stdClass $row Object of properties from database row(s)
+	 * @param stdClass $row Object of properties from database row(s)
 	 *
 	 * @return bool
 	 */
-	protected function load(\stdClass $row) {
-		$type = $this->type;
+	protected function load(stdClass $row) {
+		$attributes = array_merge($this->attributes, (array) $row);
 
-		$attr_loader = new \Elgg\AttributeLoader(get_class($this), $type, $this->attributes);
-		if ($type === 'user' || $this instanceof ElggPlugin) {
-			$attr_loader->requires_access_control = false;
-		}
-
-		$attrs = $attr_loader->getRequiredAttributes($row);
-		if (!$attrs) {
+		if (array_diff(self::$primary_attr_names, array_keys($attributes)) !== []) {
+			// Some primary attributes are missing
 			return false;
 		}
 
-		$this->attributes = $attrs;
+		foreach ($attributes as $name => $value) {
+			if (!in_array($name, self::$primary_attr_names)) {
+				$this->setVolatileData("select:$name", $value);
+				unset($attributes[$name]);
+				continue;
+			}
 
-		foreach ($attr_loader->getAdditionalSelectValues() as $name => $value) {
-			$this->setVolatileData("select:$name", $value);
+			if (in_array($name, self::$integer_attr_names)) {
+				$attributes[$name] = (int) $value;
+			}
 		}
+
+		$this->attributes = $attributes;
 
 		_elgg_services()->entityCache->set($this);
 
@@ -1521,12 +1547,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * request in case different select clauses were used to load different data
 	 * into volatile data.
 	 *
-	 * @param \stdClass $row DB row with new entity data
+	 * @param stdClass $row DB row with new entity data
 	 * @return bool
 	 * @access private
 	 */
-	public function refresh(\stdClass $row) {
-		if ($row instanceof \stdClass) {
+	public function refresh(stdClass $row) {
+		if ($row instanceof stdClass) {
 			return $this->load($row);
 		}
 		return false;
@@ -1847,7 +1873,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * {@inheritdoc}
 	 */
 	public function toObject() {
-		$object = $this->prepareObject(new \stdClass());
+		$object = $this->prepareObject(new stdClass());
 		$params = ['entity' => $this];
 		$object = _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
 		return $object;
@@ -1856,8 +1882,8 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Prepare an object copy for toObject()
 	 *
-	 * @param \stdClass $object Object representation of the entity
-	 * @return \stdClass
+	 * @param stdClass $object Object representation of the entity
+	 * @return stdClass
 	 */
 	protected function prepareObject($object) {
 		$object->guid = $this->guid;

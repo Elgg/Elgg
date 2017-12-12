@@ -1,10 +1,15 @@
 <?php
+
 namespace Elgg\Database;
 
-use Elgg\Cache\Pool;
-use Elgg\Profilable;
-use Exception;
+use DatabaseException;
 use Elgg\Cache\PluginSettingsCache;
+use Elgg\Cache\Pool;
+use Elgg\Database;
+use Elgg\Profilable;
+use ElggPlugin;
+use ElggUser;
+use Exception;
 
 /**
  * Persistent, installation-wide key-value storage.
@@ -13,62 +18,74 @@ use Elgg\Cache\PluginSettingsCache;
  *
  * @access private
  *
- * @since 1.10.0
+ * @since  1.10.0
  */
 class Plugins {
+
 	use Profilable;
 
 	/**
-	 * @var \ElggPlugin[]
+	 * @var ElggPlugin[]
 	 */
-	private $boot_plugins;
+	protected $boot_plugins;
 
 	/**
 	 * @var array|null
 	 */
-	private $provides_cache;
+	protected $provides_cache;
 
 	/**
 	 * @var string[] Active plugins, with plugin ID => GUID. Missing keys imply inactive plugins.
 	 */
-	private $active_guids = [];
+	protected $active_guids = [];
 
 	/**
 	 * @var bool Has $active_guids been populated?
 	 */
-	private $active_guids_known = false;
+	protected $active_guids_known = false;
 
 	/**
 	 * @var Pool
 	 */
-	private $plugins_by_id;
+	protected $plugins_by_id;
 
 	/**
 	 * @var PluginSettingsCache
 	 */
-	private $settings_cache;
+	protected $settings_cache;
+
+	/**
+	 * @var Database
+	 */
+	protected $db;
 
 	/**
 	 * Constructor
 	 *
 	 * @param Pool                $pool  Cache for referencing plugins by ID
 	 * @param PluginSettingsCache $cache Plugin settings cache
+	 * @param Database            $db    Database
 	 */
-	public function __construct(Pool $pool, PluginSettingsCache $cache) {
+	public function __construct(Pool $pool, PluginSettingsCache $cache, Database $db) {
 		$this->plugins_by_id = $pool;
 		$this->settings_cache = $cache;
+		$this->db = $db;
 	}
 
 	/**
 	 * Set the list of active plugins according to the boot data cache
 	 *
-	 * @param \ElggPlugin[]|null $plugins Set of active plugins
+	 * @param ElggPlugin[]|null $plugins Set of active plugins
+	 *
 	 * @return void
 	 */
 	public function setBootPlugins($plugins) {
 		$this->boot_plugins = $plugins;
 		if (is_array($plugins)) {
 			foreach ($plugins as $plugin) {
+				if (!$plugin instanceof ElggPlugin || !$plugin->getID()) {
+					continue;
+				}
 				$this->plugins_by_id->put($plugin->getID(), $plugin);
 			}
 		}
@@ -83,7 +100,7 @@ class Plugins {
 	 * @return array Array of directory names (not full paths)
 	 * @access private
 	 */
-	function getDirsInDir($dir = null) {
+	public function getDirsInDir($dir = null) {
 		if (!$dir) {
 			$dir = elgg_get_plugins_path();
 		}
@@ -114,7 +131,7 @@ class Plugins {
 	 * @return bool
 	 * @access private
 	 */
-	function generateEntities() {
+	public function generateEntities() {
 
 		$mod_dir = elgg_get_plugins_path();
 
@@ -124,11 +141,7 @@ class Plugins {
 		// show hidden entities so that we can enable them if appropriate
 		$old_access = access_show_hidden_entities(true);
 
-		$known_plugins = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'plugin',
-			'limit' => ELGG_ENTITIES_NO_VALUE,
-		]);
+		$known_plugins = $this->find('all');
 		/* @var \ElggPlugin[] $known_plugins */
 
 		if (!$known_plugins) {
@@ -146,11 +159,13 @@ class Plugins {
 				continue;
 			}
 			$id_map[$plugin->getID()] = $i;
+			$this->cache($plugin);
 		}
 
 		$physical_plugins = $this->getDirsInDir($mod_dir);
 		if (!$physical_plugins) {
 			elgg_set_ignore_access($old_ia);
+
 			return false;
 		}
 
@@ -172,8 +187,8 @@ class Plugins {
 			} else {
 				// create new plugin
 				// priority is forced to last in save() if not set.
-				$plugin = new \ElggPlugin($mod_dir . $plugin_id);
-				$plugin->save();
+				$plugin = ElggPlugin::fromId($plugin_id);
+				$this->cache($plugin);
 			}
 		}
 
@@ -201,24 +216,40 @@ class Plugins {
 	/**
 	 * Cache a reference to this plugin by its ID
 	 *
-	 * @param \ElggPlugin $plugin the plugin to cache
+	 * @param ElggPlugin $plugin the plugin to cache
 	 *
 	 * @return void
 	 *
 	 * @access private
 	 */
-	function cache(\ElggPlugin $plugin) {
+	public function cache(ElggPlugin $plugin) {
 		$this->plugins_by_id->put($plugin->getID(), $plugin);
+	}
+
+	/**
+	 * Remove plugin from cache
+	 *
+	 * @param string $plugin_id Plugin ID
+	 *
+	 * @return void
+	 */
+	public function invalidateCache($plugin_id) {
+		$this->plugins_by_id->invalidate($plugin_id);
 	}
 
 	/**
 	 * Returns an \ElggPlugin object with the path $path.
 	 *
 	 * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
-	 * @return \ElggPlugin|null
+	 *
+	 * @return ElggPlugin|null
 	 */
-	function get($plugin_id) {
-		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
+	public function get($plugin_id) {
+		if (!$plugin_id) {
+			return;
+		}
+
+		$fallback = function () use ($plugin_id) {
 			$plugins = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'plugin',
@@ -235,7 +266,9 @@ class Plugins {
 			}
 
 			return null;
-		});
+		};
+
+		return $this->plugins_by_id->get($plugin_id, $fallback);
 	}
 
 	/**
@@ -246,6 +279,7 @@ class Plugins {
 	 * {@link _elgg_generate_plugin_objects()} first.
 	 *
 	 * @param string $id The plugin ID.
+	 *
 	 * @return bool
 	 */
 	function exists($id) {
@@ -258,7 +292,7 @@ class Plugins {
 	 * @return int
 	 * @access private
 	 */
-	function getMaxPriority() {
+	public function getMaxPriority() {
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
 
 		$qb = Select::fromTable('entities', 'e');
@@ -269,20 +303,20 @@ class Plugins {
 			->andWhere($qb->compare('e.subtype', '=', 'plugin', ELGG_VALUE_STRING));
 
 		$data = _elgg_services()->db->getDataRow($qb);
+
+		$max = 1;
 		if ($data) {
-			$max = $data->max;
-		} else {
-			$max = 1;
+			$max = (int) $data->max;
 		}
 
-		// can't have a priority of 0.
-		return ($max) ? $max : 1;
+		return max(1, $max);
 	}
 
 	/**
 	 * Returns if a plugin is active for a current site.
 	 *
 	 * @param string $plugin_id The plugin ID
+	 *
 	 * @return bool
 	 */
 	function isActive($plugin_id) {
@@ -308,7 +342,7 @@ class Plugins {
 	/**
 	 * Loads all active plugins in the order specified in the tool admin panel.
 	 *
-	 * @note This is called on every page load. If a plugin is active and problematic, it
+	 * @note   This is called on every page load. If a plugin is active and problematic, it
 	 * will be disabled and a visible error emitted. This does not check the deps system because
 	 * that was too slow.
 	 *
@@ -322,11 +356,11 @@ class Plugins {
 
 		$plugins_path = elgg_get_plugins_path();
 		$start_flags = ELGG_PLUGIN_INCLUDE_START |
-						ELGG_PLUGIN_REGISTER_VIEWS |
-						ELGG_PLUGIN_REGISTER_ACTIONS |
-						ELGG_PLUGIN_REGISTER_LANGUAGES |
-						ELGG_PLUGIN_REGISTER_WIDGETS |
-						ELGG_PLUGIN_REGISTER_CLASSES;
+			ELGG_PLUGIN_REGISTER_VIEWS |
+			ELGG_PLUGIN_REGISTER_ACTIONS |
+			ELGG_PLUGIN_REGISTER_LANGUAGES |
+			ELGG_PLUGIN_REGISTER_WIDGETS |
+			ELGG_PLUGIN_REGISTER_CLASSES;
 
 		if (!$plugins_path) {
 			return false;
@@ -337,6 +371,7 @@ class Plugins {
 			if (elgg_is_admin_logged_in() && elgg_in_context('admin')) {
 				system_message(_elgg_services()->translator->translate('plugins:disabled'));
 			}
+
 			return false;
 		}
 
@@ -353,6 +388,7 @@ class Plugins {
 		$plugins = $this->boot_plugins;
 		if (!$plugins) {
 			$this->active_guids_known = true;
+
 			return true;
 		}
 
@@ -371,7 +407,7 @@ class Plugins {
 					$plugin->deactivate();
 
 					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-									[$id, $plugin->guid, $e->getMessage()]);
+						[$id, $plugin->guid, $e->getMessage()]);
 					elgg_add_admin_notice("cannot_start $id", $msg);
 					$return = false;
 				}
@@ -383,6 +419,7 @@ class Plugins {
 		if ($this->timer) {
 			$this->timer->end([__METHOD__]);
 		}
+
 		return $return;
 	}
 
@@ -390,7 +427,8 @@ class Plugins {
 	 * Returns an ordered list of plugins
 	 *
 	 * @param string $status The status of the plugins. active, inactive, or all.
-	 * @return \ElggPlugin[]
+	 *
+	 * @return ElggPlugin[]
 	 */
 	public function find($status = 'active') {
 		if (!_elgg_services()->db) {
@@ -398,52 +436,52 @@ class Plugins {
 		}
 
 		if ($status === 'active' && isset($this->boot_plugins)) {
-			return $this->boot_plugins;
+			$plugins = $this->boot_plugins;
+		} else {
+			$priority = $this->namespacePrivateSetting('internal', 'priority');
+			$site_guid = 1;
+
+			// grab plugins
+			$options = [
+				'type' => 'object',
+				'subtype' => 'plugin',
+				'limit' => 0,
+				'selects' => ['ps.value'],
+				'private_setting_names' => [$priority],
+				// ORDER BY CAST(ps.value) is super slow. We usort() below.
+				'order_by' => false,
+			];
+
+			switch ($status) {
+				case 'active':
+					$options['relationship'] = 'active_plugin';
+					$options['relationship_guid'] = $site_guid;
+					$options['inverse_relationship'] = true;
+					break;
+
+				case 'inactive':
+					$options['wheres'][] = function (QueryBuilder $qb) use ($site_guid) {
+						$subquery = $qb->subquery('entity_relationships', 'active_er');
+						$subquery->select('*')
+							->where($qb->compare('active_er.guid_one', '=', 'e.guid'))
+							->andWhere($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))
+							->andWhere($qb->compare('active_er.guid_two', '=', 1));
+
+						return "NOT EXISTS ({$subquery->getSQL()})";
+					};
+					break;
+
+				case 'all':
+				default:
+					break;
+			}
+
+			$old_ia = elgg_set_ignore_access(true);
+			$plugins = elgg_get_entities($options) ? : [];
+			elgg_set_ignore_access($old_ia);
 		}
 
-		$priority = $this->namespacePrivateSetting('internal', 'priority');
-		$site_guid = 1;
-
-		// grab plugins
-		$options = [
-			'type' => 'object',
-			'subtype' => 'plugin',
-			'limit' => false,
-			'selects' => ['ps.value'],
-			'private_setting_names' => [$priority],
-			// ORDER BY CAST(ps.value) is super slow. We usort() below.
-			'order_by' => false,
-		];
-
-		switch ($status) {
-			case 'active':
-				$options['relationship'] = 'active_plugin';
-				$options['relationship_guid'] = $site_guid;
-				$options['inverse_relationship'] = true;
-				break;
-
-			case 'inactive':
-				$options['wheres'][] = function (QueryBuilder $qb) use ($site_guid) {
-					$subquery = $qb->subquery('entity_relationships', 'active_er');
-					$subquery->select('*')
-						->where($qb->compare('active_er.guid_one', '=', 'e.guid'))
-						->andWhere($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))
-						->andWhere($qb->compare('active_er.guid_two', '=', 1));
-
-					return "NOT EXISTS ({$subquery->getSQL()})";
-				};
-				break;
-
-			case 'all':
-			default:
-				break;
-		}
-
-		$old_ia = elgg_set_ignore_access(true);
-		$plugins = elgg_get_entities($options) ? : [];
-		elgg_set_ignore_access($old_ia);
-
-		usort($plugins, function (\ElggPlugin $a, \ElggPlugin $b) {
+		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) {
 			$a_value = $a->getVolatileData('select:value');
 			$b_value = $b->getVolatileData('select:value');
 
@@ -461,12 +499,13 @@ class Plugins {
 	 * Reorder plugins to an order specified by the array.
 	 * Plugins not included in this array will be appended to the end.
 	 *
-	 * @note This doesn't use the \ElggPlugin->setPriority() method because
+	 * @note   This doesn't use the \ElggPlugin->setPriority() method because
 	 *       all plugins are being changed and we don't want it to automatically
 	 *       reorder plugins.
-	 * @todo Can this be done in a single sql command?
+	 * @todo   Can this be done in a single sql command?
 	 *
 	 * @param array $order An array of plugin ids in the order to set them
+	 *
 	 * @return bool
 	 * @access private
 	 */
@@ -483,7 +522,7 @@ class Plugins {
 		$order = array_values($order);
 
 		$missing_plugins = [];
-		/* @var \ElggPlugin[] $missing_plugins */
+		/* @var ElggPlugin[] $missing_plugins */
 
 		$priority = 0;
 		foreach ($plugins as $plugin) {
@@ -537,6 +576,7 @@ class Plugins {
 	 * @param string $type The type of setting: user_setting or internal.
 	 * @param string $name The name to namespace.
 	 * @param string $id   The plugin's ID to namespace with.  Required for user_setting.
+	 *
 	 * @return string
 	 * @access private
 	 */
@@ -562,11 +602,11 @@ class Plugins {
 	 * Returns an array of all provides from all active plugins.
 	 *
 	 * Array in the form array(
-	 * 	'provide_type' => array(
-	 * 		'provided_name' => array(
-	 * 			'version' => '1.8',
-	 * 			'provided_by' => 'provider_plugin_id'
-	 *  	)
+	 *    'provide_type' => array(
+	 *        'provided_name' => array(
+	 *            'version' => '1.8',
+	 *            'provided_by' => 'provider_plugin_id'
+	 *    )
 	 *  )
 	 * )
 	 *
@@ -607,7 +647,7 @@ class Plugins {
 			} else {
 				return false;
 			}
-		} elseif ($type) {
+		} else if ($type) {
 			if (isset($this->provides_cache[$type])) {
 				return $this->provides_cache[$type];
 			} else {
@@ -626,6 +666,7 @@ class Plugins {
 	 */
 	function invalidateProvidesCache() {
 		$this->provides_cache = null;
+
 		return true;
 	}
 
@@ -650,8 +691,8 @@ class Plugins {
 	 * @param string $comparison The comparison operator to use in version_compare()
 	 *
 	 * @return array An array in the form array(
-	 * 	'status' => bool Does the provide exist?,
-	 * 	'value' => string The version provided
+	 *    'status' => bool Does the provide exist?,
+	 *    'value' => string The version provided
 	 * )
 	 * @access private
 	 */
@@ -679,14 +720,15 @@ class Plugins {
 	/**
 	 * Returns an array of parsed strings for a dependency in the
 	 * format: array(
-	 * 	'type'			=>	requires, conflicts, or provides.
-	 * 	'name'			=>	The name of the requirement / conflict
-	 * 	'value'			=>	A string representing the expected value: <1, >=3, !=enabled
-	 * 	'local_value'	=>	The current value, ("Not installed")
-	 * 	'comment'		=>	Free form text to help resovle the problem ("Enable / Search for plugin <link>")
+	 *    'type'            =>    requires, conflicts, or provides.
+	 *    'name'            =>    The name of the requirement / conflict
+	 *    'value'            =>    A string representing the expected value: <1, >=3, !=enabled
+	 *    'local_value'    =>    The current value, ("Not installed")
+	 *    'comment'        =>    Free form text to help resovle the problem ("Enable / Search for plugin <link>")
 	 * )
 	 *
 	 * @param array $dep An \ElggPluginPackage dependency array
+	 *
 	 * @return array
 	 * @access private
 	 */
@@ -804,34 +846,85 @@ class Plugins {
 	}
 
 	/**
-	 * Returns an array of all plugin user settings for a user.
+	 * Get all settings (excluding user settings) for a plugin
 	 *
-	 * @param int    $user_guid  The user GUID or 0 for the currently logged in user.
-	 * @param string $plugin_id  The plugin ID (Required)
-	 * @param bool   $return_obj Return settings as an object? This can be used to in reusable
-	 *                           views where the settings are passed as $vars['entity'].
-	 * @return array
-	 * @see \ElggPlugin::getAllUserSettings()
+	 * @param \ElggPlugin $plugin Plugin
+	 *
+	 * @return string[]
+	 * @throws DatabaseException
 	 */
-	function getAllUserSettings($user_guid = 0, $plugin_id = null, $return_obj = false) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
+	public function getAllSettings(ElggPlugin $plugin) {
+		if (!$plugin->guid) {
+			return [];
 		}
 
-		$settings = $plugin->getAllUserSettings((int) $user_guid);
+		$values = _elgg_services()->pluginSettingsCache->getAll($plugin->guid);
+		if (isset($values)) {
+			return $values;
+		}
 
-		if ($settings && $return_obj) {
-			$return = new \stdClass;
+		$us_prefix = $this->namespacePrivateSetting('user_setting', '', $plugin->getID());
 
-			foreach ($settings as $k => $v) {
-				$return->$k = $v;
+		// Get private settings for user
+		$qb = Select::fromTable('private_settings');
+		$qb->select('name')
+			->addSelect('value')
+			->where($qb->compare('name', 'not like', "$us_prefix%", ELGG_VALUE_STRING))
+			->andWhere($qb->compare('entity_guid', '=', $plugin->guid, ELGG_VALUE_GUID));
+
+		$rows = $this->db->getData($qb);
+
+		$settings = [];
+
+		if (!empty($rows)) {
+			foreach ($rows as $row) {
+				$settings[$row->name] = $row->value;
 			}
-
-			return $return;
-		} else {
-			return $settings;
 		}
+
+		_elgg_services()->pluginSettingsCache->set($plugin->guid, $settings);
+
+		return $settings;
+	}
+
+	/**
+	 * Returns an array of all plugin user settings for a user
+	 *
+	 * @param ElggPlugin $plugin Plugin
+	 * @param ElggUser   $user   User
+	 *
+	 * @return array
+	 * @see  ElggPlugin::getAllUserSettings()
+	 * @throws DatabaseException
+	 */
+	public function getAllUserSettings(ElggPlugin $plugin, ElggUser $user = null) {
+
+		// send an empty name so we just get the first part of the namespace
+		$prefix = $this->namespacePrivateSetting('user_setting', '', $plugin->getID());
+
+		$qb = Select::fromTable('private_settings');
+		$qb->select('name')
+			->addSelect('value')
+			->where($qb->compare('name', 'like', "{$prefix}%"));
+
+		if ($user) {
+			$qb->andWhere($qb->compare('entity_guid', '=', $user->guid, ELGG_VALUE_INTEGER));
+		}
+
+		$rows = $this->db->getData($qb);
+
+		$settings = [];
+
+		if (!empty($rows)) {
+			foreach ($rows as $rows) {
+				$name = substr($rows->name, strlen($prefix));
+				$value = $rows->value;
+
+				$settings[$name] = $value;
+			}
+		}
+
+		return $settings;
 	}
 
 	/**
@@ -973,29 +1066,32 @@ class Plugins {
 	 *
 	 * @param array $options Array in the format:
 	 *
-	 * 	plugin_id => STR The plugin id. Required.
+	 *    plugin_id => STR The plugin id. Required.
 	 *
-	 * 	plugin_user_setting_names => null|ARR private setting names
+	 *    plugin_user_setting_names => null|ARR private setting names
 	 *
-	 * 	plugin_user_setting_values => null|ARR metadata values
+	 *    plugin_user_setting_values => null|ARR metadata values
 	 *
-	 * 	plugin_user_setting_name_value_pairs => null|ARR (
+	 *    plugin_user_setting_name_value_pairs => null|ARR (
 	 *                                         name => 'name',
 	 *                                         value => 'value',
 	 *                                         'operand' => '=',
 	 *                                        )
-	 * 	                             Currently if multiple values are sent via
+	 *                                 Currently if multiple values are sent via
 	 *                               an array (value => array('value1', 'value2')
 	 *                               the pair's operand will be forced to "IN".
 	 *
-	 * 	plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
+	 *    plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
 	 *                                        (name = value) OPERATOR (name = value); default AND
 	 *
 	 * @return mixed int If count, int. If not count, array. false on errors.
 	 */
-	function getEntitiesFromUserSettings(array $options = []) {
-		$singulars = ['plugin_user_setting_name', 'plugin_user_setting_value',
-			'plugin_user_setting_name_value_pair'];
+	public function getEntitiesFromUserSettings(array $options = []) {
+		$singulars = [
+			'plugin_user_setting_name',
+			'plugin_user_setting_value',
+			'plugin_user_setting_name_value_pair'
+		];
 
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
@@ -1027,5 +1123,44 @@ class Plugins {
 		$options['private_setting_name_prefix'] = $prefix;
 
 		return elgg_get_entities($options);
+	}
+
+	/**
+	 * Set plugin priority and adjust the priorities of other plugins
+	 *
+	 * @param ElggPlugin $plugin   Plugin
+	 * @param int        $priority New priority
+	 *
+	 * @return int|false
+	 * @throws DatabaseException
+	 */
+	public function setPriority(ElggPlugin $plugin, $priority) {
+
+		$old_priority = $plugin->getPriority() ? : 1;
+
+		$name = $this->namespacePrivateSetting('internal', 'priority');
+
+		if ($plugin->guid) {
+			$qb = Update::table('private_settings');
+			$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
+				->andwhere($qb->between('CAST(value AS UNSIGNED)', $old_priority, $priority, ELGG_VALUE_INTEGER))
+				->andWhere($qb->compare('entity_guid', '!=', $plugin->guid, ELGG_VALUE_INTEGER));
+
+			if ($priority > $old_priority) {
+				$qb->set('value', "CAST(value AS UNSIGNED) - 1");
+			} else {
+				$qb->set('value', "CAST(value AS UNSIGNED) + 1");
+			}
+
+			if (!$this->db->updateData($qb)) {
+				return false;
+			}
+		}
+
+		if (!$plugin->setPrivateSetting($name, $priority)) {
+			return false;
+		}
+
+		return $priority;
 	}
 }

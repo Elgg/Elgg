@@ -492,6 +492,7 @@ function _elgg_comments_social_menu_setup(\Elgg\Hook $hook) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_comments_test($hook, $type, $value, $params) {
 	$value[] = ElggCoreCommentTest::class;

@@ -61,7 +61,7 @@ foreach ($ordered_plugins as $priority => $plugin_id) {
 		exit(1);
 	}
 	
-	if (!$plugin->activate()) {
+	if (!$plugin->isActive() && !$plugin->activate()) {
 		echo "Unable to activate plugin {$plugin_id}";
 		exit(1);
 	}

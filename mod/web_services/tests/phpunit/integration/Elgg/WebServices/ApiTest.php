@@ -12,6 +12,8 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	private $call_method;
 
 	public function up() {
+		$this->startPlugin();
+
 		elgg_load_library('elgg:ws');
 		elgg_load_library('elgg:ws:api_user');
 		elgg_load_library('elgg:ws:client');

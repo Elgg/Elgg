@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use ClassException;
+use DatabaseException;
 use Elgg\Cache\EntityCache;
 use Elgg\Cache\MetadataCache;
 use Elgg\Config;
@@ -14,23 +15,20 @@ use Elgg\EntityPreloader;
 use Elgg\EventsService;
 use Elgg\I18n\Translator;
 use Elgg\Logger;
-use ElggBatch;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
-use ElggPlugin;
 use ElggSession;
 use ElggSite;
 use ElggUser;
-use IncompleteEntityException;
 use InstallationException;
-use LogicException;
+use InvalidParameterException;
 use stdClass;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @access     private
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -136,11 +134,11 @@ class EntityTable {
 	 * @param string $class   Entity class
 	 *
 	 * @return void
-	 * @throws \InvalidParameterException
+	 * @throws InvalidParameterException
 	 */
 	public function setEntityClass($type, $subtype, $class = '') {
 		if (!in_array($type, Config::getEntityTypes())) {
-			throw new \InvalidParameterException("$type is not a valid entity type");
+			throw new InvalidParameterException("$type is not a valid entity type");
 		}
 
 		$this->entity_classes[$type][$subtype] = $class;
@@ -165,9 +163,9 @@ class EntityTable {
 	/**
 	 * Returns a database row from the entities table.
 	 *
-	 * @see entity_row_to_elggstar()
+	 * @see     entity_row_to_elggstar()
 	 *
-	 * @tip Use get_entity() to return the fully loaded entity.
+	 * @tip     Use get_entity() to return the fully loaded entity.
 	 *
 	 * @warning This will only return results if a) it exists, b) you have access to it.
 	 * see {@link _elgg_get_access_where_sql()}.
@@ -176,8 +174,9 @@ class EntityTable {
 	 * @param int $user_guid GUID of the user accessing the row
 	 *                       Defaults to logged in user if null
 	 *                       Builds an access query for a logged out user if 0
+	 *
 	 * @return stdClass|false
-	 * @access private
+	 * @access  private
 	 */
 	public function getRow($guid, $user_guid = null) {
 
@@ -204,6 +203,7 @@ class EntityTable {
 	 *                             Used by database mock services to allow mocking
 	 *                             entities that were instantiated using new keyword
 	 *                             and calling ElggEntity::save()
+	 *
 	 * @return int|false
 	 */
 	public function insertRow(stdClass $row, array $attributes = []) {
@@ -232,6 +232,7 @@ class EntityTable {
 	 *
 	 * @param int      $guid Entity guid
 	 * @param stdClass $row  Updated data
+	 *
 	 * @return int|false
 	 */
 	public function updateRow($guid, stdClass $row) {
@@ -262,23 +263,20 @@ class EntityTable {
 	 *
 	 * Handles loading all tables into the correct class.
 	 *
-	 * @see get_entity_as_row()
-	 * @see get_entity()
+	 * @see    get_entity_as_row()
+	 * @see    get_entity()
 	 *
 	 * @access private
 	 *
 	 * @param stdClass $row The row of the entry in the entities table.
+	 *
 	 * @return ElggEntity|false
 	 * @throws ClassException
-	 * @throws InstallationException
+	 * @throws InvalidParameterException
 	 */
-	public function rowToElggStar($row) {
-		if (!$row instanceof stdClass) {
-			return $row;
-		}
-
+	public function rowToElggStar(stdClass $row) {
 		if (!isset($row->guid) || !isset($row->subtype)) {
-			return $row;
+			return false;
 		}
 
 		$class_name = $this->getEntityClass($row->type, $row->subtype);
@@ -298,7 +296,7 @@ class EntityTable {
 			if (isset($map[$row->type])) {
 				$class_name = $map[$row->type];
 			} else {
-				throw new InstallationException("Entity type {$row->type} is not supported.");
+				throw new InvalidParameterException("Entity type {$row->type} is not supported.");
 			}
 		}
 
@@ -335,6 +333,7 @@ class EntityTable {
 		}
 
 		$this->entity_cache->set($entity);
+
 		return $entity;
 	}
 
@@ -345,9 +344,9 @@ class EntityTable {
 	 * @param string $type The type of the entity. If given, even an existing entity with the given GUID
 	 *                     will not be returned unless its type matches.
 	 *
-	 * @return ElggEntity|stdClass|false The correct Elgg or custom object based upon entity type and subtype
+	 * @return ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
 	 * @throws ClassException
-	 * @throws InstallationException
+	 * @throws InvalidParameterException
 	 */
 	public function get($guid, $type = '') {
 		// We could also use: if (!(int) $guid) { return false },
@@ -373,11 +372,13 @@ class EntityTable {
 			return false;
 		}
 
-		$entity = $this->rowToElggStar($row);
+		$entity = $row;
 
-		if ($entity instanceof ElggEntity) {
-			$entity->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+		if ($entity instanceof \stdClass) {
+			$entity = $this->rowToElggStar($entity);
 		}
+
+		$entity->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 
 		return $entity;
 	}
@@ -391,6 +392,7 @@ class EntityTable {
 	 * has changed.
 	 *
 	 * @param int $guid The GUID of the entity
+	 *
 	 * @return bool
 	 */
 	public function exists($guid) {
@@ -412,6 +414,7 @@ class EntityTable {
 	 *
 	 * @param int  $guid      GUID of entity to enable
 	 * @param bool $recursive Recursively enable all entities disabled with the entity?
+	 *
 	 * @return bool
 	 */
 	public function enable($guid, $recursive = true) {
@@ -427,6 +430,7 @@ class EntityTable {
 		}
 
 		access_show_hidden_entities($old_access_status);
+
 		return $result;
 	}
 
@@ -440,99 +444,42 @@ class EntityTable {
 	 *
 	 * @param QueryBuilder $query   Query
 	 * @param array        $options Options
-	 * @return \stdClass[]|ElggEntity[]
+	 *
+	 * @return ElggEntity[]
+	 * @throws DatabaseException
 	 */
 	public function fetch(QueryBuilder $query, array $options = []) {
-		if ($options['callback'] === 'entity_row_to_elggstar') {
-			$results = $this->fetchFromSql($query, $options['__ElggBatch']);
-		} else {
-			$results = $this->db->getData($query, $options['callback']);
-		}
+		$results = $this->db->getData($query, $options['callback']);
 
-		if (!$results) {
-			// no results, no preloading
+		if (empty($results)) {
 			return [];
 		}
 
-		// populate entity and metadata caches, and prepare $entities for preloader
-		$guids = [];
-		foreach ($results as $item) {
-			// A custom callback could result in items that aren't \ElggEntity's, so check for them
-			if ($item instanceof ElggEntity) {
-				$this->entity_cache->set($item);
-				// plugins usually have only settings
-				if (!$item instanceof ElggPlugin) {
-					$guids[] = $item->guid;
-				}
-			}
-		}
-		// @todo Without this, recursive delete fails. See #4568
-		reset($results);
+		$preload = array_filter($results, function($e) {
+			return $e instanceof ElggEntity;
+		});
 
-		if ($guids) {
-			// there were entities in the result set, preload metadata for them
-			$this->metadata_cache->populateFromEntities($guids);
+		$this->metadata_cache->populateFromEntities($preload);
+
+		$props_to_preload = [];
+		if (elgg_extract('preload_owners', $options, false)) {
+			$props_to_preload[] = 'owner_guid';
+		}
+		if (elgg_extract('preload_containers', $options, false)) {
+			$props_to_preload[] = 'container_guid';
 		}
 
-		if (count($results) > 1) {
-			$props_to_preload = [];
-			if ($options['preload_owners']) {
-				$props_to_preload[] = 'owner_guid';
-			}
-			if ($options['preload_containers']) {
-				$props_to_preload[] = 'container_guid';
-			}
-			if ($props_to_preload) {
-				// note, ElggEntityPreloaderIntegrationTest assumes it can swap out
-				// the preloader after boot. If you inject this component at construction
-				// time that unit test will break. :/
-				_elgg_services()->entityPreloader->preload($results, $props_to_preload);
-			}
+		if ($props_to_preload) {
+			_elgg_services()->entityPreloader->preload($preload, $props_to_preload);
 		}
 
 		return $results;
 	}
 
 	/**
-	 * Return entities from an SQL query generated by elgg_get_entities.
-	 *
-	 * @param string    $sql   the SQL-query
-	 * @param ElggBatch $batch the calling batch (default: null)
-	 *
-	 * @return ElggEntity[]
-	 * @throws LogicException
-	 *
-	 * @access private
-	 */
-	public function fetchFromSql($sql, \ElggBatch $batch = null) {
-
-		$rows = $this->db->getData($sql);
-
-		// Second pass to finish conversion
-		foreach ($rows as $i => $row) {
-			if ($row instanceof ElggEntity) {
-				continue;
-			} else {
-				try {
-					$rows[$i] = $this->rowToElggStar($row);
-				} catch (IncompleteEntityException $e) {
-					// don't let incomplete entities throw fatal errors
-					unset($rows[$i]);
-
-					// report incompletes to the batch process that spawned this query
-					if ($batch) {
-						$batch->reportIncompleteEntity($row);
-					}
-				}
-			}
-		}
-		return $rows;
-	}
-
-	/**
 	 * Returns a list of months in which entities were updated or created.
 	 *
-	 * @tip Use this to generate a list of archives by month for when entities were added or updated.
+	 * @tip     Use this to generate a list of archives by month for when entities were added or updated.
 	 *
 	 * @warning Months are returned in the form YYYYMM.
 	 *
@@ -561,12 +508,12 @@ class EntityTable {
 		$qb->select("DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth");
 		$qb->addClause(EntityWhereClause::factory($options));
 
-		$results  = _elgg_services()->db->getData($qb);
+		$results = _elgg_services()->db->getData($qb);
 		if (empty($results)) {
 			return false;
 		}
 
-		return array_map(function($e) {
+		return array_map(function ($e) {
 			return $e->yearmonth;
 		}, $results);
 	}
@@ -579,8 +526,9 @@ class EntityTable {
 	 *
 	 * @param ElggEntity $entity Entity annotation|relationship action carried out on
 	 * @param int        $posted Timestamp of last action
+	 *
 	 * @return int
-	 * @access private
+	 * @access  private
 	 */
 	public function updateLastAction(ElggEntity $entity, $posted = null) {
 
@@ -623,6 +571,9 @@ class EntityTable {
 		$show_hidden = access_show_hidden_entities(true);
 
 		$user = $this->get($guid, 'user');
+		if ($user) {
+			_elgg_services()->metadataCache->populateFromEntities([$user->guid]);
+		}
 
 		$this->session->setIgnoreAccess($ia);
 		access_show_hidden_entities($show_hidden);
@@ -643,6 +594,7 @@ class EntityTable {
 	 * Disables all entities owned and contained by a user (or another entity)
 	 *
 	 * @param int $owner_guid The owner GUID
+	 *
 	 * @return bool
 	 */
 	public function disableEntities($owner_guid) {

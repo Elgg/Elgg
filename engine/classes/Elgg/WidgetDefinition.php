@@ -58,7 +58,7 @@ class WidgetDefinition {
 	 *    context => ARRAY contexts in which the widget is available
 	 *    multiple => BOOL can the widget be added multiple times
 	 *
-	 * @throws InvalidParameterException
+	 * @throws \InvalidParameterException
 	 * @return \Elgg\WidgetDefinition
 	 */
 	public static function factory(array $options) {

@@ -19,3 +19,6 @@
 !/views/
 !/views2/
 !/xxe/
+!/mod/
+!/installer/
+/installer/settings.php

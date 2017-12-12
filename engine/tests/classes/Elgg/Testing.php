@@ -30,7 +30,8 @@ trait Testing {
 	 */
 	public function normalizeTestFilePath($filename = '') {
 		$filename = ltrim($filename, '/');
-		return Paths::elgg() . "/engine/tests/test_files/$filename";
+		$append_slash = substr($filename, -1, 1) === '/';
+		return Paths::sanitize(Paths::elgg() . "/engine/tests/test_files/$filename", $append_slash);
 	}
 
 	/**
