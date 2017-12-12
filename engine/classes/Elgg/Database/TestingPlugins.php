@@ -17,4 +17,8 @@ class TestingPlugins extends Plugins {
 	function find($status = 'active') {
 		return [];
 	}
+
+	function generateEntities() {
+
+	}
 }

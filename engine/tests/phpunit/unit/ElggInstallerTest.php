@@ -1,0 +1,608 @@
+<?php
+
+use Elgg\Application;
+use Elgg\Config;
+use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Project\Paths;
+
+/**
+ * @group Installer
+ */
+class ElggInstallerTest extends \Elgg\UnitTestCase {
+
+	/**
+	 * @var PHPUnit_Framework_MockObject_MockObject
+	 */
+	private $mock;
+
+	/**
+	 * @var Application
+	 */
+	private $app;
+
+	private $settings_path_backup;
+
+	public function up() {
+		$this->settings_path_backup = null;
+		if (isset($_ENV['ELGG_SETTINGS_FILE'])) {
+			$this->settings_path_backup = $_ENV['ELGG_SETTINGS_FILE'];
+		}
+
+		$_ENV['ELGG_SETTINGS_FILE'] = $this->normalizeTestFilePath('installer/settings.php');
+
+		$this->mock = $this->getMockBuilder(ElggInstaller::class)
+			->setMethods([
+				'getApp',
+				'checkRewriteRules',
+				'createSessionFromFile',
+				'createSessionFromDatabase',
+			])
+			->getMock();
+
+		$this->mock->method('getApp')
+			->will($this->returnCallback([$this, 'getApp']));
+
+		$this->mock->method('checkRewriteRules')
+			->will($this->returnCallback([$this, 'checkRewriteRules']));
+
+		$this->mock->method('createSessionFromFile')
+			->will($this->returnCallback(function () {
+				$this->getApp()->_services->setValue('session', ElggSession::getMock());
+			}));
+
+		$this->mock->method('createSessionFromDatabase')
+			->will($this->returnCallback(function () {
+				$this->getApp()->_services->setValue('session', ElggSession::getMock());
+			}));
+	}
+
+	public function down() {
+		if (is_file($this->normalizeTestFilePath('installer/settings.php'))) {
+			unlink($this->normalizeTestFilePath('installer/settings.php'));
+		}
+
+		$_ENV['ELGG_SETTINGS_FILE'] = $this->settings_path_backup;
+	}
+
+	public function getApp() {
+		if ($this->app) {
+			return $this->app;
+		}
+
+		Application::setInstance(null);
+
+		$config = new Config();
+		$config->elgg_config_locks = false;
+		$config->installer_running = true;
+		$config->dbencoding = 'utf8mb4';
+
+		$services = new MockServiceProvider($config);
+
+		$services->setValue('session', \ElggSession::getMock());
+		$services->systemMessages;
+
+		$app = Application::factory([
+			'config' => $config,
+			'service_provider' => $services,
+			'handle_exceptions' => false,
+			'handle_shutdown' => false,
+		]);
+
+		Application::setInstance($app);
+		$app->loadCore();
+		$this->app = $app;
+
+		$this->app->_services->views->setViewtype('installation');
+		$this->app->_services->views->registerPluginViews(Paths::elgg());
+		$this->app->_services->translator->registerTranslations(Paths::elgg() . "install/languages/", true);
+
+		return $this->app;
+
+	}
+
+	public function checkRewriteRules(&$report) {
+		$report['rewrite'] = [
+			[
+				'severity' => 'pass',
+				'message' => elgg_echo('install:check:rewrite:success'),
+			]
+		];
+
+		return $report;
+	}
+
+	public function createSettingsFile() {
+		$template = Application::elggDir()->getContents("elgg-config/settings.example.php");
+
+		$params = [
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ? : '',
+			'dbuser' => getenv('ELGG_DB_USER') ? : '',
+			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
+			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dataroot' => sanitise_filepath(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
+			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'timezone' => 'UTC',
+			'cacheroot' => sanitise_filepath(Paths::elgg() . 'engine/tests/test_files/cacheroot/'),
+		];
+
+		foreach ($params as $k => $v) {
+			$template = str_replace("{{" . $k . "}}", $v, $template);
+		}
+
+		file_put_contents(Config::resolvePath(), $template);
+	}
+
+	public function testWelcome() {
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
+
+		$vars['next_step'] = 'requirements';
+
+		$title = elgg_echo("install:welcome");
+		$body = elgg_view("install/pages/welcome", $vars);
+
+		$output = elgg_view_page(
+			$title,
+			$body,
+			'default',
+			[
+				'step' => 'welcome',
+				'steps' => [
+					'welcome',
+					'requirements',
+					'database',
+					'settings',
+					'admin',
+					'complete',
+				],
+			]
+		);
+
+		$this->assertEquals($output, $response->getContent());
+
+	}
+
+	public function testRequirements() {
+
+		$this->getApp()->_services->input->set('step', 'requirements');
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
+
+		$vars['report'] = [
+			'php' => [
+				[
+					'severity' => 'pass',
+					'message' => elgg_echo('install:check:php:success')
+				]
+			],
+			'rewrite' => [
+				[
+					'severity' => 'pass',
+					'message' => elgg_echo('install:check:rewrite:success'),
+				]
+			],
+			'database' => [
+				[
+					'severity' => 'info',
+					'message' => elgg_echo('install:check:database')
+				],
+			]
+
+		];
+
+		$vars['num_failures'] = 0;
+		$vars['num_warnings'] = 0;
+		$vars['next_step'] = 'database';
+
+		$title = elgg_echo("install:requirements");
+		$body = elgg_view("install/pages/requirements", $vars);
+
+		$output = elgg_view_page(
+			$title,
+			$body,
+			'default',
+			[
+				'step' => 'requirements',
+				'steps' => [
+					'welcome',
+					'requirements',
+					'database',
+					'settings',
+					'admin',
+					'complete',
+				],
+			]
+		);
+
+		$this->assertEquals($output, $response->getContent());
+
+	}
+
+	public function testDatabase() {
+
+		$this->getApp()->_services->input->set('step', 'database');
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
+
+		$vars['variables'] = [
+			'dbuser' => [
+				'type' => 'text',
+				'value' => '',
+				'required' => true,
+			],
+			'dbpassword' => [
+				'type' => 'password',
+				'value' => '',
+				'required' => false,
+			],
+			'dbname' => [
+				'type' => 'text',
+				'value' => '',
+				'required' => true,
+			],
+			'dbhost' => [
+				'type' => 'text',
+				'value' => 'localhost',
+				'required' => true,
+			],
+			'dbprefix' => [
+				'type' => 'text',
+				'value' => 'elgg_',
+				'required' => true,
+			],
+			'dataroot' => [
+				'type' => 'text',
+				'value' => '',
+				'required' => true,
+			],
+			'wwwroot' => [
+				'type' => 'url',
+				'value' => $this->getApp()->_services->config->wwwroot,
+				'required' => true,
+			],
+			'timezone' => [
+				'type' => 'dropdown',
+				'value' => 'UTC',
+				'options' => \DateTimeZone::listIdentifiers(),
+				'required' => true
+			]
+		];
+
+		$vars['next_step'] = 'settings';
+
+		$title = elgg_echo("install:database");
+		$body = elgg_view("install/pages/database", $vars);
+
+		$output = elgg_view_page(
+			$title,
+			$body,
+			'default',
+			[
+				'step' => 'database',
+				'steps' => [
+					'welcome',
+					'requirements',
+					'database',
+					'settings',
+					'admin',
+					'complete',
+				],
+			]
+		);
+
+		$this->assertEquals($output, $response->getContent());
+
+	}
+
+	public function testDatabaseAction() {
+
+		$dataroot = dirname(Paths::elgg()) . '/_installer_testing_dataroot/';
+		_elgg_rmdir($dataroot, false);
+
+		mkdir($dataroot);
+
+		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ? : '',
+			'dbuser' => getenv('ELGG_DB_USER') ? : '',
+			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
+			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dataroot' => $dataroot,
+			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'timezone' => 'UTC',
+		]);
+
+		$this->getApp()->_services->setValue('request', $request);
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
+		$this->assertEquals(elgg_normalize_url('install.php?step=settings'), $response->getForwardURL());
+
+		_elgg_rmdir($dataroot, false);
+	}
+
+	public function testSettings() {
+
+		$db = $this->getApp()->_services->db;
+		/* @var $db \Elgg\Mocks\Database */
+
+		$db->addQuerySpec([
+			'sql' => 'SHOW TABLES',
+			'results' => [
+				(object) ["{$db->prefix}config"],
+			],
+		]);
+
+		$this->createSettingsFile();
+
+		$this->getApp()->_services->input->set('step', 'settings');
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
+
+		$vars['variables'] = [
+			'sitename' => [
+				'type' => 'text',
+				'value' => 'My New Community',
+				'required' => true,
+			],
+			'siteemail' => [
+				'type' => 'email',
+				'value' => '',
+				'required' => false,
+			],
+			'siteaccess' => [
+				'type' => 'access',
+				'value' => ACCESS_PUBLIC,
+				'required' => true,
+			],
+		];
+
+		$vars['next_step'] = 'admin';
+
+		$title = elgg_echo("install:settings");
+		$body = elgg_view("install/pages/settings", $vars);
+
+		$output = elgg_view_page(
+			$title,
+			$body,
+			'default',
+			[
+				'step' => 'settings',
+				'steps' => [
+					'welcome',
+					'requirements',
+					'database',
+					'settings',
+					'admin',
+					'complete',
+				],
+			]
+		);
+
+		$this->assertEquals($output, $response->getContent());
+
+	}
+
+	public function testSettingsAction() {
+
+		$db = $this->getApp()->_services->db;
+		/* @var $db \Elgg\Mocks\Database */
+
+		$db->addQuerySpec([
+			'sql' => 'SHOW TABLES',
+			'results' => [
+				(object) ["{$db->prefix}config"],
+			],
+		]);
+
+		$this->createSettingsFile();
+
+		$this->getApp()->_services->input->set('step', 'settings');
+
+		$request = $this->prepareHttpRequest('install.php?step=settings', 'POST', [
+			'sitename' => 'Test Site',
+			'siteemail' => 'no-reply@example.com',
+			'siteaccess' => ACCESS_PUBLIC,
+		]);
+
+		$this->getApp()->_services->setValue('request', $request);
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
+		$this->assertEquals(elgg_normalize_url('install.php?step=admin'), $response->getForwardURL());
+
+	}
+
+	public function testAdmin() {
+
+		$db = $this->getApp()->_services->db;
+		/* @var $db \Elgg\Mocks\Database */
+
+		$db->addQuerySpec([
+			'sql' => 'SHOW TABLES',
+			'results' => [
+				(object) ["{$db->prefix}config"],
+			],
+		]);
+
+		$this->createSettingsFile();
+
+		$this->createSite();
+
+		$this->getApp()->_services->input->set('step', 'admin');
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
+
+		$vars['variables'] = [
+			'displayname' => [
+				'type' => 'text',
+				'value' => '',
+				'required' => true,
+			],
+			'email' => [
+				'type' => 'email',
+				'value' => '',
+				'required' => true,
+			],
+			'username' => [
+				'type' => 'text',
+				'value' => '',
+				'required' => true,
+			],
+			'password1' => [
+				'type' => 'password',
+				'value' => '',
+				'required' => true,
+				'pattern' => '.{6,}',
+			],
+			'password2' => [
+				'type' => 'password',
+				'value' => '',
+				'required' => true,
+			],
+		];
+
+		$vars['next_step'] = 'complete';
+
+		$title = elgg_echo("install:admin");
+		$body = elgg_view("install/pages/admin", $vars);
+
+		$output = elgg_view_page(
+			$title,
+			$body,
+			'default',
+			[
+				'step' => 'admin',
+				'steps' => [
+					'welcome',
+					'requirements',
+					'database',
+					'settings',
+					'admin',
+					'complete',
+				],
+			]
+		);
+
+		$this->assertEquals($output, $response->getContent());
+
+	}
+
+	public function testAdminAction() {
+
+		$db = $this->getApp()->_services->db;
+		/* @var $db \Elgg\Mocks\Database */
+
+		$db->addQuerySpec([
+			'sql' => 'SHOW TABLES',
+			'results' => [
+				(object) ["{$db->prefix}config"],
+			],
+		]);
+
+		$this->createSettingsFile();
+
+		$this->createSite();
+
+		$this->getApp()->_services->input->set('step', 'admin');
+
+		$request = $this->prepareHttpRequest('install.php?step=admin', 'POST', [
+			'displayname' => 'admin user',
+			'email' => 'admin@example.com',
+			'username' => 'admin',
+			'password1' => '12345678',
+			'password2' => '12345678',
+		]);
+
+		$this->getApp()->_services->setValue('request', $request);
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
+		$this->assertEquals(elgg_normalize_url('install.php?step=complete'), $response->getForwardURL());
+
+		$this->assertInstanceOf(ElggUser::class, elgg_get_logged_in_user_entity());
+
+		_elgg_services()->session->removeLoggedInUser();
+	}
+
+	public function testBatchInstall() {
+
+		$db = $this->getApp()->_services->db;
+		/* @var $db \Elgg\Mocks\Database */
+
+		$db->addQuerySpec([
+			'sql' => 'SHOW TABLES',
+			'results' => [
+				(object) ["{$db->prefix}config"],
+			],
+		]);
+
+		$this->mock->batchInstall([
+			// database settings
+			'dbuser' => getenv('ELGG_DB_USER'),
+			'dbpassword' => getenv('ELGG_DB_PASS'),
+			'dbname' => getenv('ELGG_DB_NAME'),
+			'dbprefix' => getenv('ELGG_DB_PREFIX'),
+			'dbencoding' => getenv('ELGG_DB_ENCODING'),
+
+			// site settings
+			'sitename' => 'Elgg Travis Site',
+			'siteemail' => 'no_reply@travis.elgg.org',
+			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'dataroot' => getenv('HOME') . '/engine/tests/test_files/dataroot/',
+
+			// admin account
+			'displayname' => 'Administrator',
+			'email' => 'admin@travis.elgg.org',
+			'username' => 'admin',
+			'password' => 'fancypassword',
+
+			// timezone
+			'timezone' => 'UTC'
+		]);
+
+		$this->assertNull($this->getApp()->_services->config->installer_running);
+		$this->assertInternalType('integer', $this->getApp()->_services->config->installed);
+
+	}
+}

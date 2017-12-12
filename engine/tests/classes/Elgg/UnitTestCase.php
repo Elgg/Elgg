@@ -129,22 +129,5 @@ abstract class UnitTestCase extends BaseTestCase {
 		return _elgg_services()->entityTable->setup(null, 'site', $subtype, $attributes);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function assertPreConditions() {
-		parent::assertPreConditions();
-
-		$this->assertInstanceOf(MockServiceProvider::class,  _elgg_services());
-		$this->assertInstanceOf(\Elgg\Mocks\Database::class, _elgg_services()->db);
-	}
-
-	protected function assertPostConditions() {
-		parent::assertPostConditions();
-
-		$this->assertInstanceOf(MockServiceProvider::class,  _elgg_services());
-		$this->assertInstanceOf(\Elgg\Mocks\Database::class, _elgg_services()->db);
-	}
-
 }
 

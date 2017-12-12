@@ -157,6 +157,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``get_site_by_url``
  * ``elgg_override_permissions``: No longer used as handler for ``permissions_check`` and ``container_permissions_check`` hooks
  * ``elgg_check_access_overrides``
+ * ``Application::loadSettings``
  * ``ElggEntity::addToSite``
  * ``ElggEntity::disableMetadata``
  * ``ElggEntity::enableMetadata``
