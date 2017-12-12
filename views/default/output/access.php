@@ -22,10 +22,6 @@ if (!isset($access_id)) {
 $access_id_string = get_readable_access_level($access_id);
 
 switch ($access_id) {
-	case ACCESS_FRIENDS :
-		$class[] = 'elgg-access-friends';
-		break;
-
 	case ACCESS_PUBLIC :
 		$class[] = 'elgg-access-public';
 		break;

@@ -9,4 +9,5 @@
 return [
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
 	\Elgg\Upgrades\SetSecurityConfigDefaults::class,
+	\Elgg\Upgrades\MigrateFriendsACL::class,
 ];

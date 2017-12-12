@@ -1569,4 +1569,7 @@ To view %s's profile, click here:
 	"core:upgrade:2017080950:title" => "Update default security parameters",
 	"core:upgrade:2017080950:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the defaults. You can later update these parameters in your site settings.",
 
+	"core:upgrade:2017121200:title" => "Create friends access collections",
+	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
+
 );
