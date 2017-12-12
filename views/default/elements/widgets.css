@@ -6,6 +6,11 @@
 	flex-direction: column;
 }
 
+.elgg-widgets {
+	flex-grow: 1;
+	flex-basis: 100%;
+}
+
 @media screen and (min-width: 80rem) {
 	.elgg-widgets-grid {
 		flex-direction: row-reverse;

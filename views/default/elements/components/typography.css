@@ -93,6 +93,10 @@ time,
 	color: #969696;
 	font-size: 0.75rem;
 	line-height: normal;
+}
+
+.elgg-text-help,
+.elgg-tags {
 	margin-top: 0.25rem;
 }
 

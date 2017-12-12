@@ -58,8 +58,6 @@ if ($widgets) {
 	]);
 }
 
-$widget_class = "elgg-col-1of{$num_columns}";
-
 // move hidden columns widgets to last visible column
 if (!isset($widgets[$num_columns])) {
 	$widgets[$num_columns] = [];
@@ -93,7 +91,6 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	$grid .= elgg_format_element('div', [
 		'id' => "elgg-widget-col-{$column_index}",
 		'class' => [
-			"elgg-col-1of{$num_columns}",
 			'elgg-widgets',
 		],
 		
