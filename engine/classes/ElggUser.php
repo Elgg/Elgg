@@ -134,7 +134,7 @@ class ElggUser extends \ElggEntity
 		}
 
 		unset($this->ban_reason);
-		$this->banned = 'yes';
+		$this->banned = 'no';
 				
 		$this->invalidateCache();
 
