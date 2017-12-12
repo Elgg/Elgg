@@ -278,6 +278,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 			ACCESS_PUBLIC,
 			ACCESS_LOGGED_IN,
 			ACCESS_PRIVATE,
+			$this->user->getOwnedAccessCollection('friends')->id,
 			$owned_collection_id,
 		];
 
