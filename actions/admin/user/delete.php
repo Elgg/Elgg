@@ -31,4 +31,4 @@ if (strpos($_SERVER['HTTP_REFERER'], $username) !== false) {
 	$forward = 'admin/users/newest';
 }
 
-return elgg_ok_response('', elgg_echo('admin:user:delete:yes'), $forward);
+return elgg_ok_response('', elgg_echo('admin:user:delete:yes', [$name]), $forward);
