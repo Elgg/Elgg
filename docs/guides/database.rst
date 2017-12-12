@@ -45,7 +45,6 @@ object will be private, and only the creator user will be able to see
 it. Elgg defines constants for the special values of ``access_id``:
 
 -  **ACCESS_PRIVATE** Only the owner can see it
--  **ACCESS_FRIENDS** Only the owner and his/her friends can see it
 -  **ACCESS_LOGGED_IN** Any logged in user can see it
 -  **ACCESS_PUBLIC** Even visitors not logged in can see it
 

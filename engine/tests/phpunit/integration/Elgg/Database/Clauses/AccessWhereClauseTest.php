@@ -69,27 +69,5 @@ class AccessWhereClauseTest extends IntegrationTestCase {
 		$this->assertTrue(has_access_to_entity($object, $viewer));
 		$this->assertTrue(has_access_to_entity($object, $owner));
 		$session->removeLoggedInUser();
-
-		$ia = elgg_set_ignore_access(true);
-		$owner->addFriend($viewer->guid);
-		$object->access_id = ACCESS_FRIENDS;
-		$object->save();
-		elgg_set_ignore_access($ia);
-
-		$this->assertFalse(has_access_to_entity($object));
-		$this->assertTrue(has_access_to_entity($object, $viewer));
-		$this->assertTrue(has_access_to_entity($object, $owner));
-
-		$session->setLoggedInUser($viewer);
-		$this->assertTrue(has_access_to_entity($object));
-		$this->assertTrue(has_access_to_entity($object, $viewer));
-		$this->assertTrue(has_access_to_entity($object, $owner));
-
-		$ia = elgg_set_ignore_access(true);
-		$owner->delete();
-		$object->delete();
-		elgg_set_ignore_access($ia);
-
-		$session->setLoggedInUser($viewer);
 	}
 }

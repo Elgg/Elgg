@@ -414,6 +414,122 @@ function access_init() {
 }
 
 /**
+ * Creates a Friends ACL for a user
+ *
+ * @param \Elgg\Event $event event
+ *
+ * @return void
+ *
+ * @since 3.0.0
+ *
+ * @internal
+ */
+function access_friends_acl_create(\Elgg\Event $event) {
+	$user = $event->getObject();
+	if (!($user instanceof \ElggUser)) {
+		return;
+	}
+	
+	create_access_collection('friends', $user->guid, 'friends');
+}
+
+/**
+ * Adds the friend to the user friend ACL
+ *
+ * @param \Elgg\Event $event event
+ *
+ * @return void
+ *
+ * @since 3.0.0
+ *
+ * @internal
+ */
+function access_friends_acl_add_friend(\Elgg\Event $event) {
+	$relationship_object = $event->getObject();
+	if (!($relationship_object instanceof \ElggRelationship)) {
+		return;
+	}
+	
+	if ($relationship_object->relationship !== 'friend') {
+		return;
+	}
+	
+	$user = get_user($relationship_object->guid_one);
+	$friend = get_user($relationship_object->guid_two);
+	
+	if (!$user || !$friend) {
+		return;
+	}
+	
+	$acl = $user->getOwnedAccessCollection('friends');
+	if (empty($acl)) {
+		return;
+	}
+
+	$acl->addMember($friend->guid);
+}
+
+/**
+ * Add the friend to the user friends ACL
+ *
+ * @param \Elgg\Event $event event
+ *
+ * @return void
+ *
+ * @since 3.0.0
+ *
+ * @internal
+ */
+function access_friends_acl_remove_friend(\Elgg\Event $event) {
+	$relationship_object = $event->getObject();
+	if (!($relationship_object instanceof \ElggRelationship)) {
+		return;
+	}
+	
+	if ($relationship_object->relationship !== 'friend') {
+		return;
+	}
+	
+	$user = get_user($relationship_object->guid_one);
+	$friend = get_user($relationship_object->guid_two);
+	
+	if (!$user || !$friend) {
+		return;
+	}
+	
+	$acl = $user->getOwnedAccessCollection('friends');
+	if (empty($acl)) {
+		return;
+	}
+	
+	$acl->removeMember($friend->guid);
+}
+
+/**
+ * Return the name of a friends ACL
+ *
+ * @param \Elgg\Hook $hook hook
+ *
+ * @return string|void
+ *
+ * @since 3.0.0
+ *
+ * @internal
+ */
+function access_friends_acl_get_name(\Elgg\Hook $hook) {
+	$access_collection = $hook->getParam('access_collection');
+	if (!($access_collection instanceof ElggAccessCollection)) {
+		return;
+	}
+	
+	if ($access_collection->getSubtype() !== 'friends') {
+		return;
+	}
+	
+	return elgg_echo('access:friends:label');
+}
+
+/**
  * Runs unit tests for the access library
  *
  * @param string $hook   'unit_test'
@@ -438,5 +554,11 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	// and the user is logged in so it can start caching
 	$events->registerHandler('ready', 'system', 'access_init');
 
+	// friends ACL events
+	$events->registerHandler('create', 'user', 'access_friends_acl_create');
+	$events->registerHandler('create', 'relationship', 'access_friends_acl_add_friend');
+	$events->registerHandler('delete', 'relationship', 'access_friends_acl_remove_friend');
+	$hooks->registerHandler('access_collection:name', 'access_collection', 'access_friends_acl_get_name');
+	
 	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };
