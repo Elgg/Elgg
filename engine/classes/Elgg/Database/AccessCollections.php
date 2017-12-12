@@ -352,7 +352,22 @@ class AccessCollections {
 			'user_id' => $user_guid,
 			'input_params' => $input_params,
 		];
-		return $this->hooks->trigger('access:collections:write', 'user', $options, $access_array);
+		
+		$access_array = $this->hooks->trigger('access:collections:write', 'user', $options, $access_array);
+		
+		// move logged in and public to the end of the array
+		foreach ([ACCESS_LOGGED_IN, ACCESS_PUBLIC] as $access) {
+			if (!isset($access_array[$access])) {
+				continue;
+			}
+		
+			$temp = $access_array[$access];
+			unset($access_array[$access]);
+			$access_array[$access] = $temp;
+		}
+		
+		
+		return $access_array;
 	}
 
 	/**
@@ -841,9 +856,9 @@ class AccessCollections {
 		$collection = $this->get($access);
 
 		$user_guid = $this->session->getLoggedInUserGuid();
-
-		if (!$collection || !$user_guid) {
-			// return 'Limited' if there is no logged in user or collection can not be loaded
+		
+		if (!$collection || !$collection->canEdit()) {
+			// return 'Limited' if the collection can not be loaded or it can not be edited
 			return $translator->translate('access:limited:label');
 		}
 

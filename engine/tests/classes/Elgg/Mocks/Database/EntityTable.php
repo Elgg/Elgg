@@ -351,10 +351,6 @@ class EntityTable extends DbEntityTable {
 			return true;
 		}
 
-		if ($row->access_id == ACCESS_FRIENDS && check_entity_relationship($row->owner_guid, 'friend', $user->guid)) {
-			return true;
-		}
-
 		$access_list = _elgg_services()->accessCollections->getAccessList($user->guid);
 		if (in_array($row->access_id, $access_list)) {
 			return true;

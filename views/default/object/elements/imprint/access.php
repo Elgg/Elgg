@@ -26,9 +26,6 @@ if ($access === false || !elgg_is_logged_in()) {
 }
 
 switch ($access) {
-	case ACCESS_FRIENDS :
-		$icon_name = 'user';
-		break;
 	case ACCESS_PUBLIC :
 	case ACCESS_LOGGED_IN :
 		$icon_name = 'globe';
@@ -38,6 +35,10 @@ switch ($access) {
 		break;
 	default:
 		$icon_name = 'cog';
+		$collection = get_access_collection($access);
+		if ($collection && ($collection->getSubtype() == 'friends')) {
+			$icon_name = 'user';
+		}
 		break;
 }
 
