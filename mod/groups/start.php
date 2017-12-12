@@ -49,6 +49,9 @@ function groups_init() {
 
 	// group members tabs
 	elgg_register_plugin_hook_handler('register', 'menu:groups_members', 'groups_members_menu_setup');
+	
+	// topbar menu
+	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_groups_topbar_menu_setup');
 
 	//extend some views
 	elgg_extend_view('elgg.css', 'groups/css');
@@ -233,7 +236,7 @@ function _groups_page_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'groups:user:invites',
 		'text' => $text,
-		'badge' => $invitation_count ? $invitation_count : null,
+		'badge' => $invitation_count ?: null,
 		'title' => $title,
 		'href' => "groups/invitations/$user->username",
 	]);
@@ -860,6 +863,51 @@ function groups_members_menu_setup($hook, $type, $menu, $params) {
 	]);
 
 	return $menu;
+}
+
+/**
+ * Registers optional group invites menu item to topbar
+ *
+ * @elgg_plugin_hook register menu:topbar
+ *
+ * @param \Elgg\Hook $hook hook
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @since 3.0
+ *
+ * @internal
+ */
+function _groups_topbar_menu_setup(\Elgg\Hook $hook) {
+
+	$user = elgg_get_logged_in_user_entity();
+	if (empty($user)) {
+		return;
+	}
+	
+	$count = groups_get_invited_groups($user->guid, false, ['count' => true]);
+	if (empty($count)) {
+		return;
+	}
+	
+	$result = $hook->getValue();
+	
+	// Invitations
+	$text = elgg_echo('groups:invitations');
+	$title = elgg_echo('groups:invitations:pending', [$count]);
+	
+	$result[] = \ElggMenuItem::factory([
+		'name' => 'groups:user:invites',
+		'text' => $text,
+		'badge' => $count,
+		'title' => $title,
+		'icon' => 'users',
+		'parent_name' => 'account',
+		'section' => 'alt',
+		'href' => "groups/invitations/{$user->username}",
+	]);
+	
+	return $result;
 }
 
 /**
