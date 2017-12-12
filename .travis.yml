@@ -90,8 +90,8 @@ matrix:
     # Code coverage build for Scrutinizer
     - php: 7.0
       env: JOB_NAME=code_coverage
-      before_install:
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+      sudo: required
+      dist: trusty
       install:
         - composer travis:install-with-mysql
         - php -f ./.scripts/travis/enable_plugins.php
@@ -99,11 +99,15 @@ matrix:
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
       script:
-        - ./vendor/bin/phpunit --coverage-clover=coverage.clover
+        - phpdbg -qrr ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --testsuite unit --coverage-clover unit.clover
+        - phpdbg -qrr ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --testsuite integration --coverage-clover integration.clover
+        - phpdbg -qrr ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --testsuite plugins --coverage-clover plugins.clover
       after_script:
         - php ./elgg-cli database:unseed -vv
         - wget https://scrutinizer-ci.com/ocular.phar
-        - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+        - php ocular.phar code-coverage:upload --format=php-clover unit.clover
+        - php ocular.phar code-coverage:upload --format=php-clover integration.clover
+        - php ocular.phar code-coverage:upload --format=php-clover plugins.clover
 
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
