@@ -5,10 +5,10 @@ namespace Elgg\Views;
 /**
  * @group ViewsService
  */
-class ViewStackTest extends \Elgg\UnitTestCase {
+class ViewStackTestCase extends \Elgg\IntegratedUnitTestCase {
 
 	public function up() {
-		elgg_views_boot();
+
 	}
 
 	public function down() {
@@ -18,8 +18,6 @@ class ViewStackTest extends \Elgg\UnitTestCase {
 	public function viewsProvider() {
 
 		self::createApplication();
-
-		elgg_views_boot();
 
 		$provides = [];
 

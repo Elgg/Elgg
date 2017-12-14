@@ -2,13 +2,15 @@
 
 namespace Elgg\Mocks\Database;
 
+use Elgg\Cache\MetadataCache;
+use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Delete;
 use Elgg\Database\Insert;
 use Elgg\Database\MetadataTable as DbMetadataTabe;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
-use ElggEntity;
+use Elgg\EventsService as Events;
 use ElggMetadata;
 
 /**
@@ -31,6 +33,11 @@ class MetadataTable extends DbMetadataTabe {
 	 * @var int
 	 */
 	public $iterator = 100;
+
+	public function __construct(MetadataCache $metadata_cache, Database $db, Events $events) {
+		$this->setCurrentTime();
+		parent::__construct($metadata_cache, $db, $events);
+	}
 
 	/**
 	 * {@inheritdoc}

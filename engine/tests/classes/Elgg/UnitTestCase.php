@@ -26,7 +26,6 @@ abstract class UnitTestCase extends BaseTestCase {
 		$sp->config->getCookieConfig();
 		$sp->config->boot_complete = false;
 		$sp->config->system_cache_enabled = true;
-		$sp->config->boot_cache_ttl = 10;
 
 		$app = Application::factory([
 			'service_provider' => $sp,
@@ -42,6 +41,10 @@ abstract class UnitTestCase extends BaseTestCase {
 		} else {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
 		}
+
+		_elgg_services()->config->site = new \ElggSite((object) [
+			'guid' => 1,
+		]);
 
 		// turn off system log
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
@@ -64,12 +67,6 @@ abstract class UnitTestCase extends BaseTestCase {
 		elgg_set_entity_class('object', 'widget', \ElggWidget::class);
 		elgg_set_entity_class('object', 'comment', \ElggComment::class);
 		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
-
-		_elgg_services()->config->site = $this->createSite([
-			'url' => _elgg_config()->wwwroot,
-			'name' => 'Testing Site',
-			'description' => 'Testing Site',
-		]);
 
 		_elgg_services()->boot->boot(_elgg_services());
 

@@ -257,8 +257,6 @@ function _elgg_db_register_seeds(\Elgg\Hook $hook) {
  * @access private
  */
 function _elgg_db_init() {
-	register_shutdown_function('_elgg_db_run_delayed_queries');
-	register_shutdown_function('_elgg_db_log_profiling_data');
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_db_test');
 	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds');
 }

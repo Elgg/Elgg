@@ -18,10 +18,18 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 	use TestSeeding;
 
+	static $_testing_app;
+
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function createApplication() {
+	public static function createApplication($isolate = false) {
+
+		if (isset(self::$_testing_app) && !$isolate) {
+			Application::setInstance(self::$_testing_app);
+
+			return self::$_testing_app;
+		}
 
 		Application::setInstance(null);
 
@@ -66,6 +74,10 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
 		$app->bootCore();
+
+		if (!$isolate) {
+			self::$_testing_app = $app;
+		}
 
 		return $app;
 	}
@@ -116,14 +128,18 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	final protected function tearDown() {
 		$this->down();
 
-		$this->clearSeeds();
+		/**
+		 * @todo: This is bad because this overflows into other states
+		 *      But until there is a sane entity delete strategy this takes too long
+		 */
+		//$this->clearSeeds();
 
 		$app = Application::getInstance();
 
 		if ($this instanceof LegacyIntegrationTestCase) {
 			$app->_services->session->removeLoggedInUser();
 		}
-		
+
 		parent::tearDown();
 	}
 }

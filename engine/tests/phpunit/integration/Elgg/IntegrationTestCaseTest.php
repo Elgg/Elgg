@@ -8,7 +8,7 @@ use Elgg\Debug\Inspector;
  * @group IntegrationTests
  * @group TestingSuite
  */
-class IntegrationTestCaseIntegrationTest extends IntegrationTestCase {
+class IntegrationTestCaseTest extends IntegrationTestCase {
 
 	/**
 	 * @var \ElggObject
@@ -42,10 +42,10 @@ class IntegrationTestCaseIntegrationTest extends IntegrationTestCase {
 	 * that plugins can start multiple times
 	 */
 	public function testCanResetTestingApplicationAfterMultipleInstatiations() {
-		$app1 = self::createApplication();
+		$app1 = self::createApplication(true);
 		$dbConfig = $app1->getDbConfig();
 
-		$app2 = self::createApplication();
+		$app2 = self::createApplication(true);
 
 		$this->assertNotSame($app1, $app2);
 		$this->assertSame(Application::$_instance, $app2);
