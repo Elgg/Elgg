@@ -165,10 +165,12 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 			'type' => 'object',
 			'subtype' => $this->object->subtype,
 			'metadata_name_value_pairs' => [
-				'name' => 'metadata',
-				'value' => $query,
-				'operand' => '=',
-				'type' => $type,
+				[
+					'name' => 'metadata',
+					'value' => $query,
+					'operand' => '=',
+					'type' => $type,
+				],
 			],
 			'count' => true,
 		];
@@ -182,7 +184,9 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 			'type' => 'object',
 			'subtype' => $this->object->subtype,
 			'metadata_name_value_pairs' => [
-				'metadata' => $query,
+				[
+					'metadata' => $query,
+				]
 			],
 			'count' => true,
 		];

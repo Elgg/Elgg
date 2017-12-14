@@ -10,7 +10,21 @@ namespace Elgg\Integration;
  * @group EntityPrivateSettings
  */
 class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBaseTest {
-
+	
+	/**
+	 * @var ElggObject
+	 */
+	protected $object;
+	
+	public function up() {
+		$this->object = $this->createOne('object');
+	}
+	
+	public function down() {
+		$this->object->delete();
+		unset($this->object);
+	}
+	
 	public function testElggApiGettersEntitiesFromPrivateSettings() {
 
 		// create some test private settings
@@ -93,23 +107,23 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		}
 	}
 	
-	
 	/**
 	 * @dataProvider booleanPairsProvider
 	 */
-	public function testElggGetEntitiesFromBooleanPrivateSettings($value, $query, $type) {
-		$object = $this->createOne('object');
-		$object->setPrivateSetting('private_setting', $value);
+	public function testElggGetEntitiesFromBooleanPrivateSettingsPair($value, $query) {
+		$this->object->setPrivateSetting('private_setting', $value);
 		
 		// full pair
 		$options = [
 			'type' => 'object',
-			'subtype' => $object->subtype,
+			'subtype' => $this->object->subtype,
 			'private_setting_name_value_pairs' => [
-				'name' => 'private_setting',
-				'value' => $query,
-				'operand' => '=',
-				'type' => $type,
+				[
+					'name' => 'private_setting',
+					'value' => $query,
+					'operand' => '=',
+					'type' => ELGG_VALUE_STRING, // private settings are always cast to string
+				],
 			],
 			'count' => true,
 		];
@@ -117,13 +131,22 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$result = elgg_get_entities($options);
 		
 		$this->assertEquals(1, $result);
-
+	}
+	
+	/**
+	 * @dataProvider booleanPairsProvider
+	 */
+	public function testElggGetEntitiesFromBooleanPrivateSettingsShortPair($value, $query) {
+		$this->object->setPrivateSetting('private_setting', $value);
+		
 		// short pair
 		$options = [
 			'type' => 'object',
-			'subtype' => $object->subtype,
+			'subtype' => $this->object->subtype,
 			'private_setting_name_value_pairs' => [
-				'private_setting' => $query,
+				[
+					'private_setting' => $query,
+				],
 			],
 			'count' => true,
 		];
@@ -131,11 +154,18 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$result = elgg_get_entities($options);
 		
 		$this->assertEquals(1, $result);
-
+	}
+	
+	/**
+	 * @dataProvider booleanPairsProvider
+	 */
+	public function testElggGetEntitiesFromBooleanPrivateSettingsNamesValues($value, $query) {
+		$this->object->setPrivateSetting('private_setting', $value);
+		
 		// names and values
 		$options = [
 			'type' => 'object',
-			'subtype' => $object->subtype,
+			'subtype' => $this->object->subtype,
 			'private_setting_names' => 'private_setting',
 			'private_setting_values' => $query,
 			'count' => true,
@@ -144,21 +174,15 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$result = elgg_get_entities($options);
 		
 		$this->assertEquals(1, $result);
-		
-		$object->delete();
 	}
 	
 	public function booleanPairsProvider() {
 		return [
-			[true, true, null],
-			[true, 1, null],
-			[true, '1', ELGG_VALUE_INTEGER],
-			[false, false, null],
-			[false, 0, null],
-			[false, '0', ELGG_VALUE_INTEGER],
-			[1, true, null],
-			[0, false, null],
+			[true, true],
+			[true, 1],
+			[true, '1'],
+			[1, true],
+			[0, false],
 		];
 	}
-
 }

@@ -20,7 +20,7 @@ use InvalidParameterException;
  * API IN FLUX Do not access the methods directly, use elgg_get_entities() instead
  *
  * @todo   At a later stage, this class will contain additional shortcut methods to filter entities
- *         by relationship, metdataion, annotation, private settings etc. Until then, such filtering
+ *         by relationship, metadata, annotation, private settings etc. Until then, such filtering
  *         can be done via standard ege* options
  *
  * @todo   Resolve table alias collissions when querying for both annotationa and metadata name value pairs
