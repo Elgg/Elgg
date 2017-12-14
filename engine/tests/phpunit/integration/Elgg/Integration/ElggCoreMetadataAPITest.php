@@ -160,6 +160,7 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 		$this->object->metadata = $value;
 		$this->object->save();
 
+		// full pair
 		$options = [
 			'type' => 'object',
 			'subtype' => $this->object->subtype,
@@ -169,6 +170,33 @@ class ElggCoreMetadataAPITest extends LegacyIntegrationTestCase {
 				'operand' => '=',
 				'type' => $type,
 			],
+			'count' => true,
+		];
+
+		$result = elgg_get_entities($options);
+
+		$this->assertEquals(1, $result);
+
+		// short pair
+		$options = [
+			'type' => 'object',
+			'subtype' => $this->object->subtype,
+			'metadata_name_value_pairs' => [
+				'metadata' => $query,
+			],
+			'count' => true,
+		];
+
+		$result = elgg_get_entities($options);
+
+		$this->assertEquals(1, $result);
+
+		// names and values param
+		$options = [
+			'type' => 'object',
+			'subtype' => $this->object->subtype,
+			'metadata_names' => 'metadata',
+			'metadata_values' => $query,
 			'count' => true,
 		];
 
