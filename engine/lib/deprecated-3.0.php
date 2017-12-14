@@ -1065,3 +1065,18 @@ function elgg_batch_delete_callback($object) {
 	// our db functions return the number of rows affected...
 	return $object->delete() ? true : false;
 }
+
+/**
+ * Sanitise file paths ensuring that they begin and end with slashes etc.
+ *
+ * @param string $path         The path
+ * @param bool   $append_slash Add tailing slash
+ *
+ * @return string
+ * @deprecated 3.0
+ */
+function sanitise_filepath($path, $append_slash = true) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \\Elgg\\Project\\Paths::sanitize().', 3.0);
+
+	return \Elgg\Project\Paths::sanitize($path, $append_slash);
+}

@@ -91,87 +91,26 @@ function elgg_get_plugins($status = 'active') {
 }
 
 /**
- * Namespaces a string to be used as a private setting name for a plugin.
- *
- * For user_settings, two namespaces are added: a user setting namespace and the
- * plugin id.
- *
- * For internal (plugin priority), there is a single internal namespace added.
- *
- * @param string $type The type of setting: user_setting or internal.
- * @param string $name The name to namespace.
- * @param string $id   The plugin's ID to namespace with.  Required for user_setting.
- * @return string
- * @since 1.8.0
- * @access private
- */
-function _elgg_namespace_plugin_private_setting($type, $name, $id = null) {
-	return _elgg_services()->plugins->namespacePrivateSetting($type, $name, $id);
-}
-
-/**
- * Deletes all cached data on plugins being provided.
- *
- * @return boolean
- * @since 1.9.0
- * @access private
- */
-function _elgg_invalidate_plugins_provides_cache() {
-	return _elgg_services()->plugins->invalidateProvidesCache();
-}
-
-/**
- * Checks if a plugin is currently providing $type and $name, and optionally
- * checking a version.
- *
- * @param string $type       The type of the provide
- * @param string $name       The name of the provide
- * @param string $version    A version to check against
- * @param string $comparison The comparison operator to use in version_compare()
- *
- * @return array An array in the form array(
- * 	'status' => bool Does the provide exist?,
- * 	'value' => string The version provided
- * )
- * @since 1.8.0
- * @access private
- */
-function _elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
-	return _elgg_services()->plugins->checkProvides($type, $name, $version, $comparison);
-}
-
-/**
- * Returns an array of parsed strings for a dependency in the
- * format: array(
- * 	'type'			=>	requires, conflicts, or provides.
- * 	'name'			=>	The name of the requirement / conflict
- * 	'value'			=>	A string representing the expected value: <1, >=3, !=enabled
- * 	'local_value'	=>	The current value, ("Not installed")
- * 	'comment'		=>	Free form text to help resovle the problem ("Enable / Search for plugin <link>")
- * )
- *
- * @param array $dep An \ElggPluginPackage dependency array
- * @return array
- * @since 1.8.0
- * @access private
- */
-function _elgg_get_plugin_dependency_strings($dep) {
-	return _elgg_services()->plugins->getDependencyStrings($dep);
-}
-
-/**
  * Returns an array of all plugin user settings for a user.
  *
  * @param int    $user_guid  The user GUID or 0 for the currently logged in user.
  * @param string $plugin_id  The plugin ID (Required)
  * @param bool   $return_obj Return settings as an object? This can be used to in reusable
  *                           views where the settings are passed as $vars['entity'].
- * @return array
+ *
+ * @return array|object
  * @since 1.8.0
- * @see \ElggPlugin::getAllUserSettings()
+ * @see   \ElggPlugin::getAllUserSettings()
  */
 function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $return_obj = false) {
-	return _elgg_services()->plugins->getAllUserSettings($user_guid, $plugin_id, $return_obj);
+	$plugin = elgg_get_plugin_from_id($plugin_id);
+	if (!$plugin) {
+		return [];
+	}
+
+	$settings = $plugin->getAllUserSettings($user_guid);
+
+	return $return_obj ? (object) $settings : $settings;
 }
 
 /**
@@ -320,6 +259,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
  *
  * @return array
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_plugins_test($hook, $type, $value, $params) {
 	$value[] = ElggCorePluginsAPITest::class;

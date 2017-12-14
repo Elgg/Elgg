@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\Project\Paths;
-
 /**
  * Elgg Plugins Test
  *
@@ -403,15 +401,15 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 	// \ElggPlugin
 	public function testElggPluginIsValid() {
 
-		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
+		$test_plugin = ElggPlugin::fromId('profile');
 		$this->assertIdentical(true, $test_plugin->isValid());
 	}
 
 	public function testElggPluginGetID() {
 
-		$test_plugin = new \ElggPlugin(elgg_get_plugins_path() . 'profile');
+		$test_plugin = ElggPlugin::fromId('profile');
 
-		$this->assertIdentical($test_plugin, elgg_get_plugin_from_id('profile'));
+		$this->assertIdentical($test_plugin->guid, elgg_get_plugin_from_id('profile')->guid);
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}
 

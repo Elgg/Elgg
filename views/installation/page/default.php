@@ -11,14 +11,6 @@ use Elgg\Filesystem\Directory;
 $title = elgg_echo('install:title');
 $title .= " : {$vars['title']}";
 
-// we won't trust server configuration but specify utf-8
-elgg_set_http_header('Content-type: text/html; charset=utf-8');
-
-// turn off browser caching
-elgg_set_http_header('Pragma: public', true);
-elgg_set_http_header("Cache-Control: no-cache, must-revalidate", true);
-elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
-
 $isElggAtRoot = Elgg\Application::elggDir()->getPath() === Directory\Local::projectRoot()->getPath();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 

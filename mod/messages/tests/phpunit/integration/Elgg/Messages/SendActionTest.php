@@ -13,6 +13,11 @@ use Zend\Mail\Message;
  */
 class SendActionTest extends ActionResponseTestCase {
 
+	public function up() {
+		$this->startPlugin();
+		parent::up();
+	}
+
 	public function testSendFailsWithoutRecipient() {
 
 		$user = $this->createUser([], [
@@ -182,7 +187,7 @@ class SendActionTest extends ActionResponseTestCase {
 		$notification_body = $notification->getBodyText();
 
 		$this->assertEquals($expected_subject, $notification_subject);
-		$this->assertEquals($expected_body, $notification_body);
+		$this->assertEquals(preg_replace('/\\n/m', ' ', $expected_body), preg_replace('/\\n/m', ' ', $notification_body));
 
 		_elgg_services()->session->removeLoggedInUser();
 	}

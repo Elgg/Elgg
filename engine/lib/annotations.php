@@ -167,6 +167,7 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
  * @return array
  *
  * @access private
+ * @codeCoverageIgnore
  */
 function _elgg_annotations_test($hook, $type, $tests) {
 	$tests[] = ElggCoreAnnotationAPITest::class;

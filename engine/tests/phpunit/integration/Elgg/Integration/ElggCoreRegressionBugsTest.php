@@ -5,7 +5,6 @@ namespace Elgg\Integration;
 use ElggObject;
 use ElggUser;
 use ElggXMLElement;
-use SimpleXMLElement;
 
 /**
  * Elgg Regression Tests -- GitHub Bugfixes

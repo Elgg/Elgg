@@ -25,9 +25,9 @@ abstract class UnitTestCase extends BaseTestCase {
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
 		$sp->config->boot_complete = false;
+		$sp->config->system_cache_enabled = true;
 
 		$app = Application::factory([
-			'config' => $config,
 			'service_provider' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
@@ -42,6 +42,10 @@ abstract class UnitTestCase extends BaseTestCase {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
 		}
 
+		_elgg_services()->config->site = new \ElggSite((object) [
+			'guid' => 1,
+		]);
+
 		// turn off system log
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
@@ -55,11 +59,16 @@ abstract class UnitTestCase extends BaseTestCase {
 	final protected function setUp() {
 		parent::setUp();
 
-		_elgg_services()->config->site = $this->createSite([
-			'url' => _elgg_config()->wwwroot,
-			'name' => 'Testing Site',
-			'description' => 'Testing Site',
-		]);
+		elgg_set_entity_class('user', 'user', \ElggUser::class);
+		elgg_set_entity_class('group', 'group', \ElggGroup::class);
+		elgg_set_entity_class('site', 'site', \ElggSite::class);
+		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
+		elgg_set_entity_class('object', 'file', \ElggFile::class);
+		elgg_set_entity_class('object', 'widget', \ElggWidget::class);
+		elgg_set_entity_class('object', 'comment', \ElggComment::class);
+		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
+
+		_elgg_services()->boot->boot(_elgg_services());
 
 		self::$_instance = $this;
 
@@ -80,19 +89,19 @@ abstract class UnitTestCase extends BaseTestCase {
 	 */
 	public function createUser(array $attributes = [], array $metadata = []) {
 		$unique_id = uniqid('user');
-		
+
 		$defaults = [
 			'name' => "John Doe {$unique_id}",
- 			'username' => "john_doe_{$unique_id}",
+			'username' => "john_doe_{$unique_id}",
 			'email' => "john_doe_{$unique_id}@example.com",
 			'banned' => 'no',
 			'admin' => 'no',
 		];
-				
+
 		$attributes = array_merge($defaults, $metadata, $attributes);
 
 		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_user';
-		
+
 		return _elgg_services()->entityTable->setup(null, 'user', $subtype, $attributes);
 	}
 
@@ -127,23 +136,6 @@ abstract class UnitTestCase extends BaseTestCase {
 		$subtype = isset($attributes['subtype']) ? $attributes['subtype'] : 'foo_site';
 
 		return _elgg_services()->entityTable->setup(null, 'site', $subtype, $attributes);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function assertPreConditions() {
-		parent::assertPreConditions();
-
-		$this->assertInstanceOf(MockServiceProvider::class,  _elgg_services());
-		$this->assertInstanceOf(\Elgg\Mocks\Database::class, _elgg_services()->db);
-	}
-
-	protected function assertPostConditions() {
-		parent::assertPostConditions();
-
-		$this->assertInstanceOf(MockServiceProvider::class,  _elgg_services());
-		$this->assertInstanceOf(\Elgg\Mocks\Database::class, _elgg_services()->db);
 	}
 
 }

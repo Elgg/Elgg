@@ -2,29 +2,25 @@
 
 namespace Elgg\Views;
 
+use Elgg\IntegratedUnitTestCase;
 use Elgg\Plugins\PluginTesting;
-use Elgg\UnitTestCase;
 
 /**
  * Abstract class for testing view output
  */
-abstract class ViewRenderingTestCase extends UnitTestCase {
+abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 
 	use PluginTesting;
 
 	public function up() {
 		_elgg_services()->logger->disable();
 
-		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
-		elgg_set_page_owner_guid($user->guid);
 
-		$this->registerViews();
 	}
 
 	public function down() {
-		_elgg_services()->session->removeLoggedInUser();
-		elgg_set_page_owner_guid(null);
+		//_elgg_services()->session->removeLoggedInUser();
+		//elgg_set_page_owner_guid(null);
 
 		_elgg_services()->logger->enable();
 	}
@@ -41,23 +37,14 @@ abstract class ViewRenderingTestCase extends UnitTestCase {
 	 */
 	abstract public function getDefaultViewVars();
 
-	public function registerViews() {
-		elgg_views_boot();
-
-		$path = $this->getPath();
-		if ($path) {
-			_elgg_services()->views->registerPluginViews($path);
-		}
-	}
-
 	/**
 	 * An array of views to test
-	 * @return array
+	 * @return array;
 	 */
 	public function viewListProvider() {
-		$provides = [];
+		self::createApplication();
 
-		$this->registerViews();
+		$provides = [];
 
 		$data = _elgg_services()->views->getInspectorData();
 

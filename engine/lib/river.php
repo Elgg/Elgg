@@ -394,6 +394,7 @@ function update_river_access_by_object($object_guid, $access_id) {
  * @param array  $value current return value
  *
  * @return array
+ * @codeCoverageIgnore
  */
 function _elgg_river_test($hook, $type, $value) {
 	$value[] = ElggCoreRiverAPITest::class;

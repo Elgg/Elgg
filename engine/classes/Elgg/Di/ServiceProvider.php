@@ -1,10 +1,16 @@
 <?php
 namespace Elgg\Di;
 
+use ConfigurationException;
+use Elgg\Ajax\Service;
+use Elgg\Application;
 use Elgg\Config;
 use Elgg\Cache\Pool;
+use Elgg\Database\DbConfig;
+use Elgg\Database\SiteSecret;
 use Elgg\Printer\CliPrinter;
 use Elgg\Printer\HtmlPrinter;
+use Elgg\Project\Paths;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
 use Zend\Mail\Transport\TransportInterface as Mailer;
@@ -104,6 +110,7 @@ class ServiceProvider extends DiContainer {
 	 * Constructor
 	 *
 	 * @param Config $config Elgg Config service
+	 * @throws ConfigurationException
 	 */
 	public function __construct(Config $config) {
 
@@ -179,7 +186,10 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Cli($console, $c->hooks);
 		});
 
-		$this->setValue('config', $config);
+		$this->setFactory('config', function (ServiceProvider $sp) use ($config) {
+			$this->initConfig($config, $sp);
+			return $config;
+		});
 
 		$this->setFactory('configTable', function(ServiceProvider $c) {
 			return new \Elgg\Database\ConfigTable($c->db, $c->boot, $c->logger);
@@ -364,7 +374,7 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
 			$pool = new Pool\InMemory();
-			$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
+			$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache, $this->db);
 			if ($c->config->enable_profiling) {
 				$plugins->setTimer($c->timer);
 			}
@@ -445,15 +455,6 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Cache\SimpleCache($c->config);
 		});
 
-		/**
-		 * If the key is in the settings file, this is injected early.
-		 *
-		 * @see \Elgg\Application::initConfig
-		 */
-		$this->setFactory('siteSecret', function(ServiceProvider $c) {
-			return \Elgg\Database\SiteSecret::fromDatabase($c->configTable);
-		});
-
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
@@ -524,4 +525,102 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
 	}
 
+	/**
+	 * Validate, normalize, fill in missing values, and lock some
+	 *
+	 * @param Config          $config Config
+	 * @param ServiceProvider $sp     Service Provider
+	 *
+	 * @return void
+	 * @throws ConfigurationException
+	 */
+	public function initConfig(Config $config, ServiceProvider $sp) {
+		if ($config->elgg_config_locks === null) {
+			$config->elgg_config_locks = true;
+		}
+
+		if ($config->elgg_config_locks) {
+			$lock = function ($name) use ($config) {
+				$config->lock($name);
+			};
+		} else {
+			// the installer needs to build an application with defaults then update
+			// them after they're validated, so we don't want to lock them.
+			$lock = function () {
+			};
+		}
+
+		$sp->timer->begin([]);
+
+		if ($config->dataroot) {
+			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
+		} else {
+			if (!$config->installer_running) {
+				throw new ConfigurationException('Config value "dataroot" is required.');
+			}
+		}
+		$lock('dataroot');
+
+		if ($config->cacheroot) {
+			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
+		} else {
+			$config->cacheroot = $config->dataroot;
+		}
+		$lock('cacheroot');
+
+		if ($config->wwwroot) {
+			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
+		} else {
+			$config->wwwroot = $sp->request->sniffElggUrl();
+		}
+		$lock('wwwroot');
+
+		if (!$config->language) {
+			$config->language = Application::DEFAULT_LANG;
+		}
+
+		if ($config->default_limit) {
+			$lock('default_limit');
+		} else {
+			$config->default_limit = Application::DEFAULT_LIMIT;
+		}
+
+		if ($config->plugins_path) {
+			$plugins_path = rtrim($config->plugins_path, '/') . '/';
+		} else {
+			$plugins_path = Paths::project() . 'mod/';
+		}
+
+		$locked_props = [
+			'site_guid' => 1,
+			'path' => Paths::project(),
+			'plugins_path' => $plugins_path,
+			'pluginspath' => $plugins_path,
+			'url' => $config->wwwroot,
+		];
+		foreach ($locked_props as $name => $value) {
+			$config->$name = $value;
+			$lock($name);
+		}
+
+		// move sensitive credentials into isolated services
+		$sp->setValue('dbConfig', DbConfig::fromElggConfig($config));
+
+		// get this stuff out of config!
+		unset($config->db);
+		unset($config->dbname);
+		unset($config->dbhost);
+		unset($config->dbuser);
+		unset($config->dbpass);
+
+		// If the site secret is in the settings file, let's move it to that component
+		// right away to keep this value out of config.
+		$secret = SiteSecret::fromConfig($config);
+		if ($secret) {
+			$sp->setValue('siteSecret', $secret);
+			$config->elgg_config_set_secret = true;
+		}
+
+		$config->boot_complete = false;
+	}
 }

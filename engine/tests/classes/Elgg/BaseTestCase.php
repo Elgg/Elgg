@@ -5,10 +5,9 @@
 
 namespace Elgg;
 
-use Doctrine\DBAL\Query\Expression\CompositeExpression;
-use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Seedable;
 use Elgg\Di\ServiceProvider;
+use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
 
@@ -18,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	use Testing;
+	use PluginTesting;
 
 	static $_instance;
 	static $_settings;
@@ -47,6 +47,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	public static function getTestingConfig() {
 		if (!empty($_ENV['ELGG_SETTINGS_FILE'])) {
 			$settings_path = $_ENV['ELGG_SETTINGS_FILE'];
+
 			return Config::factory($settings_path);
 		}
 

@@ -165,22 +165,17 @@ class PrivateSettingsTable {
 	 * @param int    $entity_guid The Entity GUID
 	 * @param string $name        The name of the setting
 	 * @return bool
+	 * @throws \DatabaseException
 	 */
 	public function remove($entity_guid, $name) {
 		$this->cache->clear($entity_guid);
 		_elgg_services()->boot->invalidateCache();
 
-		$query = "
-			DELETE FROM {$this->table}
-			WHERE name = :name
-			AND entity_guid = :entity_guid
-		";
-		$params = [
-			':entity_guid' => (int) $entity_guid,
-			':name' => (string) $name,
-		];
-		
-		return $this->db->deleteData($query, $params);
+		$qb = Delete::fromTable('private_settings');
+		$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
+			->andWhere($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER));
+
+		return $this->db->deleteData($qb);
 	}
 
 	/**

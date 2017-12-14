@@ -2,14 +2,14 @@
 
 namespace Elgg\Actions;
 
-use Elgg\IntegrationTestCase;
+use Elgg\IntegratedUnitTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group ActionsService
  */
-class ActionRegistrationTest extends IntegrationTestCase {
+class ActionRegistrationTestCase extends IntegratedUnitTestCase {
 
 	/**
 	 * Skip some actions that do not play well with testing suite

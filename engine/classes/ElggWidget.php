@@ -154,7 +154,8 @@ class ElggWidget extends \ElggObject {
 	public function getTitle() {
 		$title = $this->title;
 		if (!$title) {
-			$title = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $this->getContainerEntity());
+			$container = $this->getContainerEntity() ? : null;
+			$title = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $container);
 		}
 		return $title;
 	}

@@ -12,16 +12,15 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	private $call_method;
 
 	public function up() {
+
 		elgg_load_library('elgg:ws');
 		elgg_load_library('elgg:ws:api_user');
 		elgg_load_library('elgg:ws:client');
 		elgg_load_library('elgg:ws:tokens');
 
 		$this->call_method = get_call_method();
-		if (!$this->call_method) {
-			// Emulate GET request, which is not set in cli mode
-			_elgg_services()->request->server->set('REQUEST_METHOD', 'GET');
-		}
+		// Emulate GET request, which is not set in cli mode
+		_elgg_services()->request->server->set('REQUEST_METHOD', 'GET');
 	}
 
 	/**

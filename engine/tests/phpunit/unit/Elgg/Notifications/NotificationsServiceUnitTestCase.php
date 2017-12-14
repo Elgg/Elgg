@@ -4,6 +4,7 @@ namespace Elgg\Notifications;
 
 use Elgg\EventsService;
 use Elgg\Logger;
+use Elgg\IntegratedUnitTestCase;
 use Elgg\PluginHooksService;
 use Elgg\Queue\MemoryQueue;
 use Elgg\UnitTestCase;
@@ -13,7 +14,7 @@ use ElggObject;
 use ElggSession;
 use Exception;
 
-abstract class NotificationsServiceUnitTestCase extends UnitTestCase {
+abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 	/**
 	 * @var PluginHooksService

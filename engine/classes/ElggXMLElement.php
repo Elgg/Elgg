@@ -1,9 +1,13 @@
 <?php
+
 /**
  * A parser for XML that uses SimpleXMLElement
  *
  * @package    Elgg.Core
  * @subpackage XML
+ *
+ * @see        \Elgg\Integration\ElggCoreRegressionBugsTest
+ * @see        \Elgg\Integration\ElggCorePluginsAPITest
  */
 class ElggXMLElement {
 	/**
@@ -58,6 +62,7 @@ class ElggXMLElement {
 		foreach ($attr as $key => $val) {
 			$result[$key] = (string) $val;
 		}
+
 		return $result;
 	}
 
@@ -85,23 +90,24 @@ class ElggXMLElement {
 	 * Override ->
 	 *
 	 * @param string $name Property name
+	 *
 	 * @return mixed
 	 */
 	public function __get($name) {
 		switch ($name) {
 			case 'name':
 				return $this->getName();
-				break;
+
 			case 'attributes':
 				return $this->getAttributes();
-				break;
+
 			case 'content':
 				return $this->getContent();
-				break;
+
 			case 'children':
 				return $this->getChildren();
-				break;
 		}
+
 		return null;
 	}
 
@@ -109,23 +115,24 @@ class ElggXMLElement {
 	 * Override isset
 	 *
 	 * @param string $name Property name
+	 *
 	 * @return boolean
 	 */
 	public function __isset($name) {
 		switch ($name) {
 			case 'name':
 				return $this->getName() !== null;
-				break;
+
 			case 'attributes':
 				return $this->getAttributes() !== null;
-				break;
+
 			case 'content':
 				return $this->getContent() !== null;
-				break;
+
 			case 'children':
 				return $this->getChildren() !== null;
-				break;
 		}
+
 		return false;
 	}
 }

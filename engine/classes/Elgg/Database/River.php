@@ -2,15 +2,9 @@
 
 namespace Elgg\Database;
 
-use Closure;
-use DataFormatException;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
-use Elgg\AttributeLoader;
-use Elgg\Database\Clauses\AccessWhereClause;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
-use Elgg\Database\Clauses\MetadataWhereClause;
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
 use ElggEntity;

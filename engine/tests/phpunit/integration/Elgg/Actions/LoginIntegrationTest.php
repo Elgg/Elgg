@@ -13,6 +13,12 @@ use Elgg\Values;
  */
 class LoginIntegrationTest extends ActionResponseTestCase {
 
+	public function up() {
+		parent::up();
+
+		self::createApplication(true);
+	}
+
 	public function testLoginWithUsernameAndPassword() {
 
 		$user = $this->createOne('user', [], [

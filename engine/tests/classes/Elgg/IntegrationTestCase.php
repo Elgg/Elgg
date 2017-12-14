@@ -17,19 +17,27 @@ use Zend\Mail\Transport\InMemory;
 abstract class IntegrationTestCase extends BaseTestCase {
 
 	use TestSeeding;
-	use PluginTesting;
-	
+
+	static $_testing_app;
+
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function createApplication() {
+	public static function createApplication($isolate = false) {
+
+		if (isset(self::$_testing_app) && !$isolate) {
+			Application::setInstance(self::$_testing_app);
+
+			return self::$_testing_app;
+		}
 
 		Application::setInstance(null);
 
 		$config = self::getTestingConfig();
 		$sp = new ServiceProvider($config);
+		$config->system_cache_enabled = true;
 		$config->boot_cache_ttl = 10;
-		
+
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
 
@@ -67,6 +75,10 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		$app->bootCore();
 
+		if (!$isolate) {
+			self::$_testing_app = $app;
+		}
+
 		return $app;
 	}
 
@@ -92,11 +104,12 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		parent::setUp();
 
 		$app = Application::getInstance();
-		
-		// check if test is in a plugin
+
 		$plugin_id = $this->getPluginID();
 		if (!empty($plugin_id)) {
-			if (!$app->_services->plugins->isActive($plugin_id)) {
+			$plugin = elgg_get_plugin_from_id($plugin_id);
+
+			if (!$plugin || !$plugin->isActive()) {
 				$this->markTestSkipped("Plugin '{$plugin_id}' isn't active, skipped test");
 			}
 		}
@@ -115,7 +128,11 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	final protected function tearDown() {
 		$this->down();
 
-		$this->clearSeeds();
+		/**
+		 * @todo: This is bad because this overflows into other states
+		 *      But until there is a sane entity delete strategy this takes too long
+		 */
+		//$this->clearSeeds();
 
 		$app = Application::getInstance();
 

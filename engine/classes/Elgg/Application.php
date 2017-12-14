@@ -2,22 +2,16 @@
 
 namespace Elgg;
 
+use ConfigurationException;
 use Doctrine\DBAL\Connection;
-use Elgg\Cache\Pool\InMemory as InMemoryCachePool;
 use Elgg\Database\DbConfig;
-use Elgg\Database\SiteSecret;
-use Elgg\Database\TestingPlugins;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
-use Elgg\Http\Request;
 use Elgg\Filesystem\Directory\Local;
-use ConfigurationException;
-use Elgg\Mocks\Di\MockServiceProvider;
+use Elgg\Http\Request;
 use Elgg\Project\Paths;
-use Exception;
 use InstallationException;
-use RuntimeException;
-use Zend\Mail\Transport\InMemory as InMemoryMailTransport;
+use InvalidArgumentException;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -105,93 +99,6 @@ class Application {
 	 */
 	public function __construct(ServiceProvider $services) {
 		$this->_services = $services;
-
-		$this->initConfig();
-	}
-
-	/**
-	 * Validate, normalize, fill in missing values, and lock some
-	 *
-	 * @return void
-	 * @throws ConfigurationException
-	 */
-	private function initConfig() {
-		$config = $this->_services->config;
-
-		if ($config->elgg_config_locks === null) {
-			$config->elgg_config_locks = true;
-		}
-
-		if ($config->elgg_config_locks) {
-			$lock = function ($name) use ($config) {
-				$config->lock($name);
-			};
-		} else {
-			// the installer needs to build an application with defaults then update
-			// them after they're validated, so we don't want to lock them.
-			$lock = function () {
-			};
-		}
-
-		$this->_services->timer->begin([]);
-
-		if ($config->dataroot) {
-			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
-		} else {
-			if (!$config->installer_running) {
-				throw new ConfigurationException('Config value "dataroot" is required.');
-			}
-		}
-		$lock('dataroot');
-
-		if ($config->cacheroot) {
-			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
-		} else {
-			$config->cacheroot = $config->dataroot;
-		}
-		$lock('cacheroot');
-
-		if ($config->wwwroot) {
-			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
-		} else {
-			$config->wwwroot = $this->_services->request->sniffElggUrl();
-		}
-		$lock('wwwroot');
-
-		if (!$config->language) {
-			$config->language = self::DEFAULT_LANG;
-		}
-
-		if ($config->default_limit) {
-			$lock('default_limit');
-		} else {
-			$config->default_limit = self::DEFAULT_LIMIT;
-		}
-
-		$locked_props = [
-			'site_guid' => 1,
-			'path' => Paths::project(),
-			'plugins_path' => Paths::project() . "mod/",
-			'pluginspath' => Paths::project() . "mod/",
-			'url' => $config->wwwroot,
-		];
-		foreach ($locked_props as $name => $value) {
-			$config->$name = $value;
-			$lock($name);
-		}
-
-		// move sensitive credentials into isolated services
-		$this->_services->dbConfig;
-
-		// If the site secret is in the settings file, let's move it to that component
-		// right away to keep this value out of config.
-		$secret = SiteSecret::fromConfig($config);
-		if ($secret) {
-			$this->_services->setValue('siteSecret', $secret);
-			$config->elgg_config_set_secret = true;
-		}
-
-		$config->boot_complete = false;
 	}
 
 	/**
@@ -270,6 +177,7 @@ class Application {
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
 	 * @return void
+	 * @throws InstallationException
 	 */
 	public function bootCore() {
 		$config = $this->_services->config;
@@ -434,8 +342,11 @@ class Application {
 	 * @param array $spec Specification for initial call.
 	 * @return self
 	 * @throws ConfigurationException
+	 * @throws InvalidArgumentException
 	 */
 	public static function factory(array $spec = []) {
+		self::loadCore();
+
 		$defaults = [
 			'config' => null,
 			'handle_exceptions' => true,
@@ -469,7 +380,7 @@ class Application {
 			if ($spec['request'] instanceof Request) {
 				$spec['service_provider']->setValue('request', $spec['request']);
 			} else {
-				throw new \InvalidArgumentException("Given request is not a " . Request::class);
+				throw new InvalidArgumentException("Given request is not a " . Request::class);
 			}
 		}
 
@@ -481,6 +392,9 @@ class Application {
 		}
 
 		if ($spec['handle_shutdown']) {
+			register_shutdown_function('_elgg_db_run_delayed_queries');
+			register_shutdown_function('_elgg_db_log_profiling_data');
+
 			// we need to register for shutdown before Symfony registers the
 			// session_write_close() function. https://github.com/Elgg/Elgg/issues/9243
 			register_shutdown_function(function () {
@@ -498,6 +412,7 @@ class Application {
 	 * Elgg's front controller. Handles basically all incoming URL requests.
 	 *
 	 * @return bool True if Elgg will handle the request, false if the server should (PHP-CLI server)
+	 * @throws ConfigurationException
 	 */
 	public static function index() {
 		$req = Request::createFromGlobals();
@@ -508,7 +423,14 @@ class Application {
 			return true;
 		}
 
-		$app = self::factory(['request' => $req]);
+		try {
+			$app = self::factory([
+				'request' => $req,
+			]);
+		} catch (ConfigurationException $ex) {
+			return self::install();
+		}
+
 		self::setGlobalConfig($app);
 		self::setInstance($app);
 
@@ -577,12 +499,28 @@ class Application {
 	/**
 	 * Renders a web UI for installing Elgg.
 	 *
-	 * @return void
+	 * @return bool
+	 * @throws InstallationException
 	 */
 	public static function install() {
 		ini_set('display_errors', 1);
+
 		$installer = new \ElggInstaller();
-		$installer->run();
+		$response = $installer->run();
+		try {
+			// we won't trust server configuration but specify utf-8
+			elgg_set_http_header('Content-type: text/html; charset=utf-8');
+
+			// turn off browser caching
+			elgg_set_http_header('Pragma: public', true);
+			elgg_set_http_header("Cache-Control: no-cache, must-revalidate", true);
+			elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+
+			_elgg_services()->responseFactory->respond($response);
+			return headers_sent();
+		} catch (\InvalidParameterException $ex) {
+			throw new InstallationException($ex->getMessage());
+		}
 	}
 
 	/**
@@ -598,6 +536,7 @@ class Application {
 	 * to a relative URL.
 	 *
 	 * @return void
+	 * @throws InstallationException
 	 */
 	public static function upgrade() {
 		// we want to know if an error occurs
@@ -705,7 +644,7 @@ class Application {
 	public static function migrate() {
 		$conf = self::elggDir()->getPath('engine/conf/migrations.php');
 		if (!$conf) {
-			throw new Exception('Settings file is required to run database migrations.');
+			throw new InstallationException('Settings file is required to run database migrations.');
 		}
 
 		$app = new \Phinx\Console\PhinxApplication();
@@ -713,7 +652,10 @@ class Application {
 			'configuration' => $conf,
 		]);
 		$log = $wrapper->getMigrate();
-		error_log($log);
+
+		if (in_array('--verbose', $_SERVER['argv'])) {
+			error_log($log);
+		}
 
 		return true;
 	}
@@ -931,16 +873,6 @@ class Application {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Does nothing.
-	 *
-	 * @return void
-	 * @deprecated
-	 */
-	public function loadSettings() {
-		trigger_error(__METHOD__ . ' is no longer needed and will be removed.');
 	}
 
 	/**
