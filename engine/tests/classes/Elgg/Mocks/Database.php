@@ -55,18 +55,18 @@ class Database extends DbDatabase {
 		$connection = BaseTestCase::$_instance->getConnectionMock();
 
 		$connection->expects(BaseTestCase::$_instance->any())
-				->method('query')
-				->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
+			->method('query')
+			->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
 
 		$connection->expects(BaseTestCase::$_instance->any())
-				->method('executeQuery')
-				->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
+			->method('executeQuery')
+			->will(BaseTestCase::$_instance->returnCallback([$this, 'executeDatabaseQuery']));
 
 		$connection->expects(BaseTestCase::$_instance->any())
-				->method('lastInsertId')
-				->will(BaseTestCase::$_instance->returnCallback(function() {
-							return $this->last_insert_id;
-						}));
+			->method('lastInsertId')
+			->will(BaseTestCase::$_instance->returnCallback(function () {
+				return $this->last_insert_id;
+			}));
 
 		$expression_builder = new ExpressionBuilder($connection);
 
@@ -76,7 +76,7 @@ class Database extends DbDatabase {
 
 		$connection->expects(BaseTestCase::$_instance->any())
 			->method('quote')
-			->will(BaseTestCase::$_instance->returnCallback(function($input, $type = null) {
+			->will(BaseTestCase::$_instance->returnCallback(function ($input, $type = null) {
 				return "'" . $input . "''";
 			}));
 
@@ -88,7 +88,7 @@ class Database extends DbDatabase {
 	 * Set the result of a query that may be called in the future
 	 *
 	 * @param array $spec Query spec
-	 * 
+	 *
 	 * @uses $spec['sql']       (string) required SQL
 	 * @uses $spec['params']    (array) Optional params passed to query builder
 	 * @uses $spec['results']   (callable|array) An array of result row objects,
@@ -98,7 +98,7 @@ class Database extends DbDatabase {
 	 * @uses $spec['insert_id'] (int) required for insert queries
 	 * @uses $spec['times']     (int) how many times to match this spec (0 = unlimited)
 	 *
-	 * @return int ID of spec
+	 * @return string ID of spec
 	 */
 	public function addQuerySpec(array $spec) {
 		static $id = 0;
@@ -118,16 +118,18 @@ class Database extends DbDatabase {
 		}
 		unset($spec['times']);
 
-		$id++;
+		$hash = sha1(serialize([$spec['sql'], $spec['params']]));
 
-		$this->query_specs[$id] = (object) $spec;
-		return $id;
+		$this->query_specs[$hash] = (object) $spec;
+
+		return $hash;
 	}
 
 	/**
 	 * Remove a specified query added by addQuerySpec()
 	 *
 	 * @param int $id Query spec ID
+	 *
 	 * @return void
 	 */
 	public function removeQuerySpec($id) {
@@ -148,6 +150,7 @@ class Database extends DbDatabase {
 	 *
 	 * @param string $sql    Query
 	 * @param array  $params Query params
+	 *
 	 * @return MockObject (statement)
 	 */
 	public function executeDatabaseQuery($sql, $params = []) {
@@ -157,30 +160,28 @@ class Database extends DbDatabase {
 		$row_count = 0;
 		$this->last_insert_id = null;
 
-		$match = false;
-		foreach ($this->query_specs as $i => $spec) {
-			if ($spec->sql == $sql && $params == $spec->params) {
-				$match = true;
-				if (isset($spec->results)) {
-					if (is_callable($spec->results)) {
-						$results = call_user_func($spec->results, $spec);
-					} else if (is_array($spec->results)) {
-						$results = $spec->results;
-					}
-				}
-				$row_count = isset($spec->row_count) ? $spec->row_count : count($results);
-				if (isset($spec->insert_id)) {
-					$this->last_insert_id = $spec->insert_id;
-				}
+		$hash = sha1(serialize([$sql, $params]));
+		$match = elgg_extract($hash, $this->query_specs);
 
-				if (isset($spec->remaining)) {
-					$spec->remaining--;
-					if (!$spec->remaining) {
-						// don't allow more matches
-						unset($this->query_specs[$i]);
-					}
+		if ($match) {
+			if (isset($match->results)) {
+				if (is_callable($match->results)) {
+					$results = call_user_func($match->results, $match);
+				} else if (is_array($match->results)) {
+					$results = $match->results;
 				}
-				break;
+			}
+			$row_count = isset($match->row_count) ? $match->row_count : count($results);
+			if (isset($match->insert_id)) {
+				$this->last_insert_id = $match->insert_id;
+			}
+
+			if (isset($match->remaining)) {
+				$match->remaining--;
+				if (!$match->remaining) {
+					// don't allow more matches
+					unset($this->query_specs[$hash]);
+				}
 			}
 		}
 
@@ -189,24 +190,24 @@ class Database extends DbDatabase {
 			// mocked, otherwise we will be getting incorrect test results
 			throw new \DatabaseException("No testing query spec was found");
 		}
-		
+
 		$statement = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\PDOStatement::class)
-				->setMethods([
-					'fetch',
-					'rowCount',
-				])
-				->disableOriginalConstructor()
-				->getMock();
+			->setMethods([
+				'fetch',
+				'rowCount',
+			])
+			->disableOriginalConstructor()
+			->getMock();
 
 		$statement->expects(BaseTestCase::$_instance->any())
-				->method('fetch')
-				->will(BaseTestCase::$_instance->returnCallback(function() use (&$results) {
-							return array_shift($results);
-						}));
+			->method('fetch')
+			->will(BaseTestCase::$_instance->returnCallback(function () use (&$results) {
+				return array_shift($results);
+			}));
 
 		$statement->expects(BaseTestCase::$_instance->any())
-				->method('rowCount')
-				->will(BaseTestCase::$_instance->returnValue($row_count));
+			->method('rowCount')
+			->will(BaseTestCase::$_instance->returnValue($row_count));
 
 		return $statement;
 	}
@@ -222,6 +223,7 @@ class Database extends DbDatabase {
 	 * Attempt to normalize whitespace in a query
 	 *
 	 * @param string $query Query
+	 *
 	 * @return string
 	 */
 	private function normalizeSql($query) {
@@ -229,6 +231,7 @@ class Database extends DbDatabase {
 		$query = str_replace('  ', ' ', $query);
 		$query = strtolower($query);
 		$query = preg_replace('~\\s+~', ' ', $query);
+
 		return $query;
 	}
 

@@ -23,7 +23,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 			elgg_set_ignore_access($ia);
 		}
 	}
-	
+
 	public function testCanSetPriority() {
 
 		$ia = elgg_set_ignore_access(true);
@@ -73,14 +73,16 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		$ia = elgg_set_ignore_access(true);
 
 		$plugin = new ElggPlugin();
-		$plugin->title = "test_plugin";
+		$plugin->title = "test_plugin_x";
 		$plugin->save();
 
 		elgg_set_ignore_access($ia);
 
-		$loaded_plugin = ElggPlugin::fromId('test_plugin');
+		$loaded_plugin = ElggPlugin::fromId('test_plugin_x');
 
 		$this->assertEquals($plugin->guid, $loaded_plugin->guid);
+
+		$loaded_plugin->delete();
 
 	}
 
@@ -134,7 +136,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	public function testInvalidatesCacheOnDelete() {
 
-		$plugin = ElggPlugin::fromId('test_plugin');
+		$plugin = ElggPlugin::fromId('test_plugin_y');
 
 		$ia = elgg_set_ignore_access(true);
 
@@ -142,7 +144,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 		elgg_set_ignore_access($ia);
 
-		$this->assertNull(elgg_get_plugin_from_id('test_plugin'));
+		$this->assertNull(elgg_get_plugin_from_id('test_plugin_y'));
 	}
 
 	public function testCanSetSetting() {

@@ -2,15 +2,14 @@
 
 namespace Elgg\Actions;
 
-use Elgg\Application;
-use Elgg\UnitTestCase;
+use Elgg\IntegratedUnitTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group ActionsService
  */
-class ActionRegistrationTest extends UnitTestCase {
+class ActionRegistrationTestCase extends IntegratedUnitTestCase {
 
 	/**
 	 * Skip some actions that do not play well with testing suite
@@ -21,8 +20,6 @@ class ActionRegistrationTest extends UnitTestCase {
 	];
 
 	public function up() {
-		Application::$_instance->bootCore();
-
 		// Logging in admin so all actions are accessible
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 	}
@@ -32,8 +29,7 @@ class ActionRegistrationTest extends UnitTestCase {
 	}
 
 	public function actionsProvider() {
-		$app = self::createApplication();
-		$app->bootCore();
+		self::createApplication();
 
 		$provides = [];
 

@@ -345,6 +345,8 @@ class Application {
 	 * @throws InvalidArgumentException
 	 */
 	public static function factory(array $spec = []) {
+		self::loadCore();
+
 		$defaults = [
 			'config' => null,
 			'handle_exceptions' => true,
@@ -390,6 +392,9 @@ class Application {
 		}
 
 		if ($spec['handle_shutdown']) {
+			register_shutdown_function('_elgg_db_run_delayed_queries');
+			register_shutdown_function('_elgg_db_log_profiling_data');
+
 			// we need to register for shutdown before Symfony registers the
 			// session_write_close() function. https://github.com/Elgg/Elgg/issues/9243
 			register_shutdown_function(function () {

@@ -56,15 +56,15 @@ class ElggCoreGroupToolTest extends IntegrationTestCase {
 	
 	public function testCanCheckGroupToolAvailability() {
 		$this->assertFalse($this->group->isToolEnabled(''));
-		$this->assertFalse($this->group->isToolEnabled('test_option'));
+		$this->assertFalse($this->group->isToolEnabled('test_option2'));
 		
-		add_group_tool_option('test_option', 'test_label');
-		$this->assertTrue($this->group->isToolEnabled('test_option'));
+		add_group_tool_option('test_option2', 'test_label');
+		$this->assertTrue($this->group->isToolEnabled('test_option2'));
 		
-		$this->assertTrue($this->group->disableTool('test_option'));
-		$this->assertFalse($this->group->isToolEnabled('test_option'));
+		$this->assertTrue($this->group->disableTool('test_option2'));
+		$this->assertFalse($this->group->isToolEnabled('test_option2'));
 		
-		$this->assertTrue($this->group->enableTool('test_option'));
-		$this->assertTrue($this->group->isToolEnabled('test_option'));
+		$this->assertTrue($this->group->enableTool('test_option2'));
+		$this->assertTrue($this->group->isToolEnabled('test_option2'));
 	}
 }
