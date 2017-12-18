@@ -2,6 +2,8 @@
 
 namespace Elgg\Di;
 
+use Elgg\Config;
+use Elgg\Database\SiteSecret;
 use phpDocumentor\Reflection\DocBlock;
 use Zend\Mail\Transport\InMemory;
 
@@ -17,6 +19,30 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 
 	public function down() {
 
+	}
+
+	public function testCanExtractSiteSecretFromConfig() {
+		$config = new Config([
+			SiteSecret::CONFIG_KEY => md5('bar'),
+		]);
+		$sp = new ServiceProvider($config);
+
+		$this->assertEmpty($config->{SiteSecret::CONFIG_KEY});
+
+		$this->assertInstanceOf(SiteSecret::class, $sp->siteSecret);
+		$this->assertEquals(md5('bar'), $sp->siteSecret->get());
+	}
+
+	public function testSetsBackupSiteSecretFactory() {
+		$config_table = _elgg_services()->configTable;
+		$config_table->set(SiteSecret::CONFIG_KEY, md5('foo'));
+
+		$config = new Config();
+		$sp = new ServiceProvider($config);
+		$sp->setValue('configTable', $config_table);
+
+		$this->assertInstanceOf(SiteSecret::class, $sp->siteSecret);
+		$this->assertEquals(md5('foo'), $sp->siteSecret->get());
 	}
 
 	/**

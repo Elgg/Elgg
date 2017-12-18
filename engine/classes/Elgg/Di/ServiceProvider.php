@@ -453,6 +453,8 @@ class ServiceProvider extends DiContainer {
 			return new SessionCache($c->config);
 		});
 
+		$this->initSiteSecret($config);
+
 		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
 
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
@@ -526,6 +528,26 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);
+	}
+
+	/**
+	 * Extract the site secret from config or set up its factory
+	 *
+	 * @param Config $config Elgg Config
+	 * @return void
+	 */
+	protected function initSiteSecret(Config $config) {
+		// Try the config, because if it's there we want to remove it to isolate who can see it.
+		$secret = SiteSecret::fromConfig($config);
+		if ($secret) {
+			$this->setValue('siteSecret', $secret);
+			$config->elgg_config_set_secret = true;
+			return;
+		}
+
+		$this->setFactory('siteSecret', function (ServiceProvider $c) {
+			return SiteSecret::fromDatabase($c->configTable);
+		});
 	}
 
 	/**
@@ -615,14 +637,6 @@ class ServiceProvider extends DiContainer {
 		unset($config->dbhost);
 		unset($config->dbuser);
 		unset($config->dbpass);
-
-		// If the site secret is in the settings file, let's move it to that component
-		// right away to keep this value out of config.
-		$secret = SiteSecret::fromConfig($config);
-		if ($secret) {
-			$sp->setValue('siteSecret', $secret);
-			$config->elgg_config_set_secret = true;
-		}
 
 		$config->boot_complete = false;
 	}
