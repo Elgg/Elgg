@@ -71,20 +71,6 @@ class AccessWhereClause extends WhereClause {
 
 		if (!$this->ignore_access) {
 			if ($this->viewer_guid) {
-				// include content of user's friends
-				$ors['friends_access'] = $qb->merge([
-					$qb->compare($alias($this->access_column), '=', ACCESS_FRIENDS, ELGG_VALUE_INTEGER),
-					$qb->compare(
-						$alias($this->owner_guid_column),
-						'in',
-						$qb->subquery('entity_relationships')
-							->select('guid_one')
-							->where($qb->compare('relationship', '=', 'friend', ELGG_VALUE_STRING))
-							->andWhere($qb->compare('guid_two', '=', $this->viewer_guid, ELGG_VALUE_INTEGER))
-							->getSQL()
-					)
-				]);
-
 				// include user's content
 				$ors['owner_access'] = $qb->compare($alias($this->owner_guid_column), '=', $this->viewer_guid, ELGG_VALUE_INTEGER);
 			}

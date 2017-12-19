@@ -75,7 +75,6 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$parts = [];
 
 		$ors = $this->qb->merge([
-			$this->getFriendsClause($this->user->guid, 'alias'),
 			$this->getOwnerClause($this->user->guid, 'alias'),
 			$this->getLoggedInAccessListClause('alias'),
 		], 'OR');
@@ -99,7 +98,6 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$parts = [];
 
 		$ors = $this->qb->merge([
-			$this->getFriendsClause($this->user->guid, ''),
 			$this->getOwnerClause($this->user->guid, ''),
 			$this->getLoggedInAccessListClause(''),
 		], 'OR');
@@ -122,7 +120,6 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$parts = [];
 
 		$ors = $this->qb->merge([
-			$this->getFriendsClause($this->user->guid, 'alias', 'unit_test'),
 			$this->getOwnerClause($this->user->guid, 'alias', 'unit_test'),
 			$this->getLoggedInAccessListClause('alias'),
 		], 'OR');
@@ -287,25 +284,6 @@ class AccessWhereClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 
 		elgg_unregister_plugin_hook_handler('get_sql', 'access', $handler);
-	}
-
-	protected function getFriendsClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {
-		$alias = function ($column) use ($table_alias) {
-			return $table_alias ? "{$table_alias}.{$column}" : $column;
-		};
-
-		return $this->qb->merge([
-			$this->qb->compare($alias('access_id'), '=', ACCESS_FRIENDS, ELGG_VALUE_INTEGER),
-			$this->qb->compare(
-				$alias($owner_guid),
-				'in',
-				$this->qb->subquery('entity_relationships')
-					->select('guid_one')
-					->where($this->qb->compare('relationship', '=', 'friend', ELGG_VALUE_STRING))
-					->andWhere($this->qb->compare('guid_two', '=', $user_guid, ELGG_VALUE_INTEGER))
-					->getSQL()
-			)
-		]);
 	}
 
 	protected function getOwnerClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {

@@ -418,6 +418,14 @@ The user owned access collections are assumed to be used as Friends Collections 
 The groups access collection information was previously stored in the group_acl metadata. With the introduction of the ACL subtype
 this information has been moved to the ACL subtype attribute.
 
+The ``ACCESS_FRIENDS`` access_id has been migrated to an actual access collection (with the subtype ``friends``). All entities and annotations have been updated to use the new 
+access collection id. The access collection is created when a user is created. When a relationship of the type ``friends`` is created, the related guid will
+also be added to the access collection. You can no longer save or update entities with the access id ``ACCESS_FRIENDS``.
+
+The ``ACCESS_FRIENDS`` access_id has been migrated to an actual access collection (with the subtype ``friends``). All entities and annotations have been updated to use the new 
+access collection id. The access collection is created when a user is created. When a relationship of the type ``friends`` is created, the related guid will
+also be added to the access collection. You can no longer save or update entities with the access id ``ACCESS_FRIENDS``.
+
 Subtypes no longer have an ID
 -----------------------------
 
