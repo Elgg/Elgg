@@ -15,7 +15,9 @@ function notifications_plugin_init() {
 	elgg_extend_view('elgg.css', 'notifications.css');
 
 	elgg_register_page_handler('notifications', 'notifications_page_handler');
-	
+
+	elgg_register_plugin_hook_handler('register', 'menu:title', '_notification_groups_title_menu');
+
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_groups_subscription_page_menu');
 
@@ -114,6 +116,40 @@ function _notifications_page_menu($hook, $type, $return, $params) {
 	}
 		
 	return $return;
+}
+
+/**
+ * Register menu items for the title menu on group profiles
+ *
+ * @param \Elgg\Hook $hook 'register' 'menu:title'
+ *
+ * @return void
+ *
+ * @access private
+ * @since 3.0
+ */
+function _notification_groups_title_menu(\Elgg\Hook $hook) {
+	if (!elgg_is_active_plugin('groups')) {
+		return;
+	}
+
+	$user = elgg_get_logged_in_user_entity();
+	if (!$user) {
+		return;
+	}
+
+	$items = $hook->getValue();
+	/* @var ElggMenuItem[] $items */
+
+	foreach ($items as $item) {
+		if ($item->getName() === 'group-dropdown') {
+			$item->addChild(ElggMenuItem::factory([
+				'name' => 'notifications',
+				'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
+				'href' => "notifications/group/{$user->username}",
+			]));
+		}
+	}
 }
 
 /**
