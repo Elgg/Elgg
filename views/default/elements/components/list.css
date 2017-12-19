@@ -6,6 +6,13 @@
 	padding: 1rem;
 }
 
+.elgg-module .elgg-list > li:last-child {
+	border-bottom: 0;
+}
+.elgg-module .elgg-list + .elgg-pagination {
+	border-top: 1px solid;
+}
+
 .elgg-item h3 a {
 	padding-bottom: 0.25rem;
 }
